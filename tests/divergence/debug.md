@@ -4,8 +4,8 @@ Score(3000)=0.700 I=0.852 C=0.575 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 31 | 31 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 45 |  | 45 | Repo identity: README title + one-sentence description | 1.1 |  | 0.000 |
-| walker |  | 47 | 16 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 92 | 45 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 76 | 45 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 92 | 16 | Fs::DirListing { dir: src } |  |  | 1.000 |
 | ns | 92 |  | 47 | Complete file map: repo root and src/ | 1.2 |  | 1.000 |
 | walker |  | 157 | 65 | Json::Identity { file: package.json } |  |  | 1.000 |
 | walker |  | 189 | 32 | Json::Dependencies { file: package.json } |  |  | 1.000 |

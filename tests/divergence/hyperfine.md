@@ -3,18 +3,18 @@ Score(3000)=0.713 I=0.933 C=0.545 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 45 | 45 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 70 | 25 | Fs::DirListing { dir: doc } |  |  | 0.000 |
 | ns | 96 |  | 96 | Crate identity: package name, description, homepage, licence | 1.1 |  | 0.000 |
-| walker |  | 114 | 44 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 127 | 13 | Fs::DirListing { dir: src/parameter } |  |  | 0.000 |
-| ns | 141 |  | 45 | Repository root listing (complete) | 1.2 |  | 0.512 |
-| walker |  | 144 | 17 | Fs::DirListing { dir: src/output } |  |  | 0.518 |
-| walker |  | 164 | 20 | Fs::DirListing { dir: src/timer } |  |  | 0.528 |
-| walker |  | 192 | 28 | Fs::DirListing { dir: src/util } |  |  | 0.551 |
-| ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.470 |
-| walker |  | 227 | 35 | Fs::DirListing { dir: src/export } |  |  | 0.481 |
-| ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.521 |
-| walker |  | 296 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.521 |
+| walker |  | 114 | 69 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 139 | 25 | Fs::DirListing { dir: doc } |  |  | 0.000 |
+| ns | 141 |  | 45 | Repository root listing (complete) | 1.2 |  | 0.441 |
+| walker |  | 183 | 44 | Fs::DirListing { dir: src } |  |  | 0.510 |
+| walker |  | 196 | 13 | Fs::DirListing { dir: src/parameter } |  |  | 0.512 |
+| walker |  | 213 | 17 | Fs::DirListing { dir: src/output } |  |  | 0.518 |
+| ns | 217 |  | 76 | Cargo.toml: version 1.20.0, edition, MSRV, build script | 1.3 | 1.1 | 0.442 |
+| walker |  | 233 | 20 | Fs::DirListing { dir: src/timer } |  |  | 0.451 |
+| walker |  | 261 | 28 | Fs::DirListing { dir: src/util } |  |  | 0.510 |
+| ns | 261 |  | 44 | src/ listing: the flat modules and six subdirectories | 1.4 |  | 0.510 |
+| walker |  | 296 | 35 | Fs::DirListing { dir: src/export } |  |  | 0.521 |
 | walker |  | 304 | 8 | Fs::DirListing { dir: .github } |  |  | 0.522 |
 | walker |  | 309 | 5 | Fs::DirListing { dir: .github/workflows } |  |  | 0.523 |
 | walker |  | 322 | 13 | Code::CodeKey { rung: ModuleDoc, file: src/util/units.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |

@@ -5,10 +5,10 @@ Score(3000)=0.548 I=0.622 C=0.482 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | ns | 98 |  | 98 | Package identity: module path, Go version, framework version | 1.1 |  | 0.000 |
 | ns | 186 |  | 88 | README lede: what Gin is and what it is for | 1.2 |  | 0.000 |
 | walker |  | 229 | 229 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 232 | 3 | Fs::DirListing { dir: codec } |  |  | 0.000 |
-| walker |  | 236 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 243 | 7 | Fs::DirListing { dir: internal } |  |  | 0.000 |
-| walker |  | 254 | 11 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 240 | 11 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 243 | 3 | Fs::DirListing { dir: codec } |  |  | 0.000 |
+| walker |  | 247 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
+| walker |  | 254 | 7 | Fs::DirListing { dir: internal } |  |  | 0.000 |
 | walker |  | 269 | 15 | Fs::DirListing { dir: ginS } |  |  | 0.000 |
 | walker |  | 284 | 15 | Fs::DirListing { dir: testdata } |  |  | 0.000 |
 | walker |  | 292 | 8 | Fs::DirListing { dir: testdata/certificate } |  |  | 0.000 |

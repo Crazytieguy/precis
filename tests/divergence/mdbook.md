@@ -5,41 +5,41 @@ Score(3000)=0.677 I=0.781 C=0.587 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | ns | 74 |  | 74 | README identity lede | 1.1 |  | 0.000 |
 | walker |  | 79 | 79 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 86 | 7 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 98 | 12 | Fs::DirListing { dir: guide } |  |  | 0.000 |
-| walker |  | 110 | 12 | Code::CodeKey { rung: ModuleDoc, file: src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 118 | 8 | Fs::DirListing { dir: guide/guide-helper } |  |  | 0.000 |
-| walker |  | 123 | 5 | Fs::DirListing { dir: .cargo } |  |  | 0.000 |
-| walker |  | 131 | 8 | Fs::DirListing { dir: guide/guide-helper/src } |  |  | 0.000 |
-| walker |  | 146 | 15 | Code::CodeKey { rung: ModuleDoc, file: guide/guide-helper/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| ns | 153 |  | 79 | Repository root listing | 1.2 |  | 0.582 |
-| walker |  | 161 | 15 | Code::CodeKey { rung: ModuleDoc, file: guide/guide-helper/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.582 |
-| walker |  | 199 | 38 | Fs::DirListing { dir: src/cmd } |  |  | 0.610 |
-| ns | 201 |  | 48 | The nine workspace crates | 1.3 |  | 0.510 |
-| walker |  | 208 | 9 | Fs::DirListing { dir: src/cmd/watch } |  |  | 0.519 |
-| walker |  | 256 | 48 | Fs::DirListing { dir: crates } |  |  | 0.661 |
-| walker |  | 268 | 12 | Fs::DirListing { dir: crates/mdbook-compare } |  |  | 0.661 |
-| walker |  | 272 | 4 | Fs::DirListing { dir: crates/mdbook-compare/src } |  |  | 0.662 |
-| walker |  | 292 | 20 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-compare/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
-| walker |  | 304 | 12 | Fs::DirListing { dir: crates/mdbook-core } |  |  | 0.662 |
-| walker |  | 316 | 12 | Fs::DirListing { dir: crates/mdbook-driver } |  |  | 0.662 |
-| walker |  | 328 | 12 | Fs::DirListing { dir: crates/mdbook-markdown } |  |  | 0.662 |
-| walker |  | 332 | 4 | Fs::DirListing { dir: crates/mdbook-markdown/src } |  |  | 0.662 |
-| walker |  | 344 | 12 | Fs::DirListing { dir: crates/mdbook-preprocessor } |  |  | 0.662 |
-| walker |  | 348 | 4 | Fs::DirListing { dir: crates/mdbook-preprocessor/src } |  |  | 0.663 |
-| ns | 349 |  | 148 | Crate-purpose map (driver crate docs), first half | 1.4 |  | 0.563 |
-| walker |  | 360 | 12 | Fs::DirListing { dir: crates/mdbook-renderer } |  |  | 0.563 |
-| walker |  | 364 | 4 | Fs::DirListing { dir: crates/mdbook-renderer/src } |  |  | 0.564 |
-| walker |  | 376 | 12 | Fs::DirListing { dir: crates/mdbook-summary } |  |  | 0.564 |
-| walker |  | 380 | 4 | Fs::DirListing { dir: crates/mdbook-summary/src } |  |  | 0.565 |
-| walker |  | 392 | 12 | Fs::DirListing { dir: crates/xtask } |  |  | 0.565 |
-| ns | 403 |  | 54 | Crate-purpose map, `mdbook_core` entry | 1.5 | 1.4 | 0.544 |
-| walker |  | 408 | 16 | Fs::DirListing { dir: crates/mdbook-html } |  |  | 0.544 |
-| walker |  | 417 | 9 | Fs::DirListing { dir: crates/xtask/src } |  |  | 0.547 |
-| walker |  | 429 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/xtask/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
-| walker |  | 436 | 7 | Fs::DirListing { dir: tests } |  |  | 0.547 |
-| ns | 457 |  | 54 | Binary crate source listing (`src/`, `src/cmd/`, `src/cmd/watch/`) | 1.6 |  | 0.567 |
-| walker |  | 515 | 79 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.798 |
-| walker |  | 539 | 24 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.798 |
+| ns | 153 |  | 79 | Repository root listing | 1.2 |  | 0.581 |
+| walker |  | 165 | 79 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.916 |
+| walker |  | 177 | 12 | Fs::DirListing { dir: guide } |  |  | 0.916 |
+| walker |  | 189 | 12 | Code::CodeKey { rung: ModuleDoc, file: src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.916 |
+| walker |  | 197 | 8 | Fs::DirListing { dir: guide/guide-helper } |  |  | 0.916 |
+| ns | 201 |  | 48 | The nine workspace crates | 1.3 |  | 0.766 |
+| walker |  | 221 | 24 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.766 |
+| walker |  | 226 | 5 | Fs::DirListing { dir: .cargo } |  |  | 0.766 |
+| walker |  | 234 | 8 | Fs::DirListing { dir: guide/guide-helper/src } |  |  | 0.766 |
+| walker |  | 249 | 15 | Code::CodeKey { rung: ModuleDoc, file: guide/guide-helper/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |
+| walker |  | 264 | 15 | Code::CodeKey { rung: ModuleDoc, file: guide/guide-helper/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |
+| walker |  | 302 | 38 | Fs::DirListing { dir: src/cmd } |  |  | 0.784 |
+| walker |  | 311 | 9 | Fs::DirListing { dir: src/cmd/watch } |  |  | 0.791 |
+| ns | 349 |  | 148 | Crate-purpose map (driver crate docs), first half | 1.4 |  | 0.671 |
+| walker |  | 359 | 48 | Fs::DirListing { dir: crates } |  |  | 0.809 |
+| walker |  | 371 | 12 | Fs::DirListing { dir: crates/mdbook-compare } |  |  | 0.809 |
+| walker |  | 375 | 4 | Fs::DirListing { dir: crates/mdbook-compare/src } |  |  | 0.809 |
+| walker |  | 395 | 20 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-compare/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
+| ns | 403 |  | 54 | Crate-purpose map, `mdbook_core` entry | 1.5 | 1.4 | 0.779 |
+| walker |  | 407 | 12 | Fs::DirListing { dir: crates/mdbook-core } |  |  | 0.779 |
+| walker |  | 419 | 12 | Fs::DirListing { dir: crates/mdbook-driver } |  |  | 0.779 |
+| walker |  | 431 | 12 | Fs::DirListing { dir: crates/mdbook-markdown } |  |  | 0.779 |
+| walker |  | 435 | 4 | Fs::DirListing { dir: crates/mdbook-markdown/src } |  |  | 0.779 |
+| walker |  | 447 | 12 | Fs::DirListing { dir: crates/mdbook-preprocessor } |  |  | 0.779 |
+| walker |  | 451 | 4 | Fs::DirListing { dir: crates/mdbook-preprocessor/src } |  |  | 0.779 |
+| ns | 457 |  | 54 | Binary crate source listing (`src/`, `src/cmd/`, `src/cmd/watch/`) | 1.6 |  | 0.793 |
+| walker |  | 463 | 12 | Fs::DirListing { dir: crates/mdbook-renderer } |  |  | 0.793 |
+| walker |  | 467 | 4 | Fs::DirListing { dir: crates/mdbook-renderer/src } |  |  | 0.794 |
+| walker |  | 479 | 12 | Fs::DirListing { dir: crates/mdbook-summary } |  |  | 0.794 |
+| walker |  | 483 | 4 | Fs::DirListing { dir: crates/mdbook-summary/src } |  |  | 0.795 |
+| walker |  | 495 | 12 | Fs::DirListing { dir: crates/xtask } |  |  | 0.795 |
+| walker |  | 511 | 16 | Fs::DirListing { dir: crates/mdbook-html } |  |  | 0.795 |
+| walker |  | 520 | 9 | Fs::DirListing { dir: crates/xtask/src } |  |  | 0.798 |
+| walker |  | 532 | 12 | Code::CodeKey { rung: ModuleDoc, file: crates/xtask/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.798 |
+| walker |  | 539 | 7 | Fs::DirListing { dir: tests } |  |  | 0.798 |
 | walker |  | 550 | 11 | Fs::DirListing { dir: examples } |  |  | 0.798 |
 | ns | 565 |  | 108 | Workspace members and root package identity | 1.7 |  | 0.730 |
 | walker |  | 568 | 18 | Fs::DirListing { dir: crates/mdbook-core/src } |  |  | 0.733 |

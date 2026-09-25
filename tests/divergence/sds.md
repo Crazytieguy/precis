@@ -5,9 +5,9 @@ Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 31 | 31 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 94 |  | 94 | README title + the one-paragraph definition of SDS | 1.1 |  | 0.000 |
 | ns | 125 |  | 31 | Complete root directory listing | 1.2 |  | 0.333 |
-| walker |  | 148 | 117 | Plaintext::Whole { file: Makefile } |  |  | 0.360 |
-| ns | 251 |  | 126 | The header-before-the-pointer design + ASCII layout diagram | 1.3 |  | 0.275 |
-| walker |  | 257 | 109 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.288 |
+| walker |  | 140 | 109 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.352 |
+| ns | 251 |  | 126 | The header-before-the-pointer design + ASCII layout diagram | 1.3 |  | 0.269 |
+| walker |  | 257 | 117 | Plaintext::Whole { file: Makefile } |  |  | 0.288 |
 | walker |  | 290 | 33 | Code::CodeKey { rung: Names, file: sdsalloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.289 |
 | walker |  | 348 | 58 | Code::CodeKey { rung: Names, file: testhelp.h, decl: 0, sub: 0, line: 0 } |  |  | 0.289 |
 | ns | 365 |  | 114 | sds.h preamble: include guard, SDS_MAX_PREALLOC, SDS_NOINIT, `typedef char *sds` | 1.4 |  | 0.232 |

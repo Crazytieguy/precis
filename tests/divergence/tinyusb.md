@@ -5,44 +5,44 @@ Score(3000)=0.647 I=0.890 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 90 |  | 90 | Project identity: name + one-paragraph overview | 1.1 |  | 0.000 |
 | walker |  | 107 | 107 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 114 | 7 | Fs::DirListing { dir: hw } |  |  | 0.000 |
-| walker |  | 131 | 17 | Fs::DirListing { dir: lib } |  |  | 0.000 |
-| walker |  | 136 | 5 | Fs::DirListing { dir: lib/embedded-cli } |  |  | 0.000 |
-| walker |  | 150 | 14 | Fs::DirListing { dir: lib/SEGGER_RTT } |  |  | 0.000 |
-| walker |  | 159 | 9 | Fs::DirListing { dir: lib/SEGGER_RTT/Config } |  |  | 0.000 |
-| walker |  | 181 | 22 | Fs::DirListing { dir: lib/rt-thread } |  |  | 0.000 |
-| walker |  | 188 | 7 | Fs::DirListing { dir: lib/rt-thread/port } |  |  | 0.000 |
-| ns | 205 |  | 115 | README 'Key Features' bullet list | 1.2 |  | 0.000 |
-| walker |  | 223 | 35 | Fs::DirListing { dir: lib/SEGGER_RTT/RTT } |  |  | 0.000 |
-| walker |  | 238 | 15 | Fs::DirListing { dir: hw/mcu } |  |  | 0.000 |
-| walker |  | 243 | 5 | Fs::DirListing { dir: hw/mcu/bridgetek } |  |  | 0.000 |
-| walker |  | 248 | 5 | Fs::DirListing { dir: hw/mcu/sony } |  |  | 0.000 |
-| walker |  | 254 | 6 | Fs::DirListing { dir: hw/mcu/nordic } |  |  | 0.000 |
-| walker |  | 291 | 37 | Fs::DirListing { dir: lib/networking } |  |  | 0.000 |
-| walker |  | 297 | 6 | Fs::DirListing { dir: .PVS-Studio } |  |  | 0.000 |
-| walker |  | 303 | 6 | Fs::DirListing { dir: .claude } |  |  | 0.000 |
-| ns | 312 |  | 107 | Complete repository root listing | 1.3 |  | 0.434 |
-| walker |  | 313 | 10 | Fs::DirListing { dir: hw/mcu/dialog } |  |  | 0.434 |
-| walker |  | 363 | 50 | Fs::DirListing { dir: src } |  |  | 0.444 |
-| walker |  | 383 | 20 | Fs::DirListing { dir: src/typec } |  |  | 0.450 |
-| walker |  | 405 | 22 | Fs::DirListing { dir: src/device } |  |  | 0.458 |
-| walker |  | 435 | 30 | Fs::DirListing { dir: src/host } |  |  | 0.472 |
-| walker |  | 481 | 46 | Fs::DirListing { dir: src/class } |  |  | 0.480 |
-| ns | 487 |  | 175 | README annotated top-level directory tree | 1.4 |  | 0.422 |
-| walker |  | 566 | 85 | Fs::DirListing { dir: src/portable } |  |  | 0.456 |
-| walker |  | 619 | 53 | Fs::DirListing { dir: docs } |  |  | 0.457 |
-| walker |  | 623 | 4 | Fs::DirListing { dir: docs/_static } |  |  | 0.457 |
-| walker |  | 637 | 14 | Fs::DirListing { dir: docs/assets } |  |  | 0.457 |
-| walker |  | 693 | 56 | Fs::DirListing { dir: src/common } |  |  | 0.481 |
-| walker |  | 717 | 24 | Fs::DirListing { dir: docs/info } |  |  | 0.481 |
-| walker |  | 725 | 8 | Fs::DirListing { dir: hw/mcu/bridgetek/ft9xx } |  |  | 0.481 |
-| ns | 729 |  | 242 | Core stack file inventory: src/ and its non-fanout subdirectories | 1.5 |  | 0.464 |
-| walker |  | 733 | 8 | Fs::DirListing { dir: hw/mcu/sony/cxd56 } |  |  | 0.464 |
-| walker |  | 797 | 64 | Fs::DirListing { dir: src/osal } |  |  | 0.553 |
-| walker |  | 806 | 9 | Fs::DirListing { dir: .circleci } |  |  | 0.553 |
-| walker |  | 816 | 10 | Fs::DirListing { dir: test } |  |  | 0.553 |
-| ns | 879 |  | 150 | Architecture doc: layer/component overview | 1.6 |  | 0.527 |
-| walker |  | 906 | 90 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.791 |
-| walker |  | 941 | 35 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.791 |
+| walker |  | 204 | 90 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 1.000 |
+| ns | 205 |  | 115 | README 'Key Features' bullet list | 1.2 |  | 0.620 |
+| walker |  | 221 | 17 | Fs::DirListing { dir: lib } |  |  | 0.620 |
+| walker |  | 226 | 5 | Fs::DirListing { dir: lib/embedded-cli } |  |  | 0.620 |
+| walker |  | 240 | 14 | Fs::DirListing { dir: lib/SEGGER_RTT } |  |  | 0.620 |
+| walker |  | 249 | 9 | Fs::DirListing { dir: lib/SEGGER_RTT/Config } |  |  | 0.620 |
+| walker |  | 271 | 22 | Fs::DirListing { dir: lib/rt-thread } |  |  | 0.620 |
+| walker |  | 278 | 7 | Fs::DirListing { dir: lib/rt-thread/port } |  |  | 0.620 |
+| ns | 312 |  | 107 | Complete repository root listing | 1.3 |  | 0.804 |
+| walker |  | 313 | 35 | Fs::DirListing { dir: lib/SEGGER_RTT/RTT } |  |  | 0.804 |
+| walker |  | 328 | 15 | Fs::DirListing { dir: hw/mcu } |  |  | 0.804 |
+| walker |  | 333 | 5 | Fs::DirListing { dir: hw/mcu/bridgetek } |  |  | 0.804 |
+| walker |  | 338 | 5 | Fs::DirListing { dir: hw/mcu/sony } |  |  | 0.804 |
+| walker |  | 344 | 6 | Fs::DirListing { dir: hw/mcu/nordic } |  |  | 0.804 |
+| walker |  | 381 | 37 | Fs::DirListing { dir: lib/networking } |  |  | 0.804 |
+| walker |  | 416 | 35 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.804 |
+| walker |  | 422 | 6 | Fs::DirListing { dir: .PVS-Studio } |  |  | 0.804 |
+| walker |  | 428 | 6 | Fs::DirListing { dir: .claude } |  |  | 0.804 |
+| walker |  | 438 | 10 | Fs::DirListing { dir: hw/mcu/dialog } |  |  | 0.804 |
+| ns | 487 |  | 175 | README annotated top-level directory tree | 1.4 |  | 0.708 |
+| walker |  | 488 | 50 | Fs::DirListing { dir: src } |  |  | 0.713 |
+| walker |  | 508 | 20 | Fs::DirListing { dir: src/typec } |  |  | 0.717 |
+| walker |  | 530 | 22 | Fs::DirListing { dir: src/device } |  |  | 0.721 |
+| walker |  | 560 | 30 | Fs::DirListing { dir: src/host } |  |  | 0.730 |
+| walker |  | 606 | 46 | Fs::DirListing { dir: src/class } |  |  | 0.734 |
+| walker |  | 691 | 85 | Fs::DirListing { dir: src/portable } |  |  | 0.758 |
+| ns | 729 |  | 242 | Core stack file inventory: src/ and its non-fanout subdirectories | 1.5 |  | 0.631 |
+| walker |  | 744 | 53 | Fs::DirListing { dir: docs } |  |  | 0.632 |
+| walker |  | 748 | 4 | Fs::DirListing { dir: docs/_static } |  |  | 0.632 |
+| walker |  | 762 | 14 | Fs::DirListing { dir: docs/assets } |  |  | 0.632 |
+| walker |  | 818 | 56 | Fs::DirListing { dir: src/common } |  |  | 0.721 |
+| walker |  | 842 | 24 | Fs::DirListing { dir: docs/info } |  |  | 0.722 |
+| walker |  | 850 | 8 | Fs::DirListing { dir: hw/mcu/bridgetek/ft9xx } |  |  | 0.722 |
+| walker |  | 858 | 8 | Fs::DirListing { dir: hw/mcu/sony/cxd56 } |  |  | 0.722 |
+| ns | 879 |  | 150 | Architecture doc: layer/component overview | 1.6 |  | 0.688 |
+| walker |  | 922 | 64 | Fs::DirListing { dir: src/osal } |  |  | 0.791 |
+| walker |  | 931 | 9 | Fs::DirListing { dir: .circleci } |  |  | 0.791 |
+| walker |  | 941 | 10 | Fs::DirListing { dir: test } |  |  | 0.791 |
 | walker |  | 946 | 5 | Fs::DirListing { dir: .claude/commands } |  |  | 0.791 |
 | walker |  | 983 | 37 | Fs::DirListing { dir: docs/reference } |  |  | 0.791 |
 | walker |  | 997 | 14 | Fs::DirListing { dir: hw/mcu/nordic/nrf5x } |  |  | 0.791 |

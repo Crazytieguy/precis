@@ -5,14 +5,14 @@ Score(3000)=0.708 I=0.866 C=0.578 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 41 |  | 41 | What linkding is | 1.1 |  | 0.000 |
 | ns | 112 |  | 71 | The one sentence that locates the code | 1.2 |  | 0.000 |
 | walker |  | 115 | 115 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 131 | 16 | Json::Identity { file: package.json } |  |  | 0.000 |
-| walker |  | 143 | 12 | Fs::DirListing { dir: docker } |  |  | 0.000 |
-| walker |  | 146 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 159 | 13 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| walker |  | 164 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.000 |
-| walker |  | 208 | 44 | Fs::DirListing { dir: assets } |  |  | 0.000 |
-| ns | 227 |  | 115 | Repository root listing (complete) | 1.3 |  | 0.714 |
-| walker |  | 262 | 54 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.945 |
+| walker |  | 169 | 54 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.816 |
+| walker |  | 185 | 16 | Json::Identity { file: package.json } |  |  | 0.816 |
+| walker |  | 197 | 12 | Fs::DirListing { dir: docker } |  |  | 0.816 |
+| walker |  | 200 | 3 | Fs::DirListing { dir: .github } |  |  | 0.816 |
+| walker |  | 213 | 13 | Fs::DirListing { dir: .github/workflows } |  |  | 0.816 |
+| walker |  | 218 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.816 |
+| ns | 227 |  | 115 | Repository root listing (complete) | 1.3 |  | 0.945 |
+| walker |  | 262 | 44 | Fs::DirListing { dir: assets } |  |  | 0.945 |
 | walker |  | 348 | 86 | Toml::Identity { file: pyproject.toml } |  |  | 0.649 |
 | ns | 348 |  | 121 | bookmarks/ app package listing (complete) | 1.4 |  | 0.649 |
 | ns | 445 |  | 97 | README feature overview (head) | 1.5 |  | 0.605 |

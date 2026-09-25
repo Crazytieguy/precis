@@ -4,9 +4,9 @@ Score(3000)=0.707 I=0.852 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 51 | 51 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 75 |  | 75 | README title + what chibicc is | 1.1 |  | 0.000 |
-| walker |  | 87 | 36 | Fs::DirListing { dir: include } |  |  | 0.000 |
-| ns | 126 |  | 51 | Complete repository root listing | 1.2 |  | 0.595 |
-| walker |  | 164 | 77 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.621 |
+| ns | 126 |  | 51 | Complete repository root listing | 1.2 |  | 0.580 |
+| walker |  | 128 | 77 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.607 |
+| walker |  | 164 | 36 | Fs::DirListing { dir: include } |  |  | 0.621 |
 | walker |  | 223 | 59 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.647 |
 | ns | 263 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.523 |
 | ns | 356 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.440 |

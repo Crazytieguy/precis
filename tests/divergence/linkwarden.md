@@ -6,22 +6,22 @@ Score(3000)=0.740 I=0.896 C=0.611 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 79 | 79 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 88 | 9 | Fs::DirListing { dir: apps } |  |  | 0.000 |
 | walker |  | 99 | 11 | Fs::DirListing { dir: patches } |  |  | 0.000 |
-| walker |  | 114 | 15 | Fs::DirListing { dir: packages } |  |  | 0.000 |
-| walker |  | 137 | 23 | Fs::DirListing { dir: packages/prisma } |  |  | 0.000 |
-| walker |  | 146 | 9 | Fs::DirListing { dir: packages/prisma/client } |  |  | 0.000 |
-| ns | 154 |  | 79 | Complete repository root listing | 1.2 |  | 0.724 |
-| walker |  | 172 | 26 | Fs::DirListing { dir: apps/worker } |  |  | 0.725 |
-| walker |  | 177 | 5 | Fs::DirListing { dir: apps/worker/templates } |  |  | 0.725 |
-| ns | 178 |  | 24 | The three apps and five shared packages | 1.3 |  | 0.712 |
-| walker |  | 220 | 43 | Json::Identity { file: package.json } |  |  | 0.714 |
-| walker |  | 224 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.714 |
-| walker |  | 237 | 13 | Fs::DirListing { dir: packages/types } |  |  | 0.714 |
-| ns | 259 |  | 81 | Complete apps/web listing | 1.4 |  | 0.534 |
-| walker |  | 270 | 33 | Fs::DirListing { dir: assets } |  |  | 0.534 |
-| walker |  | 275 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.534 |
-| ns | 321 |  | 62 | Workspace globs in the root package.json | 1.5 |  | 0.508 |
-| walker |  | 329 | 54 | Fs::DirListing { dir: packages/filesystem } |  |  | 0.508 |
-| walker |  | 439 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.714 |
+| ns | 154 |  | 79 | Complete repository root listing | 1.2 |  | 0.683 |
+| ns | 178 |  | 24 | The three apps and five shared packages | 1.3 |  | 0.589 |
+| walker |  | 209 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.864 |
+| walker |  | 224 | 15 | Fs::DirListing { dir: packages } |  |  | 1.000 |
+| walker |  | 247 | 23 | Fs::DirListing { dir: packages/prisma } |  |  | 1.000 |
+| walker |  | 256 | 9 | Fs::DirListing { dir: packages/prisma/client } |  |  | 1.000 |
+| ns | 259 |  | 81 | Complete apps/web listing | 1.4 |  | 0.749 |
+| walker |  | 282 | 26 | Fs::DirListing { dir: apps/worker } |  |  | 0.749 |
+| walker |  | 287 | 5 | Fs::DirListing { dir: apps/worker/templates } |  |  | 0.749 |
+| ns | 321 |  | 62 | Workspace globs in the root package.json | 1.5 |  | 0.702 |
+| walker |  | 330 | 43 | Json::Identity { file: package.json } |  |  | 0.713 |
+| walker |  | 334 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.713 |
+| walker |  | 347 | 13 | Fs::DirListing { dir: packages/types } |  |  | 0.713 |
+| walker |  | 380 | 33 | Fs::DirListing { dir: assets } |  |  | 0.713 |
+| walker |  | 385 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.713 |
+| walker |  | 439 | 54 | Fs::DirListing { dir: packages/filesystem } |  |  | 0.714 |
 | ns | 460 |  | 139 | Workspace package names — every `name` field under apps/ and packages/ | 1.6 |  | 0.661 |
 | walker |  | 473 | 34 | Json::Entry { file: package.json } |  |  | 0.717 |
 | ns | 674 |  | 214 | Root scripts: how you run web, worker and both together | 1.7 |  | 0.664 |

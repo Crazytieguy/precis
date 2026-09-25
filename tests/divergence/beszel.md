@@ -4,20 +4,20 @@ Score(3000)=0.642 I=0.802 C=0.514 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 55 | 55 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 83 |  | 83 | Readme lede: what Beszel is | 1.1 |  | 0.000 |
-| walker |  | 89 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| walker |  | 115 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.000 |
-| walker |  | 120 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.000 |
-| walker |  | 126 | 6 | Fs::DirListing { dir: supplemental/kubernetes } |  |  | 0.000 |
-| walker |  | 129 | 3 | Fs::DirListing { dir: supplemental/kubernetes/beszel-hub } |  |  | 0.000 |
-| walker |  | 139 | 10 | Fs::DirListing { dir: supplemental/docker } |  |  | 0.000 |
-| walker |  | 144 | 5 | Fs::DirListing { dir: supplemental/docker/agent } |  |  | 0.000 |
-| walker |  | 149 | 5 | Fs::DirListing { dir: supplemental/docker/hub } |  |  | 0.000 |
-| walker |  | 154 | 5 | Fs::DirListing { dir: supplemental/docker/same-system } |  |  | 0.000 |
-| walker |  | 164 | 10 | Fs::DirListing { dir: supplemental/licenses } |  |  | 0.000 |
-| walker |  | 167 | 3 | Fs::DirListing { dir: supplemental/licenses/LibreHardwareMonitor } |  |  | 0.000 |
-| walker |  | 170 | 3 | Fs::DirListing { dir: supplemental/licenses/smartmontools } |  |  | 0.000 |
-| ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.000 |
-| walker |  | 209 | 39 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.238 |
+| walker |  | 94 | 39 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.428 |
+| walker |  | 128 | 34 | GoMod::Identity { file: go.mod } |  |  | 0.428 |
+| walker |  | 154 | 26 | Fs::DirListing { dir: supplemental } |  |  | 0.429 |
+| walker |  | 159 | 5 | Fs::DirListing { dir: supplemental/guides } |  |  | 0.429 |
+| walker |  | 165 | 6 | Fs::DirListing { dir: supplemental/kubernetes } |  |  | 0.429 |
+| walker |  | 168 | 3 | Fs::DirListing { dir: supplemental/kubernetes/beszel-hub } |  |  | 0.429 |
+| walker |  | 178 | 10 | Fs::DirListing { dir: supplemental/docker } |  |  | 0.429 |
+| walker |  | 183 | 5 | Fs::DirListing { dir: supplemental/docker/agent } |  |  | 0.429 |
+| walker |  | 188 | 5 | Fs::DirListing { dir: supplemental/docker/hub } |  |  | 0.429 |
+| ns | 190 |  | 107 | Readme Architecture section: hub vs agent | 1.2 |  | 0.238 |
+| walker |  | 193 | 5 | Fs::DirListing { dir: supplemental/docker/same-system } |  |  | 0.238 |
+| walker |  | 203 | 10 | Fs::DirListing { dir: supplemental/licenses } |  |  | 0.238 |
+| walker |  | 206 | 3 | Fs::DirListing { dir: supplemental/licenses/LibreHardwareMonitor } |  |  | 0.238 |
+| walker |  | 209 | 3 | Fs::DirListing { dir: supplemental/licenses/smartmontools } |  |  | 0.238 |
 | walker |  | 239 | 30 | Code::CodeKey { rung: ModuleDoc, file: beszel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.240 |
 | ns | 245 |  | 55 | Repository root listing (complete) | 1.3 |  | 0.509 |
 | walker |  | 305 | 66 | Fs::DirListing { dir: internal } |  |  | 0.558 |

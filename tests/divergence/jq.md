@@ -4,16 +4,16 @@ Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 71 |  | 71 | README lede: what jq is | 1.1 |  | 0.000 |
 | walker |  | 81 | 81 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 90 | 9 | Fs::DirListing { dir: config } |  |  | 0.000 |
-| walker |  | 113 | 23 | Fs::DirListing { dir: m4 } |  |  | 0.000 |
-| ns | 152 |  | 81 | Repository root listing (complete) | 1.2 |  | 0.698 |
-| walker |  | 165 | 52 | Fs::DirListing { dir: docs } |  |  | 0.703 |
-| walker |  | 178 | 13 | Fs::DirListing { dir: docs/content } |  |  | 0.708 |
-| walker |  | 182 | 4 | Fs::DirListing { dir: docs/content/download } |  |  | 0.708 |
-| walker |  | 186 | 4 | Fs::DirListing { dir: docs/content/tutorial } |  |  | 0.708 |
-| walker |  | 207 | 21 | Fs::DirListing { dir: docs/templates } |  |  | 0.708 |
-| ns | 215 |  | 63 | Front-end landmarks: jq_parse / jq_parse_library / block_compile | 1.3 |  | 0.643 |
-| walker |  | 278 | 71 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.916 |
+| walker |  | 152 | 71 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 152 |  | 81 | Repository root listing (complete) | 1.2 |  | 1.000 |
+| walker |  | 161 | 9 | Fs::DirListing { dir: config } |  |  | 1.000 |
+| walker |  | 184 | 23 | Fs::DirListing { dir: m4 } |  |  | 1.000 |
+| ns | 215 |  | 63 | Front-end landmarks: jq_parse / jq_parse_library / block_compile | 1.3 |  | 0.909 |
+| walker |  | 236 | 52 | Fs::DirListing { dir: docs } |  |  | 0.913 |
+| walker |  | 249 | 13 | Fs::DirListing { dir: docs/content } |  |  | 0.916 |
+| walker |  | 253 | 4 | Fs::DirListing { dir: docs/content/download } |  |  | 0.916 |
+| walker |  | 257 | 4 | Fs::DirListing { dir: docs/content/tutorial } |  |  | 0.916 |
+| walker |  | 278 | 21 | Fs::DirListing { dir: docs/templates } |  |  | 0.916 |
 | walker |  | 309 | 31 | Fs::DirListing { dir: docs/public } |  |  | 0.916 |
 | walker |  | 313 | 4 | Fs::DirListing { dir: docs/public/css } |  |  | 0.916 |
 | walker |  | 318 | 5 | Fs::DirListing { dir: docs/public/js } |  |  | 0.916 |

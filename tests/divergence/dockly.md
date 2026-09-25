@@ -5,19 +5,19 @@ Score(3000)=0.709 I=0.919 C=0.547 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 72 | 72 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 81 | 9 | Fs::DirListing { dir: lib } |  |  | 0.000 |
 | ns | 95 |  | 95 | Package identity: name, version, description, entry point, bin name | 1.1 |  | 0.000 |
-| walker |  | 105 | 24 | Fs::DirListing { dir: hooks } |  |  | 0.000 |
-| walker |  | 109 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.000 |
-| walker |  | 114 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.000 |
-| walker |  | 151 | 37 | Fs::DirListing { dir: widgets } |  |  | 0.000 |
-| ns | 167 |  | 72 | Complete root directory listing | 1.2 |  | 0.546 |
-| walker |  | 190 | 39 | Fs::DirListing { dir: src } |  |  | 0.610 |
-| walker |  | 199 | 9 | Fs::DirListing { dir: src/themes } |  |  | 0.612 |
-| walker |  | 230 | 31 | Fs::DirListing { dir: src/widgetsTemplates } |  |  | 0.626 |
-| ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.624 |
-| walker |  | 296 | 66 | Json::Identity { file: package.json } |  |  | 0.816 |
-| walker |  | 315 | 19 | Fs::DirListing { dir: widgets/images } |  |  | 0.817 |
-| ns | 371 |  | 95 | Complete listings of the per-mode widget directories: widgets/containers, widgets/images, widgets/services | 1.4 |  | 0.705 |
-| walker |  | 398 | 83 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.706 |
+| walker |  | 164 | 83 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| ns | 167 |  | 72 | Complete root directory listing | 1.2 |  | 0.514 |
+| walker |  | 188 | 24 | Fs::DirListing { dir: hooks } |  |  | 0.521 |
+| walker |  | 192 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.521 |
+| walker |  | 197 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.521 |
+| walker |  | 234 | 37 | Fs::DirListing { dir: widgets } |  |  | 0.548 |
+| walker |  | 273 | 39 | Fs::DirListing { dir: src } |  |  | 0.612 |
+| ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.610 |
+| walker |  | 282 | 9 | Fs::DirListing { dir: src/themes } |  |  | 0.612 |
+| walker |  | 313 | 31 | Fs::DirListing { dir: src/widgetsTemplates } |  |  | 0.626 |
+| ns | 371 |  | 95 | Complete listings of the per-mode widget directories: widgets/containers, widgets/images, widgets/services | 1.4 |  | 0.536 |
+| walker |  | 379 | 66 | Json::Identity { file: package.json } |  |  | 0.700 |
+| walker |  | 398 | 19 | Fs::DirListing { dir: widgets/images } |  |  | 0.706 |
 | ns | 411 |  | 40 | Complete listings of src/widgetsTemplates and src/themes | 1.5 |  | 0.712 |
 | walker |  | 429 | 31 | Fs::DirListing { dir: widgets/services } |  |  | 0.742 |
 | walker |  | 463 | 34 | Json::Runtime { file: package.json } |  |  | 0.743 |

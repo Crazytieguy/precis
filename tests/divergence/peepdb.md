@@ -3,21 +3,21 @@ Score(3000)=0.724 I=0.896 C=0.585 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 38 | 38 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 41 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 49 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 54 |  | 54 | Identity: README title + package name/version/description | 1.1 |  | 0.000 |
-| walker |  | 77 | 28 | Fs::DirListing { dir: images } |  |  | 0.000 |
-| ns | 92 |  | 38 | Complete repository root listing | 1.2 |  | 0.539 |
-| walker |  | 111 | 34 | Fs::DirListing { dir: peepdb } |  |  | 0.573 |
-| walker |  | 152 | 41 | Fs::DirListing { dir: docs } |  |  | 0.591 |
+| ns | 92 |  | 38 | Complete repository root listing | 1.2 |  | 0.536 |
+| walker |  | 135 | 97 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.568 |
+| walker |  | 138 | 3 | Fs::DirListing { dir: .github } |  |  | 0.568 |
+| walker |  | 146 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.568 |
 | ns | 173 |  | 81 | README lede paragraph — scope and supported databases | 1.3 | 1.1 | 0.568 |
-| walker |  | 197 | 45 | Fs::DirListing { dir: peepdb/db } |  |  | 0.658 |
-| ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.661 |
-| walker |  | 273 | 76 | Toml::Identity { file: project.toml } |  |  | 0.837 |
-| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.783 |
-| walker |  | 300 | 27 | Toml::Operational { file: project.toml } |  |  | 0.783 |
-| ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.699 |
-| walker |  | 397 | 97 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.846 |
+| walker |  | 174 | 28 | Fs::DirListing { dir: images } |  |  | 0.571 |
+| walker |  | 208 | 34 | Fs::DirListing { dir: peepdb } |  |  | 0.603 |
+| walker |  | 249 | 41 | Fs::DirListing { dir: docs } |  |  | 0.620 |
+| ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.444 |
+| walker |  | 294 | 45 | Fs::DirListing { dir: peepdb/db } |  |  | 0.695 |
+| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.650 |
+| walker |  | 370 | 76 | Toml::Identity { file: project.toml } |  |  | 0.947 |
+| ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.845 |
+| walker |  | 397 | 27 | Toml::Operational { file: project.toml } |  |  | 0.846 |
 | ns | 497 |  | 119 | peepdb/db/__init__.py — backend class ↔ module map | 1.7 |  | 0.744 |
 | walker |  | 590 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.754 |
 | ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.691 |

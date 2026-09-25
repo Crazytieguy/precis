@@ -6,13 +6,13 @@ Score(3000)=0.487 I=0.765 C=0.310 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | ns | 59 |  | 25 | lib/ listing — the entire implementation | 1.2 |  | 0.000 |
 | walker |  | 102 | 102 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 109 |  | 50 | package.json name, version, npm description | 1.3 |  | 0.000 |
-| walker |  | 119 | 17 | Fs::DirListing { dir: typings } |  |  | 0.000 |
-| walker |  | 144 | 25 | Fs::DirListing { dir: lib } |  |  | 0.538 |
-| walker |  | 180 | 36 | Fs::DirListing { dir: docs } |  |  | 0.356 |
-| ns | 180 |  | 71 | package.json module type, main, types, engines | 1.4 |  | 0.356 |
-| walker |  | 257 | 77 | Json::Identity { file: package.json } |  |  | 0.481 |
-| ns | 265 |  | 85 | index.js: which lib module each public class comes from | 1.5 |  | 0.421 |
-| walker |  | 322 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.619 |
+| walker |  | 167 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.336 |
+| ns | 180 |  | 71 | package.json module type, main, types, engines | 1.4 |  | 0.221 |
+| walker |  | 184 | 17 | Fs::DirListing { dir: typings } |  |  | 0.222 |
+| walker |  | 209 | 25 | Fs::DirListing { dir: lib } |  |  | 0.569 |
+| walker |  | 245 | 36 | Fs::DirListing { dir: docs } |  |  | 0.571 |
+| ns | 265 |  | 85 | index.js: which lib module each public class comes from | 1.5 |  | 0.499 |
+| walker |  | 322 | 77 | Json::Identity { file: package.json } |  |  | 0.619 |
 | ns | 336 |  | 71 | index.js: the `program` singleton and the three createX factories | 1.6 |  | 0.554 |
 | walker |  | 347 | 25 | Fs::DirListing { dir: docs/zh-CN } |  |  | 0.554 |
 | walker |  | 377 | 30 | Json::Runtime { file: package.json } |  |  | 0.605 |

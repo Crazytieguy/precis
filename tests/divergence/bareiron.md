@@ -4,13 +4,13 @@ Score(3000)=0.630 I=0.816 C=0.487 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 29 | 29 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 54 |  | 54 | Project identity, tagline, and target Minecraft/protocol version | 1.1 |  | 0.000 |
-| walker |  | 67 | 38 | Fs::DirListing { dir: include } |  |  | 0.000 |
-| ns | 83 |  | 29 | Complete repository root listing | 1.2 |  | 0.518 |
-| walker |  | 115 | 48 | Fs::DirListing { dir: src } |  |  | 0.654 |
-| walker |  | 122 | 7 | Fs::DirListing { dir: .github } |  |  | 0.654 |
-| walker |  | 126 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.654 |
-| ns | 148 |  | 65 | Stated project goal and priority ordering | 1.3 |  | 0.623 |
-| walker |  | 224 | 98 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.847 |
+| ns | 83 |  | 29 | Complete repository root listing | 1.2 |  | 0.489 |
+| walker |  | 127 | 98 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.711 |
+| ns | 148 |  | 65 | Stated project goal and priority ordering | 1.3 |  | 0.710 |
+| walker |  | 165 | 38 | Fs::DirListing { dir: include } |  |  | 0.734 |
+| walker |  | 213 | 48 | Fs::DirListing { dir: src } |  |  | 0.847 |
+| walker |  | 220 | 7 | Fs::DirListing { dir: .github } |  |  | 0.847 |
+| walker |  | 224 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.847 |
 | ns | 234 |  | 86 | Complete src/ and include/ listings | 1.4 |  | 0.807 |
 | walker |  | 275 | 51 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.825 |
 | ns | 285 |  | 51 | All README H2 section headings | 1.5 |  | 0.817 |

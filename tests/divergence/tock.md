@@ -4,10 +4,10 @@ Score(3000)=0.549 I=0.818 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 49 |  | 49 | Project name and one-line description | 1.1 |  | 0.000 |
 | walker |  | 52 | 52 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 56 | 4 | Fs::DirListing { dir: cmd } |  |  | 0.000 |
-| walker |  | 60 | 4 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 65 | 5 | Fs::DirListing { dir: demo } |  |  | 0.000 |
-| walker |  | 75 | 10 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.131 |
+| walker |  | 62 | 10 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.131 |
+| walker |  | 66 | 4 | Fs::DirListing { dir: cmd } |  |  | 0.131 |
+| walker |  | 70 | 4 | Fs::DirListing { dir: docs } |  |  | 0.131 |
+| walker |  | 75 | 5 | Fs::DirListing { dir: demo } |  |  | 0.131 |
 | walker |  | 79 | 4 | Fs::DirListing { dir: cmd/tock } |  |  | 0.131 |
 | walker |  | 98 | 19 | Fs::DirListing { dir: internal } |  |  | 0.131 |
 | ns | 101 |  | 52 | Repository root listing (complete) | 1.2 |  | 0.742 |

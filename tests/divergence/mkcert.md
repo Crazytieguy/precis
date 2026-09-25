@@ -4,10 +4,10 @@ Score(3000)=0.833 I=0.902 C=0.769 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 38 |  | 38 | README title and one-sentence definition of mkcert | 1.1 |  | 0.000 |
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 79 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| ns | 88 |  | 50 | Complete root directory listing | 1.2 |  | 0.618 |
-| walker |  | 102 | 23 | Code::CodeKey { rung: ModuleDoc, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.647 |
-| walker |  | 140 | 38 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 88 | 38 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 88 |  | 50 | Complete root directory listing | 1.2 |  | 1.000 |
+| walker |  | 117 | 29 | GoMod::Identity { file: go.mod } |  |  | 1.000 |
+| walker |  | 140 | 23 | Code::CodeKey { rung: ModuleDoc, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
 | walker |  | 147 | 7 | Fs::DirListing { dir: .github } |  |  | 0.958 |
 | ns | 147 |  | 59 | Package doc line, module path and Go version | 1.3 |  | 0.958 |
 | walker |  | 155 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.960 |

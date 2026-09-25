@@ -201,7 +201,7 @@ fn push_sections(
 
 // --- value ---
 
-const README_HEADLINE_VALUE: f64 = 1308.0;
+const README_HEADLINE_VALUE: f64 = 2616.0;
 
 const HEADINGS_OUTLINE_VALUE: f64 = 974.0;
 

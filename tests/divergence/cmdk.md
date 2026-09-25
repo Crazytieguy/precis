@@ -7,15 +7,15 @@ Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 75 | 13 | Fs::DirListing { dir: cmdk } |  |  | 1.000 |
 | walker |  | 85 | 10 | Fs::DirListing { dir: cmdk/src } |  |  | 1.000 |
 | walker |  | 112 | 27 | Json::Identity { file: package.json } |  |  | 1.000 |
-| walker |  | 154 | 42 | Json::Identity { file: cmdk/package.json } |  |  | 1.000 |
-| walker |  | 159 | 5 | Fs::DirListing { dir: .husky } |  |  | 1.000 |
-| walker |  | 167 | 8 | Fs::DirListing { dir: .github } |  |  | 1.000 |
-| walker |  | 171 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 1.000 |
-| ns | 174 |  | 112 | README one-line identity + install | 1.2 |  | 0.846 |
-| walker |  | 192 | 21 | Json::Runtime { file: package.json } |  |  | 0.846 |
-| ns | 208 |  | 34 | pnpm workspace membership | 1.3 |  | 0.758 |
-| ns | 343 |  | 135 | Listings of all three packages + library source dir | 1.4 |  | 0.483 |
-| walker |  | 369 | 177 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.500 |
+| ns | 174 |  | 112 | README one-line identity + install | 1.2 |  | 0.845 |
+| ns | 208 |  | 34 | pnpm workspace membership | 1.3 |  | 0.757 |
+| walker |  | 289 | 177 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.783 |
+| walker |  | 331 | 42 | Json::Identity { file: cmdk/package.json } |  |  | 0.784 |
+| walker |  | 336 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.784 |
+| ns | 343 |  | 135 | Listings of all three packages + library source dir | 1.4 |  | 0.500 |
+| walker |  | 344 | 8 | Fs::DirListing { dir: .github } |  |  | 0.500 |
+| walker |  | 348 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.500 |
+| walker |  | 369 | 21 | Json::Runtime { file: package.json } |  |  | 0.500 |
 | walker |  | 449 | 80 | Json::Scripts { file: cmdk/package.json } |  |  | 0.506 |
 | ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.489 |
 | walker |  | 545 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.489 |

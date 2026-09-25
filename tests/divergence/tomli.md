@@ -5,15 +5,15 @@ Score(3000)=0.482 I=0.800 C=0.290 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 29 |  | 29 | README title and tagline | 1.1 |  | 0.000 |
 | walker |  | 62 | 62 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 66 | 4 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 74 | 8 | Fs::DirListing { dir: fuzzer } |  |  | 0.000 |
-| walker |  | 83 | 9 | Fs::DirListing { dir: profiler } |  |  | 0.000 |
-| walker |  | 86 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 90 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| ns | 91 |  | 62 | Root directory listing (complete) | 1.2 |  | 0.661 |
-| walker |  | 116 | 26 | Fs::DirListing { dir: src/tomli } |  |  | 0.692 |
-| walker |  | 155 | 39 | Code::CodeKey { rung: ModuleDoc, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.696 |
-| ns | 172 |  | 81 | The complete public API: src/tomli/__init__.py | 1.3 |  | 0.634 |
-| walker |  | 220 | 65 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.930 |
+| ns | 91 |  | 62 | Root directory listing (complete) | 1.2 |  | 0.660 |
+| walker |  | 131 | 65 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 139 | 8 | Fs::DirListing { dir: fuzzer } |  |  | 1.000 |
+| walker |  | 148 | 9 | Fs::DirListing { dir: profiler } |  |  | 1.000 |
+| walker |  | 151 | 3 | Fs::DirListing { dir: .github } |  |  | 1.000 |
+| walker |  | 155 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 1.000 |
+| ns | 172 |  | 81 | The complete public API: src/tomli/__init__.py | 1.3 |  | 0.901 |
+| walker |  | 181 | 26 | Fs::DirListing { dir: src/tomli } |  |  | 0.920 |
+| walker |  | 220 | 39 | Code::CodeKey { rung: ModuleDoc, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.930 |
 | ns | 270 |  | 98 | README intro lede: a TOML parser, TOML v1.1.0 as of 2.4.0 | 1.4 |  | 0.874 |
 | ns | 300 |  | 30 | Source package listing: src/ and src/tomli/ | 1.5 |  | 0.875 |
 | walker |  | 325 | 105 | Toml::Identity { file: pyproject.toml } |  |  | 0.876 |

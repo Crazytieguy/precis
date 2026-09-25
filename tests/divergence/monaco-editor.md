@@ -6,41 +6,41 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | ns | 92 |  | 25 | src/ listing — every child of the package source directory | 1.2 |  | 0.000 |
 | walker |  | 116 | 116 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 122 | 6 | Fs::DirListing { dir: test-results } |  |  | 0.000 |
-| walker |  | 147 | 25 | Fs::DirListing { dir: src } |  |  | 0.801 |
-| walker |  | 150 | 3 | Fs::DirListing { dir: src/internal } |  |  | 0.801 |
-| walker |  | 158 | 8 | Fs::DirListing { dir: src/internal/common } |  |  | 0.802 |
-| walker |  | 169 | 11 | Fs::DirListing { dir: src/deprecated } |  |  | 0.804 |
-| walker |  | 176 | 7 | Fs::DirListing { dir: src/deprecated/basic-languages } |  |  | 0.804 |
-| walker |  | 186 | 10 | Fs::DirListing { dir: src/deprecated/editor } |  |  | 0.804 |
-| walker |  | 197 | 11 | Fs::DirListing { dir: src/languages } |  |  | 0.808 |
-| walker |  | 210 | 13 | Fs::DirListing { dir: src/deprecated/language } |  |  | 0.815 |
-| ns | 216 |  | 124 | src/index.ts — the whole package entry point (9 lines) | 1.3 |  | 0.519 |
-| walker |  | 222 | 12 | Fs::DirListing { dir: src/deprecated/language/css } |  |  | 0.519 |
-| walker |  | 234 | 12 | Fs::DirListing { dir: src/deprecated/language/html } |  |  | 0.519 |
-| walker |  | 246 | 12 | Fs::DirListing { dir: src/deprecated/language/json } |  |  | 0.519 |
-| walker |  | 258 | 12 | Fs::DirListing { dir: src/deprecated/language/typescript } |  |  | 0.519 |
-| walker |  | 279 | 21 | Fs::DirListing { dir: src/languages/features } |  |  | 0.529 |
-| walker |  | 286 | 7 | Fs::DirListing { dir: src/languages/features/common } |  |  | 0.529 |
-| walker |  | 310 | 24 | Fs::DirListing { dir: src/languages/features/css } |  |  | 0.529 |
-| ns | 332 |  | 116 | Complete repository root listing | 1.4 |  | 0.661 |
-| walker |  | 334 | 24 | Fs::DirListing { dir: src/languages/features/html } |  |  | 0.662 |
-| walker |  | 361 | 27 | Fs::DirListing { dir: monaco-lsp-client } |  |  | 0.662 |
-| walker |  | 365 | 4 | Fs::DirListing { dir: monaco-lsp-client/generator } |  |  | 0.662 |
-| walker |  | 380 | 15 | Fs::DirListing { dir: monaco-lsp-client/src } |  |  | 0.663 |
-| walker |  | 409 | 29 | Fs::DirListing { dir: src/languages/features/json } |  |  | 0.664 |
-| walker |  | 438 | 29 | Fs::DirListing { dir: webpack-plugin } |  |  | 0.665 |
-| walker |  | 458 | 20 | Fs::DirListing { dir: webpack-plugin/src } |  |  | 0.666 |
-| walker |  | 462 | 4 | Fs::DirListing { dir: webpack-plugin/src/loaders } |  |  | 0.666 |
-| ns | 471 |  | 139 | package.json identity header (name, version, vscodeRef, license) | 1.5 |  | 0.602 |
-| walker |  | 494 | 32 | Fs::DirListing { dir: src/languages/features/typescript } |  |  | 0.605 |
-| walker |  | 499 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.605 |
-| walker |  | 504 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.605 |
-| walker |  | 512 | 8 | Fs::DirListing { dir: webpack-plugin/src/plugins } |  |  | 0.605 |
-| walker |  | 550 | 38 | Fs::DirListing { dir: docs } |  |  | 0.606 |
-| walker |  | 556 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.606 |
-| ns | 588 |  | 117 | The three one-to-six-line re-export files src/index.ts depends on | 1.6 | 1.2 | 0.556 |
-| walker |  | 626 | 70 | Json::Identity { file: package.json } |  |  | 0.577 |
-| walker |  | 693 | 67 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.740 |
+| walker |  | 189 | 67 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.444 |
+| walker |  | 214 | 25 | Fs::DirListing { dir: src } |  |  | 1.000 |
+| ns | 216 |  | 124 | src/index.ts — the whole package entry point (9 lines) | 1.3 |  | 0.707 |
+| walker |  | 217 | 3 | Fs::DirListing { dir: src/internal } |  |  | 0.707 |
+| walker |  | 225 | 8 | Fs::DirListing { dir: src/internal/common } |  |  | 0.707 |
+| walker |  | 236 | 11 | Fs::DirListing { dir: src/deprecated } |  |  | 0.707 |
+| walker |  | 243 | 7 | Fs::DirListing { dir: src/deprecated/basic-languages } |  |  | 0.707 |
+| walker |  | 253 | 10 | Fs::DirListing { dir: src/deprecated/editor } |  |  | 0.707 |
+| walker |  | 264 | 11 | Fs::DirListing { dir: src/languages } |  |  | 0.707 |
+| walker |  | 277 | 13 | Fs::DirListing { dir: src/deprecated/language } |  |  | 0.707 |
+| walker |  | 289 | 12 | Fs::DirListing { dir: src/deprecated/language/css } |  |  | 0.707 |
+| walker |  | 301 | 12 | Fs::DirListing { dir: src/deprecated/language/html } |  |  | 0.707 |
+| walker |  | 313 | 12 | Fs::DirListing { dir: src/deprecated/language/json } |  |  | 0.707 |
+| walker |  | 325 | 12 | Fs::DirListing { dir: src/deprecated/language/typescript } |  |  | 0.707 |
+| ns | 332 |  | 116 | Complete repository root listing | 1.4 |  | 0.845 |
+| walker |  | 346 | 21 | Fs::DirListing { dir: src/languages/features } |  |  | 0.855 |
+| walker |  | 353 | 7 | Fs::DirListing { dir: src/languages/features/common } |  |  | 0.855 |
+| walker |  | 377 | 24 | Fs::DirListing { dir: src/languages/features/css } |  |  | 0.856 |
+| walker |  | 401 | 24 | Fs::DirListing { dir: src/languages/features/html } |  |  | 0.856 |
+| walker |  | 428 | 27 | Fs::DirListing { dir: monaco-lsp-client } |  |  | 0.857 |
+| walker |  | 432 | 4 | Fs::DirListing { dir: monaco-lsp-client/generator } |  |  | 0.857 |
+| walker |  | 447 | 15 | Fs::DirListing { dir: monaco-lsp-client/src } |  |  | 0.857 |
+| ns | 471 |  | 139 | package.json identity header (name, version, vscodeRef, license) | 1.5 |  | 0.775 |
+| walker |  | 476 | 29 | Fs::DirListing { dir: src/languages/features/json } |  |  | 0.776 |
+| walker |  | 505 | 29 | Fs::DirListing { dir: webpack-plugin } |  |  | 0.777 |
+| walker |  | 525 | 20 | Fs::DirListing { dir: webpack-plugin/src } |  |  | 0.778 |
+| walker |  | 529 | 4 | Fs::DirListing { dir: webpack-plugin/src/loaders } |  |  | 0.778 |
+| walker |  | 561 | 32 | Fs::DirListing { dir: src/languages/features/typescript } |  |  | 0.780 |
+| walker |  | 566 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.780 |
+| walker |  | 571 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.780 |
+| walker |  | 579 | 8 | Fs::DirListing { dir: webpack-plugin/src/plugins } |  |  | 0.780 |
+| ns | 588 |  | 117 | The three one-to-six-line re-export files src/index.ts depends on | 1.6 | 1.2 | 0.716 |
+| walker |  | 617 | 38 | Fs::DirListing { dir: docs } |  |  | 0.716 |
+| walker |  | 623 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.716 |
+| walker |  | 693 | 70 | Json::Identity { file: package.json } |  |  | 0.740 |
 | walker |  | 697 | 4 | Fs::DirListing { dir: scripts/lib } |  |  | 0.740 |
 | ns | 734 |  | 146 | All README section headings (locations) | 1.7 |  | 0.656 |
 | walker |  | 745 | 48 | Json::Identity { file: monaco-lsp-client/package.json } |  |  | 0.656 |

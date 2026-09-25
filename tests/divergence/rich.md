@@ -6,20 +6,20 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 129 |  | 44 | rich/__init__.py docstring + __all__ | 1.2 |  | 0.000 |
 | walker |  | 191 | 191 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 203 | 12 | Fs::DirListing { dir: assets } |  |  | 0.000 |
-| walker |  | 222 | 19 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 231 | 9 | Fs::DirListing { dir: docs/images } |  |  | 0.000 |
 | ns | 263 |  | 134 | pyproject identity block | 1.3 |  | 0.000 |
-| ns | 363 |  | 100 | README section headings (all H1/H2 locations) | 1.4 |  | 0.000 |
-| walker |  | 385 | 154 | Plaintext::Whole { file: Makefile } |  |  | 0.000 |
-| walker |  | 468 | 83 | Toml::Identity { file: pyproject.toml } |  |  | 0.200 |
-| walker |  | 476 | 8 | Fs::DirListing { dir: .faq } |  |  | 0.200 |
-| ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.158 |
-| walker |  | 549 | 73 | Fs::DirListing { dir: questions } |  |  | 0.159 |
-| walker |  | 647 | 98 | Fs::DirListing { dir: imgs } |  |  | 0.159 |
-| ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.134 |
-| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.125 |
-| walker |  | 794 | 147 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.259 |
-| walker |  | 875 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.259 |
+| walker |  | 350 | 147 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.310 |
+| ns | 363 |  | 100 | README section headings (all H1/H2 locations) | 1.4 |  | 0.227 |
+| walker |  | 369 | 19 | Fs::DirListing { dir: docs } |  |  | 0.227 |
+| walker |  | 378 | 9 | Fs::DirListing { dir: docs/images } |  |  | 0.227 |
+| ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.179 |
+| walker |  | 532 | 154 | Plaintext::Whole { file: Makefile } |  |  | 0.180 |
+| walker |  | 615 | 83 | Toml::Identity { file: pyproject.toml } |  |  | 0.313 |
+| walker |  | 623 | 8 | Fs::DirListing { dir: .faq } |  |  | 0.313 |
+| ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.265 |
+| walker |  | 696 | 73 | Fs::DirListing { dir: questions } |  |  | 0.265 |
+| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.259 |
+| walker |  | 777 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.259 |
+| walker |  | 875 | 98 | Fs::DirListing { dir: imgs } |  |  | 0.259 |
 | walker |  | 898 | 23 | Fs::DirListing { dir: .github } |  |  | 0.259 |
 | walker |  | 928 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.259 |
 | ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.526 |

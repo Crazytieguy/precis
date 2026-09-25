@@ -3,19 +3,19 @@ Score(3000)=0.812 I=0.897 C=0.735 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 54 | 54 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 57 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 61 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 81 |  | 81 | Repository identity — README title + one-line definition | 1.1 |  | 0.000 |
-| walker |  | 83 | 22 | Fs::DirListing { dir: packages } |  |  | 0.000 |
-| walker |  | 128 | 45 | Json::Identity { file: package.json } |  |  | 0.000 |
-| ns | 135 |  | 54 | Complete repository root listing | 1.2 |  | 0.636 |
-| walker |  | 145 | 17 | Fs::DirListing { dir: packages/d2ts-benchmark } |  |  | 0.637 |
-| walker |  | 157 | 12 | Fs::DirListing { dir: packages/d2ts-benchmark/src } |  |  | 0.637 |
-| walker |  | 165 | 8 | Fs::DirListing { dir: .changeset } |  |  | 0.637 |
-| walker |  | 190 | 25 | Fs::DirListing { dir: packages/d2ql } |  |  | 0.642 |
-| ns | 192 |  | 57 | Workspace membership — packages/ and examples/ listings | 1.3 |  | 0.480 |
-| ns | 218 |  | 26 | pnpm workspace globs | 1.4 |  | 0.451 |
-| walker |  | 271 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.709 |
+| walker |  | 135 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 135 |  | 54 | Complete repository root listing | 1.2 |  | 1.000 |
+| walker |  | 138 | 3 | Fs::DirListing { dir: .github } |  |  | 1.000 |
+| walker |  | 142 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 1.000 |
+| walker |  | 164 | 22 | Fs::DirListing { dir: packages } |  |  | 1.000 |
+| ns | 192 |  | 57 | Workspace membership — packages/ and examples/ listings | 1.3 |  | 0.748 |
+| walker |  | 209 | 45 | Json::Identity { file: package.json } |  |  | 0.750 |
+| ns | 218 |  | 26 | pnpm workspace globs | 1.4 |  | 0.705 |
+| walker |  | 226 | 17 | Fs::DirListing { dir: packages/d2ts-benchmark } |  |  | 0.706 |
+| walker |  | 238 | 12 | Fs::DirListing { dir: packages/d2ts-benchmark/src } |  |  | 0.706 |
+| walker |  | 246 | 8 | Fs::DirListing { dir: .changeset } |  |  | 0.706 |
+| walker |  | 271 | 25 | Fs::DirListing { dir: packages/d2ql } |  |  | 0.709 |
 | ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.695 |
 | walker |  | 340 | 69 | Fs::DirListing { dir: packages/d2ql/src } |  |  | 0.701 |
 | walker |  | 349 | 9 | Fs::DirListing { dir: packages/d2ql/src/query-builder } |  |  | 0.702 |

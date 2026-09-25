@@ -3,15 +3,15 @@ Score(3000)=0.547 I=0.867 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 47 | 47 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 50 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 59 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 88 |  | 88 | README lede: Toasty is a Rust ORM for SQL and NoSQL | 1.1 |  | 0.000 |
-| walker |  | 89 | 30 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 98 | 9 | Fs::DirListing { dir: docs/guide } |  |  | 0.000 |
-| walker |  | 108 | 10 | Fs::DirListing { dir: docs/architecture } |  |  | 0.000 |
-| walker |  | 122 | 14 | Fs::DirListing { dir: docs/design } |  |  | 0.000 |
-| ns | 135 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.563 |
-| walker |  | 174 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.574 |
+| walker |  | 99 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.056 |
+| walker |  | 102 | 3 | Fs::DirListing { dir: .github } |  |  | 0.056 |
+| walker |  | 111 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.056 |
+| ns | 135 |  | 47 | Repository root listing (complete) | 1.2 |  | 0.535 |
+| walker |  | 141 | 30 | Fs::DirListing { dir: docs } |  |  | 0.547 |
+| walker |  | 150 | 9 | Fs::DirListing { dir: docs/guide } |  |  | 0.554 |
+| walker |  | 160 | 10 | Fs::DirListing { dir: docs/architecture } |  |  | 0.564 |
+| walker |  | 174 | 14 | Fs::DirListing { dir: docs/design } |  |  | 0.574 |
 | walker |  | 197 | 23 | Fs::DirListing { dir: docs/roadmap } |  |  | 0.598 |
 | walker |  | 206 | 9 | Fs::DirListing { dir: benches } |  |  | 0.598 |
 | walker |  | 217 | 11 | Fs::DirListing { dir: scripts } |  |  | 0.598 |

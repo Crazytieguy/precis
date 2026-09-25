@@ -5,16 +5,16 @@ Score(3000)=0.539 I=0.695 C=0.419 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 51 |  | 51 | Repository identity: name + one-line definition | 1.1 |  | 0.000 |
 | walker |  | 125 | 125 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 128 | 3 | Fs::DirListing { dir: cmd } |  |  | 0.000 |
-| walker |  | 134 | 6 | Fs::DirListing { dir: internal } |  |  | 0.000 |
 | ns | 144 |  | 93 | FAQ codebase-layout block | 1.2 |  | 0.000 |
-| walker |  | 145 | 11 | Fs::DirListing { dir: dktesting } |  |  | 0.000 |
-| walker |  | 157 | 12 | Fs::DirListing { dir: cli } |  |  | 0.000 |
-| walker |  | 166 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.000 |
-| walker |  | 201 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| walker |  | 205 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.000 |
-| walker |  | 220 | 15 | Fs::DirListing { dir: cmd/migrate } |  |  | 0.000 |
-| ns | 244 |  | 100 | Core design premise: dumb drivers, migrate glues | 1.3 |  | 0.000 |
-| walker |  | 271 | 51 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.413 |
+| walker |  | 179 | 51 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.538 |
+| walker |  | 185 | 6 | Fs::DirListing { dir: internal } |  |  | 0.538 |
+| walker |  | 196 | 11 | Fs::DirListing { dir: dktesting } |  |  | 0.538 |
+| walker |  | 208 | 12 | Fs::DirListing { dir: cli } |  |  | 0.538 |
+| walker |  | 217 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.538 |
+| ns | 244 |  | 100 | Core design premise: dumb drivers, migrate glues | 1.3 |  | 0.413 |
+| walker |  | 252 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.413 |
+| walker |  | 256 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.413 |
+| walker |  | 271 | 15 | Fs::DirListing { dir: cmd/migrate } |  |  | 0.413 |
 | walker |  | 278 | 7 | Fs::DirListing { dir: .github } |  |  | 0.413 |
 | walker |  | 282 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.413 |
 | ns | 323 |  | 79 | Root package doc comment (migrate.go) | 1.4 |  | 0.343 |

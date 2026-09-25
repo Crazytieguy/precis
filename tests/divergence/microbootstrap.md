@@ -4,9 +4,9 @@ Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 30 |  | 30 | README tagline: what microbootstrap is, in one sentence | 1.1 |  | 0.000 |
 | walker |  | 33 | 33 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 36 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 45 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| walker |  | 86 | 41 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 74 | 41 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 77 | 3 | Fs::DirListing { dir: .github } |  |  | 1.000 |
+| walker |  | 86 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 1.000 |
 | ns | 126 |  | 96 | The complete list of built-in instruments | 1.2 |  | 0.246 |
 | walker |  | 158 | 72 | Toml::Identity { file: pyproject.toml } |  |  | 0.246 |
 | ns | 191 |  | 65 | The four bootstrap targets: fastapi, litestar, faststream, or no framework | 1.3 |  | 0.176 |

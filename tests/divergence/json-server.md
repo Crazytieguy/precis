@@ -5,18 +5,18 @@ Score(3000)=0.746 I=0.916 C=0.608 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 48 | 48 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 52 | 4 | Fs::DirListing { dir: public } |  |  | 0.000 |
 | walker |  | 56 | 4 | Fs::DirListing { dir: views } |  |  | 0.000 |
-| walker |  | 61 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.000 |
 | ns | 84 |  | 84 | What json-server is and how you run it | 1.1 |  | 0.000 |
-| walker |  | 130 | 69 | Json::Identity { file: package.json } |  |  | 0.000 |
-| walker |  | 138 | 8 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 147 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| walker |  | 156 | 9 | Fs::DirListing { dir: fixtures } |  |  | 0.000 |
-| ns | 195 |  | 111 | Query-capability cheat sheet (README 120-127) | 1.2 |  | 0.000 |
-| walker |  | 227 | 71 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| ns | 243 |  | 48 | Repository root listing (complete) | 1.3 |  | 0.438 |
-| walker |  | 244 | 17 | Fs::DirListing { dir: src/adapters } |  |  | 0.462 |
-| ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.494 |
-| walker |  | 359 | 115 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.516 |
+| walker |  | 171 | 115 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.078 |
+| walker |  | 176 | 5 | Fs::DirListing { dir: .husky } |  |  | 0.078 |
+| ns | 195 |  | 111 | Query-capability cheat sheet (README 120-127) | 1.2 |  | 0.046 |
+| ns | 243 |  | 48 | Repository root listing (complete) | 1.3 |  | 0.375 |
+| walker |  | 245 | 69 | Json::Identity { file: package.json } |  |  | 0.384 |
+| walker |  | 253 | 8 | Fs::DirListing { dir: .github } |  |  | 0.387 |
+| walker |  | 262 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.392 |
+| walker |  | 271 | 9 | Fs::DirListing { dir: fixtures } |  |  | 0.398 |
+| ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.292 |
+| walker |  | 342 | 71 | Fs::DirListing { dir: src } |  |  | 0.447 |
+| walker |  | 359 | 17 | Fs::DirListing { dir: src/adapters } |  |  | 0.516 |
 | walker |  | 393 | 34 | Json::Runtime { file: package.json } |  |  | 0.522 |
 | walker |  | 462 | 69 | Json::Entry { file: package.json } |  |  | 0.531 |
 | ns | 513 |  | 182 | Complete README section map (every H2 and H3) | 1.5 |  | 0.425 |

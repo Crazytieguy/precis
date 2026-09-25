@@ -4,18 +4,18 @@ Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 57 | 57 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 64 |  | 64 | What Enclosed is: README title, tagline, opening sentence | 1.1 |  | 0.000 |
-| walker |  | 82 | 25 | Fs::DirListing { dir: packages } |  |  | 0.000 |
-| ns | 141 |  | 77 | README introduction: the zero-knowledge guarantee and note options | 1.2 |  | 0.000 |
-| walker |  | 146 | 64 | Json::Identity { file: package.json } |  |  | 0.000 |
-| walker |  | 163 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.000 |
-| walker |  | 182 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.000 |
-| walker |  | 205 | 23 | Fs::DirListing { dir: packages/app-server } |  |  | 0.000 |
-| ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.547 |
-| walker |  | 231 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.548 |
-| walker |  | 257 | 26 | Fs::DirListing { dir: packages/lib } |  |  | 0.549 |
-| walker |  | 273 | 16 | Fs::DirListing { dir: packages/lib/src } |  |  | 0.552 |
-| walker |  | 278 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.553 |
-| walker |  | 354 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.874 |
+| walker |  | 133 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 141 |  | 77 | README introduction: the zero-knowledge guarantee and note options | 1.2 |  | 0.707 |
+| walker |  | 158 | 25 | Fs::DirListing { dir: packages } |  |  | 0.707 |
+| walker |  | 222 | 64 | Json::Identity { file: package.json } |  |  | 0.707 |
+| ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.869 |
+| walker |  | 239 | 17 | Fs::DirListing { dir: packages/docs } |  |  | 0.869 |
+| walker |  | 258 | 19 | Fs::DirListing { dir: packages/deploy-cloudflare } |  |  | 0.870 |
+| walker |  | 281 | 23 | Fs::DirListing { dir: packages/app-server } |  |  | 0.870 |
+| walker |  | 307 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.870 |
+| walker |  | 333 | 26 | Fs::DirListing { dir: packages/lib } |  |  | 0.871 |
+| walker |  | 349 | 16 | Fs::DirListing { dir: packages/lib/src } |  |  | 0.873 |
+| walker |  | 354 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.874 |
 | walker |  | 383 | 29 | Fs::DirListing { dir: packages/cli } |  |  | 0.874 |
 | ns | 385 |  | 162 | README 'Project Structure': role of each workspace package | 1.4 |  | 0.761 |
 | walker |  | 388 | 5 | Fs::DirListing { dir: packages/cli/bin } |  |  | 0.761 |

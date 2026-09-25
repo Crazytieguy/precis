@@ -5,10 +5,10 @@ Score(3000)=0.514 I=0.549 C=0.481 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 54 |  | 54 | README title + what the package is | 1.1 |  | 0.000 |
 | walker |  | 80 | 80 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 83 |  | 29 | go.mod: module path and language version | 1.2 |  | 0.000 |
-| walker |  | 109 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.562 |
-| walker |  | 109 | 0 | GoMod::File { file: go.mod } |  |  | 0.562 |
-| ns | 163 |  | 80 | Complete root directory listing | 1.3 |  | 0.644 |
-| walker |  | 216 | 107 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.665 |
+| ns | 163 |  | 80 | Complete root directory listing | 1.3 |  | 0.519 |
+| walker |  | 187 | 107 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.541 |
+| walker |  | 216 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.665 |
+| walker |  | 216 | 0 | GoMod::File { file: go.mod } |  |  | 0.665 |
 | ns | 240 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.604 |
 | walker |  | 265 | 49 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.606 |
 | walker |  | 279 | 14 | Fs::DirListing { dir: .github } |  |  | 0.606 |

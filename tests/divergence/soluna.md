@@ -3,27 +3,27 @@ Score(3000)=0.675 I=0.896 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 64 | 14 | Fs::DirListing { dir: asset } |  |  | 0.000 |
-| walker |  | 78 | 14 | Fs::DirListing { dir: bin } |  |  | 0.000 |
 | ns | 90 |  | 90 | What Soluna is: name, one-line pitch, and what it is built on | 1.1 |  | 0.000 |
-| walker |  | 95 | 17 | Fs::DirListing { dir: web } |  |  | 0.000 |
-| walker |  | 116 | 21 | Fs::DirListing { dir: clibs } |  |  | 0.000 |
-| walker |  | 120 | 4 | Fs::DirListing { dir: clibs/datalist } |  |  | 0.000 |
-| walker |  | 124 | 4 | Fs::DirListing { dir: clibs/ltask } |  |  | 0.000 |
-| walker |  | 128 | 4 | Fs::DirListing { dir: clibs/lua } |  |  | 0.000 |
-| walker |  | 132 | 4 | Fs::DirListing { dir: clibs/yoga } |  |  | 0.000 |
-| walker |  | 136 | 4 | Fs::DirListing { dir: clibs/zip } |  |  | 0.000 |
-| ns | 140 |  | 50 | Complete root directory listing | 1.2 |  | 0.661 |
-| walker |  | 159 | 23 | Fs::DirListing { dir: script } |  |  | 0.662 |
-| walker |  | 169 | 10 | Fs::DirListing { dir: web/static } |  |  | 0.663 |
-| walker |  | 183 | 14 | Plaintext::Whole { file: Makefile } |  |  | 0.663 |
-| walker |  | 199 | 16 | Fs::DirListing { dir: web/content } |  |  | 0.663 |
-| walker |  | 204 | 5 | Fs::DirListing { dir: web/content/docs } |  |  | 0.664 |
-| ns | 209 |  | 69 | README section headings (all H2/H3) | 1.3 |  | 0.570 |
-| walker |  | 210 | 6 | Fs::DirListing { dir: .github } |  |  | 0.570 |
-| walker |  | 218 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.571 |
-| walker |  | 237 | 19 | Fs::DirListing { dir: web/assets } |  |  | 0.572 |
-| walker |  | 305 | 68 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.580 |
+| walker |  | 118 | 68 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.101 |
+| walker |  | 132 | 14 | Fs::DirListing { dir: asset } |  |  | 0.101 |
+| ns | 140 |  | 50 | Complete root directory listing | 1.2 |  | 0.670 |
+| walker |  | 146 | 14 | Fs::DirListing { dir: bin } |  |  | 0.670 |
+| walker |  | 163 | 17 | Fs::DirListing { dir: web } |  |  | 0.670 |
+| walker |  | 184 | 21 | Fs::DirListing { dir: clibs } |  |  | 0.671 |
+| walker |  | 188 | 4 | Fs::DirListing { dir: clibs/datalist } |  |  | 0.671 |
+| walker |  | 192 | 4 | Fs::DirListing { dir: clibs/ltask } |  |  | 0.671 |
+| walker |  | 196 | 4 | Fs::DirListing { dir: clibs/lua } |  |  | 0.671 |
+| walker |  | 200 | 4 | Fs::DirListing { dir: clibs/yoga } |  |  | 0.671 |
+| walker |  | 204 | 4 | Fs::DirListing { dir: clibs/zip } |  |  | 0.672 |
+| ns | 209 |  | 69 | README section headings (all H2/H3) | 1.3 |  | 0.577 |
+| walker |  | 227 | 23 | Fs::DirListing { dir: script } |  |  | 0.578 |
+| walker |  | 237 | 10 | Fs::DirListing { dir: web/static } |  |  | 0.578 |
+| walker |  | 251 | 14 | Plaintext::Whole { file: Makefile } |  |  | 0.578 |
+| walker |  | 267 | 16 | Fs::DirListing { dir: web/content } |  |  | 0.579 |
+| walker |  | 272 | 5 | Fs::DirListing { dir: web/content/docs } |  |  | 0.579 |
+| walker |  | 278 | 6 | Fs::DirListing { dir: .github } |  |  | 0.579 |
+| walker |  | 286 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.579 |
+| walker |  | 305 | 19 | Fs::DirListing { dir: web/assets } |  |  | 0.580 |
 | walker |  | 318 | 13 | Fs::DirListing { dir: web/static/fonts } |  |  | 0.581 |
 | ns | 325 |  | 116 | README: where the docs and examples live, and how to build | 1.4 | 1.3 | 0.515 |
 | walker |  | 344 | 26 | Fs::DirListing { dir: clibs/soluna } |  |  | 0.517 |

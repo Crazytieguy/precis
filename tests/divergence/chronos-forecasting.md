@@ -3,9 +3,9 @@ Score(3000)=0.386 I=0.555 C=0.268 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 54 | 4 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 54 |  | 54 | Repository identity: README title + one-sentence purpose | 1.1 |  | 0.000 |
-| walker |  | 75 | 21 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.371 |
+| walker |  | 71 | 21 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.371 |
+| walker |  | 75 | 4 | Fs::DirListing { dir: src } |  |  | 0.371 |
 | walker |  | 78 | 3 | Fs::DirListing { dir: ci } |  |  | 0.371 |
 | ns | 104 |  | 50 | Complete root directory listing | 1.2 |  | 0.761 |
 | walker |  | 105 | 27 | Fs::DirListing { dir: notebooks } |  |  | 0.762 |

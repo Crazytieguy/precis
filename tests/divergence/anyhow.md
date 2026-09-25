@@ -3,10 +3,10 @@ Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 34 | 34 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 83 | 49 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 85 |  | 85 | Crate identity — name, version, description | 1.1 |  | 0.000 |
-| ns | 119 |  | 34 | Repository root listing | 1.2 |  | 0.523 |
-| walker |  | 150 | 67 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.527 |
+| walker |  | 101 | 67 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| ns | 119 |  | 34 | Repository root listing | 1.2 |  | 0.420 |
+| walker |  | 150 | 49 | Fs::DirListing { dir: src } |  |  | 0.527 |
 | walker |  | 158 | 8 | Fs::DirListing { dir: .github } |  |  | 0.527 |
 | walker |  | 162 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.527 |
 | ns | 168 |  | 49 | src/ module inventory | 1.3 |  | 0.548 |

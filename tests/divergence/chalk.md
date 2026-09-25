@@ -5,18 +5,18 @@ Score(3000)=0.671 I=0.862 C=0.523 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 46 | 46 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 54 |  | 54 | package.json name, version, description, license | 1.1 |  | 0.000 |
 | walker |  | 58 | 12 | Fs::DirListing { dir: media } |  |  | 0.000 |
-| walker |  | 80 | 22 | Fs::DirListing { dir: source } |  |  | 0.000 |
-| walker |  | 89 | 9 | Fs::DirListing { dir: source/vendor } |  |  | 0.000 |
-| walker |  | 98 | 9 | Fs::DirListing { dir: source/vendor/ansi-styles } |  |  | 0.000 |
-| ns | 100 |  | 46 | Complete repository root listing | 1.2 |  | 0.613 |
-| walker |  | 116 | 18 | Fs::DirListing { dir: source/vendor/supports-color } |  |  | 0.650 |
-| ns | 172 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.560 |
-| walker |  | 182 | 66 | Json::Identity { file: package.json } |  |  | 0.892 |
-| walker |  | 190 | 8 | Fs::DirListing { dir: examples } |  |  | 0.892 |
-| walker |  | 201 | 11 | Fs::DirListing { dir: .github } |  |  | 0.892 |
-| walker |  | 205 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.892 |
-| ns | 230 |  | 58 | Complete `source/` tree including both vendored packages | 1.4 |  | 0.914 |
-| walker |  | 310 | 105 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.915 |
+| ns | 100 |  | 46 | Complete repository root listing | 1.2 |  | 0.572 |
+| walker |  | 163 | 105 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.575 |
+| ns | 172 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.496 |
+| walker |  | 185 | 22 | Fs::DirListing { dir: source } |  |  | 0.507 |
+| walker |  | 194 | 9 | Fs::DirListing { dir: source/vendor } |  |  | 0.518 |
+| walker |  | 203 | 9 | Fs::DirListing { dir: source/vendor/ansi-styles } |  |  | 0.530 |
+| walker |  | 221 | 18 | Fs::DirListing { dir: source/vendor/supports-color } |  |  | 0.562 |
+| ns | 230 |  | 58 | Complete `source/` tree including both vendored packages | 1.4 |  | 0.586 |
+| walker |  | 287 | 66 | Json::Identity { file: package.json } |  |  | 0.909 |
+| walker |  | 295 | 8 | Fs::DirListing { dir: examples } |  |  | 0.910 |
+| walker |  | 306 | 11 | Fs::DirListing { dir: .github } |  |  | 0.913 |
+| walker |  | 310 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.915 |
 | walker |  | 356 | 46 | Json::Runtime { file: package.json } |  |  | 0.916 |
 | ns | 361 |  | 131 | readme tagline + every `##` section heading | 1.5 |  | 0.767 |
 | walker |  | 405 | 49 | Json::Scripts { file: package.json } |  |  | 0.770 |

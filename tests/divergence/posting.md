@@ -4,21 +4,21 @@ Score(3000)=0.796 I=0.932 C=0.680 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 48 | 48 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 51 | 3 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 54 | 3 | Fs::DirListing { dir: .codex } |  |  | 0.000 |
 | ns | 91 |  | 91 | README lede: what Posting is | 1.1 |  | 0.000 |
-| walker |  | 94 | 40 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 98 | 4 | Fs::DirListing { dir: docs/overrides } |  |  | 0.000 |
-| walker |  | 102 | 4 | Fs::DirListing { dir: docs/stylesheets } |  |  | 0.000 |
-| ns | 139 |  | 48 | Repository root listing | 1.2 |  | 0.539 |
-| walker |  | 177 | 75 | Toml::Identity { file: pyproject.toml } |  |  | 0.542 |
-| walker |  | 185 | 8 | Fs::DirListing { dir: .github } |  |  | 0.542 |
-| walker |  | 197 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.542 |
-| walker |  | 221 | 24 | Toml::Operational { file: pyproject.toml } |  |  | 0.545 |
-| ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.419 |
-| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.370 |
-| walker |  | 440 | 219 | Plaintext::Whole { file: Makefile } |  |  | 0.372 |
-| ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.254 |
-| walker |  | 531 | 91 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.468 |
+| ns | 139 |  | 48 | Repository root listing | 1.2 |  | 0.534 |
+| walker |  | 142 | 91 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 145 | 3 | Fs::DirListing { dir: .codex } |  |  | 1.000 |
+| walker |  | 185 | 40 | Fs::DirListing { dir: docs } |  |  | 1.000 |
+| walker |  | 189 | 4 | Fs::DirListing { dir: docs/overrides } |  |  | 1.000 |
+| walker |  | 193 | 4 | Fs::DirListing { dir: docs/stylesheets } |  |  | 1.000 |
+| ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.771 |
+| walker |  | 268 | 75 | Toml::Identity { file: pyproject.toml } |  |  | 0.772 |
+| walker |  | 276 | 8 | Fs::DirListing { dir: .github } |  |  | 0.772 |
+| walker |  | 288 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.772 |
+| walker |  | 312 | 24 | Toml::Operational { file: pyproject.toml } |  |  | 0.774 |
+| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.685 |
+| ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.468 |
+| walker |  | 531 | 219 | Plaintext::Whole { file: Makefile } |  |  | 0.468 |
 | walker |  | 573 | 42 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.468 |
 | ns | 604 |  | 103 | Widget package and importer package listings | 1.6 |  | 0.403 |
 | walker |  | 629 | 56 | Fs::DirListing { dir: docs/guide } |  |  | 0.409 |

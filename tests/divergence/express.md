@@ -4,16 +4,16 @@ Score(3000)=0.541 I=0.823 C=0.356 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 43 | 43 | Fs::DirListing { dir: . } |  |  | 1.000 |
 | ns | 43 |  | 43 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 67 | 24 | Fs::DirListing { dir: lib } |  |  | 1.000 |
-| walker |  | 130 | 63 | Json::Identity { file: package.json } |  |  | 1.000 |
-| ns | 135 |  | 92 | package.json identity | 1.2 |  | 0.908 |
-| walker |  | 138 | 8 | Fs::DirListing { dir: .github } |  |  | 0.908 |
-| walker |  | 156 | 18 | Fs::DirListing { dir: .github/workflows } |  |  | 0.908 |
-| ns | 159 |  | 24 | lib/ listing — the entire shipped library | 1.3 |  | 0.918 |
-| walker |  | 187 | 31 | Json::Runtime { file: package.json } |  |  | 0.918 |
-| walker |  | 237 | 50 | Json::Entry { file: package.json } |  |  | 0.919 |
-| ns | 296 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.725 |
-| walker |  | 418 | 181 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.755 |
+| ns | 135 |  | 92 | package.json identity | 1.2 |  | 0.795 |
+| ns | 159 |  | 24 | lib/ listing — the entire shipped library | 1.3 |  | 0.674 |
+| walker |  | 224 | 181 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.705 |
+| walker |  | 248 | 24 | Fs::DirListing { dir: lib } |  |  | 0.873 |
+| ns | 296 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.689 |
+| walker |  | 311 | 63 | Json::Identity { file: package.json } |  |  | 0.746 |
+| walker |  | 319 | 8 | Fs::DirListing { dir: .github } |  |  | 0.747 |
+| walker |  | 337 | 18 | Fs::DirListing { dir: .github/workflows } |  |  | 0.754 |
+| walker |  | 368 | 31 | Json::Runtime { file: package.json } |  |  | 0.754 |
+| walker |  | 418 | 50 | Json::Entry { file: package.json } |  |  | 0.755 |
 | ns | 443 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.793 |
 | walker |  | 546 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.793 |
 | walker |  | 633 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.793 |

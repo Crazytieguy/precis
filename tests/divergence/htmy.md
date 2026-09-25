@@ -3,21 +3,21 @@ Score(3000)=0.739 I=0.908 C=0.601 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 33 | 33 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 53 | 20 | Fs::DirListing { dir: docs } |  |  | 0.000 |
 | ns | 72 |  | 72 | README identity: name, one-line description, pitch | 1.1 |  | 0.000 |
 | ns | 105 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.472 |
-| walker |  | 126 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.476 |
-| walker |  | 133 | 7 | Fs::DirListing { dir: .github } |  |  | 0.476 |
-| walker |  | 152 | 19 | Fs::DirListing { dir: .github/workflows } |  |  | 0.476 |
-| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.272 |
-| walker |  | 219 | 67 | Fs::DirListing { dir: htmy } |  |  | 0.439 |
-| walker |  | 233 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.505 |
-| walker |  | 250 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.505 |
-| walker |  | 272 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 0.639 |
-| walker |  | 314 | 42 | Fs::DirListing { dir: docs/api } |  |  | 0.639 |
-| walker |  | 326 | 12 | Fs::DirListing { dir: docs/api/renderer } |  |  | 0.639 |
-| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.570 |
-| walker |  | 475 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.894 |
+| walker |  | 182 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 202 | 20 | Fs::DirListing { dir: docs } |  |  | 1.000 |
+| ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.571 |
+| walker |  | 275 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.572 |
+| walker |  | 282 | 7 | Fs::DirListing { dir: .github } |  |  | 0.572 |
+| walker |  | 301 | 19 | Fs::DirListing { dir: .github/workflows } |  |  | 0.573 |
+| ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.511 |
+| walker |  | 368 | 67 | Fs::DirListing { dir: htmy } |  |  | 0.687 |
+| walker |  | 382 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.756 |
+| walker |  | 399 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
+| walker |  | 421 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 0.894 |
+| walker |  | 463 | 42 | Fs::DirListing { dir: docs/api } |  |  | 0.894 |
+| walker |  | 475 | 12 | Fs::DirListing { dir: docs/api/renderer } |  |  | 0.894 |
 | walker |  | 497 | 22 | Fs::DirListing { dir: examples } |  |  | 0.894 |
 | ns | 504 |  | 155 | README key features, second half | 1.5 | 1.4 | 0.812 |
 | walker |  | 510 | 13 | Fs::DirListing { dir: examples/internationalization } |  |  | 0.812 |

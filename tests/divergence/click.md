@@ -5,9 +5,9 @@ Score(3000)=0.812 I=0.943 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 53 | 3 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 81 |  | 81 | README identity: what Click is | 1.1 |  | 0.000 |
-| walker |  | 135 | 82 | Toml::Identity { file: pyproject.toml } |  |  | 0.000 |
-| ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.000 |
-| walker |  | 216 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.584 |
+| walker |  | 134 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.583 |
+| walker |  | 216 | 82 | Toml::Identity { file: pyproject.toml } |  |  | 0.584 |
 | walker |  | 246 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.584 |
 | ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
 | walker |  | 273 | 27 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.355 |

@@ -5,18 +5,18 @@ Score(3000)=0.786 I=0.909 C=0.679 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 28 | 28 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 47 |  | 47 | What Neco is | 1.1 |  | 0.000 |
 | walker |  | 53 | 25 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 74 | 21 | Fs::DirListing { dir: docs/assets } |  |  | 0.000 |
-| walker |  | 89 | 15 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 93 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| walker |  | 107 | 14 | Fs::DirListing { dir: docs/tools } |  |  | 0.000 |
 | ns | 121 |  | 74 | How the library is consumed and built | 1.2 |  | 0.000 |
-| walker |  | 123 | 16 | Fs::DirListing { dir: docs/tools/doxygen-md } |  |  | 0.000 |
-| ns | 149 |  | 28 | Complete root listing | 1.3 |  | 0.361 |
-| walker |  | 165 | 42 | Fs::DirListing { dir: deps } |  |  | 0.382 |
-| ns | 242 |  | 93 | examples/ and deps/ listings | 1.4 |  | 0.305 |
-| ns | 337 |  | 95 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.368 |
-| ns | 463 |  | 126 | Complete tests/ listing | 1.6 |  | 0.301 |
-| walker |  | 592 | 427 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.532 |
+| ns | 149 |  | 28 | Complete root listing | 1.3 |  | 0.292 |
+| ns | 242 |  | 93 | examples/ and deps/ listings | 1.4 |  | 0.195 |
+| ns | 337 |  | 95 | docs/ and .github/ trees, complete to the leaves | 1.5 |  | 0.166 |
+| ns | 463 |  | 126 | Complete tests/ listing | 1.6 |  | 0.135 |
+| walker |  | 480 | 427 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.315 |
+| walker |  | 501 | 21 | Fs::DirListing { dir: docs/assets } |  |  | 0.346 |
+| walker |  | 516 | 15 | Fs::DirListing { dir: .github } |  |  | 0.378 |
+| walker |  | 520 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.390 |
+| walker |  | 534 | 14 | Fs::DirListing { dir: docs/tools } |  |  | 0.430 |
+| walker |  | 550 | 16 | Fs::DirListing { dir: docs/tools/doxygen-md } |  |  | 0.491 |
+| walker |  | 592 | 42 | Fs::DirListing { dir: deps } |  |  | 0.532 |
 | ns | 595 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.494 |
 | walker |  | 643 | 51 | Fs::DirListing { dir: examples } |  |  | 0.630 |
 | walker |  | 769 | 126 | Fs::DirListing { dir: tests } |  |  | 0.793 |

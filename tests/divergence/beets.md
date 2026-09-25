@@ -4,8 +4,8 @@ Score(3000)=0.661 I=0.799 C=0.546 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 83 | 83 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 94 |  | 94 | README identity lede | 1.1 |  | 0.000 |
-| walker |  | 102 | 19 | Fs::DirListing { dir: extra } |  |  | 0.000 |
-| walker |  | 140 | 38 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.245 |
+| walker |  | 121 | 38 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.245 |
+| walker |  | 140 | 19 | Fs::DirListing { dir: extra } |  |  | 0.245 |
 | ns | 177 |  | 83 | Repository root listing (complete) | 1.2 |  | 0.603 |
 | walker |  | 211 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.611 |
 | ns | 246 |  | 69 | beets/ core package listing (complete) | 1.3 |  | 0.454 |

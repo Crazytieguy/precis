@@ -4,11 +4,11 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 33 |  | 33 | What the project is: readme About lede | 1.1 |  | 0.000 |
 | walker |  | 84 | 84 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 99 | 15 | Fs::DirListing { dir: images } |  |  | 0.000 |
-| walker |  | 102 | 3 | Fs::DirListing { dir: test } |  |  | 0.000 |
 | ns | 107 |  | 74 | package.json identity: name, version, entrypoint | 1.2 |  | 0.000 |
-| walker |  | 125 | 23 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 158 | 33 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.612 |
+| walker |  | 117 | 33 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.612 |
+| walker |  | 132 | 15 | Fs::DirListing { dir: images } |  |  | 0.612 |
+| walker |  | 135 | 3 | Fs::DirListing { dir: test } |  |  | 0.612 |
+| walker |  | 158 | 23 | Fs::DirListing { dir: docs } |  |  | 0.612 |
 | ns | 191 |  | 84 | Repository root listing (complete) | 1.3 |  | 0.816 |
 | walker |  | 227 | 69 | Json::Identity { file: package.json } |  |  | 0.903 |
 | ns | 254 |  | 63 | server/ top-level listing (complete) | 1.4 |  | 0.691 |

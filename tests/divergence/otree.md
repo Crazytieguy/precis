@@ -5,11 +5,11 @@ Score(3000)=0.701 I=0.892 C=0.551 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 35 | 35 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 39 | 4 | Fs::DirListing { dir: assets } |  |  | 0.000 |
 | ns | 44 |  | 44 | Repository identity — README title and one-line description | 1.1 |  | 0.000 |
-| walker |  | 47 | 8 | Fs::DirListing { dir: config } |  |  | 0.000 |
-| walker |  | 62 | 15 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 70 | 8 | Fs::DirListing { dir: config/themes } |  |  | 0.000 |
-| ns | 79 |  | 35 | Complete repository root listing | 1.2 |  | 0.697 |
-| walker |  | 114 | 44 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 79 |  | 35 | Complete repository root listing | 1.2 |  | 0.689 |
+| walker |  | 83 | 44 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 91 | 8 | Fs::DirListing { dir: config } |  |  | 1.000 |
+| walker |  | 106 | 15 | Fs::DirListing { dir: docs } |  |  | 1.000 |
+| walker |  | 114 | 8 | Fs::DirListing { dir: config/themes } |  |  | 1.000 |
 | ns | 117 |  | 38 | Complete src/ listing — the module roster | 1.3 |  | 0.727 |
 | walker |  | 152 | 38 | Fs::DirListing { dir: src } |  |  | 1.000 |
 | walker |  | 168 | 16 | Fs::DirListing { dir: src/config } |  |  | 1.000 |

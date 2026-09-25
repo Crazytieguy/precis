@@ -9,16 +9,16 @@ Score(3000)=0.713 I=0.906 C=0.561 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 81 |  | 81 | Readme lede: what ky is, what it targets | 1.1 |  | 0.000 |
 | walker |  | 97 | 21 | Fs::DirListing { dir: source/errors } |  |  | 0.000 |
 | ns | 121 |  | 40 | Complete repository root listing | 1.2 |  | 0.644 |
-| walker |  | 130 | 33 | Fs::DirListing { dir: source/types } |  |  | 0.702 |
-| walker |  | 168 | 38 | Fs::DirListing { dir: source/utils } |  |  | 0.781 |
-| ns | 237 |  | 116 | Complete `source/` tree: every library file | 1.3 |  | 0.736 |
-| walker |  | 239 | 71 | Json::Identity { file: package.json } |  |  | 0.746 |
-| walker |  | 250 | 11 | Fs::DirListing { dir: .github } |  |  | 0.746 |
-| walker |  | 254 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.747 |
-| walker |  | 285 | 31 | Json::Runtime { file: package.json } |  |  | 0.748 |
-| ns | 313 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.727 |
-| ns | 415 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.649 |
-| walker |  | 514 | 229 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.892 |
+| ns | 237 |  | 116 | Complete `source/` tree: every library file | 1.3 |  | 0.394 |
+| ns | 313 |  | 76 | package.json identity: name, version, description, license, repository | 1.4 |  | 0.369 |
+| walker |  | 326 | 229 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.587 |
+| walker |  | 359 | 33 | Fs::DirListing { dir: source/types } |  |  | 0.730 |
+| walker |  | 397 | 38 | Fs::DirListing { dir: source/utils } |  |  | 0.948 |
+| ns | 415 |  | 102 | Every H2 section heading in readme.md | 1.5 |  | 0.854 |
+| walker |  | 468 | 71 | Json::Identity { file: package.json } |  |  | 0.890 |
+| walker |  | 479 | 11 | Fs::DirListing { dir: .github } |  |  | 0.891 |
+| walker |  | 483 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.891 |
+| walker |  | 514 | 31 | Json::Runtime { file: package.json } |  |  | 0.892 |
 | ns | 535 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.893 |
 | walker |  | 617 | 103 | Json::Scripts { file: package.json } |  |  | 0.894 |
 | ns | 669 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.811 |

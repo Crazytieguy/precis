@@ -4,19 +4,19 @@ Score(3000)=0.727 I=0.823 C=0.642 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 47 |  | 47 | Package doc lede | 1.1 |  | 0.000 |
 | walker |  | 85 | 85 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 96 | 11 | Fs::DirListing { dir: xxhsum } |  |  | 0.000 |
-| walker |  | 110 | 14 | Fs::DirListing { dir: dynamic } |  |  | 0.000 |
 | ns | 113 |  | 66 | README title + positioning sentence | 1.2 |  | 0.000 |
-| walker |  | 125 | 15 | Fs::DirListing { dir: xxhashbench } |  |  | 0.000 |
-| walker |  | 156 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| walker |  | 156 | 0 | GoMod::File { file: go.mod } |  |  | 0.000 |
-| walker |  | 159 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 163 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| ns | 198 |  | 85 | Complete root directory listing | 1.3 |  | 0.531 |
-| walker |  | 202 | 39 | Code::CodeKey { rung: ModuleDoc, file: xxhash.go, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
-| walker |  | 237 | 35 | GoMod::Identity { file: xxhashbench/go.mod } |  |  | 0.763 |
-| ns | 275 |  | 77 | README: the complete public API block | 1.4 |  | 0.646 |
-| walker |  | 303 | 66 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.795 |
+| walker |  | 151 | 66 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.667 |
+| walker |  | 162 | 11 | Fs::DirListing { dir: xxhsum } |  |  | 0.669 |
+| walker |  | 176 | 14 | Fs::DirListing { dir: dynamic } |  |  | 0.677 |
+| walker |  | 191 | 15 | Fs::DirListing { dir: xxhashbench } |  |  | 0.690 |
+| ns | 198 |  | 85 | Complete root directory listing | 1.3 |  | 0.704 |
+| walker |  | 222 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.713 |
+| walker |  | 222 | 0 | GoMod::File { file: go.mod } |  |  | 0.713 |
+| walker |  | 225 | 3 | Fs::DirListing { dir: .github } |  |  | 0.713 |
+| walker |  | 229 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.718 |
+| walker |  | 268 | 39 | Code::CodeKey { rung: ModuleDoc, file: xxhash.go, decl: 0, sub: 0, line: 0 } |  |  | 0.939 |
+| ns | 275 |  | 77 | README: the complete public API block | 1.4 |  | 0.795 |
+| walker |  | 303 | 35 | GoMod::Identity { file: xxhashbench/go.mod } |  |  | 0.795 |
 | walker |  | 334 | 31 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.800 |
 | ns | 359 |  | 84 | README: Digest's key methods and hash.Hash64 conformance | 1.5 |  | 0.713 |
 | ns | 435 |  | 76 | README: pure-Go vs assembly, and the `purego` tag | 1.6 |  | 0.665 |

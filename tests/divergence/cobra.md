@@ -7,12 +7,12 @@ Score(3000)=0.644 I=0.786 C=0.528 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | walker |  | 194 | 3 | Fs::DirListing { dir: site } |  |  | 0.000 |
 | walker |  | 199 | 5 | Fs::DirListing { dir: assets } |  |  | 0.000 |
 | ns | 227 |  | 129 | go.mod: module path, Go version floor, and the four dependencies | 1.2 |  | 0.000 |
-| walker |  | 229 | 30 | GoMod::Identity { file: go.mod } |  |  | 0.121 |
-| walker |  | 288 | 59 | Fs::DirListing { dir: doc } |  |  | 0.124 |
-| walker |  | 336 | 48 | Code::CodeKey { rung: ModuleDoc, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.242 |
-| walker |  | 362 | 26 | Fs::DirListing { dir: site/content } |  |  | 0.243 |
-| ns | 366 |  | 139 | Complete .go roster of the root package: sources and colocated tests | 1.3 |  | 0.509 |
-| walker |  | 458 | 96 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.756 |
+| walker |  | 295 | 96 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.161 |
+| walker |  | 325 | 30 | GoMod::Identity { file: go.mod } |  |  | 0.220 |
+| ns | 366 |  | 139 | Complete .go roster of the root package: sources and colocated tests | 1.3 |  | 0.526 |
+| walker |  | 384 | 59 | Fs::DirListing { dir: doc } |  |  | 0.536 |
+| walker |  | 432 | 48 | Code::CodeKey { rung: ModuleDoc, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.755 |
+| walker |  | 458 | 26 | Fs::DirListing { dir: site/content } |  |  | 0.756 |
 | walker |  | 471 | 13 | Fs::DirListing { dir: .github } |  |  | 0.761 |
 | walker |  | 480 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.764 |
 | walker |  | 501 | 21 | Fs::DirListing { dir: site/content/docgen } |  |  | 0.768 |

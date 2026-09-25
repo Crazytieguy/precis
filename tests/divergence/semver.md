@@ -5,9 +5,9 @@ Score(3000)=0.706 I=0.904 C=0.551 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | ns | 79 |  | 79 | Package identity: README title + package.json name/version/description/main | 1.1 |  | 0.000 |
 | walker |  | 103 | 103 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 106 | 3 | Fs::DirListing { dir: tap-snapshots } |  |  | 0.000 |
-| walker |  | 111 | 5 | Fs::DirListing { dir: bin } |  |  | 0.000 |
-| walker |  | 128 | 17 | Fs::DirListing { dir: classes } |  |  | 0.000 |
-| walker |  | 154 | 26 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.219 |
+| walker |  | 132 | 26 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.216 |
+| walker |  | 137 | 5 | Fs::DirListing { dir: bin } |  |  | 0.216 |
+| walker |  | 154 | 17 | Fs::DirListing { dir: classes } |  |  | 0.219 |
 | walker |  | 181 | 27 | Fs::DirListing { dir: internal } |  |  | 0.227 |
 | ns | 182 |  | 103 | Complete root directory listing | 1.2 |  | 0.687 |
 | walker |  | 242 | 61 | Json::Identity { file: package.json } |  |  | 0.945 |

@@ -10,15 +10,15 @@ Score(3000)=0.595 I=0.648 C=0.547 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 188 | 9 | Fs::DirListing { dir: parallel } |  |  | 0.000 |
 | walker |  | 199 | 11 | Fs::DirListing { dir: internal } |  |  | 0.000 |
 | walker |  | 214 | 15 | Fs::DirListing { dir: mutable } |  |  | 0.000 |
-| walker |  | 243 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
-| walker |  | 255 | 12 | Fs::DirListing { dir: internal/xrand } |  |  | 0.000 |
-| walker |  | 275 | 20 | Fs::DirListing { dir: internal/constraints } |  |  | 0.000 |
-| walker |  | 296 | 21 | Fs::DirListing { dir: internal/xtime } |  |  | 0.000 |
 | ns | 306 |  | 146 | The four public import paths and a call example | 1.4 |  | 0.000 |
-| walker |  | 309 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/fake.go, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 322 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/real.go, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 335 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/time.go, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 465 | 130 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.362 |
+| walker |  | 344 | 130 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.358 |
+| walker |  | 373 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.358 |
+| walker |  | 385 | 12 | Fs::DirListing { dir: internal/xrand } |  |  | 0.359 |
+| walker |  | 405 | 20 | Fs::DirListing { dir: internal/constraints } |  |  | 0.360 |
+| walker |  | 426 | 21 | Fs::DirListing { dir: internal/xtime } |  |  | 0.362 |
+| walker |  | 439 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/fake.go, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
+| walker |  | 452 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/real.go, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
+| walker |  | 465 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/time.go, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
 | ns | 481 |  | 175 | Complete root directory listing | 1.5 |  | 0.701 |
 | walker |  | 599 | 134 | Fs::DirListing { dir: it } |  |  | 0.740 |
 | walker |  | 618 | 19 | Fs::DirListing { dir: .github } |  |  | 0.740 |

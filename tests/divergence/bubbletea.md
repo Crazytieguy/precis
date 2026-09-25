@@ -5,17 +5,17 @@ Score(3000)=0.542 I=0.766 C=0.383 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | ns | 95 |  | 95 | Package identity: `tea` package doc lede + module path | 1.1 |  | 0.000 |
 | ns | 163 |  | 68 | `Model` interface skeleton: `Init` / `Update` / `View` | 1.2 |  | 0.000 |
 | walker |  | 202 | 202 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 212 | 10 | Fs::DirListing { dir: testdata } |  |  | 0.000 |
-| walker |  | 226 | 14 | Fs::DirListing { dir: tutorials } |  |  | 0.000 |
-| walker |  | 255 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.057 |
-| walker |  | 263 | 8 | Fs::DirListing { dir: tutorials/basics } |  |  | 0.057 |
-| ns | 266 |  | 103 | `Msg` alias and the `Cmd` type | 1.3 |  | 0.043 |
-| walker |  | 271 | 8 | Fs::DirListing { dir: tutorials/commands } |  |  | 0.043 |
+| ns | 266 |  | 103 | `Msg` alias and the `Cmd` type | 1.3 |  | 0.000 |
+| walker |  | 278 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 288 | 10 | Fs::DirListing { dir: testdata } |  |  | 0.000 |
+| walker |  | 302 | 14 | Fs::DirListing { dir: tutorials } |  |  | 0.000 |
+| walker |  | 331 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.043 |
 | ns | 338 |  | 72 | Program entry points: `NewProgram`, `Run`, `ProgramOption` | 1.4 |  | 0.038 |
-| walker |  | 400 | 129 | Plaintext::Whole { file: Taskfile.yaml } |  |  | 0.039 |
-| walker |  | 422 | 22 | Fs::DirListing { dir: testdata/TestClearMsg } |  |  | 0.039 |
-| ns | 450 |  | 112 | `Model` method doc comments (refines 1.2) | 1.5 | 1.2 | 0.033 |
-| walker |  | 498 | 76 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.033 |
+| walker |  | 339 | 8 | Fs::DirListing { dir: tutorials/basics } |  |  | 0.038 |
+| walker |  | 347 | 8 | Fs::DirListing { dir: tutorials/commands } |  |  | 0.038 |
+| ns | 450 |  | 112 | `Model` method doc comments (refines 1.2) | 1.5 | 1.2 | 0.032 |
+| walker |  | 476 | 129 | Plaintext::Whole { file: Taskfile.yaml } |  |  | 0.033 |
+| walker |  | 498 | 22 | Fs::DirListing { dir: testdata/TestClearMsg } |  |  | 0.033 |
 | walker |  | 542 | 44 | GoMod::Identity { file: tutorials/go.mod } |  |  | 0.033 |
 | walker |  | 554 | 12 | Fs::DirListing { dir: .github } |  |  | 0.033 |
 | walker |  | 585 | 31 | Fs::DirListing { dir: .github/workflows } |  |  | 0.033 |

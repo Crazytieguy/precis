@@ -6,25 +6,25 @@ Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 89 | 3 | Fs::DirListing { dir: test-d } |  |  | 0.000 |
 | ns | 89 |  | 89 | SVGO identity and rationale (README lede) | 1.1 |  | 0.000 |
 | walker |  | 94 | 5 | Fs::DirListing { dir: bin } |  |  | 0.000 |
-| walker |  | 102 | 8 | Fs::DirListing { dir: test-d/lib } |  |  | 0.000 |
-| walker |  | 127 | 25 | Fs::DirListing { dir: logo } |  |  | 0.000 |
-| walker |  | 132 | 5 | Fs::DirListing { dir: scripts } |  |  | 0.000 |
-| walker |  | 175 | 43 | Fs::DirListing { dir: docs } |  |  | 0.756 |
-| ns | 175 |  | 86 | Complete root directory listing | 1.2 |  | 0.756 |
-| walker |  | 181 | 6 | Fs::DirListing { dir: .yarn } |  |  | 0.756 |
-| walker |  | 200 | 19 | Fs::DirListing { dir: docs/02-usage } |  |  | 0.757 |
-| walker |  | 278 | 78 | Json::Identity { file: package.json } |  |  | 0.758 |
-| ns | 297 |  | 122 | Complete lib/ engine listing (with lib/svgo/ and lib/util/) | 1.3 |  | 0.506 |
-| walker |  | 312 | 34 | Fs::DirListing { dir: docs/06-migrations } |  |  | 0.506 |
-| walker |  | 324 | 12 | Fs::DirListing { dir: .github } |  |  | 0.506 |
-| walker |  | 346 | 22 | Fs::DirListing { dir: .github/workflows } |  |  | 0.506 |
-| ns | 386 |  | 89 | optimize() -- the core API, jsdoc and signature | 1.4 |  | 0.464 |
-| walker |  | 436 | 90 | Fs::DirListing { dir: lib } |  |  | 0.629 |
-| walker |  | 449 | 13 | Fs::DirListing { dir: lib/util } |  |  | 0.663 |
-| walker |  | 468 | 19 | Fs::DirListing { dir: lib/svgo } |  |  | 0.739 |
-| walker |  | 474 | 6 | Fs::DirListing { dir: .yarn/plugins } |  |  | 0.739 |
-| ns | 496 |  | 110 | README section heading roster | 1.5 |  | 0.662 |
-| walker |  | 608 | 134 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.694 |
+| ns | 175 |  | 86 | Complete root directory listing | 1.2 |  | 0.754 |
+| walker |  | 228 | 134 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.802 |
+| walker |  | 236 | 8 | Fs::DirListing { dir: test-d/lib } |  |  | 0.802 |
+| walker |  | 261 | 25 | Fs::DirListing { dir: logo } |  |  | 0.803 |
+| walker |  | 266 | 5 | Fs::DirListing { dir: scripts } |  |  | 0.803 |
+| ns | 297 |  | 122 | Complete lib/ engine listing (with lib/svgo/ and lib/util/) | 1.3 |  | 0.536 |
+| walker |  | 309 | 43 | Fs::DirListing { dir: docs } |  |  | 0.536 |
+| walker |  | 315 | 6 | Fs::DirListing { dir: .yarn } |  |  | 0.536 |
+| walker |  | 334 | 19 | Fs::DirListing { dir: docs/02-usage } |  |  | 0.537 |
+| ns | 386 |  | 89 | optimize() -- the core API, jsdoc and signature | 1.4 |  | 0.492 |
+| walker |  | 412 | 78 | Json::Identity { file: package.json } |  |  | 0.493 |
+| walker |  | 446 | 34 | Fs::DirListing { dir: docs/06-migrations } |  |  | 0.493 |
+| walker |  | 458 | 12 | Fs::DirListing { dir: .github } |  |  | 0.493 |
+| walker |  | 480 | 22 | Fs::DirListing { dir: .github/workflows } |  |  | 0.493 |
+| ns | 496 |  | 110 | README section heading roster | 1.5 |  | 0.442 |
+| walker |  | 570 | 90 | Fs::DirListing { dir: lib } |  |  | 0.594 |
+| walker |  | 583 | 13 | Fs::DirListing { dir: lib/util } |  |  | 0.625 |
+| walker |  | 602 | 19 | Fs::DirListing { dir: lib/svgo } |  |  | 0.694 |
+| walker |  | 608 | 6 | Fs::DirListing { dir: .yarn/plugins } |  |  | 0.694 |
 | walker |  | 616 | 8 | Fs::DirListing { dir: .yarn/plugins/@yarnpkg } |  |  | 0.694 |
 | walker |  | 665 | 49 | Json::Runtime { file: package.json } |  |  | 0.695 |
 | ns | 715 |  | 219 | lib/svgo.js module graph and public re-exports | 1.6 |  | 0.608 |

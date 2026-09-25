@@ -5,14 +5,14 @@ Score(3000)=0.712 I=0.922 C=0.550 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 53 | 3 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 97 |  | 97 | README title + what Flask is (README.md:3, 5-9) | 1.1 |  | 0.000 |
-| walker |  | 140 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 0.000 |
-| ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.488 |
-| walker |  | 149 | 9 | Fs::DirListing { dir: examples } |  |  | 0.488 |
-| walker |  | 174 | 25 | Toml::Operational { file: pyproject.toml } |  |  | 0.489 |
-| walker |  | 185 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.489 |
-| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.289 |
-| walker |  | 287 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.593 |
-| walker |  | 317 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.593 |
+| ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.484 |
+| walker |  | 155 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 242 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 1.000 |
+| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.592 |
+| walker |  | 272 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.592 |
+| walker |  | 281 | 9 | Fs::DirListing { dir: examples } |  |  | 0.592 |
+| walker |  | 306 | 25 | Toml::Operational { file: pyproject.toml } |  |  | 0.593 |
+| walker |  | 317 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.593 |
 | ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.541 |
 | walker |  | 410 | 93 | Fs::DirListing { dir: src/flask } |  |  | 0.763 |
 | walker |  | 424 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 0.824 |

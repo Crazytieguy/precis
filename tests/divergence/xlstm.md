@@ -4,31 +4,31 @@ Score(3000)=0.496 I=0.542 C=0.454 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 65 | 65 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 74 | 9 | Fs::DirListing { dir: notebooks } |  |  | 0.000 |
-| walker |  | 77 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 85 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 96 |  | 96 | What xLSTM is, from the README lede | 1.1 |  | 0.000 |
-| walker |  | 113 | 28 | Fs::DirListing { dir: res } |  |  | 0.000 |
-| walker |  | 128 | 15 | Fs::DirListing { dir: notebooks/xlstm_large } |  |  | 0.000 |
-| ns | 161 |  | 65 | Complete repository-root listing | 1.2 |  | 0.594 |
-| walker |  | 164 | 36 | Fs::DirListing { dir: xlstm } |  |  | 0.608 |
-| walker |  | 181 | 17 | Code::CodeKey { rung: ModuleDoc, file: xlstm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 203 | 22 | Fs::DirListing { dir: xlstm/blocks } |  |  | 0.626 |
-| ns | 225 |  | 64 | README: the 7B model and the name "xLSTM Large" | 1.3 |  | 0.575 |
-| walker |  | 226 | 23 | Fs::DirListing { dir: xlstm/blocks/mlstm } |  |  | 0.582 |
-| walker |  | 249 | 23 | Fs::DirListing { dir: xlstm/blocks/slstm } |  |  | 0.592 |
-| walker |  | 271 | 22 | Fs::DirListing { dir: xlstm/blocks/slstm/src } |  |  | 0.592 |
-| walker |  | 287 | 16 | Fs::DirListing { dir: xlstm/blocks/slstm/src/vanilla } |  |  | 0.593 |
-| walker |  | 315 | 28 | Fs::DirListing { dir: xlstm/xlstm_large } |  |  | 0.621 |
-| ns | 346 |  | 121 | Complete listings of `xlstm/`, `xlstm/blocks/`, `xlstm/components/`, `xlstm/xlstm_large/` | 1.4 |  | 0.528 |
-| walker |  | 350 | 35 | Fs::DirListing { dir: xlstm/components } |  |  | 0.676 |
-| walker |  | 396 | 46 | Fs::DirListing { dir: experiments } |  |  | 0.679 |
-| walker |  | 412 | 16 | Fs::DirListing { dir: experiments/data } |  |  | 0.682 |
-| walker |  | 438 | 26 | Fs::DirListing { dir: experiments/data/formal_language } |  |  | 0.689 |
-| walker |  | 466 | 28 | Fs::DirListing { dir: experiments/data/formal_language/tasks } |  |  | 0.698 |
+| ns | 161 |  | 65 | Complete repository-root listing | 1.2 |  | 0.589 |
+| walker |  | 177 | 103 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.610 |
+| walker |  | 180 | 3 | Fs::DirListing { dir: .github } |  |  | 0.610 |
+| walker |  | 188 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.611 |
+| walker |  | 216 | 28 | Fs::DirListing { dir: res } |  |  | 0.613 |
+| ns | 225 |  | 64 | README: the 7B model and the name "xLSTM Large" | 1.3 |  | 0.563 |
+| walker |  | 231 | 15 | Fs::DirListing { dir: notebooks/xlstm_large } |  |  | 0.565 |
+| walker |  | 267 | 36 | Fs::DirListing { dir: xlstm } |  |  | 0.577 |
+| walker |  | 284 | 17 | Code::CodeKey { rung: ModuleDoc, file: xlstm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| walker |  | 306 | 22 | Fs::DirListing { dir: xlstm/blocks } |  |  | 0.593 |
+| walker |  | 329 | 23 | Fs::DirListing { dir: xlstm/blocks/mlstm } |  |  | 0.600 |
+| ns | 346 |  | 121 | Complete listings of `xlstm/`, `xlstm/blocks/`, `xlstm/components/`, `xlstm/xlstm_large/` | 1.4 |  | 0.444 |
+| walker |  | 352 | 23 | Fs::DirListing { dir: xlstm/blocks/slstm } |  |  | 0.452 |
+| walker |  | 374 | 22 | Fs::DirListing { dir: xlstm/blocks/slstm/src } |  |  | 0.452 |
+| walker |  | 390 | 16 | Fs::DirListing { dir: xlstm/blocks/slstm/src/vanilla } |  |  | 0.452 |
+| walker |  | 418 | 28 | Fs::DirListing { dir: xlstm/xlstm_large } |  |  | 0.542 |
+| walker |  | 453 | 35 | Fs::DirListing { dir: xlstm/components } |  |  | 0.691 |
+| walker |  | 499 | 46 | Fs::DirListing { dir: experiments } |  |  | 0.695 |
+| walker |  | 515 | 16 | Fs::DirListing { dir: experiments/data } |  |  | 0.697 |
 | ns | 528 |  | 182 | `xlstm/__init__.py` in full — version plus the entire public export block | 1.5 |  | 0.629 |
-| walker |  | 551 | 85 | Toml::Identity { file: pyproject.toml } |  |  | 0.629 |
-| walker |  | 584 | 33 | Fs::DirListing { dir: notebooks/xlstm } |  |  | 0.635 |
-| walker |  | 687 | 103 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.648 |
+| walker |  | 541 | 26 | Fs::DirListing { dir: experiments/data/formal_language } |  |  | 0.634 |
+| walker |  | 569 | 28 | Fs::DirListing { dir: experiments/data/formal_language/tasks } |  |  | 0.642 |
+| walker |  | 654 | 85 | Toml::Identity { file: pyproject.toml } |  |  | 0.643 |
+| walker |  | 687 | 33 | Fs::DirListing { dir: notebooks/xlstm } |  |  | 0.648 |
 | ns | 712 |  | 184 | Every README heading (H1/H2/H3), line-located | 1.6 | 1.1 | 0.568 |
 | walker |  | 873 | 186 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.683 |
 | walker |  | 928 | 55 | Fs::DirListing { dir: tests } |  |  | 0.699 |

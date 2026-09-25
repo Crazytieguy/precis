@@ -6,14 +6,14 @@ Score(3000)=0.788 I=0.937 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 32 |  | 32 | README title and one-line tagline | 1.1 |  | 0.000 |
 | walker |  | 33 | 4 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 61 |  | 29 | Complete root directory listing | 1.2 |  | 0.572 |
-| walker |  | 97 | 64 | Json::Identity { file: package.json } |  |  | 0.577 |
-| walker |  | 107 | 10 | Fs::DirListing { dir: .github } |  |  | 0.585 |
-| walker |  | 116 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.600 |
-| walker |  | 128 | 12 | Fs::DirListing { dir: test } |  |  | 0.622 |
-| ns | 150 |  | 89 | Every exported name in src/index.ts (names only) | 1.3 |  | 0.457 |
-| ns | 266 |  | 116 | README feature bullets | 1.4 |  | 0.400 |
-| ns | 295 |  | 29 | README: runtime support and dependency claim | 1.5 |  | 0.390 |
-| walker |  | 315 | 187 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.816 |
+| ns | 150 |  | 89 | Every exported name in src/index.ts (names only) | 1.3 |  | 0.420 |
+| walker |  | 220 | 187 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.763 |
+| ns | 266 |  | 116 | README feature bullets | 1.4 |  | 0.785 |
+| walker |  | 284 | 64 | Json::Identity { file: package.json } |  |  | 0.788 |
+| walker |  | 294 | 10 | Fs::DirListing { dir: .github } |  |  | 0.792 |
+| ns | 295 |  | 29 | README: runtime support and dependency claim | 1.5 |  | 0.795 |
+| walker |  | 303 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.803 |
+| walker |  | 315 | 12 | Fs::DirListing { dir: test } |  |  | 0.816 |
 | ns | 330 |  | 35 | Complete listings of src/, test/, .github/ and .github/workflows/ | 1.6 |  | 0.827 |
 | ns | 397 |  | 67 | All seven README `##` section headings | 1.7 |  | 0.736 |
 | walker |  | 459 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.850 |

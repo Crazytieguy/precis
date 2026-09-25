@@ -7,19 +7,19 @@ Score(3000)=0.490 I=0.847 C=0.284 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | walker |  | 104 | 13 | Fs::DirListing { dir: packages } |  |  | 0.000 |
 | ns | 113 |  | 13 | The three workspace packages | 1.2 |  | 0.292 |
 | ns | 130 |  | 17 | packages/vite/src top-level split | 1.3 |  | 0.233 |
-| walker |  | 146 | 42 | Json::Identity { file: package.json } |  |  | 0.236 |
-| walker |  | 179 | 33 | Fs::DirListing { dir: patches } |  |  | 0.236 |
-| ns | 205 |  | 75 | README: Vite's one-sentence definition | 1.4 | 1.1 | 0.227 |
-| walker |  | 209 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.228 |
-| walker |  | 232 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.228 |
-| ns | 296 |  | 91 | Repository root listing (complete) | 1.5 |  | 0.400 |
-| walker |  | 355 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.405 |
-| walker |  | 359 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.405 |
-| walker |  | 364 | 5 | Fs::DirListing { dir: packages/create-vite/__tests__ } |  |  | 0.405 |
-| ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.377 |
-| ns | 543 |  | 77 | packages/vite top-level listing | 1.7 |  | 0.313 |
-| walker |  | 549 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.700 |
-| walker |  | 585 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.700 |
+| ns | 205 |  | 75 | README: Vite's one-sentence definition | 1.4 | 1.1 | 0.225 |
+| walker |  | 289 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.850 |
+| ns | 296 |  | 91 | Repository root listing (complete) | 1.5 |  | 0.898 |
+| walker |  | 331 | 42 | Json::Identity { file: package.json } |  |  | 0.901 |
+| walker |  | 364 | 33 | Fs::DirListing { dir: patches } |  |  | 0.901 |
+| walker |  | 400 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.901 |
+| walker |  | 430 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.901 |
+| walker |  | 453 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.902 |
+| ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.839 |
+| ns | 543 |  | 77 | packages/vite top-level listing | 1.7 |  | 0.697 |
+| walker |  | 576 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.700 |
+| walker |  | 580 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.700 |
+| walker |  | 585 | 5 | Fs::DirListing { dir: packages/create-vite/__tests__ } |  |  | 0.700 |
 | ns | 636 |  | 93 | Root package.json identity, engines, package manager | 1.8 |  | 0.669 |
 | walker |  | 644 | 59 | Json::Runtime { file: package.json } |  |  | 0.708 |
 | walker |  | 721 | 77 | Fs::DirListing { dir: packages/vite } |  |  | 0.867 |

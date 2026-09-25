@@ -10,9 +10,9 @@ Score(3000)=0.578 I=0.656 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | ns | 561 |  | 168 | Root roster: setup panels and info screens | 1.6 |  | 0.000 |
 | ns | 670 |  | 109 | Root roster: utility and infrastructure modules | 1.7 |  | 0.000 |
 | walker |  | 713 | 713 | Fs::DirListing { dir: . } |  |  | 0.829 |
-| walker |  | 721 | 8 | Fs::DirListing { dir: m4 } |  |  | 0.829 |
-| walker |  | 733 | 12 | Fs::DirListing { dir: iwyu } |  |  | 0.829 |
-| walker |  | 758 | 25 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.829 |
+| walker |  | 738 | 25 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.829 |
+| walker |  | 746 | 8 | Fs::DirListing { dir: m4 } |  |  | 0.829 |
+| walker |  | 758 | 12 | Fs::DirListing { dir: iwyu } |  |  | 0.829 |
 | ns | 772 |  | 102 | Root roster: build, docs, packaging and meta files | 1.8 |  | 0.820 |
 | walker |  | 782 | 24 | Fs::DirListing { dir: docs } |  |  | 0.820 |
 | walker |  | 786 | 4 | Fs::DirListing { dir: docs/images } |  |  | 0.820 |

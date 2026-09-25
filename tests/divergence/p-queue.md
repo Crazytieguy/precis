@@ -5,13 +5,13 @@ Score(3000)=0.803 I=0.908 C=0.711 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 39 | 39 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 45 | 6 | Fs::DirListing { dir: test-d } |  |  | 0.000 |
 | ns | 67 |  | 67 | Readme title, tagline and what p-queue is useful for | 1.1 |  | 0.000 |
-| walker |  | 68 | 23 | Fs::DirListing { dir: source } |  |  | 0.000 |
-| walker |  | 136 | 68 | Json::Identity { file: package.json } |  |  | 0.000 |
-| walker |  | 143 | 7 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| ns | 146 |  | 79 | Readme scope note: not for server job queues, and the project is feature-complete | 1.2 |  | 0.000 |
-| walker |  | 147 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| ns | 185 |  | 39 | Complete root directory listing | 1.3 |  | 0.426 |
-| walker |  | 214 | 67 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.888 |
+| walker |  | 112 | 67 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 1.000 |
+| walker |  | 135 | 23 | Fs::DirListing { dir: source } |  |  | 1.000 |
+| ns | 146 |  | 79 | Readme scope note: not for server job queues, and the project is feature-complete | 1.2 |  | 0.791 |
+| ns | 185 |  | 39 | Complete root directory listing | 1.3 |  | 0.884 |
+| walker |  | 203 | 68 | Json::Identity { file: package.json } |  |  | 0.887 |
+| walker |  | 210 | 7 | Fs::DirListing { dir: .github } |  |  | 0.887 |
+| walker |  | 214 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.888 |
 | walker |  | 245 | 31 | Json::Runtime { file: package.json } |  |  | 0.708 |
 | ns | 245 |  | 60 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.708 |
 | walker |  | 299 | 54 | Json::Dependencies { file: package.json } |  |  | 0.708 |

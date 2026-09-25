@@ -4,14 +4,14 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 60 |  | 60 | README identity: name + one-line pitch | 1.1 |  | 0.000 |
 | walker |  | 74 | 74 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 83 | 9 | Fs::DirListing { dir: bindings } |  |  | 0.000 |
-| walker |  | 88 | 5 | Fs::DirListing { dir: bindings/go } |  |  | 0.000 |
-| walker |  | 93 | 5 | Fs::DirListing { dir: bindings/python } |  |  | 0.000 |
-| walker |  | 101 | 8 | Fs::DirListing { dir: bindings/go/ncruces } |  |  | 0.000 |
-| walker |  | 107 | 6 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 119 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| ns | 148 |  | 88 | README capability bullets | 1.2 |  | 0.000 |
-| walker |  | 179 | 60 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.655 |
+| walker |  | 134 | 60 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 143 | 9 | Fs::DirListing { dir: bindings } |  |  | 1.000 |
+| walker |  | 148 | 5 | Fs::DirListing { dir: bindings/go } |  |  | 0.655 |
+| ns | 148 |  | 88 | README capability bullets | 1.2 |  | 0.655 |
+| walker |  | 153 | 5 | Fs::DirListing { dir: bindings/python } |  |  | 0.655 |
+| walker |  | 161 | 8 | Fs::DirListing { dir: bindings/go/ncruces } |  |  | 0.655 |
+| walker |  | 167 | 6 | Fs::DirListing { dir: .github } |  |  | 0.655 |
+| walker |  | 179 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.655 |
 | walker |  | 204 | 25 | Plaintext::Whole { file: Makefile } |  |  | 0.655 |
 | ns | 222 |  | 74 | Repository root listing (complete) | 1.3 |  | 0.836 |
 | walker |  | 231 | 27 | Fs::DirListing { dir: bindings/rust } |  |  | 0.837 |

@@ -3,9 +3,9 @@ Score(3000)=0.722 I=0.881 C=0.591 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 26 | 26 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 30 | 4 | Fs::DirListing { dir: assets } |  |  | 0.000 |
 | ns | 33 |  | 33 | Project name and one-line description | 1.1 |  | 0.000 |
-| walker |  | 63 | 33 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 59 | 33 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| walker |  | 63 | 4 | Fs::DirListing { dir: assets } |  |  | 1.000 |
 | ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.537 |
 | walker |  | 95 | 32 | Fs::DirListing { dir: nanovllm } |  |  | 0.577 |
 | walker |  | 101 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.577 |

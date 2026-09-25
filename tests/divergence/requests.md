@@ -1,32 +1,32 @@
-Score(3000)=0.715 I=0.909 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.734/0.813/0.740/0.715/0.649/0.643/0.635
+Score(3000)=0.715 I=0.909 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.813/0.740/0.715/0.649/0.643/0.635
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 47 |  | 47 | Identity lede: what the library is, and its version | 1.1 |  | 0.000 |
 | walker |  | 74 | 74 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 77 | 3 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 111 | 34 | Fs::DirListing { dir: ext } |  |  | 0.000 |
 | ns | 121 |  | 74 | Repository root listing (complete) | 1.2 |  | 0.671 |
-| walker |  | 169 | 58 | Toml::Identity { file: pyproject.toml } |  |  | 0.672 |
-| ns | 216 |  | 95 | `src/requests/` module roster (complete) | 1.3 |  | 0.456 |
-| walker |  | 223 | 54 | Fs::DirListing { dir: docs } |  |  | 0.462 |
-| walker |  | 227 | 4 | Fs::DirListing { dir: docs/_templates } |  |  | 0.462 |
-| walker |  | 236 | 9 | Fs::DirListing { dir: docs/_static } |  |  | 0.462 |
-| walker |  | 246 | 10 | Fs::DirListing { dir: docs/dev } |  |  | 0.464 |
-| walker |  | 260 | 14 | Fs::DirListing { dir: docs/_themes } |  |  | 0.464 |
-| walker |  | 281 | 21 | Fs::DirListing { dir: docs/user } |  |  | 0.468 |
-| walker |  | 319 | 38 | Fs::DirListing { dir: docs/community } |  |  | 0.379 |
-| ns | 319 |  | 103 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.379 |
-| walker |  | 411 | 92 | Fs::DirListing { dir: src/requests } |  |  | 0.607 |
-| ns | 466 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.541 |
-| ns | 584 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.507 |
-| ns | 682 |  | 98 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.450 |
-| ns | 762 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.431 |
-| walker |  | 767 | 356 | Plaintext::Whole { file: Makefile } |  |  | 0.477 |
-| ns | 885 |  | 123 | `docs/` tree listing (complete) | 1.9 |  | 0.523 |
-| walker |  | 925 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
-| walker |  | 1100 | 175 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.768 |
-| walker |  | 1140 | 40 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.801 |
+| ns | 216 |  | 95 | `src/requests/` module roster (complete) | 1.3 |  | 0.455 |
+| walker |  | 252 | 175 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.600 |
+| walker |  | 286 | 34 | Fs::DirListing { dir: ext } |  |  | 0.600 |
+| ns | 319 |  | 103 | `tests/` roster (complete, incl. `testserver/` and `certs/`) | 1.4 |  | 0.475 |
+| walker |  | 344 | 58 | Toml::Identity { file: pyproject.toml } |  |  | 0.475 |
+| walker |  | 398 | 54 | Fs::DirListing { dir: docs } |  |  | 0.479 |
+| walker |  | 402 | 4 | Fs::DirListing { dir: docs/_templates } |  |  | 0.479 |
+| walker |  | 411 | 9 | Fs::DirListing { dir: docs/_static } |  |  | 0.479 |
+| walker |  | 421 | 10 | Fs::DirListing { dir: docs/dev } |  |  | 0.481 |
+| walker |  | 435 | 14 | Fs::DirListing { dir: docs/_themes } |  |  | 0.481 |
+| walker |  | 456 | 21 | Fs::DirListing { dir: docs/user } |  |  | 0.484 |
+| ns | 466 |  | 147 | README: the canonical `requests.get(...)` doctest + every `##` heading | 1.5 | 1.1 | 0.498 |
+| walker |  | 496 | 40 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.556 |
+| walker |  | 534 | 38 | Fs::DirListing { dir: docs/community } |  |  | 0.563 |
+| ns | 584 |  | 118 | Full package metadata block (`__version__.py`) | 1.6 | 1.1 | 0.528 |
+| walker |  | 626 | 92 | Fs::DirListing { dir: src/requests } |  |  | 0.720 |
+| ns | 682 |  | 98 | CI: `.github/` and workflow file roster (complete) | 1.7 |  | 0.638 |
+| ns | 762 |  | 80 | Makefile: install / test / CI targets | 1.8 |  | 0.611 |
+| ns | 885 |  | 123 | `docs/` tree listing (complete) | 1.9 |  | 0.654 |
+| walker |  | 982 | 356 | Plaintext::Whole { file: Makefile } |  |  | 0.692 |
+| walker |  | 1140 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.801 |
 | ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.729 |
 | walker |  | 1203 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.729 |
 | walker |  | 1246 | 43 | Fs::DirListing { dir: .github } |  |  | 0.746 |

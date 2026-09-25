@@ -4,11 +4,11 @@ Score(3000)=0.544 I=0.835 C=0.354 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 38 | 38 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 42 | 4 | Fs::DirListing { dir: build } |  |  | 0.000 |
-| walker |  | 61 | 19 | Fs::DirListing { dir: impl } |  |  | 0.000 |
-| walker |  | 86 | 25 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 86 |  | 86 | Crate identity: name, one-line purpose, version | 1.1 |  | 0.000 |
-| ns | 124 |  | 38 | Complete repository root listing | 1.2 |  | 0.453 |
-| walker |  | 133 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.635 |
+| walker |  | 89 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.507 |
+| walker |  | 108 | 19 | Fs::DirListing { dir: impl } |  |  | 0.512 |
+| ns | 124 |  | 38 | Complete repository root listing | 1.2 |  | 0.605 |
+| walker |  | 133 | 25 | Fs::DirListing { dir: src } |  |  | 0.635 |
 | walker |  | 162 | 29 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.638 |
 | walker |  | 170 | 8 | Fs::DirListing { dir: .github } |  |  | 0.638 |
 | walker |  | 174 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.638 |

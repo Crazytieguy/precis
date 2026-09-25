@@ -6,24 +6,24 @@ Score(3000)=0.514 I=0.790 C=0.334 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 69 |  | 69 | Package identity: name, description, version, license | 1.1 |  | 0.000 |
 | walker |  | 84 | 19 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | walker |  | 102 | 18 | Fs::DirListing { dir: src/structs } |  |  | 0.000 |
-| walker |  | 123 | 21 | Fs::DirListing { dir: docs } |  |  | 0.000 |
-| walker |  | 131 | 8 | Fs::DirListing { dir: docs/resources } |  |  | 0.000 |
-| ns | 134 |  | 65 | Complete root directory listing | 1.2 |  | 0.616 |
-| walker |  | 135 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.616 |
-| ns | 171 |  | 37 | Complete src/ and src/structs/ listings | 1.3 |  | 0.613 |
-| walker |  | 217 | 82 | Json::Identity { file: package.json } |  |  | 0.959 |
-| walker |  | 225 | 8 | Fs::DirListing { dir: .github } |  |  | 0.959 |
-| walker |  | 229 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.959 |
-| ns | 250 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.865 |
-| walker |  | 258 | 29 | Fs::DirListing { dir: docs/images } |  |  | 0.866 |
-| walker |  | 289 | 31 | Fs::DirListing { dir: docs/reference } |  |  | 0.868 |
-| walker |  | 323 | 34 | Json::Runtime { file: package.json } |  |  | 0.869 |
-| walker |  | 374 | 51 | Fs::DirListing { dir: docs/guides } |  |  | 0.871 |
-| ns | 416 |  | 166 | Readme lede: what Superstruct is and why it exists | 1.5 |  | 0.845 |
-| walker |  | 540 | 166 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.854 |
-| walker |  | 606 | 66 | Markdown::Prelude { file: Readme.md } |  |  | 0.876 |
-| ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.724 |
-| walker |  | 660 | 54 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.725 |
+| ns | 134 |  | 65 | Complete root directory listing | 1.2 |  | 0.615 |
+| ns | 171 |  | 37 | Complete src/ and src/structs/ listings | 1.3 |  | 0.612 |
+| ns | 250 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.552 |
+| walker |  | 268 | 166 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.554 |
+| walker |  | 289 | 21 | Fs::DirListing { dir: docs } |  |  | 0.555 |
+| walker |  | 297 | 8 | Fs::DirListing { dir: docs/resources } |  |  | 0.555 |
+| walker |  | 301 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.555 |
+| walker |  | 383 | 82 | Json::Identity { file: package.json } |  |  | 0.866 |
+| walker |  | 391 | 8 | Fs::DirListing { dir: .github } |  |  | 0.866 |
+| walker |  | 395 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.866 |
+| ns | 416 |  | 166 | Readme lede: what Superstruct is and why it exists | 1.5 |  | 0.847 |
+| walker |  | 424 | 29 | Fs::DirListing { dir: docs/images } |  |  | 0.849 |
+| walker |  | 455 | 31 | Fs::DirListing { dir: docs/reference } |  |  | 0.851 |
+| walker |  | 521 | 66 | Markdown::Prelude { file: Readme.md } |  |  | 0.874 |
+| walker |  | 555 | 34 | Json::Runtime { file: package.json } |  |  | 0.874 |
+| walker |  | 609 | 54 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.875 |
+| ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.723 |
+| walker |  | 660 | 51 | Fs::DirListing { dir: docs/guides } |  |  | 0.725 |
 | walker |  | 688 | 28 | Fs::DirListing { dir: test } |  |  | 0.726 |
 | walker |  | 764 | 76 | Json::Entry { file: package.json } |  |  | 0.727 |
 | ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.658 |

@@ -4,25 +4,25 @@ Score(3000)=0.689 I=0.891 C=0.532 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 56 | 56 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 74 |  | 74 | What py3xui is: distribution name, version, one-line purpose | 1.1 |  | 0.000 |
-| walker |  | 81 | 25 | Fs::DirListing { dir: py3xui } |  |  | 0.000 |
-| walker |  | 95 | 14 | Fs::DirListing { dir: py3xui/client } |  |  | 0.000 |
-| walker |  | 109 | 14 | Fs::DirListing { dir: py3xui/server } |  |  | 0.000 |
-| walker |  | 123 | 14 | Fs::DirListing { dir: py3xui/utils } |  |  | 0.000 |
-| ns | 130 |  | 56 | Complete repository root listing | 1.2 |  | 0.628 |
-| walker |  | 150 | 27 | Fs::DirListing { dir: dev } |  |  | 0.628 |
-| walker |  | 182 | 32 | Fs::DirListing { dir: py3xui/inbound } |  |  | 0.651 |
-| ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.562 |
-| walker |  | 222 | 40 | Fs::DirListing { dir: py3xui/api } |  |  | 0.571 |
-| ns | 237 |  | 25 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.589 |
-| walker |  | 293 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.715 |
-| walker |  | 339 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.738 |
-| walker |  | 351 | 12 | Fs::DirListing { dir: .vscode } |  |  | 0.738 |
-| walker |  | 369 | 18 | Fs::DirListing { dir: .github } |  |  | 0.738 |
-| ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.662 |
-| walker |  | 392 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.662 |
-| walker |  | 580 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.705 |
-| ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.559 |
-| walker |  | 639 | 59 | Markdown::Prelude { file: README.md } |  |  | 0.705 |
+| ns | 130 |  | 56 | Complete repository root listing | 1.2 |  | 0.571 |
+| ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.492 |
+| ns | 237 |  | 25 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.419 |
+| walker |  | 244 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.430 |
+| walker |  | 269 | 25 | Fs::DirListing { dir: py3xui } |  |  | 0.562 |
+| walker |  | 283 | 14 | Fs::DirListing { dir: py3xui/client } |  |  | 0.563 |
+| walker |  | 297 | 14 | Fs::DirListing { dir: py3xui/server } |  |  | 0.566 |
+| walker |  | 311 | 14 | Fs::DirListing { dir: py3xui/utils } |  |  | 0.571 |
+| walker |  | 338 | 27 | Fs::DirListing { dir: dev } |  |  | 0.571 |
+| walker |  | 370 | 32 | Fs::DirListing { dir: py3xui/inbound } |  |  | 0.591 |
+| ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.558 |
+| walker |  | 410 | 40 | Fs::DirListing { dir: py3xui/api } |  |  | 0.567 |
+| walker |  | 481 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.682 |
+| walker |  | 527 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.703 |
+| walker |  | 586 | 59 | Markdown::Prelude { file: README.md } |  |  | 0.877 |
+| ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.704 |
+| walker |  | 598 | 12 | Fs::DirListing { dir: .vscode } |  |  | 0.704 |
+| walker |  | 616 | 18 | Fs::DirListing { dir: .github } |  |  | 0.704 |
+| walker |  | 639 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.705 |
 | walker |  | 698 | 59 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.705 |
 | ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.661 |
 | walker |  | 725 | 27 | Fs::DirListing { dir: tests } |  |  | 0.662 |

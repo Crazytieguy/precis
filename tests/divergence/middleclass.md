@@ -3,9 +3,9 @@ Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 33 | 33 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 41 | 8 | Fs::DirListing { dir: performance } |  |  | 0.000 |
 | ns | 65 |  | 65 | Module identity table (_VERSION / _DESCRIPTION / _URL) | 1.1 |  | 0.000 |
-| walker |  | 88 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 80 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.000 |
+| walker |  | 88 | 8 | Fs::DirListing { dir: performance } |  |  | 0.000 |
 | ns | 98 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.479 |
 | ns | 145 |  | 47 | README title and one-line pitch | 1.3 |  | 0.470 |
 | walker |  | 146 | 58 | Fs::DirListing { dir: spec } |  |  | 0.510 |
