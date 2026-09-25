@@ -126,6 +126,59 @@ examples/
   upload/
 gulpfile.js
 index.d.cts
+  1→type MethodsHeaders = Partial<
+  2→  {
+  3→    [Key in axios.Method as Lowercase<Key>]: AxiosHeaders;
+  4→  } & { common: AxiosHeaders }
+  5→>;
+  7→type AxiosHeaderMatcher =
+  8→  | string
+  9→  | RegExp
+  10→  | ((this: AxiosHeaders, value: string, name: string) => boolean);
+  12→type AxiosHeaderParser = (this: AxiosHeaders, value: axios.AxiosHeaderValue, header: string) => any;
+  13→
+  14→type CommonRequestHeadersList =
+  15→  | 'Accept'
+  16→  | 'Content-Length'
+  17→  | 'User-Agent'
+  18→  | 'Content-Encoding'
+  19→  | 'Authorization'
+  20→  | 'Location';
+  22→type ContentType =
+  23→  | axios.AxiosHeaderValue
+  24→  | 'text/html'
+  25→  | 'text/plain'
+  26→  | 'multipart/form-data'
+  27→  | 'application/json'
+  28→  | 'application/x-www-form-urlencoded'
+  29→  | 'application/octet-stream';
+  31→type CommonResponseHeadersList =
+  32→  | 'Server'
+  33→  | 'Content-Type'
+  34→  | 'Content-Length'
+  35→  | 'Cache-Control'
+  36→  | 'Content-Encoding';
+  38→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
+  39→
+  40→type BrowserProgressEvent = any;
+  41→
+  42→declare class AxiosHeaders {
+  …
+  123→declare class AxiosError<T = unknown, D = any> extends Error {
+  …
+  165→declare class CanceledError<T> extends AxiosError<T> {}
+  166→
+  167→declare class Axios {
+  …
+  231→declare enum HttpStatusCode {
+  …
+  297→type InternalAxiosError<T = unknown, D = any> = AxiosError<T, D>;
+  298→
+  299→declare namespace axios {
+  …
+  713→declare const axios: axios.AxiosStatic;
+  714→
+  715→export = axios;
 index.d.ts
   …
   2→type StringLiteralsOrString<Literals extends string> = Literals | (string & {});
@@ -187,46 +240,6 @@ index.d.ts
   135→};
   …
 index.js
-  …
-  6→const {
-  7→  Axios,
-  8→  AxiosError,
-  9→  CanceledError,
-  10→  isCancel,
-  11→  CancelToken,
-  12→  VERSION,
-  13→  all,
-  14→  Cancel,
-  15→  isAxiosError,
-  16→  spread,
-  17→  toFormData,
-  18→  AxiosHeaders,
-  19→  HttpStatusCode,
-  20→  formToJSON,
-  21→  getAdapter,
-  22→  mergeConfig,
-  23→  create,
-  24→} = axios;
-  26→export {
-  27→  axios as default,
-  28→  create,
-  29→  Axios,
-  30→  AxiosError,
-  31→  CanceledError,
-  32→  isCancel,
-  33→  CancelToken,
-  34→  VERSION,
-  35→  all,
-  36→  Cancel,
-  37→  isAxiosError,
-  38→  spread,
-  39→  toFormData,
-  40→  AxiosHeaders,
-  41→  HttpStatusCode,
-  42→  formToJSON,
-  43→  getAdapter,
-  44→  mergeConfig,
-  45→};
 lib/
   adapters/
     README.md

@@ -272,7 +272,11 @@ must not undo:
   above `Decl` (breadth first); the corpus grid put it well below
   (1150 → 750: +0.016 at 3000, +0.022 over the 7 budgets), because a
   roster in every file then outranked entry-file declarations, docs
-  and manifests. Per-language pricing enters only through
+  and manifests. A roster is priced per entry (`entries^k`, no floor
+  or cap), so its ratio is its tokens per entry: small files' 1–3 row
+  rosters no longer win on size alone, and a long public roster is
+  not capped below its short peers (+0.006 at 3000 over the capped
+  `roster_mass_factor`). Per-language pricing enters only through
   `is_entrypoint`, `file_weight` and visibility.
 
 ## Open items

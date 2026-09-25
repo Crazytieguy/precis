@@ -49,9 +49,27 @@ README.md
   132→## Routes
   133→
   134→### Array Resources
-  …
+  135→
+  136→For array resources like `posts` and `comments`:
+  137→
+  138→```http
+  139→GET    /posts
+  140→GET    /posts/:id
+  141→POST   /posts
+  142→PUT    /posts/:id
+  143→PATCH  /posts/:id
+  144→DELETE /posts/:id
+  145→```
+  146→
   147→### Object Resources
-  …
+  148→
+  149→For singular object resources like `profile`:
+  150→
+  151→```http
+  152→GET   /profile
+  153→PUT   /profile
+  154→PATCH /profile
+  155→```
   157→## Query params
   158→
   159→### Conditions
@@ -160,22 +178,6 @@ src/
   adapters/
     normalized-adapter.test.ts
     normalized-adapter.ts
-      …
-      6→export const DEFAULT_SCHEMA_PATH = './node_modules/json-server/schema.json'
-      7→export type RawData = Record<string, Item[] | Item | string | undefined> & {
-      8→  $schema?: string
-      9→}
-      11→export class NormalizedAdapter implements Adapter<Data> {
-      …
-      14→  constructor(adapter: Adapter<RawData>) {
-      15→    this.#adapter = adapter
-      …
-      18→  async read(): Promise<Data | null> {
-      …
-      44→  async write(data: Data): Promise<void> {
-      45→    await this.#adapter.write({ ...data, $schema: DEFAULT_SCHEMA_PATH })
-      …
-      47→}
     observer.ts
       …
       4→export class Observer<T> {
@@ -184,16 +186,12 @@ src/
       8→    return
       …
       10→  onReadEnd: (data: T | null) => void = function () {
-      11→    return
       …
       13→  onWriteStart = function () {
-      14→    return
       …
       16→  onWriteEnd = function () {
-      17→    return
       …
       20→  constructor(adapter: Adapter<T>) {
-      21→    this.#adapter = adapter
       …
       24→  async read() {
       …
@@ -233,6 +231,16 @@ src/
   parse-where.ts
     …
     58→export function parseWhere(query: string): JsonObject {
+    59→  const out: JsonObject = {}
+    60→  const params = new URLSearchParams(query)
+    61→
+    62→  for (const [rawKey, rawValue] of params.entries()) {
+    63→    const { path, op } = splitKey(rawKey)
+    64→    if (op === null) continue
+    65→    setPathOp(out, path, op, rawValue)
+    66→  }
+    67→
+    68→  return out
     …
   random-id.ts
     …

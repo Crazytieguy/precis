@@ -26,15 +26,6 @@ BacktraceScreen.c
 BacktraceScreen.h
 BatteryMeter.c
 BatteryMeter.h
-  …
-  15→typedef enum ACPresence_ {
-  16→   AC_ABSENT,
-  17→   AC_PRESENT,
-  18→   AC_ERROR
-  19→} ACPresence;
-  20→
-  21→extern const MeterClass BatteryMeter_class;
-  …
 CLAUDE.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -43,6 +34,48 @@ CPUMeter.c
 CPUMeter.h
 CRT.c
 CRT.h
+  …
+  17→#define SCREEN_TAB_MARGIN_LEFT 2
+  18→#define SCREEN_TAB_COLUMN_GAP  1
+  19→
+  20→typedef enum TreeStr_ {
+  21→   TREE_STR_VERT,
+  22→   TREE_STR_RTEE,
+  23→   TREE_STR_BEND,
+  24→   TREE_STR_TEND,
+  25→   TREE_STR_OPEN,
+  26→   TREE_STR_SHUT,
+  27→   TREE_STR_ASC,
+  28→   TREE_STR_DESC,
+  29→   LAST_TREE_STR
+  30→} TreeStr;
+  31→
+  32→typedef enum ColorScheme_ {
+  33→   COLORSCHEME_DEFAULT,
+  34→   COLORSCHEME_MONOCHROME,
+  35→   COLORSCHEME_BLACKONWHITE,
+  36→   COLORSCHEME_LIGHTTERMINAL,
+  37→   COLORSCHEME_MIDNIGHT,
+  38→   COLORSCHEME_BLACKNIGHT,
+  39→   COLORSCHEME_BROKENGRAY,
+  40→   COLORSCHEME_NORD,
+  41→   LAST_COLORSCHEME
+  42→} ColorScheme;
+  43→
+  44→typedef enum ColorElements_ {
+  …
+  162→} ColorElements;
+  …
+  175→#define KEY_WHEELUP    KEY_F(30)
+  176→#define KEY_WHEELDOWN  KEY_F(31)
+  177→#define KEY_RECLICK    KEY_F(32)
+  178→#define KEY_RIGHTCLICK KEY_F(33)
+  179→#define KEY_SHIFT_TAB  KEY_F(34)
+  180→#define KEY_ALT(x)     (KEY_F(64 - 26) + ((x) - 'A'))
+  181→#define KEY_FOCUS_IN   (KEY_MAX + 'I')
+  182→#define KEY_FOCUS_OUT  (KEY_MAX + 'O')
+  183→#define KEY_DEL_MAC    127
+  …
 CategoriesPanel.c
 CategoriesPanel.h
 ChangeLog
@@ -71,9 +104,6 @@ EnvScreen.c
 EnvScreen.h
 FileDescriptorMeter.c
 FileDescriptorMeter.h
-  …
-  13→extern const MeterClass FileDescriptorMeter_class;
-  …
 FunctionBar.c
 FunctionBar.h
 GPUMeter.c
@@ -89,9 +119,6 @@ History.c
 History.h
 HostnameMeter.c
 HostnameMeter.h
-  …
-  13→extern const MeterClass HostnameMeter_class;
-  …
 IncSet.c
 IncSet.h
 InfoScreen.c
@@ -102,11 +129,6 @@ ListItem.c
 ListItem.h
 LoadAverageMeter.c
 LoadAverageMeter.h
-  …
-  13→extern const MeterClass LoadAverageMeter_class;
-  14→
-  15→extern const MeterClass LoadMeter_class;
-  …
 Machine.c
 Machine.h
 Macros.h
@@ -115,57 +137,16 @@ MainPanel.h
 Makefile.am
 MemoryMeter.c
 MemoryMeter.h
-  …
-  13→typedef struct MemoryClass_s {
-  14→   const char *label; // e.g. "wired", "shared", "compressed" - platform-specific memory classe names
-  15→   bool countsAsUsed; // memory class counts as "used" memory
-  16→   bool countsAsCache; // memory class reclaimed under pressure (displayed with "show cached memory")
-  17→   ColorElements color; // one of the MEMORY CRT color values
-  18→} MemoryClass;
-  19→
-  20→extern const MeterClass MemoryMeter_class;
-  …
 MemorySwapMeter.c
 MemorySwapMeter.h
-  …
-  13→extern const MeterClass MemorySwapMeter_class;
-  …
 Meter.c
 Meter.h
 MeterMode.h
-  …
-  11→enum MeterModeId_ {
-  12→   /* Meter mode 0 is reserved */
-  13→   BAR_METERMODE = 1,
-  14→   TEXT_METERMODE,
-  15→   GRAPH_METERMODE,
-  16→   LED_METERMODE,
-  17→   LAST_METERMODE
-  18→};
-  20→typedef unsigned int MeterModeId;
-  21→
-  22→#define METERMODE_DEFAULT_SUPPORTED ( \
-  23→   (1 << BAR_METERMODE) |             \
-  24→   (1 << TEXT_METERMODE) |            \
-  25→   (1 << GRAPH_METERMODE) |           \
-  26→   (1 << LED_METERMODE) |             \
-  27→   0) // Avoids edits when updating
-  …
 MetersPanel.c
 MetersPanel.h
 NEWS
 NetworkIOMeter.c
 NetworkIOMeter.h
-  …
-  15→typedef struct NetworkIOData_ {
-  16→   uint64_t bytesReceived;
-  17→   uint64_t packetsReceived;
-  18→   uint64_t bytesTransmitted;
-  19→   uint64_t packetsTransmitted;
-  20→} NetworkIOData;
-  21→
-  22→extern const MeterClass NetworkIOMeter_class;
-  …
 Object.c
 Object.h
 OpenFilesScreen.c
@@ -186,19 +167,41 @@ README
 README.md
   1→# [![htop logo](htop-logo.png)](https://htop.dev)
   …
+  13→## Introduction
+  …
+  30→## Usage
+  …
+  33→### Quick Start
+  …
+  43→## Build instructions
+  44→
+  45→### Prerequisite
+  …
+  97→### Compile from source:
+  …
+  103→### Install
+  …
+  106→### Build Options
+  …
+  176→## Runtime dependencies:
+  …
+  180→### Runtime optional dependencies:
+  …
+  198→## Support
+  199→
+  200→If you have trouble running `htop` please consult your operating system / Linux distribution documentation for getting support and filing bugs.
+  202→## Bugs, development feedback
+  …
+  211→## History
+  …
+  217→## License
+  218→
+  219→GNU General Public License, version 2 (GPL-2.0) or, at your option, any later version.
 RichString.c
 RichString.h
 Row.c
 Row.h
 RowField.h
-  …
-  13→typedef enum ReservedFields_ {
-  …
-  50→} ReservedFields;
-  52→/* Follow ReservedField entries with dynamic fields defined at runtime */
-  53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD
-  54→typedef int32_t RowField;
-  …
 Scheduling.c
 Scheduling.h
 ScreenManager.c
@@ -213,49 +216,49 @@ SignalsPanel.c
 SignalsPanel.h
 SwapMeter.c
 SwapMeter.h
-  …
-  12→typedef enum {
-  13→   SWAP_METER_USED = 0,
-  14→   SWAP_METER_CACHE = 1,
-  15→   SWAP_METER_FRONTSWAP = 2,
-  16→   SWAP_METER_ITEMCOUNT = 3, // number of entries in this enum
-  17→} SwapMeterValues;
-  18→
-  19→extern const MeterClass SwapMeter_class;
-  …
 SysArchMeter.c
 SysArchMeter.h
-  …
-  12→extern const MeterClass SysArchMeter_class;
-  …
 TESTPLAN
 Table.c
 Table.h
+  …
+  20→struct Machine_;  // IWYU pragma: keep
+  21→struct Panel_;    // IWYU pragma: keep
+  22→struct Row_;      // IWYU pragma: keep
+  23→
+  24→typedef struct Table_ {
+  …
+  41→} Table;
+  42→
+  43→typedef Table* (*Table_New)(const struct Machine_*);
+  44→typedef void (*Table_ScanPrepare)(Table* this);
+  45→typedef void (*Table_ScanIterate)(Table* this);
+  46→typedef void (*Table_ScanCleanup)(Table* this);
+  47→
+  48→typedef struct TableClass_ {
+  49→   const ObjectClass super;
+  50→   const Table_ScanPrepare prepare;
+  51→   const Table_ScanIterate iterate;
+  52→   const Table_ScanCleanup cleanup;
+  53→} TableClass;
+  54→
+  55→#define As_Table(this_)  ((const TableClass*)((this_)->super.klass))
+  56→
+  57→#define Table_scanPrepare(t_)  (As_Table(t_)->prepare ? (As_Table(t_)->prepare(t_)) : Table_prepareEntries(t_))
+  58→#define Table_scanIterate(t_)  (As_Table(t_)->iterate(t_))  /* mandatory; must have a custom iterate method */
+  …
 TasksMeter.c
 TasksMeter.h
-  …
-  13→extern const MeterClass TasksMeter_class;
-  …
 TraceScreen.c
 TraceScreen.h
 UptimeMeter.c
 UptimeMeter.h
-  …
-  13→extern const MeterClass UptimeMeter_class;
-  14→
-  15→extern const MeterClass SecondsUptimeMeter_class;
-  …
 UsersTable.c
 UsersTable.h
 Vector.c
 Vector.h
 XUtils.c
 XUtils.h
-  …
-  162→static inline bool skipEndOfLine(FILE* fp) {
-  …
-  172→static inline int xDirfd(DIR* dirp) {
-  …
 autogen.sh
   1→#!/bin/sh
   2→autoreconf --force --install --verbose -Wall
@@ -273,19 +276,21 @@ darwin/
   PlatformHelpers.c
   PlatformHelpers.h
   ProcessField.h
-    …
-    11→#define PLATFORM_PROCESS_FIELDS  \
-    12→   TRANSLATED = 100,             \
-    13→                                 \
-    14→   DUMMY_BUMP_FIELD = CWD,       \
-    15→   // End of list
-    …
 docs/
   ai-contributions-policy.md
   images/
     screenshot.png
   styleguide.md
   understanding-htop-versions.md
+    1→Understanding htop versions
+    2→===========================
+    3→
+    4→Release versions
+    5→------------------
+    …
+    14→Development versions
+    15→----------------------
+    …
 dragonflybsd/
   DragonFlyBSDMachine.c
   DragonFlyBSDMachine.h
@@ -296,14 +301,6 @@ dragonflybsd/
   Platform.c
   Platform.h
   ProcessField.h
-    …
-    11→#define PLATFORM_PROCESS_FIELDS  \
-    12→   JID = 100,                    \
-    13→   JAIL = 101,                   \
-    14→                                 \
-    15→   DUMMY_BUMP_FIELD = CWD,       \
-    16→   // End of list
-    …
 freebsd/
   FreeBSDMachine.c
   FreeBSDMachine.h
@@ -314,9 +311,6 @@ freebsd/
   Platform.c
   Platform.h
   ProcessField.h
-    …
-    11→#define PLATFORM_PROCESS_FIELDS  \
-    …
 generic/
   Demangle.c
   Demangle.h
@@ -329,9 +323,6 @@ generic/
   gettime.h
   hostname.c
   hostname.h
-    …
-    13→void Generic_hostname(char* buffer, size_t size);
-    …
   openzfs_sysctl.c
   openzfs_sysctl.h
   uname.c
@@ -354,9 +345,6 @@ linux/
   GPU.h
   HugePageMeter.c
   HugePageMeter.h
-    …
-    13→extern const MeterClass HugePageMeter_class;
-    …
   IOPriority.h
   IOPriorityPanel.c
   IOPriorityPanel.h
@@ -377,14 +365,8 @@ linux/
   PressureStallMeter.c
   PressureStallMeter.h
   ProcessField.h
-    …
-    11→#define PLATFORM_PROCESS_FIELDS  \
-    …
   SELinuxMeter.c
   SELinuxMeter.h
-    …
-    13→extern const MeterClass SELinuxMeter_class;
-    …
   SystemdMeter.c
   SystemdMeter.h
   ZramMeter.c
@@ -448,9 +430,6 @@ pcp/
   Platform.c
   Platform.h
   ProcessField.h
-    …
-    13→#define PLATFORM_PROCESS_FIELDS  \
-    …
   columns/
     container
     delayacct
@@ -493,9 +472,6 @@ solaris/
   Platform.c
   Platform.h
   ProcessField.h
-    …
-    11→#define PLATFORM_PROCESS_FIELDS  \
-    …
   SolarisMachine.c
   SolarisMachine.h
   SolarisProcess.c

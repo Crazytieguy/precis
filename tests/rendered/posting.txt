@@ -1,5 +1,6 @@
 .codex/
   environments/
+    environment.toml
 .coverage
 .github/
   FUNDING.yml
@@ -100,6 +101,10 @@ docs/
     themes.md
   home-image.afdesign
   index.md
+    1→---
+    2→title: The API client that lives in your terminal
+    3→template: home.html
+    4→---
   overrides/
     home.html
   roadmap.md
@@ -146,9 +151,31 @@ pyproject.toml
   27→license = { file = "LICENSE" }
   28→keywords = ["tui", "http", "client", "terminal", "api", "testing", "textual", "cli", "posting", "developer-tool"]
   …
+  39→[project.urls]
+  40→Homepage = "https://github.com/darrenburns/posting"
+  41→Repository = "https://github.com/darrenburns/posting"
+  42→Issues = "https://github.com/darrenburns/posting/issues"
+  43→Documentation = "https://github.com/darrenburns/posting/blob/main/README.md"
+  44→
+  45→[build-system]
+  46→requires = ["hatchling"]
+  47→build-backend = "hatchling.build"
   49→[project.scripts]
   50→posting = "posting.__main__:cli"
   …
+  72→[tool.hatch.metadata]
+  73→allow-direct-references = true
+  74→
+  75→[tool.hatch.build.targets.wheel]
+  76→packages = ["src/posting"]
+  77→
+  78→[tool.pytest.ini_options]
+  79→markers = [
+  80→    "serial",  # used to indicate tests must not run in parallel
+  81→]
+  82→
+  83→[tool.coverage.run]
+  84→relative_files = true
 src/
   posting/
     __init__.py
@@ -211,72 +238,37 @@ src/
       199→    """Return a Posting instance with the given collection and environment."""
       …
     _start_time.py
-      …
-      4→START_TIME = time.perf_counter_ns()
     app.py
     auth.py
-      …
-      6→class HttpxBearerTokenAuth(httpx.Auth):
-      7→    def __init__(self, token: str):
-      8→        self.token = token
-      10→    def auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
-      …
     collection.py
     commands.py
     config.py
     exit_codes.py
-      1→GENERAL_ERROR = 1
     files.py
     help_data.py
-      …
-      4→@dataclass
-      5→class HelpData:
-      …
-      8→    title: str = field(default="")
-      9→    """Title of the widget"""
-      10→    description: str = field(default="")
-      11→    """Markdown description to be displayed in the HelpScreen"""
     help_screen.py
     highlight_url.py (empty)
     highlighters.py
     importing/
       curl.py
-        …
-        22→class CurlImport:
-        …
       open_api.py
       postman.py
     jump_overlay.py
-      …
-      16→class JumpOverlay(ModalScreen[str | Widget | None]):
-      …
     jumper.py
     locations.py
     messages.py
-      …
-      6→@dataclass
-      7→class HttpResponseReceived(Message):
-      8→    response: Response
     posting.scss
     request_headers.py
     save_request.py
     scripts.py
     suggesters.py
-      …
-      2→HEADER_SUGGESTION_LISTS = {
-      …
     themes.py
     tuple_to_multidict.py
     types.py
     urls.py
     user_host.py
-      …
-      9→def get_user_host_string() -> Text:
-      …
     variables.py
     version.py
-      …
-      3→VERSION = version("posting")
     widgets/
       __init__.py (empty)
       center_middle.py
@@ -286,15 +278,6 @@ src/
       confirmation.py
       datatable.py
       input.py
-        …
-        9→class PostingInput(Input):
-        10→    def on_mount(self) -> None:
-        …
-        18→    @property
-        19→    def cursor_style(self) -> Style:
-        …
-        26→    def on_theme_change(self, theme: Theme) -> None:
-        …
       key_value.py
       key_value_copy_modal.py
       load_env_file_dialog.py
@@ -326,13 +309,11 @@ src/
       tree.py
       variable_autocomplete.py
       variable_input.py
-        …
-        12→class VariableInput(PostingInput):
-        …
     xresources.py
     yaml.py
 tests/
   __snapshots__/
+    test_snapshots/
   posting_snapshot_app.py
   resources/
   sample-collections/

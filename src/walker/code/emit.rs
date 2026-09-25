@@ -20,7 +20,7 @@ use super::{Language, SourceFile};
 use crate::batch::{Batch, BatchKey, CodeKey, Rung};
 use crate::content::{BatchContent, Render, Span};
 use crate::value::{
-    CODE_ENTRYPOINT_FACTOR, CODE_PRIVATE_FACTOR, code_rung_value, roster_mass_factor,
+    CODE_ENTRYPOINT_FACTOR, CODE_PRIVATE_FACTOR, DEFAULT_CONCAVITY_EXPONENT, code_rung_value,
 };
 use crate::walker::{WalkCtx, file_depth_factor};
 
@@ -90,7 +90,7 @@ impl Emitter<'_> {
                 .map(|decl| Item::new(decl.name_rows.clone())),
         );
         roster.sort_by_key(|item| item.rows.first().copied());
-        let names_value = self.file_prior * roster_mass_factor(roster.len());
+        let names_value = self.file_prior * (roster.len() as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
         self.part(names, &roster, None, names_value);
 
         let mut index = 0;

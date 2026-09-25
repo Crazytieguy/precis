@@ -94,23 +94,114 @@ codec/
     sonic.go
 codecov.yml
 context.go
+  …
+  30→// Content-Type MIME of the most common data formats.
+  31→const (
+  32→	MIMEJSON              = binding.MIMEJSON
+  33→	MIMEHTML              = binding.MIMEHTML
+  34→	MIMEXML               = binding.MIMEXML
+  35→	MIMEXML2              = binding.MIMEXML2
+  36→	MIMEPlain             = binding.MIMEPlain
+  37→	MIMEPOSTForm          = binding.MIMEPOSTForm
+  38→	MIMEMultipartPOSTForm = binding.MIMEMultipartPOSTForm
+  39→	MIMEYAML              = binding.MIMEYAML
+  40→	MIMEYAML2             = binding.MIMEYAML2
+  41→	MIMETOML              = binding.MIMETOML
+  42→	MIMEPROTOBUF          = binding.MIMEPROTOBUF
+  43→	MIMEBSON              = binding.MIMEBSON
+  44→)
+  46→// BodyBytesKey indicates a default body bytes key.
+  47→const BodyBytesKey = "_gin-gonic/gin/bodybyteskey"
+  49→// ContextKey is the key that a Context returns itself for.
+  50→const ContextKey = "_gin-gonic/gin/contextkey"
+  52→type ContextKeyType int
+  53→
+  54→const ContextRequestKey ContextKeyType = 0
+  56→// abortIndex represents a typical value used in abort functions.
+  57→const abortIndex int8 = math.MaxInt8 >> 1
+  …
+  61→type Context struct {
+  62→	writermem responseWriter
+  63→	Request   *http.Request
+  64→	Writer    ResponseWriter
+  65→
+  66→	Params   Params
+  67→	handlers HandlersChain
+  68→	index    int8
+  69→	fullPath string
+  70→
+  71→	engine       *Engine
+  72→	params       *Params
+  73→	skippedNodes *[]skippedNode
+  74→
+  75→	// This mutex protects Keys map.
+  76→	mu sync.RWMutex
+  77→
+  78→	// Keys is a key/value pair exclusively for the context of each request.
+  79→	Keys map[any]any
+  80→
+  81→	// Errors is a list of errors attached to all the handlers/middlewares who used this context.
+  82→	Errors errorMsgs
+  83→
+  84→	// Accepted defines a list of manually accepted formats for content negotiation.
+  85→	Accepted []string
+  86→
+  87→	// queryCache caches the query result from c.Request.URL.Query().
+  88→	queryCache url.Values
+  89→
+  90→	// formCache caches c.Request.PostForm, which contains the parsed form data from POST, PATCH,
+  91→	// or PUT body parameters.
+  92→	formCache url.Values
+  93→
+  94→	// SameSite allows a server to define a cookie attribute making it impossible for
+  95→	// the browser to send this cookie along with cross-site requests.
+  96→	sameSite http.SameSite
+  97→}
+  …
+  103→func (c *Context) reset() {
+  …
+  120→// Copy returns a copy of the current context that can be safely used outside the request's scope.
+  121→// This has to be used when the context has to be passed to a goroutine.
+  122→func (c *Context) Copy() *Context {
+  …
+  147→// HandlerName returns the main handler's name. For example if the handler is "handleGetUsers()",
+  148→// this function will return "main.handleGetUsers".
+  149→func (c *Context) HandlerName() string {
+  …
+  153→// HandlerNames returns a list of all registered handlers for this context in descending order,
+  154→// following the semantics of HandlerName()
+  155→func (c *Context) HandlerNames() []string {
+  …
+  166→// Handler returns the main handler.
+  167→func (c *Context) Handler() HandlerFunc {
+  …
+  177→func (c *Context) FullPath() string {
+  …
+  185→// Next should be used only inside middleware.
+  186→// It executes the pending handlers in the chain inside the calling handler.
+  187→// See example in GitHub.
+  188→func (c *Context) Next() {
+  …
+  198→// IsAborted returns true if the current context was aborted.
+  199→func (c *Context) IsAborted() bool {
+  …
+  207→func (c *Context) Abort() {
+  …
+  211→// AbortWithStatus calls `Abort()` and writes the headers with the specified status code.
+  212→// For example, a failed attempt to authenticate a request could use: context.AbortWithStatus(401).
+  213→func (c *Context) AbortWithStatus(code int) {
+  …
+  219→// AbortWithStatusPureJSON calls `Abort()` and then `PureJSON` internally.
+  220→// This method stops the chain, writes the status code and return a JSON body without escaping.
+  221→// It also sets the Content-Type as "application/json".
+  222→func (c *Context) AbortWithStatusPureJSON(code int, jsonObj any) {
+  …
 context_appengine.go
-  …
-  9→func init() {
-  10→	defaultPlatform = PlatformGoogleAppEngine
-  …
 context_file_test.go
 context_test.go
 debug.go
 debug_test.go
 deprecated.go
-  …
-  13→// BindWith binds the passed struct pointer using the specified binding engine.
-  14→// See the binding package.
-  15→//
-  16→// Deprecated: Use MustBindWith or ShouldBindWith.
-  17→func (c *Context) BindWith(obj any, b binding.Binding) error {
-  …
 deprecated_test.go
 doc.go
   1→/*
@@ -144,22 +235,6 @@ errors_test.go
 examples/
   README.md
 fs.go
-  …
-  12→// OnlyFilesFS implements an http.FileSystem without `Readdir` functionality.
-  13→type OnlyFilesFS struct {
-  14→	FileSystem http.FileSystem
-  15→}
-  17→// Open passes `Open` to the upstream implementation without `Readdir` functionality.
-  18→func (o OnlyFilesFS) Open(name string) (http.File, error) {
-  …
-  28→type neutralizedReaddirFile struct {
-  29→	http.File
-  30→}
-  32→// Readdir overrides the http.File default implementation and always returns nil.
-  33→func (n neutralizedReaddirFile) Readdir(_ int) ([]os.FileInfo, error) {
-  …
-  42→func Dir(root string, listDirectory bool) http.FileSystem {
-  …
 fs_test.go
 gin.go
   …
@@ -245,67 +320,11 @@ internal/
     fs.go
     fs_test.go
 logger.go
-  …
-  17→type consoleColorModeValue int
-  19→const (
-  20→	autoColor consoleColorModeValue = iota
-  21→	disableColor
-  22→	forceColor
-  23→)
-  25→const (
-  26→	green   = "\033[97;42m"
-  27→	white   = "\033[90;47m"
-  28→	yellow  = "\033[90;43m"
-  29→	red     = "\033[97;41m"
-  30→	blue    = "\033[97;44m"
-  31→	magenta = "\033[97;45m"
-  32→	cyan    = "\033[97;46m"
-  33→	reset   = "\033[0m"
-  34→)
-  36→var consoleColorMode = autoColor
-  38→// LoggerConfig defines the config for Logger middleware.
-  39→type LoggerConfig struct {
-  40→	// Optional. Default value is gin.defaultLogFormatter
-  41→	Formatter LogFormatter
-  42→
-  43→	// Output is a writer where logs are written.
-  44→	// Optional. Default value is gin.DefaultWriter.
-  45→	Output io.Writer
-  46→
-  47→	// SkipPaths is a URL path array which logs are not written.
-  48→	// Optional.
-  49→	SkipPaths []string
-  50→
-  51→	// SkipQueryString indicates that query strings should not be written
-  52→	// for cases such as when API keys are passed via query strings.
-  53→	// Optional. Default value is false.
-  54→	SkipQueryString bool
-  55→
-  56→	// Skip is a Skipper that indicates which logs should not be written.
-  57→	// Optional.
-  58→	Skip Skipper
-  59→}
-  61→// Skipper is a function to skip logs based on provided Context
-  62→type Skipper func(c *Context) bool
-  64→// LogFormatter gives the signature of the formatter function passed to LoggerWithFormatter
-  65→type LogFormatter func(params LogFormatterParams) string
-  …
-  68→type LogFormatterParams struct {
-  …
 logger_test.go
 middleware_test.go
 mode.go
 mode_test.go
 path.go
-  …
-  8→const stackBufSize = 128
-  …
-  23→func cleanPath(p string) string {
-  …
-  128→func bufApp(buf *[]byte, s string, w int, c byte) {
-  …
-  155→func removeRepeatedChar(s string, char byte) string {
-  …
 path_test.go
 recovery.go
 recovery_test.go
@@ -320,18 +339,6 @@ render/
   reader.go
   reader_test.go
   redirect.go
-    …
-    12→// Redirect contains the http request reference and redirects status code and location.
-    13→type Redirect struct {
-    14→	Code     int
-    15→	Request  *http.Request
-    16→	Location string
-    17→}
-    19→// Render (Redirect) redirects the http request to new location and writes redirect response.
-    20→func (r Redirect) Render(w http.ResponseWriter) error {
-    …
-    28→// WriteContentType (Redirect) don't write any ContentType.
-    29→func (r Redirect) WriteContentType(http.ResponseWriter) {}
   render.go
   render_msgpack_test.go
   render_test.go
@@ -361,6 +368,3 @@ tree_test.go
 utils.go
 utils_test.go
 version.go
-  …
-  7→// Version is the current gin framework's version.
-  8→const Version = "v1.12.0"

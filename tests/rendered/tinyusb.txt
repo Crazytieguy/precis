@@ -17,23 +17,6 @@
     build.yml
     build_util.yml
     ci_set_matrix.py
-      …
-      5→toolchain_list = [
-      6→    "aarch64-gcc",
-      7→    "arm-clang",
-      8→    "arm-iar",
-      9→    "arm-gcc",
-      10→    "esp-idf",
-      11→    "ft9xx-gcc",
-      12→    "msp430-gcc",
-      13→    "riscv-gcc",
-      14→    "rx-gcc"
-      15→]
-      …
-      18→family_list = {
-      …
-      97→def set_matrix_json():
-      …
     cifuzz.yml
     claude-code-review.yml
     claude.yml
@@ -191,6 +174,12 @@ examples/
       only.txt
       skip.txt
       src/
+        app.h
+        cdc_app.c
+        hid_app.c
+        main.c
+        msc_app.c
+        tusb_config.h
     cdc_msc_hid_freertos/
       CMakeLists.txt
       CMakePresets.json
@@ -212,7 +201,26 @@ examples/
         tusb_config.h
     midi_rx/
     msc_file_explorer/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      README.md
+      only.txt
+      skip.txt
+      src/
+        ffconf.h
+        main.c
+        msc_app.c
+        msc_app.h
+        tusb_config.h
     msc_file_explorer_freertos/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      README.md
+      only.txt
+      skip.txt
+      src/
   typec/
   west.yml
 hw/

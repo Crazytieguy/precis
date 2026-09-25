@@ -63,10 +63,6 @@ assets/
 cmd/
   tock/
     main.go
-      …
-      7→func main() {
-      8→	cli.Execute()
-      …
 demo/
   demo_script.sh
 docs/
@@ -164,13 +160,6 @@ internal/
       calendar.go
       calendar_sidebar.go
       continue.go
-        …
-        15→const (
-        16→	defaultRecentActivitiesForContinuation = 10
-        17→)
-        19→//nolint:funlen // Include all logic in one function
-        20→func NewContinueCmd() *cobra.Command {
-        …
       current.go
       ical.go
       interactive.go
@@ -180,14 +169,7 @@ internal/
       report.go
       root.go
       start.go
-        …
-        16→//nolint:gocognit,funlen // Include all logic in one function
-        17→func NewStartCmd() *cobra.Command {
-        …
       stop.go
-        …
-        14→func NewStopCmd() *cobra.Command {
-        …
       theme.go
       update.go
       version.go
@@ -220,24 +202,8 @@ internal/
         mock_activityresolver.go
         mock_notesrepository.go
       ports.go
-        …
-        11→type ActivityResolver interface {
-        …
-        22→type ActivityRepository interface {
-        23→	Save(ctx context.Context, activity models.Activity) error
-        24→	FindLast(ctx context.Context) (*models.Activity, error)
-        25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-        26→	Remove(ctx context.Context, activity models.Activity) error
-        27→}
-        29→type NotesRepository interface {
-        30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
-        31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
-        32→}
   extra/
     extra.go
-      …
-      11→func CalculateEndTime(tf *timeutil.Formatter, startTime time.Time, endStr, durationStr string) (time.Time, error) {
-      …
     extra_test.go
   services/
     activity/

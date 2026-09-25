@@ -163,69 +163,80 @@ chibicc.h
   102→File **get_input_files(void);
   103→File *new_file(char *name, int file_no, char *contents);
   104→Token *tokenize_string_literal(Token *tok, Type *basety);
+  105→Token *tokenize(File *file);
+  106→Token *tokenize_file(char *filename);
+  107→
+  108→#define unreachable() \
+  109→  error("internal error at %s:%d", __FILE__, __LINE__)
+  …
+  115→char *search_include_paths(char *filename);
+  116→void init_macros(void);
+  117→void define_macro(char *name, char *buf);
+  118→void undef_macro(char *name);
+  119→Token *preprocess(Token *tok);
+  …
+  125→// Variable or function
+  126→typedef struct Obj Obj;
+  127→struct Obj {
+  …
+  167→typedef struct Relocation Relocation;
+  168→struct Relocation {
+  169→  Relocation *next;
+  170→  int offset;
+  171→  char **label;
+  172→  long addend;
+  173→};
+  …
+  176→typedef enum {
+  …
+  225→} NodeKind;
+  …
+  228→struct Node {
+  …
+  293→Node *new_cast(Node *expr, Type *ty);
+  294→int64_t const_expr(Token **rest, Token *tok);
+  295→Obj *parse(Token *tok);
+  …
+  301→typedef enum {
+  …
+  318→} TypeKind;
+  319→
+  320→struct Type {
+  …
+  361→// Struct member
+  362→struct Member {
+  363→  Member *next;
+  364→  Type *ty;
+  365→  Token *tok; // for error message
+  366→  Token *name;
+  367→  int idx;
+  368→  int align;
+  369→  int offset;
+  370→
+  371→  // Bitfield
+  372→  bool is_bitfield;
+  373→  int bit_offset;
+  374→  int bit_width;
+  375→};
+  377→extern Type *ty_void;
+  378→extern Type *ty_bool;
+  379→
+  380→extern Type *ty_char;
   …
 codegen.c
 hashmap.c
 include/
   float.h
-    …
-    4→#define DECIMAL_DIG 21
-    5→#define FLT_EVAL_METHOD 0 // C11 5.2.4.2.2p9
-    6→#define FLT_RADIX 2
-    7→#define FLT_ROUNDS 1      // C11 5.2.4.2.2p8: to nearest
-    8→
-    9→#define FLT_DIG 6
-    10→#define FLT_EPSILON 0x1p-23
-    11→#define FLT_MANT_DIG 24
-    12→#define FLT_MAX 0x1.fffffep+127
-    13→#define FLT_MAX_10_EXP 38
-    14→#define FLT_MAX_EXP 128
-    15→#define FLT_MIN 0x1p-126
-    16→#define FLT_MIN_10_EXP -37
-    17→#define FLT_MIN_EXP -125
-    18→#define FLT_TRUE_MIN 0x1p-149
-    …
   stdalign.h
-    …
-    4→#define alignas _Alignas
-    5→#define alignof _Alignof
-    6→#define __alignas_is_defined 1
-    7→#define __alignof_is_defined 1
-    …
   stdarg.h
   stdatomic.h
   stdbool.h
-    …
-    4→#define bool _Bool
-    5→#define true 1
-    6→#define false 0
-    7→#define __bool_true_false_are_defined 1
-    …
   stddef.h
-    …
-    4→#define NULL ((void *)0)
-    5→
-    6→typedef unsigned long size_t;
-    7→typedef long ptrdiff_t;
-    8→typedef unsigned int wchar_t;
-    9→typedef long max_align_t;
-    10→
-    11→#define offsetof(type, member) ((size_t)&(((type *)0)->member))
-    …
   stdnoreturn.h
-    …
-    4→#define noreturn _Noreturn
-    …
 main.c
 parse.c
 preprocess.c
 strings.c
-  …
-  3→void strarray_push(StringArray *arr, char *s) {
-  …
-  19→// Takes a printf-style format string and returns a formatted string.
-  20→char *format(char *fmt, ...) {
-  …
 test/
   alignof.c
   alloca.c

@@ -36,9 +36,20 @@ README.md
   20→## A Simple Example
   …
   38→## Donate
-  …
+  39→
+  40→The Pallets organization develops and supports Flask and the libraries
+  41→it uses. In order to grow the community of contributors and users, and
+  42→allow the maintainers to devote more time to the projects, [please
+  43→donate today].
+  44→
+  45→[please donate today]: https://palletsprojects.com/donate
   47→## Contributing
-  …
+  48→
+  49→See our [detailed contributing documentation][contrib] for many ways to
+  50→contribute, including reporting issues, requesting features, asking or answering
+  51→questions, and making PRs.
+  52→
+  53→[contrib]: https://palletsprojects.com/contributing/
 docs/
   Makefile
   _static/
@@ -245,18 +256,6 @@ src/
     __main__.py
     app.py
     blueprints.py
-      …
-      18→class Blueprint(SansioBlueprint):
-      19→    def __init__(
-      …
-      55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
-      …
-      82→    def send_static_file(self, filename: str) -> Response:
-      …
-      104→    def open_resource(
-      105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
-      106→    ) -> t.IO[t.AnyStr]:
-      …
     cli.py
     config.py
     ctx.py
@@ -320,19 +319,6 @@ src/
     typing.py
     views.py
     wrappers.py
-      …
-      18→class Request(RequestBase):
-      …
-      222→class Response(ResponseBase):
-      …
-      240→    default_mimetype: str | None = "text/html"
-      241→
-      242→    json_module = json
-      243→
-      244→    autocorrect_location_header = False
-      246→    @property
-      247→    def max_cookie_size(self) -> int:  # type: ignore
-      …
 tests/
   conftest.py
   static/
@@ -360,6 +346,8 @@ tests/
       inner1/
         __init__.py
         inner2/
+          __init__.py (empty)
+          flask.py
       message.txt
       multiapp.py
     helloworld/

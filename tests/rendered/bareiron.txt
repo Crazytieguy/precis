@@ -87,10 +87,6 @@ build_registries.js
 extract_registries.sh
 include/
   crafting.h
-    …
-    6→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item);
-    7→void getSmeltingOutput (PlayerData *player);
-    …
   globals.h
     …
     7→#ifdef ESP_PLATFORM
@@ -130,6 +126,42 @@ include/
     53→#define CHUNK_SIZE 8
     55→// Terrain low point - should start a bit below sea level for rivers/lakes
     56→#define TERRAIN_BASE_HEIGHT 60
+    58→// Cave generation Y level
+    59→#define CAVE_BASE_DEPTH 24
+    61→// Size of every major biome in multiples of CHUNK_SIZE
+    62→// For best performance, should also be a power of 2
+    63→#define BIOME_SIZE (CHUNK_SIZE * 8)
+    65→// Calculated from BIOME_SIZE
+    66→#define BIOME_RADIUS (BIOME_SIZE / 2)
+    …
+    71→#define VISITED_HISTORY 4
+    73→// How many player-made block changes to allow
+    74→// Determines the fixed amount of memory allocated to blocks
+    75→#define MAX_BLOCK_CHANGES 20000
+    …
+    93→#define DISK_SYNC_INTERVAL 15000000
+    …
+    103→#define NETWORK_TIMEOUT_TIME 15000000
+    105→// Size of the receive buffer for incoming string data
+    106→#define MAX_RECV_BUF_LEN 256
+    …
+    165→#define STATE_NONE 0
+    166→#define STATE_STATUS 1
+    167→#define STATE_LOGIN 2
+    168→#define STATE_TRANSFER 3
+    169→#define STATE_CONFIGURATION 4
+    170→#define STATE_PLAY 5
+    171→
+    172→extern ssize_t recv_count;
+    173→extern uint8_t recv_buffer[MAX_RECV_BUF_LEN];
+    174→
+    175→extern uint32_t world_seed;
+    176→extern uint32_t rng_seed;
+    177→
+    178→extern uint16_t world_time;
+    179→extern uint32_t server_ticks;
+    180→
+    181→extern char motd[];
     …
   packets.h
     …
@@ -163,26 +195,7 @@ include/
     21→int givePlayerItem (PlayerData *player, uint16_t item, uint8_t count);
     …
   serialize.h
-    …
-    6→#ifdef SYNC_WORLD_TO_DISK
-    7→  int initSerializer ();
-    8→  void writeBlockChangesToDisk (int from, int to);
-    9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
-    10→  void writePlayerDataToDisk ();
-    11→  void writeDataToDiskOnInterval ();
-    12→#else
-    13→  // Define no-op placeholders for when disk syncing isn't enabled
-    14→  #define writeBlockChangesToDisk(a, b)
-    15→  #define writeChestChangesToDisk(a, b)
-    16→  #define writePlayerDataToDisk()
-    17→  #define writeDataToDiskOnInterval()
-    18→  #define initSerializer() 0
-    19→#endif
-    …
   structures.h
-    …
-    4→void placeTreeStructure (short x, uint8_t y, short z);
-    …
   tools.h
     …
     8→static inline int mod_abs (int a, int b) {
@@ -202,24 +215,12 @@ include/
     23→ssize_t writeUint64 (int client_fd, uint64_t num);
     …
   varnum.h
-    …
-    6→#define SEGMENT_BITS 0x7F
-    7→#define CONTINUE_BIT 0x80
-    8→#define VARNUM_ERROR 0xFFFFFFFF
-    9→
-    10→int32_t readVarInt (int client_fd);
-    11→int sizeVarInt (uint32_t value);
-    12→void writeVarInt (int client_fd, uint32_t value);
-    …
   worldgen.h
 src/
   CMakeLists.txt
   crafting.c
   globals.c
   main.c
-    …
-    68→void handlePacket (int client_fd, int length, int packet_id, int state) {
-    …
   packets.c
   procedures.c
   serialize.c

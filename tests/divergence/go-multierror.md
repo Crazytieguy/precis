@@ -1,4 +1,4 @@
-Score(3000)=0.546 I=0.556 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.418/0.470/0.513/0.546/0.602/0.892/0.804
+Score(3000)=0.546 I=0.556 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.454/0.416/0.519/0.546/0.602/0.892/0.804
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -7,62 +7,62 @@ Score(3000)=0.546 I=0.556 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 83 |  | 29 | go.mod: module path and language version | 1.2 |  | 0.000 |
 | walker |  | 109 | 29 | GoMod::Identity { file: go.mod } |  |  | 0.562 |
 | walker |  | 109 | 0 | GoMod::File { file: go.mod } |  |  | 0.562 |
-| walker |  | 127 | 18 | Code::CodeKey { rung: Names, file: prefix.go, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
-| walker |  | 147 | 20 | Code::CodeKey { rung: Names, file: append.go, decl: 0, sub: 0, line: 0 } |  |  | 0.564 |
-| walker |  | 161 | 14 | Fs::DirListing { dir: .github } |  |  | 0.564 |
-| ns | 163 |  | 80 | Complete root directory listing | 1.3 |  | 0.646 |
-| walker |  | 173 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.647 |
-| ns | 240 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.588 |
-| walker |  | 280 | 107 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.607 |
+| walker |  | 123 | 14 | Fs::DirListing { dir: .github } |  |  | 0.563 |
+| walker |  | 135 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.563 |
+| ns | 163 |  | 80 | Complete root directory listing | 1.3 |  | 0.645 |
+| ns | 240 |  | 77 | README: why returning a list-of-errors as an error works | 1.4 |  | 0.586 |
+| walker |  | 242 | 107 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.605 |
+| walker |  | 291 | 49 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.607 |
 | ns | 315 |  | 75 | The `Error` type: doc comment and both fields | 1.5 |  | 0.551 |
-| walker |  | 329 | 49 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.552 |
-| ns | 467 |  | 152 | Package-level API roster: every exported func/type outside multierror.go, with full signatures | 1.6 |  | 0.451 |
-| ns | 606 |  | 139 | Every method on `Error`, across multierror.go and sort.go | 1.7 |  | 0.390 |
-| ns | 682 |  | 76 | The unexported `chain` type and its four methods | 1.8 |  | 0.364 |
-| walker |  | 717 | 388 | Plaintext::Whole { file: Makefile } |  |  | 0.367 |
-| walker |  | 749 | 32 | Code::CodeKey { rung: Names, file: flatten.go, decl: 0, sub: 0, line: 0 } |  |  | 0.379 |
-| walker |  | 783 | 34 | Code::CodeKey { rung: Names, file: format.go, decl: 0, sub: 0, line: 0 } |  |  | 0.400 |
-| walker |  | 831 | 48 | Code::CodeKey { rung: Names, file: group.go, decl: 0, sub: 0, line: 0 } |  |  | 0.437 |
-| ns | 853 |  | 171 | README section map: every heading and every bold subsection label | 1.9 |  | 0.406 |
-| walker |  | 864 | 33 | Code::CodeKey { rung: Decl, file: group.go, decl: 1, sub: 0, line: 10 } |  |  | 0.413 |
-| walker |  | 893 | 29 | Code::CodeKey { rung: Doc, file: group.go, decl: 1, sub: 0, line: 10 } |  |  | 0.414 |
-| walker |  | 923 | 30 | Code::CodeKey { rung: Doc, file: flatten.go, decl: 1, sub: 0, line: 8 } |  |  | 0.414 |
-| ns | 946 |  | 93 | README deprecation note: prefer stdlib `errors.Join` | 2.1 |  | 0.417 |
-| walker |  | 953 | 30 | Code::CodeKey { rung: Doc, file: group.go, decl: 3, sub: 0, line: 36 } |  |  | 0.418 |
-| walker |  | 1008 | 55 | Code::CodeKey { rung: Names, file: sort.go, decl: 0, sub: 0, line: 0 } |  |  | 0.425 |
-| walker |  | 1021 | 13 | Code::CodeKey { rung: Doc, file: sort.go, decl: 1, sub: 0, line: 7 } |  |  | 0.425 |
-| walker |  | 1035 | 14 | Code::CodeKey { rung: Doc, file: sort.go, decl: 2, sub: 0, line: 16 } |  |  | 0.425 |
-| walker |  | 1049 | 14 | Code::CodeKey { rung: Doc, file: sort.go, decl: 3, sub: 0, line: 21 } |  |  | 0.425 |
-| walker |  | 1067 | 18 | Code::CodeKey { rung: Body, file: sort.go, decl: 3, sub: 0, line: 21 } |  |  | 0.427 |
-| ns | 1070 |  | 124 | `Append` doc comment: nil handling and one-level flattening | 2.2 | 1.6 | 0.408 |
-| walker |  | 1088 | 21 | Code::CodeKey { rung: Body, file: sort.go, decl: 2, sub: 0, line: 16 } |  |  | 0.410 |
-| walker |  | 1121 | 33 | Code::CodeKey { rung: Doc, file: format.go, decl: 1, sub: 0, line: 13 } |  |  | 0.410 |
-| walker |  | 1155 | 34 | Code::CodeKey { rung: Doc, file: format.go, decl: 2, sub: 0, line: 17 } |  |  | 0.411 |
-| walker |  | 1191 | 36 | Code::CodeKey { rung: Body, file: group.go, decl: 3, sub: 0, line: 36 } |  |  | 0.418 |
-| walker |  | 1241 | 50 | Code::CodeKey { rung: Doc, file: group.go, decl: 2, sub: 0, line: 20 } |  |  | 0.421 |
-| ns | 1360 |  | 290 | README: stdlib compatibility, install, and the go 1.13 requirement | 2.3 |  | 0.387 |
-| walker |  | 1415 | 174 | Code::CodeKey { rung: Names, file: multierror.go, decl: 0, sub: 0, line: 0 } |  |  | 0.462 |
-| walker |  | 1438 | 23 | Code::CodeKey { rung: Decl, file: multierror.go, decl: 1, sub: 0, line: 13 } |  |  | 0.470 |
-| walker |  | 1453 | 15 | Code::CodeKey { rung: Body, file: multierror.go, decl: 4, sub: 0, line: 42 } |  |  | 0.476 |
-| walker |  | 1462 | 9 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 8, sub: 0, line: 102 } |  |  | 0.476 |
-| walker |  | 1493 | 31 | Code::CodeKey { rung: Body, file: multierror.go, decl: 5, sub: 0, line: 53 } |  |  | 0.482 |
-| walker |  | 1531 | 38 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 1, sub: 0, line: 13 } |  |  | 0.513 |
-| walker |  | 1547 | 16 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 11, sub: 0, line: 122 } |  |  | 0.513 |
-| walker |  | 1565 | 18 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 10, sub: 0, line: 117 } |  |  | 0.513 |
-| ns | 1580 |  | 220 | README: the canonical accumulate-with-Append recipe | 2.4 |  | 0.470 |
-| walker |  | 1637 | 72 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 3, sub: 0, line: 31 } |  |  | 0.471 |
-| walker |  | 1671 | 34 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 9, sub: 0, line: 108 } |  |  | 0.471 |
-| ns | 1770 |  | 190 | `ErrorOrNil` and `WrappedErrors` doc comments | 2.5 | 1.7 | 0.456 |
-| walker |  | 1789 | 118 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 5, sub: 0, line: 53 } |  |  | 0.495 |
-| ns | 1945 |  | 175 | `Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support | 2.6 | 1.7 | 0.475 |
-| walker |  | 1964 | 175 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.516 |
-| walker |  | 1975 | 11 | Code::CodeKey { rung: Body, file: multierror.go, decl: 8, sub: 0, line: 102 } |  |  | 0.520 |
-| walker |  | 2013 | 38 | Code::CodeKey { rung: Body, file: sort.go, decl: 1, sub: 0, line: 7 } |  |  | 0.526 |
-| ns | 2063 |  | 118 | `Flatten` and `Prefix` doc comments | 2.7 | 1.6 | 0.513 |
-| walker |  | 2101 | 88 | Code::CodeKey { rung: Doc, file: prefix.go, decl: 1, sub: 0, line: 16 } |  |  | 0.538 |
-| ns | 2174 |  | 111 | `Group` doc comments: Go and Wait | 2.8 | 1.6 | 0.546 |
-| walker |  | 2200 | 99 | Code::CodeKey { rung: Body, file: flatten.go, decl: 1, sub: 0, line: 8 } |  |  | 0.552 |
-| walker |  | 2213 | 13 | Code::CodeKey { rung: Body, file: multierror.go, decl: 10, sub: 0, line: 117 } |  |  | 0.556 |
+| ns | 467 |  | 152 | Package-level API roster: every exported func/type outside multierror.go, with full signatures | 1.6 |  | 0.445 |
+| ns | 606 |  | 139 | Every method on `Error`, across multierror.go and sort.go | 1.7 |  | 0.385 |
+| walker |  | 679 | 388 | Plaintext::Whole { file: Makefile } |  |  | 0.388 |
+| ns | 682 |  | 76 | The unexported `chain` type and its four methods | 1.8 |  | 0.362 |
+| walker |  | 853 | 174 | Code::CodeKey { rung: Names, file: multierror.go, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
+| ns | 853 |  | 171 | README section map: every heading and every bold subsection label | 1.9 |  | 0.396 |
+| walker |  | 876 | 23 | Code::CodeKey { rung: Decl, file: multierror.go, decl: 1, sub: 0, line: 13 } |  |  | 0.406 |
+| walker |  | 891 | 15 | Code::CodeKey { rung: Body, file: multierror.go, decl: 4, sub: 0, line: 42 } |  |  | 0.410 |
+| walker |  | 900 | 9 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 8, sub: 0, line: 102 } |  |  | 0.410 |
+| walker |  | 931 | 31 | Code::CodeKey { rung: Body, file: multierror.go, decl: 5, sub: 0, line: 53 } |  |  | 0.415 |
+| ns | 946 |  | 93 | README deprecation note: prefer stdlib `errors.Join` | 2.1 |  | 0.418 |
+| walker |  | 969 | 38 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 1, sub: 0, line: 13 } |  |  | 0.454 |
+| walker |  | 985 | 16 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 11, sub: 0, line: 122 } |  |  | 0.454 |
+| walker |  | 1003 | 18 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 10, sub: 0, line: 117 } |  |  | 0.454 |
+| ns | 1070 |  | 124 | `Append` doc comment: nil handling and one-level flattening | 2.2 | 1.6 | 0.433 |
+| walker |  | 1075 | 72 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 3, sub: 0, line: 31 } |  |  | 0.434 |
+| walker |  | 1109 | 34 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 9, sub: 0, line: 108 } |  |  | 0.434 |
+| walker |  | 1227 | 118 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 5, sub: 0, line: 53 } |  |  | 0.440 |
+| ns | 1360 |  | 290 | README: stdlib compatibility, install, and the go 1.13 requirement | 2.3 |  | 0.405 |
+| walker |  | 1402 | 175 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.410 |
+| walker |  | 1413 | 11 | Code::CodeKey { rung: Body, file: multierror.go, decl: 8, sub: 0, line: 102 } |  |  | 0.416 |
+| walker |  | 1445 | 32 | Code::CodeKey { rung: Names, file: flatten.go, decl: 0, sub: 0, line: 0 } |  |  | 0.419 |
+| walker |  | 1475 | 30 | Code::CodeKey { rung: Doc, file: flatten.go, decl: 1, sub: 0, line: 8 } |  |  | 0.419 |
+| walker |  | 1523 | 48 | Code::CodeKey { rung: Names, file: group.go, decl: 0, sub: 0, line: 0 } |  |  | 0.431 |
+| walker |  | 1556 | 33 | Code::CodeKey { rung: Decl, file: group.go, decl: 1, sub: 0, line: 10 } |  |  | 0.435 |
+| ns | 1580 |  | 220 | README: the canonical accumulate-with-Append recipe | 2.4 |  | 0.399 |
+| walker |  | 1585 | 29 | Code::CodeKey { rung: Doc, file: group.go, decl: 1, sub: 0, line: 10 } |  |  | 0.399 |
+| walker |  | 1615 | 30 | Code::CodeKey { rung: Doc, file: group.go, decl: 3, sub: 0, line: 36 } |  |  | 0.400 |
+| walker |  | 1651 | 36 | Code::CodeKey { rung: Body, file: group.go, decl: 3, sub: 0, line: 36 } |  |  | 0.403 |
+| walker |  | 1701 | 50 | Code::CodeKey { rung: Doc, file: group.go, decl: 2, sub: 0, line: 20 } |  |  | 0.405 |
+| walker |  | 1735 | 34 | Code::CodeKey { rung: Names, file: format.go, decl: 0, sub: 0, line: 0 } |  |  | 0.423 |
+| walker |  | 1768 | 33 | Code::CodeKey { rung: Doc, file: format.go, decl: 1, sub: 0, line: 13 } |  |  | 0.423 |
+| ns | 1770 |  | 190 | `ErrorOrNil` and `WrappedErrors` doc comments | 2.5 | 1.7 | 0.447 |
+| walker |  | 1802 | 34 | Code::CodeKey { rung: Doc, file: format.go, decl: 2, sub: 0, line: 17 } |  |  | 0.447 |
+| walker |  | 1901 | 99 | Code::CodeKey { rung: Body, file: flatten.go, decl: 1, sub: 0, line: 8 } |  |  | 0.452 |
+| walker |  | 1919 | 18 | Code::CodeKey { rung: Names, file: prefix.go, decl: 0, sub: 0, line: 0 } |  |  | 0.464 |
+| ns | 1945 |  | 175 | `Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support | 2.6 | 1.7 | 0.481 |
+| walker |  | 2007 | 88 | Code::CodeKey { rung: Doc, file: prefix.go, decl: 1, sub: 0, line: 16 } |  |  | 0.485 |
+| walker |  | 2062 | 55 | Code::CodeKey { rung: Names, file: sort.go, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
+| ns | 2063 |  | 118 | `Flatten` and `Prefix` doc comments | 2.7 | 1.6 | 0.519 |
+| walker |  | 2075 | 13 | Code::CodeKey { rung: Doc, file: sort.go, decl: 1, sub: 0, line: 7 } |  |  | 0.519 |
+| walker |  | 2089 | 14 | Code::CodeKey { rung: Doc, file: sort.go, decl: 2, sub: 0, line: 16 } |  |  | 0.519 |
+| walker |  | 2103 | 14 | Code::CodeKey { rung: Doc, file: sort.go, decl: 3, sub: 0, line: 21 } |  |  | 0.519 |
+| walker |  | 2121 | 18 | Code::CodeKey { rung: Body, file: sort.go, decl: 3, sub: 0, line: 21 } |  |  | 0.523 |
+| walker |  | 2142 | 21 | Code::CodeKey { rung: Body, file: sort.go, decl: 2, sub: 0, line: 16 } |  |  | 0.527 |
+| ns | 2174 |  | 111 | `Group` doc comments: Go and Wait | 2.8 | 1.6 | 0.535 |
+| walker |  | 2180 | 38 | Code::CodeKey { rung: Body, file: sort.go, decl: 1, sub: 0, line: 7 } |  |  | 0.540 |
+| walker |  | 2193 | 13 | Code::CodeKey { rung: Body, file: multierror.go, decl: 10, sub: 0, line: 117 } |  |  | 0.545 |
+| walker |  | 2213 | 20 | Code::CodeKey { rung: Names, file: append.go, decl: 0, sub: 0, line: 0 } |  |  | 0.556 |
 | walker |  | 2337 | 124 | Code::CodeKey { rung: Doc, file: append.go, decl: 1, sub: 0, line: 14 } |  |  | 0.585 |
 | ns | 2383 |  | 209 | format.go semantics: the formatter hook and the default output strings | 2.9 | 1.6 | 0.560 |
 | ns | 2508 |  | 125 | README: customizing the message via `ErrorFormat` | 2.10 |  | 0.538 |
@@ -96,45 +96,45 @@ Score(3000)=0.546 I=0.556 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 5293 | 307 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.851 |
 | ns | 5311 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.850 |
 | walker |  | 5333 | 40 | Code::CodeKey { rung: Body, file: multierror.go, decl: 9, sub: 0, line: 108 } |  |  | 0.860 |
-| walker |  | 5350 | 17 | Code::CodeKey { rung: Names, file: group_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.860 |
 | ns | 5401 |  | 90 | sort.go bodies: Len/Swap/Less | 3.8 | 1.7 | 0.857 |
 | ns | 5477 |  | 76 | Every import block in the package: stdlib only | 3.9 |  | 0.845 |
-| walker |  | 5504 | 154 | Code::CodeKey { rung: Body, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.864 |
+| walker |  | 5487 | 154 | Code::CodeKey { rung: Body, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.864 |
 | ns | 5520 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.860 |
 | ns | 5825 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.838 |
 | ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.830 |
-| walker |  | 6057 | 553 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.892 |
-| walker |  | 6113 | 56 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.892 |
+| walker |  | 6040 | 553 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.892 |
+| walker |  | 6096 | 56 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.892 |
 | ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.868 |
-| walker |  | 6315 | 202 | Plaintext::Whole { file: .github/workflows/actionlint.yml } |  |  | 0.870 |
-| walker |  | 6349 | 34 | Code::CodeKey { rung: Names, file: flatten_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.870 |
-| walker |  | 6383 | 34 | Code::CodeKey { rung: Names, file: sort_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.870 |
-| walker |  | 6417 | 34 | Markdown::HeadingsOutline { file: .github/pull_request_template.md } |  |  | 0.871 |
-| walker |  | 6455 | 38 | Code::CodeKey { rung: Names, file: format_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.872 |
-| walker |  | 6509 | 54 | Code::CodeKey { rung: Names, file: prefix_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.874 |
-| walker |  | 6559 | 50 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 2, sub: 0, line: 22 } |  |  | 0.874 |
-| walker |  | 6614 | 55 | Code::CodeKey { rung: Body, file: flatten_test.go, decl: 2, sub: 0, line: 43 } |  |  | 0.874 |
-| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.845 |
-| walker |  | 6726 | 112 | Code::CodeKey { rung: Names, file: append_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.852 |
-| walker |  | 6785 | 59 | Code::CodeKey { rung: Body, file: append_test.go, decl: 2, sub: 0, line: 45 } |  |  | 0.852 |
-| walker |  | 6809 | 24 | Markdown::Section { file: .github/pull_request_template.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.852 |
-| ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.838 |
-| walker |  | 6872 | 63 | Code::CodeKey { rung: Body, file: append_test.go, decl: 5, sub: 0, line: 71 } |  |  | 0.838 |
-| walker |  | 6938 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 4, sub: 0, line: 62 } |  |  | 0.838 |
-| walker |  | 7004 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 6, sub: 0, line: 79 } |  |  | 0.838 |
-| ns | 7254 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.809 |
-| ns | 7361 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.798 |
-| ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.799 |
-| ns | 7461 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.801 |
-| ns | 7710 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.803 |
-| walker |  | 7861 | 857 | Plaintext::Whole { file: .github/workflows/go-multierror.yml } |  |  | 0.806 |
-| walker |  | 7948 | 87 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 3, sub: 0, line: 30 } |  |  | 0.806 |
-| ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.795 |
-| walker |  | 8114 | 166 | Code::CodeKey { rung: Names, file: multierror_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
-| walker |  | 8125 | 11 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.807 |
-| walker |  | 8140 | 15 | Code::CodeKey { rung: Doc, file: multierror_test.go, decl: 9, sub: 0, line: 209 } |  |  | 0.808 |
-| walker |  | 8231 | 91 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.808 |
-| walker |  | 8298 | 67 | Code::CodeKey { rung: Body, file: append_test.go, decl: 3, sub: 0, line: 53 } |  |  | 0.809 |
+| walker |  | 6298 | 202 | Plaintext::Whole { file: .github/workflows/actionlint.yml } |  |  | 0.869 |
+| walker |  | 6332 | 34 | Markdown::HeadingsOutline { file: .github/pull_request_template.md } |  |  | 0.870 |
+| walker |  | 6356 | 24 | Markdown::Section { file: .github/pull_request_template.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.870 |
+| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.841 |
+| ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.827 |
+| walker |  | 7213 | 857 | Plaintext::Whole { file: .github/workflows/go-multierror.yml } |  |  | 0.831 |
+| ns | 7254 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.802 |
+| ns | 7361 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.791 |
+| walker |  | 7379 | 166 | Code::CodeKey { rung: Names, file: multierror_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.794 |
+| ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.795 |
+| walker |  | 7390 | 11 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.795 |
+| walker |  | 7405 | 15 | Code::CodeKey { rung: Doc, file: multierror_test.go, decl: 9, sub: 0, line: 209 } |  |  | 0.796 |
+| walker |  | 7439 | 34 | Code::CodeKey { rung: Names, file: flatten_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
+| ns | 7461 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.799 |
+| walker |  | 7494 | 55 | Code::CodeKey { rung: Body, file: flatten_test.go, decl: 2, sub: 0, line: 43 } |  |  | 0.799 |
+| walker |  | 7511 | 17 | Code::CodeKey { rung: Names, file: group_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.799 |
+| walker |  | 7545 | 34 | Code::CodeKey { rung: Names, file: sort_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.801 |
+| walker |  | 7599 | 54 | Code::CodeKey { rung: Names, file: prefix_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.804 |
+| walker |  | 7649 | 50 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 2, sub: 0, line: 22 } |  |  | 0.804 |
+| ns | 7710 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.807 |
+| walker |  | 7736 | 87 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 3, sub: 0, line: 30 } |  |  | 0.807 |
+| walker |  | 7827 | 91 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.807 |
+| walker |  | 7939 | 112 | Code::CodeKey { rung: Names, file: append_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.815 |
+| walker |  | 7998 | 59 | Code::CodeKey { rung: Body, file: append_test.go, decl: 2, sub: 0, line: 45 } |  |  | 0.815 |
+| ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.804 |
+| walker |  | 8061 | 63 | Code::CodeKey { rung: Body, file: append_test.go, decl: 5, sub: 0, line: 71 } |  |  | 0.804 |
+| walker |  | 8127 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 4, sub: 0, line: 62 } |  |  | 0.804 |
+| walker |  | 8193 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 6, sub: 0, line: 79 } |  |  | 0.804 |
+| walker |  | 8260 | 67 | Code::CodeKey { rung: Body, file: append_test.go, decl: 3, sub: 0, line: 53 } |  |  | 0.805 |
+| walker |  | 8298 | 38 | Code::CodeKey { rung: Names, file: format_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
 | walker |  | 8403 | 105 | Code::CodeKey { rung: Body, file: format_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.809 |
 | ns | 8467 |  | 432 | CI steps: the `go fmt` gate and the golangci-lint job | 5.5 | 5.4 | 0.812 |
 | walker |  | 8526 | 123 | Code::CodeKey { rung: Body, file: format_test.go, decl: 2, sub: 0, line: 27 } |  |  | 0.812 |

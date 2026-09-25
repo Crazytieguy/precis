@@ -59,27 +59,6 @@ experiments/
         parity.py
     utils.py
   lr_scheduler.py
-    …
-    9→class BaseLRScheduler(lr_scheduler._LRScheduler):
-    10→    def __init__(self, optimizer, last_epoch=-1):
-    …
-    13→    @abstractmethod
-    14→    def get_lr(self) -> list[float]:
-    15→        """Returns the current learning rate for each parameter group."""
-    16→        raise NotImplementedError
-    18→    @abstractmethod
-    19→    def reinitialize(self, **kwargs) -> None:
-    20→        """Reinitializes the learning rate scheduler."""
-    …
-    24→class LinearWarmupCosineAnnealing(BaseLRScheduler):
-    25→    def __init__(self, optimizer, warmup_steps, decay_until_step, max_lr, min_lr, last_epoch=-1):
-    …
-    33→    @staticmethod
-    34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
-    …
-    47→    def get_lr(self) -> list[float]:
-    48→        """Returns the current learning rate for each parameter group."""
-    …
   main.py
   metrics.py
     …
@@ -91,7 +70,9 @@ experiments/
     14→        super().__init__()
     15→        self._acc = torchmetrics.Accuracy(**kwargs)
     17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
-    …
+    18→        preds = preds.reshape((-1, preds.shape[-1]))
+    19→        target = target.flatten()
+    20→        return self._acc.update(preds, target)
     22→    def compute(self):
     23→        return self._acc.compute()
     25→    def reset(self, *args, **kwargs):
@@ -109,16 +90,23 @@ notebooks/
     demo.ipynb
     load_from_pretrained.ipynb
 pyproject.toml
-  …
+  1→[build-system]
+  2→requires = ["setuptools>=42", "wheel"]
+  3→build-backend = "setuptools.build_meta"
   5→[project]
   6→name = "xlstm"
   7→version = "2.0.5"
-  …
+  8→authors = [
+  9→  { name="Maximilian Beck", email="beck@ml.jku.at" },
+  10→  { name="Korbinian Poeppel", email="poeppel@ml.jku.at" },
+  11→  { name="Andreas Auer", email="auer@ml.jku.at" },
+  12→]
   13→description = "A novel LSTM variant with promising performance compared to Transformers or State Space Models."
   14→readme = "README.md"
-  …
+  15→license = {file="LICENSE"}
   16→requires-python = ">=3.9"
   …
+  21→keywords = ["LSTM", "Transformer", "Machine Learning", "Deep Learning", "State Space Models"]
   22→dependencies = [
   23→    "torch",
   24→    "einops",
@@ -139,8 +127,21 @@ pyproject.toml
   39→    "seaborn",
   40→    "mlstm_kernels",
   41→]
-  …
+  44→# [tool.setuptools]
+  45→# include_package_data = true
+  47→[tool.setuptools.package-data]
+  48→"xlstm" = ["blocks/slstm/src/cuda/*.c", "blocks/slstm/src/cuda/*.cc", "blocks/slstm/src/cuda/*.h", "blocks/slstm/src/cuda/*.cu", "blocks/slstm/src/cuda/*.cuh", "blocks/slstm/src/util/*.c", "blocks/slstm/src/util/*.cc", "blocks/slstm/src/util/*.h", "blocks/slstm/src/util/*.cu", "blocks/slstm/src/util/*.cuh"]
+  49→
+  50→[project.urls]
+  51→Repository = "https://github.com/NX-AI/xlstm"
+  52→Issues = "https://github.com/NX-AI/xlstm/issues"
 pytest.ini
+  1→[pytest]
+  2→pythonpath = .
+  3→log_cli = true
+  4→log_cli_level = INFO
+  5→log_format = %(asctime)s %(levelname)s %(message)s
+  6→log_date_format = %Y-%m-%d %H:%M:%S
 res/
   desc_xlstm_overview.pdf
   desc_xlstm_overview.svg
@@ -180,8 +181,29 @@ xlstm/
       src/
         __init__.py (empty)
         cuda/
+          lstm_pointwise.cu
+          slstm.cc
+          slstm.h
+          slstm_backward.cu
+          slstm_backward_cut.cu
+          slstm_forward.cu
+          slstm_pointwise.cu
+          slstm_pointwise.cuh
         cuda_init.py
         util/
+          blas.cu
+          blas.h
+          cuda_error.cu
+          cuda_error.h
+          device_assert.h
+          inline_ops.cuh
+          inline_ops_2bf16.cuh
+          inline_ops_2fp16.cuh
+          inline_ops_bf16.cuh
+          inline_ops_fp16.cuh
+          inline_print.cuh
+          support.h
+          util.h
         vanilla/
           __init__.py
             …
@@ -247,6 +269,9 @@ xlstm/
     33→    def __init__(self, **kwargs):
     34→        super().__init__(**kwargs)
     36→    def get_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
+    37→        """Return a tuple of two sequences, one for parameters with weight decay and one for parameters without weight decay.
+    38→        Performs checks to ensure that each parameter is only in one of the two sequences.
+    39→        """
     …
     61→    def get_weight_decay_optim_group_param_names(self, **kwargs) -> tuple[Sequence[str], Sequence[str]]:
     …
@@ -257,54 +282,13 @@ xlstm/
     99→    ) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …
   xlstm_block_stack.py
-    …
-    16→class xLSTMBlockStackConfig:
-    …
-    77→class xLSTMBlockStack(nn.Module):
-    78→    config_class = xLSTMBlockStackConfig
-    79→
-    80→    def __init__(self, config: xLSTMBlockStackConfig):
-    …
-    90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
-    …
-    111→    def reset_parameters(self) -> None:
-    …
-    117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
-    …
-    126→    def step(
-    127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
-    128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
-    …
   xlstm_large/
     __init__.py
       1→from .model import xLSTMLarge, xLSTMLargeConfig
       2→from .model import mLSTMLayer, mLSTMLayerConfig
     components.py
     from_pretrained.py
-      …
-      9→def load_from_pretrained(
-      …
     generate.py
     model.py
     utils.py
   xlstm_lm_model.py
-    …
-    14→@dataclass
-    15→class xLSTMLMModelConfig(xLSTMBlockStackConfig):
-    16→    vocab_size: int = -1
-    17→    tie_weights: bool = False
-    18→    weight_decay_on_embedding: bool = False
-    19→    add_embedding_dropout: bool = False
-    22→class xLSTMLMModel(WeightDecayOptimGroupMixin, nn.Module):
-    23→    config_class = xLSTMLMModelConfig
-    24→
-    25→    def __init__(self, config: xLSTMLMModelConfig, **kwargs):
-    …
-    41→    def reset_parameters(self):
-    …
-    49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
-    …
-    56→    def step(
-    …
-    65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
-    …

@@ -236,6 +236,71 @@ rich/
   __init__.py
     1→"""Rich text and beautiful formatting in the terminal."""
     …
+    4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
+    5→
+    6→from ._extension import load_ipython_extension  # noqa: F401
+    7→
+    8→__all__ = ["get_console", "reconfigure", "print", "inspect", "print_json"]
+    …
+    14→_console: Optional["Console"] = None
+    …
+    23→def get_console() -> "Console":
+    24→    """Get a global :class:`~rich.console.Console` instance. This function is used when Rich requires a Console,
+    25→    and hasn't been explicitly given one.
+    26→
+    27→    Returns:
+    28→        Console: A console instance.
+    29→    """
+    …
+    39→def reconfigure(*args: Any, **kwargs: Any) -> None:
+    40→    """Reconfigures the global console by replacing it with another.
+    41→
+    42→    Args:
+    43→        *args (Any): Positional arguments for the replacement :class:`~rich.console.Console`.
+    44→        **kwargs (Any): Keyword arguments for the replacement :class:`~rich.console.Console`.
+    45→    """
+    …
+    53→def print(
+    54→    *objects: Any,
+    55→    sep: str = " ",
+    56→    end: str = "\n",
+    57→    file: Optional[IO[str]] = None,
+    58→    flush: bool = False,
+    59→) -> None:
+    …
+    71→    from .console import Console
+    72→
+    73→    write_console = get_console() if file is None else Console(file=file)
+    74→    return write_console.print(*objects, sep=sep, end=end)
+    77→def print_json(
+    78→    json: Optional[str] = None,
+    79→    *,
+    80→    data: Any = None,
+    81→    indent: Union[None, int, str] = 2,
+    82→    highlight: bool = True,
+    83→    skip_keys: bool = False,
+    84→    ensure_ascii: bool = False,
+    85→    check_circular: bool = True,
+    86→    allow_nan: bool = True,
+    87→    default: Optional[Callable[[Any], Any]] = None,
+    88→    sort_keys: bool = False,
+    89→) -> None:
+    …
+    120→def inspect(
+    121→    obj: Any,
+    122→    *,
+    123→    console: Optional["Console"] = None,
+    124→    title: Optional[str] = None,
+    125→    help: bool = False,
+    126→    methods: bool = False,
+    127→    docs: bool = True,
+    128→    private: bool = False,
+    129→    dunder: bool = False,
+    130→    sort: bool = True,
+    131→    all: bool = False,
+    132→    value: bool = True,
+    133→) -> None:
+    …
   __main__.py
     …
     18→class ColorBox:
@@ -251,8 +316,6 @@ rich/
     40→    """Get a renderable that demonstrates a number of features."""
     …
   _emoji_codes.py
-    1→EMOJI = {
-    …
   _emoji_replace.py
   _export_format.py
   _extension.py
@@ -265,26 +328,37 @@ rich/
   _pick.py
   _ratio.py
   _spinners.py
-    …
-    22→SPINNERS = {
-    …
   _stack.py
   _timer.py
   _unicode_data/
+    __init__.py
+    _versions.py
+    unicode10-0-0.py
+    unicode11-0-0.py
+    unicode12-0-0.py
+    unicode12-1-0.py
+    unicode13-0-0.py
+    unicode14-0-0.py
+    unicode15-0-0.py
+    unicode15-1-0.py
+    unicode16-0-0.py
+    unicode17-0-0.py
+    unicode4-1-0.py
+    unicode5-0-0.py
+    unicode5-1-0.py
+    unicode5-2-0.py
+    unicode6-0-0.py
+    unicode6-1-0.py
+    unicode6-2-0.py
+    unicode6-3-0.py
+    unicode7-0-0.py
+    unicode8-0-0.py
+    unicode9-0-0.py
   _win32_console.py
   _windows.py
-    …
-    6→class WindowsConsoleFeatures:
-    …
   _windows_renderer.py
   _wrap.py
   abc.py
-    …
-    4→class RichRenderable(ABC):
-    …
-    15→    @classmethod
-    16→    def __subclasshook__(cls, other: type) -> bool:
-    …
   align.py
   ansi.py
   bar.py
@@ -292,36 +366,9 @@ rich/
   cells.py
   color.py
   color_triplet.py
-    …
-    4→class ColorTriplet(NamedTuple):
-    …
   columns.py
-    …
-    16→class Columns(JupyterMixin):
-    …
-    31→    def __init__(
-    …
-    54→    def add_renderable(self, renderable: RenderableType) -> None:
-    …
-    62→    def __rich_console__(
-    63→        self, console: Console, options: ConsoleOptions
-    64→    ) -> RenderResult:
-    …
   console.py
   constrain.py
-    …
-    10→class Constrain(JupyterMixin):
-    …
-    18→    def __init__(self, renderable: "RenderableType", width: Optional[int] = 80) -> None:
-    …
-    22→    def __rich_console__(
-    23→        self, console: "Console", options: "ConsoleOptions"
-    24→    ) -> "RenderResult":
-    …
-    31→    def __rich_measure__(
-    32→        self, console: "Console", options: "ConsoleOptions"
-    33→    ) -> "Measurement":
-    …
   containers.py
   control.py
   default_styles.py
@@ -329,43 +376,21 @@ rich/
   emoji.py
   errors.py
   file_proxy.py
-    …
-    11→class FileProxy(io.TextIOBase):
-    …
   filesize.py
   highlighter.py
   json.py
-    …
-    9→class JSON:
-    …
-    25→    def __init__(
-    …
-    54→    def from_data(
-    …
-    101→    def __rich__(self) -> Text:
-    102→        return self.text
-    …
   jupyter.py
   layout.py
   live.py
   live_render.py
   logging.py
-    …
-    24→class RichHandler(Handler):
-    …
   markdown.py
   markup.py
   measure.py
   padding.py
   pager.py
   palette.py
-    …
-    11→class Palette:
-    …
   panel.py
-    …
-    17→class Panel(JupyterMixin):
-    …
   pretty.py
   progress.py
   progress_bar.py
@@ -373,71 +398,21 @@ rich/
   protocol.py
   py.typed (empty)
   region.py
-    …
-    4→class Region(NamedTuple):
-    …
-    7→    x: int
-    8→    y: int
-    9→    width: int
-    10→    height: int
   repr.py
   rule.py
-    …
-    12→class Rule(JupyterMixin):
-    …
   scope.py
-    …
-    14→def render_scope(
-    …
   screen.py
-    …
-    18→class Screen:
-    …
-    26→    renderable: "RenderableType"
-    27→
-    28→    def __init__(
-    29→        self,
-    30→        *renderables: "RenderableType",
-    31→        style: Optional[StyleType] = None,
-    32→        application_mode: bool = False,
-    33→    ) -> None:
-    …
-    40→    def __rich_console__(
-    41→        self, console: "Console", options: "ConsoleOptions"
-    42→    ) -> "RenderResult":
-    …
   segment.py
   spinner.py
-    …
-    13→class Spinner:
-    …
   status.py
-    …
-    11→class Status(JupyterMixin):
-    …
   style.py
   styled.py
-    …
-    11→class Styled:
-    …
-    19→    def __init__(self, renderable: "RenderableType", style: "StyleType") -> None:
-    …
-    23→    def __rich_console__(
-    24→        self, console: "Console", options: "ConsoleOptions"
-    25→    ) -> "RenderResult":
-    …
-    31→    def __rich_measure__(
-    32→        self, console: "Console", options: "ConsoleOptions"
-    33→    ) -> Measurement:
-    …
   syntax.py
   table.py
   terminal_theme.py
   text.py
   theme.py
   themes.py
-    …
-    5→DEFAULT = Theme(DEFAULT_STYLES)
   traceback.py
   tree.py
 setup.py

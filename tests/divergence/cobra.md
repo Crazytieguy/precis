@@ -1,4 +1,4 @@
-Score(3000)=0.554 I=0.764 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.790/0.705/0.554/0.464/0.433/0.503
+Score(3000)=0.628 I=0.777 C=0.508 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.795/0.734/0.628/0.551/0.527/0.496
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,216 +12,230 @@ Score(3000)=0.554 I=0.764 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | walker |  | 314 | 26 | Fs::DirListing { dir: site/content } |  |  | 0.125 |
 | walker |  | 362 | 48 | Code::CodeKey { rung: ModuleDoc, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.243 |
 | ns | 366 |  | 139 | Complete .go roster of the root package: sources and colocated tests | 1.3 |  | 0.509 |
-| walker |  | 377 | 15 | Code::CodeKey { rung: Names, file: command_notwin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
-| walker |  | 390 | 13 | Fs::DirListing { dir: .github } |  |  | 0.515 |
-| walker |  | 399 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.519 |
-| walker |  | 495 | 96 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.764 |
-| ns | 507 |  | 141 | README 'Overview': what the library does, first half | 1.4 |  | 0.666 |
-| walker |  | 516 | 21 | Fs::DirListing { dir: site/content/docgen } |  |  | 0.670 |
-| walker |  | 539 | 23 | Fs::DirListing { dir: site/content/completions } |  |  | 0.675 |
-| walker |  | 602 | 63 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.675 |
-| walker |  | 614 | 12 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.675 |
+| walker |  | 375 | 13 | Fs::DirListing { dir: .github } |  |  | 0.515 |
+| walker |  | 384 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.519 |
+| walker |  | 480 | 96 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.764 |
+| walker |  | 501 | 21 | Fs::DirListing { dir: site/content/docgen } |  |  | 0.768 |
+| ns | 507 |  | 141 | README 'Overview': what the library does, first half | 1.4 |  | 0.670 |
+| walker |  | 524 | 23 | Fs::DirListing { dir: site/content/completions } |  |  | 0.675 |
+| walker |  | 587 | 63 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.675 |
+| walker |  | 599 | 12 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.675 |
 | ns | 724 |  | 217 | README: the remaining capabilities, and who builds on Cobra | 1.5 | 1.4 | 0.604 |
 | ns | 926 |  | 202 | Canonical usage: the rootCmd literal and Execute() from the user guide | 1.6 |  | 0.520 |
 | ns | 978 |  | 52 | Complete non-Go root listing: build, config, docs, governance | 1.7 |  | 0.577 |
-| walker |  | 999 | 385 | Plaintext::Whole { file: Makefile } |  |  | 0.596 |
-| walker |  | 1098 | 99 | GoMod::File { file: go.mod } |  |  | 0.734 |
-| walker |  | 1134 | 36 | Code::CodeKey { rung: Names, file: command_win.go, decl: 0, sub: 0, line: 0 } |  |  | 0.734 |
-| ns | 1218 |  | 240 | Makefile: every target and its recipe | 1.8 |  | 0.769 |
-| walker |  | 1228 | 94 | Markdown::HeadingsOutline { file: CONDUCT.md } |  |  | 0.769 |
-| walker |  | 1256 | 28 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.769 |
+| walker |  | 984 | 385 | Plaintext::Whole { file: Makefile } |  |  | 0.596 |
+| walker |  | 1083 | 99 | GoMod::File { file: go.mod } |  |  | 0.734 |
+| ns | 1218 |  | 240 | Makefile: every target and its recipe | 1.8 |  | 0.768 |
 | ns | 1304 |  | 86 | doc/ subpackage, CI workflows, and assets listings | 1.9 |  | 0.782 |
-| walker |  | 1331 | 75 | Code::CodeKey { rung: Names, file: fish_completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.782 |
-| walker |  | 1345 | 14 | Code::CodeKey { rung: Doc, file: fish_completions.go, decl: 3, sub: 0, line: 284 } |  |  | 0.782 |
-| walker |  | 1364 | 19 | Code::CodeKey { rung: Doc, file: fish_completions.go, decl: 2, sub: 0, line: 276 } |  |  | 0.782 |
-| ns | 1374 |  | 70 | Documentation site tree: site/content and its two subdirectories | 1.10 |  | 0.790 |
-| walker |  | 1409 | 45 | Code::CodeKey { rung: Body, file: fish_completions.go, decl: 2, sub: 0, line: 276 } |  |  | 0.790 |
-| ns | 1612 |  | 238 | command.go: exported constants, FParseErrWhitelist, Group, Command's doc | 2.1 |  | 0.734 |
-| walker |  | 1620 | 211 | Markdown::Prelude { file: README.md } |  |  | 0.739 |
-| ns | 1684 |  | 72 | Command fields: naming and help text (Use .. Example) | 2.2 | 2.1 | 0.722 |
-| ns | 1776 |  | 92 | Command fields: argument validation, completion, metadata | 2.3 | 2.1 | 0.703 |
-| walker |  | 2041 | 421 | Code::CodeKey { rung: Names, file: cobra.go, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |
-| walker |  | 2067 | 26 | Code::CodeKey { rung: Decl, file: cobra.go, decl: 9, sub: 0, line: 72 } |  |  | 0.705 |
-| walker |  | 2076 | 9 | Code::CodeKey { rung: Decl, file: cobra.go, decl: 4, sub: 0, line: 45 } |  |  | 0.705 |
-| walker |  | 2088 | 12 | Code::CodeKey { rung: Body, file: cobra.go, decl: 11, sub: 0, line: 85 } |  |  | 0.705 |
-| walker |  | 2101 | 13 | Code::CodeKey { rung: Body, file: cobra.go, decl: 13, sub: 0, line: 99 } |  |  | 0.705 |
-| walker |  | 2120 | 19 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 7, sub: 0, line: 62 } |  |  | 0.705 |
-| ns | 2125 |  | 349 | Command fields: the ten *Run hooks with the documented ordering comment | 2.4 | 2.1 | 0.662 |
-| walker |  | 2145 | 25 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 11, sub: 0, line: 85 } |  |  | 0.662 |
-| walker |  | 2170 | 25 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 24, sub: 0, line: 243 } |  |  | 0.662 |
-| walker |  | 2198 | 28 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 12, sub: 0, line: 91 } |  |  | 0.662 |
-| walker |  | 2226 | 28 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 16, sub: 0, line: 144 } |  |  | 0.662 |
-| walker |  | 2255 | 29 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 13, sub: 0, line: 99 } |  |  | 0.662 |
-| ns | 2264 |  | 139 | Command fields: behaviour toggles, with ellipses over the unexported state | 2.5 | 2.1 | 0.637 |
-| walker |  | 2284 | 29 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 14, sub: 0, line: 105 } |  |  | 0.637 |
-| walker |  | 2318 | 34 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 23, sub: 0, line: 235 } |  |  | 0.637 |
-| walker |  | 2353 | 35 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 6, sub: 0, line: 59 } |  |  | 0.637 |
-| ns | 2372 |  | 108 | Command method roster: execution and lifecycle | 3.1 |  | 0.621 |
-| walker |  | 2396 | 43 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 8, sub: 0, line: 66 } |  |  | 0.621 |
-| walker |  | 2442 | 46 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 5, sub: 0, line: 55 } |  |  | 0.622 |
-| walker |  | 2458 | 16 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 19, sub: 0, line: 174 } |  |  | 0.622 |
-| ns | 2514 |  | 142 | Command method roster: building and traversing the command tree | 3.2 |  | 0.602 |
-| walker |  | 2558 | 100 | Code::CodeKey { rung: Decl, file: cobra.go, decl: 1, sub: 0, line: 32 } |  |  | 0.602 |
-| walker |  | 2620 | 62 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 9, sub: 0, line: 72 } |  |  | 0.603 |
-| walker |  | 2639 | 19 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 21, sub: 0, line: 192 } |  |  | 0.603 |
-| walker |  | 2709 | 70 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 15, sub: 0, line: 114 } |  |  | 0.603 |
-| ns | 2740 |  | 226 | Command method roster: the complete flag API | 3.3 |  | 0.577 |
-| walker |  | 2795 | 86 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 10, sub: 0, line: 81 } |  |  | 0.577 |
-| walker |  | 2825 | 30 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 18, sub: 0, line: 166 } |  |  | 0.577 |
-| walker |  | 2933 | 108 | Code::CodeKey { rung: Names, file: bash_completionsV2.go, decl: 0, sub: 0, line: 0 } |  |  | 0.577 |
-| walker |  | 2948 | 15 | Code::CodeKey { rung: Body, file: bash_completionsV2.go, decl: 4, sub: 0, line: 482 } |  |  | 0.577 |
-| ns | 2955 |  | 215 | Command method roster: I/O wiring and the Set* customisation hooks | 3.4 |  | 0.554 |
-| walker |  | 2967 | 19 | Code::CodeKey { rung: Doc, file: bash_completionsV2.go, decl: 3, sub: 0, line: 470 } |  |  | 0.554 |
-| walker |  | 2999 | 32 | Code::CodeKey { rung: Doc, file: bash_completionsV2.go, decl: 4, sub: 0, line: 482 } |  |  | 0.554 |
-| walker |  | 3064 | 65 | Code::CodeKey { rung: Body, file: fish_completions.go, decl: 3, sub: 0, line: 284 } |  |  | 0.554 |
-| ns | 3142 |  | 187 | Command method roster: help, usage, templates, default-command injection | 3.5 |  | 0.537 |
-| walker |  | 3281 | 217 | Code::CodeKey { rung: Names, file: bash_completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
-| walker |  | 3290 | 9 | Code::CodeKey { rung: Decl, file: bash_completions.go, decl: 1, sub: 0, line: 29 } |  |  | 0.537 |
-| walker |  | 3301 | 11 | Code::CodeKey { rung: Doc, file: bash_completions.go, decl: 1, sub: 0, line: 29 } |  |  | 0.537 |
-| ns | 3332 |  | 190 | Command method roster: naming and introspection predicates | 3.6 |  | 0.521 |
-| walker |  | 3428 | 127 | Code::CodeKey { rung: Names, file: active_help.go, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
-| walker |  | 3451 | 23 | Code::CodeKey { rung: Body, file: active_help.go, decl: 2, sub: 0, line: 38 } |  |  | 0.521 |
-| walker |  | 3500 | 49 | Code::CodeKey { rung: Decl, file: active_help.go, decl: 1, sub: 0, line: 22 } |  |  | 0.521 |
-| walker |  | 3516 | 16 | Code::CodeKey { rung: Body, file: active_help.go, decl: 4, sub: 0, line: 58 } |  |  | 0.507 |
-| ns | 3516 |  | 184 | user_guide.md: complete H2 section map | 4.1 |  | 0.507 |
-| walker |  | 3581 | 65 | Code::CodeKey { rung: Body, file: active_help.go, decl: 3, sub: 0, line: 47 } |  |  | 0.507 |
-| walker |  | 3649 | 68 | Code::CodeKey { rung: Body, file: bash_completionsV2.go, decl: 3, sub: 0, line: 470 } |  |  | 0.507 |
-| ns | 3754 |  | 238 | user_guide.md: complete H3/H4 subsection map | 4.2 | 4.1 | 0.489 |
-| walker |  | 3947 | 298 | Code::CodeKey { rung: Names, file: completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| ns | 3950 |  | 196 | Completion and Active Help documentation: H1/H2 maps | 4.3 |  | 0.477 |
-| walker |  | 3967 | 20 | Code::CodeKey { rung: Decl, file: completions.go, decl: 5, sub: 0, line: 47 } |  |  | 0.477 |
-| walker |  | 3990 | 23 | Code::CodeKey { rung: Decl, file: completions.go, decl: 8, sub: 0, line: 98 } |  |  | 0.477 |
-| walker |  | 4091 | 101 | Code::CodeKey { rung: Decl, file: completions.go, decl: 1, sub: 0, line: 28 } |  |  | 0.477 |
-| walker |  | 4125 | 34 | Code::CodeKey { rung: Doc, file: completions.go, decl: 4, sub: 0, line: 45 } |  |  | 0.477 |
-| ns | 4133 |  | 183 | Test harness: the helpers every root-package test is written against | 4.4 |  | 0.464 |
-| walker |  | 4138 | 13 | Code::CodeKey { rung: Doc, file: completions.go, decl: 3, sub: 0, line: 41 } |  |  | 0.464 |
-| walker |  | 4347 | 209 | Code::CodeKey { rung: Decl, file: completions.go, decl: 7, sub: 0, line: 56 } |  |  | 0.465 |
-| ns | 4458 |  | 325 | CI: the four jobs and the platform / Go-version matrix | 4.5 |  | 0.446 |
-| walker |  | 4576 | 229 | Code::CodeKey { rung: Decl, file: completions.go, decl: 7, sub: 1, line: 56 } |  |  | 0.447 |
-| ns | 4706 |  | 248 | golangci-lint configuration: the enabled linter set | 4.6 |  | 0.430 |
-| walker |  | 4817 | 241 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.441 |
-| walker |  | 4828 | 11 | Code::CodeKey { rung: Decl, file: command.go, decl: 1, sub: 0, line: 33 } |  |  | 0.443 |
-| walker |  | 4849 | 21 | Code::CodeKey { rung: Decl, file: command.go, decl: 3, sub: 0, line: 45 } |  |  | 0.447 |
-| walker |  | 4857 | 8 | Code::CodeKey { rung: Body, file: command.go, decl: 5, sub: 0, line: 269 } |  |  | 0.447 |
-| walker |  | 4866 | 9 | Code::CodeKey { rung: Body, file: command.go, decl: 6, sub: 0, line: 275 } |  |  | 0.447 |
-| walker |  | 4877 | 11 | Code::CodeKey { rung: Doc, file: command.go, decl: 3, sub: 0, line: 45 } |  |  | 0.450 |
-| walker |  | 4893 | 16 | Code::CodeKey { rung: Doc, file: command.go, decl: 2, sub: 0, line: 42 } |  |  | 0.455 |
-| walker |  | 4902 | 9 | Code::CodeKey { rung: Body, file: command.go, decl: 7, sub: 0, line: 281 } |  |  | 0.455 |
-| walker |  | 4933 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 9, sub: 0, line: 296 } |  |  | 0.455 |
-| walker |  | 4964 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 10, sub: 0, line: 302 } |  |  | 0.455 |
-| walker |  | 4995 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 11, sub: 0, line: 308 } |  |  | 0.455 |
-| walker |  | 5029 | 34 | Code::CodeKey { rung: Doc, file: command.go, decl: 6, sub: 0, line: 275 } |  |  | 0.455 |
-| ns | 5045 |  | 339 | Execute / ExecuteC: doc comments and the root-redirect rule | 5.1 | 3.1 | 0.439 |
-| walker |  | 5071 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 7, sub: 0, line: 281 } |  |  | 0.439 |
-| walker |  | 5124 | 53 | Code::CodeKey { rung: Doc, file: command.go, decl: 8, sub: 0, line: 289 } |  |  | 0.439 |
-| walker |  | 5239 | 115 | Code::CodeKey { rung: Doc, file: command.go, decl: 5, sub: 0, line: 269 } |  |  | 0.439 |
-| walker |  | 5250 | 11 | Code::CodeKey { rung: Body, file: command.go, decl: 9, sub: 0, line: 296 } |  |  | 0.439 |
-| walker |  | 5277 | 27 | Code::CodeKey { rung: Doc, file: completions.go, decl: 2, sub: 0, line: 38 } |  |  | 0.439 |
-| walker |  | 5288 | 11 | Code::CodeKey { rung: Body, file: command.go, decl: 10, sub: 0, line: 302 } |  |  | 0.439 |
-| walker |  | 5458 | 170 | Code::CodeKey { rung: Names, file: powershell_completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.439 |
-| walker |  | 5472 | 14 | Code::CodeKey { rung: Body, file: powershell_completions.go, decl: 5, sub: 0, line: 337 } |  |  | 0.439 |
-| walker |  | 5486 | 14 | Code::CodeKey { rung: Body, file: powershell_completions.go, decl: 7, sub: 0, line: 348 } |  |  | 0.439 |
-| walker |  | 5501 | 15 | Code::CodeKey { rung: Body, file: powershell_completions.go, decl: 4, sub: 0, line: 331 } |  |  | 0.439 |
-| walker |  | 5516 | 15 | Code::CodeKey { rung: Body, file: powershell_completions.go, decl: 6, sub: 0, line: 342 } |  |  | 0.439 |
-| walker |  | 5534 | 18 | Code::CodeKey { rung: Doc, file: powershell_completions.go, decl: 4, sub: 0, line: 331 } |  |  | 0.439 |
-| walker |  | 5554 | 20 | Code::CodeKey { rung: Doc, file: powershell_completions.go, decl: 6, sub: 0, line: 342 } |  |  | 0.439 |
-| ns | 5583 |  | 538 | execute(): the ordered run pipeline | 5.2 | 5.1 | 0.413 |
-| walker |  | 5584 | 30 | Code::CodeKey { rung: Doc, file: powershell_completions.go, decl: 5, sub: 0, line: 337 } |  |  | 0.413 |
-| walker |  | 5616 | 32 | Code::CodeKey { rung: Doc, file: powershell_completions.go, decl: 7, sub: 0, line: 348 } |  |  | 0.413 |
-| walker |  | 5712 | 96 | Code::CodeKey { rung: Doc, file: active_help.go, decl: 3, sub: 0, line: 47 } |  |  | 0.413 |
-| walker |  | 5723 | 11 | Code::CodeKey { rung: Body, file: command.go, decl: 11, sub: 0, line: 308 } |  |  | 0.413 |
-| ns | 5809 |  | 226 | cobra.go: the package-level behaviour switches | 5.3 |  | 0.430 |
-| ns | 5891 |  | 82 | cobra.go: package-level function roster | 5.4 |  | 0.439 |
-| walker |  | 5950 | 227 | Code::CodeKey { rung: Names, file: args.go, decl: 0, sub: 0, line: 0 } |  |  | 0.439 |
-| walker |  | 5957 | 7 | Code::CodeKey { rung: Body, file: args.go, decl: 6, sub: 0, line: 82 } |  |  | 0.439 |
-| walker |  | 5970 | 13 | Code::CodeKey { rung: Doc, file: args.go, decl: 6, sub: 0, line: 82 } |  |  | 0.439 |
-| walker |  | 5986 | 16 | Code::CodeKey { rung: Doc, file: args.go, decl: 3, sub: 0, line: 42 } |  |  | 0.439 |
-| walker |  | 6002 | 16 | Code::CodeKey { rung: Body, file: args.go, decl: 12, sub: 0, line: 142 } |  |  | 0.439 |
-| walker |  | 6020 | 18 | Code::CodeKey { rung: Doc, file: args.go, decl: 9, sub: 0, line: 107 } |  |  | 0.439 |
-| walker |  | 6038 | 18 | Code::CodeKey { rung: Doc, file: args.go, decl: 11, sub: 0, line: 127 } |  |  | 0.439 |
-| walker |  | 6057 | 19 | Code::CodeKey { rung: Doc, file: args.go, decl: 5, sub: 0, line: 69 } |  |  | 0.439 |
-| walker |  | 6076 | 19 | Code::CodeKey { rung: Doc, file: args.go, decl: 8, sub: 0, line: 97 } |  |  | 0.440 |
-| walker |  | 6096 | 20 | Code::CodeKey { rung: Doc, file: args.go, decl: 7, sub: 0, line: 87 } |  |  | 0.440 |
-| walker |  | 6118 | 22 | Code::CodeKey { rung: Doc, file: args.go, decl: 10, sub: 0, line: 117 } |  |  | 0.440 |
-| walker |  | 6155 | 37 | Code::CodeKey { rung: Doc, file: args.go, decl: 4, sub: 0, line: 51 } |  |  | 0.440 |
-| ns | 6188 |  | 297 | The default usage template, plus the help and version template constants | 5.5 |  | 0.433 |
-| walker |  | 6226 | 71 | Code::CodeKey { rung: Doc, file: args.go, decl: 12, sub: 0, line: 142 } |  |  | 0.433 |
-| walker |  | 6323 | 97 | Markdown::HeadingsOutline { file: site/content/active_help.md } |  |  | 0.437 |
-| walker |  | 6553 | 230 | Code::CodeKey { rung: Names, file: zsh_completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.437 |
-| walker |  | 6560 | 7 | Code::CodeKey { rung: Body, file: zsh_completions.go, decl: 5, sub: 0, line: 55 } |  |  | 0.437 |
-| walker |  | 6567 | 7 | Code::CodeKey { rung: Body, file: zsh_completions.go, decl: 6, sub: 0, line: 66 } |  |  | 0.437 |
-| walker |  | 6581 | 14 | Code::CodeKey { rung: Body, file: zsh_completions.go, decl: 2, sub: 0, line: 31 } |  |  | 0.437 |
-| walker |  | 6595 | 14 | Code::CodeKey { rung: Body, file: zsh_completions.go, decl: 4, sub: 0, line: 42 } |  |  | 0.437 |
-| walker |  | 6613 | 18 | Code::CodeKey { rung: Doc, file: zsh_completions.go, decl: 1, sub: 0, line: 25 } |  |  | 0.437 |
-| walker |  | 6633 | 20 | Code::CodeKey { rung: Doc, file: zsh_completions.go, decl: 3, sub: 0, line: 36 } |  |  | 0.437 |
-| ns | 6635 |  | 447 | args.go: every PositionalArgs validator with its defining doc line | 6.1 |  | 0.454 |
-| walker |  | 6663 | 30 | Code::CodeKey { rung: Doc, file: zsh_completions.go, decl: 2, sub: 0, line: 31 } |  |  | 0.454 |
-| walker |  | 6695 | 32 | Code::CodeKey { rung: Doc, file: zsh_completions.go, decl: 4, sub: 0, line: 42 } |  |  | 0.454 |
-| walker |  | 6710 | 15 | Code::CodeKey { rung: Body, file: zsh_completions.go, decl: 1, sub: 0, line: 25 } |  |  | 0.454 |
-| walker |  | 6806 | 96 | Code::CodeKey { rung: Doc, file: zsh_completions.go, decl: 6, sub: 0, line: 66 } |  |  | 0.454 |
-| walker |  | 6821 | 15 | Code::CodeKey { rung: Body, file: zsh_completions.go, decl: 3, sub: 0, line: 36 } |  |  | 0.454 |
-| walker |  | 6852 | 31 | Markdown::HeadingsOutline { file: site/content/completions/bash.md } |  |  | 0.454 |
-| ns | 6898 |  | 263 | flag_groups.go: the three group markers and their annotation keys | 6.2 |  | 0.448 |
-| walker |  | 6988 | 136 | Code::CodeKey { rung: Doc, file: active_help.go, decl: 2, sub: 0, line: 38 } |  |  | 0.449 |
-| ns | 7027 |  | 129 | shell_completions.go: the complete Mark* helper family | 6.3 |  | 0.444 |
-| walker |  | 7242 | 254 | Code::CodeKey { rung: Names, file: shell_completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.459 |
-| walker |  | 7255 | 13 | Code::CodeKey { rung: Body, file: shell_completions.go, decl: 1, sub: 0, line: 24 } |  |  | 0.459 |
-| walker |  | 7269 | 14 | Code::CodeKey { rung: Body, file: shell_completions.go, decl: 2, sub: 0, line: 31 } |  |  | 0.459 |
-| walker |  | 7283 | 14 | Code::CodeKey { rung: Body, file: shell_completions.go, decl: 9, sub: 0, line: 83 } |  |  | 0.459 |
-| walker |  | 7298 | 15 | Code::CodeKey { rung: Body, file: shell_completions.go, decl: 4, sub: 0, line: 44 } |  |  | 0.459 |
-| walker |  | 7313 | 15 | Code::CodeKey { rung: Body, file: shell_completions.go, decl: 5, sub: 0, line: 54 } |  |  | 0.459 |
-| walker |  | 7328 | 15 | Code::CodeKey { rung: Body, file: shell_completions.go, decl: 10, sub: 0, line: 90 } |  |  | 0.459 |
-| walker |  | 7362 | 34 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 9, sub: 0, line: 83 } |  |  | 0.459 |
-| ns | 7363 |  | 336 | completions.go: the completion type vocabulary | 7.1 |  | 0.449 |
-| walker |  | 7396 | 34 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 11, sub: 0, line: 96 } |  |  | 0.449 |
-| walker |  | 7431 | 35 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 4, sub: 0, line: 44 } |  |  | 0.449 |
-| walker |  | 7466 | 35 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 7, sub: 0, line: 67 } |  |  | 0.449 |
-| walker |  | 7508 | 42 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 10, sub: 0, line: 90 } |  |  | 0.449 |
-| walker |  | 7551 | 43 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 6, sub: 0, line: 61 } |  |  | 0.449 |
-| walker |  | 7600 | 49 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 1, sub: 0, line: 24 } |  |  | 0.449 |
-| ns | 7610 |  | 247 | The ShellCompDirective bit-mask values | 7.2 |  | 0.462 |
-| walker |  | 7649 | 49 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 3, sub: 0, line: 38 } |  |  | 0.462 |
-| walker |  | 7700 | 51 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 2, sub: 0, line: 31 } |  |  | 0.462 |
-| ns | 7747 |  | 137 | completions.go: exported completion API roster | 7.3 |  | 0.457 |
-| walker |  | 7797 | 97 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 5, sub: 0, line: 54 } |  |  | 0.457 |
-| walker |  | 7894 | 97 | Code::CodeKey { rung: Doc, file: shell_completions.go, decl: 8, sub: 0, line: 77 } |  |  | 0.457 |
-| walker |  | 8037 | 143 | Code::CodeKey { rung: Doc, file: zsh_completions.go, decl: 5, sub: 0, line: 55 } |  |  | 0.457 |
-| ns | 8040 |  | 293 | The __complete protocol and its environment configuration | 7.4 |  | 0.461 |
-| ns | 8192 |  | 152 | The generated `completion` command tree | 7.5 | 7.3 | 0.458 |
-| walker |  | 8242 | 205 | Code::CodeKey { rung: Names, file: completions.go, decl: 0, sub: 1, line: 0 } |  |  | 0.463 |
-| walker |  | 8255 | 13 | Code::CodeKey { rung: Doc, file: completions.go, decl: 12, sub: 0, line: 139 } |  |  | 0.464 |
-| walker |  | 8277 | 22 | Code::CodeKey { rung: Doc, file: completions.go, decl: 13, sub: 0, line: 142 } |  |  | 0.464 |
-| walker |  | 8301 | 24 | Code::CodeKey { rung: Doc, file: completions.go, decl: 17, sub: 0, line: 186 } |  |  | 0.464 |
-| ns | 8419 |  | 227 | Shell script generators: every exported Gen*Completion entry point | 8.1 |  | 0.471 |
-| walker |  | 8489 | 188 | Code::CodeKey { rung: Decl, file: completions.go, decl: 9, sub: 0, line: 107 } |  |  | 0.491 |
-| walker |  | 8502 | 13 | Code::CodeKey { rung: Doc, file: completions.go, decl: 9, sub: 0, line: 107 } |  |  | 0.493 |
-| ns | 8515 |  | 96 | Legacy bash completion annotations | 8.2 |  | 0.497 |
-| walker |  | 8570 | 68 | Code::CodeKey { rung: Doc, file: completions.go, decl: 16, sub: 0, line: 170 } |  |  | 0.497 |
-| walker |  | 8645 | 75 | Code::CodeKey { rung: Doc, file: completions.go, decl: 14, sub: 0, line: 151 } |  |  | 0.497 |
-| ns | 8706 |  | 191 | active_help.go: the whole feature in one batch | 8.3 |  | 0.503 |
-| walker |  | 8721 | 76 | Code::CodeKey { rung: Doc, file: completions.go, decl: 15, sub: 0, line: 160 } |  |  | 0.503 |
-| walker |  | 8847 | 126 | Code::CodeKey { rung: Doc, file: completions.go, decl: 11, sub: 0, line: 136 } |  |  | 0.503 |
-| ns | 8920 |  | 214 | The Windows mousetrap hook and its no-op counterpart | 8.4 | 5.3 | 0.503 |
-| walker |  | 9052 | 205 | Code::CodeKey { rung: Names, file: completions.go, decl: 0, sub: 2, line: 0 } |  |  | 0.507 |
-| walker |  | 9084 | 32 | Code::CodeKey { rung: Decl, file: completions.go, decl: 20, sub: 0, line: 311 } |  |  | 0.507 |
-| ns | 9098 |  | 178 | doc/: every exported generator across all four output formats | 9.1 |  | 0.501 |
-| walker |  | 9133 | 49 | Code::CodeKey { rung: Doc, file: completions.go, decl: 20, sub: 0, line: 311 } |  |  | 0.501 |
-| walker |  | 9151 | 18 | Code::CodeKey { rung: Doc, file: completions.go, decl: 18, sub: 0, line: 200 } |  |  | 0.501 |
-| walker |  | 9174 | 23 | Code::CodeKey { rung: Doc, file: completions.go, decl: 19, sub: 0, line: 231 } |  |  | 0.501 |
-| walker |  | 9269 | 95 | Code::CodeKey { rung: Doc, file: completions.go, decl: 26, sub: 0, line: 748 } |  |  | 0.501 |
-| ns | 9326 |  | 228 | doc/: GenManTreeOptions and GenManHeader, field by field | 9.2 |  | 0.494 |
-| walker |  | 9516 | 247 | Code::CodeKey { rung: Names, file: bash_completions.go, decl: 0, sub: 1, line: 0 } |  |  | 0.497 |
-| walker |  | 9531 | 15 | Code::CodeKey { rung: Doc, file: bash_completions.go, decl: 19, sub: 0, line: 701 } |  |  | 0.497 |
-| walker |  | 9551 | 20 | Code::CodeKey { rung: Doc, file: bash_completions.go, decl: 17, sub: 0, line: 683 } |  |  | 0.497 |
-| ns | 9563 |  | 237 | doc/: the YAML document schema and the shared helpers | 9.3 |  | 0.490 |
-| walker |  | 9571 | 20 | Code::CodeKey { rung: Doc, file: bash_completions.go, decl: 10, sub: 0, line: 536 } |  |  | 0.490 |
-| ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.487 |
-| walker |  | 9759 | 188 | Code::CodeKey { rung: Names, file: completions.go, decl: 0, sub: 3, line: 0 } |  |  | 0.499 |
-| walker |  | 9768 | 9 | Code::CodeKey { rung: Decl, file: completions.go, decl: 32, sub: 0, line: 996 } |  |  | 0.501 |
-| walker |  | 9783 | 15 | Code::CodeKey { rung: Doc, file: completions.go, decl: 30, sub: 0, line: 985 } |  |  | 0.501 |
-| walker |  | 9805 | 22 | Code::CodeKey { rung: Doc, file: completions.go, decl: 31, sub: 0, line: 991 } |  |  | 0.501 |
-| walker |  | 9824 | 19 | Code::CodeKey { rung: Doc, file: completions.go, decl: 32, sub: 0, line: 996 } |  |  | 0.501 |
-| walker |  | 9890 | 66 | Code::CodeKey { rung: Doc, file: completions.go, decl: 28, sub: 0, line: 955 } |  |  | 0.501 |
-| ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.495 |
-| walker |  | 9966 | 76 | Code::CodeKey { rung: Doc, file: completions.go, decl: 29, sub: 0, line: 980 } |  |  | 0.495 |
-| ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.493 |
+| walker |  | 1324 | 241 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.784 |
+| walker |  | 1335 | 11 | Code::CodeKey { rung: Decl, file: command.go, decl: 1, sub: 0, line: 33 } |  |  | 0.784 |
+| walker |  | 1356 | 21 | Code::CodeKey { rung: Decl, file: command.go, decl: 3, sub: 0, line: 45 } |  |  | 0.785 |
+| walker |  | 1364 | 8 | Code::CodeKey { rung: Body, file: command.go, decl: 5, sub: 0, line: 269 } |  |  | 0.785 |
+| walker |  | 1373 | 9 | Code::CodeKey { rung: Body, file: command.go, decl: 6, sub: 0, line: 275 } |  |  | 0.785 |
+| ns | 1374 |  | 70 | Documentation site tree: site/content and its two subdirectories | 1.10 |  | 0.793 |
+| walker |  | 1384 | 11 | Code::CodeKey { rung: Doc, file: command.go, decl: 3, sub: 0, line: 45 } |  |  | 0.794 |
+| walker |  | 1400 | 16 | Code::CodeKey { rung: Doc, file: command.go, decl: 2, sub: 0, line: 42 } |  |  | 0.795 |
+| walker |  | 1409 | 9 | Code::CodeKey { rung: Body, file: command.go, decl: 7, sub: 0, line: 281 } |  |  | 0.795 |
+| walker |  | 1440 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 9, sub: 0, line: 296 } |  |  | 0.795 |
+| walker |  | 1471 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 10, sub: 0, line: 302 } |  |  | 0.795 |
+| walker |  | 1502 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 11, sub: 0, line: 308 } |  |  | 0.795 |
+| walker |  | 1536 | 34 | Code::CodeKey { rung: Doc, file: command.go, decl: 6, sub: 0, line: 275 } |  |  | 0.795 |
+| walker |  | 1578 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 7, sub: 0, line: 281 } |  |  | 0.795 |
+| ns | 1612 |  | 238 | command.go: exported constants, FParseErrWhitelist, Group, Command's doc | 2.1 |  | 0.771 |
+| walker |  | 1631 | 53 | Code::CodeKey { rung: Doc, file: command.go, decl: 8, sub: 0, line: 289 } |  |  | 0.771 |
+| ns | 1684 |  | 72 | Command fields: naming and help text (Use .. Example) | 2.2 | 2.1 | 0.753 |
+| walker |  | 1725 | 94 | Markdown::HeadingsOutline { file: CONDUCT.md } |  |  | 0.753 |
+| walker |  | 1753 | 28 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.753 |
+| ns | 1776 |  | 92 | Command fields: argument validation, completion, metadata | 2.3 | 2.1 | 0.734 |
+| walker |  | 1868 | 115 | Code::CodeKey { rung: Doc, file: command.go, decl: 5, sub: 0, line: 269 } |  |  | 0.734 |
+| walker |  | 2081 | 213 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 1, line: 0 } |  |  | 0.736 |
+| walker |  | 2093 | 12 | Code::CodeKey { rung: Doc, file: command.go, decl: 16, sub: 0, line: 338 } |  |  | 0.736 |
+| walker |  | 2111 | 18 | Code::CodeKey { rung: Doc, file: command.go, decl: 13, sub: 0, line: 318 } |  |  | 0.736 |
+| ns | 2125 |  | 349 | Command fields: the ten *Run hooks with the documented ordering comment | 2.4 | 2.1 | 0.692 |
+| walker |  | 2129 | 18 | Code::CodeKey { rung: Doc, file: command.go, decl: 15, sub: 0, line: 333 } |  |  | 0.692 |
+| walker |  | 2148 | 19 | Code::CodeKey { rung: Doc, file: command.go, decl: 12, sub: 0, line: 313 } |  |  | 0.692 |
+| walker |  | 2167 | 19 | Code::CodeKey { rung: Doc, file: command.go, decl: 17, sub: 0, line: 343 } |  |  | 0.692 |
+| walker |  | 2186 | 19 | Code::CodeKey { rung: Doc, file: command.go, decl: 18, sub: 0, line: 352 } |  |  | 0.692 |
+| walker |  | 2210 | 24 | Code::CodeKey { rung: Doc, file: command.go, decl: 19, sub: 0, line: 358 } |  |  | 0.692 |
+| walker |  | 2234 | 24 | Code::CodeKey { rung: Doc, file: command.go, decl: 20, sub: 0, line: 367 } |  |  | 0.692 |
+| walker |  | 2259 | 25 | Code::CodeKey { rung: Doc, file: command.go, decl: 21, sub: 0, line: 376 } |  |  | 0.692 |
+| ns | 2264 |  | 139 | Command fields: behaviour toggles, with ellipses over the unexported state | 2.5 | 2.1 | 0.665 |
+| walker |  | 2286 | 27 | Code::CodeKey { rung: Doc, file: command.go, decl: 14, sub: 0, line: 328 } |  |  | 0.665 |
+| ns | 2372 |  | 108 | Command method roster: execution and lifecycle | 3.1 |  | 0.651 |
+| walker |  | 2513 | 227 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 2, line: 0 } |  |  | 0.653 |
+| ns | 2514 |  | 142 | Command method roster: building and traversing the command tree | 3.2 |  | 0.632 |
+| walker |  | 2527 | 14 | Code::CodeKey { rung: Doc, file: command.go, decl: 23, sub: 0, line: 393 } |  |  | 0.632 |
+| walker |  | 2541 | 14 | Code::CodeKey { rung: Doc, file: command.go, decl: 24, sub: 0, line: 398 } |  |  | 0.632 |
+| walker |  | 2555 | 14 | Code::CodeKey { rung: Doc, file: command.go, decl: 25, sub: 0, line: 403 } |  |  | 0.632 |
+| walker |  | 2569 | 14 | Code::CodeKey { rung: Doc, file: command.go, decl: 26, sub: 0, line: 408 } |  |  | 0.632 |
+| walker |  | 2606 | 37 | Code::CodeKey { rung: Doc, file: command.go, decl: 30, sub: 0, line: 444 } |  |  | 0.632 |
+| walker |  | 2645 | 39 | Code::CodeKey { rung: Doc, file: command.go, decl: 22, sub: 0, line: 382 } |  |  | 0.632 |
+| walker |  | 2676 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 31, sub: 0, line: 464 } |  |  | 0.632 |
+| ns | 2740 |  | 226 | Command method roster: the complete flag API | 3.3 |  | 0.605 |
+| walker |  | 2887 | 211 | Markdown::Prelude { file: README.md } |  |  | 0.609 |
+| ns | 2955 |  | 215 | Command method roster: I/O wiring and the Set* customisation hooks | 3.4 |  | 0.628 |
+| walker |  | 3125 | 238 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 3, line: 0 } |  |  | 0.630 |
+| walker |  | 3136 | 11 | Code::CodeKey { rung: Doc, file: command.go, decl: 36, sub: 0, line: 526 } |  |  | 0.630 |
+| ns | 3142 |  | 187 | Command method roster: help, usage, templates, default-command injection | 3.5 |  | 0.622 |
+| walker |  | 3147 | 11 | Code::CodeKey { rung: Doc, file: command.go, decl: 39, sub: 0, line: 563 } |  |  | 0.622 |
+| walker |  | 3158 | 11 | Code::CodeKey { rung: Doc, file: command.go, decl: 43, sub: 0, line: 583 } |  |  | 0.622 |
+| walker |  | 3171 | 13 | Code::CodeKey { rung: Doc, file: command.go, decl: 41, sub: 0, line: 573 } |  |  | 0.622 |
+| walker |  | 3201 | 30 | Code::CodeKey { rung: Doc, file: command.go, decl: 44, sub: 0, line: 592 } |  |  | 0.622 |
+| walker |  | 3240 | 39 | Code::CodeKey { rung: Doc, file: command.go, decl: 33, sub: 0, line: 484 } |  |  | 0.622 |
+| walker |  | 3282 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 32, sub: 0, line: 478 } |  |  | 0.622 |
+| walker |  | 3325 | 43 | Code::CodeKey { rung: Doc, file: command.go, decl: 35, sub: 0, line: 520 } |  |  | 0.622 |
+| ns | 3332 |  | 190 | Command method roster: naming and introspection predicates | 3.6 |  | 0.603 |
+| walker |  | 3373 | 48 | Code::CodeKey { rung: Doc, file: command.go, decl: 37, sub: 0, line: 547 } |  |  | 0.603 |
+| walker |  | 3404 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 34, sub: 0, line: 505 } |  |  | 0.603 |
+| ns | 3516 |  | 184 | user_guide.md: complete H2 section map | 4.1 |  | 0.586 |
+| walker |  | 3616 | 212 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 4, line: 0 } |  |  | 0.595 |
+| walker |  | 3631 | 15 | Code::CodeKey { rung: Doc, file: command.go, decl: 48, sub: 0, line: 643 } |  |  | 0.595 |
+| walker |  | 3661 | 30 | Code::CodeKey { rung: Doc, file: command.go, decl: 45, sub: 0, line: 605 } |  |  | 0.595 |
+| walker |  | 3691 | 30 | Code::CodeKey { rung: Doc, file: command.go, decl: 46, sub: 0, line: 618 } |  |  | 0.595 |
+| walker |  | 3726 | 35 | Code::CodeKey { rung: Doc, file: command.go, decl: 54, sub: 0, line: 757 } |  |  | 0.595 |
+| ns | 3754 |  | 238 | user_guide.md: complete H3/H4 subsection map | 4.2 | 4.1 | 0.574 |
+| walker |  | 3757 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 47, sub: 0, line: 631 } |  |  | 0.574 |
+| ns | 3950 |  | 196 | Completion and Active Help documentation: H1/H2 maps | 4.3 |  | 0.559 |
+| walker |  | 3977 | 220 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 5, line: 0 } |  |  | 0.566 |
+| walker |  | 3987 | 10 | Code::CodeKey { rung: Doc, file: command.go, decl: 60, sub: 0, line: 892 } |  |  | 0.566 |
+| walker |  | 4001 | 14 | Code::CodeKey { rung: Doc, file: command.go, decl: 58, sub: 0, line: 863 } |  |  | 0.566 |
+| walker |  | 4021 | 20 | Code::CodeKey { rung: Doc, file: command.go, decl: 59, sub: 0, line: 884 } |  |  | 0.566 |
+| walker |  | 4048 | 27 | Code::CodeKey { rung: Doc, file: command.go, decl: 57, sub: 0, line: 821 } |  |  | 0.566 |
+| walker |  | 4084 | 36 | Code::CodeKey { rung: Doc, file: command.go, decl: 61, sub: 0, line: 901 } |  |  | 0.566 |
+| ns | 4133 |  | 183 | Test harness: the helpers every root-package test is written against | 4.4 |  | 0.551 |
+| walker |  | 4136 | 52 | Code::CodeKey { rung: Doc, file: command.go, decl: 65, sub: 0, line: 1062 } |  |  | 0.551 |
+| ns | 4458 |  | 325 | CI: the four jobs and the platform / Go-version matrix | 4.5 |  | 0.529 |
+| walker |  | 4557 | 421 | Code::CodeKey { rung: Names, file: cobra.go, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| walker |  | 4583 | 26 | Code::CodeKey { rung: Decl, file: cobra.go, decl: 9, sub: 0, line: 72 } |  |  | 0.530 |
+| walker |  | 4592 | 9 | Code::CodeKey { rung: Decl, file: cobra.go, decl: 4, sub: 0, line: 45 } |  |  | 0.530 |
+| walker |  | 4604 | 12 | Code::CodeKey { rung: Body, file: cobra.go, decl: 11, sub: 0, line: 85 } |  |  | 0.530 |
+| walker |  | 4617 | 13 | Code::CodeKey { rung: Body, file: cobra.go, decl: 13, sub: 0, line: 99 } |  |  | 0.530 |
+| walker |  | 4636 | 19 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 7, sub: 0, line: 62 } |  |  | 0.531 |
+| walker |  | 4661 | 25 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 11, sub: 0, line: 85 } |  |  | 0.531 |
+| walker |  | 4686 | 25 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 24, sub: 0, line: 243 } |  |  | 0.531 |
+| ns | 4706 |  | 248 | golangci-lint configuration: the enabled linter set | 4.6 |  | 0.511 |
+| walker |  | 4714 | 28 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 12, sub: 0, line: 91 } |  |  | 0.511 |
+| walker |  | 4742 | 28 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 16, sub: 0, line: 144 } |  |  | 0.511 |
+| walker |  | 4771 | 29 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 13, sub: 0, line: 99 } |  |  | 0.511 |
+| walker |  | 4800 | 29 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 14, sub: 0, line: 105 } |  |  | 0.511 |
+| walker |  | 4834 | 34 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 23, sub: 0, line: 235 } |  |  | 0.511 |
+| walker |  | 4869 | 35 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 6, sub: 0, line: 59 } |  |  | 0.511 |
+| walker |  | 4912 | 43 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 8, sub: 0, line: 66 } |  |  | 0.511 |
+| walker |  | 4958 | 46 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 5, sub: 0, line: 55 } |  |  | 0.512 |
+| walker |  | 4974 | 16 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 19, sub: 0, line: 174 } |  |  | 0.512 |
+| ns | 5045 |  | 339 | Execute / ExecuteC: doc comments and the root-redirect rule | 5.1 | 3.1 | 0.496 |
+| walker |  | 5074 | 100 | Code::CodeKey { rung: Decl, file: cobra.go, decl: 1, sub: 0, line: 32 } |  |  | 0.496 |
+| walker |  | 5136 | 62 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 9, sub: 0, line: 72 } |  |  | 0.496 |
+| walker |  | 5155 | 19 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 21, sub: 0, line: 192 } |  |  | 0.496 |
+| walker |  | 5225 | 70 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 15, sub: 0, line: 114 } |  |  | 0.496 |
+| walker |  | 5311 | 86 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 10, sub: 0, line: 81 } |  |  | 0.496 |
+| walker |  | 5341 | 30 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 18, sub: 0, line: 166 } |  |  | 0.496 |
+| ns | 5583 |  | 538 | execute(): the ordered run pipeline | 5.2 | 5.1 | 0.467 |
+| walker |  | 5585 | 244 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 6, line: 0 } |  |  | 0.493 |
+| walker |  | 5597 | 12 | Code::CodeKey { rung: Doc, file: command.go, decl: 68, sub: 0, line: 1084 } |  |  | 0.494 |
+| walker |  | 5616 | 19 | Code::CodeKey { rung: Doc, file: command.go, decl: 75, sub: 0, line: 1317 } |  |  | 0.494 |
+| walker |  | 5637 | 21 | Code::CodeKey { rung: Doc, file: command.go, decl: 70, sub: 0, line: 1180 } |  |  | 0.494 |
+| walker |  | 5650 | 13 | Code::CodeKey { rung: Doc, file: command.go, decl: 76, sub: 0, line: 1325 } |  |  | 0.494 |
+| walker |  | 5698 | 48 | Code::CodeKey { rung: Doc, file: command.go, decl: 66, sub: 0, line: 1070 } |  |  | 0.498 |
+| walker |  | 5752 | 54 | Code::CodeKey { rung: Doc, file: command.go, decl: 67, sub: 0, line: 1078 } |  |  | 0.503 |
+| walker |  | 5808 | 56 | Code::CodeKey { rung: Doc, file: command.go, decl: 72, sub: 0, line: 1219 } |  |  | 0.503 |
+| ns | 5809 |  | 226 | cobra.go: the package-level behaviour switches | 5.3 |  | 0.514 |
+| walker |  | 5870 | 62 | Code::CodeKey { rung: Doc, file: command.go, decl: 74, sub: 0, line: 1263 } |  |  | 0.514 |
+| ns | 5891 |  | 82 | cobra.go: package-level function roster | 5.4 |  | 0.520 |
+| walker |  | 5938 | 68 | Code::CodeKey { rung: Doc, file: command.go, decl: 73, sub: 0, line: 1238 } |  |  | 0.520 |
+| walker |  | 6150 | 212 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 7, line: 0 } |  |  | 0.536 |
+| walker |  | 6163 | 13 | Code::CodeKey { rung: Doc, file: command.go, decl: 80, sub: 0, line: 1332 } |  |  | 0.536 |
+| walker |  | 6178 | 15 | Code::CodeKey { rung: Doc, file: command.go, decl: 82, sub: 0, line: 1371 } |  |  | 0.536 |
+| ns | 6188 |  | 297 | The default usage template, plus the help and version template constants | 5.5 |  | 0.527 |
+| walker |  | 6196 | 18 | Code::CodeKey { rung: Doc, file: command.go, decl: 81, sub: 0, line: 1342 } |  |  | 0.527 |
+| walker |  | 6214 | 18 | Code::CodeKey { rung: Doc, file: command.go, decl: 86, sub: 0, line: 1401 } |  |  | 0.527 |
+| walker |  | 6233 | 19 | Code::CodeKey { rung: Doc, file: command.go, decl: 85, sub: 0, line: 1396 } |  |  | 0.527 |
+| walker |  | 6253 | 20 | Code::CodeKey { rung: Doc, file: command.go, decl: 84, sub: 0, line: 1386 } |  |  | 0.527 |
+| walker |  | 6275 | 22 | Code::CodeKey { rung: Doc, file: command.go, decl: 83, sub: 0, line: 1376 } |  |  | 0.527 |
+| walker |  | 6510 | 235 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 8, line: 0 } |  |  | 0.530 |
+| walker |  | 6526 | 16 | Code::CodeKey { rung: Doc, file: command.go, decl: 93, sub: 0, line: 1465 } |  |  | 0.530 |
+| walker |  | 6546 | 20 | Code::CodeKey { rung: Doc, file: command.go, decl: 98, sub: 0, line: 1551 } |  |  | 0.530 |
+| walker |  | 6567 | 21 | Code::CodeKey { rung: Doc, file: command.go, decl: 95, sub: 0, line: 1482 } |  |  | 0.530 |
+| walker |  | 6588 | 21 | Code::CodeKey { rung: Doc, file: command.go, decl: 97, sub: 0, line: 1541 } |  |  | 0.530 |
+| walker |  | 6614 | 26 | Code::CodeKey { rung: Doc, file: command.go, decl: 87, sub: 0, line: 1435 } |  |  | 0.530 |
+| ns | 6635 |  | 447 | args.go: every PositionalArgs validator with its defining doc line | 6.1 |  | 0.517 |
+| walker |  | 6642 | 28 | Code::CodeKey { rung: Doc, file: command.go, decl: 88, sub: 0, line: 1440 } |  |  | 0.517 |
+| walker |  | 6670 | 28 | Code::CodeKey { rung: Doc, file: command.go, decl: 89, sub: 0, line: 1445 } |  |  | 0.517 |
+| walker |  | 6698 | 28 | Code::CodeKey { rung: Doc, file: command.go, decl: 90, sub: 0, line: 1450 } |  |  | 0.517 |
+| walker |  | 6728 | 30 | Code::CodeKey { rung: Doc, file: command.go, decl: 91, sub: 0, line: 1455 } |  |  | 0.517 |
+| walker |  | 6758 | 30 | Code::CodeKey { rung: Doc, file: command.go, decl: 92, sub: 0, line: 1460 } |  |  | 0.517 |
+| walker |  | 6788 | 30 | Code::CodeKey { rung: Doc, file: command.go, decl: 96, sub: 0, line: 1501 } |  |  | 0.517 |
+| walker |  | 6825 | 37 | Code::CodeKey { rung: Doc, file: command.go, decl: 94, sub: 0, line: 1474 } |  |  | 0.517 |
+| ns | 6898 |  | 263 | flag_groups.go: the three group markers and their annotation keys | 6.2 |  | 0.510 |
+| ns | 7027 |  | 129 | shell_completions.go: the complete Mark* helper family | 6.3 |  | 0.505 |
+| walker |  | 7069 | 244 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 9, line: 0 } |  |  | 0.524 |
+| walker |  | 7084 | 15 | Code::CodeKey { rung: Doc, file: command.go, decl: 102, sub: 0, line: 1591 } |  |  | 0.524 |
+| walker |  | 7099 | 15 | Code::CodeKey { rung: Doc, file: command.go, decl: 103, sub: 0, line: 1596 } |  |  | 0.524 |
+| walker |  | 7116 | 17 | Code::CodeKey { rung: Doc, file: command.go, decl: 104, sub: 0, line: 1601 } |  |  | 0.524 |
+| walker |  | 7133 | 17 | Code::CodeKey { rung: Doc, file: command.go, decl: 109, sub: 0, line: 1677 } |  |  | 0.524 |
+| walker |  | 7153 | 20 | Code::CodeKey { rung: Doc, file: command.go, decl: 101, sub: 0, line: 1586 } |  |  | 0.524 |
+| walker |  | 7174 | 21 | Code::CodeKey { rung: Doc, file: command.go, decl: 110, sub: 0, line: 1682 } |  |  | 0.524 |
+| walker |  | 7211 | 37 | Code::CodeKey { rung: Doc, file: command.go, decl: 105, sub: 0, line: 1607 } |  |  | 0.524 |
+| walker |  | 7251 | 40 | Code::CodeKey { rung: Doc, file: command.go, decl: 99, sub: 0, line: 1562 } |  |  | 0.524 |
+| walker |  | 7292 | 41 | Code::CodeKey { rung: Doc, file: command.go, decl: 108, sub: 0, line: 1662 } |  |  | 0.524 |
+| walker |  | 7345 | 53 | Code::CodeKey { rung: Doc, file: command.go, decl: 107, sub: 0, line: 1648 } |  |  | 0.524 |
+| ns | 7363 |  | 336 | completions.go: the completion type vocabulary | 7.1 |  | 0.512 |
+| walker |  | 7449 | 104 | Code::CodeKey { rung: Doc, file: command.go, decl: 106, sub: 0, line: 1628 } |  |  | 0.512 |
+| walker |  | 7480 | 31 | Code::CodeKey { rung: Doc, file: command.go, decl: 100, sub: 0, line: 1571 } |  |  | 0.512 |
+| ns | 7610 |  | 247 | The ShellCompDirective bit-mask values | 7.2 |  | 0.505 |
+| walker |  | 7720 | 240 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 10, line: 0 } |  |  | 0.516 |
+| walker |  | 7734 | 14 | Code::CodeKey { rung: Doc, file: command.go, decl: 117, sub: 0, line: 1787 } |  |  | 0.516 |
+| ns | 7747 |  | 137 | completions.go: exported completion API roster | 7.3 |  | 0.511 |
+| walker |  | 7751 | 17 | Code::CodeKey { rung: Doc, file: command.go, decl: 119, sub: 0, line: 1806 } |  |  | 0.511 |
+| walker |  | 7770 | 19 | Code::CodeKey { rung: Doc, file: command.go, decl: 120, sub: 0, line: 1811 } |  |  | 0.511 |
+| walker |  | 7790 | 20 | Code::CodeKey { rung: Doc, file: command.go, decl: 116, sub: 0, line: 1775 } |  |  | 0.511 |
+| walker |  | 7811 | 21 | Code::CodeKey { rung: Doc, file: command.go, decl: 121, sub: 0, line: 1816 } |  |  | 0.511 |
+| walker |  | 7835 | 24 | Code::CodeKey { rung: Doc, file: command.go, decl: 118, sub: 0, line: 1801 } |  |  | 0.511 |
+| walker |  | 7870 | 35 | Code::CodeKey { rung: Doc, file: command.go, decl: 111, sub: 0, line: 1688 } |  |  | 0.511 |
+| walker |  | 7909 | 39 | Code::CodeKey { rung: Doc, file: command.go, decl: 122, sub: 0, line: 1822 } |  |  | 0.511 |
+| walker |  | 7955 | 46 | Code::CodeKey { rung: Doc, file: command.go, decl: 114, sub: 0, line: 1744 } |  |  | 0.511 |
+| walker |  | 8002 | 47 | Code::CodeKey { rung: Doc, file: command.go, decl: 113, sub: 0, line: 1716 } |  |  | 0.511 |
+| ns | 8040 |  | 293 | The __complete protocol and its environment configuration | 7.4 |  | 0.503 |
+| walker |  | 8049 | 47 | Code::CodeKey { rung: Doc, file: command.go, decl: 115, sub: 0, line: 1770 } |  |  | 0.503 |
+| walker |  | 8100 | 51 | Code::CodeKey { rung: Doc, file: command.go, decl: 112, sub: 0, line: 1702 } |  |  | 0.503 |
+| ns | 8192 |  | 152 | The generated `completion` command tree | 7.5 | 7.3 | 0.499 |
+| walker |  | 8336 | 236 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 11, line: 0 } |  |  | 0.512 |
+| walker |  | 8349 | 13 | Code::CodeKey { rung: Doc, file: command.go, decl: 129, sub: 0, line: 1892 } |  |  | 0.512 |
+| walker |  | 8365 | 16 | Code::CodeKey { rung: Doc, file: command.go, decl: 128, sub: 0, line: 1868 } |  |  | 0.512 |
+| walker |  | 8393 | 28 | Code::CodeKey { rung: Decl, file: command.go, decl: 133, sub: 0, line: 1937 } |  |  | 0.512 |
+| walker |  | 8410 | 17 | Code::CodeKey { rung: Doc, file: command.go, decl: 126, sub: 0, line: 1844 } |  |  | 0.512 |
+| ns | 8419 |  | 227 | Shell script generators: every exported Gen*Completion entry point | 8.1 |  | 0.505 |
+| walker |  | 8434 | 24 | Code::CodeKey { rung: Doc, file: command.go, decl: 123, sub: 0, line: 1827 } |  |  | 0.505 |
+| walker |  | 8467 | 33 | Code::CodeKey { rung: Doc, file: command.go, decl: 124, sub: 0, line: 1833 } |  |  | 0.505 |
+| walker |  | 8502 | 35 | Code::CodeKey { rung: Doc, file: command.go, decl: 125, sub: 0, line: 1839 } |  |  | 0.505 |
+| walker |  | 8515 | 13 | Code::CodeKey { rung: Doc, file: command.go, decl: 127, sub: 0, line: 1855 } |  |  | 0.503 |
+| ns | 8515 |  | 96 | Legacy bash completion annotations | 8.2 |  | 0.503 |
+| walker |  | 8535 | 20 | Code::CodeKey { rung: Doc, file: command.go, decl: 133, sub: 0, line: 1937 } |  |  | 0.503 |
+| walker |  | 8568 | 33 | Code::CodeKey { rung: Doc, file: command.go, decl: 130, sub: 0, line: 1898 } |  |  | 0.503 |
+| walker |  | 8695 | 127 | Code::CodeKey { rung: Names, file: command.go, decl: 0, sub: 12, line: 0 } |  |  | 0.504 |
+| walker |  | 8701 | 6 | Code::CodeKey { rung: Decl, file: command.go, decl: 138, sub: 0, line: 2064 } |  |  | 0.504 |
+| ns | 8706 |  | 191 | active_help.go: the whole feature in one batch | 8.3 |  | 0.499 |
+| walker |  | 8731 | 30 | Code::CodeKey { rung: Decl, file: command.go, decl: 136, sub: 0, line: 2042 } |  |  | 0.499 |
+| walker |  | 8754 | 23 | Code::CodeKey { rung: Doc, file: command.go, decl: 137, sub: 0, line: 2047 } |  |  | 0.499 |
+| walker |  | 8777 | 23 | Code::CodeKey { rung: Doc, file: command.go, decl: 139, sub: 0, line: 2068 } |  |  | 0.499 |
+| walker |  | 8802 | 25 | Code::CodeKey { rung: Doc, file: command.go, decl: 135, sub: 0, line: 1974 } |  |  | 0.499 |
+| walker |  | 8845 | 43 | Code::CodeKey { rung: Doc, file: command.go, decl: 132, sub: 0, line: 1928 } |  |  | 0.499 |
+| walker |  | 8891 | 46 | Code::CodeKey { rung: Doc, file: command.go, decl: 71, sub: 0, line: 1205 } |  |  | 0.499 |
+| ns | 8920 |  | 214 | The Windows mousetrap hook and its no-op counterpart | 8.4 | 5.3 | 0.496 |
+| ns | 9098 |  | 178 | doc/: every exported generator across all four output formats | 9.1 |  | 0.490 |
+| walker |  | 9108 | 217 | Code::CodeKey { rung: Names, file: bash_completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
+| walker |  | 9117 | 9 | Code::CodeKey { rung: Decl, file: bash_completions.go, decl: 1, sub: 0, line: 29 } |  |  | 0.496 |
+| walker |  | 9128 | 11 | Code::CodeKey { rung: Doc, file: bash_completions.go, decl: 1, sub: 0, line: 29 } |  |  | 0.496 |
+| walker |  | 9177 | 49 | Code::CodeKey { rung: Doc, file: command.go, decl: 131, sub: 0, line: 1907 } |  |  | 0.496 |
+| ns | 9326 |  | 228 | doc/: GenManTreeOptions and GenManHeader, field by field | 9.2 |  | 0.489 |
+| walker |  | 9475 | 298 | Code::CodeKey { rung: Names, file: completions.go, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
+| walker |  | 9495 | 20 | Code::CodeKey { rung: Decl, file: completions.go, decl: 5, sub: 0, line: 47 } |  |  | 0.494 |
+| walker |  | 9518 | 23 | Code::CodeKey { rung: Decl, file: completions.go, decl: 8, sub: 0, line: 98 } |  |  | 0.495 |
+| ns | 9563 |  | 237 | doc/: the YAML document schema and the shared helpers | 9.3 |  | 0.488 |
+| walker |  | 9619 | 101 | Code::CodeKey { rung: Decl, file: completions.go, decl: 1, sub: 0, line: 28 } |  |  | 0.495 |
+| walker |  | 9653 | 34 | Code::CodeKey { rung: Doc, file: completions.go, decl: 4, sub: 0, line: 45 } |  |  | 0.496 |
+| walker |  | 9666 | 13 | Code::CodeKey { rung: Doc, file: completions.go, decl: 3, sub: 0, line: 41 } |  |  | 0.496 |
+| ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.493 |
+| walker |  | 9875 | 209 | Code::CodeKey { rung: Decl, file: completions.go, decl: 7, sub: 0, line: 56 } |  |  | 0.499 |
+| ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.494 |
+| ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.491 |

@@ -161,9 +161,6 @@ readme.md
 source/
   core/
     Ky.ts
-      …
-      33→export class Ky {
-      …
     constants.ts
   errors/
     ForceRetryError.ts
@@ -182,15 +179,6 @@ source/
       …
       30→}
     HTTPError.ts
-      …
-      5→export class HTTPError<T = unknown> extends Error {
-      6→	public response: KyResponse<T>;
-      7→	public request: KyRequest;
-      8→	public options: NormalizedOptions;
-      9→
-      10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-      …
-      23→}
     NonError.ts
     TimeoutError.ts
       …
@@ -271,9 +259,6 @@ source/
     …
   types/
     ResponsePromise.ts
-      …
-      6→export type ResponsePromise<T = unknown> = {
-      …
     common.ts
     hooks.ts
     ky.ts
@@ -338,3 +323,12 @@ test/
   stream.ts
 tsconfig.dist.json
 tsconfig.json
+  1→{
+  2→	"extends": "@sindresorhus/tsconfig",
+  3→	"compilerOptions": {
+  4→		"exactOptionalPropertyTypes": true
+  5→	},
+  6→	"include": [
+  7→		"source"
+  8→	]
+  9→}

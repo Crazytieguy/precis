@@ -24,7 +24,16 @@ README.md
   31→  --local-dir-use-symlinks False
   32→```
   34→## Quick Start
-  …
+  35→
+  36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
+  37→```python
+  38→from nanovllm import LLM, SamplingParams
+  39→llm = LLM("/YOUR/MODEL/PATH", enforce_eager=True, tensor_parallel_size=1)
+  40→sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
+  41→prompts = ["Hello, Nano-vLLM."]
+  42→outputs = llm.generate(prompts, sampling_params)
+  43→outputs[0]["text"]
+  44→```
   46→## Benchmark
   …
   64→## Star History
@@ -39,6 +48,29 @@ bench.py
 example.py
   …
   6→def main():
+  7→    path = os.path.expanduser("~/huggingface/Qwen3-0.6B/")
+  8→    tokenizer = AutoTokenizer.from_pretrained(path)
+  9→    llm = LLM(path, enforce_eager=True, tensor_parallel_size=1)
+  10→
+  11→    sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
+  12→    prompts = [
+  13→        "introduce yourself",
+  14→        "list all prime numbers within 100",
+  15→    ]
+  16→    prompts = [
+  17→        tokenizer.apply_chat_template(
+  18→            [{"role": "user", "content": prompt}],
+  19→            tokenize=False,
+  20→            add_generation_prompt=True,
+  21→        )
+  22→        for prompt in prompts
+  23→    ]
+  24→    outputs = llm.generate(prompts, sampling_params)
+  25→
+  26→    for prompt, output in zip(prompts, outputs):
+  27→        print("\n")
+  28→        print(f"Prompt: {prompt!r}")
+  29→        print(f"Completion: {output['text']!r}")
   …
 nanovllm/
   __init__.py
@@ -61,7 +93,12 @@ nanovllm/
     18→    num_kvcache_blocks: int = -1
     19→
     20→    def __post_init__(self):
-    …
+    21→        assert os.path.isdir(self.model)
+    22→        assert self.kvcache_block_size % 256 == 0
+    23→        assert 1 <= self.tensor_parallel_size <= 8
+    24→        self.hf_config = AutoConfig.from_pretrained(self.model)
+    25→        self.max_model_len = min(self.max_model_len, self.hf_config.max_position_embeddings)
+    26→        assert self.max_num_batched_tokens >= self.max_model_len
   engine/
     block_manager.py
       …
@@ -75,28 +112,27 @@ nanovllm/
       20→    def reset(self):
       …
       26→class BlockManager:
+      27→
+      28→    def __init__(self, num_blocks: int, block_size: int):
+      …
+      35→    @classmethod
+      36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
+      …
+      43→    def _allocate_block(self, block_id: int) -> Block:
+      …
+      51→    def _deallocate_block(self, block_id: int) -> Block:
+      …
+      56→    def can_allocate(self, seq: Sequence) -> bool:
+      57→        return len(self.free_block_ids) >= seq.num_blocks
+      59→    def allocate(self, seq: Sequence):
+      …
+      84→    def deallocate(self, seq: Sequence):
+      …
+      93→    def can_append(self, seq: Sequence) -> bool:
+      94→        return len(self.free_block_ids) >= (len(seq) % self.block_size == 1)
+      96→    def may_append(self, seq: Sequence):
       …
     llm_engine.py
-      …
-      15→class LLMEngine:
-      16→
-      17→    def __init__(self, model, **kwargs):
-      …
-      36→    def exit(self):
-      …
-      42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
-      …
-      48→    def step(self):
-      …
-      56→    def is_finished(self):
-      57→        return self.scheduler.is_finished()
-      59→    def generate(
-      60→        self,
-      61→        prompts: list[str] | list[list[int]],
-      62→        sampling_params: SamplingParams | list[SamplingParams],
-      63→        use_tqdm: bool = True,
-      64→    ) -> list[str]:
-      …
     model_runner.py
       …
       15→class ModelRunner:
@@ -116,7 +152,10 @@ nanovllm/
       76→    def write_shm(self, method_name, *args):
       …
       85→    def call(self, method_name, *args):
-      …
+      86→        if self.world_size > 1 and self.rank == 0:
+      87→            self.write_shm(method_name, *args)
+      88→        method = getattr(self, method_name, None)
+      89→        return method(*args)
       91→    def warmup_model(self):
       …
       100→    def allocate_kv_cache(self):
@@ -128,7 +167,11 @@ nanovllm/
       164→    def prepare_decode(self, seqs: list[Sequence]):
       …
       182→    def prepare_sample(self, seqs: list[Sequence]):
-      …
+      183→        temperatures = []
+      184→        for seq in seqs:
+      185→            temperatures.append(seq.temperature)
+      186→        temperatures = torch.tensor(temperatures, dtype=torch.float32, pin_memory=True).cuda(non_blocking=True)
+      187→        return temperatures
       189→    @torch.inference_mode()
       190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
       …
@@ -150,7 +193,9 @@ nanovllm/
       24→    def schedule(self) -> tuple[list[Sequence], bool]:
       …
       60→    def preempt(self, seq: Sequence):
-      …
+      61→        seq.status = SequenceStatus.WAITING
+      62→        self.block_manager.deallocate(seq)
+      63→        self.waiting.appendleft(seq)
       65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
       …
     sequence.py
@@ -160,118 +205,52 @@ nanovllm/
       10→    RUNNING = auto()
       11→    FINISHED = auto()
       14→class Sequence:
+      15→    block_size = 256
+      16→    counter = count()
+      17→
+      18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
+      …
+      31→    def __len__(self):
+      32→        return self.num_tokens
+      34→    def __getitem__(self, key):
+      …
+      37→    @property
+      38→    def is_finished(self):
+      …
+      41→    @property
+      42→    def num_completion_tokens(self):
+      …
+      45→    @property
+      46→    def prompt_token_ids(self):
+      …
+      49→    @property
+      50→    def completion_token_ids(self):
+      …
+      53→    @property
+      54→    def num_cached_blocks(self):
+      …
+      57→    @property
+      58→    def num_blocks(self):
+      …
+      61→    @property
+      62→    def last_block_num_tokens(self):
+      …
+      65→    def block(self, i):
+      …
+      69→    def append_token(self, token_id: int):
+      …
+      74→    def __getstate__(self):
+      …
+      78→    def __setstate__(self, state):
       …
   layers/
     activation.py
-      …
-      6→class SiluAndMul(nn.Module):
-      7→
-      8→    def __init__(self):
-      9→        super().__init__()
-      11→    @torch.compile
-      12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
-      13→        x, y = x.chunk(2, -1)
-      14→        return F.silu(x) * y
     attention.py
     embed_head.py
-      …
-      9→class VocabParallelEmbedding(nn.Module):
-      10→
-      11→    def __init__(
-      12→        self,
-      13→        num_embeddings: int,
-      14→        embedding_dim: int,
-      15→    ):
-      …
-      27→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-      …
-      34→    def forward(self, x: torch.Tensor):
-      …
-      45→class ParallelLMHead(VocabParallelEmbedding):
-      46→
-      47→    def __init__(
-      48→        self,
-      49→        num_embeddings: int,
-      50→        embedding_dim: int,
-      51→        bias: bool = False,
-      52→    ):
-      …
-      56→    def forward(self, x: torch.Tensor):
-      …
     layernorm.py
-      …
-      5→class RMSNorm(nn.Module):
-      6→
-      7→    def __init__(
-      8→        self,
-      9→        hidden_size: int,
-      10→        eps: float = 1e-6,
-      11→    ) -> None:
-      …
-      16→    @torch.compile
-      17→    def rms_forward(
-      18→        self,
-      19→        x: torch.Tensor,
-      20→    ) -> torch.Tensor:
-      …
-      28→    @torch.compile
-      29→    def add_rms_forward(
-      30→        self,
-      31→        x: torch.Tensor,
-      32→        residual: torch.Tensor,
-      33→    ) -> tuple[torch.Tensor, torch.Tensor]:
-      …
-      42→    def forward(
-      43→        self,
-      44→        x: torch.Tensor,
-      45→        residual: torch.Tensor | None = None,
-      46→    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
-      …
     linear.py
     rotary_embedding.py
-      …
-      6→def apply_rotary_emb(
-      7→    x: torch.Tensor,
-      8→    cos: torch.Tensor,
-      9→    sin: torch.Tensor,
-      10→) -> torch.Tensor:
-      …
-      17→class RotaryEmbedding(nn.Module):
-      18→
-      19→    def __init__(
-      20→        self,
-      21→        head_size: int,
-      22→        rotary_dim: int,
-      23→        max_position_embeddings: int,
-      24→        base: float,
-      25→    ) -> None:
-      …
-      37→    @torch.compile
-      38→    def forward(
-      39→        self,
-      40→        positions: torch.Tensor,
-      41→        query: torch.Tensor,
-      42→        key: torch.Tensor,
-      43→    ) -> tuple[torch.Tensor, torch.Tensor]:
-      …
-      51→@lru_cache(1)
-      52→def get_rope(
-      53→    head_size: int,
-      54→    rotary_dim: int,
-      55→    max_position: int,
-      56→    base: float,
-      57→    rope_scaling: dict | None = None,
-      58→):
-      …
     sampler.py
-      …
-      5→class Sampler(nn.Module):
-      6→
-      7→    def __init__(self):
-      8→        super().__init__()
-      10→    @torch.compile
-      11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
-      …
   llm.py
     …
     4→class LLM(LLMEngine):
@@ -291,11 +270,6 @@ nanovllm/
   utils/
     context.py
     loader.py
-      …
-      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
-      9→    param.data.copy_(loaded_weight)
-      12→def load_model(model: nn.Module, path: str):
-      …
 pyproject.toml
   1→[build-system]
   2→requires = ["setuptools>=61"]

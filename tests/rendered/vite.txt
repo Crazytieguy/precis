@@ -284,14 +284,6 @@ packages/
     rolldown.config.ts
     rolldown.dts.config.ts
     rollupLicensePlugin.ts
-      …
-      7→export default function licensePlugin(
-      8→  licenseFilePath: string,
-      9→  licenseTitle: string,
-      10→  packageName: string,
-      11→  additionalSection?: string,
-      12→): Plugin {
-      …
     scripts/
     src/
       client/
@@ -398,6 +390,9 @@ packages/
         connect.d.ts
         dynamicImportVars.d.ts
         package.json
+          …
+          3→  "version": "0.0.0"
+          …
         shims.d.ts
         ws.d.ts
     tsconfig.base.json

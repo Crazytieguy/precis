@@ -28,6 +28,13 @@ README.md
   73→- **Hooks system** for custom integrations and security policies
   74→- **Environment variable substitution** in configs and scripts
   75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
+  77→## Requirements 📋
+  78→
+  79→- Go 1.23 or later
+  80→- For OpenAI/Anthropic: API key for the respective provider
+  81→- For Ollama: Local Ollama installation with desired models
+  82→- For Google/Gemini: Google API key (see https://aistudio.google.com/app/apikey)
+  83→- One or more MCP-compatible tool servers
   …
   124→## Installation 📦
   125→
@@ -35,28 +42,21 @@ README.md
   127→go install github.com/mark3labs/mcphost@latest
   128→```
   …
+  967→## MCP Server Compatibility 🔌
+  968→
+  969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
+  …
   981→## License 📄
   982→
   983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-  …
+  985→## Acknowledgments 🙏
+  986→
+  987→- Thanks to the Anthropic team for Claude and the MCP specification
+  988→- Thanks to the Ollama team for their local LLM runtime
+  989→- Thanks to all contributors who have helped improve this tool
 cmd/
   auth.go
   hooks.go
-    …
-    16→var hooksCmd = &cobra.Command{
-    17→	Use:   "hooks",
-    18→	Short: "Manage MCPHost hooks",
-    19→	Long:  "Commands for managing and testing MCPHost hooks configuration",
-    20→}
-    …
-    25→var hooksListCmd = &cobra.Command{
-    …
-    57→var hooksValidateCmd = &cobra.Command{
-    …
-    79→var hooksInitCmd = &cobra.Command{
-    …
-    176→func init() {
-    …
   root.go
   script.go
   script_deepseek_test.go
@@ -65,6 +65,11 @@ cmd/
 contribute/
   boost.sh
   build.sh
+    …
+    3→RUN_NAME="mcphost"
+    4→
+    5→mkdir -p output
+    6→go build -o output/${RUN_NAME}
   conf/
     demo.json
     demo.yml
@@ -120,16 +125,8 @@ internal/
     agent.go
     factory.go
     streaming.go
-      …
-      19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
-      …
   auth/
     browser.go
-      …
-      14→func OpenBrowser(url string) error {
-      …
-      34→func TryOpenBrowser(url string) {
-      …
     credentials.go
     credentials_test.go
     oauth.go
@@ -182,18 +179,24 @@ internal/
     session.go
   tokens/
     anthropic.go
+      1→// Package tokens provides token counting and estimation functionality for
+      2→// various language model providers. It includes utilities for estimating
+      3→// token counts in text, as well as provider-specific implementations for
+      4→// more accurate token counting.
+      5→//
+      6→// The package supports multiple approaches to token counting:
+      7→//   - Quick estimation using character-based heuristics
+      8→//   - Provider-specific tokenizers for accurate counts
+      9→//   - Initialization functions for setting up token counters
+      10→//
+      11→// Token counting is essential for:
+      12→//   - Managing API rate limits
+      13→//   - Calculating costs for API usage
+      14→//   - Ensuring prompts fit within model context windows
+      15→//   - Optimizing prompt engineering and response handling
+      …
     counter.go
-      …
-      21→func EstimateTokens(text string) int {
-      …
     init.go
-      …
-      21→func InitializeTokenCounters() {
-      22→	// Future provider-specific counters can be registered here
-      …
-      50→func InitializeTokenCountersWithKeys() {
-      51→	// Future provider-specific counters can be registered here
-      …
   tools/
     buffered_logger.go
     connection_pool.go
@@ -203,9 +206,6 @@ internal/
   ui/
     block_renderer.go
     callbacks.go
-      …
-      17→func (c *CLI) CreateCallbackHandler() callbacks.Handler {
-      …
     cli.go
     commands.go
     compact_renderer.go
@@ -283,9 +283,27 @@ sdk/
     41→}
     42→```
     44→## Configuration
-    …
+    45→
+    46→The SDK behaves identically to the CLI:
+    47→- Loads configuration from `~/.mcphost.yml` by default
+    48→- Creates default configuration if none exists
+    49→- Respects all environment variables (`MCPHOST_*`)
+    50→- Uses the same defaults as the CLI
+    51→
     52→### Options
-    …
+    53→
+    54→You can override specific settings:
+    55→
+    56→```go
+    57→host, err := sdk.New(ctx, &sdk.Options{
+    58→    Model:        "ollama:llama3",           // Override model
+    59→    SystemPrompt: "You are a helpful bot",   // Override system prompt
+    60→    ConfigFile:   "/path/to/config.yml",     // Use specific config file
+    61→    MaxSteps:     10,                        // Override max steps
+    62→    Streaming:    true,                      // Enable streaming
+    63→    Quiet:        true,                      // Suppress debug output
+    64→})
+    65→```
     67→## Advanced Usage
     68→
     69→### With Tool Callbacks
@@ -311,23 +329,8 @@ sdk/
     147→
     148→Same as MCPHost CLI
   examples/
+    basic/
+    scripting/
   mcphost.go
   mcphost_test.go
   types.go
-    …
-    8→// Message is an alias for session.Message providing SDK users with access
-    9→// to message structures for conversation history and tool interactions.
-    10→type Message = session.Message
-    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
-    13→// with its name, arguments, and result within a conversation.
-    14→type ToolCall = session.ToolCall
-    16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
-    17→// format used by the agent for LLM interactions.
-    18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
-    19→	return msg.ConvertToSchemaMessage()
-    …
-    22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
-    23→// message format for use in the SDK API.
-    24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
-    25→	return session.ConvertFromSchemaMessage(msg)
-    …

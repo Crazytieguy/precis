@@ -1,4 +1,4 @@
-Score(3000)=0.658 I=0.799 C=0.541 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.872/0.825/0.740/0.658/0.577/0.558/0.524
+Score(3000)=0.585 I=0.646 C=0.530 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.757/0.766/0.651/0.585/0.493/0.485/0.480
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,236 +20,210 @@ Score(3000)=0.658 I=0.799 C=0.541 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 335 | 4 | Fs::DirListing { dir: examples } |  |  | 0.000 |
 | walker |  | 366 | 31 | GoMod::Identity { file: go.mod } |  |  | 0.090 |
 | walker |  | 388 | 22 | Fs::DirListing { dir: codec/json } |  |  | 0.092 |
-| walker |  | 400 | 12 | Code::CodeKey { rung: Names, file: context_appengine.go, decl: 0, sub: 0, line: 0 } |  |  | 0.092 |
 | ns | 444 |  | 120 | README key-feature list (first half) | 1.4 |  | 0.079 |
-| walker |  | 475 | 75 | Fs::DirListing { dir: render } |  |  | 0.080 |
-| walker |  | 492 | 17 | Code::CodeKey { rung: Names, file: version.go, decl: 0, sub: 0, line: 0 } |  |  | 0.123 |
-| walker |  | 517 | 25 | Code::CodeKey { rung: Names, file: deprecated.go, decl: 0, sub: 0, line: 0 } |  |  | 0.123 |
-| walker |  | 531 | 14 | Code::CodeKey { rung: Doc, file: version.go, decl: 1, sub: 0, line: 8 } |  |  | 0.201 |
-| walker |  | 550 | 19 | Fs::DirListing { dir: .github } |  |  | 0.201 |
-| ns | 569 |  | 125 | README key-feature list (second half) + Go version prerequisite | 1.5 |  | 0.181 |
-| walker |  | 572 | 22 | Fs::DirListing { dir: .github/workflows } |  |  | 0.181 |
-| ns | 661 |  | 92 | docs/doc.md top-level section map | 1.6 |  | 0.155 |
-| walker |  | 728 | 156 | Fs::DirListing { dir: binding } |  |  | 0.170 |
-| walker |  | 739 | 11 | Markdown::Section { file: docs/doc.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.174 |
-| ns | 890 |  | 229 | Complete repository root listing | 1.7 |  | 0.492 |
-| walker |  | 940 | 201 | Code::CodeKey { rung: ModuleDoc, file: doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.872 |
-| walker |  | 1085 | 145 | Markdown::ReadmeHeadline { file: ginS/README.md } |  |  | 0.872 |
-| ns | 1121 |  | 231 | binding/ and render/ directory listings | 1.8 |  | 0.875 |
-| walker |  | 1156 | 71 | Code::CodeKey { rung: Names, file: path.go, decl: 0, sub: 0, line: 0 } |  |  | 0.875 |
-| walker |  | 1168 | 12 | Code::CodeKey { rung: Body, file: context_appengine.go, decl: 1, sub: 0, line: 9 } |  |  | 0.875 |
-| walker |  | 1217 | 49 | Code::CodeKey { rung: Doc, file: deprecated.go, decl: 1, sub: 0, line: 17 } |  |  | 0.875 |
-| ns | 1238 |  | 117 | Remaining source/data directory listings (codec, ginS, internal, docs, examples, testdata) | 1.9 |  | 0.873 |
-| ns | 1436 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.825 |
-| walker |  | 1472 | 255 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
-| walker |  | 1481 | 9 | Code::CodeKey { rung: Decl, file: gin.go, decl: 2, sub: 0, line: 32 } |  |  | 0.829 |
-| walker |  | 1490 | 9 | Code::CodeKey { rung: Decl, file: gin.go, decl: 1, sub: 0, line: 25 } |  |  | 0.829 |
-| walker |  | 1530 | 40 | Code::CodeKey { rung: Decl, file: gin.go, decl: 9, sub: 0, line: 68 } |  |  | 0.838 |
-| walker |  | 1541 | 11 | Code::CodeKey { rung: Doc, file: gin.go, decl: 10, sub: 0, line: 76 } |  |  | 0.841 |
-| walker |  | 1553 | 12 | Code::CodeKey { rung: Doc, file: gin.go, decl: 7, sub: 0, line: 57 } |  |  | 0.846 |
-| walker |  | 1567 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 6, sub: 0, line: 54 } |  |  | 0.852 |
-| walker |  | 1585 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 5, sub: 0, line: 51 } |  |  | 0.860 |
-| ns | 1686 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.779 |
-| walker |  | 1690 | 105 | Code::CodeKey { rung: Decl, file: gin.go, decl: 11, sub: 0, line: 79 } |  |  | 0.779 |
-| walker |  | 1696 | 6 | Code::CodeKey { rung: Doc, file: gin.go, decl: 11, sub: 0, line: 79 } |  |  | 0.779 |
-| walker |  | 1718 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 9, sub: 0, line: 68 } |  |  | 0.789 |
-| walker |  | 1741 | 23 | Code::CodeKey { rung: Doc, file: gin.go, decl: 8, sub: 0, line: 60 } |  |  | 0.789 |
-| walker |  | 1936 | 195 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.789 |
-| ns | 2022 |  | 336 | IRoutes / IRouter: the complete route-registration interface | 2.3 |  | 0.740 |
-| walker |  | 2035 | 99 | Code::CodeKey { rung: Names, file: fs.go, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
-| walker |  | 2050 | 15 | Code::CodeKey { rung: Decl, file: fs.go, decl: 1, sub: 0, line: 13 } |  |  | 0.740 |
-| walker |  | 2062 | 12 | Code::CodeKey { rung: Decl, file: fs.go, decl: 3, sub: 0, line: 28 } |  |  | 0.740 |
-| walker |  | 2081 | 19 | Code::CodeKey { rung: Doc, file: fs.go, decl: 2, sub: 0, line: 18 } |  |  | 0.740 |
-| walker |  | 2101 | 20 | Code::CodeKey { rung: Doc, file: fs.go, decl: 1, sub: 0, line: 13 } |  |  | 0.740 |
-| walker |  | 2117 | 16 | Code::CodeKey { rung: Doc, file: fs.go, decl: 4, sub: 0, line: 33 } |  |  | 0.740 |
-| walker |  | 2165 | 48 | Code::CodeKey { rung: Names, file: render/redirect.go, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
-| walker |  | 2196 | 31 | Code::CodeKey { rung: Decl, file: render/redirect.go, decl: 1, sub: 0, line: 13 } |  |  | 0.740 |
-| walker |  | 2213 | 17 | Code::CodeKey { rung: Doc, file: render/redirect.go, decl: 3, sub: 0, line: 29 } |  |  | 0.740 |
-| walker |  | 2231 | 18 | Code::CodeKey { rung: Doc, file: render/redirect.go, decl: 1, sub: 0, line: 13 } |  |  | 0.740 |
-| walker |  | 2250 | 19 | Code::CodeKey { rung: Doc, file: render/redirect.go, decl: 2, sub: 0, line: 20 } |  |  | 0.740 |
-| ns | 2443 |  | 421 | Engine constructor New(): every default value | 2.4 | 2.2 | 0.691 |
-| walker |  | 2494 | 244 | Code::CodeKey { rung: Names, file: logger.go, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |
-| walker |  | 2503 | 9 | Code::CodeKey { rung: Decl, file: logger.go, decl: 2, sub: 0, line: 19 } |  |  | 0.691 |
-| walker |  | 2510 | 7 | Code::CodeKey { rung: Decl, file: logger.go, decl: 3, sub: 0, line: 25 } |  |  | 0.691 |
-| walker |  | 2528 | 18 | Code::CodeKey { rung: Doc, file: logger.go, decl: 6, sub: 0, line: 62 } |  |  | 0.691 |
-| walker |  | 2546 | 18 | Code::CodeKey { rung: Doc, file: logger.go, decl: 7, sub: 0, line: 65 } |  |  | 0.691 |
-| ns | 2636 |  | 193 | Default(), RouterGroup struct, and the IRouter assertions | 2.5 | 2.3 | 0.667 |
-| walker |  | 2766 | 220 | Code::CodeKey { rung: Decl, file: logger.go, decl: 5, sub: 0, line: 39 } |  |  | 0.667 |
-| walker |  | 2778 | 12 | Code::CodeKey { rung: Doc, file: logger.go, decl: 5, sub: 0, line: 39 } |  |  | 0.667 |
-| ns | 2831 |  | 195 | Run* server entry points: all six transports | 2.6 |  | 0.658 |
-| walker |  | 3050 | 272 | Code::CodeKey { rung: Decl, file: logger.go, decl: 8, sub: 0, line: 68 } |  |  | 0.658 |
-| walker |  | 3070 | 20 | Code::CodeKey { rung: Doc, file: logger.go, decl: 8, sub: 0, line: 68 } |  |  | 0.658 |
-| walker |  | 3123 | 53 | Code::CodeKey { rung: Names, file: binding/query.go, decl: 0, sub: 0, line: 0 } |  |  | 0.658 |
-| walker |  | 3131 | 8 | Code::CodeKey { rung: Body, file: binding/query.go, decl: 2, sub: 0, line: 11 } |  |  | 0.658 |
-| ns | 3335 |  | 504 | gin.go: complete function roster beyond the constructors and Run* | 2.7 | 2.5 | 0.619 |
-| walker |  | 3406 | 275 | Code::CodeKey { rung: Names, file: tree.go, decl: 0, sub: 0, line: 0 } |  |  | 0.619 |
-| walker |  | 3426 | 20 | Code::CodeKey { rung: Decl, file: tree.go, decl: 1, sub: 0, line: 17 } |  |  | 0.620 |
-| walker |  | 3433 | 7 | Code::CodeKey { rung: Decl, file: tree.go, decl: 13, sub: 0, line: 92 } |  |  | 0.620 |
-| walker |  | 3452 | 19 | Code::CodeKey { rung: Decl, file: tree.go, decl: 5, sub: 0, line: 45 } |  |  | 0.620 |
-| walker |  | 3470 | 18 | Code::CodeKey { rung: Body, file: tree.go, decl: 4, sub: 0, line: 40 } |  |  | 0.620 |
-| walker |  | 3490 | 20 | Code::CodeKey { rung: Doc, file: tree.go, decl: 1, sub: 0, line: 17 } |  |  | 0.620 |
-| ns | 3491 |  | 156 | Engine struct: unexported field tail | 2.8 | 2.2 | 0.606 |
-| walker |  | 3529 | 39 | Code::CodeKey { rung: Doc, file: tree.go, decl: 4, sub: 0, line: 40 } |  |  | 0.606 |
-| walker |  | 3573 | 44 | Code::CodeKey { rung: Doc, file: tree.go, decl: 3, sub: 0, line: 29 } |  |  | 0.606 |
-| walker |  | 3626 | 53 | Code::CodeKey { rung: Doc, file: tree.go, decl: 2, sub: 0, line: 25 } |  |  | 0.607 |
-| ns | 3639 |  | 148 | tree.go: Param / Params — the URL-parameter type and its accessors | 2.9 |  | 0.615 |
-| walker |  | 3724 | 98 | Code::CodeKey { rung: Decl, file: tree.go, decl: 14, sub: 0, line: 99 } |  |  | 0.615 |
-| walker |  | 3740 | 16 | Code::CodeKey { rung: Doc, file: tree.go, decl: 15, sub: 0, line: 111 } |  |  | 0.615 |
-| walker |  | 3760 | 20 | Code::CodeKey { rung: Doc, file: tree.go, decl: 9, sub: 0, line: 71 } |  |  | 0.615 |
-| walker |  | 3814 | 54 | Code::CodeKey { rung: Names, file: render/data.go, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
-| ns | 3818 |  | 179 | handleHTTPRequest: path resolution before the tree lookup | 2.10 | 2.7 | 0.599 |
-| walker |  | 3836 | 22 | Code::CodeKey { rung: Decl, file: render/data.go, decl: 1, sub: 0, line: 13 } |  |  | 0.599 |
-| walker |  | 3849 | 13 | Code::CodeKey { rung: Doc, file: render/data.go, decl: 1, sub: 0, line: 13 } |  |  | 0.599 |
-| walker |  | 3863 | 14 | Code::CodeKey { rung: Doc, file: render/data.go, decl: 2, sub: 0, line: 19 } |  |  | 0.599 |
-| walker |  | 3879 | 16 | Code::CodeKey { rung: Doc, file: render/data.go, decl: 3, sub: 0, line: 29 } |  |  | 0.599 |
-| walker |  | 3895 | 16 | Code::CodeKey { rung: Body, file: render/data.go, decl: 3, sub: 0, line: 29 } |  |  | 0.599 |
-| walker |  | 3950 | 55 | Code::CodeKey { rung: Names, file: binding/uri.go, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
-| walker |  | 3958 | 8 | Code::CodeKey { rung: Body, file: binding/uri.go, decl: 2, sub: 0, line: 9 } |  |  | 0.599 |
-| ns | 4191 |  | 373 | handleHTTPRequest: the radix lookup, redirects and the 404/405 exits | 2.11 | 2.10 | 0.572 |
-| walker |  | 4194 | 236 | Code::CodeKey { rung: Names, file: routergroup.go, decl: 0, sub: 0, line: 0 } |  |  | 0.573 |
-| walker |  | 4222 | 28 | Code::CodeKey { rung: Decl, file: routergroup.go, decl: 2, sub: 0, line: 27 } |  |  | 0.574 |
-| walker |  | 4260 | 38 | Code::CodeKey { rung: Decl, file: routergroup.go, decl: 4, sub: 0, line: 55 } |  |  | 0.576 |
-| walker |  | 4269 | 9 | Code::CodeKey { rung: Body, file: routergroup.go, decl: 8, sub: 0, line: 82 } |  |  | 0.576 |
-| walker |  | 4285 | 16 | Code::CodeKey { rung: Body, file: routergroup.go, decl: 11, sub: 0, line: 111 } |  |  | 0.576 |
-| walker |  | 4302 | 17 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 6, sub: 0, line: 65 } |  |  | 0.576 |
-| walker |  | 4320 | 18 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 2, sub: 0, line: 27 } |  |  | 0.577 |
-| walker |  | 4339 | 19 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 11, sub: 0, line: 111 } |  |  | 0.577 |
-| walker |  | 4375 | 36 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 4, sub: 0, line: 55 } |  |  | 0.582 |
-| ns | 4440 |  | 249 | tree.go: nodeValue and the complete radix-tree function roster | 2.12 | 2.9 | 0.571 |
-| walker |  | 4618 | 243 | Code::CodeKey { rung: Decl, file: routergroup.go, decl: 3, sub: 0, line: 33 } |  |  | 0.607 |
-| walker |  | 4629 | 11 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 3, sub: 0, line: 33 } |  |  | 0.611 |
-| ns | 4660 |  | 220 | path.go: cleanPath semantics and the file's whole function set | 2.13 | 2.11 | 0.601 |
-| walker |  | 4676 | 47 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 8, sub: 0, line: 82 } |  |  | 0.601 |
-| walker |  | 4727 | 51 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 7, sub: 0, line: 72 } |  |  | 0.601 |
-| walker |  | 4827 | 100 | Code::CodeKey { rung: Decl, file: routergroup.go, decl: 1, sub: 0, line: 14 } |  |  | 0.601 |
-| ns | 4890 |  | 230 | Trusted-platform constants and the SetTrustedProxies contract | 2.14 | 2.7 | 0.592 |
-| walker |  | 4902 | 75 | Code::CodeKey { rung: Doc, file: fs.go, decl: 5, sub: 0, line: 42 } |  |  | 0.592 |
-| walker |  | 4924 | 22 | Code::CodeKey { rung: Doc, file: fs.go, decl: 3, sub: 0, line: 28 } |  |  | 0.592 |
-| walker |  | 4958 | 34 | Code::CodeKey { rung: Names, file: internal/bytesconv/bytesconv.go, decl: 0, sub: 0, line: 0 } |  |  | 0.592 |
-| walker |  | 4975 | 17 | Code::CodeKey { rung: Body, file: internal/bytesconv/bytesconv.go, decl: 1, sub: 0, line: 13 } |  |  | 0.592 |
-| ns | 4979 |  | 89 | Makefile: complete target roster | 3.1 |  | 0.585 |
-| walker |  | 4992 | 17 | Code::CodeKey { rung: Body, file: internal/bytesconv/bytesconv.go, decl: 2, sub: 0, line: 19 } |  |  | 0.585 |
-| ns | 5037 |  | 58 | Makefile variables: which packages are tested and vetted | 3.2 | 3.1 | 0.584 |
-| walker |  | 5060 | 68 | Code::CodeKey { rung: Names, file: render/pdf.go, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
-| walker |  | 5071 | 11 | Code::CodeKey { rung: Decl, file: render/pdf.go, decl: 1, sub: 0, line: 10 } |  |  | 0.584 |
-| walker |  | 5084 | 13 | Code::CodeKey { rung: Doc, file: render/pdf.go, decl: 1, sub: 0, line: 10 } |  |  | 0.584 |
-| walker |  | 5097 | 13 | Code::CodeKey { rung: Body, file: render/pdf.go, decl: 4, sub: 0, line: 24 } |  |  | 0.584 |
-| walker |  | 5112 | 15 | Code::CodeKey { rung: Doc, file: render/pdf.go, decl: 3, sub: 0, line: 17 } |  |  | 0.584 |
-| walker |  | 5130 | 18 | Code::CodeKey { rung: Doc, file: render/pdf.go, decl: 4, sub: 0, line: 24 } |  |  | 0.584 |
-| walker |  | 5199 | 69 | Code::CodeKey { rung: Names, file: render/bson.go, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
-| walker |  | 5209 | 10 | Code::CodeKey { rung: Decl, file: render/bson.go, decl: 1, sub: 0, line: 14 } |  |  | 0.584 |
-| walker |  | 5221 | 12 | Code::CodeKey { rung: Doc, file: render/bson.go, decl: 1, sub: 0, line: 14 } |  |  | 0.584 |
-| walker |  | 5234 | 13 | Code::CodeKey { rung: Body, file: render/bson.go, decl: 4, sub: 0, line: 32 } |  |  | 0.584 |
-| walker |  | 5253 | 19 | Code::CodeKey { rung: Doc, file: render/bson.go, decl: 4, sub: 0, line: 32 } |  |  | 0.584 |
-| walker |  | 5275 | 22 | Code::CodeKey { rung: Doc, file: render/bson.go, decl: 3, sub: 0, line: 21 } |  |  | 0.584 |
-| walker |  | 5311 | 36 | Code::CodeKey { rung: Names, file: internal/fs/fs.go, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
-| walker |  | 5324 | 13 | Code::CodeKey { rung: Decl, file: internal/fs/fs.go, decl: 1, sub: 0, line: 9 } |  |  | 0.584 |
-| walker |  | 5338 | 14 | Code::CodeKey { rung: Doc, file: internal/fs/fs.go, decl: 1, sub: 0, line: 9 } |  |  | 0.584 |
-| walker |  | 5357 | 19 | Code::CodeKey { rung: Doc, file: internal/fs/fs.go, decl: 2, sub: 0, line: 14 } |  |  | 0.584 |
-| ns | 5459 |  | 422 | Context struct: all fields with their doc comments | 4.1 |  | 0.559 |
-| walker |  | 5583 | 226 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 1, line: 0 } |  |  | 0.566 |
-| walker |  | 5598 | 15 | Code::CodeKey { rung: Doc, file: gin.go, decl: 23, sub: 0, line: 312 } |  |  | 0.566 |
-| walker |  | 5617 | 19 | Code::CodeKey { rung: Doc, file: gin.go, decl: 15, sub: 0, line: 236 } |  |  | 0.570 |
-| walker |  | 5637 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 18, sub: 0, line: 259 } |  |  | 0.570 |
-| walker |  | 5657 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 19, sub: 0, line: 265 } |  |  | 0.570 |
-| ns | 5674 |  | 215 | Context flow control and error attachment: complete roster | 4.2 | 4.1 | 0.561 |
-| walker |  | 5685 | 28 | Code::CodeKey { rung: Doc, file: gin.go, decl: 21, sub: 0, line: 288 } |  |  | 0.561 |
-| walker |  | 5714 | 29 | Code::CodeKey { rung: Doc, file: gin.go, decl: 20, sub: 0, line: 272 } |  |  | 0.561 |
-| walker |  | 5746 | 32 | Code::CodeKey { rung: Doc, file: gin.go, decl: 22, sub: 0, line: 300 } |  |  | 0.561 |
-| walker |  | 5868 | 122 | Code::CodeKey { rung: Doc, file: gin.go, decl: 14, sub: 0, line: 202 } |  |  | 0.561 |
-| ns | 6045 |  | 371 | Context response rendering: complete roster | 4.3 | 4.1 | 0.547 |
-| walker |  | 6078 | 210 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 2, line: 0 } |  |  | 0.558 |
-| walker |  | 6096 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 24, sub: 0, line: 321 } |  |  | 0.558 |
-| walker |  | 6114 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 28, sub: 0, line: 348 } |  |  | 0.558 |
-| walker |  | 6134 | 20 | Code::CodeKey { rung: Doc, file: gin.go, decl: 26, sub: 0, line: 332 } |  |  | 0.558 |
-| walker |  | 6156 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 25, sub: 0, line: 326 } |  |  | 0.558 |
-| walker |  | 6193 | 37 | Code::CodeKey { rung: Doc, file: gin.go, decl: 32, sub: 0, line: 390 } |  |  | 0.558 |
-| walker |  | 6265 | 72 | Code::CodeKey { rung: Doc, file: gin.go, decl: 27, sub: 0, line: 340 } |  |  | 0.558 |
-| ns | 6470 |  | 425 | Context request binding: complete roster of all 26 entry points | 4.4 | 4.1 | 0.543 |
-| walker |  | 6499 | 234 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 3, line: 0 } |  |  | 0.562 |
-| walker |  | 6514 | 15 | Code::CodeKey { rung: Doc, file: gin.go, decl: 41, sub: 0, line: 517 } |  |  | 0.562 |
-| walker |  | 6530 | 16 | Code::CodeKey { rung: Doc, file: gin.go, decl: 40, sub: 0, line: 504 } |  |  | 0.562 |
-| walker |  | 6590 | 60 | Code::CodeKey { rung: Doc, file: gin.go, decl: 43, sub: 0, line: 540 } |  |  | 0.563 |
-| walker |  | 6661 | 71 | Code::CodeKey { rung: Doc, file: gin.go, decl: 44, sub: 0, line: 561 } |  |  | 0.563 |
-| walker |  | 6683 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 37, sub: 0, line: 462 } |  |  | 0.563 |
-| walker |  | 6707 | 24 | Code::CodeKey { rung: Doc, file: gin.go, decl: 39, sub: 0, line: 482 } |  |  | 0.563 |
-| walker |  | 6735 | 28 | Code::CodeKey { rung: Doc, file: gin.go, decl: 38, sub: 0, line: 469 } |  |  | 0.563 |
-| walker |  | 6767 | 32 | Code::CodeKey { rung: Doc, file: gin.go, decl: 36, sub: 0, line: 457 } |  |  | 0.563 |
-| walker |  | 6804 | 37 | Code::CodeKey { rung: Doc, file: gin.go, decl: 42, sub: 0, line: 525 } |  |  | 0.563 |
-| ns | 6811 |  | 341 | Context request input: params, query, form, uploads — complete roster | 4.5 | 4.1 | 0.551 |
-| walker |  | 6954 | 150 | Code::CodeKey { rung: Doc, file: gin.go, decl: 35, sub: 0, line: 451 } |  |  | 0.567 |
-| ns | 7032 |  | 221 | Context headers, cookies and client IP: complete roster | 4.6 | 4.1 | 0.559 |
-| ns | 7102 |  | 70 | Context key/value store, with the typed-accessor family marked elided | 4.7 | 4.1 | 0.556 |
-| walker |  | 7223 | 269 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 4, line: 0 } |  |  | 0.578 |
-| walker |  | 7237 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 49, sub: 0, line: 662 } |  |  | 0.578 |
-| ns | 7261 |  | 159 | Content negotiation and Context's context.Context implementation | 4.8 | 4.1 | 0.572 |
-| walker |  | 7270 | 33 | Code::CodeKey { rung: Doc, file: gin.go, decl: 48, sub: 0, line: 645 } |  |  | 0.572 |
-| walker |  | 7324 | 54 | Code::CodeKey { rung: Doc, file: gin.go, decl: 46, sub: 0, line: 607 } |  |  | 0.572 |
-| walker |  | 7380 | 56 | Code::CodeKey { rung: Doc, file: gin.go, decl: 50, sub: 0, line: 680 } |  |  | 0.572 |
-| walker |  | 7440 | 60 | Code::CodeKey { rung: Doc, file: gin.go, decl: 45, sub: 0, line: 581 } |  |  | 0.572 |
-| walker |  | 7512 | 72 | Code::CodeKey { rung: Doc, file: gin.go, decl: 47, sub: 0, line: 630 } |  |  | 0.575 |
-| walker |  | 7549 | 37 | Code::CodeKey { rung: Doc, file: gin.go, decl: 55, sub: 0, line: 799 } |  |  | 0.575 |
-| ns | 7559 |  | 298 | Bind vs ShouldBind vs ShouldBindBodyWith: the semantic difference | 4.9 | 4.4 | 0.568 |
-| ns | 7716 |  | 157 | Middleware chain mechanics: Next() and the abortIndex sentinel | 4.10 | 4.2 | 0.560 |
-| walker |  | 7843 | 294 | Code::CodeKey { rung: Decl, file: gin.go, decl: 4, sub: 0, line: 39 } |  |  | 0.560 |
-| walker |  | 7870 | 27 | Code::CodeKey { rung: Doc, file: tree.go, decl: 16, sub: 0, line: 135 } |  |  | 0.560 |
-| ns | 7961 |  | 245 | binding: the complete MIME constant table | 5.1 |  | 0.552 |
-| ns | 8197 |  | 236 | binding: the Binding / BindingBody / BindingUri interfaces | 5.2 | 5.1 | 0.543 |
-| walker |  | 8243 | 373 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.543 |
-| walker |  | 8316 | 73 | Code::CodeKey { rung: Names, file: render/protobuf.go, decl: 0, sub: 0, line: 0 } |  |  | 0.543 |
-| walker |  | 8326 | 10 | Code::CodeKey { rung: Decl, file: render/protobuf.go, decl: 1, sub: 0, line: 14 } |  |  | 0.543 |
-| walker |  | 8339 | 13 | Code::CodeKey { rung: Doc, file: render/protobuf.go, decl: 1, sub: 0, line: 14 } |  |  | 0.543 |
-| walker |  | 8352 | 13 | Code::CodeKey { rung: Body, file: render/protobuf.go, decl: 4, sub: 0, line: 34 } |  |  | 0.543 |
-| walker |  | 8370 | 18 | Code::CodeKey { rung: Doc, file: render/protobuf.go, decl: 4, sub: 0, line: 34 } |  |  | 0.543 |
-| walker |  | 8392 | 22 | Code::CodeKey { rung: Doc, file: render/protobuf.go, decl: 3, sub: 0, line: 21 } |  |  | 0.543 |
-| ns | 8432 |  | 235 | binding: the registry of concrete binder singletons | 5.3 | 5.2 | 0.535 |
-| walker |  | 8465 | 73 | Code::CodeKey { rung: Names, file: render/reader.go, decl: 0, sub: 0, line: 0 } |  |  | 0.535 |
-| walker |  | 8509 | 44 | Code::CodeKey { rung: Decl, file: render/reader.go, decl: 1, sub: 0, line: 14 } |  |  | 0.535 |
-| walker |  | 8525 | 16 | Code::CodeKey { rung: Doc, file: render/reader.go, decl: 2, sub: 0, line: 22 } |  |  | 0.535 |
-| walker |  | 8541 | 16 | Code::CodeKey { rung: Doc, file: render/reader.go, decl: 3, sub: 0, line: 36 } |  |  | 0.535 |
-| walker |  | 8557 | 16 | Code::CodeKey { rung: Body, file: render/reader.go, decl: 3, sub: 0, line: 36 } |  |  | 0.535 |
-| walker |  | 8579 | 22 | Code::CodeKey { rung: Doc, file: render/reader.go, decl: 1, sub: 0, line: 14 } |  |  | 0.535 |
-| walker |  | 8652 | 73 | Code::CodeKey { rung: Names, file: render/xml.go, decl: 0, sub: 0, line: 0 } |  |  | 0.535 |
-| walker |  | 8662 | 10 | Code::CodeKey { rung: Decl, file: render/xml.go, decl: 1, sub: 0, line: 13 } |  |  | 0.535 |
-| walker |  | 8674 | 12 | Code::CodeKey { rung: Doc, file: render/xml.go, decl: 1, sub: 0, line: 13 } |  |  | 0.535 |
-| walker |  | 8687 | 13 | Code::CodeKey { rung: Body, file: render/xml.go, decl: 4, sub: 0, line: 26 } |  |  | 0.535 |
-| walker |  | 8705 | 18 | Code::CodeKey { rung: Doc, file: render/xml.go, decl: 4, sub: 0, line: 26 } |  |  | 0.535 |
-| ns | 8707 |  | 275 | binding.Default(): how a request picks its binder | 5.4 | 5.3 | 0.524 |
-| walker |  | 8726 | 21 | Code::CodeKey { rung: Doc, file: render/xml.go, decl: 3, sub: 0, line: 20 } |  |  | 0.524 |
-| walker |  | 8800 | 74 | Code::CodeKey { rung: Names, file: render/yaml.go, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
-| walker |  | 8810 | 10 | Code::CodeKey { rung: Decl, file: render/yaml.go, decl: 1, sub: 0, line: 14 } |  |  | 0.524 |
-| walker |  | 8822 | 12 | Code::CodeKey { rung: Doc, file: render/yaml.go, decl: 1, sub: 0, line: 14 } |  |  | 0.524 |
-| walker |  | 8835 | 13 | Code::CodeKey { rung: Body, file: render/yaml.go, decl: 4, sub: 0, line: 34 } |  |  | 0.524 |
-| walker |  | 8854 | 19 | Code::CodeKey { rung: Doc, file: render/yaml.go, decl: 4, sub: 0, line: 34 } |  |  | 0.524 |
-| walker |  | 8876 | 22 | Code::CodeKey { rung: Doc, file: render/yaml.go, decl: 3, sub: 0, line: 21 } |  |  | 0.524 |
-| walker |  | 8969 | 93 | Code::CodeKey { rung: Body, file: deprecated.go, decl: 1, sub: 0, line: 17 } |  |  | 0.524 |
-| walker |  | 9045 | 76 | Code::CodeKey { rung: Names, file: binding/protobuf.go, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
-| walker |  | 9053 | 8 | Code::CodeKey { rung: Body, file: binding/protobuf.go, decl: 2, sub: 0, line: 17 } |  |  | 0.524 |
-| walker |  | 9082 | 29 | Code::CodeKey { rung: Doc, file: path.go, decl: 3, sub: 0, line: 128 } |  |  | 0.524 |
-| ns | 9152 |  | 445 | render: the Render interface and every implementation | 5.5 |  | 0.511 |
-| ns | 9314 |  | 162 | Every build-tag line in the repository | 5.6 | 5.4 | 0.508 |
-| walker |  | 9396 | 314 | Code::CodeKey { rung: Names, file: utils.go, decl: 0, sub: 0, line: 0 } |  |  | 0.508 |
-| walker |  | 9409 | 13 | Code::CodeKey { rung: Doc, file: utils.go, decl: 1, sub: 0, line: 20 } |  |  | 0.508 |
-| walker |  | 9424 | 15 | Code::CodeKey { rung: Doc, file: utils.go, decl: 7, sub: 0, line: 61 } |  |  | 0.508 |
-| walker |  | 9439 | 15 | Code::CodeKey { rung: Doc, file: utils.go, decl: 8, sub: 0, line: 64 } |  |  | 0.508 |
-| ns | 9454 |  | 140 | binding: StructValidator and the default validator hook | 5.7 | 5.2 | 0.503 |
-| walker |  | 9457 | 18 | Code::CodeKey { rung: Doc, file: utils.go, decl: 4, sub: 0, line: 29 } |  |  | 0.503 |
-| walker |  | 9478 | 21 | Code::CodeKey { rung: Doc, file: utils.go, decl: 6, sub: 0, line: 54 } |  |  | 0.503 |
-| walker |  | 9500 | 22 | Code::CodeKey { rung: Doc, file: utils.go, decl: 5, sub: 0, line: 47 } |  |  | 0.503 |
-| walker |  | 9512 | 12 | Code::CodeKey { rung: Doc, file: utils.go, decl: 2, sub: 0, line: 23 } |  |  | 0.503 |
-| walker |  | 9526 | 14 | Code::CodeKey { rung: Doc, file: utils.go, decl: 3, sub: 0, line: 26 } |  |  | 0.503 |
-| walker |  | 9549 | 23 | Code::CodeKey { rung: Doc, file: utils.go, decl: 18, sub: 0, line: 174 } |  |  | 0.503 |
-| walker |  | 9572 | 23 | Code::CodeKey { rung: Doc, file: utils.go, decl: 19, sub: 0, line: 182 } |  |  | 0.503 |
-| walker |  | 9598 | 26 | Code::CodeKey { rung: Doc, file: utils.go, decl: 17, sub: 0, line: 164 } |  |  | 0.503 |
-| ns | 9626 |  | 172 | Run modes: GIN_MODE, the three mode constants, and the default writers | 6.1 |  | 0.498 |
-| walker |  | 9676 | 78 | Code::CodeKey { rung: Names, file: binding/bson.go, decl: 0, sub: 0, line: 0 } |  |  | 0.498 |
-| walker |  | 9685 | 9 | Code::CodeKey { rung: Body, file: binding/bson.go, decl: 2, sub: 0, line: 16 } |  |  | 0.498 |
-| walker |  | 9696 | 11 | Code::CodeKey { rung: Body, file: binding/bson.go, decl: 4, sub: 0, line: 28 } |  |  | 0.498 |
-| ns | 9697 |  | 71 | mode.go: complete function roster | 6.2 | 6.1 | 0.496 |
-| walker |  | 9880 | 184 | Code::CodeKey { rung: Names, file: auth.go, decl: 0, sub: 0, line: 0 } |  |  | 0.496 |
-| walker |  | 9898 | 18 | Code::CodeKey { rung: Decl, file: auth.go, decl: 4, sub: 0, line: 25 } |  |  | 0.496 |
-| walker |  | 9910 | 12 | Code::CodeKey { rung: Body, file: auth.go, decl: 8, sub: 0, line: 72 } |  |  | 0.496 |
-| walker |  | 9927 | 17 | Code::CodeKey { rung: Doc, file: auth.go, decl: 3, sub: 0, line: 23 } |  |  | 0.496 |
-| walker |  | 9946 | 19 | Code::CodeKey { rung: Doc, file: auth.go, decl: 1, sub: 0, line: 17 } |  |  | 0.496 |
-| walker |  | 9967 | 21 | Code::CodeKey { rung: Doc, file: auth.go, decl: 2, sub: 0, line: 20 } |  |  | 0.496 |
-| ns | 9974 |  | 277 | Built-in middleware and helper constructors: complete package-level roster | 6.3 |  | 0.491 |
+| walker |  | 463 | 75 | Fs::DirListing { dir: render } |  |  | 0.080 |
+| walker |  | 482 | 19 | Fs::DirListing { dir: .github } |  |  | 0.080 |
+| walker |  | 504 | 22 | Fs::DirListing { dir: .github/workflows } |  |  | 0.080 |
+| ns | 569 |  | 125 | README key-feature list (second half) + Go version prerequisite | 1.5 |  | 0.072 |
+| walker |  | 660 | 156 | Fs::DirListing { dir: binding } |  |  | 0.081 |
+| ns | 661 |  | 92 | docs/doc.md top-level section map | 1.6 |  | 0.070 |
+| walker |  | 671 | 11 | Markdown::Section { file: docs/doc.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.077 |
+| walker |  | 872 | 201 | Code::CodeKey { rung: ModuleDoc, file: doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
+| ns | 890 |  | 229 | Complete repository root listing | 1.7 |  | 0.757 |
+| ns | 1121 |  | 231 | binding/ and render/ directory listings | 1.8 |  | 0.766 |
+| walker |  | 1127 | 255 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.767 |
+| walker |  | 1136 | 9 | Code::CodeKey { rung: Decl, file: gin.go, decl: 2, sub: 0, line: 32 } |  |  | 0.767 |
+| walker |  | 1145 | 9 | Code::CodeKey { rung: Decl, file: gin.go, decl: 1, sub: 0, line: 25 } |  |  | 0.767 |
+| walker |  | 1185 | 40 | Code::CodeKey { rung: Decl, file: gin.go, decl: 9, sub: 0, line: 68 } |  |  | 0.768 |
+| walker |  | 1196 | 11 | Code::CodeKey { rung: Doc, file: gin.go, decl: 10, sub: 0, line: 76 } |  |  | 0.769 |
+| walker |  | 1208 | 12 | Code::CodeKey { rung: Doc, file: gin.go, decl: 7, sub: 0, line: 57 } |  |  | 0.769 |
+| walker |  | 1222 | 14 | Code::CodeKey { rung: Doc, file: gin.go, decl: 6, sub: 0, line: 54 } |  |  | 0.770 |
+| ns | 1238 |  | 117 | Remaining source/data directory listings (codec, ginS, internal, docs, examples, testdata) | 1.9 |  | 0.771 |
+| walker |  | 1240 | 18 | Code::CodeKey { rung: Doc, file: gin.go, decl: 5, sub: 0, line: 51 } |  |  | 0.772 |
+| walker |  | 1345 | 105 | Code::CodeKey { rung: Decl, file: gin.go, decl: 11, sub: 0, line: 79 } |  |  | 0.772 |
+| walker |  | 1351 | 6 | Code::CodeKey { rung: Doc, file: gin.go, decl: 11, sub: 0, line: 79 } |  |  | 0.772 |
+| walker |  | 1373 | 22 | Code::CodeKey { rung: Doc, file: gin.go, decl: 9, sub: 0, line: 68 } |  |  | 0.774 |
+| walker |  | 1396 | 23 | Code::CodeKey { rung: Doc, file: gin.go, decl: 8, sub: 0, line: 60 } |  |  | 0.774 |
+| ns | 1436 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.766 |
+| walker |  | 1541 | 145 | Markdown::ReadmeHeadline { file: ginS/README.md } |  |  | 0.766 |
+| ns | 1686 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.694 |
+| walker |  | 1736 | 195 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.694 |
+| walker |  | 1973 | 237 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
+| walker |  | 1984 | 11 | Code::CodeKey { rung: Decl, file: context.go, decl: 1, sub: 0, line: 31 } |  |  | 0.694 |
+| walker |  | 1997 | 13 | Code::CodeKey { rung: Doc, file: context.go, decl: 2, sub: 0, line: 47 } |  |  | 0.694 |
+| walker |  | 2012 | 15 | Code::CodeKey { rung: Doc, file: context.go, decl: 1, sub: 0, line: 31 } |  |  | 0.694 |
+| ns | 2022 |  | 336 | IRoutes / IRouter: the complete route-registration interface | 2.3 |  | 0.651 |
+| walker |  | 2027 | 15 | Code::CodeKey { rung: Doc, file: context.go, decl: 3, sub: 0, line: 50 } |  |  | 0.651 |
+| walker |  | 2280 | 253 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 1, line: 0 } |  |  | 0.652 |
+| walker |  | 2291 | 11 | Code::CodeKey { rung: Doc, file: context.go, decl: 12, sub: 0, line: 167 } |  |  | 0.652 |
+| walker |  | 2308 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 15, sub: 0, line: 199 } |  |  | 0.652 |
+| walker |  | 2341 | 33 | Code::CodeKey { rung: Doc, file: context.go, decl: 11, sub: 0, line: 155 } |  |  | 0.652 |
+| walker |  | 2382 | 41 | Code::CodeKey { rung: Doc, file: context.go, decl: 10, sub: 0, line: 149 } |  |  | 0.652 |
+| walker |  | 2424 | 42 | Code::CodeKey { rung: Doc, file: context.go, decl: 14, sub: 0, line: 188 } |  |  | 0.653 |
+| ns | 2443 |  | 421 | Engine constructor New(): every default value | 2.4 | 2.2 | 0.610 |
+| walker |  | 2470 | 46 | Code::CodeKey { rung: Doc, file: context.go, decl: 9, sub: 0, line: 122 } |  |  | 0.610 |
+| walker |  | 2484 | 14 | Code::CodeKey { rung: Doc, file: context.go, decl: 6, sub: 0, line: 57 } |  |  | 0.610 |
+| walker |  | 2532 | 48 | Code::CodeKey { rung: Doc, file: context.go, decl: 17, sub: 0, line: 213 } |  |  | 0.610 |
+| walker |  | 2593 | 61 | Code::CodeKey { rung: Doc, file: context.go, decl: 18, sub: 0, line: 222 } |  |  | 0.610 |
+| ns | 2636 |  | 193 | Default(), RouterGroup struct, and the IRouter assertions | 2.5 | 2.3 | 0.589 |
+| ns | 2831 |  | 195 | Run* server entry points: all six transports | 2.6 |  | 0.580 |
+| walker |  | 2980 | 387 | Code::CodeKey { rung: Decl, file: context.go, decl: 7, sub: 0, line: 61 } |  |  | 0.585 |
+| walker |  | 3024 | 44 | Code::CodeKey { rung: Doc, file: context.go, decl: 7, sub: 0, line: 61 } |  |  | 0.586 |
+| walker |  | 3103 | 79 | Code::CodeKey { rung: Doc, file: context.go, decl: 13, sub: 0, line: 177 } |  |  | 0.586 |
+| walker |  | 3185 | 82 | Code::CodeKey { rung: Doc, file: context.go, decl: 16, sub: 0, line: 207 } |  |  | 0.586 |
+| ns | 3335 |  | 504 | gin.go: complete function roster beyond the constructors and Run* | 2.7 | 2.5 | 0.551 |
+| walker |  | 3396 | 211 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 2, line: 0 } |  |  | 0.552 |
+| walker |  | 3414 | 18 | Code::CodeKey { rung: Doc, file: context.go, decl: 26, sub: 0, line: 311 } |  |  | 0.552 |
+| walker |  | 3432 | 18 | Code::CodeKey { rung: Doc, file: context.go, decl: 27, sub: 0, line: 316 } |  |  | 0.552 |
+| walker |  | 3450 | 18 | Code::CodeKey { rung: Doc, file: context.go, decl: 28, sub: 0, line: 321 } |  |  | 0.552 |
+| walker |  | 3473 | 23 | Code::CodeKey { rung: Doc, file: context.go, decl: 24, sub: 0, line: 296 } |  |  | 0.552 |
+| ns | 3491 |  | 156 | Engine struct: unexported field tail | 2.8 | 2.2 | 0.540 |
+| walker |  | 3511 | 38 | Code::CodeKey { rung: Doc, file: context.go, decl: 22, sub: 0, line: 276 } |  |  | 0.540 |
+| walker |  | 3550 | 39 | Code::CodeKey { rung: Doc, file: context.go, decl: 23, sub: 0, line: 288 } |  |  | 0.540 |
+| walker |  | 3607 | 57 | Code::CodeKey { rung: Doc, file: context.go, decl: 19, sub: 0, line: 230 } |  |  | 0.540 |
+| ns | 3639 |  | 148 | tree.go: Param / Params — the URL-parameter type and its accessors | 2.9 |  | 0.530 |
+| walker |  | 3665 | 58 | Code::CodeKey { rung: Doc, file: context.go, decl: 20, sub: 0, line: 238 } |  |  | 0.530 |
+| walker |  | 3766 | 101 | Code::CodeKey { rung: Doc, file: context.go, decl: 21, sub: 0, line: 252 } |  |  | 0.530 |
+| ns | 3818 |  | 179 | handleHTTPRequest: path resolution before the tree lookup | 2.10 | 2.7 | 0.517 |
+| walker |  | 3995 | 229 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 3, line: 0 } |  |  | 0.517 |
+| walker |  | 4014 | 19 | Code::CodeKey { rung: Doc, file: context.go, decl: 33, sub: 0, line: 346 } |  |  | 0.517 |
+| walker |  | 4034 | 20 | Code::CodeKey { rung: Doc, file: context.go, decl: 38, sub: 0, line: 371 } |  |  | 0.517 |
+| walker |  | 4054 | 20 | Code::CodeKey { rung: Doc, file: context.go, decl: 39, sub: 0, line: 376 } |  |  | 0.517 |
+| walker |  | 4075 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 29, sub: 0, line: 326 } |  |  | 0.517 |
+| walker |  | 4096 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 30, sub: 0, line: 331 } |  |  | 0.517 |
+| walker |  | 4117 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 31, sub: 0, line: 336 } |  |  | 0.517 |
+| walker |  | 4138 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 32, sub: 0, line: 341 } |  |  | 0.517 |
+| walker |  | 4160 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 34, sub: 0, line: 351 } |  |  | 0.517 |
+| walker |  | 4182 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 35, sub: 0, line: 356 } |  |  | 0.517 |
+| ns | 4191 |  | 373 | handleHTTPRequest: the radix lookup, redirects and the 404/405 exits | 2.11 | 2.10 | 0.493 |
+| walker |  | 4204 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 36, sub: 0, line: 361 } |  |  | 0.493 |
+| walker |  | 4226 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 37, sub: 0, line: 366 } |  |  | 0.493 |
+| ns | 4440 |  | 249 | tree.go: nodeValue and the complete radix-tree function roster | 2.12 | 2.9 | 0.480 |
+| walker |  | 4442 | 216 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 4, line: 0 } |  |  | 0.480 |
+| walker |  | 4459 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 40, sub: 0, line: 381 } |  |  | 0.480 |
+| walker |  | 4477 | 18 | Code::CodeKey { rung: Doc, file: context.go, decl: 41, sub: 0, line: 386 } |  |  | 0.480 |
+| walker |  | 4495 | 18 | Code::CodeKey { rung: Doc, file: context.go, decl: 42, sub: 0, line: 391 } |  |  | 0.480 |
+| walker |  | 4516 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 43, sub: 0, line: 396 } |  |  | 0.480 |
+| walker |  | 4538 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 48, sub: 0, line: 421 } |  |  | 0.480 |
+| walker |  | 4562 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 44, sub: 0, line: 401 } |  |  | 0.480 |
+| walker |  | 4586 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 45, sub: 0, line: 406 } |  |  | 0.480 |
+| walker |  | 4610 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 46, sub: 0, line: 411 } |  |  | 0.480 |
+| walker |  | 4634 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 47, sub: 0, line: 416 } |  |  | 0.480 |
+| walker |  | 4658 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 49, sub: 0, line: 426 } |  |  | 0.480 |
+| ns | 4660 |  | 220 | path.go: cleanPath semantics and the file's whole function set | 2.13 | 2.11 | 0.473 |
+| walker |  | 4886 | 228 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 5, line: 0 } |  |  | 0.473 |
+| ns | 4890 |  | 230 | Trusted-platform constants and the SetTrustedProxies contract | 2.14 | 2.7 | 0.466 |
+| walker |  | 4907 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 55, sub: 0, line: 456 } |  |  | 0.466 |
+| walker |  | 4928 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 56, sub: 0, line: 461 } |  |  | 0.466 |
+| walker |  | 4949 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 57, sub: 0, line: 466 } |  |  | 0.466 |
+| walker |  | 4971 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 58, sub: 0, line: 471 } |  |  | 0.466 |
+| ns | 4979 |  | 89 | Makefile: complete target roster | 3.1 |  | 0.460 |
+| walker |  | 4995 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 50, sub: 0, line: 431 } |  |  | 0.460 |
+| walker |  | 5019 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 51, sub: 0, line: 436 } |  |  | 0.460 |
+| ns | 5037 |  | 58 | Makefile variables: which packages are tested and vetted | 3.2 | 3.1 | 0.459 |
+| walker |  | 5043 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 52, sub: 0, line: 441 } |  |  | 0.459 |
+| walker |  | 5067 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 53, sub: 0, line: 446 } |  |  | 0.459 |
+| walker |  | 5091 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 54, sub: 0, line: 451 } |  |  | 0.459 |
+| walker |  | 5117 | 26 | Code::CodeKey { rung: Doc, file: context.go, decl: 59, sub: 0, line: 476 } |  |  | 0.459 |
+| walker |  | 5330 | 213 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 6, line: 0 } |  |  | 0.460 |
+| walker |  | 5346 | 16 | Code::CodeKey { rung: Doc, file: context.go, decl: 69, sub: 0, line: 587 } |  |  | 0.460 |
+| walker |  | 5384 | 38 | Code::CodeKey { rung: Doc, file: context.go, decl: 60, sub: 0, line: 482 } |  |  | 0.460 |
+| walker |  | 5423 | 39 | Code::CodeKey { rung: Doc, file: context.go, decl: 66, sub: 0, line: 563 } |  |  | 0.460 |
+| ns | 5459 |  | 422 | Context struct: all fields with their doc comments | 4.1 |  | 0.487 |
+| walker |  | 5463 | 40 | Code::CodeKey { rung: Doc, file: context.go, decl: 68, sub: 0, line: 580 } |  |  | 0.487 |
+| walker |  | 5533 | 70 | Code::CodeKey { rung: Doc, file: context.go, decl: 62, sub: 0, line: 512 } |  |  | 0.487 |
+| walker |  | 5655 | 122 | Code::CodeKey { rung: Doc, file: context.go, decl: 64, sub: 0, line: 538 } |  |  | 0.487 |
+| ns | 5674 |  | 215 | Context flow control and error attachment: complete roster | 4.2 | 4.1 | 0.496 |
+| walker |  | 5872 | 217 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 7, line: 0 } |  |  | 0.497 |
+| walker |  | 5889 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 77, sub: 0, line: 660 } |  |  | 0.497 |
+| walker |  | 5927 | 38 | Code::CodeKey { rung: Doc, file: context.go, decl: 70, sub: 0, line: 594 } |  |  | 0.497 |
+| walker |  | 5966 | 39 | Code::CodeKey { rung: Doc, file: context.go, decl: 71, sub: 0, line: 601 } |  |  | 0.497 |
+| walker |  | 6005 | 39 | Code::CodeKey { rung: Doc, file: context.go, decl: 78, sub: 0, line: 667 } |  |  | 0.497 |
+| walker |  | 6045 | 40 | Code::CodeKey { rung: Doc, file: context.go, decl: 74, sub: 0, line: 633 } |  |  | 0.485 |
+| ns | 6045 |  | 371 | Context response rendering: complete roster | 4.3 | 4.1 | 0.485 |
+| walker |  | 6086 | 41 | Code::CodeKey { rung: Doc, file: context.go, decl: 76, sub: 0, line: 653 } |  |  | 0.485 |
+| walker |  | 6145 | 59 | Code::CodeKey { rung: Doc, file: context.go, decl: 72, sub: 0, line: 609 } |  |  | 0.485 |
+| walker |  | 6369 | 224 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 8, line: 0 } |  |  | 0.486 |
+| walker |  | 6385 | 16 | Code::CodeKey { rung: Doc, file: context.go, decl: 82, sub: 0, line: 719 } |  |  | 0.486 |
+| walker |  | 6402 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 80, sub: 0, line: 698 } |  |  | 0.486 |
+| walker |  | 6419 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 81, sub: 0, line: 713 } |  |  | 0.486 |
+| walker |  | 6439 | 20 | Code::CodeKey { rung: Doc, file: context.go, decl: 84, sub: 0, line: 763 } |  |  | 0.486 |
+| walker |  | 6459 | 20 | Code::CodeKey { rung: Doc, file: context.go, decl: 86, sub: 0, line: 773 } |  |  | 0.486 |
+| ns | 6470 |  | 425 | Context request binding: complete roster of all 26 entry points | 4.4 | 4.1 | 0.474 |
+| walker |  | 6480 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 85, sub: 0, line: 768 } |  |  | 0.474 |
+| walker |  | 6502 | 22 | Code::CodeKey { rung: Doc, file: context.go, decl: 87, sub: 0, line: 778 } |  |  | 0.474 |
+| walker |  | 6526 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 88, sub: 0, line: 783 } |  |  | 0.474 |
+| walker |  | 6657 | 131 | Code::CodeKey { rung: Doc, file: context.go, decl: 61, sub: 0, line: 503 } |  |  | 0.474 |
+| walker |  | 6790 | 133 | Code::CodeKey { rung: Doc, file: context.go, decl: 63, sub: 0, line: 525 } |  |  | 0.474 |
+| ns | 6811 |  | 341 | Context request input: params, query, form, uploads — complete roster | 4.5 | 4.1 | 0.487 |
+| walker |  | 7013 | 223 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 9, line: 0 } |  |  | 0.497 |
+| ns | 7032 |  | 221 | Context headers, cookies and client IP: complete roster | 4.6 | 4.1 | 0.491 |
+| walker |  | 7033 | 20 | Code::CodeKey { rung: Doc, file: context.go, decl: 90, sub: 0, line: 793 } |  |  | 0.491 |
+| walker |  | 7054 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 89, sub: 0, line: 788 } |  |  | 0.491 |
+| walker |  | 7089 | 35 | Code::CodeKey { rung: Doc, file: context.go, decl: 91, sub: 0, line: 799 } |  |  | 0.491 |
+| ns | 7102 |  | 70 | Context key/value store, with the typed-accessor family marked elided | 4.7 | 4.1 | 0.494 |
+| walker |  | 7129 | 40 | Code::CodeKey { rung: Doc, file: context.go, decl: 96, sub: 0, line: 879 } |  |  | 0.494 |
+| walker |  | 7170 | 41 | Code::CodeKey { rung: Doc, file: context.go, decl: 95, sub: 0, line: 873 } |  |  | 0.494 |
+| walker |  | 7213 | 43 | Code::CodeKey { rung: Doc, file: context.go, decl: 97, sub: 0, line: 885 } |  |  | 0.494 |
+| walker |  | 7256 | 43 | Code::CodeKey { rung: Doc, file: context.go, decl: 99, sub: 0, line: 897 } |  |  | 0.494 |
+| ns | 7261 |  | 159 | Content negotiation and Context's context.Context implementation | 4.8 | 4.1 | 0.488 |
+| walker |  | 7302 | 46 | Code::CodeKey { rung: Doc, file: context.go, decl: 98, sub: 0, line: 891 } |  |  | 0.488 |
+| walker |  | 7350 | 48 | Code::CodeKey { rung: Doc, file: context.go, decl: 92, sub: 0, line: 810 } |  |  | 0.488 |
+| walker |  | 7556 | 206 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 10, line: 0 } |  |  | 0.505 |
+| ns | 7559 |  | 298 | Bind vs ShouldBind vs ShouldBindBodyWith: the semantic difference | 4.9 | 4.4 | 0.499 |
+| walker |  | 7580 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 104, sub: 0, line: 946 } |  |  | 0.499 |
+| walker |  | 7604 | 24 | Code::CodeKey { rung: Doc, file: context.go, decl: 105, sub: 0, line: 951 } |  |  | 0.499 |
+| walker |  | 7629 | 25 | Code::CodeKey { rung: Doc, file: context.go, decl: 108, sub: 0, line: 966 } |  |  | 0.499 |
+| walker |  | 7655 | 26 | Code::CodeKey { rung: Doc, file: context.go, decl: 106, sub: 0, line: 956 } |  |  | 0.499 |
+| walker |  | 7683 | 28 | Code::CodeKey { rung: Doc, file: context.go, decl: 107, sub: 0, line: 961 } |  |  | 0.499 |
+| walker |  | 7712 | 29 | Code::CodeKey { rung: Doc, file: context.go, decl: 102, sub: 0, line: 919 } |  |  | 0.499 |
+| ns | 7716 |  | 157 | Middleware chain mechanics: Next() and the abortIndex sentinel | 4.10 | 4.2 | 0.496 |
+| walker |  | 7749 | 37 | Code::CodeKey { rung: Doc, file: context.go, decl: 101, sub: 0, line: 909 } |  |  | 0.496 |
+| walker |  | 7788 | 39 | Code::CodeKey { rung: Doc, file: context.go, decl: 100, sub: 0, line: 903 } |  |  | 0.496 |
+| walker |  | 7872 | 84 | Code::CodeKey { rung: Doc, file: context.go, decl: 103, sub: 0, line: 928 } |  |  | 0.497 |
+| walker |  | 7913 | 41 | Code::CodeKey { rung: Doc, file: context.go, decl: 79, sub: 0, line: 674 } |  |  | 0.497 |
+| ns | 7961 |  | 245 | binding: the complete MIME constant table | 5.1 |  | 0.490 |
+| walker |  | 8164 | 251 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 11, line: 0 } |  |  | 0.500 |
+| walker |  | 8176 | 12 | Code::CodeKey { rung: Doc, file: context.go, decl: 119, sub: 0, line: 1102 } |  |  | 0.500 |
+| walker |  | 8189 | 13 | Code::CodeKey { rung: Doc, file: context.go, decl: 115, sub: 0, line: 1073 } |  |  | 0.500 |
+| ns | 8197 |  | 236 | binding: the Binding / BindingBody / BindingUri interfaces | 5.2 | 5.1 | 0.492 |
+| walker |  | 8202 | 13 | Code::CodeKey { rung: Doc, file: context.go, decl: 118, sub: 0, line: 1094 } |  |  | 0.492 |
+| walker |  | 8216 | 14 | Code::CodeKey { rung: Doc, file: context.go, decl: 117, sub: 0, line: 1089 } |  |  | 0.492 |
+| walker |  | 8233 | 17 | Code::CodeKey { rung: Doc, file: context.go, decl: 111, sub: 0, line: 1036 } |  |  | 0.492 |
+| walker |  | 8260 | 27 | Code::CodeKey { rung: Doc, file: context.go, decl: 110, sub: 0, line: 1027 } |  |  | 0.492 |
+| walker |  | 8294 | 34 | Code::CodeKey { rung: Doc, file: context.go, decl: 112, sub: 0, line: 1042 } |  |  | 0.492 |
+| walker |  | 8344 | 50 | Code::CodeKey { rung: Doc, file: context.go, decl: 120, sub: 0, line: 1109 } |  |  | 0.492 |
+| walker |  | 8402 | 58 | Code::CodeKey { rung: Doc, file: context.go, decl: 116, sub: 0, line: 1080 } |  |  | 0.492 |
+| ns | 8432 |  | 235 | binding: the registry of concrete binder singletons | 5.3 | 5.2 | 0.485 |
+| walker |  | 8532 | 130 | Code::CodeKey { rung: Doc, file: context.go, decl: 109, sub: 0, line: 975 } |  |  | 0.485 |
+| walker |  | 8572 | 40 | Code::CodeKey { rung: Doc, file: context.go, decl: 114, sub: 0, line: 1060 } |  |  | 0.485 |
+| ns | 8707 |  | 275 | binding.Default(): how a request picks its binder | 5.4 | 5.3 | 0.474 |
+| walker |  | 8796 | 224 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 12, line: 0 } |  |  | 0.480 |
+| walker |  | 8815 | 19 | Code::CodeKey { rung: Doc, file: context.go, decl: 123, sub: 0, line: 1152 } |  |  | 0.480 |
+| walker |  | 8851 | 36 | Code::CodeKey { rung: Doc, file: context.go, decl: 128, sub: 0, line: 1205 } |  |  | 0.480 |
+| walker |  | 8894 | 43 | Code::CodeKey { rung: Doc, file: context.go, decl: 129, sub: 0, line: 1211 } |  |  | 0.480 |
+| walker |  | 8937 | 43 | Code::CodeKey { rung: Doc, file: context.go, decl: 130, sub: 0, line: 1217 } |  |  | 0.480 |
+| walker |  | 8992 | 55 | Code::CodeKey { rung: Doc, file: context.go, decl: 124, sub: 0, line: 1171 } |  |  | 0.480 |
+| walker |  | 9055 | 63 | Code::CodeKey { rung: Doc, file: context.go, decl: 126, sub: 0, line: 1187 } |  |  | 0.480 |
+| walker |  | 9119 | 64 | Code::CodeKey { rung: Doc, file: context.go, decl: 127, sub: 0, line: 1194 } |  |  | 0.480 |
+| ns | 9152 |  | 445 | render: the Render interface and every implementation | 5.5 |  | 0.468 |
+| walker |  | 9185 | 66 | Code::CodeKey { rung: Doc, file: context.go, decl: 121, sub: 0, line: 1128 } |  |  | 0.468 |
+| walker |  | 9252 | 67 | Code::CodeKey { rung: Doc, file: context.go, decl: 122, sub: 0, line: 1142 } |  |  | 0.468 |
+| ns | 9314 |  | 162 | Every build-tag line in the repository | 5.6 | 5.4 | 0.465 |
+| walker |  | 9338 | 86 | Code::CodeKey { rung: Doc, file: context.go, decl: 125, sub: 0, line: 1180 } |  |  | 0.465 |
+| ns | 9454 |  | 140 | binding: StructValidator and the default validator hook | 5.7 | 5.2 | 0.461 |
+| walker |  | 9578 | 240 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 13, line: 0 } |  |  | 0.470 |
+| walker |  | 9594 | 16 | Code::CodeKey { rung: Doc, file: context.go, decl: 137, sub: 0, line: 1254 } |  |  | 0.470 |
+| walker |  | 9610 | 16 | Code::CodeKey { rung: Doc, file: context.go, decl: 138, sub: 0, line: 1259 } |  |  | 0.470 |
+| ns | 9626 |  | 172 | Run modes: GIN_MODE, the three mode constants, and the default writers | 6.1 |  | 0.466 |
+| walker |  | 9629 | 19 | Code::CodeKey { rung: Doc, file: context.go, decl: 133, sub: 0, line: 1234 } |  |  | 0.466 |
+| walker |  | 9648 | 19 | Code::CodeKey { rung: Doc, file: context.go, decl: 136, sub: 0, line: 1249 } |  |  | 0.466 |
+| walker |  | 9668 | 20 | Code::CodeKey { rung: Doc, file: context.go, decl: 139, sub: 0, line: 1268 } |  |  | 0.466 |
+| walker |  | 9689 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 134, sub: 0, line: 1239 } |  |  | 0.466 |
+| ns | 9697 |  | 71 | mode.go: complete function roster | 6.2 | 6.1 | 0.464 |
+| walker |  | 9710 | 21 | Code::CodeKey { rung: Doc, file: context.go, decl: 135, sub: 0, line: 1244 } |  |  | 0.464 |
+| walker |  | 9733 | 23 | Code::CodeKey { rung: Doc, file: context.go, decl: 140, sub: 0, line: 1276 } |  |  | 0.464 |
+| walker |  | 9768 | 35 | Code::CodeKey { rung: Doc, file: context.go, decl: 132, sub: 0, line: 1229 } |  |  | 0.464 |
+| walker |  | 9804 | 36 | Code::CodeKey { rung: Doc, file: context.go, decl: 131, sub: 0, line: 1223 } |  |  | 0.464 |
+| walker |  | 9949 | 145 | Code::CodeKey { rung: Doc, file: context.go, decl: 65, sub: 0, line: 554 } |  |  | 0.464 |
+| ns | 9974 |  | 277 | Built-in middleware and helper constructors: complete package-level roster | 6.3 |  | 0.457 |

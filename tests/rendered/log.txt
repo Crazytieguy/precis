@@ -68,17 +68,7 @@ src/
       …
     mod.rs
     source.rs
-      1→//! Sources for key-values.
-      2→//!
-      3→//! This module defines the [`Source`] type and supporting APIs for
-      4→//! working with collections of key-values.
-      …
     value.rs
-      1→//! Structured values.
-      2→//!
-      3→//! This module defines the [`Value`] type and supporting APIs for
-      4→//! capturing and serializing them.
-      …
   lib.rs
     …
     405→#[macro_use]
@@ -198,6 +188,9 @@ src/
     698→    #[inline]
     699→    pub fn max() -> LevelFilter {
     …
+    703→    /// Converts `self` to the equivalent `Level`.
+    704→    ///
+    705→    /// Returns `None` if `self` is `LevelFilter::Off`.
     706→    #[inline]
     707→    pub fn to_level(&self) -> Option<Level> {
     …

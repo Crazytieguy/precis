@@ -44,25 +44,19 @@ README.md
   45→## Benchmarks
   …
   66→## Projects using this package
-  …
+  67→
+  68→- [InfluxDB](https://github.com/influxdata/influxdb)
+  69→- [Prometheus](https://github.com/prometheus/prometheus)
+  70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+  71→- [FreeCache](https://github.com/coocood/freecache)
+  72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
+  73→- [Ristretto](https://github.com/dgraph-io/ristretto)
+  74→- [Badger](https://github.com/dgraph-io/badger)
 bench_test.go
 dynamic/
   .gitignore
   dynamic_test.go
   plugin.go
-    …
-    14→const (
-    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
-    16→	want = uint64(0x02a2e85470d6fd96)
-    17→)
-    19→func TestSum(t *testing.T) {
-    20→	got := xxhash.Sum64String(in)
-    21→	if got != want {
-    22→		t.Fatalf("Sum64String: got 0x%x; want 0x%x", got, want)
-    23→	}
-    …
-    26→func TestDigest(t *testing.T) {
-    …
 go.mod
   1→module github.com/cespare/xxhash/v2
   2→

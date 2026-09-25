@@ -110,128 +110,134 @@ assets/
   CobraMain.png
 bash_completions.go
 bash_completionsV2.go
-  …
-  24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
-  …
-  31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
-  …
-  469→// GenBashCompletionFileV2 generates Bash completion version 2.
-  470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
-  …
-  480→// GenBashCompletionV2 generates Bash completion file version 2
-  481→// and writes it to the passed writer.
-  482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
-  483→	return c.genBashCompletion(w, includeDesc)
-  …
 bash_completionsV2_test.go
 bash_completions_test.go
 cobra.go
-  …
-  32→var templateFuncs = template.FuncMap{
-  33→	"trim":                    strings.TrimSpace,
-  34→	"trimRightSpace":          trimRightSpace,
-  35→	"trimTrailingWhitespaces": trimRightSpace,
-  36→	"appendIfNotPresent":      appendIfNotPresent,
-  37→	"rpad":                    rpad,
-  38→	"gt":                      Gt,
-  39→	"eq":                      Eq,
-  40→}
-  42→var initializers []func()
-  43→var finalizers []func()
-  45→const (
-  46→	defaultPrefixMatching   = false
-  47→	defaultCommandSorting   = true
-  48→	defaultCaseInsensitive  = false
-  49→	defaultTraverseRunHooks = false
-  50→)
-  52→// EnablePrefixMatching allows setting automatic prefix matching. Automatic prefix matching can be a dangerous thing
-  53→// to automatically enable in CLI tools.
-  54→// Set this to true to enable it.
-  55→var EnablePrefixMatching = defaultPrefixMatching
-  57→// EnableCommandSorting controls sorting of the slice of commands, which is turned on by default.
-  58→// To disable sorting, set it to false.
-  59→var EnableCommandSorting = defaultCommandSorting
-  61→// EnableCaseInsensitive allows case-insensitive commands names. (case sensitive by default)
-  62→var EnableCaseInsensitive = defaultCaseInsensitive
-  64→// EnableTraverseRunHooks executes persistent pre-run and post-run hooks from all parents.
-  65→// By default this is disabled, which means only the first run hook to be found is executed.
-  66→var EnableTraverseRunHooks = defaultTraverseRunHooks
-  68→// MousetrapHelpText enables an information splash screen on Windows
-  69→// if the CLI is started from explorer.exe.
-  70→// To disable the mousetrap, just set this variable to blank string ("").
-  71→// Works only on Microsoft Windows.
-  72→var MousetrapHelpText = `This is a command line tool.
-  73→
-  74→You need to open cmd.exe and run it from there.
-  75→`
-  77→// MousetrapDisplayDuration controls how long the MousetrapHelpText message is displayed on Windows
-  78→// if the CLI is started from explorer.exe. Set to 0 to wait for the return key to be pressed.
-  79→// To disable the mousetrap, just set MousetrapHelpText to blank string ("").
-  80→// Works only on Microsoft Windows.
-  81→var MousetrapDisplayDuration = 5 * time.Second
-  83→// AddTemplateFunc adds a template function that's available to Usage and Help
-  84→// template generation.
-  85→func AddTemplateFunc(name string, tmplFunc interface{}) {
-  86→	templateFuncs[name] = tmplFunc
-  …
-  89→// AddTemplateFuncs adds multiple template functions that are available to Usage and
-  90→// Help template generation.
-  91→func AddTemplateFuncs(tmplFuncs template.FuncMap) {
-  …
-  97→// OnInitialize sets the passed functions to be run when each command's
-  98→// Execute method is called.
-  99→func OnInitialize(y ...func()) {
-  100→	initializers = append(initializers, y...)
-  …
-  103→// OnFinalize sets the passed functions to be run when each command's
-  104→// Execute method is terminated.
-  105→func OnFinalize(y ...func()) {
-  …
-  111→// Gt takes two types and checks whether the first type is greater than the second. In case of types Arrays, Chans,
-  112→// Maps and Slices, Gt will compare their lengths. Ints are compared directly while strings are first parsed as
-  113→// ints and then compared.
-  114→func Gt(a interface{}, b interface{}) bool {
-  …
-  143→// Eq takes two types and checks whether they are equal. Supported types are int and string. Unsupported types will panic.
-  144→func Eq(a interface{}, b interface{}) bool {
-  …
-  159→func trimRightSpace(s string) string {
-  …
-  165→// appendIfNotPresent will append stringToAppend to the end of s, but only if it's not yet present in s.
-  166→func appendIfNotPresent(s, stringToAppend string) string {
-  …
-  173→// rpad adds padding to the right of a string.
-  174→func rpad(s string, padding int) string {
-  …
-  179→func tmpl(text string) *tmplFunc {
-  …
-  191→// ld compares two strings and returns the levenshtein distance between them.
-  192→func ld(s, t string, ignoreCase bool) int {
-  …
-  225→func stringInSlice(a string, list []string) bool {
-  …
-  234→// CheckErr prints the msg with the prefix 'Error:' and exits with error code 1. If the msg is nil, it does nothing.
-  235→func CheckErr(msg interface{}) {
-  …
-  242→// WriteStringAndCheck writes a string into a buffer, and checks if the error is not nil.
-  243→func WriteStringAndCheck(b io.StringWriter, s string) {
-  …
 cobra_test.go
 command.go
   …
   15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
   16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
   …
-command_notwin.go
+  33→const (
+  34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
+  35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
+  36→
+  37→	helpFlagName    = "help"
+  38→	helpCommandName = "help"
+  39→)
+  41→// FParseErrWhitelist configures Flag parse errors to be ignored
+  42→type FParseErrWhitelist flag.ParseErrorsAllowlist
+  44→// Group Structure to manage groups for commands
+  45→type Group struct {
+  46→	ID    string
+  47→	Title string
+  48→}
   …
-  20→var preExecHookFn func(*Command)
+  54→type Command struct {
+  …
+  262→// Context returns underlying command context. If command was executed
+  263→// with ExecuteContext or the context was set with SetContext, the
+  264→// previously set context will be returned. Otherwise, nil is returned.
+  265→//
+  266→// Notice that a call to Execute and ExecuteC will replace a nil context of
+  267→// a command with a context.Background, so a background context will be
+  268→// returned by Context after one of these functions has been called.
+  269→func (c *Command) Context() context.Context {
+  270→	return c.ctx
+  …
+  273→// SetContext sets context for the command. This context will be overwritten by
+  274→// Command.ExecuteContext or Command.ExecuteContextC.
+  275→func (c *Command) SetContext(ctx context.Context) {
+  276→	c.ctx = ctx
+  …
+  279→// SetArgs sets arguments for the command. It is set to os.Args[1:] by default, if desired, can be overridden
+  280→// particularly useful when testing.
+  281→func (c *Command) SetArgs(a []string) {
+  282→	c.args = a
+  …
+  285→// SetOutput sets the destination for usage and error messages.
+  286→// If output is nil, os.Stderr is used.
+  287→//
+  288→// Deprecated: Use SetOut and/or SetErr instead
+  289→func (c *Command) SetOutput(output io.Writer) {
+  …
+  294→// SetOut sets the destination for usage messages.
+  295→// If newOut is nil, os.Stdout is used.
+  296→func (c *Command) SetOut(newOut io.Writer) {
+  …
+  300→// SetErr sets the destination for error messages.
+  301→// If newErr is nil, os.Stderr is used.
+  302→func (c *Command) SetErr(newErr io.Writer) {
+  …
+  306→// SetIn sets the source for input data
+  307→// If newIn is nil, os.Stdin is used.
+  308→func (c *Command) SetIn(newIn io.Reader) {
+  …
+  312→// SetUsageFunc sets usage function. Usage can be defined by application.
+  313→func (c *Command) SetUsageFunc(f func(*Command) error) {
+  …
+  317→// SetUsageTemplate sets usage template. Can be defined by Application.
+  318→func (c *Command) SetUsageTemplate(s string) {
+  …
+  326→// SetFlagErrorFunc sets a function to generate an error when flag parsing
+  327→// fails.
+  328→func (c *Command) SetFlagErrorFunc(f func(*Command, error) error) {
+  …
+  332→// SetHelpFunc sets help function. Can be defined by Application.
+  333→func (c *Command) SetHelpFunc(f func(*Command, []string)) {
+  …
+  337→// SetHelpCommand sets help command.
+  338→func (c *Command) SetHelpCommand(cmd *Command) {
+  …
+  342→// SetHelpCommandGroupID sets the group id of the help command.
+  343→func (c *Command) SetHelpCommandGroupID(groupID string) {
+  …
+  351→// SetCompletionCommandGroupID sets the group id of the completion command.
+  352→func (c *Command) SetCompletionCommandGroupID(groupID string) {
+  …
+  357→// SetHelpTemplate sets help template to be used. Application can use it to set custom template.
+  358→func (c *Command) SetHelpTemplate(s string) {
+  …
+  366→// SetVersionTemplate sets version template to be used. Application can use it to set custom template.
+  367→func (c *Command) SetVersionTemplate(s string) {
+  …
+  375→// SetErrPrefix sets error message prefix to be used. Application can use it to set custom prefix.
+  376→func (c *Command) SetErrPrefix(s string) {
+  …
+  380→// SetGlobalNormalizationFunc sets a normalization function to all flag sets and also to child commands.
+  381→// The user should not have a cyclic dependency on commands.
+  382→func (c *Command) SetGlobalNormalizationFunc(n func(f *flag.FlagSet, name string) flag.NormalizedName) {
+  …
+  392→// OutOrStdout returns output to stdout.
+  393→func (c *Command) OutOrStdout() io.Writer {
+  …
+  397→// OutOrStderr returns output to stderr
+  398→func (c *Command) OutOrStderr() io.Writer {
+  …
+  402→// ErrOrStderr returns output to stderr
+  403→func (c *Command) ErrOrStderr() io.Writer {
+  …
+  407→// InOrStdin returns input to stdin
+  408→func (c *Command) InOrStdin() io.Reader {
+  …
+  412→func (c *Command) getOut(def io.Writer) io.Writer {
+  …
+  422→func (c *Command) getErr(def io.Writer) io.Writer {
+  …
+  432→func (c *Command) getIn(def io.Reader) io.Reader {
+  …
+  442→// UsageFunc returns either the function set by SetUsageFunc for this command
+  443→// or a parent, or it returns a default usage function.
+  444→func (c *Command) UsageFunc() (f func(*Command) error) {
+  …
+  462→// getUsageTemplateFunc returns the usage template function for the command
+  463→// going up the command tree if necessary.
+  464→func (c *Command) getUsageTemplateFunc() func(w io.Writer, data interface{}) error {
+  …
+command_notwin.go
 command_test.go
 command_win.go
-  …
-  28→var preExecHookFn = preExecHook
-  29→
-  30→func preExecHook(c *Command) {
-  …
 completions.go
 completions_test.go
 doc/
@@ -247,19 +253,6 @@ doc/
   yaml_docs.go
   yaml_docs_test.go
 fish_completions.go
-  …
-  25→func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
-  …
-  275→// GenFishCompletion generates fish completion file and writes to the passed writer.
-  276→func (c *Command) GenFishCompletion(w io.Writer, includeDesc bool) error {
-  277→	buf := new(bytes.Buffer)
-  278→	genFishComp(buf, c.Name(), includeDesc)
-  279→	_, err := buf.WriteTo(w)
-  280→	return err
-  …
-  283→// GenFishCompletionFile generates fish completion file.
-  284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
-  …
 fish_completions_test.go
 flag_groups.go
 flag_groups_test.go

@@ -65,12 +65,18 @@ README.md
   52→## Roadmap
   …
   82→## Thanks
-  …
+  83→
+  84→I created this tool to better view those super deep YAML files of Kubernetes while [jnv](https://github.com/ynqa/jnv) only supports JSON.
+  85→
+  86→This is based on the amazing TUI framework [ratatui](https://github.com/ratatui-org/ratatui) and its tree widget [tui-tree-widget](https://github.com/EdJoPaTo/tui-rs-tree-widget.git).
 assets/
   screenshot.png
 build.rs
   …
   8→fn uncommitted_count() -> Result<usize, Box<dyn Error>> {
+  9→    let output = exec_git(&["status", "-s"])?;
+  10→    let lines = output.lines();
+  11→    Ok(lines.filter(|line| !line.trim().is_empty()).count())
   …
   14→fn exec_git(args: &[&str]) -> Result<String, Box<dyn Error>> {
   …
@@ -98,11 +104,6 @@ examples/
   example.yaml
 src/
   clipboard.rs
-    …
-    7→fn get_cmd() -> Result<Command> {
-    …
-    28→pub fn write_clipboard(text: &str) -> Result<()> {
-    …
   cmd.rs
     …
     13→pub struct CommandArgs {
@@ -120,11 +121,6 @@ src/
     keys.rs
     mod.rs
     types.rs
-      …
-      3→macro_rules! generate_types_default {
-      …
-      28→pub struct Types {
-      …
   debug.rs
     …
     7→#[macro_export]
@@ -177,6 +173,10 @@ src/
     33→    ) -> Self {
     …
     64→    pub fn get_err(&self) -> Option<String> {
+    65→        let data_lock = self.data.lock().unwrap();
+    66→        let err = data_lock.get_err();
+    67→        drop(data_lock);
+    68→        err
     …
     71→    pub fn parse_tree(&self) -> Option<Tree> {
     …
@@ -209,40 +209,39 @@ src/
     …
   parse/
     any.rs
-      …
-      9→pub struct AnyParser {
-      10→    inner: RefCell<Option<Box<dyn Parser>>>,
-      11→}
-      13→impl AnyParser {
-      14→    pub fn new() -> Self {
-      …
-      20→    pub fn set_parser(&self, parser: Box<dyn Parser>) {
-      21→        *self.inner.borrow_mut() = Some(parser);
-      …
-      23→}
-      25→impl Parser for AnyParser {
-      …
     hcl.rs
     json.rs
     jsonl.rs
-      …
-      7→pub struct JsonlParser;
-      8→
-      9→impl Parser for JsonlParser {
-      10→    fn extension(&self) -> &'static str {
-      11→        "json"
-      …
-      14→    fn allow_array_root(&self) -> bool {
-      15→        true
-      …
-      18→    fn parse(&self, data: &str) -> Result<Value> {
-      …
-      35→    fn syntax_highlight(&self, _name: &str, value: &Value) -> Vec<SyntaxToken> {
-      36→        json::highlight(value, 0, false)
-      …
-      38→}
-      …
     mod.rs
+      1→mod any;
+      2→mod hcl;
+      3→mod json;
+      4→mod jsonl;
+      5→mod syntax;
+      6→mod toml;
+      7→mod xml;
+      8→mod yaml;
+      9→
+      10→pub use syntax::SyntaxToken;
+      …
+      18→pub enum ContentType {
+      …
+      36→pub trait Parser {
+      37→    fn extension(&self) -> &'static str;
+      38→
+      39→    fn allow_array_root(&self) -> bool;
+      40→
+      41→    fn parse(&self, data: &str) -> Result<Value>;
+      42→
+      43→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken>;
+      44→
+      45→    fn parse_root(&self, validator: Option<&dyn Parser>, data: &[u8]) -> Result<Value> {
+      …
+      64→}
+      66→impl ContentType {
+      67→    pub fn new_parser(self) -> Box<dyn Parser> {
+      …
+      78→}
     syntax.rs
     test_cases/
     toml.rs
@@ -292,10 +291,12 @@ src/
     95→        self.values.get(path)
     …
     98→    pub fn get_parser(&self) -> Rc<Box<dyn Parser>> {
+    99→        Rc::clone(&self.parser)
     …
     383→}
     385→impl ItemValue {
     386→    pub fn plain_text(&self) -> String {
+    387→        SyntaxToken::pure_text(&self.tokens)
     …
     390→    pub fn render(&self, cfg: &Config, width: usize) -> (Text<'_>, usize, usize) {
     …
@@ -310,50 +311,10 @@ src/
   ui/
     app.rs
     data_block.rs
-      …
-      16→pub struct DataBlock {
-      …
-      32→impl DataBlock {
-      …
     filter.rs
     footer.rs
-      …
-      10→pub enum FooterText<'a> {
-      11→    Identify(&'a [String], Option<String>),
-      12→    Message(String),
-      13→    None,
-      14→}
-      16→pub struct Footer {
-      17→    cfg: Rc<Config>,
-      18→}
-      20→impl Footer {
-      21→    pub fn new(cfg: Rc<Config>) -> Self {
-      22→        Self { cfg }
-      …
-      25→    pub fn draw(&self, frame: &mut Frame, area: Rect, text: FooterText) {
-      …
-      98→}
     header.rs
     mod.rs
     popup.rs
-      …
-      13→pub struct PopupData {
-      14→    pub title: Cow<'static, str>,
-      15→    pub text: Text<'static>,
-      16→}
-      18→pub struct Popup {
-      19→    data: Option<PopupData>,
-      20→
-      21→    cfg: Rc<Config>,
-      22→
-      23→    scroll: usize,
-      24→}
-      26→impl Popup {
-      …
     tree_overview.rs
-      …
-      19→pub struct TreeOverview {
-      …
-      32→impl TreeOverview {
-      …
 typos.toml

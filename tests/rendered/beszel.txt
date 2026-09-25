@@ -26,10 +26,6 @@ agent/
   agent_cache.go
   agent_cache_test.go
   agent_test_helpers.go
-    …
-    6→func (a *Agent) GetConnectionManager() *ConnectionManager {
-    7→	return a.connectionManager
-    …
   battery/
     battery.go
       1→// Package battery provides functions to check if the system has a battery and return the charge state and percentage.
@@ -80,6 +76,11 @@ agent/
   handlers_test.go
   health/
     health.go
+      1→// Package health provides functions to check and update the health of the agent.
+      2→// It uses a file in the temp directory to store the timestamp of the last connection attempt.
+      3→// If the timestamp is older than 90 seconds, the agent is considered unhealthy.
+      4→// NB: The agent must be started with the Start() method to be considered healthy.
+      …
     health_test.go
   lhm/
     beszel_lhm.cs
@@ -90,22 +91,14 @@ agent/
   network.go
   network_test.go
   response.go
-    …
-    13→func newAgentResponse(data any, requestID *uint32) common.AgentResponse {
-    …
   sensors.go
   sensors_default.go
-    …
-    9→var getSensorTemps = sensors.TemperaturesWithContext
   sensors_test.go
   sensors_windows.go
   server.go
   server_test.go
   smart.go
   smart_nonwindows.go
-    …
-    7→func ensureEmbeddedSmartctl() (string, error) {
-    …
   smart_test.go
   smart_windows.go
   system.go
@@ -135,33 +128,15 @@ agent/
     utils_test.go
   zfs/
     zfs_freebsd.go
-      …
-      9→func ARCSize() (uint64, error) {
-      …
     zfs_linux.go
       …
       3→// Package zfs provides functions to read ZFS statistics.
       …
-      14→func ARCSize() (uint64, error) {
-      …
     zfs_unsupported.go
-      …
-      7→func ARCSize() (uint64, error) {
-      …
 beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
   …
-  7→const (
-  8→	// Version is the current version of the application.
-  9→	Version = "0.18.7"
-  10→	// AppName is the name of the application.
-  11→	AppName = "beszel"
-  12→)
-  14→// MinVersionCbor is the minimum supported version for CBOR compatibility.
-  15→var MinVersionCbor = semver.MustParse("0.12.0")
-  17→// MinVersionAgentResponse is the minimum supported version for AgentResponse compatibility.
-  18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
   1→module github.com/henrygd/beszel
   2→
@@ -240,6 +215,10 @@ internal/
       config_test.go
     expirymap/
       expirymap.go
+        1→// Package expirymap provides a thread-safe map with expiring entries.
+        2→// It supports TTL-based expiration with both lazy cleanup on access
+        3→// and periodic background cleanup.
+        …
       expirymap_test.go
     heartbeat/
       heartbeat.go
@@ -284,9 +263,6 @@ internal/
       ws_test_helpers.go
   migrations/
     0_collections_snapshot_0_19_0_dev_1.go
-      …
-      8→func init() {
-      …
     initial-settings.go
   records/
     records.go
@@ -409,6 +385,17 @@ internal/
           use-toast.ts
       index.css
       lib/
+        alerts.ts
+        api.ts
+        enums.ts
+        i18n.ts
+        languages.ts
+        shiki.ts
+        stores.ts
+        systemsManager.ts
+        time.ts (empty)
+        use-intersection-observer.ts
+        utils.ts
       locales/
       main.tsx
       types.d.ts

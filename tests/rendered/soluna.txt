@@ -1,6 +1,7 @@
 .editorconfig
 .github/
   actions/
+    soluna/
   workflows/
     nightly.yml
     pages.yml
@@ -51,17 +52,32 @@ README.md
 README.zh-CN.md
   …
   7→# Soluna
-  …
+  8→
+  9→[English](./README.md)
+  10→
+  11→[在线演示](https://cloudwu.github.io/soluna/)
+  12→
+  13→一个基于 [sokol](https://github.com/floooh/sokol) 的 2D 游戏引擎。它以 Lua 为编程语言，整合了 ltask 作为多线程框架。sokol + lua 是其名字的由来。
+  14→
+  15→Soluna 可以运行在 Windows、Linux、macOS 和现代浏览器（通过 WebAssembly）上。
+  16→
+  17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
   19→## 文档
-  …
+  20→
+  21→- [API 参考](./docs)
+  22→- [示例](./test)
+  23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
   25→## 预编译二进制文件
-  …
+  26→
+  27→你可以从 [Nightly Releases](/../../releases/tag/nightly) 页面下载 Windows、Linux、macOS 和
+  28→WebAssembly 的预编译二进制文件。
   30→## 从源码构建
   …
   35→### 在你的项目的 Actions 中集成
   …
   55→## 使用 Soluna 制作的项目
-  …
+  56→
+  57→- [Deep Future](https://github.com/cloudwu/deepfuture), 一款桌游 Deep Future 的数字版。
   59→## 许可证
   60→
   61→Soluna 使用 MIT 许可证。详情见 [LICENSE](./LICENSE)。
@@ -83,9 +99,6 @@ clibs/
     make.lua
   soluna/
     compile_lua.lua
-      …
-      4→local function compile_lua_code(script, src, name)
-      …
     compile_shader.lua
     make.lua
     runlua.lua
@@ -96,112 +109,25 @@ clibs/
     make.lua
 docs/
   app.lua
-    …
-    10→---
-    11→--- Quits the application
-    12→---
-    13→--- Signals the application to exit gracefully.
-    14→---
-    15→function app.quit() end
-    …
-    24→function app.set_ime_font(font_name, font_size) end
-    …
-    35→function app.set_ime_rect(rect) end
-    …
   args.lua
-    …
-    18→function batch:add(sprite, x, y) end
-    …
-    41→function batch:layer(scale, rotation, x, y) end
-    …
   callback.lua
   coroutine.lua
-    …
-    18→function coroutine.create(f) end
-    …
-    30→function coroutine.resume(co, ...) end
-    …
-    40→function coroutine.yield(...) end
-    …
   crypt.lua
-    …
-    17→function crypt.hexencode(data) end
-    …
-    26→function crypt.sha1(data) end
-    …
   datalist.lua
-    …
-    15→function datalist.parse(data) end
-    …
-    22→function datalist.quote(str) end
-    …
   file.lua
   font.lua
-    …
-    10→---
-    11→--- Imports a TrueType font
-    12→---
-    13→---@param data string Raw TTF font data
-    14→function font.import(data) end
-    …
-    21→function font.name(name) end
-    23→---
-    24→--- Gets the font system C object
-    25→---
-    26→---@return userdata fontcobj Font system object
-    27→function font.cobj() end
-    …
   font_system.lua
-    …
-    15→function font_system.ttfdata(name) end
-    …
   image.lua
-    …
-    17→function image.load(data) end
-    …
-    33→function image.resize(data, width, height, scale_x, scale_y) end
-    …
   layout.lua
-    …
-    22→function layout.load(filename_or_list, scripts) end
-    …
-    32→function layout.calc(document) end
-    …
   lfs.lua
-    …
-    15→function lfs.attributes(filename) end
-    …
-    22→function lfs.dir(path) end
-    …
   material_mask.lua
-    …
-    19→function matmask.mask(sprite, color) end
-    …
   material_perspective_quad.lua
-    …
-    29→function matproj.sprite(sprite, options) end
-    …
   material_quad.lua
-    …
-    20→function matquad.quad(width, height, color) end
-    …
   material_text.lua
-    …
-    31→function mattext.block(fontcobj, fontid, size, color, alignment) end
-    …
   soluna.lua
   text.lua
-    …
-    17→function text.init(bundle_file) end
-    …
   url.lua
-    …
-    14→function url.open(link) end
-    …
   zip.lua
-    …
-    19→function zip.open(filename, mode) end
-    …
 make.lua
   …
   4→local function detect_emcc()
@@ -215,17 +141,63 @@ make.lua
   …
 script/
   build_web.lua
+    1→local function trim(s)
+    2→  return (s:gsub("^%s+", ""):gsub("%s+$", ""))
+    …
+    5→local function shell_quote(value)
+    6→  return "'" .. value:gsub("'", "'\\''") .. "'"
+    …
+    9→local function run(cmd)
+    …
+    16→local function read_file(path)
+    …
+    23→local function write_file(path, data)
+    24→  local f = assert(io.open(path, "wb"))
+    25→  f:write(data)
+    26→  f:close()
+    …
+    29→local function write_lines(path, lines)
+    30→  write_file(path, table.concat(lines, "\n") .. "\n")
+    …
+    33→local function read_lines(path)
+    …
+    43→local function exec_lines(cmd)
+    …
+    55→local function is_array(tbl)
+    …
+    71→local function json_escape(value)
+    …
+    82→local function json_encode(value)
+    …
+    111→local function yaml_quote(value)
+    112→  return value:gsub("\\", "\\\\"):gsub("\"", "\\\"")
+    …
+    115→local function shortcode_quote(value)
+    116→  return value:gsub("\\", "\\\\"):gsub("\"", "\\\"")
+    …
+    119→local function html_escape(value)
+    …
+    126→local function write_front_matter(lines, fields)
+    …
+    134→local function titleize(name)
+    …
+    142→local function parse_doc_file(path)
+    …
+    176→local function parse_args(argv)
+    …
+    208→local function write_examples_content(site_dir, examples)
+    …
+    225→local function write_docs_content(site_dir, docs)
+    …
   datalist2c.lua
-    …
-    14→local function tohex(c)
-    …
   hashversion.lua
     1→local function get_rev()
+    2→	local f = io.popen "git rev-parse HEAD"
+    3→	local rev = f:read "a"
+    4→	f:close()
+    5→	return rev:match "[%da-f]*"
     …
   lua2c.lua
-    …
-    13→local function tohex(c)
-    …
 src/
   appevent.h
   batch.c
@@ -242,22 +214,24 @@ src/
   font_define.h
   font_manager.c
   font_manager.h
+    …
+    9→struct font_manager;
+    10→
+    11→size_t font_manager_sizeof();
+    12→void font_manager_init(struct font_manager *, void *L);
+    13→void* font_manager_shutdown(struct font_manager *);
+    14→void font_manager_import(struct font_manager *F, void* fontdata, size_t sz);
+    15→
+    16→int font_manager_addfont_with_family(struct font_manager *F, const char* family);
+    17→void font_manager_fontheight(struct font_manager *F, int fontid, int size, int *ascent, int *descent, int *lineGap);
+    18→int font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize);
+    19→const char* font_manager_glyph(struct font_manager *F, int fontid, int codepoint, int size, struct font_glyph *g, struct font_glyph *og);
+    …
   font_system.c
   gamepad.c
   image.c
   ime_char_filter.h
   ime_state.h
-    …
-    7→struct soluna_ime_rect_state {
-    8→    float x;
-    9→    float y;
-    10→    float w;
-    11→    float h;
-    12→    uint32_t text_color;
-    13→    bool valid;
-    14→};
-    16→extern struct soluna_ime_rect_state g_soluna_ime_rect;
-    …
   lcrypt.c
   lfs.c
   loginfo.h
@@ -273,19 +247,10 @@ src/
     …
   lsha1.c
   luabuffer.h
-    …
-    8→static inline uint8_t const *
-    9→luaL_getbuffer(lua_State *L, size_t *sz) {
-    …
   lualib/
     coroutine.lua
     fontmgr.lua
     icon.lua
-      …
-      10→function icon.bundle(filename)
-      …
-      27→function icon.symbol(name, size, color)
-      …
     initsetting.lua
     layout.lua
     main.lua
@@ -328,39 +293,15 @@ src/
   render.c
   render_bindings.c
   render_bindings.h
-    …
-    6→struct soluna_render_bindings {
-    7→	int base;
-    8→	sg_bindings bindings;
-    9→};
-    11→#define DRAWFUNC(name) (sg_query_features().draw_base_instance ? name##_ex : name)
-    …
   render_uniform.c
   sdfimage.c
   sdftext.glsl
   service/
     gamepad.lua
-      …
-      10→function S.register(addr, msg)
-      …
-      15→function S.update()
-      …
     loader.lua
     log.lua
-      …
-      12→local function writelog()
-      …
-      38→function S.quit()
-      39→	writelog()
-      …
     render.lua
     settings.lua
-      …
-      9→function S.init(args)
-      …
-      14→function S.get()
-      15→	return setting
-      …
     start.lua
   sprite_submit.h
   spritemgr.c
@@ -369,11 +310,7 @@ src/
     7→#define INVALID_TEXTUREID 0xffff
     8→
     9→struct sprite_rect {
-    10→	uint32_t texid;
-    11→	uint32_t off;	// (dx + 0x8000) << (dy + 0x8000)
-    12→	uint32_t u;		// x << 16 | w
-    13→	uint32_t v;		// y << 16 | h
-    14→};
+    …
     16→struct sprite_bank {
     17→	int n;
     18→	int cap;
@@ -391,9 +328,6 @@ src/
   truetype.c
   truetype.h
   version.h
-    …
-    4→#define SOLUNA_API_VERSION 3
-    …
   winfile.c
   writelog.c
   yogaone.cpp
@@ -440,6 +374,10 @@ web/
       _index.md
     examples/
     playframe.md
+      1→---
+      2→title: "Playframe"
+      3→type: "playframe"
+      4→---
   layouts/
     _default/
       baseof.html

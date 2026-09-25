@@ -101,8 +101,6 @@ monaco-lsp-client/
         LspTypeDefinitionFeature.ts
         common.ts
     index.ts
-      …
-      5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
     types.ts
     utils.ts
 package-lock.json
@@ -155,18 +153,12 @@ samples/
     .gitignore
     index.html
     main.ts
-      …
-      18→const tm = monaco.editor.createModel(`class Test {}`, 'typescript',
-      19→	monaco.Uri.parse('file:///main.ts'));
-      21→const editor = monaco.editor.create(document.getElementById('root')!, {
-      22→	model: tm,
-      23→	language: 'typescript',
-      24→	theme: 'vs-dark',
-      25→});
     package-lock.json
     package.json
       …
       2→	"name": "browser-esm-vite",
+      …
+      8→	"dependencies": {},
       …
     style.css
     tsconfig.json
@@ -178,6 +170,8 @@ samples/
     package.json
       …
       2→	"name": "browser-esm-vite-react",
+      …
+      9→	"dependencies": {},
       …
     src/
       components/
@@ -236,6 +230,8 @@ samples/
     package.json
       …
       2→	"name": "monaco-esm-webpack-typescript",
+      …
+      7→	"dependencies": {},
       …
     src/
       components/
@@ -403,9 +399,6 @@ src/
     wordOperations/
     wordPartOperations/
   index.ts
-    …
-    8→export * from './editor';
-    9→export { css, html, json, typescript, lsp };
   internal/
     common/
       initialize.ts
@@ -542,6 +535,15 @@ webpack-plugin/
     1→# Monaco Editor Webpack Loader Plugin
     2→
     3→A plugin to simplify loading the [Monaco Editor](https://github.com/microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
+    5→## Installing
+    …
+    11→## Using
+    …
+    63→## Options
+    …
+    90→## Version Matrix
+    …
+    104→## Contributing
     …
   package-lock.json
   package.json
@@ -549,6 +551,8 @@ webpack-plugin/
     2→	"name": "monaco-editor-webpack-plugin",
     3→	"version": "7.1.1",
     4→	"description": "A webpack plugin for the Monaco Editor",
+    5→	"main": "out/index.js",
+    6→	"typings": "./out/index.d.ts",
     …
     23→	"license": "MIT",
     …

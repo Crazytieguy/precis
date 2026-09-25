@@ -76,7 +76,11 @@ README.md
   70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
   71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
   73→## License
-  …
+  74→
+  75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
+  76→licensed under the [Creative Commons CC BY 3.0](COPYING).
+  77→`jq` uses parts of the open source C library "decNumber", which is distributed
+  78→under [ICU License](COPYING)
 SECURITY.md
 build/
 compile-ios.sh
@@ -177,44 +181,39 @@ sig/
 src/
   builtin.c
   builtin.h
-    …
-    8→int builtins_bind(jq_state *, block*);
-    9→
-    10→#define BINOPS \
-    11→  BINOP(plus) \
-    12→  BINOP(minus) \
-    13→  BINOP(multiply) \
-    14→  BINOP(divide) \
-    15→  BINOP(mod) \
-    16→  BINOP(equal) \
-    17→  BINOP(notequal) \
-    18→  BINOP(less) \
-    19→  BINOP(lesseq) \
-    20→  BINOP(greater) \
-    21→  BINOP(greatereq) \
-    24→#define BINOP(name) jv binop_ ## name(jv, jv);
-    …
   builtin.jq
   bytecode.c
   bytecode.h
   compile.c
   compile.h
+    …
+    8→struct inst;
+    9→typedef struct inst inst;
+    10→
+    11→
+    12→typedef struct block {
+    13→  inst* first;
+    14→  inst* last;
+    15→} block;
+    16→
+    17→block gen_location(location, struct locfile*, block);
+    18→
+    19→block gen_noop(void);
+    20→int block_is_noop(block b);
+    21→block gen_op_simple(opcode op);
+    22→block gen_error(jv constant);
+    23→block gen_const(jv constant);
+    24→block gen_const_global(jv constant, const char *name);
+    25→int block_is_const(block b);
+    26→jv_kind block_const_kind(block b);
+    27→jv block_const(block b);
+    28→block gen_op_target(opcode op, block target);
+    29→block gen_op_unbound(opcode op, const char* name);
+    30→block gen_op_bound(opcode op, block binder);
+    31→block gen_op_var_fresh(opcode op, const char* name);
+    32→block gen_op_pushk_under(jv constant);
+    …
   exec_stack.h
-    …
-    40→struct determine_alignment {
-    41→  char x;
-    42→  union { int i; double d; uint64_t u64; size_t sz; void* ptr; } u;
-    43→};
-    44→enum {ALIGNMENT = offsetof(struct determine_alignment, u)};
-    …
-    50→typedef int stack_ptr;
-    51→
-    52→struct stack {
-    53→  char* mem_end; // one-past-the-end of allocated region
-    54→  stack_ptr bound;
-    55→  stack_ptr limit; // 0 - stack is empty
-    56→};
-    …
   execute.c
   inject_errors.c
   jq.h
@@ -240,10 +239,6 @@ src/
     30→jv jq_next(jq_state *);
     …
   jq_parser.h
-    …
-    6→int jq_parse(struct locfile* source, block* answer);
-    7→int jq_parse_library(struct locfile* locations, block* answer);
-    …
   jq_test.c
   jv.c
   jv.h
@@ -254,57 +249,76 @@ src/
   jv_dtoa.h
   jv_dtoa_tsd.c
   jv_dtoa_tsd.h
-    …
-    3→struct dtoa_context *tsd_dtoa_context_get(void);
-    …
   jv_file.c
-    …
-    12→jv jv_load_file(const char* filename, int raw) {
-    …
   jv_parse.c
   jv_print.c
   jv_private.h
-    …
-    4→int jvp_number_cmp(jv, jv);
-    5→int jvp_number_is_nan(jv);
-    …
   jv_thread.h
   jv_unicode.c
   jv_unicode.h
   jv_utf8_tables.h
-    1→#define UTF8_CONTINUATION_BYTE ((unsigned char)255)
-    …
   lexer.c
   lexer.h
   lexer.l
   libm.h
   linker.c
   linker.h
-    …
-    4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
-    5→jv load_module_meta(jq_state *jq, jv modname);
-    …
   locfile.c
   locfile.h
   main.c
   opcode_list.h
   parser.c
   parser.h
+    …
+    44→#if YYDEBUG
+    45→extern int yydebug;
+    46→#endif
+    …
+    51→struct lexer_param;
+    52→
+    53→#define YYLTYPE location
+    54→#define YYLLOC_DEFAULT(Loc, Rhs, N)             \
+    55→  do {                                          \
+    56→    if (N) {                                    \
+    57→      (Loc).start = YYRHSLOC(Rhs, 1).start;     \
+    58→      (Loc).end = YYRHSLOC(Rhs, N).end;         \
+    59→    } else {                                    \
+    60→      (Loc).start = YYRHSLOC(Rhs, 0).end;       \
+    61→      (Loc).end = YYRHSLOC(Rhs, 0).end;         \
+    62→    }                                           \
+    63→  } while (0)
+    …
+    70→  enum yytokentype
+    …
+    123→  typedef enum yytokentype yytoken_kind_t;
+    124→#endif
+    125→/* Token kinds.  */
+    126→#define YYEMPTY -2
+    127→#define YYEOF 0
+    128→#define YYerror 256
+    129→#define YYUNDEF 257
+    130→#define INVALID_CHARACTER 258
+    131→#define IDENT 259
+    132→#define FIELD 260
+    133→#define BINDING 261
+    134→#define LITERAL 262
+    135→#define FORMAT 263
+    136→#define REC 264
+    137→#define SETMOD 265
+    138→#define EQ 266
+    139→#define NEQ 267
+    140→#define DEFINEDOR 268
+    141→#define AS 269
+    142→#define DEF 270
+    143→#define MODULE 271
+    144→#define IMPORT 272
+    145→#define INCLUDE 273
+    146→#define IF 274
+    147→#define THEN 275
+    …
   parser.y
   util.c
   util.h
-    …
-    16→jv expand_path(jv);
-    17→jv get_home(void);
-    18→jv jq_realpath(jv);
-    …
-    44→const void *_jq_memmem(const void *haystack, size_t haystacklen,
-    45→                       const void *needle, size_t needlelen);
-    …
-    62→#ifndef HAVE_STRPTIME
-    63→char* strptime(const char *buf, const char *fmt, struct tm *tm);
-    64→#endif
-    …
 tests/
   base64.test
   base64test

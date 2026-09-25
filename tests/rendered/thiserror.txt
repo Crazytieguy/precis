@@ -145,9 +145,6 @@ impl/
     attr.rs
     expand.rs
     fallback.rs
-      …
-      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
-      …
     fmt.rs
     generics.rs
     lib.rs
@@ -279,14 +276,6 @@ src/
   private.rs
   provide.rs
   var.rs
-    …
-    3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-    4→
-    5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
-    6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    7→        Pointer::fmt(self.0, formatter)
-    …
-    9→}
 tests/
   compiletest.rs
   no-std/

@@ -108,29 +108,10 @@ bookmarks/
   api/
     __init__.py (empty)
     auth.py
-      …
-      8→class LinkdingTokenAuthentication(TokenAuthentication):
-      …
-      14→    model = ApiToken
-      15→    keywords = [keyword.lower().encode() for keyword in ["Token", "Bearer"]]
-      16→
-      17→    def authenticate(self, request):
-      …
     routes.py
     serializers.py
   apps.py
-    …
-    4→class BookmarksConfig(AppConfig):
-    5→    name = "bookmarks"
-    6→
-    7→    def ready(self):
-    …
   context_processors.py
-    …
-    5→def toasts(request):
-    …
-    20→def app_version(request):
-    21→    return {"app_version": utils.app_version}
   feeds.py
   forms.py
   frontend/
@@ -160,36 +141,13 @@ bookmarks/
   management/
     commands/
       backup.py
-        …
-        7→class Command(BaseCommand):
-        …
       create_initial_superuser.py
       enable_wal.py
       ensure_superuser.py
-        …
-        5→class Command(BaseCommand):
-        …
       full_backup.py
-        …
-        9→class Command(BaseCommand):
-        …
       generate_secret_key.py
       import_netscape.py
-        …
-        7→class Command(BaseCommand):
-        8→    help = "Import Netscape HTML bookmark file"
-        9→
-        10→    def add_arguments(self, parser):
-        …
-        16→    def handle(self, *args, **kwargs):
-        …
       migrate_tasks.py
-        …
-        9→class Command(BaseCommand):
-        10→    help = "Migrate tasks from django-background-tasks to Huey"
-        11→
-        12→    def handle(self, *args, **options):
-        …
   middlewares.py
   migrations/
   models.py
@@ -211,11 +169,6 @@ bookmarks/
     tags.py
     tasks.py
     wayback.py
-      …
-      6→def generate_fallback_webarchive_url(
-      7→    url: str, timestamp: datetime.datetime
-      8→) -> str | None:
-      …
     website_loader.py
   settings/
     __init__.py
@@ -224,10 +177,6 @@ bookmarks/
     dev.py
     prod.py
   signals.py
-    …
-    6→@receiver(connection_created)
-    7→def extend_sqlite(connection=None, **kwargs):
-    …
   static/
     apple-touch-icon.png
     favicon.ico
@@ -350,24 +299,9 @@ bookmarks/
   tests/
   tests_e2e/
   type_defs.py
-    …
-    11→class HttpRequest(http.HttpRequest):
-    12→    global_settings: GlobalSettings
-    13→    user_profile: UserProfile
-    14→    user: User | AnonymousUser
   urls.py
-    …
-    21→urlpatterns = [
-    …
-    127→urlpatterns = [path("", include((urlpatterns, "linkding")))]
-    …
   utils.py
   validators.py
-    …
-    5→class BookmarkURLValidator(validators.URLValidator):
-    …
-    11→    def __call__(self, value):
-    …
   views/
     __init__.py (empty)
     access.py
@@ -378,34 +312,16 @@ bookmarks/
     contexts.py
     custom_css.py
     health.py
-      …
-      7→def health(request):
-      …
     manifest.py
-      …
-      5→def manifest(request):
-      …
     opensearch.py
-      …
-      5→def opensearch(request):
-      …
     reload.py
     root.py
-      …
-      7→def root(request):
-      …
     settings.py
     tags.py
     toasts.py
-      …
-      9→@login_required
-      10→def acknowledge(request):
-      …
     turbo.py
   widgets.py
   wsgi.py
-    …
-    13→application = get_wsgi_application()
 bootstrap.sh
 docker/
   alpine.Dockerfile

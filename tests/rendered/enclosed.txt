@@ -231,8 +231,6 @@ packages/
     package.json
     src/
       index.cloudflare.ts
-        …
-        8→export default app;
       index.node.ts
       modules/
         app/
@@ -433,26 +431,6 @@ packages/
       files/
         files.models.ts
       index.ts
-        …
-        10→export {
-        11→  createNote,
-        12→  createNoteUrl,
-        13→  createNoteUrlHashFragment,
-        14→  decryptNote,
-        15→  encryptionAlgorithms,
-        16→  encryptNote,
-        17→  fetchNote,
-        18→  filesToNoteAssets,
-        19→  fileToNoteAsset,
-        20→  isApiClientErrorWithCode,
-        21→  isApiClientErrorWithStatusCode,
-        22→  noteAssetsToFiles,
-        23→  noteAssetToFile,
-        24→  parseNoteUrl,
-        25→  parseNoteUrlHashFragment,
-        26→  serializationFormats,
-        27→  storeNote,
-        28→};
       notes/
         notes.models.test.ts
         notes.models.ts

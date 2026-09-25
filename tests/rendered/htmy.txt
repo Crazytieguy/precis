@@ -38,7 +38,8 @@ README.md
   33→## Testimonials
   …
   47→## Support
-  …
+  48→
+  49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
   51→## Installation
   …
   63→## Concepts
@@ -66,13 +67,17 @@ README.md
   330→## Framework integrations
   …
   337→## External examples
-  …
+  338→
+  339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
   341→## Why
   …
   353→## Dependencies
   …
   361→## Development
-  …
+  362→
+  363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
+  364→
+  365→The documentation is built with `zensical` and `mkdocstrings`.
   367→## Contributing
   …
   377→## License - MIT
@@ -188,38 +193,68 @@ htmy/
     …
   core.py
   error_boundary.py
-    …
-    15→class ErrorBoundary:
-    …
-    23→    __slots__ = ("_children", "_errors", "_fallback")
-    24→
-    25→    def __init__(
-    26→        self,
-    27→        *children: ComponentType,
-    28→        fallback: Component = None,
-    29→        errors: Container[type[Exception]] | None = None,
-    30→    ) -> None:
-    …
-    41→        self._children = children
-    42→        self._errors = errors
-    43→        self._fallback: Component = fallback
-    45→    async def htmy(self, context: Context) -> Component:
-    …
-    56→    def _fallback_component(self, error: Exception) -> ComponentType:
-    …
   etree.py
-    …
-    23→class ETreeConverter:
-    …
   function_component.py
   html.py
+    …
+    13→class DOCTYPE:
+    14→    """Document type declaration."""
+    16→    html = SafeStr("<!DOCTYPE html>")
+    17→    """HTML document type."""
+    20→html = Tag("html")
+    …
+    27→head = Tag("head")
+    …
+    34→body = Tag("body")
+    …
+    41→base = TagWithProps("base")
+    …
+    48→title = Tag("title", child_separator=None)  # TODO: allow only a single str child.
+    …
+    55→link = TagWithProps("link")
+    …
+    63→class Link:
+    64→    """`link` tag factories."""
+    66→    @staticmethod
+    67→    def css(href: str) -> ComponentType:
+    …
+    71→meta = TagWithProps("meta")
+    …
+    79→class Meta:
+    80→    """`meta` tag factories."""
+    82→    @staticmethod
+    83→    def author(content: str) -> ComponentType:
+    …
+    86→    @staticmethod
+    87→    def charset(charset: str = "utf-8") -> ComponentType:
+    …
+    90→    @staticmethod
+    91→    def description(content: str) -> ComponentType:
+    …
+    94→    @staticmethod
+    95→    def keywords(content: str) -> ComponentType:
+    …
+    98→    @staticmethod
+    99→    def viewport(content: str = "width=device-width, initial-scale=1.0") -> ComponentType:
+    …
+    103→script = Tag("script")  # TODO: allow only a single str child.
+    …
+    113→style = Tag("style")  # TODO: only allow a single str child, automatically convert plain str to SafeStr.
+    …
+    123→dialog = Tag("dialog")
+    …
+    130→address = Tag("address")
+    …
+    137→article = Tag("article")
+    …
+    144→aside = Tag("aside")
+    …
+    151→blockquote = Tag("blockquote")
+    …
+    158→div = Tag("div")
+    …
   i18n.py
   io.py
-    …
-    11→async def load_text_file(path: str | Path) -> str:
-    12→    """Loads the text content from the given path."""
-    13→    async with await open_file(path, "r") as f:
-    14→        return await f.read()
   md/
     __init__.py
       1→from .core import MD as MD
@@ -229,28 +264,6 @@ htmy/
       5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
       6→from .typing import ParsedMarkdown as ParsedMarkdown
     core.py
-      …
-      20→class MarkdownParser(ContextAware):
-      …
-      81→class MD(Snippet):
-      …
-      98→    __slots__ = (
-      99→        "_converter",
-      100→        "_renderer",
-      101→    )
-      102→
-      103→    def __init__(
-      104→        self,
-      105→        path_or_text: Text | str | Path,
-      106→        text_resolver: TextResolver | None = None,
-      107→        *,
-      108→        converter: Callable[[str], Component] | None = None,
-      109→        renderer: MarkdownRenderFunction | None = None,
-      110→        text_processor: TextProcessor | None = None,
-      111→    ) -> None:
-      …
-      131→    def _render_text(self, text: str, context: Context) -> Component:
-      …
     typing.py
   py.typed (empty)
   renderer/
@@ -267,45 +280,10 @@ htmy/
       12→BaselineRenderer = _BaselineRenderer
       …
     baseline.py
-      …
-      18→class Renderer:
-      …
     context.py
-      …
-      6→class RendererContext:
-      …
-      11→    @classmethod
-      12→    def from_context(cls, context: Context) -> RendererType:
-      …
     default.py
     typing.py
   snippet.py
-    …
-    27→class Slots:
-    …
-    158→class Snippet:
-    …
-    216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
-    217→
-    218→    def __init__(
-    219→        self,
-    220→        path_or_text: Text | str | Path,
-    221→        text_resolver: TextResolver | None = None,
-    222→        *,
-    223→        text_processor: TextProcessor | None = None,
-    224→    ) -> None:
-    …
-    241→    async def htmy(self, context: Context) -> Component:
-    242→        """Renders the component."""
-    …
-    256→    async def _get_text_content(self) -> str:
-    …
-    265→    def _render_text(self, text: str, context: Context) -> Component:
-    …
-    272→    @staticmethod
-    273→    @alru_cache()
-    274→    async def _load_text_file(path: str | Path) -> str:
-    …
   tag.py
   typing.py
   utils.py

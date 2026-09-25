@@ -48,6 +48,10 @@ README.md
   56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
   57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
   …
+  87→## Want to become a TypeScript Expert?
+  88→
+  89→Check out 👉 [Type-Level TypeScript](https://type-level-typescript.com/), an online course teaching you how to unleash the full potential of TypeScript's Turing-complete type system. You already know how to code, and types are simply another programming language to master. This course **bridges the gap**, helping you apply your **existing programming knowledge** to **TypeScript's type system**, so you never again struggle with type errors or feel unable to type complex generic code correctly!
+  …
 benchmarks/
   always-last-digit.ts
   nested-objects.ts
@@ -111,6 +115,7 @@ examples/
   gif-fetcher/
     package.json
     public/
+      index.html
     src/
       App.tsx
       constants.ts
@@ -217,29 +222,23 @@ src/
     6→export { NonExhaustiveError } from './errors';
   internals/
     helpers.ts
+      1→/**
+      2→ * @module
+      3→ * @private
+      4→ * @internal
+      5→ */
+      …
     symbols.ts
   is-matching.ts
-    …
-    32→export function isMatching<const p extends Pattern<unknown>>(
-    33→  pattern: p
-    34→): (value: unknown) => value is P.infer<p>;
-    …
-    48→export function isMatching<const T, const P extends PatternConstraint<T>>(
-    49→  pattern: P,
-    50→  value: T
-    51→): value is T & WithDefault<P.narrow<T, P>, P.infer<P>>;
-    53→export function isMatching<const p extends Pattern<any>>(
-    54→  ...args: [pattern: p, value?: any]
-    55→): boolean | ((vale: any) => boolean) {
-    …
   match.ts
-    …
-    32→export function match<const input, output = symbols.unset>(
-    33→  value: input
-    34→): Match<input, output> {
-    35→  return new MatchExpression(value, unmatched) as any;
-    …
   patterns.ts
+    1→/**
+    2→ * The `P` module contains patterns for primitive types, wildcards and
+    3→ * other pattern-matching utilities.
+    4→ *
+    5→ * @module
+    6→ */
+    …
   types/
     BuildMany.ts
     DeepExclude.ts
@@ -298,6 +297,8 @@ tests/
   type-error.test.ts
   type-is-matching.test.ts
   types-catalog/
+    definition.ts
+    utils.ts
   types.test.ts
   unions.test.ts
   variadic-tuples.test.ts

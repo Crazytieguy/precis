@@ -134,14 +134,6 @@ bindings/
       go-sqlite3.patch
   python/
     extra_init.py
-      …
-      6→def serialize_float32(vector: List[float]) -> bytes:
-      7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
-      8→    return pack("%sf" % len(vector), *vector)
-      11→def serialize_int8(vector: List[int]) -> bytes:
-      12→    """Serializes a list of integers into the "raw bytes" format sqlite-vec expects"""
-      13→    return pack("%sb" % len(vector), *vector)
-      …
   rust/
     .gitignore
     Cargo.lock
@@ -256,8 +248,6 @@ tests/
   build.rs
   conftest.py
   correctness/
-    build.py
-    test-correctness.py
   fuzz/
     .gitignore
     Makefile

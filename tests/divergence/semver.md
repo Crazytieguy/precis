@@ -10,21 +10,21 @@ Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 154 | 26 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.219 |
 | walker |  | 181 | 27 | Fs::DirListing { dir: internal } |  |  | 0.227 |
 | ns | 182 |  | 103 | Complete root directory listing | 1.2 |  | 0.687 |
-| walker |  | 193 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.687 |
-| walker |  | 254 | 61 | Json::Identity { file: package.json } |  |  | 0.945 |
-| ns | 307 |  | 125 | package.json `bin` + `files`: CLI entry point and published surface | 1.3 |  | 0.756 |
-| walker |  | 310 | 56 | Fs::DirListing { dir: ranges } |  |  | 0.768 |
-| walker |  | 340 | 30 | Json::Runtime { file: package.json } |  |  | 0.768 |
+| walker |  | 242 | 61 | Json::Identity { file: package.json } |  |  | 0.945 |
+| walker |  | 298 | 56 | Fs::DirListing { dir: ranges } |  |  | 0.961 |
+| ns | 307 |  | 125 | package.json `bin` + `files`: CLI entry point and published surface | 1.3 |  | 0.768 |
+| walker |  | 328 | 30 | Json::Runtime { file: package.json } |  |  | 0.768 |
 | ns | 356 |  | 49 | Complete listings of classes/, internal/ and bin/ | 1.4 |  | 0.786 |
-| walker |  | 445 | 105 | Fs::DirListing { dir: functions } |  |  | 0.820 |
+| walker |  | 433 | 105 | Fs::DirListing { dir: functions } |  |  | 0.820 |
+| walker |  | 461 | 28 | Fs::DirListing { dir: .github } |  |  | 0.834 |
 | ns | 461 |  | 105 | Complete listing of functions/ (24 version-level modules) | 1.5 |  | 0.834 |
-| walker |  | 473 | 28 | Fs::DirListing { dir: .github } |  |  | 0.834 |
-| walker |  | 514 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.835 |
+| walker |  | 502 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.835 |
 | ns | 517 |  | 56 | Complete listing of ranges/ (11 range-level modules) | 1.6 |  | 0.836 |
-| walker |  | 547 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
-| walker |  | 585 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
-| walker |  | 645 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
-| walker |  | 662 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
+| walker |  | 535 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
+| walker |  | 573 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
+| walker |  | 633 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
+| walker |  | 650 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
+| walker |  | 662 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.653 |
 | walker |  | 1042 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
@@ -35,41 +35,41 @@ Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 1409 | 135 | Json::Entry { file: package.json } |  |  | 0.951 |
 | ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.900 |
 | walker |  | 1694 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.903 |
-| walker |  | 1708 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.903 |
 | ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.834 |
-| walker |  | 1852 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
-| walker |  | 1855 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
-| walker |  | 1876 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.835 |
+| walker |  | 1838 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
+| walker |  | 1841 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
+| walker |  | 1946 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.835 |
+| walker |  | 1950 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |
 | ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.785 |
-| walker |  | 1981 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.785 |
-| walker |  | 1985 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |
-| walker |  | 1989 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.785 |
-| walker |  | 2045 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.785 |
-| walker |  | 2129 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.787 |
-| walker |  | 2134 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.787 |
+| walker |  | 1954 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.785 |
+| walker |  | 2010 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.785 |
+| walker |  | 2094 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.787 |
+| walker |  | 2099 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.787 |
 | ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.734 |
 | ns | 2537 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.687 |
 | ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.678 |
 | ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.687 |
-| walker |  | 3001 | 867 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.687 |
+| walker |  | 2966 | 867 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.687 |
 | ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.671 |
 | ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.663 |
 | ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.649 |
 | ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.642 |
-| walker |  | 3564 | 563 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.642 |
+| walker |  | 3529 | 563 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.642 |
 | ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.630 |
-| walker |  | 3670 | 106 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.645 |
-| walker |  | 3678 | 8 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.645 |
-| walker |  | 3689 | 11 | Fs::DirListing { dir: .github/actions } |  |  | 0.645 |
-| walker |  | 3693 | 4 | Fs::DirListing { dir: .github/actions/create-check } |  |  | 0.645 |
-| walker |  | 3697 | 4 | Fs::DirListing { dir: .github/actions/install-latest-npm } |  |  | 0.645 |
-| walker |  | 3705 | 8 | Fs::DirListing { dir: tap-snapshots/test/bin } |  |  | 0.645 |
+| walker |  | 3635 | 106 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.645 |
+| walker |  | 3643 | 8 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.645 |
+| walker |  | 3654 | 11 | Fs::DirListing { dir: .github/actions } |  |  | 0.645 |
+| walker |  | 3658 | 4 | Fs::DirListing { dir: .github/actions/create-check } |  |  | 0.645 |
+| walker |  | 3662 | 4 | Fs::DirListing { dir: .github/actions/install-latest-npm } |  |  | 0.645 |
+| walker |  | 3670 | 8 | Fs::DirListing { dir: tap-snapshots/test/bin } |  |  | 0.645 |
 | ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.632 |
-| walker |  | 3918 | 213 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.658 |
+| walker |  | 3883 | 213 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.658 |
 | ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.643 |
-| walker |  | 4448 | 530 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: true } |  |  | 0.668 |
+| walker |  | 4413 | 530 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: true } |  |  | 0.668 |
+| walker |  | 4427 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
 | ns | 4467 |  | 290 | README: tilde ranges and their desugaring table | 3.9 |  | 0.659 |
-| walker |  | 4710 | 262 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.659 |
+| walker |  | 4689 | 262 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.659 |
+| walker |  | 4710 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
 | ns | 4731 |  | 264 | README: X-ranges and bare partial versions | 3.10 |  | 0.648 |
 | ns | 4922 |  | 191 | README: hyphen ranges | 3.11 |  | 0.638 |
 | ns | 5101 |  | 179 | README: ranges can be non-contiguous (the gtr/ltr/satisfies gotcha) | 3.12 |  | 0.631 |

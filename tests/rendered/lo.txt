@@ -89,11 +89,6 @@ concurrency_test.go
 condition.go
 condition_test.go
 constraints.go
-  …
-  3→// Clonable defines a constraint of types having Clone() T method.
-  4→type Clonable[T any] interface {
-  5→	Clone() T
-  6→}
 docs/
   .gitignore
   CLAUDE.md
@@ -226,13 +221,7 @@ internal/
       6→// with type parameters.
       …
     ordered_go118.go
-      …
-      9→type Ordered interface {
-      10→	Integer | Float | ~string
-      11→}
     ordered_go121.go
-      …
-      13→type Ordered = cmp.Ordered
   xrand/
     ordered_go118.go
     ordered_go122.go
@@ -275,9 +264,6 @@ it/
   seq_example_test.go
   seq_test.go
   string.go
-    …
-    13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
-    …
   string_example_test.go
   string_test.go
   tuples.go
@@ -316,14 +302,20 @@ type_manipulation.go
   22→func IsNotNil(x any) bool {
   23→	return !IsNil(x)
   …
+  26→// ToPtr returns a pointer copy of value.
+  27→// Play: https://go.dev/play/p/P2sD0PMXw4F
   28→func ToPtr[T any](x T) *T {
   29→	return &x
   …
+  32→// Nil returns a nil pointer of type.
+  33→// Play: https://go.dev/play/p/P2sD0PMXw4F
   34→func Nil[T any]() *T {
   35→	return nil
   …
   41→func EmptyableToPtr[T any](x T) *T {
   …
+  51→// FromPtr returns the pointer value or empty.
+  52→// Play: https://go.dev/play/p/mhD9CwO3X0m
   53→func FromPtr[T any](x *T) T {
   …
   63→func FromPtrOr[T any](x *T, fallback T) T {

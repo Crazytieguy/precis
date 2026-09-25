@@ -5,6 +5,7 @@
   FUNDING.yml
   ISSUE_TEMPLATE/
   actions/
+    choco/
   dependabot.yml
   workflows/
     .gitignore
@@ -45,7 +46,12 @@ README.md
   5→> "Think globally, `act` locally"
   6→
   7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
-  …
+  9→- **Fast Feedback** - Rather than having to commit/push every time you want to test out the changes you are making to your `.github/workflows/` files (or for any changes to embedded GitHub actions), you can use `act` to run the actions locally. The [environment variables](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) and [filesystem](https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners) are all configured to match what GitHub provides.
+  10→- **Local Task Runner** - I love [make](<https://en.wikipedia.org/wiki/Make_(software)>). However, I also hate repeating myself. With `act`, you can use the GitHub Actions defined in your `.github/workflows/` to replace your `Makefile`!
+  11→
+  12→> [!TIP]
+  13→> **Now Manage and Run Act Directly From VS Code!**<br/>
+  14→> Check out the [GitHub Local Actions](https://sanjulaganepola.github.io/github-local-actions-docs/) Visual Studio Code extension which allows you to leverage the power of `act` to run and test workflows locally without leaving your editor.
   16→# How Does It Work?
   …
   24→# Act User Guide
@@ -64,39 +70,15 @@ VERSION
 act-cli.nuspec
 cmd/
   dir.go
-    …
-    10→var (
-    11→	UserHomeDir  string
-    12→	CacheHomeDir string
-    13→)
-    15→func init() {
-    …
   execute_test.go
   graph.go
-    …
-    10→func drawGraph(plan *model.Plan) error {
-    …
   input.go
   list.go
-    …
-    11→func printList(plan *model.Plan) error {
-    …
   notices.go
   platforms.go
-    …
-    7→func (i *Input) newPlatforms() map[string]string {
-    …
   root.go
   root_test.go
   secrets.go
-    …
-    12→type secrets map[string]string
-    13→
-    14→func newSecrets(secretList []string) secrets {
-    …
-    40→func (s secrets) AsMap() map[string]string {
-    41→	return s
-    …
   testdata/
     env.actrc
     secrets.yml
@@ -126,6 +108,13 @@ main_test.go
 pkg/
   artifactcache/
     doc.go
+      1→// Package artifactcache provides a cache handler for the runner.
+      2→//
+      3→// Inspired by https://github.com/sp-ricard-valverde/github-act-cache-server
+      4→//
+      5→// TODO: Restrictions for accessing a cache, see https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#restrictions-for-accessing-a-cache
+      6→// TODO: Force deleting cache entries, see https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows#force-deleting-cache-entries
+      …
     handler.go
     handler_test.go
     model.go
@@ -165,9 +154,6 @@ pkg/
     line_writer_test.go
     logger.go
     outbound_ip.go
-      …
-      13→func GetOutboundIP() net.IP {
-      …
   container/
     DOCKER_LICENSE
     container_types.go
@@ -191,17 +177,11 @@ pkg/
     docker_stub.go
     docker_volume.go
     executions_environment.go
-      …
-      5→type ExecutionsEnvironment interface {
-      …
     host_environment.go
     host_environment_test.go
     linux_container_environment_extensions.go
     linux_container_environment_extensions_test.go
     parse_env_file.go
-      …
-      14→func parseEnvFile(e Container, srcPath string, env *map[string]string) common.Executor {
-      …
     testdata/
       Dockerfile
       docker-pull-options/
@@ -224,7 +204,9 @@ pkg/
     interpreter_test.go
     testdata/
       for-hashing-1.txt
+        1→Hello
       for-hashing-2.txt
+        1→World!
       for-hashing-3/
         data.txt
         nested/
@@ -234,22 +216,11 @@ pkg/
     file_collector_test.go
   gh/
     gh.go
-      …
-      10→func GetToken(ctx context.Context, workingDirectory string) (string, error) {
-      …
     gh_test.go
   lookpath/
     LICENSE
     env.go
     error.go
-      …
-      3→type Error struct {
-      4→	Name string
-      5→	Err  error
-      6→}
-      8→func (e *Error) Error() string {
-      9→	return e.Err.Error()
-      …
     lp_js.go
     lp_plan9.go
     lp_unix.go
@@ -261,17 +232,6 @@ pkg/
     github_context.go
     github_context_test.go
     job_context.go
-      …
-      3→type JobContext struct {
-      4→	Status    string `json:"status"`
-      5→	Container struct {
-      6→		ID      string `json:"id"`
-      7→		Network string `json:"network"`
-      8→	} `json:"container"`
-      9→	Services map[string]struct {
-      10→		ID string `json:"id"`
-      11→	} `json:"services"`
-      12→}
     planner.go
     planner_test.go
     step_result.go

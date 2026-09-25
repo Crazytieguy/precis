@@ -101,11 +101,20 @@ README.md
   315→
   316→Hyperfine is inspired by [bench](https://github.com/Gabriella439/bench).
   …
+  332→## Origin of the name
+  333→
+  334→The name *hyperfine* was chosen in reference to the hyperfine levels of caesium 133 which play a crucial role in the
+  335→[definition of our base unit of time](https://en.wikipedia.org/wiki/Second#History_of_definition)
+  336→— the second.
   338→## Citing hyperfine
   339→
   340→Thank you for considering to cite hyperfine in your research work. Please see the information
   341→in the sidebar on how to properly cite hyperfine.
-  …
+  343→## License
+  344→
+  345→`hyperfine` is dual-licensed under the terms of the MIT License and the Apache License 2.0.
+  346→
+  347→See the [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) files for details.
 build.rs
   …
   7→fn main() {
@@ -135,125 +144,17 @@ src/
     scheduler.rs
     timing_result.rs
   cli.rs
-    …
-    8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
-    9→where
-    10→    I: IntoIterator<Item = T>,
-    11→    T: Into<OsString> + Clone + 'a,
-    12→{
-    13→    let command = build_command();
-    14→    command.get_matches_from(args)
-    …
-    18→fn build_command() -> Command {
-    …
   command.rs
   error.rs
-    …
-    6→#[derive(Debug, Error)]
-    7→pub enum ParameterScanError {
-    8→    #[error("Error while parsing parameter scan arguments ({0})")]
-    9→    ParseIntError(num::ParseIntError),
-    10→    #[error("Error while parsing parameter scan arguments ({0})")]
-    11→    ParseDecimalError(DecimalError),
-    12→    #[error("Empty parameter range")]
-    13→    EmptyRange,
-    14→    #[error("Parameter range is too large")]
-    15→    TooLarge,
-    16→    #[error("Zero is not a valid parameter step")]
-    17→    ZeroStep,
-    18→    #[error("A step size is required when the range bounds are floating point numbers. The step size can be specified with the '-D/--parameter-step-size <DELTA>' parameter")]
-    19→    StepRequired,
-    20→    #[error("'--command-name' has been specified {0} times. It has to appear exactly once, or exactly {1} times (number of benchmarks)")]
-    21→    UnexpectedCommandNameCount(usize, usize),
-    22→}
-    24→impl From<num::ParseIntError> for ParameterScanError {
-    25→    fn from(e: num::ParseIntError) -> ParameterScanError {
-    26→        ParameterScanError::ParseIntError(e)
-    …
-    28→}
-    30→impl From<DecimalError> for ParameterScanError {
-    31→    fn from(e: DecimalError) -> ParameterScanError {
-    32→        ParameterScanError::ParseDecimalError(e)
-    …
-    34→}
-    …
-    37→pub enum OptionsError<'a> {
-    …
   export/
     asciidoc.rs
-      …
-      4→#[derive(Default)]
-      5→pub struct AsciidocExporter {}
-      6→
-      7→impl MarkupExporter for AsciidocExporter {
-      8→    fn table_header(&self, cell_aligmnents: &[Alignment]) -> String {
-      …
-      22→    fn table_footer(&self, _cell_aligmnents: &[Alignment]) -> String {
-      23→        "|===\n".to_string()
-      …
-      26→    fn table_row(&self, cells: &[&str]) -> String {
-      …
-      30→    fn table_divider(&self, _cell_aligmnents: &[Alignment]) -> String {
-      31→        "".to_string()
-      …
-      34→    fn command(&self, cmd: &str) -> String {
-      35→        format!("`{cmd}`")
-      …
-      37→}
-      …
     csv.rs
-      …
-      12→#[derive(Default)]
-      13→pub struct CsvExporter {}
-      14→
-      15→impl Exporter for CsvExporter {
-      16→    fn serialize(
-      17→        &self,
-      18→        results: &[BenchmarkResult],
-      19→        _unit: Option<Unit>,
-      20→        _sort_order: SortOrder,
-      21→    ) -> Result<Vec<u8>> {
-      …
-      61→}
-      …
     json.rs
     markdown.rs
-      …
-      5→#[derive(Default)]
-      6→pub struct MarkdownExporter {}
-      7→
-      8→impl MarkupExporter for MarkdownExporter {
-      9→    fn table_row(&self, cells: &[&str]) -> String {
-      10→        format!("| {} |\n", cells.join(" | "))
-      …
-      13→    fn table_divider(&self, cell_aligmnents: &[Alignment]) -> String {
-      …
-      26→    fn command(&self, cmd: &str) -> String {
-      27→        format!("`{cmd}`")
-      …
-      29→}
-      …
     markup.rs
     mod.rs
     orgmode.rs
-      …
-      4→#[derive(Default)]
-      5→pub struct OrgmodeExporter {}
-      6→
-      7→impl MarkupExporter for OrgmodeExporter {
-      8→    fn table_row(&self, cells: &[&str]) -> String {
-      …
-      16→    fn table_divider(&self, cell_aligmnents: &[Alignment]) -> String {
-      …
-      20→    fn command(&self, cmd: &str) -> String {
-      21→        format!("={cmd}=")
-      …
-      23→}
-      …
     tests.rs
-      …
-      9→fn get_output<E: Exporter + Default>(
-      …
   main.rs
     …
     17→pub mod benchmark;
@@ -271,8 +172,133 @@ src/
     29→fn run() -> Result<()> {
     …
     53→fn main() {
+    54→    match run() {
+    55→        Ok(_) => {}
+    56→        Err(e) => {
+    57→            eprintln!("{} {:#}", "Error:".red(), e);
+    58→            std::process::exit(1);
+    59→        }
+    60→    }
     …
   options.rs
+    …
+    16→#[cfg(not(windows))]
+    17→pub const DEFAULT_SHELL: &str = "sh";
+    19→#[cfg(windows)]
+    20→pub const DEFAULT_SHELL: &str = "cmd.exe";
+    22→/// Shell to use for executing benchmarked commands
+    23→#[derive(Debug, PartialEq)]
+    24→pub enum Shell {
+    25→    /// Default shell command
+    26→    Default(&'static str),
+    27→
+    28→    /// Custom shell command specified via --shell
+    29→    Custom(Vec<String>),
+    30→}
+    32→impl Default for Shell {
+    33→    fn default() -> Self {
+    …
+    36→}
+    38→impl fmt::Display for Shell {
+    39→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    …
+    45→}
+    47→impl Shell {
+    48→    /// Parse given string as shell command line
+    49→    pub fn parse_from_str<'a>(s: &str) -> Result<Self, OptionsError<'a>> {
+    …
+    57→    pub fn command(&self) -> Command {
+    …
+    67→}
+    69→/// Action to take when an executed command fails.
+    70→#[derive(Debug, Clone, PartialEq, Eq)]
+    71→pub enum CmdFailureAction {
+    72→    /// Exit with an error message
+    73→    RaiseError,
+    74→
+    75→    /// Ignore all non-zero exit codes
+    76→    IgnoreAllFailures,
+    77→
+    78→    /// Ignore specific exit codes
+    79→    IgnoreSpecificFailures(Vec<i32>),
+    80→}
+    …
+    84→pub enum OutputStyleOption {
+    …
+    101→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    102→pub enum SortOrder {
+    103→    Command,
+    104→    MeanTime,
+    105→}
+    107→/// Bounds for the number of benchmark runs
+    108→pub struct RunBounds {
+    109→    /// Minimum number of benchmark runs
+    110→    pub min: u64,
+    111→
+    112→    /// Maximum number of benchmark runs
+    113→    pub max: Option<u64>,
+    114→}
+    116→impl Default for RunBounds {
+    117→    fn default() -> Self {
+    …
+    120→}
+    122→#[derive(Debug, Default, Clone, PartialEq)]
+    123→pub enum CommandInputPolicy {
+    124→    /// Read from the null device
+    125→    #[default]
+    126→    Null,
+    127→
+    128→    /// Read input from a file
+    129→    File(PathBuf),
+    130→}
+    132→impl CommandInputPolicy {
+    133→    pub fn get_stdin(&self) -> io::Result<Stdio> {
+    …
+    145→}
+    147→/// How to handle the output of benchmarked commands
+    148→#[derive(Debug, Clone, PartialEq, Eq, Default)]
+    149→pub enum CommandOutputPolicy {
+    150→    /// Redirect output to the null device
+    151→    #[default]
+    152→    Null,
+    153→
+    154→    /// Feed output through a pipe before discarding it
+    155→    Pipe,
+    156→
+    157→    /// Redirect output to a file
+    158→    File(PathBuf),
+    159→
+    160→    /// Show command output on the terminal
+    161→    Inherit,
+    162→}
+    164→impl CommandOutputPolicy {
+    165→    pub fn get_stdout_stderr(&self) -> io::Result<(Stdio, Stdio)> {
+    …
+    182→}
+    184→#[derive(Debug, PartialEq)]
+    185→pub enum ExecutorKind {
+    186→    Raw,
+    187→    Shell(Shell),
+    188→    Mock(Option<String>),
+    189→}
+    191→impl Default for ExecutorKind {
+    192→    fn default() -> Self {
+    …
+    195→}
+    …
+    198→pub struct Options {
+    …
+    251→impl Default for Options {
+    252→    fn default() -> Options {
+    …
+    273→}
+    275→impl Options {
+    276→    pub fn from_cli_arguments<'a>(matches: &ArgMatches) -> Result<Self, OptionsError<'a>> {
+    …
+    470→    pub fn validate_against_command_list(&mut self, commands: &Commands) -> Result<()> {
+    …
+    503→}
+    …
   outlier_detection.rs
     1→//! A module for statistical outlier detection.
     2→//!
@@ -281,45 +307,19 @@ src/
     5→//!   The ASQC Basic References in Quality Control: Statistical Techniques, Edward F. Mykytka,
     6→//!   Ph.D., Editor.
     …
-    13→pub const OUTLIER_THRESHOLD: f64 = 1.4826 * 10.0;
-    …
-    21→pub fn modified_zscores(xs: &[f64]) -> Vec<f64> {
-    …
   output/
     format.rs
     mod.rs
-      1→pub mod format;
-      2→pub mod progress_bar;
-      3→pub mod warnings;
     progress_bar.rs
     warnings.rs
-      …
-      7→pub struct OutlierWarningOptions {
-      …
-      13→pub enum Warnings {
-      …
-      20→impl fmt::Display for Warnings {
-      …
   parameter/
     mod.rs
     range_step.rs
     tokenize.rs
-      1→pub fn tokenize(values: &str) -> Vec<String> {
-      …
   timer/
     mod.rs
     unix_timer.rs
     wall_clock_timer.rs
-      …
-      5→pub struct WallClockTimer {
-      6→    start: Instant,
-      7→}
-      9→impl WallClockTimer {
-      10→    pub fn start() -> WallClockTimer {
-      …
-      16→    pub fn stop(&self) -> Second {
-      …
-      20→}
     windows_timer.rs
   util/
     exit_code.rs
@@ -327,10 +327,6 @@ src/
     mod.rs
     number.rs
     randomized_environment_offset.rs
-      …
-      6→pub fn value() -> String {
-      7→    "X".repeat(rand::random::<usize>() % 4096usize)
-      …
     units.rs
       1→//! This module contains common units.
       …

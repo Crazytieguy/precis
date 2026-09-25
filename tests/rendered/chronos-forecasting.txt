@@ -1,6 +1,8 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
+    config.yml
   workflows/
     ci.yml
     eval-model.yml
@@ -46,6 +48,7 @@ README.md
   159→This project is licensed under the Apache-2.0 License.
 ci/
   evaluate/
+    backtest_config.yaml
 notebooks/
   chronos-2-quickstart.ipynb
   deploy-chronos-to-amazon-sagemaker.ipynb
@@ -74,6 +77,15 @@ pyproject.toml
   22→  "scikit-learn>=1.6.0,<2",
   23→]
   …
+  31→[build-system]
+  32→requires = ["hatchling"]
+  33→build-backend = "hatchling.build"
+  34→
+  35→[tool.hatch.build.targets.wheel]
+  36→packages = ["src/chronos"]
+  37→
+  38→[tool.hatch.version]
+  39→path = "src/chronos/__about__.py"
   41→[project.optional-dependencies]
   42→extras = [
   43→  "boto3>=1.10,<2",
@@ -100,12 +112,31 @@ pyproject.toml
   64→  "rich",
   65→  "pandas>=2.0,<2.4",
   66→]
-  …
+  68→[project.urls]
+  69→Homepage = "https://github.com/amazon-science/chronos-forecasting"
+  70→Issues = "https://github.com/amazon-science/chronos-forecasting/issues"
+  71→Chronos-Paper = "https://arxiv.org/abs/2403.07815"
+  72→Chronos-2-Paper = "https://arxiv.org/abs/2510.15821"
+  73→
+  74→[tool.mypy]
+  75→ignore_missing_imports = true
+  76→
+  77→[tool.ruff]
+  78→line-length = 119
+  79→lint.ignore = [
+  80→  "E501", # Line too long
+  81→  "E731", # Do not assign a `lambda` expression, use a `def`
+  82→  "E722", # Do not use bare `except`
+  83→]
 scripts/
   README.md
+    1→# Usage Examples
+    …
   evaluation/
   kernel-synth.py
   training/
+    configs/
+    train.py
 src/
   chronos/
     __about__.py
@@ -140,44 +171,67 @@ src/
       29→    "Chronos2Pipeline",
       30→]
     base.py
-      …
-      27→class ForecastType(Enum):
-      28→    SAMPLES = "samples"
-      29→    QUANTILES = "quantiles"
-      32→class PipelineRegistry(type):
-      33→    REGISTRY: Dict[str, "PipelineRegistry"] = {}
-      34→
-      35→    def __new__(cls, name, bases, attrs):
-      36→        """See, https://github.com/faif/python-patterns."""
-      …
-      44→class BaseChronosPipeline(metaclass=PipelineRegistry):
-      45→    forecast_type: ForecastType
-      46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
-      47→
-      48→    def __init__(self, inner_model: "PreTrainedModel"):
-      …
-      58→    @property
-      59→    def model_context_length(self) -> int:
-      …
-      62→    @property
-      63→    def model_prediction_length(self) -> int:
-      …
-      66→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
-      …
-      76→    def predict(self, inputs: Union[torch.Tensor, List[torch.Tensor]], prediction_length: Optional[int] = None):
-      …
-      100→    def predict_quantiles(
-      …
-      135→    def predict_df(
-      …
-      252→    def predict_fev(
-      253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
-      254→    ) -> tuple[list["datasets.DatasetDict"], float]:
-      …
-      337→    def from_pretrained(
-      …
     boto_utils.py
     chronos.py
+      …
+      24→logger = logging.getLogger(__file__)
+      …
+      28→class ChronosConfig:
+      …
+      59→class ChronosTokenizer:
+      …
+      68→    def context_input_transform(
+      69→        self,
+      70→        context: torch.Tensor,
+      71→    ) -> Tuple:
+      …
+      100→    def label_input_transform(self, label: torch.Tensor, tokenizer_state: Any) -> Tuple:
+      …
+      131→    def output_transform(self, samples: torch.Tensor, tokenizer_state: Any) -> torch.Tensor:
+      …
+      154→class MeanScaleUniformBins(ChronosTokenizer):
+      155→    def __init__(self, low_limit: float, high_limit: float, config: ChronosConfig) -> None:
+      …
+      170→    def _input_transform(
+      171→        self, context: torch.Tensor, scale: Optional[torch.Tensor] = None
+      172→    ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+      …
+      198→    def _append_eos_token(
+      199→        self, token_ids: torch.Tensor, attention_mask: torch.Tensor
+      200→    ) -> Tuple[torch.Tensor, torch.Tensor]:
+      …
+      209→    def context_input_transform(self, context: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+      …
+      222→    def label_input_transform(self, label: torch.Tensor, scale: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
+      …
+      233→    def output_transform(self, samples: torch.Tensor, scale: torch.Tensor) -> torch.Tensor:
+      …
+      243→class ChronosModel(nn.Module):
+      …
+      256→    def __init__(self, config: ChronosConfig, model: PreTrainedModel) -> None:
+      …
+      261→    @property
+      262→    def device(self):
+      263→        return self.model.device
+      265→    def encode(
+      266→        self,
+      267→        input_ids: torch.Tensor,
+      268→        attention_mask: torch.Tensor,
+      269→    ):
+      …
+      292→    def forward(
+      293→        self,
+      294→        input_ids: torch.Tensor,
+      295→        attention_mask: torch.Tensor,
+      296→        prediction_length: Optional[int] = None,
+      297→        num_samples: Optional[int] = None,
+      298→        temperature: Optional[float] = None,
+      299→        top_k: Optional[int] = None,
+      300→        top_p: Optional[float] = None,
+      301→    ) -> torch.Tensor:
+      …
+      355→class ChronosPipeline(BaseChronosPipeline):
+      …
     chronos2/
       __init__.py
         …
@@ -188,21 +242,6 @@ src/
         10→
         11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
       config.py
-        …
-        12→class Chronos2CoreConfig(PretrainedConfig):
-        …
-        46→    model_type = "t5"
-        47→    attribute_map = {
-        48→        "hidden_size": "d_model",
-        49→        "num_attention_heads": "num_heads",
-        50→        "num_hidden_layers": "num_layers",
-        51→        "head_dim": "d_kv",
-        52→    }
-        53→
-        54→    def __init__(
-        …
-        103→class Chronos2ForecastingConfig:
-        …
       dataset.py
       layers.py
       model.py
@@ -210,51 +249,19 @@ src/
       trainer.py
     chronos_bolt.py
     df_utils.py
-      …
-      16→def _validate_df_types_and_cast(
-      …
-      59→def validate_df_inputs(
-      60→    df: "pd.DataFrame",
-      61→    future_df: "pd.DataFrame | None",
-      62→    target_columns: list[str],
-      63→    prediction_length: int,
-      64→    id_column: str = "item_id",
-      65→    timestamp_column: str = "timestamp",
-      66→) -> tuple["pd.DataFrame", "pd.DataFrame | None", str, list[int], np.ndarray]:
-      …
-      199→def convert_df_input_to_list_of_dicts_input(
-      200→    df: "pd.DataFrame",
-      201→    future_df: "pd.DataFrame | None",
-      202→    target_columns: list[str],
-      203→    prediction_length: int,
-      204→    id_column: str = "item_id",
-      205→    timestamp_column: str = "timestamp",
-      206→    validate_inputs: bool = True,
-      207→    freq: str | None = None,
-      208→) -> tuple[list[dict[str, np.ndarray | dict[str, np.ndarray]]], np.ndarray, dict[str, "pd.DatetimeIndex"]]:
-      …
     utils.py
-      …
-      11→def left_pad_and_stack_1D(tensors: List[torch.Tensor]) -> torch.Tensor:
-      …
-      22→def interpolate_quantiles(
-      23→    query_quantile_levels: torch.Tensor | list[float],
-      24→    original_quantile_levels: torch.Tensor | list[float],
-      25→    original_values: torch.Tensor,
-      26→) -> torch.Tensor:
-      …
-      135→def weighted_quantile(
-      136→    query_quantile_levels: torch.Tensor | list[float],
-      137→    sample_weights: torch.Tensor | list[float],
-      138→    samples: torch.Tensor,
-      139→):
-      …
 test/
   __init__.py
   dummy-chronos-bolt-model/
+    config.json
+    model.safetensors
   dummy-chronos-model/
   dummy-chronos2-lora/
+    adapter_config.json
+    adapter_model.safetensors
   dummy-chronos2-model/
+    config.json
+    model.safetensors
   test_chronos.py
   test_chronos2.py
   test_chronos_bolt.py

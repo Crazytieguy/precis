@@ -59,13 +59,25 @@ README.md
   189→### Submitting pull requests
   …
   203→## License
-  …
+  204→
+  205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 package.json
   …
   2→  "name": "mitt",
   3→  "version": "3.0.1",
   4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
   …
+  30→  "repository": "developit/mitt",
+  31→  "keywords": [
+  32→    "events",
+  33→    "eventemitter",
+  34→    "emitter",
+  35→    "pubsub"
+  36→  ],
+  37→  "homepage": "https://github.com/developit/mitt",
+  38→  "authors": [
+  39→    "Jason Miller <jason@developit.ca>"
+  40→  ],
   41→  "license": "MIT",
   …
 src/

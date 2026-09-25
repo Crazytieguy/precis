@@ -46,6 +46,34 @@ README.rst
   33→        def myhook(self, arg1, arg2):
   34→            print("inside Plugin_1.myhook()")
   35→            return arg1 + arg2
+  38→    class Plugin_2:
+  39→        """A 2nd hook implementation namespace."""
+  40→
+  41→        @hookimpl
+  42→        def myhook(self, arg1, arg2):
+  43→            print("inside Plugin_2.myhook()")
+  44→            return arg1 - arg2
+  45→
+  46→
+  47→    # create a manager and add the spec
+  48→    pm = pluggy.PluginManager("myproject")
+  49→    pm.add_hookspecs(MySpec)
+  50→
+  51→    # register plugins
+  52→    pm.register(Plugin_1())
+  53→    pm.register(Plugin_2())
+  54→
+  55→    # call our ``myhook`` hook
+  56→    results = pm.hook.myhook(arg1=1, arg2=2)
+  57→    print(results)
+  58→
+  59→
+  60→Running this directly gets us::
+  61→
+  62→    $ python docs/examples/toy-example.py
+  63→    inside Plugin_2.myhook()
+  64→    inside Plugin_1.myhook()
+  65→    [-1, 3]
   …
   104→Support pluggy
   105→--------------
@@ -83,12 +111,35 @@ changelog/
     1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
   README.rst
   _template.rst
+    1→{% for section in sections %}
+    2→{% set underline = "-" %}
+    3→{% if section %}
+    4→{{section}}
+    5→{{ underline * section|length }}{% set underline = "~" %}
+    6→
+    7→{% endif %}
+    8→{% if sections[section] %}
+    9→{% for category, val in definitions.items() if category in sections[section] %}
+    …
 codecov.yml
 docs/
   _static/
     img/
       plug.png
   api_reference.rst
+    1→:orphan:
+    2→
+    3→.. _`api-reference`:
+    4→
+    5→API Reference
+    6→=============
+    7→
+    8→.. autoclass:: pluggy.PluginManager
+    …
+    52→Warnings
+    …
+    55→Custom warnings generated in some situations such as improper usage or deprecated features.
+    …
   changelog.rst
   conf.py
   examples/
@@ -113,12 +164,58 @@ downstream/
     1→This directory contains scripts for testing some downstream projects
     2→against your current pluggy worktree.
   conda.sh
+    …
+    2→set -eux -o pipefail
+    3→if [[ ! -d conda ]]; then
+    …
+    6→pushd conda && trap popd EXIT
+    7→git pull
+    8→set +eu
+    9→source dev/start
+    10→set -eu
+    11→pip install -e ../../
+    …
   datasette.sh
+    …
+    2→set -eux -o pipefail
+    3→if [[ ! -d datasette ]]; then
+    …
+    6→pushd datasette && trap popd EXIT
+    7→git pull
+    8→python -m venv venv
+    9→venv/bin/pip install -e .[test] -e ../..
+    10→venv/bin/pytest
   devpi.sh
   hatch.sh
+    …
+    2→set -eux -o pipefail
+    3→if [[ ! -d hatch ]]; then
+    …
+    6→pushd hatch && trap popd EXIT
+    7→git pull
+    8→python -m venv venv
+    9→venv/bin/pip install -e . -e ./backend  -e ../..
+    10→venv/bin/hatch run dev
   pytest.sh
+    …
+    2→set -eux -o pipefail
+    3→if [[ ! -d pytest ]]; then
+    …
+    6→pushd pytest && trap popd EXIT
+    7→git pull
+    8→python -m venv venv
+    9→venv/bin/pip install -e .[testing] -e ../..
+    10→venv/bin/pytest
   python-lsp-server.sh
   tox.sh
+    …
+    2→set -eux -o pipefail
+    3→if [[ ! -d tox ]]; then
+    …
+    6→pushd tox && trap popd EXIT
+    7→python -m venv venv
+    8→venv/bin/pip install -e .[testing] -e ../..
+    9→venv/bin/pytest
 pyproject.toml
   …
   8→[project]
@@ -207,92 +304,13 @@ src/
     _hooks.py
     _manager.py
     _result.py
-      …
-      16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
-      17→ResultType = TypeVar("ResultType")
-      18→
-      19→
-      20→class HookCallError(Exception):
-      21→    """Hook was called incorrectly."""
-      24→@final
-      25→class Result(Generic[ResultType]):
-      26→    """An object used to inspect and set the result in a :ref:`hook wrapper
-      27→    <hookwrappers>`."""
-      29→    __slots__ = ("_result", "_exception", "_traceback")
-      30→
-      31→    def __init__(
-      32→        self,
-      33→        result: ResultType | None,
-      34→        exception: BaseException | None,
-      35→    ) -> None:
-      36→        """:meta private:"""
-      …
-      42→    @property
-      43→    def excinfo(self) -> _ExcInfo | None:
-      44→        """:meta private:"""
-      …
-      51→    @property
-      52→    def exception(self) -> BaseException | None:
-      53→        """:meta private:"""
-      …
-      56→    @classmethod
-      57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
-      58→        """:meta private:"""
-      …
-      67→    def force_result(self, result: ResultType) -> None:
-      …
-      80→    def force_exception(self, exception: BaseException) -> None:
-      81→        """Force the result to fail with ``exception``.
-      82→
-      83→        This overrides any previous result or exception.
-      84→
-      85→        .. versionadded:: 1.1.0
-      86→        """
-      …
-      91→    def get_result(self) -> ResultType:
-      92→        """Get the result(s) for this hook call.
-      93→
-      94→        If the hook was marked as a ``firstresult`` only a single value
-      95→        will be returned, otherwise a list of results.
-      96→        """
-      …
-      107→_Result = Result
     _tracing.py
-      …
-      12→_Writer = Callable[[str], object]
-      13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
-      14→
-      15→
-      16→class TagTracer:
-      17→    def __init__(self) -> None:
-      …
-      22→    def get(self, name: str) -> TagTracerSub:
-      23→        return TagTracerSub(self, (name,))
-      25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
-      …
-      42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
-      …
-      48→    def setwriter(self, writer: _Writer | None) -> None:
-      49→        self._writer = writer
-      51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
-      …
-      59→class TagTracerSub:
-      60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
-      61→        self.root = root
-      62→        self.tags = tags
-      64→    def __call__(self, *args: object) -> None:
-      65→        self.root._processmessage(self.tags, args)
-      67→    def get(self, name: str) -> TagTracerSub:
-      68→        return self.__class__(self.root, self.tags + (name,))
     _warnings.py
       …
       4→class PluggyWarning(UserWarning):
-      5→    """Base class for all warnings emitted by pluggy."""
-      7→    __module__ = "pluggy"
-      10→@final
+      …
       11→class PluggyTeardownRaisedWarning(PluggyWarning):
       …
-      27→    __module__ = "pluggy"
     py.typed (empty)
 testing/
   benchmark.py

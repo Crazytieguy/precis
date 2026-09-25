@@ -67,9 +67,6 @@ apps/
       _layout.tsx
       incoming.tsx
       index.tsx
-        …
-        12→export default function HomeScreen() {
-        …
       links/
         [id].tsx
       login.tsx
@@ -144,8 +141,6 @@ apps/
         login-page.ts
         registration-page.ts
       index.ts
-        1→export { test } from "./fixtures";
-        2→export { expect } from "@playwright/test";
       tests/
         global/
         public/
@@ -197,9 +192,6 @@ apps/
       next-auth.d.ts
   worker/
     index.ts
-      …
-      3→function launch() {
-      …
     lib/
       archiveHandler.ts
       autoTagLink.ts
@@ -295,13 +287,6 @@ packages/
     ssrf.test.ts
     ssrf.ts
     transporter.ts
-      …
-      3→export default createTransport({
-      4→  url: process.env.EMAIL_SERVER,
-      5→  auth: {
-      6→    user: process.env.EMAIL_FROM,
-      7→  },
-      8→});
     utils.ts
     verifyCapacity.ts
   prisma/
@@ -309,18 +294,6 @@ packages/
       index.d.ts
       index.js
     index.ts
-      …
-      3→const globalForPrisma = global as unknown as { prisma: PrismaClient };
-      4→
-      5→export const prisma =
-      6→  globalForPrisma.prisma ||
-      7→  new PrismaClient({
-      8→    log:
-      9→      process.env.DEBUG === "true"
-      10→        ? ["query", "info", "warn", "error"]
-      11→        : ["warn", "error"],
-      12→  });
-      …
     migrations/
     package.json
     schema.prisma
@@ -331,6 +304,28 @@ packages/
       10→model Account {
       …
       28→model User {
+      29→  id                      Int                   @id @default(autoincrement())
+      30→  name                    String?
+      31→  username                String?               @unique
+      32→  email                   String?               @unique
+      33→  emailVerified           DateTime?
+      34→  unverifiedNewEmail      String?
+      35→  image                   String?
+      36→  password                String?
+      37→  locale                  String                @default("en")
+      38→  parentSubscription      Subscription?         @relation("ChildUsers", fields: [parentSubscriptionId], references: [id])
+      39→  parentSubscriptionId    Int?
+      40→  accounts                Account[]
+      41→  collections             Collection[]
+      42→  tags                    Tag[]
+      43→  pinnedLinks             Link[]                @relation("PinnedLinks")
+      44→  createdLinks            Link[]                @relation("CreatedLinks")
+      45→  createdCollections      Collection[]          @relation("CreatedCollections")
+      46→  highlights              Highlight[]
+      47→  collectionsJoined       UsersAndCollections[]
+      48→  collectionOrder         Int[]                 @default([])
+      49→  whitelistedUsers        WhitelistedUser[]
+      50→  accessTokens            AccessToken[]
       …
       77→enum Theme {
       78→  dark

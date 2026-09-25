@@ -21,7 +21,46 @@ Justfile
 README.md
   …
   12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
-  …
+  14→```python
+  15→# settings.py
+  16→from microbootstrap import LitestarSettings
+  17→
+  18→
+  19→class YourSettings(LitestarSettings):
+  20→    ...  # Your settings are stored here
+  21→
+  22→
+  23→settings = YourSettings()
+  24→
+  25→
+  26→# application.py
+  27→import litestar
+  28→from microbootstrap.bootstrappers.litestar import LitestarBootstrapper
+  29→
+  30→from your_application.settings import settings
+  31→
+  32→# Use the Litestar application!
+  33→application: litestar.Litestar = LitestarBootstrapper(settings).bootstrap()
+  34→```
+  35→
+  36→With <b>microbootstrap</b>, you receive an application with lightweight built-in support for:
+  37→
+  38→- `sentry`
+  39→- `prometheus`
+  40→- `opentelemetry`
+  41→- `logging`
+  42→- `cors`
+  43→- `swagger` - with additional offline version support
+  44→- `health-checks`
+  45→
+  46→Those instruments can be bootstrapped for:
+  47→
+  48→- `fastapi`,
+  49→- `litestar`,
+  50→- or `faststream` service,
+  51→- or even a service that doesn't use one of these frameworks.
+  52→
+  53→Interested? Let's dive right in ⚡
   55→## Table of Contents
   56→
   57→- [Installation](#installation)
@@ -104,7 +143,33 @@ microbootstrap/
     15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
     16→from microbootstrap.instruments.sentry_instrument import SentryConfig
     17→from microbootstrap.instruments.swagger_instrument import SwaggerConfig
-    …
+    18→from microbootstrap.settings import (
+    19→    FastApiSettings,
+    20→    FastStreamSettings,
+    21→    InstrumentsSetupperSettings,
+    22→    LitestarSettings,
+    23→)
+    24→
+    25→
+    26→__all__ = (
+    27→    "CorsConfig",
+    28→    "FastApiPrometheusConfig",
+    29→    "FastApiSettings",
+    30→    "FastStreamOpentelemetryConfig",
+    31→    "FastStreamPrometheusConfig",
+    32→    "FastStreamPrometheusMiddlewareProtocol",
+    33→    "FastStreamSettings",
+    34→    "FastStreamTelemetryMiddlewareProtocol",
+    35→    "HealthChecksConfig",
+    36→    "InstrumentsSetupperSettings",
+    37→    "LitestarPrometheusConfig",
+    38→    "LitestarSettings",
+    39→    "LoggingConfig",
+    40→    "OpentelemetryConfig",
+    41→    "PyroscopeConfig",
+    42→    "SentryConfig",
+    43→    "SwaggerConfig",
+    44→)
   bootstrappers/
     __init__.py (empty)
     base.py
@@ -114,24 +179,8 @@ microbootstrap/
   config/
     __init__.py (empty)
     fastapi.py
-      …
-      21→class FastApiConfig:
-      …
     faststream.py
-      …
-      21→class FastStreamConfig:
-      …
     litestar.py
-      …
-      13→@dataclasses.dataclass
-      14→class LitestarConfig(AppConfig):
-      15→    on_app_init: typing.Sequence[OnAppInitHandler] | None = None
-      16→    logging_config: LoggingConfig = dataclasses.field(
-      17→        default_factory=lambda: LoggingConfig(
-      18→            # required for foreign logs json formatting
-      19→            configure_root_logger=False,
-      20→        )
-      21→    )
   console_writer.py
     …
     10→@dataclasses.dataclass
@@ -148,142 +197,35 @@ microbootstrap/
     25→        is_enabled: bool,
     26→        disable_reason: str | None = None,
     27→    ) -> None:
-    …
+    28→        is_enabled_value: typing.Final = "[green]Enabled[/green]" if is_enabled else "[red]Disabled[/red]"
+    29→        self.rich_table.add_row(rf"{instrument_name}", is_enabled_value, disable_reason or "")
     31→    def print_bootstrap_table(self) -> None:
-    …
+    32→        if self.writer_enabled:
+    33→            self.rich_console.print(Rule("[yellow]Bootstrapping application[/yellow]", align="left"))
+    34→            self.rich_console.print(self.rich_table)
   exceptions.py
-    1→class MicroBootstrapBaseError(Exception):
-    2→    """Base for all exceptions."""
-    5→class ConfigMergeError(MicroBootstrapBaseError):
-    6→    """Raises when it's impossible to merge configs due to type mismatch."""
-    9→class MissingInstrumentError(MicroBootstrapBaseError):
-    10→    """Raises when attempting to configure instrument, that is not supported yet."""
   granian_server.py
-    …
-    16→GRANIAN_LOG_LEVELS_MAP = {
-    17→    logging.CRITICAL: LogLevels.critical,
-    18→    logging.ERROR: LogLevels.error,
-    19→    logging.WARNING: LogLevels.warning,
-    20→    logging.WARNING: LogLevels.warn,
-    21→    logging.INFO: LogLevels.info,
-    22→    logging.DEBUG: LogLevels.debug,
-    23→}
-    …
-    27→def create_granian_server(
-    28→    target: str,
-    29→    settings: ServerConfig,
-    30→    **granian_options: typing.Any,  # noqa: ANN401
-    31→) -> GranianServer[typing.Any]:
-    …
   helpers.py
   instruments/
     __init__.py (empty)
     base.py
     cors_instrument.py
-      …
-      8→class CorsConfig(BaseInstrumentConfig):
-      …
-      18→class CorsInstrument(Instrument[CorsConfig]):
-      19→    instrument_name = "Cors"
-      20→    ready_condition = "Provide allowed origins or regex"
-      21→
-      22→    def is_ready(self) -> bool:
-      …
-      27→    @classmethod
-      28→    def get_config_type(cls) -> type[CorsConfig]:
-      29→        return CorsConfig
     health_checks_instrument.py
     instrument_box.py
-      …
-      10→class InstrumentBox:
-      …
     logging_instrument.py
     opentelemetry_instrument.py
     prometheus_instrument.py
     pyroscope_instrument.py
-      …
-      15→class PyroscopeConfig(BaseInstrumentConfig):
-      …
-      27→class PyroscopeInstrument(Instrument[PyroscopeConfig]):
-      28→    instrument_name = "Pyroscope"
-      29→    ready_condition = "Provide pyroscope_endpoint"
-      30→
-      31→    def is_ready(self) -> bool:
-      …
-      34→    def teardown(self) -> None:
-      35→        pyroscope.shutdown()
-      37→    def bootstrap(self) -> None:
-      …
-      52→    @classmethod
-      53→    def get_config_type(cls) -> type[PyroscopeConfig]:
-      54→        return PyroscopeConfig
     sentry_instrument.py
     swagger_instrument.py
-      …
-      10→class SwaggerConfig(BaseInstrumentConfig):
-      11→    service_name: str = "micro-service"
-      12→    service_description: str = "Micro service description"
-      13→    service_version: str = "1.0.0"
-      14→
-      15→    service_static_path: str = "/static"
-      16→    swagger_path: str = "/docs"
-      17→    swagger_offline_docs: bool = False
-      18→    swagger_extra_params: dict[str, typing.Any] = pydantic.Field(default_factory=dict)
-      21→class SwaggerInstrument(Instrument[SwaggerConfig]):
-      22→    instrument_name = "Swagger"
-      23→    ready_condition = "Provide valid swagger_path"
-      24→
-      25→    def is_ready(self) -> bool:
-      …
-      28→    @classmethod
-      29→    def get_config_type(cls) -> type[SwaggerConfig]:
-      30→        return SwaggerConfig
   instruments_setupper.py
     …
     19→class InstrumentsSetupper:
-    20→    console_writer: ConsoleWriter
-    21→    instrument_box: InstrumentBox
-    22→
-    23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
-    …
-    28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-    …
-    32→    def configure_instruments(
-    33→        self,
-    34→        *instrument_configs: InstrumentConfigT,
-    35→    ) -> typing_extensions.Self:
-    …
-    40→    @classmethod
-    41→    def use_instrument(
-    42→        cls,
-    43→    ) -> typing.Callable[
-    44→        [type[Instrument[InstrumentConfigT]]],
-    45→        type[Instrument[InstrumentConfigT]],
-    46→    ]:
-    …
-    51→    def setup(self) -> None:
-    …
-    57→    def teardown(self) -> None:
-    …
-    62→    def __enter__(self) -> None:
-    63→        self.setup()
-    65→    def __exit__(self, *args: object) -> None:
-    66→        self.teardown()
     …
   middlewares/
     __init__.py (empty)
     fastapi.py
-      …
-      12→def build_fastapi_logging_middleware(
-      13→    exclude_endpoints: typing.Iterable[str],
-      14→) -> type[BaseHTTPMiddleware]:
-      …
     litestar.py
-      …
-      14→def build_litestar_logging_middleware(
-      15→    exclude_endpoints: typing.Iterable[str],
-      16→) -> type[MiddlewareProtocol]:
-      …
   py.typed (empty)
   settings.py
 package-lock.json
@@ -305,8 +247,49 @@ pyproject.toml
   14→    "fastapi",
   15→]
   …
+  32→dependencies = [
+  33→    "eval-type-backport>=0.2",
+  34→    "opentelemetry-api>=1.30.0",
+  35→    "opentelemetry-exporter-otlp>=1.15.0",
+  36→    "opentelemetry-exporter-prometheus-remote-write>=0.46b0",
+  37→    "opentelemetry-instrumentation>=0.46b0",
+  38→    "opentelemetry-instrumentation-system-metrics>=0.46b0",
+  39→    "opentelemetry-sdk>=1.30.0",
+  40→    "pydantic-settings>=2",
+  41→    "rich>=13",
+  42→    "sentry-sdk>=2.7",
+  43→    "structlog>=24",
+  44→    "pyroscope-io; platform_system != 'Windows'",
+  45→    "opentelemetry-distro[otlp]>=0.54b1",
+  46→    "opentelemetry-instrumentation-aio-pika>=0.54b1",
+  47→    "opentelemetry-instrumentation-aiohttp-client>=0.54b1",
+  48→    "opentelemetry-instrumentation-aiokafka>=0.54b1",
+  49→    "opentelemetry-instrumentation-asyncpg>=0.54b1",
+  50→    "opentelemetry-instrumentation-httpx>=0.54b1",
+  51→    "opentelemetry-instrumentation-logging>=0.54b1",
+  52→    "opentelemetry-instrumentation-redis>=0.54b1",
+  53→    "opentelemetry-instrumentation-psycopg>=0.54b1",
+  54→    "opentelemetry-instrumentation-sqlalchemy>=0.54b1",
+  55→    "opentelemetry-instrumentation-asyncio>=0.54b1",
+  56→    "opentelemetry-instrumentation-asgi>=0.46b0",
+  57→    "orjson>=3.10.18",
+  58→]
   59→version = "0"
   60→authors = [{ name = "community-of-python" }]
+  62→[project.optional-dependencies]
+  63→fastapi = [
+  64→    "fastapi>=0.100",
+  65→    "fastapi-offline-docs>=1",
+  66→    "opentelemetry-instrumentation-fastapi>=0.46b0",
+  67→    "prometheus-fastapi-instrumentator>=6.1",
+  68→]
+  69→litestar = [
+  70→    "litestar>=2.9",
+  71→    "litestar-offline-docs>=1",
+  72→    "prometheus-client>=0.20",
+  73→]
+  74→granian = ["granian[reload]>=1"]
+  75→faststream = ["faststream~=0.6.2", "prometheus-client>=0.20"]
   …
 tests/
   __init__.py (empty)
@@ -318,6 +301,16 @@ tests/
     test_litestar_opentelemetry.py
   conftest.py
   instruments/
+    __init__.py (empty)
+    test_cors.py
+    test_health_checks.py
+    test_instrument_box.py
+    test_logging.py
+    test_opentelemetry.py
+    test_prometheus.py
+    test_pyroscope.py
+    test_sentry.py
+    test_swagger.py
   test_granian_server.py
   test_helpers.py
   test_instruments_setupper.py

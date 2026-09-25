@@ -239,6 +239,35 @@ pyproject.toml
   2→requires = ["setuptools"]
   3→build-backend = "setuptools.build_meta"
 setup.cfg
+  1→[metadata]
+  2→name = swarm
+  3→version = 0.1.0
+  4→author = OpenAI Solutions
+  5→description = A lightweight, stateless multi-agent orchestration framework.
+  6→long_description = file: README.md
+  7→long_description_content_type = text/markdown
+  8→license = MIT
+  9→
+  10→[options]
+  11→packages = find:
+  12→zip_safe = True
+  13→include_package_data = True
+  14→install_requires =
+  15→    numpy
+  16→    openai>=1.33.0
+  17→    pytest
+  18→    requests
+  19→    tqdm
+  20→    pre-commit
+  21→    instructor
+  22→python_requires = >=3.10
+  23→
+  24→[tool.autopep8]
+  25→max_line_length = 120
+  26→ignore = E501,W6
+  27→in-place = true
+  28→recursive = true
+  29→aggressive = 3
 swarm/
   __init__.py
     1→from .core import Swarm
@@ -300,15 +329,6 @@ swarm/
     __init__.py
       1→from .repl import run_demo_loop
     repl.py
-      …
-      6→def process_and_print_streaming_response(response):
-      …
-      37→def pretty_print_messages(messages) -> None:
-      …
-      60→def run_demo_loop(
-      61→    starting_agent, context_variables=None, stream=False, debug=False
-      62→) -> None:
-      …
   types.py
     …
     11→AgentFunction = Callable[[], Union[str, "Agent", dict]]
@@ -338,19 +358,6 @@ swarm/
     40→    agent: Optional[Agent] = None
     41→    context_variables: dict = {}
   util.py
-    …
-    5→def debug_print(debug: bool, *args: str) -> None:
-    …
-    13→def merge_fields(target, source):
-    14→    for key, value in source.items():
-    15→        if isinstance(value, str):
-    16→            target[key] += value
-    17→        elif value is not None and isinstance(value, dict):
-    18→            merge_fields(target[key], value)
-    21→def merge_chunk(final_response: dict, delta: dict) -> None:
-    …
-    31→def function_to_json(func) -> dict:
-    …
 tests/
   __init__.py (empty)
   mock_client.py

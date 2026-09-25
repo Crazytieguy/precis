@@ -11,7 +11,14 @@ README.md
   2→
   3→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL and OracleDB. peepDB is lightweight, secure, and incredibly easy to use.
   5→## 🚀 Features
-  …
+  6→
+  7→- **Multi-Database Support**: Works with MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, MSSQL, OracleDB, and Firebase.
+  8→- **Quick Data Inspection**: View all tables or a specific table with a simple command.
+  9→- **User-Friendly CLI**: Easy-to-use command-line interface powered by Click.
+  10→- **Secure Local Storage**: Securely store database connection details with encryption on your local machine.
+  11→- **Lightweight**: Minimal footprint, designed for speed.
+  12→- **Formatted Output**: View data in a clean, formatted table or JSON format.
+  13→- **Pagination**: Efficiently handle large datasets by viewing data in manageable chunks.
   15→## 🎬 peepDB in Action
   16→
   17→Here's a quick demonstration of peepDB:
@@ -80,7 +87,8 @@ docs/
   index.md
     …
     6→# peepDB
-    …
+    7→
+    8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
     10→## 🚀 Features
     …
     20→## Getting Started
@@ -92,9 +100,18 @@ docs/
   installation.md
     …
     6→# 📦 Installation
-    …
+    7→
+    8→You can install peepDB directly from PyPI using pip:
+    9→
+    10→```bash
+    11→pip install peepdb
+    12→```
+    13→
+    14→This will install the latest version of peepDB along with all its dependencies.
     16→## Requirements
-    …
+    17→
+    18→- Python 3.9 or higher
+    19→- pip (Python package installer)
     21→## System Dependencies
     …
     30→## Verifying the Installation
@@ -102,6 +119,26 @@ docs/
     42→## Next Steps
     …
   usage.md
+    …
+    6→# 🛠️ Usage
+    7→
+    8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
+    10→## Saving Database Connection Details
+    …
+    20→## Listing Saved Connections
+    …
+    28→## Viewing Tables
+    …
+    42→## Pagination
+    …
+    50→## Choosing Output Format
+    …
+    58→## Removing Saved Connections
+    …
+    74→## Help
+    …
+    82→## Examples
+    …
 images/
   demo.gif
   peepdb_example1.png
@@ -111,6 +148,64 @@ peepdb/
   __init__.py
   __main__.py
   cli.py
+    …
+    16→class CustomEncoder(json.JSONEncoder):
+    17→    def default(self, obj):
+    …
+    25→@click.group()
+    26→@click.version_option()
+    27→def cli():
+    …
+    53→@cli.command()
+    54→@click.argument('connection_name')
+    55→@click.option('--db-type',
+    56→              type=click.Choice(['mysql', 'postgres', 'mariadb', 'sqlite', 'mongodb', 'firebase', 'mssql', 'oracle']),
+    57→              required=True,
+    58→              help='Database type')
+    59→@click.option('--host', required=True, help='Database host or file path for SQLite')
+    60→@click.option('--port', type=int, required=False, help='Database port (optional)')
+    61→@click.option('--user', required=False, help='Database user (not required for SQLite)')
+    62→@click.option('--password', required=False, help='Database password (not required for SQLite)')
+    63→@click.option('--database', required=False, help='Database name (not required for SQLite/Firebase/MSSQL)')
+    64→@click.option('--trusted', is_flag=True, help='Use Windows Authentication (Trusted Connection) for MSSQL')
+    65→def save(connection_name, db_type, host, port, user, password, database, trusted):
+    …
+    86→@cli.command()
+    87→def list():
+    88→    """
+    89→    List saved connections.
+    90→
+    91→    Example:
+    92→    peepdb list
+    93→    """
+    94→    list_connections()
+    97→@cli.command()
+    98→@click.argument('connection_name')
+    99→@click.confirmation_option(prompt='Are you sure you want to remove this connection?')
+    100→def remove(connection_name):
+    …
+    113→@cli.command()
+    114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
+    115→def remove_all():
+    116→    """
+    117→    Remove all saved connections.
+    118→
+    119→    Example:
+    120→    peepdb remove-all
+    121→    """
+    …
+    126→@cli.command()
+    127→@click.argument('connection_name')
+    128→@click.option('--table', required=False, help='Specific table to view')
+    129→@click.option('--format', type=click.Choice(['table', 'json']), default='table', help='Output format')
+    130→@click.option('--page', type=int, default=1, help='Page number to view')
+    131→@click.option('--page-size', type=int, default=50, help='Number of rows per page')
+    132→@click.option('--scientific', is_flag=True, help='Use scientific notation for numbers')
+    133→def view(connection_name, table, format, page, page_size, scientific):
+    …
+    181→def main():
+    182→    cli()
+    …
   config.py
   core.py
   db/
@@ -137,131 +232,14 @@ peepdb/
       20→    'OracleDatabase'
       21→]
     base.py
-      …
-      5→class BaseDatabase(ABC):
-      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
-      …
-      17→    @abstractmethod
-      18→    def connect(self) -> None:
-      19→        pass
-      21→    @abstractmethod
-      22→    def disconnect(self) -> None:
-      23→        pass
-      25→    @abstractmethod
-      26→    def fetch_tables(self) -> List[str]:
-      27→        pass
-      29→    @abstractmethod
-      30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      31→        pass
-      33→    def __enter__(self):
-      …
-      37→    def __exit__(self, exc_type, exc_val, exc_tb):
-      …
     firebase.py
-      …
-      7→logger = logging.getLogger(__name__)
-      8→
-      9→class FirebaseDatabase(BaseDatabase):
-      10→    def __init__(self, service_account_path: str, **kwargs):
-      …
-      15→    def connect(self):
-      …
-      26→    def disconnect(self):
-      27→        # Firebase Admin SDK does not provide a disconnect method
-      28→        pass
-      30→    def fetch_tables(self) -> List[str]:
-      …
-      39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     mariadb.py
-      …
-      5→class MariaDBDatabase(BaseDatabase):
-      6→    def connect(self) -> None:
-      …
-      23→    def disconnect(self) -> None:
-      …
-      30→    def fetch_tables(self) -> List[str]:
-      …
-      34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     mongodb.py
-      …
-      8→class MongoDBDatabase(BaseDatabase):
-      9→    def connect(self) -> None:
-      …
-      32→    def disconnect(self) -> None:
-      …
-      39→    def fetch_tables(self) -> t.List[str]:
-      40→        return self.db.list_collection_names()
-      42→    def fetch_data(
-      43→        self,
-      44→        table: str,
-      45→        page: int = 1,
-      46→        page_size: int = 100
-      47→    ) -> t.Dict[str, t.Any]:
-      48→        """
-      49→        Fetches data from the MongoDB database.
-      50→        """
-      …
     mssql.py
-      …
-      6→class MSSQLDatabase(BaseDatabase):
-      7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
-      …
-      12→    def connect(self) -> None:
-      …
-      28→    def disconnect(self) -> None:
-      …
-      35→    def fetch_tables(self) -> List[str]:
-      …
-      45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     mysql.py
-      …
-      5→class MySQLDatabase(BaseDatabase):
-      6→    def connect(self) -> None:
-      …
-      22→    def disconnect(self) -> None:
-      …
-      29→    def fetch_tables(self) -> List[str]:
-      …
-      33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     oracle.py
-      …
-      7→class OracleDatabase(BaseDatabase):
-      8→    def connect(self) -> None:
-      …
-      25→    def disconnect(self) -> None:
-      …
-      32→    def fetch_tables(self) -> List[str]:
-      …
-      36→    def fetch_data(
-      37→        self, table: str, page: int = 1, page_size: int = 100
-      38→    ) -> Dict[str, Any]:
-      …
     postgresql.py
-      …
-      6→class PostgreSQLDatabase(BaseDatabase):
-      7→    def connect(self) -> None:
-      …
-      23→    def disconnect(self) -> None:
-      …
-      30→    def fetch_tables(self) -> List[str]:
-      …
-      34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
     sqlite.py
-      …
-      6→class SQLiteDatabase(BaseDatabase):
-      7→    def connect(self) -> None:
-      …
-      22→    def disconnect(self) -> None:
-      …
-      29→    def fetch_tables(self) -> List[str]:
-      …
-      43→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
   exceptions.py
     1→class InvalidPassword(Exception):
     2→    pass

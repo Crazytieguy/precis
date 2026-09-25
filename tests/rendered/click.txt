@@ -213,21 +213,6 @@ src/
     _compat.py
     _termui_impl.py
     _textwrap.py
-      …
-      8→class TextWrapper(textwrap.TextWrapper):
-      9→    def _handle_long_word(
-      10→        self,
-      11→        reversed_chunks: list[str],
-      12→        cur_line: list[str],
-      13→        cur_len: int,
-      14→        width: int,
-      15→    ) -> None:
-      …
-      27→    @contextmanager
-      28→    def extra_indent(self, indent: str) -> cabc.Iterator[None]:
-      …
-      40→    def indent_only(self, text: str) -> str:
-      …
     _utils.py
     _winconsole.py
       …
@@ -278,8 +263,22 @@ src/
       185→class FuncParamType(ParamType[ParamTypeValue]):
       …
       210→class UnprocessedParamType(ParamType[t.Any]):
+      211→    name = "text"
+      212→
+      213→    def convert(
+      214→        self, value: t.Any, param: Parameter | None, ctx: Context | None
+      215→    ) -> t.Any:
+      …
+      218→    def __repr__(self) -> str:
       …
       222→class StringParamType(ParamType[str]):
+      223→    name = "text"
+      224→
+      225→    def convert(
+      226→        self, value: t.Any, param: Parameter | None, ctx: Context | None
+      227→    ) -> str:
+      …
+      244→    def __repr__(self) -> str:
       …
       248→class ChoiceInfoDict(ParamTypeInfoDict):
       249→    choices: cabc.Sequence[t.Any]

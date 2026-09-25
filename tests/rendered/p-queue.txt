@@ -211,6 +211,32 @@ source/
     887→	*/
     888→	get isRateLimited(): boolean {
     …
+    892→	/**
+    893→	Whether the queue is saturated. Returns `true` when:
+    894→	- All concurrency slots are occupied and tasks are waiting, OR
+    895→	- The queue is rate-limited and tasks are waiting
+    896→
+    897→	Useful for detecting backpressure and potential hanging tasks.
+    898→
+    899→	```js
+    900→	import PQueue from 'p-queue';
+    901→
+    902→	const queue = new PQueue({concurrency: 2});
+    903→
+    904→	// Backpressure handling
+    905→	if (queue.isSaturated) {
+    906→		console.log('Queue is saturated, waiting for capacity...');
+    907→		await queue.onSizeLessThan(queue.concurrency);
+    908→	}
+    909→
+    910→	// Monitoring for stuck tasks
+    911→	setInterval(() => {
+    912→		if (queue.isSaturated) {
+    913→			console.warn(`Queue saturated: ${queue.pending} running, ${queue.size} waiting`);
+    914→		}
+    915→	}, 60000);
+    916→	```
+    917→	*/
     918→	get isSaturated(): boolean {
     …
     952→	get runningTasks(): ReadonlyArray<{
@@ -229,40 +255,7 @@ source/
   lower-bound.ts
   options.ts
   priority-queue.ts
-    …
-    7→export type PriorityQueueOptions = {
-    8→	priority?: number;
-    9→} & QueueAddOptions;
-    11→export default class PriorityQueue implements Queue<RunFunction, PriorityQueueOptions> {
-    …
-    17→	enqueue(run: RunFunction, options?: Partial<PriorityQueueOptions>): void {
-    …
-    50→	setPriority(id: string, priority: number) {
-    …
-    61→	remove(id: string): void;
-    62→	remove(run: RunFunction): void;
-    63→	remove(idOrRun: string | RunFunction): void {
-    …
-    82→	dequeue(): RunFunction | undefined {
-    …
-    102→	filter(options: Readonly<Partial<PriorityQueueOptions>>): RunFunction[] {
-    …
-    115→	get size(): number {
-    116→		return this.#queue.length - this.#head;
-    …
-    128→}
   queue.ts
-    1→export type RunFunction = () => Promise<unknown>;
-    2→
-    3→export type Queue<Element, Options> = {
-    4→	size: number;
-    5→	filter: (options: Readonly<Partial<Options>>) => Element[];
-    6→	dequeue: () => Element | undefined;
-    7→	enqueue: (run: Element, options?: Partial<Options>) => void;
-    8→	setPriority: (id: string, priority: number) => void;
-    9→	// TODO: Make this required in the next major version.
-    10→	remove?: (id: string) => void;
-    11→};
 test/
   advanced.ts
   basic.ts

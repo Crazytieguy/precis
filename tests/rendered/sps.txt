@@ -94,13 +94,41 @@ README.md
   77→## 📦 Usage
   …
   123→## 🏗️ Building from Source
-  …
+  124→
+  125→**Prerequisites:** Rust toolchain (stable).
+  126→
+  127→```sh
+  128→git clone <repo-url>
+  129→cd sps
+  130→cargo build --release
+  131→```
+  132→
+  133→The `sps` binary will be at `target/release/sps`. Add it to your `PATH`.
+  134→
+  135→
+  136→-----
   138→## 📥 Using the Latest Nightly Build
-  …
+  139→
+  140→You can download the latest nightly build from [`actions/workflows/rust.yml`](../../actions/workflows/rust.yml) inside this repository (select a successful build and scroll down to `Artifacts`).
+  141→
+  142→After extracting the downloaded archive, you can run the binary directly:
+  143→
+  144→```sh
+  145→./sps --help
+  146→```
+  147→
+  148→
+  149→-----
   151→## 🤝 Contributing
   …
   164→## 📄 License
-  …
+  165→
+  166→  - **sps:** BSD‑3‑Clause - see [LICENSE.md](LICENSE.md)
+  167→  - Inspired by Homebrew BSD‑2‑Clause — see [NOTICE.md](NOTICE.md)
+  168→
+  169→-----
+  170→
+  171→> *Alpha software. No guarantees. Use responsibly.*
 rustfmt.toml
 sps/
   Cargo.toml
@@ -111,82 +139,58 @@ sps/
         …
       init.rs
       install.rs
-        …
-        16→pub struct InstallArgs {
-        …
-        43→impl InstallArgs {
-        44→    #[instrument(skip(self, config, cache), fields(targets = ?self.names))]
-        45→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-        …
-        76→}
       list.rs
-        …
-        15→#[derive(Args, Debug)]
-        16→pub struct List {
-        17→    /// Show only formulas
-        18→    #[arg(long = "formula")]
-        19→    pub formula_only: bool,
-        20→    /// Show only casks
-        21→    #[arg(long = "cask")]
-        22→    pub cask_only: bool,
-        23→    /// Show only packages with updates available
-        24→    #[arg(long = "outdated")]
-        25→    pub outdated_only: bool,
-        26→}
-        28→impl List {
-        29→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-        …
-        422→}
       reinstall.rs
-        …
-        11→#[derive(Args, Debug)]
-        12→pub struct ReinstallArgs {
-        13→    #[arg(required = true)]
-        14→    pub names: Vec<String>,
-        15→
-        16→    #[arg(
-        17→        long,
-        18→        help = "Force building the formula from source, even if a bottle is available"
-        19→    )]
-        20→    pub build_from_source: bool,
-        21→}
-        23→impl ReinstallArgs {
-        24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-        …
-        34→}
       search.rs
       status.rs
       uninstall.rs
       update.rs
         1→//! Contains the logic for the `update` command.
         …
-        10→#[derive(clap::Args, Debug)]
-        11→pub struct Update;
-        12→
-        13→impl Update {
-        14→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-        …
-        73→}
       upgrade.rs
-        …
-        11→#[derive(Args, Debug)]
-        12→pub struct UpgradeArgs {
-        13→    #[arg()]
-        14→    pub names: Vec<String>,
-        15→
-        16→    #[arg(long, conflicts_with = "names")]
-        17→    pub all: bool,
-        18→
-        19→    #[arg(long)]
-        20→    pub build_from_source: bool,
-        21→}
-        23→impl UpgradeArgs {
-        24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-        …
-        57→}
     cli.rs
       …
       2→//! Defines the command-line argument structure using clap.
+      …
+      10→pub mod info;
+      11→pub mod init;
+      12→pub mod install;
+      13→pub mod list;
+      14→pub mod reinstall;
+      15→pub mod search;
+      16→pub mod status;
+      17→pub mod uninstall;
+      18→pub mod update;
+      19→pub mod upgrade;
+      …
+      23→pub use crate::cli::init::InitArgs;
+      …
+      32→#[derive(Parser, Debug)]
+      33→#[command(author, version, about, long_about = None, name = "sps", bin_name = "sps")]
+      34→#[command(propagate_version = true)]
+      35→pub struct CliArgs {
+      36→    #[arg(short, long, action = ArgAction::Count, global = true)]
+      37→    pub verbose: u8,
+      38→
+      39→    #[command(subcommand)]
+      40→    pub command: Command,
+      41→}
+      43→#[derive(Subcommand, Debug)]
+      44→pub enum Command {
+      45→    Init(InitArgs),
+      46→    Search(Search),
+      47→    List(List),
+      48→    Info(Info),
+      49→    Update(Update),
+      50→    Install(InstallArgs),
+      51→    Uninstall(Uninstall),
+      52→    Reinstall(ReinstallArgs),
+      53→    Upgrade(UpgradeArgs),
+      54→}
+      56→impl Command {
+      57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+      …
+      71→}
       …
     main.rs
       …
@@ -202,15 +206,6 @@ sps/
       …
     pipeline/
       downloader.rs
-        …
-        21→pub(crate) struct DownloadCoordinator {
-        …
-        28→impl DownloadCoordinator {
-        29→    pub fn new(
-        …
-        43→    pub async fn coordinate_downloads(
-        …
-        209→}
       planner.rs
       runner.rs
     pipeline.rs
@@ -229,14 +224,6 @@ sps-common/
       resolver.rs
     error.rs
     formulary.rs
-      …
-      11→#[derive()]
-      12→pub struct Formulary {
-      13→    cache: Cache,
-      14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
-      15→}
-      17→impl Formulary {
-      …
     keg.rs
     lib.rs
       …
@@ -256,9 +243,6 @@ sps-common/
       …
     model/
       artifact.rs
-        …
-        9→pub enum InstalledArtifact {
-        …
       cask.rs
       formula.rs
       mod.rs

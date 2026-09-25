@@ -96,115 +96,112 @@ docs/
 eslint.config.mjs
 lib/
   builtin.js
-    …
-    62→export const builtinPlugins = Object.freeze([
-    …
   parser.js
-    …
-    4→export class SvgoParserError extends Error {
-    …
-    12→  constructor(message, line, column, source, file) {
-    …
-    25→  toString() {
-    …
-    59→}
-    …
-    80→export const parseSvg = (data, from) => {
-    …
   parser.test.js
   path.js
     1→/**
     2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/paths.html#PathDataBNF.
     3→ */
     …
-    137→/**
-    138→ * @param {string} string
-    139→ * @returns {import('./types.js').PathDataItem[]}
-    140→ */
-    141→export const parsePathData = (string) => {
-    …
-    298→/**
-    299→ * @param {StringifyPathDataOptions} options
-    300→ * @returns {string}
-    301→ */
-    302→export const stringifyPathData = ({
-    303→  pathData,
-    304→  precision,
-    305→  disableSpaceAfterFlags,
-    306→}) => {
-    …
   path.test.js
   stringifier.js
-    …
-    66→export const stringifySvg = (data, userOptions = {}) => {
-    …
   style.js
-    …
-    195→export const compareSpecificity = (a, b) => {
-    …
-    211→export const collectStylesheet = (root) => {
-    …
-    253→export const computeStyle = (stylesheet, node) => {
-    …
-    286→export const includesAttrSelector = (
-    287→  selector,
-    288→  name,
-    289→  value = null,
-    290→  traversed = false,
-    291→) => {
-    …
   style.test.js
   svgo/
     coa.js
-      …
-      19→export function checkIsDir(filePath) {
-      …
-      30→export default function makeProgram(program) {
-      …
     css-select-adapter.js
-      …
-      78→export function createAdapter(relativeNode, parents) {
-      …
     plugins.js
-      …
-      14→export const invokePlugins = (
-      15→  ast,
-      16→  info,
-      17→  plugins,
-      18→  overrides,
-      19→  globalOverrides,
-      20→) => {
-      …
-      40→export const createPreset = ({ name, plugins }) => {
-      …
     tools.js
   svgo-node.js
-    …
-    35→export * from './svgo.js';
-    …
-    44→export const loadConfig = async (configFile, cwd = process.cwd()) => {
-    …
-    83→export const optimize = (input, config) => {
-    …
   svgo-node.test.js
   svgo.js
   svgo.test.js
   types.js
     1→export default {};
   types.ts
+    …
+    30→export type DefaultPlugins = {
+    …
+    67→export type PresetDefaultOverrides = {
+    68→  [Name in keyof DefaultPlugins]?: DefaultPlugins[Name] | false;
+    69→};
+    71→export type BuiltinsWithOptionalParams = DefaultPlugins & {
+    …
+    100→export type BuiltinsWithRequiredParams = {
+    101→  addAttributesToSVGElement: AddAttributesToSVGElementParams;
+    102→  addClassesToSVGElement: AddClassesToSVGElementParams;
+    103→  removeAttributesBySelector: RemoveAttributesBySelectorParams;
+    104→  removeAttrs: RemoveAttrsParams;
+    105→  removeElementsByAttr: RemoveElementsByAttrParams;
+    106→};
+    108→export type PluginsParams = BuiltinsWithOptionalParams &
+    109→  BuiltinsWithRequiredParams;
+    111→export type CustomPlugin<T = any> = {
+    112→  name: string;
+    113→  fn: Plugin<T>;
+    114→  params?: T;
+    115→};
+    117→export type PluginConfig =
+    …
+    133→export type BuiltinPlugin<Name extends string, Params> = {
+    134→  /** Name of the plugin, also known as the plugin ID. */
+    135→  name: Name;
+    136→  description?: string;
+    137→  fn: Plugin<Params>;
+    138→};
+    …
+    155→export type BuiltinPluginOrPreset<Name extends string, Params> = BuiltinPlugin<
+    156→  Name,
+    157→  Params
+    158→> &
+    159→  (PresetProperties<true> | Partial<PresetProperties<false>>);
+    161→export type XastDoctype = {
+    162→  type: 'doctype';
+    163→  name: string;
+    164→  data: {
+    165→    doctype: string;
+    166→  };
+    167→};
+    169→export type XastInstruction = {
+    170→  type: 'instruction';
+    171→  name: string;
+    172→  value: string;
+    173→};
+    175→export type XastComment = {
+    176→  type: 'comment';
+    177→  value: string;
+    178→};
+    180→export type XastCdata = {
+    181→  type: 'cdata';
+    182→  value: string;
+    183→};
+    185→export type XastText = {
+    186→  type: 'text';
+    187→  value: string;
+    188→};
+    190→export type XastElement = {
+    191→  type: 'element';
+    192→  name: string;
+    193→  attributes: Record<string, string>;
+    194→  children: XastChild[];
+    195→};
+    197→export type XastChild =
+    198→  | XastDoctype
+    199→  | XastInstruction
+    200→  | XastComment
+    201→  | XastCdata
+    202→  | XastText
+    203→  | XastElement;
+    205→export type XastRoot = {
+    206→  type: 'root';
+    207→  children: XastChild[];
+    208→};
+    210→export type XastParent = XastRoot | XastElement;
+    …
   util/
     map-nodes-to-parents.js
-      …
-      9→export function mapNodesToParents(node) {
-      …
     visit.js
-      1→export const visitSkip = Symbol();
-      …
-      8→export const visit = (node, visitor, parentNode) => {
-      …
   version.js
-    …
-    7→export const VERSION = '4.0.1';
   xast.js
   xast.test.js
 logo/
