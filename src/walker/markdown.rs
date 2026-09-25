@@ -30,8 +30,7 @@
 //!   section's value flags, includes the heading) plus
 //!   predecessor-chained `OversizeTail` chunks (valued at
 //!   `OVERSIZE_TAIL_FACTOR`), cut at blank-line boundaries outside
-//!   code fences. Changelog-class files (CHANGELOG
-//!   / CONTRIBUTING / CHANGES) are gated out of splitting. H3/prose
+//!   code fences. H3/prose
 //!   body-block splitting also requires `HeadingsOutline` so heading
 //!   context is preserved; list-only H2 splits are allowed without an
 //!   outline because each item is self-contained.
@@ -54,7 +53,7 @@ use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::render::Source;
 use crate::tokenizer;
-use crate::value::{is_orientation_doc, mix_signals};
+use crate::value::{is_orientation_doc, is_peripheral_doc, mix_signals};
 
 use super::{
     FileLines, WalkCtx, budget_chunk_ranges, extend_nonblank_rows, first_child_of_kind,
@@ -208,12 +207,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     for file in md_files {
         // Auto-injected agent docs (AGENTS.md / CLAUDE.md / skill
         // files) are loaded into the model's context by the harness,
-        // so emitting their bodies is pure waste. Skip the prose-body
-        // batches (Prelude + Section); the structural batches
+        // so emitting their bodies is pure waste; peripheral admin docs
+        // (changelogs, contributing guides, …) are appendix material
+        // whose bodies an orientation summary never reaches. Skip the
+        // prose-body batches (Prelude + Section); the structural batches
         // (HeadingsOutline + ReadmeHeadline) still emit so the file's
-        // shape stays discoverable at large budgets, riding the 0.1×
-        // value discount applied via `non_essential_factor`.
-        let suppress_body = ctx.is_auto_injected_doc_file(&file);
+        // shape stays discoverable at large budgets, riding the value
+        // discount applied via `non_essential_factor`.
+        let suppress_body = ctx.is_auto_injected_doc_file(&file) || is_peripheral_doc(&file);
 
         let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
@@ -225,11 +226,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             sibling_md_count,
             root_readme,
         };
-        let mut ranges = logical_sections(&file, &tree, &source, outline_emits, root_readme);
-        if ranges.is_empty() && !markdown_has_heading(&tree) {
-            ranges = headingless_fallback_ranges(&file, &source);
-        }
-        if ranges.is_empty() {
+        let ranges = if suppress_body {
+            Vec::new()
+        } else {
+            let ranges = logical_sections(&file, &tree, &source, outline_emits, root_readme);
+            if ranges.is_empty() && !markdown_has_heading(&tree) {
+                headingless_fallback_ranges(&file, &source)
+            } else {
+                ranges
+            }
+        };
+        if ranges.is_empty() && !suppress_body {
             continue;
         }
 
@@ -512,22 +519,11 @@ fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
     ((idx as f64 + 1.0).powf(-exp)).max(floor)
 }
 
-fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
-    let is_guide = is_changelog_class(file);
+fn heading_slab_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let is_orientation = is_orientation_doc(file);
     // Root-level (depth 1) orientation already wins; only nested
     // orientation gets the cat bump.
-    let is_nested_orientation = is_orientation && ctx.depth_from_root(file) > 1;
-    // Changelog index decay (newest-first) — floor lets deep sections
-    // still fire when budget permits.
-    let scale = if is_guide {
-        index_decay(parent_index, 0.3, 0.35)
-    } else {
-        1.0
-    };
-    let cat = if is_guide {
-        0.5
-    } else if is_nested_orientation {
+    let cat = if is_orientation && ctx.depth_from_root(file) > 1 {
         0.65
     } else {
         0.3
@@ -537,7 +533,7 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
         0.5,
         0.5,
         super::file_depth_factor(file, ctx, is_orientation),
-    ) * scale
+    )
 }
 
 /// Per-section value. Child ranges scale the parent's value so they
@@ -557,7 +553,7 @@ fn section_signal_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64
     let parent = if is_readme(file) {
         readme_section_value(file, range, ctx)
     } else {
-        heading_slab_value(file, range.parent_index, ctx)
+        heading_slab_value(file, ctx)
     };
     let sub_scale = if is_readme(file) {
         // A root-README reference-vocabulary H3 (`### Colors`,
@@ -583,15 +579,6 @@ fn section_signal_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64
 /// README H3 children are often canonical concept rows in their own
 /// right; bump above the generic `SUB_SECTION_SIGNAL_SCALE`.
 const README_SUB_SECTION_SIGNAL_SCALE: f64 = 0.55;
-
-fn is_changelog_class(file: &Path) -> bool {
-    file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-        matches!(
-            n.to_ascii_uppercase().as_str(),
-            "CHANGELOG.MD" | "CONTRIBUTING.MD" | "CHANGES.MD"
-        )
-    })
-}
 
 // --- parser ---
 
@@ -2157,15 +2144,6 @@ fn logical_sections(
     root_readme: bool,
 ) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
-    let split_eligible_file = !is_changelog_class(file);
-    // Oversize head-split scope: the root README only. Its early
-    // content is what NSes rank inside the early-budget envelope, so
-    // unlocking early purchase there is recall; peripheral docs
-    // (upgrade guides, nested docs) are NS-ranked late, where lump
-    // size is not a purchase barrier — splitting them only hands a
-    // cheap full-value head to content the schedule shouldn't buy
-    // early.
-    let oversize_split_eligible = split_eligible_file && root_readme;
     let synthetic_intro_present =
         matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
 
@@ -2192,14 +2170,13 @@ fn logical_sections(
                         reference_shaped: false,
                         chained_to_previous: false,
                     },
-                    oversize_split_eligible,
+                    root_readme,
                 );
             }
             TopLevelEntry::H2Section { node, start, end } => {
                 let bytes = node.end_byte() - node.start_byte();
-                let structural_split_gate =
-                    split_eligible_file && outline_emits && bytes >= H2_SPLIT_BYTES;
-                let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
+                let structural_split_gate = outline_emits && bytes >= H2_SPLIT_BYTES;
+                let body_block_split_gate = bytes >= H2_SPLIT_BYTES;
                 let usage_h2 = readme && is_canonical_usage_h2(*node, source);
                 // README H2 whose title is in the reference/usage
                 // vocabulary, regardless of code fraction. Gates: a
@@ -2283,7 +2260,7 @@ fn logical_sections(
                                 reference_shaped: false,
                                 chained_to_previous: false,
                             },
-                            oversize_split_eligible,
+                            root_readme,
                         );
                     }
                 }
@@ -2608,6 +2585,11 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 /// fields stay positional. When the head itself carves a lede
 /// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is a
 /// [`SectionKind::LedeBody`] rather than a tail.
+/// Scope: the root README only. Its early content is what NSes rank
+/// inside the early-budget envelope, so unlocking early purchase there
+/// is recall; other docs are NS-ranked late, where lump size is not a
+/// purchase barrier — splitting them only hands a cheap full-value head
+/// to content the schedule shouldn't buy early.
 fn push_whole_or_head_split(
     out: &mut Vec<SectionRange>,
     src_lines: &[&str],
@@ -4269,16 +4251,7 @@ mod tests {
                 make_split_h2_source("# Title\n\nT.\n\n## Usage", 2, 0),
                 vec![SectionKind::Whole, SectionKind::Whole],
             ),
-            // `CHANGELOG.md` shape with H3 children stays `Whole` — the
-            // changelog index-decay needs a stable per-H2 mapping.
-            (
-                "markdown_h2_split_skipped_for_changelog",
-                "CHANGELOG.md",
-                make_split_h2_source("## v1.0", 2, 6),
-                vec![SectionKind::Whole],
-            ),
-            // Doc page (non-README, non-changelog) with H3 children does
-            // split. Gate is changelog-only, not readme-only.
+            // Doc page (non-README) with H3 children splits too.
             (
                 "markdown_h2_split_non_readme_doc_page",
                 "docs/setup.md",
@@ -4313,27 +4286,6 @@ mod tests {
                 "{case} row {}: section kinds mismatch; ranges={ranges:?}",
                 row_no + 1
             );
-        }
-    }
-
-    /// Non-split changelog: every `Whole` range's `parent_index` equals
-    /// its position in the returned list. Regression guard for the
-    /// index-decay contract.
-    #[test]
-    fn markdown_h2_parent_index_consistent_for_changelog() {
-        let mut src = String::new();
-        for v in 0..3 {
-            src.push_str(&format!(
-                "## v{v}.0\n\n### Added\n\nbullet\n\n### Fixed\n\nbullet\n\n"
-            ));
-        }
-        let ranges = sections("CHANGELOG.md", &src);
-        for (i, r) in ranges.iter().enumerate() {
-            assert_eq!(
-                r.parent_index, i,
-                "Whole ranges must have parent_index == position; got {r:?}"
-            );
-            assert_eq!(r.kind, SectionKind::Whole);
         }
     }
 
@@ -4632,18 +4584,6 @@ mod tests {
         assert!(
             !ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
             "prose-then-list section must not body-block-split; got {ranges:?}"
-        );
-    }
-
-    /// Changelog file class is gated out of body-block split — index-
-    /// decay needs a stable per-H2 mapping.
-    #[test]
-    fn markdown_h2_no_split_bullets_changelog() {
-        let src = make_bullet_section("## v1.0", 3, 4);
-        let ranges = sections("CHANGELOG.md", &src);
-        assert!(
-            !ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
-            "changelog must not split; got {ranges:?}"
         );
     }
 

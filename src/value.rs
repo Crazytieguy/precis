@@ -493,7 +493,7 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
 /// SECURITY / NOTICE / RELEASING / migration-guide stems / etc. —
 /// anywhere in the tree (monorepo per-package copies inherit the
 /// same admin-doc semantics).
-fn is_peripheral_doc(target: &std::path::Path) -> bool {
+pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
         return false;
     };

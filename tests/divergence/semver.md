@@ -83,63 +83,63 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 3097 | 11 | listing of '.github/actions' |  |  | 0.672 |
 | walker |  | 3101 | 4 | listing of '.github/actions/create-check' |  |  | 0.672 |
 | walker |  | 3105 | 4 | listing of '.github/actions/install-latest-npm' |  |  | 0.672 |
-| walker |  | 3115 | 10 | CHANGELOG.md section #0 |  |  | 0.672 |
 | ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.678 |
-| walker |  | 3185 | 70 | README.md section #32 |  |  | 0.678 |
-| walker |  | 3256 | 71 | README.md section #28 |  |  | 0.678 |
-| ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.664 |
-| walker |  | 3333 | 77 | README.md section #6 |  |  | 0.665 |
-| walker |  | 3409 | 76 | README.md section #27 |  |  | 0.665 |
+| walker |  | 3175 | 70 | README.md section #32 |  |  | 0.678 |
+| walker |  | 3246 | 71 | README.md section #28 |  |  | 0.678 |
+| walker |  | 3323 | 77 | README.md section #6 |  |  | 0.679 |
+| ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.665 |
+| walker |  | 3399 | 76 | README.md section #27 |  |  | 0.665 |
 | ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.657 |
-| walker |  | 3491 | 82 | README.md section #8 |  |  | 0.657 |
-| walker |  | 3499 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.657 |
-| walker |  | 3584 | 85 | README.md section #51 |  |  | 0.657 |
+| walker |  | 3481 | 82 | README.md section #8 |  |  | 0.657 |
+| walker |  | 3489 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.657 |
+| walker |  | 3574 | 85 | README.md section #51 |  |  | 0.657 |
 | ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.648 |
-| walker |  | 3675 | 91 | README.md section #10 |  |  | 0.665 |
-| walker |  | 3761 | 86 | README.md section #42 |  |  | 0.665 |
-| walker |  | 3837 | 76 | README.md section #33 |  |  | 0.665 |
+| walker |  | 3665 | 91 | README.md section #10 |  |  | 0.665 |
+| walker |  | 3751 | 86 | README.md section #42 |  |  | 0.665 |
+| walker |  | 3827 | 76 | README.md section #33 |  |  | 0.665 |
 | ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.652 |
-| walker |  | 3910 | 73 | README.md section #57 |  |  | 0.652 |
-| walker |  | 4022 | 112 | README.md section #9 |  |  | 0.652 |
-| walker |  | 4155 | 133 | README.md section #50 |  |  | 0.652 |
+| walker |  | 3900 | 73 | README.md section #57 |  |  | 0.652 |
+| walker |  | 4012 | 112 | README.md section #9 |  |  | 0.652 |
+| walker |  | 4145 | 133 | README.md section #50 |  |  | 0.652 |
 | ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.637 |
-| walker |  | 4310 | 155 | README.md section #44 |  |  | 0.637 |
+| walker |  | 4300 | 155 | README.md section #44 |  |  | 0.637 |
 | ns | 4467 |  | 290 | README: tilde ranges and their desugaring table | 3.9 |  | 0.629 |
-| walker |  | 4480 | 170 | README.md section #46 |  |  | 0.629 |
-| walker |  | 4665 | 185 | README.md section #7 |  |  | 0.629 |
+| walker |  | 4470 | 170 | README.md section #46 |  |  | 0.629 |
+| walker |  | 4655 | 185 | README.md section #7 |  |  | 0.629 |
 | ns | 4731 |  | 264 | README: X-ranges and bare partial versions | 3.10 |  | 0.619 |
 | ns | 4922 |  | 191 | README: hyphen ranges | 3.11 |  | 0.609 |
 | ns | 5101 |  | 179 | README: ranges can be non-contiguous (the gtr/ltr/satisfies gotcha) | 3.12 |  | 0.614 |
-| walker |  | 5263 | 598 | README.md section #5 |  |  | 0.648 |
+| walker |  | 5253 | 598 | README.md section #5 |  |  | 0.648 |
 | ns | 5314 |  | 213 | README: coercion limits | 3.13 |  | 0.640 |
-| walker |  | 5613 | 350 | json config release-please-config.json |  |  | 0.640 |
+| walker |  | 5603 | 350 | json config release-please-config.json |  |  | 0.640 |
 | ns | 5694 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.612 |
-| walker |  | 5765 | 152 | README.md section #56 |  |  | 0.612 |
+| walker |  | 5755 | 152 | README.md section #56 |  |  | 0.612 |
 | ns | 5956 |  | 262 | internal/parse-options.js and internal/debug.js (whole files) | 4.2 |  | 0.592 |
-| walker |  | 5987 | 222 | README.md section #54 |  |  | 0.592 |
+| walker |  | 5977 | 222 | README.md section #54 |  |  | 0.592 |
 | ns | 6262 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.573 |
 | ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.565 |
 | ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.555 |
-| walker |  | 6735 | 748 | README.md section #20 |  |  | 0.593 |
+| walker |  | 6725 | 748 | README.md section #20 |  |  | 0.593 |
 | ns | 6761 |  | 168 | internal/re.js: the ReDoS-safe regex construction | 4.6 |  | 0.586 |
-| walker |  | 7020 | 285 | README.md section #15 |  |  | 0.604 |
+| walker |  | 7010 | 285 | README.md section #15 |  |  | 0.604 |
 | ns | 7436 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.578 |
 | ns | 7755 |  | 319 | bin/semver.js: complete option-flag roster | 5.1 |  | 0.560 |
-| walker |  | 7795 | 775 | README.md section #58 |  |  | 0.560 |
+| walker |  | 7785 | 775 | README.md section #58 |  |  | 0.560 |
 | ns | 7931 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.554 |
-| walker |  | 8088 | 293 | README.md section #49 |  |  | 0.566 |
+| walker |  | 8078 | 293 | README.md section #49 |  |  | 0.566 |
 | ns | 8268 |  | 337 | bin/semver.js: the main() output pipeline | 5.3 |  | 0.554 |
-| walker |  | 8404 | 316 | README.md section #11 |  |  | 0.556 |
+| walker |  | 8394 | 316 | README.md section #11 |  |  | 0.556 |
 | ns | 8414 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.547 |
 | ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.537 |
-| walker |  | 8831 | 427 | plaintext config .github/workflows/codeql-analysis.yml |  |  | 0.537 |
+| walker |  | 8821 | 427 | plaintext config .github/workflows/codeql-analysis.yml |  |  | 0.537 |
 | ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.532 |
 | ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.525 |
-| walker |  | 9157 | 326 | README.md section #12 |  |  | 0.528 |
+| walker |  | 9147 | 326 | README.md section #12 |  |  | 0.528 |
 | ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.542 |
 | ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.539 |
-| walker |  | 9493 | 336 | README.md section #16 |  |  | 0.554 |
+| walker |  | 9483 | 336 | README.md section #16 |  |  | 0.554 |
 | ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.554 |
 | ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.565 |
 | ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.564 |
 | ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.559 |
+| walker |  | 9993 | 510 | plaintext config .github/workflows/audit.yml |  |  | 0.559 |

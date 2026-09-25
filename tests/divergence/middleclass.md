@@ -1,4 +1,4 @@
-Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.750/0.722/0.826/0.764/0.660/0.639
+Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.750/0.722/0.826/0.758/0.642/0.608
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -61,33 +61,24 @@ Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.782 |
 | walker |  | 3727 | 858 | UPDATING.md section #0 |  |  | 0.815 |
 | walker |  | 3863 | 136 | headings outline in CHANGELOG.md |  |  | 0.833 |
-| walker |  | 3863 | 0 | CHANGELOG.md section #0 |  |  | 0.833 |
-| walker |  | 3896 | 33 | CHANGELOG.md section #4 |  |  | 0.833 |
-| walker |  | 3948 | 52 | CHANGELOG.md section #2 |  |  | 0.834 |
-| walker |  | 3981 | 33 | CHANGELOG.md section #6 |  |  | 0.834 |
-| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.796 |
-| walker |  | 4021 | 40 | CHANGELOG.md section #5 |  |  | 0.796 |
-| walker |  | 4116 | 95 | CHANGELOG.md section #1 |  |  | 0.802 |
-| ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.764 |
-| ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.746 |
-| walker |  | 4417 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.746 |
-| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.724 |
-| walker |  | 4511 | 94 | CHANGELOG.md section #3 |  |  | 0.736 |
-| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.716 |
-| walker |  | 4890 | 379 | plaintext config .travis.yml |  |  | 0.720 |
-| walker |  | 4975 | 85 | CHANGELOG.md section #8 |  |  | 0.720 |
-| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.707 |
-| walker |  | 5149 | 174 | CHANGELOG.md section #7 |  |  | 0.708 |
-| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.698 |
-| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.679 |
-| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.660 |
-| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.642 |
-| ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.648 |
-| ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.655 |
-| ns | 7263 |  | 239 | Current rockspec in full (middleclass-4.1.1-0) | 6.3 |  | 0.642 |
-| ns | 7409 |  | 146 | .travis.yml Lua version matrix and test script | 6.4 |  | 0.647 |
-| ns | 7494 |  | 85 | Version line of each of the five older rockspecs | 6.5 |  | 0.644 |
-| ns | 7644 |  | 150 | performance/time.lua in full plus run.lua's harness header | 6.6 |  | 0.636 |
-| ns | 7734 |  | 90 | The six operations benchmarked by performance/run.lua | 6.7 | 6.6 | 0.629 |
-| ns | 7952 |  | 218 | .travis.yml remainder: toolchain install, coverage upload, branch and mail rules | 6.8 | 6.4 | 0.638 |
-| ns | 7970 |  | 18 | MIT license copyright line | 6.9 |  | 0.639 |
+| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.795 |
+| walker |  | 4164 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.796 |
+| ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.758 |
+| ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.739 |
+| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.717 |
+| walker |  | 4543 | 379 | plaintext config .travis.yml |  |  | 0.721 |
+| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.701 |
+| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.688 |
+| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.678 |
+| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.660 |
+| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.642 |
+| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.624 |
+| ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.630 |
+| ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.620 |
+| ns | 7263 |  | 239 | Current rockspec in full (middleclass-4.1.1-0) | 6.3 |  | 0.608 |
+| ns | 7409 |  | 146 | .travis.yml Lua version matrix and test script | 6.4 |  | 0.614 |
+| ns | 7494 |  | 85 | Version line of each of the five older rockspecs | 6.5 |  | 0.611 |
+| ns | 7644 |  | 150 | performance/time.lua in full plus run.lua's harness header | 6.6 |  | 0.603 |
+| ns | 7734 |  | 90 | The six operations benchmarked by performance/run.lua | 6.7 | 6.6 | 0.597 |
+| ns | 7952 |  | 218 | .travis.yml remainder: toolchain install, coverage upload, branch and mail rules | 6.8 | 6.4 | 0.607 |
+| ns | 7970 |  | 18 | MIT license copyright line | 6.9 |  | 0.608 |

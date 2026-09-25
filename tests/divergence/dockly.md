@@ -146,7 +146,6 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 6501 | 66 | package identity in docs/package.json |  |  | 0.534 |
 | walker |  | 6508 | 7 | plaintext config .nvmrc |  |  | 0.534 |
 | walker |  | 6545 | 37 | headings outline in SECURITY.md |  |  | 0.534 |
-| walker |  | 6545 | 0 | SECURITY.md section #0 |  |  | 0.534 |
 | walker |  | 6608 | 63 | ts body src/dockerUtil.js:55 |  |  | 0.536 |
 | walker |  | 6623 | 15 | ts body src/widgetsTemplates/logs.widget.template.js:84 |  |  | 0.536 |
 | walker |  | 6639 | 16 | ts body src/widgetsTemplates/list.widget.template.js:131 |  |  | 0.536 |
@@ -182,7 +181,6 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 8372 | 13 | ts decl docs/src/pages/generic.js:8 |  |  | 0.576 |
 | walker |  | 8394 | 22 | ts names docs/src/pages/index.js |  |  | 0.576 |
 | walker |  | 8468 | 74 | headings outline in CODE_OF_CONDUCT.md |  |  | 0.576 |
-| walker |  | 8468 | 0 | CODE_OF_CONDUCT.md section #0 |  |  | 0.576 |
 | ns | 8482 |  | 354 | hooks/shell.hook.js: openShell() plus dockerRunScript.sh's docker exec line | 6.3 | 6.1 | 0.567 |
 | walker |  | 8484 | 16 | ts body src/widgetsTemplates/list.widget.template.js:139 |  |  | 0.567 |
 | walker |  | 8508 | 24 | ts names docs/src/components/Footer.js |  |  | 0.567 |
@@ -196,15 +194,14 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 8972 | 82 | ts body src/dockerUtil.js:43 |  |  | 0.597 |
 | walker |  | 8998 | 26 | listing of 'docs/src/assets/scss' |  |  | 0.597 |
 | walker |  | 9009 | 11 | listing of 'docs/src/assets/scss/base' |  |  | 0.597 |
-| walker |  | 9093 | 84 | CONTRIBUTING.md section #0 |  |  | 0.597 |
-| walker |  | 9109 | 16 | ts body src/widgetsTemplates/list.widget.template.js:143 |  |  | 0.597 |
+| walker |  | 9025 | 16 | ts body src/widgetsTemplates/list.widget.template.js:143 |  |  | 0.597 |
 | ns | 9179 |  | 286 | widgets/containers/containerList.widget.js: complete method roster | 7.3 |  | 0.590 |
 | ns | 9448 |  | 269 | widgets/toolbar.widget.js: the per-mode command extension map | 7.4 |  | 0.582 |
-| ns | 9596 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.578 |
-| walker |  | 9606 | 497 | plaintext config .github/workflows/main.yml |  |  | 0.607 |
+| walker |  | 9522 | 497 | plaintext config .github/workflows/main.yml |  |  | 0.612 |
+| ns | 9596 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.607 |
 | ns | 9640 |  | 44 | Complete listings of .github/ and its subdirectories | 8.1 |  | 0.610 |
-| walker |  | 9732 | 126 | ts body src/screen.js:19 |  |  | 0.622 |
-| ns | 9739 |  | 99 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.629 |
-| walker |  | 9818 | 86 | ts body src/dockerUtil.js:88 |  |  | 0.630 |
-| walker |  | 9840 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.630 |
+| walker |  | 9648 | 126 | ts body src/screen.js:19 |  |  | 0.622 |
+| walker |  | 9734 | 86 | ts body src/dockerUtil.js:88 |  |  | 0.623 |
+| ns | 9739 |  | 99 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.630 |
+| walker |  | 9756 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.630 |
 | ns | 9988 |  | 249 | Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc | 8.3 |  | 0.622 |

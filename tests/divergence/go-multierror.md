@@ -104,7 +104,6 @@ Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 5696 | 118 | go doc multierror.go:53 |  |  | 0.867 |
 | walker |  | 5736 | 40 | go body multierror.go:108 |  |  | 0.876 |
 | walker |  | 5792 | 56 | headings outline in CHANGELOG.md |  |  | 0.877 |
-| walker |  | 5792 | 0 | CHANGELOG.md section #0 |  |  | 0.877 |
 | ns | 5825 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.858 |
 | walker |  | 5994 | 202 | plaintext config .github/workflows/actionlint.yml |  |  | 0.859 |
 | ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.851 |
