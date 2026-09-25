@@ -1,4 +1,4 @@
-Score(3000)=0.592 I=0.574 C=0.610 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.562/0.573/0.497/0.592/0.719/0.656/0.731
+Score(3000)=0.592 I=0.574 C=0.610 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.573/0.497/0.592/0.719/0.656/0.731
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,19 +20,19 @@ Score(3000)=0.592 I=0.574 C=0.610 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 393 | 34 | Json::Runtime { file: package.json } |  |  | 0.522 |
 | walker |  | 462 | 69 | Json::Entry { file: package.json } |  |  | 0.531 |
 | ns | 513 |  | 182 | Complete README section map (every H2 and H3) | 1.5 |  | 0.425 |
-| walker |  | 693 | 231 | Json::Dependencies { file: package.json } |  |  | 0.445 |
-| ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.458 |
-| ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.422 |
-| walker |  | 892 | 199 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.556 |
-| walker |  | 917 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.556 |
-| walker |  | 947 | 30 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.556 |
-| ns | 1101 |  | 229 | Complete runtime dependency list (package.json 46-60) | 1.8 |  | 0.563 |
-| walker |  | 1109 | 162 | Json::Scripts { file: package.json } |  |  | 0.620 |
+| walker |  | 661 | 199 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.592 |
+| walker |  | 686 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.592 |
+| ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.581 |
+| walker |  | 716 | 30 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.581 |
+| ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.535 |
+| walker |  | 880 | 164 | Json::Scripts { file: package.json } |  |  | 0.600 |
+| ns | 1101 |  | 229 | Complete runtime dependency list (package.json 46-60) | 1.8 |  | 0.545 |
+| walker |  | 1109 | 229 | Json::Dependencies { file: package.json } |  |  | 0.620 |
+| walker |  | 1124 | 15 | Code::CodeKey { rung: Names, file: src/random-id.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
 | ns | 1140 |  | 39 | Complete listing of every non-src directory | 1.9 |  | 0.619 |
+| walker |  | 1142 | 18 | Code::CodeKey { rung: Body, file: src/random-id.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.619 |
 | ns | 1260 |  | 120 | Complete REST route table for array and object resources | 2.1 |  | 0.585 |
-| walker |  | 1293 | 184 | Json::IdentityMeta { file: package.json } |  |  | 0.597 |
-| walker |  | 1308 | 15 | Code::CodeKey { rung: Names, file: src/random-id.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 1326 | 18 | Code::CodeKey { rung: Body, file: src/random-id.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.597 |
+| walker |  | 1326 | 184 | Json::IdentityMeta { file: package.json } |  |  | 0.597 |
 | ns | 1384 |  | 124 | CLI usage/options help text (src/bin.ts 22-30) | 2.2 |  | 0.572 |
 | walker |  | 1411 | 85 | Code::CodeKey { rung: Names, file: src/service.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.573 |
 | walker |  | 1434 | 23 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 3, sub: 0, line: 13 } |  |  | 0.573 |

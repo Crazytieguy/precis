@@ -1,4 +1,4 @@
-Score(3000)=0.621 I=0.857 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.838/0.803/0.720/0.621/0.566/0.543/0.584
+Score(3000)=0.621 I=0.857 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.861/0.836/0.720/0.621/0.566/0.543/0.584
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -17,40 +17,40 @@ Score(3000)=0.621 I=0.857 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 268 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.614 |
 | walker |  | 339 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.738 |
 | walker |  | 351 | 12 | Fs::DirListing { dir: .vscode } |  |  | 0.738 |
-| ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.661 |
-| walker |  | 410 | 59 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.661 |
-| walker |  | 428 | 18 | Fs::DirListing { dir: .github } |  |  | 0.662 |
-| walker |  | 451 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.662 |
-| ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.525 |
-| walker |  | 639 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.559 |
-| walker |  | 698 | 59 | Markdown::Prelude { file: README.md } |  |  | 0.705 |
-| ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.661 |
-| walker |  | 725 | 27 | Fs::DirListing { dir: tests } |  |  | 0.662 |
-| walker |  | 780 | 55 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.662 |
+| walker |  | 369 | 18 | Fs::DirListing { dir: .github } |  |  | 0.738 |
+| ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.662 |
+| walker |  | 392 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.662 |
+| walker |  | 580 | 188 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.705 |
+| ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.559 |
+| walker |  | 639 | 59 | Markdown::Prelude { file: README.md } |  |  | 0.705 |
+| walker |  | 666 | 27 | Fs::DirListing { dir: tests } |  |  | 0.705 |
+| ns | 709 |  | 119 | Supported Python versions and 3x-ui compatibility floor | 1.7 |  | 0.662 |
+| walker |  | 725 | 59 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.662 |
+| walker |  | 758 | 33 | Markdown::HeadingsOutline { file: py3xui/client/README.md } |  |  | 0.662 |
 | ns | 795 |  | 86 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.717 |
-| walker |  | 813 | 33 | Markdown::HeadingsOutline { file: py3xui/client/README.md } |  |  | 0.717 |
 | ns | 869 |  | 74 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.746 |
-| walker |  | 980 | 167 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.829 |
+| walker |  | 925 | 167 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.829 |
 | ns | 1016 |  | 147 | Re-export blocks of py3xui/api/__init__.py and py3xui/async_api/__init__.py | 1.10 |  | 0.789 |
-| walker |  | 1142 | 162 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.859 |
+| walker |  | 1087 | 162 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.859 |
+| walker |  | 1142 | 55 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.859 |
 | ns | 1157 |  | 141 | Re-export blocks of the inbound/, client/, server/ and utils/ packages | 1.11 |  | 0.816 |
 | walker |  | 1185 | 43 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.816 |
-| walker |  | 1316 | 131 | Toml::Config { file: pyproject.toml } |  |  | 0.816 |
-| walker |  | 1332 | 16 | Code::CodeKey { rung: Names, file: py3xui/client/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.817 |
-| ns | 1342 |  | 185 | Canonical usage: env-var credentials, Api.from_env() and AsyncApi.from_env() | 2.1 |  | 0.760 |
-| walker |  | 1414 | 82 | Code::CodeKey { rung: Names, file: py3xui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.802 |
-| ns | 1459 |  | 117 | class Api and its full constructor signature | 2.2 |  | 0.762 |
-| walker |  | 1482 | 68 | Code::CodeKey { rung: Names, file: py3xui/api/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.771 |
-| walker |  | 1517 | 35 | Code::CodeKey { rung: Names, file: py3xui/utils/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.777 |
-| walker |  | 1587 | 70 | Code::CodeKey { rung: Names, file: py3xui/inbound/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.805 |
+| walker |  | 1201 | 16 | Code::CodeKey { rung: Names, file: py3xui/client/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.817 |
+| walker |  | 1283 | 82 | Code::CodeKey { rung: Names, file: py3xui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.862 |
+| ns | 1342 |  | 185 | Canonical usage: env-var credentials, Api.from_env() and AsyncApi.from_env() | 2.1 |  | 0.802 |
+| walker |  | 1351 | 68 | Code::CodeKey { rung: Names, file: py3xui/api/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
+| walker |  | 1386 | 35 | Code::CodeKey { rung: Names, file: py3xui/utils/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.817 |
+| walker |  | 1456 | 70 | Code::CodeKey { rung: Names, file: py3xui/inbound/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.847 |
+| ns | 1459 |  | 117 | class Api and its full constructor signature | 2.2 |  | 0.805 |
 | ns | 1665 |  | 206 | Api constructor body: the four sub-API attributes it wires up | 2.3 | 2.2 | 0.753 |
+| walker |  | 1804 | 348 | Code::CodeKey { rung: Names, file: demo.py, decl: 0, sub: 0, line: 0 } |  |  | 0.753 |
 | ns | 1840 |  | 175 | class AsyncApi: identical constructor, Async* sub-APIs | 2.4 |  | 0.712 |
-| walker |  | 1935 | 348 | Code::CodeKey { rung: Names, file: demo.py, decl: 0, sub: 0, line: 0 } |  |  | 0.712 |
-| walker |  | 2014 | 79 | Code::CodeKey { rung: Names, file: py3xui/async_api/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
-| walker |  | 2034 | 20 | Code::CodeKey { rung: Names, file: py3xui/server/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.750 |
+| walker |  | 1883 | 79 | Code::CodeKey { rung: Names, file: py3xui/async_api/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
+| walker |  | 1903 | 20 | Code::CodeKey { rung: Names, file: py3xui/server/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.750 |
+| walker |  | 2010 | 107 | Code::CodeKey { rung: Doc, file: demo.py, decl: 14, sub: 0, line: 70 } |  |  | 0.750 |
 | ns | 2063 |  | 223 | ClientApi methods 1-5 with the panel endpoint each one calls | 2.5 |  | 0.720 |
-| walker |  | 2141 | 107 | Code::CodeKey { rung: Doc, file: demo.py, decl: 14, sub: 0, line: 70 } |  |  | 0.720 |
-| walker |  | 2253 | 112 | Markdown::HeadingsOutline { file: py3xui/server/README.md } |  |  | 0.720 |
+| walker |  | 2122 | 112 | Markdown::HeadingsOutline { file: py3xui/server/README.md } |  |  | 0.720 |
+| walker |  | 2253 | 131 | Toml::Config { file: pyproject.toml } |  |  | 0.720 |
 | ns | 2292 |  | 229 | ClientApi methods 6-10 with their endpoints (closes the ClientApi roster) | 2.6 | 2.5 | 0.697 |
 | walker |  | 2431 | 178 | Code::CodeKey { rung: Body, file: demo.py, decl: 14, sub: 0, line: 70 } |  |  | 0.697 |
 | ns | 2586 |  | 294 | InboundApi: complete method roster with endpoints | 2.7 |  | 0.664 |

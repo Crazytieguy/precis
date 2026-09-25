@@ -42,16 +42,8 @@ package.json
   28→    "format": "prettier --write .",
   29→    "test": "playwright test"
   30→  },
-  31→  "keywords": [
-  32→    "react",
-  33→    "drawer",
-  34→    "dialog",
-  35→    "modal"
-  36→  ],
-  37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+  …
   38→  "license": "MIT",
-  39→  "homepage": "https://vaul.emilkowal.ski/",
-  40→  "repository": {
   …
   65→  "packageManager": "pnpm@8.8.0",
   66→  "dependencies": {
@@ -265,6 +257,25 @@ test/
   public/
   src/
     app/
+      controlled/
+      default-open/
+      different-directions/
+      globals.css
+      initial-snap/
+      layout.tsx
+      nested-drawers/
+      non-dismissible/
+      open-another-drawer/
+      page.tsx
+      parent-container/
+      scrollable-page/
+      scrollable-with-inputs/
+      with-handle/
+      with-modal-false/
+      with-redirect/
+      with-scaled-background/
+      with-snap-points/
+      without-scaled-background/
   tailwind.config.ts
   tests/
   tsconfig.json

@@ -61,7 +61,9 @@ Readme.md
   182→
   183→Try out the [live demo on CodeSandbox](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js) to get an idea for how the API works, or to quickly verify your use case:
   184→
-  …
+  185→[![Demo screenshot.](./docs/images/demo-screenshot.png)](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js)
+  186→
+  187→<br/>
   189→### Examples
   …
   205→### Documentation
@@ -197,7 +199,7 @@ package.json
   3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
   4→  "version": "2.0.2",
   5→  "license": "MIT",
-  6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+  …
   7→  "type": "module",
   8→  "main": "./dist/index.cjs",
   9→  "module": "./dist/index.mjs",
@@ -206,9 +208,7 @@ package.json
   12→  "files": [
   13→    "dist"
   14→  ],
-  15→  "publishConfig": {
-  16→    "registry": "https://registry.npmjs.org"
-  17→  },
+  …
   18→  "engines": {
   19→    "node": ">=14.0.0"
   20→  },
@@ -229,37 +229,6 @@ package.json
   51→    "test:watch": "vitest",
   52→    "watch": "npm run build -- --watch"
   53→  },
-  54→  "keywords": [
-  55→    "api",
-  56→    "array",
-  57→    "assert",
-  58→    "cast",
-  59→    "check",
-  60→    "checker",
-  61→    "collection",
-  62→    "data",
-  63→    "error",
-  64→    "express",
-  65→    "hapi",
-  66→    "interface",
-  67→    "invalid",
-  68→    "joi",
-  69→    "json",
-  70→    "list",
-  71→    "model",
-  72→    "object",
-  73→    "orm",
-  74→    "scalar",
-  75→    "schema",
-  76→    "struct",
-  77→    "throw",
-  78→    "type",
-  79→    "types",
-  80→    "valid",
-  81→    "validate",
-  82→    "validation",
-  83→    "validator"
-  84→  ]
   …
 rollup.config.js
 src/
@@ -299,6 +268,36 @@ src/
     5→export * from './structs/types.js'
     6→export * from './structs/utilities.js'
   struct.ts
+    …
+    10→export class Struct<T = unknown, S = unknown> {
+    …
+    123→export function assert<T, S>(
+    …
+    139→export function create<T, S>(
+    …
+    157→export function mask<T, S>(
+    …
+    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
+    …
+    185→export function validate<T, S>(
+    …
+    221→export type Context = {
+    222→  branch: Array<any>
+    223→  path: Array<any>
+    224→  mask?: boolean
+    225→}
+    …
+    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+    …
+    237→export type Describe<T> = Struct<T, StructSchema<T>>
+    …
+    243→export type Result =
+    …
+    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+    …
+    259→export type Validator = (value: unknown, context: Context) => Result
+    …
+    266→export type Refiner<T> = (value: T, context: Context) => Result
   structs/
     coercions.ts
     refinements.ts

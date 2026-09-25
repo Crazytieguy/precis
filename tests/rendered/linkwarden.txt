@@ -34,6 +34,26 @@ README.md
   29→
   30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
   …
+  41→## Features
+  …
+  68→## Get Our Official Mobile App
+  …
+  87→## Like what we're doing? Give us a Star ⭐
+  …
+  91→## We're building our Community 🌐
+  …
+  101→## Suggestions
+  …
+  105→## Roadmap
+  …
+  109→## Community Projects
+  …
+  119→## Development
+  …
+  123→# Translations
+  …
+  132→## Security
+  …
 apps/
   mobile/
     .easignore
@@ -234,17 +254,6 @@ package.json
   8→    "packages/*"
   9→  ],
   …
-  32→  "dependencies": {
-  33→    "concurrently": "^9.1.2",
-  34→    "patch-package": "^8.0.0"
-  35→  },
-  36→  "resolutions": {
-  37→    "react": "19.1.0",
-  38→    "react-dom": "19.1.0",
-  39→    "react-native-mmkv": "4.1.2",
-  40→    "react-native-nitro-modules": "0.34.1"
-  41→  }
-  …
 packages/
   filesystem/
     createFile.ts
@@ -328,6 +337,8 @@ packages/
       46→  highlights              Highlight[]
       47→  collectionsJoined       UsersAndCollections[]
       48→  collectionOrder         Int[]                 @default([])
+      49→  whitelistedUsers        WhitelistedUser[]
+      50→  accessTokens            AccessToken[]
       …
       77→enum Theme {
       78→  dark

@@ -11,10 +11,10 @@ Score(3000)=0.502 I=0.813 C=0.310 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | walker |  | 133 | 47 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.635 |
 | walker |  | 141 | 8 | Fs::DirListing { dir: .github } |  |  | 0.635 |
 | walker |  | 145 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.636 |
-| walker |  | 181 | 36 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.637 |
-| walker |  | 210 | 29 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.640 |
-| ns | 215 |  | 91 | Complete listings of both source trees: src/, impl/, impl/src/ | 1.3 |  | 0.461 |
-| walker |  | 257 | 47 | Fs::DirListing { dir: impl/src } |  |  | 0.708 |
+| walker |  | 174 | 29 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.638 |
+| ns | 215 |  | 91 | Complete listings of both source trees: src/, impl/, impl/src/ | 1.3 |  | 0.460 |
+| walker |  | 221 | 47 | Fs::DirListing { dir: impl/src } |  |  | 0.707 |
+| walker |  | 257 | 36 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.708 |
 | ns | 313 |  | 98 | README canonical example, head: derive, #[from], positional {0} | 1.4 |  | 0.617 |
 | ns | 398 |  | 85 | README canonical example, tail: named-field variant, unit variant | 1.5 | 1.4 | 0.558 |
 | walker |  | 442 | 185 | Toml::Identity { file: Cargo.toml } |  |  | 0.748 |
@@ -35,16 +35,16 @@ Score(3000)=0.502 I=0.813 C=0.310 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | walker |  | 1065 | 71 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.774 |
 | ns | 1222 |  | 186 | Display shorthand table: {var}, {0}, {var:?}, {0:?} | 2.3 |  | 0.739 |
 | walker |  | 1229 | 164 | Toml::Operational { file: Cargo.toml } |  |  | 0.763 |
-| walker |  | 1352 | 123 | Toml::Config { file: Cargo.toml } |  |  | 0.763 |
-| walker |  | 1399 | 47 | Code::CodeKey { rung: Body, file: impl/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.764 |
+| walker |  | 1276 | 47 | Code::CodeKey { rung: Body, file: impl/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.764 |
+| walker |  | 1359 | 83 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.764 |
 | ns | 1404 |  | 182 | Details: #[from] generates From, with its field-count restriction | 2.4 |  | 0.717 |
-| walker |  | 1452 | 53 | Toml::Dependencies { file: impl/Cargo.toml } |  |  | 0.717 |
-| walker |  | 1535 | 83 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
+| walker |  | 1405 | 46 | Code::CodeKey { rung: Decl, file: build.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.717 |
+| walker |  | 1460 | 55 | Code::CodeKey { rung: Body, file: build.rs, decl: 5, sub: 0, line: 190 } |  |  | 0.717 |
 | ns | 1557 |  | 153 | Details: source() from #[source] or a field named `source` | 2.5 |  | 0.690 |
-| walker |  | 1581 | 46 | Code::CodeKey { rung: Decl, file: build.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.690 |
-| walker |  | 1636 | 55 | Code::CodeKey { rung: Body, file: build.rs, decl: 5, sub: 0, line: 190 } |  |  | 0.690 |
+| walker |  | 1577 | 117 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 179 } |  |  | 0.690 |
+| walker |  | 1700 | 123 | Toml::Config { file: Cargo.toml } |  |  | 0.690 |
 | ns | 1709 |  | 152 | Details: #[error(transparent)] forwarding | 2.6 |  | 0.656 |
-| walker |  | 1753 | 117 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 179 } |  |  | 0.656 |
+| walker |  | 1753 | 53 | Toml::Dependencies { file: impl/Cargo.toml } |  |  | 0.656 |
 | walker |  | 1834 | 81 | Code::CodeKey { rung: Names, file: build/probe.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.656 |
 | ns | 1839 |  | 130 | Details: provide() and automatic Backtrace field detection | 2.7 |  | 0.635 |
 | walker |  | 1863 | 29 | Code::CodeKey { rung: Decl, file: build/probe.rs, decl: 3, sub: 0, line: 14 } |  |  | 0.635 |
@@ -132,30 +132,30 @@ Score(3000)=0.502 I=0.813 C=0.310 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | ns | 4647 |  | 169 | valid.rs: complete validate/check function roster | 3.10 |  | 0.463 |
 | walker |  | 4712 | 122 | Toml::Identity { file: impl/Cargo.toml } |  |  | 0.463 |
 | ns | 4859 |  | 212 | attr.rs: which attributes `get` recognises, plus the file's function roster | 3.11 |  | 0.453 |
-| walker |  | 4871 | 159 | Toml::Config { file: impl/Cargo.toml } |  |  | 0.453 |
-| walker |  | 5065 | 194 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.481 |
+| walker |  | 4906 | 194 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.481 |
 | ns | 5096 |  | 237 | impl/src/prop.rs: complete accessor roster for source/from/backtrace fields | 3.12 |  | 0.466 |
-| walker |  | 5263 | 198 | Code::CodeKey { rung: Names, file: impl/src/attr.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
-| walker |  | 5287 | 24 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 11, sub: 0, line: 302 } |  |  | 0.471 |
-| ns | 5305 |  | 209 | prop.rs: how the source and backtrace fields are actually chosen | 3.13 |  | 0.458 |
-| walker |  | 5311 | 24 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 13, sub: 0, line: 342 } |  |  | 0.458 |
-| walker |  | 5347 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 6, sub: 0, line: 50 } |  |  | 0.462 |
-| walker |  | 5383 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 5, sub: 0, line: 44 } |  |  | 0.468 |
-| walker |  | 5419 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 4, sub: 0, line: 38 } |  |  | 0.476 |
-| walker |  | 5455 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 3, sub: 0, line: 32 } |  |  | 0.485 |
-| walker |  | 5545 | 90 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 1, sub: 0, line: 11 } |  |  | 0.494 |
-| ns | 5595 |  | 290 | impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping | 3.14 |  | 0.481 |
-| walker |  | 5637 | 92 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 7, sub: 0, line: 56 } |  |  | 0.512 |
-| ns | 5726 |  | 131 | fmt.rs: FmtArguments and the remaining function roster | 3.15 | 3.14 | 0.505 |
-| walker |  | 5749 | 112 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 2, sub: 0, line: 20 } |  |  | 0.531 |
-| walker |  | 5834 | 85 | Code::CodeKey { rung: Names, file: impl/src/generics.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
-| walker |  | 5850 | 16 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 1, sub: 0, line: 8 } |  |  | 0.531 |
-| walker |  | 5889 | 39 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 6, sub: 0, line: 48 } |  |  | 0.532 |
+| walker |  | 5104 | 198 | Code::CodeKey { rung: Names, file: impl/src/attr.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 5128 | 24 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 11, sub: 0, line: 302 } |  |  | 0.471 |
+| walker |  | 5152 | 24 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 13, sub: 0, line: 342 } |  |  | 0.471 |
+| walker |  | 5188 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 6, sub: 0, line: 50 } |  |  | 0.474 |
+| walker |  | 5224 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 5, sub: 0, line: 44 } |  |  | 0.481 |
+| walker |  | 5260 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 4, sub: 0, line: 38 } |  |  | 0.489 |
+| walker |  | 5296 | 36 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 3, sub: 0, line: 32 } |  |  | 0.499 |
+| ns | 5305 |  | 209 | prop.rs: how the source and backtrace fields are actually chosen | 3.13 |  | 0.485 |
+| walker |  | 5386 | 90 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 1, sub: 0, line: 11 } |  |  | 0.493 |
+| walker |  | 5478 | 92 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 7, sub: 0, line: 56 } |  |  | 0.526 |
+| walker |  | 5590 | 112 | Code::CodeKey { rung: Decl, file: impl/src/attr.rs, decl: 2, sub: 0, line: 20 } |  |  | 0.553 |
+| ns | 5595 |  | 290 | impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping | 3.14 |  | 0.538 |
+| walker |  | 5675 | 85 | Code::CodeKey { rung: Names, file: impl/src/generics.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.538 |
+| walker |  | 5691 | 16 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 1, sub: 0, line: 8 } |  |  | 0.538 |
+| ns | 5726 |  | 131 | fmt.rs: FmtArguments and the remaining function roster | 3.15 | 3.14 | 0.531 |
+| walker |  | 5730 | 39 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 6, sub: 0, line: 48 } |  |  | 0.532 |
+| walker |  | 5776 | 46 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 2, sub: 0, line: 12 } |  |  | 0.532 |
+| walker |  | 5846 | 70 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 7, sub: 0, line: 53 } |  |  | 0.532 |
+| walker |  | 5878 | 32 | Code::CodeKey { rung: Body, file: impl/src/generics.rs, decl: 4, sub: 0, line: 19 } |  |  | 0.532 |
 | ns | 5905 |  | 179 | ast.rs: ContainerKind and its six display strings | 3.16 |  | 0.525 |
-| walker |  | 5935 | 46 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 2, sub: 0, line: 12 } |  |  | 0.525 |
-| walker |  | 6005 | 70 | Code::CodeKey { rung: Decl, file: impl/src/generics.rs, decl: 7, sub: 0, line: 53 } |  |  | 0.526 |
-| walker |  | 6037 | 32 | Code::CodeKey { rung: Body, file: impl/src/generics.rs, decl: 4, sub: 0, line: 19 } |  |  | 0.526 |
-| walker |  | 6074 | 37 | Code::CodeKey { rung: Body, file: impl/src/generics.rs, decl: 3, sub: 0, line: 13 } |  |  | 0.526 |
+| walker |  | 5915 | 37 | Code::CodeKey { rung: Body, file: impl/src/generics.rs, decl: 3, sub: 0, line: 13 } |  |  | 0.525 |
+| walker |  | 6074 | 159 | Toml::Config { file: impl/Cargo.toml } |  |  | 0.526 |
 | walker |  | 6148 | 74 | Code::CodeKey { rung: Names, file: impl/src/valid.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
 | walker |  | 6172 | 24 | Code::CodeKey { rung: Decl, file: impl/src/valid.rs, decl: 1, sub: 0, line: 5 } |  |  | 0.529 |
 | ns | 6198 |  | 293 | ast.rs: complete from_syn constructor roster | 3.17 |  | 0.521 |

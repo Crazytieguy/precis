@@ -1,4 +1,4 @@
-Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.589/0.599/0.586/0.450/0.352/0.281/0.457
+Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.592/0.645/0.586/0.450/0.352/0.281/0.457
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -36,14 +36,14 @@ Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 874 |  | 236 | README sample usage: inserting vectors | 1.8 | 1.7 | 0.628 |
 | walker |  | 966 | 144 | Fs::DirListing { dir: tests } |  |  | 0.631 |
 | ns | 978 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.589 |
-| walker |  | 1092 | 126 | Toml::Config { file: sqlite-dist.toml } |  |  | 0.591 |
-| ns | 1194 |  | 216 | vec0Module: read-side method table (iVersion through xRowid) | 2.1 |  | 0.532 |
-| ns | 1434 |  | 240 | vec0Module: write-side slots and the unimplemented ones | 2.2 | 2.1 | 0.483 |
-| walker |  | 1615 | 523 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.647 |
+| ns | 1194 |  | 216 | vec0Module: read-side method table (iVersion through xRowid) | 2.1 |  | 0.530 |
+| ns | 1434 |  | 240 | vec0Module: write-side slots and the unimplemented ones | 2.2 | 2.1 | 0.482 |
+| walker |  | 1489 | 523 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.645 |
+| walker |  | 1537 | 48 | Fs::DirListing { dir: tests/fuzz } |  |  | 0.645 |
+| walker |  | 1586 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.647 |
 | ns | 1629 |  | 195 | vec0 hard limits and column-index constants | 2.3 |  | 0.605 |
-| walker |  | 1663 | 48 | Fs::DirListing { dir: tests/fuzz } |  |  | 0.605 |
-| walker |  | 1712 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.607 |
-| walker |  | 1763 | 51 | Fs::DirListing { dir: site/guides } |  |  | 0.607 |
+| walker |  | 1637 | 51 | Fs::DirListing { dir: site/guides } |  |  | 0.605 |
+| walker |  | 1763 | 126 | Toml::Config { file: sqlite-dist.toml } |  |  | 0.607 |
 | ns | 1829 |  | 200 | Shadow table name macros (complete set) | 2.4 |  | 0.586 |
 | walker |  | 1899 | 136 | Code::CodeKey { rung: Names, file: tmp-static.py, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
 | walker |  | 2049 | 150 | Code::CodeKey { rung: Decl, file: tmp-static.py, decl: 4, sub: 0, line: 13 } |  |  | 0.586 |

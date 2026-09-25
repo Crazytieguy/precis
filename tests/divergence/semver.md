@@ -1,4 +1,4 @@
-Score(3000)=0.725 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.756/0.757/0.786/0.725/0.637/0.610/0.541
+Score(3000)=0.725 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.758/0.786/0.725/0.637/0.610/0.541
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,21 +22,21 @@ Score(3000)=0.725 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | ns | 517 |  | 56 | Complete listing of ranges/ (11 range-level modules) | 1.6 |  | 0.836 |
 | walker |  | 535 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
 | walker |  | 573 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
-| walker |  | 633 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
-| walker |  | 650 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
+| walker |  | 590 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
-| walker |  | 830 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.724 |
-| walker |  | 855 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
-| walker |  | 882 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.724 |
+| walker |  | 770 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.724 |
+| walker |  | 795 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
+| walker |  | 822 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.724 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.658 |
-| walker |  | 1017 | 135 | Json::Entry { file: package.json } |  |  | 0.787 |
-| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.754 |
-| walker |  | 1302 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.757 |
-| walker |  | 1446 | 144 | Json::Scripts { file: package.json } |  |  | 0.757 |
-| walker |  | 1458 | 12 | Code::CodeKey { rung: Names, file: classes/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
-| ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.717 |
-| walker |  | 1500 | 42 | Code::CodeKey { rung: Decl, file: classes/index.js, decl: 1, sub: 0, line: 3 } |  |  | 0.718 |
-| walker |  | 1512 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.718 |
+| walker |  | 1107 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.661 |
+| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.639 |
+| walker |  | 1244 | 137 | Json::Entry { file: package.json } |  |  | 0.757 |
+| walker |  | 1388 | 144 | Json::Scripts { file: package.json } |  |  | 0.757 |
+| walker |  | 1400 | 12 | Code::CodeKey { rung: Names, file: classes/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
+| walker |  | 1442 | 42 | Code::CodeKey { rung: Decl, file: classes/index.js, decl: 1, sub: 0, line: 3 } |  |  | 0.758 |
+| walker |  | 1454 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
+| ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.718 |
+| walker |  | 1512 | 58 | Json::IdentityMeta { file: package.json } |  |  | 0.718 |
 | ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.664 |
 | walker |  | 1892 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.836 |
 | walker |  | 1906 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |

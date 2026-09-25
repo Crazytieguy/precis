@@ -173,7 +173,25 @@ bookmarks/
     0034_bookmark_preview_image_file_and_more.py
     0035_userprofile_tag_grouping.py
     0036_userprofile_auto_tagging_rules.py
-    …
+    0037_globalsettings.py
+    0038_globalsettings_guest_profile_user.py
+    0039_globalsettings_enable_link_prefetch.py
+    0040_userprofile_items_per_page_and_more.py
+    0041_merge_metadata.py
+    0042_userprofile_custom_css_hash.py
+    0043_userprofile_collapse_side_panel.py
+    0044_bookmark_latest_snapshot.py
+    0045_userprofile_hide_bundles_bookmarkbundle.py
+    0046_add_url_normalized_field.py
+    0047_populate_url_normalized_field.py
+    0048_userprofile_default_mark_shared.py
+    0049_userprofile_legacy_search.py
+    0050_new_search_toast.py
+    0051_fix_normalized_url.py
+    0052_apitoken.py
+    0053_migrate_api_tokens.py
+    0054_bookmarkbundle_filter_shared_and_more.py
+    __init__.py (empty)
   models.py
   queries.py
   services/
@@ -395,18 +413,6 @@ package.json
   8→    "dev": "rollup -c -w"
   9→  },
   10→  "dependencies": {
-  11→    "@floating-ui/dom": "^1.7.4",
-  12→    "@hotwired/turbo": "^8.0.6",
-  13→    "@rollup/plugin-node-resolve": "^16.0.1",
-  14→    "@rollup/plugin-terser": "^0.4.4",
-  15→    "@rollup/wasm-node": "^4.13.0",
-  16→    "cssnano": "^7.0.6",
-  17→    "lit": "^3.3.1",
-  18→    "postcss": "^8.4.45",
-  19→    "postcss-cli": "^11.0.0",
-  20→    "postcss-import": "^16.1.0",
-  21→    "postcss-nesting": "^13.0.0"
-  22→  },
   …
 postcss.config.js
 pyproject.toml

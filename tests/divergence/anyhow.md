@@ -34,17 +34,17 @@ Score(3000)=0.615 I=0.846 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 1155 | 34 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.808 |
 | walker |  | 1167 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.809 |
 | walker |  | 1197 | 30 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.812 |
-| ns | 1244 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.799 |
-| walker |  | 1322 | 125 | Toml::Config { file: Cargo.toml } |  |  | 0.799 |
-| walker |  | 1332 | 10 | Code::CodeKey { rung: Body, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.807 |
-| walker |  | 1401 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
+| walker |  | 1207 | 10 | Code::CodeKey { rung: Body, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.813 |
+| ns | 1244 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.807 |
+| walker |  | 1276 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
+| walker |  | 1349 | 73 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 199 } |  |  | 0.807 |
+| walker |  | 1353 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.807 |
+| walker |  | 1357 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.807 |
 | ns | 1452 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.753 |
-| walker |  | 1474 | 73 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 199 } |  |  | 0.753 |
-| walker |  | 1478 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.753 |
-| walker |  | 1482 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.753 |
-| walker |  | 1599 | 117 | Code::CodeKey { rung: Body, file: build.rs, decl: 3, sub: 0, line: 188 } |  |  | 0.753 |
-| ns | 1612 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.760 |
-| walker |  | 1681 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.762 |
+| walker |  | 1474 | 117 | Code::CodeKey { rung: Body, file: build.rs, decl: 3, sub: 0, line: 188 } |  |  | 0.753 |
+| walker |  | 1556 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.755 |
+| ns | 1612 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.762 |
+| walker |  | 1681 | 125 | Toml::Config { file: Cargo.toml } |  |  | 0.762 |
 | walker |  | 1717 | 36 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.762 |
 | ns | 1778 |  | 166 | Display representations — `{}` and `{:#}`, with sample output | 2.4 | 1.4 | 0.740 |
 | walker |  | 1883 | 166 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 1, sub: 0, line: 56 } |  |  | 0.742 |

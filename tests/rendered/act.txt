@@ -68,8 +68,46 @@ cmd/
   execute_test.go
   graph.go
   input.go
+    …
+    10→type Input struct {
+    …
   list.go
   notices.go
+    …
+    17→type Notice struct {
+    18→	Level   string `json:"level"`
+    19→	Message string `json:"message"`
+    20→}
+    22→func displayNotices(input *Input) {
+    …
+    55→var noticesLoaded = make(chan []Notice)
+    56→
+    57→func loadVersionNotices(version string) {
+    58→	go func() {
+    59→		noticesLoaded <- getVersionNotices(version)
+    60→	}()
+    …
+    63→const NoticeURL = "https://api.nektosact.com/notices"
+    64→
+    65→func getVersionNotices(version string) []Notice {
+    …
+    121→func loadNoticesEtag() string {
+    122→	p := etagPath()
+    123→	content, err := os.ReadFile(p)
+    124→	if err != nil {
+    125→		log.Debugf("Unable to load etag from %s: %e", p, err)
+    126→	}
+    127→	return strings.TrimSuffix(string(content), "\n")
+    …
+    130→func saveNoticesEtag(etag string) {
+    …
+    138→func etagPath() string {
+    139→	dir := filepath.Join(CacheHomeDir, "act")
+    140→	if err := os.MkdirAll(dir, 0o777); err != nil {
+    141→		log.Fatal(err)
+    142→	}
+    143→	return filepath.Join(dir, ".notices.etag")
+    …
   platforms.go
   root.go
   root_test.go
@@ -84,27 +122,6 @@ go.mod
   1→module github.com/nektos/act
   2→
   3→go 1.25.0
-  4→
-  5→require (
-  6→	github.com/AlecAivazis/survey/v2 v2.3.7
-  7→	github.com/Masterminds/semver v1.5.0
-  8→	github.com/adrg/xdg v0.5.3
-  9→	github.com/andreaskoch/go-fswatch v1.0.0
-  10→	github.com/creack/pty v1.1.24
-  11→	github.com/docker/cli v29.3.0+incompatible
-  12→	github.com/docker/go-connections v0.6.0
-  13→	github.com/go-git/go-billy/v5 v5.9.0
-  14→	github.com/go-git/go-git/v5 v5.16.5
-  15→	github.com/joho/godotenv v1.5.1
-  16→	github.com/julienschmidt/httprouter v1.3.0
-  17→	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
-  18→	github.com/mattn/go-isatty v0.0.20
-  19→	github.com/moby/patternmatcher v0.6.0
-  20→	github.com/opencontainers/image-spec v1.1.1
-  21→	github.com/opencontainers/selinux v1.13.1
-  22→	github.com/pkg/errors v0.9.1
-  23→	github.com/rhysd/actionlint v1.7.7
-  24→	github.com/sabhiram/go-gitignore v0.0.0-20210923224102-525f6e181f06
   …
 go.sum
 install.sh
@@ -200,6 +217,11 @@ pkg/
     parse_env_file.go
     testdata/
       Dockerfile
+        1→FROM scratch
+        2→ENV PATH="/this/path/does/not/exists/anywhere:/this/either"
+        3→ENV SOME_RANDOM_VAR=""
+        4→ENV ANOTHER_ONE="BUT_I_HAVE_VALUE"
+        5→ENV CONFLICT_VAR="I_EXIST_ONLY_HERE"
       docker-pull-options/
         config.json
       scratch/
@@ -226,6 +248,7 @@ pkg/
         1→World!
       for-hashing-3/
         data.txt
+          1→Knock knock!
         nested/
           nested-data.txt
   filecollector/

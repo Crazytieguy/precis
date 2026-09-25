@@ -1,4 +1,4 @@
-Score(3000)=0.650 I=0.865 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.638/0.822/0.691/0.650/0.579/0.560/0.586
+Score(3000)=0.650 I=0.865 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.638/0.821/0.691/0.650/0.579/0.560/0.586
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,13 +32,13 @@ Score(3000)=0.650 I=0.865 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 814 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.694 |
 | ns | 875 |  | 160 | Command-line usage (README) | 1.7 |  | 0.626 |
 | walker |  | 1170 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.663 |
-| ns | 1231 |  | 356 | Complete plugins/ listing (all 58 modules) | 1.8 |  | 0.714 |
-| walker |  | 1375 | 205 | Json::Dependencies { file: package.json } |  |  | 0.715 |
-| walker |  | 1430 | 55 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.822 |
+| walker |  | 1225 | 55 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.769 |
+| ns | 1231 |  | 356 | Complete plugins/ listing (all 58 modules) | 1.8 |  | 0.821 |
 | ns | 1470 |  | 239 | svgo.config.mjs shape (README Configuration) | 1.9 |  | 0.759 |
+| walker |  | 1509 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.759 |
+| walker |  | 1544 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.760 |
 | ns | 1669 |  | 199 | optimize() body, part 1: multipass loop and plugin resolution | 1.10 | 1.4 | 0.724 |
-| walker |  | 1714 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.724 |
-| walker |  | 1749 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.725 |
+| walker |  | 1749 | 205 | Json::Dependencies { file: package.json } |  |  | 0.725 |
 | walker |  | 1756 | 7 | Code::CodeKey { rung: Names, file: lib/types.js, decl: 0, sub: 0, line: 0 } |  |  | 0.725 |
 | ns | 1873 |  | 204 | optimize() body, part 2: overrides, invoke, stringify, datauri | 1.11 | 1.10 | 0.687 |
 | walker |  | 1983 | 227 | Json::Entry { file: package.json } |  |  | 0.691 |

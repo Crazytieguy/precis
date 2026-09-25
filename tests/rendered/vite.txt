@@ -167,17 +167,6 @@ packages/
       49→    "node": "^20.19.0 || >=22.12.0"
       50→  },
       …
-      75→  "dependencies": {
-      76→    "lightningcss": "^1.32.0",
-      77→    "picomatch": "^4.0.4",
-      78→    "postcss": "^8.5.14",
-      79→    "rolldown": "1.0.1",
-      80→    "tinyglobby": "^0.2.16"
-      81→  },
-      82→  "optionalDependencies": {
-      83→    "fsevents": "~2.3.3"
-      84→  },
-      …
     rolldown.config.ts
     rolldown.dts.config.ts
     rollupLicensePlugin.ts
@@ -286,6 +275,13 @@ patches/
   sirv@3.0.2.patch
 playground/
   alias/
+    __tests__/
+    customResolver.js
+    dir/
+    index.html
+    package.json
+    test.js
+    vite.config.js
   assets/
   assets-sanitize/
   backend-integration/
@@ -436,6 +432,12 @@ playground/
     test.css
     vite.config.js
   module-graph/
+    __tests__/
+    empty.js (empty)
+    imported-urls-order.js
+    index.html
+    package.json
+    …
   multiple-entrypoints/
   nested-deps/
   object-hooks/
@@ -542,11 +544,27 @@ playground/
     package.json
     postcss.config.js
     tailwind.css
-    …
+    vite.config.js
   tailwind-v3/
   test-utils.ts
   transform-plugin/
   tsconfig-json/
+    __tests__/
+    index.html
+    nested/
+      main.ts
+      not-used-type.ts
+      tsconfig.json
+    nested-with-extends/
+      main.ts
+      not-used-type.ts
+      tsconfig.json
+    package.json
+    src/
+      decorator.ts
+      main.ts
+      not-used-type.ts
+    tsconfig.json
   tsconfig-json-load-error/
     __tests__/
     has-error/

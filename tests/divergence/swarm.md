@@ -11,9 +11,9 @@ Score(3000)=0.749 I=0.921 C=0.609 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 124 |  | 37 | Repository root listing (complete) | 1.2 |  | 0.546 |
 | walker |  | 211 | 110 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.922 |
 | ns | 211 |  | 87 | README Overview: agents and handoffs | 1.3 |  | 0.922 |
-| ns | 242 |  | 31 | `swarm/` package listing (complete, incl. `repl/`) | 1.4 |  | 0.924 |
-| walker |  | 243 | 32 | Toml::Config { file: pyproject.toml } |  |  | 0.924 |
-| walker |  | 270 | 27 | Fs::DirListing { dir: tests } |  |  | 0.929 |
+| walker |  | 238 | 27 | Fs::DirListing { dir: tests } |  |  | 0.922 |
+| ns | 242 |  | 31 | `swarm/` package listing (complete, incl. `repl/`) | 1.4 |  | 0.929 |
+| walker |  | 270 | 32 | Toml::Config { file: pyproject.toml } |  |  | 0.929 |
 | walker |  | 278 | 8 | Code::CodeKey { rung: Names, file: swarm/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.929 |
 | ns | 301 |  | 59 | Public exports of `swarm` and `swarm.repl` | 1.5 | 1.4 | 0.836 |
 | walker |  | 358 | 80 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 1, sub: 0, line: 26 } |  |  | 0.846 |

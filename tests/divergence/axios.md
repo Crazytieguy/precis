@@ -30,16 +30,16 @@ Score(3000)=0.498 I=0.742 C=0.334 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 636 | 11 | Fs::DirListing { dir: lib/platform/node/classes } |  |  | 0.810 |
 | walker |  | 655 | 19 | Fs::DirListing { dir: tests } |  |  | 0.810 |
 | walker |  | 662 | 7 | Fs::DirListing { dir: tests/module } |  |  | 0.810 |
-| walker |  | 748 | 86 | Json::Dependencies { file: package.json } |  |  | 0.810 |
-| walker |  | 760 | 12 | Fs::DirListing { dir: tests/module/cjs } |  |  | 0.810 |
-| walker |  | 780 | 20 | Markdown::HeadingsOutline { file: lib/adapters/README.md } |  |  | 0.810 |
-| walker |  | 794 | 14 | Fs::DirListing { dir: tests/smoke } |  |  | 0.825 |
+| walker |  | 674 | 12 | Fs::DirListing { dir: tests/module/cjs } |  |  | 0.810 |
+| walker |  | 694 | 20 | Markdown::HeadingsOutline { file: lib/adapters/README.md } |  |  | 0.810 |
+| walker |  | 708 | 14 | Fs::DirListing { dir: tests/smoke } |  |  | 0.810 |
+| walker |  | 719 | 11 | Fs::DirListing { dir: tests/smoke/bun } |  |  | 0.810 |
+| walker |  | 731 | 12 | Fs::DirListing { dir: tests/smoke/cjs } |  |  | 0.810 |
+| walker |  | 744 | 13 | Fs::DirListing { dir: tests/smoke/deno } |  |  | 0.810 |
+| walker |  | 781 | 37 | Fs::DirListing { dir: .github } |  |  | 0.810 |
 | ns | 794 |  | 190 | lib/helpers roster (complete) | 1.8 |  | 0.825 |
-| walker |  | 805 | 11 | Fs::DirListing { dir: tests/smoke/bun } |  |  | 0.825 |
-| walker |  | 817 | 12 | Fs::DirListing { dir: tests/smoke/cjs } |  |  | 0.825 |
-| walker |  | 830 | 13 | Fs::DirListing { dir: tests/smoke/deno } |  |  | 0.825 |
-| walker |  | 867 | 37 | Fs::DirListing { dir: .github } |  |  | 0.825 |
-| walker |  | 907 | 40 | Fs::DirListing { dir: .github/workflows } |  |  | 0.825 |
+| walker |  | 821 | 40 | Fs::DirListing { dir: .github/workflows } |  |  | 0.825 |
+| walker |  | 907 | 86 | Json::Dependencies { file: package.json } |  |  | 0.825 |
 | walker |  | 958 | 51 | Fs::DirListing { dir: docs } |  |  | 0.825 |
 | walker |  | 965 | 7 | Fs::DirListing { dir: docs/es } |  |  | 0.825 |
 | walker |  | 972 | 7 | Fs::DirListing { dir: docs/fr } |  |  | 0.825 |

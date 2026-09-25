@@ -16,10 +16,10 @@ Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 208 |  | 34 | pnpm workspace membership | 1.3 |  | 0.758 |
 | walker |  | 249 | 57 | Markdown::HeadingsOutline { file: ARCHITECTURE.md } |  |  | 0.758 |
 | ns | 343 |  | 135 | Listings of all three packages + library source dir | 1.4 |  | 0.484 |
-| walker |  | 345 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.484 |
-| walker |  | 522 | 177 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.500 |
-| ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.426 |
-| walker |  | 602 | 80 | Json::Scripts { file: cmdk/package.json } |  |  | 0.490 |
+| walker |  | 426 | 177 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.500 |
+| walker |  | 506 | 80 | Json::Scripts { file: cmdk/package.json } |  |  | 0.506 |
+| ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.490 |
+| walker |  | 602 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.490 |
 | walker |  | 656 | 54 | Fs::DirListing { dir: website } |  |  | 0.594 |
 | walker |  | 670 | 14 | Fs::DirListing { dir: website/components } |  |  | 0.594 |
 | walker |  | 687 | 17 | Fs::DirListing { dir: website/pages } |  |  | 0.595 |
@@ -54,19 +54,19 @@ Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2371 | 32 | Markdown::Section { file: ARCHITECTURE.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.807 |
 | ns | 2406 |  | 109 | Props type roster (all twelve type aliases) | 2.5 |  | 0.780 |
 | walker |  | 2431 | 60 | Fs::DirListing { dir: test/pages } |  |  | 0.781 |
-| walker |  | 2603 | 172 | Json::IdentityMeta { file: cmdk/package.json } |  |  | 0.781 |
-| walker |  | 2649 | 46 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 13, sub: 0, line: 1004 } |  |  | 0.781 |
-| walker |  | 2717 | 68 | Markdown::Section { file: ARCHITECTURE.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.781 |
-| ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.798 |
-| walker |  | 2858 | 141 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.851 |
+| walker |  | 2477 | 46 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 13, sub: 0, line: 1004 } |  |  | 0.781 |
+| walker |  | 2545 | 68 | Markdown::Section { file: ARCHITECTURE.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.781 |
+| walker |  | 2686 | 141 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.842 |
+| ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.851 |
 | ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.809 |
-| walker |  | 3168 | 310 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.809 |
+| walker |  | 2996 | 310 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.809 |
+| walker |  | 3147 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.809 |
+| walker |  | 3160 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.809 |
 | ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.775 |
-| walker |  | 3319 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.775 |
-| walker |  | 3332 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.775 |
-| walker |  | 3398 | 66 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 899 } |  |  | 0.775 |
-| ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.751 |
-| walker |  | 3578 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.758 |
+| walker |  | 3226 | 66 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 899 } |  |  | 0.775 |
+| walker |  | 3406 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.783 |
+| ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.758 |
+| walker |  | 3578 | 172 | Json::IdentityMeta { file: cmdk/package.json } |  |  | 0.758 |
 | ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.738 |
 | ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.724 |
 | walker |  | 4017 | 439 | Markdown::Section { file: ARCHITECTURE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.728 |

@@ -1,4 +1,4 @@
-Score(3000)=0.724 I=0.924 C=0.567 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.679/0.718/0.715/0.724/0.567/0.475/0.484
+Score(3000)=0.724 I=0.924 C=0.567 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.638/0.715/0.724/0.567/0.475/0.484
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,25 +24,25 @@ Score(3000)=0.724 I=0.924 C=0.567 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 680 | 27 | Fs::DirListing { dir: docs/_static } |  |  | 0.787 |
 | ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.719 |
 | walker |  | 744 | 64 | Fs::DirListing { dir: docs/deploying } |  |  | 0.719 |
-| walker |  | 782 | 38 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.721 |
-| walker |  | 860 | 78 | Fs::DirListing { dir: docs/tutorial } |  |  | 0.721 |
-| ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.671 |
-| walker |  | 1005 | 145 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.680 |
-| ns | 1121 |  | 256 | Public export surface 3/3: all ten signals, template renderers, Request/Response (src/flask/__init__.py:24-39) | 1.8 | 1.7 | 0.621 |
-| walker |  | 1127 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.680 |
-| walker |  | 1272 | 145 | Fs::DirListing { dir: docs/patterns } |  |  | 0.680 |
-| walker |  | 1296 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.680 |
-| walker |  | 1300 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.680 |
-| walker |  | 1317 | 17 | Fs::DirListing { dir: examples/celery/src/task_app } |  |  | 0.680 |
-| ns | 1391 |  | 270 | Package identity + runtime dependency stack (pyproject.toml:1-8, 22-34) | 1.9 |  | 0.716 |
-| walker |  | 1462 | 145 | Fs::DirListing { dir: tests } |  |  | 0.718 |
-| ns | 1468 |  | 77 | Why src/flask/sansio/ exists (src/flask/sansio/README.md:1-6) | 2.1 |  | 0.700 |
-| walker |  | 1481 | 19 | Fs::DirListing { dir: tests/type_check } |  |  | 0.700 |
-| walker |  | 1508 | 27 | Fs::DirListing { dir: examples/javascript } |  |  | 0.700 |
-| walker |  | 1521 | 13 | Fs::DirListing { dir: examples/javascript/js_example } |  |  | 0.700 |
-| ns | 1545 |  | 77 | The class spine: Scaffold -> App -> Flask and Scaffold -> Blueprint -> Blueprint (6 class statements) | 2.2 |  | 0.683 |
-| walker |  | 1548 | 27 | Fs::DirListing { dir: examples/tutorial } |  |  | 0.683 |
-| walker |  | 1576 | 28 | Fs::DirListing { dir: examples/tutorial/flaskr } |  |  | 0.684 |
+| walker |  | 822 | 78 | Fs::DirListing { dir: docs/tutorial } |  |  | 0.719 |
+| ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.669 |
+| walker |  | 944 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.733 |
+| walker |  | 1089 | 145 | Fs::DirListing { dir: docs/patterns } |  |  | 0.733 |
+| ns | 1121 |  | 256 | Public export surface 3/3: all ten signals, template renderers, Request/Response (src/flask/__init__.py:24-39) | 1.8 | 1.7 | 0.670 |
+| walker |  | 1127 | 38 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.671 |
+| walker |  | 1151 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.671 |
+| walker |  | 1155 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.671 |
+| walker |  | 1172 | 17 | Fs::DirListing { dir: examples/celery/src/task_app } |  |  | 0.671 |
+| walker |  | 1317 | 145 | Fs::DirListing { dir: tests } |  |  | 0.674 |
+| walker |  | 1336 | 19 | Fs::DirListing { dir: tests/type_check } |  |  | 0.674 |
+| walker |  | 1363 | 27 | Fs::DirListing { dir: examples/javascript } |  |  | 0.674 |
+| walker |  | 1376 | 13 | Fs::DirListing { dir: examples/javascript/js_example } |  |  | 0.674 |
+| ns | 1391 |  | 270 | Package identity + runtime dependency stack (pyproject.toml:1-8, 22-34) | 1.9 |  | 0.633 |
+| walker |  | 1403 | 27 | Fs::DirListing { dir: examples/tutorial } |  |  | 0.633 |
+| walker |  | 1431 | 28 | Fs::DirListing { dir: examples/tutorial/flaskr } |  |  | 0.634 |
+| ns | 1468 |  | 77 | Why src/flask/sansio/ exists (src/flask/sansio/README.md:1-6) | 2.1 |  | 0.618 |
+| ns | 1545 |  | 77 | The class spine: Scaffold -> App -> Flask and Scaffold -> Blueprint -> Blueprint (6 class statements) | 2.2 |  | 0.603 |
+| walker |  | 1576 | 145 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.684 |
 | walker |  | 1605 | 29 | Fs::DirListing { dir: tests/test_apps } |  |  | 0.684 |
 | walker |  | 1614 | 9 | Fs::DirListing { dir: tests/test_apps/blueprintapp } |  |  | 0.684 |
 | walker |  | 1623 | 9 | Fs::DirListing { dir: tests/test_apps/subdomaintestmodule } |  |  | 0.684 |

@@ -115,9 +115,6 @@ package.json
   4→  "description": "Send private and secure note",
   5→  "packageManager": "pnpm@9.15.0",
   6→  "license": "Apache-2.0",
-  7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-  8→  "repository": {
-  9→    "type": "git",
   …
   12→  "engines": {
   13→    "node": ">=22.0.0"
@@ -246,6 +243,15 @@ packages/
       modules/
         app/
           auth/
+            auth.errors.ts
+            auth.middleware.test.ts
+            auth.middleware.ts
+            auth.models.test.ts
+            auth.models.ts
+            auth.routes.ts
+            auth.services.ts
+            e2e/
+              login.e2e.test.ts
           config/
             config.models.ts
             config.routes.ts
@@ -383,6 +389,9 @@ packages/
         i18n.data.ts
       how-it-works.md
       index.md
+        …
+        5→# Enclosed
+        …
       integrations/
         cli.md
         npm-package.md

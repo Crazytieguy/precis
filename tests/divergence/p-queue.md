@@ -1,4 +1,4 @@
-Score(3000)=0.791 I=0.886 C=0.707 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.790/0.644/0.702/0.791/0.771/0.690/0.611
+Score(3000)=0.791 I=0.886 C=0.707 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.790/0.644/0.702/0.791/0.757/0.690/0.611
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,9 +12,9 @@ Score(3000)=0.791 I=0.886 C=0.707 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 147 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
 | ns | 185 |  | 39 | Complete root directory listing | 1.3 |  | 0.426 |
 | walker |  | 214 | 67 | Markdown::ReadmeHeadline { file: readme.md } |  |  | 0.888 |
-| ns | 245 |  | 60 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.705 |
-| walker |  | 268 | 54 | Json::Dependencies { file: package.json } |  |  | 0.705 |
-| walker |  | 299 | 31 | Json::Runtime { file: package.json } |  |  | 0.708 |
+| walker |  | 245 | 31 | Json::Runtime { file: package.json } |  |  | 0.708 |
+| ns | 245 |  | 60 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.708 |
+| walker |  | 299 | 54 | Json::Dependencies { file: package.json } |  |  | 0.708 |
 | walker |  | 330 | 31 | Fs::DirListing { dir: test } |  |  | 0.910 |
 | ns | 380 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.836 |
 | walker |  | 451 | 121 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.865 |
@@ -65,28 +65,28 @@ Score(3000)=0.791 I=0.886 C=0.707 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 2972 |  | 229 | .isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape | 2.11 | 2.1 | 0.768 |
 | walker |  | 3009 | 281 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 25, sub: 0, line: 918 } |  |  | 0.791 |
 | ns | 3044 |  | 72 | .setPriority(id, priority) signature and contract | 2.12 | 2.1 | 0.781 |
-| walker |  | 3248 | 239 | Json::IdentityMeta { file: package.json } |  |  | 0.798 |
-| ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.764 |
-| walker |  | 3377 | 129 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.764 |
-| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.737 |
-| walker |  | 3716 | 339 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 26, sub: 0, line: 952 } |  |  | 0.758 |
-| walker |  | 3751 | 35 | Code::CodeKey { rung: Names, file: source/queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
-| walker |  | 3865 | 114 | Code::CodeKey { rung: Decl, file: source/queue.ts, decl: 2, sub: 0, line: 3 } |  |  | 0.792 |
-| ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.780 |
-| ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.774 |
-| ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.758 |
-| walker |  | 4337 | 472 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 5, sub: 0, line: 432 } |  |  | 0.771 |
-| walker |  | 4374 | 37 | Code::CodeKey { rung: Names, file: source/priority-queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.771 |
-| walker |  | 4391 | 17 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.771 |
-| ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.747 |
-| walker |  | 4525 | 134 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.747 |
-| walker |  | 4540 | 15 | Code::CodeKey { rung: Body, file: source/priority-queue.ts, decl: 10, sub: 0, line: 115 } |  |  | 0.747 |
-| walker |  | 4597 | 57 | Code::CodeKey { rung: Names, file: source/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.749 |
-| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.734 |
-| walker |  | 4727 | 130 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 2, sub: 0, line: 97 } |  |  | 0.740 |
-| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.730 |
-| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.707 |
-| walker |  | 5124 | 397 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 3, sub: 0, line: 111 } |  |  | 0.714 |
+| walker |  | 3138 | 129 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.781 |
+| ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.748 |
+| walker |  | 3477 | 339 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 26, sub: 0, line: 952 } |  |  | 0.770 |
+| walker |  | 3512 | 35 | Code::CodeKey { rung: Names, file: source/queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
+| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.744 |
+| walker |  | 3626 | 114 | Code::CodeKey { rung: Decl, file: source/queue.ts, decl: 2, sub: 0, line: 3 } |  |  | 0.776 |
+| ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.764 |
+| ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.759 |
+| walker |  | 4098 | 472 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 5, sub: 0, line: 432 } |  |  | 0.771 |
+| walker |  | 4135 | 37 | Code::CodeKey { rung: Names, file: source/priority-queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.771 |
+| walker |  | 4152 | 17 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.771 |
+| ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.756 |
+| walker |  | 4286 | 134 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.757 |
+| walker |  | 4301 | 15 | Code::CodeKey { rung: Body, file: source/priority-queue.ts, decl: 10, sub: 0, line: 115 } |  |  | 0.757 |
+| walker |  | 4358 | 57 | Code::CodeKey { rung: Names, file: source/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
+| walker |  | 4488 | 130 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 2, sub: 0, line: 97 } |  |  | 0.764 |
+| ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.740 |
+| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.726 |
+| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.716 |
+| walker |  | 4885 | 397 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 3, sub: 0, line: 111 } |  |  | 0.724 |
+| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.701 |
+| walker |  | 5124 | 239 | Json::IdentityMeta { file: package.json } |  |  | 0.714 |
 | walker |  | 5231 | 107 | Code::CodeKey { rung: Body, file: source/priority-queue.ts, decl: 9, sub: 0, line: 102 } |  |  | 0.714 |
 | walker |  | 5312 | 81 | Json::Whole { file: tsconfig.json } |  |  | 0.715 |
 | ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.691 |

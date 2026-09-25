@@ -85,18 +85,13 @@ package.json
   15→    "require": "./dist/mitt.js",
   16→    "default": "./dist/mitt.mjs"
   17→  },
+  18→  "scripts": {
+  19→    "test": "npm-run-all --silent typecheck lint mocha test-types",
+  20→    "mocha": "mocha test",
+  21→    "test-types": "tsc test/test-types-compilation.ts --noEmit --strict",
+  22→    "lint": "eslint src test --ext ts --ext js",
+  23→    "typecheck": "tsc --noEmit",
   …
-  30→  "repository": "developit/mitt",
-  31→  "keywords": [
-  32→    "events",
-  33→    "eventemitter",
-  34→    "emitter",
-  35→    "pubsub"
-  36→  ],
-  37→  "homepage": "https://github.com/developit/mitt",
-  38→  "authors": [
-  39→    "Jason Miller <jason@developit.ca>"
-  40→  ],
   41→  "license": "MIT",
   42→  "files": [
   43→    "dist",

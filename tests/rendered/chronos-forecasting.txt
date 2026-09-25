@@ -77,15 +77,6 @@ pyproject.toml
   22→  "scikit-learn>=1.6.0,<2",
   23→]
   …
-  31→[build-system]
-  32→requires = ["hatchling"]
-  33→build-backend = "hatchling.build"
-  34→
-  35→[tool.hatch.build.targets.wheel]
-  36→packages = ["src/chronos"]
-  37→
-  38→[tool.hatch.version]
-  39→path = "src/chronos/__about__.py"
   41→[project.optional-dependencies]
   42→extras = [
   43→  "boto3>=1.10,<2",
@@ -112,22 +103,7 @@ pyproject.toml
   64→  "rich",
   65→  "pandas>=2.0,<2.4",
   66→]
-  68→[project.urls]
-  69→Homepage = "https://github.com/amazon-science/chronos-forecasting"
-  70→Issues = "https://github.com/amazon-science/chronos-forecasting/issues"
-  71→Chronos-Paper = "https://arxiv.org/abs/2403.07815"
-  72→Chronos-2-Paper = "https://arxiv.org/abs/2510.15821"
-  73→
-  74→[tool.mypy]
-  75→ignore_missing_imports = true
-  76→
-  77→[tool.ruff]
-  78→line-length = 119
-  79→lint.ignore = [
-  80→  "E501", # Line too long
-  81→  "E731", # Do not assign a `lambda` expression, use a `def`
-  82→  "E722", # Do not use bare `except`
-  83→]
+  …
 scripts/
   README.md
   evaluation/
@@ -231,6 +207,35 @@ src/
       355→class ChronosPipeline(BaseChronosPipeline):
       …
       371→    tokenizer: ChronosTokenizer
+      372→    model: ChronosModel
+      373→    forecast_type: ForecastType = ForecastType.SAMPLES
+      374→
+      375→    def __init__(self, tokenizer, model):
+      …
+      380→    @property
+      381→    def model_context_length(self) -> int:
+      …
+      384→    @property
+      385→    def model_prediction_length(self) -> int:
+      …
+      388→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
+      …
+      398→    @torch.no_grad()
+      399→    def embed(self, context: Union[torch.Tensor, List[torch.Tensor]]) -> Tuple[torch.Tensor, Any]:
+      …
+      430→    def predict(
+      431→        self,
+      432→        inputs: Union[torch.Tensor, List[torch.Tensor]],
+      433→        prediction_length: Optional[int] = None,
+      434→        num_samples: Optional[int] = None,
+      435→        temperature: Optional[float] = None,
+      436→        top_k: Optional[int] = None,
+      437→        top_p: Optional[float] = None,
+      …
+      513→    def predict_quantiles(
+      …
+      535→    @classmethod
+      536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
       …
     chronos2/
       __init__.py

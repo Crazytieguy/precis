@@ -24,11 +24,11 @@ Score(3000)=0.628 I=0.771 C=0.512 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 422 | 15 | Fs::DirListing { dir: docs/examples } |  |  | 0.730 |
 | walker |  | 430 | 8 | Fs::DirListing { dir: docs/examples/eggsample } |  |  | 0.731 |
 | walker |  | 450 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.736 |
-| ns | 521 |  | 166 | Public name to private module map (the re-export block) | 1.5 | 1.4 | 0.643 |
-| walker |  | 530 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.643 |
-| walker |  | 592 | 62 | Fs::DirListing { dir: testing } |  |  | 0.661 |
+| walker |  | 512 | 62 | Fs::DirListing { dir: testing } |  |  | 0.757 |
+| ns | 521 |  | 166 | Public name to private module map (the re-export block) | 1.5 | 1.4 | 0.661 |
+| walker |  | 538 | 26 | Markdown::Section { file: downstream/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.661 |
 | ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.703 |
-| walker |  | 618 | 26 | Markdown::Section { file: downstream/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.703 |
+| walker |  | 618 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.703 |
 | walker |  | 665 | 47 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.703 |
 | ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.645 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.645 |
@@ -203,5 +203,7 @@ Score(3000)=0.628 I=0.771 C=0.512 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 9783 | 11 | Fs::DirListing { dir: docs/examples/eggsample-spam } |  |  | 0.521 |
 | ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.517 |
 | ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.514 |
+| walker |  | 9921 | 138 | Plaintext::DeclSurface { file: downstream/python-lsp-server.sh } |  |  | 0.514 |
+| walker |  | 9929 | 8 | Code::CodeKey { rung: Body, file: src/pluggy/_result.py, decl: 7, sub: 0, line: 51 } |  |  | 0.514 |
 | ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.517 |
-| walker |  | 9984 | 201 | Toml::Config { file: pyproject.toml } |  |  | 0.521 |
+| walker |  | 9999 | 70 | Code::CodeKey { rung: Doc, file: src/pluggy/_manager.py, decl: 15, sub: 0, line: 176 } |  |  | 0.517 |

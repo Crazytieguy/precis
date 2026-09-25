@@ -51,21 +51,6 @@ Cargo.toml
   44→[target.'cfg(all(windows, not(windows_process_extensions_main_thread_handle)))'.dependencies]
   45→once_cell = "1.19"
   46→
-  47→[target.'cfg(target_os="linux")'.dependencies]
-  48→nix = { version = "0.29", features = ["zerocopy"] }
-  49→
-  50→[dependencies.clap]
-  51→version = "4"
-  52→default-features = false
-  53→features = [
-  54→    "suggestions",
-  55→    "color",
-  56→    "wrap_help",
-  57→    "cargo",
-  58→    "help",
-  59→    "usage",
-  60→    "error-context",
-  61→]
   …
   70→[profile.dev.package]
   71→insta.opt-level = 3
@@ -101,13 +86,20 @@ README.md
   315→
   316→Hyperfine is inspired by [bench](https://github.com/Gabriella439/bench).
   …
+  332→## Origin of the name
+  333→
+  334→The name *hyperfine* was chosen in reference to the hyperfine levels of caesium 133 which play a crucial role in the
+  335→[definition of our base unit of time](https://en.wikipedia.org/wiki/Second#History_of_definition)
+  336→— the second.
   338→## Citing hyperfine
   339→
   340→Thank you for considering to cite hyperfine in your research work. Please see the information
   341→in the sidebar on how to properly cite hyperfine.
   343→## License
   344→
-  …
+  345→`hyperfine` is dual-licensed under the terms of the MIT License and the Apache License 2.0.
+  346→
+  347→See the [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) files for details.
 build.rs
   …
   7→fn main() {

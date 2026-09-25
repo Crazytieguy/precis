@@ -1,4 +1,4 @@
-Score(3000)=0.551 I=0.699 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.642/0.622/0.551/0.461/0.487/0.479
+Score(3000)=0.551 I=0.699 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.642/0.622/0.551/0.461/0.487/0.514
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -236,36 +236,45 @@ Score(3000)=0.551 I=0.699 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 7890 | 3 | Fs::DirListing { dir: source/go_bindata/examples } |  |  | 0.508 |
 | walker |  | 7923 | 33 | Markdown::Section { file: source/file/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.508 |
 | ns | 7955 |  | 166 | cli.Main and the complete global flag set | 5.3 |  | 0.504 |
+| walker |  | 8067 | 144 | Markdown::HeadingsOutline { file: cmd/migrate/README.md } |  |  | 0.504 |
+| walker |  | 8083 | 16 | Markdown::Section { file: database/snowflake/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.504 |
+| walker |  | 8099 | 16 | Markdown::Section { file: source/google_cloud_storage/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.504 |
+| walker |  | 8171 | 72 | Code::CodeKey { rung: Body, file: source/driver.go, decl: 6, sub: 0, line: 110 } |  |  | 0.504 |
+| walker |  | 8202 | 31 | Code::CodeKey { rung: Names, file: source/errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 8222 | 20 | Code::CodeKey { rung: Decl, file: source/errors.go, decl: 1, sub: 0, line: 7 } |  |  | 0.504 |
+| walker |  | 8230 | 8 | Code::CodeKey { rung: Doc, file: source/errors.go, decl: 2, sub: 0, line: 13 } |  |  | 0.504 |
+| walker |  | 8245 | 15 | Code::CodeKey { rung: Body, file: source/errors.go, decl: 2, sub: 0, line: 13 } |  |  | 0.504 |
+| walker |  | 8269 | 24 | Code::CodeKey { rung: Doc, file: source/errors.go, decl: 1, sub: 0, line: 7 } |  |  | 0.504 |
 | ns | 8287 |  | 332 | The `migrate -help` usage text, from source | 5.4 |  | 0.493 |
-| ns | 8594 |  | 307 | Subcommand usage strings (internal/cli/main.go:18-33) | 5.5 |  | 0.488 |
-| walker |  | 8746 | 823 | GoMod::File { file: go.mod } |  |  | 0.488 |
-| ns | 8847 |  | 253 | Complete command-implementation roster (internal/cli/commands.go) | 5.6 |  | 0.484 |
-| walker |  | 8890 | 144 | Markdown::HeadingsOutline { file: cmd/migrate/README.md } |  |  | 0.484 |
-| walker |  | 8906 | 16 | Markdown::Section { file: database/snowflake/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.484 |
-| walker |  | 8922 | 16 | Markdown::Section { file: source/google_cloud_storage/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.484 |
-| ns | 8984 |  | 137 | A build-tag shim in full, and the tag-name traps | 5.7 |  | 0.479 |
-| walker |  | 8994 | 72 | Code::CodeKey { rung: Body, file: source/driver.go, decl: 6, sub: 0, line: 110 } |  |  | 0.479 |
-| walker |  | 9025 | 31 | Code::CodeKey { rung: Names, file: source/errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
-| walker |  | 9045 | 20 | Code::CodeKey { rung: Decl, file: source/errors.go, decl: 1, sub: 0, line: 7 } |  |  | 0.479 |
-| walker |  | 9053 | 8 | Code::CodeKey { rung: Doc, file: source/errors.go, decl: 2, sub: 0, line: 13 } |  |  | 0.479 |
-| walker |  | 9068 | 15 | Code::CodeKey { rung: Body, file: source/errors.go, decl: 2, sub: 0, line: 13 } |  |  | 0.479 |
-| walker |  | 9092 | 24 | Code::CodeKey { rung: Doc, file: source/errors.go, decl: 1, sub: 0, line: 7 } |  |  | 0.479 |
-| walker |  | 9128 | 36 | Markdown::Section { file: source/iofs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.479 |
-| walker |  | 9262 | 134 | Code::CodeKey { rung: Names, file: database/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| walker |  | 9271 | 9 | Code::CodeKey { rung: Decl, file: database/driver.go, decl: 1, sub: 0, line: 15 } |  |  | 0.491 |
-| ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.485 |
-| walker |  | 9282 | 11 | Code::CodeKey { rung: Doc, file: database/driver.go, decl: 7, sub: 0, line: 102 } |  |  | 0.485 |
-| walker |  | 9293 | 11 | Code::CodeKey { rung: Doc, file: database/driver.go, decl: 8, sub: 0, line: 115 } |  |  | 0.485 |
-| walker |  | 9305 | 12 | Code::CodeKey { rung: Doc, file: database/driver.go, decl: 6, sub: 0, line: 85 } |  |  | 0.485 |
-| walker |  | 9358 | 53 | Code::CodeKey { rung: Names, file: dktesting/dktesting.go, decl: 0, sub: 0, line: 0 } |  |  | 0.485 |
-| walker |  | 9376 | 18 | Code::CodeKey { rung: Decl, file: dktesting/dktesting.go, decl: 3, sub: 0, line: 44 } |  |  | 0.485 |
-| walker |  | 9401 | 25 | Code::CodeKey { rung: Decl, file: dktesting/dktesting.go, decl: 1, sub: 0, line: 14 } |  |  | 0.485 |
-| walker |  | 9414 | 13 | Code::CodeKey { rung: Doc, file: dktesting/dktesting.go, decl: 1, sub: 0, line: 14 } |  |  | 0.485 |
-| walker |  | 9427 | 13 | Code::CodeKey { rung: Doc, file: dktesting/dktesting.go, decl: 3, sub: 0, line: 44 } |  |  | 0.485 |
-| walker |  | 9448 | 21 | Code::CodeKey { rung: Doc, file: dktesting/dktesting.go, decl: 2, sub: 0, line: 20 } |  |  | 0.485 |
-| ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.480 |
-| walker |  | 9695 | 247 | Code::CodeKey { rung: Decl, file: database/driver.go, decl: 5, sub: 0, line: 45 } |  |  | 0.491 |
-| ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.486 |
-| walker |  | 9942 | 247 | Code::CodeKey { rung: Decl, file: database/driver.go, decl: 5, sub: 1, line: 45 } |  |  | 0.516 |
-| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.519 |
-| walker |  | 9990 | 48 | Code::CodeKey { rung: Body, file: database/error.go, decl: 2, sub: 0, line: 22 } |  |  | 0.524 |
+| walker |  | 8305 | 36 | Markdown::Section { file: source/iofs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.493 |
+| walker |  | 8439 | 134 | Code::CodeKey { rung: Names, file: database/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 8448 | 9 | Code::CodeKey { rung: Decl, file: database/driver.go, decl: 1, sub: 0, line: 15 } |  |  | 0.506 |
+| walker |  | 8459 | 11 | Code::CodeKey { rung: Doc, file: database/driver.go, decl: 7, sub: 0, line: 102 } |  |  | 0.506 |
+| walker |  | 8470 | 11 | Code::CodeKey { rung: Doc, file: database/driver.go, decl: 8, sub: 0, line: 115 } |  |  | 0.506 |
+| walker |  | 8482 | 12 | Code::CodeKey { rung: Doc, file: database/driver.go, decl: 6, sub: 0, line: 85 } |  |  | 0.506 |
+| walker |  | 8535 | 53 | Code::CodeKey { rung: Names, file: dktesting/dktesting.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
+| walker |  | 8553 | 18 | Code::CodeKey { rung: Decl, file: dktesting/dktesting.go, decl: 3, sub: 0, line: 44 } |  |  | 0.506 |
+| walker |  | 8578 | 25 | Code::CodeKey { rung: Decl, file: dktesting/dktesting.go, decl: 1, sub: 0, line: 14 } |  |  | 0.506 |
+| walker |  | 8591 | 13 | Code::CodeKey { rung: Doc, file: dktesting/dktesting.go, decl: 1, sub: 0, line: 14 } |  |  | 0.506 |
+| ns | 8594 |  | 307 | Subcommand usage strings (internal/cli/main.go:18-33) | 5.5 |  | 0.500 |
+| walker |  | 8604 | 13 | Code::CodeKey { rung: Doc, file: dktesting/dktesting.go, decl: 3, sub: 0, line: 44 } |  |  | 0.500 |
+| walker |  | 8625 | 21 | Code::CodeKey { rung: Doc, file: dktesting/dktesting.go, decl: 2, sub: 0, line: 20 } |  |  | 0.500 |
+| ns | 8847 |  | 253 | Complete command-implementation roster (internal/cli/commands.go) | 5.6 |  | 0.496 |
+| walker |  | 8872 | 247 | Code::CodeKey { rung: Decl, file: database/driver.go, decl: 5, sub: 0, line: 45 } |  |  | 0.508 |
+| ns | 8984 |  | 137 | A build-tag shim in full, and the tag-name traps | 5.7 |  | 0.502 |
+| walker |  | 9119 | 247 | Code::CodeKey { rung: Decl, file: database/driver.go, decl: 5, sub: 1, line: 45 } |  |  | 0.534 |
+| walker |  | 9203 | 84 | Code::CodeKey { rung: Body, file: database/error.go, decl: 2, sub: 0, line: 22 } |  |  | 0.542 |
+| walker |  | 9207 | 4 | Fs::DirListing { dir: cmd/migrate/examples } |  |  | 0.542 |
+| ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.536 |
+| walker |  | 9500 | 293 | Code::CodeKey { rung: Names, file: source/migration.go, decl: 0, sub: 0, line: 0 } |  |  | 0.542 |
+| walker |  | 9509 | 9 | Code::CodeKey { rung: Decl, file: source/migration.go, decl: 2, sub: 0, line: 10 } |  |  | 0.543 |
+| walker |  | 9537 | 28 | Code::CodeKey { rung: Decl, file: source/migration.go, decl: 4, sub: 0, line: 36 } |  |  | 0.546 |
+| ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.539 |
+| walker |  | 9549 | 12 | Code::CodeKey { rung: Doc, file: source/migration.go, decl: 1, sub: 0, line: 8 } |  |  | 0.539 |
+| walker |  | 9687 | 138 | Code::CodeKey { rung: Decl, file: source/migration.go, decl: 3, sub: 0, line: 18 } |  |  | 0.551 |
+| walker |  | 9712 | 25 | Code::CodeKey { rung: Doc, file: source/migration.go, decl: 4, sub: 0, line: 36 } |  |  | 0.554 |
+| walker |  | 9754 | 42 | Code::CodeKey { rung: Doc, file: source/migration.go, decl: 3, sub: 0, line: 18 } |  |  | 0.561 |
+| walker |  | 9777 | 23 | Code::CodeKey { rung: Body, file: source/migration.go, decl: 15, sub: 0, line: 131 } |  |  | 0.561 |
+| ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.556 |
+| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.558 |
+| walker |  | 9997 | 220 | Code::CodeKey { rung: Decl, file: source/driver.go, decl: 3, sub: 0, line: 35 } |  |  | 0.565 |

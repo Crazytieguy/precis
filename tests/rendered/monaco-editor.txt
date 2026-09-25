@@ -113,14 +113,14 @@ package.json
   …
   5→	"private": true,
   6→	"description": "A browser based code editor",
-  7→	"homepage": "https://github.com/microsoft/monaco-editor",
   …
   9→	"license": "MIT",
   …
 samples/
   README.md
     1→# Monaco Editor Samples
-    …
+    2→
+    3→Standalone HTML samples showing how to integrate the Monaco Editor.
     5→## Running
     …
     17→## Loading variations
@@ -128,7 +128,8 @@ samples/
     26→## Other examples & techniques
     …
     34→## License
-    …
+    35→
+    36→MIT
   browser-esm-esbuild/
     .gitignore
     build.js
@@ -159,8 +160,6 @@ samples/
       …
       2→	"name": "browser-esm-vite",
       …
-      8→	"dependencies": {},
-      …
     style.css
     tsconfig.json
     vite.config.ts
@@ -171,8 +170,6 @@ samples/
     package.json
       …
       2→	"name": "browser-esm-vite-react",
-      …
-      9→	"dependencies": {},
       …
     src/
       components/
@@ -231,8 +228,6 @@ samples/
     package.json
       …
       2→	"name": "monaco-esm-webpack-typescript",
-      …
-      7→	"dependencies": {},
       …
     src/
       components/
@@ -316,6 +311,9 @@ samples/
     …
 scripts/
   ci/
+    build-monaco-editor-core-pkg.ts
+    build-monaco-editor-pkg.ts
+    env.ts
   lib/
     index.ts
 src/
@@ -522,6 +520,8 @@ src/
       typescript/
         languageFeatures.ts
         lib/
+          editor.worker.d.ts
+          …
         register.ts
         ts.worker.ts
         tsMode.ts

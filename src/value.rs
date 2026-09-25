@@ -22,9 +22,9 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
 /// member). A sub-package's roster is scaffolding around that.
 pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
     if describes_repository {
-        1068.0 * depth
+        854.0 * depth
     } else {
-        716.0 * depth
+        573.0 * depth
     }
 }
 
@@ -46,7 +46,7 @@ pub fn manifest_operational_value(depth: f64) -> f64 {
 /// table no other section owns (build systems, profiles, lints, tool
 /// config). Shared by every manifest format.
 pub fn manifest_appendix_value(depth: f64) -> f64 {
-    753.0 * depth
+    602.0 * depth
 }
 
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this

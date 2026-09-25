@@ -28,6 +28,13 @@ README.md
   73→- **Hooks system** for custom integrations and security policies
   74→- **Environment variable substitution** in configs and scripts
   75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
+  77→## Requirements 📋
+  78→
+  79→- Go 1.23 or later
+  80→- For OpenAI/Anthropic: API key for the respective provider
+  81→- For Ollama: Local Ollama installation with desired models
+  82→- For Google/Gemini: Google API key (see https://aistudio.google.com/app/apikey)
+  83→- One or more MCP-compatible tool servers
   …
   124→## Installation 📦
   125→
@@ -49,6 +56,43 @@ README.md
   989→- Thanks to all contributors who have helped improve this tool
 cmd/
   auth.go
+    …
+    17→var authCmd = &cobra.Command{
+    18→	Use:   "auth",
+    19→	Short: "Manage authentication credentials for AI providers",
+    20→	Long: `Manage authentication credentials for AI providers.
+    21→
+    22→This command allows you to securely authenticate and manage credentials for various AI providers
+    23→using OAuth flows. Stored credentials take precedence over environment variables.
+    …
+    37→var authLoginCmd = &cobra.Command{
+    …
+    58→var authLogoutCmd = &cobra.Command{
+    …
+    78→var authStatusCmd = &cobra.Command{
+    79→	Use:   "status",
+    80→	Short: "Show authentication status for all providers",
+    81→	Long: `Show the current authentication status for all supported AI providers.
+    82→
+    83→This command displays which providers have stored credentials and when they were created.
+    84→It does not display the actual API keys for security reasons.
+    85→
+    86→Example:
+    87→  mcphost auth status`,
+    88→	RunE: runAuthStatus,
+    89→}
+    91→func init() {
+    …
+    97→func runAuthLogin(cmd *cobra.Command, args []string) error {
+    …
+    108→func runAuthLogout(cmd *cobra.Command, args []string) error {
+    …
+    119→func runAuthStatus(cmd *cobra.Command, args []string) error {
+    …
+    165→func loginAnthropic() error {
+    …
+    239→func logoutAnthropic() error {
+    …
   hooks.go
     …
     13→// hooksCmd represents the hooks command for managing MCPHost hook configurations.
@@ -124,6 +168,12 @@ cmd/
 contribute/
   boost.sh
   build.sh
+    1→#!/bin/bash
+    2→
+    3→RUN_NAME="mcphost"
+    4→
+    5→mkdir -p output
+    6→go build -o output/${RUN_NAME}
   conf/
     demo.json
     demo.yml
@@ -143,36 +193,7 @@ go.mod
   3→go 1.24.0
   4→
   5→toolchain go1.24.5
-  6→
-  7→require (
-  8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
-  9→	github.com/PuerkitoBio/goquery v1.10.3
-  10→	github.com/bytedance/sonic v1.15.0
-  11→	github.com/charmbracelet/fang v0.4.0
-  12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-  13→	github.com/cloudwego/eino v0.7.13
-  14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
-  15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
-  16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
-  17→	github.com/eino-contrib/jsonschema v1.0.3
-  18→	github.com/getkin/kin-openapi v0.131.0
-  19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
-  20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
-  21→	github.com/spf13/cobra v1.10.1
-  22→	github.com/spf13/viper v1.20.1
-  23→	github.com/tidwall/gjson v1.18.0
-  24→	golang.org/x/term v0.37.0
-  25→	google.golang.org/genai v1.22.0
-  26→	gopkg.in/yaml.v3 v3.0.1
-  27→)
   …
-  143→require (
-  …
-  145→	github.com/charmbracelet/bubbles v0.21.0
-  146→	github.com/charmbracelet/bubbletea v1.3.10
-  147→	github.com/charmbracelet/glamour v0.10.0
-  …
-  165→)
 go.sum
 internal/
   agent/

@@ -1,4 +1,4 @@
-Score(3000)=0.573 I=0.856 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.654/0.571/0.573/0.509/0.472/0.512
+Score(3000)=0.577 I=0.857 C=0.389 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.654/0.571/0.577/0.549/0.472/0.512
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -77,63 +77,63 @@ Score(3000)=0.573 I=0.856 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 2549 | 134 | Code::CodeKey { rung: ModuleDoc, file: pkg/artifactcache/doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
 | walker |  | 2553 | 4 | Fs::DirListing { dir: .github/actions } |  |  | 0.623 |
 | walker |  | 2560 | 7 | Plaintext::DeclSurface { file: pkg/container/testdata/scratch/test.txt } |  |  | 0.623 |
-| ns | 2869 |  | 347 | pkg/model: complete type roster | 3.1 |  | 0.584 |
-| ns | 2979 |  | 110 | Workflow struct | 3.2 | 3.1 | 0.573 |
-| ns | 3209 |  | 230 | Planner interface + Plan/Stage/Run | 3.3 | 3.1 | 0.545 |
-| walker |  | 3369 | 809 | GoMod::File { file: go.mod } |  |  | 0.546 |
-| walker |  | 3436 | 67 | Plaintext::Whole { file: pkg/container/testdata/Dockerfile } |  |  | 0.546 |
-| walker |  | 3444 | 8 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/data.txt } |  |  | 0.546 |
-| ns | 3471 |  | 262 | Job struct: every supported job key | 3.4 | 3.1 | 0.529 |
-| walker |  | 3591 | 147 | Code::CodeKey { rung: Names, file: cmd/notices.go, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
-| walker |  | 3618 | 27 | Code::CodeKey { rung: Decl, file: cmd/notices.go, decl: 1, sub: 0, line: 17 } |  |  | 0.533 |
-| walker |  | 3647 | 29 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 4, sub: 0, line: 57 } |  |  | 0.533 |
-| ns | 3695 |  | 224 | Step struct: every supported step key | 3.5 | 3.1 | 0.519 |
-| walker |  | 3714 | 67 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 9, sub: 0, line: 138 } |  |  | 0.519 |
-| walker |  | 3791 | 77 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 7, sub: 0, line: 121 } |  |  | 0.519 |
-| walker |  | 3941 | 150 | Code::CodeKey { rung: Names, file: cmd/input.go, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
-| walker |  | 3950 | 9 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 6, sub: 0, line: 99 } |  |  | 0.537 |
-| walker |  | 3961 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.537 |
-| walker |  | 3972 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.537 |
-| walker |  | 3983 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 5, sub: 0, line: 94 } |  |  | 0.537 |
-| walker |  | 3995 | 12 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.537 |
-| walker |  | 4008 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.537 |
-| walker |  | 4021 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 6, sub: 0, line: 99 } |  |  | 0.537 |
-| ns | 4027 |  | 332 | StepType constants | 3.6 | 3.1 | 0.517 |
-| walker |  | 4035 | 14 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.517 |
-| walker |  | 4050 | 15 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 7, sub: 0, line: 104 } |  |  | 0.517 |
-| walker |  | 4065 | 15 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 9, sub: 0, line: 114 } |  |  | 0.517 |
-| walker |  | 4099 | 34 | Code::CodeKey { rung: Names, file: cmd/dir.go, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
-| walker |  | 4108 | 9 | Code::CodeKey { rung: Decl, file: cmd/dir.go, decl: 1, sub: 0, line: 10 } |  |  | 0.518 |
-| walker |  | 4159 | 51 | Code::CodeKey { rung: Names, file: cmd/secrets.go, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
-| walker |  | 4166 | 7 | Code::CodeKey { rung: Body, file: cmd/secrets.go, decl: 3, sub: 0, line: 40 } |  |  | 0.522 |
-| walker |  | 4184 | 18 | Code::CodeKey { rung: Names, file: cmd/graph.go, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
-| walker |  | 4202 | 18 | Code::CodeKey { rung: Names, file: cmd/list.go, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
-| walker |  | 4213 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.525 |
-| ns | 4248 |  | 221 | GithubContext: complete field-name roster | 3.7 | 3.1 | 0.503 |
-| ns | 4531 |  | 283 | Executor type + complete combinator roster | 4.1 |  | 0.488 |
-| walker |  | 4587 | 374 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
-| walker |  | 4637 | 50 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 1, sub: 0, line: 37 } |  |  | 0.527 |
-| walker |  | 4649 | 12 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 18, sub: 0, line: 391 } |  |  | 0.527 |
-| walker |  | 4662 | 13 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 3, sub: 0, line: 47 } |  |  | 0.529 |
-| walker |  | 4678 | 16 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 15, sub: 0, line: 345 } |  |  | 0.529 |
-| walker |  | 4713 | 35 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 5, sub: 0, line: 138 } |  |  | 0.532 |
-| walker |  | 4745 | 32 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 12, sub: 0, line: 314 } |  |  | 0.532 |
-| walker |  | 4858 | 113 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.532 |
-| ns | 5066 |  | 535 | pkg/runner: complete type roster | 4.2 |  | 0.508 |
-| ns | 5176 |  | 110 | Runner interface and New() | 4.3 | 4.2 | 0.501 |
-| walker |  | 5439 | 581 | Code::CodeKey { rung: Decl, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.502 |
-| walker |  | 5453 | 14 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.508 |
-| walker |  | 5460 | 7 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/nested/nested-data.txt } |  |  | 0.508 |
-| walker |  | 5481 | 21 | Code::CodeKey { rung: Names, file: cmd/platforms.go, decl: 0, sub: 0, line: 0 } |  |  | 0.514 |
-| walker |  | 5558 | 77 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 8, sub: 0, line: 130 } |  |  | 0.514 |
-| ns | 5564 |  | 388 | runner.Config: fields (first half, rest elided) | 4.4 | 4.2 | 0.500 |
-| walker |  | 5675 | 117 | Code::CodeKey { rung: Body, file: cmd/dir.go, decl: 2, sub: 0, line: 15 } |  |  | 0.500 |
-| walker |  | 5688 | 13 | Code::CodeKey { rung: Names, file: pkg/model/job_context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.500 |
-| walker |  | 5782 | 94 | Code::CodeKey { rung: Decl, file: pkg/model/job_context.go, decl: 1, sub: 0, line: 3 } |  |  | 0.500 |
-| walker |  | 5822 | 40 | Code::CodeKey { rung: Names, file: pkg/artifactcache/model.go, decl: 0, sub: 0, line: 0 } |  |  | 0.500 |
-| walker |  | 5865 | 43 | Code::CodeKey { rung: Decl, file: pkg/artifactcache/model.go, decl: 1, sub: 0, line: 3 } |  |  | 0.500 |
-| ns | 5866 |  | 302 | RunContext struct | 4.5 | 4.2 | 0.486 |
-| walker |  | 6012 | 147 | Code::CodeKey { rung: Decl, file: pkg/artifactcache/model.go, decl: 3, sub: 0, line: 26 } |  |  | 0.486 |
+| walker |  | 2627 | 67 | Plaintext::Whole { file: pkg/container/testdata/Dockerfile } |  |  | 0.623 |
+| walker |  | 2635 | 8 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/data.txt } |  |  | 0.623 |
+| walker |  | 2782 | 147 | Code::CodeKey { rung: Names, file: cmd/notices.go, decl: 0, sub: 0, line: 0 } |  |  | 0.627 |
+| walker |  | 2809 | 27 | Code::CodeKey { rung: Decl, file: cmd/notices.go, decl: 1, sub: 0, line: 17 } |  |  | 0.627 |
+| walker |  | 2838 | 29 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 4, sub: 0, line: 57 } |  |  | 0.627 |
+| ns | 2869 |  | 347 | pkg/model: complete type roster | 3.1 |  | 0.588 |
+| walker |  | 2905 | 67 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 9, sub: 0, line: 138 } |  |  | 0.588 |
+| ns | 2979 |  | 110 | Workflow struct | 3.2 | 3.1 | 0.577 |
+| walker |  | 2982 | 77 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 7, sub: 0, line: 121 } |  |  | 0.577 |
+| walker |  | 3132 | 150 | Code::CodeKey { rung: Names, file: cmd/input.go, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
+| walker |  | 3141 | 9 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 6, sub: 0, line: 99 } |  |  | 0.597 |
+| walker |  | 3152 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.597 |
+| walker |  | 3163 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.597 |
+| walker |  | 3174 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 5, sub: 0, line: 94 } |  |  | 0.597 |
+| walker |  | 3186 | 12 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.597 |
+| walker |  | 3199 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.597 |
+| ns | 3209 |  | 230 | Planner interface + Plan/Stage/Run | 3.3 | 3.1 | 0.568 |
+| walker |  | 3212 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 6, sub: 0, line: 99 } |  |  | 0.568 |
+| walker |  | 3226 | 14 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.568 |
+| walker |  | 3241 | 15 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 7, sub: 0, line: 104 } |  |  | 0.568 |
+| walker |  | 3256 | 15 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 9, sub: 0, line: 114 } |  |  | 0.568 |
+| walker |  | 3290 | 34 | Code::CodeKey { rung: Names, file: cmd/dir.go, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
+| walker |  | 3299 | 9 | Code::CodeKey { rung: Decl, file: cmd/dir.go, decl: 1, sub: 0, line: 10 } |  |  | 0.570 |
+| walker |  | 3350 | 51 | Code::CodeKey { rung: Names, file: cmd/secrets.go, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
+| walker |  | 3357 | 7 | Code::CodeKey { rung: Body, file: cmd/secrets.go, decl: 3, sub: 0, line: 40 } |  |  | 0.574 |
+| walker |  | 3375 | 18 | Code::CodeKey { rung: Names, file: cmd/graph.go, decl: 0, sub: 0, line: 0 } |  |  | 0.575 |
+| walker |  | 3393 | 18 | Code::CodeKey { rung: Names, file: cmd/list.go, decl: 0, sub: 0, line: 0 } |  |  | 0.577 |
+| walker |  | 3404 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.577 |
+| ns | 3471 |  | 262 | Job struct: every supported job key | 3.4 | 3.1 | 0.559 |
+| ns | 3695 |  | 224 | Step struct: every supported step key | 3.5 | 3.1 | 0.545 |
+| walker |  | 3778 | 374 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.588 |
+| walker |  | 3828 | 50 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 1, sub: 0, line: 37 } |  |  | 0.588 |
+| walker |  | 3840 | 12 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 18, sub: 0, line: 391 } |  |  | 0.588 |
+| walker |  | 3853 | 13 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 3, sub: 0, line: 47 } |  |  | 0.590 |
+| walker |  | 3869 | 16 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 15, sub: 0, line: 345 } |  |  | 0.590 |
+| walker |  | 3904 | 35 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 5, sub: 0, line: 138 } |  |  | 0.593 |
+| walker |  | 3936 | 32 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 12, sub: 0, line: 314 } |  |  | 0.593 |
+| ns | 4027 |  | 332 | StepType constants | 3.6 | 3.1 | 0.571 |
+| walker |  | 4049 | 113 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.571 |
+| ns | 4248 |  | 221 | GithubContext: complete field-name roster | 3.7 | 3.1 | 0.547 |
+| ns | 4531 |  | 283 | Executor type + complete combinator roster | 4.1 |  | 0.531 |
+| walker |  | 4630 | 581 | Code::CodeKey { rung: Decl, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.532 |
+| walker |  | 4644 | 14 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.538 |
+| walker |  | 4651 | 7 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/nested/nested-data.txt } |  |  | 0.538 |
+| walker |  | 4672 | 21 | Code::CodeKey { rung: Names, file: cmd/platforms.go, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| walker |  | 4749 | 77 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 8, sub: 0, line: 130 } |  |  | 0.545 |
+| walker |  | 4866 | 117 | Code::CodeKey { rung: Body, file: cmd/dir.go, decl: 2, sub: 0, line: 15 } |  |  | 0.545 |
+| walker |  | 4879 | 13 | Code::CodeKey { rung: Names, file: pkg/model/job_context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| walker |  | 4973 | 94 | Code::CodeKey { rung: Decl, file: pkg/model/job_context.go, decl: 1, sub: 0, line: 3 } |  |  | 0.545 |
+| walker |  | 5013 | 40 | Code::CodeKey { rung: Names, file: pkg/artifactcache/model.go, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| walker |  | 5056 | 43 | Code::CodeKey { rung: Decl, file: pkg/artifactcache/model.go, decl: 1, sub: 0, line: 3 } |  |  | 0.545 |
+| ns | 5066 |  | 535 | pkg/runner: complete type roster | 4.2 |  | 0.520 |
+| ns | 5176 |  | 110 | Runner interface and New() | 4.3 | 4.2 | 0.513 |
+| walker |  | 5203 | 147 | Code::CodeKey { rung: Decl, file: pkg/artifactcache/model.go, decl: 3, sub: 0, line: 26 } |  |  | 0.513 |
+| ns | 5564 |  | 388 | runner.Config: fields (first half, rest elided) | 4.4 | 4.2 | 0.499 |
+| ns | 5866 |  | 302 | RunContext struct | 4.5 | 4.2 | 0.485 |
+| walker |  | 6012 | 809 | GoMod::File { file: go.mod } |  |  | 0.486 |
 | walker |  | 6026 | 14 | Code::CodeKey { rung: Names, file: pkg/container/executions_environment.go, decl: 0, sub: 0, line: 0 } |  |  | 0.486 |
 | walker |  | 6134 | 108 | Code::CodeKey { rung: Decl, file: pkg/container/executions_environment.go, decl: 1, sub: 0, line: 5 } |  |  | 0.487 |
 | walker |  | 6162 | 28 | Code::CodeKey { rung: Names, file: pkg/lookpath/error.go, decl: 0, sub: 0, line: 0 } |  |  | 0.487 |

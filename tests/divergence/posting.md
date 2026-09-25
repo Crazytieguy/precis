@@ -1,4 +1,4 @@
-Score(3000)=0.793 I=0.938 C=0.671 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.746/0.792/0.824/0.793/0.674/0.622/0.566
+Score(3000)=0.793 I=0.938 C=0.671 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.746/0.782/0.812/0.793/0.674/0.622/0.566
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,39 +35,39 @@ Score(3000)=0.793 I=0.938 C=0.671 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 1100 | 86 | Fs::DirListing { dir: docs/assets } |  |  | 0.771 |
 | ns | 1140 |  | 96 | Documentation tree listing | 1.10 |  | 0.785 |
 | walker |  | 1141 | 41 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.785 |
-| walker |  | 1229 | 88 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.799 |
-| ns | 1270 |  | 130 | Test tree and sample-collection listings | 1.11 |  | 0.744 |
-| walker |  | 1284 | 55 | Markdown::HeadingsOutline { file: docs/roadmap.md } |  |  | 0.744 |
-| walker |  | 1383 | 99 | Fs::DirListing { dir: tests } |  |  | 0.788 |
-| ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.763 |
-| walker |  | 1681 | 298 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.822 |
-| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.780 |
-| walker |  | 1731 | 50 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.780 |
-| ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.753 |
-| walker |  | 1988 | 257 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.841 |
-| ns | 2052 |  | 145 | XDG locations: config file, themes and default collection | 2.4 |  | 0.821 |
-| walker |  | 2125 | 137 | Code::CodeKey { rung: Names, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
-| walker |  | 2137 | 12 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.831 |
-| walker |  | 2159 | 22 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.836 |
-| walker |  | 2191 | 32 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 5, sub: 0, line: 76 } |  |  | 0.836 |
-| walker |  | 2235 | 44 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.839 |
-| walker |  | 2247 | 12 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.842 |
-| walker |  | 2261 | 14 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.846 |
-| walker |  | 2278 | 17 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.848 |
-| ns | 2359 |  | 307 | collection.py type roster | 3.1 |  | 0.805 |
-| walker |  | 2405 | 127 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 4, sub: 0, line: 50 } |  |  | 0.821 |
-| ns | 2534 |  | 175 | The `.posting.yaml` on-disk request format | 3.2 |  | 0.784 |
-| walker |  | 2537 | 132 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.814 |
-| walker |  | 2553 | 16 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.819 |
-| walker |  | 2587 | 34 | Markdown::Section { file: docs/index.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.819 |
+| walker |  | 1196 | 55 | Markdown::HeadingsOutline { file: docs/roadmap.md } |  |  | 0.785 |
+| ns | 1270 |  | 130 | Test tree and sample-collection listings | 1.11 |  | 0.731 |
+| walker |  | 1295 | 99 | Fs::DirListing { dir: tests } |  |  | 0.774 |
+| walker |  | 1345 | 50 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.774 |
+| ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.750 |
+| walker |  | 1602 | 257 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.846 |
+| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.803 |
+| walker |  | 1739 | 137 | Code::CodeKey { rung: Names, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |
+| walker |  | 1751 | 12 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.814 |
+| walker |  | 1773 | 22 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.819 |
+| walker |  | 1805 | 32 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 5, sub: 0, line: 76 } |  |  | 0.820 |
+| walker |  | 1849 | 44 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.820 |
+| walker |  | 1861 | 12 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.824 |
+| walker |  | 1875 | 14 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.829 |
+| walker |  | 1892 | 17 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.829 |
+| ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.804 |
+| walker |  | 2019 | 127 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 4, sub: 0, line: 50 } |  |  | 0.821 |
+| ns | 2052 |  | 145 | XDG locations: config file, themes and default collection | 2.4 |  | 0.801 |
+| walker |  | 2151 | 132 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.835 |
+| walker |  | 2167 | 16 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.841 |
+| walker |  | 2201 | 34 | Markdown::Section { file: docs/index.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.841 |
+| walker |  | 2289 | 88 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.852 |
+| ns | 2359 |  | 307 | collection.py type roster | 3.1 |  | 0.809 |
+| ns | 2534 |  | 175 | The `.posting.yaml` on-disk request format | 3.2 |  | 0.773 |
+| walker |  | 2587 | 298 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.819 |
 | walker |  | 2592 | 5 | Fs::DirListing { dir: .codex/environments } |  |  | 0.819 |
 | walker |  | 2597 | 5 | Fs::DirListing { dir: tests/__snapshots__ } |  |  | 0.819 |
+| walker |  | 2618 | 21 | Markdown::HeadingsOutline { file: docs/guide/command_palette.md } |  |  | 0.819 |
+| walker |  | 2626 | 8 | Fs::DirListing { dir: tests/resources } |  |  | 0.819 |
+| walker |  | 2636 | 10 | Code::CodeKey { rung: Names, file: src/posting/exit_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.819 |
+| walker |  | 2659 | 23 | Markdown::HeadingsOutline { file: docs/guide/help_system.md } |  |  | 0.819 |
 | ns | 2774 |  | 240 | RequestModel field roster | 3.3 | 3.1 | 0.791 |
-| walker |  | 2843 | 246 | Toml::Config { file: pyproject.toml } |  |  | 0.805 |
-| walker |  | 2864 | 21 | Markdown::HeadingsOutline { file: docs/guide/command_palette.md } |  |  | 0.805 |
-| walker |  | 2872 | 8 | Fs::DirListing { dir: tests/resources } |  |  | 0.805 |
-| walker |  | 2882 | 10 | Code::CodeKey { rung: Names, file: src/posting/exit_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.805 |
-| walker |  | 2905 | 23 | Markdown::HeadingsOutline { file: docs/guide/help_system.md } |  |  | 0.805 |
+| walker |  | 2905 | 246 | Toml::Config { file: pyproject.toml } |  |  | 0.805 |
 | walker |  | 2917 | 12 | Code::CodeKey { rung: Names, file: src/posting/help_data.py, decl: 0, sub: 0, line: 0 } |  |  | 0.805 |
 | ns | 2934 |  | 160 | RequestModel behaviour roster | 3.4 |  | 0.793 |
 | walker |  | 2976 | 59 | Code::CodeKey { rung: Decl, file: src/posting/help_data.py, decl: 1, sub: 0, line: 4 } |  |  | 0.793 |

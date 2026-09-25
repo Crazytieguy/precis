@@ -1,4 +1,4 @@
-Score(3000)=0.626 I=0.777 C=0.504 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.607/0.792/0.736/0.626/0.577/0.529/0.500
+Score(3000)=0.626 I=0.777 C=0.504 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.792/0.736/0.626/0.577/0.529/0.500
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,8 +24,8 @@ Score(3000)=0.626 I=0.777 C=0.504 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | ns | 926 |  | 202 | Canonical usage: the rootCmd literal and Execute() from the user guide | 1.6 |  | 0.520 |
 | ns | 978 |  | 52 | Complete non-Go root listing: build, config, docs, governance | 1.7 |  | 0.577 |
 | walker |  | 984 | 385 | Plaintext::Whole { file: Makefile } |  |  | 0.596 |
-| walker |  | 1083 | 99 | GoMod::File { file: go.mod } |  |  | 0.734 |
-| walker |  | 1177 | 94 | Markdown::HeadingsOutline { file: CONDUCT.md } |  |  | 0.734 |
+| walker |  | 1078 | 94 | Markdown::HeadingsOutline { file: CONDUCT.md } |  |  | 0.596 |
+| walker |  | 1177 | 99 | GoMod::File { file: go.mod } |  |  | 0.734 |
 | walker |  | 1205 | 28 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.734 |
 | ns | 1218 |  | 240 | Makefile: every target and its recipe | 1.8 |  | 0.769 |
 | ns | 1304 |  | 86 | doc/ subpackage, CI workflows, and assets listings | 1.9 |  | 0.782 |

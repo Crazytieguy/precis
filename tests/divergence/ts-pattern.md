@@ -39,17 +39,17 @@ Score(3000)=0.627 I=0.790 C=0.498 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | ns | 2047 |  | 82 | README `###`/`####` heading locations: the Types section | 1.14 |  | 0.714 |
 | ns | 2103 |  | 56 | src/patterns.ts module docstring | 2.1 |  | 0.702 |
 | walker |  | 2133 | 273 | Json::Scripts { file: package.json } |  |  | 0.704 |
-| walker |  | 2339 | 206 | Json::IdentityMeta { file: package.json } |  |  | 0.704 |
 | ns | 2379 |  | 276 | Complete roster of every named export in src/patterns.ts (the `P` namespace) | 2.2 |  | 0.646 |
 | ns | 2425 |  | 46 | src/patterns.ts re-export block: `Pattern`, `unstable_Fn`, `matcher` | 2.3 |  | 0.636 |
-| ns | 2555 |  | 130 | `match()` — doc summary, signature and body in src/match.ts | 2.4 |  | 0.625 |
-| walker |  | 2695 | 356 | Json::Entry { file: package.json } |  |  | 0.638 |
-| walker |  | 2713 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.638 |
-| ns | 2720 |  | 165 | `isMatching()` — both overload signatures with their doc summaries | 2.5 |  | 0.626 |
-| walker |  | 2730 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.626 |
-| walker |  | 2770 | 40 | Code::CodeKey { rung: Doc, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.627 |
-| walker |  | 2845 | 75 | Code::CodeKey { rung: Body, file: src/errors.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.629 |
-| walker |  | 2849 | 4 | Fs::DirListing { dir: examples/gif-fetcher/public } |  |  | 0.633 |
+| walker |  | 2491 | 358 | Json::Entry { file: package.json } |  |  | 0.650 |
+| walker |  | 2509 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.650 |
+| walker |  | 2526 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.650 |
+| ns | 2555 |  | 130 | `match()` — doc summary, signature and body in src/match.ts | 2.4 |  | 0.638 |
+| walker |  | 2566 | 40 | Code::CodeKey { rung: Doc, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.639 |
+| walker |  | 2641 | 75 | Code::CodeKey { rung: Body, file: src/errors.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.641 |
+| walker |  | 2645 | 4 | Fs::DirListing { dir: examples/gif-fetcher/public } |  |  | 0.646 |
+| ns | 2720 |  | 165 | `isMatching()` — both overload signatures with their doc summaries | 2.5 |  | 0.633 |
+| walker |  | 2849 | 204 | Json::IdentityMeta { file: package.json } |  |  | 0.633 |
 | walker |  | 2857 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.644 |
 | walker |  | 2867 | 10 | Code::CodeKey { rung: Names, file: src/types/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
 | ns | 2887 |  | 167 | Complete method roster of the `Match<>` builder type (src/types/Match.ts) | 2.6 |  | 0.622 |

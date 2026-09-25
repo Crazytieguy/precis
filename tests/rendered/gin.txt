@@ -214,24 +214,6 @@ go.mod
   1→module github.com/gin-gonic/gin
   2→
   3→go 1.25.0
-  4→
-  5→require (
-  6→	github.com/bytedance/sonic v1.15.0
-  7→	github.com/gin-contrib/sse v1.1.0
-  8→	github.com/go-playground/validator/v10 v10.30.1
-  9→	github.com/goccy/go-json v0.10.6
-  10→	github.com/goccy/go-yaml v1.19.2
-  11→	github.com/json-iterator/go v1.1.12
-  12→	github.com/mattn/go-isatty v0.0.20
-  13→	github.com/modern-go/reflect2 v1.0.2
-  14→	github.com/pelletier/go-toml/v2 v2.2.4
-  15→	github.com/quic-go/quic-go v0.59.0
-  16→	github.com/stretchr/testify v1.11.1
-  17→	github.com/ugorji/go/codec v1.3.1
-  18→	go.mongodb.org/mongo-driver/v2 v2.5.0
-  19→	golang.org/x/net v0.52.0
-  20→	google.golang.org/protobuf v1.36.11
-  21→)
   …
 go.sum
 internal/
@@ -263,28 +245,44 @@ path.go
 path_test.go
 recovery.go
   …
+  26→const (
   27→	dunno     = "???"
   28→	stackSkip = 3
-  …
+  29→)
+  31→// RecoveryFunc defines the function passable to CustomRecovery.
   32→type RecoveryFunc func(c *Context, err any)
-  …
+  34→// Recovery returns a middleware that recovers from any panics and writes a 500 if there was one.
   35→func Recovery() HandlerFunc {
+  36→	return RecoveryWithWriter(DefaultErrorWriter)
   …
+  39→// CustomRecovery returns a middleware that recovers from any panics and calls the provided handle func to handle it.
   40→func CustomRecovery(handle RecoveryFunc) HandlerFunc {
+  41→	return RecoveryWithWriter(DefaultErrorWriter, handle)
   …
+  44→// RecoveryWithWriter returns a middleware for a given writer that recovers from any panics and writes a 500 if there was one.
   45→func RecoveryWithWriter(out io.Writer, recovery ...RecoveryFunc) HandlerFunc {
   …
+  52→// CustomRecoveryWithWriter returns a middleware for a given writer that recovers from any panics and calls the provided handle func to handle it.
   53→func CustomRecoveryWithWriter(out io.Writer, handle RecoveryFunc) HandlerFunc {
   …
   98→func secureRequestDump(r *http.Request) string {
   …
   109→func defaultHandleRecovery(c *Context, _ any) {
   …
+  113→// stack returns a nicely formatted stack frame, skipping skip frames.
   114→func stack(skip int) []byte {
   …
+  142→// readNthLine reads the nth line from the file.
+  143→// It returns the trimmed content of the line if found,
+  144→// or an empty string if the line doesn't exist.
+  145→// If there's an error opening the file, it returns the error.
   146→func readNthLine(file string, n int) (string, error) {
   …
+  171→// function returns, if possible, the name of the function containing the PC.
   172→func function(pc uintptr) string {
+  …
+  196→// timeFormat returns a customized time string for logger.
+  197→func timeFormat(t time.Time) string {
   …
 recovery_test.go
 render/

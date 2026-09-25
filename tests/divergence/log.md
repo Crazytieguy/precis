@@ -24,11 +24,11 @@ Score(3000)=0.565 I=0.787 C=0.406 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | ns | 431 |  | 127 | Cargo.toml package block: version, licence, MSRV, edition | 1.7 |  | 0.779 |
 | walker |  | 462 | 191 | Toml::Identity { file: Cargo.toml } |  |  | 0.897 |
 | walker |  | 526 | 64 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.897 |
-| walker |  | 562 | 36 | Toml::Config { file: Cargo.toml } |  |  | 0.897 |
 | ns | 565 |  | 134 | Cargo features, part 1: the twelve compile-time level filters | 1.8 |  | 0.767 |
-| walker |  | 681 | 119 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.772 |
-| walker |  | 726 | 45 | Code::CodeKey { rung: ModuleDoc, file: src/kv/value.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
-| walker |  | 774 | 48 | Code::CodeKey { rung: ModuleDoc, file: src/kv/source.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
+| walker |  | 571 | 45 | Code::CodeKey { rung: ModuleDoc, file: src/kv/value.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.767 |
+| walker |  | 607 | 36 | Toml::Config { file: Cargo.toml } |  |  | 0.767 |
+| walker |  | 655 | 48 | Code::CodeKey { rung: ModuleDoc, file: src/kv/source.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.767 |
+| walker |  | 774 | 119 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.772 |
 | ns | 799 |  | 234 | Cargo features, part 2: std, the kv family, the serde alias, deprecated aliases | 1.9 | 1.8 | 0.683 |
 | ns | 916 |  | 117 | The four optional runtime dependencies | 1.10 |  | 0.691 |
 | walker |  | 1031 | 257 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |

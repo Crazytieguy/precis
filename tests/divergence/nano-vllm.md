@@ -16,19 +16,19 @@ Score(3000)=0.707 I=0.862 C=0.580 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 225 |  | 78 | The complete public API: __init__.py and llm.py | 1.5 |  | 0.651 |
 | walker |  | 227 | 94 | Toml::Identity { file: pyproject.toml } |  |  | 0.652 |
 | walker |  | 258 | 31 | Fs::DirListing { dir: nanovllm/layers } |  |  | 0.664 |
-| walker |  | 280 | 22 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.665 |
-| ns | 302 |  | 77 | README Key Features bullets | 1.6 |  | 0.618 |
-| walker |  | 336 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.817 |
-| walker |  | 413 | 77 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.893 |
+| ns | 302 |  | 77 | README Key Features bullets | 1.6 |  | 0.617 |
+| walker |  | 314 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.817 |
+| walker |  | 391 | 77 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.892 |
+| walker |  | 413 | 22 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.893 |
 | ns | 450 |  | 148 | README Quick Start usage snippet | 1.7 |  | 0.779 |
 | walker |  | 488 | 75 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.782 |
 | walker |  | 527 | 39 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.782 |
+| walker |  | 538 | 11 | Code::CodeKey { rung: Names, file: bench.py, decl: 0, sub: 0, line: 0 } |  |  | 0.782 |
+| walker |  | 549 | 11 | Code::CodeKey { rung: Names, file: example.py, decl: 0, sub: 0, line: 0 } |  |  | 0.782 |
 | ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.684 |
-| walker |  | 623 | 96 | Toml::Config { file: pyproject.toml } |  |  | 0.684 |
-| walker |  | 634 | 11 | Code::CodeKey { rung: Names, file: bench.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
-| walker |  | 645 | 11 | Code::CodeKey { rung: Names, file: example.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
-| walker |  | 676 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
-| walker |  | 732 | 56 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.699 |
+| walker |  | 580 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
+| walker |  | 636 | 56 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.699 |
+| walker |  | 732 | 96 | Toml::Config { file: pyproject.toml } |  |  | 0.699 |
 | walker |  | 743 | 11 | Code::CodeKey { rung: Names, file: nanovllm/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
 | ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.591 |
 | ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.560 |

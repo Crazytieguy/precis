@@ -10,13 +10,13 @@ Score(3000)=0.631 I=0.881 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 153 | 74 | Toml::Identity { file: pyproject.toml } |  |  | 0.772 |
 | ns | 218 |  | 78 | Package module roster: src/typeguard/ | 1.3 |  | 0.510 |
 | walker |  | 227 | 74 | Fs::DirListing { dir: src/typeguard } |  |  | 0.868 |
-| walker |  | 278 | 51 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.868 |
 | ns | 313 |  | 95 | README: the two principal checking modes | 1.4 |  | 0.746 |
-| walker |  | 384 | 106 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.864 |
-| walker |  | 419 | 35 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.788 |
+| walker |  | 333 | 106 | Markdown::ReadmeHeadline { file: README.rst } |  |  | 0.863 |
+| walker |  | 384 | 51 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.864 |
+| walker |  | 411 | 27 | Fs::DirListing { dir: .github } |  |  | 0.864 |
+| walker |  | 419 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.788 |
 | ns | 419 |  | 106 | README: what instrumentation actually covers | 1.5 | 1.4 | 0.788 |
-| walker |  | 446 | 27 | Fs::DirListing { dir: .github } |  |  | 0.788 |
-| walker |  | 454 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.789 |
+| walker |  | 454 | 35 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.789 |
 | ns | 552 |  | 133 | README: the two instrumentation entry points | 1.6 |  | 0.686 |
 | walker |  | 554 | 100 | Fs::DirListing { dir: tests } |  |  | 0.704 |
 | walker |  | 568 | 14 | Fs::DirListing { dir: tests/mypy } |  |  | 0.709 |

@@ -1,4 +1,4 @@
-Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.822/0.687/0.599/0.531/0.499/0.494/0.525
+Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.822/0.686/0.599/0.531/0.499/0.494/0.525
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -48,10 +48,10 @@ Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 1027 | 25 | Markdown::Section { file: README.md, section_index: 26, keeps_default_concavity: false } |  |  | 0.799 |
 | ns | 1177 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.762 |
 | ns | 1255 |  | 78 | Domain sentinel errors | 2.4 |  | 0.744 |
-| walker |  | 1269 | 242 | GoMod::File { file: go.mod } |  |  | 0.745 |
-| ns | 1442 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.687 |
-| ns | 1508 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.670 |
-| walker |  | 1548 | 279 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.670 |
+| walker |  | 1306 | 279 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.744 |
+| ns | 1442 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.685 |
+| ns | 1508 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.669 |
+| walker |  | 1548 | 242 | GoMod::File { file: go.mod } |  |  | 0.670 |
 | ns | 1603 |  | 95 | dto.Report and dto.ProjectReport | 2.7 |  | 0.647 |
 | ns | 1687 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.630 |
 | walker |  | 1736 | 188 | Markdown::HeadingsOutline { file: docs/commands.md } |  |  | 0.630 |

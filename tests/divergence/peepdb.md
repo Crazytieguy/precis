@@ -1,4 +1,4 @@
-Score(3000)=0.669 I=0.866 C=0.517 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.592/0.660/0.712/0.669/0.661/0.613/0.591
+Score(3000)=0.669 I=0.866 C=0.517 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.592/0.691/0.712/0.669/0.661/0.613/0.591
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -18,34 +18,34 @@ Score(3000)=0.669 I=0.866 C=0.517 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 300 | 27 | Toml::Operational { file: project.toml } |  |  | 0.783 |
 | ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.699 |
 | walker |  | 397 | 97 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.846 |
-| walker |  | 453 | 56 | Toml::PackageMetadata { file: project.toml } |  |  | 0.846 |
 | ns | 497 |  | 119 | peepdb/db/__init__.py — backend class ↔ module map | 1.7 |  | 0.744 |
-| walker |  | 645 | 192 | Toml::Dependencies { file: project.toml } |  |  | 0.744 |
-| ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.682 |
-| ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.613 |
-| walker |  | 838 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.622 |
-| walker |  | 873 | 35 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.622 |
-| walker |  | 901 | 28 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.622 |
+| walker |  | 590 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.754 |
+| walker |  | 625 | 35 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.754 |
+| walker |  | 653 | 28 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.754 |
+| ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.691 |
+| walker |  | 683 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 718 | 35 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 774 | 56 | Toml::PackageMetadata { file: project.toml } |  |  | 0.692 |
+| walker |  | 820 | 46 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.692 |
+| ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.622 |
+| walker |  | 874 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.622 |
 | ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.592 |
-| walker |  | 931 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.592 |
-| walker |  | 966 | 35 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.592 |
-| walker |  | 1012 | 46 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.592 |
+| walker |  | 930 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.592 |
+| walker |  | 986 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.592 |
 | ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.591 |
-| walker |  | 1066 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.591 |
-| walker |  | 1193 | 127 | Toml::Config { file: project.toml } |  |  | 0.592 |
+| walker |  | 1178 | 192 | Toml::Dependencies { file: project.toml } |  |  | 0.591 |
 | ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.628 |
-| walker |  | 1249 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.628 |
-| walker |  | 1305 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.628 |
-| walker |  | 1347 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.697 |
-| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.660 |
-| walker |  | 1473 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.660 |
-| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.641 |
-| ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.621 |
-| walker |  | 1688 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 1785 | 97 | Markdown::HeadingsOutline { file: docs/usage.md } |  |  | 0.681 |
-| walker |  | 1817 | 32 | Markdown::Section { file: docs/usage.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.681 |
-| walker |  | 1828 | 11 | Code::CodeKey { rung: Names, file: peepdb/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
-| walker |  | 1833 | 5 | Code::CodeKey { rung: Decl, file: peepdb/exceptions.py, decl: 1, sub: 0, line: 1 } |  |  | 0.690 |
+| walker |  | 1220 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.696 |
+| walker |  | 1346 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.696 |
+| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.659 |
+| walker |  | 1561 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.724 |
+| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.703 |
+| walker |  | 1658 | 97 | Markdown::HeadingsOutline { file: docs/usage.md } |  |  | 0.703 |
+| ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.681 |
+| walker |  | 1690 | 32 | Markdown::Section { file: docs/usage.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.681 |
+| walker |  | 1701 | 11 | Code::CodeKey { rung: Names, file: peepdb/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
+| walker |  | 1706 | 5 | Code::CodeKey { rung: Decl, file: peepdb/exceptions.py, decl: 1, sub: 0, line: 1 } |  |  | 0.689 |
+| walker |  | 1833 | 127 | Toml::Config { file: project.toml } |  |  | 0.690 |
 | ns | 1922 |  | 242 | `view` docstring + connection resolution (cli.py 134-155) | 2.4 | 1.6 | 0.637 |
 | walker |  | 1944 | 111 | Code::CodeKey { rung: Names, file: peepdb/cli.py, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
 | walker |  | 1952 | 8 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 5, sub: 0, line: 86 } |  |  | 0.679 |

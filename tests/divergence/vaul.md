@@ -1,4 +1,4 @@
-Score(3000)=0.875 I=0.929 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.875/0.798/0.732/0.653
+Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.798/0.732/0.653
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,10 +9,10 @@ Score(3000)=0.875 I=0.929 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 86 |  | 86 | Package identity: name, version, description, entry points | 1.1 |  | 0.000 |
 | walker |  | 131 | 58 | Json::Identity { file: package.json } |  |  | 0.460 |
 | ns | 148 |  | 62 | Complete repository root listing | 1.2 |  | 0.677 |
-| walker |  | 167 | 36 | Json::Dependencies { file: package.json } |  |  | 0.677 |
-| walker |  | 186 | 19 | Json::Runtime { file: package.json } |  |  | 0.677 |
-| ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.507 |
-| walker |  | 257 | 71 | Fs::DirListing { dir: src } |  |  | 0.737 |
+| walker |  | 202 | 71 | Fs::DirListing { dir: src } |  |  | 0.746 |
+| ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.737 |
+| walker |  | 223 | 21 | Json::Runtime { file: package.json } |  |  | 0.737 |
+| walker |  | 257 | 34 | Json::Dependencies { file: package.json } |  |  | 0.737 |
 | walker |  | 320 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |
 | walker |  | 372 | 52 | Fs::DirListing { dir: test } |  |  | 0.622 |
@@ -46,19 +46,19 @@ Score(3000)=0.875 I=0.929 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.632 |
 | walker |  | 2896 | 1170 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 0, line: 50 } |  |  | 0.912 |
 | ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.875 |
-| ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.862 |
-| walker |  | 3072 | 176 | Json::IdentityMeta { file: package.json } |  |  | 0.862 |
-| walker |  | 3171 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.864 |
-| walker |  | 3237 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.865 |
+| walker |  | 2995 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.877 |
+| walker |  | 3061 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.879 |
+| ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.865 |
+| walker |  | 3075 | 14 | Code::CodeKey { rung: Names, file: src/use-position-fixed.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.865 |
+| walker |  | 3199 | 124 | Code::CodeKey { rung: Decl, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.866 |
+| walker |  | 3213 | 14 | Code::CodeKey { rung: Names, file: src/use-snap-points.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.866 |
 | ns | 3242 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.851 |
-| walker |  | 3251 | 14 | Code::CodeKey { rung: Names, file: src/use-position-fixed.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.851 |
 | ns | 3354 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.839 |
-| walker |  | 3375 | 124 | Code::CodeKey { rung: Decl, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.839 |
-| walker |  | 3389 | 14 | Code::CodeKey { rung: Names, file: src/use-snap-points.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.839 |
-| ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.812 |
-| walker |  | 3638 | 249 | Code::CodeKey { rung: Decl, file: src/use-snap-points.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.816 |
-| walker |  | 3698 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 11, sub: 0, line: 1130 } |  |  | 0.816 |
-| walker |  | 3713 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.816 |
+| walker |  | 3462 | 249 | Code::CodeKey { rung: Decl, file: src/use-snap-points.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.844 |
+| walker |  | 3522 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 11, sub: 0, line: 1130 } |  |  | 0.844 |
+| walker |  | 3537 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.844 |
+| ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.816 |
+| walker |  | 3713 | 176 | Json::IdentityMeta { file: package.json } |  |  | 0.816 |
 | ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.793 |
 | walker |  | 3825 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.808 |
 | walker |  | 3837 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.808 |

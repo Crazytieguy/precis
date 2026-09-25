@@ -1,4 +1,4 @@
-Score(3000)=0.715 I=0.874 C=0.585 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.892/0.814/0.788/0.715/0.609/0.532/0.516
+Score(3000)=0.726 I=0.879 C=0.600 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.892/0.864/0.807/0.726/0.609/0.532/0.516
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -51,50 +51,50 @@ Score(3000)=0.715 I=0.874 C=0.585 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 1228 | 27 | Markdown::Section { file: sdk/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.850 |
 | walker |  | 1241 | 13 | Markdown::Section { file: sdk/README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.850 |
 | ns | 1243 |  | 154 | main.go entry point | 2.1 |  | 0.814 |
-| ns | 1504 |  | 261 | Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init) | 2.2 |  | 0.771 |
-| ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.742 |
-| walker |  | 1755 | 514 | GoMod::File { file: go.mod } |  |  | 0.742 |
-| walker |  | 1813 | 58 | Markdown::Section { file: README.md, section_index: 31, keeps_default_concavity: false } |  |  | 0.745 |
-| walker |  | 1940 | 127 | Code::CodeKey { rung: Body, file: main.go, decl: 2, sub: 0, line: 14 } |  |  | 0.786 |
-| walker |  | 2006 | 66 | Markdown::Section { file: README.md, section_index: 34, keeps_default_concavity: false } |  |  | 0.788 |
-| ns | 2098 |  | 344 | Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags | 2.4 |  | 0.749 |
-| walker |  | 2204 | 198 | Code::CodeKey { rung: ModuleDoc, file: internal/tokens/anthropic.go, decl: 0, sub: 0, line: 0 } |  |  | 0.749 |
-| walker |  | 2210 | 6 | Fs::DirListing { dir: sdk/examples } |  |  | 0.763 |
-| ns | 2224 |  | 126 | Provider and TLS flag registration | 2.5 |  | 0.756 |
-| walker |  | 2281 | 71 | Code::CodeKey { rung: Names, file: cmd/hooks.go, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |
-| walker |  | 2328 | 47 | Code::CodeKey { rung: Decl, file: cmd/hooks.go, decl: 1, sub: 0, line: 16 } |  |  | 0.757 |
-| ns | 2502 |  | 278 | Generation-parameter and Ollama flag registration, with the hidden flag | 2.6 |  | 0.737 |
-| walker |  | 2513 | 185 | Code::CodeKey { rung: Decl, file: cmd/hooks.go, decl: 3, sub: 0, line: 57 } |  |  | 0.739 |
-| ns | 2749 |  | 247 | MCPServerConfig: complete field set including the legacy block | 3.1 |  | 0.713 |
-| walker |  | 2833 | 320 | Code::CodeKey { rung: Decl, file: cmd/hooks.go, decl: 2, sub: 0, line: 25 } |  |  | 0.715 |
-| walker |  | 2884 | 51 | Code::CodeKey { rung: Doc, file: cmd/hooks.go, decl: 3, sub: 0, line: 57 } |  |  | 0.715 |
-| walker |  | 2938 | 54 | Code::CodeKey { rung: Doc, file: cmd/hooks.go, decl: 2, sub: 0, line: 25 } |  |  | 0.715 |
-| walker |  | 2997 | 59 | Code::CodeKey { rung: Doc, file: cmd/hooks.go, decl: 1, sub: 0, line: 16 } |  |  | 0.715 |
-| walker |  | 3037 | 40 | Plaintext::DeclSurface { file: contribute/build.sh } |  |  | 0.715 |
-| walker |  | 3048 | 11 | Plaintext::Whole { file: contribute/build.sh } |  |  | 0.715 |
-| ns | 3069 |  | 320 | Config struct: application-level keys | 3.2 |  | 0.693 |
-| walker |  | 3151 | 103 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.696 |
-| ns | 3250 |  | 181 | Config struct: generation-parameter and TLS keys | 3.3 |  | 0.681 |
-| walker |  | 3311 | 160 | Code::CodeKey { rung: Names, file: cmd/auth.go, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 3430 | 119 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 4, sub: 0, line: 78 } |  |  | 0.684 |
-| ns | 3514 |  | 264 | GetTransportType: type-to-transport mapping and legacy inference | 3.4 |  | 0.649 |
-| walker |  | 3591 | 161 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 1, sub: 0, line: 17 } |  |  | 0.654 |
-| walker |  | 3758 | 167 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 3, sub: 0, line: 58 } |  |  | 0.660 |
-| walker |  | 3933 | 175 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 2, sub: 0, line: 37 } |  |  | 0.667 |
+| walker |  | 1299 | 58 | Markdown::Section { file: README.md, section_index: 31, keeps_default_concavity: false } |  |  | 0.816 |
+| walker |  | 1426 | 127 | Code::CodeKey { rung: Body, file: main.go, decl: 2, sub: 0, line: 14 } |  |  | 0.861 |
+| walker |  | 1492 | 66 | Markdown::Section { file: README.md, section_index: 34, keeps_default_concavity: false } |  |  | 0.864 |
+| ns | 1504 |  | 261 | Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init) | 2.2 |  | 0.819 |
+| walker |  | 1690 | 198 | Code::CodeKey { rung: ModuleDoc, file: internal/tokens/anthropic.go, decl: 0, sub: 0, line: 0 } |  |  | 0.819 |
+| walker |  | 1696 | 6 | Fs::DirListing { dir: sdk/examples } |  |  | 0.835 |
+| ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.803 |
+| walker |  | 1767 | 71 | Code::CodeKey { rung: Names, file: cmd/hooks.go, decl: 0, sub: 0, line: 0 } |  |  | 0.803 |
+| walker |  | 1814 | 47 | Code::CodeKey { rung: Decl, file: cmd/hooks.go, decl: 1, sub: 0, line: 16 } |  |  | 0.804 |
+| walker |  | 1999 | 185 | Code::CodeKey { rung: Decl, file: cmd/hooks.go, decl: 3, sub: 0, line: 57 } |  |  | 0.805 |
+| ns | 2098 |  | 344 | Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags | 2.4 |  | 0.765 |
+| ns | 2224 |  | 126 | Provider and TLS flag registration | 2.5 |  | 0.758 |
+| walker |  | 2319 | 320 | Code::CodeKey { rung: Decl, file: cmd/hooks.go, decl: 2, sub: 0, line: 25 } |  |  | 0.760 |
+| walker |  | 2370 | 51 | Code::CodeKey { rung: Doc, file: cmd/hooks.go, decl: 3, sub: 0, line: 57 } |  |  | 0.760 |
+| walker |  | 2424 | 54 | Code::CodeKey { rung: Doc, file: cmd/hooks.go, decl: 2, sub: 0, line: 25 } |  |  | 0.760 |
+| walker |  | 2483 | 59 | Code::CodeKey { rung: Doc, file: cmd/hooks.go, decl: 1, sub: 0, line: 16 } |  |  | 0.760 |
+| ns | 2502 |  | 278 | Generation-parameter and Ollama flag registration, with the hidden flag | 2.6 |  | 0.741 |
+| walker |  | 2523 | 40 | Plaintext::DeclSurface { file: contribute/build.sh } |  |  | 0.741 |
+| walker |  | 2534 | 11 | Plaintext::Whole { file: contribute/build.sh } |  |  | 0.741 |
+| walker |  | 2637 | 103 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.744 |
+| ns | 2749 |  | 247 | MCPServerConfig: complete field set including the legacy block | 3.1 |  | 0.718 |
+| walker |  | 2797 | 160 | Code::CodeKey { rung: Names, file: cmd/auth.go, decl: 0, sub: 0, line: 0 } |  |  | 0.718 |
+| walker |  | 2916 | 119 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 4, sub: 0, line: 78 } |  |  | 0.721 |
+| ns | 3069 |  | 320 | Config struct: application-level keys | 3.2 |  | 0.699 |
+| walker |  | 3077 | 161 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 1, sub: 0, line: 17 } |  |  | 0.704 |
+| walker |  | 3244 | 167 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 3, sub: 0, line: 58 } |  |  | 0.711 |
+| ns | 3250 |  | 181 | Config struct: generation-parameter and TLS keys | 3.3 |  | 0.695 |
+| walker |  | 3419 | 175 | Code::CodeKey { rung: Decl, file: cmd/auth.go, decl: 2, sub: 0, line: 37 } |  |  | 0.703 |
+| walker |  | 3470 | 51 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 3, sub: 0, line: 58 } |  |  | 0.703 |
+| ns | 3514 |  | 264 | GetTransportType: type-to-transport mapping and legacy inference | 3.4 |  | 0.667 |
+| walker |  | 3522 | 52 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 2, sub: 0, line: 37 } |  |  | 0.667 |
+| walker |  | 3576 | 54 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 4, sub: 0, line: 78 } |  |  | 0.667 |
+| walker |  | 3640 | 64 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 1, sub: 0, line: 17 } |  |  | 0.667 |
+| walker |  | 3705 | 65 | Code::CodeKey { rung: Names, file: sdk/types.go, decl: 0, sub: 0, line: 0 } |  |  | 0.667 |
+| walker |  | 3716 | 11 | Code::CodeKey { rung: Body, file: sdk/types.go, decl: 3, sub: 0, line: 18 } |  |  | 0.667 |
+| walker |  | 3728 | 12 | Code::CodeKey { rung: Body, file: sdk/types.go, decl: 4, sub: 0, line: 24 } |  |  | 0.667 |
+| walker |  | 3760 | 32 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 3, sub: 0, line: 18 } |  |  | 0.667 |
+| walker |  | 3793 | 33 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 1, sub: 0, line: 10 } |  |  | 0.667 |
+| walker |  | 3827 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 2, sub: 0, line: 14 } |  |  | 0.667 |
+| walker |  | 3861 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 4, sub: 0, line: 24 } |  |  | 0.667 |
 | ns | 3938 |  | 424 | Config.Validate: required fields per transport and filter exclusivity | 3.5 |  | 0.634 |
-| walker |  | 3984 | 51 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 3, sub: 0, line: 58 } |  |  | 0.634 |
-| walker |  | 4036 | 52 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 2, sub: 0, line: 37 } |  |  | 0.634 |
-| walker |  | 4090 | 54 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 4, sub: 0, line: 78 } |  |  | 0.634 |
 | ns | 4141 |  | 203 | Substitution engine: the two regexes plus every symbol in substitution.go | 3.6 |  | 0.622 |
-| walker |  | 4154 | 64 | Code::CodeKey { rung: Doc, file: cmd/auth.go, decl: 1, sub: 0, line: 17 } |  |  | 0.622 |
-| walker |  | 4219 | 65 | Code::CodeKey { rung: Names, file: sdk/types.go, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
-| walker |  | 4230 | 11 | Code::CodeKey { rung: Body, file: sdk/types.go, decl: 3, sub: 0, line: 18 } |  |  | 0.622 |
-| walker |  | 4242 | 12 | Code::CodeKey { rung: Body, file: sdk/types.go, decl: 4, sub: 0, line: 24 } |  |  | 0.622 |
-| walker |  | 4274 | 32 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 3, sub: 0, line: 18 } |  |  | 0.622 |
 | ns | 4295 |  | 154 | Remaining top-level symbols of internal/config/config.go and all of merger.go (locations) | 3.7 |  | 0.609 |
-| walker |  | 4307 | 33 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 1, sub: 0, line: 10 } |  |  | 0.609 |
-| walker |  | 4341 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 2, sub: 0, line: 14 } |  |  | 0.609 |
-| walker |  | 4375 | 34 | Code::CodeKey { rung: Doc, file: sdk/types.go, decl: 4, sub: 0, line: 24 } |  |  | 0.609 |
+| walker |  | 4375 | 514 | GoMod::File { file: go.mod } |  |  | 0.609 |
 | walker |  | 4379 | 4 | Fs::DirListing { dir: sdk/examples/basic } |  |  | 0.615 |
 | walker |  | 4383 | 4 | Fs::DirListing { dir: sdk/examples/scripting } |  |  | 0.622 |
 | ns | 4541 |  | 246 | Agent struct and its seven callback handler types | 4.1 |  | 0.606 |

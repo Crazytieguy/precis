@@ -1,4 +1,4 @@
-Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.523/0.708/0.736/0.621/0.521/0.552
+Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.459/0.644/0.736/0.621/0.521/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -17,28 +17,28 @@ Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 549 | 73 | Fs::DirListing { dir: questions } |  |  | 0.159 |
 | walker |  | 647 | 98 | Fs::DirListing { dir: imgs } |  |  | 0.159 |
 | ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.134 |
-| walker |  | 728 | 81 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.187 |
-| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.174 |
-| walker |  | 875 | 147 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.316 |
-| walker |  | 898 | 23 | Fs::DirListing { dir: .github } |  |  | 0.316 |
-| walker |  | 928 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.316 |
-| ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.548 |
-| walker |  | 951 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.549 |
-| walker |  | 1032 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.549 |
-| walker |  | 1123 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.647 |
-| walker |  | 1145 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.656 |
-| walker |  | 1196 | 51 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.750 |
-| walker |  | 1239 | 43 | Fs::DirListing { dir: tools } |  |  | 0.751 |
-| ns | 1312 |  | 363 | rich/ package module roster (complete) | 1.9 |  | 0.535 |
-| walker |  | 1374 | 135 | Fs::DirListing { dir: docs/source } |  |  | 0.537 |
-| walker |  | 1384 | 10 | Fs::DirListing { dir: docs/source/appendix } |  |  | 0.538 |
-| ns | 1424 |  | 112 | rich.* top-level function signatures: get_console, reconfigure, print | 2.1 |  | 0.522 |
-| walker |  | 1550 | 166 | Fs::DirListing { dir: examples } |  |  | 0.525 |
-| ns | 1729 |  | 305 | rich.* top-level function signatures: print_json, inspect | 2.2 |  | 0.486 |
-| walker |  | 1913 | 363 | Fs::DirListing { dir: rich } |  |  | 0.743 |
-| walker |  | 1929 | 16 | Code::CodeKey { rung: ModuleDoc, file: rich/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |
-| ns | 2019 |  | 290 | The console protocol: RichCast, ConsoleRenderable, RenderableType, RenderResult | 2.3 |  | 0.707 |
-| walker |  | 2129 | 200 | Fs::DirListing { dir: rich/_unicode_data } |  |  | 0.709 |
+| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.125 |
+| walker |  | 794 | 147 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.259 |
+| walker |  | 817 | 23 | Fs::DirListing { dir: .github } |  |  | 0.259 |
+| walker |  | 847 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.259 |
+| walker |  | 870 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.259 |
+| ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.527 |
+| walker |  | 951 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.527 |
+| walker |  | 1042 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.625 |
+| walker |  | 1064 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.634 |
+| walker |  | 1145 | 81 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.656 |
+| walker |  | 1188 | 43 | Fs::DirListing { dir: tools } |  |  | 0.657 |
+| ns | 1312 |  | 363 | rich/ package module roster (complete) | 1.9 |  | 0.468 |
+| walker |  | 1323 | 135 | Fs::DirListing { dir: docs/source } |  |  | 0.471 |
+| walker |  | 1333 | 10 | Fs::DirListing { dir: docs/source/appendix } |  |  | 0.471 |
+| ns | 1424 |  | 112 | rich.* top-level function signatures: get_console, reconfigure, print | 2.1 |  | 0.457 |
+| walker |  | 1499 | 166 | Fs::DirListing { dir: examples } |  |  | 0.461 |
+| ns | 1729 |  | 305 | rich.* top-level function signatures: print_json, inspect | 2.2 |  | 0.426 |
+| walker |  | 1862 | 363 | Fs::DirListing { dir: rich } |  |  | 0.673 |
+| walker |  | 1878 | 16 | Code::CodeKey { rung: ModuleDoc, file: rich/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
+| ns | 2019 |  | 290 | The console protocol: RichCast, ConsoleRenderable, RenderableType, RenderResult | 2.3 |  | 0.642 |
+| walker |  | 2078 | 200 | Fs::DirListing { dir: rich/_unicode_data } |  |  | 0.644 |
+| walker |  | 2129 | 51 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.709 |
 | walker |  | 2155 | 26 | Code::CodeKey { rung: Names, file: rich/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
 | walker |  | 2177 | 22 | Code::CodeKey { rung: Decl, file: rich/__main__.py, decl: 1, sub: 0, line: 18 } |  |  | 0.709 |
 | walker |  | 2203 | 26 | Code::CodeKey { rung: Decl, file: rich/__main__.py, decl: 2, sub: 0, line: 19 } |  |  | 0.709 |
@@ -167,80 +167,80 @@ Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 6939 |  | 174 | Width measurement, cell arithmetic, wrapping, ratios | 3.16 |  | 0.491 |
 | walker |  | 6966 | 194 | Code::CodeKey { rung: Decl, file: rich/segment.py, decl: 1, sub: 0, line: 32 } |  |  | 0.491 |
 | walker |  | 6982 | 16 | Code::CodeKey { rung: Doc, file: rich/segment.py, decl: 1, sub: 0, line: 32 } |  |  | 0.491 |
+| walker |  | 7006 | 24 | Code::CodeKey { rung: Names, file: rich/_null_file.py, decl: 0, sub: 0, line: 0 } |  |  | 0.491 |
 | ns | 7034 |  | 95 | Complete exception hierarchy | 3.17 |  | 0.487 |
 | ns | 7112 |  | 78 | Control codes | 3.18 |  | 0.485 |
-| walker |  | 7225 | 243 | Toml::Config { file: pyproject.toml } |  |  | 0.505 |
-| walker |  | 7249 | 24 | Code::CodeKey { rung: Names, file: rich/_null_file.py, decl: 0, sub: 0, line: 0 } |  |  | 0.505 |
-| ns | 7375 |  | 263 | Protocol helpers, file plumbing and small utilities | 3.19 |  | 0.496 |
-| walker |  | 7583 | 334 | Code::CodeKey { rung: Decl, file: rich/_null_file.py, decl: 1, sub: 0, line: 5 } |  |  | 0.496 |
-| walker |  | 7588 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 2, sub: 0, line: 6 } |  |  | 0.496 |
-| walker |  | 7593 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 4, sub: 0, line: 12 } |  |  | 0.496 |
-| walker |  | 7598 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 6, sub: 0, line: 18 } |  |  | 0.496 |
-| walker |  | 7603 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 7, sub: 0, line: 21 } |  |  | 0.496 |
-| ns | 7612 |  | 237 | Legacy Windows console support | 3.20 |  | 0.489 |
-| walker |  | 7662 | 59 | Code::CodeKey { rung: Decl, file: rich/_null_file.py, decl: 17, sub: 0, line: 51 } |  |  | 0.489 |
-| walker |  | 7667 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 13, sub: 0, line: 39 } |  |  | 0.489 |
-| walker |  | 7672 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 14, sub: 0, line: 42 } |  |  | 0.489 |
-| walker |  | 7677 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 17, sub: 0, line: 51 } |  |  | 0.489 |
-| walker |  | 7682 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 19, sub: 0, line: 62 } |  |  | 0.489 |
-| walker |  | 7688 | 6 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 3, sub: 0, line: 9 } |  |  | 0.489 |
-| walker |  | 7700 | 12 | Code::CodeKey { rung: Names, file: rich/scope.py, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| ns | 7766 |  | 154 | Makefile — the complete set of dev commands | 4.1 |  | 0.500 |
-| walker |  | 7826 | 126 | Code::CodeKey { rung: Decl, file: rich/scope.py, decl: 1, sub: 0, line: 14 } |  |  | 0.500 |
-| walker |  | 7952 | 126 | Markdown::Section { file: AI_POLICY.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.500 |
-| walker |  | 7958 | 6 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 5, sub: 0, line: 15 } |  |  | 0.500 |
-| walker |  | 8070 | 112 | Code::CodeKey { rung: Names, file: rich/errors.py, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
-| walker |  | 8078 | 8 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 4, sub: 0, line: 13 } |  |  | 0.510 |
-| walker |  | 8087 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 2, sub: 0, line: 5 } |  |  | 0.510 |
-| walker |  | 8096 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 3, sub: 0, line: 9 } |  |  | 0.510 |
-| walker |  | 8105 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 5, sub: 0, line: 17 } |  |  | 0.510 |
-| walker |  | 8114 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 7, sub: 0, line: 25 } |  |  | 0.510 |
-| walker |  | 8124 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 1, sub: 0, line: 1 } |  |  | 0.510 |
-| walker |  | 8134 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 6, sub: 0, line: 21 } |  |  | 0.510 |
-| walker |  | 8144 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 8, sub: 0, line: 29 } |  |  | 0.485 |
-| ns | 8144 |  | 378 | tests/ directory listing (complete) | 4.2 |  | 0.485 |
-| walker |  | 8154 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 9, sub: 0, line: 33 } |  |  | 0.485 |
-| walker |  | 8179 | 25 | Code::CodeKey { rung: Names, file: rich/measure.py, decl: 0, sub: 0, line: 0 } |  |  | 0.486 |
-| walker |  | 8222 | 43 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 8, sub: 0, line: 125 } |  |  | 0.486 |
-| ns | 8310 |  | 166 | examples/ directory listing (complete) | 4.3 |  | 0.509 |
-| walker |  | 8361 | 139 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 1, sub: 0, line: 11 } |  |  | 0.509 |
-| walker |  | 8367 | 6 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 2, sub: 0, line: 19 } |  |  | 0.509 |
-| walker |  | 8402 | 35 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 6, sub: 0, line: 59 } |  |  | 0.509 |
-| walker |  | 8445 | 43 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 7, sub: 0, line: 78 } |  |  | 0.509 |
-| walker |  | 8458 | 13 | Code::CodeKey { rung: Doc, file: rich/measure.py, decl: 2, sub: 0, line: 19 } |  |  | 0.509 |
-| walker |  | 8478 | 20 | Code::CodeKey { rung: Doc, file: rich/measure.py, decl: 1, sub: 0, line: 11 } |  |  | 0.509 |
-| walker |  | 8488 | 10 | Code::CodeKey { rung: Body, file: rich/measure.py, decl: 2, sub: 0, line: 19 } |  |  | 0.509 |
-| walker |  | 8537 | 49 | Code::CodeKey { rung: Doc, file: rich/measure.py, decl: 3, sub: 0, line: 24 } |  |  | 0.509 |
-| ns | 8550 |  | 240 | Type-check and test configuration, and the global test fixture | 4.4 |  | 0.509 |
-| walker |  | 8562 | 25 | Code::CodeKey { rung: Names, file: rich/pager.py, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
-| walker |  | 8580 | 18 | Code::CodeKey { rung: Decl, file: rich/pager.py, decl: 1, sub: 0, line: 5 } |  |  | 0.510 |
-| walker |  | 8589 | 9 | Code::CodeKey { rung: Decl, file: rich/pager.py, decl: 2, sub: 0, line: 8 } |  |  | 0.510 |
-| walker |  | 8635 | 46 | Code::CodeKey { rung: Decl, file: rich/pager.py, decl: 3, sub: 0, line: 17 } |  |  | 0.510 |
-| walker |  | 8645 | 10 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 1, sub: 0, line: 5 } |  |  | 0.510 |
-| walker |  | 8657 | 12 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 3, sub: 0, line: 17 } |  |  | 0.510 |
-| walker |  | 8673 | 16 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 5, sub: 0, line: 23 } |  |  | 0.510 |
-| walker |  | 8683 | 10 | Code::CodeKey { rung: Body, file: rich/pager.py, decl: 5, sub: 0, line: 23 } |  |  | 0.510 |
-| ns | 8685 |  | 135 | docs/source narrative pages (complete listing) | 4.5 |  | 0.525 |
-| walker |  | 8724 | 41 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 2, sub: 0, line: 8 } |  |  | 0.525 |
-| walker |  | 8864 | 140 | Code::CodeKey { rung: Names, file: rich/traceback.py, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
-| walker |  | 8881 | 17 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 9, sub: 0, line: 253 } |  |  | 0.532 |
-| ns | 8896 |  | 211 | docs/source/reference and appendix listings (complete) | 4.6 |  | 0.552 |
-| walker |  | 8904 | 23 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 10, sub: 0, line: 258 } |  |  | 0.552 |
-| walker |  | 8934 | 30 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 4, sub: 0, line: 56 } |  |  | 0.552 |
-| walker |  | 9004 | 70 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 7, sub: 0, line: 231 } |  |  | 0.552 |
-| ns | 9012 |  | 116 | CONTRIBUTING.md section headings (complete) | 4.7 |  | 0.548 |
-| walker |  | 9091 | 87 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 6, sub: 0, line: 221 } |  |  | 0.548 |
-| ns | 9183 |  | 171 | tox.ini — supported interpreters and the lint/docs environments | 4.8 |  | 0.543 |
-| walker |  | 9206 | 115 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 8, sub: 0, line: 241 } |  |  | 0.543 |
-| walker |  | 9403 | 197 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 11, sub: 0, line: 262 } |  |  | 0.543 |
-| walker |  | 9411 | 8 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 16, sub: 0, line: 728 } |  |  | 0.543 |
-| walker |  | 9419 | 8 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 17, sub: 0, line: 751 } |  |  | 0.543 |
-| walker |  | 9427 | 8 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 18, sub: 0, line: 767 } |  |  | 0.543 |
-| walker |  | 9453 | 26 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 15, sub: 0, line: 626 } |  |  | 0.543 |
-| ns | 9473 |  | 290 | CHANGELOG — format convention and the most recent releases | 4.9 |  | 0.536 |
-| walker |  | 9628 | 175 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 14, sub: 0, line: 432 } |  |  | 0.536 |
-| ns | 9634 |  | 161 | FAQ.md — every question heading | 4.10 |  | 0.533 |
-| ns | 9781 |  | 147 | benchmarks/, tools/, questions/ and .faq/ listings | 4.11 |  | 0.544 |
-| walker |  | 9876 | 248 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 12, sub: 0, line: 295 } |  |  | 0.544 |
-| ns | 9981 |  | 200 | rich/_unicode_data listing (complete) | 4.12 |  | 0.553 |
-| walker |  | 9992 | 116 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 5, sub: 0, line: 84 } |  |  | 0.553 |
+| walker |  | 7340 | 334 | Code::CodeKey { rung: Decl, file: rich/_null_file.py, decl: 1, sub: 0, line: 5 } |  |  | 0.485 |
+| walker |  | 7345 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 2, sub: 0, line: 6 } |  |  | 0.485 |
+| walker |  | 7350 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 4, sub: 0, line: 12 } |  |  | 0.485 |
+| walker |  | 7355 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 6, sub: 0, line: 18 } |  |  | 0.485 |
+| walker |  | 7360 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 7, sub: 0, line: 21 } |  |  | 0.485 |
+| ns | 7375 |  | 263 | Protocol helpers, file plumbing and small utilities | 3.19 |  | 0.477 |
+| walker |  | 7419 | 59 | Code::CodeKey { rung: Decl, file: rich/_null_file.py, decl: 17, sub: 0, line: 51 } |  |  | 0.477 |
+| walker |  | 7424 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 13, sub: 0, line: 39 } |  |  | 0.477 |
+| walker |  | 7429 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 14, sub: 0, line: 42 } |  |  | 0.477 |
+| walker |  | 7434 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 17, sub: 0, line: 51 } |  |  | 0.477 |
+| walker |  | 7439 | 5 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 19, sub: 0, line: 62 } |  |  | 0.477 |
+| walker |  | 7445 | 6 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 3, sub: 0, line: 9 } |  |  | 0.477 |
+| walker |  | 7457 | 12 | Code::CodeKey { rung: Names, file: rich/scope.py, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 7583 | 126 | Code::CodeKey { rung: Decl, file: rich/scope.py, decl: 1, sub: 0, line: 14 } |  |  | 0.477 |
+| ns | 7612 |  | 237 | Legacy Windows console support | 3.20 |  | 0.470 |
+| walker |  | 7709 | 126 | Markdown::Section { file: AI_POLICY.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.470 |
+| walker |  | 7715 | 6 | Code::CodeKey { rung: Body, file: rich/_null_file.py, decl: 5, sub: 0, line: 15 } |  |  | 0.470 |
+| ns | 7766 |  | 154 | Makefile — the complete set of dev commands | 4.1 |  | 0.481 |
+| walker |  | 7827 | 112 | Code::CodeKey { rung: Names, file: rich/errors.py, decl: 0, sub: 0, line: 0 } |  |  | 0.491 |
+| walker |  | 7835 | 8 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 4, sub: 0, line: 13 } |  |  | 0.491 |
+| walker |  | 7844 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 2, sub: 0, line: 5 } |  |  | 0.491 |
+| walker |  | 7853 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 3, sub: 0, line: 9 } |  |  | 0.491 |
+| walker |  | 7862 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 5, sub: 0, line: 17 } |  |  | 0.491 |
+| walker |  | 7871 | 9 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 7, sub: 0, line: 25 } |  |  | 0.491 |
+| walker |  | 7881 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 1, sub: 0, line: 1 } |  |  | 0.491 |
+| walker |  | 7891 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 6, sub: 0, line: 21 } |  |  | 0.491 |
+| walker |  | 7901 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 8, sub: 0, line: 29 } |  |  | 0.491 |
+| walker |  | 7911 | 10 | Code::CodeKey { rung: Doc, file: rich/errors.py, decl: 9, sub: 0, line: 33 } |  |  | 0.491 |
+| walker |  | 7936 | 25 | Code::CodeKey { rung: Names, file: rich/measure.py, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
+| walker |  | 7979 | 43 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 8, sub: 0, line: 125 } |  |  | 0.492 |
+| walker |  | 8118 | 139 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 1, sub: 0, line: 11 } |  |  | 0.492 |
+| walker |  | 8124 | 6 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 2, sub: 0, line: 19 } |  |  | 0.492 |
+| ns | 8144 |  | 378 | tests/ directory listing (complete) | 4.2 |  | 0.468 |
+| walker |  | 8159 | 35 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 6, sub: 0, line: 59 } |  |  | 0.468 |
+| walker |  | 8202 | 43 | Code::CodeKey { rung: Decl, file: rich/measure.py, decl: 7, sub: 0, line: 78 } |  |  | 0.468 |
+| walker |  | 8215 | 13 | Code::CodeKey { rung: Doc, file: rich/measure.py, decl: 2, sub: 0, line: 19 } |  |  | 0.468 |
+| walker |  | 8235 | 20 | Code::CodeKey { rung: Doc, file: rich/measure.py, decl: 1, sub: 0, line: 11 } |  |  | 0.468 |
+| walker |  | 8245 | 10 | Code::CodeKey { rung: Body, file: rich/measure.py, decl: 2, sub: 0, line: 19 } |  |  | 0.468 |
+| walker |  | 8294 | 49 | Code::CodeKey { rung: Doc, file: rich/measure.py, decl: 3, sub: 0, line: 24 } |  |  | 0.468 |
+| ns | 8310 |  | 166 | examples/ directory listing (complete) | 4.3 |  | 0.491 |
+| walker |  | 8319 | 25 | Code::CodeKey { rung: Names, file: rich/pager.py, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
+| walker |  | 8337 | 18 | Code::CodeKey { rung: Decl, file: rich/pager.py, decl: 1, sub: 0, line: 5 } |  |  | 0.492 |
+| walker |  | 8346 | 9 | Code::CodeKey { rung: Decl, file: rich/pager.py, decl: 2, sub: 0, line: 8 } |  |  | 0.492 |
+| walker |  | 8392 | 46 | Code::CodeKey { rung: Decl, file: rich/pager.py, decl: 3, sub: 0, line: 17 } |  |  | 0.492 |
+| walker |  | 8402 | 10 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 1, sub: 0, line: 5 } |  |  | 0.492 |
+| walker |  | 8414 | 12 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 3, sub: 0, line: 17 } |  |  | 0.492 |
+| walker |  | 8430 | 16 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 5, sub: 0, line: 23 } |  |  | 0.492 |
+| walker |  | 8440 | 10 | Code::CodeKey { rung: Body, file: rich/pager.py, decl: 5, sub: 0, line: 23 } |  |  | 0.492 |
+| walker |  | 8481 | 41 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 2, sub: 0, line: 8 } |  |  | 0.492 |
+| ns | 8550 |  | 240 | Type-check and test configuration, and the global test fixture | 4.4 |  | 0.485 |
+| walker |  | 8621 | 140 | Code::CodeKey { rung: Names, file: rich/traceback.py, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |
+| walker |  | 8638 | 17 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 9, sub: 0, line: 253 } |  |  | 0.493 |
+| walker |  | 8661 | 23 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 10, sub: 0, line: 258 } |  |  | 0.493 |
+| ns | 8685 |  | 135 | docs/source narrative pages (complete listing) | 4.5 |  | 0.508 |
+| walker |  | 8691 | 30 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 4, sub: 0, line: 56 } |  |  | 0.508 |
+| walker |  | 8761 | 70 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 7, sub: 0, line: 231 } |  |  | 0.508 |
+| walker |  | 8848 | 87 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 6, sub: 0, line: 221 } |  |  | 0.508 |
+| ns | 8896 |  | 211 | docs/source/reference and appendix listings (complete) | 4.6 |  | 0.529 |
+| walker |  | 8963 | 115 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 8, sub: 0, line: 241 } |  |  | 0.529 |
+| ns | 9012 |  | 116 | CONTRIBUTING.md section headings (complete) | 4.7 |  | 0.525 |
+| walker |  | 9160 | 197 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 11, sub: 0, line: 262 } |  |  | 0.525 |
+| walker |  | 9168 | 8 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 16, sub: 0, line: 728 } |  |  | 0.525 |
+| walker |  | 9176 | 8 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 17, sub: 0, line: 751 } |  |  | 0.525 |
+| ns | 9183 |  | 171 | tox.ini — supported interpreters and the lint/docs environments | 4.8 |  | 0.520 |
+| walker |  | 9184 | 8 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 18, sub: 0, line: 767 } |  |  | 0.520 |
+| walker |  | 9210 | 26 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 15, sub: 0, line: 626 } |  |  | 0.520 |
+| walker |  | 9385 | 175 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 14, sub: 0, line: 432 } |  |  | 0.520 |
+| ns | 9473 |  | 290 | CHANGELOG — format convention and the most recent releases | 4.9 |  | 0.514 |
+| walker |  | 9633 | 248 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 12, sub: 0, line: 295 } |  |  | 0.514 |
+| ns | 9634 |  | 161 | FAQ.md — every question heading | 4.10 |  | 0.511 |
+| ns | 9781 |  | 147 | benchmarks/, tools/, questions/ and .faq/ listings | 4.11 |  | 0.522 |
+| walker |  | 9895 | 262 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 5, sub: 0, line: 84 } |  |  | 0.522 |
+| ns | 9981 |  | 200 | rich/_unicode_data listing (complete) | 4.12 |  | 0.531 |
+| walker |  | 9993 | 98 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 13, sub: 0, line: 352 } |  |  | 0.531 |

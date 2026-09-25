@@ -17,16 +17,16 @@ Score(3000)=0.754 I=0.910 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 314 | 42 | Fs::DirListing { dir: docs/api } |  |  | 0.639 |
 | walker |  | 326 | 12 | Fs::DirListing { dir: docs/api/renderer } |  |  | 0.639 |
 | ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.570 |
-| walker |  | 355 | 29 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.572 |
-| walker |  | 504 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.814 |
-| ns | 504 |  | 155 | README key features, second half | 1.5 | 1.4 | 0.814 |
-| walker |  | 526 | 22 | Fs::DirListing { dir: examples } |  |  | 0.814 |
-| walker |  | 619 | 93 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.820 |
-| walker |  | 632 | 13 | Fs::DirListing { dir: examples/internationalization } |  |  | 0.820 |
-| walker |  | 646 | 14 | Fs::DirListing { dir: examples/markdown_customization } |  |  | 0.820 |
-| ns | 648 |  | 144 | `htmy/__init__.py` exports, part 1: version + everything from `core` | 1.6 |  | 0.735 |
-| walker |  | 660 | 14 | Fs::DirListing { dir: examples/markdown_essentials } |  |  | 0.735 |
-| walker |  | 716 | 56 | Markdown::HeadingsOutline { file: docs/components-guide.md } |  |  | 0.735 |
+| walker |  | 475 | 149 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.894 |
+| walker |  | 497 | 22 | Fs::DirListing { dir: examples } |  |  | 0.894 |
+| ns | 504 |  | 155 | README key features, second half | 1.5 | 1.4 | 0.812 |
+| walker |  | 510 | 13 | Fs::DirListing { dir: examples/internationalization } |  |  | 0.812 |
+| walker |  | 524 | 14 | Fs::DirListing { dir: examples/markdown_customization } |  |  | 0.812 |
+| walker |  | 538 | 14 | Fs::DirListing { dir: examples/markdown_essentials } |  |  | 0.812 |
+| walker |  | 567 | 29 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.814 |
+| walker |  | 623 | 56 | Markdown::HeadingsOutline { file: docs/components-guide.md } |  |  | 0.814 |
+| ns | 648 |  | 144 | `htmy/__init__.py` exports, part 1: version + everything from `core` | 1.6 |  | 0.729 |
+| walker |  | 716 | 93 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.735 |
 | walker |  | 775 | 59 | Markdown::HeadingsOutline { file: docs/function-components.md } |  |  | 0.735 |
 | ns | 786 |  | 138 | `htmy/__init__.py` exports, part 2: `ErrorBoundary`, `component`, renderers, `Snippet`/`Slots`, tags | 1.7 | 1.6 | 0.675 |
 | walker |  | 834 | 59 | Fs::DirListing { dir: tests } |  |  | 0.679 |

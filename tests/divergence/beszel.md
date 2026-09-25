@@ -1,4 +1,4 @@
-Score(3000)=0.579 I=0.683 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.342/0.434/0.543/0.579/0.537/0.459/0.432
+Score(3000)=0.579 I=0.683 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.342/0.434/0.543/0.579/0.553/0.459/0.432
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -99,67 +99,67 @@ Score(3000)=0.579 I=0.683 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | walker |  | 2852 | 59 | Code::CodeKey { rung: ModuleDoc, file: internal/hub/heartbeat/heartbeat.go, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
 | ns | 2871 |  | 496 | Hub HTTP API: route registration, part 1 | 2.6 |  | 0.579 |
 | walker |  | 2908 | 56 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.579 |
+| walker |  | 3008 | 100 | Fs::DirListing { dir: internal/site/src/locales } |  |  | 0.579 |
+| walker |  | 3012 | 4 | Fs::DirListing { dir: internal/site/src/locales/ar } |  |  | 0.579 |
+| walker |  | 3016 | 4 | Fs::DirListing { dir: internal/site/src/locales/bg } |  |  | 0.579 |
+| walker |  | 3020 | 4 | Fs::DirListing { dir: internal/site/src/locales/cs } |  |  | 0.579 |
+| walker |  | 3024 | 4 | Fs::DirListing { dir: internal/site/src/locales/da } |  |  | 0.579 |
+| walker |  | 3028 | 4 | Fs::DirListing { dir: internal/site/src/locales/de } |  |  | 0.579 |
+| walker |  | 3032 | 4 | Fs::DirListing { dir: internal/site/src/locales/en } |  |  | 0.579 |
+| walker |  | 3036 | 4 | Fs::DirListing { dir: internal/site/src/locales/es } |  |  | 0.579 |
+| walker |  | 3040 | 4 | Fs::DirListing { dir: internal/site/src/locales/fa } |  |  | 0.579 |
+| walker |  | 3044 | 4 | Fs::DirListing { dir: internal/site/src/locales/fr } |  |  | 0.579 |
+| walker |  | 3048 | 4 | Fs::DirListing { dir: internal/site/src/locales/he } |  |  | 0.579 |
+| walker |  | 3052 | 4 | Fs::DirListing { dir: internal/site/src/locales/hr } |  |  | 0.579 |
+| walker |  | 3056 | 4 | Fs::DirListing { dir: internal/site/src/locales/hu } |  |  | 0.579 |
+| walker |  | 3060 | 4 | Fs::DirListing { dir: internal/site/src/locales/id } |  |  | 0.579 |
+| walker |  | 3064 | 4 | Fs::DirListing { dir: internal/site/src/locales/it } |  |  | 0.579 |
+| walker |  | 3068 | 4 | Fs::DirListing { dir: internal/site/src/locales/ja } |  |  | 0.579 |
+| walker |  | 3072 | 4 | Fs::DirListing { dir: internal/site/src/locales/ko } |  |  | 0.579 |
+| walker |  | 3076 | 4 | Fs::DirListing { dir: internal/site/src/locales/nl } |  |  | 0.579 |
+| walker |  | 3080 | 4 | Fs::DirListing { dir: internal/site/src/locales/no } |  |  | 0.579 |
+| walker |  | 3084 | 4 | Fs::DirListing { dir: internal/site/src/locales/pl } |  |  | 0.579 |
+| walker |  | 3088 | 4 | Fs::DirListing { dir: internal/site/src/locales/pt } |  |  | 0.579 |
+| walker |  | 3092 | 4 | Fs::DirListing { dir: internal/site/src/locales/ro } |  |  | 0.579 |
+| walker |  | 3096 | 4 | Fs::DirListing { dir: internal/site/src/locales/ru } |  |  | 0.579 |
+| walker |  | 3100 | 4 | Fs::DirListing { dir: internal/site/src/locales/sl } |  |  | 0.579 |
+| walker |  | 3104 | 4 | Fs::DirListing { dir: internal/site/src/locales/sr } |  |  | 0.579 |
+| walker |  | 3108 | 4 | Fs::DirListing { dir: internal/site/src/locales/sv } |  |  | 0.579 |
+| walker |  | 3112 | 4 | Fs::DirListing { dir: internal/site/src/locales/th } |  |  | 0.579 |
+| walker |  | 3116 | 4 | Fs::DirListing { dir: internal/site/src/locales/tr } |  |  | 0.579 |
+| walker |  | 3120 | 4 | Fs::DirListing { dir: internal/site/src/locales/uk } |  |  | 0.579 |
+| walker |  | 3124 | 4 | Fs::DirListing { dir: internal/site/src/locales/vi } |  |  | 0.579 |
+| walker |  | 3128 | 4 | Fs::DirListing { dir: internal/site/src/locales/zh } |  |  | 0.579 |
+| walker |  | 3134 | 6 | Fs::DirListing { dir: internal/site/src/locales/zh-CN } |  |  | 0.579 |
+| walker |  | 3140 | 6 | Fs::DirListing { dir: internal/site/src/locales/zh-HK } |  |  | 0.579 |
 | ns | 3159 |  | 288 | Hub HTTP API: route registration, part 2 (completes the route table) | 2.7 |  | 0.555 |
-| walker |  | 3323 | 415 | GoMod::File { file: go.mod } |  |  | 0.557 |
-| walker |  | 3423 | 100 | Fs::DirListing { dir: internal/site/src/locales } |  |  | 0.557 |
-| walker |  | 3427 | 4 | Fs::DirListing { dir: internal/site/src/locales/ar } |  |  | 0.557 |
-| walker |  | 3431 | 4 | Fs::DirListing { dir: internal/site/src/locales/bg } |  |  | 0.557 |
-| walker |  | 3435 | 4 | Fs::DirListing { dir: internal/site/src/locales/cs } |  |  | 0.557 |
-| walker |  | 3439 | 4 | Fs::DirListing { dir: internal/site/src/locales/da } |  |  | 0.557 |
-| walker |  | 3443 | 4 | Fs::DirListing { dir: internal/site/src/locales/de } |  |  | 0.557 |
-| walker |  | 3447 | 4 | Fs::DirListing { dir: internal/site/src/locales/en } |  |  | 0.557 |
-| walker |  | 3451 | 4 | Fs::DirListing { dir: internal/site/src/locales/es } |  |  | 0.557 |
-| walker |  | 3455 | 4 | Fs::DirListing { dir: internal/site/src/locales/fa } |  |  | 0.557 |
-| walker |  | 3459 | 4 | Fs::DirListing { dir: internal/site/src/locales/fr } |  |  | 0.557 |
-| walker |  | 3463 | 4 | Fs::DirListing { dir: internal/site/src/locales/he } |  |  | 0.557 |
-| walker |  | 3467 | 4 | Fs::DirListing { dir: internal/site/src/locales/hr } |  |  | 0.557 |
-| walker |  | 3471 | 4 | Fs::DirListing { dir: internal/site/src/locales/hu } |  |  | 0.557 |
-| walker |  | 3475 | 4 | Fs::DirListing { dir: internal/site/src/locales/id } |  |  | 0.557 |
-| walker |  | 3479 | 4 | Fs::DirListing { dir: internal/site/src/locales/it } |  |  | 0.557 |
-| walker |  | 3483 | 4 | Fs::DirListing { dir: internal/site/src/locales/ja } |  |  | 0.557 |
-| walker |  | 3487 | 4 | Fs::DirListing { dir: internal/site/src/locales/ko } |  |  | 0.557 |
-| walker |  | 3491 | 4 | Fs::DirListing { dir: internal/site/src/locales/nl } |  |  | 0.557 |
-| walker |  | 3495 | 4 | Fs::DirListing { dir: internal/site/src/locales/no } |  |  | 0.557 |
-| ns | 3497 |  | 338 | Wire protocol: the remaining request/response payload types | 2.8 |  | 0.527 |
-| walker |  | 3499 | 4 | Fs::DirListing { dir: internal/site/src/locales/pl } |  |  | 0.527 |
-| walker |  | 3503 | 4 | Fs::DirListing { dir: internal/site/src/locales/pt } |  |  | 0.527 |
-| walker |  | 3507 | 4 | Fs::DirListing { dir: internal/site/src/locales/ro } |  |  | 0.527 |
-| walker |  | 3511 | 4 | Fs::DirListing { dir: internal/site/src/locales/ru } |  |  | 0.527 |
-| walker |  | 3515 | 4 | Fs::DirListing { dir: internal/site/src/locales/sl } |  |  | 0.527 |
-| walker |  | 3519 | 4 | Fs::DirListing { dir: internal/site/src/locales/sr } |  |  | 0.527 |
-| walker |  | 3523 | 4 | Fs::DirListing { dir: internal/site/src/locales/sv } |  |  | 0.527 |
-| walker |  | 3527 | 4 | Fs::DirListing { dir: internal/site/src/locales/th } |  |  | 0.527 |
-| walker |  | 3531 | 4 | Fs::DirListing { dir: internal/site/src/locales/tr } |  |  | 0.527 |
-| walker |  | 3535 | 4 | Fs::DirListing { dir: internal/site/src/locales/uk } |  |  | 0.527 |
-| walker |  | 3539 | 4 | Fs::DirListing { dir: internal/site/src/locales/vi } |  |  | 0.527 |
-| walker |  | 3543 | 4 | Fs::DirListing { dir: internal/site/src/locales/zh } |  |  | 0.527 |
-| walker |  | 3549 | 6 | Fs::DirListing { dir: internal/site/src/locales/zh-CN } |  |  | 0.527 |
-| walker |  | 3555 | 6 | Fs::DirListing { dir: internal/site/src/locales/zh-HK } |  |  | 0.527 |
-| walker |  | 3631 | 76 | Markdown::HeadingsOutline { file: supplemental/guides/systemd.md } |  |  | 0.527 |
-| walker |  | 3802 | 171 | Code::CodeKey { rung: Names, file: internal/site/src/main.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
-| ns | 3888 |  | 391 | Hub entry point: getBaseApp wiring PocketBase | 3.1 |  | 0.500 |
-| walker |  | 3918 | 116 | Fs::DirListing { dir: internal/site/src/components } |  |  | 0.502 |
-| walker |  | 3930 | 12 | Fs::DirListing { dir: internal/site/src/components/alerts } |  |  | 0.502 |
-| walker |  | 3943 | 13 | Fs::DirListing { dir: internal/site/src/components/containers-table } |  |  | 0.502 |
-| walker |  | 3956 | 13 | Fs::DirListing { dir: internal/site/src/components/systems-table } |  |  | 0.502 |
-| walker |  | 3971 | 15 | Fs::DirListing { dir: internal/site/src/components/systemd-table } |  |  | 0.502 |
-| walker |  | 3994 | 23 | Fs::DirListing { dir: internal/site/src/components/charts } |  |  | 0.502 |
-| walker |  | 4019 | 25 | Fs::DirListing { dir: internal/site/src/components/login } |  |  | 0.503 |
-| walker |  | 4045 | 26 | Fs::DirListing { dir: internal/site/src/components/routes } |  |  | 0.503 |
-| walker |  | 4104 | 59 | Fs::DirListing { dir: internal/site/src/components/routes/system } |  |  | 0.503 |
-| walker |  | 4195 | 91 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.556 |
-| ns | 4216 |  | 328 | Hub struct and NewHub: the hub's subcomponents | 3.2 |  | 0.532 |
-| walker |  | 4250 | 55 | Fs::DirListing { dir: internal/site/src/components/routes/settings } |  |  | 0.533 |
-| walker |  | 4322 | 72 | Code::CodeKey { rung: Names, file: beszel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
-| walker |  | 4361 | 39 | Code::CodeKey { rung: Decl, file: beszel.go, decl: 1, sub: 0, line: 7 } |  |  | 0.554 |
-| walker |  | 4378 | 17 | Code::CodeKey { rung: Doc, file: beszel.go, decl: 2, sub: 0, line: 15 } |  |  | 0.554 |
-| walker |  | 4395 | 17 | Code::CodeKey { rung: Doc, file: beszel.go, decl: 3, sub: 0, line: 18 } |  |  | 0.554 |
-| walker |  | 4508 | 113 | Code::CodeKey { rung: Body, file: internal/site/src/main.tsx, decl: 9, sub: 0, line: 122 } |  |  | 0.554 |
-| ns | 4580 |  | 364 | Agent struct: every subsystem in one commented field list | 3.3 |  | 0.530 |
-| walker |  | 4595 | 87 | Plaintext::DeclSurface { file: agent/lhm/beszel_lhm.cs } |  |  | 0.530 |
-| walker |  | 4600 | 5 | Fs::DirListing { dir: agent/tools } |  |  | 0.530 |
-| walker |  | 4649 | 49 | Fs::DirListing { dir: internal/site/src/components/routes/system/charts } |  |  | 0.531 |
-| walker |  | 4678 | 29 | Markdown::Section { file: supplemental/guides/systemd.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.531 |
+| walker |  | 3216 | 76 | Markdown::HeadingsOutline { file: supplemental/guides/systemd.md } |  |  | 0.555 |
+| walker |  | 3387 | 171 | Code::CodeKey { rung: Names, file: internal/site/src/main.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.555 |
+| ns | 3497 |  | 338 | Wire protocol: the remaining request/response payload types | 2.8 |  | 0.525 |
+| walker |  | 3503 | 116 | Fs::DirListing { dir: internal/site/src/components } |  |  | 0.527 |
+| walker |  | 3515 | 12 | Fs::DirListing { dir: internal/site/src/components/alerts } |  |  | 0.527 |
+| walker |  | 3528 | 13 | Fs::DirListing { dir: internal/site/src/components/containers-table } |  |  | 0.527 |
+| walker |  | 3541 | 13 | Fs::DirListing { dir: internal/site/src/components/systems-table } |  |  | 0.527 |
+| walker |  | 3556 | 15 | Fs::DirListing { dir: internal/site/src/components/systemd-table } |  |  | 0.527 |
+| walker |  | 3579 | 23 | Fs::DirListing { dir: internal/site/src/components/charts } |  |  | 0.527 |
+| walker |  | 3604 | 25 | Fs::DirListing { dir: internal/site/src/components/login } |  |  | 0.528 |
+| walker |  | 3630 | 26 | Fs::DirListing { dir: internal/site/src/components/routes } |  |  | 0.528 |
+| walker |  | 3689 | 59 | Fs::DirListing { dir: internal/site/src/components/routes/system } |  |  | 0.529 |
+| walker |  | 3780 | 91 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.584 |
+| walker |  | 3835 | 55 | Fs::DirListing { dir: internal/site/src/components/routes/settings } |  |  | 0.586 |
+| ns | 3888 |  | 391 | Hub entry point: getBaseApp wiring PocketBase | 3.1 |  | 0.556 |
+| walker |  | 3907 | 72 | Code::CodeKey { rung: Names, file: beszel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.560 |
+| walker |  | 3946 | 39 | Code::CodeKey { rung: Decl, file: beszel.go, decl: 1, sub: 0, line: 7 } |  |  | 0.577 |
+| walker |  | 3963 | 17 | Code::CodeKey { rung: Doc, file: beszel.go, decl: 2, sub: 0, line: 15 } |  |  | 0.577 |
+| walker |  | 3980 | 17 | Code::CodeKey { rung: Doc, file: beszel.go, decl: 3, sub: 0, line: 18 } |  |  | 0.577 |
+| walker |  | 4093 | 113 | Code::CodeKey { rung: Body, file: internal/site/src/main.tsx, decl: 9, sub: 0, line: 122 } |  |  | 0.577 |
+| walker |  | 4180 | 87 | Plaintext::DeclSurface { file: agent/lhm/beszel_lhm.cs } |  |  | 0.577 |
+| walker |  | 4185 | 5 | Fs::DirListing { dir: agent/tools } |  |  | 0.577 |
+| ns | 4216 |  | 328 | Hub struct and NewHub: the hub's subcomponents | 3.2 |  | 0.552 |
+| walker |  | 4234 | 49 | Fs::DirListing { dir: internal/site/src/components/routes/system/charts } |  |  | 0.553 |
+| walker |  | 4263 | 29 | Markdown::Section { file: supplemental/guides/systemd.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.553 |
+| ns | 4580 |  | 364 | Agent struct: every subsystem in one commented field list | 3.3 |  | 0.529 |
+| walker |  | 4678 | 415 | GoMod::File { file: go.mod } |  |  | 0.531 |
 | walker |  | 4725 | 47 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_unsupported.go, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
 | walker |  | 4738 | 13 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml_unsupported.go, decl: 1, sub: 0, line: 7 } |  |  | 0.531 |
 | walker |  | 4754 | 16 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_unsupported.go, decl: 2, sub: 0, line: 11 } |  |  | 0.531 |

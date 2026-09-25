@@ -1,4 +1,4 @@
-Score(3000)=0.663 I=0.877 C=0.501 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.977/0.787/0.734/0.663/0.691/0.651/0.573
+Score(3000)=0.663 I=0.877 C=0.501 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.965/0.826/0.734/0.663/0.691/0.651/0.573
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,17 +30,17 @@ Score(3000)=0.663 I=0.877 C=0.501 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 928 | 175 | Json::Entry { file: package.json } |  |  | 0.965 |
 | walker |  | 970 | 42 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.965 |
 | ns | 1030 |  | 260 | CI workflow in full | 1.9 |  | 0.831 |
-| walker |  | 1199 | 229 | Json::IdentityMeta { file: package.json } |  |  | 0.861 |
-| ns | 1244 |  | 214 | Runtime export surface of `source/index.js` | 2.1 |  | 0.778 |
-| walker |  | 1290 | 91 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.778 |
-| ns | 1358 |  | 114 | `source/index.d.ts` top-level declaration roster | 2.2 |  | 0.753 |
-| ns | 1458 |  | 100 | readme: chaining semantics of `chalk.<style>[.<style>...]` | 2.3 | 1.7 | 0.733 |
-| walker |  | 1527 | 237 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
-| walker |  | 1542 | 15 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 1, sub: 0, line: 34 } |  |  | 0.830 |
-| walker |  | 1551 | 9 | Code::CodeKey { rung: Body, file: source/index.js, decl: 3, sub: 0, line: 50 } |  |  | 0.830 |
-| walker |  | 1577 | 26 | Code::CodeKey { rung: Body, file: source/index.js, decl: 2, sub: 0, line: 35 } |  |  | 0.830 |
-| ns | 1686 |  | 228 | readme: `chalk.level` and the 0–3 colour-level table | 2.4 | 1.7 | 0.773 |
-| walker |  | 1717 | 140 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.773 |
+| walker |  | 1061 | 91 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.831 |
+| ns | 1244 |  | 214 | Runtime export surface of `source/index.js` | 2.1 |  | 0.750 |
+| walker |  | 1298 | 237 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.854 |
+| walker |  | 1313 | 15 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 1, sub: 0, line: 34 } |  |  | 0.854 |
+| walker |  | 1322 | 9 | Code::CodeKey { rung: Body, file: source/index.js, decl: 3, sub: 0, line: 50 } |  |  | 0.854 |
+| walker |  | 1348 | 26 | Code::CodeKey { rung: Body, file: source/index.js, decl: 2, sub: 0, line: 35 } |  |  | 0.854 |
+| ns | 1358 |  | 114 | `source/index.d.ts` top-level declaration roster | 2.2 |  | 0.826 |
+| ns | 1458 |  | 100 | readme: chaining semantics of `chalk.<style>[.<style>...]` | 2.3 | 1.7 | 0.804 |
+| walker |  | 1488 | 140 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.804 |
+| ns | 1686 |  | 228 | readme: `chalk.level` and the 0–3 colour-level table | 2.4 | 1.7 | 0.749 |
+| walker |  | 1717 | 229 | Json::IdentityMeta { file: package.json } |  |  | 0.773 |
 | ns | 1826 |  | 140 | `Options` interface body with level documentation | 2.5 | 2.2 | 0.741 |
 | ns | 1970 |  | 144 | `ChalkInstance` call signature, `level`, and all six colour-model methods | 2.6 | 2.2 | 0.706 |
 | ns | 2094 |  | 124 | All ten `ChalkInstance` modifier properties | 2.7 | 2.6 | 0.670 |

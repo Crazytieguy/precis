@@ -90,9 +90,7 @@ notebooks/
     demo.ipynb
     load_from_pretrained.ipynb
 pyproject.toml
-  1→[build-system]
-  2→requires = ["setuptools>=42", "wheel"]
-  3→build-backend = "setuptools.build_meta"
+  …
   5→[project]
   6→name = "xlstm"
   7→version = "2.0.5"
@@ -129,12 +127,7 @@ pyproject.toml
   41→]
   44→# [tool.setuptools]
   45→# include_package_data = true
-  47→[tool.setuptools.package-data]
-  48→"xlstm" = ["blocks/slstm/src/cuda/*.c", "blocks/slstm/src/cuda/*.cc", "blocks/slstm/src/cuda/*.h", "blocks/slstm/src/cuda/*.cu", "blocks/slstm/src/cuda/*.cuh", "blocks/slstm/src/util/*.c", "blocks/slstm/src/util/*.cc", "blocks/slstm/src/util/*.h", "blocks/slstm/src/util/*.cu", "blocks/slstm/src/util/*.cuh"]
-  49→
-  50→[project.urls]
-  51→Repository = "https://github.com/NX-AI/xlstm"
-  52→Issues = "https://github.com/NX-AI/xlstm/issues"
+  …
 pytest.ini
   1→[pytest]
   2→pythonpath = .
@@ -275,6 +268,8 @@ xlstm/
     …
     61→    def get_weight_decay_optim_group_param_names(self, **kwargs) -> tuple[Sequence[str], Sequence[str]]:
     62→        """Return a tuple of two sequences, one for parameter names with weight decay and one for parameter names without weight decay.
+    63→        Performs checks to ensure that each parameter is only in one of the two sequences.
+    64→        """
     …
     77→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …
@@ -283,6 +278,23 @@ xlstm/
     99→    ) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …
   xlstm_block_stack.py
+    …
+    16→class xLSTMBlockStackConfig:
+    …
+    77→class xLSTMBlockStack(nn.Module):
+    78→    config_class = xLSTMBlockStackConfig
+    79→
+    80→    def __init__(self, config: xLSTMBlockStackConfig):
+    …
+    90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
+    …
+    111→    def reset_parameters(self) -> None:
+    …
+    117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
+    …
+    126→    def step(
+    127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
+    …
   xlstm_large/
     __init__.py
       1→from .model import xLSTMLarge, xLSTMLargeConfig

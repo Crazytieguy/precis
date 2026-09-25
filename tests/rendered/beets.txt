@@ -346,6 +346,7 @@ beetsplug/
       268→class QueryConverter(PathConverter):
       …
       283→class EverythingConverter(PathConverter):
+      284→    part_isolating = False
       …
       290→app = flask.Flask(__name__)
       …
@@ -356,6 +357,7 @@ beetsplug/
       …
       313→def all_items():
       …
+      317→@app.route("/item/<int:item_id>/file")
       318→def item_file(item_id):
       …
       340→def item_query(queries):
@@ -363,6 +365,7 @@ beetsplug/
       344→@app.route("/item/path/<everything:path>")
       345→def item_at_path(path):
       …
+      354→@app.route("/item/values/<string:key>")
       355→def item_unique_field_values(key):
       …
       371→def get_album(id):
@@ -371,8 +374,10 @@ beetsplug/
       …
       384→def album_query(queries):
       …
+      388→@app.route("/album/<int:album_id>/art")
       389→def album_art(album_id):
       …
+      397→@app.route("/album/values/<string:key>")
       398→def album_unique_field_values(key):
       …
       412→@app.route("/artist/")
@@ -472,13 +477,9 @@ pyproject.toml
   2→name = "beets"
   3→version = "2.11.0"
   4→description = "music tagger and library organizer"
-  5→authors = ["Adrian Sampson <adrian@radbox.org>"]
-  6→maintainers = ["Serene-Arc"]
+  …
   7→license = "MIT"
   8→readme = "README.rst"
-  9→homepage = "https://beets.io/"
-  10→repository = "https://github.com/beetbox/beets"
-  11→documentation = "https://beets.readthedocs.io/en/stable/"
   …
   184→[tool.poetry.scripts]
   185→beet = "beets.ui:main"

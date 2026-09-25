@@ -1,4 +1,4 @@
-Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.564/0.574/0.493/0.459/0.495/0.546/0.520
+Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.564/0.574/0.493/0.459/0.495/0.546/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,12 +22,12 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 364 | 9 | Plaintext::Whole { file: profiler/requirements.txt } |  |  | 0.608 |
 | walker |  | 394 | 30 | Fs::DirListing { dir: tests } |  |  | 0.610 |
 | ns | 408 |  | 108 | README: the tomllib stdlib relationship | 1.6 |  | 0.554 |
-| walker |  | 454 | 60 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.555 |
-| ns | 496 |  | 88 | Entry points: load() and loads() signatures with docstrings | 1.7 |  | 0.525 |
-| ns | 622 |  | 126 | TOMLDecodeError class docstring and its attributes | 1.8 |  | 0.464 |
-| ns | 682 |  | 60 | src/tomli/_types.py type aliases (complete file body) | 1.9 |  | 0.436 |
-| ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.419 |
-| walker |  | 847 | 393 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.604 |
+| ns | 496 |  | 88 | Entry points: load() and loads() signatures with docstrings | 1.7 |  | 0.523 |
+| ns | 622 |  | 126 | TOMLDecodeError class docstring and its attributes | 1.8 |  | 0.463 |
+| ns | 682 |  | 60 | src/tomli/_types.py type aliases (complete file body) | 1.9 |  | 0.434 |
+| ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.418 |
+| walker |  | 787 | 393 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.603 |
+| walker |  | 847 | 60 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.604 |
 | walker |  | 891 | 44 | Plaintext::Whole { file: fuzzer/requirements.txt } |  |  | 0.604 |
 | walker |  | 928 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
 | ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.559 |
@@ -111,28 +111,28 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 6386 | 70 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.547 |
 | ns | 6511 |  | 478 | key_value_rule(): dotted keys, pending flags and immutability | 4.5 | 2.1 | 0.527 |
 | ns | 6690 |  | 179 | parse_key_part(): bare, literal and basic key forms | 4.6 | 2.1 | 0.519 |
+| walker |  | 6778 | 392 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.519 |
+| walker |  | 6962 | 184 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.519 |
 | ns | 6975 |  | 285 | parse_array(): array literals and trailing commas | 4.7 | 2.1 | 0.507 |
 | ns | 7464 |  | 489 | parse_inline_table(): inline tables and their local flag scope | 4.8 | 2.1 | 0.490 |
+| walker |  | 7478 | 516 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.490 |
 | ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.484 |
 | ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.481 |
-| ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.477 |
-| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.483 |
-| walker |  | 8196 | 1810 | Toml::Config { file: pyproject.toml } |  |  | 0.506 |
-| ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.498 |
-| ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.508 |
-| walker |  | 8588 | 392 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.508 |
-| walker |  | 8772 | 184 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.520 |
-| ns | 8772 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.520 |
-| ns | 8901 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.520 |
-| ns | 9133 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.527 |
-| walker |  | 9288 | 516 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.527 |
-| ns | 9339 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.526 |
-| ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.520 |
-| walker |  | 9631 | 343 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 1, sub: 0, line: 20 } |  |  | 0.520 |
-| ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.516 |
-| walker |  | 9639 | 8 | Plaintext::Whole { file: scripts/requirements.txt } |  |  | 0.516 |
-| walker |  | 9722 | 83 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 8, sub: 0, line: 109 } |  |  | 0.517 |
-| walker |  | 9735 | 13 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 22, sub: 0, line: 233 } |  |  | 0.518 |
+| walker |  | 7821 | 343 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 1, sub: 0, line: 20 } |  |  | 0.481 |
+| walker |  | 7829 | 8 | Plaintext::Whole { file: scripts/requirements.txt } |  |  | 0.481 |
+| walker |  | 7912 | 83 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 8, sub: 0, line: 109 } |  |  | 0.481 |
+| walker |  | 7925 | 13 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 22, sub: 0, line: 233 } |  |  | 0.482 |
+| ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.479 |
+| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.484 |
+| ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.476 |
+| ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.489 |
+| ns | 8772 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.502 |
+| ns | 8901 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.501 |
+| ns | 9133 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.496 |
+| ns | 9339 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.496 |
+| ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.490 |
+| ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.486 |
+| walker |  | 9735 | 1810 | Toml::Config { file: pyproject.toml } |  |  | 0.518 |
 | walker |  | 9750 | 15 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 47, sub: 0, line: 595 } |  |  | 0.518 |
 | ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.513 |
 | ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.507 |

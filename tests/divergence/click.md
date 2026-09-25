@@ -5,27 +5,27 @@ Score(3000)=0.811 I=0.941 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 53 | 3 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 81 |  | 81 | README identity: what Click is | 1.1 |  | 0.000 |
-| walker |  | 84 | 31 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.000 |
-| walker |  | 162 | 78 | Toml::Identity { file: pyproject.toml } |  |  | 0.000 |
+| walker |  | 135 | 82 | Toml::Identity { file: pyproject.toml } |  |  | 0.000 |
 | ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.000 |
-| walker |  | 243 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.584 |
+| walker |  | 216 | 81 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.584 |
+| walker |  | 246 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.584 |
+| walker |  | 257 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.584 |
 | ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
-| walker |  | 273 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.355 |
-| walker |  | 284 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.355 |
 | ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.527 |
-| walker |  | 372 | 88 | Fs::DirListing { dir: src/click } |  |  | 0.810 |
+| walker |  | 345 | 88 | Fs::DirListing { dir: src/click } |  |  | 0.810 |
+| walker |  | 372 | 27 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.810 |
 | walker |  | 385 | 13 | Fs::DirListing { dir: .github } |  |  | 0.810 |
 | walker |  | 408 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.811 |
 | ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.694 |
 | walker |  | 483 | 75 | Code::CodeKey { rung: ModuleDoc, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
-| walker |  | 521 | 38 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.695 |
-| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.664 |
-| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.525 |
-| walker |  | 713 | 192 | Fs::DirListing { dir: docs } |  |  | 0.544 |
-| walker |  | 728 | 15 | Fs::DirListing { dir: docs/_static } |  |  | 0.547 |
-| ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.498 |
-| walker |  | 827 | 99 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.610 |
-| walker |  | 863 | 36 | Fs::DirListing { dir: examples } |  |  | 0.658 |
+| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.663 |
+| walker |  | 675 | 192 | Fs::DirListing { dir: docs } |  |  | 0.687 |
+| walker |  | 690 | 15 | Fs::DirListing { dir: docs/_static } |  |  | 0.690 |
+| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.546 |
+| ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.497 |
+| walker |  | 789 | 99 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.609 |
+| walker |  | 825 | 36 | Fs::DirListing { dir: examples } |  |  | 0.658 |
+| walker |  | 863 | 38 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.658 |
 | ns | 983 |  | 207 | Documentation listing: docs/ | 1.9 |  | 0.728 |
 | walker |  | 990 | 127 | Fs::DirListing { dir: tests } |  |  | 0.804 |
 | walker |  | 1238 | 248 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |

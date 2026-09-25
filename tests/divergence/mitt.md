@@ -1,4 +1,4 @@
-Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.739/0.718/0.754/0.793/0.804/0.711/0.703
+Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.754/0.793/0.804/0.711/0.703
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,23 +19,23 @@ Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 459 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.850 |
 | walker |  | 490 | 31 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.851 |
 | ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.757 |
-| walker |  | 605 | 115 | Json::IdentityMeta { file: package.json } |  |  | 0.760 |
-| ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.695 |
-| walker |  | 688 | 83 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.695 |
-| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.579 |
-| walker |  | 900 | 212 | Json::Entry { file: package.json } |  |  | 0.730 |
-| ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.650 |
-| ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.620 |
-| walker |  | 1133 | 233 | Json::Scripts { file: package.json } |  |  | 0.631 |
-| walker |  | 1293 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.739 |
-| walker |  | 1307 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.747 |
-| walker |  | 1330 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.756 |
-| ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.676 |
-| walker |  | 1358 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.689 |
-| walker |  | 1393 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.711 |
-| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.657 |
-| walker |  | 1590 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.746 |
-| walker |  | 1636 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.777 |
+| walker |  | 573 | 83 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.757 |
+| ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.692 |
+| walker |  | 785 | 212 | Json::Entry { file: package.json } |  |  | 0.872 |
+| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.726 |
+| walker |  | 1020 | 235 | Json::Scripts { file: package.json } |  |  | 0.739 |
+| ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.658 |
+| ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.628 |
+| walker |  | 1180 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.736 |
+| walker |  | 1194 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.744 |
+| walker |  | 1217 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.753 |
+| walker |  | 1245 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.768 |
+| walker |  | 1280 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.792 |
+| ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.707 |
+| walker |  | 1477 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.802 |
+| walker |  | 1523 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.836 |
+| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.773 |
+| walker |  | 1636 | 113 | Json::IdentityMeta { file: package.json } |  |  | 0.777 |
 | ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.741 |
 | walker |  | 1747 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.742 |
 | ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.685 |
