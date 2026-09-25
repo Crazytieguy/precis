@@ -34,7 +34,6 @@ impl BatchId {
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum BatchKey {
     Fs(FsKey),
-    Rust(RustKey),
     Markdown(MarkdownKey),
     Toml(TomlKey),
     Typescript(TsKey),
@@ -87,7 +86,6 @@ macro_rules! impl_batchkey {
 
 impl_batchkey! {
     Fs => FsKey,
-    Rust => RustKey,
     Markdown => MarkdownKey,
     Toml => TomlKey,
     Typescript => TsKey,
@@ -123,92 +121,6 @@ trait InnerKey {
     fn is_dominant_file_surface(&self) -> bool {
         false
     }
-}
-
-/// Rust batches — per-item for pub types, file-scope for crate-doc /
-/// mod-use / methods, cross-file for the `#[macro_export]` surface.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum RustKey {
-    /// `//!` module-doc lede — first paragraph only, entrypoint files.
-    CrateDocLede { file: PathBuf },
-    /// `//!` module-doc body — after the first paragraph. Predecessor:
-    /// matching `CrateDocLede`, or `None` when the crate doc opens with
-    /// a heading and no Lede candidate is emitted. When the body is
-    /// oversize it shrinks to the first ~200-token chunk, followed by
-    /// chained `CrateDocTail` chunks.
-    CrateDocBody { file: PathBuf },
-    /// One ~200-token continuation chunk of an oversize crate-doc
-    /// body, cut at blank doc lines outside doc code fences.
-    /// Predecessor: the previous chunk (`CrateDocBody` for the first
-    /// tail). Scheduler-trait defaults (flat concavity, no breadth
-    /// pressure) are the initial shipped state, not yet swept —
-    /// `PubItemDocBody` steepens to 0.45 and markdown's `OversizeTail`
-    /// chunks steepen via `Section` index ≥ 1, so those are the
-    /// candidates if the tail train over-buys at higher budgets.
-    CrateDocTail { file: PathBuf, start_line: usize },
-    /// Contiguous top-of-file `#![…]` inner-attribute block (with its
-    /// interleaved comment lines), entrypoint files only.
-    CrateAttrs { file: PathBuf },
-    /// `use` + `mod` + `pub use` plumbing at the top of a file.
-    ModUse { file: PathBuf },
-    /// Surface listing of every top-level `pub` item name in a file —
-    /// catastrophic-omission hedge.
-    PubItemNames { file: PathBuf },
-    /// Surface listing of a file's top-level private `fn` names — the
-    /// internal implementation TOC, emitted only when private fns
-    /// outnumber the file's pub items (see `private_fn_roster_items`).
-    PrivateItemNames { file: PathBuf },
-    /// Whole top-level `pub` item (sig with body marker for fn).
-    PubItem { file: PathBuf, start_line: usize },
-    /// Body slice of a public fn, split by top-level statement.
-    /// Predecessor: matching `PubItem`.
-    PubItemBody {
-        file: PathBuf,
-        start_line: usize,
-        body_start_line: usize,
-    },
-    /// Private top-level item in a Rust entrypoint file. Functions render
-    /// as sig with body ellipses; non-functions render whole.
-    EntryItem { file: PathBuf, start_line: usize },
-    /// Body slice of a private entrypoint fn, split by top-level statement.
-    /// Predecessor: matching `EntryItem`.
-    EntryItemBody {
-        file: PathBuf,
-        start_line: usize,
-        body_start_line: usize,
-    },
-    /// All top-level private `static`/`const` items of an entrypoint
-    /// file as one grouped batch — NS rows anchor on module state as a
-    /// unit, and per-item batches would be schedule crumbs (see
-    /// `module_state_rows` for membership and the token floor).
-    ModuleState { file: PathBuf },
-    /// Rustdoc up to the first `# Heading`. Predecessor: `PubItem`.
-    PubItemDocLede { file: PathBuf, start_line: usize },
-    /// Rustdoc body from the first `# Heading` onward. Predecessor:
-    /// `PubItemDocLede` if any, else `PubItem`.
-    PubItemDocBody { file: PathBuf, start_line: usize },
-    /// Impl-block headers + method signatures in a single file.
-    MethodSigs { file: PathBuf },
-    /// One `impl`-block method's signature (body elided), for a method
-    /// the file's `MethodSigs` roster already names. Predecessor: that
-    /// `MethodSigs` batch — the roster is the entry ticket, and gating
-    /// there keeps the sig-line overlap inside the predecessor chain.
-    ImplMethod { file: PathBuf, start_line: usize },
-    /// Body slice of an impl method, split by top-level statement —
-    /// the same shape as `PubItemBody`. Predecessor: matching
-    /// `ImplMethod`.
-    ImplMethodBody {
-        file: PathBuf,
-        start_line: usize,
-        body_start_line: usize,
-    },
-    /// Private function signature plus same-constructor registration call anchors.
-    RegistrationRoster { file: PathBuf, start_line: usize },
-    /// `#[macro_export] macro_rules!` names across `src_dir`.
-    MacroNames { src_dir: PathBuf },
-    /// Full body of one `#[macro_export] macro_rules!`. Predecessor:
-    /// `MacroNames` for the enclosing `src_dir`.
-    MacroBody { file: PathBuf, start_line: usize },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -656,116 +568,6 @@ impl InnerKey for FsKey {
             "listing of '.'".to_string()
         } else {
             format!("listing of '{shown}'")
-        }
-    }
-}
-
-impl InnerKey for RustKey {
-    fn is_depth_follow_up(&self) -> bool {
-        // `EntryItemBody` is deliberately absent: entrypoint internals
-        // are the "how does this app work" spine, and NS authors rank
-        // that dive as wanted depth (otree main.rs args->config parts:
-        // -0.131 with it pressured).
-        matches!(
-            self,
-            RustKey::PubItemBody { .. }
-                | RustKey::PubItemDocLede { .. }
-                | RustKey::PubItemDocBody { .. }
-                | RustKey::MacroBody { .. }
-                | RustKey::ImplMethodBody { .. }
-        )
-    }
-
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(
-            self,
-            RustKey::CrateAttrs { .. }
-                | RustKey::ModUse { .. }
-                | RustKey::PubItemNames { .. }
-                | RustKey::PrivateItemNames { .. }
-                | RustKey::PubItem { .. }
-                | RustKey::EntryItem { .. }
-                | RustKey::ModuleState { .. }
-                | RustKey::MethodSigs { .. }
-                | RustKey::ImplMethod { .. }
-                | RustKey::RegistrationRoster { .. }
-                | RustKey::MacroNames { .. }
-        )
-    }
-
-    /// `PubItemDocBody` steepens to `0.45` — rustdoc prose past the
-    /// first heading grows in cost without proportional structural value.
-    /// `CrateDocBody` stays at the default (its bullets carry credit).
-    /// Per-method batches take the same `0.45` as their Python / C / Go
-    /// counterparts — short members emitted in bulk.
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            RustKey::PubItemDocBody { .. } => 0.45,
-            RustKey::ImplMethod { .. } | RustKey::ImplMethodBody { .. } => 0.45,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            RustKey::CrateDocLede { file } => describe_in("crate-doc lede", file, root),
-            RustKey::CrateDocBody { file } => describe_in("crate-doc body", file, root),
-            RustKey::CrateDocTail { file, start_line } => {
-                describe_at("crate-doc tail", file, *start_line, root)
-            }
-            RustKey::CrateAttrs { file } => describe_in("crate attributes", file, root),
-            RustKey::ModUse { file } => describe_in("mod/use plumbing", file, root),
-            RustKey::PubItemNames { file } => describe_in("pub-item names surface", file, root),
-            RustKey::PrivateItemNames { file } => {
-                describe_in("private-fn names surface", file, root)
-            }
-            RustKey::PubItem { file, start_line } => {
-                describe_at("pub item", file, *start_line, root)
-            }
-            RustKey::PubItemBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body("pub item body", file, *start_line, *body_start_line, root),
-            RustKey::EntryItem { file, start_line } => {
-                describe_at("entry item", file, *start_line, root)
-            }
-            RustKey::EntryItemBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body("entry item body", file, *start_line, *body_start_line, root),
-            RustKey::ModuleState { file } => describe_in("private module state", file, root),
-            RustKey::PubItemDocLede { file, start_line } => {
-                describe_at("pub-item doc lede", file, *start_line, root)
-            }
-            RustKey::PubItemDocBody { file, start_line } => {
-                describe_at("pub-item doc body", file, *start_line, root)
-            }
-            RustKey::MethodSigs { file } => describe_in("impl method sigs", file, root),
-            RustKey::ImplMethod { file, start_line } => {
-                describe_at("impl method", file, *start_line, root)
-            }
-            RustKey::ImplMethodBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body(
-                "impl method body",
-                file,
-                *start_line,
-                *body_start_line,
-                root,
-            ),
-            RustKey::RegistrationRoster { file, start_line } => {
-                describe_at("registration roster", file, *start_line, root)
-            }
-            RustKey::MacroNames { src_dir } => {
-                format!("macro_export names across {}", display_path(src_dir, root))
-            }
-            RustKey::MacroBody { file, start_line } => {
-                describe_at("macro_export body", file, *start_line, root)
-            }
         }
     }
 }

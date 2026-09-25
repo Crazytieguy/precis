@@ -14,17 +14,7 @@ Cargo.toml
   6→    "sps-core",
   7→    "sps-net",
   8→]
-  10→[patch.crates-io]
-  11→sps-common  = { path = "sps-common" }
-  12→sps-core    = { path = "sps-core" }
-  13→sps-net     = { path = "sps-net" }
-  14→
-  15→# Shared dependencies defined once
   …
-  43→[profile.release]
-  44→lto = true
-  45→codegen-units = 1
-  46→strip = true
 LICENSE.md
 NOTICE.md
 README.md
@@ -61,54 +51,106 @@ sps/
   src/
     cli/
       info.rs
+        1→//! Contains the logic for the `info` command.
+        …
       init.rs
       install.rs
+        …
+        16→pub struct InstallArgs {
+        …
+        43→impl InstallArgs {
+        44→    #[instrument(skip(self, config, cache), fields(targets = ?self.names))]
+        45→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+        …
+        76→}
       list.rs
+        …
+        16→pub struct List {
+        …
+        28→impl List {
+        29→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+        …
+        422→}
       reinstall.rs
+        …
+        12→pub struct ReinstallArgs {
+        …
+        23→impl ReinstallArgs {
+        24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+        …
+        34→}
       search.rs
       status.rs
       uninstall.rs
       update.rs
+        1→//! Contains the logic for the `update` command.
+        …
+        10→#[derive(clap::Args, Debug)]
+        11→pub struct Update;
+        12→
+        13→impl Update {
+        14→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+        …
+        73→}
       upgrade.rs
+        …
+        12→pub struct UpgradeArgs {
+        …
+        23→impl UpgradeArgs {
+        24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+        …
+        57→}
     cli.rs
+      …
+      2→//! Defines the command-line argument structure using clap.
+      …
     main.rs
       …
+      23→async fn run_init_command(init_args: &InitArgs, verbose_level: u8) -> spResult<()> {
+      …
+      56→#[tokio::main]
       57→async fn main() -> spResult<()> {
+      …
+      193→async fn check_and_run_auto_update(config: &Config, cache: Arc<Cache>) -> spResult<()> {
       …
     pipeline/
       downloader.rs
+        …
+        21→pub(crate) struct DownloadCoordinator {
+        …
+        28→impl DownloadCoordinator {
+        …
       planner.rs
       runner.rs
     pipeline.rs
+      1→pub mod downloader;
+      2→pub mod planner;
+      3→pub mod runner;
 sps-common/
   Cargo.toml
   src/
     cache.rs
       …
+      12→const CACHE_TTL: Duration = Duration::from_secs(24 * 60 * 60); // 24 hours
+      14→/// Cache struct to manage cache operations
       15→pub struct Cache {
       16→    cache_dir: PathBuf,
       17→    _config: Config, // Keep a reference to config if needed for other paths or future use
       18→}
+      20→impl Cache {
       …
     config.rs
-      …
-      15→pub struct Config {
-      …
-      199→pub fn load_config() -> Result<Config> {
-      …
     dependency/
       definition.rs
       mod.rs
-        1→pub mod definition; // Renamed from 'dependency'
-        2→pub mod requirement;
-        3→pub mod resolver;
-        …
-        6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
-        7→pub use requirement::Requirement;
-        8→pub use resolver::{
-        9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
-        10→};
       requirement.rs
+        …
+        7→pub enum Requirement {
+        …
+        13→impl fmt::Display for Requirement {
+        14→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        …
+        21→}
       resolver.rs
     error.rs
     formulary.rs
@@ -118,7 +160,12 @@ sps-common/
       13→    cache: Cache,
       14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
       15→}
+      17→impl Formulary {
+      18→    pub fn new(config: Config) -> Self {
       …
+      28→    pub fn load_formula(&self, name: &str) -> Result<Formula> {
+      …
+      76→}
     keg.rs
       …
       12→#[derive(Debug, Clone, PartialEq, Eq)]
@@ -127,11 +174,12 @@ sps-common/
       15→    pub version_str: String,
       16→    pub path: PathBuf,
       17→}
-      …
+      19→/// Manages querying installed packages in the Cellar.
       20→#[derive(Debug)]
       21→pub struct KegRegistry {
       22→    config: Config,
       23→}
+      25→impl KegRegistry {
       …
     lib.rs
       …
@@ -151,27 +199,18 @@ sps-common/
       …
     model/
       artifact.rs
+        …
+        9→pub enum InstalledArtifact {
+        …
       cask.rs
       formula.rs
       mod.rs
-        …
-        3→use std::sync::Arc;
-        4→
-        5→pub mod artifact;
-        6→pub mod cask;
-        7→pub mod formula;
-        8→pub mod tap;
-        9→pub mod version;
-        …
-        12→pub use artifact::InstalledArtifact;
-        13→pub use cask::Cask;
-        14→pub use formula::Formula;
-        16→#[derive(Debug, Clone)]
-        17→pub enum InstallTargetIdentifier {
-        18→    Formula(Arc<Formula>),
-        19→    Cask(Arc<Cask>),
-        20→}
       tap.rs
+        …
+        10→pub struct Tap {
+        …
+        21→impl Tap {
+        …
       version.rs
     pipeline.rs
 sps-core/
@@ -180,32 +219,31 @@ sps-core/
     build/
       compile/
         cargo.rs
+          …
+          12→pub fn cargo_build(
+          …
         cmake.rs
+          …
+          13→pub fn cmake_build(
+          …
         go.rs
+          …
+          13→pub fn go_build(
+          …
         make.rs
         meson.rs
+          …
+          12→pub fn meson_build(
+          …
         mod.rs
-          …
-          37→pub(crate) const RECOGNISED_SINGLE_FILE_EXTENSIONS: [&str; 9] =
-          …
-          40→pub async fn download_source(formula: &Formula, config: &Config) -> Result<PathBuf> {
-          41→    download_source_with_progress(formula, config, None).await
-          …
-          44→pub async fn download_source_with_progress(
-          45→    formula: &Formula,
-          46→    config: &Config,
-          47→    progress_callback: Option<ProgressCallback>,
-          48→) -> Result<PathBuf> {
-          …
-          293→pub async fn build_from_source(
-          294→    source_path: &Path,
-          295→    formula: &Formula,
-          296→    config: &Config,
-          297→    all_installed_paths: &[PathBuf],
-          298→) -> Result<PathBuf> {
-          …
         perl.rs
+          …
+          12→pub fn perl_build(
+          …
         python.rs
+          …
+          13→pub fn python_build(
+          …
       env.rs
       mod.rs
         1→pub mod compile;
@@ -219,58 +257,98 @@ sps-core/
         4→pub use installed::{InstalledPackageInfo, PackageType};
         5→pub use update::UpdateInfo;
       update.rs
+        …
+        23→pub struct UpdateInfo {
+        …
+        33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
+        …
+        89→pub async fn check_for_updates(
+        …
     install/
       bottle/
         exec.rs
         link.rs
         macho.rs
         mod.rs
-          …
-          17→/// Download formula resources from the internet asynchronously.
-          18→pub async fn download_formula(
-          19→    formula: &Formula,
-          20→    config: &Config,
-          21→    client: &reqwest::Client,
-          22→) -> Result<PathBuf> {
-          …
-          33→/// Checks if a suitable bottle exists for the current platform, considering fallbacks.
-          34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
-          …
-          159→pub fn get_formula_cellar_path(formula: &Formula, config: &Config) -> PathBuf {
-          160→    // Use Config method
-          161→    config.formula_cellar_dir(formula.name())
-          …
-          165→pub fn write_receipt(
-          166→    formula: &Formula,
-          167→    install_dir: &Path,
-          168→    installation_type: &str, // "bottle" or "source"
-          169→) -> Result<()> {
-          …
       cask/
         artifacts/
           app.rs
           audio_unit_plugin.rs
+            …
+            20→pub fn install_audio_unit_plugin(
+            …
           binary.rs
+            …
+            23→pub fn install_binary(
+            …
           colorpicker.rs
+            …
+            20→pub fn install_colorpicker(
+            …
           dictionary.rs
+            …
+            25→pub fn install_dictionary(
+            …
           font.rs
+            …
+            21→pub fn install_font(
+            …
           input_method.rs
+            …
+            17→pub fn install_input_method(
+            …
           installer.rs
           internet_plugin.rs
+            …
+            21→pub fn install_internet_plugin(
+            …
           keyboard_layout.rs
+            …
+            17→pub fn install_keyboard_layout(
+            …
           manpage.rs
           mdimporter.rs
+            …
+            21→pub fn install_mdimporter(
+            …
           mod.rs
           pkg.rs
+            …
+            13→pub fn install_pkg_from_path(
+            …
           preflight.rs
+            …
+            13→pub fn run_preflight(
+            …
           prefpane.rs
+            …
+            21→pub fn install_prefpane(
+            …
           qlplugin.rs
+            …
+            20→pub fn install_qlplugin(
+            …
           screen_saver.rs
+            …
+            20→pub fn install_screen_saver(
+            …
           service.rs
+            …
+            21→pub fn install_service(
+            …
           suite.rs
+            …
+            20→pub fn install_suite(
+            …
           uninstall.rs
           vst3_plugin.rs
+            …
+            20→pub fn install_vst3_plugin(
+            …
           vst_plugin.rs
+            …
+            20→pub fn install_vst_plugin(
+            …
           zap.rs
         dmg.rs
         helpers.rs
@@ -278,21 +356,6 @@ sps-core/
       devtools.rs
       extract.rs
       mod.rs
-        …
-        5→use std::path::PathBuf;
-        6→
-        7→use sps_common::config::Config;
-        8→use sps_common::model::formula::Formula;
-        …
-        11→pub mod bottle;
-        12→pub mod cask;
-        13→pub mod devtools;
-        14→pub mod extract;
-        …
-        17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
-        18→    // Use new Config method
-        19→    config.formula_opt_path(formula.name())
-        …
     lib.rs
       …
       4→pub mod build;
@@ -308,36 +371,40 @@ sps-core/
       …
     pipeline/
       engine.rs
+        …
+        16→pub fn start_worker_pool_manager(
+        …
       mod.rs
         1→pub mod engine;
         2→pub mod worker;
       worker.rs
+        …
+        21→pub(super) fn execute_sync_job(
+        …
+        37→fn do_execute_sync_steps(
+        …
     uninstall/
       cask.rs
       common.rs
       formula.rs
+        …
+        10→pub fn uninstall_formula_artifacts(
+        …
       mod.rs
-        …
-        3→pub mod cask;
-        4→pub mod common;
-        5→pub mod formula;
-        …
-        8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
-        9→pub use common::UninstallOptions;
-        10→pub use formula::uninstall_formula_artifacts;
     upgrade/
       bottle.rs
+        …
+        20→pub async fn upgrade_bottle_formula(
+        …
       cask.rs
+        …
+        15→pub async fn upgrade_cask_package(
+        …
       mod.rs
-        …
-        3→pub mod bottle;
-        4→pub mod cask;
-        5→pub mod source;
-        …
-        8→pub use self::bottle::upgrade_bottle_formula;
-        9→pub use self::cask::upgrade_cask_package;
-        10→pub use self::source::upgrade_source_formula;
       source.rs
+        …
+        19→pub async fn upgrade_source_formula(
+        …
     utils/
       applescript.rs
       mod.rs
@@ -380,3 +447,10 @@ sps-net/
       29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
     oci.rs
     validation.rs
+      …
+      67→pub fn verify_checksum(path: &Path, expected: &str) -> Result<()> {
+      …
+      93→pub fn verify_content_type(path: &Path, expected_ext: &str) -> Result<()> {
+      …
+      121→pub fn validate_url(url_str: &str) -> Result<()> {
+      …

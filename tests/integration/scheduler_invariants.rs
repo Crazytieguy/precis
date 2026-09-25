@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use precis::batch::{Batch, BatchKey, FsKey, RustKey};
+use precis::batch::{Batch, BatchKey, CodeKey, FsKey, Rung};
 use precis::content::{BatchContent, FsEntries, FsGroup, Render, Span};
 use precis::render::SourceCache;
 use precis::scheduler::Scheduler;
@@ -56,14 +56,24 @@ fn fs_listing_batch(value: f64, child: &str) -> Batch<BatchKey> {
     }
 }
 
+fn code_key(rung: Rung, file: &str) -> BatchKey {
+    BatchKey::Code(CodeKey {
+        rung,
+        file: stub_file(file),
+        decl: 1,
+        sub: 0,
+        line: 1,
+    })
+}
+
 fn preload(cache: &SourceCache, path: &Path, contents: &str) {
     cache.insert(path.to_path_buf(), Arc::from(contents));
 }
 
 #[test]
 fn scheduler_invariants_override_via_predecessor_chain() {
-    // Three batches: a folder listing → a `PubItem` carrying Truncated
-    // spans → a `PubItemDocLede` refinement (with PubItem as predecessor)
+    // Three batches: a folder listing → a code `Decl` carrying Truncated
+    // spans → a `Doc` refinement (with the `Decl` as predecessor)
     // that overrides line 1 with its Full version.
     struct OverrideChain;
     impl Walker for OverrideChain {
@@ -74,10 +84,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
         }
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                let pub_item_key = BatchKey::Rust(RustKey::PubItem {
-                    file: stub_file("synthetic.rs"),
-                    start_line: 1,
-                });
+                let pub_item_key = code_key(Rung::Decl, "synthetic.rs");
                 vec![
                     Batch {
                         key: pub_item_key.clone(),
@@ -105,10 +112,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                         value: 500.0,
                     },
                     Batch {
-                        key: BatchKey::Rust(RustKey::PubItemDocLede {
-                            file: stub_file("synthetic.rs"),
-                            start_line: 1,
-                        }),
+                        key: code_key(Rung::Doc, "synthetic.rs"),
                         predecessor: Some(pub_item_key),
                         content: BatchContent::Lines {
                             spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
@@ -152,10 +156,7 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 vec![Batch {
-                    key: BatchKey::Rust(RustKey::PubItem {
-                        file: stub_file("synthetic.rs"),
-                        start_line: 1,
-                    }),
+                    key: code_key(Rung::Decl, "synthetic.rs"),
                     predecessor: None,
                     content: BatchContent::Lines {
                         spans: vec![Span {
@@ -360,18 +361,13 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
                 };
                 vec![
                     Batch {
-                        key: BatchKey::Rust(RustKey::PubItem {
-                            file: stub_file("f.rs"),
-                            start_line: 1,
-                        }),
+                        key: code_key(Rung::Decl, "f.rs"),
                         predecessor: None,
                         content: line_content(),
                         value: 500.0,
                     },
                     Batch {
-                        key: BatchKey::Rust(RustKey::MethodSigs {
-                            file: stub_file("f.rs"),
-                        }),
+                        key: code_key(Rung::Names, "f.rs"),
                         predecessor: None,
                         content: line_content(),
                         value: 500.0,
@@ -463,7 +459,7 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
     // member-count bookkeeping behind breadth pressure parks such
     // dependents under a pseudo-root and reparents when the key
     // materializes — this exercises that path end-to-end (absorb
-    // order: doc lede first, its PubItem predecessor second).
+    // order: doc first, its `Decl` predecessor second).
     struct DependentFirst;
     impl Walker for DependentFirst {
         type Key = BatchKey;
@@ -473,16 +469,10 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
         }
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                let pub_item_key = BatchKey::Rust(RustKey::PubItem {
-                    file: stub_file("synthetic.rs"),
-                    start_line: 1,
-                });
+                let pub_item_key = code_key(Rung::Decl, "synthetic.rs");
                 vec![
                     Batch {
-                        key: BatchKey::Rust(RustKey::PubItemDocLede {
-                            file: stub_file("synthetic.rs"),
-                            start_line: 1,
-                        }),
+                        key: code_key(Rung::Doc, "synthetic.rs"),
                         predecessor: Some(pub_item_key.clone()),
                         content: BatchContent::Lines {
                             spans: single_span(stub_file("synthetic.rs"), 2, 2, Render::Full),

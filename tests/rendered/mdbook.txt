@@ -33,10 +33,22 @@ crates/
     src/
       main.rs
         1→//! Utility to compare the output of two different versions of mdbook.
-        3→use std::path::Path;
-        4→use std::process::Command;
+        …
+        6→macro_rules! error {
         …
         14→fn main() {
+        …
+        39→fn clean(path: &Path) {
+        …
+        46→fn build(mdbook: &Path, book: &Path) {
+        …
+        61→fn process(path: &Path) {
+        …
+        78→fn process_html(path: &Path) {
+        …
+        88→fn tidy(path: &Path) {
+        …
+        105→fn diff(a: &Path, b: &Path) {
         …
   mdbook-core/
     Cargo.toml
@@ -50,27 +62,18 @@ crates/
         1→//! The base support library for mdbook, intended for internal use only.
         …
         7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+        8→
         9→pub mod book;
         10→pub mod config;
         11→pub mod utils;
-        …
-        14→pub mod errors {
         …
       utils/
         fs.rs
         html.rs
         mod.rs
-          1→//! Various helpers and utilities.
-          …
-          28→/// Prints a "backtrace" of some `Error`.
-          29→pub fn log_backtrace(e: &Error) {
-          …
         toml_ext.rs
   mdbook-driver/
     Cargo.toml
-      …
-      31→[features]
-      32→search = ["mdbook-html/search"]
     README.md
     src/
       builtin_preprocessors/
@@ -80,23 +83,23 @@ crates/
           take_lines.rs
         links.rs
         mod.rs
-          1→//! Built-in preprocessors.
-          …
       builtin_renderers/
         markdown_renderer.rs
         mod.rs
-          1→//! Built-in renderers.
-          2→//!
-          3→//! The HTML renderer can be found in the [`mdbook_html`] crate.
-          …
-          19→#[derive(Debug, Clone, PartialEq)]
-          20→pub struct CmdRenderer {
-          21→    name: String,
-          22→    cmd: String,
-          23→}
-          …
       init.rs
       lib.rs
+        …
+        67→pub mod builtin_preprocessors;
+        68→pub mod builtin_renderers;
+        69→pub mod init;
+        …
+        74→pub use mdbook::MDBook;
+        75→pub use mdbook_core::{book, config, errors};
+        …
+        82→fn compose_command(cmd: &str, root: &Path) -> Result<Command> {
+        …
+        107→fn handle_command_error(
+        …
       load.rs
       mdbook/
         tests.rs
@@ -138,51 +141,39 @@ crates/
         static_files.rs
       lib.rs
         1→//! mdBook HTML renderer.
-        3→mod html;
-        4→mod html_handlebars;
+        …
         5→pub mod theme;
-        6→pub(crate) mod utils;
-        7→
+        …
         8→pub use html_handlebars::HtmlHandlebars;
       theme/
         fonts.rs
         mod.rs
-          1→//! Support for theme files.
-          …
         playground_editor.rs
         searcher.rs
       utils.rs
+        1→//! Utilities for processing HTML.
+        …
   mdbook-markdown/
     Cargo.toml
     README.md
     src/
       lib.rs
+        1→//! Markdown processing used in mdBook.
+        2→//!
+        3→//! This crate provides functions for processing Markdown in the same way as
+        4→//! [mdBook](https://rust-lang.github.io/mdBook/). The [`pulldown_cmark`]
+        5→//! crate is used as the underlying parser. This crate re-exports
+        6→//! [`pulldown_cmark`] so that you can access its types.
         …
-        8→use pulldown_cmark::{Options, Parser};
-        …
+        10→#[doc(inline)]
         11→pub use pulldown_cmark;
-        13→/// Options for parsing markdown.
-        14→#[non_exhaustive]
+        …
         15→pub struct MarkdownOptions {
-        16→    /// Enables smart punctuation.
-        17→    ///
-        18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
-        19→    /// `---` to em-dash.
-        20→    ///
-        21→    /// This is `true` by default.
-        22→    pub smart_punctuation: bool,
-        23→    /// Enables definition lists.
-        24→    ///
-        25→    /// This is `true` by default.
-        26→    pub definition_lists: bool,
-        27→    /// Enables admonitions.
-        28→    ///
-        29→    /// This is `true` by default.
-        30→    pub admonitions: bool,
-        31→}
+        …
         33→impl Default for MarkdownOptions {
         34→    fn default() -> MarkdownOptions {
         …
+        41→}
         43→/// Creates a new pulldown-cmark parser of the given text.
         44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
         …
@@ -191,22 +182,27 @@ crates/
     README.md
     src/
       lib.rs
+        1→//! Library to assist implementing an mdbook preprocessor.
+        2→//!
+        3→//! This library is used to implement a
+        4→//! [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
+        5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+        6→//! for more information on how to implement a preprocessor.
+        …
+        18→pub use mdbook_core::MDBOOK_VERSION;
+        19→pub use mdbook_core::book;
+        20→pub use mdbook_core::config;
+        21→pub use mdbook_core::errors;
         …
         30→pub trait Preprocessor {
-        31→    /// Get the `Preprocessor`'s name.
+        …
         32→    fn name(&self) -> &str;
-        33→
-        34→    /// Run this `Preprocessor`, allowing it to update the book before it is
-        35→    /// given to a renderer.
+        …
         36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
-        37→
-        38→    /// A hint to `MDBook` whether this preprocessor is compatible with a
-        39→    /// particular renderer.
-        40→    ///
-        41→    /// By default, always returns `true`.
+        …
         42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
         43→        Ok(true)
-        44→    }
+        …
         45→}
         …
         51→pub struct PreprocessorContext {
@@ -215,27 +211,49 @@ crates/
         …
         70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
         …
+        79→}
         81→/// Parses the input given to a preprocessor.
         82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
-        83→    serde_json::from_reader(reader).with_context(|| "Unable to parse the input")
         …
   mdbook-renderer/
     Cargo.toml
     README.md
     src/
       lib.rs
+        1→//! Library to assist implementing an mdbook renderer.
+        2→//!
+        3→//! This library is used to implement a
+        4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
+        5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+        6→//! for more information on how to implement a renderer.
+        …
+        17→pub use mdbook_core::MDBOOK_VERSION;
+        18→pub use mdbook_core::book;
+        19→pub use mdbook_core::config;
+        20→pub use mdbook_core::errors;
         …
         28→pub trait Renderer {
-        29→    /// The `Renderer`'s name.
+        …
         30→    fn name(&self) -> &str;
-        31→
-        32→    /// Invoke the `Renderer`, passing in all the necessary information for
-        33→    /// describing a book.
+        …
         34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
         35→}
         …
         40→pub struct RenderContext {
         …
+        63→impl RenderContext {
+        64→    /// Create a new `RenderContext`.
+        65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
+        66→    where
+        67→        P: Into<PathBuf>,
+        68→        Q: Into<PathBuf>,
+        69→    {
+        …
+        81→    pub fn source_dir(&self) -> PathBuf {
+        …
+        86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
+        …
+        89→}
   mdbook-summary/
     Cargo.toml
     README.md
@@ -247,22 +265,11 @@ crates/
         4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
         5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         …
-        59→pub fn parse_summary(summary: &str) -> Result<Summary> {
-        60→    let parser = SummaryParser::new(summary);
-        61→    parser.parse()
+        8→pub use mdbook_core::book::SectionNumber;
         …
-        65→#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-        66→#[non_exhaustive]
+        59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+        …
         67→pub struct Summary {
-        68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
-        69→    pub title: Option<String>,
-        70→    /// Chapters before the main text (e.g. an introduction).
-        71→    pub prefix_chapters: Vec<SummaryItem>,
-        72→    /// The main numbered chapters of the book, broken into one or more possibly named parts.
-        73→    pub numbered_chapters: Vec<SummaryItem>,
-        74→    /// Items which come after the main document (e.g. a conclusion).
-        75→    pub suffix_chapters: Vec<SummaryItem>,
-        76→}
         …
         82→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
         83→#[non_exhaustive]
@@ -277,7 +284,15 @@ crates/
         92→    /// Any nested items this chapter may contain.
         93→    pub nested_items: Vec<SummaryItem>,
         94→}
+        96→impl Link {
         …
+        98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
+        …
+        106→}
+        108→impl Default for Link {
+        109→    fn default() -> Self {
+        …
+        117→}
         119→/// An item in `SUMMARY.md`.
         120→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
         121→#[non_exhaustive]
@@ -289,6 +304,21 @@ crates/
         127→    /// A part title.
         128→    PartTitle(String),
         129→}
+        …
+        140→impl From<Link> for SummaryItem {
+        141→    fn from(other: Link) -> SummaryItem {
+        …
+        144→}
+        …
+        173→struct SummaryParser<'a> {
+        …
+        190→macro_rules! collect_events {
+        …
+        604→fn update_section_numbers(items: &mut [SummaryItem], level: usize, by: u32) {
+        …
+        618→fn get_last_link(links: &mut [SummaryItem]) -> Result<(usize, &mut Link)> {
+        …
+        634→fn stringify_events(events: Vec<Event<'_>>) -> String {
         …
   xtask/
 eslint.config.mjs
@@ -313,36 +343,17 @@ guide/
           main.rs
             …
             12→fn main() {
-            13→    let mut stdin = io::stdin();
-            14→    let ctx = RenderContext::from_json(&mut stdin).unwrap();
-            15→    let cfg: WordcountConfig = ctx.config
-            16→        .get_deserialized("output.wordcount")
-            17→        .unwrap_or_default();
-            19→    let _ = fs::create_dir_all(&ctx.destination);
-            20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
+            …
+            40→fn count_words(ch: &Chapter) -> usize {
             …
             44→#[derive(Debug, Default, Serialize, Deserialize)]
-            …
+            45→#[serde(default, rename_all = "kebab-case")]
             46→pub struct WordcountConfig {
             47→    pub ignores: Vec<String>,
             48→    pub deny_odds: bool,
             49→}
       preprocessors.md
     format/
-      README.md
-      configuration/
-      example.rs
-      images/
-        rust-logo-blk.svg
-      markdown.md
-      mathjax.md
-      mdbook.md
-      summary.md
-      theme/
-        README.md
-        editor.md
-        index-hbs.md
-        syntax-highlighting.md
     guide/
       README.md
       creating.md
@@ -357,6 +368,8 @@ src/
     build.rs
     clean.rs
     command_prelude.rs
+      1→//! Helpers for building the command-line arguments for commands.
+      …
     init.rs
     mod.rs
       1→//! Subcommand modules for the `mdbook` binary.
@@ -370,16 +383,17 @@ src/
   main.rs
     1→//! The mdbook CLI.
     …
+    16→const VERSION: &str = concat!("v", clap::crate_version!());
+    17→
     18→fn main() {
-    19→    init_logger();
-    21→    let command = create_clap_command();
-    23→    // Check which subcommand the user ran...
     …
-    50→    if let Err(e) = res {
-    51→        utils::log_backtrace(&e);
-    52→
-    53→        std::process::exit(101);
-    54→    }
+    58→fn create_clap_command() -> Command {
+    …
+    93→fn init_logger() {
+    …
+    126→fn get_book_dir(args: &ArgMatches) -> PathBuf {
+    …
+    139→fn open<P: AsRef<OsStr>>(path: P) {
     …
 tests/
   gui/

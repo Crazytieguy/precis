@@ -158,8 +158,8 @@ Two gotchas in this shape:
 
 - **A scan that starts below the walk root must ask about ancestors.** A
   directory-only pattern (`examples/`) matches the directory, not the
-  files in it, so a traversal seeded inside an ignored directory (as
-  Rust's Cargo source dirs are) reads the whole subtree unless it uses
+  files in it, so a traversal seeded inside an ignored directory reads
+  the whole subtree unless it uses
   `DirFilter::excludes_tree` at its entry point.
 - **A directory can be ignored by a pattern inside it** (a `.gitignore`
   holding `*`). `DirFilter::hides_everything_in` answers this
@@ -201,8 +201,9 @@ language.**
 
 - Walker dispatch is a closed-set enum. Resist adding extension points
   unless multiple languages actually want them.
-- Per-walker run state goes in named fields on `WalkCtx` (`rust_state`,
-  `typescript_state`, …), not a `TypeId` bag or thread-local.
+- Per-walker run state goes in named fields on `WalkCtx`
+  (`typescript_state`, `ctx.code.<lang>`, …), not a `TypeId` bag or
+  thread-local.
 
 ## Output notation and the plugin cap
 

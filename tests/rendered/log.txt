@@ -56,66 +56,40 @@ src/
   kv/
     error.rs
     key.rs
-      …
-      7→pub trait ToKey {
-      8→    /// Perform the conversion.
-      9→    fn to_key(&self) -> Key<'_>;
-      10→}
-      …
-      37→pub struct Key<'k> {
+      1→//! Structured keys.
       …
     mod.rs
-      1→//! Structured logging.
-      2→//!
-      3→//! Add the `kv` feature to your `Cargo.toml` to enable
-      4→//! this module:
-      5→//!
-      6→//! ```toml
-      7→//! [dependencies.log]
-      8→//! features = ["kv"]
-      9→//! ```
-      10→//!
-      …
     source.rs
     value.rs
   lib.rs
     …
-    11→//! A lightweight logging facade.
-    12→//!
-    13→//! The `log` crate provides a single logging API that abstracts over the
-    14→//! actual logging implementation. Libraries can use the logging API provided
-    15→//! by this crate, and the consumer of those libraries can choose the logging
-    16→//! implementation that is most suitable for its use case.
-    17→//!
-    18→//! If no logging implementation is selected, the facade falls back to a "noop"
-    19→//! implementation that ignores all log messages. The overhead in this case
-    20→//! is very small - just an integer load, comparison and jump.
-    21→//!
-    22→//! A log request consists of a _target_, a _level_, and a _body_. A target is a
-    23→//! string which defaults to the module path of the location of the log request,
-    24→//! though that default may be overridden. Logger implementations typically use
-    25→//! the target to filter requests based on some user configuration.
-    26→//!
-    …
-    399→use std::cfg;
-    400→#[cfg(feature = "std")]
-    401→use std::error;
-    402→use std::str::FromStr;
-    403→use std::{cmp, fmt, mem};
-    …
-    406→mod macros;
-    407→mod serde;
-    408→
     409→#[cfg(feature = "kv")]
     410→pub mod kv;
-    411→
-    412→#[cfg(target_has_atomic = "ptr")]
-    413→use std::sync::atomic::{AtomicUsize, Ordering};
-    414→
-    415→#[cfg(not(target_has_atomic = "ptr"))]
-    416→use std::cell::Cell;
-    417→#[cfg(not(target_has_atomic = "ptr"))]
-    418→use std::sync::atomic::Ordering;
+    …
+    420→#[cfg(not(target_has_atomic = "ptr"))]
+    421→struct AtomicUsize {
+    422→    v: Cell<usize>,
+    423→}
+    …
+    442→#[cfg(not(target_has_atomic = "ptr"))]
+    443→unsafe impl Sync for AtomicUsize {}
+    …
+    447→static mut LOGGER: &dyn Log = &NopLogger;
+    448→
+    449→static STATE: AtomicUsize = AtomicUsize::new(0);
+    …
+    454→const UNINITIALIZED: usize = 0;
+    455→const INITIALIZING: usize = 1;
+    456→const INITIALIZED: usize = 2;
+    457→
+    458→static MAX_LOG_LEVEL_FILTER: AtomicUsize = AtomicUsize::new(0);
+    459→
+    460→static LOG_LEVEL_NAMES: [&str; 6] = ["OFF", "ERROR", "WARN", "INFO", "DEBUG", "TRACE"];
+    461→
+    462→static SET_LOGGER_ERROR: &str = "attempted to set a logger after the logging system \
+    463→                                 was already initialized";
+    464→static LEVEL_PARSE_ERROR: &str =
+    465→    "attempted to convert a string that doesn't match an existing log level";
     …
     473→#[repr(usize)]
     474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
@@ -144,6 +118,42 @@ src/
     497→    /// Designates very low priority, often extremely verbose, information.
     498→    Trace,
     499→}
+    501→impl PartialEq<LevelFilter> for Level {
+    502→    #[inline]
+    503→    fn eq(&self, other: &LevelFilter) -> bool {
+    …
+    506→}
+    508→impl PartialOrd<LevelFilter> for Level {
+    509→    #[inline]
+    510→    fn partial_cmp(&self, other: &LevelFilter) -> Option<cmp::Ordering> {
+    …
+    513→}
+    515→impl FromStr for Level {
+    516→    type Err = ParseLevelError;
+    517→    fn from_str(level: &str) -> Result<Level, Self::Err> {
+    …
+    526→}
+    528→impl fmt::Display for Level {
+    529→    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    …
+    532→}
+    534→impl Level {
+    …
+    547→    #[inline]
+    548→    pub fn max() -> Level {
+    …
+    553→    #[inline]
+    554→    pub fn to_level_filter(&self) -> LevelFilter {
+    …
+    561→    pub fn as_str(&self) -> &'static str {
+    …
+    579→    pub fn iter() -> impl Iterator<Item = Self> {
+    …
+    599→    pub fn increment_severity(&self) -> Self {
+    …
+    620→    pub fn decrement_severity(&self) -> Self {
+    …
+    624→}
     …
     634→#[repr(usize)]
     635→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
@@ -161,6 +171,47 @@ src/
     647→    /// Corresponds to the `Trace` log level.
     648→    Trace,
     649→}
+    651→impl PartialEq<Level> for LevelFilter {
+    652→    #[inline]
+    653→    fn eq(&self, other: &Level) -> bool {
+    …
+    656→}
+    658→impl PartialOrd<Level> for LevelFilter {
+    659→    #[inline]
+    660→    fn partial_cmp(&self, other: &Level) -> Option<cmp::Ordering> {
+    …
+    663→}
+    665→impl FromStr for LevelFilter {
+    666→    type Err = ParseLevelError;
+    667→    fn from_str(level: &str) -> Result<LevelFilter, Self::Err> {
+    …
+    676→}
+    678→impl fmt::Display for LevelFilter {
+    679→    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+    …
+    682→}
+    684→impl LevelFilter {
+    …
+    698→    #[inline]
+    699→    pub fn max() -> LevelFilter {
+    …
+    706→    #[inline]
+    707→    pub fn to_level(&self) -> Option<Level> {
+    …
+    714→    pub fn as_str(&self) -> &'static str {
+    …
+    732→    pub fn iter() -> impl Iterator<Item = Self> {
+    …
+    752→    pub fn increment_severity(&self) -> Self {
+    …
+    774→    pub fn decrement_severity(&self) -> Self {
+    …
+    778→}
+    780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
+    781→enum MaybeStaticStr<'a> {
+    782→    Static(&'static str),
+    783→    Borrowed(&'a str),
+    784→}
     …
     841→#[derive(Clone, Debug)]
     842→pub struct Record<'a> {
@@ -173,102 +224,93 @@ src/
     849→    key_values: KeyValues<'a>,
     850→}
     …
+    856→#[cfg(feature = "kv")]
+    857→#[derive(Clone)]
+    858→struct KeyValues<'a>(&'a dyn kv::Source);
+    860→#[cfg(feature = "kv")]
+    861→impl<'a> fmt::Debug for KeyValues<'a> {
+    862→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    …
+    867→}
+    869→impl<'a> Record<'a> {
+    …
+    871→    #[inline]
+    872→    pub fn builder() -> RecordBuilder<'a> {
+    …
+    877→    #[inline]
+    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
+    …
+    883→    #[inline]
+    884→    pub fn metadata(&self) -> &Metadata<'a> {
+    …
+    889→    #[inline]
+    890→    pub fn level(&self) -> Level {
+    …
+    895→    #[inline]
+    896→    pub fn target(&self) -> &'a str {
+    …
+    901→    #[inline]
+    902→    pub fn module_path(&self) -> Option<&'a str> {
+    …
+    907→    #[inline]
+    908→    pub fn module_path_static(&self) -> Option<&'static str> {
+    …
+    916→    #[inline]
+    917→    pub fn file(&self) -> Option<&'a str> {
+    …
+    922→    #[inline]
+    923→    pub fn file_static(&self) -> Option<&'static str> {
+    …
+    931→    #[inline]
+    932→    pub fn line(&self) -> Option<u32> {
+    …
+    937→    #[cfg(feature = "kv")]
+    938→    #[inline]
+    939→    pub fn key_values(&self) -> &dyn kv::Source {
+    …
+    944→    #[cfg(feature = "kv")]
+    945→    #[inline]
+    946→    pub fn to_builder(&self) -> RecordBuilder<'_> {
+    …
+    961→}
+    …
     1002→#[derive(Debug)]
     1003→pub struct RecordBuilder<'a> {
     1004→    record: Record<'a>,
     1005→}
     …
-    1157→#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
-    1158→pub struct Metadata<'a> {
-    1159→    level: Level,
-    1160→    target: &'a str,
-    1161→}
-    …
-    1199→#[derive(Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
-    1200→pub struct MetadataBuilder<'a> {
-    1201→    metadata: Metadata<'a>,
-    1202→}
-    …
-    1249→pub trait Log: Sync + Send {
-    1250→    /// Determines if a log message with the specified metadata would be
-    1251→    /// logged.
-    1252→    ///
-    1253→    /// This is used by the `log_enabled!` macro to allow callers to avoid
-    1254→    /// expensive computation of log message arguments if the message would be
-    1255→    /// discarded anyway.
-    1256→    ///
-    1257→    /// # For implementors
-    1258→    ///
-    1259→    /// This method isn't called automatically by the `log!` macros.
-    1260→    /// It's up to an implementation of the `Log` trait to call `enabled` in its own
-    1261→    /// `log` method implementation to guarantee that filtering is applied.
-    1262→    fn enabled(&self, metadata: &Metadata) -> bool;
-    1263→
-    1264→    /// Logs the `Record`.
-    1265→    ///
-    1266→    /// # For implementors
-    1267→    ///
-    1268→    /// Note that `enabled` is *not* necessarily called before this method.
-    1269→    /// Implementations of `log` should perform all necessary filtering
-    1270→    /// internally.
-    1271→    fn log(&self, record: &Record);
-    1272→
-    1273→    /// Flushes any buffered records.
-    1274→    ///
-    1275→    /// # For implementors
-    1276→    ///
-    1277→    /// This method isn't called automatically by the `log!` macros.
-    1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
-    1279→    fn flush(&self);
-    1280→}
-    …
-    1350→#[cfg(target_has_atomic = "ptr")]
-    1351→pub fn set_max_level(level: LevelFilter) {
-    …
-    1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
-    …
-    1396→pub fn max_level() -> LevelFilter {
-    …
-    1419→#[cfg(all(feature = "std", target_has_atomic = "ptr"))]
-    1420→pub fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), SetLoggerError> {
-    …
-    1477→#[cfg(target_has_atomic = "ptr")]
-    1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-    …
-    1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-    …
-    1547→#[allow(missing_copy_implementations)]
-    1548→#[derive(Debug)]
-    1549→pub struct SetLoggerError(());
-    …
-    1564→#[allow(missing_copy_implementations)]
-    1565→#[derive(Debug, PartialEq, Eq)]
-    1566→pub struct ParseLevelError(());
-    …
-    1581→pub fn logger() -> &'static dyn Log {
-    …
-    1599→#[doc(hidden)]
-    1600→pub mod __private_api;
-    …
-    1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
-    1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-    1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-    1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-    1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-    1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-    1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-    1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
-    1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-    1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
-    1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
-    1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
-    1623→    _ => LevelFilter::Trace,
-    1624→};
-    1626→#[cfg(test)]
-    1627→mod tests {
-    …
   macros.rs
   serde.rs
+    …
+    16→impl Serialize for Level {
+    17→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    18→    where
+    19→        S: Serializer,
+    20→    {
+    …
+    29→}
+    31→impl<'de> Deserialize<'de> for Level {
+    32→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    33→    where
+    34→        D: Deserializer<'de>,
+    35→    {
+    …
+    108→}
+    110→impl Serialize for LevelFilter {
+    111→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    112→    where
+    113→        S: Serializer,
+    114→    {
+    …
+    124→}
+    126→impl<'de> Deserialize<'de> for LevelFilter {
+    127→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    128→    where
+    129→        D: Deserializer<'de>,
+    130→    {
+    …
+    203→}
+    …
 test_max_level_features/
   Cargo.toml
   main.rs

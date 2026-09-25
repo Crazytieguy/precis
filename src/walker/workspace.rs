@@ -15,8 +15,8 @@ use std::path::{Path, PathBuf};
 pub(super) const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
 /// Per-run cache of a workspace's resolved member-manifest set plus a
-/// raw-path → `is_member` lookup. Shared across the TOML, JSON, and
-/// Rust walkers; rust's `RustState` reuses TOML's resolver via this.
+/// raw-path → `is_member` lookup. Shared by the Cargo and npm/pnpm
+/// workspaces.
 #[derive(Default)]
 pub(super) struct WorkspaceMembership {
     members: OnceCell<HashSet<PathBuf>>,
@@ -45,6 +45,38 @@ impl WorkspaceMembership {
             .unwrap_or(false);
         self.lookup.borrow_mut().insert(file.to_path_buf(), hit);
         hit
+    }
+}
+
+/// Per-run Cargo workspace state: the member manifests and the facts
+/// primary-member election reads from them.
+#[derive(Default)]
+pub(super) struct CargoWorkspace {
+    membership: WorkspaceMembership,
+    member_facts: OnceCell<super::toml::MemberFacts>,
+}
+
+impl CargoWorkspace {
+    /// `true` iff `file` is a workspace-member `Cargo.toml`. Memoized.
+    pub(super) fn is_member(&self, file: &Path, root: &Path) -> bool {
+        self.membership
+            .is_member(file, || super::toml::collect_workspace_members(root))
+    }
+
+    /// `true` when the workspace's primary member is ambiguous and `file` is
+    /// not one of the colliding candidates — the only case where a member can
+    /// be called definitely-secondary without knowing which one is primary.
+    pub(super) fn is_definite_secondary_member(&self, file: &Path, root: &Path) -> bool {
+        let members = self
+            .membership
+            .members(|| super::toml::collect_workspace_members(root));
+        let facts = self
+            .member_facts
+            .get_or_init(|| super::toml::read_member_facts(root, members));
+        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+        facts
+            .ambiguous_primary()
+            .is_some_and(|members| !members.contains(&key))
     }
 }
 

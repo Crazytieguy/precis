@@ -1,5 +1,4 @@
-//! Rust extraction for the code engine. Not ported yet: `walker::rust` still
-//! walks these files.
+//! Rust extraction for the code engine.
 //!
 //! - **Module doc**: the file's leading `//!` / `/*! */` comments, one
 //!   [`Item`] per paragraph, without the leading paragraphs that are only
@@ -29,7 +28,7 @@ use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::WalkCtx;
 use crate::walker::markdown::{fence_closes, fence_marker};
 
-pub(super) const PORTED: bool = false;
+pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["rs"];
 
 pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {

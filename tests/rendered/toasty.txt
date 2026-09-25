@@ -11,21 +11,6 @@ README.md
   2→
   3→**Current status: Incubating - Toasty is not ready for production usage. The API
   4→is still evolving and documentation is lacking.**
-  6→Toasty is an ORM for the Rust programming language that prioritizes ease-of-use.
-  7→It supports both SQL databases as well as some NoSQL databases, including DynamoDB
-  8→and Cassandra. Note that Toasty does not hide the database capabilities.
-  9→Instead, Toasty exposes features based on the target database.
-  11→## Using Toasty
-  …
-  76→## SQL and NoSQL
-  …
-  91→## Application data model vs. database schema
-  …
-  98→## Current status and roadmap
-  …
-  111→## License
-  …
-  117→### Contribution
   …
 benches/
   Cargo.toml
@@ -35,20 +20,6 @@ crates/
   std-util/
     Cargo.toml
     src/
-      lib.rs
-        1→pub mod num;
-        2→pub mod option;
-        3→pub mod result;
-        4→pub mod slice;
-        5→pub mod str;
-        6→
-        7→pub mod prelude {
-        …
-      num.rs
-      option.rs
-      result.rs
-      slice.rs
-      str.rs
   toasty/
     CONTEXT.md
     Cargo.toml
@@ -68,22 +39,6 @@ crates/
           as_expr.rs
         eval.rs
         exec/
-          action.rs
-          delete_by_key.rs
-          eval.rs
-          exec_statement.rs
-          filter.rs
-          find_pk_by_index.rs
-          get_by_key.rs
-          nested_merge.rs
-          output.rs
-          plan.rs
-          project.rs
-          query_pk.rs
-          rmw.rs
-          set_var.rs
-          update_by_key.rs
-          var.rs
         exec.rs
         hir.rs
         index/
@@ -98,22 +53,6 @@ crates/
           returning.rs
         lower.rs
         mir/
-          const.rs
-          delete_by_key.rs
-          eval.rs
-          exec_statement.rs
-          filter.rs
-          find_pk_by_index.rs
-          get_by_key.rs
-          logical_plan.rs
-          nested_merge.rs
-          node.rs
-          operation.rs
-          project.rs
-          query_pk.rs
-          read_modify_write.rs
-          store.rs
-          update_by_key.rs
         mir.rs
         plan/
           execution.rs
@@ -121,25 +60,6 @@ crates/
           statement.rs
         plan.rs
         simplify/
-          association.rs
-          expr_and.rs
-          expr_any.rs
-          expr_binary_op.rs
-          expr_cast.rs
-          expr_concat_str.rs
-          expr_exists.rs
-          expr_in_list.rs
-          expr_is_null.rs
-          expr_list.rs
-          expr_map.rs
-          expr_not.rs
-          expr_or.rs
-          expr_project.rs
-          expr_record.rs
-          lift_in_subquery.rs
-          lift_pk_select.rs
-          rewrite_root_path_expr.rs
-          stmt_query.rs
         simplify.rs
         ty.rs
         verify.rs
@@ -176,21 +96,20 @@ crates/
     src/
       config.rs
       lib.rs
-        1→mod config;
-        2→mod migration;
-        3→mod theme;
-        4→
+        …
         5→pub use config::*;
         6→pub use migration::*;
-        7→
-        8→use anyhow::Result;
-        9→use clap::Parser;
-        10→use toasty::Db;
+        …
         12→/// Toasty CLI library for building custom command-line tools
         13→pub struct ToastyCli {
         14→    db: Db,
         15→    config: Config,
         16→}
+        18→impl ToastyCli {
+        …
+        64→struct Cli {
+        …
+        70→enum Command {
         …
       migration/
         apply.rs
@@ -219,21 +138,10 @@ crates/
         util.rs
       expand.rs
       lib.rs
-        1→mod expand;
-        2→mod schema;
-        3→
-        4→use proc_macro2::TokenStream;
+        …
         6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
-        7→    let item: syn::ItemStruct = syn::parse2(input)?;
-        8→    let model = schema::Model::from_ast(&item, false)?;
-        9→
-        10→    Ok(expand::root_model(&model))
         …
         13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
-        14→    let item: syn::ItemStruct = syn::parse2(input)?;
-        15→    let model = schema::Model::from_ast(&item, true)?;
-        16→
-        17→    Ok(expand::embedded_model(&model))
         …
       schema/
         auto.rs
@@ -270,30 +178,12 @@ crates/
         response.rs
       driver.rs
       error/
-        adhoc.rs
-        condition_failed.rs
-        connection_pool.rs
-        driver_operation_failed.rs
-        expression_evaluation_failed.rs
-        invalid_connection_url.rs
-        invalid_driver_configuration.rs
-        invalid_record_count.rs
-        invalid_result.rs
-        invalid_schema.rs
-        invalid_statement.rs
-        invalid_type_conversion.rs
-        record_not_found.rs
-        unsupported_feature.rs
-        validation.rs
       error.rs
       lib.rs
         …
-        2→mod macros;
-        3→
         4→pub mod driver;
         5→pub use driver::Connection;
-        6→
-        7→mod error;
+        …
         8→pub use error::Error;
         9→
         10→pub mod schema;
@@ -302,6 +192,7 @@ crates/
         13→pub mod stmt;
         15→/// A Result type alias that uses Toasty's [`Error`] type.
         16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+        17→
         18→pub use async_trait::async_trait;
       macros.rs
       schema/
@@ -355,18 +246,6 @@ crates/
     Cargo.toml
     src/
       lib.rs
-        …
-        29→#[derive(Debug)]
-        30→pub struct DynamoDb {
-        31→    url: String,
-        32→}
-        …
-        95→#[derive(Debug)]
-        96→pub struct Connection {
-        97→    /// Handle to the AWS SDK client
-        98→    client: Client,
-        99→}
-        …
       op/
         create_table.rs
         delete_by_key.rs
@@ -382,8 +261,6 @@ crates/
     Cargo.toml
     src/
   toasty-driver-integration-suite-macros/
-    Cargo.toml
-    src/
   toasty-driver-mysql/
     Cargo.toml
     src/
@@ -394,12 +271,45 @@ crates/
         23→    url: String,
         24→    pool: Pool,
         25→}
+        27→impl MySQL {
+        28→    pub fn new(url: impl Into<String>) -> Result<Self> {
+        …
+        60→}
+        …
+        63→impl Driver for MySQL {
         …
         132→#[derive(Debug)]
         133→pub struct Connection {
         134→    conn: Conn,
         135→}
+        137→impl Connection {
+        138→    pub fn new(conn: Conn) -> Self {
         …
+        142→    pub async fn create_table(&mut self, schema: &Schema, table: &Table) -> Result<()> {
+        …
+        182→}
+        184→impl From<Conn> for Connection {
+        185→    fn from(conn: Conn) -> Self {
+        …
+        188→}
+        190→#[async_trait]
+        191→impl toasty_core::driver::Connection for Connection {
+        192→    async fn exec(&mut self, schema: &Arc<Schema>, op: Operation) -> Result<Response> {
+        …
+        322→    async fn push_schema(&mut self, schema: &Schema) -> Result<()> {
+        …
+        329→    async fn applied_migrations(
+        330→        &mut self,
+        331→    ) -> Result<Vec<toasty_core::schema::db::AppliedMigration>> {
+        …
+        358→    async fn apply_migration(
+        359→        &mut self,
+        360→        id: u64,
+        361→        name: String,
+        362→        migration: &toasty_core::schema::db::Migration,
+        363→    ) -> Result<()> {
+        …
+        422→}
       value.rs
   toasty-driver-postgresql/
     Cargo.toml
@@ -411,13 +321,49 @@ crates/
         25→    url: String,
         26→    config: Config,
         27→}
+        29→impl PostgreSQL {
+        …
+        31→    pub fn new(url: impl Into<String>) -> Result<Self> {
+        …
+        77→}
+        …
+        80→impl Driver for PostgreSQL {
         …
         177→#[derive(Debug)]
         178→pub struct Connection {
         179→    client: Client,
         180→    statement_cache: StatementCache,
         181→}
+        183→impl Connection {
         …
+        185→    pub fn new(client: Client) -> Self {
+        …
+        195→    pub async fn connect<T>(config: Config, tls: T) -> Result<Self>
+        196→    where
+        197→        T: MakeTlsConnect<Socket> + 'static,
+        198→        T::Stream: Send,
+        199→    {
+        …
+        215→    pub async fn create_table(&mut self, schema: &Schema, table: &Table) -> Result<()> {
+        …
+        256→}
+        258→impl From<Client> for Connection {
+        259→    fn from(client: Client) -> Self {
+        …
+        265→}
+        267→#[async_trait]
+        268→impl toasty_core::driver::Connection for Connection {
+        269→    async fn exec(&mut self, schema: &Arc<Schema>, op: Operation) -> Result<Response> {
+        …
+        348→    async fn push_schema(&mut self, schema: &Schema) -> Result<()> {
+        …
+        355→    async fn applied_migrations(
+        356→        &mut self,
+        357→    ) -> Result<Vec<toasty_core::schema::db::AppliedMigration>> {
+        …
+        390→    async fn apply_migration(
+        …
+        454→}
       statement_cache.rs
       type.rs
       value.rs
@@ -432,11 +378,41 @@ crates/
         24→    File(PathBuf),
         25→    InMemory,
         26→}
+        28→impl Sqlite {
+        …
+        30→    pub fn new(url: impl Into<String>) -> Result<Self> {
+        …
+        49→    pub fn in_memory() -> Self {
+        …
+        54→    pub fn open<P: AsRef<Path>>(path: P) -> Self {
+        …
+        57→}
+        …
+        60→impl Driver for Sqlite {
         …
         122→#[derive(Debug)]
         123→pub struct Connection {
         124→    connection: RusqliteConnection,
         125→}
+        127→impl Connection {
+        128→    pub fn in_memory() -> Self {
+        …
+        134→    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
+        …
+        140→}
+        142→#[toasty_core::async_trait]
+        143→impl toasty_core::driver::Connection for Connection {
+        144→    async fn exec(&mut self, schema: &Arc<Schema>, op: Operation) -> Result<Response> {
+        …
+        248→    async fn push_schema(&mut self, schema: &Schema) -> Result<()> {
+        …
+        256→    async fn applied_migrations(
+        257→        &mut self,
+        258→    ) -> Result<Vec<toasty_core::schema::db::AppliedMigration>> {
+        …
+        288→    async fn apply_migration(
+        …
+        340→}
         …
       value.rs
   toasty-macros/
@@ -512,6 +488,11 @@ examples/
     src/
       main.rs
         …
+        2→struct User {
+        …
+        19→struct Todo {
+        …
+        33→#[tokio::main]
         34→async fn main() -> toasty::Result<()> {
         …
   todo-with-cli/

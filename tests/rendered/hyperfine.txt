@@ -24,6 +24,14 @@ Cargo.toml
   16→# Use the nightly feature windows_process_extensions_main_thread_handle
   17→windows_process_extensions_main_thread_handle = []
   …
+  70→[profile.dev.package]
+  71→insta.opt-level = 3
+  72→similar.opt-level = 3
+  …
+  78→[profile.release]
+  79→lto = true
+  80→strip = true
+  81→codegen-units = 1
 LICENSE-APACHE
 LICENSE-MIT
 README.md
@@ -50,107 +58,114 @@ README.md
   23→* Cross-platform
   …
 build.rs
+  …
+  7→fn main() {
+  …
 doc/
   execution-order.png
   execution-order.svg
   histogram.png
   hyperfine.1
+    …
+    2→.SH NAME
+    3→hyperfine \- command\-line benchmarking tool
+    …
+    57→.SH DESCRIPTION
+    58→A command\-line benchmarking tool which includes:
+    59→.LP
+    60→.RS
+    61→* Statistical analysis across multiple runs
+    62→.RE
+    …
   whisker.png
 scripts/
+  README.md
+  advanced_statistics.py
+  plot_benchmark_comparison.py
+  plot_histogram.py
+  plot_parametrized.py
+  plot_progression.py
+  plot_whisker.py
+  ruff.toml
+  welch_ttest.py
 src/
   benchmark/
     benchmark_result.rs
+      …
+      11→pub struct BenchmarkResult {
+      …
     executor.rs
     mod.rs
-      …
-      31→/// Threshold for warning about fast execution time
-      32→pub const MIN_EXECUTION_TIME: Second = 5e-3;
-      33→
-      34→pub struct Benchmark<'a> {
-      35→    number: usize,
-      36→    command: &'a Command<'a>,
-      37→    options: &'a Options,
-      38→    executor: &'a dyn Executor,
-      39→}
-      …
     relative_speed.rs
     scheduler.rs
+      …
+      13→pub struct Scheduler<'a> {
+      14→    commands: &'a Commands<'a>,
+      15→    options: &'a Options,
+      16→    export_manager: &'a ExportManager,
+      17→    results: Vec<BenchmarkResult>,
+      18→}
+      20→impl<'a> Scheduler<'a> {
+      …
     timing_result.rs
+      …
+      5→pub struct TimingResult {
+      …
   cli.rs
+    …
+    8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
+    9→where
+    10→    I: IntoIterator<Item = T>,
+    11→    T: Into<OsString> + Clone + 'a,
+    12→{
     …
     18→fn build_command() -> Command {
     …
-    27→            Arg::new("command")
-    …
-    39→            Arg::new("warmup")
-    …
-    50→            Arg::new("min-runs")
-    …
-    58→            Arg::new("max-runs")
-    …
-    66→            Arg::new("runs")
-    …
-    76→            Arg::new("setup")
-    …
-    90→            Arg::new("reference")
-    …
-    100→            Arg::new("reference-name")
-    …
-    108→            Arg::new("prepare")
-    …
-    124→            Arg::new("conclude")
-    …
-    141→            Arg::new("cleanup")
-    …
-    155→            Arg::new("parameter-scan")
-    …
-    173→            Arg::new("parameter-step-size")
-    …
-    187→            Arg::new("parameter-list")
-    …
-    204→            Arg::new("shell")
-    …
-    220→            Arg::new("no-shell")
-    …
-    227→            Arg::new("ignore-failure")
-    …
-    240→            Arg::new("style")
-    …
-    255→            Arg::new("sort")
-    …
-    272→            Arg::new("time-unit")
-    …
-    283→            Arg::new("export-asciidoc")
-    …
-    292→            Arg::new("export-csv")
-    …
-    302→            Arg::new("export-json")
-    …
-    311→            Arg::new("export-markdown")
-    …
-    320→            Arg::new("export-orgmode")
-    …
-    329→            Arg::new("show-output")
-    …
-    341→            Arg::new("output")
-    …
-    368→            Arg::new("input")
-    …
-    382→            Arg::new("command-name")
-    …
-    394→            Arg::new("min-benchmarking-time")
-    …
-    403→            Arg::new("debug-mode")
-    …
   command.rs
     …
+    20→/// A command that should be benchmarked.
+    21→#[derive(Debug, Clone, PartialEq, Eq)]
     22→pub struct Command<'a> {
+    23→    /// The command name (without parameter substitution)
+    24→    name: Option<&'a str>,
+    25→
+    26→    /// The command that should be executed (without parameter substitution)
+    27→    expression: &'a str,
+    28→
+    29→    /// Zero or more parameter values.
+    30→    parameters: Vec<ParameterNameAndValue<'a>>,
+    31→}
+    33→impl<'a> Command<'a> {
     …
+    133→/// A collection of commands that should be benchmarked
     134→pub struct Commands<'a>(Vec<Command<'a>>);
+    135→
+    136→impl<'a> Commands<'a> {
+    137→    pub fn from_cli_arguments(matches: &'a ArgMatches) -> Result<Commands<'a>> {
+    …
+    250→    pub fn iter(&self) -> impl Iterator<Item = &Command<'a>> {
+    …
+    254→    pub fn num_commands(&self, has_reference_command: bool) -> usize {
+    …
+    359→}
+    …
+    387→impl fmt::Display for Command<'_> {
+    388→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    …
+    391→}
     …
   error.rs
     …
     7→pub enum ParameterScanError {
+    …
+    24→impl From<num::ParseIntError> for ParameterScanError {
+    25→    fn from(e: num::ParseIntError) -> ParameterScanError {
+    …
+    28→}
+    30→impl From<DecimalError> for ParameterScanError {
+    31→    fn from(e: DecimalError) -> ParameterScanError {
+    …
+    34→}
     …
     37→pub enum OptionsError<'a> {
     …
@@ -159,21 +174,36 @@ src/
       …
       4→#[derive(Default)]
       5→pub struct AsciidocExporter {}
+      6→
+      7→impl MarkupExporter for AsciidocExporter {
       …
     csv.rs
       …
       12→#[derive(Default)]
       13→pub struct CsvExporter {}
+      14→
+      15→impl Exporter for CsvExporter {
+      16→    fn serialize(
+      …
+      61→}
       …
     json.rs
       …
+      12→struct HyperfineSummary<'a> {
+      …
       16→#[derive(Default)]
       17→pub struct JsonExporter {}
+      18→
+      19→impl Exporter for JsonExporter {
+      20→    fn serialize(
       …
+      33→}
     markdown.rs
       …
       5→#[derive(Default)]
       6→pub struct MarkdownExporter {}
+      7→
+      8→impl MarkupExporter for MarkdownExporter {
       …
     markup.rs
       …
@@ -183,58 +213,26 @@ src/
       13→}
       15→pub trait MarkupExporter {
       …
+      98→fn determine_unit_from_results(results: &[BenchmarkResult]) -> Unit {
+      …
+      108→impl<T: MarkupExporter> Exporter for T {
+      109→    fn serialize(
+      …
+      121→}
     mod.rs
-      …
-      26→/// The desired form of exporter to use for a given file.
-      27→#[derive(Clone)]
-      28→pub enum ExportType {
-      29→    /// Asciidoc Table
-      30→    Asciidoc,
-      31→
-      32→    /// CSV (comma separated values) format
-      33→    Csv,
-      34→
-      35→    /// JSON format
-      36→    Json,
-      37→
-      38→    /// Markdown table
-      39→    Markdown,
-      40→
-      41→    /// Emacs org-mode tables
-      42→    Orgmode,
-      43→}
-      …
-      56→pub enum ExportTarget {
-      57→    File(String),
-      58→    Stdout,
-      59→}
-      …
-      66→/// Handles the management of multiple file exporters.
-      67→pub struct ExportManager {
-      68→    exporters: Vec<ExporterWithTarget>,
-      69→    time_unit: Option<Unit>,
-      70→    sort_order: SortOrder,
-      71→}
-      …
     orgmode.rs
       …
       4→#[derive(Default)]
       5→pub struct OrgmodeExporter {}
+      6→
+      7→impl MarkupExporter for OrgmodeExporter {
       …
     tests.rs
+      …
+      9→fn get_output<E: Exporter + Default>(
+      …
   main.rs
     …
-    6→use std::env;
-    7→
-    8→use benchmark::scheduler::Scheduler;
-    9→use cli::get_cli_arguments;
-    10→use command::Commands;
-    11→use export::ExportManager;
-    12→use options::Options;
-    13→
-    14→use anyhow::Result;
-    15→use colored::*;
-    16→
     17→pub mod benchmark;
     18→pub mod cli;
     19→pub mod command;
@@ -246,36 +244,24 @@ src/
     25→pub mod parameter;
     26→pub mod timer;
     27→pub mod util;
+    28→
     29→fn run() -> Result<()> {
-    30→    // Enabled ANSI colors on Windows 10
-    31→    #[cfg(windows)]
-    32→    colored::control::set_virtual_terminal(true).unwrap();
-    34→    let cli_arguments = get_cli_arguments(env::args_os());
-    35→    let mut options = Options::from_cli_arguments(&cli_arguments)?;
-    36→    let commands = Commands::from_cli_arguments(&cli_arguments)?;
-    37→    let export_manager = ExportManager::from_cli_arguments(
-    38→        &cli_arguments,
-    39→        options.time_unit,
-    40→        options.sort_order_exports,
-    41→    )?;
-    43→    options.validate_against_command_list(&commands)?;
-    45→    let mut scheduler = Scheduler::new(&commands, &options, &export_manager);
-    46→    scheduler.run_benchmarks()?;
-    47→    scheduler.print_relative_speed_comparison();
-    48→    scheduler.final_export()?;
-    50→    Ok(())
     …
     53→fn main() {
-    54→    match run() {
-    55→        Ok(_) => {}
-    56→        Err(e) => {
-    57→            eprintln!("{} {:#}", "Error:".red(), e);
-    58→            std::process::exit(1);
-    59→        }
-    60→    }
     …
   options.rs
   outlier_detection.rs
+    1→//! A module for statistical outlier detection.
+    2→//!
+    3→//! References:
+    4→//! - Boris Iglewicz and David Hoaglin (1993), "Volume 16: How to Detect and Handle Outliers",
+    5→//!   The ASQC Basic References in Quality Control: Statistical Techniques, Edward F. Mykytka,
+    6→//!   Ph.D., Editor.
+    …
+    13→pub const OUTLIER_THRESHOLD: f64 = 1.4826 * 10.0;
+    …
+    21→pub fn modified_zscores(xs: &[f64]) -> Vec<f64> {
+    …
   output/
     format.rs
     mod.rs
@@ -283,83 +269,69 @@ src/
       2→pub mod progress_bar;
       3→pub mod warnings;
     progress_bar.rs
-      …
-      13→pub fn get_progress_bar(length: u64, msg: &str, option: OutputStyleOption) -> ProgressBar {
-      …
     warnings.rs
       …
       7→pub struct OutlierWarningOptions {
       8→    pub warmup_in_use: bool,
       9→    pub prepare_in_use: bool,
       10→}
-      …
+      12→/// A list of all possible warnings
       13→pub enum Warnings {
+      14→    FastExecutionTime,
+      15→    NonZeroExitCode,
+      16→    SlowInitialRun(Second, OutlierWarningOptions),
+      17→    OutliersDetected(OutlierWarningOptions),
+      18→}
+      20→impl fmt::Display for Warnings {
+      21→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
       …
+      69→}
   parameter/
     mod.rs
-      1→use crate::util::number::Number;
-      2→use std::fmt::Display;
-      3→
-      4→pub mod range_step;
-      5→pub mod tokenize;
-      7→#[derive(Debug, Clone, PartialEq, Eq)]
-      8→pub enum ParameterValue {
-      9→    Text(String),
-      10→    Numeric(Number),
-      11→}
-      13→impl Display for ParameterValue {
-      14→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-      …
-      23→pub type ParameterNameAndValue<'a> = (&'a str, ParameterValue);
     range_step.rs
-      …
-      7→pub trait Numeric:
-      …
-      34→pub struct RangeStep<T> {
-      …
     tokenize.rs
       1→pub fn tokenize(values: &str) -> Vec<String> {
       …
   timer/
     mod.rs
       …
-      40→/// Used to indicate the result of running a command
-      41→#[derive(Debug, Copy, Clone)]
-      42→pub struct TimerResult {
-      43→    pub time_real: Second,
-      44→    pub time_user: Second,
-      45→    pub time_system: Second,
-      46→    pub memory_usage_byte: u64,
-      47→    /// The exit status of the process
-      48→    pub status: ExitStatus,
-      49→}
+      29→struct CPUTimes {
       …
-      82→/// Execute the given command and return a timing summary
+      42→pub struct TimerResult {
+      …
+      52→fn discard(output: ChildStdout) {
+      …
       83→pub fn execute_and_measure(mut command: Command) -> Result<TimerResult> {
       …
     unix_timer.rs
-      …
-      10→pub struct CPUInterval {
-      …
-      18→pub struct CPUTimer {
-      19→    start_cpu: CPUTimes,
-      20→}
-      …
     wall_clock_timer.rs
       …
       5→pub struct WallClockTimer {
       6→    start: Instant,
       7→}
+      9→impl WallClockTimer {
+      10→    pub fn start() -> WallClockTimer {
       …
+      16→    pub fn stop(&self) -> Second {
+      …
+      20→}
     windows_timer.rs
-      …
-      49→pub struct CPUTimer {
-      50→    job_object: HANDLE,
-      51→}
-      …
   util/
     exit_code.rs
+      …
+      3→#[cfg(unix)]
+      4→pub fn extract_exit_code(status: ExitStatus) -> Option<i32> {
+      …
+      19→#[cfg(not(unix))]
+      20→pub fn extract_exit_code(status: ExitStatus) -> Option<i32> {
+      21→    status.code()
+      …
     min_max.rs
+      …
+      2→pub fn max(vals: &[f64]) -> f64 {
+      …
+      10→pub fn min(vals: &[f64]) -> f64 {
+      …
     mod.rs
       1→pub mod exit_code;
       2→pub mod min_max;
@@ -372,6 +344,25 @@ src/
       6→pub fn value() -> String {
       …
     units.rs
+      1→//! This module contains common units.
+      3→pub type Scalar = f64;
+      5→/// Type alias for unit of time
+      6→pub type Second = Scalar;
+      8→/// Supported time units
+      9→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+      10→pub enum Unit {
+      11→    Second,
+      12→    MilliSecond,
+      13→    MicroSecond,
+      14→}
+      16→impl Unit {
+      …
+      18→    pub fn short_name(self) -> String {
+      …
+      27→    pub fn format(self, value: Second) -> String {
+      …
+      34→}
+      …
 tests/
   common.rs
   example_input_file.txt

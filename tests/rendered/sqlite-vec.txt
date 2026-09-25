@@ -126,12 +126,10 @@ bindings/
     Cargo.toml.tmpl
     Makefile
     build.rs
+      1→fn main() {
+      …
     src/
       lib.rs
-        …
-        6→#[cfg(test)]
-        7→mod tests {
-        …
 examples/
   nbc-headlines/
   python-recipes/
