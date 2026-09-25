@@ -2334,6 +2334,36 @@ mod tests {
         );
     }
 
+    /// A license text emits nothing, but documentation of a product's own
+    /// licensing is ordinary prose and keeps its batches.
+    #[test]
+    fn markdown_walker_skips_license_text_but_not_licensing_docs() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body = "# Licensing\n\n## Activation\n\nKeys are validated online.\n";
+        fs::write(root.join("LICENSE.md"), body).unwrap();
+        fs::write(root.join("license-server.md"), body).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        let emits_for = |name: &str| {
+            let path = root.join(name);
+            batches.iter().any(|b| {
+                matches!(
+                    &b.key,
+                    BatchKey::Markdown(
+                        MarkdownKey::ReadmeHeadline { file }
+                            | MarkdownKey::Prelude { file }
+                            | MarkdownKey::HeadingsOutline { file }
+                            | MarkdownKey::Section { file, .. }
+                    ) if *file == path
+                )
+            })
+        };
+        assert!(!emits_for("LICENSE.md"));
+        assert!(emits_for("license-server.md"));
+    }
+
     /// The root README's `HeadingsOutline` is the hard predecessor of
     /// every section in that file, so the dense-siblings damp must never
     /// reach it however crowded the root directory is — damping it would

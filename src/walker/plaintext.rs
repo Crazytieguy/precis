@@ -336,19 +336,31 @@ fn classify_source_text(name: &str) -> Option<Class> {
 }
 
 /// A license text (`LICENSE`, `COPYING.txt`, `MIT-LICENSE.txt`,
-/// `LICENSE.md`). No walker renders one: the listing names the file and
-/// the manifest's `license` field names the license, and the text says
-/// nothing about the code. `*-header` is the one common non-license
-/// `license` name: the boilerplate a project prepends to its sources.
+/// `LICENSE-APACHE`, `LICENSE.md`). No walker renders one: the listing names
+/// the file and the manifest's `license` field names the license, and the
+/// text says nothing about the code. A qualifier may follow the legal word
+/// only in an all-caps name, so `license-api.md` or `license-server.md` —
+/// documentation of a product's own licensing — still renders. `*-header`
+/// is the boilerplate a project prepends to its sources, not a license.
 pub(crate) fn is_license_file_name(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    let stem = match lower.rsplit_once('.') {
-        None => lower.as_str(),
-        Some((stem, "txt" | "md" | "rst")) => stem,
+    let stem = match name.rsplit_once('.') {
+        None => name,
+        Some((stem, ext)) if matches!(ext.to_ascii_lowercase().as_str(), "txt" | "md" | "rst") => {
+            stem
+        }
         Some(_) => return false,
     };
-    (stem.contains("license") || stem.contains("licence") || stem == "copying" || stem == "notice")
-        && !stem.contains("header")
+    let lower = stem.to_ascii_lowercase();
+    let is_legal_word = |word: &str| {
+        matches!(
+            word,
+            "license" | "licence" | "licenses" | "copying" | "notice"
+        )
+    };
+    let first = lower.split(['-', '_']).next().unwrap_or_default();
+    let last = lower.rsplit(['-', '_']).next().unwrap_or_default();
+    (is_legal_word(last) || (is_legal_word(first) && !stem.chars().any(|c| c.is_ascii_lowercase())))
+        && !lower.contains("header")
 }
 
 /// Line classes inside a declaration surface. The three get separate
@@ -1098,10 +1110,21 @@ mod tests {
             "NOTICE",
             "MIT-LICENSE.txt",
             "LICENSE-THIRD-PARTY.txt",
+            "DOCKER_LICENSE",
+            "arm_license.txt",
+            "License.md",
         ] {
             assert!(is_license_file_name(name), "{name}");
         }
-        for name in ["license-header.txt", "license.go", "licenses.json"] {
+        for name in [
+            "LICENSE-HEADER",
+            "license-header.txt",
+            "license.go",
+            "licenses.json",
+            "license-management.md",
+            "license-server.md",
+            "license-api.md",
+        ] {
             assert!(!is_license_file_name(name), "{name}");
         }
     }
