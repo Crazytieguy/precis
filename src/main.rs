@@ -21,9 +21,10 @@ const HOOK_WRAPPER: [&str; 3] = [
 const ABOUT: &str = "\
 Summarize a directory within a token budget.
 
-`N→` rows are source line N (a trailing `…` cuts it short). A `…` row
-marks hidden source in a file, or hidden entries in a directory. An entry
-with nothing under it wasn't expanded, unless marked `(empty)`.";
+`N→` rows are source line N (a trailing `…` means it was cut short).
+A `…` row marks hidden source in a file, or hidden entries in a
+directory. An entry with nothing under it wasn't expanded, unless
+marked `(empty)`.";
 
 #[derive(Parser)]
 #[command(about = ABOUT, version)]
@@ -61,13 +62,21 @@ fn main() -> Result<()> {
 /// What is left of the hook cap once the session-start hook has spent
 /// its share on the wrapper and on `--help`.
 fn plugin_char_budget() -> usize {
-    let help = Cli::command().render_help().to_string();
+    let help = help_output();
     let spent: usize = HOOK_WRAPPER
         .iter()
         .chain([&help.as_str()])
         .map(|text| precis::char_units(text))
         .sum();
     HOOK_CONTEXT_CAP.saturating_sub(spent)
+}
+
+/// What `precis --help` prints. clap switches `--help` to the long form
+/// once any argument carries long help, which `render_help` would miss.
+fn help_output() -> String {
+    Cli::command()
+        .try_get_matches_from(["precis", "--help"])
+        .map_or_else(|help| help.to_string(), |_| String::new())
 }
 
 /// Empty output and exit 0 is indistinguishable from success in a script,
@@ -105,13 +114,14 @@ mod tests {
     #[test]
     fn main_hook_wrapper_matches_session_start_script() {
         let script = include_str!("../plugins/precis/hooks/session-start.sh");
-        for piece in HOOK_WRAPPER {
-            let jq_literal = piece.replace('\n', "\\n");
-            assert!(
-                script.contains(&jq_literal),
-                "session-start.sh no longer wraps with {jq_literal:?}; update HOOK_WRAPPER"
-            );
-        }
+        let [before_help, before_output, after_output] =
+            HOOK_WRAPPER.map(|piece| format!("\"{}\"", piece.replace('\n', "\\n")));
+        let jq_expression =
+            format!("{before_help} + $help + {before_output} + $output + {after_output}");
+        assert!(
+            script.contains(&jq_expression),
+            "session-start.sh no longer builds {jq_expression:?}; update HOOK_WRAPPER"
+        );
     }
 
     /// Rebuilds `additionalContext` the way the hook does on a fixture
@@ -119,10 +129,15 @@ mod tests {
     #[test]
     fn main_plugin_context_fits_hook_cap() {
         let fixture = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/toasty");
+        assert!(
+            fixture.is_dir(),
+            "{} is missing; run `cargo run --example clone_fixtures`",
+            fixture.display()
+        );
         let uncapped = precis::render(&fixture, 3000, None).unwrap();
         assert!(precis::char_units(&uncapped) > plugin_char_budget());
         let output = precis::render(&fixture, 3000, Some(plugin_char_budget())).unwrap();
-        let help = Cli::command().render_help().to_string();
+        let help = help_output();
         let context = [
             HOOK_WRAPPER[0],
             help.trim_end_matches('\n'),

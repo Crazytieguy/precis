@@ -119,7 +119,7 @@ impl SourceCache {
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct Cost {
     pub tokens: usize,
-    /// In [`char_units`].
+    /// UTF-16 code units, see [`char_units`].
     pub chars: usize,
 }
 
@@ -868,8 +868,8 @@ mod tests {
         (cache, path)
     }
 
-    /// Real on-disk tree — the elision marker asks the filesystem
-    /// whether an unopened entry holds anything, so these cases can't
+    /// Real on-disk tree — the `(empty)` marker asks the filesystem
+    /// whether an unopened entry holds nothing, so these cases can't
     /// run against the stub paths the gap tests use.
     ///
     /// `listed/` and `shown.rs` end up rendering content; `pruned/` and

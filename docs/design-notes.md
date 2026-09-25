@@ -216,6 +216,10 @@ language.**
   more spaces before a digit costs two tokens whatever its length, and
   ` …\n` costs the same one token as `\n`. Indent width is therefore a
   character cost, not a token cost.
+- **Line numbers are not padded.** The same step pricing made
+  right-aligning `N→` free in tokens, so it was dropped for the plugin
+  cap's characters. The cost is that the `→` column shifts by one at
+  9/10 and 99/100; indentation stays readable relative to `→`.
 - **The plugin cap is in UTF-16 code units.** Claude Code keeps a hook's
   `additionalContext` inline only up to 10,000 JavaScript string units
   and otherwise replaces it with a file path and a preview, so the
