@@ -232,6 +232,6 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 9745 | 36 | README.md section #23 |  |  | 0.570 |
 | walker |  | 9846 | 101 | README.md section #30 |  |  | 0.570 |
 | walker |  | 9856 | 10 | python doc htmy/html.py:79 |  |  | 0.570 |
-| walker |  | 9889 | 33 | docs/index.md section #37 |  |  | 0.570 |
+| walker |  | 9889 | 33 | docs/index.md section #38 |  |  | 0.570 |
 | ns | 9917 |  | 345 | `html.py` tag roster 5/5: lists, tables, headings, media, `entity` | 8.5 | 8.1 | 0.556 |
 | walker |  | 9986 | 97 | README.md section #32 |  |  | 0.556 |

@@ -200,7 +200,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let ranges = if suppress_body {
             Vec::new()
         } else {
-            let ranges = logical_sections(&file, &tree, &source, outline_emits, root_readme);
+            let ranges = logical_sections(&file, &tree, &source, outline_emits);
             if ranges.is_empty() && headed_sections(tree.root_node()).next().is_none() {
                 headingless_fallback_ranges(&file, &source)
             } else {
@@ -583,7 +583,6 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
             },
             0,
         ),
-        true,
     );
     out
 }
@@ -708,7 +707,7 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
 /// or, when the title carries none, the first prose paragraph of an
 /// intro-titled section (`Overview`, `Introduction`, …). The text
 /// before the first body heading is a synthetic intro, and every later
-/// heading opens one section, each through the root-README head-split.
+/// heading opens one section, each through the oversize head-split.
 fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
     let src_lines: Vec<&str> = source.lines().collect();
     let headings = scan_rst_headings(&src_lines);
@@ -745,7 +744,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
     let mut ranges = Vec::new();
     if intro_start <= intro_end {
         let intro = SectionRange::new(intro_start, intro_end, SectionKind::Whole, 0);
-        push_whole_or_head_split(&mut ranges, &src_lines, intro, true);
+        push_whole_or_head_split(&mut ranges, &src_lines, intro);
     }
     for (i, heading) in headings.iter().enumerate().skip(1) {
         let title = title_core(src_lines[heading.title_row - 1]);
@@ -757,7 +756,6 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
                     || is_reference_usage_title_core(&title),
                 ..SectionRange::new(heading.title_row, section_end(i), SectionKind::Whole, i - 1)
             },
-            true,
         );
     }
     (
@@ -1329,13 +1327,12 @@ fn is_catalog_line(line: &str) -> bool {
 /// an emitted `HeadingsOutline`, which renders the heading rows the
 /// split drops) expands to an optional `Intro` plus one `H3Child` — or,
 /// for a large H3, its body blocks — per H3. Other top-level entries
-/// emit one `Whole`, head-split on the root README when oversize.
+/// emit one `Whole`, head-split when oversize.
 fn logical_sections(
     file: &Path,
     tree: &Tree,
     source: &str,
     outline_emits: bool,
-    root_readme: bool,
 ) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
     // The first real H2 is index 0; an H1-unwrap intro shares it.
@@ -1363,7 +1360,6 @@ fn logical_sections(
                     &mut out,
                     &src_lines,
                     SectionRange::new(*start, *end, SectionKind::Whole, h2_idx),
-                    root_readme,
                 );
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1399,7 +1395,6 @@ fn logical_sections(
                             is_reference_usage_section: reference_h2,
                             ..SectionRange::new(*start, *end, SectionKind::Whole, h2_idx)
                         },
-                        root_readme,
                     );
                 }
             }
@@ -1637,23 +1632,8 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 /// fields stay positional. When the head itself carves a lede
 /// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is a
 /// [`SectionKind::LedeBody`] rather than a tail.
-///
-/// Scope: the root README only. Its early content is what NSes rank
-/// inside the early-budget envelope, so unlocking early purchase there
-/// is recall; other docs are NS-ranked late, where lump size is not a
-/// purchase barrier — splitting them only hands a cheap full-value head
-/// to content the schedule shouldn't buy early.
-fn push_whole_or_head_split(
-    out: &mut Vec<SectionRange>,
-    src_lines: &[&str],
-    head: SectionRange,
-    split_eligible: bool,
-) {
+fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], head: SectionRange) {
     let (start, end) = (head.start, head.end);
-    if !split_eligible {
-        out.push(head);
-        return;
-    }
     let tokens: usize = (start..=end).map(|r| row_tokens(src_lines, r)).sum();
     if tokens < OVERSIZE_SECTION_SPLIT_TOKENS {
         out.push(head);
@@ -2971,7 +2951,7 @@ mod tests {
         let tree = parse(source);
         let file = PathBuf::from(file);
         let gates = derive_outline_gates(&file, &tree, source);
-        logical_sections(&file, &tree, source, gates.emits, is_readme(&file))
+        logical_sections(&file, &tree, source, gates.emits)
     }
 
     /// Build a `## Heading\n\n### Sub\n<filler>` shape sized to clear
@@ -3420,7 +3400,7 @@ mod tests {
         let tree = parse(&src);
         let file = PathBuf::from("/x/README.md");
         let gates = derive_outline_gates(&file, &tree, &src);
-        let ranges = logical_sections(&file, &tree, &src, gates.emits, false);
+        let ranges = logical_sections(&file, &tree, &src, gates.emits);
         let items: Vec<(usize, usize)> = ranges
             .iter()
             .filter(|r| matches!(r.kind, SectionKind::BodyBlock))

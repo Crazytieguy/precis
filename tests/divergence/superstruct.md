@@ -1,4 +1,4 @@
-Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.640/0.498/0.571/0.516/0.578/0.625/0.620
+Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.640/0.498/0.571/0.516/0.578/0.611/0.618
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -116,77 +116,80 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 5596 |  | 140 | Complete docs/ tree listing | 5.1 |  | 0.542 |
 | walker |  | 5621 | 183 | listing of 'test/typings' |  |  | 0.546 |
 | ns | 5649 |  | 53 | Complete test/ and test/api/ listings | 5.2 |  | 0.557 |
-| walker |  | 5665 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.557 |
-| ns | 5774 |  | 125 | All 41 validation-fixture kind directories | 5.3 |  | 0.588 |
-| ns | 5829 |  | 55 | Complete examples/ listing | 5.4 |  | 0.595 |
-| walker |  | 5847 | 182 | ts decl src/structs/utilities.ts:44 |  |  | 0.595 |
-| walker |  | 5887 | 40 | headings outline in docs/reference/errors.md |  |  | 0.595 |
+| ns | 5774 |  | 125 | All 41 validation-fixture kind directories | 5.3 |  | 0.587 |
+| ns | 5829 |  | 55 | Complete examples/ listing | 5.4 |  | 0.594 |
+| walker |  | 5854 | 233 | docs/readme.md section #0 |  |  | 0.594 |
+| walker |  | 5898 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.595 |
 | ns | 5906 |  | 77 | One kind directory listed in full, as the case-naming exemplar | 5.5 |  | 0.586 |
+| walker |  | 6080 | 182 | ts decl src/structs/utilities.ts:44 |  |  | 0.586 |
 | ns | 6089 |  | 183 | The 45 type-level test files | 5.6 |  | 0.611 |
-| walker |  | 6188 | 301 | package identity metadata in package.json |  |  | 0.625 |
-| ns | 6316 |  | 227 | Every heading in the six guides | 5.7 |  | 0.626 |
-| ns | 6379 |  | 63 | Readme section map | 5.8 |  | 0.629 |
-| walker |  | 6457 | 269 | ts names src/structs/types.ts #2 |  |  | 0.665 |
-| walker |  | 6476 | 19 | ts decl src/structs/types.ts:295 |  |  | 0.668 |
-| walker |  | 6498 | 22 | ts decl src/structs/types.ts:492 |  |  | 0.668 |
-| ns | 6519 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.662 |
-| walker |  | 6532 | 34 | ts decl src/structs/types.ts:367 |  |  | 0.662 |
-| walker |  | 6566 | 34 | ts decl src/structs/types.ts:456 |  |  | 0.662 |
-| walker |  | 6601 | 35 | ts decl src/structs/types.ts:522 |  |  | 0.662 |
-| walker |  | 6653 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.671 |
-| ns | 6690 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.665 |
-| walker |  | 6695 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.666 |
-| walker |  | 6722 | 27 | docs/reference/typescript.md section #0 |  |  | 0.666 |
-| walker |  | 6767 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.667 |
-| walker |  | 6804 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.667 |
-| walker |  | 6826 | 22 | ts names test/index.ts |  |  | 0.667 |
-| walker |  | 6846 | 20 | ts module doc test/index.ts |  |  | 0.667 |
-| walker |  | 6884 | 38 | docs/reference/errors.md section #0 |  |  | 0.667 |
-| ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.657 |
-| walker |  | 6995 | 111 | Readme.md section #5 |  |  | 0.657 |
-| walker |  | 7026 | 31 | docs/summary.md section #2 |  |  | 0.657 |
-| walker |  | 7088 | 62 | headings outline in docs/reference/core.md |  |  | 0.659 |
-| ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.641 |
-| walker |  | 7195 | 107 | ts doc src/error.ts:25 |  |  | 0.655 |
-| ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.649 |
-| walker |  | 7433 | 238 | ts names src/utils.ts |  |  | 0.659 |
-| walker |  | 7453 | 20 | ts decl src/utils.ts:218 |  |  | 0.659 |
-| ns | 7481 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.649 |
-| walker |  | 7503 | 50 | ts decl src/utils.ts:106 |  |  | 0.649 |
-| walker |  | 7553 | 50 | ts decl src/utils.ts:202 |  |  | 0.649 |
-| walker |  | 7607 | 54 | ts decl src/utils.ts:67 |  |  | 0.649 |
-| walker |  | 7709 | 102 | ts decl src/utils.ts:130 |  |  | 0.657 |
-| walker |  | 7772 | 63 | docs/reference/coercions.md section #0 |  |  | 0.657 |
-| walker |  | 7851 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.657 |
-| walker |  | 7881 | 30 | docs/reference/utilities.md section #0 |  |  | 0.657 |
-| walker |  | 7892 | 11 | ts body src/struct.ts:83 |  |  | 0.657 |
-| ns | 7894 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.637 |
-| walker |  | 8017 | 125 | docs/summary.md section #0 |  |  | 0.637 |
-| ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.629 |
-| walker |  | 8099 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.630 |
-| walker |  | 8152 | 53 | docs/reference/refinements.md section #0 |  |  | 0.630 |
-| ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.625 |
-| walker |  | 8229 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.626 |
-| walker |  | 8253 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.626 |
-| walker |  | 8276 | 23 | ts doc src/struct.ts:175 |  |  | 0.626 |
-| walker |  | 8386 | 110 | json config jsr.json |  |  | 0.626 |
-| ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.631 |
-| walker |  | 8592 | 206 | Readme.md section #6 |  |  | 0.631 |
-| walker |  | 8618 | 26 | package identity in examples/package.json |  |  | 0.631 |
+| walker |  | 6120 | 40 | headings outline in docs/reference/errors.md |  |  | 0.611 |
+| ns | 6316 |  | 227 | Every heading in the six guides | 5.7 |  | 0.612 |
+| ns | 6379 |  | 63 | Readme section map | 5.8 |  | 0.615 |
+| walker |  | 6421 | 301 | package identity metadata in package.json |  |  | 0.629 |
+| ns | 6519 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.623 |
+| walker |  | 6690 | 269 | ts names src/structs/types.ts #2 |  |  | 0.652 |
+| ns | 6690 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.652 |
+| walker |  | 6709 | 19 | ts decl src/structs/types.ts:295 |  |  | 0.655 |
+| walker |  | 6731 | 22 | ts decl src/structs/types.ts:492 |  |  | 0.655 |
+| walker |  | 6765 | 34 | ts decl src/structs/types.ts:367 |  |  | 0.655 |
+| walker |  | 6799 | 34 | ts decl src/structs/types.ts:456 |  |  | 0.655 |
+| walker |  | 6834 | 35 | ts decl src/structs/types.ts:522 |  |  | 0.655 |
+| walker |  | 6886 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.665 |
+| ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.655 |
+| walker |  | 6928 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.656 |
+| walker |  | 6955 | 27 | docs/reference/typescript.md section #0 |  |  | 0.656 |
+| ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.639 |
+| walker |  | 7237 | 282 | docs/readme.md section #1 |  |  | 0.639 |
+| walker |  | 7282 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.640 |
+| ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.633 |
+| walker |  | 7319 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.633 |
+| walker |  | 7341 | 22 | ts names test/index.ts |  |  | 0.633 |
+| walker |  | 7361 | 20 | ts module doc test/index.ts |  |  | 0.634 |
+| walker |  | 7399 | 38 | docs/reference/errors.md section #0 |  |  | 0.634 |
+| ns | 7481 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.625 |
+| walker |  | 7510 | 111 | Readme.md section #5 |  |  | 0.625 |
+| walker |  | 7541 | 31 | docs/summary.md section #2 |  |  | 0.625 |
+| walker |  | 7603 | 62 | headings outline in docs/reference/core.md |  |  | 0.626 |
+| walker |  | 7710 | 107 | ts doc src/error.ts:25 |  |  | 0.640 |
+| ns | 7894 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.620 |
+| walker |  | 7948 | 238 | ts names src/utils.ts |  |  | 0.629 |
+| walker |  | 7968 | 20 | ts decl src/utils.ts:218 |  |  | 0.629 |
+| walker |  | 8018 | 50 | ts decl src/utils.ts:106 |  |  | 0.629 |
+| walker |  | 8068 | 50 | ts decl src/utils.ts:202 |  |  | 0.629 |
+| ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.622 |
+| walker |  | 8122 | 54 | ts decl src/utils.ts:67 |  |  | 0.622 |
+| ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.617 |
+| walker |  | 8224 | 102 | ts decl src/utils.ts:130 |  |  | 0.624 |
+| walker |  | 8287 | 63 | docs/reference/coercions.md section #0 |  |  | 0.624 |
+| walker |  | 8366 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.624 |
+| walker |  | 8396 | 30 | docs/reference/utilities.md section #0 |  |  | 0.624 |
+| walker |  | 8407 | 11 | ts body src/struct.ts:83 |  |  | 0.624 |
+| ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.630 |
+| walker |  | 8532 | 125 | docs/summary.md section #0 |  |  | 0.630 |
+| walker |  | 8614 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.631 |
 | ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.627 |
-| walker |  | 8641 | 23 | ts doc src/struct.ts:243 |  |  | 0.627 |
-| walker |  | 8749 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.627 |
+| walker |  | 8667 | 53 | docs/reference/refinements.md section #0 |  |  | 0.627 |
+| walker |  | 8744 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.627 |
+| walker |  | 8768 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.627 |
 | ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.625 |
-| walker |  | 8860 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.625 |
-| walker |  | 8942 | 82 | ts doc src/structs/coercions.ts:38 |  |  | 0.625 |
-| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.619 |
-| walker |  | 8961 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.620 |
-| ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.612 |
-| ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.607 |
-| ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.612 |
+| walker |  | 8791 | 23 | ts doc src/struct.ts:175 |  |  | 0.625 |
+| walker |  | 8901 | 110 | json config jsr.json |  |  | 0.625 |
+| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.618 |
+| walker |  | 9107 | 206 | Readme.md section #6 |  |  | 0.618 |
+| walker |  | 9133 | 26 | package identity in examples/package.json |  |  | 0.618 |
+| walker |  | 9156 | 23 | ts doc src/struct.ts:243 |  |  | 0.618 |
+| ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.611 |
+| walker |  | 9264 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.611 |
+| ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.605 |
+| walker |  | 9375 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.605 |
+| walker |  | 9457 | 82 | ts doc src/structs/coercions.ts:38 |  |  | 0.606 |
+| walker |  | 9476 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.607 |
+| walker |  | 9502 | 26 | ts doc src/structs/refinements.ts:33 |  |  | 0.607 |
+| walker |  | 9519 | 17 | ts body src/utils.ts:16 |  |  | 0.607 |
+| ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.613 |
 | ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.610 |
-| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.605 |
+| walker |  | 9652 | 133 | docs/guides/06-using-typescript.md section #0 |  |  | 0.610 |
+| walker |  | 9677 | 25 | ts doc src/struct.ts:259 |  |  | 0.610 |
+| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.606 |
 | ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.603 |
-| walker |  | 9914 | 953 | docs/readme.md section #0 |  |  | 0.603 |
-| walker |  | 9940 | 26 | ts doc src/structs/refinements.ts:33 |  |  | 0.603 |
-| walker |  | 9957 | 17 | ts body src/utils.ts:16 |  |  | 0.603 |

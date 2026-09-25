@@ -266,7 +266,7 @@ Score(3000)=0.675 I=0.771 C=0.592 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | ns | 8762 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.517 |
 | walker |  | 8863 | 104 | README.md section #3 |  |  | 0.517 |
 | walker |  | 8939 | 76 | README.md section #15 |  |  | 0.517 |
-| walker |  | 8990 | 51 | MAINTAINING.md section #2 |  |  | 0.517 |
+| walker |  | 8990 | 51 | MAINTAINING.md section #3 |  |  | 0.517 |
 | ns | 9000 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.510 |
 | walker |  | 9057 | 67 | listing of 'website/src/website/pages/playground' |  |  | 0.510 |
 | walker |  | 9132 | 75 | listing of 'website/src/website/data/playground-samples/extending-language-services' |  |  | 0.510 |
