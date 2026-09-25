@@ -1,4 +1,4 @@
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::fmt::Write as _;
 
 use super::*;
@@ -21,7 +21,7 @@ fn format_schedule_table(out: &mut String, ctx: &BuildCtx) {
         "|:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|\n",
     );
 
-    let mut walker_cum: BTreeMap<&Atom, usize> = BTreeMap::new();
+    let mut walker_cum: HashMap<&Atom, usize> = HashMap::new();
     let mut a_b_atoms: usize = 0;
     let mut prev_ns_t: usize = 0;
 

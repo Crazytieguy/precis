@@ -103,7 +103,7 @@
 //!   (`build_scores`) calls at each grid budget, so the per-row curve
 //!   and the grid-aligned snapshot agree by construction.
 
-use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::path::Path;
 
 use anyhow::{Context, Result};
@@ -391,7 +391,7 @@ impl<'a> BuildCtx<'a> {
 
 /// Per-budget walker state for `build_scores`.
 struct WalkerSnapshots<'a> {
-    cums: [BTreeMap<&'a Atom, usize>; BUDGETS.len()],
+    cums: [HashMap<&'a Atom, usize>; BUDGETS.len()],
     a_b_atoms: [usize; BUDGETS.len()],
 }
 
@@ -459,7 +459,7 @@ fn build_scores(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Scores {
 pub(super) fn compute_score_at_running(
     ctx: &BuildCtx,
     budget: usize,
-    walker_cum: &BTreeMap<&Atom, usize>,
+    walker_cum: &HashMap<&Atom, usize>,
     a_b_atoms: usize,
 ) -> ScoreAtBudget {
     if a_b_atoms == 0 {
@@ -505,7 +505,7 @@ pub(super) fn compute_score_at_running(
 
 /// Byte-weighted completion: `Σ min(walker, ns) / Σ ns` over the
 /// batch's atoms — the `completion(B_i)` factor in `damped_credit`.
-fn completion_for_row(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
+fn completion_for_row(ns_atoms: &[GradedAtom], walker_cum: &HashMap<&Atom, usize>) -> f64 {
     if ns_atoms.is_empty() {
         return 0.0;
     }
@@ -520,14 +520,14 @@ fn completion_for_row(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usiz
     delivered as f64 / total as f64
 }
 
-fn atom_credit(atom: &GradedAtom, walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
+fn atom_credit(atom: &GradedAtom, walker_cum: &HashMap<&Atom, usize>) -> f64 {
     let walker_bytes = walker_cum.get(&atom.atom).copied().unwrap_or(0);
     let ns_bytes = atom.bytes.max(1);
     ((walker_bytes.min(ns_bytes) as f64) / (ns_bytes as f64)).min(1.0)
 }
 
 /// Fold one walker batch's atoms into a cumulative byte-max map.
-pub(super) fn fold_walker_atoms<'a>(cum: &mut BTreeMap<&'a Atom, usize>, atoms: &'a [GradedAtom]) {
+pub(super) fn fold_walker_atoms<'a>(cum: &mut HashMap<&'a Atom, usize>, atoms: &'a [GradedAtom]) {
     for wa in atoms {
         let entry = cum.entry(&wa.atom).or_insert(0);
         if wa.bytes > *entry {
@@ -539,8 +539,8 @@ pub(super) fn fold_walker_atoms<'a>(cum: &mut BTreeMap<&'a Atom, usize>, atoms: 
 /// Walker cumulative byte-max map up to (and including) walker batches
 /// with `seen_t ≤ t_max`. Borrowed `&Atom` keys — keys live in
 /// `ctx.walker_rows`, so the returned map can't outlive `ctx`.
-fn walker_cum_at<'a>(ctx: &'a BuildCtx<'_>, t_max: usize) -> BTreeMap<&'a Atom, usize> {
-    let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
+fn walker_cum_at<'a>(ctx: &'a BuildCtx<'_>, t_max: usize) -> HashMap<&'a Atom, usize> {
+    let mut cumulative: HashMap<&Atom, usize> = HashMap::new();
     for wr in &ctx.walker_rows {
         if wr.seen_t > t_max {
             break;
@@ -552,7 +552,7 @@ fn walker_cum_at<'a>(ctx: &'a BuildCtx<'_>, t_max: usize) -> BTreeMap<&'a Atom, 
 
 #[cfg(test)]
 mod tests {
-    use std::collections::BTreeMap;
+    use std::collections::HashMap;
     use std::path::PathBuf;
 
     use crate::content::BatchContent;
@@ -660,7 +660,7 @@ mod tests {
         // advance: at each grid budget, advance NS + walker rows with
         // cum ≤ budget, then parity-check the running score against the
         // precomputed snapshot.
-        let mut walker_cum: BTreeMap<&Atom, usize> = BTreeMap::new();
+        let mut walker_cum: HashMap<&Atom, usize> = HashMap::new();
         let mut a_b_atoms: usize = 0;
         let mut ns_idx = 0;
         let mut walker_idx = 0;
