@@ -1,4 +1,4 @@
-Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.605/0.768/0.778/0.668/0.599/0.541/0.520
+Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.605/0.768/0.778/0.668/0.634/0.570/0.542
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -87,119 +87,119 @@ Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 3871 |  | 260 | Group and CommandCollection method rosters | 3.10 |  | 0.594 |
 | walker |  | 3972 | 220 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 3, line: 0 } |  |  | 0.632 |
 | walker |  | 4005 | 33 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 45, sub: 0, line: 495 } |  |  | 0.632 |
-| walker |  | 4144 | 139 | Code::CodeKey { rung: Names, file: src/click/parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.632 |
-| walker |  | 4164 | 20 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 12, sub: 0, line: 216 } |  |  | 0.632 |
-| walker |  | 4203 | 39 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 9, sub: 0, line: 185 } |  |  | 0.632 |
-| ns | 4212 |  | 341 | Context method roster (core.py 460-884) | 3.11 |  | 0.604 |
-| walker |  | 4278 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.604 |
-| ns | 4321 |  | 109 | CommandCollection: composing several groups | 3.12 | 3.1 | 0.599 |
-| walker |  | 4421 | 143 | Code::CodeKey { rung: Names, file: src/click/globals.py, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
-| walker |  | 4428 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 2, sub: 0, line: 12 } |  |  | 0.599 |
-| walker |  | 4435 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 3, sub: 0, line: 16 } |  |  | 0.599 |
-| walker |  | 4445 | 10 | Code::CodeKey { rung: Body, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.599 |
-| ns | 4451 |  | 130 | ParameterSource members: where a value came from | 3.13 |  | 0.591 |
-| walker |  | 4458 | 13 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.591 |
-| walker |  | 4474 | 16 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 5, sub: 0, line: 44 } |  |  | 0.591 |
-| ns | 4551 |  | 100 | Parameter: the shared base of options and arguments | 4.1 | 3.1 | 0.585 |
-| walker |  | 4614 | 140 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 38, sub: 0, line: 426 } |  |  | 0.585 |
-| walker |  | 4647 | 33 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 43, sub: 0, line: 468 } |  |  | 0.585 |
-| walker |  | 4688 | 41 | Code::CodeKey { rung: Decl, file: src/click/_compat.py, decl: 8, sub: 0, line: 56 } |  |  | 0.585 |
-| walker |  | 4778 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.585 |
-| ns | 4832 |  | 281 | Parameter constructor: settings shared by options and arguments | 4.2 |  | 0.571 |
-| walker |  | 4855 | 77 | Code::CodeKey { rung: Decl, file: src/click/testing.py, decl: 32, sub: 0, line: 283 } |  |  | 0.571 |
-| ns | 4894 |  | 62 | Option: what it adds over a plain parameter | 4.3 | 3.1 | 0.566 |
-| walker |  | 5066 | 211 | Code::CodeKey { rung: Names, file: src/click/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
-| walker |  | 5077 | 11 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 24, sub: 0, line: 278 } |  |  | 0.567 |
-| walker |  | 5103 | 26 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 11, sub: 0, line: 108 } |  |  | 0.567 |
-| walker |  | 5129 | 26 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 18, sub: 0, line: 221 } |  |  | 0.567 |
-| walker |  | 5155 | 26 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 21, sub: 0, line: 251 } |  |  | 0.567 |
-| ns | 5186 |  | 292 | Option constructor: the full option feature set | 4.4 |  | 0.552 |
-| walker |  | 5197 | 42 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 14, sub: 0, line: 150 } |  |  | 0.552 |
-| walker |  | 5239 | 42 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 34, sub: 0, line: 334 } |  |  | 0.552 |
-| walker |  | 5282 | 43 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 30, sub: 0, line: 313 } |  |  | 0.552 |
-| walker |  | 5326 | 44 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 27, sub: 0, line: 304 } |  |  | 0.552 |
-| walker |  | 5359 | 33 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 25, sub: 0, line: 288 } |  |  | 0.552 |
-| walker |  | 5429 | 70 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 8, sub: 0, line: 65 } |  |  | 0.552 |
-| ns | 5471 |  | 285 | Argument: positional parameters and the required-by-default rule | 4.5 | 3.1 | 0.540 |
-| walker |  | 5535 | 106 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 3, sub: 0, line: 35 } |  |  | 0.540 |
-| walker |  | 5605 | 70 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 19, sub: 0, line: 227 } |  |  | 0.540 |
-| walker |  | 5675 | 70 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 22, sub: 0, line: 254 } |  |  | 0.540 |
-| ns | 5728 |  | 257 | Parameter method roster (core.py 2218-2647) | 4.6 |  | 0.528 |
-| walker |  | 5746 | 71 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 12, sub: 0, line: 126 } |  |  | 0.528 |
-| ns | 5965 |  | 237 | Option and Argument method rosters | 4.7 |  | 0.517 |
-| walker |  | 6052 | 306 | Code::CodeKey { rung: Names, file: src/click/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.536 |
-| walker |  | 6089 | 37 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 6, sub: 0, line: 100 } |  |  | 0.536 |
-| ns | 6112 |  | 147 | Package identity and runtime dependencies | 5.1 |  | 0.545 |
-| walker |  | 6127 | 38 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 7, sub: 0, line: 119 } |  |  | 0.545 |
-| walker |  | 6207 | 80 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 93, sub: 0, line: 1988 } |  |  | 0.546 |
-| ns | 6209 |  | 97 | How tests are run: pytest configuration | 5.2 |  | 0.541 |
-| walker |  | 6222 | 15 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 6, sub: 0, line: 100 } |  |  | 0.541 |
-| walker |  | 6250 | 28 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 3, sub: 0, line: 57 } |  |  | 0.541 |
-| ns | 6270 |  | 61 | The pytest fixture every test uses | 5.3 |  | 0.537 |
-| walker |  | 6283 | 33 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 4, sub: 0, line: 76 } |  |  | 0.537 |
-| walker |  | 6344 | 61 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 94, sub: 0, line: 2004 } |  |  | 0.537 |
-| ns | 6452 |  | 182 | CliRunner.invoke: running a CLI in a test | 5.4 |  | 0.530 |
-| walker |  | 6480 | 136 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 8, sub: 0, line: 146 } |  |  | 0.543 |
-| walker |  | 6524 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 68, sub: 0, line: 1516 } |  |  | 0.543 |
-| ns | 6581 |  | 129 | tox environments: the developer command surface | 5.5 |  | 0.537 |
-| walker |  | 6681 | 157 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 135, sub: 0, line: 3399 } |  |  | 0.540 |
-| walker |  | 6690 | 9 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 137, sub: 0, line: 3430 } |  |  | 0.540 |
-| walker |  | 6749 | 59 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 136, sub: 0, line: 3409 } |  |  | 0.542 |
-| walker |  | 6787 | 38 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 139, sub: 0, line: 3450 } |  |  | 0.542 |
-| ns | 6818 |  | 237 | Lint and type-check configuration | 5.6 |  | 0.531 |
-| ns | 6868 |  | 50 | CI and repository automation listing | 5.7 |  | 0.532 |
-| ns | 6927 |  | 59 | The exact command CI runs | 5.8 |  | 0.531 |
-| walker |  | 7073 | 286 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 121, sub: 0, line: 2671 } |  |  | 0.551 |
-| walker |  | 7109 | 36 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 133, sub: 0, line: 3319 } |  |  | 0.551 |
-| walker |  | 7149 | 40 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 124, sub: 0, line: 2935 } |  |  | 0.551 |
-| walker |  | 7187 | 38 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 126, sub: 0, line: 2974 } |  |  | 0.551 |
-| walker |  | 7214 | 27 | Code::CodeKey { rung: Body, file: src/click/formatting.py, decl: 3, sub: 0, line: 24 } |  |  | 0.551 |
-| ns | 7226 |  | 299 | types.py class roster: the ParamType hierarchy | 6.1 |  | 0.544 |
-| walker |  | 7263 | 49 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 2, sub: 0, line: 51 } |  |  | 0.544 |
-| ns | 7306 |  | 80 | The exported type singletons | 6.2 |  | 0.542 |
-| walker |  | 7312 | 49 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 5, sub: 0, line: 127 } |  |  | 0.542 |
-| walker |  | 7320 | 8 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 7, sub: 0, line: 165 } |  |  | 0.542 |
-| ns | 7442 |  | 136 | ParamType: the interface a custom type implements | 6.3 |  | 0.536 |
-| walker |  | 7497 | 177 | Code::CodeKey { rung: Names, file: src/click/_termui_impl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
-| walker |  | 7507 | 10 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 26, sub: 0, line: 417 } |  |  | 0.537 |
-| walker |  | 7554 | 47 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 22, sub: 0, line: 375 } |  |  | 0.537 |
-| walker |  | 7590 | 36 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 25, sub: 0, line: 386 } |  |  | 0.537 |
-| ns | 7707 |  | 265 | Exception hierarchy with exit codes | 6.4 |  | 0.538 |
-| walker |  | 7716 | 126 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 30, sub: 0, line: 608 } |  |  | 0.538 |
-| walker |  | 7726 | 10 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 34, sub: 0, line: 668 } |  |  | 0.538 |
-| walker |  | 7736 | 10 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 35, sub: 0, line: 673 } |  |  | 0.538 |
-| walker |  | 7808 | 72 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 31, sub: 0, line: 609 } |  |  | 0.538 |
-| walker |  | 7855 | 47 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 29, sub: 0, line: 597 } |  |  | 0.538 |
-| ns | 7912 |  | 205 | decorators.py roster: every decorator and its overloads | 7.1 |  | 0.529 |
-| walker |  | 7944 | 89 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 15, sub: 0, line: 162 } |  |  | 0.529 |
-| ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.523 |
-| ns | 8347 |  | 204 | style and secho: colours and text attributes | 8.1 |  | 0.517 |
-| walker |  | 8451 | 507 | Code::CodeKey { rung: Names, file: src/click/termui.py, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
-| walker |  | 8477 | 26 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 13, sub: 0, line: 301 } |  |  | 0.518 |
-| walker |  | 8528 | 51 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 14, sub: 0, line: 320 } |  |  | 0.518 |
-| walker |  | 8539 | 11 | Code::CodeKey { rung: Body, file: src/click/termui.py, decl: 21, sub: 0, line: 705 } |  |  | 0.518 |
-| ns | 8590 |  | 243 | prompt and confirm signatures | 8.2 |  | 0.510 |
-| walker |  | 8615 | 76 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 12, sub: 0, line: 242 } |  |  | 0.514 |
-| walker |  | 8700 | 85 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 24, sub: 0, line: 761 } |  |  | 0.514 |
-| walker |  | 8786 | 86 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 22, sub: 0, line: 717 } |  |  | 0.514 |
-| ns | 8798 |  | 208 | termui.py roster: the remaining terminal functions | 8.3 |  | 0.525 |
-| walker |  | 8872 | 86 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 23, sub: 0, line: 751 } |  |  | 0.525 |
-| ns | 8963 |  | 165 | utils.py roster: echo, streams, files and app directories | 8.4 |  | 0.520 |
-| walker |  | 8973 | 101 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 25, sub: 0, line: 771 } |  |  | 0.520 |
-| walker |  | 9082 | 109 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 26, sub: 0, line: 782 } |  |  | 0.520 |
-| ns | 9159 |  | 196 | shell_completion.py roster: per-shell backends | 9.1 |  | 0.513 |
-| walker |  | 9231 | 149 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 11, sub: 0, line: 129 } |  |  | 0.530 |
-| ns | 9340 |  | 181 | formatting.py: HelpFormatter and text wrapping | 9.2 |  | 0.525 |
-| walker |  | 9544 | 313 | Code::CodeKey { rung: Names, file: src/click/shell_completion.py, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
-| ns | 9555 |  | 215 | parser.py: the private option parser | 9.3 |  | 0.537 |
-| walker |  | 9573 | 29 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 30, sub: 0, line: 449 } |  |  | 0.537 |
-| walker |  | 9632 | 59 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 2, sub: 0, line: 57 } |  |  | 0.537 |
-| walker |  | 9695 | 63 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 1, sub: 0, line: 19 } |  |  | 0.537 |
-| ns | 9748 |  | 193 | globals.py and the UNSET sentinel | 9.4 |  | 0.536 |
-| walker |  | 9763 | 68 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 25, sub: 0, line: 403 } |  |  | 0.536 |
-| walker |  | 9832 | 69 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 22, sub: 0, line: 367 } |  |  | 0.536 |
-| ns | 9861 |  | 113 | _termui_impl.py roster: ProgressBar, pagers, Editor | 9.5 |  | 0.541 |
-| walker |  | 9926 | 94 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 17, sub: 0, line: 308 } |  |  | 0.541 |
-| walker |  | 9932 | 6 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 18, sub: 0, line: 314 } |  |  | 0.541 |
-| ns | 9959 |  | 98 | Changelog head: the unreleased 8.4.0 section | 10.1 |  | 0.537 |
-| walker |  | 9964 | 32 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 37, sub: 0, line: 634 } |  |  | 0.537 |
+| walker |  | 4061 | 56 | Fs::DirListing { dir: tests/typing } |  |  | 0.670 |
+| walker |  | 4200 | 139 | Code::CodeKey { rung: Names, file: src/click/parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.670 |
+| ns | 4212 |  | 341 | Context method roster (core.py 460-884) | 3.11 |  | 0.640 |
+| walker |  | 4220 | 20 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 12, sub: 0, line: 216 } |  |  | 0.640 |
+| walker |  | 4259 | 39 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 9, sub: 0, line: 185 } |  |  | 0.640 |
+| ns | 4321 |  | 109 | CommandCollection: composing several groups | 3.12 | 3.1 | 0.634 |
+| walker |  | 4334 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.634 |
+| ns | 4451 |  | 130 | ParameterSource members: where a value came from | 3.13 |  | 0.626 |
+| walker |  | 4477 | 143 | Code::CodeKey { rung: Names, file: src/click/globals.py, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
+| walker |  | 4484 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 2, sub: 0, line: 12 } |  |  | 0.626 |
+| walker |  | 4491 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 3, sub: 0, line: 16 } |  |  | 0.626 |
+| walker |  | 4501 | 10 | Code::CodeKey { rung: Body, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.626 |
+| walker |  | 4514 | 13 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.626 |
+| walker |  | 4530 | 16 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 5, sub: 0, line: 44 } |  |  | 0.626 |
+| ns | 4551 |  | 100 | Parameter: the shared base of options and arguments | 4.1 | 3.1 | 0.620 |
+| walker |  | 4670 | 140 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 38, sub: 0, line: 426 } |  |  | 0.620 |
+| walker |  | 4703 | 33 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 43, sub: 0, line: 468 } |  |  | 0.620 |
+| walker |  | 4744 | 41 | Code::CodeKey { rung: Decl, file: src/click/_compat.py, decl: 8, sub: 0, line: 56 } |  |  | 0.620 |
+| ns | 4832 |  | 281 | Parameter constructor: settings shared by options and arguments | 4.2 |  | 0.605 |
+| walker |  | 4834 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.605 |
+| ns | 4894 |  | 62 | Option: what it adds over a plain parameter | 4.3 | 3.1 | 0.600 |
+| walker |  | 4911 | 77 | Code::CodeKey { rung: Decl, file: src/click/testing.py, decl: 32, sub: 0, line: 283 } |  |  | 0.600 |
+| walker |  | 5122 | 211 | Code::CodeKey { rung: Names, file: src/click/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
+| walker |  | 5133 | 11 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 24, sub: 0, line: 278 } |  |  | 0.601 |
+| walker |  | 5159 | 26 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 11, sub: 0, line: 108 } |  |  | 0.601 |
+| walker |  | 5185 | 26 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 18, sub: 0, line: 221 } |  |  | 0.601 |
+| ns | 5186 |  | 292 | Option constructor: the full option feature set | 4.4 |  | 0.585 |
+| walker |  | 5211 | 26 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 21, sub: 0, line: 251 } |  |  | 0.585 |
+| walker |  | 5253 | 42 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 14, sub: 0, line: 150 } |  |  | 0.585 |
+| walker |  | 5295 | 42 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 34, sub: 0, line: 334 } |  |  | 0.585 |
+| walker |  | 5338 | 43 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 30, sub: 0, line: 313 } |  |  | 0.585 |
+| walker |  | 5382 | 44 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 27, sub: 0, line: 304 } |  |  | 0.585 |
+| walker |  | 5415 | 33 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 25, sub: 0, line: 288 } |  |  | 0.585 |
+| ns | 5471 |  | 285 | Argument: positional parameters and the required-by-default rule | 4.5 | 3.1 | 0.571 |
+| walker |  | 5485 | 70 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 8, sub: 0, line: 65 } |  |  | 0.571 |
+| walker |  | 5591 | 106 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 3, sub: 0, line: 35 } |  |  | 0.572 |
+| walker |  | 5661 | 70 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 19, sub: 0, line: 227 } |  |  | 0.572 |
+| ns | 5728 |  | 257 | Parameter method roster (core.py 2218-2647) | 4.6 |  | 0.559 |
+| walker |  | 5731 | 70 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 22, sub: 0, line: 254 } |  |  | 0.559 |
+| walker |  | 5802 | 71 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 12, sub: 0, line: 126 } |  |  | 0.559 |
+| ns | 5965 |  | 237 | Option and Argument method rosters | 4.7 |  | 0.548 |
+| walker |  | 6108 | 306 | Code::CodeKey { rung: Names, file: src/click/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
+| ns | 6112 |  | 147 | Package identity and runtime dependencies | 5.1 |  | 0.575 |
+| walker |  | 6145 | 37 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 6, sub: 0, line: 100 } |  |  | 0.575 |
+| walker |  | 6183 | 38 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 7, sub: 0, line: 119 } |  |  | 0.575 |
+| ns | 6209 |  | 97 | How tests are run: pytest configuration | 5.2 |  | 0.570 |
+| walker |  | 6263 | 80 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 93, sub: 0, line: 1988 } |  |  | 0.571 |
+| ns | 6270 |  | 61 | The pytest fixture every test uses | 5.3 |  | 0.566 |
+| walker |  | 6278 | 15 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 6, sub: 0, line: 100 } |  |  | 0.566 |
+| walker |  | 6306 | 28 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 3, sub: 0, line: 57 } |  |  | 0.566 |
+| walker |  | 6339 | 33 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 4, sub: 0, line: 76 } |  |  | 0.566 |
+| walker |  | 6400 | 61 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 94, sub: 0, line: 2004 } |  |  | 0.566 |
+| ns | 6452 |  | 182 | CliRunner.invoke: running a CLI in a test | 5.4 |  | 0.559 |
+| walker |  | 6536 | 136 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 8, sub: 0, line: 146 } |  |  | 0.571 |
+| walker |  | 6580 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 68, sub: 0, line: 1516 } |  |  | 0.571 |
+| ns | 6581 |  | 129 | tox environments: the developer command surface | 5.5 |  | 0.566 |
+| walker |  | 6737 | 157 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 135, sub: 0, line: 3399 } |  |  | 0.568 |
+| walker |  | 6746 | 9 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 137, sub: 0, line: 3430 } |  |  | 0.568 |
+| walker |  | 6805 | 59 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 136, sub: 0, line: 3409 } |  |  | 0.570 |
+| ns | 6818 |  | 237 | Lint and type-check configuration | 5.6 |  | 0.558 |
+| walker |  | 6843 | 38 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 139, sub: 0, line: 3450 } |  |  | 0.558 |
+| ns | 6868 |  | 50 | CI and repository automation listing | 5.7 |  | 0.559 |
+| ns | 6927 |  | 59 | The exact command CI runs | 5.8 |  | 0.558 |
+| walker |  | 7129 | 286 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 121, sub: 0, line: 2671 } |  |  | 0.578 |
+| walker |  | 7165 | 36 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 133, sub: 0, line: 3319 } |  |  | 0.578 |
+| walker |  | 7205 | 40 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 124, sub: 0, line: 2935 } |  |  | 0.578 |
+| ns | 7226 |  | 299 | types.py class roster: the ParamType hierarchy | 6.1 |  | 0.570 |
+| walker |  | 7243 | 38 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 126, sub: 0, line: 2974 } |  |  | 0.570 |
+| walker |  | 7270 | 27 | Code::CodeKey { rung: Body, file: src/click/formatting.py, decl: 3, sub: 0, line: 24 } |  |  | 0.570 |
+| ns | 7306 |  | 80 | The exported type singletons | 6.2 |  | 0.567 |
+| walker |  | 7319 | 49 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 2, sub: 0, line: 51 } |  |  | 0.567 |
+| walker |  | 7368 | 49 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 5, sub: 0, line: 127 } |  |  | 0.567 |
+| walker |  | 7376 | 8 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 7, sub: 0, line: 165 } |  |  | 0.567 |
+| ns | 7442 |  | 136 | ParamType: the interface a custom type implements | 6.3 |  | 0.562 |
+| walker |  | 7553 | 177 | Code::CodeKey { rung: Names, file: src/click/_termui_impl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
+| walker |  | 7563 | 10 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 26, sub: 0, line: 417 } |  |  | 0.562 |
+| walker |  | 7610 | 47 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 22, sub: 0, line: 375 } |  |  | 0.562 |
+| walker |  | 7646 | 36 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 25, sub: 0, line: 386 } |  |  | 0.562 |
+| ns | 7707 |  | 265 | Exception hierarchy with exit codes | 6.4 |  | 0.563 |
+| walker |  | 7772 | 126 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 30, sub: 0, line: 608 } |  |  | 0.563 |
+| walker |  | 7782 | 10 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 34, sub: 0, line: 668 } |  |  | 0.563 |
+| walker |  | 7792 | 10 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 35, sub: 0, line: 673 } |  |  | 0.563 |
+| walker |  | 7864 | 72 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 31, sub: 0, line: 609 } |  |  | 0.563 |
+| walker |  | 7911 | 47 | Code::CodeKey { rung: Decl, file: src/click/_termui_impl.py, decl: 29, sub: 0, line: 597 } |  |  | 0.563 |
+| ns | 7912 |  | 205 | decorators.py roster: every decorator and its overloads | 7.1 |  | 0.553 |
+| walker |  | 8000 | 89 | Code::CodeKey { rung: Decl, file: src/click/exceptions.py, decl: 15, sub: 0, line: 162 } |  |  | 0.553 |
+| ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.547 |
+| ns | 8347 |  | 204 | style and secho: colours and text attributes | 8.1 |  | 0.541 |
+| walker |  | 8507 | 507 | Code::CodeKey { rung: Names, file: src/click/termui.py, decl: 0, sub: 0, line: 0 } |  |  | 0.542 |
+| walker |  | 8533 | 26 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 13, sub: 0, line: 301 } |  |  | 0.542 |
+| walker |  | 8584 | 51 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 14, sub: 0, line: 320 } |  |  | 0.542 |
+| ns | 8590 |  | 243 | prompt and confirm signatures | 8.2 |  | 0.534 |
+| walker |  | 8595 | 11 | Code::CodeKey { rung: Body, file: src/click/termui.py, decl: 21, sub: 0, line: 705 } |  |  | 0.534 |
+| walker |  | 8671 | 76 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 12, sub: 0, line: 242 } |  |  | 0.537 |
+| walker |  | 8756 | 85 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 24, sub: 0, line: 761 } |  |  | 0.537 |
+| ns | 8798 |  | 208 | termui.py roster: the remaining terminal functions | 8.3 |  | 0.548 |
+| walker |  | 8842 | 86 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 22, sub: 0, line: 717 } |  |  | 0.548 |
+| walker |  | 8928 | 86 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 23, sub: 0, line: 751 } |  |  | 0.548 |
+| ns | 8963 |  | 165 | utils.py roster: echo, streams, files and app directories | 8.4 |  | 0.542 |
+| walker |  | 9029 | 101 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 25, sub: 0, line: 771 } |  |  | 0.542 |
+| walker |  | 9138 | 109 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 26, sub: 0, line: 782 } |  |  | 0.542 |
+| ns | 9159 |  | 196 | shell_completion.py roster: per-shell backends | 9.1 |  | 0.536 |
+| walker |  | 9287 | 149 | Code::CodeKey { rung: Decl, file: src/click/termui.py, decl: 11, sub: 0, line: 129 } |  |  | 0.552 |
+| ns | 9340 |  | 181 | formatting.py: HelpFormatter and text wrapping | 9.2 |  | 0.547 |
+| ns | 9555 |  | 215 | parser.py: the private option parser | 9.3 |  | 0.543 |
+| walker |  | 9600 | 313 | Code::CodeKey { rung: Names, file: src/click/shell_completion.py, decl: 0, sub: 0, line: 0 } |  |  | 0.558 |
+| walker |  | 9629 | 29 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 30, sub: 0, line: 449 } |  |  | 0.558 |
+| walker |  | 9688 | 59 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 2, sub: 0, line: 57 } |  |  | 0.558 |
+| ns | 9748 |  | 193 | globals.py and the UNSET sentinel | 9.4 |  | 0.557 |
+| walker |  | 9751 | 63 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 1, sub: 0, line: 19 } |  |  | 0.557 |
+| walker |  | 9819 | 68 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 25, sub: 0, line: 403 } |  |  | 0.557 |
+| ns | 9861 |  | 113 | _termui_impl.py roster: ProgressBar, pagers, Editor | 9.5 |  | 0.562 |
+| walker |  | 9888 | 69 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 22, sub: 0, line: 367 } |  |  | 0.562 |
+| ns | 9959 |  | 98 | Changelog head: the unreleased 8.4.0 section | 10.1 |  | 0.558 |
+| walker |  | 9982 | 94 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 17, sub: 0, line: 308 } |  |  | 0.558 |
+| walker |  | 9988 | 6 | Code::CodeKey { rung: Decl, file: src/click/shell_completion.py, decl: 18, sub: 0, line: 314 } |  |  | 0.558 |

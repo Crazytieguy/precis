@@ -222,40 +222,41 @@ Score(3000)=0.624 I=0.860 C=0.453 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 8245 | 22 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 9, sub: 0, line: 76 } |  |  | 0.524 |
 | walker |  | 8273 | 28 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 2, sub: 0, line: 15 } |  |  | 0.524 |
 | walker |  | 8288 | 15 | Code::CodeKey { rung: Body, file: src/lualib/layout.lua, decl: 5, sub: 0, line: 36 } |  |  | 0.524 |
-| walker |  | 8334 | 46 | Code::CodeKey { rung: Doc, file: docs/datalist.lua, decl: 1, sub: 0, line: 15 } |  |  | 0.524 |
+| walker |  | 8292 | 4 | Fs::DirListing { dir: .github/actions } |  |  | 0.524 |
+| walker |  | 8338 | 46 | Code::CodeKey { rung: Doc, file: docs/datalist.lua, decl: 1, sub: 0, line: 15 } |  |  | 0.524 |
 | ns | 8372 |  | 225 | Makefile: the Windows/gcc build in outline | 5.3 |  | 0.519 |
-| walker |  | 8420 | 86 | Code::CodeKey { rung: Names, file: src/platform/macos/soluna_macos_ime.h, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| walker |  | 8443 | 23 | Code::CodeKey { rung: Body, file: src/service/settings.lua, decl: 1, sub: 0, line: 9 } |  |  | 0.520 |
+| walker |  | 8424 | 86 | Code::CodeKey { rung: Names, file: src/platform/macos/soluna_macos_ime.h, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
+| walker |  | 8447 | 23 | Code::CodeKey { rung: Body, file: src/service/settings.lua, decl: 1, sub: 0, line: 9 } |  |  | 0.520 |
 | ns | 8655 |  | 283 | make.lua: platform detection and output layout | 5.4 |  | 0.510 |
-| walker |  | 8767 | 324 | Code::CodeKey { rung: Names, file: src/service/render.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
-| walker |  | 8781 | 14 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 2, sub: 0, line: 97 } |  |  | 0.511 |
-| walker |  | 8796 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 5, sub: 0, line: 106 } |  |  | 0.511 |
-| walker |  | 8811 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 8, sub: 0, line: 115 } |  |  | 0.511 |
-| walker |  | 8826 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 9, sub: 0, line: 118 } |  |  | 0.511 |
-| walker |  | 8841 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 11, sub: 0, line: 123 } |  |  | 0.511 |
+| walker |  | 8771 | 324 | Code::CodeKey { rung: Names, file: src/service/render.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
+| walker |  | 8785 | 14 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 2, sub: 0, line: 97 } |  |  | 0.511 |
+| walker |  | 8800 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 5, sub: 0, line: 106 } |  |  | 0.511 |
+| walker |  | 8815 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 8, sub: 0, line: 115 } |  |  | 0.511 |
+| walker |  | 8830 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 9, sub: 0, line: 118 } |  |  | 0.511 |
+| walker |  | 8845 | 15 | Code::CodeKey { rung: Body, file: src/service/render.lua, decl: 11, sub: 0, line: 123 } |  |  | 0.511 |
 | ns | 8863 |  | 208 | make.lua: how clibs modules and the final executable are wired | 5.5 | 5.4 | 0.505 |
-| walker |  | 8889 | 48 | Code::CodeKey { rung: Doc, file: docs/file.lua, decl: 1, sub: 0, line: 15 } |  |  | 0.505 |
-| walker |  | 8958 | 69 | Code::CodeKey { rung: Names, file: src/lfs.c, decl: 0, sub: 0, line: 0 } |  |  | 0.505 |
-| walker |  | 8982 | 24 | Code::CodeKey { rung: Body, file: src/service/gamepad.lua, decl: 1, sub: 0, line: 10 } |  |  | 0.506 |
-| walker |  | 9029 | 47 | Code::CodeKey { rung: Body, file: src/transform.h, decl: 3, sub: 0, line: 16 } |  |  | 0.506 |
-| walker |  | 9081 | 52 | Code::CodeKey { rung: Doc, file: docs/soluna.lua, decl: 4, sub: 0, line: 59 } |  |  | 0.508 |
+| walker |  | 8893 | 48 | Code::CodeKey { rung: Doc, file: docs/file.lua, decl: 1, sub: 0, line: 15 } |  |  | 0.505 |
+| walker |  | 8962 | 69 | Code::CodeKey { rung: Names, file: src/lfs.c, decl: 0, sub: 0, line: 0 } |  |  | 0.505 |
+| walker |  | 8986 | 24 | Code::CodeKey { rung: Body, file: src/service/gamepad.lua, decl: 1, sub: 0, line: 10 } |  |  | 0.506 |
+| walker |  | 9033 | 47 | Code::CodeKey { rung: Body, file: src/transform.h, decl: 3, sub: 0, line: 16 } |  |  | 0.506 |
+| walker |  | 9085 | 52 | Code::CodeKey { rung: Doc, file: docs/soluna.lua, decl: 4, sub: 0, line: 59 } |  |  | 0.508 |
 | ns | 9217 |  | 354 | make.lua: the Emscripten/WASM link configuration | 5.6 | 5.4 | 0.500 |
-| walker |  | 9303 | 222 | Code::CodeKey { rung: Names, file: src/luamods.c, decl: 0, sub: 0, line: 0 } |  |  | 0.500 |
-| walker |  | 9355 | 52 | Code::CodeKey { rung: Body, file: script/hashversion.lua, decl: 1, sub: 0, line: 1 } |  |  | 0.500 |
-| walker |  | 9382 | 27 | Code::CodeKey { rung: Body, file: src/service/loader.lua, decl: 4, sub: 0, line: 56 } |  |  | 0.500 |
-| walker |  | 9418 | 36 | Code::CodeKey { rung: Body, file: src/truetype.h, decl: 9, sub: 0, line: 44 } |  |  | 0.500 |
-| walker |  | 9475 | 57 | Code::CodeKey { rung: Doc, file: docs/font.lua, decl: 2, sub: 0, line: 21 } |  |  | 0.500 |
-| walker |  | 9504 | 29 | Code::CodeKey { rung: Body, file: src/lualib/fontmgr.lua, decl: 6, sub: 0, line: 290 } |  |  | 0.500 |
+| walker |  | 9307 | 222 | Code::CodeKey { rung: Names, file: src/luamods.c, decl: 0, sub: 0, line: 0 } |  |  | 0.500 |
+| walker |  | 9359 | 52 | Code::CodeKey { rung: Body, file: script/hashversion.lua, decl: 1, sub: 0, line: 1 } |  |  | 0.500 |
+| walker |  | 9386 | 27 | Code::CodeKey { rung: Body, file: src/service/loader.lua, decl: 4, sub: 0, line: 56 } |  |  | 0.500 |
+| walker |  | 9422 | 36 | Code::CodeKey { rung: Body, file: src/truetype.h, decl: 9, sub: 0, line: 44 } |  |  | 0.500 |
+| walker |  | 9479 | 57 | Code::CodeKey { rung: Doc, file: docs/font.lua, decl: 2, sub: 0, line: 21 } |  |  | 0.500 |
+| walker |  | 9508 | 29 | Code::CodeKey { rung: Body, file: src/lualib/fontmgr.lua, decl: 6, sub: 0, line: 290 } |  |  | 0.500 |
 | ns | 9518 |  | 301 | The full `soluna.app` C surface in src/entry.c | 6.1 | 3.3 | 0.493 |
-| walker |  | 9534 | 30 | Code::CodeKey { rung: Body, file: src/lualib/fontmgr.lua, decl: 4, sub: 0, line: 258 } |  |  | 0.493 |
-| ns | 9540 |  | 22 | Complete listing of .github: workflows and the composite action | 7.1 | 1.2 | 0.493 |
-| walker |  | 9564 | 30 | Code::CodeKey { rung: Body, file: src/service/loader.lua, decl: 1, sub: 0, line: 14 } |  |  | 0.495 |
-| walker |  | 9625 | 61 | Code::CodeKey { rung: Doc, file: docs/font_system.lua, decl: 1, sub: 0, line: 15 } |  |  | 0.495 |
-| ns | 9739 |  | 199 | The composite action's four outputs (action.yml) | 7.2 | 7.1 | 0.491 |
-| walker |  | 9740 | 115 | Code::CodeKey { rung: Names, file: src/platform/linux/soluna_linux_ime.h, decl: 0, sub: 0, line: 0 } |  |  | 0.491 |
-| walker |  | 9768 | 28 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 3, sub: 0, line: 21 } |  |  | 0.491 |
-| walker |  | 9799 | 31 | Code::CodeKey { rung: Body, file: src/lualib/text.lua, decl: 1, sub: 0, line: 9 } |  |  | 0.491 |
-| ns | 9824 |  | 85 | Complete listing of web/ content, assets and static files | 7.3 | 1.2 | 0.499 |
-| ns | 9926 |  | 102 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.509 |
-| walker |  | 9977 | 178 | Code::CodeKey { rung: Names, file: src/font_manager.h, decl: 0, sub: 1, line: 0 } |  |  | 0.509 |
-| walker |  | 9983 | 6 | Code::CodeKey { rung: Doc, file: src/font_manager.h, decl: 17, sub: 0, line: 31 } |  |  | 0.509 |
+| walker |  | 9538 | 30 | Code::CodeKey { rung: Body, file: src/lualib/fontmgr.lua, decl: 4, sub: 0, line: 258 } |  |  | 0.493 |
+| ns | 9540 |  | 22 | Complete listing of .github: workflows and the composite action | 7.1 | 1.2 | 0.494 |
+| walker |  | 9568 | 30 | Code::CodeKey { rung: Body, file: src/service/loader.lua, decl: 1, sub: 0, line: 14 } |  |  | 0.496 |
+| walker |  | 9629 | 61 | Code::CodeKey { rung: Doc, file: docs/font_system.lua, decl: 1, sub: 0, line: 15 } |  |  | 0.496 |
+| ns | 9739 |  | 199 | The composite action's four outputs (action.yml) | 7.2 | 7.1 | 0.492 |
+| walker |  | 9744 | 115 | Code::CodeKey { rung: Names, file: src/platform/linux/soluna_linux_ime.h, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
+| walker |  | 9772 | 28 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 3, sub: 0, line: 21 } |  |  | 0.492 |
+| walker |  | 9803 | 31 | Code::CodeKey { rung: Body, file: src/lualib/text.lua, decl: 1, sub: 0, line: 9 } |  |  | 0.492 |
+| ns | 9824 |  | 85 | Complete listing of web/ content, assets and static files | 7.3 | 1.2 | 0.501 |
+| ns | 9926 |  | 102 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.510 |
+| walker |  | 9981 | 178 | Code::CodeKey { rung: Names, file: src/font_manager.h, decl: 0, sub: 1, line: 0 } |  |  | 0.510 |
+| walker |  | 9987 | 6 | Code::CodeKey { rung: Doc, file: src/font_manager.h, decl: 17, sub: 0, line: 31 } |  |  | 0.510 |

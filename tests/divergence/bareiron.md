@@ -1,4 +1,4 @@
-Score(3000)=0.482 I=0.809 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.635/0.622/0.482/0.513/0.730/0.703
+Score(3000)=0.482 I=0.809 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.632/0.622/0.482/0.513/0.730/0.703
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,22 +23,22 @@ Score(3000)=0.482 I=0.809 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | ns | 665 |  | 70 | Connection state constants (STATE_NONE through STATE_PLAY) | 2.1 |  | 0.707 |
 | ns | 885 |  | 220 | packets.h — serverbound declarations, connection and world interaction | 2.2 |  | 0.647 |
 | walker |  | 937 | 529 | Plaintext::Whole { file: build.sh } |  |  | 0.732 |
+| walker |  | 953 | 16 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.733 |
 | ns | 1038 |  | 153 | packets.h — remainder of the serverbound declarations | 2.3 |  | 0.678 |
-| walker |  | 1148 | 211 | Code::CodeKey { rung: Names, file: include/tools.h, decl: 0, sub: 0, line: 0 } |  |  | 0.680 |
-| ns | 1265 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.631 |
-| walker |  | 1428 | 280 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 0, line: 0 } |  |  | 0.634 |
-| walker |  | 1437 | 9 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 1, sub: 0, line: 7 } |  |  | 0.635 |
-| walker |  | 1447 | 10 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 4, sub: 0, line: 11 } |  |  | 0.635 |
-| walker |  | 1458 | 11 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 9, sub: 0, line: 26 } |  |  | 0.635 |
-| walker |  | 1469 | 11 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 10, sub: 0, line: 29 } |  |  | 0.635 |
+| walker |  | 1164 | 211 | Code::CodeKey { rung: Names, file: include/tools.h, decl: 0, sub: 0, line: 0 } |  |  | 0.680 |
+| ns | 1265 |  | 227 | packets.h — clientbound declarations, login and configuration phase | 2.4 |  | 0.632 |
+| walker |  | 1444 | 280 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 0, line: 0 } |  |  | 0.635 |
+| walker |  | 1453 | 9 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 1, sub: 0, line: 7 } |  |  | 0.635 |
+| walker |  | 1463 | 10 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 4, sub: 0, line: 11 } |  |  | 0.635 |
+| walker |  | 1474 | 11 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 9, sub: 0, line: 26 } |  |  | 0.635 |
+| walker |  | 1485 | 11 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 10, sub: 0, line: 29 } |  |  | 0.635 |
 | ns | 1560 |  | 295 | packets.h — clientbound declarations, world and inventory | 2.5 |  | 0.595 |
-| walker |  | 1569 | 100 | Code::CodeKey { rung: Names, file: include/varnum.h, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
-| walker |  | 1586 | 17 | Code::CodeKey { rung: Body, file: include/tools.h, decl: 1, sub: 0, line: 8 } |  |  | 0.598 |
-| walker |  | 1806 | 220 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
-| walker |  | 1833 | 27 | Code::CodeKey { rung: Names, file: src/main.c, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
-| walker |  | 1846 | 13 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 14, sub: 0, line: 41 } |  |  | 0.601 |
+| walker |  | 1585 | 100 | Code::CodeKey { rung: Names, file: include/varnum.h, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
+| walker |  | 1602 | 17 | Code::CodeKey { rung: Body, file: include/tools.h, decl: 1, sub: 0, line: 8 } |  |  | 0.599 |
+| walker |  | 1822 | 220 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
+| walker |  | 1849 | 27 | Code::CodeKey { rung: Names, file: src/main.c, decl: 0, sub: 0, line: 0 } |  |  | 0.564 |
 | ns | 1849 |  | 289 | packets.h — clientbound declarations, entities, health and registries | 2.6 |  | 0.564 |
-| walker |  | 1862 | 16 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.564 |
+| walker |  | 1862 | 13 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 14, sub: 0, line: 41 } |  |  | 0.564 |
 | ns | 1949 |  | 100 | varnum.h in full — VarInt encoding primitives and error sentinel | 2.7 |  | 0.585 |
 | ns | 2019 |  | 70 | globals.h — BlockChange record and the packed-struct pragma | 3.1 |  | 0.566 |
 | walker |  | 2073 | 211 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |

@@ -1,4 +1,4 @@
-Score(3000)=0.422 I=0.758 C=0.235 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.575/0.468/0.515/0.422/0.499/0.509/0.490
+Score(3000)=0.422 I=0.760 C=0.235 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.575/0.468/0.515/0.422/0.499/0.509/0.490
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -55,18 +55,18 @@ Score(3000)=0.422 I=0.758 C=0.235 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 2741 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.416 |
 | walker |  | 2758 | 17 | Code::CodeKey { rung: Names, file: tests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.416 |
 | walker |  | 2771 | 13 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 19, sub: 0, line: 149 } |  |  | 0.422 |
-| walker |  | 2805 | 34 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 9, sub: 0, line: 116 } |  |  | 0.422 |
-| walker |  | 3042 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.423 |
-| ns | 3122 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.395 |
-| walker |  | 3252 | 210 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 2, line: 0 } |  |  | 0.417 |
-| walker |  | 3287 | 35 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 39, sub: 0, line: 413 } |  |  | 0.417 |
-| walker |  | 3325 | 38 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 40, sub: 0, line: 447 } |  |  | 0.417 |
-| walker |  | 3391 | 66 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 34, sub: 0, line: 327 } |  |  | 0.417 |
-| ns | 3453 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.443 |
-| ns | 3550 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.436 |
-| walker |  | 3566 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.436 |
-| walker |  | 3575 | 9 | Markdown::ReadmeHeadline { file: benchmark/README.md } |  |  | 0.436 |
-| walker |  | 3581 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.437 |
+| walker |  | 2777 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.422 |
+| walker |  | 2811 | 34 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 9, sub: 0, line: 116 } |  |  | 0.422 |
+| walker |  | 3048 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.424 |
+| ns | 3122 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.396 |
+| walker |  | 3258 | 210 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 2, line: 0 } |  |  | 0.417 |
+| walker |  | 3293 | 35 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 39, sub: 0, line: 413 } |  |  | 0.417 |
+| walker |  | 3331 | 38 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 40, sub: 0, line: 447 } |  |  | 0.417 |
+| walker |  | 3397 | 66 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 34, sub: 0, line: 327 } |  |  | 0.417 |
+| ns | 3453 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.444 |
+| ns | 3550 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.437 |
+| walker |  | 3572 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.437 |
+| walker |  | 3581 | 9 | Markdown::ReadmeHeadline { file: benchmark/README.md } |  |  | 0.437 |
 | ns | 3662 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.430 |
 | walker |  | 3685 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.430 |
 | ns | 3836 |  | 174 | BASIC_STR_ESCAPE_REPLACEMENTS: the full escape table | 2.12 |  | 0.453 |

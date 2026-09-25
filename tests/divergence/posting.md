@@ -255,3 +255,5 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 9967 | 169 | Code::CodeKey { rung: Decl, file: src/posting/config.py, decl: 1, sub: 0, line: 18 } |  |  | 0.579 |
 | walker |  | 9978 | 11 | Code::CodeKey { rung: Doc, file: src/posting/widgets/request/form_editor.py, decl: 4, sub: 0, line: 40 } |  |  | 0.579 |
 | ns | 9981 |  | 289 | Remaining packaging metadata and CI | 7.5 | 1.7 | 0.569 |
+| walker |  | 9983 | 5 | Fs::DirListing { dir: .codex/environments } |  |  | 0.569 |
+| walker |  | 9988 | 5 | Fs::DirListing { dir: tests/__snapshots__ } |  |  | 0.569 |

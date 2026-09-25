@@ -1,4 +1,4 @@
-Score(3000)=0.839 I=0.913 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.839/0.764/0.605/0.633
+Score(3000)=0.839 I=0.913 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.839/0.764/0.611/0.633
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -83,22 +83,22 @@ Score(3000)=0.839 I=0.913 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | walker |  | 5605 | 150 | Code::CodeKey { rung: Body, file: truststore_java.go, decl: 6, sub: 0, line: 110 } |  |  | 0.639 |
 | ns | 5695 |  | 152 | main(): the flag.Usage override, -help and -version handling | 3.6 | 2.1 | 0.626 |
 | walker |  | 5756 | 151 | Code::CodeKey { rung: Body, file: truststore_windows.go, decl: 4, sub: 0, line: 54 } |  |  | 0.627 |
-| ns | 5876 |  | 181 | commandWithSudo(): how every privileged trust-store command is wrapped | 3.7 | 1.5 | 0.617 |
-| ns | 5961 |  | 85 | generateKey(): the key algorithm and sizes | 4.1 | 1.6 | 0.621 |
-| walker |  | 6014 | 258 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 5, sub: 0, line: 77 } |  |  | 0.622 |
-| ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.605 |
-| walker |  | 6276 | 262 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 4, sub: 0, line: 55 } |  |  | 0.606 |
-| walker |  | 6369 | 93 | Code::CodeKey { rung: Body, file: main.go, decl: 13, sub: 0, line: 345 } |  |  | 0.626 |
-| ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.610 |
-| walker |  | 6576 | 207 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.631 |
-| walker |  | 6839 | 263 | Code::CodeKey { rung: Body, file: cert.go, decl: 6, sub: 0, line: 176 } |  |  | 0.662 |
-| ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.644 |
-| walker |  | 7134 | 295 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.644 |
-| ns | 7232 |  | 251 | makeCert(): signing, and the two write paths (PEM pair vs PKCS#12) with their file modes | 4.5 | 4.4 | 0.634 |
-| walker |  | 7382 | 248 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.634 |
-| ns | 7515 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.620 |
-| walker |  | 7621 | 239 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.620 |
-| walker |  | 7630 | 9 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.625 |
+| walker |  | 5765 | 9 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.633 |
+| ns | 5876 |  | 181 | commandWithSudo(): how every privileged trust-store command is wrapped | 3.7 | 1.5 | 0.624 |
+| ns | 5961 |  | 85 | generateKey(): the key algorithm and sizes | 4.1 | 1.6 | 0.628 |
+| walker |  | 6023 | 258 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 5, sub: 0, line: 77 } |  |  | 0.628 |
+| ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.611 |
+| walker |  | 6285 | 262 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 4, sub: 0, line: 55 } |  |  | 0.612 |
+| walker |  | 6378 | 93 | Code::CodeKey { rung: Body, file: main.go, decl: 13, sub: 0, line: 345 } |  |  | 0.632 |
+| ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.615 |
+| walker |  | 6585 | 207 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.637 |
+| walker |  | 6848 | 263 | Code::CodeKey { rung: Body, file: cert.go, decl: 6, sub: 0, line: 176 } |  |  | 0.668 |
+| ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.649 |
+| walker |  | 7143 | 295 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.649 |
+| ns | 7232 |  | 251 | makeCert(): signing, and the two write paths (PEM pair vs PKCS#12) with their file modes | 4.5 | 4.4 | 0.639 |
+| walker |  | 7391 | 248 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.639 |
+| ns | 7515 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.625 |
+| walker |  | 7630 | 239 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.625 |
 | ns | 7759 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.617 |
 | walker |  | 7861 | 231 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.617 |
 | ns | 7999 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.607 |

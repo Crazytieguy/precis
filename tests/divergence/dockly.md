@@ -46,18 +46,18 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 1309 | 195 | Json::Dependencies { file: package.json } |  |  | 0.617 |
 | walker |  | 1361 | 52 | Fs::DirListing { dir: docs } |  |  | 0.617 |
 | walker |  | 1370 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.618 |
+| walker |  | 1383 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.618 |
 | ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.633 |
-| walker |  | 1477 | 107 | Json::Entry { file: package.json } |  |  | 0.796 |
-| walker |  | 1490 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.796 |
-| walker |  | 1610 | 120 | Json::Scripts { file: package.json } |  |  | 0.828 |
-| walker |  | 1629 | 19 | Code::CodeKey { rung: Names, file: src/baseWidget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.828 |
-| ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.764 |
-| walker |  | 1799 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.768 |
-| walker |  | 1821 | 22 | Code::CodeKey { rung: Names, file: src/assetsLoader.js, decl: 0, sub: 0, line: 0 } |  |  | 0.768 |
-| ns | 1857 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.745 |
-| walker |  | 1993 | 172 | Code::CodeKey { rung: Decl, file: src/screen.js, decl: 1, sub: 0, line: 18 } |  |  | 0.748 |
-| walker |  | 2002 | 9 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 16, sub: 0, line: 192 } |  |  | 0.748 |
-| walker |  | 2027 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.749 |
+| walker |  | 1490 | 107 | Json::Entry { file: package.json } |  |  | 0.796 |
+| walker |  | 1515 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.797 |
+| walker |  | 1635 | 120 | Json::Scripts { file: package.json } |  |  | 0.829 |
+| walker |  | 1654 | 19 | Code::CodeKey { rung: Names, file: src/baseWidget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
+| ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.765 |
+| walker |  | 1824 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.769 |
+| walker |  | 1846 | 22 | Code::CodeKey { rung: Names, file: src/assetsLoader.js, decl: 0, sub: 0, line: 0 } |  |  | 0.769 |
+| ns | 1857 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.746 |
+| walker |  | 2018 | 172 | Code::CodeKey { rung: Decl, file: src/screen.js, decl: 1, sub: 0, line: 18 } |  |  | 0.749 |
+| walker |  | 2027 | 9 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 16, sub: 0, line: 192 } |  |  | 0.749 |
 | walker |  | 2041 | 14 | Code::CodeKey { rung: Names, file: src/themes/theme.selector.js, decl: 0, sub: 0, line: 0 } |  |  | 0.749 |
 | ns | 2043 |  | 186 | src/cli.js: the four docker-connection options in full (socketPath, host, port, protocol) | 2.3 | 2.2 | 0.700 |
 | walker |  | 2074 | 33 | Code::CodeKey { rung: Doc, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.700 |
@@ -70,21 +70,21 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 2449 | 26 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 16, sub: 0, line: 175 } |  |  | 0.655 |
 | ns | 2455 |  | 116 | README: --containerFilters semantics | 2.7 |  | 0.649 |
 | walker |  | 2491 | 42 | Code::CodeKey { rung: Decl, file: src/assetsLoader.js, decl: 1, sub: 0, line: 10 } |  |  | 0.649 |
-| walker |  | 2517 | 26 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/help.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
-| walker |  | 2543 | 26 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/info.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
-| walker |  | 2569 | 26 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/logs.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
-| walker |  | 2601 | 32 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 11, sub: 0, line: 126 } |  |  | 0.649 |
+| walker |  | 2496 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.649 |
+| walker |  | 2522 | 26 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/help.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
+| walker |  | 2548 | 26 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/info.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
+| walker |  | 2574 | 26 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/logs.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.649 |
+| walker |  | 2606 | 32 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 11, sub: 0, line: 126 } |  |  | 0.649 |
 | ns | 2625 |  | 170 | Dockerfile in full | 2.8 |  | 0.667 |
-| walker |  | 2633 | 32 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 12, sub: 0, line: 132 } |  |  | 0.667 |
-| walker |  | 2694 | 61 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 2, sub: 0, line: 59 } |  |  | 0.670 |
-| walker |  | 2722 | 28 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/base.hook.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.670 |
+| walker |  | 2638 | 32 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 12, sub: 0, line: 132 } |  |  | 0.667 |
+| walker |  | 2699 | 61 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 2, sub: 0, line: 59 } |  |  | 0.670 |
 | ns | 2724 |  | 99 | README: running and building the docker image | 2.9 |  | 0.659 |
-| walker |  | 2750 | 28 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/list.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
-| walker |  | 2779 | 29 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/base.hook.template.js, decl: 1, sub: 0, line: 6 } |  |  | 0.659 |
-| walker |  | 2874 | 95 | Code::CodeKey { rung: Body, file: index.js, decl: 3, sub: 0, line: 72 } |  |  | 0.660 |
+| walker |  | 2727 | 28 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/base.hook.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
+| walker |  | 2755 | 28 | Code::CodeKey { rung: Names, file: src/widgetsTemplates/list.widget.template.js, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
+| walker |  | 2784 | 29 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/base.hook.template.js, decl: 1, sub: 0, line: 6 } |  |  | 0.659 |
 | ns | 2876 |  | 152 | .github/workflows/main.yml: the lint job | 2.10 |  | 0.638 |
-| walker |  | 2901 | 27 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 12, sub: 0, line: 155 } |  |  | 0.638 |
-| walker |  | 2906 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.638 |
+| walker |  | 2879 | 95 | Code::CodeKey { rung: Body, file: index.js, decl: 3, sub: 0, line: 72 } |  |  | 0.638 |
+| walker |  | 2906 | 27 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 12, sub: 0, line: 155 } |  |  | 0.638 |
 | walker |  | 2942 | 36 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 10, sub: 0, line: 120 } |  |  | 0.638 |
 | ns | 3087 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.620 |
 | ns | 3170 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.624 |
@@ -111,30 +111,30 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 4668 |  | 88 | src/assetsLoader.js: the glob patterns that define the plugin conventions | 3.9 |  | 0.554 |
 | walker |  | 4687 | 112 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/info.widget.template.js, decl: 1, sub: 0, line: 6 } |  |  | 0.555 |
 | walker |  | 4695 | 8 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 7, sub: 0, line: 107 } |  |  | 0.555 |
-| walker |  | 4746 | 51 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 8, sub: 0, line: 107 } |  |  | 0.557 |
-| walker |  | 4870 | 124 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/help.widget.template.js, decl: 1, sub: 0, line: 5 } |  |  | 0.557 |
-| ns | 4871 |  | 203 | src/assetsLoader.js: the loader body and the asset naming rule | 3.10 | 3.9 | 0.548 |
-| walker |  | 4878 | 8 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 8, sub: 0, line: 130 } |  |  | 0.548 |
+| walker |  | 4708 | 13 | Fs::DirListing { dir: docs/src/assets } |  |  | 0.555 |
+| walker |  | 4714 | 6 | Fs::DirListing { dir: docs/src/assets/css } |  |  | 0.555 |
+| walker |  | 4765 | 51 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 8, sub: 0, line: 107 } |  |  | 0.557 |
+| ns | 4871 |  | 203 | src/assetsLoader.js: the loader body and the asset naming rule | 3.10 | 3.9 | 0.547 |
+| walker |  | 4889 | 124 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/help.widget.template.js, decl: 1, sub: 0, line: 5 } |  |  | 0.548 |
+| walker |  | 4897 | 8 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 8, sub: 0, line: 130 } |  |  | 0.548 |
 | ns | 5149 |  | 278 | src/grid.config.js: the containers-mode layout in full | 3.11 |  | 0.539 |
-| walker |  | 5257 | 379 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.558 |
-| walker |  | 5278 | 21 | Code::CodeKey { rung: Body, file: src/assetsLoader.js, decl: 2, sub: 0, line: 11 } |  |  | 0.560 |
-| walker |  | 5289 | 11 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/logs.widget.template.js, decl: 6, sub: 0, line: 76 } |  |  | 0.560 |
-| walker |  | 5300 | 11 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/logs.widget.template.js, decl: 7, sub: 0, line: 80 } |  |  | 0.560 |
-| walker |  | 5342 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 18, sub: 0, line: 187 } |  |  | 0.560 |
+| walker |  | 5276 | 379 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.558 |
+| walker |  | 5297 | 21 | Code::CodeKey { rung: Body, file: src/assetsLoader.js, decl: 2, sub: 0, line: 11 } |  |  | 0.560 |
+| walker |  | 5308 | 11 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/logs.widget.template.js, decl: 6, sub: 0, line: 76 } |  |  | 0.560 |
+| walker |  | 5319 | 11 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/logs.widget.template.js, decl: 7, sub: 0, line: 80 } |  |  | 0.560 |
+| walker |  | 5361 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 18, sub: 0, line: 187 } |  |  | 0.560 |
 | ns | 5554 |  | 405 | src/grid.config.js: the services and images layouts plus the export block | 3.12 | 3.11 | 0.546 |
-| walker |  | 5632 | 290 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.546 |
-| walker |  | 5686 | 54 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 6, sub: 0, line: 79 } |  |  | 0.548 |
-| walker |  | 5701 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 9, sub: 0, line: 134 } |  |  | 0.548 |
-| walker |  | 5716 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 8, sub: 0, line: 111 } |  |  | 0.548 |
-| walker |  | 5731 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/logs.widget.template.js, decl: 5, sub: 0, line: 72 } |  |  | 0.548 |
+| walker |  | 5651 | 290 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.546 |
+| walker |  | 5705 | 54 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 6, sub: 0, line: 79 } |  |  | 0.548 |
+| walker |  | 5720 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 9, sub: 0, line: 134 } |  |  | 0.548 |
+| walker |  | 5735 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 8, sub: 0, line: 111 } |  |  | 0.548 |
+| walker |  | 5750 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/logs.widget.template.js, decl: 5, sub: 0, line: 72 } |  |  | 0.548 |
 | ns | 5884 |  | 330 | src/dockerUtil.js: complete method roster of the dockerode wrapper | 4.1 |  | 0.558 |
-| walker |  | 5908 | 177 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/list.widget.template.js, decl: 1, sub: 0, line: 8 } |  |  | 0.559 |
-| walker |  | 5923 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 7, sub: 0, line: 127 } |  |  | 0.559 |
-| walker |  | 5938 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 12, sub: 0, line: 147 } |  |  | 0.559 |
-| walker |  | 5953 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 13, sub: 0, line: 151 } |  |  | 0.559 |
-| walker |  | 5969 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/base.hook.template.js, decl: 3, sub: 0, line: 29 } |  |  | 0.559 |
-| walker |  | 5982 | 13 | Fs::DirListing { dir: docs/src/assets } |  |  | 0.559 |
-| walker |  | 5988 | 6 | Fs::DirListing { dir: docs/src/assets/css } |  |  | 0.559 |
+| walker |  | 5927 | 177 | Code::CodeKey { rung: Decl, file: src/widgetsTemplates/list.widget.template.js, decl: 1, sub: 0, line: 8 } |  |  | 0.559 |
+| walker |  | 5942 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 7, sub: 0, line: 127 } |  |  | 0.559 |
+| walker |  | 5957 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 12, sub: 0, line: 147 } |  |  | 0.559 |
+| walker |  | 5972 | 15 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 13, sub: 0, line: 151 } |  |  | 0.559 |
+| walker |  | 5988 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/base.hook.template.js, decl: 3, sub: 0, line: 29 } |  |  | 0.559 |
 | walker |  | 6005 | 17 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 4, sub: 0, line: 50 } |  |  | 0.559 |
 | walker |  | 6022 | 17 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 4, sub: 0, line: 64 } |  |  | 0.559 |
 | ns | 6164 |  | 280 | src/dockerUtil.js: constructor — connection config and containerFilters parsing | 4.2 | 4.1 | 0.547 |
@@ -167,40 +167,42 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 7992 | 54 | Markdown::HeadingsOutline { file: CONTRIBUTING.md } |  |  | 0.580 |
 | walker |  | 8028 | 36 | Markdown::HeadingsOutline { file: .github/PULL_REQUEST_TEMPLATE.md } |  |  | 0.580 |
 | walker |  | 8044 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 9, sub: 0, line: 135 } |  |  | 0.580 |
-| walker |  | 8113 | 69 | Code::CodeKey { rung: Body, file: src/themes/theme.selector.js, decl: 1, sub: 0, line: 13 } |  |  | 0.581 |
+| walker |  | 8070 | 26 | Fs::DirListing { dir: docs/src/assets/scss } |  |  | 0.580 |
+| walker |  | 8081 | 11 | Fs::DirListing { dir: docs/src/assets/scss/base } |  |  | 0.580 |
 | ns | 8128 |  | 209 | hooks/containers.hook.js: the toolbar key dispatch inside init() | 6.2 | 6.1 | 0.572 |
-| walker |  | 8154 | 41 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.572 |
-| walker |  | 8226 | 72 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 7, sub: 0, line: 78 } |  |  | 0.573 |
-| walker |  | 8246 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 10, sub: 0, line: 138 } |  |  | 0.573 |
-| walker |  | 8266 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 9, sub: 0, line: 115 } |  |  | 0.576 |
-| walker |  | 8288 | 22 | Code::CodeKey { rung: Names, file: docs/src/components/Header.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 8310 | 22 | Code::CodeKey { rung: Names, file: docs/src/components/Scroll.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 8332 | 22 | Code::CodeKey { rung: Names, file: docs/src/components/layout.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 8354 | 22 | Code::CodeKey { rung: Names, file: docs/src/pages/generic.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 8367 | 13 | Code::CodeKey { rung: Decl, file: docs/src/pages/generic.js, decl: 1, sub: 0, line: 8 } |  |  | 0.576 |
-| walker |  | 8389 | 22 | Code::CodeKey { rung: Names, file: docs/src/pages/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 8463 | 74 | Markdown::HeadingsOutline { file: CODE_OF_CONDUCT.md } |  |  | 0.576 |
-| walker |  | 8479 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 10, sub: 0, line: 139 } |  |  | 0.576 |
+| walker |  | 8150 | 69 | Code::CodeKey { rung: Body, file: src/themes/theme.selector.js, decl: 1, sub: 0, line: 13 } |  |  | 0.572 |
+| walker |  | 8191 | 41 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 8263 | 72 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 7, sub: 0, line: 78 } |  |  | 0.573 |
+| walker |  | 8283 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/help.widget.template.js, decl: 10, sub: 0, line: 138 } |  |  | 0.573 |
+| walker |  | 8303 | 20 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/info.widget.template.js, decl: 9, sub: 0, line: 115 } |  |  | 0.576 |
+| walker |  | 8325 | 22 | Code::CodeKey { rung: Names, file: docs/src/components/Header.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 8347 | 22 | Code::CodeKey { rung: Names, file: docs/src/components/Scroll.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 8369 | 22 | Code::CodeKey { rung: Names, file: docs/src/components/layout.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 8391 | 22 | Code::CodeKey { rung: Names, file: docs/src/pages/generic.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 8404 | 13 | Code::CodeKey { rung: Decl, file: docs/src/pages/generic.js, decl: 1, sub: 0, line: 8 } |  |  | 0.576 |
+| walker |  | 8426 | 22 | Code::CodeKey { rung: Names, file: docs/src/pages/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
 | ns | 8482 |  | 354 | hooks/shell.hook.js: openShell() plus dockerRunScript.sh's docker exec line | 6.3 | 6.1 | 0.567 |
-| walker |  | 8503 | 24 | Code::CodeKey { rung: Names, file: docs/src/components/Footer.js, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
-| walker |  | 8527 | 24 | Code::CodeKey { rung: Names, file: docs/src/components/Nav.js, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
-| walker |  | 8553 | 26 | Code::CodeKey { rung: Names, file: docs/src/components/HeaderGeneric.js, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
-| walker |  | 8579 | 26 | Code::CodeKey { rung: Names, file: docs/src/pages/404.js, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
+| walker |  | 8500 | 74 | Markdown::HeadingsOutline { file: CODE_OF_CONDUCT.md } |  |  | 0.567 |
+| walker |  | 8516 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 10, sub: 0, line: 139 } |  |  | 0.567 |
+| walker |  | 8540 | 24 | Code::CodeKey { rung: Names, file: docs/src/components/Footer.js, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
+| walker |  | 8564 | 24 | Code::CodeKey { rung: Names, file: docs/src/components/Nav.js, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
 | ns | 8583 |  | 101 | src/enum.js in full — the ContainerState vocabulary | 7.1 |  | 0.572 |
-| walker |  | 8765 | 186 | Code::CodeKey { rung: Body, file: src/baseWidget.js, decl: 1, sub: 0, line: 4 } |  |  | 0.590 |
-| walker |  | 8885 | 120 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 3, sub: 0, line: 35 } |  |  | 0.600 |
-| ns | 8893 |  | 310 | src/themes/theme.selector.js in full and the dark/light style keys | 7.2 |  | 0.597 |
-| walker |  | 8967 | 82 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 4, sub: 0, line: 43 } |  |  | 0.597 |
-| walker |  | 8993 | 26 | Fs::DirListing { dir: docs/src/assets/scss } |  |  | 0.597 |
-| walker |  | 9004 | 11 | Fs::DirListing { dir: docs/src/assets/scss/base } |  |  | 0.597 |
-| walker |  | 9020 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 11, sub: 0, line: 143 } |  |  | 0.597 |
+| walker |  | 8586 | 22 | Fs::DirListing { dir: docs/src/assets/scss/libs } |  |  | 0.572 |
+| walker |  | 8612 | 26 | Code::CodeKey { rung: Names, file: docs/src/components/HeaderGeneric.js, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8638 | 26 | Code::CodeKey { rung: Names, file: docs/src/pages/404.js, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8824 | 186 | Code::CodeKey { rung: Body, file: src/baseWidget.js, decl: 1, sub: 0, line: 4 } |  |  | 0.590 |
+| walker |  | 8849 | 25 | Fs::DirListing { dir: docs/src/assets/scss/layout } |  |  | 0.590 |
+| ns | 8893 |  | 310 | src/themes/theme.selector.js in full and the dark/light style keys | 7.2 |  | 0.587 |
+| walker |  | 8969 | 120 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 3, sub: 0, line: 35 } |  |  | 0.597 |
+| walker |  | 9051 | 82 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 4, sub: 0, line: 43 } |  |  | 0.597 |
+| walker |  | 9096 | 45 | Fs::DirListing { dir: docs/src/assets/fonts } |  |  | 0.597 |
+| walker |  | 9112 | 16 | Code::CodeKey { rung: Body, file: src/widgetsTemplates/list.widget.template.js, decl: 11, sub: 0, line: 143 } |  |  | 0.597 |
 | ns | 9179 |  | 286 | widgets/containers/containerList.widget.js: complete method roster | 7.3 |  | 0.590 |
 | ns | 9448 |  | 269 | widgets/toolbar.widget.js: the per-mode command extension map | 7.4 |  | 0.582 |
-| walker |  | 9517 | 497 | Plaintext::Whole { file: .github/workflows/main.yml } |  |  | 0.612 |
-| ns | 9596 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.607 |
+| ns | 9596 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.578 |
+| walker |  | 9609 | 497 | Plaintext::Whole { file: .github/workflows/main.yml } |  |  | 0.607 |
 | ns | 9640 |  | 44 | Complete listings of .github/ and its subdirectories | 8.1 |  | 0.610 |
-| walker |  | 9643 | 126 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 2, sub: 0, line: 19 } |  |  | 0.622 |
-| walker |  | 9729 | 86 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 8, sub: 0, line: 88 } |  |  | 0.623 |
-| ns | 9739 |  | 99 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.630 |
-| walker |  | 9751 | 22 | Fs::DirListing { dir: docs/src/assets/scss/libs } |  |  | 0.630 |
+| walker |  | 9735 | 126 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 2, sub: 0, line: 19 } |  |  | 0.622 |
+| ns | 9739 |  | 99 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.629 |
+| walker |  | 9821 | 86 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 8, sub: 0, line: 88 } |  |  | 0.630 |
 | ns | 9988 |  | 249 | Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc | 8.3 |  | 0.622 |

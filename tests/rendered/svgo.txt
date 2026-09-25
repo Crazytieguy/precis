@@ -1,6 +1,10 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
+    config.yml
+    feature_request.md
+    plugin_request.md
   dependabot.yml
   workflows/
     ci.yml
@@ -260,7 +264,6 @@ lib/
   xast.js
     …
     22→export const querySelectorAll = (node, selector, parents) => {
-    23→  return selectAll(selector, node, createCssSelectOptions(node, parents));
     …
     32→export const querySelector = (node, selector, parents) => {
     …

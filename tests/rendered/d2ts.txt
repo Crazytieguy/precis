@@ -76,7 +76,22 @@ eslint.base.mjs
 examples/
   basic.ts
   d2ql/
+    README.md
+    basic_select.ts
+    functions.ts
+    group_by.ts
+    joins.ts
+    kitchen_sink.ts
+    where_conditions.ts
   electric/
+    CHANGELOG.md
+    README.md
+    db/
+    docker-compose.yml
+    package.json
+    src/
+      index.ts
+      types.ts
   fruit-processed.ts
   includes.ts
   iterate.ts
@@ -111,15 +126,6 @@ packages/
     package.json
     src/
       d2.ts
-        …
-        10→export class D2 implements ID2 {
-        …
-        73→export class StreamBuilder<T> implements IStreamBuilder<T> {
-        …
-        146→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-        147→  sendData(collection: MultiSet<T> | MultiSetArray<T>): void {
-        …
-        150→}
       graph.ts
       index.ts
         1→export * from './d2.js'

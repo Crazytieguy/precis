@@ -1,4 +1,4 @@
-Score(3000)=0.764 I=0.897 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.581/0.770/0.764/0.765/0.726/0.655
+Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.581/0.770/0.765/0.765/0.726/0.655
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -50,33 +50,33 @@ Score(3000)=0.764 I=0.897 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.807 |
 | walker |  | 2507 | 36 | Code::CodeKey { rung: Names, file: src/context.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
 | walker |  | 2544 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
-| walker |  | 2604 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 14, sub: 0, line: 1130 } |  |  | 0.807 |
-| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.781 |
-| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.763 |
-| walker |  | 2819 | 215 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.794 |
-| walker |  | 2871 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.795 |
-| walker |  | 2892 | 21 | Code::CodeKey { rung: Decl, file: src/types.ts, decl: 2, sub: 0, line: 2 } |  |  | 0.796 |
-| walker |  | 2950 | 58 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.796 |
-| ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.764 |
-| walker |  | 3049 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.766 |
-| ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.767 |
-| ns | 3242 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.754 |
-| walker |  | 3328 | 279 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 3, line: 50 } |  |  | 0.820 |
-| ns | 3354 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.808 |
-| walker |  | 3394 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.809 |
-| walker |  | 3491 | 97 | Code::CodeKey { rung: Names, file: src/use-prevent-scroll.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
+| walker |  | 2643 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.809 |
+| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.783 |
+| walker |  | 2703 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 14, sub: 0, line: 1130 } |  |  | 0.783 |
+| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.765 |
+| walker |  | 2918 | 215 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.796 |
+| walker |  | 2984 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.797 |
+| ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.765 |
+| walker |  | 3036 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |
+| walker |  | 3057 | 21 | Code::CodeKey { rung: Decl, file: src/types.ts, decl: 2, sub: 0, line: 2 } |  |  | 0.767 |
+| ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.768 |
+| walker |  | 3115 | 58 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.768 |
+| ns | 3242 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.755 |
+| ns | 3354 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.745 |
+| walker |  | 3394 | 279 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 3, line: 50 } |  |  | 0.809 |
+| walker |  | 3403 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.809 |
+| walker |  | 3500 | 97 | Code::CodeKey { rung: Names, file: src/use-prevent-scroll.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
 | ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.783 |
-| walker |  | 3738 | 247 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.783 |
+| walker |  | 3747 | 247 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.783 |
 | ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.762 |
 | ns | 3912 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.750 |
-| walker |  | 3943 | 205 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 4, line: 50 } |  |  | 0.797 |
+| walker |  | 3952 | 205 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 4, line: 50 } |  |  | 0.797 |
 | ns | 4022 |  | 110 | useSnapPoints: entry point and its complete return surface | 3.8 |  | 0.780 |
-| walker |  | 4055 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.793 |
-| walker |  | 4067 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.793 |
-| walker |  | 4080 | 13 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.793 |
-| walker |  | 4095 | 15 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 6, sub: 0, line: 30 } |  |  | 0.793 |
-| walker |  | 4219 | 124 | Code::CodeKey { rung: Decl, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.793 |
-| walker |  | 4228 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.793 |
+| walker |  | 4064 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.793 |
+| walker |  | 4076 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.793 |
+| walker |  | 4089 | 13 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.793 |
+| walker |  | 4104 | 15 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 6, sub: 0, line: 30 } |  |  | 0.793 |
+| walker |  | 4228 | 124 | Code::CodeKey { rung: Decl, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.793 |
 | ns | 4271 |  | 249 | useSnapPoints parameter object (fills 3.8's ellipsis) | 3.9 | 3.8 | 0.765 |
 | walker |  | 4372 | 144 | Code::CodeKey { rung: Names, file: src/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.788 |
 | walker |  | 4412 | 40 | Code::CodeKey { rung: Decl, file: src/constants.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.797 |

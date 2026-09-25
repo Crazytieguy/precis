@@ -1,4 +1,4 @@
-Score(3000)=0.659 I=0.781 C=0.555 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.735/0.733/0.648/0.659/0.643/0.545/0.500
+Score(3000)=0.659 I=0.781 C=0.555 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.763/0.757/0.648/0.659/0.643/0.545/0.505
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -33,18 +33,18 @@ Score(3000)=0.659 I=0.781 C=0.555 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 866 | 8 | Fs::DirListing { dir: docs/examples/eggsample } |  |  | 0.754 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.719 |
 | walker |  | 932 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.725 |
-| ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.735 |
-| walker |  | 1012 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.735 |
-| walker |  | 1074 | 62 | Fs::DirListing { dir: testing } |  |  | 0.824 |
-| walker |  | 1141 | 67 | Code::CodeKey { rung: Names, file: src/pluggy/_tracing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.824 |
-| walker |  | 1208 | 67 | Code::CodeKey { rung: Decl, file: src/pluggy/_tracing.py, decl: 10, sub: 0, line: 59 } |  |  | 0.825 |
-| walker |  | 1288 | 80 | Code::CodeKey { rung: Names, file: src/pluggy/_callers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.825 |
-| ns | 1296 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.732 |
-| walker |  | 1319 | 31 | Code::CodeKey { rung: Decl, file: src/pluggy/_callers.py, decl: 2, sub: 0, line: 27 } |  |  | 0.732 |
-| walker |  | 1404 | 85 | Code::CodeKey { rung: Names, file: src/pluggy/_result.py, decl: 0, sub: 0, line: 0 } |  |  | 0.733 |
-| walker |  | 1415 | 11 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 3, sub: 0, line: 20 } |  |  | 0.733 |
-| walker |  | 1429 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_warnings.py, decl: 1, sub: 0, line: 4 } |  |  | 0.733 |
-| walker |  | 1449 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.757 |
+| walker |  | 952 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.756 |
+| ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.763 |
+| walker |  | 1032 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.763 |
+| walker |  | 1094 | 62 | Fs::DirListing { dir: testing } |  |  | 0.851 |
+| walker |  | 1161 | 67 | Code::CodeKey { rung: Names, file: src/pluggy/_tracing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.851 |
+| walker |  | 1228 | 67 | Code::CodeKey { rung: Decl, file: src/pluggy/_tracing.py, decl: 10, sub: 0, line: 59 } |  |  | 0.852 |
+| ns | 1296 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.756 |
+| walker |  | 1308 | 80 | Code::CodeKey { rung: Names, file: src/pluggy/_callers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |
+| walker |  | 1339 | 31 | Code::CodeKey { rung: Decl, file: src/pluggy/_callers.py, decl: 2, sub: 0, line: 27 } |  |  | 0.756 |
+| walker |  | 1424 | 85 | Code::CodeKey { rung: Names, file: src/pluggy/_result.py, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
+| walker |  | 1435 | 11 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 3, sub: 0, line: 20 } |  |  | 0.757 |
+| walker |  | 1449 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_warnings.py, decl: 1, sub: 0, line: 4 } |  |  | 0.757 |
 | walker |  | 1478 | 29 | Code::CodeKey { rung: Decl, file: src/pluggy/_callers.py, decl: 4, sub: 0, line: 70 } |  |  | 0.758 |
 | walker |  | 1525 | 47 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.758 |
 | ns | 1528 |  | 232 | The rest of `_manager.py`: PluginValidationError, DistFacade, and the two module helpers | 2.2 |  | 0.704 |
@@ -138,26 +138,26 @@ Score(3000)=0.659 I=0.781 C=0.555 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 7396 | 108 | Plaintext::DeclSurface { file: downstream/devpi.sh } |  |  | 0.529 |
 | walker |  | 7408 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 5, sub: 0, line: 31 } |  |  | 0.529 |
 | walker |  | 7422 | 14 | Code::CodeKey { rung: Names, file: scripts/towncrier-draft-to-file.py, decl: 0, sub: 0, line: 0 } |  |  | 0.529 |
-| ns | 7503 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.515 |
-| ns | 7697 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.508 |
-| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.502 |
-| ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.488 |
-| walker |  | 8480 | 1058 | Toml::Config { file: pyproject.toml } |  |  | 0.489 |
-| ns | 8540 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.480 |
-| walker |  | 8618 | 138 | Plaintext::DeclSurface { file: downstream/python-lsp-server.sh } |  |  | 0.480 |
-| ns | 8760 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.472 |
-| walker |  | 8914 | 296 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 11, sub: 1, line: 83 } |  |  | 0.500 |
-| walker |  | 8942 | 28 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 36, sub: 0, line: 512 } |  |  | 0.500 |
-| walker |  | 8973 | 31 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 34, sub: 0, line: 450 } |  |  | 0.500 |
-| walker |  | 8985 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 6, sub: 0, line: 42 } |  |  | 0.500 |
-| walker |  | 8997 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 8, sub: 0, line: 56 } |  |  | 0.500 |
-| ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.489 |
-| ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.485 |
-| ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.477 |
-| walker |  | 9538 | 541 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: false } |  |  | 0.477 |
-| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.478 |
-| walker |  | 9727 | 189 | Code::CodeKey { rung: Doc, file: src/pluggy/_warnings.py, decl: 2, sub: 0, line: 10 } |  |  | 0.484 |
-| walker |  | 9738 | 11 | Fs::DirListing { dir: docs/examples/eggsample-spam } |  |  | 0.488 |
+| walker |  | 7433 | 11 | Fs::DirListing { dir: docs/examples/eggsample-spam } |  |  | 0.535 |
+| ns | 7503 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.521 |
+| ns | 7697 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.514 |
+| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.507 |
+| ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.494 |
+| walker |  | 8491 | 1058 | Toml::Config { file: pyproject.toml } |  |  | 0.495 |
+| ns | 8540 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.485 |
+| walker |  | 8629 | 138 | Plaintext::DeclSurface { file: downstream/python-lsp-server.sh } |  |  | 0.485 |
+| ns | 8760 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.477 |
+| walker |  | 8925 | 296 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 11, sub: 1, line: 83 } |  |  | 0.505 |
+| walker |  | 8953 | 28 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 36, sub: 0, line: 512 } |  |  | 0.505 |
+| walker |  | 8984 | 31 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 34, sub: 0, line: 450 } |  |  | 0.505 |
+| walker |  | 8996 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 6, sub: 0, line: 42 } |  |  | 0.505 |
+| walker |  | 9008 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 8, sub: 0, line: 56 } |  |  | 0.505 |
+| ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.494 |
+| ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.490 |
+| ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.482 |
+| walker |  | 9549 | 541 | Markdown::Section { file: README.rst, section_index: 3, keeps_default_concavity: false } |  |  | 0.482 |
+| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.483 |
+| walker |  | 9738 | 189 | Code::CodeKey { rung: Doc, file: src/pluggy/_warnings.py, decl: 2, sub: 0, line: 10 } |  |  | 0.488 |
 | walker |  | 9765 | 27 | Code::CodeKey { rung: Names, file: testing/test_result.py, decl: 0, sub: 0, line: 0 } |  |  | 0.488 |
 | ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.484 |
 | ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.488 |

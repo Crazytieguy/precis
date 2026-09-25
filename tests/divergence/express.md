@@ -63,16 +63,16 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.572 |
 | walker |  | 3414 | 460 | Json::Dependencies { file: package.json } |  |  | 0.574 |
 | walker |  | 3440 | 26 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 3, sub: 0, line: 140 } |  |  | 0.574 |
-| walker |  | 3482 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.574 |
-| walker |  | 3527 | 45 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.574 |
-| ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
-| walker |  | 3575 | 48 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 2, sub: 0, line: 104 } |  |  | 0.556 |
-| walker |  | 3634 | 59 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 7, sub: 0, line: 321 } |  |  | 0.556 |
-| ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.544 |
-| walker |  | 3692 | 58 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 3, sub: 0, line: 133 } |  |  | 0.544 |
-| walker |  | 3752 | 60 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 4, sub: 0, line: 169 } |  |  | 0.544 |
-| walker |  | 3815 | 63 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 7, sub: 0, line: 162 } |  |  | 0.544 |
-| walker |  | 3901 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.545 |
+| walker |  | 3526 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.576 |
+| ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.557 |
+| walker |  | 3568 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.557 |
+| walker |  | 3613 | 45 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.557 |
+| walker |  | 3661 | 48 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 2, sub: 0, line: 104 } |  |  | 0.557 |
+| ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.545 |
+| walker |  | 3720 | 59 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 7, sub: 0, line: 321 } |  |  | 0.545 |
+| walker |  | 3778 | 58 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 3, sub: 0, line: 133 } |  |  | 0.545 |
+| walker |  | 3838 | 60 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 4, sub: 0, line: 169 } |  |  | 0.545 |
+| walker |  | 3901 | 63 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 7, sub: 0, line: 162 } |  |  | 0.545 |
 | walker |  | 3961 | 60 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 11, sub: 0, line: 604 } |  |  | 0.545 |
 | ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.527 |
 | walker |  | 3988 | 27 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 3, sub: 0, line: 90 } |  |  | 0.527 |
@@ -143,9 +143,16 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.517 |
 | walker |  | 9435 | 119 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 12, sub: 0, line: 629 } |  |  | 0.517 |
 | walker |  | 9508 | 73 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 10, sub: 0, line: 249 } |  |  | 0.517 |
-| walker |  | 9596 | 88 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.517 |
-| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.511 |
-| walker |  | 9728 | 132 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 7, sub: 0, line: 321 } |  |  | 0.511 |
-| walker |  | 9815 | 87 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 15, sub: 0, line: 494 } |  |  | 0.514 |
-| walker |  | 9949 | 134 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 17, sub: 0, line: 812 } |  |  | 0.514 |
-| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.510 |
+| walker |  | 9587 | 79 | Fs::DirListing { dir: test/fixtures } |  |  | 0.534 |
+| walker |  | 9591 | 4 | Fs::DirListing { dir: test/fixtures/pets } |  |  | 0.534 |
+| walker |  | 9596 | 5 | Fs::DirListing { dir: test/fixtures/local_layout } |  |  | 0.534 |
+| walker |  | 9603 | 7 | Fs::DirListing { dir: test/fixtures/blog } |  |  | 0.534 |
+| walker |  | 9610 | 7 | Fs::DirListing { dir: test/fixtures/snow ☃ } |  |  | 0.534 |
+| walker |  | 9615 | 5 | Fs::DirListing { dir: test/fixtures/blog/post } |  |  | 0.534 |
+| walker |  | 9624 | 9 | Fs::DirListing { dir: test/fixtures/users } |  |  | 0.534 |
+| walker |  | 9634 | 10 | Fs::DirListing { dir: test/fixtures/default_layout } |  |  | 0.534 |
+| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.528 |
+| walker |  | 9722 | 88 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.528 |
+| walker |  | 9854 | 132 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 7, sub: 0, line: 321 } |  |  | 0.528 |
+| walker |  | 9941 | 87 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 15, sub: 0, line: 494 } |  |  | 0.530 |
+| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.527 |

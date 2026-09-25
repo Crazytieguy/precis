@@ -1,4 +1,4 @@
-Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.360/0.400/0.308/0.423/0.438/0.663/0.660
+Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.360/0.400/0.308/0.423/0.438/0.663/0.659
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -101,102 +101,103 @@ Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 4113 | 8 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/health_checks_instrument.py, decl: 6, sub: 0, line: 40 } |  |  | 0.447 |
 | walker |  | 4121 | 8 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/pyroscope_instrument.py, decl: 6, sub: 0, line: 52 } |  |  | 0.447 |
 | walker |  | 4132 | 11 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 8, sub: 0, line: 90 } |  |  | 0.452 |
+| walker |  | 4170 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.452 |
 | ns | 4224 |  | 376 | `OpentelemetryConfig`: complete field set | 4.2 |  | 0.437 |
-| walker |  | 4246 | 114 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/swagger_instrument.py, decl: 1, sub: 0, line: 10 } |  |  | 0.438 |
-| walker |  | 4364 | 118 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/health_checks_instrument.py, decl: 2, sub: 0, line: 14 } |  |  | 0.439 |
+| walker |  | 4284 | 114 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/swagger_instrument.py, decl: 1, sub: 0, line: 10 } |  |  | 0.438 |
+| walker |  | 4402 | 118 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/health_checks_instrument.py, decl: 2, sub: 0, line: 14 } |  |  | 0.439 |
 | ns | 4499 |  | 275 | `LoggingConfig`: complete field set plus the exclude-endpoint validator | 4.3 |  | 0.427 |
-| walker |  | 4739 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.632 |
+| walker |  | 4777 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.632 |
 | ns | 4844 |  | 345 | Prometheus config family: `BasePrometheusConfig` and its three framework variants | 4.4 |  | 0.613 |
-| walker |  | 4864 | 125 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 1, sub: 0, line: 9 } |  |  | 0.623 |
-| walker |  | 4872 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 5, sub: 0, line: 48 } |  |  | 0.625 |
-| walker |  | 4900 | 28 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 3, sub: 0, line: 21 } |  |  | 0.626 |
-| walker |  | 4938 | 38 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 4, sub: 0, line: 34 } |  |  | 0.626 |
-| walker |  | 5065 | 127 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/cors_instrument.py, decl: 1, sub: 0, line: 8 } |  |  | 0.628 |
-| ns | 5111 |  | 267 | `CorsConfig` and `SwaggerConfig`: complete field sets | 4.5 |  | 0.640 |
-| walker |  | 5316 | 251 | Code::CodeKey { rung: Decl, file: microbootstrap/settings.py, decl: 4, sub: 0, line: 29 } |  |  | 0.681 |
-| walker |  | 5454 | 138 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/prometheus_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
-| ns | 5470 |  | 359 | `HealthCheckTypedDict` + `HealthChecksConfig`, and `PyroscopeConfig` | 4.6 |  | 0.676 |
-| walker |  | 5478 | 24 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 3, sub: 0, line: 24 } |  |  | 0.678 |
-| walker |  | 5508 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 5, sub: 0, line: 35 } |  |  | 0.678 |
-| walker |  | 5556 | 48 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 2, sub: 0, line: 17 } |  |  | 0.682 |
-| walker |  | 5604 | 48 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 8, sub: 0, line: 55 } |  |  | 0.687 |
-| walker |  | 5671 | 67 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 9, sub: 0, line: 60 } |  |  | 0.691 |
-| walker |  | 5679 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 11, sub: 0, line: 69 } |  |  | 0.691 |
-| walker |  | 5781 | 102 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 4, sub: 0, line: 28 } |  |  | 0.704 |
-| ns | 5790 |  | 320 | Readiness predicates: `is_ready` for all eight instruments | 4.7 |  | 0.686 |
-| walker |  | 5851 | 70 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 7, sub: 0, line: 46 } |  |  | 0.686 |
+| walker |  | 4902 | 125 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 1, sub: 0, line: 9 } |  |  | 0.624 |
+| walker |  | 4910 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 5, sub: 0, line: 48 } |  |  | 0.625 |
+| walker |  | 4938 | 28 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 3, sub: 0, line: 21 } |  |  | 0.626 |
+| walker |  | 4976 | 38 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/instrument_box.py, decl: 4, sub: 0, line: 34 } |  |  | 0.626 |
+| walker |  | 5103 | 127 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/cors_instrument.py, decl: 1, sub: 0, line: 8 } |  |  | 0.628 |
+| ns | 5111 |  | 267 | `CorsConfig` and `SwaggerConfig`: complete field sets | 4.5 |  | 0.641 |
+| walker |  | 5354 | 251 | Code::CodeKey { rung: Decl, file: microbootstrap/settings.py, decl: 4, sub: 0, line: 29 } |  |  | 0.682 |
+| ns | 5470 |  | 359 | `HealthCheckTypedDict` + `HealthChecksConfig`, and `PyroscopeConfig` | 4.6 |  | 0.672 |
+| walker |  | 5492 | 138 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/prometheus_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.677 |
+| walker |  | 5516 | 24 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 3, sub: 0, line: 24 } |  |  | 0.678 |
+| walker |  | 5546 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 5, sub: 0, line: 35 } |  |  | 0.678 |
+| walker |  | 5594 | 48 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 2, sub: 0, line: 17 } |  |  | 0.683 |
+| walker |  | 5642 | 48 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 8, sub: 0, line: 55 } |  |  | 0.688 |
+| walker |  | 5709 | 67 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 9, sub: 0, line: 60 } |  |  | 0.692 |
+| walker |  | 5717 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 11, sub: 0, line: 69 } |  |  | 0.692 |
+| ns | 5790 |  | 320 | Readiness predicates: `is_ready` for all eight instruments | 4.7 |  | 0.673 |
+| walker |  | 5819 | 102 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 4, sub: 0, line: 28 } |  |  | 0.686 |
 | ns | 5885 |  | 95 | FastStream broker-middleware protocols and `FastStreamOpentelemetryConfig` | 4.8 |  | 0.681 |
-| walker |  | 6002 | 151 | Code::CodeKey { rung: Names, file: microbootstrap/bootstrappers/fastapi.py, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 6034 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 9, sub: 0, line: 73 } |  |  | 0.681 |
-| walker |  | 6066 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 11, sub: 0, line: 92 } |  |  | 0.681 |
-| walker |  | 6098 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 13, sub: 0, line: 103 } |  |  | 0.681 |
+| walker |  | 5889 | 70 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 7, sub: 0, line: 46 } |  |  | 0.681 |
+| walker |  | 6040 | 151 | Code::CodeKey { rung: Names, file: microbootstrap/bootstrappers/fastapi.py, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
+| walker |  | 6072 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 9, sub: 0, line: 73 } |  |  | 0.681 |
+| walker |  | 6104 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 11, sub: 0, line: 92 } |  |  | 0.662 |
 | ns | 6104 |  | 219 | Instrument method roster: every `bootstrap` / `teardown` / private override, by line | 4.9 |  | 0.662 |
-| walker |  | 6149 | 51 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 6, sub: 0, line: 57 } |  |  | 0.662 |
-| walker |  | 6203 | 54 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 15, sub: 0, line: 113 } |  |  | 0.663 |
-| walker |  | 6211 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 17, sub: 0, line: 131 } |  |  | 0.663 |
-| walker |  | 6266 | 55 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 18, sub: 0, line: 136 } |  |  | 0.663 |
-| ns | 6391 |  | 287 | Instrument module-level symbol roster: helpers not attached to any class | 4.10 |  | 0.646 |
-| walker |  | 6397 | 131 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 2, sub: 0, line: 27 } |  |  | 0.647 |
-| walker |  | 6407 | 10 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 3, sub: 0, line: 33 } |  |  | 0.647 |
-| walker |  | 6419 | 12 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 4, sub: 0, line: 41 } |  |  | 0.647 |
-| walker |  | 6570 | 151 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/pyroscope_instrument.py, decl: 1, sub: 0, line: 15 } |  |  | 0.667 |
-| walker |  | 6608 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.668 |
+| walker |  | 6136 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 13, sub: 0, line: 103 } |  |  | 0.663 |
+| walker |  | 6187 | 51 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 6, sub: 0, line: 57 } |  |  | 0.663 |
+| walker |  | 6241 | 54 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 15, sub: 0, line: 113 } |  |  | 0.663 |
+| walker |  | 6249 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 17, sub: 0, line: 131 } |  |  | 0.663 |
+| walker |  | 6304 | 55 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 18, sub: 0, line: 136 } |  |  | 0.663 |
+| ns | 6391 |  | 287 | Instrument module-level symbol roster: helpers not attached to any class | 4.10 |  | 0.647 |
+| walker |  | 6435 | 131 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 2, sub: 0, line: 27 } |  |  | 0.647 |
+| walker |  | 6445 | 10 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 3, sub: 0, line: 33 } |  |  | 0.647 |
+| walker |  | 6457 | 12 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 4, sub: 0, line: 41 } |  |  | 0.647 |
+| walker |  | 6608 | 151 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/pyroscope_instrument.py, decl: 1, sub: 0, line: 15 } |  |  | 0.668 |
 | walker |  | 6618 | 10 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/instrument_box.py, decl: 5, sub: 0, line: 48 } |  |  | 0.668 |
-| walker |  | 6630 | 12 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 6, sub: 0, line: 60 } |  |  | 0.672 |
-| ns | 6684 |  | 293 | `ApplicationBootstrapper`: class attributes and complete member roster | 5.1 |  | 0.658 |
-| ns | 6945 |  | 261 | `ApplicationBootstrapper.bootstrap()` — the whole application-assembly pipeline | 5.2 | 5.1 | 0.642 |
-| ns | 7214 |  | 269 | `ApplicationBootstrapper.__init__` and the `configure_*` fluent methods | 5.3 | 5.1 | 0.624 |
-| walker |  | 7324 | 694 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.625 |
+| walker |  | 6682 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.669 |
+| ns | 6684 |  | 293 | `ApplicationBootstrapper`: class attributes and complete member roster | 5.1 |  | 0.655 |
+| walker |  | 6694 | 12 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 6, sub: 0, line: 60 } |  |  | 0.659 |
+| ns | 6945 |  | 261 | `ApplicationBootstrapper.bootstrap()` — the whole application-assembly pipeline | 5.2 | 5.1 | 0.643 |
+| ns | 7214 |  | 269 | `ApplicationBootstrapper.__init__` and the `configure_*` fluent methods | 5.3 | 5.1 | 0.625 |
 | ns | 7344 |  | 130 | `use_instrument` decorator factory and `ApplicationBootstrapper.teardown` | 5.4 | 5.1 | 0.618 |
-| walker |  | 7515 | 191 | Code::CodeKey { rung: Names, file: microbootstrap/bootstrappers/litestar.py, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
-| walker |  | 7538 | 23 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 10, sub: 0, line: 133 } |  |  | 0.618 |
-| walker |  | 7563 | 25 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 3, sub: 0, line: 62 } |  |  | 0.618 |
-| walker |  | 7589 | 26 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 11, sub: 0, line: 158 } |  |  | 0.618 |
-| walker |  | 7619 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 5, sub: 0, line: 73 } |  |  | 0.618 |
-| walker |  | 7649 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 7, sub: 0, line: 108 } |  |  | 0.619 |
-| walker |  | 7679 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 13, sub: 0, line: 177 } |  |  | 0.619 |
-| ns | 7696 |  | 352 | `bootstrappers/litestar.py` roster: bootstrapper, every registered instrument, every helper | 5.5 |  | 0.616 |
-| walker |  | 7709 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 15, sub: 0, line: 190 } |  |  | 0.619 |
-| walker |  | 7761 | 52 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 17, sub: 0, line: 199 } |  |  | 0.621 |
-| walker |  | 7769 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 19, sub: 0, line: 217 } |  |  | 0.621 |
-| walker |  | 7821 | 52 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 20, sub: 0, line: 222 } |  |  | 0.624 |
-| walker |  | 7902 | 81 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 1, sub: 0, line: 48 } |  |  | 0.633 |
-| ns | 7978 |  | 282 | `bootstrappers/fastapi.py` roster: bootstrapper and every registered instrument | 5.6 |  | 0.640 |
-| walker |  | 8088 | 186 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 4, sub: 0, line: 23 } |  |  | 0.661 |
-| walker |  | 8098 | 10 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 7, sub: 0, line: 42 } |  |  | 0.662 |
-| walker |  | 8114 | 16 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 8, sub: 0, line: 45 } |  |  | 0.664 |
-| walker |  | 8142 | 28 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 5, sub: 0, line: 29 } |  |  | 0.665 |
-| walker |  | 8148 | 6 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/base.py, decl: 9, sub: 0, line: 50 } |  |  | 0.666 |
-| ns | 8270 |  | 292 | `bootstrappers/faststream.py` roster: bootstrapper, loggers, every registered instrument | 5.7 |  | 0.655 |
-| walker |  | 8354 | 206 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/sentry_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.657 |
-| walker |  | 8392 | 38 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/sentry_instrument.py, decl: 6, sub: 0, line: 67 } |  |  | 0.657 |
-| ns | 8460 |  | 190 | `InstrumentsSetupper`: member roster and the four instruments it registers | 5.8 |  | 0.653 |
-| walker |  | 8470 | 78 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/sentry_instrument.py, decl: 8, sub: 0, line: 89 } |  |  | 0.656 |
-| walker |  | 8478 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/sentry_instrument.py, decl: 11, sub: 0, line: 122 } |  |  | 0.656 |
-| walker |  | 8486 | 8 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/sentry_instrument.py, decl: 11, sub: 0, line: 122 } |  |  | 0.656 |
-| walker |  | 8683 | 197 | Code::CodeKey { rung: Decl, file: microbootstrap/config/faststream.py, decl: 1, sub: 0, line: 20 } |  |  | 0.656 |
-| ns | 8692 |  | 232 | README Configuration: simple values overwrite, complex values merge | 5.9 |  | 0.651 |
-| ns | 8771 |  | 79 | `LitestarBootstrapper.bootstrap_before`: how the console table and teardown get attached | 5.10 |  | 0.648 |
-| walker |  | 8893 | 210 | Code::CodeKey { rung: Names, file: microbootstrap/bootstrappers/faststream.py, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
-| ns | 8914 |  | 143 | `helpers.py`: complete function roster and `VALID_PATH_PATTERN` | 6.1 |  | 0.657 |
-| walker |  | 8920 | 27 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 2, sub: 0, line: 31 } |  |  | 0.658 |
-| walker |  | 8974 | 54 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 4, sub: 0, line: 37 } |  |  | 0.660 |
-| ns | 9021 |  | 107 | `exceptions.py`: the complete exception hierarchy | 6.2 |  | 0.661 |
-| walker |  | 9035 | 61 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 12, sub: 0, line: 79 } |  |  | 0.662 |
-| walker |  | 9118 | 83 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 6, sub: 0, line: 58 } |  |  | 0.664 |
-| walker |  | 9126 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 9, sub: 0, line: 70 } |  |  | 0.664 |
-| walker |  | 9219 | 93 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 20, sub: 0, line: 120 } |  |  | 0.666 |
-| ns | 9269 |  | 248 | Middleware builders and `create_granian_server`: signatures and returned classes | 6.3 |  | 0.662 |
-| walker |  | 9319 | 100 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 15, sub: 0, line: 90 } |  |  | 0.664 |
-| walker |  | 9327 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 19, sub: 0, line: 115 } |  |  | 0.664 |
-| walker |  | 9333 | 6 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/base.py, decl: 10, sub: 0, line: 53 } |  |  | 0.665 |
-| ns | 9376 |  | 107 | `config/litestar.py`: the `LitestarConfig` application-config dataclass | 6.4 |  | 0.668 |
-| walker |  | 9442 | 109 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 6, sub: 0, line: 37 } |  |  | 0.668 |
-| ns | 9534 |  | 158 | Test tree listings (complete) and `.github/workflows/` | 7.1 |  | 0.663 |
-| walker |  | 9655 | 213 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 4, sub: 0, line: 25 } |  |  | 0.679 |
-| walker |  | 9686 | 31 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 6, sub: 0, line: 39 } |  |  | 0.680 |
-| ns | 9704 |  | 170 | `Justfile`: install, lint, lint-ci and test recipes | 7.2 |  | 0.672 |
-| walker |  | 9717 | 31 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 7, sub: 0, line: 46 } |  |  | 0.674 |
-| walker |  | 9749 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 8, sub: 0, line: 53 } |  |  | 0.675 |
-| walker |  | 9810 | 61 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 9, sub: 0, line: 61 } |  |  | 0.679 |
-| ns | 9954 |  | 250 | `pyproject.toml`: identity, python requirement and optional-dependency extras | 7.3 |  | 0.684 |
+| walker |  | 7388 | 694 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.619 |
+| walker |  | 7579 | 191 | Code::CodeKey { rung: Names, file: microbootstrap/bootstrappers/litestar.py, decl: 0, sub: 0, line: 0 } |  |  | 0.619 |
+| walker |  | 7602 | 23 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 10, sub: 0, line: 133 } |  |  | 0.619 |
+| walker |  | 7627 | 25 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 3, sub: 0, line: 62 } |  |  | 0.619 |
+| walker |  | 7653 | 26 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 11, sub: 0, line: 158 } |  |  | 0.619 |
+| walker |  | 7683 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 5, sub: 0, line: 73 } |  |  | 0.619 |
+| ns | 7696 |  | 352 | `bootstrappers/litestar.py` roster: bootstrapper, every registered instrument, every helper | 5.5 |  | 0.613 |
+| walker |  | 7713 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 7, sub: 0, line: 108 } |  |  | 0.615 |
+| walker |  | 7743 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 13, sub: 0, line: 177 } |  |  | 0.617 |
+| walker |  | 7773 | 30 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 15, sub: 0, line: 190 } |  |  | 0.620 |
+| walker |  | 7825 | 52 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 17, sub: 0, line: 199 } |  |  | 0.622 |
+| walker |  | 7833 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 19, sub: 0, line: 217 } |  |  | 0.622 |
+| walker |  | 7885 | 52 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 20, sub: 0, line: 222 } |  |  | 0.625 |
+| walker |  | 7966 | 81 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/litestar.py, decl: 1, sub: 0, line: 48 } |  |  | 0.634 |
+| ns | 7978 |  | 282 | `bootstrappers/fastapi.py` roster: bootstrapper and every registered instrument | 5.6 |  | 0.641 |
+| walker |  | 8152 | 186 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 4, sub: 0, line: 23 } |  |  | 0.662 |
+| walker |  | 8162 | 10 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 7, sub: 0, line: 42 } |  |  | 0.663 |
+| walker |  | 8178 | 16 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 8, sub: 0, line: 45 } |  |  | 0.665 |
+| walker |  | 8206 | 28 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/base.py, decl: 5, sub: 0, line: 29 } |  |  | 0.666 |
+| walker |  | 8212 | 6 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/base.py, decl: 9, sub: 0, line: 50 } |  |  | 0.667 |
+| ns | 8270 |  | 292 | `bootstrappers/faststream.py` roster: bootstrapper, loggers, every registered instrument | 5.7 |  | 0.656 |
+| walker |  | 8418 | 206 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/sentry_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.658 |
+| walker |  | 8456 | 38 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/sentry_instrument.py, decl: 6, sub: 0, line: 67 } |  |  | 0.658 |
+| ns | 8460 |  | 190 | `InstrumentsSetupper`: member roster and the four instruments it registers | 5.8 |  | 0.654 |
+| walker |  | 8534 | 78 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/sentry_instrument.py, decl: 8, sub: 0, line: 89 } |  |  | 0.657 |
+| walker |  | 8542 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/sentry_instrument.py, decl: 11, sub: 0, line: 122 } |  |  | 0.657 |
+| walker |  | 8550 | 8 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/sentry_instrument.py, decl: 11, sub: 0, line: 122 } |  |  | 0.657 |
+| ns | 8692 |  | 232 | README Configuration: simple values overwrite, complex values merge | 5.9 |  | 0.652 |
+| walker |  | 8747 | 197 | Code::CodeKey { rung: Decl, file: microbootstrap/config/faststream.py, decl: 1, sub: 0, line: 20 } |  |  | 0.652 |
+| ns | 8771 |  | 79 | `LitestarBootstrapper.bootstrap_before`: how the console table and teardown get attached | 5.10 |  | 0.649 |
+| ns | 8914 |  | 143 | `helpers.py`: complete function roster and `VALID_PATH_PATTERN` | 6.1 |  | 0.654 |
+| walker |  | 8957 | 210 | Code::CodeKey { rung: Names, file: microbootstrap/bootstrappers/faststream.py, decl: 0, sub: 0, line: 0 } |  |  | 0.658 |
+| walker |  | 8984 | 27 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 2, sub: 0, line: 31 } |  |  | 0.659 |
+| ns | 9021 |  | 107 | `exceptions.py`: the complete exception hierarchy | 6.2 |  | 0.659 |
+| walker |  | 9038 | 54 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 4, sub: 0, line: 37 } |  |  | 0.662 |
+| walker |  | 9099 | 61 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 12, sub: 0, line: 79 } |  |  | 0.663 |
+| walker |  | 9182 | 83 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 6, sub: 0, line: 58 } |  |  | 0.665 |
+| walker |  | 9190 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 9, sub: 0, line: 70 } |  |  | 0.665 |
+| ns | 9269 |  | 248 | Middleware builders and `create_granian_server`: signatures and returned classes | 6.3 |  | 0.661 |
+| walker |  | 9283 | 93 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 20, sub: 0, line: 120 } |  |  | 0.663 |
+| ns | 9376 |  | 107 | `config/litestar.py`: the `LitestarConfig` application-config dataclass | 6.4 |  | 0.666 |
+| walker |  | 9383 | 100 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 15, sub: 0, line: 90 } |  |  | 0.668 |
+| walker |  | 9391 | 8 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/faststream.py, decl: 19, sub: 0, line: 115 } |  |  | 0.668 |
+| walker |  | 9397 | 6 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/base.py, decl: 10, sub: 0, line: 53 } |  |  | 0.669 |
+| walker |  | 9506 | 109 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 6, sub: 0, line: 37 } |  |  | 0.669 |
+| ns | 9534 |  | 158 | Test tree listings (complete) and `.github/workflows/` | 7.1 |  | 0.677 |
+| ns | 9704 |  | 170 | `Justfile`: install, lint, lint-ci and test recipes | 7.2 |  | 0.669 |
+| walker |  | 9719 | 213 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 4, sub: 0, line: 25 } |  |  | 0.684 |
+| walker |  | 9750 | 31 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 6, sub: 0, line: 39 } |  |  | 0.685 |
+| walker |  | 9781 | 31 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 7, sub: 0, line: 46 } |  |  | 0.686 |
+| walker |  | 9813 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 8, sub: 0, line: 53 } |  |  | 0.688 |
+| walker |  | 9874 | 61 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/base.py, decl: 9, sub: 0, line: 61 } |  |  | 0.691 |
+| ns | 9954 |  | 250 | `pyproject.toml`: identity, python requirement and optional-dependency extras | 7.3 |  | 0.696 |

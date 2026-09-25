@@ -144,6 +144,38 @@ examples/
   build_system/
   device/
   dual/
+    CMakeLists.txt
+    CMakePresets.json
+    dynamic_switch/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      README.md
+      only.txt
+      src/
+        CMakeLists.txt
+        main.c
+        tusb_config.h
+        usb_descriptors.c
+    host_hid_to_device_cdc/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      src/
+        main.c
+        tusb_config.h
+        usb_descriptors.c
+    host_info_to_device_cdc/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      src/
+        CMakeLists.txt
+        main.c
+        tusb_config.h
+        usb_descriptors.c
   host/
   typec/
   west.yml
@@ -350,29 +382,6 @@ src/
   tinyusb.mk
   tusb.c
   tusb.h
-    …
-    144→#if CFG_TUH_ENABLED || CFG_TUD_ENABLED
-    …
-    147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
-    …
-    159→#define _tusb_init_arg1(_rhport)             _tusb_init_arg0()
-    160→#define _tusb_init_arg2(_rhport, _rh_init)   tusb_rhport_init(_rhport, _rh_init)
-    161→#define tusb_init(...)                       TU_FUNC_OPTIONAL_ARG(_tusb_init, __VA_ARGS__)
-    163→// Check if stack is initialized
-    164→bool tusb_inited(void);
-    …
-    167→void tusb_int_handler(uint8_t rhport, bool in_isr);
-    169→// Deinit usb stack on roothub port
-    170→bool tusb_deinit(uint8_t rhport);
-    172→#else
-    173→
-    174→#define tusb_init(...)  (false)
-    175→#define tusb_int_handler(...)  do {}while(0)
-    176→#define tusb_inited()  (false)
-    177→#define tusb_deinit(...) (false)
-    178→
-    179→#endif
-    …
   tusb_option.h
   typec/
     pd_types.h
@@ -382,6 +391,13 @@ src/
 test/
   fuzz/
   hil/
+    hfp.json
+    hil_ci.sh
+    hil_ci_set_matrix.py
+    hil_test.py
+    pymtp.py
+    requirements.txt
+    tinyusb.json
   unit-test/
     CMakeLists.txt
     ceedling

@@ -1,4 +1,4 @@
-Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.951/0.785/0.686/0.643/0.627/0.521
+Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.831/0.785/0.687/0.643/0.627/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,49 +25,49 @@ Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 549 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
 | walker |  | 582 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
 | walker |  | 620 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
-| walker |  | 680 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
+| walker |  | 637 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
+| walker |  | 697 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.653 |
-| walker |  | 1060 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
+| walker |  | 1077 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
 | ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.795 |
-| walker |  | 1240 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.831 |
-| walker |  | 1265 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.831 |
-| walker |  | 1282 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.831 |
-| walker |  | 1417 | 135 | Json::Entry { file: package.json } |  |  | 0.951 |
+| walker |  | 1257 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.831 |
+| walker |  | 1282 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.831 |
+| walker |  | 1309 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.831 |
+| walker |  | 1444 | 135 | Json::Entry { file: package.json } |  |  | 0.951 |
 | ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.900 |
-| walker |  | 1702 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.903 |
+| walker |  | 1729 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.903 |
 | ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.834 |
-| walker |  | 1846 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
-| walker |  | 1873 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.835 |
+| walker |  | 1873 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
 | walker |  | 1876 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
 | ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.785 |
 | walker |  | 1981 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.785 |
 | walker |  | 2037 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.785 |
-| ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.732 |
-| ns | 2537 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.686 |
-| ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.676 |
-| ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.686 |
-| walker |  | 2904 | 867 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.686 |
-| ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.670 |
-| ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.661 |
-| ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.648 |
-| ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.640 |
-| walker |  | 3467 | 563 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.640 |
-| walker |  | 3471 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.640 |
-| walker |  | 3475 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.640 |
-| walker |  | 3581 | 106 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.655 |
-| ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.643 |
-| walker |  | 3665 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.645 |
-| walker |  | 3670 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.645 |
+| walker |  | 2041 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |
+| walker |  | 2045 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.785 |
+| walker |  | 2129 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.787 |
+| walker |  | 2134 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.787 |
+| ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.734 |
+| ns | 2537 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.687 |
+| ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.678 |
+| ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.687 |
+| walker |  | 3001 | 867 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.687 |
+| ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.671 |
+| ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.663 |
+| ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.649 |
+| ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.642 |
+| walker |  | 3564 | 563 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.642 |
+| ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.630 |
+| walker |  | 3670 | 106 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.645 |
 | walker |  | 3678 | 8 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.645 |
 | walker |  | 3689 | 11 | Fs::DirListing { dir: .github/actions } |  |  | 0.645 |
 | walker |  | 3693 | 4 | Fs::DirListing { dir: .github/actions/create-check } |  |  | 0.645 |
 | walker |  | 3697 | 4 | Fs::DirListing { dir: .github/actions/install-latest-npm } |  |  | 0.645 |
+| walker |  | 3705 | 8 | Fs::DirListing { dir: tap-snapshots/test/bin } |  |  | 0.645 |
 | ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.632 |
-| walker |  | 3910 | 213 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.658 |
+| walker |  | 3918 | 213 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.658 |
 | ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.643 |
-| walker |  | 4440 | 530 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: true } |  |  | 0.668 |
-| walker |  | 4448 | 8 | Fs::DirListing { dir: tap-snapshots/test/bin } |  |  | 0.668 |
+| walker |  | 4448 | 530 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: true } |  |  | 0.668 |
 | ns | 4467 |  | 290 | README: tilde ranges and their desugaring table | 3.9 |  | 0.659 |
 | walker |  | 4710 | 262 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.659 |
 | ns | 4731 |  | 264 | README: X-ranges and bare partial versions | 3.10 |  | 0.648 |

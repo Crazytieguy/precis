@@ -190,7 +190,11 @@ site/
   build-ref.mjs
   compiling.md
   features/
+    knn.md
+    vec0.md
   getting-started/
+    installation.md
+    introduction.md
   guides/
     arithmetic.md
     binary-quant.md
@@ -255,11 +259,14 @@ tests/
   build.rs
   conftest.py
   correctness/
+    build.py
+    test-correctness.py
   fuzz/
     .gitignore
     Makefile
     README.md
     corpus/
+      vec0-create/
     exec.c
     exec.dict
     json.c

@@ -133,8 +133,39 @@ docs/
   web-security.rst
 examples/
   celery/
+    README.md
+    make_celery.py
+    pyproject.toml
+    requirements.txt
+    src/
+      task_app/
+        __init__.py
+        tasks.py
+        templates/
+        views.py
   javascript/
+    .gitignore
+    LICENSE.txt
+    README.rst
+    js_example/
+      __init__.py
+      templates/
+      views.py
+    pyproject.toml
+    tests/
   tutorial/
+    .gitignore
+    LICENSE.txt
+    README.rst
+    flaskr/
+    pyproject.toml
+    tests/
+      conftest.py
+      data.sql
+      test_auth.py
+      test_blog.py
+      test_db.py
+      test_factory.py
 pyproject.toml
   1→[project]
   2→name = "Flask"
@@ -276,16 +307,6 @@ src/
         …
       tag.py
     logging.py
-      …
-      15→@LocalProxy
-      16→def wsgi_errors_stream() -> t.TextIO:
-      …
-      31→def has_level_handler(logger: logging.Logger) -> bool:
-      …
-      52→default_handler = logging.StreamHandler(wsgi_errors_stream)  # type: ignore
-      …
-      58→def create_logger(app: App) -> logging.Logger:
-      …
     py.typed (empty)
     sansio/
       README.md
@@ -296,18 +317,6 @@ src/
     signals.py
     templating.py
     testing.py
-      …
-      27→class EnvironBuilder(werkzeug.test.EnvironBuilder):
-      …
-      97→_werkzeug_version = ""
-      98→
-      99→
-      100→def _get_werkzeug_version() -> str:
-      …
-      109→class FlaskClient(Client):
-      …
-      265→class FlaskCliRunner(CliRunner):
-      …
     typing.py
     views.py
       …
@@ -330,20 +339,30 @@ src/
       …
       222→class Response(ResponseBase):
       …
-      240→    default_mimetype: str | None = "text/html"
-      241→
-      242→    json_module = json
-      243→
-      244→    autocorrect_location_header = False
-      246→    @property
-      247→    def max_cookie_size(self) -> int:  # type: ignore
-      …
 tests/
   conftest.py
   static/
   templates/
   test_appctx.py
   test_apps/
+    .env
+    .flaskenv
+    blueprintapp/
+      __init__.py
+      apps/
+        __init__.py (empty)
+        admin/
+          __init__.py
+          static/
+          templates/
+        frontend/
+          __init__.py
+          templates/
+    cliapp/
+    helloworld/
+    subdomaintestmodule/
+      __init__.py
+      static/
   test_async.py
   test_basic.py
   test_blueprints.py

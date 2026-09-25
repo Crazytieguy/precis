@@ -114,21 +114,6 @@ bookmarks/
     20→def app_version(request):
     21→    return {"app_version": utils.app_version}
   feeds.py
-    …
-    15→class FeedContext:
-    …
-    21→def sanitize(text: str):
-    …
-    31→class BaseBookmarksFeed(Feed):
-    …
-    73→class AllBookmarksFeed(BaseBookmarksFeed):
-    …
-    84→class UnreadBookmarksFeed(BaseBookmarksFeed):
-    …
-    97→class SharedBookmarksFeed(BaseBookmarksFeed):
-    …
-    110→class PublicSharedBookmarksFeed(BaseBookmarksFeed):
-    …
   forms.py
   frontend/
     api.js
@@ -478,6 +463,13 @@ docs/
   package.json
   public/
   src/
+    assets/
+    components/
+    content/
+      config.ts
+      docs/
+    env.d.ts
+    styles/
   tsconfig.json
 install-linkding.sh
 manage.py

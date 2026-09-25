@@ -289,10 +289,7 @@ lib/
       1→# axios // core
       2→
       3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
-      5→- Dispatching requests
-      6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
-      7→- Managing interceptors
-      8→- Handling config
+      …
     buildFullPath.js
     dispatchRequest.js
     mergeConfig.js
@@ -301,9 +298,6 @@ lib/
   defaults/
     index.js
     transitional.js
-      …
-      3→export default {
-      …
   env/
     README.md
       1→# axios // env
@@ -408,6 +402,14 @@ tests/
       package-lock.json
       package.json
       tests/
+        fixture-cleanup.module.test.js
+        helpers/
+          esm-functions.ts
+          esm-index.ts
+          fixture.js
+          run-command.js
+        ts.module.test.js
+        typings.module.test.js
       vitest.config.js
   setup/
   smoke/

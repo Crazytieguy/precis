@@ -84,31 +84,31 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 3719 | 29 | Fs::DirListing { dir: tests/fixtures-extensions } |  |  | 0.487 |
 | ns | 3804 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.473 |
 | walker |  | 3812 | 93 | Fs::DirListing { dir: tests/fixtures } |  |  | 0.474 |
+| walker |  | 3815 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.474 |
+| walker |  | 3818 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.474 |
 | ns | 3874 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.473 |
-| walker |  | 3884 | 72 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 43, sub: 0, line: 740 } |  |  | 0.473 |
-| ns | 3891 |  | 17 | typings/ listing | 3.1 |  | 0.477 |
-| walker |  | 3903 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 10, sub: 0, line: 156 } |  |  | 0.477 |
-| walker |  | 3993 | 90 | Markdown::Section { file: Readme.md, section_index: 29, keeps_default_concavity: false } |  |  | 0.477 |
+| walker |  | 3890 | 72 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 43, sub: 0, line: 740 } |  |  | 0.473 |
+| ns | 3891 |  | 17 | typings/ listing | 3.1 |  | 0.478 |
+| walker |  | 3909 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 10, sub: 0, line: 156 } |  |  | 0.478 |
+| walker |  | 3999 | 90 | Markdown::Section { file: Readme.md, section_index: 29, keeps_default_concavity: false } |  |  | 0.478 |
 | ns | 4013 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.471 |
-| walker |  | 4156 | 163 | Markdown::HeadingsOutline { file: docs/zh-CN/不再推荐使用的功能.md } |  |  | 0.471 |
-| walker |  | 4177 | 21 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 4, sub: 0, line: 56 } |  |  | 0.471 |
+| walker |  | 4162 | 163 | Markdown::HeadingsOutline { file: docs/zh-CN/不再推荐使用的功能.md } |  |  | 0.471 |
+| walker |  | 4183 | 21 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 4, sub: 0, line: 56 } |  |  | 0.471 |
 | ns | 4258 |  | 245 | typings/index.d.ts — every exported interface, type alias, function and const | 3.3 | 3.2 | 0.460 |
 | ns | 4322 |  | 64 | typings/index.d.ts — Command's public instance properties | 3.4 |  | 0.456 |
-| walker |  | 4361 | 184 | Markdown::Section { file: Readme_zh-CN.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.456 |
+| walker |  | 4367 | 184 | Markdown::Section { file: Readme_zh-CN.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.456 |
 | ns | 4413 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.452 |
 | ns | 4449 |  | 36 | docs/ listing | 3.6 |  | 0.461 |
 | ns | 4564 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.466 |
-| ns | 4729 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.457 |
+| ns | 4729 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.458 |
 | ns | 4992 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.445 |
-| walker |  | 5163 | 802 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.445 |
+| walker |  | 5169 | 802 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.445 |
 | ns | 5241 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.436 |
-| walker |  | 5434 | 271 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 0, line: 12 } |  |  | 0.476 |
-| walker |  | 5443 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 10, sub: 0, line: 182 } |  |  | 0.476 |
-| walker |  | 5452 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 11, sub: 0, line: 193 } |  |  | 0.476 |
-| walker |  | 5473 | 21 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 3, sub: 0, line: 29 } |  |  | 0.476 |
-| walker |  | 5476 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.476 |
+| walker |  | 5440 | 271 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 0, line: 12 } |  |  | 0.476 |
+| walker |  | 5449 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 10, sub: 0, line: 182 } |  |  | 0.476 |
+| walker |  | 5458 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 11, sub: 0, line: 193 } |  |  | 0.476 |
 | ns | 5478 |  | 237 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.517 |
-| walker |  | 5479 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.517 |
+| walker |  | 5479 | 21 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 3, sub: 0, line: 29 } |  |  | 0.517 |
 | ns | 5609 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.511 |
 | walker |  | 5735 | 256 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 0, line: 13 } |  |  | 0.537 |
 | walker |  | 5745 | 10 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 6, sub: 0, line: 192 } |  |  | 0.537 |

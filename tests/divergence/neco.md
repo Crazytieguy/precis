@@ -1,4 +1,4 @@
-Score(3000)=0.679 I=0.858 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.681/0.765/0.715/0.679/0.602/0.547/0.470
+Score(3000)=0.679 I=0.858 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.681/0.765/0.715/0.679/0.602/0.566/0.485
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -87,59 +87,60 @@ Score(3000)=0.679 I=0.858 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 5721 | 87 | Markdown::Section { file: docs/API.md, section_index: 90, keeps_default_concavity: false } |  |  | 0.522 |
 | ns | 5725 |  | 232 | Platform notes: what does not work on Windows and WebAssembly | 3.4 |  | 0.511 |
 | walker |  | 6016 | 295 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.511 |
-| walker |  | 6105 | 89 | Markdown::Section { file: docs/API.md, section_index: 80, keeps_default_concavity: false } |  |  | 0.511 |
-| ns | 6115 |  | 390 | The scheduler, context switching, and the thread-local runtime | 3.5 |  | 0.541 |
-| walker |  | 6194 | 89 | Markdown::Section { file: docs/API.md, section_index: 86, keeps_default_concavity: false } |  |  | 0.541 |
-| ns | 6230 |  | 115 | How docs/API.md is produced | 3.6 |  | 0.547 |
-| walker |  | 6282 | 88 | Markdown::Section { file: docs/API.md, section_index: 85, keeps_default_concavity: false } |  |  | 0.547 |
-| walker |  | 6372 | 90 | Markdown::Section { file: docs/API.md, section_index: 137, keeps_default_concavity: false } |  |  | 0.547 |
-| walker |  | 6461 | 89 | Markdown::Section { file: docs/API.md, section_index: 138, keeps_default_concavity: false } |  |  | 0.547 |
-| walker |  | 6552 | 91 | Markdown::Section { file: docs/API.md, section_index: 152, keeps_default_concavity: false } |  |  | 0.547 |
-| ns | 6616 |  | 386 | neco.c compile-time options: the complete knob list | 4.1 |  | 0.532 |
-| walker |  | 6641 | 89 | Markdown::Section { file: docs/API.md, section_index: 153, keeps_default_concavity: false } |  |  | 0.532 |
-| walker |  | 6733 | 92 | Markdown::Section { file: docs/API.md, section_index: 91, keeps_default_concavity: false } |  |  | 0.532 |
-| walker |  | 6826 | 93 | Markdown::Section { file: docs/API.md, section_index: 82, keeps_default_concavity: false } |  |  | 0.532 |
-| ns | 6875 |  | 259 | Amalgamation structure and the embedded-source boundaries | 4.2 |  | 0.517 |
-| walker |  | 6918 | 92 | Markdown::Section { file: docs/API.md, section_index: 83, keeps_default_concavity: false } |  |  | 0.517 |
-| ns | 7007 |  | 132 | Section map of Neco's own implementation | 4.3 |  | 0.512 |
-| walker |  | 7009 | 91 | Markdown::Section { file: docs/API.md, section_index: 84, keeps_default_concavity: false } |  |  | 0.512 |
-| walker |  | 7269 | 260 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| ns | 7292 |  | 285 | struct coroutine: identity, stack, arguments, scheduling flags | 4.4 |  | 0.501 |
-| walker |  | 7327 | 58 | Code::CodeKey { rung: Decl, file: neco.c, decl: 10, sub: 0, line: 1155 } |  |  | 0.501 |
-| walker |  | 7374 | 47 | Code::CodeKey { rung: Decl, file: neco.c, decl: 1, sub: 0, line: 133 } |  |  | 0.501 |
-| walker |  | 7579 | 205 | Code::CodeKey { rung: Decl, file: neco.c, decl: 3, sub: 0, line: 1124 } |  |  | 0.501 |
-| ns | 7585 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.491 |
-| walker |  | 7589 | 10 | Code::CodeKey { rung: Body, file: neco.c, decl: 2, sub: 0, line: 283 } |  |  | 0.491 |
-| walker |  | 7611 | 22 | Code::CodeKey { rung: Body, file: neco.c, decl: 14, sub: 0, line: 1199 } |  |  | 0.491 |
-| walker |  | 7706 | 95 | Markdown::Section { file: docs/API.md, section_index: 81, keeps_default_concavity: false } |  |  | 0.491 |
-| ns | 7769 |  | 184 | Where the event queue backend is chosen | 4.6 |  | 0.484 |
-| walker |  | 7801 | 95 | Markdown::Section { file: docs/API.md, section_index: 87, keeps_default_concavity: false } |  |  | 0.484 |
-| walker |  | 7899 | 98 | Markdown::Section { file: docs/API.md, section_index: 92, keeps_default_concavity: false } |  |  | 0.484 |
-| ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.478 |
-| walker |  | 7997 | 98 | Markdown::Section { file: docs/API.md, section_index: 143, keeps_default_concavity: false } |  |  | 0.478 |
-| walker |  | 8096 | 99 | Markdown::Section { file: docs/API.md, section_index: 27, keeps_default_concavity: false } |  |  | 0.478 |
-| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.470 |
-| walker |  | 8320 | 224 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 4, line: 0 } |  |  | 0.488 |
-| ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.485 |
-| walker |  | 8447 | 127 | Code::CodeKey { rung: Doc, file: neco.h, decl: 53, sub: 0, line: 135 } |  |  | 0.486 |
-| walker |  | 8548 | 101 | Markdown::Section { file: docs/API.md, section_index: 141, keeps_default_concavity: false } |  |  | 0.486 |
-| ns | 8595 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.477 |
-| walker |  | 8647 | 99 | Markdown::Section { file: docs/API.md, section_index: 142, keeps_default_concavity: false } |  |  | 0.477 |
-| walker |  | 8748 | 101 | Markdown::Section { file: docs/API.md, section_index: 145, keeps_default_concavity: false } |  |  | 0.477 |
-| ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.470 |
-| walker |  | 8852 | 104 | Markdown::Section { file: docs/API.md, section_index: 139, keeps_default_concavity: false } |  |  | 0.470 |
-| walker |  | 8957 | 105 | Markdown::Section { file: docs/API.md, section_index: 144, keeps_default_concavity: false } |  |  | 0.470 |
-| walker |  | 9065 | 108 | Markdown::Section { file: docs/API.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.470 |
-| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.459 |
-| walker |  | 9173 | 108 | Markdown::Section { file: docs/API.md, section_index: 26, keeps_default_concavity: false } |  |  | 0.459 |
-| walker |  | 9281 | 108 | Markdown::Section { file: docs/API.md, section_index: 146, keeps_default_concavity: false } |  |  | 0.459 |
-| walker |  | 9389 | 108 | Markdown::Section { file: docs/API.md, section_index: 150, keeps_default_concavity: false } |  |  | 0.459 |
-| ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.452 |
-| ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.447 |
-| ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.445 |
-| walker |  | 9691 | 302 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.465 |
-| walker |  | 9804 | 113 | Markdown::Section { file: docs/API.md, section_index: 149, keeps_default_concavity: false } |  |  | 0.465 |
-| ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.459 |
-| walker |  | 9920 | 116 | Markdown::Section { file: docs/API.md, section_index: 136, keeps_default_concavity: false } |  |  | 0.459 |
-| ns | 9939 |  | 112 | CI | 6.6 |  | 0.455 |
-| ns | 9984 |  | 45 | License | 6.7 |  | 0.456 |
+| walker |  | 6032 | 16 | Fs::DirListing { dir: docs/tools/doxygen-md } |  |  | 0.531 |
+| ns | 6115 |  | 390 | The scheduler, context switching, and the thread-local runtime | 3.5 |  | 0.560 |
+| walker |  | 6121 | 89 | Markdown::Section { file: docs/API.md, section_index: 80, keeps_default_concavity: false } |  |  | 0.560 |
+| walker |  | 6210 | 89 | Markdown::Section { file: docs/API.md, section_index: 86, keeps_default_concavity: false } |  |  | 0.560 |
+| ns | 6230 |  | 115 | How docs/API.md is produced | 3.6 |  | 0.566 |
+| walker |  | 6298 | 88 | Markdown::Section { file: docs/API.md, section_index: 85, keeps_default_concavity: false } |  |  | 0.566 |
+| walker |  | 6388 | 90 | Markdown::Section { file: docs/API.md, section_index: 137, keeps_default_concavity: false } |  |  | 0.566 |
+| walker |  | 6477 | 89 | Markdown::Section { file: docs/API.md, section_index: 138, keeps_default_concavity: false } |  |  | 0.566 |
+| walker |  | 6568 | 91 | Markdown::Section { file: docs/API.md, section_index: 152, keeps_default_concavity: false } |  |  | 0.566 |
+| ns | 6616 |  | 386 | neco.c compile-time options: the complete knob list | 4.1 |  | 0.550 |
+| walker |  | 6657 | 89 | Markdown::Section { file: docs/API.md, section_index: 153, keeps_default_concavity: false } |  |  | 0.550 |
+| walker |  | 6749 | 92 | Markdown::Section { file: docs/API.md, section_index: 91, keeps_default_concavity: false } |  |  | 0.550 |
+| walker |  | 6842 | 93 | Markdown::Section { file: docs/API.md, section_index: 82, keeps_default_concavity: false } |  |  | 0.550 |
+| ns | 6875 |  | 259 | Amalgamation structure and the embedded-source boundaries | 4.2 |  | 0.535 |
+| walker |  | 6934 | 92 | Markdown::Section { file: docs/API.md, section_index: 83, keeps_default_concavity: false } |  |  | 0.535 |
+| ns | 7007 |  | 132 | Section map of Neco's own implementation | 4.3 |  | 0.530 |
+| walker |  | 7025 | 91 | Markdown::Section { file: docs/API.md, section_index: 84, keeps_default_concavity: false } |  |  | 0.530 |
+| walker |  | 7285 | 260 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| ns | 7292 |  | 285 | struct coroutine: identity, stack, arguments, scheduling flags | 4.4 |  | 0.518 |
+| walker |  | 7343 | 58 | Code::CodeKey { rung: Decl, file: neco.c, decl: 10, sub: 0, line: 1155 } |  |  | 0.518 |
+| walker |  | 7390 | 47 | Code::CodeKey { rung: Decl, file: neco.c, decl: 1, sub: 0, line: 133 } |  |  | 0.518 |
+| ns | 7585 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.508 |
+| walker |  | 7595 | 205 | Code::CodeKey { rung: Decl, file: neco.c, decl: 3, sub: 0, line: 1124 } |  |  | 0.508 |
+| walker |  | 7605 | 10 | Code::CodeKey { rung: Body, file: neco.c, decl: 2, sub: 0, line: 283 } |  |  | 0.508 |
+| walker |  | 7627 | 22 | Code::CodeKey { rung: Body, file: neco.c, decl: 14, sub: 0, line: 1199 } |  |  | 0.508 |
+| walker |  | 7722 | 95 | Markdown::Section { file: docs/API.md, section_index: 81, keeps_default_concavity: false } |  |  | 0.508 |
+| ns | 7769 |  | 184 | Where the event queue backend is chosen | 4.6 |  | 0.501 |
+| walker |  | 7817 | 95 | Markdown::Section { file: docs/API.md, section_index: 87, keeps_default_concavity: false } |  |  | 0.501 |
+| walker |  | 7915 | 98 | Markdown::Section { file: docs/API.md, section_index: 92, keeps_default_concavity: false } |  |  | 0.501 |
+| ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.495 |
+| walker |  | 8013 | 98 | Markdown::Section { file: docs/API.md, section_index: 143, keeps_default_concavity: false } |  |  | 0.495 |
+| walker |  | 8112 | 99 | Markdown::Section { file: docs/API.md, section_index: 27, keeps_default_concavity: false } |  |  | 0.495 |
+| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.486 |
+| ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.482 |
+| walker |  | 8336 | 224 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 4, line: 0 } |  |  | 0.500 |
+| walker |  | 8463 | 127 | Code::CodeKey { rung: Doc, file: neco.h, decl: 53, sub: 0, line: 135 } |  |  | 0.501 |
+| walker |  | 8564 | 101 | Markdown::Section { file: docs/API.md, section_index: 141, keeps_default_concavity: false } |  |  | 0.501 |
+| ns | 8595 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.492 |
+| walker |  | 8663 | 99 | Markdown::Section { file: docs/API.md, section_index: 142, keeps_default_concavity: false } |  |  | 0.492 |
+| walker |  | 8764 | 101 | Markdown::Section { file: docs/API.md, section_index: 145, keeps_default_concavity: false } |  |  | 0.492 |
+| ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.485 |
+| walker |  | 8868 | 104 | Markdown::Section { file: docs/API.md, section_index: 139, keeps_default_concavity: false } |  |  | 0.485 |
+| walker |  | 8973 | 105 | Markdown::Section { file: docs/API.md, section_index: 144, keeps_default_concavity: false } |  |  | 0.485 |
+| walker |  | 9081 | 108 | Markdown::Section { file: docs/API.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.485 |
+| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.474 |
+| walker |  | 9189 | 108 | Markdown::Section { file: docs/API.md, section_index: 26, keeps_default_concavity: false } |  |  | 0.474 |
+| walker |  | 9297 | 108 | Markdown::Section { file: docs/API.md, section_index: 146, keeps_default_concavity: false } |  |  | 0.474 |
+| ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.466 |
+| walker |  | 9405 | 108 | Markdown::Section { file: docs/API.md, section_index: 150, keeps_default_concavity: false } |  |  | 0.466 |
+| ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.461 |
+| ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.459 |
+| walker |  | 9707 | 302 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.479 |
+| walker |  | 9820 | 113 | Markdown::Section { file: docs/API.md, section_index: 149, keeps_default_concavity: false } |  |  | 0.479 |
+| ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.473 |
+| walker |  | 9936 | 116 | Markdown::Section { file: docs/API.md, section_index: 136, keeps_default_concavity: false } |  |  | 0.473 |
+| ns | 9939 |  | 112 | CI | 6.6 |  | 0.469 |
+| ns | 9984 |  | 45 | License | 6.7 |  | 0.470 |

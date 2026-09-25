@@ -262,9 +262,6 @@ src/
       96→): Struct<T, S> {
       …
       109→export function size<
-      110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
-      111→  S extends any,
-      112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
       …
       146→export function refine<T, S>(
       147→  struct: Struct<T, S>,
@@ -318,4 +315,45 @@ test/
   tsconfig.json
   typings/
   validation/
+    any/
+    array/
+    assign/
+    bigint/
+    boolean/
+    coerce/
+    date/
+    defaulted/
+    deprecated/
+    dynamic/
+    empty/
+    enums/
+    function/
+    instance/
+    integer/
+    intersection/
+    lazy/
+    literal/
+    map/
+    max/
+    min/
+    never/
+    nullable/
+    number/
+    object/
+    omit/
+    optional/
+    partial/
+    pattern/
+    pick/
+    record/
+    refine/
+    regexp/
+    set/
+    size/
+    string/
+    trimmed/
+    tuple/
+    type/
+    union/
+    unknown/
 tsconfig.json

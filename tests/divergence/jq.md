@@ -99,42 +99,42 @@ Score(3000)=0.699 I=0.825 C=0.591 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 4624 | 225 | Code::CodeKey { rung: Names, file: src/jv_dtoa.h, decl: 0, sub: 0, line: 0 } |  |  | 0.558 |
 | walker |  | 4656 | 32 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.h, decl: 3, sub: 0, line: 6 } |  |  | 0.558 |
 | ns | 4813 |  | 402 | jv.h: comparison, invalid-with-message, constructors, numbers, arrays | 4.3 |  | 0.533 |
-| walker |  | 5002 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.533 |
-| walker |  | 5085 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.533 |
+| walker |  | 4823 | 167 | Fs::DirListing { dir: vendor/decNumber } |  |  | 0.533 |
 | ns | 5142 |  | 329 | jv.h: the string API | 4.4 |  | 0.520 |
-| walker |  | 5302 | 217 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.543 |
-| walker |  | 5317 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.543 |
-| ns | 5353 |  | 211 | jv.h: the object API and its iterator protocol | 4.5 |  | 0.534 |
+| walker |  | 5169 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.520 |
+| walker |  | 5252 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.520 |
+| ns | 5353 |  | 211 | jv.h: the object API and its iterator protocol | 4.5 |  | 0.510 |
+| walker |  | 5469 | 217 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.534 |
+| walker |  | 5484 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.534 |
 | ns | 5549 |  | 196 | jv.h: path access, keys, ordering, sort/group/unique | 4.6 |  | 0.526 |
-| walker |  | 5653 | 336 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 1, line: 0 } |  |  | 0.526 |
-| walker |  | 5738 | 85 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 57, sub: 0, line: 178 } |  |  | 0.526 |
 | ns | 5811 |  | 262 | jv.h: parsing - flags, one-shot parsers, streaming jv_parser, jv_load_file | 4.7 |  | 0.513 |
-| walker |  | 5823 | 85 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.513 |
-| walker |  | 5941 | 118 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 2, line: 0 } |  |  | 0.513 |
-| walker |  | 5946 | 5 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 64, sub: 0, line: 205 } |  |  | 0.513 |
-| walker |  | 5953 | 7 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 60, sub: 0, line: 191 } |  |  | 0.513 |
-| walker |  | 5974 | 21 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 61, sub: 0, line: 195 } |  |  | 0.513 |
-| walker |  | 6018 | 44 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 62, sub: 0, line: 197 } |  |  | 0.513 |
+| walker |  | 5820 | 336 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 1, line: 0 } |  |  | 0.513 |
+| walker |  | 5905 | 85 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 57, sub: 0, line: 178 } |  |  | 0.513 |
+| walker |  | 5910 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.513 |
+| walker |  | 5915 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.513 |
+| walker |  | 6000 | 85 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.513 |
+| walker |  | 6118 | 118 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 2, line: 0 } |  |  | 0.513 |
+| walker |  | 6123 | 5 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 64, sub: 0, line: 205 } |  |  | 0.513 |
 | ns | 6129 |  | 318 | jv.h: print flags and the dump/show functions | 4.8 |  | 0.501 |
-| walker |  | 6185 | 167 | Fs::DirListing { dir: vendor/decNumber } |  |  | 0.501 |
+| walker |  | 6130 | 7 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 60, sub: 0, line: 191 } |  |  | 0.501 |
+| walker |  | 6151 | 21 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 61, sub: 0, line: 195 } |  |  | 0.501 |
+| walker |  | 6195 | 44 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 62, sub: 0, line: 197 } |  |  | 0.501 |
 | ns | 6267 |  | 138 | jv.h: the convenience macro walls (existence, not bodies) | 4.9 |  | 0.494 |
-| walker |  | 6420 | 235 | Code::CodeKey { rung: Names, file: src/jv_parse.c, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
-| walker |  | 6495 | 75 | Code::CodeKey { rung: Decl, file: src/jv_parse.c, decl: 3, sub: 0, line: 25 } |  |  | 0.494 |
-| walker |  | 6510 | 15 | Code::CodeKey { rung: Names, file: docs/build_mantests.py, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
+| walker |  | 6430 | 235 | Code::CodeKey { rung: Names, file: src/jv_parse.c, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
+| walker |  | 6505 | 75 | Code::CodeKey { rung: Decl, file: src/jv_parse.c, decl: 3, sub: 0, line: 25 } |  |  | 0.494 |
+| walker |  | 6520 | 15 | Code::CodeKey { rung: Names, file: docs/build_mantests.py, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
 | ns | 6773 |  | 506 | opcode_list.h: every opcode and its immediate kind | 5.1 |  | 0.472 |
-| walker |  | 6783 | 273 | Code::CodeKey { rung: Names, file: src/jv.h, decl: 0, sub: 0, line: 0 } |  |  | 0.482 |
-| walker |  | 6853 | 70 | Code::CodeKey { rung: Decl, file: src/jv.h, decl: 1, sub: 0, line: 19 } |  |  | 0.490 |
-| walker |  | 6928 | 75 | Code::CodeKey { rung: Decl, file: src/jv.h, decl: 3, sub: 0, line: 34 } |  |  | 0.507 |
-| walker |  | 6955 | 27 | Code::CodeKey { rung: Doc, file: src/jv.h, decl: 3, sub: 0, line: 34 } |  |  | 0.516 |
-| walker |  | 7072 | 117 | Code::CodeKey { rung: Names, file: src/jv_dtoa_tsd.c, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
+| walker |  | 6793 | 273 | Code::CodeKey { rung: Names, file: src/jv.h, decl: 0, sub: 0, line: 0 } |  |  | 0.482 |
+| walker |  | 6863 | 70 | Code::CodeKey { rung: Decl, file: src/jv.h, decl: 1, sub: 0, line: 19 } |  |  | 0.490 |
+| walker |  | 6938 | 75 | Code::CodeKey { rung: Decl, file: src/jv.h, decl: 3, sub: 0, line: 34 } |  |  | 0.507 |
+| walker |  | 6965 | 27 | Code::CodeKey { rung: Doc, file: src/jv.h, decl: 3, sub: 0, line: 34 } |  |  | 0.516 |
+| walker |  | 7082 | 117 | Code::CodeKey { rung: Names, file: src/jv_dtoa_tsd.c, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
 | ns | 7248 |  | 475 | parser.y: the complete token list | 5.2 |  | 0.494 |
-| walker |  | 7395 | 323 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.494 |
+| walker |  | 7405 | 323 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.494 |
 | ns | 7435 |  | 187 | parser.y: operator precedence and associativity | 5.3 |  | 0.487 |
-| walker |  | 7598 | 203 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.504 |
-| walker |  | 7810 | 212 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 1, line: 0 } |  |  | 0.504 |
-| walker |  | 7897 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.504 |
-| walker |  | 7902 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.504 |
-| walker |  | 7907 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.504 |
+| walker |  | 7608 | 203 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.504 |
+| walker |  | 7820 | 212 | Code::CodeKey { rung: Names, file: src/compile.h, decl: 0, sub: 1, line: 0 } |  |  | 0.504 |
+| walker |  | 7907 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.504 |
 | ns | 8106 |  | 671 | builtin.c: function_list, part 1 - libm, binops, conversions, keys, strings, paths, sorting | 5.4 |  | 0.487 |
 | walker |  | 8574 | 667 | Plaintext::Whole { file: compile-ios.sh } |  |  | 0.487 |
 | ns | 8607 |  | 501 | builtin.c: function_list, part 2 - search, min/max, errors, env, regex, I/O, time | 5.5 |  | 0.475 |

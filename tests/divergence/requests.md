@@ -1,4 +1,4 @@
-Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.639/0.618/0.576/0.579/0.625/0.599
+Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.639/0.635/0.576/0.579/0.625/0.599
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,10 +37,10 @@ Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.599 |
 | walker |  | 1909 | 43 | Fs::DirListing { dir: .github } |  |  | 0.612 |
 | walker |  | 1950 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.646 |
-| walker |  | 2000 | 50 | Code::CodeKey { rung: Names, file: src/requests/status_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.618 |
-| walker |  | 2147 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.618 |
-| walker |  | 2161 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.635 |
+| walker |  | 1964 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.663 |
+| walker |  | 2014 | 50 | Code::CodeKey { rung: Names, file: src/requests/status_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
+| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.635 |
+| walker |  | 2161 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.635 |
 | walker |  | 2218 | 57 | Code::CodeKey { rung: Names, file: src/requests/hooks.py, decl: 0, sub: 0, line: 0 } |  |  | 0.635 |
 | walker |  | 2271 | 53 | Code::CodeKey { rung: Decl, file: src/requests/hooks.py, decl: 3, sub: 0, line: 32 } |  |  | 0.635 |
 | walker |  | 2328 | 57 | Code::CodeKey { rung: Names, file: src/requests/sessions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.635 |
