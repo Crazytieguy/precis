@@ -1,20 +1,4 @@
 .travis.yml
-  1→language: python
-  2→sudo: false
-  3→
-  4→env:
-  5→  - LUA="lua=5.1"
-  6→  - LUA="lua=5.2"
-  7→  - LUA="lua=5.3"
-  8→  - LUA="luajit=2.0"
-  9→  - LUA="luajit=2.1"
-  10→
-  11→before_install:
-  12→  - pip install hererocks
-  13→  - hererocks lua_install -r^ --$LUA
-  14→  - export PATH=$PATH:$PWD/lua_install/bin # Add directory with all installed binaries to PATH
-  15→
-  …
 CHANGELOG.md
 MIT-LICENSE.txt
 README.md

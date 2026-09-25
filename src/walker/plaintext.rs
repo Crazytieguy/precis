@@ -2,7 +2,7 @@
 //! for. Two jobs:
 //!
 //! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
-//!    samples and contributor tooling config, each rendered whole or as
+//!    samples, version pins and the pnpm workspace, each rendered whole or as
 //!    a head slice at one of two value tiers.
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
@@ -97,9 +97,10 @@ const DOTENV_BYTE_GATE: usize = 64 * 1024;
 /// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
-    /// Contributor-toolchain config: ignore lists, editor / lint /
-    /// format config, version pins, `pnpm-workspace.yaml`, and hook /
-    /// docs-site YAML.
+    /// Toolchain facts a reader needs before running anything: runtime
+    /// version pins and the pnpm workspace's package globs. Ignore
+    /// lists, editor / lint / format config and CI or hook YAML are left
+    /// to the listing.
     Tooling,
     /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
     /// `Dockerfile`, compose files).
@@ -123,20 +124,7 @@ pub(crate) enum Class {
 pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     let lower = name.to_ascii_lowercase();
     match name {
-        ".gitignore"
-        | ".dockerignore"
-        | ".editorconfig"
-        | ".eslintrc"
-        | ".prettierrc"
-        | ".nvmrc"
-        | ".python-version"
-        | ".tool-versions"
-        | "pnpm-workspace.yaml"
-        | ".travis.yml"
-        | ".golangci.yml"
-        | ".golangci.yaml"
-        | ".pre-commit-config.yaml"
-        | "mkdocs.yml" => {
+        ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
             return Some(Class::Tooling);
         }
         // `Taskfile.yaml` is a `Makefile` in YAML clothing and a `justfile` one
@@ -988,11 +976,8 @@ mod tests {
         // credential-bearing.
         let cases: &[(&str, Option<Class>)] = &[
             // Dotfiles by class.
-            (".gitignore", Some(Class::Tooling)),
-            (".dockerignore", Some(Class::Tooling)),
-            (".editorconfig", Some(Class::Tooling)),
-            (".eslintrc", Some(Class::Tooling)),
-            (".prettierrc", Some(Class::Tooling)),
+            (".gitignore", None),
+            (".editorconfig", None),
             (".nvmrc", Some(Class::Tooling)),
             (".python-version", Some(Class::Tooling)),
             (".tool-versions", Some(Class::Tooling)),
@@ -1010,8 +995,7 @@ mod tests {
             ("composer.yml", None),
             ("compose-.yml", None),
             ("config.yaml", None),
-            (".travis.yml", Some(Class::Tooling)),
-            (".pre-commit-config.yaml", Some(Class::Tooling)),
+            (".pre-commit-config.yaml", None),
             ("requirements-dev.txt", None),
             (".env.sample", Some(Class::DotenvSample)),
             (".env.example", Some(Class::DotenvSample)),
@@ -1173,7 +1157,7 @@ mod tests {
             "MIT License\n\nCopyright (c) Yoav\n\nSee LICENSE.\n",
         )
         .unwrap();
-        std::fs::write(root.join(".gitignore"), "target/\n*.tmp\n").unwrap();
+        std::fs::write(root.join(".tool-versions"), "rust 1.80.0\n").unwrap();
 
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
@@ -1184,11 +1168,11 @@ mod tests {
             "rendered output carries the LICENSE body:\n{rendered}",
         );
         assert!(
-            rendered.contains("target/"),
-            "rendered output is missing the .gitignore body:\n{rendered}",
+            rendered.contains("rust 1.80.0"),
+            "rendered output is missing the .tool-versions body:\n{rendered}",
         );
         assert_no_plaintext_whole(&report, "LICENSE");
-        assert_has_plaintext_whole(&report, ".gitignore");
+        assert_has_plaintext_whole(&report, ".tool-versions");
     }
 
     /// A file the code engine parses is never also a fallback file —
@@ -1242,11 +1226,11 @@ mod tests {
         let body: String = (0..(PLAINTEXT_LINE_CAP + 5))
             .map(|i| format!("line {i}\n"))
             .collect();
-        std::fs::write(root.join(".gitignore"), body).unwrap();
+        std::fs::write(root.join(".tool-versions"), body).unwrap();
 
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
-        assert_has_plaintext_whole(&report, ".gitignore");
+        assert_has_plaintext_whole(&report, ".tool-versions");
         let rendered = report.tree.render();
         assert!(rendered.contains("line 0"), "{rendered}");
         assert!(

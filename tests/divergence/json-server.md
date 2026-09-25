@@ -130,11 +130,10 @@ Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 8381 | 237 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.751 |
 | walker |  | 8412 | 31 | Json::Whole { file: .oxfmtrc.json } |  |  | 0.751 |
 | ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.743 |
-| walker |  | 8463 | 51 | Plaintext::Whole { file: .gitignore } |  |  | 0.743 |
 | ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.746 |
-| walker |  | 8688 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.746 |
+| walker |  | 8637 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.746 |
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.734 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.740 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.730 |
-| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.719 |
-| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.710 |
+| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.717 |
+| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.708 |
