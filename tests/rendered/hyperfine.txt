@@ -23,6 +23,31 @@ Cargo.toml
   15→[features]
   16→# Use the nightly feature windows_process_extensions_main_thread_handle
   17→windows_process_extensions_main_thread_handle = []
+  19→[dependencies]
+  20→colored = "2.1"
+  21→indicatif = "=0.17.4"
+  22→statistical = "1.0"
+  23→csv = "1.3"
+  24→serde = { version = "1.0", features = ["derive"] }
+  25→serde_json = "1.0"
+  26→rust_decimal = "1.36"
+  27→rand = "0.8"
+  28→shell-words = "1.0"
+  29→thiserror = "2.0"
+  30→anyhow = "1.0"
+  …
+  50→[dependencies.clap]
+  51→version = "4"
+  52→default-features = false
+  53→features = [
+  54→    "suggestions",
+  55→    "color",
+  56→    "wrap_help",
+  57→    "cargo",
+  58→    "help",
+  59→    "usage",
+  60→    "error-context",
+  61→]
   …
   70→[profile.dev.package]
   71→insta.opt-level = 3
@@ -76,27 +101,6 @@ scripts/
   welch_ttest.py
 src/
   benchmark/
-    benchmark_result.rs
-      …
-      11→pub struct BenchmarkResult {
-      …
-    executor.rs
-    mod.rs
-    relative_speed.rs
-    scheduler.rs
-      …
-      13→pub struct Scheduler<'a> {
-      14→    commands: &'a Commands<'a>,
-      15→    options: &'a Options,
-      16→    export_manager: &'a ExportManager,
-      17→    results: Vec<BenchmarkResult>,
-      18→}
-      20→impl<'a> Scheduler<'a> {
-      …
-    timing_result.rs
-      …
-      5→pub struct TimingResult {
-      …
   cli.rs
     …
     8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
