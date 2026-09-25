@@ -51,25 +51,27 @@ README.md
   35→  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
   36→```
   38→## Donate
-  39→
-  40→The Pallets organization develops and supports Flask and the libraries
-  41→it uses. In order to grow the community of contributors and users, and
-  42→allow the maintainers to devote more time to the projects, [please
-  43→donate today].
-  44→
-  45→[please donate today]: https://palletsprojects.com/donate
+  …
   47→## Contributing
-  48→
-  49→See our [detailed contributing documentation][contrib] for many ways to
-  50→contribute, including reporting issues, requesting features, asking or answering
-  51→questions, and making PRs.
-  52→
-  53→[contrib]: https://palletsprojects.com/contributing/
+  …
 docs/
   Makefile
     1→# Minimal makefile for Sphinx documentation
     2→#
     3→
+    4→# You can set these variables from the command line, and also
+    5→# from the environment for the first two.
+    6→SPHINXOPTS    ?=
+    7→SPHINXBUILD   ?= sphinx-build
+    8→SOURCEDIR     = .
+    9→BUILDDIR      = _build
+    10→
+    11→# Put it first so that "make" without argument is like "make help".
+    12→help:
+    13→	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+    14→
+    15→.PHONY: help Makefile
+    16→
     …
   _static/
     debugger.png

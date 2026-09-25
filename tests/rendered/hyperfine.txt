@@ -36,6 +36,12 @@ Cargo.toml
   29→thiserror = "2.0"
   30→anyhow = "1.0"
   31→
+  32→[target.'cfg(not(windows))'.dependencies]
+  33→libc = "0.2"
+  34→
+  35→[target.'cfg(windows)'.dependencies]
+  36→windows-sys = { version = "0.59", features = [
+  37→    "Win32_Foundation",
   …
 LICENSE-APACHE
 LICENSE-MIT
@@ -72,11 +78,7 @@ README.md
   339→
   340→Thank you for considering to cite hyperfine in your research work. Please see the information
   341→in the sidebar on how to properly cite hyperfine.
-  343→## License
-  344→
-  345→`hyperfine` is dual-licensed under the terms of the MIT License and the Apache License 2.0.
-  346→
-  347→See the [LICENSE-APACHE](LICENSE-APACHE) and [LICENSE-MIT](LICENSE-MIT) files for details.
+  …
 build.rs
   …
   7→fn main() {

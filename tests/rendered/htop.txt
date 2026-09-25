@@ -45,6 +45,14 @@ CommandLine.c
 CommandLine.h
   …
   11→typedef enum {
+  12→   STATUS_OK,
+  13→   STATUS_ERROR_EXIT,
+  14→   STATUS_OK_EXIT
+  15→} CommandLineStatus;
+  16→
+  17→extern const char* program;
+  18→
+  19→int CommandLine_run(int argc, char** argv);
   …
 CommandScreen.c
 CommandScreen.h
@@ -167,15 +175,13 @@ README.md
   180→### Runtime optional dependencies:
   …
   198→## Support
-  199→
-  200→If you have trouble running `htop` please consult your operating system / Linux distribution documentation for getting support and filing bugs.
+  …
   202→## Bugs, development feedback
   …
   211→## History
   …
   217→## License
-  218→
-  219→GNU General Public License, version 2 (GPL-2.0) or, at your option, any later version.
+  …
 RichString.c
 RichString.h
 Row.c

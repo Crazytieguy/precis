@@ -81,8 +81,7 @@ README.md
   116→# Usage
   …
   131→# License
-  132→
-  133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
+  …
 SECURITY.md
 active_help.go
 active_help_test.go
@@ -214,6 +213,8 @@ command.go
   …
   484→func (c *Command) HelpFunc() func(*Command, []string) {
   …
+  503→// getHelpTemplateFunc returns the help template function for the command
+  504→// going up the command tree if necessary.
   505→func (c *Command) getHelpTemplateFunc() func(w io.Writer, data interface{}) error {
   …
   520→func (c *Command) Help() error {

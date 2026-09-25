@@ -89,18 +89,11 @@ README.md
   25→
   26→Please look at the [act user guide](https://nektosact.com) for more documentation.
   28→# Support
-  29→
-  30→Need help? Ask in [discussions](https://github.com/nektos/act/discussions)!
+  …
   32→# Contributing
-  33→
-  34→Want to contribute to act? Awesome! Check out the [contributing guidelines](CONTRIBUTING.md) to get involved.
-  35→
+  …
   36→## Manually building from source
-  37→
-  38→- Install Go tools 1.20+ - (<https://golang.org/doc/install>)
-  39→- Clone this repo `git clone git@github.com:nektos/act.git`
-  40→- Run unit tests with `make test`
-  41→- Build and install: `make install`
+  …
 VERIFICATION
 VERSION
 act-cli.nuspec
@@ -120,12 +113,27 @@ cmd/
   notices.go
     …
     17→type Notice struct {
-    …
+    18→	Level   string `json:"level"`
+    19→	Message string `json:"message"`
+    20→}
     22→func displayNotices(input *Input) {
     …
     55→var noticesLoaded = make(chan []Notice)
     56→
     57→func loadVersionNotices(version string) {
+    58→	go func() {
+    59→		noticesLoaded <- getVersionNotices(version)
+    60→	}()
+    …
+    63→const NoticeURL = "https://api.nektosact.com/notices"
+    64→
+    65→func getVersionNotices(version string) []Notice {
+    …
+    121→func loadNoticesEtag() string {
+    …
+    130→func saveNoticesEtag(etag string) {
+    …
+    138→func etagPath() string {
     …
   platforms.go
   root.go

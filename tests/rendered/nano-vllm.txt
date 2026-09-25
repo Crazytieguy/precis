@@ -37,8 +37,7 @@ README.md
   46→## Benchmark
   …
   64→## Star History
-  65→
-  66→[![Star History Chart](https://api.star-history.com/svg?repos=GeeeekExplorer/nano-vllm&type=Date)](https://www.star-history.com/#GeeeekExplorer/nano-vllm&Date)
+  …
 assets/
   logo.png
 bench.py
@@ -122,8 +121,12 @@ nanovllm/
       48→    def step(self):
       …
       56→    def is_finished(self):
-      …
+      57→        return self.scheduler.is_finished()
       59→    def generate(
+      60→        self,
+      61→        prompts: list[str] | list[list[int]],
+      62→        sampling_params: SamplingParams | list[SamplingParams],
+      63→        use_tqdm: bool = True,
       …
     model_runner.py
       …

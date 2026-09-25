@@ -73,7 +73,7 @@ Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | ns | 5631 |  | 123 | TokenKind enum | 4.1 |  | 0.595 |
 | ns | 5707 |  | 76 | File struct | 4.2 |  | 0.602 |
 | walker |  | 5729 | 187 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 2, line: 176 } |  |  | 0.604 |
-| walker |  | 5828 | 99 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.604 |
+| walker |  | 5828 | 99 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.604 |
 | walker |  | 5877 | 49 | Code::CodeKey { rung: Names, file: include/stdbool.h, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
 | ns | 6011 |  | 304 | Token struct (all fields) | 4.3 |  | 0.618 |
 | walker |  | 6101 | 224 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.639 |
@@ -115,6 +115,6 @@ Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | ns | 9430 |  | 247 | The statement grammar (comment above stmt()) | 6.1 |  | 0.720 |
 | walker |  | 9559 | 217 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.720 |
 | ns | 9756 |  | 326 | The expression precedence chain, as grammar comments | 6.2 | 3.9 | 0.712 |
-| walker |  | 9819 | 260 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.712 |
+| walker |  | 9803 | 244 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.712 |
 | ns | 9989 |  | 233 | Every preprocessor directive chibicc handles | 6.3 |  | 0.705 |
-| walker |  | 9996 | 177 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.705 |
+| walker |  | 9997 | 194 | Code::CodeKey { rung: Names, file: main.c, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |

@@ -74,10 +74,7 @@ README.md
   52→## Roadmap
   …
   82→## Thanks
-  83→
-  84→I created this tool to better view those super deep YAML files of Kubernetes while [jnv](https://github.com/ynqa/jnv) only supports JSON.
-  85→
-  86→This is based on the amazing TUI framework [ratatui](https://github.com/ratatui-org/ratatui) and its tree widget [tui-tree-widget](https://github.com/EdJoPaTo/tui-rs-tree-widget.git).
+  …
 assets/
   screenshot.png
 build.rs
@@ -236,6 +233,17 @@ src/
     62→            if args.live_reload {
     63→                fw = Some(FileWatcher::new(
     64→                    path.clone(),
+    65→                    cfg.clone(),
+    66→                    content_type,
+    67→                    max_data_size,
+    68→                ));
+    69→            }
+    70→            fs::read(path).context("read file")?
+    71→        }
+    72→        None => {
+    73→            let mut data = Vec::new();
+    74→            io::stdin().read_to_end(&mut data).context("read stdin")?;
+    75→            data
     …
     109→}
     111→fn main() {

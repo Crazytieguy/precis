@@ -45,23 +45,7 @@ README.md
   967→## MCP Server Compatibility 🔌
   968→
   969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
-  971→## Contributing 🤝
-  972→
-  973→Contributions are welcome! Feel free to:
-  974→- Submit bug reports or feature requests through issues
-  975→- Create pull requests for improvements
-  976→- Share your custom MCP servers
-  977→- Improve documentation
-  978→
-  979→Please ensure your contributions follow good coding practices and include appropriate tests.
-  981→## License 📄
-  982→
-  983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-  985→## Acknowledgments 🙏
-  986→
-  987→- Thanks to the Anthropic team for Claude and the MCP specification
-  988→- Thanks to the Ollama team for their local LLM runtime
-  989→- Thanks to all contributors who have helped improve this tool
+  …
 cmd/
   auth.go
     …
@@ -83,12 +67,30 @@ cmd/
     32→}
     …
     37→var authLoginCmd = &cobra.Command{
+    38→	Use:   "login [provider]",
+    39→	Short: "Authenticate with an AI provider using OAuth",
+    40→	Long: `Authenticate with an AI provider using OAuth flow.
+    41→
+    42→This will open your browser to complete the OAuth authentication process.
+    43→Your credentials will be securely stored and will take precedence over 
+    44→environment variables when making API calls.
     …
     58→var authLogoutCmd = &cobra.Command{
     59→	Use:   "logout [provider]",
     60→	Short: "Remove stored authentication credentials for a provider",
     61→	Long: `Remove stored authentication credentials for an AI provider.
     62→
+    63→This will delete the stored API key for the specified provider. You will need
+    64→to use environment variables or command-line flags for authentication after logout.
+    65→
+    66→Available providers:
+    67→  - anthropic: Anthropic Claude API
+    68→
+    69→Example:
+    70→  mcphost auth logout anthropic`,
+    71→	Args: cobra.ExactArgs(1),
+    72→	RunE: runAuthLogout,
+    73→}
     …
     78→var authStatusCmd = &cobra.Command{
     79→	Use:   "status",

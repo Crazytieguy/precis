@@ -1,4 +1,4 @@
-Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.668/0.593/0.700/0.692/0.653/0.734
+Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.668/0.593/0.700/0.753/0.701/0.734
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,15 +23,15 @@ Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 661 | 199 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.592 |
 | walker |  | 686 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.592 |
 | ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.581 |
-| walker |  | 716 | 30 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.581 |
+| walker |  | 716 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.581 |
 | ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.535 |
 | walker |  | 880 | 164 | Json::Scripts { file: package.json } |  |  | 0.600 |
 | ns | 1101 |  | 229 | Complete runtime dependency list (package.json 46-60) | 1.8 |  | 0.545 |
 | walker |  | 1109 | 229 | Json::Dependencies { file: package.json } |  |  | 0.620 |
 | ns | 1140 |  | 39 | Complete listing of every non-src directory | 1.9 |  | 0.619 |
-| walker |  | 1254 | 145 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.733 |
+| walker |  | 1254 | 145 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.733 |
 | ns | 1260 |  | 120 | Complete REST route table for array and object resources | 2.1 |  | 0.693 |
-| walker |  | 1371 | 117 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.697 |
+| walker |  | 1371 | 117 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.697 |
 | ns | 1384 |  | 124 | CLI usage/options help text (src/bin.ts 22-30) | 2.2 |  | 0.668 |
 | walker |  | 1386 | 15 | Code::CodeKey { rung: Names, file: src/random-id.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
 | walker |  | 1404 | 18 | Code::CodeKey { rung: Body, file: src/random-id.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.668 |
@@ -55,7 +55,7 @@ Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 2015 | 36 | Code::CodeKey { rung: Names, file: src/app.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
 | walker |  | 2038 | 23 | Code::CodeKey { rung: Decl, file: src/app.ts, decl: 1, sub: 0, line: 18 } |  |  | 0.591 |
 | ns | 2171 |  | 165 | v0 to v1 migration notes (README 256-263) | 2.9 |  | 0.578 |
-| walker |  | 2201 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.615 |
+| walker |  | 2201 | 163 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.615 |
 | walker |  | 2256 | 55 | Code::CodeKey { rung: Names, file: src/where-operators.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
 | walker |  | 2344 | 88 | Code::CodeKey { rung: Decl, file: src/where-operators.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.618 |
 | walker |  | 2362 | 18 | Code::CodeKey { rung: Body, file: src/where-operators.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.620 |
@@ -76,7 +76,7 @@ Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 3357 | 117 | Code::CodeKey { rung: Body, file: src/parse-where.ts, decl: 1, sub: 0, line: 58 } |  |  | 0.710 |
 | ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.719 |
 | ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.724 |
-| walker |  | 3532 | 175 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.741 |
+| walker |  | 3532 | 175 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.741 |
 | walker |  | 3546 | 14 | Code::CodeKey { rung: Names, file: src/adapters/observer.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.743 |
 | ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.729 |
 | walker |  | 3656 | 110 | Code::CodeKey { rung: Decl, file: src/adapters/observer.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.730 |
@@ -85,53 +85,51 @@ Score(3000)=0.700 I=0.816 C=0.600 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 3677 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 4, sub: 0, line: 13 } |  |  | 0.731 |
 | walker |  | 3684 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 5, sub: 0, line: 16 } |  |  | 0.731 |
 | walker |  | 3695 | 11 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 6, sub: 0, line: 20 } |  |  | 0.731 |
+| walker |  | 3797 | 102 | Json::Whole { file: schema.json } |  |  | 0.732 |
 | ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.728 |
-| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.714 |
-| walker |  | 4021 | 326 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.714 |
-| ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.692 |
-| walker |  | 4328 | 307 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.692 |
-| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.668 |
-| walker |  | 4430 | 102 | Json::Whole { file: schema.json } |  |  | 0.668 |
-| walker |  | 4462 | 32 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 8, sub: 0, line: 31 } |  |  | 0.668 |
-| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.654 |
-| walker |  | 4523 | 61 | Code::CodeKey { rung: Names, file: src/adapters/normalized-adapter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
-| walker |  | 4536 | 13 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.664 |
-| walker |  | 4590 | 54 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 3, sub: 0, line: 11 } |  |  | 0.670 |
-| walker |  | 4601 | 11 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 4, sub: 0, line: 14 } |  |  | 0.673 |
-| walker |  | 4622 | 21 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 6, sub: 0, line: 44 } |  |  | 0.673 |
-| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.679 |
-| walker |  | 4915 | 293 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.714 |
-| ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.693 |
-| ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.672 |
-| walker |  | 5172 | 257 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.685 |
-| walker |  | 5339 | 167 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.706 |
-| ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.686 |
-| walker |  | 5491 | 152 | Json::Whole { file: tsconfig.json } |  |  | 0.687 |
-| walker |  | 5579 | 88 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 10, sub: 0, line: 145 } |  |  | 0.688 |
-| walker |  | 5622 | 43 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 7, sub: 0, line: 24 } |  |  | 0.688 |
-| ns | 5863 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.668 |
-| walker |  | 5944 | 322 | Code::CodeKey { rung: Body, file: src/paginate.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.669 |
-| walker |  | 6070 | 126 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 8, sub: 0, line: 96 } |  |  | 0.669 |
-| ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.651 |
-| walker |  | 6289 | 219 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 5, sub: 0, line: 18 } |  |  | 0.653 |
+| walker |  | 3829 | 32 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 8, sub: 0, line: 31 } |  |  | 0.728 |
+| walker |  | 3890 | 61 | Code::CodeKey { rung: Names, file: src/adapters/normalized-adapter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.737 |
+| walker |  | 3903 | 13 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.739 |
+| walker |  | 3957 | 54 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 3, sub: 0, line: 11 } |  |  | 0.746 |
+| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.732 |
+| walker |  | 3968 | 11 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 4, sub: 0, line: 14 } |  |  | 0.735 |
+| walker |  | 3989 | 21 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 6, sub: 0, line: 44 } |  |  | 0.735 |
+| ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.713 |
+| walker |  | 4282 | 293 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.751 |
+| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.725 |
+| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.710 |
+| walker |  | 4539 | 257 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.723 |
+| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.727 |
+| walker |  | 4706 | 167 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.751 |
+| walker |  | 4858 | 152 | Json::Whole { file: tsconfig.json } |  |  | 0.752 |
+| ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.730 |
+| walker |  | 4946 | 88 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 10, sub: 0, line: 145 } |  |  | 0.730 |
+| walker |  | 4989 | 43 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 7, sub: 0, line: 24 } |  |  | 0.730 |
+| ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.708 |
+| walker |  | 5311 | 322 | Code::CodeKey { rung: Body, file: src/paginate.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.710 |
+| ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.689 |
+| walker |  | 5437 | 126 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 8, sub: 0, line: 96 } |  |  | 0.689 |
+| walker |  | 5656 | 219 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 5, sub: 0, line: 18 } |  |  | 0.691 |
+| ns | 5863 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.671 |
+| ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.653 |
 | ns | 6390 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.637 |
-| ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.619 |
-| ns | 6942 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.629 |
-| walker |  | 7118 | 829 | Code::CodeKey { rung: Body, file: src/matches-where.ts, decl: 1, sub: 0, line: 24 } |  |  | 0.691 |
-| ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.678 |
-| walker |  | 7291 | 173 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.700 |
-| walker |  | 7544 | 253 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 0, line: 94 } |  |  | 0.726 |
-| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.706 |
-| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.692 |
-| walker |  | 7817 | 273 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 1, line: 94 } |  |  | 0.701 |
-| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.708 |
-| walker |  | 8144 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.743 |
-| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.729 |
-| walker |  | 8381 | 237 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.751 |
-| walker |  | 8412 | 31 | Json::Whole { file: .oxfmtrc.json } |  |  | 0.751 |
+| walker |  | 6485 | 829 | Code::CodeKey { rung: Body, file: src/matches-where.ts, decl: 1, sub: 0, line: 24 } |  |  | 0.703 |
+| walker |  | 6658 | 173 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.705 |
+| ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.685 |
+| walker |  | 6911 | 253 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 0, line: 94 } |  |  | 0.713 |
+| ns | 6942 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.719 |
+| walker |  | 7184 | 273 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 1, line: 94 } |  |  | 0.724 |
+| ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.730 |
+| walker |  | 7511 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.750 |
+| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.730 |
+| walker |  | 7748 | 237 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.754 |
+| walker |  | 7779 | 31 | Json::Whole { file: .oxfmtrc.json } |  |  | 0.754 |
+| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.760 |
+| walker |  | 8004 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.760 |
+| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.765 |
+| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.751 |
 | ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.743 |
 | ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.746 |
-| walker |  | 8637 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.746 |
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.734 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.740 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.730 |

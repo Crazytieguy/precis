@@ -151,13 +151,7 @@ README.md
   151→## 🤝 Contributing
   …
   164→## 📄 License
-  165→
-  166→  - **sps:** BSD‑3‑Clause - see [LICENSE.md](LICENSE.md)
-  167→  - Inspired by Homebrew BSD‑2‑Clause — see [NOTICE.md](NOTICE.md)
-  168→
-  169→-----
-  170→
-  171→> *Alpha software. No guarantees. Use responsibly.*
+  …
 rustfmt.toml
 sps/
   Cargo.toml
@@ -186,6 +180,15 @@ sps/
       …
       2→//! Defines the command-line argument structure using clap.
       …
+      10→pub mod info;
+      11→pub mod init;
+      12→pub mod install;
+      13→pub mod list;
+      14→pub mod reinstall;
+      15→pub mod search;
+      16→pub mod status;
+      17→pub mod uninstall;
+      …
     main.rs
       …
       17→mod cli;
@@ -203,7 +206,8 @@ sps/
       runner.rs
     pipeline.rs
       1→pub mod downloader;
-      …
+      2→pub mod planner;
+      3→pub mod runner;
 sps-common/
   Cargo.toml
   src/

@@ -51,18 +51,11 @@ README.md
   142→### 6. Remove Saved Connections
   …
   154→## 🔒 Security
-  155→
-  156→peepDB implements several security measures to protect your database connection details:
-  157→
-  158→1. **Local Storage**: All connection details are stored locally on your machine, not on any remote servers.
-  159→2. **Encryption**: Connection details are encrypted before being stored, using the cryptography library.
-  160→3. **Caution with Passwords**: While passwords are accepted as command-line arguments for convenience, users should be cautious about using this method in shared environments or situations where command history might be accessible to others.
+  …
   162→## 🤝 Contributing
-  163→
-  164→Contributions to peepDB are welcome! Please refer to our [Contributing Guide](CONTRIBUTING.md) for more information.
+  …
   166→## 📜 License
-  167→
-  168→Distributed under the GNU General Public License Version 3. See the [LICENSE](LICENSE) file for more details.
+  …
   170→## 📚 Documentation
   171→
   172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
@@ -216,6 +209,22 @@ peepdb/
     …
     27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
     …
+    56→def peep_db(db_type: str,
+    57→            host: str,
+    58→            user: str,
+    59→            password: str,
+    60→            database: str,
+    61→            table: str = None,
+    62→            format: str = 'table',
+    63→            page: int = 1,
+    64→            page_size: int = 100,
+    65→            scientific: bool = False,
+    66→            trusted: bool = False) -> Any:
+    …
+    101→def format_as_table(data: Dict[str, Any]) -> str:
+    …
+    118→def format_value(value, scientific: bool, output_format: str):
+    …
   db/
     __init__.py
       1→from .base import BaseDatabase
@@ -290,4 +299,6 @@ project.toml
   47→peepdb = "peepdb.cli:main"
   …
 requirements.txt
+  1→async-timeout==4.0.3
+  …
 setup.py

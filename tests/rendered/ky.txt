@@ -140,10 +140,7 @@ readme.md
   1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
   1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
   1352→## Maintainers
-  1353→
-  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
-  1355→- [Seth Holladay](https://github.com/sholladay)
-  1356→- [Szymon Marczak](https://github.com/szmarczak)
+  …
 source/
   core/
     Ky.ts
@@ -159,6 +156,14 @@ source/
     constants.ts
   errors/
     ForceRetryError.ts
+      …
+      8→export class ForceRetryError extends Error {
+      9→	override name = 'ForceRetryError' as const;
+      10→	customDelay: number | undefined;
+      11→	code: string | undefined;
+      12→	customRequest: Request | undefined;
+      13→
+      …
     HTTPError.ts
     NonError.ts
       1→/**

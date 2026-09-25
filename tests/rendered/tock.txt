@@ -139,9 +139,7 @@ README.md
   709→## Inspiration
   710→
   711→Tock is inspired by and compatible with [Bartib](https://github.com/nikolassv/bartib) - an excellent time tracking tool written in Rust by Nikolas Schmidt-Voigt. It's saved me countless hours and helped me stay organized, so I wanted to create a similar tool in Go with a clean architecture approach and an interactive terminal UI.
-  713→## License
-  714→
-  715→GPL-3.0-or-later
+  …
 assets/
   demo.gif
   demo.png
@@ -237,7 +235,8 @@ internal/
       25→type CalendarConfig struct {
       …
       33→type ExportConfig struct {
-      …
+      34→	ICal ICalConfig `mapstructure:"ical"`
+      35→}
       37→type ICalConfig struct {
       38→	FileName string `mapstructure:"file_name"`
       39→}

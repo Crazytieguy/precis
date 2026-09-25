@@ -70,8 +70,7 @@ README.md
   511→### Thread local runtime
   …
   579→## License
-  580→
-  581→Source code is available under the MIT [License](LICENSE).
+  …
 deps/
   .gitignore
   .package
@@ -226,6 +225,8 @@ neco.h
   177→int neco_getaddrinfo(const char *node, const char *service,
   …
   179→int neco_getaddrinfo_dl(const char *node, const char *service,
+  …
+  188→int neco_setnonblock(int fd, bool nonblock, bool *oldnonblock);
   …
 tests/
   README.md

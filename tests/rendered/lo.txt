@@ -77,19 +77,12 @@ README.md
   14→
   15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
   …
-  5093→## 👤 Contributors
-  5094→
-  5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
   5097→## 💫 Show your support
   5098→
   5099→Give a ⭐️ if this project helped you!
   5100→
   5101→[![GitHub Sponsors](https://img.shields.io/github/sponsors/samber?style=for-the-badge)](https://github.com/sponsors/samber)
-  5103→## 📝 License
-  5104→
-  5105→Copyright © 2022 [Samuel Berthe](https://github.com/samber).
-  5106→
-  5107→This project is under [MIT](./LICENSE) license.
+  …
 benchmark/
   CLAUDE.md
   core_condition_bench_test.go
@@ -345,12 +338,23 @@ type_manipulation.go
   28→func ToPtr[T any](x T) *T {
   …
   34→func Nil[T any]() *T {
+  35→	return nil
   …
   41→func EmptyableToPtr[T any](x T) *T {
   …
   53→func FromPtr[T any](x *T) T {
   …
   63→func FromPtrOr[T any](x *T, fallback T) T {
+  …
+  73→func ToSlicePtr[T any](collection []T) []*T {
+  …
+  85→func FromSlicePtr[T any](collection []*T) []T {
+  …
+  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
+  …
+  115→func ToAnySlice[T any](collection []T) []any {
+  …
+  126→func FromAnySlice[T any](in []any) ([]T, bool) {
   …
 type_manipulation_test.go
 types.go

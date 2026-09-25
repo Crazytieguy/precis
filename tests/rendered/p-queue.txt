@@ -103,9 +103,7 @@ readme.md
   847→## FAQ
   …
   1066→## Maintainers
-  1067→
-  1068→- [Sindre Sorhus](https://github.com/sindresorhus)
-  1069→- [Richie Bendall](https://github.com/Richienb)
+  …
   1071→## Related
   …
 source/
@@ -258,6 +256,9 @@ source/
     902→	const queue = new PQueue({concurrency: 2});
     903→
     904→	// Backpressure handling
+    905→	if (queue.isSaturated) {
+    906→		console.log('Queue is saturated, waiting for capacity...');
+    907→		await queue.onSizeLessThan(queue.concurrency);
     …
     918→	get isSaturated(): boolean {
     …

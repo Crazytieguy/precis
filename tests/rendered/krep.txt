@@ -104,16 +104,11 @@ README.md
   222→### 5. Skipping Non-Relevant Content
   …
   231→## Contributing
-  232→
-  233→Contributions are welcome! Please feel free to submit a Pull Request.
+  …
   235→## Author
-  236→
-  237→- **Davide Santangelo** - [GitHub](https://github.com/davidesantangelo)
+  …
   239→## License
-  240→
-  241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
-  242→
-  243→Copyright © 2025 Davide Santangelo
+  …
 aho_corasick.c
 aho_corasick.h
   …
@@ -178,13 +173,17 @@ krep.h
   65→typedef struct search_params
   …
   94→} search_params_t;
-  …
+  96→/* --- Function Pointer Type for Search Algorithms --- */
+  97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
   98→typedef uint64_t (*search_func_t)(const search_params_t *params,
   99→                                  const char *text_start,
   100→                                  size_t text_len,
   101→                                  match_result_t *result);
   …
   104→typedef struct
+  105→{
+  106→   int thread_id;
+  107→   const search_params_t *params; // Pointer to shared search parameters
   …
   122→} thread_data_t;
   124→/* --- Thread Pool Implementation --- */
@@ -204,7 +203,8 @@ krep.h
   138→   pthread_mutex_t queue_mutex;  // Mutex for task queue access
   139→   pthread_cond_t queue_cond;    // Condition variable for task availability
   140→   pthread_cond_t complete_cond; // Condition variable for task completion
-  …
+  141→   size_t working_threads;       // Counter for busy threads
+  142→   atomic_bool shutdown;         // Shutdown flag
   143→} thread_pool_t;
   145→/* --- Thread Pool API --- */
   146→thread_pool_t *thread_pool_init(int num_threads);

@@ -41,11 +41,9 @@ README.md
   130→## 📝 Citation
   …
   153→## 🛡️ Security
-  154→
-  155→See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+  …
   157→## 📃 License
-  158→
-  159→This project is licensed under the Apache-2.0 License.
+  …
 ci/
   evaluate/
     backtest_config.yaml
@@ -147,6 +145,11 @@ src/
       34→    tokenizer_class: str
       35→    tokenizer_kwargs: Dict[str, Any]
       36→    context_length: int
+      37→    prediction_length: int
+      38→    n_tokens: int
+      39→    n_special_tokens: int
+      40→    pad_token_id: int
+      41→    eos_token_id: int
       …
       59→class ChronosTokenizer:
       …

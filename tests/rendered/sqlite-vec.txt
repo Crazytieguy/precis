@@ -87,18 +87,6 @@ README.md
   94→*/
   95→```
   97→## Sponsors
-  98→
-  99→Development of `sqlite-vec` is supported by multiple generous sponsors! Mozilla
-  100→is the main sponsor through the new Builders project.
-  101→<p align="center">
-  102→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
-  103→  <picture>
-  104→    <source media="(prefers-color-scheme: dark)" srcset="./.github/logos/mozilla.dark.svg">
-  105→    <source media="(prefers-color-scheme: light)" srcset="./.github/logos/mozilla.svg">
-  106→    <img alt="Mozilla Builders logo" width=400>
-  107→  </picture>
-  108→  </a>
-  109→</p>
   …
   152→## See Also
   153→
@@ -144,7 +132,24 @@ bindings/
     Makefile
       1→VERSION=$(shell cat ../../VERSION)
       2→
-      …
+      3→deps: Cargo.toml sqlite-vec.c sqlite-vec.h sqlite3ext.h sqlite3.h
+      4→
+      5→Cargo.toml: ../../VERSION Cargo.toml.tmpl
+      6→		VERSION=$(VERSION) envsubst < Cargo.toml.tmpl > $@
+      7→
+      8→sqlite-vec.c: ../../sqlite-vec.c
+      9→		cp $< $@
+      10→
+      11→sqlite-vec.h: ../../sqlite-vec.h
+      12→		cp $< $@
+      13→
+      14→sqlite3ext.h: ../../vendor/sqlite3ext.h
+      15→		cp $< $@
+      16→
+      17→sqlite3.h: ../../vendor/sqlite3.h
+      18→		cp $< $@
+      19→
+      20→.PHONY: deps
     build.rs
       1→fn main() {
       2→    cc::Build::new().file("sqlite-vec.c").define("SQLITE_CORE", None).compile("sqlite_vec0");

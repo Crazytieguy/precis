@@ -86,8 +86,7 @@ Readme.md
   205→### Documentation
   …
   231→### License
-  232→
-  233→This package is [MIT-licensed](./License.md).
+  …
 docs/
   guides/
     01-getting-started.md
@@ -212,8 +211,11 @@ src/
     139→export function create<T, S>(
     140→  value: unknown,
     141→  struct: Struct<T, S>,
+    142→  message?: string
+    143→): T {
     …
     157→export function mask<T, S>(
+    158→  value: unknown,
     …
     175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
     …

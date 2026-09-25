@@ -477,6 +477,9 @@ fn rst_readme(source: &str) -> (BTreeSet<usize>, Vec<SectionRange>) {
             continue;
         }
         let title = title_core(src_lines[heading.title_row - 1]);
+        if is_appendix_title_core(&title) {
+            continue;
+        }
         push_whole_or_head_split(
             &mut ranges,
             &src_lines,
@@ -875,6 +878,9 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                 );
             }
             TopLevelEntry::Section { node, start, end } => {
+                if is_appendix_title_core(&section_title_core(*node, source)) {
+                    continue;
+                }
                 let reference_h2 = is_reference_usage_section(*node, source);
                 push_whole_or_head_split(
                     &mut out,
@@ -1198,15 +1204,52 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
 /// over prose are introductions, and over a long body a tutorial the
 /// index decay keeps back.
 fn is_reference_usage_section(section: Node, source: &str) -> bool {
-    let Some(inline) =
-        first_heading_child(section).and_then(|heading| first_child_of_kind(heading, "inline"))
-    else {
-        return false;
-    };
-    let title = title_core(&source[inline.start_byte()..inline.end_byte()]);
+    let title = section_title_core(section, source);
     let body = section_body(section, None, source);
     (is_canonical_usage_title_core(&title) && is_code_dominant(section, body))
         || (is_reference_usage_title_core(&title) && reference_usage_body_ok(body))
+}
+
+fn section_title_core(section: Node, source: &str) -> String {
+    first_heading_child(section)
+        .and_then(|heading| first_child_of_kind(heading, "inline"))
+        .map(|inline| title_core(&source[inline.start_byte()..inline.end_byte()]))
+        .unwrap_or_default()
+}
+
+/// A README's back matter: who wrote, funds, maintains or may contribute
+/// to the project, and under what license — never what the code does.
+/// These sections emit no batch; the outline still names them.
+fn is_appendix_title_core(core: &str) -> bool {
+    matches!(
+        core,
+        "license"
+            | "licence"
+            | "licensing"
+            | "contributing"
+            | "contribute"
+            | "contributors"
+            | "contribution"
+            | "sponsors"
+            | "backers"
+            | "donate"
+            | "donation"
+            | "donations"
+            | "support"
+            | "funding"
+            | "acknowledgements"
+            | "acknowledgments"
+            | "credits"
+            | "thanks"
+            | "authors"
+            | "author"
+            | "maintainers"
+            | "star history"
+            | "code of conduct"
+            | "security"
+            | "citation"
+            | "contact"
+    )
 }
 
 /// Usage-demo titles; shared with the RST heading path.
@@ -2063,6 +2106,17 @@ mod tests {
         let tree = parse(source);
         let outline_emits = !outline_rows_of(source).is_empty();
         logical_sections(&tree, source, outline_emits)
+    }
+
+    /// Back-matter sections (license, contributing, sponsors, …) emit no
+    /// batch, whatever emoji or markup leads their title.
+    #[test]
+    fn markdown_readme_back_matter_emits_no_section() {
+        let src = "# Tool\n\nDoes things.\n\n## Usage\n\nRun it.\n\n\
+                   ## 📄 License\n\nMIT.\n\n## Contributing\n\nSend PRs.\n";
+        let ranges = sections(src);
+        let bounds: Vec<_> = ranges.iter().map(|r| (r.start, r.end)).collect();
+        assert_eq!(bounds, [(1, 4), (5, 7)]);
     }
 
     #[test]

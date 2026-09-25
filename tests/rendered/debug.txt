@@ -38,6 +38,10 @@ README.md
   39→
   40→require('./worker');
   41→```
+  43→Example _worker.js_:
+  44→
+  45→```js
+  46→var a = require('debug')('worker:a')
   …
   110→## Namespace Colors
   …
@@ -117,11 +121,7 @@ README.md
   357→## Usage in child processes
   …
   379→## Authors
-  380→
-  381→ - TJ Holowaychuk
-  382→ - Nathan Rajlich
-  383→ - Andrew Rhyne
-  384→ - Josh Junon
+  …
   386→## Backers
   …
   422→## Sponsors

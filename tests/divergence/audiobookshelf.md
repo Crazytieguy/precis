@@ -261,7 +261,7 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 6794 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.679 |
 | ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.664 |
 | walker |  | 6828 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.664 |
-| walker |  | 6856 | 28 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.664 |
+| walker |  | 6856 | 28 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.664 |
 | walker |  | 6930 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.664 |
 | ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.657 |
 | ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.653 |

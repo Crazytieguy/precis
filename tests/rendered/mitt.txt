@@ -164,6 +164,9 @@ README.md
   169→Invoke all handlers for the given type.
   170→If present, `'*'` handlers are invoked after type-matched handlers.
   171→
+  172→Note: Manually firing '\*' handlers is not supported.
+  173→
+  174→#### Parameters
   …
   179→## Contribute
   …
@@ -172,8 +175,7 @@ README.md
   189→### Submitting pull requests
   …
   203→## License
-  204→
-  205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+  …
 package.json
   …
   2→  "name": "mitt",

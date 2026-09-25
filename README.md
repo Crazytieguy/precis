@@ -65,8 +65,7 @@ README.md
   189→### Submitting pull requests
   …
   203→## License
-  204→
-  205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+  …
 package.json
   …
   2→  "name": "mitt",
@@ -91,6 +90,8 @@ package.json
   21→    "test-types": "tsc test/test-types-compilation.ts --noEmit --strict",
   22→    "lint": "eslint src test --ext ts --ext js",
   23→    "typecheck": "tsc --noEmit",
+  24→    "bundle": "microbundle -f es,cjs,umd",
+  25→    "build": "npm-run-all --silent clean -p bundle -s docs",
   …
   41→  "license": "MIT",
   42→  "files": [

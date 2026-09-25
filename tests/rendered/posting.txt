@@ -78,8 +78,7 @@ README.md
   49→
   50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
   52→## Contributing
-  53→
-  54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
+  …
   56→## Learn More
   57→
   58→Learn more about Posting at [https://posting.sh](https://posting.sh).
@@ -272,6 +271,13 @@ src/
       postman.py
     jump_overlay.py
     jumper.py
+      …
+      10→class Jumpable(Protocol):
+      …
+      16→class JumpInfo(NamedTuple):
+      …
+      26→class Jumper:
+      …
     locations.py
     messages.py
     posting.scss
@@ -340,7 +346,7 @@ tests/
   sample-configs/
   sample-envs/
     sample_base.env
-    …
+    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

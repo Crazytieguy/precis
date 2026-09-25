@@ -76,11 +76,7 @@ README.md
   70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
   71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
   73→## License
-  74→
-  75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
-  76→licensed under the [Creative Commons CC BY 3.0](COPYING).
-  77→`jq` uses parts of the open source C library "decNumber", which is distributed
-  78→under [ICU License](COPYING)
+  …
 SECURITY.md
 build/
 compile-ios.sh
@@ -302,6 +298,15 @@ src/
     135→#define FORMAT 263
     136→#define REC 264
     137→#define SETMOD 265
+    138→#define EQ 266
+    139→#define NEQ 267
+    140→#define DEFINEDOR 268
+    141→#define AS 269
+    142→#define DEF 270
+    143→#define MODULE 271
+    144→#define IMPORT 272
+    145→#define INCLUDE 273
+    146→#define IF 274
     …
   parser.y
   util.c

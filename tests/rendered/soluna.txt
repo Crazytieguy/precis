@@ -49,8 +49,7 @@ README.md
   54→
   55→- [Deep Future](https://github.com/cloudwu/deepfuture), a digital version of boardgame Deep Future.
   57→## License
-  58→
-  59→Soluna is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
+  …
 README.zh-CN.md
 asset/
   avatar.png
@@ -330,6 +329,9 @@ src/
     …
     43→static inline uint32_t
     44→convert_scale_part_(uint32_t scale12) {
+    …
+    56→static inline int
+    57→convert_rot_(float rot) {
     …
   spritemgr.c
   spritemgr.h
