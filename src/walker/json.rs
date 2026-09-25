@@ -221,10 +221,12 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
         .collect();
     let lines: Vec<&str> = source.lines().collect();
     entries.sort_by_key(|&(start, _)| !is_entry_point_script(lines[start - 1]));
+    let mut charged_rows = std::collections::HashSet::new();
     let costs: Vec<usize> = entries
         .iter()
         .map(|&(start, end)| {
             (start..=end)
+                .filter(|&row| charged_rows.insert(row))
                 .map(|row| crate::tokenizer::count(lines[row - 1]))
                 .sum()
         })
@@ -654,17 +656,18 @@ mod tests {
     }
 
     /// A long `scripts` block delivers as a chain of chunks behind the
-    /// identity block; a short one stays one batch.
+    /// identity block; a short one, even with many scripts on one line,
+    /// stays one batch.
     #[test]
     fn walker_json_long_scripts_block_chains_chunks() {
-        let scripts_keys = |script_count: usize| {
+        let scripts_keys = |script_count: usize, separator: &str| {
             let dir = tempfile::tempdir().unwrap();
             let scripts: Vec<String> = (0..script_count)
                 .map(|i| format!("    \"task-{i}\": \"node scripts/run-task.js --step {i}\""))
                 .collect();
             let body = format!(
                 "{{\n  \"name\": \"x\",\n  \"scripts\": {{\n{}\n  }}\n}}\n",
-                scripts.join(",\n")
+                scripts.join(separator)
             );
             write_pkg(dir.path(), &body);
             let ctx = WalkCtx::new(dir.path().to_path_buf());
@@ -679,8 +682,9 @@ mod tests {
                 .map(|batch| (batch.key, batch.predecessor))
                 .collect::<Vec<_>>()
         };
-        assert_eq!(scripts_keys(3).len(), 1);
-        let chunks = scripts_keys(40);
+        assert_eq!(scripts_keys(3, ",\n").len(), 1);
+        assert_eq!(scripts_keys(10, ", ").len(), 1);
+        let chunks = scripts_keys(40, ",\n");
         assert!(chunks.len() > 1);
         assert!(matches!(
             chunks[0].1,
