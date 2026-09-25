@@ -310,15 +310,9 @@ pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> 
 /// see `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
 const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 
-/// Upper bound on a spine file's size. Past this, a single file is a
-/// generated table or an amalgamated bundle rather than something a
-/// reader is meant to read more of.
-const MASS_SHARE_MAX_FILE_BYTES: u64 = 400_000;
-
 /// The tree's essential source files, as one walk: byte mass per
-/// language family, plus the per-file candidate list (files under
-/// [`MASS_SHARE_MAX_FILE_BYTES`]). Enumeration rules are documented on
-/// [`find_dominant_source_file`], the original caller.
+/// language family, plus the per-file candidate list. Enumeration rules
+/// are documented on [`find_dominant_source_file`].
 struct EssentialSource {
     per_language: HashMap<&'static str, u64>,
     candidates: Vec<(PathBuf, u64, &'static str)>,
@@ -343,7 +337,7 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
             if file_type.is_dir() {
                 let name = entry.file_name();
                 let name = name.to_string_lossy();
-                if !crate::fs_util::should_skip_dir(&name) && !holds_derived_code(&name) {
+                if !crate::fs_util::should_skip_dir(&name) {
                     stack.push(path);
                 }
             } else if file_type.is_file() {
@@ -357,9 +351,7 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
                     continue;
                 };
                 *per_language.entry(language).or_default() += len;
-                if len <= MASS_SHARE_MAX_FILE_BYTES {
-                    candidates.push((path, len, language));
-                }
+                candidates.push((path, len, language));
             }
         }
     }
@@ -367,14 +359,6 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
         per_language,
         candidates,
     }
-}
-
-/// Directories of code nobody wrote by hand — generated output, test
-/// corpora, vendored copies at any depth. Their bytes are source but not
-/// the repository's own, so they neither win nor dilute the mass share.
-fn holds_derived_code(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    matches!(lower.as_str(), "generated" | "testdata") || crate::value::is_vendor_dir_name(&lower)
 }
 
 /// Select a source file that carries at least
@@ -389,9 +373,9 @@ fn holds_derived_code(name: &str) -> bool {
 /// (the only thing bounding a walk of a non-repository tree, where the
 /// filter is inert by design), and non-following file types so a
 /// symlink is neither descended into nor weighed as source — the same
-/// containment answer typed source discovery gives. [`holds_derived_code`]
-/// narrows that universe, and a candidate whose text reads as
-/// machine-generated (a banner, or minified line lengths) never wins.
+/// containment answer typed source discovery gives. A candidate whose
+/// text reads as machine-generated (a banner, or minified line lengths)
+/// never wins.
 fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
@@ -659,10 +643,7 @@ mod tests {
     fn walker_mod_dominant_file_passes_over_generated_and_minified_code() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
-        std::fs::create_dir_all(root.join("src/generated")).unwrap();
-        std::fs::create_dir_all(root.join("lib/vendor")).unwrap();
-        std::fs::write(root.join("src/generated/schema.ts"), "x = 1\n".repeat(900)).unwrap();
-        std::fs::write(root.join("lib/vendor/dep.ts"), "x = 1\n".repeat(900)).unwrap();
+        std::fs::create_dir_all(root.join("src")).unwrap();
         std::fs::write(root.join("src/app.bundle.js"), "var a=1;".repeat(1000)).unwrap();
         std::fs::write(
             root.join("src/client.ts"),
