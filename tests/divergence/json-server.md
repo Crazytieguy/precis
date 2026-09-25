@@ -144,8 +144,8 @@ Score(3000)=0.571 I=0.561 C=0.581 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 9060 | 31 | json config .oxfmtrc.json |  |  | 0.738 |
 | walker |  | 9111 | 51 | plaintext config .gitignore |  |  | 0.738 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.743 |
-| walker |  | 9336 | 225 | json config fixtures/db.json5 |  |  | 0.743 |
-| ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.734 |
-| walker |  | 9645 | 309 | plaintext config LICENSE |  |  | 0.734 |
+| ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.733 |
+| walker |  | 9420 | 309 | plaintext config LICENSE |  |  | 0.733 |
+| walker |  | 9645 | 225 | json config fixtures/db.json5 |  |  | 0.734 |
 | ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.722 |
 | ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.713 |

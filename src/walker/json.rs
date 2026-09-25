@@ -102,7 +102,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if is_package_json(name) {
             emit_package_json(&file, ctx, &mut out);
         } else if (dir == ctx.root() || !name.to_ascii_lowercase().ends_with(".json"))
-            && let Some(batch) = whole_json_batch(&file, name, ctx)
+            && let Some(batch) = whole_json_batch(&file, ctx)
         {
             out.push(batch);
         }
@@ -110,7 +110,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
+fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
     let content = gated_whole_file_content(file, ctx, WHOLE_BYTE_GATE, WHOLE_LINE_CAP)?;
     Some(Batch {
         key: JsonKey::Whole {
@@ -119,7 +119,7 @@ fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<Batc
         .into(),
         predecessor: None,
         content,
-        value: whole_value(file, name, ctx),
+        value: 589.0 * path_depth_factor(file, ctx),
     })
 }
 
@@ -377,18 +377,6 @@ fn manifest_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
         1.0
     } else {
         path_depth_factor(file, ctx)
-    }
-}
-
-fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
-    let lower = name.to_ascii_lowercase();
-    if lower.ends_with(".code-workspace") || lower.ends_with(".json5") {
-        // These explicitly admitted sidecars are otherwise the only copy of
-        // workspace topology or non-JSON data/config. Their strict size cap
-        // keeps this identity-like admission value away from generated data.
-        1451.0 * path_depth_factor(file, ctx)
-    } else {
-        589.0 * path_depth_factor(file, ctx)
     }
 }
 
