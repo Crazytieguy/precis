@@ -212,6 +212,11 @@ packages/
         app/
           auth/
           config/
+            config.models.ts
+            config.routes.ts
+            config.test-utils.ts
+            config.ts
+            config.types.ts
           middlewares/
           server.ts
           server.types.ts
@@ -272,9 +277,6 @@ packages/
     package.json
     src/
       cli.ts
-        …
-        6→const main = defineCommand({
-        …
       config/
         config.command.ts
           …

@@ -18,7 +18,9 @@ README.md
   9→> [!WARNING]
   10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
   12→## Quick start
-  …
+  13→For PC x86_64 platforms, grab the [latest build binary](https://github.com/p2r3/bareiron/releases/download/latest/bareiron.exe) and run it. The file is a [Cosmopolitan polyglot](https://github.com/jart/cosmopolitan), which means it'll run on Windows, Linux, and possibly Mac, despite the file extension. Note that the server's default settings cannot be reconfigured without compiling from source.
+  14→
+  15→For microcontrollers, see the section on **compilation** below.
   17→## Compilation
   …
   28→## Configuration
@@ -74,48 +76,6 @@ build.sh
   44→$compiler src/*.c -O2 -Iinclude -o "bareiron$exe" $windows_linker
   45→"./bareiron$exe"
 build_registries.js
-  …
-  5→const blockToItemOverrides = {
-  …
-  20→const blockBlacklist = [
-  …
-  40→const blockWhitelist = [
-  …
-  67→const biomes = [
-  68→  "plains",
-  69→  "mangrove_swamp",
-  70→  "desert",
-  71→  "snowy_plains",
-  72→  "beach"
-  73→];
-  …
-  76→async function extractItemsAndBlocks () {
-  …
-  174→function writeVarInt (value) {
-  …
-  187→async function scanDirectory (basePath, currentPath = "") {
-  …
-  212→function serializeRegistry (name, entries) {
-  …
-  244→function serializeTags (tags) {
-  …
-  288→function toVarIntBuffer (array) {
-  …
-  297→function toCArray (buffer) {
-  …
-  306→const requiredRegistries = [
-  307→  "cat_variant",
-  308→  "chicken_variant",
-  309→  "cow_variant",
-  310→  "frog_variant",
-  311→  "painting_variant",
-  312→  "pig_variant",
-  313→  "wolf_sound_variant",
-  314→  "wolf_variant",
-  315→  "damage_type"
-  316→];
-  318→async function convert () {
-  …
 extract_registries.sh
 include/
   crafting.h
@@ -144,7 +104,7 @@ include/
     29→#define MOB_DESPAWN_DISTANCE 256
     …
     32→#define GAMEMODE 0
-    …
+    34→// Max render distance, determines how many chunks to send
     35→#define VIEW_DISTANCE 2
     …
     38→#define TIME_BETWEEN_TICKS 1000000
@@ -268,6 +228,13 @@ include/
 src/
   CMakeLists.txt
   crafting.c
+    …
+    9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
+    …
+    349→#define registerSmeltingRecipe(a, b) \
+    350→  if (*material == a && (*output_item == b || *output_item == 0)) *output_item = b
+    352→void getSmeltingOutput (PlayerData *player) {
+    …
   globals.c
   main.c
     …
@@ -277,6 +244,11 @@ src/
   procedures.c
   serialize.c
   structures.c
+    …
+    9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
+    …
+    16→void placeTreeStructure (short x, uint8_t y, short z) {
+    …
   tools.c
     …
     42→uint64_t total_bytes_received = 0;
@@ -284,4 +256,11 @@ src/
     44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
     …
   varnum.c
+    …
+    14→int32_t readVarInt (int client_fd) {
+    …
+    34→int sizeVarInt (uint32_t value) {
+    …
+    43→void writeVarInt (int client_fd, uint32_t value) {
+    …
   worldgen.c

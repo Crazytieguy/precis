@@ -76,7 +76,12 @@ index.d.ts
   23→export class AxiosHeaders {
   …
   95→type CommonRequestHeadersList =
-  …
+  96→  | 'Accept'
+  97→  | 'Content-Length'
+  98→  | 'User-Agent'
+  99→  | 'Content-Encoding'
+  100→  | 'Authorization'
+  101→  | 'Location';
   103→type ContentType =
   …
   112→export type RawAxiosRequestHeaders = Partial<
@@ -84,7 +89,11 @@ index.d.ts
   120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
   121→
   122→type CommonResponseHeadersList =
-  …
+  123→  | 'Server'
+  124→  | 'Content-Type'
+  125→  | 'Content-Length'
+  126→  | 'Cache-Control'
+  127→  | 'Content-Encoding';
   129→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
   130→
   131→type RawCommonResponseHeaders = {
@@ -412,26 +421,7 @@ rollup.config.js
 sandbox/
   client.html
   client.js
-    …
-    3→const URL = 'http://127.0.0.1:3000/api';
-    4→const BODY = {
-    …
-    9→function handleSuccess(data) {
-    …
-    12→function handleFailure(data) {
-    …
   server.js
-    …
-    5→let server;
-    …
-    14→function pipeFileToResponse(res, file, type) {
-    …
-    33→function handleApiRequest(req, res) {
-    …
-    75→function requestHandler(req, res) {
-    …
-    111→const PORT = 3000;
-    …
 scripts/
   axios-build-instance.js
 tests/

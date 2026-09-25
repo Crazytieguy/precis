@@ -1,4 +1,4 @@
-Score(3000)=0.493 I=0.691 C=0.352 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.528/0.419/0.452/0.493/0.503/0.532/0.536
+Score(3000)=0.494 I=0.693 C=0.352 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.528/0.419/0.452/0.494/0.503/0.532/0.534
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -56,257 +56,255 @@ Score(3000)=0.493 I=0.691 C=0.352 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1081 | 26 | listing of 'packages/app-client/src' |  |  | 0.498 |
 | walker |  | 1085 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.498 |
 | walker |  | 1172 | 87 | listing of 'packages/app-client/src/locales' |  |  | 0.499 |
-| walker |  | 1186 | 14 | ts names packages/cli/src/cli.ts |  |  | 0.499 |
-| walker |  | 1199 | 13 | listing of 'packages/app-server/src/modules/storage' |  |  | 0.499 |
-| walker |  | 1208 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.499 |
-| walker |  | 1217 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.499 |
-| ns | 1237 |  | 161 | CONTRIBUTING: local development setup commands | 1.9 |  | 0.432 |
-| walker |  | 1238 | 21 | listing of 'packages/cli/src/config' |  |  | 0.433 |
-| walker |  | 1259 | 21 | listing of 'packages/cli/src/create-note' |  |  | 0.433 |
-| walker |  | 1280 | 21 | listing of 'packages/crypto/src/node' |  |  | 0.434 |
-| walker |  | 1301 | 21 | listing of 'packages/crypto/src/web' |  |  | 0.435 |
-| walker |  | 1322 | 21 | listing of 'packages/lib/src/api' |  |  | 0.436 |
-| walker |  | 1333 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.436 |
-| walker |  | 1384 | 51 | package runtime metadata in package.json |  |  | 0.460 |
+| walker |  | 1185 | 13 | listing of 'packages/app-server/src/modules/storage' |  |  | 0.499 |
+| walker |  | 1194 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.499 |
+| walker |  | 1203 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.499 |
+| walker |  | 1224 | 21 | listing of 'packages/cli/src/config' |  |  | 0.500 |
+| ns | 1237 |  | 161 | CONTRIBUTING: local development setup commands | 1.9 |  | 0.433 |
+| walker |  | 1245 | 21 | listing of 'packages/cli/src/create-note' |  |  | 0.433 |
+| walker |  | 1266 | 21 | listing of 'packages/crypto/src/node' |  |  | 0.434 |
+| walker |  | 1287 | 21 | listing of 'packages/crypto/src/web' |  |  | 0.435 |
+| walker |  | 1308 | 21 | listing of 'packages/lib/src/api' |  |  | 0.436 |
+| walker |  | 1319 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.436 |
+| walker |  | 1370 | 51 | package runtime metadata in package.json |  |  | 0.460 |
+| walker |  | 1387 | 17 | ts names packages/app-client/src/routes.tsx |  |  | 0.460 |
+| walker |  | 1398 | 11 | ts names packages/cli/src/config/config.usecases.ts |  |  | 0.460 |
 | ns | 1399 |  | 162 | Self-host quickstart: docker run invocation plus the whole docker-compose.yml | 1.10 |  | 0.419 |
-| walker |  | 1401 | 17 | ts names packages/app-client/src/routes.tsx |  |  | 0.419 |
-| walker |  | 1412 | 11 | ts names packages/cli/src/config/config.usecases.ts |  |  | 0.419 |
-| walker |  | 1423 | 11 | ts names packages/docs/src/data/configuration.data.ts |  |  | 0.419 |
-| walker |  | 1434 | 11 | ts names packages/docs/src/data/i18n.data.ts |  |  | 0.419 |
-| walker |  | 1477 | 43 | README headline in packages/app-client/README.md |  |  | 0.419 |
-| walker |  | 1502 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.421 |
-| walker |  | 1529 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.423 |
-| walker |  | 1558 | 29 | listing of '.github' |  |  | 0.423 |
-| walker |  | 1639 | 81 | listing of '.github/workflows' |  |  | 0.424 |
-| walker |  | 1652 | 13 | ts names packages/app-client/src/locales/locales.ts |  |  | 0.424 |
-| walker |  | 1681 | 29 | listing of 'packages/app-client/src/modules' |  |  | 0.425 |
-| walker |  | 1686 | 5 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.425 |
-| walker |  | 1692 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.425 |
-| walker |  | 1698 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.425 |
-| walker |  | 1709 | 11 | listing of 'packages/app-client/src/modules/docs' |  |  | 0.425 |
-| walker |  | 1720 | 11 | listing of 'packages/app-client/src/modules/files' |  |  | 0.426 |
-| walker |  | 1735 | 15 | listing of 'packages/app-client/src/modules/shared' |  |  | 0.426 |
-| walker |  | 1739 | 4 | listing of 'packages/app-client/src/modules/shared/hooks' |  |  | 0.426 |
-| walker |  | 1743 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.426 |
-| walker |  | 1748 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.426 |
-| walker |  | 1756 | 8 | listing of 'packages/app-client/src/modules/shared/files' |  |  | 0.426 |
+| walker |  | 1409 | 11 | ts names packages/docs/src/data/configuration.data.ts |  |  | 0.419 |
+| walker |  | 1420 | 11 | ts names packages/docs/src/data/i18n.data.ts |  |  | 0.419 |
+| walker |  | 1463 | 43 | README headline in packages/app-client/README.md |  |  | 0.419 |
+| walker |  | 1488 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.421 |
+| walker |  | 1515 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.423 |
+| walker |  | 1544 | 29 | listing of '.github' |  |  | 0.423 |
+| walker |  | 1625 | 81 | listing of '.github/workflows' |  |  | 0.424 |
+| walker |  | 1638 | 13 | ts names packages/app-client/src/locales/locales.ts |  |  | 0.424 |
+| walker |  | 1667 | 29 | listing of 'packages/app-client/src/modules' |  |  | 0.425 |
+| walker |  | 1672 | 5 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.425 |
+| walker |  | 1678 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.425 |
+| walker |  | 1684 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.425 |
+| walker |  | 1695 | 11 | listing of 'packages/app-client/src/modules/docs' |  |  | 0.425 |
+| walker |  | 1706 | 11 | listing of 'packages/app-client/src/modules/files' |  |  | 0.426 |
+| walker |  | 1721 | 15 | listing of 'packages/app-client/src/modules/shared' |  |  | 0.426 |
+| walker |  | 1725 | 4 | listing of 'packages/app-client/src/modules/shared/hooks' |  |  | 0.426 |
+| walker |  | 1729 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.426 |
+| walker |  | 1734 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.426 |
+| walker |  | 1742 | 8 | listing of 'packages/app-client/src/modules/shared/files' |  |  | 0.426 |
+| walker |  | 1758 | 16 | listing of 'packages/app-client/src/modules/config' |  |  | 0.414 |
 | ns | 1758 |  | 359 | packages/lib/src/index.ts in full — the definitive @enclosed/lib export surface | 2.1 |  | 0.414 |
-| walker |  | 1772 | 16 | listing of 'packages/app-client/src/modules/config' |  |  | 0.414 |
-| walker |  | 1790 | 18 | listing of 'packages/app-client/src/modules/auth' |  |  | 0.415 |
-| walker |  | 1796 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.415 |
-| walker |  | 1827 | 31 | listing of 'packages/docs/src/self-hosting' |  |  | 0.416 |
-| walker |  | 1841 | 14 | ts names packages/cli/src/config/config.constants.ts |  |  | 0.416 |
-| walker |  | 1898 | 57 | README headline in packages/cli/README.md |  |  | 0.416 |
-| walker |  | 1913 | 15 | ts names packages/cli/src/create-note/create-note.usecases.ts |  |  | 0.416 |
+| walker |  | 1776 | 18 | listing of 'packages/app-client/src/modules/auth' |  |  | 0.415 |
+| walker |  | 1782 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.415 |
+| walker |  | 1813 | 31 | listing of 'packages/docs/src/self-hosting' |  |  | 0.416 |
+| walker |  | 1827 | 14 | ts names packages/cli/src/config/config.constants.ts |  |  | 0.416 |
+| walker |  | 1884 | 57 | README headline in packages/cli/README.md |  |  | 0.416 |
+| walker |  | 1899 | 15 | ts names packages/cli/src/create-note/create-note.usecases.ts |  |  | 0.416 |
 | ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.450 |
-| walker |  | 1972 | 59 | README headline in packages/lib/README.md |  |  | 0.450 |
-| walker |  | 1994 | 22 | listing of 'packages/app-server/src/modules/app' |  |  | 0.451 |
-| walker |  | 1999 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.451 |
-| walker |  | 2021 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.451 |
-| walker |  | 2036 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.451 |
-| walker |  | 2052 | 16 | ts names packages/cli/src/config/config.command.ts |  |  | 0.451 |
-| walker |  | 2075 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.452 |
-| walker |  | 2098 | 23 | listing of 'packages/crypto/src/node/encryption-algorithms' |  |  | 0.452 |
-| walker |  | 2121 | 23 | listing of 'packages/crypto/src/web/encryption-algorithms' |  |  | 0.453 |
-| walker |  | 2132 | 11 | ts names packages/app-client/src/modules/config/config.types.ts |  |  | 0.453 |
+| walker |  | 1958 | 59 | README headline in packages/lib/README.md |  |  | 0.450 |
+| walker |  | 1980 | 22 | listing of 'packages/app-server/src/modules/app' |  |  | 0.451 |
+| walker |  | 1985 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.451 |
+| walker |  | 2007 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.451 |
+| walker |  | 2022 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.451 |
+| walker |  | 2038 | 16 | ts names packages/cli/src/config/config.command.ts |  |  | 0.451 |
+| walker |  | 2061 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.452 |
+| walker |  | 2084 | 23 | listing of 'packages/crypto/src/node/encryption-algorithms' |  |  | 0.452 |
+| walker |  | 2107 | 23 | listing of 'packages/crypto/src/web/encryption-algorithms' |  |  | 0.453 |
+| walker |  | 2118 | 11 | ts names packages/app-client/src/modules/config/config.types.ts |  |  | 0.453 |
 | ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.438 |
-| walker |  | 2238 | 106 | YAML config at docker-compose.yml |  |  | 0.465 |
-| walker |  | 2302 | 64 | listing of 'packages/app-client/public' |  |  | 0.465 |
-| walker |  | 2326 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.485 |
-| walker |  | 2343 | 17 | ts names packages/cli/src/create-note/create-note.command.ts |  |  | 0.485 |
-| walker |  | 2360 | 17 | ts names packages/cli/src/view-note/view-note.command.ts |  |  | 0.485 |
+| walker |  | 2224 | 106 | YAML config at docker-compose.yml |  |  | 0.465 |
+| walker |  | 2288 | 64 | listing of 'packages/app-client/public' |  |  | 0.465 |
+| walker |  | 2312 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.485 |
+| walker |  | 2329 | 17 | ts names packages/cli/src/create-note/create-note.command.ts |  |  | 0.485 |
+| walker |  | 2346 | 17 | ts names packages/cli/src/view-note/view-note.command.ts |  |  | 0.485 |
 | ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.459 |
-| walker |  | 2438 | 78 | package scripts in package.json |  |  | 0.500 |
-| walker |  | 2456 | 18 | ts names packages/lib/src/api/api.constants.ts |  |  | 0.500 |
-| walker |  | 2482 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.532 |
-| walker |  | 2497 | 15 | listing of 'packages/lib/src/crypto/serialization/cbor-array' |  |  | 0.547 |
-| walker |  | 2568 | 71 | README headline in packages/crypto/README.md |  |  | 0.547 |
-| walker |  | 2597 | 29 | headings outline in packages/crypto/README.md |  |  | 0.547 |
-| walker |  | 2629 | 32 | ts names packages/crypto/src/api-definition.ts |  |  | 0.547 |
-| walker |  | 2644 | 15 | ts names packages/app-client/src/modules/theme/theme.store.ts |  |  | 0.547 |
+| walker |  | 2424 | 78 | package scripts in package.json |  |  | 0.500 |
+| walker |  | 2442 | 18 | ts names packages/lib/src/api/api.constants.ts |  |  | 0.500 |
+| walker |  | 2468 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.532 |
+| walker |  | 2483 | 15 | listing of 'packages/lib/src/crypto/serialization/cbor-array' |  |  | 0.547 |
+| walker |  | 2554 | 71 | README headline in packages/crypto/README.md |  |  | 0.547 |
+| walker |  | 2583 | 29 | headings outline in packages/crypto/README.md |  |  | 0.547 |
+| walker |  | 2615 | 32 | ts names packages/crypto/src/api-definition.ts |  |  | 0.547 |
+| walker |  | 2630 | 15 | ts names packages/app-client/src/modules/theme/theme.store.ts |  |  | 0.547 |
 | ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.507 |
-| walker |  | 2694 | 50 | listing of 'packages/crypto/src/encryption-algorithms' |  |  | 0.509 |
-| walker |  | 2732 | 38 | headings outline in packages/lib/README.md |  |  | 0.509 |
-| walker |  | 2784 | 52 | listing of 'packages/docs/src/public' |  |  | 0.509 |
-| walker |  | 2807 | 23 | listing of 'packages/app-client/src/modules/shared/http' |  |  | 0.509 |
-| walker |  | 2831 | 24 | ts names packages/lib/src/notes/notes.usecases.ts |  |  | 0.510 |
+| walker |  | 2680 | 50 | listing of 'packages/crypto/src/encryption-algorithms' |  |  | 0.509 |
+| walker |  | 2718 | 38 | headings outline in packages/lib/README.md |  |  | 0.509 |
+| walker |  | 2770 | 52 | listing of 'packages/docs/src/public' |  |  | 0.509 |
+| walker |  | 2793 | 23 | listing of 'packages/app-client/src/modules/shared/http' |  |  | 0.509 |
+| walker |  | 2817 | 24 | ts names packages/lib/src/notes/notes.usecases.ts |  |  | 0.510 |
 | ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.493 |
-| walker |  | 2893 | 62 | ts decl packages/cli/build.config.ts:3 |  |  | 0.493 |
-| walker |  | 2918 | 25 | ts names packages/lib/src/api/api.client.ts |  |  | 0.493 |
-| walker |  | 2935 | 17 | ts names packages/app-client/src/modules/config/config.constants.ts |  |  | 0.493 |
-| walker |  | 2952 | 17 | ts names packages/app-server/src/modules/tasks/tasks.types.ts |  |  | 0.493 |
-| walker |  | 2987 | 35 | plaintext config packages/app-client/.env.example |  |  | 0.493 |
-| walker |  | 3012 | 25 | listing of 'packages/app-server/src/modules/app/config' |  |  | 0.494 |
+| walker |  | 2879 | 62 | ts decl packages/cli/build.config.ts:3 |  |  | 0.493 |
+| walker |  | 2904 | 25 | ts names packages/lib/src/api/api.client.ts |  |  | 0.493 |
+| walker |  | 2921 | 17 | ts names packages/app-client/src/modules/config/config.constants.ts |  |  | 0.493 |
+| walker |  | 2938 | 17 | ts names packages/app-server/src/modules/tasks/tasks.types.ts |  |  | 0.493 |
+| walker |  | 2973 | 35 | plaintext config packages/app-client/.env.example |  |  | 0.493 |
+| walker |  | 2998 | 25 | listing of 'packages/app-server/src/modules/app/config' |  |  | 0.494 |
 | ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.473 |
-| walker |  | 3210 | 198 | headings outline in README.md |  |  | 0.473 |
-| walker |  | 3316 | 106 | README.md section #0 |  |  | 0.515 |
-| walker |  | 3337 | 21 | README.md section #32 |  |  | 0.515 |
-| walker |  | 3371 | 34 | README.md section #18 |  |  | 0.515 |
-| walker |  | 3389 | 18 | ts names packages/app-client/src/modules/auth/auth.store.ts |  |  | 0.515 |
+| walker |  | 3196 | 198 | headings outline in README.md |  |  | 0.473 |
+| walker |  | 3302 | 106 | README.md section #0 |  |  | 0.515 |
+| walker |  | 3323 | 21 | README.md section #32 |  |  | 0.515 |
+| walker |  | 3357 | 34 | README.md section #18 |  |  | 0.515 |
+| walker |  | 3375 | 18 | ts names packages/app-client/src/modules/auth/auth.store.ts |  |  | 0.515 |
 | ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.490 |
-| walker |  | 3428 | 39 | listing of 'packages/app-client/src/modules/notes' |  |  | 0.490 |
-| walker |  | 3442 | 14 | listing of 'packages/app-client/src/modules/notes/components' |  |  | 0.491 |
-| walker |  | 3456 | 14 | listing of 'packages/app-client/src/modules/notes/pages' |  |  | 0.491 |
-| walker |  | 3489 | 33 | README.md section #25 |  |  | 0.491 |
-| walker |  | 3517 | 28 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.491 |
-| walker |  | 3536 | 19 | ts names packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts |  |  | 0.491 |
-| walker |  | 3566 | 30 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.491 |
+| walker |  | 3414 | 39 | listing of 'packages/app-client/src/modules/notes' |  |  | 0.490 |
+| walker |  | 3428 | 14 | listing of 'packages/app-client/src/modules/notes/components' |  |  | 0.491 |
+| walker |  | 3442 | 14 | listing of 'packages/app-client/src/modules/notes/pages' |  |  | 0.491 |
+| walker |  | 3475 | 33 | README.md section #25 |  |  | 0.491 |
+| walker |  | 3503 | 28 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.491 |
+| walker |  | 3522 | 19 | ts names packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts |  |  | 0.491 |
+| walker |  | 3552 | 30 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.491 |
 | ns | 3584 |  | 194 | Payload vocabulary: the algorithm and compression constants | 2.9 |  | 0.482 |
-| walker |  | 3614 | 48 | ts names packages/crypto/src/index.node.ts |  |  | 0.482 |
-| walker |  | 3662 | 48 | ts names packages/crypto/src/index.web.ts |  |  | 0.482 |
-| walker |  | 3706 | 44 | listing of 'packages/docs/src/public/logos' |  |  | 0.482 |
-| walker |  | 3721 | 15 | ts names packages/app-server/src/modules/shared/logger/logger.test-utils.ts |  |  | 0.482 |
+| walker |  | 3600 | 48 | ts names packages/crypto/src/index.node.ts |  |  | 0.482 |
+| walker |  | 3648 | 48 | ts names packages/crypto/src/index.web.ts |  |  | 0.482 |
+| walker |  | 3692 | 44 | listing of 'packages/docs/src/public/logos' |  |  | 0.482 |
+| walker |  | 3707 | 15 | ts names packages/app-server/src/modules/shared/logger/logger.test-utils.ts |  |  | 0.482 |
 | ns | 3780 |  | 196 | Complete file roster of packages/crypto | 2.10 |  | 0.526 |
-| walker |  | 3802 | 81 | ts decl packages/lib/build.config.ts:3 |  |  | 0.526 |
-| walker |  | 3824 | 22 | ts names packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts |  |  | 0.526 |
-| walker |  | 3846 | 22 | ts names packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts |  |  | 0.526 |
-| walker |  | 3865 | 19 | README.md section #6 |  |  | 0.527 |
-| walker |  | 3882 | 17 | README.md section #7 |  |  | 0.527 |
-| walker |  | 3901 | 19 | README.md section #8 |  |  | 0.528 |
-| walker |  | 3934 | 33 | ts names packages/cli/src/view-note/view-note.models.ts |  |  | 0.528 |
-| walker |  | 3950 | 16 | ts names packages/app-server/src/modules/app/config/config.types.ts |  |  | 0.528 |
-| walker |  | 3966 | 16 | ts names packages/app-server/src/modules/shared/logger/logger.types.ts |  |  | 0.528 |
-| walker |  | 4000 | 34 | ts names packages/cli/src/shared/cli.models.ts |  |  | 0.528 |
-| walker |  | 4020 | 20 | README.md section #2 |  |  | 0.530 |
+| walker |  | 3788 | 81 | ts decl packages/lib/build.config.ts:3 |  |  | 0.526 |
+| walker |  | 3810 | 22 | ts names packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts |  |  | 0.526 |
+| walker |  | 3832 | 22 | ts names packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts |  |  | 0.526 |
+| walker |  | 3851 | 19 | README.md section #6 |  |  | 0.527 |
+| walker |  | 3868 | 17 | README.md section #7 |  |  | 0.527 |
+| walker |  | 3887 | 19 | README.md section #8 |  |  | 0.528 |
+| walker |  | 3920 | 33 | ts names packages/cli/src/view-note/view-note.models.ts |  |  | 0.528 |
+| walker |  | 3936 | 16 | ts names packages/app-server/src/modules/app/config/config.types.ts |  |  | 0.528 |
+| walker |  | 3952 | 16 | ts names packages/app-server/src/modules/shared/logger/logger.types.ts |  |  | 0.528 |
+| walker |  | 3986 | 34 | ts names packages/cli/src/shared/cli.models.ts |  |  | 0.528 |
+| walker |  | 4006 | 20 | README.md section #2 |  |  | 0.530 |
 | ns | 4036 |  | 256 | @enclosed/crypto entry points: the eight exported names and the web/node swap | 2.11 |  | 0.513 |
-| walker |  | 4112 | 92 | ts decl packages/crypto/build.config.ts:3 |  |  | 0.513 |
-| walker |  | 4137 | 25 | ts names packages/app-server/src/modules/tasks/task-scheduler.ts |  |  | 0.513 |
-| walker |  | 4158 | 21 | README.md section #5 |  |  | 0.516 |
-| walker |  | 4179 | 21 | README.md section #9 |  |  | 0.518 |
-| walker |  | 4215 | 36 | listing of 'packages/app-server/src/modules/app/middlewares' |  |  | 0.519 |
-| walker |  | 4233 | 18 | ts names packages/app-client/src/modules/auth/pages/login.page.tsx |  |  | 0.519 |
-| walker |  | 4251 | 18 | ts names packages/app-client/src/modules/notes/components/file-uploader.tsx |  |  | 0.519 |
-| walker |  | 4289 | 38 | ts names packages/lib/src/notes/notes.types.ts |  |  | 0.519 |
-| walker |  | 4311 | 22 | ts decl packages/lib/src/notes/notes.types.ts:12 |  |  | 0.503 |
+| walker |  | 4098 | 92 | ts decl packages/crypto/build.config.ts:3 |  |  | 0.513 |
+| walker |  | 4123 | 25 | ts names packages/app-server/src/modules/tasks/task-scheduler.ts |  |  | 0.513 |
+| walker |  | 4144 | 21 | README.md section #5 |  |  | 0.516 |
+| walker |  | 4165 | 21 | README.md section #9 |  |  | 0.517 |
+| walker |  | 4201 | 36 | listing of 'packages/app-server/src/modules/app/middlewares' |  |  | 0.519 |
+| walker |  | 4219 | 18 | ts names packages/app-client/src/modules/auth/pages/login.page.tsx |  |  | 0.519 |
+| walker |  | 4237 | 18 | ts names packages/app-client/src/modules/notes/components/file-uploader.tsx |  |  | 0.519 |
+| walker |  | 4275 | 38 | ts names packages/lib/src/notes/notes.types.ts |  |  | 0.519 |
+| walker |  | 4297 | 22 | ts decl packages/lib/src/notes/notes.types.ts:12 |  |  | 0.519 |
 | ns | 4311 |  | 275 | Key derivation parameters: generateBaseKey and deriveMasterKey (web implementation) | 2.12 | 2.11 | 0.503 |
-| walker |  | 4337 | 26 | ts names packages/app-server/src/modules/tasks/tasks.models.ts |  |  | 0.503 |
-| walker |  | 4393 | 56 | README headline in packages/app-client/src/locales/README.md |  |  | 0.503 |
-| walker |  | 4415 | 22 | headings outline in packages/app-client/src/locales/README.md |  |  | 0.503 |
-| walker |  | 4452 | 37 | ts decl packages/cli/src/config/config.usecases.ts:3 |  |  | 0.503 |
-| walker |  | 4474 | 22 | README.md section #12 |  |  | 0.505 |
-| walker |  | 4512 | 38 | listing of 'packages/app-server/src/modules/storage/factories' |  |  | 0.506 |
+| walker |  | 4323 | 26 | ts names packages/app-server/src/modules/tasks/tasks.models.ts |  |  | 0.503 |
+| walker |  | 4379 | 56 | README headline in packages/app-client/src/locales/README.md |  |  | 0.503 |
+| walker |  | 4401 | 22 | headings outline in packages/app-client/src/locales/README.md |  |  | 0.503 |
+| walker |  | 4438 | 37 | ts decl packages/cli/src/config/config.usecases.ts:3 |  |  | 0.503 |
+| walker |  | 4460 | 22 | README.md section #12 |  |  | 0.505 |
+| walker |  | 4498 | 38 | listing of 'packages/app-server/src/modules/storage/factories' |  |  | 0.506 |
+| walker |  | 4517 | 19 | ts names packages/app-client/src/modules/notes/pages/create-note.page.tsx |  |  | 0.506 |
 | ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.497 |
-| walker |  | 4531 | 19 | ts names packages/app-client/src/modules/notes/pages/create-note.page.tsx |  |  | 0.497 |
-| walker |  | 4550 | 19 | ts names packages/app-client/src/modules/notes/pages/view-note.page.tsx |  |  | 0.497 |
-| walker |  | 4569 | 19 | ts names packages/app-server/src/modules/storage/factories/memory.storage.ts |  |  | 0.497 |
-| walker |  | 4610 | 41 | ts names packages/cli/src/shared/http.models.ts |  |  | 0.497 |
-| walker |  | 4651 | 41 | ts names packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.498 |
+| walker |  | 4536 | 19 | ts names packages/app-client/src/modules/notes/pages/view-note.page.tsx |  |  | 0.497 |
+| walker |  | 4555 | 19 | ts names packages/app-server/src/modules/storage/factories/memory.storage.ts |  |  | 0.497 |
+| walker |  | 4596 | 41 | ts names packages/cli/src/shared/http.models.ts |  |  | 0.497 |
+| walker |  | 4637 | 41 | ts names packages/lib/src/crypto/crypto.usecases.ts |  |  | 0.498 |
 | ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.490 |
-| walker |  | 4692 | 41 | ts names packages/lib/src/notes/notes.services.ts |  |  | 0.490 |
-| walker |  | 4731 | 39 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts:6 |  |  | 0.490 |
-| walker |  | 4759 | 28 | ts names packages/app-client/src/modules/docs/docs.models.ts |  |  | 0.490 |
-| walker |  | 4779 | 20 | ts names packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts |  |  | 0.490 |
-| walker |  | 4802 | 23 | README.md section #11 |  |  | 0.493 |
-| walker |  | 4824 | 22 | README.md section #10 |  |  | 0.496 |
-| walker |  | 4866 | 42 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts |  |  | 0.496 |
+| walker |  | 4678 | 41 | ts names packages/lib/src/notes/notes.services.ts |  |  | 0.490 |
+| walker |  | 4717 | 39 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts:6 |  |  | 0.490 |
+| walker |  | 4745 | 28 | ts names packages/app-client/src/modules/docs/docs.models.ts |  |  | 0.490 |
+| walker |  | 4765 | 20 | ts names packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts |  |  | 0.490 |
+| walker |  | 4788 | 23 | README.md section #11 |  |  | 0.493 |
+| walker |  | 4810 | 22 | README.md section #10 |  |  | 0.496 |
+| walker |  | 4852 | 42 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts |  |  | 0.496 |
 | ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.511 |
-| walker |  | 4900 | 34 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts:9 |  |  | 0.511 |
-| walker |  | 4942 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.536 |
-| walker |  | 4960 | 18 | ts names packages/app-server/src/modules/app/auth/auth.errors.ts |  |  | 0.536 |
-| walker |  | 5075 | 115 | packages/lib/README.md section #2 |  |  | 0.536 |
-| walker |  | 5118 | 43 | headings outline in packages/docs/src/index.md |  |  | 0.536 |
+| walker |  | 4886 | 34 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts:9 |  |  | 0.511 |
+| walker |  | 4928 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.536 |
+| walker |  | 4946 | 18 | ts names packages/app-server/src/modules/app/auth/auth.errors.ts |  |  | 0.536 |
+| walker |  | 5061 | 115 | packages/lib/README.md section #2 |  |  | 0.536 |
+| walker |  | 5104 | 43 | headings outline in packages/docs/src/index.md |  |  | 0.536 |
 | ns | 5133 |  | 256 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.529 |
-| walker |  | 5148 | 30 | ts names packages/lib/src/crypto/serialization/serialization.test-utils.ts |  |  | 0.529 |
-| walker |  | 5211 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.556 |
-| walker |  | 5230 | 19 | listing of 'packages/app-server/src/modules/notes/tasks' |  |  | 0.561 |
-| walker |  | 5248 | 18 | ts names packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts |  |  | 0.561 |
-| walker |  | 5279 | 31 | ts names packages/app-client/src/modules/notes/notes.constants.ts |  |  | 0.561 |
-| walker |  | 5304 | 25 | README.md section #3 |  |  | 0.565 |
-| walker |  | 5351 | 47 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts |  |  | 0.565 |
+| walker |  | 5134 | 30 | ts names packages/lib/src/crypto/serialization/serialization.test-utils.ts |  |  | 0.529 |
+| walker |  | 5197 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.556 |
+| walker |  | 5216 | 19 | listing of 'packages/app-server/src/modules/notes/tasks' |  |  | 0.561 |
+| walker |  | 5234 | 18 | ts names packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts |  |  | 0.561 |
+| walker |  | 5265 | 31 | ts names packages/app-client/src/modules/notes/notes.constants.ts |  |  | 0.561 |
+| walker |  | 5290 | 25 | README.md section #3 |  |  | 0.565 |
+| walker |  | 5337 | 47 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts |  |  | 0.565 |
 | ns | 5361 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.549 |
-| walker |  | 5383 | 32 | ts names packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.549 |
-| walker |  | 5428 | 45 | ts decl packages/cli/src/config/config.constants.ts:3 |  |  | 0.549 |
-| walker |  | 5480 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.561 |
-| walker |  | 5503 | 23 | ts names packages/app-server/src/modules/app/middlewares/errors.middleware.ts |  |  | 0.561 |
-| walker |  | 5526 | 23 | ts names packages/app-server/src/modules/app/middlewares/logger.middleware.ts |  |  | 0.561 |
-| walker |  | 5559 | 33 | ts names packages/app-client/src/modules/notes/notes.usecases.ts |  |  | 0.561 |
-| walker |  | 5592 | 33 | ts names packages/app-server/src/modules/notes/notes.usecases.ts |  |  | 0.561 |
-| walker |  | 5639 | 47 | ts decl packages/docs/src/data/configuration.data.ts:55 |  |  | 0.561 |
-| walker |  | 5687 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.562 |
-| walker |  | 5711 | 24 | ts names packages/app-server/src/modules/shared/utils/random.ts |  |  | 0.562 |
-| walker |  | 5745 | 34 | ts names packages/lib/src/crypto/serialization/serialization.models.ts |  |  | 0.562 |
-| walker |  | 5794 | 49 | ts decl packages/lib/src/notes/notes.types.ts:4 |  |  | 0.562 |
-| walker |  | 5829 | 35 | ts names packages/app-client/src/modules/notes/notes.context.tsx |  |  | 0.562 |
-| walker |  | 5854 | 25 | ts names packages/app-client/src/modules/shared/style/cn.ts |  |  | 0.562 |
+| walker |  | 5369 | 32 | ts names packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.549 |
+| walker |  | 5414 | 45 | ts decl packages/cli/src/config/config.constants.ts:3 |  |  | 0.549 |
+| walker |  | 5466 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.561 |
+| walker |  | 5489 | 23 | ts names packages/app-server/src/modules/app/middlewares/errors.middleware.ts |  |  | 0.561 |
+| walker |  | 5512 | 23 | ts names packages/app-server/src/modules/app/middlewares/logger.middleware.ts |  |  | 0.561 |
+| walker |  | 5545 | 33 | ts names packages/app-client/src/modules/notes/notes.usecases.ts |  |  | 0.561 |
+| walker |  | 5578 | 33 | ts names packages/app-server/src/modules/notes/notes.usecases.ts |  |  | 0.561 |
+| walker |  | 5625 | 47 | ts decl packages/docs/src/data/configuration.data.ts:55 |  |  | 0.561 |
+| walker |  | 5673 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.562 |
+| walker |  | 5697 | 24 | ts names packages/app-server/src/modules/shared/utils/random.ts |  |  | 0.562 |
+| walker |  | 5731 | 34 | ts names packages/lib/src/crypto/serialization/serialization.models.ts |  |  | 0.562 |
+| walker |  | 5780 | 49 | ts decl packages/lib/src/notes/notes.types.ts:4 |  |  | 0.562 |
+| walker |  | 5815 | 35 | ts names packages/app-client/src/modules/notes/notes.context.tsx |  |  | 0.562 |
+| walker |  | 5840 | 25 | ts names packages/app-client/src/modules/shared/style/cn.ts |  |  | 0.562 |
 | ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.543 |
-| walker |  | 5879 | 25 | ts names packages/app-server/src/modules/app/middlewares/cors.middleware.ts |  |  | 0.543 |
-| walker |  | 5904 | 25 | ts names packages/app-server/src/modules/app/middlewares/timeout.middleware.ts |  |  | 0.543 |
-| walker |  | 5954 | 50 | ts decl packages/lib/src/notes/notes.services.ts:39 |  |  | 0.543 |
-| walker |  | 5990 | 36 | ts names packages/app-client/src/modules/i18n/i18n.models.ts |  |  | 0.543 |
-| walker |  | 6026 | 36 | ts names packages/app-server/src/modules/notes/notes.repository.ts |  |  | 0.543 |
-| walker |  | 6062 | 36 | ts names packages/lib/src/crypto/serialization/serialization.types.ts |  |  | 0.543 |
+| walker |  | 5865 | 25 | ts names packages/app-server/src/modules/app/middlewares/cors.middleware.ts |  |  | 0.543 |
+| walker |  | 5890 | 25 | ts names packages/app-server/src/modules/app/middlewares/timeout.middleware.ts |  |  | 0.543 |
+| walker |  | 5940 | 50 | ts decl packages/lib/src/notes/notes.services.ts:39 |  |  | 0.543 |
+| walker |  | 5976 | 36 | ts names packages/app-client/src/modules/i18n/i18n.models.ts |  |  | 0.543 |
+| walker |  | 6012 | 36 | ts names packages/app-server/src/modules/notes/notes.repository.ts |  |  | 0.543 |
+| walker |  | 6048 | 36 | ts names packages/lib/src/crypto/serialization/serialization.types.ts |  |  | 0.543 |
 | ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.532 |
-| walker |  | 6099 | 37 | ts names packages/app-server/src/modules/notes/notes.routes.ts |  |  | 0.532 |
-| walker |  | 6254 | 155 | package identity metadata in package.json |  |  | 0.532 |
+| walker |  | 6085 | 37 | ts names packages/app-server/src/modules/notes/notes.routes.ts |  |  | 0.532 |
+| walker |  | 6240 | 155 | package identity metadata in package.json |  |  | 0.532 |
+| walker |  | 6278 | 38 | ts names packages/app-client/src/modules/config/config.provider.tsx |  |  | 0.532 |
 | ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.520 |
-| walker |  | 6292 | 38 | ts names packages/app-client/src/modules/config/config.provider.tsx |  |  | 0.520 |
-| walker |  | 6319 | 27 | ts names packages/app-server/src/modules/app/middlewares/config.middleware.ts |  |  | 0.520 |
-| walker |  | 6346 | 27 | ts names packages/app-server/src/modules/app/middlewares/storage.middleware.ts |  |  | 0.520 |
-| walker |  | 6373 | 27 | ts names packages/app-server/src/modules/storage/factories/fs-lite.storage.ts |  |  | 0.520 |
-| walker |  | 6402 | 29 | README.md section #4 |  |  | 0.524 |
-| walker |  | 6459 | 57 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts |  |  | 0.524 |
+| walker |  | 6305 | 27 | ts names packages/app-server/src/modules/app/middlewares/config.middleware.ts |  |  | 0.520 |
+| walker |  | 6332 | 27 | ts names packages/app-server/src/modules/app/middlewares/storage.middleware.ts |  |  | 0.520 |
+| walker |  | 6359 | 27 | ts names packages/app-server/src/modules/storage/factories/fs-lite.storage.ts |  |  | 0.520 |
+| walker |  | 6388 | 29 | README.md section #4 |  |  | 0.524 |
+| walker |  | 6445 | 57 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts |  |  | 0.524 |
+| walker |  | 6484 | 39 | ts names packages/app-client/src/modules/auth/auth.services.ts |  |  | 0.518 |
 | ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.518 |
-| walker |  | 6498 | 39 | ts names packages/app-client/src/modules/auth/auth.services.ts |  |  | 0.518 |
 | ns | 6772 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.509 |
 | ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.503 |
-| walker |  | 7017 | 519 | plaintext config Dockerfile |  |  | 0.504 |
-| walker |  | 7045 | 28 | ts names packages/app-client/src/modules/shared/hooks/hooks.ts |  |  | 0.504 |
-| walker |  | 7082 | 37 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.504 |
-| walker |  | 7182 | 100 | headings outline in packages/cli/README.md |  |  | 0.504 |
+| walker |  | 7003 | 519 | plaintext config Dockerfile |  |  | 0.504 |
+| walker |  | 7031 | 28 | ts names packages/app-client/src/modules/shared/hooks/hooks.ts |  |  | 0.504 |
+| walker |  | 7068 | 37 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.504 |
+| walker |  | 7168 | 100 | headings outline in packages/cli/README.md |  |  | 0.504 |
 | ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.498 |
-| walker |  | 7210 | 28 | packages/cli/README.md section #2 |  |  | 0.498 |
-| walker |  | 7236 | 26 | packages/crypto/README.md section #3 |  |  | 0.498 |
-| walker |  | 7267 | 31 | ts names packages/app-server/src/modules/shared/logger/logger.ts |  |  | 0.498 |
-| walker |  | 7312 | 45 | ts names packages/app-server/src/modules/app/server.ts |  |  | 0.499 |
-| walker |  | 7357 | 45 | ts names packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.499 |
-| walker |  | 7390 | 33 | ts names packages/app-server/src/modules/app/config/config.test-utils.ts |  |  | 0.499 |
+| walker |  | 7196 | 28 | packages/cli/README.md section #2 |  |  | 0.498 |
+| walker |  | 7222 | 26 | packages/crypto/README.md section #3 |  |  | 0.498 |
+| walker |  | 7253 | 31 | ts names packages/app-server/src/modules/shared/logger/logger.ts |  |  | 0.498 |
+| walker |  | 7298 | 45 | ts names packages/app-server/src/modules/app/server.ts |  |  | 0.499 |
+| walker |  | 7343 | 45 | ts names packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.499 |
+| walker |  | 7376 | 33 | ts names packages/app-server/src/modules/app/config/config.test-utils.ts |  |  | 0.499 |
 | ns | 7406 |  | 220 | The two server entry points: node bootstrap and Cloudflare worker | 3.12 | 3.4 | 0.491 |
-| walker |  | 7505 | 115 | headings outline in packages/app-client/README.md |  |  | 0.491 |
-| walker |  | 7505 | 0 | packages/app-client/README.md section #3 |  |  | 0.491 |
+| walker |  | 7491 | 115 | headings outline in packages/app-client/README.md |  |  | 0.491 |
+| walker |  | 7491 | 0 | packages/app-client/README.md section #3 |  |  | 0.491 |
+| walker |  | 7568 | 77 | packages/app-client/README.md section #0 |  |  | 0.491 |
 | ns | 7575 |  | 169 | cli.ts: the three subcommands and the citty entry point | 4.1 |  | 0.484 |
-| walker |  | 7582 | 77 | packages/app-client/README.md section #0 |  |  | 0.484 |
-| walker |  | 7608 | 26 | packages/cli/README.md section #7 |  |  | 0.484 |
-| walker |  | 7641 | 33 | packages/crypto/README.md section #2 |  |  | 0.484 |
+| walker |  | 7594 | 26 | packages/cli/README.md section #7 |  |  | 0.484 |
+| walker |  | 7627 | 33 | packages/crypto/README.md section #2 |  |  | 0.484 |
+| walker |  | 7694 | 67 | ts decl packages/docs/src/data/i18n.data.ts:59 |  |  | 0.484 |
 | ns | 7705 |  | 130 | Complete file roster of packages/cli | 4.2 |  | 0.503 |
-| walker |  | 7708 | 67 | ts decl packages/docs/src/data/i18n.data.ts:59 |  |  | 0.503 |
-| walker |  | 7756 | 48 | ts names packages/app-client/src/modules/auth/auth.models.ts |  |  | 0.503 |
-| walker |  | 7791 | 35 | ts names packages/app-client/src/modules/ui/components/textarea.tsx |  |  | 0.503 |
-| walker |  | 7821 | 30 | packages/app-client/README.md section #2 |  |  | 0.503 |
-| walker |  | 7857 | 36 | README.md section #1 |  |  | 0.507 |
-| walker |  | 7893 | 36 | ts names packages/app-server/src/modules/app/users/users.repository.ts |  |  | 0.507 |
-| walker |  | 7965 | 72 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts:3 |  |  | 0.507 |
+| walker |  | 7742 | 48 | ts names packages/app-client/src/modules/auth/auth.models.ts |  |  | 0.503 |
+| walker |  | 7777 | 35 | ts names packages/app-client/src/modules/ui/components/textarea.tsx |  |  | 0.503 |
+| walker |  | 7807 | 30 | packages/app-client/README.md section #2 |  |  | 0.503 |
+| walker |  | 7843 | 36 | README.md section #1 |  |  | 0.507 |
+| walker |  | 7879 | 36 | ts names packages/app-server/src/modules/app/users/users.repository.ts |  |  | 0.507 |
+| walker |  | 7951 | 72 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts:3 |  |  | 0.507 |
 | ns | 7969 |  | 264 | `enclosed create`: every flag, its description and its short alias | 4.3 | 4.1 | 0.499 |
-| walker |  | 8041 | 76 | ts names packages/cli/src/files/files.services.ts |  |  | 0.499 |
-| walker |  | 8117 | 76 | ts names packages/lib/src/crypto/crypto.types.ts |  |  | 0.499 |
-| walker |  | 8154 | 37 | ts decl packages/lib/src/crypto/crypto.types.ts:7 |  |  | 0.499 |
-| walker |  | 8180 | 26 | packages/lib/README.md section #4 |  |  | 0.499 |
-| walker |  | 8217 | 37 | ts names packages/app-server/src/modules/app/auth/auth.routes.ts |  |  | 0.499 |
+| walker |  | 8027 | 76 | ts names packages/cli/src/files/files.services.ts |  |  | 0.499 |
+| walker |  | 8103 | 76 | ts names packages/lib/src/crypto/crypto.types.ts |  |  | 0.499 |
+| walker |  | 8140 | 37 | ts decl packages/lib/src/crypto/crypto.types.ts:7 |  |  | 0.499 |
+| walker |  | 8166 | 26 | packages/lib/README.md section #4 |  |  | 0.499 |
+| walker |  | 8203 | 37 | ts names packages/app-server/src/modules/app/auth/auth.routes.ts |  |  | 0.499 |
 | ns | 8227 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.491 |
-| walker |  | 8254 | 37 | ts names packages/app-server/src/modules/app/config/config.routes.ts |  |  | 0.491 |
-| walker |  | 8329 | 75 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.491 |
-| walker |  | 8337 | 8 | ts body packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.491 |
-| walker |  | 8391 | 54 | ts names packages/app-server/src/modules/app/server.types.ts |  |  | 0.491 |
-| walker |  | 8436 | 45 | ts decl packages/app-server/src/modules/app/server.types.ts:5 |  |  | 0.491 |
-| walker |  | 8473 | 37 | ts decl packages/app-server/src/modules/app/auth/auth.errors.ts:3 |  |  | 0.492 |
+| walker |  | 8240 | 37 | ts names packages/app-server/src/modules/app/config/config.routes.ts |  |  | 0.491 |
+| walker |  | 8315 | 75 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.491 |
+| walker |  | 8323 | 8 | ts body packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.491 |
+| walker |  | 8377 | 54 | ts names packages/app-server/src/modules/app/server.types.ts |  |  | 0.491 |
+| walker |  | 8422 | 45 | ts decl packages/app-server/src/modules/app/server.types.ts:5 |  |  | 0.491 |
+| walker |  | 8459 | 37 | ts decl packages/app-server/src/modules/app/auth/auth.errors.ts:3 |  |  | 0.492 |
 | ns | 8502 |  | 275 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.524 |
-| walker |  | 8524 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.524 |
-| walker |  | 8564 | 40 | ts names packages/app-server/src/modules/app/auth/auth.models.ts |  |  | 0.524 |
-| walker |  | 8597 | 33 | packages/cli/README.md section #6 |  |  | 0.524 |
-| walker |  | 8654 | 57 | ts names packages/app-server/src/modules/notes/notes.constants.ts |  |  | 0.524 |
-| walker |  | 8695 | 41 | ts names packages/app-client/src/modules/ui/components/sonner.tsx |  |  | 0.524 |
+| walker |  | 8510 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.524 |
+| walker |  | 8550 | 40 | ts names packages/app-server/src/modules/app/auth/auth.models.ts |  |  | 0.524 |
+| walker |  | 8583 | 33 | packages/cli/README.md section #6 |  |  | 0.524 |
+| walker |  | 8640 | 57 | ts names packages/app-server/src/modules/notes/notes.constants.ts |  |  | 0.524 |
+| walker |  | 8681 | 41 | ts names packages/app-client/src/modules/ui/components/sonner.tsx |  |  | 0.524 |
+| walker |  | 8722 | 41 | ts names packages/app-server/src/modules/app/config/config.ts |  |  | 0.524 |
 | ns | 8731 |  | 229 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.544 |
-| walker |  | 8736 | 41 | ts names packages/app-server/src/modules/app/config/config.ts |  |  | 0.544 |
-| walker |  | 8791 | 55 | ts decl packages/app-client/src/modules/docs/docs.models.ts:6 |  |  | 0.544 |
-| walker |  | 8833 | 42 | ts names packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.models.ts |  |  | 0.544 |
-| walker |  | 8971 | 138 | ts names packages/app-server/src/index.node.ts |  |  | 0.546 |
-| ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.536 |
-| walker |  | 9060 | 89 | ts names packages/lib/src/api/api.models.ts |  |  | 0.536 |
-| ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.533 |
-| walker |  | 9290 | 230 | ts decl packages/app-client/eslint.config.js:3 |  |  | 0.533 |
-| ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.537 |
-| walker |  | 9520 | 230 | ts decl packages/app-server/eslint.config.js:3 |  |  | 0.537 |
-| ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.534 |
-| walker |  | 9750 | 230 | ts decl packages/crypto/eslint.config.js:3 |  |  | 0.534 |
-| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.538 |
-| ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.551 |
-| walker |  | 9980 | 230 | ts decl packages/docs/eslint.config.js:3 |  |  | 0.551 |
+| walker |  | 8777 | 55 | ts decl packages/app-client/src/modules/docs/docs.models.ts:6 |  |  | 0.544 |
+| walker |  | 8819 | 42 | ts names packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.models.ts |  |  | 0.544 |
+| walker |  | 8908 | 89 | ts names packages/lib/src/api/api.models.ts |  |  | 0.544 |
+| ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.534 |
+| walker |  | 9138 | 230 | ts decl packages/app-client/eslint.config.js:3 |  |  | 0.534 |
+| ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.531 |
+| ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.536 |
+| walker |  | 9368 | 230 | ts decl packages/app-server/eslint.config.js:3 |  |  | 0.536 |
+| ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.532 |
+| walker |  | 9598 | 230 | ts decl packages/crypto/eslint.config.js:3 |  |  | 0.532 |
+| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.537 |
+| walker |  | 9828 | 230 | ts decl packages/docs/eslint.config.js:3 |  |  | 0.537 |
+| ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.549 |

@@ -178,4 +178,3 @@ Score(3000)=0.597 I=0.853 C=0.418 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 9829 | 95 | readme.md section #26 |  |  | 0.636 |
 | ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.626 |
 | walker |  | 9981 | 152 | ts body source/utils/merge.ts:16 |  |  | 0.638 |
-| walker |  | 10000 | 19 | ts names test/fetch.ts |  |  | 0.638 |

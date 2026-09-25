@@ -190,9 +190,6 @@ client/
     i18n.js
     init.client.js
     toast.js
-      …
-      5→const options = {
-      …
     utils.js
       …
       229→export function supplant(str, subs) {
@@ -539,6 +536,10 @@ server/
       142→module.exports = LibraryScan
     LibraryScanner.js
     MediaProbeData.js
+      …
+      3→class MediaProbeData {
+      …
+      67→module.exports = MediaProbeData
     NfoFileScanner.js
     OpfFileScanner.js
     PodcastScanner.js

@@ -1,4 +1,4 @@
-Score(3000)=0.578 I=0.761 C=0.439 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.595/0.492/0.578/0.636/0.610/0.548
+Score(3000)=0.578 I=0.761 C=0.439 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.595/0.492/0.578/0.637/0.610/0.535
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -110,127 +110,125 @@ Score(3000)=0.578 I=0.761 C=0.439 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.564 |
 | walker |  | 3702 | 135 | package entrypoints in package.json |  |  | 0.641 |
 | ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.628 |
-| walker |  | 3925 | 223 | ts names bin/semver.js |  |  | 0.628 |
-| ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.614 |
-| walker |  | 4210 | 285 | README.md section #2 |  |  | 0.636 |
-| walker |  | 4236 | 26 | ts body functions/valid.js:4 |  |  | 0.636 |
-| walker |  | 4380 | 144 | package scripts in package.json |  |  | 0.636 |
-| walker |  | 4407 | 27 | listing of 'test/internal' |  |  | 0.636 |
-| walker |  | 4410 | 3 | listing of 'tap-snapshots/test' |  |  | 0.636 |
-| walker |  | 4446 | 36 | ts body functions/clean.js:4 |  |  | 0.636 |
+| walker |  | 3987 | 285 | README.md section #2 |  |  | 0.650 |
+| walker |  | 4013 | 26 | ts body functions/valid.js:4 |  |  | 0.650 |
+| walker |  | 4157 | 144 | package scripts in package.json |  |  | 0.651 |
+| ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.636 |
+| walker |  | 4184 | 27 | listing of 'test/internal' |  |  | 0.636 |
+| walker |  | 4187 | 3 | listing of 'tap-snapshots/test' |  |  | 0.636 |
+| walker |  | 4223 | 36 | ts body functions/clean.js:4 |  |  | 0.636 |
+| walker |  | 4259 | 36 | ts body functions/prerelease.js:4 |  |  | 0.636 |
+| walker |  | 4282 | 23 | ts body internal/lrucache.js:4 |  |  | 0.637 |
+| walker |  | 4327 | 45 | ts body ranges/intersects.js:4 |  |  | 0.637 |
+| walker |  | 4348 | 21 | README.md section #21 |  |  | 0.637 |
+| walker |  | 4369 | 21 | README.md section #22 |  |  | 0.637 |
+| walker |  | 4390 | 21 | README.md section #23 |  |  | 0.637 |
+| walker |  | 4411 | 21 | README.md section #24 |  |  | 0.637 |
+| walker |  | 4433 | 22 | README.md section #35 |  |  | 0.637 |
+| walker |  | 4455 | 22 | README.md section #52 |  |  | 0.637 |
 | ns | 4467 |  | 290 | README: tilde ranges and their desugaring table | 3.9 |  | 0.628 |
-| walker |  | 4482 | 36 | ts body functions/prerelease.js:4 |  |  | 0.628 |
-| walker |  | 4505 | 23 | ts body internal/lrucache.js:4 |  |  | 0.628 |
-| walker |  | 4550 | 45 | ts body ranges/intersects.js:4 |  |  | 0.628 |
-| walker |  | 4571 | 21 | README.md section #21 |  |  | 0.628 |
-| walker |  | 4592 | 21 | README.md section #22 |  |  | 0.628 |
-| walker |  | 4613 | 21 | README.md section #23 |  |  | 0.628 |
-| walker |  | 4634 | 21 | README.md section #24 |  |  | 0.628 |
-| walker |  | 4656 | 22 | README.md section #35 |  |  | 0.628 |
-| walker |  | 4678 | 22 | README.md section #52 |  |  | 0.628 |
-| walker |  | 4730 | 52 | ts body functions/compare-build.js:4 |  |  | 0.628 |
+| walker |  | 4507 | 52 | ts body functions/compare-build.js:4 |  |  | 0.628 |
+| walker |  | 4562 | 55 | ts body functions/satisfies.js:4 |  |  | 0.628 |
+| walker |  | 4587 | 25 | README.md section #13 |  |  | 0.628 |
+| walker |  | 4692 | 105 | listing of 'test/functions' |  |  | 0.628 |
+| walker |  | 4716 | 24 | README.md section #43 |  |  | 0.628 |
 | ns | 4731 |  | 264 | README: X-ranges and bare partial versions | 3.10 |  | 0.617 |
-| walker |  | 4785 | 55 | ts body functions/satisfies.js:4 |  |  | 0.617 |
-| walker |  | 4810 | 25 | README.md section #13 |  |  | 0.617 |
-| walker |  | 4915 | 105 | listing of 'test/functions' |  |  | 0.617 |
+| walker |  | 4740 | 24 | README.md section #48 |  |  | 0.617 |
+| walker |  | 4796 | 56 | listing of 'test/ranges' |  |  | 0.617 |
+| walker |  | 4825 | 29 | README.md section #14 |  |  | 0.617 |
+| walker |  | 4848 | 23 | README.md section #34 |  |  | 0.617 |
+| walker |  | 4852 | 4 | listing of '.github/matchers' |  |  | 0.617 |
+| walker |  | 4856 | 4 | listing of 'test/integration' |  |  | 0.617 |
 | ns | 4922 |  | 191 | README: hyphen ranges | 3.11 |  | 0.608 |
-| walker |  | 4939 | 24 | README.md section #43 |  |  | 0.608 |
-| walker |  | 4963 | 24 | README.md section #48 |  |  | 0.608 |
-| walker |  | 5019 | 56 | listing of 'test/ranges' |  |  | 0.608 |
-| walker |  | 5048 | 29 | README.md section #14 |  |  | 0.608 |
-| walker |  | 5071 | 23 | README.md section #34 |  |  | 0.608 |
-| walker |  | 5075 | 4 | listing of '.github/matchers' |  |  | 0.608 |
-| walker |  | 5079 | 4 | listing of 'test/integration' |  |  | 0.608 |
-| ns | 5101 |  | 179 | README: ranges can be non-contiguous (the gtr/ltr/satisfies gotcha) | 3.12 |  | 0.601 |
-| walker |  | 5151 | 72 | ts body internal/parse-options.js:6 |  |  | 0.602 |
-| walker |  | 5180 | 29 | README.md section #26 |  |  | 0.602 |
-| walker |  | 5209 | 29 | README.md section #36 |  |  | 0.602 |
-| ns | 5314 |  | 213 | README: coercion limits | 3.13 |  | 0.594 |
-| walker |  | 5315 | 106 | README.md section #4 |  |  | 0.607 |
-| walker |  | 5345 | 30 | README.md section #39 |  |  | 0.607 |
-| walker |  | 5429 | 84 | listing of 'test/fixtures' |  |  | 0.608 |
-| walker |  | 5441 | 12 | ts names .commitlintrc.js |  |  | 0.608 |
-| walker |  | 5453 | 12 | ts names .eslintrc.js |  |  | 0.608 |
-| walker |  | 5465 | 12 | ts names .eslintrc.local.js |  |  | 0.608 |
-| walker |  | 5544 | 79 | ts body ranges/valid.js:4 |  |  | 0.608 |
-| walker |  | 5577 | 33 | README.md section #31 |  |  | 0.608 |
-| walker |  | 5582 | 5 | listing of 'test/bin' |  |  | 0.608 |
-| walker |  | 5610 | 28 | ts body bin/semver.js:132 |  |  | 0.608 |
-| ns | 5694 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.609 |
-| walker |  | 5707 | 97 | ts body functions/parse.js:4 |  |  | 0.609 |
-| walker |  | 5744 | 37 | README.md section #40 |  |  | 0.609 |
-| walker |  | 5780 | 36 | README.md section #41 |  |  | 0.609 |
-| walker |  | 5817 | 37 | README.md section #47 |  |  | 0.609 |
-| walker |  | 5882 | 65 | ts body classes/semver.js:81 |  |  | 0.610 |
-| walker |  | 5926 | 44 | README.md section #37 |  |  | 0.610 |
+| walker |  | 4928 | 72 | ts body internal/parse-options.js:6 |  |  | 0.609 |
+| walker |  | 4957 | 29 | README.md section #26 |  |  | 0.609 |
+| walker |  | 4986 | 29 | README.md section #36 |  |  | 0.609 |
+| walker |  | 5092 | 106 | README.md section #4 |  |  | 0.622 |
+| ns | 5101 |  | 179 | README: ranges can be non-contiguous (the gtr/ltr/satisfies gotcha) | 3.12 |  | 0.615 |
+| walker |  | 5122 | 30 | README.md section #39 |  |  | 0.615 |
+| walker |  | 5206 | 84 | listing of 'test/fixtures' |  |  | 0.617 |
+| walker |  | 5218 | 12 | ts names .commitlintrc.js |  |  | 0.617 |
+| walker |  | 5230 | 12 | ts names .eslintrc.js |  |  | 0.617 |
+| walker |  | 5242 | 12 | ts names .eslintrc.local.js |  |  | 0.617 |
+| ns | 5314 |  | 213 | README: coercion limits | 3.13 |  | 0.608 |
+| walker |  | 5321 | 79 | ts body ranges/valid.js:4 |  |  | 0.608 |
+| walker |  | 5354 | 33 | README.md section #31 |  |  | 0.608 |
+| walker |  | 5359 | 5 | listing of 'test/bin' |  |  | 0.608 |
+| walker |  | 5456 | 97 | ts body functions/parse.js:4 |  |  | 0.608 |
+| walker |  | 5493 | 37 | README.md section #40 |  |  | 0.608 |
+| walker |  | 5529 | 36 | README.md section #41 |  |  | 0.608 |
+| walker |  | 5566 | 37 | README.md section #47 |  |  | 0.608 |
+| walker |  | 5631 | 65 | ts body classes/semver.js:81 |  |  | 0.609 |
+| walker |  | 5675 | 44 | README.md section #37 |  |  | 0.609 |
+| ns | 5694 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.610 |
+| walker |  | 5717 | 42 | README.md section #38 |  |  | 0.610 |
+| walker |  | 5761 | 44 | README.md section #45 |  |  | 0.610 |
+| walker |  | 5806 | 45 | README.md section #53 |  |  | 0.610 |
+| walker |  | 5853 | 47 | README.md section #29 |  |  | 0.610 |
 | ns | 5956 |  | 262 | internal/parse-options.js and internal/debug.js (whole files) | 4.2 |  | 0.610 |
-| walker |  | 5968 | 42 | README.md section #38 |  |  | 0.610 |
-| walker |  | 6012 | 44 | README.md section #45 |  |  | 0.610 |
-| walker |  | 6057 | 45 | README.md section #53 |  |  | 0.610 |
-| walker |  | 6104 | 47 | README.md section #29 |  |  | 0.610 |
-| walker |  | 6240 | 136 | ts body functions/inc.js:5 |  |  | 0.610 |
-| walker |  | 6248 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.610 |
+| walker |  | 5989 | 136 | ts body functions/inc.js:5 |  |  | 0.610 |
+| walker |  | 5997 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.610 |
+| walker |  | 6047 | 50 | README.md section #30 |  |  | 0.610 |
+| walker |  | 6102 | 55 | README.md section #25 |  |  | 0.610 |
+| walker |  | 6198 | 96 | ts body internal/lrucache.js:9 |  |  | 0.610 |
+| walker |  | 6209 | 11 | listing of '.github/actions' |  |  | 0.610 |
+| walker |  | 6213 | 4 | listing of '.github/actions/create-check' |  |  | 0.610 |
+| walker |  | 6217 | 4 | listing of '.github/actions/install-latest-npm' |  |  | 0.610 |
+| walker |  | 6227 | 10 | CHANGELOG.md section #0 |  |  | 0.610 |
 | ns | 6262 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.593 |
-| walker |  | 6298 | 50 | README.md section #30 |  |  | 0.593 |
-| walker |  | 6353 | 55 | README.md section #25 |  |  | 0.593 |
-| ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.597 |
-| walker |  | 6449 | 96 | ts body internal/lrucache.js:9 |  |  | 0.598 |
-| walker |  | 6460 | 11 | listing of '.github/actions' |  |  | 0.598 |
-| walker |  | 6464 | 4 | listing of '.github/actions/create-check' |  |  | 0.598 |
-| walker |  | 6468 | 4 | listing of '.github/actions/install-latest-npm' |  |  | 0.598 |
-| walker |  | 6478 | 10 | CHANGELOG.md section #0 |  |  | 0.598 |
-| ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.587 |
-| walker |  | 6676 | 198 | ts body internal/identifiers.js:4 |  |  | 0.614 |
+| ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.598 |
+| walker |  | 6425 | 198 | ts body internal/identifiers.js:4 |  |  | 0.626 |
+| ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.614 |
+| walker |  | 6624 | 199 | ts body ranges/max-satisfying.js:6 |  |  | 0.614 |
 | ns | 6761 |  | 168 | internal/re.js: the ReDoS-safe regex construction | 4.6 |  | 0.607 |
-| walker |  | 6875 | 199 | ts body ranges/max-satisfying.js:6 |  |  | 0.607 |
-| walker |  | 7074 | 199 | ts body ranges/min-satisfying.js:5 |  |  | 0.607 |
-| walker |  | 7144 | 70 | README.md section #32 |  |  | 0.607 |
-| walker |  | 7215 | 71 | README.md section #28 |  |  | 0.607 |
-| walker |  | 7292 | 77 | README.md section #6 |  |  | 0.610 |
-| walker |  | 7308 | 16 | ts names benchmarks/bench-compare.js |  |  | 0.610 |
-| walker |  | 7324 | 16 | ts names benchmarks/bench-parse.js |  |  | 0.610 |
-| walker |  | 7400 | 76 | README.md section #27 |  |  | 0.610 |
-| ns | 7436 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.583 |
-| walker |  | 7482 | 82 | README.md section #8 |  |  | 0.583 |
-| walker |  | 7490 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.583 |
-| walker |  | 7634 | 144 | ts body classes/semver.js:93 |  |  | 0.584 |
-| ns | 7755 |  | 319 | bin/semver.js: complete option-flag roster | 5.1 |  | 0.566 |
-| walker |  | 7784 | 150 | ts body classes/comparator.js:61 |  |  | 0.566 |
-| walker |  | 7869 | 85 | README.md section #51 |  |  | 0.566 |
-| ns | 7931 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.560 |
-| walker |  | 7960 | 91 | README.md section #10 |  |  | 0.570 |
-| walker |  | 8046 | 86 | README.md section #42 |  |  | 0.570 |
+| walker |  | 6823 | 199 | ts body ranges/min-satisfying.js:5 |  |  | 0.607 |
+| walker |  | 6893 | 70 | README.md section #32 |  |  | 0.607 |
+| walker |  | 6964 | 71 | README.md section #28 |  |  | 0.607 |
+| walker |  | 7041 | 77 | README.md section #6 |  |  | 0.610 |
+| walker |  | 7117 | 76 | README.md section #27 |  |  | 0.610 |
+| walker |  | 7199 | 82 | README.md section #8 |  |  | 0.610 |
+| walker |  | 7207 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.610 |
+| walker |  | 7351 | 144 | ts body classes/semver.js:93 |  |  | 0.610 |
+| ns | 7436 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.584 |
+| walker |  | 7501 | 150 | ts body classes/comparator.js:61 |  |  | 0.584 |
+| walker |  | 7586 | 85 | README.md section #51 |  |  | 0.584 |
+| walker |  | 7677 | 91 | README.md section #10 |  |  | 0.595 |
+| ns | 7755 |  | 319 | bin/semver.js: complete option-flag roster | 5.1 |  | 0.577 |
+| walker |  | 7763 | 86 | README.md section #42 |  |  | 0.577 |
+| ns | 7931 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.570 |
+| walker |  | 8058 | 295 | ts body ranges/subset.js:45 |  |  | 0.570 |
+| walker |  | 8134 | 76 | README.md section #33 |  |  | 0.570 |
 | ns | 8268 |  | 337 | bin/semver.js: the main() output pipeline | 5.3 |  | 0.558 |
-| walker |  | 8341 | 295 | ts body ranges/subset.js:45 |  |  | 0.558 |
+| walker |  | 8304 | 170 | ts body classes/range.js:193 |  |  | 0.558 |
+| walker |  | 8377 | 73 | README.md section #57 |  |  | 0.558 |
+| walker |  | 8389 | 12 | ts names test/fixtures/comparator-intersection.js |  |  | 0.558 |
+| walker |  | 8401 | 12 | ts names test/fixtures/comparisons.js |  |  | 0.558 |
+| walker |  | 8413 | 12 | ts names test/fixtures/equality.js |  |  | 0.558 |
 | ns | 8414 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.548 |
-| ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.538 |
-| ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.534 |
-| walker |  | 8894 | 553 | ts decl bin/semver.js:139 |  |  | 0.548 |
-| walker |  | 8970 | 76 | README.md section #33 |  |  | 0.548 |
-| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.540 |
-| walker |  | 9140 | 170 | ts body classes/range.js:193 |  |  | 0.541 |
-| walker |  | 9213 | 73 | README.md section #57 |  |  | 0.541 |
-| walker |  | 9225 | 12 | ts names test/fixtures/comparator-intersection.js |  |  | 0.541 |
-| walker |  | 9237 | 12 | ts names test/fixtures/comparisons.js |  |  | 0.541 |
-| walker |  | 9249 | 12 | ts names test/fixtures/equality.js |  |  | 0.541 |
-| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.554 |
-| walker |  | 9261 | 12 | ts names test/fixtures/increments.js |  |  | 0.554 |
-| walker |  | 9273 | 12 | ts names test/fixtures/invalid-versions.js |  |  | 0.554 |
-| walker |  | 9285 | 12 | ts names test/fixtures/range-exclude.js |  |  | 0.554 |
-| walker |  | 9297 | 12 | ts names test/fixtures/range-include.js |  |  | 0.554 |
-| walker |  | 9309 | 12 | ts names test/fixtures/range-intersection.js |  |  | 0.554 |
-| walker |  | 9321 | 12 | ts names test/fixtures/range-parse.js |  |  | 0.554 |
-| walker |  | 9333 | 12 | ts names test/fixtures/valid-versions.js |  |  | 0.554 |
-| walker |  | 9345 | 12 | ts names test/fixtures/version-gt-range.js |  |  | 0.554 |
-| walker |  | 9357 | 12 | ts names test/fixtures/version-lt-range.js |  |  | 0.554 |
-| walker |  | 9369 | 12 | ts names test/fixtures/version-not-gt-range.js |  |  | 0.554 |
-| walker |  | 9381 | 12 | ts names test/fixtures/version-not-lt-range.js |  |  | 0.554 |
-| walker |  | 9393 | 12 | ts names test/ranges/simplify.js |  |  | 0.554 |
-| ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.551 |
-| walker |  | 9405 | 12 | ts names test/ranges/subset.js |  |  | 0.551 |
-| walker |  | 9538 | 133 | ts body internal/lrucache.js:25 |  |  | 0.552 |
-| ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.552 |
-| walker |  | 9650 | 112 | README.md section #9 |  |  | 0.552 |
-| ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.562 |
-| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.562 |
-| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.557 |
+| walker |  | 8425 | 12 | ts names test/fixtures/increments.js |  |  | 0.548 |
+| walker |  | 8437 | 12 | ts names test/fixtures/invalid-versions.js |  |  | 0.548 |
+| walker |  | 8449 | 12 | ts names test/fixtures/range-exclude.js |  |  | 0.548 |
+| walker |  | 8461 | 12 | ts names test/fixtures/range-include.js |  |  | 0.548 |
+| walker |  | 8473 | 12 | ts names test/fixtures/range-intersection.js |  |  | 0.548 |
+| walker |  | 8485 | 12 | ts names test/fixtures/range-parse.js |  |  | 0.548 |
+| walker |  | 8497 | 12 | ts names test/fixtures/valid-versions.js |  |  | 0.548 |
+| walker |  | 8509 | 12 | ts names test/fixtures/version-gt-range.js |  |  | 0.548 |
+| walker |  | 8521 | 12 | ts names test/fixtures/version-lt-range.js |  |  | 0.548 |
+| walker |  | 8533 | 12 | ts names test/fixtures/version-not-gt-range.js |  |  | 0.548 |
+| walker |  | 8545 | 12 | ts names test/fixtures/version-not-lt-range.js |  |  | 0.548 |
+| ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.539 |
+| walker |  | 8678 | 133 | ts body internal/lrucache.js:25 |  |  | 0.540 |
+| walker |  | 8790 | 112 | README.md section #9 |  |  | 0.540 |
+| ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.535 |
+| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.528 |
+| walker |  | 9174 | 384 | ts body functions/cmp.js:10 |  |  | 0.552 |
+| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.565 |
+| ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.561 |
+| walker |  | 9608 | 434 | ts body ranges/simplify.js:8 |  |  | 0.561 |
+| ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.561 |
+| walker |  | 9678 | 70 | ts decl .eslintrc.js:11 |  |  | 0.561 |
+| ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.571 |
+| walker |  | 9811 | 133 | README.md section #50 |  |  | 0.571 |
+| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.571 |
+| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.566 |
+| walker |  | 9996 | 185 | ts body classes/range.js:73 |  |  | 0.566 |

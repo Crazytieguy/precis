@@ -132,14 +132,14 @@ Score(3000)=0.720 I=0.898 C=0.577 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 9189 |  | 421 | Every test title in `test/chalk.js` | 6.2 | 6.1 | 0.536 |
 | walker |  | 9214 | 480 | readme.md section #39 |  |  | 0.536 |
 | walker |  | 9377 | 163 | code-of-conduct.md section #5 |  |  | 0.536 |
-| walker |  | 9414 | 37 | readme.md section #31 |  |  | 0.536 |
+| walker |  | 9393 | 16 | ts doc source/vendor/ansi-styles/index.d.ts:186 |  |  | 0.536 |
 | ns | 9425 |  | 236 | Every test title in the four remaining ava files | 6.3 |  | 0.532 |
-| ns | 9522 |  | 97 | `test/_fixture.js` in full, and the child process that runs it | 6.4 | 6.3 | 0.530 |
-| walker |  | 9724 | 310 | ts decl source/index.d.ts:32 #2 |  |  | 0.539 |
-| ns | 9753 |  | 231 | ansi-styles `index.d.ts`: complete declaration roster | 7.1 |  | 0.548 |
-| walker |  | 9798 | 74 | ts doc source/vendor/supports-color/index.d.ts:19 |  |  | 0.548 |
-| walker |  | 9822 | 24 | readme.md section #30 |  |  | 0.548 |
-| walker |  | 9838 | 16 | ts doc source/vendor/ansi-styles/index.d.ts:186 |  |  | 0.548 |
-| walker |  | 9880 | 42 | readme.md section #40 |  |  | 0.548 |
-| ns | 9896 |  | 143 | `source/index.test-d.ts`: what the tsd suite asserts | 7.2 |  | 0.543 |
-| ns | 9989 |  | 93 | `benchmark.js` and both `examples/` scripts: purpose lines | 7.3 |  | 0.541 |
+| walker |  | 9466 | 73 | ts doc source/index.d.ts:277 |  |  | 0.533 |
+| ns | 9522 |  | 97 | `test/_fixture.js` in full, and the child process that runs it | 6.4 | 6.3 | 0.531 |
+| walker |  | 9539 | 73 | ts doc source/index.d.ts:286 |  |  | 0.532 |
+| walker |  | 9619 | 80 | ts doc source/index.d.ts:295 |  |  | 0.533 |
+| walker |  | 9712 | 93 | ts doc source/index.d.ts:242 |  |  | 0.533 |
+| ns | 9753 |  | 231 | ansi-styles `index.d.ts`: complete declaration roster | 7.1 |  | 0.542 |
+| walker |  | 9855 | 143 | ts body source/index.js:132 |  |  | 0.559 |
+| ns | 9896 |  | 143 | `source/index.test-d.ts`: what the tsd suite asserts | 7.2 |  | 0.554 |
+| ns | 9989 |  | 93 | `benchmark.js` and both `examples/` scripts: purpose lines | 7.3 |  | 0.551 |

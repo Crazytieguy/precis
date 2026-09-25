@@ -68,6 +68,9 @@ README.md
   186→### Sort
   …
   194→### Pagination
+  196→```http
+  197→GET /posts?_page=1&_per_page=25
+  198→```
   …
   220→### Embed
   …
@@ -90,9 +93,27 @@ package.json
   2→  "name": "json-server",
   3→  "version": "1.0.0-beta.15",
   4→  "description": "",
-  …
+  5→  "keywords": [
+  6→    "JSON",
+  7→    "server",
+  8→    "fake",
+  9→    "REST",
+  10→    "API",
+  11→    "prototyping",
+  12→    "mock",
+  13→    "mocking",
+  14→    "test",
+  15→    "testing",
+  16→    "rest",
+  17→    "data",
+  18→    "dummy"
+  19→  ],
   20→  "license": "MIT",
-  …
+  21→  "author": "typicode <typicode@gmail.com>",
+  22→  "repository": {
+  23→    "type": "git",
+  24→    "url": "git+https://github.com/typicode/json-server.git"
+  25→  },
   26→  "bin": {
   27→    "json-server": "lib/bin.js"
   28→  },
@@ -154,6 +175,7 @@ src/
       18→  async read(): Promise<Data | null> {
       …
       44→  async write(data: Data): Promise<void> {
+      45→    await this.#adapter.write({ ...data, $schema: DEFAULT_SCHEMA_PATH })
       …
       47→}
     observer.ts
@@ -173,6 +195,7 @@ src/
       17→    return
       …
       20→  constructor(adapter: Adapter<T>) {
+      21→    this.#adapter = adapter
       …
       24→  async read() {
       …
@@ -190,32 +213,6 @@ src/
     94→export function createApp(db: Low<Data>, options: AppOptions = {}) {
     …
   bin.ts
-    …
-    21→function help() {
-    …
-    34→function args(): {
-    35→  file: string;
-    36→  port: number;
-    37→  host: string;
-    38→  static: string[];
-    39→} {
-    …
-    115→const { file, port, host, static: staticArr } = args();
-    …
-    128→let adapter: Adapter<RawData>;
-    …
-    137→const observer = new Observer(new NormalizedAdapter(adapter));
-    138→
-    139→const db = new Low<Data>(observer, {});
-    …
-    143→const app = createApp(db, { logger: false, static: staticArr });
-    144→
-    145→function logRoutes(data: Data) {
-    …
-    158→const kaomojis = ["♡⸜(˶˃ ᵕ ˂˶)⸝♡", "♡( ◡‿◡ )", "( ˶ˆ ᗜ ˆ˵ )", "(˶ᵔ ᵕ ᵔ˶)"];
-    159→
-    160→function randomItem(items: string[]): string {
-    …
   matches-where.test.ts
   matches-where.ts
     …
@@ -262,6 +259,7 @@ src/
     85→    this.#db = db
     …
     92→  has(name: string): boolean {
+    93→    return Object.prototype.hasOwnProperty.call(this.#db?.data, name)
     …
     96→  findById(name: string, id: string, query: { _embed?: string[] | string }): Item | undefined {
     …
@@ -279,12 +277,16 @@ src/
     145→  async create(name: string, data: Omit<Item, 'id'> = {}): Promise<Item | undefined> {
     …
     186→  async update(name: string, body: Item = {}): Promise<Item | undefined> {
+    187→    return this.#updateOrPatch(name, body, false)
     …
     190→  async patch(name: string, body: Item = {}): Promise<Item | undefined> {
+    191→    return this.#updateOrPatch(name, body, true)
     …
     194→  async updateById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
+    195→    return this.#updateOrPatchById(name, id, body, false)
     …
     198→  async patchById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
+    199→    return this.#updateOrPatchById(name, id, body, true)
     …
     202→  async destroyById(
     203→    name: string,

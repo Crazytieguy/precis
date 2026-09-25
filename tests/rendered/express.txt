@@ -139,24 +139,6 @@ index.js
   11→module.exports = require('./lib/express');
 lib/
   application.js
-    …
-    28→/**
-    29→ * Module variables.
-    30→ * @private
-    31→ */
-    33→var slice = Array.prototype.slice;
-    34→var flatten = Array.prototype.flat;
-    36→/**
-    37→ * Application prototype.
-    38→ */
-    40→var app = exports = module.exports = {};
-    …
-    47→var trustProxyDefaultSymbol = '@@symbol:trust_proxy_default';
-    …
-    615→function logerror(err) {
-    …
-    625→function tryRender(view, options, callback) {
-    …
   express.js
     …
     27→exports = module.exports = createApplication;

@@ -5,8 +5,7 @@
 //! names, and CommonJS `module.exports` / `exports.x` targets. Every
 //! top-level declaration of a `.d.ts` file is API (ambient declarations
 //! are implicitly exported). Other top-level declarations are `Private`
-//! in entrypoint files and in files that export nothing (scripts), and
-//! hidden elsewhere. `export … from` and the statements that export a
+//! in entrypoint files and hidden elsewhere. `export … from` and the statements that export a
 //! name without declaring it are re-exports, listed on the roster.
 //!
 //! Classes are containers: methods (and arrow-function fields) are
@@ -72,7 +71,7 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         .collect();
     let unexported = if is_declaration_file(&file.path) {
         Some(Visibility::Public)
-    } else if entrypoint || !scan.exports_anything {
+    } else if entrypoint {
         Some(Visibility::Private)
     } else {
         None
@@ -206,7 +205,6 @@ enum TopLevel<'tree> {
 struct ExportScan<'source> {
     /// Local names some export statement or CommonJS assignment publishes.
     public_names: HashSet<&'source str>,
-    exports_anything: bool,
 }
 
 impl<'source> ExportScan<'source> {
@@ -217,7 +215,6 @@ impl<'source> ExportScan<'source> {
     ) -> TopLevel<'tree> {
         match statement.kind() {
             "export_statement" => {
-                self.exports_anything = true;
                 if let Some(declaration) = statement.child_by_field_name("declaration") {
                     return TopLevel::Exported(unwrap_ambient(declaration));
                 }
@@ -239,7 +236,6 @@ impl<'source> ExportScan<'source> {
             }
             "expression_statement" => {
                 if let Some(value) = commonjs_export_value(file, statement) {
-                    self.exports_anything = true;
                     return self.exported_value(file, value);
                 }
                 match statement.named_child(0) {
@@ -1223,7 +1219,7 @@ export { local, type Shape };
     }
 
     #[test]
-    fn code_typescript_unexported_declarations_are_private_only_in_entrypoints_and_scripts() {
+    fn code_typescript_unexported_declarations_are_private_only_in_entrypoints() {
         let source = "import x from 'x';\nconst helper = 1;\nexport const api = 2;\n";
         let visibilities = |relative| {
             extract_source(relative, source)
@@ -1241,10 +1237,7 @@ export { local, type Shape };
             "scripts/build.js",
             "const fs = require('fs');\nfunction main() {}\nmain();\n",
         );
-        assert_eq!(
-            describe(&script),
-            ["Private Callable name [2] head [2] doc [] body []"]
-        );
+        assert!(script.decls.is_empty());
     }
 
     #[test]

@@ -28,20 +28,6 @@
 .gitignore
 .npmrc
 bench.ts
-  …
-  6→const suite = new Benchmark.Suite() as Benchmark.Suite;
-  7→const smallTaskCount = 100;
-  8→const largeBacklogTaskCount = 10_000;
-  9→const selectedBenchmarks = process.argv.slice(2);
-  …
-  12→type Resolvable = Deferred & {resolve: () => void};
-  13→
-  14→const noop = () => undefined;
-  15→
-  16→const shouldRunBenchmark = (name: string) => selectedBenchmarks.length === 0
-  17→	|| selectedBenchmarks.some(selectedBenchmark => name.includes(selectedBenchmark));
-  19→const addBenchmark = (name: string, fn: () => Promise<void>) => {
-  …
 license
 package.json
   …
@@ -196,16 +182,27 @@ source/
     …
     696→	async onPendingZero(): Promise<void> {
     …
+    704→	/**
+    705→	@returns A promise that settles when the queue becomes rate-limited due to intervalCap.
+    706→	*/
     707→	async onRateLimit(): Promise<void> {
     …
+    715→	/**
+    716→	@returns A promise that settles when the queue is no longer rate-limited.
+    717→	*/
     718→	async onRateLimitCleared(): Promise<void> {
     …
     756→	onError(): Promise<never> {
     …
+    782→	/**
+    783→	Size of the queue, the number of queued items waiting to run.
+    784→	*/
     785→	get size(): number {
     786→		return this.#queue.size;
     …
     794→	sizeBy(options: Readonly<Partial<EnqueueOptionsType>>): number {
+    795→		// eslint-disable-next-line unicorn/no-array-callback-reference
+    796→		return this.#queue.filter(options).length;
     …
     799→	/**
     800→	Number of running items (no longer in the queue).
@@ -233,6 +230,8 @@ source/
     955→		readonly startTime: number;
     956→		readonly timeout?: number;
     957→	}> {
+    958→		// Return fresh array with fresh objects to prevent mutations
+    959→		return [...this.#runningTasks.values()].map(task => ({...task}));
     …
     961→}
     963→export type {Queue} from './queue.js';

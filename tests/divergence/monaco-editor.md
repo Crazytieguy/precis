@@ -220,133 +220,137 @@ Score(3000)=0.680 I=0.775 C=0.596 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 5809 | 14 | ts names src/deprecated/language/typescript/monaco.contribution.ts |  |  | 0.523 |
 | walker |  | 5831 | 22 | ts names monaco-lsp-client/src/adapters/TextDocumentSynchronizer.ts |  |  | 0.523 |
 | walker |  | 5929 | 98 | ts decl webpack-plugin/src/index.ts:238 |  |  | 0.523 |
-| walker |  | 5970 | 41 | ts names samples/browser-esm-esbuild/build.js |  |  | 0.523 |
 | ns | 6027 |  | 236 | TypeScriptWorker — all 21 proxy methods (names only) | 4.10 | 4.8 | 0.514 |
-| walker |  | 6071 | 101 | ts decl monaco-lsp-client/generator/index.ts:170 |  |  | 0.514 |
-| walker |  | 6087 | 16 | ts names src/deprecated/language/typescript/ts.worker.ts |  |  | 0.515 |
-| walker |  | 6190 | 103 | json config editor.code-workspace |  |  | 0.515 |
-| walker |  | 6207 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts |  |  | 0.515 |
-| walker |  | 6221 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts:17 |  |  | 0.515 |
-| walker |  | 6238 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts |  |  | 0.515 |
-| walker |  | 6252 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts:8 |  |  | 0.515 |
-| walker |  | 6269 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts |  |  | 0.515 |
-| walker |  | 6283 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts:8 |  |  | 0.515 |
-| walker |  | 6300 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts |  |  | 0.515 |
-| walker |  | 6315 | 15 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts:7 |  |  | 0.515 |
+| walker |  | 6030 | 101 | ts decl monaco-lsp-client/generator/index.ts:170 |  |  | 0.514 |
+| walker |  | 6046 | 16 | ts names src/deprecated/language/typescript/ts.worker.ts |  |  | 0.515 |
+| walker |  | 6149 | 103 | json config editor.code-workspace |  |  | 0.515 |
+| walker |  | 6166 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts |  |  | 0.515 |
+| walker |  | 6180 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts:17 |  |  | 0.515 |
+| walker |  | 6197 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts |  |  | 0.515 |
+| walker |  | 6211 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts:8 |  |  | 0.515 |
+| walker |  | 6228 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts |  |  | 0.515 |
+| walker |  | 6242 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts:8 |  |  | 0.515 |
+| walker |  | 6259 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts |  |  | 0.515 |
+| walker |  | 6274 | 15 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts:7 |  |  | 0.515 |
+| walker |  | 6291 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspFormattingFeature.ts |  |  | 0.515 |
+| walker |  | 6305 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspFormattingFeature.ts:7 |  |  | 0.515 |
 | ns | 6318 |  | 291 | typescript/javascript defaults and their divergence | 4.11 | 4.8 | 0.502 |
-| walker |  | 6332 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspFormattingFeature.ts |  |  | 0.502 |
-| walker |  | 6346 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspFormattingFeature.ts:7 |  |  | 0.502 |
-| walker |  | 6363 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspHoverFeature.ts |  |  | 0.502 |
-| walker |  | 6377 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspHoverFeature.ts:7 |  |  | 0.502 |
-| walker |  | 6394 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspImplementationFeature.ts |  |  | 0.502 |
-| walker |  | 6408 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspImplementationFeature.ts:8 |  |  | 0.502 |
-| walker |  | 6425 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspReferencesFeature.ts |  |  | 0.502 |
-| walker |  | 6439 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspReferencesFeature.ts:7 |  |  | 0.502 |
-| walker |  | 6456 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspRenameFeature.ts |  |  | 0.502 |
-| walker |  | 6470 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspRenameFeature.ts:7 |  |  | 0.502 |
+| walker |  | 6322 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspHoverFeature.ts |  |  | 0.502 |
+| walker |  | 6336 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspHoverFeature.ts:7 |  |  | 0.502 |
+| walker |  | 6353 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspImplementationFeature.ts |  |  | 0.502 |
+| walker |  | 6367 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspImplementationFeature.ts:8 |  |  | 0.502 |
+| walker |  | 6384 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspReferencesFeature.ts |  |  | 0.502 |
+| walker |  | 6398 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspReferencesFeature.ts:7 |  |  | 0.502 |
+| walker |  | 6415 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspRenameFeature.ts |  |  | 0.502 |
+| walker |  | 6429 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspRenameFeature.ts:7 |  |  | 0.502 |
+| walker |  | 6541 | 112 | ts decl monaco-lsp-client/generator/index.ts:183 |  |  | 0.502 |
 | ns | 6547 |  | 229 | The four *Mode.ts entry points and the tsMode re-export tail | 5.1 |  | 0.498 |
-| walker |  | 6582 | 112 | ts decl monaco-lsp-client/generator/index.ts:183 |  |  | 0.498 |
-| walker |  | 6696 | 114 | ts decl monaco-lsp-client/generator/index.ts:86 |  |  | 0.498 |
-| walker |  | 6714 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCodeActionFeature.ts |  |  | 0.498 |
-| walker |  | 6728 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeActionFeature.ts:8 |  |  | 0.498 |
-| walker |  | 6746 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCodeLensFeature.ts |  |  | 0.498 |
-| walker |  | 6760 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeLensFeature.ts:9 |  |  | 0.498 |
+| walker |  | 6655 | 114 | ts decl monaco-lsp-client/generator/index.ts:86 |  |  | 0.498 |
+| walker |  | 6673 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCodeActionFeature.ts |  |  | 0.498 |
+| walker |  | 6687 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeActionFeature.ts:8 |  |  | 0.498 |
+| walker |  | 6705 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCodeLensFeature.ts |  |  | 0.498 |
+| walker |  | 6719 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeLensFeature.ts:9 |  |  | 0.498 |
+| walker |  | 6737 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDocumentHighlightFeature.ts |  |  | 0.498 |
+| walker |  | 6751 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentHighlightFeature.ts:8 |  |  | 0.498 |
 | ns | 6761 |  | 214 | cssMode.setupMode — WorkerManager, the worker accessor, and ModeConfiguration-gated provider registration | 5.2 | 5.1 | 0.489 |
-| walker |  | 6778 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDocumentHighlightFeature.ts |  |  | 0.489 |
-| walker |  | 6792 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentHighlightFeature.ts:8 |  |  | 0.489 |
-| walker |  | 6810 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDocumentLinkFeature.ts |  |  | 0.489 |
-| walker |  | 6824 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentLinkFeature.ts:7 |  |  | 0.489 |
-| walker |  | 6842 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDocumentSymbolFeature.ts |  |  | 0.489 |
-| walker |  | 6856 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentSymbolFeature.ts:8 |  |  | 0.489 |
-| walker |  | 6874 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspRangeFormattingFeature.ts |  |  | 0.489 |
-| walker |  | 6888 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspRangeFormattingFeature.ts:7 |  |  | 0.489 |
-| walker |  | 6906 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspSelectionRangeFeature.ts |  |  | 0.489 |
-| walker |  | 6920 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspSelectionRangeFeature.ts:7 |  |  | 0.489 |
-| walker |  | 6938 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspSemanticTokensFeature.ts |  |  | 0.489 |
-| walker |  | 6952 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspSemanticTokensFeature.ts:7 |  |  | 0.489 |
-| walker |  | 6970 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspSignatureHelpFeature.ts |  |  | 0.489 |
-| walker |  | 6984 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspSignatureHelpFeature.ts:8 |  |  | 0.489 |
-| walker |  | 7002 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspTypeDefinitionFeature.ts |  |  | 0.489 |
-| walker |  | 7016 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspTypeDefinitionFeature.ts:8 |  |  | 0.489 |
-| walker |  | 7034 | 18 | ts names samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.489 |
-| walker |  | 7052 | 18 | ts names samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.489 |
-| walker |  | 7081 | 29 | ts names src/internal/common/workers.ts |  |  | 0.489 |
-| walker |  | 7104 | 23 | ts decl src/internal/common/workers.ts:92 |  |  | 0.489 |
+| walker |  | 6769 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDocumentLinkFeature.ts |  |  | 0.489 |
+| walker |  | 6783 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentLinkFeature.ts:7 |  |  | 0.489 |
+| walker |  | 6801 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDocumentSymbolFeature.ts |  |  | 0.489 |
+| walker |  | 6815 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentSymbolFeature.ts:8 |  |  | 0.489 |
+| walker |  | 6833 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspRangeFormattingFeature.ts |  |  | 0.489 |
+| walker |  | 6847 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspRangeFormattingFeature.ts:7 |  |  | 0.489 |
+| walker |  | 6865 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspSelectionRangeFeature.ts |  |  | 0.489 |
+| walker |  | 6879 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspSelectionRangeFeature.ts:7 |  |  | 0.489 |
+| walker |  | 6897 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspSemanticTokensFeature.ts |  |  | 0.489 |
+| walker |  | 6911 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspSemanticTokensFeature.ts:7 |  |  | 0.489 |
+| walker |  | 6929 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspSignatureHelpFeature.ts |  |  | 0.489 |
+| walker |  | 6943 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspSignatureHelpFeature.ts:8 |  |  | 0.489 |
+| walker |  | 6961 | 18 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspTypeDefinitionFeature.ts |  |  | 0.489 |
+| walker |  | 6975 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspTypeDefinitionFeature.ts:8 |  |  | 0.489 |
+| walker |  | 6993 | 18 | ts names samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.489 |
+| walker |  | 7011 | 18 | ts names samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.489 |
+| walker |  | 7040 | 29 | ts names src/internal/common/workers.ts |  |  | 0.489 |
+| walker |  | 7063 | 23 | ts decl src/internal/common/workers.ts:92 |  |  | 0.489 |
+| walker |  | 7082 | 19 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspFoldingRangeFeature.ts |  |  | 0.489 |
+| walker |  | 7096 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspFoldingRangeFeature.ts:8 |  |  | 0.489 |
 | ns | 7114 |  | 353 | common/lspLanguageFeatures.ts — the shared provider adapters and LSP conversion helpers | 5.3 |  | 0.481 |
-| walker |  | 7123 | 19 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspFoldingRangeFeature.ts |  |  | 0.481 |
-| walker |  | 7137 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspFoldingRangeFeature.ts:8 |  |  | 0.481 |
-| walker |  | 7156 | 19 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspInlayHintsFeature.ts |  |  | 0.481 |
-| walker |  | 7172 | 16 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspInlayHintsFeature.ts:9 |  |  | 0.481 |
-| walker |  | 7191 | 19 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspOnTypeFormattingFeature.ts |  |  | 0.481 |
-| walker |  | 7205 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspOnTypeFormattingFeature.ts:7 |  |  | 0.481 |
-| walker |  | 7238 | 33 | samples/legacy/README.md section #0 |  |  | 0.481 |
-| walker |  | 7384 | 146 | headings outline in README.md |  |  | 0.506 |
+| walker |  | 7115 | 19 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspInlayHintsFeature.ts |  |  | 0.481 |
+| walker |  | 7131 | 16 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspInlayHintsFeature.ts:9 |  |  | 0.481 |
+| walker |  | 7150 | 19 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspOnTypeFormattingFeature.ts |  |  | 0.481 |
+| walker |  | 7164 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspOnTypeFormattingFeature.ts:7 |  |  | 0.481 |
+| walker |  | 7197 | 33 | samples/legacy/README.md section #0 |  |  | 0.481 |
+| walker |  | 7343 | 146 | headings outline in README.md |  |  | 0.506 |
+| walker |  | 7387 | 44 | README.md section #0 |  |  | 0.506 |
 | ns | 7421 |  | 307 | Web-worker plumbing: MonacoEnvironment hooks, createWebWorker, IWebWorkerOptions fields, worker entry points | 5.4 |  | 0.497 |
-| walker |  | 7428 | 44 | README.md section #0 |  |  | 0.497 |
-| walker |  | 7478 | 50 | ts decl webpack-plugin/src/loader-utils.d.ts:1 |  |  | 0.497 |
-| walker |  | 7538 | 60 | listing of 'website' |  |  | 0.497 |
+| walker |  | 7437 | 50 | ts decl webpack-plugin/src/loader-utils.d.ts:1 |  |  | 0.497 |
+| walker |  | 7497 | 60 | listing of 'website' |  |  | 0.497 |
+| walker |  | 7548 | 51 | ts decl monaco-lsp-client/src/utils.ts:5 |  |  | 0.497 |
+| walker |  | 7561 | 13 | package entrypoints in samples/legacy/electron-amd/package.json |  |  | 0.497 |
+| walker |  | 7574 | 13 | package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.497 |
 | ns | 7576 |  | 155 | WorkerManager lifecycle and the CSSWorker entry points | 5.5 |  | 0.493 |
-| walker |  | 7589 | 51 | ts decl monaco-lsp-client/src/utils.ts:5 |  |  | 0.493 |
-| walker |  | 7602 | 13 | package entrypoints in samples/legacy/electron-amd/package.json |  |  | 0.493 |
-| walker |  | 7615 | 13 | package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.493 |
-| walker |  | 7643 | 28 | webpack-plugin/README.md section #1 |  |  | 0.493 |
-| walker |  | 7665 | 22 | ts names src/languages/features/typescript/ts.worker.ts |  |  | 0.493 |
-| walker |  | 7700 | 35 | ts names monaco-lsp-client/src/adapters/LspCapabilitiesRegistry.ts |  |  | 0.493 |
-| walker |  | 7735 | 35 | listing of 'src/languages/features/typescript/lib' |  |  | 0.505 |
-| walker |  | 7772 | 37 | ts names webpack-plugin/src/loaders/include.ts |  |  | 0.505 |
-| walker |  | 7786 | 14 | ts decl webpack-plugin/src/loaders/include.ts:10 |  |  | 0.505 |
-| walker |  | 7820 | 34 | ts decl webpack-plugin/src/loaders/include.ts:4 |  |  | 0.505 |
+| walker |  | 7602 | 28 | webpack-plugin/README.md section #1 |  |  | 0.493 |
+| walker |  | 7624 | 22 | ts names src/languages/features/typescript/ts.worker.ts |  |  | 0.493 |
+| walker |  | 7659 | 35 | ts names monaco-lsp-client/src/adapters/LspCapabilitiesRegistry.ts |  |  | 0.493 |
+| walker |  | 7694 | 35 | listing of 'src/languages/features/typescript/lib' |  |  | 0.505 |
+| walker |  | 7731 | 37 | ts names webpack-plugin/src/loaders/include.ts |  |  | 0.505 |
+| walker |  | 7745 | 14 | ts decl webpack-plugin/src/loaders/include.ts:10 |  |  | 0.505 |
+| walker |  | 7779 | 34 | ts decl webpack-plugin/src/loaders/include.ts:4 |  |  | 0.505 |
+| walker |  | 7817 | 38 | ts names webpack-plugin/src/plugins/AddWorkerEntryPointPlugin.ts |  |  | 0.505 |
 | ns | 7830 |  | 254 | typescript/languageFeatures.ts — the TypeScript-specific adapter roster | 5.6 |  | 0.499 |
-| walker |  | 7858 | 38 | ts names webpack-plugin/src/plugins/AddWorkerEntryPointPlugin.ts |  |  | 0.499 |
-| walker |  | 7886 | 28 | ts decl webpack-plugin/src/plugins/AddWorkerEntryPointPlugin.ts:40 |  |  | 0.499 |
+| walker |  | 7845 | 28 | ts decl webpack-plugin/src/plugins/AddWorkerEntryPointPlugin.ts:40 |  |  | 0.499 |
+| walker |  | 7908 | 63 | ts decl monaco-lsp-client/src/utils.ts:24 |  |  | 0.499 |
 | ns | 7909 |  | 79 | monaco-lsp-client package: complete tree listing | 6.1 |  | 0.508 |
-| walker |  | 7949 | 63 | ts decl monaco-lsp-client/src/utils.ts:24 |  |  | 0.508 |
-| walker |  | 7988 | 39 | ts names src/languages/definitions/_.contribution.ts |  |  | 0.508 |
-| walker |  | 8071 | 83 | headings outline in docs/integrate-esm.md |  |  | 0.509 |
-| walker |  | 8112 | 41 | ts names monaco-lsp-client/src/adapters/ITextModelBridge.ts |  |  | 0.509 |
+| walker |  | 7947 | 39 | ts names src/languages/definitions/_.contribution.ts |  |  | 0.508 |
+| walker |  | 8030 | 83 | headings outline in docs/integrate-esm.md |  |  | 0.509 |
+| walker |  | 8071 | 41 | ts names monaco-lsp-client/src/adapters/ITextModelBridge.ts |  |  | 0.509 |
+| walker |  | 8101 | 30 | ts decl monaco-lsp-client/src/adapters/ITextModelBridge.ts:32 |  |  | 0.509 |
 | ns | 8116 |  | 207 | MonacoLspClient wiring + index exports | 6.2 | 6.1 | 0.504 |
-| walker |  | 8142 | 30 | ts decl monaco-lsp-client/src/adapters/ITextModelBridge.ts:32 |  |  | 0.504 |
-| ns | 8165 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.510 |
-| walker |  | 8184 | 42 | ts names src/internal/common/initialize.ts |  |  | 0.511 |
-| walker |  | 8214 | 30 | README.md section #21 |  |  | 0.511 |
-| walker |  | 8292 | 78 | package identity metadata in package.json |  |  | 0.518 |
-| walker |  | 8311 | 19 | ts names src/languages/features/typescript/lib/typescriptServicesMetadata.ts |  |  | 0.518 |
+| walker |  | 8143 | 42 | ts names src/internal/common/initialize.ts |  |  | 0.505 |
+| ns | 8165 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.511 |
+| walker |  | 8173 | 30 | README.md section #21 |  |  | 0.511 |
+| walker |  | 8251 | 78 | package identity metadata in package.json |  |  | 0.518 |
+| walker |  | 8270 | 19 | ts names src/languages/features/typescript/lib/typescriptServicesMetadata.ts |  |  | 0.518 |
 | ns | 8449 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.514 |
 | ns | 8613 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.504 |
 | ns | 8762 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.500 |
-| walker |  | 8930 | 619 | ts decl webpack-plugin/src/index.ts:102 |  |  | 0.510 |
-| walker |  | 8937 | 7 | ts body src/internal/common/initialize.ts:5 |  |  | 0.510 |
+| walker |  | 8889 | 619 | ts decl webpack-plugin/src/index.ts:102 |  |  | 0.510 |
+| walker |  | 8896 | 7 | ts body src/internal/common/initialize.ts:5 |  |  | 0.510 |
+| walker |  | 8917 | 21 | ts names src/languages/features/typescript/lib/lib.index.ts |  |  | 0.510 |
+| walker |  | 8938 | 21 | ts names src/languages/features/typescript/lib/lib.ts |  |  | 0.510 |
+| walker |  | 8959 | 21 | ts names src/languages/features/typescript/lib/typescriptServices.d.ts |  |  | 0.510 |
+| walker |  | 8989 | 30 | package scripts in samples/browser-esm-esbuild/package.json |  |  | 0.510 |
 | ns | 9000 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.503 |
-| walker |  | 9017 | 80 | ts names samples/browser-esm-webpack-small/generate-imports.js |  |  | 0.503 |
-| walker |  | 9038 | 21 | ts names src/languages/features/typescript/lib/lib.index.ts |  |  | 0.503 |
-| walker |  | 9059 | 21 | ts names src/languages/features/typescript/lib/lib.ts |  |  | 0.503 |
-| walker |  | 9080 | 21 | ts names src/languages/features/typescript/lib/typescriptServices.d.ts |  |  | 0.503 |
-| walker |  | 9110 | 30 | package scripts in samples/browser-esm-esbuild/package.json |  |  | 0.503 |
-| walker |  | 9156 | 46 | README.md section #4 |  |  | 0.503 |
+| walker |  | 9035 | 46 | README.md section #4 |  |  | 0.503 |
+| walker |  | 9066 | 31 | package scripts in samples/browser-esm-parcel/package.json |  |  | 0.503 |
 | ns | 9166 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.500 |
-| walker |  | 9187 | 31 | package scripts in samples/browser-esm-parcel/package.json |  |  | 0.500 |
-| walker |  | 9353 | 166 | package entrypoints in package.json |  |  | 0.510 |
-| walker |  | 9376 | 23 | listing of 'scripts/ci' |  |  | 0.510 |
-| walker |  | 9419 | 43 | README.md section #17 |  |  | 0.510 |
+| walker |  | 9232 | 166 | package entrypoints in package.json |  |  | 0.510 |
+| walker |  | 9255 | 23 | listing of 'scripts/ci' |  |  | 0.510 |
+| walker |  | 9298 | 43 | README.md section #17 |  |  | 0.510 |
+| walker |  | 9350 | 52 | ts decl webpack-plugin/src/plugins/AddWorkerEntryPointPlugin.ts:3 |  |  | 0.510 |
 | ns | 9420 |  | 254 | README Installing + CHANGELOG head (0.55.x breaking changes) | 8.2 |  | 0.505 |
-| walker |  | 9471 | 52 | ts decl webpack-plugin/src/plugins/AddWorkerEntryPointPlugin.ts:3 |  |  | 0.505 |
+| walker |  | 9430 | 80 | README.md section #1 |  |  | 0.505 |
+| walker |  | 9485 | 55 | ts decl monaco-lsp-client/src/adapters/LspCapabilitiesRegistry.ts:5 |  |  | 0.505 |
+| walker |  | 9510 | 25 | ts names src/languages/features/typescript/lib/editor.worker.d.ts |  |  | 0.505 |
 | ns | 9524 |  | 104 | samples/ listing — every integration sample directory | 8.3 |  | 0.513 |
-| walker |  | 9551 | 80 | README.md section #1 |  |  | 0.513 |
 | ns | 9562 |  | 38 | docs/ listing | 8.4 |  | 0.515 |
-| walker |  | 9606 | 55 | ts decl monaco-lsp-client/src/adapters/LspCapabilitiesRegistry.ts:5 |  |  | 0.515 |
-| walker |  | 9631 | 25 | ts names src/languages/features/typescript/lib/editor.worker.d.ts |  |  | 0.515 |
+| walker |  | 9579 | 69 | package scripts in webpack-plugin/package.json |  |  | 0.515 |
+| walker |  | 9605 | 26 | listing of 'website/src' |  |  | 0.516 |
+| walker |  | 9617 | 12 | listing of 'website/src/runner' |  |  | 0.516 |
 | ns | 9645 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.518 |
-| walker |  | 9700 | 69 | package scripts in webpack-plugin/package.json |  |  | 0.518 |
-| walker |  | 9726 | 26 | listing of 'website/src' |  |  | 0.518 |
-| walker |  | 9738 | 12 | listing of 'website/src/runner' |  |  | 0.518 |
+| walker |  | 9655 | 38 | package scripts in samples/browser-esm-webpack/package.json |  |  | 0.518 |
+| walker |  | 9693 | 38 | package scripts in samples/browser-esm-webpack-monaco-plugin/package.json |  |  | 0.518 |
+| walker |  | 9714 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeActionFeature.ts:9 |  |  | 0.518 |
+| walker |  | 9735 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeLensFeature.ts:10 |  |  | 0.518 |
+| walker |  | 9756 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts:18 |  |  | 0.518 |
 | ns | 9771 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.529 |
-| walker |  | 9776 | 38 | package scripts in samples/browser-esm-webpack/package.json |  |  | 0.529 |
-| walker |  | 9814 | 38 | package scripts in samples/browser-esm-webpack-monaco-plugin/package.json |  |  | 0.529 |
-| walker |  | 9835 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeActionFeature.ts:9 |  |  | 0.529 |
-| walker |  | 9856 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCodeLensFeature.ts:10 |  |  | 0.529 |
-| walker |  | 9877 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts:18 |  |  | 0.529 |
-| walker |  | 9898 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts:9 |  |  | 0.529 |
-| walker |  | 9919 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts:9 |  |  | 0.529 |
-| walker |  | 9940 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts:11 |  |  | 0.529 |
-| walker |  | 9961 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentHighlightFeature.ts:9 |  |  | 0.529 |
-| walker |  | 9982 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentLinkFeature.ts:8 |  |  | 0.529 |
+| walker |  | 9777 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts:9 |  |  | 0.529 |
+| walker |  | 9798 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts:9 |  |  | 0.529 |
+| walker |  | 9819 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts:11 |  |  | 0.529 |
+| walker |  | 9840 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentHighlightFeature.ts:9 |  |  | 0.529 |
+| walker |  | 9861 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentLinkFeature.ts:8 |  |  | 0.529 |
+| walker |  | 9882 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDocumentSymbolFeature.ts:9 |  |  | 0.529 |
+| walker |  | 9903 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspFoldingRangeFeature.ts:9 |  |  | 0.529 |
+| walker |  | 9924 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspFormattingFeature.ts:8 |  |  | 0.529 |
+| walker |  | 9945 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspHoverFeature.ts:8 |  |  | 0.529 |
+| walker |  | 9966 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspImplementationFeature.ts:9 |  |  | 0.529 |
+| walker |  | 9987 | 21 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspInlayHintsFeature.ts:12 |  |  | 0.529 |

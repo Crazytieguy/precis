@@ -43,6 +43,57 @@ Readme.md
   42→### Usage
   43→
   44→Superstruct allows you to define the shape of data you want to validate:
+  46→```js
+  47→import { assert, object, number, string, array } from 'superstruct'
+  48→
+  49→const Article = object({
+  50→  id: number(),
+  51→  title: string(),
+  52→  tags: array(string()),
+  53→  author: object({
+  54→    id: number(),
+  55→  }),
+  56→})
+  57→
+  58→const data = {
+  59→  id: 34,
+  60→  title: 'Hello World',
+  61→  tags: ['news', 'features'],
+  62→  author: {
+  63→    id: 1,
+  64→  },
+  65→}
+  66→
+  67→assert(data, Article)
+  68→// This will throw an error when the data is invalid.
+  69→// If you'd rather not throw, you can use `is()` or `validate()`.
+  70→```
+  72→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
+  73→
+  74→```js
+  75→import { is, define, object, string } from 'superstruct'
+  76→import isUuid from 'is-uuid'
+  77→import isEmail from 'is-email'
+  78→
+  79→const Email = define('Email', isEmail)
+  80→const Uuid = define('Uuid', isUuid.v4)
+  81→
+  82→const User = object({
+  83→  id: Uuid,
+  84→  email: Email,
+  85→  name: string(),
+  86→})
+  87→
+  88→const data = {
+  89→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
+  90→  email: 'jane@example.com',
+  91→  name: 'Jane',
+  92→}
+  93→
+  94→if (is(data, User)) {
+  95→  // Your data is guaranteed to be valid in this block.
+  96→}
+  97→```
   …
   145→### Why?
   …
@@ -99,108 +150,15 @@ docs/
 examples/
   README.md
   basic-validation.js
-    …
-    12→const User = object({
-    …
-    22→const data = {
-    …
   composing-structs.js
-    …
-    4→const User = object({
-    5→  id: number(),
-    6→  name: string(),
-    7→})
-    …
-    11→const Article = object({
-    …
-    19→const data = {
-    …
   custom-errors.js
-    …
-    4→const User = object({
-    5→  id: number(),
-    6→  name: string(),
-    7→  email: string(),
-    8→})
-    …
-    11→const data = {
-    12→  id: 1,
-    13→  name: true,
-    14→  email: 'jane@example.com',
-    15→}
-    …
   custom-types.js
-    …
-    7→const Uuid = define('Uuid', isUuid.v4)
-    8→
-    9→const Url = define('Url', (value) => {
-    10→  return isUrl(value) && value.length < 2048
-    11→})
-    13→const Email = define('Email', (value) => {
-    …
-    24→const User = object({
-    …
-    32→const data = {
-    …
   default-values.js
-    …
-    12→let uid = 1
-    …
-    15→const User = object({
-    …
-    24→const data = {
-    25→  name: 'Jane Smith',
-    26→  email: 'jane@example.com',
-    27→}
-    …
-    30→const user = create(data, User)
-    …
   optional-values.js
-    …
-    4→const User = object({
-    5→  name: string(),
-    6→  email: string(),
-    7→  is_admin: optional(boolean()),
-    8→})
-    …
-    11→const data = {
-    12→  name: 'Jane Smith',
-    13→  email: 'jane@example.com',
-    14→}
-    …
   package.json
   returning-errors.js
-    …
-    4→const User = object({
-    5→  id: number(),
-    6→  name: string(),
-    7→  email: string(),
-    8→})
-    …
-    11→const data = {
-    …
-    19→const [error, user] = validate(data, User)
-    …
   testing-values.js
-    …
-    4→const User = object({
-    5→  id: number(),
-    6→  name: string(),
-    7→  email: string(),
-    8→})
-    …
-    11→const data = {
-    …
   throwing-errors.js
-    …
-    4→const User = object({
-    5→  id: number(),
-    6→  name: string(),
-    7→  email: string(),
-    8→})
-    …
-    11→const data = {
-    …
 jsr.json
 package.json
   …
@@ -243,7 +201,9 @@ rollup.config.js
   20→})
 src/
   error.ts
-    …
+    1→/**
+    2→ * A `StructFailure` represents a single specific failure in validation.
+    3→ */
     5→export type Failure = {
     6→  value: any
     7→  key: any
@@ -352,6 +312,11 @@ src/
     …
 test/
   api/
+    assert.test.ts
+    create.test.ts
+    is.test.ts
+    mask.test.ts
+    validate.test.ts
   deprecated.test.ts
   index.test.ts
   index.ts

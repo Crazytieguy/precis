@@ -54,86 +54,11 @@ README.md
   27→-   [Contribute](#contribute)
   28→-   [License](#license)
   30→## Install
-  31→
-  32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
-  33→
-  34→```sh
-  35→$ npm install --save mitt
-  36→```
-  37→
-  38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
-  39→
-  40→```javascript
-  41→// using ES6 modules
-  42→import mitt from 'mitt'
-  43→
-  44→// using CommonJS modules
-  45→var mitt = require('mitt')
-  46→```
-  47→
-  48→The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
-  49→
-  50→```html
-  51→<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
-  52→```
-  53→
-  54→You can find the library on `window.mitt`.
+  …
   56→## Usage
-  57→
-  58→```js
-  59→import mitt from 'mitt'
-  60→
-  61→const emitter = mitt()
-  62→
-  63→// listen to an event
-  64→emitter.on('foo', e => console.log('foo', e) )
-  65→
-  66→// listen to all events
-  67→emitter.on('*', (type, e) => console.log(type, e) )
-  68→
-  69→// fire an event
-  70→emitter.emit('foo', { a: 'b' })
-  71→
-  72→// clearing all events
-  73→emitter.all.clear()
-  74→
-  75→// working with handler references:
-  76→function onFoo() {}
-  77→emitter.on('foo', onFoo)   // listen
-  78→emitter.off('foo', onFoo)  // unlisten
-  79→```
-  80→
+  …
   81→### Typescript
-  82→
-  83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
-  84→
-  85→```ts
-  86→import mitt from 'mitt';
-  87→
-  88→type Events = {
-  89→  foo: string;
-  90→  bar?: number;
-  91→};
-  92→
-  93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
-  94→
-  95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
-  96→
-  97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
-  98→```
-  99→
-  100→Alternatively, you can use the provided `Emitter` type:
-  101→
-  102→```ts
-  103→import mitt, { Emitter } from 'mitt';
-  104→
-  105→type Events = {
-  106→  foo: string;
-  107→  bar?: number;
-  108→};
-  109→
-  110→const emitter: Emitter<Events> = mitt<Events>();
-  111→```
+  …
   113→## Examples & Demos
   …
   123→## API

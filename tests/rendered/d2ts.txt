@@ -73,7 +73,11 @@ README.md
   26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
   27→
   28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/TimelyDataflow/differential-dataflow) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
-  …
+  30→You can use D2TS to build data pipelines that can be executed incrementally, meaning you can process data as it comes in, and only recompute the parts that have changed. This could be as simple as remapping data, or as complex as performing a full join combining two datasources where one is a computed aggregate.
+  31→
+  32→D2TS can be used in conjunction with [ElectricSQL](https://electric-sql.com) to build data pipelines on top of [ShapeStreams](https://electric-sql.com/docs/api/clients/typescript#shapestream) that can be executed incrementally.
+  33→
+  34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
   36→## Table of Contents
   …
   51→## Key Features
@@ -113,13 +117,6 @@ eslint.base.mjs
   …
 examples/
   basic.ts
-    …
-    5→const graph = new D2({ initialFrontier: 0 })
-    …
-    9→const input = graph.newInput<number>()
-    …
-    13→const output = input.pipe(
-    …
   d2ql/
   electric/
     CHANGELOG.md
@@ -131,27 +128,8 @@ examples/
       index.ts
       types.ts
   fruit-processed.ts
-    …
-    4→type FruitOrder = {
-    …
-    11→const fruitOrders = new Store<string, FruitOrder>()
-    12→const fruitOrders2 = new Store<string, { name: string; quantity: number }>()
-    13→
-    14→const [{ materializedStatus, materializedProcessed }, _unsubscribe] =
-    …
-    67→function showStatus() {
-    …
-    73→function showProcessed() {
-    …
   includes.ts
   iterate.ts
-    …
-    15→const graph = new D2({ initialFrontier: new Antichain([v(0)]) })
-    16→
-    17→const input = graph.newInput<number>()
-    18→
-    19→const output = input
-    …
   join.ts
   min_max.ts
 package.json
@@ -232,6 +210,9 @@ packages/
       compiler.ts
         …
         16→export function compileQuery<T extends IStreamBuilder<unknown>>(
+        17→  query: Query,
+        18→  inputs: Record<string, IStreamBuilder<Record<string, unknown>>>,
+        19→): T {
         …
       evaluators.ts
         …
@@ -363,6 +344,11 @@ packages/
       types.ts
       utils.ts
       version-index.ts
+        …
+        8→export interface IndexType<K, V> {
+        …
+        28→export class Index<K, V> implements IndexType<K, V> {
+        …
     tests/
     tsconfig.json
     vitest.config.js
