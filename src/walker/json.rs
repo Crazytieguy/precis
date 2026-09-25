@@ -21,7 +21,7 @@ use crate::content::BatchContent;
 use crate::render::Source;
 use crate::value::{
     dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
-    manifest_operational_value, mix_signals,
+    manifest_identity_value, manifest_operational_value, mix_signals,
 };
 
 use super::workspace::{
@@ -361,16 +361,13 @@ fn secondary_package_json_factor(file: &Path) -> f64 {
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let primary_member = ctx.is_primary_js_workspace_member(file);
-    let m = if primary_member {
-        1.0
-    } else if ctx.is_js_workspace_member(file) {
+    let scale = if ctx.is_js_workspace_member(file) && !ctx.is_primary_js_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
-    let s = secondary_package_json_factor(file);
-    mix_signals(m, 0.7 * m, 0.85 * m, manifest_depth_factor(file, ctx)) * s
+    manifest_identity_value(scale, manifest_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {

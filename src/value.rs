@@ -76,6 +76,13 @@ pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
     }
 }
 
+/// Value of a manifest's identity block (name, version, description),
+/// scaled by how much of the project's identity the manifest carries — a
+/// workspace member inherits most of it from the root.
+pub fn manifest_identity_value(scale: f64, depth: f64) -> f64 {
+    mix_signals(scale, 0.7 * scale, 0.85 * scale, depth)
+}
+
 /// Value of the sections of a manifest that say how the package runs and
 /// ships: entrypoints, console scripts, feature flags, runtime
 /// constraints. Shared by every manifest format.

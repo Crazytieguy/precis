@@ -28,7 +28,7 @@ use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::render::Source;
 use crate::value::{
     dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
-    manifest_operational_value, mix_signals,
+    manifest_identity_value, manifest_operational_value,
 };
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
@@ -76,7 +76,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TomlKey::Identity { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: identity_value(&file, ctx),
+                value: identity_value(
+                    &file,
+                    ctx,
+                    sections
+                        .iter()
+                        .any(|(name, _, _)| is_pyproject_identity_table(name)),
+                ),
             });
             if let Some(content) =
                 build_package_metadata_content(&file, &source, &pairs, &identity_residue)
@@ -509,29 +515,17 @@ fn pep621_dependency_array_rows(pairs: &[TablePair]) -> impl Iterator<Item = usi
         .flat_map(|pair| pair.start..=pair.end)
 }
 
-fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let m = if let Some(factor) = pyproject_identity_factor(file, ctx) {
-        factor
+/// `has_python_identity`: the TOML has a `[project]` or `[tool.poetry]`
+/// table, whatever its filename.
+fn identity_value(file: &Path, ctx: &WalkCtx, has_python_identity: bool) -> f64 {
+    let scale = if has_python_identity {
+        PYPROJECT_LEDE_IDENTITY_FACTOR
     } else if ctx.is_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
-    mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx))
-}
-
-fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
-    // Pyproject shape — any TOML with `[project]` or `[tool.poetry]`,
-    // regardless of filename. Cargo.toml uses `[package]` and won't match.
-    let (source, tree) = parse_toml(ctx, file)?;
-    let sections = collect_sections(&tree, &source);
-    if !sections
-        .iter()
-        .any(|(name, _, _)| is_pyproject_identity_table(name))
-    {
-        return None;
-    }
-    Some(PYPROJECT_LEDE_IDENTITY_FACTOR)
+    manifest_identity_value(scale, path_depth_factor(file, ctx))
 }
 
 fn is_pyproject_identity_table(name: &str) -> bool {
