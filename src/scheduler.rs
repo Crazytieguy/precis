@@ -174,6 +174,10 @@ impl<W: Walker> Scheduler<W> {
 
     /// Run the scheduler and return the tree plus the scheduled-batches log.
     pub fn run_with_report(mut self) -> RunReport {
+        // The first cost probe needs the tokenizer; build it while the
+        // tree's one whole-walk scan runs.
+        crate::tokenizer::warm_up();
+        self.ctx.dominant_source_file();
         for batch in self.walker.seed(&self.ctx) {
             self.absorb(batch);
         }

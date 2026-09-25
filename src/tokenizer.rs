@@ -12,6 +12,12 @@ fn bpe() -> &'static CoreBPE {
     BPE.get_or_init(|| tiktoken_rs::o200k_base().expect("o200k_base init"))
 }
 
+/// Build the o200k tables (tens of milliseconds) on a background thread;
+/// a [`count`] that arrives first waits for them.
+pub fn warm_up() {
+    std::thread::spawn(bpe);
+}
+
 /// Approximate token count by byte length. Clamp-to-1 keeps non-empty
 /// rows from scoring as `INFINITY` ratio.
 pub fn approx_count(text: &str) -> usize {
