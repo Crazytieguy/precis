@@ -117,6 +117,11 @@ pub struct WalkCtx {
     json_state: json::JsonState,
     /// Run state of the code engine's language modules.
     code: code::CodeState,
+    /// The tree's essential source, walked once; `None` past
+    /// [`PROBE_ENTRY_CAP`].
+    essential_source: OnceCell<Option<EssentialSource>>,
+    /// The language family carrying the most essential source bytes.
+    primary_language: OnceCell<Option<&'static str>>,
     /// The one source file that carries a dominant share of the tree's
     /// essential source bytes, if any.
     dominant_source_file: OnceCell<Option<PathBuf>>,
@@ -141,6 +146,8 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             code: code::CodeState::default(),
+            essential_source: OnceCell::new(),
+            primary_language: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
         }
     }
@@ -192,10 +199,26 @@ impl WalkCtx {
     pub fn dominant_source_file(&self) -> Option<&Path> {
         self.dominant_source_file
             .get_or_init(|| {
-                enumerate_essential_source(&self.root, &self.dir_filter)
-                    .and_then(|source| find_dominant_source_file(&source))
+                find_dominant_source_file(self.essential_source()?, self.primary_language()?)
             })
             .as_deref()
+    }
+
+    /// The language family ([`language_group`]) the repository is written
+    /// in: the one carrying the most essential source bytes. `None` for a
+    /// tie for the lead — "the language this repo is written in" has no
+    /// answer there, and answering it by hasher seeding would make the
+    /// output differ between processes on identical input.
+    pub(crate) fn primary_language(&self) -> Option<&'static str> {
+        *self
+            .primary_language
+            .get_or_init(|| find_primary_language(self.essential_source()?))
+    }
+
+    fn essential_source(&self) -> Option<&EssentialSource> {
+        self.essential_source
+            .get_or_init(|| enumerate_essential_source(&self.root, &self.dir_filter))
+            .as_ref()
     }
 
     /// Read `path` into memory, caching the result.
@@ -340,17 +363,12 @@ struct EssentialSource {
     candidates: Vec<(PathBuf, u64, &'static str)>,
 }
 
-/// `None` once the walk has seen more source than a file within
-/// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] can hold
-/// [`DOMINANT_SOURCE_MASS_SHARE`] of: no file can be the spine then, and
-/// stopping there keeps the survey from walking all of a huge tree. `None`
-/// too once it has read [`PROBE_ENTRY_CAP`] entries; non-essential
+/// `None` once it has read [`PROBE_ENTRY_CAP`] entries; non-essential
 /// directories are not entered, since nothing under one counts, so a
 /// large test corpus can't spend that budget.
 fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<EssentialSource> {
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
-    let mut total = 0;
     let mut entries_read = 0;
     let mut stack = vec![root.to_path_buf()];
     while let Some(dir) = stack.pop() {
@@ -389,11 +407,6 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<Essenti
                 };
                 *per_language.entry(language).or_default() += len;
                 candidates.push((path, len, language));
-                total += len;
-                if total as f64 * DOMINANT_SOURCE_MASS_SHARE > DOMINANT_SOURCE_MAX_FILE_BYTES as f64
-                {
-                    return None;
-                }
             }
         }
     }
@@ -419,28 +432,11 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<Essenti
 /// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] is never read, and one whose text
 /// reads as machine-generated (a banner, or minified line lengths) never
 /// wins.
-fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
+fn find_dominant_source_file(source: &EssentialSource, primary: &str) -> Option<PathBuf> {
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
-    // but it is not what the repo is about. Ranked over a sorted vector
-    // rather than the hash map's iteration order, and a tie for the lead
-    // yields no primary at all: "the language this repo is written in"
-    // has no answer there, and answering it by hasher seeding would make
-    // the output differ between processes on identical input.
-    let mut by_mass: Vec<(&'static str, u64)> = source
-        .per_language
-        .iter()
-        .map(|(&language, &bytes)| (language, bytes))
-        .collect();
-    by_mass.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0)));
-    let (primary, primary_bytes) = *by_mass.first()?;
-    if by_mass
-        .get(1)
-        .is_some_and(|&(_, bytes)| bytes == primary_bytes)
-    {
-        return None;
-    }
-    let total: u64 = by_mass.iter().map(|&(_, bytes)| bytes).sum();
+    // but it is not what the repo is about.
+    let total: u64 = source.per_language.values().sum();
     if total == 0 {
         return None;
     }
@@ -460,10 +456,27 @@ fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
         .map(|(path, _, _)| path.clone())
 }
 
+/// The language with the most bytes, ranked over a sorted vector rather
+/// than the hash map's iteration order; `None` on a tie for the lead.
+fn find_primary_language(source: &EssentialSource) -> Option<&'static str> {
+    let mut by_mass: Vec<(&'static str, u64)> = source
+        .per_language
+        .iter()
+        .map(|(&language, &bytes)| (language, bytes))
+        .collect();
+    by_mass.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0)));
+    let (primary, primary_bytes) = *by_mass.first()?;
+    let tied = by_mass
+        .get(1)
+        .is_some_and(|&(_, bytes)| bytes == primary_bytes);
+    (!tied).then_some(primary)
+}
+
 /// Extension → language family, collapsing the families whose files sit
 /// side by side in one codebase (a `.h` beside its `.c`, a `.js` beside
-/// its `.ts`). `None` for anything that isn't hand-authored code.
-fn language_group(path: &Path) -> Option<&'static str> {
+/// its `.ts`). A language only the plaintext fallback reads is its own
+/// family. `None` for anything that isn't hand-authored code.
+pub(super) fn language_group(path: &Path) -> Option<&'static str> {
     let ext = path.extension()?.to_str()?.to_ascii_lowercase();
     Some(match ext.as_str() {
         "c" | "cc" | "cpp" | "cxx" | "h" | "hpp" => "c",
@@ -475,7 +488,12 @@ fn language_group(path: &Path) -> Option<&'static str> {
         "rs" => "rs",
         "swift" => "swift",
         "zig" => "zig",
-        _ => return None,
+        _ => {
+            return plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS
+                .iter()
+                .copied()
+                .find(|&language| language == ext);
+        }
     })
 }
 
@@ -601,8 +619,8 @@ mod tests {
     }
 
     fn dominant_source_file_of(root: &Path) -> Option<PathBuf> {
-        enumerate_essential_source(root, &DirFilter::new(root))
-            .and_then(|source| find_dominant_source_file(&source))
+        let source = enumerate_essential_source(root, &DirFilter::new(root))?;
+        find_dominant_source_file(&source, find_primary_language(&source)?)
     }
 
     /// The spine detector runs on whatever path a user points precis

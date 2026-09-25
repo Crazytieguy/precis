@@ -120,6 +120,13 @@ language.**
   repository, for Cargo and JS alike.
 - License texts and CI workflow YAML render no content; their listing
   rows name them.
+- Whether precis has a walker for a language must not decide which part
+  of a repository wins. The plaintext fallback's declaration surface
+  prices like a parsed declaration (`code_rung_value(Decl)`) when its
+  file is in the tree's primary language (most essential source bytes),
+  so a core written in an unparsed language (a Zig database with a Rust
+  client) is not crowded out by side clients the code engine parses.
+  Every other fallback surface prices below a parsed declaration.
 
 ## Output notation and the plugin cap
 
@@ -237,9 +244,10 @@ corpus, which none of these bounds touch.
   `~/projects` took 49 s. The budget is per probe rather than per run so
   a directory's inventory answer depends only on that directory, not on
   what was probed before it; an answer the budget cut short is not cached.
-  The spine survey skips non-essential directories and stops as soon as
-  it has seen more source than a spine could hold its share of, which is
-  exact. `hides_everything_in` is deliberately uncapped: its recursion
+  The spine survey skips non-essential directories. It reads on past
+  the point where no file could be the spine, because the primary
+  language it also measures needs the whole tree's byte mass; that costs
+  under 0.1 s on the sweep's largest trees. `hides_everything_in` is deliberately uncapped: its recursion
   only descends through directories with nothing visible, and a capped
   answer lists every such directory as `(empty)` rows.
 

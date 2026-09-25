@@ -585,9 +585,7 @@ fn block_comment_interiors(source: &str) -> Vec<bool> {
 ///
 /// The result is a *surface*, not a summary: no parse, no signature
 /// reconstruction, no bodies. It is priced accordingly in
-/// [`class_value`] — strictly below every parsed language walker's
-/// declaration roster, and strictly above the nothing that a file in
-/// an unsupported language renders as today.
+/// [`class_value`].
 fn declaration_surface(source: &str) -> Vec<usize> {
     let banner_end = boilerplate_banner_end(source);
     let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
@@ -833,15 +831,27 @@ pub(super) fn named_file_rest(emitted: &[Batch], ctx: &WalkCtx) -> Option<Batch>
 
 /// Two tiers. The ops surface (how the project is built, deployed and
 /// versioned) and an unparsed language's declaration surface sit at the
-/// top — the latter still below every parsed walker's roster, so it
-/// loses to any walker that understands the file. Contributor tooling
-/// and unclassified prose / flat config sit low.
+/// top, the latter below a parsed declaration unless it is in the
+/// repository's primary language ([`is_in_primary_language`]).
+/// Contributor tooling and unclassified prose / flat config sit low.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
+        Class::LanguageSource if is_in_primary_language(file, ctx) => {
+            crate::value::code_rung_value(crate::batch::Rung::Decl)
+        }
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::Tooling | Class::FlatText => 488.0,
     };
     tier * path_depth_factor(file, ctx)
+}
+
+/// Whether `file` is in the language the repository is written in. When
+/// no walker parses that language, its declaration surface is the best
+/// account of the repository's core there is, and prices like a parsed
+/// declaration so side clients in parsed languages do not crowd it out.
+fn is_in_primary_language(file: &Path, ctx: &WalkCtx) -> bool {
+    ctx.primary_language()
+        .is_some_and(|primary| super::language_group(file) == Some(primary))
 }
 
 /// Mild promotion for a root `Makefile` / `Taskfile`. A
@@ -1367,6 +1377,22 @@ mod tests {
                 }),
             ]
         );
+    }
+
+    /// Where no walker parses the language a repository is written in, its
+    /// files' surfaces price like parsed declarations; a side language's
+    /// stay below them.
+    #[test]
+    fn plaintext_primary_language_surface_prices_like_a_parsed_declaration() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("core.zig"), "pub fn step() void {}\n".repeat(50)).unwrap();
+        std::fs::write(root.join("tool.rb"), "def tool\nend\n").unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let decl = crate::value::code_rung_value(crate::batch::Rung::Decl);
+        let value = |name: &str| class_value(Class::LanguageSource, &root.join(name), &ctx);
+        assert_eq!(value("core.zig"), decl);
+        assert!(value("tool.rb") < decl);
     }
 
     /// A small file in an unparsed language renders whole once the

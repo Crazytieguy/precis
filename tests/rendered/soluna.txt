@@ -129,18 +129,8 @@ docs/
     28→
     29→return font
   font_system.lua
-    …
-    15→function font_system.ttfdata(name) end
-    16→
-    17→return font_system
   image.lua
   layout.lua
-    …
-    22→function layout.load(filename_or_list, scripts) end
-    …
-    32→function layout.calc(document) end
-    33→
-    …
   lfs.lua
     …
     15→function lfs.attributes(filename) end
@@ -223,22 +213,6 @@ src/
   appevent.h
   batch.c
   batch.h
-    …
-    6→struct draw_primitive {
-    7→	int32_t x;		// sign bit + 23 + 8   fix number
-    8→	int32_t y;
-    9→	uint32_t sr;	// scale + rot
-    10→	int32_t sprite;		// negative : material 
-    11→};
-    13→struct draw_primitive_external {
-    14→	int sprite;
-    15→};
-    17→struct draw_batch;
-    18→
-    19→struct draw_batch * batch_new(int size);
-    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
-    21→void batch_delete(struct draw_batch *);
-    …
   blit.glsl
   colorquad.glsl
   data/
@@ -349,11 +323,9 @@ src/
     …
     66→static inline void
     67→sprite_set_scale(struct draw_primitive *p, float scale) {
-    68→	p->sr = convert_scale_(scale) << 12;
     …
     71→static inline void
     72→sprite_set_rot(struct draw_primitive *p, float rot) {
-    73→	p->sr = convert_rot_(rot);
     …
     76→static inline void
     77→sprite_set_sr(struct draw_primitive *p, float scale, float rot) {
@@ -396,9 +368,28 @@ src/
     2→#include "yoga/YGEnums.cpp"
     3→#include "yoga/YGNode.cpp"
     4→#include "yoga/YGNodeLayout.cpp"
-    …
+    5→#include "yoga/YGNodeStyle.cpp"
+    6→#include "yoga/YGPixelGrid.cpp"
+    7→#include "yoga/YGValue.cpp"
+    8→
+    9→#include "yoga/algorithm/AbsoluteLayout.cpp"
+    10→#include "yoga/algorithm/Baseline.cpp"
+    11→#include "yoga/algorithm/Cache.cpp"
+    12→#include "yoga/algorithm/CalculateLayout.cpp"
+    13→#include "yoga/algorithm/FlexLine.cpp"
+    14→#include "yoga/algorithm/PixelGrid.cpp"
+    15→
+    16→#include "yoga/config/Config.cpp"
+    17→
+    18→#include "yoga/debug/AssertFatal.cpp"
+    19→
+    20→#include "yoga/debug/Log.cpp"
+    21→
+    22→#include "yoga/node/LayoutResults.cpp"
+    23→#include "yoga/node/Node.cpp"
+    24→
     25→#define Node Node_
-    …
+    26→#include "yoga/event/event.cpp"
     27→#undef Node
 test/
   bundle.lua

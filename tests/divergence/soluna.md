@@ -1,4 +1,4 @@
-Score(3000)=0.676 I=0.897 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.776/0.775/0.676/0.625/0.523/0.512
+Score(3000)=0.675 I=0.896 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.776/0.775/0.675/0.625/0.523/0.512
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,83 +57,83 @@ Score(3000)=0.676 I=0.897 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | ns | 1256 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.723 |
 | walker |  | 1272 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.733 |
 | walker |  | 1328 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.809 |
-| walker |  | 1338 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.809 |
-| walker |  | 1384 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.810 |
-| ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.776 |
-| walker |  | 1462 | 78 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.776 |
+| walker |  | 1406 | 78 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.809 |
+| ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.775 |
+| walker |  | 1416 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.775 |
+| walker |  | 1462 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.776 |
 | walker |  | 1476 | 14 | Code::CodeKey { rung: Names, file: make.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
 | ns | 1482 |  | 70 | All three .game setting files in test/ | 2.4 | 2.3 | 0.761 |
 | walker |  | 1564 | 88 | Fs::DirListing { dir: test } |  |  | 0.838 |
-| walker |  | 1568 | 4 | Fs::DirListing { dir: .github/actions } |  |  | 0.838 |
-| walker |  | 1579 | 11 | Code::CodeKey { rung: Names, file: script/hashversion.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
-| walker |  | 1602 | 23 | Code::CodeKey { rung: Names, file: docs/text.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
-| walker |  | 1614 | 12 | Code::CodeKey { rung: Names, file: src/loginfo.h, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
 | ns | 1618 |  | 136 | The `soluna` core module surface (docs/soluna.lua declarations) | 2.5 |  | 0.815 |
-| walker |  | 1677 | 63 | Code::CodeKey { rung: Decl, file: src/loginfo.h, decl: 1, sub: 0, line: 6 } |  |  | 0.815 |
-| walker |  | 1702 | 25 | Code::CodeKey { rung: Names, file: docs/url.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.815 |
 | ns | 1799 |  | 181 | Types and parameter docs for the `soluna` module | 2.6 | 2.5 | 0.790 |
+| walker |  | 1813 | 249 | Plaintext::Whole { file: src/yogaone.cpp } |  |  | 0.790 |
+| walker |  | 1817 | 4 | Fs::DirListing { dir: .github/actions } |  |  | 0.790 |
+| walker |  | 1828 | 11 | Code::CodeKey { rung: Names, file: script/hashversion.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.790 |
+| walker |  | 1851 | 23 | Code::CodeKey { rung: Names, file: docs/text.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.790 |
+| walker |  | 1863 | 12 | Code::CodeKey { rung: Names, file: src/loginfo.h, decl: 0, sub: 0, line: 0 } |  |  | 0.790 |
 | ns | 1900 |  | 101 | The `Batch` draw object and the `Args` passed to the entry script | 2.7 |  | 0.775 |
-| walker |  | 1957 | 255 | Code::CodeKey { rung: Names, file: script/build_web.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.775 |
-| walker |  | 2008 | 51 | Code::CodeKey { rung: Names, file: docs/font.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.775 |
-| walker |  | 2060 | 52 | Code::CodeKey { rung: Names, file: docs/coroutine.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.775 |
-| walker |  | 2152 | 92 | Code::CodeKey { rung: Names, file: docs/file.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
-| walker |  | 2192 | 40 | Code::CodeKey { rung: Names, file: docs/crypt.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
-| ns | 2202 |  | 302 | A worked drawing example: test/sprite.lua (setup and frame loop) | 2.8 | 2.7 | 0.726 |
-| walker |  | 2232 | 40 | Code::CodeKey { rung: Names, file: src/spritemgr.h, decl: 0, sub: 0, line: 0 } |  |  | 0.726 |
-| walker |  | 2278 | 46 | Code::CodeKey { rung: Decl, file: src/spritemgr.h, decl: 3, sub: 0, line: 16 } |  |  | 0.726 |
-| walker |  | 2359 | 81 | Code::CodeKey { rung: Decl, file: src/spritemgr.h, decl: 2, sub: 0, line: 9 } |  |  | 0.726 |
-| ns | 2361 |  | 159 | What batch:add accepts (docs/args.lua) | 2.9 | 2.7 | 0.709 |
-| walker |  | 2386 | 27 | Code::CodeKey { rung: Names, file: docs/zip.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
-| walker |  | 2427 | 41 | Code::CodeKey { rung: Names, file: docs/datalist.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
-| walker |  | 2468 | 41 | Code::CodeKey { rung: Names, file: docs/lfs.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.710 |
-| ns | 2623 |  | 262 | The five batch:layer overloads (docs/args.lua) | 2.10 | 2.9 | 0.686 |
+| walker |  | 1926 | 63 | Code::CodeKey { rung: Decl, file: src/loginfo.h, decl: 1, sub: 0, line: 6 } |  |  | 0.775 |
+| walker |  | 1951 | 25 | Code::CodeKey { rung: Names, file: docs/url.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.775 |
+| ns | 2202 |  | 302 | A worked drawing example: test/sprite.lua (setup and frame loop) | 2.8 | 2.7 | 0.724 |
+| walker |  | 2206 | 255 | Code::CodeKey { rung: Names, file: script/build_web.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.724 |
+| walker |  | 2257 | 51 | Code::CodeKey { rung: Names, file: docs/font.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.725 |
+| walker |  | 2309 | 52 | Code::CodeKey { rung: Names, file: docs/coroutine.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.725 |
+| ns | 2361 |  | 159 | What batch:add accepts (docs/args.lua) | 2.9 | 2.7 | 0.708 |
+| walker |  | 2401 | 92 | Code::CodeKey { rung: Names, file: docs/file.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
+| walker |  | 2441 | 40 | Code::CodeKey { rung: Names, file: docs/crypt.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
+| walker |  | 2481 | 40 | Code::CodeKey { rung: Names, file: src/spritemgr.h, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
+| walker |  | 2527 | 46 | Code::CodeKey { rung: Decl, file: src/spritemgr.h, decl: 3, sub: 0, line: 16 } |  |  | 0.709 |
+| walker |  | 2608 | 81 | Code::CodeKey { rung: Decl, file: src/spritemgr.h, decl: 2, sub: 0, line: 9 } |  |  | 0.709 |
+| ns | 2623 |  | 262 | The five batch:layer overloads (docs/args.lua) | 2.10 | 2.9 | 0.685 |
+| walker |  | 2635 | 27 | Code::CodeKey { rung: Names, file: docs/zip.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
+| walker |  | 2676 | 41 | Code::CodeKey { rung: Names, file: docs/datalist.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
+| walker |  | 2717 | 41 | Code::CodeKey { rung: Names, file: docs/lfs.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
 | ns | 2727 |  | 104 | Callback parameter semantics (docs/callback.lua prose) | 2.11 | 2.2 | 0.675 |
-| walker |  | 2744 | 276 | Code::CodeKey { rung: Names, file: src/sprite_submit.h, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
-| walker |  | 2757 | 13 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 8, sub: 0, line: 71 } |  |  | 0.675 |
-| walker |  | 2774 | 17 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 7, sub: 0, line: 66 } |  |  | 0.675 |
-| walker |  | 2857 | 83 | Code::CodeKey { rung: Names, file: src/batch.h, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
-| walker |  | 2867 | 10 | Code::CodeKey { rung: Decl, file: src/batch.h, decl: 2, sub: 0, line: 13 } |  |  | 0.675 |
-| walker |  | 2934 | 67 | Code::CodeKey { rung: Decl, file: src/batch.h, decl: 1, sub: 0, line: 6 } |  |  | 0.675 |
-| walker |  | 2962 | 28 | Code::CodeKey { rung: Names, file: docs/font_system.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
-| walker |  | 3004 | 42 | Code::CodeKey { rung: Names, file: docs/layout.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.676 |
-| walker |  | 3018 | 14 | Code::CodeKey { rung: Names, file: script/datalist2c.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.676 |
-| walker |  | 3032 | 14 | Code::CodeKey { rung: Names, file: script/lua2c.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.676 |
-| walker |  | 3050 | 18 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 1, sub: 0, line: 9 } |  |  | 0.676 |
+| walker |  | 2993 | 276 | Code::CodeKey { rung: Names, file: src/sprite_submit.h, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
+| walker |  | 3006 | 13 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 8, sub: 0, line: 71 } |  |  | 0.675 |
+| walker |  | 3023 | 17 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 7, sub: 0, line: 66 } |  |  | 0.675 |
 | ns | 3074 |  | 347 | The Lua module registry (src/luamods.c): ltask, app, render, materials | 3.1 |  | 0.651 |
-| walker |  | 3237 | 187 | Code::CodeKey { rung: Names, file: src/appevent.h, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
-| walker |  | 3274 | 37 | Code::CodeKey { rung: Decl, file: src/appevent.h, decl: 1, sub: 0, line: 4 } |  |  | 0.651 |
-| walker |  | 3303 | 29 | Code::CodeKey { rung: Names, file: docs/material_mask.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
-| walker |  | 3332 | 29 | Code::CodeKey { rung: Names, file: docs/material_perspective_quad.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
+| walker |  | 3106 | 83 | Code::CodeKey { rung: Names, file: src/batch.h, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
+| walker |  | 3116 | 10 | Code::CodeKey { rung: Decl, file: src/batch.h, decl: 2, sub: 0, line: 13 } |  |  | 0.651 |
+| walker |  | 3183 | 67 | Code::CodeKey { rung: Decl, file: src/batch.h, decl: 1, sub: 0, line: 6 } |  |  | 0.651 |
+| walker |  | 3211 | 28 | Code::CodeKey { rung: Names, file: docs/font_system.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
+| walker |  | 3253 | 42 | Code::CodeKey { rung: Names, file: docs/layout.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
+| walker |  | 3267 | 14 | Code::CodeKey { rung: Names, file: script/datalist2c.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
+| walker |  | 3281 | 14 | Code::CodeKey { rung: Names, file: script/lua2c.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |
+| walker |  | 3299 | 18 | Code::CodeKey { rung: Body, file: src/sprite_submit.h, decl: 1, sub: 0, line: 9 } |  |  | 0.651 |
 | ns | 3371 |  | 297 | Rest of the module registry: datalist, file, fonts, gamepad, lfs, sdf, yoga, url, crypt, zip | 3.2 | 3.1 | 0.632 |
+| walker |  | 3486 | 187 | Code::CodeKey { rung: Names, file: src/appevent.h, decl: 0, sub: 0, line: 0 } |  |  | 0.632 |
+| walker |  | 3523 | 37 | Code::CodeKey { rung: Decl, file: src/appevent.h, decl: 1, sub: 0, line: 4 } |  |  | 0.623 |
 | ns | 3523 |  | 152 | The `soluna.app` host module (docs/app.lua) | 3.3 |  | 0.623 |
-| walker |  | 3714 | 382 | Code::CodeKey { rung: Names, file: src/truetype.h, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
-| walker |  | 3743 | 29 | Code::CodeKey { rung: Decl, file: src/truetype.h, decl: 6, sub: 0, line: 17 } |  |  | 0.623 |
-| walker |  | 3753 | 10 | Code::CodeKey { rung: Doc, file: src/truetype.h, decl: 7, sub: 0, line: 23 } |  |  | 0.623 |
-| walker |  | 3764 | 11 | Code::CodeKey { rung: Doc, file: src/truetype.h, decl: 10, sub: 0, line: 52 } |  |  | 0.623 |
-| walker |  | 3775 | 11 | Code::CodeKey { rung: Doc, file: src/truetype.h, decl: 12, sub: 0, line: 94 } |  |  | 0.623 |
+| walker |  | 3552 | 29 | Code::CodeKey { rung: Names, file: docs/material_mask.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
+| walker |  | 3581 | 29 | Code::CodeKey { rung: Names, file: docs/material_perspective_quad.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
 | ns | 3783 |  | 260 | Declaration roster: image, font, font.system, text, layout, coroutine | 3.4 |  | 0.617 |
-| walker |  | 3893 | 118 | Code::CodeKey { rung: Names, file: docs/callback.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.631 |
-| walker |  | 3982 | 89 | Code::CodeKey { rung: Names, file: docs/soluna.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.638 |
-| walker |  | 4042 | 60 | Code::CodeKey { rung: Names, file: docs/app.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
-| ns | 4117 |  | 334 | The material modules: every documented constructor | 3.5 | 2.9 | 0.625 |
-| walker |  | 4224 | 182 | Code::CodeKey { rung: Names, file: src/font_define.h, decl: 0, sub: 0, line: 0 } |  |  | 0.625 |
-| walker |  | 4303 | 79 | Code::CodeKey { rung: Decl, file: src/font_define.h, decl: 5, sub: 0, line: 11 } |  |  | 0.625 |
-| walker |  | 4321 | 18 | Code::CodeKey { rung: Body, file: src/font_define.h, decl: 10, sub: 0, line: 31 } |  |  | 0.625 |
-| walker |  | 4340 | 19 | Code::CodeKey { rung: Body, file: src/font_define.h, decl: 9, sub: 0, line: 26 } |  |  | 0.625 |
+| walker |  | 3963 | 382 | Code::CodeKey { rung: Names, file: src/truetype.h, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 3992 | 29 | Code::CodeKey { rung: Decl, file: src/truetype.h, decl: 6, sub: 0, line: 17 } |  |  | 0.617 |
+| walker |  | 4002 | 10 | Code::CodeKey { rung: Doc, file: src/truetype.h, decl: 7, sub: 0, line: 23 } |  |  | 0.617 |
+| walker |  | 4013 | 11 | Code::CodeKey { rung: Doc, file: src/truetype.h, decl: 10, sub: 0, line: 52 } |  |  | 0.617 |
+| walker |  | 4024 | 11 | Code::CodeKey { rung: Doc, file: src/truetype.h, decl: 12, sub: 0, line: 94 } |  |  | 0.617 |
+| ns | 4117 |  | 334 | The material modules: every documented constructor | 3.5 | 2.9 | 0.602 |
+| walker |  | 4142 | 118 | Code::CodeKey { rung: Names, file: docs/callback.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
+| walker |  | 4231 | 89 | Code::CodeKey { rung: Names, file: docs/soluna.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |
+| walker |  | 4291 | 60 | Code::CodeKey { rung: Names, file: docs/app.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.625 |
 | ns | 4396 |  | 279 | Declaration roster: file, lfs, zip, url, crypt, datalist | 3.6 | 3.4 | 0.626 |
-| walker |  | 4431 | 91 | Code::CodeKey { rung: Names, file: src/srbuffer.h, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
-| walker |  | 4443 | 12 | Code::CodeKey { rung: Decl, file: src/srbuffer.h, decl: 1, sub: 0, line: 7 } |  |  | 0.626 |
-| walker |  | 4527 | 84 | Code::CodeKey { rung: Decl, file: src/srbuffer.h, decl: 2, sub: 0, line: 11 } |  |  | 0.626 |
-| walker |  | 4573 | 46 | Code::CodeKey { rung: Names, file: docs/args.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.627 |
-| ns | 4612 |  | 216 | src/lualib/soluna.lua — the core module's real implementation | 4.1 | 2.5 | 0.611 |
-| walker |  | 4699 | 126 | Code::CodeKey { rung: Names, file: src/transform.h, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
-| walker |  | 4780 | 81 | Code::CodeKey { rung: Decl, file: src/transform.h, decl: 1, sub: 0, line: 6 } |  |  | 0.611 |
-| walker |  | 4800 | 20 | Code::CodeKey { rung: Body, file: script/build_web.lua, decl: 2, sub: 0, line: 5 } |  |  | 0.611 |
-| walker |  | 4820 | 20 | Code::CodeKey { rung: Body, file: script/build_web.lua, decl: 6, sub: 0, line: 29 } |  |  | 0.611 |
-| walker |  | 4868 | 48 | Code::CodeKey { rung: Names, file: docs/image.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
-| walker |  | 4900 | 32 | Code::CodeKey { rung: Names, file: docs/material_quad.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| ns | 4905 |  | 293 | How a game boots: src/service/start.lua init() | 4.2 |  | 0.595 |
-| walker |  | 5149 | 249 | Plaintext::Whole { file: src/yogaone.cpp } |  |  | 0.595 |
+| walker |  | 4473 | 182 | Code::CodeKey { rung: Names, file: src/font_define.h, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
+| walker |  | 4552 | 79 | Code::CodeKey { rung: Decl, file: src/font_define.h, decl: 5, sub: 0, line: 11 } |  |  | 0.626 |
+| walker |  | 4570 | 18 | Code::CodeKey { rung: Body, file: src/font_define.h, decl: 10, sub: 0, line: 31 } |  |  | 0.626 |
+| walker |  | 4589 | 19 | Code::CodeKey { rung: Body, file: src/font_define.h, decl: 9, sub: 0, line: 26 } |  |  | 0.626 |
+| ns | 4612 |  | 216 | src/lualib/soluna.lua — the core module's real implementation | 4.1 | 2.5 | 0.609 |
+| walker |  | 4680 | 91 | Code::CodeKey { rung: Names, file: src/srbuffer.h, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 4692 | 12 | Code::CodeKey { rung: Decl, file: src/srbuffer.h, decl: 1, sub: 0, line: 7 } |  |  | 0.609 |
+| walker |  | 4776 | 84 | Code::CodeKey { rung: Decl, file: src/srbuffer.h, decl: 2, sub: 0, line: 11 } |  |  | 0.609 |
+| walker |  | 4822 | 46 | Code::CodeKey { rung: Names, file: docs/args.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| ns | 4905 |  | 293 | How a game boots: src/service/start.lua init() | 4.2 |  | 0.589 |
+| walker |  | 4948 | 126 | Code::CodeKey { rung: Names, file: src/transform.h, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
+| walker |  | 5029 | 81 | Code::CodeKey { rung: Decl, file: src/transform.h, decl: 1, sub: 0, line: 6 } |  |  | 0.589 |
+| walker |  | 5049 | 20 | Code::CodeKey { rung: Body, file: script/build_web.lua, decl: 2, sub: 0, line: 5 } |  |  | 0.589 |
+| walker |  | 5069 | 20 | Code::CodeKey { rung: Body, file: script/build_web.lua, decl: 6, sub: 0, line: 29 } |  |  | 0.589 |
+| walker |  | 5117 | 48 | Code::CodeKey { rung: Names, file: docs/image.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 5149 | 32 | Code::CodeKey { rung: Names, file: docs/material_quad.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
 | walker |  | 5170 | 21 | Code::CodeKey { rung: Body, file: script/build_web.lua, decl: 12, sub: 0, line: 111 } |  |  | 0.595 |
 | walker |  | 5191 | 21 | Code::CodeKey { rung: Body, file: script/build_web.lua, decl: 13, sub: 0, line: 115 } |  |  | 0.595 |
 | walker |  | 5225 | 34 | Code::CodeKey { rung: Names, file: src/luabuffer.h, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
