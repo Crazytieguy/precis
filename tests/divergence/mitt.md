@@ -1,4 +1,4 @@
-Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.754/0.793/0.817/0.676/0.678
+Score(3000)=0.791 I=0.944 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.783/0.791/0.804/0.656/0.663
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,62 +35,61 @@ Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 1477 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.802 |
 | walker |  | 1523 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.836 |
 | ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.773 |
-| walker |  | 1636 | 113 | Json::IdentityMeta { file: package.json } |  |  | 0.777 |
-| ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.741 |
-| walker |  | 1747 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.742 |
-| ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.685 |
-| walker |  | 1977 | 230 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.774 |
-| ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.748 |
-| ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.718 |
-| walker |  | 2257 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.795 |
-| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.759 |
-| walker |  | 2469 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.761 |
-| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.741 |
-| walker |  | 2767 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.830 |
-| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.789 |
-| walker |  | 2916 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.793 |
-| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.799 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.805 |
-| walker |  | 3218 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.807 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.788 |
-| walker |  | 3381 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.789 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.753 |
-| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.761 |
-| walker |  | 3676 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.763 |
-| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.755 |
-| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.725 |
-| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.702 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.682 |
-| walker |  | 4574 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.813 |
-| walker |  | 4593 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.813 |
-| walker |  | 4609 | 16 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.813 |
-| walker |  | 4683 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.813 |
-| walker |  | 4711 | 28 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.813 |
-| ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.793 |
-| walker |  | 4821 | 110 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.794 |
-| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.775 |
-| walker |  | 4986 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.776 |
-| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.758 |
-| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.742 |
-| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.721 |
-| walker |  | 5486 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.725 |
-| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.708 |
-| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.697 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.676 |
-| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.662 |
-| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.645 |
-| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.635 |
-| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.642 |
-| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.645 |
-| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.653 |
-| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.661 |
-| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.670 |
-| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.671 |
-| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.659 |
-| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.668 |
-| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.678 |
-| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.679 |
-| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.673 |
-| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.676 |
-| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.672 |
-| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.672 |
+| walker |  | 1634 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.774 |
+| ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.739 |
+| walker |  | 1864 | 230 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.835 |
+| ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.771 |
+| ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.745 |
+| walker |  | 2144 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.826 |
+| ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.792 |
+| walker |  | 2356 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.794 |
+| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.758 |
+| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.738 |
+| walker |  | 2654 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.827 |
+| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.786 |
+| walker |  | 2803 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.790 |
+| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.796 |
+| walker |  | 3105 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.798 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.804 |
+| walker |  | 3268 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.806 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.786 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.750 |
+| walker |  | 3563 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.752 |
+| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.733 |
+| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.725 |
+| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.696 |
+| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.674 |
+| walker |  | 4461 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.810 |
+| walker |  | 4480 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.810 |
+| walker |  | 4496 | 16 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.810 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.788 |
+| walker |  | 4570 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.789 |
+| walker |  | 4598 | 28 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.789 |
+| walker |  | 4708 | 110 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.790 |
+| ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.770 |
+| walker |  | 4873 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.771 |
+| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.753 |
+| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.735 |
+| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.720 |
+| walker |  | 5373 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.724 |
+| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.703 |
+| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.687 |
+| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.676 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.656 |
+| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.642 |
+| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.625 |
+| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.616 |
+| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.623 |
+| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.627 |
+| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.635 |
+| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.644 |
+| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.654 |
+| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.654 |
+| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.643 |
+| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.653 |
+| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.663 |
+| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.664 |
+| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.659 |
+| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.662 |
+| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.659 |
+| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.659 |

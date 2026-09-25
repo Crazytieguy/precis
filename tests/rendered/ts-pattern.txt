@@ -177,26 +177,8 @@ package.json
   51→    "dist/**/*",
   52→    "package.json"
   53→  ],
-  54→  "repository": {
-  55→    "type": "git",
-  56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
-  57→  },
-  58→  "keywords": [
-  59→    "pattern",
-  60→    "matching",
-  61→    "pattern-matching",
-  62→    "typescript",
-  63→    "match-with",
-  64→    "match",
-  65→    "switch",
-  66→    "adt"
-  67→  ],
-  68→  "author": "Gabriel Vergnaud",
+  …
   69→  "license": "MIT",
-  70→  "bugs": {
-  71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
-  72→  },
-  73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
   …
 scripts/
   generate-cts.sh
@@ -234,13 +216,33 @@ src/
     …
     48→export function isMatching<const T, const P extends PatternConstraint<T>>(
     49→  pattern: P,
-    …
+    50→  value: T
+    51→): value is T & WithDefault<P.narrow<T, P>, P.infer<P>>;
     53→export function isMatching<const p extends Pattern<any>>(
     54→  ...args: [pattern: p, value?: any]
     55→): boolean | ((vale: any) => boolean) {
     …
   match.ts
+    …
+    32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
+    35→  return new MatchExpression(value, unmatched) as any;
+    …
   patterns.ts
+    …
+    48→export type {
+    49→  /**
+    50→   * `Pattern<T>` is the type of all patterns
+    51→   * that can match a value of type `T`.
+    52→   */
+    53→  Pattern,
+    54→
+    55→  /**
+    56→   * `unstable_Fn` can be used to created a
+    57→   * a Matchable instance – a custom type that
+    58→   * can be used as a pattern.
+    …
   types/
     BuildMany.ts
     DeepExclude.ts

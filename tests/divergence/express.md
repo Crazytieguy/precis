@@ -1,4 +1,4 @@
-Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.607/0.608/0.566/0.513/0.490/0.408/0.506
+Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.607/0.608/0.566/0.513/0.490/0.408/0.488
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -134,18 +134,19 @@ Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.491 |
 | walker |  | 8216 | 141 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 9, sub: 0, line: 351 } |  |  | 0.504 |
 | ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.498 |
+| walker |  | 8362 | 146 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.498 |
+| walker |  | 8400 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 6, sub: 0, line: 214 } |  |  | 0.498 |
 | ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.494 |
-| walker |  | 8554 | 338 | Json::IdentityMeta { file: package.json } |  |  | 0.506 |
-| walker |  | 8700 | 146 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.506 |
-| walker |  | 8738 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 6, sub: 0, line: 214 } |  |  | 0.506 |
-| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.500 |
-| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.506 |
-| walker |  | 8897 | 159 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 16, sub: 0, line: 522 } |  |  | 0.506 |
-| ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.501 |
-| walker |  | 9139 | 242 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.501 |
-| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.512 |
-| walker |  | 9640 | 501 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.525 |
-| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.533 |
-| walker |  | 9857 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.553 |
-| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.549 |
-| walker |  | 9991 | 134 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 17, sub: 0, line: 598 } |  |  | 0.549 |
+| walker |  | 8559 | 159 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 16, sub: 0, line: 522 } |  |  | 0.494 |
+| walker |  | 8801 | 242 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.494 |
+| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.488 |
+| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.488 |
+| ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.483 |
+| walker |  | 9302 | 501 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.496 |
+| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.507 |
+| walker |  | 9519 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.527 |
+| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.535 |
+| walker |  | 9742 | 223 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 17, sub: 0, line: 598 } |  |  | 0.535 |
+| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.531 |
+| walker |  | 9987 | 245 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.531 |
+| walker |  | 9992 | 5 | Markdown::Section { file: Readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.531 |

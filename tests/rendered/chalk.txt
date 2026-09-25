@@ -24,8 +24,7 @@ package.json
   3→	"version": "5.6.2",
   4→	"description": "Terminal string styling done right",
   5→	"license": "MIT",
-  6→	"repository": "chalk/chalk",
-  7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
+  …
   8→	"type": "module",
   9→	"main": "./source/index.js",
   10→	"exports": "./source/index.js",
@@ -49,28 +48,6 @@ package.json
   28→		"source",
   29→		"!source/index.test-d.ts"
   30→	],
-  31→	"keywords": [
-  32→		"color",
-  33→		"colour",
-  34→		"colors",
-  35→		"terminal",
-  36→		"console",
-  37→		"cli",
-  38→		"string",
-  39→		"ansi",
-  40→		"style",
-  41→		"styles",
-  42→		"tty",
-  43→		"formatting",
-  44→		"rgb",
-  45→		"256",
-  46→		"shell",
-  47→		"xterm",
-  48→		"log",
-  49→		"logging",
-  50→		"command-line",
-  51→		"text"
-  52→	],
   …
 readme.md
   …
@@ -183,7 +160,30 @@ source/
     49→	Use RGB values to set text color.
     50→
     51→	@example
+    52→	```
+    53→	import chalk from 'chalk';
+    54→
+    55→	chalk.rgb(222, 173, 237);
+    56→	```
+    57→	*/
+    58→	rgb: (red: number, green: number, blue: number) => this;
+    60→	/**
+    61→	Use HEX value to set text color.
+    62→
+    63→	@param color - Hexadecimal value representing the desired color.
+    64→
+    65→	@example
+    66→	```
+    67→	import chalk from 'chalk';
+    68→
+    69→	chalk.hex('#DEADED');
+    70→	```
+    71→	*/
+    72→	hex: (color: string) => this;
+    73→
+    74→	/**
     …
+    231→}
     233→/**
     234→Main Chalk object that allows to chain styles together.
     235→

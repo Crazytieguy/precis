@@ -294,6 +294,12 @@ internal/
     …
     9→exports = module.exports = {}
     …
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    …
 map.js
   …
   3→module.exports = testFile => testFile.replace(/test\//, '')
@@ -315,10 +321,7 @@ package.json
   15→  },
   …
   22→  "license": "ISC",
-  23→  "repository": {
-  24→    "type": "git",
-  25→    "url": "git+https://github.com/npm/node-semver.git"
-  26→  },
+  …
   27→  "bin": {
   28→    "semver": "bin/semver.js"
   29→  },
@@ -337,7 +340,6 @@ package.json
   49→  "engines": {
   50→    "node": ">=10"
   51→  },
-  52→  "author": "GitHub Inc.",
   …
 preload.js
   …

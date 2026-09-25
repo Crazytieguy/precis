@@ -1,4 +1,4 @@
-Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.798/0.733/0.658
+Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.820/0.733/0.658
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,91 +58,91 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 3522 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 11, sub: 0, line: 1130 } |  |  | 0.844 |
 | walker |  | 3537 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.844 |
 | ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.816 |
-| walker |  | 3713 | 176 | Json::IdentityMeta { file: package.json } |  |  | 0.816 |
-| ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.793 |
-| walker |  | 3825 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.808 |
-| walker |  | 3837 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.808 |
-| walker |  | 3850 | 13 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.808 |
-| walker |  | 3865 | 15 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 6, sub: 0, line: 30 } |  |  | 0.808 |
-| walker |  | 3888 | 23 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 4, sub: 0, line: 18 } |  |  | 0.808 |
-| ns | 3912 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.794 |
-| walker |  | 3915 | 27 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 7, sub: 0, line: 34 } |  |  | 0.794 |
-| walker |  | 3967 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.798 |
-| walker |  | 3988 | 21 | Code::CodeKey { rung: Decl, file: src/types.ts, decl: 2, sub: 0, line: 2 } |  |  | 0.805 |
-| ns | 4022 |  | 110 | useSnapPoints: entry point and its complete return surface | 3.8 |  | 0.788 |
-| walker |  | 4024 | 36 | Code::CodeKey { rung: Names, file: src/context.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.790 |
-| ns | 4271 |  | 249 | useSnapPoints parameter object (fills 3.8's ellipsis) | 3.9 | 3.8 | 0.797 |
-| walker |  | 4351 | 327 | Code::CodeKey { rung: Decl, file: src/context.ts, decl: 1, sub: 0, line: 37 } |  |  | 0.798 |
-| walker |  | 4410 | 59 | Code::CodeKey { rung: Body, file: src/context.ts, decl: 2, sub: 0, line: 69 } |  |  | 0.811 |
-| walker |  | 4554 | 144 | Code::CodeKey { rung: Names, file: src/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.833 |
-| ns | 4565 |  | 294 | usePositionFixed: the iOS rationale comment, its signature and return | 3.10 |  | 0.809 |
-| walker |  | 4594 | 40 | Code::CodeKey { rung: Decl, file: src/constants.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.818 |
-| walker |  | 4652 | 58 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.818 |
-| walker |  | 4677 | 25 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 1, sub: 0, line: 23 } |  |  | 0.818 |
-| walker |  | 4712 | 35 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 2, sub: 0, line: 31 } |  |  | 0.818 |
-| walker |  | 4749 | 37 | Code::CodeKey { rung: Doc, file: src/use-composed-refs.ts, decl: 1, sub: 0, line: 23 } |  |  | 0.818 |
-| ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.804 |
-| walker |  | 4787 | 38 | Code::CodeKey { rung: Doc, file: src/use-composed-refs.ts, decl: 2, sub: 0, line: 31 } |  |  | 0.804 |
-| walker |  | 4884 | 97 | Code::CodeKey { rung: Names, file: src/use-prevent-scroll.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.808 |
+| walker |  | 3649 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.831 |
+| walker |  | 3661 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.831 |
+| walker |  | 3674 | 13 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.831 |
+| walker |  | 3689 | 15 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 6, sub: 0, line: 30 } |  |  | 0.831 |
+| walker |  | 3712 | 23 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 4, sub: 0, line: 18 } |  |  | 0.831 |
+| walker |  | 3739 | 27 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 7, sub: 0, line: 34 } |  |  | 0.831 |
+| walker |  | 3791 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
+| walker |  | 3812 | 21 | Code::CodeKey { rung: Decl, file: src/types.ts, decl: 2, sub: 0, line: 2 } |  |  | 0.843 |
+| ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.820 |
+| walker |  | 3848 | 36 | Code::CodeKey { rung: Names, file: src/context.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
+| ns | 3912 |  | 99 | DrawerContext creation and the useDrawerContext accessor | 3.7 | 3.6 | 0.807 |
+| ns | 4022 |  | 110 | useSnapPoints: entry point and its complete return surface | 3.8 |  | 0.790 |
+| walker |  | 4175 | 327 | Code::CodeKey { rung: Decl, file: src/context.ts, decl: 1, sub: 0, line: 37 } |  |  | 0.791 |
+| walker |  | 4234 | 59 | Code::CodeKey { rung: Body, file: src/context.ts, decl: 2, sub: 0, line: 69 } |  |  | 0.805 |
+| ns | 4271 |  | 249 | useSnapPoints parameter object (fills 3.8's ellipsis) | 3.9 | 3.8 | 0.811 |
+| walker |  | 4378 | 144 | Code::CodeKey { rung: Names, file: src/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.833 |
+| walker |  | 4418 | 40 | Code::CodeKey { rung: Decl, file: src/constants.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.842 |
+| walker |  | 4476 | 58 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.842 |
+| walker |  | 4501 | 25 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 1, sub: 0, line: 23 } |  |  | 0.842 |
+| walker |  | 4536 | 35 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 2, sub: 0, line: 31 } |  |  | 0.842 |
+| ns | 4565 |  | 294 | usePositionFixed: the iOS rationale comment, its signature and return | 3.10 |  | 0.818 |
+| walker |  | 4573 | 37 | Code::CodeKey { rung: Doc, file: src/use-composed-refs.ts, decl: 1, sub: 0, line: 23 } |  |  | 0.818 |
+| walker |  | 4611 | 38 | Code::CodeKey { rung: Doc, file: src/use-composed-refs.ts, decl: 2, sub: 0, line: 31 } |  |  | 0.818 |
+| walker |  | 4708 | 97 | Code::CodeKey { rung: Names, file: src/use-prevent-scroll.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.819 |
+| walker |  | 4749 | 41 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 2, sub: 0, line: 29 } |  |  | 0.819 |
+| ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.808 |
+| walker |  | 4807 | 58 | Code::CodeKey { rung: Doc, file: src/use-prevent-scroll.ts, decl: 4, sub: 0, line: 68 } |  |  | 0.808 |
+| walker |  | 4869 | 62 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 5, sub: 0, line: 294 } |  |  | 0.808 |
 | ns | 4907 |  | 149 | use-prevent-scroll.ts module-private declarations | 3.12 | 3.11 | 0.796 |
-| walker |  | 4925 | 41 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 2, sub: 0, line: 29 } |  |  | 0.796 |
-| walker |  | 4983 | 58 | Code::CodeKey { rung: Doc, file: src/use-prevent-scroll.ts, decl: 4, sub: 0, line: 68 } |  |  | 0.796 |
-| walker |  | 5045 | 62 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 5, sub: 0, line: 294 } |  |  | 0.796 |
+| walker |  | 4961 | 92 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 3, sub: 0, line: 34 } |  |  | 0.796 |
+| walker |  | 4970 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.796 |
 | ns | 5125 |  | 218 | use-controllable-state.ts — the controlled/uncontrolled prop machinery | 3.13 |  | 0.784 |
-| walker |  | 5137 | 92 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 3, sub: 0, line: 34 } |  |  | 0.784 |
-| walker |  | 5146 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.784 |
-| walker |  | 5319 | 173 | Code::CodeKey { rung: Names, file: src/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.789 |
+| walker |  | 5143 | 173 | Code::CodeKey { rung: Names, file: src/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
+| walker |  | 5164 | 21 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 90 } |  |  | 0.797 |
+| walker |  | 5193 | 29 | Code::CodeKey { rung: Doc, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.797 |
+| walker |  | 5270 | 77 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 7, sub: 0, line: 94 } |  |  | 0.797 |
 | ns | 5319 |  | 194 | useScaleBackground and use-composed-refs — the two smallest modules | 3.14 |  | 0.789 |
-| walker |  | 5340 | 21 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 90 } |  |  | 0.789 |
-| walker |  | 5369 | 29 | Code::CodeKey { rung: Doc, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.789 |
-| walker |  | 5446 | 77 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 7, sub: 0, line: 94 } |  |  | 0.789 |
-| walker |  | 5531 | 85 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 4, sub: 0, line: 59 } |  |  | 0.789 |
+| walker |  | 5355 | 85 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 4, sub: 0, line: 59 } |  |  | 0.789 |
+| walker |  | 5442 | 87 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.789 |
 | ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.772 |
-| walker |  | 5618 | 87 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 8, sub: 0, line: 108 } |  |  | 0.772 |
-| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.754 |
-| walker |  | 5765 | 147 | Code::CodeKey { rung: Doc, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.769 |
-| walker |  | 5835 | 70 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 5, sub: 0, line: 22 } |  |  | 0.769 |
-| ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.758 |
-| walker |  | 5872 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
-| walker |  | 5983 | 111 | Json::Whole { file: tsconfig.json } |  |  | 0.759 |
-| ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.747 |
-| walker |  | 6094 | 111 | Json::Whole { file: turbo.json } |  |  | 0.748 |
-| walker |  | 6177 | 83 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.748 |
+| walker |  | 5589 | 147 | Code::CodeKey { rung: Doc, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.786 |
+| walker |  | 5659 | 70 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 5, sub: 0, line: 22 } |  |  | 0.786 |
+| walker |  | 5696 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.787 |
+| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.769 |
+| walker |  | 5807 | 111 | Json::Whole { file: tsconfig.json } |  |  | 0.770 |
+| ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.759 |
+| walker |  | 5918 | 111 | Json::Whole { file: turbo.json } |  |  | 0.760 |
+| walker |  | 6001 | 83 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.760 |
+| ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.748 |
+| walker |  | 6117 | 116 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.748 |
 | ns | 6214 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.733 |
-| walker |  | 6293 | 116 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.733 |
-| walker |  | 6550 | 257 | Code::CodeKey { rung: Body, file: src/use-controllable-state.ts, decl: 1, sub: 0, line: 39 } |  |  | 0.733 |
+| walker |  | 6374 | 257 | Code::CodeKey { rung: Body, file: src/use-controllable-state.ts, decl: 1, sub: 0, line: 39 } |  |  | 0.733 |
+| walker |  | 6561 | 187 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 4, sub: 0, line: 68 } |  |  | 0.733 |
 | ns | 6564 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.708 |
-| walker |  | 6737 | 187 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 4, sub: 0, line: 68 } |  |  | 0.708 |
 | ns | 6813 |  | 249 | shouldDrag: the scrollable-ancestor climb | 4.7 | 4.6 | 0.691 |
-| walker |  | 7032 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 10, sub: 0, line: 1098 } |  |  | 0.692 |
+| walker |  | 6856 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 10, sub: 0, line: 1098 } |  |  | 0.692 |
+| walker |  | 7002 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.692 |
 | ns | 7042 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.680 |
-| walker |  | 7178 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.680 |
+| walker |  | 7282 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.680 |
 | ns | 7355 |  | 313 | onRelease: the close-vs-snap-back decision ladder | 4.9 | 4.8 | 0.664 |
-| walker |  | 7458 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.664 |
-| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.654 |
-| walker |  | 7775 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.659 |
+| walker |  | 7599 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.664 |
+| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.659 |
 | ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.649 |
 | ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.656 |
 | ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.652 |
-| ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.646 |
-| ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.641 |
-| walker |  | 8440 | 665 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.645 |
+| walker |  | 8264 | 665 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.656 |
+| ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.651 |
+| ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.645 |
+| walker |  | 8438 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.645 |
+| walker |  | 8473 | 35 | Markdown::HeadingsOutline { file: test/README.md } |  |  | 0.645 |
 | ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.654 |
 | ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.658 |
-| walker |  | 8614 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.658 |
 | ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.662 |
-| walker |  | 8649 | 35 | Markdown::HeadingsOutline { file: test/README.md } |  |  | 0.662 |
-| walker |  | 8880 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 5, sub: 0, line: 72 } |  |  | 0.662 |
+| walker |  | 8704 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 5, sub: 0, line: 72 } |  |  | 0.662 |
 | ns | 8915 |  | 293 | Spec-suite to demo-route map for every Playwright file | 6.4 |  | 0.653 |
 | ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.644 |
-| ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.640 |
-| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.646 |
-| walker |  | 9396 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.650 |
+| walker |  | 9220 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.649 |
+| ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.645 |
+| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.650 |
+| walker |  | 9488 | 268 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 1, line: 15 } |  |  | 0.650 |
 | ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.647 |
 | ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.651 |
-| walker |  | 9664 | 268 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 1, line: 15 } |  |  | 0.651 |
 | ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.655 |
 | ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.655 |
 | ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.649 |
 | ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.646 |
-| walker |  | 9999 | 335 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.646 |
+| walker |  | 9988 | 500 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.648 |
+| walker |  | 9996 | 8 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 9, sub: 0, line: 996 } |  |  | 0.648 |

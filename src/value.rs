@@ -42,13 +42,6 @@ pub fn manifest_operational_value(depth: f64) -> f64 {
     839.0 * depth
 }
 
-/// Value of a manifest's appendix: author and URL metadata and every
-/// table no other section owns (build systems, profiles, lints, tool
-/// config). Shared by every manifest format.
-pub fn manifest_appendix_value(depth: f64) -> f64 {
-    602.0 * depth
-}
-
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;

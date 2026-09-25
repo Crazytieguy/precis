@@ -24,6 +24,19 @@ README.md
   15→```
   17→## Usage
   18→
+  19→Create a `db.json` or `db.json5` file
+  20→
+  21→```json
+  22→{
+  23→  "$schema": "./node_modules/json-server/schema.json",
+  24→  "posts": [
+  25→    { "id": "1", "title": "a title", "views": 100 },
+  26→    { "id": "2", "title": "another title", "views": 200 }
+  27→  ],
+  28→  "comments": [
+  29→    { "id": "1", "text": "a comment about post 1", "postId": "1" },
+  30→    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+  31→  ],
   …
   91→## Sponsors ✨
   92→
@@ -109,27 +122,9 @@ package.json
   2→  "name": "json-server",
   3→  "version": "1.0.0-beta.15",
   4→  "description": "",
-  5→  "keywords": [
-  6→    "JSON",
-  7→    "server",
-  8→    "fake",
-  9→    "REST",
-  10→    "API",
-  11→    "prototyping",
-  12→    "mock",
-  13→    "mocking",
-  14→    "test",
-  15→    "testing",
-  16→    "rest",
-  17→    "data",
-  18→    "dummy"
-  19→  ],
+  …
   20→  "license": "MIT",
-  21→  "author": "typicode <typicode@gmail.com>",
-  22→  "repository": {
-  23→    "type": "git",
-  24→    "url": "git+https://github.com/typicode/json-server.git"
-  25→  },
+  …
   26→  "bin": {
   27→    "json-server": "lib/bin.js"
   28→  },

@@ -113,11 +113,14 @@ language.**
   thread-local.
 - Manifests (`Cargo.toml`, `pyproject.toml`, `package.json`) share one
   ontology: identity, operational (entry points / scripts / features /
-  runtime constraints), runtime dependencies, appendix. Their prices live
-  once in `value.rs` (`manifest_*_value`, `dependency_roster_value`);
-  walkers only map their tables/keys onto those kinds. Development and
-  peer rosters are not emitted. A workspace's primary member is the one
-  member directory named after the repository, for Cargo and JS alike.
+  runtime constraints), runtime dependencies. Their prices live once in
+  `value.rs` (`manifest_*_value`, `dependency_roster_value`); walkers
+  only map their tables/keys onto those kinds. Development and peer
+  rosters, author/URL metadata and tool config are not emitted. A
+  workspace's primary member is the one member directory named after the
+  repository, for Cargo and JS alike.
+- License texts and CI workflow YAML render no content; their listing
+  rows name them.
 
 ## Output notation and the plugin cap
 

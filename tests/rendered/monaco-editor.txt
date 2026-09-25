@@ -88,7 +88,7 @@ monaco-lsp-client/
     …
     2→	"name": "@vscode/monaco-lsp-client",
     3→	"description": "description",
-    4→	"authors": "vscode",
+    …
     5→	"version": "0.1.0",
     6→	"main": "out/index.js",
     7→	"types": "out/index.d.ts",
@@ -306,7 +306,7 @@ samples/
     7→	"scripts": {
     8→		"simpleserver": "yaserver --root ./ --port 8888"
     9→	},
-    10→	"author": "Microsoft Corporation",
+    …
     11→	"license": "MIT",
     …
 scripts/
@@ -521,6 +521,10 @@ src/
         languageFeatures.ts
         lib/
           editor.worker.d.ts
+          lib.index.ts
+          lib.ts
+          typescriptServices.d.ts
+          typescriptServices.js
           …
         register.ts
         ts.worker.ts

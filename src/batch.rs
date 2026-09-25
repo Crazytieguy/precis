@@ -95,16 +95,13 @@ pub enum MarkdownKey {
 }
 
 /// JSON batches. `package.json` splits along the shared manifest ontology
-/// (identity / operational / dependencies / appendix). Other small JSON
+/// (identity / operational / dependencies). Other small JSON
 /// configs get a single `Whole` batch.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum JsonKey {
     /// `package.json` identity scalars: `name`, `version`, `description`,
     /// `type`, `private`, `license`/`licenses`.
     Identity { file: PathBuf },
-    /// Auxiliary `package.json` metadata: authorship, repository/homepage,
-    /// bugs, keywords, publish config, funding.
-    IdentityMeta { file: PathBuf },
     /// `package.json` entrypoint pointers (`main`/`module`/`exports`/
     /// `bin`/`types`/`files`/...).
     Entry { file: PathBuf },

@@ -18,10 +18,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::render::Source;
-use crate::value::{
-    dependency_roster_value, manifest_appendix_value, manifest_identity_value,
-    manifest_operational_value,
-};
+use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
@@ -115,8 +112,7 @@ fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch> {
 }
 
 /// Emit independently purchasable `package.json` surfaces. On ordinary
-/// multi-line manifests every section hangs directly off Identity, so
-/// appendix metadata cannot gate entrypoints, scripts, or dependencies.
+/// multi-line manifests every section hangs directly off Identity.
 /// Compact manifests whose sections share a physical line retain a local
 /// chain because the scheduler only permits line overlap along predecessor
 /// ancestry. The `devDependencies` / `peerDependencies` rosters are left
@@ -126,9 +122,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
-    // The primary workspace member prices like the root manifest for the
-    // sections that say what the package is and how it ships; appendix
-    // metadata keeps ordinary path-depth pricing.
+    // The primary workspace member prices like the root manifest.
     let primary = ctx.is_primary_js_workspace_member(file);
     let depth = if primary {
         1.0
@@ -165,14 +159,9 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
             is_scripts_key,
         ),
         (
-            JsonKey::Dependencies { file: f.clone() },
+            JsonKey::Dependencies { file: f },
             dependency_roster_value(describes_repository, depth),
             is_runtime_dependencies_key,
-        ),
-        (
-            JsonKey::IdentityMeta { file: f },
-            manifest_appendix_value(path_depth_factor(file, ctx)),
-            is_identity_meta_key,
         ),
     ];
     let sections: Vec<_> = section_kinds
@@ -248,21 +237,6 @@ fn is_identity_key(k: &str) -> bool {
     )
 }
 
-fn is_identity_meta_key(k: &str) -> bool {
-    matches!(
-        k,
-        "author"
-            | "authors"
-            | "contributors"
-            | "repository"
-            | "homepage"
-            | "bugs"
-            | "keywords"
-            | "publishConfig"
-            | "funding"
-    )
-}
-
 fn is_entry_key(k: &str) -> bool {
     matches!(
         k,
@@ -311,7 +285,6 @@ fn is_runtime_dependencies_key(k: &str) -> bool {
 
 fn is_package_section_key(k: &str) -> bool {
     is_identity_key(k)
-        || is_identity_meta_key(k)
         || is_entry_key(k)
         || is_runtime_key(k)
         || is_scripts_key(k)

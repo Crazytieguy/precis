@@ -221,6 +221,15 @@ lib/
     149→exports.Argument = Argument;
     150→exports.humanReadableArgName = humanReadableArgName;
   command.js
+    …
+    13→class Command extends EventEmitter {
+    …
+    2748→/**
+    …
+    2752→function useColor() {
+    …
+    2776→exports.Command = Command;
+    2777→exports.useColor = useColor; // exporting for tests
   error.js
   help.js
     …
@@ -324,14 +333,6 @@ package.json
   2→  "name": "commander",
   3→  "version": "14.0.3",
   4→  "description": "the complete solution for node.js command-line programs",
-  5→  "keywords": [
-  6→    "commander",
-  7→    "command",
-  8→    "option",
-  9→    "parser",
-  10→    "cli",
-  11→    "argument",
-  12→    "args",
   …
   16→  "license": "MIT",
   …

@@ -130,7 +130,6 @@ client/
     5→  "description": "Self-hosted audiobook and podcast client",
     6→  "main": "index.js",
     …
-    17→  "author": "advplyr",
     18→  "license": "ISC",
     …
   pages/
@@ -322,7 +321,6 @@ package.json
   …
   23→  "bin": "index.js",
   …
-  38→  "author": "advplyr",
   39→  "license": "GPL-3.0",
   …
 prod.js
@@ -419,7 +417,7 @@ server/
       LICENSE
       buffer-equal-constant-time/
         LICENSE
-        …
+        index.js
       ecdsa-sig-formatter/
       index.js
     jws/
@@ -427,6 +425,11 @@ server/
       index.js
       lib/
     libarchive/
+      LICENSE
+      archive.js
+      libarchiveWorker.js
+      wasm-libarchive.js
+      wasm-module.js
     lodash.once/
       LICENSE
       index.js

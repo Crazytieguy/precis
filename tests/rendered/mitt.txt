@@ -147,8 +147,15 @@ README.md
   151→
   152→#### Parameters
   153→
-  …
+  154→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
+  155→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
+  156→
   157→### off
+  158→
+  159→Remove an event handler for the given type.
+  160→If `handler` is omitted, all handlers of the given type are removed.
+  161→
+  162→#### Parameters
   …
   167→### emit
   …
@@ -191,17 +198,7 @@ package.json
   27→    "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
   28→    "release": "npm run -s build -s && npm t && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
   29→  },
-  30→  "repository": "developit/mitt",
-  31→  "keywords": [
-  32→    "events",
-  33→    "eventemitter",
-  34→    "emitter",
-  35→    "pubsub"
-  36→  ],
-  37→  "homepage": "https://github.com/developit/mitt",
-  38→  "authors": [
-  39→    "Jason Miller <jason@developit.ca>"
-  40→  ],
+  …
   41→  "license": "MIT",
   42→  "files": [
   43→    "dist",
