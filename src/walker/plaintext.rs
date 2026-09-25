@@ -1,17 +1,18 @@
 //! Plaintext walker — the home for every file precis has no parser
 //! for. Two jobs:
 //!
-//! 1. **Named plaintext files** ([`classify_plaintext`]): license and
-//!    ignore files, compact toolchain/build/package manifests, selected
-//!    build scripts, requirement lists, version/TODO stamps,
-//!    `Makefile`/`Dockerfile`/dotenv heads. These get
-//!    class-specific treatment and a per-class value preset.
+//! 1. **Named plaintext files** ([`classify_plaintext`]): build
+//!    entrypoints (`Makefile`, `Dockerfile`, compose files), build
+//!    scripts, dotenv samples, contributor tooling config (ignore lists,
+//!    version pins, CI workflow YAML), project notes (`setup.cfg`,
+//!    `requirements.txt`, `TODO`), version stamps and licenses. Each
+//!    renders whole or as a head slice at one of four value tiers.
 //! 2. **Every other source-like text file** ([`Class::SourceText`]):
 //!    the language-agnostic fallback for the ~90% of file formats no
 //!    tree-sitter walker in this crate claims — Java, C++, Ruby, PHP,
 //!    Swift, Kotlin, C#, Scala, Elixir, Haskell, Vue, Svelte, CSS,
-//!    HTML, reST, plain text and the rest of
-//!    [`SOURCE_TEXT_EXTENSIONS`]. Without it those files reach the
+//!    reST, plain text and the rest of
+//!    [`SOURCE_TEXT_LANGUAGE_EXTENSIONS`]. Without it those files reach the
 //!    output as a bare filename in a directory listing and nothing
 //!    else, which is what a repository in any of those languages
 //!    renders as.

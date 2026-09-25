@@ -143,9 +143,9 @@ pub enum MarkdownKey {
     },
 }
 
-/// JSON batches. `package.json` splits along the `Cargo.toml` ontology
-/// (identity / scripts / deps) plus a JS entrypoint-pointer batch. Other
-/// small JSON configs get a single `Whole` batch.
+/// JSON batches. `package.json` splits along the shared manifest ontology
+/// (identity / operational / dependencies / appendix). Other small JSON
+/// configs get a single `Whole` batch.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum JsonKey {
     /// `package.json` identity scalars: `name`, `version`, `description`,
@@ -170,9 +170,8 @@ pub enum JsonKey {
     Whole { file: PathBuf },
 }
 
-/// Plaintext config / license file batches. Whitelist lives in
-/// [`crate::walker::plaintext`]. Capped on line + token cost to bound
-/// render-time displacement of richer walker batches.
+/// Batches for files no parser claims — named config/ops files and the
+/// language-agnostic declaration surface. See [`crate::walker::plaintext`].
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
     /// Whole-file render, or a head slice of a longer file.
