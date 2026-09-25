@@ -52,7 +52,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let sections = collect_sections(&tree, &source);
-        let python_project_manifest = is_python_project_manifest(&file, &sections, &source);
+        let python_project_manifest = is_python_project_manifest(&file, &sections);
         // Pair-level detail is only consulted for Python identity tables.
         let pairs = if python_project_manifest {
             collect_table_pairs(&tree, &source)
@@ -323,12 +323,11 @@ fn is_cargo_manifest(file: &Path) -> bool {
     file.file_name().and_then(|name| name.to_str()) == Some("Cargo.toml")
 }
 
-fn is_python_project_manifest(file: &Path, sections: &[Section], source: &str) -> bool {
-    match file.file_name().and_then(|n| n.to_str()) {
-        Some("pyproject.toml") => true,
-        Some("project.toml") => project_table_has_pep621_key(sections, source),
-        _ => false,
-    }
+/// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table —
+/// the Python counterpart of [`is_manifest_toml`]'s name-independent rule.
+fn is_python_project_manifest(file: &Path, sections: &[Section]) -> bool {
+    file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
+        || sections.iter().any(|(name, _, _)| name == "project")
 }
 
 /// A TOML that declares package identity is a manifest whatever it is named —
@@ -340,39 +339,6 @@ fn is_manifest_toml(sections: &[Section], python_project_manifest: bool) -> bool
         || sections.iter().any(|(name, _, _)| {
             matches!(name.as_str(), "package" | "workspace" | "workspace.package")
         })
-}
-
-fn project_table_has_pep621_key(sections: &[Section], source: &str) -> bool {
-    let Some((_, start, end)) = sections.iter().find(|(name, _, _)| name == "project") else {
-        return false;
-    };
-    source
-        .lines()
-        .enumerate()
-        .filter_map(|(idx, line)| {
-            let line_no = idx + 1;
-            (line_no > *start && line_no <= *end).then_some(line)
-        })
-        .filter_map(|line| line.trim_start().split_once('=').map(|(key, _)| key.trim()))
-        .any(is_pep621_project_key)
-}
-
-fn is_pep621_project_key(key: &str) -> bool {
-    matches!(
-        key,
-        "name"
-            | "version"
-            | "description"
-            | "readme"
-            | "requires-python"
-            | "license"
-            | "authors"
-            | "maintainers"
-            | "keywords"
-            | "classifiers"
-            | "dependencies"
-            | "dynamic"
-    )
 }
 
 fn is_dependency_section(name: &str) -> bool {
@@ -807,31 +773,23 @@ requires-python = ">=3.10"
     }
 
     #[test]
-    fn walker_toml_project_toml_requires_pep621_project_table() {
+    fn walker_toml_python_manifest_is_pyproject_or_any_project_table() {
         let parse_sections = |source: &str| collect_sections(&parse(source), source);
 
-        let generic_project = "[project]\nowner = \"infra\"\n";
-        let generic_sections = parse_sections(generic_project);
-        assert!(!is_python_project_manifest(
-            &PathBuf::from("project.toml"),
-            &generic_sections,
-            generic_project,
-        ));
-
-        let pep621_project = "[project]\nname = \"demo\"\ndependencies = [\"click\"]\n";
-        let pep621_sections = parse_sections(pep621_project);
+        let project = parse_sections("[project]\nname = \"demo\"\n");
         assert!(is_python_project_manifest(
             &PathBuf::from("project.toml"),
-            &pep621_sections,
-            pep621_project,
+            &project
         ));
 
-        let pyproject_without_project = "[tool.ruff]\nline-length = 100\n";
-        let pyproject_sections = parse_sections(pyproject_without_project);
+        let tool_only = parse_sections("[tool.ruff]\nline-length = 100\n");
         assert!(is_python_project_manifest(
             &PathBuf::from("pyproject.toml"),
-            &pyproject_sections,
-            pyproject_without_project,
+            &tool_only
+        ));
+        assert!(!is_python_project_manifest(
+            &PathBuf::from("ruff.toml"),
+            &tool_only
         ));
     }
 
