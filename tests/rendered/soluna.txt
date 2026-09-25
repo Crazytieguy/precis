@@ -52,25 +52,14 @@ README.md
 README.zh-CN.md
   …
   7→# Soluna
-  8→
-  9→[English](./README.md)
-  10→
-  11→[在线演示](https://cloudwu.github.io/soluna/)
-  12→
-  13→一个基于 [sokol](https://github.com/floooh/sokol) 的 2D 游戏引擎。它以 Lua 为编程语言，整合了 ltask 作为多线程框架。sokol + lua 是其名字的由来。
-  14→
-  15→Soluna 可以运行在 Windows、Linux、macOS 和现代浏览器（通过 WebAssembly）上。
-  16→
-  17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
+  …
   19→## 文档
   20→
   21→- [API 参考](./docs)
   22→- [示例](./test)
   23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
   25→## 预编译二进制文件
-  26→
-  27→你可以从 [Nightly Releases](/../../releases/tag/nightly) 页面下载 Windows、Linux、macOS 和
-  28→WebAssembly 的预编译二进制文件。
+  …
   30→## 从源码构建
   …
   35→### 在你的项目的 Actions 中集成
@@ -115,18 +104,48 @@ docs/
   crypt.lua
   datalist.lua
   file.lua
-  font.lua
     …
     10→---
-    11→--- Imports a TrueType font
+    11→--- Loads a file's contents
     12→---
-    13→---@param data string Raw TTF font data
+    13→---@param filename string File path
+    14→---@return string? content File contents or nil on error
+    15→function file.load(filename) end
+    17→---
+    18→--- Gets file attributes
+    19→---
+    20→---@param filename string File path
+    21→---@return table? attributes File attributes or nil
+    22→function file.attributes(filename) end
+    24→---
+    25→--- Checks if a file exists
+    26→---
+    27→---@param filename string File path
+    28→---@return boolean? exists True if file exists, nil if not
+    29→function file.exist(filename) end
+    31→---
+    32→--- Checks if a local file exists
+    33→---
+    34→---@param filename string File path
+    35→---@return boolean? exists True if file exists, nil if not
+    36→function file.local_exist(filename) end
+    38→---
+    39→--- Loads a local file's contents
+    40→---
+    41→---@param filename string File path
+    42→---@return string? content File contents or nil
+    43→function file.local_load(filename) end
+    45→---
+    46→--- Iterates over directory entries
+    47→---
+    48→---@param path string Directory path
+    49→---@return function iterator Iterator function
+    50→function file.dir(path) end
+    …
+  font.lua
+    …
     14→function font.import(data) end
-    16→---
-    17→--- Gets font ID by name
-    18→---
-    19→---@param name string Font name (empty string for last imported font)
-    20→---@return integer? fontid Font ID, or nil if font not found
+    …
     21→function font.name(name) end
     23→---
     24→--- Gets the font system C object
@@ -170,9 +189,6 @@ script/
     16→local function read_file(path)
     …
     23→local function write_file(path, data)
-    24→  local f = assert(io.open(path, "wb"))
-    25→  f:write(data)
-    26→  f:close()
     …
     29→local function write_lines(path, lines)
     30→  write_file(path, table.concat(lines, "\n") .. "\n")

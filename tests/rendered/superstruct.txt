@@ -176,14 +176,6 @@ docs/
     coercions.md
     core.md
     errors.md
-      1→# Errors
-      …
-      5→### `StructError`
-      …
-      19→### Error Properties
-      …
-      32→### Multiple Errors
-      …
     refinements.md
     types.md
     typescript.md
@@ -257,6 +249,20 @@ package.json
 rollup.config.js
 src/
   error.ts
+    …
+    5→export type Failure = {
+    6→  value: any
+    7→  key: any
+    8→  type: string
+    9→  refinement: string | undefined
+    10→  message: string
+    11→  explanation?: string
+    12→  branch: Array<any>
+    13→  path: Array<any>
+    14→}
+    …
+    25→export class StructError extends TypeError {
+    …
   index.ts
     1→export * from './error.js'
     2→export * from './struct.js'

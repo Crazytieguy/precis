@@ -28,13 +28,6 @@ README.md
   73→- **Hooks system** for custom integrations and security policies
   74→- **Environment variable substitution** in configs and scripts
   75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
-  77→## Requirements 📋
-  78→
-  79→- Go 1.23 or later
-  80→- For OpenAI/Anthropic: API key for the respective provider
-  81→- For Ollama: Local Ollama installation with desired models
-  82→- For Google/Gemini: Google API key (see https://aistudio.google.com/app/apikey)
-  83→- One or more MCP-compatible tool servers
   …
   124→## Installation 📦
   125→
@@ -57,6 +50,21 @@ README.md
 cmd/
   auth.go
   hooks.go
+    …
+    16→var hooksCmd = &cobra.Command{
+    17→	Use:   "hooks",
+    18→	Short: "Manage MCPHost hooks",
+    19→	Long:  "Commands for managing and testing MCPHost hooks configuration",
+    20→}
+    …
+    25→var hooksListCmd = &cobra.Command{
+    …
+    57→var hooksValidateCmd = &cobra.Command{
+    …
+    79→var hooksInitCmd = &cobra.Command{
+    …
+    176→func init() {
+    …
   root.go
   script.go
   script_deepseek_test.go
@@ -65,11 +73,6 @@ cmd/
 contribute/
   boost.sh
   build.sh
-    …
-    3→RUN_NAME="mcphost"
-    4→
-    5→mkdir -p output
-    6→go build -o output/${RUN_NAME}
   conf/
     demo.json
     demo.yml

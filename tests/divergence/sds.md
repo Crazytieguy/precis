@@ -62,37 +62,37 @@ Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 3337 |  | 257 | Roster of every function defined in sds.c, part 1 (lines 44-440), names only | 4.1 |  | 0.758 |
 | walker |  | 3422 | 88 | Code::CodeKey { rung: Doc, file: sds.c, decl: 13, sub: 0, line: 300 } |  |  | 0.758 |
 | walker |  | 3520 | 98 | Code::CodeKey { rung: Doc, file: sds.c, decl: 12, sub: 0, line: 256 } |  |  | 0.758 |
-| walker |  | 3631 | 111 | Code::CodeKey { rung: Doc, file: sds.c, decl: 11, sub: 0, line: 204 } |  |  | 0.759 |
-| ns | 3650 |  | 313 | Roster of every function defined in sds.c, part 2 (lines 451-1325), names only | 4.2 | 4.1 | 0.720 |
-| ns | 3791 |  | 141 | sds.c includes + SDS_NOINIT definition, and the sdsalloc.h allocator macros | 4.3 |  | 0.705 |
-| walker |  | 3862 | 231 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 1, line: 0 } |  |  | 0.735 |
-| walker |  | 3883 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 24, sub: 0, line: 494 } |  |  | 0.735 |
-| walker |  | 3917 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 14, sub: 0, line: 307 } |  |  | 0.736 |
-| walker |  | 3958 | 41 | Code::CodeKey { rung: Doc, file: sds.c, decl: 21, sub: 0, line: 440 } |  |  | 0.736 |
-| walker |  | 4000 | 42 | Code::CodeKey { rung: Doc, file: sds.c, decl: 20, sub: 0, line: 427 } |  |  | 0.736 |
+| ns | 3650 |  | 313 | Roster of every function defined in sds.c, part 2 (lines 451-1325), names only | 4.2 | 4.1 | 0.719 |
+| walker |  | 3751 | 231 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 1, line: 0 } |  |  | 0.750 |
+| walker |  | 3772 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 24, sub: 0, line: 494 } |  |  | 0.750 |
+| ns | 3791 |  | 141 | sds.c includes + SDS_NOINIT definition, and the sdsalloc.h allocator macros | 4.3 |  | 0.735 |
+| walker |  | 3806 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 14, sub: 0, line: 307 } |  |  | 0.735 |
+| walker |  | 3847 | 41 | Code::CodeKey { rung: Doc, file: sds.c, decl: 21, sub: 0, line: 440 } |  |  | 0.735 |
+| walker |  | 3889 | 42 | Code::CodeKey { rung: Doc, file: sds.c, decl: 20, sub: 0, line: 427 } |  |  | 0.735 |
+| walker |  | 3956 | 67 | Code::CodeKey { rung: Doc, file: sds.c, decl: 19, sub: 0, line: 421 } |  |  | 0.735 |
 | ns | 4007 |  | 216 | sdsHdrSize() and sdsReqType() — the type-selection policy | 4.4 | 4.1 | 0.708 |
-| walker |  | 4067 | 67 | Code::CodeKey { rung: Doc, file: sds.c, decl: 19, sub: 0, line: 421 } |  |  | 0.708 |
-| walker |  | 4135 | 68 | Code::CodeKey { rung: Doc, file: sds.c, decl: 18, sub: 0, line: 413 } |  |  | 0.708 |
-| walker |  | 4208 | 73 | Code::CodeKey { rung: Doc, file: sds.c, decl: 16, sub: 0, line: 380 } |  |  | 0.708 |
+| walker |  | 4024 | 68 | Code::CodeKey { rung: Doc, file: sds.c, decl: 18, sub: 0, line: 413 } |  |  | 0.708 |
+| walker |  | 4097 | 73 | Code::CodeKey { rung: Doc, file: sds.c, decl: 16, sub: 0, line: 380 } |  |  | 0.708 |
+| walker |  | 4182 | 85 | Code::CodeKey { rung: Doc, file: sds.c, decl: 17, sub: 0, line: 398 } |  |  | 0.708 |
 | ns | 4216 |  | 209 | sdsnewlen() doc comment — NULL vs SDS_NOINIT init, and the always-null-terminated guarantee | 4.5 |  | 0.692 |
-| walker |  | 4293 | 85 | Code::CodeKey { rung: Doc, file: sds.c, decl: 17, sub: 0, line: 398 } |  |  | 0.692 |
-| walker |  | 4379 | 86 | Code::CodeKey { rung: Doc, file: sds.c, decl: 22, sub: 0, line: 450 } |  |  | 0.692 |
-| ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.665 |
-| walker |  | 4605 | 226 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 2, line: 0 } |  |  | 0.675 |
-| walker |  | 4626 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 31, sub: 0, line: 783 } |  |  | 0.675 |
-| walker |  | 4647 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 32, sub: 0, line: 790 } |  |  | 0.675 |
-| walker |  | 4669 | 22 | Code::CodeKey { rung: Doc, file: sds.c, decl: 26, sub: 0, line: 534 } |  |  | 0.675 |
-| walker |  | 4720 | 51 | Code::CodeKey { rung: Doc, file: sds.c, decl: 25, sub: 0, line: 526 } |  |  | 0.675 |
-| ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.654 |
-| walker |  | 4979 | 259 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 3, line: 0 } |  |  | 0.684 |
-| walker |  | 4999 | 20 | Code::CodeKey { rung: Doc, file: sds.c, decl: 42, sub: 0, line: 1120 } |  |  | 0.684 |
-| walker |  | 5025 | 26 | Code::CodeKey { rung: Doc, file: sds.c, decl: 35, sub: 0, line: 885 } |  |  | 0.684 |
-| walker |  | 5058 | 33 | Code::CodeKey { rung: Doc, file: sds.c, decl: 37, sub: 0, line: 925 } |  |  | 0.684 |
-| walker |  | 5092 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 38, sub: 0, line: 932 } |  |  | 0.684 |
-| walker |  | 5130 | 38 | Code::CodeKey { rung: Doc, file: sds.c, decl: 41, sub: 0, line: 1108 } |  |  | 0.684 |
-| walker |  | 5233 | 103 | Code::CodeKey { rung: Doc, file: sds.c, decl: 43, sub: 0, line: 1136 } |  |  | 0.684 |
-| ns | 5253 |  | 370 | sdsMakeRoomFor(): the realloc-vs-move-header branch (224-248) | 4.8 | 4.7 | 0.660 |
-| walker |  | 5343 | 110 | Code::CodeKey { rung: Doc, file: sds.c, decl: 36, sub: 0, line: 898 } |  |  | 0.660 |
+| walker |  | 4268 | 86 | Code::CodeKey { rung: Doc, file: sds.c, decl: 22, sub: 0, line: 450 } |  |  | 0.692 |
+| walker |  | 4494 | 226 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 2, line: 0 } |  |  | 0.703 |
+| walker |  | 4515 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 31, sub: 0, line: 783 } |  |  | 0.703 |
+| walker |  | 4536 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 32, sub: 0, line: 790 } |  |  | 0.703 |
+| ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.675 |
+| walker |  | 4558 | 22 | Code::CodeKey { rung: Doc, file: sds.c, decl: 26, sub: 0, line: 534 } |  |  | 0.675 |
+| walker |  | 4609 | 51 | Code::CodeKey { rung: Doc, file: sds.c, decl: 25, sub: 0, line: 526 } |  |  | 0.675 |
+| walker |  | 4868 | 259 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 3, line: 0 } |  |  | 0.706 |
+| ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.679 |
+| walker |  | 4888 | 20 | Code::CodeKey { rung: Doc, file: sds.c, decl: 42, sub: 0, line: 1120 } |  |  | 0.679 |
+| walker |  | 4914 | 26 | Code::CodeKey { rung: Doc, file: sds.c, decl: 35, sub: 0, line: 885 } |  |  | 0.679 |
+| walker |  | 4947 | 33 | Code::CodeKey { rung: Doc, file: sds.c, decl: 37, sub: 0, line: 925 } |  |  | 0.679 |
+| walker |  | 4981 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 38, sub: 0, line: 932 } |  |  | 0.679 |
+| walker |  | 5019 | 38 | Code::CodeKey { rung: Doc, file: sds.c, decl: 41, sub: 0, line: 1108 } |  |  | 0.679 |
+| walker |  | 5122 | 103 | Code::CodeKey { rung: Doc, file: sds.c, decl: 43, sub: 0, line: 1136 } |  |  | 0.679 |
+| walker |  | 5232 | 110 | Code::CodeKey { rung: Doc, file: sds.c, decl: 36, sub: 0, line: 898 } |  |  | 0.679 |
+| ns | 5253 |  | 370 | sdsMakeRoomFor(): the realloc-vs-move-header branch (224-248) | 4.8 | 4.7 | 0.655 |
+| walker |  | 5343 | 111 | Code::CodeKey { rung: Doc, file: sds.c, decl: 11, sub: 0, line: 204 } |  |  | 0.660 |
 | walker |  | 5483 | 140 | Code::CodeKey { rung: Doc, file: sds.c, decl: 33, sub: 0, line: 807 } |  |  | 0.660 |
 | ns | 5486 |  | 233 | sdsempty/sdsnew/sdsdup/sdsfree bodies, with sdsfree's NULL contract | 4.9 | 4.1 | 0.653 |
 | walker |  | 5632 | 149 | Code::CodeKey { rung: Doc, file: sds.c, decl: 40, sub: 0, line: 1092 } |  |  | 0.653 |

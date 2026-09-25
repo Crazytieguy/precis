@@ -304,7 +304,6 @@ src/
     383→}
     385→impl ItemValue {
     386→    pub fn plain_text(&self) -> String {
-    387→        SyntaxToken::pure_text(&self.tokens)
     …
     390→    pub fn render(&self, cfg: &Config, width: usize) -> (Text<'_>, usize, usize) {
     …

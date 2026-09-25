@@ -70,18 +70,7 @@ README.md
   7→Cobra is a library for creating powerful modern CLI applications.
   8→
   9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
-  12→Cobra is used in many Go projects such as [Kubernetes](https://kubernetes.io/),
-  13→[Hugo](https://gohugo.io), and [GitHub CLI](https://github.com/cli/cli) to
-  14→name a few. [This list](site/content/projects_using_cobra.md) contains a more extensive list of projects using Cobra.
   …
-  20→<hr>
-  21→<div align="center" markdown="1">
-  22→   <sup>Supported by:</sup>
-  23→   <br>
-  24→   <br>
-  25→   <a href="https://www.warp.dev/cobra">
-  26→      <img alt="Warp sponsorship" width="400" src="https://github.com/user-attachments/assets/ab8dd143-b0fd-4904-bdc5-dd7ecac94eae">
-  27→   </a>
   29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
   30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
   32→</div>
@@ -136,13 +125,6 @@ command.go
   …
   54→type Command struct {
   …
-  262→// Context returns underlying command context. If command was executed
-  263→// with ExecuteContext or the context was set with SetContext, the
-  264→// previously set context will be returned. Otherwise, nil is returned.
-  265→//
-  266→// Notice that a call to Execute and ExecuteC will replace a nil context of
-  267→// a command with a context.Background, so a background context will be
-  268→// returned by Context after one of these functions has been called.
   269→func (c *Command) Context() context.Context {
   270→	return c.ctx
   …
@@ -234,6 +216,42 @@ command.go
   462→// getUsageTemplateFunc returns the usage template function for the command
   463→// going up the command tree if necessary.
   464→func (c *Command) getUsageTemplateFunc() func(w io.Writer, data interface{}) error {
+  …
+  475→// Usage puts out the usage for the command.
+  476→// Used when a user provides invalid input.
+  477→// Can be defined by user by overriding UsageFunc.
+  478→func (c *Command) Usage() error {
+  …
+  482→// HelpFunc returns either the function set by SetHelpFunc for this command
+  483→// or a parent, or it returns a function with default help behavior.
+  484→func (c *Command) HelpFunc() func(*Command, []string) {
+  …
+  503→// getHelpTemplateFunc returns the help template function for the command
+  504→// going up the command tree if necessary.
+  505→func (c *Command) getHelpTemplateFunc() func(w io.Writer, data interface{}) error {
+  …
+  520→func (c *Command) Help() error {
+  …
+  525→// UsageString returns usage string.
+  526→func (c *Command) UsageString() string {
+  …
+  547→func (c *Command) FlagErrorFunc() (f func(*Command, error) error) {
+  …
+  560→const minUsagePadding = 25
+  562→// UsagePadding return padding for the usage.
+  563→func (c *Command) UsagePadding() int {
+  …
+  570→const minCommandPathPadding = 11
+  572→// CommandPathPadding return padding for the command path.
+  573→func (c *Command) CommandPathPadding() int {
+  …
+  580→const minNamePadding = 11
+  582→// NamePadding returns padding for the name.
+  583→func (c *Command) NamePadding() int {
+  …
+  590→// UsageTemplate returns usage template for the command.
+  591→// This function is kept for backwards-compatibility reasons.
+  592→func (c *Command) UsageTemplate() string {
   …
 command_notwin.go
 command_test.go

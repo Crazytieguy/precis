@@ -19,10 +19,10 @@ Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 616 |  | 180 | README section map — every `##` heading | 1.6 |  | 0.689 |
 | walker |  | 629 | 191 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.888 |
 | walker |  | 654 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.888 |
+| walker |  | 668 | 14 | Code::CodeKey { rung: Names, file: karma.conf.js, decl: 0, sub: 0, line: 0 } |  |  | 0.888 |
 | ns | 765 |  | 149 | src/common.js — `setup(env)` and the complete `createDebug.*` public API attachment block | 2.1 |  | 0.777 |
 | ns | 906 |  | 141 | src/common.js — module-level state: `names`, `skips`, `formatters` | 2.2 |  | 0.707 |
-| walker |  | 915 | 261 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.713 |
-| walker |  | 929 | 14 | Code::CodeKey { rung: Names, file: karma.conf.js, decl: 0, sub: 0, line: 0 } |  |  | 0.713 |
+| walker |  | 929 | 261 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.713 |
 | walker |  | 972 | 43 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.713 |
 | ns | 1061 |  | 155 | src/common.js — roster of every function definition plus the module tail | 2.3 |  | 0.657 |
 | walker |  | 1151 | 179 | Json::IdentityMeta { file: package.json } |  |  | 0.657 |

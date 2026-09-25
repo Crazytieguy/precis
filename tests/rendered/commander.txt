@@ -64,20 +64,6 @@ docs/
   zh-CN/
     不再推荐使用的功能.md
     可变参数的选项.md
-      1→# 可变参数的选项
-      …
-      26→## 解析中的歧义
-      …
-      73→### 方案一：让`--`成为语法的一部分
-      …
-      98→### 方案二：把选项放在最后
-      …
-      120→### 方案三：使用选项替代命令参数
-      …
-      142→## 合并短选项和带有参数的选项
-      …
-      183→### 将短选项视作 boolean 类型选项合并
-      …
     术语表.md
 eslint.config.js
 esm.mjs
@@ -160,6 +146,66 @@ index.js
 jest.config.js
 lib/
   argument.js
+    …
+    3→class Argument {
+    …
+    13→  constructor(name, description) {
+    …
+    42→  /**
+    43→   * Return argument name.
+    44→   *
+    45→   * @return {string}
+    46→   */
+    48→  name() {
+    49→    return this._name;
+    …
+    52→  /**
+    53→   * @package
+    54→   */
+    56→  _collectValue(value, previous) {
+    …
+    73→  default(value, description) {
+    …
+    86→  argParser(fn) {
+    …
+    91→  /**
+    92→   * Only allow argument value to be one of choices.
+    93→   *
+    94→   * @param {string[]} values
+    95→   * @return {Argument}
+    96→   */
+    98→  choices(values) {
+    …
+    114→  /**
+    115→   * Make argument required.
+    116→   *
+    117→   * @returns {Argument}
+    118→   */
+    119→  argRequired() {
+    120→    this.required = true;
+    121→    return this;
+    …
+    124→  /**
+    125→   * Make argument optional.
+    126→   *
+    127→   * @returns {Argument}
+    128→   */
+    129→  argOptional() {
+    130→    this.required = false;
+    131→    return this;
+    …
+    133→}
+    135→/**
+    136→ * Takes an argument and returns its human readable equivalent for help usage.
+    137→ *
+    138→ * @param {Argument} arg
+    139→ * @return {string}
+    140→ * @private
+    141→ */
+    143→function humanReadableArgName(arg) {
+    …
+    149→exports.Argument = Argument;
+    150→exports.humanReadableArgName = humanReadableArgName;
   command.js
   error.js
   help.js
@@ -176,12 +222,7 @@ lib/
   option.js
     …
     3→class Option {
-    4→  /**
-    5→   * Initialize a new `Option` with the given `flags` and `description`.
-    6→   *
-    7→   * @param {string} flags
-    8→   * @param {string} [description]
-    9→   */
+    …
     11→  constructor(flags, description) {
     …
     47→  default(value, description) {
@@ -194,20 +235,8 @@ lib/
     …
     120→  env(name) {
     …
-    125→  /**
-    126→   * Set the custom handler for processing CLI option arguments into option values.
-    127→   *
-    128→   * @param {Function} [fn]
-    129→   * @return {Option}
-    130→   */
     132→  argParser(fn) {
     …
-    137→  /**
-    138→   * Whether the option is mandatory and must have a value after parsing.
-    139→   *
-    140→   * @param {boolean} [mandatory=true]
-    141→   * @return {Option}
-    142→   */
     144→  makeOptionMandatory(mandatory = true) {
     …
     149→  /**
@@ -254,13 +283,6 @@ lib/
     229→   */
     230→  helpGroup(heading) {
     …
-    235→  /**
-    236→   * Check if `arg` matches the short or long flag.
-    237→   *
-    238→   * @param {string} arg
-    239→   * @return {boolean}
-    240→   * @package
-    241→   */
     243→  is(arg) {
     244→    return this.short === arg || this.long === arg;
     …
@@ -357,5 +379,7 @@ tsconfig.json
 tsconfig.ts.json
 typings/
   esm.d.mts
+    …
+    3→export * from './index.js';
   index.d.ts
   index.test-d.ts

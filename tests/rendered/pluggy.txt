@@ -117,19 +117,6 @@ docs/
     img/
       plug.png
   api_reference.rst
-    1→:orphan:
-    2→
-    3→.. _`api-reference`:
-    4→
-    5→API Reference
-    6→=============
-    7→
-    8→.. autoclass:: pluggy.PluginManager
-    …
-    52→Warnings
-    …
-    55→Custom warnings generated in some situations such as improper usage or deprecated features.
-    …
   changelog.rst
   conf.py
   examples/
@@ -154,58 +141,12 @@ downstream/
     1→This directory contains scripts for testing some downstream projects
     2→against your current pluggy worktree.
   conda.sh
-    …
-    2→set -eux -o pipefail
-    3→if [[ ! -d conda ]]; then
-    …
-    6→pushd conda && trap popd EXIT
-    7→git pull
-    8→set +eu
-    9→source dev/start
-    10→set -eu
-    11→pip install -e ../../
-    …
   datasette.sh
-    …
-    2→set -eux -o pipefail
-    3→if [[ ! -d datasette ]]; then
-    …
-    6→pushd datasette && trap popd EXIT
-    7→git pull
-    8→python -m venv venv
-    9→venv/bin/pip install -e .[test] -e ../..
-    10→venv/bin/pytest
   devpi.sh
   hatch.sh
-    …
-    2→set -eux -o pipefail
-    3→if [[ ! -d hatch ]]; then
-    …
-    6→pushd hatch && trap popd EXIT
-    7→git pull
-    8→python -m venv venv
-    9→venv/bin/pip install -e . -e ./backend  -e ../..
-    10→venv/bin/hatch run dev
   pytest.sh
-    …
-    2→set -eux -o pipefail
-    3→if [[ ! -d pytest ]]; then
-    …
-    6→pushd pytest && trap popd EXIT
-    7→git pull
-    8→python -m venv venv
-    9→venv/bin/pip install -e .[testing] -e ../..
-    10→venv/bin/pytest
   python-lsp-server.sh
   tox.sh
-    …
-    2→set -eux -o pipefail
-    3→if [[ ! -d tox ]]; then
-    …
-    6→pushd tox && trap popd EXIT
-    7→python -m venv venv
-    8→venv/bin/pip install -e .[testing] -e ../..
-    9→venv/bin/pytest
 pyproject.toml
   …
   8→[project]
@@ -300,7 +241,41 @@ src/
     _manager.py
     _result.py
     _tracing.py
+      …
+      12→_Writer = Callable[[str], object]
+      13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
+      14→
+      15→
+      16→class TagTracer:
+      17→    def __init__(self) -> None:
+      …
+      22→    def get(self, name: str) -> TagTracerSub:
+      23→        return TagTracerSub(self, (name,))
+      25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+      …
+      42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+      …
+      48→    def setwriter(self, writer: _Writer | None) -> None:
+      49→        self._writer = writer
+      51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
+      …
+      59→class TagTracerSub:
+      60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+      61→        self.root = root
+      62→        self.tags = tags
+      64→    def __call__(self, *args: object) -> None:
+      65→        self.root._processmessage(self.tags, args)
+      67→    def get(self, name: str) -> TagTracerSub:
+      68→        return self.__class__(self.root, self.tags + (name,))
     _warnings.py
+      …
+      4→class PluggyWarning(UserWarning):
+      5→    """Base class for all warnings emitted by pluggy."""
+      7→    __module__ = "pluggy"
+      10→@final
+      11→class PluggyTeardownRaisedWarning(PluggyWarning):
+      …
+      27→    __module__ = "pluggy"
     py.typed (empty)
 testing/
   benchmark.py

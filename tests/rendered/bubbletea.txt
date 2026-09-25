@@ -108,15 +108,7 @@ tea.go
   63→	// view is rendered after every Update.
   64→	View() View
   65→}
-  67→// NewView is a helper function to create a new [View] with the given styled
-  68→// string. A styled string represents text with styles and hyperlinks encoded
-  69→// as ANSI escape codes.
-  70→//
-  71→// Example:
-  72→//
-  73→//	```go
-  74→//	v := tea.NewView("Hello, World!")
-  75→//	```
+  …
   76→func NewView(s string) View {
   …
   84→type View struct {
@@ -208,6 +200,19 @@ tea.go
   349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
   357→type Cursor struct {
+  358→	// Position is a [Position] that determines the cursor's position on the
+  359→	// screen relative to the top left corner of the frame.
+  360→	Position
+  361→
+  362→	// Color is a [color.Color] that determines the cursor's color.
+  363→	Color color.Color
+  364→
+  365→	// Shape is a [CursorShape] that determines the cursor's shape.
+  366→	Shape CursorShape
+  367→
+  368→	// Blink is a boolean that determines whether the cursor should blink.
+  369→	Blink bool
+  370→}
   …
   374→func NewCursor(x, y int) *Cursor {
   …

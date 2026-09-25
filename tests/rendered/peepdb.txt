@@ -11,14 +11,7 @@ README.md
   2→
   3→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL and OracleDB. peepDB is lightweight, secure, and incredibly easy to use.
   5→## 🚀 Features
-  6→
-  7→- **Multi-Database Support**: Works with MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, MSSQL, OracleDB, and Firebase.
-  8→- **Quick Data Inspection**: View all tables or a specific table with a simple command.
-  9→- **User-Friendly CLI**: Easy-to-use command-line interface powered by Click.
-  10→- **Secure Local Storage**: Securely store database connection details with encryption on your local machine.
-  11→- **Lightweight**: Minimal footprint, designed for speed.
-  12→- **Formatted Output**: View data in a clean, formatted table or JSON format.
-  13→- **Pagination**: Efficiently handle large datasets by viewing data in manageable chunks.
+  …
   15→## 🎬 peepDB in Action
   16→
   17→Here's a quick demonstration of peepDB:
@@ -87,8 +80,7 @@ docs/
   index.md
     …
     6→# peepDB
-    7→
-    8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
+    …
     10→## 🚀 Features
     …
     20→## Getting Started
@@ -100,18 +92,9 @@ docs/
   installation.md
     …
     6→# 📦 Installation
-    7→
-    8→You can install peepDB directly from PyPI using pip:
-    9→
-    10→```bash
-    11→pip install peepdb
-    12→```
-    13→
-    14→This will install the latest version of peepDB along with all its dependencies.
+    …
     16→## Requirements
-    17→
-    18→- Python 3.9 or higher
-    19→- pip (Python package installer)
+    …
     21→## System Dependencies
     …
     30→## Verifying the Installation
@@ -169,6 +152,12 @@ peepdb/
     63→@click.option('--database', required=False, help='Database name (not required for SQLite/Firebase/MSSQL)')
     64→@click.option('--trusted', is_flag=True, help='Use Windows Authentication (Trusted Connection) for MSSQL')
     65→def save(connection_name, db_type, host, port, user, password, database, trusted):
+    66→    """
+    67→    Save a new database connection.
+    68→
+    69→    Example:
+    70→    peepdb save test_conn --db-type mssql --host localhost --port 1433 --trusted --database SomeDB
+    71→    """
     …
     86→@cli.command()
     87→def list():
@@ -183,6 +172,12 @@ peepdb/
     98→@click.argument('connection_name')
     99→@click.confirmation_option(prompt='Are you sure you want to remove this connection?')
     100→def remove(connection_name):
+    101→    """
+    102→    Remove a specific saved connection.
+    103→
+    104→    Example:
+    105→    peepdb remove mydb
+    106→    """
     …
     113→@cli.command()
     114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
@@ -202,6 +197,12 @@ peepdb/
     131→@click.option('--page-size', type=int, default=50, help='Number of rows per page')
     132→@click.option('--scientific', is_flag=True, help='Use scientific notation for numbers')
     133→def view(connection_name, table, format, page, page_size, scientific):
+    134→    """
+    135→    View data from a saved connection.
+    136→
+    137→    Example:
+    138→    peepdb view mydb --table SomeTable
+    139→    """
     …
     181→def main():
     182→    cli()

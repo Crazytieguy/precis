@@ -84,20 +84,6 @@ README.md
   41→
   42→<br>
   44→## Details
-  45→
-  46→- Thiserror deliberately does not appear in your public API. You get the same
-  47→  thing as if you had written an implementation of `std::error::Error` by hand,
-  48→  and switching from handwritten impls to thiserror or vice versa is not a
-  49→  breaking change.
-  50→
-  51→- Errors may be enums, structs with named fields, tuple structs, or unit
-  52→  structs.
-  53→
-  54→- A `Display` impl is generated for your error if you provide `#[error("...")]`
-  55→  messages on the struct or each variant of your enum, as shown above in the
-  56→  example.
-  57→
-  58→  The messages support a shorthand for interpolating fields from the error.
   …
   211→## Comparison to anyhow
   …
@@ -155,35 +141,64 @@ build.rs
   …
 impl/
   Cargo.toml
-    1→[package]
-    2→name = "thiserror-impl"
-    3→version = "2.0.18"
-    4→authors = ["David Tolnay <dtolnay@gmail.com>"]
-    5→description = "Implementation detail of the `thiserror` crate"
-    6→edition = "2021"
-    7→license = "MIT OR Apache-2.0"
-    8→repository = "https://github.com/dtolnay/thiserror"
-    9→rust-version = "1.71"
-    11→[lib]
-    12→proc-macro = true
+    …
     14→[dependencies]
     15→proc-macro2 = "1.0.74"
     16→quote = "1.0.35"
     17→syn = "2.0.87"
-    19→[package.metadata.docs.rs]
-    20→targets = ["x86_64-unknown-linux-gnu"]
-    21→rustdoc-args = [
-    22→    "--generate-link-to-definition",
-    23→    "--generate-macro-expansion",
-    24→    "--extern-html-root-url=core=https://doc.rust-lang.org",
-    25→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
-    26→    "--extern-html-root-url=std=https://doc.rust-lang.org",
-    27→    "--extern-html-root-url=proc_macro=https://doc.rust-lang.org",
-    28→]
+    …
   LICENSE-APACHE
   LICENSE-MIT
   src/
     ast.rs
+      …
+      10→pub enum Input<'a> {
+      11→    Struct(Struct<'a>),
+      12→    Enum(Enum<'a>),
+      13→}
+      15→pub struct Struct<'a> {
+      16→    pub attrs: Attrs<'a>,
+      17→    pub ident: Ident,
+      18→    pub generics: &'a Generics,
+      19→    pub fields: Vec<Field<'a>>,
+      20→}
+      22→pub struct Enum<'a> {
+      23→    pub attrs: Attrs<'a>,
+      24→    pub ident: Ident,
+      25→    pub generics: &'a Generics,
+      26→    pub variants: Vec<Variant<'a>>,
+      27→}
+      29→pub struct Variant<'a> {
+      30→    pub original: &'a syn::Variant,
+      31→    pub attrs: Attrs<'a>,
+      32→    pub ident: Ident,
+      33→    pub fields: Vec<Field<'a>>,
+      34→}
+      36→pub struct Field<'a> {
+      37→    pub original: &'a syn::Field,
+      38→    pub attrs: Attrs<'a>,
+      39→    pub member: MemberUnraw,
+      40→    pub ty: &'a Type,
+      41→    pub contains_generic: bool,
+      42→}
+      44→#[derive(Copy, Clone)]
+      45→pub enum ContainerKind {
+      46→    Struct,
+      47→    TupleStruct,
+      48→    UnitStruct,
+      49→    StructVariant,
+      50→    TupleVariant,
+      51→    UnitVariant,
+      52→}
+      54→impl<'a> Input<'a> {
+      55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+      …
+      65→}
+      …
+      174→impl Display for ContainerKind {
+      175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+      …
+      185→}
     attr.rs
     expand.rs
     fallback.rs

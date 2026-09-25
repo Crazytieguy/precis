@@ -129,41 +129,7 @@ package.json
   4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
   5→  "type": "module",
   …
-  36→  "scripts": {
-  37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
-  38→    "dev": "microbundle watch",
-  39→    "prepublishOnly": "npm run test && npm run build",
-  40→    "publish:jsr": "npm run prepublishOnly && npx jsr publish",
-  41→    "release": "npm run prepublishOnly && npm publish && npx jsr publish",
-  42→    "test": "jest",
-  43→    "clear-test": "jest --clearCache",
-  44→    "fmt": "prettier ./src/** ./tests/** -w",
-  45→    "check": "tsc --strict --noEmit --extendedDiagnostics",
-  46→    "perf": "tsc --project tests/tsconfig.json --noEmit --extendedDiagnostics",
-  47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
-  48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
-  49→  },
-  …
-  54→  "repository": {
-  55→    "type": "git",
-  56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
-  57→  },
-  58→  "keywords": [
-  59→    "pattern",
-  60→    "matching",
-  61→    "pattern-matching",
-  62→    "typescript",
-  63→    "match-with",
-  64→    "match",
-  65→    "switch",
-  66→    "adt"
-  67→  ],
-  68→  "author": "Gabriel Vergnaud",
   69→  "license": "MIT",
-  70→  "bugs": {
-  71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
-  72→  },
-  73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
   …
 scripts/
   generate-cts.sh
@@ -240,6 +206,59 @@ src/
     192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
     …
     241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
+    242→export function array<
+    243→  input,
+    244→  const pattern extends Pattern<WithDefault<UnwrapArray<input>, unknown>>
+    245→>(pattern: pattern): ArrayChainable<ArrayP<input, pattern>>;
+    246→export function array(
+    247→  ...args: [pattern?: any]
+    248→): ArrayChainable<ArrayP<any, any>> {
+    …
+    294→export function set<input>(): Chainable<SetP<input, unknown>>;
+    295→export function set<
+    296→  input,
+    297→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
+    298→>(pattern: pattern): Chainable<SetP<input, pattern>>;
+    299→export function set<
+    …
+    356→export function map<input>(): Chainable<MapP<input, unknown, unknown>>;
+    357→export function map<
+    …
+    362→export function map<
+    …
+    433→export function record<
+    434→  input,
+    435→  const pvalue extends Pattern<UnwrapRecordValue<input>>
+    436→>(patternValue: pvalue): Chainable<RecordP<input, StringPattern, pvalue>>;
+    437→export function record<
+    …
+    445→export function record(
+    446→  ...args: [patternKey?: unknown, patternValue?: unknown]
+    447→): Chainable<RecordP<unknown, unknown, unknown>> {
+    …
+    536→export function intersection<
+    537→  input,
+    538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
+    539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
+    …
+    572→export function union<
+    …
+    611→export function not<
+    612→  input,
+    613→  const pattern extends Pattern<input> | UnknownValuePattern
+    614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
+    …
+    637→export function when<input, predicate extends (value: input) => unknown>(
+    …
+    643→export function when<input, narrowed extends input, excluded>(
+    644→  predicate: (input: input) => input is narrowed
+    645→): GuardExcludeP<input, narrowed, excluded>;
+    646→export function when<input, predicate extends (value: input) => unknown>(
+    …
+    672→export function select(): Chainable<AnonymousSelectP, 'select' | 'or' | 'and'>;
+    673→export function select<
+    …
+    686→export function select<
     …
   types/
     BuildMany.ts

@@ -120,10 +120,6 @@ crates/
       31→[features]
       32→search = ["mdbook-html/search"]
     README.md
-      1→# mdbook-driver
-      …
-      7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
-      …
     src/
       builtin_preprocessors/
         cmd.rs
@@ -219,7 +215,12 @@ crates/
           …
       lib.rs
         1→//! mdBook HTML renderer.
-        …
+        3→mod html;
+        4→mod html_handlebars;
+        5→pub mod theme;
+        6→pub(crate) mod utils;
+        7→
+        8→pub use html_handlebars::HtmlHandlebars;
       theme/
         fonts.rs
         mod.rs

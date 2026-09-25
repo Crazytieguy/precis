@@ -172,6 +172,12 @@ classes/
     333→module.exports = SemVer
 functions/
   clean.js
+    …
+    4→const clean = (version, options) => {
+    5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
+    6→  return s ? s.version : null
+    …
+    8→module.exports = clean
   cmp.js
   coerce.js
   compare-build.js
@@ -195,6 +201,12 @@ functions/
   satisfies.js
   sort.js
   valid.js
+    …
+    4→const valid = (version, options) => {
+    5→  const v = parse(version, options)
+    6→  return v ? v.version : null
+    …
+    8→module.exports = valid
 index.js
   …
   45→module.exports = {
@@ -258,7 +270,26 @@ internal/
     11→module.exports = debug
   identifiers.js
   lrucache.js
+    …
+    3→class LRUCache {
+    4→  constructor () {
+    5→    this.max = 1000
+    6→    this.map = new Map()
+    …
+    9→  get (key) {
+    …
+    21→  delete (key) {
+    22→    return this.map.delete(key)
+    …
+    25→  set (key, value) {
+    …
+    40→}
+    42→module.exports = LRUCache
   parse-options.js
+    …
+    6→const parseOptions = options => {
+    …
+    17→module.exports = parseOptions
   re.js
 map.js
   …

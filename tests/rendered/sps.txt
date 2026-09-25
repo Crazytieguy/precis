@@ -94,31 +94,9 @@ README.md
   77→## 📦 Usage
   …
   123→## 🏗️ Building from Source
-  124→
-  125→**Prerequisites:** Rust toolchain (stable).
-  126→
-  127→```sh
-  128→git clone <repo-url>
-  129→cd sps
-  130→cargo build --release
-  131→```
-  132→
-  133→The `sps` binary will be at `target/release/sps`. Add it to your `PATH`.
-  134→
-  135→
-  136→-----
+  …
   138→## 📥 Using the Latest Nightly Build
-  139→
-  140→You can download the latest nightly build from [`actions/workflows/rust.yml`](../../actions/workflows/rust.yml) inside this repository (select a successful build and scroll down to `Artifacts`).
-  141→
-  142→After extracting the downloaded archive, you can run the binary directly:
-  143→
-  144→```sh
-  145→./sps --help
-  146→```
-  147→
-  148→
-  149→-----
+  …
   151→## 🤝 Contributing
   …
   164→## 📄 License
@@ -165,10 +143,28 @@ sps/
       …
       23→pub use crate::cli::init::InitArgs;
       …
+      32→#[derive(Parser, Debug)]
+      33→#[command(author, version, about, long_about = None, name = "sps", bin_name = "sps")]
+      34→#[command(propagate_version = true)]
       35→pub struct CliArgs {
-      …
+      36→    #[arg(short, long, action = ArgAction::Count, global = true)]
+      37→    pub verbose: u8,
+      38→
+      39→    #[command(subcommand)]
+      40→    pub command: Command,
+      41→}
+      43→#[derive(Subcommand, Debug)]
       44→pub enum Command {
-      …
+      45→    Init(InitArgs),
+      46→    Search(Search),
+      47→    List(List),
+      48→    Info(Info),
+      49→    Update(Update),
+      50→    Install(InstallArgs),
+      51→    Uninstall(Uninstall),
+      52→    Reinstall(ReinstallArgs),
+      53→    Upgrade(UpgradeArgs),
+      54→}
       56→impl Command {
       57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
       …

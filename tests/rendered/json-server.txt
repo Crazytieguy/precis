@@ -49,27 +49,9 @@ README.md
   132→## Routes
   133→
   134→### Array Resources
-  135→
-  136→For array resources like `posts` and `comments`:
-  137→
-  138→```http
-  139→GET    /posts
-  140→GET    /posts/:id
-  141→POST   /posts
-  142→PUT    /posts/:id
-  143→PATCH  /posts/:id
-  144→DELETE /posts/:id
-  145→```
-  146→
+  …
   147→### Object Resources
-  148→
-  149→For singular object resources like `profile`:
-  150→
-  151→```http
-  152→GET   /profile
-  153→PUT   /profile
-  154→PATCH /profile
-  155→```
+  …
   157→## Query params
   158→
   159→### Conditions
@@ -186,12 +168,16 @@ src/
       8→    return
       …
       10→  onReadEnd: (data: T | null) => void = function () {
+      11→    return
       …
       13→  onWriteStart = function () {
+      14→    return
       …
       16→  onWriteEnd = function () {
+      17→    return
       …
       20→  constructor(adapter: Adapter<T>) {
+      21→    this.#adapter = adapter
       …
       24→  async read() {
       …

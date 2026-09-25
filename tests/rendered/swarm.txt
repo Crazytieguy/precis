@@ -346,18 +346,24 @@ swarm/
     25→    agent: Optional[Agent] = None
     26→    context_variables: dict = {}
     29→class Result(BaseModel):
-    30→    """
-    31→    Encapsulates the possible return values for an agent function.
-    32→
-    33→    Attributes:
-    34→        value (str): The result value as a string.
-    35→        agent (Agent): The agent instance, if applicable.
-    36→        context_variables (dict): A dictionary of context variables.
-    37→    """
+    …
     39→    value: str = ""
     40→    agent: Optional[Agent] = None
     41→    context_variables: dict = {}
   util.py
+    …
+    5→def debug_print(debug: bool, *args: str) -> None:
+    …
+    13→def merge_fields(target, source):
+    14→    for key, value in source.items():
+    15→        if isinstance(value, str):
+    16→            target[key] += value
+    17→        elif value is not None and isinstance(value, dict):
+    18→            merge_fields(target[key], value)
+    21→def merge_chunk(final_response: dict, delta: dict) -> None:
+    …
+    31→def function_to_json(func) -> dict:
+    …
 tests/
   __init__.py (empty)
   mock_client.py

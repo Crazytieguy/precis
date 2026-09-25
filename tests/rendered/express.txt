@@ -115,6 +115,60 @@ index.js
   11→module.exports = require('./lib/express');
 lib/
   application.js
+    …
+    36→/**
+    37→ * Application prototype.
+    38→ */
+    40→var app = exports = module.exports = {};
+    …
+    59→app.init = function init() {
+    …
+    85→/**
+    86→ * Initialize application configuration.
+    87→ * @private
+    88→ */
+    90→app.defaultConfiguration = function defaultConfiguration() {
+    …
+    152→app.handle = function handle(req, res, callback) {
+    …
+    190→app.use = function use(fn) {
+    …
+    256→app.route = function route(path) {
+    257→  return this.router.route(path);
+    …
+    294→app.engine = function engine(ext, fn) {
+    …
+    322→app.param = function param(name, fn) {
+    …
+    351→app.set = function set(setting, val) {
+    …
+    399→app.path = function path() {
+    …
+    420→app.enabled = function enabled(setting) {
+    421→  return Boolean(this.set(setting));
+    …
+    439→app.disabled = function disabled(setting) {
+    440→  return !this.set(setting);
+    …
+    443→/**
+    444→ * Enable `setting`.
+    445→ *
+    446→ * @param {String} setting
+    447→ * @return {app} for chaining
+    448→ * @public
+    449→ */
+    451→app.enable = function enable(setting) {
+    452→  return this.set(setting, true);
+    …
+    463→app.disable = function disable(setting) {
+    464→  return this.set(setting, false);
+    …
+    494→app.all = function all(path) {
+    …
+    522→app.render = function render(name, options, callback) {
+    …
+    598→app.listen = function listen() {
+    …
   express.js
     …
     27→exports = module.exports = createApplication;
@@ -167,14 +221,6 @@ lib/
     172→  const accept = accepts(this);
     173→  return accept.charsets(...charsets);
     …
-    176→/**
-    177→ * Check if the given `lang`s are acceptable,
-    178→ * otherwise you should respond with 406 "Not Acceptable".
-    179→ *
-    180→ * @param {String} ...lang
-    181→ * @return {String|Array}
-    182→ * @public
-    183→ */
     185→req.acceptsLanguages = function(...languages) {
     186→  return accepts(this).languages(...languages);
     …
@@ -190,35 +236,9 @@ package.json
   2→  "name": "express",
   3→  "description": "Fast, unopinionated, minimalist web framework",
   4→  "version": "5.2.1",
-  5→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-  6→  "contributors": [
-  7→    "Aaron Heckmann <aaron.heckmann+github@gmail.com>",
-  8→    "Ciaran Jessup <ciaranj@gmail.com>",
-  9→    "Douglas Christopher Wilson <doug@somethingdoug.com>",
-  10→    "Guillermo Rauch <rauchg@gmail.com>",
-  11→    "Jonathan Ong <me@jongleberry.com>",
-  12→    "Roman Shtylman <shtylman+expressjs@gmail.com>",
-  13→    "Young Jae Sim <hanul@hanul.me>"
-  14→  ],
+  …
   15→  "license": "MIT",
-  16→  "repository": "expressjs/express",
-  17→  "homepage": "https://expressjs.com/",
-  18→  "funding": {
-  19→    "type": "opencollective",
-  20→    "url": "https://opencollective.com/express"
-  21→  },
-  22→  "keywords": [
-  23→    "express",
-  24→    "framework",
-  25→    "sinatra",
-  26→    "web",
-  27→    "http",
-  28→    "rest",
-  29→    "restful",
-  30→    "router",
-  31→    "app",
-  32→    "api"
-  33→  ],
+  …
   34→  "dependencies": {
   35→    "accepts": "^2.0.0",
   36→    "body-parser": "^2.2.1",

@@ -212,6 +212,52 @@ crates/
     src/
       config.rs
       lib.rs
+        1→mod config;
+        2→mod migration;
+        3→mod theme;
+        4→
+        5→pub use config::*;
+        6→pub use migration::*;
+        …
+        12→/// Toasty CLI library for building custom command-line tools
+        13→pub struct ToastyCli {
+        14→    db: Db,
+        15→    config: Config,
+        16→}
+        18→impl ToastyCli {
+        19→    /// Create a new ToastyCli instance with the given database connection
+        20→    pub fn new(db: Db) -> Self {
+        …
+        27→    /// Create a new ToastyCli instance with a custom configuration
+        28→    pub fn with_config(db: Db, config: Config) -> Self {
+        …
+        32→    /// Get a reference to the configuration
+        33→    pub fn config(&self) -> &Config {
+        …
+        37→    /// Parse and execute CLI commands from command-line arguments
+        38→    pub async fn parse_and_run(&self) -> Result<()> {
+        …
+        43→    /// Parse and execute CLI commands from an iterator of arguments
+        44→    pub async fn parse_from<I, T>(&self, args: I) -> Result<()>
+        45→    where
+        46→        I: IntoIterator<Item = T>,
+        47→        T: Into<std::ffi::OsString> + Clone,
+        48→    {
+        …
+        58→}
+        60→#[derive(Parser, Debug)]
+        61→#[command(name = "toasty")]
+        62→#[command(about = "Toasty CLI - Database migration and management tool")]
+        63→#[command(version)]
+        64→struct Cli {
+        65→    #[command(subcommand)]
+        66→    command: Command,
+        67→}
+        69→#[derive(Parser, Debug)]
+        70→enum Command {
+        71→    /// Database migration commands
+        72→    Migration(migration::MigrationCommand),
+        73→}
       migration/
         apply.rs
         config.rs
@@ -339,90 +385,6 @@ crates/
         verify.rs
       schema.rs
       stmt/
-        assignments.rs
-        association.rs
-        condition.rs
-        cte.rs
-        cx.rs
-        delete.rs
-        direction.rs
-        entry.rs
-        entry_mut.rs
-        entry_path.rs
-        eval.rs
-        expr.rs
-        expr_and.rs
-        expr_any.rs
-        expr_arg.rs
-        expr_begins_with.rs
-        expr_binary_op.rs
-        expr_cast.rs
-        expr_concat.rs
-        expr_concat_str.rs
-        expr_exists.rs
-        expr_func.rs
-        expr_in_list.rs
-        expr_in_subquery.rs
-        expr_is_null.rs
-        expr_key.rs
-        expr_like.rs
-        expr_list.rs
-        expr_map.rs
-        expr_not.rs
-        expr_or.rs
-        expr_pattern.rs
-        expr_project.rs
-        expr_record.rs
-        expr_reference.rs
-        expr_set.rs
-        expr_set_op.rs
-        expr_stmt.rs
-        expr_ty.rs
-        filter.rs
-        func_count.rs
-        func_last_insert_id.rs
-        input.rs
-        insert.rs
-        insert_table.rs
-        insert_target.rs
-        join.rs
-        like.rs
-        limit.rs
-        node.rs
-        num.rs
-        offset.rs
-        op_binary.rs
-        op_set.rs
-        order_by.rs
-        order_by_expr.rs
-        path.rs
-        path_field_set.rs
-        projection.rs
-        query.rs
-        returning.rs
-        select.rs
-        source.rs
-        source_table.rs
-        source_table_id.rs
-        sparse_record.rs
-        substitute.rs
-        table_derived.rs
-        table_factor.rs
-        table_ref.rs
-        table_with_joins.rs
-        ty.rs
-        ty_jiff.rs
-        update.rs
-        value.rs
-        value_cmp.rs
-        value_jiff.rs
-        value_list.rs
-        value_record.rs
-        value_stream.rs
-        values.rs
-        visit.rs
-        visit_mut.rs
-        with.rs
       stmt.rs
     tests/
   toasty-driver-dynamodb/
@@ -529,8 +491,7 @@ docs/
   CHANGE_GUIDE.md
   CONTEXT.md
     1→# Documentation Context
-    2→
-    3→Load this file when editing anything in the `docs/` directory.
+    …
     5→## Writing Style
     …
     18→### Examples
@@ -553,8 +514,6 @@ docs/
       3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
       …
     composite-keys.md
-      1→# Composite Key Support
-      …
     order_limit_pagination.md
     query-constraints.md
 examples/

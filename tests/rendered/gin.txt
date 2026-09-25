@@ -18,16 +18,7 @@ LICENSE
 Makefile
 README.md
   1→# Gin Web Framework
-  3→<img align="right" width="159px" src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png">
-  4→
-  5→[![Build Status](https://github.com/gin-gonic/gin/actions/workflows/gin.yml/badge.svg?branch=master)](https://github.com/gin-gonic/gin/actions/workflows/gin.yml)
-  6→[![Trivy Security Scan](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml)
-  7→[![codecov](https://codecov.io/gh/gin-gonic/gin/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-gonic/gin)
-  8→[![Go Report Card](https://goreportcard.com/badge/github.com/gin-gonic/gin)](https://goreportcard.com/report/github.com/gin-gonic/gin)
-  9→[![Go Reference](https://pkg.go.dev/badge/github.com/gin-gonic/gin?status.svg)](https://pkg.go.dev/github.com/gin-gonic/gin?tab=doc)
-  10→[![Sourcegraph](https://sourcegraph.com/github.com/gin-gonic/gin/-/badge.svg)](https://sourcegraph.com/github.com/gin-gonic/gin?badge)
-  11→[![Open Source Helpers](https://www.codetriage.com/gin-gonic/gin/badges/users.svg)](https://www.codetriage.com/gin-gonic/gin)
-  12→[![Release](https://img.shields.io/github/release/gin-gonic/gin.svg?style=flat-square)](https://github.com/gin-gonic/gin/releases)
+  …
   14→## 📰 Gin 1.12.0 is now available!
   …
   43→## Getting Started
@@ -77,10 +68,6 @@ auth.go
   31→
   32→func (a authPairs) searchCredential(authValue string) (string, bool) {
   …
-  44→// BasicAuthForRealm returns a Basic HTTP Authorization middleware. It takes as arguments a map[string]string where
-  45→// the key is the user name and the value is the password, as well as the name of the Realm.
-  46→// If the realm is empty, "Authorization Required" will be used by default.
-  47→// (see http://tools.ietf.org/html/rfc2617#section-1.2)
   48→func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
   …
   70→// BasicAuth returns a Basic HTTP Authorization middleware. It takes as argument a map[string]string where
@@ -259,8 +246,55 @@ middleware_test.go
 mode.go
 mode_test.go
 path.go
+  …
+  8→const stackBufSize = 128
+  …
+  23→func cleanPath(p string) string {
+  …
+  126→// Internal helper to lazily create a buffer if necessary.
+  127→// Calls to this function get inlined.
+  128→func bufApp(buf *[]byte, s string, w int, c byte) {
+  …
+  153→// removeRepeatedChar removes multiple consecutive 'char's from a string.
+  154→// if s == "/a//b///c////" && char == '/', it returns "/a/b/c/"
+  155→func removeRepeatedChar(s string, char byte) string {
+  …
 path_test.go
 recovery.go
+  …
+  26→const (
+  27→	dunno     = "???"
+  28→	stackSkip = 3
+  29→)
+  31→// RecoveryFunc defines the function passable to CustomRecovery.
+  32→type RecoveryFunc func(c *Context, err any)
+  34→// Recovery returns a middleware that recovers from any panics and writes a 500 if there was one.
+  35→func Recovery() HandlerFunc {
+  36→	return RecoveryWithWriter(DefaultErrorWriter)
+  …
+  39→// CustomRecovery returns a middleware that recovers from any panics and calls the provided handle func to handle it.
+  40→func CustomRecovery(handle RecoveryFunc) HandlerFunc {
+  41→	return RecoveryWithWriter(DefaultErrorWriter, handle)
+  …
+  45→func RecoveryWithWriter(out io.Writer, recovery ...RecoveryFunc) HandlerFunc {
+  …
+  53→func CustomRecoveryWithWriter(out io.Writer, handle RecoveryFunc) HandlerFunc {
+  …
+  98→func secureRequestDump(r *http.Request) string {
+  …
+  109→func defaultHandleRecovery(c *Context, _ any) {
+  …
+  113→// stack returns a nicely formatted stack frame, skipping skip frames.
+  114→func stack(skip int) []byte {
+  …
+  146→func readNthLine(file string, n int) (string, error) {
+  …
+  171→// function returns, if possible, the name of the function containing the PC.
+  172→func function(pc uintptr) string {
+  …
+  196→// timeFormat returns a customized time string for logger.
+  197→func timeFormat(t time.Time) string {
+  …
 recovery_test.go
 render/
   bson.go

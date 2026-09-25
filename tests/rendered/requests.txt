@@ -89,22 +89,7 @@ README.md
   37→
   38→Requests officially supports Python 3.10+.
   40→## Supported Features & Best–Practices
-  41→
-  42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
-  43→
-  44→- Keep-Alive & Connection Pooling
-  45→- International Domains and URLs
-  46→- Sessions with Cookie Persistence
-  47→- Browser-style TLS/SSL Verification
-  48→- Basic & Digest Authentication
-  49→- Familiar `dict`–like Cookies
-  50→- Automatic Content Decompression and Decoding
-  51→- Multi-part File Uploads
-  52→- SOCKS Proxy Support
-  53→- Connection Timeouts
-  54→- Streaming Downloads
-  55→- Automatic honoring of `.netrc`
-  56→- Chunked HTTP Requests
+  …
   58→## Cloning the repository
   …
 docs/
@@ -236,6 +221,15 @@ src/
       64→) -> None:
       …
       99→def _check_cryptography(cryptography_version: str) -> None:
+      100→    # cryptography < 1.3.4
+      101→    try:
+      102→        cryptography_version_list = list(map(int, cryptography_version.split(".")))
+      103→    except ValueError:
+      104→        return
+      105→
+      106→    if cryptography_version_list < [1, 3, 4]:
+      107→        warning = f"Old version of cryptography ({cryptography_version_list}) may cause slowdown."
+      108→        warnings.warn(warning, RequestsDependencyWarning)
       …
       150→from urllib3.exceptions import DependencyWarning
       …
@@ -300,8 +294,6 @@ src/
     utils.py
 tests/
   __init__.py
-    1→"""Requests test package initialisation."""
-    …
   certs/
     README.md
     expired/
