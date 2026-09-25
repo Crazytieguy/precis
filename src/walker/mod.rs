@@ -147,9 +147,14 @@ impl WalkCtx {
     }
 
     pub fn with_cache(root: PathBuf, source_cache: SourceCache) -> Self {
+        Self::with_filter(DirFilter::new(&root), source_cache)
+    }
+
+    /// Context for a walk scoped by `dir_filter`, rooted at its root.
+    pub fn with_filter(dir_filter: DirFilter, source_cache: SourceCache) -> Self {
         Self {
-            dir_filter: Rc::new(DirFilter::new(&root)),
-            root,
+            root: dir_filter.root().to_path_buf(),
+            dir_filter: Rc::new(dir_filter),
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
             cargo_workspace: workspace::CargoWorkspace::default(),

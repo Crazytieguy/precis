@@ -81,6 +81,9 @@ pub struct DirFilter {
     /// Memo for [`list_dir`]: every walker and every scheduler cost
     /// probe lists the same directories again.
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
+    /// Set for a single-file walk: the one entry under `root` the filter
+    /// admits. See [`DirFilter::single_file`].
+    only_file: Option<PathBuf>,
 }
 
 impl std::fmt::Debug for DirFilter {
@@ -91,6 +94,7 @@ impl std::fmt::Debug for DirFilter {
         f.debug_struct("DirFilter")
             .field("root", &self.root)
             .field("ignore_rules", &self.repo.is_some())
+            .field("only_file", &self.only_file)
             .finish_non_exhaustive()
     }
 }
@@ -183,7 +187,23 @@ impl DirFilter {
             canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
             repo: None,
             listings: RefCell::new(HashMap::new()),
+            only_file: None,
         }
+    }
+
+    /// Filter for summarizing one file: a walk of its directory that
+    /// admits `file` and nothing else, so every walker applies to it
+    /// unchanged. Ignore rules don't apply — the caller named the file.
+    pub fn single_file(file: &Path) -> Self {
+        let root = file.parent().unwrap_or(file);
+        Self {
+            only_file: Some(file.to_path_buf()),
+            ..Self::unfiltered(root)
+        }
+    }
+
+    pub fn root(&self) -> &Path {
+        &self.root
     }
 
     /// True when `dir` is a symbolic link rather than a real directory,
@@ -292,6 +312,9 @@ impl DirFilter {
     /// still gets read and parsed. Costs one match per ancestor, so use
     /// it at traversal entry points, not per directory entry.
     pub fn excludes_tree(&self, path: &Path, is_dir: bool) -> bool {
+        if self.only_file.is_some() {
+            return self.excludes(path, is_dir);
+        }
         if self.repo.is_none() {
             return false;
         }
@@ -313,6 +336,9 @@ impl DirFilter {
 
     /// True when `path` must not appear in precis output.
     pub fn excludes(&self, path: &Path, is_dir: bool) -> bool {
+        if let Some(only_file) = &self.only_file {
+            return path != only_file;
+        }
         let Some(repo) = &self.repo else {
             return false;
         };

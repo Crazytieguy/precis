@@ -19,7 +19,7 @@ const HOOK_WRAPPER: [&str; 3] = [
 
 /// clap does not wrap help text, so the lines below are pre-wrapped.
 const ABOUT: &str = "\
-Summarize a directory within a token budget.
+Summarize a directory or file within a token budget.
 
 `N→` rows are source line N (a trailing `…` means it was cut short).
 A `…` row marks hidden source in a file, or hidden entries in a
@@ -29,7 +29,7 @@ marked `(empty)`.";
 #[derive(Parser)]
 #[command(about = ABOUT, version)]
 struct Cli {
-    /// Directory to summarize
+    /// Directory or file to summarize
     #[arg(default_value = ".")]
     path: PathBuf,
 
@@ -91,7 +91,13 @@ fn warn_empty_output(path: &Path, token_budget: usize, char_budget: Option<usize
         Some(chars) => format!("--token-budget {token_budget} --char-budget {chars}"),
         None => format!("--token-budget {token_budget}"),
     };
-    eprintln!("precis: nothing fit in {budgets}; raise it, or everything under {shown} is ignored");
+    if path.is_file() {
+        eprintln!("precis: nothing fit in {budgets}; raise it");
+    } else {
+        eprintln!(
+            "precis: nothing fit in {budgets}; raise it, or everything under {shown} is ignored"
+        );
+    }
 }
 
 /// A reader that stops early (`precis . | head`) closes the pipe under us;

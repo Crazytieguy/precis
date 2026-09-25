@@ -180,6 +180,7 @@ Always use `precis` for codebase exploration. Run `precis .` for a full overview
 ```
 precis .                           # summarize the current directory
 precis ./src                       # zoom into a subdirectory
+precis ./src/main.rs               # or into a single file
 precis . --token-budget 8000       # with a larger token budget
 precis . --char-budget 9000        # also cap the output's length
 ```

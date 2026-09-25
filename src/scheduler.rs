@@ -140,8 +140,28 @@ impl<W: Walker> Scheduler<W> {
         char_budget: Option<usize>,
         source_cache: SourceCache,
     ) -> Self {
-        let ctx = WalkCtx::with_cache(root.clone(), source_cache.clone());
-        let tree = RenderedTree::with_filter(root, source_cache, ctx.dir_filter_handle());
+        let ctx = WalkCtx::with_cache(root, source_cache);
+        Self::with_ctx(ctx, walker, token_budget, char_budget)
+    }
+
+    /// Scheduler whose walk is scoped by `dir_filter` rather than by
+    /// the default filter for its root.
+    pub fn with_filter(
+        dir_filter: DirFilter,
+        walker: W,
+        token_budget: usize,
+        char_budget: Option<usize>,
+    ) -> Self {
+        let ctx = WalkCtx::with_filter(dir_filter, SourceCache::new());
+        Self::with_ctx(ctx, walker, token_budget, char_budget)
+    }
+
+    fn with_ctx(ctx: WalkCtx, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
+        let tree = RenderedTree::with_filter(
+            ctx.root().to_path_buf(),
+            ctx.source_cache().clone(),
+            ctx.dir_filter_handle(),
+        );
         Self {
             walker,
             ctx,

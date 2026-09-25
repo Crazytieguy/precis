@@ -125,3 +125,23 @@ fn symlink_containment_holds_at_the_headline_budget() {
         "out-of-root content reached the output:\n{out}"
     );
 }
+
+/// A named file gets the rule a listing applies to a linked entry: a
+/// link resolving outside its own directory is refused, one staying
+/// inside renders what it points at.
+#[test]
+fn symlink_containment_applies_to_a_named_file() {
+    let temp = tempfile::tempdir().unwrap();
+    let root = linked_checkout(temp.path());
+
+    for escaping in ["config.ini", "docs/notes.md", "docs/broken.md"] {
+        assert!(
+            precis::render(&root.join(escaping), 100_000, None).is_err(),
+            "`{escaping}` resolves outside its directory (or nowhere at all) and must not render"
+        );
+    }
+
+    let out = precis::render(&root.join("CLAUDE.md"), 100_000, None).unwrap();
+    assert!(out.starts_with("README.md\n"), "{out}");
+    assert!(out.contains("# demo"), "{out}");
+}

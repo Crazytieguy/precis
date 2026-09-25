@@ -23,11 +23,10 @@ pub use render::{Cost, RenderedTree, SourceCache, char_units};
 use scheduler::Scheduler;
 use walker::FsWalker;
 
-/// Render a precis summary of the directory at `path` under the given
-/// budgets (`char_budget` in [`char_units`]).
+/// Render a precis summary of the directory or file at `path` under the
+/// given budgets (`char_budget` in [`char_units`]).
 pub fn render(path: &Path, token_budget: usize, char_budget: Option<usize>) -> Result<String> {
-    let root = canonicalize_dir(path)?;
-    let scheduler = Scheduler::new(root, FsWalker, token_budget, char_budget);
+    let scheduler = Scheduler::with_filter(walk_scope(path)?, FsWalker, token_budget, char_budget);
     Ok(scheduler.run().render())
 }
 
@@ -63,8 +62,9 @@ pub struct ScheduledBatch {
 /// Run the walker at `budget` and return a [`Schedule`] — input for
 /// regression snapshots and the divergence metric.
 pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
-    let root = canonicalize_dir(path)?;
-    let report = Scheduler::new(root.clone(), FsWalker, budget, None).run_with_report();
+    let filter = walk_scope(path)?;
+    let root = filter.root().to_path_buf();
+    let report = Scheduler::with_filter(filter, FsWalker, budget, None).run_with_report();
     let batches = report
         .scheduled
         .into_iter()
@@ -78,19 +78,35 @@ pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
     Ok(Schedule { root, batches })
 }
 
-fn canonicalize_dir(path: &Path) -> Result<std::path::PathBuf> {
-    let root = path
+/// The walk that summarizes `path`: the whole tree for a directory, or
+/// for a file, its directory with only that file admitted.
+fn walk_scope(path: &Path) -> Result<DirFilter> {
+    let resolved = path
         .canonicalize()
         .with_context(|| format!("failed to canonicalize {}", path.display()))?;
-    if !root.is_dir() {
+    if resolved.is_dir() {
+        // Without this an unreadable root walks to nothing, and the caller
+        // cannot tell a permission error from an empty repository.
+        std::fs::read_dir(&resolved)
+            .with_context(|| format!("failed to read directory {}", resolved.display()))?;
+        return Ok(DirFilter::new(&resolved));
+    }
+    // A named file that is a link gets the containment rule a listing
+    // applies to a linked entry: it must resolve inside its own directory.
+    let named_dir = match path.parent() {
+        Some(parent) if !parent.as_os_str().is_empty() => parent,
+        _ => Path::new("."),
+    };
+    let named_dir = named_dir
+        .canonicalize()
+        .with_context(|| format!("failed to canonicalize {}", named_dir.display()))?;
+    if !resolved.starts_with(&named_dir) {
         bail!(
-            "{} is not a directory; precis summarizes directory trees",
-            root.display()
+            "{} resolves to {}, outside {}",
+            path.display(),
+            resolved.display(),
+            named_dir.display()
         );
     }
-    // Without this an unreadable root walks to nothing, and the caller
-    // cannot tell a permission error from an empty repository.
-    std::fs::read_dir(&root)
-        .with_context(|| format!("failed to read directory {}", root.display()))?;
-    Ok(root)
+    Ok(DirFilter::single_file(&resolved))
 }

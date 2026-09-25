@@ -189,6 +189,10 @@ consumer inherits it:
 - **Listing *through* a link yields nothing.** That makes the walk
   exactly the real directory tree, so link cycles are unreachable
   rather than bounded — no depth caps or visited-sets.
+- **A named file walks its directory with only that file admitted**
+  (`DirFilter::single_file`), so it gets every walker unchanged. If it
+  is a link, it must resolve inside the directory it was named in —
+  the rule a listing applies to a linked entry.
 
 **Still open:** walkers that probe a *named* path directly —
 `dir.join("Cargo.toml").is_file()`, `package.json`, `__init__.py`,
