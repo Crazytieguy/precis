@@ -7,6 +7,9 @@
 .gitignore
 LICENSE
 Makefile
+  …
+  63→.PHONY: all clean install uninstall test test-directory ci bench-rg
+  …
 README.md
   1→# k(r)ep - A high-performance string search utility
   …
@@ -201,8 +204,7 @@ krep.h
   138→   pthread_mutex_t queue_mutex;  // Mutex for task queue access
   139→   pthread_cond_t queue_cond;    // Condition variable for task availability
   140→   pthread_cond_t complete_cond; // Condition variable for task completion
-  141→   size_t working_threads;       // Counter for busy threads
-  142→   atomic_bool shutdown;         // Shutdown flag
+  …
   143→} thread_pool_t;
   145→/* --- Thread Pool API --- */
   146→thread_pool_t *thread_pool_init(int num_threads);

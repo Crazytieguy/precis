@@ -29,7 +29,7 @@ const PLAINTEXT_LINE_CAP: usize = 60;
 /// FS-metadata pre-flight gate (≈80 bytes/line × line cap).
 const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
-/// Line cap on a [`Class::Build`] batch, which renders whole or not at all.
+/// Line cap on a whole [`Class::Build`] batch.
 const BUILD_LINE_CAP: usize = 100;
 
 /// FS-metadata pre-flight gate for build files (same ≈80
@@ -719,20 +719,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             Class::DotenvSample => {
                 head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
             }
-            // Whole or nothing, with headroom over the generic cap: a
-            // Makefile's head is mostly variable preamble, not its
-            // targets.
+            // Whole, with headroom over the generic cap: a Makefile's
+            // head is mostly variable preamble, not its targets.
             Class::Build => gated_whole_file_content(&file, ctx, BUILD_BYTE_GATE, BUILD_LINE_CAP),
             _ => head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
         };
-        let Some(content) = content else {
-            continue;
+        let (content, value) = match content {
+            Some(content) => (
+                content,
+                class_value(class, &file, ctx) * small_build_file_factor(class, &file, ctx),
+            ),
+            None => match root_makefile_phony_targets(&file, name, ctx) {
+                Some(content) => (content, class_value(class, &file, ctx)),
+                None => continue,
+            },
         };
         out.push(Batch {
             key: PlaintextKey::Whole { file: file.clone() }.into(),
             predecessor: None,
             content,
-            value: class_value(class, &file, ctx),
+            value,
         });
     }
     out
@@ -748,7 +754,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::Tooling | Class::FlatText => 488.0,
     };
-    tier * path_depth_factor(file, ctx) * small_build_file_factor(class, file, ctx)
+    tier * path_depth_factor(file, ctx)
 }
 
 /// Mild promotion for a root `Makefile` / `Taskfile`. A
@@ -775,6 +781,26 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     } else {
         1.0
     }
+}
+
+/// A root Makefile too long to render whole still names what it can run:
+/// its `.PHONY` declarations, the author's own list of commands.
+fn root_makefile_phony_targets(
+    file: &Path,
+    name: &str,
+    ctx: &WalkCtx,
+) -> Option<crate::content::BatchContent> {
+    if name != "Makefile" || ctx.depth_from_root(file) != 1 {
+        return None;
+    }
+    let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
+    let rows = source
+        .lines()
+        .enumerate()
+        .filter(|(_, line)| line.starts_with(".PHONY"))
+        .map(|(index, _)| index + 1)
+        .collect();
+    single_file_lines_content(file, &source, rows)
 }
 
 /// The first `head_line_cap` rows — the whole file when it fits, so a
@@ -1082,20 +1108,30 @@ mod tests {
     }
 
     #[test]
-    fn plaintext_oversized_makefile_is_suppressed_entirely() {
+    fn plaintext_oversized_makefile_renders_only_its_phony_targets() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        let file = root.join("Makefile");
-        let mut source = String::from("BUILD_DEPS = common-a common-b\n\nbuild: $(BUILD_DEPS)\n");
+        std::fs::create_dir(root.join("docs")).unwrap();
+        let mut source = String::from(
+            "BUILD_DEPS = common-a common-b\n.PHONY: build test\n\nbuild: $(BUILD_DEPS)\n",
+        );
         for index in 0..60 {
             source.push_str(&format!(
                 "target-{index:02}: dep-{index:02}-a dep-{index:02}-b\n\tRECIPE_{index:02}\n"
             ));
         }
-        std::fs::write(&file, &source).unwrap();
+        std::fs::write(root.join("Makefile"), &source).unwrap();
+        std::fs::write(root.join("docs/Makefile"), &source).unwrap();
 
         let ctx = WalkCtx::new(root.to_path_buf());
-        assert!(expand_in_dir(root, &ctx).is_empty());
+        let batches = expand_in_dir(root, &ctx);
+        assert_eq!(batches.len(), 1);
+        let crate::content::BatchContent::Lines { spans } = &batches[0].content else {
+            panic!("expected a lines batch");
+        };
+        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
+        assert_eq!(rows, [(2, 2)]);
+        assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
     }
 
     #[test]

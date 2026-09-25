@@ -17,6 +17,8 @@
   zlib/ (empty)
 LICENSE
 Makefile
+  1→.PHONY : all clean shader
+  …
 README.md
   …
   3→Sokol + Lua = Soluna
@@ -145,7 +147,6 @@ docs/
   font.lua
     …
     10→---
-    11→--- Imports a TrueType font
     …
     14→function font.import(data) end
     …

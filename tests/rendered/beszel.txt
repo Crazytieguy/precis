@@ -15,6 +15,9 @@
 .goreleaser.yml
 LICENSE
 Makefile
+  …
+  44→.PHONY: tidy build-agent build-hub build-hub-dev build clean lint dev-server dev-agent dev-hub dev generate-locales fetch-smartctl-conditional
+  …
 SECURITY.md
 agent/
   agent.go
@@ -137,15 +140,10 @@ beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
   …
-  7→const (
-  …
   9→	Version = "0.18.7"
   …
   11→	AppName = "beszel"
   …
-  15→var MinVersionCbor = semver.MustParse("0.12.0")
-  …
-  18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
   1→module github.com/henrygd/beszel
   2→

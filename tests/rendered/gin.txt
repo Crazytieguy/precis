@@ -16,6 +16,25 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 LICENSE
 Makefile
+  …
+  10→.PHONY: test
+  …
+  37→.PHONY: fmt
+  …
+  42→.PHONY: fmt-check
+  …
+  52→.PHONY: vet
+  …
+  57→.PHONY: lint
+  …
+  65→.PHONY: misspell
+  …
+  73→.PHONY: misspell-check
+  …
+  81→.PHONY: tools
+  …
+  92→.PHONY: help
+  …
 README.md
   1→# Gin Web Framework
   …
@@ -247,16 +266,6 @@ logger.go
   167→var defaultLogFormatter = func(param LogFormatterParams) string {
   168→	var statusColor, methodColor, resetColor, latencyColor string
   169→	if param.IsOutputColor() {
-  170→		statusColor = param.StatusCodeColor()
-  171→		methodColor = param.MethodColor()
-  172→		resetColor = param.ResetColor()
-  173→		latencyColor = param.LatencyColor()
-  174→	}
-  175→
-  176→	switch {
-  177→	case param.Latency > time.Minute:
-  178→		param.Latency = param.Latency.Truncate(time.Second * 10)
-  179→	case param.Latency > time.Second:
   …
   196→// DisableConsoleColor disables color output in the console.
   197→func DisableConsoleColor() {

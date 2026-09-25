@@ -38,6 +38,9 @@ MIGRATIONS.md
   67→## Reversibility of Migrations
   …
 Makefile
+  …
+  114→.PHONY: build build-docker build-cli clean test-short test test-with-flags html-coverage \
+  …
 README.md
   …
   10→# migrate
@@ -431,10 +434,6 @@ source/
       bindata.go
   godoc_vfs/
     vfs.go
-      1→// Package godoc_vfs contains a driver that reads migrations from a virtual file
-      2→// system.
-      3→//
-      …
     vfs_example_test.go
     vfs_test.go
   google_cloud_storage/
