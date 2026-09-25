@@ -142,118 +142,118 @@ Score(3000)=0.333 I=0.398 C=0.279 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 5954 | 53 | python names beets/util/units.py |  |  | 0.312 |
 | walker |  | 6009 | 55 | python names beets/util/lyrics.py |  |  | 0.312 |
 | walker |  | 6078 | 69 | [package] in pyproject.toml |  |  | 0.319 |
-| walker |  | 6119 | 41 | manifest config in pyproject.toml |  |  | 0.319 |
+| walker |  | 6133 | 55 | python decl beets/util/config.py:29 |  |  | 0.319 |
 | ns | 6147 |  | 360 | importer/stages.py: complete stage-function roster with section banners | 5.2 |  | 0.312 |
-| walker |  | 6160 | 41 | tool.pipx-install config in pyproject.toml |  |  | 0.312 |
-| walker |  | 6215 | 55 | python decl beets/util/config.py:29 |  |  | 0.312 |
-| walker |  | 6293 | 78 | python body beets/ui/commands/__init__.py:36 |  |  | 0.312 |
-| walker |  | 6352 | 59 | python names beets/importer/session.py |  |  | 0.312 |
-| walker |  | 6359 | 7 | python decl beets/importer/session.py:42 |  |  | 0.312 |
+| walker |  | 6211 | 78 | python body beets/ui/commands/__init__.py:36 |  |  | 0.312 |
+| walker |  | 6270 | 59 | python names beets/importer/session.py |  |  | 0.312 |
+| walker |  | 6277 | 7 | python decl beets/importer/session.py:42 |  |  | 0.312 |
 | ns | 6572 |  | 425 | ImportSession.run(): how the pipeline is assembled | 5.3 | 5.2 | 0.303 |
-| walker |  | 6742 | 383 | listing of 'beetsplug' |  |  | 0.391 |
-| walker |  | 6753 | 11 | listing of 'beetsplug/bpd' |  |  | 0.391 |
-| walker |  | 6765 | 12 | listing of 'beetsplug/web' |  |  | 0.391 |
-| walker |  | 6781 | 16 | python module doc beetsplug/web/__init__.py |  |  | 0.391 |
-| walker |  | 6795 | 14 | listing of 'beetsplug/discogs' |  |  | 0.391 |
-| walker |  | 6811 | 16 | listing of 'beetsplug/metasync' |  |  | 0.391 |
-| walker |  | 6828 | 17 | python module doc beetsplug/metasync/__init__.py |  |  | 0.391 |
+| walker |  | 6660 | 383 | listing of 'beetsplug' |  |  | 0.391 |
+| walker |  | 6671 | 11 | listing of 'beetsplug/bpd' |  |  | 0.391 |
+| walker |  | 6683 | 12 | listing of 'beetsplug/web' |  |  | 0.391 |
+| walker |  | 6699 | 16 | python module doc beetsplug/web/__init__.py |  |  | 0.391 |
+| walker |  | 6713 | 14 | listing of 'beetsplug/discogs' |  |  | 0.391 |
+| walker |  | 6729 | 16 | listing of 'beetsplug/metasync' |  |  | 0.391 |
+| walker |  | 6746 | 17 | python module doc beetsplug/metasync/__init__.py |  |  | 0.391 |
+| walker |  | 6750 | 4 | listing of 'beetsplug/web/templates' |  |  | 0.391 |
+| walker |  | 6769 | 19 | listing of 'beetsplug/tidal' |  |  | 0.391 |
+| walker |  | 6792 | 23 | listing of 'beetsplug/lastgenre' |  |  | 0.391 |
 | ns | 6829 |  | 257 | ImportSession class contract (attributes + the four decision hooks) | 5.4 | 5.3 | 0.384 |
-| walker |  | 6832 | 4 | listing of 'beetsplug/web/templates' |  |  | 0.384 |
-| walker |  | 6851 | 19 | listing of 'beetsplug/tidal' |  |  | 0.384 |
-| walker |  | 6874 | 23 | listing of 'beetsplug/lastgenre' |  |  | 0.384 |
-| walker |  | 6913 | 39 | python module doc beetsplug/discogs/__init__.py |  |  | 0.384 |
-| walker |  | 6943 | 30 | listing of 'beetsplug/_utils' |  |  | 0.384 |
-| walker |  | 6975 | 32 | python names beetsplug/_utils/__init__.py |  |  | 0.384 |
-| walker |  | 7038 | 63 | python module doc beetsplug/bpd/__init__.py |  |  | 0.384 |
-| walker |  | 7052 | 14 | python names beetsplug/substitute.py |  |  | 0.384 |
-| walker |  | 7067 | 15 | python names beetsplug/replace.py |  |  | 0.384 |
-| walker |  | 7082 | 15 | python names beetsplug/types.py |  |  | 0.384 |
-| walker |  | 7098 | 16 | python names beetsplug/albumtypes.py |  |  | 0.384 |
+| walker |  | 6831 | 39 | python module doc beetsplug/discogs/__init__.py |  |  | 0.384 |
+| walker |  | 6861 | 30 | listing of 'beetsplug/_utils' |  |  | 0.384 |
+| walker |  | 6893 | 32 | python names beetsplug/_utils/__init__.py |  |  | 0.384 |
+| walker |  | 6956 | 63 | python module doc beetsplug/bpd/__init__.py |  |  | 0.384 |
+| walker |  | 6970 | 14 | python names beetsplug/substitute.py |  |  | 0.384 |
+| walker |  | 6985 | 15 | python names beetsplug/replace.py |  |  | 0.384 |
+| walker |  | 7000 | 15 | python names beetsplug/types.py |  |  | 0.384 |
+| walker |  | 7016 | 16 | python names beetsplug/albumtypes.py |  |  | 0.384 |
+| walker |  | 7032 | 16 | python names beetsplug/filefilter.py |  |  | 0.384 |
+| walker |  | 7048 | 16 | python names beetsplug/importadded.py |  |  | 0.384 |
+| walker |  | 7064 | 16 | python names beetsplug/importsource.py |  |  | 0.384 |
+| walker |  | 7080 | 16 | python names beetsplug/ipfs.py |  |  | 0.384 |
+| walker |  | 7096 | 16 | python names beetsplug/keyfinder.py |  |  | 0.384 |
 | ns | 7103 |  | 274 | importer/tasks.py: Action enum and the complete task class roster | 5.5 |  | 0.378 |
-| walker |  | 7114 | 16 | python names beetsplug/filefilter.py |  |  | 0.378 |
-| walker |  | 7130 | 16 | python names beetsplug/importadded.py |  |  | 0.378 |
-| walker |  | 7146 | 16 | python names beetsplug/importsource.py |  |  | 0.378 |
-| walker |  | 7162 | 16 | python names beetsplug/ipfs.py |  |  | 0.378 |
-| walker |  | 7178 | 16 | python names beetsplug/keyfinder.py |  |  | 0.378 |
-| walker |  | 7194 | 16 | python names beetsplug/loadext.py |  |  | 0.378 |
-| walker |  | 7210 | 16 | python names beetsplug/mbsubmit.py |  |  | 0.378 |
-| walker |  | 7226 | 16 | python names beetsplug/sonosupdate.py |  |  | 0.378 |
-| walker |  | 7242 | 16 | python names beetsplug/unimported.py |  |  | 0.378 |
-| walker |  | 7259 | 17 | python names beetsplug/autobpm.py |  |  | 0.378 |
-| walker |  | 7276 | 17 | python names beetsplug/bpsync.py |  |  | 0.378 |
-| walker |  | 7293 | 17 | python names beetsplug/freedesktop.py |  |  | 0.378 |
-| walker |  | 7310 | 17 | python names beetsplug/mbsync.py |  |  | 0.378 |
-| walker |  | 7327 | 17 | python names beetsplug/subsonicupdate.py |  |  | 0.378 |
+| walker |  | 7112 | 16 | python names beetsplug/loadext.py |  |  | 0.378 |
+| walker |  | 7128 | 16 | python names beetsplug/mbsubmit.py |  |  | 0.378 |
+| walker |  | 7144 | 16 | python names beetsplug/sonosupdate.py |  |  | 0.378 |
+| walker |  | 7160 | 16 | python names beetsplug/unimported.py |  |  | 0.378 |
+| walker |  | 7177 | 17 | python names beetsplug/autobpm.py |  |  | 0.378 |
+| walker |  | 7194 | 17 | python names beetsplug/bpsync.py |  |  | 0.378 |
+| walker |  | 7211 | 17 | python names beetsplug/freedesktop.py |  |  | 0.378 |
+| walker |  | 7228 | 17 | python names beetsplug/mbsync.py |  |  | 0.378 |
+| walker |  | 7245 | 17 | python names beetsplug/subsonicupdate.py |  |  | 0.378 |
 | ns | 7349 |  | 246 | BeetsPlugin base class: docstring and declared attributes | 6.1 |  | 0.372 |
-| walker |  | 7584 | 257 | python names beetsplug/bpd/__init__.py |  |  | 0.372 |
+| walker |  | 7502 | 257 | python names beetsplug/bpd/__init__.py |  |  | 0.372 |
+| walker |  | 7521 | 19 | python module doc beetsplug/subsonicupdate.py |  |  | 0.372 |
+| walker |  | 7541 | 20 | python module doc beetsplug/unimported.py |  |  | 0.372 |
+| walker |  | 7563 | 22 | python module doc beetsplug/zero.py |  |  | 0.372 |
 | ns | 7595 |  | 246 | BeetsPlugin method roster (complete) | 6.2 | 6.1 | 0.369 |
-| walker |  | 7603 | 19 | python module doc beetsplug/subsonicupdate.py |  |  | 0.369 |
-| walker |  | 7623 | 20 | python module doc beetsplug/unimported.py |  |  | 0.369 |
-| walker |  | 7645 | 22 | python module doc beetsplug/zero.py |  |  | 0.369 |
-| walker |  | 7750 | 105 | python module doc beetsplug/lastgenre/__init__.py |  |  | 0.369 |
-| walker |  | 7774 | 24 | python module doc beetsplug/subsonicplaylist.py |  |  | 0.369 |
-| walker |  | 7796 | 22 | python decl beetsplug/unimported.py:29 |  |  | 0.369 |
-| walker |  | 7820 | 24 | python names beetsplug/parentwork.py |  |  | 0.369 |
-| walker |  | 7845 | 25 | python names beetsplug/listenbrainz.py |  |  | 0.369 |
-| walker |  | 7871 | 26 | python names beetsplug/ihate.py |  |  | 0.369 |
-| walker |  | 7898 | 27 | python names beetsplug/badfiles.py |  |  | 0.369 |
-| walker |  | 7917 | 19 | python decl beetsplug/badfiles.py:32 |  |  | 0.369 |
-| walker |  | 7944 | 27 | python names beetsplug/bpm.py |  |  | 0.369 |
-| walker |  | 7971 | 27 | python names beetsplug/mpdupdate.py |  |  | 0.369 |
-| walker |  | 7997 | 26 | python decl beetsplug/loadext.py:23 |  |  | 0.369 |
+| walker |  | 7668 | 105 | python module doc beetsplug/lastgenre/__init__.py |  |  | 0.369 |
+| walker |  | 7692 | 24 | python module doc beetsplug/subsonicplaylist.py |  |  | 0.369 |
+| walker |  | 7714 | 22 | python decl beetsplug/unimported.py:29 |  |  | 0.369 |
+| walker |  | 7738 | 24 | python names beetsplug/parentwork.py |  |  | 0.369 |
+| walker |  | 7763 | 25 | python names beetsplug/listenbrainz.py |  |  | 0.369 |
+| walker |  | 7789 | 26 | python names beetsplug/ihate.py |  |  | 0.369 |
+| walker |  | 7816 | 27 | python names beetsplug/badfiles.py |  |  | 0.369 |
+| walker |  | 7835 | 19 | python decl beetsplug/badfiles.py:32 |  |  | 0.369 |
+| walker |  | 7862 | 27 | python names beetsplug/bpm.py |  |  | 0.369 |
+| walker |  | 7889 | 27 | python names beetsplug/mpdupdate.py |  |  | 0.369 |
+| walker |  | 7915 | 26 | python decl beetsplug/loadext.py:23 |  |  | 0.369 |
+| walker |  | 7946 | 31 | python module doc beetsplug/ihate.py |  |  | 0.369 |
+| walker |  | 7975 | 29 | python names beetsplug/subsonicplaylist.py |  |  | 0.369 |
+| walker |  | 8003 | 28 | python decl beetsplug/freedesktop.py:21 |  |  | 0.369 |
 | ns | 8017 |  | 422 | The complete `EventType` literal — every plugin event name | 6.3 | 6.1 | 0.358 |
-| walker |  | 8028 | 31 | python module doc beetsplug/ihate.py |  |  | 0.358 |
-| walker |  | 8057 | 29 | python names beetsplug/subsonicplaylist.py |  |  | 0.358 |
-| walker |  | 8085 | 28 | python decl beetsplug/freedesktop.py:21 |  |  | 0.358 |
-| walker |  | 8113 | 28 | python decl beetsplug/substitute.py:25 |  |  | 0.358 |
-| walker |  | 8135 | 22 | listing of 'beetsplug/web/static' |  |  | 0.358 |
-| walker |  | 8165 | 30 | python names beetsplug/hook.py |  |  | 0.358 |
-| walker |  | 8190 | 25 | python decl beetsplug/hook.py:28 |  |  | 0.358 |
-| walker |  | 8220 | 30 | python names beetsplug/scrub.py |  |  | 0.358 |
-| walker |  | 8250 | 30 | python names beetsplug/titlecase.py |  |  | 0.358 |
-| walker |  | 8274 | 24 | python decl beetsplug/titlecase.py:40 |  |  | 0.358 |
-| walker |  | 8304 | 30 | python module doc beetsplug/titlecase.py |  |  | 0.358 |
+| walker |  | 8031 | 28 | python decl beetsplug/substitute.py:25 |  |  | 0.358 |
+| walker |  | 8053 | 22 | listing of 'beetsplug/web/static' |  |  | 0.358 |
+| walker |  | 8083 | 30 | python names beetsplug/hook.py |  |  | 0.358 |
+| walker |  | 8108 | 25 | python decl beetsplug/hook.py:28 |  |  | 0.358 |
+| walker |  | 8138 | 30 | python names beetsplug/scrub.py |  |  | 0.358 |
+| walker |  | 8168 | 30 | python names beetsplug/titlecase.py |  |  | 0.358 |
+| walker |  | 8192 | 24 | python decl beetsplug/titlecase.py:40 |  |  | 0.358 |
+| walker |  | 8222 | 30 | python module doc beetsplug/titlecase.py |  |  | 0.358 |
 | ns | 8321 |  | 304 | plugins.py module-level API roster (complete) | 6.4 |  | 0.355 |
 | ns | 8633 |  | 312 | MetadataSourcePlugin: the metadata-backend contract | 6.5 |  | 0.350 |
-| walker |  | 8748 | 444 | python names beetsplug/web/__init__.py |  |  | 0.350 |
-| walker |  | 8756 | 8 | python decl beetsplug/web/__init__.py:439 |  |  | 0.350 |
-| walker |  | 8765 | 9 | python decl beetsplug/web/__init__.py:296 |  |  | 0.350 |
-| walker |  | 8775 | 10 | python decl beetsplug/web/__init__.py:412 |  |  | 0.350 |
-| walker |  | 8785 | 10 | python decl beetsplug/web/__init__.py:423 |  |  | 0.350 |
-| walker |  | 8799 | 14 | python decl beetsplug/web/__init__.py:344 |  |  | 0.350 |
-| walker |  | 8814 | 15 | python decl beetsplug/web/__init__.py:354 |  |  | 0.350 |
-| walker |  | 8829 | 15 | python decl beetsplug/web/__init__.py:397 |  |  | 0.350 |
+| walker |  | 8666 | 444 | python names beetsplug/web/__init__.py |  |  | 0.350 |
+| walker |  | 8674 | 8 | python decl beetsplug/web/__init__.py:439 |  |  | 0.350 |
+| walker |  | 8683 | 9 | python decl beetsplug/web/__init__.py:296 |  |  | 0.350 |
+| walker |  | 8693 | 10 | python decl beetsplug/web/__init__.py:412 |  |  | 0.350 |
+| walker |  | 8703 | 10 | python decl beetsplug/web/__init__.py:423 |  |  | 0.350 |
+| walker |  | 8717 | 14 | python decl beetsplug/web/__init__.py:344 |  |  | 0.350 |
+| walker |  | 8732 | 15 | python decl beetsplug/web/__init__.py:354 |  |  | 0.350 |
+| walker |  | 8747 | 15 | python decl beetsplug/web/__init__.py:397 |  |  | 0.350 |
+| walker |  | 8763 | 16 | python decl beetsplug/web/__init__.py:317 |  |  | 0.350 |
+| walker |  | 8780 | 17 | python decl beetsplug/web/__init__.py:388 |  |  | 0.350 |
+| walker |  | 8802 | 22 | python decl beetsplug/web/__init__.py:283 |  |  | 0.350 |
+| walker |  | 8824 | 22 | python decl beetsplug/web/__init__.py:447 |  |  | 0.350 |
 | ns | 8830 |  | 197 | Query-string prefixes: how `beet ls artist:foo` is parsed | 7.1 |  | 0.347 |
-| walker |  | 8845 | 16 | python decl beetsplug/web/__init__.py:317 |  |  | 0.347 |
-| walker |  | 8862 | 17 | python decl beetsplug/web/__init__.py:388 |  |  | 0.347 |
-| walker |  | 8884 | 22 | python decl beetsplug/web/__init__.py:283 |  |  | 0.347 |
-| walker |  | 8906 | 22 | python decl beetsplug/web/__init__.py:447 |  |  | 0.347 |
-| walker |  | 8934 | 28 | python decl beetsplug/web/__init__.py:252 |  |  | 0.347 |
-| walker |  | 8962 | 28 | python decl beetsplug/web/__init__.py:268 |  |  | 0.347 |
-| walker |  | 8993 | 31 | python decl beetsplug/web/__init__.py:310 |  |  | 0.347 |
-| walker |  | 9024 | 31 | python decl beetsplug/web/__init__.py:369 |  |  | 0.347 |
-| walker |  | 9055 | 31 | python decl beetsplug/web/__init__.py:375 |  |  | 0.347 |
-| walker |  | 9087 | 32 | python decl beetsplug/web/__init__.py:382 |  |  | 0.347 |
-| walker |  | 9120 | 33 | python decl beetsplug/web/__init__.py:520 |  |  | 0.347 |
-| walker |  | 9158 | 38 | python decl beetsplug/web/__init__.py:304 |  |  | 0.347 |
+| walker |  | 8852 | 28 | python decl beetsplug/web/__init__.py:252 |  |  | 0.347 |
+| walker |  | 8880 | 28 | python decl beetsplug/web/__init__.py:268 |  |  | 0.347 |
+| walker |  | 8911 | 31 | python decl beetsplug/web/__init__.py:310 |  |  | 0.347 |
+| walker |  | 8942 | 31 | python decl beetsplug/web/__init__.py:369 |  |  | 0.347 |
+| walker |  | 8973 | 31 | python decl beetsplug/web/__init__.py:375 |  |  | 0.347 |
+| walker |  | 9005 | 32 | python decl beetsplug/web/__init__.py:382 |  |  | 0.347 |
+| walker |  | 9038 | 33 | python decl beetsplug/web/__init__.py:520 |  |  | 0.347 |
+| walker |  | 9076 | 38 | python decl beetsplug/web/__init__.py:304 |  |  | 0.347 |
+| walker |  | 9115 | 39 | python decl beetsplug/web/__init__.py:338 |  |  | 0.347 |
+| walker |  | 9144 | 29 | python decl beetsplug/albumtypes.py:29 |  |  | 0.347 |
+| walker |  | 9175 | 31 | python names beetsplug/bareasc.py |  |  | 0.347 |
 | ns | 9187 |  | 357 | dbcore/query.py class roster (complete) | 7.2 |  | 0.339 |
-| walker |  | 9197 | 39 | python decl beetsplug/web/__init__.py:338 |  |  | 0.339 |
-| walker |  | 9226 | 29 | python decl beetsplug/albumtypes.py:29 |  |  | 0.339 |
-| walker |  | 9257 | 31 | python names beetsplug/bareasc.py |  |  | 0.339 |
-| walker |  | 9285 | 28 | python decl beetsplug/bareasc.py:29 |  |  | 0.339 |
-| walker |  | 9293 | 8 | python decl beetsplug/bareasc.py:32 |  |  | 0.339 |
-| walker |  | 9324 | 31 | python names beetsplug/embedart.py |  |  | 0.339 |
-| walker |  | 9355 | 31 | python names beetsplug/fuzzy.py |  |  | 0.339 |
-| walker |  | 9380 | 25 | python decl beetsplug/fuzzy.py:51 |  |  | 0.339 |
-| walker |  | 9415 | 35 | python module doc beetsplug/the.py |  |  | 0.339 |
-| walker |  | 9446 | 31 | python decl beetsplug/hook.py:44 |  |  | 0.339 |
-| walker |  | 9479 | 33 | python names beetsplug/advancedrewrite.py |  |  | 0.339 |
-| walker |  | 9503 | 24 | python decl beetsplug/advancedrewrite.py:57 |  |  | 0.339 |
-| walker |  | 9536 | 33 | python names beetsplug/kodiupdate.py |  |  | 0.339 |
+| walker |  | 9203 | 28 | python decl beetsplug/bareasc.py:29 |  |  | 0.339 |
+| walker |  | 9211 | 8 | python decl beetsplug/bareasc.py:32 |  |  | 0.339 |
+| walker |  | 9242 | 31 | python names beetsplug/embedart.py |  |  | 0.339 |
+| walker |  | 9273 | 31 | python names beetsplug/fuzzy.py |  |  | 0.339 |
+| walker |  | 9298 | 25 | python decl beetsplug/fuzzy.py:51 |  |  | 0.339 |
+| walker |  | 9333 | 35 | python module doc beetsplug/the.py |  |  | 0.339 |
+| walker |  | 9364 | 31 | python decl beetsplug/hook.py:44 |  |  | 0.339 |
+| walker |  | 9397 | 33 | python names beetsplug/advancedrewrite.py |  |  | 0.339 |
+| walker |  | 9421 | 24 | python decl beetsplug/advancedrewrite.py:57 |  |  | 0.339 |
+| walker |  | 9454 | 33 | python names beetsplug/kodiupdate.py |  |  | 0.339 |
 | ns | 9539 |  | 352 | beets.autotag exports, Recommendation, Proposal | 8.1 |  | 0.334 |
-| walker |  | 9691 | 155 | python names beetsplug/tidal/__init__.py |  |  | 0.334 |
-| walker |  | 9770 | 79 | python decl beetsplug/tidal/__init__.py:494 |  |  | 0.334 |
+| walker |  | 9609 | 155 | python names beetsplug/tidal/__init__.py |  |  | 0.334 |
+| walker |  | 9688 | 79 | python decl beetsplug/tidal/__init__.py:494 |  |  | 0.334 |
 | ns | 9775 |  | 236 | autotag/hooks.py and distance.py symbol roster | 8.2 |  | 0.331 |
-| walker |  | 9956 | 186 | python names beetsplug/metasync/__init__.py |  |  | 0.331 |
+| walker |  | 9874 | 186 | python names beetsplug/metasync/__init__.py |  |  | 0.331 |
+| walker |  | 9903 | 29 | python decl beetsplug/metasync/__init__.py:34 |  |  | 0.331 |
+| walker |  | 9955 | 52 | python decl beetsplug/metasync/__init__.py:40 |  |  | 0.331 |
+| walker |  | 9964 | 9 | python decl beetsplug/metasync/__init__.py:47 |  |  | 0.331 |
 | ns | 9970 |  | 195 | beets/util/__init__.py: classes and the core path/file-operation helpers | 9.1 |  | 0.329 |
-| walker |  | 9985 | 29 | python decl beetsplug/metasync/__init__.py:34 |  |  | 0.329 |

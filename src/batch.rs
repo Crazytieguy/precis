@@ -277,10 +277,6 @@ pub enum TomlKey {
     /// Ordinary `[dependencies]` / `[workspace.dependencies]` tables,
     /// plus Python-manifest dependency sections.
     Dependencies { file: PathBuf },
-    /// One top-level Python-manifest `tool.<name>` family, including its
-    /// descendants, or a compact family of adjacent small tool tables.
-    /// Predecessor: `Identity` on the same file, when it has one.
-    ToolConfig { file: PathBuf, tool: String },
     /// Manifest-level operational config outside Python `tool.*` families:
     /// build systems, package metadata, Cargo targets, and profiles.
     /// Predecessor: `Identity` on the same file, when it has one.
@@ -390,7 +386,7 @@ impl InnerKey for TomlKey {
     fn is_orientation(&self) -> bool {
         !matches!(
             self,
-            TomlKey::ToolConfig { .. } | TomlKey::Config { .. } | TomlKey::PackageMetadata { .. }
+            TomlKey::Config { .. } | TomlKey::PackageMetadata { .. }
         )
     }
 
@@ -401,9 +397,6 @@ impl InnerKey for TomlKey {
             TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
-            TomlKey::ToolConfig { file, tool } => {
-                describe_in(&format!("tool.{tool} config"), file, root)
-            }
             TomlKey::Config { file } => describe_in("manifest config", file, root),
         }
     }

@@ -14,14 +14,11 @@
 //! - `Dependencies { file }` — Cargo `[dependencies]` /
 //!   `[workspace.dependencies]`, `[tool.poetry.dependencies]`, and the PEP
 //!   621 dependency arrays under `[project]`
-//! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
-//!   with adjacent small tables packed into compact families; predecessor:
-//!   `Identity` on the same file when it has one
 //! - `Config { file }` — every other table of a manifest, whatever it is
 //!   named: build systems, targets, profiles, lints, patches, packaging;
 //!   predecessor: `Identity` on the same file when it has one
 
-use std::collections::{BTreeMap, HashSet};
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -39,13 +36,6 @@ use super::{
 
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
-
-/// Per-tool tables below this source-token size are packed with adjacent
-/// small tables. This avoids turning a large config roster into a swarm of
-/// 10--40 token scheduler trinkets while keeping useful config slices near
-/// the 100--250 token target once line labels and gap markers are rendered.
-const TOOL_CONFIG_FAMILY_MIN_TOKENS: usize = 120;
-const TOOL_CONFIG_FAMILY_MAX_TOKENS: usize = 240;
 
 type Section = (String, usize, usize);
 
@@ -148,21 +138,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // yet. The load-bearing sections (scripts, features, dependency
         // rosters) stay ungated — they answer what the project is on their
         // own, and gating them costs more than it buys.
-        for (tool, content) in
-            build_tool_config_contents(&file, &source, &sections, python_project_manifest)
-        {
-            let value = config_value(&file, ctx) * checking_toolchain_scale(&tool);
-            out.push(Batch {
-                key: TomlKey::ToolConfig {
-                    file: file.clone(),
-                    tool,
-                }
-                .into(),
-                predecessor: identity.clone(),
-                content,
-                value,
-            });
-        }
         if let Some(content) =
             build_config_content(&file, &source, &sections, python_project_manifest)
         {
@@ -213,114 +188,6 @@ fn build_dependencies_content(
     single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-fn build_tool_config_contents(
-    file: &Path,
-    source: &Source,
-    sections: &[Section],
-    python_project_manifest: bool,
-) -> Vec<(String, crate::content::BatchContent)> {
-    if !should_partition_tool_config(source, sections, python_project_manifest) {
-        return Vec::new();
-    }
-    pack_small_tool_config_families(source, collect_tool_config_lines(sections))
-        .into_iter()
-        .filter_map(|(tool, lines)| {
-            single_file_lines_content(file, source, FileLines::new(dedup_sorted(lines)))
-                .map(|content| (tool, content))
-        })
-        .collect()
-}
-
-fn pack_small_tool_config_families(
-    source: &str,
-    families: BTreeMap<String, Vec<usize>>,
-) -> Vec<(String, Vec<usize>)> {
-    let source_lines: Vec<&str> = source.lines().collect();
-    let mut ordered: Vec<_> = families.into_iter().collect();
-    ordered.sort_by_key(|(_, lines)| lines.first().copied().unwrap_or(usize::MAX));
-
-    let mut packed = Vec::new();
-    let mut small_family: Option<(Vec<String>, Vec<usize>, usize)> = None;
-    for (tool, lines) in ordered {
-        let tokens = tool_config_source_tokens(&source_lines, &lines);
-        if tokens >= TOOL_CONFIG_FAMILY_MIN_TOKENS {
-            // Flushing the small accumulator on a large family can
-            // strand a lone sub-minimum pack (an interleaved layout's
-            // leading small family stays solo). Measured better than
-            // merging across large families: the small solo pack is a
-            // cheap early buy, the merged pack schedules later
-            // (htmy/tomli, 2026-07-18).
-            flush_small_tool_family(&mut packed, &mut small_family);
-            packed.push((tool, lines));
-            continue;
-        }
-
-        if small_family
-            .as_ref()
-            .is_some_and(|(_, _, total)| total + tokens > TOOL_CONFIG_FAMILY_MAX_TOKENS)
-        {
-            flush_small_tool_family(&mut packed, &mut small_family);
-        }
-        let (tools, packed_lines, total) =
-            small_family.get_or_insert_with(|| (Vec::new(), Vec::new(), 0));
-        tools.push(tool);
-        packed_lines.extend(lines);
-        *total += tokens;
-    }
-    flush_small_tool_family(&mut packed, &mut small_family);
-    packed
-}
-
-fn should_partition_tool_config(
-    source: &str,
-    sections: &[Section],
-    python_project_manifest: bool,
-) -> bool {
-    if !python_project_manifest {
-        return false;
-    }
-    let source_lines: Vec<&str> = source.lines().collect();
-    let tool_tokens: usize = collect_tool_config_lines(sections)
-        .values()
-        .map(|lines| tool_config_source_tokens(&source_lines, lines))
-        .sum();
-    tool_tokens > TOOL_CONFIG_FAMILY_MAX_TOKENS
-}
-
-fn tool_config_source_tokens(source_lines: &[&str], lines: &[usize]) -> usize {
-    let mut text = String::new();
-    for line_number in lines {
-        if let Some(line) = source_lines.get(line_number.saturating_sub(1)) {
-            text.push_str(line);
-            text.push('\n');
-        }
-    }
-    crate::tokenizer::count(&text)
-}
-
-fn flush_small_tool_family(
-    packed: &mut Vec<(String, Vec<usize>)>,
-    small_family: &mut Option<(Vec<String>, Vec<usize>, usize)>,
-) {
-    if let Some((tools, lines, _)) = small_family.take() {
-        packed.push((tools.join("+"), lines));
-    }
-}
-
-fn collect_tool_config_lines(sections: &[Section]) -> BTreeMap<String, Vec<usize>> {
-    let mut families: BTreeMap<String, Vec<usize>> = BTreeMap::new();
-    for (name, start, end) in sections {
-        if !is_config_section(name) {
-            continue;
-        }
-        let Some(tool) = top_level_tool_name(name) else {
-            continue;
-        };
-        families.entry(tool).or_default().extend(*start..=*end);
-    }
-    families
-}
-
 /// The identity-table residue, minus the dependency arrays the dependency
 /// batch owns — no two peer batches may claim the same row.
 fn build_package_metadata_content(
@@ -348,13 +215,9 @@ fn build_config_content(
     if !is_manifest_toml(sections, python_project_manifest) {
         return None;
     }
-    let partition_tool_config =
-        should_partition_tool_config(source, sections, python_project_manifest);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if is_config_section(name)
-            && (!partition_tool_config || top_level_tool_name(name).is_none())
-        {
+        if is_config_section(name) {
             line_numbers.extend(*start..=*end);
         }
     }
@@ -544,27 +407,6 @@ fn is_scripts_section(name: &str) -> bool {
     matches!(name, "project.scripts" | "tool.poetry.scripts")
 }
 
-/// The first dotted segment after `tool.`, preserving quotes around a segment
-/// that itself contains a literal dot. Input has already passed through
-/// [`normalize_key_path`].
-fn top_level_tool_name(name: &str) -> Option<String> {
-    let rest = name.strip_prefix("tool.")?;
-    if rest.is_empty() {
-        return None;
-    }
-    let mut quote = None;
-    for (index, ch) in rest.char_indices() {
-        match quote {
-            Some(q) if ch == q => quote = None,
-            Some(_) => {}
-            None if matches!(ch, '\'' | '"') => quote = Some(ch),
-            None if ch == '.' => return Some(rest[..index].to_string()),
-            None => {}
-        }
-    }
-    Some(rest.to_string())
-}
-
 /// Every table of a manifest that no other batch claims. A manifest is
 /// author-written declaration throughout: a `[lib]`, a `[lints.*]` block or a
 /// `[patch.*]` redirect states a decision about the project as much as a
@@ -737,73 +579,6 @@ fn cargo_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.45, 0.6, 0.45, path_depth_factor(file, ctx))
-}
-
-/// Demotion for a `tool.<name>` pack whose every family configures the
-/// contributor's *checking* toolchain — linter, formatter, type checker,
-/// test runner, coverage. Build backends, packaging and task-runner
-/// tables say how the project is built and invoked and stay at the full
-/// config tier; these say only which style rules a contributor's editor
-/// enforces, which is the one part of a manifest no summary reader is
-/// orienting on. Any unrecognized family in the pack keeps it at full
-/// value, so the demotion never fires on a mixed appendix.
-///
-/// `pack` is the `+`-joined family name that
-/// [`pack_small_tool_config_families`] produced.
-fn checking_toolchain_scale(pack: &str) -> f64 {
-    if pack.split('+').all(is_checking_toolchain_tool) {
-        CHECKING_TOOLCHAIN_CONFIG_SCALE
-    } else {
-        1.0
-    }
-}
-
-const CHECKING_TOOLCHAIN_CONFIG_SCALE: f64 = 0.35;
-
-fn is_checking_toolchain_tool(tool: &str) -> bool {
-    matches!(
-        tool,
-        // linters and formatters
-        "ruff"
-            | "black"
-            | "blue"
-            | "isort"
-            | "flake8"
-            | "pylint"
-            | "autopep8"
-            | "yapf"
-            | "autoflake"
-            | "pyupgrade"
-            | "bandit"
-            | "vulture"
-            | "codespell"
-            | "docformatter"
-            | "docstrfmt"
-            | "interrogate"
-            | "pydocstyle"
-            | "pycodestyle"
-            | "refurb"
-            | "ssort"
-            // type checkers
-            | "mypy"
-            | "pyright"
-            | "basedpyright"
-            | "pyre"
-            | "pyre-check"
-            | "pytype"
-            | "ty"
-            // test harness and coverage
-            | "pytest"
-            | "coverage"
-            | "tox"
-            | "nox"
-            | "hypothesis"
-            | "slipcover"
-            // commit-time plumbing
-            | "pre-commit"
-            | "commitizen"
-            | "towncrier"
-    )
 }
 
 // --- parser ---
@@ -1131,23 +906,6 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         assert_eq!(residue, vec![3, 5]);
     }
 
-    /// The demotion fires only when the whole pack is checking tooling —
-    /// a build backend, a task runner, or an unrecognized tool anywhere
-    /// in the pack keeps it at the full config tier.
-    #[test]
-    fn walker_toml_checking_toolchain_scale_requires_a_pure_pack() {
-        for pack in ["ruff", "mypy+pytest", "coverage+isort+tox"] {
-            assert_eq!(
-                checking_toolchain_scale(pack),
-                CHECKING_TOOLCHAIN_CONFIG_SCALE,
-                "{pack}"
-            );
-        }
-        for pack in ["setuptools", "poe", "maturin", "mypy+setuptools", "ruff+uv"] {
-            assert_eq!(checking_toolchain_scale(pack), 1.0, "{pack}");
-        }
-    }
-
     /// Config takes every table no other batch owns; the owned ones are the
     /// whole exclusion list, since a peer batch may not re-claim their lines.
     #[test]
@@ -1187,79 +945,6 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
                 "{name} is unclaimed manifest config"
             );
         }
-    }
-
-    #[test]
-    fn walker_toml_tool_config_partitions_by_top_level_family() {
-        assert_eq!(top_level_tool_name("tool.ruff.lint"), Some("ruff".into()));
-        assert_eq!(
-            top_level_tool_name("tool.pytest.ini_options"),
-            Some("pytest".into())
-        );
-        assert_eq!(
-            top_level_tool_name("tool.\"vendor.tool\".lint"),
-            Some("\"vendor.tool\"".into())
-        );
-        assert_eq!(top_level_tool_name("project.urls"), None);
-
-        let source = r#"[build-system]
-requires = ["setuptools"]
-
-[tool.pytest.ini_options]
-xfail_strict = true
-
-[tool.ruff]
-src = ["src"]
-
-[tool.ruff.lint]
-select = ["E"]
-
-[tool.mypy]
-strict = true
-
-[tool.poetry]
-name = "demo"
-
-[tool.poetry.dependencies]
-python = ">=3.11"
-
-[tool.poetry.group.test.dependencies]
-pytest = "*"
-"#;
-        let sections = collect_sections(&parse(source), source);
-        let families = collect_tool_config_lines(&sections);
-
-        assert!(!should_partition_tool_config(source, &sections, true));
-
-        assert_eq!(
-            families.keys().cloned().collect::<Vec<_>>(),
-            ["mypy", "poetry", "pytest", "ruff"]
-        );
-        assert!(families["ruff"].contains(&7));
-        assert!(families["ruff"].contains(&10));
-        assert_eq!(families["poetry"], vec![22, 23]);
-
-        let packed = pack_small_tool_config_families(source, families);
-        assert_eq!(
-            packed
-                .iter()
-                .map(|(tools, _)| tools.as_str())
-                .collect::<Vec<_>>(),
-            ["pytest+ruff+mypy+poetry"]
-        );
-
-        let oversized = format!(
-            "[tool.ruff]\nselect = [{}]\n",
-            std::iter::repeat_n("\"RULE\"", 300)
-                .collect::<Vec<_>>()
-                .join(", ")
-        );
-        let oversized_sections = collect_sections(&parse(&oversized), &oversized);
-        assert!(should_partition_tool_config(
-            &oversized,
-            &oversized_sections,
-            true
-        ));
     }
 
     #[test]

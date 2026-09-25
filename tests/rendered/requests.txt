@@ -134,9 +134,7 @@ ext/
   requests-logo.png
   requests-logo.svg
 pyproject.toml
-  1→[build-system]
-  2→requires = ["setuptools>=61.0"]
-  3→build-backend = "setuptools.build_meta"
+  …
   5→[project]
   6→name = "requests"
   7→description = "Python HTTP for Humans."
@@ -150,22 +148,10 @@ pyproject.toml
   22→    "certifi>=2023.5.7"
   23→]
   …
-  49→[project.urls]
-  50→Documentation = "https://requests.readthedocs.io"
-  51→Source = "https://github.com/psf/requests"
   53→[project.optional-dependencies]
   54→security = []
   55→socks = ["PySocks>=1.5.6, !=1.5.7"]
   56→use_chardet_on_py3 = ["chardet>=3.0.2,<8"]
-  …
-  74→[tool.setuptools]
-  75→license-files = ["LICENSE", "NOTICE"]
-  76→
-  77→[tool.setuptools.dynamic]
-  78→version = {attr = "requests.__version__.__version__"}
-  79→
-  80→[tool.setuptools.packages.find]
-  81→where = ["src"]
   …
 requirements-dev.txt
 setup.py
@@ -248,6 +234,37 @@ src/
       181→    TooManyRedirects,
       182→    URLRequired,
       183→)
+      184→from .models import PreparedRequest, Request, Response
+      185→from .sessions import Session, session
+      186→from .status_codes import codes
+      187→
+      188→__all__ = (
+      189→    "ConnectionError",
+      190→    "ConnectTimeout",
+      191→    "HTTPError",
+      192→    "JSONDecodeError",
+      193→    "PreparedRequest",
+      194→    "ReadTimeout",
+      195→    "Request",
+      196→    "RequestException",
+      197→    "Response",
+      198→    "Session",
+      199→    "Timeout",
+      200→    "TooManyRedirects",
+      201→    "URLRequired",
+      202→    "codes",
+      203→    "delete",
+      204→    "get",
+      205→    "head",
+      206→    "options",
+      207→    "packages",
+      208→    "patch",
+      209→    "post",
+      210→    "put",
+      211→    "request",
+      212→    "session",
+      213→    "utils",
+      214→)
       …
     __version__.py
     _internal_utils.py

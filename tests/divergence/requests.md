@@ -1,4 +1,4 @@
-Score(3000)=0.565 I=0.715 C=0.446 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.635/0.626/0.565/0.591/0.634/0.607
+Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.635/0.626/0.576/0.579/0.625/0.599
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -40,161 +40,162 @@ Score(3000)=0.565 I=0.715 C=0.446 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 2006 | 147 | README.md section #0 |  |  | 0.636 |
 | walker |  | 2020 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.654 |
 | ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.626 |
-| walker |  | 2097 | 77 | manifest config in pyproject.toml |  |  | 0.631 |
-| walker |  | 2154 | 57 | python names src/requests/hooks.py |  |  | 0.631 |
-| walker |  | 2207 | 53 | python decl src/requests/hooks.py:32 |  |  | 0.631 |
-| walker |  | 2264 | 57 | python names src/requests/sessions.py |  |  | 0.631 |
-| walker |  | 2295 | 31 | python decl src/requests/sessions.py:76 |  |  | 0.631 |
-| walker |  | 2303 | 8 | python body src/requests/sessions.py:908 |  |  | 0.631 |
-| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.594 |
-| walker |  | 2356 | 53 | python decl src/requests/sessions.py:108 |  |  | 0.594 |
-| walker |  | 2438 | 82 | tool.setuptools config in pyproject.toml |  |  | 0.595 |
-| walker |  | 2577 | 139 | [dependencies] in pyproject.toml |  |  | 0.607 |
-| ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.584 |
-| walker |  | 2640 | 63 | README.md section #1 |  |  | 0.584 |
-| walker |  | 2713 | 73 | python names src/requests/structures.py |  |  | 0.584 |
-| walker |  | 2726 | 13 | python doc src/requests/help.py:69 |  |  | 0.584 |
-| walker |  | 2740 | 14 | python doc src/requests/help.py:128 |  |  | 0.584 |
-| walker |  | 2829 | 89 | python names src/requests/adapters.py |  |  | 0.584 |
-| walker |  | 2869 | 40 | python decl src/requests/adapters.py:122 |  |  | 0.584 |
-| ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.565 |
-| walker |  | 2878 | 9 | python doc src/requests/adapters.py:122 |  |  | 0.565 |
-| walker |  | 2885 | 7 | python body src/requests/adapters.py:125 |  |  | 0.565 |
-| ns | 3054 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.551 |
-| walker |  | 3154 | 269 | python names src/requests/__init__.py #1 |  |  | 0.569 |
-| walker |  | 3279 | 125 | package metadata in pyproject.toml |  |  | 0.604 |
-| walker |  | 3356 | 77 | listing of 'tests' |  |  | 0.637 |
-| walker |  | 3370 | 14 | listing of 'tests/certs' |  |  | 0.656 |
-| walker |  | 3382 | 12 | listing of 'tests/testserver' |  |  | 0.668 |
-| walker |  | 3399 | 17 | python body src/requests/hooks.py:25 |  |  | 0.668 |
-| ns | 3407 |  | 353 | `models.py` module map: constants, all five classes, `Request` fields | 3.1 |  | 0.639 |
-| walker |  | 3417 | 18 | python doc src/requests/hooks.py:32 |  |  | 0.639 |
-| walker |  | 3435 | 18 | python body src/requests/help.py:128 |  |  | 0.639 |
-| walker |  | 3445 | 10 | python body src/requests/adapters.py:153 |  |  | 0.639 |
-| walker |  | 3571 | 126 | python names src/requests/auth.py |  |  | 0.639 |
-| walker |  | 3593 | 22 | python decl src/requests/auth.py:78 |  |  | 0.639 |
-| walker |  | 3615 | 22 | python decl src/requests/auth.py:116 |  |  | 0.639 |
-| walker |  | 3628 | 13 | python doc src/requests/auth.py:78 |  |  | 0.639 |
-| walker |  | 3643 | 15 | python doc src/requests/auth.py:116 |  |  | 0.639 |
-| ns | 3728 |  | 321 | `PreparedRequest`: attributes + every `prepare_*` step | 3.2 | 3.1 | 0.618 |
-| walker |  | 3777 | 134 | python names src/requests/api.py |  |  | 0.634 |
-| walker |  | 3812 | 35 | python decl src/requests/api.py:24 |  |  | 0.634 |
-| walker |  | 3852 | 40 | python decl src/requests/api.py:74 |  |  | 0.634 |
-| walker |  | 3892 | 40 | python decl src/requests/api.py:137 |  |  | 0.634 |
-| walker |  | 3932 | 40 | python decl src/requests/api.py:154 |  |  | 0.634 |
-| walker |  | 3996 | 64 | python decl src/requests/api.py:117 |  |  | 0.634 |
-| walker |  | 4009 | 13 | python module doc tests/__init__.py |  |  | 0.634 |
-| ns | 4031 |  | 303 | `Response` attribute set: typed fields + `__attrs__` | 3.3 | 3.1 | 0.606 |
-| walker |  | 4256 | 247 | python names src/requests/utils.py |  |  | 0.606 |
-| walker |  | 4264 | 8 | python decl src/requests/utils.py:370 |  |  | 0.606 |
-| walker |  | 4274 | 10 | python decl src/requests/utils.py:328 |  |  | 0.606 |
-| walker |  | 4302 | 28 | python decl src/requests/utils.py:91 |  |  | 0.607 |
-| ns | 4313 |  | 282 | `Response`: `__init__`, dunders and every `@property` | 3.4 | 3.3 | 0.591 |
-| walker |  | 4335 | 33 | python decl src/requests/utils.py:231 |  |  | 0.591 |
-| walker |  | 4372 | 37 | python decl src/requests/utils.py:149 |  |  | 0.591 |
-| walker |  | 4409 | 37 | python decl src/requests/utils.py:341 |  |  | 0.591 |
-| walker |  | 4448 | 39 | plaintext config docs/requirements.txt |  |  | 0.591 |
-| ns | 4465 |  | 152 | `Response`: the remaining members (`iter_content` … `close`) | 3.5 | 3.4 | 0.582 |
-| walker |  | 4605 | 157 | python names src/requests/compat.py |  |  | 0.582 |
-| ns | 4680 |  | 215 | `adapters.py`: pool defaults + the `BaseAdapter` contract | 3.6 |  | 0.574 |
-| walker |  | 4751 | 146 | python names src/requests/models.py |  |  | 0.581 |
-| walker |  | 4810 | 59 | python decl src/requests/models.py:255 |  |  | 0.581 |
-| walker |  | 4846 | 36 | python decl src/requests/models.py:258 |  |  | 0.581 |
-| walker |  | 4920 | 74 | python decl src/requests/models.py:96 |  |  | 0.589 |
-| walker |  | 5044 | 124 | python decl src/requests/models.py:109 |  |  | 0.568 |
-| ns | 5044 |  | 364 | `HTTPAdapter`: constructor knobs + complete method roster | 3.7 | 3.6 | 0.568 |
-| walker |  | 5050 | 6 | python decl src/requests/models.py:112 |  |  | 0.568 |
-| walker |  | 5065 | 15 | python decl src/requests/models.py:137 |  |  | 0.568 |
-| walker |  | 5082 | 17 | python decl src/requests/models.py:133 |  |  | 0.568 |
-| walker |  | 5099 | 17 | python decl src/requests/models.py:147 |  |  | 0.568 |
-| walker |  | 5257 | 158 | python module doc src/requests/__version__.py |  |  | 0.628 |
-| ns | 5313 |  | 269 | `SessionRedirectMixin` + session-module merge helpers | 3.8 |  | 0.614 |
-| ns | 5549 |  | 236 | `cookies.py` module map: classes + free functions | 3.9 |  | 0.604 |
-| walker |  | 5610 | 353 | python names src/requests/exceptions.py |  |  | 0.644 |
-| walker |  | 5618 | 8 | python doc src/requests/exceptions.py:106 |  |  | 0.644 |
-| walker |  | 5666 | 48 | python decl src/requests/exceptions.py:42 |  |  | 0.644 |
-| walker |  | 5675 | 9 | python doc src/requests/exceptions.py:38 |  |  | 0.644 |
-| walker |  | 5684 | 9 | python doc src/requests/exceptions.py:66 |  |  | 0.644 |
-| walker |  | 5740 | 56 | python decl src/requests/exceptions.py:20 |  |  | 0.644 |
-| walker |  | 5749 | 9 | python doc src/requests/exceptions.py:70 |  |  | 0.644 |
-| walker |  | 5758 | 9 | python doc src/requests/exceptions.py:74 |  |  | 0.644 |
-| ns | 5857 |  | 308 | `auth.py`: every auth handler and its methods | 3.10 |  | 0.637 |
-| walker |  | 5922 | 164 | python names src/requests/_types.py |  |  | 0.637 |
-| walker |  | 5951 | 29 | python decl src/requests/_types.py:27 |  |  | 0.637 |
-| walker |  | 5981 | 30 | python decl src/requests/_types.py:32 |  |  | 0.637 |
-| walker |  | 5996 | 15 | python doc src/requests/_types.py:42 |  |  | 0.637 |
-| walker |  | 6153 | 157 | python decl src/requests/sessions.py:127 |  |  | 0.649 |
-| walker |  | 6179 | 26 | python decl src/requests/sessions.py:309 |  |  | 0.649 |
-| walker |  | 6205 | 26 | python decl src/requests/sessions.py:370 |  |  | 0.649 |
-| ns | 6229 |  | 372 | `_types.py`: public type-alias roster | 4.1 |  | 0.634 |
-| walker |  | 6250 | 45 | python decl src/requests/sessions.py:334 |  |  | 0.634 |
-| walker |  | 6417 | 167 | python decl src/requests/auth.py:85 |  |  | 0.639 |
-| walker |  | 6424 | 7 | python decl src/requests/auth.py:91 |  |  | 0.639 |
-| walker |  | 6431 | 7 | python decl src/requests/auth.py:93 |  |  | 0.639 |
-| ns | 6540 |  | 311 | `_types.py`: the `Unpack` kwargs TypedDicts | 4.2 | 4.1 | 0.623 |
-| walker |  | 6599 | 168 | python decl src/requests/models.py:283 |  |  | 0.644 |
-| walker |  | 6610 | 11 | python doc src/requests/adapters.py:153 |  |  | 0.646 |
-| walker |  | 6707 | 97 | python decl src/requests/adapters.py:128 |  |  | 0.662 |
-| walker |  | 6722 | 15 | python body src/requests/api.py:90 |  |  | 0.662 |
-| ns | 6739 |  | 199 | Environment-driven settings: the `merge_environment_settings` core | 4.3 | 2.6 | 0.652 |
-| ns | 6846 |  | 107 | `utils.py` module-level constants | 5.1 |  | 0.655 |
-| ns | 6994 |  | 148 | `utils.py` function roster 1/3: proxies shim, lengths, netrc, encoders | 5.2 |  | 0.651 |
-| walker |  | 7002 | 280 | python names src/requests/cookies.py |  |  | 0.662 |
-| walker |  | 7029 | 27 | python decl src/requests/cookies.py:135 |  |  | 0.662 |
-| walker |  | 7062 | 33 | python decl src/requests/cookies.py:604 |  |  | 0.662 |
-| walker |  | 7101 | 39 | python decl src/requests/cookies.py:164 |  |  | 0.662 |
-| walker |  | 7152 | 51 | python decl src/requests/cookies.py:579 |  |  | 0.662 |
-| ns | 7161 |  | 167 | `utils.py` function roster 2/3: cookies, encoding detection, URI quoting, CIDR | 5.3 | 5.2 | 0.653 |
-| walker |  | 7205 | 53 | python decl src/requests/cookies.py:114 |  |  | 0.653 |
-| walker |  | 7261 | 56 | python decl src/requests/cookies.py:563 |  |  | 0.653 |
-| walker |  | 7317 | 56 | python decl src/requests/cookies.py:571 |  |  | 0.653 |
-| walker |  | 7326 | 9 | python doc src/requests/exceptions.py:78 |  |  | 0.653 |
-| ns | 7341 |  | 180 | `utils.py` function roster 3/3: proxy resolution, default headers, header validation | 5.4 | 5.3 | 0.645 |
-| walker |  | 7528 | 202 | python decl src/requests/structures.py:96 |  |  | 0.645 |
-| walker |  | 7535 | 7 | python decl src/requests/structures.py:126 |  |  | 0.645 |
-| walker |  | 7544 | 9 | python decl src/requests/structures.py:123 |  |  | 0.645 |
-| walker |  | 7552 | 8 | python doc src/requests/structures.py:96 |  |  | 0.645 |
-| ns | 7602 |  | 261 | `structures.py`: `CaseInsensitiveDict` and `LookupDict` in full shape | 5.5 |  | 0.638 |
-| ns | 7712 |  | 110 | `status_codes.py`: how `requests.codes` is built | 5.6 |  | 0.634 |
-| walker |  | 7762 | 210 | python decl src/requests/structures.py:20 |  |  | 0.648 |
-| walker |  | 7816 | 54 | python decl src/requests/structures.py:49 |  |  | 0.648 |
-| ns | 7954 |  | 242 | The five small modules: hooks, `_internal_utils`, compat, certs, packages | 5.7 |  | 0.641 |
-| walker |  | 8038 | 222 | python names src/requests/_internal_utils.py |  |  | 0.643 |
-| walker |  | 8067 | 29 | python decl src/requests/_internal_utils.py:20 |  |  | 0.643 |
-| walker |  | 8080 | 13 | python doc src/requests/utils.py:149 |  |  | 0.643 |
-| walker |  | 8092 | 12 | python doc src/requests/compat.py:37 |  |  | 0.645 |
-| ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.637 |
-| walker |  | 8162 | 70 | python decl src/requests/adapters.py:85 |  |  | 0.637 |
-| walker |  | 8297 | 135 | python decl src/requests/sessions.py:186 |  |  | 0.640 |
-| walker |  | 8306 | 9 | python doc src/requests/exceptions.py:142 |  |  | 0.640 |
-| walker |  | 8321 | 15 | python body src/requests/api.py:171 |  |  | 0.640 |
-| walker |  | 8362 | 41 | python decl src/requests/models.py:151 |  |  | 0.640 |
-| ns | 8464 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.626 |
-| walker |  | 8638 | 276 | python decl src/requests/cookies.py:31 |  |  | 0.626 |
-| walker |  | 8646 | 8 | python decl src/requests/cookies.py:101 |  |  | 0.626 |
-| walker |  | 8654 | 8 | python decl src/requests/cookies.py:105 |  |  | 0.626 |
-| walker |  | 8662 | 8 | python decl src/requests/cookies.py:109 |  |  | 0.626 |
-| walker |  | 8705 | 43 | python decl src/requests/models.py:183 |  |  | 0.626 |
-| ns | 8753 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.615 |
-| walker |  | 8827 | 122 | python body src/requests/__init__.py:99 |  |  | 0.615 |
-| walker |  | 8873 | 46 | python decl src/requests/models.py:141 |  |  | 0.615 |
-| walker |  | 8882 | 9 | python body src/requests/structures.py:73 |  |  | 0.615 |
-| walker |  | 8932 | 50 | python body src/requests/_types.py:42 |  |  | 0.615 |
-| ns | 8955 |  | 202 | `HTTPAdapter.send`: the remaining `except` arms and the return | 6.3 | 6.2 | 0.607 |
-| ns | 9043 |  | 88 | Makefile: the remaining targets (coverage, publish, docs) | 7.1 | 1.8 | 0.611 |
-| walker |  | 9254 | 322 | python decl src/requests/models.py:376 |  |  | 0.631 |
-| walker |  | 9262 | 8 | python decl src/requests/models.py:471 |  |  | 0.632 |
-| walker |  | 9295 | 33 | python decl src/requests/models.py:697 |  |  | 0.632 |
-| ns | 9326 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.625 |
-| walker |  | 9334 | 39 | python decl src/requests/models.py:574 |  |  | 0.625 |
-| walker |  | 9374 | 40 | python decl src/requests/models.py:481 |  |  | 0.625 |
-| walker |  | 9415 | 41 | python decl src/requests/models.py:668 |  |  | 0.625 |
-| walker |  | 9468 | 53 | python body src/requests/_internal_utils.py:26 |  |  | 0.625 |
-| ns | 9481 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.619 |
-| ns | 9576 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.616 |
-| walker |  | 9639 | 171 | python decl src/requests/models.py:321 |  |  | 0.616 |
-| walker |  | 9695 | 56 | python doc src/requests/_internal_utils.py:26 |  |  | 0.616 |
-| walker |  | 9704 | 9 | python doc src/requests/exceptions.py:153 |  |  | 0.616 |
-| ns | 9758 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.610 |
+| walker |  | 2077 | 57 | python names src/requests/hooks.py |  |  | 0.626 |
+| walker |  | 2130 | 53 | python decl src/requests/hooks.py:32 |  |  | 0.626 |
+| walker |  | 2187 | 57 | python names src/requests/sessions.py |  |  | 0.626 |
+| walker |  | 2218 | 31 | python decl src/requests/sessions.py:76 |  |  | 0.626 |
+| walker |  | 2226 | 8 | python body src/requests/sessions.py:908 |  |  | 0.626 |
+| walker |  | 2279 | 53 | python decl src/requests/sessions.py:108 |  |  | 0.626 |
+| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.590 |
+| walker |  | 2420 | 141 | [dependencies] in pyproject.toml |  |  | 0.598 |
+| walker |  | 2483 | 63 | README.md section #1 |  |  | 0.598 |
+| walker |  | 2556 | 73 | python names src/requests/structures.py |  |  | 0.598 |
+| walker |  | 2569 | 13 | python doc src/requests/help.py:69 |  |  | 0.598 |
+| walker |  | 2583 | 14 | python doc src/requests/help.py:128 |  |  | 0.598 |
+| ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.576 |
+| walker |  | 2672 | 89 | python names src/requests/adapters.py |  |  | 0.576 |
+| walker |  | 2712 | 40 | python decl src/requests/adapters.py:122 |  |  | 0.576 |
+| walker |  | 2721 | 9 | python doc src/requests/adapters.py:122 |  |  | 0.576 |
+| walker |  | 2728 | 7 | python body src/requests/adapters.py:125 |  |  | 0.576 |
+| ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.557 |
+| walker |  | 2997 | 269 | python names src/requests/__init__.py #1 |  |  | 0.576 |
+| ns | 3054 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.562 |
+| walker |  | 3122 | 125 | package metadata in pyproject.toml |  |  | 0.591 |
+| walker |  | 3199 | 77 | listing of 'tests' |  |  | 0.624 |
+| walker |  | 3213 | 14 | listing of 'tests/certs' |  |  | 0.643 |
+| walker |  | 3225 | 12 | listing of 'tests/testserver' |  |  | 0.654 |
+| walker |  | 3242 | 17 | python body src/requests/hooks.py:25 |  |  | 0.654 |
+| walker |  | 3260 | 18 | python doc src/requests/hooks.py:32 |  |  | 0.654 |
+| walker |  | 3278 | 18 | python body src/requests/help.py:128 |  |  | 0.654 |
+| walker |  | 3288 | 10 | python body src/requests/adapters.py:153 |  |  | 0.654 |
+| ns | 3407 |  | 353 | `models.py` module map: constants, all five classes, `Request` fields | 3.1 |  | 0.626 |
+| walker |  | 3414 | 126 | python names src/requests/auth.py |  |  | 0.626 |
+| walker |  | 3436 | 22 | python decl src/requests/auth.py:78 |  |  | 0.626 |
+| walker |  | 3458 | 22 | python decl src/requests/auth.py:116 |  |  | 0.627 |
+| walker |  | 3471 | 13 | python doc src/requests/auth.py:78 |  |  | 0.627 |
+| walker |  | 3486 | 15 | python doc src/requests/auth.py:116 |  |  | 0.627 |
+| walker |  | 3620 | 134 | python names src/requests/api.py |  |  | 0.643 |
+| walker |  | 3655 | 35 | python decl src/requests/api.py:24 |  |  | 0.643 |
+| walker |  | 3695 | 40 | python decl src/requests/api.py:74 |  |  | 0.643 |
+| ns | 3728 |  | 321 | `PreparedRequest`: attributes + every `prepare_*` step | 3.2 | 3.1 | 0.622 |
+| walker |  | 3735 | 40 | python decl src/requests/api.py:137 |  |  | 0.622 |
+| walker |  | 3775 | 40 | python decl src/requests/api.py:154 |  |  | 0.622 |
+| walker |  | 3839 | 64 | python decl src/requests/api.py:117 |  |  | 0.622 |
+| walker |  | 3852 | 13 | python module doc tests/__init__.py |  |  | 0.622 |
+| ns | 4031 |  | 303 | `Response` attribute set: typed fields + `__attrs__` | 3.3 | 3.1 | 0.594 |
+| walker |  | 4099 | 247 | python names src/requests/utils.py |  |  | 0.595 |
+| walker |  | 4107 | 8 | python decl src/requests/utils.py:370 |  |  | 0.595 |
+| walker |  | 4117 | 10 | python decl src/requests/utils.py:328 |  |  | 0.595 |
+| walker |  | 4145 | 28 | python decl src/requests/utils.py:91 |  |  | 0.595 |
+| walker |  | 4178 | 33 | python decl src/requests/utils.py:231 |  |  | 0.595 |
+| walker |  | 4215 | 37 | python decl src/requests/utils.py:149 |  |  | 0.595 |
+| walker |  | 4252 | 37 | python decl src/requests/utils.py:341 |  |  | 0.595 |
+| walker |  | 4291 | 39 | plaintext config docs/requirements.txt |  |  | 0.595 |
+| ns | 4313 |  | 282 | `Response`: `__init__`, dunders and every `@property` | 3.4 | 3.3 | 0.579 |
+| walker |  | 4448 | 157 | python names src/requests/compat.py |  |  | 0.580 |
+| ns | 4465 |  | 152 | `Response`: the remaining members (`iter_content` … `close`) | 3.5 | 3.4 | 0.571 |
+| walker |  | 4594 | 146 | python names src/requests/models.py |  |  | 0.577 |
+| walker |  | 4653 | 59 | python decl src/requests/models.py:255 |  |  | 0.577 |
+| ns | 4680 |  | 215 | `adapters.py`: pool defaults + the `BaseAdapter` contract | 3.6 |  | 0.570 |
+| walker |  | 4689 | 36 | python decl src/requests/models.py:258 |  |  | 0.570 |
+| walker |  | 4763 | 74 | python decl src/requests/models.py:96 |  |  | 0.578 |
+| walker |  | 4887 | 124 | python decl src/requests/models.py:109 |  |  | 0.578 |
+| walker |  | 4893 | 6 | python decl src/requests/models.py:112 |  |  | 0.578 |
+| walker |  | 4908 | 15 | python decl src/requests/models.py:137 |  |  | 0.578 |
+| walker |  | 4925 | 17 | python decl src/requests/models.py:133 |  |  | 0.578 |
+| walker |  | 4942 | 17 | python decl src/requests/models.py:147 |  |  | 0.578 |
+| ns | 5044 |  | 364 | `HTTPAdapter`: constructor knobs + complete method roster | 3.7 | 3.6 | 0.558 |
+| walker |  | 5100 | 158 | python module doc src/requests/__version__.py |  |  | 0.617 |
+| ns | 5313 |  | 269 | `SessionRedirectMixin` + session-module merge helpers | 3.8 |  | 0.604 |
+| walker |  | 5453 | 353 | python names src/requests/exceptions.py |  |  | 0.645 |
+| walker |  | 5461 | 8 | python doc src/requests/exceptions.py:106 |  |  | 0.645 |
+| walker |  | 5509 | 48 | python decl src/requests/exceptions.py:42 |  |  | 0.645 |
+| walker |  | 5518 | 9 | python doc src/requests/exceptions.py:38 |  |  | 0.645 |
+| walker |  | 5527 | 9 | python doc src/requests/exceptions.py:66 |  |  | 0.645 |
+| ns | 5549 |  | 236 | `cookies.py` module map: classes + free functions | 3.9 |  | 0.634 |
+| walker |  | 5583 | 56 | python decl src/requests/exceptions.py:20 |  |  | 0.634 |
+| walker |  | 5592 | 9 | python doc src/requests/exceptions.py:70 |  |  | 0.634 |
+| walker |  | 5601 | 9 | python doc src/requests/exceptions.py:74 |  |  | 0.634 |
+| walker |  | 5765 | 164 | python names src/requests/_types.py |  |  | 0.635 |
+| walker |  | 5794 | 29 | python decl src/requests/_types.py:27 |  |  | 0.635 |
+| walker |  | 5824 | 30 | python decl src/requests/_types.py:32 |  |  | 0.635 |
+| walker |  | 5839 | 15 | python doc src/requests/_types.py:42 |  |  | 0.635 |
+| ns | 5857 |  | 308 | `auth.py`: every auth handler and its methods | 3.10 |  | 0.627 |
+| walker |  | 5996 | 157 | python decl src/requests/sessions.py:127 |  |  | 0.640 |
+| walker |  | 6022 | 26 | python decl src/requests/sessions.py:309 |  |  | 0.640 |
+| walker |  | 6048 | 26 | python decl src/requests/sessions.py:370 |  |  | 0.640 |
+| walker |  | 6093 | 45 | python decl src/requests/sessions.py:334 |  |  | 0.640 |
+| ns | 6229 |  | 372 | `_types.py`: public type-alias roster | 4.1 |  | 0.625 |
+| walker |  | 6260 | 167 | python decl src/requests/auth.py:85 |  |  | 0.629 |
+| walker |  | 6267 | 7 | python decl src/requests/auth.py:91 |  |  | 0.629 |
+| walker |  | 6274 | 7 | python decl src/requests/auth.py:93 |  |  | 0.629 |
+| walker |  | 6442 | 168 | python decl src/requests/models.py:283 |  |  | 0.651 |
+| walker |  | 6453 | 11 | python doc src/requests/adapters.py:153 |  |  | 0.653 |
+| ns | 6540 |  | 311 | `_types.py`: the `Unpack` kwargs TypedDicts | 4.2 | 4.1 | 0.637 |
+| walker |  | 6550 | 97 | python decl src/requests/adapters.py:128 |  |  | 0.653 |
+| walker |  | 6565 | 15 | python body src/requests/api.py:90 |  |  | 0.653 |
+| ns | 6739 |  | 199 | Environment-driven settings: the `merge_environment_settings` core | 4.3 | 2.6 | 0.643 |
+| walker |  | 6845 | 280 | python names src/requests/cookies.py |  |  | 0.654 |
+| ns | 6846 |  | 107 | `utils.py` module-level constants | 5.1 |  | 0.657 |
+| walker |  | 6872 | 27 | python decl src/requests/cookies.py:135 |  |  | 0.657 |
+| walker |  | 6905 | 33 | python decl src/requests/cookies.py:604 |  |  | 0.657 |
+| walker |  | 6944 | 39 | python decl src/requests/cookies.py:164 |  |  | 0.657 |
+| ns | 6994 |  | 148 | `utils.py` function roster 1/3: proxies shim, lengths, netrc, encoders | 5.2 |  | 0.653 |
+| walker |  | 6995 | 51 | python decl src/requests/cookies.py:579 |  |  | 0.653 |
+| walker |  | 7048 | 53 | python decl src/requests/cookies.py:114 |  |  | 0.653 |
+| walker |  | 7104 | 56 | python decl src/requests/cookies.py:563 |  |  | 0.653 |
+| walker |  | 7160 | 56 | python decl src/requests/cookies.py:571 |  |  | 0.653 |
+| ns | 7161 |  | 167 | `utils.py` function roster 2/3: cookies, encoding detection, URI quoting, CIDR | 5.3 | 5.2 | 0.645 |
+| walker |  | 7169 | 9 | python doc src/requests/exceptions.py:78 |  |  | 0.645 |
+| ns | 7341 |  | 180 | `utils.py` function roster 3/3: proxy resolution, default headers, header validation | 5.4 | 5.3 | 0.636 |
+| walker |  | 7371 | 202 | python decl src/requests/structures.py:96 |  |  | 0.637 |
+| walker |  | 7378 | 7 | python decl src/requests/structures.py:126 |  |  | 0.637 |
+| walker |  | 7387 | 9 | python decl src/requests/structures.py:123 |  |  | 0.637 |
+| walker |  | 7395 | 8 | python doc src/requests/structures.py:96 |  |  | 0.637 |
+| ns | 7602 |  | 261 | `structures.py`: `CaseInsensitiveDict` and `LookupDict` in full shape | 5.5 |  | 0.629 |
+| walker |  | 7605 | 210 | python decl src/requests/structures.py:20 |  |  | 0.644 |
+| walker |  | 7659 | 54 | python decl src/requests/structures.py:49 |  |  | 0.644 |
+| ns | 7712 |  | 110 | `status_codes.py`: how `requests.codes` is built | 5.6 |  | 0.640 |
+| walker |  | 7881 | 222 | python names src/requests/_internal_utils.py |  |  | 0.640 |
+| walker |  | 7910 | 29 | python decl src/requests/_internal_utils.py:20 |  |  | 0.640 |
+| walker |  | 7923 | 13 | python doc src/requests/utils.py:149 |  |  | 0.640 |
+| walker |  | 7935 | 12 | python doc src/requests/compat.py:37 |  |  | 0.641 |
+| ns | 7954 |  | 242 | The five small modules: hooks, `_internal_utils`, compat, certs, packages | 5.7 |  | 0.637 |
+| walker |  | 8005 | 70 | python decl src/requests/adapters.py:85 |  |  | 0.637 |
+| ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.630 |
+| walker |  | 8140 | 135 | python decl src/requests/sessions.py:186 |  |  | 0.632 |
+| walker |  | 8149 | 9 | python doc src/requests/exceptions.py:142 |  |  | 0.632 |
+| walker |  | 8164 | 15 | python body src/requests/api.py:171 |  |  | 0.632 |
+| walker |  | 8205 | 41 | python decl src/requests/models.py:151 |  |  | 0.632 |
+| ns | 8464 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.619 |
+| walker |  | 8481 | 276 | python decl src/requests/cookies.py:31 |  |  | 0.619 |
+| walker |  | 8489 | 8 | python decl src/requests/cookies.py:101 |  |  | 0.619 |
+| walker |  | 8497 | 8 | python decl src/requests/cookies.py:105 |  |  | 0.619 |
+| walker |  | 8505 | 8 | python decl src/requests/cookies.py:109 |  |  | 0.619 |
+| walker |  | 8548 | 43 | python decl src/requests/models.py:183 |  |  | 0.619 |
+| walker |  | 8670 | 122 | python body src/requests/__init__.py:99 |  |  | 0.619 |
+| walker |  | 8716 | 46 | python decl src/requests/models.py:141 |  |  | 0.619 |
+| walker |  | 8725 | 9 | python body src/requests/structures.py:73 |  |  | 0.619 |
+| ns | 8753 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.607 |
+| walker |  | 8775 | 50 | python body src/requests/_types.py:42 |  |  | 0.607 |
+| ns | 8955 |  | 202 | `HTTPAdapter.send`: the remaining `except` arms and the return | 6.3 | 6.2 | 0.599 |
+| ns | 9043 |  | 88 | Makefile: the remaining targets (coverage, publish, docs) | 7.1 | 1.8 | 0.604 |
+| walker |  | 9097 | 322 | python decl src/requests/models.py:376 |  |  | 0.624 |
+| walker |  | 9105 | 8 | python decl src/requests/models.py:471 |  |  | 0.625 |
+| walker |  | 9138 | 33 | python decl src/requests/models.py:697 |  |  | 0.625 |
+| walker |  | 9177 | 39 | python decl src/requests/models.py:574 |  |  | 0.625 |
+| walker |  | 9217 | 40 | python decl src/requests/models.py:481 |  |  | 0.625 |
+| walker |  | 9258 | 41 | python decl src/requests/models.py:668 |  |  | 0.625 |
+| walker |  | 9311 | 53 | python body src/requests/_internal_utils.py:26 |  |  | 0.625 |
+| ns | 9326 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.613 |
+| ns | 9481 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.608 |
+| walker |  | 9482 | 171 | python decl src/requests/models.py:321 |  |  | 0.608 |
+| walker |  | 9538 | 56 | python doc src/requests/_internal_utils.py:26 |  |  | 0.608 |
+| walker |  | 9547 | 9 | python doc src/requests/exceptions.py:153 |  |  | 0.608 |
+| ns | 9576 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.605 |
+| ns | 9758 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.599 |
+| walker |  | 9875 | 328 | python decl src/requests/auth.py:124 |  |  | 0.610 |
+| walker |  | 9882 | 7 | python decl src/requests/auth.py:136 |  |  | 0.610 |
+| walker |  | 9889 | 7 | python decl src/requests/auth.py:138 |  |  | 0.610 |
 | ns | 9915 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.604 |
 | ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.602 |

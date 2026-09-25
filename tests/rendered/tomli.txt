@@ -67,10 +67,14 @@ README.md
   …
   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
   …
+  181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
   …
   201→## Performance<a name="performance"></a>
-  …
+  202→
+  203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
+  204→
+  205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
   …
   230→### Pure Python<a name="pure-python"></a>
@@ -88,9 +92,7 @@ profiler/
   profiler_script.py
   requirements.txt
 pyproject.toml
-  1→[build-system]
-  2→requires = ["flit_core>=3.12,<4"]
-  3→build-backend = "flit_core.buildapi"
+  …
   5→[project]
   6→name = "tomli"
   7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
@@ -104,9 +106,6 @@ pyproject.toml
   15→readme = "README.md"
   …
   26→keywords = ["toml"]
-  28→[project.urls]
-  29→"Homepage" = "https://github.com/hukkin/tomli"
-  30→"Changelog" = "https://github.com/hukkin/tomli/blob/master/CHANGELOG.md"
   …
 scripts/
   mypyc_tox
@@ -237,7 +236,9 @@ src/
       109→def match_to_localtime(match: re.Match[str]) -> time:
       …
       116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-      …
+      117→    if match.group("floatpart"):
+      118→        return parse_float(match.group())
+      119→    return int(match.group(), 0)
     _types.py
       …
       8→ParseFloat = Callable[[str], Any]

@@ -124,12 +124,7 @@ downstream/
   python-lsp-server.sh
   tox.sh
 pyproject.toml
-  1→[build-system]
-  2→requires = [
-  3→  "setuptools>=65.0",
-  4→  "setuptools-scm[toml]>=8.0",
-  5→]
-  6→build-backend = "setuptools.build_meta"
+  …
   8→[project]
   9→name = "pluggy"
   10→license = {text = "MIT"}
@@ -140,16 +135,6 @@ pyproject.toml
   34→readme = {file = "README.rst", content-type = "text/x-rst"}
   35→requires-python = ">=3.10"
   37→dynamic = ["version"]
-  …
-  43→[tool.setuptools]
-  44→packages = ["pluggy"]
-  45→package-dir =  {""="src"}
-  46→package-data = {"pluggy" = ["py.typed"]}
-  …
-  69→[tool.setuptools_scm]
-  70→
-  71→[tool.uv]
-  72→default-groups = ["dev", "testing"]
   …
 scripts/
   release.py
