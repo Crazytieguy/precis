@@ -54,8 +54,9 @@ ill-fitting batch for a smaller one would break this.
 
 ## Only the root README is read as a document
 
-The root README is the only document the markdown walker reads (a
-single named file reads as one); every other `.md` is a listing row.
+The root README is the only document the markdown walker reads (one
+file: Markdown, then reST, then AsciiDoc; a single named file reads as
+one); every other `.md` is a listing row.
 That includes the files the host harness already loads into the model's
 context — `CLAUDE.md`, `AGENTS.md`, skill and rules files — so they need
 no special case: an NS that ranks their content as primary is an

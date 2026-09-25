@@ -190,7 +190,7 @@ When the path is the root of a git repository, `precis` honours `.gitignore` (in
 ## Supported languages
 
 - **Parsed source** — Rust, TypeScript / JavaScript (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`), Python, Go, C (`.c`, `.h`) and Lua: module docs, declaration names and signatures, then doc comments and bodies as the budget allows.
-- **README** — the root `README.md` or `README.rst`: its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
+- **README** — the root README in Markdown, reStructuredText, AsciiDoc or plain text (`README.md`, `README.rst`, `README.adoc`, an extensionless `README`, …): its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
 - **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
 - **Build and ops files** — Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples, runtime version pins (`.nvmrc`, `.python-version`, `.tool-versions`) and `pnpm-workspace.yaml`.
 - **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short.
