@@ -35,7 +35,22 @@ README.md
   28→  - [Pure Python](#pure-python)
   30→<!-- mdformat-toc end -->
   32→## Intro<a name="intro"></a>
-  …
+  33→
+  34→Tomli is a Python library for parsing [TOML](https://toml.io).
+  35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
+  36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
+  37→
+  38→A version of Tomli, the `tomllib` module,
+  39→was added to the standard library in Python 3.11
+  40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
+  41→Tomli continues to provide a backport on PyPI for Python versions
+  42→where the standard library module is not available
+  43→and that have not yet reached their end-of-life.
+  44→
+  45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
+  46→to generate binary wheels for most of the widely used platforms,
+  47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
+  48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
   50→## Installation<a name="installation"></a>
   51→
   52→```bash
@@ -56,9 +71,27 @@ README.md
   152→## FAQ<a name="faq"></a>
   153→
   154→### Why this parser?<a name="why-this-parser"></a>
-  …
+  155→
+  156→- it's lil'
+  157→- pure Python with zero dependencies
+  158→- the fastest pure Python parser [\*](#pure-python):
+  159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
+  160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
+  161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
+  162→- 100% spec compliant: passes all tests in
+  163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+  164→  test suite
+  165→- thoroughly tested: 100% branch coverage
   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-  …
+  168→
+  169→No.
+  170→
+  171→The `tomli.loads` function returns a plain `dict` that is populated with builtin types and types from the standard library only.
+  172→Preserving comments requires a custom type to be returned so will not be supported,
+  173→at least not by the `tomli.loads` and `tomli.load` functions.
+  174→
+  175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
+  176→
   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
   …
   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
@@ -72,6 +105,8 @@ README.md
 benchmark/
   LICENSE
   README.md
+    1→# Benchmark
+    …
   data.toml
   requirements.txt
   run.py
@@ -86,8 +121,19 @@ fuzzer/
     56→    sys.stderr.flush()
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
-    …
+    61→    to_process = [toml_obj]
+    62→    while to_process:
+    63→        cont = to_process.pop()
+    64→        for k, v in cont.items() if isinstance(cont, dict) else enumerate(cont):
+    65→            if isinstance(v, float) and isnan(v):
+    66→                cont[k] = "nan"
+    67→            elif isinstance(v, (dict, list)):
+    68→                to_process.append(v)
     71→def main():
+    72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
+    73→    fuzzer_options = sys.argv
+    74→    atheris.Setup(fuzzer_options, test_one_input)
+    75→    atheris.Fuzz()
     …
   requirements.txt
     1→# sudo apt-get install clang
@@ -149,106 +195,8 @@ src/
       48→
       49→TOML_WS: Final = frozenset(" \t")
       50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
-      51→BARE_KEY_CHARS: Final = frozenset(
-      52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-      53→)
-      54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
-      55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
-      56→
-      57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-      58→    {
-      59→        "\\b": "\u0008",  # backspace
-      60→        "\\t": "\u0009",  # tab
-      61→        "\\n": "\u000a",  # linefeed
-      62→        "\\f": "\u000c",  # form feed
-      63→        "\\r": "\u000d",  # carriage return
-      64→        "\\e": "\u001b",  # escape
-      65→        '\\"': "\u0022",  # quote
-      66→        "\\\\": "\u005c",  # backslash
-      67→    }
-      68→)
-      71→class DEPRECATED_DEFAULT:
-      …
-      76→class TOMLDecodeError(ValueError):
-      …
-      87→    def __init__(
-      88→        self,
-      89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      92→        *args: Any,
-      93→    ):
-      …
-      137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      …
-      149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      …
-      220→class Flags:
-      …
-      223→    # Marks an immutable namespace (inline array or inline table).
-      224→    FROZEN: Final = 0
-      225→    # Marks a nest that has been explicitly created and can no longer
-      226→    # be opened using the "[table]" syntax.
-      227→    EXPLICIT_NEST: Final = 1
-      228→
-      229→    def __init__(self) -> None:
-      …
-      233→    def add_pending(self, key: Key, flag: int) -> None:
-      …
-      236→    def finalize_pending(self) -> None:
-      …
-      241→    def unset_all(self, key: Key) -> None:
-      …
-      249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
-      …
-      260→    def is_(self, key: Key, flag: int) -> bool:
-      …
-      278→class NestedDict:
-      279→    def __init__(self) -> None:
-      …
-      283→    def get_or_create_nest(
-      284→        self,
-      285→        key: Key,
-      286→        *,
-      287→        access_lists: bool = True,
-      288→    ) -> dict[str, Any]:
-      …
-      300→    def append_nest_to_list(self, key: Key) -> None:
-      …
-      312→class Output:
-      313→    def __init__(self) -> None:
-      …
-      318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
       …
     _re.py
-      …
-      11→TYPE_CHECKING = False
-      …
-      17→_TIME_RE_STR: Final = r"""
-      …
-      26→RE_NUMBER: Final = re.compile(
-      …
-      45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
-      46→RE_DATETIME: Final = re.compile(
-      47→    rf"""
-      48→([0-9]{{4}})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])  # date, e.g. 1988-10-27
-      49→(?:
-      50→    [Tt ]
-      51→    {_TIME_RE_STR}
-      52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
-      53→)?
-      54→""",
-      55→    flags=re.VERBOSE,
-      56→)
-      59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
-      …
-      98→@lru_cache(maxsize=None)
-      99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
-      …
-      109→def match_to_localtime(match: re.Match[str]) -> time:
-      …
-      116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-      …
     _types.py
       …
       8→ParseFloat = Callable[[str], Any]
@@ -257,17 +205,25 @@ src/
     py.typed
 tests/
   __init__.py
-    …
-    5→__all__ = ("tomllib",)
-    …
   burntsushi.py
   data/
+    invalid/
+    valid/
   test_data.py
   test_error.py
   test_misc.py
 tomllib.md
   1→# `tomllib` – Tomli in the standard library
-  …
+  2→
+  3→Tomli was added to the Python standard library in Python 3.11.
+  4→
+  5→Relevant links:
+  6→
+  7→- Python Issue Tracker: https://bugs.python.org/issue40059
+  8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
+  9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
+  10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
+  11→- CPython pull request: https://github.com/python/cpython/pull/31498
   13→## Converting Tomli to tomllib
   14→
   15→### Sync status

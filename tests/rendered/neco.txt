@@ -147,6 +147,19 @@ docs/
     485→```
     486→
     487→<a name='structneco__gen'></a>
+    488→## neco_gen
+    489→```c
+    490→struct neco_gen;
+    491→```
+    492→
+    493→<a name='group___basic_operations_1gacfbcf6055ddaa921e490d1126b098c6b'></a>
+    …
+    1847→## neco_cancel()
+    1848→```c
+    1849→int neco_cancel(int64_t id);
+    1850→```
+    1851→
+    1852→<a name='group___cancelation_1ga85143c030d2055da855a9451980585af'></a>
     …
   README.md
     1→# Neco Documentation
@@ -158,6 +171,26 @@ docs/
     8→
     9→To manually generate the document, run the `docs/tools/build-api.sh`.
   TECHNICAL.md
+    1→# Neco Technical Details
+    2→
+    3→Technical details of the Neco coroutine library.
+    4→
+    5→_Work in progress_
+    6→
+    7→This is a list topics that may be of interest to the community. 
+    8→I look forward to providing more information when time permits.
+    9→
+    10→- The runtime and scheduler
+    11→- Coroutine context switching
+    12→- Signal handling
+    13→- Deadlines
+    14→- Cancelations
+    15→- Epoll and Kqueue
+    16→- Networking
+    17→- Error handling
+    18→- Panics
+    19→- Stack unwinding
+    20→- Profiling
   assets/
     API_foot.md
       1→***
@@ -165,7 +198,14 @@ docs/
       3→Generated with the help of [doxygen](https://www.doxygen.nl/index.html)
     API_head.md
       1→# Neco C API
-      …
+      2→
+      3→C API for the Neco coroutine library.
+      4→
+      5→This document provides a detailed description of the functions and types in the
+      6→[neco.h](../neco.h) and [neco.c](../neco.c) source files for the Neco library.
+      7→
+      8→For a more general overview please see the project 
+      9→[README](https://github.com/tidwall/neco). 
       12→## Table of contents
       …
       34→## Programming notes
@@ -216,40 +256,6 @@ neco.h
   46→int64_t neco_getid(void);
   47→int64_t neco_lastid(void);
   48→int64_t neco_starterid(void);
-  …
-  55→/// @defgroup Channels Channels
-  56→/// Channels allow for sending and receiving values between coroutines.
-  57→/// By default, sends and receives will block until the other side is ready.
-  58→/// This allows the coroutines to synchronize without using locks or condition
-  59→/// variables.
-  60→/// @{
-  61→typedef struct neco_chan neco_chan;
-  62→
-  63→int neco_chan_make(neco_chan **chan, size_t data_size, size_t capacity);
-  64→int neco_chan_retain(neco_chan *chan);
-  65→int neco_chan_release(neco_chan *chan);
-  66→int neco_chan_send(neco_chan *chan, void *data);
-  67→int neco_chan_send_dl(neco_chan *chan, void *data, int64_t deadline);
-  68→int neco_chan_broadcast(neco_chan *chan, void *data);
-  69→int neco_chan_recv(neco_chan *chan, void *data);
-  70→int neco_chan_recv_dl(neco_chan *chan, void *data, int64_t deadline);
-  71→int neco_chan_tryrecv(neco_chan *chan, void *data);
-  72→int neco_chan_close(neco_chan *chan);
-  73→int neco_chan_select(int nchans, ...);
-  74→int neco_chan_select_dl(int64_t deadline, int nchans, ...);
-  75→int neco_chan_selectv(int nchans, neco_chan *chans[]);
-  76→int neco_chan_selectv_dl(int nchans, neco_chan *chans[], int64_t deadline);
-  77→int neco_chan_tryselect(int nchans, ...);
-  78→int neco_chan_tryselectv(int nchans, neco_chan *chans[]);
-  79→int neco_chan_case(neco_chan *chan, void *data);
-  …
-  86→/// @defgroup Generators Generators
-  87→/// A generator is a specialized iterator-bound coroutine that can produce a
-  88→/// sequence of values to be iterated over.
-  89→/// @{
-  90→typedef struct neco_gen neco_gen;
-  91→
-  92→int neco_gen_start(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, ...);
   …
 tests/
   README.md

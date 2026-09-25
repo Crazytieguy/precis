@@ -70,42 +70,6 @@ README.md
   338→You're also welcome to contribute to the project by opening a pull request.
 SECURITY.md
 demo.py
-  …
-  12→host = "**********"
-  13→username = "**********"
-  14→password = "**********"
-  15→
-  16→email = "iwatkot"
-  17→
-  18→api = Api(host, username, password)
-  …
-  23→inbound_id = 1  # ⬅️ Your inbound ID here.
-  …
-  26→inbound = api.inbound.get_by_id(inbound_id)
-  …
-  30→client = None
-  …
-  41→cliend_uuid = client.id
-  …
-  44→client_by_email = api.client.get_by_email(email)
-  …
-  65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
-  66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
-  67→SERVER_PORT = 443  # ⬅️ Your server port here.
-  68→
-  69→
-  70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
-  …
-  103→connection_string = get_connection_string(inbound, "**********", email)
-  …
-  106→img = qrcode.make(connection_string)
-  …
-  109→qrcode_path = os.path.join("qrcodes", f"{email}.png")
-  …
-  120→server_status = api.server.get_status()
-  …
-  129→db_backup_path = "backup.db"
-  …
 dev/
   clean_trash.sh
   create_venv.sh
@@ -142,7 +106,7 @@ py3xui/
     api_base.py
       …
       15→class ApiFields:
-      …
+      16→    """Stores the fields returned by the XUI API for parsing."""
       18→    SUCCESS = "success"
       19→    MSG = "msg"
       20→    OBJ = "obj"
@@ -264,8 +228,12 @@ py3xui/
     bases.py
       …
       9→class JsonStringModel(BaseModel):
-      …
+      10→    """Base class for models that have a JSON string as a field."""
+      12→    @model_validator(mode="before")
       13→    def model_validate(
+      14→        cls,
+      15→        values,
+      16→    ):  # pylint: disable=no-self-argument, arguments-differ
       …
     inbound.py
       …
@@ -276,7 +244,7 @@ py3xui/
     settings.py
       …
       9→class SettingsFields:
-      …
+      10→    """Stores the fields returned by the XUI API for parsing."""
       12→    CLIENTS = "clients"
       13→    DECRYPTION = "decryption"
       14→    FALLBACKS = "fallbacks"
@@ -288,7 +256,7 @@ py3xui/
     sniffing.py
       …
       9→class SniffingFields:
-      …
+      10→    """Stores the fields returned by the XUI API for parsing."""
       12→    ENABLED = "enabled"
       13→
       14→    DEST_OVERRIDE = "destOverride"
@@ -297,6 +265,12 @@ py3xui/
       17→    ROUTE_ONLY = "routeOnly"
       20→class Sniffing(JsonStringModel):
       …
+      31→    enabled: bool
+      32→
+      33→    dest_override: list[str] = Field(default=[], alias=SniffingFields.DEST_OVERRIDE)  # type: ignore
+      34→
+      35→    metadata_only: bool = Field(default=False, alias=SniffingFields.METADATA_ONLY)  # type: ignore
+      36→    route_only: bool = Field(default=False, alias=SniffingFields.ROUTE_ONLY)  # type: ignore
     stream_settings.py
       …
       9→class StreamSettingsFields:
@@ -334,7 +308,9 @@ py3xui/
       4→COOKIE_NAMES = ["3x-ui", "session"]
     env.py
 pyproject.toml
-  …
+  1→[build-system]
+  2→requires = ["setuptools>=42", "wheel"]
+  3→build-backend = "setuptools.build_meta"
   5→[project]
   6→name = "py3xui"
   7→version = "0.5.0"
@@ -349,7 +325,14 @@ pyproject.toml
   21→    "requests>=2.0.0",
   22→    "httpx>=0.20.0",
   23→]
-  …
+  25→[project.urls]
+  26→Homepage = "https://github.com/iwatkot/py3xui"
+  27→Repository = "https://github.com/iwatkot/py3xui"
+  28→
+  29→[tool.setuptools.packages.find]
+  30→where = ["."]
+  31→include = ["py3xui*"]
+  32→exclude = ["dev*"]
 tests/
   __init__.py (empty)
   responses/

@@ -154,26 +154,13 @@ src/
       …
       56→def instrument(f: T_CallableOrType) -> FunctionType | str:
       …
-      136→@overload
       137→def typechecked(
-      138→    *,
-      139→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
-      140→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
-      141→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
-      142→    debug_instrumentation: bool | Unset = unset,
-      143→) -> Callable[[T_CallableOrType], T_CallableOrType]: ...
+      …
       146→@overload
       147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
       148→
       149→
       150→def typechecked(
-      151→    target: T_CallableOrType | None = None,
-      152→    *,
-      153→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
-      154→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
-      155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
-      156→    debug_instrumentation: bool | Unset = unset,
-      157→) -> Any:
       …
     _exceptions.py
       …
@@ -184,15 +171,15 @@ src/
       15→    def __init__(self, message: str):
       16→        super().__init__(message)
       19→class InstrumentationWarning(UserWarning):
-      …
+      20→    """Emitted when there's a problem with instrumenting a function for type checks."""
       22→    def __init__(self, message: str):
-      …
+      23→        super().__init__(message)
       26→class TypeCheckError(Exception):
       …
       31→    def __init__(self, message: str):
       …
       35→    def append_path_element(self, element: str) -> None:
-      …
+      36→        self._path.append(element)
       38→    def __str__(self) -> str:
       …
     _functions.py
@@ -208,8 +195,13 @@ src/
       51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
       …
       55→class TypeguardLoader(SourceFileLoader):
-      …
+      56→    @staticmethod
       57→    def source_to_code(
+      58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
+      59→        path: Buffer | str | PathLike[str] = "<string>",
+      60→        *,
+      61→        _optimize: int = -1,
+      62→    ) -> CodeType:
       …
       99→    def exec_module(self, module: ModuleType) -> None:
       …
@@ -254,6 +246,13 @@ src/
       35→    __slots__ = "globals", "locals", "self_type", "config"
       36→
       37→    def __init__(
+      38→        self,
+      39→        globals: dict[str, Any],
+      40→        locals: dict[str, Any],
+      41→        *,
+      42→        self_type: type | None = None,
+      43→        config: TypeCheckConfiguration = global_config,
+      44→    ):
       …
     _pytest_plugin.py
       …

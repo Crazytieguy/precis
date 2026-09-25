@@ -30,6 +30,35 @@ README.md
   17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
   18→
   19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+  21→## Table of Contents
+  …
+  30→## Install
+  …
+  56→## Usage
+  …
+  81→### Typescript
+  …
+  113→## Examples & Demos
+  …
+  123→## API
+  …
+  138→### mitt
+  …
+  144→### all
+  …
+  148→### on
+  …
+  157→### off
+  …
+  167→### emit
+  …
+  179→## Contribute
+  …
+  184→### Reporting Issues
+  …
+  189→### Submitting pull requests
+  …
+  203→## License
   …
 package.json
   …
@@ -59,27 +88,7 @@ src/
     20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
     21→>;
     23→export interface Emitter<Events extends Record<EventType, unknown>> {
-    24→	all: EventHandlerMap<Events>;
-    25→
-    26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
-    27→	on(type: '*', handler: WildcardHandler<Events>): void;
-    28→
-    29→	off<Key extends keyof Events>(
-    30→		type: Key,
-    31→		handler?: Handler<Events[Key]>
-    32→	): void;
-    33→	off(type: '*', handler: WildcardHandler<Events>): void;
-    34→
-    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
-    36→	emit<Key extends keyof Events>(
-    37→		type: undefined extends Events[Key] ? Key : never
-    38→	): void;
-    39→}
-    41→/**
-    42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
-    43→ * @name mitt
-    44→ * @returns {Mitt}
-    45→ */
+    …
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {

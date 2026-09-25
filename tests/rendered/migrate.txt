@@ -17,12 +17,67 @@ FAQ.md
 GETTING_STARTED.md
 LICENSE
 MIGRATIONS.md
+  1→# Migrations
+  2→
+  3→## Migration Filename Format
+  …
+  56→## Migration Content Format
+  …
+  67→## Reversibility of Migrations
+  …
 Makefile
 README.md
   …
   10→# migrate
   11→
   12→__Database migrations written in Go. Use as [CLI](#cli-usage) or import as [library](#use-in-your-go-project).__
+  14→* Migrate reads migrations from [sources](#migration-sources)
+  15→   and applies them in correct order to a [database](#databases).
+  16→* Drivers are "dumb", migrate glues everything together and makes sure the logic is bulletproof.
+  17→   (Keeps the drivers lightweight, too.)
+  18→* Database drivers don't assume things or try to correct user input. When in doubt, fail.
+  19→
+  20→Forked from [mattes/migrate](https://github.com/mattes/migrate)
+  22→## Databases
+  …
+  48→### Database URLs
+  …
+  69→## Migration Sources
+  …
+  84→## CLI usage
+  85→
+  86→* Simple wrapper around this library.
+  87→* Handles ctrl+c (SIGINT) gracefully.
+  88→* No config search paths, no config files, no magic ENV var injections.
+  89→
+  90→[CLI Documentation](cmd/migrate) (includes CLI install instructions)
+  91→
+  92→### Basic usage
+  93→
+  94→```bash
+  95→$ migrate -source file://path/to/migrations -database postgres://localhost:5432/database up 2
+  96→```
+  97→
+  98→### Docker usage
+  99→
+  100→```bash
+  101→$ docker run -v {{ migration dir }}:/migrations --network host migrate/migrate
+  102→    -path=/migrations/ -database postgres://localhost:5432/database up 2
+  103→```
+  105→## Use in your Go project
+  …
+  152→## Getting started
+  153→
+  154→Go to [getting started](GETTING_STARTED.md)
+  156→## Tutorials
+  …
+  163→## Migration files
+  …
+  174→## Coming from another db migration tool?
+  …
+  179→## Versions
+  …
+  187→## Development and Contributing
   …
 SECURITY.md
 cli/
@@ -32,11 +87,13 @@ cli/
     3→Use [cmd/migrate](../cmd/migrate) instead
   main.go
     …
+    5→// Deprecated, please use cmd/migrate
     6→func main() {
     7→	cli.Main(Version)
     …
   version.go
     …
+    3→// Version is set in Makefile with build flags
     4→var Version = "dev"
 cmd/
   migrate/
@@ -68,6 +125,10 @@ database/
     examples/
   cockroachdb/
     README.md
+      1→# cockroachdb
+      2→
+      3→`cockroachdb://user:password@host:port/dbname?query` (`cockroach://`, and `crdb-postgres://` work, too)
+      …
     TUTORIAL.md
     cockroachdb.go
     cockroachdb_test.go
@@ -162,6 +223,9 @@ database/
     spanner_test.go
   sqlcipher/
     README.md
+      1→# sqlcipher
+      2→
+      3→This is just a copy of the [sqlite3](https://github.com/golang-migrate/migrate/blob/master/database/sqlite3) driver except that it imports `github.com/mutecomm/go-sqlcipher`.
     examples/
     sqlcipher.go
     sqlcipher_test.go
@@ -177,6 +241,11 @@ database/
     sqlite3_test.go
   sqlserver/
     README.md
+      1→# Microsoft SQL Server
+      2→
+      3→`sqlserver://username:password@host/instance?param1=value&param2=value`
+      4→`sqlserver://username:password@host:port?param1=value&param2=value`
+      …
     examples/
     sqlserver.go
     sqlserver_test.go
@@ -193,19 +262,13 @@ database/
     yugabytedb_test.go
 dktesting/
   dktesting.go
-    …
-    14→type ContainerSpec struct {
-    15→	ImageName string
-    16→	Options   dktest.Options
-    17→}
-    …
-    20→func (s *ContainerSpec) Cleanup() (retErr error) {
-    …
-    44→func ParallelTest(t *testing.T, specs []ContainerSpec,
-    45→	testFunc func(*testing.T, dktest.ContainerInfo)) {
-    …
   example_test.go
 docker-deploy.sh
+  1→#!/bin/bash
+  2→
+  3→echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && \
+  4→docker build --build-arg VERSION="$TRAVIS_TAG" . -t migrate/migrate -t migrate/migrate:"$TRAVIS_TAG" && \
+  5→docker push migrate/migrate:"$TRAVIS_TAG" && docker push migrate/migrate
 go.mod
   1→module github.com/golang-migrate/migrate/v4
   2→
@@ -235,79 +298,8 @@ migrate.go
   3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
   4→// in this package.
   …
-  24→var DefaultPrefetchMigrations = uint(10)
-  26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
-  27→var DefaultLockTimeout = 15 * time.Second
-  29→var (
-  30→	ErrNoChange       = errors.New("no change")
-  31→	ErrNilVersion     = errors.New("no migration")
-  32→	ErrInvalidVersion = errors.New("version must be >= -1")
-  33→	ErrLocked         = errors.New("database locked")
-  34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
-  35→)
-  …
-  39→type ErrShortLimit struct {
-  40→	Short uint
-  41→}
-  43→// Error implements the error interface.
-  44→func (e ErrShortLimit) Error() string {
-  45→	return fmt.Sprintf("limit %v short", e.Short)
-  …
-  48→type ErrDirty struct {
-  49→	Version int
-  50→}
-  52→func (e ErrDirty) Error() string {
-  …
-  56→type Migrate struct {
-  57→	sourceName         string
-  58→	sourceDrv          source.Driver
-  59→	databaseDriverName string
-  60→	databaseDrv        database.Driver
-  61→
-  62→	// Log accepts a Logger interface
-  63→	Log Logger
-  64→
-  65→	// GracefulStop accepts `true` and will stop executing migrations
-  66→	// as soon as possible at a safe break point, so that the database
-  67→	// is not corrupted.
-  68→	GracefulStop chan bool
-  69→	isLockedMu   *sync.Mutex
-  70→
-  71→	isGracefulStop bool
-  72→	isLocked       bool
-  73→
-  74→	// PrefetchMigrations defaults to DefaultPrefetchMigrations,
-  75→	// but can be set per Migrate instance.
-  76→	PrefetchMigrations uint
-  77→
-  78→	// LockTimeout defaults to DefaultLockTimeout,
-  79→	// but can be set per Migrate instance.
-  80→	LockTimeout time.Duration
-  81→}
-  …
-  85→func New(sourceURL, databaseURL string) (*Migrate, error) {
-  …
-  119→func NewWithDatabaseInstance(sourceURL string, databaseDriverName string, databaseInstance database.Driver) (*Migrate, error) {
-  …
 migrate_test.go
 migration.go
-  …
-  13→var DefaultBufferSize = uint(100000)
-  …
-  18→type Migration struct {
-  …
-  77→func NewMigration(body io.ReadCloser, identifier string,
-  78→	version uint, targetVersion int) (*Migration, error) {
-  …
-  106→// String implements string.Stringer and is used in tests.
-  107→func (m *Migration) String() string {
-  108→	return fmt.Sprintf("%v [%v=>%v]", m.Identifier, m.Version, m.TargetVersion)
-  …
-  111→// LogString returns a string describing this migration to humans.
-  112→func (m *Migration) LogString() string {
-  …
-  122→func (m *Migration) Buffer() (berr error) {
-  …
 migration_test.go
 source/
   aws_s3/
@@ -334,14 +326,6 @@ source/
     …
   driver_test.go
   errors.go
-    …
-    7→type ErrDuplicateMigration struct {
-    8→	Migration
-    9→	os.FileInfo
-    10→}
-    12→// Error implements error interface.
-    13→func (e ErrDuplicateMigration) Error() string {
-    …
   file/
     README.md
       1→# file
@@ -353,6 +337,10 @@ source/
   github/
     .gitignore
     README.md
+      1→# github
+      2→
+      3→This driver is catered for those that want to source migrations from [github.com](https://github.com). The URL scheme doesn't require a hostname, as it just simply defaults to `github.com`.
+      …
     examples/
     github.go
     github_test.go
@@ -434,19 +422,4 @@ testing/
   testing.go
   testing_test.go
 util.go
-  …
-  13→type MultiError struct {
-  14→	Errs []error
-  15→}
-  …
-  21→func NewMultiError(errs ...error) MultiError {
-  …
-  31→// Error implements error. Multiple errors are concatenated with 'and's.
-  32→func (m MultiError) Error() string {
-  …
-  45→func suint(n int) uint {
-  …
-  52→// FilterCustomQuery filters all query values starting with `x-`
-  53→func FilterCustomQuery(u *nurl.URL) *nurl.URL {
-  …
 util_test.go

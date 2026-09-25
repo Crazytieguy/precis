@@ -24,7 +24,8 @@ package.json
   3→	"version": "5.6.2",
   4→	"description": "Terminal string styling done right",
   5→	"license": "MIT",
-  …
+  6→	"repository": "chalk/chalk",
+  7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
   8→	"type": "module",
   9→	"main": "./source/index.js",
   10→	"exports": "./source/index.js",
@@ -48,6 +49,28 @@ package.json
   28→		"source",
   29→		"!source/index.test-d.ts"
   30→	],
+  31→	"keywords": [
+  32→		"color",
+  33→		"colour",
+  34→		"colors",
+  35→		"terminal",
+  36→		"console",
+  37→		"cli",
+  38→		"string",
+  39→		"ansi",
+  40→		"style",
+  41→		"styles",
+  42→		"tty",
+  43→		"formatting",
+  44→		"rgb",
+  45→		"256",
+  46→		"shell",
+  47→		"xterm",
+  48→		"log",
+  49→		"logging",
+  50→		"command-line",
+  51→		"text"
+  52→	],
   …
 readme.md
   …
@@ -58,9 +81,24 @@ readme.md
   20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
   21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
   23→## Highlights
-  …
+  24→
+  25→- Expressive API
+  26→- Highly performant
+  27→- No dependencies
+  28→- Ability to nest styles
+  29→- [256/Truecolor color support](#256-and-truecolor-color-support)
+  30→- Auto-detects color support
+  31→- Doesn't extend `String.prototype`
+  32→- Clean and focused
+  33→- Actively maintained
+  34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
   36→## Install
-  …
+  37→
+  38→```sh
+  39→npm install chalk
+  40→```
+  41→
+  42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
   44→## Usage
   …
   112→## API
@@ -148,86 +186,6 @@ readme.md
   297→- [Josh Junon](https://github.com/qix-)
 source/
   index.d.ts
-    …
-    12→export interface Options {
-    13→	/**
-    14→	Specify the color support for Chalk.
-    15→
-    16→	By default, color support is automatically detected based on the environment.
-    17→
-    18→	Levels:
-    19→	- `0` - All colors disabled.
-    20→	- `1` - Basic 16 colors support.
-    21→	- `2` - ANSI 256 colors support.
-    22→	- `3` - Truecolor 16 million colors support.
-    23→	*/
-    24→	readonly level?: ColorSupportLevel;
-    25→}
-    27→/**
-    28→Return a new Chalk instance.
-    29→*/
-    30→export const Chalk: new (options?: Options) => ChalkInstance; // eslint-disable-line @typescript-eslint/naming-convention
-    31→
-    32→export interface ChalkInstance {
-    …
-    242→declare const chalk: ChalkInstance;
-    243→
-    244→export const supportsColor: ColorInfo;
-    245→
-    246→export const chalkStderr: typeof chalk;
-    247→export const supportsColorStderr: typeof supportsColor;
-    248→
-    249→export {
-    250→	ModifierName, ForegroundColorName, BackgroundColorName, ColorName,
-    251→	modifierNames, foregroundColorNames, backgroundColorNames, colorNames,
-    252→// } from '#ansi-styles';
-    253→} from './vendor/ansi-styles/index.js';
-    254→
-    255→export {
-    256→	ColorInfo,
-    257→	ColorSupport,
-    258→	ColorSupportLevel,
-    259→// } from '#supports-color';
-    260→} from './vendor/supports-color/index.js';
-    …
-    263→/**
-    264→@deprecated Use `ModifierName` instead.
-    265→
-    266→Basic modifier names.
-    267→*/
-    268→export type Modifiers = ModifierName;
-    …
-    277→export type ForegroundColor = ForegroundColorName;
-    …
-    286→export type BackgroundColor = BackgroundColorName;
-    …
-    295→export type Color = ColorName;
-    297→/**
-    298→@deprecated Use `modifierNames` instead.
-    299→
-    300→Basic modifier names.
-    301→*/
-    302→export const modifiers: readonly Modifiers[];
-    304→/**
-    305→@deprecated Use `foregroundColorNames` instead.
-    306→
-    307→Basic foreground color names.
-    308→*/
-    309→export const foregroundColors: readonly ForegroundColor[];
-    311→/**
-    312→@deprecated Use `backgroundColorNames` instead.
-    313→
-    314→Basic background color names.
-    315→*/
-    316→export const backgroundColors: readonly BackgroundColor[];
-    318→/**
-    319→@deprecated Use `colorNames` instead.
-    320→
-    321→Basic color names. The combination of foreground and background color names.
-    322→*/
-    323→export const colors: readonly Color[];
-    324→
-    325→export default chalk;
   index.js
     …
     8→const {stdout: stdoutColor, stderr: stderrColor} = supportsColor;
@@ -253,6 +211,12 @@ source/
     …
     39→}
     41→const chalkFactory = options => {
+    42→	const chalk = (...strings) => strings.join(' ');
+    43→	applyOptions(chalk, options);
+    44→
+    45→	Object.setPrototypeOf(chalk, createChalk.prototype);
+    46→
+    47→	return chalk;
     …
     50→function createChalk(options) {
     51→	return chalkFactory(options);
@@ -309,7 +273,6 @@ source/
       index.js
     supports-color/
       browser.d.ts
-        1→export {default} from './index.js';
       browser.js
       index.d.ts
       index.js

@@ -1,4 +1,4 @@
-Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.831/0.785/0.687/0.643/0.627/0.521
+Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.951/0.785/0.687/0.643/0.627/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -6,40 +6,40 @@ Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 103 | 103 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 106 | 3 | Fs::DirListing { dir: tap-snapshots } |  |  | 0.000 |
 | walker |  | 111 | 5 | Fs::DirListing { dir: bin } |  |  | 0.000 |
-| walker |  | 123 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 140 | 17 | Fs::DirListing { dir: classes } |  |  | 0.000 |
-| walker |  | 166 | 26 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.219 |
-| ns | 182 |  | 103 | Complete root directory listing | 1.2 |  | 0.661 |
-| walker |  | 193 | 27 | Fs::DirListing { dir: internal } |  |  | 0.687 |
+| walker |  | 128 | 17 | Fs::DirListing { dir: classes } |  |  | 0.000 |
+| walker |  | 154 | 26 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.219 |
+| walker |  | 181 | 27 | Fs::DirListing { dir: internal } |  |  | 0.227 |
+| ns | 182 |  | 103 | Complete root directory listing | 1.2 |  | 0.687 |
+| walker |  | 193 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.687 |
 | walker |  | 254 | 61 | Json::Identity { file: package.json } |  |  | 0.945 |
 | ns | 307 |  | 125 | package.json `bin` + `files`: CLI entry point and published surface | 1.3 |  | 0.756 |
 | walker |  | 310 | 56 | Fs::DirListing { dir: ranges } |  |  | 0.768 |
 | walker |  | 340 | 30 | Json::Runtime { file: package.json } |  |  | 0.768 |
 | ns | 356 |  | 49 | Complete listings of classes/, internal/ and bin/ | 1.4 |  | 0.786 |
 | walker |  | 445 | 105 | Fs::DirListing { dir: functions } |  |  | 0.820 |
-| walker |  | 459 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
 | ns | 461 |  | 105 | Complete listing of functions/ (24 version-level modules) | 1.5 |  | 0.834 |
-| walker |  | 487 | 28 | Fs::DirListing { dir: .github } |  |  | 0.834 |
-| ns | 517 |  | 56 | Complete listing of ranges/ (11 range-level modules) | 1.6 |  | 0.835 |
-| walker |  | 528 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.836 |
-| walker |  | 549 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
-| walker |  | 582 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
-| walker |  | 620 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
-| walker |  | 680 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
-| walker |  | 697 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
+| walker |  | 473 | 28 | Fs::DirListing { dir: .github } |  |  | 0.834 |
+| walker |  | 514 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.835 |
+| ns | 517 |  | 56 | Complete listing of ranges/ (11 range-level modules) | 1.6 |  | 0.836 |
+| walker |  | 547 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
+| walker |  | 585 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
+| walker |  | 645 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
+| walker |  | 662 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.653 |
-| walker |  | 1077 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
-| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.795 |
-| walker |  | 1257 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.831 |
-| walker |  | 1282 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.831 |
-| walker |  | 1309 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.831 |
-| walker |  | 1444 | 135 | Json::Entry { file: package.json } |  |  | 0.951 |
+| walker |  | 1042 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
+| walker |  | 1222 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.878 |
+| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.831 |
+| walker |  | 1247 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.831 |
+| walker |  | 1274 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.831 |
+| walker |  | 1409 | 135 | Json::Entry { file: package.json } |  |  | 0.951 |
 | ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.900 |
-| walker |  | 1729 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.903 |
+| walker |  | 1694 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.903 |
+| walker |  | 1708 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.903 |
 | ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.834 |
-| walker |  | 1873 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
-| walker |  | 1876 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
+| walker |  | 1852 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
+| walker |  | 1855 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
+| walker |  | 1876 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.835 |
 | ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.785 |
 | walker |  | 1981 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.785 |
 | walker |  | 1985 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |

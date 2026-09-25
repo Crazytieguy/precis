@@ -33,7 +33,26 @@ README.md
   3→**A powerful HTTP client that lives in your terminal.**
   4→
   5→Posting is an HTTP client, not unlike Postman and Insomnia. As a TUI application, it can be used over SSH and enables efficient keyboard-centric workflows. Your requests are stored locally in simple YAML files, so they're easy to read and version control.
-  …
+  7→<img width="968" alt="image" src="https://github.com/user-attachments/assets/78359ab0-5e0c-4c0b-a60b-dce06b11bbf5" />
+  8→
+  9→Some notable features include:
+  10→
+  11→- "jump mode" navigation
+  12→- environments/variables
+  13→- autocompletion
+  14→- syntax highlighting using tree-sitter
+  15→- Vim keys
+  16→- customizable keybindings
+  17→- user-defined themes
+  18→- run Python code before and after requests
+  19→- extensive configuration
+  20→- open in $EDITOR/$PAGER
+  21→- import curl commands by pasting them into the URL bar
+  22→- export requests as cURL commands
+  23→- import from Postman and OpenAPI specs
+  24→- a command palette for quickly accessing functionality
+  25→
+  26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
   28→## Installation
   …
   48→### Prefer `pipx`?
@@ -42,7 +61,10 @@ README.md
   53→
   54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
   56→## Learn More
-  …
+  57→
+  58→Learn more about Posting at [https://posting.sh](https://posting.sh).
+  59→
+  60→Posting was built with [Textual](https://github.com/textualize/textual).
 docs/
   CHANGELOG.md
   CNAME
@@ -81,6 +103,16 @@ docs/
   overrides/
     home.html
   roadmap.md
+    1→## About this document
+    …
+    47→## Next planned features 🚀
+    …
+    57→## Longer Term 🔮
+    …
+    89→## Completed ✓
+    …
+    117→## Legend
+    …
   stylesheets/
     extra.css
 mkdocs.yml
@@ -89,9 +121,30 @@ pyproject.toml
   2→name = "posting"
   3→version = "2.10.0"
   4→description = "The modern API client that lives in your terminal."
-  …
+  5→authors = [
+  6→    { name = "Darren Burns", email = "darrenb900@gmail.com" }
+  7→]
+  8→dependencies = [
+  9→    "click>=8.1.7,<9.0.0",
+  10→    "xdg-base-dirs>=6.0.1,<7.0.0",
+  11→    "click-default-group>=1.2.4,<2.0.0",
+  12→    "httpx[brotli]==0.28.1",
+  13→    # pinned httpx automatically since we monkeypatch _main.py
+  14→    "openapi-pydantic>=0.5.0",
+  15→    "pyperclip>=1.9.0,<2.0.0",
+  16→    "pydantic>=2.9.2,<3.0.0",
+  17→    "pyyaml>=6.0.2,<7.0.0",
+  18→    "pydantic-settings>=2.4.0,<3.0.0",
+  19→    "python-dotenv>=1.0.1,<2.0.0",
+  20→    # pinned intentionally
+  21→    "watchfiles>=0.24.0",
+  22→    "textual[syntax]==6.1.0",
+  23→    "textual-autocomplete==4.0.6",
+  24→]
   25→readme = "README.md"
   26→requires-python = ">= 3.11"
+  27→license = { file = "LICENSE" }
+  28→keywords = ["tui", "http", "client", "terminal", "api", "testing", "textual", "cli", "posting", "developer-tool"]
   …
   49→[project.scripts]
   50→posting = "posting.__main__:cli"
@@ -99,35 +152,6 @@ pyproject.toml
 src/
   posting/
     __init__.py
-      …
-      3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
-      …
-      10→from .collection import (
-      11→    Auth,
-      12→    Cookie,
-      13→    Header,
-      14→    QueryParam,
-      15→    RequestBody,
-      16→    RequestModel,
-      17→    FormItem,
-      18→    Options,
-      19→    Scripts,
-      20→)
-      21→from .scripts import Posting
-      22→
-      23→
-      24→__all__ = [
-      25→    "Auth",
-      26→    "Cookie",
-      27→    "Header",
-      28→    "QueryParam",
-      29→    "RequestBody",
-      30→    "RequestModel",
-      31→    "FormItem",
-      32→    "Options",
-      33→    "Scripts",
-      34→    "Posting",
-      35→]
     __main__.py
       1→"""The main entry point for the Posting CLI."""
       …
@@ -184,22 +208,12 @@ src/
       196→    env: tuple[str, ...] = (),
       197→    using_default_collection: bool = False,
       198→) -> Posting:
+      199→    """Return a Posting instance with the given collection and environment."""
       …
     _start_time.py
       …
       4→START_TIME = time.perf_counter_ns()
     app.py
-      …
-      93→class AppHeader(Horizontal):
-      …
-      96→    def compose(self) -> ComposeResult:
-      …
-      108→class AppBody(Vertical):
-      …
-      112→class MainScreen(Screen[None]):
-      …
-      1205→class Posting(App[None], inherit_bindings=False):
-      …
     auth.py
       …
       6→class HttpxBearerTokenAuth(httpx.Auth):
@@ -209,20 +223,19 @@ src/
       …
     collection.py
     commands.py
-      …
-      11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
-      12→
-      13→
-      14→class PostingProvider(Provider):
-      …
     config.py
     exit_codes.py
       1→GENERAL_ERROR = 1
     files.py
     help_data.py
       …
+      4→@dataclass
       5→class HelpData:
       …
+      8→    title: str = field(default="")
+      9→    """Title of the widget"""
+      10→    description: str = field(default="")
+      11→    """Markdown description to be displayed in the HelpScreen"""
     help_screen.py
     highlight_url.py (empty)
     highlighters.py
@@ -238,24 +251,6 @@ src/
       16→class JumpOverlay(ModalScreen[str | Widget | None]):
       …
     jumper.py
-      …
-      9→@runtime_checkable
-      10→class Jumpable(Protocol):
-      …
-      13→    jump_key: str
-      16→class JumpInfo(NamedTuple):
-      …
-      19→    key: str
-      20→    """The key which should trigger the jump."""
-      21→
-      22→    widget: str | Widget
-      23→    """Either the ID or a direct reference to the widget."""
-      26→class Jumper:
-      …
-      29→    def __init__(self, ids_to_keys: Mapping[str, str], screen: Screen[Any]) -> None:
-      …
-      34→    def get_overlays(self) -> dict[Offset, JumpInfo]:
-      …
     locations.py
     messages.py
       …
@@ -264,24 +259,7 @@ src/
       8→    response: Response
     posting.scss
     request_headers.py
-      …
-      4→class RequestHeader(TypedDict):
-      5→    section: str
-      6→    name: str
-      7→    description: str
-      8→    experimental: bool
-      9→    url: str
-      12→REQUEST_HEADERS: list[RequestHeader] = [
-      …
     save_request.py
-      …
-      5→FILE_SUFFIX = ".posting.yaml"
-      6→
-      7→
-      8→def slugify(text: str) -> str:
-      …
-      15→def generate_request_filename(request_title: str) -> str:
-      …
     scripts.py
     suggesters.py
       …
@@ -290,11 +268,6 @@ src/
     themes.py
     tuple_to_multidict.py
     types.py
-      …
-      3→PostingLayout = Literal["horizontal", "vertical"]
-      …
-      6→CertTypes = Union[
-      …
     urls.py
     user_host.py
       …
@@ -307,30 +280,22 @@ src/
     widgets/
       __init__.py (empty)
       center_middle.py
-        …
-        4→class CenterMiddle(Widget, inherit_bindings=False):
-        …
       collection/
         browser.py
         new_request_modal.py
       confirmation.py
-        …
-        12→class ConfirmationModal(ModalScreen[bool]):
-        …
       datatable.py
-        …
-        27→class PostingDataTable(DataTable[str | Text]):
-        …
       input.py
         …
         9→class PostingInput(Input):
+        10→    def on_mount(self) -> None:
+        …
+        18→    @property
+        19→    def cursor_style(self) -> Style:
+        …
+        26→    def on_theme_change(self, theme: Theme) -> None:
         …
       key_value.py
-        …
-        19→class KeyValueInput(Horizontal):
-        …
-        127→class KeyValueEditor(Vertical):
-        …
       key_value_copy_modal.py
       load_env_file_dialog.py
       request/
@@ -338,78 +303,50 @@ src/
         form_editor.py
         header_editor.py
         method_selection.py
-          …
-          14→class MethodSelector(PostingSelect[str]):
-          …
         path_editor.py
         query_editor.py
         request_auth.py
         request_body.py
         request_editor.py
         request_metadata.py
-          …
-          11→class RequestMetadata(VerticalScroll):
-          …
         request_options.py
-          …
-          12→class RequestOptions(VerticalScroll):
-          …
         request_scripts.py
         url_bar.py
       response/
         cookies_table.py
-          …
-          9→class CookiesSection(Vertical):
-          …
         response_area.py
         response_body.py
-          …
-          8→class ResponseTextArea(ReadOnlyTextArea):
-          …
         response_headers.py
-          …
-          4→class ResponseHeadersTable(PostingDataTable):
-          5→    def on_mount(self) -> None:
-          …
         response_trace.py
         script_output.py
       rich_log.py
-        …
-        7→class RichLogIO(StringIO):
-        …
-        37→class PostingRichLog(RichLog):
-        …
       select.py
       tabbed_content.py
-        …
-        5→class PostingTabbedContent(TabbedContent):
-        …
       text_area.py
       tree.py
-        …
-        6→T = TypeVar("T")
-        7→
-        8→
-        9→class PostingTree(Tree[T]):
-        …
       variable_autocomplete.py
-        …
-        18→class VariableAutoComplete(AutoComplete):
-        …
       variable_input.py
         …
         12→class VariableInput(PostingInput):
         …
     xresources.py
-      …
-      8→XRDB_MAPPING = {
-      …
-      20→def load_xresources_themes() -> dict[str, TextualTheme]:
-      …
     yaml.py
-      …
-      10→def str_presenter(dumper: Dumper, data: str) -> yaml.ScalarNode:
-      …
-      23→__all__ = ["load", "dump", "Loader", "Dumper"]
 tests/
+  __snapshots__/
+  posting_snapshot_app.py
+  resources/
+  sample-collections/
+  sample-configs/
+  sample-envs/
+  sample-importable-collections/
+  sample-themes/
+  test_curl_export.py
+  test_curl_import.py
+  test_files.py
+  test_load_env_file_dialog.py
+  test_open_api_import.py
+  test_postman_import.py
+  test_snapshots.py
+  test_urls.py
+  test_variables.py
 uv.lock

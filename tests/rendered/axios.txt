@@ -27,9 +27,25 @@ CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
+  1→# Contributors
+  2→
+  3→Thank you to all the wonderful people who have contributed to axios!
+  5→## Core Team
+  …
+  11→## Notable Contributors
+  12→
+  13→<!-- Add contributors here in alphabetical order by GitHub username -->
+  15→## How to Contribute
+  …
 ECOSYSTEM.md
 LICENSE
 MIGRATION_GUIDE.md
+  1→# Axios Migration Guide
+  2→
+  3→> **Migrating from Axios 0.x to 1.x**
+  4→> 
+  5→> This guide helps developers upgrade from Axios 0.x to 1.x by documenting breaking changes, providing migration strategies, and offering solutions to common upgrade challenges.
+  …
 README.md
 SECURITY.md
 THREATMODEL.md
@@ -110,59 +126,6 @@ examples/
   upload/
 gulpfile.js
 index.d.cts
-  1→type MethodsHeaders = Partial<
-  2→  {
-  3→    [Key in axios.Method as Lowercase<Key>]: AxiosHeaders;
-  4→  } & { common: AxiosHeaders }
-  5→>;
-  7→type AxiosHeaderMatcher =
-  8→  | string
-  9→  | RegExp
-  10→  | ((this: AxiosHeaders, value: string, name: string) => boolean);
-  12→type AxiosHeaderParser = (this: AxiosHeaders, value: axios.AxiosHeaderValue, header: string) => any;
-  13→
-  14→type CommonRequestHeadersList =
-  15→  | 'Accept'
-  16→  | 'Content-Length'
-  17→  | 'User-Agent'
-  18→  | 'Content-Encoding'
-  19→  | 'Authorization'
-  20→  | 'Location';
-  22→type ContentType =
-  23→  | axios.AxiosHeaderValue
-  24→  | 'text/html'
-  25→  | 'text/plain'
-  26→  | 'multipart/form-data'
-  27→  | 'application/json'
-  28→  | 'application/x-www-form-urlencoded'
-  29→  | 'application/octet-stream';
-  31→type CommonResponseHeadersList =
-  32→  | 'Server'
-  33→  | 'Content-Type'
-  34→  | 'Content-Length'
-  35→  | 'Cache-Control'
-  36→  | 'Content-Encoding';
-  38→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
-  39→
-  40→type BrowserProgressEvent = any;
-  41→
-  42→declare class AxiosHeaders {
-  …
-  123→declare class AxiosError<T = unknown, D = any> extends Error {
-  …
-  165→declare class CanceledError<T> extends AxiosError<T> {}
-  166→
-  167→declare class Axios {
-  …
-  231→declare enum HttpStatusCode {
-  …
-  297→type InternalAxiosError<T = unknown, D = any> = AxiosError<T, D>;
-  298→
-  299→declare namespace axios {
-  …
-  713→declare const axios: axios.AxiosStatic;
-  714→
-  715→export = axios;
 index.d.ts
   …
   2→type StringLiteralsOrString<Literals extends string> = Literals | (string & {});
@@ -289,7 +252,10 @@ lib/
       1→# axios // core
       2→
       3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
-      …
+      5→- Dispatching requests
+      6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
+      7→- Managing interceptors
+      8→- Handling config
     buildFullPath.js
     dispatchRequest.js
     mergeConfig.js
@@ -333,8 +299,6 @@ lib/
     isAxiosError.js
     isURLSameOrigin.js
     null.js
-      …
-      2→export default null;
     parseHeaders.js
     parseProtocol.js
     progressEventReducer.js
@@ -398,6 +362,16 @@ tests/
       package-lock.json
       package.json
       tests/
+        fixture-cleanup.module.test.cjs
+        helpers/
+          cjs-typing.ts
+          fixture.cjs
+          run-command.cjs
+          ts-require-default.ts
+          ts-require.ts
+        ts-require-default.module.test.cjs
+        ts-require.module.test.cjs
+        typings.module.test.cjs
     esm/
       package-lock.json
       package.json
@@ -425,6 +399,11 @@ tests/
       deno.json
       deno.lock
       tests/
+        cancel.smoke.test.ts
+        error.smoke.test.ts
+        fetch.smoke.test.ts
+        headers.smoke.test.ts
+        import.smoke.test.ts
     esm/
       package-lock.json
       package.json

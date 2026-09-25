@@ -1,4 +1,4 @@
-Score(3000)=0.634 I=0.872 C=0.460 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.661/0.663/0.643/0.634/0.656/0.574/0.529
+Score(3000)=0.633 I=0.872 C=0.460 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.822/0.685/0.716/0.633/0.656/0.574/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,45 +15,45 @@ Score(3000)=0.634 I=0.872 C=0.460 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 245 |  | 60 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.705 |
 | walker |  | 268 | 54 | Json::Dependencies { file: package.json } |  |  | 0.705 |
 | walker |  | 299 | 31 | Json::Runtime { file: package.json } |  |  | 0.708 |
-| walker |  | 334 | 35 | Code::CodeKey { rung: Names, file: source/queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
-| walker |  | 371 | 37 | Code::CodeKey { rung: Names, file: source/priority-queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
-| ns | 380 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.651 |
-| walker |  | 388 | 17 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.651 |
-| ns | 496 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.553 |
-| ns | 564 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.528 |
-| walker |  | 586 | 198 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 620 | 34 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.609 |
-| ns | 713 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.552 |
-| walker |  | 796 | 176 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.552 |
-| walker |  | 814 | 18 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.591 |
-| walker |  | 871 | 57 | Code::CodeKey { rung: Names, file: source/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
-| walker |  | 902 | 31 | Fs::DirListing { dir: test } |  |  | 0.661 |
-| ns | 902 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.661 |
-| walker |  | 1023 | 121 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.770 |
-| ns | 1036 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.729 |
-| walker |  | 1115 | 92 | Json::Entry { file: package.json } |  |  | 0.773 |
-| ns | 1275 |  | 239 | Name-only roster of every public member of PQueue (24 declarations, complete) | 2.1 |  | 0.672 |
-| walker |  | 1347 | 232 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 3, sub: 1, line: 16 } |  |  | 0.716 |
-| walker |  | 1387 | 40 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 10, sub: 0, line: 581 } |  |  | 0.717 |
-| walker |  | 1429 | 42 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 11, sub: 0, line: 585 } |  |  | 0.717 |
-| ns | 1436 |  | 161 | Readme Usage: the canonical concurrency-1 example | 2.2 |  | 0.663 |
-| walker |  | 1440 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 5, sub: 0, line: 382 } |  |  | 0.663 |
-| walker |  | 1452 | 12 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 13, sub: 0, line: 609 } |  |  | 0.663 |
-| walker |  | 1556 | 104 | Json::Scripts { file: package.json } |  |  | 0.664 |
-| walker |  | 1577 | 21 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 14, sub: 0, line: 616 } |  |  | 0.665 |
-| ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.643 |
-| walker |  | 1691 | 114 | Code::CodeKey { rung: Decl, file: source/queue.ts, decl: 2, sub: 0, line: 3 } |  |  | 0.699 |
-| ns | 1792 |  | 172 | Readme .add() semantics and its two warnings | 2.4 |  | 0.674 |
-| walker |  | 1821 | 130 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 2, sub: 0, line: 97 } |  |  | 0.675 |
-| ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.652 |
-| walker |  | 1955 | 134 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.652 |
-| walker |  | 1976 | 21 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 11, sub: 0, line: 585 } |  |  | 0.652 |
-| ns | 2002 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.643 |
-| walker |  | 2135 | 159 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 3, sub: 2, line: 16 } |  |  | 0.716 |
-| walker |  | 2187 | 52 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 28, sub: 0, line: 952 } |  |  | 0.717 |
-| walker |  | 2197 | 10 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 24, sub: 0, line: 802 } |  |  | 0.717 |
-| walker |  | 2208 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 22, sub: 0, line: 785 } |  |  | 0.717 |
-| walker |  | 2223 | 15 | Code::CodeKey { rung: Body, file: source/priority-queue.ts, decl: 10, sub: 0, line: 115 } |  |  | 0.717 |
+| walker |  | 330 | 31 | Fs::DirListing { dir: test } |  |  | 0.910 |
+| ns | 380 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.836 |
+| walker |  | 451 | 121 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.865 |
+| ns | 496 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.864 |
+| walker |  | 543 | 92 | Json::Entry { file: package.json } |  |  | 0.873 |
+| ns | 564 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.834 |
+| walker |  | 647 | 104 | Json::Scripts { file: package.json } |  |  | 0.834 |
+| walker |  | 682 | 35 | Code::CodeKey { rung: Names, file: source/queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
+| ns | 713 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.754 |
+| walker |  | 796 | 114 | Code::CodeKey { rung: Decl, file: source/queue.ts, decl: 2, sub: 0, line: 3 } |  |  | 0.856 |
+| walker |  | 833 | 37 | Code::CodeKey { rung: Names, file: source/priority-queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.856 |
+| walker |  | 850 | 17 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.856 |
+| ns | 902 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.821 |
+| walker |  | 984 | 134 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.822 |
+| ns | 1036 |  | 134 | source/index.ts imports and the Task type | 1.10 |  | 0.772 |
+| walker |  | 1182 | 198 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.818 |
+| walker |  | 1216 | 34 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.825 |
+| ns | 1275 |  | 239 | Name-only roster of every public member of PQueue (24 declarations, complete) | 2.1 |  | 0.716 |
+| walker |  | 1392 | 176 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.717 |
+| walker |  | 1410 | 18 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.740 |
+| ns | 1436 |  | 161 | Readme Usage: the canonical concurrency-1 example | 2.2 |  | 0.685 |
+| ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.644 |
+| walker |  | 1642 | 232 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 3, sub: 1, line: 16 } |  |  | 0.687 |
+| walker |  | 1682 | 40 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 10, sub: 0, line: 581 } |  |  | 0.699 |
+| walker |  | 1724 | 42 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 11, sub: 0, line: 585 } |  |  | 0.699 |
+| walker |  | 1735 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 5, sub: 0, line: 382 } |  |  | 0.699 |
+| walker |  | 1747 | 12 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 13, sub: 0, line: 609 } |  |  | 0.699 |
+| walker |  | 1768 | 21 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 14, sub: 0, line: 616 } |  |  | 0.700 |
+| walker |  | 1789 | 21 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 11, sub: 0, line: 585 } |  |  | 0.700 |
+| ns | 1792 |  | 172 | Readme .add() semantics and its two warnings | 2.4 |  | 0.675 |
+| ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.651 |
+| walker |  | 1948 | 159 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 3, sub: 2, line: 16 } |  |  | 0.726 |
+| walker |  | 2000 | 52 | Code::CodeKey { rung: Decl, file: source/index.ts, decl: 28, sub: 0, line: 952 } |  |  | 0.726 |
+| ns | 2002 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.716 |
+| walker |  | 2010 | 10 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 24, sub: 0, line: 802 } |  |  | 0.716 |
+| walker |  | 2021 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 22, sub: 0, line: 785 } |  |  | 0.716 |
+| walker |  | 2036 | 15 | Code::CodeKey { rung: Body, file: source/priority-queue.ts, decl: 10, sub: 0, line: 115 } |  |  | 0.716 |
+| walker |  | 2093 | 57 | Code::CodeKey { rung: Names, file: source/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
+| walker |  | 2223 | 130 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 2, sub: 0, line: 97 } |  |  | 0.717 |
 | walker |  | 2234 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 25, sub: 0, line: 809 } |  |  | 0.717 |
 | ns | 2249 |  | 247 | Doc comments distinguishing .onEmpty(), .onIdle() and .onPendingZero() | 2.7 | 2.1 | 0.677 |
 | walker |  | 2281 | 47 | Markdown::Section { file: readme.md, section_index: 27, keeps_default_concavity: false } |  |  | 0.677 |
@@ -61,23 +61,23 @@ Score(3000)=0.634 I=0.872 C=0.460 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 2579 |  | 123 | .onError() contract, with its example elided | 2.9 | 2.1 | 0.633 |
 | walker |  | 2665 | 384 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.670 |
 | walker |  | 2678 | 13 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 26, sub: 0, line: 888 } |  |  | 0.670 |
-| walker |  | 2718 | 40 | Code::CodeKey { rung: Names, file: source/lower-bound.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.670 |
 | ns | 2743 |  | 164 | Doc comments for the .size, .sizeBy(), .pending and .isPaused introspection members | 2.10 | 2.1 | 0.642 |
-| walker |  | 2957 | 239 | Json::IdentityMeta { file: package.json } |  |  | 0.663 |
-| ns | 2972 |  | 229 | .isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape | 2.11 | 2.1 | 0.634 |
+| walker |  | 2917 | 239 | Json::IdentityMeta { file: package.json } |  |  | 0.663 |
+| ns | 2972 |  | 229 | .isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape | 2.11 | 2.1 | 0.633 |
 | ns | 3044 |  | 72 | .setPriority(id, priority) signature and contract | 2.12 | 2.1 | 0.625 |
-| walker |  | 3086 | 129 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.625 |
+| walker |  | 3046 | 129 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.625 |
 | ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.605 |
-| walker |  | 3483 | 397 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 3, sub: 0, line: 111 } |  |  | 0.609 |
-| walker |  | 3506 | 23 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 13, sub: 0, line: 609 } |  |  | 0.614 |
-| walker |  | 3530 | 24 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 25, sub: 0, line: 809 } |  |  | 0.619 |
+| walker |  | 3443 | 397 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 3, sub: 0, line: 111 } |  |  | 0.609 |
+| walker |  | 3466 | 23 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 13, sub: 0, line: 609 } |  |  | 0.614 |
+| walker |  | 3490 | 24 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 25, sub: 0, line: 809 } |  |  | 0.619 |
+| walker |  | 3571 | 81 | Json::Whole { file: tsconfig.json } |  |  | 0.619 |
 | ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.597 |
-| walker |  | 3611 | 81 | Json::Whole { file: tsconfig.json } |  |  | 0.597 |
-| walker |  | 3814 | 203 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.642 |
+| walker |  | 3774 | 203 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.642 |
 | ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.633 |
 | ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.637 |
-| walker |  | 4103 | 289 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 1, sub: 0, line: 27 } |  |  | 0.659 |
-| walker |  | 4131 | 28 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 24, sub: 0, line: 802 } |  |  | 0.665 |
+| walker |  | 4063 | 289 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 1, sub: 0, line: 27 } |  |  | 0.659 |
+| walker |  | 4091 | 28 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 24, sub: 0, line: 802 } |  |  | 0.665 |
+| walker |  | 4131 | 40 | Code::CodeKey { rung: Names, file: source/lower-bound.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.665 |
 | ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.651 |
 | walker |  | 4161 | 30 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 26, sub: 0, line: 888 } |  |  | 0.656 |
 | walker |  | 4386 | 225 | Markdown::Section { file: readme.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.656 |

@@ -1,11 +1,11 @@
-Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.532/0.454/0.529
+Score(3000)=0.424 I=0.775 C=0.232 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.604/0.604/0.485/0.424/0.532/0.454/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 43 | 43 | Fs::DirListing { dir: . } |  |  | 1.000 |
 | ns | 43 |  | 43 | Repository root listing | 1.1 |  | 1.000 |
-| walker |  | 58 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
-| walker |  | 82 | 24 | Fs::DirListing { dir: lib } |  |  | 1.000 |
+| walker |  | 67 | 24 | Fs::DirListing { dir: lib } |  |  | 1.000 |
+| walker |  | 82 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
 | ns | 135 |  | 92 | package.json identity | 1.2 |  | 0.827 |
 | walker |  | 145 | 63 | Json::Identity { file: package.json } |  |  | 0.908 |
 | walker |  | 153 | 8 | Fs::DirListing { dir: .github } |  |  | 0.908 |
@@ -14,72 +14,72 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 202 | 31 | Json::Runtime { file: package.json } |  |  | 0.919 |
 | walker |  | 252 | 50 | Json::Entry { file: package.json } |  |  | 0.919 |
 | ns | 296 |  | 137 | Module export surface (index.js + lib/express.js exports) | 1.4 |  | 0.728 |
-| walker |  | 327 | 75 | Code::CodeKey { rung: Names, file: lib/view.js, decl: 0, sub: 0, line: 0 } |  |  | 0.729 |
-| walker |  | 428 | 101 | Fs::DirListing { dir: examples } |  |  | 0.732 |
-| ns | 443 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.604 |
-| walker |  | 547 | 119 | Code::CodeKey { rung: Names, file: lib/request.js, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
-| walker |  | 560 | 13 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 5, sub: 0, line: 185 } |  |  | 0.606 |
-| ns | 652 |  | 209 | npm scripts + engines | 1.6 |  | 0.542 |
-| ns | 678 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.576 |
-| walker |  | 693 | 133 | Code::CodeKey { rung: Names, file: lib/express.js, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
-| ns | 789 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.685 |
-| ns | 962 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.603 |
-| walker |  | 1113 | 420 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.723 |
-| ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.631 |
-| walker |  | 1241 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.631 |
-| walker |  | 1328 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.631 |
-| walker |  | 1352 | 24 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 4, sub: 0, line: 171 } |  |  | 0.631 |
-| walker |  | 1378 | 26 | Code::CodeKey { rung: Doc, file: lib/request.js, decl: 1, sub: 0, line: 30 } |  |  | 0.631 |
-| walker |  | 1403 | 25 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 2, sub: 0, line: 127 } |  |  | 0.631 |
-| ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.579 |
-| walker |  | 1656 | 253 | Code::CodeKey { rung: Names, file: lib/application.js, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
-| ns | 1663 |  | 198 | lib/view.js and lib/utils.js symbol rosters | 2.5 |  | 0.620 |
-| walker |  | 1667 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.620 |
-| walker |  | 1678 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.620 |
-| walker |  | 1689 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.620 |
-| walker |  | 1701 | 12 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 13, sub: 0, line: 451 } |  |  | 0.620 |
-| walker |  | 1713 | 12 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 14, sub: 0, line: 463 } |  |  | 0.620 |
-| walker |  | 1880 | 167 | Code::CodeKey { rung: Names, file: lib/utils.js, decl: 0, sub: 0, line: 0 } |  |  | 0.670 |
-| walker |  | 1892 | 12 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 5, sub: 0, line: 75 } |  |  | 0.670 |
-| ns | 1896 |  | 233 | createApplication() body | 2.6 |  | 0.622 |
-| ns | 2153 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.575 |
-| walker |  | 2201 | 309 | Code::CodeKey { rung: Names, file: lib/response.js, decl: 0, sub: 0, line: 0 } |  |  | 0.635 |
-| walker |  | 2212 | 11 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 13, sub: 0, line: 696 } |  |  | 0.635 |
-| walker |  | 2227 | 15 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 16, sub: 0, line: 794 } |  |  | 0.635 |
-| ns | 2244 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.656 |
-| walker |  | 2250 | 23 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 18, sub: 0, line: 875 } |  |  | 0.656 |
-| walker |  | 2276 | 26 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 1, sub: 0, line: 42 } |  |  | 0.656 |
-| ns | 2369 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.663 |
-| walker |  | 2452 | 176 | Json::Scripts { file: package.json } |  |  | 0.703 |
-| ns | 2478 |  | 109 | Default settings established at boot | 3.1 |  | 0.687 |
-| ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.659 |
-| walker |  | 2828 | 376 | Fs::DirListing { dir: test } |  |  | 0.666 |
-| walker |  | 2840 | 12 | Fs::DirListing { dir: test/support } |  |  | 0.666 |
-| walker |  | 2897 | 57 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 13, sub: 0, line: 696 } |  |  | 0.666 |
-| walker |  | 2915 | 18 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 1, sub: 0, line: 40 } |  |  | 0.666 |
-| walker |  | 2954 | 39 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 1, sub: 0, line: 29 } |  |  | 0.666 |
-| ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.624 |
-| ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.599 |
-| ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.572 |
-| walker |  | 3414 | 460 | Json::Dependencies { file: package.json } |  |  | 0.574 |
-| walker |  | 3440 | 26 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 3, sub: 0, line: 140 } |  |  | 0.574 |
-| walker |  | 3482 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.574 |
-| ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
-| walker |  | 3568 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.557 |
-| walker |  | 3613 | 45 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.557 |
-| walker |  | 3661 | 48 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 2, sub: 0, line: 104 } |  |  | 0.557 |
-| ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.545 |
-| walker |  | 3720 | 59 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 7, sub: 0, line: 321 } |  |  | 0.545 |
-| walker |  | 3778 | 58 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 3, sub: 0, line: 133 } |  |  | 0.545 |
-| walker |  | 3838 | 60 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 4, sub: 0, line: 169 } |  |  | 0.545 |
-| walker |  | 3901 | 63 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 7, sub: 0, line: 162 } |  |  | 0.545 |
-| walker |  | 3961 | 60 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 11, sub: 0, line: 604 } |  |  | 0.545 |
-| ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.527 |
-| walker |  | 3988 | 27 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 3, sub: 0, line: 90 } |  |  | 0.527 |
-| ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.516 |
-| walker |  | 4326 | 338 | Json::IdentityMeta { file: package.json } |  |  | 0.532 |
+| walker |  | 353 | 101 | Fs::DirListing { dir: examples } |  |  | 0.731 |
+| ns | 443 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.603 |
+| ns | 652 |  | 209 | npm scripts + engines | 1.6 |  | 0.539 |
+| ns | 678 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.574 |
+| walker |  | 773 | 420 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.727 |
+| ns | 789 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.686 |
+| walker |  | 901 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.686 |
+| ns | 962 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.604 |
+| walker |  | 988 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.604 |
+| walker |  | 1164 | 176 | Json::Scripts { file: package.json } |  |  | 0.691 |
+| ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.604 |
+| ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.548 |
+| walker |  | 1540 | 376 | Fs::DirListing { dir: test } |  |  | 0.555 |
+| walker |  | 1552 | 12 | Fs::DirListing { dir: test/support } |  |  | 0.555 |
+| ns | 1663 |  | 198 | lib/view.js and lib/utils.js symbol rosters | 2.5 |  | 0.520 |
+| ns | 1896 |  | 233 | createApplication() body | 2.6 |  | 0.483 |
+| walker |  | 2012 | 460 | Json::Dependencies { file: package.json } |  |  | 0.485 |
+| walker |  | 2087 | 75 | Code::CodeKey { rung: Names, file: lib/view.js, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |
+| ns | 2153 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.456 |
+| walker |  | 2173 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.457 |
+| walker |  | 2221 | 48 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 2, sub: 0, line: 104 } |  |  | 0.457 |
+| ns | 2244 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.437 |
+| walker |  | 2279 | 58 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 3, sub: 0, line: 133 } |  |  | 0.437 |
+| walker |  | 2339 | 60 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 4, sub: 0, line: 169 } |  |  | 0.437 |
+| ns | 2369 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.413 |
+| walker |  | 2458 | 119 | Code::CodeKey { rung: Names, file: lib/request.js, decl: 0, sub: 0, line: 0 } |  |  | 0.422 |
+| walker |  | 2471 | 13 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 5, sub: 0, line: 185 } |  |  | 0.422 |
+| ns | 2478 |  | 109 | Default settings established at boot | 3.1 |  | 0.412 |
+| walker |  | 2495 | 24 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 4, sub: 0, line: 171 } |  |  | 0.412 |
+| walker |  | 2521 | 26 | Code::CodeKey { rung: Doc, file: lib/request.js, decl: 1, sub: 0, line: 30 } |  |  | 0.412 |
+| walker |  | 2546 | 25 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 2, sub: 0, line: 127 } |  |  | 0.412 |
+| walker |  | 2572 | 26 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 3, sub: 0, line: 140 } |  |  | 0.412 |
+| ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.396 |
+| walker |  | 2705 | 133 | Code::CodeKey { rung: Names, file: lib/express.js, decl: 0, sub: 0, line: 0 } |  |  | 0.453 |
+| walker |  | 2747 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.453 |
+| ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.424 |
+| walker |  | 3085 | 338 | Json::IdentityMeta { file: package.json } |  |  | 0.444 |
+| walker |  | 3123 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 6, sub: 0, line: 214 } |  |  | 0.444 |
+| ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.426 |
+| ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.407 |
+| walker |  | 3376 | 253 | Code::CodeKey { rung: Names, file: lib/application.js, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
+| walker |  | 3387 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.490 |
+| walker |  | 3398 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.490 |
+| walker |  | 3409 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.490 |
+| walker |  | 3421 | 12 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 13, sub: 0, line: 451 } |  |  | 0.490 |
+| walker |  | 3433 | 12 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 14, sub: 0, line: 463 } |  |  | 0.490 |
+| walker |  | 3451 | 18 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 1, sub: 0, line: 40 } |  |  | 0.490 |
+| walker |  | 3478 | 27 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 3, sub: 0, line: 90 } |  |  | 0.490 |
+| ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.474 |
+| walker |  | 3645 | 167 | Code::CodeKey { rung: Names, file: lib/utils.js, decl: 0, sub: 0, line: 0 } |  |  | 0.502 |
+| walker |  | 3657 | 12 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 5, sub: 0, line: 75 } |  |  | 0.502 |
+| ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.491 |
+| walker |  | 3696 | 39 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 1, sub: 0, line: 29 } |  |  | 0.491 |
+| walker |  | 3741 | 45 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.491 |
+| walker |  | 3804 | 63 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 7, sub: 0, line: 162 } |  |  | 0.491 |
+| ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.474 |
+| ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.464 |
+| walker |  | 4113 | 309 | Code::CodeKey { rung: Names, file: lib/response.js, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
+| walker |  | 4124 | 11 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 13, sub: 0, line: 696 } |  |  | 0.532 |
+| walker |  | 4139 | 15 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 16, sub: 0, line: 794 } |  |  | 0.532 |
+| walker |  | 4162 | 23 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 18, sub: 0, line: 875 } |  |  | 0.532 |
+| walker |  | 4188 | 26 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 1, sub: 0, line: 42 } |  |  | 0.532 |
+| walker |  | 4245 | 57 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 13, sub: 0, line: 696 } |  |  | 0.532 |
+| walker |  | 4304 | 59 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 7, sub: 0, line: 321 } |  |  | 0.532 |
 | ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.519 |
-| walker |  | 4364 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 6, sub: 0, line: 214 } |  |  | 0.519 |
+| walker |  | 4364 | 60 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 11, sub: 0, line: 604 } |  |  | 0.519 |
 | walker |  | 4428 | 64 | Code::CodeKey { rung: Doc, file: lib/utils.js, decl: 6, sub: 0, line: 130 } |  |  | 0.519 |
 | ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.509 |
 | walker |  | 4559 | 131 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.509 |

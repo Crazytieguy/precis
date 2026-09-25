@@ -267,9 +267,12 @@ must not undo:
   failing a fixture run. A batch whose rows its ancestors already
   render is skipped, and its descendants gate on the ancestor.
 - **Full-line spans only:** the engine emits no Ellipsis records.
-- **One value table:** `value::code_rung_value` per rung, one chunk
-  exponent (`DEFAULT_CONCAVITY_EXPONENT`), and `Names` ≥ `Decl` by
-  design (breadth first). Per-language pricing enters only through
+- **One value table:** `value::code_rung_value` per rung and one chunk
+  exponent (`DEFAULT_CONCAVITY_EXPONENT`). `Names` was designed at or
+  above `Decl` (breadth first); the corpus grid put it well below
+  (1150 → 750: +0.016 at 3000, +0.022 over the 7 budgets), because a
+  roster in every file then outranked entry-file declarations, docs
+  and manifests. Per-language pricing enters only through
   `is_entrypoint`, `file_weight` and visibility.
 
 ## Open items

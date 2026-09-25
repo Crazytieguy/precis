@@ -120,6 +120,9 @@ docs/
   index.rst
   make.bat
   requirements.txt
+    1→# Pinning to avoid unexpected breakages.
+    2→# Used by RTD to generate docs.
+    3→Sphinx==7.2.6
   user/
     advanced.rst
     authentication.rst
@@ -139,7 +142,14 @@ pyproject.toml
   6→name = "requests"
   7→description = "Python HTTP for Humans."
   8→readme = "README.md"
-  …
+  9→license = {text = "Apache-2.0"}
+  10→authors = [
+  11→    { name = "Kenneth Reitz", email = "me@kennethreitz.org" },
+  12→]
+  13→maintainers = [
+  14→    {name = "Ian Stapleton Cordasco", email="graffatcolmingov@gmail.com"},
+  15→    {name = "Nate Prewitt", email="nate.prewitt@gmail.com"}
+  16→]
   17→requires-python = ">=3.10"
   18→dependencies = [
   19→    "charset_normalizer>=2,<4",
@@ -147,6 +157,7 @@ pyproject.toml
   21→    "urllib3>=1.26,<3",
   22→    "certifi>=2023.5.7"
   23→]
+  24→dynamic = ["version"]
   …
   53→[project.optional-dependencies]
   54→security = []
@@ -154,6 +165,13 @@ pyproject.toml
   56→use_chardet_on_py3 = ["chardet>=3.0.2,<8"]
   …
 requirements-dev.txt
+  1→-e .[socks]
+  2→pytest>=2.8.0,<10
+  3→pytest-cov
+  4→pytest-httpbin==2.1.0
+  5→httpbin~=0.10.0
+  6→trustme
+  7→wheel
 setup.py
 src/
   requests/
@@ -236,28 +254,20 @@ src/
       183→)
       …
     __version__.py
+      …
+      5→__title__ = "requests"
+      6→__description__ = "Python HTTP for Humans."
+      7→__url__ = "https://requests.readthedocs.io"
+      8→__version__ = "2.34.2"
+      9→__build__ = 0x023402
+      10→__author__ = "Kenneth Reitz"
+      11→__author_email__ = "me@kennethreitz.org"
+      12→__license__ = "Apache-2.0"
+      13→__copyright__ = "Copyright Kenneth Reitz"
+      14→__cake__ = "\u2728 \U0001f370 \u2728"
     _internal_utils.py
     _types.py
     adapters.py
-      …
-      79→DEFAULT_POOLBLOCK = False
-      80→DEFAULT_POOLSIZE = 10
-      81→DEFAULT_RETRIES = 0
-      82→DEFAULT_POOL_TIMEOUT = None
-      83→
-      84→
-      85→def _urllib3_request_context(
-      …
-      122→class BaseAdapter:
-      123→    """The Base Transport Adapter"""
-      125→    def __init__(self) -> None:
-      126→        super().__init__()
-      128→    def send(
-      …
-      153→    def close(self) -> None:
-      …
-      158→class HTTPAdapter(BaseAdapter):
-      …
     api.py
     auth.py
     certs.py
@@ -273,6 +283,7 @@ src/
       …
       128→def main():
       129→    """Pretty-print the bug information as JSON."""
+      130→    print(json.dumps(info(), sort_keys=True, indent=2))
       …
     hooks.py
       …
@@ -280,6 +291,7 @@ src/
       23→
       24→
       25→def default_hooks() -> dict[str, list[_t.HookType]]:
+      26→    return {event: [] for event in HOOKS}
       …
       32→def dispatch_hook(
       33→    key: str,
@@ -287,6 +299,7 @@ src/
       35→    hook_data: Response,
       36→    **kwargs: Any,
       37→) -> Response:
+      38→    """Dispatches a hook dictionary on a given piece of data."""
       …
     models.py
     packages.py
@@ -294,14 +307,8 @@ src/
     sessions.py
       …
       76→def merge_setting(
-      77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
-      78→) -> Any:
       …
       108→def merge_hooks(
-      109→    request_hooks: _t.HooksType,
-      110→    session_hooks: _t.HooksType,
-      111→    dict_class: type = OrderedDict,
-      112→) -> _t.HooksType:
       …
       127→class SessionRedirectMixin:
       …
@@ -309,7 +316,6 @@ src/
       …
       908→def session() -> Session:
       …
-      920→    return Session()
     status_codes.py
       …
       23→_codes = {
@@ -320,18 +326,11 @@ src/
       109→def _init():
       …
     structures.py
-      …
-      16→_VT = TypeVar("_VT")
-      17→_D = TypeVar("_D")
-      18→
-      19→
-      20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-      …
-      96→class LookupDict(dict[str, _VT]):
-      …
     utils.py
 tests/
   __init__.py
+    1→"""Requests test package initialisation."""
+    …
   certs/
     README.md
     expired/

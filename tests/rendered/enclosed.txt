@@ -188,6 +188,18 @@ packages/
           i18n.models.ts
           i18n.provider.tsx
         notes/
+          components/
+            file-uploader.tsx
+            note-password-field.tsx
+          notes.constants.ts
+          notes.context.tsx
+          notes.models.test.ts
+          notes.models.ts
+          notes.services.ts
+          notes.usecases.ts
+          pages/
+            create-note.page.tsx
+            view-note.page.tsx
         shared/
           files/
             convert.ts
@@ -259,8 +271,6 @@ packages/
           tasks.models.test.ts
           tasks.models.ts
           tasks.types.ts
-            …
-            3→export type TaskDefinition = ReturnType<typeof defineTask>;
       reset.d.ts
       scripts/
     tsconfig.json
@@ -280,28 +290,13 @@ packages/
       cli.ts
       config/
         config.command.ts
-          …
-          8→export const configCommand = defineCommand({
-          …
         config.constants.ts
-          …
-          3→export const configDefinition = {
-          …
         config.models.ts
         config.usecases.ts
-          …
-          3→export const {
-          …
       create-note/
         create-note.command.ts
-          …
-          13→export const createNoteCommand = defineCommand({
-          …
         create-note.usecases.test.ts
         create-note.usecases.ts
-          …
-          3→export async function getNoteContent({
-          …
       files/
         files.services.test.ts
         files.services.ts
@@ -310,9 +305,6 @@ packages/
         http.models.ts
       view-note/
         view-note.command.ts
-          …
-          7→export const viewNoteCommand = defineCommand({
-          …
         view-note.models.ts
     tsconfig.json
   crypto/
@@ -331,11 +323,6 @@ packages/
     package.json
     src/
       api-definition.ts
-        …
-        4→export { createEnclosedCryptoApi };
-        5→
-        6→function createEnclosedCryptoApi({
-        …
       encryption-algorithms/
         encryption-algorithms.constants.ts
         encryption-algorithms.models.ts
@@ -377,13 +364,7 @@ packages/
         toggle.vue
       data/
         configuration.data.ts
-          …
-          55→export default {
-          …
         i18n.data.ts
-          …
-          59→export default {
-          …
       how-it-works.md
       index.md
       integrations/

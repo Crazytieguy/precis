@@ -15,6 +15,43 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
+  1→[workspace]
+  2→members = [
+  3→    ".",
+  4→    "crates/*",
+  5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
+  6→]
+  …
+  21→[workspace.package]
+  22→edition = "2024"
+  23→license = "MPL-2.0"
+  24→repository = "https://github.com/rust-lang/mdBook"
+  25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
+  …
+  72→[package]
+  73→name = "mdbook"
+  74→version = "0.5.2"
+  75→authors = [
+  76→    "Mathieu David <mathieudavid@mathieudavid.org>",
+  77→    "Michael-F-Bryan <michaelfbryan@gmail.com>",
+  78→    "Matt Ickstadt <mattico8@gmail.com>"
+  79→]
+  80→documentation = "https://rust-lang.github.io/mdBook/index.html"
+  81→edition.workspace = true
+  82→exclude = ["/guide/*"]
+  83→keywords = ["book", "gitbook", "rustbook", "markdown"]
+  84→license.workspace = true
+  85→readme = "README.md"
+  86→repository.workspace = true
+  87→description = "Creates a book from markdown files"
+  88→rust-version.workspace = true
+  …
+  129→[features]
+  130→default = ["watch", "serve", "search"]
+  131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
+  132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
+  133→search = ["mdbook-html/search"]
+  …
 LICENSE
 README.md
   1→# mdBook
@@ -33,6 +70,9 @@ ci/
 crates/
   mdbook-compare/
     Cargo.toml
+      …
+      9→[dependencies]
+      …
     README.md
       1→# mdbook-compare
       2→
@@ -44,29 +84,19 @@ crates/
       main.rs
         1→//! Utility to compare the output of two different versions of mdbook.
         …
-        6→macro_rules! error {
-        …
-        14→fn main() {
-        …
-        39→fn clean(path: &Path) {
-        …
-        46→fn build(mdbook: &Path, book: &Path) {
-        …
-        61→fn process(path: &Path) {
-        …
-        78→fn process_html(path: &Path) {
-        …
-        88→fn tidy(path: &Path) {
-        …
-        105→fn diff(a: &Path, b: &Path) {
-        …
   mdbook-core/
     Cargo.toml
     README.md
+      1→# mdbook-core
+      …
+      7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+      …
     src/
       book/
         tests.rs
       book.rs
+        1→//! A tree structure representing a book.
+        …
       config.rs
       lib.rs
         1→//! The base support library for mdbook, intended for internal use only.
@@ -84,6 +114,9 @@ crates/
         toml_ext.rs
   mdbook-driver/
     Cargo.toml
+      …
+      31→[features]
+      32→search = ["mdbook-html/search"]
     README.md
     src/
       builtin_preprocessors/
@@ -98,27 +131,20 @@ crates/
         mod.rs
       init.rs
       lib.rs
-        …
-        67→pub mod builtin_preprocessors;
-        68→pub mod builtin_renderers;
-        69→pub mod init;
-        70→mod load;
-        71→mod mdbook;
-        …
-        74→pub use mdbook::MDBook;
-        75→pub use mdbook_core::{book, config, errors};
-        …
-        82→fn compose_command(cmd: &str, root: &Path) -> Result<Command> {
-        …
-        107→fn handle_command_error(
-        …
       load.rs
       mdbook/
         tests.rs
       mdbook.rs
   mdbook-html/
     Cargo.toml
+      …
+      36→[features]
+      37→search = ["dep:elasticlunr-rs"]
     README.md
+      1→# mdbook-html
+      …
+      7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
+      …
     front-end/
       css/
         ayu-highlight.css
@@ -187,9 +213,15 @@ crates/
         playground_editor.rs
         searcher.rs
       utils.rs
+        1→//! Utilities for processing HTML.
+        …
   mdbook-markdown/
     Cargo.toml
     README.md
+      1→# mdbook-markdown
+      …
+      7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
+      …
     src/
       lib.rs
         1→//! Markdown processing used in mdBook.
@@ -199,21 +231,13 @@ crates/
         5→//! crate is used as the underlying parser. This crate re-exports
         6→//! [`pulldown_cmark`] so that you can access its types.
         …
-        10→#[doc(inline)]
-        11→pub use pulldown_cmark;
-        …
-        15→pub struct MarkdownOptions {
-        …
-        33→impl Default for MarkdownOptions {
-        34→    fn default() -> MarkdownOptions {
-        …
-        41→}
-        43→/// Creates a new pulldown-cmark parser of the given text.
-        44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
-        …
   mdbook-preprocessor/
     Cargo.toml
     README.md
+      1→# mdbook-preprocessor
+      …
+      7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+      …
     src/
       lib.rs
         1→//! Library to assist implementing an mdbook preprocessor.
@@ -223,35 +247,13 @@ crates/
         5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
         6→//! for more information on how to implement a preprocessor.
         …
-        18→pub use mdbook_core::MDBOOK_VERSION;
-        19→pub use mdbook_core::book;
-        20→pub use mdbook_core::config;
-        21→pub use mdbook_core::errors;
-        …
-        30→pub trait Preprocessor {
-        …
-        32→    fn name(&self) -> &str;
-        …
-        36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
-        …
-        42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
-        43→        Ok(true)
-        …
-        45→}
-        …
-        51→pub struct PreprocessorContext {
-        …
-        68→impl PreprocessorContext {
-        …
-        70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
-        …
-        79→}
-        81→/// Parses the input given to a preprocessor.
-        82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
-        …
   mdbook-renderer/
     Cargo.toml
     README.md
+      1→# mdbook-renderer
+      …
+      7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+      …
     src/
       lib.rs
         1→//! Library to assist implementing an mdbook renderer.
@@ -261,36 +263,13 @@ crates/
         5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
         6→//! for more information on how to implement a renderer.
         …
-        17→pub use mdbook_core::MDBOOK_VERSION;
-        18→pub use mdbook_core::book;
-        19→pub use mdbook_core::config;
-        20→pub use mdbook_core::errors;
-        …
-        28→pub trait Renderer {
-        …
-        30→    fn name(&self) -> &str;
-        …
-        34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
-        35→}
-        …
-        40→pub struct RenderContext {
-        …
-        63→impl RenderContext {
-        …
-        65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
-        66→    where
-        67→        P: Into<PathBuf>,
-        68→        Q: Into<PathBuf>,
-        69→    {
-        …
-        81→    pub fn source_dir(&self) -> PathBuf {
-        …
-        86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
-        …
-        89→}
   mdbook-summary/
     Cargo.toml
     README.md
+      1→# mdbook-summary
+      …
+      7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+      …
     src/
       lib.rs
         1→//! Summary parser for mdBook.
@@ -301,6 +280,9 @@ crates/
         …
   xtask/
     Cargo.toml
+      …
+      9→[dependencies]
+      …
     README.md
       1→# xtask
       2→
@@ -387,11 +369,6 @@ rustfmt.toml
 src/
   cmd/
     build.rs
-      …
-      8→pub fn make_subcommand() -> Command {
-      …
-      17→pub fn execute(args: &ArgMatches) -> Result<()> {
-      …
     clean.rs
     command_prelude.rs
       1→//! Helpers for building the command-line arguments for commands.
@@ -402,11 +379,6 @@ src/
       …
     serve.rs
     test.rs
-      …
-      9→pub fn make_subcommand() -> Command {
-      …
-      35→pub fn execute(args: &ArgMatches) -> Result<()> {
-      …
     watch/
       native.rs
         1→//! A filesystem watcher using native operating system facilities.

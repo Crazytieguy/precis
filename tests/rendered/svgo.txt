@@ -40,11 +40,39 @@ README.md
   108→### Custom plugins
   …
   134→## API usage
-  …
+  135→
+  136→SVGO provides a few low level utilities.
+  137→
   138→### optimize
-  …
+  139→
+  140→The core of SVGO is `optimize` function.
+  141→
+  142→```js
+  143→import { optimize } from 'svgo';
+  144→
+  145→const result = optimize(svgString, {
+  146→  path: 'path-to.svg', // recommended
+  147→  multipass: true, // all other config fields are available here
+  148→});
+  149→
+  150→const optimizedSvgString = result.data;
+  151→```
+  152→
   153→### loadConfig
-  …
+  154→
+  155→If you write a tool on top of SVGO you may want to resolve the `svgo.config.mjs` file.
+  156→
+  157→```js
+  158→import { loadConfig } from 'svgo';
+  159→
+  160→const config = await loadConfig();
+  161→```
+  162→
+  163→You can also specify a path and customize the current working directory.
+  164→
+  165→```js
+  166→const config = await loadConfig(configFile, cwd);
+  167→```
   169→## Donors
   …
   175→## License and Copyright
@@ -89,8 +117,16 @@ lib/
     2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/paths.html#PathDataBNF.
     3→ */
     …
+    137→/**
+    138→ * @param {string} string
+    139→ * @returns {import('./types.js').PathDataItem[]}
+    140→ */
     141→export const parsePathData = (string) => {
     …
+    298→/**
+    299→ * @param {StringifyPathDataOptions} options
+    300→ * @returns {string}
+    301→ */
     302→export const stringifyPathData = ({
     303→  pathData,
     304→  precision,
@@ -152,102 +188,10 @@ lib/
     …
   svgo-node.test.js
   svgo.js
-    …
-    72→export * from './types.js';
-    …
-    81→export const optimize = (input, config) => {
-    …
-    136→export {
-    137→  VERSION,
-    138→  builtinPlugins,
-    139→  mapNodesToParents,
-    140→  querySelector,
-    141→  querySelectorAll,
-    142→  _collections,
-    143→};
   svgo.test.js
   types.js
     1→export default {};
   types.ts
-    …
-    30→export type DefaultPlugins = {
-    …
-    67→export type PresetDefaultOverrides = {
-    68→  [Name in keyof DefaultPlugins]?: DefaultPlugins[Name] | false;
-    69→};
-    71→export type BuiltinsWithOptionalParams = DefaultPlugins & {
-    …
-    100→export type BuiltinsWithRequiredParams = {
-    101→  addAttributesToSVGElement: AddAttributesToSVGElementParams;
-    102→  addClassesToSVGElement: AddClassesToSVGElementParams;
-    103→  removeAttributesBySelector: RemoveAttributesBySelectorParams;
-    104→  removeAttrs: RemoveAttrsParams;
-    105→  removeElementsByAttr: RemoveElementsByAttrParams;
-    106→};
-    108→export type PluginsParams = BuiltinsWithOptionalParams &
-    109→  BuiltinsWithRequiredParams;
-    111→export type CustomPlugin<T = any> = {
-    112→  name: string;
-    113→  fn: Plugin<T>;
-    114→  params?: T;
-    115→};
-    117→export type PluginConfig =
-    …
-    133→export type BuiltinPlugin<Name extends string, Params> = {
-    134→  /** Name of the plugin, also known as the plugin ID. */
-    135→  name: Name;
-    136→  description?: string;
-    137→  fn: Plugin<Params>;
-    138→};
-    …
-    155→export type BuiltinPluginOrPreset<Name extends string, Params> = BuiltinPlugin<
-    156→  Name,
-    157→  Params
-    158→> &
-    159→  (PresetProperties<true> | Partial<PresetProperties<false>>);
-    161→export type XastDoctype = {
-    162→  type: 'doctype';
-    163→  name: string;
-    164→  data: {
-    165→    doctype: string;
-    166→  };
-    167→};
-    169→export type XastInstruction = {
-    170→  type: 'instruction';
-    171→  name: string;
-    172→  value: string;
-    173→};
-    175→export type XastComment = {
-    176→  type: 'comment';
-    177→  value: string;
-    178→};
-    180→export type XastCdata = {
-    181→  type: 'cdata';
-    182→  value: string;
-    183→};
-    185→export type XastText = {
-    186→  type: 'text';
-    187→  value: string;
-    188→};
-    190→export type XastElement = {
-    191→  type: 'element';
-    192→  name: string;
-    193→  attributes: Record<string, string>;
-    194→  children: XastChild[];
-    195→};
-    197→export type XastChild =
-    198→  | XastDoctype
-    199→  | XastInstruction
-    200→  | XastComment
-    201→  | XastCdata
-    202→  | XastText
-    203→  | XastElement;
-    205→export type XastRoot = {
-    206→  type: 'root';
-    207→  children: XastChild[];
-    208→};
-    210→export type XastParent = XastRoot | XastElement;
-    …
   util/
     map-nodes-to-parents.js
       …
@@ -262,16 +206,6 @@ lib/
     …
     7→export const VERSION = '4.0.1';
   xast.js
-    …
-    22→export const querySelectorAll = (node, selector, parents) => {
-    …
-    32→export const querySelector = (node, selector, parents) => {
-    …
-    42→export const matches = (node, selector, parents) => {
-    43→  return is(node, selector, createCssSelectOptions(node, parents));
-    …
-    50→export const detachNodeFromParent = (node, parentNode) => {
-    …
   xast.test.js
 logo/
   isotype-white.svg
@@ -288,6 +222,27 @@ package.json
   6→  "license": "MIT",
   7→  "type": "module",
   …
+  53→  "bin": "./bin/svgo.js",
+  54→  "types": "./types/lib/svgo-node.d.ts",
+  55→  "exports": {
+  56→    ".": {
+  57→      "import": "./lib/svgo-node.js",
+  58→      "require": "./dist/svgo-node.cjs",
+  59→      "types": "./types/lib/svgo-node.d.ts"
+  60→    },
+  61→    "./browser": {
+  62→      "import": "./dist/svgo.browser.js",
+  63→      "types": "./types/lib/svgo.d.ts"
+  64→    }
+  65→  },
+  66→  "files": [
+  67→    "bin",
+  68→    "dist",
+  69→    "lib",
+  70→    "plugins",
+  71→    "types",
+  72→    "!**/*.test.js"
+  73→  ],
   74→  "engines": {
   75→    "node": ">=16"
   76→  },
@@ -374,8 +329,26 @@ test/
   coa/
   fixtures/
     config-loader/
+      cjs/
+      invalid-array.js
+      invalid-null.js
+      invalid-runtime.js
+      invalid-runtime.mjs
+      invalid-string.js
+      mjs/
+      module-not-found.js
+      one/
+      svgo.config.js
   plugins/
   regression/
+    compare.js
+    delta.js
+    extract.js
+    file-lists.js
+    lib.js
+    lists/
+    optimize.js
+    regression-io.js
   svg2js/
   svgo/
   svgo.cjs

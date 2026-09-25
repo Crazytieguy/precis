@@ -45,76 +45,22 @@ CRT.c
 CRT.h
 CategoriesPanel.c
 CategoriesPanel.h
-  …
-  16→typedef struct CategoriesPanel_ {
-  17→   Panel super;
-  18→   ScreenManager* scr;
-  19→   Machine* host;
-  20→   Header* header;
-  21→} CategoriesPanel;
-  22→
-  23→extern const PanelClass CategoriesPanel_class;
-  24→
-  25→CategoriesPanel* CategoriesPanel_new(ScreenManager* scr, Header* header, Machine* host);
-  …
 ChangeLog
 ColorsPanel.c
 ColorsPanel.h
-  …
-  14→typedef struct ColorsPanel_ {
-  15→   Panel super;
-  16→
-  17→   Settings* settings;
-  18→} ColorsPanel;
-  19→
-  20→extern const PanelClass ColorsPanel_class;
-  21→
-  22→ColorsPanel* ColorsPanel_new(Settings* settings);
-  …
 ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
-  …
-  11→typedef enum {
-  12→   STATUS_OK,
-  13→   STATUS_ERROR_EXIT,
-  14→   STATUS_OK_EXIT
-  15→} CommandLineStatus;
-  16→
-  17→extern const char* program;
-  18→
-  19→int CommandLine_run(int argc, char** argv);
-  …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
 DateTimeMeter.h
-  …
-  13→extern const MeterClass ClockMeter_class;
-  14→
-  15→extern const MeterClass DateMeter_class;
-  16→
-  17→extern const MeterClass DateTimeMeter_class;
-  …
 Debug.h
 DiskIOMeter.c
 DiskIOMeter.h
 DisplayOptionsPanel.c
 DisplayOptionsPanel.h
-  …
-  16→typedef struct DisplayOptionsPanel_ {
-  17→   Panel super;
-  18→
-  19→   Settings* settings;
-  20→   ScreenManager* scr;
-  21→   FunctionBar* decIncBar;
-  22→} DisplayOptionsPanel;
-  23→
-  24→extern const PanelClass DisplayOptionsPanel_class;
-  25→
-  26→DisplayOptionsPanel* DisplayOptionsPanel_new(Settings* settings, ScreenManager* scr);
-  …
 DynamicColumn.c
 DynamicColumn.h
 DynamicMeter.c
@@ -132,18 +78,6 @@ FunctionBar.c
 FunctionBar.h
 GPUMeter.c
 GPUMeter.h
-  …
-  15→struct GPUMeterEngineData {
-  16→   const char* key;  /* owned by LinuxMachine */
-  17→   unsigned long long int timeDiff;
-  18→   double percentage;
-  19→};
-  21→extern struct GPUMeterEngineData GPUMeter_engineData[4];
-  22→
-  23→extern const MeterClass GPUMeter_class;
-  24→
-  25→bool GPUMeter_active(void);
-  …
 Hashtable.c
 Hashtable.h
 Header.c
@@ -183,7 +117,10 @@ MemoryMeter.c
 MemoryMeter.h
   …
   13→typedef struct MemoryClass_s {
-  …
+  14→   const char *label; // e.g. "wired", "shared", "compressed" - platform-specific memory classe names
+  15→   bool countsAsUsed; // memory class counts as "used" memory
+  16→   bool countsAsCache; // memory class reclaimed under pressure (displayed with "show cached memory")
+  17→   ColorElements color; // one of the MEMORY CRT color values
   18→} MemoryClass;
   19→
   20→extern const MeterClass MemoryMeter_class;
@@ -198,10 +135,21 @@ Meter.h
 MeterMode.h
   …
   11→enum MeterModeId_ {
-  …
+  12→   /* Meter mode 0 is reserved */
+  13→   BAR_METERMODE = 1,
+  14→   TEXT_METERMODE,
+  15→   GRAPH_METERMODE,
+  16→   LED_METERMODE,
+  17→   LAST_METERMODE
+  18→};
   20→typedef unsigned int MeterModeId;
   21→
   22→#define METERMODE_DEFAULT_SUPPORTED ( \
+  23→   (1 << BAR_METERMODE) |             \
+  24→   (1 << TEXT_METERMODE) |            \
+  25→   (1 << GRAPH_METERMODE) |           \
+  26→   (1 << LED_METERMODE) |             \
+  27→   0) // Avoids edits when updating
   …
 MetersPanel.c
 MetersPanel.h
@@ -247,7 +195,7 @@ RowField.h
   13→typedef enum ReservedFields_ {
   …
   50→} ReservedFields;
-  …
+  52→/* Follow ReservedField entries with dynamic fields defined at runtime */
   53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD
   54→typedef int32_t RowField;
   …
@@ -263,21 +211,14 @@ Settings.c
 Settings.h
 SignalsPanel.c
 SignalsPanel.h
-  …
-  17→typedef struct SignalItem_ {
-  18→   const char* name;
-  19→   int number;
-  20→} SignalItem;
-  21→
-  22→#define SIGNALSPANEL_INITSELECTEDSIGNAL SIGTERM
-  23→
-  24→Panel* SignalsPanel_new(int preSelectedSignal);
-  …
 SwapMeter.c
 SwapMeter.h
   …
   12→typedef enum {
-  …
+  13→   SWAP_METER_USED = 0,
+  14→   SWAP_METER_CACHE = 1,
+  15→   SWAP_METER_FRONTSWAP = 2,
+  16→   SWAP_METER_ITEMCOUNT = 3, // number of entries in this enum
   17→} SwapMeterValues;
   18→
   19→extern const MeterClass SwapMeter_class;
@@ -323,22 +264,10 @@ configure.ac
 darwin/
   DarwinMachine.c
   DarwinMachine.h
-    …
-    18→typedef struct DarwinMachine_ {
-    …
-    29→} DarwinMachine;
-    …
   DarwinProcess.c
   DarwinProcess.h
   DarwinProcessTable.c
   DarwinProcessTable.h
-    …
-    16→typedef struct DarwinProcessTable_ {
-    17→   ProcessTable super;
-    18→
-    19→   uint64_t global_diff;
-    20→} DarwinProcessTable;
-    …
   Platform.c
   Platform.h
   PlatformHelpers.c
@@ -346,6 +275,10 @@ darwin/
   ProcessField.h
     …
     11→#define PLATFORM_PROCESS_FIELDS  \
+    12→   TRANSLATED = 100,             \
+    13→                                 \
+    14→   DUMMY_BUMP_FIELD = CWD,       \
+    15→   // End of list
     …
 docs/
   ai-contributions-policy.md
@@ -365,6 +298,11 @@ dragonflybsd/
   ProcessField.h
     …
     11→#define PLATFORM_PROCESS_FIELDS  \
+    12→   JID = 100,                    \
+    13→   JAIL = 101,                   \
+    14→                                 \
+    15→   DUMMY_BUMP_FIELD = CWD,       \
+    16→   // End of list
     …
 freebsd/
   FreeBSDMachine.c
@@ -373,13 +311,6 @@ freebsd/
   FreeBSDProcess.h
   FreeBSDProcessTable.c
   FreeBSDProcessTable.h
-    …
-    17→typedef struct FreeBSDProcessTable_ {
-    18→   ProcessTable super;
-    19→
-    20→   int osreldate;
-    21→} FreeBSDProcessTable;
-    …
   Platform.c
   Platform.h
   ProcessField.h
@@ -392,16 +323,8 @@ generic/
   ProvideDemangle.h
   UnwindPtrace.c
   UnwindPtrace.h
-    …
-    15→#ifdef HAVE_LIBUNWIND_PTRACE
-    16→void UnwindPtrace_makeBacktrace(Vector* frames, pid_t pid, char** error);
-    17→#endif
-    …
   fdstat_sysctl.c
   fdstat_sysctl.h
-    …
-    11→void Generic_getFileDescriptors_sysctl(double* used, double* max);
-    …
   gettime.c
   gettime.h
   hostname.c
@@ -423,6 +346,51 @@ iwyu/
   htop.imp
   run_iwyu.sh
 linux/
+  CGroupUtils.c
+  CGroupUtils.h
+  Compat.c
+  Compat.h
+  GPU.c
+  GPU.h
+  HugePageMeter.c
+  HugePageMeter.h
+    …
+    13→extern const MeterClass HugePageMeter_class;
+    …
+  IOPriority.h
+  IOPriorityPanel.c
+  IOPriorityPanel.h
+  LibNl.c
+  LibNl.h
+  LibSensors.c
+  LibSensors.h
+  LinuxMachine.c
+  LinuxMachine.h
+  LinuxProcess.c
+  LinuxProcess.h
+  LinuxProcessTable.c
+  LinuxProcessTable.h
+  OpenRCMeter.c
+  OpenRCMeter.h
+  Platform.c
+  Platform.h
+  PressureStallMeter.c
+  PressureStallMeter.h
+  ProcessField.h
+    …
+    11→#define PLATFORM_PROCESS_FIELDS  \
+    …
+  SELinuxMeter.c
+  SELinuxMeter.h
+    …
+    13→extern const MeterClass SELinuxMeter_class;
+    …
+  SystemdMeter.c
+  SystemdMeter.h
+  ZramMeter.c
+  ZramMeter.h
+  ZramStats.h
+  ZswapStats.h
 m4/
   ax_check_compile_flag.m4
 netbsd/
@@ -432,15 +400,22 @@ netbsd/
   NetBSDProcess.h
   NetBSDProcessTable.c
   NetBSDProcessTable.h
-    …
-    20→typedef struct NetBSDProcessTable_ {
-    21→   ProcessTable super;
-    22→} NetBSDProcessTable;
-    …
   Platform.c
   Platform.h
   ProcessField.h
   README.md
+    1→NetBSD support in htop(1)
+    2→===
+    3→
+    4→This implementation utilizes kvm_getprocs(3), sysctl(3), etc, eliminating the
+    5→need for mount_procfs(8) with Linux compatibility enabled.
+    …
+    9→Notes on NetBSD curses
+    10→---
+    …
+    32→What needs improvement
+    33→---
+    …
 openbsd/
   OpenBSDMachine.c
   OpenBSDMachine.h
@@ -448,18 +423,72 @@ openbsd/
   OpenBSDProcess.h
   OpenBSDProcessTable.c
   OpenBSDProcessTable.h
-    …
-    17→typedef struct OpenBSDProcessTable_ {
-    18→   ProcessTable super;
-    19→} OpenBSDProcessTable;
-    …
   Platform.c
   Platform.h
   ProcessField.h
 pcp/
+  InDomTable.c
+  InDomTable.h
+  Instance.c
+  Instance.h
+  Metric.c
+  Metric.h
+  PCPDynamicColumn.c
+  PCPDynamicColumn.h
+  PCPDynamicMeter.c
+  PCPDynamicMeter.h
+  PCPDynamicScreen.c
+  PCPDynamicScreen.h
+  PCPMachine.c
+  PCPMachine.h
+  PCPProcess.c
+  PCPProcess.h
+  PCPProcessTable.c
+  PCPProcessTable.h
+  Platform.c
+  Platform.h
+  ProcessField.h
+    …
+    13→#define PLATFORM_PROCESS_FIELDS  \
+    …
+  columns/
+    container
+    delayacct
+    fdcount
+    gpu_memory
+    guest
+    memory
+    sched
+    swap
+    tcp
+    udp
+    wchan
+  meters/
+    entropy
+    freespace
+    gpu
+    ipc
+    locks
+    memcache
+    mysql
+    postfix
+    redis
+    tcp
+  screens/
+    biosnoop
+    cgroups
+    cgroupsio
+    cgroupsmem
+    devices
+    execsnoop
+    exitsnoop
+    filesystems
+    opensnoop
 pcp-htop.5.in
 pcp-htop.c
 scripts/
+  htop_suppressions.valgrind
+  run_valgrind.sh
 solaris/
   Platform.c
   Platform.h
@@ -473,11 +502,6 @@ solaris/
   SolarisProcess.h
   SolarisProcessTable.c
   SolarisProcessTable.h
-    …
-    27→typedef struct SolarisProcessTable_ {
-    28→   ProcessTable super;
-    29→} SolarisProcessTable;
-    …
 test_spec.lua
 unsupported/
   Platform.c
@@ -485,30 +509,13 @@ unsupported/
   ProcessField.h
   UnsupportedMachine.c
   UnsupportedMachine.h
-    …
-    13→typedef struct UnsupportedMachine_ {
-    14→   Machine super;
-    15→   memory_t usedMem;
-    16→   memory_t cachedMem;
-    17→} UnsupportedMachine;
-    …
   UnsupportedProcess.c
   UnsupportedProcess.h
   UnsupportedProcessTable.c
   UnsupportedProcessTable.h
-    …
-    13→typedef struct UnsupportedProcessTable_ {
-    14→   ProcessTable super;
-    15→} UnsupportedProcessTable;
-    …
 zfs/
   ZfsArcMeter.c
   ZfsArcMeter.h
   ZfsArcStats.h
-    …
-    10→typedef struct ZfsArcStats_ {
-    …
-    23→} ZfsArcStats;
-    …
   ZfsCompressedArcMeter.c
   ZfsCompressedArcMeter.h

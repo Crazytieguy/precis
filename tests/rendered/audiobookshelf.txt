@@ -313,25 +313,6 @@ images/
   LibraryStreamSquare.png
   banner.svg
 index.js
-  1→const optionDefinitions = [
-  …
-  13→const options = commandLineArgs(optionDefinitions)
-  …
-  21→const isDev = process.env.NODE_ENV !== 'production'
-  …
-  38→const inputConfig = options.config ? Path.resolve(options.config) : null
-  39→const inputMetadata = options.metadata ? Path.resolve(options.metadata) : null
-  40→
-  41→const PORT = options.port || process.env.PORT || 3333
-  42→const HOST = options.host || process.env.HOST
-  43→const CONFIG_PATH = inputConfig || process.env.CONFIG_PATH || Path.resolve('config')
-  44→const METADATA_PATH = inputMetadata || process.env.METADATA_PATH || Path.resolve('metadata')
-  45→const SOURCE = options.source || process.env.SOURCE || 'debian'
-  46→
-  47→const ROUTER_BASE_PATH = process.env.ROUTER_BASE_PATH ?? '/audiobookshelf'
-  …
-  52→const Server = new server(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH, ROUTER_BASE_PATH)
-  …
 package-lock.json
 package.json
   …
@@ -393,6 +374,98 @@ server/
     BookFinder.js
     PodcastFinder.js
   libs/
+    archiver/
+    async/
+      LICENSE
+      index.js
+    bcryptjs/
+      LICENSE
+      index.js
+    busboy/
+      LICENSE
+      index.js
+      types/
+        multipart.js
+        urlencoded.js
+      utils.js
+    commandLineArgs/
+      index.js
+    dateAndTime/
+      LICENSE
+      index.js
+    expressFileupload/
+    fastSort/
+      LICENSE
+      index.js
+    fluentFfmpeg/
+    fsExtra/
+    fusejs/
+      index.js
+    imageType/
+      LICENSE
+      fileType.js
+      index.js
+    isexe/
+      LICENSE
+      index.js
+      mode.js
+      windows.js
+    jsonwebtoken/
+    jwa/
+    jws/
+      LICENSE
+      index.js
+      lib/
+    libarchive/
+    lodash.once/
+      LICENSE
+      index.js
+    memorystore/
+      LICENSE
+      index.js
+    nodeCron/
+    nodeFfprobe/
+      LICENSE
+      index.js
+    nodeStreamZip/
+      LICENSE
+      index.js
+    passportLocal/
+      LICENSE
+      index.js
+      strategy.js
+    readChunk/
+    recursiveReaddirAsync/
+      LICENSE
+      index.js
+    requestIp/
+      LICENSE
+      index.js
+      isJs.js
+    rss/
+      LICENSE
+      index.js
+    sanitizeHtml/
+      LICENSE
+      index.js
+    streamsearch/
+      LICENSE
+      index.js
+    uaParser/
+      LICENSE
+      index.js
+    umzug/
+    universalify/
+      LICENSE
+      index.js
+    watcher/
+    which/
+      LICENSE
+      index.js
+    xml/
+      LICENSE
+      escapeForXML.js
+      index.js
   managers/
     AbMergeManager.js
     ApiCacheManager.js

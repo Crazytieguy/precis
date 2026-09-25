@@ -85,6 +85,26 @@ apps/
         splash-icon.png
     babel.config.js
     components/
+      ActionSheets/
+        AddLinkSheet.tsx
+        EditLinkSheet.tsx
+        NewCollectionSheet.tsx
+        Sheets.tsx
+        SupportSheet.tsx
+      CollectionListing.tsx
+      DashboardItem.tsx
+      DashboardSection.tsx
+      ElementNotSupported.tsx
+      Formats/
+        ImageFormat.tsx
+        PdfFormat.tsx
+        ReadableFormat.tsx
+        WebpageFormat.tsx
+      HapticTab.tsx
+      LinkListing.tsx
+      Links.tsx
+      TagListing.tsx
+      ui/
     eas.json
     lib/
       cache.ts
@@ -116,6 +136,13 @@ apps/
       data/
         user.ts
       fixtures/
+        base/
+          dashboard-page.ts
+          modal.ts
+          page.ts
+        index.ts
+        login-page.ts
+        registration-page.ts
       index.ts
         1→export { test } from "./fixtures";
         2→export { expect } from "@playwright/test";
@@ -123,6 +150,15 @@ apps/
         global/
         public/
     hooks/
+      useArchivalTags.ts
+      useCollectivePermissions.ts
+      useDetectPageBottom.tsx
+      useInitialData.tsx
+      useMediaQuery.tsx
+      useOnScreen.tsx
+      usePermissions.tsx
+      useSort.tsx
+      useWindowDimensions.tsx
     layouts/
       AdminLayout.tsx
       AuthRedirect.tsx
@@ -165,6 +201,16 @@ apps/
       3→function launch() {
       …
     lib/
+      archiveHandler.ts
+      autoTagLink.ts
+      browser.ts
+      countUnprocessedBillableLinks.ts
+      fetchHeaders.ts
+      getLinkBatch.ts
+      getLinkBatchFairly.ts
+      preservationScheme/
+      prompts.ts
+      protectPageRequests.ts
     package.json
     templates/
       trialEnded.html
@@ -212,17 +258,8 @@ package.json
 packages/
   filesystem/
     createFile.ts
-      …
-      6→export async function createFile({
-      …
     createFolder.ts
-      …
-      5→export function createFolder({ filePath }: { filePath: string }) {
-      …
     fileExists.ts
-      …
-      6→export async function fileExists(filePath: string): Promise<boolean> {
-      …
     index.ts
       1→export * from "./moveFile";
       2→export * from "./removeFile";
@@ -235,87 +272,41 @@ packages/
       9→export * from "./removeFolder";
     manageFiles.ts
     moveFile.ts
-      …
-      6→export async function moveFile(from: string, to: string) {
-      …
     package.json
     readFile.ts
-      …
-      19→export async function readFile(filePath: string) {
-      …
     removeFile.ts
-      …
-      6→export async function removeFile({ filePath }: { filePath: string }) {
-      …
     removeFolder.ts
-      …
-      40→export async function removeFolder({ filePath }: { filePath: string }) {
-      …
     s3Client.ts
-      …
-      3→const s3Client: S3 | undefined =
-      …
-      19→export default s3Client;
   lib/
     constants.ts
-      1→export const MEILI_INDEX_VERSION = 1;
     formatStats.ts
-      …
-      4→export function formatAvailable(
-      …
-      11→export const atLeastOneFormatAvailable = (
-      …
     generatePreview.ts
-      …
-      5→export const generatePreview = async (
-      …
     getFormatBasedOnPreference.ts
     getFormatFromContentType.ts
     getLinkTypeFromFormat.ts
     getOriginalFormat.ts
-      …
-      6→const getOriginalFormat = (
-      7→  link: LinkIncludingShortenedCollectionAndTags
-      8→): ArchivedFormat | null => {
-      …
-      17→export default getOriginalFormat;
     getPreservedFormatUrl.ts
-      …
-      3→export default async function getPreservedFormatUrl({
-      …
     isArchivalTag.ts
-      …
-      3→export const isArchivalTag = (tag: any | Tag) =>
-      …
     meilisearchClient.ts
-      …
-      5→export const meiliClient = apiKey
-      …
     package.json
     rssHandler.ts
-      …
-      7→export const rssHandler = async (
-      …
     safeFetch.ts
-      …
-      95→export async function safeFetch(
-      …
     schemaValidation.ts
     ssrf.test.ts
     ssrf.ts
     transporter.ts
       …
       3→export default createTransport({
-      …
+      4→  url: process.env.EMAIL_SERVER,
+      5→  auth: {
+      6→    user: process.env.EMAIL_FROM,
+      7→  },
+      8→});
     utils.ts
     verifyCapacity.ts
-      …
-      8→export const hasPassedLimit = async (
-      …
   prisma/
     client/
       index.d.ts
-        1→export * from "../../../node_modules/.prisma/client/index.d";
       index.js
     index.ts
       …
@@ -437,15 +428,7 @@ packages/
     links.tsx
     package.json
     publicLinks.tsx
-      …
-      9→const usePublicLinks = (params: LinkRequestQuery = {}) => {
-      …
-      83→export { usePublicLinks };
     publicTags.tsx
-      …
-      7→const usePublicTags = (): UseQueryResult<TagIncludingCount[]> => {
-      …
-      26→export { usePublicTags };
     rss.tsx
     tags.tsx
     tokens.tsx

@@ -33,7 +33,19 @@ cmdk/
     2→  "name": "cmdk",
     3→  "version": "1.1.1",
     4→  "license": "MIT",
-    …
+    5→  "main": "./dist/index.js",
+    6→  "module": "./dist/index.mjs",
+    7→  "types": "./dist/index.d.ts",
+    8→  "files": [
+    9→    "dist"
+    10→  ],
+    11→  "exports": {
+    12→    ".": {
+    13→      "types": "./dist/index.d.ts",
+    14→      "import": "./dist/index.mjs",
+    15→      "require": "./dist/index.js"
+    16→    }
+    17→  },
     18→  "scripts": {
     19→    "prepublishOnly": "cp ../README.md . && pnpm build",
     20→    "postpublish": "rm README.md",
@@ -47,6 +59,8 @@ cmdk/
     31→    "@radix-ui/react-id": "^1.1.0",
     32→    "@radix-ui/react-primitive": "^2.0.2"
     33→  },
+    …
+    37→  "sideEffects": false,
     …
   src/
     command-score.ts
@@ -122,7 +136,28 @@ cmdk/
       78→}
       79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
       80→type CommandProps = Children &
+      81→  DivProps & {
+      82→    /**
+      83→     * Accessible label for this command menu. Not shown visibly.
+      84→     */
+      85→    label?: string
+      86→    /**
+      87→     * Optionally set to `false` to turn off the automatic filtering and sorting.
+      88→     * If `false`, you must conditionally render valid items based on the search query yourself.
+      89→     */
+      90→    shouldFilter?: boolean
+      91→    /**
+      92→     * Custom filter function for whether each command menu item should matches the given search query.
+      93→     * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
+      94→     * By default, uses the `command-score` library.
+      95→     */
+      96→    filter?: CommandFilter
+      97→    /**
+      98→     * Optional default item value when it is initially rendered.
+      99→     */
+      100→    defaultValue?: string
       …
+      121→  }
       123→type Context = {
       124→  value: (id: string, value: string, keywords?: string[]) => void
       125→  item: (id: string, groupId: string) => () => void
@@ -183,62 +218,6 @@ cmdk/
       …
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
       …
-      909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-      …
-      930→const pkg = Object.assign(Command, {
-      931→  List,
-      932→  Item,
-      933→  Input,
-      934→  Group,
-      935→  Separator,
-      936→  Dialog,
-      937→  Empty,
-      938→  Loading,
-      939→})
-      941→export { useCmdk as useCommandState }
-      942→export { pkg as Command }
-      943→export { defaultFilter }
-      944→
-      945→export { Command as CommandRoot }
-      946→export { List as CommandList }
-      947→export { Item as CommandItem }
-      948→export { Input as CommandInput }
-      949→export { Group as CommandGroup }
-      950→export { Separator as CommandSeparator }
-      951→export { Dialog as CommandDialog }
-      952→export { Empty as CommandEmpty }
-      953→export { Loading as CommandLoading }
-      …
-      963→function findNextSibling(el: Element, selector: string) {
-      …
-      972→function findPreviousSibling(el: Element, selector: string) {
-      …
-      981→function useAsRef<T>(data: T) {
-      …
-      991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
-      992→
-      993→function useLazyRef<T>(fn: () => T) {
-      …
-      1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-      …
-      1010→function useValue(
-      1011→  id: string,
-      1012→  ref: React.RefObject<HTMLElement>,
-      1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
-      1014→  aliases: string[] = [],
-      1015→) {
-      …
-      1046→const useScheduleLayoutEffect = () => {
-      …
-      1061→function renderChildren(children: React.ReactElement) {
-      …
-      1071→function SlottableWithNestedChildren(
-      1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
-      1073→  render: (child: React.ReactNode) => JSX.Element,
-      1074→) {
-      …
-      1081→const srOnlyStyles = {
-      …
   tsup.config.ts
 package.json
   …
@@ -250,7 +229,23 @@ package.json
 playwright.config.ts
 pnpm-lock.yaml
 pnpm-workspace.yaml
+  1→packages:
+  2→  - 'website'
+  3→  - 'test'
+  4→  - 'cmdk'
 test/
+  basic.test.ts
+  dialog.test.ts
+  group.test.ts
+  item.test.ts
+  keybind.test.ts
+  next-env.d.ts
+  numeric.test.ts
+  package.json
+  pages/
+  props.test.ts
+  style.css
+  tsconfig.json
 tsconfig.json
 website/
   .eslintrc.json
@@ -258,6 +253,10 @@ website/
   README.md
   components/
     cmdk/
+      framer.tsx
+      linear.tsx
+      raycast.tsx
+      vercel.tsx
     code/
     icons/
     index.ts

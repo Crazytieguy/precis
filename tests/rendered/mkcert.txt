@@ -9,7 +9,29 @@ README.md
   1→# mkcert
   2→
   3→mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
-  …
+  5→```
+  6→$ mkcert -install
+  7→Created a new local CA 💥
+  8→The local CA is now installed in the system trust store! ⚡️
+  9→The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
+  10→
+  11→$ mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
+  12→
+  13→Created a new certificate valid for the following names 📜
+  14→ - "example.com"
+  15→ - "*.example.com"
+  16→ - "example.test"
+  17→ - "localhost"
+  18→ - "127.0.0.1"
+  19→ - "::1"
+  20→
+  21→The certificate is at "./example.com+5.pem" and the key at "./example.com+5-key.pem" ✅
+  22→```
+  24→<p align="center"><img width="498" alt="Chrome and Firefox screenshot" src="https://user-images.githubusercontent.com/1225294/51066373-96d4aa80-15be-11e9-91e2-f4e44a3a4458.png"></p>
+  25→
+  26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
+  27→
+  28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
   30→## Installation
   …
   34→### macOS
@@ -35,42 +57,6 @@ README.md
   188→### Installing the CA on other systems
   …
 cert.go
-  …
-  35→var userAndHostname string
-  36→
-  37→func init() {
-  …
-  50→func (m *mkcert) makeCert(hosts []string) {
-  …
-  148→func (m *mkcert) printHosts(hosts []string) {
-  …
-  166→func (m *mkcert) generateKey(rootCA bool) (crypto.PrivateKey, error) {
-  167→	if m.ecdsa {
-  168→		return ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-  169→	}
-  170→	if rootCA {
-  171→		return rsa.GenerateKey(rand.Reader, 3072)
-  172→	}
-  173→	return rsa.GenerateKey(rand.Reader, 2048)
-  …
-  176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
-  …
-  202→func randomSerialNumber() *big.Int {
-  203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
-  204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
-  205→	fatalIfErr(err, "failed to generate serial number")
-  206→	return serialNumber
-  …
-  209→func (m *mkcert) makeCertFromCSR() {
-  …
-  281→// loadCA will load or create the CA at CAROOT.
-  282→func (m *mkcert) loadCA() {
-  …
-  310→func (m *mkcert) newCA() {
-  …
-  366→func (m *mkcert) caUniqueName() string {
-  367→	return "mkcert development CA " + m.caCert.SerialNumber.String()
-  …
 go.mod
   1→module filippo.io/mkcert
   2→
@@ -182,6 +168,9 @@ main.go
   361→	}
   …
   364→func fatalIfCmdErr(err error, cmd string, out []byte) {
+  365→	if err != nil {
+  366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
+  367→	}
   …
   370→func pathExists(path string) bool {
   371→	_, err := os.Stat(path)
@@ -206,10 +195,37 @@ truststore_darwin.go
   25→var trustSettings []interface{}
   26→var _, _ = plist.Unmarshal(trustSettingsData, &trustSettings)
   27→var trustSettingsData = []byte(`
-  …
+  28→<array>
+  29→	<dict>
+  30→		<key>kSecTrustSettingsPolicy</key>
+  31→		<data>
+  32→		KoZIhvdjZAED
+  33→		</data>
+  34→		<key>kSecTrustSettingsPolicyName</key>
+  35→		<string>sslServer</string>
+  36→		<key>kSecTrustSettingsResult</key>
+  37→		<integer>1</integer>
+  38→	</dict>
+  39→	<dict>
+  40→		<key>kSecTrustSettingsPolicy</key>
+  41→		<data>
+  42→		KoZIhvdjZAEC
+  43→		</data>
+  44→		<key>kSecTrustSettingsPolicyName</key>
+  45→		<string>basicX509</string>
+  46→		<key>kSecTrustSettingsResult</key>
+  47→		<integer>1</integer>
+  48→	</dict>
+  49→</array>
+  50→`)
   52→func (m *mkcert) installPlatform() bool {
   …
   105→func (m *mkcert) uninstallPlatform() bool {
+  106→	cmd := commandWithSudo("security", "remove-trusted-cert", "-d", filepath.Join(m.CAROOT, rootName))
+  107→	out, err := cmd.CombinedOutput()
+  108→	fatalIfCmdErr(err, "security remove-trusted-cert", out)
+  109→
+  110→	return true
   …
 truststore_java.go
   …
@@ -255,40 +271,4 @@ truststore_linux.go
   77→func (m *mkcert) uninstallPlatform() bool {
   …
 truststore_nss.go
-  …
-  17→var (
-  18→	hasNSS       bool
-  19→	hasCertutil  bool
-  20→	certutilPath string
-  21→	nssDBs       = []string{
-  22→		filepath.Join(os.Getenv("HOME"), ".pki/nssdb"),
-  23→		filepath.Join(os.Getenv("HOME"), "snap/chromium/current/.pki/nssdb"), // Snapcraft
-  24→		"/etc/pki/nssdb", // CentOS 7
-  25→	}
-  26→	firefoxPaths = []string{
-  27→		"/usr/bin/firefox",
-  28→		"/usr/bin/firefox-nightly",
-  29→		"/usr/bin/firefox-developer-edition",
-  30→		"/snap/firefox",
-  31→		"/Applications/Firefox.app",
-  32→		"/Applications/FirefoxDeveloperEdition.app",
-  33→		"/Applications/Firefox Developer Edition.app",
-  34→		"/Applications/Firefox Nightly.app",
-  35→		"C:\\Program Files\\Mozilla Firefox",
-  36→	}
-  37→)
-  39→func init() {
-  …
-  73→func (m *mkcert) checkNSS() bool {
-  …
-  89→func (m *mkcert) installNSS() bool {
-  …
-  106→func (m *mkcert) uninstallNSS() {
-  …
-  118→// execCertutil will execute a "certutil" command and if needed re-execute
-  119→// the command with commandWithSudo to work around file permissions.
-  120→func execCertutil(cmd *exec.Cmd) ([]byte, error) {
-  …
-  131→func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {
-  …
 truststore_windows.go

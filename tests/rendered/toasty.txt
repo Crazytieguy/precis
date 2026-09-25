@@ -5,6 +5,42 @@
 .gitignore
 CLAUDE.md
 Cargo.toml
+  1→[workspace]
+  2→resolver = "2"
+  3→members = [
+  4→    "crates/toasty",
+  5→    "crates/toasty-cli",
+  6→    "crates/toasty-codegen",
+  7→    "crates/toasty-core",
+  8→    "crates/toasty-macros",
+  9→    "crates/toasty-sql",
+  10→
+  11→    # Driver implementations
+  12→    "crates/toasty-driver-dynamodb",
+  13→    "crates/toasty-driver-mysql",
+  14→    "crates/toasty-driver-postgresql",
+  15→    "crates/toasty-driver-sqlite",
+  16→
+  17→    # Driver integration test suite
+  18→    "crates/toasty-driver-integration-suite",
+  19→    "crates/toasty-driver-integration-suite-macros",
+  20→
+  21→    # General utilities.
+  22→    "crates/std-util",
+  23→
+  24→    # Examples
+  25→    "examples/composite-key",
+  26→    "examples/hello-toasty",
+  27→    "examples/todo-with-cli",
+  28→    "examples/user-has-one-profile",
+  29→
+  30→    # Tests
+  31→    "tests",
+  32→
+  33→    # Benchmarks
+  34→    "benches",
+  35→]
+  …
 LICENSE
 README.md
   1→# Toasty
@@ -60,6 +96,8 @@ crates/
         builder.rs
         connect.rs
         pool.rs
+          1→//! Connection pooling for database connections.
+          …
       db.rs
       engine/
         eval/
@@ -140,9 +178,6 @@ crates/
           stmt_query.rs
         simplify.rs
         ty.rs
-          …
-          4→impl Engine {
-          …
         verify.rs
       engine.rs
       lib.rs
@@ -209,23 +244,6 @@ crates/
     src/
       config.rs
       lib.rs
-        1→mod config;
-        2→mod migration;
-        3→mod theme;
-        4→
-        5→pub use config::*;
-        6→pub use migration::*;
-        …
-        13→pub struct ToastyCli {
-        14→    db: Db,
-        15→    config: Config,
-        16→}
-        18→impl ToastyCli {
-        …
-        64→struct Cli {
-        …
-        70→enum Command {
-        …
       migration/
         apply.rs
         config.rs
@@ -253,13 +271,6 @@ crates/
         util.rs
       expand.rs
       lib.rs
-        1→mod expand;
-        2→mod schema;
-        …
-        6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
-        …
-        13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
-        …
       schema/
         auto.rs
         belongs_to.rs
@@ -378,6 +389,18 @@ crates/
   toasty-driver-integration-suite/
     Cargo.toml
     src/
+      exec_log.rs
+      helpers.rs
+      isolate.rs
+      lib.rs
+      logging_driver.rs
+      macros.rs
+      setup.rs
+      stmt.rs
+      suite.rs
+      test.rs
+      tests/
+      tests.rs
   toasty-driver-integration-suite-macros/
     Cargo.toml
     src/
@@ -390,38 +413,6 @@ crates/
     Cargo.toml
     src/
       lib.rs
-        …
-        3→mod value;
-        …
-        21→#[derive(Debug)]
-        22→pub struct MySQL {
-        23→    url: String,
-        24→    pool: Pool,
-        25→}
-        27→impl MySQL {
-        28→    pub fn new(url: impl Into<String>) -> Result<Self> {
-        …
-        60→}
-        …
-        63→impl Driver for MySQL {
-        …
-        132→#[derive(Debug)]
-        133→pub struct Connection {
-        134→    conn: Conn,
-        135→}
-        137→impl Connection {
-        138→    pub fn new(conn: Conn) -> Self {
-        …
-        142→    pub async fn create_table(&mut self, schema: &Schema, table: &Table) -> Result<()> {
-        …
-        182→}
-        184→impl From<Conn> for Connection {
-        185→    fn from(conn: Conn) -> Self {
-        …
-        188→}
-        …
-        191→impl toasty_core::driver::Connection for Connection {
-        …
       value.rs
   toasty-driver-postgresql/
     Cargo.toml
@@ -435,38 +426,6 @@ crates/
     Cargo.toml
     src/
       lib.rs
-        1→mod value;
-        …
-        22→#[derive(Debug)]
-        23→pub enum Sqlite {
-        24→    File(PathBuf),
-        25→    InMemory,
-        26→}
-        28→impl Sqlite {
-        …
-        30→    pub fn new(url: impl Into<String>) -> Result<Self> {
-        …
-        49→    pub fn in_memory() -> Self {
-        …
-        54→    pub fn open<P: AsRef<Path>>(path: P) -> Self {
-        …
-        57→}
-        …
-        60→impl Driver for Sqlite {
-        …
-        122→#[derive(Debug)]
-        123→pub struct Connection {
-        124→    connection: RusqliteConnection,
-        125→}
-        127→impl Connection {
-        128→    pub fn in_memory() -> Self {
-        …
-        134→    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
-        …
-        140→}
-        …
-        143→impl toasty_core::driver::Connection for Connection {
-        …
       value.rs
   toasty-macros/
     Cargo.toml
@@ -477,14 +436,6 @@ crates/
     Cargo.toml
     src/
       lib.rs
-        1→pub mod migration;
-        2→pub use migration::*;
-        3→
-        4→pub mod serializer;
-        5→pub use serializer::{Params, Serializer, TypedValue};
-        6→
-        7→pub mod stmt;
-        8→pub use stmt::Statement;
       migration.rs
       serializer/
         column.rs
@@ -523,6 +474,14 @@ docs/
   ARCHITECTURE.md
   CHANGE_GUIDE.md
   CONTEXT.md
+    1→# Documentation Context
+    …
+    5→## Writing Style
+    …
+    18→### Examples
+    …
+    28→## Document Structure
+    …
   architecture/
     query-engine.md
     type-system.md
@@ -534,6 +493,10 @@ docs/
     pagination.md
   roadmap/
     README.md
+      1→# Toasty ORM - Development Roadmap
+      2→
+      3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
+      …
     composite-keys.md
     order_limit_pagination.md
     query-constraints.md
@@ -541,6 +504,13 @@ examples/
   composite-key/
   hello-toasty/
   todo-with-cli/
+    .gitignore
+    Cargo.toml
+    Toasty.toml
+    src/
+      bin/
+      lib.rs
+    toasty/
   user-has-one-profile/
 rust-toolchain.toml
 scripts/

@@ -145,14 +145,13 @@ pub fn conserved_catalog_chunk_factors(chunk_costs: &[usize], cost_exponent: f64
 
 /// Base value of each code-engine rung (`walker::code`), before the file
 /// prior, the declaration factors and the chunk share. Starting values
-/// are the medians of the pre-engine walkers' effective values per rung,
-/// not tuned. `Names` sits above `Decl` so a file's roster ranks ahead of
-/// its individual declarations.
+/// were the medians of the pre-engine walkers' effective values per rung;
+/// `Names` is tuned on the corpus grid.
 pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
     use crate::batch::Rung;
     match rung {
         Rung::ModuleDoc => 1180.0,
-        Rung::Names => 1150.0,
+        Rung::Names => 750.0,
         Rung::Decl => 1130.0,
         Rung::Doc => 610.0,
         Rung::Body => 600.0,

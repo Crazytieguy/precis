@@ -1,6 +1,7 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
   dependabot.yml
   workflows/
     ci.yml
@@ -16,6 +17,40 @@ AUTHORS
 COPYING
 ChangeLog
 Dockerfile
+  1→FROM debian:12-slim AS builder
+  2→
+  3→ENV DEBIAN_FRONTEND=noninteractive \
+  4→    DEBCONF_NONINTERACTIVE_SEEN=true \
+  5→    LC_ALL=C.UTF-8 \
+  6→    LANG=C.UTF-8
+  7→
+  8→RUN apt-get update \
+  9→ && apt-get install -y \
+  10→      build-essential \
+  11→      autoconf \
+  12→      libtool \
+  13→      git \
+  14→ && apt-get clean \
+  15→ && rm -rf /var/lib/apt/lists/*
+  16→
+  17→WORKDIR /app
+  18→COPY . /app
+  19→RUN autoreconf -i \
+  20→ && ./configure \
+  21→      --disable-docs \
+  22→      --with-oniguruma=builtin \
+  23→      --enable-static \
+  24→      --enable-all-static \
+  25→      --prefix=/usr/local \
+  26→ && make -j$(nproc) \
+  27→ && make check VERBOSE=yes \
+  28→ && make install-strip
+  29→
+  30→FROM scratch
+  31→
+  32→COPY --from=builder /app/AUTHORS /app/COPYING /usr/local/bin/jq /
+  33→RUN ["/jq", "--version"]
+  34→ENTRYPOINT ["/jq"]
 KEYS
 Makefile.am
 NEWS.md
@@ -36,7 +71,10 @@ README.md
   34→### Building from source
   …
   67→## Community & Support
-  …
+  68→
+  69→- Questions & Help: [Stack Overflow (jq tag)](https://stackoverflow.com/questions/tagged/jq)
+  70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
+  71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
   73→## License
   …
 SECURITY.md
@@ -99,6 +137,8 @@ docs/
     js/
       manual-search.js
     robots.txt
+      1→User-agent: *
+      2→Allow: /
   templates/
     default.html.j2
     index.html.j2
@@ -120,6 +160,20 @@ scripts/
   gen_utf8_tables.py
   version
 sig/
+  jq-release-new.key
+  jq-release-old.key
+  v1.3/
+  v1.4/
+  v1.5/
+  v1.5rc1/
+  v1.5rc2/
+  v1.6/
+  v1.7/
+  v1.7.1/
+  v1.7rc1/
+  v1.7rc2/
+  v1.8.0/
+  v1.8.1/
 src/
   builtin.c
   builtin.h
@@ -195,16 +249,6 @@ src/
   jv.h
   jv_alloc.c
   jv_alloc.h
-    …
-    6→void* jv_mem_alloc(size_t);
-    7→void* jv_mem_alloc_unguarded(size_t);
-    8→void* jv_mem_calloc(size_t, size_t);
-    9→void* jv_mem_calloc_unguarded(size_t, size_t);
-    10→char* jv_mem_strdup(const char *);
-    11→char* jv_mem_strdup_unguarded(const char *);
-    12→void jv_mem_free(void*);
-    13→__attribute__((warn_unused_result)) void* jv_mem_realloc(void*, size_t);
-    …
   jv_aux.c
   jv_dtoa.c
   jv_dtoa.h
@@ -242,78 +286,10 @@ src/
     …
   locfile.c
   locfile.h
-    …
-    6→typedef struct {
-    7→  int start, end;
-    8→} location;
-    …
-    12→struct locfile {
-    13→  jv fname;
-    14→  const char* data;
-    15→  int length;
-    16→  int* linemap;
-    17→  int nlines;
-    18→  char *error;
-    19→  jq_state *jq;
-    20→  int refct;
-    21→};
-    23→struct locfile* locfile_init(jq_state *, const char *, const char *, int);
-    24→struct locfile* locfile_retain(struct locfile *);
-    25→int locfile_get_line(struct locfile *, int);
-    26→void locfile_free(struct locfile *);
-    27→void locfile_locate(struct locfile *, location, const char *, ...);
-    …
   main.c
   opcode_list.h
   parser.c
   parser.h
-    …
-    44→#if YYDEBUG
-    45→extern int yydebug;
-    46→#endif
-    …
-    51→struct lexer_param;
-    52→
-    53→#define YYLTYPE location
-    54→#define YYLLOC_DEFAULT(Loc, Rhs, N)             \
-    55→  do {                                          \
-    56→    if (N) {                                    \
-    57→      (Loc).start = YYRHSLOC(Rhs, 1).start;     \
-    58→      (Loc).end = YYRHSLOC(Rhs, N).end;         \
-    59→    } else {                                    \
-    60→      (Loc).start = YYRHSLOC(Rhs, 0).end;       \
-    61→      (Loc).end = YYRHSLOC(Rhs, 0).end;         \
-    62→    }                                           \
-    63→  } while (0)
-    …
-    70→  enum yytokentype
-    …
-    123→  typedef enum yytokentype yytoken_kind_t;
-    124→#endif
-    125→/* Token kinds.  */
-    126→#define YYEMPTY -2
-    127→#define YYEOF 0
-    128→#define YYerror 256
-    129→#define YYUNDEF 257
-    130→#define INVALID_CHARACTER 258
-    131→#define IDENT 259
-    132→#define FIELD 260
-    133→#define BINDING 261
-    134→#define LITERAL 262
-    135→#define FORMAT 263
-    136→#define REC 264
-    137→#define SETMOD 265
-    138→#define EQ 266
-    139→#define NEQ 267
-    140→#define DEFINEDOR 268
-    141→#define AS 269
-    142→#define DEF 270
-    143→#define MODULE 271
-    144→#define IMPORT 272
-    145→#define INCLUDE 273
-    146→#define IF 274
-    147→#define THEN 275
-    …
   parser.y
   util.c
   util.h
@@ -357,10 +333,44 @@ tests/
   setup
   shtest
   torture/
+    input0.json
   uri.test
   uritest
   utf8test
   yes-main-program.jq
 vendor/
   decNumber/
+    ICU-license.html
+    decBasic.c
+    decCommon.c
+    decContext.c
+    decContext.h
+    decDPD.h
+    decDouble.c
+    decDouble.h
+    decNumber.c
+    decNumber.h
+    decNumberLocal.h
+    decPacked.c
+    decPacked.h
+    decQuad.c
+    decQuad.h
+    decSingle.c
+    decSingle.h
+    decimal128.c
+    decimal128.h
+    decimal32.c
+    decimal32.h
+    decimal64.c
+    decimal64.h
+    decnumber.pdf
+    example1.c
+    example2.c
+    example3.c
+    example4.c
+    example5.c
+    example6.c
+    example7.c
+    example8.c
+    readme.txt
   oniguruma/ (empty)

@@ -95,10 +95,34 @@ Readme.md
 docs/
   guides/
     01-getting-started.md
+      1→# Getting Started
+      2→
+      3→## Installing Superstruct
+      …
+      41→## Defining Structs
+      …
     02-validating-data.md
     03-coercing-data.md
+      1→# Coercing Data
+      …
+      7→## Default Values
+      …
+      49→## Custom Coercions
+      …
     04-refining-validation.md
+      1→# Refining Validation
+      …
+      7→## Built-in Refinements
+      …
+      47→## Custom Refinements
+      …
     05-handling-errors.md
+      1→# Handling Errors
+      …
+      53→## Customizing Errors
+      …
+      102→## Multiple Failures
+      …
     06-using-typescript.md
   images/
     banner.png
@@ -127,7 +151,8 @@ docs/
     faq.md
     links.md
       1→# Resources
-      …
+      2→
+      3→A few resources that are helpful for building with Superstruct.
       5→## Libraries
       …
   summary.md
@@ -171,6 +196,23 @@ package.json
   19→    "node": ">=14.0.0"
   20→  },
   …
+  38→  "scripts": {
+  39→    "build": "rm -rf ./{dist} && rollup --config ./rollup.config.js",
+  40→    "clean": "rm -rf ./{dist,node_modules}",
+  41→    "fix": "npm run fix:eslint && npm run fix:prettier",
+  42→    "fix:eslint": "npm run lint:eslint --fix",
+  43→    "fix:prettier": "prettier '**/*.{js,json,ts}' --write",
+  44→    "lint": "npm run lint:eslint && npm run lint:prettier",
+  45→    "lint:eslint": "eslint '{src,test}/*.{js,ts}'",
+  46→    "lint:prettier": "prettier '**/*.{js,json,ts}' --check",
+  47→    "release": "npm run build && npm run lint && np",
+  48→    "test": "npm run build && npm run test:types && npm run test:vitest",
+  49→    "test:types": "tsc --noEmit && tsc --project ./test/tsconfig.json --noEmit",
+  50→    "test:vitest": "vitest run",
+  51→    "test:watch": "vitest",
+  52→    "watch": "npm run build -- --watch"
+  53→  },
+  …
 rollup.config.js
 src/
   error.ts
@@ -211,95 +253,8 @@ src/
   struct.ts
   structs/
     coercions.ts
-      …
-      16→export function coerce<T, S, C>(
-      17→  struct: Struct<T, S>,
-      18→  condition: Struct<C, any>,
-      19→  coercer: Coercer<C>
-      20→): Struct<T, S> {
-      …
-      38→export function defaulted<T, S>(
-      39→  struct: Struct<T, S>,
-      40→  fallback: any,
-      41→  options: {
-      42→    strict?: boolean
-      43→  } = {}
-      44→): Struct<T, S> {
-      …
-      79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
-      …
     refinements.ts
-      …
-      8→export function empty<
-      9→  T extends string | any[] | Map<any, any> | Set<any>,
-      10→  S extends any,
-      11→>(struct: Struct<T, S>): Struct<T, S> {
-      …
-      33→export function max<T extends number | Date, S extends any>(
-      34→  struct: Struct<T, S>,
-      35→  threshold: T,
-      36→  options: {
-      37→    exclusive?: boolean
-      38→  } = {}
-      39→): Struct<T, S> {
-      …
-      55→export function min<T extends number | Date, S extends any>(
-      56→  struct: Struct<T, S>,
-      57→  threshold: T,
-      58→  options: {
-      59→    exclusive?: boolean
-      60→  } = {}
-      61→): Struct<T, S> {
-      …
-      77→export function nonempty<
-      78→  T extends string | any[] | Map<any, any> | Set<any>,
-      79→  S extends any,
-      80→>(struct: Struct<T, S>): Struct<T, S> {
-      …
-      93→export function pattern<T extends string, S extends any>(
-      94→  struct: Struct<T, S>,
-      95→  regexp: RegExp
-      96→): Struct<T, S> {
-      …
-      109→export function size<
-      …
-      146→export function refine<T, S>(
-      147→  struct: Struct<T, S>,
-      148→  name: string,
-      149→  refiner: Refiner<T>
-      150→): Struct<T, S> {
-      …
     types.ts
-      …
-      19→export function any(): Struct<any, null> {
-      20→  return define('any', () => true)
-      …
-      31→export function array<T extends Struct<any>>(Element: T): Struct<Infer<T>[], T>
-      32→export function array(): Struct<unknown[], undefined>
-      33→export function array<T extends Struct<any>>(Element?: T): any {
-      …
-      60→export function bigint(): Struct<bigint, null> {
-      …
-      70→export function boolean(): Struct<boolean, null> {
-      …
-      83→export function date(): Struct<Date, null> {
-      …
-      99→export function enums<U extends number, T extends readonly U[]>(
-      100→  values: T
-      101→): Struct<T[number], { [K in T[number]]: K }>
-      102→export function enums<U extends string, T extends readonly U[]>(
-      103→  values: T
-      104→): Struct<T[number], { [K in T[number]]: K }>
-      105→export function enums<U extends string | number, T extends readonly U[]>(
-      106→  values: T
-      107→): any {
-      …
-      131→export function func(): Struct<Function, null> {
-      …
-      144→export function instance<T extends { new (...args: any): any }>(
-      145→  Class: T
-      146→): Struct<InstanceType<T>, null> {
-      …
     utilities.ts
   utils.ts
 test/
@@ -314,6 +269,51 @@ test/
   index.ts
   tsconfig.json
   typings/
+    any.ts
+    array.ts
+    assign.ts
+    bigint.ts
+    boolean.ts
+    coerce.ts
+    date.ts
+    defaulted.ts
+    deprecated.ts
+    describe.ts
+    dynamic.ts
+    empty.ts
+    enums.ts
+    func.ts
+    infer.ts
+    instance.ts
+    integer.ts
+    intersection.ts
+    lazy.ts
+    literal.ts
+    map.ts
+    max.ts
+    min.ts
+    never.ts
+    nonempty.ts
+    nullable.ts
+    number.ts
+    object.ts
+    omit.ts
+    optional.ts
+    partial.ts
+    pattern.ts
+    pick.ts
+    record.ts
+    refine.ts
+    regexp.ts
+    set.ts
+    size.ts
+    string.ts
+    struct.ts
+    trimmed.ts
+    tuple.ts
+    type.ts
+    union.ts
+    unknown.ts
   validation/
     any/
     array/

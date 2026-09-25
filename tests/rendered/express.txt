@@ -115,53 +115,15 @@ index.js
   11→module.exports = require('./lib/express');
 lib/
   application.js
-    …
-    36→/**
-    37→ * Application prototype.
-    38→ */
-    40→var app = exports = module.exports = {};
-    …
-    59→app.init = function init() {
-    …
-    90→app.defaultConfiguration = function defaultConfiguration() {
-    …
-    152→app.handle = function handle(req, res, callback) {
-    …
-    190→app.use = function use(fn) {
-    …
-    256→app.route = function route(path) {
-    257→  return this.router.route(path);
-    …
-    294→app.engine = function engine(ext, fn) {
-    …
-    322→app.param = function param(name, fn) {
-    …
-    351→app.set = function set(setting, val) {
-    …
-    399→app.path = function path() {
-    …
-    420→app.enabled = function enabled(setting) {
-    421→  return Boolean(this.set(setting));
-    …
-    439→app.disabled = function disabled(setting) {
-    440→  return !this.set(setting);
-    …
-    451→app.enable = function enable(setting) {
-    452→  return this.set(setting, true);
-    …
-    463→app.disable = function disable(setting) {
-    464→  return this.set(setting, false);
-    …
-    494→app.all = function all(path) {
-    …
-    522→app.render = function render(name, options, callback) {
-    …
-    598→app.listen = function listen() {
-    …
   express.js
     …
     27→exports = module.exports = createApplication;
-    …
+    29→/**
+    30→ * Create an express application.
+    31→ *
+    32→ * @return {Function}
+    33→ * @api public
+    34→ */
     36→function createApplication() {
     …
     62→exports.application = proto;
@@ -191,6 +153,8 @@ lib/
     129→  return accept.types.apply(accept, arguments);
     …
     140→req.acceptsEncodings = function(){
+    141→  var accept = accepts(this);
+    142→  return accept.encodings.apply(accept, arguments);
     …
     171→req.acceptsCharsets = function(...charsets) {
     172→  const accept = accepts(this);
@@ -204,100 +168,37 @@ lib/
     269→req.is = function is(types) {
     …
   response.js
-    …
-    37→/**
-    38→ * Response prototype.
-    39→ * @public
-    40→ */
-    42→var res = Object.create(http.ServerResponse.prototype)
-    …
-    49→module.exports = res
-    …
-    64→res.status = function status(code) {
-    …
-    97→res.links = function(links) {
-    …
-    125→res.send = function send(body) {
-    …
-    232→res.json = function json(obj) {
-    …
-    260→res.jsonp = function jsonp(obj) {
-    …
-    321→res.sendStatus = function sendStatus(statusCode) {
-    …
-    371→res.sendFile = function sendFile(path, options, callback) {
-    …
-    433→res.download = function download (path, filename, options, callback) {
-    …
-    569→res.format = function(obj){
-    …
-    604→res.attachment = function attachment(filename) {
-    …
-    629→res.append = function append(field, val) {
-    …
-    688→/**
-    689→ * Get value for header `field`.
-    690→ *
-    691→ * @param {String} field
-    692→ * @return {String}
-    693→ * @public
-    694→ */
-    696→res.get = function(field){
-    697→  return this.getHeader(field);
-    …
-    709→res.clearCookie = function clearCookie(name, options) {
-    …
-    742→res.cookie = function (name, value, options) {
-    …
-    794→res.location = function location(url) {
-    795→  return this.set('Location', encodeUrl(url));
-    …
-    812→res.redirect = function redirect(url) {
-    …
-    875→res.vary = function(field){
-    876→  vary(this, field);
-    877→
-    878→  return this;
-    …
-    894→res.render = function render(view, options, callback) {
-    …
   utils.js
-    …
-    25→/**
-    26→ * A list of lowercased HTTP methods that are supported by Node.js.
-    27→ * @api private
-    28→ */
-    29→exports.methods = METHODS.map((method) => method.toLowerCase());
-    …
-    40→exports.etag = createETagGenerator({ weak: false })
-    …
-    51→exports.wetag = createETagGenerator({ weak: true })
-    …
-    61→exports.normalizeType = function(type){
-    …
-    75→exports.normalizeTypes = function(types) {
-    76→  return types.map(exports.normalizeType);
-    …
-    130→exports.compileETag = function(val) {
-    …
-    162→exports.compileQueryParser = function compileQueryParser(val) {
-    …
-    194→exports.compileTrust = function(val) {
-    …
-    225→exports.setCharset = function setCharset(type, charset) {
-    …
-    249→function createETagGenerator (options) {
-    …
   view.js
     …
     36→module.exports = View;
     …
     52→function View(name, options) {
     …
+    97→/**
+    98→ * Lookup view by the given `name`
+    99→ *
+    100→ * @param {string} name
+    101→ * @private
+    102→ */
     104→View.prototype.lookup = function lookup(name) {
     …
+    125→/**
+    126→ * Render with the given options.
+    127→ *
+    128→ * @param {object} options
+    129→ * @param {function} callback
+    130→ * @private
+    131→ */
     133→View.prototype.render = function render(options, callback) {
     …
+    161→/**
+    162→ * Resolve the file within the given directory.
+    163→ *
+    164→ * @param {string} dir
+    165→ * @param {string} file
+    166→ * @private
+    167→ */
     169→View.prototype.resolve = function resolve(dir, file) {
     …
 package.json
@@ -307,6 +208,37 @@ package.json
   4→  "version": "5.2.1",
   …
   15→  "license": "MIT",
+  …
+  34→  "dependencies": {
+  35→    "accepts": "^2.0.0",
+  36→    "body-parser": "^2.2.1",
+  37→    "content-disposition": "^1.0.0",
+  38→    "content-type": "^1.0.5",
+  39→    "cookie": "^0.7.1",
+  40→    "cookie-signature": "^1.2.1",
+  41→    "debug": "^4.4.0",
+  42→    "depd": "^2.0.0",
+  43→    "encodeurl": "^2.0.0",
+  44→    "escape-html": "^1.0.3",
+  45→    "etag": "^1.8.1",
+  46→    "finalhandler": "^2.1.0",
+  47→    "fresh": "^2.0.0",
+  48→    "http-errors": "^2.0.0",
+  49→    "merge-descriptors": "^2.0.0",
+  50→    "mime-types": "^3.0.0",
+  51→    "on-finished": "^2.4.1",
+  52→    "once": "^1.4.0",
+  53→    "parseurl": "^1.3.3",
+  54→    "proxy-addr": "^2.0.7",
+  55→    "qs": "^6.14.2",
+  56→    "range-parser": "^1.2.1",
+  57→    "router": "^2.2.0",
+  58→    "send": "^1.1.0",
+  59→    "serve-static": "^2.2.0",
+  60→    "statuses": "^2.0.1",
+  61→    "type-is": "^2.0.1",
+  62→    "vary": "^1.1.2"
+  63→  },
   …
   82→  "engines": {
   83→    "node": ">= 18"
@@ -330,6 +262,24 @@ test/
   Route.js
   Router.js
   acceptance/
+    auth.js
+    content-negotiation.js
+    cookie-sessions.js
+    cookies.js
+    downloads.js
+    ejs.js
+    error-pages.js
+    error.js
+    hello-world.js
+    markdown.js
+    multi-router.js
+    mvc.js
+    params.js
+    resource.js
+    route-map.js
+    route-separation.js
+    vhost.js
+    web-service.js
   app.all.js
   app.engine.js
   app.head.js

@@ -18,7 +18,13 @@ package.json
   3→	"version": "1.14.3",
   4→	"description": "Tiny and elegant HTTP client based on the Fetch API",
   5→	"license": "MIT",
-  …
+  6→	"repository": "sindresorhus/ky",
+  7→	"funding": "https://github.com/sindresorhus/ky?sponsor=1",
+  8→	"author": {
+  9→		"name": "Sindre Sorhus",
+  10→		"email": "sindresorhus@gmail.com",
+  11→		"url": "https://sindresorhus.com"
+  12→	},
   13→	"type": "module",
   14→	"exports": {
   15→		"types": "./distribution/index.d.ts",
@@ -40,6 +46,28 @@ package.json
   31→	"files": [
   32→		"distribution"
   33→	],
+  34→	"keywords": [
+  35→		"fetch",
+  36→		"request",
+  37→		"requests",
+  38→		"http",
+  39→		"https",
+  40→		"fetching",
+  41→		"get",
+  42→		"url",
+  43→		"curl",
+  44→		"wget",
+  45→		"net",
+  46→		"network",
+  47→		"ajax",
+  48→		"api",
+  49→		"rest",
+  50→		"xhr",
+  51→		"browser",
+  52→		"got",
+  53→		"axios",
+  54→		"node-fetch"
+  55→	],
   …
 readme.md
   …
@@ -122,9 +150,14 @@ readme.md
   1344→
   1345→Node.js 18 and later.
   1347→## Related
-  …
+  1348→
+  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+  1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
   1352→## Maintainers
-  …
+  1353→
+  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
+  1355→- [Seth Holladay](https://github.com/sholladay)
+  1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/
   core/
     Ky.ts
@@ -141,6 +174,10 @@ source/
   errors/
     ForceRetryError.ts
       …
+      4→/**
+      5→Internal error used to signal a forced retry from afterResponse hooks.
+      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+      7→*/
       8→export class ForceRetryError extends Error {
       9→	override name = 'ForceRetryError' as const;
       10→	customDelay: number | undefined;
@@ -161,9 +198,6 @@ source/
       …
       23→}
     NonError.ts
-      …
-      6→export class NonError extends Error {
-      …
     TimeoutError.ts
       …
       3→export class TimeoutError extends Error {
@@ -175,6 +209,27 @@ source/
   index.ts
     …
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+    12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
+    13→
+    14→	for (const method of requestMethods) {
+    15→		// eslint-disable-next-line @typescript-eslint/promise-function-async
+    16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
+    17→	}
+    18→
+    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
+    20→	ky.extend = (newDefaults?: Partial<Options> | ((parentDefaults: Partial<Options>) => Partial<Options>)) => {
+    21→		if (typeof newDefaults === 'function') {
+    22→			newDefaults = newDefaults(defaults ?? {});
+    23→		}
+    24→
+    25→		return createInstance(validateAndMerge(defaults, newDefaults));
+    26→	};
+    27→
+    28→	ky.stop = stop;
+    29→	ky.retry = retry;
+    30→
+    31→	return ky as KyInstance;
     …
     34→const ky = createInstance();
     35→
@@ -224,52 +279,6 @@ source/
       …
     common.ts
     hooks.ts
-      …
-      5→export type BeforeRequestState = {
-      6→	/**
-      7→	The number of retries attempted. `0` for the initial request, increments with each retry.
-      8→
-      9→	This allows you to distinguish between initial requests and retries, which is useful when you need different behavior for retries (e.g., avoiding overwriting headers set in `beforeRetry`).
-      10→	*/
-      11→	retryCount: number;
-      12→};
-      14→export type BeforeRequestHook = (
-      15→	request: KyRequest,
-      16→	options: NormalizedOptions,
-      17→	state: BeforeRequestState
-      18→) => Request | Response | void | Promise<Request | Response | void>;
-      20→export type BeforeRetryState = {
-      21→	request: KyRequest;
-      22→	options: NormalizedOptions;
-      23→	error: Error;
-      24→
-      25→	/**
-      26→	The number of retries attempted. Always `>= 1` since this hook is only called during retries, not on the initial request.
-      27→	*/
-      28→	retryCount: number;
-      29→};
-      30→export type BeforeRetryHook = (options: BeforeRetryState) => Request | Response | typeof stop | void | Promise<Request | Response | typeof stop | void>;
-      31→
-      32→export type AfterResponseState = {
-      33→	/**
-      34→	The number of retries attempted. `0` for the initial request, increments with each retry.
-      35→
-      36→	This allows you to distinguish between initial requests and retries, which is useful when you need different behavior for retries (e.g., showing a notification only on the final retry).
-      37→	*/
-      38→	retryCount: number;
-      39→};
-      41→export type AfterResponseHook = (
-      42→	request: KyRequest,
-      43→	options: NormalizedOptions,
-      44→	response: KyResponse,
-      45→	state: AfterResponseState
-      46→) => Response | RetryMarker | void | Promise<Response | RetryMarker | void>;
-      48→export type BeforeErrorState = {
-      …
-      57→export type BeforeErrorHook = (error: HTTPError, state: BeforeErrorState) => HTTPError | Promise<HTTPError>;
-      58→
-      59→export type Hooks = {
-      …
     ky.ts
       …
       5→export type KyInstance = {
@@ -307,19 +316,6 @@ source/
     options.ts
     timeout.ts
     type-guards.ts
-      …
-      27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-      28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
-      …
-      49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-      50→	return error instanceof HTTPError || ((error as any)?.name === HTTPError.name);
-      …
-      71→export function isTimeoutError(error: unknown): error is TimeoutError {
-      72→	return error instanceof TimeoutError || ((error as any)?.name === TimeoutError.name);
-      …
-      98→export function isForceRetryError(error: unknown): error is ForceRetryError {
-      99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
-      …
     types.ts
 test/
   browser.ts

@@ -2,6 +2,27 @@
 .git-blame-ignore-revs
 .gitattributes
 .github/
+  ISSUE_TEMPLATE/
+  PULL_REQUEST_TEMPLATE.md
+  SECURITY.md
+  commit-convention.md
+  copilot-instructions.md
+  renovate.json5
+  workflows/
+    ci.yml
+    copilot-setup-steps.yml
+    ecosystem-ci-trigger.yml
+    issue-close-require.yml
+    issue-labeled.yml
+    issue-template-check.yml
+    lock-closed-issues.yml
+    preview-release.yml
+    publish.yml
+    pull-request-template-check.yml
+    release-tag.yml
+    semantic-pull-request.yml
+    zizmor.yml
+  zizmor.yml
 .gitignore
 .oxfmtrc.json
 CODE_OF_CONDUCT.md
@@ -33,6 +54,36 @@ README.md
   61→## Sponsors
   …
 docs/
+  .vitepress/
+    buildEnd.config.ts
+    config.ts
+    inlined-scripts/
+    theme/
+      components/
+      composables/
+      index.ts
+      landing/
+      live/
+      styles.css
+  _data/
+    acknowledgements.data.ts
+    blog.data.ts
+    team.js
+  acknowledgements.md
+  blog/
+  blog.md
+  changes/
+  config/
+  guide/
+  images/
+  index.md
+  live.md
+  package.json
+  plugins/
+  public/
+  releases.md
+  team.md
+  tsconfig.json
 eslint.config.js
 netlify.toml
 package.json
@@ -51,6 +102,11 @@ packages/
     CHANGELOG.md
     LICENSE
     README.md
+      1→# create-vite <a href="https://npmjs.com/package/create-vite"><img src="https://img.shields.io/npm/v/create-vite" alt="npm package"></a>
+      3→## Scaffolding Your First Vite Project
+      …
+      82→## Community Templates
+      …
     __tests__/
     index.js
     package.json
@@ -58,9 +114,29 @@ packages/
       index.ts
         …
         11→const {
-        …
+        12→  blue,
+        13→  blueBright,
+        14→  cyan,
+        15→  green,
+        16→  greenBright,
+        17→  magenta,
+        18→  red,
+        19→  redBright,
+        20→  reset,
+        21→  underline,
+        22→  yellow,
+        23→} = createColors()
         25→const argv = mri<{
-        …
+        26→  template?: string
+        27→  help?: boolean
+        28→  overwrite?: boolean
+        29→  immediate?: boolean
+        30→  interactive?: boolean
+        31→}>(process.argv.slice(2), {
+        32→  boolean: ['help', 'overwrite', 'immediate', 'interactive'],
+        33→  alias: { h: 'help', t: 'template', i: 'immediate' },
+        34→  string: ['template'],
+        35→})
         36→const cwd = process.cwd()
         …
         39→const helpMessage = `\
@@ -73,7 +149,12 @@ packages/
         68→  variants: FrameworkVariant[]
         69→}
         70→type FrameworkVariant = {
-        …
+        71→  name: string
+        72→  display: string
+        73→  link?: `https://${string}`
+        74→  color: ColorFunc
+        75→  customCommand?: string
+        76→}
         78→const FRAMEWORKS: Framework[] = [
         …
         387→const TEMPLATES = FRAMEWORKS.map((f) => f.variants.map((v) => v.name)).reduce(
@@ -127,6 +208,7 @@ packages/
         …
         32→let babel: Promise<typeof import('@babel/core')> | undefined
         33→async function loadBabel() {
+        34→  return (babel ??= import('@babel/core'))
         …
         39→const { loadConfig: browserslistLoadConfig } = browserslist
         …
@@ -156,69 +238,7 @@ packages/
         125→
         126→const nonLeadingHashInFileNameRE = /[^/]+\[hash(?::\d+)?\]/
         127→const prefixedHashInFileNameRE = /\W?\[hash(?::\d+)?\]/
-        128→export const modulePreloadLinkRE: RegExp =
-        129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
         …
-        132→const modernTargetsEsbuild = [
-        133→  'es2020',
-        134→  'edge105',
-        135→  'firefox106',
-        136→  'chrome105',
-        137→  'safari16.4',
-        138→  'ios16.4',
-        139→]
-        …
-        143→const modernTargetsBabel =
-        144→  'edge>=105, firefox>=106, chrome>=105, safari>=16.4, chromeAndroid>=105, iOS>=16.4'
-        146→const outputOptionsForLegacyChunks =
-        147→  new WeakSet<Rollup.NormalizedOutputOptions>()
-        149→function viteLegacyPlugin(options: Options = {}): Plugin[] {
-        …
-        794→export async function detectPolyfills(
-        795→  code: string,
-        796→  targets: any,
-        797→  assumptions: Record<string, boolean>,
-        798→  list: Set<string>,
-        799→): Promise<void> {
-        …
-        840→async function buildPolyfillChunk(
-        …
-        938→const polyfillId = '\0vite/legacy-polyfills'
-        939→
-        940→function polyfillsPlugin(
-        941→  imports: Set<string>,
-        942→  excludeSystemJS?: boolean,
-        943→): Plugin {
-        …
-        962→function prependModenChunkLegacyGuardPlugin(): Plugin {
-        …
-        987→function isLegacyChunk(chunk: Rollup.RenderedChunk) {
-        …
-        991→function isLegacyBundle(bundle: Rollup.OutputBundle) {
-        …
-        999→function recordAndRemovePolyfillBabelPlugin(
-        1000→  polyfills: Set<string>,
-        1001→): BabelPlugin {
-        …
-        1015→function replaceLegacyEnvBabelPlugin(): BabelPlugin {
-        …
-        1028→function replaceModernEnvBabelPlugin(): BabelPlugin {
-        …
-        1041→function wrapIIFEBabelPlugin(): BabelPlugin {
-        …
-        1057→export const cspHashes: string[] = [
-        1058→  safari10NoModuleFix,
-        1059→  systemJSInlineCode,
-        1060→  detectModernBrowserCode,
-        1061→  dynamicFallbackInlineCode,
-        1062→].map((i) => crypto.hash('sha256', i, 'base64'))
-        1064→export type { Options }
-        1065→
-        1066→export default viteLegacyPlugin
-        …
-        1069→function viteLegacyPluginCjs(this: unknown, options: Options): Plugin[] {
-        …
-        1078→export { viteLegacyPluginCjs as 'module.exports' }
       shims.d.ts
       snippets.ts
       types.ts
@@ -234,12 +254,8 @@ packages/
     client.d.ts
     misc/
       false.d.ts
-        1→declare const result: boolean
-        2→export default result
       false.js
       true.d.ts
-        1→declare const result: boolean
-        2→export default result
       true.js
     package.json
       …
@@ -270,6 +286,11 @@ packages/
     rollupLicensePlugin.ts
       …
       7→export default function licensePlugin(
+      8→  licenseFilePath: string,
+      9→  licenseTitle: string,
+      10→  packageName: string,
+      11→  additionalSection?: string,
+      12→): Plugin {
       …
     scripts/
     src/
@@ -289,9 +310,6 @@ packages/
         importMetaResolver.ts
         index.ts
         runner.ts
-          …
-          38→export class ModuleRunner {
-          …
         sourcemap/
           decoder.ts
           index.ts
@@ -302,16 +320,15 @@ packages/
       node/
         __tests__/
         __tests_dts__/
+          config.ts
+          plugin.ts
+          tsconfig.json
+          typeOptions.ts
+          utils.ts
         assetSource.ts
-          …
-          111→export function getNodeAssetAttributes(
-          …
         baseEnvironment.ts
         build.ts
         cli.ts
-          …
-          68→export const stopProfiler = (
-          …
         config.ts
         constants.ts
         deprecations.ts
@@ -325,6 +342,12 @@ packages/
         logger.ts
         nodeResolve.ts
         optimizer/
+          index.ts
+          optimizer.ts
+          pluginConverter.ts
+          resolve.ts
+          rolldownDepPlugin.ts
+          scan.ts
         packages.ts
         plugin.ts
         plugins/
@@ -368,6 +391,15 @@ packages/
         watch.ts
       shared/
       types/
+        alias.d.ts
+        anymatch.d.ts
+        chokidar.d.ts
+        commonjs.d.ts
+        connect.d.ts
+        dynamicImportVars.d.ts
+        package.json
+        shims.d.ts
+        ws.d.ts
     tsconfig.base.json
     tsconfig.check.json
     tsconfig.json

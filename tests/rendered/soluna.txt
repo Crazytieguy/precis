@@ -7,6 +7,13 @@
 .gitignore
 .gitmodules
 3rd/
+  datalist/ (empty)
+  ltask/ (empty)
+  lua/ (empty)
+  sokol/ (empty)
+  stb/ (empty)
+  yoga/ (empty)
+  zlib/ (empty)
 LICENSE
 Makefile
 README.md
@@ -29,13 +36,15 @@ README.md
   22→- [Examples](./test)
   23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
   25→## Precompiled Binaries
-  …
+  26→
+  27→You can download precompiled binaries for Windows, Linux, macOS and WebAssembly from the [Nightly Releases](/../../releases/tag/nightly) page.
   29→## Building from Source
   …
   33→### Integration with the Actions of your projects
   …
   53→## Projects made with Soluna
-  …
+  54→
+  55→- [Deep Future](https://github.com/cloudwu/deepfuture), a digital version of boardgame Deep Future.
   57→## License
   58→
   59→Soluna is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
@@ -54,13 +63,15 @@ README.zh-CN.md
   55→## 使用 Soluna 制作的项目
   …
   59→## 许可证
-  …
+  60→
+  61→Soluna 使用 MIT 许可证。详情见 [LICENSE](./LICENSE)。
 asset/
   avatar.png
   lua-logo.png
   sprites.dl
 bin/
   readme.txt
+    1→The compiled binary go here.
   sokol-tools-bin/ (empty)
 build/
 clibs/
@@ -76,13 +87,6 @@ clibs/
       4→local function compile_lua_code(script, src, name)
       …
     compile_shader.lua
-      …
-      5→local function shdc_plat()
-      …
-      27→local function compile_shader(src, name, lang)
-      …
-      44→local function shader_lang()
-      …
     make.lua
     runlua.lua
     shader2c.lua
@@ -93,6 +97,11 @@ clibs/
 docs/
   app.lua
     …
+    10→---
+    11→--- Quits the application
+    12→---
+    13→--- Signals the application to exit gracefully.
+    14→---
     15→function app.quit() end
     …
     24→function app.set_ime_font(font_name, font_size) end
@@ -127,25 +136,19 @@ docs/
     22→function datalist.quote(str) end
     …
   file.lua
-    …
-    15→function file.load(filename) end
-    …
-    22→function file.attributes(filename) end
-    …
-    29→function file.exist(filename) end
-    …
-    36→function file.local_exist(filename) end
-    …
-    43→function file.local_load(filename) end
-    …
-    50→function file.dir(path) end
-    …
   font.lua
     …
+    10→---
+    11→--- Imports a TrueType font
+    12→---
+    13→---@param data string Raw TTF font data
     14→function font.import(data) end
     …
     21→function font.name(name) end
-    …
+    23→---
+    24→--- Gets the font system C object
+    25→---
+    26→---@return userdata fontcobj Font system object
     27→function font.cobj() end
     …
   font_system.lua
@@ -187,17 +190,6 @@ docs/
     31→function mattext.block(fontcobj, fontid, size, color, alignment) end
     …
   soluna.lua
-    …
-    40→function soluna.settings() end
-    …
-    46→function soluna.set_window_title(text) end
-    …
-    52→function soluna.set_icon(data) end
-    …
-    59→function soluna.gamedir(name) end
-    …
-    66→function soluna.load_sprites(filename) end
-    …
   text.lua
     …
     17→function text.init(bundle_file) end
@@ -213,6 +205,13 @@ docs/
 make.lua
   …
   4→local function detect_emcc()
+  5→  if lm.compiler == "emcc" then
+  6→    return true
+  7→  end
+  8→  if type(lm.cc) == "string" and lm.cc:find("emcc", 1, true) then
+  9→    return true
+  10→  end
+  11→  return false
   …
 script/
   build_web.lua
@@ -231,22 +230,6 @@ src/
   appevent.h
   batch.c
   batch.h
-    …
-    6→struct draw_primitive {
-    7→	int32_t x;		// sign bit + 23 + 8   fix number
-    8→	int32_t y;
-    9→	uint32_t sr;	// scale + rot
-    10→	int32_t sprite;		// negative : material 
-    11→};
-    13→struct draw_primitive_external {
-    14→	int sprite;
-    15→};
-    17→struct draw_batch;
-    18→
-    19→struct draw_batch * batch_new(int size);
-    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
-    21→void batch_delete(struct draw_batch *);
-    …
   blit.glsl
   colorquad.glsl
   data/
@@ -304,44 +287,14 @@ src/
       27→function icon.symbol(name, size, color)
       …
     initsetting.lua
-      …
-      10→local function patch(s, k, v)
-      …
-      44→local function settings_filename(filename, change_root)
-      …
-      62→function S.init(args, change_root)
-      …
     layout.lua
     main.lua
-      …
-      19→	local function embedloader(name)
-      …
-      50→local function start(config)
-      …
-      159→function api.start(app)
-      …
-      183→function api.init(desc)
-      …
     packageloader.lua
-      …
-      14→local function load_zips(zipnames)
-      …
-      163→local function fileload(name, fullname)
-      …
-      169→local function search_file(name)
-      …
     print_r.lua
     soluna.lua
     spritebundle.lua
     text.lua
     util.lua
-      …
-      9→function func_chain:add(f)
-      …
-      13→function func_chain:__call()
-      …
-      20→function util.func_chain()
-      …
   luamods.c
   luayoga.c
   luazip.c
@@ -398,6 +351,7 @@ src/
       12→local function writelog()
       …
       38→function S.quit()
+      39→	writelog()
       …
     render.lua
     settings.lua
@@ -443,7 +397,36 @@ src/
   winfile.c
   writelog.c
   yogaone.cpp
+    1→#include "yoga/YGConfig.cpp"
+    2→#include "yoga/YGEnums.cpp"
+    3→#include "yoga/YGNode.cpp"
+    4→#include "yoga/YGNodeLayout.cpp"
+    …
+    25→#define Node Node_
+    …
+    27→#undef Node
 test/
+  bundle.lua
+  file.lua
+  hello.game
+  hello.lua
+  icon.lua
+  image.lua
+  ime.lua
+  intersect.lua
+  layout.lua
+  mask.lua
+  mtex.game
+  mtex.lua
+  perspective_quad.lua
+  setting.lua
+  sprite.lua
+  spritepack.lua
+  test.lua
+  text.lua
+  version.lua
+  window.game
+  window.lua
 web/
   assets/
     htmx.js

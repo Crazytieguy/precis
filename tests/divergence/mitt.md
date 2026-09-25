@@ -12,21 +12,21 @@ Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 128 | 12 | Fs::DirListing { dir: test } |  |  | 0.622 |
 | ns | 150 |  | 89 | Every exported name in src/index.ts (names only) | 1.3 |  | 0.457 |
 | ns | 266 |  | 116 | README feature bullets | 1.4 |  | 0.400 |
-| walker |  | 288 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
-| ns | 295 |  | 29 | README: runtime support and dependency claim | 1.5 |  | 0.602 |
-| walker |  | 302 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.604 |
-| walker |  | 325 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.606 |
-| ns | 330 |  | 35 | Complete listings of src/, test/, .github/ and .github/workflows/ | 1.6 |  | 0.619 |
-| walker |  | 353 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.623 |
-| walker |  | 388 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.630 |
-| ns | 397 |  | 67 | All seven README `##` section headings | 1.7 |  | 0.561 |
-| ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.502 |
-| walker |  | 585 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.523 |
-| ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.479 |
-| walker |  | 772 | 187 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.757 |
-| walker |  | 818 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.762 |
-| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.718 |
-| walker |  | 962 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.788 |
+| ns | 295 |  | 29 | README: runtime support and dependency claim | 1.5 |  | 0.390 |
+| walker |  | 315 | 187 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.816 |
+| ns | 330 |  | 35 | Complete listings of src/, test/, .github/ and .github/workflows/ | 1.6 |  | 0.827 |
+| ns | 397 |  | 67 | All seven README `##` section headings | 1.7 |  | 0.736 |
+| walker |  | 459 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.850 |
+| ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.756 |
+| walker |  | 619 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.895 |
+| ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.819 |
+| walker |  | 633 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.820 |
+| walker |  | 656 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.821 |
+| walker |  | 684 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.824 |
+| walker |  | 719 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.829 |
+| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.767 |
+| walker |  | 916 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.783 |
+| walker |  | 962 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.788 |
 | walker |  | 993 | 31 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.788 |
 | ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.809 |
 | walker |  | 1108 | 115 | Json::IdentityMeta { file: package.json } |  |  | 0.812 |

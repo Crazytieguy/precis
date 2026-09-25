@@ -123,8 +123,15 @@ microbootstrap/
       …
     litestar.py
       …
+      13→@dataclasses.dataclass
       14→class LitestarConfig(AppConfig):
-      …
+      15→    on_app_init: typing.Sequence[OnAppInitHandler] | None = None
+      16→    logging_config: LoggingConfig = dataclasses.field(
+      17→        default_factory=lambda: LoggingConfig(
+      18→            # required for foreign logs json formatting
+      19→            configure_root_logger=False,
+      20→        )
+      21→    )
   console_writer.py
     …
     10→@dataclasses.dataclass
@@ -169,34 +176,6 @@ microbootstrap/
     31→) -> GranianServer[typing.Any]:
     …
   helpers.py
-    …
-    15→PydanticConfigT = typing.TypeVar("PydanticConfigT", bound="BaseModel")
-    16→VALID_PATH_PATTERN: typing.Final = r"^(/[a-zA-Z0-9_-]+)+/?$"
-    17→
-    18→
-    19→def dataclass_to_dict_no_defaults(dataclass_to_convert: "_DataclassT") -> dict[str, typing.Any]:
-    …
-    35→def merge_pydantic_configs(
-    36→    config_to_merge: PydanticConfigT,
-    37→    config_with_changes: PydanticConfigT,
-    38→) -> PydanticConfigT:
-    …
-    48→def merge_dataclasses_configs(
-    49→    config_to_merge: "_DataclassT",
-    50→    config_with_changes: "_DataclassT",
-    51→) -> "_DataclassT":
-    …
-    60→def merge_dict_configs(
-    61→    config_dict: dict[str, typing.Any],
-    62→    changes_dict: dict[str, typing.Any],
-    63→) -> dict[str, typing.Any]:
-    …
-    96→def is_valid_path(maybe_path: str) -> bool:
-    97→    return bool(re.fullmatch(VALID_PATH_PATTERN, maybe_path))
-    100→def optimize_exclude_paths(
-    101→    exclude_endpoints: typing.Iterable[str],
-    102→) -> typing.Collection[str]:
-    …
   instruments/
     __init__.py (empty)
     base.py
@@ -212,17 +191,8 @@ microbootstrap/
       …
       27→    @classmethod
       28→    def get_config_type(cls) -> type[CorsConfig]:
-      …
+      29→        return CorsConfig
     health_checks_instrument.py
-      …
-      8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
-      9→    service_version: str | None
-      10→    service_name: str | None
-      11→    health_status: bool
-      14→class HealthChecksConfig(BaseInstrumentConfig):
-      …
-      26→class HealthChecksInstrument(Instrument[HealthChecksConfig]):
-      …
     instrument_box.py
       …
       10→class InstrumentBox:
@@ -235,12 +205,30 @@ microbootstrap/
       15→class PyroscopeConfig(BaseInstrumentConfig):
       …
       27→class PyroscopeInstrument(Instrument[PyroscopeConfig]):
+      28→    instrument_name = "Pyroscope"
+      29→    ready_condition = "Provide pyroscope_endpoint"
+      30→
+      31→    def is_ready(self) -> bool:
       …
+      34→    def teardown(self) -> None:
+      35→        pyroscope.shutdown()
+      37→    def bootstrap(self) -> None:
+      …
+      52→    @classmethod
+      53→    def get_config_type(cls) -> type[PyroscopeConfig]:
+      54→        return PyroscopeConfig
     sentry_instrument.py
     swagger_instrument.py
       …
       10→class SwaggerConfig(BaseInstrumentConfig):
-      …
+      11→    service_name: str = "micro-service"
+      12→    service_description: str = "Micro service description"
+      13→    service_version: str = "1.0.0"
+      14→
+      15→    service_static_path: str = "/static"
+      16→    swagger_path: str = "/docs"
+      17→    swagger_offline_docs: bool = False
+      18→    swagger_extra_params: dict[str, typing.Any] = pydantic.Field(default_factory=dict)
       21→class SwaggerInstrument(Instrument[SwaggerConfig]):
       22→    instrument_name = "Swagger"
       23→    ready_condition = "Provide valid swagger_path"
@@ -249,10 +237,38 @@ microbootstrap/
       …
       28→    @classmethod
       29→    def get_config_type(cls) -> type[SwaggerConfig]:
-      …
+      30→        return SwaggerConfig
   instruments_setupper.py
     …
     19→class InstrumentsSetupper:
+    20→    console_writer: ConsoleWriter
+    21→    instrument_box: InstrumentBox
+    22→
+    23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
+    …
+    28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
+    …
+    32→    def configure_instruments(
+    33→        self,
+    34→        *instrument_configs: InstrumentConfigT,
+    35→    ) -> typing_extensions.Self:
+    …
+    40→    @classmethod
+    41→    def use_instrument(
+    42→        cls,
+    43→    ) -> typing.Callable[
+    44→        [type[Instrument[InstrumentConfigT]]],
+    45→        type[Instrument[InstrumentConfigT]],
+    46→    ]:
+    …
+    51→    def setup(self) -> None:
+    …
+    57→    def teardown(self) -> None:
+    …
+    62→    def __enter__(self) -> None:
+    63→        self.setup()
+    65→    def __exit__(self, *args: object) -> None:
+    66→        self.teardown()
     …
   middlewares/
     __init__.py (empty)
@@ -270,54 +286,6 @@ microbootstrap/
       …
   py.typed (empty)
   settings.py
-    …
-    23→SettingsT = typing.TypeVar("SettingsT", bound="BaseServiceSettings")
-    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
-    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
-    …
-    29→class BaseServiceSettings(
-    …
-    53→class ServerConfig(pydantic.BaseModel):
-    54→    server_host: str = "0.0.0.0"  # noqa: S104
-    55→    server_port: int = 8000
-    56→    server_reload: bool = True
-    57→    server_workers_count: int = 1
-    60→class LitestarSettings(  # type: ignore[misc]
-    61→    BaseServiceSettings,
-    62→    ServerConfig,
-    63→    LoggingConfig,
-    64→    OpentelemetryConfig,
-    65→    SentryConfig,
-    66→    LitestarPrometheusConfig,
-    67→    SwaggerConfig,
-    68→    CorsConfig,
-    69→    HealthChecksConfig,
-    70→    PyroscopeConfig,
-    71→):
-    …
-    75→class FastApiSettings(  # type: ignore[misc]
-    76→    BaseServiceSettings,
-    77→    ServerConfig,
-    78→    LoggingConfig,
-    79→    OpentelemetryConfig,
-    80→    SentryConfig,
-    81→    FastApiPrometheusConfig,
-    82→    SwaggerConfig,
-    83→    CorsConfig,
-    84→    HealthChecksConfig,
-    85→    PyroscopeConfig,
-    86→):
-    …
-    90→class FastStreamSettings(  # type: ignore[misc]
-    …
-    105→class InstrumentsSetupperSettings(  # type: ignore[misc]
-    106→    BaseServiceSettings,
-    107→    LoggingConfig,
-    108→    OpentelemetryConfig,
-    109→    SentryConfig,
-    110→    PyroscopeConfig,
-    111→):
-    112→    """Settings for a vanilla service."""
 package-lock.json
 package.json
 pyproject.toml
@@ -343,6 +311,11 @@ pyproject.toml
 tests/
   __init__.py (empty)
   bootstrappers/
+    __init__.py (empty)
+    test_fastapi.py
+    test_faststream.py
+    test_litestar.py
+    test_litestar_opentelemetry.py
   conftest.py
   instruments/
   test_granian_server.py

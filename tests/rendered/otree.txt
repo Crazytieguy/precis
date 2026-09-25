@@ -18,7 +18,37 @@ Cargo.toml
   9→readme = "README.md"
   10→repository = "https://github.com/fioncat/otree"
   11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
+  13→[dependencies]
+  14→anyhow = "^1"
+  15→clap = { version = "^4", features = ["derive"] }
+  16→console = "^0"
+  17→crossterm = { version = "^0", features = ["use-dev-tty"] }
+  18→dirs = "^6"
+  19→hcl-rs = "^0"
+  20→humansize = "^2"
+  21→notify = "^8"
+  22→paste = "^1"
+  23→quick-xml = { version = "^0", features = ["serialize"] }
+  24→ratatui = "^0"
+  25→regex = "^1"
+  26→serde = { version = "^1", features = ["derive"] }
+  27→serde_json = { version = "^1", features = ["preserve_order"] }
+  28→serde_yml = "^0"
+  29→strum = { version = "^0", features = ["derive"] }
+  30→toml = { version = "^0", features = ["preserve_order"] }
+  31→tui-textarea = "^0"
+  32→tui-tree-widget = "^0"
   …
+  38→[profile.release]
+  39→lto = true
+  40→strip = true
+  41→incremental = false
+  42→
+  43→[lints.clippy]
+  44→pedantic = { level = "warn", priority = -1 }
+  45→single_match_else = "allow" # match-ing Options is visually cleaner
+  46→inefficient_to_string = "allow" # makes type conversion less obvious for little benefit
+  47→too_many_lines = "allow" # necessary evil for now
 LICENSE
 README.md
   1→# OTree - Object Tree TUI Viewer
@@ -172,6 +202,10 @@ src/
     27→fn run() -> Result<()> {
     …
     111→fn main() {
+    112→    if let Err(err) = run() {
+    113→        eprintln!("Error: {err:#}");
+    114→        process::exit(1);
+    115→    }
     …
   parse/
     any.rs
@@ -188,49 +222,30 @@ src/
       25→impl Parser for AnyParser {
       …
     hcl.rs
-      …
-      8→pub struct HclParser {}
-      9→
-      10→impl Parser for HclParser {
-      …
-      28→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
-      …
     json.rs
-      …
-      6→pub struct JsonParser {}
-      7→
-      8→impl Parser for JsonParser {
-      …
-      26→pub fn highlight(value: &Value, indent: usize, has_next: bool) -> Vec<SyntaxToken> {
-      …
     jsonl.rs
       …
       7→pub struct JsonlParser;
       8→
       9→impl Parser for JsonlParser {
+      10→    fn extension(&self) -> &'static str {
+      11→        "json"
+      …
+      14→    fn allow_array_root(&self) -> bool {
+      15→        true
+      …
+      18→    fn parse(&self, data: &str) -> Result<Value> {
+      …
+      35→    fn syntax_highlight(&self, _name: &str, value: &Value) -> Vec<SyntaxToken> {
+      …
+      38→}
       …
     mod.rs
     syntax.rs
     test_cases/
     toml.rs
-      …
-      9→pub struct TomlParser {}
-      10→
-      11→impl Parser for TomlParser {
-      …
-      62→fn toml_value_to_json(toml_value: TomlValue) -> Value {
-      …
-      88→fn highlight(
-      …
     xml.rs
     yaml.rs
-      …
-      8→pub struct YamlParser {}
-      9→
-      10→impl Parser for YamlParser {
-      …
-      72→fn highlight(value: &Value, indent: usize, from_arr: bool) -> Vec<SyntaxToken> {
-      …
   tree.rs
     …
     14→pub struct Tree {
@@ -291,24 +306,6 @@ src/
     411→}
   ui/
     app.rs
-      …
-      27→enum Refresh {
-      …
-      39→enum ElementInFocus {
-      …
-      47→#[derive(Debug, Clone, Copy)]
-      48→pub enum ScrollDirection {
-      49→    Up,
-      50→    Down,
-      51→}
-      53→pub struct App {
-      …
-      86→pub enum ShowResult {
-      87→    Edit(Box<Edit>),
-      88→    Quit,
-      89→}
-      91→impl App {
-      …
     data_block.rs
       …
       16→pub struct DataBlock {
@@ -316,21 +313,6 @@ src/
       32→impl DataBlock {
       …
     filter.rs
-      …
-      13→pub struct Filter {
-      …
-      20→pub enum FilterAction {
-      …
-      27→pub struct FilterOptions {
-      …
-      34→pub enum FilterTarget {
-      …
-      40→impl Filter {
-      …
-      152→impl FilterOptions {
-      153→    pub fn filter(&self, item: &ItemValue) -> bool {
-      …
-      187→}
     footer.rs
       …
       10→pub enum FooterText<'a> {
@@ -343,32 +325,12 @@ src/
       18→}
       20→impl Footer {
       21→    pub fn new(cfg: Rc<Config>) -> Self {
+      22→        Self { cfg }
       …
       25→    pub fn draw(&self, frame: &mut Frame, area: Rect, text: FooterText) {
       …
       98→}
     header.rs
-      …
-      11→pub struct HeaderContext {
-      12→    version: String,
-      13→    data_source: Cow<'static, str>,
-      14→    content_type: &'static str,
-      15→    data_size: String,
-      16→}
-      18→impl HeaderContext {
-      19→    pub fn new(source: Option<String>, content_type: &'static str, size: usize) -> Self {
-      …
-      39→}
-      41→pub struct Header {
-      42→    cfg: Rc<Config>,
-      43→    data: String,
-      44→}
-      46→impl Header {
-      47→    pub fn new(cfg: Rc<Config>, ctx: &HeaderContext) -> Self {
-      …
-      55→    pub fn draw(&self, frame: &mut Frame, area: Rect) {
-      …
-      61→}
     mod.rs
     popup.rs
       …

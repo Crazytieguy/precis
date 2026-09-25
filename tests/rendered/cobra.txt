@@ -8,6 +8,24 @@
 .golangci.yml
 .mailmap
 CONDUCT.md
+  1→## Cobra User Contract
+  2→
+  3→### Versioning
+  …
+  6→### Backward Compatibility
+  …
+  9→### Deprecation
+  …
+  12→### CVE
+  …
+  15→### Communication
+  …
+  18→### Breaking Changes
+  …
+  32→### CI Testing
+  …
+  35→### Disclaimer
+  …
 CONTRIBUTING.md
 LICENSE.txt
 MAINTAINERS
@@ -52,7 +70,18 @@ README.md
   7→Cobra is a library for creating powerful modern CLI applications.
   8→
   9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
+  12→Cobra is used in many Go projects such as [Kubernetes](https://kubernetes.io/),
+  13→[Hugo](https://gohugo.io), and [GitHub CLI](https://github.com/cli/cli) to
+  14→name a few. [This list](site/content/projects_using_cobra.md) contains a more extensive list of projects using Cobra.
   …
+  20→<hr>
+  21→<div align="center" markdown="1">
+  22→   <sup>Supported by:</sup>
+  23→   <br>
+  24→   <br>
+  25→   <a href="https://www.warp.dev/cobra">
+  26→      <img alt="Warp sponsorship" width="400" src="https://github.com/user-attachments/assets/ab8dd143-b0fd-4904-bdc5-dd7ecac94eae">
+  27→   </a>
   29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
   30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
   32→</div>
@@ -70,15 +99,19 @@ README.md
   116→# Usage
   …
   131→# License
-  …
+  132→
+  133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
   …
+  22→const (
   23→	activeHelpMarker = "_activeHelp_ "
-  …
+  24→	// The below values should not be changed: programs will be using them explicitly
+  25→	// in their user documentation, and users will be using them explicitly.
   26→	activeHelpEnvVarSuffix  = "ACTIVE_HELP"
   27→	activeHelpGlobalEnvVar  = configEnvVarGlobalPrefix + "_" + activeHelpEnvVarSuffix
   28→	activeHelpGlobalDisable = "0"
+  29→)
   …
   38→func AppendActiveHelp(compArray []Completion, activeHelpStr string) []Completion {
   39→	return append(compArray, fmt.Sprintf("%s%s", activeHelpMarker, activeHelpStr))
@@ -86,6 +119,7 @@ active_help.go
   47→func GetActiveHelpConfig(cmd *Command) string {
   …
   58→func activeHelpEnvVar(name string) string {
+  59→	return configEnvVar(name, activeHelpEnvVarSuffix)
   …
 active_help_test.go
 args.go
@@ -122,6 +156,8 @@ bash_completionsV2.go
   469→// GenBashCompletionFileV2 generates Bash completion version 2.
   470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
   …
+  480→// GenBashCompletionV2 generates Bash completion file version 2
+  481→// and writes it to the passed writer.
   482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
   483→	return c.genBashCompletion(w, includeDesc)
   …
@@ -130,7 +166,14 @@ bash_completions_test.go
 cobra.go
   …
   32→var templateFuncs = template.FuncMap{
-  …
+  33→	"trim":                    strings.TrimSpace,
+  34→	"trimRightSpace":          trimRightSpace,
+  35→	"trimTrailingWhitespaces": trimRightSpace,
+  36→	"appendIfNotPresent":      appendIfNotPresent,
+  37→	"rpad":                    rpad,
+  38→	"gt":                      Gt,
+  39→	"eq":                      Eq,
+  40→}
   42→var initializers []func()
   43→var finalizers []func()
   45→const (
@@ -154,7 +197,8 @@ cobra.go
   75→`
   …
   81→var MousetrapDisplayDuration = 5 * time.Second
-  …
+  83→// AddTemplateFunc adds a template function that's available to Usage and Help
+  84→// template generation.
   85→func AddTemplateFunc(name string, tmplFunc interface{}) {
   86→	templateFuncs[name] = tmplFunc
   …
@@ -185,43 +229,14 @@ cobra.go
   235→func CheckErr(msg interface{}) {
   …
   243→func WriteStringAndCheck(b io.StringWriter, s string) {
+  244→	_, err := b.WriteString(s)
+  245→	CheckErr(err)
   …
 cobra_test.go
 command.go
   …
   15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
   16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
-  …
-  33→const (
-  34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
-  35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
-  36→
-  37→	helpFlagName    = "help"
-  38→	helpCommandName = "help"
-  39→)
-  …
-  42→type FParseErrWhitelist flag.ParseErrorsAllowlist
-  …
-  45→type Group struct {
-  46→	ID    string
-  47→	Title string
-  48→}
-  …
-  54→type Command struct {
-  …
-  269→func (c *Command) Context() context.Context {
-  …
-  275→func (c *Command) SetContext(ctx context.Context) {
-  …
-  281→func (c *Command) SetArgs(a []string) {
-  …
-  289→func (c *Command) SetOutput(output io.Writer) {
-  …
-  296→func (c *Command) SetOut(newOut io.Writer) {
-  …
-  302→func (c *Command) SetErr(newErr io.Writer) {
-  …
-  308→func (c *Command) SetIn(newIn io.Reader) {
   …
 command_notwin.go
   …
@@ -234,52 +249,6 @@ command_win.go
   30→func preExecHook(c *Command) {
   …
 completions.go
-  …
-  28→const (
-  29→	// ShellCompRequestCmd is the name of the hidden command that is used to request
-  30→	// completion results from the program.  It is used by the shell completion scripts.
-  31→	ShellCompRequestCmd = "__complete"
-  32→	// ShellCompNoDescRequestCmd is the name of the hidden command that is used to request
-  33→	// completion results without their description.  It is used by the shell completion scripts.
-  34→	ShellCompNoDescRequestCmd = "__completeNoDesc"
-  35→)
-  …
-  38→var flagCompletionFunctions = map[*pflag.Flag]CompletionFunc{}
-  …
-  41→var flagCompletionMutex = &sync.RWMutex{}
-  …
-  45→type ShellCompDirective int
-  46→
-  47→type flagCompError struct {
-  48→	subCommand string
-  49→	flagName   string
-  50→}
-  52→func (e *flagCompError) Error() string {
-  …
-  58→	ShellCompDirectiveError ShellCompDirective = 1 << iota
-  …
-  62→	ShellCompDirectiveNoSpace
-  …
-  66→	ShellCompDirectiveNoFileComp
-  …
-  73→	ShellCompDirectiveFilterFileExt
-  …
-  80→	ShellCompDirectiveFilterDirs
-  …
-  84→	ShellCompDirectiveKeepOrder
-  …
-  90→	shellCompDirectiveMaxValue
-  …
-  95→	ShellCompDirectiveDefault ShellCompDirective = 0
-  …
-  98→const (
-  99→	// Constants for the completion command
-  100→	compCmdName              = "completion"
-  101→	compCmdNoDescFlagName    = "no-descriptions"
-  102→	compCmdNoDescFlagDesc    = "disable completion descriptions"
-  103→	compCmdNoDescFlagDefault = false
-  104→)
-  …
 completions_test.go
 doc/
   cmd_test.go
@@ -299,9 +268,20 @@ fish_completions.go
   …
   275→// GenFishCompletion generates fish completion file and writes to the passed writer.
   276→func (c *Command) GenFishCompletion(w io.Writer, includeDesc bool) error {
+  277→	buf := new(bytes.Buffer)
+  278→	genFishComp(buf, c.Name(), includeDesc)
+  279→	_, err := buf.WriteTo(w)
+  280→	return err
   …
   283→// GenFishCompletionFile generates fish completion file.
   284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
+  285→	outFile, err := os.Create(filename)
+  286→	if err != nil {
+  287→		return err
+  288→	}
+  289→	defer outFile.Close()
+  290→
+  291→	return c.GenFishCompletion(outFile, includeDesc)
   …
 fish_completions_test.go
 flag_groups.go

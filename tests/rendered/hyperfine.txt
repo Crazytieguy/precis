@@ -23,6 +23,49 @@ Cargo.toml
   15→[features]
   16→# Use the nightly feature windows_process_extensions_main_thread_handle
   17→windows_process_extensions_main_thread_handle = []
+  19→[dependencies]
+  20→colored = "2.1"
+  21→indicatif = "=0.17.4"
+  22→statistical = "1.0"
+  23→csv = "1.3"
+  24→serde = { version = "1.0", features = ["derive"] }
+  25→serde_json = "1.0"
+  26→rust_decimal = "1.36"
+  27→rand = "0.8"
+  28→shell-words = "1.0"
+  29→thiserror = "2.0"
+  30→anyhow = "1.0"
+  31→
+  32→[target.'cfg(not(windows))'.dependencies]
+  33→libc = "0.2"
+  34→
+  35→[target.'cfg(windows)'.dependencies]
+  36→windows-sys = { version = "0.59", features = [
+  37→    "Win32_Foundation",
+  38→    "Win32_Security",
+  39→    "Win32_System_JobObjects",
+  40→    "Win32_System_LibraryLoader",
+  41→    "Win32_System_Threading",
+  42→] }
+  43→
+  44→[target.'cfg(all(windows, not(windows_process_extensions_main_thread_handle)))'.dependencies]
+  45→once_cell = "1.19"
+  46→
+  47→[target.'cfg(target_os="linux")'.dependencies]
+  48→nix = { version = "0.29", features = ["zerocopy"] }
+  49→
+  50→[dependencies.clap]
+  51→version = "4"
+  52→default-features = false
+  53→features = [
+  54→    "suggestions",
+  55→    "color",
+  56→    "wrap_help",
+  57→    "cargo",
+  58→    "help",
+  59→    "usage",
+  60→    "error-context",
+  61→]
   …
   70→[profile.dev.package]
   71→insta.opt-level = 3
@@ -54,6 +97,15 @@ README.md
   22→* Parameterized benchmarks (e.g. vary the number of threads).
   23→* Cross-platform
   …
+  314→## Alternative tools
+  315→
+  316→Hyperfine is inspired by [bench](https://github.com/Gabriella439/bench).
+  …
+  338→## Citing hyperfine
+  339→
+  340→Thank you for considering to cite hyperfine in your research work. Please see the information
+  341→in the sidebar on how to properly cite hyperfine.
+  …
 build.rs
   …
   7→fn main() {
@@ -76,6 +128,12 @@ scripts/
   welch_ttest.py
 src/
   benchmark/
+    benchmark_result.rs
+    executor.rs
+    mod.rs
+    relative_speed.rs
+    scheduler.rs
+    timing_result.rs
   cli.rs
     …
     8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
@@ -83,52 +141,39 @@ src/
     10→    I: IntoIterator<Item = T>,
     11→    T: Into<OsString> + Clone + 'a,
     12→{
+    13→    let command = build_command();
+    14→    command.get_matches_from(args)
     …
     18→fn build_command() -> Command {
     …
   command.rs
-    …
-    20→/// A command that should be benchmarked.
-    21→#[derive(Debug, Clone, PartialEq, Eq)]
-    22→pub struct Command<'a> {
-    23→    /// The command name (without parameter substitution)
-    24→    name: Option<&'a str>,
-    25→
-    26→    /// The command that should be executed (without parameter substitution)
-    27→    expression: &'a str,
-    28→
-    29→    /// Zero or more parameter values.
-    30→    parameters: Vec<ParameterNameAndValue<'a>>,
-    31→}
-    33→impl<'a> Command<'a> {
-    …
-    133→/// A collection of commands that should be benchmarked
-    134→pub struct Commands<'a>(Vec<Command<'a>>);
-    135→
-    136→impl<'a> Commands<'a> {
-    137→    pub fn from_cli_arguments(matches: &'a ArgMatches) -> Result<Commands<'a>> {
-    …
-    250→    pub fn iter(&self) -> impl Iterator<Item = &Command<'a>> {
-    …
-    254→    pub fn num_commands(&self, has_reference_command: bool) -> usize {
-    …
-    359→}
-    …
-    387→impl fmt::Display for Command<'_> {
-    388→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-    …
-    391→}
-    …
   error.rs
     …
+    6→#[derive(Debug, Error)]
     7→pub enum ParameterScanError {
-    …
+    8→    #[error("Error while parsing parameter scan arguments ({0})")]
+    9→    ParseIntError(num::ParseIntError),
+    10→    #[error("Error while parsing parameter scan arguments ({0})")]
+    11→    ParseDecimalError(DecimalError),
+    12→    #[error("Empty parameter range")]
+    13→    EmptyRange,
+    14→    #[error("Parameter range is too large")]
+    15→    TooLarge,
+    16→    #[error("Zero is not a valid parameter step")]
+    17→    ZeroStep,
+    18→    #[error("A step size is required when the range bounds are floating point numbers. The step size can be specified with the '-D/--parameter-step-size <DELTA>' parameter")]
+    19→    StepRequired,
+    20→    #[error("'--command-name' has been specified {0} times. It has to appear exactly once, or exactly {1} times (number of benchmarks)")]
+    21→    UnexpectedCommandNameCount(usize, usize),
+    22→}
     24→impl From<num::ParseIntError> for ParameterScanError {
     25→    fn from(e: num::ParseIntError) -> ParameterScanError {
+    26→        ParameterScanError::ParseIntError(e)
     …
     28→}
     30→impl From<DecimalError> for ParameterScanError {
     31→    fn from(e: DecimalError) -> ParameterScanError {
+    32→        ParameterScanError::ParseDecimalError(e)
     …
     34→}
     …
@@ -141,6 +186,18 @@ src/
       5→pub struct AsciidocExporter {}
       6→
       7→impl MarkupExporter for AsciidocExporter {
+      8→    fn table_header(&self, cell_aligmnents: &[Alignment]) -> String {
+      …
+      22→    fn table_footer(&self, _cell_aligmnents: &[Alignment]) -> String {
+      …
+      26→    fn table_row(&self, cells: &[&str]) -> String {
+      …
+      30→    fn table_divider(&self, _cell_aligmnents: &[Alignment]) -> String {
+      31→        "".to_string()
+      …
+      34→    fn command(&self, cmd: &str) -> String {
+      …
+      37→}
       …
     csv.rs
       …
@@ -149,41 +206,30 @@ src/
       14→
       15→impl Exporter for CsvExporter {
       16→    fn serialize(
+      17→        &self,
+      18→        results: &[BenchmarkResult],
+      19→        _unit: Option<Unit>,
+      20→        _sort_order: SortOrder,
+      21→    ) -> Result<Vec<u8>> {
       …
       61→}
       …
     json.rs
-      …
-      12→struct HyperfineSummary<'a> {
-      …
-      16→#[derive(Default)]
-      17→pub struct JsonExporter {}
-      18→
-      19→impl Exporter for JsonExporter {
-      20→    fn serialize(
-      …
-      33→}
     markdown.rs
       …
       5→#[derive(Default)]
       6→pub struct MarkdownExporter {}
       7→
       8→impl MarkupExporter for MarkdownExporter {
+      9→    fn table_row(&self, cells: &[&str]) -> String {
+      …
+      13→    fn table_divider(&self, cell_aligmnents: &[Alignment]) -> String {
+      …
+      26→    fn command(&self, cmd: &str) -> String {
+      …
+      29→}
       …
     markup.rs
-      …
-      10→pub enum Alignment {
-      11→    Left,
-      12→    Right,
-      13→}
-      15→pub trait MarkupExporter {
-      …
-      98→fn determine_unit_from_results(results: &[BenchmarkResult]) -> Unit {
-      …
-      108→impl<T: MarkupExporter> Exporter for T {
-      109→    fn serialize(
-      …
-      121→}
     mod.rs
     orgmode.rs
       …
@@ -191,6 +237,13 @@ src/
       5→pub struct OrgmodeExporter {}
       6→
       7→impl MarkupExporter for OrgmodeExporter {
+      8→    fn table_row(&self, cells: &[&str]) -> String {
+      …
+      16→    fn table_divider(&self, cell_aligmnents: &[Alignment]) -> String {
+      …
+      20→    fn command(&self, cmd: &str) -> String {
+      …
+      23→}
       …
     tests.rs
       …
@@ -240,32 +293,15 @@ src/
       8→    pub warmup_in_use: bool,
       9→    pub prepare_in_use: bool,
       10→}
-      12→/// A list of all possible warnings
+      …
       13→pub enum Warnings {
-      14→    FastExecutionTime,
-      15→    NonZeroExitCode,
-      16→    SlowInitialRun(Second, OutlierWarningOptions),
-      17→    OutliersDetected(OutlierWarningOptions),
-      18→}
+      …
       20→impl fmt::Display for Warnings {
       21→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
       …
       69→}
   parameter/
     mod.rs
-      …
-      4→pub mod range_step;
-      5→pub mod tokenize;
-      7→#[derive(Debug, Clone, PartialEq, Eq)]
-      8→pub enum ParameterValue {
-      9→    Text(String),
-      10→    Numeric(Number),
-      11→}
-      13→impl Display for ParameterValue {
-      14→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-      …
-      21→}
-      23→pub type ParameterNameAndValue<'a> = (&'a str, ParameterValue);
     range_step.rs
     tokenize.rs
       1→pub fn tokenize(values: &str) -> Vec<String> {
@@ -287,75 +323,16 @@ src/
     windows_timer.rs
   util/
     exit_code.rs
-      …
-      3→#[cfg(unix)]
-      4→pub fn extract_exit_code(status: ExitStatus) -> Option<i32> {
-      …
-      19→#[cfg(not(unix))]
-      20→pub fn extract_exit_code(status: ExitStatus) -> Option<i32> {
-      21→    status.code()
-      …
     min_max.rs
-      …
-      2→pub fn max(vals: &[f64]) -> f64 {
-      …
-      10→pub fn min(vals: &[f64]) -> f64 {
-      …
     mod.rs
-      1→pub mod exit_code;
-      2→pub mod min_max;
-      3→pub mod number;
-      4→pub mod randomized_environment_offset;
-      5→pub mod units;
     number.rs
-      …
-      8→#[derive(Debug, Clone, Serialize, Copy, PartialEq, Eq)]
-      9→#[serde(untagged)]
-      10→pub enum Number {
-      11→    Int(i32),
-      12→    Decimal(Decimal),
-      13→}
-      15→impl fmt::Display for Number {
-      16→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-      …
-      22→}
-      24→impl From<i32> for Number {
-      25→    fn from(x: i32) -> Number {
-      …
-      28→}
-      30→impl From<Decimal> for Number {
-      31→    fn from(x: Decimal) -> Number {
-      …
-      34→}
-      36→impl TryFrom<Number> for usize {
-      37→    type Error = ();
-      38→
-      39→    fn try_from(numeric: Number) -> Result<Self, Self::Error> {
-      …
-      48→}
     randomized_environment_offset.rs
       …
       6→pub fn value() -> String {
+      7→    "X".repeat(rand::random::<usize>() % 4096usize)
       …
     units.rs
       1→//! This module contains common units.
-      3→pub type Scalar = f64;
-      5→/// Type alias for unit of time
-      6→pub type Second = Scalar;
-      8→/// Supported time units
-      9→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-      10→pub enum Unit {
-      11→    Second,
-      12→    MilliSecond,
-      13→    MicroSecond,
-      14→}
-      16→impl Unit {
-      …
-      18→    pub fn short_name(self) -> String {
-      …
-      27→    pub fn format(self, value: Second) -> String {
-      …
-      34→}
       …
 tests/
   common.rs

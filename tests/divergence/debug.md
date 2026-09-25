@@ -1,4 +1,4 @@
-Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.727/0.623/0.616/0.582/0.628/0.589/0.565
+Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.726/0.562/0.619/0.582/0.628/0.589/0.565
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,43 +11,43 @@ Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 200 | 65 | Json::Identity { file: package.json } |  |  | 1.000 |
 | ns | 205 |  | 113 | src/index.js in full — the environment dispatch | 1.3 |  | 0.791 |
 | walker |  | 232 | 32 | Json::Dependencies { file: package.json } |  |  | 0.791 |
-| walker |  | 254 | 22 | Code::CodeKey { rung: Names, file: src/common.js, decl: 0, sub: 0, line: 0 } |  |  | 0.791 |
-| walker |  | 286 | 32 | Json::Runtime { file: package.json } |  |  | 0.800 |
-| walker |  | 300 | 14 | Code::CodeKey { rung: Names, file: karma.conf.js, decl: 0, sub: 0, line: 0 } |  |  | 0.800 |
-| ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.759 |
-| walker |  | 368 | 68 | Json::Entry { file: package.json } |  |  | 0.830 |
-| walker |  | 406 | 38 | Code::CodeKey { rung: Doc, file: src/common.js, decl: 1, sub: 0, line: 7 } |  |  | 0.833 |
+| walker |  | 264 | 32 | Json::Runtime { file: package.json } |  |  | 0.800 |
+| ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.758 |
+| walker |  | 332 | 68 | Json::Entry { file: package.json } |  |  | 0.830 |
+| walker |  | 354 | 22 | Code::CodeKey { rung: Names, file: src/common.js, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
+| walker |  | 392 | 38 | Code::CodeKey { rung: Doc, file: src/common.js, decl: 1, sub: 0, line: 7 } |  |  | 0.833 |
 | ns | 436 |  | 108 | package.json `scripts` — every build/test/lint entry point | 1.5 |  | 0.747 |
-| walker |  | 512 | 106 | Json::Scripts { file: package.json } |  |  | 0.856 |
+| walker |  | 498 | 106 | Json::Scripts { file: package.json } |  |  | 0.856 |
 | ns | 616 |  | 180 | README section map — every `##` heading | 1.6 |  | 0.692 |
-| walker |  | 675 | 163 | Code::CodeKey { rung: Names, file: src/browser.js, decl: 0, sub: 0, line: 0 } |  |  | 0.698 |
-| ns | 765 |  | 149 | src/common.js — `setup(env)` and the complete `createDebug.*` public API attachment block | 2.1 |  | 0.625 |
-| walker |  | 773 | 98 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.626 |
-| ns | 906 |  | 141 | src/common.js — module-level state: `names`, `skips`, `formatters` | 2.2 |  | 0.569 |
-| walker |  | 964 | 191 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.727 |
-| walker |  | 989 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.727 |
-| ns | 1061 |  | 155 | src/common.js — roster of every function definition plus the module tail | 2.3 |  | 0.670 |
-| walker |  | 1192 | 203 | Code::CodeKey { rung: Names, file: src/node.js, decl: 0, sub: 0, line: 0 } |  |  | 0.676 |
-| walker |  | 1217 | 25 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.676 |
-| ns | 1229 |  | 168 | src/node.js — the node adapter's export contract | 2.4 |  | 0.625 |
-| walker |  | 1264 | 47 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 1, sub: 0, line: 18 } |  |  | 0.637 |
-| walker |  | 1273 | 9 | Code::CodeKey { rung: Body, file: src/node.js, decl: 8, sub: 0, line: 220 } |  |  | 0.637 |
-| walker |  | 1288 | 15 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 2, sub: 0, line: 27 } |  |  | 0.637 |
-| ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.623 |
-| ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.618 |
-| walker |  | 1549 | 261 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.622 |
-| walker |  | 1572 | 23 | Code::CodeKey { rung: Body, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.622 |
-| walker |  | 1608 | 36 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.622 |
-| ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.625 |
-| walker |  | 1651 | 43 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.625 |
-| ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.641 |
-| walker |  | 1830 | 179 | Json::IdentityMeta { file: package.json } |  |  | 0.641 |
-| walker |  | 1874 | 44 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 7, sub: 0, line: 200 } |  |  | 0.641 |
-| ns | 1988 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.616 |
-| ns | 2155 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.597 |
-| ns | 2217 |  | 62 | README: every sub-`##` heading (`###`/`####`/`#####`) | 3.4 |  | 0.587 |
-| walker |  | 2263 | 389 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: true } |  |  | 0.634 |
-| walker |  | 2314 | 51 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.634 |
+| walker |  | 689 | 191 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.890 |
+| walker |  | 714 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.890 |
+| walker |  | 728 | 14 | Code::CodeKey { rung: Names, file: karma.conf.js, decl: 0, sub: 0, line: 0 } |  |  | 0.890 |
+| ns | 765 |  | 149 | src/common.js — `setup(env)` and the complete `createDebug.*` public API attachment block | 2.1 |  | 0.792 |
+| ns | 906 |  | 141 | src/common.js — module-level state: `names`, `skips`, `formatters` | 2.2 |  | 0.720 |
+| walker |  | 989 | 261 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.726 |
+| walker |  | 1032 | 43 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.726 |
+| ns | 1061 |  | 155 | src/common.js — roster of every function definition plus the module tail | 2.3 |  | 0.669 |
+| walker |  | 1211 | 179 | Json::IdentityMeta { file: package.json } |  |  | 0.669 |
+| ns | 1229 |  | 168 | src/node.js — the node adapter's export contract | 2.4 |  | 0.599 |
+| ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.562 |
+| ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.533 |
+| walker |  | 1600 | 389 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: true } |  |  | 0.540 |
+| ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.520 |
+| walker |  | 1763 | 163 | Code::CodeKey { rung: Names, file: src/browser.js, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.592 |
+| walker |  | 1861 | 98 | Code::CodeKey { rung: Decl, file: src/browser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.598 |
+| walker |  | 1897 | 36 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.598 |
+| walker |  | 1941 | 44 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 7, sub: 0, line: 200 } |  |  | 0.598 |
+| ns | 1988 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.619 |
+| walker |  | 1992 | 51 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.619 |
+| ns | 2155 |  | 167 | README: wildcard and exclusion syntax for `DEBUG` | 3.3 |  | 0.600 |
+| walker |  | 2195 | 203 | Code::CodeKey { rung: Names, file: src/node.js, decl: 0, sub: 0, line: 0 } |  |  | 0.637 |
+| ns | 2217 |  | 62 | README: every sub-`##` heading (`###`/`####`/`#####`) | 3.4 |  | 0.627 |
+| walker |  | 2220 | 25 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.627 |
+| walker |  | 2267 | 47 | Code::CodeKey { rung: Decl, file: src/node.js, decl: 1, sub: 0, line: 18 } |  |  | 0.634 |
+| walker |  | 2276 | 9 | Code::CodeKey { rung: Body, file: src/node.js, decl: 8, sub: 0, line: 220 } |  |  | 0.634 |
+| walker |  | 2291 | 15 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 2, sub: 0, line: 27 } |  |  | 0.634 |
+| walker |  | 2314 | 23 | Code::CodeKey { rung: Body, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.634 |
 | walker |  | 2343 | 29 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 4, sub: 0, line: 155 } |  |  | 0.634 |
 | walker |  | 2375 | 32 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 6, sub: 0, line: 193 } |  |  | 0.634 |
 | ns | 2438 |  | 221 | README: the canonical usage example | 3.5 |  | 0.603 |

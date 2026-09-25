@@ -137,6 +137,10 @@ docs/
     index.rst
     usb_concepts.rst
   requirements.txt
+    1→sphinx>=5.0
+    2→furo>=2020.12.30.b24
+    3→sphinx-autodoc-typehints>=1.10
+    4→jinja2>=3.0.3
   troubleshooting.rst
 examples/
   CMakeLists.txt
@@ -177,6 +181,38 @@ examples/
         tusb_config.h
         usb_descriptors.c
   host/
+    CMakeLists.txt
+    CMakePresets.json
+    bare_api/
+    cdc_msc_hid/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      skip.txt
+      src/
+    cdc_msc_hid_freertos/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      skip.txt
+      src/
+    device_info/
+    hid_controller/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      skip.txt
+      src/
+        app.h
+        hid_app.c
+        main.c
+        tusb_config.h
+    midi_rx/
+    msc_file_explorer/
+    msc_file_explorer_freertos/
   typec/
   west.yml
 hw/
@@ -192,6 +228,13 @@ hw/
         scripts/
     dialog/
       README.md
+        1→# Dialog DA1469x MCU
+        2→
+        3→**Dialog Semiconductors** provides SDKs for DA146x MCU family.
+        4→Most of the files there can't be redistributed.
+        5→Registers definition file `DA1469xAB.h` and some **ARM** originated headers are have licenses that allow
+        6→for redistribution.
+        7→Whole SDK repository can be downloaded from Dialog Semiconductor web page `https://www.dialog.com`
       da1469x/
         SDK_10.0.8.105/
           sdk/
@@ -251,35 +294,8 @@ lib/
   networking/
     dhserver.c
     dhserver.h
-      …
-      42→typedef struct dhcp_entry
-      43→{
-      44→	uint8_t    mac[6];
-      45→	ip4_addr_t addr;
-      46→	uint32_t   lease;
-      47→} dhcp_entry_t;
-      48→
-      49→typedef struct dhcp_config
-      50→{
-      51→	ip4_addr_t    router;
-      52→	uint16_t      port;
-      53→	ip4_addr_t    dns;
-      54→	const char   *domain;
-      55→	int           num_entry;
-      56→	dhcp_entry_t *entries;
-      57→} dhcp_config_t;
-      …
-      62→err_t dhserv_init(const dhcp_config_t *c);
-      63→void dhserv_free(void);
-      …
     dnserver.c
     dnserver.h
-      …
-      42→typedef bool (*dns_query_proc_t)(const char *name, ip4_addr_t *addr);
-      …
-      47→err_t dnserv_init(const ip_addr_t *bind, uint16_t port, dns_query_proc_t query_proc);
-      48→void  dnserv_free(void);
-      …
     ndis.h
     rndis_protocol.h
     rndis_reports.c
@@ -313,13 +329,6 @@ src/
     tusb_common.h
     tusb_compiler.h
     tusb_debug.h
-      …
-      144→#define TU_LOG0(...)
-      145→#define TU_LOG0_MEM(...)
-      146→#define TU_LOG0_BUF(...)
-      147→#define TU_LOG0_INT(...)
-      148→#define TU_LOG0_HEX(...)
-      …
     tusb_fifo.c
     tusb_fifo.h
     tusb_mcu.h
@@ -340,14 +349,6 @@ src/
     usbh_pvt.h
   osal/
     osal.h
-      …
-      36→typedef void (*osal_task_func_t)(void* param);
-      38→// Timeout
-      39→#define OSAL_TIMEOUT_NOTIMEOUT     (0)          // Return immediately
-      40→#define OSAL_TIMEOUT_NORMAL        (10)         // Default timeout
-      41→#define OSAL_TIMEOUT_WAIT_FOREVER  (UINT32_MAX) // Wait forever
-      42→#define OSAL_TIMEOUT_CONTROL_XFER  OSAL_TIMEOUT_WAIT_FOREVER
-      …
     osal_freertos.h
     osal_mynewt.h
     osal_none.h
@@ -390,6 +391,42 @@ src/
     usbc.h
 test/
   fuzz/
+    dcd_fuzz.cc
+    device/
+      cdc/
+        CMakeLists.txt
+        Makefile
+        cdc_seed_corpus.zip
+        src/
+          fuzz.cc
+          tusb_config.h
+          usb_descriptors.cc
+      msc/
+        CMakeLists.txt
+        Makefile
+        msc_seed_corpus.zip
+        src/
+          fuzz.cc
+          tusb_config.h
+          usb_descriptors.cc
+      net/
+        CMakeLists.txt
+        Makefile
+        src/
+          arch/
+          fuzz.cc
+          lwipopts.h
+          tusb_config.h
+          usb_descriptors.cc
+    dicts/
+    fuzz.cc
+    fuzz.h
+    fuzz_private.h
+    make.mk
+    msc_fuzz.cc
+    net_fuzz.cc
+    rules.mk
+    usbd_fuzz.cc
   hil/
     hfp.json
     hil_ci.sh

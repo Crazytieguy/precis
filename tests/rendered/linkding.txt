@@ -3,6 +3,19 @@
   devcontainer.json
 .dockerignore
 .env.sample
+  1→# Docker container name
+  2→LD_CONTAINER_NAME=linkding
+  3→# Port on the host system that the application should be published on
+  4→LD_HOST_PORT=9090
+  5→# Directory on the host system that should be mounted as data dir into the Docker container
+  6→LD_HOST_DATA_DIR=./data
+  7→
+  8→# Can be used to run linkding under a context path, for example: linkding/
+  9→# Must end with a slash `/`
+  10→LD_CONTEXT_PATH=
+  11→# Username of the initial superuser to create, leave empty to not create one
+  12→LD_SUPERUSER_NAME=
+  …
 .gitattributes
 .github/
   workflows/
@@ -98,6 +111,11 @@ bookmarks/
       …
       8→class LinkdingTokenAuthentication(TokenAuthentication):
       …
+      14→    model = ApiToken
+      15→    keywords = [keyword.lower().encode() for keyword in ["Token", "Bearer"]]
+      16→
+      17→    def authenticate(self, request):
+      …
     routes.py
     serializers.py
   apps.py
@@ -159,24 +177,20 @@ bookmarks/
       import_netscape.py
         …
         7→class Command(BaseCommand):
+        8→    help = "Import Netscape HTML bookmark file"
+        9→
+        10→    def add_arguments(self, parser):
+        …
+        16→    def handle(self, *args, **kwargs):
         …
       migrate_tasks.py
         …
         9→class Command(BaseCommand):
+        10→    help = "Migrate tasks from django-background-tasks to Huey"
+        11→
+        12→    def handle(self, *args, **options):
         …
   middlewares.py
-    …
-    7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
-    8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
-    11→default_global_settings = GlobalSettings()
-    12→
-    13→standard_profile = UserProfile()
-    …
-    17→class LinkdingMiddleware:
-    18→    def __init__(self, get_response):
-    …
-    21→    def __call__(self, request):
-    …
   migrations/
   models.py
   queries.py
@@ -190,20 +204,7 @@ bookmarks/
     favicon_loader.py
     importer.py
     monolith.py
-      …
-      9→class MonolithError(Exception):
-      10→    pass
-      …
-      16→def create_snapshot(url: str, filepath: str):
-      …
     parser.py
-      …
-      9→class NetscapeBookmark:
-      …
-      22→class BookmarkParser(HTMLParser):
-      …
-      110→def parse(html: str) -> list[NetscapeBookmark]:
-      …
     preview_image_loader.py
     search_query_parser.py
     singlefile.py
@@ -222,13 +223,6 @@ bookmarks/
     custom.py
     dev.py
     prod.py
-      …
-      15→DEBUG = False
-      …
-      26→host_name = os.environ.get("HOST_NAME")
-      …
-      33→LOGGING = {
-      …
   signals.py
     …
     6→@receiver(connection_created)
@@ -268,6 +262,27 @@ bookmarks/
     settings.css
     tags.css
     theme/
+      LICENSE
+      _normalize.css
+      animations.css
+      asian.css
+      autocomplete.css
+      badges.css
+      base.css
+      buttons.css
+      code.css
+      dropdowns.css
+      empty.css
+      forms.css
+      menus.css
+      modals.css
+      pagination.css
+      tables.css
+      tabs.css
+      toasts.css
+      typography.css
+      utilities.css
+      variables.css
     theme-dark.css
     theme-light.css
   tasks.py
@@ -330,13 +345,6 @@ bookmarks/
   templatetags/
     __init__.py (empty)
     bookmarks.py
-      …
-      6→register = template.Library()
-      9→@register.inclusion_tag(
-      10→    "bookmarks/search.html", name="bookmark_search", takes_context=True
-      11→)
-      12→def bookmark_search(context, search: BookmarkSearch, mode: str = ""):
-      …
     pagination.py
     shared.py
   tests/
@@ -364,38 +372,11 @@ bookmarks/
     __init__.py (empty)
     access.py
     assets.py
-      …
-      14→def _get_asset_content(asset):
-      …
-      30→def view(request, asset_id: int):
-      …
-      45→def read(request, asset_id: int):
-      …
     auth.py
-      …
-      7→class LinkdingLoginView(auth_views.LoginView):
-      …
-      13→    def get_form(self, form_class=None):
-      …
-      18→    def get_context_data(self, **kwargs):
-      …
-      25→    def form_invalid(self, form):
-      …
-      36→class LinkdingPasswordChangeView(auth_views.PasswordChangeView):
-      37→    def get_form(self, form_class=None):
-      …
-      42→    def form_invalid(self, form):
-      …
     bookmarks.py
     bundles.py
     contexts.py
     custom_css.py
-      …
-      3→custom_css_cache_max_age = 2592000  # 30 days
-      4→
-      5→
-      6→def custom_css(request):
-      …
     health.py
       …
       7→def health(request):
@@ -422,31 +403,6 @@ bookmarks/
       …
     turbo.py
   widgets.py
-    …
-    7→class FormErrorList(ErrorList):
-    8→    template_name = "shared/error_list.html"
-    11→class FormInput(forms.TextInput):
-    12→    def __init__(self, attrs=None):
-    …
-    19→class FormNumberInput(forms.NumberInput):
-    20→    def __init__(self, attrs=None):
-    …
-    27→class FormSelect(forms.Select):
-    28→    def __init__(self, attrs=None):
-    …
-    35→class FormTextarea(forms.Textarea):
-    36→    def __init__(self, attrs=None):
-    …
-    43→class FormCheckbox(forms.CheckboxInput):
-    44→    def __init__(self, attrs=None):
-    …
-    48→    def render(self, name, value, attrs=None, renderer=None):
-    …
-    63→class TagAutocomplete(forms.TextInput):
-    64→    def __init__(self, attrs=None):
-    …
-    67→    def render(self, name, value, attrs=None, renderer=None):
-    …
   wsgi.py
     …
     13→application = get_wsgi_application()
@@ -455,6 +411,17 @@ docker/
   alpine.Dockerfile
   default.Dockerfile
 docker-compose.yml
+  1→services:
+  2→  linkding:
+  3→    container_name: "${LD_CONTAINER_NAME:-linkding}"
+  4→    image: sissbruecker/linkding:latest
+  5→    ports:
+  6→      - "${LD_HOST_PORT:-9090}:9090"
+  7→    volumes:
+  8→      - "${LD_HOST_DATA_DIR:-./data}:/etc/linkding/data"
+  9→    env_file:
+  10→      - .env
+  11→    restart: unless-stopped
 docs/
   .gitignore
   README.md
@@ -486,10 +453,33 @@ pyproject.toml
   4→description = "Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up using Docker."
   5→readme = "README.md"
   6→requires-python = ">=3.13"
+  7→dependencies = [
+  8→    "beautifulsoup4>=4.14.3",
+  9→    "bleach>=6.3.0",
+  10→    "bleach-allowlist>=1.0.3",
+  11→    "django>=6.0",
+  12→    "djangorestframework>=3.16.1",
+  13→    "huey>=2.5.5",
+  14→    "markdown>=3.10",
+  15→    "mozilla-django-oidc>=5.0.2",
+  16→    "requests>=2.32.5",
+  17→    "supervisor>=4.3.0",
+  18→    "uwsgi>=2.0.31",
+  19→    "waybackpy>=3.0.6",
+  20→]
   …
 pytest.ini
 rollup.config.mjs
 scripts/
+  build-docker.sh
+  coverage.sh
+  generate-changelog.py
+  release.sh
+  run-docker.sh
+  run-postgres.sh
+  setup-ublock.sh
+  test-environments/
+  test-postgres.sh
 supervisord-all.conf
 supervisord-tasks.conf
 uv.lock

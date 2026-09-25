@@ -46,6 +46,12 @@ README.md
   23→
   24→<hr clear="right"/>
   …
+  602→## Update Check
+  603→
+  604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
+  605→
+  606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
+  …
   713→## License
   714→
   715→GPL-3.0-or-later
@@ -65,11 +71,89 @@ demo/
   demo_script.sh
 docs/
   commands.md
+    1→# Commands Reference
+    …
+    23→## Core Commands
+    24→
+    25→### `start`
+    …
+    57→### `stop` (alias: `s`)
+    …
+    86→### `add`
+    …
+    118→### `remove` (alias: `rm`)
+    …
+    143→### `continue` (alias: `c`)
+    …
+    188→## Viewing & Reporting
+    189→
+    190→### `calendar`
+    …
+    217→### `list` (alias: `ls`)
+    …
+    240→### `current`
+    …
+    260→### `last` (alias: `lt`)
+    …
+    283→### `report`
+    …
+    307→### `analyze`
+    …
+    330→### `ical`
+    …
 go.mod
   1→module github.com/kriuchkov/tock
   2→
   3→go 1.25.6
-  …
+  4→
+  5→require (
+  6→	github.com/charmbracelet/bubbles v1.0.0
+  7→	github.com/charmbracelet/bubbletea v1.3.10
+  8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+  9→	github.com/go-faster/errors v0.7.1
+  10→	github.com/muesli/termenv v0.16.0
+  11→	github.com/samber/lo v1.52.0
+  12→	github.com/spf13/cobra v1.10.2
+  13→	github.com/spf13/pflag v1.0.10
+  14→	github.com/spf13/viper v1.21.0
+  15→	github.com/stretchr/testify v1.11.1
+  16→	gopkg.in/yaml.v3 v3.0.1
+  17→)
+  18→
+  19→require (
+  20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
+  21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
+  22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
+  23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
+  24→	github.com/charmbracelet/x/term v0.2.2 // indirect
+  25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
+  26→	github.com/clipperhouse/stringish v0.1.1 // indirect
+  27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
+  28→	github.com/davecgh/go-spew v1.1.1 // indirect
+  29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
+  30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
+  31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+  32→	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+  33→	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
+  34→	github.com/mattn/go-isatty v0.0.20 // indirect
+  35→	github.com/mattn/go-localereader v0.0.1 // indirect
+  36→	github.com/mattn/go-runewidth v0.0.19 // indirect
+  37→	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
+  38→	github.com/muesli/cancelreader v0.2.2 // indirect
+  39→	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+  40→	github.com/pmezard/go-difflib v1.0.0 // indirect
+  41→	github.com/rivo/uniseg v0.4.7 // indirect
+  42→	github.com/sagikazarmark/locafero v0.11.0 // indirect
+  43→	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
+  44→	github.com/spf13/afero v1.15.0 // indirect
+  45→	github.com/spf13/cast v1.10.0 // indirect
+  46→	github.com/stretchr/objx v0.5.2 // indirect
+  47→	github.com/subosito/gotenv v1.6.0 // indirect
+  48→	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
+  49→	go.yaml.in/yaml/v3 v3.0.4 // indirect
+  50→	golang.org/x/sys v0.39.0 // indirect
+  51→	golang.org/x/text v0.32.0 // indirect
+  52→)
 go.sum
 install.sh
 internal/
@@ -77,15 +161,6 @@ internal/
     cli/
       add.go
       analyze.go
-        …
-        20→func NewAnalyzeCmd() *cobra.Command {
-        …
-        70→type AnalysisStats struct {
-        …
-        84→func analyzeData(activities []models.Activity) AnalysisStats {
-        …
-        206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
-        …
       calendar.go
       calendar_sidebar.go
       continue.go
@@ -93,45 +168,20 @@ internal/
         15→const (
         16→	defaultRecentActivitiesForContinuation = 10
         17→)
-        …
+        19→//nolint:funlen // Include all logic in one function
         20→func NewContinueCmd() *cobra.Command {
         …
       current.go
-        …
-        19→type currentCmdActivity struct {
-        20→	models.Activity
-        21→}
-        23→func (a currentCmdActivity) Duration() time.Duration {
-        …
-        27→func (a currentCmdActivity) DurationHMS() string {
-        …
-        35→func NewCurrentCmd() *cobra.Command {
-        …
       ical.go
       interactive.go
       last.go
-        …
-        16→type lastOptions struct {
-        17→	Limit      int
-        18→	JSONOutput bool
-        19→}
-        21→func NewLastCmd() *cobra.Command {
-        …
-        42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
-        …
       list_gui.go
       remove.go
       report.go
-        …
-        20→type reportOptions struct {
-        …
-        31→func NewReportCmd() *cobra.Command {
-        …
-        61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
-        …
       root.go
       start.go
         …
+        16→//nolint:gocognit,funlen // Include all logic in one function
         17→func NewStartCmd() *cobra.Command {
         …
       stop.go
@@ -140,22 +190,7 @@ internal/
         …
       theme.go
       update.go
-        …
-        17→type githubRelease struct {
-        …
-        22→func checkUpdate() (githubRelease, error) {
-        …
-        45→func runUpdateCheck(cmd *cobra.Command) {
-        …
       version.go
-        …
-        10→var (
-        11→	version = "dev"
-        12→	commit  = "none"
-        13→	date    = "unknown"
-        14→)
-        16→func NewVersionCmd() *cobra.Command {
-        …
       watch.go
     repositories/
       file/
@@ -171,113 +206,14 @@ internal/
         repository_test.go
   config/
     config.go
-      …
-      12→type Config struct {
-      …
-      25→type CalendarConfig struct {
-      26→	TimeSpentFormat   string `mapstructure:"time_spent_format"`
-      27→	TimeStartFormat   string `mapstructure:"time_start_format"`
-      28→	TimeEndFormat     string `mapstructure:"time_end_format"`
-      29→	TimeTotalFormat   string `mapstructure:"time_total_format"`
-      30→	AlignDurationLeft bool   `mapstructure:"align_duration_left"`
-      31→}
-      33→type ExportConfig struct {
-      34→	ICal ICalConfig `mapstructure:"ical"`
-      35→}
-      37→type ICalConfig struct {
-      38→	FileName string `mapstructure:"file_name"`
-      39→}
-      41→type FileConfig struct {
-      42→	Path string `mapstructure:"path"`
-      43→}
-      45→type TimewarriorConfig struct {
-      46→	DataPath string `mapstructure:"data_path"`
-      47→}
-      49→type ThemeConfig struct {
-      50→	Name      string `mapstructure:"name"`
-      51→	Primary   string `mapstructure:"primary"`
-      52→	Secondary string `mapstructure:"secondary"`
-      53→	Text      string `mapstructure:"text"`
-      54→	SubText   string `mapstructure:"sub_text"`
-      55→	Faint     string `mapstructure:"faint"`
-      56→	Highlight string `mapstructure:"highlight"`
-      57→	Tag       string `mapstructure:"tag"`
-      58→}
-      60→type Option func(*viper.Viper)
-      61→
-      62→func WithConfigPath(path string) Option {
-      …
-      68→func WithConfigName(name string) Option {
-      …
-      74→func WithConfigFile(file string) Option {
-      …
-      80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
-      …
     config_test.go
   core/
     dto/
       activity_dto.go
-        …
-        9→type StartActivityRequest struct {
-        10→	Description string
-        11→	Project     string
-        12→	StartTime   time.Time
-        13→	Notes       string
-        14→	Tags        []string
-        15→}
-        17→type StopActivityRequest struct {
-        18→	EndTime time.Time
-        19→	Notes   string
-        20→	Tags    []string
-        21→}
-        23→type AddActivityRequest struct {
-        24→	Description string
-        25→	Project     string
-        26→	StartTime   time.Time
-        27→	EndTime     time.Time
-        28→	Notes       string
-        29→	Tags        []string
-        30→}
-        32→type ActivityFilter struct {
-        33→	FromDate    *time.Time
-        34→	ToDate      *time.Time
-        35→	Project     *string
-        36→	Description *string
-        37→	IsRunning   *bool
-        38→}
-        40→type Report struct {
-        41→	Activities    []models.Activity
-        42→	TotalDuration time.Duration
-        43→	ByProject     map[string]ProjectReport
-        44→}
-        46→type ProjectReport struct {
-        47→	ProjectName string
-        48→	Duration    time.Duration
-        49→	Activities  []models.Activity
-        50→}
     errors/
       errors.go
-        …
-        5→var (
-        6→	ErrActivityNotFound       = errors.New("activity not found")
-        7→	ErrNoActiveActivity       = errors.New("no active activity found")
-        8→	ErrActivityAlreadyStarted = errors.New("activity already started")
-        9→	ErrCancelled              = errors.New("operation cancelled")
-        10→)
     models/
       activity.go
-        …
-        10→type Activity struct {
-        …
-        19→func (a Activity) ID() string {
-        20→	return a.StartTime.Format("150405")
-        …
-        23→func (a Activity) Duration() time.Duration {
-        …
-        31→func (a Activity) DurationString() string {
-        …
-        41→func (a Activity) MarshalJSON() ([]byte, error) {
-        …
     ports/
       mocks/
         mock_activityrepository.go
@@ -309,15 +245,6 @@ internal/
       service_test.go
     ics/
       generator.go
-        …
-        12→func Generate(act models.Activity, uidKey string) string {
-        …
-        18→func WrapCalendar(eventsBody string) string {
-        …
-        29→func GenerateEvent(act models.Activity, uidKey string) string {
-        …
-        71→func escapeProperty(s string) string {
-        …
   timeutil/
     timeutil.go
     timeutil_test.go

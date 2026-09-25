@@ -26,6 +26,15 @@ Cargo.toml
   22→# preferred.
   23→backtrace = { version = "0.3.51", optional = true }
   …
+  32→[package.metadata.docs.rs]
+  33→targets = ["x86_64-unknown-linux-gnu"]
+  34→rustdoc-args = [
+  35→    "--generate-link-to-definition",
+  36→    "--generate-macro-expansion",
+  37→    "--extern-html-root-url=core=https://doc.rust-lang.org",
+  38→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
+  39→    "--extern-html-root-url=std=https://doc.rust-lang.org",
+  40→]
 LICENSE-APACHE
 LICENSE-MIT
 README.md
@@ -63,35 +72,6 @@ build.rs
 rust-toolchain.toml
 src/
   backtrace.rs
-    …
-    7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
-    8→pub(crate) enum Backtrace {}
-    10→#[cfg(std_backtrace)]
-    11→macro_rules! impl_backtrace {
-    12→    () => {
-    13→        std::backtrace::Backtrace
-    14→    };
-    15→}
-    …
-    18→macro_rules! impl_backtrace {
-    …
-    25→macro_rules! backtrace {
-    …
-    31→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
-    32→macro_rules! backtrace {
-    33→    () => {
-    34→        None
-    35→    };
-    36→}
-    …
-    39→macro_rules! backtrace_if_absent {
-    …
-    53→macro_rules! backtrace_if_absent {
-    …
-    64→macro_rules! backtrace_if_absent {
-    …
-    407→fn _assert_send_sync() {
-    …
   chain.rs
     …
     10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
@@ -108,11 +88,8 @@ src/
     33→}
     35→impl<'a> Iterator for Chain<'a> {
     …
-    56→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     57→impl DoubleEndedIterator for Chain<'_> {
-    58→    fn next_back(&mut self) -> Option<Self::Item> {
     …
-    74→}
     76→impl ExactSizeIterator for Chain<'_> {
     77→    fn len(&self) -> usize {
     …
@@ -123,30 +100,6 @@ src/
     …
     102→}
   context.rs
-    …
-    42→impl<T, E> Context<T, E> for Result<T, E>
-    …
-    90→impl<T> Context<T, Infallible> for Option<T> {
-    …
-    115→impl<C, E> Debug for ContextError<C, E>
-    …
-    128→impl<C, E> Display for ContextError<C, E>
-    129→where
-    130→    C: Display,
-    131→{
-    132→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    …
-    135→}
-    137→impl<C, E> StdError for ContextError<C, E>
-    …
-    152→impl<C> StdError for ContextError<C, Error>
-    …
-    166→struct Quoted<C>(C);
-    167→
-    168→impl<C> Debug for Quoted<C>
-    …
-    180→impl Write for Quoted<&mut fmt::Formatter<'_>> {
-    …
   ensure.rs
     …
     35→struct Buf {
@@ -161,67 +114,26 @@ src/
     81→fn render(msg: &'static str, lhs: &dyn Debug, rhs: &dyn Debug) -> Error {
     …
   error.rs
-    …
-    19→impl Error {
-    …
-    691→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    692→impl<E> From<E> for Error
-    693→where
-    694→    E: StdError + Send + Sync + 'static,
-    695→{
-    696→    #[cold]
-    697→    fn from(error: E) -> Self {
-    …
-    701→}
-    703→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    704→impl Deref for Error {
-    705→    type Target = dyn StdError + Send + Sync + 'static;
-    706→
-    707→    fn deref(&self) -> &Self::Target {
-    …
-    710→}
-    712→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    713→impl DerefMut for Error {
-    714→    fn deref_mut(&mut self) -> &mut Self::Target {
-    …
-    717→}
-    719→impl Display for Error {
-    720→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    …
-    723→}
-    725→impl Debug for Error {
-    726→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    …
-    729→}
-    731→impl Drop for Error {
-    732→    fn drop(&mut self) {
-    …
-    738→}
-    740→struct ErrorVTable {
-    …
-    757→unsafe fn object_drop<E>(e: Own<ErrorImpl>) {
-    …
-    765→unsafe fn object_drop_front<E>(e: Own<ErrorImpl>, target: TypeId) {
-    …
-    775→unsafe fn object_ref<E>(e: Ref<ErrorImpl>) -> Ref<dyn StdError + Send + Sync + 'static>
-    776→where
-    777→    E: StdError + Send + Sync + 'static,
-    778→{
-    …
-    788→unsafe fn object_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
-    …
-    799→unsafe fn object_reallocate_boxed<E>(e: Own<ErrorImpl>) -> Box<dyn StdError + Send + Sync + 'static>
-    …
   fmt.rs
     …
     6→impl ErrorImpl {
+    7→    pub(crate) unsafe fn display(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
     …
+    20→    pub(crate) unsafe fn debug(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
+    …
+    67→}
     69→struct Indented<'a, D> {
     70→    inner: &'a mut D,
     71→    number: Option<usize>,
     72→    started: bool,
     73→}
     75→impl<T> Write for Indented<'_, T>
+    76→where
+    77→    T: Write,
+    78→{
+    79→    fn write_str(&mut self, s: &str) -> fmt::Result {
+    …
+    101→}
     …
   kind.rs
     …
@@ -243,6 +155,7 @@ src/
     92→    where
     93→        E: Into<Error>,
     94→    {
+    95→        error.into()
     …
     97→}
     99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -255,6 +168,32 @@ src/
     …
     121→}
   lib.rs
+    …
+    9→//! This library provides [`anyhow::Error`][Error], a trait object based error
+    10→//! type for easy idiomatic error handling in Rust applications.
+    11→//!
+    12→//! <br>
+    13→//!
+    14→//! # Details
+    15→//!
+    16→//! - Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as
+    17→//!   the return type of any fallible function.
+    18→//!
+    19→//!   Within the function, use `?` to easily propagate any error that implements
+    20→//!   the [`std::error::Error`] trait.
+    21→//!
+    22→//!   ```
+    …
+    38→//!   use anyhow::Result;
+    39→//!
+    40→//!   fn get_cluster_info() -> Result<ClusterMap> {
+    41→//!       let config = std::fs::read_to_string("cluster.json")?;
+    42→//!       let map: ClusterMap = serde_json::from_str(&config)?;
+    43→//!       Ok(map)
+    44→//!   }
+    …
+    47→//!   ```
+    48→//!
     …
     251→#[macro_use]
     252→mod backtrace;
@@ -310,20 +249,54 @@ src/
     …
   macros.rs
     …
+    56→#[macro_export]
+    57→#[cfg_attr(not(anyhow_no_clippy_format_args), clippy::format_args)]
     58→macro_rules! bail {
-    …
+    59→    ($msg:literal $(,)?) => {
+    60→        return $crate::__private::Err($crate::__anyhow!($msg))
+    61→    };
+    62→    ($err:expr $(,)?) => {
+    63→        return $crate::__private::Err($crate::__anyhow!($err))
+    64→    };
+    65→    ($fmt:expr, $($arg:tt)*) => {
+    66→        return $crate::__private::Err($crate::__anyhow!($fmt, $($arg)*))
+    67→    };
+    68→}
     70→macro_rules! __ensure {
     …
+    202→#[macro_export]
+    203→#[cfg_attr(not(anyhow_no_clippy_format_args), clippy::format_args)]
     204→macro_rules! anyhow {
+    205→    ($msg:literal $(,)?) => {
+    206→        $crate::__private::must_use({
+    207→            let error = $crate::__private::format_err($crate::__private::format_args!($msg));
+    208→            error
+    209→        })
+    210→    };
+    211→    ($err:expr $(,)?) => {
+    212→        $crate::__private::must_use({
+    213→            use $crate::__private::kind::*;
+    214→            let error = match $err {
+    215→                error => (&error).anyhow_kind().new(error),
+    216→            };
+    217→            error
+    218→        })
+    219→    };
+    220→    ($fmt:expr, $($arg:tt)*) => {
+    221→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
+    222→    };
+    223→}
     …
   nightly.rs
   ptr.rs
   wrapper.rs
 tests/
   common/
+    mod.rs
   compiletest.rs
   crate/
   drop/
+    mod.rs
   test_autotrait.rs
   test_backtrace.rs
   test_boxed.rs
@@ -338,3 +311,17 @@ tests/
   test_repr.rs
   test_source.rs
   ui/
+    chained-comparison.rs
+    chained-comparison.stderr
+    empty-ensure.rs
+    empty-ensure.stderr
+    ensure-nonbool.rs
+    ensure-nonbool.stderr
+    must-use.rs
+    must-use.stderr
+    no-impl.rs
+    no-impl.stderr
+    temporary-value.rs
+    temporary-value.stderr
+    wrong-interpolation.rs
+    wrong-interpolation.stderr

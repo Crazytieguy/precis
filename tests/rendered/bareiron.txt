@@ -18,7 +18,9 @@ README.md
   9→> [!WARNING]
   10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
   12→## Quick start
-  …
+  13→For PC x86_64 platforms, grab the [latest build binary](https://github.com/p2r3/bareiron/releases/download/latest/bareiron.exe) and run it. The file is a [Cosmopolitan polyglot](https://github.com/jart/cosmopolitan), which means it'll run on Windows, Linux, and possibly Mac, despite the file extension. Note that the server's default settings cannot be reconfigured without compiling from source.
+  14→
+  15→For microcontrollers, see the section on **compilation** below.
   17→## Compilation
   …
   28→## Configuration
@@ -110,9 +112,9 @@ include/
     29→#define MOB_DESPAWN_DISTANCE 256
     …
     32→#define GAMEMODE 0
-    …
+    34→// Max render distance, determines how many chunks to send
     35→#define VIEW_DISTANCE 2
-    …
+    37→// Time between server ticks in microseconds (default = 1s)
     38→#define TIME_BETWEEN_TICKS 1000000
     40→// Calculated from TIME_BETWEEN_TICKS
     41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
@@ -122,7 +124,7 @@ include/
     49→#define INITIAL_RNG_SEED 0xE2B9419
     …
     53→#define CHUNK_SIZE 8
-    …
+    55→// Terrain low point - should start a bit below sea level for rivers/lakes
     56→#define TERRAIN_BASE_HEIGHT 60
     …
   packets.h
@@ -206,31 +208,6 @@ include/
     12→void writeVarInt (int client_fd, uint32_t value);
     …
   worldgen.h
-    …
-    6→typedef struct {
-    7→  short x;
-    8→  short z;
-    9→  uint32_t hash;
-    10→  uint8_t biome;
-    11→} ChunkAnchor;
-    12→
-    13→typedef struct {
-    14→  short x;
-    15→  uint8_t y;
-    16→  short z;
-    17→  uint8_t variant;
-    18→} ChunkFeature;
-    19→
-    20→uint32_t getChunkHash (short x, short z);
-    21→uint8_t getChunkBiome (short x, short z);
-    22→uint8_t getHeightAtFromHash (int rx, int rz, int _x, int _z, uint32_t chunk_hash, uint8_t biome);
-    23→uint8_t getHeightAt (int x, int z);
-    24→uint8_t getTerrainAt (int x, int y, int z, ChunkAnchor anchor);
-    25→uint8_t getBlockAt (int x, int y, int z);
-    26→
-    27→extern uint8_t chunk_section[4096];
-    28→uint8_t buildChunkSection (int cx, int cy, int cz);
-    …
 src/
   CMakeLists.txt
   crafting.c
@@ -244,10 +221,5 @@ src/
   serialize.c
   structures.c
   tools.c
-    …
-    42→uint64_t total_bytes_received = 0;
-    43→
-    44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
-    …
   varnum.c
   worldgen.c

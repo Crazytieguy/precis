@@ -1,4 +1,4 @@
-Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.570/0.719/0.656/0.717
+Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.518/0.566/0.498/0.570/0.719/0.656/0.717
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,61 +16,61 @@ Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 238 | 71 | Fs::DirListing { dir: src } |  |  | 0.055 |
 | ns | 243 |  | 48 | Repository root listing (complete) | 1.3 |  | 0.452 |
 | walker |  | 255 | 17 | Fs::DirListing { dir: src/adapters } |  |  | 0.476 |
-| walker |  | 270 | 15 | Code::CodeKey { rung: Names, file: src/random-id.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| walker |  | 289 | 19 | Code::CodeKey { rung: Names, file: src/parse-where.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| walker |  | 313 | 24 | Code::CodeKey { rung: Names, file: src/matches-where.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| walker |  | 327 | 14 | Code::CodeKey { rung: Names, file: src/adapters/observer.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.508 |
-| walker |  | 361 | 34 | Json::Runtime { file: package.json } |  |  | 0.512 |
-| walker |  | 397 | 36 | Code::CodeKey { rung: Names, file: src/app.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 420 | 23 | Code::CodeKey { rung: Decl, file: src/app.ts, decl: 1, sub: 0, line: 18 } |  |  | 0.513 |
-| walker |  | 463 | 43 | Code::CodeKey { rung: Names, file: src/paginate.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.514 |
-| ns | 513 |  | 182 | Complete README section map (every H2 and H3) | 1.5 |  | 0.411 |
-| walker |  | 518 | 55 | Code::CodeKey { rung: Names, file: src/where-operators.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.412 |
-| walker |  | 587 | 69 | Json::Entry { file: package.json } |  |  | 0.416 |
-| walker |  | 657 | 70 | Code::CodeKey { rung: Decl, file: src/paginate.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.420 |
-| ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.400 |
-| walker |  | 742 | 85 | Code::CodeKey { rung: Names, file: src/service.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.402 |
-| walker |  | 765 | 23 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 3, sub: 0, line: 13 } |  |  | 0.402 |
-| walker |  | 853 | 88 | Code::CodeKey { rung: Decl, file: src/where-operators.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.406 |
-| ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.374 |
-| walker |  | 1083 | 230 | Code::CodeKey { rung: Decl, file: src/service.ts, decl: 5, sub: 0, line: 81 } |  |  | 0.379 |
-| ns | 1101 |  | 229 | Complete runtime dependency list (package.json 46-60) | 1.8 |  | 0.344 |
-| walker |  | 1124 | 41 | Code::CodeKey { rung: Decl, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.345 |
-| walker |  | 1135 | 11 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 6, sub: 0, line: 84 } |  |  | 0.345 |
-| ns | 1140 |  | 39 | Complete listing of every non-src directory | 1.9 |  | 0.366 |
-| walker |  | 1224 | 89 | Code::CodeKey { rung: Decl, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.370 |
-| walker |  | 1242 | 18 | Code::CodeKey { rung: Body, file: src/random-id.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.370 |
-| walker |  | 1260 | 18 | Code::CodeKey { rung: Body, file: src/where-operators.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.352 |
-| ns | 1260 |  | 120 | Complete REST route table for array and object resources | 2.1 |  | 0.352 |
-| walker |  | 1321 | 61 | Code::CodeKey { rung: Names, file: src/adapters/normalized-adapter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.354 |
-| walker |  | 1334 | 13 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.354 |
-| ns | 1384 |  | 124 | CLI usage/options help text (src/bin.ts 22-30) | 2.2 |  | 0.339 |
-| walker |  | 1388 | 54 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 3, sub: 0, line: 11 } |  |  | 0.340 |
-| ns | 1532 |  | 148 | Complete condition-operator vocabulary (README 161-172) | 2.3 |  | 0.326 |
-| walker |  | 1619 | 231 | Json::Dependencies { file: package.json } |  |  | 0.392 |
-| ns | 1643 |  | 111 | Worked filter-query examples (README 174-183) | 2.4 |  | 0.379 |
-| ns | 1710 |  | 67 | Sort and embed query params (README 189-191, 223-224) | 2.5 |  | 0.372 |
-| walker |  | 1820 | 201 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.464 |
-| walker |  | 1845 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.464 |
-| ns | 1850 |  | 140 | Pagination request, response envelope, and clamping notes | 2.6 |  | 0.444 |
-| ns | 1902 |  | 52 | `_where` JSON query param and its override rule | 2.7 |  | 0.441 |
-| walker |  | 1996 | 151 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.466 |
-| ns | 2006 |  | 104 | Dependent deletes and static file serving | 2.8 |  | 0.457 |
-| walker |  | 2026 | 30 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.457 |
-| ns | 2171 |  | 165 | v0 to v1 migration notes (README 256-263) | 2.9 |  | 0.446 |
-| walker |  | 2188 | 162 | Json::Scripts { file: package.json } |  |  | 0.487 |
-| walker |  | 2205 | 17 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 11, sub: 0, line: 186 } |  |  | 0.487 |
-| walker |  | 2315 | 110 | Code::CodeKey { rung: Decl, file: src/adapters/observer.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.489 |
-| walker |  | 2322 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.489 |
-| walker |  | 2329 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 3, sub: 0, line: 10 } |  |  | 0.489 |
-| walker |  | 2336 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 4, sub: 0, line: 13 } |  |  | 0.490 |
-| walker |  | 2343 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 5, sub: 0, line: 16 } |  |  | 0.490 |
-| walker |  | 2360 | 17 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 12, sub: 0, line: 190 } |  |  | 0.490 |
-| walker |  | 2371 | 11 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 4, sub: 0, line: 14 } |  |  | 0.490 |
-| ns | 2436 |  | 265 | Roster of every module-level function in src/ (names only) | 3.1 |  | 0.463 |
-| walker |  | 2555 | 184 | Json::IdentityMeta { file: package.json } |  |  | 0.472 |
-| walker |  | 2575 | 20 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 7, sub: 0, line: 92 } |  |  | 0.472 |
+| walker |  | 289 | 34 | Json::Runtime { file: package.json } |  |  | 0.479 |
+| walker |  | 304 | 15 | Code::CodeKey { rung: Names, file: src/random-id.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
+| walker |  | 323 | 19 | Code::CodeKey { rung: Names, file: src/parse-where.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
+| ns | 331 |  | 88 | Complete src/ and src/adapters/ listing | 1.4 |  | 0.511 |
+| walker |  | 392 | 69 | Json::Entry { file: package.json } |  |  | 0.517 |
+| walker |  | 416 | 24 | Code::CodeKey { rung: Names, file: src/matches-where.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 430 | 14 | Code::CodeKey { rung: Names, file: src/adapters/observer.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 448 | 18 | Code::CodeKey { rung: Body, file: src/random-id.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.517 |
+| ns | 513 |  | 182 | Complete README section map (every H2 and H3) | 1.5 |  | 0.414 |
+| walker |  | 679 | 231 | Json::Dependencies { file: package.json } |  |  | 0.434 |
+| ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.413 |
+| walker |  | 715 | 36 | Code::CodeKey { rung: Names, file: src/app.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.414 |
+| walker |  | 738 | 23 | Code::CodeKey { rung: Decl, file: src/app.ts, decl: 1, sub: 0, line: 18 } |  |  | 0.415 |
+| ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.382 |
+| walker |  | 939 | 201 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.518 |
+| walker |  | 964 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.518 |
+| ns | 1101 |  | 229 | Complete runtime dependency list (package.json 46-60) | 1.8 |  | 0.530 |
+| walker |  | 1115 | 151 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.564 |
+| ns | 1140 |  | 39 | Complete listing of every non-src directory | 1.9 |  | 0.567 |
+| walker |  | 1145 | 30 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.567 |
+| walker |  | 1188 | 43 | Code::CodeKey { rung: Names, file: src/paginate.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.568 |
+| walker |  | 1258 | 70 | Code::CodeKey { rung: Decl, file: src/paginate.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.571 |
+| ns | 1260 |  | 120 | Complete REST route table for array and object resources | 2.1 |  | 0.540 |
+| ns | 1384 |  | 124 | CLI usage/options help text (src/bin.ts 22-30) | 2.2 |  | 0.517 |
+| walker |  | 1420 | 162 | Json::Scripts { file: package.json } |  |  | 0.566 |
+| walker |  | 1475 | 55 | Code::CodeKey { rung: Names, file: src/where-operators.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
+| ns | 1532 |  | 148 | Complete condition-operator vocabulary (README 161-172) | 2.3 |  | 0.543 |
+| walker |  | 1563 | 88 | Code::CodeKey { rung: Decl, file: src/where-operators.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.546 |
+| walker |  | 1581 | 18 | Code::CodeKey { rung: Body, file: src/where-operators.ts, decl: 3, sub: 0, line: 16 } |  |  | 0.548 |
+| ns | 1643 |  | 111 | Worked filter-query examples (README 174-183) | 2.4 |  | 0.530 |
+| walker |  | 1691 | 110 | Code::CodeKey { rung: Decl, file: src/adapters/observer.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.532 |
+| walker |  | 1698 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.532 |
+| walker |  | 1705 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 3, sub: 0, line: 10 } |  |  | 0.532 |
+| ns | 1710 |  | 67 | Sort and embed query params (README 189-191, 223-224) | 2.5 |  | 0.522 |
+| walker |  | 1712 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 4, sub: 0, line: 13 } |  |  | 0.523 |
+| walker |  | 1719 | 7 | Code::CodeKey { rung: Body, file: src/adapters/observer.ts, decl: 5, sub: 0, line: 16 } |  |  | 0.523 |
+| ns | 1850 |  | 140 | Pagination request, response envelope, and clamping notes | 2.6 |  | 0.500 |
+| ns | 1902 |  | 52 | `_where` JSON query param and its override rule | 2.7 |  | 0.497 |
+| walker |  | 1903 | 184 | Json::IdentityMeta { file: package.json } |  |  | 0.506 |
+| walker |  | 1988 | 85 | Code::CodeKey { rung: Names, file: src/service.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.508 |
+| ns | 2006 |  | 104 | Dependent deletes and static file serving | 2.8 |  | 0.498 |
+| walker |  | 2011 | 23 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 3, sub: 0, line: 13 } |  |  | 0.498 |
+| ns | 2171 |  | 165 | v0 to v1 migration notes (README 256-263) | 2.9 |  | 0.487 |
+| walker |  | 2241 | 230 | Code::CodeKey { rung: Decl, file: src/service.ts, decl: 5, sub: 0, line: 81 } |  |  | 0.491 |
+| walker |  | 2282 | 41 | Code::CodeKey { rung: Decl, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.492 |
+| walker |  | 2293 | 11 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 6, sub: 0, line: 84 } |  |  | 0.492 |
+| walker |  | 2382 | 89 | Code::CodeKey { rung: Decl, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.496 |
+| walker |  | 2399 | 17 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 11, sub: 0, line: 186 } |  |  | 0.496 |
+| walker |  | 2416 | 17 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 12, sub: 0, line: 190 } |  |  | 0.496 |
+| walker |  | 2436 | 20 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 7, sub: 0, line: 92 } |  |  | 0.468 |
+| ns | 2436 |  | 265 | Roster of every module-level function in src/ (names only) | 3.1 |  | 0.468 |
+| walker |  | 2497 | 61 | Code::CodeKey { rung: Names, file: src/adapters/normalized-adapter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.470 |
+| walker |  | 2510 | 13 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.470 |
+| walker |  | 2564 | 54 | Code::CodeKey { rung: Decl, file: src/adapters/normalized-adapter.ts, decl: 3, sub: 0, line: 11 } |  |  | 0.471 |
+| walker |  | 2575 | 11 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 4, sub: 0, line: 14 } |  |  | 0.472 |
 | walker |  | 2596 | 21 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 6, sub: 0, line: 44 } |  |  | 0.472 |
 | ns | 2603 |  | 167 | Roster of every exported type and class across src/ | 3.2 |  | 0.477 |
 | walker |  | 2617 | 21 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 13, sub: 0, line: 194 } |  |  | 0.477 |

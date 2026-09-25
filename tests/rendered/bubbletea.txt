@@ -45,22 +45,16 @@ cursed_renderer.go
 cursed_renderer_test.go
 cursor.go
 environ.go
-  …
-  19→type EnvMsg uv.Environ
-  …
-  24→func (msg EnvMsg) Getenv(key string) (v string) {
-  25→	return uv.Environ(msg).Getenv(key)
-  …
-  32→func (msg EnvMsg) LookupEnv(key string) (s string, v bool) {
-  33→	return uv.Environ(msg).LookupEnv(key)
-  …
 examples/
 exec.go
 exec_test.go
 focus.go
   …
+  3→// FocusMsg represents a terminal focus message.
+  4→// This occurs when the terminal gains focus.
   5→type FocusMsg struct{}
-  …
+  7→// BlurMsg represents a terminal blur message.
+  8→// This occurs when the terminal loses focus.
   9→type BlurMsg struct{}
 go.mod
   1→module charm.land/bubbletea/v2
@@ -75,16 +69,6 @@ input.go
 key.go
 keyboard.go
 logging.go
-  …
-  23→func LogToFile(path string, prefix string) (*os.File, error) {
-  …
-  29→type LogOptionsSetter interface {
-  30→	SetOutput(io.Writer)
-  31→	SetPrefix(string)
-  32→}
-  …
-  35→func LogToFileWith(path string, prefix string, log LogOptionsSetter) (*os.File, error) {
-  …
 logging_test.go
 mod.go
 mouse.go
@@ -101,7 +85,8 @@ paste.go
   11→	return p.Content
   …
   16→type PasteStartMsg struct{}
-  …
+  18→// PasteEndMsg is an message that is emitted when the terminal ends the
+  19→// bracketed-paste text.
   20→type PasteEndMsg struct{}
 profile.go
   …
@@ -115,6 +100,9 @@ raw.go
   7→}
   …
   33→func Raw(r any) Cmd {
+  34→	return func() Msg {
+  35→		return RawMsg{r}
+  36→	}
   …
 renderer.go
 screen.go
@@ -144,6 +132,7 @@ signals_unix.go
 signals_windows.go
   …
   8→func (p *Program) listenForResize(done chan struct{}) {
+  9→	close(done)
   …
 tea.go
   1→// Package tea provides a framework for building rich terminal user interfaces
@@ -163,7 +152,7 @@ tea.go
   46→var ErrInterrupted = errors.New("program was interrupted")
   …
   50→type Msg = uv.Event
-  …
+  52→// Model contains the program's state as well as its core functions.
   53→type Model interface {
   54→	// Init is the first function that will be called. It returns an optional
   55→	// initial command. To not perform an initial command return nil.
@@ -246,7 +235,7 @@ tea.go
   316→	ProgressBarIndeterminate
   317→	ProgressBarWarning
   318→)
-  …
+  320→// String return a human-readable value for the given [ProgressBarState].
   321→func (s ProgressBarState) String() string {
   …
   336→type ProgressBar struct {
@@ -267,6 +256,9 @@ termcap.go
   5→type requestCapabilityMsg string
   …
   30→func RequestCapability(s string) Cmd {
+  31→	return func() Msg {
+  32→		return requestCapabilityMsg(s)
+  33→	}
   …
   41→type CapabilityMsg struct {
   42→	Content string
@@ -296,6 +288,16 @@ testdata/
     clear_screen.golden
     read_set_clipboard.golden
   TestViewModel/
+    altscreen.golden
+    altscreen_autoexit.golden
+    bg_set_color.golden
+    bp_stop_start.golden
+    cursor_hide.golden
+    cursor_hideshow.golden
+    kitty_stop_startreleases.golden
+    mouse_allmotion.golden
+    mouse_cellmotion.golden
+    mouse_disable.golden
 tty.go
 tty_unix.go
   …
@@ -329,6 +331,7 @@ tutorials/
   go.sum
 xterm.go
   …
+  3→// TerminalVersionMsg is a message that represents the terminal version.
   4→type TerminalVersionMsg struct {
   5→	Name string
   6→}

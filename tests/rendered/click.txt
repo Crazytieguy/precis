@@ -36,9 +36,20 @@ README.md
   21→## A Simple Example
   …
   47→## Donate
-  …
+  48→
+  49→The Pallets organization develops and supports Click and other popular
+  50→packages. In order to grow the community of contributors and users, and
+  51→allow the maintainers to devote more time to the projects, [please
+  52→donate today][].
+  53→
+  54→[please donate today]: https://palletsprojects.com/donate
   56→## Contributing
-  …
+  57→
+  58→See our [detailed contributing documentation][contrib] for many ways to
+  59→contribute, including reporting issues, requesting features, asking or answering
+  60→questions, and making PRs.
+  61→
+  62→[contrib]: https://palletsprojects.com/contributing/
 docs/
   _static/
     click-icon.svg
@@ -65,6 +76,13 @@ docs/
   handling-files.md
   index.rst
   license.md
+    1→# BSD-3-Clause License
+    2→
+    3→```{literalinclude} ../LICENSE.txt
+    4→---
+    5→language: text
+    6→---
+    7→```
   option-decorators.md
   options.md
   parameter-types.md
@@ -211,28 +229,6 @@ src/
     decorators.py
     exceptions.py
     formatting.py
-      …
-      11→FORCED_WIDTH: int | None = None
-      12→
-      13→
-      14→def measure_table(rows: cabc.Iterable[tuple[str, str]]) -> tuple[int, ...]:
-      …
-      24→def iter_rows(
-      25→    rows: cabc.Iterable[tuple[str, str]], col_count: int
-      26→) -> cabc.Iterator[tuple[str, ...]]:
-      …
-      31→def wrap_text(
-      32→    text: str,
-      33→    width: int = 78,
-      34→    initial_indent: str = "",
-      35→    subsequent_indent: str = "",
-      36→    preserve_paragraphs: bool = False,
-      37→) -> str:
-      …
-      104→class HelpFormatter:
-      …
-      283→def join_options(options: cabc.Sequence[str]) -> tuple[str, bool]:
-      …
     globals.py
     parser.py
     py.typed (empty)
@@ -293,6 +289,9 @@ src/
       426→class DateTime(ParamType[datetime]):
       …
       495→class _NumberParamTypeBase(ParamType[ParamTypeValue]):
+      496→    _number_class: t.Callable[[t.Any], ParamTypeValue]
+      497→
+      498→    def convert(
       …
     utils.py
 tests/
@@ -319,4 +318,13 @@ tests/
   test_types.py
   test_utils.py
   typing/
+    typing_aliased_group.py
+    typing_confirmation_option.py
+    typing_group_kw_options.py
+    typing_help_option.py
+    typing_options.py
+    typing_password_option.py
+    typing_progressbar.py
+    typing_simple_example.py
+    typing_version_option.py
 uv.lock

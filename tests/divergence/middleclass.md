@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.865 C=0.720 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.685/0.750/0.720/0.789/0.756/0.640/0.606
+Score(3000)=0.789 I=0.865 C=0.720 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.566/0.750/0.720/0.789/0.756/0.640/0.606
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,29 +11,29 @@ Score(3000)=0.789 I=0.865 C=0.720 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 146 | 58 | Fs::DirListing { dir: spec } |  |  | 0.510 |
 | walker |  | 226 | 80 | Fs::DirListing { dir: rockspecs } |  |  | 0.561 |
 | ns | 248 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.468 |
-| walker |  | 251 | 25 | Code::CodeKey { rung: Names, file: performance/run.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.468 |
-| walker |  | 316 | 65 | Code::CodeKey { rung: ModuleDoc, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
-| walker |  | 362 | 46 | Markdown::HeadingsOutline { file: UPDATING.md } |  |  | 0.811 |
+| walker |  | 291 | 65 | Code::CodeKey { rung: ModuleDoc, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
+| walker |  | 337 | 46 | Markdown::HeadingsOutline { file: UPDATING.md } |  |  | 0.811 |
 | ns | 394 |  | 146 | Complete listings of spec/, performance/ and rockspecs/ | 1.5 |  | 0.835 |
-| walker |  | 400 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.835 |
-| walker |  | 414 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.835 |
-| walker |  | 428 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.836 |
-| ns | 442 |  | 48 | All README section headings | 1.6 |  | 0.767 |
-| walker |  | 509 | 81 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.851 |
-| walker |  | 518 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 1, sub: 0, line: 19 } |  |  | 0.851 |
-| walker |  | 527 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 2, sub: 0, line: 37 } |  |  | 0.851 |
+| walker |  | 418 | 81 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.850 |
+| ns | 442 |  | 48 | All README section headings | 1.6 |  | 0.851 |
+| walker |  | 443 | 25 | Code::CodeKey { rung: Names, file: performance/run.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.851 |
+| walker |  | 452 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 1, sub: 0, line: 19 } |  |  | 0.851 |
+| walker |  | 461 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 2, sub: 0, line: 37 } |  |  | 0.851 |
+| walker |  | 499 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.851 |
+| walker |  | 513 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.851 |
+| walker |  | 527 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.851 |
 | ns | 572 |  | 130 | DefaultMixin member roster — every default instance and static method name | 2.1 |  | 0.690 |
 | ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.628 |
-| walker |  | 833 | 306 | Code::CodeKey { rung: Names, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.720 |
-| walker |  | 883 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 12, sub: 0, line: 139 } |  |  | 0.745 |
-| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.656 |
-| walker |  | 933 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 16, sub: 0, line: 172 } |  |  | 0.666 |
-| walker |  | 985 | 52 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 18, sub: 0, line: 186 } |  |  | 0.685 |
-| walker |  | 1044 | 59 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 13, sub: 0, line: 144 } |  |  | 0.734 |
-| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.702 |
-| ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.669 |
-| ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.627 |
-| walker |  | 1360 | 316 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.706 |
+| walker |  | 843 | 316 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.643 |
+| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.566 |
+| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.524 |
+| walker |  | 1149 | 306 | Code::CodeKey { rung: Names, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.607 |
+| ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.581 |
+| walker |  | 1199 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 12, sub: 0, line: 139 } |  |  | 0.600 |
+| walker |  | 1249 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 16, sub: 0, line: 172 } |  |  | 0.625 |
+| walker |  | 1301 | 52 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 18, sub: 0, line: 186 } |  |  | 0.642 |
+| ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.669 |
+| walker |  | 1360 | 59 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 13, sub: 0, line: 144 } |  |  | 0.706 |
 | walker |  | 1424 | 64 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 17, sub: 0, line: 178 } |  |  | 0.741 |
 | ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.750 |
 | walker |  | 1504 | 80 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 3, sub: 0, line: 68 } |  |  | 0.751 |

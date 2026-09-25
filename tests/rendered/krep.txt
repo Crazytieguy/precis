@@ -16,7 +16,10 @@ README.md
   10→>
   11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
   13→## The Story Behind the Name
-  …
+  14→
+  15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
+  16→
+  17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
   19→## Key Features
   20→
   21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
@@ -62,7 +65,25 @@ README.md
   96→## Usage Examples
   …
   134→## Command Line Options
-  …
+  135→
+  136→- `-i, --ignore-case` Case-insensitive search
+  137→- `-c, --count` Count matching lines only
+  138→- `-o, --only-matching` Print only the matched parts of lines
+  139→- `-e PATTERN, --pattern=PATTERN` Specify pattern(s). Can be used multiple times.
+  140→- `-f FILE, --file=FILE` Read patterns from FILE, one per line. Use `-` for stdin.
+  141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
+  142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
+  143→- `-F, --fixed-strings` Interpret pattern as fixed string(s) (default unless -E is used)
+  144→- `-r, --recursive` Recursively search directories
+  145→- `--gitignore` Respect `.gitignore` files during recursive search
+  146→- `--algo=ALGO` Force search algorithm: `auto` (default), `bm` (Boyer-Moore), `kmp` (KMP)
+  147→- `-t NUM, --threads=NUM` Use NUM threads for file search (default: auto)
+  148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
+  149→- `-w, --word-regexp` Match only whole words
+  150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
+  151→- `--no-simd` Explicitly disable SIMD acceleration
+  152→- `-v, --version` Show version information
+  153→- `-h, --help` Show help message
   155→## Performance Benchmarks
   …
   171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
@@ -96,7 +117,8 @@ aho_corasick.h
   13→// Forward declaration for search_params_t instead of including krep.h
   14→struct search_params;
   15→typedef struct search_params search_params_t;
-  …
+  17→// Forward declaration for match_result_t (needed by aho_corasick_search)
+  18→// Use the same struct tag as defined in krep.h
   19→struct match_result_t;
   20→typedef struct match_result_t match_result_t;
   22→// Forward declaration for internal node structure
@@ -159,23 +181,7 @@ krep.h
   101→                                  match_result_t *result);
   …
   104→typedef struct
-  105→{
-  106→   int thread_id;
-  107→   const search_params_t *params; // Pointer to shared search parameters
-  108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
-  109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
-  110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
-  111→
-  112→   // Thread-specific results
-  113→   match_result_t *local_result; // For position tracking (default/-o)
-  114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
-  115→
-  116→   // Status flags
-  117→   bool error_flag; // Flag to indicate an error occurred in the thread
-  118→
-  119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
-  120→   // Current size approx 56 bytes. Adding sufficient padding.
-  121→   char padding[64]; 
+  …
   122→} thread_data_t;
   …
   125→typedef struct task

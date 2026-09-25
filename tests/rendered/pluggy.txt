@@ -21,12 +21,66 @@ README.rst
   …
   7→This is the core framework used by the `pytest`_, `tox`_, and `devpi`_ projects.
   9→Please `read the docs`_ to learn more!
+  11→A definitive example
+  12→====================
+  13→.. code-block:: python
+  14→
+  15→    import pluggy
+  16→
+  17→    hookspec = pluggy.HookspecMarker("myproject")
+  18→    hookimpl = pluggy.HookimplMarker("myproject")
+  19→
+  20→
+  21→    class MySpec:
+  22→        """A hook specification namespace."""
+  23→
+  24→        @hookspec
+  25→        def myhook(self, arg1, arg2):
+  26→            """My special little hook that you can customize."""
+  27→
+  28→
+  29→    class Plugin_1:
+  30→        """A hook implementation namespace."""
+  31→
+  32→        @hookimpl
+  33→        def myhook(self, arg1, arg2):
+  34→            print("inside Plugin_1.myhook()")
+  35→            return arg1 + arg2
   …
+  104→Support pluggy
+  105→--------------
+  106→
+  107→`Open Collective`_ is an online funding platform for open and transparent communities.
+  108→It provides tools to raise money and share your finances in full transparency.
+  109→
+  110→It is the platform of choice for individuals and companies that want to make one-time or
+  111→monthly donations directly to the project.
+  112→
+  113→``pluggy`` is part of the ``pytest-dev`` project, see more details in the `pytest collective`_.
+  114→
+  115→.. _Open Collective: https://opencollective.com
+  116→.. _pytest collective: https://opencollective.com/pytest
 RELEASING.rst
 SECURITY.md
 TIDELIFT.rst
+  1→========
+  2→Tidelift
+  3→========
+  4→
+  5→pluggy is a member of `Tidelift`_. This document describes how the core team manages
+  6→Tidelift-related activities.
+  7→
+  8→What is it
+  9→==========
+  10→
+  11→Tidelift aims to make Open Source sustainable by offering subscriptions to companies which rely
+  …
+  26→* `@nicoddemus`_
+  27→* `@The-Compiler`_
+  …
 changelog/
   590.trivial.rst
+    1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
   README.rst
   _template.rst
 codecov.yml
@@ -130,6 +184,9 @@ src/
       27→def run_old_style_hookwrapper(
       28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
       29→) -> Teardown:
+      30→    """
+      31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
+      32→    """
       …
       60→def _raise_wrapfail(
       61→    wrap_controller: Generator[None, object, object],
@@ -141,113 +198,14 @@ src/
       72→) -> None:
       …
       82→def _multicall(
+      83→    hook_name: str,
+      84→    hook_impls: Sequence[HookImpl],
+      85→    caller_kwargs: Mapping[str, object],
+      86→    firstresult: bool,
+      87→) -> object | list[object]:
       …
     _hooks.py
-      …
-      28→_T = TypeVar("_T")
-      29→_F = TypeVar("_F", bound=Callable[..., object])
-      30→
-      31→_Namespace: TypeAlias = ModuleType | type
-      32→_Plugin: TypeAlias = object
-      33→_HookExec: TypeAlias = Callable[
-      34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
-      35→    object | list[object],
-      36→]
-      37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
-      38→
-      39→
-      40→class HookspecOpts(TypedDict):
-      …
-      56→class HookimplOpts(TypedDict):
-      …
-      77→@final
-      78→class HookspecMarker:
-      …
-      86→    __slots__ = ("project_name",)
-      87→
-      88→    def __init__(self, project_name: str) -> None:
-      …
-      92→    def __call__(
-      …
-      102→    def __call__(  # noqa: F811
-      …
-      111→    def __call__(  # noqa: F811
-      …
-      164→@final
-      165→class HookimplMarker:
-      …
-      173→    __slots__ = ("project_name",)
-      174→
-      175→    def __init__(self, project_name: str) -> None:
-      …
-      179→    def __call__(
-      …
-      191→    def __call__(  # noqa: F811
-      …
-      202→    def __call__(  # noqa: F811
-      …
-      281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
-      …
-      290→_PYPY = hasattr(sys, "pypy_version_info")
-      291→
-      292→
-      293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
-      …
-      358→@final
-      359→class HookRelay:
-      …
-      363→    __slots__ = ("__dict__",)
-      364→
-      365→    def __init__(self) -> None:
-      …
-      368→    if TYPE_CHECKING:
-      369→
-      370→        def __getattr__(self, name: str) -> HookCaller: ...
-      …
-      374→_HookRelay = HookRelay
-      375→
-      376→
-      377→_CallHistory: TypeAlias = list[
-      378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
-      379→]
-      382→class HookCaller:
-      …
-      590→_HookCaller = HookCaller
-      591→
-      592→
-      593→class _SubsetHookCaller(HookCaller):
-      …
-      639→class HookImpl:
-      …
-      697→class HookSpec:
-      …
     _manager.py
-      …
-      36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
-      37→_AfterTrace: TypeAlias = Callable[
-      38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
-      39→]
-      42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
-      …
-      52→class PluginValidationError(Exception):
-      …
-      59→    def __init__(self, plugin: _Plugin, message: str) -> None:
-      …
-      65→class DistFacade:
-      66→    """Emulate a pkg_resources Distribution"""
-      68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
-      …
-      71→    @property
-      72→    def project_name(self) -> str:
-      …
-      76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
-      …
-      79→    def __dir__(self) -> list[str]:
-      …
-      83→class PluginManager:
-      …
-      525→def _formatdef(func: Callable[..., object]) -> str:
-      …
     _result.py
       …
       16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
@@ -273,6 +231,7 @@ src/
       51→    @property
       52→    def exception(self) -> BaseException | None:
       …
+      54→        return self._exception
       56→    @classmethod
       57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
       …
@@ -306,7 +265,7 @@ src/
       60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
       …
       64→    def __call__(self, *args: object) -> None:
-      …
+      65→        self.root._processmessage(self.tags, args)
       67→    def get(self, name: str) -> TagTracerSub:
       …
     _warnings.py
@@ -332,4 +291,17 @@ testing/
   test_tracer.py
   test_warnings.py
 tox.ini
+  1→[tox]
+  2→envlist=docs,py{310,311,312,313,314,py3},py{310}-pytestmain
+  3→
+  4→[testenv]
+  5→commands=
+  …
+  9→setenv=
+  …
+  12→dependency_groups=testing
+  13→deps=
+  …
+  17→[testenv:benchmark]
+  …
 uv.lock
