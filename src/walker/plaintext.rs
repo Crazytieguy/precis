@@ -933,7 +933,7 @@ fn is_in_primary_language(file: &Path, ctx: &WalkCtx) -> bool {
         .is_some_and(|primary| super::language_group(file) == Some(primary))
 }
 
-/// Mild promotion for a root `Makefile` / `Taskfile`. A
+/// Mild promotion for a root `Makefile` / `Taskfile` / `justfile`. A
 /// compact one is the answer to "how do I build and run this", which
 /// NS authors buy in the first screenful — ahead of most of the source
 /// it builds — while the class's own preset prices it as one config
@@ -950,7 +950,10 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         .and_then(|name| name.to_str())
         .unwrap_or_default();
     if class == Class::Build
-        && matches!(name, "Makefile" | "Taskfile.yaml" | "Taskfile.yml")
+        && matches!(
+            name,
+            "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "justfile" | "Justfile" | ".justfile"
+        )
         && ctx.depth_from_root(file) == 1
     {
         SMALL_BUILD_FILE_PROMOTION

@@ -1,4 +1,4 @@
-Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.589/0.804/0.710/0.778/0.691/0.677/0.638
+Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.475/0.694/0.710/0.778/0.691/0.677/0.638
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,25 +19,25 @@ Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 355 | 27 | Fs::DirListing { dir: microbootstrap/bootstrappers } |  |  | 0.398 |
 | walker |  | 427 | 72 | Fs::DirListing { dir: microbootstrap/instruments } |  |  | 0.610 |
 | ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.586 |
-| walker |  | 467 | 40 | Json::Dependencies { file: package.json } |  |  | 0.586 |
-| walker |  | 485 | 18 | Fs::DirListing { dir: examples } |  |  | 0.632 |
-| walker |  | 568 | 83 | Json::Scripts { file: package.json } |  |  | 0.632 |
-| walker |  | 615 | 47 | Fs::DirListing { dir: tests } |  |  | 0.633 |
-| ns | 641 |  | 202 | `microbootstrap/__init__.py` — the complete `__all__` export block | 1.7 |  | 0.541 |
-| walker |  | 808 | 193 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
-| ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.473 |
-| ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.415 |
-| walker |  | 1183 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.773 |
-| ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.743 |
-| walker |  | 1477 | 294 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.843 |
-| ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.773 |
-| walker |  | 1704 | 227 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.847 |
-| ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.757 |
-| walker |  | 1915 | 211 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.757 |
-| walker |  | 1953 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.757 |
-| ns | 2007 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.709 |
-| ns | 2228 |  | 221 | README Settings section: env sourcing and `ENVIRONMENT_PREFIX` | 2.5 |  | 0.679 |
-| walker |  | 2262 | 309 | Plaintext::Whole { file: Justfile } |  |  | 0.680 |
+| ns | 641 |  | 202 | `microbootstrap/__init__.py` — the complete `__all__` export block | 1.7 |  | 0.501 |
+| walker |  | 736 | 309 | Plaintext::Whole { file: Justfile } |  |  | 0.503 |
+| walker |  | 776 | 40 | Json::Dependencies { file: package.json } |  |  | 0.503 |
+| walker |  | 794 | 18 | Fs::DirListing { dir: examples } |  |  | 0.543 |
+| ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.475 |
+| walker |  | 877 | 83 | Json::Scripts { file: package.json } |  |  | 0.475 |
+| walker |  | 924 | 47 | Fs::DirListing { dir: tests } |  |  | 0.475 |
+| ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.416 |
+| walker |  | 1117 | 193 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.416 |
+| ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.400 |
+| walker |  | 1492 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.683 |
+| ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.683 |
+| walker |  | 1786 | 294 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.774 |
+| ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.692 |
+| ns | 2007 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.648 |
+| walker |  | 2013 | 227 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.710 |
+| walker |  | 2224 | 211 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.710 |
+| ns | 2228 |  | 221 | README Settings section: env sourcing and `ENVIRONMENT_PREFIX` | 2.5 |  | 0.680 |
+| walker |  | 2262 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.680 |
 | walker |  | 2425 | 163 | Code::CodeKey { rung: Names, file: microbootstrap/settings.py, decl: 0, sub: 0, line: 0 } |  |  | 0.712 |
 | walker |  | 2476 | 51 | Code::CodeKey { rung: Decl, file: microbootstrap/settings.py, decl: 9, sub: 0, line: 105 } |  |  | 0.721 |
 | ns | 2478 |  | 250 | `instruments/base.py`: `BaseInstrumentConfig`, `Instrument` header, complete method roster | 3.1 |  | 0.685 |
