@@ -1,13 +1,5 @@
 .editorconfig
 .github/
-  FUNDING.yml
-  dependabot.yml
-  workflows/
-    build_release.yml
-    ci.yml
-    codeql-analysis.yml
-    coverity.yml
-    htoprc
 .gitignore
 .travis.yml
 AGENTS.md
@@ -18,6 +10,13 @@ Affinity.c
 Affinity.h
 AffinityPanel.c
 AffinityPanel.h
+  …
+  15→extern const PanelClass AffinityPanel_class;
+  16→
+  17→Panel* AffinityPanel_new(Machine* host, const Affinity* affinity, int* width);
+  18→
+  19→Affinity* AffinityPanel_getAffinity(Panel* super, Machine* host);
+  …
 AvailableColumnsPanel.c
 AvailableColumnsPanel.h
 AvailableMetersPanel.c
@@ -26,6 +25,15 @@ BacktraceScreen.c
 BacktraceScreen.h
 BatteryMeter.c
 BatteryMeter.h
+  …
+  15→typedef enum ACPresence_ {
+  16→   AC_ABSENT,
+  17→   AC_PRESENT,
+  18→   AC_ERROR
+  19→} ACPresence;
+  20→
+  21→extern const MeterClass BatteryMeter_class;
+  …
 CLAUDE.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -36,22 +44,76 @@ CRT.c
 CRT.h
 CategoriesPanel.c
 CategoriesPanel.h
+  …
+  16→typedef struct CategoriesPanel_ {
+  17→   Panel super;
+  18→   ScreenManager* scr;
+  19→   Machine* host;
+  20→   Header* header;
+  21→} CategoriesPanel;
+  22→
+  23→extern const PanelClass CategoriesPanel_class;
+  24→
+  25→CategoriesPanel* CategoriesPanel_new(ScreenManager* scr, Header* header, Machine* host);
+  …
 ChangeLog
 ColorsPanel.c
 ColorsPanel.h
+  …
+  14→typedef struct ColorsPanel_ {
+  15→   Panel super;
+  16→
+  17→   Settings* settings;
+  18→} ColorsPanel;
+  19→
+  20→extern const PanelClass ColorsPanel_class;
+  21→
+  22→ColorsPanel* ColorsPanel_new(Settings* settings);
+  …
 ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
+  …
+  11→typedef enum {
+  12→   STATUS_OK,
+  13→   STATUS_ERROR_EXIT,
+  14→   STATUS_OK_EXIT
+  15→} CommandLineStatus;
+  16→
+  17→extern const char* program;
+  18→
+  19→int CommandLine_run(int argc, char** argv);
+  …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
 DateTimeMeter.h
+  …
+  13→extern const MeterClass ClockMeter_class;
+  14→
+  15→extern const MeterClass DateMeter_class;
+  16→
+  17→extern const MeterClass DateTimeMeter_class;
+  …
 Debug.h
 DiskIOMeter.c
 DiskIOMeter.h
 DisplayOptionsPanel.c
 DisplayOptionsPanel.h
+  …
+  16→typedef struct DisplayOptionsPanel_ {
+  17→   Panel super;
+  18→
+  19→   Settings* settings;
+  20→   ScreenManager* scr;
+  21→   FunctionBar* decIncBar;
+  22→} DisplayOptionsPanel;
+  23→
+  24→extern const PanelClass DisplayOptionsPanel_class;
+  25→
+  26→DisplayOptionsPanel* DisplayOptionsPanel_new(Settings* settings, ScreenManager* scr);
+  …
 DynamicColumn.c
 DynamicColumn.h
 DynamicMeter.c
@@ -69,38 +131,37 @@ FunctionBar.c
 FunctionBar.h
 GPUMeter.c
 GPUMeter.h
+  …
+  15→struct GPUMeterEngineData {
+  16→   const char* key;  /* owned by LinuxMachine */
+  17→   unsigned long long int timeDiff;
+  18→   double percentage;
+  19→};
+  21→extern struct GPUMeterEngineData GPUMeter_engineData[4];
+  22→
+  23→extern const MeterClass GPUMeter_class;
+  24→
+  25→bool GPUMeter_active(void);
+  …
 Hashtable.c
 Hashtable.h
-  …
-  14→typedef unsigned int ht_key_t;
-  15→
-  16→typedef void(*Hashtable_PairFunction)(ht_key_t key, void* value, void* userdata);
-  17→
-  18→typedef struct Hashtable_ Hashtable;
-  …
-  22→size_t Hashtable_count(const Hashtable* this);
-  …
-  26→Hashtable* Hashtable_new(size_t size, bool owner);
-  27→
-  28→void Hashtable_delete(Hashtable* this);
-  29→
-  30→void Hashtable_clear(Hashtable* this);
-  31→
-  32→void Hashtable_setSize(Hashtable* this, size_t size);
-  33→
-  34→void Hashtable_put(Hashtable* this, ht_key_t key, void* value);
-  35→
-  36→void* Hashtable_remove(Hashtable* this, ht_key_t key);
-  37→
-  38→void* Hashtable_get(Hashtable* this, ht_key_t key);
-  39→
-  40→void Hashtable_foreach(Hashtable* this, Hashtable_PairFunction f, void* userData);
-  …
 Header.c
 Header.h
 HeaderLayout.h
 HeaderOptionsPanel.c
 HeaderOptionsPanel.h
+  …
+  15→typedef struct HeaderOptionsPanel_ {
+  16→   Panel super;
+  17→
+  18→   ScreenManager* scr;
+  19→   Settings* settings;
+  20→} HeaderOptionsPanel;
+  21→
+  22→extern const PanelClass HeaderOptionsPanel_class;
+  23→
+  24→HeaderOptionsPanel* HeaderOptionsPanel_new(Settings* settings, ScreenManager* scr);
+  …
 History.c
 History.h
 HostnameMeter.c
@@ -118,37 +179,13 @@ ListItem.c
 ListItem.h
 LoadAverageMeter.c
 LoadAverageMeter.h
+  …
+  13→extern const MeterClass LoadAverageMeter_class;
+  14→
+  15→extern const MeterClass LoadMeter_class;
+  …
 Machine.c
 Machine.h
-  …
-  35→typedef unsigned long long int memory_t;
-  36→#define MEMORY_MAX ULLONG_MAX
-  37→
-  38→typedef struct Machine_ {
-  …
-  73→} Machine;
-  76→Machine* Machine_new(UsersTable* usersTable, uid_t userId);
-  77→
-  78→void Machine_init(Machine* this, UsersTable* usersTable, uid_t userId);
-  79→
-  80→void Machine_delete(Machine* this);
-  81→
-  82→void Machine_done(Machine* this);
-  83→
-  84→bool Machine_isCPUonline(const Machine* this, unsigned int id);
-  85→
-  86→int Machine_getCPUPhysicalCoreID(const Machine* this, unsigned int id);
-  87→
-  88→int Machine_getCPUThreadIndex(const Machine* this, unsigned int id);
-  89→
-  90→void Machine_populateTablesFromSettings(Machine* this, Settings* settings, Table* processTable);
-  91→
-  92→void Machine_setTablesPanel(Machine* this, Panel* panel);
-  93→
-  94→void Machine_scan(Machine* this);
-  95→
-  96→void Machine_scanTables(Machine* this);
-  …
 Macros.h
 MainPanel.c
 MainPanel.h
@@ -158,6 +195,8 @@ MemoryMeter.h
   …
   13→typedef struct MemoryClass_s {
   …
+  18→} MemoryClass;
+  19→
   20→extern const MeterClass MemoryMeter_class;
   …
 MemorySwapMeter.c
@@ -168,50 +207,36 @@ MemorySwapMeter.h
 Meter.c
 Meter.h
 MeterMode.h
+  …
+  11→enum MeterModeId_ {
+  12→   /* Meter mode 0 is reserved */
+  13→   BAR_METERMODE = 1,
+  14→   TEXT_METERMODE,
+  15→   GRAPH_METERMODE,
+  16→   LED_METERMODE,
+  17→   LAST_METERMODE
+  18→};
+  20→typedef unsigned int MeterModeId;
+  21→
+  22→#define METERMODE_DEFAULT_SUPPORTED ( \
+  …
 MetersPanel.c
 MetersPanel.h
 NEWS
 NetworkIOMeter.c
 NetworkIOMeter.h
+  …
+  15→typedef struct NetworkIOData_ {
+  16→   uint64_t bytesReceived;
+  17→   uint64_t packetsReceived;
+  18→   uint64_t bytesTransmitted;
+  19→   uint64_t packetsTransmitted;
+  20→} NetworkIOData;
+  21→
+  22→extern const MeterClass NetworkIOMeter_class;
+  …
 Object.c
 Object.h
-  …
-  18→struct Object_;
-  19→typedef struct Object_ Object;
-  20→
-  21→typedef void(*Object_Display)(const Object*, RichString*);
-  22→typedef int(*Object_Compare)(const void*, const void*);
-  23→typedef void(*Object_Delete)(Object*);
-  24→
-  25→#define Object_getClass(obj_)         ((const Object*)(obj_))->klass
-  26→#define Object_setClass(obj_, class_) (((Object*)(obj_))->klass = (const ObjectClass*) (class_))
-  27→
-  28→#define Object_delete(obj_)           (assert(Object_getClass(obj_)->delete), Object_getClass(obj_)->delete((Object*)(obj_)))
-  29→#define Object_displayFn(obj_)        Object_getClass(obj_)->display
-  30→#define Object_display(obj_, str_)    (assert(Object_getClass(obj_)->display), Object_getClass(obj_)->display((const Object*)(obj_), str_))
-  31→#define Object_compare(obj_, other_)  (assert(Object_getClass(obj_)->compare), Object_getClass(obj_)->compare((const void*)(obj_), other_))
-  32→
-  33→#define Class(class_)                 ((const ObjectClass*)(&(class_ ## _class)))
-  34→
-  35→#define AllocThis(class_) (class_*)   xMalloc(sizeof(class_)); Object_setClass(this, Class(class_))
-  36→
-  37→typedef struct ObjectClass_ {
-  38→   const void* const extends;
-  39→   const Object_Display display;
-  40→   const Object_Delete delete;
-  41→   const Object_Compare compare;
-  42→} ObjectClass;
-  44→struct Object_ {
-  45→   const ObjectClass* klass;
-  46→};
-  48→typedef union {
-  49→   int i;
-  50→   void* v;
-  51→} Arg;
-  53→extern const ObjectClass Object_class;
-  54→
-  55→bool Object_isA(const Object* o, const ObjectClass* klass);
-  …
 OpenFilesScreen.c
 OpenFilesScreen.h
 OptionItem.c
@@ -239,6 +264,14 @@ RichString.h
 Row.c
 Row.h
 RowField.h
+  …
+  13→typedef enum ReservedFields_ {
+  …
+  50→} ReservedFields;
+  …
+  53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD
+  54→typedef int32_t RowField;
+  …
 Scheduling.c
 Scheduling.h
 ScreenManager.c
@@ -251,8 +284,28 @@ Settings.c
 Settings.h
 SignalsPanel.c
 SignalsPanel.h
+  …
+  17→typedef struct SignalItem_ {
+  18→   const char* name;
+  19→   int number;
+  20→} SignalItem;
+  21→
+  22→#define SIGNALSPANEL_INITSELECTEDSIGNAL SIGTERM
+  23→
+  24→Panel* SignalsPanel_new(int preSelectedSignal);
+  …
 SwapMeter.c
 SwapMeter.h
+  …
+  12→typedef enum {
+  13→   SWAP_METER_USED = 0,
+  14→   SWAP_METER_CACHE = 1,
+  15→   SWAP_METER_FRONTSWAP = 2,
+  16→   SWAP_METER_ITEMCOUNT = 3, // number of entries in this enum
+  17→} SwapMeterValues;
+  18→
+  19→extern const MeterClass SwapMeter_class;
+  …
 SysArchMeter.c
 SysArchMeter.h
   …
@@ -270,6 +323,11 @@ TraceScreen.c
 TraceScreen.h
 UptimeMeter.c
 UptimeMeter.h
+  …
+  13→extern const MeterClass UptimeMeter_class;
+  14→
+  15→extern const MeterClass SecondsUptimeMeter_class;
+  …
 UsersTable.c
 UsersTable.h
 Vector.c
@@ -282,22 +340,9 @@ XUtils.h
   172→static inline int xDirfd(DIR* dirp) {
   …
 autogen.sh
-  1→#!/bin/sh
-  2→autoreconf --force --install --verbose -Wall
 check-pcp-style.sh
 configure.ac
 darwin/
-  DarwinMachine.c
-  DarwinMachine.h
-  DarwinProcess.c
-  DarwinProcess.h
-  DarwinProcessTable.c
-  DarwinProcessTable.h
-  Platform.c
-  Platform.h
-  PlatformHelpers.c
-  PlatformHelpers.h
-  ProcessField.h
 docs/
   ai-contributions-policy.md
   images/
@@ -305,73 +350,43 @@ docs/
   styleguide.md
   understanding-htop-versions.md
 dragonflybsd/
-  DragonFlyBSDMachine.c
-  DragonFlyBSDMachine.h
-  DragonFlyBSDProcess.c
-  DragonFlyBSDProcess.h
-  DragonFlyBSDProcessTable.c
-  DragonFlyBSDProcessTable.h
-  Platform.c
-  Platform.h
-  ProcessField.h
 freebsd/
   FreeBSDMachine.c
   FreeBSDMachine.h
+    …
+    20→typedef struct CPUData_ {
+    21→   double userPercent;
+    22→   double nicePercent;
+    23→   double systemPercent;
+    24→   double irqPercent;
+    25→   double systemAllPercent;
+    26→
+    27→   double frequency;
+    28→   double temperature;
+    29→} CPUData;
+    30→
+    31→typedef struct FreeBSDMachine_ {
+    …
+    56→} FreeBSDMachine;
+    …
   FreeBSDProcess.c
   FreeBSDProcess.h
   FreeBSDProcessTable.c
   FreeBSDProcessTable.h
+    …
+    17→typedef struct FreeBSDProcessTable_ {
+    18→   ProcessTable super;
+    19→
+    20→   int osreldate;
+    21→} FreeBSDProcessTable;
+    …
   Platform.c
   Platform.h
   ProcessField.h
+    …
+    11→#define PLATFORM_PROCESS_FIELDS  \
+    …
 generic/
-  Demangle.c
-  Demangle.h
-  ProvideDemangle.h
-  UnwindPtrace.c
-  UnwindPtrace.h
-    …
-    16→void UnwindPtrace_makeBacktrace(Vector* frames, pid_t pid, char** error);
-    …
-  fdstat_sysctl.c
-  fdstat_sysctl.h
-    …
-    11→void Generic_getFileDescriptors_sysctl(double* used, double* max);
-    …
-  gettime.c
-  gettime.h
-    …
-    14→void Generic_gettime_realtime(struct timespec* tsp, uint64_t* msec);
-    15→
-    16→void Generic_gettime_monotonic(uint64_t* msec);
-    17→
-    18→static inline int timespec_cmp(const struct timespec* a, const struct timespec* b) {
-    …
-    26→static inline void timespec_add(const struct timespec* a, const struct timespec* b, struct timespec* result) {
-    …
-  hostname.c
-  hostname.h
-    …
-    10→#include <stddef.h>
-    13→void Generic_hostname(char* buffer, size_t size);
-    …
-  openzfs_sysctl.c
-  openzfs_sysctl.h
-    …
-    13→void openzfs_sysctl_init(ZfsArcStats* stats);
-    14→
-    15→void openzfs_sysctl_updateArcStats(ZfsArcStats* stats);
-    …
-  uname.c
-  uname.h
-    …
-    10→#include <stddef.h>
-    12→typedef void (*Platform_FetchReleaseFunction)(char* buffer, size_t length);
-    13→
-    14→const char* Generic_unameRelease(Platform_FetchReleaseFunction fetchRelease);
-    15→
-    16→const char* Generic_uname(void);
-    …
 htop-logo.png
 htop.1.in
 htop.c
@@ -379,29 +394,30 @@ htop.desktop
 htop.png
 htop.svg
 iwyu/
-  htop.imp
-  run_iwyu.sh
 linux/
 m4/
-  ax_check_compile_flag.m4
 netbsd/
-  NetBSDMachine.c
-  NetBSDMachine.h
-  NetBSDProcess.c
-  NetBSDProcess.h
-  NetBSDProcessTable.c
-  NetBSDProcessTable.h
-  Platform.c
-  Platform.h
-  ProcessField.h
-  README.md
 openbsd/
   OpenBSDMachine.c
   OpenBSDMachine.h
+    …
+    18→typedef struct CPUData_ {
+    …
+    38→} CPUData;
+    39→
+    40→typedef struct OpenBSDMachine_ {
+    …
+    57→} OpenBSDMachine;
+    …
   OpenBSDProcess.c
   OpenBSDProcess.h
   OpenBSDProcessTable.c
   OpenBSDProcessTable.h
+    …
+    17→typedef struct OpenBSDProcessTable_ {
+    18→   ProcessTable super;
+    19→} OpenBSDProcessTable;
+    …
   Platform.c
   Platform.h
   ProcessField.h
@@ -413,12 +429,20 @@ solaris/
   Platform.c
   Platform.h
   ProcessField.h
+    …
+    11→#define PLATFORM_PROCESS_FIELDS  \
+    …
   SolarisMachine.c
   SolarisMachine.h
   SolarisProcess.c
   SolarisProcess.h
   SolarisProcessTable.c
   SolarisProcessTable.h
+    …
+    27→typedef struct SolarisProcessTable_ {
+    28→   ProcessTable super;
+    29→} SolarisProcessTable;
+    …
 test_spec.lua
 unsupported/
   Platform.c
@@ -426,10 +450,22 @@ unsupported/
   ProcessField.h
   UnsupportedMachine.c
   UnsupportedMachine.h
+    …
+    13→typedef struct UnsupportedMachine_ {
+    14→   Machine super;
+    15→   memory_t usedMem;
+    16→   memory_t cachedMem;
+    17→} UnsupportedMachine;
+    …
   UnsupportedProcess.c
   UnsupportedProcess.h
   UnsupportedProcessTable.c
   UnsupportedProcessTable.h
+    …
+    13→typedef struct UnsupportedProcessTable_ {
+    14→   ProcessTable super;
+    15→} UnsupportedProcessTable;
+    …
 zfs/
   ZfsArcMeter.c
   ZfsArcMeter.h
@@ -441,6 +477,8 @@ zfs/
   ZfsArcStats.h
     …
     10→typedef struct ZfsArcStats_ {
+    …
+    23→} ZfsArcStats;
     …
   ZfsCompressedArcMeter.c
   ZfsCompressedArcMeter.h

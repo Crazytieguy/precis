@@ -1,5 +1,4 @@
-//! C extraction for the code engine. Not ported yet: `walker::c` still
-//! walks these files.
+//! C extraction for the code engine.
 //!
 //! The declarations of a file are its "effective top level": the body of
 //! a wrapping `#ifndef X` / `#define X` / `#endif` header guard, the body
@@ -25,7 +24,7 @@ use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::{WalkCtx, collect_doc_comments_above_filtered};
 
-pub(super) const PORTED: bool = false;
+pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["c", "h"];
 
 /// Every batch of a `.c` file, relative to a header. The ratio of the old

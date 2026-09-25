@@ -98,6 +98,8 @@ README.md
   511→### Thread local runtime
   513→There can be no more than one scheduler per thread.
   …
+  523→_Pthread utilties such as `pthread_mutex_t` and `pthread_cond_t` do not work very well in coroutines._
+  …
   579→## License
   580→
   581→Source code is available under the MIT [License](LICENSE).
@@ -160,16 +162,13 @@ examples/
   signals.c
 neco.c
 neco.h
-  …
-  12→#include <stdbool.h>
-  13→#include <stdint.h>
-  14→#include <sys/types.h>
-  15→#ifdef _WIN32
-  16→#include <ws2tcpip.h>
-  17→#else
-  18→#include <netdb.h>
-  19→#include <sys/socket.h>
-  20→#endif
+  1→// https://github.com/tidwall/neco
+  2→//
+  3→// Copyright 2024 Joshua J Baker. All rights reserved.
+  4→// Use of this source code is governed by an MIT-style
+  5→// license that can be found in the LICENSE file.
+  6→//
+  7→// Neco -- Coroutine library for C
   …
   30→/// @defgroup BasicOperations Basic operations
   31→/// Neco provides standard operations for starting a coroutine, sleeping, 
@@ -240,16 +239,6 @@ neco.h
   111→/// due to race conditions.
   112→/// @{
   113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
-  114→
-  115→#define NECO_MUTEX_INITIALIZER { 0 }
-  116→
-  117→int neco_mutex_init(neco_mutex *mutex);
-  118→int neco_mutex_lock(neco_mutex *mutex);
-  119→int neco_mutex_lock_dl(neco_mutex *mutex, int64_t deadline);
-  120→int neco_mutex_trylock(neco_mutex *mutex);
-  …
-  424→#include <stdio.h>
-  425→#include <stdlib.h>
   …
 tests/
   README.md

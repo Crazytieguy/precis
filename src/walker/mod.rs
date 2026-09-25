@@ -24,7 +24,6 @@ use crate::content::{BatchContent, Render, Span};
 use crate::fs_util::DirFilter;
 use crate::render::{Source, SourceCache};
 
-pub mod c;
 pub(crate) mod code;
 pub mod fs;
 pub mod go_mod;
@@ -114,7 +113,6 @@ impl Walker for FsWalker {
         out.extend(json::expand_in_dir(dir, ctx));
         out.extend(plaintext::expand_in_dir(dir, ctx));
         out.extend(prisma::expand_in_dir(dir, ctx));
-        out.extend(c::expand_in_dir(dir, ctx));
         out.extend(go_mod::expand_in_dir(dir, ctx));
         out.extend(python::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
@@ -139,7 +137,6 @@ pub struct WalkCtx {
     fs_state: fs::FsState,
     json_state: json::JsonState,
     typescript_state: typescript::TypescriptState,
-    c_state: c::CState,
     python_state: python::PythonState,
     /// Run state of the code engine's language modules.
     #[allow(
@@ -174,7 +171,6 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             typescript_state: typescript::TypescriptState::new(),
-            c_state: c::CState::default(),
             python_state: python::PythonState::default(),
             code: code::CodeState::default(),
             readme_cited_paths: OnceCell::new(),
@@ -339,10 +335,6 @@ impl WalkCtx {
 
     pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
         &self.fs_state
-    }
-
-    pub(in crate::walker) fn c_state(&self) -> &c::CState {
-        &self.c_state
     }
 
     pub(in crate::walker) fn python_state(&self) -> &python::PythonState {
@@ -1175,27 +1167,6 @@ pub(crate) fn comment_starts_at_line_start(node: Node, source: &str) -> bool {
     source[line_start..start].trim().is_empty()
 }
 
-/// Largest 0-based row `e ∈ [start_row, end_row]` such that no row
-/// `r ∈ (start_row, e]` is the start of another decl (i.e., its
-/// 1-based line `r + 1` is in `all_starts`). Returns `start_row` if a
-/// sibling starts immediately at `start_row + 1`. Walkers use this to
-/// trim span ends so emitted batches never claim a row that's another
-/// decl's anchor — tree-sitter occasionally folds attribute-like
-/// macros into a following function as a type qualifier, producing
-/// nodes that span into the next sibling's line.
-pub(crate) fn trim_end_before_next_decl(
-    end_row: usize,
-    start_row: usize,
-    all_starts: &std::collections::HashSet<usize>,
-) -> usize {
-    for r in (start_row + 1)..=end_row {
-        if all_starts.contains(&(r + 1)) {
-            return r.saturating_sub(1).max(start_row);
-        }
-    }
-    end_row
-}
-
 /// Push 1-based line numbers `start_row+1 ..= end_row+1` onto `out`.
 /// Inputs are 0-based tree-sitter row indices.
 pub(crate) fn push_rows(out: &mut Vec<usize>, start_row: usize, end_row: usize) {
@@ -1222,63 +1193,6 @@ pub(crate) fn gap_ellipses(selected: &[usize], line_count: usize) -> Vec<usize> 
         previous = line;
     }
     ellipses
-}
-
-/// 0-based rows inside `body` whose only content is comment text: rows
-/// touched by a `comment` node and by no non-comment token.
-pub(crate) fn comment_only_rows(body: Node) -> HashSet<usize> {
-    let mut comment_rows = HashSet::new();
-    let mut code_rows = HashSet::new();
-    fn walk(node: Node, comment_rows: &mut HashSet<usize>, code_rows: &mut HashSet<usize>) {
-        if node.kind() == "comment" {
-            comment_rows.extend(node.start_position().row..=node.end_position().row);
-            return;
-        }
-        if node.child_count() == 0 {
-            code_rows.extend(node.start_position().row..=node.end_position().row);
-            return;
-        }
-        let mut cursor = node.walk();
-        for child in node.children(&mut cursor) {
-            walk(child, comment_rows, code_rows);
-        }
-    }
-    walk(body, &mut comment_rows, &mut code_rows);
-    &comment_rows - &code_rows
-}
-
-/// Walk the rows strictly between a struct/union body's `{` and `}`,
-/// accumulating non-blank 1-based row numbers into groups separated by
-/// blank source lines. Each returned `(group_start_line, rows)` tuple
-/// describes one contiguous non-blank run in the body — what Cobra-/
-/// chibicc-style aggregates use as the natural field-group split. Empty
-/// when the body has no interior or no non-blank rows.
-pub(crate) fn collect_blank_line_groups(body: Node, source: &str) -> Vec<(usize, Vec<usize>)> {
-    let body_start = body.start_position().row;
-    let body_end = body.end_position().row;
-    if body_end <= body_start + 1 {
-        return Vec::new();
-    }
-    // The body's own text spans all the rows it needs; splitting the whole
-    // file per struct is quadratic in the file's struct count.
-    let body_rows = (body_start..body_end).zip(source[body.byte_range()].lines());
-    let mut groups: Vec<(usize, Vec<usize>)> = Vec::new();
-    let mut current: Vec<usize> = Vec::new();
-    for (row, line) in body_rows.skip(1) {
-        if line.trim().is_empty() {
-            if !current.is_empty() {
-                let start = *current.first().unwrap();
-                groups.push((start, std::mem::take(&mut current)));
-            }
-        } else {
-            current.push(row + 1);
-        }
-    }
-    if !current.is_empty() {
-        let start = *current.first().unwrap();
-        groups.push((start, current));
-    }
-    groups
 }
 
 #[cfg(test)]

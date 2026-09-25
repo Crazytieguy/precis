@@ -188,6 +188,12 @@ xlstm/
           blas.h
           cuda_error.cu
           cuda_error.h
+            1→// Copyright (c) NXAI GmbH and its affiliates 2023
+            2→// Korbinian Poeppel
+            …
+            9→void cudaOccupancyMaxActiveBlocksPerMultiprocessor2(dim3 blockSize,
+            10→                                                    size_t dynamicSMemSize,
+            11→                                                    const void *func);
           device_assert.h
           inline_ops.cuh
           inline_ops_2bf16.cuh
@@ -197,11 +203,9 @@ xlstm/
           inline_print.cuh
           support.h
           util.h
-            1→#pragma once
-            2→
-            3→#ifndef uint
+            …
             4→typedef unsigned int uint;
-            5→#endif
+            …
         vanilla/
           __init__.py
             1→# Copyright (c) NXAI GmbH and its affiliates 2023

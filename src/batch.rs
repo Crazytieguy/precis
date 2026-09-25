@@ -41,7 +41,6 @@ pub enum BatchKey {
     Json(JsonKey),
     Plaintext(PlaintextKey),
     Prisma(PrismaKey),
-    C(CKey),
     GoMod(GoModKey),
     Python(PythonKey),
     Code(CodeKey),
@@ -95,7 +94,6 @@ impl_batchkey! {
     Json => JsonKey,
     Plaintext => PlaintextKey,
     Prisma => PrismaKey,
-    C => CKey,
     GoMod => GoModKey,
     Python => PythonKey,
     Code => CodeKey,
@@ -452,40 +450,6 @@ pub enum PrismaKey {
         file: PathBuf,
         start_line: usize,
         tail_start_line: usize,
-    },
-}
-
-/// C / C-header batches. "Public" rule: top-level
-/// `function_definition` / `declaration` / `type_definition` /
-/// `preproc_def` / `preproc_function_def` that aren't `static` (in `.c`
-/// files), plus `static inline` fn defs in `.h` files. Header-guard
-/// `#ifndef`/`#define`/`#endif` is descended transparently.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum CKey {
-    /// Whole small header rendered verbatim in one batch — replaces the
-    /// `HeaderBanner`/`Includes`/`DeclNames`/per-`Decl` decomposition for
-    /// headers small enough that the decomposition only fragments their
-    /// public surface and strips macro values / `#ifdef` shape.
-    WholeFile { file: PathBuf },
-    /// Top-of-file `/* */` banner comment (license / brief).
-    HeaderBanner { file: PathBuf },
-    /// `#include` directives.
-    Includes { file: PathBuf },
-    /// Names-surface chunk for top-level public decls.
-    DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level public declaration (sig with body marker for fn).
-    Decl { file: PathBuf, start_line: usize },
-    /// Body interior of a fn definition. Predecessor: matching `Decl`.
-    DeclBody { file: PathBuf, start_line: usize },
-    /// Doc comment(s) above a decl. Predecessor: matching `Decl`.
-    DeclDoc { file: PathBuf, start_line: usize },
-    /// Blank-line-separated field group inside a big struct/union body,
-    /// or a sized chunk of a big enum body. Predecessor: `Decl` (the
-    /// Decl span is trimmed to header + closer).
-    AggregateMemberGroup {
-        file: PathBuf,
-        start_line: usize,
-        group_start_line: usize,
     },
 }
 
@@ -1244,64 +1208,6 @@ impl InnerKey for PythonKey {
                 describe_at("python setup manifest", file, *start_line, root)
             }
             PythonKey::TestNames { file } => describe_in("python test names surface", file, root),
-        }
-    }
-}
-
-impl InnerKey for CKey {
-    fn is_depth_follow_up(&self) -> bool {
-        matches!(self, CKey::DeclDoc { .. } | CKey::DeclBody { .. })
-    }
-
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(
-            self,
-            CKey::WholeFile { .. }
-                | CKey::Includes { .. }
-                | CKey::DeclNames { .. }
-                | CKey::Decl { .. }
-        )
-    }
-
-    /// Per-decl batches steepen to `0.45` — typedef / prototype lines
-    /// are short and headers emit dozens; the default 0.35 lets the
-    /// stack dominate larger anchor batches. `DeclDoc` joins them: a
-    /// one-line doc comment above a decl is the same short-and-numerous
-    /// shape, and at 0.35 the doc-scrap stack out-ranks the big coherent
-    /// name catalogs / struct batches the NS wants first (krep, bareiron).
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            CKey::Decl { .. }
-            | CKey::DeclBody { .. }
-            | CKey::AggregateMemberGroup { .. }
-            | CKey::DeclDoc { .. } => 0.45,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            CKey::WholeFile { file } => describe_in("c whole header", file, root),
-            CKey::HeaderBanner { file } => describe_in("c header banner", file, root),
-            CKey::Includes { file } => describe_in("c includes", file, root),
-            CKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("c decl names surface", file, *chunk_index, root)
-            }
-            CKey::Decl { file, start_line } => describe_at("c decl", file, *start_line, root),
-            CKey::DeclBody { file, start_line } => {
-                describe_at("c decl body", file, *start_line, root)
-            }
-            CKey::DeclDoc { file, start_line } => {
-                describe_at("c decl doc", file, *start_line, root)
-            }
-            CKey::AggregateMemberGroup {
-                file,
-                start_line,
-                group_start_line,
-            } => format!(
-                "c aggregate member group at {}:{start_line} group {group_start_line}",
-                display_path(file, root)
-            ),
         }
     }
 }

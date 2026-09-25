@@ -177,24 +177,8 @@ lib/
   networking/
     dhserver.c
     dhserver.h
-      …
-      42→typedef struct dhcp_entry
-      …
-      49→typedef struct dhcp_config
-      …
-      51→	ip4_addr_t    router;
-      …
-      62→err_t dhserv_init(const dhcp_config_t *c);
-      63→void dhserv_free(void);
-      …
     dnserver.c
     dnserver.h
-      …
-      42→typedef bool (*dns_query_proc_t)(const char *name, ip4_addr_t *addr);
-      …
-      47→err_t dnserv_init(const ip_addr_t *bind, uint16_t port, dns_query_proc_t query_proc);
-      48→void  dnserv_free(void);
-      …
     ndis.h
     rndis_protocol.h
     rndis_reports.c
@@ -248,14 +232,6 @@ src/
     usbh_pvt.h
   osal/
     osal.h
-      …
-      36→typedef void (*osal_task_func_t)(void* param);
-      …
-      39→#define OSAL_TIMEOUT_NOTIMEOUT     (0)          // Return immediately
-      40→#define OSAL_TIMEOUT_NORMAL        (10)         // Default timeout
-      41→#define OSAL_TIMEOUT_WAIT_FOREVER  (UINT32_MAX) // Wait forever
-      42→#define OSAL_TIMEOUT_CONTROL_XFER  OSAL_TIMEOUT_WAIT_FOREVER
-      …
     osal_freertos.h
     osal_mynewt.h
     osal_none.h
@@ -290,6 +266,31 @@ src/
   tinyusb.mk
   tusb.c
   tusb.h
+    1→/*
+    2→ * The MIT License (MIT)
+    3→ *
+    4→ * Copyright (c) 2019 Ha Thach (tinyusb.org)
+    5→ *
+    6→ * Permission is hereby granted, free of charge, to any person obtaining a copy
+    7→ * of this software and associated documentation files (the "Software"), to deal
+    8→ * in the Software without restriction, including without limitation the rights
+    9→ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    10→ * copies of the Software, and to permit persons to whom the Software is
+    11→ * furnished to do so, subject to the following conditions:
+    12→ *
+    13→ * The above copyright notice and this permission notice shall be included in
+    14→ * all copies or substantial portions of the Software.
+    15→ *
+    16→ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    17→ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    18→ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    19→ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    20→ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    21→ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    22→ * THE SOFTWARE.
+    23→ *
+    24→ * This file is part of the TinyUSB stack.
+    25→ */
     …
     146→// Internal helper for backward compatible with tusb_init(void)
     147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
@@ -299,7 +300,7 @@ src/
     161→#define tusb_init(...)                       TU_FUNC_OPTIONAL_ARG(_tusb_init, __VA_ARGS__)
     163→// Check if stack is initialized
     164→bool tusb_inited(void);
-    …
+    166→// Called to handle usb interrupt/event. tusb_init(rhport, role) must be called before
     167→void tusb_int_handler(uint8_t rhport, bool in_isr);
     169→// Deinit usb stack on roothub port
     170→bool tusb_deinit(uint8_t rhport);
