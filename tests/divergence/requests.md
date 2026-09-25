@@ -1,4 +1,4 @@
-Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.720/0.657/0.715/0.603/0.613/0.595
+Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.813/0.740/0.715/0.603/0.613/0.595
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,27 +26,27 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 885 |  | 123 | `docs/` tree listing (complete) | 1.9 |  | 0.523 |
 | walker |  | 942 | 175 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.660 |
 | walker |  | 982 | 40 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.692 |
-| walker |  | 1045 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.692 |
-| walker |  | 1088 | 43 | Fs::DirListing { dir: .github } |  |  | 0.711 |
-| walker |  | 1129 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.758 |
-| walker |  | 1143 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.782 |
-| ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.712 |
-| walker |  | 1453 | 310 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.715 |
-| walker |  | 1500 | 47 | Code::CodeKey { rung: Decl, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.715 |
-| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.699 |
-| walker |  | 1769 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.724 |
-| ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.677 |
-| walker |  | 1910 | 141 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.686 |
-| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.657 |
-| walker |  | 2260 | 350 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.657 |
-| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.619 |
-| walker |  | 2337 | 77 | Fs::DirListing { dir: tests } |  |  | 0.655 |
-| walker |  | 2349 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.666 |
-| walker |  | 2363 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.689 |
-| walker |  | 2510 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.689 |
-| ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.663 |
-| walker |  | 2668 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
+| walker |  | 1140 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.801 |
+| ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.729 |
+| walker |  | 1203 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.729 |
+| walker |  | 1246 | 43 | Fs::DirListing { dir: .github } |  |  | 0.746 |
+| walker |  | 1287 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.790 |
+| walker |  | 1301 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.813 |
+| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.741 |
+| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.724 |
+| walker |  | 1611 | 310 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.791 |
+| walker |  | 1658 | 47 | Code::CodeKey { rung: Decl, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.791 |
+| ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.740 |
+| walker |  | 1927 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.764 |
+| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.731 |
+| walker |  | 2068 | 141 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.740 |
+| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.697 |
+| walker |  | 2418 | 350 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
+| walker |  | 2495 | 77 | Fs::DirListing { dir: tests } |  |  | 0.734 |
+| walker |  | 2507 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.745 |
+| walker |  | 2521 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.769 |
+| ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.740 |
+| walker |  | 2668 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.740 |
 | walker |  | 2790 | 122 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 2, sub: 0, line: 99 } |  |  | 0.740 |
 | walker |  | 2863 | 73 | Plaintext::DeclSurface { file: requirements-dev.txt } |  |  | 0.740 |
 | ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.715 |

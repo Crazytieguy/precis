@@ -148,14 +148,23 @@ beets/
       6→from .queries import parse_query_parts, parse_query_string
       7→
       8→NEW_MODULE_BY_NAME = dict.fromkeys(
-      …
+      9→    ("DateType", "DurationType", "MusicalKey", "PathType"), "beets.dbcore.types"
+      10→) | dict.fromkeys(
+      11→    ("BLOB_TYPE", "SingletonQuery", "PathQuery"), "beets.dbcore.query"
+      12→)
       15→def __getattr__(name: str):
-      …
+      16→    return deprecate_imports(__name__, NEW_MODULE_BY_NAME, name)
       19→__all__ = [
       20→    "Album",
       21→    "FileOperationError",
       22→    "Item",
-      …
+      23→    "LibModel",
+      24→    "Library",
+      25→    "ReadError",
+      26→    "WriteError",
+      27→    "parse_query_parts",
+      28→    "parse_query_string",
+      29→]
     exceptions.py
     fields.py
     library.py
@@ -283,10 +292,6 @@ beetsplug/
   fuzzy.py
   hook.py
   ihate.py
-    …
-    22→__author__ = "baobab@heresiarch.info"
-    23→__version__ = "2.0"
-    …
   importadded.py
   importfeeds.py
   importsource.py
@@ -345,19 +350,9 @@ beetsplug/
   sonosupdate.py
   spotify.py
   subsonicplaylist.py
-    …
-    29→__author__ = "https://github.com/MrNuggelz"
-    …
   subsonicupdate.py
-    …
-    41→__author__ = "https://github.com/maffo999"
-    …
   substitute.py
   the.py
-    …
-    22→__author__ = "baobab@heresiarch.info"
-    23→__version__ = "1.1"
-    …
   thumbnails.py
   tidal/
     __init__.py
@@ -365,19 +360,18 @@ beetsplug/
     api_types.py
     session.py
   titlecase.py
-    …
-    36→__author__ = "henryoberholtzer@gmail.com"
-    37→__version__ = "1.0"
-    …
   types.py
   unimported.py
-    …
-    26→__author__ = "https://github.com/MrNuggelz"
-    …
   web/
     __init__.py
       …
       15→"""A Web interface to beets."""
+      …
+      23→from flask import jsonify
+      24→from unidecode import unidecode
+      25→from werkzeug.routing import BaseConverter, PathConverter
+      …
+      28→from beets import ui, util
       …
     static/
       backbone.js
@@ -388,9 +382,6 @@ beetsplug/
     templates/
       index.html
   zero.py
-    …
-    26→__author__ = "baobab@heresiarch.info"
-    …
 codecov.yml
 docs/
   .gitignore

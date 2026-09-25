@@ -6,10 +6,11 @@
 //!   starts at its first decorator; its name row is the `def` / `class`
 //!   row.
 //! - **Doc**: the docstring opening a `def` / `class` body.
-//! - **Module doc**: an entry file's (`__init__.py`, `__main__.py`)
-//!   module docstring, and dunder assignments other than `__all__`.
-//!   Other modules' docstrings and leading `#` comments (shebangs, license
-//!   headers) are in no part.
+//! - **Module doc**: an entry file's (a dunder-named module:
+//!   `__init__.py`, `__main__.py`, `__version__.py`) module docstring and
+//!   dunder assignments other than `__all__`. Other modules' docstrings and
+//!   leading `#` comments (shebangs, license headers) are in no part, and
+//!   their dunder assignments are ordinary constants.
 //! - **Re-exports**: `__all__`, and in `__init__.py` every top-level
 //!   `from … import …`.
 
@@ -32,6 +33,7 @@ pub(super) const LANGUAGE: Language = Language {
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();
     let is_package_init = file_name(&file.path) == Some("__init__.py");
+    let is_entry = is_entrypoint(&file.path, ctx);
     let root = file.tree.root_node();
     let mut cursor = root.walk();
     let mut first_statement = true;
@@ -41,7 +43,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         }
         let is_first_statement = std::mem::replace(&mut first_statement, false);
         if is_first_statement && is_docstring(node) {
-            if is_entrypoint(&file.path, ctx) {
+            if is_entry {
                 model
                     .module_doc
                     .extend(file.paragraphs(file.node_rows(node)));
@@ -63,7 +65,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                 Some(Assignment::Plain("__all__") | Assignment::Augmented("__all__")) => {
                     model.reexports.push(rows());
                 }
-                Some(Assignment::Plain(name)) if is_dunder(name) => model.module_doc.push(rows()),
+                Some(Assignment::Plain(name)) if is_entry && is_dunder(name) => {
+                    model.module_doc.push(rows())
+                }
                 Some(Assignment::Plain(_)) => model.decls.push(whole_statement(file, node)),
                 Some(Assignment::Augmented(_)) | None => {}
             },
@@ -74,7 +78,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 }
 
 fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
-    matches!(file_name(path), Some("__init__.py" | "__main__.py"))
+    file_name(path).is_some_and(|name| name.starts_with("__") && name.ends_with("__.py"))
 }
 
 fn file_name(path: &Path) -> Option<&str> {
@@ -278,7 +282,9 @@ __all__ += [\"extra\"]
         assert_eq!(rows(&model.reexports), vec![vec![11], vec![12]]);
         assert!(model.decls.is_empty());
         let module = extract_source("pkg/core.py", source);
-        assert_eq!(rows(&module.module_doc), vec![vec![10]]);
+        assert!(module.module_doc.is_empty());
+        let constants: Vec<_> = module.decls.iter().map(|decl| decl.head.clone()).collect();
+        assert_eq!(constants, vec![vec![10]]);
     }
 
     #[test]
@@ -493,11 +499,13 @@ _first = second = 0
     }
 
     #[test]
-    fn code_python_entrypoints_are_package_init_and_main() {
+    fn code_python_entrypoints_are_dunder_named_modules() {
         let ctx = WalkCtx::new(PathBuf::from("/repo"));
         let entrypoint = |path: &str| is_entrypoint(Path::new(path), &ctx);
         assert!(entrypoint("/repo/pkg/__init__.py"));
         assert!(entrypoint("/repo/pkg/__main__.py"));
+        assert!(entrypoint("/repo/pkg/__version__.py"));
         assert!(!entrypoint("/repo/pkg/main.py"));
+        assert!(!entrypoint("/repo/pkg/_private.py"));
     }
 }
