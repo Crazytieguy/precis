@@ -127,8 +127,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
-    let manifest_role = package_json_role(&pairs);
-    let scripts_deps_factor = manifest_role.scripts_deps_factor();
     let mut sections = Vec::new();
     // `mass_graded` marks the dependency rosters, the one section class
     // whose value stops tracking its size — see
@@ -166,13 +164,13 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
     collect(
         JsonKey::Scripts { file: f.clone() },
-        scripts_value(file, ctx) * scripts_deps_factor,
+        scripts_value(file, ctx),
         is_scripts_key,
         false,
     );
     collect(
         JsonKey::Dependencies { file: f.clone() },
-        dependencies_value(file, ctx) * scripts_deps_factor,
+        dependencies_value(file, ctx),
         is_runtime_dependencies_key,
         true,
     );
@@ -210,73 +208,14 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     }
 }
 
-/// Boost factor for `scripts` / `dependencies` on operational
-/// `package.json`s (see [`PackageJsonRole`]).
-const APP_SCRIPTS_DEPS_FACTOR: f64 = 1.3;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum PackageJsonRole {
-    MonorepoRoot,
-    AppOrCli,
-    Library,
-    ImplicitEntryPackage,
-}
-
-impl PackageJsonRole {
-    fn scripts_deps_factor(self) -> f64 {
-        match self {
-            PackageJsonRole::AppOrCli => APP_SCRIPTS_DEPS_FACTOR,
-            PackageJsonRole::MonorepoRoot
-            | PackageJsonRole::Library
-            | PackageJsonRole::ImplicitEntryPackage => 1.0,
-        }
-    }
-}
-
-/// Classify a manifest by its own top-level content so app/CLI
-/// manifests can price run/dependency surfaces without promoting
-/// publishable library manifests wholesale.
-fn package_json_role(pairs: &[(String, usize, usize, bool)]) -> PackageJsonRole {
-    let private_true = pairs
-        .iter()
-        .find(|(name, _, _, _)| name == "private")
-        .is_some_and(|(_, _, _, value_is_true)| *value_is_true);
-    let has_bin = pairs.iter().any(|(name, _, _, _)| name == "bin");
-    let has_workspaces = pairs.iter().any(|(name, _, _, _)| name == "workspaces");
-    let has_files = pairs.iter().any(|(name, _, _, _)| name == "files");
-    let has_entry_metadata = pairs.iter().any(|(name, _, _, _)| {
-        matches!(
-            name.as_str(),
-            "main" | "module" | "browser" | "exports" | "types" | "typings" | "files"
-        )
-    });
-
-    if private_true && has_workspaces {
-        return PackageJsonRole::MonorepoRoot;
-    }
-    if private_true {
-        return PackageJsonRole::AppOrCli;
-    }
-    if has_bin && has_files {
-        return PackageJsonRole::Library;
-    }
-    if has_entry_metadata {
-        return PackageJsonRole::Library;
-    }
-    if has_bin {
-        return PackageJsonRole::AppOrCli;
-    }
-    PackageJsonRole::ImplicitEntryPackage
-}
-
 fn section_content(
     file: &Path,
     source: &Source,
-    pairs: &[(String, usize, usize, bool)],
+    pairs: &[(String, usize, usize)],
     name_match: fn(&str) -> bool,
 ) -> Option<BatchContent> {
     let mut lines: Vec<usize> = Vec::new();
-    for (name, start, end, _) in pairs {
+    for (name, start, end) in pairs {
         if name_match(name) {
             lines.extend(*start..=*end);
         }
@@ -382,15 +321,15 @@ fn is_package_section_key(k: &str) -> bool {
 /// Whether two emitted section classes claim the same physical source line.
 /// This is common for one-line JSON, where independent sibling batches would
 /// violate the scheduler's ownership contract.
-fn package_sections_share_lines(pairs: &[(String, usize, usize, bool)]) -> bool {
+fn package_sections_share_lines(pairs: &[(String, usize, usize)]) -> bool {
     let emitted: Vec<_> = pairs
         .iter()
-        .filter(|(name, _, _, _)| is_package_section_key(name))
+        .filter(|(name, _, _)| is_package_section_key(name))
         .collect();
-    emitted.iter().enumerate().any(|(i, (_, start, end, _))| {
+    emitted.iter().enumerate().any(|(i, (_, start, end))| {
         emitted[i + 1..]
             .iter()
-            .any(|(_, other_start, other_end, _)| start <= other_end && other_start <= end)
+            .any(|(_, other_start, other_end)| start <= other_end && other_start <= end)
     })
 }
 
@@ -540,8 +479,8 @@ fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_json::LANGUAGE.into())
 }
 
-/// `(unquoted_key, start_1based, end_1based, value_is_true)` for each top-level pair.
-fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize, bool)> {
+/// `(unquoted_key, start_1based, end_1based)` for each top-level pair.
+fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let root = tree.root_node();
     let Some(object) = first_child_of_kind(root, "object", false) else {
         return Vec::new();
@@ -558,10 +497,7 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize, bool
         let key = unquote_string(key_node, source);
         let start = child.start_position().row + 1;
         let end = child.end_position().row + 1;
-        let value_is_true = child
-            .child_by_field_name("value")
-            .is_some_and(|value| value.kind() == "true");
-        out.push((key, start, end, value_is_true));
+        out.push((key, start, end));
     }
     out
 }
@@ -819,17 +755,7 @@ mod tests {
         root.join(rel).join("package.json").canonicalize().unwrap()
     }
 
-    fn role_for_manifest(source: &str) -> PackageJsonRole {
-        let mut parser = tree_sitter::Parser::new();
-        parser
-            .set_language(&tree_sitter_json::LANGUAGE.into())
-            .unwrap();
-        let tree = parser.parse(source.as_bytes(), None).unwrap();
-        let pairs = top_level_pairs(&tree, source);
-        package_json_role(&pairs)
-    }
-
-    fn pairs_for_manifest(source: &str) -> Vec<(String, usize, usize, bool)> {
+    fn pairs_for_manifest(source: &str) -> Vec<(String, usize, usize)> {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&tree_sitter_json::LANGUAGE.into())
@@ -931,58 +857,6 @@ mod tests {
             r#"{"name":"demo","scripts":{"test":"vitest"},"dependencies":{"react":"19"}}"#,
         );
         assert!(package_sections_share_lines(&compact));
-    }
-
-    #[test]
-    fn walker_json_package_role_private_workspace_root_is_neutral() {
-        let role = role_for_manifest(
-            r#"{
-                "private": true,
-                "workspaces": ["packages/*"],
-                "scripts": {"build": "pnpm -r build"}
-            }"#,
-        );
-        assert_eq!(role, PackageJsonRole::MonorepoRoot);
-        assert_eq!(role.scripts_deps_factor(), 1.0);
-    }
-
-    #[test]
-    fn walker_json_package_role_private_app_with_start_script_is_boosted() {
-        let role = role_for_manifest(
-            r#"{
-                "private": true,
-                "module": "./src/main.ts",
-                "scripts": {"start": "vite --host 0.0.0.0"}
-            }"#,
-        );
-        assert_eq!(role, PackageJsonRole::AppOrCli);
-        assert_eq!(role.scripts_deps_factor(), APP_SCRIPTS_DEPS_FACTOR);
-    }
-
-    #[test]
-    fn walker_json_package_role_published_cli_with_files_is_library_leaning() {
-        let role = role_for_manifest(
-            r#"{
-                "bin": "./cli.js",
-                "files": ["cli.js", "dist"]
-            }"#,
-        );
-        assert_eq!(role, PackageJsonRole::Library);
-        assert_eq!(role.scripts_deps_factor(), 1.0);
-    }
-
-    #[test]
-    fn walker_json_package_role_implicit_entry_package_is_neutral() {
-        let role = role_for_manifest(r#"{"name": "plain-package"}"#);
-        assert_eq!(role, PackageJsonRole::ImplicitEntryPackage);
-        assert_eq!(role.scripts_deps_factor(), 1.0);
-    }
-
-    #[test]
-    fn walker_json_package_role_module_field_is_library() {
-        let role = role_for_manifest(r#"{"module": "./dist/index.mjs"}"#);
-        assert_eq!(role, PackageJsonRole::Library);
-        assert_eq!(role.scripts_deps_factor(), 1.0);
     }
 
     #[test]

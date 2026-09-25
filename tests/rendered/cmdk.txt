@@ -221,30 +221,37 @@ cmdk/
       1004→function useCmdk<T = any>(selector: (state: State) => T): T {
       …
       1010→function useValue(
+      1011→  id: string,
+      1012→  ref: React.RefObject<HTMLElement>,
+      1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+      1014→  aliases: string[] = [],
+      1015→) {
       …
       1046→const useScheduleLayoutEffect = () => {
       …
       1061→function renderChildren(children: React.ReactElement) {
       …
       1071→function SlottableWithNestedChildren(
+      1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
+      1073→  render: (child: React.ReactNode) => JSX.Element,
+      1074→) {
       …
       1081→const srOnlyStyles = {
-      …
+      1082→  position: 'absolute',
+      1083→  width: '1px',
+      1084→  height: '1px',
+      1085→  padding: '0',
+      1086→  margin: '-1px',
+      1087→  overflow: 'hidden',
+      1088→  clip: 'rect(0, 0, 0, 0)',
+      1089→  whiteSpace: 'nowrap',
+      1090→  borderWidth: '0',
+      1091→} as const
   tsup.config.ts
 package.json
   …
   2→  "name": "cmdk-root",
   3→  "private": true,
-  4→  "scripts": {
-  5→    "build": "pnpm -F cmdk build",
-  6→    "dev": "pnpm -F cmdk build --watch",
-  7→    "website": "pnpm -F cmdk-website dev",
-  8→    "testsite": "pnpm -F cmdk-tests dev",
-  9→    "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
-  10→    "preinstall": "npx only-allow pnpm",
-  11→    "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
-  12→    "test": "playwright test"
-  13→  },
   …
   22→  "packageManager": "pnpm@8.8.0",
   …

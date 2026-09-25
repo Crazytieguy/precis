@@ -1,4 +1,4 @@
-Score(3000)=0.675 I=0.771 C=0.592 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.663/0.699/0.784/0.675/0.594/0.552/0.526
+Score(3000)=0.675 I=0.771 C=0.592 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.663/0.699/0.784/0.675/0.594/0.552/0.510
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -144,50 +144,50 @@ Score(3000)=0.675 I=0.771 C=0.592 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 4115 | 174 | listing of 'monaco-lsp-client/src/adapters/languageFeatures' |  |  | 0.618 |
 | walker |  | 4178 | 63 | ts decl webpack-plugin/src/index.ts:12 |  |  | 0.618 |
 | walker |  | 4214 | 36 | headings outline in MAINTAINING.md |  |  | 0.618 |
+| walker |  | 4226 | 12 | package identity metadata in samples/package.json |  |  | 0.618 |
 | ns | 4237 |  | 285 | css: the default ModeConfiguration toggles, the three defaults objects, and the lazy onLanguage hookup | 4.3 | 4.2 | 0.594 |
-| walker |  | 4253 | 39 | package scripts in samples/package.json |  |  | 0.594 |
-| walker |  | 4263 | 10 | package identity metadata in samples/package.json |  |  | 0.594 |
-| walker |  | 4327 | 64 | ts decl monaco-lsp-client/generator/index.ts:124 |  |  | 0.594 |
-| walker |  | 4338 | 11 | package entrypoints in samples/electron-esm-webpack/package.json |  |  | 0.594 |
-| walker |  | 4403 | 65 | ts decl webpack-plugin/src/index.ts:150 |  |  | 0.594 |
-| walker |  | 4485 | 82 | listing of 'samples/legacy' |  |  | 0.594 |
-| walker |  | 4489 | 4 | listing of 'samples/legacy/browser-amd-editor' |  |  | 0.594 |
-| walker |  | 4493 | 4 | listing of 'samples/legacy/browser-amd-localized' |  |  | 0.594 |
+| walker |  | 4290 | 64 | ts decl monaco-lsp-client/generator/index.ts:124 |  |  | 0.594 |
+| walker |  | 4301 | 11 | package entrypoints in samples/electron-esm-webpack/package.json |  |  | 0.594 |
+| walker |  | 4366 | 65 | ts decl webpack-plugin/src/index.ts:150 |  |  | 0.594 |
+| walker |  | 4448 | 82 | listing of 'samples/legacy' |  |  | 0.594 |
+| walker |  | 4452 | 4 | listing of 'samples/legacy/browser-amd-editor' |  |  | 0.594 |
+| walker |  | 4456 | 4 | listing of 'samples/legacy/browser-amd-localized' |  |  | 0.594 |
+| walker |  | 4460 | 4 | listing of 'samples/legacy/browser-amd-monarch' |  |  | 0.594 |
+| walker |  | 4464 | 4 | listing of 'samples/legacy/browser-amd-requirejs' |  |  | 0.594 |
+| walker |  | 4468 | 4 | listing of 'samples/legacy/browser-amd-shadow-dom' |  |  | 0.594 |
+| walker |  | 4472 | 4 | listing of 'samples/legacy/browser-amd-shared-model' |  |  | 0.594 |
+| walker |  | 4476 | 4 | listing of 'samples/legacy/browser-amd-trusted-types' |  |  | 0.594 |
+| walker |  | 4484 | 8 | listing of 'samples/legacy/browser-amd-iframe' |  |  | 0.594 |
+| walker |  | 4496 | 12 | listing of 'samples/legacy/browser-amd-diff-editor' |  |  | 0.580 |
 | ns | 4496 |  | 259 | json/register.ts — every top-level export (names only) | 4.4 |  | 0.580 |
-| walker |  | 4497 | 4 | listing of 'samples/legacy/browser-amd-monarch' |  |  | 0.580 |
-| walker |  | 4501 | 4 | listing of 'samples/legacy/browser-amd-requirejs' |  |  | 0.580 |
-| walker |  | 4505 | 4 | listing of 'samples/legacy/browser-amd-shadow-dom' |  |  | 0.580 |
-| walker |  | 4509 | 4 | listing of 'samples/legacy/browser-amd-shared-model' |  |  | 0.580 |
-| walker |  | 4513 | 4 | listing of 'samples/legacy/browser-amd-trusted-types' |  |  | 0.580 |
-| walker |  | 4521 | 8 | listing of 'samples/legacy/browser-amd-iframe' |  |  | 0.580 |
-| walker |  | 4533 | 12 | listing of 'samples/legacy/browser-amd-diff-editor' |  |  | 0.580 |
-| walker |  | 4550 | 17 | listing of 'samples/legacy/electron-amd' |  |  | 0.580 |
-| walker |  | 4567 | 17 | listing of 'samples/legacy/electron-amd-nodeIntegration' |  |  | 0.580 |
-| walker |  | 4583 | 16 | package identity in samples/legacy/electron-amd/package.json |  |  | 0.580 |
-| walker |  | 4602 | 19 | package identity in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.580 |
-| walker |  | 4676 | 74 | ts decl monaco-lsp-client/generator/index.ts:113 |  |  | 0.580 |
-| walker |  | 4714 | 38 | headings outline in samples/README.md |  |  | 0.580 |
-| walker |  | 4723 | 9 | samples/README.md section #4 |  |  | 0.580 |
+| walker |  | 4513 | 17 | listing of 'samples/legacy/electron-amd' |  |  | 0.580 |
+| walker |  | 4530 | 17 | listing of 'samples/legacy/electron-amd-nodeIntegration' |  |  | 0.580 |
+| walker |  | 4546 | 16 | package identity in samples/legacy/electron-amd/package.json |  |  | 0.580 |
+| walker |  | 4565 | 19 | package identity in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.580 |
+| walker |  | 4639 | 74 | ts decl monaco-lsp-client/generator/index.ts:113 |  |  | 0.580 |
+| walker |  | 4677 | 38 | headings outline in samples/README.md |  |  | 0.580 |
+| walker |  | 4686 | 9 | samples/README.md section #4 |  |  | 0.580 |
+| walker |  | 4763 | 77 | ts decl monaco-lsp-client/generator/index.ts:134 |  |  | 0.580 |
 | ns | 4765 |  | 269 | json defaults: diagnostic option values, mode toggles, jsonDefaults, the worker interface | 4.5 | 4.4 | 0.561 |
-| walker |  | 4800 | 77 | ts decl monaco-lsp-client/generator/index.ts:134 |  |  | 0.561 |
-| walker |  | 4879 | 79 | ts decl monaco-lsp-client/generator/index.ts:7 |  |  | 0.561 |
-| walker |  | 4906 | 27 | package entrypoints in monaco-lsp-client/package.json |  |  | 0.561 |
-| walker |  | 4934 | 28 | package entrypoints in webpack-plugin/package.json |  |  | 0.562 |
-| walker |  | 5021 | 87 | ts decl monaco-lsp-client/generator/index.ts:101 |  |  | 0.562 |
+| walker |  | 4842 | 79 | ts decl monaco-lsp-client/generator/index.ts:7 |  |  | 0.561 |
+| walker |  | 4869 | 27 | package entrypoints in monaco-lsp-client/package.json |  |  | 0.561 |
+| walker |  | 4897 | 28 | package entrypoints in webpack-plugin/package.json |  |  | 0.562 |
+| walker |  | 4984 | 87 | ts decl monaco-lsp-client/generator/index.ts:101 |  |  | 0.562 |
 | ns | 5027 |  | 262 | html/register.ts — export names plus the registerHTMLLanguageService factory | 4.6 |  | 0.549 |
-| walker |  | 5066 | 45 | headings outline in webpack-plugin/README.md |  |  | 0.549 |
-| walker |  | 5164 | 98 | ts decl webpack-plugin/src/index.ts:238 |  |  | 0.549 |
-| walker |  | 5265 | 101 | ts decl monaco-lsp-client/generator/index.ts:170 |  |  | 0.549 |
+| walker |  | 5029 | 45 | headings outline in webpack-plugin/README.md |  |  | 0.549 |
+| walker |  | 5127 | 98 | ts decl webpack-plugin/src/index.ts:238 |  |  | 0.549 |
+| walker |  | 5228 | 101 | ts decl monaco-lsp-client/generator/index.ts:170 |  |  | 0.549 |
 | ns | 5311 |  | 284 | html: the three pre-registered services and their per-language toggles | 4.7 | 4.6 | 0.535 |
-| walker |  | 5368 | 103 | json config editor.code-workspace |  |  | 0.535 |
-| walker |  | 5480 | 112 | ts decl monaco-lsp-client/generator/index.ts:183 |  |  | 0.535 |
+| walker |  | 5331 | 103 | json config editor.code-workspace |  |  | 0.535 |
+| walker |  | 5443 | 112 | ts decl monaco-lsp-client/generator/index.ts:183 |  |  | 0.535 |
 | ns | 5556 |  | 245 | typescript/register.ts — every top-level export (names only) | 4.8 |  | 0.525 |
-| walker |  | 5594 | 114 | ts decl monaco-lsp-client/generator/index.ts:86 |  |  | 0.525 |
-| walker |  | 5627 | 33 | samples/legacy/README.md section #0 |  |  | 0.525 |
-| walker |  | 5773 | 146 | headings outline in README.md |  |  | 0.552 |
+| walker |  | 5557 | 114 | ts decl monaco-lsp-client/generator/index.ts:86 |  |  | 0.525 |
+| walker |  | 5590 | 33 | samples/legacy/README.md section #0 |  |  | 0.525 |
+| walker |  | 5736 | 146 | headings outline in README.md |  |  | 0.552 |
+| walker |  | 5780 | 44 | README.md section #0 |  |  | 0.552 |
 | ns | 5791 |  | 235 | LanguageServiceDefaults (typescript) — all members | 4.9 |  | 0.542 |
-| walker |  | 5817 | 44 | README.md section #0 |  |  | 0.542 |
-| walker |  | 5877 | 60 | listing of 'website' |  |  | 0.543 |
+| walker |  | 5840 | 60 | listing of 'website' |  |  | 0.543 |
+| walker |  | 5877 | 37 | package scripts in samples/package.json |  |  | 0.543 |
 | walker |  | 5890 | 13 | package entrypoints in samples/legacy/electron-amd/package.json |  |  | 0.543 |
 | walker |  | 5903 | 13 | package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.543 |
 | walker |  | 5931 | 28 | webpack-plugin/README.md section #1 |  |  | 0.543 |
@@ -215,76 +215,96 @@ Score(3000)=0.675 I=0.771 C=0.592 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 7353 | 38 | package scripts in samples/browser-esm-webpack/package.json |  |  | 0.518 |
 | walker |  | 7391 | 38 | package scripts in samples/browser-esm-webpack-monaco-plugin/package.json |  |  | 0.518 |
 | ns | 7421 |  | 307 | Web-worker plumbing: MonacoEnvironment hooks, createWebWorker, IWebWorkerOptions fields, worker entry points | 5.4 |  | 0.508 |
-| walker |  | 7427 | 36 | package runtime dependencies in samples/package.json |  |  | 0.508 |
-| walker |  | 7509 | 82 | package scripts in monaco-lsp-client/package.json |  |  | 0.508 |
-| walker |  | 7514 | 5 | docs/integrate-esm.md section #6 |  |  | 0.508 |
-| walker |  | 7519 | 5 | docs/integrate-esm.md section #11 |  |  | 0.508 |
-| walker |  | 7524 | 5 | docs/integrate-esm.md section #19 |  |  | 0.508 |
-| walker |  | 7534 | 10 | ts names src/deprecated/editor/editor.main.ts |  |  | 0.508 |
-| walker |  | 7544 | 10 | ts names src/deprecated/editor/editor.worker.ts |  |  | 0.508 |
-| walker |  | 7555 | 11 | package runtime dependencies in samples/browser-esm-vite/package.json |  |  | 0.508 |
-| walker |  | 7566 | 11 | package runtime dependencies in samples/browser-esm-vite-react/package.json |  |  | 0.508 |
+| walker |  | 7473 | 82 | package scripts in monaco-lsp-client/package.json |  |  | 0.508 |
+| walker |  | 7478 | 5 | docs/integrate-esm.md section #6 |  |  | 0.508 |
+| walker |  | 7483 | 5 | docs/integrate-esm.md section #11 |  |  | 0.508 |
+| walker |  | 7488 | 5 | docs/integrate-esm.md section #19 |  |  | 0.508 |
+| walker |  | 7498 | 10 | ts names src/deprecated/editor/editor.main.ts |  |  | 0.508 |
+| walker |  | 7508 | 10 | ts names src/deprecated/editor/editor.worker.ts |  |  | 0.508 |
+| walker |  | 7519 | 11 | package runtime dependencies in samples/browser-esm-vite/package.json |  |  | 0.508 |
+| walker |  | 7530 | 11 | package runtime dependencies in samples/browser-esm-vite-react/package.json |  |  | 0.508 |
+| walker |  | 7541 | 11 | package runtime dependencies in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.508 |
 | ns | 7576 |  | 155 | WorkerManager lifecycle and the CSSWorker entry points | 5.5 |  | 0.504 |
-| walker |  | 7577 | 11 | package runtime dependencies in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.504 |
-| walker |  | 7631 | 54 | package scripts in samples/browser-esm-vite/package.json |  |  | 0.504 |
-| walker |  | 7687 | 56 | package scripts in samples/browser-esm-webpack-small/package.json |  |  | 0.504 |
-| walker |  | 7746 | 59 | README.md section #19 |  |  | 0.504 |
-| walker |  | 7780 | 34 | package scripts in samples/legacy/electron-amd/package.json |  |  | 0.504 |
-| walker |  | 7814 | 34 | package scripts in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.504 |
+| walker |  | 7595 | 54 | package scripts in samples/browser-esm-vite/package.json |  |  | 0.504 |
+| walker |  | 7651 | 56 | package scripts in samples/browser-esm-webpack-small/package.json |  |  | 0.504 |
+| walker |  | 7710 | 59 | README.md section #19 |  |  | 0.504 |
+| walker |  | 7744 | 34 | package scripts in samples/legacy/electron-amd/package.json |  |  | 0.504 |
+| walker |  | 7778 | 34 | package scripts in samples/legacy/electron-amd-nodeIntegration/package.json |  |  | 0.504 |
 | ns | 7830 |  | 254 | typescript/languageFeatures.ts — the TypeScript-specific adapter roster | 5.6 |  | 0.498 |
+| walker |  | 7888 | 110 | MAINTAINING.md section #0 |  |  | 0.498 |
 | ns | 7909 |  | 79 | monaco-lsp-client package: complete tree listing | 6.1 |  | 0.507 |
-| walker |  | 7924 | 110 | MAINTAINING.md section #0 |  |  | 0.507 |
-| walker |  | 7983 | 59 | package scripts in samples/electron-esm-webpack/package.json |  |  | 0.507 |
-| walker |  | 7986 | 3 | listing of 'website/index' |  |  | 0.507 |
-| walker |  | 8000 | 14 | ts names monaco-lsp-client/src/adapters/LspConnection.ts |  |  | 0.507 |
-| walker |  | 8012 | 12 | ts decl monaco-lsp-client/src/adapters/LspConnection.ts:6 |  |  | 0.507 |
-| walker |  | 8026 | 14 | ts names src/deprecated/basic-languages/monaco.contribution.ts |  |  | 0.507 |
-| walker |  | 8050 | 24 | ts names src/languages/register.all.ts |  |  | 0.509 |
-| walker |  | 8074 | 24 | ts names webpack-plugin/src/types.ts |  |  | 0.509 |
-| walker |  | 8093 | 19 | ts decl webpack-plugin/src/types.ts:1 |  |  | 0.509 |
+| walker |  | 7947 | 59 | package scripts in samples/electron-esm-webpack/package.json |  |  | 0.507 |
+| walker |  | 7950 | 3 | listing of 'website/index' |  |  | 0.507 |
+| walker |  | 7964 | 14 | ts names monaco-lsp-client/src/adapters/LspConnection.ts |  |  | 0.507 |
+| walker |  | 7976 | 12 | ts decl monaco-lsp-client/src/adapters/LspConnection.ts:6 |  |  | 0.507 |
+| walker |  | 7990 | 14 | ts names src/deprecated/basic-languages/monaco.contribution.ts |  |  | 0.507 |
+| walker |  | 8014 | 24 | ts names src/languages/register.all.ts |  |  | 0.509 |
+| walker |  | 8038 | 24 | ts names webpack-plugin/src/types.ts |  |  | 0.509 |
+| walker |  | 8057 | 19 | ts decl webpack-plugin/src/types.ts:1 |  |  | 0.509 |
 | ns | 8116 |  | 207 | MonacoLspClient wiring + index exports | 6.2 | 6.1 | 0.504 |
-| walker |  | 8156 | 63 | package scripts in samples/browser-esm-webpack-typescript/package.json |  |  | 0.504 |
+| walker |  | 8120 | 63 | package scripts in samples/browser-esm-webpack-typescript/package.json |  |  | 0.504 |
 | ns | 8165 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.510 |
-| walker |  | 8207 | 51 | listing of 'test/smoke' |  |  | 0.525 |
-| walker |  | 8273 | 66 | package scripts in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.525 |
-| walker |  | 8288 | 15 | ts names monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.525 |
-| ns | 8449 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.529 |
-| ns | 8613 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.520 |
-| ns | 8762 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.516 |
-| walker |  | 8935 | 647 | package scripts in package.json |  |  | 0.534 |
-| ns | 9000 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.526 |
-| walker |  | 9015 | 80 | listing of 'test/manual' |  |  | 0.526 |
-| walker |  | 9032 | 17 | ts names src/languages/features/register.all.ts |  |  | 0.528 |
-| walker |  | 9078 | 46 | listing of 'website/src/website' |  |  | 0.528 |
-| walker |  | 9093 | 15 | listing of 'website/src/website/data' |  |  | 0.528 |
-| walker |  | 9120 | 27 | listing of 'website/src/website/pages' |  |  | 0.528 |
-| walker |  | 9154 | 34 | listing of 'website/src/website/data/playground-samples' |  |  | 0.528 |
-| ns | 9166 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.533 |
-| walker |  | 9173 | 19 | listing of 'website/src/website/data/playground-samples/customizing-the-appearence' |  |  | 0.533 |
-| walker |  | 9194 | 21 | listing of 'website/src/website/data/playground-samples/creating-the-diffeditor' |  |  | 0.533 |
-| walker |  | 9225 | 31 | listing of 'website/src/website/data/playground-samples/creating-the-editor' |  |  | 0.533 |
-| walker |  | 9265 | 40 | listing of 'website/src/website/components' |  |  | 0.533 |
-| walker |  | 9307 | 42 | listing of 'website/src/website/utils' |  |  | 0.533 |
-| walker |  | 9411 | 104 | README.md section #3 |  |  | 0.533 |
-| ns | 9420 |  | 254 | README Installing + CHANGELOG head (0.55.x breaking changes) | 8.2 |  | 0.528 |
-| walker |  | 9487 | 76 | README.md section #20 |  |  | 0.528 |
-| ns | 9524 |  | 104 | samples/ listing — every integration sample directory | 8.3 |  | 0.534 |
-| walker |  | 9538 | 51 | MAINTAINING.md section #2 |  |  | 0.534 |
-| ns | 9562 |  | 38 | docs/ listing | 8.4 |  | 0.537 |
-| walker |  | 9572 | 34 | package runtime dependencies in webpack-plugin/package.json |  |  | 0.537 |
-| walker |  | 9639 | 67 | listing of 'website/src/website/pages/playground' |  |  | 0.537 |
-| ns | 9645 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.539 |
-| walker |  | 9726 | 87 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.539 |
-| ns | 9771 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.549 |
-| walker |  | 9801 | 75 | listing of 'website/src/website/data/playground-samples/extending-language-services' |  |  | 0.549 |
-| walker |  | 9814 | 13 | ts names src/deprecated/language/css/monaco.contribution.ts |  |  | 0.550 |
-| walker |  | 9827 | 13 | ts names src/deprecated/language/html/monaco.contribution.ts |  |  | 0.550 |
-| walker |  | 9840 | 13 | ts names src/deprecated/language/json/monaco.contribution.ts |  |  | 0.550 |
-| walker |  | 9853 | 13 | ts names src/languages/features/css/workerManager.ts |  |  | 0.550 |
-| walker |  | 9866 | 13 | ts names src/languages/features/html/workerManager.ts |  |  | 0.550 |
-| walker |  | 9879 | 13 | ts names src/languages/features/json/workerManager.ts |  |  | 0.550 |
-| walker |  | 9892 | 13 | ts names src/languages/features/typescript/workerManager.ts |  |  | 0.550 |
-| walker |  | 9927 | 35 | ts names monaco-lsp-client/src/utils.ts |  |  | 0.550 |
-| walker |  | 9939 | 12 | ts decl monaco-lsp-client/src/utils.ts:1 |  |  | 0.550 |
-| walker |  | 9959 | 20 | ts decl monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.550 |
-| walker |  | 9994 | 35 | ts decl webpack-plugin/src/types.ts:6 |  |  | 0.550 |
+| walker |  | 8171 | 51 | listing of 'test/smoke' |  |  | 0.525 |
+| walker |  | 8237 | 66 | package scripts in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.525 |
+| walker |  | 8252 | 15 | ts names monaco-lsp-client/src/adapters/LspClient.ts |  |  | 0.525 |
+| walker |  | 8332 | 80 | listing of 'test/manual' |  |  | 0.525 |
+| walker |  | 8349 | 17 | ts names src/languages/features/register.all.ts |  |  | 0.526 |
+| walker |  | 8395 | 46 | listing of 'website/src/website' |  |  | 0.526 |
+| walker |  | 8410 | 15 | listing of 'website/src/website/data' |  |  | 0.526 |
+| walker |  | 8437 | 27 | listing of 'website/src/website/pages' |  |  | 0.526 |
+| ns | 8449 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.531 |
+| walker |  | 8471 | 34 | listing of 'website/src/website/data/playground-samples' |  |  | 0.531 |
+| walker |  | 8490 | 19 | listing of 'website/src/website/data/playground-samples/customizing-the-appearence' |  |  | 0.531 |
+| walker |  | 8511 | 21 | listing of 'website/src/website/data/playground-samples/creating-the-diffeditor' |  |  | 0.531 |
+| walker |  | 8542 | 31 | listing of 'website/src/website/data/playground-samples/creating-the-editor' |  |  | 0.531 |
+| walker |  | 8582 | 40 | listing of 'website/src/website/components' |  |  | 0.531 |
+| ns | 8613 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.521 |
+| walker |  | 8624 | 42 | listing of 'website/src/website/utils' |  |  | 0.521 |
+| walker |  | 8728 | 104 | README.md section #3 |  |  | 0.521 |
+| ns | 8762 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.517 |
+| walker |  | 8804 | 76 | README.md section #20 |  |  | 0.517 |
+| walker |  | 8855 | 51 | MAINTAINING.md section #2 |  |  | 0.517 |
+| walker |  | 8889 | 34 | package runtime dependencies in webpack-plugin/package.json |  |  | 0.517 |
+| walker |  | 8956 | 67 | listing of 'website/src/website/pages/playground' |  |  | 0.517 |
+| ns | 9000 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.510 |
+| walker |  | 9043 | 87 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.510 |
+| walker |  | 9079 | 36 | package runtime dependencies in samples/package.json |  |  | 0.510 |
+| walker |  | 9154 | 75 | listing of 'website/src/website/data/playground-samples/extending-language-services' |  |  | 0.510 |
+| ns | 9166 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.516 |
+| walker |  | 9167 | 13 | ts names src/deprecated/language/css/monaco.contribution.ts |  |  | 0.516 |
+| walker |  | 9180 | 13 | ts names src/deprecated/language/html/monaco.contribution.ts |  |  | 0.516 |
+| walker |  | 9193 | 13 | ts names src/deprecated/language/json/monaco.contribution.ts |  |  | 0.516 |
+| walker |  | 9206 | 13 | ts names src/languages/features/css/workerManager.ts |  |  | 0.516 |
+| walker |  | 9219 | 13 | ts names src/languages/features/html/workerManager.ts |  |  | 0.516 |
+| walker |  | 9232 | 13 | ts names src/languages/features/json/workerManager.ts |  |  | 0.516 |
+| walker |  | 9245 | 13 | ts names src/languages/features/typescript/workerManager.ts |  |  | 0.516 |
+| walker |  | 9280 | 35 | ts names monaco-lsp-client/src/utils.ts |  |  | 0.516 |
+| walker |  | 9292 | 12 | ts decl monaco-lsp-client/src/utils.ts:1 |  |  | 0.516 |
+| walker |  | 9312 | 20 | ts decl monaco-lsp-client/src/adapters/LspClient.ts:30 |  |  | 0.516 |
+| walker |  | 9347 | 35 | ts decl webpack-plugin/src/types.ts:6 |  |  | 0.516 |
+| walker |  | 9361 | 14 | ts names src/deprecated/language/css/css.worker.ts |  |  | 0.516 |
+| walker |  | 9375 | 14 | ts names src/deprecated/language/html/html.worker.ts |  |  | 0.516 |
+| walker |  | 9389 | 14 | ts names src/deprecated/language/json/json.worker.ts |  |  | 0.516 |
+| walker |  | 9403 | 14 | ts names src/deprecated/language/typescript/monaco.contribution.ts |  |  | 0.516 |
+| ns | 9420 |  | 254 | README Installing + CHANGELOG head (0.55.x breaking changes) | 8.2 |  | 0.511 |
+| walker |  | 9425 | 22 | ts names monaco-lsp-client/src/adapters/TextDocumentSynchronizer.ts |  |  | 0.511 |
+| walker |  | 9499 | 74 | listing of 'website/src/website/data/playground-samples/interacting-with-the-editor' |  |  | 0.511 |
+| walker |  | 9511 | 12 | ts body webpack-plugin/src/index.ts:371 |  |  | 0.511 |
+| ns | 9524 |  | 104 | samples/ listing — every integration sample directory | 8.3 |  | 0.518 |
+| ns | 9562 |  | 38 | docs/ listing | 8.4 |  | 0.521 |
+| ns | 9645 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.523 |
+| walker |  | 9663 | 152 | README.md section #2 |  |  | 0.525 |
+| walker |  | 9763 | 100 | samples/README.md section #1 |  |  | 0.525 |
+| ns | 9771 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.536 |
+| walker |  | 9800 | 37 | README.md section #15 |  |  | 0.536 |
+| walker |  | 9837 | 37 | README.md section #16 |  |  | 0.536 |
+| walker |  | 9853 | 16 | ts names src/deprecated/language/typescript/ts.worker.ts |  |  | 0.536 |
+| walker |  | 9870 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts |  |  | 0.536 |
+| walker |  | 9884 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspCompletionFeature.ts:17 |  |  | 0.536 |
+| walker |  | 9901 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts |  |  | 0.536 |
+| walker |  | 9915 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDeclarationFeature.ts:8 |  |  | 0.536 |
+| walker |  | 9932 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts |  |  | 0.536 |
+| walker |  | 9946 | 14 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDefinitionFeature.ts:8 |  |  | 0.536 |
+| walker |  | 9963 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts |  |  | 0.536 |
+| walker |  | 9978 | 15 | ts decl monaco-lsp-client/src/adapters/languageFeatures/LspDiagnosticsFeature.ts:7 |  |  | 0.536 |
+| walker |  | 9995 | 17 | ts names monaco-lsp-client/src/adapters/languageFeatures/LspFormattingFeature.ts |  |  | 0.536 |

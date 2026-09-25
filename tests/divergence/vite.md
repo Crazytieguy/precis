@@ -261,10 +261,24 @@ Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | walker |  | 9363 | 319 | ts decl packages/create-vite/src/index.ts:39 |  |  | 0.474 |
 | walker |  | 9397 | 34 | ts names packages/vite/src/node/plugins/preAlias.ts |  |  | 0.474 |
 | walker |  | 9427 | 30 | ts decl packages/vite/src/node/plugins/preAlias.ts:129 |  |  | 0.474 |
+| walker |  | 9476 | 49 | ts decl packages/vite/src/node/env.ts:28 |  |  | 0.474 |
 | ns | 9501 |  | 158 | CONTRIBUTING: the dependency policy | 5.10 | 5.1 | 0.472 |
+| walker |  | 9525 | 49 | ts decl packages/vite/src/node/idResolver.ts:11 |  |  | 0.472 |
+| walker |  | 9574 | 49 | ts decl packages/vite/src/shared/ssrTransform.ts:23 |  |  | 0.472 |
+| walker |  | 9608 | 34 | ts decl packages/vite/src/node/ssr/runnerImport.ts:15 |  |  | 0.472 |
 | ns | 9624 |  | 123 | create-vite: package layout and template roster | 5.11 |  | 0.485 |
 | ns | 9677 |  | 53 | plugin-legacy: package layout | 5.12 |  | 0.491 |
-| ns | 9827 |  | 150 | Repository automation: .github and release scripts | 5.13 |  | 0.502 |
-| walker |  | 9893 | 466 | package scripts in package.json |  |  | 0.535 |
-| walker |  | 9942 | 49 | ts decl packages/vite/src/node/env.ts:28 |  |  | 0.535 |
-| walker |  | 9991 | 49 | ts decl packages/vite/src/node/idResolver.ts:11 |  |  | 0.535 |
+| walker |  | 9683 | 75 | listing of 'packages/vite/src/node/server' |  |  | 0.504 |
+| walker |  | 9701 | 18 | listing of 'packages/vite/src/node/server/environments' |  |  | 0.504 |
+| walker |  | 9714 | 13 | ts names packages/vite/src/node/server/openBrowser.ts |  |  | 0.504 |
+| walker |  | 9728 | 14 | ts names packages/vite/src/node/server/warmup.ts |  |  | 0.504 |
+| walker |  | 9751 | 23 | ts names packages/vite/src/node/server/send.ts |  |  | 0.504 |
+| walker |  | 9775 | 24 | ts names packages/vite/src/node/server/mixedModuleGraph.ts |  |  | 0.504 |
+| walker |  | 9814 | 39 | listing of 'packages/vite/src/node/server/__tests__' |  |  | 0.504 |
+| ns | 9827 |  | 150 | Repository automation: .github and release scripts | 5.13 |  | 0.515 |
+| walker |  | 9842 | 28 | ts names packages/vite/src/node/server/environment.ts |  |  | 0.515 |
+| walker |  | 9870 | 28 | ts names packages/vite/src/node/server/searchRoot.ts |  |  | 0.515 |
+| walker |  | 9897 | 27 | ts decl packages/vite/src/node/server/searchRoot.ts:68 |  |  | 0.515 |
+| walker |  | 9926 | 29 | ts decl packages/vite/src/node/server/warmup.ts:10 |  |  | 0.515 |
+| walker |  | 9957 | 31 | ts decl packages/vite/src/node/server/searchRoot.ts:84 |  |  | 0.515 |
+| walker |  | 9993 | 36 | ts names packages/vite/src/node/plugins/clientInjections.ts |  |  | 0.515 |

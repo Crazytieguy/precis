@@ -1,4 +1,4 @@
-Score(3000)=0.577 I=0.808 C=0.413 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.394/0.309/0.277/0.577/0.811/0.734/0.648
+Score(3000)=0.537 I=0.784 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.394/0.309/0.277/0.537/0.811/0.734/0.648
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,27 +46,27 @@ Score(3000)=0.577 I=0.808 C=0.413 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 2297 |  | 179 | Component declaration roster (all nine forwardRef components) | 2.4 |  | 0.380 |
 | walker |  | 2309 | 58 | listing of 'test' |  |  | 0.488 |
 | ns | 2406 |  | 109 | Props type roster (all twelve type aliases) | 2.5 |  | 0.516 |
-| walker |  | 2511 | 202 | package scripts in package.json |  |  | 0.566 |
-| ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.524 |
-| walker |  | 2893 | 382 | ts names cmdk/src/index.tsx #3 |  |  | 0.571 |
-| walker |  | 2952 | 59 | ts decl cmdk/src/index.tsx:930 |  |  | 0.607 |
-| ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.577 |
-| walker |  | 3002 | 50 | ts decl cmdk/src/index.tsx:1071 |  |  | 0.577 |
-| walker |  | 3067 | 65 | ts decl cmdk/src/index.tsx:1010 |  |  | 0.577 |
-| walker |  | 3189 | 122 | ts decl cmdk/src/index.tsx:1081 |  |  | 0.577 |
-| ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.553 |
-| walker |  | 3206 | 17 | listing of 'website/pages' |  |  | 0.553 |
-| walker |  | 3351 | 145 | package entrypoints in cmdk/package.json |  |  | 0.588 |
-| ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.607 |
-| ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.621 |
-| walker |  | 3603 | 252 | ts decl cmdk/src/index.tsx:80 |  |  | 0.668 |
-| walker |  | 3637 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.687 |
-| walker |  | 3660 | 23 | listing of 'website/components/cmdk' |  |  | 0.687 |
-| ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.695 |
-| walker |  | 3948 | 288 | headings outline in README.md |  |  | 0.753 |
-| walker |  | 3962 | 14 | README.md section #28 |  |  | 0.753 |
-| walker |  | 3988 | 26 | README.md section #1 |  |  | 0.769 |
-| walker |  | 4032 | 44 | README.md section #3 |  |  | 0.769 |
+| walker |  | 2691 | 382 | ts names cmdk/src/index.tsx #3 |  |  | 0.570 |
+| ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.528 |
+| walker |  | 2750 | 59 | ts decl cmdk/src/index.tsx:930 |  |  | 0.565 |
+| walker |  | 2800 | 50 | ts decl cmdk/src/index.tsx:1071 |  |  | 0.565 |
+| walker |  | 2865 | 65 | ts decl cmdk/src/index.tsx:1010 |  |  | 0.565 |
+| ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.537 |
+| walker |  | 2987 | 122 | ts decl cmdk/src/index.tsx:1081 |  |  | 0.537 |
+| walker |  | 3004 | 17 | listing of 'website/pages' |  |  | 0.537 |
+| walker |  | 3149 | 145 | package entrypoints in cmdk/package.json |  |  | 0.574 |
+| ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.550 |
+| walker |  | 3401 | 252 | ts decl cmdk/src/index.tsx:80 |  |  | 0.606 |
+| ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.622 |
+| walker |  | 3435 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.642 |
+| walker |  | 3458 | 23 | listing of 'website/components/cmdk' |  |  | 0.642 |
+| ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.654 |
+| ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.663 |
+| walker |  | 3746 | 288 | headings outline in README.md |  |  | 0.722 |
+| walker |  | 3760 | 14 | README.md section #28 |  |  | 0.722 |
+| walker |  | 3786 | 26 | README.md section #1 |  |  | 0.738 |
+| walker |  | 3830 | 44 | README.md section #3 |  |  | 0.738 |
+| walker |  | 4032 | 202 | package scripts in package.json |  |  | 0.769 |
 | walker |  | 4064 | 32 | ARCHITECTURE.md section #4 |  |  | 0.774 |
 | ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.768 |
 | walker |  | 4083 | 19 | README.md section #24 |  |  | 0.768 |

@@ -1,4 +1,4 @@
-Score(3000)=0.696 I=0.852 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.656/0.720/0.789/0.696/0.676/0.623/0.548
+Score(3000)=0.696 I=0.852 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.656/0.648/0.757/0.696/0.676/0.623/0.548
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,45 +41,45 @@ Score(3000)=0.696 I=0.852 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 1069 | 13 | ts names packages/d2mini/src/operators/filterBy.ts |  |  | 0.587 |
 | walker |  | 1082 | 13 | ts names packages/d2ts/src/operators/filterBy.ts |  |  | 0.587 |
 | walker |  | 1169 | 87 | ts decl packages/d2ts-benchmark/src/index.ts:496 |  |  | 0.587 |
+| walker |  | 1228 | 59 | README headline in packages/d2mini/README.md |  |  | 0.587 |
 | ns | 1284 |  | 252 | README "Implementation Details" — provenance and the four core data structures | 1.11 | 1.10 | 0.523 |
-| walker |  | 1305 | 136 | package scripts in package.json |  |  | 0.630 |
-| walker |  | 1364 | 59 | README headline in packages/d2mini/README.md |  |  | 0.630 |
-| ns | 1392 |  | 108 | Every package's own root listing | 2.1 |  | 0.696 |
-| walker |  | 1433 | 69 | listing of 'packages/d2ql/src' |  |  | 0.700 |
-| ns | 1436 |  | 44 | packages/d2ts/src — complete module roster | 2.2 |  | 0.719 |
-| walker |  | 1442 | 9 | listing of 'packages/d2ql/src/query-builder' |  |  | 0.720 |
-| walker |  | 1480 | 38 | ts names packages/d2ql/src/index.ts |  |  | 0.720 |
-| ns | 1506 |  | 70 | packages/d2ts/src/index.ts — the public export barrel | 2.3 |  | 0.728 |
-| walker |  | 1533 | 53 | ts module doc packages/d2ql/src/index.ts |  |  | 0.730 |
-| walker |  | 1554 | 21 | ts names packages/d2ql/src/compiler.ts |  |  | 0.730 |
-| ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.753 |
-| walker |  | 1631 | 77 | README headline in packages/d2ql/README.md |  |  | 0.753 |
-| walker |  | 1664 | 33 | packages/d2ql/README.md section #0 |  |  | 0.753 |
-| walker |  | 1742 | 78 | README headline in packages/d2ts/README.md |  |  | 0.753 |
-| walker |  | 1766 | 24 | listing of 'examples/electric' |  |  | 0.754 |
-| walker |  | 1774 | 8 | listing of 'examples/electric/src' |  |  | 0.754 |
-| walker |  | 1813 | 39 | packages/d2mini/README.md section #0 |  |  | 0.755 |
-| ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.706 |
-| ns | 1981 |  | 137 | packages/d2mini/src and its operators directory | 2.6 |  | 0.731 |
-| walker |  | 1986 | 173 | headings outline in README.md |  |  | 0.789 |
-| walker |  | 2158 | 172 | README.md section #0 |  |  | 0.808 |
-| walker |  | 2193 | 35 | ts decl packages/d2ql/src/compiler.ts:16 |  |  | 0.808 |
-| walker |  | 2231 | 38 | ts names packages/d2ts/src/version-index.ts |  |  | 0.808 |
-| ns | 2246 |  | 265 | packages/d2mini export barrels | 2.7 | 2.6 | 0.765 |
-| walker |  | 2257 | 26 | plaintext config pnpm-workspace.yaml |  |  | 0.780 |
-| walker |  | 2283 | 26 | ts names packages/d2mini/src/operators/topK.ts |  |  | 0.780 |
-| walker |  | 2309 | 26 | ts names packages/d2ts/src/operators/topK.ts |  |  | 0.780 |
-| ns | 2324 |  | 78 | packages/d2ql/src and query-builder/ listings | 2.8 |  | 0.788 |
-| walker |  | 2338 | 29 | listing of 'packages/d2mini/tests' |  |  | 0.788 |
-| walker |  | 2370 | 32 | listing of 'examples/d2ql' |  |  | 0.790 |
-| walker |  | 2401 | 31 | ts names packages/d2mini/src/operators/debug.ts |  |  | 0.790 |
-| walker |  | 2428 | 27 | ts decl packages/d2mini/src/operators/debug.ts:12 |  |  | 0.790 |
-| ns | 2441 |  | 117 | packages/d2ql export barrels | 2.9 | 2.8 | 0.786 |
-| walker |  | 2459 | 31 | ts names packages/d2mini/src/operators/output.ts |  |  | 0.786 |
-| walker |  | 2486 | 27 | ts decl packages/d2mini/src/operators/output.ts:13 |  |  | 0.786 |
-| walker |  | 2517 | 31 | ts names packages/d2ts/src/operators/debug.ts |  |  | 0.786 |
-| ns | 2518 |  | 77 | packages/d2ts/src/sqlite — complete tree listing | 2.10 |  | 0.761 |
-| walker |  | 2544 | 27 | ts decl packages/d2ts/src/operators/debug.ts:18 |  |  | 0.761 |
+| walker |  | 1297 | 69 | listing of 'packages/d2ql/src' |  |  | 0.526 |
+| walker |  | 1306 | 9 | listing of 'packages/d2ql/src/query-builder' |  |  | 0.527 |
+| walker |  | 1344 | 38 | ts names packages/d2ql/src/index.ts |  |  | 0.527 |
+| ns | 1392 |  | 108 | Every package's own root listing | 2.1 |  | 0.621 |
+| walker |  | 1397 | 53 | ts module doc packages/d2ql/src/index.ts |  |  | 0.622 |
+| walker |  | 1418 | 21 | ts names packages/d2ql/src/compiler.ts |  |  | 0.622 |
+| ns | 1436 |  | 44 | packages/d2ts/src — complete module roster | 2.2 |  | 0.648 |
+| walker |  | 1495 | 77 | README headline in packages/d2ql/README.md |  |  | 0.648 |
+| ns | 1506 |  | 70 | packages/d2ts/src/index.ts — the public export barrel | 2.3 |  | 0.659 |
+| walker |  | 1528 | 33 | packages/d2ql/README.md section #0 |  |  | 0.659 |
+| ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.691 |
+| walker |  | 1606 | 78 | README headline in packages/d2ts/README.md |  |  | 0.692 |
+| walker |  | 1630 | 24 | listing of 'examples/electric' |  |  | 0.692 |
+| walker |  | 1638 | 8 | listing of 'examples/electric/src' |  |  | 0.693 |
+| walker |  | 1677 | 39 | packages/d2mini/README.md section #0 |  |  | 0.693 |
+| ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.648 |
+| walker |  | 1850 | 173 | headings outline in README.md |  |  | 0.716 |
+| ns | 1981 |  | 137 | packages/d2mini/src and its operators directory | 2.6 |  | 0.738 |
+| walker |  | 2022 | 172 | README.md section #0 |  |  | 0.757 |
+| walker |  | 2057 | 35 | ts decl packages/d2ql/src/compiler.ts:16 |  |  | 0.757 |
+| walker |  | 2095 | 38 | ts names packages/d2ts/src/version-index.ts |  |  | 0.757 |
+| walker |  | 2121 | 26 | plaintext config pnpm-workspace.yaml |  |  | 0.773 |
+| walker |  | 2147 | 26 | ts names packages/d2mini/src/operators/topK.ts |  |  | 0.773 |
+| walker |  | 2173 | 26 | ts names packages/d2ts/src/operators/topK.ts |  |  | 0.773 |
+| walker |  | 2202 | 29 | listing of 'packages/d2mini/tests' |  |  | 0.773 |
+| walker |  | 2234 | 32 | listing of 'examples/d2ql' |  |  | 0.775 |
+| ns | 2246 |  | 265 | packages/d2mini export barrels | 2.7 | 2.6 | 0.734 |
+| walker |  | 2265 | 31 | ts names packages/d2mini/src/operators/debug.ts |  |  | 0.734 |
+| walker |  | 2292 | 27 | ts decl packages/d2mini/src/operators/debug.ts:12 |  |  | 0.734 |
+| walker |  | 2323 | 31 | ts names packages/d2mini/src/operators/output.ts |  |  | 0.734 |
+| ns | 2324 |  | 78 | packages/d2ql/src and query-builder/ listings | 2.8 |  | 0.745 |
+| walker |  | 2350 | 27 | ts decl packages/d2mini/src/operators/output.ts:13 |  |  | 0.745 |
+| walker |  | 2381 | 31 | ts names packages/d2ts/src/operators/debug.ts |  |  | 0.745 |
+| walker |  | 2408 | 27 | ts decl packages/d2ts/src/operators/debug.ts:18 |  |  | 0.745 |
+| ns | 2441 |  | 117 | packages/d2ql export barrels | 2.9 | 2.8 | 0.741 |
+| ns | 2518 |  | 77 | packages/d2ts/src/sqlite — complete tree listing | 2.10 |  | 0.718 |
+| walker |  | 2544 | 136 | package scripts in package.json |  |  | 0.761 |
 | walker |  | 2574 | 30 | ts decl packages/d2mini/src/operators/output.ts:38 |  |  | 0.761 |
 | walker |  | 2628 | 54 | ts names packages/d2mini/src/d2.ts |  |  | 0.761 |
 | walker |  | 2654 | 26 | ts decl packages/d2mini/src/d2.ts:146 |  |  | 0.761 |
