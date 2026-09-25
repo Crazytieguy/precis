@@ -26,8 +26,8 @@ The holdout extends to anything fixture-specific for validation
 repos. **Off-limits during calibration:**
 
 - `tests/validation/<fixture>.md` (the score files)
-- `tests/north-stars/<fixture>.toml` for any fixture registered with
-  `per_validation_fixture_tests!` — the NS is the answer key, and
+- `tests/north-stars/<fixture>.toml` for any fixture in the
+  `validation` block of `tests/data/fixtures.rs` — the NS is the answer key, and
   the dir is shared with training only because building two parallel
   dirs would be process bloat for the same convention
 - `tests/fixtures/<fixture>/` for the same set — the fixture source
@@ -208,8 +208,7 @@ perspectives.
 - **Don't read or iterate against held-out fixtures.** The holdout
   covers `tests/validation/<name>.md`, the corresponding
   `tests/north-stars/<name>.toml`, and `tests/fixtures/<name>/` for
-  any fixture registered with `per_validation_fixture_tests!` in
-  `tests/fixture_baselines.rs`. Opening any of these to debug a low
+  any fixture in the `validation` block of `tests/data/fixtures.rs`. Opening any of these to debug a low
   validation score is overfitting to the holdout.
 - Don't ship neutral or marginally-positive changes that *add* code.
   Complexity has to pay for itself.

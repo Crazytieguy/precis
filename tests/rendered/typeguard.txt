@@ -1,0 +1,302 @@
+.github/
+    FUNDING.yml …
+    ISSUE_TEMPLATE/ …
+    SECURITY.md …
+    dependabot.yml …
+    pull_request_template.md …
+    workflows/
+        publish.yml …
+        test.yml …
+.gitignore …
+.pre-commit-config.yaml …
+.readthedocs.yml …
+LICENSE …
+README.rst
+    …
+      14→This library provides run-time type checking for functions defined with
+      15→`PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_ argument (and return) type
+      16→annotations, and any arbitrary objects. It can be used together with static type
+      17→checkers as an additional layer of type safety, to catch type violations that could only
+      18→be detected at run time.
+      19→
+      20→Two principal ways to do type checking are provided:
+      21→
+      22→#. The ``check_type`` function:
+      23→
+      24→   * like ``isinstance()``, but supports arbitrary type annotations (within limits)
+      25→   * can be used as a ``cast()`` replacement, but with actual checking of the value
+      26→#. Code instrumentation:
+      27→
+      28→   * entire modules, or individual functions (via ``@typechecked``) are recompiled, with
+      29→     type checking code injected into them
+      30→   * automatically checks function arguments, return values and assignments to annotated
+      31→     local variables
+      32→   * for generator functions (regular and async), checks yield and send values
+      33→   * requires the original source code of the instrumented module(s) to be accessible
+      34→
+      35→Two options are provided for code instrumentation:
+      36→
+      37→#. the ``@typechecked`` function:
+      38→
+      39→   * can be applied to functions individually
+      40→#. the import hook (``typeguard.install_import_hook()``):
+      41→
+      42→   * automatically instruments targeted modules on import
+      43→   * no manual code changes required in the target modules
+      44→   * requires the import hook to be installed before the targeted modules are imported
+      45→   * may clash with other import hooks
+      46→
+      47→See the documentation_ for further information.
+    …
+docs/
+    api.rst …
+    conf.py …
+    contributing.rst …
+    extending.rst …
+    features.rst …
+    index.rst …
+    userguide.rst …
+    versionhistory.rst …
+pyproject.toml
+       1→[build-system]
+       2→requires = [
+       3→    "setuptools >= 77",
+       4→    "setuptools_scm[toml] >= 6.4"
+       5→]
+       6→build-backend = "setuptools.build_meta"
+       8→[project]
+       9→name = "typeguard"
+      10→description = "Run-time type checker for Python"
+      11→readme = "README.rst"
+      12→authors = [{name = "Alex Grönholm", email = "alex.gronholm@nextday.fi"}]
+      13→license = "MIT"
+    …
+      26→requires-python = ">= 3.9"
+      27→dependencies = [
+      28→    "importlib_metadata >= 3.6; python_version < '3.10'",
+      29→    "typing_extensions >= 4.14.0",
+      30→]
+      31→dynamic = ["version"]
+      33→[project.urls]
+      34→Documentation = "https://typeguard.readthedocs.io/en/latest/"
+      35→"Change log" = "https://typeguard.readthedocs.io/en/latest/versionhistory.html"
+      36→"Source code" = "https://github.com/agronholm/typeguard"
+      37→"Issue tracker" = "https://github.com/agronholm/typeguard/issues"
+      38→
+      39→[project.entry-points]
+      40→pytest11 = {typeguard = "typeguard._pytest_plugin"}
+    …
+      55→[tool.setuptools.package-data]
+      56→typeguard = ["py.typed"]
+      57→
+      58→[tool.setuptools_scm]
+      59→version_scheme = "post-release"
+      60→local_scheme = "dirty-tag"
+      61→
+      62→[tool.pytest.ini_options]
+      63→addopts = "--tb=short"
+      64→testpaths = "tests"
+      65→xfail_strict = true
+      66→filterwarnings = ["error"]
+      67→
+      68→[tool.coverage.run]
+      69→source = ["typeguard"]
+      70→
+      71→[tool.coverage.report]
+      72→show_missing = true
+      73→exclude_lines = [
+      74→    "pragma: no cover",
+      75→    "if TYPE_CHECKING:"
+      76→]
+    …
+src/
+    typeguard/
+        __init__.py
+               1→import os
+               2→from typing import Any
+               3→
+               4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
+               5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
+               6→from ._checkers import check_type_internal as check_type_internal
+               7→from ._checkers import checker_lookup_functions as checker_lookup_functions
+               8→from ._checkers import load_plugins as load_plugins
+               9→from ._config import CollectionCheckStrategy as CollectionCheckStrategy
+              10→from ._config import ForwardRefPolicy as ForwardRefPolicy
+              11→from ._config import TypeCheckConfiguration as TypeCheckConfiguration
+              12→from ._decorators import typechecked as typechecked
+              13→from ._decorators import typeguard_ignore as typeguard_ignore
+              14→from ._exceptions import InstrumentationWarning as InstrumentationWarning
+              15→from ._exceptions import TypeCheckError as TypeCheckError
+              16→from ._exceptions import TypeCheckWarning as TypeCheckWarning
+              17→from ._exceptions import TypeHintWarning as TypeHintWarning
+              18→from ._functions import TypeCheckFailCallback as TypeCheckFailCallback
+              19→from ._functions import check_type as check_type
+              20→from ._functions import warn_on_error as warn_on_error
+              21→from ._importhook import ImportHookManager as ImportHookManager
+              22→from ._importhook import TypeguardFinder as TypeguardFinder
+              23→from ._importhook import install_import_hook as install_import_hook
+              24→from ._memo import TypeCheckMemo as TypeCheckMemo
+              25→from ._suppression import suppress_type_checks as suppress_type_checks
+              26→from ._utils import Unset as Unset
+            …
+              34→config: TypeCheckConfiguration
+              35→
+              36→
+              37→def __getattr__(name: str) -> Any:
+              38→    if name == "config":
+              39→        from ._config import global_config
+              40→
+              41→        return global_config
+              42→
+              43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+            …
+        _checkers.py
+            …
+             153→def check_callable(
+             154→    value: Any,
+             155→    origin_type: Any,
+             156→    args: tuple[Any, ...],
+             157→    memo: TypeCheckMemo,
+             158→) -> None:
+            …
+             212→def check_mapping(
+             213→    value: Any,
+             214→    origin_type: Any,
+             215→    args: tuple[Any, ...],
+             216→    memo: TypeCheckMemo,
+             217→) -> None:
+            …
+             247→def check_typed_dict(
+             248→    value: Any,
+             249→    origin_type: Any,
+             250→    args: tuple[Any, ...],
+             251→    memo: TypeCheckMemo,
+             252→) -> None:
+            …
+             305→def check_list(
+             306→    value: Any,
+             307→    origin_type: Any,
+             308→    args: tuple[Any, ...],
+             309→    memo: TypeCheckMemo,
+             310→) -> None:
+            …
+             324→def check_sequence(
+             325→    value: Any,
+             326→    origin_type: Any,
+             327→    args: tuple[Any, ...],
+             328→    memo: TypeCheckMemo,
+             329→) -> None:
+            …
+             924→def check_type_internal(
+             925→    value: Any,
+             926→    annotation: Any,
+             927→    memo: TypeCheckMemo,
+             928→) -> None:
+            …
+            1099→def load_plugins() -> None:
+            …
+        _config.py
+            …
+              11→T = TypeVar("T")
+              12→
+              13→
+              14→class ForwardRefPolicy(Enum):
+            …
+              25→    ERROR = auto()
+              26→    WARN = auto()
+              27→    IGNORE = auto()
+              30→class CollectionCheckStrategy(Enum):
+            …
+              49→    FIRST_ITEM = auto()
+              50→    ALL_ITEMS = auto()
+            …
+              62→@dataclass
+              63→class TypeCheckConfiguration:
+              64→    """
+              65→     You can change Typeguard's behavior with these settings.
+            …
+             106→global_config = TypeCheckConfiguration()
+        _decorators.py …
+        _exceptions.py
+               1→from collections import deque
+               2→from typing import Deque
+               5→class TypeHintWarning(UserWarning):
+               6→    """
+               7→    A warning that is emitted when a type hint in string form could not be resolved to
+               8→    an actual type.
+               9→    """
+              12→class TypeCheckWarning(UserWarning):
+              13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
+              15→    def __init__(self, message: str):
+              16→        super().__init__(message)
+              19→class InstrumentationWarning(UserWarning):
+              20→    """Emitted when there's a problem with instrumenting a function for type checks."""
+              22→    def __init__(self, message: str):
+              23→        super().__init__(message)
+              26→class TypeCheckError(Exception):
+              27→    """
+              28→    Raised by typeguard's type checkers when a type mismatch is detected.
+              29→    """
+              31→    def __init__(self, message: str):
+            …
+              35→    def append_path_element(self, element: str) -> None:
+              36→        self._path.append(element)
+              38→    def __str__(self) -> str:
+            …
+        _functions.py …
+        _importhook.py …
+        _memo.py
+            …
+               8→class TypeCheckMemo:
+               9→    """
+              10→    Contains information necessary for type checkers to do their work.
+            …
+              35→    __slots__ = "globals", "locals", "self_type", "config"
+              37→    def __init__(
+              38→        self,
+              39→        globals: dict[str, Any],
+              40→        locals: dict[str, Any],
+              41→        *,
+              42→        self_type: type | None = None,
+              43→        config: TypeCheckConfiguration = global_config,
+              44→    ):
+            …
+        _pytest_plugin.py …
+        _suppression.py
+            …
+              15→P = ParamSpec("P")
+              16→T = TypeVar("T")
+              17→
+              18→type_checks_suppressed = 0
+              19→type_checks_suppress_lock = Lock()
+              22→@overload
+              23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
+              26→@overload
+              27→def suppress_type_checks() -> ContextManager[None]: ...
+              30→def suppress_type_checks(
+              31→    func: Callable[P, T] | None = None,
+              32→) -> Callable[P, T] | ContextManager[None]:
+            …
+        _transformer.py …
+        _utils.py …
+        py.typed
+tests/
+    __init__.py …
+    conftest.py …
+    deferredannos.py …
+    dummymodule.py …
+    dummymodule_py312.py …
+    mypy/
+        negative.py …
+        positive.py …
+        test_type_annotations.py …
+    test_checkers.py …
+    test_importhook.py …
+    test_instrumentation.py …
+    test_plugins.py …
+    test_pytest_plugin.py …
+    test_suppression.py …
+    test_transformer.py …
+    test_typechecked.py …
+    test_utils.py …
+    test_warn_on_error.py …

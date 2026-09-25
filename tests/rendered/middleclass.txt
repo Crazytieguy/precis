@@ -1,0 +1,279 @@
+.travis.yml
+       1→language: python
+       2→sudo: false
+       3→
+       4→env:
+       5→  - LUA="lua=5.1"
+       6→  - LUA="lua=5.2"
+       7→  - LUA="lua=5.3"
+       8→  - LUA="luajit=2.0"
+       9→  - LUA="luajit=2.1"
+      10→
+      11→before_install:
+      12→  - pip install hererocks
+      13→  - hererocks lua_install -r^ --$LUA
+      14→  - export PATH=$PATH:$PWD/lua_install/bin # Add directory with all installed binaries to PATH
+      15→
+      16→install:
+      17→  - luarocks install luacheck
+      18→  - luarocks install busted
+      19→  - luarocks install luacov
+      20→  - luarocks install luacov-coveralls
+      21→
+      22→script:
+      23→  - luacheck --no-unused-args --std max+busted *.lua spec
+      24→  - busted --verbose --coverage
+      25→
+      26→after_success:
+      27→  - luacov-coveralls --exclude $TRAVIS_BUILD_DIR/lua_install
+      28→
+      29→branches:
+      30→  except:
+      31→    - gh-pages
+      32→
+      33→notifications:
+      34→  email:
+      35→    on_success: change
+      36→    on_failure: always
+CHANGELOG.md …
+MIT-LICENSE.txt …
+README.md
+       1→middleclass
+       2→===========
+    …
+       7→A simple OOP library for Lua. It has inheritance, metamethods (operators), class variables and weak mixin support.
+       9→Quick Look
+      10→==========
+      11→
+      12→```lua
+      13→local class = require 'middleclass'
+      14→
+      15→local Fruit = class('Fruit') -- 'Fruit' is the class' name
+      16→
+      17→function Fruit:initialize(sweetness)
+      18→  self.sweetness = sweetness
+      19→end
+      20→
+      21→Fruit.static.sweetness_threshold = 5 -- class variable (also admits methods)
+      22→
+      23→function Fruit:isSweet()
+      24→  return self.sweetness > Fruit.sweetness_threshold
+      25→end
+      26→
+      27→local Lemon = class('Lemon', Fruit) -- subclassing
+      28→
+      29→function Lemon:initialize()
+      30→  Fruit.initialize(self, 1) -- invoking the superclass' initializer
+      31→end
+      32→
+      33→local lemon = Lemon:new()
+      34→
+      35→print(lemon:isSweet()) -- false
+      36→```
+      37→
+      38→Documentation
+      39→=============
+      40→
+      41→See the [github wiki page](https://github.com/kikito/middleclass/wiki) for examples & documentation.
+      42→
+      43→You can read the `CHANGELOG.md` file to see what has changed on each version of this library.
+      45→If you need help updating to a new middleclass version, read `UPDATING.md`.
+      46→
+      47→Installation
+      48→============
+      49→
+      50→Just copy the middleclass.lua file wherever you want it (for example on a lib/ folder). Then write this in any Lua file where you want to use it:
+      51→
+      52→```lua
+      53→local class = require 'middleclass'
+      54→```
+      55→
+      56→Specs
+      57→=====
+      58→
+      59→This project uses [busted](http://olivinelabs.com/busted/) for its specs. If you want to run the specs, you will have to install it first. Then just execute the following:
+      60→
+      61→```bash
+      62→cd /folder/where/the/spec/folder/is
+      63→busted
+      64→```
+      65→
+      66→Performance tests
+      67→=================
+      68→
+      69→Middleclass also comes with a small performance test suite. Just run the following command:
+      70→
+      71→```bash
+      72→lua performance/run.lua
+      73→```
+      74→
+      75→License
+      76→=======
+      77→
+      78→Middleclass is distributed under the MIT license.
+UPDATING.md
+       1→Updating from 3.x to 4.x
+       2→========================
+    …
+      21→Updating from 2.x to 3.x
+      22→========================
+    …
+middleclass.lua
+       1→local middleclass = {
+       2→  _VERSION     = 'middleclass v4.1.1',
+       3→  _DESCRIPTION = 'Object Orientation for Lua',
+       4→  _URL         = 'https://github.com/kikito/middleclass',
+    …
+      31→local function _createIndexWrapper(aClass, f)
+      32→  if f == nil then
+      33→    return aClass.__instanceDict
+      34→  elseif type(f) == "function" then
+      35→    return function(self, name)
+      36→      local value = aClass.__instanceDict[name]
+      37→
+      38→      if value ~= nil then
+      39→        return value
+      40→      else
+      41→        return (f(self, name))
+      42→      end
+      43→    end
+      44→  else -- if  type(f) == "table" then
+      45→    return function(self, name)
+      46→      local value = aClass.__instanceDict[name]
+      47→
+      48→      if value ~= nil then
+      49→        return value
+      50→      else
+      51→        return f[name]
+      52→      end
+      53→    end
+      54→  end
+    …
+      57→local function _propagateInstanceMethod(aClass, name, f)
+      58→  f = name == "__index" and _createIndexWrapper(aClass, f) or f
+      59→  aClass.__instanceDict[name] = f
+      60→
+      61→  for subclass in pairs(aClass.subclasses) do
+      62→    if rawget(subclass.__declaredMethods, name) == nil then
+      63→      _propagateInstanceMethod(subclass, name, f)
+      64→    end
+      65→  end
+    …
+      68→local function _declareInstanceMethod(aClass, name, f)
+      69→  aClass.__declaredMethods[name] = f
+      70→
+      71→  if f == nil and aClass.super then
+      72→    f = aClass.super.__instanceDict[name]
+      73→  end
+      74→
+      75→  _propagateInstanceMethod(aClass, name, f)
+    …
+      78→local function _tostring(self) return "class " .. self.name end
+      79→local function _call(self, ...) return self:new(...) end
+      80→
+      81→local function _createClass(name, super)
+    …
+     109→local function _includeMixin(aClass, mixin)
+     110→  assert(type(mixin) == 'table', "mixin must be a table")
+     111→
+     112→  for name,method in pairs(mixin) do
+     113→    if name ~= "included" and name ~= "static" then aClass[name] = method end
+     114→  end
+     115→
+     116→  for name,method in pairs(mixin.static or {}) do
+     117→    aClass.static[name] = method
+     118→  end
+     119→
+     120→  if type(mixin.included)=="function" then mixin:included(aClass) end
+     121→  return aClass
+    …
+     125→  __tostring   = function(self) return "instance of " .. tostring(self.class) end,
+     126→
+     127→  initialize   = function(self, ...) end,
+     128→
+     129→  isInstanceOf = function(self, aClass)
+     130→    return type(aClass) == 'table'
+     131→       and type(self) == 'table'
+     132→       and (self.class == aClass
+     133→            or type(self.class) == 'table'
+     134→            and type(self.class.isSubclassOf) == 'function'
+     135→            and self.class:isSubclassOf(aClass))
+    …
+     138→  static = {
+     139→    allocate = function(self)
+     140→      assert(type(self) == 'table', "Make sure that you are using 'Class:allocate' instead of 'Class.allocate'")
+     141→      return setmetatable({ class = self }, self.__instanceDict)
+    …
+     144→    new = function(self, ...)
+     145→      assert(type(self) == 'table', "Make sure that you are using 'Class:new' instead of 'Class.new'")
+     146→      local instance = self:allocate()
+     147→      instance:initialize(...)
+     148→      return instance
+    …
+     151→    subclass = function(self, name)
+     152→      assert(type(self) == 'table', "Make sure that you are using 'Class:subclass' instead of 'Class.subclass'")
+     153→      assert(type(name) == "string", "You must provide a name(string) for your class")
+     154→
+     155→      local subclass = _createClass(name, self)
+     156→
+     157→      for methodName, f in pairs(self.__instanceDict) do
+     158→        if not (methodName == "__index" and type(f) == "table") then
+     159→          _propagateInstanceMethod(subclass, methodName, f)
+     160→        end
+     161→      end
+     162→      subclass.initialize = function(instance, ...) return self.initialize(instance, ...) end
+     163→
+     164→      self.subclasses[subclass] = true
+     165→      self:subclassed(subclass)
+     166→
+     167→      return subclass
+    …
+     170→    subclassed = function(self, other) end,
+     171→
+     172→    isSubclassOf = function(self, other)
+     173→      return type(other)      == 'table' and
+     174→             type(self.super) == 'table' and
+     175→             ( self.super == other or self.super:isSubclassOf(other) )
+    …
+     178→    include = function(self, ...)
+     179→      assert(type(self) == 'table', "Make sure you that you are using 'Class:include' instead of 'Class.include'")
+     180→      for _,mixin in ipairs({...}) do _includeMixin(self, mixin) end
+     181→      return self
+    …
+     186→function middleclass.class(name, super)
+     187→  assert(type(name) == 'string', "A name (string) is needed for the new class")
+     188→  return super and super:subclass(name) or _includeMixin(_createClass(name), DefaultMixin)
+    …
+performance/
+    run.lua
+        …
+          19→function A:foo()
+          20→  return 1
+        …
+          37→function A.static:bar()
+          38→  return 2
+        …
+    time.lua …
+rockspecs/
+    middleclass-3.0-0.rockspec …
+    middleclass-3.1-0.rockspec …
+    middleclass-3.2-0.rockspec …
+    middleclass-4.0-0.rockspec …
+    middleclass-4.1-0.rockspec …
+    middleclass-4.1.1-0.rockspec …
+spec/
+    class_spec.lua …
+    classes_spec.lua …
+    default_methods_spec.lua …
+    instances_spec.lua …
+    metamethods_lua_5_2.lua …
+    metamethods_lua_5_3.lua …
+    metamethods_spec.lua
+        …
+           3→local function is_lua_5_2_compatible()
+           4→  return type(rawlen) == 'function'
+        …
+           7→local function is_lua_5_3_compatible()
+           8→  return type(string.unpack) == 'function'
+        …
+    mixins_spec.lua …

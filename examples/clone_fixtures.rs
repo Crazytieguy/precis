@@ -7,23 +7,21 @@
 use std::path::Path;
 use std::process::Command;
 
-macro_rules! with_fixtures {
-    ($(($dir:expr, $url:expr, $rev:expr)),* $(,)?) => {
-        const FIXTURES: &[(&str, &str, &str)] = &[$(($dir, $url, $rev)),*];
+macro_rules! fixtures {
+    ($($tier:ident { $($name:ident $url:literal $rev:literal,)* })*) => {
+        const FIXTURES: &[(&str, &str, &str)] = &[$($((stringify!($name), $url, $rev),)*)*];
     };
 }
 include!("../tests/data/fixtures.rs");
 
 fn main() {
-    let fixtures_dir = match std::env::var_os("PRECIS_FIXTURE_DIR") {
-        Some(p) => std::path::PathBuf::from(p),
-        None => Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures"),
-    };
+    let fixtures_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     let mut cloned = 0;
     let mut skipped = 0;
 
-    for &(dir, url, rev) in FIXTURES {
-        let target = fixtures_dir.join(dir);
+    for &(name, url, rev) in FIXTURES {
+        let dir = name.replace('_', "-");
+        let target = fixtures_dir.join(&dir);
         if target.exists() {
             let pin = target.join(precis::fs_util::PRECIS_PIN_FILE);
             match std::fs::read_to_string(&pin) {

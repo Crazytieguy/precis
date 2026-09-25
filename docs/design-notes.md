@@ -48,8 +48,7 @@ open questions that aren't visible from reading `src/`.
   Once frozen they are the divergence test's ground truth; implementation
   changes do not edit them.
 - `revision_pin` is the only thing binding an NS to its fixture revision.
-  `load_ns_checked` enforces it; the `ns_pins_match_fixture_pins` test
-  enforces it under `cargo t`.
+  `load_ns_checked` enforces it in every fixture test.
 - **The corpus has been re-frozen wholesale twice** (22d2f7b3, 2026-07-05;
   2fbbe8d4, 2026-07-28). Scores are only comparable within one key; the
   previous corpus is kept at `tests/north-stars-v1/`.

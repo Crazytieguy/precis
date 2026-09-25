@@ -1,0 +1,291 @@
+.github/
+    ISSUE_TEMPLATE/ …
+    workflows/
+        release.yml …
+        test.yml …
+AUTHORS …
+LICENSE …
+README.md
+       1→# mkcert
+       2→
+       3→mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
+       5→```
+       6→$ mkcert -install
+       7→Created a new local CA 💥
+       8→The local CA is now installed in the system trust store! ⚡️
+       9→The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
+      10→
+      11→$ mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
+      12→
+      13→Created a new certificate valid for the following names 📜
+      14→ - "example.com"
+      15→ - "*.example.com"
+      16→ - "example.test"
+      17→ - "localhost"
+      18→ - "127.0.0.1"
+      19→ - "::1"
+      20→
+      21→The certificate is at "./example.com+5.pem" and the key at "./example.com+5-key.pem" ✅
+      22→```
+      23→
+      24→<p align="center"><img width="498" alt="Chrome and Firefox screenshot" src="https://user-images.githubusercontent.com/1225294/51066373-96d4aa80-15be-11e9-91e2-f4e44a3a4458.png"></p>
+      25→
+      26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
+      27→
+      28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
+      30→## Installation
+      31→
+      32→> **Warning**: the `rootCA-key.pem` file that mkcert automatically generates gives complete power to intercept secure requests from your machine. Do not share it.
+      34→### macOS
+    …
+      51→### Linux
+    …
+      92→### Windows
+    …
+     107→or build from source (requires Go 1.10+), or use [the pre-built binaries](https://github.com/FiloSottile/mkcert/releases).
+     109→If you're running into permission problems try running `mkcert` as an Administrator.
+     111→## Supported root stores
+    …
+     127→## Advanced topics
+     128→
+     129→### Advanced options
+    …
+     150→> **Note:** You _must_ place these options before the domain names list.
+    …
+     158→### S/MIME
+    …
+     166→### Mobile devices
+    …
+     174→### Using the root with Node.js
+    …
+     182→### Changing the location of the CA files
+    …
+     188→### Installing the CA on other systems
+    …
+cert.go
+    …
+      35→var userAndHostname string
+      36→
+      37→func init() {
+    …
+      50→func (m *mkcert) makeCert(hosts []string) {
+    …
+     148→func (m *mkcert) printHosts(hosts []string) {
+    …
+     166→func (m *mkcert) generateKey(rootCA bool) (crypto.PrivateKey, error) {
+    …
+     176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
+    …
+     202→func randomSerialNumber() *big.Int {
+     203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
+     204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
+     205→	fatalIfErr(err, "failed to generate serial number")
+     206→	return serialNumber
+    …
+     209→func (m *mkcert) makeCertFromCSR() {
+    …
+     281→// loadCA will load or create the CA at CAROOT.
+     282→func (m *mkcert) loadCA() {
+    …
+     310→func (m *mkcert) newCA() {
+    …
+     366→func (m *mkcert) caUniqueName() string {
+     367→	return "mkcert development CA " + m.caCert.SerialNumber.String()
+    …
+go.mod
+       1→module filippo.io/mkcert
+       2→
+       3→go 1.18
+       4→
+       5→require (
+       6→	golang.org/x/net v0.0.0-20220421235706-1d1ef9303861
+       7→	howett.net/plist v1.0.0
+       8→	software.sslmate.com/src/go-pkcs12 v0.2.0
+       9→)
+      10→
+      11→require (
+      12→	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
+      13→	golang.org/x/text v0.3.7 // indirect
+      14→)
+go.sum …
+main.go
+    …
+       5→// Command mkcert is a simple zero-config tool to make development certificates.
+       6→package main
+       7→
+       8→import (
+       9→	"crypto"
+      10→	"crypto/x509"
+      11→	"flag"
+      12→	"fmt"
+      13→	"log"
+      14→	"net"
+      15→	"net/mail"
+      16→	"net/url"
+      17→	"os"
+      18→	"os/exec"
+      19→	"os/user"
+      20→	"path/filepath"
+      21→	"regexp"
+      22→	"runtime"
+      23→	"runtime/debug"
+      24→	"strings"
+      25→	"sync"
+      26→
+      27→	"golang.org/x/net/idna"
+      28→)
+      30→const shortUsage = `Usage of mkcert:
+      31→
+      32→	$ mkcert -install
+      33→	Install the local CA in the system trust store.
+      34→
+      35→	$ mkcert example.org
+      36→	Generate "example.org.pem" and "example.org-key.pem".
+      37→
+      38→	$ mkcert example.com myapp.dev localhost 127.0.0.1 ::1
+      39→	Generate "example.com+4.pem" and "example.com+4-key.pem".
+      40→
+      41→	$ mkcert "*.example.it"
+      42→	Generate "_wildcard.example.it.pem" and "_wildcard.example.it-key.pem".
+      43→
+      44→	$ mkcert -uninstall
+      45→	Uninstall the local CA (but do not delete it).
+      46→
+      47→`
+      49→const advancedUsage = `Advanced options:
+    …
+      82→// Version can be set at link time to override debug.BuildInfo.Main.Version,
+      83→// which is "(devel)" when building from within the module. See
+      84→// golang.org/issue/29814 and golang.org/issue/29228.
+      85→var Version string
+      86→
+      87→func main() {
+    …
+     152→const rootName = "rootCA.pem"
+     153→const rootKeyName = "rootCA-key.pem"
+     155→type mkcert struct {
+     156→	installMode, uninstallMode bool
+     157→	pkcs12, ecdsa, client      bool
+     158→	keyFile, certFile, p12File string
+     159→	csrPath                    string
+     160→
+     161→	CAROOT string
+     162→	caCert *x509.Certificate
+     163→	caKey  crypto.PrivateKey
+     164→
+     165→	// The system cert pool is only loaded once. After installing the root, checks
+     166→	// will keep failing until the next execution. TODO: maybe execve?
+     167→	// https://github.com/golang/go/issues/24540 (thanks, myself)
+     168→	ignoreCheckFailure bool
+     169→}
+     171→func (m *mkcert) Run(args []string) {
+    …
+     240→func getCAROOT() string {
+    …
+     267→func (m *mkcert) install() {
+    …
+     307→func (m *mkcert) uninstall() {
+    …
+     336→func (m *mkcert) checkPlatform() bool {
+     337→	if m.ignoreCheckFailure {
+     338→		return true
+     339→	}
+     340→
+     341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
+     342→	return err == nil
+    …
+     345→func storeEnabled(name string) bool {
+     346→	stores := os.Getenv("TRUST_STORES")
+     347→	if stores == "" {
+     348→		return true
+     349→	}
+     350→	for _, store := range strings.Split(stores, ",") {
+     351→		if store == name {
+     352→			return true
+     353→		}
+     354→	}
+     355→	return false
+    …
+     358→func fatalIfErr(err error, msg string) {
+     359→	if err != nil {
+     360→		log.Fatalf("ERROR: %s: %s", msg, err)
+     361→	}
+    …
+     364→func fatalIfCmdErr(err error, cmd string, out []byte) {
+     365→	if err != nil {
+     366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
+     367→	}
+    …
+     370→func pathExists(path string) bool {
+     371→	_, err := os.Stat(path)
+     372→	return err == nil
+    …
+     375→func binaryExists(name string) bool {
+     376→	_, err := exec.LookPath(name)
+     377→	return err == nil
+    …
+     380→var sudoWarningOnce sync.Once
+     381→
+     382→func commandWithSudo(cmd ...string) *exec.Cmd {
+    …
+truststore_darwin.go …
+truststore_java.go
+    …
+      21→var (
+      22→	hasJava    bool
+      23→	hasKeytool bool
+      24→
+      25→	javaHome    string
+      26→	cacertsPath string
+      27→	keytoolPath string
+      28→	storePass   string = "changeit"
+      29→)
+      31→func init() {
+    …
+      57→func (m *mkcert) checkJava() bool {
+    …
+      81→func (m *mkcert) installJava() {
+    …
+      94→func (m *mkcert) uninstallJava() {
+    …
+     108→// execKeytool will execute a "keytool" command and if needed re-execute
+     109→// the command with commandWithSudo to work around file permissions.
+     110→func execKeytool(cmd *exec.Cmd) ([]byte, error) {
+    …
+truststore_linux.go …
+truststore_nss.go
+    …
+       5→package main
+       6→
+       7→import (
+       8→	"bytes"
+       9→	"log"
+      10→	"os"
+      11→	"os/exec"
+      12→	"path/filepath"
+      13→	"runtime"
+      14→	"strings"
+      15→)
+    …
+      18→	hasNSS       bool
+      19→	hasCertutil  bool
+      20→	certutilPath string
+      21→	nssDBs       = []string{
+    …
+      26→	firefoxPaths = []string{
+    …
+      39→func init() {
+    …
+      73→func (m *mkcert) checkNSS() bool {
+    …
+      89→func (m *mkcert) installNSS() bool {
+    …
+     106→func (m *mkcert) uninstallNSS() {
+    …
+     118→// execCertutil will execute a "certutil" command and if needed re-execute
+     119→// the command with commandWithSudo to work around file permissions.
+     120→func execCertutil(cmd *exec.Cmd) ([]byte, error) {
+    …
+     131→func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {
+    …
+truststore_windows.go …

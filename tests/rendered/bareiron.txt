@@ -1,0 +1,302 @@
+.github/
+    ISSUE_TEMPLATE/
+        bug_report.md …
+        feature_request.md …
+        optimization-idea.md …
+    workflows/
+        build.yml …
+.gitignore …
+LICENSE …
+README.md
+       1→# bareiron
+       2→Minimalist Minecraft server for memory-restrictive embedded systems.
+       3→
+       4→The goal of this project is to enable hosting Minecraft servers on very weak devices, such as the ESP32. The project's priorities are, in order: **memory usage**, **performance**, and **features**. Because of this, compliance with vanilla Minecraft is not guaranteed, nor is it a goal of the project.
+       6→- Minecraft version: `1.21.8`
+       7→- Protocol version: `772`
+       8→
+       9→> [!WARNING]
+      10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
+      12→## Quick start
+    …
+      17→## Compilation
+    …
+      28→## Configuration
+    …
+      39→## Non-volatile storage (optional)
+    …
+      48→## Contribution
+    …
+build.sh
+       1→#!/usr/bin/env bash
+       2→
+       3→# Check for registries before attempting to compile, prevents confusion
+       4→if [ ! -f "include/registries.h" ]; then
+       5→  echo "Error: 'include/registries.h' is missing."
+       6→  echo "Please follow the 'Compilation' section of the README to generate it."
+       7→  exit 1
+       8→fi
+       9→
+      10→# Figure out executable suffix (for MSYS compilation)
+      11→case "$OSTYPE" in
+      12→  msys*|cygwin*|win32*) exe=".exe" ;;
+      13→  *) exe="" ;;
+      14→esac
+      15→
+      16→# mingw64-specific linker options
+      17→windows_linker=""
+      18→unameOut="$(uname -s)"
+      19→case "$unameOut" in
+      20→  MINGW64_NT*)
+      21→    windows_linker="-static -lws2_32 -pthread"
+      22→    ;;
+      23→esac
+      24→
+      25→# Default compiler
+      26→compiler="gcc"
+      27→
+      28→# Handle arguments for windows 9x build
+      29→for arg in "$@"; do
+      30→  case $arg in
+      31→    --9x)
+      32→      if [[ "$unameOut" == MINGW64_NT* ]]; then
+      33→        compiler="/opt/bin/i686-w64-mingw32-gcc"
+      34→        windows_linker="$windows_linker -Wl,--subsystem,console:4"
+      35→      else
+      36→        echo "Error: Compiling for Windows 9x is only supported when running under the MinGW64 shell."
+      37→        exit 1
+      38→      fi
+      39→      ;;
+      40→  esac
+      41→done
+      42→
+      43→rm -f "bareiron$exe"
+      44→$compiler src/*.c -O2 -Iinclude -o "bareiron$exe" $windows_linker
+      45→"./bareiron$exe"
+build_registries.js …
+extract_registries.sh …
+include/
+    crafting.h
+           1→#ifndef CRAFTING_H
+           2→#define CRAFTING_H
+           3→
+           4→#include "globals.h"
+           5→
+           6→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item);
+           7→void getSmeltingOutput (PlayerData *player);
+           8→
+           9→#endif
+    globals.h
+        …
+           4→#include <stdint.h>
+           5→#include <unistd.h>
+        …
+           8→  #define WIFI_SSID "your-ssid"
+           9→  #define WIFI_PASS "your-password"
+          10→  void task_yield ();
+        …
+          12→  #define task_yield();
+        …
+          15→#define true 1
+          16→#define false 0
+          18→// TCP port, Minecraft's default is 25565
+          19→#define PORT 25565
+          21→// How many players to keep in memory, NOT the amount of concurrent players
+          22→// Even when offline, players who have logged on before take up a slot
+          23→#define MAX_PLAYERS 16
+          25→// How many mobs to allocate memory for
+          26→#define MAX_MOBS (MAX_PLAYERS)
+          28→// Manhattan distance at which mobs despawn
+          29→#define MOB_DESPAWN_DISTANCE 256
+        …
+          32→#define GAMEMODE 0
+        …
+          35→#define VIEW_DISTANCE 2
+        …
+          38→#define TIME_BETWEEN_TICKS 1000000
+        …
+          41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
+        …
+          45→#define INITIAL_WORLD_SEED 0xA103DE6C
+        …
+          49→#define INITIAL_RNG_SEED 0xE2B9419
+        …
+          53→#define CHUNK_SIZE 8
+        …
+          56→#define TERRAIN_BASE_HEIGHT 60
+          58→// Cave generation Y level
+          59→#define CAVE_BASE_DEPTH 24
+        …
+          63→#define BIOME_SIZE (CHUNK_SIZE * 8)
+          65→// Calculated from BIOME_SIZE
+          66→#define BIOME_RADIUS (BIOME_SIZE / 2)
+        …
+          71→#define VISITED_HISTORY 4
+        …
+          75→#define MAX_BLOCK_CHANGES 20000
+        …
+          93→#define DISK_SYNC_INTERVAL 15000000
+        …
+         103→#define NETWORK_TIMEOUT_TIME 15000000
+         105→// Size of the receive buffer for incoming string data
+         106→#define MAX_RECV_BUF_LEN 256
+        …
+         165→#define STATE_NONE 0
+         166→#define STATE_STATUS 1
+         167→#define STATE_LOGIN 2
+         168→#define STATE_TRANSFER 3
+         169→#define STATE_CONFIGURATION 4
+         170→#define STATE_PLAY 5
+         171→
+         172→extern ssize_t recv_count;
+         173→extern uint8_t recv_buffer[MAX_RECV_BUF_LEN];
+         174→
+         175→extern uint32_t world_seed;
+         176→extern uint32_t rng_seed;
+         177→
+         178→extern uint16_t world_time;
+         179→extern uint32_t server_ticks;
+         180→
+         181→extern char motd[];
+         182→extern uint8_t motd_len;
+        …
+         185→  extern char brand[];
+         186→  extern uint8_t brand_len;
+        …
+         189→extern uint16_t client_count;
+         190→
+         191→typedef struct {
+         192→  short x;
+         193→  short z;
+         194→  uint8_t y;
+         195→  uint8_t block;
+         196→} BlockChange;
+        …
+         200→typedef struct {
+        …
+         238→} PlayerData;
+         240→typedef struct {
+         241→  uint8_t type;
+         242→  short x;
+         243→  // When the mob is dead (health is 0), the Y coordinate acts
+         244→  // as a timer for deleting and deallocating the mob
+         245→  uint8_t y;
+         246→  short z;
+         247→  // Lower 5 bits: health
+         248→  // Middle 1 bit: sheep sheared, unused for other mobs
+         249→  // Upper 2 bits: panic timer
+         250→  uint8_t data;
+         251→} MobData;
+        …
+         255→union EntityDataValue {
+         256→  uint8_t byte;
+         257→  int pose;
+         258→};
+         260→typedef struct {
+         261→  uint8_t index;
+         262→  // 0 - Byte
+         263→  // 21 - Pose
+         264→  int type;
+         265→  union EntityDataValue value;
+         266→} EntityData;
+         268→extern BlockChange block_changes[MAX_BLOCK_CHANGES];
+         269→extern int block_changes_count;
+         270→
+         271→extern PlayerData player_data[MAX_PLAYERS];
+         272→extern int player_data_count;
+         273→
+         274→extern MobData mob_data[MAX_MOBS];
+        …
+    packets.h …
+    procedures.h …
+    serialize.h
+           1→#ifndef SERIALIZE_H
+           2→#define SERIALIZE_H
+           3→
+           4→#include "globals.h"
+           5→
+           6→#ifdef SYNC_WORLD_TO_DISK
+           7→  int initSerializer ();
+           8→  void writeBlockChangesToDisk (int from, int to);
+           9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
+          10→  void writePlayerDataToDisk ();
+          11→  void writeDataToDiskOnInterval ();
+          12→#else
+          13→  // Define no-op placeholders for when disk syncing isn't enabled
+          14→  #define writeBlockChangesToDisk(a, b)
+          15→  #define writeChestChangesToDisk(a, b)
+          16→  #define writePlayerDataToDisk()
+          17→  #define writeDataToDiskOnInterval()
+          18→  #define initSerializer() 0
+          19→#endif
+          20→
+          21→#endif
+    structures.h
+           1→#ifndef H_STRUCTURES
+           2→#define H_STRUCTURES
+           3→
+           4→void placeTreeStructure (short x, uint8_t y, short z);
+           5→
+           6→#endif
+    tools.h …
+    varnum.h
+           1→#ifndef H_VARNUM
+           2→#define H_VARNUM
+           3→
+           4→#include <stdint.h>
+           5→
+           6→#define SEGMENT_BITS 0x7F
+           7→#define CONTINUE_BIT 0x80
+           8→#define VARNUM_ERROR 0xFFFFFFFF
+           9→
+          10→int32_t readVarInt (int client_fd);
+          11→int sizeVarInt (uint32_t value);
+          12→void writeVarInt (int client_fd, uint32_t value);
+          13→
+          14→#endif
+    worldgen.h
+           1→#ifndef H_WORLDGEN
+           2→#define H_WORLDGEN
+           3→
+           4→#include <stdint.h>
+           5→
+           6→typedef struct {
+           7→  short x;
+           8→  short z;
+           9→  uint32_t hash;
+          10→  uint8_t biome;
+          11→} ChunkAnchor;
+          12→
+          13→typedef struct {
+          14→  short x;
+          15→  uint8_t y;
+          16→  short z;
+          17→  uint8_t variant;
+          18→} ChunkFeature;
+          19→
+          20→uint32_t getChunkHash (short x, short z);
+          21→uint8_t getChunkBiome (short x, short z);
+          22→uint8_t getHeightAtFromHash (int rx, int rz, int _x, int _z, uint32_t chunk_hash, uint8_t biome);
+          23→uint8_t getHeightAt (int x, int z);
+          24→uint8_t getTerrainAt (int x, int y, int z, ChunkAnchor anchor);
+          25→uint8_t getBlockAt (int x, int y, int z);
+          26→
+          27→extern uint8_t chunk_section[4096];
+          28→uint8_t buildChunkSection (int cx, int cy, int cz);
+          29→
+          30→#endif
+src/
+    CMakeLists.txt …
+    crafting.c …
+    globals.c …
+    main.c
+        …
+          68→void handlePacket (int client_fd, int length, int packet_id, int state) {
+        …
+    packets.c …
+    procedures.c …
+    serialize.c …
+    structures.c …
+    tools.c …
+    varnum.c …
+    worldgen.c …

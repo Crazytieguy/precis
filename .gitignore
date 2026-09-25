@@ -5,12 +5,8 @@ CLAUDE.local.md
 .claude/scheduled_tasks.lock
 HISTORY.md
 
-# .new sidecars: inspection artifacts written when divergence /
-# rendered / validation baselines mismatch and the run isn't in regen mode.
-# Never commit. Regen via `UPDATE_BASELINES=1 cargo t`.
-tests/divergence/*.md.new
-tests/validation/*.md.new
-**/*.snap.new
+# Baseline mismatch sidecars written by tests/fixture_baselines.rs.
+tests/*/*.new
 ignore/
 .precis-batch-base-ref
 .claude/worktrees/
