@@ -57,7 +57,7 @@ const LANGUAGES: [&Language; 6] = [
 
 impl Language {
     /// The language whose extensions include `path`'s extension.
-    fn from_path(path: &Path) -> Option<&'static Language> {
+    pub(crate) fn from_path(path: &Path) -> Option<&'static Language> {
         let extension = path.extension()?.to_str()?;
         LANGUAGES.into_iter().find(|language| {
             language

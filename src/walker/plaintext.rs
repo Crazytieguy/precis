@@ -249,7 +249,7 @@ pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
     "swift", "zig", "dart", "nim", "cr", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex",
     "exs", // scripting
     "rb", "php", "pl", "pm", "r", "jl", "tcl", "pyi", // component-file web frameworks
-    "vue", "svelte", "astro", "jsx",
+    "vue", "svelte", "astro",
 ];
 
 /// Contract-bearing extensions whose indentation-zero lines are real
@@ -712,11 +712,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let named = classify_plaintext(name)
             .or(is_workflow.then_some(Class::Tooling))
             .filter(|_| !name.ends_with(".sh") || is_build_script_location(dir, ctx));
-        // Root `README.rst` belongs to the markdown walker; emitting
-        // a second slice of it would overlap its spans.
-        let owned_by_markdown = dir == ctx.root() && super::markdown::is_readme_rst(&file);
+        // Root `README.rst` belongs to the markdown walker and parsed
+        // languages to the code engine; a second slice of either would
+        // overlap their spans.
+        let owned_elsewhere = (dir == ctx.root() && super::markdown::is_readme_rst(&file))
+            || super::code::Language::from_path(&file).is_some();
         let Some(class) = named.or_else(|| {
-            (!owned_by_markdown)
+            (!owned_elsewhere)
                 .then(|| classify_source_text(name))
                 .flatten()
         }) else {
@@ -1184,6 +1186,27 @@ mod tests {
         );
         assert_has_plaintext_whole(&report, "LICENSE");
         assert_has_plaintext_whole(&report, ".gitignore");
+    }
+
+    /// A file the code engine parses is never also a fallback file —
+    /// two walkers claiming its rows would overlap.
+    #[test]
+    fn plaintext_fallback_skips_files_the_code_engine_parses() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("App.jsx"), "export const X = 1;\n").unwrap();
+        std::fs::write(root.join("App.kt"), "class App\n").unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let files: Vec<_> = expand_in_dir(root, &ctx)
+            .into_iter()
+            .map(|batch| batch.key)
+            .collect();
+        assert_eq!(
+            files,
+            vec![BatchKey::from(PlaintextKey::DeclSurface {
+                file: root.join("App.kt")
+            })]
+        );
     }
 
     /// A small file in an unparsed language renders whole once the
