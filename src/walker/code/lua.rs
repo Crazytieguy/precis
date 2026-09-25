@@ -10,7 +10,8 @@
 //!
 //! The module doc is a top-of-file identity table (`_VERSION`, …). What
 //! `require` returns (the top-level `return` and a `setmetatable(…)` call)
-//! joins the roster as re-export rows.
+//! joins the roster as re-export rows; function-valued fields of the
+//! tables it hands out are `Callable` declarations instead.
 
 use tree_sitter::Node;
 
@@ -28,24 +29,41 @@ pub(super) const LANGUAGE: Language = Language {
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let identity = module_identity_rows(file);
+    let exports = module_export_nodes(file);
+    let mut export_fields = Vec::new();
+    for export in &exports {
+        for table in export_tables(*export) {
+            collect_function_fields(table, &mut export_fields, 1);
+        }
+    }
+    let field_rows: Vec<usize> = export_fields
+        .iter()
+        .flat_map(|field| file.node_rows(*field))
+        .collect();
+    let mut decls = find_decls(file.tree.root_node());
+    decls.extend(export_fields);
+    decls.sort_by_key(Node::start_byte);
     FileModel {
         module_doc: if identity.is_empty() {
             Vec::new()
         } else {
             vec![Item::new(identity)]
         },
-        reexports: module_exports(file),
-        decls: find_decls(file.tree.root_node())
-            .into_iter()
-            .map(|node| callable(node, file))
+        reexports: exports
+            .iter()
+            .flat_map(|export| file.node_rows(*export))
+            .filter(|row| !field_rows.contains(row))
+            .map(|row| Item::new([row]))
             .collect(),
+        decls: decls.into_iter().map(|node| callable(node, file)).collect(),
     }
 }
 
 /// What `require` returns: the top-level `return`, and a
-/// `setmetatable(…)` call that makes the module callable, one item per
-/// row so a long export table chunks like any roster.
-fn module_exports(file: &SourceFile) -> Vec<Item> {
+/// `setmetatable(…)` call that makes the module callable. Their rows join
+/// the roster one item per row, except function-valued fields of their
+/// tables, which are declarations.
+fn module_export_nodes<'a>(file: &'a SourceFile) -> Vec<Node<'a>> {
     let root = file.tree.root_node();
     let mut cursor = root.walk();
     root.children(&mut cursor)
@@ -55,7 +73,30 @@ fn module_exports(file: &SourceFile) -> Vec<Item> {
                 || (child.kind() == "function_call"
                     && file.text(*child).starts_with("setmetatable"))
         })
-        .flat_map(|child| file.node_rows(child).map(|row| Item::new([row])))
+        .collect()
+}
+
+/// Table constructors an export hands out: returned tables, and the
+/// table arguments of a returned or top-level call.
+fn export_tables(export: Node) -> Vec<Node> {
+    let expressions = match export.kind() {
+        "table_constructor" => return vec![export],
+        "function_call" => export.child_by_field_name("arguments"),
+        _ => {
+            let mut cursor = export.walk();
+            export
+                .children(&mut cursor)
+                .find(|child| child.kind() == "expression_list")
+        }
+    };
+    let Some(expressions) = expressions else {
+        return Vec::new();
+    };
+    let mut cursor = expressions.walk();
+    expressions
+        .named_children(&mut cursor)
+        .filter(|expression| matches!(expression.kind(), "table_constructor" | "function_call"))
+        .flat_map(export_tables)
         .collect()
 }
 
@@ -278,7 +319,44 @@ return M
             .iter()
             .map(|item| item.rows.clone())
             .collect();
-        assert_eq!(exports, [vec![3], vec![4], vec![5], vec![7]]);
+        assert_eq!(exports, [vec![3], vec![5], vec![7]]);
+        assert_eq!(name_rows(&model), [2, 4]);
+
+        let returns_table = extract_source(
+            "\
+local function run(x)
+  return x
+end
+return {
+  run = run,
+  stop = function(reason)
+    print(reason)
+    return false
+  end,
+}
+",
+        );
+        let exports: Vec<Vec<usize>> = returns_table
+            .reexports
+            .iter()
+            .map(|item| item.rows.clone())
+            .collect();
+        assert_eq!(exports, [vec![4], vec![5], vec![10]]);
+        let stop = &returns_table.decls[1];
+        assert_eq!(stop.head, [6]);
+        assert_eq!(stop.body, [Item::new([7]), Item::new([8])]);
+
+        let returns_callable = extract_source(
+            "\
+return setmetatable({}, {
+  __call = function(_, x)
+    return x
+  end,
+})
+",
+        );
+        assert_eq!(returns_callable.reexports, [Item::new([1]), Item::new([5])]);
+        assert_eq!(returns_callable.decls[0].body, [Item::new([3])]);
 
         let returns_function = extract_source(
             "\
