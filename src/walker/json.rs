@@ -129,16 +129,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     let pairs = top_level_pairs(&tree, &source);
     let manifest_role = package_json_role(&pairs);
     let scripts_deps_factor = manifest_role.scripts_deps_factor();
-    // A paired inline lint + coverage policy is part of the test workflow.
-    // A lone linter ruleset is not enough: folding one into Scripts can turn
-    // a small operational batch into a large config appendix.
-    let has_xo_and_c8 = pairs.iter().any(|(name, _, _, _)| name == "xo")
-        && pairs.iter().any(|(name, _, _, _)| name == "c8");
-    let scripts_key_match = if has_xo_and_c8 {
-        is_scripts_or_inline_lint_coverage_key
-    } else {
-        is_scripts_key
-    };
     let mut sections = Vec::new();
     // `mass_graded` marks the dependency rosters, the one section class
     // whose value stops tracking its size — see
@@ -177,7 +167,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     collect(
         JsonKey::Scripts { file: f.clone() },
         scripts_value(file, ctx) * scripts_deps_factor,
-        scripts_key_match,
+        is_scripts_key,
         false,
     );
     collect(
@@ -337,14 +327,7 @@ fn is_skipped_json(name: &str) -> bool {
 fn is_identity_key(k: &str) -> bool {
     matches!(
         k,
-        "name"
-            | "version"
-            | "description"
-            | "license"
-            | "licenses"
-            | "type"
-            | "private"
-            | "vscodeRef"
+        "name" | "version" | "description" | "license" | "licenses" | "type" | "private"
     )
 }
 
@@ -394,11 +377,7 @@ fn is_runtime_key(k: &str) -> bool {
 }
 
 fn is_scripts_key(k: &str) -> bool {
-    matches!(k, "scripts" | "bin-scripts")
-}
-
-fn is_scripts_or_inline_lint_coverage_key(k: &str) -> bool {
-    is_scripts_key(k) || matches!(k, "xo" | "c8")
+    k == "scripts"
 }
 
 fn is_runtime_dependencies_key(k: &str) -> bool {
@@ -434,7 +413,7 @@ fn is_package_section_key(k: &str) -> bool {
         || is_identity_meta_key(k)
         || is_entry_key(k)
         || is_runtime_key(k)
-        || is_scripts_or_inline_lint_coverage_key(k)
+        || is_scripts_key(k)
         || is_runtime_dependencies_key(k)
         || is_dev_dependencies_key(k)
 }
@@ -1077,20 +1056,6 @@ mod tests {
             (ratio - crate::value::DEV_DEPENDENCY_ROSTER_SCALE).abs() < 1e-9,
             "dev-only batch should carry exactly the roster scale, got {ratio}"
         );
-    }
-
-    #[test]
-    fn walker_json_manifest_recall_keys_join_nearest_existing_class() {
-        assert!(is_identity_key("vscodeRef"));
-        assert!(is_scripts_or_inline_lint_coverage_key("xo"));
-        assert!(is_scripts_or_inline_lint_coverage_key("c8"));
-        assert!(!is_scripts_key("xo"));
-        assert!(!is_scripts_key("c8"));
-        assert!(!is_identity_meta_key("vscodeRef"));
-        assert!(!is_dev_dependencies_key("xo"));
-        assert!(!is_dev_dependencies_key("c8"));
-        assert!(is_package_section_key("xo"));
-        assert!(is_package_section_key("c8"));
     }
 
     #[test]

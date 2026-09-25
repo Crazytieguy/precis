@@ -86,25 +86,6 @@ package.json
   51→		"text"
   52→	],
   …
-  65→	"xo": {
-  66→		"rules": {
-  67→			"unicorn/prefer-string-slice": "off",
-  68→			"@typescript-eslint/consistent-type-imports": "off",
-  69→			"@typescript-eslint/consistent-type-exports": "off",
-  70→			"@typescript-eslint/consistent-type-definitions": "off",
-  71→			"unicorn/expiring-todo-comments": "off"
-  72→		}
-  73→	},
-  74→	"c8": {
-  75→		"reporter": [
-  76→			"text",
-  77→			"lcov"
-  78→		],
-  79→		"exclude": [
-  80→			"source/vendor"
-  81→		]
-  82→	}
-  …
 readme.md
   …
   10→> Terminal string styling done right
@@ -316,6 +297,37 @@ source/
   vendor/
     ansi-styles/
       index.d.ts
+        1→export interface CSPair { // eslint-disable-line @typescript-eslint/naming-convention
+        …
+        13→export interface ColorBase {
+        …
+        26→export interface Modifier {
+        …
+        75→export interface ForegroundColor {
+        …
+        105→export interface BackgroundColor {
+        …
+        135→export interface ConvertColor {
+        …
+        186→export type ModifierName = keyof Modifier;
+        …
+        193→export type ForegroundColorName = keyof ForegroundColor;
+        …
+        200→export type BackgroundColorName = keyof BackgroundColor;
+        …
+        207→export type ColorName = ForegroundColorName | BackgroundColorName;
+        …
+        212→export const modifierNames: readonly ModifierName[];
+        …
+        217→export const foregroundColorNames: readonly ForegroundColorName[];
+        …
+        222→export const backgroundColorNames: readonly BackgroundColorName[];
+        …
+        227→export const colorNames: readonly ColorName[];
+        228→
+        229→declare const ansiStyles: {
+        …
+        236→export default ansiStyles;
       index.js
         …
         68→export const modifierNames = Object.keys(styles.modifier);
