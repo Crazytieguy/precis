@@ -158,7 +158,8 @@ language.**
   tokens on large repos), and token-only ranking underpriced deep
   indentation and long listings exactly there. The rate comes from the
   two budgets rather than a constant, so the subset property above holds
-  between char-capped runs whose budgets share one chars-per-token rate.
+  between char-capped runs whose budgets share one chars-per-token rate;
+  varying only one of the two budgets changes the ranking, so it does not.
   The grid runs uncapped, so it can't see this; it was judged on
   plugin-mode output of external repos.
 
