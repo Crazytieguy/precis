@@ -305,6 +305,8 @@ fn push_sections(
     section_predecessor: Option<BatchKey>,
     ctx: &WalkCtx,
 ) {
+    let base = section_base_value(file, ctx);
+    let readme = is_readme(file);
     let mut prev_section_key: Option<BatchKey> = None;
     for (idx, range) in ranges.iter().enumerate() {
         if let Some(content) = build_section_content(file, source, range, headline) {
@@ -328,7 +330,7 @@ fn push_sections(
                 key: key.into(),
                 predecessor,
                 content,
-                value: section_value(file, range, ctx),
+                value: section_value(base, readme, range),
             });
         }
     }
@@ -423,22 +425,13 @@ impl NavDensity {
 /// budget at any of these settings.
 const DENSE_MD_SIBLINGS: usize = 3;
 
-fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
-        * readme_index_decay(range)
-        * if range.is_reference_usage_section {
-            REFERENCE_USAGE_SECTION_FACTOR
-        } else {
-            1.0
-        }
-}
-
 /// Boost for README usage/reference sections (see
 /// [`SectionRange::is_reference_usage_section`]) so they clear the
 /// early budget instead of sinking below the README index decay.
 const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
 
-/// Index decay for README sections. (An adaptive steeper falloff for
+/// Index decay for README sections: `(idx + 1)^-0.15`, floored at 0.7,
+/// counting from the first real H2. (An adaptive steeper falloff for
 /// long READMEs (≥18 H2s) was tuned on the pre-refreeze keys and
 /// measured obsolete on the frozen ones — un-shipped 2026-07-06.)
 fn readme_index_decay(range: &SectionRange) -> f64 {
@@ -447,15 +440,15 @@ fn readme_index_decay(range: &SectionRange) -> f64 {
     } else {
         range.parent_index
     };
-    index_decay(h2_idx, 0.15, 0.7)
+    (h2_idx as f64 + 1.0).powf(-0.15).max(0.7)
 }
 
-/// `(idx + 1)^-exp`, floored at `floor` — shared decay shape.
-fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
-    ((idx as f64 + 1.0).powf(-exp)).max(floor)
-}
-
-fn heading_slab_value(file: &Path, ctx: &WalkCtx) -> f64 {
+/// Value of a section of `file` before its range's own factors: the
+/// README section tier, or the heading-slab tier for any other doc.
+fn section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    if is_readme(file) {
+        return mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
+    }
     let is_orientation = is_orientation_doc(file);
     // Root-level (depth 1) orientation already wins; only nested
     // orientation gets the cat bump.
@@ -472,14 +465,17 @@ fn heading_slab_value(file: &Path, ctx: &WalkCtx) -> f64 {
     )
 }
 
-/// Per-section value. Child ranges scale the parent's value so they
-/// don't over-rank once cost drops. `Intro` keeps full weight.
-fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
-    let parent = if is_readme(file) {
-        readme_section_value(file, range, ctx)
-    } else {
-        heading_slab_value(file, ctx)
-    };
+/// Per-section value from the file's [`section_base_value`]. Child
+/// ranges scale the parent's value so they don't over-rank once cost
+/// drops. `Intro` keeps full weight.
+fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
+    let mut parent = base;
+    if readme {
+        parent *= readme_index_decay(range);
+    }
+    if range.is_reference_usage_section {
+        parent *= REFERENCE_USAGE_SECTION_FACTOR;
+    }
     // A reference-vocabulary README H3 (`### Colors`, `### Modifiers`)
     // is a top-rank catalog row in its own right, not H3 fan-out noise —
     // it skips the sub-section scale.
