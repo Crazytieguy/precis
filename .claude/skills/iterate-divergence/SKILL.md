@@ -26,10 +26,13 @@ is a net win on training.
 
 ## Priority
 
-`Score(3000)` (the CLI default budget) is the primary target; the other
-grid budgets are valid targets too, and gains at early budgets carry
-through later rows. Complexity is a cost: a small gain may not pay for
-the code it adds, and removing code at flat score is a ship.
+`Score(3000)` (the CLI default budget) is the primary target. It is
+also close to what the plugin injects every session: a 10,000-UTF-16-unit
+cap shared with `--help`, median 2,730 tokens on 48 repos outside the
+corpus (measured 2026-09-25). The other grid budgets are valid targets
+too, and gains at early budgets carry through later rows. Complexity is
+a cost: a small gain may not pay for the code it adds, and removing code
+at flat score is a ship.
 
 ## 1. Find a candidate
 

@@ -204,6 +204,24 @@ language.**
 - Per-walker run state goes in named fields on `WalkCtx` (`rust_state`,
   `typescript_state`, …), not a `TypeId` bag or thread-local.
 
+## Output notation and the plugin cap
+
+- **Score is a poor judge of row formatting.** Re-pricing rows
+  re-prices the NS too, and the corpus Score curve falls above 3000
+  tokens, so a format that fits more content per token scores roughly
+  as if the budget had grown: putting source rows at column 0 (about
+  14% fewer tokens) measured −0.027 at 3000 while showing more. Open:
+  whether to take that trade.
+- **o200k charges for leading spaces only in steps:** a run of two or
+  more spaces before a digit costs two tokens whatever its length, and
+  ` …\n` costs the same one token as `\n`. Indent width is therefore a
+  character cost, not a token cost.
+- **The plugin cap is in UTF-16 code units.** Claude Code keeps a hook's
+  `additionalContext` inline only up to 10,000 JavaScript string units
+  and otherwise replaces it with a file path and a preview, so the
+  default `--char-budget` is derived at runtime from the rendered help
+  and the hook's wrapper text (`src/main.rs`).
+
 ## Open items
 
 - **Ellipsis atoms are credited on schedule content, not rendered
