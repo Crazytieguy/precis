@@ -179,6 +179,13 @@ must not undo:
   A program's `main`, and the file's other functions when `main` has at
   most two top-level statements, are `Whole` declarations, so their
   bodies price at the `Decl` tier.
+- **Python's central modules are found through package `__init__`
+  imports.** A module an enclosing `__init__.py` imports names from gets
+  a ×1.2 file weight. Signals that rank every batch of a big module
+  higher lost badly at 3000 (2026-09-25): a line-count file weight
+  (−0.018), counting class members as `Names` entries (−0.020), listing
+  members in the file roster (−0.002). They buy the big module's
+  declaration dive, not its roster.
 
 ## Threads
 
