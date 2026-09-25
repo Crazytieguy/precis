@@ -14,9 +14,7 @@
 - **Release prefers invalid output to a panic.** Hot-path asserts are
   `debug_assert!`; release builds tolerate walker contract violations
   rather than abort. The end-of-run budget cross-check follows the same rule.
-- **Plan files are ephemeral; design rationale lives in the repo.** Per-session
-  plans shouldn't carry decisions that need to survive plan churn — those
-  go here or in code / agent prompts.
+- **Plan files are ephemeral; design rationale lives in the repo.**
 - **Simplify over validate.** When a feature would need extra validation,
   consider whether collapsing the design eliminates the need.
 - **Output is a verbatim subset of the source.** No paraphrasing,
@@ -28,132 +26,75 @@
 
 - North Star documents (`tests/north-stars/<fixture>.toml`) are agent-drafted,
   human-reviewed, and **frozen** before implementation iterates against them.
-  Once frozen they are the divergence test's ground truth; implementation
-  changes do not edit them.
+  Implementation changes do not edit them. Scores are only comparable within
+  one freeze of the corpus.
 - `revision_pin` is the only thing binding an NS to its fixture revision.
   `load_ns_checked` enforces it in every fixture test.
-- **The corpus has been re-frozen wholesale twice** (22d2f7b3, 2026-07-05;
-  2fbbe8d4, 2026-07-28). Scores are only comparable within one key; the
-  previous corpus is `git show 2fbbe8d4^:tests/north-stars/<fixture>.toml`.
 - **Training vs validation tier.** Training fixtures get a full divergence
   report at `tests/divergence/<name>.md` and drive calibration; validation
   fixtures get a one-line score at `tests/validation/<name>.md` and are
-  held out. The validation set is sampled to match the GitHub language
-  distribution within supported languages. The point is overfit
-  detection — if a change wins on training but tanks on validation, the
-  rule isn't general. Enforcement is by process (the `iterate-divergence`
-  skill), not the type system. The holdout also covers the validation
-  fixtures' NS files (which share `tests/north-stars/` with training)
-  and their source under `tests/fixtures/`; a parallel directory tree
-  would not strengthen the convention, since both surfaces are equally
-  readable to anyone disregarding the skill.
-- **Validation debugging surface is intentionally thin.** No rendered
-  snapshot or per-row diff for held-out fixtures. The
-  acceptable responses to a validation move are: improve the walker
-  generally against the *training* reports and re-run, or accept the
-  move as a real generalization signal. Adding diagnostic artifacts
-  would re-expose the surface the holdout exists to hide.
-- **Growth envelope**: each batch's marginal cost must satisfy
-  `cost_i ≤ 100 + 0.3 · cumulative_before`. Per-batch is too local;
-  cumulative matches the author's intuition ("doubling aggregate on
-  batch 2 is fine, doubling on batch 10 is bad") and doesn't force
-  authors to inflate a small preceding batch to clear the path for a
-  legitimately larger one later. Constants live in `src/ns_simulate.rs`.
+  held out for overfit detection. The holdout (their NS files and sources
+  too) is enforced by process — the `iterate-divergence` skill — and the
+  validation surface stays thin on purpose: no rendered snapshot or
+  per-row diff, since those would re-expose what the holdout hides.
+- **Growth envelope**: each NS batch's marginal cost must satisfy
+  `cost_i ≤ 100 + 0.3 · cumulative_before` (constants in
+  `src/ns_simulate.rs`), so NS prefixes stay coherent at small budgets
+  without forcing authors to inflate an early batch.
 
-## Scheduler prefix-monotonicity (consequence for divergence)
+## Scheduler prefix-monotonicity
 
-The scheduler stops on first ill-fit (`src/scheduler.rs` module doc has
-the algorithm), after spending what is left on the longest affordable
-prefix of that batch's entries or lines. **Every decision taken at
-budget `T_small` is also taken at `T_large`**, so `T_small`'s output is
-a subset of `T_large`'s, sub-budget outputs are replays of a single
-`T_max` schedule plus the head of the batch it stops on, and the
-divergence metric runs the walker once per fixture rather than per
-budget. Skipping an ill-fitting batch for a smaller one would break
-this.
+The scheduler stops on the first top-ranked batch that doesn't fit, after
+spending what is left on the longest affordable prefix of that batch's
+entries or lines (`src/scheduler.rs`). **Every decision taken at budget
+`T_small` is also taken at `T_large`**, so `T_small`'s output is a subset
+of `T_large`'s, and the divergence metric replays one `T_max` schedule
+per fixture instead of running the walker per budget. Skipping an
+ill-fitting batch for a smaller one would break this.
 
 ## Auto-injected docs don't belong in precis output
 
 Files the host harness already loads into the model's context —
-`AGENTS.md` / `CLAUDE.md` at any depth (Claude Code's CLAUDE.md
-hierarchy is recursive), and text files under `.claude/skills/`,
-`.agent/skills/`, `.cursor/rules/` — should not have their bodies
-scheduled by precis. Their paths stay discoverable via fs listings, but
-the prose-body batches (`MarkdownKey::Prelude`, `MarkdownKey::Section`)
-are walker-side suppressed. Residual
-structural batches (`HeadingsOutline`, `ReadmeHeadline`) carry a 0.1×
-value discount. precis is a value-per-token summary for follow-up tool
-calls to build on, not a guarantee that all content is reachable.
-
-If an NS surfaces these files' content as primary atoms, that's an
-NS-author error to flag — don't move the goalpost by un-suppressing the
-walker.
-
-Peripheral admin markdown (`is_peripheral_doc`: changelogs, contributing
-guides, security policies, migration guides, …) gets the same body
-suppression, on measurement rather than policy: the schedule never
-bought those bodies.
+`AGENTS.md` / `CLAUDE.md` at any depth, and text files under
+`.claude/skills/`, `.agent/skills/`, `.cursor/rules/` — keep their
+listing rows, but their prose bodies are never scheduled and their
+structural batches carry a 0.1× discount. An NS that ranks their content
+as primary is an NS-author error, not a reason to un-suppress.
+Peripheral admin markdown (`is_peripheral_doc`) gets the same body
+suppression because the schedule never bought those bodies anyway.
 
 ## Gitignored content doesn't belong in precis output either
 
-Filtering is `fs_util::DirFilter`, built once per run and threaded
-through `WalkCtx`. Decisions worth not re-litigating:
-
 - **Gitignore rules apply only when the walk root is itself a repository
-  root**, not when an ancestor is (the `ignore` crate's `require_git`
-  default; what ripgrep and `fd` do). Ancestor search would make output
-  depend on rules outside the summarized tree — `tests/fixtures/<f>`
-  lives inside precis's own repo, so the frozen corpus would start
-  reading precis's `.gitignore` and each contributor's
-  `core.excludesFile`. The cost is that `precis packages/web` inside a
-  monorepo gets no gitignore filtering; if that becomes a real
-  complaint, the fix is a repo-root search plus an explicit escape for
-  roots under the corpus, not silently widening the gate.
-- **Matching is pattern-only; the index is never read.** A force-added
-  tracked file matching an ignore pattern is hidden. Consulting the
-  index would mean shelling out to `git ls-files` on every run.
-- **The heavy-directory blocklist (`should_skip_dir`) stays.** Inside a
-  repository it never fires, but precis also runs on trees that aren't
-  repositories (extracted archives, vendored snapshots, the fixture
-  corpus) where the filter is inert by design. `.git` is dropped
-  unconditionally in `list_dir`.
-- **A genuinely empty directory is not treated as ignored.** It is real
-  structure; the parity test in `src/fs_util.rs` encodes it as the single
-  expected difference from git.
-
+  root** (the `ignore` crate's `require_git` default; what ripgrep and
+  `fd` do). Ancestor search would make output depend on rules outside
+  the summarized tree — the corpus lives inside precis's own repo. The
+  cost is that `precis packages/web` inside a monorepo gets no gitignore
+  filtering.
+- **The corpus runs with the filter inert**: `clone_fixtures` strips
+  `.git`, so gitignore handling is covered only by unit tests, and the
+  heavy-directory blocklist (`should_skip_dir`) is what bounds traversal
+  on every fixture and on any tree that isn't a repository.
+- **Matching is pattern-only; the index is never read**, so a force-added
+  file matching an ignore pattern is hidden.
 - **A directory can be ignored by a pattern inside it** (a `.gitignore`
-  holding `*`). `DirFilter::hides_everything_in` answers this
-  recursively. Use git's walk (`git ls-files --others
-  --exclude-standard`), not `git check-ignore`, as the oracle — the
-  latter is a one-level pattern question.
+  holding `*`); a genuinely empty directory is not. The parity test in
+  `src/fs_util.rs` uses git's walk (`git ls-files --others
+  --exclude-standard`) as the oracle, not `git check-ignore`, which only
+  answers a one-level pattern question.
 
 ## Content outside the walk root doesn't belong in it at all
 
 precis runs on untrusted checkouts whose output is pasted into agent
 contexts, so containment is a property of the listing layer and every
-consumer inherits it:
-
-- **`DirFilter` always knows its walk root**, canonical form included
-  (`tests/fixtures` is a symlink). There is no rootless constructor —
-  a filter with no root can express no containment.
-- **A link surfaces only when it resolves inside the root**, with the
-  kind of what it resolves to. Escaping and dangling links are dropped;
-  in-root links (`CLAUDE.md -> AGENTS.md`) keep their rows.
-- **Listing *through* a link yields nothing.** That makes the walk
-  exactly the real directory tree, so link cycles are unreachable
-  rather than bounded — no depth caps or visited-sets.
-- **A named file walks its directory with only that file admitted**
-  (`DirFilter::single_file`), so it gets every walker unchanged. If it
-  is a link, it must resolve inside the directory it was named in —
-  the rule a listing applies to a linked entry.
-
-**Still open:** walkers that probe a *named* path directly —
-`dir.join("Cargo.toml").is_file()`, `package.json`, `__init__.py`,
-`mod.rs` — follow links and then read, so a checkout shipping
-`Cargo.toml -> /etc/passwd` still gets that file rendered. Closing it
-wants one contained-read helper adopted across the walker modules;
-`SourceCache` is not the chokepoint it looks like, since many walkers
-call `read_to_string` directly.
+consumer inherits it (`fs_util::list_dir`, `resolved_kind`): a link
+surfaces only when it resolves inside the root, listing through a link
+yields nothing (so link cycles are unreachable), and a named file walks
+its directory with only that file admitted. Content batches come from
+link-rejecting enumeration. The exception is workspace-membership
+parsing, which reads `package.json`, `pnpm-workspace.yaml` and
+`Cargo.toml` by name and follows links; it parses member lists and never
+renders the text.
 
 ## Cross-language vs language-specific concerns
 
@@ -179,18 +120,16 @@ language.**
 ## Output notation and the plugin cap
 
 - **Score is a poor judge of row formatting.** Re-pricing rows
-  re-prices the NS too, and the corpus Score curve falls above 3000
-  tokens, so a format that fits more content per token scores roughly
-  as if the budget had grown: putting source rows at column 0 (about
-  14% fewer tokens) measured −0.027 at 3000 while showing more.
+  re-prices the NS too, so a denser format scores roughly as if the
+  budget had changed: source rows at column 0 (about 14% fewer tokens)
+  measured −0.027 at 3000, and lost a pairwise A/B eval on fresh repos,
+  where judges found flush-left excerpts hard to attach to their files.
+  Rows stay nested under their file.
 - **o200k charges for leading spaces only in steps:** a run of two or
   more spaces before a digit costs two tokens whatever its length, and
   ` …\n` costs the same one token as `\n`. Indent width is therefore a
-  character cost, not a token cost.
-- **Line numbers are not padded.** The same step pricing made
-  right-aligning `N→` free in tokens, so it was dropped for the plugin
-  cap's characters. The cost is that the `→` column shifts by one at
-  9/10 and 99/100; indentation stays readable relative to `→`.
+  character cost, not a token cost — which is also why line numbers are
+  not right-aligned.
 - **The plugin cap is in UTF-16 code units.** Claude Code keeps a hook's
   `additionalContext` inline only up to 10,000 JavaScript string units
   and otherwise replaces it with a file path and a preview, so the
@@ -229,37 +168,28 @@ must not undo:
 ## Threads
 
 - **Only parsing is parallel.** `WalkCtx::parse_trees` parses a
-  directory's code and markdown files (and each TypeScript re-export
-  level) on scoped worker threads into the tree cache; everything that
-  decides output runs on the main thread in walk order. Output is
-  independent of thread timing only while a parse stays a pure function
-  of the file.
-- **Tokenizing on workers doesn't pay** (measured 2026-09-25).
-  Pre-counting every line of a directory's code files cost about 4× the
-  main-thread counting it replaced; pre-counting exactly the model's
-  item rows cut wall time 2–10% on the slowest repos but added 70–150 ms
-  of CPU per run: the same lines took about twice the CPU on workers as
-  on the main thread.
-- **The o200k table build (~55 ms) is fixed per run** and dominates
-  small repos. It happens inside `tiktoken_rs::o200k_base()`, so only
-  replacing the tokenizer would shrink it; the scheduler starts it on a
-  background thread and runs the essential-source scan meanwhile, unless
-  the seed listing's approximate cost already exceeds the budget (then
-  no source batch is ever absorbed and the scan would be wasted I/O).
+  directory's files on scoped worker threads into the tree cache;
+  everything that decides output runs on the main thread in walk order,
+  so output is independent of thread timing only while a parse stays a
+  pure function of the file.
+- **Tokenizing on workers doesn't pay:** the same lines cost about
+  twice the CPU on workers as on the main thread.
+- **The o200k table build (~55 ms) is fixed per run.** The scheduler
+  starts it on a background thread and runs the essential-source scan
+  meanwhile, unless the seed listing's approximate cost already exceeds
+  the budget.
 
 ## Open items
 
 - **Ellipsis atoms are credited on schedule content, not rendered
   output.** An NS Ellipsis atom can earn its 1-byte credit while the
   renderer emits one shared gap marker, or nothing for a blank-only
-  gap. Deliberately unchanged: aligning atomization with rendered
-  deltas would re-price every frozen NS mid-calibration. Revisit as a
-  deliberate metric revision at the next NS re-freeze.
-- **Per-row Score column can't decompose I × C**, and small walker
-  tweaks cascade decimal noise through every later row. Revisit if
-  iteration shows the single column loses signal.
-- **Min-tokens lower bound.** A cheap lower-bound cost estimator on
-  `BatchContent` would let the scheduler prune obviously-too-big batches
-  without touching the render tree. Line count alone misses
-  predecessor-overlap savings; full marginal cost is too expensive.
-  Benign at current fixture sizes.
+  gap. Aligning atomization with rendered deltas would re-price every
+  frozen NS; revisit at the next re-freeze.
+- **The answer key favours complete listings more than eval judges do.**
+  Judges on fresh repos most often fault budget spent on inventories of
+  test files, media and CI directories, but every listing demotion tried
+  (splitting co-located tests and media into a discounted follow-up
+  listing, a media-share discount, a steeper listing cost exponent)
+  lost on the grid, because NS authors rank those listings early.
+  Moving that trade needs an answer-key revision, not a walker tweak.

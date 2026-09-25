@@ -194,10 +194,7 @@ fn graded_atoms(
             .into_iter()
             .map(|(path, line, render)| {
                 let source = source_cache.get(&fixture_root.join(&path));
-                let source_line = source
-                    .as_deref()
-                    .and_then(|s| s.line(line))
-                    .unwrap_or("");
+                let source_line = source.as_deref().and_then(|s| s.line(line)).unwrap_or("");
                 let bytes = match render {
                     Render::Full => source_line.len(),
                     Render::Ellipsis => 1,

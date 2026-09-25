@@ -1,17 +1,11 @@
 //! Value-model helpers shared across walkers: depth pricing, non-essential
 //! discounts, and the cost-side concavity used by the scheduler. Walkers
 //! compute their batch's `value: f64` directly; the scheduler ranks by
-//! [`ratio`].
+//! [`ratio_with_exponent`].
 //!
-//! [`mix_signals`] is a convenience for walkers that still find it natural
-//! to express per-batch tuning as a `(catastrophic, follow-up, zero-call)`
-//! triple — the weights live here so per-batch numbers stay comparable
-//! across walkers. It's not load-bearing: a walker is free to skip the
-//! helper and compute its value however. The weights were re-swept on
-//! the full corpus on 2026-07-28 against the v2 answer key (zero point
-//! 0.6074) and left unchanged; the measured point grids are recorded in
-//! `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep
-//! curves"). Don't re-sweep without a new answer key.
+//! [`mix_signals`] prices a batch from a `(catastrophic, follow-up,
+//! zero-call)` triple with shared weights; walkers may also write their
+//! value as a plain number.
 
 /// Mix three signal axes — catastrophic-omission,
 /// follow-up minimization, zero-tool-call understanding — into a scalar

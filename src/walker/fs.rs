@@ -103,35 +103,18 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     let module_source_dir = is_module_source_dir(dir);
     let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
     let non_essential = ctx.non_essential_factor(dir);
-    // Inventory promotion: covers two cases.
-    //   1. Supporting corpora (`tests/`, `examples/`, `docs/`): the
-    //      `non_essential < 1.0` gate keeps "inventories" outside source
-    //      orientation. Source/module dirs inside those corpora already
-    //      qualify structurally via the sibling-module / module-source
-    //      checks.
-    //   2. Flat source partitions under a real source ancestor (`lib/`,
-    //      `src/`): directories like axios's `lib/helpers` (34 JS files,
-    //      no `index.js`) or generic `src/utils/` are the package's API
-    //      partition. They lack a structural anchor (no entrypoint file,
-    //      no sibling module), so the inventory probe is what surfaces
-    //      them — without it their (legitimately) large listing loses
-    //      every V/C race to tiny sibling dirs.
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
     let under_root_source_ancestor = has_source_root_ancestor(dir, ctx);
-    // The structural half of that probe — a catalog of source files that
-    // is not itself a named source root or module dir — qualified by the
-    // location clause: inside a supporting corpus, or under a root-level
-    // source ancestor.
+    // A catalog of source files that no name or entrypoint marks as a
+    // source dir: a flat partition of the package (`lib/helpers/`), or an
+    // inventory inside tests, examples or docs.
     let source_inventory_dir = !source_dir
         && !module_source_dir
         && is_source_inventory_dir(dir, ctx)
         && (non_essential < 1.0 || under_root_source_ancestor);
+    // A partition under the repository's source root names part of the
+    // package's API wherever it sits, so it prices like depth 1.
     let depth = if source_inventory_dir && under_root_source_ancestor {
-        // A flat partition under a root-adjacent `lib/`/`src/` is the
-        // package's API surface root — its listing is what names the
-        // partition, regardless of layout depth. Pin to depth 1 so axios's `lib/helpers` doesn't
-        // get a path-depth discount that lets the same package's tiny
-        // sibling dirs out-rank it on the V/C race.
         file_depth_factor(dir, ctx, true)
     } else if supporting_source_dir || source_inventory_dir {
         inventory_depth_factor(dir, ctx, non_essential)
@@ -140,39 +123,22 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         path_depth_factor(dir, ctx)
     };
-    // Depth-1 repo-map floor: the one-line-per-entry listing of a
-    // top-level directory is part of the shallow repo map NS authors
-    // rank as tier-1 orientation, regardless of the dir's
-    // classification — the non-essential discount belongs to the
-    // dir's *contents*, not to knowing what's in it. Floor the
-    // location prior for the listing batch only (at depth 1 the
-    // prior is exactly the non-essential factor, so this floors the
-    // discount at 0.5).
+    // A top-level directory's listing is part of the repo map whatever
+    // the directory holds; the non-essential discount is for its contents.
     let depth = if ctx.depth_from_root(dir) == 1 {
         depth.max(0.5)
     } else {
         depth
     };
-    // Source-inventory catalogs keep size-neutral ranking: a flat
-    // partition's complete listing is the API map NS authors anchor on,
-    // and without the factor an N-entry listing's ratio falls as N^-k
-    // against tiny same-tier sibling listings. Boosting plain
-    // `src/`-named or module dirs lets the big listing itself displace
-    // NS-wanted content (measured: soluna −0.210, beszel −0.073), so
-    // those stay out.
+    // Without the roster factor a source inventory's ratio falls with its
+    // length against tiny sibling listings.
     let fanout = if source_inventory_dir {
         crate::value::roster_mass_factor(children.len())
     } else {
         1.0
     };
-    // Catalog-child suppression: when the parent is a high-fanout
-    // source-inventory catalog, its own listing already names every child,
-    // so each child's (near-identical) listing is redundant reference
-    // detail. Without this, monaco's `src/languages/definitions/` catalog
-    // (82 language dirs) spends ~1.2K of the 3K budget on 82 two-file
-    // child listings, displacing the sibling-catalog listings the NS
-    // ranks next (features/, deprecated/, build/). Strong deferral rather
-    // than omission so the children stay reachable at large budgets.
+    // A catalog parent's listing already names every child, so the
+    // children's own listings are deferred, not dropped.
     let catalog_child_factor = if parent_is_high_fanout_catalog(dir, ctx) {
         CATALOG_CHILD_LISTING_SUPPRESSION
     } else {
@@ -190,8 +156,8 @@ const CATALOG_PARENT_MIN_CHILD_DIRS: usize = 10;
 const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
 
 /// True when `dir`'s parent is a high-fanout source-inventory catalog:
-/// a directory of many uniform child dirs (monaco's `definitions/`,
-/// tinyusb's `portable/`) whose own listing enumerates every child.
+/// a directory of many uniform child dirs whose own listing enumerates
+/// every child.
 /// Named `src`/`lib`/`pkg` roots and package module dirs (with an
 /// `index.*`/`__init__.py`/`mod.rs` entrypoint) are deliberately NOT
 /// catalogs — their children are first-class modules, not catalog leaves.
