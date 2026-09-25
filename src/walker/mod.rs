@@ -130,7 +130,7 @@ pub struct WalkCtx {
     /// Files hyperlinked from the root README — exempts them from the
     /// `examples/`-style non-essential demotion.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
-    /// The tree's hand-authored essential source, walked once.
+    /// The tree's essential source, walked once.
     essential_source: OnceCell<EssentialSource>,
     /// The one source file that carries a dominant share of the tree's
     /// essential source bytes, if any.
@@ -319,30 +319,6 @@ pub(in crate::walker) fn first_child_of_kind<'a>(
 /// see `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
 const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 
-/// Directories holding code that nobody wrote by hand: build outputs,
-/// vendored copies, and generated test corpora. Their contents are
-/// source bytes but not *the repository's* source, so they neither win
-/// nor dilute the mass share. Complements
-/// [`crate::value::non_essential_factor`]'s classifier, which covers
-/// `tests/` / `examples/` / `benches/` but not these.
-const MASS_SHARE_EXCLUDED_DIRS: &[&str] = &[
-    "dist",
-    "build",
-    "generated",
-    "libs",
-    "spec",
-    "specs",
-    "testdata",
-    "third_party",
-    "vendor",
-    "vendored",
-];
-
-/// Mean bytes per line above which a file reads as minified or bundled
-/// rather than hand-authored. Hand-written code across the corpus sits
-/// near 20–55; minified bundles are in the thousands.
-const MASS_SHARE_MAX_MEAN_LINE_BYTES: f64 = 200.0;
-
 /// Upper bound on a spine file's size. Past this, a single file is a
 /// generated table or an amalgamated bundle rather than something a
 /// reader is meant to read more of.
@@ -374,11 +350,7 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
                 continue;
             }
             if file_type.is_dir() {
-                let name = entry.file_name();
-                let name = name.to_string_lossy();
-                let skipped = crate::fs_util::should_skip_dir(&name)
-                    || MASS_SHARE_EXCLUDED_DIRS.contains(&name.to_ascii_lowercase().as_str());
-                if !skipped {
+                if !crate::fs_util::should_skip_dir(&entry.file_name().to_string_lossy()) {
                     stack.push(path);
                 }
             } else if file_type.is_file() {
@@ -404,9 +376,9 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
     }
 }
 
-/// Select a hand-authored source file that carries at least
-/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total, the largest if several do.
-/// Non-essential subtrees (tests, examples, vendored, tooling) are
+/// Select a source file that carries at least
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total — the largest one when
+/// several do. Non-essential subtrees (tests, examples, vendored, tooling) are
 /// excluded from both the numerator and the denominator so a big test file can neither win nor
 /// dilute the share.
 ///
@@ -416,11 +388,8 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
 /// (the only thing bounding a walk of a non-repository tree, where the
 /// filter is inert by design), and non-following file types so a
 /// symlink is neither descended into nor weighed as source — the same
-/// containment answer typed source discovery gives. The
-/// generated/vendored [`MASS_SHARE_EXCLUDED_DIRS`] narrowing applies on
-/// top of that shared universe.
+/// containment answer typed source discovery gives.
 fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
-    let mut candidates = source.candidates.clone();
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
     // but it is not what the repo is about. Ranked over a sorted vector
@@ -445,14 +414,14 @@ fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
     if total == 0 {
         return None;
     }
-    candidates.retain(|(_, len, language)| {
-        *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
-    });
-    candidates
-        .into_iter()
-        .filter(|(path, _, _)| is_hand_authored(path))
+    source
+        .candidates
+        .iter()
+        .filter(|(_, len, language)| {
+            *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
+        })
         .min_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)))
-        .map(|(path, _, _)| path)
+        .map(|(path, _, _)| path.clone())
 }
 
 /// Extension → language family, collapsing the families whose files sit
@@ -472,24 +441,6 @@ fn language_group(path: &Path) -> Option<&'static str> {
         "zig" => "zig",
         _ => return None,
     })
-}
-
-/// Line-shape check for "a person typed this": mean bytes per line over
-/// a leading sample stays under [`MASS_SHARE_MAX_MEAN_LINE_BYTES`].
-fn is_hand_authored(path: &Path) -> bool {
-    use std::io::Read;
-    let Ok(mut file) = std::fs::File::open(path) else {
-        return false;
-    };
-    let mut sample = [0u8; 64 * 1024];
-    let Ok(read) = file.read(&mut sample) else {
-        return false;
-    };
-    if read == 0 {
-        return false;
-    }
-    let newlines = sample[..read].iter().filter(|&&b| b == b'\n').count();
-    read as f64 / (newlines + 1) as f64 <= MASS_SHARE_MAX_MEAN_LINE_BYTES
 }
 
 /// Scan the seed root's README for relative-path hyperlinks to source
