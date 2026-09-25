@@ -81,7 +81,7 @@ impl Emitter<'_> {
             line: 0,
         };
         let (module_doc, names) = (file_key(Rung::ModuleDoc), file_key(Rung::Names));
-        self.part(module_doc, &model.module_doc, None, self.file_prior, false);
+        self.part(module_doc, &model.module_doc, None, self.file_prior);
 
         let mut roster: Vec<Item> = model.reexports.clone();
         roster.extend(
@@ -92,7 +92,7 @@ impl Emitter<'_> {
         );
         roster.sort_by_key(|item| item.rows.first().copied());
         let names_value = self.file_prior * roster_mass_factor(roster.len());
-        self.part(names, &roster, None, names_value, true);
+        self.part(names, &roster, None, names_value);
 
         let mut index = 0;
         for decl in &model.decls {
@@ -136,17 +136,11 @@ impl Emitter<'_> {
             head_items.extend(decl.body.iter().cloned());
         }
         let decl_gate = self
-            .part(key(Rung::Decl), &head_items, parent.as_ref(), value, false)
+            .part(key(Rung::Decl), &head_items, parent.as_ref(), value)
             .or(parent);
-        self.part(key(Rung::Doc), &decl.doc, decl_gate.as_ref(), value, false);
+        self.part(key(Rung::Doc), &decl.doc, decl_gate.as_ref(), value);
         if decl.shape == Shape::Callable {
-            self.part(
-                key(Rung::Body),
-                &decl.body,
-                decl_gate.as_ref(),
-                value,
-                false,
-            );
+            self.part(key(Rung::Body), &decl.body, decl_gate.as_ref(), value);
         }
         decl_gate
     }
@@ -160,7 +154,6 @@ impl Emitter<'_> {
         items: &[Item],
         parent: Option<&CodeKey>,
         prior: f64,
-        head_premium: bool,
     ) -> Option<CodeKey> {
         let costs: Vec<usize> = items
             .iter()
@@ -169,6 +162,7 @@ impl Emitter<'_> {
         let part_cost: usize = costs.iter().sum();
         let ranges = chunk_ranges(&costs);
         let part_value = prior * code_rung_value(head.rung);
+        let head_premium = head.rung == Rung::Names;
         let mut gate = parent.cloned();
         let mut emitted_head = None;
         for (index, range) in ranges.iter().enumerate() {
