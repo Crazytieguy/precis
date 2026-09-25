@@ -118,7 +118,7 @@ A `…` row means "there is more here that isn't shown": source inside a file, o
 
 ### Claude Code plugin (recommended)
 
-The precis plugin automatically injects a structural overview of your project into Claude's context at the start of every session. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude the `precis` CLI so it can zoom into specific directories on demand.
+The precis plugin automatically injects a structural overview of your project into Claude's context at the start of every session. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude the `precis` CLI so it can zoom into specific directories on demand, and lets `precis` runs on paths inside the project skip the permission prompt.
 
 ```
 claude plugin marketplace add Crazytieguy/precis
@@ -183,16 +183,16 @@ precis . --token-budget 8000       # with a larger token budget
 precis . --char-budget 9000        # also cap the output's length
 ```
 
-The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; the plugin sets it so the injected context stays within Claude Code's 10,000-unit limit.
+The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; when run from the plugin's hook (`CLAUDE_PLUGIN_ROOT` set), precis derives a default so the injected context stays within Claude Code's 10,000-unit limit.
 
-When the path is a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are summarized normally.
+When the path is the root of a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. In any tree, `target`, `node_modules`, `dist`, `build`, `.next` and `__pycache__` directories are listed but never expanded. `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are treated like any other file.
 
 ## Supported languages
 
 - **Parsed source** — Rust, TypeScript / JavaScript (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`), Python, Go, C (`.c`, `.h`) and Lua: module docs, declaration names and signatures, then doc comments and bodies as the budget allows.
 - **README** — the root `README.md` or `README.rst`: its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
 - **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
-- **Build and ops files** — Makefile, Taskfile, Dockerfile, compose files, CI workflows, build scripts, dotenv samples, license.
+- **Build and ops files** — Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples, and tooling config such as `.gitignore` and `.editorconfig`.
 - **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short.
 
-Every file appears in the directory tree even when its contents aren't summarized.
+Other files, such as CI workflows and other YAML, licenses and XML, appear in the directory tree by name only.
