@@ -422,12 +422,7 @@ const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
 /// long READMEs (≥18 H2s) was tuned on the pre-refreeze keys and
 /// measured obsolete on the frozen ones — un-shipped 2026-07-06.)
 fn readme_index_decay(range: &SectionRange) -> f64 {
-    let h2_idx = if range.synthetic_intro_present {
-        range.parent_index.saturating_sub(1)
-    } else {
-        range.parent_index
-    };
-    (h2_idx as f64 + 1.0).powf(-0.15).max(0.7)
+    (range.h2_index as f64 + 1.0).powf(-0.15).max(0.7)
 }
 
 /// Value of a section of `file` before its range's own factors: the
@@ -611,23 +606,20 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
     push_whole_or_head_split(
         &mut out,
         &src_lines,
-        SectionRange {
-            start: start + 1,
-            end: end + 1,
-            // A headingless README is still the project's orientation
-            // lede. Other headingless Markdown (licenses, generated
-            // fragments, footer snippets) remains reachable without
-            // competing at the same value as a named section.
-            kind: if is_readme(file) {
+        // A headingless README is still the project's orientation lede.
+        // Other headingless Markdown (licenses, generated fragments,
+        // footer snippets) remains reachable without competing at the
+        // same value as a named section.
+        SectionRange::new(
+            start + 1,
+            end + 1,
+            if is_readme(file) {
                 SectionKind::Whole
             } else {
                 SectionKind::BodyBlock
             },
-            parent_index: 0,
-            synthetic_intro_present: false,
-            is_reference_usage_section: false,
-            chained_to_previous: false,
-        },
+            0,
+        ),
         true,
     );
     out
@@ -788,17 +780,9 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
         covered_rows.extend(&rows[lede]);
     }
     let mut ranges = Vec::new();
-    let intro_range = SectionRange {
-        start: intro_start,
-        end: intro_end,
-        kind: SectionKind::Whole,
-        parent_index: 0,
-        synthetic_intro_present: true,
-        is_reference_usage_section: false,
-        chained_to_previous: false,
-    };
     if intro_start <= intro_end {
-        push_whole_or_head_split(&mut ranges, &src_lines, intro_range, true);
+        let intro = SectionRange::new(intro_start, intro_end, SectionKind::Whole, 0);
+        push_whole_or_head_split(&mut ranges, &src_lines, intro, true);
     }
     for (i, heading) in headings.iter().enumerate().skip(1) {
         let title = title_core(src_lines[heading.title_row - 1]);
@@ -806,12 +790,9 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
             &mut ranges,
             &src_lines,
             SectionRange {
-                start: heading.title_row,
-                end: section_end(i),
-                parent_index: i,
                 is_reference_usage_section: is_canonical_usage_title_core(&title)
                     || is_reference_usage_title_core(&title),
-                ..intro_range
+                ..SectionRange::new(heading.title_row, section_end(i), SectionKind::Whole, i - 1)
             },
             true,
         );
@@ -1317,21 +1298,16 @@ fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRo
 // --- tree-sitter-md helpers ---
 
 /// One scheduling unit for a markdown file: 1-based inclusive row range
-/// plus its kind and the index of its parent H2 in the *un-split*
-/// top-level section list. `parent_index` lets `heading_slab_signals`
-/// apply changelog index-decay relative to the parent H2 instead of
-/// the post-split logical-section index. `synthetic_intro_present`
-/// is true iff the file's `top_level_entries[0]` is a
-/// `SyntheticIntro` (the H1-unwrap virtual section); README/changelog
-/// decay subtracts 1 from `parent_index` in that case so the first
-/// real H2 is treated as index 0.
+/// plus its kind and `h2_index`, the README index decay's input — the
+/// position of its parent H2 in the *un-split* top-level section list,
+/// counting the first real H2 as 0 (an H1-unwrap intro shares index 0
+/// with it).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct SectionRange {
     start: usize,
     end: usize,
     kind: SectionKind,
-    parent_index: usize,
-    synthetic_intro_present: bool,
+    h2_index: usize,
     /// README-only: this range's own (or parent H2's, for
     /// `Whole`/`Intro`) section is a code-dominant canonical usage demo
     /// ([`is_canonical_usage_h2`]), or is titled in the reference/usage
@@ -1342,6 +1318,19 @@ struct SectionRange {
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
     chained_to_previous: bool,
+}
+
+impl SectionRange {
+    fn new(start: usize, end: usize, kind: SectionKind, h2_index: usize) -> Self {
+        Self {
+            start,
+            end,
+            kind,
+            h2_index,
+            is_reference_usage_section: false,
+            chained_to_previous: false,
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -1373,15 +1362,11 @@ fn is_catalog_line(line: &str) -> bool {
             .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
-/// Section ranges for batching. H2s that satisfy a split rule expand
-/// to an optional `Intro` plus per-child sub-ranges (bullet split,
-/// H3 split, or body-block split). Other top-level entries emit one
-/// `Whole`.
-///
-/// Splits drop the section's heading row — sub-ranges are built from
-/// body blocks, and headings are scaffolding to that walk. The emitted
-/// `HeadingsOutline` renders every dropped heading row; without one,
-/// only the list-only split runs, and it keeps its heading row.
+/// Section ranges for batching. A large H2 with two or more H3s (under
+/// an emitted `HeadingsOutline`, which renders the heading rows the
+/// split drops) expands to an optional `Intro` plus one `H3Child` — or,
+/// for a large H3, its body blocks — per H3. Other top-level entries
+/// emit one `Whole`, head-split on the root README when oversize.
 fn logical_sections(
     file: &Path,
     tree: &Tree,
@@ -1390,13 +1375,17 @@ fn logical_sections(
     root_readme: bool,
 ) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
-    let synthetic_intro_present =
-        matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
+    // The first real H2 is index 0; an H1-unwrap intro shares it.
+    let h2_offset = usize::from(matches!(
+        entries.first(),
+        Some(TopLevelEntry::SyntheticIntro { .. })
+    ));
 
     let readme = is_readme(file);
     let src_lines: Vec<&str> = source.lines().collect();
     let mut out = Vec::with_capacity(entries.len());
-    for (parent_idx, entry) in entries.iter().enumerate() {
+    for (entry_idx, entry) in entries.iter().enumerate() {
+        let h2_idx = entry_idx.saturating_sub(h2_offset);
         match entry {
             TopLevelEntry::SyntheticIntro {
                 heading_only,
@@ -1410,15 +1399,7 @@ fn logical_sections(
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
-                    SectionRange {
-                        start: *start,
-                        end: *end,
-                        kind: SectionKind::Whole,
-                        parent_index: parent_idx,
-                        synthetic_intro_present,
-                        is_reference_usage_section: false,
-                        chained_to_previous: false,
-                    },
+                    SectionRange::new(*start, *end, SectionKind::Whole, h2_idx),
                     root_readme,
                 );
             }
@@ -1443,35 +1424,17 @@ fn logical_sections(
                     Vec::new()
                 };
                 if h3s.len() >= 2 {
-                    push_intro(
-                        &mut out,
-                        *node,
-                        h3s[0],
-                        parent_idx,
-                        synthetic_intro_present,
-                        source,
-                    );
+                    push_intro(&mut out, *node, h3s[0], h2_idx, source);
                     for h3 in &h3s {
-                        push_h3_child_or_body_blocks(
-                            &mut out,
-                            *h3,
-                            parent_idx,
-                            synthetic_intro_present,
-                            source,
-                        );
+                        push_h3_child_or_body_blocks(&mut out, *h3, h2_idx, source);
                     }
                 } else {
                     push_whole_or_head_split(
                         &mut out,
                         &src_lines,
                         SectionRange {
-                            start: *start,
-                            end: *end,
-                            kind: SectionKind::Whole,
-                            parent_index: parent_idx,
-                            synthetic_intro_present,
                             is_reference_usage_section: reference_h2,
-                            chained_to_previous: false,
+                            ..SectionRange::new(*start, *end, SectionKind::Whole, h2_idx)
                         },
                         root_readme,
                     );
@@ -1711,6 +1674,7 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 /// fields stay positional. When the head itself carves a lede
 /// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is a
 /// [`SectionKind::LedeBody`] rather than a tail.
+///
 /// Scope: the root README only. Its early content is what NSes rank
 /// inside the early-budget envelope, so unlocking early purchase there
 /// is recall; other docs are NS-ranked late, where lump size is not a
@@ -1758,25 +1722,22 @@ fn push_whole_or_head_split(
                 start: chunk_start,
                 end: chunk_end,
                 kind: SectionKind::OversizeTail,
-                parent_index: head.parent_index,
-                synthetic_intro_present: head.synthetic_intro_present,
-                is_reference_usage_section: head.is_reference_usage_section,
                 chained_to_previous: true,
+                ..head
             });
         }
     }
 }
 
 /// Append an `Intro` range covering the H2 heading + prelude before
-/// `first_child` (the first H3 or the section's bullet list). A prelude
+/// `first_child` (the first H3). A prelude
 /// with no substantive non-heading content is skipped as a zero-cost
 /// duplicate of the outline's own heading row.
 fn push_intro<'a>(
     out: &mut Vec<SectionRange>,
     h2_section: Node<'a>,
     first_child: Node<'a>,
-    parent_idx: usize,
-    synthetic_intro_present: bool,
+    h2_idx: usize,
     source: &str,
 ) {
     let body = section_body(h2_section, Some(first_child), source);
@@ -1787,16 +1748,15 @@ fn push_intro<'a>(
     // before the first H3 inherits it. The compact-body gate measures
     // just the prelude rows (the whole split H2 is large by
     // construction). README-only — the caller is gated.
-    let reference_h2 =
-        is_reference_usage_title(h2_section, source) && reference_usage_body_ok(body);
     out.push(SectionRange {
-        start: h2_section.start_position().row + 1,
-        end: first_child.start_position().row,
-        kind: SectionKind::Intro,
-        parent_index: parent_idx,
-        synthetic_intro_present,
-        is_reference_usage_section: reference_h2,
-        chained_to_previous: false,
+        is_reference_usage_section: is_reference_usage_title(h2_section, source)
+            && reference_usage_body_ok(body),
+        ..SectionRange::new(
+            h2_section.start_position().row + 1,
+            first_child.start_position().row,
+            SectionKind::Intro,
+            h2_idx,
+        )
     });
 }
 
@@ -1805,8 +1765,7 @@ fn push_intro<'a>(
 fn push_h3_child_or_body_blocks(
     out: &mut Vec<SectionRange>,
     h3_section: Node<'_>,
-    parent_idx: usize,
-    synthetic_intro_present: bool,
+    h2_idx: usize,
     source: &str,
 ) {
     let body = section_body(h3_section, None, source);
@@ -1816,43 +1775,23 @@ fn push_h3_child_or_body_blocks(
     let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
     if h3_bytes >= BODY_BLOCK_SPLIT_BYTES {
         let ranges = body_block_ranges(h3_section, source);
-        if push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present) {
+        if ranges.len() >= 2 {
+            out.extend(
+                ranges.into_iter().map(|(start, end)| {
+                    SectionRange::new(start, end, SectionKind::BodyBlock, h2_idx)
+                }),
+            );
             return;
         }
     }
     // The H3's OWN title carries the reference/usage match (e.g.
     // `### Colors`, `### Default preset`). Same gates as the H2 path.
+    let (start, end) = node_row_range(h3_section, source);
     out.push(SectionRange {
-        start: h3_section.start_position().row + 1,
-        end: node_row_range(h3_section, source).1,
-        kind: SectionKind::H3Child,
-        parent_index: parent_idx,
-        synthetic_intro_present,
         is_reference_usage_section: is_reference_usage_title(h3_section, source)
             && reference_usage_body_ok(body),
-        chained_to_previous: false,
+        ..SectionRange::new(start, end, SectionKind::H3Child, h2_idx)
     });
-}
-
-fn push_body_block_ranges(
-    out: &mut Vec<SectionRange>,
-    ranges: Vec<(usize, usize)>,
-    parent_idx: usize,
-    synthetic_intro_present: bool,
-) -> bool {
-    if ranges.len() < 2 {
-        return false;
-    }
-    out.extend(ranges.into_iter().map(|(start, end)| SectionRange {
-        start,
-        end,
-        kind: SectionKind::BodyBlock,
-        parent_index: parent_idx,
-        synthetic_intro_present,
-        is_reference_usage_section: false,
-        chained_to_previous: false,
-    }));
-    true
 }
 
 fn substantive_item_ranges(list: Node<'_>, source: &str) -> Vec<(usize, usize)> {
@@ -3285,32 +3224,18 @@ mod tests {
     }
 
     /// `# Title` README's first real H2 must get readme-index decay
-    /// factor 1.0 (i.e. be unscaled). The synthetic H1-unwrap intro
-    /// sits at `parent_index = 0`, so naïvely keying the decay off
-    /// `parent_index` would scale "## Install" to ~0.90 — the exact
-    /// codex-flagged regression this test guards against.
+    /// factor 1.0 (i.e. be unscaled): the synthetic H1-unwrap intro
+    /// shares index 0 with it rather than pushing "## Install" to index
+    /// 1 (~0.90).
     #[test]
     fn markdown_readme_index_decay_skips_synthetic_intro() {
         let src = "# Title\n\nTagline.\n\n## Install\n\nbody\n\n## Use\n\nbody\n";
         let ranges = sections("README.md", src);
         // Three ranges: synthetic intro, ## Install, ## Use.
-        assert_eq!(ranges.len(), 3, "got {ranges:?}");
-        let intro = &ranges[0];
-        assert_eq!(intro.parent_index, 0);
-        assert!(intro.synthetic_intro_present);
-
-        let install = &ranges[1];
-        assert_eq!(install.parent_index, 1);
-        assert!(install.synthetic_intro_present);
-        assert_eq!(
-            readme_index_decay(install),
-            1.0,
-            "first real H2 must be unscaled (readme h2_idx = 0)"
-        );
-
-        let use_ = &ranges[2];
-        assert_eq!(use_.parent_index, 2);
-        let f = readme_index_decay(use_);
+        let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
+        assert_eq!(indices, vec![0, 0, 1], "got {ranges:?}");
+        assert_eq!(readme_index_decay(&ranges[1]), 1.0);
+        let f = readme_index_decay(&ranges[2]);
         assert!(
             (0.7..1.0).contains(&f),
             "second real H2 should decay; got {f}"
@@ -3318,13 +3243,13 @@ mod tests {
     }
 
     /// READMEs without an H1 wrap (no synthetic intro) — first H2 is
-    /// `parent_index = 0` and gets factor 1.0 directly.
+    /// index 0 and gets factor 1.0 directly.
     #[test]
     fn markdown_readme_index_decay_no_synthetic_intro() {
         let src = "## Install\n\nbody\n\n## Use\n\nbody\n";
         let ranges = sections("README.md", src);
-        assert_eq!(ranges.len(), 2);
-        assert!(!ranges[0].synthetic_intro_present);
+        let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
+        assert_eq!(indices, vec![0, 1]);
         assert_eq!(readme_index_decay(&ranges[0]), 1.0);
     }
 
