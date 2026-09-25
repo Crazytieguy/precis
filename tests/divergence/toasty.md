@@ -170,170 +170,167 @@ Score(3000)=0.636 I=0.925 C=0.437 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 5441 | 124 | rust decl crates/toasty-driver-postgresql/src/lib.rs:79 |  |  | 0.569 |
 | walker |  | 5561 | 120 | headings outline in docs/ARCHITECTURE.md |  |  | 0.569 |
 | ns | 5567 |  | 261 | The `Driver` trait — the database extension point | 4.4 |  | 0.559 |
-| walker |  | 5597 | 36 | docs/ARCHITECTURE.md section #0 |  |  | 0.559 |
-| walker |  | 5735 | 138 | rust names crates/toasty-core/src/lib.rs |  |  | 0.576 |
-| ns | 5750 |  | 183 | The `Connection` trait: exec, push_schema, migrations | 4.5 |  | 0.569 |
-| walker |  | 5751 | 16 | rust doc crates/toasty-core/src/lib.rs:16 |  |  | 0.574 |
+| walker |  | 5699 | 138 | rust names crates/toasty-core/src/lib.rs |  |  | 0.576 |
+| walker |  | 5715 | 16 | rust doc crates/toasty-core/src/lib.rs:16 |  |  | 0.581 |
+| ns | 5750 |  | 183 | The `Connection` trait: exec, push_schema, migrations | 4.5 |  | 0.574 |
 | ns | 5869 |  | 119 | The eight driver `Operation` enum variants | 4.6 |  | 0.569 |
-| walker |  | 5927 | 176 | rust names crates/toasty-driver-integration-suite/src/lib.rs |  |  | 0.569 |
-| walker |  | 5940 | 13 | docs/ARCHITECTURE.md section #1 |  |  | 0.569 |
-| walker |  | 5957 | 17 | rust names crates/toasty/src/stmt/primitive_jiff.rs |  |  | 0.569 |
-| walker |  | 6098 | 141 | rust decl crates/toasty-driver-sqlite/src/lib.rs:59 |  |  | 0.569 |
+| walker |  | 5891 | 176 | rust names crates/toasty-driver-integration-suite/src/lib.rs |  |  | 0.569 |
+| walker |  | 5908 | 17 | rust names crates/toasty/src/stmt/primitive_jiff.rs |  |  | 0.569 |
+| walker |  | 6049 | 141 | rust decl crates/toasty-driver-sqlite/src/lib.rs:59 |  |  | 0.569 |
+| walker |  | 6241 | 192 | rust names crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.569 |
+| walker |  | 6261 | 20 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:29 |  |  | 0.569 |
 | ns | 6278 |  | 409 | The statement AST node roster (crates/toasty-core/src/stmt/, complete) | 4.7 |  | 0.529 |
-| walker |  | 6290 | 192 | rust names crates/toasty-driver-dynamodb/src/lib.rs |  |  | 0.529 |
-| walker |  | 6310 | 20 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:29 |  |  | 0.529 |
-| walker |  | 6332 | 22 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:34 |  |  | 0.529 |
-| walker |  | 6365 | 33 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:95 |  |  | 0.529 |
+| walker |  | 6283 | 22 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:34 |  |  | 0.529 |
+| walker |  | 6316 | 33 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:95 |  |  | 0.529 |
+| walker |  | 6377 | 61 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:101 |  |  | 0.529 |
 | ns | 6405 |  | 127 | The top-level `Statement` enum (toasty-core/src/stmt.rs) | 4.8 |  | 0.523 |
-| walker |  | 6426 | 61 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:101 |  |  | 0.523 |
-| walker |  | 6517 | 91 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:156 |  |  | 0.523 |
-| walker |  | 6548 | 31 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:169 |  |  | 0.523 |
-| walker |  | 6607 | 59 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:175 |  |  | 0.523 |
+| walker |  | 6468 | 91 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:156 |  |  | 0.523 |
+| walker |  | 6499 | 31 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:169 |  |  | 0.523 |
+| walker |  | 6558 | 59 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:175 |  |  | 0.523 |
 | ns | 6652 |  | 247 | `Capability`: the complete feature-advertisement field set | 4.9 |  | 0.515 |
-| walker |  | 6732 | 125 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:40 |  |  | 0.515 |
-| walker |  | 6751 | 19 | rust names crates/toasty/src/relation/option.rs |  |  | 0.515 |
-| walker |  | 6795 | 44 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:247 |  |  | 0.515 |
-| walker |  | 6807 | 12 | rust body crates/toasty-driver-integration-suite-macros/src/lib.rs:20 |  |  | 0.515 |
-| walker |  | 6853 | 46 | docs/ARCHITECTURE.md section #12 |  |  | 0.515 |
-| walker |  | 6867 | 14 | rust names crates/toasty/src/engine/exec/output.rs |  |  | 0.515 |
-| walker |  | 6888 | 21 | rust names crates/toasty/src/db/builder.rs |  |  | 0.515 |
-| ns | 6902 |  | 250 | `StorageTypes`, `SchemaMutations`, and the four per-database presets | 4.10 |  | 0.508 |
-| walker |  | 6911 | 23 | listing of 'examples/todo-with-cli' |  |  | 0.512 |
-| walker |  | 6918 | 7 | listing of 'examples/todo-with-cli/src' |  |  | 0.515 |
-| walker |  | 6933 | 15 | rust names crates/toasty/src/engine/exec/plan.rs |  |  | 0.515 |
-| walker |  | 6948 | 15 | rust names crates/toasty/src/engine/plan/execution.rs |  |  | 0.515 |
-| walker |  | 6963 | 15 | rust names crates/toasty/src/engine/simplify/association.rs |  |  | 0.515 |
-| walker |  | 6978 | 15 | rust names crates/toasty/src/engine/simplify/expr_and.rs |  |  | 0.515 |
-| walker |  | 6993 | 15 | rust names crates/toasty/src/engine/simplify/expr_any.rs |  |  | 0.515 |
-| walker |  | 7008 | 15 | rust names crates/toasty/src/engine/simplify/expr_binary_op.rs |  |  | 0.515 |
-| walker |  | 7023 | 15 | rust names crates/toasty/src/engine/simplify/expr_cast.rs |  |  | 0.515 |
-| walker |  | 7038 | 15 | rust names crates/toasty/src/engine/simplify/expr_concat_str.rs |  |  | 0.515 |
-| walker |  | 7053 | 15 | rust names crates/toasty/src/engine/simplify/expr_exists.rs |  |  | 0.515 |
-| walker |  | 7068 | 15 | rust names crates/toasty/src/engine/simplify/expr_in_list.rs |  |  | 0.515 |
-| walker |  | 7083 | 15 | rust names crates/toasty/src/engine/simplify/expr_is_null.rs |  |  | 0.515 |
-| walker |  | 7098 | 15 | rust names crates/toasty/src/engine/simplify/expr_list.rs |  |  | 0.515 |
+| walker |  | 6683 | 125 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:40 |  |  | 0.515 |
+| walker |  | 6702 | 19 | rust names crates/toasty/src/relation/option.rs |  |  | 0.515 |
+| walker |  | 6746 | 44 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:247 |  |  | 0.515 |
+| walker |  | 6758 | 12 | rust body crates/toasty-driver-integration-suite-macros/src/lib.rs:20 |  |  | 0.515 |
+| walker |  | 6794 | 36 | docs/ARCHITECTURE.md section #0 |  |  | 0.515 |
+| walker |  | 6808 | 14 | rust names crates/toasty/src/engine/exec/output.rs |  |  | 0.515 |
+| walker |  | 6829 | 21 | rust names crates/toasty/src/db/builder.rs |  |  | 0.515 |
+| walker |  | 6852 | 23 | listing of 'examples/todo-with-cli' |  |  | 0.519 |
+| walker |  | 6859 | 7 | listing of 'examples/todo-with-cli/src' |  |  | 0.522 |
+| walker |  | 6874 | 15 | rust names crates/toasty/src/engine/exec/plan.rs |  |  | 0.522 |
+| walker |  | 6889 | 15 | rust names crates/toasty/src/engine/plan/execution.rs |  |  | 0.522 |
+| ns | 6902 |  | 250 | `StorageTypes`, `SchemaMutations`, and the four per-database presets | 4.10 |  | 0.515 |
+| walker |  | 6904 | 15 | rust names crates/toasty/src/engine/simplify/association.rs |  |  | 0.515 |
+| walker |  | 6919 | 15 | rust names crates/toasty/src/engine/simplify/expr_and.rs |  |  | 0.515 |
+| walker |  | 6934 | 15 | rust names crates/toasty/src/engine/simplify/expr_any.rs |  |  | 0.515 |
+| walker |  | 6949 | 15 | rust names crates/toasty/src/engine/simplify/expr_binary_op.rs |  |  | 0.515 |
+| walker |  | 6964 | 15 | rust names crates/toasty/src/engine/simplify/expr_cast.rs |  |  | 0.515 |
+| walker |  | 6979 | 15 | rust names crates/toasty/src/engine/simplify/expr_concat_str.rs |  |  | 0.515 |
+| walker |  | 6994 | 15 | rust names crates/toasty/src/engine/simplify/expr_exists.rs |  |  | 0.515 |
+| walker |  | 7009 | 15 | rust names crates/toasty/src/engine/simplify/expr_in_list.rs |  |  | 0.515 |
+| walker |  | 7024 | 15 | rust names crates/toasty/src/engine/simplify/expr_is_null.rs |  |  | 0.515 |
+| walker |  | 7039 | 15 | rust names crates/toasty/src/engine/simplify/expr_list.rs |  |  | 0.515 |
+| walker |  | 7054 | 15 | rust names crates/toasty/src/engine/simplify/expr_map.rs |  |  | 0.515 |
+| walker |  | 7069 | 15 | rust names crates/toasty/src/engine/simplify/expr_not.rs |  |  | 0.515 |
+| walker |  | 7084 | 15 | rust names crates/toasty/src/engine/simplify/expr_or.rs |  |  | 0.515 |
+| walker |  | 7099 | 15 | rust names crates/toasty/src/engine/simplify/expr_project.rs |  |  | 0.515 |
 | ns | 7104 |  | 202 | The fifteen `ErrorKind` variants (toasty-core/src/error.rs) | 4.11 |  | 0.508 |
-| walker |  | 7113 | 15 | rust names crates/toasty/src/engine/simplify/expr_map.rs |  |  | 0.508 |
-| walker |  | 7128 | 15 | rust names crates/toasty/src/engine/simplify/expr_not.rs |  |  | 0.508 |
-| walker |  | 7143 | 15 | rust names crates/toasty/src/engine/simplify/expr_or.rs |  |  | 0.508 |
-| walker |  | 7158 | 15 | rust names crates/toasty/src/engine/simplify/expr_project.rs |  |  | 0.508 |
-| walker |  | 7173 | 15 | rust names crates/toasty/src/engine/simplify/expr_record.rs |  |  | 0.508 |
-| walker |  | 7188 | 15 | rust names crates/toasty/src/engine/simplify/lift_pk_select.rs |  |  | 0.508 |
-| walker |  | 7203 | 15 | rust names crates/toasty/src/engine/simplify/rewrite_root_path_expr.rs |  |  | 0.508 |
-| walker |  | 7218 | 15 | rust names crates/toasty/src/engine/simplify/stmt_query.rs |  |  | 0.508 |
-| walker |  | 7231 | 13 | rust names crates/toasty-core/src/macros.rs |  |  | 0.508 |
-| walker |  | 7247 | 16 | rust names crates/toasty/src/engine/lower/paginate.rs |  |  | 0.508 |
-| walker |  | 7302 | 55 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:264 |  |  | 0.508 |
-| walker |  | 7340 | 38 | rust names crates/toasty/src/apply_update.rs |  |  | 0.508 |
-| walker |  | 7352 | 12 | rust decl crates/toasty/src/apply_update.rs:18 |  |  | 0.508 |
-| walker |  | 7377 | 25 | rust decl crates/toasty/src/apply_update.rs:21 |  |  | 0.508 |
-| walker |  | 7404 | 27 | rust decl crates/toasty/src/apply_update.rs:9 |  |  | 0.508 |
-| walker |  | 7461 | 57 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:344 |  |  | 0.508 |
+| walker |  | 7114 | 15 | rust names crates/toasty/src/engine/simplify/expr_record.rs |  |  | 0.508 |
+| walker |  | 7129 | 15 | rust names crates/toasty/src/engine/simplify/lift_pk_select.rs |  |  | 0.508 |
+| walker |  | 7144 | 15 | rust names crates/toasty/src/engine/simplify/rewrite_root_path_expr.rs |  |  | 0.508 |
+| walker |  | 7159 | 15 | rust names crates/toasty/src/engine/simplify/stmt_query.rs |  |  | 0.508 |
+| walker |  | 7172 | 13 | rust names crates/toasty-core/src/macros.rs |  |  | 0.508 |
+| walker |  | 7188 | 16 | rust names crates/toasty/src/engine/lower/paginate.rs |  |  | 0.508 |
+| walker |  | 7243 | 55 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:264 |  |  | 0.508 |
+| walker |  | 7281 | 38 | rust names crates/toasty/src/apply_update.rs |  |  | 0.508 |
+| walker |  | 7293 | 12 | rust decl crates/toasty/src/apply_update.rs:18 |  |  | 0.508 |
+| walker |  | 7318 | 25 | rust decl crates/toasty/src/apply_update.rs:21 |  |  | 0.508 |
+| walker |  | 7345 | 27 | rust decl crates/toasty/src/apply_update.rs:9 |  |  | 0.508 |
+| walker |  | 7402 | 57 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:344 |  |  | 0.508 |
+| walker |  | 7416 | 14 | rust names crates/std-util/src/option.rs |  |  | 0.508 |
 | ns | 7473 |  | 369 | crates/toasty/src/engine tree (complete) | 5.1 |  | 0.553 |
-| walker |  | 7475 | 14 | rust names crates/std-util/src/option.rs |  |  | 0.553 |
-| walker |  | 7493 | 18 | docs/ARCHITECTURE.md section #7 |  |  | 0.553 |
-| walker |  | 7511 | 18 | docs/ARCHITECTURE.md section #10 |  |  | 0.553 |
 | ns | 7756 |  | 283 | `Engine`: the four-phase pipeline doc and `exec` entry point | 5.2 |  | 0.546 |
-| ns | 7872 |  | 116 | engine.rs module roster and private-module boundary | 5.3 |  | 0.541 |
-| walker |  | 7920 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.614 |
-| walker |  | 7947 | 27 | rust names crates/toasty/src/engine/kv.rs |  |  | 0.614 |
-| walker |  | 7968 | 21 | docs/CONTEXT.md section #0 |  |  | 0.614 |
-| walker |  | 7979 | 11 | docs/roadmap/composite-keys.md section #0 |  |  | 0.614 |
-| walker |  | 7988 | 9 | rust body crates/toasty-cli/src/lib.rs:33 |  |  | 0.614 |
-| walker |  | 8032 | 44 | rust names crates/toasty/src/schema.rs |  |  | 0.614 |
-| walker |  | 8043 | 11 | rust module doc crates/toasty-core/src/schema/app.rs |  |  | 0.614 |
-| walker |  | 8088 | 45 | rust names crates/toasty/src/page.rs |  |  | 0.614 |
-| ns | 8097 |  | 225 | The engine as a mini-program: query-engine.md execution model | 5.4 |  | 0.609 |
-| walker |  | 8126 | 38 | rust decl crates/toasty/src/page.rs:107 |  |  | 0.609 |
-| walker |  | 8146 | 20 | [dependencies] in crates/toasty-sql/Cargo.toml |  |  | 0.609 |
-| walker |  | 8159 | 13 | rust body crates/toasty-driver-integration-suite-macros/src/lib.rs:10 |  |  | 0.609 |
-| walker |  | 8172 | 13 | rust body crates/toasty-macros/src/lib.rs:30 |  |  | 0.611 |
+| walker |  | 7825 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.621 |
+| walker |  | 7852 | 27 | rust names crates/toasty/src/engine/kv.rs |  |  | 0.621 |
+| ns | 7872 |  | 116 | engine.rs module roster and private-module boundary | 5.3 |  | 0.614 |
+| walker |  | 7873 | 21 | docs/CONTEXT.md section #0 |  |  | 0.614 |
+| walker |  | 7884 | 11 | docs/roadmap/composite-keys.md section #0 |  |  | 0.614 |
+| walker |  | 7893 | 9 | rust body crates/toasty-cli/src/lib.rs:33 |  |  | 0.614 |
+| walker |  | 7937 | 44 | rust names crates/toasty/src/schema.rs |  |  | 0.614 |
+| walker |  | 7948 | 11 | rust module doc crates/toasty-core/src/schema/app.rs |  |  | 0.614 |
+| walker |  | 7993 | 45 | rust names crates/toasty/src/page.rs |  |  | 0.614 |
+| walker |  | 8031 | 38 | rust decl crates/toasty/src/page.rs:107 |  |  | 0.614 |
+| walker |  | 8051 | 20 | [dependencies] in crates/toasty-sql/Cargo.toml |  |  | 0.614 |
+| walker |  | 8064 | 13 | rust body crates/toasty-driver-integration-suite-macros/src/lib.rs:10 |  |  | 0.614 |
+| walker |  | 8077 | 13 | rust body crates/toasty-macros/src/lib.rs:30 |  |  | 0.616 |
+| ns | 8097 |  | 225 | The engine as a mini-program: query-engine.md execution model | 5.4 |  | 0.611 |
+| walker |  | 8147 | 70 | rust decl crates/toasty-cli/src/lib.rs:60 |  |  | 0.611 |
+| walker |  | 8158 | 11 | rust names crates/toasty-core/src/stmt/ty_jiff.rs |  |  | 0.611 |
+| walker |  | 8169 | 11 | rust names crates/toasty-driver-dynamodb/src/op/create_table.rs |  |  | 0.611 |
+| walker |  | 8180 | 11 | rust names crates/toasty-driver-dynamodb/src/op/delete_by_key.rs |  |  | 0.611 |
+| walker |  | 8191 | 11 | rust names crates/toasty-driver-dynamodb/src/op/find_pk_by_index.rs |  |  | 0.611 |
+| walker |  | 8202 | 11 | rust names crates/toasty-driver-dynamodb/src/op/get_by_key.rs |  |  | 0.611 |
+| walker |  | 8213 | 11 | rust names crates/toasty-driver-dynamodb/src/op/insert.rs |  |  | 0.611 |
+| walker |  | 8224 | 11 | rust names crates/toasty-driver-dynamodb/src/op/query_pk.rs |  |  | 0.611 |
 | ns | 8225 |  | 128 | toasty-codegen tree: attribute parsing and expansion (complete) | 6.1 |  | 0.621 |
-| walker |  | 8242 | 70 | rust decl crates/toasty-cli/src/lib.rs:60 |  |  | 0.621 |
-| walker |  | 8253 | 11 | rust names crates/toasty-core/src/stmt/ty_jiff.rs |  |  | 0.621 |
-| walker |  | 8264 | 11 | rust names crates/toasty-driver-dynamodb/src/op/create_table.rs |  |  | 0.621 |
-| walker |  | 8275 | 11 | rust names crates/toasty-driver-dynamodb/src/op/delete_by_key.rs |  |  | 0.621 |
-| walker |  | 8286 | 11 | rust names crates/toasty-driver-dynamodb/src/op/find_pk_by_index.rs |  |  | 0.621 |
-| walker |  | 8297 | 11 | rust names crates/toasty-driver-dynamodb/src/op/get_by_key.rs |  |  | 0.621 |
-| walker |  | 8308 | 11 | rust names crates/toasty-driver-dynamodb/src/op/insert.rs |  |  | 0.621 |
-| walker |  | 8319 | 11 | rust names crates/toasty-driver-dynamodb/src/op/query_pk.rs |  |  | 0.621 |
-| walker |  | 8330 | 11 | rust names crates/toasty-driver-dynamodb/src/op/update_by_key.rs |  |  | 0.621 |
-| walker |  | 8361 | 31 | rust names crates/toasty/src/stmt/into_select.rs |  |  | 0.621 |
-| walker |  | 8373 | 12 | rust names crates/toasty-core/src/stmt/association.rs |  |  | 0.621 |
-| walker |  | 8385 | 12 | rust names crates/toasty-core/src/stmt/direction.rs |  |  | 0.621 |
-| walker |  | 8397 | 12 | rust names crates/toasty-core/src/stmt/limit.rs |  |  | 0.621 |
-| walker |  | 8409 | 12 | rust names crates/toasty-core/src/stmt/offset.rs |  |  | 0.621 |
+| walker |  | 8235 | 11 | rust names crates/toasty-driver-dynamodb/src/op/update_by_key.rs |  |  | 0.621 |
+| walker |  | 8266 | 31 | rust names crates/toasty/src/stmt/into_select.rs |  |  | 0.621 |
+| walker |  | 8278 | 12 | rust names crates/toasty-core/src/stmt/association.rs |  |  | 0.621 |
+| walker |  | 8290 | 12 | rust names crates/toasty-core/src/stmt/direction.rs |  |  | 0.621 |
+| walker |  | 8302 | 12 | rust names crates/toasty-core/src/stmt/limit.rs |  |  | 0.621 |
+| walker |  | 8314 | 12 | rust names crates/toasty-core/src/stmt/offset.rs |  |  | 0.621 |
+| walker |  | 8327 | 13 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_batch_create.rs |  |  | 0.621 |
+| walker |  | 8346 | 19 | rust names crates/toasty-cli/src/theme.rs |  |  | 0.621 |
+| walker |  | 8365 | 19 | rust names crates/toasty-driver-integration-suite/src/setup.rs |  |  | 0.621 |
+| walker |  | 8397 | 32 | rust decl crates/toasty/src/stmt/to_statement.rs:3 |  |  | 0.621 |
 | ns | 8412 |  | 187 | The codegen entry points: `generate_model` / `generate_embed` | 6.2 |  | 0.617 |
-| walker |  | 8431 | 22 | docs/ARCHITECTURE.md section #5 |  |  | 0.617 |
-| walker |  | 8444 | 13 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_batch_create.rs |  |  | 0.617 |
-| walker |  | 8463 | 19 | rust names crates/toasty-cli/src/theme.rs |  |  | 0.617 |
-| walker |  | 8482 | 19 | rust names crates/toasty-driver-integration-suite/src/setup.rs |  |  | 0.617 |
-| walker |  | 8514 | 32 | rust decl crates/toasty/src/stmt/to_statement.rs:3 |  |  | 0.617 |
-| walker |  | 8537 | 23 | rust names crates/toasty/src/engine/mir/node.rs |  |  | 0.617 |
-| walker |  | 8575 | 38 | listing of 'crates/toasty-sql/tests' |  |  | 0.617 |
-| walker |  | 8609 | 34 | rust decl crates/toasty/src/stmt/into_insert.rs:4 |  |  | 0.617 |
-| ns | 8638 |  | 226 | The inherent methods generated on every model | 6.3 |  | 0.613 |
-| walker |  | 8643 | 34 | rust decl crates/toasty/src/stmt/into_select.rs:4 |  |  | 0.613 |
-| walker |  | 8656 | 13 | rust names crates/toasty-core/src/stmt/cte.rs |  |  | 0.613 |
-| walker |  | 8669 | 13 | rust names crates/toasty-core/src/stmt/expr_pattern.rs |  |  | 0.613 |
-| walker |  | 8682 | 13 | rust names crates/toasty-core/src/stmt/table_derived.rs |  |  | 0.613 |
-| walker |  | 8695 | 13 | rust names crates/toasty-core/src/stmt/table_factor.rs |  |  | 0.613 |
-| walker |  | 8716 | 21 | rust names crates/toasty-cli/src/config.rs |  |  | 0.613 |
-| walker |  | 8729 | 13 | rust body crates/toasty-macros/src/lib.rs:35 |  |  | 0.615 |
-| walker |  | 8744 | 15 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_scoped_query.rs |  |  | 0.615 |
-| walker |  | 8759 | 15 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_sort_limit.rs |  |  | 0.615 |
-| walker |  | 8773 | 14 | rust names crates/toasty-codegen/src/expand/create.rs |  |  | 0.615 |
-| walker |  | 8787 | 14 | rust names crates/toasty-codegen/src/expand/fields.rs |  |  | 0.615 |
-| walker |  | 8801 | 14 | rust names crates/toasty-codegen/src/expand/model.rs |  |  | 0.615 |
-| walker |  | 8815 | 14 | rust names crates/toasty-codegen/src/expand/query.rs |  |  | 0.615 |
-| walker |  | 8829 | 14 | rust names crates/toasty-codegen/src/expand/relation.rs |  |  | 0.615 |
+| walker |  | 8420 | 23 | rust names crates/toasty/src/engine/mir/node.rs |  |  | 0.617 |
+| walker |  | 8458 | 38 | listing of 'crates/toasty-sql/tests' |  |  | 0.617 |
+| walker |  | 8492 | 34 | rust decl crates/toasty/src/stmt/into_insert.rs:4 |  |  | 0.617 |
+| walker |  | 8526 | 34 | rust decl crates/toasty/src/stmt/into_select.rs:4 |  |  | 0.617 |
+| walker |  | 8539 | 13 | rust names crates/toasty-core/src/stmt/cte.rs |  |  | 0.617 |
+| walker |  | 8552 | 13 | rust names crates/toasty-core/src/stmt/expr_pattern.rs |  |  | 0.617 |
+| walker |  | 8565 | 13 | rust names crates/toasty-core/src/stmt/table_derived.rs |  |  | 0.617 |
+| walker |  | 8578 | 13 | rust names crates/toasty-core/src/stmt/table_factor.rs |  |  | 0.617 |
+| walker |  | 8599 | 21 | rust names crates/toasty-cli/src/config.rs |  |  | 0.617 |
+| walker |  | 8612 | 13 | rust body crates/toasty-macros/src/lib.rs:35 |  |  | 0.619 |
+| walker |  | 8627 | 15 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_scoped_query.rs |  |  | 0.619 |
+| ns | 8638 |  | 226 | The inherent methods generated on every model | 6.3 |  | 0.615 |
+| walker |  | 8642 | 15 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_sort_limit.rs |  |  | 0.615 |
+| walker |  | 8656 | 14 | rust names crates/toasty-codegen/src/expand/create.rs |  |  | 0.615 |
+| walker |  | 8670 | 14 | rust names crates/toasty-codegen/src/expand/fields.rs |  |  | 0.615 |
+| walker |  | 8684 | 14 | rust names crates/toasty-codegen/src/expand/model.rs |  |  | 0.615 |
+| walker |  | 8698 | 14 | rust names crates/toasty-codegen/src/expand/query.rs |  |  | 0.615 |
+| walker |  | 8712 | 14 | rust names crates/toasty-codegen/src/expand/relation.rs |  |  | 0.615 |
+| walker |  | 8726 | 14 | rust names crates/toasty-codegen/src/expand/update.rs |  |  | 0.615 |
+| walker |  | 8763 | 37 | rust decl crates/toasty/src/stmt/into_select.rs:10 |  |  | 0.615 |
+| walker |  | 8790 | 27 | rust names crates/toasty/src/engine/exec/action.rs |  |  | 0.615 |
+| walker |  | 8806 | 16 | crates/toasty-driver-sqlite/CONTEXT.md section #0 |  |  | 0.615 |
+| walker |  | 8829 | 23 | rust names crates/toasty-driver-integration-suite/src/suite.rs |  |  | 0.615 |
 | ns | 8839 |  | 201 | toasty-sql tree: serializer and DDL statement types (complete) | 6.4 |  | 0.628 |
-| walker |  | 8843 | 14 | rust names crates/toasty-codegen/src/expand/update.rs |  |  | 0.628 |
-| walker |  | 8880 | 37 | rust decl crates/toasty/src/stmt/into_select.rs:10 |  |  | 0.628 |
+| walker |  | 8844 | 15 | rust decl crates/toasty-driver-integration-suite/src/suite.rs:5 |  |  | 0.628 |
+| walker |  | 8860 | 16 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_link_unlink.rs |  |  | 0.628 |
+| walker |  | 8876 | 16 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_query.rs |  |  | 0.628 |
+| walker |  | 8904 | 28 | rust names crates/toasty/src/engine/mir/operation.rs |  |  | 0.628 |
 | ns | 8906 |  | 67 | toasty-sql public surface (src/lib.rs, complete file) | 6.5 |  | 0.631 |
-| walker |  | 8907 | 27 | rust names crates/toasty/src/engine/exec/action.rs |  |  | 0.631 |
-| walker |  | 8923 | 16 | crates/toasty-driver-sqlite/CONTEXT.md section #0 |  |  | 0.631 |
-| walker |  | 8946 | 23 | rust names crates/toasty-driver-integration-suite/src/suite.rs |  |  | 0.631 |
-| walker |  | 8961 | 15 | rust decl crates/toasty-driver-integration-suite/src/suite.rs:5 |  |  | 0.631 |
-| walker |  | 8977 | 16 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_link_unlink.rs |  |  | 0.631 |
-| walker |  | 8993 | 16 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_query.rs |  |  | 0.631 |
-| walker |  | 9021 | 28 | rust names crates/toasty/src/engine/mir/operation.rs |  |  | 0.631 |
+| walker |  | 8923 | 19 | rust decl crates/toasty/src/engine/mir/operation.rs:52 |  |  | 0.631 |
+| walker |  | 8938 | 15 | rust names crates/toasty-codegen/src/schema/pk.rs |  |  | 0.631 |
+| walker |  | 8953 | 15 | rust names crates/toasty-core/src/stmt/table_with_joins.rs |  |  | 0.631 |
+| walker |  | 8976 | 23 | rust decl crates/toasty-driver-integration-suite/src/suite.rs:9 |  |  | 0.631 |
+| walker |  | 9005 | 29 | rust names crates/toasty/src/engine/plan/nested_merge.rs |  |  | 0.631 |
 | ns | 9034 |  | 128 | The four driver crates and their source files (complete) | 6.6 |  | 0.639 |
-| walker |  | 9040 | 19 | rust decl crates/toasty/src/engine/mir/operation.rs:52 |  |  | 0.639 |
-| walker |  | 9055 | 15 | rust names crates/toasty-codegen/src/schema/pk.rs |  |  | 0.639 |
-| walker |  | 9070 | 15 | rust names crates/toasty-core/src/stmt/table_with_joins.rs |  |  | 0.639 |
-| walker |  | 9093 | 23 | rust decl crates/toasty-driver-integration-suite/src/suite.rs:9 |  |  | 0.639 |
-| walker |  | 9122 | 29 | rust names crates/toasty/src/engine/plan/nested_merge.rs |  |  | 0.639 |
-| ns | 9175 |  | 141 | The SQLite driver as the reference `Driver` implementation | 6.7 |  | 0.640 |
-| walker |  | 9179 | 57 | rust body crates/toasty-codegen/src/lib.rs:6 |  |  | 0.643 |
-| walker |  | 9236 | 57 | rust body crates/toasty-codegen/src/lib.rs:13 |  |  | 0.651 |
+| walker |  | 9062 | 57 | rust body crates/toasty-codegen/src/lib.rs:6 |  |  | 0.641 |
+| walker |  | 9119 | 57 | rust body crates/toasty-codegen/src/lib.rs:13 |  |  | 0.646 |
+| walker |  | 9149 | 30 | rust names crates/toasty/src/engine/lower/insert.rs |  |  | 0.646 |
+| walker |  | 9165 | 16 | rust names crates/toasty-codegen/src/schema/fk.rs |  |  | 0.646 |
+| ns | 9175 |  | 141 | The SQLite driver as the reference `Driver` implementation | 6.7 |  | 0.647 |
+| walker |  | 9196 | 31 | rust names crates/toasty/src/engine/index/index_plan.rs |  |  | 0.647 |
+| walker |  | 9222 | 26 | rust names crates/std-util/src/result.rs |  |  | 0.647 |
 | ns | 9236 |  | 61 | toasty-cli tree: the migration subcommand files (complete) | 6.8 |  | 0.651 |
-| walker |  | 9266 | 30 | rust names crates/toasty/src/engine/lower/insert.rs |  |  | 0.651 |
-| walker |  | 9282 | 16 | rust names crates/toasty-codegen/src/schema/fk.rs |  |  | 0.651 |
-| walker |  | 9313 | 31 | rust names crates/toasty/src/engine/index/index_plan.rs |  |  | 0.651 |
-| walker |  | 9339 | 26 | rust names crates/std-util/src/result.rs |  |  | 0.651 |
-| walker |  | 9357 | 18 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_n_1.rs |  |  | 0.651 |
-| walker |  | 9374 | 17 | rust names crates/toasty-core/src/stmt/value_jiff.rs |  |  | 0.651 |
-| walker |  | 9391 | 17 | rust names crates/toasty-sql/src/serializer/name.rs |  |  | 0.651 |
-| walker |  | 9408 | 17 | rust names crates/toasty-sql/src/serializer/ty.rs |  |  | 0.651 |
-| walker |  | 9435 | 27 | rust names crates/toasty-driver-dynamodb/src/type.rs |  |  | 0.651 |
+| walker |  | 9240 | 18 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_n_1.rs |  |  | 0.651 |
+| walker |  | 9257 | 17 | rust names crates/toasty-core/src/stmt/value_jiff.rs |  |  | 0.651 |
+| walker |  | 9274 | 17 | rust names crates/toasty-sql/src/serializer/name.rs |  |  | 0.651 |
+| walker |  | 9291 | 17 | rust names crates/toasty-sql/src/serializer/ty.rs |  |  | 0.651 |
+| walker |  | 9318 | 27 | rust names crates/toasty-driver-dynamodb/src/type.rs |  |  | 0.651 |
+| walker |  | 9341 | 23 | rust decl crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.651 |
+| walker |  | 9364 | 23 | rust decl crates/toasty-driver-dynamodb/src/type.rs:9 |  |  | 0.651 |
+| walker |  | 9391 | 27 | rust names crates/toasty-driver-integration-suite/src/macros.rs |  |  | 0.651 |
+| walker |  | 9418 | 27 | rust names crates/toasty-driver-postgresql/src/type.rs |  |  | 0.651 |
+| walker |  | 9439 | 21 | rust decl crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.651 |
 | ns | 9452 |  | 216 | The workspace `tests/` crate and `benches/` (complete) | 7.1 |  | 0.638 |
-| walker |  | 9458 | 23 | rust decl crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.638 |
-| walker |  | 9481 | 23 | rust decl crates/toasty-driver-dynamodb/src/type.rs:9 |  |  | 0.638 |
-| walker |  | 9508 | 27 | rust names crates/toasty-driver-integration-suite/src/macros.rs |  |  | 0.638 |
-| walker |  | 9535 | 27 | rust names crates/toasty-driver-postgresql/src/type.rs |  |  | 0.638 |
-| walker |  | 9556 | 21 | rust decl crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.638 |
-| walker |  | 9577 | 21 | rust decl crates/toasty-driver-postgresql/src/type.rs:9 |  |  | 0.638 |
-| walker |  | 9596 | 19 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_crud_multi_relations.rs |  |  | 0.638 |
-| walker |  | 9608 | 12 | rust names crates/toasty-core/src/schema/app/arg.rs |  |  | 0.638 |
-| walker |  | 9685 | 77 | rust names crates/toasty/src/cursor.rs |  |  | 0.638 |
-| walker |  | 9728 | 43 | rust decl crates/toasty/src/cursor.rs:6 |  |  | 0.638 |
-| ns | 9735 |  | 283 | The driver integration suite and its test roster (complete) | 7.2 |  | 0.650 |
-| walker |  | 9746 | 18 | rust names crates/toasty-sql/src/serializer/column_def.rs |  |  | 0.650 |
-| walker |  | 9822 | 76 | rust decl crates/toasty/src/cursor.rs:16 |  |  | 0.651 |
-| walker |  | 9846 | 24 | rust decl crates/toasty/src/cursor.rs:36 |  |  | 0.651 |
+| walker |  | 9460 | 21 | rust decl crates/toasty-driver-postgresql/src/type.rs:9 |  |  | 0.638 |
+| walker |  | 9479 | 19 | rust module doc crates/toasty-driver-integration-suite/src/tests/has_many_crud_multi_relations.rs |  |  | 0.638 |
+| walker |  | 9491 | 12 | rust names crates/toasty-core/src/schema/app/arg.rs |  |  | 0.638 |
+| walker |  | 9568 | 77 | rust names crates/toasty/src/cursor.rs |  |  | 0.638 |
+| walker |  | 9611 | 43 | rust decl crates/toasty/src/cursor.rs:6 |  |  | 0.638 |
+| walker |  | 9629 | 18 | rust names crates/toasty-sql/src/serializer/column_def.rs |  |  | 0.638 |
+| walker |  | 9705 | 76 | rust decl crates/toasty/src/cursor.rs:16 |  |  | 0.640 |
+| walker |  | 9729 | 24 | rust decl crates/toasty/src/cursor.rs:36 |  |  | 0.640 |
+| ns | 9735 |  | 283 | The driver integration suite and its test roster (complete) | 7.2 |  | 0.651 |
+| walker |  | 9780 | 51 | rust names crates/toasty/src/batch/create.rs |  |  | 0.651 |
+| walker |  | 9796 | 16 | rust decl crates/toasty/src/batch/create.rs:46 |  |  | 0.651 |
+| walker |  | 9847 | 51 | rust names crates/toasty/src/stmt/delete.rs |  |  | 0.651 |
 | ns | 9858 |  | 123 | The `toasty` crate's complete feature-flag set | 7.3 |  | 0.648 |
-| walker |  | 9897 | 51 | rust names crates/toasty/src/batch/create.rs |  |  | 0.648 |
-| walker |  | 9913 | 16 | rust decl crates/toasty/src/batch/create.rs:46 |  |  | 0.648 |
-| walker |  | 9964 | 51 | rust names crates/toasty/src/stmt/delete.rs |  |  | 0.648 |
-| walker |  | 9984 | 20 | rust decl crates/toasty/src/stmt/delete.rs:20 |  |  | 0.648 |
+| walker |  | 9867 | 20 | rust decl crates/toasty/src/stmt/delete.rs:20 |  |  | 0.648 |
+| walker |  | 9893 | 26 | rust decl crates/toasty/src/stmt/delete.rs:11 |  |  | 0.648 |
+| walker |  | 9923 | 30 | rust decl crates/toasty/src/stmt/delete.rs:6 |  |  | 0.648 |

@@ -439,19 +439,11 @@ fn section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
     if is_readme(file) {
         return mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
     }
-    let is_orientation = is_orientation_doc(file);
-    // Root-level (depth 1) orientation already wins; only nested
-    // orientation gets the cat bump.
-    let cat = if is_orientation && ctx.depth_from_root(file) > 1 {
-        0.65
-    } else {
-        0.3
-    };
     mix_signals(
-        cat,
+        0.3,
         0.5,
         0.5,
-        super::file_depth_factor(file, ctx, is_orientation),
+        super::file_depth_factor(file, ctx, is_orientation_doc(file)),
     )
 }
 
