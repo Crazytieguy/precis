@@ -5,20 +5,20 @@ Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 50 | 50 | listing of '.' |  |  | 0.000 |
 | walker |  | 53 | 3 | listing of 'src' |  |  | 0.000 |
 | ns | 81 |  | 81 | README identity: what Click is | 1.1 |  | 0.000 |
-| walker |  | 134 | 81 | README headline in README.md |  |  | 1.000 |
-| walker |  | 164 | 30 | headings outline in README.md |  |  | 1.000 |
-| walker |  | 175 | 11 | listing of '.devcontainer' |  |  | 1.000 |
+| walker |  | 84 | 31 | [dependencies] in pyproject.toml |  |  | 0.000 |
+| walker |  | 165 | 81 | README headline in README.md |  |  | 1.000 |
 | ns | 182 |  | 101 | Click in three points | 1.2 |  | 0.583 |
-| walker |  | 188 | 13 | listing of '.github' |  |  | 0.583 |
-| walker |  | 211 | 23 | listing of '.github/workflows' |  |  | 0.584 |
+| walker |  | 195 | 30 | headings outline in README.md |  |  | 0.583 |
+| walker |  | 206 | 11 | listing of '.devcontainer' |  |  | 0.583 |
+| walker |  | 219 | 13 | listing of '.github' |  |  | 0.583 |
+| walker |  | 242 | 23 | listing of '.github/workflows' |  |  | 0.584 |
 | ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
-| walker |  | 299 | 88 | listing of 'src/click' |  |  | 0.800 |
-| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.810 |
-| walker |  | 374 | 75 | python module doc src/click/__init__.py |  |  | 0.810 |
+| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.527 |
+| walker |  | 330 | 88 | listing of 'src/click' |  |  | 0.810 |
+| walker |  | 405 | 75 | python module doc src/click/__init__.py |  |  | 0.810 |
 | ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.693 |
-| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.661 |
-| walker |  | 622 | 248 | python names src/click/__init__.py |  |  | 0.671 |
-| walker |  | 653 | 31 | [dependencies] in pyproject.toml |  |  | 0.671 |
+| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.662 |
+| walker |  | 653 | 248 | python names src/click/__init__.py |  |  | 0.671 |
 | walker |  | 669 | 16 | python names src/click/_textwrap.py |  |  | 0.671 |
 | ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.531 |
 | ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.483 |

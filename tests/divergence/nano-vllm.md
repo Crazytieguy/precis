@@ -31,21 +31,21 @@ Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 341 | 16 | python names nanovllm/layers/activation.py |  |  | 0.670 |
 | walker |  | 397 | 56 | headings outline in README.md |  |  | 0.870 |
 | walker |  | 418 | 21 | python names nanovllm/engine/block_manager.py |  |  | 0.870 |
-| walker |  | 440 | 22 | python names nanovllm/engine/sequence.py |  |  | 0.870 |
 | ns | 450 |  | 148 | README Quick Start usage snippet | 1.7 |  | 0.758 |
-| walker |  | 468 | 28 | python decl nanovllm/engine/sequence.py:8 |  |  | 0.759 |
-| walker |  | 499 | 31 | python names nanovllm/layers/embed_head.py |  |  | 0.759 |
-| walker |  | 529 | 30 | python decl nanovllm/layers/embed_head.py:45 |  |  | 0.759 |
+| walker |  | 497 | 79 | [dependencies] in pyproject.toml |  |  | 0.759 |
+| walker |  | 519 | 22 | python names nanovllm/engine/sequence.py |  |  | 0.759 |
+| walker |  | 547 | 28 | python decl nanovllm/engine/sequence.py:8 |  |  | 0.760 |
 | ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.666 |
-| walker |  | 594 | 65 | python decl nanovllm/sampling_params.py:4 |  |  | 0.716 |
-| walker |  | 631 | 37 | python names nanovllm/layers/rotary_embedding.py |  |  | 0.717 |
-| walker |  | 655 | 24 | python decl nanovllm/layers/rotary_embedding.py:17 |  |  | 0.717 |
-| walker |  | 691 | 36 | python decl nanovllm/layers/activation.py:6 |  |  | 0.717 |
-| walker |  | 700 | 9 | python decl nanovllm/layers/activation.py:11 |  |  | 0.717 |
-| walker |  | 737 | 37 | python decl nanovllm/layers/sampler.py:5 |  |  | 0.717 |
-| walker |  | 746 | 9 | python decl nanovllm/layers/sampler.py:10 |  |  | 0.717 |
-| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.606 |
-| walker |  | 825 | 79 | [dependencies] in pyproject.toml |  |  | 0.607 |
+| walker |  | 578 | 31 | python names nanovllm/layers/embed_head.py |  |  | 0.666 |
+| walker |  | 608 | 30 | python decl nanovllm/layers/embed_head.py:45 |  |  | 0.666 |
+| walker |  | 673 | 65 | python decl nanovllm/sampling_params.py:4 |  |  | 0.717 |
+| walker |  | 710 | 37 | python names nanovllm/layers/rotary_embedding.py |  |  | 0.718 |
+| walker |  | 734 | 24 | python decl nanovllm/layers/rotary_embedding.py:17 |  |  | 0.718 |
+| walker |  | 770 | 36 | python decl nanovllm/layers/activation.py:6 |  |  | 0.718 |
+| walker |  | 779 | 9 | python decl nanovllm/layers/activation.py:11 |  |  | 0.718 |
+| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.607 |
+| walker |  | 816 | 37 | python decl nanovllm/layers/sampler.py:5 |  |  | 0.607 |
+| walker |  | 825 | 9 | python decl nanovllm/layers/sampler.py:10 |  |  | 0.607 |
 | walker |  | 866 | 41 | python names nanovllm/utils/loader.py |  |  | 0.607 |
 | ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.575 |
 | walker |  | 905 | 39 | python decl nanovllm/layers/rotary_embedding.py:6 |  |  | 0.575 |

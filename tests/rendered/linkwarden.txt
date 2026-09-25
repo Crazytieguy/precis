@@ -186,6 +186,17 @@ package.json
   8→    "packages/*"
   9→  ],
   …
+  32→  "dependencies": {
+  33→    "concurrently": "^9.1.2",
+  34→    "patch-package": "^8.0.0"
+  35→  },
+  36→  "resolutions": {
+  37→    "react": "19.1.0",
+  38→    "react-dom": "19.1.0",
+  39→    "react-native-mmkv": "4.1.2",
+  40→    "react-native-nitro-modules": "0.34.1"
+  41→  }
+  …
 packages/
   filesystem/
     createFile.ts
@@ -254,15 +265,9 @@ packages/
       …
       50→export default getFormatBasedOnPreference;
     getFormatFromContentType.ts
-      …
-      3→const getFormatFromContentType = (contentType: string): ArchivedFormat => {
-      …
-      21→export default getFormatFromContentType;
     getLinkTypeFromFormat.ts
       …
       3→const getLinkTypeFromFormat = (
-      4→  format: ArchivedFormat
-      5→): "image" | "pdf" | "readable" | "monolith" => {
       …
       21→export default getLinkTypeFromFormat;
     getOriginalFormat.ts
@@ -288,16 +293,10 @@ packages/
     rssHandler.ts
       …
       7→export const rssHandler = async (
-      8→  rssSubscription: RssSubscription,
-      9→  feed: Parser.Output<any>
-      10→) => {
       …
     safeFetch.ts
       …
       95→export async function safeFetch(
-      96→  input: string,
-      97→  options: SafeFetchOptions = {}
-      98→): Promise<Response> {
       …
     schemaValidation.ts
     ssrf.test.ts

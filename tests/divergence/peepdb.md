@@ -1,4 +1,4 @@
-Score(3000)=0.631 I=0.875 C=0.456 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.563/0.679/0.692/0.631/0.626/0.594/0.572
+Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.498/0.650/0.689/0.615/0.626/0.594/0.572
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -31,64 +31,64 @@ Score(3000)=0.631 I=0.875 C=0.456 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 659 | 215 | python names peepdb/db/__init__.py |  |  | 0.621 |
 | ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.569 |
 | walker |  | 690 | 31 | python names peepdb/db/firebase.py |  |  | 0.569 |
-| walker |  | 743 | 53 | python decl peepdb/db/oracle.py:7 |  |  | 0.570 |
-| walker |  | 797 | 54 | python decl peepdb/db/mongodb.py:8 |  |  | 0.571 |
-| ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.513 |
-| walker |  | 908 | 111 | python names peepdb/cli.py |  |  | 0.561 |
-| ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.561 |
-| walker |  | 916 | 8 | python decl peepdb/cli.py:86 |  |  | 0.561 |
-| walker |  | 927 | 11 | python decl peepdb/cli.py:16 |  |  | 0.561 |
-| walker |  | 944 | 17 | python decl peepdb/cli.py:25 |  |  | 0.561 |
-| walker |  | 975 | 31 | python decl peepdb/cli.py:113 |  |  | 0.563 |
-| walker |  | 1016 | 41 | python decl peepdb/cli.py:97 |  |  | 0.566 |
-| walker |  | 1023 | 7 | python body peepdb/cli.py:181 |  |  | 0.566 |
-| ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.543 |
-| walker |  | 1097 | 74 | [package] in project.toml |  |  | 0.736 |
-| walker |  | 1153 | 56 | package metadata in project.toml |  |  | 0.736 |
-| ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.686 |
-| walker |  | 1271 | 118 | python names peepdb/core.py |  |  | 0.714 |
-| walker |  | 1380 | 109 | python decl peepdb/core.py:56 |  |  | 0.717 |
-| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.679 |
-| walker |  | 1573 | 193 | headings outline in README.md |  |  | 0.752 |
-| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.731 |
-| walker |  | 1615 | 42 | README.md section #19 |  |  | 0.731 |
-| walker |  | 1650 | 35 | README.md section #8 |  |  | 0.731 |
-| walker |  | 1680 | 30 | README.md section #11 |  |  | 0.740 |
-| ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.740 |
-| walker |  | 1708 | 28 | README.md section #30 |  |  | 0.740 |
-| walker |  | 1727 | 19 | README.md section #5 |  |  | 0.742 |
-| walker |  | 1757 | 30 | README.md section #29 |  |  | 0.742 |
-| walker |  | 1853 | 96 | README headline in docs/README.md |  |  | 0.742 |
-| walker |  | 1874 | 21 | README.md section #7 |  |  | 0.745 |
-| walker |  | 1894 | 20 | README.md section #6 |  |  | 0.750 |
-| ns | 1922 |  | 242 | `view` docstring + connection resolution (cli.py 134-155) | 2.4 | 1.6 | 0.692 |
-| walker |  | 1932 | 38 | python decl peepdb/db/oracle.py:36 |  |  | 0.692 |
-| walker |  | 1967 | 35 | README.md section #28 |  |  | 0.692 |
-| walker |  | 1975 | 8 | python body peepdb/cli.py:86 |  |  | 0.692 |
-| walker |  | 2117 | 142 | python decl peepdb/cli.py:126 |  |  | 0.721 |
-| ns | 2207 |  | 285 | `view` dispatch into peep_db + output rendering (cli.py 156-178) | 2.5 | 2.4 | 0.670 |
-| walker |  | 2389 | 272 | python names peepdb/config.py |  |  | 0.724 |
-| walker |  | 2407 | 18 | python decl peepdb/config.py:29 |  |  | 0.724 |
-| ns | 2425 |  | 218 | `save` docstring and body (cli.py 66-83) | 2.6 | 1.6 | 0.688 |
-| walker |  | 2427 | 20 | python decl peepdb/config.py:41 |  |  | 0.688 |
-| walker |  | 2457 | 30 | python decl peepdb/config.py:15 |  |  | 0.689 |
-| walker |  | 2472 | 15 | python body peepdb/config.py:70 |  |  | 0.689 |
-| walker |  | 2487 | 15 | python body peepdb/config.py:73 |  |  | 0.689 |
-| ns | 2515 |  | 90 | Bodies of `list`, `remove` and `remove-all` (cli.py) | 2.7 | 1.6 | 0.671 |
-| walker |  | 2566 | 79 | python decl peepdb/db/mariadb.py:5 |  |  | 0.671 |
-| walker |  | 2645 | 79 | python decl peepdb/db/mysql.py:5 |  |  | 0.672 |
-| walker |  | 2724 | 79 | python decl peepdb/db/postgresql.py:6 |  |  | 0.673 |
-| ns | 2746 |  | 231 | BaseDatabase: class line + the four abstract methods + context manager | 3.1 |  | 0.634 |
-| walker |  | 2803 | 79 | python decl peepdb/db/sqlite.py:6 |  |  | 0.635 |
-| walker |  | 2826 | 23 | README.md section #3 |  |  | 0.639 |
-| walker |  | 2848 | 22 | README.md section #4 |  |  | 0.645 |
-| walker |  | 2871 | 23 | README.md section #2 |  |  | 0.652 |
-| ns | 2913 |  | 167 | BaseDatabase.__init__ and base.py imports | 3.2 | 3.1 | 0.631 |
-| walker |  | 2942 | 71 | README.md section #13 |  |  | 0.631 |
-| walker |  | 2988 | 46 | README.md section #10 |  |  | 0.631 |
-| ns | 3026 |  | 113 | core.peep_db full signature (core.py 56-66) | 3.3 | 1.5 | 0.644 |
-| walker |  | 3042 | 54 | headings outline in docs/installation.md |  |  | 0.644 |
-| walker |  | 3234 | 192 | [dependencies] in project.toml |  |  | 0.645 |
+| ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.512 |
+| walker |  | 882 | 192 | [dependencies] in project.toml |  |  | 0.512 |
+| ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.497 |
+| walker |  | 935 | 53 | python decl peepdb/db/oracle.py:7 |  |  | 0.498 |
+| walker |  | 989 | 54 | python decl peepdb/db/mongodb.py:8 |  |  | 0.498 |
+| ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.486 |
+| walker |  | 1100 | 111 | python names peepdb/cli.py |  |  | 0.538 |
+| walker |  | 1108 | 8 | python decl peepdb/cli.py:86 |  |  | 0.538 |
+| walker |  | 1119 | 11 | python decl peepdb/cli.py:16 |  |  | 0.538 |
+| walker |  | 1136 | 17 | python decl peepdb/cli.py:25 |  |  | 0.539 |
+| walker |  | 1167 | 31 | python decl peepdb/cli.py:113 |  |  | 0.540 |
+| walker |  | 1208 | 41 | python decl peepdb/cli.py:97 |  |  | 0.544 |
+| ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.507 |
+| walker |  | 1215 | 7 | python body peepdb/cli.py:181 |  |  | 0.507 |
+| walker |  | 1289 | 74 | [package] in project.toml |  |  | 0.686 |
+| walker |  | 1345 | 56 | package metadata in project.toml |  |  | 0.687 |
+| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.650 |
+| walker |  | 1463 | 118 | python names peepdb/core.py |  |  | 0.677 |
+| walker |  | 1572 | 109 | python decl peepdb/core.py:56 |  |  | 0.680 |
+| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.660 |
+| ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.674 |
+| walker |  | 1765 | 193 | headings outline in README.md |  |  | 0.741 |
+| walker |  | 1807 | 42 | README.md section #19 |  |  | 0.741 |
+| walker |  | 1842 | 35 | README.md section #8 |  |  | 0.741 |
+| walker |  | 1872 | 30 | README.md section #11 |  |  | 0.741 |
+| walker |  | 1900 | 28 | README.md section #30 |  |  | 0.741 |
+| walker |  | 1919 | 19 | README.md section #5 |  |  | 0.742 |
+| ns | 1922 |  | 242 | `view` docstring + connection resolution (cli.py 134-155) | 2.4 | 1.6 | 0.685 |
+| walker |  | 1949 | 30 | README.md section #29 |  |  | 0.685 |
+| walker |  | 2045 | 96 | README headline in docs/README.md |  |  | 0.685 |
+| walker |  | 2066 | 21 | README.md section #7 |  |  | 0.689 |
+| walker |  | 2086 | 20 | README.md section #6 |  |  | 0.693 |
+| walker |  | 2124 | 38 | python decl peepdb/db/oracle.py:36 |  |  | 0.693 |
+| walker |  | 2159 | 35 | README.md section #28 |  |  | 0.693 |
+| walker |  | 2167 | 8 | python body peepdb/cli.py:86 |  |  | 0.693 |
+| ns | 2207 |  | 285 | `view` dispatch into peep_db + output rendering (cli.py 156-178) | 2.5 | 2.4 | 0.644 |
+| walker |  | 2309 | 142 | python decl peepdb/cli.py:126 |  |  | 0.671 |
+| ns | 2425 |  | 218 | `save` docstring and body (cli.py 66-83) | 2.6 | 1.6 | 0.637 |
+| ns | 2515 |  | 90 | Bodies of `list`, `remove` and `remove-all` (cli.py) | 2.7 | 1.6 | 0.621 |
+| walker |  | 2581 | 272 | python names peepdb/config.py |  |  | 0.671 |
+| walker |  | 2599 | 18 | python decl peepdb/config.py:29 |  |  | 0.671 |
+| walker |  | 2619 | 20 | python decl peepdb/config.py:41 |  |  | 0.671 |
+| walker |  | 2649 | 30 | python decl peepdb/config.py:15 |  |  | 0.671 |
+| walker |  | 2664 | 15 | python body peepdb/config.py:70 |  |  | 0.671 |
+| walker |  | 2679 | 15 | python body peepdb/config.py:73 |  |  | 0.671 |
+| ns | 2746 |  | 231 | BaseDatabase: class line + the four abstract methods + context manager | 3.1 |  | 0.633 |
+| walker |  | 2758 | 79 | python decl peepdb/db/mariadb.py:5 |  |  | 0.633 |
+| walker |  | 2837 | 79 | python decl peepdb/db/mysql.py:5 |  |  | 0.634 |
+| ns | 2913 |  | 167 | BaseDatabase.__init__ and base.py imports | 3.2 | 3.1 | 0.614 |
+| walker |  | 2916 | 79 | python decl peepdb/db/postgresql.py:6 |  |  | 0.615 |
+| walker |  | 2995 | 79 | python decl peepdb/db/sqlite.py:6 |  |  | 0.615 |
+| walker |  | 3018 | 23 | README.md section #3 |  |  | 0.619 |
+| ns | 3026 |  | 113 | core.peep_db full signature (core.py 56-66) | 3.3 | 1.5 | 0.633 |
+| walker |  | 3040 | 22 | README.md section #4 |  |  | 0.638 |
+| walker |  | 3063 | 23 | README.md section #2 |  |  | 0.645 |
+| walker |  | 3134 | 71 | README.md section #13 |  |  | 0.645 |
+| walker |  | 3180 | 46 | README.md section #10 |  |  | 0.645 |
+| walker |  | 3234 | 54 | headings outline in docs/installation.md |  |  | 0.645 |
 | ns | 3292 |  | 266 | connect_to_database: the first five engine branches (core.py 28-42) | 3.4 | 1.5 | 0.624 |
 | walker |  | 3361 | 127 | manifest config in project.toml |  |  | 0.624 |
 | walker |  | 3417 | 56 | headings outline in docs/index.md |  |  | 0.624 |

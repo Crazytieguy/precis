@@ -1,4 +1,4 @@
-Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.635/0.626/0.576/0.579/0.625/0.599
+Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.635/0.618/0.576/0.579/0.625/0.599
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,22 +32,22 @@ Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.641 |
 | ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.627 |
 | walker |  | 1667 | 350 | python module doc src/requests/__init__.py |  |  | 0.627 |
-| walker |  | 1710 | 43 | listing of '.github' |  |  | 0.641 |
-| walker |  | 1751 | 41 | listing of '.github/workflows' |  |  | 0.677 |
-| walker |  | 1809 | 58 | [package] in pyproject.toml |  |  | 0.680 |
-| walker |  | 1859 | 50 | python names src/requests/status_codes.py |  |  | 0.680 |
-| ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.636 |
-| walker |  | 2006 | 147 | README.md section #0 |  |  | 0.636 |
-| walker |  | 2020 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.654 |
-| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.626 |
-| walker |  | 2077 | 57 | python names src/requests/hooks.py |  |  | 0.626 |
-| walker |  | 2130 | 53 | python decl src/requests/hooks.py:32 |  |  | 0.626 |
-| walker |  | 2187 | 57 | python names src/requests/sessions.py |  |  | 0.626 |
-| walker |  | 2218 | 31 | python decl src/requests/sessions.py:76 |  |  | 0.626 |
-| walker |  | 2226 | 8 | python body src/requests/sessions.py:908 |  |  | 0.626 |
-| walker |  | 2279 | 53 | python decl src/requests/sessions.py:108 |  |  | 0.626 |
-| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.590 |
-| walker |  | 2420 | 141 | [dependencies] in pyproject.toml |  |  | 0.598 |
+| walker |  | 1812 | 145 | [dependencies] in pyproject.toml |  |  | 0.630 |
+| walker |  | 1866 | 54 | [package] in pyproject.toml |  |  | 0.640 |
+| ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.599 |
+| walker |  | 1909 | 43 | listing of '.github' |  |  | 0.612 |
+| walker |  | 1950 | 41 | listing of '.github/workflows' |  |  | 0.646 |
+| walker |  | 2000 | 50 | python names src/requests/status_codes.py |  |  | 0.646 |
+| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.618 |
+| walker |  | 2147 | 147 | README.md section #0 |  |  | 0.618 |
+| walker |  | 2161 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.635 |
+| walker |  | 2218 | 57 | python names src/requests/hooks.py |  |  | 0.635 |
+| walker |  | 2271 | 53 | python decl src/requests/hooks.py:32 |  |  | 0.635 |
+| walker |  | 2328 | 57 | python names src/requests/sessions.py |  |  | 0.635 |
+| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.598 |
+| walker |  | 2359 | 31 | python decl src/requests/sessions.py:76 |  |  | 0.598 |
+| walker |  | 2367 | 8 | python body src/requests/sessions.py:908 |  |  | 0.598 |
+| walker |  | 2420 | 53 | python decl src/requests/sessions.py:108 |  |  | 0.598 |
 | walker |  | 2483 | 63 | README.md section #1 |  |  | 0.598 |
 | walker |  | 2556 | 73 | python names src/requests/structures.py |  |  | 0.598 |
 | walker |  | 2569 | 13 | python doc src/requests/help.py:69 |  |  | 0.598 |

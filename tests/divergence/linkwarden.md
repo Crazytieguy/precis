@@ -84,34 +84,34 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 2221 | 210 | Prisma decl at packages/prisma/schema.prisma:166 |  |  | 0.647 |
 | ns | 2396 |  | 313 | `User` model — identity, relations and subscription linkage | 2.4 | 2.1 | 0.607 |
 | walker |  | 2400 | 179 | Prisma decl tail at packages/prisma/schema.prisma:166 body 182 |  |  | 0.678 |
-| walker |  | 2509 | 109 | listing of 'packages/lib' |  |  | 0.681 |
-| walker |  | 2522 | 13 | ts names packages/lib/transporter.ts |  |  | 0.681 |
-| walker |  | 2536 | 14 | ts names packages/lib/constants.ts |  |  | 0.681 |
-| walker |  | 2550 | 14 | ts names packages/lib/safeFetch.ts |  |  | 0.681 |
-| walker |  | 2565 | 15 | ts names packages/lib/generatePreview.ts |  |  | 0.681 |
-| walker |  | 2580 | 15 | ts names packages/lib/rssHandler.ts |  |  | 0.681 |
-| walker |  | 2596 | 16 | ts names packages/lib/verifyCapacity.ts |  |  | 0.681 |
-| walker |  | 2613 | 17 | ts names packages/lib/meilisearchClient.ts |  |  | 0.681 |
-| walker |  | 2631 | 18 | ts names packages/lib/getPreservedFormatUrl.ts |  |  | 0.681 |
-| walker |  | 2654 | 23 | ts names packages/lib/isArchivalTag.ts |  |  | 0.681 |
-| walker |  | 2678 | 24 | ts names packages/lib/getOriginalFormat.ts |  |  | 0.681 |
-| walker |  | 2704 | 26 | ts decl packages/lib/getOriginalFormat.ts:6 |  |  | 0.681 |
-| walker |  | 2732 | 28 | ts names packages/lib/formatStats.ts |  |  | 0.681 |
+| walker |  | 2535 | 135 | package runtime dependencies in package.json |  |  | 0.678 |
+| walker |  | 2644 | 109 | listing of 'packages/lib' |  |  | 0.681 |
+| walker |  | 2657 | 13 | ts names packages/lib/transporter.ts |  |  | 0.681 |
+| walker |  | 2671 | 14 | ts names packages/lib/constants.ts |  |  | 0.681 |
+| walker |  | 2685 | 14 | ts names packages/lib/safeFetch.ts |  |  | 0.681 |
+| walker |  | 2700 | 15 | ts names packages/lib/generatePreview.ts |  |  | 0.681 |
+| walker |  | 2715 | 15 | ts names packages/lib/rssHandler.ts |  |  | 0.681 |
+| walker |  | 2731 | 16 | ts names packages/lib/verifyCapacity.ts |  |  | 0.681 |
 | ns | 2738 |  | 342 | `User` model — preference and archival-toggle fields | 2.5 | 2.4 | 0.646 |
-| walker |  | 2756 | 24 | ts decl packages/lib/formatStats.ts:11 |  |  | 0.646 |
-| walker |  | 2784 | 28 | ts names packages/lib/getFormatBasedOnPreference.ts |  |  | 0.646 |
-| walker |  | 2812 | 28 | ts names packages/lib/getLinkTypeFromFormat.ts |  |  | 0.646 |
-| walker |  | 2840 | 28 | ts decl packages/lib/verifyCapacity.ts:8 |  |  | 0.646 |
-| walker |  | 2870 | 30 | ts decl packages/lib/rssHandler.ts:7 |  |  | 0.646 |
-| walker |  | 2900 | 30 | ts decl packages/lib/safeFetch.ts:95 |  |  | 0.646 |
-| walker |  | 2934 | 34 | ts decl packages/lib/getLinkTypeFromFormat.ts:3 |  |  | 0.646 |
-| walker |  | 2971 | 37 | ts names packages/lib/getFormatFromContentType.ts |  |  | 0.646 |
-| walker |  | 3028 | 57 | listing of 'apps/worker/lib' |  |  | 0.647 |
-| ns | 3055 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.617 |
-| walker |  | 3067 | 39 | Prisma decl at packages/prisma/schema.prisma:289 |  |  | 0.641 |
-| walker |  | 3087 | 20 | plaintext config apps/mobile/.env.sample |  |  | 0.641 |
-| walker |  | 3126 | 39 | ts decl packages/lib/generatePreview.ts:5 |  |  | 0.641 |
-| walker |  | 3261 | 135 | package runtime dependencies in package.json |  |  | 0.641 |
+| walker |  | 2748 | 17 | ts names packages/lib/meilisearchClient.ts |  |  | 0.646 |
+| walker |  | 2766 | 18 | ts names packages/lib/getPreservedFormatUrl.ts |  |  | 0.646 |
+| walker |  | 2789 | 23 | ts names packages/lib/isArchivalTag.ts |  |  | 0.646 |
+| walker |  | 2813 | 24 | ts names packages/lib/getOriginalFormat.ts |  |  | 0.646 |
+| walker |  | 2839 | 26 | ts decl packages/lib/getOriginalFormat.ts:6 |  |  | 0.646 |
+| walker |  | 2867 | 28 | ts names packages/lib/formatStats.ts |  |  | 0.646 |
+| walker |  | 2891 | 24 | ts decl packages/lib/formatStats.ts:11 |  |  | 0.646 |
+| walker |  | 2919 | 28 | ts names packages/lib/getFormatBasedOnPreference.ts |  |  | 0.646 |
+| walker |  | 2947 | 28 | ts names packages/lib/getLinkTypeFromFormat.ts |  |  | 0.646 |
+| walker |  | 2975 | 28 | ts decl packages/lib/verifyCapacity.ts:8 |  |  | 0.646 |
+| walker |  | 3005 | 30 | ts decl packages/lib/rssHandler.ts:7 |  |  | 0.646 |
+| walker |  | 3035 | 30 | ts decl packages/lib/safeFetch.ts:95 |  |  | 0.646 |
+| ns | 3055 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.616 |
+| walker |  | 3069 | 34 | ts decl packages/lib/getLinkTypeFromFormat.ts:3 |  |  | 0.616 |
+| walker |  | 3106 | 37 | ts names packages/lib/getFormatFromContentType.ts |  |  | 0.616 |
+| walker |  | 3163 | 57 | listing of 'apps/worker/lib' |  |  | 0.617 |
+| walker |  | 3202 | 39 | Prisma decl at packages/prisma/schema.prisma:289 |  |  | 0.641 |
+| walker |  | 3222 | 20 | plaintext config apps/mobile/.env.sample |  |  | 0.641 |
+| walker |  | 3261 | 39 | ts decl packages/lib/generatePreview.ts:5 |  |  | 0.641 |
 | walker |  | 3320 | 59 | listing of 'apps/mobile/components' |  |  | 0.642 |
 | walker |  | 3346 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.642 |
 | walker |  | 3378 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.642 |

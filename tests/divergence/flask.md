@@ -1,4 +1,4 @@
-Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.771/0.637/0.694/0.676/0.569/0.509/0.534
+Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.771/0.637/0.715/0.676/0.569/0.509/0.534
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,25 +38,25 @@ Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 1573 | 43 | python body src/flask/json/__init__.py:77 |  |  | 0.733 |
 | walker |  | 1616 | 43 | python body src/flask/json/__init__.py:108 |  |  | 0.733 |
 | ns | 1639 |  | 94 | Scaffold routing decorators — every URL-registration method, names only (sansio/scaffold.py:284-436) | 2.3 | 2.2 | 0.707 |
-| walker |  | 1672 | 56 | python body src/flask/json/__init__.py:13 |  |  | 0.707 |
 | ns | 1745 |  | 106 | Scaffold request-hook and error-handler decorators, names only (sansio/scaffold.py:460-657) | 2.4 | 2.2 | 0.684 |
-| walker |  | 1794 | 122 | README.md section #0 |  |  | 0.725 |
-| ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.694 |
-| walker |  | 1939 | 145 | listing of 'docs/patterns' |  |  | 0.694 |
-| walker |  | 1995 | 56 | python names src/flask/config.py |  |  | 0.694 |
-| walker |  | 2056 | 61 | python names src/flask/views.py |  |  | 0.694 |
-| walker |  | 2088 | 32 | python decl src/flask/views.py:11 |  |  | 0.694 |
-| ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.660 |
-| walker |  | 2136 | 48 | python decl src/flask/views.py:138 |  |  | 0.660 |
-| walker |  | 2281 | 145 | listing of 'tests' |  |  | 0.662 |
-| ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.646 |
-| walker |  | 2341 | 60 | python body src/flask/json/__init__.py:47 |  |  | 0.646 |
-| walker |  | 2407 | 66 | python decl src/flask/blueprints.py:18 |  |  | 0.646 |
-| walker |  | 2492 | 85 | [package] in pyproject.toml |  |  | 0.655 |
-| ns | 2510 |  | 216 | Class roster B: templating, testing, CLI, debug helpers (14 class statements) | 2.8 |  | 0.629 |
-| walker |  | 2530 | 38 | package metadata in pyproject.toml |  |  | 0.638 |
-| ns | 2655 |  | 145 | Class roster C: the whole src/flask/json subpackage (12 class statements) | 2.9 |  | 0.619 |
-| walker |  | 2675 | 145 | [dependencies] in pyproject.toml |  |  | 0.673 |
+| walker |  | 1763 | 147 | [dependencies] in pyproject.toml |  |  | 0.707 |
+| walker |  | 1819 | 56 | python body src/flask/json/__init__.py:13 |  |  | 0.707 |
+| ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.677 |
+| walker |  | 1941 | 122 | README.md section #0 |  |  | 0.715 |
+| walker |  | 2086 | 145 | listing of 'docs/patterns' |  |  | 0.715 |
+| ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.680 |
+| walker |  | 2142 | 56 | python names src/flask/config.py |  |  | 0.681 |
+| walker |  | 2203 | 61 | python names src/flask/views.py |  |  | 0.681 |
+| walker |  | 2235 | 32 | python decl src/flask/views.py:11 |  |  | 0.681 |
+| walker |  | 2283 | 48 | python decl src/flask/views.py:138 |  |  | 0.681 |
+| ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.663 |
+| walker |  | 2428 | 145 | listing of 'tests' |  |  | 0.665 |
+| walker |  | 2488 | 60 | python body src/flask/json/__init__.py:47 |  |  | 0.665 |
+| ns | 2510 |  | 216 | Class roster B: templating, testing, CLI, debug helpers (14 class statements) | 2.8 |  | 0.639 |
+| walker |  | 2571 | 83 | [package] in pyproject.toml |  |  | 0.673 |
+| walker |  | 2609 | 38 | package metadata in pyproject.toml |  |  | 0.693 |
+| ns | 2655 |  | 145 | Class roster C: the whole src/flask/json subpackage (12 class statements) | 2.9 |  | 0.672 |
+| walker |  | 2675 | 66 | python decl src/flask/blueprints.py:18 |  |  | 0.673 |
 | walker |  | 2718 | 43 | python names src/flask/json/provider.py |  |  | 0.674 |
 | walker |  | 2737 | 19 | listing of 'tests/type_check' |  |  | 0.674 |
 | walker |  | 2810 | 73 | python decl src/flask/wrappers.py:222 |  |  | 0.674 |

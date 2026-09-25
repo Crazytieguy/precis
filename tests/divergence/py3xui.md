@@ -37,27 +37,27 @@ Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 772 | 15 | python names py3xui/inbound/bases.py |  |  | 0.495 |
 | walker |  | 783 | 11 | python decl py3xui/inbound/bases.py:9 |  |  | 0.495 |
 | ns | 795 |  | 86 | Listings of the two transport packages: py3xui/api/ and py3xui/async_api/ | 1.8 |  | 0.541 |
-| walker |  | 800 | 17 | python names py3xui/async_api/async_api_client.py |  |  | 0.541 |
-| walker |  | 817 | 17 | python names py3xui/async_api/async_api_database.py |  |  | 0.541 |
-| walker |  | 832 | 15 | python decl py3xui/async_api/async_api_database.py:7 |  |  | 0.541 |
-| walker |  | 849 | 17 | python names py3xui/async_api/async_api_inbound.py |  |  | 0.541 |
-| walker |  | 866 | 17 | python names py3xui/async_api/async_api_server.py |  |  | 0.542 |
-| ns | 869 |  | 74 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.566 |
-| walker |  | 884 | 18 | listing of '.github' |  |  | 0.566 |
-| walker |  | 907 | 23 | listing of '.github/workflows' |  |  | 0.567 |
-| walker |  | 938 | 31 | README headline in py3xui/utils/README.md |  |  | 0.567 |
-| walker |  | 960 | 22 | python names py3xui/api/api_base.py |  |  | 0.567 |
-| walker |  | 983 | 23 | python names py3xui/client/client.py |  |  | 0.567 |
-| walker |  | 998 | 15 | py3xui/utils/README.md section #0 |  |  | 0.567 |
+| walker |  | 844 | 61 | [dependencies] in pyproject.toml |  |  | 0.541 |
+| walker |  | 861 | 17 | python names py3xui/async_api/async_api_client.py |  |  | 0.541 |
+| ns | 869 |  | 74 | Listings of the model and utility packages: inbound/, client/, server/, utils/ | 1.9 |  | 0.565 |
+| walker |  | 878 | 17 | python names py3xui/async_api/async_api_database.py |  |  | 0.565 |
+| walker |  | 893 | 15 | python decl py3xui/async_api/async_api_database.py:7 |  |  | 0.566 |
+| walker |  | 910 | 17 | python names py3xui/async_api/async_api_inbound.py |  |  | 0.566 |
+| walker |  | 927 | 17 | python names py3xui/async_api/async_api_server.py |  |  | 0.566 |
+| walker |  | 945 | 18 | listing of '.github' |  |  | 0.566 |
+| walker |  | 968 | 23 | listing of '.github/workflows' |  |  | 0.567 |
+| walker |  | 999 | 31 | README headline in py3xui/utils/README.md |  |  | 0.567 |
 | ns | 1016 |  | 147 | Re-export blocks of py3xui/api/__init__.py and py3xui/async_api/__init__.py | 1.10 |  | 0.575 |
-| walker |  | 1022 | 24 | python names py3xui/inbound/settings.py |  |  | 0.575 |
-| walker |  | 1058 | 36 | README headline in py3xui/server/README.md |  |  | 0.575 |
-| walker |  | 1083 | 25 | python names py3xui/inbound/inbound.py |  |  | 0.575 |
-| walker |  | 1120 | 37 | README headline in py3xui/client/README.md |  |  | 0.575 |
-| walker |  | 1146 | 26 | python names py3xui/inbound/stream_settings.py |  |  | 0.575 |
+| walker |  | 1021 | 22 | python names py3xui/api/api_base.py |  |  | 0.575 |
+| walker |  | 1044 | 23 | python names py3xui/client/client.py |  |  | 0.575 |
+| walker |  | 1059 | 15 | py3xui/utils/README.md section #0 |  |  | 0.575 |
+| walker |  | 1083 | 24 | python names py3xui/inbound/settings.py |  |  | 0.575 |
+| walker |  | 1119 | 36 | README headline in py3xui/server/README.md |  |  | 0.575 |
+| walker |  | 1144 | 25 | python names py3xui/inbound/inbound.py |  |  | 0.575 |
 | ns | 1157 |  | 141 | Re-export blocks of the inbound/, client/, server/ and utils/ packages | 1.11 |  | 0.582 |
-| walker |  | 1174 | 28 | python names py3xui/inbound/sniffing.py |  |  | 0.582 |
-| walker |  | 1235 | 61 | [dependencies] in pyproject.toml |  |  | 0.582 |
+| walker |  | 1181 | 37 | README headline in py3xui/client/README.md |  |  | 0.582 |
+| walker |  | 1207 | 26 | python names py3xui/inbound/stream_settings.py |  |  | 0.582 |
+| walker |  | 1235 | 28 | python names py3xui/inbound/sniffing.py |  |  | 0.582 |
 | walker |  | 1282 | 47 | README headline in py3xui/inbound/README.md |  |  | 0.582 |
 | walker |  | 1309 | 27 | listing of 'tests' |  |  | 0.583 |
 | walker |  | 1330 | 21 | headings outline in py3xui/client/README.md |  |  | 0.583 |

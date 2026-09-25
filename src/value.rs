@@ -62,6 +62,20 @@ pub fn dependency_table_mass_factor(tokens: usize) -> f64 {
     (DEPENDENCY_TABLE_SATURATION_TOKENS / mass).powf(DEPENDENCY_TABLE_DAMP_GRADE)
 }
 
+/// Value of a manifest's runtime dependency roster, before
+/// [`dependency_table_mass_factor`], shared by every manifest format. What
+/// a package depends on is a primary statement of what it *is* — a
+/// database driver, an HTTP client, a template engine — for the manifest
+/// that describes the repository (its root, or a workspace's primary
+/// member). A sub-package's roster is scaffolding around that.
+pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
+    if describes_repository {
+        mix_signals(0.75, 0.6, 0.5, depth)
+    } else {
+        mix_signals(0.4, 0.7, 0.4, depth)
+    }
+}
+
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;

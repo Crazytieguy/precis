@@ -24,12 +24,12 @@ Score(3000)=0.696 I=0.852 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | ns | 387 |  | 99 | README lede — ElectricSQL ShapeStreams and pipeline type inference | 1.6 | 1.1 | 0.887 |
 | walker |  | 421 | 36 | listing of 'packages/d2ts' |  |  | 0.898 |
 | walker |  | 506 | 85 | package identity in packages/d2ts/package.json |  |  | 0.898 |
-| walker |  | 539 | 33 | listing of 'packages/d2mini/src' |  |  | 0.898 |
-| ns | 578 |  | 191 | Root package.json — identity and every workspace script | 1.7 |  | 0.737 |
-| walker |  | 586 | 47 | ts names packages/d2mini/src/index.ts |  |  | 0.737 |
-| walker |  | 690 | 104 | listing of 'packages/d2mini/src/operators' |  |  | 0.749 |
-| ns | 728 |  | 150 | Published package identity: d2ts and d2mini | 1.8 |  | 0.705 |
-| walker |  | 764 | 74 | package runtime dependencies in packages/d2ts/package.json |  |  | 0.705 |
+| ns | 578 |  | 191 | Root package.json — identity and every workspace script | 1.7 |  | 0.736 |
+| walker |  | 580 | 74 | package runtime dependencies in packages/d2ts/package.json |  |  | 0.736 |
+| walker |  | 613 | 33 | listing of 'packages/d2mini/src' |  |  | 0.737 |
+| walker |  | 660 | 47 | ts names packages/d2mini/src/index.ts |  |  | 0.737 |
+| ns | 728 |  | 150 | Published package identity: d2ts and d2mini | 1.8 |  | 0.694 |
+| walker |  | 764 | 104 | listing of 'packages/d2mini/src/operators' |  |  | 0.705 |
 | walker |  | 820 | 56 | ts decl packages/d2ts-benchmark/src/index.ts:25 |  |  | 0.705 |
 | walker |  | 864 | 44 | listing of 'packages/d2ts/src' |  |  | 0.712 |
 | walker |  | 868 | 4 | listing of 'packages/d2ts/src/electric' |  |  | 0.712 |

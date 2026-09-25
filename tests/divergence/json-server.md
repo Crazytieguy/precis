@@ -44,10 +44,10 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 1287 | 61 | ts names src/adapters/normalized-adapter.ts |  |  | 0.354 |
 | walker |  | 1300 | 13 | ts decl src/adapters/normalized-adapter.ts:7 |  |  | 0.354 |
 | walker |  | 1354 | 54 | ts decl src/adapters/normalized-adapter.ts:11 |  |  | 0.355 |
-| walker |  | 1365 | 11 | ts body src/service.ts:84 |  |  | 0.355 |
 | ns | 1384 |  | 124 | CLI usage/options help text (src/bin.ts 22-30) | 2.2 |  | 0.340 |
 | ns | 1532 |  | 148 | Complete condition-operator vocabulary (README 161-172) | 2.3 |  | 0.326 |
-| walker |  | 1596 | 231 | package runtime dependencies in package.json |  |  | 0.392 |
+| walker |  | 1585 | 231 | package runtime dependencies in package.json |  |  | 0.392 |
+| walker |  | 1596 | 11 | ts body src/service.ts:84 |  |  | 0.392 |
 | ns | 1643 |  | 111 | Worked filter-query examples (README 174-183) | 2.4 |  | 0.379 |
 | ns | 1710 |  | 67 | Sort and embed query params (README 189-191, 223-224) | 2.5 |  | 0.372 |
 | walker |  | 1797 | 201 | headings outline in README.md |  |  | 0.464 |

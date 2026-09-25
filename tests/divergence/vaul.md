@@ -9,9 +9,9 @@ Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 86 |  | 86 | Package identity: name, version, description, entry points | 1.1 |  | 0.000 |
 | walker |  | 131 | 58 | package identity in package.json |  |  | 0.460 |
 | ns | 148 |  | 62 | Complete repository root listing | 1.2 |  | 0.677 |
-| walker |  | 202 | 71 | listing of 'src' |  |  | 0.746 |
-| ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.737 |
-| walker |  | 238 | 36 | package runtime dependencies in package.json |  |  | 0.737 |
+| walker |  | 167 | 36 | package runtime dependencies in package.json |  |  | 0.677 |
+| ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.507 |
+| walker |  | 238 | 71 | listing of 'src' |  |  | 0.737 |
 | walker |  | 257 | 19 | package runtime metadata in package.json |  |  | 0.737 |
 | walker |  | 320 | 63 | README.md section #0 |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |

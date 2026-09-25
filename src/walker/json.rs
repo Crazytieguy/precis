@@ -19,7 +19,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::render::Source;
-use crate::value::{dependency_table_mass_factor, mix_signals};
+use crate::value::{dependency_roster_value, dependency_table_mass_factor, mix_signals};
 
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
@@ -391,26 +391,11 @@ fn operational_value(file: &Path, ctx: &WalkCtx) -> f64 {
         * secondary_package_json_factor(file)
 }
 
-/// What a package depends on at runtime is a primary statement of what
-/// it *is* — a database driver, an HTTP client, a template engine.
-/// Priced flat, the class sat below `Entry` / `Scripts` / `Runtime` and
-/// only 4% above `DevDependencies`, a gap per-token ranking erases:
-/// whichever of the two blocks is physically shorter wins, and that is
-/// routinely the dev block, so a manifest could render its tooling and
-/// nothing else. Only manifests that describe the repository itself are
-/// promoted — a demo/sample sub-package's dependency list is
-/// scaffolding, and promoting those buys clutter.
-const REPOSITORY_DEPENDENCIES_BOOST: f64 = 2.2;
-
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let boost = if describes_repository(file, ctx) {
-        REPOSITORY_DEPENDENCIES_BOOST
-    } else {
-        1.0
-    };
-    mix_signals(0.25, 0.5, 0.25, manifest_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
-        * boost
+    dependency_roster_value(
+        describes_repository(file, ctx),
+        manifest_depth_factor(file, ctx),
+    ) * secondary_package_json_factor(file)
 }
 
 /// True iff this manifest describes the repository itself — the root

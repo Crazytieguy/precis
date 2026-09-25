@@ -1,4 +1,4 @@
-Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.835/0.765/0.761/0.627/0.577/0.559/0.590
+Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.835/0.766/0.761/0.627/0.577/0.559/0.590
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -34,20 +34,20 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 980 | 22 | listing of 'examples' |  |  | 0.835 |
 | walker |  | 1006 | 26 | python names htmy/md/core.py |  |  | 0.835 |
 | ns | 1014 |  | 228 | `htmy/__init__.py` exports, part 3: the sixteen re-exported type names | 1.8 | 1.7 | 0.744 |
-| ns | 1160 |  | 146 | `htmy/__init__.py` exports, part 4: `utils` helpers and the two aliases | 1.9 | 1.8 | 0.692 |
-| walker |  | 1248 | 242 | python names htmy/__init__.py #1 |  |  | 0.811 |
-| walker |  | 1324 | 76 | python names htmy/tag.py |  |  | 0.811 |
-| walker |  | 1381 | 57 | python decl htmy/tag.py:84 |  |  | 0.812 |
-| ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.764 |
-| walker |  | 1442 | 61 | python decl htmy/tag.py:56 |  |  | 0.765 |
-| walker |  | 1518 | 76 | python decl htmy/error_boundary.py:15 |  |  | 0.765 |
-| walker |  | 1595 | 77 | python decl htmy/tag.py:73 |  |  | 0.766 |
+| walker |  | 1103 | 97 | [dependencies] in pyproject.toml |  |  | 0.746 |
+| ns | 1160 |  | 146 | `htmy/__init__.py` exports, part 4: `utils` helpers and the two aliases | 1.9 | 1.8 | 0.693 |
+| walker |  | 1345 | 242 | python names htmy/__init__.py #1 |  |  | 0.813 |
+| walker |  | 1421 | 76 | python names htmy/tag.py |  |  | 0.813 |
+| ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.766 |
+| walker |  | 1478 | 57 | python decl htmy/tag.py:84 |  |  | 0.766 |
+| walker |  | 1539 | 61 | python decl htmy/tag.py:56 |  |  | 0.766 |
 | ns | 1612 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.747 |
-| walker |  | 1651 | 56 | headings outline in docs/components-guide.md |  |  | 0.747 |
-| walker |  | 1651 | 0 | docs/components-guide.md section #0 |  |  | 0.747 |
-| walker |  | 1666 | 15 | python doc htmy/io.py:11 |  |  | 0.747 |
-| ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.722 |
-| walker |  | 1763 | 97 | [dependencies] in pyproject.toml |  |  | 0.723 |
+| walker |  | 1615 | 76 | python decl htmy/error_boundary.py:15 |  |  | 0.747 |
+| walker |  | 1692 | 77 | python decl htmy/tag.py:73 |  |  | 0.748 |
+| walker |  | 1748 | 56 | headings outline in docs/components-guide.md |  |  | 0.748 |
+| walker |  | 1748 | 0 | docs/components-guide.md section #0 |  |  | 0.748 |
+| ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.723 |
+| walker |  | 1763 | 15 | python doc htmy/io.py:11 |  |  | 0.723 |
 | walker |  | 1822 | 59 | headings outline in docs/function-components.md |  |  | 0.723 |
 | walker |  | 1830 | 8 | python body htmy/tag.py:66 |  |  | 0.723 |
 | ns | 1900 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.707 |

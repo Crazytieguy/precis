@@ -26,7 +26,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::render::Source;
-use crate::value::{dependency_table_mass_factor, mix_signals};
+use crate::value::{dependency_roster_value, dependency_table_mass_factor, mix_signals};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{
@@ -117,11 +117,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if let Some(content) =
             build_dependencies_content(&file, &source, &pairs, &sections, python_project_manifest)
         {
-            let tier = if is_cargo_manifest(&file) {
-                cargo_dependencies_value(&file, ctx)
-            } else {
-                dependencies_value(&file, ctx)
-            };
+            let tier = dependency_roster_value(
+                file.parent() == Some(ctx.root()),
+                path_depth_factor(&file, ctx),
+            );
             let value =
                 tier * dependency_table_mass_factor(lines_content_tokens(&source, &content));
             out.push(Batch {
@@ -544,30 +543,6 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Console entry points answer "how do I run this" — orientation that
     // a reader otherwise has to reconstruct from the source tree.
     mix_signals(0.70, 0.6, 0.65, path_depth_factor(file, ctx))
-}
-
-fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Pyproject lede manifests get a cat-axis bump — reuses the same
-    // signal as `identity_value` so the two stay co-classified.
-    let cat = match pyproject_identity_factor(file, ctx) {
-        Some(PYPROJECT_LEDE_IDENTITY_FACTOR) => 0.55,
-        _ => 0.4,
-    };
-    mix_signals(cat, 0.7, 0.4, path_depth_factor(file, ctx))
-}
-
-fn cargo_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let (catastrophic, follow_up, zero_tool_call) = if file.parent() == Some(ctx.root()) {
-        (0.75, 0.6, 0.5)
-    } else {
-        (0.4, 0.7, 0.4)
-    };
-    mix_signals(
-        catastrophic,
-        follow_up,
-        zero_tool_call,
-        path_depth_factor(file, ctx),
-    )
 }
 
 fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {

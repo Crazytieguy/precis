@@ -84,12 +84,12 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.544 |
 | walker |  | 3710 | 26 | Readme.md section #16 |  |  | 0.544 |
 | walker |  | 3735 | 25 | Readme.md section #17 |  |  | 0.544 |
-| walker |  | 3773 | 38 | ts body lib/request.js:214 |  |  | 0.544 |
-| walker |  | 3830 | 57 | ts doc lib/response.js:696 |  |  | 0.544 |
-| walker |  | 3858 | 28 | Readme.md section #22 |  |  | 0.544 |
 | ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.525 |
 | ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.514 |
-| walker |  | 4318 | 460 | package runtime dependencies in package.json |  |  | 0.516 |
+| walker |  | 4195 | 460 | package runtime dependencies in package.json |  |  | 0.516 |
+| walker |  | 4233 | 38 | ts body lib/request.js:214 |  |  | 0.516 |
+| walker |  | 4290 | 57 | ts doc lib/response.js:696 |  |  | 0.516 |
+| walker |  | 4318 | 28 | Readme.md section #22 |  |  | 0.516 |
 | ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.503 |
 | walker |  | 4348 | 30 | Readme.md section #27 |  |  | 0.503 |
 | walker |  | 4378 | 30 | Readme.md section #29 |  |  | 0.503 |

@@ -177,6 +177,6 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 9857 | 42 | c decl sqlite-vec.c:598 |  |  | 0.406 |
 | walker |  | 9883 | 26 | c decl sqlite-vec.c:811 |  |  | 0.406 |
 | walker |  | 9910 | 27 | c decl sqlite-vec.c:687 |  |  | 0.406 |
-| walker |  | 9940 | 30 | [dependencies] in tests/pyproject.toml |  |  | 0.406 |
-| walker |  | 9946 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.406 |
+| walker |  | 9916 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.406 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.403 |
+| walker |  | 9979 | 63 | README headline in benchmarks/exhaustive-memory/README.md |  |  | 0.403 |

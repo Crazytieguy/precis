@@ -1,4 +1,4 @@
-Score(3000)=0.600 I=0.669 C=0.537 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.421/0.603/0.600/0.543/0.471/0.466
+Score(3000)=0.600 I=0.669 C=0.537 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.492/0.421/0.603/0.600/0.543/0.471/0.466
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,13 +19,13 @@ Score(3000)=0.600 I=0.669 C=0.537 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 711 | 147 | README headline in README.md |  |  | 0.152 |
 | ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.160 |
 | walker |  | 792 | 81 | README prelude in README.md |  |  | 0.160 |
-| walker |  | 815 | 23 | listing of '.github' |  |  | 0.160 |
-| walker |  | 845 | 30 | listing of '.github/workflows' |  |  | 0.160 |
-| walker |  | 868 | 23 | listing of 'benchmarks' |  |  | 0.160 |
-| ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.470 |
-| walker |  | 959 | 91 | headings outline in README.md |  |  | 0.568 |
-| walker |  | 981 | 22 | README.md section #0 |  |  | 0.577 |
-| walker |  | 1064 | 83 | [dependencies] in pyproject.toml |  |  | 0.599 |
+| walker |  | 875 | 83 | [dependencies] in pyproject.toml |  |  | 0.229 |
+| walker |  | 898 | 23 | listing of '.github' |  |  | 0.229 |
+| walker |  | 928 | 30 | listing of '.github/workflows' |  |  | 0.229 |
+| ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.491 |
+| walker |  | 951 | 23 | listing of 'benchmarks' |  |  | 0.492 |
+| walker |  | 1042 | 91 | headings outline in README.md |  |  | 0.590 |
+| walker |  | 1064 | 22 | README.md section #0 |  |  | 0.599 |
 | walker |  | 1107 | 43 | listing of 'tools' |  |  | 0.600 |
 | walker |  | 1242 | 135 | listing of 'docs/source' |  |  | 0.604 |
 | walker |  | 1252 | 10 | listing of 'docs/source/appendix' |  |  | 0.604 |

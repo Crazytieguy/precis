@@ -120,6 +120,28 @@ notebooks/
     demo.ipynb
     load_from_pretrained.ipynb
 pyproject.toml
+  …
+  22→dependencies = [
+  23→    "torch",
+  24→    "einops",
+  25→    "numpy",
+  26→    "opt_einsum", 
+  27→    "omegaconf",
+  28→    "transformers",
+  29→    "reportlab",
+  30→    "joypy",
+  31→    "ipykernel",
+  32→    "dacite",
+  33→    "ftfy", 
+  34→    "ninja",
+  35→    "huggingface-hub",
+  36→    "rich",
+  37→    "tokenizers",
+  38→    "tqdm",
+  39→    "seaborn",
+  40→    "mlstm_kernels",
+  41→]
+  …
 pytest.ini
 res/
   desc_xlstm_overview.pdf
@@ -327,17 +349,4 @@ xlstm/
     18→    weight_decay_on_embedding: bool = False
     19→    add_embedding_dropout: bool = False
     22→class xLSTMLMModel(WeightDecayOptimGroupMixin, nn.Module):
-    23→    config_class = xLSTMLMModelConfig
-    24→
-    25→    def __init__(self, config: xLSTMLMModelConfig, **kwargs):
-    …
-    41→    def reset_parameters(self):
-    …
-    49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
-    …
-    56→    def step(
-    57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
-    58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
-    …
-    65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …

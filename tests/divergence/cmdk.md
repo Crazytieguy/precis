@@ -34,8 +34,8 @@ Score(3000)=0.537 I=0.784 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 1361 |  | 136 | README testing steps (verbatim) | 1.9 | 1.7 | 0.303 |
 | walker |  | 1412 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.309 |
 | ns | 1473 |  | 112 | index.tsx imports + 'use client' | 2.1 |  | 0.299 |
-| walker |  | 1577 | 165 | ts decl cmdk/src/index.tsx:123 |  |  | 0.302 |
-| walker |  | 1673 | 96 | package runtime dependencies in cmdk/package.json |  |  | 0.302 |
+| walker |  | 1508 | 96 | package runtime dependencies in cmdk/package.json |  |  | 0.299 |
+| walker |  | 1673 | 165 | ts decl cmdk/src/index.tsx:123 |  |  | 0.302 |
 | ns | 1690 |  | 217 | Public export surface (Command.* object + named exports) | 2.2 |  | 0.275 |
 | walker |  | 1878 | 205 | ts names cmdk/src/index.tsx #2 |  |  | 0.277 |
 | walker |  | 2103 | 225 | ts decl cmdk/src/index.tsx:44 |  |  | 0.279 |

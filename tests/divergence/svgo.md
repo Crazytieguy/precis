@@ -72,11 +72,11 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 2256 | 93 | ts names lib/svgo.js |  |  | 0.420 |
 | ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.410 |
 | walker |  | 2612 | 356 | listing of 'plugins' |  |  | 0.579 |
-| walker |  | 2623 | 11 | README.md section #8 |  |  | 0.579 |
-| walker |  | 2678 | 55 | README.md section #1 |  |  | 0.663 |
-| ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.641 |
-| ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.633 |
-| walker |  | 2883 | 205 | package runtime dependencies in package.json |  |  | 0.634 |
+| ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.560 |
+| ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.553 |
+| walker |  | 2817 | 205 | package runtime dependencies in package.json |  |  | 0.553 |
+| walker |  | 2828 | 11 | README.md section #8 |  |  | 0.553 |
+| walker |  | 2883 | 55 | README.md section #1 |  |  | 0.634 |
 | walker |  | 2902 | 19 | ts body lib/xast.js:42 |  |  | 0.634 |
 | walker |  | 2922 | 20 | ts body lib/xast.js:22 |  |  | 0.634 |
 | walker |  | 2942 | 20 | ts body lib/xast.js:32 |  |  | 0.634 |

@@ -1,4 +1,4 @@
-Score(3000)=0.375 I=0.561 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.630/0.563/0.393/0.375/0.367/0.523/0.537
+Score(3000)=0.375 I=0.561 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.630/0.563/0.393/0.375/0.367/0.520/0.554
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -97,111 +97,105 @@ Score(3000)=0.375 I=0.561 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | walker |  | 4346 | 61 | python decl src/chronos/chronos_bolt.py:463 |  |  | 0.367 |
 | walker |  | 4444 | 98 | python decl src/chronos/chronos2/config.py:12 |  |  | 0.380 |
 | ns | 4510 |  | 327 | `chronos2/model.py` complete class + method roster | 3.7 |  | 0.377 |
-| walker |  | 4632 | 188 | python decl src/chronos/chronos_bolt.py:147 |  |  | 0.379 |
-| ns | 4663 |  | 153 | `Chronos2Model.forward` full signature | 3.8 | 3.7 | 0.372 |
-| walker |  | 4680 | 48 | python decl src/chronos/chronos_bolt.py:240 |  |  | 0.372 |
-| walker |  | 4728 | 48 | python decl src/chronos/chronos_bolt.py:364 |  |  | 0.372 |
-| walker |  | 4803 | 75 | python decl src/chronos/chronos_bolt.py:294 |  |  | 0.372 |
-| ns | 4847 |  | 184 | `chronos2/layers.py` complete class roster | 3.9 |  | 0.363 |
-| walker |  | 5001 | 198 | python decl src/chronos/chronos.py:355 |  |  | 0.381 |
-| walker |  | 5009 | 8 | python decl src/chronos/chronos.py:380 |  |  | 0.383 |
-| walker |  | 5017 | 8 | python decl src/chronos/chronos.py:384 |  |  | 0.385 |
-| walker |  | 5025 | 8 | python decl src/chronos/chronos.py:535 |  |  | 0.388 |
-| walker |  | 5035 | 10 | python decl src/chronos/chronos.py:398 |  |  | 0.391 |
-| walker |  | 5053 | 18 | python doc src/chronos/base.py:35 |  |  | 0.391 |
-| ns | 5123 |  | 276 | `chronos2/dataset.py` complete top-level symbol roster | 3.10 |  | 0.379 |
-| ns | 5232 |  | 109 | `PreparedInput` TypedDict — the internal batch element schema | 3.11 | 3.10 | 0.375 |
-| walker |  | 5252 | 199 | python decl src/chronos/chronos.py:27 |  |  | 0.406 |
-| ns | 5308 |  | 76 | `chronos2/trainer.py` complete roster | 3.12 |  | 0.413 |
-| walker |  | 5453 | 201 | python decl src/chronos/base.py:44 |  |  | 0.443 |
-| walker |  | 5461 | 8 | python decl src/chronos/base.py:58 |  |  | 0.446 |
-| walker |  | 5469 | 8 | python decl src/chronos/base.py:62 |  |  | 0.449 |
-| ns | 5488 |  | 180 | `chronos_bolt.py` complete component roster | 3.13 |  | 0.464 |
-| walker |  | 5510 | 41 | python decl src/chronos/base.py:252 |  |  | 0.464 |
-| walker |  | 5575 | 65 | python decl src/chronos/base.py:336 |  |  | 0.472 |
-| walker |  | 5685 | 110 | python decl src/chronos/chronos.py:292 |  |  | 0.472 |
-| ns | 5701 |  | 213 | `chronos.py` complete component roster: tokenizer and model wrapper | 3.14 |  | 0.486 |
-| walker |  | 5814 | 129 | python names src/chronos/chronos2/layers.py |  |  | 0.494 |
-| walker |  | 5843 | 29 | python decl src/chronos/chronos2/layers.py:294 |  |  | 0.494 |
-| ns | 5852 |  | 151 | `utils.py` complete public roster with signatures | 4.1 |  | 0.501 |
-| walker |  | 5872 | 29 | python decl src/chronos/chronos2/layers.py:317 |  |  | 0.501 |
-| walker |  | 5903 | 31 | python decl src/chronos/chronos2/layers.py:343 |  |  | 0.501 |
-| walker |  | 5934 | 31 | python decl src/chronos/chronos2/layers.py:369 |  |  | 0.501 |
-| walker |  | 5971 | 37 | python decl src/chronos/chronos2/layers.py:142 |  |  | 0.502 |
-| walker |  | 6011 | 40 | python decl src/chronos/chronos2/layers.py:86 |  |  | 0.502 |
-| walker |  | 6051 | 40 | python decl src/chronos/chronos2/layers.py:110 |  |  | 0.502 |
-| ns | 6070 |  | 218 | `df_utils.py` complete function roster with signature heads | 4.2 |  | 0.512 |
-| walker |  | 6091 | 40 | python decl src/chronos/chronos2/layers.py:126 |  |  | 0.512 |
-| walker |  | 6156 | 65 | python decl src/chronos/chronos2/layers.py:148 |  |  | 0.516 |
-| walker |  | 6193 | 37 | python decl src/chronos/chronos2/layers.py:353 |  |  | 0.516 |
-| ns | 6240 |  | 170 | `boto_utils.py` module constants + complete function roster | 4.3 |  | 0.523 |
-| walker |  | 6275 | 82 | python decl src/chronos/chronos2/layers.py:18 |  |  | 0.527 |
-| walker |  | 6283 | 8 | python decl src/chronos/chronos2/layers.py:51 |  |  | 0.530 |
-| walker |  | 6293 | 10 | python decl src/chronos/chronos2/layers.py:34 |  |  | 0.530 |
-| ns | 6347 |  | 107 | Complete listing of `scripts/` and `ci/` | 5.1 |  | 0.519 |
-| walker |  | 6350 | 57 | python decl src/chronos/chronos2/layers.py:58 |  |  | 0.522 |
-| walker |  | 6413 | 63 | python decl src/chronos/chronos2/layers.py:301 |  |  | 0.522 |
-| ns | 6460 |  | 113 | `scripts/README.md` section headings + staleness warning | 5.2 |  | 0.518 |
-| walker |  | 6476 | 63 | python decl src/chronos/chronos2/layers.py:324 |  |  | 0.518 |
-| walker |  | 6510 | 34 | python decl src/chronos/chronos.py:198 |  |  | 0.518 |
-| ns | 6623 |  | 163 | `scripts/training/train.py` complete top-level roster | 5.3 |  | 0.510 |
-| walker |  | 6826 | 316 | manifest config in pyproject.toml |  |  | 0.512 |
+| ns | 4663 |  | 153 | `Chronos2Model.forward` full signature | 3.8 | 3.7 | 0.371 |
+| ns | 4847 |  | 184 | `chronos2/layers.py` complete class roster | 3.9 |  | 0.362 |
+| walker |  | 4870 | 426 | [dependencies] in pyproject.toml |  |  | 0.364 |
+| walker |  | 5058 | 188 | python decl src/chronos/chronos_bolt.py:147 |  |  | 0.365 |
+| walker |  | 5106 | 48 | python decl src/chronos/chronos_bolt.py:240 |  |  | 0.365 |
+| ns | 5123 |  | 276 | `chronos2/dataset.py` complete top-level symbol roster | 3.10 |  | 0.355 |
+| walker |  | 5154 | 48 | python decl src/chronos/chronos_bolt.py:364 |  |  | 0.355 |
+| walker |  | 5229 | 75 | python decl src/chronos/chronos_bolt.py:294 |  |  | 0.355 |
+| ns | 5232 |  | 109 | `PreparedInput` TypedDict — the internal batch element schema | 3.11 | 3.10 | 0.351 |
+| ns | 5308 |  | 76 | `chronos2/trainer.py` complete roster | 3.12 |  | 0.359 |
+| walker |  | 5427 | 198 | python decl src/chronos/chronos.py:355 |  |  | 0.375 |
+| walker |  | 5435 | 8 | python decl src/chronos/chronos.py:380 |  |  | 0.377 |
+| walker |  | 5443 | 8 | python decl src/chronos/chronos.py:384 |  |  | 0.379 |
+| walker |  | 5451 | 8 | python decl src/chronos/chronos.py:535 |  |  | 0.381 |
+| walker |  | 5461 | 10 | python decl src/chronos/chronos.py:398 |  |  | 0.384 |
+| walker |  | 5479 | 18 | python doc src/chronos/base.py:35 |  |  | 0.384 |
+| ns | 5488 |  | 180 | `chronos_bolt.py` complete component roster | 3.13 |  | 0.403 |
+| walker |  | 5678 | 199 | python decl src/chronos/chronos.py:27 |  |  | 0.431 |
+| ns | 5701 |  | 213 | `chronos.py` complete component roster: tokenizer and model wrapper | 3.14 |  | 0.447 |
+| ns | 5852 |  | 151 | `utils.py` complete public roster with signatures | 4.1 |  | 0.455 |
+| walker |  | 5879 | 201 | python decl src/chronos/base.py:44 |  |  | 0.483 |
+| walker |  | 5887 | 8 | python decl src/chronos/base.py:58 |  |  | 0.485 |
+| walker |  | 5895 | 8 | python decl src/chronos/base.py:62 |  |  | 0.488 |
+| walker |  | 5936 | 41 | python decl src/chronos/base.py:252 |  |  | 0.488 |
+| walker |  | 6001 | 65 | python decl src/chronos/base.py:336 |  |  | 0.496 |
+| ns | 6070 |  | 218 | `df_utils.py` complete function roster with signature heads | 4.2 |  | 0.505 |
+| walker |  | 6111 | 110 | python decl src/chronos/chronos.py:292 |  |  | 0.505 |
+| walker |  | 6240 | 129 | python names src/chronos/chronos2/layers.py |  |  | 0.520 |
+| ns | 6240 |  | 170 | `boto_utils.py` module constants + complete function roster | 4.3 |  | 0.520 |
+| walker |  | 6269 | 29 | python decl src/chronos/chronos2/layers.py:294 |  |  | 0.520 |
+| walker |  | 6298 | 29 | python decl src/chronos/chronos2/layers.py:317 |  |  | 0.520 |
+| walker |  | 6329 | 31 | python decl src/chronos/chronos2/layers.py:343 |  |  | 0.520 |
+| ns | 6347 |  | 107 | Complete listing of `scripts/` and `ci/` | 5.1 |  | 0.510 |
+| walker |  | 6360 | 31 | python decl src/chronos/chronos2/layers.py:369 |  |  | 0.510 |
+| walker |  | 6397 | 37 | python decl src/chronos/chronos2/layers.py:142 |  |  | 0.511 |
+| walker |  | 6437 | 40 | python decl src/chronos/chronos2/layers.py:86 |  |  | 0.511 |
+| ns | 6460 |  | 113 | `scripts/README.md` section headings + staleness warning | 5.2 |  | 0.507 |
+| walker |  | 6477 | 40 | python decl src/chronos/chronos2/layers.py:110 |  |  | 0.507 |
+| walker |  | 6517 | 40 | python decl src/chronos/chronos2/layers.py:126 |  |  | 0.507 |
+| walker |  | 6582 | 65 | python decl src/chronos/chronos2/layers.py:148 |  |  | 0.511 |
+| walker |  | 6619 | 37 | python decl src/chronos/chronos2/layers.py:353 |  |  | 0.511 |
+| ns | 6623 |  | 163 | `scripts/training/train.py` complete top-level roster | 5.3 |  | 0.504 |
+| walker |  | 6701 | 82 | python decl src/chronos/chronos2/layers.py:18 |  |  | 0.508 |
+| walker |  | 6709 | 8 | python decl src/chronos/chronos2/layers.py:51 |  |  | 0.510 |
+| walker |  | 6719 | 10 | python decl src/chronos/chronos2/layers.py:34 |  |  | 0.510 |
+| walker |  | 6776 | 57 | python decl src/chronos/chronos2/layers.py:58 |  |  | 0.513 |
+| walker |  | 6839 | 63 | python decl src/chronos/chronos2/layers.py:301 |  |  | 0.513 |
+| walker |  | 6902 | 63 | python decl src/chronos/chronos2/layers.py:324 |  |  | 0.513 |
 | ns | 6919 |  | 296 | `train.py main()` complete CLI/config parameter list with defaults | 5.4 | 5.3 | 0.501 |
-| walker |  | 6944 | 118 | python decl src/chronos/chronos.py:430 |  |  | 0.501 |
-| walker |  | 7064 | 120 | python decl src/chronos/base.py:100 |  |  | 0.511 |
-| walker |  | 7097 | 33 | README.md section #11 |  |  | 0.511 |
-| ns | 7154 |  | 235 | `evaluate.py` roster and the three benchmark subcommands | 5.5 |  | 0.499 |
-| walker |  | 7218 | 121 | python decl src/chronos/chronos.py:513 |  |  | 0.499 |
-| ns | 7308 |  | 154 | Benchmark config schema: head of `in-domain.yaml` + CI backtest config | 5.6 |  | 0.493 |
-| walker |  | 7339 | 121 | python decl src/chronos/chronos_bolt.py:559 |  |  | 0.493 |
-| ns | 7439 |  | 131 | `kernel-synth.py` roster + CLI entry point | 5.7 |  | 0.489 |
-| walker |  | 7475 | 136 | python decl src/chronos/chronos2/config.py:102 |  |  | 0.501 |
-| walker |  | 7481 | 6 | python decl src/chronos/chronos2/config.py:114 |  |  | 0.503 |
-| walker |  | 7521 | 40 | python decl src/chronos/chronos.py:170 |  |  | 0.503 |
-| walker |  | 7602 | 81 | python decl src/chronos/chronos2/layers.py:227 |  |  | 0.503 |
-| ns | 7614 |  | 175 | `agg-relative-score.py` scoring function and command signature | 5.8 |  | 0.497 |
-| walker |  | 7687 | 85 | python decl src/chronos/chronos2/layers.py:372 |  |  | 0.497 |
-| walker |  | 7772 | 85 | python decl src/chronos/chronos2/model.py:48 |  |  | 0.497 |
-| ns | 7808 |  | 194 | `pyproject.toml`: package identity, Python floor and runtime dependencies | 6.1 |  | 0.494 |
-| ns | 7945 |  | 137 | `pyproject.toml`: the four optional-dependency extras | 6.2 |  | 0.488 |
-| ns | 7972 |  | 27 | Notebook inventory | 6.3 |  | 0.489 |
-| ns | 8097 |  | 125 | Complete listing of `test/` including the dummy checkpoint fixtures | 6.4 |  | 0.487 |
-| ns | 8130 |  | 33 | Complete `.github` listing | 6.5 |  | 0.487 |
-| walker |  | 8158 | 386 | python decl src/chronos/chronos2/pipeline.py:39 |  |  | 0.514 |
-| walker |  | 8166 | 8 | python decl src/chronos/chronos2/pipeline.py:76 |  |  | 0.516 |
-| walker |  | 8174 | 8 | python decl src/chronos/chronos2/pipeline.py:80 |  |  | 0.517 |
-| walker |  | 8182 | 8 | python decl src/chronos/chronos2/pipeline.py:84 |  |  | 0.519 |
-| walker |  | 8190 | 8 | python decl src/chronos/chronos2/pipeline.py:88 |  |  | 0.521 |
-| walker |  | 8198 | 8 | python decl src/chronos/chronos2/pipeline.py:92 |  |  | 0.523 |
-| walker |  | 8207 | 9 | python decl src/chronos/chronos2/pipeline.py:1185 |  |  | 0.525 |
-| walker |  | 8215 | 8 | python decl src/chronos/chronos2/pipeline.py:47 |  |  | 0.527 |
-| ns | 8217 |  | 87 | CI gate commands | 6.6 |  | 0.524 |
-| walker |  | 8288 | 73 | python decl src/chronos/chronos2/pipeline.py:1105 |  |  | 0.527 |
-| ns | 8371 |  | 154 | `test/util.py` complete shared-helper roster | 6.7 |  | 0.524 |
-| walker |  | 8380 | 92 | python decl src/chronos/chronos2/pipeline.py:1027 |  |  | 0.524 |
-| walker |  | 8529 | 149 | python decl src/chronos/chronos2/pipeline.py:455 |  |  | 0.538 |
-| ns | 8543 |  | 172 | `pyproject.toml`: build backend, version source, tooling config | 6.8 |  | 0.545 |
-| walker |  | 8682 | 153 | python decl src/chronos/chronos2/pipeline.py:763 |  |  | 0.545 |
-| walker |  | 8728 | 46 | python decl src/chronos/chronos2/pipeline.py:749 |  |  | 0.547 |
-| ns | 8730 |  | 187 | `test_chronos.py` complete test-function roster | 6.9 |  | 0.542 |
-| walker |  | 8812 | 84 | python decl src/chronos/df_utils.py:16 |  |  | 0.543 |
-| walker |  | 8904 | 92 | python decl src/chronos/chronos2/model.py:134 |  |  | 0.543 |
-| ns | 8991 |  | 261 | `test_chronos_bolt.py` complete test-function roster | 6.10 |  | 0.537 |
-| walker |  | 9081 | 177 | python decl src/chronos/chronos2/model.py:198 |  |  | 0.554 |
-| walker |  | 9146 | 65 | python decl src/chronos/chronos2/pipeline.py:720 |  |  | 0.554 |
-| walker |  | 9162 | 16 | python body src/chronos/chronos2/config.py:114 |  |  | 0.556 |
-| walker |  | 9231 | 69 | README.md section #3 |  |  | 0.556 |
-| ns | 9316 |  | 325 | `test_chronos2.py` test roster, part 1: loading, predict, embed, predict_df | 6.11 |  | 0.549 |
-| walker |  | 9469 | 238 | python decl src/chronos/chronos2/pipeline.py:821 |  |  | 0.562 |
-| walker |  | 9475 | 6 | listing of 'ci/evaluate' |  |  | 0.562 |
-| ns | 9539 |  | 223 | `test_chronos2.py` test roster, part 2: cross-learning and fine-tuning | 6.12 | 6.11 | 0.558 |
-| walker |  | 9698 | 223 | python names src/chronos/chronos2/dataset.py |  |  | 0.565 |
-| walker |  | 9727 | 29 | python decl src/chronos/chronos2/dataset.py:466 |  |  | 0.568 |
-| walker |  | 9757 | 30 | python decl src/chronos/chronos2/dataset.py:302 |  |  | 0.568 |
-| walker |  | 9797 | 40 | python decl src/chronos/chronos2/dataset.py:50 |  |  | 0.568 |
-| walker |  | 9848 | 51 | python decl src/chronos/chronos2/dataset.py:406 |  |  | 0.568 |
-| ns | 9866 |  | 327 | `test_df_utils.py` and `test_utils.py` complete test rosters | 6.13 |  | 0.561 |
-| walker |  | 9915 | 67 | python decl src/chronos/chronos2/dataset.py:219 |  |  | 0.561 |
-| ns | 9954 |  | 88 | Opt-in model-evaluation workflow | 6.14 |  | 0.560 |
-| ns | 9980 |  | 26 | Licensing statement | 6.15 |  | 0.560 |
-| walker |  | 9997 | 82 | python decl src/chronos/chronos2/dataset.py:23 |  |  | 0.564 |
+| ns | 7154 |  | 235 | `evaluate.py` roster and the three benchmark subcommands | 5.5 |  | 0.490 |
+| walker |  | 7214 | 312 | manifest config in pyproject.toml |  |  | 0.492 |
+| walker |  | 7248 | 34 | python decl src/chronos/chronos.py:198 |  |  | 0.492 |
+| ns | 7308 |  | 154 | Benchmark config schema: head of `in-domain.yaml` + CI backtest config | 5.6 |  | 0.486 |
+| walker |  | 7366 | 118 | python decl src/chronos/chronos.py:430 |  |  | 0.486 |
+| ns | 7439 |  | 131 | `kernel-synth.py` roster + CLI entry point | 5.7 |  | 0.482 |
+| walker |  | 7486 | 120 | python decl src/chronos/base.py:100 |  |  | 0.491 |
+| walker |  | 7519 | 33 | README.md section #11 |  |  | 0.491 |
+| ns | 7614 |  | 175 | `agg-relative-score.py` scoring function and command signature | 5.8 |  | 0.486 |
+| walker |  | 7640 | 121 | python decl src/chronos/chronos.py:513 |  |  | 0.486 |
+| walker |  | 7761 | 121 | python decl src/chronos/chronos_bolt.py:559 |  |  | 0.486 |
+| ns | 7808 |  | 194 | `pyproject.toml`: package identity, Python floor and runtime dependencies | 6.1 |  | 0.493 |
+| walker |  | 7897 | 136 | python decl src/chronos/chronos2/config.py:102 |  |  | 0.505 |
+| walker |  | 7903 | 6 | python decl src/chronos/chronos2/config.py:114 |  |  | 0.506 |
+| walker |  | 7943 | 40 | python decl src/chronos/chronos.py:170 |  |  | 0.506 |
+| ns | 7945 |  | 137 | `pyproject.toml`: the four optional-dependency extras | 6.2 |  | 0.512 |
+| ns | 7972 |  | 27 | Notebook inventory | 6.3 |  | 0.513 |
+| walker |  | 8024 | 81 | python decl src/chronos/chronos2/layers.py:227 |  |  | 0.513 |
+| ns | 8097 |  | 125 | Complete listing of `test/` including the dummy checkpoint fixtures | 6.4 |  | 0.509 |
+| walker |  | 8109 | 85 | python decl src/chronos/chronos2/layers.py:372 |  |  | 0.509 |
+| ns | 8130 |  | 33 | Complete `.github` listing | 6.5 |  | 0.509 |
+| walker |  | 8194 | 85 | python decl src/chronos/chronos2/model.py:48 |  |  | 0.509 |
+| ns | 8217 |  | 87 | CI gate commands | 6.6 |  | 0.507 |
+| ns | 8371 |  | 154 | `test/util.py` complete shared-helper roster | 6.7 |  | 0.505 |
+| ns | 8543 |  | 172 | `pyproject.toml`: build backend, version source, tooling config | 6.8 |  | 0.512 |
+| walker |  | 8580 | 386 | python decl src/chronos/chronos2/pipeline.py:39 |  |  | 0.538 |
+| walker |  | 8588 | 8 | python decl src/chronos/chronos2/pipeline.py:76 |  |  | 0.540 |
+| walker |  | 8596 | 8 | python decl src/chronos/chronos2/pipeline.py:80 |  |  | 0.542 |
+| walker |  | 8604 | 8 | python decl src/chronos/chronos2/pipeline.py:84 |  |  | 0.543 |
+| walker |  | 8612 | 8 | python decl src/chronos/chronos2/pipeline.py:88 |  |  | 0.545 |
+| walker |  | 8620 | 8 | python decl src/chronos/chronos2/pipeline.py:92 |  |  | 0.547 |
+| walker |  | 8629 | 9 | python decl src/chronos/chronos2/pipeline.py:1185 |  |  | 0.549 |
+| walker |  | 8637 | 8 | python decl src/chronos/chronos2/pipeline.py:47 |  |  | 0.551 |
+| walker |  | 8710 | 73 | python decl src/chronos/chronos2/pipeline.py:1105 |  |  | 0.553 |
+| ns | 8730 |  | 187 | `test_chronos.py` complete test-function roster | 6.9 |  | 0.548 |
+| walker |  | 8802 | 92 | python decl src/chronos/chronos2/pipeline.py:1027 |  |  | 0.548 |
+| walker |  | 8951 | 149 | python decl src/chronos/chronos2/pipeline.py:455 |  |  | 0.560 |
+| ns | 8991 |  | 261 | `test_chronos_bolt.py` complete test-function roster | 6.10 |  | 0.554 |
+| walker |  | 9104 | 153 | python decl src/chronos/chronos2/pipeline.py:763 |  |  | 0.554 |
+| walker |  | 9150 | 46 | python decl src/chronos/chronos2/pipeline.py:749 |  |  | 0.556 |
+| walker |  | 9234 | 84 | python decl src/chronos/df_utils.py:16 |  |  | 0.557 |
+| ns | 9316 |  | 325 | `test_chronos2.py` test roster, part 1: loading, predict, embed, predict_df | 6.11 |  | 0.550 |
+| walker |  | 9326 | 92 | python decl src/chronos/chronos2/model.py:134 |  |  | 0.550 |
+| walker |  | 9503 | 177 | python decl src/chronos/chronos2/model.py:198 |  |  | 0.566 |
+| ns | 9539 |  | 223 | `test_chronos2.py` test roster, part 2: cross-learning and fine-tuning | 6.12 | 6.11 | 0.562 |
+| walker |  | 9568 | 65 | python decl src/chronos/chronos2/pipeline.py:720 |  |  | 0.562 |
+| walker |  | 9584 | 16 | python body src/chronos/chronos2/config.py:114 |  |  | 0.564 |
+| walker |  | 9653 | 69 | README.md section #3 |  |  | 0.564 |
+| ns | 9866 |  | 327 | `test_df_utils.py` and `test_utils.py` complete test rosters | 6.13 |  | 0.557 |
+| walker |  | 9891 | 238 | python decl src/chronos/chronos2/pipeline.py:821 |  |  | 0.570 |
+| walker |  | 9897 | 6 | listing of 'ci/evaluate' |  |  | 0.570 |
+| ns | 9954 |  | 88 | Opt-in model-evaluation workflow | 6.14 |  | 0.569 |
+| ns | 9980 |  | 26 | Licensing statement | 6.15 |  | 0.570 |

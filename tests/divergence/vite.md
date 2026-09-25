@@ -44,24 +44,24 @@ Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | walker |  | 1507 | 30 | listing of 'scripts' |  |  | 0.660 |
 | walker |  | 1566 | 59 | package runtime metadata in package.json |  |  | 0.684 |
 | walker |  | 1579 | 13 | ts names packages/vite/src/module-runner/runner.ts |  |  | 0.684 |
-| walker |  | 1593 | 14 | ts names packages/vite/src/node/cli.ts |  |  | 0.684 |
 | ns | 1640 |  | 155 | src/node/index.ts: primary API factories | 2.1 |  | 0.642 |
-| walker |  | 1683 | 90 | ts decl packages/plugin-legacy/src/index.ts:43 |  |  | 0.642 |
+| walker |  | 1713 | 134 | package runtime dependencies in packages/vite/package.json |  |  | 0.642 |
+| walker |  | 1727 | 14 | ts names packages/vite/src/node/cli.ts |  |  | 0.642 |
+| walker |  | 1817 | 90 | ts decl packages/plugin-legacy/src/index.ts:43 |  |  | 0.642 |
 | ns | 1853 |  | 213 | vite CLI: the complete command roster | 2.2 |  | 0.600 |
-| walker |  | 2026 | 343 | ts names packages/plugin-legacy/src/index.ts #1 |  |  | 0.600 |
-| walker |  | 2060 | 34 | ts decl packages/plugin-legacy/src/index.ts:128 |  |  | 0.600 |
-| walker |  | 2074 | 14 | ts decl packages/plugin-legacy/src/index.ts:146 |  |  | 0.600 |
 | ns | 2118 |  | 265 | src/node/index.ts: transform helpers and environment factories | 2.3 | 2.1 | 0.555 |
-| walker |  | 2123 | 49 | ts decl packages/plugin-legacy/src/index.ts:794 |  |  | 0.555 |
-| walker |  | 2189 | 66 | ts decl packages/plugin-legacy/src/index.ts:1057 |  |  | 0.555 |
-| walker |  | 2210 | 21 | ts decl packages/plugin-legacy/src/index.ts:999 |  |  | 0.555 |
-| walker |  | 2238 | 28 | ts decl packages/plugin-legacy/src/index.ts:940 |  |  | 0.555 |
+| walker |  | 2160 | 343 | ts names packages/plugin-legacy/src/index.ts #1 |  |  | 0.555 |
+| walker |  | 2194 | 34 | ts decl packages/plugin-legacy/src/index.ts:128 |  |  | 0.555 |
+| walker |  | 2208 | 14 | ts decl packages/plugin-legacy/src/index.ts:146 |  |  | 0.555 |
 | ns | 2242 |  | 124 | src/node/index.ts: SSR/module-runner exports | 2.4 | 2.3 | 0.541 |
-| walker |  | 2272 | 34 | ts decl packages/plugin-legacy/src/index.ts:143 |  |  | 0.541 |
-| walker |  | 2338 | 66 | ts decl packages/plugin-legacy/src/index.ts:132 |  |  | 0.541 |
-| walker |  | 2354 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.541 |
-| walker |  | 2369 | 15 | ts names packages/vite/src/node/assetSource.ts |  |  | 0.541 |
-| walker |  | 2503 | 134 | package runtime dependencies in packages/vite/package.json |  |  | 0.541 |
+| walker |  | 2257 | 49 | ts decl packages/plugin-legacy/src/index.ts:794 |  |  | 0.541 |
+| walker |  | 2323 | 66 | ts decl packages/plugin-legacy/src/index.ts:1057 |  |  | 0.541 |
+| walker |  | 2344 | 21 | ts decl packages/plugin-legacy/src/index.ts:999 |  |  | 0.541 |
+| walker |  | 2372 | 28 | ts decl packages/plugin-legacy/src/index.ts:940 |  |  | 0.541 |
+| walker |  | 2406 | 34 | ts decl packages/plugin-legacy/src/index.ts:143 |  |  | 0.541 |
+| walker |  | 2472 | 66 | ts decl packages/plugin-legacy/src/index.ts:132 |  |  | 0.541 |
+| walker |  | 2488 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.541 |
+| walker |  | 2503 | 15 | ts names packages/vite/src/node/assetSource.ts |  |  | 0.541 |
 | walker |  | 2544 | 41 | listing of '.github' |  |  | 0.541 |
 | ns | 2571 |  | 329 | src/node/index.ts: constants, utils and remaining value exports | 2.5 | 2.4 | 0.494 |
 | walker |  | 2623 | 79 | listing of '.github/workflows' |  |  | 0.495 |
