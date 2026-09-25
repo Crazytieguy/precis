@@ -133,18 +133,18 @@ Score(3000)=0.577 I=0.859 C=0.388 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 8768 |  | 72 | ava test harness setup in `test/chalk.js` | 6.1 |  | 0.621 |
 | walker |  | 8841 | 402 | Code::CodeKey { rung: Decl, file: source/vendor/ansi-styles/index.d.ts, decl: 3, sub: 0, line: 26 } |  |  | 0.621 |
 | walker |  | 8984 | 143 | Code::CodeKey { rung: Body, file: source/index.js, decl: 15, sub: 0, line: 132 } |  |  | 0.638 |
-| walker |  | 9092 | 108 | Code::CodeKey { rung: Names, file: source/vendor/ansi-styles/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.642 |
+| walker |  | 9078 | 94 | Code::CodeKey { rung: Names, file: source/vendor/ansi-styles/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.642 |
 | ns | 9189 |  | 421 | Every test title in `test/chalk.js` | 6.2 | 6.1 | 0.632 |
-| walker |  | 9340 | 248 | Markdown::Section { file: readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.643 |
+| walker |  | 9326 | 248 | Markdown::Section { file: readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.643 |
 | ns | 9425 |  | 236 | Every test title in the four remaining ava files | 6.3 |  | 0.639 |
-| walker |  | 9455 | 115 | Code::CodeKey { rung: Names, file: source/vendor/supports-color/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.643 |
-| walker |  | 9478 | 23 | Code::CodeKey { rung: Decl, file: source/vendor/supports-color/index.d.ts, decl: 6, sub: 0, line: 50 } |  |  | 0.644 |
+| walker |  | 9441 | 115 | Code::CodeKey { rung: Names, file: source/vendor/supports-color/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.643 |
+| walker |  | 9464 | 23 | Code::CodeKey { rung: Decl, file: source/vendor/supports-color/index.d.ts, decl: 6, sub: 0, line: 50 } |  |  | 0.644 |
 | ns | 9522 |  | 97 | `test/_fixture.js` in full, and the child process that runs it | 6.4 | 6.3 | 0.641 |
-| walker |  | 9547 | 69 | Code::CodeKey { rung: Decl, file: source/vendor/supports-color/index.d.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.648 |
-| walker |  | 9700 | 153 | Code::CodeKey { rung: Decl, file: source/vendor/supports-color/index.d.ts, decl: 3, sub: 0, line: 24 } |  |  | 0.649 |
-| walker |  | 9719 | 19 | Code::CodeKey { rung: Doc, file: source/vendor/supports-color/index.d.ts, decl: 3, sub: 0, line: 24 } |  |  | 0.649 |
+| walker |  | 9533 | 69 | Code::CodeKey { rung: Decl, file: source/vendor/supports-color/index.d.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.648 |
+| walker |  | 9686 | 153 | Code::CodeKey { rung: Decl, file: source/vendor/supports-color/index.d.ts, decl: 3, sub: 0, line: 24 } |  |  | 0.649 |
+| walker |  | 9705 | 19 | Code::CodeKey { rung: Doc, file: source/vendor/supports-color/index.d.ts, decl: 3, sub: 0, line: 24 } |  |  | 0.649 |
 | ns | 9753 |  | 231 | ansi-styles `index.d.ts`: complete declaration roster | 7.1 |  | 0.655 |
-| walker |  | 9793 | 74 | Code::CodeKey { rung: Doc, file: source/vendor/supports-color/index.d.ts, decl: 2, sub: 0, line: 19 } |  |  | 0.655 |
+| walker |  | 9779 | 74 | Code::CodeKey { rung: Doc, file: source/vendor/supports-color/index.d.ts, decl: 2, sub: 0, line: 19 } |  |  | 0.655 |
 | ns | 9896 |  | 143 | `source/index.test-d.ts`: what the tsd suite asserts | 7.2 |  | 0.649 |
+| walker |  | 9985 | 206 | Markdown::Section { file: readme.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.649 |
 | ns | 9989 |  | 93 | `benchmark.js` and both `examples/` scripts: purpose lines | 7.3 |  | 0.646 |
-| walker |  | 9999 | 206 | Markdown::Section { file: readme.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.646 |
