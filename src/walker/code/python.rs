@@ -113,9 +113,9 @@ enum Assignment<'a> {
     Augmented(&'a str),
 }
 
-/// The single identifier an `expression_statement` assigns (`NAME = …`,
-/// `NAME: T = …`, `NAME += …`); `None` for tuple, attribute, subscript or
-/// chained targets and for non-assignments.
+/// The identifier an `expression_statement` assigns (`NAME = …`,
+/// `NAME: T = …`, `NAME += …`, the first target of `NAME = OTHER = …`);
+/// `None` for tuple, attribute or subscript targets and for non-assignments.
 fn assignment_target<'a>(file: &'a SourceFile, statement: Node) -> Option<Assignment<'a>> {
     let mut cursor = statement.walk();
     let assignment = statement.named_children(&mut cursor).next()?;
@@ -125,12 +125,7 @@ fn assignment_target<'a>(file: &'a SourceFile, statement: Node) -> Option<Assign
     }
     let name = file.text(left);
     match assignment.kind() {
-        "assignment" => {
-            let chained = assignment
-                .child_by_field_name("right")
-                .is_some_and(|right| right.kind() == "assignment");
-            (!chained).then_some(Assignment::Plain(name))
-        }
+        "assignment" => Some(Assignment::Plain(name)),
         "augmented_assignment" => Some(Assignment::Augmented(name)),
         _ => None,
     }
@@ -617,6 +612,29 @@ if TYPE_CHECKING:
             ]
         );
         assert!(model.decls.iter().all(|decl| decl.body.is_empty()));
+    }
+
+    #[test]
+    fn code_python_chained_assignment_is_one_statement() {
+        let source = "\
+__version__ = version = \"1.0\"
+LIB = STATE = SUPPRESS = None
+_first = second = 0
+";
+        let model = extract_source("pkg/__main__.py", source);
+        assert_eq!(rows(&model.module_doc), vec![vec![1]]);
+        let summary: Vec<_> = model
+            .decls
+            .iter()
+            .map(|decl| (decl.head.clone(), decl.visibility))
+            .collect();
+        assert_eq!(
+            summary,
+            vec![
+                (vec![2], Visibility::Public),
+                (vec![3], Visibility::Private),
+            ]
+        );
     }
 
     #[test]
