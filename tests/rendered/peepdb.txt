@@ -222,6 +222,24 @@ peepdb/
     …
     42→def fetch_key_from_keyring():
     …
+    49→def get_key_security_config():
+    …
+    60→def get_key():
+    …
+    70→def encrypt(message: str) -> str:
+    …
+    73→def decrypt(token: str) -> str:
+    …
+    76→def save_connection(name, db_type, host, port, user, password, database, trusted):
+    …
+    112→def get_connection(name):
+    …
+    144→def list_connections():
+    …
+    161→def remove_connection(name):
+    …
+    178→def remove_all_connections():
+    …
   core.py
   db/
     __init__.py
@@ -267,9 +285,7 @@ peepdb/
     test_peepdb.py
     test_sqlite.py
 project.toml
-  1→[build-system]
-  2→requires = ["setuptools>=45", "wheel"]
-  3→build-backend = "setuptools.build_meta"
+  …
   5→[project]
   6→name = "peepdb"
   7→version = "0.1.4"
@@ -297,14 +313,9 @@ project.toml
   38→    "pytest>=8.3.2",
   39→    "pytest-cov>=5.0.0",
   40→]
-  42→[project.urls]
-  43→Homepage = "https://github.com/PeepDB-dev/peepdb"
-  44→"Bug Tracker" = "https://github.com/PeepDB-dev/peepdb/issues"
+  …
   46→[project.scripts]
   47→peepdb = "peepdb.cli:main"
-  49→[tool.setuptools.packages.find]
-  50→where = ["."]
-  51→include = ["peepdb*"]
-  52→exclude = ["tests*"]
+  …
 requirements.txt
 setup.py

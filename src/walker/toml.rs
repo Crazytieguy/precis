@@ -1,7 +1,8 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
 //! section group (identity / package metadata / operational /
-//! dependencies / config).
+//! dependencies). Every other table — build systems, profiles, lints,
+//! tool config — is left to an explicit read.
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
@@ -15,9 +16,6 @@
 //!   ones included) / `[workspace.dependencies]`,
 //!   `[tool.poetry.dependencies]`, and the PEP
 //!   621 dependency arrays under `[project]`
-//! - `Config { file }` — every other table of a manifest, whatever it is
-//!   named: build systems, targets, profiles, lints, patches, packaging;
-//!   predecessor: `Identity` on the same file when it has one
 
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
@@ -111,23 +109,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 predecessor: None,
                 content,
                 value,
-            });
-        }
-        // The config appendix of a manifest gates behind that manifest's
-        // identity block: linter settings and build-backend tables are
-        // qualifiers on a package the reader has not been told the name of
-        // yet. The load-bearing sections (operational, dependency
-        // rosters) stay ungated — they answer what the project is on their
-        // own, and gating them costs more than it buys.
-        if is_manifest_toml(&sections, python_project_manifest)
-            && let Some(content) =
-                rows_content(&file, &source, section_rows(&sections, is_config_section))
-        {
-            out.push(Batch {
-                key: TomlKey::Config { file: file.clone() }.into(),
-                predecessor: identity,
-                content,
-                value: manifest_appendix_value(depth),
             });
         }
     }
@@ -225,38 +206,10 @@ fn pair_value_node(pair: Node) -> Option<Node> {
     None
 }
 
-/// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table —
-/// the Python counterpart of [`is_manifest_toml`]'s name-independent rule.
+/// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table.
 fn is_python_project_manifest(file: &Path, sections: &[Section]) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
         || sections.iter().any(|(name, _, _)| name == "project")
-}
-
-/// A TOML that declares package identity is a manifest whatever it is named —
-/// `sqlite-dist.toml`, `uv.toml` and friends carry the same class of content
-/// as `Cargo.toml`, and a filename list can only ever recognize the dialects
-/// that already existed when it was written.
-fn is_manifest_toml(sections: &[Section], python_project_manifest: bool) -> bool {
-    python_project_manifest
-        || sections.iter().any(|(name, _, _)| {
-            matches!(name.as_str(), "package" | "workspace" | "workspace.package")
-        })
-}
-
-fn is_dependency_section(name: &str) -> bool {
-    is_ordinary_dependency_section(name)
-        || is_cargo_development_dependency_section(name)
-        || is_dependency_group_section(name)
-}
-
-/// Named test / lint / docs rosters, the Python analogue of Cargo's
-/// `[dev-dependencies]`: PEP 735 `[dependency-groups]` and Poetry's
-/// `[tool.poetry.group.*]` / `[tool.poetry.dev-dependencies]`.
-fn is_dependency_group_section(name: &str) -> bool {
-    name == "dependency-groups"
-        || name.starts_with("dependency-groups.")
-        || name.starts_with("tool.poetry.group.")
-        || name == "tool.poetry.dev-dependencies"
 }
 
 fn is_ordinary_dependency_section(name: &str) -> bool {
@@ -269,13 +222,6 @@ fn is_ordinary_dependency_section(name: &str) -> bool {
             | "project.optional-dependencies"
     ) || name.starts_with("dependencies.")
         || name.starts_with("workspace.dependencies.")
-}
-
-fn is_cargo_development_dependency_section(name: &str) -> bool {
-    let name = untargeted_cargo_table(name);
-    matches!(name, "dev-dependencies" | "build-dependencies")
-        || name.starts_with("dev-dependencies.")
-        || name.starts_with("build-dependencies.")
 }
 
 /// A Cargo platform-specific dependency table read as the table it scopes:
@@ -298,20 +244,6 @@ fn untargeted_cargo_table(name: &str) -> &str {
 
 fn is_scripts_section(name: &str) -> bool {
     matches!(name, "project.scripts" | "tool.poetry.scripts")
-}
-
-/// Every table of a manifest that no other batch claims. A manifest is
-/// author-written declaration throughout: a `[lib]`, a `[lints.*]` block or a
-/// `[patch.*]` redirect states a decision about the project as much as a
-/// `[profile.*]` does, and enumerating the tables worth keeping only ever
-/// produces a list that the next manifest falls outside of.
-fn is_config_section(name: &str) -> bool {
-    !(matches!(
-        name,
-        "package" | "workspace" | "workspace.package" | "features"
-    ) || is_pyproject_identity_table(name)
-        || is_scripts_section(name)
-        || is_dependency_section(name))
 }
 
 /// Rows of a Python identity table that its lede does not take: the author and
@@ -729,92 +661,6 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         assert_eq!(residue, vec![3, 5]);
     }
 
-    /// Config takes every table no other batch owns; the owned ones are the
-    /// whole exclusion list, since a peer batch may not re-claim their lines.
-    #[test]
-    fn walker_toml_config_sections_do_not_overlap_owned_sections() {
-        let owned = [
-            "package",
-            "workspace",
-            "workspace.package",
-            "features",
-            "project",
-            "project.scripts",
-            "tool.poetry",
-            "tool.poetry.dependencies",
-            "tool.poetry.scripts",
-            "dependencies.foo",
-            "dev-dependencies.foo",
-            "build-dependencies.foo",
-            "dependency-groups",
-            "target.'cfg(unix)'.dependencies",
-            "target.'cfg(windows)'.dev-dependencies",
-        ];
-        for name in owned {
-            assert!(
-                !is_config_section(name),
-                "{name} must stay with its owning TOML batch"
-            );
-        }
-        for name in [
-            "tool.ruff",
-            "lib",
-            "lints.clippy",
-            "patch.crates-io",
-            "test",
-        ] {
-            assert!(
-                is_config_section(name),
-                "{name} is unclaimed manifest config"
-            );
-        }
-    }
-
-    #[test]
-    fn walker_toml_cargo_dependency_classes_are_disjoint() {
-        for name in [
-            "dependencies",
-            "dependencies.serde",
-            "workspace.dependencies",
-            "target.'cfg(unix)'.dependencies",
-            "target.'cfg(unix)'.dependencies.libc",
-            "target.x86_64-pc-windows-msvc.dependencies",
-        ] {
-            assert!(is_ordinary_dependency_section(name), "ordinary: {name}");
-            assert!(
-                !is_cargo_development_dependency_section(name),
-                "not development: {name}"
-            );
-        }
-        for name in [
-            "dev-dependencies",
-            "dev-dependencies.proptest",
-            "build-dependencies",
-            "build-dependencies.cc",
-            "target.'cfg(windows)'.dev-dependencies",
-            "target.'cfg(target_os = \"macos\")'.build-dependencies.bindgen",
-        ] {
-            assert!(
-                is_cargo_development_dependency_section(name),
-                "development/build: {name}"
-            );
-            assert!(
-                !is_ordinary_dependency_section(name),
-                "not ordinary: {name}"
-            );
-        }
-        for name in [
-            "profile.release",
-            "bin",
-            "example",
-            "test",
-            "bench",
-            "target.'cfg(unix)'.rustflags",
-        ] {
-            assert!(!is_dependency_section(name), "config/target only: {name}");
-        }
-    }
-
     /// Platform-specific runtime dependencies ship with the package like
     /// untargeted ones, so they join the dependency roster; platform-specific
     /// dev- and build-dependencies stay out of it, as their untargeted
@@ -831,47 +677,6 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
             section_rows(&sections, is_ordinary_dependency_section),
             vec![4, 5, 6, 7, 8, 9, 10, 11, 12],
         );
-    }
-
-    /// A manifest's config appendix is a qualifier on the package the
-    /// identity block names, so it waits for it. A manifest that declares
-    /// no identity table at all — a bare `[build-system]` pyproject — has
-    /// nothing to wait for and stays ungated.
-    #[test]
-    fn walker_toml_config_appendix_gates_behind_identity() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        fs::write(
-            root.join("Cargo.toml"),
-            "[package]\nname='demo'\nversion='0.1.0'\n[profile.release]\nlto=true\n",
-        )
-        .unwrap();
-        fs::write(
-            root.join("pyproject.toml"),
-            "[build-system]\nrequires = ['setuptools']\nbuild-backend = 'setuptools.build_meta'\n",
-        )
-        .unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        for (rel, expected) in [
-            (
-                "Cargo.toml",
-                Some(BatchKey::Toml(TomlKey::Identity {
-                    file: root.join("Cargo.toml"),
-                })),
-            ),
-            ("pyproject.toml", None),
-        ] {
-            let file = root.join(rel);
-            let config = batches
-                .iter()
-                .find(
-                    |b| matches!(&b.key, BatchKey::Toml(TomlKey::Config { file: f }) if *f == file),
-                )
-                .expect("config batch");
-            assert_eq!(config.predecessor, expected, "{rel}");
-        }
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries

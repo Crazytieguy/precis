@@ -40,6 +40,8 @@ README.md
   40→Since the 3x-ui app is under development, the SDK may not be compatible with all versions of the app. The developer of SDK is not related to the 3x-ui app, therefore the latest versions of the software are not guaranteed to be compatible with the SDK. <br>
   41→The SDK does not support versions of the 3x-ui older than `2.3.7`.
   43→## Quick Start
+  44→You can use both synchronous and asynchronous methods to interact with the 3x-ui app. Both APIs have the same methods and return the same data, so it's up to you to choose which one to use.<br>
+  45→After installing the SDK, you can create a new instance of the API. When creating a new instance, you can either use environment variables or pass the credentials directly. It's strongly recommended to use environment variables to store the API credentials.<br>
   …
   48→### Installation
   …
@@ -205,6 +207,10 @@ py3xui/
       …
       684→## AsyncBaseApi Objects
       …
+      922→# async\_api.async\_api\_client
+      …
+      929→## AsyncClientApi Objects
+      …
     __init__.py
       …
       2→from py3xui.async_api.async_api_client import AsyncClientApi
@@ -314,9 +320,7 @@ py3xui/
       4→COOKIE_NAMES = ["3x-ui", "session"]
     env.py
 pyproject.toml
-  1→[build-system]
-  2→requires = ["setuptools>=42", "wheel"]
-  3→build-backend = "setuptools.build_meta"
+  …
   5→[project]
   6→name = "py3xui"
   7→version = "0.5.0"
@@ -331,14 +335,7 @@ pyproject.toml
   21→    "requests>=2.0.0",
   22→    "httpx>=0.20.0",
   23→]
-  25→[project.urls]
-  26→Homepage = "https://github.com/iwatkot/py3xui"
-  27→Repository = "https://github.com/iwatkot/py3xui"
-  28→
-  29→[tool.setuptools.packages.find]
-  30→where = ["."]
-  31→include = ["py3xui*"]
-  32→exclude = ["dev*"]
+  …
 tests/
   __init__.py (empty)
   responses/

@@ -39,6 +39,7 @@ bench.py
 example.py
   …
   6→def main():
+  7→    path = os.path.expanduser("~/huggingface/Qwen3-0.6B/")
   …
 nanovllm/
   __init__.py
@@ -107,7 +108,10 @@ nanovllm/
       17→    def __init__(self, model, **kwargs):
       …
       36→    def exit(self):
-      …
+      37→        self.model_runner.call("exit")
+      38→        del self.model_runner
+      39→        for p in self.ps:
+      40→            p.join()
       42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
       …
       48→    def step(self):
@@ -117,6 +121,9 @@ nanovllm/
       59→    def generate(
       60→        self,
       61→        prompts: list[str] | list[list[int]],
+      62→        sampling_params: SamplingParams | list[SamplingParams],
+      63→        use_tqdm: bool = True,
+      64→    ) -> list[str]:
       …
     model_runner.py
       …
@@ -290,9 +297,7 @@ nanovllm/
     context.py
     loader.py
 pyproject.toml
-  1→[build-system]
-  2→requires = ["setuptools>=61"]
-  3→build-backend = "setuptools.build_meta"
+  …
   5→[project]
   6→name = "nano-vllm"
   7→version = "0.2.0"
@@ -309,9 +314,4 @@ pyproject.toml
   18→    "flash-attn",
   19→    "xxhash",
   20→]
-  22→[project.urls]
-  23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"
-  24→
-  25→[tool.setuptools.packages.find]
-  26→where = ["."]
-  27→include = ["nanovllm*"]
+  …

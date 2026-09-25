@@ -21,8 +21,6 @@ Cargo.toml
   15→exclude = ["rfcs/**/*"]
   16→rust-version = "1.68.0"
   17→edition = "2021"
-  19→[package.metadata.docs.rs]
-  20→features = ["std", "serde", "kv_std", "kv_sval", "kv_serde"]
   …
   56→[dependencies]
   57→serde_core = { version = "1.0", optional = true, default-features = false }
@@ -197,6 +195,9 @@ src/
     697→    /// Returns the most verbose logging level filter.
     698→    #[inline]
     699→    pub fn max() -> LevelFilter {
+    …
+    703→    /// Converts `self` to the equivalent `Level`.
+    704→    ///
     …
     706→    #[inline]
     707→    pub fn to_level(&self) -> Option<Level> {

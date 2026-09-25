@@ -55,9 +55,28 @@ README.md
   25→
   26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
   28→## Installation
-  …
+  29→
+  30→Posting can be installed via [uv](https://docs.astral.sh/uv/getting-started/installation/) on MacOS, Linux, and Windows.
+  31→
+  32→```bash
+  33→# quickly install uv on MacOS/Linux
+  34→curl -LsSf https://astral.sh/uv/install.sh | sh
+  35→
+  36→# install Posting (will also quickly install Python 3.13 if needed)
+  37→uv tool install --python 3.13 posting
+  38→```
+  39→
+  40→ Now you can run Posting via the command line:
+  41→
+  42→```bash
+  43→posting
+  44→```
+  45→
+  46→Homebrew and NixOS are not officially supported at the moment.
+  47→
   48→### Prefer `pipx`?
-  …
+  49→
+  50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
   52→## Contributing
   53→
   54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
@@ -159,31 +178,9 @@ pyproject.toml
   27→license = { file = "LICENSE" }
   28→keywords = ["tui", "http", "client", "terminal", "api", "testing", "textual", "cli", "posting", "developer-tool"]
   …
-  39→[project.urls]
-  40→Homepage = "https://github.com/darrenburns/posting"
-  41→Repository = "https://github.com/darrenburns/posting"
-  42→Issues = "https://github.com/darrenburns/posting/issues"
-  43→Documentation = "https://github.com/darrenburns/posting/blob/main/README.md"
-  44→
-  45→[build-system]
-  46→requires = ["hatchling"]
-  47→build-backend = "hatchling.build"
   49→[project.scripts]
   50→posting = "posting.__main__:cli"
   …
-  72→[tool.hatch.metadata]
-  73→allow-direct-references = true
-  74→
-  75→[tool.hatch.build.targets.wheel]
-  76→packages = ["src/posting"]
-  77→
-  78→[tool.pytest.ini_options]
-  79→markers = [
-  80→    "serial",  # used to indicate tests must not run in parallel
-  81→]
-  82→
-  83→[tool.coverage.run]
-  84→relative_files = true
 src/
   posting/
     __init__.py
@@ -286,6 +283,8 @@ src/
     user_host.py
     variables.py
     version.py
+      …
+      3→VERSION = version("posting")
     widgets/
       __init__.py (empty)
       center_middle.py
@@ -337,6 +336,8 @@ tests/
   sample-collections/
   sample-configs/
   sample-envs/
+    sample_base.env
+    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

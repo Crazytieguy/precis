@@ -39,16 +39,6 @@ Cargo.toml
   31→tui-textarea = "^0"
   32→tui-tree-widget = "^0"
   …
-  38→[profile.release]
-  39→lto = true
-  40→strip = true
-  41→incremental = false
-  42→
-  43→[lints.clippy]
-  44→pedantic = { level = "warn", priority = -1 }
-  45→single_match_else = "allow" # match-ing Options is visually cleaner
-  46→inefficient_to_string = "allow" # makes type conversion less obvious for little benefit
-  47→too_many_lines = "allow" # necessary evil for now
 LICENSE
 README.md
   1→# OTree - Object Tree TUI Viewer
@@ -128,6 +118,10 @@ src/
     colors.rs
     keys.rs
     mod.rs
+      1→pub mod colors;
+      2→pub mod keys;
+      3→pub mod types;
+      …
     types.rs
   debug.rs
     …
@@ -242,7 +236,14 @@ src/
       24→    /// See: <https://github.com/hashicorp/hcl>
       25→    Hcl,
       26→
-      …
+      27→    /// Useful for some logs file: <https://jsonlines.org/>
+      28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
+      29→    // basically jsonl but every json object is prefixed with 0x1e
+      30→    Jsonl,
+      31→
+      32→    #[clap(skip)]
+      33→    Any,
+      34→}
       36→pub trait Parser {
       37→    fn extension(&self) -> &'static str;
       38→

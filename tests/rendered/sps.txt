@@ -14,17 +14,7 @@ Cargo.toml
   6→    "sps-core",
   7→    "sps-net",
   8→]
-  10→[patch.crates-io]
-  11→sps-common  = { path = "sps-common" }
-  12→sps-core    = { path = "sps-core" }
-  13→sps-net     = { path = "sps-net" }
-  14→
-  15→# Shared dependencies defined once
   …
-  43→[profile.release]
-  44→lto = true
-  45→codegen-units = 1
-  46→strip = true
 LICENSE.md
 NOTICE.md
 README.md
@@ -183,6 +173,20 @@ sps/
       23→pub use crate::cli::init::InitArgs;
       …
       35→pub struct CliArgs {
+      …
+      43→#[derive(Subcommand, Debug)]
+      44→pub enum Command {
+      45→    Init(InitArgs),
+      46→    Search(Search),
+      47→    List(List),
+      48→    Info(Info),
+      49→    Update(Update),
+      50→    Install(InstallArgs),
+      …
+      56→impl Command {
+      57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+      …
+      71→}
       …
     main.rs
       …

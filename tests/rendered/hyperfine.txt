@@ -51,15 +51,14 @@ Cargo.toml
   44→[target.'cfg(all(windows, not(windows_process_extensions_main_thread_handle)))'.dependencies]
   45→once_cell = "1.19"
   46→
+  47→[target.'cfg(target_os="linux")'.dependencies]
+  48→nix = { version = "0.29", features = ["zerocopy"] }
+  49→
+  50→[dependencies.clap]
+  51→version = "4"
+  52→default-features = false
+  53→features = [
   …
-  70→[profile.dev.package]
-  71→insta.opt-level = 3
-  72→similar.opt-level = 3
-  …
-  78→[profile.release]
-  79→lto = true
-  80→strip = true
-  81→codegen-units = 1
 LICENSE-APACHE
 LICENSE-MIT
 README.md

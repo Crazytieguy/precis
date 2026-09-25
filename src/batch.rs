@@ -218,10 +218,6 @@ pub enum TomlKey {
     /// Ordinary `[dependencies]` / `[workspace.dependencies]` tables,
     /// plus Python-manifest dependency sections.
     Dependencies { file: PathBuf },
-    /// Manifest-level operational config outside Python `tool.*` families:
-    /// build systems, package metadata, Cargo targets, and profiles.
-    /// Predecessor: `Identity` on the same file, when it has one.
-    Config { file: PathBuf },
 }
 
 impl BatchKey {

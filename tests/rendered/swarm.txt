@@ -192,9 +192,6 @@ logs/
   session_20240425-212748.json
   session_20240425-213023.json
 pyproject.toml
-  1→[build-system]
-  2→requires = ["setuptools"]
-  3→build-backend = "setuptools.build_meta"
 setup.cfg
   1→[metadata]
   2→name = swarm
@@ -221,6 +218,9 @@ setup.cfg
   23→
   24→[tool.autopep8]
   25→max_line_length = 120
+  26→ignore = E501,W6
+  27→in-place = true
+  28→recursive = true
   …
 swarm/
   __init__.py

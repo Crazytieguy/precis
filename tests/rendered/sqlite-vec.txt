@@ -49,6 +49,12 @@ README.md
   26→  </picture>
   27→  </a>
   28→</p>
+  30→<p align="center">
+  31→<i>
+  32→<code>sqlite-vec</code> is a
+  33→<a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">Mozilla Builders project</a>,
+  34→with additional sponsorship from
+  35→<a href="https://fly.io/"><img width=14px src="./.github/logos/flyio.small.ico"/> Fly.io </a>,
   …
   43→## Installing
   …
@@ -235,19 +241,7 @@ sqlite-dist.toml
   6→description = "A vector search SQLite extension."
   7→authors = ["Alex Garcia"]
   8→git_tag_format = "v$VERSION"
-  10→[targets]
-  11→github_releases = {}
-  12→sqlpkg = {}
-  13→spm = {}
-  14→amalgamation = {include=["sqlite-vec.c", "sqlite-vec.h"]}
-  15→
-  16→pip = { extra_init_py = "bindings/python/extra_init.py" }
-  17→datasette = {}
-  18→sqlite_utils = {}
-  19→
-  20→npm = {}
-  21→
-  22→gem = { module_name = "SqliteVec" }
+  …
 sqlite-vec.c
 sqlite-vec.h.tmpl
 test.sql
