@@ -8,11 +8,9 @@
 LICENSE
 README.md
   1→<h1 align="center">TS-Pattern</h1>
-  2→
-  3→<p align="center">
+  …
   4→The exhaustive Pattern Matching library for <a href="https://github.com/microsoft/TypeScript">TypeScript</a>
   5→with smart type inference.
-  6→</p>
   …
   20→```tsx
   21→import { match, P } from 'ts-pattern';
@@ -236,6 +234,8 @@ src/
     536→export function intersection<
     …
     572→export function union<
+    …
+    611→export function not<
     …
   types/
     BuildMany.ts

@@ -16,7 +16,8 @@ README.md
   7→> A lil' TOML parser
   8→
   9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
-  …
+  11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
+  12→
   13→- [Intro](#intro)
   14→- [Installation](#installation)
   15→- [Usage](#usage)
@@ -33,6 +34,7 @@ README.md
   26→- [Performance](#performance)
   27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
   28→  - [Pure Python](#pure-python)
+  29→
   30→<!-- mdformat-toc end -->
   32→## Intro<a name="intro"></a>
   33→
@@ -200,8 +202,6 @@ src/
       87→    def __init__(
       88→        self,
       89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
       …
       137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
       …

@@ -56,14 +56,8 @@ README.md
   13→[Hugo](https://gohugo.io), and [GitHub CLI](https://github.com/cli/cli) to
   14→name a few. [This list](site/content/projects_using_cobra.md) contains a more extensive list of projects using Cobra.
   …
-  20→<hr>
-  21→<div align="center" markdown="1">
   22→   <sup>Supported by:</sup>
-  23→   <br>
-  24→   <br>
-  25→   <a href="https://www.warp.dev/cobra">
-  26→      <img alt="Warp sponsorship" width="400" src="https://github.com/user-attachments/assets/ab8dd143-b0fd-4904-bdc5-dd7ecac94eae">
-  27→   </a>
+  …
   29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
   30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
   32→</div>
@@ -250,6 +244,18 @@ command.go
   892→func (c *Command) Root() *Command {
   …
   901→func (c *Command) ArgsLenAtDash() int {
+  …
+  905→func (c *Command) execute(a []string) (err error) {
+  …
+  1047→func (c *Command) preRun() {
+  …
+  1053→func (c *Command) postRun() {
+  …
+  1062→func (c *Command) ExecuteContext(ctx context.Context) error {
+  …
+  1070→func (c *Command) Execute() error {
+  …
+  1078→func (c *Command) ExecuteContextC(ctx context.Context) (*Command, error) {
   …
 command_notwin.go
 command_test.go

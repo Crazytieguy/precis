@@ -651,8 +651,38 @@ fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
 
 fn extend_headline_block_rows(rows: &mut BTreeSet<usize>, node: Node, source: &str) {
     if node.end_byte() - node.start_byte() <= HEADLINE_BLOCK_BYTE_GATE {
-        extend_rows_inclusive(rows, node, source);
+        rows.extend(block_text_rows(node, source));
     }
+}
+
+/// 1-based rows of `block` that carry text. An HTML block keeps only
+/// the rows with a letter or digit outside its tags and comments, so a
+/// centered title keeps its heading row but not the logo and badge rows
+/// wrapped in the same element.
+fn block_text_rows(block: Node, source: &str) -> Vec<usize> {
+    let first_row = block.start_position().row;
+    let last_row = node_end_row_trimmed(block, source);
+    if block.kind() != "html_block" {
+        return (first_row + 1..=last_row + 1).collect();
+    }
+    let mut rows = Vec::new();
+    let mut in_tag = false;
+    let text = &source[block.start_byte()..block.end_byte()];
+    for (offset, line) in text.lines().enumerate().take(last_row - first_row + 1) {
+        let mut has_text = false;
+        for c in strip_html_entities(line).chars() {
+            match c {
+                '<' => in_tag = true,
+                '>' => in_tag = false,
+                c if !in_tag && c.is_alphanumeric() => has_text = true,
+                _ => {}
+            }
+        }
+        if has_text {
+            rows.push(first_row + offset + 1);
+        }
+    }
+    rows
 }
 
 fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
@@ -1547,8 +1577,7 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>)
         if is_prelude_chrome_block(block, source) {
             continue;
         }
-        for row in block.start_position().row..=node_end_row_trimmed(block, source) {
-            let row = row + 1;
+        for row in block_text_rows(block, source) {
             if headline.contains(&row) {
                 continue;
             }
@@ -1568,13 +1597,23 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>)
 
 /// The chrome/substance line for the whole pre-heading region, stated
 /// once: decoration is image/badge-only paragraphs, tag-only HTML
-/// wrappers, and in-page nav menus. Everything else above the first
-/// heading is substance. Both readers of that region use this —
-/// `ReadmeHeadline` and [`prelude_remainder_rows`].
+/// wrappers, in-page nav menus and tables of contents. Everything else
+/// above the first heading is substance. Both readers of that region use
+/// this — `ReadmeHeadline` and [`prelude_remainder_rows`].
 fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)
         || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
+        || is_table_of_contents(block, source)
+}
+
+/// A list whose every line links into the document (`[Install](#install)`).
+fn is_table_of_contents(block: Node, source: &str) -> bool {
+    block.kind() == "list"
+        && source[block.start_byte()..block.end_byte()]
+            .lines()
+            .filter(|line| !line.trim().is_empty())
+            .all(|line| line.contains("](#"))
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -1885,6 +1924,24 @@ mod tests {
                    A command line tool to view objects in TUI tree widget.\n",
             &[1, 5],
             &[3],
+        ),
+        // A centered HTML title block keeps only its text rows; an in-page
+        // table of contents under the title is chrome.
+        (
+            "markdown_html_title_block_keeps_text_rows_and_skips_toc",
+            "<div align=\"center\">\n\
+                   <img src=\"logo.png\">\n\
+                   <h1>Tool</h1>\n\
+                   </div>\n\
+                   \n\
+                   # Tool\n\
+                   \n\
+                   * [Install](#install)\n\
+                   * [Usage](#usage)\n\
+                   \n\
+                   Tool does the useful thing for you.\n",
+            &[3, 6, 11],
+            &[2, 8, 9],
         ),
         // soluna shape: H1 + blank + plain text-link paragraph + blank +
         // prose. Plain text-link paragraphs are not badges and must NOT

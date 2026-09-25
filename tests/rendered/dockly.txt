@@ -34,12 +34,8 @@ Dockerfile
   16→ENTRYPOINT ["node", "index.js"]
 LICENSE
 README.md
-  1→<p align="center">
-  2→	<br>
-  3→  <img width="200" src="https://user-images.githubusercontent.com/316371/28937414-67ee5ffa-7893-11e7-95f9-5059cacf9170.png">
-  4→	<br>
+  …
   5→ Immersive terminal interface for managing docker containers, services and images
-  6→</p>
   …
   16→Dockly has been highlighted, featured and chosen as favorite docker container management tool on:
   …
@@ -271,6 +267,7 @@ src/
     66→Cli.prototype.showUsage = function () {
     …
     93→Cli.prototype.cliParse = function () {
+    94→  return commandLineArgs(this.cliOpts)
     …
     97→module.exports = new Cli()
   dockerUtil.js
@@ -379,6 +376,13 @@ src/
 widgets/
   actionStatus.widget.js
   actionsMenu.widget.js
+    …
+    5→class myWidget extends baseWidget() {
+    6→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {} }) {
+    …
+    28→  stopAllContainers () {
+    …
+    153→module.exports = myWidget
   containers/
     containerInfo.widget.js
     containerList.widget.js

@@ -19,23 +19,6 @@ Readme.md
   5→**This project has a [Code of Conduct].**
   6→
   7→## Table of contents
-  8→
-  9→- [Table of contents](#table-of-contents)
-  10→- [Installation](#installation)
-  11→- [Features](#features)
-  12→- [Docs \& Community](#docs--community)
-  13→- [Quick Start](#quick-start)
-  14→- [Philosophy](#philosophy)
-  15→- [Examples](#examples)
-  16→- [Contributing](#contributing)
-  17→  - [Security Issues](#security-issues)
-  18→  - [Running Tests](#running-tests)
-  19→- [Current project team members](#current-project-team-members)
-  20→  - [TC (Technical Committee)](#tc-technical-committee)
-  21→    - [TC emeriti members](#tc-emeriti-members)
-  22→  - [Triagers](#triagers)
-  23→    - [Emeritus Triagers](#emeritus-triagers)
-  24→- [License](#license)
   …
   34→```js
   35→import express from 'express'
@@ -213,6 +196,29 @@ lib/
     269→req.is = function is(types) {
     …
   response.js
+    …
+    42→var res = Object.create(http.ServerResponse.prototype)
+    …
+    49→module.exports = res
+    …
+    64→res.status = function status(code) {
+    …
+    97→res.links = function(links) {
+    …
+    125→res.send = function send(body) {
+    …
+    232→res.json = function json(obj) {
+    …
+    260→res.jsonp = function jsonp(obj) {
+    …
+    321→res.sendStatus = function sendStatus(statusCode) {
+    …
+    371→res.sendFile = function sendFile(path, options, callback) {
+    …
+    433→res.download = function download (path, filename, options, callback) {
+    …
+    569→res.format = function(obj){
+    …
   utils.js
   view.js
     …
@@ -259,6 +265,11 @@ package.json
   56→    "range-parser": "^1.2.1",
   57→    "router": "^2.2.0",
   58→    "send": "^1.1.0",
+  59→    "serve-static": "^2.2.0",
+  60→    "statuses": "^2.0.1",
+  61→    "type-is": "^2.0.1",
+  62→    "vary": "^1.1.2"
+  63→  },
   …
   82→  "engines": {
   83→    "node": ">= 18"

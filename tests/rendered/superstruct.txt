@@ -14,12 +14,8 @@ Changelog.md
 License.md
 Readme.md
   …
-  5→<p align="center">
   6→  A simple and composable way  <br/>
   7→  to validate data in JavaScript (and TypeScript).
-  8→</p>
-  9→<br/>
-  10→<br/>
   …
   36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
   38→But Superstruct is designed for validating data at runtime, so it throws (or returns) detailed runtime errors for you or your end users. This is especially useful in situations like accepting arbitrary input in a REST or GraphQL API. But it can even be used to validate internal data structures at runtime when needed.
@@ -205,6 +201,9 @@ src/
     10→export class Struct<T = unknown, S = unknown> {
     …
     123→export function assert<T, S>(
+    124→  value: unknown,
+    125→  struct: Struct<T, S>,
+    126→  message?: string
     …
     139→export function create<T, S>(
     140→  value: unknown,
