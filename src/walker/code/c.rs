@@ -32,9 +32,7 @@ pub(super) const LANGUAGE: Language = Language {
     file_weight: Some(file_weight),
 };
 
-/// Every batch of a `.c` file, relative to a header. The ratio of the old
-/// C walker's `.c` to `.h` values for declarations (0.57) and rosters
-/// (0.60).
+/// Every batch of a `.c` file, relative to a header. Not tuned.
 const IMPLEMENTATION_FILE_WEIGHT: f64 = 0.6;
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {

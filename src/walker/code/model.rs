@@ -21,7 +21,7 @@
 //! - **`doc`**: the doc comment rows directly above the declaration (no
 //!   blank row between them and the head), or a docstring inside it (the
 //!   Python first-statement string, whose rows are then not in `body`). One
-//!   [`Item`] per paragraph, split at blank rows.
+//!   [`Item`] per paragraph (per block for TS/JS JSDoc).
 //! - **`head`** starts at the declaration's first row: its first leading
 //!   attribute / decorator / annotation / modifier row, never a doc
 //!   comment. Where it ends depends on [`Shape`]:
@@ -71,59 +71,40 @@
 //!
 //! The language module decides which declarations to leave out of the
 //! model entirely (not in `decls`, not in a container's `members`, their
-//! name rows not in a container's `body`): test code (`#[cfg(test)]`,
-//! `#[test]`), `#[doc(hidden)]`, C non-`inline` `static` in a header, and
-//! members the language enforces as private to their container (TS
-//! `private` / `protected` / `#name`, a Rust inherent-`impl` fn without
-//! `pub`). Every declaration in the model is priced alike; public and
-//! internal declarations are not told apart.
+//! name rows not in a container's `body`): test code, `#[doc(hidden)]`,
+//! unexported TS/JS declarations, C non-`inline` `static` in a header, and
+//! members the language enforces as private to their container. Every
+//! declaration in the model is priced alike.
 //!
 //! # Disjointness
 //!
-//! Within a file, no row may belong to two of: `module_doc`, `reexports`,
-//! and the declarations. Within a declaration, `doc`, `head` and `body`
-//! are disjoint, and each member's rows are disjoint from its container's
-//! `head` and `body` except its `name_rows` Item. The one overlap allowed:
-//! a member that starts on its container's opening row (TS
-//! `class A { foo(`) shares that row with the container's `head`, through
-//! its `name_rows`. Two declarations never
-//! share a row, except that declarations starting on the same row are
-//! merged (below). A row that two batches claim outside one predecessor
-//! chain is dropped from the later batch and counted (asserted in the
-//! engine's unit tests), so a violation loses content rather than
-//! failing the run.
-//!
-//! A row in no part of any declaration and in neither `module_doc` nor
-//! `reexports` is never rendered. That includes context wrapping several
-//! declarations (a C `#ifdef … #endif` guard, a TS `declare namespace X {`
-//! line) unless `extract` assigns its rows to a part.
+//! Within a file, no row may belong to two of `module_doc`, `reexports`
+//! and the declarations; within a declaration, `doc`, `head` and `body`
+//! are disjoint; a member shares rows with its container only through its
+//! `name_rows` (a TS `class A { foo(` member shares the container's
+//! opening row). A row in no part is never rendered, including context
+//! wrapping several declarations (a C `#ifdef … #endif`, a TS
+//! `declare namespace X {` line). A row two batches claim outside one
+//! predecessor chain is dropped from the later batch (asserted zero in the
+//! engine's unit tests), so a violation loses content rather than failing
+//! the run.
 //!
 //! # What the engine does, so `extract` doesn't
 //!
-//! - Orders declarations (and each container's members) by **first row**,
-//!   the smallest row in any of the declaration's parts, `doc` included;
-//!   `decls` may come in any order.
-//! - Merges declarations (or members of one container) whose first rows are
-//!   equal into one: the union of each part and the first one's shape (Go
-//!   `var a = 1; var b = 2` on one row, C same-row declarations, two TS
-//!   members on one row).
-//! - **Trims at the next sibling**: drops from each declaration every row at
-//!   or past the next declaration's first row (for members, the next member
-//!   of the same container). Tree-sitter sometimes extends a node into the
-//!   next declaration (a C attribute-like macro parsed as the next
-//!   function's type qualifier, a trailing comment). Untrimmed, the earlier
-//!   declaration's `Decl` would claim the next one's name row through
-//!   their shared `Names` ancestor, become that row's owner, and so become
-//!   the next declaration's predecessor. The trim is load-bearing, not
-//!   redundant with the ownership ledger.
-//! - Strips `module_doc` rows from every other part, so a leading comment
-//!   that is both a module doc and a declaration's doc stays module doc. A
-//!   language whose module doc boundary is subtler (C's license banner end)
-//!   still draws it in `extract`.
-//! - Makes each declaration's parts disjoint: drops `doc` rows from `head`
-//!   and `body`, and `head` rows from `body`, so a row listed in two parts
-//!   renders once, in the earlier rung. Members are also trimmed at their
-//!   container's next sibling.
+//! - Orders declarations (and each container's members) by first row, the
+//!   smallest row in any part, `doc` included.
+//! - Merges siblings whose first rows are equal (Go `var a = 1; var b = 2`
+//!   on one row, two TS members on one row): the union of each part, the
+//!   first one's shape.
+//! - **Trims at the next sibling**: drops every row at or past the next
+//!   sibling's first row. Tree-sitter sometimes extends a node into the
+//!   next declaration (a C attribute-like macro, a trailing comment);
+//!   untrimmed, the earlier `Decl` would claim the next one's name row
+//!   through their shared `Names` ancestor and become its predecessor. The
+//!   trim is load-bearing, not redundant with the ownership ledger.
+//! - Strips `module_doc` rows from every other part, then makes each
+//!   declaration's parts disjoint (`doc` over `head` over `body`), so a row
+//!   listed in two parts renders once, in the earlier rung.
 //! - Chunks oversize parts, values batches and gates each batch on its
 //!   predecessor.
 

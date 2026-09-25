@@ -1,5 +1,5 @@
 //! Lua extraction. Declarations are the top-level function forms, all
-//! `Callable` and public:
+//! `Callable`:
 //!  - `function_declaration` (incl. `local function`),
 //!  - `assignment_statement` / `variable_declaration` with a
 //!    `function_definition` right-hand side, and

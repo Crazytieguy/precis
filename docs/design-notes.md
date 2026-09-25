@@ -256,37 +256,27 @@ Source languages share one declaration ladder: a language module's
 and the engine alone builds batches from it. Decisions a new port
 must not undo:
 
-- **Five rungs:** `ModuleDoc`, `Names`, `Decl`, `Doc`, `Body`. A
-  `CodeKey` is identified by `(rung, file, decl index, chunk)`, never
+- A `CodeKey` is identified by `(rung, file, decl index, chunk)`, never
   by source line: a container and its first member can share a row.
-- **Engine-side normalization** (sort, dedup, blank-row drop,
-  `module_doc` strip, same-first-row merge, trim at the next sibling,
-  part disjointness) so `extract` can list rows loosely. The
-  next-sibling trim is load-bearing: without it a node that spills into
-  the next declaration claims its roster row and becomes its
-  predecessor.
 - **Ownership ledger, not assertions:** a row claimed outside the
-  claiming batch's predecessor chain is dropped and counted (asserted
-  zero in unit tests), so one extraction quirk loses a row instead of
-  failing a fixture run. A batch whose rows its ancestors already
-  render is skipped, and its descendants gate on the ancestor.
-- **Full-line spans only:** the engine emits no Ellipsis records.
+  claiming batch's predecessor chain is dropped and counted, so one
+  extraction quirk loses a row instead of failing a run. A batch whose
+  rows its ancestors already render is skipped, and its descendants
+  gate on the ancestor. The engine emits no Ellipsis records.
 - **One value table:** `value::code_rung_value` per rung and one chunk
-  exponent (`DEFAULT_CONCAVITY_EXPONENT`). `Names` was designed at or
-  above `Decl` (breadth first); the corpus grid put it well below
-  (1150 → 750: +0.016 at 3000, +0.022 over the 7 budgets), because a
-  roster in every file then outranked entry-file declarations, docs
-  and manifests. A roster is priced per entry (`entries^k`, no floor
-  or cap), so its ratio is its tokens per entry: small files' 1–3 row
-  rosters no longer win on size alone, and a long public roster is
-  not capped below its short peers (+0.006 at 3000 over the capped
-  `roster_mass_factor`). Per-language pricing enters only through
-  `is_entrypoint` (a depth pin, no extra factor), `file_weight` and
-  what `extract` hides. Once rosters were priced per entry, an
-  entry-file factor, a private-declaration factor, a member factor, a
-  roster head premium and a chunk tail decay each measured neutral or
-  negative on the grid and were removed (2026-09-25); re-adding one
-  needs a fresh measurement.
+  exponent. `Names` sits well below `Decl`: a roster in every file
+  otherwise outranks entry-file declarations, docs and manifests. A
+  roster is priced per entry (`entries^k`), so its ratio is its tokens
+  per entry. Per-language pricing enters only through `is_entrypoint`
+  (a depth pin), `file_weight` and what `extract` hides.
+- **Removed after measuring neutral or better on the grid
+  (2026-09-25); re-adding one needs a fresh measurement:** entry-file,
+  private-declaration and member factors, a roster head premium, a
+  chunk tail decay; the TS/JS module doc, JSDoc paragraph splits,
+  unexported declarations in TS/JS entry files, publishing a published
+  handle's factory; Rust badge-paragraph skipping, rustdoc fence-aware
+  paragraphs, hiding impls of hidden types; C decoration-row paragraph
+  splits.
 
 ## Threads
 
