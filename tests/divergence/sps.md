@@ -1,4 +1,4 @@
-Score(3000)=0.652 I=0.800 C=0.531 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.802/0.720/0.652/0.587/0.645/0.592
+Score(3000)=0.652 I=0.800 C=0.531 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.802/0.720/0.652/0.567/0.576/0.580
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -120,140 +120,134 @@ Score(3000)=0.652 I=0.800 C=0.531 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 3319 | 14 | rust names sps-core/src/install/cask/artifacts/prefpane.rs |  |  | 0.630 |
 | ns | 3342 |  | 172 | Core worker pool manager and its sizing rule | 2.5 |  | 0.619 |
 | walker |  | 3399 | 80 | README.md section #3 |  |  | 0.623 |
-| walker |  | 3488 | 89 | rust decl sps/src/cli/upgrade.rs:11 |  |  | 0.623 |
 | ns | 3553 |  | 211 | Worker job execution entry points | 2.6 |  | 0.611 |
-| walker |  | 3584 | 96 | rust names sps/src/cli/status.rs |  |  | 0.612 |
-| walker |  | 3599 | 15 | rust names sps-core/src/install/cask/artifacts/audio_unit_plugin.rs |  |  | 0.612 |
-| walker |  | 3614 | 15 | rust names sps-core/src/install/cask/artifacts/internet_plugin.rs |  |  | 0.612 |
-| walker |  | 3629 | 15 | rust names sps-core/src/install/cask/artifacts/mdimporter.rs |  |  | 0.612 |
-| walker |  | 3644 | 15 | rust names sps-core/src/install/cask/artifacts/pkg.rs |  |  | 0.612 |
-| walker |  | 3659 | 15 | rust names sps-core/src/install/cask/artifacts/qlplugin.rs |  |  | 0.612 |
-| walker |  | 3674 | 15 | rust names sps-core/src/install/cask/artifacts/screen_saver.rs |  |  | 0.612 |
-| walker |  | 3689 | 15 | rust names sps-core/src/install/cask/artifacts/vst_plugin.rs |  |  | 0.612 |
-| walker |  | 3699 | 10 | rust doc sps-common/src/cache.rs:15 |  |  | 0.612 |
-| walker |  | 3727 | 28 | rust decl sps/src/pipeline/downloader.rs:28 |  |  | 0.612 |
-| ns | 3752 |  | 199 | OperationPlanner and plan_operations | 2.7 |  | 0.597 |
-| walker |  | 3824 | 97 | rust decl sps/src/cli/reinstall.rs:11 |  |  | 0.599 |
-| walker |  | 3840 | 16 | rust names sps-core/src/install/cask/artifacts/vst3_plugin.rs |  |  | 0.599 |
-| ns | 3892 |  | 140 | DownloadCoordinator | 2.8 |  | 0.590 |
-| walker |  | 3944 | 104 | README.md section #2 |  |  | 0.608 |
-| walker |  | 4016 | 72 | rust names sps-net/src/validation.rs |  |  | 0.608 |
-| walker |  | 4136 | 120 | rust names sps/src/cli/info.rs |  |  | 0.608 |
-| ns | 4151 |  | 259 | JobProcessingState: the runner's per-job state machine | 2.9 |  | 0.591 |
-| walker |  | 4173 | 37 | rust decl sps/src/cli/info.rs:23 |  |  | 0.591 |
-| walker |  | 4253 | 80 | rust decl sps/src/cli/info.rs:13 |  |  | 0.592 |
-| ns | 4285 |  | 134 | PlannedOperations: the planner's output | 2.10 |  | 0.586 |
-| walker |  | 4297 | 44 | rust names sps-core/src/utils/mod.rs |  |  | 0.587 |
-| ns | 4412 |  | 127 | Terminal status display: JobStatus states and the event-loop entry | 2.11 |  | 0.578 |
-| walker |  | 4417 | 120 | rust decl sps/src/cli/list.rs:15 |  |  | 0.579 |
-| walker |  | 4430 | 13 | rust doc sps-common/src/keg.rs:20 |  |  | 0.579 |
-| walker |  | 4477 | 47 | rust names sps-core/src/check/mod.rs |  |  | 0.584 |
-| walker |  | 4524 | 47 | rust names sps-core/src/check/update.rs |  |  | 0.584 |
-| ns | 4564 |  | 152 | main(): the init special-case and the auto-update gate | 2.12 |  | 0.576 |
-| walker |  | 4570 | 46 | rust decl sps-core/src/check/update.rs:89 |  |  | 0.576 |
-| walker |  | 4620 | 50 | rust decl sps-common/src/dependency/requirement.rs:6 |  |  | 0.577 |
-| walker |  | 4701 | 81 | README.md section #9 |  |  | 0.577 |
-| walker |  | 4716 | 15 | rust doc sps-common/src/keg.rs:12 |  |  | 0.577 |
-| ns | 4768 |  | 204 | Auto-update behaviour and its environment variables | 2.13 | 2.12 | 0.568 |
-| walker |  | 4809 | 93 | rust names sps-common/src/config.rs |  |  | 0.568 |
-| walker |  | 4825 | 16 | rust decl sps-common/src/config.rs:193 |  |  | 0.568 |
-| walker |  | 4834 | 9 | rust body sps-common/src/config.rs:199 |  |  | 0.568 |
-| ns | 4869 |  | 101 | Logging: SPS_LOG env filter and the rolling log file | 2.14 |  | 0.563 |
-| walker |  | 5036 | 202 | rust names sps/src/pipeline/runner.rs |  |  | 0.564 |
-| walker |  | 5080 | 44 | rust decl sps/src/pipeline/runner.rs:30 |  |  | 0.567 |
-| ns | 5124 |  | 255 | `sps install` flags | 3.1 |  | 0.553 |
-| walker |  | 5126 | 46 | rust decl sps/src/pipeline/runner.rs:37 |  |  | 0.560 |
-| walker |  | 5213 | 87 | rust decl sps/src/pipeline/runner.rs:66 |  |  | 0.579 |
-| walker |  | 5255 | 42 | rust decl sps/src/pipeline/runner.rs:603 |  |  | 0.579 |
-| walker |  | 5269 | 14 | rust doc sps/src/cli/info.rs:25 |  |  | 0.579 |
-| ns | 5341 |  | 217 | `sps upgrade` and `sps reinstall` flags | 3.2 |  | 0.592 |
-| walker |  | 5371 | 102 | rust names sps-common/src/pipeline.rs |  |  | 0.593 |
-| walker |  | 5412 | 41 | rust decl sps-common/src/pipeline.rs:13 |  |  | 0.595 |
-| walker |  | 5462 | 50 | rust decl sps-common/src/pipeline.rs:184 |  |  | 0.595 |
-| walker |  | 5527 | 65 | rust decl sps-common/src/pipeline.rs:41 |  |  | 0.601 |
-| walker |  | 5595 | 68 | rust decl sps-common/src/pipeline.rs:141 |  |  | 0.601 |
-| ns | 5660 |  | 319 | `sps uninstall` and `sps list` flags | 3.3 |  | 0.591 |
-| walker |  | 5670 | 75 | rust decl sps-common/src/pipeline.rs:32 |  |  | 0.602 |
-| walker |  | 5750 | 80 | rust decl sps-common/src/pipeline.rs:20 |  |  | 0.620 |
-| walker |  | 5767 | 17 | rust doc sps-net/src/validation.rs:121 |  |  | 0.620 |
-| walker |  | 5867 | 100 | rust decl sps-common/src/config.rs:14 |  |  | 0.621 |
-| walker |  | 5928 | 61 | rust decl sps-core/src/upgrade/cask.rs:15 |  |  | 0.621 |
-| ns | 5940 |  | 280 | `sps search`, `sps info`, `sps init` and `sps update` flags | 3.4 |  | 0.611 |
-| walker |  | 6098 | 170 | rust decl sps/src/cli/uninstall.rs:16 |  |  | 0.635 |
-| ns | 6103 |  | 163 | Config: prefix root constants and struct fields | 4.1 |  | 0.639 |
-| walker |  | 6203 | 105 | rust decl sps-common/src/pipeline.rs:190 |  |  | 0.645 |
-| walker |  | 6231 | 28 | rust names sps-core/src/install/cask/artifacts/uninstall.rs |  |  | 0.645 |
-| walker |  | 6411 | 180 | rust names sps/src/cli/init.rs |  |  | 0.646 |
-| walker |  | 6441 | 30 | rust decl sps/src/cli/init.rs:22 |  |  | 0.646 |
-| ns | 6449 |  | 346 | Config: every path helper (complete name roster) | 4.2 | 4.1 | 0.631 |
-| walker |  | 6497 | 56 | rust decl sps/src/cli/init.rs:15 |  |  | 0.638 |
-| walker |  | 6562 | 65 | rust names sps-core/src/install/mod.rs |  |  | 0.641 |
-| ns | 6624 |  | 175 | Configuration environment variables | 4.3 | 4.1 | 0.637 |
-| walker |  | 6671 | 109 | README.md section #6 |  |  | 0.637 |
-| walker |  | 6734 | 63 | rust decl sps-core/src/uninstall/formula.rs:10 |  |  | 0.637 |
-| walker |  | 6786 | 52 | rust decl sps/src/pipeline/downloader.rs:21 |  |  | 0.641 |
-| ns | 6921 |  | 297 | SpsError: all 26 variants and the crate Result alias | 4.4 |  | 0.625 |
-| walker |  | 6976 | 190 | rust names sps/src/pipeline/planner.rs |  |  | 0.626 |
-| walker |  | 7004 | 28 | rust decl sps/src/pipeline/planner.rs:191 |  |  | 0.626 |
-| walker |  | 7053 | 49 | rust decl sps/src/pipeline/planner.rs:36 |  |  | 0.626 |
-| walker |  | 7105 | 52 | rust decl sps/src/pipeline/planner.rs:184 |  |  | 0.628 |
-| ns | 7128 |  | 207 | Formula: the complete field list | 4.5 |  | 0.620 |
-| walker |  | 7148 | 43 | rust decl sps-core/src/build/compile/cargo.rs:12 |  |  | 0.620 |
-| walker |  | 7191 | 43 | rust decl sps-core/src/build/compile/perl.rs:12 |  |  | 0.620 |
-| walker |  | 7234 | 43 | rust decl sps-core/src/build/compile/python.rs:13 |  |  | 0.620 |
-| walker |  | 7254 | 20 | rust doc sps-net/src/validation.rs:93 |  |  | 0.620 |
-| walker |  | 7285 | 31 | rust names sps-core/src/install/cask/artifacts/manpage.rs |  |  | 0.620 |
-| ns | 7390 |  | 262 | Cask: the complete field list | 4.6 |  | 0.610 |
-| walker |  | 7397 | 112 | README.md section #7 |  |  | 0.610 |
-| walker |  | 7453 | 56 | rust decl sps/src/pipeline/runner.rs:980 |  |  | 0.610 |
-| walker |  | 7526 | 73 | rust names sps-common/src/dependency/definition.rs |  |  | 0.610 |
-| walker |  | 7542 | 16 | rust decl sps-common/src/dependency/definition.rs:18 |  |  | 0.610 |
-| walker |  | 7574 | 32 | rust decl sps-common/src/dependency/definition.rs:24 |  |  | 0.610 |
-| ns | 7596 |  | 206 | Dependency tags and Requirement | 4.7 |  | 0.604 |
-| walker |  | 7623 | 49 | rust decl sps-common/src/dependency/definition.rs:37 |  |  | 0.604 |
-| walker |  | 7675 | 52 | rust decl sps-common/src/dependency/definition.rs:30 |  |  | 0.604 |
-| walker |  | 7736 | 61 | rust decl sps-common/src/dependency/definition.rs:53 |  |  | 0.604 |
-| walker |  | 7809 | 73 | rust names sps-core/src/utils/applescript.rs |  |  | 0.604 |
+| ns | 3752 |  | 199 | OperationPlanner and plan_operations | 2.7 |  | 0.596 |
+| ns | 3892 |  | 140 | DownloadCoordinator | 2.8 |  | 0.587 |
+| walker |  | 3971 | 572 | [dependencies] in Cargo.toml |  |  | 0.587 |
+| walker |  | 4060 | 89 | rust decl sps/src/cli/upgrade.rs:11 |  |  | 0.588 |
+| ns | 4151 |  | 259 | JobProcessingState: the runner's per-job state machine | 2.9 |  | 0.572 |
+| walker |  | 4156 | 96 | rust names sps/src/cli/status.rs |  |  | 0.572 |
+| walker |  | 4171 | 15 | rust names sps-core/src/install/cask/artifacts/audio_unit_plugin.rs |  |  | 0.572 |
+| walker |  | 4186 | 15 | rust names sps-core/src/install/cask/artifacts/internet_plugin.rs |  |  | 0.572 |
+| walker |  | 4201 | 15 | rust names sps-core/src/install/cask/artifacts/mdimporter.rs |  |  | 0.572 |
+| walker |  | 4216 | 15 | rust names sps-core/src/install/cask/artifacts/pkg.rs |  |  | 0.572 |
+| walker |  | 4231 | 15 | rust names sps-core/src/install/cask/artifacts/qlplugin.rs |  |  | 0.572 |
+| walker |  | 4246 | 15 | rust names sps-core/src/install/cask/artifacts/screen_saver.rs |  |  | 0.572 |
+| walker |  | 4261 | 15 | rust names sps-core/src/install/cask/artifacts/vst_plugin.rs |  |  | 0.572 |
+| walker |  | 4271 | 10 | rust doc sps-common/src/cache.rs:15 |  |  | 0.572 |
+| ns | 4285 |  | 134 | PlannedOperations: the planner's output | 2.10 |  | 0.566 |
+| walker |  | 4299 | 28 | rust decl sps/src/pipeline/downloader.rs:28 |  |  | 0.567 |
+| walker |  | 4396 | 97 | rust decl sps/src/cli/reinstall.rs:11 |  |  | 0.568 |
+| walker |  | 4412 | 16 | rust names sps-core/src/install/cask/artifacts/vst3_plugin.rs |  |  | 0.560 |
+| ns | 4412 |  | 127 | Terminal status display: JobStatus states and the event-loop entry | 2.11 |  | 0.560 |
+| walker |  | 4516 | 104 | README.md section #2 |  |  | 0.577 |
+| ns | 4564 |  | 152 | main(): the init special-case and the auto-update gate | 2.12 |  | 0.569 |
+| walker |  | 4588 | 72 | rust names sps-net/src/validation.rs |  |  | 0.569 |
+| walker |  | 4708 | 120 | rust names sps/src/cli/info.rs |  |  | 0.569 |
+| walker |  | 4745 | 37 | rust decl sps/src/cli/info.rs:23 |  |  | 0.569 |
+| ns | 4768 |  | 204 | Auto-update behaviour and its environment variables | 2.13 | 2.12 | 0.561 |
+| walker |  | 4825 | 80 | rust decl sps/src/cli/info.rs:13 |  |  | 0.561 |
+| walker |  | 4869 | 44 | rust names sps-core/src/utils/mod.rs |  |  | 0.558 |
+| ns | 4869 |  | 101 | Logging: SPS_LOG env filter and the rolling log file | 2.14 |  | 0.558 |
+| walker |  | 4989 | 120 | rust decl sps/src/cli/list.rs:15 |  |  | 0.558 |
+| walker |  | 5002 | 13 | rust doc sps-common/src/keg.rs:20 |  |  | 0.558 |
+| walker |  | 5049 | 47 | rust names sps-core/src/check/mod.rs |  |  | 0.563 |
+| walker |  | 5096 | 47 | rust names sps-core/src/check/update.rs |  |  | 0.563 |
+| ns | 5124 |  | 255 | `sps install` flags | 3.1 |  | 0.548 |
+| walker |  | 5142 | 46 | rust decl sps-core/src/check/update.rs:89 |  |  | 0.548 |
+| walker |  | 5192 | 50 | rust decl sps-common/src/dependency/requirement.rs:6 |  |  | 0.549 |
+| walker |  | 5273 | 81 | README.md section #9 |  |  | 0.549 |
+| walker |  | 5288 | 15 | rust doc sps-common/src/keg.rs:12 |  |  | 0.549 |
+| ns | 5341 |  | 217 | `sps upgrade` and `sps reinstall` flags | 3.2 |  | 0.564 |
+| walker |  | 5381 | 93 | rust names sps-common/src/config.rs |  |  | 0.564 |
+| walker |  | 5397 | 16 | rust decl sps-common/src/config.rs:193 |  |  | 0.564 |
+| walker |  | 5406 | 9 | rust body sps-common/src/config.rs:199 |  |  | 0.564 |
+| walker |  | 5608 | 202 | rust names sps/src/pipeline/runner.rs |  |  | 0.565 |
+| walker |  | 5652 | 44 | rust decl sps/src/pipeline/runner.rs:30 |  |  | 0.568 |
+| ns | 5660 |  | 319 | `sps uninstall` and `sps list` flags | 3.3 |  | 0.560 |
+| walker |  | 5698 | 46 | rust decl sps/src/pipeline/runner.rs:37 |  |  | 0.566 |
+| walker |  | 5785 | 87 | rust decl sps/src/pipeline/runner.rs:66 |  |  | 0.583 |
+| walker |  | 5827 | 42 | rust decl sps/src/pipeline/runner.rs:603 |  |  | 0.583 |
+| walker |  | 5841 | 14 | rust doc sps/src/cli/info.rs:25 |  |  | 0.583 |
+| ns | 5940 |  | 280 | `sps search`, `sps info`, `sps init` and `sps update` flags | 3.4 |  | 0.574 |
+| walker |  | 5943 | 102 | rust names sps-common/src/pipeline.rs |  |  | 0.574 |
+| walker |  | 5984 | 41 | rust decl sps-common/src/pipeline.rs:13 |  |  | 0.576 |
+| walker |  | 6034 | 50 | rust decl sps-common/src/pipeline.rs:184 |  |  | 0.576 |
+| walker |  | 6099 | 65 | rust decl sps-common/src/pipeline.rs:41 |  |  | 0.582 |
+| ns | 6103 |  | 163 | Config: prefix root constants and struct fields | 4.1 |  | 0.576 |
+| walker |  | 6167 | 68 | rust decl sps-common/src/pipeline.rs:141 |  |  | 0.576 |
+| walker |  | 6242 | 75 | rust decl sps-common/src/pipeline.rs:32 |  |  | 0.587 |
+| walker |  | 6322 | 80 | rust decl sps-common/src/pipeline.rs:20 |  |  | 0.604 |
+| walker |  | 6339 | 17 | rust doc sps-net/src/validation.rs:121 |  |  | 0.604 |
+| walker |  | 6439 | 100 | rust decl sps-common/src/config.rs:14 |  |  | 0.616 |
+| ns | 6449 |  | 346 | Config: every path helper (complete name roster) | 4.2 | 4.1 | 0.601 |
+| walker |  | 6500 | 61 | rust decl sps-core/src/upgrade/cask.rs:15 |  |  | 0.601 |
+| ns | 6624 |  | 175 | Configuration environment variables | 4.3 | 4.1 | 0.597 |
+| walker |  | 6670 | 170 | rust decl sps/src/cli/uninstall.rs:16 |  |  | 0.619 |
+| walker |  | 6775 | 105 | rust decl sps-common/src/pipeline.rs:190 |  |  | 0.626 |
+| walker |  | 6803 | 28 | rust names sps-core/src/install/cask/artifacts/uninstall.rs |  |  | 0.626 |
+| ns | 6921 |  | 297 | SpsError: all 26 variants and the crate Result alias | 4.4 |  | 0.610 |
+| walker |  | 6983 | 180 | rust names sps/src/cli/init.rs |  |  | 0.611 |
+| walker |  | 7013 | 30 | rust decl sps/src/cli/init.rs:22 |  |  | 0.611 |
+| walker |  | 7069 | 56 | rust decl sps/src/cli/init.rs:15 |  |  | 0.618 |
+| ns | 7128 |  | 207 | Formula: the complete field list | 4.5 |  | 0.610 |
+| walker |  | 7134 | 65 | rust names sps-core/src/install/mod.rs |  |  | 0.613 |
+| walker |  | 7243 | 109 | README.md section #6 |  |  | 0.613 |
+| walker |  | 7306 | 63 | rust decl sps-core/src/uninstall/formula.rs:10 |  |  | 0.613 |
+| walker |  | 7358 | 52 | rust decl sps/src/pipeline/downloader.rs:21 |  |  | 0.617 |
+| ns | 7390 |  | 262 | Cask: the complete field list | 4.6 |  | 0.607 |
+| walker |  | 7548 | 190 | rust names sps/src/pipeline/planner.rs |  |  | 0.607 |
+| walker |  | 7576 | 28 | rust decl sps/src/pipeline/planner.rs:191 |  |  | 0.608 |
+| ns | 7596 |  | 206 | Dependency tags and Requirement | 4.7 |  | 0.601 |
+| walker |  | 7625 | 49 | rust decl sps/src/pipeline/planner.rs:36 |  |  | 0.601 |
+| walker |  | 7677 | 52 | rust decl sps/src/pipeline/planner.rs:184 |  |  | 0.604 |
+| walker |  | 7720 | 43 | rust decl sps-core/src/build/compile/cargo.rs:12 |  |  | 0.604 |
+| walker |  | 7763 | 43 | rust decl sps-core/src/build/compile/perl.rs:12 |  |  | 0.604 |
+| walker |  | 7806 | 43 | rust decl sps-core/src/build/compile/python.rs:13 |  |  | 0.604 |
+| walker |  | 7826 | 20 | rust doc sps-net/src/validation.rs:93 |  |  | 0.604 |
 | ns | 7828 |  | 232 | Resolver outputs: install strategy, resolution status, resolved graph | 4.8 |  | 0.593 |
-| walker |  | 7879 | 70 | rust decl sps-common/src/dependency/definition.rs:59 |  |  | 0.593 |
-| walker |  | 7954 | 75 | rust names sps-core/src/install/devtools.rs |  |  | 0.593 |
+| walker |  | 7857 | 31 | rust names sps-core/src/install/cask/artifacts/manpage.rs |  |  | 0.593 |
 | ns | 7957 |  | 129 | InstalledArtifact: the eight kinds an install records | 4.9 |  | 0.588 |
-| walker |  | 8029 | 75 | rust names sps-core/src/upgrade/mod.rs |  |  | 0.593 |
-| walker |  | 8101 | 72 | rust decl sps-core/src/check/update.rs:22 |  |  | 0.593 |
-| walker |  | 8231 | 130 | rust names sps-common/src/error.rs |  |  | 0.593 |
-| walker |  | 8253 | 22 | rust decl sps-common/src/error.rs:95 |  |  | 0.593 |
-| walker |  | 8275 | 22 | rust decl sps-common/src/error.rs:101 |  |  | 0.593 |
-| walker |  | 8297 | 22 | rust decl sps-common/src/error.rs:107 |  |  | 0.593 |
-| ns | 8300 |  | 343 | Installed-package discovery: InstalledKeg, KegRegistry, Cache, Formulary | 4.10 |  | 0.586 |
-| walker |  | 8320 | 23 | rust decl sps-common/src/error.rs:89 |  |  | 0.586 |
-| walker |  | 8343 | 23 | rust decl sps-common/src/error.rs:113 |  |  | 0.586 |
-| walker |  | 8420 | 77 | rust names sps-core/src/uninstall/mod.rs |  |  | 0.596 |
-| ns | 8439 |  | 139 | Bottle install path: download, platform check, install, link, Mach-O patch | 5.1 |  | 0.591 |
-| walker |  | 8660 | 240 | rust names sps/src/cli/search.rs |  |  | 0.593 |
-| ns | 8668 |  | 229 | Cask install path: private store, download, install_cask, manifests, DMG handling | 5.2 |  | 0.586 |
-| walker |  | 8685 | 25 | rust decl sps/src/cli/search.rs:23 |  |  | 0.586 |
-| walker |  | 8717 | 32 | rust decl sps/src/cli/search.rs:29 |  |  | 0.586 |
-| walker |  | 8769 | 52 | rust decl sps/src/cli/search.rs:42 |  |  | 0.586 |
-| ns | 8815 |  | 147 | CaskInstallManifest: the on-disk record of a cask install | 5.3 |  | 0.581 |
-| walker |  | 8845 | 76 | rust decl sps/src/cli/search.rs:14 |  |  | 0.592 |
-| walker |  | 8929 | 84 | rust names sps-core/src/build/env.rs |  |  | 0.592 |
-| walker |  | 9009 | 80 | rust decl sps-core/src/upgrade/source.rs:19 |  |  | 0.592 |
-| ns | 9065 |  | 250 | Installed / outdated checks | 5.4 |  | 0.585 |
-| walker |  | 9123 | 114 | [package] in sps-common/Cargo.toml |  |  | 0.586 |
-| ns | 9224 |  | 159 | Archive extraction, toolchain discovery and macOS-only helpers | 5.5 |  | 0.584 |
-| walker |  | 9237 | 114 | [package] in sps-core/Cargo.toml |  |  | 0.586 |
-| walker |  | 9351 | 114 | [package] in sps-net/Cargo.toml |  |  | 0.589 |
-| walker |  | 9406 | 55 | rust decl sps-core/src/build/compile/cmake.rs:13 |  |  | 0.589 |
-| walker |  | 9461 | 55 | rust decl sps-core/src/build/compile/meson.rs:12 |  |  | 0.589 |
-| ns | 9471 |  | 247 | Network endpoints, user agents and timeouts | 6.1 |  | 0.585 |
-| walker |  | 9553 | 92 | rust names sps-common/src/model/mod.rs |  |  | 0.586 |
-| ns | 9587 |  | 116 | Progress-reporting download variants and the raw JSON fetchers | 6.2 |  | 0.583 |
-| walker |  | 9589 | 36 | rust decl sps-common/src/model/mod.rs:16 |  |  | 0.584 |
-| walker |  | 9660 | 71 | rust decl sps/src/pipeline/runner.rs:669 |  |  | 0.584 |
-| ns | 9701 |  | 114 | Source builds: the seven build-system drivers and build_from_source | 7.1 |  | 0.581 |
-| ns | 9772 |  | 71 | BuildEnvironment: the sanitized superenv-style build environment | 7.2 |  | 0.579 |
-| walker |  | 9811 | 151 | rust decl sps-common/src/keg.rs:25 |  |  | 0.584 |
-| ns | 9816 |  | 44 | Remaining directories: crate roots and .github | 8.1 |  | 0.588 |
-| walker |  | 9883 | 72 | rust decl sps/src/cli/status.rs:69 |  |  | 0.588 |
-| walker |  | 9956 | 73 | rust decl sps/src/pipeline/planner.rs:1050 |  |  | 0.588 |
-| ns | 9978 |  | 162 | Contributor workflow: the exact check, format, lint and test commands | 8.2 |  | 0.583 |
+| walker |  | 7969 | 112 | README.md section #7 |  |  | 0.588 |
+| walker |  | 8025 | 56 | rust decl sps/src/pipeline/runner.rs:980 |  |  | 0.588 |
+| walker |  | 8098 | 73 | rust names sps-common/src/dependency/definition.rs |  |  | 0.588 |
+| walker |  | 8114 | 16 | rust decl sps-common/src/dependency/definition.rs:18 |  |  | 0.588 |
+| walker |  | 8146 | 32 | rust decl sps-common/src/dependency/definition.rs:24 |  |  | 0.588 |
+| walker |  | 8195 | 49 | rust decl sps-common/src/dependency/definition.rs:37 |  |  | 0.588 |
+| walker |  | 8247 | 52 | rust decl sps-common/src/dependency/definition.rs:30 |  |  | 0.588 |
+| ns | 8300 |  | 343 | Installed-package discovery: InstalledKeg, KegRegistry, Cache, Formulary | 4.10 |  | 0.581 |
+| walker |  | 8308 | 61 | rust decl sps-common/src/dependency/definition.rs:53 |  |  | 0.581 |
+| walker |  | 8381 | 73 | rust names sps-core/src/utils/applescript.rs |  |  | 0.581 |
+| ns | 8439 |  | 139 | Bottle install path: download, platform check, install, link, Mach-O patch | 5.1 |  | 0.577 |
+| walker |  | 8451 | 70 | rust decl sps-common/src/dependency/definition.rs:59 |  |  | 0.577 |
+| walker |  | 8526 | 75 | rust names sps-core/src/install/devtools.rs |  |  | 0.577 |
+| walker |  | 8601 | 75 | rust names sps-core/src/upgrade/mod.rs |  |  | 0.582 |
+| ns | 8668 |  | 229 | Cask install path: private store, download, install_cask, manifests, DMG handling | 5.2 |  | 0.575 |
+| walker |  | 8673 | 72 | rust decl sps-core/src/check/update.rs:22 |  |  | 0.575 |
+| walker |  | 8803 | 130 | rust names sps-common/src/error.rs |  |  | 0.575 |
+| ns | 8815 |  | 147 | CaskInstallManifest: the on-disk record of a cask install | 5.3 |  | 0.571 |
+| walker |  | 8825 | 22 | rust decl sps-common/src/error.rs:95 |  |  | 0.571 |
+| walker |  | 8847 | 22 | rust decl sps-common/src/error.rs:101 |  |  | 0.571 |
+| walker |  | 8869 | 22 | rust decl sps-common/src/error.rs:107 |  |  | 0.571 |
+| walker |  | 8892 | 23 | rust decl sps-common/src/error.rs:89 |  |  | 0.571 |
+| walker |  | 8915 | 23 | rust decl sps-common/src/error.rs:113 |  |  | 0.571 |
+| walker |  | 8992 | 77 | rust names sps-core/src/uninstall/mod.rs |  |  | 0.580 |
+| ns | 9065 |  | 250 | Installed / outdated checks | 5.4 |  | 0.573 |
+| ns | 9224 |  | 159 | Archive extraction, toolchain discovery and macOS-only helpers | 5.5 |  | 0.572 |
+| walker |  | 9232 | 240 | rust names sps/src/cli/search.rs |  |  | 0.573 |
+| walker |  | 9257 | 25 | rust decl sps/src/cli/search.rs:23 |  |  | 0.573 |
+| walker |  | 9289 | 32 | rust decl sps/src/cli/search.rs:29 |  |  | 0.573 |
+| walker |  | 9341 | 52 | rust decl sps/src/cli/search.rs:42 |  |  | 0.573 |
+| walker |  | 9417 | 76 | rust decl sps/src/cli/search.rs:14 |  |  | 0.584 |
+| ns | 9471 |  | 247 | Network endpoints, user agents and timeouts | 6.1 |  | 0.580 |
+| walker |  | 9501 | 84 | rust names sps-core/src/build/env.rs |  |  | 0.580 |
+| walker |  | 9581 | 80 | rust decl sps-core/src/upgrade/source.rs:19 |  |  | 0.580 |
+| ns | 9587 |  | 116 | Progress-reporting download variants and the raw JSON fetchers | 6.2 |  | 0.577 |
+| walker |  | 9695 | 114 | [package] in sps-common/Cargo.toml |  |  | 0.578 |
+| ns | 9701 |  | 114 | Source builds: the seven build-system drivers and build_from_source | 7.1 |  | 0.574 |
+| ns | 9772 |  | 71 | BuildEnvironment: the sanitized superenv-style build environment | 7.2 |  | 0.572 |
+| walker |  | 9809 | 114 | [package] in sps-core/Cargo.toml |  |  | 0.574 |
+| ns | 9816 |  | 44 | Remaining directories: crate roots and .github | 8.1 |  | 0.578 |
+| walker |  | 9923 | 114 | [package] in sps-net/Cargo.toml |  |  | 0.580 |
+| walker |  | 9978 | 55 | rust decl sps-core/src/build/compile/cmake.rs:13 |  |  | 0.576 |
+| ns | 9978 |  | 162 | Contributor workflow: the exact check, format, lint and test commands | 8.2 |  | 0.576 |

@@ -20,8 +20,8 @@ use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::render::Source;
 use crate::value::{
-    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
-    manifest_identity_value, manifest_operational_value,
+    dependency_roster_value, manifest_appendix_value, manifest_identity_value,
+    manifest_operational_value,
 };
 
 use super::workspace::{
@@ -30,7 +30,7 @@ use super::workspace::{
 };
 use super::{
     FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_any_extension,
-    gated_whole_file_content, lines_content_tokens, path_depth_factor, single_file_lines_content,
+    gated_whole_file_content, path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
@@ -136,60 +136,44 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     };
     let pairs = top_level_pairs(&tree, &source);
     let mut sections = Vec::new();
-    // `mass_graded` marks the dependency rosters, the one section class
-    // whose value stops tracking its size — see
-    // `crate::value::dependency_table_mass_factor`.
-    let mut collect =
-        |key: JsonKey, value: f64, name_match: fn(&str) -> bool, mass_graded: bool| {
-            let Some(content) = section_content(file, &source, &pairs, name_match) else {
-                return;
-            };
-            let grade = if mass_graded {
-                dependency_table_mass_factor(lines_content_tokens(&source, &content))
-            } else {
-                1.0
-            };
-            sections.push((key, content, value * grade));
-        };
+    let mut collect = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
+        if let Some(content) = section_content(file, &source, &pairs, name_match) {
+            sections.push((key, content, value));
+        }
+    };
     let f = file.to_path_buf();
     collect(
         JsonKey::Identity { file: f.clone() },
         identity_value(file, ctx),
         is_identity_key,
-        false,
     );
     collect(
         JsonKey::Entry { file: f.clone() },
         manifest_operational_value(manifest_depth_factor(file, ctx))
             * secondary_package_json_factor(file),
         is_entry_key,
-        false,
     );
     collect(
         JsonKey::Runtime { file: f.clone() },
         manifest_operational_value(manifest_depth_factor(file, ctx))
             * secondary_package_json_factor(file),
         is_runtime_key,
-        false,
     );
     collect(
         JsonKey::Scripts { file: f.clone() },
         manifest_operational_value(manifest_depth_factor(file, ctx))
             * secondary_package_json_factor(file),
         is_scripts_key,
-        false,
     );
     collect(
         JsonKey::Dependencies { file: f.clone() },
         dependencies_value(file, ctx),
         is_runtime_dependencies_key,
-        true,
     );
     collect(
         JsonKey::IdentityMeta { file: f.clone() },
         manifest_appendix_value(path_depth_factor(file, ctx)) * secondary_package_json_factor(file),
         is_identity_meta_key,
-        false,
     );
     let overlap_chain = package_sections_share_lines(&pairs);
     // The collect() calls above push Identity first, so it can only be

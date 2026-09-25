@@ -1,4 +1,4 @@
-Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.530/0.420/0.532
+Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.516/0.420/0.532
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -60,36 +60,36 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 2911 | 12 | listing of 'test/support' |  |  | 0.666 |
 | walker |  | 2950 | 39 | ts doc lib/utils.js:29 |  |  | 0.666 |
 | ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.624 |
-| walker |  | 2992 | 42 | ts doc lib/express.js:36 |  |  | 0.624 |
-| walker |  | 3037 | 45 | ts body lib/utils.js:61 |  |  | 0.624 |
-| walker |  | 3085 | 48 | ts doc lib/view.js:104 |  |  | 0.624 |
 | ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.599 |
-| walker |  | 3143 | 58 | ts doc lib/view.js:133 |  |  | 0.599 |
-| walker |  | 3203 | 60 | ts doc lib/view.js:169 |  |  | 0.599 |
-| walker |  | 3266 | 63 | ts doc lib/utils.js:162 |  |  | 0.599 |
-| walker |  | 3352 | 86 | listing of 'test/acceptance' |  |  | 0.600 |
-| ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.574 |
-| walker |  | 3375 | 23 | Readme.md section #19 |  |  | 0.574 |
-| walker |  | 3398 | 23 | Readme.md section #30 |  |  | 0.574 |
-| walker |  | 3422 | 24 | Readme.md section #12 |  |  | 0.574 |
-| walker |  | 3446 | 24 | Readme.md section #32 |  |  | 0.574 |
-| walker |  | 3471 | 25 | Readme.md section #18 |  |  | 0.574 |
-| walker |  | 3553 | 82 | Readme.md section #7 |  |  | 0.574 |
+| ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.572 |
+| walker |  | 3410 | 460 | package runtime dependencies in package.json |  |  | 0.574 |
+| walker |  | 3452 | 42 | ts doc lib/express.js:36 |  |  | 0.574 |
+| walker |  | 3497 | 45 | ts body lib/utils.js:61 |  |  | 0.574 |
+| walker |  | 3545 | 48 | ts doc lib/view.js:104 |  |  | 0.574 |
 | ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
-| walker |  | 3579 | 26 | Readme.md section #23 |  |  | 0.556 |
-| walker |  | 3604 | 25 | Readme.md section #24 |  |  | 0.556 |
+| walker |  | 3603 | 58 | ts doc lib/view.js:133 |  |  | 0.556 |
+| walker |  | 3663 | 60 | ts doc lib/view.js:169 |  |  | 0.556 |
 | ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.544 |
-| walker |  | 3944 | 340 | package identity metadata in package.json |  |  | 0.561 |
-| walker |  | 3971 | 27 | Readme.md section #13 |  |  | 0.561 |
-| ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.542 |
-| walker |  | 3997 | 26 | Readme.md section #14 |  |  | 0.542 |
-| walker |  | 4024 | 27 | Readme.md section #15 |  |  | 0.542 |
-| walker |  | 4050 | 26 | Readme.md section #16 |  |  | 0.542 |
-| walker |  | 4075 | 25 | Readme.md section #17 |  |  | 0.542 |
-| ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.530 |
-| ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.517 |
-| ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.507 |
-| walker |  | 4533 | 458 | package runtime dependencies in package.json |  |  | 0.509 |
+| walker |  | 3726 | 63 | ts doc lib/utils.js:162 |  |  | 0.544 |
+| walker |  | 3812 | 86 | listing of 'test/acceptance' |  |  | 0.545 |
+| walker |  | 3835 | 23 | Readme.md section #19 |  |  | 0.545 |
+| walker |  | 3858 | 23 | Readme.md section #30 |  |  | 0.545 |
+| walker |  | 3882 | 24 | Readme.md section #12 |  |  | 0.545 |
+| walker |  | 3906 | 24 | Readme.md section #32 |  |  | 0.545 |
+| walker |  | 3931 | 25 | Readme.md section #18 |  |  | 0.545 |
+| ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.527 |
+| walker |  | 4013 | 82 | Readme.md section #7 |  |  | 0.527 |
+| ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.516 |
+| ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.503 |
+| walker |  | 4351 | 338 | package identity metadata in package.json |  |  | 0.519 |
+| walker |  | 4377 | 26 | Readme.md section #23 |  |  | 0.519 |
+| walker |  | 4402 | 25 | Readme.md section #24 |  |  | 0.519 |
+| walker |  | 4429 | 27 | Readme.md section #13 |  |  | 0.519 |
+| walker |  | 4455 | 26 | Readme.md section #14 |  |  | 0.519 |
+| ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.509 |
+| walker |  | 4482 | 27 | Readme.md section #15 |  |  | 0.509 |
+| walker |  | 4508 | 26 | Readme.md section #16 |  |  | 0.509 |
+| walker |  | 4533 | 25 | Readme.md section #17 |  |  | 0.509 |
 | walker |  | 4571 | 38 | ts body lib/request.js:214 |  |  | 0.509 |
 | walker |  | 4628 | 57 | ts doc lib/response.js:696 |  |  | 0.509 |
 | walker |  | 4656 | 28 | Readme.md section #22 |  |  | 0.509 |

@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.570/0.789/0.765/0.684/0.642
+Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.570/0.789/0.765/0.703/0.642
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -236,66 +236,66 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 5479 | 44 | declaration surface of client/pages/login.vue |  |  | 0.724 |
 | ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.707 |
 | walker |  | 5523 | 44 | declaration surface of client/pages/oops.vue |  |  | 0.707 |
-| walker |  | 5557 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.707 |
-| walker |  | 5704 | 147 | listing of 'client/components/modals' |  |  | 0.707 |
-| walker |  | 5709 | 5 | listing of 'client/components/modals/authors' |  |  | 0.707 |
-| walker |  | 5714 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.707 |
-| walker |  | 5719 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.707 |
-| walker |  | 5725 | 6 | listing of 'client/components/modals/notification' |  |  | 0.707 |
-| walker |  | 5733 | 8 | listing of 'client/components/modals/item' |  |  | 0.707 |
-| walker |  | 5745 | 12 | listing of 'client/components/modals/player' |  |  | 0.707 |
-| walker |  | 5757 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.707 |
-| walker |  | 5772 | 15 | listing of 'client/components/modals/emails' |  |  | 0.707 |
-| walker |  | 5788 | 16 | listing of 'client/components/modals/collections' |  |  | 0.707 |
-| walker |  | 5805 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.707 |
-| walker |  | 5840 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.707 |
-| walker |  | 5850 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.707 |
-| walker |  | 5887 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.707 |
-| ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.691 |
-| walker |  | 5919 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.691 |
-| walker |  | 5974 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.691 |
-| walker |  | 5978 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.691 |
-| walker |  | 5985 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.691 |
-| walker |  | 6003 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.691 |
-| walker |  | 6042 | 39 | ts names server/libs/jws/lib/sign-stream.js |  |  | 0.691 |
-| walker |  | 6081 | 39 | ts names server/libs/jws/lib/verify-stream.js |  |  | 0.691 |
-| walker |  | 6108 | 27 | listing of 'test/server' |  |  | 0.693 |
-| ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.682 |
-| walker |  | 6130 | 22 | listing of 'test/server/managers' |  |  | 0.684 |
-| walker |  | 6284 | 154 | listing of 'client/components/ui' |  |  | 0.687 |
-| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.673 |
-| walker |  | 6603 | 319 | headings outline in readme.md |  |  | 0.680 |
-| walker |  | 6603 | 0 | readme.md section #49 |  |  | 0.680 |
-| walker |  | 6626 | 23 | readme.md section #50 |  |  | 0.680 |
-| walker |  | 6640 | 14 | readme.md section #9 |  |  | 0.680 |
-| walker |  | 6653 | 13 | readme.md section #8 |  |  | 0.681 |
-| walker |  | 6668 | 15 | readme.md section #2 |  |  | 0.682 |
-| walker |  | 6683 | 15 | readme.md section #4 |  |  | 0.683 |
-| walker |  | 6698 | 15 | readme.md section #3 |  |  | 0.685 |
-| walker |  | 6713 | 15 | readme.md section #5 |  |  | 0.687 |
-| walker |  | 6728 | 15 | readme.md section #10 |  |  | 0.687 |
-| walker |  | 6742 | 14 | readme.md section #11 |  |  | 0.688 |
-| walker |  | 6776 | 34 | readme.md section #24 |  |  | 0.688 |
-| walker |  | 6792 | 16 | readme.md section #16 |  |  | 0.688 |
-| walker |  | 6809 | 17 | readme.md section #14 |  |  | 0.690 |
-| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.675 |
-| walker |  | 6825 | 16 | readme.md section #13 |  |  | 0.677 |
-| walker |  | 6853 | 28 | readme.md section #71 |  |  | 0.677 |
-| walker |  | 6871 | 18 | readme.md section #7 |  |  | 0.679 |
-| walker |  | 6888 | 17 | readme.md section #6 |  |  | 0.682 |
-| walker |  | 6900 | 12 | readme.md section #63 |  |  | 0.682 |
-| walker |  | 6922 | 22 | readme.md section #18 |  |  | 0.682 |
-| walker |  | 6946 | 24 | readme.md section #12 |  |  | 0.684 |
-| ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.676 |
-| walker |  | 7020 | 74 | readme.md section #23 |  |  | 0.676 |
-| walker |  | 7040 | 20 | readme.md section #46 |  |  | 0.676 |
-| walker |  | 7072 | 32 | readme.md section #17 |  |  | 0.676 |
-| ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.673 |
-| walker |  | 7105 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.673 |
-| walker |  | 7138 | 33 | listing of 'test/server/utils' |  |  | 0.676 |
-| walker |  | 7161 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.679 |
-| ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.674 |
-| walker |  | 7506 | 345 | package runtime dependencies in package.json |  |  | 0.695 |
+| walker |  | 5868 | 345 | package runtime dependencies in package.json |  |  | 0.730 |
+| ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.714 |
+| walker |  | 5902 | 34 | listing of 'server/libs/archiver/compress-commons/archivers/zip' |  |  | 0.714 |
+| walker |  | 6049 | 147 | listing of 'client/components/modals' |  |  | 0.714 |
+| walker |  | 6054 | 5 | listing of 'client/components/modals/authors' |  |  | 0.714 |
+| walker |  | 6059 | 5 | listing of 'client/components/modals/bookmarks' |  |  | 0.714 |
+| walker |  | 6064 | 5 | listing of 'client/components/modals/changelog' |  |  | 0.714 |
+| walker |  | 6070 | 6 | listing of 'client/components/modals/notification' |  |  | 0.714 |
+| walker |  | 6078 | 8 | listing of 'client/components/modals/item' |  |  | 0.714 |
+| walker |  | 6090 | 12 | listing of 'client/components/modals/player' |  |  | 0.714 |
+| walker |  | 6102 | 12 | listing of 'client/components/modals/rssfeed' |  |  | 0.714 |
+| walker |  | 6117 | 15 | listing of 'client/components/modals/emails' |  |  | 0.714 |
+| ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.703 |
+| walker |  | 6133 | 16 | listing of 'client/components/modals/collections' |  |  | 0.703 |
+| walker |  | 6150 | 17 | listing of 'client/components/modals/playlists' |  |  | 0.703 |
+| walker |  | 6185 | 35 | listing of 'client/components/modals/podcast' |  |  | 0.703 |
+| walker |  | 6195 | 10 | listing of 'client/components/modals/podcast/tabs' |  |  | 0.703 |
+| walker |  | 6232 | 37 | listing of 'client/components/modals/libraries' |  |  | 0.703 |
+| walker |  | 6264 | 32 | listing of 'client/components/modals/item/tabs' |  |  | 0.703 |
+| walker |  | 6319 | 55 | listing of 'server/libs/archiver/archiverUtils/readableStream' |  |  | 0.703 |
+| walker |  | 6323 | 4 | listing of 'server/libs/archiver/archiverUtils/readableStream/stream' |  |  | 0.703 |
+| walker |  | 6330 | 7 | listing of 'server/libs/archiver/archiverUtils/readableStream/internal' |  |  | 0.703 |
+| walker |  | 6348 | 18 | listing of 'server/libs/archiver/archiverUtils/readableStream/ours' |  |  | 0.703 |
+| walker |  | 6387 | 39 | ts names server/libs/jws/lib/sign-stream.js |  |  | 0.703 |
+| walker |  | 6426 | 39 | ts names server/libs/jws/lib/verify-stream.js |  |  | 0.703 |
+| walker |  | 6453 | 27 | listing of 'test/server' |  |  | 0.704 |
+| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.690 |
+| walker |  | 6475 | 22 | listing of 'test/server/managers' |  |  | 0.692 |
+| walker |  | 6629 | 154 | listing of 'client/components/ui' |  |  | 0.695 |
+| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.680 |
+| walker |  | 6948 | 319 | headings outline in readme.md |  |  | 0.687 |
+| walker |  | 6948 | 0 | readme.md section #49 |  |  | 0.687 |
+| walker |  | 6971 | 23 | readme.md section #50 |  |  | 0.687 |
+| walker |  | 6985 | 14 | readme.md section #9 |  |  | 0.679 |
+| ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.679 |
+| walker |  | 6998 | 13 | readme.md section #8 |  |  | 0.680 |
+| walker |  | 7013 | 15 | readme.md section #2 |  |  | 0.681 |
+| walker |  | 7028 | 15 | readme.md section #4 |  |  | 0.682 |
+| walker |  | 7043 | 15 | readme.md section #3 |  |  | 0.684 |
+| walker |  | 7058 | 15 | readme.md section #5 |  |  | 0.686 |
+| walker |  | 7073 | 15 | readme.md section #10 |  |  | 0.686 |
+| walker |  | 7087 | 14 | readme.md section #11 |  |  | 0.686 |
+| ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.682 |
+| walker |  | 7121 | 34 | readme.md section #24 |  |  | 0.682 |
+| walker |  | 7137 | 16 | readme.md section #16 |  |  | 0.683 |
+| walker |  | 7154 | 17 | readme.md section #14 |  |  | 0.685 |
+| walker |  | 7170 | 16 | readme.md section #13 |  |  | 0.686 |
+| walker |  | 7198 | 28 | readme.md section #71 |  |  | 0.686 |
+| walker |  | 7216 | 18 | readme.md section #7 |  |  | 0.689 |
+| walker |  | 7233 | 17 | readme.md section #6 |  |  | 0.691 |
+| walker |  | 7245 | 12 | readme.md section #63 |  |  | 0.691 |
+| walker |  | 7267 | 22 | readme.md section #18 |  |  | 0.691 |
+| walker |  | 7291 | 24 | readme.md section #12 |  |  | 0.694 |
+| ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.688 |
+| walker |  | 7365 | 74 | readme.md section #23 |  |  | 0.688 |
+| walker |  | 7385 | 20 | readme.md section #46 |  |  | 0.688 |
+| walker |  | 7417 | 32 | readme.md section #17 |  |  | 0.688 |
+| walker |  | 7450 | 33 | listing of 'client/cypress/tests/components/cards' |  |  | 0.688 |
+| walker |  | 7483 | 33 | listing of 'test/server/utils' |  |  | 0.692 |
+| walker |  | 7506 | 23 | listing of 'test/server/utils/parsers' |  |  | 0.695 |
 | walker |  | 7527 | 21 | readme.md section #39 |  |  | 0.695 |
 | walker |  | 7565 | 38 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib' |  |  | 0.695 |
 | walker |  | 7568 | 3 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal' |  |  | 0.695 |

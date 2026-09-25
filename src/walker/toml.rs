@@ -27,14 +27,14 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::render::Source;
 use crate::value::{
-    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
-    manifest_identity_value, manifest_operational_value,
+    dependency_roster_value, manifest_appendix_value, manifest_identity_value,
+    manifest_operational_value,
 };
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, lines_content_tokens,
-    path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
+    single_file_lines_content,
 };
 
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
@@ -117,8 +117,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             dependency_rows.extend(pep621_dependency_array_rows(&pairs));
         }
         if let Some(content) = rows_content(&file, &source, dependency_rows) {
-            let value = dependency_roster_value(file.parent() == Some(ctx.root()), depth)
-                * dependency_table_mass_factor(lines_content_tokens(&source, &content));
+            let value = dependency_roster_value(file.parent() == Some(ctx.root()), depth);
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,

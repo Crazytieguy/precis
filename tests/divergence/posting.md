@@ -1,4 +1,4 @@
-Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.725/0.699/0.621/0.563/0.564/0.600
+Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.725/0.699/0.621/0.592/0.564/0.600
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -128,27 +128,27 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 3892 |  | 178 | Settings keys, part 2 | 4.3 | 4.2 | 0.581 |
 | walker |  | 3911 | 30 | python names src/posting/widgets/request/request_editor.py |  |  | 0.581 |
 | walker |  | 3916 | 5 | python decl src/posting/widgets/request/request_editor.py:29 |  |  | 0.581 |
-| walker |  | 3925 | 9 | python doc src/posting/help_screen.py:33 |  |  | 0.581 |
-| walker |  | 3956 | 31 | python names src/posting/widgets/request/request_body.py |  |  | 0.581 |
-| walker |  | 3971 | 15 | python decl src/posting/widgets/request/request_body.py:12 |  |  | 0.581 |
-| walker |  | 4021 | 50 | README.md section #3 |  |  | 0.581 |
-| walker |  | 4106 | 85 | python names src/posting/locations.py |  |  | 0.584 |
-| walker |  | 4118 | 12 | python body src/posting/locations.py:34 |  |  | 0.586 |
-| walker |  | 4131 | 13 | python body src/posting/locations.py:24 |  |  | 0.586 |
-| walker |  | 4181 | 50 | python names src/posting/widgets/key_value_copy_modal.py |  |  | 0.586 |
-| walker |  | 4195 | 14 | python doc src/posting/locations.py:24 |  |  | 0.589 |
-| walker |  | 4243 | 48 | python decl src/posting/widgets/input.py:9 |  |  | 0.589 |
-| ns | 4250 |  | 358 | Configuration precedence and guide section map | 4.4 |  | 0.563 |
-| walker |  | 4251 | 8 | python decl src/posting/widgets/input.py:18 |  |  | 0.563 |
-| walker |  | 4282 | 31 | python decl src/posting/widgets/request/query_editor.py:49 |  |  | 0.563 |
-| walker |  | 4290 | 8 | python decl src/posting/widgets/request/query_editor.py:65 |  |  | 0.563 |
-| ns | 4526 |  | 276 | app.py class roster and MainScreen reactive state | 5.1 |  | 0.551 |
-| walker |  | 4547 | 257 | README.md section #0 |  |  | 0.612 |
-| walker |  | 4561 | 14 | python body src/posting/locations.py:12 |  |  | 0.612 |
-| walker |  | 4652 | 91 | python names src/posting/files.py |  |  | 0.612 |
-| walker |  | 4660 | 8 | python body src/posting/auth.py:7 |  |  | 0.612 |
-| ns | 4716 |  | 190 | Main screen keybindings, part 1 | 5.2 | 5.1 | 0.595 |
-| walker |  | 4958 | 298 | [dependencies] in pyproject.toml |  |  | 0.630 |
+| walker |  | 4214 | 298 | [dependencies] in pyproject.toml |  |  | 0.619 |
+| walker |  | 4223 | 9 | python doc src/posting/help_screen.py:33 |  |  | 0.619 |
+| ns | 4250 |  | 358 | Configuration precedence and guide section map | 4.4 |  | 0.591 |
+| walker |  | 4254 | 31 | python names src/posting/widgets/request/request_body.py |  |  | 0.592 |
+| walker |  | 4269 | 15 | python decl src/posting/widgets/request/request_body.py:12 |  |  | 0.592 |
+| walker |  | 4319 | 50 | README.md section #3 |  |  | 0.592 |
+| walker |  | 4404 | 85 | python names src/posting/locations.py |  |  | 0.595 |
+| walker |  | 4416 | 12 | python body src/posting/locations.py:34 |  |  | 0.596 |
+| walker |  | 4429 | 13 | python body src/posting/locations.py:24 |  |  | 0.596 |
+| walker |  | 4479 | 50 | python names src/posting/widgets/key_value_copy_modal.py |  |  | 0.596 |
+| walker |  | 4493 | 14 | python doc src/posting/locations.py:24 |  |  | 0.599 |
+| ns | 4526 |  | 276 | app.py class roster and MainScreen reactive state | 5.1 |  | 0.587 |
+| walker |  | 4541 | 48 | python decl src/posting/widgets/input.py:9 |  |  | 0.587 |
+| walker |  | 4549 | 8 | python decl src/posting/widgets/input.py:18 |  |  | 0.587 |
+| walker |  | 4580 | 31 | python decl src/posting/widgets/request/query_editor.py:49 |  |  | 0.587 |
+| walker |  | 4588 | 8 | python decl src/posting/widgets/request/query_editor.py:65 |  |  | 0.587 |
+| ns | 4716 |  | 190 | Main screen keybindings, part 1 | 5.2 | 5.1 | 0.571 |
+| walker |  | 4845 | 257 | README.md section #0 |  |  | 0.630 |
+| walker |  | 4859 | 14 | python body src/posting/locations.py:12 |  |  | 0.630 |
+| walker |  | 4950 | 91 | python names src/posting/files.py |  |  | 0.630 |
+| walker |  | 4958 | 8 | python body src/posting/auth.py:7 |  |  | 0.630 |
 | ns | 4962 |  | 246 | Main screen keybindings, part 2 | 5.3 | 5.2 | 0.609 |
 | walker |  | 5018 | 60 | python names src/posting/widgets/select.py |  |  | 0.609 |
 | walker |  | 5121 | 103 | python names src/posting/urls.py |  |  | 0.609 |

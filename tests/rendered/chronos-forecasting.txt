@@ -56,6 +56,41 @@ pyproject.toml
   13→readme = "README.md"
   14→license = { file = "LICENSE" }
   15→requires-python = ">=3.10"
+  16→dependencies = [
+  17→  "torch>=2.2,<3",
+  18→  "transformers>=4.41,<5",
+  19→  "accelerate>=0.34,<2",
+  20→  "numpy>=1.21,<3",
+  21→  "einops>=0.7.0,<1",
+  22→  "scikit-learn>=1.6.0,<2",
+  23→]
+  …
+  41→[project.optional-dependencies]
+  42→extras = [
+  43→  "boto3>=1.10,<2",
+  44→  "peft>=0.13.0,<0.18",
+  45→  "fev>=0.6.1",
+  46→  "pandas[pyarrow]>=2.0,<2.4",
+  47→]
+  48→test = [
+  49→  "pytest~=8.0",
+  50→  "boto3>=1.10,<2",
+  51→  "peft>=0.13.0,<1",
+  52→  "fev>=0.6.1",
+  53→  "pandas[pyarrow]>=2.0,<2.4",
+  54→]
+  55→typecheck = ["mypy~=1.9"]
+  56→dev = [
+  57→  "gluonts[pro]~=0.16",
+  58→  "datasets>=3.0,<4",
+  59→  "typer",
+  60→  "tensorboard",
+  61→  "typer-config",
+  62→  "joblib",
+  63→  "fev>=0.6.1",
+  64→  "rich",
+  65→  "pandas>=2.0,<2.4",
+  66→]
   …
 scripts/
   README.md
@@ -108,30 +143,6 @@ src/
       44→class BaseChronosPipeline(metaclass=PipelineRegistry):
       …
     boto_utils.py
-      …
-      18→logger = logging.getLogger(__name__)
-      19→
-      20→MODEL_FILENAMES = ["config.json", "model.safetensors", "LICENSE.txt"]
-      21→CLOUDFRONT_MAPPING = {"s3://autogluon/chronos-2": "https://d7057vjasule5.cloudfront.net"}
-      22→CHUNK_SIZE = 1024 * 1024  # 1MB
-      23→
-      24→
-      25→def download_model_files_from_cloudfront(
-      26→    cloudfront_url: str,
-      27→    bucket: str,
-      28→    prefix: str,
-      29→    local_path: Path,
-      30→    force_download: bool = False,
-      31→) -> None:
-      …
-      53→def download_model_files_from_s3(
-      …
-      98→def cache_model_from_s3(
-      99→    s3_uri: str,
-      100→    force_download: bool = False,
-      101→    boto3_session: boto3.Session | None = None,
-      102→):
-      …
     chronos.py
       …
       24→logger = logging.getLogger(__file__)
@@ -150,17 +161,6 @@ src/
       131→    def output_transform(self, samples: torch.Tensor, tokenizer_state: Any) -> torch.Tensor:
       …
       154→class MeanScaleUniformBins(ChronosTokenizer):
-      155→    def __init__(self, low_limit: float, high_limit: float, config: ChronosConfig) -> None:
-      …
-      170→    def _input_transform(
-      …
-      198→    def _append_eos_token(
-      …
-      209→    def context_input_transform(self, context: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-      …
-      222→    def label_input_transform(self, label: torch.Tensor, scale: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-      …
-      233→    def output_transform(self, samples: torch.Tensor, scale: torch.Tensor) -> torch.Tensor:
       …
       243→class ChronosModel(nn.Module):
       …

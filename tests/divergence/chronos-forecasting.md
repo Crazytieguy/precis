@@ -1,4 +1,4 @@
-Score(3000)=0.375 I=0.561 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.630/0.563/0.393/0.375/0.367/0.520/0.554
+Score(3000)=0.375 I=0.560 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.630/0.563/0.393/0.375/0.327/0.520/0.554
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -61,45 +61,45 @@ Score(3000)=0.375 I=0.561 C=0.251 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | walker |  | 2202 | 76 | python decl src/chronos/chronos_bolt.py:71 |  |  | 0.386 |
 | walker |  | 2250 | 48 | python decl src/chronos/chronos_bolt.py:81 |  |  | 0.386 |
 | ns | 2354 |  | 181 | `ChronosConfig` complete field list | 2.7 |  | 0.366 |
-| walker |  | 2433 | 183 | package metadata in pyproject.toml |  |  | 0.366 |
 | ns | 2541 |  | 187 | `ChronosBoltConfig` and `ChronosBoltOutput` complete field lists | 2.8 |  | 0.397 |
-| walker |  | 2568 | 135 | python decl src/chronos/df_utils.py:199 |  |  | 0.398 |
-| walker |  | 2712 | 144 | python decl src/chronos/chronos.py:154 |  |  | 0.399 |
-| ns | 2720 |  | 179 | `Chronos2ForecastingConfig` fields + `editable_fields` | 2.9 |  | 0.384 |
-| ns | 2841 |  | 121 | `BaseChronosPipeline.from_pretrained` signature + docstring | 2.10 | 2.1 | 0.374 |
-| walker |  | 2866 | 154 | python names src/chronos/boto_utils.py |  |  | 0.374 |
-| walker |  | 2911 | 45 | python decl src/chronos/boto_utils.py:98 |  |  | 0.375 |
-| walker |  | 2970 | 59 | python decl src/chronos/boto_utils.py:25 |  |  | 0.375 |
-| walker |  | 3035 | 65 | python decl src/chronos/boto_utils.py:53 |  |  | 0.375 |
-| ns | 3115 |  | 274 | `from_pretrained` dispatch body: the `PipelineRegistry` mechanism | 2.11 | 2.10 | 0.359 |
-| walker |  | 3128 | 93 | python names src/chronos/chronos2/model.py |  |  | 0.359 |
-| walker |  | 3157 | 29 | python decl src/chronos/chronos2/model.py:38 |  |  | 0.359 |
-| walker |  | 3214 | 57 | python decl src/chronos/chronos2/model.py:31 |  |  | 0.359 |
+| walker |  | 2676 | 426 | [dependencies] in pyproject.toml |  |  | 0.399 |
+| ns | 2720 |  | 179 | `Chronos2ForecastingConfig` fields + `editable_fields` | 2.9 |  | 0.383 |
+| ns | 2841 |  | 121 | `BaseChronosPipeline.from_pretrained` signature + docstring | 2.10 | 2.1 | 0.373 |
+| walker |  | 2859 | 183 | package metadata in pyproject.toml |  |  | 0.373 |
+| walker |  | 2994 | 135 | python decl src/chronos/df_utils.py:199 |  |  | 0.375 |
+| ns | 3115 |  | 274 | `from_pretrained` dispatch body: the `PipelineRegistry` mechanism | 2.11 | 2.10 | 0.358 |
+| walker |  | 3138 | 144 | python decl src/chronos/chronos.py:154 |  |  | 0.359 |
 | ns | 3223 |  | 108 | `chronos.chronos2` subpackage exports | 3.1 |  | 0.371 |
-| walker |  | 3277 | 63 | python decl src/chronos/chronos2/model.py:89 |  |  | 0.372 |
-| walker |  | 3347 | 70 | python decl src/chronos/chronos2/model.py:82 |  |  | 0.372 |
+| walker |  | 3292 | 154 | python names src/chronos/boto_utils.py |  |  | 0.372 |
+| walker |  | 3337 | 45 | python decl src/chronos/boto_utils.py:98 |  |  | 0.372 |
 | ns | 3355 |  | 132 | `Chronos2CoreConfig` declaration, docstring lede and HF attribute map | 3.2 |  | 0.364 |
-| walker |  | 3431 | 84 | python decl src/chronos/chronos2/model.py:190 |  |  | 0.364 |
-| ns | 3581 |  | 226 | `Chronos2CoreConfig.__init__` full hyperparameter defaults | 3.3 | 3.2 | 0.352 |
-| ns | 3720 |  | 139 | `Chronos2Pipeline.predict` full signature | 3.4 | 2.2 | 0.345 |
-| walker |  | 3899 | 468 | README.md section #0 |  |  | 0.345 |
-| walker |  | 3938 | 39 | README.md section #5 |  |  | 0.336 |
-| ns | 3938 |  | 218 | `Chronos2Pipeline.predict_df` signature | 3.5 | 2.2 | 0.336 |
-| walker |  | 3954 | 16 | python doc src/chronos/chronos2/trainer.py:30 |  |  | 0.336 |
-| walker |  | 4039 | 85 | python decl src/chronos/chronos_bolt.py:114 |  |  | 0.336 |
-| ns | 4183 |  | 245 | `Chronos2Pipeline.fit` signature — in-package fine-tuning | 3.6 | 2.2 | 0.325 |
-| walker |  | 4204 | 165 | python decl src/chronos/chronos_bolt.py:403 |  |  | 0.349 |
-| walker |  | 4212 | 8 | python decl src/chronos/chronos_bolt.py:411 |  |  | 0.352 |
-| walker |  | 4220 | 8 | python decl src/chronos/chronos_bolt.py:415 |  |  | 0.355 |
-| walker |  | 4228 | 8 | python decl src/chronos/chronos_bolt.py:419 |  |  | 0.359 |
-| walker |  | 4236 | 8 | python decl src/chronos/chronos_bolt.py:609 |  |  | 0.362 |
-| walker |  | 4285 | 49 | python decl src/chronos/chronos_bolt.py:423 |  |  | 0.367 |
-| walker |  | 4346 | 61 | python decl src/chronos/chronos_bolt.py:463 |  |  | 0.367 |
-| walker |  | 4444 | 98 | python decl src/chronos/chronos2/config.py:12 |  |  | 0.380 |
-| ns | 4510 |  | 327 | `chronos2/model.py` complete class + method roster | 3.7 |  | 0.377 |
-| ns | 4663 |  | 153 | `Chronos2Model.forward` full signature | 3.8 | 3.7 | 0.371 |
-| ns | 4847 |  | 184 | `chronos2/layers.py` complete class roster | 3.9 |  | 0.362 |
-| walker |  | 4870 | 426 | [dependencies] in pyproject.toml |  |  | 0.364 |
+| walker |  | 3396 | 59 | python decl src/chronos/boto_utils.py:25 |  |  | 0.364 |
+| walker |  | 3461 | 65 | python decl src/chronos/boto_utils.py:53 |  |  | 0.365 |
+| walker |  | 3554 | 93 | python names src/chronos/chronos2/model.py |  |  | 0.365 |
+| ns | 3581 |  | 226 | `Chronos2CoreConfig.__init__` full hyperparameter defaults | 3.3 | 3.2 | 0.353 |
+| walker |  | 3583 | 29 | python decl src/chronos/chronos2/model.py:38 |  |  | 0.353 |
+| walker |  | 3640 | 57 | python decl src/chronos/chronos2/model.py:31 |  |  | 0.353 |
+| walker |  | 3703 | 63 | python decl src/chronos/chronos2/model.py:89 |  |  | 0.353 |
+| ns | 3720 |  | 139 | `Chronos2Pipeline.predict` full signature | 3.4 | 2.2 | 0.346 |
+| walker |  | 3773 | 70 | python decl src/chronos/chronos2/model.py:82 |  |  | 0.346 |
+| walker |  | 3857 | 84 | python decl src/chronos/chronos2/model.py:190 |  |  | 0.346 |
+| ns | 3938 |  | 218 | `Chronos2Pipeline.predict_df` signature | 3.5 | 2.2 | 0.338 |
+| ns | 4183 |  | 245 | `Chronos2Pipeline.fit` signature — in-package fine-tuning | 3.6 | 2.2 | 0.327 |
+| walker |  | 4325 | 468 | README.md section #0 |  |  | 0.327 |
+| walker |  | 4364 | 39 | README.md section #5 |  |  | 0.327 |
+| walker |  | 4380 | 16 | python doc src/chronos/chronos2/trainer.py:30 |  |  | 0.327 |
+| walker |  | 4465 | 85 | python decl src/chronos/chronos_bolt.py:114 |  |  | 0.327 |
+| ns | 4510 |  | 327 | `chronos2/model.py` complete class + method roster | 3.7 |  | 0.328 |
+| walker |  | 4630 | 165 | python decl src/chronos/chronos_bolt.py:403 |  |  | 0.350 |
+| walker |  | 4638 | 8 | python decl src/chronos/chronos_bolt.py:411 |  |  | 0.353 |
+| walker |  | 4646 | 8 | python decl src/chronos/chronos_bolt.py:415 |  |  | 0.356 |
+| walker |  | 4654 | 8 | python decl src/chronos/chronos_bolt.py:419 |  |  | 0.359 |
+| walker |  | 4662 | 8 | python decl src/chronos/chronos_bolt.py:609 |  |  | 0.363 |
+| ns | 4663 |  | 153 | `Chronos2Model.forward` full signature | 3.8 | 3.7 | 0.357 |
+| walker |  | 4711 | 49 | python decl src/chronos/chronos_bolt.py:423 |  |  | 0.361 |
+| walker |  | 4772 | 61 | python decl src/chronos/chronos_bolt.py:463 |  |  | 0.361 |
+| ns | 4847 |  | 184 | `chronos2/layers.py` complete class roster | 3.9 |  | 0.352 |
+| walker |  | 4870 | 98 | python decl src/chronos/chronos2/config.py:12 |  |  | 0.364 |
 | walker |  | 5058 | 188 | python decl src/chronos/chronos_bolt.py:147 |  |  | 0.365 |
 | walker |  | 5106 | 48 | python decl src/chronos/chronos_bolt.py:240 |  |  | 0.365 |
 | ns | 5123 |  | 276 | `chronos2/dataset.py` complete top-level symbol roster | 3.10 |  | 0.355 |
