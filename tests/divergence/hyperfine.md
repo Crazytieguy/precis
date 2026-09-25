@@ -18,21 +18,21 @@ Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 266 | 35 | listing of 'src/export' |  |  | 0.546 |
 | walker |  | 274 | 8 | listing of '.github' |  |  | 0.547 |
 | walker |  | 279 | 5 | listing of '.github/workflows' |  |  | 0.548 |
-| walker |  | 318 | 39 | [features] in Cargo.toml |  |  | 0.548 |
 | ns | 343 |  | 82 | README feature list, first five bullets (rest elided) | 1.5 |  | 0.495 |
-| ns | 409 |  | 66 | README feature list, remaining bullets | 1.6 | 1.5 | 0.471 |
-| walker |  | 438 | 120 | rust names src/main.rs |  |  | 0.486 |
-| walker |  | 451 | 13 | rust module doc src/util/units.rs |  |  | 0.486 |
-| walker |  | 464 | 13 | rust names src/benchmark/benchmark_result.rs |  |  | 0.486 |
+| walker |  | 399 | 120 | rust names src/main.rs |  |  | 0.511 |
+| ns | 409 |  | 66 | README feature list, remaining bullets | 1.6 | 1.5 | 0.486 |
+| walker |  | 412 | 13 | rust module doc src/util/units.rs |  |  | 0.486 |
+| walker |  | 425 | 13 | rust names src/benchmark/benchmark_result.rs |  |  | 0.486 |
+| walker |  | 438 | 13 | rust names src/benchmark/timing_result.rs |  |  | 0.486 |
+| walker |  | 453 | 15 | rust names src/util/randomized_environment_offset.rs |  |  | 0.486 |
 | ns | 471 |  | 62 | src/benchmark/ and src/export/ listings (complete) | 1.7 |  | 0.519 |
-| walker |  | 477 | 13 | rust names src/benchmark/timing_result.rs |  |  | 0.519 |
-| walker |  | 492 | 15 | rust names src/util/randomized_environment_offset.rs |  |  | 0.519 |
 | ns | 549 |  | 78 | src/output/, src/parameter/, src/timer/, src/util/ listings (complete) | 1.8 |  | 0.537 |
-| walker |  | 608 | 116 | README headline in README.md |  |  | 0.537 |
-| walker |  | 626 | 18 | rust names src/export/tests.rs |  |  | 0.537 |
+| walker |  | 569 | 116 | README headline in README.md |  |  | 0.537 |
+| walker |  | 587 | 18 | rust names src/export/tests.rs |  |  | 0.537 |
+| walker |  | 606 | 19 | rust names src/parameter/tokenize.rs |  |  | 0.537 |
 | ns | 643 |  | 94 | src/main.rs: module declarations and the types the entry point imports | 1.9 |  | 0.544 |
-| walker |  | 794 | 168 | [package] in Cargo.toml |  |  | 0.918 |
-| walker |  | 813 | 19 | rust names src/parameter/tokenize.rs |  |  | 0.918 |
+| walker |  | 778 | 172 | [package] in Cargo.toml |  |  | 0.918 |
+| walker |  | 813 | 35 | [features] in Cargo.toml |  |  | 0.918 |
 | walker |  | 854 | 41 | rust names src/cli.rs |  |  | 0.918 |
 | walker |  | 875 | 21 | listing of 'tests' |  |  | 0.921 |
 | ns | 899 |  | 256 | src/main.rs: the run() pipeline | 1.10 | 1.9 | 0.806 |

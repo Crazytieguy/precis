@@ -1,4 +1,4 @@
-Score(3000)=0.509 I=0.833 C=0.311 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.657/0.698/0.622/0.509/0.486/0.536/0.523
+Score(3000)=0.509 I=0.833 C=0.311 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.657/0.677/0.622/0.509/0.486/0.536/0.523
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,16 +37,16 @@ Score(3000)=0.509 I=0.833 C=0.311 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | walker |  | 1057 | 81 | rust names build/probe.rs |  |  | 0.618 |
 | ns | 1222 |  | 186 | Display shorthand table: {var}, {0}, {var:?}, {0:?} | 2.3 |  | 0.591 |
 | walker |  | 1253 | 196 | README.md section #1 |  |  | 0.720 |
+| walker |  | 1282 | 29 | rust decl build/probe.rs:14 |  |  | 0.720 |
+| walker |  | 1311 | 29 | rust decl build/probe.rs:20 |  |  | 0.720 |
+| walker |  | 1341 | 30 | rust decl build/probe.rs:26 |  |  | 0.720 |
 | ns | 1404 |  | 182 | Details: #[from] generates From, with its field-count restriction | 2.4 |  | 0.675 |
-| walker |  | 1417 | 164 | [features] in Cargo.toml |  |  | 0.698 |
-| walker |  | 1446 | 29 | rust decl build/probe.rs:14 |  |  | 0.698 |
-| walker |  | 1475 | 29 | rust decl build/probe.rs:20 |  |  | 0.698 |
-| walker |  | 1505 | 30 | rust decl build/probe.rs:26 |  |  | 0.698 |
-| ns | 1557 |  | 153 | Details: source() from #[source] or a field named `source` | 2.5 |  | 0.672 |
-| walker |  | 1577 | 72 | listing of 'tests' |  |  | 0.674 |
-| walker |  | 1608 | 31 | rust body impl/src/lib.rs:39 |  |  | 0.690 |
-| walker |  | 1638 | 30 | rust names impl/src/fallback.rs |  |  | 0.690 |
-| walker |  | 1652 | 14 | rust body src/var.rs:6 |  |  | 0.690 |
+| walker |  | 1413 | 72 | listing of 'tests' |  |  | 0.677 |
+| walker |  | 1444 | 31 | rust body impl/src/lib.rs:39 |  |  | 0.694 |
+| walker |  | 1474 | 30 | rust names impl/src/fallback.rs |  |  | 0.694 |
+| walker |  | 1488 | 14 | rust body src/var.rs:6 |  |  | 0.694 |
+| ns | 1557 |  | 153 | Details: source() from #[source] or a field named `source` | 2.5 |  | 0.668 |
+| walker |  | 1652 | 164 | [features] in Cargo.toml |  |  | 0.690 |
 | ns | 1709 |  | 152 | Details: #[error(transparent)] forwarding | 2.6 |  | 0.656 |
 | walker |  | 1775 | 123 | manifest config in Cargo.toml |  |  | 0.656 |
 | walker |  | 1828 | 53 | [dependencies] in impl/Cargo.toml |  |  | 0.656 |

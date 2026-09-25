@@ -76,6 +76,13 @@ pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
     }
 }
 
+/// Value of the sections of a manifest that say how the package runs and
+/// ships: entrypoints, console scripts, feature flags, runtime
+/// constraints. Shared by every manifest format.
+pub fn manifest_operational_value(depth: f64) -> f64 {
+    mix_signals(0.55, 0.55, 0.45, depth)
+}
+
 /// Value of a manifest's appendix: author and URL metadata and every
 /// table no other section owns (build systems, profiles, lints, tool
 /// config). Shared by every manifest format.

@@ -5,12 +5,12 @@ Score(3000)=0.601 I=0.823 C=0.438 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 34 | 34 | listing of '.' |  |  | 0.000 |
 | walker |  | 83 | 49 | listing of 'src' |  |  | 0.000 |
 | ns | 85 |  | 85 | Crate identity — name, version, description | 1.1 |  | 0.000 |
-| walker |  | 110 | 27 | [features] in Cargo.toml |  |  | 0.000 |
-| walker |  | 118 | 8 | listing of '.github' |  |  | 0.000 |
+| walker |  | 91 | 8 | listing of '.github' |  |  | 0.000 |
+| walker |  | 95 | 4 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 119 |  | 34 | Repository root listing | 1.2 |  | 0.523 |
-| walker |  | 122 | 4 | listing of '.github/workflows' |  |  | 0.523 |
-| ns | 168 |  | 49 | src/ module inventory | 1.3 |  | 0.545 |
-| walker |  | 189 | 67 | README headline in README.md |  |  | 0.549 |
+| walker |  | 162 | 67 | README headline in README.md |  |  | 0.527 |
+| ns | 168 |  | 49 | src/ module inventory | 1.3 |  | 0.548 |
+| walker |  | 189 | 27 | [features] in Cargo.toml |  |  | 0.549 |
 | walker |  | 258 | 69 | rust names build.rs |  |  | 0.549 |
 | ns | 259 |  | 91 | What `anyhow::Error` is — a Box<dyn Error> that must be Send + Sync | 1.4 |  | 0.486 |
 | walker |  | 302 | 44 | headings outline in README.md |  |  | 0.494 |

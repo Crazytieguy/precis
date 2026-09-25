@@ -27,7 +27,8 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::render::Source;
 use crate::value::{
-    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value, mix_signals,
+    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
+    manifest_operational_value, mix_signals,
 };
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
@@ -99,7 +100,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TomlKey::Scripts { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: scripts_value(&file, ctx),
+                value: manifest_operational_value(path_depth_factor(&file, ctx)),
             });
         }
         if let Some(content) = build_section_content(
@@ -113,7 +114,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TomlKey::Features { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: features_value(&file, ctx),
+                value: manifest_operational_value(path_depth_factor(&file, ctx)),
             });
         }
         if let Some(content) =
@@ -535,16 +536,6 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
 
 fn is_pyproject_identity_table(name: &str) -> bool {
     matches!(name, "project" | "tool.poetry")
-}
-
-fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.75, 0.6, 0.5, path_depth_factor(file, ctx))
-}
-
-fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Console entry points answer "how do I run this" — orientation that
-    // a reader otherwise has to reconstruct from the source tree.
-    mix_signals(0.70, 0.6, 0.65, path_depth_factor(file, ctx))
 }
 
 // --- parser ---

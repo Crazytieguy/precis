@@ -9,14 +9,14 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 94 | 40 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 98 | 4 | listing of 'docs/overrides' |  |  | 0.000 |
 | walker |  | 102 | 4 | listing of 'docs/stylesheets' |  |  | 0.000 |
-| walker |  | 128 | 26 | entry-point scripts in pyproject.toml |  |  | 0.000 |
-| walker |  | 136 | 8 | listing of '.github' |  |  | 0.000 |
-| ns | 139 |  | 48 | Repository root listing | 1.2 |  | 0.540 |
-| walker |  | 148 | 12 | listing of '.github/workflows' |  |  | 0.540 |
+| walker |  | 110 | 8 | listing of '.github' |  |  | 0.000 |
+| walker |  | 122 | 12 | listing of '.github/workflows' |  |  | 0.000 |
+| ns | 139 |  | 48 | Repository root listing | 1.2 |  | 0.539 |
 | ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.414 |
-| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.367 |
-| walker |  | 367 | 219 | plaintext config Makefile |  |  | 0.368 |
-| walker |  | 458 | 91 | README headline in README.md |  |  | 0.683 |
+| walker |  | 341 | 219 | plaintext config Makefile |  |  | 0.416 |
+| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.368 |
+| walker |  | 432 | 91 | README headline in README.md |  |  | 0.683 |
+| walker |  | 458 | 26 | entry-point scripts in pyproject.toml |  |  | 0.683 |
 | walker |  | 500 | 42 | headings outline in README.md |  |  | 0.683 |
 | ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.467 |
 | walker |  | 556 | 56 | listing of 'docs/guide' |  |  | 0.474 |

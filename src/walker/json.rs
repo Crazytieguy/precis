@@ -20,7 +20,8 @@ use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::render::Source;
 use crate::value::{
-    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value, mix_signals,
+    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
+    manifest_operational_value, mix_signals,
 };
 
 use super::workspace::{
@@ -158,19 +159,22 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
     collect(
         JsonKey::Entry { file: f.clone() },
-        operational_value(file, ctx),
+        manifest_operational_value(manifest_depth_factor(file, ctx))
+            * secondary_package_json_factor(file),
         is_entry_key,
         false,
     );
     collect(
         JsonKey::Runtime { file: f.clone() },
-        operational_value(file, ctx),
+        manifest_operational_value(manifest_depth_factor(file, ctx))
+            * secondary_package_json_factor(file),
         is_runtime_key,
         false,
     );
     collect(
         JsonKey::Scripts { file: f.clone() },
-        operational_value(file, ctx),
+        manifest_operational_value(manifest_depth_factor(file, ctx))
+            * secondary_package_json_factor(file),
         is_scripts_key,
         false,
     );
@@ -367,15 +371,6 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     };
     let s = secondary_package_json_factor(file);
     mix_signals(m, 0.7 * m, 0.85 * m, manifest_depth_factor(file, ctx)) * s
-}
-
-/// Entrypoints, scripts and runtime constraints: how the package ships and
-/// runs. Priced below identity and the repository's dependency roster —
-/// the keys rarely match an answer-key anchor themselves, and a reader can
-/// re-read the manifest at trivial cost.
-fn operational_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.55, 0.55, 0.45, manifest_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {

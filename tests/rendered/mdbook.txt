@@ -15,13 +15,6 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
-  …
-  129→[features]
-  130→default = ["watch", "serve", "search"]
-  131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
-  132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
-  133→search = ["mdbook-html/search"]
-  …
 LICENSE
 README.md
   1→# mdBook
@@ -51,6 +44,22 @@ crates/
       main.rs
         1→//! Utility to compare the output of two different versions of mdbook.
         …
+        6→macro_rules! error {
+        …
+        14→fn main() {
+        …
+        39→fn clean(path: &Path) {
+        …
+        46→fn build(mdbook: &Path, book: &Path) {
+        …
+        61→fn process(path: &Path) {
+        …
+        78→fn process_html(path: &Path) {
+        …
+        88→fn tidy(path: &Path) {
+        …
+        105→fn diff(a: &Path, b: &Path) {
+        …
   mdbook-core/
     Cargo.toml
     README.md
@@ -75,9 +84,6 @@ crates/
         toml_ext.rs
   mdbook-driver/
     Cargo.toml
-      …
-      31→[features]
-      32→search = ["mdbook-html/search"]
     README.md
     src/
       builtin_preprocessors/
@@ -112,9 +118,6 @@ crates/
       mdbook.rs
   mdbook-html/
     Cargo.toml
-      …
-      36→[features]
-      37→search = ["dep:elasticlunr-rs"]
     README.md
     front-end/
       css/
@@ -144,6 +147,12 @@ crates/
         mark.min.js
         searcher.js
       templates/
+        head.hbs
+        header.hbs
+        index.hbs
+        redirect.hbs
+        toc.html.hbs
+        toc.js.hbs
     src/
       html/
         admonitions.rs
@@ -407,6 +416,7 @@ src/
     17→
     18→fn main() {
     …
+    57→/// Create a list of valid arguments and sub-commands
     58→fn create_clap_command() -> Command {
     …
     93→fn init_logger() {

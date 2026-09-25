@@ -1,4 +1,4 @@
-Score(3000)=0.577 I=0.790 C=0.422 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.655/0.562/0.620/0.577/0.548/0.560/0.580
+Score(3000)=0.577 I=0.790 C=0.422 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.655/0.562/0.620/0.577/0.548/0.560/0.526
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -182,72 +182,72 @@ Score(3000)=0.577 I=0.790 C=0.422 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 6247 | 56 | rust decl src/__private_api.rs:41 |  |  | 0.565 |
 | ns | 6331 |  | 206 | Roster: `RecordBuilder` and all twelve setters | 6.4 | 2.1 | 0.578 |
 | walker |  | 6340 | 93 | rust decl src/__private_api.rs:84 |  |  | 0.591 |
+| walker |  | 6423 | 83 | README.md section #1 |  |  | 0.591 |
 | ns | 6434 |  | 103 | `MetadataBuilder` and its setters | 6.5 | 2.1 | 0.596 |
-| ns | 6591 |  | 157 | What structured logging means in `log` | 7.1 |  | 0.590 |
-| walker |  | 6750 | 410 | [features] in Cargo.toml |  |  | 0.653 |
-| ns | 6774 |  | 183 | The complete list of capture modifiers | 7.2 |  | 0.647 |
-| walker |  | 6833 | 83 | README.md section #1 |  |  | 0.647 |
-| walker |  | 6908 | 75 | rust decl src/__private_api.rs:56 |  |  | 0.651 |
-| ns | 6979 |  | 205 | The kv module's structure and complete export list | 7.3 |  | 0.637 |
-| ns | 7070 |  | 91 | `trait Source`: the three methods | 7.4 |  | 0.631 |
-| walker |  | 7074 | 166 | rust names src/kv/key.rs |  |  | 0.631 |
-| walker |  | 7093 | 19 | rust decl src/kv/key.rs:81 |  |  | 0.631 |
-| walker |  | 7113 | 20 | rust decl src/kv/key.rs:75 |  |  | 0.631 |
-| walker |  | 7134 | 21 | rust decl src/kv/key.rs:7 |  |  | 0.631 |
-| walker |  | 7156 | 22 | rust decl src/kv/key.rs:21 |  |  | 0.631 |
-| walker |  | 7179 | 23 | rust decl src/kv/key.rs:87 |  |  | 0.631 |
-| walker |  | 7203 | 24 | rust decl src/kv/key.rs:27 |  |  | 0.631 |
-| walker |  | 7231 | 28 | rust decl src/kv/key.rs:69 |  |  | 0.631 |
-| walker |  | 7277 | 46 | rust decl src/kv/key.rs:12 |  |  | 0.623 |
-| ns | 7277 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.623 |
-| walker |  | 7331 | 54 | rust decl src/kv/key.rs:36 |  |  | 0.623 |
-| ns | 7361 |  | 84 | `trait VisitSource`: the visitor side of a `Source` | 7.6 |  | 0.620 |
-| walker |  | 7399 | 68 | rust decl src/kv/key.rs:42 |  |  | 0.620 |
-| ns | 7444 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.616 |
-| ns | 7689 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.605 |
-| walker |  | 7863 | 464 | rust names src/kv/value.rs |  |  | 0.606 |
-| walker |  | 7884 | 21 | rust decl src/kv/value.rs:11 |  |  | 0.608 |
-| walker |  | 7905 | 21 | rust decl src/kv/value.rs:264 |  |  | 0.608 |
-| walker |  | 7927 | 22 | rust decl src/kv/value.rs:258 |  |  | 0.608 |
-| walker |  | 7949 | 22 | rust decl src/kv/value.rs:270 |  |  | 0.608 |
-| ns | 7965 |  | 276 | The primitive conversion tables | 7.9 |  | 0.598 |
-| walker |  | 7973 | 24 | rust decl src/kv/value.rs:25 |  |  | 0.598 |
-| walker |  | 7997 | 24 | rust decl src/kv/value.rs:118 |  |  | 0.602 |
-| walker |  | 8025 | 28 | rust decl src/kv/value.rs:222 |  |  | 0.602 |
-| walker |  | 8055 | 30 | rust decl src/kv/value.rs:228 |  |  | 0.602 |
-| walker |  | 8098 | 43 | rust decl src/kv/value.rs:234 |  |  | 0.602 |
-| walker |  | 8141 | 43 | rust decl src/kv/value.rs:276 |  |  | 0.602 |
-| ns | 8158 |  | 193 | Roster: every method on `VisitValue` | 7.10 |  | 0.594 |
-| walker |  | 8187 | 46 | rust decl src/kv/value.rs:16 |  |  | 0.594 |
-| walker |  | 8212 | 25 | rust decl src/kv/value.rs:236 |  |  | 0.594 |
-| walker |  | 8263 | 51 | rust decl src/kv/value.rs:251 |  |  | 0.594 |
-| ns | 8294 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.590 |
-| walker |  | 8319 | 56 | rust decl src/kv/value.rs:244 |  |  | 0.590 |
-| walker |  | 8383 | 64 | rust decl src/kv/value.rs:376 |  |  | 0.590 |
-| walker |  | 8396 | 13 | rust decl src/kv/value.rs:378 |  |  | 0.591 |
-| walker |  | 8485 | 89 | rust decl src/kv/value.rs:1126 |  |  | 0.591 |
-| walker |  | 8574 | 89 | rust decl src/kv/value.rs:1136 |  |  | 0.591 |
-| ns | 8588 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.588 |
-| walker |  | 8666 | 92 | rust decl src/kv/value.rs:1146 |  |  | 0.588 |
-| walker |  | 8759 | 93 | rust decl src/kv/value.rs:1155 |  |  | 0.588 |
-| ns | 8760 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.581 |
-| ns | 8837 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.580 |
-| walker |  | 8852 | 93 | rust decl src/kv/value.rs:1166 |  |  | 0.580 |
-| walker |  | 9024 | 172 | rust decl src/kv/value.rs:1051 |  |  | 0.580 |
-| walker |  | 9087 | 63 | rust decl src/kv/value.rs:1053 |  |  | 0.580 |
-| ns | 9121 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.568 |
-| walker |  | 9150 | 63 | rust decl src/kv/value.rs:1063 |  |  | 0.568 |
-| walker |  | 9216 | 66 | rust decl src/kv/value.rs:1093 |  |  | 0.568 |
-| walker |  | 9283 | 67 | rust decl src/kv/value.rs:1073 |  |  | 0.568 |
-| ns | 9297 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.562 |
-| walker |  | 9350 | 67 | rust decl src/kv/value.rs:1083 |  |  | 0.562 |
-| walker |  | 9418 | 68 | rust decl src/kv/value.rs:1103 |  |  | 0.562 |
-| ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.558 |
-| walker |  | 9486 | 68 | rust decl src/kv/value.rs:1112 |  |  | 0.558 |
-| ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.552 |
-| ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.550 |
-| ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.547 |
-| walker |  | 9829 | 343 | rust decl src/macros.rs:390 |  |  | 0.554 |
-| ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.550 |
-| ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.548 |
-| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.545 |
+| walker |  | 6498 | 75 | rust decl src/__private_api.rs:56 |  |  | 0.600 |
+| ns | 6591 |  | 157 | What structured logging means in `log` | 7.1 |  | 0.594 |
+| walker |  | 6664 | 166 | rust names src/kv/key.rs |  |  | 0.594 |
+| walker |  | 6683 | 19 | rust decl src/kv/key.rs:81 |  |  | 0.594 |
+| walker |  | 6703 | 20 | rust decl src/kv/key.rs:75 |  |  | 0.594 |
+| walker |  | 6724 | 21 | rust decl src/kv/key.rs:7 |  |  | 0.594 |
+| walker |  | 6746 | 22 | rust decl src/kv/key.rs:21 |  |  | 0.594 |
+| walker |  | 6769 | 23 | rust decl src/kv/key.rs:87 |  |  | 0.594 |
+| ns | 6774 |  | 183 | The complete list of capture modifiers | 7.2 |  | 0.588 |
+| walker |  | 6793 | 24 | rust decl src/kv/key.rs:27 |  |  | 0.588 |
+| walker |  | 6821 | 28 | rust decl src/kv/key.rs:69 |  |  | 0.588 |
+| walker |  | 6867 | 46 | rust decl src/kv/key.rs:12 |  |  | 0.588 |
+| walker |  | 6921 | 54 | rust decl src/kv/key.rs:36 |  |  | 0.589 |
+| ns | 6979 |  | 205 | The kv module's structure and complete export list | 7.3 |  | 0.576 |
+| walker |  | 6989 | 68 | rust decl src/kv/key.rs:42 |  |  | 0.577 |
+| ns | 7070 |  | 91 | `trait Source`: the three methods | 7.4 |  | 0.571 |
+| ns | 7277 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.564 |
+| ns | 7361 |  | 84 | `trait VisitSource`: the visitor side of a `Source` | 7.6 |  | 0.561 |
+| ns | 7444 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.557 |
+| walker |  | 7453 | 464 | rust names src/kv/value.rs |  |  | 0.557 |
+| walker |  | 7474 | 21 | rust decl src/kv/value.rs:11 |  |  | 0.559 |
+| walker |  | 7495 | 21 | rust decl src/kv/value.rs:264 |  |  | 0.559 |
+| walker |  | 7517 | 22 | rust decl src/kv/value.rs:258 |  |  | 0.559 |
+| walker |  | 7539 | 22 | rust decl src/kv/value.rs:270 |  |  | 0.559 |
+| walker |  | 7563 | 24 | rust decl src/kv/value.rs:25 |  |  | 0.559 |
+| walker |  | 7587 | 24 | rust decl src/kv/value.rs:118 |  |  | 0.564 |
+| walker |  | 7615 | 28 | rust decl src/kv/value.rs:222 |  |  | 0.564 |
+| walker |  | 7645 | 30 | rust decl src/kv/value.rs:228 |  |  | 0.564 |
+| walker |  | 7688 | 43 | rust decl src/kv/value.rs:234 |  |  | 0.564 |
+| ns | 7689 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.554 |
+| walker |  | 7731 | 43 | rust decl src/kv/value.rs:276 |  |  | 0.554 |
+| walker |  | 7777 | 46 | rust decl src/kv/value.rs:16 |  |  | 0.554 |
+| walker |  | 7802 | 25 | rust decl src/kv/value.rs:236 |  |  | 0.554 |
+| walker |  | 7853 | 51 | rust decl src/kv/value.rs:251 |  |  | 0.554 |
+| walker |  | 7909 | 56 | rust decl src/kv/value.rs:244 |  |  | 0.554 |
+| ns | 7965 |  | 276 | The primitive conversion tables | 7.9 |  | 0.546 |
+| walker |  | 7973 | 64 | rust decl src/kv/value.rs:376 |  |  | 0.546 |
+| walker |  | 7986 | 13 | rust decl src/kv/value.rs:378 |  |  | 0.547 |
+| walker |  | 8075 | 89 | rust decl src/kv/value.rs:1126 |  |  | 0.547 |
+| ns | 8158 |  | 193 | Roster: every method on `VisitValue` | 7.10 |  | 0.539 |
+| walker |  | 8164 | 89 | rust decl src/kv/value.rs:1136 |  |  | 0.539 |
+| walker |  | 8256 | 92 | rust decl src/kv/value.rs:1146 |  |  | 0.539 |
+| ns | 8294 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.535 |
+| walker |  | 8349 | 93 | rust decl src/kv/value.rs:1155 |  |  | 0.535 |
+| walker |  | 8442 | 93 | rust decl src/kv/value.rs:1166 |  |  | 0.535 |
+| ns | 8588 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.534 |
+| walker |  | 8614 | 172 | rust decl src/kv/value.rs:1051 |  |  | 0.534 |
+| walker |  | 8677 | 63 | rust decl src/kv/value.rs:1053 |  |  | 0.534 |
+| walker |  | 8740 | 63 | rust decl src/kv/value.rs:1063 |  |  | 0.534 |
+| ns | 8760 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.528 |
+| walker |  | 8806 | 66 | rust decl src/kv/value.rs:1093 |  |  | 0.528 |
+| ns | 8837 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.526 |
+| walker |  | 8873 | 67 | rust decl src/kv/value.rs:1073 |  |  | 0.526 |
+| walker |  | 8940 | 67 | rust decl src/kv/value.rs:1083 |  |  | 0.526 |
+| walker |  | 9008 | 68 | rust decl src/kv/value.rs:1103 |  |  | 0.526 |
+| walker |  | 9076 | 68 | rust decl src/kv/value.rs:1112 |  |  | 0.526 |
+| ns | 9121 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.516 |
+| ns | 9297 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.510 |
+| walker |  | 9419 | 343 | rust decl src/macros.rs:390 |  |  | 0.517 |
+| ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.514 |
+| ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.508 |
+| walker |  | 9626 | 207 | rust names src/kv/mod.rs |  |  | 0.529 |
+| ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.527 |
+| ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.524 |
+| ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.520 |
+| ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.518 |
+| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.515 |

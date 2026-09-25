@@ -14,19 +14,19 @@ Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 168 | 41 | listing of 'docs' |  |  | 0.592 |
 | ns | 173 |  | 81 | README lede paragraph — scope and supported databases | 1.3 | 1.1 | 0.569 |
 | walker |  | 213 | 45 | listing of 'peepdb/db' |  |  | 0.659 |
-| walker |  | 242 | 29 | entry-point scripts in project.toml |  |  | 0.663 |
-| ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.665 |
-| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.622 |
-| walker |  | 327 | 85 | README headline in README.md |  |  | 0.650 |
-| walker |  | 341 | 14 | python names peepdb/db/base.py |  |  | 0.650 |
-| walker |  | 355 | 14 | python names peepdb/db/oracle.py |  |  | 0.650 |
-| walker |  | 369 | 14 | python names peepdb/db/sqlite.py |  |  | 0.650 |
-| ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.580 |
-| walker |  | 384 | 15 | python names peepdb/db/mariadb.py |  |  | 0.580 |
-| walker |  | 399 | 15 | python names peepdb/db/mongodb.py |  |  | 0.580 |
-| walker |  | 414 | 15 | python names peepdb/db/mssql.py |  |  | 0.580 |
-| walker |  | 429 | 15 | python names peepdb/db/mysql.py |  |  | 0.580 |
-| walker |  | 444 | 15 | python names peepdb/db/postgresql.py |  |  | 0.580 |
+| ns | 252 |  | 79 | Source roster: complete listing of peepdb/ and peepdb/db/ | 1.4 |  | 0.662 |
+| ns | 297 |  | 45 | peepdb/core.py: every top-level function, names only | 1.5 |  | 0.619 |
+| walker |  | 298 | 85 | README headline in README.md |  |  | 0.647 |
+| walker |  | 312 | 14 | python names peepdb/db/base.py |  |  | 0.647 |
+| walker |  | 326 | 14 | python names peepdb/db/oracle.py |  |  | 0.647 |
+| walker |  | 340 | 14 | python names peepdb/db/sqlite.py |  |  | 0.647 |
+| walker |  | 355 | 15 | python names peepdb/db/mariadb.py |  |  | 0.647 |
+| walker |  | 370 | 15 | python names peepdb/db/mongodb.py |  |  | 0.647 |
+| ns | 378 |  | 81 | peepdb/cli.py: every top-level definition, names only | 1.6 |  | 0.577 |
+| walker |  | 385 | 15 | python names peepdb/db/mssql.py |  |  | 0.577 |
+| walker |  | 400 | 15 | python names peepdb/db/mysql.py |  |  | 0.577 |
+| walker |  | 415 | 15 | python names peepdb/db/postgresql.py |  |  | 0.578 |
+| walker |  | 444 | 29 | entry-point scripts in project.toml |  |  | 0.580 |
 | ns | 497 |  | 119 | peepdb/db/__init__.py — backend class ↔ module map | 1.7 |  | 0.510 |
 | walker |  | 659 | 215 | python names peepdb/db/__init__.py |  |  | 0.621 |
 | ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.569 |
