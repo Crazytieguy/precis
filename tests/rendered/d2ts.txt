@@ -72,29 +72,6 @@ RELEASING.md
 eslint.base.mjs
   …
   6→export default [
-  7→  // Base ESLint configuration
-  8→  eslint.configs.recommended,
-  9→  
-  10→  // TypeScript configurations
-  11→  {
-  12→    files: ['**/*.ts', '**/*.tsx'],
-  13→    languageOptions: {
-  14→      parser: typescript,
-  15→      parserOptions: {
-  16→        ecmaVersion: 2020,
-  17→        sourceType: 'module',
-  18→      },
-  19→    },
-  20→    plugins: {
-  21→      '@typescript-eslint': tseslint,
-  22→    },
-  23→    rules: {
-  24→      // Disable the base ESLint rule
-  25→      'no-unused-vars': 'off',
-  26→      'no-dupe-class-members': 'off',
-  27→      'no-redeclare': 'off',
-  28→      // Enable the TypeScript rule
-  29→      '@typescript-eslint/no-unused-vars': ['error', {
   …
 examples/
   basic.ts
@@ -162,6 +139,24 @@ packages/
         filterBy.ts
         groupBy.ts
         index.ts
+          1→export * from './pipe.js'
+          2→export * from './map.js'
+          3→export * from './filter.js'
+          4→export * from './negate.js'
+          5→export * from './concat.js'
+          6→export * from './debug.js'
+          7→export * from './output.js'
+          8→export * from './consolidate.js'
+          9→export * from './join.js'
+          10→export * from './reduce.js'
+          11→export * from './count.js'
+          12→export * from './distinct.js'
+          13→export * from './keying.js'
+          14→export * from './topK.js'
+          15→export * from './topKWithFractionalIndex.js'
+          16→export * from './orderBy.js'
+          17→export * from './filterBy.js'
+          18→export { groupBy, groupByOperators } from './groupBy.js'
         join.ts
         keying.ts
         map.ts
@@ -246,10 +241,6 @@ packages/
       39→    "test": "vitest run",
       40→    "lint": "eslint './src/**/*.ts' './tests/**/*.ts' --config eslint.config.mjs",
       41→    "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
-      42→    "typecheck": "tsc --noEmit",
-      43→    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\" \"tests/**/*.{ts,tsx,js,jsx,json}\"",
-      44→    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json}\" \"tests/**/*.{ts,tsx,js,jsx,json}\""
-      45→  },
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",
@@ -282,6 +273,26 @@ packages/
         filterBy.ts
         groupBy.ts
         index.ts
+          1→export * from './pipe.js'
+          2→export * from './map.js'
+          3→export * from './filter.js'
+          4→export * from './negate.js'
+          5→export * from './concat.js'
+          6→export * from './debug.js'
+          7→export * from './output.js'
+          8→export * from './consolidate.js'
+          9→export * from './buffer.js'
+          10→export * from './join.js'
+          11→export * from './reduce.js'
+          12→export * from './count.js'
+          13→export * from './distinct.js'
+          14→export * from './iterate.js'
+          15→export * from './keying.js'
+          16→export * from './topK.js'
+          17→export * from './topKWithFractionalIndex.js'
+          18→export * from './orderBy.js'
+          19→export * from './filterBy.js'
+          20→export { groupBy, groupByOperators } from './groupBy.js'
         iterate.ts
         join.ts
         keying.ts
@@ -298,40 +309,15 @@ packages/
         context.ts
         database.ts
         index.ts
+          1→export * from './version-index.js'
+          2→export * from './operators/index.js'
+          3→export * from './database.js'
         operators/
-          buffer.ts
-          consolidate.ts
-          count.ts
-          distinct.ts
-          filterBy.ts
-          groupBy.ts
-          index.ts
-          join.ts
-          orderBy.ts
-          reduce.ts
-          topK.ts
-          topKWithFractionalIndex.ts
         version-index.ts
       types.ts
       utils.ts
       version-index.ts
     tests/
-      electric.test.ts
-      graph.test.ts
-      multiset.test.ts
-      operators/
-      operators-sqlite/
-        buffer.test.ts
-        consolidate.test.ts
-        count.test.ts
-        distinct.test.ts
-        groupBy.test.ts
-        injection.test.ts
-        join.test.ts
-        reduce.test.ts
-      order.test.ts
-      utils.test.ts
-      version-index.test.ts
     tsconfig.json
     vitest.config.js
   d2ts-benchmark/

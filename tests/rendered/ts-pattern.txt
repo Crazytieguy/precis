@@ -230,8 +230,6 @@ src/
     …
     362→export function map<
     …
-    433→export function record<
-    …
   types/
     BuildMany.ts
     DeepExclude.ts
@@ -244,6 +242,7 @@ src/
     Pattern.ts
     helpers.ts
     index.ts
+      1→export * from './Pattern';
 tests/
   bigints.test.ts
   branded-nominal-types.test.ts

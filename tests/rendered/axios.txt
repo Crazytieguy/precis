@@ -198,30 +198,7 @@ index.d.cts
   172→    response: axios.AxiosInterceptorManager<axios.AxiosResponse>;
   173→  };
   174→  getUri(config?: axios.AxiosRequestConfig): string;
-  175→  request<T = any, R = axios.AxiosResponse<T>, D = any>(
-  176→    config: axios.AxiosRequestConfig<D>
-  177→  ): Promise<R>;
-  178→  get<T = any, R = axios.AxiosResponse<T>, D = any>(
-  179→    url: string,
-  180→    config?: axios.AxiosRequestConfig<D>
-  181→  ): Promise<R>;
-  182→  delete<T = any, R = axios.AxiosResponse<T>, D = any>(
-  183→    url: string,
-  184→    config?: axios.AxiosRequestConfig<D>
-  185→  ): Promise<R>;
-  186→  head<T = any, R = axios.AxiosResponse<T>, D = any>(
-  187→    url: string,
-  188→    config?: axios.AxiosRequestConfig<D>
-  189→  ): Promise<R>;
-  190→  options<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
-  194→  post<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  199→  put<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  204→  patch<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  229→}
   231→declare enum HttpStatusCode {
   …
   297→type InternalAxiosError<T = unknown, D = any> = AxiosError<T, D>;
@@ -268,6 +245,34 @@ lib/
     isCancel.js
   core/
     Axios.js
+      …
+      15→/**
+      16→ * Create a new instance of Axios
+      17→ *
+      18→ * @param {Object} instanceConfig The default config for the instance
+      19→ *
+      20→ * @return {Axios} A new instance of Axios
+      21→ */
+      22→class Axios {
+      23→  constructor(instanceConfig) {
+      24→    this.defaults = instanceConfig || {};
+      25→    this.interceptors = {
+      26→      request: new InterceptorManager(),
+      27→      response: new InterceptorManager(),
+      28→    };
+      …
+      39→  async request(configOrUrl, config) {
+      …
+      82→  _request(configOrUrl, config) {
+      …
+      233→  getUri(config) {
+      234→    config = mergeConfig(this.defaults, config);
+      235→    const fullPath = buildFullPath(config.baseURL, config.url, config.allowAbsoluteUrls);
+      236→    return buildURL(fullPath, config.params, config.paramsSerializer);
+      …
+      238→}
+      …
+      281→export default Axios;
     AxiosError.js
     AxiosHeaders.js
     InterceptorManager.js
@@ -279,6 +284,10 @@ lib/
     transformData.js
   defaults/
     index.js
+      …
+      38→const defaults = {
+      …
+      177→export default defaults;
     transitional.js
   env/
     README.md
@@ -330,6 +339,11 @@ lib/
     common/
       utils.js
     index.js
+      …
+      4→export default {
+      5→  ...utils,
+      6→  ...platform,
+      7→};
     node/
       classes/
         FormData.js

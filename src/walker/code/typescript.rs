@@ -106,10 +106,10 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     model
 }
 
-/// `index` / `main` / `mod` / `esm` sources within one directory of
+/// `index` / `main` / `mod` / `esm` sources within two directories of
 /// their package root (the nearest `package.json` directory, else the
-/// walk root): `index.ts`, `src/index.ts`, `lib/main.js`; and, outside
-/// `bin/`, the source named after that package (`lib/express.js`).
+/// walk root): `index.ts`, `lib/main.js`, `src/node/index.ts`; and,
+/// outside `bin/`, the source named after that package (`lib/express.js`).
 fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     let Some((stem, extension)) = path
         .file_name()
@@ -129,7 +129,7 @@ fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     let Ok(relative) = path.strip_prefix(&package_dir) else {
         return false;
     };
-    relative.components().count() <= 2
+    relative.components().count() <= 3
         && (ENTRYPOINT_STEMS.contains(&stem)
             || (is_named_after(path, &package_dir) && !relative.starts_with("bin")))
 }
@@ -1427,6 +1427,7 @@ export const c = 3;
             ("index.ts", ""),
             ("src/index.ts", ""),
             ("src/deep/index.ts", ""),
+            ("src/deep/er/index.ts", ""),
             ("packages/core/package.json", "{}"),
             ("packages/core/src/main.js", ""),
             ("packages/core/src/lib/mod.ts", ""),
@@ -1452,7 +1453,9 @@ export const c = 3;
             [
                 "index.ts",
                 "src/index.ts",
+                "src/deep/index.ts",
                 "packages/core/src/main.js",
+                "packages/core/src/lib/mod.ts",
                 "packages/core/src/core.ts"
             ]
         );

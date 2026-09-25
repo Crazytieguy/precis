@@ -114,14 +114,11 @@ Score(3000)=0.829 I=0.935 C=0.734 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9081 | 14 | Code::CodeKey { rung: Names, file: website/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
 | ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.522 |
 | walker |  | 9305 | 224 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 1, line: 729 } |  |  | 0.544 |
+| walker |  | 9473 | 168 | Code::CodeKey { rung: Names, file: website/components/icons/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
 | ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.534 |
 | ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.524 |
-| walker |  | 9784 | 479 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.533 |
-| walker |  | 9816 | 32 | Json::Identity { file: test/package.json } |  |  | 0.533 |
-| walker |  | 9842 | 26 | Json::Scripts { file: test/package.json } |  |  | 0.533 |
-| walker |  | 9868 | 26 | Plaintext::DeclSurface { file: test/style.css } |  |  | 0.533 |
-| walker |  | 9871 | 3 | Plaintext::Whole { file: test/style.css } |  |  | 0.533 |
-| walker |  | 9914 | 43 | Json::Identity { file: website/package.json } |  |  | 0.526 |
-| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.526 |
+| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.517 |
+| walker |  | 9952 | 479 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.526 |
+| walker |  | 9984 | 32 | Json::Identity { file: test/package.json } |  |  | 0.526 |
 | ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.534 |
-| walker |  | 9993 | 79 | Json::Scripts { file: website/package.json } |  |  | 0.534 |
+| walker |  | 9993 | 9 | Json::Scripts { file: test/package.json } |  |  | 0.534 |
