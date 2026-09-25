@@ -133,9 +133,9 @@ pub fn conserved_catalog_chunk_factors(chunk_costs: &[usize], cost_exponent: f64
 /// Base value of each code-engine rung (`walker::code`), before the file
 /// prior and the chunk share: one value for what a file or declaration
 /// is (module doc, declaration), one for its depth (doc, body), and the
-/// roster's per-entry value. The engine scales `Names` by `entries^k`
-/// (`k` the default concavity exponent), so a roster's scheduling ratio
-/// depends on its tokens per entry, not on its length. Tuned on the
+/// roster's per-row value. The engine scales `Names` by `rows^k` (`k`
+/// the default concavity exponent), so a roster's scheduling ratio
+/// depends on its tokens per row, not on its length. Tuned on the
 /// corpus grid (2026-09-25), where `Names` is by far the most sensitive
 /// of the three.
 pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {

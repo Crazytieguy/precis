@@ -1,4 +1,4 @@
-Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.513/0.749/0.731/0.702/0.696/0.618/0.739
+Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.513/0.749/0.731/0.702/0.699/0.618/0.739
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -51,14 +51,14 @@ Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | ns | 3100 |  | 364 | preprocess.c file-header comment: the hideset macro-expansion algorithm | 3.2 |  | 0.668 |
 | ns | 3229 |  | 129 | Internal (non-exported) helpers of type.c, unicode.c and hashmap.c | 3.3 |  | 0.654 |
 | walker |  | 3239 | 320 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 36, sub: 0, line: 127 } |  |  | 0.658 |
-| ns | 3561 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.624 |
-| walker |  | 3669 | 430 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 45, sub: 0, line: 320 } |  |  | 0.627 |
-| walker |  | 3919 | 250 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 3, line: 0 } |  |  | 0.683 |
-| ns | 3965 |  | 404 | Function-name roster: tokenize.c | 3.5 |  | 0.643 |
-| walker |  | 4156 | 237 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 4, line: 0 } |  |  | 0.672 |
-| walker |  | 4181 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 79, sub: 0, line: 428 } |  |  | 0.672 |
-| walker |  | 4206 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 80, sub: 0, line: 434 } |  |  | 0.672 |
-| walker |  | 4333 | 127 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 5, line: 0 } |  |  | 0.699 |
+| walker |  | 3489 | 250 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 3, line: 0 } |  |  | 0.716 |
+| ns | 3561 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.679 |
+| walker |  | 3726 | 237 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 4, line: 0 } |  |  | 0.709 |
+| walker |  | 3751 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 79, sub: 0, line: 428 } |  |  | 0.709 |
+| walker |  | 3776 | 25 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 80, sub: 0, line: 434 } |  |  | 0.710 |
+| walker |  | 3903 | 127 | Code::CodeKey { rung: Names, file: chibicc.h, decl: 0, sub: 5, line: 0 } |  |  | 0.738 |
+| ns | 3965 |  | 404 | Function-name roster: tokenize.c | 3.5 |  | 0.696 |
+| walker |  | 4333 | 430 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 45, sub: 0, line: 320 } |  |  | 0.699 |
 | ns | 4346 |  | 381 | Function-name roster: codegen.c | 3.6 |  | 0.664 |
 | walker |  | 4615 | 282 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.666 |
 | walker |  | 4622 | 7 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.666 |
@@ -75,19 +75,19 @@ Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 5667 | 56 | Code::CodeKey { rung: Names, file: include/stdalign.h, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
 | ns | 5707 |  | 76 | File struct | 4.2 |  | 0.604 |
 | walker |  | 5755 | 88 | Code::CodeKey { rung: Names, file: include/stddef.h, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
-| walker |  | 5922 | 167 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.604 |
+| walker |  | 5898 | 143 | Code::CodeKey { rung: Names, file: include/stdarg.h, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
+| walker |  | 5921 | 23 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 3, sub: 0, line: 13 } |  |  | 0.604 |
+| walker |  | 5961 | 40 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 1, sub: 0, line: 4 } |  |  | 0.604 |
 | ns | 6011 |  | 304 | Token struct (all fields) | 4.3 |  | 0.618 |
-| walker |  | 6021 | 99 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.618 |
-| walker |  | 6038 | 17 | Code::CodeKey { rung: Names, file: include/stdnoreturn.h, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
-| walker |  | 6289 | 251 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
+| walker |  | 6074 | 113 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 5, sub: 0, line: 44 } |  |  | 0.618 |
+| walker |  | 6241 | 167 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.618 |
+| walker |  | 6340 | 99 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.618 |
+| walker |  | 6357 | 17 | Code::CodeKey { rung: Names, file: include/stdnoreturn.h, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
 | ns | 6360 |  | 349 | Obj struct: variables and functions | 4.4 |  | 0.639 |
 | ns | 6461 |  | 101 | Relocation struct | 4.5 | 4.4 | 0.644 |
-| walker |  | 6638 | 349 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 1, line: 0 } |  |  | 0.644 |
+| walker |  | 6608 | 251 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
 | ns | 6766 |  | 305 | NodeKind enum, first half (arithmetic through bit ops) | 4.6 |  | 0.656 |
-| walker |  | 6781 | 143 | Code::CodeKey { rung: Names, file: include/stdarg.h, decl: 0, sub: 0, line: 0 } |  |  | 0.656 |
-| walker |  | 6804 | 23 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 3, sub: 0, line: 13 } |  |  | 0.656 |
-| walker |  | 6844 | 40 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 1, sub: 0, line: 4 } |  |  | 0.656 |
-| walker |  | 6957 | 113 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 5, sub: 0, line: 44 } |  |  | 0.656 |
+| walker |  | 6957 | 349 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 1, line: 0 } |  |  | 0.656 |
 | ns | 7114 |  | 348 | NodeKind enum, second half (control flow, calls, casts, atomics) | 4.7 | 4.6 | 0.666 |
 | walker |  | 7239 | 282 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 0, line: 0 } |  |  | 0.666 |
 | walker |  | 7298 | 59 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 11, sub: 0, line: 15 } |  |  | 0.666 |

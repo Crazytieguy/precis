@@ -1,4 +1,4 @@
-Score(3000)=0.603 I=0.828 C=0.440 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.644/0.752/0.723/0.603/0.750/0.703/0.624
+Score(3000)=0.603 I=0.828 C=0.440 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.644/0.752/0.679/0.603/0.757/0.703/0.624
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -36,18 +36,18 @@ Score(3000)=0.603 I=0.828 C=0.440 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | walker |  | 1479 | 64 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.752 |
 | walker |  | 1523 | 44 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.752 |
 | ns | 1534 |  | 191 | README command-line options table, first half (-i through -F) | 2.3 |  | 0.719 |
-| ns | 1753 |  | 219 | README command-line options table, second half (-r through -h) | 2.4 |  | 0.684 |
-| walker |  | 1938 | 415 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.784 |
-| ns | 1963 |  | 210 | README: the documented smart algorithm-selection policy | 2.5 |  | 0.741 |
-| walker |  | 2060 | 122 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.741 |
-| ns | 2069 |  | 106 | README usage examples: the six concrete invocations, command lines only | 2.6 |  | 0.723 |
-| ns | 2181 |  | 112 | README: the multi-threading architecture section | 2.7 |  | 0.694 |
-| walker |  | 2276 | 216 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 0, line: 0 } |  |  | 0.695 |
-| walker |  | 2285 | 9 | Code::CodeKey { rung: Doc, file: krep.h, decl: 10, sub: 0, line: 42 } |  |  | 0.695 |
+| walker |  | 1739 | 216 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
+| walker |  | 1748 | 9 | Code::CodeKey { rung: Doc, file: krep.h, decl: 10, sub: 0, line: 42 } |  |  | 0.721 |
+| ns | 1753 |  | 219 | README command-line options table, second half (-r through -h) | 2.4 |  | 0.685 |
+| walker |  | 1762 | 14 | Code::CodeKey { rung: Doc, file: krep.h, decl: 1, sub: 0, line: 19 } |  |  | 0.685 |
+| walker |  | 1776 | 14 | Code::CodeKey { rung: Doc, file: krep.h, decl: 2, sub: 0, line: 22 } |  |  | 0.685 |
+| walker |  | 1796 | 20 | Code::CodeKey { rung: Doc, file: krep.h, decl: 4, sub: 0, line: 34 } |  |  | 0.685 |
+| ns | 1963 |  | 210 | README: the documented smart algorithm-selection policy | 2.5 |  | 0.648 |
+| ns | 2069 |  | 106 | README usage examples: the six concrete invocations, command lines only | 2.6 |  | 0.632 |
+| ns | 2181 |  | 112 | README: the multi-threading architecture section | 2.7 |  | 0.607 |
+| walker |  | 2211 | 415 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.695 |
 | ns | 2287 |  | 106 | README: the recursive-search skipping rules | 2.8 |  | 0.675 |
-| walker |  | 2299 | 14 | Code::CodeKey { rung: Doc, file: krep.h, decl: 1, sub: 0, line: 19 } |  |  | 0.675 |
-| walker |  | 2313 | 14 | Code::CodeKey { rung: Doc, file: krep.h, decl: 2, sub: 0, line: 22 } |  |  | 0.675 |
-| walker |  | 2333 | 20 | Code::CodeKey { rung: Doc, file: krep.h, decl: 4, sub: 0, line: 34 } |  |  | 0.675 |
+| walker |  | 2333 | 122 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.675 |
 | ns | 2402 |  | 115 | README scope note: explicitly not a grep/ripgrep replacement | 2.9 |  | 0.680 |
 | ns | 2512 |  | 110 | README install and build-from-source commands | 2.10 |  | 0.655 |
 | walker |  | 2611 | 278 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 1, line: 0 } |  |  | 0.657 |
@@ -75,17 +75,17 @@ Score(3000)=0.603 I=0.828 C=0.440 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | walker |  | 3912 | 10 | Code::CodeKey { rung: Doc, file: krep.h, decl: 28, sub: 0, line: 183 } |  |  | 0.747 |
 | walker |  | 4002 | 90 | Code::CodeKey { rung: Doc, file: krep.h, decl: 26, sub: 0, line: 170 } |  |  | 0.747 |
 | ns | 4011 |  | 185 | skip_extensions: head, ellipsis, and the count line | 3.8 |  | 0.735 |
-| walker |  | 4098 | 96 | Code::CodeKey { rung: Doc, file: krep.h, decl: 27, sub: 0, line: 180 } |  |  | 0.735 |
-| ns | 4236 |  | 225 | ANSI colour macro block, output palette and help palette | 3.9 |  | 0.740 |
-| walker |  | 4295 | 197 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 3, line: 0 } |  |  | 0.750 |
-| walker |  | 4302 | 7 | Code::CodeKey { rung: Doc, file: krep.h, decl: 33, sub: 0, line: 203 } |  |  | 0.750 |
-| ns | 4395 |  | 159 | Documented contracts of the three entry points and the printer | 3.10 | 1.7 | 0.738 |
-| walker |  | 4484 | 182 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 4, line: 0 } |  |  | 0.748 |
-| walker |  | 4503 | 19 | Code::CodeKey { rung: Decl, file: krep.h, decl: 40, sub: 0, line: 218 } |  |  | 0.753 |
-| walker |  | 4522 | 19 | Code::CodeKey { rung: Decl, file: krep.h, decl: 39, sub: 0, line: 214 } |  |  | 0.760 |
-| walker |  | 4541 | 19 | Code::CodeKey { rung: Decl, file: krep.h, decl: 42, sub: 0, line: 226 } |  |  | 0.766 |
-| walker |  | 4565 | 24 | Code::CodeKey { rung: Decl, file: krep.h, decl: 41, sub: 0, line: 222 } |  |  | 0.777 |
-| walker |  | 4573 | 8 | Code::CodeKey { rung: Doc, file: krep.h, decl: 43, sub: 0, line: 231 } |  |  | 0.777 |
+| walker |  | 4199 | 197 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 3, line: 0 } |  |  | 0.745 |
+| walker |  | 4206 | 7 | Code::CodeKey { rung: Doc, file: krep.h, decl: 33, sub: 0, line: 203 } |  |  | 0.745 |
+| ns | 4236 |  | 225 | ANSI colour macro block, output palette and help palette | 3.9 |  | 0.750 |
+| walker |  | 4388 | 182 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 4, line: 0 } |  |  | 0.760 |
+| ns | 4395 |  | 159 | Documented contracts of the three entry points and the printer | 3.10 | 1.7 | 0.747 |
+| walker |  | 4407 | 19 | Code::CodeKey { rung: Decl, file: krep.h, decl: 40, sub: 0, line: 218 } |  |  | 0.753 |
+| walker |  | 4426 | 19 | Code::CodeKey { rung: Decl, file: krep.h, decl: 39, sub: 0, line: 214 } |  |  | 0.759 |
+| walker |  | 4445 | 19 | Code::CodeKey { rung: Decl, file: krep.h, decl: 42, sub: 0, line: 226 } |  |  | 0.766 |
+| walker |  | 4469 | 24 | Code::CodeKey { rung: Decl, file: krep.h, decl: 41, sub: 0, line: 222 } |  |  | 0.776 |
+| walker |  | 4477 | 8 | Code::CodeKey { rung: Doc, file: krep.h, decl: 43, sub: 0, line: 231 } |  |  | 0.776 |
+| walker |  | 4573 | 96 | Code::CodeKey { rung: Doc, file: krep.h, decl: 27, sub: 0, line: 180 } |  |  | 0.777 |
 | ns | 4634 |  | 239 | krep.c file-level section banner map, all sixteen top-level banners | 4.1 |  | 0.754 |
 | walker |  | 4732 | 159 | Code::CodeKey { rung: Names, file: krep.h, decl: 0, sub: 5, line: 0 } |  |  | 0.771 |
 | walker |  | 4737 | 5 | Code::CodeKey { rung: Decl, file: krep.h, decl: 49, sub: 0, line: 298 } |  |  | 0.771 |

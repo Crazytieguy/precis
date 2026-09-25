@@ -229,18 +229,14 @@ Score(3000)=0.626 I=0.777 C=0.504 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | walker |  | 9475 | 70 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 15, sub: 0, line: 114 } |  |  | 0.499 |
 | walker |  | 9511 | 36 | Code::CodeKey { rung: Names, file: command_win.go, decl: 0, sub: 0, line: 0 } |  |  | 0.502 |
 | ns | 9563 |  | 237 | doc/: the YAML document schema and the shared helpers | 9.3 |  | 0.495 |
-| walker |  | 9597 | 86 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 10, sub: 0, line: 81 } |  |  | 0.495 |
-| ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.492 |
-| walker |  | 9824 | 227 | Code::CodeKey { rung: Names, file: args.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
-| walker |  | 9831 | 7 | Code::CodeKey { rung: Body, file: args.go, decl: 6, sub: 0, line: 82 } |  |  | 0.497 |
-| walker |  | 9844 | 13 | Code::CodeKey { rung: Doc, file: args.go, decl: 6, sub: 0, line: 82 } |  |  | 0.498 |
-| walker |  | 9860 | 16 | Code::CodeKey { rung: Doc, file: args.go, decl: 3, sub: 0, line: 42 } |  |  | 0.499 |
-| walker |  | 9876 | 16 | Code::CodeKey { rung: Body, file: args.go, decl: 12, sub: 0, line: 142 } |  |  | 0.499 |
-| walker |  | 9894 | 18 | Code::CodeKey { rung: Doc, file: args.go, decl: 9, sub: 0, line: 107 } |  |  | 0.500 |
-| walker |  | 9912 | 18 | Code::CodeKey { rung: Doc, file: args.go, decl: 11, sub: 0, line: 127 } |  |  | 0.501 |
-| ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.496 |
-| walker |  | 9931 | 19 | Code::CodeKey { rung: Doc, file: args.go, decl: 5, sub: 0, line: 69 } |  |  | 0.497 |
-| walker |  | 9950 | 19 | Code::CodeKey { rung: Doc, file: args.go, decl: 8, sub: 0, line: 97 } |  |  | 0.499 |
-| walker |  | 9970 | 20 | Code::CodeKey { rung: Doc, file: args.go, decl: 7, sub: 0, line: 87 } |  |  | 0.500 |
-| walker |  | 9992 | 22 | Code::CodeKey { rung: Doc, file: args.go, decl: 10, sub: 0, line: 117 } |  |  | 0.502 |
-| ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.500 |
+| walker |  | 9638 | 127 | Code::CodeKey { rung: Names, file: active_help.go, decl: 0, sub: 0, line: 0 } |  |  | 0.498 |
+| ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.495 |
+| walker |  | 9687 | 49 | Code::CodeKey { rung: Decl, file: active_help.go, decl: 1, sub: 0, line: 22 } |  |  | 0.496 |
+| walker |  | 9703 | 16 | Code::CodeKey { rung: Body, file: active_help.go, decl: 4, sub: 0, line: 58 } |  |  | 0.496 |
+| walker |  | 9726 | 23 | Code::CodeKey { rung: Body, file: active_help.go, decl: 2, sub: 0, line: 38 } |  |  | 0.496 |
+| walker |  | 9791 | 65 | Code::CodeKey { rung: Body, file: active_help.go, decl: 3, sub: 0, line: 47 } |  |  | 0.496 |
+| walker |  | 9862 | 71 | Code::CodeKey { rung: Doc, file: active_help.go, decl: 4, sub: 0, line: 58 } |  |  | 0.496 |
+| ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.491 |
+| walker |  | 9948 | 86 | Code::CodeKey { rung: Doc, file: cobra.go, decl: 10, sub: 0, line: 81 } |  |  | 0.491 |
+| walker |  | 9990 | 42 | Code::CodeKey { rung: Names, file: args.go, decl: 0, sub: 0, line: 0 } |  |  | 0.491 |
+| ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.489 |

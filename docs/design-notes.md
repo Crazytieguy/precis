@@ -159,9 +159,9 @@ must not undo:
   exponent. `Names` sits well below `Decl`: a roster in every file
   otherwise outranks entry-file declarations, docs and manifests. A
   roster is priced per entry (`entries^k`), so its ratio is its tokens
-  per entry; a re-export statement counts one entry per row, since a
-  multi-line `export { … }` or `from x import (…)` lists one name per
-  row. Per-language pricing enters only through `is_entrypoint`
+  per entry. An entry is a roster row, not a statement or declaration:
+  a multi-line `export { … }` or `from x import (…)` lists one name per
+  row, and a Go grouped declaration one per spec. Per-language pricing enters only through `is_entrypoint`
   (a depth pin), `file_weight` and what `extract` hides.
 - **Removed after measuring neutral or better on the grid
   (2026-09-25); re-adding one needs a fresh measurement:** entry-file,

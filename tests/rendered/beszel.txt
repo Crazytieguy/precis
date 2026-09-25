@@ -137,6 +137,15 @@ beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
   …
+  7→const (
+  …
+  9→	Version = "0.18.7"
+  …
+  11→	AppName = "beszel"
+  …
+  15→var MinVersionCbor = semver.MustParse("0.12.0")
+  …
+  18→var MinVersionAgentResponse = semver.MustParse("0.13.0")
 go.mod
   1→module github.com/henrygd/beszel
   2→
@@ -318,37 +327,6 @@ internal/
         use-intersection-observer.ts
         utils.ts
       locales/
-        ar/
-        bg/
-        cs/
-        da/
-        de/
-        en/
-        es/
-        fa/
-        fr/
-        he/
-        hr/
-        hu/
-        id/
-        it/
-        ja/
-        ko/
-        nl/
-        no/
-        pl/
-        pt/
-        ro/
-        ru/
-        sl/
-        sr/
-        sv/
-        th/
-        tr/
-        uk/
-        vi/
-        zh/
-        …
       main.tsx
       types.d.ts
       vite-env.d.ts

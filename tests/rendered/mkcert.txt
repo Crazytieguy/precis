@@ -53,52 +53,6 @@ README.md
   188→### Installing the CA on other systems
   …
 cert.go
-  …
-  35→var userAndHostname string
-  36→
-  37→func init() {
-  38→	u, err := user.Current()
-  39→	if err == nil {
-  40→		userAndHostname = u.Username + "@"
-  41→	}
-  42→	if h, err := os.Hostname(); err == nil {
-  43→		userAndHostname += h
-  44→	}
-  45→	if err == nil && u.Name != "" && u.Name != u.Username {
-  46→		userAndHostname += " (" + u.Name + ")"
-  47→	}
-  …
-  50→func (m *mkcert) makeCert(hosts []string) {
-  …
-  148→func (m *mkcert) printHosts(hosts []string) {
-  …
-  166→func (m *mkcert) generateKey(rootCA bool) (crypto.PrivateKey, error) {
-  167→	if m.ecdsa {
-  168→		return ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-  169→	}
-  170→	if rootCA {
-  171→		return rsa.GenerateKey(rand.Reader, 3072)
-  172→	}
-  173→	return rsa.GenerateKey(rand.Reader, 2048)
-  …
-  176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
-  …
-  202→func randomSerialNumber() *big.Int {
-  203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
-  204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
-  205→	fatalIfErr(err, "failed to generate serial number")
-  206→	return serialNumber
-  …
-  209→func (m *mkcert) makeCertFromCSR() {
-  …
-  281→// loadCA will load or create the CA at CAROOT.
-  282→func (m *mkcert) loadCA() {
-  …
-  310→func (m *mkcert) newCA() {
-  …
-  366→func (m *mkcert) caUniqueName() string {
-  367→	return "mkcert development CA " + m.caCert.SerialNumber.String()
-  …
 go.mod
   1→module filippo.io/mkcert
   2→
@@ -251,21 +205,54 @@ truststore_darwin.go
   44→		<key>kSecTrustSettingsPolicyName</key>
   45→		<string>basicX509</string>
   46→		<key>kSecTrustSettingsResult</key>
-  47→		<integer>1</integer>
-  48→	</dict>
-  49→</array>
-  50→`)
+  …
   52→func (m *mkcert) installPlatform() bool {
   …
   105→func (m *mkcert) uninstallPlatform() bool {
-  106→	cmd := commandWithSudo("security", "remove-trusted-cert", "-d", filepath.Join(m.CAROOT, rootName))
-  107→	out, err := cmd.CombinedOutput()
-  108→	fatalIfCmdErr(err, "security remove-trusted-cert", out)
-  109→
-  110→	return true
   …
 truststore_java.go
+  …
+  21→var (
+  22→	hasJava    bool
+  23→	hasKeytool bool
+  24→
+  25→	javaHome    string
+  26→	cacertsPath string
+  27→	keytoolPath string
+  28→	storePass   string = "changeit"
+  29→)
+  31→func init() {
+  …
+  57→func (m *mkcert) checkJava() bool {
+  …
+  81→func (m *mkcert) installJava() {
+  …
+  94→func (m *mkcert) uninstallJava() {
+  …
+  108→// execKeytool will execute a "keytool" command and if needed re-execute
+  109→// the command with commandWithSudo to work around file permissions.
+  110→func execKeytool(cmd *exec.Cmd) ([]byte, error) {
+  …
 truststore_linux.go
+  …
+  17→var (
+  18→	FirefoxProfiles = []string{os.Getenv("HOME") + "/.mozilla/firefox/*",
+  19→		os.Getenv("HOME") + "/snap/firefox/common/.mozilla/firefox/*"}
+  20→	NSSBrowsers = "Firefox and/or Chrome/Chromium"
+  21→
+  22→	SystemTrustFilename string
+  23→	SystemTrustCommand  []string
+  24→	CertutilInstallHelp string
+  25→)
+  27→func init() {
+  …
+  51→func (m *mkcert) systemTrustFilename() string {
+  52→	return fmt.Sprintf(SystemTrustFilename, strings.Replace(m.caUniqueName(), " ", "_", -1))
+  …
+  55→func (m *mkcert) installPlatform() bool {
+  …
+  77→func (m *mkcert) uninstallPlatform() bool {
+  …
 truststore_nss.go
   …
   17→var (
@@ -274,9 +261,21 @@ truststore_nss.go
   20→	certutilPath string
   21→	nssDBs       = []string{
   22→		filepath.Join(os.Getenv("HOME"), ".pki/nssdb"),
-  …
+  23→		filepath.Join(os.Getenv("HOME"), "snap/chromium/current/.pki/nssdb"), // Snapcraft
+  24→		"/etc/pki/nssdb", // CentOS 7
+  25→	}
   26→	firefoxPaths = []string{
-  …
+  27→		"/usr/bin/firefox",
+  28→		"/usr/bin/firefox-nightly",
+  29→		"/usr/bin/firefox-developer-edition",
+  30→		"/snap/firefox",
+  31→		"/Applications/Firefox.app",
+  32→		"/Applications/FirefoxDeveloperEdition.app",
+  33→		"/Applications/Firefox Developer Edition.app",
+  34→		"/Applications/Firefox Nightly.app",
+  35→		"C:\\Program Files\\Mozilla Firefox",
+  36→	}
+  37→)
   39→func init() {
   …
   73→func (m *mkcert) checkNSS() bool {
@@ -285,6 +284,8 @@ truststore_nss.go
   …
   106→func (m *mkcert) uninstallNSS() {
   …
+  118→// execCertutil will execute a "certutil" command and if needed re-execute
+  119→// the command with commandWithSudo to work around file permissions.
   120→func execCertutil(cmd *exec.Cmd) ([]byte, error) {
   …
   131→func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {

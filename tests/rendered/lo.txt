@@ -322,6 +322,24 @@ retry_test.go
 slice.go
 slice_test.go
 string.go
+  …
+  16→var (
+  17→	//nolint:revive
+  18→	LowerCaseLettersCharset = []rune("abcdefghijklmnopqrstuvwxyz")
+  19→	UpperCaseLettersCharset = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+  20→	LettersCharset          = append(LowerCaseLettersCharset, UpperCaseLettersCharset...)
+  21→	NumbersCharset          = []rune("0123456789")
+  22→	AlphanumericCharset     = append(LettersCharset, NumbersCharset...)
+  23→	SpecialCharset          = []rune("!@#$%^&*()_+-=[]{}|;':\",./<>?")
+  24→	AllCharset              = append(AlphanumericCharset, SpecialCharset...)
+  25→
+  26→	// bearer:disable go_lang_permissive_regex_validation
+  27→	splitWordReg = regexp.MustCompile(`([a-z])([A-Z0-9])|([a-zA-Z])([0-9])|([0-9])([a-zA-Z])|([A-Z])([A-Z])([a-z])`)
+  28→	// bearer:disable go_lang_permissive_regex_validation
+  29→	splitNumberLetterReg = regexp.MustCompile(`([0-9])([a-zA-Z])`)
+  30→	maximumCapacity      = math.MaxInt>>1 + 1
+  31→)
+  …
 string_test.go
 time.go
 time_test.go
@@ -332,44 +350,20 @@ type_manipulation.go
   7→func IsNil(x any) bool {
   …
   22→func IsNotNil(x any) bool {
-  23→	return !IsNil(x)
   …
-  26→// ToPtr returns a pointer copy of value.
-  27→// Play: https://go.dev/play/p/P2sD0PMXw4F
   28→func ToPtr[T any](x T) *T {
-  29→	return &x
   …
-  32→// Nil returns a nil pointer of type.
-  33→// Play: https://go.dev/play/p/P2sD0PMXw4F
   34→func Nil[T any]() *T {
-  35→	return nil
   …
   41→func EmptyableToPtr[T any](x T) *T {
   …
-  51→// FromPtr returns the pointer value or empty.
-  52→// Play: https://go.dev/play/p/mhD9CwO3X0m
   53→func FromPtr[T any](x *T) T {
   …
-  61→// FromPtrOr returns the pointer value or the fallback value.
-  …
   63→func FromPtrOr[T any](x *T, fallback T) T {
-  64→	if x == nil {
-  65→		return fallback
-  66→	}
-  67→
-  68→	return *x
   …
-  71→// ToSlicePtr returns a slice of pointers to each value.
-  72→// Play: https://go.dev/play/p/P2sD0PMXw4F
   73→func ToSlicePtr[T any](collection []T) []*T {
   …
   85→func FromSlicePtr[T any](collection []*T) []T {
-  …
-  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
-  …
-  115→func ToAnySlice[T any](collection []T) []any {
-  …
-  126→func FromAnySlice[T any](in []any) ([]T, bool) {
   …
 type_manipulation_test.go
 types.go

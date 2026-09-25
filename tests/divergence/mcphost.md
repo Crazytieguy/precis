@@ -1,4 +1,4 @@
-Score(3000)=0.726 I=0.879 C=0.600 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.891/0.864/0.807/0.726/0.609/0.532/0.516
+Score(3000)=0.726 I=0.879 C=0.600 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.891/0.864/0.807/0.726/0.609/0.532/0.512
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -187,33 +187,21 @@ Score(3000)=0.726 I=0.879 C=0.600 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 8743 | 48 | Code::CodeKey { rung: Doc, file: internal/models/generate_models.go, decl: 1, sub: 0, line: 18 } |  |  | 0.503 |
 | walker |  | 8804 | 61 | Code::CodeKey { rung: Doc, file: internal/hooks/schemas.go, decl: 3, sub: 0, line: 32 } |  |  | 0.503 |
 | ns | 8813 |  | 131 | Every top-level symbol of cmd/script.go (locations) | 8.2 |  | 0.512 |
-| walker |  | 8832 | 28 | Code::CodeKey { rung: Names, file: internal/tokens/init.go, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 8847 | 15 | Code::CodeKey { rung: Body, file: internal/tokens/init.go, decl: 1, sub: 0, line: 21 } |  |  | 0.512 |
-| walker |  | 8862 | 15 | Code::CodeKey { rung: Body, file: internal/tokens/init.go, decl: 2, sub: 0, line: 50 } |  |  | 0.512 |
-| walker |  | 8950 | 88 | Code::CodeKey { rung: Names, file: internal/hooks/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
-| walker |  | 8977 | 27 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 1, sub: 0, line: 14 } |  |  | 0.515 |
-| walker |  | 9032 | 55 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 3, sub: 0, line: 30 } |  |  | 0.521 |
-| walker |  | 9097 | 65 | Code::CodeKey { rung: Decl, file: internal/hooks/config.go, decl: 2, sub: 0, line: 21 } |  |  | 0.530 |
-| walker |  | 9111 | 14 | Code::CodeKey { rung: Doc, file: internal/hooks/config.go, decl: 6, sub: 0, line: 113 } |  |  | 0.521 |
-| ns | 9111 |  | 298 | Session file format: Session, Metadata, Message and ToolCall fields | 8.3 |  | 0.521 |
-| walker |  | 9130 | 19 | Code::CodeKey { rung: Doc, file: internal/hooks/config.go, decl: 5, sub: 0, line: 97 } |  |  | 0.521 |
-| walker |  | 9159 | 29 | Code::CodeKey { rung: Doc, file: internal/hooks/config.go, decl: 1, sub: 0, line: 14 } |  |  | 0.521 |
-| walker |  | 9215 | 56 | Code::CodeKey { rung: Doc, file: internal/hooks/config.go, decl: 3, sub: 0, line: 30 } |  |  | 0.521 |
-| walker |  | 9275 | 60 | Code::CodeKey { rung: Doc, file: internal/hooks/config.go, decl: 2, sub: 0, line: 21 } |  |  | 0.521 |
-| walker |  | 9305 | 30 | Code::CodeKey { rung: Names, file: internal/auth/browser.go, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
-| walker |  | 9336 | 31 | Code::CodeKey { rung: Body, file: internal/auth/browser.go, decl: 2, sub: 0, line: 34 } |  |  | 0.521 |
-| walker |  | 9396 | 60 | Code::CodeKey { rung: Doc, file: internal/auth/browser.go, decl: 2, sub: 0, line: 34 } |  |  | 0.521 |
-| ns | 9405 |  | 294 | The public SDK surface: Options and every exported symbol | 8.4 |  | 0.533 |
-| walker |  | 9456 | 60 | Code::CodeKey { rung: Names, file: internal/ui/commands.go, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
-| walker |  | 9507 | 51 | Code::CodeKey { rung: Decl, file: internal/ui/commands.go, decl: 1, sub: 0, line: 6 } |  |  | 0.533 |
-| walker |  | 9555 | 48 | Code::CodeKey { rung: Doc, file: internal/ui/commands.go, decl: 1, sub: 0, line: 6 } |  |  | 0.533 |
-| ns | 9607 |  | 202 | The complete slash-command table: names and descriptions | 8.5 |  | 0.527 |
-| walker |  | 9610 | 55 | Code::CodeKey { rung: Doc, file: internal/ui/commands.go, decl: 3, sub: 0, line: 65 } |  |  | 0.527 |
-| walker |  | 9668 | 58 | Code::CodeKey { rung: Doc, file: internal/ui/commands.go, decl: 4, sub: 0, line: 83 } |  |  | 0.527 |
-| ns | 9828 |  | 221 | ui.SetupCLI: the AgentInterface contract and CLISetupOptions | 8.6 |  | 0.520 |
-| walker |  | 9880 | 212 | Code::CodeKey { rung: Names, file: internal/config/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
-| walker |  | 9922 | 42 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 3, sub: 0, line: 109 } |  |  | 0.528 |
-| walker |  | 9931 | 9 | Code::CodeKey { rung: Body, file: internal/config/config.go, decl: 14, sub: 0, line: 459 } |  |  | 0.528 |
-| walker |  | 9954 | 23 | Code::CodeKey { rung: Doc, file: internal/config/config.go, decl: 11, sub: 0, line: 296 } |  |  | 0.528 |
-| ns | 9984 |  | 156 | Release packaging: the goreleaser build matrix | 9.1 |  | 0.522 |
-| walker |  | 9991 | 37 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 5, sub: 0, line: 137 } |  |  | 0.522 |
+| ns | 9111 |  | 298 | Session file format: Session, Metadata, Message and ToolCall fields | 8.3 |  | 0.503 |
+| walker |  | 9121 | 317 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.503 |
+| walker |  | 9134 | 13 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 2, sub: 0, line: 67 } |  |  | 0.503 |
+| walker |  | 9145 | 11 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 3, sub: 0, line: 71 } |  |  | 0.503 |
+| walker |  | 9219 | 74 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 1, sub: 0, line: 27 } |  |  | 0.503 |
+| walker |  | 9234 | 15 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 2, sub: 0, line: 67 } |  |  | 0.503 |
+| ns | 9405 |  | 294 | The public SDK surface: Options and every exported symbol | 8.4 |  | 0.516 |
+| walker |  | 9483 | 249 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 1, line: 0 } |  |  | 0.517 |
+| walker |  | 9502 | 19 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 16, sub: 0, line: 794 } |  |  | 0.517 |
+| walker |  | 9524 | 22 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 15, sub: 0, line: 777 } |  |  | 0.517 |
+| ns | 9607 |  | 202 | The complete slash-command table: names and descriptions | 8.5 |  | 0.511 |
+| walker |  | 9738 | 214 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 14, sub: 0, line: 758 } |  |  | 0.519 |
+| walker |  | 9748 | 10 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 12, sub: 0, line: 361 } |  |  | 0.519 |
+| walker |  | 9801 | 53 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 7, sub: 0, line: 131 } |  |  | 0.519 |
+| ns | 9828 |  | 221 | ui.SetupCLI: the AgentInterface contract and CLISetupOptions | 8.6 |  | 0.512 |
+| walker |  | 9859 | 58 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 14, sub: 0, line: 758 } |  |  | 0.512 |
+| ns | 9984 |  | 156 | Release packaging: the goreleaser build matrix | 9.1 |  | 0.506 |
+| walker |  | 9994 | 135 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 2, line: 0 } |  |  | 0.510 |

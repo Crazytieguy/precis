@@ -26,6 +26,15 @@ BacktraceScreen.c
 BacktraceScreen.h
 BatteryMeter.c
 BatteryMeter.h
+  …
+  15→typedef enum ACPresence_ {
+  16→   AC_ABSENT,
+  17→   AC_PRESENT,
+  18→   AC_ERROR
+  19→} ACPresence;
+  20→
+  21→extern const MeterClass BatteryMeter_class;
+  …
 CLAUDE.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -39,39 +48,9 @@ CRT.h
   18→#define SCREEN_TAB_COLUMN_GAP  1
   19→
   20→typedef enum TreeStr_ {
-  21→   TREE_STR_VERT,
-  22→   TREE_STR_RTEE,
-  23→   TREE_STR_BEND,
-  24→   TREE_STR_TEND,
-  25→   TREE_STR_OPEN,
-  26→   TREE_STR_SHUT,
-  27→   TREE_STR_ASC,
-  28→   TREE_STR_DESC,
-  29→   LAST_TREE_STR
+  …
   30→} TreeStr;
   31→
-  32→typedef enum ColorScheme_ {
-  33→   COLORSCHEME_DEFAULT,
-  34→   COLORSCHEME_MONOCHROME,
-  35→   COLORSCHEME_BLACKONWHITE,
-  36→   COLORSCHEME_LIGHTTERMINAL,
-  37→   COLORSCHEME_MIDNIGHT,
-  …
-  42→} ColorScheme;
-  43→
-  44→typedef enum ColorElements_ {
-  …
-  162→} ColorElements;
-  …
-  175→#define KEY_WHEELUP    KEY_F(30)
-  176→#define KEY_WHEELDOWN  KEY_F(31)
-  177→#define KEY_RECLICK    KEY_F(32)
-  178→#define KEY_RIGHTCLICK KEY_F(33)
-  179→#define KEY_SHIFT_TAB  KEY_F(34)
-  180→#define KEY_ALT(x)     (KEY_F(64 - 26) + ((x) - 'A'))
-  181→#define KEY_FOCUS_IN   (KEY_MAX + 'I')
-  182→#define KEY_FOCUS_OUT  (KEY_MAX + 'O')
-  183→#define KEY_DEL_MAC    127
   …
 CategoriesPanel.c
 CategoriesPanel.h
@@ -82,6 +61,17 @@ ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
+  …
+  11→typedef enum {
+  12→   STATUS_OK,
+  13→   STATUS_ERROR_EXIT,
+  14→   STATUS_OK_EXIT
+  15→} CommandLineStatus;
+  16→
+  17→extern const char* program;
+  18→
+  19→int CommandLine_run(int argc, char** argv);
+  …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
@@ -134,29 +124,21 @@ MainPanel.h
 Makefile.am
 MemoryMeter.c
 MemoryMeter.h
+  …
+  13→typedef struct MemoryClass_s {
+  14→   const char *label; // e.g. "wired", "shared", "compressed" - platform-specific memory classe names
+  15→   bool countsAsUsed; // memory class counts as "used" memory
+  16→   bool countsAsCache; // memory class reclaimed under pressure (displayed with "show cached memory")
+  17→   ColorElements color; // one of the MEMORY CRT color values
+  18→} MemoryClass;
+  19→
+  20→extern const MeterClass MemoryMeter_class;
+  …
 MemorySwapMeter.c
 MemorySwapMeter.h
 Meter.c
 Meter.h
 MeterMode.h
-  …
-  11→enum MeterModeId_ {
-  12→   /* Meter mode 0 is reserved */
-  13→   BAR_METERMODE = 1,
-  14→   TEXT_METERMODE,
-  15→   GRAPH_METERMODE,
-  16→   LED_METERMODE,
-  17→   LAST_METERMODE
-  18→};
-  20→typedef unsigned int MeterModeId;
-  21→
-  22→#define METERMODE_DEFAULT_SUPPORTED ( \
-  23→   (1 << BAR_METERMODE) |             \
-  24→   (1 << TEXT_METERMODE) |            \
-  25→   (1 << GRAPH_METERMODE) |           \
-  26→   (1 << LED_METERMODE) |             \
-  27→   0) // Avoids edits when updating
-  …
 MetersPanel.c
 MetersPanel.h
 NEWS
@@ -181,15 +163,7 @@ ProvideTerm.h
 README
 README.md
   1→# [![htop logo](htop-logo.png)](https://htop.dev)
-  3→[![CI](https://github.com/htop-dev/htop/workflows/CI/badge.svg)](https://github.com/htop-dev/htop/actions)
-  4→[![Coverity Scan Build Status](https://scan.coverity.com/projects/21665/badge.svg)](https://scan.coverity.com/projects/21665)
-  5→[![Mailing List](https://img.shields.io/badge/Mailing%20List-htop-blue.svg)](https://groups.io/g/htop)
-  6→[![IRC #htop](https://img.shields.io/badge/IRC-htop-blue.svg)](https://web.libera.chat/#htop)
-  7→[![GitHub Release](https://img.shields.io/github/release/htop-dev/htop.svg)](https://github.com/htop-dev/htop/releases/latest)
-  8→[![Packaging status](https://repology.org/badge/tiny-repos/htop.svg)](https://repology.org/project/htop/versions)
-  9→[![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2+-blue.svg)](COPYING?raw=true)
-  10→
-  11→![Screenshot of htop](docs/images/screenshot.png?raw=true)
+  …
   13→## Introduction
   …
   30→## Usage
@@ -225,6 +199,49 @@ RichString.h
 Row.c
 Row.h
 RowField.h
+  …
+  13→typedef enum ReservedFields_ {
+  14→   NULL_FIELD = 0,
+  15→   PID = 1,
+  16→   COMM = 2,
+  17→   STATE = 3,
+  18→   PPID = 4,
+  19→   PGRP = 5,
+  20→   SESSION = 6,
+  21→   TTY = 7,
+  22→   TPGID = 8,
+  23→   MINFLT = 10,
+  24→   MAJFLT = 12,
+  25→   PRIORITY = 18,
+  26→   NICE = 19,
+  27→   STARTTIME = 21,
+  28→   PROCESSOR = 38,
+  29→   M_VIRT = 39,
+  30→   M_RESIDENT = 40,
+  31→   ST_UID = 46,
+  32→   PERCENT_CPU = 47,
+  33→   PERCENT_MEM = 48,
+  34→   USER = 49,
+  35→   TIME = 50,
+  36→   NLWP = 51,
+  37→   TGID = 52,
+  38→   PERCENT_NORM_CPU = 53,
+  39→   ELAPSED = 54,
+  40→   SCHEDULERPOLICY = 55,
+  41→   PROC_COMM = 124,
+  42→   PROC_EXE = 125,
+  43→   CWD = 126,
+  44→
+  45→   /* Platform specific fields, defined in ${platform}/ProcessField.h */
+  46→   PLATFORM_PROCESS_FIELDS
+  47→
+  48→   /* Do not add new fields after this entry (dynamic entries follow) */
+  49→   LAST_RESERVED_FIELD
+  50→} ReservedFields;
+  52→/* Follow ReservedField entries with dynamic fields defined at runtime */
+  53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD
+  54→typedef int32_t RowField;
+  …
 Scheduling.c
 Scheduling.h
 ScreenManager.c
@@ -239,6 +256,16 @@ SignalsPanel.c
 SignalsPanel.h
 SwapMeter.c
 SwapMeter.h
+  …
+  12→typedef enum {
+  13→   SWAP_METER_USED = 0,
+  14→   SWAP_METER_CACHE = 1,
+  15→   SWAP_METER_FRONTSWAP = 2,
+  16→   SWAP_METER_ITEMCOUNT = 3, // number of entries in this enum
+  17→} SwapMeterValues;
+  18→
+  19→extern const MeterClass SwapMeter_class;
+  …
 SysArchMeter.c
 SysArchMeter.h
 TESTPLAN
@@ -246,9 +273,6 @@ Table.c
 Table.h
 TasksMeter.c
 TasksMeter.h
-  …
-  13→extern const MeterClass TasksMeter_class;
-  …
 TraceScreen.c
 TraceScreen.h
 UptimeMeter.c

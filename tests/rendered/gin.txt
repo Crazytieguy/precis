@@ -52,37 +52,6 @@ README.md
   222→### Getting Started with Contributing
   …
 auth.go
-  …
-  16→// AuthUserKey is the cookie name for user credential in basic auth.
-  17→const AuthUserKey = "user"
-  19→// AuthProxyUserKey is the cookie name for proxy_user credential in basic auth for proxy.
-  20→const AuthProxyUserKey = "proxy_user"
-  22→// Accounts defines a key/value for user/pass list of authorized logins.
-  23→type Accounts map[string]string
-  24→
-  25→type authPair struct {
-  26→	value string
-  27→	user  string
-  28→}
-  30→type authPairs []authPair
-  31→
-  32→func (a authPairs) searchCredential(authValue string) (string, bool) {
-  …
-  48→func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
-  …
-  70→// BasicAuth returns a Basic HTTP Authorization middleware. It takes as argument a map[string]string where
-  71→// the key is the user name and the value is the password.
-  72→func BasicAuth(accounts Accounts) HandlerFunc {
-  73→	return BasicAuthForRealm(accounts, "")
-  …
-  76→func processAccounts(accounts Accounts) authPairs {
-  …
-  91→func authorizationHeader(user, password string) string {
-  …
-  96→// BasicAuthForProxy returns a Basic HTTP Proxy-Authorization middleware.
-  97→// If the realm is empty, "Proxy Authorization Required" will be used by default.
-  98→func BasicAuthForProxy(accounts Accounts, realm string) HandlerFunc {
-  …
 auth_test.go
 benchmarks_test.go
 binding/
@@ -133,39 +102,6 @@ context_appengine.go
 context_file_test.go
 context_test.go
 debug.go
-  …
-  16→const ginSupportMinGoVer = 25
-  17→
-  18→var runtimeVersion = runtime.Version()
-  20→// IsDebugging returns true if the framework is running in debug mode.
-  21→// Use SetMode(gin.ReleaseMode) to disable debug mode.
-  22→func IsDebugging() bool {
-  23→	return atomic.LoadInt32(&ginMode) == debugCode
-  …
-  26→// DebugPrintRouteFunc indicates debug log output format.
-  27→var DebugPrintRouteFunc func(httpMethod, absolutePath, handlerName string, nuHandlers int)
-  29→// DebugPrintFunc indicates debug log output format.
-  30→var DebugPrintFunc func(format string, values ...any)
-  31→
-  32→func debugPrintRoute(httpMethod, absolutePath string, handlers HandlersChain) {
-  …
-  44→func debugPrintLoadTemplate(tmpl *template.Template) {
-  …
-  56→func debugPrint(format string, values ...any) {
-  …
-  72→func getMinVer(v string) (uint64, error) {
-  …
-  81→func debugPrintWARNINGDefault() {
-  …
-  92→func debugPrintWARNINGNew() {
-  …
-  100→func debugPrintWARNINGSetHTMLTemplate() {
-  …
-  110→func debugPrintError(err error) {
-  111→	if err != nil && IsDebugging() {
-  112→		fmt.Fprintf(DefaultErrorWriter, "[GIN-debug] [ERROR] %v\n", err)
-  113→	}
-  …
 debug_test.go
 deprecated.go
 deprecated_test.go
@@ -224,66 +160,181 @@ internal/
     fs.go
     fs_test.go
 logger.go
+  …
+  17→type consoleColorModeValue int
+  19→const (
+  20→	autoColor consoleColorModeValue = iota
+  21→	disableColor
+  22→	forceColor
+  23→)
+  25→const (
+  26→	green   = "\033[97;42m"
+  27→	white   = "\033[90;47m"
+  28→	yellow  = "\033[90;43m"
+  29→	red     = "\033[97;41m"
+  30→	blue    = "\033[97;44m"
+  31→	magenta = "\033[97;45m"
+  32→	cyan    = "\033[97;46m"
+  33→	reset   = "\033[0m"
+  34→)
+  36→var consoleColorMode = autoColor
+  38→// LoggerConfig defines the config for Logger middleware.
+  39→type LoggerConfig struct {
+  40→	// Optional. Default value is gin.defaultLogFormatter
+  41→	Formatter LogFormatter
+  42→
+  43→	// Output is a writer where logs are written.
+  44→	// Optional. Default value is gin.DefaultWriter.
+  45→	Output io.Writer
+  46→
+  47→	// SkipPaths is a URL path array which logs are not written.
+  48→	// Optional.
+  49→	SkipPaths []string
+  50→
+  51→	// SkipQueryString indicates that query strings should not be written
+  52→	// for cases such as when API keys are passed via query strings.
+  53→	// Optional. Default value is false.
+  54→	SkipQueryString bool
+  55→
+  56→	// Skip is a Skipper that indicates which logs should not be written.
+  57→	// Optional.
+  58→	Skip Skipper
+  59→}
+  61→// Skipper is a function to skip logs based on provided Context
+  62→type Skipper func(c *Context) bool
+  64→// LogFormatter gives the signature of the formatter function passed to LoggerWithFormatter
+  65→type LogFormatter func(params LogFormatterParams) string
+  67→// LogFormatterParams is the structure any formatter will be handed when time to log comes
+  68→type LogFormatterParams struct {
+  69→	Request *http.Request
+  70→
+  71→	// TimeStamp shows the time after the server returns a response.
+  72→	TimeStamp time.Time
+  73→	// StatusCode is HTTP response code.
+  74→	StatusCode int
+  75→	// Latency is how much time the server cost to process a certain request.
+  76→	Latency time.Duration
+  77→	// ClientIP equals Context's ClientIP method.
+  78→	ClientIP string
+  79→	// Method is the HTTP method given to the request.
+  80→	Method string
+  81→	// Path is a path the client requests.
+  82→	Path string
+  83→	// ErrorMessage is set if error has occurred in processing the request.
+  84→	ErrorMessage string
+  85→	// isTerm shows whether gin's output descriptor refers to a terminal.
+  86→	isTerm bool
+  87→	// BodySize is the size of the Response Body
+  88→	BodySize int
+  89→	// Keys are the keys set on the request's context.
+  90→	Keys map[any]any
+  91→}
+  93→// StatusCodeColor is the ANSI color for appropriately logging http status code to a terminal.
+  94→func (p *LogFormatterParams) StatusCodeColor() string {
+  …
+  111→// LatencyColor is the ANSI color for latency
+  112→func (p *LogFormatterParams) LatencyColor() string {
+  …
+  132→// MethodColor is the ANSI color for appropriately logging http method to a terminal.
+  133→func (p *LogFormatterParams) MethodColor() string {
+  …
+  156→// ResetColor resets all escape attributes.
+  157→func (p *LogFormatterParams) ResetColor() string {
+  …
+  161→// IsOutputColor indicates whether can colors be outputted to the log.
+  162→func (p *LogFormatterParams) IsOutputColor() bool {
+  …
+  167→var defaultLogFormatter = func(param LogFormatterParams) string {
+  168→	var statusColor, methodColor, resetColor, latencyColor string
+  169→	if param.IsOutputColor() {
+  170→		statusColor = param.StatusCodeColor()
+  171→		methodColor = param.MethodColor()
+  172→		resetColor = param.ResetColor()
+  173→		latencyColor = param.LatencyColor()
+  174→	}
+  175→
+  176→	switch {
+  177→	case param.Latency > time.Minute:
+  178→		param.Latency = param.Latency.Truncate(time.Second * 10)
+  179→	case param.Latency > time.Second:
+  …
+  196→// DisableConsoleColor disables color output in the console.
+  197→func DisableConsoleColor() {
+  …
+  201→// ForceConsoleColor force color output in the console.
+  202→func ForceConsoleColor() {
+  …
+  206→// ErrorLogger returns a HandlerFunc for any error type.
+  207→func ErrorLogger() HandlerFunc {
+  …
+  211→// ErrorLoggerT returns a HandlerFunc for a given error type.
+  212→func ErrorLoggerT(typ ErrorType) HandlerFunc {
+  …
+  222→// Logger instances a Logger middleware that will write the logs to gin.DefaultWriter.
+  223→// By default, gin.DefaultWriter = os.Stdout.
+  224→func Logger() HandlerFunc {
+  …
+  228→// LoggerWithFormatter instance a Logger middleware with the specified log format function.
+  229→func LoggerWithFormatter(f LogFormatter) HandlerFunc {
+  …
+  235→// LoggerWithWriter instance a Logger middleware with the specified writer buffer.
+  236→// Example: os.Stdout, a file opened in write mode, a socket...
+  237→func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
+  …
+  244→// LoggerWithConfig instance a Logger middleware with config.
+  245→func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
+  …
 logger_test.go
 middleware_test.go
 mode.go
+  …
+  16→// EnvGinMode indicates environment name for gin mode.
+  17→const EnvGinMode = "GIN_MODE"
+  19→const (
+  20→	// DebugMode indicates gin mode is debug.
+  21→	DebugMode = "debug"
+  22→	// ReleaseMode indicates gin mode is release.
+  23→	ReleaseMode = "release"
+  24→	// TestMode indicates gin mode is test.
+  25→	TestMode = "test"
+  26→)
+  28→const (
+  29→	debugCode = iota
+  30→	releaseCode
+  31→	testCode
+  32→)
+  …
+  42→var DefaultWriter io.Writer = os.Stdout
+  44→// DefaultErrorWriter is the default io.Writer used by Gin to debug errors
+  45→var DefaultErrorWriter io.Writer = os.Stderr
+  47→var (
+  48→	ginMode  int32 = debugCode
+  49→	modeName atomic.Value
+  50→)
+  52→func init() {
+  …
+  57→// SetMode sets gin mode according to input string.
+  58→func SetMode(value string) {
+  …
+  80→// DisableBindValidation closes the default validator.
+  81→func DisableBindValidation() {
+  82→	binding.Validator = nil
+  …
+  85→// EnableJsonDecoderUseNumber sets true for binding.EnableDecoderUseNumber to
+  86→// call the UseNumber method on the JSON Decoder instance.
+  87→func EnableJsonDecoderUseNumber() {
+  …
+  91→// EnableJsonDecoderDisallowUnknownFields sets true for binding.EnableDecoderDisallowUnknownFields to
+  92→// call the DisallowUnknownFields method on the JSON Decoder instance.
+  93→func EnableJsonDecoderDisallowUnknownFields() {
+  …
+  97→// Mode returns current gin mode.
+  98→func Mode() string {
+  …
 mode_test.go
 path.go
-  …
-  8→const stackBufSize = 128
-  …
-  23→func cleanPath(p string) string {
-  …
-  126→// Internal helper to lazily create a buffer if necessary.
-  127→// Calls to this function get inlined.
-  128→func bufApp(buf *[]byte, s string, w int, c byte) {
-  …
-  153→// removeRepeatedChar removes multiple consecutive 'char's from a string.
-  154→// if s == "/a//b///c////" && char == '/', it returns "/a/b/c/"
-  155→func removeRepeatedChar(s string, char byte) string {
-  …
 path_test.go
 recovery.go
-  …
-  26→const (
-  27→	dunno     = "???"
-  28→	stackSkip = 3
-  29→)
-  31→// RecoveryFunc defines the function passable to CustomRecovery.
-  32→type RecoveryFunc func(c *Context, err any)
-  34→// Recovery returns a middleware that recovers from any panics and writes a 500 if there was one.
-  35→func Recovery() HandlerFunc {
-  36→	return RecoveryWithWriter(DefaultErrorWriter)
-  …
-  39→// CustomRecovery returns a middleware that recovers from any panics and calls the provided handle func to handle it.
-  40→func CustomRecovery(handle RecoveryFunc) HandlerFunc {
-  41→	return RecoveryWithWriter(DefaultErrorWriter, handle)
-  …
-  44→// RecoveryWithWriter returns a middleware for a given writer that recovers from any panics and writes a 500 if there was one.
-  45→func RecoveryWithWriter(out io.Writer, recovery ...RecoveryFunc) HandlerFunc {
-  …
-  52→// CustomRecoveryWithWriter returns a middleware for a given writer that recovers from any panics and calls the provided handle func to handle it.
-  53→func CustomRecoveryWithWriter(out io.Writer, handle RecoveryFunc) HandlerFunc {
-  …
-  98→func secureRequestDump(r *http.Request) string {
-  …
-  109→func defaultHandleRecovery(c *Context, _ any) {
-  …
-  113→// stack returns a nicely formatted stack frame, skipping skip frames.
-  114→func stack(skip int) []byte {
-  …
-  142→// readNthLine reads the nth line from the file.
-  143→// It returns the trimmed content of the line if found,
-  144→// or an empty string if the line doesn't exist.
-  145→// If there's an error opening the file, it returns the error.
-  146→func readNthLine(file string, n int) (string, error) {
-  …
-  171→// function returns, if possible, the name of the function containing the PC.
-  172→func function(pc uintptr) string {
-  …
-  196→// timeFormat returns a customized time string for logger.
-  197→func timeFormat(t time.Time) string {
-  …
 recovery_test.go
 render/
   bson.go
@@ -323,54 +374,5 @@ testdata/
 tree.go
 tree_test.go
 utils.go
-  …
-  19→// BindKey indicates a default bind key.
-  20→const BindKey = "_gin-gonic/gin/bindkey"
-  22→// localhostIP indicates the default localhost IP address.
-  23→const localhostIP = "127.0.0.1"
-  25→// localhostIPv6 indicates the default localhost IPv6 address.
-  26→const localhostIPv6 = "::1"
-  28→// Bind is a helper function for given interface object and returns a Gin middleware.
-  29→func Bind(val any) HandlerFunc {
-  …
-  46→// WrapF is a helper function for wrapping http.HandlerFunc and returns a Gin middleware.
-  47→func WrapF(f http.HandlerFunc) HandlerFunc {
-  …
-  53→// WrapH is a helper function for wrapping http.Handler and returns a Gin middleware.
-  54→func WrapH(h http.Handler) HandlerFunc {
-  …
-  60→// H is a shortcut for map[string]any
-  61→type H map[string]any
-  63→// MarshalXML allows type H to be used with xml.Marshal.
-  64→func (h H) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-  …
-  85→func assert1(guard bool, text string) {
-  …
-  91→func filterFlags(content string) string {
-  …
-  100→func chooseData(custom, wildcard any) any {
-  …
-  110→func parseAccept(acceptHeader string) []string {
-  …
-  124→func lastChar(str string) uint8 {
-  …
-  131→func nameOfFunction(f any) string {
-  …
-  135→func joinPaths(absolutePath, relativePath string) string {
-  …
-  147→func resolveAddress(addr []string) string {
-  …
-  163→// https://stackoverflow.com/questions/53069040/checking-a-string-contains-only-ascii-characters
-  164→func isASCII(s string) bool {
-  …
-  173→// safeInt8 converts int to int8 safely, capping at math.MaxInt8
-  174→func safeInt8(n int) int8 {
-  …
-  181→// safeUint16 converts int to uint16 safely, capping at math.MaxUint16
-  182→func safeUint16(n int) uint16 {
-  …
 utils_test.go
 version.go
-  …
-  7→// Version is the current gin framework's version.
-  8→const Version = "v1.12.0"

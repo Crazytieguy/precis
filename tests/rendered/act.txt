@@ -64,12 +64,16 @@ VERSION
 act-cli.nuspec
 cmd/
   dir.go
+    …
+    10→var (
+    11→	UserHomeDir  string
+    12→	CacheHomeDir string
+    13→)
+    15→func init() {
+    …
   execute_test.go
   graph.go
   input.go
-    …
-    10→type Input struct {
-    …
   list.go
   notices.go
     …
@@ -95,8 +99,6 @@ cmd/
     123→	content, err := os.ReadFile(p)
     124→	if err != nil {
     125→		log.Debugf("Unable to load etag from %s: %e", p, err)
-    126→	}
-    127→	return strings.TrimSuffix(string(content), "\n")
     …
     130→func saveNoticesEtag(etag string) {
     …
