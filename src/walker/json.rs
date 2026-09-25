@@ -440,11 +440,6 @@ fn package_sections_share_lines(pairs: &[(String, usize, usize, bool)]) -> bool 
 /// certainly a docs/tooling site, not the primary surface.
 const SECONDARY_PACKAGE_JSON_FACTOR: f64 = 0.05;
 
-/// Damp `package.json` inside scaffold-template directories
-/// (`templates/` or `template-*`) — they're starter material, not the
-/// repo's own API/workflow.
-const SCAFFOLD_TEMPLATE_PACKAGE_JSON_FACTOR: f64 = 0.05;
-
 fn secondary_package_json_factor(file: &Path) -> f64 {
     let Some(parent) = file.parent() else {
         return 1.0;
@@ -452,24 +447,7 @@ fn secondary_package_json_factor(file: &Path) -> f64 {
     if parent.join("pyproject.toml").is_file() || parent.join("Cargo.toml").is_file() {
         return SECONDARY_PACKAGE_JSON_FACTOR;
     }
-    if is_scaffold_template_path(file) {
-        return SCAFFOLD_TEMPLATE_PACKAGE_JSON_FACTOR;
-    }
     1.0
-}
-
-/// True iff `file` is under a `templates/` / `template-*` / `cra-template-*`
-/// ancestor — npm scaffold template content.
-fn is_scaffold_template_path(file: &Path) -> bool {
-    file.ancestors().any(|anc| {
-        anc.file_name()
-            .and_then(|n| n.to_str())
-            // A bare `templates/` joins the prefixed forms here and only
-            // here: this predicate fires on a manifest, and a directory
-            // that both is named `templates` and ships its own
-            // `package.json` is scaffold payload, not a view layer.
-            .is_some_and(|n| n == "templates" || crate::value::is_scaffold_template_dir_name(n))
-    })
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
