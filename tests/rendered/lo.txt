@@ -80,11 +80,36 @@ README.md
   14→
   15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
   …
+  53→## 🚀 Install
+  54→
+  55→```sh
+  56→go get github.com/samber/lo@v1
+  57→
+  58→# AI Agent Skill
+  59→npx skills add https://github.com/samber/cc-skills-golang --skill golang-samber-lo
+  60→```
+  61→
+  62→This library is v1 and follows SemVer strictly.
+  63→
+  64→No breaking changes will be made to exported APIs before v2.0.0, except for experimental packages under `exp/`.
+  65→
+  66→This library has no dependencies outside the Go standard library.
+  68→## 💡 Usage
+  …
+  100→## 🤠 Spec
+  …
+  5036→## 🛩 Benchmark
+  …
+  5073→## 🤝 Contributing
+  …
+  5093→## 👤 Contributors
+  …
   5097→## 💫 Show your support
   5098→
   5099→Give a ⭐️ if this project helped you!
   5100→
   5101→[![GitHub Sponsors](https://img.shields.io/github/sponsors/samber?style=for-the-badge)](https://github.com/sponsors/samber)
+  5103→## 📝 License
   …
 benchmark/
   CLAUDE.md
@@ -138,12 +163,7 @@ docs/
       channel.md
       find.md
       intersect.md
-      map.md
-      sequence.md
-      slice.md
-      string.md
-      tuple.md
-      type.md
+      …
     mutable/
       _category_.json
       slice.md
@@ -334,28 +354,5 @@ time_test.go
 tuples.go
 tuples_test.go
 type_manipulation.go
-  …
-  7→func IsNil(x any) bool {
-  …
-  22→func IsNotNil(x any) bool {
-  …
-  28→func ToPtr[T any](x T) *T {
-  29→	return &x
-  …
-  34→func Nil[T any]() *T {
-  35→	return nil
-  …
-  41→func EmptyableToPtr[T any](x T) *T {
-  …
-  53→func FromPtr[T any](x *T) T {
-  …
-  63→func FromPtrOr[T any](x *T, fallback T) T {
-  …
-  73→func ToSlicePtr[T any](collection []T) []*T {
-  …
-  85→func FromSlicePtr[T any](collection []*T) []T {
-  …
-  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
-  …
 type_manipulation_test.go
 types.go

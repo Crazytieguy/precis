@@ -11,6 +11,9 @@ README.md
   2→
   3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
   5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
+  7→## Table of Contents
+  …
+  41→## Overview 🌟
   …
   60→## Features ✨
   61→
@@ -35,16 +38,29 @@ README.md
   81→- For Ollama: Local Ollama installation with desired models
   82→- For Google/Gemini: Google API key (see https://aistudio.google.com/app/apikey)
   83→- One or more MCP-compatible tool servers
+  85→## Environment Setup 🔧
   …
   124→## Installation 📦
   125→
   126→```bash
   127→go install github.com/mark3labs/mcphost@latest
   128→```
+  130→## SDK Usage 🛠️
+  …
+  176→## Configuration ⚙️
+  …
+  488→## Usage 🚀
+  …
+  892→## Automation & Scripting 🤖
   …
   967→## MCP Server Compatibility 🔌
   968→
   969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
+  971→## Contributing 🤝
+  …
+  981→## License 📄
+  …
+  985→## Acknowledgments 🙏
   …
 cmd/
   auth.go
@@ -73,16 +89,6 @@ cmd/
     41→
     42→This will open your browser to complete the OAuth authentication process.
     43→Your credentials will be securely stored and will take precedence over 
-    44→environment variables when making API calls.
-    45→
-    46→Available providers:
-    47→  - anthropic: Anthropic Claude API (OAuth)
-    48→
-    49→Example:
-    50→  mcphost auth login anthropic`,
-    51→	Args: cobra.ExactArgs(1),
-    52→	RunE: runAuthLogin,
-    53→}
     …
     58→var authLogoutCmd = &cobra.Command{
     59→	Use:   "logout [provider]",
@@ -353,6 +359,3 @@ sdk/
   mcphost.go
   mcphost_test.go
   types.go
-    …
-    10→type Message = session.Message
-    …

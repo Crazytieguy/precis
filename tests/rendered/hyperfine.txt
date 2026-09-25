@@ -40,8 +40,6 @@ Cargo.toml
   33→libc = "0.2"
   34→
   35→[target.'cfg(windows)'.dependencies]
-  36→windows-sys = { version = "0.59", features = [
-  37→    "Win32_Foundation",
   …
 LICENSE-APACHE
 LICENSE-MIT
@@ -64,10 +62,14 @@ README.md
   21→* Export results to various formats: CSV, JSON, Markdown, AsciiDoc.
   22→* Parameterized benchmarks (e.g. vary the number of threads).
   23→* Cross-platform
+  25→## Usage
+  …
+  164→## Installation
   …
   314→## Alternative tools
   315→
   316→Hyperfine is inspired by [bench](https://github.com/Gabriella439/bench).
+  318→## Integration with other tools
   …
   332→## Origin of the name
   333→
@@ -78,6 +80,7 @@ README.md
   339→
   340→Thank you for considering to cite hyperfine in your research work. Please see the information
   341→in the sidebar on how to properly cite hyperfine.
+  343→## License
   …
 build.rs
   …

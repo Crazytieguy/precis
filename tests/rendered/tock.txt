@@ -96,6 +96,8 @@ README.md
   75→tock start -d "Implementing features" -p "My Project" -t 14:30 --note "Some notes" --tag "afternoon" # Start with flags + time + notes/tags
   76→```
   …
+  116→## Configuration
+  …
   238→## Theming
   239→
   240→Tock supports customizable color themes for the calendar view.
@@ -120,6 +122,8 @@ README.md
   259→- `ansi_light`: 16-color light theme
   260→- `custom`: Use custom colors defined by environment variables
   …
+  343→## Commands
+  …
   602→## Update Check
   603→
   604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
@@ -135,10 +139,14 @@ README.md
   615→```
   616→
   617→You can edit this file manually with any text editor.
+  619→## Shell Completion
+  …
+  656→## Shell Integration
   …
   709→## Inspiration
   710→
   711→Tock is inspired by and compatible with [Bartib](https://github.com/nikolassv/bartib) - an excellent time tracking tool written in Rust by Nikolas Schmidt-Voigt. It's saved me countless hours and helped me stay organized, so I wanted to create a similar tool in Go with a clean architecture approach and an interactive terminal UI.
+  713→## License
   …
 assets/
   demo.gif
@@ -235,8 +243,7 @@ internal/
       25→type CalendarConfig struct {
       …
       33→type ExportConfig struct {
-      34→	ICal ICalConfig `mapstructure:"ical"`
-      35→}
+      …
       37→type ICalConfig struct {
       38→	FileName string `mapstructure:"file_name"`
       39→}
@@ -244,8 +251,7 @@ internal/
       42→	Path string `mapstructure:"path"`
       43→}
       45→type TimewarriorConfig struct {
-      46→	DataPath string `mapstructure:"data_path"`
-      47→}
+      …
       49→type ThemeConfig struct {
       …
       60→type Option func(*viper.Viper)

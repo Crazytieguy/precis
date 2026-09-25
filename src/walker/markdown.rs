@@ -11,7 +11,8 @@
 //! - `Prelude` — the rest of the text above the first heading, chrome
 //!   excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
-//!   cover, when there are 2..=[`MAX_OUTLINE_HEADINGS`] of them.
+//!   cover (H1–H2 when that is too many), when there are
+//!   2..=[`MAX_OUTLINE_HEADINGS`] of them.
 //!   Predecessor: the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s); an oversize section splits into a head
@@ -261,9 +262,10 @@ fn build_outline_content(
     single_file_lines_content(file, source, full)
 }
 
-/// Heading row ranges for `HeadingsOutline` — levels 1–3, with any
-/// headline-covered headings dropped — or none when there are fewer than
-/// two or more than [`MAX_OUTLINE_HEADINGS`] of them.
+/// Heading row ranges for `HeadingsOutline` — levels 1–3, or 1–2 when
+/// that is too many, with any headline-covered headings dropped — or
+/// none when there are fewer than two or more than
+/// [`MAX_OUTLINE_HEADINGS`] of them.
 fn outline_rows(
     tree: &Tree,
     source: &str,
@@ -282,12 +284,17 @@ fn outline_rows(
         if headline.is_some_and(|spec| spec.range(start_row..=end_row).next().is_some()) {
             continue;
         }
-        out.push((start_row, end_row));
+        out.push((level, start_row, end_row));
+    }
+    if out.len() > MAX_OUTLINE_HEADINGS {
+        out.retain(|&(level, _, _)| level <= 2);
     }
     if !(2..=MAX_OUTLINE_HEADINGS).contains(&out.len()) {
         out.clear();
     }
-    out
+    out.into_iter()
+        .map(|(_, start, end)| (start, end))
+        .collect()
 }
 
 /// Section headings in document order — tree-sitter-md nests every
@@ -2212,6 +2219,24 @@ mod tests {
         assert!(
             rows.is_empty(),
             "outline must not include H4+; got {rows:?}"
+        );
+    }
+
+    #[test]
+    fn markdown_outline_over_the_cap_keeps_h1_h2() {
+        let mut src = String::from("# Tool\n\nTool does things.\n");
+        for section in 0..3 {
+            src.push_str(&format!("\n## Part {section}\n"));
+            for sub in 0..MAX_OUTLINE_HEADINGS / 2 {
+                src.push_str(&format!("\n### Step {sub}\n"));
+            }
+        }
+        let rows = outline_rows_of(&src);
+        let lines: Vec<&str> = src.lines().collect();
+        assert_eq!(rows.len(), 3);
+        assert!(
+            rows.iter()
+                .all(|&(start, _)| lines[start - 1].starts_with("## "))
         );
     }
 

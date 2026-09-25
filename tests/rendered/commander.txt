@@ -25,6 +25,15 @@ Readme.md
   63→```sh
   64→npm install commander
   65→```
+  67→## Quick Start
+  …
+  147→## Declaring _program_ variable
+  …
+  177→## Options
+  …
+  523→## Commands
+  …
+  754→## Automated help
   …
   956→## Custom event listeners
   957→
@@ -35,6 +44,9 @@ Readme.md
   962→  process.env.VERBOSE = this.opts().verbose;
   963→});
   964→```
+  966→## Bits and pieces
+  …
+  1164→## Support
   …
 Readme_zh-CN.md
 SECURITY.md
@@ -351,25 +363,19 @@ typings/
     347→  error: boolean;
     348→}
     349→export interface AddHelpTextContext {
-    350→  // passed to text function used with .addHelpText()
-    351→  error: boolean;
-    352→  command: Command;
-    353→}
+    …
     354→export interface OutputConfiguration {
     …
     367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
     368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
     …
     370→export type OptionValueSource =
-    371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-    372→  | undefined;
+    …
     374→export type OptionValues = Record<string, any>;
     375→
     376→export class Command {
     …
     1094→export interface CommandOptions {
-    1095→  hidden?: boolean;
-    1096→  isDefault?: boolean;
     …
     1100→export interface ExecutableCommandOptions extends CommandOptions {
     1101→  executableFile?: string;

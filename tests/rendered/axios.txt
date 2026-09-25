@@ -89,22 +89,6 @@ README.md
   …
   331→## Table of Contents
   …
-  383→## Features
-  384→
-  385→- **Browser Requests:** Make [XMLHttpRequests](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) directly from the browser.
-  386→- **Node.js Requests:** Make [http](https://nodejs.org/api/http.html) requests from Node.js environments.
-  387→- **Promise-based:** Fully supports the [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) API for easier asynchronous code.
-  388→- **Interceptors:** Intercept requests and responses to add custom logic or transform data.
-  389→- **Data Transformation:** Transform request and response data automatically.
-  390→- **Request Cancellation:** Cancel requests using built-in mechanisms.
-  391→- **Automatic JSON Handling:** Automatically serializes and parses [JSON](https://www.json.org/json-en.html) data.
-  392→- **Form Serialization:** 🆕 Automatically serializes data objects to `multipart/form-data` or `x-www-form-urlencoded` formats.
-  393→- **XSRF Protection:** Client-side support to protect against [Cross-Site Request Forgery](https://en.wikipedia.org/wiki/Cross-site_request_forgery).
-  …
-  2341→## Semver
-  2342→
-  2343→Since Axios has reached a `v.1.0.0` we will fully embrace semver as per the spec [here](https://semver.org/)
-  …
 SECURITY.md
 THREATMODEL.md
 docs/
@@ -220,14 +204,26 @@ index.d.cts
   12→type AxiosHeaderParser = (this: AxiosHeaders, value: axios.AxiosHeaderValue, header: string) => any;
   13→
   14→type CommonRequestHeadersList =
-  …
+  15→  | 'Accept'
+  16→  | 'Content-Length'
+  17→  | 'User-Agent'
+  18→  | 'Content-Encoding'
+  19→  | 'Authorization'
+  20→  | 'Location';
   22→type ContentType =
-  …
+  23→  | axios.AxiosHeaderValue
+  24→  | 'text/html'
+  25→  | 'text/plain'
+  26→  | 'multipart/form-data'
+  27→  | 'application/json'
+  28→  | 'application/x-www-form-urlencoded'
+  29→  | 'application/octet-stream';
   31→type CommonResponseHeadersList =
   32→  | 'Server'
   33→  | 'Content-Type'
   34→  | 'Content-Length'
-  …
+  35→  | 'Cache-Control'
+  36→  | 'Content-Encoding';
   38→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
   39→
   40→type BrowserProgressEvent = any;
@@ -235,6 +231,21 @@ index.d.cts
   42→declare class AxiosHeaders {
   …
   123→declare class AxiosError<T = unknown, D = any> extends Error {
+  124→  constructor(
+  …
+  132→  config?: axios.InternalAxiosRequestConfig<D>;
+  133→  code?: string;
+  134→  request?: any;
+  135→  response?: axios.AxiosResponse<T, D>;
+  136→  isAxiosError: boolean;
+  137→  status?: number;
+  138→  toJSON: () => object;
+  139→  cause?: Error;
+  140→  event?: BrowserProgressEvent;
+  141→  static from<T = unknown, D = any>(
+  …
+  149→  static readonly ERR_FR_TOO_MANY_REDIRECTS = 'ERR_FR_TOO_MANY_REDIRECTS';
+  150→  static readonly ERR_BAD_OPTION_VALUE = 'ERR_BAD_OPTION_VALUE';
   …
   165→declare class CanceledError<T> extends AxiosError<T> {}
   166→
