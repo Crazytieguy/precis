@@ -474,8 +474,12 @@ fn is_block_closer(trimmed: &str) -> bool {
 /// `#region` / `#endregion` (C#, Visual Basic, PHP) name a fold for the
 /// editor and read as comments too.
 fn is_comment_line(trimmed: &str) -> bool {
-    let lower = trimmed.to_ascii_lowercase();
-    if lower.starts_with("#region") || lower.starts_with("#endregion") {
+    let starts_with_ignoring_case = |prefix: &str| {
+        trimmed
+            .get(..prefix.len())
+            .is_some_and(|head| head.eq_ignore_ascii_case(prefix))
+    };
+    if starts_with_ignoring_case("#region") || starts_with_ignoring_case("#endregion") {
         return true;
     }
     for marker in ["//", "/*", "<!--", "\"\"\"", "'''"] {
@@ -597,10 +601,10 @@ fn declaration_surface(source: &str, class: Class) -> Vec<usize> {
         if trimmed.is_empty() || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS {
             continue;
         }
-        let Some(class) = classify_surface_line(trimmed, in_block_comment) else {
+        let Some(kind) = classify_surface_line(trimmed, in_block_comment) else {
             continue;
         };
-        rows.push((indentation(line), index + 1, class));
+        rows.push((indentation(line), index + 1, kind));
     }
 
     let mut levels: Vec<usize> = rows.iter().map(|(indent, ..)| *indent).collect();
