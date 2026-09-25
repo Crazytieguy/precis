@@ -112,7 +112,7 @@ fn decl_info(
     }
     let name_rows = name_rows(node);
     let (head, body) = match shape {
-        Shape::Callable => callable_parts(node, file, &name_rows),
+        Shape::Callable => callable_parts(node, file),
         Shape::Whole => whole_parts(node, file),
     };
     let doc_rows = collect_doc_comments_above_filtered(node, source, banner_end_row, |prev, _| {
@@ -201,10 +201,10 @@ fn declared_name(declarator: Node) -> Option<Node> {
 }
 
 /// A function definition's head (through the row before its first
-/// statement) and its statements.
-fn callable_parts(node: Node, file: &SourceFile, name_rows: &[usize]) -> (Vec<usize>, Vec<Item>) {
+/// statement) and its statements. A statement sharing the row of the
+/// body's opening `{` is head.
+fn callable_parts(node: Node, file: &SourceFile) -> (Vec<usize>, Vec<Item>) {
     let rows = file.node_rows(node);
-    let last_name_row = name_rows.last().copied().unwrap_or(*rows.start());
     let body = node
         .child_by_field_name("body")
         .filter(|body| {
@@ -212,7 +212,7 @@ fn callable_parts(node: Node, file: &SourceFile, name_rows: &[usize]) -> (Vec<us
             body.named_children(&mut cursor)
                 .any(|child| child.kind() != "comment")
         })
-        .map(|body| child_items(body, file, last_name_row))
+        .map(|body| child_items(body, file, body.start_position().row + 1))
         .unwrap_or_default();
     let head_end = body.first().map_or(*rows.end(), |first| first.rows[0] - 1);
     ((*rows.start()..=head_end).collect(), body)
@@ -760,9 +760,13 @@ int one_liner(void) { return 1; }
 void empty(void) {
     /* nothing */
 }
+int add(int a,
+        int b) { int sum = a + b;
+    return sum;
+}
 ";
         let model = model("sds.c", source);
-        let [sdsnewlen, one_liner, empty] = &model.decls[..] else {
+        let [sdsnewlen, one_liner, empty, add] = &model.decls[..] else {
             panic!("{:?}", model.decls);
         };
         assert_eq!(sdsnewlen.shape, Shape::Callable);
@@ -780,6 +784,8 @@ void empty(void) {
         assert!(one_liner.body.is_empty());
         assert_eq!(empty.head, vec![15, 16, 17]);
         assert!(empty.body.is_empty());
+        assert_eq!(add.head, vec![18, 19]);
+        assert_eq!(rows(&add.body), vec![vec![20]]);
     }
 
     #[test]
