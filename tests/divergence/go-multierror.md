@@ -1,4 +1,4 @@
-Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.421/0.500/0.510/0.511/0.742/0.875/0.771
+Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.516/0.500/0.510/0.511/0.742/0.875/0.771
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,23 +19,23 @@ Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 349 | 55 | go names sort.go |  |  | 0.560 |
 | walker |  | 363 | 14 | listing of '.github' |  |  | 0.560 |
 | walker |  | 375 | 12 | listing of '.github/workflows' |  |  | 0.561 |
+| walker |  | 388 | 13 | go doc sort.go:7 |  |  | 0.561 |
+| walker |  | 402 | 14 | go doc sort.go:16 |  |  | 0.561 |
+| walker |  | 416 | 14 | go doc sort.go:21 |  |  | 0.561 |
 | ns | 467 |  | 152 | Package-level API roster: every exported func/type outside multierror.go, with full signatures | 1.6 |  | 0.532 |
-| ns | 606 |  | 139 | Every method on `Error`, across multierror.go and sort.go | 1.7 |  | 0.466 |
-| ns | 682 |  | 76 | The unexported `chain` type and its four methods | 1.8 |  | 0.435 |
-| walker |  | 763 | 388 | plaintext config Makefile |  |  | 0.439 |
-| walker |  | 776 | 13 | go doc sort.go:7 |  |  | 0.439 |
-| walker |  | 790 | 14 | go doc sort.go:16 |  |  | 0.439 |
-| walker |  | 804 | 14 | go doc sort.go:21 |  |  | 0.439 |
-| ns | 853 |  | 171 | README section map: every heading and every bold subsection label | 1.9 |  | 0.403 |
-| walker |  | 936 | 132 | README headline in README.md |  |  | 0.414 |
-| ns | 946 |  | 93 | README deprecation note: prefer stdlib `errors.Join` | 2.1 |  | 0.414 |
-| walker |  | 985 | 49 | headings outline in README.md |  |  | 0.421 |
-| ns | 1070 |  | 124 | `Append` doc comment: nil handling and one-level flattening | 2.2 | 1.6 | 0.401 |
-| walker |  | 1159 | 174 | go names multierror.go |  |  | 0.475 |
-| walker |  | 1182 | 23 | go decl multierror.go:13 |  |  | 0.484 |
-| walker |  | 1197 | 15 | go body multierror.go:42 |  |  | 0.490 |
-| walker |  | 1206 | 9 | go doc multierror.go:102 |  |  | 0.490 |
-| walker |  | 1237 | 31 | go body multierror.go:53 |  |  | 0.497 |
+| walker |  | 548 | 132 | README headline in README.md |  |  | 0.547 |
+| walker |  | 597 | 49 | headings outline in README.md |  |  | 0.549 |
+| ns | 606 |  | 139 | Every method on `Error`, across multierror.go and sort.go | 1.7 |  | 0.480 |
+| ns | 682 |  | 76 | The unexported `chain` type and its four methods | 1.8 |  | 0.448 |
+| walker |  | 771 | 174 | go names multierror.go |  |  | 0.533 |
+| walker |  | 794 | 23 | go decl multierror.go:13 |  |  | 0.544 |
+| walker |  | 809 | 15 | go body multierror.go:42 |  |  | 0.551 |
+| walker |  | 818 | 9 | go doc multierror.go:102 |  |  | 0.551 |
+| walker |  | 849 | 31 | go body multierror.go:53 |  |  | 0.559 |
+| ns | 853 |  | 171 | README section map: every heading and every bold subsection label | 1.9 |  | 0.517 |
+| ns | 946 |  | 93 | README deprecation note: prefer stdlib `errors.Join` | 2.1 |  | 0.516 |
+| ns | 1070 |  | 124 | `Append` doc comment: nil handling and one-level flattening | 2.2 | 1.6 | 0.493 |
+| walker |  | 1237 | 388 | plaintext config Makefile |  |  | 0.497 |
 | walker |  | 1255 | 18 | go body sort.go:21 |  |  | 0.503 |
 | walker |  | 1284 | 29 | go doc group.go:10 |  |  | 0.503 |
 | walker |  | 1322 | 38 | go doc multierror.go:13 |  |  | 0.536 |

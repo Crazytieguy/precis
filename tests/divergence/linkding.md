@@ -1,4 +1,4 @@
-Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.821/0.709/0.618/0.530/0.477/0.482
+Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.818/0.697/0.709/0.618/0.530/0.477/0.482
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -8,55 +8,55 @@ Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 127 | 12 | listing of 'docker' |  |  | 0.000 |
 | walker |  | 138 | 11 | python names manage.py |  |  | 0.000 |
 | walker |  | 141 | 3 | listing of '.github' |  |  | 0.000 |
-| walker |  | 154 | 13 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 159 | 5 | listing of '.devcontainer' |  |  | 0.000 |
-| walker |  | 169 | 10 | plaintext config version.txt |  |  | 0.000 |
+| walker |  | 151 | 10 | plaintext config version.txt |  |  | 0.000 |
+| walker |  | 164 | 13 | listing of '.github/workflows' |  |  | 0.000 |
+| walker |  | 169 | 5 | listing of '.devcontainer' |  |  | 0.000 |
 | walker |  | 213 | 44 | listing of 'assets' |  |  | 0.000 |
 | ns | 227 |  | 115 | Repository root listing (complete) | 1.3 |  | 0.714 |
 | walker |  | 267 | 54 | README headline in README.md |  |  | 0.945 |
 | ns | 348 |  | 121 | bookmarks/ app package listing (complete) | 1.4 |  | 0.647 |
-| ns | 445 |  | 97 | README feature overview (head) | 1.5 |  | 0.604 |
-| ns | 583 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.576 |
-| walker |  | 628 | 361 | plaintext config Makefile |  |  | 0.593 |
-| ns | 679 |  | 96 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.515 |
-| walker |  | 749 | 121 | listing of 'bookmarks' |  |  | 0.758 |
-| walker |  | 752 | 3 | listing of 'bookmarks/management' |  |  | 0.758 |
-| ns | 762 |  | 83 | bookmarks/services/ listing (complete) | 1.8 |  | 0.691 |
-| walker |  | 772 | 20 | listing of 'bookmarks/api' |  |  | 0.696 |
-| walker |  | 792 | 20 | listing of 'bookmarks/templatetags' |  |  | 0.696 |
-| walker |  | 814 | 22 | listing of 'bookmarks/settings' |  |  | 0.698 |
-| walker |  | 826 | 12 | python names bookmarks/wsgi.py |  |  | 0.698 |
-| walker |  | 844 | 18 | listing of 'bookmarks/frontend' |  |  | 0.698 |
-| walker |  | 859 | 15 | python names bookmarks/apps.py |  |  | 0.698 |
-| walker |  | 874 | 15 | python names bookmarks/type_defs.py |  |  | 0.698 |
-| walker |  | 891 | 17 | python names bookmarks/validators.py |  |  | 0.698 |
-| walker |  | 906 | 15 | python decl bookmarks/validators.py:5 |  |  | 0.698 |
-| walker |  | 924 | 18 | python names bookmarks/signals.py |  |  | 0.698 |
-| walker |  | 933 | 9 | python decl bookmarks/signals.py:6 |  |  | 0.698 |
-| ns | 937 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.692 |
-| walker |  | 960 | 27 | listing of 'bookmarks/templates' |  |  | 0.692 |
-| walker |  | 965 | 5 | listing of 'bookmarks/templates/admin' |  |  | 0.692 |
-| walker |  | 981 | 16 | listing of 'bookmarks/templates/registration' |  |  | 0.692 |
-| walker |  | 1005 | 24 | python names bookmarks/context_processors.py |  |  | 0.692 |
-| walker |  | 1081 | 76 | listing of 'bookmarks/views' |  |  | 0.798 |
-| walker |  | 1093 | 12 | python names bookmarks/views/health.py |  |  | 0.798 |
-| walker |  | 1105 | 12 | python names bookmarks/views/manifest.py |  |  | 0.798 |
-| walker |  | 1117 | 12 | python names bookmarks/views/root.py |  |  | 0.798 |
-| walker |  | 1129 | 12 | python names bookmarks/views/toasts.py |  |  | 0.798 |
-| walker |  | 1137 | 8 | python decl bookmarks/views/toasts.py:9 |  |  | 0.798 |
-| ns | 1154 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.810 |
-| walker |  | 1162 | 25 | python decl bookmarks/apps.py:4 |  |  | 0.810 |
-| walker |  | 1176 | 14 | python names bookmarks/views/opensearch.py |  |  | 0.810 |
-| walker |  | 1196 | 20 | listing of 'bookmarks/templates/bundles' |  |  | 0.810 |
-| walker |  | 1216 | 20 | listing of 'bookmarks/templates/tags' |  |  | 0.810 |
-| walker |  | 1299 | 83 | listing of 'bookmarks/services' |  |  | 0.880 |
-| walker |  | 1315 | 16 | python names bookmarks/api/auth.py |  |  | 0.880 |
-| walker |  | 1331 | 16 | python names bookmarks/services/wayback.py |  |  | 0.880 |
-| walker |  | 1362 | 31 | python names bookmarks/urls.py |  |  | 0.880 |
-| walker |  | 1394 | 32 | python decl bookmarks/type_defs.py:11 |  |  | 0.880 |
-| walker |  | 1421 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.880 |
-| ns | 1438 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.821 |
-| walker |  | 1448 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.821 |
+| walker |  | 388 | 121 | listing of 'bookmarks' |  |  | 0.957 |
+| walker |  | 391 | 3 | listing of 'bookmarks/management' |  |  | 0.957 |
+| walker |  | 411 | 20 | listing of 'bookmarks/api' |  |  | 0.958 |
+| walker |  | 431 | 20 | listing of 'bookmarks/templatetags' |  |  | 0.958 |
+| ns | 445 |  | 97 | README feature overview (head) | 1.5 |  | 0.894 |
+| walker |  | 453 | 22 | listing of 'bookmarks/settings' |  |  | 0.896 |
+| walker |  | 465 | 12 | python names bookmarks/wsgi.py |  |  | 0.896 |
+| walker |  | 483 | 18 | listing of 'bookmarks/frontend' |  |  | 0.896 |
+| walker |  | 498 | 15 | python names bookmarks/apps.py |  |  | 0.896 |
+| walker |  | 513 | 15 | python names bookmarks/type_defs.py |  |  | 0.896 |
+| walker |  | 530 | 17 | python names bookmarks/validators.py |  |  | 0.896 |
+| walker |  | 545 | 15 | python decl bookmarks/validators.py:5 |  |  | 0.896 |
+| walker |  | 563 | 18 | python names bookmarks/signals.py |  |  | 0.896 |
+| walker |  | 572 | 9 | python decl bookmarks/signals.py:6 |  |  | 0.896 |
+| ns | 583 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.855 |
+| walker |  | 599 | 27 | listing of 'bookmarks/templates' |  |  | 0.855 |
+| walker |  | 604 | 5 | listing of 'bookmarks/templates/admin' |  |  | 0.855 |
+| walker |  | 620 | 16 | listing of 'bookmarks/templates/registration' |  |  | 0.855 |
+| walker |  | 644 | 24 | python names bookmarks/context_processors.py |  |  | 0.855 |
+| ns | 679 |  | 96 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.747 |
+| walker |  | 720 | 76 | listing of 'bookmarks/views' |  |  | 0.877 |
+| walker |  | 732 | 12 | python names bookmarks/views/health.py |  |  | 0.877 |
+| walker |  | 744 | 12 | python names bookmarks/views/manifest.py |  |  | 0.877 |
+| walker |  | 756 | 12 | python names bookmarks/views/root.py |  |  | 0.877 |
+| ns | 762 |  | 83 | bookmarks/services/ listing (complete) | 1.8 |  | 0.799 |
+| walker |  | 768 | 12 | python names bookmarks/views/toasts.py |  |  | 0.799 |
+| walker |  | 776 | 8 | python decl bookmarks/views/toasts.py:9 |  |  | 0.799 |
+| walker |  | 801 | 25 | python decl bookmarks/apps.py:4 |  |  | 0.799 |
+| walker |  | 815 | 14 | python names bookmarks/views/opensearch.py |  |  | 0.799 |
+| walker |  | 835 | 20 | listing of 'bookmarks/templates/bundles' |  |  | 0.799 |
+| walker |  | 855 | 20 | listing of 'bookmarks/templates/tags' |  |  | 0.799 |
+| ns | 937 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.734 |
+| walker |  | 938 | 83 | listing of 'bookmarks/services' |  |  | 0.817 |
+| walker |  | 954 | 16 | python names bookmarks/api/auth.py |  |  | 0.818 |
+| walker |  | 970 | 16 | python names bookmarks/services/wayback.py |  |  | 0.818 |
+| walker |  | 1001 | 31 | python names bookmarks/urls.py |  |  | 0.818 |
+| walker |  | 1033 | 32 | python decl bookmarks/type_defs.py:11 |  |  | 0.818 |
+| walker |  | 1060 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.818 |
+| walker |  | 1087 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.818 |
+| ns | 1154 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.748 |
+| ns | 1438 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.697 |
+| walker |  | 1448 | 361 | plaintext config Makefile |  |  | 0.821 |
 | ns | 1460 |  | 22 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.822 |
 | walker |  | 1517 | 69 | listing of 'bookmarks/styles' |  |  | 0.822 |
 | walker |  | 1541 | 24 | python decl bookmarks/services/wayback.py:6 |  |  | 0.822 |
@@ -253,7 +253,8 @@ Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 9532 | 99 | python decl bookmarks/api/serializers.py:181 |  |  | 0.483 |
 | walker |  | 9645 | 113 | python names bookmarks/services/auto_tagging.py |  |  | 0.483 |
 | walker |  | 9662 | 17 | python body bookmarks/utils.py:21 |  |  | 0.483 |
-| walker |  | 9730 | 68 | python decl bookmarks/management/commands/full_backup.py:9 |  |  | 0.483 |
-| ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.477 |
-| ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.488 |
-| ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.498 |
+| walker |  | 9709 | 47 | declaration surface of pytest.ini |  |  | 0.486 |
+| walker |  | 9777 | 68 | python decl bookmarks/management/commands/full_backup.py:9 |  |  | 0.486 |
+| ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.479 |
+| ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.490 |
+| ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.500 |

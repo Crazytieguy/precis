@@ -166,7 +166,8 @@ Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 8963 |  | 232 | Complete method roster of TypeguardTransformer | 6.2 |  | 0.520 |
 | walker |  | 9083 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.559 |
 | walker |  | 9102 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.560 |
-| walker |  | 9215 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.560 |
+| walker |  | 9204 | 102 | declaration surface of docs/api.rst |  |  | 0.560 |
+| walker |  | 9317 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.560 |
 | ns | 9434 |  | 471 | Docstrings of the TypeguardTransformer visit_ handlers | 6.3 | 6.2 | 0.546 |
 | ns | 9624 |  | 190 | pyproject.toml: package identity, runtime requirements, pytest entry point | 7.1 |  | 0.548 |
 | ns | 9825 |  | 201 | pyproject.toml: dependency groups and pytest configuration | 7.2 |  | 0.541 |

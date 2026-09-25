@@ -128,12 +128,12 @@ Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | ns | 6298 |  | 123 | `TestInlining`: which functions must inline, and how it checks | 4.6 | 4.5 | 0.737 |
 | ns | 6520 |  | 222 | `xxhsum/`: the CLI's usage text and argument handling | 4.7 |  | 0.730 |
 | walker |  | 6681 | 471 | go body xxhash.go:129 |  |  | 0.779 |
-| walker |  | 6778 | 97 | go names xxhashbench/xxhashbench_test.go |  |  | 0.779 |
+| walker |  | 6689 | 8 | plaintext config dynamic/.gitignore |  |  | 0.779 |
+| walker |  | 6786 | 97 | go names xxhashbench/xxhashbench_test.go |  |  | 0.779 |
 | ns | 6790 |  | 270 | `xxhsum/`: the file loop, `contains`, and the output format | 4.8 | 4.7 | 0.778 |
-| walker |  | 6818 | 40 | go doc xxhash_unsafe_test.go:31 |  |  | 0.781 |
-| walker |  | 6906 | 88 | go decl bench_test.go:8 |  |  | 0.793 |
-| walker |  | 6914 | 8 | plaintext config dynamic/.gitignore |  |  | 0.793 |
-| walker |  | 6923 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.793 |
+| walker |  | 6826 | 40 | go doc xxhash_unsafe_test.go:31 |  |  | 0.781 |
+| walker |  | 6835 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.781 |
+| walker |  | 6923 | 88 | go decl bench_test.go:8 |  |  | 0.793 |
 | ns | 6928 |  | 138 | `dynamic/`: the `plugin` build-tag file and its two exported tests | 4.9 |  | 0.789 |
 | walker |  | 7031 | 108 | go body bench_test.go:34 |  |  | 0.789 |
 | walker |  | 7157 | 126 | go body bench_test.go:63 |  |  | 0.789 |

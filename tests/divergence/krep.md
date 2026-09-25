@@ -235,16 +235,17 @@ Score(3000)=0.584 I=0.827 C=0.412 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.682 |
 | walker |  | 9120 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.708 |
 | walker |  | 9135 | 15 | c doc aho_corasick.c:86 |  |  | 0.708 |
+| walker |  | 9170 | 35 | plaintext config .gitignore |  |  | 0.708 |
 | ns | 9299 |  | 333 | select_search_algorithm: dispatch head through the short-pattern branch | 6.4 |  | 0.693 |
-| walker |  | 9342 | 207 | c names test/test_krep.h |  |  | 0.695 |
-| walker |  | 9404 | 62 | c decl test/test_krep.h:33 |  |  | 0.695 |
-| walker |  | 9414 | 10 | c doc test/test_krep.h:39 |  |  | 0.695 |
-| walker |  | 9477 | 63 | c body krep.h:312 |  |  | 0.695 |
-| walker |  | 9545 | 68 | c doc krep.h:298 |  |  | 0.695 |
-| walker |  | 9588 | 43 | c doc test/test_krep.h:33 |  |  | 0.695 |
-| walker |  | 9663 | 75 | c body aho_corasick.c:274 |  |  | 0.695 |
+| walker |  | 9377 | 207 | c names test/test_krep.h |  |  | 0.695 |
+| walker |  | 9439 | 62 | c decl test/test_krep.h:33 |  |  | 0.695 |
+| walker |  | 9449 | 10 | c doc test/test_krep.h:39 |  |  | 0.695 |
+| walker |  | 9512 | 63 | c body krep.h:312 |  |  | 0.695 |
+| walker |  | 9580 | 68 | c doc krep.h:298 |  |  | 0.695 |
+| walker |  | 9623 | 43 | c doc test/test_krep.h:33 |  |  | 0.695 |
 | ns | 9685 |  | 386 | select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback | 6.5 | 6.4 | 0.678 |
-| walker |  | 9753 | 90 | c doc krep.h:170 |  |  | 0.678 |
-| walker |  | 9849 | 96 | c doc krep.h:180 |  |  | 0.679 |
+| walker |  | 9698 | 75 | c body aho_corasick.c:274 |  |  | 0.678 |
+| walker |  | 9788 | 90 | c doc krep.h:170 |  |  | 0.678 |
 | ns | 9868 |  | 183 | gitignore data model: pattern record and parent-chained context | 6.6 |  | 0.677 |
-| ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.671 |
+| walker |  | 9884 | 96 | c doc krep.h:180 |  |  | 0.677 |
+| ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.672 |

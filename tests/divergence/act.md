@@ -6,21 +6,21 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 127 | 127 | listing of '.' |  |  | 0.000 |
 | ns | 135 |  | 86 | main.go: process entry point | 1.2 |  | 0.000 |
 | walker |  | 152 | 25 | go names main.go |  |  | 0.106 |
+| walker |  | 162 | 10 | plaintext config VERSION |  |  | 0.106 |
 | ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.068 |
-| walker |  | 193 | 41 | listing of 'pkg' |  |  | 0.445 |
-| walker |  | 209 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.445 |
+| walker |  | 203 | 41 | listing of 'pkg' |  |  | 0.445 |
+| walker |  | 219 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.445 |
 | ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.352 |
-| walker |  | 231 | 22 | listing of 'pkg/exprparser' |  |  | 0.352 |
-| walker |  | 240 | 9 | listing of 'pkg/gh' |  |  | 0.352 |
-| walker |  | 264 | 24 | listing of 'pkg/artifacts' |  |  | 0.353 |
-| walker |  | 289 | 25 | listing of 'pkg/artifactcache' |  |  | 0.354 |
-| walker |  | 292 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.354 |
-| walker |  | 305 | 13 | listing of 'pkg/filecollector' |  |  | 0.354 |
-| walker |  | 309 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.354 |
-| walker |  | 342 | 33 | listing of 'pkg/lookpath' |  |  | 0.355 |
+| walker |  | 241 | 22 | listing of 'pkg/exprparser' |  |  | 0.352 |
+| walker |  | 250 | 9 | listing of 'pkg/gh' |  |  | 0.352 |
+| walker |  | 274 | 24 | listing of 'pkg/artifacts' |  |  | 0.353 |
+| walker |  | 299 | 25 | listing of 'pkg/artifactcache' |  |  | 0.354 |
+| walker |  | 302 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.354 |
+| walker |  | 315 | 13 | listing of 'pkg/filecollector' |  |  | 0.354 |
+| walker |  | 319 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.354 |
 | ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.449 |
-| walker |  | 374 | 32 | go module identity in go.mod |  |  | 0.453 |
-| walker |  | 384 | 10 | plaintext config VERSION |  |  | 0.454 |
+| walker |  | 352 | 33 | listing of 'pkg/lookpath' |  |  | 0.449 |
+| walker |  | 384 | 32 | go module identity in go.mod |  |  | 0.454 |
 | walker |  | 403 | 19 | listing of 'pkg/schema' |  |  | 0.456 |
 | ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.413 |
 | walker |  | 413 | 10 | go doc main.go:11 |  |  | 0.437 |
@@ -195,54 +195,56 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 7208 | 19 | go doc pkg/container/docker_pull.go:21 |  |  | 0.436 |
 | ns | 7300 |  | 160 | pkg/container: complete file list | 5.1 |  | 0.462 |
 | walker |  | 7326 | 118 | go names pkg/runner/job_executor.go |  |  | 0.463 |
-| walker |  | 7543 | 217 | go names pkg/container/host_environment.go |  |  | 0.463 |
+| walker |  | 7332 | 6 | declaration surface of pkg/exprparser/testdata/for-hashing-1.txt |  |  | 0.463 |
+| walker |  | 7338 | 6 | declaration surface of pkg/exprparser/testdata/for-hashing-2.txt |  |  | 0.463 |
+| walker |  | 7555 | 217 | go names pkg/container/host_environment.go |  |  | 0.463 |
 | ns | 7577 |  | 277 | Container interface | 5.2 |  | 0.456 |
-| walker |  | 7614 | 71 | go decl pkg/container/host_environment.go:28 |  |  | 0.456 |
-| walker |  | 7633 | 19 | go body pkg/common/dryrun.go:23 |  |  | 0.456 |
+| walker |  | 7626 | 71 | go decl pkg/container/host_environment.go:28 |  |  | 0.456 |
+| walker |  | 7645 | 19 | go body pkg/common/dryrun.go:23 |  |  | 0.456 |
 | ns | 7719 |  | 142 | ExecutionsEnvironment interface | 5.3 |  | 0.462 |
-| walker |  | 7755 | 122 | go names pkg/workflowpattern/workflow_pattern.go |  |  | 0.462 |
-| walker |  | 7787 | 32 | go decl pkg/workflowpattern/workflow_pattern.go:9 |  |  | 0.462 |
-| walker |  | 7799 | 12 | go doc pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.462 |
-| walker |  | 7816 | 17 | go doc pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.462 |
-| walker |  | 7835 | 19 | go doc pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.462 |
+| walker |  | 7767 | 122 | go names pkg/workflowpattern/workflow_pattern.go |  |  | 0.462 |
+| walker |  | 7799 | 32 | go decl pkg/workflowpattern/workflow_pattern.go:9 |  |  | 0.462 |
+| walker |  | 7811 | 12 | go doc pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.462 |
+| walker |  | 7828 | 17 | go doc pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.462 |
+| walker |  | 7847 | 19 | go doc pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.462 |
 | ns | 7984 |  | 265 | Docker backend vs docker-less stub: the build-tag split | 5.4 |  | 0.454 |
-| walker |  | 8048 | 213 | go names pkg/container/docker_cli.go |  |  | 0.454 |
+| walker |  | 8060 | 213 | go names pkg/container/docker_cli.go |  |  | 0.454 |
 | ns | 8161 |  | 177 | Docker socket discovery | 5.5 |  | 0.465 |
-| walker |  | 8182 | 134 | go module doc pkg/artifactcache/doc.go |  |  | 0.465 |
+| walker |  | 8194 | 134 | go module doc pkg/artifactcache/doc.go |  |  | 0.465 |
 | ns | 8251 |  | 90 | Supporting packages: complete file lists (A) | 6.1 |  | 0.479 |
-| walker |  | 8384 | 202 | go names pkg/container/docker_run.go |  |  | 0.479 |
-| walker |  | 8398 | 14 | go doc pkg/container/docker_run.go:45 |  |  | 0.480 |
+| walker |  | 8396 | 202 | go names pkg/container/docker_run.go |  |  | 0.479 |
+| walker |  | 8410 | 14 | go doc pkg/container/docker_run.go:45 |  |  | 0.501 |
 | ns | 8410 |  | 159 | Supporting packages: complete file lists (B) | 6.2 |  | 0.501 |
 | ns | 8554 |  | 144 | Context names the expression interpreter resolves | 6.3 |  | 0.496 |
-| walker |  | 8676 | 278 | go names pkg/model/workflow.go |  |  | 0.503 |
-| ns | 8679 |  | 125 | Expression functions act implements | 6.4 |  | 0.498 |
-| walker |  | 8689 | 13 | go decl pkg/model/workflow.go:171 |  |  | 0.498 |
-| walker |  | 8706 | 17 | go decl pkg/model/workflow.go:225 |  |  | 0.498 |
-| walker |  | 8726 | 20 | go decl pkg/model/workflow.go:113 |  |  | 0.498 |
-| walker |  | 8752 | 26 | go decl pkg/model/workflow.go:161 |  |  | 0.498 |
-| walker |  | 8784 | 32 | go decl pkg/model/workflow.go:230 |  |  | 0.498 |
-| walker |  | 8823 | 39 | go decl pkg/model/workflow.go:166 |  |  | 0.498 |
-| walker |  | 8878 | 55 | go decl pkg/model/workflow.go:154 |  |  | 0.498 |
+| ns | 8679 |  | 125 | Expression functions act implements | 6.4 |  | 0.492 |
+| walker |  | 8688 | 278 | go names pkg/model/workflow.go |  |  | 0.498 |
+| walker |  | 8701 | 13 | go decl pkg/model/workflow.go:171 |  |  | 0.498 |
+| walker |  | 8718 | 17 | go decl pkg/model/workflow.go:225 |  |  | 0.498 |
+| walker |  | 8738 | 20 | go decl pkg/model/workflow.go:113 |  |  | 0.498 |
+| walker |  | 8764 | 26 | go decl pkg/model/workflow.go:161 |  |  | 0.498 |
+| walker |  | 8796 | 32 | go decl pkg/model/workflow.go:230 |  |  | 0.498 |
+| walker |  | 8835 | 39 | go decl pkg/model/workflow.go:166 |  |  | 0.498 |
+| walker |  | 8890 | 55 | go decl pkg/model/workflow.go:154 |  |  | 0.498 |
 | ns | 8903 |  | 224 | Artifact cache server: routes and lifecycle | 6.5 |  | 0.494 |
-| walker |  | 8947 | 69 | go decl pkg/model/workflow.go:105 |  |  | 0.494 |
-| walker |  | 9019 | 72 | go decl pkg/model/workflow.go:216 |  |  | 0.494 |
+| walker |  | 8959 | 69 | go decl pkg/model/workflow.go:105 |  |  | 0.494 |
+| walker |  | 9031 | 72 | go decl pkg/model/workflow.go:216 |  |  | 0.494 |
 | ns | 9068 |  | 165 | Artifact server: Serve + the v4 route base | 6.6 |  | 0.490 |
-| walker |  | 9106 | 87 | go decl pkg/model/workflow.go:19 |  |  | 0.496 |
-| walker |  | 9126 | 20 | go body pkg/runner/action_cache_offline_mode.go:45 |  |  | 0.496 |
-| walker |  | 9138 | 12 | go doc cmd/root.go:391 |  |  | 0.496 |
-| walker |  | 9269 | 131 | go names pkg/model/step_result.go |  |  | 0.498 |
-| walker |  | 9276 | 7 | go decl pkg/model/step_result.go:7 |  |  | 0.498 |
-| walker |  | 9325 | 49 | go decl pkg/model/step_result.go:41 |  |  | 0.498 |
-| walker |  | 9353 | 28 | go decl pkg/model/step_result.go:13 |  |  | 0.498 |
+| walker |  | 9118 | 87 | go decl pkg/model/workflow.go:19 |  |  | 0.496 |
+| walker |  | 9138 | 20 | go body pkg/runner/action_cache_offline_mode.go:45 |  |  | 0.496 |
+| walker |  | 9150 | 12 | go doc cmd/root.go:391 |  |  | 0.496 |
+| walker |  | 9281 | 131 | go names pkg/model/step_result.go |  |  | 0.498 |
+| walker |  | 9288 | 7 | go decl pkg/model/step_result.go:7 |  |  | 0.498 |
+| walker |  | 9337 | 49 | go decl pkg/model/step_result.go:41 |  |  | 0.498 |
+| walker |  | 9365 | 28 | go decl pkg/model/step_result.go:13 |  |  | 0.498 |
 | ns | 9373 |  | 305 | pkg/common: complete exported-function roster | 6.7 |  | 0.497 |
 | ns | 9536 |  | 163 | pkg/common/git: repo detection and cloning | 6.8 |  | 0.492 |
-| walker |  | 9628 | 275 | go names pkg/runner/logger.go |  |  | 0.493 |
-| walker |  | 9645 | 17 | go decl pkg/runner/logger.go:60 |  |  | 0.493 |
-| walker |  | 9657 | 12 | go doc pkg/runner/logger.go:45 |  |  | 0.493 |
+| walker |  | 9640 | 275 | go names pkg/runner/logger.go |  |  | 0.493 |
+| walker |  | 9657 | 17 | go decl pkg/runner/logger.go:60 |  |  | 0.493 |
 | ns | 9666 |  | 130 | CI, issue-template and editor directories | 7.1 |  | 0.497 |
-| walker |  | 9679 | 22 | go decl pkg/runner/logger.go:18 |  |  | 0.497 |
-| walker |  | 9696 | 17 | go doc pkg/runner/logger.go:56 |  |  | 0.497 |
+| walker |  | 9669 | 12 | go doc pkg/runner/logger.go:45 |  |  | 0.497 |
+| walker |  | 9691 | 22 | go decl pkg/runner/logger.go:18 |  |  | 0.497 |
+| walker |  | 9708 | 17 | go doc pkg/runner/logger.go:56 |  |  | 0.497 |
 | ns | 9919 |  | 253 | Key direct dependencies | 7.2 |  | 0.491 |
-| walker |  | 9925 | 229 | go names pkg/artifactcache/handler.go |  |  | 0.493 |
-| walker |  | 9934 | 9 | go decl pkg/artifactcache/handler.go:28 |  |  | 0.493 |
-| walker |  | 9952 | 18 | go body pkg/artifactcache/handler.go:129 |  |  | 0.493 |
+| walker |  | 9937 | 229 | go names pkg/artifactcache/handler.go |  |  | 0.493 |
+| walker |  | 9946 | 9 | go decl pkg/artifactcache/handler.go:28 |  |  | 0.493 |
+| walker |  | 9964 | 18 | go body pkg/artifactcache/handler.go:129 |  |  | 0.493 |

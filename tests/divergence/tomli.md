@@ -130,18 +130,18 @@ Score(3000)=0.416 I=0.754 C=0.230 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 7763 | 32 | python decl profiler/profiler_script.py:12 |  |  | 0.471 |
 | ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.467 |
 | walker |  | 7846 | 83 | tomllib.md section #5 |  |  | 0.467 |
-| walker |  | 7929 | 83 | python body src/tomli/_re.py:109 |  |  | 0.467 |
+| walker |  | 7854 | 8 | plaintext config scripts/requirements.txt |  |  | 0.467 |
+| walker |  | 7937 | 83 | python body src/tomli/_re.py:109 |  |  | 0.467 |
+| walker |  | 7946 | 9 | plaintext config profiler/requirements.txt |  |  | 0.467 |
 | ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.459 |
-| walker |  | 8101 | 172 | README.md section #3 |  |  | 0.459 |
-| walker |  | 8114 | 13 | python doc src/tomli/_parser.py:149 |  |  | 0.462 |
-| walker |  | 8128 | 14 | python doc src/tomli/_parser.py:220 |  |  | 0.464 |
-| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.470 |
-| walker |  | 8136 | 8 | plaintext config scripts/requirements.txt |  |  | 0.470 |
-| walker |  | 8320 | 184 | README.md section #27 |  |  | 0.470 |
+| walker |  | 8118 | 172 | README.md section #3 |  |  | 0.459 |
+| walker |  | 8131 | 13 | python doc src/tomli/_parser.py:149 |  |  | 0.462 |
+| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.467 |
+| walker |  | 8145 | 14 | python doc src/tomli/_parser.py:220 |  |  | 0.470 |
+| walker |  | 8329 | 184 | README.md section #27 |  |  | 0.470 |
 | ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.462 |
-| walker |  | 8382 | 62 | python names fuzzer/fuzz.py |  |  | 0.462 |
-| walker |  | 8442 | 60 | python decl benchmark/run.py:15 |  |  | 0.462 |
-| walker |  | 8451 | 9 | plaintext config profiler/requirements.txt |  |  | 0.462 |
+| walker |  | 8391 | 62 | python names fuzzer/fuzz.py |  |  | 0.462 |
+| walker |  | 8451 | 60 | python decl benchmark/run.py:15 |  |  | 0.462 |
 | ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.475 |
 | walker |  | 8579 | 128 | tomllib.md section #6 |  |  | 0.475 |
 | walker |  | 8594 | 15 | python doc src/tomli/_parser.py:137 |  |  | 0.478 |

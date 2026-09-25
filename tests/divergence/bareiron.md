@@ -167,17 +167,14 @@ Score(3000)=0.481 I=0.807 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | ns | 9485 |  | 181 | packets.c — the chat command surface (!msg and !help) | 6.6 |  | 0.669 |
 | walker |  | 9562 | 220 | c names include/packets.h #3 |  |  | 0.683 |
 | walker |  | 9607 | 45 | c doc src/procedures.c:652 |  |  | 0.683 |
-| ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.675 |
-| ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.677 |
-| walker |  | 9821 | 214 | c names src/procedures.c #2 |  |  | 0.685 |
-| walker |  | 9835 | 14 | c doc src/procedures.c:789 |  |  | 0.685 |
-| walker |  | 9849 | 14 | c doc src/procedures.c:858 |  |  | 0.685 |
-| walker |  | 9866 | 17 | c doc src/procedures.c:775 |  |  | 0.685 |
-| ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.686 |
-| walker |  | 9883 | 17 | c doc src/procedures.c:802 |  |  | 0.686 |
-| walker |  | 9900 | 17 | c doc src/procedures.c:812 |  |  | 0.686 |
-| walker |  | 9918 | 18 | c doc src/procedures.c:721 |  |  | 0.686 |
-| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.683 |
-| walker |  | 9937 | 19 | c doc src/procedures.c:746 |  |  | 0.683 |
-| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.682 |
-| walker |  | 9969 | 32 | c doc src/procedures.c:909 |  |  | 0.682 |
+| walker |  | 9713 | 106 | declaration surface of src/CMakeLists.txt |  |  | 0.698 |
+| ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.690 |
+| ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.692 |
+| ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.694 |
+| walker |  | 9927 | 214 | c names src/procedures.c #2 |  |  | 0.701 |
+| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.698 |
+| walker |  | 9941 | 14 | c doc src/procedures.c:789 |  |  | 0.698 |
+| walker |  | 9955 | 14 | c doc src/procedures.c:858 |  |  | 0.698 |
+| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.697 |
+| walker |  | 9972 | 17 | c doc src/procedures.c:775 |  |  | 0.697 |
+| walker |  | 9989 | 17 | c doc src/procedures.c:802 |  |  | 0.697 |

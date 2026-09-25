@@ -19,13 +19,13 @@ Score(3000)=0.466 I=0.666 C=0.326 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 353 | 22 | go names signals_windows.go |  |  | 0.000 |
 | walker |  | 376 | 23 | go names input.go |  |  | 0.000 |
 | walker |  | 400 | 24 | go names termios_windows.go |  |  | 0.000 |
-| ns | 450 |  | 112 | `Model` method doc comments (refines 1.2) | 1.5 | 1.2 | 0.000 |
-| walker |  | 529 | 129 | plaintext config Taskfile.yaml |  |  | 0.000 |
-| walker |  | 558 | 29 | go module identity in go.mod |  |  | 0.033 |
-| walker |  | 583 | 25 | go names termios_bsd.go |  |  | 0.033 |
-| walker |  | 608 | 25 | go names termios_unix.go |  |  | 0.033 |
-| walker |  | 634 | 26 | go names raw.go |  |  | 0.033 |
-| walker |  | 647 | 13 | go decl raw.go:5 |  |  | 0.033 |
+| walker |  | 429 | 29 | go module identity in go.mod |  |  | 0.038 |
+| ns | 450 |  | 112 | `Model` method doc comments (refines 1.2) | 1.5 | 1.2 | 0.032 |
+| walker |  | 454 | 25 | go names termios_bsd.go |  |  | 0.032 |
+| walker |  | 479 | 25 | go names termios_unix.go |  |  | 0.032 |
+| walker |  | 505 | 26 | go names raw.go |  |  | 0.032 |
+| walker |  | 518 | 13 | go decl raw.go:5 |  |  | 0.032 |
+| walker |  | 647 | 129 | plaintext config Taskfile.yaml |  |  | 0.033 |
 | ns | 652 |  | 202 | Complete root directory listing | 1.6 |  | 0.411 |
 | walker |  | 669 | 22 | listing of 'testdata/TestClearMsg' |  |  | 0.411 |
 | walker |  | 714 | 45 | go names tty_unix.go |  |  | 0.412 |

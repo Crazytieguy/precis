@@ -246,7 +246,12 @@ parallel/
 retry.go
   …
   10→type debounce struct {
-  …
+  11→	after     time.Duration
+  12→	mu        *sync.Mutex
+  13→	timer     *time.Timer
+  14→	done      bool
+  15→	callbacks []func()
+  16→}
   18→func (d *debounce) reset() {
   …
   42→func (d *debounce) cancel() {

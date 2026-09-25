@@ -127,68 +127,68 @@ Score(3000)=0.624 I=0.860 C=0.453 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 3419 | 24 | c names src/font_system.c |  |  | 0.585 |
 | ns | 3523 |  | 152 | The `soluna.app` host module (docs/app.lua) | 3.3 |  | 0.578 |
 | walker |  | 3527 | 108 | lua names docs/callback.lua |  |  | 0.594 |
-| walker |  | 3537 | 10 | lua body src/lualib/util.lua:9 |  |  | 0.594 |
-| walker |  | 3663 | 126 | c names src/transform.h |  |  | 0.594 |
-| walker |  | 3744 | 81 | c decl src/transform.h:6 |  |  | 0.594 |
+| walker |  | 3537 | 10 | declaration surface of bin/readme.txt |  |  | 0.594 |
+| walker |  | 3547 | 10 | lua body src/lualib/util.lua:9 |  |  | 0.594 |
+| walker |  | 3673 | 126 | c names src/transform.h |  |  | 0.594 |
+| walker |  | 3754 | 81 | c decl src/transform.h:6 |  |  | 0.594 |
 | ns | 3783 |  | 260 | Declaration roster: image, font, font.system, text, layout, coroutine | 3.4 |  | 0.595 |
-| walker |  | 3953 | 209 | c names src/font_manager.h |  |  | 0.595 |
+| walker |  | 3963 | 209 | c names src/font_manager.h |  |  | 0.595 |
 | ns | 4117 |  | 334 | The material modules: every documented constructor | 3.5 | 2.9 | 0.582 |
-| walker |  | 4208 | 255 | lua names script/build_web.lua |  |  | 0.582 |
-| walker |  | 4228 | 20 | lua body script/build_web.lua:5 |  |  | 0.582 |
-| walker |  | 4248 | 20 | lua body script/build_web.lua:29 |  |  | 0.582 |
-| walker |  | 4269 | 21 | lua body script/build_web.lua:111 |  |  | 0.582 |
-| walker |  | 4290 | 21 | lua body script/build_web.lua:115 |  |  | 0.582 |
-| walker |  | 4365 | 75 | lua names src/lualib/print_r.lua |  |  | 0.582 |
-| walker |  | 4377 | 12 | lua body src/lualib/util.lua:20 |  |  | 0.582 |
+| walker |  | 4218 | 255 | lua names script/build_web.lua |  |  | 0.582 |
+| walker |  | 4238 | 20 | lua body script/build_web.lua:5 |  |  | 0.582 |
+| walker |  | 4258 | 20 | lua body script/build_web.lua:29 |  |  | 0.582 |
+| walker |  | 4279 | 21 | lua body script/build_web.lua:111 |  |  | 0.582 |
+| walker |  | 4300 | 21 | lua body script/build_web.lua:115 |  |  | 0.582 |
+| walker |  | 4375 | 75 | lua names src/lualib/print_r.lua |  |  | 0.582 |
+| walker |  | 4387 | 12 | lua body src/lualib/util.lua:20 |  |  | 0.582 |
 | ns | 4396 |  | 279 | Declaration roster: file, lfs, zip, url, crypt, datalist | 3.6 | 3.4 | 0.585 |
-| walker |  | 4456 | 79 | lua names src/service/start.lua |  |  | 0.585 |
-| walker |  | 4463 | 7 | lua body src/service/start.lua:176 |  |  | 0.585 |
-| walker |  | 4475 | 12 | lua doc src/service/start.lua:59 |  |  | 0.585 |
-| walker |  | 4553 | 78 | declaration surface of src/yogaone.cpp |  |  | 0.585 |
-| walker |  | 4567 | 14 | lua body src/service/start.lua:26 |  |  | 0.585 |
+| walker |  | 4466 | 79 | lua names src/service/start.lua |  |  | 0.585 |
+| walker |  | 4473 | 7 | lua body src/service/start.lua:176 |  |  | 0.585 |
+| walker |  | 4485 | 12 | lua doc src/service/start.lua:59 |  |  | 0.585 |
+| walker |  | 4563 | 78 | declaration surface of src/yogaone.cpp |  |  | 0.585 |
+| walker |  | 4577 | 14 | lua body src/service/start.lua:26 |  |  | 0.585 |
 | ns | 4612 |  | 216 | src/lualib/soluna.lua — the core module's real implementation | 4.1 | 2.5 | 0.570 |
-| walker |  | 4749 | 182 | c names src/font_define.h |  |  | 0.570 |
-| walker |  | 4828 | 79 | c decl src/font_define.h:11 |  |  | 0.570 |
-| walker |  | 4846 | 18 | c body src/font_define.h:31 |  |  | 0.570 |
-| walker |  | 4865 | 19 | c body src/font_define.h:26 |  |  | 0.570 |
-| walker |  | 4895 | 30 | lua doc docs/callback.lua:11 |  |  | 0.570 |
+| walker |  | 4759 | 182 | c names src/font_define.h |  |  | 0.570 |
+| walker |  | 4838 | 79 | c decl src/font_define.h:11 |  |  | 0.570 |
+| walker |  | 4856 | 18 | c body src/font_define.h:31 |  |  | 0.570 |
+| walker |  | 4875 | 19 | c body src/font_define.h:26 |  |  | 0.570 |
+| walker |  | 4905 | 30 | lua doc docs/callback.lua:11 |  |  | 0.550 |
 | ns | 4905 |  | 293 | How a game boots: src/service/start.lua init() | 4.2 |  | 0.550 |
-| walker |  | 4991 | 96 | lua names src/lualib/fontmgr.lua |  |  | 0.550 |
-| walker |  | 5178 | 187 | c names src/appevent.h |  |  | 0.550 |
-| walker |  | 5215 | 37 | c decl src/appevent.h:4 |  |  | 0.550 |
-| walker |  | 5246 | 31 | lua doc docs/soluna.lua:46 |  |  | 0.550 |
+| walker |  | 5001 | 96 | lua names src/lualib/fontmgr.lua |  |  | 0.550 |
+| walker |  | 5188 | 187 | c names src/appevent.h |  |  | 0.550 |
+| walker |  | 5225 | 37 | c decl src/appevent.h:4 |  |  | 0.550 |
+| walker |  | 5256 | 31 | lua doc docs/soluna.lua:46 |  |  | 0.550 |
 | ns | 5288 |  | 383 | Callback wiring and the complete dispatchable event list (start.lua) | 4.3 | 2.2 | 0.526 |
-| walker |  | 5334 | 88 | listing of 'test' |  |  | 0.571 |
-| walker |  | 5379 | 45 | c names src/openurl.c |  |  | 0.571 |
-| walker |  | 5411 | 32 | lua doc docs/callback.lua:24 |  |  | 0.572 |
-| walker |  | 5513 | 102 | lua names src/lualib/spritebundle.lua |  |  | 0.572 |
-| walker |  | 5529 | 16 | lua body src/service/start.lua:22 |  |  | 0.572 |
-| walker |  | 5633 | 104 | lua names src/service/loader.lua |  |  | 0.573 |
+| walker |  | 5344 | 88 | listing of 'test' |  |  | 0.571 |
+| walker |  | 5389 | 45 | c names src/openurl.c |  |  | 0.571 |
+| walker |  | 5421 | 32 | lua doc docs/callback.lua:24 |  |  | 0.572 |
+| walker |  | 5523 | 102 | lua names src/lualib/spritebundle.lua |  |  | 0.572 |
+| walker |  | 5539 | 16 | lua body src/service/start.lua:22 |  |  | 0.572 |
 | ns | 5639 |  | 351 | The per-frame loop of a running game (start.lua) | 4.4 | 4.3 | 0.547 |
-| walker |  | 5836 | 203 | c names src/ime_char_filter.h |  |  | 0.547 |
-| walker |  | 5891 | 55 | c decl src/ime_char_filter.h:8 |  |  | 0.547 |
-| walker |  | 5916 | 25 | c body src/ime_char_filter.h:47 |  |  | 0.547 |
-| walker |  | 5942 | 26 | c body src/ime_char_filter.h:41 |  |  | 0.547 |
-| walker |  | 5976 | 34 | lua doc docs/font.lua:27 |  |  | 0.547 |
-| walker |  | 5993 | 17 | lua body src/lualib/print_r.lua:140 |  |  | 0.547 |
+| walker |  | 5643 | 104 | lua names src/service/loader.lua |  |  | 0.547 |
+| walker |  | 5846 | 203 | c names src/ime_char_filter.h |  |  | 0.547 |
+| walker |  | 5901 | 55 | c decl src/ime_char_filter.h:8 |  |  | 0.547 |
+| walker |  | 5926 | 25 | c body src/ime_char_filter.h:47 |  |  | 0.547 |
+| walker |  | 5952 | 26 | c body src/ime_char_filter.h:41 |  |  | 0.547 |
+| walker |  | 5986 | 34 | lua doc docs/font.lua:27 |  |  | 0.547 |
+| walker |  | 6003 | 17 | lua body src/lualib/print_r.lua:140 |  |  | 0.547 |
 | ns | 6068 |  | 429 | src/lualib/main.lua — the ltask bootstrap set and app init | 4.5 |  | 0.525 |
-| walker |  | 6204 | 211 | c names src/material_util.h |  |  | 0.525 |
-| walker |  | 6239 | 35 | lua doc docs/font.lua:14 |  |  | 0.525 |
-| walker |  | 6353 | 114 | lua names src/lualib/layout.lua |  |  | 0.525 |
-| walker |  | 6361 | 8 | lua doc src/lualib/layout.lua:47 |  |  | 0.525 |
-| walker |  | 6369 | 8 | lua body src/lualib/layout.lua:28 |  |  | 0.525 |
-| walker |  | 6379 | 10 | lua body src/lualib/layout.lua:24 |  |  | 0.525 |
-| walker |  | 6390 | 11 | lua body src/lualib/layout.lua:32 |  |  | 0.525 |
-| walker |  | 6426 | 36 | lua doc docs/soluna.lua:40 |  |  | 0.526 |
+| walker |  | 6214 | 211 | c names src/material_util.h |  |  | 0.525 |
+| walker |  | 6249 | 35 | lua doc docs/font.lua:14 |  |  | 0.525 |
+| walker |  | 6363 | 114 | lua names src/lualib/layout.lua |  |  | 0.525 |
+| walker |  | 6371 | 8 | lua doc src/lualib/layout.lua:47 |  |  | 0.525 |
+| walker |  | 6379 | 8 | lua body src/lualib/layout.lua:28 |  |  | 0.525 |
+| walker |  | 6389 | 10 | lua body src/lualib/layout.lua:24 |  |  | 0.525 |
+| walker |  | 6400 | 11 | lua body src/lualib/layout.lua:32 |  |  | 0.525 |
+| walker |  | 6436 | 36 | lua doc docs/soluna.lua:40 |  |  | 0.526 |
 | ns | 6443 |  | 375 | The render service: material ids and every service entry point | 4.6 |  | 0.511 |
-| walker |  | 6478 | 52 | c names src/openlibs.c |  |  | 0.511 |
-| walker |  | 6515 | 37 | lua doc docs/app.lua:15 |  |  | 0.511 |
-| walker |  | 6599 | 84 | lua body make.lua:4 |  |  | 0.511 |
-| walker |  | 6623 | 24 | lua body script/build_web.lua:1 |  |  | 0.511 |
+| walker |  | 6488 | 52 | c names src/openlibs.c |  |  | 0.511 |
+| walker |  | 6525 | 37 | lua doc docs/app.lua:15 |  |  | 0.511 |
+| walker |  | 6609 | 84 | lua body make.lua:4 |  |  | 0.511 |
+| walker |  | 6633 | 24 | lua body script/build_web.lua:1 |  |  | 0.511 |
 | ns | 6685 |  | 242 | The loader service: sprite bank and bundle entry points | 4.7 | 4.1 | 0.502 |
-| walker |  | 6743 | 120 | lua names src/lualib/soluna.lua |  |  | 0.510 |
-| walker |  | 6815 | 72 | c names src/platform/windows/soluna_windows_ime.h |  |  | 0.510 |
-| walker |  | 6825 | 10 | declaration surface of bin/readme.txt |  |  | 0.510 |
+| walker |  | 6753 | 120 | lua names src/lualib/soluna.lua |  |  | 0.510 |
+| walker |  | 6825 | 72 | c names src/platform/windows/soluna_windows_ime.h |  |  | 0.510 |
 | walker |  | 6864 | 39 | lua doc docs/url.lua:14 |  |  | 0.510 |
 | walker |  | 6884 | 20 | lua body src/lualib/soluna.lua:36 |  |  | 0.510 |
 | walker |  | 6904 | 20 | lua body src/lualib/soluna.lua:40 |  |  | 0.510 |

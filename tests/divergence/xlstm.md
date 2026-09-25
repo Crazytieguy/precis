@@ -1,4 +1,4 @@
-Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.521/0.585/0.498/0.408/0.396/0.393/0.411
+Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.521/0.585/0.498/0.408/0.396/0.393/0.412
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -218,24 +218,21 @@ Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/43
 | walker |  | 8913 | 102 | python decl xlstm/blocks/mlstm/block.py:9 |  |  | 0.414 |
 | walker |  | 8922 | 9 | python body experiments/data/formal_language/formal_language_dataset.py:153 |  |  | 0.414 |
 | ns | 8968 |  | 164 | README: the three commands that run the parity experiments | 5.1 | 1.6 | 0.411 |
-| walker |  | 8978 | 56 | python decl xlstm/blocks/slstm/layer.py:92 |  |  | 0.411 |
-| walker |  | 9010 | 32 | python doc xlstm/components/init.py:28 |  |  | 0.411 |
-| walker |  | 9120 | 110 | python decl experiments/data/formal_language/formal_language_dataset.py:30 |  |  | 0.411 |
+| walker |  | 8996 | 74 | declaration surface of pytest.ini |  |  | 0.412 |
+| walker |  | 9052 | 56 | python decl xlstm/blocks/slstm/layer.py:92 |  |  | 0.412 |
+| walker |  | 9084 | 32 | python doc xlstm/components/init.py:28 |  |  | 0.412 |
 | ns | 9139 |  | 171 | `experiments/main.py` — the dataset registry and the `__main__` config entry point | 5.2 |  | 0.407 |
-| walker |  | 9236 | 116 | python decl xlstm/blocks/mlstm/backends.py:9 |  |  | 0.407 |
-| walker |  | 9359 | 123 | python names experiments/data/formal_language/generate.py |  |  | 0.407 |
-| walker |  | 9400 | 41 | python decl experiments/data/formal_language/generate.py:19 |  |  | 0.407 |
+| walker |  | 9194 | 110 | python decl experiments/data/formal_language/formal_language_dataset.py:30 |  |  | 0.407 |
+| walker |  | 9310 | 116 | python decl xlstm/blocks/mlstm/backends.py:9 |  |  | 0.407 |
+| walker |  | 9433 | 123 | python names experiments/data/formal_language/generate.py |  |  | 0.407 |
 | ns | 9440 |  | 301 | `experiments/parity_xlstm01.yaml` — the training and model sections of a real config | 5.3 |  | 0.399 |
-| walker |  | 9453 | 53 | python decl experiments/data/formal_language/generate.py:12 |  |  | 0.399 |
-| walker |  | 9578 | 125 | python decl xlstm/blocks/slstm/block.py:12 |  |  | 0.399 |
-| walker |  | 9636 | 58 | c names xlstm/blocks/slstm/src/util/device_assert.h |  |  | 0.399 |
-| walker |  | 9649 | 13 | c decl xlstm/blocks/slstm/src/util/device_assert.h:23 |  |  | 0.399 |
+| walker |  | 9474 | 41 | python decl experiments/data/formal_language/generate.py:19 |  |  | 0.399 |
+| walker |  | 9527 | 53 | python decl experiments/data/formal_language/generate.py:12 |  |  | 0.399 |
+| walker |  | 9652 | 125 | python decl xlstm/blocks/slstm/block.py:12 |  |  | 0.399 |
 | ns | 9653 |  | 213 | `tests/conftest.py` in full, plus every test function in the suite | 5.4 |  | 0.395 |
-| walker |  | 9672 | 23 | c decl xlstm/blocks/slstm/src/util/device_assert.h:27 |  |  | 0.395 |
-| walker |  | 9803 | 131 | python decl xlstm/blocks/mlstm/backends.py:93 |  |  | 0.395 |
+| walker |  | 9710 | 58 | c names xlstm/blocks/slstm/src/util/device_assert.h |  |  | 0.395 |
+| walker |  | 9723 | 13 | c decl xlstm/blocks/slstm/src/util/device_assert.h:23 |  |  | 0.395 |
+| walker |  | 9746 | 23 | c decl xlstm/blocks/slstm/src/util/device_assert.h:27 |  |  | 0.395 |
 | ns | 9837 |  | 184 | `pyproject.toml` — project metadata, the dependency list marker, and package data | 6.1 |  | 0.402 |
-| walker |  | 9936 | 133 | python decl xlstm/blocks/slstm/layer.py:18 |  |  | 0.404 |
-| walker |  | 9956 | 20 | python body xlstm/components/conv.py:20 |  |  | 0.404 |
-| walker |  | 9974 | 18 | python body xlstm/components/util.py:7 |  |  | 0.404 |
-| walker |  | 9982 | 8 | python body experiments/data/formal_language/online_generate.py:25 |  |  | 0.404 |
+| walker |  | 9877 | 131 | python decl xlstm/blocks/mlstm/backends.py:93 |  |  | 0.402 |
 | ns | 10005 |  | 168 | `pytest.ini` in full, and the README install commands | 6.2 | 1.6 | 0.400 |

@@ -8,10 +8,10 @@ Score(3000)=0.600 I=0.669 C=0.537 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 203 | 12 | listing of 'assets' |  |  | 0.000 |
 | walker |  | 222 | 19 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 231 | 9 | listing of 'docs/images' |  |  | 0.000 |
+| walker |  | 239 | 8 | listing of '.faq' |  |  | 0.000 |
 | ns | 263 |  | 134 | pyproject identity block | 1.3 |  | 0.000 |
 | ns | 363 |  | 100 | README section headings (all H1/H2 locations) | 1.4 |  | 0.000 |
-| walker |  | 385 | 154 | plaintext config Makefile |  |  | 0.000 |
-| walker |  | 393 | 8 | listing of '.faq' |  |  | 0.000 |
+| walker |  | 393 | 154 | plaintext config Makefile |  |  | 0.000 |
 | walker |  | 466 | 73 | listing of 'questions' |  |  | 0.000 |
 | ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.000 |
 | walker |  | 564 | 98 | listing of 'imgs' |  |  | 0.000 |

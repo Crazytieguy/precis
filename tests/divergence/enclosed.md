@@ -1,4 +1,4 @@
-Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.528/0.423/0.499/0.537/0.513/0.537/0.559
+Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.528/0.423/0.499/0.537/0.513/0.542/0.559
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -193,45 +193,45 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 5124 | 29 | README.md section #4 |  |  | 0.548 |
 | ns | 5133 |  | 256 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.581 |
 | walker |  | 5181 | 57 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts |  |  | 0.581 |
+| walker |  | 5218 | 37 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.581 |
+| walker |  | 5318 | 100 | headings outline in packages/cli/README.md |  |  | 0.581 |
+| walker |  | 5346 | 28 | packages/cli/README.md section #2 |  |  | 0.581 |
 | ns | 5361 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.566 |
-| walker |  | 5700 | 519 | plaintext config Dockerfile |  |  | 0.566 |
-| walker |  | 5737 | 37 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.566 |
-| walker |  | 5837 | 100 | headings outline in packages/cli/README.md |  |  | 0.566 |
+| walker |  | 5372 | 26 | packages/crypto/README.md section #3 |  |  | 0.566 |
+| walker |  | 5403 | 31 | ts names packages/app-server/src/modules/shared/logger/logger.ts |  |  | 0.566 |
+| walker |  | 5448 | 45 | ts names packages/app-server/src/modules/app/server.ts |  |  | 0.567 |
+| walker |  | 5481 | 33 | ts names packages/app-server/src/modules/app/config/config.test-utils.ts |  |  | 0.567 |
+| walker |  | 5596 | 115 | headings outline in packages/app-client/README.md |  |  | 0.567 |
+| walker |  | 5596 | 0 | packages/app-client/README.md section #3 |  |  | 0.567 |
+| walker |  | 5673 | 77 | packages/app-client/README.md section #0 |  |  | 0.567 |
+| walker |  | 5699 | 26 | packages/cli/README.md section #7 |  |  | 0.567 |
+| walker |  | 5732 | 33 | packages/crypto/README.md section #2 |  |  | 0.567 |
+| walker |  | 5799 | 67 | ts decl packages/docs/src/data/i18n.data.ts:59 |  |  | 0.567 |
+| walker |  | 5829 | 30 | packages/app-client/README.md section #2 |  |  | 0.567 |
 | ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.547 |
-| walker |  | 5865 | 28 | packages/cli/README.md section #2 |  |  | 0.547 |
-| walker |  | 5891 | 26 | packages/crypto/README.md section #3 |  |  | 0.547 |
-| walker |  | 5922 | 31 | ts names packages/app-server/src/modules/shared/logger/logger.ts |  |  | 0.547 |
-| walker |  | 5967 | 45 | ts names packages/app-server/src/modules/app/server.ts |  |  | 0.548 |
-| walker |  | 6000 | 33 | ts names packages/app-server/src/modules/app/config/config.test-utils.ts |  |  | 0.548 |
-| ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.537 |
-| walker |  | 6115 | 115 | headings outline in packages/app-client/README.md |  |  | 0.537 |
-| walker |  | 6115 | 0 | packages/app-client/README.md section #3 |  |  | 0.537 |
-| walker |  | 6192 | 77 | packages/app-client/README.md section #0 |  |  | 0.537 |
-| walker |  | 6218 | 26 | packages/cli/README.md section #7 |  |  | 0.537 |
-| walker |  | 6251 | 33 | packages/crypto/README.md section #2 |  |  | 0.537 |
-| ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.525 |
-| walker |  | 6318 | 67 | ts decl packages/docs/src/data/i18n.data.ts:59 |  |  | 0.525 |
-| walker |  | 6348 | 30 | packages/app-client/README.md section #2 |  |  | 0.525 |
-| walker |  | 6384 | 36 | README.md section #1 |  |  | 0.530 |
-| walker |  | 6420 | 36 | ts names packages/app-server/src/modules/app/users/users.repository.ts |  |  | 0.530 |
-| ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.525 |
-| walker |  | 6492 | 72 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts:3 |  |  | 0.525 |
-| walker |  | 6568 | 76 | ts names packages/cli/src/files/files.services.ts |  |  | 0.525 |
-| walker |  | 6594 | 26 | packages/lib/README.md section #4 |  |  | 0.525 |
-| walker |  | 6631 | 37 | ts names packages/app-server/src/modules/app/auth/auth.routes.ts |  |  | 0.525 |
-| walker |  | 6668 | 37 | ts names packages/app-server/src/modules/app/config/config.routes.ts |  |  | 0.525 |
-| walker |  | 6685 | 17 | ts names packages/app-client/src/routes.tsx |  |  | 0.525 |
-| walker |  | 6760 | 75 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.525 |
-| walker |  | 6768 | 8 | ts body packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.525 |
+| walker |  | 5865 | 36 | README.md section #1 |  |  | 0.553 |
+| walker |  | 5901 | 36 | ts names packages/app-server/src/modules/app/users/users.repository.ts |  |  | 0.553 |
+| walker |  | 5973 | 72 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts:3 |  |  | 0.553 |
+| walker |  | 6049 | 76 | ts names packages/cli/src/files/files.services.ts |  |  | 0.553 |
+| walker |  | 6075 | 26 | packages/lib/README.md section #4 |  |  | 0.553 |
+| ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.542 |
+| walker |  | 6112 | 37 | ts names packages/app-server/src/modules/app/auth/auth.routes.ts |  |  | 0.542 |
+| walker |  | 6149 | 37 | ts names packages/app-server/src/modules/app/config/config.routes.ts |  |  | 0.542 |
+| walker |  | 6166 | 17 | ts names packages/app-client/src/routes.tsx |  |  | 0.542 |
+| walker |  | 6241 | 75 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.542 |
+| walker |  | 6249 | 8 | ts body packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts:3 |  |  | 0.542 |
+| ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.530 |
+| walker |  | 6303 | 54 | ts names packages/app-server/src/modules/app/server.types.ts |  |  | 0.530 |
+| walker |  | 6348 | 45 | ts decl packages/app-server/src/modules/app/server.types.ts:5 |  |  | 0.530 |
+| walker |  | 6385 | 37 | ts decl packages/app-server/src/modules/app/auth/auth.errors.ts:3 |  |  | 0.530 |
+| walker |  | 6436 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.530 |
+| walker |  | 6476 | 40 | ts names packages/app-server/src/modules/app/auth/auth.models.ts |  |  | 0.530 |
+| ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.524 |
+| walker |  | 6509 | 33 | packages/cli/README.md section #6 |  |  | 0.524 |
+| walker |  | 6566 | 57 | ts names packages/app-server/src/modules/notes/notes.constants.ts |  |  | 0.524 |
 | ns | 6772 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.515 |
-| walker |  | 6822 | 54 | ts names packages/app-server/src/modules/app/server.types.ts |  |  | 0.515 |
-| walker |  | 6867 | 45 | ts decl packages/app-server/src/modules/app/server.types.ts:5 |  |  | 0.515 |
-| walker |  | 6904 | 37 | ts decl packages/app-server/src/modules/app/auth/auth.errors.ts:3 |  |  | 0.515 |
-| walker |  | 6955 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.515 |
-| ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.510 |
-| walker |  | 6995 | 40 | ts names packages/app-server/src/modules/app/auth/auth.models.ts |  |  | 0.510 |
-| walker |  | 7028 | 33 | packages/cli/README.md section #6 |  |  | 0.510 |
-| walker |  | 7085 | 57 | ts names packages/app-server/src/modules/notes/notes.constants.ts |  |  | 0.510 |
+| ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.509 |
+| walker |  | 7085 | 519 | plaintext config Dockerfile |  |  | 0.510 |
 | walker |  | 7126 | 41 | ts names packages/app-server/src/modules/app/config/config.ts |  |  | 0.510 |
 | walker |  | 7168 | 42 | ts names packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.models.ts |  |  | 0.510 |
 | ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.504 |

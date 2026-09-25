@@ -124,12 +124,9 @@ const DOTENV_BYTE_GATE: usize = 64 * 1024;
 pub(crate) enum Class {
     /// LICENSE / LICENSE-MIT / COPYING / NOTICE etc.
     License,
-    /// .gitignore / .dockerignore.
-    IgnoreList,
-    /// .editorconfig / .eslintrc / .prettierrc (extensionless).
-    EditorConfig,
-    /// .nvmrc / .python-version / .tool-versions / pnpm-workspace.yaml.
-    Toolchain,
+    /// Contributor-toolchain dotfiles: ignore lists, editor / lint /
+    /// format config, version pins, `pnpm-workspace.yaml`.
+    Tooling,
     /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
     /// `Dockerfile`).
     BuildEntrypoint,
@@ -178,10 +175,16 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::License);
     }
     match name {
-        ".gitignore" | ".dockerignore" => return Some(Class::IgnoreList),
-        ".editorconfig" | ".eslintrc" | ".prettierrc" => return Some(Class::EditorConfig),
-        ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
-            return Some(Class::Toolchain);
+        ".gitignore"
+        | ".dockerignore"
+        | ".editorconfig"
+        | ".eslintrc"
+        | ".prettierrc"
+        | ".nvmrc"
+        | ".python-version"
+        | ".tool-versions"
+        | "pnpm-workspace.yaml" => {
+            return Some(Class::Tooling);
         }
         // `Taskfile.yaml` is a `Makefile` in YAML clothing — the task
         // runner's target roster. The YAML walker enumerates the
@@ -756,44 +759,22 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
+/// Four tiers. The ops surface (how the project is built, deployed and
+/// versioned) and an unparsed language's declaration surface sit at the
+/// top — the latter still below every parsed walker's roster, so it
+/// loses to any walker that understands the file. Project notes and
+/// rosters sit mid, contributor tooling and unclassified prose / flat
+/// config low, and license text at the floor.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
-    // Tuned against frozen-NS divergence baselines: License gets the
-    // floor because pure boilerplate rarely shifts how an agent uses
-    // the code, and at higher weights it displaced one tier-tail
-    // batch in anyhow/superstruct. mitt's NS 5.10 (.editorconfig +
-    // .gitignore) is the load-bearing fixture target.
     let (cat, fu, ztu) = match class {
         Class::License => (0.05, 0.10, 0.10),
-        Class::IgnoreList => (0.20, 0.30, 0.25),
-        Class::EditorConfig => (0.25, 0.35, 0.30),
-        Class::Toolchain => (0.30, 0.35, 0.30),
-        Class::BuildEntrypoint => (0.70, 0.55, 0.60),
-        Class::BuildScript => (0.60, 0.50, 0.55),
-        Class::PackageConfig => (0.45, 0.55, 0.45),
-        Class::Requirements => (0.35, 0.45, 0.35),
-        // Dotenv sample: the deploy-facing config-key roster of a
-        // self-hosted app — NS authors rank it alongside Dockerfile /
-        // compose as tier-1 ops orientation (linkwarden, linkding).
-        Class::DotenvSample => (0.60, 0.50, 0.55),
-        // Version stamp: a single short line answers "what version is
-        // this?" — high orientation value relative to the trivial cost.
-        Class::Version => (0.55, 0.40, 0.45),
-        // TODO backlog: short header items are tier-1 orientation for
-        // "what's pending / known limitations"; rest is appendix.
-        Class::Todo => (0.40, 0.50, 0.40),
-        // Unparsed declaration surface. Priced below every parsed
-        // walker's names/decl roster (Python's is cat 0.4–0.65, C's
-        // and Rust's higher) because a column-zero line slice is a
-        // weaker claim about a file than a reconstructed declaration
-        // list: it should lose the `value/cost^k` race to any walker
-        // that actually understands the file, and win against the
-        // bare filename that is the only alternative.
-        Class::SourceText => (0.60, 0.55, 0.50),
-        // Head slice of a prose/config file. Near the license floor:
-        // it carries no declaration semantics at all, and unlike the
-        // named plaintext classes above nobody chose this file — it
-        // is whatever `.txt`/`.rst`/`.ini` happened to be in the tree.
-        Class::SourceProse => (0.22, 0.30, 0.25),
+        Class::BuildEntrypoint
+        | Class::BuildScript
+        | Class::DotenvSample
+        | Class::Version
+        | Class::SourceText => (0.60, 0.50, 0.55),
+        Class::Requirements | Class::Todo | Class::PackageConfig => (0.40, 0.50, 0.40),
+        Class::Tooling | Class::SourceProse => (0.30, 0.35, 0.30),
     };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
         * small_build_file_factor(class, file, ctx)
@@ -1060,15 +1041,15 @@ mod tests {
             ("COPYING", Some(Class::License)),
             ("NOTICE", Some(Class::License)),
             // Dotfiles by class.
-            (".gitignore", Some(Class::IgnoreList)),
-            (".dockerignore", Some(Class::IgnoreList)),
-            (".editorconfig", Some(Class::EditorConfig)),
-            (".eslintrc", Some(Class::EditorConfig)),
-            (".prettierrc", Some(Class::EditorConfig)),
-            (".nvmrc", Some(Class::Toolchain)),
-            (".python-version", Some(Class::Toolchain)),
-            (".tool-versions", Some(Class::Toolchain)),
-            ("pnpm-workspace.yaml", Some(Class::Toolchain)),
+            (".gitignore", Some(Class::Tooling)),
+            (".dockerignore", Some(Class::Tooling)),
+            (".editorconfig", Some(Class::Tooling)),
+            (".eslintrc", Some(Class::Tooling)),
+            (".prettierrc", Some(Class::Tooling)),
+            (".nvmrc", Some(Class::Tooling)),
+            (".python-version", Some(Class::Tooling)),
+            (".tool-versions", Some(Class::Tooling)),
+            ("pnpm-workspace.yaml", Some(Class::Tooling)),
             ("Makefile", Some(Class::BuildEntrypoint)),
             ("Taskfile.yaml", Some(Class::BuildEntrypoint)),
             ("Taskfile.yml", Some(Class::BuildEntrypoint)),

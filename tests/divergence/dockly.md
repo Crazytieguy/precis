@@ -1,4 +1,4 @@
-Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.710/0.586/0.700/0.638/0.577/0.547/0.597
+Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.710/0.633/0.700/0.638/0.577/0.547/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,16 +44,16 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 1053 |  | 162 | index.js: pre-flight CLI dispatch (--help, --version, node version floor) | 1.10 | 1.9 | 0.658 |
 | walker |  | 1114 | 109 | plaintext config dockerRunScript.sh |  |  | 0.658 |
 | ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.610 |
-| walker |  | 1284 | 170 | plaintext config Dockerfile |  |  | 0.615 |
-| ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.586 |
-| walker |  | 1479 | 195 | package runtime dependencies in package.json |  |  | 0.637 |
-| walker |  | 1531 | 52 | listing of 'docs' |  |  | 0.637 |
-| walker |  | 1540 | 9 | listing of 'docs/src' |  |  | 0.637 |
-| walker |  | 1647 | 107 | package entrypoints in package.json |  |  | 0.800 |
-| walker |  | 1660 | 13 | listing of 'docs/src/pages' |  |  | 0.801 |
-| ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.739 |
-| walker |  | 1780 | 120 | package scripts in package.json |  |  | 0.768 |
-| walker |  | 1799 | 19 | ts names src/baseWidget.js |  |  | 0.768 |
+| walker |  | 1309 | 195 | package runtime dependencies in package.json |  |  | 0.617 |
+| walker |  | 1361 | 52 | listing of 'docs' |  |  | 0.617 |
+| walker |  | 1370 | 9 | listing of 'docs/src' |  |  | 0.618 |
+| ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.633 |
+| walker |  | 1477 | 107 | package entrypoints in package.json |  |  | 0.796 |
+| walker |  | 1490 | 13 | listing of 'docs/src/pages' |  |  | 0.796 |
+| walker |  | 1610 | 120 | package scripts in package.json |  |  | 0.828 |
+| walker |  | 1629 | 19 | ts names src/baseWidget.js |  |  | 0.828 |
+| ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.764 |
+| walker |  | 1799 | 170 | plaintext config Dockerfile |  |  | 0.768 |
 | walker |  | 1821 | 22 | ts names src/assetsLoader.js |  |  | 0.768 |
 | ns | 1857 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.745 |
 | walker |  | 1993 | 172 | ts decl src/screen.js:18 |  |  | 0.748 |

@@ -1,4 +1,4 @@
-Score(3000)=0.554 I=0.765 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.674/0.700/0.554/0.486/0.415/0.511
+Score(3000)=0.554 I=0.765 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.569/0.700/0.554/0.486/0.415/0.511
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,25 +19,25 @@ Score(3000)=0.554 I=0.765 C=0.402 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | ns | 507 |  | 141 | README 'Overview': what the library does, first half | 1.4 |  | 0.453 |
 | walker |  | 531 | 96 | README headline in README.md |  |  | 0.666 |
 | walker |  | 552 | 21 | listing of 'site/content/docgen' |  |  | 0.670 |
-| ns | 724 |  | 217 | README: the remaining capabilities, and who builds on Cobra | 1.5 | 1.4 | 0.599 |
-| ns | 926 |  | 202 | Canonical usage: the rootCmd literal and Execute() from the user guide | 1.6 |  | 0.516 |
-| walker |  | 937 | 385 | plaintext config Makefile |  |  | 0.533 |
-| walker |  | 960 | 23 | listing of 'site/content/completions' |  |  | 0.537 |
-| ns | 978 |  | 52 | Complete non-Go root listing: build, config, docs, governance | 1.7 |  | 0.596 |
-| walker |  | 1035 | 75 | go names fish_completions.go |  |  | 0.596 |
-| walker |  | 1049 | 14 | go doc fish_completions.go:284 |  |  | 0.596 |
-| walker |  | 1112 | 63 | headings outline in README.md |  |  | 0.596 |
-| walker |  | 1124 | 12 | README.md section #0 |  |  | 0.596 |
-| ns | 1218 |  | 240 | Makefile: every target and its recipe | 1.8 |  | 0.644 |
-| ns | 1304 |  | 86 | doc/ subpackage, CI workflows, and assets listings | 1.9 |  | 0.663 |
-| ns | 1374 |  | 70 | Documentation site tree: site/content and its two subdirectories | 1.10 |  | 0.674 |
-| walker |  | 1545 | 421 | go names cobra.go |  |  | 0.676 |
-| walker |  | 1571 | 26 | go decl cobra.go:72 |  |  | 0.676 |
-| walker |  | 1580 | 9 | go decl cobra.go:45 |  |  | 0.676 |
-| walker |  | 1592 | 12 | go body cobra.go:85 |  |  | 0.676 |
-| walker |  | 1605 | 13 | go body cobra.go:99 |  |  | 0.676 |
-| ns | 1612 |  | 238 | command.go: exported constants, FParseErrWhitelist, Group, Command's doc | 2.1 |  | 0.628 |
-| walker |  | 1618 | 13 | go body cobra.go:105 |  |  | 0.628 |
+| walker |  | 575 | 23 | listing of 'site/content/completions' |  |  | 0.675 |
+| walker |  | 650 | 75 | go names fish_completions.go |  |  | 0.675 |
+| walker |  | 664 | 14 | go doc fish_completions.go:284 |  |  | 0.675 |
+| ns | 724 |  | 217 | README: the remaining capabilities, and who builds on Cobra | 1.5 | 1.4 | 0.605 |
+| walker |  | 727 | 63 | headings outline in README.md |  |  | 0.605 |
+| walker |  | 739 | 12 | README.md section #0 |  |  | 0.605 |
+| ns | 926 |  | 202 | Canonical usage: the rootCmd literal and Execute() from the user guide | 1.6 |  | 0.520 |
+| ns | 978 |  | 52 | Complete non-Go root listing: build, config, docs, governance | 1.7 |  | 0.577 |
+| walker |  | 1160 | 421 | go names cobra.go |  |  | 0.579 |
+| walker |  | 1186 | 26 | go decl cobra.go:72 |  |  | 0.579 |
+| walker |  | 1195 | 9 | go decl cobra.go:45 |  |  | 0.579 |
+| walker |  | 1207 | 12 | go body cobra.go:85 |  |  | 0.579 |
+| ns | 1218 |  | 240 | Makefile: every target and its recipe | 1.8 |  | 0.502 |
+| walker |  | 1220 | 13 | go body cobra.go:99 |  |  | 0.502 |
+| walker |  | 1233 | 13 | go body cobra.go:105 |  |  | 0.502 |
+| ns | 1304 |  | 86 | doc/ subpackage, CI workflows, and assets listings | 1.9 |  | 0.544 |
+| ns | 1374 |  | 70 | Documentation site tree: site/content and its two subdirectories | 1.10 |  | 0.569 |
+| ns | 1612 |  | 238 | command.go: exported constants, FParseErrWhitelist, Group, Command's doc | 2.1 |  | 0.529 |
+| walker |  | 1618 | 385 | plaintext config Makefile |  |  | 0.628 |
 | ns | 1684 |  | 72 | Command fields: naming and help text (Use .. Example) | 2.2 | 2.1 | 0.614 |
 | walker |  | 1717 | 99 | go module file go.mod |  |  | 0.718 |
 | ns | 1776 |  | 92 | Command fields: argument validation, completion, metadata | 2.3 | 2.1 | 0.700 |

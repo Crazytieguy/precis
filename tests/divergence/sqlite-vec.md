@@ -8,9 +8,9 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 88 | 5 | listing of 'bindings/go' |  |  | 0.000 |
 | walker |  | 93 | 5 | listing of 'bindings/python' |  |  | 0.000 |
 | walker |  | 101 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.000 |
-| walker |  | 107 | 6 | listing of '.github' |  |  | 0.000 |
-| walker |  | 119 | 12 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 132 | 13 | plaintext config VERSION |  |  | 0.000 |
+| walker |  | 114 | 13 | plaintext config VERSION |  |  | 0.000 |
+| walker |  | 120 | 6 | listing of '.github' |  |  | 0.000 |
+| walker |  | 132 | 12 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 148 |  | 88 | README capability bullets | 1.2 |  | 0.000 |
 | walker |  | 192 | 60 | README headline in README.md |  |  | 0.655 |
 | walker |  | 219 | 27 | listing of 'bindings/rust' |  |  | 0.655 |
@@ -64,9 +64,9 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 2873 |  | 307 | idxStr block kinds (complete enum) | 2.9 |  | 0.450 |
 | walker |  | 2929 | 211 | python body tmp-static.py:25 |  |  | 0.450 |
 | ns | 3045 |  | 172 | Partition key operator encoding | 2.10 |  | 0.435 |
-| walker |  | 3149 | 220 | plaintext config bindings/rust/Makefile |  |  | 0.435 |
+| walker |  | 3086 | 157 | README.md section #8 |  |  | 0.435 |
 | ns | 3277 |  | 232 | Metadata and distance-constraint operator encodings | 2.11 | 2.10 | 0.415 |
-| walker |  | 3306 | 157 | README.md section #8 |  |  | 0.415 |
+| walker |  | 3306 | 220 | plaintext config bindings/rust/Makefile |  |  | 0.415 |
 | walker |  | 3314 | 8 | listing of 'site/getting-started' |  |  | 0.416 |
 | walker |  | 3509 | 195 | README.md section #5 |  |  | 0.416 |
 | ns | 3608 |  | 331 | struct vec0_vtab: field roster | 2.12 |  | 0.390 |
@@ -177,6 +177,7 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 9857 | 42 | c decl sqlite-vec.c:598 |  |  | 0.406 |
 | walker |  | 9883 | 26 | c decl sqlite-vec.c:811 |  |  | 0.406 |
 | walker |  | 9910 | 27 | c decl sqlite-vec.c:687 |  |  | 0.406 |
-| walker |  | 9916 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.406 |
+| walker |  | 9916 | 6 | plaintext config tests/.gitignore |  |  | 0.406 |
+| walker |  | 9922 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.406 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.403 |
-| walker |  | 9979 | 63 | README headline in benchmarks/exhaustive-memory/README.md |  |  | 0.403 |
+| walker |  | 9985 | 63 | README headline in benchmarks/exhaustive-memory/README.md |  |  | 0.403 |

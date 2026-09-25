@@ -106,19 +106,19 @@ Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.762 |
 | walker |  | 5851 | 247 | LICENSE.md section #0 |  |  | 0.762 |
 | ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.752 |
-| walker |  | 5928 | 77 | ts body src/helpers.ts:94 |  |  | 0.752 |
 | ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.740 |
-| walker |  | 6013 | 85 | ts body src/helpers.ts:59 |  |  | 0.740 |
-| walker |  | 6105 | 92 | ts body src/use-prevent-scroll.ts:34 |  |  | 0.740 |
-| walker |  | 6119 | 14 | ts names test/src/app/page.tsx |  |  | 0.740 |
-| walker |  | 6195 | 76 | README headline in test/README.md |  |  | 0.740 |
+| walker |  | 6131 | 280 | declaration surface of src/style.css |  |  | 0.740 |
+| walker |  | 6208 | 77 | ts body src/helpers.ts:94 |  |  | 0.740 |
 | ns | 6214 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.725 |
-| walker |  | 6218 | 23 | headings outline in test/README.md |  |  | 0.725 |
-| walker |  | 6249 | 31 | ts names test/tests/helpers.ts |  |  | 0.725 |
-| walker |  | 6336 | 87 | ts body src/helpers.ts:108 |  |  | 0.725 |
-| walker |  | 6483 | 147 | ts doc src/use-position-fixed.ts:15 |  |  | 0.739 |
-| ns | 6564 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.713 |
-| walker |  | 6763 | 280 | declaration surface of src/style.css |  |  | 0.713 |
+| walker |  | 6293 | 85 | ts body src/helpers.ts:59 |  |  | 0.725 |
+| walker |  | 6385 | 92 | ts body src/use-prevent-scroll.ts:34 |  |  | 0.725 |
+| walker |  | 6399 | 14 | ts names test/src/app/page.tsx |  |  | 0.725 |
+| walker |  | 6475 | 76 | README headline in test/README.md |  |  | 0.725 |
+| walker |  | 6498 | 23 | headings outline in test/README.md |  |  | 0.725 |
+| walker |  | 6529 | 31 | ts names test/tests/helpers.ts |  |  | 0.725 |
+| ns | 6564 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.700 |
+| walker |  | 6616 | 87 | ts body src/helpers.ts:108 |  |  | 0.700 |
+| walker |  | 6763 | 147 | ts doc src/use-position-fixed.ts:15 |  |  | 0.713 |
 | ns | 6813 |  | 249 | shouldDrag: the scrollable-ancestor climb | 4.7 | 4.6 | 0.696 |
 | ns | 7042 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.684 |
 | walker |  | 7058 | 295 | ts body src/index.tsx:1098 |  |  | 0.686 |

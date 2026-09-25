@@ -142,9 +142,9 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.706 |
 | walker |  | 9029 | 327 | ts body src/app.ts:94 #2 |  |  | 0.738 |
 | walker |  | 9060 | 31 | json config .oxfmtrc.json |  |  | 0.738 |
+| walker |  | 9111 | 51 | plaintext config .gitignore |  |  | 0.738 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.743 |
-| walker |  | 9285 | 225 | json config fixtures/db.json5 |  |  | 0.743 |
-| walker |  | 9336 | 51 | plaintext config .gitignore |  |  | 0.743 |
+| walker |  | 9336 | 225 | json config fixtures/db.json5 |  |  | 0.743 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.734 |
 | walker |  | 9645 | 309 | plaintext config LICENSE |  |  | 0.734 |
 | ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.722 |

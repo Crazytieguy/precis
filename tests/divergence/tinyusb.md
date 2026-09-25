@@ -160,73 +160,73 @@ Score(3000)=0.535 I=0.707 C=0.405 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 6199 | 22 | c decl src/osal/osal_none.h:44 |  |  | 0.410 |
 | walker |  | 6226 | 27 | c decl src/osal/osal_none.h:50 |  |  | 0.410 |
 | walker |  | 6236 | 10 | c body src/osal/osal_none.h:53 |  |  | 0.410 |
+| walker |  | 6294 | 58 | plaintext config docs/requirements.txt |  |  | 0.410 |
 | ns | 6463 |  | 299 | src/host/hcd.h: complete host-controller porting contract (names only) | 4.4 |  | 0.399 |
-| walker |  | 6515 | 279 | c names src/common/tusb_types.h |  |  | 0.399 |
-| walker |  | 6542 | 27 | c decl src/common/tusb_types.h:102 |  |  | 0.399 |
-| walker |  | 6579 | 37 | c decl src/common/tusb_types.h:39 |  |  | 0.399 |
-| walker |  | 6616 | 37 | c decl src/common/tusb_types.h:57 |  |  | 0.399 |
-| walker |  | 6654 | 38 | c decl src/common/tusb_types.h:107 |  |  | 0.399 |
-| walker |  | 6698 | 44 | c decl src/common/tusb_types.h:79 |  |  | 0.399 |
-| walker |  | 6761 | 63 | c decl src/common/tusb_types.h:95 |  |  | 0.399 |
-| walker |  | 6827 | 66 | c decl src/common/tusb_types.h:86 |  |  | 0.399 |
+| walker |  | 6573 | 279 | c names src/common/tusb_types.h |  |  | 0.399 |
+| walker |  | 6600 | 27 | c decl src/common/tusb_types.h:102 |  |  | 0.399 |
+| walker |  | 6637 | 37 | c decl src/common/tusb_types.h:39 |  |  | 0.399 |
+| walker |  | 6674 | 37 | c decl src/common/tusb_types.h:57 |  |  | 0.399 |
+| walker |  | 6712 | 38 | c decl src/common/tusb_types.h:107 |  |  | 0.399 |
+| walker |  | 6756 | 44 | c decl src/common/tusb_types.h:79 |  |  | 0.399 |
+| walker |  | 6819 | 63 | c decl src/common/tusb_types.h:95 |  |  | 0.399 |
 | ns | 6880 |  | 417 | src/osal/osal.h: the OSAL porting contract | 4.5 |  | 0.389 |
-| walker |  | 6909 | 82 | c decl src/common/tusb_types.h:50 |  |  | 0.389 |
-| walker |  | 6991 | 82 | c decl src/common/tusb_types.h:68 |  |  | 0.389 |
+| walker |  | 6885 | 66 | c decl src/common/tusb_types.h:86 |  |  | 0.389 |
+| walker |  | 6967 | 82 | c decl src/common/tusb_types.h:50 |  |  | 0.389 |
 | ns | 7023 |  | 143 | hw/bsp/board_api.h: complete board porting API (names only) | 4.6 |  | 0.383 |
-| walker |  | 7075 | 84 | c decl src/common/tusb_types.h:43 |  |  | 0.383 |
-| walker |  | 7159 | 84 | c decl src/common/tusb_types.h:61 |  |  | 0.383 |
-| walker |  | 7245 | 86 | c decl src/common/tusb_types.h:112 |  |  | 0.383 |
+| walker |  | 7049 | 82 | c decl src/common/tusb_types.h:68 |  |  | 0.383 |
+| walker |  | 7133 | 84 | c decl src/common/tusb_types.h:43 |  |  | 0.383 |
+| walker |  | 7217 | 84 | c decl src/common/tusb_types.h:61 |  |  | 0.383 |
 | ns | 7285 |  | 262 | Endpoint API a class driver is allowed to call | 4.7 |  | 0.375 |
-| walker |  | 7479 | 234 | c names src/host/hcd.h |  |  | 0.379 |
-| walker |  | 7485 | 6 | c doc src/host/hcd.h:122 |  |  | 0.379 |
-| walker |  | 7492 | 7 | c doc src/host/hcd.h:125 |  |  | 0.379 |
-| walker |  | 7500 | 8 | c doc src/host/hcd.h:119 |  |  | 0.379 |
-| walker |  | 7509 | 9 | c doc src/host/hcd.h:116 |  |  | 0.379 |
-| walker |  | 7574 | 65 | c decl src/host/hcd.h:56 |  |  | 0.379 |
+| walker |  | 7303 | 86 | c decl src/common/tusb_types.h:112 |  |  | 0.375 |
+| walker |  | 7537 | 234 | c names src/host/hcd.h |  |  | 0.379 |
+| walker |  | 7543 | 6 | c doc src/host/hcd.h:122 |  |  | 0.379 |
+| walker |  | 7550 | 7 | c doc src/host/hcd.h:125 |  |  | 0.379 |
+| walker |  | 7558 | 8 | c doc src/host/hcd.h:119 |  |  | 0.379 |
+| walker |  | 7567 | 9 | c doc src/host/hcd.h:116 |  |  | 0.379 |
 | ns | 7602 |  | 317 | Complete file inventory of every USB class driver | 5.1 |  | 0.359 |
-| walker |  | 7782 | 208 | c names src/osal/osal_threadx.h |  |  | 0.359 |
-| walker |  | 7792 | 10 | c decl src/osal/osal_threadx.h:74 |  |  | 0.359 |
-| walker |  | 7812 | 20 | c decl src/osal/osal_threadx.h:79 |  |  | 0.359 |
-| walker |  | 7822 | 10 | c body src/osal/osal_threadx.h:82 |  |  | 0.359 |
-| walker |  | 7838 | 16 | c body src/osal/osal_threadx.h:64 |  |  | 0.359 |
+| walker |  | 7632 | 65 | c decl src/host/hcd.h:56 |  |  | 0.359 |
+| walker |  | 7840 | 208 | c names src/osal/osal_threadx.h |  |  | 0.359 |
+| walker |  | 7850 | 10 | c decl src/osal/osal_threadx.h:74 |  |  | 0.359 |
 | ns | 7860 |  | 258 | src/device/usbd.c: the built-in device class-driver table | 5.2 |  | 0.355 |
+| walker |  | 7870 | 20 | c decl src/osal/osal_threadx.h:79 |  |  | 0.355 |
+| walker |  | 7880 | 10 | c body src/osal/osal_threadx.h:82 |  |  | 0.355 |
+| walker |  | 7896 | 16 | c body src/osal/osal_threadx.h:64 |  |  | 0.355 |
 | ns | 7983 |  | 123 | src/host/usbh.c: the built-in host class-driver table | 5.3 |  | 0.352 |
-| walker |  | 8111 | 273 | c names src/host/hub.h |  |  | 0.352 |
-| walker |  | 8129 | 18 | c decl src/host/hub.h:172 |  |  | 0.352 |
-| walker |  | 8147 | 18 | c decl src/host/hub.h:176 |  |  | 0.352 |
-| walker |  | 8165 | 18 | c decl src/host/hub.h:181 |  |  | 0.352 |
-| walker |  | 8197 | 32 | c decl src/host/hub.h:61 |  |  | 0.352 |
-| walker |  | 8235 | 38 | c decl src/host/hub.h:90 |  |  | 0.352 |
-| walker |  | 8274 | 39 | c decl src/host/hub.h:85 |  |  | 0.352 |
+| walker |  | 8169 | 273 | c names src/host/hub.h |  |  | 0.352 |
+| walker |  | 8187 | 18 | c decl src/host/hub.h:172 |  |  | 0.352 |
+| walker |  | 8205 | 18 | c decl src/host/hub.h:176 |  |  | 0.352 |
+| walker |  | 8223 | 18 | c decl src/host/hub.h:181 |  |  | 0.352 |
+| walker |  | 8255 | 32 | c decl src/host/hub.h:61 |  |  | 0.352 |
+| walker |  | 8293 | 38 | c decl src/host/hub.h:90 |  |  | 0.352 |
 | ns | 8321 |  | 338 | src/device/usbd.h: complete roster of descriptor template macros | 5.4 |  | 0.345 |
-| walker |  | 8338 | 64 | c decl src/host/hub.h:96 |  |  | 0.345 |
-| walker |  | 8427 | 89 | c decl src/host/hub.h:128 |  |  | 0.345 |
+| walker |  | 8332 | 39 | c decl src/host/hub.h:85 |  |  | 0.345 |
+| walker |  | 8396 | 64 | c decl src/host/hub.h:96 |  |  | 0.345 |
+| walker |  | 8485 | 89 | c decl src/host/hub.h:128 |  |  | 0.345 |
 | ns | 8544 |  | 223 | src/common/tusb_types.h: inventory of named USB protocol enums | 6.1 |  | 0.341 |
-| walker |  | 8572 | 145 | c decl src/host/hub.h:102 |  |  | 0.341 |
+| walker |  | 8630 | 145 | c decl src/host/hub.h:102 |  |  | 0.341 |
 | ns | 8753 |  | 209 | src/common/tusb_types.h: packed USB descriptor structs and the setup packet | 6.2 |  | 0.337 |
-| walker |  | 8816 | 244 | c names src/osal/osal_zephyr.h |  |  | 0.337 |
-| walker |  | 8827 | 11 | c decl src/osal/osal_zephyr.h:50 |  |  | 0.337 |
-| walker |  | 8848 | 21 | c decl src/osal/osal_zephyr.h:45 |  |  | 0.337 |
-| walker |  | 8858 | 10 | c body src/osal/osal_zephyr.h:53 |  |  | 0.337 |
-| walker |  | 8869 | 11 | c body src/osal/osal_zephyr.h:34 |  |  | 0.337 |
-| walker |  | 8882 | 13 | c body src/osal/osal_zephyr.h:38 |  |  | 0.337 |
+| walker |  | 8874 | 244 | c names src/osal/osal_zephyr.h |  |  | 0.337 |
+| walker |  | 8885 | 11 | c decl src/osal/osal_zephyr.h:50 |  |  | 0.337 |
+| walker |  | 8906 | 21 | c decl src/osal/osal_zephyr.h:45 |  |  | 0.337 |
+| walker |  | 8916 | 10 | c body src/osal/osal_zephyr.h:53 |  |  | 0.337 |
+| walker |  | 8927 | 11 | c body src/osal/osal_zephyr.h:34 |  |  | 0.337 |
+| walker |  | 8940 | 13 | c body src/osal/osal_zephyr.h:38 |  |  | 0.337 |
 | ns | 9008 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.331 |
-| walker |  | 9104 | 222 | c names src/device/dcd.h |  |  | 0.334 |
-| walker |  | 9110 | 6 | c doc src/device/dcd.h:120 |  |  | 0.334 |
-| walker |  | 9117 | 7 | c doc src/device/dcd.h:123 |  |  | 0.334 |
-| walker |  | 9124 | 7 | c doc src/device/dcd.h:126 |  |  | 0.334 |
-| walker |  | 9133 | 9 | c doc src/device/dcd.h:114 |  |  | 0.334 |
-| walker |  | 9144 | 11 | c doc src/device/dcd.h:117 |  |  | 0.334 |
+| walker |  | 9162 | 222 | c names src/device/dcd.h |  |  | 0.334 |
+| walker |  | 9168 | 6 | c doc src/device/dcd.h:120 |  |  | 0.334 |
+| walker |  | 9175 | 7 | c doc src/device/dcd.h:123 |  |  | 0.334 |
+| walker |  | 9182 | 7 | c doc src/device/dcd.h:126 |  |  | 0.334 |
+| walker |  | 9191 | 9 | c doc src/device/dcd.h:114 |  |  | 0.334 |
 | ns | 9196 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.330 |
-| walker |  | 9295 | 151 | c decl src/host/usbh_pvt.h:47 |  |  | 0.340 |
-| walker |  | 9316 | 21 | c doc src/host/usbh_pvt.h:47 |  |  | 0.340 |
-| walker |  | 9333 | 17 | c body src/osal/osal_rtx4.h:78 |  |  | 0.340 |
+| walker |  | 9202 | 11 | c doc src/device/dcd.h:117 |  |  | 0.330 |
+| walker |  | 9353 | 151 | c decl src/host/usbh_pvt.h:47 |  |  | 0.340 |
+| walker |  | 9374 | 21 | c doc src/host/usbh_pvt.h:47 |  |  | 0.340 |
+| walker |  | 9391 | 17 | c body src/osal/osal_rtx4.h:78 |  |  | 0.340 |
 | ns | 9543 |  | 347 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.330 |
-| walker |  | 9564 | 231 | c names src/device/usbd_pvt.h |  |  | 0.330 |
-| walker |  | 9589 | 25 | c decl src/device/usbd_pvt.h:43 |  |  | 0.330 |
-| walker |  | 9598 | 9 | c doc src/device/usbd_pvt.h:83 |  |  | 0.330 |
+| walker |  | 9622 | 231 | c names src/device/usbd_pvt.h |  |  | 0.330 |
+| walker |  | 9647 | 25 | c decl src/device/usbd_pvt.h:43 |  |  | 0.330 |
+| walker |  | 9656 | 9 | c doc src/device/usbd_pvt.h:83 |  |  | 0.330 |
 | ns | 9679 |  | 136 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.336 |
 | ns | 9686 |  | 7 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.338 |
-| walker |  | 9756 | 158 | c decl lib/embedded-cli/embedded_cli.h:67 |  |  | 0.338 |
+| walker |  | 9814 | 158 | c decl lib/embedded-cli/embedded_cli.h:67 |  |  | 0.338 |
 | ns | 9884 |  | 198 | Maintenance tooling and documentation sources | 7.5 |  | 0.367 |
-| walker |  | 9997 | 241 | c names src/common/tusb_private.h |  |  | 0.367 |

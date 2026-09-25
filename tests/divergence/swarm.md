@@ -70,10 +70,10 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 2536 | 42 | listing of 'examples/support_bot' |  |  | 0.750 |
 | walker |  | 2597 | 61 | python body swarm/util.py:13 |  |  | 0.750 |
 | ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.735 |
-| ns | 2766 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.723 |
-| walker |  | 2865 | 268 | plaintext config setup.cfg |  |  | 0.725 |
-| ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.717 |
-| walker |  | 2952 | 87 | python doc swarm/types.py:29 |  |  | 0.721 |
+| walker |  | 2684 | 87 | python doc swarm/types.py:29 |  |  | 0.738 |
+| ns | 2766 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.726 |
+| ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.718 |
+| walker |  | 2952 | 268 | plaintext config setup.cfg |  |  | 0.721 |
 | ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.709 |
 | walker |  | 3042 | 90 | python body swarm/util.py:5 |  |  | 0.709 |
 | walker |  | 3136 | 94 | python body swarm/util.py:21 |  |  | 0.710 |
@@ -167,22 +167,23 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 9340 |  | 206 | `setup.cfg`: package metadata and the complete dependency list | 6.4 |  | 0.659 |
 | walker |  | 9392 | 67 | python decl tests/mock_client.py:44 |  |  | 0.662 |
 | walker |  | 9403 | 11 | python names examples/customer_service_streaming/src/swarm/engines/engine.py |  |  | 0.662 |
-| walker |  | 9447 | 44 | python names examples/weather_agent/agents.py |  |  | 0.662 |
-| walker |  | 9486 | 39 | python decl examples/weather_agent/agents.py:19 |  |  | 0.664 |
+| walker |  | 9412 | 9 | plaintext config examples/support_bot/requirements.txt |  |  | 0.662 |
+| walker |  | 9456 | 44 | python names examples/weather_agent/agents.py |  |  | 0.662 |
+| walker |  | 9495 | 39 | python decl examples/weather_agent/agents.py:19 |  |  | 0.664 |
 | ns | 9515 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.660 |
-| walker |  | 9553 | 67 | README headline in examples/support_bot/README.md |  |  | 0.661 |
-| walker |  | 9569 | 16 | headings outline in examples/support_bot/README.md |  |  | 0.661 |
-| walker |  | 9581 | 12 | python names examples/customer_service_streaming/src/swarm/engines/local_engine.py |  |  | 0.661 |
-| walker |  | 9625 | 44 | listing of 'examples/customer_service_lite/logs' |  |  | 0.661 |
+| walker |  | 9562 | 67 | README headline in examples/support_bot/README.md |  |  | 0.661 |
+| walker |  | 9578 | 16 | headings outline in examples/support_bot/README.md |  |  | 0.661 |
+| walker |  | 9590 | 12 | python names examples/customer_service_streaming/src/swarm/engines/local_engine.py |  |  | 0.661 |
+| walker |  | 9634 | 44 | listing of 'examples/customer_service_lite/logs' |  |  | 0.661 |
 | ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.670 |
-| walker |  | 9698 | 73 | README headline in examples/basic/README.md |  |  | 0.671 |
-| walker |  | 9716 | 18 | headings outline in examples/basic/README.md |  |  | 0.671 |
-| walker |  | 9729 | 13 | python names examples/customer_service_streaming/configs/tools/send_email/handler.py |  |  | 0.671 |
-| walker |  | 9742 | 13 | python names examples/customer_service_streaming/src/swarm/engines/assistants_engine.py |  |  | 0.671 |
-| walker |  | 9799 | 57 | python names examples/basic/simple_loop_no_helpers.py |  |  | 0.671 |
-| walker |  | 9824 | 25 | python decl examples/basic/simple_loop_no_helpers.py:5 |  |  | 0.671 |
+| walker |  | 9707 | 73 | README headline in examples/basic/README.md |  |  | 0.671 |
+| walker |  | 9725 | 18 | headings outline in examples/basic/README.md |  |  | 0.671 |
+| walker |  | 9738 | 13 | python names examples/customer_service_streaming/configs/tools/send_email/handler.py |  |  | 0.671 |
+| walker |  | 9751 | 13 | python names examples/customer_service_streaming/src/swarm/engines/assistants_engine.py |  |  | 0.671 |
+| walker |  | 9808 | 57 | python names examples/basic/simple_loop_no_helpers.py |  |  | 0.671 |
+| walker |  | 9833 | 25 | python decl examples/basic/simple_loop_no_helpers.py:5 |  |  | 0.671 |
 | ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.662 |
 | ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.663 |
-| walker |  | 9936 | 112 | python names tests/test_core.py |  |  | 0.666 |
-| walker |  | 9942 | 6 | python decl tests/test_core.py:10 |  |  | 0.666 |
-| walker |  | 9964 | 22 | python names examples/customer_service_streaming/src/tasks/task.py |  |  | 0.666 |
+| walker |  | 9945 | 112 | python names tests/test_core.py |  |  | 0.666 |
+| walker |  | 9951 | 6 | python decl tests/test_core.py:10 |  |  | 0.666 |
+| walker |  | 9973 | 22 | python names examples/customer_service_streaming/src/tasks/task.py |  |  | 0.666 |

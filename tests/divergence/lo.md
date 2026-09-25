@@ -1,4 +1,4 @@
-Score(3000)=0.483 I=0.599 C=0.389 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.615/0.556/0.483/0.444/0.408/0.373
+Score(3000)=0.483 I=0.599 C=0.389 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.615/0.556/0.483/0.426/0.408/0.373
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -66,64 +66,64 @@ Score(3000)=0.483 I=0.599 C=0.389 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 2832 | 11 | go body types.go:17 |  |  | 0.511 |
 | walker |  | 2870 | 38 | go names internal/xtime/noCopy.go |  |  | 0.511 |
 | ns | 2911 |  | 332 | find.go roster 2/2: min/max, first/last/nth, sampling (L352-L988) | 2.5 |  | 0.483 |
-| ns | 3284 |  | 373 | map.go roster: every map helper | 2.6 |  | 0.456 |
-| ns | 3491 |  | 207 | condition.go complete: Ternary plus the If/Switch builder types | 2.7 |  | 0.446 |
-| ns | 3722 |  | 231 | type_manipulation.go roster: pointer, zero-value, coalesce | 2.8 |  | 0.443 |
-| walker |  | 3807 | 937 | plaintext config Makefile |  |  | 0.468 |
-| walker |  | 3859 | 52 | go decl retry.go:10 |  |  | 0.468 |
-| ns | 3910 |  | 188 | intersect.go roster: set predicates and set algebra | 2.9 |  | 0.463 |
-| walker |  | 4084 | 225 | go names concurrency.go |  |  | 0.463 |
-| ns | 4085 |  | 175 | errors.go roster: Must, Try, Validate, and the Assert vars | 2.10 |  | 0.451 |
-| walker |  | 4097 | 13 | go decl concurrency.go:9 |  |  | 0.451 |
-| walker |  | 4105 | 8 | go body concurrency.go:56 |  |  | 0.451 |
-| walker |  | 4158 | 53 | go decl retry.go:76 |  |  | 0.451 |
-| ns | 4264 |  | 179 | channel.go roster: dispatcher, buffering, fan-in/fan-out | 2.11 |  | 0.444 |
-| walker |  | 4399 | 241 | go names errors.go |  |  | 0.446 |
-| walker |  | 4411 | 12 | go body errors.go:72 |  |  | 0.446 |
-| walker |  | 4424 | 13 | go body errors.go:78 |  |  | 0.446 |
-| walker |  | 4443 | 19 | go body errors.go:65 |  |  | 0.446 |
-| walker |  | 4466 | 23 | go body errors.go:84 |  |  | 0.446 |
+| walker |  | 2922 | 52 | go decl retry.go:10 |  |  | 0.483 |
+| walker |  | 3147 | 225 | go names concurrency.go |  |  | 0.483 |
+| walker |  | 3160 | 13 | go decl concurrency.go:9 |  |  | 0.483 |
+| walker |  | 3168 | 8 | go body concurrency.go:56 |  |  | 0.483 |
+| walker |  | 3221 | 53 | go decl retry.go:76 |  |  | 0.483 |
+| ns | 3284 |  | 373 | map.go roster: every map helper | 2.6 |  | 0.457 |
+| walker |  | 3462 | 241 | go names errors.go |  |  | 0.457 |
+| walker |  | 3474 | 12 | go body errors.go:72 |  |  | 0.457 |
+| walker |  | 3487 | 13 | go body errors.go:78 |  |  | 0.457 |
+| ns | 3491 |  | 207 | condition.go complete: Ternary plus the If/Switch builder types | 2.7 |  | 0.447 |
+| walker |  | 3506 | 19 | go body errors.go:65 |  |  | 0.447 |
+| walker |  | 3529 | 23 | go body errors.go:84 |  |  | 0.447 |
+| ns | 3722 |  | 231 | type_manipulation.go roster: pointer, zero-value, coalesce | 2.8 |  | 0.444 |
+| walker |  | 3767 | 238 | go names map.go |  |  | 0.447 |
+| walker |  | 3785 | 18 | go body map.go:47 |  |  | 0.447 |
+| walker |  | 3817 | 32 | go doc map.go:117 |  |  | 0.447 |
+| ns | 3910 |  | 188 | intersect.go roster: set predicates and set algebra | 2.9 |  | 0.442 |
+| walker |  | 4070 | 253 | go names string.go |  |  | 0.442 |
+| ns | 4085 |  | 175 | errors.go roster: Must, Try, Validate, and the Assert vars | 2.10 |  | 0.433 |
+| walker |  | 4126 | 56 | go decl string.go:16 |  |  | 0.433 |
+| walker |  | 4160 | 34 | go doc concurrency.go:56 |  |  | 0.433 |
+| walker |  | 4172 | 12 | go doc types.go:4 |  |  | 0.433 |
+| walker |  | 4207 | 35 | go doc map.go:5 |  |  | 0.433 |
+| ns | 4264 |  | 179 | channel.go roster: dispatcher, buffering, fan-in/fan-out | 2.11 |  | 0.426 |
+| walker |  | 4299 | 92 | go names it/channel.go |  |  | 0.426 |
+| walker |  | 4347 | 48 | go names internal/xrand/ordered_go118.go |  |  | 0.426 |
+| walker |  | 4395 | 48 | go names internal/xrand/ordered_go122.go |  |  | 0.426 |
+| walker |  | 4454 | 59 | listing of 'docs' |  |  | 0.446 |
+| walker |  | 4458 | 4 | listing of 'docs/plugins' |  |  | 0.446 |
+| walker |  | 4465 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.446 |
+| walker |  | 4501 | 36 | go doc find.go:56 |  |  | 0.446 |
 | ns | 4527 |  | 263 | tuples.go: eleven arity families, head and tail with elision | 2.12 |  | 0.429 |
-| walker |  | 4704 | 238 | go names map.go |  |  | 0.431 |
-| walker |  | 4722 | 18 | go body map.go:47 |  |  | 0.431 |
-| walker |  | 4754 | 32 | go doc map.go:117 |  |  | 0.431 |
-| ns | 4779 |  | 252 | math.go and string.go rosters | 2.13 |  | 0.422 |
-| ns | 4916 |  | 137 | concurrency.go roster: Async, Synchronize, WaitFor | 2.14 |  | 0.423 |
-| walker |  | 5007 | 253 | go names string.go |  |  | 0.423 |
-| walker |  | 5063 | 56 | go decl string.go:16 |  |  | 0.423 |
-| ns | 5078 |  | 162 | retry.go roster: attempt, debounce, throttle, transaction | 2.15 |  | 0.418 |
-| walker |  | 5097 | 34 | go doc concurrency.go:56 |  |  | 0.418 |
-| walker |  | 5109 | 12 | go doc types.go:4 |  |  | 0.418 |
-| walker |  | 5144 | 35 | go doc map.go:5 |  |  | 0.418 |
-| ns | 5188 |  | 110 | time.go, func.go and constraints.go: complete small files | 2.16 |  | 0.416 |
-| walker |  | 5236 | 92 | go names it/channel.go |  |  | 0.416 |
-| walker |  | 5284 | 48 | go names internal/xrand/ordered_go118.go |  |  | 0.416 |
-| ns | 5329 |  | 141 | types.go: Entry and the Tuple2..Tuple9 family | 2.17 |  | 0.414 |
-| walker |  | 5332 | 48 | go names internal/xrand/ordered_go122.go |  |  | 0.415 |
-| walker |  | 5391 | 59 | listing of 'docs' |  |  | 0.431 |
-| ns | 5392 |  | 63 | Full signatures for the three flagship slice helpers | 2.18 | 2.2 | 0.430 |
-| walker |  | 5395 | 4 | listing of 'docs/plugins' |  |  | 0.430 |
-| walker |  | 5402 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.430 |
-| walker |  | 5438 | 36 | go doc find.go:56 |  |  | 0.430 |
-| walker |  | 5474 | 36 | go doc intersect.go:119 |  |  | 0.430 |
-| ns | 5497 |  | 105 | it/ package header: the go1.23 build tag and its dependencies | 3.1 |  | 0.425 |
-| walker |  | 5510 | 36 | go doc map.go:47 |  |  | 0.425 |
-| walker |  | 5547 | 37 | go doc type_manipulation.go:34 |  |  | 0.425 |
-| walker |  | 5619 | 72 | README headline in exp/simd/README.md |  |  | 0.425 |
-| walker |  | 5670 | 51 | go names internal/constraints/constraints.go |  |  | 0.426 |
-| walker |  | 5685 | 15 | go decl internal/constraints/constraints.go:26 |  |  | 0.426 |
-| walker |  | 5701 | 16 | go decl internal/constraints/constraints.go:40 |  |  | 0.426 |
-| walker |  | 5719 | 18 | go decl internal/constraints/constraints.go:33 |  |  | 0.426 |
-| walker |  | 5748 | 29 | go decl internal/constraints/constraints.go:12 |  |  | 0.426 |
-| walker |  | 5780 | 32 | go decl internal/constraints/constraints.go:19 |  |  | 0.426 |
-| walker |  | 5818 | 38 | go doc find.go:40 |  |  | 0.426 |
-| walker |  | 5845 | 27 | README.md section #437 |  |  | 0.426 |
-| walker |  | 5884 | 39 | go doc intersect.go:17 |  |  | 0.426 |
-| walker |  | 5923 | 39 | go doc math.go:71 |  |  | 0.426 |
-| walker |  | 5949 | 26 | go body errors.go:91 |  |  | 0.426 |
-| ns | 5952 |  | 455 | it/seq.go roster 1/2: sequence transforms (L16-L615) | 3.2 |  | 0.408 |
-| walker |  | 5990 | 41 | go doc intersect.go:5 |  |  | 0.408 |
-| walker |  | 6229 | 239 | go decl errors.go:34 |  |  | 0.408 |
+| walker |  | 4537 | 36 | go doc intersect.go:119 |  |  | 0.429 |
+| walker |  | 4573 | 36 | go doc map.go:47 |  |  | 0.429 |
+| walker |  | 4610 | 37 | go doc type_manipulation.go:34 |  |  | 0.429 |
+| walker |  | 4682 | 72 | README headline in exp/simd/README.md |  |  | 0.429 |
+| walker |  | 4733 | 51 | go names internal/constraints/constraints.go |  |  | 0.429 |
+| walker |  | 4748 | 15 | go decl internal/constraints/constraints.go:26 |  |  | 0.429 |
+| walker |  | 4764 | 16 | go decl internal/constraints/constraints.go:40 |  |  | 0.429 |
+| ns | 4779 |  | 252 | math.go and string.go rosters | 2.13 |  | 0.420 |
+| walker |  | 4782 | 18 | go decl internal/constraints/constraints.go:33 |  |  | 0.420 |
+| walker |  | 4811 | 29 | go decl internal/constraints/constraints.go:12 |  |  | 0.420 |
+| walker |  | 4843 | 32 | go decl internal/constraints/constraints.go:19 |  |  | 0.420 |
+| walker |  | 4881 | 38 | go doc find.go:40 |  |  | 0.420 |
+| walker |  | 4908 | 27 | README.md section #437 |  |  | 0.420 |
+| ns | 4916 |  | 137 | concurrency.go roster: Async, Synchronize, WaitFor | 2.14 |  | 0.422 |
+| walker |  | 4947 | 39 | go doc intersect.go:17 |  |  | 0.422 |
+| walker |  | 4986 | 39 | go doc math.go:71 |  |  | 0.422 |
+| walker |  | 5012 | 26 | go body errors.go:91 |  |  | 0.422 |
+| walker |  | 5053 | 41 | go doc intersect.go:5 |  |  | 0.422 |
+| ns | 5078 |  | 162 | retry.go roster: attempt, debounce, throttle, transaction | 2.15 |  | 0.417 |
+| ns | 5188 |  | 110 | time.go, func.go and constraints.go: complete small files | 2.16 |  | 0.414 |
+| walker |  | 5292 | 239 | go decl errors.go:34 |  |  | 0.414 |
+| ns | 5329 |  | 141 | types.go: Entry and the Tuple2..Tuple9 family | 2.17 |  | 0.413 |
+| ns | 5392 |  | 63 | Full signatures for the three flagship slice helpers | 2.18 | 2.2 | 0.412 |
+| ns | 5497 |  | 105 | it/ package header: the go1.23 build tag and its dependencies | 3.1 |  | 0.407 |
+| ns | 5952 |  | 455 | it/seq.go roster 1/2: sequence transforms (L16-L615) | 3.2 |  | 0.390 |
+| walker |  | 6229 | 937 | plaintext config Makefile |  |  | 0.408 |
 | walker |  | 6271 | 42 | go doc concurrency.go:21 |  |  | 0.408 |
 | ns | 6287 |  | 335 | it/seq.go roster 2/2: take/drop, count, trim, buffer (L627-L1169) | 3.3 |  | 0.397 |
 | walker |  | 6313 | 42 | go doc math.go:11 |  |  | 0.397 |

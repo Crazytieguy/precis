@@ -96,28 +96,28 @@ Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 3473 | 56 | README.md section #9 |  |  | 0.611 |
 | walker |  | 3569 | 96 | python decl peepdb/db/firebase.py:9 |  |  | 0.612 |
 | walker |  | 3624 | 55 | python decl peepdb/db/mongodb.py:42 |  |  | 0.612 |
-| walker |  | 3634 | 10 | python body peepdb/db/mongodb.py:39 |  |  | 0.612 |
 | ns | 3651 |  | 198 | peep_db body: connect, fetch one table or all (core.py 67-79) | 3.6 | 3.3 | 0.597 |
-| walker |  | 3676 | 42 | listing of 'peepdb/tests' |  |  | 0.631 |
+| walker |  | 3734 | 110 | plaintext config requirements.txt |  |  | 0.597 |
+| walker |  | 3744 | 10 | python body peepdb/db/mongodb.py:39 |  |  | 0.597 |
+| walker |  | 3786 | 42 | listing of 'peepdb/tests' |  |  | 0.631 |
 | ns | 3887 |  | 236 | peep_db body: table-vs-JSON post-processing and the finally-disconnect (core.py 80-98) | 3.7 | 3.6 | 0.610 |
-| walker |  | 3908 | 232 | python decl peepdb/cli.py:53 |  |  | 0.640 |
-| walker |  | 4034 | 126 | declaration surface of docs/Gemfile |  |  | 0.640 |
+| walker |  | 4018 | 232 | python decl peepdb/cli.py:53 |  |  | 0.640 |
 | ns | 4134 |  | 247 | format_value: numeric/date rendering rules (core.py 119-140) | 3.8 | 1.5 | 0.617 |
-| walker |  | 4159 | 125 | python decl peepdb/db/mssql.py:6 |  |  | 0.618 |
-| walker |  | 4194 | 35 | README.md section #1 |  |  | 0.626 |
-| walker |  | 4201 | 7 | python body peepdb/cli.py:25 |  |  | 0.626 |
+| walker |  | 4144 | 126 | declaration surface of docs/Gemfile |  |  | 0.617 |
+| walker |  | 4269 | 125 | python decl peepdb/db/mssql.py:6 |  |  | 0.618 |
+| walker |  | 4304 | 35 | README.md section #1 |  |  | 0.626 |
+| walker |  | 4311 | 7 | python body peepdb/cli.py:25 |  |  | 0.626 |
 | ns | 4335 |  | 201 | format_as_table: the tabulate grid layout (core.py 102-115) | 3.9 | 1.5 | 0.612 |
-| walker |  | 4353 | 152 | python decl peepdb/db/base.py:5 |  |  | 0.622 |
-| walker |  | 4362 | 9 | python decl peepdb/db/base.py:17 |  |  | 0.625 |
-| walker |  | 4371 | 9 | python decl peepdb/db/base.py:21 |  |  | 0.627 |
-| walker |  | 4380 | 9 | python decl peepdb/db/base.py:25 |  |  | 0.629 |
-| walker |  | 4389 | 9 | python decl peepdb/db/base.py:29 |  |  | 0.632 |
-| walker |  | 4394 | 5 | python body peepdb/db/base.py:17 |  |  | 0.634 |
-| walker |  | 4417 | 23 | README.md section #16 |  |  | 0.634 |
-| ns | 4459 |  | 124 | core.py import header and module logger setup | 3.10 |  | 0.621 |
-| walker |  | 4514 | 97 | headings outline in docs/usage.md |  |  | 0.621 |
-| walker |  | 4546 | 32 | docs/usage.md section #0 |  |  | 0.621 |
-| walker |  | 4656 | 110 | plaintext config requirements.txt |  |  | 0.621 |
+| ns | 4459 |  | 124 | core.py import header and module logger setup | 3.10 |  | 0.600 |
+| walker |  | 4463 | 152 | python decl peepdb/db/base.py:5 |  |  | 0.610 |
+| walker |  | 4472 | 9 | python decl peepdb/db/base.py:17 |  |  | 0.612 |
+| walker |  | 4481 | 9 | python decl peepdb/db/base.py:21 |  |  | 0.614 |
+| walker |  | 4490 | 9 | python decl peepdb/db/base.py:25 |  |  | 0.617 |
+| walker |  | 4499 | 9 | python decl peepdb/db/base.py:29 |  |  | 0.619 |
+| walker |  | 4504 | 5 | python body peepdb/db/base.py:17 |  |  | 0.621 |
+| walker |  | 4527 | 23 | README.md section #16 |  |  | 0.621 |
+| walker |  | 4624 | 97 | headings outline in docs/usage.md |  |  | 0.621 |
+| walker |  | 4656 | 32 | docs/usage.md section #0 |  |  | 0.621 |
 | walker |  | 4661 | 5 | python body peepdb/db/base.py:21 |  |  | 0.624 |
 | walker |  | 4768 | 107 | README.md section #22 |  |  | 0.624 |
 | walker |  | 4773 | 5 | python body peepdb/db/base.py:25 |  |  | 0.626 |

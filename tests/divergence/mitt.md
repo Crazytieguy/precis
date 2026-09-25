@@ -75,10 +75,10 @@ Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 4856 | 35 | README.md section #6 |  |  | 0.834 |
 | walker |  | 4875 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.834 |
 | walker |  | 4891 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.834 |
-| walker |  | 4919 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.835 |
 | ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.815 |
-| walker |  | 5029 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.815 |
-| walker |  | 5103 | 74 | plaintext config .gitignore |  |  | 0.816 |
+| walker |  | 4965 | 74 | plaintext config .gitignore |  |  | 0.815 |
+| walker |  | 4993 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.815 |
+| walker |  | 5103 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.816 |
 | ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.797 |
 | walker |  | 5268 | 165 | plaintext config .editorconfig |  |  | 0.798 |
 | ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.781 |

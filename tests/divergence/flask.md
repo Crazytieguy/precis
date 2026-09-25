@@ -212,4 +212,6 @@ Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | ns | 9611 |  | 67 | The three runnable example applications (examples/ and each app package) | 6.6 |  | 0.570 |
 | walker |  | 9719 | 207 | python names src/flask/app.py |  |  | 0.571 |
 | walker |  | 9742 | 23 | python decl src/flask/app.py:64 |  |  | 0.571 |
+| walker |  | 9804 | 62 | python decl src/flask/helpers.py:654 |  |  | 0.571 |
+| walker |  | 9837 | 33 | python decl src/flask/testing.py:193 |  |  | 0.571 |
 | ns | 9979 |  | 368 | The canonical application factory (examples/tutorial/flaskr/__init__.py:1-48, comments elided) | 6.7 | 6.6 | 0.557 |

@@ -31,14 +31,14 @@ Score(3000)=0.545 I=0.585 C=0.508 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 258 | 9 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.740 |
 | walker |  | 270 | 12 | go names cmd/tock/main.go |  |  | 0.740 |
 | ns | 294 |  | 77 | README feature bullets, part 2 (Bartib/TimeWarrior compat, themes, iCal) | 1.5 |  | 0.691 |
-| ns | 362 |  | 68 | Binary entry point | 1.6 |  | 0.587 |
-| ns | 414 |  | 52 | Package tree: cmd/, internal/ and its layer directories | 1.7 |  | 0.634 |
-| ns | 495 |  | 81 | Domain, service and support package file listings (complete) | 1.8 |  | 0.617 |
-| walker |  | 603 | 333 | plaintext config Makefile |  |  | 0.617 |
-| ns | 621 |  | 126 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.508 |
-| walker |  | 694 | 91 | README headline in README.md |  |  | 0.511 |
-| walker |  | 708 | 14 | listing of '.github' |  |  | 0.512 |
-| walker |  | 716 | 8 | listing of '.github/workflows' |  |  | 0.512 |
+| walker |  | 361 | 91 | README headline in README.md |  |  | 0.696 |
+| ns | 362 |  | 68 | Binary entry point | 1.6 |  | 0.591 |
+| walker |  | 375 | 14 | listing of '.github' |  |  | 0.591 |
+| walker |  | 383 | 8 | listing of '.github/workflows' |  |  | 0.592 |
+| ns | 414 |  | 52 | Package tree: cmd/, internal/ and its layer directories | 1.7 |  | 0.639 |
+| ns | 495 |  | 81 | Domain, service and support package file listings (complete) | 1.8 |  | 0.622 |
+| ns | 621 |  | 126 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.512 |
+| walker |  | 716 | 333 | plaintext config Makefile |  |  | 0.512 |
 | ns | 726 |  | 105 | README section headings (all H2) | 1.10 |  | 0.482 |
 | walker |  | 734 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.495 |
 | walker |  | 752 | 18 | listing of 'internal/core/ports/mocks' |  |  | 0.529 |

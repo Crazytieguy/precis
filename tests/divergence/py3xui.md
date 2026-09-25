@@ -135,19 +135,19 @@ Score(3000)=0.591 I=0.829 C=0.421 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | ns | 5088 |  | 167 | class Inbound: traffic counters, expiry, client_stats and model_config | 3.5 | 3.4 | 0.546 |
 | walker |  | 5127 | 100 | headings outline in py3xui/server/README.md |  |  | 0.546 |
 | walker |  | 5140 | 13 | py3xui/server/README.md section #0 |  |  | 0.546 |
-| walker |  | 5235 | 95 | python decl py3xui/api/api.py:67 |  |  | 0.570 |
+| walker |  | 5205 | 65 | plaintext config dev/requirements.txt |  |  | 0.546 |
+| walker |  | 5300 | 95 | python decl py3xui/api/api.py:67 |  |  | 0.570 |
 | ns | 5301 |  | 213 | InboundFields: the complete inbound JSON key mapping | 3.6 |  | 0.552 |
-| walker |  | 5330 | 95 | python decl py3xui/async_api/async_api.py:72 |  |  | 0.566 |
-| ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.560 |
-| walker |  | 5511 | 181 | python decl py3xui/inbound/inbound.py:15 |  |  | 0.591 |
-| walker |  | 5527 | 16 | python doc py3xui/inbound/inbound.py:15 |  |  | 0.599 |
+| ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.547 |
+| walker |  | 5395 | 95 | python decl py3xui/async_api/async_api.py:72 |  |  | 0.560 |
+| walker |  | 5576 | 181 | python decl py3xui/inbound/inbound.py:15 |  |  | 0.592 |
+| walker |  | 5592 | 16 | python doc py3xui/inbound/inbound.py:15 |  |  | 0.599 |
 | ns | 5681 |  | 306 | Inbound.to_json body: which fields are sent, and the nested-JSON-string encoding | 3.8 | 3.7 | 0.577 |
-| walker |  | 5742 | 215 | python decl py3xui/api/api_client.py:13 |  |  | 0.587 |
+| walker |  | 5807 | 215 | python decl py3xui/api/api_client.py:13 |  |  | 0.587 |
 | ns | 5829 |  | 148 | Inbound.validate_stream_settings: the dict / JSON-string / empty-string union | 3.9 |  | 0.576 |
-| walker |  | 5885 | 143 | headings outline in py3xui/api/README.md |  |  | 0.576 |
+| walker |  | 5950 | 143 | headings outline in py3xui/api/README.md |  |  | 0.576 |
 | ns | 6066 |  | 237 | Settings and Sniffing models with their field-name constants | 3.10 |  | 0.588 |
-| walker |  | 6110 | 225 | python decl py3xui/async_api/async_api_client.py:12 |  |  | 0.607 |
-| walker |  | 6175 | 65 | plaintext config dev/requirements.txt |  |  | 0.607 |
+| walker |  | 6175 | 225 | python decl py3xui/async_api/async_api_client.py:12 |  |  | 0.607 |
 | ns | 6205 |  | 139 | StreamSettingsFields: every transport-settings JSON key | 3.11 |  | 0.614 |
 | ns | 6335 |  | 130 | class StreamSettings: every field, protocol dicts truncated to their names | 3.12 | 3.11 | 0.606 |
 | walker |  | 6402 | 227 | python decl py3xui/client/client.py:7 |  |  | 0.639 |

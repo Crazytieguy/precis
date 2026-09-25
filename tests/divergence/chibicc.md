@@ -1,4 +1,4 @@
-Score(3000)=0.639 I=0.821 C=0.497 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.504/0.470/0.361/0.639/0.562/0.530/0.610
+Score(3000)=0.639 I=0.821 C=0.497 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.327/0.304/0.361/0.639/0.562/0.530/0.610
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,25 +11,25 @@ Score(3000)=0.639 I=0.821 C=0.497 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 240 | 59 | headings outline in README.md |  |  | 0.647 |
 | ns | 263 |  | 137 | README lede tail: real-world programs it compiles | 1.3 | 1.1 | 0.523 |
 | walker |  | 289 | 49 | c names include/stdbool.h |  |  | 0.523 |
+| walker |  | 345 | 56 | c names include/stdalign.h |  |  | 0.523 |
 | ns | 356 |  | 93 | chibicc.h module section banners (the header's table of contents) | 1.4 |  | 0.440 |
+| walker |  | 382 | 37 | c names strings.c |  |  | 0.440 |
 | ns | 415 |  | 59 | All README H2 headings | 1.5 |  | 0.470 |
 | ns | 528 |  | 113 | README Internals: tokenize and preprocess stages | 1.6 | 1.5 | 0.418 |
 | ns | 602 |  | 74 | README Internals: parse and codegen stages | 1.7 | 1.6 | 0.392 |
-| ns | 765 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.344 |
-| ns | 905 |  | 140 | Makefile: test targets | 1.9 | 1.8 | 0.320 |
-| walker |  | 971 | 682 | plaintext config Makefile |  |  | 0.504 |
-| ns | 1003 |  | 98 | Makefile: stage-2 self-host targets and clean | 1.10 | 1.9 | 0.514 |
-| walker |  | 1027 | 56 | c names include/stdalign.h |  |  | 0.514 |
-| ns | 1039 |  | 36 | Complete include/ listing (bundled freestanding headers) | 1.11 |  | 0.523 |
-| walker |  | 1064 | 37 | c names strings.c |  |  | 0.523 |
-| ns | 1273 |  | 234 | README Status: supported and unsupported C11 features | 1.12 | 1.5 | 0.464 |
-| walker |  | 1342 | 278 | c names chibicc.h |  |  | 0.466 |
-| walker |  | 1365 | 23 | c decl chibicc.h:38 |  |  | 0.468 |
-| walker |  | 1371 | 6 | c doc chibicc.h:73 |  |  | 0.468 |
-| walker |  | 1431 | 60 | c decl chibicc.h:62 |  |  | 0.470 |
-| ns | 1484 |  | 211 | Complete test/ listing | 1.13 |  | 0.381 |
-| walker |  | 1528 | 97 | c decl chibicc.h:52 |  |  | 0.383 |
-| walker |  | 1535 | 7 | c doc chibicc.h:52 |  |  | 0.383 |
+| walker |  | 660 | 278 | c names chibicc.h |  |  | 0.394 |
+| walker |  | 683 | 23 | c decl chibicc.h:38 |  |  | 0.396 |
+| walker |  | 689 | 6 | c doc chibicc.h:73 |  |  | 0.396 |
+| walker |  | 749 | 60 | c decl chibicc.h:62 |  |  | 0.398 |
+| ns | 765 |  | 163 | Makefile: build flags and the chibicc target | 1.8 |  | 0.349 |
+| walker |  | 846 | 97 | c decl chibicc.h:52 |  |  | 0.351 |
+| walker |  | 853 | 7 | c doc chibicc.h:52 |  |  | 0.351 |
+| ns | 905 |  | 140 | Makefile: test targets | 1.9 | 1.8 | 0.327 |
+| ns | 1003 |  | 98 | Makefile: stage-2 self-host targets and clean | 1.10 | 1.9 | 0.313 |
+| ns | 1039 |  | 36 | Complete include/ listing (bundled freestanding headers) | 1.11 |  | 0.343 |
+| ns | 1273 |  | 234 | README Status: supported and unsupported C11 features | 1.12 | 1.5 | 0.304 |
+| ns | 1484 |  | 211 | Complete test/ listing | 1.13 |  | 0.247 |
+| walker |  | 1535 | 682 | plaintext config Makefile |  |  | 0.383 |
 | ns | 1569 |  | 85 | The four stage entry points declared in chibicc.h | 2.1 |  | 0.375 |
 | walker |  | 1623 | 88 | c names include/stddef.h |  |  | 0.375 |
 | ns | 1798 |  | 229 | chibicc.h: rest of the tokenize.c public API | 2.2 | 2.1 | 0.362 |
