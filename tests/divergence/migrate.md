@@ -260,8 +260,24 @@ Score(3000)=0.551 I=0.700 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 9581 | 13 | Code::CodeKey { rung: Decl, file: cmd/migrate/main.go, decl: 1, sub: 0, line: 5 } |  |  | 0.610 |
 | walker |  | 9593 | 12 | Code::CodeKey { rung: Names, file: cmd/migrate/version.go, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
 | walker |  | 9608 | 15 | Code::CodeKey { rung: Doc, file: cmd/migrate/version.go, decl: 1, sub: 0, line: 4 } |  |  | 0.612 |
-| walker |  | 9618 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.612 |
-| walker |  | 9780 | 162 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.612 |
+| walker |  | 9620 | 12 | Code::CodeKey { rung: Names, file: internal/cli/build_github.go, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 9632 | 12 | Code::CodeKey { rung: Names, file: internal/cli/build_github_ee.go, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 9644 | 12 | Code::CodeKey { rung: Names, file: internal/cli/build_mongodb.go, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 9656 | 12 | Code::CodeKey { rung: Names, file: internal/cli/build_mysql.go, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 9668 | 12 | Code::CodeKey { rung: Names, file: internal/cli/build_postgres.go, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 9680 | 12 | Code::CodeKey { rung: Names, file: internal/cli/build_sqlite.go, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 9690 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.612 |
+| walker |  | 9852 | 162 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.612 |
 | ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.606 |
+| walker |  | 9865 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_bitbucket.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 9878 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_cassandra.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 9891 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_clickhouse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 9904 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_firebird.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 9917 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_gitlab.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 9930 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_pgx.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
+| walker |  | 9943 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_ql.go, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
 | ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.603 |
-| walker |  | 9989 | 209 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.603 |
+| walker |  | 9956 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_redshift.go, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
+| walker |  | 9969 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_snowflake.go, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
+| walker |  | 9982 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_spanner.go, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
+| walker |  | 9995 | 13 | Code::CodeKey { rung: Names, file: internal/cli/build_sqlcipher.go, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |

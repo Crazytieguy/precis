@@ -2,7 +2,9 @@
 //! program flow of `package main` (see `show_program_flow`); `type`,
 //! `const` and `var` declarations are `Whole`, and a grouped `( … )`
 //! declaration lists one roster row per spec. The module doc is the
-//! package comment.
+//! package comment. A `//go:build` constraint joins the roster as a
+//! re-export row, so a platform variant never lists its declarations
+//! without their condition.
 
 use tree_sitter::Node;
 
@@ -26,6 +28,10 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut cursor = root.walk();
     for child in root.named_children(&mut cursor) {
         let decl = match child.kind() {
+            "comment" if file.text(child).starts_with("//go:build") => {
+                model.reexports.push(Item::new(file.node_rows(child)));
+                continue;
+            }
             "package_clause" => {
                 model.module_doc = doc_items(child, file);
                 let mut inner = child.walk();
@@ -244,6 +250,22 @@ var x, Y = 1, 2
         assert_eq!(body_rows(group), [vec![4, 5], vec![6]]);
         let single = &model.decls[1];
         assert_eq!((single.head.as_slice(), single.body.len()), (&[9][..], 0));
+    }
+
+    #[test]
+    fn go_build_constraint_joins_the_roster() {
+        let model = extract_source(
+            "\
+//go:build linux && !purego
+
+// Package foo does things.
+package foo
+
+func Sum() {}
+",
+        );
+        assert_eq!(model.reexports, [Item::new([1])]);
+        assert_eq!(model.module_doc, [Item::new([3])]);
     }
 
     #[test]

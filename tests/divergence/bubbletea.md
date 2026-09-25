@@ -187,15 +187,16 @@ Score(3000)=0.556 I=0.777 C=0.398 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 9096 | 43 | Code::CodeKey { rung: Decl, file: key.go, decl: 1, sub: 0, line: 9 } |  |  | 0.515 |
 | walker |  | 9110 | 14 | Code::CodeKey { rung: Names, file: profile.go, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
 | walker |  | 9121 | 11 | Code::CodeKey { rung: Decl, file: profile.go, decl: 1, sub: 0, line: 13 } |  |  | 0.518 |
-| walker |  | 9220 | 99 | Code::CodeKey { rung: Names, file: renderer.go, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
-| walker |  | 9233 | 13 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 3, sub: 0, line: 59 } |  |  | 0.520 |
-| walker |  | 9272 | 39 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 1, sub: 0, line: 10 } |  |  | 0.522 |
-| walker |  | 9299 | 27 | Code::CodeKey { rung: Doc, file: renderer.go, decl: 6, sub: 0, line: 96 } |  |  | 0.522 |
-| walker |  | 9345 | 46 | Code::CodeKey { rung: Body, file: renderer.go, decl: 4, sub: 0, line: 70 } |  |  | 0.522 |
-| ns | 9347 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.518 |
+| walker |  | 9177 | 56 | Code::CodeKey { rung: Names, file: tty_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
+| walker |  | 9276 | 99 | Code::CodeKey { rung: Names, file: renderer.go, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
+| walker |  | 9289 | 13 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 3, sub: 0, line: 59 } |  |  | 0.520 |
+| walker |  | 9328 | 39 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 1, sub: 0, line: 10 } |  |  | 0.523 |
+| ns | 9347 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.519 |
+| walker |  | 9355 | 27 | Code::CodeKey { rung: Doc, file: renderer.go, decl: 6, sub: 0, line: 96 } |  |  | 0.519 |
+| walker |  | 9401 | 46 | Code::CodeKey { rung: Body, file: renderer.go, decl: 4, sub: 0, line: 70 } |  |  | 0.519 |
 | ns | 9516 |  | 169 | README section map | 5.4 |  | 0.527 |
-| walker |  | 9729 | 384 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 2, sub: 0, line: 18 } |  |  | 0.535 |
-| walker |  | 9742 | 13 | Code::CodeKey { rung: Doc, file: renderer.go, decl: 2, sub: 0, line: 18 } |  |  | 0.538 |
-| ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.527 |
+| walker |  | 9785 | 384 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 2, sub: 0, line: 18 } |  |  | 0.536 |
+| walker |  | 9798 | 13 | Code::CodeKey { rung: Doc, file: renderer.go, decl: 2, sub: 0, line: 18 } |  |  | 0.538 |
+| ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.528 |
 | ns | 9917 |  | 41 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.532 |
-| walker |  | 9989 | 247 | Code::CodeKey { rung: Names, file: mouse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| walker |  | 9998 | 200 | Code::CodeKey { rung: Names, file: mouse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |

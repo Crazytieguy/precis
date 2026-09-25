@@ -63,10 +63,6 @@ go.mod
   3→go 1.11
 go.sum (empty)
 testall.sh
-  …
-  2→set -eu -o pipefail
-  3→
-  …
 xxhash.go
   1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
   2→// at https://xxhash.com/.
@@ -157,6 +153,7 @@ xxhash.go
 xxhash_amd64.s
 xxhash_arm64.s
 xxhash_asm.go
+  1→//go:build (amd64 || arm64) && !appengine && gc && !purego
   …
   9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
   10→//
@@ -165,6 +162,7 @@ xxhash_asm.go
   14→//go:noescape
   15→func writeBlocks(d *Digest, b []byte) int
 xxhash_other.go
+  1→//go:build (!amd64 && !arm64) || appengine || !gc || purego
   …
   6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
   7→func Sum64(b []byte) uint64 {
@@ -172,6 +170,7 @@ xxhash_other.go
   64→func writeBlocks(d *Digest, b []byte) int {
   …
 xxhash_safe.go
+  1→//go:build appengine
   …
   8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
   9→func Sum64String(s string) uint64 {
@@ -183,6 +182,7 @@ xxhash_safe.go
   …
 xxhash_test.go
 xxhash_unsafe.go
+  1→//go:build !appengine
   …
   36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
   37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
@@ -194,10 +194,6 @@ xxhash_unsafe.go
   44→// It may be faster than Write([]byte(s)) by avoiding a copy.
   45→func (d *Digest) WriteString(s string) (n int, err error) {
   46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
-  47→	// d.Write always returns len(s), nil.
-  48→	// Ignoring the return output and returning these fixed values buys a
-  49→	// savings of 6 in the inliner's cost model.
-  50→	return len(s), nil
   …
   53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
   54→// of the first two words is the same as the layout of a string.
