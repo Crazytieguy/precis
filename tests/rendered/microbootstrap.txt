@@ -283,30 +283,8 @@ microbootstrap/
     56→    server_reload: bool = True
     57→    server_workers_count: int = 1
     60→class LitestarSettings(  # type: ignore[misc]
-    61→    BaseServiceSettings,
-    62→    ServerConfig,
-    63→    LoggingConfig,
-    64→    OpentelemetryConfig,
-    65→    SentryConfig,
-    66→    LitestarPrometheusConfig,
-    67→    SwaggerConfig,
-    68→    CorsConfig,
-    69→    HealthChecksConfig,
-    70→    PyroscopeConfig,
-    71→):
     …
     75→class FastApiSettings(  # type: ignore[misc]
-    76→    BaseServiceSettings,
-    77→    ServerConfig,
-    78→    LoggingConfig,
-    79→    OpentelemetryConfig,
-    80→    SentryConfig,
-    81→    FastApiPrometheusConfig,
-    82→    SwaggerConfig,
-    83→    CorsConfig,
-    84→    HealthChecksConfig,
-    85→    PyroscopeConfig,
-    86→):
     …
     90→class FastStreamSettings(  # type: ignore[misc]
     …
@@ -321,6 +299,25 @@ microbootstrap/
 package-lock.json
 package.json
 pyproject.toml
+  1→[project]
+  2→name = "microbootstrap"
+  3→description = "Package for bootstrapping new micro-services"
+  4→readme = "README.md"
+  5→requires-python = ">=3.10,<4"
+  6→keywords = [
+  7→    "python",
+  8→    "microservice",
+  9→    "bootstrap",
+  10→    "opentelemetry",
+  11→    "logging",
+  12→    "error-tracing",
+  13→    "litestar",
+  14→    "fastapi",
+  15→]
+  …
+  59→version = "0"
+  60→authors = [{ name = "community-of-python" }]
+  …
 tests/
   __init__.py (empty)
   bootstrappers/

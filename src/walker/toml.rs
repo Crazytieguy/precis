@@ -35,7 +35,6 @@ use super::{
 };
 
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
-const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
 
 type Section = (String, usize, usize);
 
@@ -530,17 +529,7 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
     {
         return None;
     }
-    // Reaching this point already proves the file is a Python project
-    // manifest with an identity table. PEP 517 conventionally places
-    // `[build-system]` first, so table position is not an identity signal.
-    let has_package_json = file
-        .parent()
-        .is_some_and(|parent| parent.join("package.json").exists());
-    Some(if has_package_json {
-        PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR
-    } else {
-        PYPROJECT_LEDE_IDENTITY_FACTOR
-    })
+    Some(PYPROJECT_LEDE_IDENTITY_FACTOR)
 }
 
 fn is_pyproject_identity_table(name: &str) -> bool {
@@ -561,7 +550,7 @@ fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Pyproject lede manifests get a cat-axis bump — reuses the same
     // signal as `identity_value` so the two stay co-classified.
     let cat = match pyproject_identity_factor(file, ctx) {
-        Some(PYPROJECT_LEDE_IDENTITY_FACTOR | PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR) => 0.55,
+        Some(PYPROJECT_LEDE_IDENTITY_FACTOR) => 0.55,
         _ => 0.4,
     };
     mix_signals(cat, 0.7, 0.4, path_depth_factor(file, ctx))

@@ -1,4 +1,4 @@
-Score(3000)=0.618 I=0.845 C=0.452 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.360/0.400/0.572/0.618/0.642/0.662/0.669
+Score(3000)=0.552 I=0.824 C=0.369 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.360/0.400/0.572/0.552/0.638/0.662/0.669
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -48,63 +48,63 @@ Score(3000)=0.618 I=0.845 C=0.452 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1404 | 17 | python doc microbootstrap/exceptions.py:9 |  |  | 0.400 |
 | walker |  | 1451 | 47 | listing of 'tests' |  |  | 0.400 |
 | ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.367 |
-| walker |  | 1560 | 109 | python decl microbootstrap/console_writer.py:10 |  |  | 0.367 |
-| walker |  | 1610 | 50 | python decl microbootstrap/console_writer.py:22 |  |  | 0.367 |
+| walker |  | 1523 | 72 | [package] in pyproject.toml |  |  | 0.367 |
+| walker |  | 1632 | 109 | python decl microbootstrap/console_writer.py:10 |  |  | 0.367 |
+| walker |  | 1682 | 50 | python decl microbootstrap/console_writer.py:22 |  |  | 0.367 |
 | ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.328 |
-| walker |  | 1985 | 375 | README prelude in README.md |  |  | 0.610 |
-| ns | 2007 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.572 |
-| walker |  | 2047 | 62 | python decl microbootstrap/instruments/swagger_instrument.py:21 |  |  | 0.572 |
-| walker |  | 2055 | 8 | python decl microbootstrap/instruments/swagger_instrument.py:28 |  |  | 0.572 |
-| walker |  | 2118 | 63 | python decl microbootstrap/instruments/cors_instrument.py:18 |  |  | 0.572 |
-| walker |  | 2126 | 8 | python decl microbootstrap/instruments/cors_instrument.py:27 |  |  | 0.572 |
+| ns | 2007 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.307 |
+| walker |  | 2057 | 375 | README prelude in README.md |  |  | 0.572 |
+| walker |  | 2119 | 62 | python decl microbootstrap/instruments/swagger_instrument.py:21 |  |  | 0.572 |
+| walker |  | 2127 | 8 | python decl microbootstrap/instruments/swagger_instrument.py:28 |  |  | 0.572 |
+| walker |  | 2190 | 63 | python decl microbootstrap/instruments/cors_instrument.py:18 |  |  | 0.572 |
+| walker |  | 2198 | 8 | python decl microbootstrap/instruments/cors_instrument.py:27 |  |  | 0.572 |
 | ns | 2228 |  | 221 | README Settings section: env sourcing and `ENVIRONMENT_PREFIX` | 2.5 |  | 0.548 |
-| walker |  | 2288 | 162 | python names microbootstrap/helpers.py |  |  | 0.548 |
-| walker |  | 2312 | 24 | python decl microbootstrap/helpers.py:100 |  |  | 0.548 |
-| walker |  | 2351 | 39 | python decl microbootstrap/helpers.py:48 |  |  | 0.548 |
-| walker |  | 2391 | 40 | python decl microbootstrap/helpers.py:60 |  |  | 0.548 |
-| walker |  | 2433 | 42 | python decl microbootstrap/helpers.py:35 |  |  | 0.548 |
-| walker |  | 2449 | 16 | python body microbootstrap/helpers.py:96 |  |  | 0.548 |
-| ns | 2478 |  | 250 | `instruments/base.py`: `BaseInstrumentConfig`, `Instrument` header, complete method roster | 3.1 |  | 0.522 |
-| walker |  | 2612 | 163 | python names microbootstrap/settings.py |  |  | 0.555 |
-| walker |  | 2663 | 51 | python decl microbootstrap/settings.py:105 |  |  | 0.564 |
-| walker |  | 2673 | 10 | python doc microbootstrap/settings.py:105 |  |  | 0.567 |
-| walker |  | 2737 | 64 | python decl microbootstrap/settings.py:53 |  |  | 0.574 |
-| walker |  | 2832 | 95 | python decl microbootstrap/settings.py:60 |  |  | 0.601 |
-| ns | 2842 |  | 364 | Instrument roster: every instrument class with its `instrument_name` and `ready_condition` | 3.2 |  | 0.577 |
-| walker |  | 2927 | 95 | python decl microbootstrap/settings.py:75 |  |  | 0.618 |
-| walker |  | 3025 | 98 | python decl microbootstrap/settings.py:90 |  |  | 0.653 |
-| ns | 3039 |  | 197 | `InstrumentBox`: registry fields, `initialize`, and remaining member roster | 3.3 |  | 0.634 |
+| walker |  | 2297 | 99 | package metadata in pyproject.toml |  |  | 0.548 |
+| walker |  | 2459 | 162 | python names microbootstrap/helpers.py |  |  | 0.548 |
+| ns | 2478 |  | 250 | `instruments/base.py`: `BaseInstrumentConfig`, `Instrument` header, complete method roster | 3.1 |  | 0.521 |
+| walker |  | 2483 | 24 | python decl microbootstrap/helpers.py:100 |  |  | 0.521 |
+| walker |  | 2522 | 39 | python decl microbootstrap/helpers.py:48 |  |  | 0.522 |
+| walker |  | 2562 | 40 | python decl microbootstrap/helpers.py:60 |  |  | 0.522 |
+| walker |  | 2604 | 42 | python decl microbootstrap/helpers.py:35 |  |  | 0.522 |
+| walker |  | 2620 | 16 | python body microbootstrap/helpers.py:96 |  |  | 0.522 |
+| walker |  | 2783 | 163 | python names microbootstrap/settings.py |  |  | 0.555 |
+| walker |  | 2834 | 51 | python decl microbootstrap/settings.py:105 |  |  | 0.564 |
+| ns | 2842 |  | 364 | Instrument roster: every instrument class with its `instrument_name` and `ready_condition` | 3.2 |  | 0.543 |
+| walker |  | 2844 | 10 | python doc microbootstrap/settings.py:105 |  |  | 0.546 |
+| walker |  | 2908 | 64 | python decl microbootstrap/settings.py:53 |  |  | 0.552 |
+| walker |  | 3003 | 95 | python decl microbootstrap/settings.py:60 |  |  | 0.577 |
+| ns | 3039 |  | 197 | `InstrumentBox`: registry fields, `initialize`, and remaining member roster | 3.3 |  | 0.560 |
+| walker |  | 3098 | 95 | python decl microbootstrap/settings.py:75 |  |  | 0.600 |
+| walker |  | 3196 | 98 | python decl microbootstrap/settings.py:90 |  |  | 0.634 |
 | ns | 3198 |  | 159 | `Instrument` abstract methods and default hook implementations (bodies) | 3.4 | 3.1 | 0.609 |
-| walker |  | 3265 | 240 | headings outline in README.md |  |  | 0.655 |
-| walker |  | 3272 | 7 | python body microbootstrap/instruments/cors_instrument.py:27 |  |  | 0.655 |
-| walker |  | 3279 | 7 | python body microbootstrap/instruments/swagger_instrument.py:28 |  |  | 0.655 |
-| ns | 3319 |  | 121 | `Instrument.configure_instrument` and `write_status` (bodies) | 3.5 | 3.1 | 0.640 |
-| walker |  | 3442 | 163 | python decl microbootstrap/instruments_setupper.py:19 |  |  | 0.640 |
-| walker |  | 3474 | 32 | python decl microbootstrap/instruments_setupper.py:32 |  |  | 0.640 |
-| walker |  | 3480 | 6 | python body microbootstrap/instruments_setupper.py:62 |  |  | 0.640 |
-| walker |  | 3489 | 9 | python body microbootstrap/instruments_setupper.py:65 |  |  | 0.640 |
-| walker |  | 3550 | 61 | python decl microbootstrap/instruments_setupper.py:40 |  |  | 0.640 |
-| ns | 3579 |  | 260 | `InstrumentBox` bodies: config dispatch and the replace-on-register rule | 3.6 | 3.3 | 0.613 |
-| walker |  | 3639 | 89 | python names microbootstrap/instruments/base.py |  |  | 0.618 |
-| walker |  | 3658 | 19 | python decl microbootstrap/instruments/base.py:19 |  |  | 0.620 |
-| walker |  | 3744 | 86 | python decl microbootstrap/instruments/health_checks_instrument.py:26 |  |  | 0.624 |
-| walker |  | 3752 | 8 | python decl microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.624 |
-| walker |  | 3847 | 95 | python names microbootstrap/bootstrappers/base.py |  |  | 0.624 |
-| ns | 3848 |  | 269 | `SentryConfig`: complete field set | 4.1 |  | 0.610 |
-| walker |  | 3865 | 18 | python decl microbootstrap/bootstrappers/base.py:17 |  |  | 0.610 |
-| walker |  | 4125 | 260 | python names microbootstrap/__init__.py #1 |  |  | 0.660 |
-| walker |  | 4217 | 92 | python decl microbootstrap/config/litestar.py:13 |  |  | 0.661 |
-| ns | 4224 |  | 376 | `OpentelemetryConfig`: complete field set | 4.2 |  | 0.639 |
-| walker |  | 4309 | 92 | python decl microbootstrap/instruments/pyroscope_instrument.py:27 |  |  | 0.642 |
-| walker |  | 4317 | 8 | python decl microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.642 |
-| walker |  | 4324 | 7 | python body microbootstrap/instruments/pyroscope_instrument.py:34 |  |  | 0.642 |
-| walker |  | 4332 | 8 | python body microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.642 |
-| walker |  | 4340 | 8 | python body microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.642 |
-| walker |  | 4351 | 11 | python doc microbootstrap/settings.py:90 |  |  | 0.648 |
-| walker |  | 4366 | 15 | README.md section #22 |  |  | 0.648 |
-| walker |  | 4438 | 72 | [package] in pyproject.toml |  |  | 0.648 |
-| ns | 4499 |  | 275 | `LoggingConfig`: complete field set plus the exclude-endpoint validator | 4.3 |  | 0.630 |
-| walker |  | 4537 | 99 | package metadata in pyproject.toml |  |  | 0.630 |
+| ns | 3319 |  | 121 | `Instrument.configure_instrument` and `write_status` (bodies) | 3.5 | 3.1 | 0.595 |
+| walker |  | 3436 | 240 | headings outline in README.md |  |  | 0.640 |
+| walker |  | 3443 | 7 | python body microbootstrap/instruments/cors_instrument.py:27 |  |  | 0.640 |
+| walker |  | 3450 | 7 | python body microbootstrap/instruments/swagger_instrument.py:28 |  |  | 0.640 |
+| ns | 3579 |  | 260 | `InstrumentBox` bodies: config dispatch and the replace-on-register rule | 3.6 | 3.3 | 0.612 |
+| walker |  | 3613 | 163 | python decl microbootstrap/instruments_setupper.py:19 |  |  | 0.613 |
+| walker |  | 3645 | 32 | python decl microbootstrap/instruments_setupper.py:32 |  |  | 0.613 |
+| walker |  | 3651 | 6 | python body microbootstrap/instruments_setupper.py:62 |  |  | 0.613 |
+| walker |  | 3660 | 9 | python body microbootstrap/instruments_setupper.py:65 |  |  | 0.613 |
+| walker |  | 3721 | 61 | python decl microbootstrap/instruments_setupper.py:40 |  |  | 0.613 |
+| walker |  | 3810 | 89 | python names microbootstrap/instruments/base.py |  |  | 0.618 |
+| walker |  | 3829 | 19 | python decl microbootstrap/instruments/base.py:19 |  |  | 0.621 |
+| ns | 3848 |  | 269 | `SentryConfig`: complete field set | 4.1 |  | 0.607 |
+| walker |  | 3915 | 86 | python decl microbootstrap/instruments/health_checks_instrument.py:26 |  |  | 0.610 |
+| walker |  | 3923 | 8 | python decl microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.610 |
+| walker |  | 4018 | 95 | python names microbootstrap/bootstrappers/base.py |  |  | 0.610 |
+| walker |  | 4036 | 18 | python decl microbootstrap/bootstrappers/base.py:17 |  |  | 0.610 |
+| ns | 4224 |  | 376 | `OpentelemetryConfig`: complete field set | 4.2 |  | 0.590 |
+| walker |  | 4296 | 260 | python names microbootstrap/__init__.py #1 |  |  | 0.638 |
+| walker |  | 4388 | 92 | python decl microbootstrap/config/litestar.py:13 |  |  | 0.639 |
+| walker |  | 4480 | 92 | python decl microbootstrap/instruments/pyroscope_instrument.py:27 |  |  | 0.642 |
+| walker |  | 4488 | 8 | python decl microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.642 |
+| walker |  | 4495 | 7 | python body microbootstrap/instruments/pyroscope_instrument.py:34 |  |  | 0.642 |
+| ns | 4499 |  | 275 | `LoggingConfig`: complete field set plus the exclude-endpoint validator | 4.3 |  | 0.625 |
+| walker |  | 4503 | 8 | python body microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.625 |
+| walker |  | 4511 | 8 | python body microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.625 |
+| walker |  | 4522 | 11 | python doc microbootstrap/settings.py:90 |  |  | 0.630 |
+| walker |  | 4537 | 15 | README.md section #22 |  |  | 0.630 |
 | walker |  | 4651 | 114 | python decl microbootstrap/instruments/swagger_instrument.py:10 |  |  | 0.631 |
 | walker |  | 4769 | 118 | python decl microbootstrap/instruments/health_checks_instrument.py:14 |  |  | 0.632 |
 | walker |  | 4822 | 53 | README.md section #33 |  |  | 0.632 |
