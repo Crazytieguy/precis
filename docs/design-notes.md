@@ -171,11 +171,19 @@ must not undo:
   unexported declarations in TS/JS entry files, publishing a published
   handle's factory; Rust badge-paragraph skipping, rustdoc fence-aware
   paragraphs, hiding impls of hidden types; C decoration-row paragraph
-  splits.
+  splits; the C banner cutoff on declaration docs.
+- **Rows that condition or define a file's exports join its roster as
+  re-export rows**: a Go `//go:build` constraint (otherwise platform
+  variants list the same declarations with no condition), and a Lua
+  module's top-level `return` and `setmetatable(…)` call.
 - **Front doors and program flow are extraction decisions.** A file
   named after its project (a TS package's `lib/<package>.js`, a C
   repository's `<repo>.h`) is an entrypoint: the depth pin only;
   front-door file weights on top measured flat or negative (2026-09-25).
+  For Go, a root library file named after its package at ×1.3–1.4
+  measured +0.0014–0.0017 at 3000, under the bar: a helper file named
+  after its package opens ahead of the central one. Weighting the file
+  that holds the package comment instead measured negative.
   A program's `main`, and the file's other functions when `main` has at
   most two top-level statements, are `Whole` declarations, so their
   bodies price at the `Decl` tier. A TS/JS entry script that exports
@@ -220,3 +228,12 @@ must not undo:
   listing, a media-share discount, a steeper listing cost exponent)
   lost on the grid, because NS authors rank those listings early.
   Moving that trade needs an answer-key revision, not a walker tweak.
+- **Unopened rosters rank by row length, not centrality.** A roster's
+  ratio is `350 · prior / (tokens per row)^k`, so a directory's
+  rosters sit in a narrow band (about 115–145 in a Go root) and open
+  shortest-rows first; a central file whose rows are long method
+  signatures (`func (engine *Engine) …`) opens last, and once any
+  roster opens, that file's `Decl` and `Doc` batches (ratio 200–400)
+  drain before the next roster. Per-language file weights and hiding
+  rules in `extract` measured flat or split by fixture (2026-09-25); a
+  fix belongs in the value model.
