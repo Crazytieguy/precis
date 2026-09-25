@@ -1,4 +1,4 @@
-Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.831/0.785/0.689/0.637/0.592/0.535
+Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.831/0.785/0.689/0.637/0.592/0.532
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -132,18 +132,14 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 8404 | 316 | README.md section #11 |  |  | 0.556 |
 | ns | 8414 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.547 |
 | ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.537 |
-| walker |  | 8730 | 326 | README.md section #12 |  |  | 0.540 |
-| ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.535 |
-| walker |  | 9066 | 336 | README.md section #16 |  |  | 0.552 |
-| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.545 |
-| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.558 |
-| walker |  | 9382 | 316 | README.md section #19 |  |  | 0.558 |
-| walker |  | 9394 | 12 | ts names classes/index.js |  |  | 0.558 |
-| ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.555 |
-| walker |  | 9513 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.555 |
-| walker |  | 9513 | 0 | CONTRIBUTING.md section #0 |  |  | 0.555 |
-| walker |  | 9537 | 24 | json config .release-please-manifest.json |  |  | 0.555 |
-| ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.555 |
+| walker |  | 8831 | 427 | plaintext config .github/workflows/codeql-analysis.yml |  |  | 0.537 |
+| ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.532 |
+| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.525 |
+| walker |  | 9157 | 326 | README.md section #12 |  |  | 0.528 |
+| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.542 |
+| ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.539 |
+| walker |  | 9493 | 336 | README.md section #16 |  |  | 0.554 |
+| ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.554 |
 | ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.565 |
-| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.565 |
-| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.560 |
+| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.564 |
+| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.559 |

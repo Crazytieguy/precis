@@ -124,22 +124,22 @@ Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 7058 | 295 | ts body src/index.tsx:1098 |  |  | 0.686 |
 | walker |  | 7128 | 70 | ts body src/browser.ts:22 |  |  | 0.686 |
 | ns | 7355 |  | 313 | onRelease: the close-vs-snap-back decision ladder | 4.9 | 4.8 | 0.669 |
-| walker |  | 7445 | 317 | ts body src/index.tsx:803 |  |  | 0.670 |
-| walker |  | 7528 | 83 | ts body src/browser.ts:1 |  |  | 0.670 |
-| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.664 |
-| walker |  | 7644 | 116 | ts body src/helpers.ts:9 |  |  | 0.664 |
-| walker |  | 7703 | 59 | ts decl test/tests/helpers.ts:11 |  |  | 0.664 |
-| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.655 |
-| ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.661 |
-| walker |  | 7960 | 257 | ts body src/use-controllable-state.ts:39 |  |  | 0.661 |
-| walker |  | 7997 | 37 | ts names test/src/app/layout.tsx |  |  | 0.661 |
-| walker |  | 8026 | 29 | ts decl test/src/app/layout.tsx:7 |  |  | 0.661 |
-| ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.657 |
-| walker |  | 8213 | 187 | ts body src/use-prevent-scroll.ts:68 |  |  | 0.657 |
-| ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.652 |
-| ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.646 |
+| walker |  | 7439 | 311 | plaintext config .github/workflows/playwright.yml |  |  | 0.670 |
+| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.660 |
+| walker |  | 7756 | 317 | ts body src/index.tsx:803 |  |  | 0.665 |
+| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.656 |
+| walker |  | 7839 | 83 | ts body src/browser.ts:1 |  |  | 0.656 |
+| ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.662 |
+| walker |  | 7955 | 116 | ts body src/helpers.ts:9 |  |  | 0.662 |
+| walker |  | 8014 | 59 | ts decl test/tests/helpers.ts:11 |  |  | 0.662 |
+| ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.658 |
+| walker |  | 8271 | 257 | ts body src/use-controllable-state.ts:39 |  |  | 0.658 |
+| ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.653 |
+| walker |  | 8308 | 37 | ts names test/src/app/layout.tsx |  |  | 0.653 |
+| walker |  | 8337 | 29 | ts decl test/src/app/layout.tsx:7 |  |  | 0.653 |
+| ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.647 |
 | ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.655 |
-| walker |  | 8524 | 311 | YAML config at .github/workflows/playwright.yml |  |  | 0.655 |
+| walker |  | 8524 | 187 | ts body src/use-prevent-scroll.ts:68 |  |  | 0.655 |
 | ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.660 |
 | ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.664 |
 | walker |  | 8670 | 146 | ts body src/helpers.ts:42 |  |  | 0.664 |

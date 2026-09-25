@@ -1,4 +1,4 @@
-Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.516/0.500/0.510/0.511/0.742/0.875/0.771
+Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.516/0.500/0.510/0.511/0.742/0.859/0.803
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -106,17 +106,17 @@ Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 5792 | 56 | headings outline in CHANGELOG.md |  |  | 0.877 |
 | walker |  | 5792 | 0 | CHANGELOG.md section #0 |  |  | 0.877 |
 | ns | 5825 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.858 |
-| walker |  | 5904 | 112 | go names append_test.go |  |  | 0.865 |
-| ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.857 |
-| walker |  | 6058 | 154 | go body multierror.go:71 |  |  | 0.875 |
-| walker |  | 6092 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.875 |
-| ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.851 |
-| walker |  | 6267 | 175 | go doc multierror.go:71 |  |  | 0.866 |
-| walker |  | 6433 | 166 | go names multierror_test.go |  |  | 0.880 |
-| walker |  | 6610 | 177 | go doc multierror.go:99 |  |  | 0.893 |
-| walker |  | 6621 | 11 | go body multierror_test.go:13 |  |  | 0.893 |
-| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.863 |
-| walker |  | 6823 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.865 |
+| walker |  | 5994 | 202 | plaintext config .github/workflows/actionlint.yml |  |  | 0.859 |
+| ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.851 |
+| walker |  | 6106 | 112 | go names append_test.go |  |  | 0.859 |
+| ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.835 |
+| walker |  | 6260 | 154 | go body multierror.go:71 |  |  | 0.853 |
+| walker |  | 6294 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.853 |
+| walker |  | 6469 | 175 | go doc multierror.go:71 |  |  | 0.868 |
+| walker |  | 6635 | 166 | go names multierror_test.go |  |  | 0.881 |
+| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.853 |
+| walker |  | 6812 | 177 | go doc multierror.go:99 |  |  | 0.865 |
+| walker |  | 6823 | 11 | go body multierror_test.go:13 |  |  | 0.865 |
 | ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.851 |
 | walker |  | 6838 | 15 | go doc multierror_test.go:209 |  |  | 0.852 |
 | walker |  | 6888 | 50 | go body prefix_test.go:22 |  |  | 0.852 |
@@ -129,25 +129,25 @@ Score(3000)=0.511 I=0.567 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 7254 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.823 |
 | walker |  | 7288 | 67 | go body append_test.go:53 |  |  | 0.824 |
 | ns | 7361 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.812 |
-| walker |  | 7375 | 87 | go body prefix_test.go:30 |  |  | 0.812 |
 | ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.813 |
 | ns | 7461 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.814 |
-| walker |  | 7466 | 91 | go body prefix_test.go:11 |  |  | 0.814 |
-| walker |  | 7571 | 105 | go body format_test.go:11 |  |  | 0.814 |
-| walker |  | 7694 | 123 | go body format_test.go:27 |  |  | 0.814 |
 | ns | 7710 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.816 |
-| walker |  | 7821 | 127 | go body multierror_test.go:17 |  |  | 0.816 |
-| walker |  | 7950 | 129 | go body multierror_test.go:33 |  |  | 0.823 |
-| ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.801 |
-| walker |  | 8083 | 133 | go body multierror_test.go:51 |  |  | 0.801 |
-| walker |  | 8218 | 135 | go body sort_test.go:13 |  |  | 0.801 |
-| walker |  | 8241 | 23 | .github/pull_request_template.md section #2 |  |  | 0.801 |
-| walker |  | 8389 | 148 | go body multierror_test.go:65 |  |  | 0.801 |
-| ns | 8467 |  | 432 | CI steps: the `go fmt` gate and the golangci-lint job | 5.5 | 5.4 | 0.785 |
-| ns | 8852 |  | 385 | CI: how the linux test job actually runs the suite | 5.6 | 5.4 | 0.771 |
-| ns | 9035 |  | 183 | CI: what the windows job does differently | 5.7 | 5.4 | 0.764 |
-| ns | 9237 |  | 202 | actionlint workflow, in full | 5.8 |  | 0.767 |
-| walker |  | 9246 | 857 | YAML config at .github/workflows/go-multierror.yml |  |  | 0.797 |
+| ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.794 |
+| walker |  | 8145 | 857 | plaintext config .github/workflows/go-multierror.yml |  |  | 0.808 |
+| walker |  | 8232 | 87 | go body prefix_test.go:30 |  |  | 0.808 |
+| walker |  | 8323 | 91 | go body prefix_test.go:11 |  |  | 0.808 |
+| walker |  | 8428 | 105 | go body format_test.go:11 |  |  | 0.808 |
+| ns | 8467 |  | 432 | CI steps: the `go fmt` gate and the golangci-lint job | 5.5 | 5.4 | 0.811 |
+| walker |  | 8551 | 123 | go body format_test.go:27 |  |  | 0.811 |
+| walker |  | 8678 | 127 | go body multierror_test.go:17 |  |  | 0.811 |
+| walker |  | 8807 | 129 | go body multierror_test.go:33 |  |  | 0.818 |
+| ns | 8852 |  | 385 | CI: how the linux test job actually runs the suite | 5.6 | 5.4 | 0.803 |
+| walker |  | 8940 | 133 | go body multierror_test.go:51 |  |  | 0.803 |
+| ns | 9035 |  | 183 | CI: what the windows job does differently | 5.7 | 5.4 | 0.795 |
+| walker |  | 9075 | 135 | go body sort_test.go:13 |  |  | 0.795 |
+| walker |  | 9098 | 23 | .github/pull_request_template.md section #2 |  |  | 0.795 |
+| ns | 9237 |  | 202 | actionlint workflow, in full | 5.8 |  | 0.797 |
+| walker |  | 9246 | 148 | go body multierror_test.go:65 |  |  | 0.797 |
 | ns | 9388 |  | 151 | Dependabot configuration | 5.9 |  | 0.789 |
 | walker |  | 9437 | 191 | go body sort_test.go:32 |  |  | 0.789 |
 | ns | 9477 |  | 89 | CHANGELOG skeleton, CODEOWNERS, and the pinned Go toolchain file | 5.10 |  | 0.786 |

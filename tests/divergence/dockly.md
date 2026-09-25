@@ -199,18 +199,12 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 9093 | 84 | CONTRIBUTING.md section #0 |  |  | 0.597 |
 | walker |  | 9109 | 16 | ts body src/widgetsTemplates/list.widget.template.js:143 |  |  | 0.597 |
 | ns | 9179 |  | 286 | widgets/containers/containerList.widget.js: complete method roster | 7.3 |  | 0.590 |
-| walker |  | 9235 | 126 | ts body src/screen.js:19 |  |  | 0.602 |
-| walker |  | 9321 | 86 | ts body src/dockerUtil.js:88 |  |  | 0.603 |
-| walker |  | 9343 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.603 |
-| walker |  | 9429 | 86 | ts body src/dockerUtil.js:100 |  |  | 0.604 |
-| ns | 9448 |  | 269 | widgets/toolbar.widget.js: the per-mode command extension map | 7.4 |  | 0.596 |
-| walker |  | 9454 | 25 | listing of 'docs/src/assets/scss/layout' |  |  | 0.596 |
-| walker |  | 9587 | 133 | ts body src/screen.js:138 |  |  | 0.601 |
-| ns | 9596 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.597 |
-| walker |  | 9632 | 45 | listing of 'docs/src/assets/fonts' |  |  | 0.597 |
-| ns | 9640 |  | 44 | Complete listings of .github/ and its subdirectories | 8.1 |  | 0.600 |
-| walker |  | 9680 | 48 | ts decl docs/src/components/layout.js:6 |  |  | 0.600 |
-| ns | 9739 |  | 99 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.608 |
-| walker |  | 9766 | 86 | ts body src/dockerUtil.js:112 |  |  | 0.608 |
-| walker |  | 9965 | 199 | ts body src/assetsLoader.js:16 |  |  | 0.619 |
-| ns | 9988 |  | 249 | Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc | 8.3 |  | 0.611 |
+| ns | 9448 |  | 269 | widgets/toolbar.widget.js: the per-mode command extension map | 7.4 |  | 0.582 |
+| ns | 9596 |  | 148 | widgets/actionsMenu.widget.js: the `m` menu's action table | 7.5 |  | 0.578 |
+| walker |  | 9606 | 497 | plaintext config .github/workflows/main.yml |  |  | 0.607 |
+| ns | 9640 |  | 44 | Complete listings of .github/ and its subdirectories | 8.1 |  | 0.610 |
+| walker |  | 9732 | 126 | ts body src/screen.js:19 |  |  | 0.622 |
+| ns | 9739 |  | 99 | Complete listings of the docs/ Gatsby site | 8.2 |  | 0.629 |
+| walker |  | 9818 | 86 | ts body src/dockerUtil.js:88 |  |  | 0.630 |
+| walker |  | 9840 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.630 |
+| ns | 9988 |  | 249 | Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc | 8.3 |  | 0.622 |

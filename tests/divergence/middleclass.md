@@ -73,9 +73,9 @@ Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 4417 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.746 |
 | ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.724 |
 | walker |  | 4511 | 94 | CHANGELOG.md section #3 |  |  | 0.736 |
-| walker |  | 4596 | 85 | CHANGELOG.md section #8 |  |  | 0.737 |
-| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.717 |
-| walker |  | 4975 | 379 | YAML config at .travis.yml |  |  | 0.720 |
+| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.716 |
+| walker |  | 4890 | 379 | plaintext config .travis.yml |  |  | 0.720 |
+| walker |  | 4975 | 85 | CHANGELOG.md section #8 |  |  | 0.720 |
 | ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.707 |
 | walker |  | 5149 | 174 | CHANGELOG.md section #7 |  |  | 0.708 |
 | ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.698 |

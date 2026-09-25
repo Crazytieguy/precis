@@ -124,11 +124,12 @@ const DOTENV_BYTE_GATE: usize = 64 * 1024;
 pub(crate) enum Class {
     /// LICENSE / LICENSE-MIT / COPYING / NOTICE etc.
     License,
-    /// Contributor-toolchain dotfiles: ignore lists, editor / lint /
-    /// format config, version pins, `pnpm-workspace.yaml`.
+    /// Contributor-toolchain config: ignore lists, editor / lint /
+    /// format config, version pins, `pnpm-workspace.yaml`, CI workflows
+    /// and hook / docs-site YAML.
     Tooling,
     /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
-    /// `Dockerfile`).
+    /// `Dockerfile`, compose files).
     BuildEntrypoint,
     /// Compact build/test plumbing scripts and manifests.
     BuildScript,
@@ -183,19 +184,25 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         | ".nvmrc"
         | ".python-version"
         | ".tool-versions"
-        | "pnpm-workspace.yaml" => {
+        | "pnpm-workspace.yaml"
+        | ".travis.yml"
+        | ".golangci.yml"
+        | ".golangci.yaml"
+        | ".pre-commit-config.yaml"
+        | "mkdocs.yml" => {
             return Some(Class::Tooling);
         }
         // `Taskfile.yaml` is a `Makefile` in YAML clothing — the task
-        // runner's target roster. The YAML walker enumerates the
-        // extension but classifies only deployment / CI / tooling
-        // configs, so it declines this one and ownership stays here.
+        // runner's target roster.
         "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "Dockerfile" | "Containerfile" => {
             return Some(Class::BuildEntrypoint);
         }
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
         "setup.cfg" => return Some(Class::PackageConfig),
         _ => {}
+    }
+    if is_docker_compose_name(&lower) {
+        return Some(Class::BuildEntrypoint);
     }
     if lower == "requirements.txt" {
         return Some(Class::Requirements);
@@ -222,6 +229,25 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::Todo);
     }
     None
+}
+
+/// True iff `lower` has the exact `docker-compose` / `compose` YAML stem,
+/// or adds an environment variant separated by `.` / `-`.
+fn is_docker_compose_name(lower: &str) -> bool {
+    let Some(stem) = lower
+        .strip_suffix(".yaml")
+        .or_else(|| lower.strip_suffix(".yml"))
+    else {
+        return false;
+    };
+    ["docker-compose", "compose"].into_iter().any(|base| {
+        stem.strip_prefix(base).is_some_and(|suffix| {
+            suffix.is_empty()
+                || suffix
+                    .strip_prefix(['.', '-'])
+                    .is_some_and(|variant| !variant.is_empty())
+        })
+    })
 }
 
 /// File stems that never render regardless of extension — they
@@ -696,10 +722,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let file = dir.join(&name);
         // A `.sh` outside a build-script location falls through to the
         // fallback rather than out of the output.
-        let named = classify_plaintext(&name).filter(|class| match class {
-            Class::BuildScript => is_build_script_location(&file, dir, ctx),
-            _ => true,
-        });
+        let is_workflow = dir.strip_prefix(ctx.root()) == Ok(Path::new(".github/workflows"))
+            && (name.ends_with(".yml") || name.ends_with(".yaml"));
+        let named = classify_plaintext(&name)
+            .or(is_workflow.then_some(Class::Tooling))
+            .filter(|class| match class {
+                Class::BuildScript => is_build_script_location(&file, dir, ctx),
+                _ => true,
+            });
         // Root `README.rst` belongs to the markdown walker; emitting
         // a second slice of it would overlap its spans.
         let owned_by_markdown = dir == ctx.root() && super::markdown::is_readme_rst(&file);
@@ -1055,6 +1085,15 @@ mod tests {
             ("Taskfile.yml", Some(Class::BuildEntrypoint)),
             ("Dockerfile", Some(Class::BuildEntrypoint)),
             ("Containerfile", Some(Class::BuildEntrypoint)),
+            ("docker-compose.yml", Some(Class::BuildEntrypoint)),
+            ("Docker-Compose.YML", Some(Class::BuildEntrypoint)),
+            ("compose.override.yaml", Some(Class::BuildEntrypoint)),
+            ("compose-dev.yaml", Some(Class::BuildEntrypoint)),
+            ("composer.yml", None),
+            ("compose-.yml", None),
+            ("config.yaml", None),
+            (".travis.yml", Some(Class::Tooling)),
+            (".pre-commit-config.yaml", Some(Class::Tooling)),
             ("testall.sh", Some(Class::BuildScript)),
             ("build.sh", Some(Class::BuildScript)),
             (".gitmodules", Some(Class::BuildScript)),

@@ -110,13 +110,13 @@ Score(3000)=0.618 I=0.816 C=0.467 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 3066 | 66 | python decl bookmarks/feeds.py:84 |  |  | 0.592 |
 | walker |  | 3132 | 66 | python decl bookmarks/feeds.py:97 |  |  | 0.592 |
 | walker |  | 3214 | 82 | python decl bookmarks/feeds.py:110 |  |  | 0.592 |
+| walker |  | 3267 | 53 | python names bookmarks/services/singlefile.py |  |  | 0.592 |
 | ns | 3271 |  | 245 | Bookmark methods: resolved_title, tag_names, save, query_existing | 2.6 | 2.2 | 0.571 |
-| walker |  | 3341 | 127 | YAML config at docker-compose.yml |  |  | 0.571 |
-| walker |  | 3394 | 53 | python names bookmarks/services/singlefile.py |  |  | 0.571 |
-| walker |  | 3399 | 5 | python decl bookmarks/services/singlefile.py:10 |  |  | 0.571 |
-| walker |  | 3450 | 51 | python decl bookmarks/api/auth.py:8 |  |  | 0.571 |
+| walker |  | 3272 | 5 | python decl bookmarks/services/singlefile.py:10 |  |  | 0.571 |
+| walker |  | 3323 | 51 | python decl bookmarks/api/auth.py:8 |  |  | 0.571 |
 | ns | 3465 |  | 194 | Tag model + tag-string parsing rules | 2.7 | 2.1 | 0.557 |
-| walker |  | 3652 | 202 | [dependencies] in pyproject.toml |  |  | 0.576 |
+| walker |  | 3525 | 202 | [dependencies] in pyproject.toml |  |  | 0.576 |
+| walker |  | 3652 | 127 | plaintext config docker-compose.yml |  |  | 0.576 |
 | walker |  | 3702 | 50 | listing of 'scripts' |  |  | 0.577 |
 | ns | 3741 |  | 276 | BookmarkAsset — snapshot/upload model | 2.8 | 2.1 | 0.559 |
 | walker |  | 3758 | 56 | python names bookmarks/services/bundles.py |  |  | 0.559 |

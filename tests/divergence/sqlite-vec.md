@@ -180,4 +180,3 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 9916 | 6 | plaintext config tests/.gitignore |  |  | 0.406 |
 | walker |  | 9922 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.406 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.403 |
-| walker |  | 9985 | 63 | README headline in benchmarks/exhaustive-memory/README.md |  |  | 0.403 |

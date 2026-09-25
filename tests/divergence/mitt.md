@@ -1,4 +1,4 @@
-Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.665/0.774/0.862/0.712/0.698
+Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.665/0.774/0.904/0.712/0.698
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -56,21 +56,21 @@ Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.895 |
 | walker |  | 3759 | 38 | README.md section #15 |  |  | 0.895 |
 | walker |  | 3790 | 31 | README.md section #18 |  |  | 0.895 |
-| walker |  | 3910 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.896 |
-| walker |  | 4032 | 122 | README.md section #9 |  |  | 0.897 |
-| walker |  | 4150 | 118 | README.md section #11 |  |  | 0.898 |
-| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.861 |
-| walker |  | 4251 | 101 | README.md section #14 |  |  | 0.862 |
-| walker |  | 4282 | 31 | README.md section #10 |  |  | 0.862 |
-| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.835 |
-| walker |  | 4474 | 192 | README.md section #17 |  |  | 0.836 |
-| walker |  | 4506 | 32 | README.md section #12 |  |  | 0.836 |
-| walker |  | 4521 | 15 | README.md section #13 |  |  | 0.837 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.814 |
-| walker |  | 4576 | 55 | README.md section #16 |  |  | 0.814 |
-| walker |  | 4587 | 11 | README.md section #8 |  |  | 0.814 |
-| ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.794 |
-| walker |  | 4804 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.834 |
+| walker |  | 3910 | 120 | plaintext config .github/workflows/compressed-size.yml |  |  | 0.896 |
+| walker |  | 4127 | 217 | plaintext config .github/workflows/main.yml |  |  | 0.941 |
+| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.903 |
+| walker |  | 4249 | 122 | README.md section #9 |  |  | 0.904 |
+| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.875 |
+| walker |  | 4367 | 118 | README.md section #11 |  |  | 0.876 |
+| walker |  | 4468 | 101 | README.md section #14 |  |  | 0.876 |
+| walker |  | 4499 | 31 | README.md section #10 |  |  | 0.877 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.853 |
+| walker |  | 4691 | 192 | README.md section #17 |  |  | 0.854 |
+| walker |  | 4723 | 32 | README.md section #12 |  |  | 0.854 |
+| ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.833 |
+| walker |  | 4738 | 15 | README.md section #13 |  |  | 0.833 |
+| walker |  | 4793 | 55 | README.md section #16 |  |  | 0.834 |
+| walker |  | 4804 | 11 | README.md section #8 |  |  | 0.834 |
 | walker |  | 4821 | 17 | README.md section #7 |  |  | 0.834 |
 | walker |  | 4856 | 35 | README.md section #6 |  |  | 0.834 |
 | walker |  | 4875 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.834 |

@@ -41,7 +41,6 @@ pub enum BatchKey {
     Prisma(PrismaKey),
     GoMod(GoModKey),
     Code(CodeKey),
-    Yaml(YamlKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -90,7 +89,6 @@ impl_batchkey! {
     Prisma => PrismaKey,
     GoMod => GoModKey,
     Code => CodeKey,
-    Yaml => YamlKey,
 }
 
 /// Per-walker contributions to the [`WalkerKey`] dispatch on
@@ -183,13 +181,6 @@ pub enum PlaintextKey {
     /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
     /// Vue, CSS, reST, …). The language-agnostic fallback.
     DeclSurface { file: PathBuf },
-}
-
-/// YAML batches. Narrowly scoped to operational configs.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum YamlKey {
-    /// Whole-file render of a compact operational config.
-    Whole { file: PathBuf },
 }
 
 /// Prisma schema batches.
@@ -472,14 +463,6 @@ impl InnerKey for PrismaKey {
                 *tail_start_line,
                 root,
             ),
-        }
-    }
-}
-
-impl InnerKey for YamlKey {
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            YamlKey::Whole { file } => format!("YAML config at {}", display_path(file, root)),
         }
     }
 }

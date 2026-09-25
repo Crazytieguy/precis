@@ -94,12 +94,12 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1950 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.498 |
 | walker |  | 1973 | 23 | listing of 'packages/crypto/src/node/encryption-algorithms' |  |  | 0.499 |
 | walker |  | 1996 | 23 | listing of 'packages/crypto/src/web/encryption-algorithms' |  |  | 0.499 |
-| walker |  | 2102 | 106 | YAML config at docker-compose.yml |  |  | 0.526 |
-| walker |  | 2166 | 64 | listing of 'packages/app-client/public' |  |  | 0.526 |
-| walker |  | 2190 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.545 |
-| walker |  | 2207 | 17 | ts names packages/cli/src/create-note/create-note.command.ts |  |  | 0.545 |
-| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.528 |
-| walker |  | 2224 | 17 | ts names packages/cli/src/view-note/view-note.command.ts |  |  | 0.528 |
+| walker |  | 2060 | 64 | listing of 'packages/app-client/public' |  |  | 0.499 |
+| walker |  | 2084 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.519 |
+| walker |  | 2101 | 17 | ts names packages/cli/src/create-note/create-note.command.ts |  |  | 0.519 |
+| walker |  | 2118 | 17 | ts names packages/cli/src/view-note/view-note.command.ts |  |  | 0.519 |
+| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.502 |
+| walker |  | 2224 | 106 | plaintext config docker-compose.yml |  |  | 0.528 |
 | walker |  | 2250 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.562 |
 | walker |  | 2265 | 15 | listing of 'packages/lib/src/crypto/serialization/cbor-array' |  |  | 0.577 |
 | walker |  | 2336 | 71 | README headline in packages/crypto/README.md |  |  | 0.577 |

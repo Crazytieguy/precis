@@ -33,7 +33,6 @@ pub mod plaintext;
 pub mod prisma;
 pub mod toml;
 mod workspace;
-pub mod yaml;
 
 /// Greedily partition source-ordered items once a range reaches `target`.
 /// A final range cheaper than `min_tail` folds into its predecessor when
@@ -108,7 +107,6 @@ impl Walker for FsWalker {
         out.extend(prisma::expand_in_dir(dir, ctx));
         out.extend(go_mod::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
-        out.extend(yaml::expand_in_dir(dir, ctx));
         out
     }
 }

@@ -1,4 +1,4 @@
-Score(3000)=0.584 I=0.827 C=0.412 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.539/0.606/0.688/0.584/0.721/0.695/0.682
+Score(3000)=0.584 I=0.827 C=0.412 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.539/0.606/0.688/0.584/0.721/0.695/0.699
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -212,40 +212,33 @@ Score(3000)=0.584 I=0.827 C=0.412 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | walker |  | 8287 | 155 | README.md section #43 |  |  | 0.664 |
 | walker |  | 8306 | 19 | c body krep.h:298 |  |  | 0.664 |
 | ns | 8462 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.667 |
-| walker |  | 8609 | 303 | c names krep.c #6 |  |  | 0.683 |
-| walker |  | 8615 | 6 | c decl krep.c:3442 |  |  | 0.683 |
-| walker |  | 8621 | 6 | c decl krep.c:4104 |  |  | 0.683 |
-| walker |  | 8627 | 6 | c decl krep.c:4209 |  |  | 0.683 |
-| walker |  | 8633 | 6 | c decl krep.c:4313 |  |  | 0.683 |
-| walker |  | 8639 | 6 | c decl krep.c:4332 |  |  | 0.683 |
-| walker |  | 8645 | 6 | c decl krep.c:3240 |  |  | 0.683 |
-| walker |  | 8651 | 6 | c decl krep.c:3272 |  |  | 0.683 |
-| walker |  | 8657 | 6 | c decl krep.c:3297 |  |  | 0.683 |
-| walker |  | 8663 | 6 | c decl krep.c:4046 |  |  | 0.683 |
-| walker |  | 8669 | 6 | c decl krep.c:4251 |  |  | 0.683 |
-| ns | 8696 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.681 |
-| walker |  | 8710 | 41 | c decl krep.c:3891 |  |  | 0.681 |
-| walker |  | 8751 | 41 | c decl krep.c:4371 |  |  | 0.681 |
-| walker |  | 8775 | 24 | c decl krep.c:3310 |  |  | 0.681 |
-| walker |  | 8798 | 23 | c doc krep.h:49 |  |  | 0.686 |
-| walker |  | 8826 | 28 | c body aho_corasick.c:287 |  |  | 0.686 |
-| walker |  | 8835 | 9 | c doc aho_corasick.c:34 |  |  | 0.686 |
-| walker |  | 8872 | 37 | c doc krep.h:98 |  |  | 0.690 |
-| walker |  | 8884 | 12 | c doc aho_corasick.c:55 |  |  | 0.690 |
-| ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.682 |
-| walker |  | 9120 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.708 |
-| walker |  | 9135 | 15 | c doc aho_corasick.c:86 |  |  | 0.708 |
-| walker |  | 9170 | 35 | plaintext config .gitignore |  |  | 0.708 |
+| walker |  | 8542 | 236 | plaintext config .github/workflows/ci.yml |  |  | 0.695 |
+| ns | 8696 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.692 |
+| walker |  | 8845 | 303 | c names krep.c #6 |  |  | 0.707 |
+| walker |  | 8851 | 6 | c decl krep.c:3442 |  |  | 0.707 |
+| walker |  | 8857 | 6 | c decl krep.c:4104 |  |  | 0.707 |
+| walker |  | 8863 | 6 | c decl krep.c:4209 |  |  | 0.707 |
+| walker |  | 8869 | 6 | c decl krep.c:4313 |  |  | 0.707 |
+| walker |  | 8875 | 6 | c decl krep.c:4332 |  |  | 0.707 |
+| walker |  | 8881 | 6 | c decl krep.c:3240 |  |  | 0.707 |
+| walker |  | 8887 | 6 | c decl krep.c:3272 |  |  | 0.707 |
+| walker |  | 8893 | 6 | c decl krep.c:3297 |  |  | 0.707 |
+| walker |  | 8899 | 6 | c decl krep.c:4046 |  |  | 0.707 |
+| walker |  | 8905 | 6 | c decl krep.c:4251 |  |  | 0.707 |
+| walker |  | 8946 | 41 | c decl krep.c:3891 |  |  | 0.707 |
+| ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.699 |
+| walker |  | 8987 | 41 | c decl krep.c:4371 |  |  | 0.699 |
+| walker |  | 9011 | 24 | c decl krep.c:3310 |  |  | 0.699 |
+| walker |  | 9034 | 23 | c doc krep.h:49 |  |  | 0.703 |
+| walker |  | 9062 | 28 | c body aho_corasick.c:287 |  |  | 0.703 |
+| walker |  | 9071 | 9 | c doc aho_corasick.c:34 |  |  | 0.703 |
+| walker |  | 9108 | 37 | c doc krep.h:98 |  |  | 0.708 |
+| walker |  | 9120 | 12 | c doc aho_corasick.c:55 |  |  | 0.708 |
 | ns | 9299 |  | 333 | select_search_algorithm: dispatch head through the short-pattern branch | 6.4 |  | 0.693 |
-| walker |  | 9377 | 207 | c names test/test_krep.h |  |  | 0.695 |
-| walker |  | 9439 | 62 | c decl test/test_krep.h:33 |  |  | 0.695 |
-| walker |  | 9449 | 10 | c doc test/test_krep.h:39 |  |  | 0.695 |
-| walker |  | 9512 | 63 | c body krep.h:312 |  |  | 0.695 |
-| walker |  | 9580 | 68 | c doc krep.h:298 |  |  | 0.695 |
-| walker |  | 9623 | 43 | c doc test/test_krep.h:33 |  |  | 0.695 |
-| ns | 9685 |  | 386 | select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback | 6.5 | 6.4 | 0.678 |
-| walker |  | 9698 | 75 | c body aho_corasick.c:274 |  |  | 0.678 |
-| walker |  | 9788 | 90 | c doc krep.h:170 |  |  | 0.678 |
-| ns | 9868 |  | 183 | gitignore data model: pattern record and parent-chained context | 6.6 |  | 0.677 |
-| walker |  | 9884 | 96 | c doc krep.h:180 |  |  | 0.677 |
-| ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.672 |
+| ns | 9685 |  | 386 | select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback | 6.5 | 6.4 | 0.676 |
+| walker |  | 9717 | 597 | plaintext config .github/workflows/release.yml |  |  | 0.695 |
+| walker |  | 9732 | 15 | c doc aho_corasick.c:86 |  |  | 0.695 |
+| walker |  | 9767 | 35 | plaintext config .gitignore |  |  | 0.695 |
+| ns | 9868 |  | 183 | gitignore data model: pattern record and parent-chained context | 6.6 |  | 0.693 |
+| walker |  | 9974 | 207 | c names test/test_krep.h |  |  | 0.695 |
+| ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.689 |

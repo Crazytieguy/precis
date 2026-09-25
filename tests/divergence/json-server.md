@@ -123,22 +123,22 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.547 |
 | walker |  | 6342 | 732 | README.md section #2 |  |  | 0.690 |
 | ns | 6390 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.672 |
-| walker |  | 6561 | 219 | ts body src/adapters/normalized-adapter.ts:18 |  |  | 0.674 |
-| ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.655 |
+| walker |  | 6538 | 196 | plaintext config .github/workflows/node.js.yml |  |  | 0.672 |
+| ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.653 |
+| walker |  | 6757 | 219 | ts body src/adapters/normalized-adapter.ts:18 |  |  | 0.655 |
 | ns | 6942 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.664 |
 | ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.673 |
-| walker |  | 7390 | 829 | ts body src/matches-where.ts:24 |  |  | 0.730 |
-| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.711 |
-| walker |  | 7643 | 253 | ts body src/app.ts:94 |  |  | 0.735 |
-| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.720 |
-| walker |  | 7916 | 273 | ts body src/app.ts:94 #1 |  |  | 0.729 |
-| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.735 |
-| walker |  | 8242 | 326 | README.md section #3 |  |  | 0.735 |
-| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.721 |
-| walker |  | 8438 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.721 |
+| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.655 |
+| walker |  | 7586 | 829 | ts body src/matches-where.ts:24 |  |  | 0.711 |
+| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.697 |
+| walker |  | 7839 | 253 | ts body src/app.ts:94 |  |  | 0.720 |
+| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.727 |
+| walker |  | 8103 | 264 | plaintext config .github/workflows/publish.yml |  |  | 0.727 |
+| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.714 |
+| walker |  | 8376 | 273 | ts body src/app.ts:94 #1 |  |  | 0.721 |
 | ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.714 |
 | ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.717 |
-| walker |  | 8702 | 264 | YAML config at .github/workflows/publish.yml |  |  | 0.717 |
+| walker |  | 8702 | 326 | README.md section #3 |  |  | 0.717 |
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.706 |
 | walker |  | 9029 | 327 | ts body src/app.ts:94 #2 |  |  | 0.738 |
 | walker |  | 9060 | 31 | json config .oxfmtrc.json |  |  | 0.738 |
