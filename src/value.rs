@@ -503,6 +503,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     let Some(stem) = target.file_stem().and_then(|s| s.to_str()) else {
         return false;
     };
+    let stem = stem.replace('-', "_");
     if [
         "CHANGELOG",
         "CHANGES",

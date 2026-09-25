@@ -9,20 +9,6 @@
 .npmrc
 benchmark.js
 code-of-conduct.md
-  1→# Contributor Covenant Code of Conduct
-  2→
-  3→## Our Pledge
-  …
-  12→## Our Standards
-  …
-  34→## Our Responsibilities
-  …
-  46→## Scope
-  …
-  55→## Enforcement
-  …
-  68→## Attribution
-  …
 contributing.md
 examples/
   rainbow.js
@@ -326,7 +312,11 @@ source/
         227→export const colorNames: readonly ColorName[];
         228→
         229→declare const ansiStyles: {
-        …
+        230→	readonly modifier: Modifier;
+        231→	readonly color: ColorBase & ForegroundColor;
+        232→	readonly bgColor: ColorBase & BackgroundColor;
+        233→	readonly codes: ReadonlyMap<number, number>;
+        234→} & ForegroundColor & BackgroundColor & Modifier & ConvertColor;
         236→export default ansiStyles;
       index.js
         …
