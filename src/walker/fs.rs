@@ -295,7 +295,7 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if !is_source_inventory_dir(parent, ctx) {
         return false;
     }
-    ctx.fs_state().child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
+    ctx.fs_state.child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
 }
 
 /// Count of immediate subdirectories of `dir`.
@@ -486,7 +486,7 @@ impl FsState {
 
 fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     const MIN_SOURCE_FILES: usize = 3;
-    ctx.fs_state()
+    ctx.fs_state
         .source_inventory_count(dir, MIN_SOURCE_FILES, ctx.dir_filter())
         >= MIN_SOURCE_FILES
 }
@@ -506,7 +506,7 @@ fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
                 // The repo's own `src/` promotes everything beneath it;
                 // a module's `src/` promotes only its catalogs.
                 owner == root
-                    || (ctx.fs_state().entry_count(dir, ctx.dir_filter())
+                    || (ctx.fs_state.entry_count(dir, ctx.dir_filter())
                         >= MODULE_SOURCE_ROOT_MIN_ENTRIES
                         && is_package_root_dir(owner, ctx.dir_filter()))
             })

@@ -239,15 +239,6 @@ impl WalkCtx {
             .get_or_init(|| enumerate_essential_source(&self.root, &self.dir_filter))
     }
 
-    /// True when `path` is an auto-injected agent doc (AGENTS.md /
-    /// CLAUDE.md at root, or a text file under .claude/skills/,
-    /// .agent/skills/, .cursor/rules/). Walkers consult this to skip
-    /// emitting prose-body batches whose content is already in the
-    /// model's context.
-    pub fn is_auto_injected_doc_file(&self, path: &Path) -> bool {
-        crate::value::is_auto_injected_doc_file(path, &self.root)
-    }
-
     /// Read `path` into memory, caching the result.
     pub fn read_source(&self, path: &Path) -> Option<Arc<Source>> {
         self.source_cache.get(path)
@@ -269,10 +260,6 @@ impl WalkCtx {
             .borrow_mut()
             .insert(path.to_path_buf(), arc.clone());
         Some((source, arc))
-    }
-
-    pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
-        &self.fs_state
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.

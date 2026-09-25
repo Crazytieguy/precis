@@ -152,7 +152,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         // (HeadingsOutline + ReadmeHeadline) still emit so the file's
         // shape stays discoverable at large budgets, riding the value
         // discount applied via `non_essential_factor`.
-        let suppress_body = ctx.is_auto_injected_doc_file(&file) || is_peripheral_doc(&file);
+        let suppress_body =
+            crate::value::is_auto_injected_doc_file(&file, ctx.root()) || is_peripheral_doc(&file);
 
         let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
