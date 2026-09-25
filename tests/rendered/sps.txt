@@ -14,7 +14,17 @@ Cargo.toml
   6→    "sps-core",
   7→    "sps-net",
   8→]
+  10→[patch.crates-io]
+  11→sps-common  = { path = "sps-common" }
+  12→sps-core    = { path = "sps-core" }
+  13→sps-net     = { path = "sps-net" }
+  14→
+  15→# Shared dependencies defined once
   …
+  43→[profile.release]
+  44→lto = true
+  45→codegen-units = 1
+  46→strip = true
 LICENSE.md
 NOTICE.md
 README.md
@@ -28,7 +38,12 @@ README.md
   31→
   32→---
   34→## ⚙️ Project Structure
-  …
+  35→
+  36→- **sps‑core** Core library: fetching, dependency resolution, archive extraction, artifact handling (apps, binaries, pkg installers, fonts, plugins, zap/preflight/uninstall stanzas, etc.)
+  37→
+  38→- **sps‑cli** Command‑line interface: `sps` executable wrapping the core library.
+  39→
+  40→---
   42→## 🚧 Current Status
   …
   54→## 🚀 Roadmap
@@ -82,6 +97,18 @@ sps/
       search.rs
       status.rs
       uninstall.rs
+        …
+        17→pub struct Uninstall {
+        …
+        30→impl Uninstall {
+        31→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+        …
+        178→}
+        …
+        181→fn count_files_and_size(path: &std::path::Path) -> Result<(usize, u64)> {
+        …
+        213→fn format_size(size: u64) -> String {
+        …
       update.rs
         1→//! Contains the logic for the `update` command.
         …
@@ -103,6 +130,46 @@ sps/
     cli.rs
       …
       2→//! Defines the command-line argument structure using clap.
+      …
+      10→pub mod info;
+      11→pub mod init;
+      12→pub mod install;
+      13→pub mod list;
+      14→pub mod reinstall;
+      15→pub mod search;
+      16→pub mod status;
+      17→pub mod uninstall;
+      18→pub mod update;
+      19→pub mod upgrade;
+      …
+      23→pub use crate::cli::init::InitArgs;
+      …
+      32→#[derive(Parser, Debug)]
+      33→#[command(author, version, about, long_about = None, name = "sps", bin_name = "sps")]
+      34→#[command(propagate_version = true)]
+      35→pub struct CliArgs {
+      36→    #[arg(short, long, action = ArgAction::Count, global = true)]
+      37→    pub verbose: u8,
+      38→
+      39→    #[command(subcommand)]
+      40→    pub command: Command,
+      41→}
+      43→#[derive(Subcommand, Debug)]
+      44→pub enum Command {
+      45→    Init(InitArgs),
+      46→    Search(Search),
+      47→    List(List),
+      48→    Info(Info),
+      49→    Update(Update),
+      50→    Install(InstallArgs),
+      51→    Uninstall(Uninstall),
+      52→    Reinstall(ReinstallArgs),
+      53→    Upgrade(UpgradeArgs),
+      54→}
+      56→impl Command {
+      57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+      …
+      71→}
       …
     main.rs
       …
@@ -133,15 +200,6 @@ sps-common/
   Cargo.toml
   src/
     cache.rs
-      …
-      12→const CACHE_TTL: Duration = Duration::from_secs(24 * 60 * 60); // 24 hours
-      14→/// Cache struct to manage cache operations
-      15→pub struct Cache {
-      16→    cache_dir: PathBuf,
-      17→    _config: Config, // Keep a reference to config if needed for other paths or future use
-      18→}
-      20→impl Cache {
-      …
     config.rs
     dependency/
       definition.rs
@@ -151,9 +209,7 @@ sps-common/
         7→pub enum Requirement {
         …
         13→impl fmt::Display for Requirement {
-        14→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         …
-        21→}
       resolver.rs
     error.rs
     formulary.rs
@@ -171,13 +227,8 @@ sps-common/
       76→}
     keg.rs
       …
-      12→#[derive(Debug, Clone, PartialEq, Eq)]
       13→pub struct InstalledKeg {
-      14→    pub name: String,
-      15→    pub version_str: String,
-      16→    pub path: PathBuf,
-      17→}
-      19→/// Manages querying installed packages in the Cellar.
+      …
       20→#[derive(Debug)]
       21→pub struct KegRegistry {
       22→    config: Config,
@@ -254,19 +305,7 @@ sps-core/
     check/
       installed.rs
       mod.rs
-        1→pub mod installed;
-        2→pub mod update;
-        3→
-        4→pub use installed::{InstalledPackageInfo, PackageType};
-        5→pub use update::UpdateInfo;
       update.rs
-        …
-        23→pub struct UpdateInfo {
-        …
-        33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
-        …
-        89→pub async fn check_for_updates(
-        …
     install/
       bottle/
         exec.rs
@@ -277,81 +316,27 @@ sps-core/
         artifacts/
           app.rs
           audio_unit_plugin.rs
-            …
-            20→pub fn install_audio_unit_plugin(
-            …
           binary.rs
-            …
-            23→pub fn install_binary(
-            …
           colorpicker.rs
-            …
-            20→pub fn install_colorpicker(
-            …
           dictionary.rs
-            …
-            25→pub fn install_dictionary(
-            …
           font.rs
-            …
-            21→pub fn install_font(
-            …
           input_method.rs
-            …
-            17→pub fn install_input_method(
-            …
           installer.rs
           internet_plugin.rs
-            …
-            21→pub fn install_internet_plugin(
-            …
           keyboard_layout.rs
-            …
-            17→pub fn install_keyboard_layout(
-            …
           manpage.rs
           mdimporter.rs
-            …
-            21→pub fn install_mdimporter(
-            …
           mod.rs
           pkg.rs
-            …
-            13→pub fn install_pkg_from_path(
-            …
           preflight.rs
-            …
-            13→pub fn run_preflight(
-            …
           prefpane.rs
-            …
-            21→pub fn install_prefpane(
-            …
           qlplugin.rs
-            …
-            20→pub fn install_qlplugin(
-            …
           screen_saver.rs
-            …
-            20→pub fn install_screen_saver(
-            …
           service.rs
-            …
-            21→pub fn install_service(
-            …
           suite.rs
-            …
-            20→pub fn install_suite(
-            …
           uninstall.rs
           vst3_plugin.rs
-            …
-            20→pub fn install_vst3_plugin(
-            …
           vst_plugin.rs
-            …
-            20→pub fn install_vst_plugin(
-            …
           zap.rs
         dmg.rs
         helpers.rs
@@ -381,11 +366,6 @@ sps-core/
         1→pub mod engine;
         2→pub mod worker;
       worker.rs
-        …
-        21→pub(super) fn execute_sync_job(
-        …
-        37→fn do_execute_sync_steps(
-        …
     uninstall/
       cask.rs
       common.rs
@@ -411,10 +391,6 @@ sps-core/
     utils/
       applescript.rs
       mod.rs
-        1→#[cfg(target_os = "macos")]
-        2→pub mod applescript;
-        3→#[cfg(target_os = "macos")]
-        4→pub mod xattr;
       xattr.rs
 sps-net/
   Cargo.toml
@@ -450,10 +426,3 @@ sps-net/
       29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
     oci.rs
     validation.rs
-      …
-      67→pub fn verify_checksum(path: &Path, expected: &str) -> Result<()> {
-      …
-      93→pub fn verify_content_type(path: &Path, expected_ext: &str) -> Result<()> {
-      …
-      121→pub fn validate_url(url_str: &str) -> Result<()> {
-      …

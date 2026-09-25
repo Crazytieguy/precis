@@ -11,6 +11,8 @@
 //! - **Declarations**: `fn` is `Callable`; `struct`, `enum`, `union`,
 //!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait` and
 //!   `impl` are `Whole` containers whose members are their functions.
+//! - **File weight**: files of a secondary Cargo workspace member (one
+//!   whose directory isn't named after the repository) are damped.
 //! - **Visibility**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
 //!   items are hidden. Bare `pub` (or `#[macro_export]`) is public;
 //!   `pub(…)` and no modifier are private. Trait and trait-impl functions
@@ -124,8 +126,27 @@ pub(super) fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
         .is_some_and(|name| matches!(name, "lib.rs" | "main.rs"))
 }
 
-pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
-    1.0
+/// A file of a secondary Cargo workspace member: a member crate whose
+/// directory isn't named after the repository. The crate named after the
+/// repository, or the root package, carries what the repository is.
+const SECONDARY_MEMBER_WEIGHT: f64 = 0.7;
+
+pub(super) fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
+    let root = ctx.root();
+    let crate_dir = path
+        .ancestors()
+        .skip(1)
+        .take_while(|dir| dir.starts_with(root))
+        .find(|dir| dir.join("Cargo.toml").is_file());
+    match crate_dir {
+        Some(dir)
+            if dir.file_name() != root.file_name()
+                && ctx.is_workspace_member(&dir.join("Cargo.toml")) =>
+        {
+            SECONDARY_MEMBER_WEIGHT
+        }
+        _ => 1.0,
+    }
 }
 
 #[derive(Default)]
@@ -1030,5 +1051,31 @@ macro_rules! __private {
         assert!(is_entrypoint(Path::new("src/lib.rs"), &ctx));
         assert!(is_entrypoint(Path::new("src/main.rs"), &ctx));
         assert!(!is_entrypoint(Path::new("src/mod.rs"), &ctx));
+    }
+
+    #[test]
+    fn rust_extract_file_weight_damps_secondary_workspace_members() {
+        let outer = tempfile::tempdir().unwrap();
+        let root = outer.path().join("acme");
+        let manifest = |dir: &Path, body: &str| {
+            std::fs::create_dir_all(dir.join("src")).unwrap();
+            std::fs::write(dir.join("Cargo.toml"), body).unwrap();
+        };
+        manifest(
+            &root,
+            "[package]\nname = \"root\"\n[workspace]\nmembers = [\"crates/acme\", \"crates/extra\"]\n",
+        );
+        for name in ["acme", "extra"] {
+            manifest(
+                &root.join("crates").join(name),
+                &format!("[package]\nname = \"{name}\"\n"),
+            );
+        }
+        let root = root.canonicalize().unwrap();
+        let ctx = WalkCtx::new(root.clone());
+        let weight = |file: &str| file_weight(&root.join(file), &ctx);
+        assert_eq!(weight("src/lib.rs"), 1.0);
+        assert_eq!(weight("crates/acme/src/lib.rs"), 1.0);
+        assert_eq!(weight("crates/extra/src/lib.rs"), SECONDARY_MEMBER_WEIGHT);
     }
 }

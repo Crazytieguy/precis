@@ -15,6 +15,13 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
+  …
+  129→[features]
+  130→default = ["watch", "serve", "search"]
+  131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
+  132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
+  133→search = ["mdbook-html/search"]
+  …
 LICENSE
 README.md
   1→# mdBook
@@ -26,29 +33,23 @@ README.md
   12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
   …
 ci/
+  install-rust.sh
+  make-release-asset.sh
+  publish-guide.sh
+  update-dependencies.sh
 crates/
   mdbook-compare/
     Cargo.toml
     README.md
+      1→# mdbook-compare
+      2→
+      3→This is a simple utility to compare the output of two different versions of mdbook.
+      4→
+      5→To use this:
+      …
     src/
       main.rs
         1→//! Utility to compare the output of two different versions of mdbook.
-        …
-        6→macro_rules! error {
-        …
-        14→fn main() {
-        …
-        39→fn clean(path: &Path) {
-        …
-        46→fn build(mdbook: &Path, book: &Path) {
-        …
-        61→fn process(path: &Path) {
-        …
-        78→fn process_html(path: &Path) {
-        …
-        88→fn tidy(path: &Path) {
-        …
-        105→fn diff(a: &Path, b: &Path) {
         …
   mdbook-core/
     Cargo.toml
@@ -74,6 +75,9 @@ crates/
         toml_ext.rs
   mdbook-driver/
     Cargo.toml
+      …
+      31→[features]
+      32→search = ["mdbook-html/search"]
     README.md
     src/
       builtin_preprocessors/
@@ -108,9 +112,19 @@ crates/
       mdbook.rs
   mdbook-html/
     Cargo.toml
+      …
+      36→[features]
+      37→search = ["dep:elasticlunr-rs"]
     README.md
     front-end/
       css/
+        ayu-highlight.css
+        chrome.css
+        general.css
+        highlight.css
+        print.css
+        tomorrow-night.css
+        variables.css
       fonts/
       images/
         favicon.png
@@ -120,7 +134,15 @@ crates/
         clipboard.min.js
         highlight.js
       playground_editor/
+        ace.js
+        editor.js
+        mode-rust.js
+        theme-dawn.js
+        theme-tomorrow_night.js
       searcher/
+        elasticlunr.min.js
+        mark.min.js
+        searcher.js
       templates/
     src/
       html/
@@ -135,6 +157,10 @@ crates/
       html_handlebars/
         hbs_renderer.rs
         helpers/
+          fontawesome.rs
+          mod.rs
+          resources.rs
+          toc.rs
         mod.rs
         search.rs
         static_files.rs
@@ -152,8 +178,6 @@ crates/
         playground_editor.rs
         searcher.rs
       utils.rs
-        1→//! Utilities for processing HTML.
-        …
   mdbook-markdown/
     Cargo.toml
     README.md
@@ -243,7 +267,7 @@ crates/
         40→pub struct RenderContext {
         …
         63→impl RenderContext {
-        64→    /// Create a new `RenderContext`.
+        …
         65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
         66→    where
         67→        P: Into<PathBuf>,
@@ -266,62 +290,12 @@ crates/
         4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
         5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         …
-        8→pub use mdbook_core::book::SectionNumber;
-        …
-        59→pub fn parse_summary(summary: &str) -> Result<Summary> {
-        …
-        67→pub struct Summary {
-        …
-        82→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-        83→#[non_exhaustive]
-        84→pub struct Link {
-        85→    /// The name of the chapter.
-        86→    pub name: String,
-        87→    /// The location of the chapter's source file, taking the book's `src`
-        88→    /// directory as the root.
-        89→    pub location: Option<PathBuf>,
-        90→    /// The section number, if this chapter is in the numbered section.
-        91→    pub number: Option<SectionNumber>,
-        92→    /// Any nested items this chapter may contain.
-        93→    pub nested_items: Vec<SummaryItem>,
-        94→}
-        96→impl Link {
-        …
-        98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
-        …
-        106→}
-        108→impl Default for Link {
-        109→    fn default() -> Self {
-        …
-        117→}
-        119→/// An item in `SUMMARY.md`.
-        120→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-        121→#[non_exhaustive]
-        122→pub enum SummaryItem {
-        123→    /// A link to a chapter.
-        124→    Link(Link),
-        125→    /// A separator (`---`).
-        126→    Separator,
-        127→    /// A part title.
-        128→    PartTitle(String),
-        129→}
-        …
-        140→impl From<Link> for SummaryItem {
-        141→    fn from(other: Link) -> SummaryItem {
-        …
-        144→}
-        …
-        173→struct SummaryParser<'a> {
-        …
-        190→macro_rules! collect_events {
-        …
-        604→fn update_section_numbers(items: &mut [SummaryItem], level: usize, by: u32) {
-        …
-        618→fn get_last_link(links: &mut [SummaryItem]) -> Result<(usize, &mut Link)> {
-        …
-        634→fn stringify_events(events: Vec<Event<'_>>) -> String {
-        …
   xtask/
+    Cargo.toml
+    README.md
+    src/
+      changelog.rs
+      main.rs
 eslint.config.mjs
 examples/
   nop-preprocessor.rs
@@ -334,6 +308,15 @@ guide/
     README.md
     SUMMARY.md
     cli/
+      README.md
+      arg-watcher.md
+      build.md
+      clean.md
+      completions.md
+      init.md
+      serve.md
+      test.md
+      watch.md
     continuous-integration.md
     for_developers/
       README.md
@@ -346,6 +329,7 @@ guide/
             12→fn main() {
             …
             40→fn count_words(ch: &Chapter) -> usize {
+            41→    ch.content.split_whitespace().count()
             …
             44→#[derive(Debug, Default, Serialize, Deserialize)]
             45→#[serde(default, rename_all = "kebab-case")]
@@ -355,6 +339,27 @@ guide/
             49→}
       preprocessors.md
     format/
+      README.md
+      configuration/
+        README.md
+        environment-variables.md
+        general.md
+        preprocessors.md
+        renderers.md
+      example.rs
+        1→fn main() {
+        …
+      images/
+        rust-logo-blk.svg
+      markdown.md
+      mathjax.md
+      mdbook.md
+      summary.md
+      theme/
+        README.md
+        editor.md
+        index-hbs.md
+        syntax-highlighting.md
     guide/
       README.md
       creating.md
@@ -367,6 +372,11 @@ rustfmt.toml
 src/
   cmd/
     build.rs
+      …
+      8→pub fn make_subcommand() -> Command {
+      …
+      17→pub fn execute(args: &ArgMatches) -> Result<()> {
+      …
     clean.rs
     command_prelude.rs
       1→//! Helpers for building the command-line arguments for commands.
@@ -377,8 +387,15 @@ src/
       …
     serve.rs
     test.rs
+      …
+      9→pub fn make_subcommand() -> Command {
+      …
+      35→pub fn execute(args: &ArgMatches) -> Result<()> {
+      …
     watch/
       native.rs
+        1→//! A filesystem watcher using native operating system facilities.
+        …
       poller.rs
     watch.rs
   main.rs

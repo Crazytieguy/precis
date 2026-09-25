@@ -85,6 +85,9 @@ README.md
   42→<br>
   44→## Details
   …
+  51→- Errors may be enums, structs with named fields, tuple structs, or unit
+  52→  structs.
+  …
   211→## Comparison to anyhow
   …
 build/
@@ -95,10 +98,12 @@ build/
     13→
     14→impl Debug for MyError {
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    16→        unimplemented!()
     …
     18→}
     20→impl Display for MyError {
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    22→        unimplemented!()
     …
     24→}
     26→impl Error for MyError {
@@ -123,6 +128,10 @@ build.rs
   179→fn rustc_minor_version() -> Option<u32> {
   …
   190→fn cargo_env_var(key: &str) -> OsString {
+  191→    env::var_os(key).unwrap_or_else(|| {
+  192→        eprintln!("Environment variable ${key} is not set during execution of build script");
+  193→        process::exit(1);
+  194→    })
   …
 impl/
   Cargo.toml
@@ -243,38 +252,6 @@ impl/
       55→}
     prop.rs
     scan_expr.rs
-      …
-      6→enum Input {
-      …
-      25→enum Action {
-      …
-      32→static INIT: [(Input, Action); 28] = [
-      …
-      63→static POSTFIX: [(Input, Action); 10] = [
-      …
-      76→static ASYNC: [(Input, Action); 3] = [
-      …
-      82→static BLOCK: [(Input, Action); 1] = [(ConsumeBrace, SetState(&POSTFIX))];
-      83→
-      84→static BREAK_LABEL: [(Input, Action); 2] = [
-      85→    (ConsumeLifetime, SetState(&BREAK_VALUE)),
-      86→    (Otherwise, SetState(&BREAK_VALUE)),
-      87→];
-      89→static BREAK_VALUE: [(Input, Action); 3] = [
-      …
-      95→static CLOSURE: [(Input, Action); 6] = [
-      …
-      104→static CLOSURE_ARGS: [(Input, Action); 2] = [
-      105→    (Punct("|"), SetState(&CLOSURE_RET)),
-      106→    (ConsumeAny, SetState(&CLOSURE_ARGS)),
-      107→];
-      109→static CLOSURE_RET: [(Input, Action); 2] = [
-      …
-      114→static CONST: [(Input, Action); 2] = [
-      115→    (Punct("|"), SetState(&CLOSURE_ARGS)),
-      116→    (ConsumeBrace, SetState(&POSTFIX)),
-      117→];
-      …
     unraw.rs
     valid.rs
       …
