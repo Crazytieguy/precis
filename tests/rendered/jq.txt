@@ -98,12 +98,6 @@ docs/
   Pipfile
   Pipfile.lock
   README.md
-    1→Documentation
-    2→=============
-    3→
-    4→The jq website, manpages and some of the tests are generated from this
-    5→directory. The manual is a YAML file in `content/manual`.
-    …
   build_manpage.py
   build_mantests.py
   build_website.py
@@ -187,6 +181,9 @@ src/
   compile.c
   compile.h
   exec_stack.h
+    …
+    40→struct determine_alignment {
+    …
   execute.c
   inject_errors.c
   jq.h
@@ -316,7 +313,11 @@ src/
     196→typedef struct YYLTYPE YYLTYPE;
     197→struct YYLTYPE
     198→{
-    …
+    199→  int first_line;
+    200→  int first_column;
+    201→  int last_line;
+    202→  int last_column;
+    203→};
     204→# define YYLTYPE_IS_DECLARED 1
     205→# define YYLTYPE_IS_TRIVIAL 1
     206→#endif

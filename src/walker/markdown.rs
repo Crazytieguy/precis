@@ -154,10 +154,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
             continue;
         };
-        let headline = readme_headline_rows(&file, &tree, &source);
+        let root_readme = is_root_readme(&file, ctx);
+        let headline = readme_headline_rows(root_readme, &tree, &source);
         let outline_rows = outline_rows(&tree, &source, headline.as_ref());
         let outline_emits = !outline_rows.is_empty();
-        let root_readme = is_readme(&file) && dir == ctx.root();
         let nav = NavDensity {
             sibling_md_count,
             root_readme,
@@ -210,7 +210,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             &mut out,
             &file,
             &source,
-            &logical_sections(&file, &tree, &source, outline_emits),
+            &logical_sections(root_readme, &tree, &source, outline_emits),
             headline.as_ref(),
             section_predecessor,
             ctx,
@@ -231,8 +231,8 @@ fn push_sections(
     section_predecessor: Option<BatchKey>,
     ctx: &WalkCtx,
 ) {
-    let base = section_base_value(file, ctx);
-    let readme = is_readme(file);
+    let root_readme = is_root_readme(file, ctx);
+    let base = section_base_value(root_readme, file, ctx);
     let mut prev_section_key: Option<BatchKey> = None;
     for (idx, range) in ranges.iter().enumerate() {
         if let Some(content) = build_section_content(file, source, range, headline) {
@@ -255,7 +255,7 @@ fn push_sections(
                 key: key.into(),
                 predecessor,
                 content,
-                value: section_value(base, readme, range),
+                value: section_value(base, root_readme, range),
             });
         }
     }
@@ -270,7 +270,7 @@ fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
 /// `Prelude` prices as the README's index-0 section: it is the top of
 /// the README body, just above the first heading rather than below it.
 fn prelude_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    section_base_value(file, ctx) * nav.factor()
+    section_base_value(nav.root_readme, file, ctx) * nav.factor()
 }
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
@@ -322,9 +322,10 @@ fn readme_index_decay(range: &SectionRange) -> f64 {
 }
 
 /// Value of a section of `file` before its range's own factors: the
-/// README section tier, or the heading-slab tier for any other doc.
-fn section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_readme(file) {
+/// root README's section tier, or the heading-slab tier for any other
+/// doc.
+fn section_base_value(root_readme: bool, file: &Path, ctx: &WalkCtx) -> f64 {
+    if root_readme {
         return mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
     }
     mix_signals(0.3, 0.5, 0.5, path_depth_factor(file, ctx))
@@ -375,10 +376,8 @@ fn build_outline_content(
     single_file_lines_content(file, source, full)
 }
 
-fn readme_headline_rows(file: &Path, tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
-    is_readme(file)
-        .then(|| headline_rows(tree, source))
-        .flatten()
+fn readme_headline_rows(root_readme: bool, tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
+    root_readme.then(|| headline_rows(tree, source)).flatten()
 }
 
 /// Heading row ranges for `HeadingsOutline` — levels 1–3, with any
@@ -445,6 +444,12 @@ fn build_section_content(
 
     let lines: Vec<usize> = (effective_start..=end).collect();
     single_file_lines_content(file, source, lines)
+}
+
+/// The repository's README. A README below the root is one more page in
+/// a directory the listing already names, and prices as an ordinary doc.
+fn is_root_readme(file: &Path, ctx: &WalkCtx) -> bool {
+    is_readme(file) && file.parent() == Some(ctx.root())
 }
 
 fn is_readme(file: &Path) -> bool {
@@ -957,7 +962,7 @@ impl SectionRange {
 /// Section ranges for batching: one per top-level entry — or, for a
 /// headingless file, one for its whole text — head-split when oversize.
 fn logical_sections(
-    file: &Path,
+    root_readme: bool,
     tree: &Tree,
     source: &str,
     outline_emits: bool,
@@ -985,7 +990,6 @@ fn logical_sections(
         Some(TopLevelEntry::SyntheticIntro { .. })
     ));
 
-    let readme = is_readme(file);
     for (entry_idx, entry) in entries.iter().enumerate() {
         let h2_idx = entry_idx.saturating_sub(h2_offset);
         match entry {
@@ -1005,7 +1009,7 @@ fn logical_sections(
                 );
             }
             TopLevelEntry::Section { node, start, end } => {
-                let reference_h2 = readme && is_reference_usage_section(*node, source);
+                let reference_h2 = root_readme && is_reference_usage_section(*node, source);
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
@@ -2107,7 +2111,7 @@ mod tests {
 
     fn outline_rows_of(file: &str, source: &str) -> Vec<(usize, usize)> {
         let tree = parse(source);
-        let headline = readme_headline_rows(Path::new(file), &tree, source);
+        let headline = readme_headline_rows(is_readme(Path::new(file)), &tree, source);
         outline_rows(&tree, source, headline.as_ref())
     }
 
@@ -2192,7 +2196,7 @@ mod tests {
     fn sections(file: &str, source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
         let outline_emits = !outline_rows_of(file, source).is_empty();
-        logical_sections(Path::new(file), &tree, source, outline_emits)
+        logical_sections(is_readme(Path::new(file)), &tree, source, outline_emits)
     }
 
     #[test]
@@ -2411,6 +2415,14 @@ mod tests {
         // README do move once its directory is crowded.
         let sparse_docs_nav = nav_values(&sparse, &sparse_root.join("docs/README.md"));
         let dense_docs_nav = nav_values(&dense, &dense_root.join("docs/README.md"));
+        assert_eq!(
+            sparse_docs_nav
+                .iter()
+                .map(|(kind, _)| *kind)
+                .collect::<Vec<_>>(),
+            ["outline"],
+            "a nested README is an ordinary doc: no headline or prelude",
+        );
         assert_eq!(sparse_docs_nav.len(), dense_docs_nav.len());
         for ((kind, sparse_value), (_, dense_value)) in sparse_docs_nav.iter().zip(&dense_docs_nav)
         {

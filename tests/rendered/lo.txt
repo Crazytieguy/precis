@@ -201,10 +201,7 @@ exp/
       …
     README.md
       1→# SIMD experiment (Go 1.26+)
-      2→
-      3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
-      4→
-      5→See [benchmarks](./BENCHMARK.md).
+      …
       7→## CPU compatibility (avoiding SIGILL)
       …
       11→### Check support on Linux
@@ -255,9 +252,6 @@ go.sum
 internal/
   constraints/
     README.md
-      2→# Constraints
-      3→
-      4→This package is for Go 1.18 retrocompatiblity purpose.
     constraints.go
       …
       5→// Package constraints defines a set of useful constraints to be used
@@ -270,11 +264,6 @@ internal/
     ordered_go122.go
   xtime/
     README.md
-      2→# xtime
-      3→
-      4→Lightweight mock for time package.
-      5→
-      6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
     fake.go
       1→//nolint:revive
       …
@@ -345,17 +334,23 @@ type_manipulation.go
   22→func IsNotNil(x any) bool {
   23→	return !IsNil(x)
   …
+  26→// ToPtr returns a pointer copy of value.
+  27→// Play: https://go.dev/play/p/P2sD0PMXw4F
   28→func ToPtr[T any](x T) *T {
   29→	return &x
   …
   32→// Nil returns a nil pointer of type.
-  …
+  33→// Play: https://go.dev/play/p/P2sD0PMXw4F
   34→func Nil[T any]() *T {
   35→	return nil
   …
   41→func EmptyableToPtr[T any](x T) *T {
   …
+  51→// FromPtr returns the pointer value or empty.
+  52→// Play: https://go.dev/play/p/mhD9CwO3X0m
   53→func FromPtr[T any](x *T) T {
+  …
+  61→// FromPtrOr returns the pointer value or the fallback value.
   …
   63→func FromPtrOr[T any](x *T, fallback T) T {
   64→	if x == nil {
@@ -364,6 +359,8 @@ type_manipulation.go
   67→
   68→	return *x
   …
+  71→// ToSlicePtr returns a slice of pointers to each value.
+  72→// Play: https://go.dev/play/p/P2sD0PMXw4F
   73→func ToSlicePtr[T any](collection []T) []*T {
   …
   85→func FromSlicePtr[T any](collection []*T) []T {

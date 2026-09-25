@@ -41,6 +41,14 @@ README.md
   25→
   26→app = Flask(__name__)
   27→
+  28→@app.route("/")
+  29→def hello():
+  30→    return "Hello, World!"
+  31→```
+  32→
+  33→```
+  34→$ flask run
+  35→  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
   …
   38→## Donate
   39→
@@ -310,12 +318,6 @@ src/
     py.typed (empty)
     sansio/
       README.md
-        1→# Sansio
-        2→
-        3→This folder contains code that can be used by alternative Flask
-        4→implementations, for example Quart. The code therefore cannot do any
-        5→IO, nor be part of a likely IO path. Finally this code cannot use the
-        6→Flask globals.
       app.py
       blueprints.py
       scaffold.py

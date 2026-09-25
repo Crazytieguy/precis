@@ -107,6 +107,15 @@ demo.py
   80→    """
   81→    public_key = inbound.stream_settings.reality_settings.get("settings").get("publicKey")
   82→    website_name = inbound.stream_settings.reality_settings.get("serverNames")[0]
+  83→    short_id = inbound.stream_settings.reality_settings.get("shortIds")[0]
+  84→
+  85→    connection_string = (
+  86→        f"vless://{user_uuid}@{XUI_EXTERNAL_IP}:{SERVER_PORT}"
+  87→        f"?type=tcp&security=reality&pbk={public_key}&fp=firefox&sni={website_name}"
+  88→        f"&sid={short_id}&spx=%2F#{MAIN_REMARK}-{user_email}"
+  89→    )
+  90→
+  91→    return connection_string
   …
   103→connection_string = get_connection_string(inbound, "**********", email)
   …
@@ -134,12 +143,8 @@ py3xui/
     6→from py3xui.server.server import RealityKeyPair, Server
   api/
     README.md
-      1→<a id="api.api_database"></a>
-      2→
+      …
       3→# api.api\_database
-      4→
-      5→This module contains the DatabaseApi class, which is responsible handling database operations
-      6→in the XUI API.
       …
       10→## DatabaseApi Objects
       …
@@ -179,12 +184,26 @@ py3xui/
     api_server.py
   async_api/
     README.md
-      1→<a id="async_api.async_api_inbound"></a>
-      2→
+      …
       3→# async\_api.async\_api\_inbound
-      4→
-      5→This module contains the InboundApi class which provides methods to interact with the
-      6→clients in the XUI API asynchronously.
+      …
+      10→## AsyncInboundApi Objects
+      …
+      279→# async\_api.async\_api
+      …
+      285→## AsyncApi Objects
+      …
+      482→# async\_api.async\_api\_database
+      …
+      489→## AsyncDatabaseApi Objects
+      …
+      546→# async\_api.async\_api\_server
+      …
+      552→## AsyncServerApi Objects
+      …
+      678→# async\_api.async\_api\_base
+      …
+      684→## AsyncBaseApi Objects
       …
     __init__.py
       …
@@ -200,8 +219,7 @@ py3xui/
     async_api_server.py
   client/
     README.md
-      1→<a id="client.client"></a>
-      2→
+      …
       3→# client.client
       4→
       5→This module contains the Client class which represents a client in the XUI API.
@@ -217,12 +235,8 @@ py3xui/
     client.py
   inbound/
     README.md
-      1→<a id="inbound.settings"></a>
-      2→
+      …
       3→# inbound.settings
-      4→
-      5→This module contains the Settings class, which is used to parse the JSON response
-      6→from the XUI API.
       …
       10→## SettingsFields Objects
       …
@@ -263,8 +277,7 @@ py3xui/
     stream_settings.py
   server/
     README.md
-      1→<a id="server.server"></a>
-      2→
+      …
       3→# server.server
       4→
       5→This module contains the Server class which represents server information in XUI API.
@@ -294,14 +307,6 @@ py3xui/
     server.py
   utils/
     README.md
-      1→<a id="utils.env"></a>
-      2→
-      3→# utils.env
-      4→
-      5→This module contains utility functions for parsing environment variables.
-      6→
-      7→<a id="utils.env.parse_env"></a>
-      …
     __init__.py
       …
       2→from py3xui.utils import env

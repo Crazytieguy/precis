@@ -72,6 +72,28 @@ RELEASING.md
 eslint.base.mjs
   …
   6→export default [
+  7→  // Base ESLint configuration
+  8→  eslint.configs.recommended,
+  9→  
+  10→  // TypeScript configurations
+  11→  {
+  12→    files: ['**/*.ts', '**/*.tsx'],
+  13→    languageOptions: {
+  14→      parser: typescript,
+  15→      parserOptions: {
+  16→        ecmaVersion: 2020,
+  17→        sourceType: 'module',
+  18→      },
+  19→    },
+  20→    plugins: {
+  21→      '@typescript-eslint': tseslint,
+  22→    },
+  23→    rules: {
+  24→      // Disable the base ESLint rule
+  25→      'no-unused-vars': 'off',
+  26→      'no-dupe-class-members': 'off',
+  27→      'no-redeclare': 'off',
+  28→      // Enable the TypeScript rule
   …
 examples/
   basic.ts
@@ -118,9 +140,8 @@ packages/
     CHANGELOG.md
     README.md
       1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
-      2→
-      3→D2Mini is a minimal implementation of the D2TS dataflow graph library but simplified and without the complexities of multi-dimensional versioning.
-      5→The API is almost identical to D2TS, but without the need to specify a version when sending data, or to send a frontier to mark the end of a version.
+      …
+      7→### Basic Usage
       …
     eslint.config.mjs
     package.json
@@ -168,13 +189,6 @@ packages/
     tsconfig.json
   d2ql/
     README.md
-      1→# D2QL
-      2→
-      3→**This is an experimental package**
-      4→
-      5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
-      7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
-      …
     eslint.config.mjs
     package.json
     src/
@@ -205,11 +219,6 @@ packages/
   d2ts/
     CHANGELOG.md
     README.md
-      …
-      26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
-      27→
-      28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
-      …
     eslint.config.mjs
     package.json
       …
@@ -316,7 +325,13 @@ packages/
       operators/
       operators-sqlite/
         buffer.test.ts
-        …
+        consolidate.test.ts
+        count.test.ts
+        distinct.test.ts
+        groupBy.test.ts
+        injection.test.ts
+        join.test.ts
+        reduce.test.ts
       order.test.ts
       utils.test.ts
       version-index.test.ts

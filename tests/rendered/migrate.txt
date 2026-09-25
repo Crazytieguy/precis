@@ -16,7 +16,9 @@ Dockerfile.github-actions
 FAQ.md
 GETTING_STARTED.md
   1→# Getting started
-  …
+  2→Before you start, you should understand the concept of forward/up and reverse/down database migrations.
+  3→
+  4→Configure a database for your application. Make sure that your database driver is supported [here](README.md#databases).
   6→## Create migrations
   …
   22→## Run migrations
@@ -92,40 +94,37 @@ README.md
 SECURITY.md
 cli/
   README.md
-    1→# Deprecated
-    2→
-    3→Use [cmd/migrate](../cmd/migrate) instead
   main.go
   version.go
 cmd/
   migrate/
     README.md
-      1→# migrate CLI
-      …
     examples/
     main.go
     version.go
 database/
   cassandra/
     README.md
+      1→# Cassandra / ScyllaDB
+      …
+      16→## Usage
+      …
+      40→## Upgrading from v1
+      …
     cassandra.go
     cassandra_test.go
     examples/
   clickhouse/
     README.md
       1→# ClickHouse
-      2→
-      3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
+      …
+      17→## Notes
       …
     clickhouse.go
     clickhouse_test.go
     examples/
   cockroachdb/
     README.md
-      1→# cockroachdb
-      2→
-      3→`cockroachdb://user:password@host:port/dbname?query` (`cockroach://`, and `crdb-postgres://` work, too)
-      …
     TUTORIAL.md
     cockroachdb.go
     cockroachdb_test.go
@@ -142,15 +141,15 @@ database/
   error.go
   firebird/
     README.md
-      1→# firebird
-      2→
-      3→`firebirdsql://user:password@servername[:port_number]/database_name_or_file[?params1=value1[&param2=value2]...]`
-      …
     examples/
     firebird.go
     firebird_test.go
   mongodb/
     README.md
+      1→# MongoDB
+      …
+      8→# Usage
+      …
     examples/
     mongodb.go
     mongodb_test.go
@@ -161,12 +160,30 @@ database/
     parse_test.go
   mysql/
     README.md
+      1→# MySQL
+      …
+      21→## Use with existing client
+      …
+      50→## Upgrading from v1
+      …
     examples/
     mysql.go
     mysql_test.go
   neo4j/
     README.md
+      1→# neo4j
+      …
+      18→## Supported versions
+      …
     TUTORIAL.md
+      1→## Create migrations
+      …
+      24→## Run migrations
+      …
+      45→## Database transactions
+      …
+      75→## Optional: Run migrations within your Go app
+      …
     examples/
     neo4j.go
     neo4j_test.go
@@ -174,8 +191,6 @@ database/
   pgx/
     README.md
       1→# pgx
-      2→
-      3→This package is for [pgx/v4](https://pkg.go.dev/github.com/jackc/pgx/v4). A backend for the newer [pgx/v5](https://pkg.go.dev/github.com/jackc/pgx/v5) is [also available](v5).
       …
       30→## Upgrading from v1
       …
@@ -190,6 +205,12 @@ database/
       pgx_test.go
   postgres/
     README.md
+      1→# postgres
+      …
+      26→## Upgrading from v1
+      …
+      34→## Multi-statement mode
+      …
     TUTORIAL.md
     examples/
     postgres.go
@@ -206,6 +227,10 @@ database/
     redshift_test.go
   rqlite/
     README.md
+      1→# rqlite
+      …
+      16→## Notes
+      …
     examples/
     rqlite.go
     rqlite_test.go
@@ -214,58 +239,51 @@ database/
   snowflake/
     README.md
       1→# Snowflake
-      2→
-      3→`snowflake://user:password@accountname/schema/dbname?query`
-      4→
-      5→| URL Query  | WithInstance Config | Description |
-      6→|------------|---------------------|-------------|
-      7→| `x-migrations-table` | `MigrationsTable` | Name of the migrations table |
-      9→Snowflake is PostgreSQL compatible but has some specific features (or lack thereof) that require slightly different behavior.
+      …
+      11→## Status
       …
     snowflake.go
   spanner/
     README.md
       1→# Google Cloud Spanner
+      2→
       3→## Usage
-      …
-      33→## DDL with comments
-      …
-      38→## Multiple statements
-      …
-      42→## Testing
       …
     examples/
     spanner.go
     spanner_test.go
   sqlcipher/
     README.md
-      1→# sqlcipher
-      2→
-      3→This is just a copy of the [sqlite3](https://github.com/golang-migrate/migrate/blob/master/database/sqlite3) driver except that it imports `github.com/mutecomm/go-sqlcipher`.
     examples/
     sqlcipher.go
     sqlcipher_test.go
   sqlite/
     README.md
       1→# sqlite
-      2→
-      3→`sqlite://path/to/database?query`
-      4→
+      …
+      14→## Notes
       …
     examples/
     sqlite.go
     sqlite_test.go
   sqlite3/
     README.md
+      1→# sqlite3
+      …
+      14→## Notes
+      …
     examples/
     sqlite3.go
     sqlite3_test.go
   sqlserver/
     README.md
       1→# Microsoft SQL Server
-      2→
-      3→`sqlserver://username:password@host/instance?param1=value&param2=value`
-      4→`sqlserver://username:password@host:port?param1=value&param2=value`
+      …
+      23→## Driver Support
+      24→
+      25→### Which go-mssqldb driver to us?
+      …
+      30→### Official Support by migrate
       …
     examples/
     sqlserver.go
@@ -298,10 +316,53 @@ go.mod
 go.sum
 internal/
   cli/
+    build_aws-s3.go
+    build_bitbucket.go
+    build_cassandra.go
+    build_clickhouse.go
+    build_cockroachdb.go
+    build_firebird.go
+    build_github.go
+    build_github_ee.go
+    build_gitlab.go
+    build_go-bindata.go
+    build_godoc-vfs.go
+    build_google-cloud-storage.go
+    build_mongodb.go
+    build_mysql.go
+    build_neo4j.go
+    build_pgx.go
+    build_pgxv5.go
+    build_postgres.go
+    build_ql.go
+    build_redshift.go
+    build_rqlite.go
+    build_snowflake.go
+    build_spanner.go
+    build_sqlcipher.go
+    build_sqlite.go
+    build_sqlite3.go
+    build_sqlserver.go
+    build_yugabytedb.go
+    commands.go
+    commands_test.go
+    log.go
+    main.go
   url/
     url.go
     url_test.go
 log.go
+  …
+  3→// Logger is an interface so you can pass in your own
+  4→// logging implementation.
+  5→type Logger interface {
+  6→
+  7→	// Printf is like fmt.Printf
+  8→	Printf(format string, v ...interface{})
+  9→
+  10→	// Verbose should return true when verbose logging output is wanted
+  11→	Verbose() bool
+  12→}
 migrate.go
   1→// Package migrate reads migrations from sources and runs them against databases.
   2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
@@ -314,18 +375,11 @@ migration_test.go
 source/
   aws_s3/
     README.md
-      1→# aws_s3
-      2→
-      3→`s3://<bucket>/<prefix>`
     s3.go
     s3_test.go
   bitbucket/
     .gitignore
     README.md
-      1→# bitbucket
-      2→
-      3→This driver is catered for those that want to source migrations from bitbucket cloud(https://bitbucket.com).
-      …
     bitbucket.go
     bitbucket_test.go
   driver.go
@@ -338,19 +392,11 @@ source/
   errors.go
   file/
     README.md
-      1→# file
-      2→
-      3→`file:///absolute/path`  
-      4→`file://relative/path`
     file.go
     file_test.go
   github/
     .gitignore
     README.md
-      1→# github
-      2→
-      3→This driver is catered for those that want to source migrations from [github.com](https://github.com). The URL scheme doesn't require a hostname, as it just simply defaults to `github.com`.
-      …
     examples/
     github.go
     github_test.go
@@ -358,6 +404,8 @@ source/
     .gitignore
     README.md
       1→# github ee
+      2→
+      3→## GitHub Enterprise Edition
       …
     github_ee.go
     github_ee_test.go
@@ -369,8 +417,6 @@ source/
     gitlab_test.go
   go_bindata/
     README.md
-      1→# go_bindata
-      …
     examples/
     go-bindata.go
     go-bindata_test.go
@@ -383,6 +429,8 @@ source/
   google_cloud_storage/
     README.md
       1→# Google Cloud Storage
+      2→
+      3→
       4→## Import
       …
       12→## Connection String
@@ -392,6 +440,8 @@ source/
   httpfs/
     README.md
       1→# httpfs
+      2→
+      3→## Usage
       …
     driver.go
     driver_test.go
@@ -406,15 +456,20 @@ source/
       sql/
   iofs/
     README.md
-      1→# iofs
-      2→
-      3→https://pkg.go.dev/github.com/golang-migrate/migrate/v4/source/iofs
     doc.go
     example_test.go
     iofs.go
     iofs_test.go
     testdata/
       migrations/
+        1_foobar.down.sql
+        1_foobar.up.sql
+        3_foobar.up.sql
+        4_foobar.down.sql
+        4_foobar.up.sql
+        5_foobar.down.sql
+        7_foobar.down.sql
+        7_foobar.up.sql
   migration.go
   migration_test.go
   parse.go

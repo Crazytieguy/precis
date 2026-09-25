@@ -46,25 +46,25 @@ Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 2241 | 12 | Code::CodeKey { rung: Body, file: rich/__main__.py, decl: 3, sub: 0, line: 33 } |  |  | 0.709 |
 | walker |  | 2258 | 17 | Code::CodeKey { rung: Doc, file: rich/__main__.py, decl: 4, sub: 0, line: 39 } |  |  | 0.709 |
 | ns | 2281 |  | 262 | console.py module-level symbol roster | 2.4 |  | 0.673 |
-| walker |  | 2303 | 45 | Markdown::ReadmeHeadline { file: questions/README.md } |  |  | 0.673 |
-| walker |  | 2462 | 159 | Code::CodeKey { rung: Names, file: rich/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.710 |
-| ns | 2525 |  | 244 | Console method roster — rendering and output (lines 1092–1652) | 2.5 |  | 0.678 |
-| walker |  | 2529 | 67 | Code::CodeKey { rung: Decl, file: rich/__init__.py, decl: 4, sub: 0, line: 53 } |  |  | 0.697 |
-| walker |  | 2668 | 139 | Code::CodeKey { rung: Decl, file: rich/__init__.py, decl: 6, sub: 0, line: 120 } |  |  | 0.714 |
+| walker |  | 2417 | 159 | Code::CodeKey { rung: Names, file: rich/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.710 |
+| walker |  | 2484 | 67 | Code::CodeKey { rung: Decl, file: rich/__init__.py, decl: 4, sub: 0, line: 53 } |  |  | 0.730 |
+| ns | 2525 |  | 244 | Console method roster — rendering and output (lines 1092–1652) | 2.5 |  | 0.697 |
+| walker |  | 2623 | 139 | Code::CodeKey { rung: Decl, file: rich/__init__.py, decl: 6, sub: 0, line: 120 } |  |  | 0.714 |
 | ns | 2735 |  | 210 | Console method roster — JSON, screen updates, exceptions, logging, export (1758–2606) | 2.6 |  | 0.691 |
-| walker |  | 2815 | 147 | Code::CodeKey { rung: Decl, file: rich/__init__.py, decl: 5, sub: 0, line: 77 } |  |  | 0.736 |
-| walker |  | 2870 | 55 | Code::CodeKey { rung: Body, file: rich/__init__.py, decl: 4, sub: 0, line: 53 } |  |  | 0.736 |
-| walker |  | 2940 | 70 | Code::CodeKey { rung: Doc, file: rich/__init__.py, decl: 2, sub: 0, line: 23 } |  |  | 0.736 |
-| walker |  | 3023 | 83 | Code::CodeKey { rung: Doc, file: rich/__init__.py, decl: 3, sub: 0, line: 39 } |  |  | 0.736 |
+| walker |  | 2770 | 147 | Code::CodeKey { rung: Decl, file: rich/__init__.py, decl: 5, sub: 0, line: 77 } |  |  | 0.736 |
+| walker |  | 2825 | 55 | Code::CodeKey { rung: Body, file: rich/__init__.py, decl: 4, sub: 0, line: 53 } |  |  | 0.736 |
+| walker |  | 2895 | 70 | Code::CodeKey { rung: Doc, file: rich/__init__.py, decl: 2, sub: 0, line: 23 } |  |  | 0.736 |
+| walker |  | 2978 | 83 | Code::CodeKey { rung: Doc, file: rich/__init__.py, decl: 3, sub: 0, line: 39 } |  |  | 0.736 |
+| walker |  | 3105 | 127 | Code::CodeKey { rung: Names, file: rich/_unicode_data/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.736 |
+| walker |  | 3112 | 7 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.736 |
 | ns | 3126 |  | 391 | Console method roster — construction, context management, properties (617–1084) | 2.7 |  | 0.691 |
-| walker |  | 3150 | 127 | Code::CodeKey { rung: Names, file: rich/_unicode_data/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |
-| walker |  | 3157 | 7 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.691 |
-| walker |  | 3209 | 52 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 1, sub: 0, line: 20 } |  |  | 0.691 |
-| walker |  | 3268 | 59 | Code::CodeKey { rung: Doc, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.691 |
-| walker |  | 3450 | 182 | Fs::DirListing { dir: docs/source/reference } |  |  | 0.694 |
-| walker |  | 3548 | 98 | Code::CodeKey { rung: Doc, file: rich/_unicode_data/__init__.py, decl: 3, sub: 0, line: 31 } |  |  | 0.694 |
+| walker |  | 3164 | 52 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 1, sub: 0, line: 20 } |  |  | 0.691 |
+| walker |  | 3223 | 59 | Code::CodeKey { rung: Doc, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.691 |
+| walker |  | 3405 | 182 | Fs::DirListing { dir: docs/source/reference } |  |  | 0.694 |
+| walker |  | 3503 | 98 | Code::CodeKey { rung: Doc, file: rich/_unicode_data/__init__.py, decl: 3, sub: 0, line: 31 } |  |  | 0.694 |
+| walker |  | 3561 | 58 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.694 |
 | ns | 3573 |  | 447 | Console.__init__ full keyword surface | 2.8 | 2.7 | 0.656 |
-| walker |  | 3606 | 58 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.656 |
+| walker |  | 3606 | 45 | Markdown::Section { file: questions/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.656 |
 | walker |  | 3702 | 96 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.668 |
 | walker |  | 3735 | 33 | Code::CodeKey { rung: Names, file: rich/theme.py, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
 | ns | 3780 |  | 207 | ConsoleOptions dataclass — the per-render context | 2.9 | 2.4 | 0.650 |

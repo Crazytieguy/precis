@@ -88,6 +88,8 @@ docs/
   API.md
   README.md
     1→# Neco Documentation
+    2→
+    3→## [API.md](API.md)
     …
   TECHNICAL.md
   assets/
@@ -234,7 +236,6 @@ neco.h
   172→ssize_t neco_write_dl(int fd, const void *data, size_t nbytes, int64_t deadline);
   173→int neco_accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
   174→int neco_accept_dl(int sockfd, struct sockaddr *addr, socklen_t *addrlen, int64_t deadline);
-  175→int neco_connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
   …
 tests/
   README.md

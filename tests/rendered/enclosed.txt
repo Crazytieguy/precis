@@ -115,6 +115,9 @@ package.json
   4→  "description": "Send private and secure note",
   5→  "packageManager": "pnpm@9.15.0",
   6→  "license": "Apache-2.0",
+  7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+  8→  "repository": {
+  9→    "type": "git",
   …
   12→  "engines": {
   13→    "node": ">=22.0.0"
@@ -130,10 +133,6 @@ packages/
     .env.example
     .gitignore
     README.md
-      1→## Usage
-      2→
-      3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
-      …
     components.json
     e2e-tests/
       create-and-view-note.e2e.test.ts
@@ -158,6 +157,26 @@ packages/
         favicon.ico
       index.tsx
       locales/
+        README.md
+        ar.json
+        de.json
+        en.json
+        es.json
+        fr.json
+        hu.json
+        id.json
+        it.json
+        locales.test.ts
+        locales.ts
+        nl.json
+        pl.json
+        pt-BR.json
+        pt.json
+        ru.json
+        tr.json
+        vi.json
+        zh-CN.json
+        zh-TW.json
       modules/
         auth/
           auth.models.ts
@@ -238,7 +257,9 @@ packages/
             cors.middleware.ts
             errors.middleware.ts
             logger.middleware.ts
-            …
+            storage.middleware.ts
+            timeout.middleware.test.ts
+            timeout.middleware.ts
           server.ts
           server.types.ts
           users/
@@ -259,6 +280,11 @@ packages/
             validation.ts
         storage/
           factories/
+            cloudflare-kv.storage.models.test.ts
+            cloudflare-kv.storage.models.ts
+            cloudflare-kv.storage.ts
+            fs-lite.storage.ts
+            memory.storage.ts
           storage.models.ts
           storage.types.ts
         tasks/
@@ -272,10 +298,6 @@ packages/
     wrangler.toml
   cli/
     README.md
-      1→# Enclosed CLI
-      2→
-      3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-      …
     bin/
       enclosed.mjs
     build.config.ts
@@ -305,8 +327,7 @@ packages/
   crypto/
     README.md
       1→# Enclosed crypto library
-      2→
-      3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
+      …
       5→## Installation
       …
       18→## License
@@ -398,8 +419,7 @@ packages/
   lib/
     README.md
       1→### Enclosed lib
-      2→
-      3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+      …
       5→## Installation
       …
       18→## Usage

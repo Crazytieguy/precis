@@ -209,11 +209,33 @@ index.d.cts
   173→  };
   174→  getUri(config?: axios.AxiosRequestConfig): string;
   175→  request<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
+  176→    config: axios.AxiosRequestConfig<D>
+  177→  ): Promise<R>;
   178→  get<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
+  179→    url: string,
+  180→    config?: axios.AxiosRequestConfig<D>
+  181→  ): Promise<R>;
   182→  delete<T = any, R = axios.AxiosResponse<T>, D = any>(
+  183→    url: string,
+  184→    config?: axios.AxiosRequestConfig<D>
+  185→  ): Promise<R>;
+  186→  head<T = any, R = axios.AxiosResponse<T>, D = any>(
+  187→    url: string,
+  188→    config?: axios.AxiosRequestConfig<D>
+  189→  ): Promise<R>;
+  190→  options<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
+  194→  post<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  199→  put<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  204→  patch<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  209→  postForm<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  214→  putForm<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  229→}
   231→declare enum HttpStatusCode {
   …
   297→type InternalAxiosError<T = unknown, D = any> = AxiosError<T, D>;
@@ -229,8 +251,8 @@ lib/
   adapters/
     README.md
       1→# axios // adapters
-      2→
-      3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
+      …
+      5→## Example
       …
     adapters.js
     fetch.js
@@ -247,13 +269,6 @@ lib/
     AxiosHeaders.js
     InterceptorManager.js
     README.md
-      1→# axios // core
-      2→
-      3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
-      5→- Dispatching requests
-      6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
-      7→- Managing interceptors
-      8→- Handling config
     buildFullPath.js
     dispatchRequest.js
     mergeConfig.js
@@ -264,9 +279,6 @@ lib/
     transitional.js
   env/
     README.md
-      1→# axios // env
-      2→
-      3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
     classes/
       FormData.js
     data.js
@@ -275,12 +287,6 @@ lib/
     AxiosURLSearchParams.js
     HttpStatusCode.js
     README.md
-      1→# axios // helpers
-      2→
-      3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
-      5→- Browser polyfills
-      6→- Managing cookies
-      7→- Parsing HTTP headers
     ZlibHeaderTransformStream.js
     bind.js
     buildURL.js

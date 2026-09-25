@@ -199,6 +199,7 @@ tea.go
   348→// [ProgressBarIndeterminate].
   349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
+  356→// Cursor represents a cursor on the terminal screen.
   357→type Cursor struct {
   358→	// Position is a [Position] that determines the cursor's position on the
   359→	// screen relative to the top left corner of the frame.
@@ -213,7 +214,8 @@ tea.go
   368→	// Blink is a boolean that determines whether the cursor should blink.
   369→	Blink bool
   370→}
-  …
+  372→// NewCursor returns a new cursor with the default settings and the given
+  373→// position.
   374→func NewCursor(x, y int) *Cursor {
   …
   390→type Cmd func() Msg
@@ -222,7 +224,8 @@ tea.go
   396→	handlers []chan struct{}
   397→	mu       sync.RWMutex
   398→}
-  …
+  400→// Adds a channel to the list of handlers. We wait for all handlers to terminate
+  401→// gracefully on shutdown.
   402→func (h *channelHandlers) add(ch chan struct{}) {
   …
   408→// shutdown waits for all handlers to terminate.
@@ -238,7 +241,8 @@ tea.go
   564→func Suspend() Msg {
   …
   574→type SuspendMsg struct{}
-  …
+  576→// ResumeMsg can be listen to do something once a program is resumed back
+  577→// from a suspend state.
   578→type ResumeMsg struct{}
   …
   586→type InterruptMsg struct{}
@@ -254,6 +258,8 @@ tea.go
   684→// handleResize handles terminal resize events.
   685→func (p *Program) handleResize() chan struct{} {
   …
+  698→// handleCommands runs commands in a goroutine and sends the result to the
+  699→// program's message channel.
   700→func (p *Program) handleCommands(cmds chan Cmd) chan struct{} {
   …
   743→func (p *Program) eventLoop(model Model, cmds chan Cmd) (Model, error) {
@@ -286,21 +292,9 @@ tty_windows.go
 tutorials/
   basics/
     README.md
-      1→# Bubble Tea Basics
-      2→
-      3→Bubble Tea is based on the functional design paradigms of [The Elm
-      4→Architecture][elm], which happens to work nicely with Go. It’s a delightful way
-      5→to build applications.
-      …
     main.go
   commands/
     README.md
-      1→# Commands in Bubble Tea
-      2→
-      3→This is the second tutorial for Bubble Tea covering commands, which deal with
-      4→I/O. The tutorial assumes you have a working knowledge of Go and a decent
-      5→understanding of [the first tutorial][basics].
-      …
     main.go
   go.mod
     1→module tutorial

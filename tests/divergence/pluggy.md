@@ -21,14 +21,14 @@ Score(3000)=0.628 I=0.771 C=0.512 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 389 | 13 | Fs::DirListing { dir: .github } |  |  | 0.729 |
 | walker |  | 393 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.729 |
 | walker |  | 407 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.729 |
-| walker |  | 433 | 26 | Markdown::Section { file: downstream/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.729 |
-| walker |  | 448 | 15 | Fs::DirListing { dir: docs/examples } |  |  | 0.730 |
-| walker |  | 456 | 8 | Fs::DirListing { dir: docs/examples/eggsample } |  |  | 0.731 |
-| walker |  | 476 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.736 |
+| walker |  | 422 | 15 | Fs::DirListing { dir: docs/examples } |  |  | 0.730 |
+| walker |  | 430 | 8 | Fs::DirListing { dir: docs/examples/eggsample } |  |  | 0.731 |
+| walker |  | 450 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.736 |
 | ns | 521 |  | 166 | Public name to private module map (the re-export block) | 1.5 | 1.4 | 0.643 |
-| walker |  | 556 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.643 |
-| ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.577 |
-| walker |  | 618 | 62 | Fs::DirListing { dir: testing } |  |  | 0.703 |
+| walker |  | 530 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.643 |
+| walker |  | 592 | 62 | Fs::DirListing { dir: testing } |  |  | 0.661 |
+| ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.703 |
+| walker |  | 618 | 26 | Markdown::Section { file: downstream/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.703 |
 | walker |  | 665 | 47 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.703 |
 | ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.645 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.645 |

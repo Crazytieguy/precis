@@ -222,11 +222,6 @@ pyproject.toml
   …
 questions/
   README.md
-    2→# Questions
-    3→
-    4→Your questions should go in this directory.
-    5→
-    6→Question files should be named with the extension ".question.md".
   ansi_escapes.question.md
   emoji_broken.question.md
   highlight_incorrect.question.md
@@ -262,6 +257,8 @@ rich/
     41→
     42→    Args:
     43→        *args (Any): Positional arguments for the replacement :class:`~rich.console.Console`.
+    44→        **kwargs (Any): Keyword arguments for the replacement :class:`~rich.console.Console`.
+    45→    """
     …
     53→def print(
     54→    *objects: Any,
@@ -335,6 +332,9 @@ rich/
   _timer.py
   _unicode_data/
     __init__.py
+      …
+      12→from importlib import import_module
+      …
     _versions.py
     unicode10-0-0.py
     unicode11-0-0.py

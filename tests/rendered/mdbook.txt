@@ -74,12 +74,6 @@ crates/
       9→[dependencies]
       …
     README.md
-      1→# mdbook-compare
-      2→
-      3→This is a simple utility to compare the output of two different versions of mdbook.
-      4→
-      5→To use this:
-      …
     src/
       main.rs
         1→//! Utility to compare the output of two different versions of mdbook.
@@ -89,7 +83,7 @@ crates/
     README.md
       1→# mdbook-core
       …
-      7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+      11→## License
       …
     src/
       book/
@@ -120,6 +114,10 @@ crates/
       31→[features]
       32→search = ["mdbook-html/search"]
     README.md
+      1→# mdbook-driver
+      …
+      11→## License
+      …
     src/
       builtin_preprocessors/
         cmd.rs
@@ -145,10 +143,13 @@ crates/
         …
   mdbook-html/
     Cargo.toml
+      …
+      36→[features]
+      37→search = ["dep:elasticlunr-rs"]
     README.md
       1→# mdbook-html
       …
-      7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
+      11→## License
       …
     front-end/
       css/
@@ -212,7 +213,12 @@ crates/
           …
       lib.rs
         1→//! mdBook HTML renderer.
-        …
+        3→mod html;
+        4→mod html_handlebars;
+        5→pub mod theme;
+        6→pub(crate) mod utils;
+        7→
+        8→pub use html_handlebars::HtmlHandlebars;
       theme/
         fonts.rs
         mod.rs
@@ -230,7 +236,7 @@ crates/
     README.md
       1→# mdbook-markdown
       …
-      7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
+      11→## License
       …
     src/
       lib.rs
@@ -246,7 +252,7 @@ crates/
     README.md
       1→# mdbook-preprocessor
       …
-      7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+      11→## License
       …
     src/
       lib.rs
@@ -262,7 +268,7 @@ crates/
     README.md
       1→# mdbook-renderer
       …
-      7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+      11→## License
       …
     src/
       lib.rs
@@ -273,12 +279,27 @@ crates/
         5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
         6→//! for more information on how to implement a renderer.
         …
+        17→pub use mdbook_core::MDBOOK_VERSION;
+        18→pub use mdbook_core::book;
+        19→pub use mdbook_core::config;
+        20→pub use mdbook_core::errors;
+        …
+        28→pub trait Renderer {
+        …
+        30→    fn name(&self) -> &str;
+        …
+        34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+        …
+        40→pub struct RenderContext {
+        …
+        63→impl RenderContext {
+        …
   mdbook-summary/
     Cargo.toml
     README.md
       1→# mdbook-summary
       …
-      7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+      11→## License
       …
     src/
       lib.rs
@@ -294,10 +315,6 @@ crates/
       9→[dependencies]
       …
     README.md
-      1→# xtask
-      2→
-      3→This is a CLI utility for running development commands for mdbook.
-      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
     src/
       changelog.rs
         1→//! Helper to generate a changelog for a new release.
@@ -309,6 +326,13 @@ eslint.config.mjs
 examples/
   nop-preprocessor.rs
   remove-emphasis/
+    .gitignore
+    book.toml
+    mdbook-remove-emphasis/
+    src/
+      SUMMARY.md
+      chapter_1.md
+    test.rs
 guide/
   book.toml
   guide-helper/
@@ -324,7 +348,19 @@ guide/
   src/
     404.md
     README.md
+      1→# Introduction
+      …
+      46→## Contributing
+      …
+      55→## License
+      …
     SUMMARY.md
+      1→# Summary
+      …
+      5→# User guide
+      …
+      11→# Reference guide
+      …
     cli/
       README.md
       arg-watcher.md
@@ -341,6 +377,11 @@ guide/
       backends.md
       mdbook-wordcount/
         Cargo.toml
+          1→[package]
+          2→name = "mdbook-wordcount"
+          3→version = "0.1.0"
+          4→authors = ["Michael Bryan <michaelfbryan@gmail.com>"]
+          …
         src/
           main.rs
       preprocessors.md

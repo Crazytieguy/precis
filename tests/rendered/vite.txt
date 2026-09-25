@@ -102,11 +102,6 @@ packages/
     CHANGELOG.md
     LICENSE
     README.md
-      1→# create-vite <a href="https://npmjs.com/package/create-vite"><img src="https://img.shields.io/npm/v/create-vite" alt="npm package"></a>
-      3→## Scaffolding Your First Vite Project
-      …
-      82→## Community Templates
-      …
     __tests__/
     index.js
     package.json
@@ -434,10 +429,12 @@ playground/
   minify/
     __tests__/
     dir/
+      module/
     index.html
     main.js
     package.json
-    …
+    test.css
+    vite.config.js
   module-graph/
   multiple-entrypoints/
   nested-deps/
@@ -492,6 +489,14 @@ playground/
     src/
       index.js
   resolve-tsconfig-paths/
+    __tests__/
+    fallback/
+      fallback.js
+    index.html
+    package.json
+    src/
+    tsconfig.json
+    vite.config.js
   shims.d.ts
   ssr/
     __tests__/
@@ -532,6 +537,12 @@ playground/
   ssr-webworker/
   tailwind/
   tailwind-sourcemap/
+    __tests__/
+    index.html
+    package.json
+    postcss.config.js
+    tailwind.css
+    …
   tailwind-v3/
   test-utils.ts
   transform-plugin/

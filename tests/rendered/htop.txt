@@ -39,10 +39,23 @@ CRT.h
   18→#define SCREEN_TAB_COLUMN_GAP  1
   19→
   20→typedef enum TreeStr_ {
-  …
+  21→   TREE_STR_VERT,
+  22→   TREE_STR_RTEE,
+  23→   TREE_STR_BEND,
+  24→   TREE_STR_TEND,
+  25→   TREE_STR_OPEN,
+  26→   TREE_STR_SHUT,
+  27→   TREE_STR_ASC,
+  28→   TREE_STR_DESC,
+  29→   LAST_TREE_STR
   30→} TreeStr;
   31→
   32→typedef enum ColorScheme_ {
+  33→   COLORSCHEME_DEFAULT,
+  34→   COLORSCHEME_MONOCHROME,
+  35→   COLORSCHEME_BLACKONWHITE,
+  36→   COLORSCHEME_LIGHTTERMINAL,
+  37→   COLORSCHEME_MIDNIGHT,
   …
   42→} ColorScheme;
   43→
@@ -57,6 +70,8 @@ CRT.h
   179→#define KEY_SHIFT_TAB  KEY_F(34)
   180→#define KEY_ALT(x)     (KEY_F(64 - 26) + ((x) - 'A'))
   181→#define KEY_FOCUS_IN   (KEY_MAX + 'I')
+  182→#define KEY_FOCUS_OUT  (KEY_MAX + 'O')
+  183→#define KEY_DEL_MAC    127
   …
 CategoriesPanel.c
 CategoriesPanel.h
@@ -373,20 +388,9 @@ netbsd/
   README.md
     1→NetBSD support in htop(1)
     2→===
-    3→
-    4→This implementation utilizes kvm_getprocs(3), sysctl(3), etc, eliminating the
-    5→need for mount_procfs(8) with Linux compatibility enabled.
-    7→The implementation was initially based on the OpenBSD support in htop(1).
-    8→
+    …
     9→Notes on NetBSD curses
     10→---
-    11→
-    12→NetBSD is one of the last operating systems to use and maintain its own
-    13→implementation of Curses.
-    14→
-    15→htop(1) can be compiled against either ncurses or NetBSD's curses(3).
-    16→By default, htop(1) will use ncurses when it is found, as support for NetBSD's
-    17→curses in htop is limited.
     …
     32→What needs improvement
     33→---

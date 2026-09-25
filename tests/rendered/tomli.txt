@@ -105,8 +105,6 @@ README.md
 benchmark/
   LICENSE
   README.md
-    1→# Benchmark
-    …
   data.toml
   requirements.txt
   run.py
@@ -212,6 +210,7 @@ src/
       109→def match_to_localtime(match: re.Match[str]) -> time:
       …
       116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+      117→    if match.group("floatpart"):
       …
     _types.py
       …

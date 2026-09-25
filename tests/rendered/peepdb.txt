@@ -67,14 +67,6 @@ docs/
   Gemfile.lock
   LICENSE
   README.md
-    1→# just-the-docs-template
-    2→
-    3→This is a *bare-minimum* template to create a [Jekyll] site that:
-    4→
-    5→- uses the [Just the Docs] theme;
-    6→- can be built and published on [GitHub Pages];
-    7→- can be built and previewed locally, and published on other platforms.
-    …
   _config.yml
   contributing.md
   index.md
@@ -218,7 +210,7 @@ peepdb/
     24→KEYRING_SERVICE_NAME = "PEEP_DB"
     …
     27→logger = logging.getLogger(__name__)
-    …
+    29→@cached(cache=TTLCache(maxsize=1024, ttl=600))
     30→def generate_key_from_password(salt):
     …
     42→def fetch_key_from_keyring():
@@ -230,6 +222,18 @@ peepdb/
     70→def encrypt(message: str) -> str:
     …
     73→def decrypt(token: str) -> str:
+    …
+    76→def save_connection(name, db_type, host, port, user, password, database, trusted):
+    …
+    112→def get_connection(name):
+    …
+    144→def list_connections():
+    …
+    161→def remove_connection(name):
+    …
+    178→def remove_all_connections():
+    …
+    196→def add_key_security():
     …
   core.py
   db/

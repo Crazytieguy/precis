@@ -156,9 +156,11 @@ Score(3000)=0.749 I=0.921 C=0.609 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 9515 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.709 |
 | ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.717 |
 | walker |  | 9815 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 5, sub: 0, line: 89 } |  |  | 0.753 |
-| walker |  | 9866 | 51 | Markdown::ReadmeHeadline { file: examples/weather_agent/README.md } |  |  | 0.753 |
 | ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.743 |
-| walker |  | 9883 | 17 | Markdown::HeadingsOutline { file: examples/weather_agent/README.md } |  |  | 0.743 |
-| ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.744 |
-| walker |  | 9938 | 55 | Fs::DirListing { dir: examples/customer_service/logs } |  |  | 0.744 |
-| walker |  | 9999 | 61 | Markdown::ReadmeHeadline { file: examples/triage_agent/README.md } |  |  | 0.744 |
+| walker |  | 9870 | 55 | Fs::DirListing { dir: examples/customer_service/logs } |  |  | 0.743 |
+| walker |  | 9879 | 9 | Plaintext::Whole { file: examples/support_bot/requirements.txt } |  |  | 0.743 |
+| ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.743 |
+| walker |  | 9907 | 28 | Markdown::HeadingsOutline { file: examples/personal_shopper/README.md } |  |  | 0.743 |
+| walker |  | 9935 | 28 | Markdown::HeadingsOutline { file: examples/support_bot/README.md } |  |  | 0.743 |
+| walker |  | 9964 | 29 | Markdown::HeadingsOutline { file: examples/weather_agent/README.md } |  |  | 0.743 |
+| walker |  | 9992 | 28 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.744 |

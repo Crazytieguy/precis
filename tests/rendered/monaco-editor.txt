@@ -36,7 +36,7 @@ README.md
   1→# Monaco Editor
   …
   8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
-  …
+  10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
   12→## Try it out
   …
   18→## Installing
@@ -81,11 +81,6 @@ editor.code-workspace
 gulpfile.js
 monaco-lsp-client/
   README.md
-    1→# Monaco LSP Client
-    2→
-    3→Provides a Language Server Protocol (LSP) client for the Monaco Editor.
-    4→
-    5→This package is in alpha stage and might contain many bugs.
   generator/
     index.ts
   package-lock.json
@@ -118,14 +113,14 @@ package.json
   …
   5→	"private": true,
   6→	"description": "A browser based code editor",
+  7→	"homepage": "https://github.com/microsoft/monaco-editor",
   …
   9→	"license": "MIT",
   …
 samples/
   README.md
     1→# Monaco Editor Samples
-    2→
-    3→Standalone HTML samples showing how to integrate the Monaco Editor.
+    …
     5→## Running
     …
     17→## Loading variations
@@ -133,8 +128,7 @@ samples/
     26→## Other examples & techniques
     …
     34→## License
-    35→
-    36→MIT
+    …
   browser-esm-esbuild/
     .gitignore
     build.js
@@ -261,8 +255,6 @@ samples/
     webpack.config.js
   legacy/
     README.md
-      1→These AMD samples are not supported anymore and will be removed in future releases.
-      2→Please use the ESM version of the editor!
     browser-amd-diff-editor/
       index.html
       modified.txt
@@ -292,6 +284,8 @@ samples/
         …
         2→	"name": "electron-amd",
         …
+        6→	"main": "./main"
+        …
     electron-amd-nodeIntegration/
       electron-index.html
       index.html
@@ -299,6 +293,8 @@ samples/
       package.json
         …
         2→	"name": "electron-amd-node-integration",
+        …
+        6→	"main": "./main"
         …
   nwjs-amd/
     index.html
@@ -544,8 +540,7 @@ webpack-plugin/
   LICENSE
   README.md
     1→# Monaco Editor Webpack Loader Plugin
-    2→
-    3→A plugin to simplify loading the [Monaco Editor](https://github.com/microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
+    …
     5→## Installing
     …
     11→## Using
@@ -577,3 +572,16 @@ webpack-plugin/
     types.ts
   tsconfig.json
 website/
+  .gitignore
+  .prettierrc.json
+  index/
+  package-lock.json
+  package.json
+  scripts/
+  src/
+  static/
+  tsconfig.json
+  tslint.json
+  typedoc/
+  vscode-web-editors.tgz
+  webpack.config.ts
