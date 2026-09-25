@@ -223,11 +223,11 @@ impl RenderedTree {
         total
     }
 
-    /// Approximate token count (`bytes / k`) — for approx ranking.
-    pub fn marginal_cost_approx(&self, content: &BatchContent) -> usize {
-        let mut tokens: usize = 0;
-        self.visit_atom_costs(content, tokenizer::approx_count, |c| tokens += c.tokens);
-        tokens
+    /// Marginal cost with tokens approximated as `bytes / k`.
+    pub fn marginal_cost_approx(&self, content: &BatchContent) -> Cost {
+        let mut total = Cost::default();
+        self.visit_atom_costs(content, tokenizer::approx_count, |c| total = total + c);
+        total
     }
 
     /// Marginal-cost visitor (per FS entry / per touched file) —
@@ -1027,7 +1027,7 @@ mod tests {
 
         let overlap = listing(&["a.rs"]);
         let exact = tree.marginal_cost(&overlap);
-        let approx_tokens = tree.marginal_cost_approx(&overlap);
+        let approx_tokens = tree.marginal_cost_approx(&overlap).tokens;
         assert_eq!(exact.tokens, 0);
         assert_eq!(exact.chars, 0);
         assert_eq!(approx_tokens, 0);
@@ -1072,7 +1072,7 @@ mod tests {
 
         let full = one_span(path.clone(), 1, Render::Full);
         let delta_exact = tree.marginal_cost(&full);
-        let delta_approx = tree.marginal_cost_approx(&full);
+        let delta_approx = tree.marginal_cost_approx(&full).tokens;
 
         let cache_fresh = SourceCache::new();
         cache_fresh.insert(
@@ -1082,7 +1082,7 @@ mod tests {
         let mut tree_fresh = RenderedTree::new(stub_dir(), cache_fresh);
         tree_fresh.apply(&listing(&["syn.rs"]), BatchId::new(0), |_| true);
         let fresh_exact = tree_fresh.marginal_cost(&full);
-        let fresh_approx = tree_fresh.marginal_cost_approx(&full);
+        let fresh_approx = tree_fresh.marginal_cost_approx(&full).tokens;
 
         assert!(delta_exact.chars > 0);
         assert!(delta_exact.tokens > 0);

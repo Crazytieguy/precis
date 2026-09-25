@@ -301,7 +301,9 @@ must not undo:
 - **The o200k table build (~55 ms) is fixed per run** and dominates
   small repos. It happens inside `tiktoken_rs::o200k_base()`, so only
   replacing the tokenizer would shrink it; the scheduler starts it on a
-  background thread and runs the essential-source scan meanwhile.
+  background thread and runs the essential-source scan meanwhile, unless
+  the seed listing's approximate cost already exceeds the budget (then
+  no source batch is ever absorbed and the scan would be wasted I/O).
 
 ## Open items
 
