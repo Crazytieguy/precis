@@ -168,6 +168,25 @@ lib/
   svgo-node.js
   svgo-node.test.js
   svgo.js
+    …
+    72→export * from './types.js';
+    74→/**
+    75→ * The core of SVGO.
+    76→ *
+    77→ * @param {string} input
+    78→ * @param {import('./types.js').Config=} config
+    79→ * @returns {import('./types.js').Output}
+    80→ */
+    81→export const optimize = (input, config) => {
+    …
+    136→export {
+    137→  VERSION,
+    138→  builtinPlugins,
+    139→  mapNodesToParents,
+    140→  querySelector,
+    141→  querySelectorAll,
+    142→  _collections,
+    143→};
   svgo.test.js
   types.js
     1→export default {};
@@ -291,15 +310,7 @@ plugins/
     64→    collapseGroups,
     65→    convertPathData,
     66→    convertTransform,
-    67→    removeEmptyAttrs,
-    68→    removeEmptyContainers,
-    69→    mergePaths,
-    70→    removeUnusedNS,
-    71→    sortAttrs,
-    72→    sortDefsChildren,
-    73→    removeDesc,
-    74→  ],
-    75→});
+    …
     77→export default presetDefault;
   removeAttributesBySelector.js
   removeAttrs.js
@@ -323,13 +334,6 @@ plugins/
   removeMetadata.js
   removeNonInheritableGroupAttrs.js
   removeOffCanvasPaths.js
-    …
-    6→export const name = 'removeOffCanvasPaths';
-    7→export const description =
-    8→  'removes elements that are drawn outside of the viewBox';
-    …
-    17→export const fn = () => {
-    …
   removeRasterImages.js
   removeScripts.js
   removeStyleElement.js
@@ -343,12 +347,6 @@ plugins/
   removeXMLProcInst.js
   removeXlink.js
   reusePaths.js
-    …
-    4→export const name = 'reusePaths';
-    5→export const description =
-    …
-    18→export const fn = (root) => {
-    …
   sortAttrs.js
   sortDefsChildren.js
 rollup.config.js

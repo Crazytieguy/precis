@@ -84,7 +84,13 @@ impl Emitter<'_> {
                 .map(|decl| Item::new(decl.name_rows.clone())),
         );
         roster.sort_by_key(|item| item.rows.first().copied());
-        let names_value = self.file_prior * (roster.len() as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
+        let entries: usize = model
+            .reexports
+            .iter()
+            .map(|item| item.rows.len())
+            .sum::<usize>()
+            + model.decls.len();
+        let names_value = self.file_prior * (entries as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
         self.part(names, &roster, None, names_value);
 
         let mut index = 0;

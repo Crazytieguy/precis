@@ -169,9 +169,6 @@ classes/
     101→
     102→    if (other.version === this.version) {
     103→      return 0
-    104→    }
-    105→
-    106→    return this.compareMain(other) || this.comparePre(other)
     …
     109→  compareMain (other) {
     …
@@ -185,11 +182,6 @@ classes/
     333→module.exports = SemVer
 functions/
   clean.js
-    …
-    4→const clean = (version, options) => {
-    5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
-    …
-    8→module.exports = clean
   cmp.js
   coerce.js
   compare-build.js
@@ -275,6 +267,15 @@ internal/
     9→  : () => {}
     11→module.exports = debug
   identifiers.js
+    …
+    4→const compareIdentifiers = (a, b) => {
+    …
+    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+    25→
+    26→module.exports = {
+    27→  compareIdentifiers,
+    28→  rcompareIdentifiers,
+    29→}
   lrucache.js
     …
     3→class LRUCache {

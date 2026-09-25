@@ -1,4 +1,4 @@
-Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.724/0.736/0.715/0.603/0.621/0.597
+Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.721/0.657/0.715/0.603/0.621/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -29,31 +29,31 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 1025 | 43 | Fs::DirListing { dir: .github } |  |  | 0.711 |
 | walker |  | 1066 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.758 |
 | walker |  | 1080 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.782 |
-| walker |  | 1143 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.782 |
 | ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.712 |
-| walker |  | 1284 | 141 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.724 |
-| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.659 |
-| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.644 |
-| walker |  | 1636 | 352 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
-| walker |  | 1713 | 77 | Fs::DirListing { dir: tests } |  |  | 0.689 |
-| walker |  | 1725 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.701 |
-| walker |  | 1739 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.730 |
-| ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.683 |
-| walker |  | 1897 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.768 |
-| walker |  | 1970 | 73 | Plaintext::DeclSurface { file: requirements-dev.txt } |  |  | 0.768 |
-| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.736 |
-| walker |  | 2117 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.736 |
-| walker |  | 2156 | 39 | Plaintext::DeclSurface { file: docs/requirements.txt } |  |  | 0.736 |
-| walker |  | 2266 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.736 |
-| walker |  | 2324 | 58 | Plaintext::Whole { file: tox.ini } |  |  | 0.736 |
-| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.693 |
-| ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.667 |
-| walker |  | 2632 | 308 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.719 |
-| walker |  | 2679 | 47 | Code::CodeKey { rung: Decl, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.719 |
-| walker |  | 2801 | 122 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 2, sub: 0, line: 99 } |  |  | 0.719 |
-| ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.695 |
-| ns | 3054 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.678 |
-| walker |  | 3070 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.697 |
+| walker |  | 1390 | 310 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
+| walker |  | 1437 | 47 | Code::CodeKey { rung: Decl, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.721 |
+| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.715 |
+| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.699 |
+| walker |  | 1706 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.724 |
+| walker |  | 1769 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.724 |
+| ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.677 |
+| walker |  | 1910 | 141 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.686 |
+| ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.657 |
+| walker |  | 2260 | 350 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.657 |
+| ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.619 |
+| walker |  | 2337 | 77 | Fs::DirListing { dir: tests } |  |  | 0.655 |
+| walker |  | 2349 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.666 |
+| walker |  | 2363 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.689 |
+| walker |  | 2521 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.769 |
+| ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.740 |
+| walker |  | 2643 | 122 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 2, sub: 0, line: 99 } |  |  | 0.740 |
+| walker |  | 2716 | 73 | Plaintext::DeclSurface { file: requirements-dev.txt } |  |  | 0.740 |
+| walker |  | 2863 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.740 |
+| ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.715 |
+| walker |  | 2902 | 39 | Plaintext::DeclSurface { file: docs/requirements.txt } |  |  | 0.715 |
+| walker |  | 3012 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.715 |
+| ns | 3054 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.697 |
+| walker |  | 3070 | 58 | Plaintext::Whole { file: tox.ini } |  |  | 0.697 |
 | walker |  | 3083 | 13 | Code::CodeKey { rung: ModuleDoc, file: tests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
 | walker |  | 3140 | 57 | Code::CodeKey { rung: Names, file: src/requests/sessions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
 | walker |  | 3171 | 31 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 1, sub: 0, line: 76 } |  |  | 0.697 |

@@ -1,4 +1,4 @@
-Score(3000)=0.367 I=0.551 C=0.245 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.498/0.438/0.383/0.367/0.480/0.517/0.508
+Score(3000)=0.367 I=0.551 C=0.245 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.629/0.550/0.383/0.367/0.480/0.517/0.508
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,18 +23,18 @@ Score(3000)=0.367 I=0.551 C=0.245 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | walker |  | 424 | 20 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.630 |
 | walker |  | 454 | 30 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.630 |
 | ns | 468 |  | 61 | Minimal forecasting example: import and load a pipeline | 1.6 |  | 0.609 |
-| walker |  | 532 | 78 | Fs::DirListing { dir: test } |  |  | 0.610 |
-| ns | 611 |  | 143 | README `predict_df` call with every keyword argument annotated | 1.7 |  | 0.555 |
-| walker |  | 640 | 108 | Code::CodeKey { rung: Names, file: src/chronos/chronos2/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.557 |
-| ns | 809 |  | 198 | Complete table of published model IDs | 1.8 |  | 0.498 |
-| ns | 1039 |  | 230 | `BaseChronosPipeline` complete member roster + `ForecastType` | 2.1 |  | 0.436 |
-| walker |  | 1108 | 468 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.436 |
-| walker |  | 1114 | 6 | Fs::DirListing { dir: ci/evaluate } |  |  | 0.436 |
-| ns | 1448 |  | 409 | `Chronos2Pipeline` complete member roster | 2.2 |  | 0.364 |
-| walker |  | 1540 | 426 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.366 |
-| walker |  | 1547 | 7 | Fs::DirListing { dir: scripts/training } |  |  | 0.366 |
-| ns | 1630 |  | 182 | `ChronosBoltPipeline` complete member roster | 2.3 |  | 0.341 |
-| walker |  | 1843 | 296 | Code::CodeKey { rung: Names, file: src/chronos/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.430 |
+| ns | 611 |  | 143 | README `predict_df` call with every keyword argument annotated | 1.7 |  | 0.554 |
+| walker |  | 750 | 296 | Code::CodeKey { rung: Names, file: src/chronos/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
+| ns | 809 |  | 198 | Complete table of published model IDs | 1.8 |  | 0.625 |
+| walker |  | 828 | 78 | Fs::DirListing { dir: test } |  |  | 0.626 |
+| walker |  | 936 | 108 | Code::CodeKey { rung: Names, file: src/chronos/chronos2/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
+| ns | 1039 |  | 230 | `BaseChronosPipeline` complete member roster + `ForecastType` | 2.1 |  | 0.550 |
+| walker |  | 1404 | 468 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.550 |
+| walker |  | 1410 | 6 | Fs::DirListing { dir: ci/evaluate } |  |  | 0.550 |
+| ns | 1448 |  | 409 | `Chronos2Pipeline` complete member roster | 2.2 |  | 0.459 |
+| ns | 1630 |  | 182 | `ChronosBoltPipeline` complete member roster | 2.3 |  | 0.428 |
+| walker |  | 1836 | 426 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.430 |
+| walker |  | 1843 | 7 | Fs::DirListing { dir: scripts/training } |  |  | 0.430 |
 | ns | 1848 |  | 218 | `ChronosPipeline` complete member roster + class docstring | 2.4 |  | 0.399 |
 | walker |  | 1852 | 9 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.399 |
 | walker |  | 1862 | 10 | Fs::DirListing { dir: test/dummy-chronos-bolt-model } |  |  | 0.399 |

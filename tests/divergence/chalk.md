@@ -1,4 +1,4 @@
-Score(3000)=0.653 I=0.853 C=0.499 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.965/0.826/0.761/0.653/0.703/0.638/0.573
+Score(3000)=0.653 I=0.853 C=0.499 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.868/0.841/0.762/0.653/0.703/0.638/0.573
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,41 +22,41 @@ Score(3000)=0.653 I=0.853 C=0.499 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 405 | 49 | Json::Scripts { file: package.json } |  |  | 0.770 |
 | walker |  | 432 | 27 | Fs::DirListing { dir: test } |  |  | 0.781 |
 | ns | 568 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.684 |
-| walker |  | 692 | 260 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.836 |
-| ns | 708 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.845 |
-| walker |  | 716 | 24 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.845 |
-| walker |  | 753 | 37 | Markdown::Section { file: readme.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.845 |
-| ns | 770 |  | 62 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.852 |
-| walker |  | 928 | 175 | Json::Entry { file: package.json } |  |  | 0.965 |
-| walker |  | 970 | 42 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.965 |
-| ns | 1030 |  | 260 | CI workflow in full | 1.9 |  | 0.831 |
-| walker |  | 1061 | 91 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.831 |
-| ns | 1244 |  | 214 | Runtime export surface of `source/index.js` | 2.1 |  | 0.750 |
-| walker |  | 1298 | 237 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.854 |
-| walker |  | 1313 | 15 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 1, sub: 0, line: 34 } |  |  | 0.854 |
-| walker |  | 1322 | 9 | Code::CodeKey { rung: Body, file: source/index.js, decl: 3, sub: 0, line: 50 } |  |  | 0.854 |
-| walker |  | 1348 | 26 | Code::CodeKey { rung: Body, file: source/index.js, decl: 2, sub: 0, line: 35 } |  |  | 0.854 |
+| walker |  | 669 | 237 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.698 |
+| walker |  | 684 | 15 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 1, sub: 0, line: 34 } |  |  | 0.698 |
+| walker |  | 693 | 9 | Code::CodeKey { rung: Body, file: source/index.js, decl: 3, sub: 0, line: 50 } |  |  | 0.698 |
+| ns | 708 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.641 |
+| walker |  | 719 | 26 | Code::CodeKey { rung: Body, file: source/index.js, decl: 2, sub: 0, line: 35 } |  |  | 0.641 |
+| ns | 770 |  | 62 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.688 |
+| walker |  | 979 | 260 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.868 |
+| walker |  | 1003 | 24 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.868 |
+| ns | 1030 |  | 260 | CI workflow in full | 1.9 |  | 0.747 |
+| walker |  | 1040 | 37 | Markdown::Section { file: readme.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.747 |
+| walker |  | 1215 | 175 | Json::Entry { file: package.json } |  |  | 0.845 |
+| ns | 1244 |  | 214 | Runtime export surface of `source/index.js` | 2.1 |  | 0.854 |
+| walker |  | 1257 | 42 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.854 |
+| walker |  | 1348 | 91 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.854 |
 | ns | 1358 |  | 114 | `source/index.d.ts` top-level declaration roster | 2.2 |  | 0.826 |
 | ns | 1458 |  | 100 | readme: chaining semantics of `chalk.<style>[.<style>...]` | 2.3 | 1.7 | 0.804 |
-| walker |  | 1488 | 140 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.804 |
 | ns | 1686 |  | 228 | readme: `chalk.level` and the 0–3 colour-level table | 2.4 | 1.7 | 0.749 |
-| ns | 1826 |  | 140 | `Options` interface body with level documentation | 2.5 | 2.2 | 0.718 |
-| walker |  | 1872 | 384 | Code::CodeKey { rung: Names, file: source/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.752 |
-| walker |  | 1892 | 20 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 2, sub: 0, line: 30 } |  |  | 0.752 |
-| ns | 1970 |  | 144 | `ChalkInstance` call signature, `level`, and all six colour-model methods | 2.6 | 2.2 | 0.717 |
-| walker |  | 2030 | 138 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.761 |
-| walker |  | 2064 | 34 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 12, sub: 0, line: 302 } |  |  | 0.761 |
-| ns | 2094 |  | 124 | All ten `ChalkInstance` modifier properties | 2.7 | 2.6 | 0.722 |
-| walker |  | 2100 | 36 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 8, sub: 0, line: 268 } |  |  | 0.722 |
-| walker |  | 2136 | 36 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 13, sub: 0, line: 309 } |  |  | 0.723 |
-| walker |  | 2172 | 36 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 14, sub: 0, line: 316 } |  |  | 0.723 |
-| walker |  | 2215 | 43 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 15, sub: 0, line: 323 } |  |  | 0.723 |
-| walker |  | 2288 | 73 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 9, sub: 0, line: 277 } |  |  | 0.723 |
+| walker |  | 1732 | 384 | Code::CodeKey { rung: Names, file: source/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.785 |
+| walker |  | 1752 | 20 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 2, sub: 0, line: 30 } |  |  | 0.785 |
+| ns | 1826 |  | 140 | `Options` interface body with level documentation | 2.5 | 2.2 | 0.752 |
+| walker |  | 1890 | 138 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.798 |
+| walker |  | 1924 | 34 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 12, sub: 0, line: 302 } |  |  | 0.798 |
+| walker |  | 1960 | 36 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 8, sub: 0, line: 268 } |  |  | 0.799 |
+| ns | 1970 |  | 144 | `ChalkInstance` call signature, `level`, and all six colour-model methods | 2.6 | 2.2 | 0.761 |
+| walker |  | 1996 | 36 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 13, sub: 0, line: 309 } |  |  | 0.761 |
+| walker |  | 2032 | 36 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 14, sub: 0, line: 316 } |  |  | 0.761 |
+| walker |  | 2075 | 43 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 15, sub: 0, line: 323 } |  |  | 0.762 |
+| ns | 2094 |  | 124 | All ten `ChalkInstance` modifier properties | 2.7 | 2.6 | 0.723 |
+| walker |  | 2148 | 73 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 9, sub: 0, line: 277 } |  |  | 0.723 |
+| walker |  | 2221 | 73 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 10, sub: 0, line: 286 } |  |  | 0.723 |
 | ns | 2293 |  | 199 | All foreground colour properties, including the `gray`/`grey` aliases | 2.8 | 2.7 | 0.686 |
-| walker |  | 2361 | 73 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 10, sub: 0, line: 286 } |  |  | 0.686 |
-| walker |  | 2441 | 80 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 11, sub: 0, line: 295 } |  |  | 0.686 |
+| walker |  | 2301 | 80 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 11, sub: 0, line: 295 } |  |  | 0.686 |
+| walker |  | 2396 | 95 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 4, sub: 0, line: 242 } |  |  | 0.686 |
 | ns | 2517 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.653 |
-| walker |  | 2536 | 95 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 4, sub: 0, line: 242 } |  |  | 0.653 |
+| walker |  | 2536 | 140 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.653 |
 | walker |  | 2582 | 46 | Code::CodeKey { rung: Names, file: source/utilities.js, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
 | ns | 2767 |  | 250 | readme: `supportsColor`, the `--color`/`FORCE_COLOR` overrides, `chalkStderr` | 2.10 | 1.7 | 0.638 |
 | ns | 2832 |  | 65 | readme: the exported style-name arrays and their use | 2.11 | 1.7 | 0.631 |

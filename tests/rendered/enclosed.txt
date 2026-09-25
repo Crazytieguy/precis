@@ -154,25 +154,6 @@ packages/
         favicon.ico
       index.tsx
       locales/
-        README.md
-        ar.json
-        de.json
-        en.json
-        es.json
-        fr.json
-        hu.json
-        id.json
-        it.json
-        locales.test.ts
-        locales.ts
-        nl.json
-        pl.json
-        pt-BR.json
-        pt.json
-        ru.json
-        tr.json
-        vi.json
-        …
       modules/
         auth/
           auth.models.ts
@@ -249,13 +230,6 @@ packages/
             config.ts
             config.types.ts
           middlewares/
-            config.middleware.ts
-            cors.middleware.ts
-            errors.middleware.ts
-            logger.middleware.ts
-            storage.middleware.ts
-            timeout.middleware.test.ts
-            timeout.middleware.ts
           server.ts
           server.types.ts
           users/
@@ -301,13 +275,6 @@ packages/
         7→  meta: {
         8→    name: 'enclosed',
         9→    description: 'Create and view private and secure notes',
-        10→  },
-        11→  subCommands: {
-        12→    create: createNoteCommand,
-        13→    view: viewNoteCommand,
-        14→    config: configCommand,
-        15→  },
-        16→});
         …
       config/
         config.command.ts
@@ -460,6 +427,26 @@ packages/
       files/
         files.models.ts
       index.ts
+        …
+        10→export {
+        11→  createNote,
+        12→  createNoteUrl,
+        13→  createNoteUrlHashFragment,
+        14→  decryptNote,
+        15→  encryptionAlgorithms,
+        16→  encryptNote,
+        17→  fetchNote,
+        18→  filesToNoteAssets,
+        19→  fileToNoteAsset,
+        20→  isApiClientErrorWithCode,
+        21→  isApiClientErrorWithStatusCode,
+        22→  noteAssetsToFiles,
+        23→  noteAssetToFile,
+        24→  parseNoteUrl,
+        25→  parseNoteUrlHashFragment,
+        26→  serializationFormats,
+        27→  storeNote,
+        28→};
       notes/
         notes.models.test.ts
         notes.models.ts

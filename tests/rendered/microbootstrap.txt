@@ -142,6 +142,50 @@ examples/
 logo.svg
 microbootstrap/
   __init__.py
+    1→from microbootstrap.instruments.cors_instrument import CorsConfig
+    2→from microbootstrap.instruments.health_checks_instrument import HealthChecksConfig
+    3→from microbootstrap.instruments.logging_instrument import LoggingConfig
+    4→from microbootstrap.instruments.opentelemetry_instrument import (
+    5→    FastStreamOpentelemetryConfig,
+    6→    FastStreamTelemetryMiddlewareProtocol,
+    7→    OpentelemetryConfig,
+    8→)
+    9→from microbootstrap.instruments.prometheus_instrument import (
+    10→    FastApiPrometheusConfig,
+    11→    FastStreamPrometheusConfig,
+    12→    FastStreamPrometheusMiddlewareProtocol,
+    13→    LitestarPrometheusConfig,
+    14→)
+    15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
+    16→from microbootstrap.instruments.sentry_instrument import SentryConfig
+    17→from microbootstrap.instruments.swagger_instrument import SwaggerConfig
+    18→from microbootstrap.settings import (
+    19→    FastApiSettings,
+    20→    FastStreamSettings,
+    21→    InstrumentsSetupperSettings,
+    22→    LitestarSettings,
+    23→)
+    24→
+    25→
+    26→__all__ = (
+    27→    "CorsConfig",
+    28→    "FastApiPrometheusConfig",
+    29→    "FastApiSettings",
+    30→    "FastStreamOpentelemetryConfig",
+    31→    "FastStreamPrometheusConfig",
+    32→    "FastStreamPrometheusMiddlewareProtocol",
+    33→    "FastStreamSettings",
+    34→    "FastStreamTelemetryMiddlewareProtocol",
+    35→    "HealthChecksConfig",
+    36→    "InstrumentsSetupperSettings",
+    37→    "LitestarPrometheusConfig",
+    38→    "LitestarSettings",
+    39→    "LoggingConfig",
+    40→    "OpentelemetryConfig",
+    41→    "PyroscopeConfig",
+    42→    "SentryConfig",
+    43→    "SwaggerConfig",
+    44→)
   bootstrappers/
     __init__.py (empty)
     base.py
@@ -176,22 +220,10 @@ microbootstrap/
     33→            self.rich_console.print(Rule("[yellow]Bootstrapping application[/yellow]", align="left"))
     34→            self.rich_console.print(self.rich_table)
   exceptions.py
-    1→class MicroBootstrapBaseError(Exception):
-    2→    """Base for all exceptions."""
-    5→class ConfigMergeError(MicroBootstrapBaseError):
-    6→    """Raises when it's impossible to merge configs due to type mismatch."""
-    9→class MissingInstrumentError(MicroBootstrapBaseError):
-    10→    """Raises when attempting to configure instrument, that is not supported yet."""
   granian_server.py
     …
     16→GRANIAN_LOG_LEVELS_MAP = {
     17→    logging.CRITICAL: LogLevels.critical,
-    18→    logging.ERROR: LogLevels.error,
-    19→    logging.WARNING: LogLevels.warning,
-    20→    logging.WARNING: LogLevels.warn,
-    21→    logging.INFO: LogLevels.info,
-    22→    logging.DEBUG: LogLevels.debug,
-    23→}
     …
     27→def create_granian_server(
     28→    target: str,
@@ -251,37 +283,6 @@ microbootstrap/
     litestar.py
   py.typed (empty)
   settings.py
-    …
-    23→SettingsT = typing.TypeVar("SettingsT", bound="BaseServiceSettings")
-    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
-    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
-    …
-    29→class BaseServiceSettings(
-    …
-    53→class ServerConfig(pydantic.BaseModel):
-    54→    server_host: str = "0.0.0.0"  # noqa: S104
-    55→    server_port: int = 8000
-    56→    server_reload: bool = True
-    57→    server_workers_count: int = 1
-    60→class LitestarSettings(  # type: ignore[misc]
-    61→    BaseServiceSettings,
-    62→    ServerConfig,
-    63→    LoggingConfig,
-    64→    OpentelemetryConfig,
-    65→    SentryConfig,
-    …
-    75→class FastApiSettings(  # type: ignore[misc]
-    …
-    90→class FastStreamSettings(  # type: ignore[misc]
-    …
-    105→class InstrumentsSetupperSettings(  # type: ignore[misc]
-    106→    BaseServiceSettings,
-    107→    LoggingConfig,
-    108→    OpentelemetryConfig,
-    109→    SentryConfig,
-    110→    PyroscopeConfig,
-    111→):
-    112→    """Settings for a vanilla service."""
 package-lock.json
 package.json
   …

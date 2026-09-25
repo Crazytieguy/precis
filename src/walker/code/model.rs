@@ -119,8 +119,8 @@ pub(crate) struct FileModel {
     /// What the file exposes without declaring it here, one [`Item`] per
     /// statement: `pub use`, `pub mod name;`, `export … from`,
     /// `export * from`, `__init__.py` from-imports, `__all__`. Listed in the
-    /// file's `Names` roster alongside the declarations. Ordinary imports
-    /// are not modeled.
+    /// file's `Names` roster alongside the declarations, each row counting
+    /// as one roster entry. Ordinary imports are not modeled.
     pub reexports: Vec<Item>,
     /// Admitted top-level declarations, in any order.
     pub decls: Vec<DeclInfo>,

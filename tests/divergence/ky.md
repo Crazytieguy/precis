@@ -1,4 +1,4 @@
-Score(3000)=0.714 I=0.911 C=0.559 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.818/0.811/0.882/0.714/0.687/0.650/0.624
+Score(3000)=0.714 I=0.911 C=0.559 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.808/0.923/0.882/0.714/0.687/0.650/0.624
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,16 +25,16 @@ Score(3000)=0.714 I=0.911 C=0.559 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 683 | 103 | Json::Scripts { file: package.json } |  |  | 0.818 |
 | ns | 751 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.774 |
 | walker |  | 786 | 103 | Json::Entry { file: package.json } |  |  | 0.782 |
-| walker |  | 818 | 32 | Fs::DirListing { dir: test/helpers } |  |  | 0.788 |
-| ns | 873 |  | 122 | package.json module contract: type, exports, main, engines | 1.9 | 1.4 | 0.803 |
-| ns | 1123 |  | 250 | source/index.ts: the complete public type-export block | 1.10 | 1.7 | 0.696 |
-| walker |  | 1158 | 340 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.767 |
-| walker |  | 1174 | 16 | Markdown::Section { file: readme.md, section_index: 38, keeps_default_concavity: false } |  |  | 0.767 |
-| walker |  | 1194 | 20 | Markdown::Section { file: readme.md, section_index: 37, keeps_default_concavity: false } |  |  | 0.767 |
-| ns | 1221 |  | 98 | Complete `test/` tree, including helpers | 1.11 |  | 0.790 |
-| walker |  | 1288 | 94 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.790 |
-| ns | 1461 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.804 |
-| walker |  | 1698 | 410 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.961 |
+| ns | 873 |  | 122 | package.json module contract: type, exports, main, engines | 1.9 | 1.4 | 0.797 |
+| ns | 1123 |  | 250 | source/index.ts: the complete public type-export block | 1.10 | 1.7 | 0.691 |
+| walker |  | 1196 | 410 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.901 |
+| ns | 1221 |  | 98 | Complete `test/` tree, including helpers | 1.11 |  | 0.863 |
+| walker |  | 1228 | 32 | Fs::DirListing { dir: test/helpers } |  |  | 0.906 |
+| ns | 1461 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.841 |
+| walker |  | 1568 | 340 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.960 |
+| walker |  | 1584 | 16 | Markdown::Section { file: readme.md, section_index: 38, keeps_default_concavity: false } |  |  | 0.960 |
+| walker |  | 1604 | 20 | Markdown::Section { file: readme.md, section_index: 37, keeps_default_concavity: false } |  |  | 0.960 |
+| walker |  | 1698 | 94 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.961 |
 | ns | 1731 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.951 |
 | walker |  | 1768 | 70 | Markdown::Section { file: readme.md, section_index: 40, keeps_default_concavity: false } |  |  | 0.951 |
 | walker |  | 1843 | 75 | Markdown::Section { file: readme.md, section_index: 39, keeps_default_concavity: false } |  |  | 0.951 |

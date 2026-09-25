@@ -223,17 +223,6 @@ index.d.cts
   187→    url: string,
   188→    config?: axios.AxiosRequestConfig<D>
   189→  ): Promise<R>;
-  190→  options<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  194→  post<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  199→  put<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  204→  patch<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  209→  postForm<T = any, R = axios.AxiosResponse<T>, D = any>(
-  …
-  214→  putForm<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
   229→}
   231→declare enum HttpStatusCode {
@@ -247,6 +236,27 @@ index.d.cts
   715→export = axios;
 index.d.ts
 index.js
+  …
+  26→export {
+  27→  axios as default,
+  28→  create,
+  29→  Axios,
+  30→  AxiosError,
+  31→  CanceledError,
+  32→  isCancel,
+  33→  CancelToken,
+  34→  VERSION,
+  35→  all,
+  36→  Cancel,
+  37→  isAxiosError,
+  38→  spread,
+  39→  toFormData,
+  40→  AxiosHeaders,
+  41→  HttpStatusCode,
+  42→  formToJSON,
+  43→  getAdapter,
+  44→  mergeConfig,
+  45→};
 lib/
   adapters/
     README.md

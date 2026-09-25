@@ -62,21 +62,9 @@ README.md
   33→# quickly install uv on MacOS/Linux
   34→curl -LsSf https://astral.sh/uv/install.sh | sh
   35→
-  36→# install Posting (will also quickly install Python 3.13 if needed)
-  37→uv tool install --python 3.13 posting
-  38→```
-  39→
-  40→ Now you can run Posting via the command line:
-  41→
-  42→```bash
-  43→posting
-  44→```
-  45→
-  46→Homebrew and NixOS are not officially supported at the moment.
-  47→
+  …
   48→### Prefer `pipx`?
-  49→
-  50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
+  …
   52→## Contributing
   53→
   54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
@@ -180,6 +168,35 @@ pyproject.toml
 src/
   posting/
     __init__.py
+      …
+      3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
+      …
+      10→from .collection import (
+      11→    Auth,
+      12→    Cookie,
+      13→    Header,
+      14→    QueryParam,
+      15→    RequestBody,
+      16→    RequestModel,
+      17→    FormItem,
+      18→    Options,
+      19→    Scripts,
+      20→)
+      21→from .scripts import Posting
+      22→
+      23→
+      24→__all__ = [
+      25→    "Auth",
+      26→    "Cookie",
+      27→    "Header",
+      28→    "QueryParam",
+      29→    "RequestBody",
+      30→    "RequestModel",
+      31→    "FormItem",
+      32→    "Options",
+      33→    "Scripts",
+      34→    "Posting",
+      35→]
     __main__.py
       1→"""The main entry point for the Posting CLI."""
       …
@@ -265,17 +282,6 @@ src/
       postman.py
     jump_overlay.py
     jumper.py
-      …
-      9→@runtime_checkable
-      10→class Jumpable(Protocol):
-      …
-      13→    jump_key: str
-      16→class JumpInfo(NamedTuple):
-      …
-      26→class Jumper:
-      …
-      29→    def __init__(self, ids_to_keys: Mapping[str, str], screen: Screen[Any]) -> None:
-      …
     locations.py
     messages.py
     posting.scss

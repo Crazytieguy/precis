@@ -1,4 +1,4 @@
-Score(3000)=0.700 I=0.887 C=0.552 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.710/0.753/0.700/0.660/0.616/0.610
+Score(3000)=0.700 I=0.887 C=0.552 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.769/0.712/0.753/0.700/0.660/0.616/0.610
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,20 +26,20 @@ Score(3000)=0.700 I=0.887 C=0.552 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 821 | 28 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.788 |
 | ns | 831 |  | 155 | peepdb/config.py: every top-level definition, names only | 1.9 |  | 0.708 |
 | walker |  | 851 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.708 |
-| walker |  | 886 | 35 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.708 |
 | ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.673 |
-| walker |  | 932 | 46 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.673 |
-| walker |  | 986 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.673 |
 | ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.655 |
-| walker |  | 1042 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.655 |
-| walker |  | 1098 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.655 |
-| ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.683 |
-| walker |  | 1290 | 192 | Toml::Dependencies { file: project.toml } |  |  | 0.683 |
-| walker |  | 1332 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.749 |
-| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.710 |
-| walker |  | 1458 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.710 |
-| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.689 |
-| walker |  | 1673 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.750 |
+| walker |  | 1066 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.733 |
+| walker |  | 1101 | 35 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.733 |
+| walker |  | 1147 | 46 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.733 |
+| walker |  | 1201 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.733 |
+| ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.752 |
+| walker |  | 1257 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.752 |
+| walker |  | 1313 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.752 |
+| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.712 |
+| walker |  | 1505 | 192 | Toml::Dependencies { file: project.toml } |  |  | 0.712 |
+| walker |  | 1547 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.773 |
+| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.750 |
+| walker |  | 1673 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.750 |
 | ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.727 |
 | walker |  | 1770 | 97 | Markdown::HeadingsOutline { file: docs/usage.md } |  |  | 0.727 |
 | walker |  | 1802 | 32 | Markdown::Section { file: docs/usage.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.727 |
