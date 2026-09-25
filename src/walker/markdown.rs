@@ -26,7 +26,7 @@ use std::path::Path;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, MarkdownKey};
-use crate::content::{BatchContent, Render, Span};
+use crate::content::BatchContent;
 use crate::render::Source;
 use crate::tokenizer;
 use crate::value::{is_peripheral_doc, mix_signals};
@@ -52,15 +52,10 @@ const MAX_OUTLINE_HEADINGS: usize = 30;
 const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 
 /// Token target for the *first* chunk of a head-split section — the
-/// section lede. A section's opening paragraph is what an NS credits
-/// when it wants the section's subject rather than its detail, so the
-/// entry price for a section should be its lede's, not a generic
-/// chunk's. Both halves price off the section's own value, undiscounted
-/// — a carve that split the value by row share would make ratio scale
-/// as `cost^(1-k)`, i.e. make entry strictly *worse*, which is the same
-/// arithmetic that killed conservation in the Go and Python
-/// entry-slice families; a 0.7 lede discount measured −0.0027 at 3000
-/// here and lost both carriers.
+/// section lede, so a section's entry price is its opening paragraph's
+/// rather than a generic chunk's. Both halves price off the section's
+/// own value, undiscounted: splitting the value by row share would make
+/// the ratio scale as `cost^(1-k)`, i.e. make entry strictly worse.
 const LEDE_TARGET_TOKENS: usize = 140;
 
 /// Minimum tokens that must remain after a cut — a smaller remainder
@@ -72,13 +67,10 @@ const OVERSIZE_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// safe row boundaries outside fences keep those ranges purchasable.
 const OVERSIZE_HARD_CHUNK_CHAR_CAP: usize = 4_096;
 
-/// A pathological README paragraph must not turn `ReadmeHeadline` into
-/// a multi-megabyte batch. Normal ledes stay untouched; only a very
-/// large block is reduced to a bounded prefix, and individually huge
-/// rows in that prefix are truncated further for early purchase.
+/// A lede block larger than this stays out of `ReadmeHeadline`, so a
+/// pathological README paragraph cannot turn it into a multi-megabyte
+/// batch.
 const HEADLINE_BLOCK_BYTE_GATE: usize = 16 * 1024;
-const HEADLINE_OVERSIZE_LEDE_BYTES: usize = 640;
-const HEADLINE_OVERSIZE_LINE_CHARS: usize = 320;
 
 /// Source-byte ceiling on the `Prelude` batch. The hero region of a
 /// normal README is well under this; the cap only stops a README that
@@ -162,7 +154,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
             continue;
         };
-        let headline = readme_headline_spec(&file, &tree, &source);
+        let headline = readme_headline_rows(&file, &tree, &source);
         let outline_rows = outline_rows(&tree, &source, headline.as_ref());
         let outline_emits = !outline_rows.is_empty();
         let root_readme = is_readme(&file) && dir == ctx.root();
@@ -235,7 +227,7 @@ fn push_sections(
     file: &Path,
     source: &Source,
     ranges: &[SectionRange],
-    headline: Option<&HeadlineSpec>,
+    headline: Option<&BTreeSet<usize>>,
     section_predecessor: Option<BatchKey>,
     ctx: &WalkCtx,
 ) {
@@ -314,11 +306,8 @@ impl NavDensity {
 
 /// Markdown-file count above which a directory reads as a docs
 /// directory rather than as a couple of loose notes, so its listing
-/// stands in for the individual pages' navigation batches. Swept on the
-/// 3K corpus mean at 6 / 4 / 3 / 2 → +0.0000 / +0.0019 / +0.0031 /
-/// +0.0032; the response saturates between 3 and 2, and 3 is the
-/// gentlest setting on the flat part. No fixture moves down at any grid
-/// budget at any of these settings.
+/// stands in for the individual pages' navigation batches. Swept; see
+/// `git show 74aef411`.
 const DENSE_MD_SIBLINGS: usize = 3;
 
 /// Boost for README usage/reference sections (see
@@ -374,13 +363,9 @@ fn parse_inline(text: &str) -> Option<Tree> {
 fn build_headline_content(
     file: &Path,
     source: &Source,
-    spec: &HeadlineSpec,
+    rows: &BTreeSet<usize>,
 ) -> Option<BatchContent> {
-    let spans = build_headline_spans(file, source, spec);
-    if spans.is_empty() {
-        return None;
-    }
-    Some(BatchContent::Lines { spans })
+    single_file_lines_content(file, source, rows.iter().copied().collect())
 }
 
 fn build_outline_content(
@@ -392,16 +377,20 @@ fn build_outline_content(
     single_file_lines_content(file, source, full)
 }
 
-fn readme_headline_spec(file: &Path, tree: &Tree, source: &str) -> Option<HeadlineSpec> {
+fn readme_headline_rows(file: &Path, tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
     is_readme(file)
-        .then(|| headline_spec(tree, source))
+        .then(|| headline_rows(tree, source))
         .flatten()
 }
 
 /// Heading row ranges for `HeadingsOutline` — levels 1–3, with any
 /// headline-covered headings dropped — or none when there are fewer than
 /// two or more than [`MAX_OUTLINE_HEADINGS`] of them.
-fn outline_rows(tree: &Tree, source: &str, headline: Option<&HeadlineSpec>) -> Vec<(usize, usize)> {
+fn outline_rows(
+    tree: &Tree,
+    source: &str,
+    headline: Option<&BTreeSet<usize>>,
+) -> Vec<(usize, usize)> {
     let mut nodes = Vec::new();
     collect_heading_nodes(tree.root_node(), &mut nodes);
     let mut out = Vec::new();
@@ -412,12 +401,7 @@ fn outline_rows(tree: &Tree, source: &str, headline: Option<&HeadlineSpec>) -> V
         }
         let start_row = node.start_position().row + 1;
         let end_row = node_end_row_trimmed(node, source) + 1;
-        if headline.is_some_and(|spec| {
-            spec.covered_rows
-                .range(start_row..=end_row)
-                .next()
-                .is_some()
-        }) {
+        if headline.is_some_and(|spec| spec.range(start_row..=end_row).next().is_some()) {
             continue;
         }
         out.push((start_row, end_row));
@@ -445,7 +429,7 @@ fn build_section_content(
     file: &Path,
     source: &Source,
     range: &SectionRange,
-    headline: Option<&HeadlineSpec>,
+    headline: Option<&BTreeSet<usize>>,
 ) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
 
@@ -454,7 +438,7 @@ fn build_section_content(
     // `ratio(value, 0) = ∞`. (`headline` is `Some` only for README.md.)
     // Rows the headline stepped *over* are dropped with them: admitting
     // that chrome measured −0.0033 corpus mean.
-    let effective_start = match headline.and_then(|spec| spec.covered_rows.iter().next_back()) {
+    let effective_start = match headline.and_then(|spec| spec.iter().next_back()) {
         Some(max_row) => (max_row + 1).max(start),
         None => start,
     };
@@ -562,7 +546,7 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
 /// intro-titled section (`Overview`, `Introduction`, …). The text
 /// before the first body heading is a synthetic intro, and every later
 /// heading opens one section, each through the oversize head-split.
-fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
+fn rst_readme(source: &str) -> (BTreeSet<usize>, Vec<SectionRange>) {
     let src_lines: Vec<&str> = source.lines().collect();
     let headings = scan_rst_headings(&src_lines);
     let intro_end = headings
@@ -631,13 +615,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
             },
         );
     }
-    (
-        HeadlineSpec {
-            covered_rows,
-            truncated_rows: BTreeSet::new(),
-        },
-        ranges,
-    )
+    (covered_rows, ranges)
 }
 
 /// Index range in `rows` of the first prose paragraph: the first prose
@@ -690,15 +668,7 @@ fn title_core(title: &str) -> String {
     core.trim().to_string()
 }
 
-// --- headline spec + span construction ---
-
-/// Computed shape of `ReadmeHeadline` — rendered source rows, and the
-/// long rows of an oversize lede block, which render as a prefix.
-#[derive(Debug, Clone, Default)]
-struct HeadlineSpec {
-    covered_rows: BTreeSet<usize>,
-    truncated_rows: BTreeSet<usize>,
-}
+// --- headline ---
 
 /// Block kinds that bound a section — `ReadmeHeadline` never reaches
 /// past these.
@@ -706,11 +676,11 @@ fn is_section_boundary(kind: &str) -> bool {
     matches!(kind, "section" | "atx_heading" | "setext_heading")
 }
 
-fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
+fn headline_rows(tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
     let section = headed_sections(tree.root_node()).next()?;
     let heading = first_heading_child(section)?;
 
-    let mut spec = HeadlineSpec::default();
+    let mut spec = BTreeSet::new();
     // Prelude content: README opens with HTML title blocks / badges /
     // lede paragraph before the first heading.
     extend_lede(
@@ -719,7 +689,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         source,
         true,
     );
-    extend_rows_inclusive(&mut spec.covered_rows, heading, source);
+    extend_rows_inclusive(&mut spec, heading, source);
     let heading_first_row = heading.start_position().row + 1;
 
     // The "tagline + lede" extension only fires under the project's
@@ -730,32 +700,10 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     extend_lede(&mut spec, &post, source, heading_level(heading) == 1);
 
     debug_assert!(
-        spec.covered_rows.contains(&heading_first_row),
+        spec.contains(&heading_first_row),
         "headline covered_rows missing heading row"
     );
     Some(spec)
-}
-
-fn build_headline_spans(file: &Path, source: &Source, spec: &HeadlineSpec) -> Vec<Span> {
-    let full_rows: Vec<usize> = spec
-        .covered_rows
-        .iter()
-        .copied()
-        .filter(|row| !spec.truncated_rows.contains(row))
-        .collect();
-    // Full rows go through `build_file_spans` (blank-filter + merge);
-    // splice the truncated-row spans in afterwards.
-    let mut spans = super::build_file_spans(file, source, full_rows);
-    spans.extend(spec.truncated_rows.iter().map(|&row| Span {
-        path: file.to_path_buf(),
-        start: row,
-        end: row,
-        render: Render::Truncated {
-            pattern: format!(r"(?s)^.{{1,{HEADLINE_OVERSIZE_LINE_CHARS}}}"),
-        },
-    }));
-    spans.sort_by_key(|span| span.start);
-    spans
 }
 
 /// Append every 1-based row covered by `node` to `out`, trimming a
@@ -767,28 +715,9 @@ fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
     }
 }
 
-fn extend_headline_block_rows(spec: &mut HeadlineSpec, node: Node, source: &str) {
+fn extend_headline_block_rows(rows: &mut BTreeSet<usize>, node: Node, source: &str) {
     if node.end_byte() - node.start_byte() <= HEADLINE_BLOCK_BYTE_GATE {
-        extend_rows_inclusive(&mut spec.covered_rows, node, source);
-        return;
-    }
-    let src_lines: Vec<&str> = source.lines().collect();
-    let start = node.start_position().row;
-    let end = node_end_row_trimmed(node, source);
-    let mut bytes = 0usize;
-    for row in start..=end {
-        let line = src_lines.get(row).copied().unwrap_or_default();
-        if line.trim().is_empty() {
-            continue;
-        }
-        spec.covered_rows.insert(row + 1);
-        if line.chars().count() > HEADLINE_OVERSIZE_LINE_CHARS {
-            spec.truncated_rows.insert(row + 1);
-        }
-        bytes += line.len() + 1;
-        if bytes >= HEADLINE_OVERSIZE_LEDE_BYTES {
-            break;
-        }
+        extend_rows_inclusive(rows, node, source);
     }
 }
 
@@ -1608,7 +1537,7 @@ fn strip_html_entities(text: &str) -> String {
 /// over chrome ([`is_prelude_chrome_block`]); after a short tagline
 /// paragraph, take one more block.
 fn extend_lede(
-    spec: &mut HeadlineSpec,
+    spec: &mut BTreeSet<usize>,
     blocks: &[Node],
     source: &str,
     allow_tagline_extension: bool,
@@ -1663,7 +1592,7 @@ fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
 /// [`is_prelude_chrome_block`] stays excluded: chrome tokenizes almost
 /// entirely as URLs, and it sits at the very top of the README, so
 /// buying it displaces the earliest-ranked content in the schedule.
-fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) -> Vec<usize> {
+fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &BTreeSet<usize>) -> Vec<usize> {
     let Some(first_headed) = headed_sections(tree.root_node()).next() else {
         return Vec::new();
     };
@@ -1676,7 +1605,7 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) ->
         }
         for row in block.start_position().row..=node_end_row_trimmed(block, source) {
             let row = row + 1;
-            if headline.covered_rows.contains(&row) {
+            if headline.contains(&row) {
                 continue;
             }
             let line = src_lines.get(row - 1).copied().unwrap_or_default();
@@ -1729,7 +1658,6 @@ mod tests {
     use super::*;
     use crate::scheduler::Scheduler;
     use crate::walker::FsWalker;
-    use std::path::PathBuf;
     use tree_sitter::Parser;
 
     fn parse(source: &str) -> Tree {
@@ -1775,8 +1703,8 @@ mod tests {
             "## Install\n",
         );
         let tree = parse(source);
-        let spec = headline_spec(&tree, source).expect("headline");
-        assert!(spec.covered_rows.contains(&5), "lede row in headline");
+        let spec = headline_rows(&tree, source).expect("headline");
+        assert!(spec.contains(&5), "lede row in headline");
         assert_eq!(prelude_remainder_rows(&tree, source, &spec), vec![9]);
     }
 
@@ -1931,11 +1859,7 @@ mod tests {
                 .collect::<Vec<_>>()
                 .join("\n")
         );
-        let spans = rendered_spans(&source);
-        assert_eq!(spans.len(), 2, "unexpected headline spans: {spans:?}");
-        assert_eq!((spans[0].start, spans[0].end), (1, 1));
-        assert_eq!((spans[1].start, spans[1].end), (3, 3));
-        assert!(matches!(spans[1].render, Render::Truncated { .. }));
+        assert_eq!(covered(&source).into_iter().collect::<Vec<_>>(), vec![1]);
     }
 
     #[test]
@@ -1988,19 +1912,7 @@ mod tests {
     }
 
     fn covered(source: &str) -> BTreeSet<usize> {
-        let tree = parse(source);
-        let spec = headline_spec(&tree, source).expect("headline spec");
-        spec.covered_rows
-    }
-
-    fn rendered_spans(source: &str) -> Vec<Span> {
-        let tree = parse(source);
-        let spec = headline_spec(&tree, source).expect("headline spec");
-        build_headline_spans(
-            &PathBuf::from("README.md"),
-            &Source::new(source.into()),
-            &spec,
-        )
+        headline_rows(&parse(source), source).expect("headline rows")
     }
 
     const HEADLINE_COVERED_CASES: &[(&str, &str, &[usize], &[usize])] = &[
@@ -2222,7 +2134,7 @@ mod tests {
 
     fn outline_rows_of(file: &str, source: &str) -> Vec<(usize, usize)> {
         let tree = parse(source);
-        let headline = readme_headline_spec(Path::new(file), &tree, source);
+        let headline = readme_headline_rows(Path::new(file), &tree, source);
         outline_rows(&tree, source, headline.as_ref())
     }
 
