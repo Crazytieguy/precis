@@ -2,6 +2,8 @@
 
 A CLI tool that extracts a token-efficient summary of a path, designed to replace most Explore agent use with a single fast command. It uses tree-sitter to parse source files, extracts structural symbols (functions, types, interfaces, headings), and ranks them by importance to fit within a token budget.
 
+Upgrading from v0.1? The flags and the output notation changed; see [CHANGELOG.md](CHANGELOG.md).
+
 ## Example
 
 Here's what `precis` shows for [developit/mitt](https://github.com/developit/mitt), a tiny TypeScript event emitter, at a 900-token budget:
