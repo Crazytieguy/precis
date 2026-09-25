@@ -221,7 +221,6 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
         .collect();
     let lines: Vec<&str> = source.lines().collect();
     entries.sort_by_key(|&(start, _)| !is_entry_point_script(lines[start - 1]));
-    let lines: Vec<&str> = source.lines().collect();
     let costs: Vec<usize> = entries
         .iter()
         .map(|&(start, end)| {
@@ -654,8 +653,8 @@ mod tests {
         );
     }
 
-    /// A long `scripts` block delivers as a source-order chain of chunks
-    /// behind the identity block; a short one stays one batch.
+    /// A long `scripts` block delivers as a chain of chunks behind the
+    /// identity block; a short one stays one batch.
     #[test]
     fn walker_json_long_scripts_block_chains_chunks() {
         let scripts_keys = |script_count: usize| {
