@@ -104,13 +104,14 @@ include/
     16→#define false 0
     18→// TCP port, Minecraft's default is 25565
     19→#define PORT 25565
-    …
+    21→// How many players to keep in memory, NOT the amount of concurrent players
+    22→// Even when offline, players who have logged on before take up a slot
     23→#define MAX_PLAYERS 16
     25→// How many mobs to allocate memory for
     26→#define MAX_MOBS (MAX_PLAYERS)
     28→// Manhattan distance at which mobs despawn
     29→#define MOB_DESPAWN_DISTANCE 256
-    …
+    31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
     32→#define GAMEMODE 0
     34→// Max render distance, determines how many chunks to send
     35→#define VIEW_DISTANCE 2
@@ -118,11 +119,14 @@ include/
     38→#define TIME_BETWEEN_TICKS 1000000
     40→// Calculated from TIME_BETWEEN_TICKS
     41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
-    …
+    43→// Initial world generation seed, will be hashed on startup
+    44→// Used in generating terrain and biomes
     45→#define INITIAL_WORLD_SEED 0xA103DE6C
-    …
+    47→// Initial general RNG seed, will be hashed on startup
+    48→// Used in random game events like item drops and mob behavior
     49→#define INITIAL_RNG_SEED 0xE2B9419
-    …
+    51→// Size of each bilinearly interpolated area ("minichunk")
+    52→// For best performance, CHUNK_SIZE should be a power of 2
     53→#define CHUNK_SIZE 8
     55→// Terrain low point - should start a bit below sea level for rivers/lakes
     56→#define TERRAIN_BASE_HEIGHT 60

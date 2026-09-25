@@ -1,4 +1,4 @@
-Score(3000)=0.644 I=0.848 C=0.489 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.627/0.714/0.687/0.644/0.529/0.496/0.549
+Score(3000)=0.644 I=0.848 C=0.489 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.627/0.714/0.687/0.644/0.529/0.496/0.530
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -97,20 +97,20 @@ Score(3000)=0.644 I=0.848 C=0.489 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 4284 | 35 | Code::CodeKey { rung: Body, file: lib/xast.js, decl: 4, sub: 0, line: 50 } |  |  | 0.543 |
 | ns | 4291 |  | 152 | Overriding and disabling preset-default plugins (README) | 2.7 |  | 0.529 |
 | walker |  | 4331 | 47 | Code::CodeKey { rung: Doc, file: lib/version.js, decl: 1, sub: 0, line: 7 } |  |  | 0.542 |
+| walker |  | 4380 | 49 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 4, sub: 0, line: 50 } |  |  | 0.542 |
 | ns | 4408 |  | 117 | Custom plugin objects (docs/05-plugins-api.mdx) | 2.8 |  | 0.536 |
 | ns | 4603 |  | 195 | Node entry point: loadConfig and the Node optimize wrapper | 2.9 |  | 0.526 |
-| walker |  | 4621 | 290 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 3, sub: 0, line: 71 } |  |  | 0.526 |
-| walker |  | 4714 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
-| walker |  | 4741 | 27 | Code::CodeKey { rung: Doc, file: lib/svgo/coa.js, decl: 2, sub: 0, line: 30 } |  |  | 0.531 |
+| walker |  | 4670 | 290 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 3, sub: 0, line: 71 } |  |  | 0.526 |
+| walker |  | 4763 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
 | ns | 4786 |  | 183 | Plugin descriptions: preset-default steps 1-9 | 3.1 |  | 0.524 |
-| walker |  | 4804 | 63 | Code::CodeKey { rung: Doc, file: lib/style.js, decl: 3, sub: 0, line: 253 } |  |  | 0.524 |
+| walker |  | 4790 | 27 | Code::CodeKey { rung: Doc, file: lib/svgo/coa.js, decl: 2, sub: 0, line: 30 } |  |  | 0.524 |
+| walker |  | 4853 | 63 | Code::CodeKey { rung: Doc, file: lib/style.js, decl: 3, sub: 0, line: 253 } |  |  | 0.524 |
 | ns | 5033 |  | 247 | Plugin descriptions: preset-default steps 10-18 | 3.2 |  | 0.516 |
-| walker |  | 5185 | 381 | Json::Scripts { file: package.json } |  |  | 0.516 |
+| walker |  | 5234 | 381 | Json::Scripts { file: package.json } |  |  | 0.516 |
 | ns | 5238 |  | 205 | Plugin descriptions: preset-default steps 19-26 | 3.3 |  | 0.509 |
-| walker |  | 5253 | 68 | Code::CodeKey { rung: Doc, file: lib/svgo.js, decl: 1, sub: 0, line: 81 } |  |  | 0.528 |
-| walker |  | 5259 | 6 | Fs::DirListing { dir: .yarn/plugins } |  |  | 0.528 |
-| walker |  | 5331 | 72 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 2, sub: 0, line: 83 } |  |  | 0.528 |
-| walker |  | 5380 | 49 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 4, sub: 0, line: 50 } |  |  | 0.528 |
+| walker |  | 5302 | 68 | Code::CodeKey { rung: Doc, file: lib/svgo.js, decl: 1, sub: 0, line: 81 } |  |  | 0.528 |
+| walker |  | 5308 | 6 | Fs::DirListing { dir: .yarn/plugins } |  |  | 0.528 |
+| walker |  | 5380 | 72 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 2, sub: 0, line: 83 } |  |  | 0.528 |
 | ns | 5405 |  | 167 | Plugin descriptions: preset-default steps 27-34 | 3.4 |  | 0.522 |
 | walker |  | 5454 | 74 | Code::CodeKey { rung: Doc, file: lib/parser.js, decl: 4, sub: 0, line: 80 } |  |  | 0.522 |
 | walker |  | 5583 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.522 |
@@ -118,69 +118,67 @@ Score(3000)=0.644 I=0.848 C=0.489 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 5799 | 216 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.510 |
 | walker |  | 5875 | 76 | Code::CodeKey { rung: Doc, file: lib/stringifier.js, decl: 1, sub: 0, line: 66 } |  |  | 0.510 |
 | ns | 5895 |  | 117 | Plugin descriptions: plugins requiring params | 3.6 |  | 0.507 |
+| walker |  | 5957 | 82 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 3, sub: 0, line: 42 } |  |  | 0.507 |
 | ns | 6127 |  | 232 | Config and Output type bodies | 4.1 |  | 0.496 |
-| walker |  | 6375 | 500 | Code::CodeKey { rung: Decl, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.497 |
-| walker |  | 6427 | 52 | Code::CodeKey { rung: Doc, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.497 |
-| ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.521 |
-| walker |  | 6477 | 50 | Code::CodeKey { rung: Body, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.521 |
-| walker |  | 6577 | 100 | Code::CodeKey { rung: Body, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.521 |
+| ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.520 |
+| walker |  | 6457 | 500 | Code::CodeKey { rung: Decl, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.521 |
+| walker |  | 6509 | 52 | Code::CodeKey { rung: Doc, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.521 |
+| walker |  | 6559 | 50 | Code::CodeKey { rung: Body, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.521 |
 | ns | 6652 |  | 212 | Visitor keys, VisitorNode, PluginInfo and Plugin bodies | 4.3 |  | 0.511 |
-| walker |  | 6682 | 105 | Code::CodeKey { rung: Doc, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.524 |
-| walker |  | 6800 | 118 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.524 |
-| ns | 6809 |  | 157 | coa.js top-level function roster | 5.1 |  | 0.518 |
-| walker |  | 6857 | 57 | Code::CodeKey { rung: Doc, file: lib/util/visit.js, decl: 2, sub: 0, line: 8 } |  |  | 0.518 |
+| walker |  | 6661 | 102 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 1, sub: 0, line: 22 } |  |  | 0.511 |
+| walker |  | 6761 | 100 | Code::CodeKey { rung: Body, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.511 |
+| ns | 6809 |  | 157 | coa.js top-level function roster | 5.1 |  | 0.505 |
+| walker |  | 6866 | 105 | Code::CodeKey { rung: Doc, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.518 |
 | ns | 6933 |  | 124 | CLI program metadata and positional argument | 5.2 |  | 0.514 |
-| walker |  | 6969 | 112 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 1, sub: 0, line: 44 } |  |  | 0.514 |
-| walker |  | 6972 | 3 | Fs::DirListing { dir: test/fixtures/config-loader/one } |  |  | 0.514 |
-| walker |  | 6982 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.514 |
+| walker |  | 6984 | 118 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.514 |
+| walker |  | 7093 | 109 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 2, sub: 0, line: 32 } |  |  | 0.514 |
+| walker |  | 7150 | 57 | Code::CodeKey { rung: Doc, file: lib/util/visit.js, decl: 2, sub: 0, line: 8 } |  |  | 0.514 |
 | ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.504 |
-| walker |  | 7484 | 502 | Json::IdentityMeta { file: package.json } |  |  | 0.506 |
-| walker |  | 7516 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/cleanupListOfValues.mdx } |  |  | 0.506 |
-| walker |  | 7548 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/convertEllipseToCircle.mdx } |  |  | 0.506 |
-| ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.494 |
-| ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.490 |
-| walker |  | 7771 | 223 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.490 |
+| walker |  | 7262 | 112 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 1, sub: 0, line: 44 } |  |  | 0.504 |
+| walker |  | 7265 | 3 | Fs::DirListing { dir: test/fixtures/config-loader/one } |  |  | 0.504 |
+| walker |  | 7275 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.504 |
+| ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.493 |
+| ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.489 |
+| walker |  | 7777 | 502 | Json::IdentityMeta { file: package.json } |  |  | 0.490 |
 | ns | 7790 |  | 115 | parseSvg and the sax configuration | 6.1 |  | 0.487 |
-| walker |  | 7804 | 33 | Plaintext::DeclSurface { file: docs/04-plugins/convertOneStopGradients.mdx } |  |  | 0.487 |
+| walker |  | 7809 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/cleanupListOfValues.mdx } |  |  | 0.487 |
+| walker |  | 7841 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/convertEllipseToCircle.mdx } |  |  | 0.487 |
 | ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.483 |
-| walker |  | 7969 | 165 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.510 |
-| ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.512 |
-| walker |  | 8044 | 75 | Code::CodeKey { rung: Doc, file: lib/parser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.512 |
-| walker |  | 8120 | 76 | Code::CodeKey { rung: Doc, file: lib/util/map-nodes-to-parents.js, decl: 1, sub: 0, line: 9 } |  |  | 0.512 |
-| walker |  | 8133 | 13 | Fs::DirListing { dir: test/cli } |  |  | 0.512 |
-| ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.508 |
-| ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.510 |
-| walker |  | 8412 | 279 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.542 |
-| walker |  | 8424 | 12 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 37, sub: 0, line: 357 } |  |  | 0.542 |
-| walker |  | 8446 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 31, sub: 0, line: 300 } |  |  | 0.542 |
-| walker |  | 8469 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 24, sub: 0, line: 263 } |  |  | 0.542 |
-| ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.540 |
-| walker |  | 8492 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 34, sub: 0, line: 329 } |  |  | 0.540 |
-| walker |  | 8522 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 27, sub: 0, line: 276 } |  |  | 0.540 |
-| walker |  | 8552 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 29, sub: 0, line: 289 } |  |  | 0.540 |
-| walker |  | 8583 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 30, sub: 0, line: 294 } |  |  | 0.540 |
-| walker |  | 8623 | 40 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 25, sub: 0, line: 268 } |  |  | 0.541 |
-| walker |  | 8665 | 42 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 28, sub: 0, line: 282 } |  |  | 0.541 |
-| ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.535 |
-| walker |  | 8712 | 47 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 22, sub: 0, line: 248 } |  |  | 0.535 |
-| walker |  | 8761 | 49 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 21, sub: 0, line: 243 } |  |  | 0.539 |
-| walker |  | 8856 | 95 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 23, sub: 0, line: 253 } |  |  | 0.553 |
-| ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.549 |
-| ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.545 |
-| walker |  | 9034 | 178 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 33, sub: 0, line: 307 } |  |  | 0.546 |
-| ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.546 |
-| walker |  | 9254 | 220 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 36, sub: 0, line: 336 } |  |  | 0.567 |
-| ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.572 |
-| ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.580 |
-| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.577 |
-| walker |  | 9546 | 292 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 20, sub: 0, line: 214 } |  |  | 0.577 |
-| ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.586 |
-| walker |  | 9625 | 79 | Code::CodeKey { rung: Doc, file: lib/svgo/plugins.js, decl: 2, sub: 0, line: 40 } |  |  | 0.586 |
-| walker |  | 9668 | 43 | Plaintext::DeclSurface { file: docs/04-plugins/mergePaths.mdx } |  |  | 0.586 |
+| ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.486 |
+| walker |  | 8064 | 223 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.486 |
+| ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.482 |
+| walker |  | 8184 | 120 | Code::CodeKey { rung: Doc, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.482 |
+| walker |  | 8217 | 33 | Plaintext::DeclSurface { file: docs/04-plugins/convertOneStopGradients.mdx } |  |  | 0.482 |
+| ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.484 |
+| walker |  | 8382 | 165 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.510 |
+| walker |  | 8457 | 75 | Code::CodeKey { rung: Doc, file: lib/parser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.510 |
+| ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.507 |
+| walker |  | 8533 | 76 | Code::CodeKey { rung: Doc, file: lib/util/map-nodes-to-parents.js, decl: 1, sub: 0, line: 9 } |  |  | 0.507 |
+| walker |  | 8546 | 13 | Fs::DirListing { dir: test/cli } |  |  | 0.507 |
+| ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.502 |
+| walker |  | 8825 | 279 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.533 |
+| walker |  | 8837 | 12 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 37, sub: 0, line: 357 } |  |  | 0.533 |
+| walker |  | 8859 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 31, sub: 0, line: 300 } |  |  | 0.533 |
+| walker |  | 8882 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 24, sub: 0, line: 263 } |  |  | 0.534 |
+| ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.530 |
+| walker |  | 8905 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 34, sub: 0, line: 329 } |  |  | 0.530 |
+| walker |  | 8935 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 27, sub: 0, line: 276 } |  |  | 0.530 |
+| walker |  | 8965 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 29, sub: 0, line: 289 } |  |  | 0.530 |
+| walker |  | 8996 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 30, sub: 0, line: 294 } |  |  | 0.530 |
+| ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.526 |
+| ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.527 |
+| walker |  | 9036 | 40 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 25, sub: 0, line: 268 } |  |  | 0.528 |
+| walker |  | 9078 | 42 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 28, sub: 0, line: 282 } |  |  | 0.528 |
+| walker |  | 9125 | 47 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 22, sub: 0, line: 248 } |  |  | 0.528 |
+| walker |  | 9174 | 49 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 21, sub: 0, line: 243 } |  |  | 0.532 |
+| ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.538 |
+| walker |  | 9269 | 95 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 23, sub: 0, line: 253 } |  |  | 0.551 |
+| ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.560 |
+| walker |  | 9447 | 178 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 33, sub: 0, line: 307 } |  |  | 0.560 |
+| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.558 |
+| ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.567 |
+| walker |  | 9667 | 220 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 36, sub: 0, line: 336 } |  |  | 0.586 |
 | ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.582 |
-| walker |  | 9820 | 152 | Code::CodeKey { rung: Body, file: lib/svgo-node.js, decl: 2, sub: 0, line: 83 } |  |  | 0.586 |
-| ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.582 |
-| walker |  | 9866 | 46 | Plaintext::DeclSurface { file: docs/04-plugins/mergeStyles.mdx } |  |  | 0.582 |
-| walker |  | 9948 | 82 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 3, sub: 0, line: 42 } |  |  | 0.582 |
-| ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.586 |
-| walker |  | 9996 | 48 | Plaintext::DeclSurface { file: docs/04-plugins/addAttributesToSVGElement.mdx } |  |  | 0.586 |
+| ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.578 |
+| walker |  | 9959 | 292 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 20, sub: 0, line: 214 } |  |  | 0.578 |
+| ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.582 |

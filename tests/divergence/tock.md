@@ -148,51 +148,56 @@ Score(3000)=0.554 I=0.815 C=0.377 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 6530 | 15 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 5, sub: 0, line: 34 } |  |  | 0.522 |
 | walker |  | 6546 | 16 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 7, sub: 0, line: 47 } |  |  | 0.522 |
 | walker |  | 6563 | 17 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 6, sub: 0, line: 39 } |  |  | 0.522 |
+| walker |  | 6599 | 36 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 8, sub: 0, line: 56 } |  |  | 0.522 |
 | ns | 6637 |  | 205 | file repository Save — activity identity is minute-precision StartTime | 5.4 | 5.3 | 0.515 |
-| walker |  | 6674 | 111 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar_sidebar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
-| walker |  | 6692 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/report.go, decl: 3, sub: 0, line: 61 } |  |  | 0.515 |
+| walker |  | 6639 | 40 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 4, sub: 0, line: 25 } |  |  | 0.515 |
+| walker |  | 6683 | 44 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 9, sub: 0, line: 103 } |  |  | 0.515 |
+| walker |  | 6755 | 72 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 10, sub: 0, line: 158 } |  |  | 0.515 |
+| walker |  | 6866 | 111 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar_sidebar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
 | ns | 6876 |  | 239 | notes repository: sidecar file layout and YAML front matter | 5.5 |  | 0.504 |
-| walker |  | 6983 | 291 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.506 |
-| ns | 7047 |  | 171 | timewarrior repository: interval shape and data layout | 5.6 |  | 0.497 |
+| walker |  | 6884 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/report.go, decl: 3, sub: 0, line: 61 } |  |  | 0.504 |
+| ns | 7047 |  | 171 | timewarrior repository: interval shape and data layout | 5.6 |  | 0.495 |
+| walker |  | 7175 | 291 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.497 |
 | ns | 7233 |  | 186 | timewarrior repository function roster (names only) | 5.7 |  | 0.490 |
-| walker |  | 7250 | 267 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.490 |
-| walker |  | 7269 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/calendar_sidebar.go, decl: 2, sub: 0, line: 15 } |  |  | 0.490 |
+| walker |  | 7442 | 267 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.490 |
+| walker |  | 7461 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/calendar_sidebar.go, decl: 2, sub: 0, line: 15 } |  |  | 0.490 |
 | ns | 7467 |  | 234 | iCalendar generator | 5.8 |  | 0.489 |
-| walker |  | 7502 | 233 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.490 |
-| ns | 7649 |  | 182 | config.Config — the top-level settings struct | 6.1 |  | 0.501 |
-| walker |  | 7767 | 265 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.501 |
-| walker |  | 7888 | 121 | Code::CodeKey { rung: Names, file: internal/adapters/cli/theme.go, decl: 0, sub: 0, line: 0 } |  |  | 0.501 |
-| walker |  | 7975 | 87 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.501 |
-| walker |  | 7989 | 14 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.502 |
-| walker |  | 8005 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 9, sub: 0, line: 167 } |  |  | 0.502 |
-| ns | 8015 |  | 366 | All nested config structs (complete) | 6.2 |  | 0.522 |
-| walker |  | 8023 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 3, sub: 0, line: 40 } |  |  | 0.522 |
-| walker |  | 8041 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 4, sub: 0, line: 53 } |  |  | 0.522 |
-| ns | 8129 |  | 114 | Config defaults | 6.3 |  | 0.518 |
-| walker |  | 8212 | 171 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.518 |
-| walker |  | 8228 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.518 |
-| walker |  | 8271 | 43 | Code::CodeKey { rung: Body, file: internal/core/models/activity.go, decl: 3, sub: 0, line: 23 } |  |  | 0.522 |
-| walker |  | 8291 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/analyze.go, decl: 4, sub: 0, line: 206 } |  |  | 0.522 |
-| walker |  | 8310 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 8, sub: 0, line: 122 } |  |  | 0.522 |
-| walker |  | 8341 | 31 | Code::CodeKey { rung: Body, file: internal/config/config.go, decl: 9, sub: 0, line: 62 } |  |  | 0.522 |
-| ns | 8454 |  | 325 | Complete TOCK_* environment variable bindings | 6.4 |  | 0.515 |
-| walker |  | 8481 | 140 | Plaintext::DeclSurface { file: demo/demo_script.sh } |  |  | 0.515 |
+| ns | 7649 |  | 182 | config.Config — the top-level settings struct | 6.1 |  | 0.499 |
+| walker |  | 7694 | 233 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.501 |
+| walker |  | 7959 | 265 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.501 |
+| ns | 8015 |  | 366 | All nested config structs (complete) | 6.2 |  | 0.520 |
+| walker |  | 8080 | 121 | Code::CodeKey { rung: Names, file: internal/adapters/cli/theme.go, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
+| ns | 8129 |  | 114 | Config defaults | 6.3 |  | 0.517 |
+| walker |  | 8167 | 87 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.517 |
+| walker |  | 8181 | 14 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.518 |
+| walker |  | 8197 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 9, sub: 0, line: 167 } |  |  | 0.518 |
+| walker |  | 8215 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 3, sub: 0, line: 40 } |  |  | 0.518 |
+| walker |  | 8233 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 4, sub: 0, line: 53 } |  |  | 0.518 |
+| walker |  | 8252 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 8, sub: 0, line: 122 } |  |  | 0.518 |
+| walker |  | 8272 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 5, sub: 0, line: 66 } |  |  | 0.518 |
+| walker |  | 8293 | 21 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 6, sub: 0, line: 79 } |  |  | 0.518 |
+| walker |  | 8322 | 29 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 7, sub: 0, line: 93 } |  |  | 0.518 |
+| ns | 8454 |  | 325 | Complete TOCK_* environment variable bindings | 6.4 |  | 0.511 |
+| walker |  | 8493 | 171 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.511 |
+| walker |  | 8509 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.511 |
+| walker |  | 8552 | 43 | Code::CodeKey { rung: Body, file: internal/core/models/activity.go, decl: 3, sub: 0, line: 23 } |  |  | 0.515 |
+| walker |  | 8572 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/analyze.go, decl: 4, sub: 0, line: 206 } |  |  | 0.515 |
+| walker |  | 8603 | 31 | Code::CodeKey { rung: Body, file: internal/config/config.go, decl: 9, sub: 0, line: 62 } |  |  | 0.515 |
 | ns | 8702 |  | 248 | timeutil.Formatter — 12/24-hour formats and method roster | 6.5 |  | 0.522 |
-| walker |  | 8747 | 266 | Markdown::Section { file: docs/commands.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.522 |
-| walker |  | 8778 | 31 | Code::CodeKey { rung: Body, file: internal/config/config.go, decl: 10, sub: 0, line: 68 } |  |  | 0.522 |
+| walker |  | 8743 | 140 | Plaintext::DeclSurface { file: demo/demo_script.sh } |  |  | 0.522 |
 | ns | 8890 |  | 188 | Theme type and the complete theme constructor roster | 6.6 |  | 0.533 |
-| walker |  | 8948 | 170 | Code::CodeKey { rung: Names, file: internal/adapters/cli/ical.go, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
+| walker |  | 9009 | 266 | Markdown::Section { file: docs/commands.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.533 |
+| walker |  | 9040 | 31 | Code::CodeKey { rung: Body, file: internal/config/config.go, decl: 10, sub: 0, line: 68 } |  |  | 0.533 |
 | ns | 9048 |  | 158 | GetTheme — accepted theme names and auto-detection | 6.7 | 6.6 | 0.525 |
-| walker |  | 9118 | 170 | Code::CodeKey { rung: Names, file: internal/adapters/cli/watch.go, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
-| walker |  | 9140 | 22 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 4, sub: 0, line: 90 } |  |  | 0.526 |
-| ns | 9218 |  | 170 | Type roster of the cli package (names only) | 7.1 |  | 0.525 |
-| walker |  | 9232 | 92 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 3, sub: 0, line: 77 } |  |  | 0.525 |
-| ns | 9373 |  | 155 | AnalysisStats — everything `tock analyze` computes | 7.2 | 7.1 | 0.532 |
-| walker |  | 9473 | 241 | Markdown::Section { file: README.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.534 |
-| ns | 9519 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.526 |
-| walker |  | 9729 | 256 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: true } |  |  | 0.526 |
+| walker |  | 9210 | 170 | Code::CodeKey { rung: Names, file: internal/adapters/cli/ical.go, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
+| ns | 9218 |  | 170 | Type roster of the cli package (names only) | 7.1 |  | 0.522 |
+| ns | 9373 |  | 155 | AnalysisStats — everything `tock analyze` computes | 7.2 | 7.1 | 0.528 |
+| walker |  | 9380 | 170 | Code::CodeKey { rung: Names, file: internal/adapters/cli/watch.go, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
+| walker |  | 9402 | 22 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 4, sub: 0, line: 90 } |  |  | 0.532 |
+| walker |  | 9494 | 92 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 3, sub: 0, line: 77 } |  |  | 0.532 |
+| ns | 9519 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.524 |
+| walker |  | 9735 | 241 | Markdown::Section { file: README.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.526 |
 | ns | 9756 |  | 237 | Direct dependency set | 8.1 |  | 0.534 |
 | ns | 9807 |  | 51 | Peripheral directory listings (docs, demo, assets, .github) | 8.2 |  | 0.540 |
-| walker |  | 9890 | 161 | Markdown::Section { file: README.md, section_index: 24, keeps_default_concavity: false } |  |  | 0.540 |
-| walker |  | 9910 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 5, sub: 0, line: 66 } |  |  | 0.540 |
 | ns | 9963 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.536 |
+| walker |  | 9991 | 256 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: true } |  |  | 0.536 |

@@ -216,7 +216,8 @@ src/
       21→    """Hook was called incorrectly."""
       24→@final
       25→class Result(Generic[ResultType]):
-      …
+      26→    """An object used to inspect and set the result in a :ref:`hook wrapper
+      27→    <hookwrappers>`."""
       29→    __slots__ = ("_result", "_exception", "_traceback")
       30→
       31→    def __init__(
@@ -224,16 +225,19 @@ src/
       33→        result: ResultType | None,
       34→        exception: BaseException | None,
       35→    ) -> None:
+      36→        """:meta private:"""
       …
       42→    @property
       43→    def excinfo(self) -> _ExcInfo | None:
+      44→        """:meta private:"""
       …
       51→    @property
       52→    def exception(self) -> BaseException | None:
+      53→        """:meta private:"""
       …
-      54→        return self._exception
       56→    @classmethod
       57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+      58→        """:meta private:"""
       …
       67→    def force_result(self, result: ResultType) -> None:
       …

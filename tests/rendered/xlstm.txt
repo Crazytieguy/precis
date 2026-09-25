@@ -65,9 +65,11 @@ experiments/
     …
     13→    @abstractmethod
     14→    def get_lr(self) -> list[float]:
+    15→        """Returns the current learning rate for each parameter group."""
     …
     18→    @abstractmethod
     19→    def reinitialize(self, **kwargs) -> None:
+    20→        """Reinitializes the learning rate scheduler."""
     …
     24→class LinearWarmupCosineAnnealing(BaseLRScheduler):
     25→    def __init__(self, optimizer, warmup_steps, decay_until_step, max_lr, min_lr, last_epoch=-1):
@@ -76,6 +78,7 @@ experiments/
     34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
     …
     47→    def get_lr(self) -> list[float]:
+    48→        """Returns the current learning rate for each parameter group."""
     …
   main.py
   metrics.py
@@ -228,11 +231,6 @@ xlstm/
     feedforward.py
     init.py
     linear_headwise.py
-      …
-      13→class LinearHeadwiseExpandConfig:
-      …
-      42→class LinearHeadwiseExpand(nn.Module):
-      …
     ln.py
     util.py
   utils.py

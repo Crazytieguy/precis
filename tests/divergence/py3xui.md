@@ -1,4 +1,4 @@
-Score(3000)=0.636 I=0.872 C=0.464 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.755/0.766/0.674/0.636/0.592/0.647/0.655
+Score(3000)=0.636 I=0.872 C=0.464 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.755/0.766/0.674/0.636/0.592/0.647/0.637
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -175,28 +175,27 @@ Score(3000)=0.636 I=0.872 C=0.464 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 8512 | 27 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 7, sub: 0, line: 100 } |  |  | 0.638 |
 | walker |  | 8555 | 43 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 3, sub: 0, line: 54 } |  |  | 0.646 |
 | walker |  | 8640 | 85 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 8, sub: 0, line: 113 } |  |  | 0.652 |
-| ns | 8675 |  | 208 | Cookie discovery, cookie dict, and the login-required guards | 4.7 | 4.6 | 0.644 |
-| ns | 8924 |  | 249 | AsyncBaseApi: where the async transport actually differs | 4.8 | 4.5 | 0.633 |
-| walker |  | 8980 | 340 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 9, sub: 0, line: 125 } |  |  | 0.655 |
-| ns | 9075 |  | 151 | Async error handling: different exception types, different terminal error | 4.9 | 4.8 | 0.650 |
-| ns | 9230 |  | 155 | Every remaining directory in the repository, listed in full | 5.1 |  | 0.650 |
-| walker |  | 9329 | 349 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 1, sub: 0, line: 7 } |  |  | 0.650 |
-| ns | 9403 |  | 173 | tests/test_api.py: how the suite is wired | 5.2 |  | 0.641 |
-| walker |  | 9686 | 357 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 2, sub: 0, line: 28 } |  |  | 0.660 |
-| walker |  | 9694 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 4, sub: 0, line: 80 } |  |  | 0.660 |
-| walker |  | 9702 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 5, sub: 0, line: 88 } |  |  | 0.660 |
-| walker |  | 9710 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 6, sub: 0, line: 96 } |  |  | 0.660 |
-| walker |  | 9718 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 7, sub: 0, line: 104 } |  |  | 0.660 |
-| ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.647 |
-| walker |  | 9726 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 8, sub: 0, line: 112 } |  |  | 0.647 |
-| walker |  | 9734 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 9, sub: 0, line: 120 } |  |  | 0.647 |
-| walker |  | 9742 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 11, sub: 0, line: 136 } |  |  | 0.647 |
-| walker |  | 9750 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 13, sub: 0, line: 152 } |  |  | 0.647 |
-| walker |  | 9758 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 17, sub: 0, line: 210 } |  |  | 0.647 |
-| walker |  | 9767 | 9 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 12, sub: 0, line: 144 } |  |  | 0.647 |
-| walker |  | 9777 | 10 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 14, sub: 0, line: 160 } |  |  | 0.647 |
-| walker |  | 9788 | 11 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 10, sub: 0, line: 128 } |  |  | 0.647 |
-| walker |  | 9883 | 95 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 3, sub: 0, line: 61 } |  |  | 0.650 |
-| ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.647 |
-| walker |  | 9921 | 38 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 21, sub: 0, line: 313 } |  |  | 0.647 |
-| ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.645 |
+| walker |  | 8660 | 20 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 8, sub: 0, line: 113 } |  |  | 0.655 |
+| ns | 8675 |  | 208 | Cookie discovery, cookie dict, and the login-required guards | 4.7 | 4.6 | 0.647 |
+| walker |  | 8712 | 52 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 5, sub: 0, line: 78 } |  |  | 0.647 |
+| walker |  | 8766 | 54 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 4, sub: 0, line: 67 } |  |  | 0.647 |
+| walker |  | 8823 | 57 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 2, sub: 0, line: 43 } |  |  | 0.648 |
+| ns | 8924 |  | 249 | AsyncBaseApi: where the async transport actually differs | 4.8 | 4.5 | 0.637 |
+| ns | 9075 |  | 151 | Async error handling: different exception types, different terminal error | 4.9 | 4.8 | 0.632 |
+| walker |  | 9163 | 340 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 9, sub: 0, line: 125 } |  |  | 0.653 |
+| walker |  | 9222 | 59 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 6, sub: 0, line: 89 } |  |  | 0.653 |
+| ns | 9230 |  | 155 | Every remaining directory in the repository, listed in full | 5.1 |  | 0.653 |
+| ns | 9403 |  | 173 | tests/test_api.py: how the suite is wired | 5.2 |  | 0.645 |
+| walker |  | 9571 | 349 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 1, sub: 0, line: 7 } |  |  | 0.645 |
+| walker |  | 9585 | 14 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 1, sub: 0, line: 7 } |  |  | 0.647 |
+| ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.635 |
+| ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.632 |
+| walker |  | 9942 | 357 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 2, sub: 0, line: 28 } |  |  | 0.649 |
+| walker |  | 9950 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 4, sub: 0, line: 80 } |  |  | 0.649 |
+| walker |  | 9958 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 5, sub: 0, line: 88 } |  |  | 0.649 |
+| walker |  | 9966 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 6, sub: 0, line: 96 } |  |  | 0.649 |
+| walker |  | 9974 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 7, sub: 0, line: 104 } |  |  | 0.649 |
+| ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.647 |
+| walker |  | 9982 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 8, sub: 0, line: 112 } |  |  | 0.647 |
+| walker |  | 9990 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 9, sub: 0, line: 120 } |  |  | 0.647 |
+| walker |  | 9998 | 8 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 11, sub: 0, line: 136 } |  |  | 0.647 |

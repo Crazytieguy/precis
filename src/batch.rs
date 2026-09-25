@@ -263,14 +263,14 @@ impl BatchKey {
         }
     }
 
-    /// True for depth follow-up batches — doc/body refinements of an
+    /// True for depth follow-up batches — body refinements of an
     /// already-delivered surface. Drives the scheduler's breadth-pressure
     /// penalty; surfaces never qualify.
     pub fn is_depth_follow_up(&self) -> bool {
         matches!(
             self,
             BatchKey::Code(CodeKey {
-                rung: Rung::Doc | Rung::Body,
+                rung: Rung::Body,
                 ..
             })
         )

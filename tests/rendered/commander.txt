@@ -168,13 +168,14 @@ lib/
     48→  name() {
     49→    return this._name;
     …
+    52→  /**
+    53→   * @package
+    54→   */
     56→  _collectValue(value, previous) {
     …
     73→  default(value, description) {
     …
     86→  argParser(fn) {
-    87→    this.parseArg = fn;
-    88→    return this;
     …
     98→  choices(values) {
     …
@@ -187,7 +188,13 @@ lib/
     131→    return this;
     …
     133→}
-    …
+    135→/**
+    136→ * Takes an argument and returns its human readable equivalent for help usage.
+    137→ *
+    138→ * @param {Argument} arg
+    139→ * @return {string}
+    140→ * @private
+    141→ */
     143→function humanReadableArgName(arg) {
     …
     149→exports.Argument = Argument;
@@ -227,13 +234,6 @@ lib/
     …
     12→class Help {
     …
-    732→/**
-    733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
-    734→ *
-    735→ * @param {string} str
-    736→ * @returns {string}
-    737→ * @package
-    738→ */
     740→function stripColor(str) {
     741→  // eslint-disable-next-line no-control-regex
     742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
@@ -260,13 +260,14 @@ lib/
     122→    return this;
     …
     132→  argParser(fn) {
-    133→    this.parseArg = fn;
-    134→    return this;
     …
     144→  makeOptionMandatory(mandatory = true) {
     …
     156→  hideHelp(hide = true) {
     …
+    161→  /**
+    162→   * @package
+    163→   */
     165→  _collectValue(value, previous) {
     …
     181→  choices(values) {
@@ -285,7 +286,9 @@ lib/
     259→}
     …
     268→class DualOptions {
-    …
+    269→  /**
+    270→   * @param {Option[]} options
+    271→   */
     272→  constructor(options) {
     …
     297→  valueFromOption(value, option) {

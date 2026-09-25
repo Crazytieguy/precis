@@ -283,27 +283,9 @@ sdk/
     41→}
     42→```
     44→## Configuration
-    45→
-    46→The SDK behaves identically to the CLI:
-    47→- Loads configuration from `~/.mcphost.yml` by default
-    48→- Creates default configuration if none exists
-    49→- Respects all environment variables (`MCPHOST_*`)
-    50→- Uses the same defaults as the CLI
-    51→
+    …
     52→### Options
-    53→
-    54→You can override specific settings:
-    55→
-    56→```go
-    57→host, err := sdk.New(ctx, &sdk.Options{
-    58→    Model:        "ollama:llama3",           // Override model
-    59→    SystemPrompt: "You are a helpful bot",   // Override system prompt
-    60→    ConfigFile:   "/path/to/config.yml",     // Use specific config file
-    61→    MaxSteps:     10,                        // Override max steps
-    62→    Streaming:    true,                      // Enable streaming
-    63→    Quiet:        true,                      // Suppress debug output
-    64→})
-    65→```
+    …
     67→## Advanced Usage
     68→
     69→### With Tool Callbacks
@@ -344,6 +326,8 @@ sdk/
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     19→	return msg.ConvertToSchemaMessage()
     …
+    22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
+    23→// message format for use in the SDK API.
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
     25→	return session.ConvertFromSchemaMessage(msg)
     …

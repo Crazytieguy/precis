@@ -1,4 +1,4 @@
-Score(3000)=0.720 I=0.916 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.797/0.730/0.883/0.720/0.685/0.622/0.570
+Score(3000)=0.720 I=0.916 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.797/0.730/0.883/0.720/0.685/0.622/0.568
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -116,34 +116,36 @@ Score(3000)=0.720 I=0.916 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 6285 | 145 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 11, sub: 0, line: 358 } |  |  | 0.622 |
 | walker |  | 6314 | 29 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 12, sub: 0, line: 373 } |  |  | 0.622 |
 | ns | 6360 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.617 |
+| walker |  | 6366 | 52 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 9, sub: 0, line: 307 } |  |  | 0.617 |
 | ns | 6456 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.615 |
-| walker |  | 6736 | 422 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.622 |
-| ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.632 |
-| walker |  | 6763 | 27 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.632 |
-| walker |  | 6815 | 52 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 9, sub: 0, line: 307 } |  |  | 0.632 |
+| ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.625 |
+| walker |  | 6788 | 422 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.632 |
+| walker |  | 6815 | 27 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.632 |
 | ns | 6965 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.622 |
 | ns | 7168 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.614 |
 | walker |  | 7175 | 360 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.627 |
-| walker |  | 7521 | 346 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.631 |
-| walker |  | 7569 | 48 | Code::CodeKey { rung: Names, file: source/utils/normalize.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.632 |
-| walker |  | 7591 | 22 | Code::CodeKey { rung: Decl, file: source/utils/normalize.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.634 |
-| ns | 7600 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.618 |
-| walker |  | 7986 | 395 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.619 |
-| ns | 8012 |  | 412 | `#retry`: the recursive retry loop and the `beforeRetry` hook contract | 4.5 | 3.1 | 0.602 |
-| ns | 8221 |  | 209 | Constructor: input validation and `prefixUrl` joining | 4.6 | 2.5 | 0.595 |
-| walker |  | 8372 | 386 | Markdown::Section { file: readme.md, section_index: 28, keeps_default_concavity: false } |  |  | 0.595 |
-| ns | 8398 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.589 |
-| ns | 8553 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.583 |
-| walker |  | 8695 | 323 | Markdown::Section { file: readme.md, section_index: 29, keeps_default_concavity: true } |  |  | 0.584 |
-| ns | 8726 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.579 |
-| walker |  | 8870 | 175 | Code::CodeKey { rung: Doc, file: source/utils/type-guards.ts, decl: 2, sub: 0, line: 49 } |  |  | 0.579 |
-| ns | 9000 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.570 |
-| ns | 9125 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.574 |
-| ns | 9282 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.577 |
-| walker |  | 9324 | 454 | Markdown::Section { file: readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.579 |
-| ns | 9370 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.578 |
-| ns | 9473 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.581 |
-| ns | 9500 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.584 |
-| ns | 9694 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.594 |
-| walker |  | 9760 | 436 | Markdown::Section { file: readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.594 |
+| walker |  | 7350 | 175 | Code::CodeKey { rung: Doc, file: source/utils/type-guards.ts, decl: 2, sub: 0, line: 49 } |  |  | 0.627 |
+| walker |  | 7532 | 182 | Code::CodeKey { rung: Doc, file: source/utils/type-guards.ts, decl: 3, sub: 0, line: 71 } |  |  | 0.627 |
+| ns | 7600 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.611 |
+| walker |  | 7878 | 346 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.615 |
+| walker |  | 7926 | 48 | Code::CodeKey { rung: Names, file: source/utils/normalize.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 7948 | 22 | Code::CodeKey { rung: Decl, file: source/utils/normalize.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.618 |
+| ns | 8012 |  | 412 | `#retry`: the recursive retry loop and the `beforeRetry` hook contract | 4.5 | 3.1 | 0.601 |
+| walker |  | 8166 | 218 | Code::CodeKey { rung: Doc, file: source/utils/type-guards.ts, decl: 1, sub: 0, line: 27 } |  |  | 0.601 |
+| ns | 8221 |  | 209 | Constructor: input validation and `prefixUrl` joining | 4.6 | 2.5 | 0.594 |
+| walker |  | 8386 | 220 | Code::CodeKey { rung: Doc, file: source/utils/type-guards.ts, decl: 4, sub: 0, line: 98 } |  |  | 0.594 |
+| ns | 8398 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.588 |
+| ns | 8553 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.582 |
+| ns | 8726 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.577 |
+| walker |  | 8781 | 395 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.577 |
+| ns | 9000 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.568 |
+| ns | 9125 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.573 |
+| walker |  | 9167 | 386 | Markdown::Section { file: readme.md, section_index: 28, keeps_default_concavity: false } |  |  | 0.573 |
+| ns | 9282 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.576 |
+| ns | 9370 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.575 |
+| ns | 9473 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.579 |
+| walker |  | 9490 | 323 | Markdown::Section { file: readme.md, section_index: 29, keeps_default_concavity: true } |  |  | 0.580 |
+| ns | 9500 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.583 |
+| ns | 9694 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.593 |
+| walker |  | 9944 | 454 | Markdown::Section { file: readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.594 |
 | ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.585 |

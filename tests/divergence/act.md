@@ -1,4 +1,4 @@
-Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.483/0.681/0.594/0.578/0.480/0.412/0.463
+Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.483/0.681/0.594/0.578/0.480/0.412/0.467
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -166,80 +166,82 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 6413 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.426 |
 | walker |  | 6424 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.426 |
 | walker |  | 6435 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 5, sub: 0, line: 94 } |  |  | 0.426 |
-| walker |  | 6446 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.426 |
-| walker |  | 6457 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 9, sub: 0, line: 114 } |  |  | 0.426 |
-| walker |  | 6469 | 12 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.426 |
-| walker |  | 6481 | 12 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 7, sub: 0, line: 104 } |  |  | 0.426 |
-| walker |  | 6494 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.426 |
+| walker |  | 6447 | 12 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 4, sub: 0, line: 90 } |  |  | 0.426 |
+| walker |  | 6460 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 3, sub: 0, line: 85 } |  |  | 0.426 |
+| walker |  | 6473 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 6, sub: 0, line: 99 } |  |  | 0.426 |
+| walker |  | 6487 | 14 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.426 |
 | ns | 6499 |  | 278 | step interface and stage enum | 4.7 | 4.2 | 0.413 |
-| walker |  | 6507 | 13 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 6, sub: 0, line: 99 } |  |  | 0.413 |
-| walker |  | 6592 | 85 | Code::CodeKey { rung: Names, file: pkg/container/docker_socket.go, decl: 0, sub: 0, line: 0 } |  |  | 0.413 |
-| walker |  | 6612 | 20 | Code::CodeKey { rung: Decl, file: pkg/container/docker_socket.go, decl: 4, sub: 0, line: 57 } |  |  | 0.413 |
-| walker |  | 6713 | 101 | Code::CodeKey { rung: Decl, file: pkg/container/docker_socket.go, decl: 1, sub: 0, line: 12 } |  |  | 0.414 |
-| walker |  | 6726 | 13 | Code::CodeKey { rung: Doc, file: pkg/container/docker_socket.go, decl: 2, sub: 0, line: 23 } |  |  | 0.414 |
-| walker |  | 6811 | 85 | Code::CodeKey { rung: Names, file: pkg/workflowpattern/trace_writer.go, decl: 0, sub: 0, line: 0 } |  |  | 0.414 |
-| walker |  | 6814 | 3 | Code::CodeKey { rung: Decl, file: pkg/workflowpattern/trace_writer.go, decl: 3, sub: 0, line: 11 } |  |  | 0.414 |
-| walker |  | 6828 | 14 | Code::CodeKey { rung: Decl, file: pkg/workflowpattern/trace_writer.go, decl: 1, sub: 0, line: 5 } |  |  | 0.414 |
-| walker |  | 6840 | 12 | Code::CodeKey { rung: Body, file: pkg/workflowpattern/trace_writer.go, decl: 5, sub: 0, line: 16 } |  |  | 0.414 |
-| walker |  | 6927 | 87 | Code::CodeKey { rung: Names, file: pkg/runner/local_repository_cache.go, decl: 0, sub: 0, line: 0 } |  |  | 0.414 |
-| walker |  | 6963 | 36 | Code::CodeKey { rung: Decl, file: pkg/runner/local_repository_cache.go, decl: 1, sub: 0, line: 19 } |  |  | 0.414 |
+| walker |  | 6502 | 15 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 7, sub: 0, line: 104 } |  |  | 0.413 |
+| walker |  | 6517 | 15 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 9, sub: 0, line: 114 } |  |  | 0.413 |
+| walker |  | 6528 | 11 | Code::CodeKey { rung: Body, file: cmd/input.go, decl: 8, sub: 0, line: 109 } |  |  | 0.413 |
+| walker |  | 6613 | 85 | Code::CodeKey { rung: Names, file: pkg/container/docker_socket.go, decl: 0, sub: 0, line: 0 } |  |  | 0.413 |
+| walker |  | 6633 | 20 | Code::CodeKey { rung: Decl, file: pkg/container/docker_socket.go, decl: 4, sub: 0, line: 57 } |  |  | 0.413 |
+| walker |  | 6734 | 101 | Code::CodeKey { rung: Decl, file: pkg/container/docker_socket.go, decl: 1, sub: 0, line: 12 } |  |  | 0.414 |
+| walker |  | 6747 | 13 | Code::CodeKey { rung: Doc, file: pkg/container/docker_socket.go, decl: 2, sub: 0, line: 23 } |  |  | 0.414 |
+| walker |  | 6832 | 85 | Code::CodeKey { rung: Names, file: pkg/workflowpattern/trace_writer.go, decl: 0, sub: 0, line: 0 } |  |  | 0.414 |
+| walker |  | 6835 | 3 | Code::CodeKey { rung: Decl, file: pkg/workflowpattern/trace_writer.go, decl: 3, sub: 0, line: 11 } |  |  | 0.414 |
+| walker |  | 6849 | 14 | Code::CodeKey { rung: Decl, file: pkg/workflowpattern/trace_writer.go, decl: 1, sub: 0, line: 5 } |  |  | 0.414 |
+| walker |  | 6861 | 12 | Code::CodeKey { rung: Body, file: pkg/workflowpattern/trace_writer.go, decl: 5, sub: 0, line: 16 } |  |  | 0.414 |
+| walker |  | 6948 | 87 | Code::CodeKey { rung: Names, file: pkg/runner/local_repository_cache.go, decl: 0, sub: 0, line: 0 } |  |  | 0.414 |
+| walker |  | 6984 | 36 | Code::CodeKey { rung: Decl, file: pkg/runner/local_repository_cache.go, decl: 1, sub: 0, line: 19 } |  |  | 0.414 |
 | ns | 6994 |  | 495 | run_context.go: method roster (container lifecycle) | 4.8 |  | 0.402 |
-| walker |  | 7076 | 113 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.402 |
-| walker |  | 7090 | 14 | Code::CodeKey { rung: Body, file: pkg/container/util_openbsd_mips64.go, decl: 2, sub: 0, line: 15 } |  |  | 0.402 |
-| walker |  | 7104 | 14 | Code::CodeKey { rung: Body, file: pkg/container/util_plan9.go, decl: 2, sub: 0, line: 15 } |  |  | 0.402 |
-| walker |  | 7118 | 14 | Code::CodeKey { rung: Body, file: pkg/container/util_windows.go, decl: 2, sub: 0, line: 13 } |  |  | 0.402 |
+| walker |  | 7097 | 113 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.402 |
+| walker |  | 7111 | 14 | Code::CodeKey { rung: Body, file: pkg/container/util_openbsd_mips64.go, decl: 2, sub: 0, line: 15 } |  |  | 0.402 |
+| walker |  | 7125 | 14 | Code::CodeKey { rung: Body, file: pkg/container/util_plan9.go, decl: 2, sub: 0, line: 15 } |  |  | 0.402 |
+| walker |  | 7139 | 14 | Code::CodeKey { rung: Body, file: pkg/container/util_windows.go, decl: 2, sub: 0, line: 13 } |  |  | 0.402 |
 | ns | 7140 |  | 146 | ActionCache implementations | 4.9 | 4.2 | 0.397 |
-| walker |  | 7209 | 91 | Code::CodeKey { rung: Names, file: pkg/container/docker_logger.go, decl: 0, sub: 0, line: 0 } |  |  | 0.397 |
-| walker |  | 7295 | 86 | Code::CodeKey { rung: Decl, file: pkg/container/docker_logger.go, decl: 1, sub: 0, line: 14 } |  |  | 0.397 |
+| walker |  | 7230 | 91 | Code::CodeKey { rung: Names, file: pkg/container/docker_logger.go, decl: 0, sub: 0, line: 0 } |  |  | 0.397 |
 | ns | 7300 |  | 160 | pkg/container: complete file list | 5.1 |  | 0.428 |
+| walker |  | 7316 | 86 | Code::CodeKey { rung: Decl, file: pkg/container/docker_logger.go, decl: 1, sub: 0, line: 14 } |  |  | 0.428 |
 | ns | 7577 |  | 277 | Container interface | 5.2 |  | 0.422 |
 | ns | 7719 |  | 142 | ExecutionsEnvironment interface | 5.3 |  | 0.428 |
-| walker |  | 7876 | 581 | Code::CodeKey { rung: Decl, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.430 |
-| walker |  | 7970 | 94 | Code::CodeKey { rung: Names, file: pkg/runner/action_cache_offline_mode.go, decl: 0, sub: 0, line: 0 } |  |  | 0.431 |
-| walker |  | 7984 | 14 | Code::CodeKey { rung: Decl, file: pkg/runner/action_cache_offline_mode.go, decl: 1, sub: 0, line: 13 } |  |  | 0.426 |
-| ns | 7984 |  | 265 | Docker backend vs docker-less stub: the build-tag split | 5.4 |  | 0.426 |
-| walker |  | 8004 | 20 | Code::CodeKey { rung: Body, file: pkg/runner/action_cache_offline_mode.go, decl: 3, sub: 0, line: 45 } |  |  | 0.426 |
-| walker |  | 8011 | 7 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/nested/nested-data.txt } |  |  | 0.426 |
-| walker |  | 8106 | 95 | Code::CodeKey { rung: Names, file: pkg/common/line_writer.go, decl: 0, sub: 0, line: 0 } |  |  | 0.426 |
-| walker |  | 8130 | 24 | Code::CodeKey { rung: Decl, file: pkg/common/line_writer.go, decl: 2, sub: 0, line: 11 } |  |  | 0.426 |
-| walker |  | 8145 | 15 | Code::CodeKey { rung: Doc, file: pkg/common/line_writer.go, decl: 3, sub: 0, line: 17 } |  |  | 0.426 |
-| walker |  | 8161 | 16 | Code::CodeKey { rung: Doc, file: pkg/common/line_writer.go, decl: 1, sub: 0, line: 9 } |  |  | 0.437 |
-| ns | 8161 |  | 177 | Docker socket discovery | 5.5 |  | 0.437 |
-| walker |  | 8187 | 26 | Code::CodeKey { rung: Body, file: pkg/common/line_writer.go, decl: 3, sub: 0, line: 17 } |  |  | 0.437 |
-| walker |  | 8216 | 29 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 4, sub: 0, line: 57 } |  |  | 0.437 |
-| ns | 8251 |  | 90 | Supporting packages: complete file lists (A) | 6.1 |  | 0.453 |
-| walker |  | 8319 | 103 | Code::CodeKey { rung: Names, file: pkg/lookpath/lp_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.453 |
-| walker |  | 8342 | 23 | Code::CodeKey { rung: Doc, file: pkg/lookpath/lp_windows.go, decl: 1, sub: 0, line: 16 } |  |  | 0.453 |
-| ns | 8410 |  | 159 | Supporting packages: complete file lists (B) | 6.2 |  | 0.476 |
-| walker |  | 8446 | 104 | Code::CodeKey { rung: Names, file: pkg/container/container_types.go, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| walker |  | 8453 | 7 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 7, sub: 0, line: 80 } |  |  | 0.476 |
-| walker |  | 8482 | 29 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 2, sub: 0, line: 36 } |  |  | 0.476 |
-| walker |  | 8529 | 47 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 5, sub: 0, line: 70 } |  |  | 0.476 |
-| ns | 8554 |  | 144 | Context names the expression interpreter resolves | 6.3 |  | 0.472 |
-| walker |  | 8581 | 52 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 4, sub: 0, line: 61 } |  |  | 0.472 |
-| walker |  | 8597 | 16 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 2, sub: 0, line: 36 } |  |  | 0.472 |
-| ns | 8679 |  | 125 | Expression functions act implements | 6.4 |  | 0.468 |
-| walker |  | 8803 | 206 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 1, sub: 0, line: 12 } |  |  | 0.468 |
-| ns | 8903 |  | 224 | Artifact cache server: routes and lifecycle | 6.5 |  | 0.463 |
-| walker |  | 9051 | 248 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 3, sub: 0, line: 43 } |  |  | 0.479 |
-| walker |  | 9061 | 10 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 3, sub: 0, line: 43 } |  |  | 0.480 |
-| ns | 9068 |  | 165 | Artifact server: Serve + the v4 route base | 6.6 |  | 0.477 |
-| ns | 9373 |  | 305 | pkg/common: complete exported-function roster | 6.7 |  | 0.474 |
-| walker |  | 9435 | 374 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.496 |
-| walker |  | 9485 | 50 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 1, sub: 0, line: 37 } |  |  | 0.496 |
-| walker |  | 9498 | 13 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 3, sub: 0, line: 47 } |  |  | 0.497 |
-| walker |  | 9510 | 12 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 18, sub: 0, line: 391 } |  |  | 0.497 |
-| walker |  | 9526 | 16 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 15, sub: 0, line: 345 } |  |  | 0.497 |
-| ns | 9536 |  | 163 | pkg/common/git: repo detection and cloning | 6.8 |  | 0.493 |
-| walker |  | 9587 | 61 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 3, sub: 0, line: 47 } |  |  | 0.502 |
-| ns | 9666 |  | 130 | CI, issue-template and editor directories | 7.1 |  | 0.507 |
-| walker |  | 9869 | 282 | Code::CodeKey { rung: Names, file: pkg/schema/schema.go, decl: 0, sub: 0, line: 0 } |  |  | 0.507 |
-| walker |  | 9872 | 3 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 12, sub: 0, line: 92 } |  |  | 0.507 |
-| walker |  | 9875 | 3 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 13, sub: 0, line: 95 } |  |  | 0.507 |
-| walker |  | 9878 | 3 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 14, sub: 0, line: 98 } |  |  | 0.507 |
-| walker |  | 9892 | 14 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 4, sub: 0, line: 25 } |  |  | 0.507 |
-| walker |  | 9908 | 16 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 10, sub: 0, line: 83 } |  |  | 0.507 |
-| ns | 9919 |  | 253 | Key direct dependencies | 7.2 |  | 0.515 |
-| walker |  | 9927 | 19 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 8, sub: 0, line: 70 } |  |  | 0.515 |
-| walker |  | 9952 | 25 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 11, sub: 0, line: 87 } |  |  | 0.515 |
-| walker |  | 9978 | 26 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 18, sub: 0, line: 119 } |  |  | 0.515 |
+| walker |  | 7897 | 581 | Code::CodeKey { rung: Decl, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.430 |
+| walker |  | 7911 | 14 | Code::CodeKey { rung: Doc, file: cmd/input.go, decl: 1, sub: 0, line: 10 } |  |  | 0.434 |
+| ns | 7984 |  | 265 | Docker backend vs docker-less stub: the build-tag split | 5.4 |  | 0.427 |
+| walker |  | 8005 | 94 | Code::CodeKey { rung: Names, file: pkg/runner/action_cache_offline_mode.go, decl: 0, sub: 0, line: 0 } |  |  | 0.428 |
+| walker |  | 8019 | 14 | Code::CodeKey { rung: Decl, file: pkg/runner/action_cache_offline_mode.go, decl: 1, sub: 0, line: 13 } |  |  | 0.429 |
+| walker |  | 8039 | 20 | Code::CodeKey { rung: Body, file: pkg/runner/action_cache_offline_mode.go, decl: 3, sub: 0, line: 45 } |  |  | 0.429 |
+| walker |  | 8046 | 7 | Plaintext::DeclSurface { file: pkg/exprparser/testdata/for-hashing-3/nested/nested-data.txt } |  |  | 0.429 |
+| walker |  | 8141 | 95 | Code::CodeKey { rung: Names, file: pkg/common/line_writer.go, decl: 0, sub: 0, line: 0 } |  |  | 0.430 |
+| ns | 8161 |  | 177 | Docker socket discovery | 5.5 |  | 0.441 |
+| walker |  | 8165 | 24 | Code::CodeKey { rung: Decl, file: pkg/common/line_writer.go, decl: 2, sub: 0, line: 11 } |  |  | 0.441 |
+| walker |  | 8180 | 15 | Code::CodeKey { rung: Doc, file: pkg/common/line_writer.go, decl: 3, sub: 0, line: 17 } |  |  | 0.441 |
+| walker |  | 8196 | 16 | Code::CodeKey { rung: Doc, file: pkg/common/line_writer.go, decl: 1, sub: 0, line: 9 } |  |  | 0.441 |
+| walker |  | 8222 | 26 | Code::CodeKey { rung: Body, file: pkg/common/line_writer.go, decl: 3, sub: 0, line: 17 } |  |  | 0.441 |
+| walker |  | 8251 | 29 | Code::CodeKey { rung: Body, file: cmd/notices.go, decl: 4, sub: 0, line: 57 } |  |  | 0.457 |
+| ns | 8251 |  | 90 | Supporting packages: complete file lists (A) | 6.1 |  | 0.457 |
+| walker |  | 8354 | 103 | Code::CodeKey { rung: Names, file: pkg/lookpath/lp_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.457 |
+| walker |  | 8377 | 23 | Code::CodeKey { rung: Doc, file: pkg/lookpath/lp_windows.go, decl: 1, sub: 0, line: 16 } |  |  | 0.457 |
+| ns | 8410 |  | 159 | Supporting packages: complete file lists (B) | 6.2 |  | 0.480 |
+| walker |  | 8481 | 104 | Code::CodeKey { rung: Names, file: pkg/container/container_types.go, decl: 0, sub: 0, line: 0 } |  |  | 0.480 |
+| walker |  | 8488 | 7 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 7, sub: 0, line: 80 } |  |  | 0.480 |
+| walker |  | 8517 | 29 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 2, sub: 0, line: 36 } |  |  | 0.480 |
+| ns | 8554 |  | 144 | Context names the expression interpreter resolves | 6.3 |  | 0.475 |
+| walker |  | 8564 | 47 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 5, sub: 0, line: 70 } |  |  | 0.475 |
+| walker |  | 8616 | 52 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 4, sub: 0, line: 61 } |  |  | 0.475 |
+| walker |  | 8632 | 16 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 2, sub: 0, line: 36 } |  |  | 0.475 |
+| walker |  | 8650 | 18 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 5, sub: 0, line: 70 } |  |  | 0.475 |
+| walker |  | 8670 | 20 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 4, sub: 0, line: 61 } |  |  | 0.475 |
+| ns | 8679 |  | 125 | Expression functions act implements | 6.4 |  | 0.471 |
+| walker |  | 8876 | 206 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 1, sub: 0, line: 12 } |  |  | 0.471 |
+| walker |  | 8891 | 15 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 1, sub: 0, line: 12 } |  |  | 0.471 |
+| ns | 8903 |  | 224 | Artifact cache server: routes and lifecycle | 6.5 |  | 0.467 |
+| ns | 9068 |  | 165 | Artifact server: Serve + the v4 route base | 6.6 |  | 0.463 |
+| walker |  | 9137 | 246 | Code::CodeKey { rung: Decl, file: pkg/container/container_types.go, decl: 3, sub: 0, line: 43 } |  |  | 0.478 |
+| walker |  | 9147 | 10 | Code::CodeKey { rung: Doc, file: pkg/container/container_types.go, decl: 3, sub: 0, line: 43 } |  |  | 0.480 |
+| ns | 9373 |  | 305 | pkg/common: complete exported-function roster | 6.7 |  | 0.477 |
+| walker |  | 9521 | 374 | Code::CodeKey { rung: Names, file: cmd/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.499 |
+| ns | 9536 |  | 163 | pkg/common/git: repo detection and cloning | 6.8 |  | 0.495 |
+| walker |  | 9571 | 50 | Code::CodeKey { rung: Decl, file: cmd/root.go, decl: 1, sub: 0, line: 37 } |  |  | 0.495 |
+| walker |  | 9584 | 13 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 3, sub: 0, line: 47 } |  |  | 0.496 |
+| walker |  | 9596 | 12 | Code::CodeKey { rung: Doc, file: cmd/root.go, decl: 18, sub: 0, line: 391 } |  |  | 0.496 |
+| walker |  | 9612 | 16 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 15, sub: 0, line: 345 } |  |  | 0.496 |
+| ns | 9666 |  | 130 | CI, issue-template and editor directories | 7.1 |  | 0.501 |
+| walker |  | 9673 | 61 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 3, sub: 0, line: 47 } |  |  | 0.509 |
+| ns | 9919 |  | 253 | Key direct dependencies | 7.2 |  | 0.518 |
+| walker |  | 9955 | 282 | Code::CodeKey { rung: Names, file: pkg/schema/schema.go, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
+| walker |  | 9958 | 3 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 12, sub: 0, line: 92 } |  |  | 0.518 |
+| walker |  | 9961 | 3 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 13, sub: 0, line: 95 } |  |  | 0.518 |
+| walker |  | 9964 | 3 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 14, sub: 0, line: 98 } |  |  | 0.518 |
+| walker |  | 9978 | 14 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 4, sub: 0, line: 25 } |  |  | 0.518 |
+| walker |  | 9994 | 16 | Code::CodeKey { rung: Decl, file: pkg/schema/schema.go, decl: 10, sub: 0, line: 83 } |  |  | 0.518 |

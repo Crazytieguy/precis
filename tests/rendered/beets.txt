@@ -142,15 +142,20 @@ beets/
       74→    """
       …
       80→def _in_encoding():
-      …
+      81→    """Get the encoding to use for *inputting* strings from the console."""
       82→    return _stream_encoding(sys.stdin)
       85→def _out_encoding():
-      …
+      86→    """Get the encoding to use for *outputting* strings to the console."""
       87→    return _stream_encoding(sys.stdout)
       90→def _stream_encoding(stream, default="utf-8"):
       …
       111→def decargs(arglist):
-      …
+      112→    """Given a list of command-line argument bytestrings, attempts to
+      113→    decode them to Unicode strings when running under Python 2.
+      114→
+      115→    .. deprecated:: 2.4.0
+      116→       This function will be removed in 3.0.0.
+      117→    """
       118→    deprecate_for_maintainers("'beets.ui.decargs'")
       119→    return arglist
       122→def print_(*strings: str, end: str = "\n") -> None:
@@ -266,12 +271,6 @@ beetsplug/
   bench.py
   bpd/
     __init__.py
-      …
-      15→"""A clone of the Music Player Daemon (MPD) that plays music from a
-      16→Beets library. Attempts to implement a compatible protocol to allow
-      17→use of the wide range of MPD clients.
-      18→"""
-      …
     gstplayer.py
   bpm.py
   bpsync.py
@@ -351,9 +350,6 @@ beetsplug/
   spotify.py
   subsonicplaylist.py
   subsonicupdate.py
-    …
-    41→__author__ = "https://github.com/maffo999"
-    …
   substitute.py
   the.py
   thumbnails.py
@@ -374,9 +370,6 @@ beetsplug/
     templates/
       index.html
   zero.py
-    …
-    26→__author__ = "baobab@heresiarch.info"
-    …
 codecov.yml
 docs/
   .gitignore

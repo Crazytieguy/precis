@@ -1,4 +1,4 @@
-Score(3000)=0.538 I=0.796 C=0.364 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.601/0.606/0.586/0.538/0.619/0.595/0.569
+Score(3000)=0.538 I=0.796 C=0.364 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.601/0.606/0.586/0.538/0.624/0.599/0.564
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -93,98 +93,101 @@ Score(3000)=0.538 I=0.796 C=0.364 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 3398 | 142 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 8, sub: 0, line: 126 } |  |  | 0.586 |
 | ns | 3453 |  | 161 | connect_to_database: the irregular branches and the failure path (core.py 43-53) | 3.5 | 3.4 | 0.574 |
 | walker |  | 3630 | 232 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 4, sub: 0, line: 53 } |  |  | 0.607 |
-| walker |  | 3637 | 7 | Code::CodeKey { rung: Body, file: peepdb/cli.py, decl: 3, sub: 0, line: 25 } |  |  | 0.607 |
 | ns | 3651 |  | 198 | peep_db body: connect, fetch one table or all (core.py 67-79) | 3.6 | 3.3 | 0.592 |
-| walker |  | 3755 | 118 | Code::CodeKey { rung: Names, file: peepdb/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.607 |
-| walker |  | 3864 | 109 | Code::CodeKey { rung: Decl, file: peepdb/core.py, decl: 4, sub: 0, line: 56 } |  |  | 0.634 |
-| walker |  | 3869 | 5 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 5, sub: 0, line: 25 } |  |  | 0.637 |
-| ns | 3887 |  | 236 | peep_db body: table-vs-JSON post-processing and the finally-disconnect (core.py 80-98) | 3.7 | 3.6 | 0.615 |
-| walker |  | 3896 | 27 | Markdown::Section { file: docs/installation.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.615 |
-| walker |  | 4064 | 168 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.642 |
-| ns | 4134 |  | 247 | format_value: numeric/date rendering rules (core.py 119-140) | 3.8 | 1.5 | 0.619 |
-| walker |  | 4136 | 72 | Markdown::Section { file: docs/index.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.619 |
-| walker |  | 4209 | 73 | Markdown::Section { file: docs/installation.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.619 |
-| walker |  | 4230 | 21 | Code::CodeKey { rung: Body, file: peepdb/db/firebase.py, decl: 5, sub: 0, line: 26 } |  |  | 0.619 |
-| ns | 4335 |  | 201 | format_as_table: the tabulate grid layout (core.py 102-115) | 3.9 | 1.5 | 0.605 |
-| walker |  | 4384 | 154 | Markdown::HeadingsOutline { file: docs/README.md } |  |  | 0.605 |
-| walker |  | 4404 | 20 | Markdown::Section { file: docs/README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.605 |
-| walker |  | 4422 | 18 | Markdown::Section { file: docs/README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.605 |
-| ns | 4459 |  | 124 | core.py import header and module logger setup | 3.10 |  | 0.593 |
-| walker |  | 4480 | 58 | Markdown::Section { file: docs/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.593 |
-| walker |  | 4695 | 215 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.593 |
-| ns | 4964 |  | 505 | Every class and method name across all eight backend modules | 4.1 | 3.1 | 0.629 |
-| walker |  | 4967 | 272 | Code::CodeKey { rung: Names, file: peepdb/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
-| walker |  | 4985 | 18 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 8, sub: 0, line: 29 } |  |  | 0.659 |
-| walker |  | 5005 | 20 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 9, sub: 0, line: 41 } |  |  | 0.659 |
-| walker |  | 5035 | 30 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 1, sub: 0, line: 15 } |  |  | 0.660 |
-| walker |  | 5050 | 15 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 12, sub: 0, line: 70 } |  |  | 0.660 |
-| walker |  | 5065 | 15 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 13, sub: 0, line: 73 } |  |  | 0.660 |
-| walker |  | 5116 | 51 | Markdown::Section { file: docs/README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.660 |
-| walker |  | 5121 | 5 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 6, sub: 0, line: 29 } |  |  | 0.662 |
-| walker |  | 5147 | 26 | Code::CodeKey { rung: Doc, file: peepdb/db/mongodb.py, decl: 5, sub: 0, line: 42 } |  |  | 0.662 |
-| walker |  | 5183 | 36 | Markdown::Section { file: docs/installation.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.662 |
-| ns | 5263 |  | 299 | The table/collection-listing query of every backend | 4.2 | 4.1 | 0.642 |
-| walker |  | 5307 | 124 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.642 |
-| walker |  | 5338 | 31 | Code::CodeKey { rung: Body, file: peepdb/db/mariadb.py, decl: 4, sub: 0, line: 30 } |  |  | 0.643 |
-| walker |  | 5370 | 32 | Code::CodeKey { rung: Body, file: peepdb/db/oracle.py, decl: 4, sub: 0, line: 32 } |  |  | 0.644 |
-| walker |  | 5403 | 33 | Code::CodeKey { rung: Body, file: peepdb/db/firebase.py, decl: 3, sub: 0, line: 10 } |  |  | 0.644 |
-| walker |  | 5437 | 34 | Code::CodeKey { rung: Body, file: peepdb/db/mysql.py, decl: 4, sub: 0, line: 29 } |  |  | 0.646 |
-| walker |  | 5478 | 41 | Markdown::Section { file: docs/usage.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.646 |
-| walker |  | 5484 | 6 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 8, sub: 0, line: 37 } |  |  | 0.649 |
-| walker |  | 5524 | 40 | Code::CodeKey { rung: Body, file: peepdb/db/postgresql.py, decl: 4, sub: 0, line: 30 } |  |  | 0.653 |
-| walker |  | 5574 | 50 | Markdown::Section { file: docs/index.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.653 |
-| ns | 5595 |  | 332 | MySQLDatabase — the canonical backend implementation | 4.3 | 4.1 | 0.630 |
-| walker |  | 5651 | 77 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 9, sub: 0, line: 41 } |  |  | 0.630 |
-| walker |  | 5696 | 45 | Code::CodeKey { rung: Body, file: peepdb/db/mssql.py, decl: 2, sub: 0, line: 7 } |  |  | 0.630 |
-| walker |  | 5751 | 55 | Markdown::Section { file: docs/usage.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.630 |
-| walker |  | 5803 | 52 | Code::CodeKey { rung: Body, file: peepdb/db/sqlite.py, decl: 3, sub: 0, line: 22 } |  |  | 0.630 |
-| walker |  | 5856 | 53 | Code::CodeKey { rung: Body, file: peepdb/db/oracle.py, decl: 3, sub: 0, line: 25 } |  |  | 0.630 |
-| ns | 5897 |  | 302 | PostgreSQL, MariaDB and Oracle connect() — drivers, default ports, cursor factories | 4.4 | 4.1 | 0.609 |
-| walker |  | 5910 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/mariadb.py, decl: 3, sub: 0, line: 23 } |  |  | 0.609 |
-| walker |  | 5964 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/mssql.py, decl: 4, sub: 0, line: 28 } |  |  | 0.609 |
-| walker |  | 6018 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/mysql.py, decl: 3, sub: 0, line: 22 } |  |  | 0.609 |
-| walker |  | 6072 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/postgresql.py, decl: 3, sub: 0, line: 23 } |  |  | 0.609 |
-| ns | 6156 |  | 259 | MongoDBDatabase.connect — URI construction from the generic parameters | 4.5 | 4.1 | 0.595 |
-| walker |  | 6273 | 201 | Code::CodeKey { rung: Body, file: peepdb/core.py, decl: 5, sub: 0, line: 101 } |  |  | 0.616 |
-| walker |  | 6337 | 64 | Markdown::Section { file: docs/usage.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.616 |
-| walker |  | 6401 | 64 | Markdown::Section { file: docs/usage.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.616 |
-| walker |  | 6430 | 29 | Code::CodeKey { rung: Body, file: peepdb/cli.py, decl: 7, sub: 0, line: 113 } |  |  | 0.617 |
-| ns | 6435 |  | 279 | MSSQLDatabase: constructor extras and the ODBC connection string | 4.6 | 4.1 | 0.607 |
-| ns | 6582 |  | 147 | FirebaseDatabase: the backend that does not call super().__init__ | 4.7 | 4.1 | 0.600 |
-| walker |  | 6662 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.600 |
-| walker |  | 6863 | 201 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: true } |  |  | 0.600 |
-| ns | 6899 |  | 317 | SQLiteDatabase connect and fetch_data — file-path handling and print-based logging | 4.8 | 4.1 | 0.587 |
-| walker |  | 6985 | 122 | Markdown::Section { file: docs/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.587 |
-| walker |  | 7052 | 67 | Markdown::Section { file: docs/installation.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.587 |
-| ns | 7201 |  | 302 | The non-LIMIT/OFFSET pagination variants (MSSQL, Oracle, MongoDB, Firebase) | 4.9 | 4.1 | 0.574 |
-| walker |  | 7299 | 247 | Code::CodeKey { rung: Body, file: peepdb/core.py, decl: 6, sub: 0, line: 118 } |  |  | 0.604 |
-| ns | 7310 |  | 109 | Where credentials live: config paths and KeySecurity modes | 5.1 | 1.9 | 0.608 |
-| walker |  | 7347 | 48 | Code::CodeKey { rung: Body, file: peepdb/db/mongodb.py, decl: 3, sub: 0, line: 32 } |  |  | 0.608 |
-| ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.600 |
-| ns | 7742 |  | 247 | The two key sources: PBKDF2 derivation and keyring fetch-or-create | 5.3 | 1.9 | 0.595 |
-| ns | 7987 |  | 245 | save_connection: the on-disk record shape and what is encrypted | 5.4 | 1.9 | 0.583 |
-| ns | 8167 |  | 180 | get_connection: the tuple contract and InvalidPassword | 5.5 | 1.9 | 0.574 |
-| walker |  | 8214 | 867 | Plaintext::Whole { file: requirements.txt } |  |  | 0.574 |
-| walker |  | 8295 | 81 | Code::CodeKey { rung: Body, file: peepdb/db/firebase.py, decl: 6, sub: 0, line: 30 } |  |  | 0.579 |
-| ns | 8309 |  | 142 | add_key_security: first-run choice between keyring and password | 5.6 | 1.9 | 0.575 |
-| walker |  | 8400 | 105 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 11, sub: 0, line: 60 } |  |  | 0.583 |
-| ns | 8403 |  | 94 | list/remove/remove_all_connections — the distinctive lines only | 5.7 | 1.9 | 0.578 |
-| walker |  | 8488 | 88 | Markdown::Section { file: docs/index.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.578 |
-| walker |  | 8584 | 96 | Markdown::Section { file: docs/usage.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.578 |
-| walker |  | 8625 | 41 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 5, sub: 0, line: 86 } |  |  | 0.578 |
-| walker |  | 8728 | 103 | Code::CodeKey { rung: Body, file: peepdb/db/mssql.py, decl: 5, sub: 0, line: 35 } |  |  | 0.586 |
-| ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.573 |
-| walker |  | 8828 | 100 | Markdown::Section { file: docs/usage.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.573 |
-| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.569 |
-| walker |  | 8985 | 157 | Markdown::Section { file: docs/README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.569 |
-| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.563 |
-| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.561 |
-| walker |  | 9292 | 307 | Markdown::Section { file: docs/README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.561 |
-| walker |  | 9306 | 14 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 7, sub: 0, line: 33 } |  |  | 0.565 |
-| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.561 |
-| walker |  | 9529 | 223 | Markdown::Section { file: docs/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.561 |
-| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.563 |
-| walker |  | 9637 | 108 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 10, sub: 0, line: 49 } |  |  | 0.570 |
-| ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.563 |
-| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.563 |
-| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.561 |
+| walker |  | 3671 | 41 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 5, sub: 0, line: 86 } |  |  | 0.592 |
+| walker |  | 3716 | 45 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 7, sub: 0, line: 113 } |  |  | 0.593 |
+| walker |  | 3763 | 47 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 6, sub: 0, line: 97 } |  |  | 0.593 |
+| walker |  | 3815 | 52 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 8, sub: 0, line: 126 } |  |  | 0.595 |
+| ns | 3887 |  | 236 | peep_db body: table-vs-JSON post-processing and the finally-disconnect (core.py 80-98) | 3.7 | 3.6 | 0.575 |
+| walker |  | 3933 | 118 | Code::CodeKey { rung: Names, file: peepdb/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
+| walker |  | 4042 | 109 | Code::CodeKey { rung: Decl, file: peepdb/core.py, decl: 4, sub: 0, line: 56 } |  |  | 0.615 |
+| walker |  | 4108 | 66 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 4, sub: 0, line: 53 } |  |  | 0.619 |
+| walker |  | 4113 | 5 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 5, sub: 0, line: 25 } |  |  | 0.621 |
+| ns | 4134 |  | 247 | format_value: numeric/date rendering rules (core.py 119-140) | 3.8 | 1.5 | 0.599 |
+| walker |  | 4140 | 27 | Markdown::Section { file: docs/installation.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.599 |
+| walker |  | 4308 | 168 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.624 |
+| ns | 4335 |  | 201 | format_as_table: the tabulate grid layout (core.py 102-115) | 3.9 | 1.5 | 0.611 |
+| walker |  | 4380 | 72 | Markdown::Section { file: docs/index.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.611 |
+| walker |  | 4453 | 73 | Markdown::Section { file: docs/installation.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.611 |
+| ns | 4459 |  | 124 | core.py import header and module logger setup | 3.10 |  | 0.599 |
+| walker |  | 4474 | 21 | Code::CodeKey { rung: Body, file: peepdb/db/firebase.py, decl: 5, sub: 0, line: 26 } |  |  | 0.599 |
+| walker |  | 4628 | 154 | Markdown::HeadingsOutline { file: docs/README.md } |  |  | 0.599 |
+| walker |  | 4648 | 20 | Markdown::Section { file: docs/README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.599 |
+| walker |  | 4666 | 18 | Markdown::Section { file: docs/README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.599 |
+| walker |  | 4724 | 58 | Markdown::Section { file: docs/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.599 |
+| walker |  | 4939 | 215 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.599 |
+| ns | 4964 |  | 505 | Every class and method name across all eight backend modules | 4.1 | 3.1 | 0.633 |
+| walker |  | 5211 | 272 | Code::CodeKey { rung: Names, file: peepdb/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.664 |
+| walker |  | 5229 | 18 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 8, sub: 0, line: 29 } |  |  | 0.664 |
+| walker |  | 5249 | 20 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 9, sub: 0, line: 41 } |  |  | 0.664 |
+| ns | 5263 |  | 299 | The table/collection-listing query of every backend | 4.2 | 4.1 | 0.644 |
+| walker |  | 5279 | 30 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 1, sub: 0, line: 15 } |  |  | 0.645 |
+| walker |  | 5294 | 15 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 12, sub: 0, line: 70 } |  |  | 0.645 |
+| walker |  | 5309 | 15 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 13, sub: 0, line: 73 } |  |  | 0.645 |
+| walker |  | 5360 | 51 | Markdown::Section { file: docs/README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.645 |
+| walker |  | 5365 | 5 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 6, sub: 0, line: 29 } |  |  | 0.647 |
+| walker |  | 5391 | 26 | Code::CodeKey { rung: Doc, file: peepdb/db/mongodb.py, decl: 5, sub: 0, line: 42 } |  |  | 0.647 |
+| walker |  | 5427 | 36 | Markdown::Section { file: docs/installation.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.647 |
+| walker |  | 5551 | 124 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.647 |
+| walker |  | 5582 | 31 | Code::CodeKey { rung: Body, file: peepdb/db/mariadb.py, decl: 4, sub: 0, line: 30 } |  |  | 0.647 |
+| walker |  | 5589 | 7 | Code::CodeKey { rung: Body, file: peepdb/cli.py, decl: 3, sub: 0, line: 25 } |  |  | 0.647 |
+| ns | 5595 |  | 332 | MySQLDatabase — the canonical backend implementation | 4.3 | 4.1 | 0.625 |
+| walker |  | 5621 | 32 | Code::CodeKey { rung: Body, file: peepdb/db/oracle.py, decl: 4, sub: 0, line: 32 } |  |  | 0.626 |
+| walker |  | 5654 | 33 | Code::CodeKey { rung: Body, file: peepdb/db/firebase.py, decl: 3, sub: 0, line: 10 } |  |  | 0.626 |
+| walker |  | 5688 | 34 | Code::CodeKey { rung: Body, file: peepdb/db/mysql.py, decl: 4, sub: 0, line: 29 } |  |  | 0.628 |
+| walker |  | 5729 | 41 | Markdown::Section { file: docs/usage.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.628 |
+| walker |  | 5735 | 6 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 8, sub: 0, line: 37 } |  |  | 0.631 |
+| walker |  | 5775 | 40 | Code::CodeKey { rung: Body, file: peepdb/db/postgresql.py, decl: 4, sub: 0, line: 30 } |  |  | 0.634 |
+| walker |  | 5825 | 50 | Markdown::Section { file: docs/index.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.634 |
+| ns | 5897 |  | 302 | PostgreSQL, MariaDB and Oracle connect() — drivers, default ports, cursor factories | 4.4 | 4.1 | 0.613 |
+| walker |  | 5902 | 77 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 9, sub: 0, line: 41 } |  |  | 0.613 |
+| walker |  | 5947 | 45 | Code::CodeKey { rung: Body, file: peepdb/db/mssql.py, decl: 2, sub: 0, line: 7 } |  |  | 0.613 |
+| walker |  | 6002 | 55 | Markdown::Section { file: docs/usage.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 6054 | 52 | Code::CodeKey { rung: Body, file: peepdb/db/sqlite.py, decl: 3, sub: 0, line: 22 } |  |  | 0.613 |
+| walker |  | 6107 | 53 | Code::CodeKey { rung: Body, file: peepdb/db/oracle.py, decl: 3, sub: 0, line: 25 } |  |  | 0.613 |
+| ns | 6156 |  | 259 | MongoDBDatabase.connect — URI construction from the generic parameters | 4.5 | 4.1 | 0.599 |
+| walker |  | 6161 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/mariadb.py, decl: 3, sub: 0, line: 23 } |  |  | 0.599 |
+| walker |  | 6215 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/mssql.py, decl: 4, sub: 0, line: 28 } |  |  | 0.599 |
+| walker |  | 6269 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/mysql.py, decl: 3, sub: 0, line: 22 } |  |  | 0.599 |
+| walker |  | 6323 | 54 | Code::CodeKey { rung: Body, file: peepdb/db/postgresql.py, decl: 3, sub: 0, line: 23 } |  |  | 0.599 |
+| ns | 6435 |  | 279 | MSSQLDatabase: constructor extras and the ODBC connection string | 4.6 | 4.1 | 0.589 |
+| walker |  | 6524 | 201 | Code::CodeKey { rung: Body, file: peepdb/core.py, decl: 5, sub: 0, line: 101 } |  |  | 0.609 |
+| ns | 6582 |  | 147 | FirebaseDatabase: the backend that does not call super().__init__ | 4.7 | 4.1 | 0.602 |
+| walker |  | 6588 | 64 | Markdown::Section { file: docs/usage.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.602 |
+| walker |  | 6652 | 64 | Markdown::Section { file: docs/usage.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.602 |
+| walker |  | 6884 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.602 |
+| ns | 6899 |  | 317 | SQLiteDatabase connect and fetch_data — file-path handling and print-based logging | 4.8 | 4.1 | 0.589 |
+| walker |  | 7085 | 201 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: true } |  |  | 0.589 |
+| ns | 7201 |  | 302 | The non-LIMIT/OFFSET pagination variants (MSSQL, Oracle, MongoDB, Firebase) | 4.9 | 4.1 | 0.577 |
+| walker |  | 7207 | 122 | Markdown::Section { file: docs/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.577 |
+| walker |  | 7274 | 67 | Markdown::Section { file: docs/installation.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.577 |
+| ns | 7310 |  | 109 | Where credentials live: config paths and KeySecurity modes | 5.1 | 1.9 | 0.581 |
+| ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.574 |
+| walker |  | 7521 | 247 | Code::CodeKey { rung: Body, file: peepdb/core.py, decl: 6, sub: 0, line: 118 } |  |  | 0.602 |
+| walker |  | 7569 | 48 | Code::CodeKey { rung: Body, file: peepdb/db/mongodb.py, decl: 3, sub: 0, line: 32 } |  |  | 0.602 |
+| ns | 7742 |  | 247 | The two key sources: PBKDF2 derivation and keyring fetch-or-create | 5.3 | 1.9 | 0.597 |
+| walker |  | 7846 | 277 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 3, sub: 0, line: 25 } |  |  | 0.597 |
+| ns | 7987 |  | 245 | save_connection: the on-disk record shape and what is encrypted | 5.4 | 1.9 | 0.586 |
+| ns | 8167 |  | 180 | get_connection: the tuple contract and InvalidPassword | 5.5 | 1.9 | 0.576 |
+| ns | 8309 |  | 142 | add_key_security: first-run choice between keyring and password | 5.6 | 1.9 | 0.571 |
+| ns | 8403 |  | 94 | list/remove/remove_all_connections — the distinctive lines only | 5.7 | 1.9 | 0.566 |
+| walker |  | 8713 | 867 | Plaintext::Whole { file: requirements.txt } |  |  | 0.566 |
+| ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.554 |
+| walker |  | 8794 | 81 | Code::CodeKey { rung: Body, file: peepdb/db/firebase.py, decl: 6, sub: 0, line: 30 } |  |  | 0.560 |
+| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.556 |
+| walker |  | 8899 | 105 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 11, sub: 0, line: 60 } |  |  | 0.564 |
+| walker |  | 8987 | 88 | Markdown::Section { file: docs/index.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.564 |
+| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.558 |
+| walker |  | 9083 | 96 | Markdown::Section { file: docs/usage.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.558 |
+| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.560 |
+| walker |  | 9186 | 103 | Code::CodeKey { rung: Body, file: peepdb/db/mssql.py, decl: 5, sub: 0, line: 35 } |  |  | 0.568 |
+| walker |  | 9286 | 100 | Markdown::Section { file: docs/usage.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.568 |
+| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.564 |
+| walker |  | 9443 | 157 | Markdown::Section { file: docs/README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.564 |
+| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.565 |
+| walker |  | 9750 | 307 | Markdown::Section { file: docs/README.md, section_index: 9, keeps_default_concavity: true } |  |  | 0.565 |
+| ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.558 |
+| walker |  | 9764 | 14 | Code::CodeKey { rung: Body, file: peepdb/db/base.py, decl: 7, sub: 0, line: 33 } |  |  | 0.562 |
+| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.562 |
+| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.560 |
+| walker |  | 9987 | 223 | Markdown::Section { file: docs/README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.560 |

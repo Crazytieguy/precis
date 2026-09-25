@@ -1,4 +1,4 @@
-Score(3000)=0.482 I=0.781 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.499/0.564/0.482/0.428/0.607/0.572
+Score(3000)=0.482 I=0.781 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.499/0.564/0.482/0.428/0.591/0.593
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -100,98 +100,111 @@ Score(3000)=0.482 I=0.781 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 4715 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 6, sub: 0, line: 70 } |  |  | 0.437 |
 | walker |  | 4738 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 11, sub: 0, line: 131 } |  |  | 0.438 |
 | ns | 4759 |  | 332 | run() stage 2: recursive descent over entries | 4.3 | 4.1 | 0.419 |
-| walker |  | 4845 | 107 | Code::CodeKey { rung: Doc, file: src/error.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.449 |
-| ns | 4882 |  | 123 | run() stage 3: refiners and the success yield | 4.4 | 4.1 | 0.440 |
-| walker |  | 4946 | 101 | Code::CodeKey { rung: Names, file: src/structs/refinements.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.457 |
-| walker |  | 4979 | 33 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 5, sub: 0, line: 93 } |  |  | 0.457 |
-| walker |  | 5023 | 44 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 7, sub: 0, line: 146 } |  |  | 0.457 |
-| ns | 5054 |  | 172 | validate() body: how one failure becomes a StructError | 4.5 | 2.1 | 0.446 |
-| walker |  | 5071 | 48 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.446 |
-| walker |  | 5119 | 48 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 4, sub: 0, line: 77 } |  |  | 0.446 |
-| walker |  | 5176 | 57 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 2, sub: 0, line: 33 } |  |  | 0.446 |
-| walker |  | 5233 | 57 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 3, sub: 0, line: 55 } |  |  | 0.446 |
-| ns | 5265 |  | 211 | Struct constructor: defaults and failure wrapping | 4.6 | 1.6 | 0.431 |
-| walker |  | 5295 | 62 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 6, sub: 0, line: 109 } |  |  | 0.431 |
-| ns | 5456 |  | 191 | StructError constructor: message, cause and failure caching | 4.7 | 2.7 | 0.424 |
-| walker |  | 5528 | 233 | Code::CodeKey { rung: Names, file: src/struct.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.445 |
-| walker |  | 5562 | 34 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.454 |
-| ns | 5596 |  | 140 | Complete docs/ tree listing | 5.1 |  | 0.488 |
-| walker |  | 5599 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 9, sub: 0, line: 139 } |  |  | 0.488 |
-| walker |  | 5636 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 10, sub: 0, line: 157 } |  |  | 0.488 |
-| ns | 5649 |  | 53 | Complete test/ and test/api/ listings | 5.2 |  | 0.502 |
-| walker |  | 5676 | 40 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 8, sub: 0, line: 123 } |  |  | 0.502 |
-| walker |  | 5717 | 41 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.513 |
-| ns | 5774 |  | 125 | All 41 validation-fixture kind directories | 5.3 |  | 0.549 |
-| walker |  | 5800 | 83 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.549 |
-| ns | 5829 |  | 55 | Complete examples/ listing | 5.4 |  | 0.557 |
-| ns | 5906 |  | 77 | One kind directory listed in full, as the case-naming exemplar | 5.5 |  | 0.549 |
-| walker |  | 6044 | 244 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.580 |
-| ns | 6089 |  | 183 | The 45 type-level test files | 5.6 |  | 0.607 |
-| walker |  | 6116 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 2, sub: 0, line: 22 } |  |  | 0.607 |
-| walker |  | 6188 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 7, sub: 0, line: 107 } |  |  | 0.607 |
-| ns | 6316 |  | 227 | Every heading in the six guides | 5.7 |  | 0.618 |
-| walker |  | 6364 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.618 |
-| ns | 6379 |  | 63 | Readme section map | 5.8 |  | 0.621 |
-| ns | 6519 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.618 |
-| walker |  | 6559 | 195 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.618 |
-| ns | 6690 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.612 |
-| walker |  | 6694 | 135 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.612 |
-| ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.602 |
-| walker |  | 6951 | 257 | Markdown::Section { file: License.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.602 |
-| walker |  | 7014 | 63 | Markdown::Section { file: docs/reference/coercions.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.602 |
-| walker |  | 7093 | 79 | Markdown::HeadingsOutline { file: docs/reference/utilities.md } |  |  | 0.602 |
-| walker |  | 7123 | 30 | Markdown::Section { file: docs/reference/utilities.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.602 |
-| walker |  | 7134 | 11 | Code::CodeKey { rung: Body, file: src/struct.ts, decl: 5, sub: 0, line: 83 } |  |  | 0.602 |
-| ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.586 |
-| walker |  | 7259 | 125 | Markdown::Section { file: docs/summary.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.586 |
-| walker |  | 7286 | 27 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 12, sub: 0, line: 144 } |  |  | 0.587 |
-| ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.581 |
-| walker |  | 7368 | 82 | Markdown::HeadingsOutline { file: docs/reference/refinements.md } |  |  | 0.583 |
-| walker |  | 7421 | 53 | Markdown::Section { file: docs/reference/refinements.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.583 |
-| ns | 7481 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.574 |
-| walker |  | 7652 | 231 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.590 |
-| walker |  | 7683 | 31 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 21, sub: 0, line: 226 } |  |  | 0.593 |
-| walker |  | 7723 | 40 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 14, sub: 0, line: 172 } |  |  | 0.593 |
-| walker |  | 7800 | 77 | Code::CodeKey { rung: Doc, file: src/structs/coercions.ts, decl: 3, sub: 0, line: 79 } |  |  | 0.593 |
-| walker |  | 7814 | 14 | Code::CodeKey { rung: Body, file: src/structs/types.ts, decl: 23, sub: 0, line: 258 } |  |  | 0.593 |
-| walker |  | 7838 | 24 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 5, sub: 0, line: 93 } |  |  | 0.593 |
-| walker |  | 7861 | 23 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 11, sub: 0, line: 175 } |  |  | 0.593 |
-| ns | 7894 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.575 |
-| walker |  | 7971 | 110 | Json::Whole { file: jsr.json } |  |  | 0.575 |
-| ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.569 |
-| walker |  | 8191 | 220 | Code::CodeKey { rung: Names, file: src/structs/utilities.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.582 |
-| ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.577 |
-| walker |  | 8224 | 33 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 8, sub: 0, line: 106 } |  |  | 0.577 |
-| walker |  | 8261 | 37 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 11, sub: 0, line: 197 } |  |  | 0.577 |
-| walker |  | 8299 | 38 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 7, sub: 0, line: 80 } |  |  | 0.577 |
-| walker |  | 8342 | 43 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 12, sub: 0, line: 221 } |  |  | 0.577 |
-| walker |  | 8386 | 44 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 10, sub: 0, line: 171 } |  |  | 0.577 |
-| walker |  | 8431 | 45 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 1, sub: 0, line: 17 } |  |  | 0.577 |
-| ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.583 |
-| walker |  | 8533 | 102 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 2, sub: 0, line: 21 } |  |  | 0.583 |
-| ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.580 |
-| walker |  | 8683 | 150 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 3, sub: 0, line: 30 } |  |  | 0.580 |
-| ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.578 |
-| walker |  | 8865 | 182 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 4, sub: 0, line: 44 } |  |  | 0.578 |
-| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.572 |
-| walker |  | 9071 | 206 | Markdown::Section { file: Readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.572 |
-| walker |  | 9097 | 26 | Json::Identity { file: examples/package.json } |  |  | 0.572 |
-| walker |  | 9120 | 23 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.572 |
-| walker |  | 9138 | 18 | Code::CodeKey { rung: Names, file: test/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
-| ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.566 |
-| walker |  | 9246 | 108 | Markdown::Section { file: docs/guides/03-coercing-data.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.566 |
-| walker |  | 9357 | 111 | Markdown::Section { file: docs/guides/04-refining-validation.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.566 |
-| ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.560 |
-| walker |  | 9439 | 82 | Code::CodeKey { rung: Doc, file: src/structs/coercions.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.561 |
-| ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.567 |
-| ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.565 |
-| walker |  | 9708 | 269 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.593 |
-| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.589 |
-| walker |  | 9727 | 19 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 27, sub: 0, line: 295 } |  |  | 0.591 |
-| walker |  | 9749 | 22 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 37, sub: 0, line: 492 } |  |  | 0.591 |
-| walker |  | 9783 | 34 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 30, sub: 0, line: 367 } |  |  | 0.591 |
-| walker |  | 9817 | 34 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 36, sub: 0, line: 456 } |  |  | 0.591 |
-| ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.589 |
-| walker |  | 9852 | 35 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 38, sub: 0, line: 522 } |  |  | 0.589 |
-| walker |  | 9871 | 19 | Code::CodeKey { rung: Body, file: src/structs/utilities.ts, decl: 6, sub: 0, line: 71 } |  |  | 0.590 |
-| walker |  | 9897 | 26 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 2, sub: 0, line: 33 } |  |  | 0.590 |
+| walker |  | 4765 | 27 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 12, sub: 0, line: 144 } |  |  | 0.421 |
+| walker |  | 4830 | 65 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 8, sub: 0, line: 99 } |  |  | 0.424 |
+| ns | 4882 |  | 123 | run() stage 3: refiners and the success yield | 4.4 | 4.1 | 0.416 |
+| walker |  | 4904 | 74 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 7, sub: 0, line: 83 } |  |  | 0.419 |
+| walker |  | 4999 | 95 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 2, sub: 0, line: 31 } |  |  | 0.423 |
+| ns | 5054 |  | 172 | validate() body: how one failure becomes a StructError | 4.5 | 2.1 | 0.412 |
+| walker |  | 5106 | 107 | Code::CodeKey { rung: Doc, file: src/error.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.441 |
+| walker |  | 5207 | 101 | Code::CodeKey { rung: Names, file: src/structs/refinements.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.457 |
+| walker |  | 5240 | 33 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 5, sub: 0, line: 93 } |  |  | 0.457 |
+| ns | 5265 |  | 211 | Struct constructor: defaults and failure wrapping | 4.6 | 1.6 | 0.442 |
+| walker |  | 5284 | 44 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 7, sub: 0, line: 146 } |  |  | 0.442 |
+| walker |  | 5332 | 48 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.442 |
+| walker |  | 5380 | 48 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 4, sub: 0, line: 77 } |  |  | 0.442 |
+| walker |  | 5437 | 57 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 2, sub: 0, line: 33 } |  |  | 0.442 |
+| ns | 5456 |  | 191 | StructError constructor: message, cause and failure caching | 4.7 | 2.7 | 0.434 |
+| walker |  | 5494 | 57 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 3, sub: 0, line: 55 } |  |  | 0.434 |
+| walker |  | 5556 | 62 | Code::CodeKey { rung: Decl, file: src/structs/refinements.ts, decl: 6, sub: 0, line: 109 } |  |  | 0.434 |
+| walker |  | 5580 | 24 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 5, sub: 0, line: 93 } |  |  | 0.434 |
+| ns | 5596 |  | 140 | Complete docs/ tree listing | 5.1 |  | 0.471 |
+| walker |  | 5606 | 26 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 2, sub: 0, line: 33 } |  |  | 0.471 |
+| walker |  | 5632 | 26 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 3, sub: 0, line: 55 } |  |  | 0.473 |
+| ns | 5649 |  | 53 | Complete test/ and test/api/ listings | 5.2 |  | 0.486 |
+| walker |  | 5661 | 29 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.488 |
+| walker |  | 5690 | 29 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 4, sub: 0, line: 77 } |  |  | 0.490 |
+| walker |  | 5738 | 48 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 6, sub: 0, line: 109 } |  |  | 0.494 |
+| ns | 5774 |  | 125 | All 41 validation-fixture kind directories | 5.3 |  | 0.532 |
+| ns | 5829 |  | 55 | Complete examples/ listing | 5.4 |  | 0.540 |
+| ns | 5906 |  | 77 | One kind directory listed in full, as the case-naming exemplar | 5.5 |  | 0.533 |
+| walker |  | 5971 | 233 | Code::CodeKey { rung: Names, file: src/struct.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.548 |
+| walker |  | 6005 | 34 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.555 |
+| walker |  | 6042 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 9, sub: 0, line: 139 } |  |  | 0.555 |
+| walker |  | 6079 | 37 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 10, sub: 0, line: 157 } |  |  | 0.555 |
+| ns | 6089 |  | 183 | The 45 type-level test files | 5.6 |  | 0.583 |
+| walker |  | 6119 | 40 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 8, sub: 0, line: 123 } |  |  | 0.583 |
+| walker |  | 6160 | 41 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.591 |
+| walker |  | 6243 | 83 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.591 |
+| walker |  | 6266 | 23 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 11, sub: 0, line: 175 } |  |  | 0.591 |
+| walker |  | 6289 | 23 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.591 |
+| walker |  | 6314 | 25 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 18, sub: 0, line: 259 } |  |  | 0.591 |
+| ns | 6316 |  | 227 | Every heading in the six guides | 5.7 |  | 0.602 |
+| walker |  | 6341 | 27 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 14, sub: 0, line: 231 } |  |  | 0.602 |
+| walker |  | 6368 | 27 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 15, sub: 0, line: 237 } |  |  | 0.602 |
+| ns | 6379 |  | 63 | Readme section map | 5.8 |  | 0.606 |
+| walker |  | 6396 | 28 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 8, sub: 0, line: 123 } |  |  | 0.606 |
+| walker |  | 6424 | 28 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 17, sub: 0, line: 253 } |  |  | 0.606 |
+| walker |  | 6453 | 29 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 9, sub: 0, line: 139 } |  |  | 0.606 |
+| walker |  | 6483 | 30 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 10, sub: 0, line: 157 } |  |  | 0.606 |
+| ns | 6519 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.603 |
+| walker |  | 6522 | 39 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 19, sub: 0, line: 266 } |  |  | 0.603 |
+| ns | 6690 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.597 |
+| walker |  | 6764 | 242 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.624 |
+| walker |  | 6836 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 2, sub: 0, line: 22 } |  |  | 0.624 |
+| ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.614 |
+| walker |  | 6908 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 7, sub: 0, line: 107 } |  |  | 0.614 |
+| walker |  | 6954 | 46 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.614 |
+| walker |  | 6982 | 28 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 5, sub: 0, line: 83 } |  |  | 0.614 |
+| walker |  | 7015 | 33 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 3, sub: 0, line: 67 } |  |  | 0.614 |
+| walker |  | 7048 | 33 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 4, sub: 0, line: 75 } |  |  | 0.614 |
+| walker |  | 7117 | 69 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.630 |
+| ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.612 |
+| walker |  | 7214 | 97 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.615 |
+| ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.609 |
+| walker |  | 7390 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.609 |
+| ns | 7481 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.600 |
+| walker |  | 7585 | 195 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.600 |
+| walker |  | 7720 | 135 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.600 |
+| ns | 7894 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.581 |
+| walker |  | 7977 | 257 | Markdown::Section { file: License.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.581 |
+| walker |  | 8046 | 69 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 6, sub: 0, line: 93 } |  |  | 0.585 |
+| ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.578 |
+| walker |  | 8109 | 63 | Markdown::Section { file: docs/reference/coercions.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.578 |
+| walker |  | 8188 | 79 | Markdown::HeadingsOutline { file: docs/reference/utilities.md } |  |  | 0.578 |
+| ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.574 |
+| walker |  | 8218 | 30 | Markdown::Section { file: docs/reference/utilities.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.574 |
+| walker |  | 8343 | 125 | Markdown::Section { file: docs/summary.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.574 |
+| walker |  | 8425 | 82 | Markdown::HeadingsOutline { file: docs/reference/refinements.md } |  |  | 0.575 |
+| ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.581 |
+| walker |  | 8478 | 53 | Markdown::Section { file: docs/reference/refinements.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.581 |
+| ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.577 |
+| walker |  | 8709 | 231 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.592 |
+| walker |  | 8740 | 31 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 21, sub: 0, line: 226 } |  |  | 0.595 |
+| ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.593 |
+| walker |  | 8780 | 40 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 14, sub: 0, line: 172 } |  |  | 0.593 |
+| walker |  | 8803 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 13, sub: 0, line: 159 } |  |  | 0.594 |
+| walker |  | 8826 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 23, sub: 0, line: 258 } |  |  | 0.594 |
+| walker |  | 8853 | 27 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 14, sub: 0, line: 172 } |  |  | 0.596 |
+| walker |  | 8880 | 27 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 24, sub: 0, line: 266 } |  |  | 0.596 |
+| walker |  | 8911 | 31 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 15, sub: 0, line: 200 } |  |  | 0.599 |
+| walker |  | 8954 | 43 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 20, sub: 0, line: 225 } |  |  | 0.599 |
+| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.593 |
+| walker |  | 9031 | 77 | Code::CodeKey { rung: Doc, file: src/structs/coercions.ts, decl: 3, sub: 0, line: 79 } |  |  | 0.593 |
+| walker |  | 9113 | 82 | Code::CodeKey { rung: Doc, file: src/structs/coercions.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.594 |
+| walker |  | 9204 | 91 | Code::CodeKey { rung: Doc, file: src/structs/refinements.ts, decl: 7, sub: 0, line: 146 } |  |  | 0.596 |
+| ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.586 |
+| walker |  | 9314 | 110 | Json::Whole { file: jsr.json } |  |  | 0.589 |
+| ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.583 |
+| ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.589 |
+| walker |  | 9534 | 220 | Code::CodeKey { rung: Names, file: src/structs/utilities.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
+| walker |  | 9567 | 33 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 8, sub: 0, line: 106 } |  |  | 0.601 |
+| ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.599 |
+| walker |  | 9604 | 37 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 11, sub: 0, line: 197 } |  |  | 0.599 |
+| walker |  | 9642 | 38 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 7, sub: 0, line: 80 } |  |  | 0.599 |
+| walker |  | 9685 | 43 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 12, sub: 0, line: 221 } |  |  | 0.599 |
+| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.594 |
+| walker |  | 9729 | 44 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 10, sub: 0, line: 171 } |  |  | 0.594 |
+| walker |  | 9774 | 45 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 1, sub: 0, line: 17 } |  |  | 0.594 |
+| ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.592 |
+| walker |  | 9876 | 102 | Code::CodeKey { rung: Decl, file: src/structs/utilities.ts, decl: 2, sub: 0, line: 21 } |  |  | 0.592 |

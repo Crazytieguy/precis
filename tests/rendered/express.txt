@@ -152,6 +152,13 @@ lib/
     128→  var accept = accepts(this);
     129→  return accept.types.apply(accept, arguments);
     …
+    132→/**
+    133→ * Check if the given `encoding`s are accepted.
+    134→ *
+    135→ * @param {String} ...encoding
+    136→ * @return {String|Array}
+    137→ * @public
+    138→ */
     140→req.acceptsEncodings = function(){
     141→  var accept = accepts(this);
     142→  return accept.encodings.apply(accept, arguments);

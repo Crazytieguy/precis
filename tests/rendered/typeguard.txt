@@ -149,14 +149,11 @@ src/
       32→def make_cell(value: object) -> _Cell:
       …
       36→def find_target_function(
-      37→    new_code: CodeType, target_path: Sequence[str], firstlineno: int
-      38→) -> CodeType | None:
       …
       56→def instrument(f: T_CallableOrType) -> FunctionType | str:
       …
       137→def typechecked(
       …
-      146→@overload
       147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
       148→
       149→
@@ -165,21 +162,26 @@ src/
     _exceptions.py
       …
       5→class TypeHintWarning(UserWarning):
-      …
+      6→    """
+      7→    A warning that is emitted when a type hint in string form could not be resolved to
+      8→    an actual type.
+      9→    """
       12→class TypeCheckWarning(UserWarning):
-      …
+      13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
       15→    def __init__(self, message: str):
       16→        super().__init__(message)
       19→class InstrumentationWarning(UserWarning):
       20→    """Emitted when there's a problem with instrumenting a function for type checks."""
       22→    def __init__(self, message: str):
-      23→        super().__init__(message)
-      26→class TypeCheckError(Exception):
       …
+      26→class TypeCheckError(Exception):
+      27→    """
+      28→    Raised by typeguard's type checkers when a type mismatch is detected.
+      29→    """
       31→    def __init__(self, message: str):
       …
       35→    def append_path_element(self, element: str) -> None:
-      36→        self._path.append(element)
+      …
       38→    def __str__(self) -> str:
       …
     _functions.py
@@ -219,7 +221,9 @@ src/
       138→    def should_instrument(self, module_name: str) -> bool:
       …
       156→class ImportHookManager:
-      …
+      157→    """
+      158→    A handle that can be used to uninstall the Typeguard import hook.
+      159→    """
       161→    def __init__(self, hook: MetaPathFinder):
       …
       164→    def __enter__(self) -> None:
@@ -232,6 +236,7 @@ src/
       172→    ) -> None:
       …
       175→    def uninstall(self) -> None:
+      176→        """Uninstall the import hook."""
       …
       183→def install_import_hook(
       184→    packages: Iterable[str] | None = None,

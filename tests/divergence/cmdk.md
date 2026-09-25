@@ -1,4 +1,4 @@
-Score(3000)=0.578 I=0.825 C=0.406 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.544/0.422/0.504/0.578/0.814/0.772/0.661
+Score(3000)=0.593 I=0.828 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.544/0.422/0.504/0.593/0.807/0.810/0.676
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -52,80 +52,82 @@ Score(3000)=0.578 I=0.825 C=0.406 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2660 | 34 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.563 |
 | ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.521 |
 | walker |  | 2865 | 205 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 2, line: 0 } |  |  | 0.546 |
-| ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.578 |
-| walker |  | 3153 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.652 |
-| walker |  | 3179 | 26 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.670 |
-| ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.642 |
-| walker |  | 3381 | 202 | Json::Scripts { file: package.json } |  |  | 0.679 |
-| walker |  | 3407 | 26 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 36, sub: 0, line: 882 } |  |  | 0.679 |
-| ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.694 |
-| walker |  | 3439 | 32 | Markdown::Section { file: ARCHITECTURE.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.698 |
-| ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.709 |
-| walker |  | 3656 | 217 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 12, sub: 1, line: 80 } |  |  | 0.756 |
-| ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.761 |
-| walker |  | 3716 | 60 | Fs::DirListing { dir: test/pages } |  |  | 0.762 |
-| walker |  | 3743 | 27 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 37, sub: 0, line: 899 } |  |  | 0.764 |
-| ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.758 |
-| walker |  | 4125 | 382 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 3, line: 0 } |  |  | 0.790 |
-| walker |  | 4184 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 39, sub: 0, line: 930 } |  |  | 0.814 |
-| walker |  | 4234 | 50 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 49, sub: 0, line: 1071 } |  |  | 0.814 |
-| walker |  | 4299 | 65 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 46, sub: 0, line: 1010 } |  |  | 0.814 |
-| walker |  | 4421 | 122 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 50, sub: 0, line: 1081 } |  |  | 0.814 |
-| walker |  | 4436 | 15 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 45, sub: 0, line: 1004 } |  |  | 0.814 |
-| ns | 4438 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.822 |
-| walker |  | 4608 | 172 | Json::IdentityMeta { file: cmdk/package.json } |  |  | 0.822 |
-| ns | 4659 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.826 |
-| walker |  | 4676 | 68 | Markdown::Section { file: ARCHITECTURE.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.826 |
-| walker |  | 4817 | 141 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.862 |
-| ns | 4873 |  | 214 | Roster of Command's internal functions | 3.4 |  | 0.845 |
-| ns | 5086 |  | 213 | Store: subscribe/snapshot and the 'search' setState branch | 3.5 |  | 0.821 |
-| walker |  | 5127 | 310 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.821 |
-| walker |  | 5278 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.821 |
-| walker |  | 5291 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.821 |
-| ns | 5300 |  | 214 | Root keydown handler: IME guard, vim down bindings, ArrowDown | 3.6 | 3.4 | 0.794 |
-| walker |  | 5321 | 30 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 38, sub: 0, line: 909 } |  |  | 0.796 |
-| walker |  | 5501 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.802 |
-| ns | 5678 |  | 378 | score() and sort(): per-group maximum score and the ordering rules | 4.1 | 3.4 | 0.765 |
-| walker |  | 5749 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: true } |  |  | 0.796 |
-| walker |  | 5775 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.796 |
-| ns | 6027 |  | 349 | sort(): the DOM re-append loop | 4.2 | 4.1 | 0.769 |
-| walker |  | 6214 | 439 | Markdown::Section { file: ARCHITECTURE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.772 |
-| walker |  | 6251 | 37 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 32, sub: 0, line: 729 } |  |  | 0.775 |
-| walker |  | 6261 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.775 |
-| walker |  | 6271 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.775 |
-| walker |  | 6309 | 38 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 34, sub: 0, line: 787 } |  |  | 0.780 |
-| ns | 6432 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.748 |
-| walker |  | 6605 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.748 |
-| ns | 6702 |  | 270 | Item: value inference, render gate, select handlers | 4.4 | 2.6 | 0.731 |
-| walker |  | 6849 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.731 |
-| walker |  | 6871 | 22 | Code::CodeKey { rung: Names, file: test/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.731 |
-| ns | 6880 |  | 178 | Item: rendered element and its attributes | 4.5 | 4.4 | 0.719 |
-| walker |  | 6919 | 48 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 33, sub: 0, line: 774 } |  |  | 0.726 |
-| walker |  | 6965 | 46 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 45, sub: 0, line: 1004 } |  |  | 0.726 |
-| walker |  | 6984 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.726 |
-| walker |  | 7036 | 52 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 35, sub: 0, line: 833 } |  |  | 0.735 |
-| walker |  | 7080 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.735 |
-| ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.720 |
-| ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.708 |
-| ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.696 |
-| walker |  | 7604 | 524 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.696 |
-| ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.699 |
-| walker |  | 8030 | 426 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.699 |
-| ns | 8098 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.684 |
-| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.682 |
-| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.686 |
-| ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.680 |
-| walker |  | 8504 | 474 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.680 |
-| ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.673 |
-| walker |  | 8653 | 149 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.673 |
-| ns | 8740 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.668 |
-| walker |  | 8895 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.668 |
-| ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.661 |
-| walker |  | 9139 | 244 | Markdown::Section { file: ARCHITECTURE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.669 |
-| ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.662 |
-| walker |  | 9349 | 210 | Markdown::Section { file: ARCHITECTURE.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.665 |
-| walker |  | 9368 | 19 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 47, sub: 0, line: 1046 } |  |  | 0.667 |
-| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.655 |
-| ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.642 |
-| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.634 |
-| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.639 |
+| walker |  | 2891 | 26 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 36, sub: 0, line: 882 } |  |  | 0.546 |
+| walker |  | 2918 | 27 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 37, sub: 0, line: 899 } |  |  | 0.549 |
+| walker |  | 2955 | 37 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 32, sub: 0, line: 729 } |  |  | 0.554 |
+| ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.586 |
+| walker |  | 2993 | 38 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 34, sub: 0, line: 787 } |  |  | 0.593 |
+| walker |  | 3041 | 48 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 33, sub: 0, line: 774 } |  |  | 0.605 |
+| walker |  | 3093 | 52 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 35, sub: 0, line: 833 } |  |  | 0.621 |
+| walker |  | 3159 | 66 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 31, sub: 0, line: 664 } |  |  | 0.647 |
+| ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.620 |
+| ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.637 |
+| walker |  | 3447 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.700 |
+| walker |  | 3473 | 26 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.717 |
+| ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.726 |
+| walker |  | 3675 | 202 | Json::Scripts { file: package.json } |  |  | 0.759 |
+| walker |  | 3707 | 32 | Markdown::Section { file: ARCHITECTURE.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.763 |
+| ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.768 |
+| walker |  | 3924 | 217 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 12, sub: 1, line: 80 } |  |  | 0.812 |
+| walker |  | 3984 | 60 | Fs::DirListing { dir: test/pages } |  |  | 0.813 |
+| ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.807 |
+| walker |  | 4366 | 382 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 3, line: 0 } |  |  | 0.838 |
+| walker |  | 4425 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 39, sub: 0, line: 930 } |  |  | 0.861 |
+| ns | 4438 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.865 |
+| walker |  | 4440 | 15 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 45, sub: 0, line: 1004 } |  |  | 0.866 |
+| walker |  | 4490 | 50 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 49, sub: 0, line: 1071 } |  |  | 0.866 |
+| walker |  | 4520 | 30 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 38, sub: 0, line: 909 } |  |  | 0.876 |
+| walker |  | 4585 | 65 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 46, sub: 0, line: 1010 } |  |  | 0.876 |
+| walker |  | 4604 | 19 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 47, sub: 0, line: 1046 } |  |  | 0.876 |
+| ns | 4659 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.878 |
+| walker |  | 4726 | 122 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 50, sub: 0, line: 1081 } |  |  | 0.878 |
+| walker |  | 4761 | 35 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 40, sub: 0, line: 963 } |  |  | 0.878 |
+| ns | 4873 |  | 214 | Roster of Command's internal functions | 3.4 |  | 0.860 |
+| walker |  | 4933 | 172 | Json::IdentityMeta { file: cmdk/package.json } |  |  | 0.860 |
+| walker |  | 5001 | 68 | Markdown::Section { file: ARCHITECTURE.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.860 |
+| ns | 5086 |  | 213 | Store: subscribe/snapshot and the 'search' setState branch | 3.5 |  | 0.836 |
+| walker |  | 5142 | 141 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.870 |
+| ns | 5300 |  | 214 | Root keydown handler: IME guard, vim down bindings, ArrowDown | 3.6 | 3.4 | 0.841 |
+| walker |  | 5452 | 310 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.841 |
+| walker |  | 5603 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.841 |
+| walker |  | 5616 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.841 |
+| ns | 5678 |  | 378 | score() and sort(): per-group maximum score and the ordering rules | 4.1 | 3.4 | 0.803 |
+| walker |  | 5796 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.808 |
+| ns | 6027 |  | 349 | sort(): the DOM re-append loop | 4.2 | 4.1 | 0.781 |
+| walker |  | 6044 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: true } |  |  | 0.810 |
+| walker |  | 6070 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
+| ns | 6432 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.777 |
+| walker |  | 6509 | 439 | Markdown::Section { file: ARCHITECTURE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.780 |
+| walker |  | 6519 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.780 |
+| walker |  | 6529 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.780 |
+| ns | 6702 |  | 270 | Item: value inference, render gate, select handlers | 4.4 | 2.6 | 0.762 |
+| walker |  | 6825 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.762 |
+| ns | 6880 |  | 178 | Item: rendered element and its attributes | 4.5 | 4.4 | 0.749 |
+| walker |  | 7069 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.749 |
+| walker |  | 7091 | 22 | Code::CodeKey { rung: Names, file: test/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.749 |
+| walker |  | 7110 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.749 |
+| ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.734 |
+| walker |  | 7154 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.734 |
+| walker |  | 7200 | 46 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 45, sub: 0, line: 1004 } |  |  | 0.734 |
+| ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.722 |
+| ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.710 |
+| walker |  | 7724 | 524 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.710 |
+| ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.715 |
+| ns | 8098 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.700 |
+| walker |  | 8150 | 426 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.700 |
+| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.698 |
+| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.702 |
+| ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.696 |
+| ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.689 |
+| walker |  | 8624 | 474 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.689 |
+| ns | 8740 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.683 |
+| walker |  | 8773 | 149 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.683 |
+| ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.676 |
+| walker |  | 9015 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.676 |
+| ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.668 |
+| walker |  | 9259 | 244 | Markdown::Section { file: ARCHITECTURE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.676 |
+| walker |  | 9469 | 210 | Markdown::Section { file: ARCHITECTURE.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.680 |
+| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.667 |
+| ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.654 |
+| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.645 |
+| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.651 |

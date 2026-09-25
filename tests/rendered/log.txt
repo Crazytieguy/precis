@@ -113,33 +113,8 @@ src/
     464→static LEVEL_PARSE_ERROR: &str =
     465→    "attempted to convert a string that doesn't match an existing log level";
     …
-    473→#[repr(usize)]
-    474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
     475→pub enum Level {
-    476→    /// The "error" level.
-    477→    ///
-    478→    /// Designates very serious errors.
-    479→    // This way these line up with the discriminants for LevelFilter below
-    480→    // This works because Rust treats field-less enums the same way as C does:
-    481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
-    482→    Error = 1,
-    483→    /// The "warn" level.
-    484→    ///
-    485→    /// Designates hazardous situations.
-    486→    Warn,
-    487→    /// The "info" level.
-    488→    ///
-    489→    /// Designates useful information.
-    490→    Info,
-    491→    /// The "debug" level.
-    492→    ///
-    493→    /// Designates lower priority information.
-    494→    Debug,
-    495→    /// The "trace" level.
-    496→    ///
-    497→    /// Designates very low priority, often extremely verbose, information.
-    498→    Trace,
-    499→}
+    …
     501→impl PartialEq<LevelFilter> for Level {
     502→    #[inline]
     503→    fn eq(&self, other: &LevelFilter) -> bool {
@@ -161,9 +136,11 @@ src/
     532→}
     534→impl Level {
     …
+    546→    /// Returns the most verbose logging level.
     547→    #[inline]
     548→    pub fn max() -> Level {
     …
+    552→    /// Converts the `Level` to the equivalent `LevelFilter`.
     553→    #[inline]
     554→    pub fn to_level_filter(&self) -> LevelFilter {
     …
@@ -214,6 +191,7 @@ src/
     682→}
     684→impl LevelFilter {
     …
+    697→    /// Returns the most verbose logging level filter.
     698→    #[inline]
     699→    pub fn max() -> LevelFilter {
     …
@@ -255,41 +233,52 @@ src/
     …
     867→}
     869→impl<'a> Record<'a> {
-    …
+    870→    /// Returns a new builder.
     871→    #[inline]
     872→    pub fn builder() -> RecordBuilder<'a> {
     …
+    876→    /// The message body.
     877→    #[inline]
     878→    pub fn args(&self) -> &fmt::Arguments<'a> {
     …
+    882→    /// Metadata about the log directive.
     883→    #[inline]
     884→    pub fn metadata(&self) -> &Metadata<'a> {
     …
+    888→    /// The verbosity level of the message.
     889→    #[inline]
     890→    pub fn level(&self) -> Level {
     …
+    894→    /// The name of the target of the directive.
     895→    #[inline]
     896→    pub fn target(&self) -> &'a str {
     …
+    900→    /// The module path of the message.
     901→    #[inline]
     902→    pub fn module_path(&self) -> Option<&'a str> {
     …
+    906→    /// The module path of the message, if it is a `'static` string.
     907→    #[inline]
     908→    pub fn module_path_static(&self) -> Option<&'static str> {
     …
+    915→    /// The source file containing the message.
     916→    #[inline]
     917→    pub fn file(&self) -> Option<&'a str> {
     …
+    921→    /// The source file containing the message, if it is a `'static` string.
     922→    #[inline]
     923→    pub fn file_static(&self) -> Option<&'static str> {
     …
+    930→    /// The line containing the message.
     931→    #[inline]
     932→    pub fn line(&self) -> Option<u32> {
     …
+    936→    /// The structured key-value pairs associated with the message.
     937→    #[cfg(feature = "kv")]
     938→    #[inline]
     939→    pub fn key_values(&self) -> &dyn kv::Source {
     …
+    943→    /// Create a new [`RecordBuilder`](struct.RecordBuilder.html) based on this record.
     944→    #[cfg(feature = "kv")]
     945→    #[inline]
     946→    pub fn to_builder(&self) -> RecordBuilder<'_> {

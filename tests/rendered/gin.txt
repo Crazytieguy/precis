@@ -155,7 +155,7 @@ fs.go
   28→type neutralizedReaddirFile struct {
   29→	http.File
   30→}
-  …
+  32→// Readdir overrides the http.File default implementation and always returns nil.
   33→func (n neutralizedReaddirFile) Readdir(_ int) ([]os.FileInfo, error) {
   …
   42→func Dir(root string, listDirectory bool) http.FileSystem {
@@ -183,9 +183,10 @@ gin.go
   54→type OptionFunc func(*Engine)
   56→// HandlersChain defines a HandlerFunc slice.
   57→type HandlersChain []HandlerFunc
-  …
+  59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
   60→func (c HandlersChain) Last() HandlerFunc {
   …
+  67→// RouteInfo represents a request route's specification which contains method and path and its handler.
   68→type RouteInfo struct {
   69→	Method      string
   70→	Path        string
@@ -290,29 +291,6 @@ logger.go
   65→type LogFormatter func(params LogFormatterParams) string
   …
   68→type LogFormatterParams struct {
-  69→	Request *http.Request
-  70→
-  71→	// TimeStamp shows the time after the server returns a response.
-  72→	TimeStamp time.Time
-  73→	// StatusCode is HTTP response code.
-  74→	StatusCode int
-  75→	// Latency is how much time the server cost to process a certain request.
-  76→	Latency time.Duration
-  77→	// ClientIP equals Context's ClientIP method.
-  78→	ClientIP string
-  79→	// Method is the HTTP method given to the request.
-  80→	Method string
-  81→	// Path is a path the client requests.
-  82→	Path string
-  83→	// ErrorMessage is set if error has occurred in processing the request.
-  84→	ErrorMessage string
-  85→	// isTerm shows whether gin's output descriptor refers to a terminal.
-  86→	isTerm bool
-  87→	// BodySize is the size of the Response Body
-  88→	BodySize int
-  89→	// Keys are the keys set on the request's context.
-  90→	Keys map[any]any
-  91→}
   …
 logger_test.go
 middleware_test.go

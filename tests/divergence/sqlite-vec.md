@@ -164,6 +164,7 @@ Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 9387 | 213 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 2, line: 0 } |  |  | 0.373 |
 | walker |  | 9399 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 22, sub: 0, line: 481 } |  |  | 0.373 |
 | ns | 9451 |  | 171 | Python example, end to end | 5.5 |  | 0.368 |
+| walker |  | 9498 | 99 | Code::CodeKey { rung: Doc, file: sqlite-vec.c, decl: 26, sub: 0, line: 556 } |  |  | 0.368 |
 | ns | 9501 |  | 50 | bindings/ listings (complete) | 5.6 |  | 0.379 |
 | ns | 9640 |  | 139 | Documentation site listings (complete) | 5.7 |  | 0.404 |
 | ns | 9840 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.399 |

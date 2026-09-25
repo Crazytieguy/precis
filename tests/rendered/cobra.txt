@@ -103,50 +103,12 @@ README.md
   133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
-  …
-  22→const (
-  23→	activeHelpMarker = "_activeHelp_ "
-  24→	// The below values should not be changed: programs will be using them explicitly
-  25→	// in their user documentation, and users will be using them explicitly.
-  26→	activeHelpEnvVarSuffix  = "ACTIVE_HELP"
-  27→	activeHelpGlobalEnvVar  = configEnvVarGlobalPrefix + "_" + activeHelpEnvVarSuffix
-  28→	activeHelpGlobalDisable = "0"
-  29→)
-  …
-  38→func AppendActiveHelp(compArray []Completion, activeHelpStr string) []Completion {
-  39→	return append(compArray, fmt.Sprintf("%s%s", activeHelpMarker, activeHelpStr))
-  …
-  47→func GetActiveHelpConfig(cmd *Command) string {
-  …
-  58→func activeHelpEnvVar(name string) string {
-  59→	return configEnvVar(name, activeHelpEnvVarSuffix)
-  …
 active_help_test.go
 args.go
 args_test.go
 assets/
   CobraMain.png
 bash_completions.go
-  …
-  28→// Annotations for Bash completion.
-  29→const (
-  30→	BashCompFilenameExt     = "cobra_annotation_bash_completion_filename_extensions"
-  31→	BashCompCustom          = "cobra_annotation_bash_completion_custom"
-  32→	BashCompOneRequiredFlag = "cobra_annotation_bash_completion_one_required_flag"
-  33→	BashCompSubdirsInDir    = "cobra_annotation_bash_completion_subdirs_in_dir"
-  34→)
-  36→func writePreamble(buf io.StringWriter, name string) {
-  …
-  404→func writePostscript(buf io.StringWriter, name string) {
-  …
-  447→func writeCommands(buf io.StringWriter, cmd *Command) {
-  …
-  459→func writeFlagHandler(buf io.StringWriter, name string, annotations map[string][]string, cmd *Command) {
-  …
-  495→const cbn = "\")\n"
-  496→
-  497→func writeShortFlag(buf io.StringWriter, flag *pflag.Flag, cmd *Command) {
-  …
 bash_completionsV2.go
   …
   24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
@@ -182,55 +144,77 @@ cobra.go
   48→	defaultCaseInsensitive  = false
   49→	defaultTraverseRunHooks = false
   50→)
-  …
+  52→// EnablePrefixMatching allows setting automatic prefix matching. Automatic prefix matching can be a dangerous thing
+  53→// to automatically enable in CLI tools.
+  54→// Set this to true to enable it.
   55→var EnablePrefixMatching = defaultPrefixMatching
-  …
+  57→// EnableCommandSorting controls sorting of the slice of commands, which is turned on by default.
+  58→// To disable sorting, set it to false.
   59→var EnableCommandSorting = defaultCommandSorting
   61→// EnableCaseInsensitive allows case-insensitive commands names. (case sensitive by default)
   62→var EnableCaseInsensitive = defaultCaseInsensitive
-  …
+  64→// EnableTraverseRunHooks executes persistent pre-run and post-run hooks from all parents.
+  65→// By default this is disabled, which means only the first run hook to be found is executed.
   66→var EnableTraverseRunHooks = defaultTraverseRunHooks
-  …
+  68→// MousetrapHelpText enables an information splash screen on Windows
+  69→// if the CLI is started from explorer.exe.
+  70→// To disable the mousetrap, just set this variable to blank string ("").
+  71→// Works only on Microsoft Windows.
   72→var MousetrapHelpText = `This is a command line tool.
   73→
   74→You need to open cmd.exe and run it from there.
   75→`
-  …
+  77→// MousetrapDisplayDuration controls how long the MousetrapHelpText message is displayed on Windows
+  78→// if the CLI is started from explorer.exe. Set to 0 to wait for the return key to be pressed.
+  79→// To disable the mousetrap, just set MousetrapHelpText to blank string ("").
+  80→// Works only on Microsoft Windows.
   81→var MousetrapDisplayDuration = 5 * time.Second
   83→// AddTemplateFunc adds a template function that's available to Usage and Help
   84→// template generation.
   85→func AddTemplateFunc(name string, tmplFunc interface{}) {
   86→	templateFuncs[name] = tmplFunc
   …
+  89→// AddTemplateFuncs adds multiple template functions that are available to Usage and
+  90→// Help template generation.
   91→func AddTemplateFuncs(tmplFuncs template.FuncMap) {
   …
+  97→// OnInitialize sets the passed functions to be run when each command's
+  98→// Execute method is called.
   99→func OnInitialize(y ...func()) {
   100→	initializers = append(initializers, y...)
   …
+  103→// OnFinalize sets the passed functions to be run when each command's
+  104→// Execute method is terminated.
   105→func OnFinalize(y ...func()) {
-  106→	finalizers = append(finalizers, y...)
   …
+  111→// Gt takes two types and checks whether the first type is greater than the second. In case of types Arrays, Chans,
+  112→// Maps and Slices, Gt will compare their lengths. Ints are compared directly while strings are first parsed as
+  113→// ints and then compared.
   114→func Gt(a interface{}, b interface{}) bool {
   …
+  143→// Eq takes two types and checks whether they are equal. Supported types are int and string. Unsupported types will panic.
   144→func Eq(a interface{}, b interface{}) bool {
   …
   159→func trimRightSpace(s string) string {
   …
+  165→// appendIfNotPresent will append stringToAppend to the end of s, but only if it's not yet present in s.
   166→func appendIfNotPresent(s, stringToAppend string) string {
   …
+  173→// rpad adds padding to the right of a string.
   174→func rpad(s string, padding int) string {
   …
   179→func tmpl(text string) *tmplFunc {
   …
+  191→// ld compares two strings and returns the levenshtein distance between them.
   192→func ld(s, t string, ignoreCase bool) int {
   …
   225→func stringInSlice(a string, list []string) bool {
   …
+  234→// CheckErr prints the msg with the prefix 'Error:' and exits with error code 1. If the msg is nil, it does nothing.
   235→func CheckErr(msg interface{}) {
   …
+  242→// WriteStringAndCheck writes a string into a buffer, and checks if the error is not nil.
   243→func WriteStringAndCheck(b io.StringWriter, s string) {
-  244→	_, err := b.WriteString(s)
-  245→	CheckErr(err)
   …
 cobra_test.go
 command.go
@@ -275,13 +259,6 @@ fish_completions.go
   …
   283→// GenFishCompletionFile generates fish completion file.
   284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
-  285→	outFile, err := os.Create(filename)
-  286→	if err != nil {
-  287→		return err
-  288→	}
-  289→	defer outFile.Close()
-  290→
-  291→	return c.GenFishCompletion(outFile, includeDesc)
   …
 fish_completions_test.go
 flag_groups.go

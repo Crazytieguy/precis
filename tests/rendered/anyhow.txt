@@ -73,32 +73,6 @@ rust-toolchain.toml
 src/
   backtrace.rs
   chain.rs
-    …
-    10→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
-    11→pub(crate) struct Chain<'a> {
-    12→    state: ChainState<'a>,
-    13→}
-    …
-    16→pub(crate) enum ChainState<'a> {
-    …
-    26→impl<'a> Chain<'a> {
-    27→    #[cold]
-    28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
-    …
-    33→}
-    35→impl<'a> Iterator for Chain<'a> {
-    …
-    57→impl DoubleEndedIterator for Chain<'_> {
-    …
-    76→impl ExactSizeIterator for Chain<'_> {
-    77→    fn len(&self) -> usize {
-    …
-    91→}
-    93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    94→impl Default for Chain<'_> {
-    95→    fn default() -> Self {
-    …
-    102→}
   context.rs
   ensure.rs
     …
@@ -221,7 +195,25 @@ src/
     390→pub struct Error {
     391→    inner: Own<ErrorImpl>,
     392→}
-    …
+    394→/// Iterator of a chain of source errors.
+    395→///
+    396→/// This type is the iterator returned by [`Error::chain`].
+    397→///
+    398→/// # Example
+    399→///
+    400→/// ```
+    401→/// use anyhow::Error;
+    402→/// use std::io;
+    403→///
+    404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+    405→///     for cause in error.chain() {
+    406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+    407→///             return Some(io_error.kind());
+    408→///         }
+    409→///     }
+    410→///     None
+    411→/// }
+    412→/// ```
     413→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     414→#[derive(Clone)]
     415→pub struct Chain<'a> {
@@ -235,7 +227,8 @@ src/
     618→    fn context<C>(self, context: C) -> Result<T, Error>
     619→    where
     620→        C: Display + Send + Sync + 'static;
-    …
+    622→    /// Wrap the error value with additional context that is evaluated lazily
+    623→    /// only once an error does occur.
     624→    fn with_context<C, F>(self, f: F) -> Result<T, Error>
     625→    where
     626→        C: Display + Send + Sync + 'static,

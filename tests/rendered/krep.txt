@@ -157,7 +157,8 @@ krep.h
   43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
   44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
   45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-  …
+  47→/* --- Match tracking structure --- */
+  48→// Define match_position_t BEFORE match_result_t
   49→typedef struct
   50→{
   51→   size_t start_offset; // Starting position of the match
@@ -183,7 +184,7 @@ krep.h
   104→typedef struct
   …
   122→} thread_data_t;
-  …
+  124→/* --- Thread Pool Implementation --- */
   125→typedef struct task
   126→{
   127→   void *(*func)(void *); // Task function
@@ -203,7 +204,7 @@ krep.h
   141→   size_t working_threads;       // Counter for busy threads
   142→   atomic_bool shutdown;         // Shutdown flag
   143→} thread_pool_t;
-  …
+  145→/* --- Thread Pool API --- */
   146→thread_pool_t *thread_pool_init(int num_threads);
   147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
   …

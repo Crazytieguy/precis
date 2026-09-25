@@ -206,16 +206,30 @@ cmdk/
       …
       664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
       …
+      725→/**
+      726→ * Group command menu items together with a heading.
+      727→ * Grouped items are always shown together.
+      728→ */
       729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
       …
       774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
       …
+      783→/**
+      784→ * Command menu input.
+      785→ * All props are forwarded to the underyling `input` element.
+      786→ */
       787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
       …
       833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
       …
+      879→/**
+      880→ * Renders the command menu in a Radix Dialog.
+      881→ */
       882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
       …
+      896→/**
+      897→ * Automatically renders when there are no results for the search query.
+      898→ */
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
       …
   tsup.config.ts

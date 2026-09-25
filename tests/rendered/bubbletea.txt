@@ -76,18 +76,6 @@ nil_renderer.go
 options.go
 options_test.go
 paste.go
-  …
-  5→type PasteMsg struct {
-  6→	Content string
-  7→}
-  9→// String returns the pasted content as a string.
-  10→func (p PasteMsg) String() string {
-  11→	return p.Content
-  …
-  16→type PasteStartMsg struct{}
-  18→// PasteEndMsg is an message that is emitted when the terminal ends the
-  19→// bracketed-paste text.
-  20→type PasteEndMsg struct{}
 profile.go
   …
   13→type ColorProfileMsg struct {
@@ -108,22 +96,13 @@ renderer.go
 screen.go
   …
   9→type WindowSizeMsg struct {
-  10→	Width  int
-  11→	Height int
-  12→}
   …
   20→func ClearScreen() Msg {
-  21→	return clearScreenMsg{}
   …
   26→type clearScreenMsg struct{}
   …
   62→type ModeReportMsg struct {
-  63→	// Mode is the mode number.
-  64→	Mode ansi.Mode
-  65→
-  66→	// Value is the mode value.
-  67→	Value ansi.ModeSetting
-  68→}
+  …
 screen_test.go
 signals_unix.go
   …
@@ -145,12 +124,15 @@ tea.go
   8→//
   9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
   …
+  38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
   39→var ErrProgramPanic = errors.New("program experienced a panic")
-  …
+  41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
   42→var ErrProgramKilled = errors.New("program was killed")
-  …
+  44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
+  45→// signal, or when it receives a [InterruptMsg].
   46→var ErrInterrupted = errors.New("program was interrupted")
-  …
+  48→// Msg contain data from the result of a IO operation. Msgs trigger the update
+  49→// function and, henceforth, the UI.
   50→type Msg = uv.Event
   52→// Model contains the program's state as well as its core functions.
   53→type Model interface {
@@ -166,7 +148,15 @@ tea.go
   63→	// view is rendered after every Update.
   64→	View() View
   65→}
-  …
+  67→// NewView is a helper function to create a new [View] with the given styled
+  68→// string. A styled string represents text with styles and hyperlinks encoded
+  69→// as ANSI escape codes.
+  70→//
+  71→// Example:
+  72→//
+  73→//	```go
+  74→//	v := tea.NewView("Hello, World!")
+  75→//	```
   76→func NewView(s string) View {
   …
   84→type View struct {
@@ -198,7 +188,16 @@ tea.go
   265→	// if that is enabled.
   266→	ReportAssociatedText bool
   267→}
-  …
+  269→// SetContent is a helper method to set the content of a [View] with a styled
+  270→// string. A styled string represents text with styles and hyperlinks encoded
+  271→// as ANSI escape codes.
+  272→//
+  273→// Example:
+  274→//
+  275→//	```go
+  276→//	var v tea.View
+  277→//	v.SetContent("Hello, World!")
+  278→//	```
   279→func (v *View) SetContent(s string) {
   280→	v.Content = s
   …
@@ -238,6 +237,11 @@ tea.go
   320→// String return a human-readable value for the given [ProgressBarState].
   321→func (s ProgressBarState) String() string {
   …
+  331→// ProgressBar represents the terminal progress bar.
+  332→//
+  333→// Support depends on the terminal.
+  334→//
+  335→// See https://learn.microsoft.com/en-us/windows/terminal/tutorials/progress-bar-sequences
   336→type ProgressBar struct {
   337→	// State is the current state of the progress bar. It can be one of
   338→	// [ProgressBarNone], [ProgressBarDefault], [ProgressBarError],
@@ -247,26 +251,13 @@ tea.go
   342→	// 0 and 100.
   343→	Value int
   344→}
-  …
+  346→// NewProgressBar returns a new progress bar with the given state and value.
+  347→// The value is ignored if the state is [ProgressBarNone] or
+  348→// [ProgressBarIndeterminate].
   349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
 tea_test.go
 termcap.go
-  …
-  5→type requestCapabilityMsg string
-  …
-  30→func RequestCapability(s string) Cmd {
-  31→	return func() Msg {
-  32→		return requestCapabilityMsg(s)
-  33→	}
-  …
-  41→type CapabilityMsg struct {
-  42→	Content string
-  43→}
-  45→// String returns the capability content as a string.
-  46→func (c CapabilityMsg) String() string {
-  47→	return c.Content
-  …
 termios_bsd.go
   …
   11→func (p *Program) checkOptimizedMovements(s *term.State) {
@@ -330,17 +321,3 @@ tutorials/
     …
   go.sum
 xterm.go
-  …
-  3→// TerminalVersionMsg is a message that represents the terminal version.
-  4→type TerminalVersionMsg struct {
-  5→	Name string
-  6→}
-  8→// String returns the terminal name as a string.
-  9→func (t TerminalVersionMsg) String() string {
-  10→	return t.Name
-  …
-  15→type terminalVersion struct{}
-  …
-  20→func RequestTerminalVersion() Msg {
-  21→	return terminalVersion{}
-  …
