@@ -72,9 +72,6 @@ docs/
   team.md
   tsconfig.json
 eslint.config.js
-  …
-  16→export default defineConfig(
-  …
 netlify.toml
 package.json
 packages/
@@ -87,6 +84,39 @@ packages/
     package.json
     src/
       index.ts
+        …
+        11→const {
+        …
+        25→const argv = mri<{
+        …
+        36→const cwd = process.cwd()
+        …
+        39→const helpMessage = `\
+        …
+        63→type ColorFunc = (str: string) => string
+        64→type Framework = {
+        …
+        70→type FrameworkVariant = {
+        …
+        78→const FRAMEWORKS: Framework[] = [
+        …
+        387→const TEMPLATES = FRAMEWORKS.map((f) => f.variants.map((v) => v.name)).reduce(
+        …
+        392→const renameFiles: Record<string, string | undefined> = {
+        393→  _gitignore: '.gitignore',
+        394→}
+        396→const defaultTargetDir = 'vite-project'
+        397→
+        398→function run([command, ...args]: string[], options?: SpawnOptions) {
+        …
+        411→function install(root: string, agent: string) {
+        …
+        425→function start(root: string, agent: string) {
+        …
+        437→async function init() {
+        …
+        702→function formatTargetDir(targetDir: string) {
+        …
     template-lit/
     template-lit-ts/
     template-preact/
@@ -218,9 +248,6 @@ packages/
         …
     tsconfig.json
     tsdown.config.ts
-      …
-      3→export default defineConfig({
-      …
   vite/
     CHANGELOG.md
     LICENSE.md
@@ -234,12 +261,10 @@ packages/
         1→declare const result: boolean
         2→export default result
       false.js
-        1→export default false
       true.d.ts
         1→declare const result: boolean
         2→export default result
       true.js
-        1→export default true
     package.json
       …
       2→  "name": "vite",
@@ -261,18 +286,7 @@ packages/
       84→  },
       …
     rolldown.config.ts
-      …
-      161→export default defineConfig([
-      162→  envConfig,
-      163→  clientConfig,
-      164→  nodeConfig,
-      165→  moduleRunnerConfig,
-      166→])
-      …
     rolldown.dts.config.ts
-      …
-      35→export default defineConfig({
-      …
     rollupLicensePlugin.ts
       …
       7→export default function licensePlugin(
@@ -406,10 +420,4 @@ scripts/
   releaseUtils.ts
   tsconfig.json
 vitest.config.e2e.ts
-  …
-  8→export default defineConfig({
-  …
 vitest.config.ts
-  …
-  7→export default defineConfig({
-  …

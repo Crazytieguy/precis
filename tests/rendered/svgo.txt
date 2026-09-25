@@ -1,6 +1,10 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
+    config.yml
+    feature_request.md
+    plugin_request.md
   dependabot.yml
   workflows/
     ci.yml
@@ -22,7 +26,8 @@ README.md
   5→# SVGO…
   7→SVGO, short for **SVG O**ptimizer, is a Node.js library and command-line application for optimizing SVG files.
   9→## Why?
-  …
+  10→
+  11→SVG files, especially those exported from vector editors, usually contain a lot of redundant information. This includes editor metadata, comments, hidden elements, default or suboptimal values, and other stuff that can be safely removed or converted without impacting rendering.
   13→## Installation
   …
   28→## Command-line usage
@@ -32,6 +37,7 @@ README.md
   79→### Default preset
   …
   108→### Custom plugins
+  110→You can also specify custom plugins:
   …
   134→## API usage
   135→
@@ -61,9 +67,6 @@ docs/
     02-migration-from-v2-to-v3.mdx
     _category_.json
 eslint.config.mjs
-  …
-  5→export default [
-  …
 lib/
   builtin.js
     …
@@ -262,10 +265,13 @@ lib/
   xast.js
     …
     22→export const querySelectorAll = (node, selector, parents) => {
+    23→  return selectAll(selector, node, createCssSelectOptions(node, parents));
     …
     32→export const querySelector = (node, selector, parents) => {
+    33→  return selectOne(selector, node, createCssSelectOptions(node, parents));
     …
     42→export const matches = (node, selector, parents) => {
+    43→  return is(node, selector, createCssSelectOptions(node, parents));
     …
     50→export const detachNodeFromParent = (node, parentNode) => {
     …
@@ -289,29 +295,29 @@ package.json
   75→    "node": ">=16"
   76→  },
   …
+  104→  "dependencies": {
+  105→    "commander": "^11.1.0",
+  106→    "css-select": "^5.1.0",
+  107→    "css-tree": "^3.0.1",
+  108→    "css-what": "^6.1.0",
+  109→    "csso": "^5.0.5",
+  110→    "picocolors": "^1.1.1",
+  111→    "sax": "^1.5.0"
+  112→  },
+  …
+  141→  "resolutions": {
+  142→    "sax@^1.5.0": "patch:sax@npm%3A1.5.0#./.yarn/patches/sax-npm-1.5.0-d40bca2226.patch"
+  143→  }
+  …
 plugins/
   _collections.js
-    1→/**
-    2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/intro.html#Definitions.
-    3→ */
-    …
   _path.js
   _transforms.js
   addAttributesToSVGElement.js
   addClassesToSVGElement.js
   applyTransforms.js
-    …
-    22→export const applyTransforms = (root, params) => {
-    …
   cleanupAttrs.js
   cleanupEnableBackground.js
-    …
-    4→export const name = 'cleanupEnableBackground';
-    5→export const description =
-    6→  'remove or cleanup enable-background attribute when possible';
-    …
-    23→export const fn = (root) => {
-    …
   cleanupIds.js
   cleanupListOfValues.js
   cleanupNumericValues.js
@@ -329,31 +335,14 @@ plugins/
   minifyStyles.js
   moveElemsAttrsToGroup.js
   moveGroupAttrsToElems.js
-    …
-    4→export const name = 'moveGroupAttrsToElems';
-    5→export const description =
-    6→  'moves some group attributes to the content elements';
-    …
-    28→export const fn = () => {
-    …
   prefixIds.js
   preset-default.js
-    …
-    37→const presetDefault = createPreset({
-    …
-    77→export default presetDefault;
   removeAttributesBySelector.js
   removeAttrs.js
   removeComments.js
   removeDeprecatedAttrs.js
   removeDesc.js
   removeDimensions.js
-    1→export const name = 'removeDimensions';
-    2→export const description =
-    3→  'removes width and height in presence of viewBox (opposite to removeViewBox)';
-    …
-    17→export const fn = () => {
-    …
   removeDoctype.js
   removeEditorsNSData.js
   removeElementsByAttr.js
@@ -364,13 +353,6 @@ plugins/
   removeMetadata.js
   removeNonInheritableGroupAttrs.js
   removeOffCanvasPaths.js
-    …
-    6→export const name = 'removeOffCanvasPaths';
-    7→export const description =
-    8→  'removes elements that are drawn outside of the viewBox';
-    …
-    17→export const fn = () => {
-    …
   removeRasterImages.js
   removeScripts.js
   removeStyleElement.js
@@ -384,18 +366,9 @@ plugins/
   removeXMLProcInst.js
   removeXlink.js
   reusePaths.js
-    …
-    4→export const name = 'reusePaths';
-    5→export const description =
-    …
-    18→export const fn = (root) => {
-    …
   sortAttrs.js
   sortDefsChildren.js
 rollup.config.js
-  …
-  35→export default [
-  …
 scripts/
   sync-version.js
 test/

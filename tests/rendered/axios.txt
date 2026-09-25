@@ -21,9 +21,6 @@ SECURITY.md
 THREATMODEL.md
 docs/
 eslint.config.js
-  …
-  4→export default [
-  …
 examples/
 gulpfile.js
   …
@@ -85,7 +82,12 @@ index.d.ts
   103→type ContentType =
   …
   112→export type RawAxiosRequestHeaders = Partial<
-  …
+  113→  RawAxiosHeaders & {
+  114→    [Key in CommonRequestHeadersList]: AxiosHeaderValue;
+  115→  } & {
+  116→    'Content-Type': ContentType;
+  117→  }
+  118→>;
   120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
   121→
   122→type CommonResponseHeadersList =
@@ -415,9 +417,6 @@ package.json
   128→  },
   …
 rollup.config.js
-  …
-  78→export default async () => {
-  …
 sandbox/
   client.html
   client.js
@@ -436,10 +435,4 @@ tests/
 tsconfig.json
 tslint.json
 vitest.config.js
-  …
-  4→export default defineConfig({
-  …
 webpack.config.js
-  1→var config = {};
-  …
-  26→module.exports = config;

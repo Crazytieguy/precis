@@ -132,9 +132,6 @@ monaco-lsp-client/
     5→	"version": "0.1.0",
     …
   rolldown.config.mjs
-    …
-    9→export default defineConfig({
-    …
   src/
     adapters/
     index.ts
@@ -200,9 +197,6 @@ samples/
     style.css
     tsconfig.json
     vite.config.ts
-      …
-      4→export default defineConfig({
-      …
   browser-esm-vite-react/
     .gitignore
     index.html
@@ -220,10 +214,6 @@ samples/
       vite-env.d.ts
     tsconfig.json
     vite.config.ts
-      …
-      5→export default defineConfig({
-      6→	plugins: [react()]
-      7→});
   browser-esm-webpack/
     .gitignore
     dist/
@@ -234,9 +224,6 @@ samples/
       2→	"name": "browser-esm-webpack",
       …
     webpack.config.js
-      …
-      3→module.exports = {
-      …
   browser-esm-webpack-monaco-plugin/
     .gitignore
     dist/
@@ -247,9 +234,6 @@ samples/
       2→	"name": "browser-esm-webpack-monaco-plugin",
       …
     webpack.config.js
-      …
-      4→module.exports = {
-      …
   browser-esm-webpack-small/
     .gitignore
     dist/
@@ -261,9 +245,6 @@ samples/
       2→	"name": "browser-esm-webpack-small",
       …
     webpack.config.js
-      …
-      4→module.exports = {
-      …
   browser-esm-webpack-typescript/
     .gitignore
     package.json
@@ -275,9 +256,6 @@ samples/
       index.ts
     tsconfig.json
     webpack.config.js
-      …
-      4→module.exports = {
-      …
   browser-esm-webpack-typescript-react/
     .gitignore
     package-lock.json
@@ -293,30 +271,16 @@ samples/
       index.tsx
     tsconfig.json
     webpack.config.js
-      …
-      7→module.exports = {
-      …
   electron-esm-webpack/
     .gitignore
     dist/
     index.js
     main.js
-      …
-      2→const app = electron.app;
-      3→const BrowserWindow = electron.BrowserWindow;
-      4→
-      5→let mainWindow;
-      6→
-      7→function createWindow() {
-      …
     package.json
       …
       2→	"name": "electron-esm-webpack",
       …
     webpack.config.js
-      …
-      3→module.exports = {
-      …
   legacy/
   nwjs-amd/
     index.html
@@ -324,6 +288,15 @@ samples/
     index.html
   package-lock.json
   package.json
+    …
+    2→	"name": "monaco-editor-samples",
+    3→	"version": "0.0.1",
+    4→	"private": true,
+    5→	"description": "Samples for using the Monaco Editor",
+    6→	"main": "index.js",
+    …
+    11→	"license": "MIT",
+    …
 scripts/
   ci/
   lib/
@@ -334,7 +307,10 @@ src/
       monaco.contribution.ts
     editor/
       editor.main.ts
+        1→export * from '../../index';
       editor.worker.ts
+        …
+        26→export { initialize };
     language/
       css/
         css.worker.ts
@@ -555,6 +531,13 @@ webpack-plugin/
   README.md
   package-lock.json
   package.json
+    …
+    2→	"name": "monaco-editor-webpack-plugin",
+    3→	"version": "7.1.1",
+    4→	"description": "A webpack plugin for the Monaco Editor",
+    …
+    23→	"license": "MIT",
+    …
   src/
     index.ts
     loader-utils.d.ts

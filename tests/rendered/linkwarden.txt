@@ -94,8 +94,6 @@ apps/
         maskable_logo.png
         splash-icon.png
     babel.config.js
-      1→module.exports = function (api) {
-      …
     components/
     eas.json
     lib/
@@ -108,15 +106,10 @@ apps/
         …
       theme.ts
     metro.config.js
-      …
-      18→module.exports = withNativeWind(config, { input: "./styles/global.css" });
     nativewind-env.d.ts
     package.json
     plugins/
       with-daynight-transparent-nav.js
-        …
-        38→module.exports = function withDayNightTransparentNav(config) {
-        …
     store/
       auth.ts
       data.ts
@@ -124,9 +117,6 @@ apps/
     styles/
       global.css
     tailwind.config.js
-      …
-      13→module.exports = {
-      …
     tsconfig.json
     types/
       global.ts
@@ -162,20 +152,11 @@ apps/
         isValidUrl.ts
       utils.ts
     next-i18next.config.js
-      …
-      2→module.exports = {
-      …
     next.config.js
-      …
-      5→const nextConfig = {
-      …
-      31→module.exports = nextConfig;
     package.json
     pages/
     playwright.config.ts
     postcss.config.js
-      1→module.exports = {
-      …
     public/
     scripts/
     store/
@@ -184,9 +165,6 @@ apps/
     styles/
       globals.css
     tailwind.config.js
-      …
-      5→module.exports = {
-      …
     templates/
       acceptInvitation.html
       passwordReset.html
@@ -300,12 +278,66 @@ packages/
       …
       19→export default s3Client;
   lib/
+    constants.ts
+      1→export const MEILI_INDEX_VERSION = 1;
+    formatStats.ts
+      …
+      4→export function formatAvailable(
+      …
+      11→export const atLeastOneFormatAvailable = (
+      …
+    generatePreview.ts
+      …
+      5→export const generatePreview = async (
+      …
+    getFormatBasedOnPreference.ts
+    getFormatFromContentType.ts
+    getLinkTypeFromFormat.ts
+    getOriginalFormat.ts
+      …
+      6→const getOriginalFormat = (
+      7→  link: LinkIncludingShortenedCollectionAndTags
+      8→): ArchivedFormat | null => {
+      …
+      17→export default getOriginalFormat;
+    getPreservedFormatUrl.ts
+      …
+      3→export default async function getPreservedFormatUrl({
+      …
+    isArchivalTag.ts
+      …
+      3→export const isArchivalTag = (tag: any | Tag) =>
+      …
+    meilisearchClient.ts
+      …
+      5→export const meiliClient = apiKey
+      …
+    package.json
+    rssHandler.ts
+      …
+      7→export const rssHandler = async (
+      …
+    safeFetch.ts
+      …
+      95→export async function safeFetch(
+      …
+    schemaValidation.ts
+    ssrf.test.ts
+    ssrf.ts
+    transporter.ts
+      …
+      3→export default createTransport({
+      …
+    utils.ts
+    verifyCapacity.ts
+      …
+      8→export const hasPassedLimit = async (
+      …
   prisma/
     client/
       index.d.ts
         1→export * from "../../../node_modules/.prisma/client/index.d";
       index.js
-        1→export * from "@prisma/client";
     index.ts
       …
       3→const globalForPrisma = global as unknown as { prisma: PrismaClient };
@@ -444,15 +476,4 @@ packages/
 patches/
   xcode+3.0.1.patch
 vitest.config.mts
-  …
-  4→export default defineConfig({
-  5→  resolve: {
-  6→    alias: {
-  7→      "@": path.resolve(process.cwd(), "apps/web"),
-  8→    },
-  9→  },
-  10→  test: {
-  11→    exclude: ["**/node_modules/**", "**/dist/**", "**/e2e/**"],
-  12→  },
-  13→});
 yarn.lock

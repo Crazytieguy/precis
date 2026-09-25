@@ -114,12 +114,33 @@ bookmarks/
     20→def app_version(request):
     21→    return {"app_version": utils.app_version}
   feeds.py
+    …
+    14→@dataclass
+    15→class FeedContext:
+    16→    request: HttpRequest
+    17→    feed_token: FeedToken | None
+    18→    query_set: QuerySet[Bookmark]
+    21→def sanitize(text: str):
+    …
+    31→class BaseBookmarksFeed(Feed):
+    …
+    73→class AllBookmarksFeed(BaseBookmarksFeed):
+    74→    title = "All bookmarks"
+    75→    description = "All bookmarks"
+    76→
+    77→    def get_query_set(self, feed_token: FeedToken, search: BookmarkSearch):
+    …
+    80→    def link(self, context: FeedContext):
+    …
+    84→class UnreadBookmarksFeed(BaseBookmarksFeed):
+    …
+    97→class SharedBookmarksFeed(BaseBookmarksFeed):
+    …
+    110→class PublicSharedBookmarksFeed(BaseBookmarksFeed):
+    …
   forms.py
   frontend/
     api.js
-      1→export class Api {
-      …
-      32→export const api = new Api(apiBaseUrl);
     components/
       bookmark-page.js
       clear-button.js
@@ -130,17 +151,8 @@ bookmarks/
       filter-drawer.js
       form.js
       modal.js
-        …
-        4→export class Modal extends HeadlessElement {
-        …
       search-autocomplete.js
-        …
-        14→export class SearchAutocomplete extends TurboLitElement {
-        …
       tag-autocomplete.js
-        …
-        7→export class TagAutocomplete extends TurboLitElement {
-        …
       upload-button.js
     index.js
     shortcuts.js
@@ -149,16 +161,8 @@ bookmarks/
       focus.js
       input.js
       position-controller.js
-        …
-        10→export class PositionController {
-        …
       search-history.js
-        …
-        4→export class SearchHistory {
-        …
       tag-cache.js
-        …
-        35→export const cache = new TagCache(api);
   management/
     commands/
       backup.py
@@ -492,22 +496,9 @@ manage.py
 package-lock.json
 package.json
 postcss.config.js
-  …
-  5→module.exports = {
-  6→  plugins: [
-  7→    postcssImport,
-  8→    postcssNesting,
-  9→    cssnano({
-  10→      preset: "default",
-  11→    }),
-  12→  ],
-  13→};
 pyproject.toml
 pytest.ini
 rollup.config.mjs
-  …
-  17→export default {
-  …
 scripts/
 supervisord-all.conf
 supervisord-tasks.conf

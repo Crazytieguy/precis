@@ -4,9 +4,12 @@
 .github/
   CODEOWNERS
   ISSUE_TEMPLATE/
+    bug.yml
+    config.yml
   actions/
   dependabot.yml
   matchers/
+    tap.json
   settings.yml
   workflows/
     audit.yml
@@ -27,6 +30,108 @@ LICENSE
 README.md
   1→semver(1) -- The semantic versioner for npm
   2→===========================================
+  4→## Install
+  5→
+  6→```bash
+  7→npm install semver
+  8→````
+  10→## Usage
+  11→
+  12→As a node module:
+  13→
+  14→```js
+  15→const semver = require('semver')
+  16→
+  17→semver.valid('1.2.3') // '1.2.3'
+  18→semver.valid('a.b.c') // null
+  19→semver.clean('  =v1.2.3   ') // '1.2.3'
+  20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
+  21→semver.gt('1.2.3', '9.8.7') // false
+  22→semver.lt('1.2.3', '9.8.7') // true
+  23→semver.minVersion('>=1.0.0') // '1.0.0'
+  24→semver.valid(semver.coerce('v2')) // '2.0.0'
+  25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
+  26→```
+  …
+  139→## Versions
+  140→
+  141→A "version" is described by the `v2.0.0` specification found at
+  142→<https://semver.org/>.
+  143→
+  144→A leading `"="` or `"v"` character is stripped off and ignored.
+  145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
+  146→specification but should not be used anymore.
+  148→## Ranges
+  …
+  184→### Prerelease Tags
+  …
+  279→### Advanced Range Syntax
+  281→Advanced range syntax desugars to primitive comparators in
+  282→deterministic ways.
+  284→Advanced ranges may be combined in the same way as primitive
+  285→comparators using white space or `||`.
+  …
+  384→### Range Grammar
+  …
+  408→## Functions
+  …
+  453→### Comparison
+  455→* `gt(v1, v2)`: `v1 > v2`
+  456→* `gte(v1, v2)`: `v1 >= v2`
+  457→* `lt(v1, v2)`: `v1 < v2`
+  458→* `lte(v1, v2)`: `v1 <= v2`
+  …
+  462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+  …
+  469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
+  470→  in descending order when passed to `Array.sort()`.
+  …
+  473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
+  …
+  478→### Sorting
+  …
+  485→### Comparators
+  486→
+  487→* `intersects(comparator)`: Return true if the comparators intersect
+  489→### Ranges
+  491→* `validRange(range)`: Return the valid range or null if it's not valid.
+  492→* `satisfies(version, range)`: Return true if the version satisfies the
+  493→  range.
+  494→* `maxSatisfying(versions, range)`: Return the highest version in the list
+  495→  that satisfies the range, or `null` if none of them do.
+  496→* `minSatisfying(versions, range)`: Return the lowest version in the list
+  497→  that satisfies the range, or `null` if none of them do.
+  498→* `minVersion(range)`: Return the lowest version that can match
+  499→  the given range.
+  500→* `gtr(version, range)`: Return `true` if the version is greater than all the
+  501→  versions possible in the range.
+  502→* `ltr(version, range)`: Return `true` if the version is less than all the
+  503→  versions possible in the range.
+  …
+  508→* `intersects(range)`: Return true if any of the range comparators intersect.
+  …
+  517→* `subset(subRange, superRange)`: Return `true` if the `subRange` range is
+  518→  entirely contained by the `superRange` range.
+  …
+  528→If you want to know if a version satisfies or does not satisfy a
+  529→range, use the `satisfies(version, range)` function.
+  531→### Coercion
+  533→* `coerce(version, options)`: Coerces a string to semver if possible
+  …
+  558→### Clean
+  560→* `clean(version)`: Clean a string to be a valid semver if possible
+  562→This will return a cleaned and trimmed semver version. If the provided
+  563→version is not valid a null will be returned. This does not work for
+  564→ranges.
+  …
+  576→## Constants
+  577→
+  578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+  580→### `RELEASE_TYPES`
+  …
+  600→### `SEMVER_SPEC_VERSION`
+  …
+  610→## Exported Modules
   …
 SECURITY.md
 benchmarks/
@@ -40,164 +145,34 @@ bin/
   semver.js
 classes/
   comparator.js
-    …
-    5→class Comparator {
-    6→  static get ANY () {
-    7→    return ANY
-    …
-    10→  constructor (comp, options) {
-    …
-    36→  parse (comp) {
-    …
-    57→  toString () {
-    …
-    61→  test (version) {
-    …
-    79→  intersects (comp, options) {
-    …
-    134→}
-    136→module.exports = Comparator
-    …
   index.js
-    …
-    3→module.exports = {
-    4→  SemVer: require('./semver.js'),
-    5→  Range: require('./range.js'),
-    6→  Comparator: require('./comparator.js'),
-    7→}
   range.js
-    …
-    6→class Range {
-    7→  constructor (range, options) {
-    …
-    73→  get range () {
-    …
-    92→  format () {
-    …
-    96→  toString () {
-    …
-    100→  parseRange (range) {
-    …
-    170→  intersects (range, options) {
-    …
-    193→  test (version) {
-    …
-    213→}
-    215→module.exports = Range
-    …
   semver.js
-    …
-    9→class SemVer {
-    …
-    333→module.exports = SemVer
 functions/
   clean.js
-    …
-    4→const clean = (version, options) => {
-    …
-    8→module.exports = clean
   cmp.js
-    …
-    10→const cmp = (a, op, b, loose) => {
-    …
-    54→module.exports = cmp
   coerce.js
-    …
-    7→const coerce = (version, options) => {
-    …
-    62→module.exports = coerce
   compare-build.js
-    …
-    4→const compareBuild = (a, b, loose) => {
-    …
-    9→module.exports = compareBuild
   compare-loose.js
-    …
-    4→const compareLoose = (a, b) => compare(a, b, true)
-    5→module.exports = compareLoose
   compare.js
-    …
-    4→const compare = (a, b, loose) =>
-    5→  new SemVer(a, loose).compare(new SemVer(b, loose))
-    7→module.exports = compare
   diff.js
-    …
-    5→const diff = (version1, version2) => {
-    …
-    60→module.exports = diff
   eq.js
-    …
-    4→const eq = (a, b, loose) => compare(a, b, loose) === 0
-    5→module.exports = eq
   gt.js
-    …
-    4→const gt = (a, b, loose) => compare(a, b, loose) > 0
-    5→module.exports = gt
   gte.js
-    …
-    4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
-    5→module.exports = gte
   inc.js
-    …
-    5→const inc = (version, release, options, identifier, identifierBase) => {
-    …
-    21→module.exports = inc
   lt.js
-    …
-    4→const lt = (a, b, loose) => compare(a, b, loose) < 0
-    5→module.exports = lt
   lte.js
-    …
-    4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
-    5→module.exports = lte
   major.js
-    …
-    4→const major = (a, loose) => new SemVer(a, loose).major
-    5→module.exports = major
   minor.js
-    …
-    4→const minor = (a, loose) => new SemVer(a, loose).minor
-    5→module.exports = minor
   neq.js
-    …
-    4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
-    5→module.exports = neq
   parse.js
-    …
-    4→const parse = (version, options, throwErrors = false) => {
-    …
-    18→module.exports = parse
   patch.js
-    …
-    4→const patch = (a, loose) => new SemVer(a, loose).patch
-    5→module.exports = patch
   prerelease.js
-    …
-    4→const prerelease = (version, options) => {
-    …
-    8→module.exports = prerelease
   rcompare.js
-    …
-    4→const rcompare = (a, b, loose) => compare(b, a, loose)
-    5→module.exports = rcompare
   rsort.js
-    …
-    4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
-    5→module.exports = rsort
   satisfies.js
-    …
-    4→const satisfies = (version, range, options) => {
-    …
-    12→module.exports = satisfies
   sort.js
-    …
-    4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
-    5→module.exports = sort
   valid.js
-    …
-    4→const valid = (version, options) => {
-    …
-    8→module.exports = valid
 index.js
   …
   45→module.exports = {
@@ -249,69 +224,11 @@ index.js
   91→}
 internal/
   constants.js
-    …
-    5→const SEMVER_SPEC_VERSION = '2.0.0'
-    6→
-    7→const MAX_LENGTH = 256
-    8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-    9→/* istanbul ignore next */ 9007199254740991
-    …
-    12→const MAX_SAFE_COMPONENT_LENGTH = 16
-    …
-    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
-    17→
-    18→const RELEASE_TYPES = [
-    …
-    28→module.exports = {
-    …
   debug.js
-    …
-    3→const debug = (
-    4→  typeof process === 'object' &&
-    5→  process.env &&
-    6→  process.env.NODE_DEBUG &&
-    7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
-    8→) ? (...args) => console.error('SEMVER', ...args)
-    9→  : () => {}
-    11→module.exports = debug
   identifiers.js
-    …
-    4→const compareIdentifiers = (a, b) => {
-    …
-    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
-    25→
-    26→module.exports = {
-    27→  compareIdentifiers,
-    28→  rcompareIdentifiers,
-    29→}
   lrucache.js
-    …
-    3→class LRUCache {
-    4→  constructor () {
-    …
-    9→  get (key) {
-    …
-    21→  delete (key) {
-    …
-    25→  set (key, value) {
-    …
-    40→}
-    42→module.exports = LRUCache
   parse-options.js
-    …
-    6→const parseOptions = options => {
-    …
-    17→module.exports = parseOptions
   re.js
-    …
-    9→exports = module.exports = {}
-    …
-    180→exports.tildeTrimReplace = '$1~'
-    …
-    190→exports.caretTrimReplace = '$1^'
-    …
-    203→exports.comparatorTrimReplace = '$1$2$3'
-    …
 map.js
   …
   3→module.exports = testFile => testFile.replace(/test\//, '')
@@ -320,12 +237,42 @@ package.json
   2→  "name": "semver",
   3→  "version": "7.7.4",
   4→  "description": "The semantic version parser used by npm.",
+  5→  "main": "index.js",
+  6→  "scripts": {
+  7→    "test": "tap",
+  8→    "snap": "tap",
+  9→    "lint": "npm run eslint",
+  10→    "postlint": "template-oss-check",
+  11→    "lintfix": "npm run eslint -- --fix",
+  12→    "posttest": "npm run lint",
+  13→    "template-oss-apply": "template-oss-apply --force",
+  14→    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\""
+  15→  },
   …
   22→  "license": "ISC",
+  23→  "repository": {
+  24→    "type": "git",
+  25→    "url": "git+https://github.com/npm/node-semver.git"
+  26→  },
+  27→  "bin": {
+  28→    "semver": "bin/semver.js"
+  29→  },
+  30→  "files": [
+  31→    "bin/",
+  32→    "lib/",
+  33→    "classes/",
+  34→    "functions/",
+  35→    "internal/",
+  36→    "ranges/",
+  37→    "index.js",
+  38→    "preload.js",
+  39→    "range.bnf"
+  40→  ],
   …
   49→  "engines": {
   50→    "node": ">=10"
   51→  },
+  52→  "author": "GitHub Inc.",
   …
 preload.js
   …
@@ -333,69 +280,89 @@ preload.js
 range.bnf
 ranges/
   gtr.js
-    …
-    5→const gtr = (version, range, options) => outside(version, range, '>', options)
-    6→module.exports = gtr
   intersects.js
-    …
-    4→const intersects = (r1, r2, options) => {
-    …
-    9→module.exports = intersects
   ltr.js
-    …
-    5→const ltr = (version, range, options) => outside(version, range, '<', options)
-    6→module.exports = ltr
   max-satisfying.js
-    …
-    6→const maxSatisfying = (versions, range, options) => {
-    …
-    27→module.exports = maxSatisfying
   min-satisfying.js
-    …
-    5→const minSatisfying = (versions, range, options) => {
-    …
-    26→module.exports = minSatisfying
   min-version.js
-    …
-    7→const minVersion = (range, loose) => {
-    …
-    63→module.exports = minVersion
   outside.js
-    …
-    13→const outside = (version, range, hilo, options) => {
-    …
-    82→module.exports = outside
   simplify.js
-    …
-    8→module.exports = (versions, range, options) => {
-    …
   subset.js
-    …
-    45→const subset = (sub, dom, options = {}) => {
-    …
-    249→module.exports = subset
   to-comparators.js
-    …
-    6→const toComparators = (range, options) =>
-    7→  new Range(range, options).set
-    8→    .map(comp => comp.map(c => c.value).join(' ').trim().split(' '))
-    10→module.exports = toComparators
   valid.js
-    …
-    4→const validRange = (range, options) => {
-    …
-    13→module.exports = validRange
 release-please-config.json
 tap-snapshots/
   test/
+    bin/
 test/
   bin/
+    semver.js
   classes/
+    comparator.js
+    index.js
+    range.js
+    semver.js
   fixtures/
+    comparator-intersection.js
+    comparisons.js
+    equality.js
+    increments.js
+    invalid-versions.js
+    range-exclude.js
+    range-include.js
+    range-intersection.js
+    range-parse.js
+    valid-versions.js
+    version-gt-range.js
+    version-lt-range.js
+    version-not-gt-range.js
+    version-not-lt-range.js
   functions/
+    clean.js
+    cmp.js
+    coerce.js
+    compare-build.js
+    compare-loose.js
+    compare.js
+    diff.js
+    eq.js
+    gt.js
+    gte.js
+    inc.js
+    lt.js
+    lte.js
+    major.js
+    minor.js
+    neq.js
+    parse.js
+    patch.js
+    prerelease.js
+    rcompare.js
+    rsort.js
+    satisfies.js
+    sort.js
+    valid.js
   index.js
   integration/
+    whitespace.js
   internal/
+    constants.js
+    debug.js
+    identifiers.js
+    lrucache.js
+    parse-options.js
+    re.js
   map.js
   preload.js
   ranges/
+    gtr.js
+    intersects.js
+    ltr.js
+    max-satisfying.js
+    min-satisfying.js
+    min-version.js
+    outside.js
+    simplify.js
+    subset.js
+    to-comparators.js
+    valid.js

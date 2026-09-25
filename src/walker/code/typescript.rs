@@ -23,6 +23,7 @@ use tree_sitter::Node;
 use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::WalkCtx;
+use crate::walker::fs::is_source_dir;
 
 pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
@@ -141,8 +142,50 @@ pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
         .is_ok_and(|relative| relative.components().count() <= 2)
 }
 
-pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
-    1.0
+/// Tooling config (`vite.config.ts`, `.eslintrc.js`) is not the
+/// project's code, and JavaScript outside a source directory is a
+/// script, demo or helper beside the source rather than the source.
+pub(super) fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
+    if is_config_file(path) {
+        CONFIG_FILE_WEIGHT
+    } else if is_javascript(path) && !is_in_source_tree(path, ctx.root()) {
+        SECONDARY_JAVASCRIPT_WEIGHT
+    } else {
+        1.0
+    }
+}
+
+const CONFIG_FILE_WEIGHT: f64 = 0.001;
+const SECONDARY_JAVASCRIPT_WEIGHT: f64 = 0.05;
+
+fn is_config_file(path: &Path) -> bool {
+    let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
+        return false;
+    };
+    let stem = name.split('.').next().unwrap_or_default();
+    name.starts_with('.') || name.contains(".config.") || stem.ends_with("rc")
+}
+
+fn is_javascript(path: &Path) -> bool {
+    path.extension()
+        .and_then(|extension| extension.to_str())
+        .is_some_and(|extension| {
+            ["js", "mjs", "cjs", "jsx"]
+                .iter()
+                .any(|candidate| extension.eq_ignore_ascii_case(candidate))
+        })
+}
+
+/// At the walk root, or under a `src` / `lib` / `source` directory.
+fn is_in_source_tree(path: &Path, root: &Path) -> bool {
+    let Ok(relative) = path.strip_prefix(root) else {
+        return false;
+    };
+    relative.components().count() == 1
+        || relative.parent().is_some_and(|dir| {
+            dir.iter()
+                .any(|component| is_source_dir(Path::new(component)))
+        })
 }
 
 #[derive(Default)]
@@ -1472,5 +1515,34 @@ export const c = 3;
             entrypoints,
             ["index.ts", "src/index.ts", "packages/core/src/main.js"]
         );
+    }
+
+    #[test]
+    fn code_typescript_config_and_javascript_beside_the_source_weigh_less() {
+        let ctx = WalkCtx::new(PathBuf::from("/repo"));
+        let weight = |relative: &str| file_weight(&Path::new("/repo").join(relative), &ctx);
+        for primary in [
+            "index.js",
+            "lib/router.js",
+            "packages/a/src/x.mjs",
+            "server/app.ts",
+        ] {
+            assert_eq!(weight(primary), 1.0, "{primary}");
+        }
+        for secondary in ["server/app.js", "client/store/index.js"] {
+            assert_eq!(
+                weight(secondary),
+                SECONDARY_JAVASCRIPT_WEIGHT,
+                "{secondary}"
+            );
+        }
+        for config in [
+            ".eslintrc.js",
+            "vite.config.ts",
+            "src/jest.config.cjs",
+            ".prettierrc.js",
+        ] {
+            assert_eq!(weight(config), CONFIG_FILE_WEIGHT, "{config}");
+        }
     }
 }

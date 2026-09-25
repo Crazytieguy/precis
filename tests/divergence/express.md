@@ -1,4 +1,4 @@
-Score(3000)=0.443 I=0.780 C=0.252 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.659/0.602/0.443/0.382/0.341/0.551
+Score(3000)=0.443 I=0.780 C=0.252 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.736/0.659/0.602/0.443/0.382/0.341/0.548
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -117,37 +117,33 @@ Score(3000)=0.443 I=0.780 C=0.252 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.477 |
 | walker |  | 7060 | 181 | ts body lib/utils.js:162 |  |  | 0.498 |
 | walker |  | 7254 | 194 | ts body lib/utils.js:194 |  |  | 0.519 |
-| walker |  | 7276 | 22 | ts names test/support/tmpl.js |  |  | 0.519 |
 | ns | 7299 |  | 258 | examples/README.md — annotated example index (second half) | 5.5 | 5.4 | 0.514 |
 | ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.506 |
-| walker |  | 7433 | 157 | Readme.md section #20 |  |  | 0.506 |
-| walker |  | 7512 | 79 | listing of 'test/fixtures' |  |  | 0.526 |
-| walker |  | 7516 | 4 | listing of 'test/fixtures/pets' |  |  | 0.526 |
-| walker |  | 7521 | 5 | listing of 'test/fixtures/local_layout' |  |  | 0.526 |
-| walker |  | 7528 | 7 | listing of 'test/fixtures/blog' |  |  | 0.526 |
-| walker |  | 7535 | 7 | listing of 'test/fixtures/snow ☃' |  |  | 0.526 |
-| walker |  | 7540 | 5 | listing of 'test/fixtures/blog/post' |  |  | 0.526 |
+| walker |  | 7411 | 157 | Readme.md section #20 |  |  | 0.506 |
+| walker |  | 7490 | 79 | listing of 'test/fixtures' |  |  | 0.526 |
+| walker |  | 7494 | 4 | listing of 'test/fixtures/pets' |  |  | 0.526 |
+| walker |  | 7499 | 5 | listing of 'test/fixtures/local_layout' |  |  | 0.526 |
+| walker |  | 7506 | 7 | listing of 'test/fixtures/blog' |  |  | 0.526 |
+| walker |  | 7513 | 7 | listing of 'test/fixtures/snow ☃' |  |  | 0.526 |
+| walker |  | 7518 | 5 | listing of 'test/fixtures/blog/post' |  |  | 0.526 |
+| walker |  | 7527 | 9 | listing of 'test/fixtures/users' |  |  | 0.526 |
+| walker |  | 7537 | 10 | listing of 'test/fixtures/default_layout' |  |  | 0.526 |
 | ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.523 |
-| walker |  | 7549 | 9 | listing of 'test/fixtures/users' |  |  | 0.523 |
-| walker |  | 7559 | 10 | listing of 'test/fixtures/default_layout' |  |  | 0.523 |
+| walker |  | 7543 | 6 | declaration surface of test/fixtures/% of dogs.txt |  |  | 0.523 |
+| walker |  | 7550 | 7 | declaration surface of test/fixtures/name.txt |  |  | 0.523 |
+| walker |  | 7557 | 7 | declaration surface of test/fixtures/todo.txt |  |  | 0.523 |
 | ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.517 |
-| walker |  | 7701 | 142 | ts names test/support/utils.js |  |  | 0.521 |
-| walker |  | 7707 | 6 | declaration surface of test/fixtures/% of dogs.txt |  |  | 0.521 |
-| walker |  | 7714 | 7 | declaration surface of test/fixtures/name.txt |  |  | 0.521 |
-| walker |  | 7721 | 7 | declaration surface of test/fixtures/todo.txt |  |  | 0.521 |
-| ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.515 |
-| ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.529 |
-| walker |  | 8240 | 519 | README headline in examples/README.md |  |  | 0.553 |
-| ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.547 |
-| ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.542 |
-| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.536 |
-| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.540 |
-| walker |  | 8945 | 705 | YAML config at .github/workflows/ci.yml |  |  | 0.551 |
-| walker |  | 8953 | 8 | declaration surface of test/fixtures/nums.txt |  |  | 0.551 |
-| walker |  | 8987 | 34 | ts body test/support/utils.js:57 |  |  | 0.551 |
-| walker |  | 9029 | 42 | ts doc test/support/utils.js:57 |  |  | 0.551 |
-| walker |  | 9071 | 42 | ts body test/support/utils.js:45 |  |  | 0.551 |
-| ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.546 |
-| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.539 |
-| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.532 |
-| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.529 |
+| ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.511 |
+| walker |  | 8076 | 519 | README headline in examples/README.md |  |  | 0.537 |
+| ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.550 |
+| ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.543 |
+| ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.538 |
+| walker |  | 8781 | 705 | YAML config at .github/workflows/ci.yml |  |  | 0.549 |
+| walker |  | 8789 | 8 | declaration surface of test/fixtures/nums.txt |  |  | 0.549 |
+| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.543 |
+| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.548 |
+| ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.542 |
+| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.535 |
+| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.529 |
+| walker |  | 9790 | 1001 | Readme.md section #33 |  |  | 0.529 |
+| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.525 |

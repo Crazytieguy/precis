@@ -143,9 +143,6 @@ packages/
       5→The API is almost identical to D2TS, but without the need to specify a version when sending data, or to send a frontier to mark the end of a version.
       …
     eslint.config.mjs
-      …
-      3→export default [
-      …
     package.json
     src/
       d2.ts
@@ -202,9 +199,6 @@ packages/
       7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
       …
     eslint.config.mjs
-      …
-      3→export default [
-      …
     package.json
     src/
       compiler.ts
@@ -274,9 +268,6 @@ packages/
       28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
       …
     eslint.config.mjs
-      …
-      3→export default [
-      …
     package.json
       …
       2→  "name": "@electric-sql/d2ts",
@@ -352,9 +343,6 @@ packages/
     tests/
     tsconfig.json
     vitest.config.js
-      …
-      3→export default defineConfig({
-      …
   d2ts-benchmark/
     CHANGELOG.md
     package.json
@@ -393,4 +381,7 @@ packages/
     tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml
+  1→packages:
+  2→  - 'packages/*'
+  3→  - 'examples/*'
 tsconfig.json

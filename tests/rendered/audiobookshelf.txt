@@ -39,9 +39,6 @@ client/
     draggable.css
     ebooks/
       basic.js
-        …
-        5→export default `
-        …
       htmlParser.js
       mobi.js
     fonts.css
@@ -50,6 +47,15 @@ client/
     trix.css
   components/
     app/
+      Appbar.vue
+      BookShelfCategorized.vue
+      BookShelfRow.vue
+      BookShelfToolbar.vue
+      ConfigSideNav.vue
+      LazyBookshelf.vue
+      MediaPlayerContainer.vue
+      SettingsContent.vue
+      SideRail.vue
     cards/
     content/
       LibraryItemDetails.vue
@@ -83,6 +89,13 @@ client/
       PdfReader.vue
       Reader.vue
     stats/
+      DailyListeningChart.vue
+      Heatmap.vue
+      PreviewIcons.vue
+      YearInReview.vue
+      YearInReviewBanner.vue
+      YearInReviewServer.vue
+      YearInReviewShort.vue
     tables/
     ui/
     widgets/
@@ -97,30 +110,16 @@ client/
         cards/
       utils/
   cypress.config.js
-    …
-    3→module.exports = defineConfig({
-    …
   layouts/
     blank.vue
     default.vue
     error.vue
   middleware/
     authenticated.js
-      1→export default function ({ store, redirect, route, app }) {
-      …
   mixins/
     bookshelfCardsHelpers.js
-      …
-      8→export default {
-      …
     menuKeyboardNavigation.js
-      …
-      23→export default {
-      …
     uploadHelpers.js
-      …
-      3→export default {
-      …
   nuxt.config.js
   package-lock.json
   package.json
@@ -131,6 +130,7 @@ client/
     5→  "description": "Self-hosted audiobook and podcast client",
     6→  "main": "index.js",
     …
+    17→  "author": "advplyr",
     18→  "license": "ISC",
     …
   pages/
@@ -147,6 +147,28 @@ client/
     collection/
       _id.vue
     config/
+      api-keys/
+        index.vue
+      authentication.vue
+      backups.vue
+      email.vue
+      index.vue
+      item-metadata-utils/
+        custom-metadata-providers.vue
+        genres.vue
+        index.vue
+        tags.vue
+      libraries.vue
+      log.vue
+      notifications.vue
+      rss-feeds.vue
+      sessions.vue
+      stats.vue
+      users/
+        _id/
+          index.vue
+          sessions.vue
+        index.vue
     config.vue
     index.vue
     item/
@@ -154,6 +176,18 @@ client/
         index.vue
     library/
       _library/
+        bookshelf/
+          _id.vue
+        index.vue
+        narrators.vue
+        podcast/
+          download-queue.vue
+          latest.vue
+          search.vue
+        search.vue
+        series/
+          _id.vue
+        stats.vue
     login.vue
     oops.vue
     playlist/
@@ -164,43 +198,20 @@ client/
       index.vue
   players/
     AudioTrack.js
-      1→export default class AudioTrack {
-      …
     CastPlayer.js
-      …
-      4→export default class CastPlayer extends EventEmitter {
-      …
     LocalAudioPlayer.js
-      …
-      4→export default class LocalAudioPlayer extends EventEmitter {
-      …
     PlayerHandler.js
-      …
-      5→export default class PlayerHandler {
-      …
     castUtils.js
   plugins/
     axios.js
-      1→export default function ({ $axios, store, $root, app }) {
-      …
     chromecast.js
-      1→export default (ctx) => {
-      …
     constants.js
     i18n.js
     init.client.js
     toast.js
     utils.js
-      …
-      229→export function supplant(str, subs) {
-      …
     version.js
   postcss.config.js
-    1→module.exports = {
-    2→  plugins: {
-    3→    '@tailwindcss/postcss': {}
-    4→  }
-    5→}
   static/
     Logo.png
     book_placeholder.jpg
@@ -208,6 +219,10 @@ client/
     fonts/
       MaterialSymbolsRounded.woff2
       Source_Sans_Pro/
+        OFL.txt
+        SourceSansPro-Light.ttf
+        SourceSansPro-Regular.ttf
+        SourceSansPro-SemiBold.ttf
       Ubuntu_Mono/
         UFL.txt
         UbuntuMono-Regular.ttf
@@ -236,15 +251,6 @@ client/
   store/
     globals.js
     index.js
-      …
-      5→export const state = () => ({
-      …
-      34→export const getters = {
-      …
-      67→export const actions = {
-      …
-      130→export const mutations = {
-      …
     libraries.js
     scanners.js
     tasks.js
@@ -256,6 +262,17 @@ docker-compose.yml
 docker-template.xml
 docs/
   README.md
+    1→# OpenAPI specification
+    3→This directory includes the OpenAPI spec for the ABS server. The spec is made up of a number of individual `yaml` files located here and in the subfolders, with `root.yaml` being the file that references all of the others. The files are organized to have the same hierarchy as the server source files. The full spec is b…
+    …
+    9→### Bundling the spec
+    …
+    15→### Linting the spec
+    …
+    21→### Generating documentation
+    …
+    25→### Putting it all together
+    …
   controllers/
     AuthorController.yaml
     EmailController.yaml
@@ -337,114 +354,100 @@ readme.md
   …
 server/
   Auth.js
-    …
-    18→class Auth {
-    …
-    516→module.exports = Auth
   Database.js
-    …
-    13→class Database {
-    …
-    999→module.exports = new Database()
   Logger.js
-    …
-    5→class Logger {
-    …
-    146→module.exports = new Logger()
   Server.js
-    …
-    48→class Server {
-    …
-    514→module.exports = Server
   SocketAuthority.js
-    …
-    16→class SocketAuthority {
-    …
-    428→module.exports = new SocketAuthority()
   Watcher.js
-    …
-    17→class FolderWatcher extends EventEmitter {
-    …
-    429→module.exports = new FolderWatcher()
   auth/
     LocalAuthStrategy.js
-      …
-      12→class LocalAuthStrategy {
-      …
-      186→module.exports = LocalAuthStrategy
     OidcAuthStrategy.js
     TokenManager.js
-      …
-      9→class TokenManager {
-      …
-      425→module.exports = TokenManager
   controllers/
+    ApiKeyController.js
+    AuthorController.js
+    BackupController.js
+    CacheController.js
+    CollectionController.js
+    CustomMetadataProviderController.js
+    EmailController.js
+    FileSystemController.js
+    LibraryController.js
+    LibraryItemController.js
+    MeController.js
+    MiscController.js
+    NotificationController.js
+    PlaylistController.js
+    PodcastController.js
+    RSSFeedController.js
+    SearchController.js
+    SeriesController.js
+    SessionController.js
+    ShareController.js
+    StatsController.js
+    ToolsController.js
+    UserController.js
   finders/
     AuthorFinder.js
-      …
-      8→class AuthorFinder {
-      …
-      68→module.exports = new AuthorFinder()
     BookFinder.js
-      …
-      13→class BookFinder {
-      …
-      646→module.exports = new BookFinder()
-      …
     PodcastFinder.js
-      …
-      4→class PodcastFinder {
-      …
-      35→module.exports = new PodcastFinder()
   libs/
   managers/
+    AbMergeManager.js
+    ApiCacheManager.js
+    AudioMetadataManager.js
+    BackupManager.js
+    BinaryManager.js
+    CacheManager.js
+    CoverManager.js
+    CoverSearchManager.js
+    CronManager.js
+    EmailManager.js
+    LogManager.js
+    MigrationManager.js
+    NotificationManager.js
+    PlaybackSessionManager.js
+    PodcastManager.js
+    RssFeedManager.js
+    ShareManager.js
+    TaskManager.js
   migrations/
   models/
+    ApiKey.js
+    Author.js
+    Book.js
+    BookAuthor.js
+    BookSeries.js
+    Collection.js
+    CollectionBook.js
+    CustomMetadataProvider.js
+    Device.js
+    Feed.js
+    FeedEpisode.js
+    Library.js
+    LibraryFolder.js
+    LibraryItem.js
+    MediaItemShare.js
+    MediaProgress.js
+    PlaybackSession.js
+    Playlist.js
+    PlaylistMediaItem.js
+    Podcast.js
+    PodcastEpisode.js
+    Series.js
+    Session.js
+    Setting.js
+    User.js
   objects/
     Backup.js
-      …
-      5→class Backup {
-      …
-      81→module.exports = Backup
     DailyLog.js
-      …
-      7→class DailyLog {
-      …
-      135→module.exports = DailyLog
     DeviceInfo.js
-      …
-      4→class DeviceInfo {
-      …
-      146→module.exports = DeviceInfo
     Notification.js
-      …
-      3→class Notification {
-      …
-      133→module.exports = Notification
     PlaybackSession.js
-      …
-      6→class PlaybackSession {
-      …
-      251→module.exports = PlaybackSession
     PodcastEpisodeDownload.js
-      …
-      6→class PodcastEpisodeDownload {
-      …
-      133→module.exports = PodcastEpisodeDownload
     Stream.js
-      …
-      15→class Stream extends EventEmitter {
-      …
-      426→module.exports = Stream
     Task.js
-      …
-      10→class Task {
-      …
-      133→module.exports = Task
     TrackProgressMonitor.js
-      1→class TrackProgressMonitor {
-      …
-      88→module.exports = TrackProgressMonitor
     files/
       AudioFile.js
       AudioTrack.js
@@ -459,105 +462,81 @@ server/
       ServerSettings.js
   providers/
     Audible.js
-      …
-      5→class Audible {
-      …
-      174→module.exports = Audible
     AudiobookCovers.js
-      …
-      4→class AudiobookCovers {
-      …
-      33→module.exports = AudiobookCovers
     Audnexus.js
-      …
-      15→class Audnexus {
-      …
-      187→module.exports = Audnexus
     CustomProviderAdapter.js
-      …
-      6→class CustomProviderAdapter {
-      …
-      148→module.exports = CustomProviderAdapter
     FantLab.js
-      …
-      4→class FantLab {
-      …
-      204→module.exports = FantLab
     GoogleBooks.js
-      …
-      4→class GoogleBooks {
-      …
-      77→module.exports = GoogleBooks
     MusicBrainz.js
-      …
-      6→class MusicBrainz {
-      …
-      51→module.exports = MusicBrainz
     OpenLibrary.js
-      …
-      3→class OpenLibrary {
-      …
-      121→module.exports = OpenLibrary
     iTunes.js
-      …
-      30→class iTunes {
-      …
-      170→module.exports = iTunes
   routers/
     ApiRouter.js
-      …
-      39→class ApiRouter {
-      …
-      576→module.exports = ApiRouter
     HlsRouter.js
-      …
-      10→class HlsRouter {
-      …
-      100→module.exports = HlsRouter
     PublicRouter.js
-      …
-      5→class PublicRouter {
-      …
-      24→module.exports = PublicRouter
   scanner/
     AbsMetadataFileScanner.js
     AudioFileScanner.js
     BookScanner.js
-      …
-      52→class BookScanner {
-      …
-      1004→module.exports = new BookScanner()
     LibraryItemScanData.js
     LibraryItemScanner.js
     LibraryScan.js
-      …
-      9→class LibraryScan {
-      …
-      142→module.exports = LibraryScan
     LibraryScanner.js
     MediaProbeData.js
-      …
-      3→class MediaProbeData {
-      …
-      67→module.exports = MediaProbeData
     NfoFileScanner.js
     OpfFileScanner.js
     PodcastScanner.js
-      …
-      35→class PodcastScanner {
-      …
-      485→module.exports = new PodcastScanner()
     ScanLogger.js
-      …
-      4→class ScanLogger {
-      …
-      60→module.exports = ScanLogger
     Scanner.js
-      …
-      27→class Scanner {
-      …
-      546→module.exports = new Scanner()
   utils/
+    areEquivalent.js
+    comicBookExtractors.js
+    constants.js
+    ffmpegHelpers.js
+    fileUtils.js
+    generators/
+      abmetadataGenerator.js
+      hlsPlaylistGenerator.js
+      opmlGenerator.js
+    globals.js
+    htmlEntities.js
+    htmlSanitizer.js
+    index.js
+    libraryHelpers.js
+    longTimeout.js
+    migrations/
+      absMetadataMigration.js
+      dbMigration.js
+      oldDbFiles.js
+    notifications.js
+    parsers/
+      parseComicInfoMetadata.js
+      parseComicMetadata.js
+      parseEbookMetadata.js
+      parseEpubMetadata.js
+      parseFullName.js
+      parseNameString.js
+      parseNfoMetadata.js
+      parseOPML.js
+      parseOpfMetadata.js
+      parseOverdriveMediaMarkers.js
+      parseSeriesString.js
+    podcastUtils.js
+    prober.js
+    profiler.js
+    queries/
+      adminStats.js
+      authorFilters.js
+      libraryFilters.js
+      libraryItemFilters.js
+      libraryItemsBookFilters.js
+      libraryItemsPodcastFilters.js
+      seriesFilters.js
+      userStats.js
+    rateLimiterFactory.js
+    scandir.js
+    stringifySequelizeQuery.js
+    zipHelpers.js
 tailwind.config.js (empty)
 test/
   server/

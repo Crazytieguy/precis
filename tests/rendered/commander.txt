@@ -48,9 +48,6 @@ docs/
     可变参数的选项.md
     术语表.md
 eslint.config.js
-  …
-  12→module.exports = tseslint.config(
-  …
 esm.mjs
   …
   4→export const {
@@ -129,15 +126,6 @@ index.js
   23→exports.InvalidArgumentError = InvalidArgumentError;
   24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated
 jest.config.js
-  1→const config = {
-  2→  testEnvironment: 'node',
-  3→  collectCoverage: true,
-  4→  transform: {
-  5→    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.ts.json' }],
-  6→  },
-  7→  testPathIgnorePatterns: ['/node_modules/'],
-  8→};
-  10→module.exports = config;
 lib/
   argument.js
     …
@@ -224,6 +212,8 @@ lib/
     100→  implies(impliedOptionValues) {
     …
     120→  env(name) {
+    121→    this.envVar = name;
+    122→    return this;
     …
     132→  argParser(fn) {
     …

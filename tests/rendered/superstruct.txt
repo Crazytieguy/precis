@@ -181,24 +181,6 @@ package.json
   20→  },
   …
 rollup.config.js
-  …
-  4→export default defineConfig({
-  5→  input: './src/index.ts',
-  6→  plugins: [typescript()],
-  7→  output: [
-  8→    {
-  9→      file: './dist/index.mjs',
-  10→      format: 'esm',
-  11→      sourcemap: true,
-  12→    },
-  13→    {
-  14→      file: './dist/index.cjs',
-  15→      format: 'umd',
-  16→      name: 'Superstruct',
-  17→      sourcemap: true,
-  18→    },
-  19→  ],
-  20→})
 src/
   error.ts
     1→/**
@@ -257,6 +239,29 @@ src/
       …
     refinements.ts
     types.ts
+      …
+      19→export function any(): Struct<any, null> {
+      …
+      31→export function array<T extends Struct<any>>(Element: T): Struct<Infer<T>[], T>
+      32→export function array(): Struct<unknown[], undefined>
+      33→export function array<T extends Struct<any>>(Element?: T): any {
+      …
+      60→export function bigint(): Struct<bigint, null> {
+      …
+      70→export function boolean(): Struct<boolean, null> {
+      …
+      83→export function date(): Struct<Date, null> {
+      …
+      99→export function enums<U extends number, T extends readonly U[]>(
+      …
+      102→export function enums<U extends string, T extends readonly U[]>(
+      …
+      105→export function enums<U extends string | number, T extends readonly U[]>(
+      …
+      131→export function func(): Struct<Function, null> {
+      …
+      144→export function instance<T extends { new (...args: any): any }>(
+      …
     utilities.ts
   utils.ts
     …

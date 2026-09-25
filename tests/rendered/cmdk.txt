@@ -185,17 +185,55 @@ cmdk/
       …
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
       …
+      909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+      …
+      930→const pkg = Object.assign(Command, {
+      931→  List,
+      932→  Item,
+      933→  Input,
+      934→  Group,
+      935→  Separator,
+      936→  Dialog,
+      937→  Empty,
+      938→  Loading,
+      939→})
+      941→export { useCmdk as useCommandState }
+      942→export { pkg as Command }
+      943→export { defaultFilter }
+      944→
+      945→export { Command as CommandRoot }
+      946→export { List as CommandList }
+      947→export { Item as CommandItem }
+      948→export { Input as CommandInput }
+      949→export { Group as CommandGroup }
+      950→export { Separator as CommandSeparator }
+      951→export { Dialog as CommandDialog }
+      952→export { Empty as CommandEmpty }
+      953→export { Loading as CommandLoading }
+      …
+      963→function findNextSibling(el: Element, selector: string) {
+      …
+      972→function findPreviousSibling(el: Element, selector: string) {
+      …
+      981→function useAsRef<T>(data: T) {
+      …
+      991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+      992→
+      993→function useLazyRef<T>(fn: () => T) {
+      …
+      1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+      …
+      1010→function useValue(
+      …
+      1046→const useScheduleLayoutEffect = () => {
+      …
+      1061→function renderChildren(children: React.ReactElement) {
+      …
+      1071→function SlottableWithNestedChildren(
+      …
+      1081→const srOnlyStyles = {
+      …
   tsup.config.ts
-    …
-    3→export default defineConfig({
-    4→  sourcemap: false,
-    5→  minify: true,
-    6→  dts: true,
-    7→  format: ['esm', 'cjs'],
-    8→  loader: {
-    9→    '.js': 'jsx',
-    10→  },
-    11→})
 package.json
   …
   2→  "name": "cmdk-root",
@@ -214,10 +252,6 @@ package.json
   22→  "packageManager": "pnpm@8.8.0",
   …
 playwright.config.ts
-  …
-  3→const config: PlaywrightTestConfig = {
-  …
-  27→export default config
 pnpm-lock.yaml
 pnpm-workspace.yaml
 test/
