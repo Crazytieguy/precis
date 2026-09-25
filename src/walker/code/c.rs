@@ -49,7 +49,13 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         if node.kind().starts_with('#') {
             directives.extend(gate_directive(node, file));
         } else {
-            decls.extend(decl_info(node, file, in_header, guard_name, banner_end_row));
+            decls.extend(declaration(
+                node,
+                file,
+                in_header,
+                guard_name,
+                banner_end_row,
+            ));
         }
     });
     attach_directives(&mut decls, &directives);
@@ -74,7 +80,7 @@ fn is_header(path: &Path) -> bool {
         .is_some_and(|extension| extension.eq_ignore_ascii_case("h"))
 }
 
-fn decl_info(
+fn declaration(
     node: Node,
     file: &SourceFile,
     in_header: bool,

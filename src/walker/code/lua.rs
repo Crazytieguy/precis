@@ -35,7 +35,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         reexports: Vec::new(),
         decls: find_decls(file.tree.root_node())
             .into_iter()
-            .map(|node| decl_info(node, file))
+            .map(|node| callable(node, file))
             .collect(),
     }
 }
@@ -132,7 +132,7 @@ fn body_block(node: Node) -> Option<Node> {
 /// Head: the declaration's start through the row before its body block
 /// (the whole node when it has none). Body: one item per block statement,
 /// leading comments included, past the head.
-fn decl_info(node: Node, file: &SourceFile) -> DeclInfo {
+fn callable(node: Node, file: &SourceFile) -> DeclInfo {
     let rows = file.node_rows(node);
     let start = *rows.start();
     let block = body_block(node);

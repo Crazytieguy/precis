@@ -89,7 +89,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             }
             TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
-        let mut decl = declaration_parts(file, statement, node);
+        let mut decl = declaration(file, statement, node);
         decl.doc = doc_items(file, statement);
         model.decls.push(decl);
     }
@@ -543,7 +543,7 @@ fn is_commonjs_target(file: &SourceFile, left: Node) -> bool {
 /// introduces, shaped by `node` (the declaration or exported value inside
 /// it). The head starts at `statement`, so it carries `export`, `declare`
 /// and decorators.
-fn declaration_parts(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
+fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
     let span = Span::of(file, statement);
     let name_row = name_row(node).unwrap_or(span.start);
     let kind = node.kind();
@@ -565,7 +565,7 @@ fn declaration_parts(file: &SourceFile, statement: Node, node: Node) -> DeclInfo
         "statement_block" => whole(file, span, vec![span.start], Some(node)),
         "lexical_declaration" | "variable_declaration" => match single_declarator(node) {
             Some(declarator) => match declarator.child_by_field_name("value") {
-                Some(value) => value_parts(file, span, name_row, value),
+                Some(value) => value_declaration(file, span, name_row, value),
                 None => whole(file, span, vec![name_row], None),
             },
             None => {
@@ -578,7 +578,7 @@ fn declaration_parts(file: &SourceFile, statement: Node, node: Node) -> DeclInfo
                 whole(file, span, name_rows, None)
             }
         },
-        _ => value_parts(file, span, span.start, node),
+        _ => value_declaration(file, span, span.start, node),
     }
 }
 
@@ -602,7 +602,7 @@ fn own_object_type(value: Node) -> Option<Node> {
 /// wrapped, `memo(forwardRef(() => { … }))`) is `Callable`; a class is a
 /// container; an object or array literal lists its entries; anything
 /// else is all head.
-fn value_parts(file: &SourceFile, span: Span, name_row: usize, value: Node) -> DeclInfo {
+fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node) -> DeclInfo {
     if is_class_kind(value.kind()) {
         return class(file, span, name_row, value.child_by_field_name("body"));
     }
