@@ -1,47 +1,26 @@
 //! Markdown walker. Uses `tree-sitter-md`'s block grammar for heading and
-//! section detection.
+//! section detection; the root `README.rst` is line-scanned into the same
+//! shapes (see [`rst_readme`]).
 //!
-//! Keys:
-//! - `ReadmeHeadline { file }` — `README.md`, the heading's project-name
-//!   line plus the first non-decorative content. Decorative paragraphs
-//!   (image-only / badge-only) and `<img>`-only HTML blocks immediately
-//!   after the heading are skipped, and a heading line whose tail is
-//!   nothing but badges is rendered with `Render::Truncated` to drop it.
-//! - `HeadingsOutline { file }` — every H1/H2/H3 heading line (full
-//!   row, no body). Cheap navigation hedge analogous to Rust's
-//!   `PubItemNames`. For READMEs the headline-covered H1 row is
-//!   skipped so the headline's `Truncated` render survives. Only
-//!   emitted when 2..=`MAX_OUTLINE_HEADINGS` collectable rows exist.
-//! - `Section { file, section_index }` — one scheduling unit of a
-//!   markdown file's body, 0-indexed. Default granularity is one
-//!   H2-level top-level section per batch; `logical_sections`
-//!   subdivides via one of two rules when applicable. *H3 split*
-//!   (content-heavy H2 with ≥2 H3 children) becomes one `Intro`
-//!   (when its body is substantive) plus one `H3Child` per H3.
-//!   *Body-block split* refines large H3 children into direct
-//!   paragraph/code/list blocks, and can split list-only H2 sections
-//!   into one body block per item (anyhow's `## Details` shape).
-//!   All per-child kinds carry a global signal scale
-//!   (`SUB_SECTION_SIGNAL_SCALE` / `BODY_BLOCK_SIGNAL_SCALE`) to keep
-//!   them from over-ranking once the marginal cost drops to
-//!   per-sub-section size. Root-README sections neither rule catches
-//!   that still exceed `OVERSIZE_SECTION_SPLIT_TOKENS` get the
-//!   *oversize head-split*: a head chunk (kind `Whole`, keeps the
-//!   section's value flags, includes the heading) plus
-//!   predecessor-chained `OversizeTail` chunks (valued at
-//!   `OVERSIZE_TAIL_FACTOR`), cut at blank-line boundaries outside
-//!   code fences. H3/prose
-//!   body-block splitting also requires `HeadingsOutline` so heading
-//!   context is preserved; list-only H2 splits are allowed without an
-//!   outline because each item is self-contained.
-//!   Predecessor (when emitted): outline → headline → none, picking
-//!   the deepest available so all heading-row overlaps are
-//!   ancestor-overlaps. Enabling either split rule shifts
-//!   `section_index` numbering relative to a non-split version of
-//!   the same file; snapshots / divergence reports reflect the
-//!   post-split indexing. For `README.rst` (line-scanned, no
-//!   tree-sitter) `Section`s are the body sections after the title,
-//!   one per setext/overline heading — see [`rst_body_sections`].
+//! Per file, in document order:
+//! - `ReadmeHeadline` (READMEs) — the first heading plus the lede: the
+//!   first substantive block before it and the blocks under it through
+//!   the first paragraph, stepping over chrome (badges, logos, nav
+//!   rows). A heading whose tail is a badge run renders `Truncated`.
+//! - `Prelude` (READMEs) — the rest of the text above the first
+//!   heading, chrome excluded. Predecessor: the headline.
+//! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
+//!   cover, when 2..=[`MAX_OUTLINE_HEADINGS`] rows fit
+//!   [`MAX_OUTLINE_HEADING_BYTES`]. Predecessor: the headline.
+//! - `Section`s — one per top-level H2 (an H1-only document unwraps to
+//!   an intro plus its H2s). Under an emitted outline a large H2 with
+//!   H3s splits per H3, and a large H3 into body blocks; on the root
+//!   README an oversize section splits into a head chunk plus chained
+//!   `OversizeTail` chunks. Predecessor: the outline, else the
+//!   headline.
+//!
+//! Peripheral and auto-injected docs emit only their structural
+//! batches.
 
 use std::collections::BTreeSet;
 use std::path::Path;

@@ -123,11 +123,12 @@ pub enum MarkdownKey {
     /// badges, and every lede block past the one the headline took.
     /// Predecessor: `ReadmeHeadline`.
     Prelude { file: PathBuf },
-    /// Every H1/H2/H3 heading line (H2+H3 only on READMEs). Predecessor
-    /// of every same-file `Section`.
+    /// Every H1/H2/H3 heading line the headline doesn't cover.
+    /// Predecessor of every same-file `Section`.
     HeadingsOutline { file: PathBuf },
     /// One scheduling unit of a markdown body, indexed by post-split
-    /// position. May be whole H2 / per-bullet / Intro+per-H3 child.
+    /// position: a whole H2, an H2 intro, an H3 child, a body block, or
+    /// an oversize chunk.
     /// `keeps_default_concavity` exempts a range from the steeper
     /// index-≥1 prose exponent: README ranges dominated by list /
     /// table / fence rows (catalogs, not prose), and the body behind a
