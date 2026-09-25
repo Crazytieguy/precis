@@ -499,6 +499,7 @@ pub(super) fn language_group(path: &Path) -> Option<&'static str> {
         "rs" => "rs",
         "swift" => "swift",
         "zig" => "zig",
+        "cls" | "sty" => "tex",
         _ => {
             return plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS
                 .iter()
