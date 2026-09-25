@@ -2,8 +2,10 @@
 //! `Cargo.toml` (identity / scripts ≈ features / dependencies) plus
 //! JS-specific `Entry` and `Runtime` batches for entrypoint pointers
 //! (`main`/`module`/`exports`/…) and runtime constraints. Other small
-//! JSON-family configs (`tsconfig.json`, `.eslintrc.json`, `*.json5`,
-//! `*.code-workspace`, …) get a single `Whole` batch; lockfiles and large
+//! root JSON configs (`tsconfig.json`, `.eslintrc.json`, …) and
+//! `*.json5` / `*.code-workspace` files anywhere get a single `Whole`
+//! batch; nested `.json` is data (locale tables, fixtures, logs) far more
+//! often than config and is left to the listing. Lockfiles and large
 //! generated files are skipped. The full `package.json` key→batch mapping
 //! lives in the `is_*_key` predicates below.
 
@@ -95,7 +97,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
         if is_package_json(name) {
             emit_package_json(&file, ctx, &mut out);
-        } else if let Some(batch) = whole_json_batch(&file, name, ctx) {
+        } else if (dir == ctx.root() || !name.to_ascii_lowercase().ends_with(".json"))
+            && let Some(batch) = whole_json_batch(&file, name, ctx)
+        {
             out.push(batch);
         }
     }

@@ -148,5 +148,4 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.734 |
 | walker |  | 9645 | 309 | plaintext config LICENSE |  |  | 0.734 |
 | ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.722 |
-| walker |  | 9814 | 169 | json config fixtures/db.json |  |  | 0.737 |
-| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.728 |
+| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.713 |
