@@ -41,13 +41,6 @@ use super::{FileLines, WalkCtx, fs::files_with_extension, single_file_lines_cont
 /// treated as too large to body-expand within budget).
 const MAX_TOC_ENTRIES: usize = 80;
 
-/// First N decl bodies (in source order) keep full value; later bodies
-/// decay toward [`LATE_DECL_VALUE_FACTOR`]. Schemas front-load their
-/// load-bearing models, and undamped later bodies would crowd the
-/// orientation surfaces the agent needs first.
-const FULL_VALUE_DECLS: usize = 12;
-const LATE_DECL_VALUE_FACTOR: f64 = 0.6;
-
 /// Field count at which a declaration body earns full base value. Wider
 /// models (User/Link/Collection) carry the schema's load-bearing
 /// relations and field semantics the NS wants. Scaling value by body
@@ -155,13 +148,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             value: toc_value(depth),
         });
 
-        let mut body_index = 0;
-        for decl in &decls {
-            if !decl.warrants_body() {
-                continue;
-            }
-            push_decl_batches(&mut out, &file, &source, decl, body_index, depth, &toc_key);
-            body_index += 1;
+        for decl in decls.iter().filter(|decl| decl.warrants_body()) {
+            push_decl_batches(&mut out, &file, &source, decl, depth, &toc_key);
         }
     }
     out
@@ -175,12 +163,11 @@ fn push_decl_batches(
     file: &Path,
     source: &Source,
     decl: &Decl,
-    decl_index: usize,
     depth: f64,
     toc_key: &BatchKey,
 ) {
     let body_rows = decl.close_line.saturating_sub(decl.open_line) + 1;
-    let value = decl_value(decl_index, decl.field_rows(), depth);
+    let value = decl_value(decl.field_rows(), depth);
     let head_key: BatchKey = PrismaKey::Decl {
         file: file.to_path_buf(),
         start_line: decl.open_line,
@@ -335,19 +322,12 @@ fn schema_depth_factor(file: &Path, ctx: &WalkCtx, declares_data_model: bool) ->
 /// listings, README body sections), so the concrete model / enum
 /// fields land right after the catalog. Scaled by body size so wide
 /// load-bearing models out-rank narrow bookkeeping blocks (and the
-/// scheduler's small-batch cost bias is neutralized), then by a
-/// source-order decay so a wide tail of late models doesn't crowd
-/// orientation rows.
-fn decl_value(decl_index: usize, field_rows: usize, depth: f64) -> f64 {
-    let decay = if decl_index < FULL_VALUE_DECLS {
-        1.0
-    } else {
-        LATE_DECL_VALUE_FACTOR
-    };
+/// scheduler's small-batch cost bias is neutralized).
+fn decl_value(field_rows: usize, depth: f64) -> f64 {
     let size = (field_rows as f64 / FULL_VALUE_FIELD_ROWS)
         .powf(crate::value::DEFAULT_CONCAVITY_EXPONENT)
         .min(1.0);
-    mix_signals(0.85, 0.75, 0.7, depth) * size * decay
+    mix_signals(0.85, 0.75, 0.7, depth) * size
 }
 
 #[cfg(test)]
