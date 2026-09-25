@@ -1,4 +1,4 @@
-Score(3000)=0.791 I=0.944 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.783/0.791/0.804/0.656/0.663
+Score(3000)=0.788 I=0.936 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.783/0.788/0.804/0.656/0.663
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -47,14 +47,14 @@ Score(3000)=0.791 I=0.944 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.738 |
 | walker |  | 2654 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.827 |
 | ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.786 |
-| walker |  | 2803 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.790 |
-| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.796 |
-| walker |  | 3105 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.798 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.804 |
-| walker |  | 3268 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.806 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.786 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.750 |
-| walker |  | 3563 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.752 |
+| walker |  | 2956 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.788 |
+| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.794 |
+| walker |  | 3119 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.795 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.770 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.752 |
+| walker |  | 3414 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.754 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.719 |
+| walker |  | 3563 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.752 |
 | ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.733 |
 | ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.725 |
 | ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.696 |

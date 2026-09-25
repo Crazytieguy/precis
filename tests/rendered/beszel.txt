@@ -140,10 +140,6 @@ beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
   …
-  9→	Version = "0.18.7"
-  …
-  11→	AppName = "beszel"
-  …
 go.mod
   1→module github.com/henrygd/beszel
   2→
@@ -229,10 +225,6 @@ internal/
       expirymap_test.go
     heartbeat/
       heartbeat.go
-        1→// Package heartbeat sends periodic outbound pings to an external monitoring
-        2→// endpoint (e.g. BetterStack, Uptime Kuma, Healthchecks.io) so operators can
-        3→// monitor Beszel without exposing it to the internet.
-        …
       heartbeat_test.go
     hub.go
       1→// Package hub handles updating systems and serving the web UI.
@@ -360,7 +352,11 @@ readme.md
   22→- **Automatic backups**: Save to and restore from disk or S3-compatible storage.
   23→<!-- - **REST API**: Use or update your data in your own scripts and applications. -->
   25→## Architecture
-  …
+  26→
+  27→Beszel consists of two main components: the **hub** and the **agent**.
+  28→
+  29→- **Hub**: A web application built on [PocketBase](https://pocketbase.io/) that provides a dashboard for viewing and managing connected systems.
+  30→- **Agent**: Runs on each system you want to monitor and communicates system metrics to the hub.
   32→## Getting started
   33→
   34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.

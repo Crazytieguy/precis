@@ -44,7 +44,14 @@ README.md
   45→## Benchmarks
   …
   66→## Projects using this package
-  …
+  67→
+  68→- [InfluxDB](https://github.com/influxdata/influxdb)
+  69→- [Prometheus](https://github.com/prometheus/prometheus)
+  70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+  71→- [FreeCache](https://github.com/coocood/freecache)
+  72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
+  73→- [Ristretto](https://github.com/dgraph-io/ristretto)
+  74→- [Badger](https://github.com/dgraph-io/badger)
 bench_test.go
 dynamic/
   .gitignore
@@ -56,16 +63,10 @@ go.mod
   3→go 1.11
 go.sum (empty)
 testall.sh
-  1→#!/bin/bash
+  …
   2→set -eu -o pipefail
   3→
-  4→# Small convenience script for running the tests with various combinations of
-  5→# arch/tags. This assumes we're running on amd64 and have qemu available.
-  6→
-  7→go test ./...
-  8→go test -tags purego ./...
-  9→GOARCH=arm64 go test
-  10→GOARCH=arm64 go test -tags purego
+  …
 xxhash.go
   1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
   2→// at https://xxhash.com/.
@@ -169,9 +170,6 @@ xxhash_other.go
   7→func Sum64(b []byte) uint64 {
   …
   64→func writeBlocks(d *Digest, b []byte) int {
-  65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
-  66→	n := len(b)
-  67→	for len(b) >= 32 {
   …
 xxhash_safe.go
   …

@@ -26,15 +26,6 @@ BacktraceScreen.c
 BacktraceScreen.h
 BatteryMeter.c
 BatteryMeter.h
-  …
-  15→typedef enum ACPresence_ {
-  16→   AC_ABSENT,
-  17→   AC_PRESENT,
-  18→   AC_ERROR
-  19→} ACPresence;
-  20→
-  21→extern const MeterClass BatteryMeter_class;
-  …
 CLAUDE.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -43,15 +34,6 @@ CPUMeter.c
 CPUMeter.h
 CRT.c
 CRT.h
-  …
-  17→#define SCREEN_TAB_MARGIN_LEFT 2
-  18→#define SCREEN_TAB_COLUMN_GAP  1
-  19→
-  20→typedef enum TreeStr_ {
-  …
-  30→} TreeStr;
-  31→
-  …
 CategoriesPanel.c
 CategoriesPanel.h
 ChangeLog
@@ -61,17 +43,6 @@ ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
-  …
-  11→typedef enum {
-  12→   STATUS_OK,
-  13→   STATUS_ERROR_EXIT,
-  14→   STATUS_OK_EXIT
-  15→} CommandLineStatus;
-  16→
-  17→extern const char* program;
-  18→
-  19→int CommandLine_run(int argc, char** argv);
-  …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
@@ -163,7 +134,15 @@ ProvideTerm.h
 README
 README.md
   1→# [![htop logo](htop-logo.png)](https://htop.dev)
-  …
+  3→[![CI](https://github.com/htop-dev/htop/workflows/CI/badge.svg)](https://github.com/htop-dev/htop/actions)
+  4→[![Coverity Scan Build Status](https://scan.coverity.com/projects/21665/badge.svg)](https://scan.coverity.com/projects/21665)
+  5→[![Mailing List](https://img.shields.io/badge/Mailing%20List-htop-blue.svg)](https://groups.io/g/htop)
+  6→[![IRC #htop](https://img.shields.io/badge/IRC-htop-blue.svg)](https://web.libera.chat/#htop)
+  7→[![GitHub Release](https://img.shields.io/github/release/htop-dev/htop.svg)](https://github.com/htop-dev/htop/releases/latest)
+  8→[![Packaging status](https://repology.org/badge/tiny-repos/htop.svg)](https://repology.org/project/htop/versions)
+  9→[![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2+-blue.svg)](COPYING?raw=true)
+  10→
+  11→![Screenshot of htop](docs/images/screenshot.png?raw=true)
   13→## Introduction
   …
   30→## Usage
@@ -229,14 +208,7 @@ RowField.h
   39→   ELAPSED = 54,
   40→   SCHEDULERPOLICY = 55,
   41→   PROC_COMM = 124,
-  42→   PROC_EXE = 125,
-  43→   CWD = 126,
-  44→
-  45→   /* Platform specific fields, defined in ${platform}/ProcessField.h */
-  46→   PLATFORM_PROCESS_FIELDS
-  47→
-  48→   /* Do not add new fields after this entry (dynamic entries follow) */
-  49→   LAST_RESERVED_FIELD
+  …
   50→} ReservedFields;
   52→/* Follow ReservedField entries with dynamic fields defined at runtime */
   53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD

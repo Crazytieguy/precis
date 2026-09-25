@@ -13,6 +13,31 @@ README.md
   13→$ npm install debug
   14→```
   16→## Usage
+  17→
+  18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
+  19→
+  20→Example _app.js_:
+  21→
+  22→```js
+  23→var debug = require('debug')('http')
+  24→  , http = require('http')
+  25→  , name = 'My App';
+  26→
+  27→// fake app
+  28→
+  29→debug('booting %o', name);
+  30→
+  31→http.createServer(function(req, res){
+  32→  debug(req.method + ' ' + req.url);
+  33→  res.end('hello\n');
+  34→}).listen(3000, function(){
+  35→  debug('listening');
+  36→});
+  37→
+  38→// fake worker of some kind
+  39→
+  40→require('./worker');
+  41→```
   …
   110→## Namespace Colors
   …
@@ -22,7 +47,16 @@ README.md
   146→
   147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
   149→## Wildcards
-  …
+  150→
+  151→The `*` character may be used as a wildcard. Suppose for example your library has
+  152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
+  153→instead of listing all three with
+  154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
+  155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
+  156→
+  157→You can also exclude specific debuggers by prefixing them with a "-" character.
+  158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
+  159→starting with "connect:".
   161→## Environment Variables
   162→
   163→When running through Node.js, you can set a few environment variables that will
@@ -51,11 +85,35 @@ README.md
   248→## Output streams
   …
   274→## Extend
-  …
+  275→You can simply extend debugger 
+  276→```js
+  277→const log = require('debug')('auth');
+  278→
+  279→//creates new debug instance with extended namespace
+  280→const logSign = log.extend('sign');
+  281→const logLogin = log.extend('login');
+  282→
+  283→log('hello'); // auth hello
+  284→logSign('hello'); //auth:sign hello
+  285→logLogin('hello'); //auth:login hello
+  286→```
   288→## Set dynamically
   …
   341→## Checking whether a debug target is enabled
-  …
+  342→
+  343→After you've created a debug instance, you can determine whether or not it is
+  344→enabled by checking the `enabled` property:
+  345→
+  346→```javascript
+  347→const debug = require('debug')('http');
+  348→
+  349→if (debug.enabled) {
+  350→  // do stuff...
+  351→}
+  352→```
+  353→
+  354→You can also manually toggle this property to force the debug instance to be
+  355→enabled or disabled.
   357→## Usage in child processes
   …
   379→## Authors
@@ -122,80 +180,8 @@ src/
     19→		}
     20→	};
     21→})();
-    23→/**
-    24→ * Colors.
-    25→ */
-    27→exports.colors = [
-    28→	'#0000CC',
-    29→	'#0000FF',
-    30→	'#0033CC',
-    31→	'#0033FF',
-    32→	'#0066CC',
-    33→	'#0066FF',
-    34→	'#0099CC',
-    35→	'#0099FF',
-    36→	'#00CC00',
-    37→	'#00CC33',
-    38→	'#00CC66',
-    39→	'#00CC99',
-    40→	'#00CCCC',
-    41→	'#00CCFF',
-    42→	'#3300CC',
-    43→	'#3300FF',
-    44→	'#3333CC',
-    45→	'#3333FF',
-    46→	'#3366CC',
-    47→	'#3366FF',
-    48→	'#3399CC',
-    49→	'#3399FF',
-    50→	'#33CC00',
-    51→	'#33CC33',
-    52→	'#33CC66',
-    53→	'#33CC99',
-    54→	'#33CCCC',
-    55→	'#33CCFF',
-    56→	'#6600CC',
-    57→	'#6600FF',
-    58→	'#6633CC',
-    59→	'#6633FF',
-    60→	'#66CC00',
-    61→	'#66CC33',
-    62→	'#9900CC',
-    63→	'#9900FF',
-    64→	'#9933CC',
-    65→	'#9933FF',
-    66→	'#99CC00',
-    67→	'#99CC33',
-    68→	'#CC0000',
-    69→	'#CC0033',
-    70→	'#CC0066',
-    71→	'#CC0099',
-    72→	'#CC00CC',
-    73→	'#CC00FF',
-    74→	'#CC3300',
-    75→	'#CC3333',
-    76→	'#CC3366',
-    77→	'#CC3399',
-    78→	'#CC33CC',
-    79→	'#CC33FF',
-    80→	'#CC6600',
-    81→	'#CC6633',
-    82→	'#CC9900',
-    83→	'#CC9933',
-    84→	'#CCCC00',
-    85→	'#CCCC33',
-    86→	'#FF0000',
-    87→	'#FF0033',
-    88→	'#FF0066',
-    89→	'#FF0099',
-    90→	'#FF00CC',
-    91→	'#FF00FF',
-    92→	'#FF3300',
-    93→	'#FF3333',
-    94→	'#FF3366',
-    95→	'#FF3399',
     …
-    104→];
+    27→exports.colors = [
     …
     115→function useColors() {
     …

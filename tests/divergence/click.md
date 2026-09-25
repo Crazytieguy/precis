@@ -1,4 +1,4 @@
-Score(3000)=0.811 I=0.940 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.804/0.831/0.877/0.811/0.684/0.626/0.624
+Score(3000)=0.811 I=0.940 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.804/0.792/0.828/0.811/0.684/0.626/0.624
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,28 +19,28 @@ Score(3000)=0.811 I=0.940 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.694 |
 | walker |  | 483 | 75 | Code::CodeKey { rung: ModuleDoc, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
 | ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.663 |
-| walker |  | 675 | 192 | Fs::DirListing { dir: docs } |  |  | 0.687 |
-| walker |  | 690 | 15 | Fs::DirListing { dir: docs/_static } |  |  | 0.690 |
-| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.546 |
-| ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.497 |
-| walker |  | 789 | 99 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.609 |
+| walker |  | 582 | 99 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.819 |
+| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.648 |
+| walker |  | 774 | 192 | Fs::DirListing { dir: docs } |  |  | 0.667 |
+| ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.607 |
+| walker |  | 789 | 15 | Fs::DirListing { dir: docs/_static } |  |  | 0.609 |
 | walker |  | 825 | 36 | Fs::DirListing { dir: examples } |  |  | 0.658 |
 | walker |  | 952 | 127 | Fs::DirListing { dir: tests } |  |  | 0.766 |
 | ns | 983 |  | 207 | Documentation listing: docs/ | 1.9 |  | 0.804 |
-| walker |  | 1200 | 248 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |
-| ns | 1248 |  | 265 | Public API surface, part 1: object model and decorators | 2.1 |  | 0.814 |
-| walker |  | 1433 | 233 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.827 |
-| ns | 1440 |  | 192 | Public API surface, part 2: exceptions, formatting, globals | 2.2 |  | 0.831 |
+| walker |  | 1027 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.804 |
+| walker |  | 1117 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.804 |
+| ns | 1248 |  | 265 | Public API surface, part 1: object model and decorators | 2.1 |  | 0.752 |
+| walker |  | 1365 | 248 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
+| ns | 1440 |  | 192 | Public API surface, part 2: exceptions, formatting, globals | 2.2 |  | 0.781 |
+| walker |  | 1598 | 233 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.831 |
 | ns | 1629 |  | 189 | Public API surface, part 3: terminal UI exports | 2.3 |  | 0.801 |
-| walker |  | 1672 | 239 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.840 |
-| walker |  | 1892 | 220 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 3, line: 0 } |  |  | 0.847 |
-| ns | 1899 |  | 270 | Public API surface, part 4: parameter types and utilities | 2.4 |  | 0.851 |
-| walker |  | 1921 | 29 | Markdown::Section { file: docs/setuptools.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.851 |
-| ns | 1980 |  | 81 | Deprecated names still resolvable via module __getattr__ | 2.5 |  | 0.828 |
-| walker |  | 1996 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.828 |
-| walker |  | 2052 | 56 | Fs::DirListing { dir: tests/typing } |  |  | 0.877 |
-| ns | 2124 |  | 144 | core.py class roster with exact line numbers | 3.1 |  | 0.854 |
-| walker |  | 2142 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.854 |
+| walker |  | 1837 | 239 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.840 |
+| ns | 1899 |  | 270 | Public API surface, part 4: parameter types and utilities | 2.4 |  | 0.800 |
+| ns | 1980 |  | 81 | Deprecated names still resolvable via module __getattr__ | 2.5 |  | 0.777 |
+| walker |  | 2057 | 220 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 3, line: 0 } |  |  | 0.828 |
+| walker |  | 2086 | 29 | Markdown::Section { file: docs/setuptools.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.828 |
+| ns | 2124 |  | 144 | core.py class roster with exact line numbers | 3.1 |  | 0.806 |
+| walker |  | 2142 | 56 | Fs::DirListing { dir: tests/typing } |  |  | 0.854 |
 | ns | 2174 |  | 50 | Command: what it is | 3.2 | 3.1 | 0.846 |
 | walker |  | 2362 | 220 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.912 |
 | ns | 2368 |  | 194 | Command constructor: every knob a command accepts | 3.3 |  | 0.883 |

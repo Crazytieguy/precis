@@ -1,4 +1,4 @@
-Score(3000)=0.578 I=0.656 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.815/0.764/0.663/0.578/0.524/0.432/0.449
+Score(3000)=0.577 I=0.653 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.815/0.764/0.663/0.577/0.524/0.432/0.449
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,34 +46,34 @@ Score(3000)=0.578 I=0.656 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 2047 | 32 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.691 |
 | ns | 2071 |  | 261 | Row.h: RowClass vtable - the six behaviours a row type overrides | 2.3 |  | 0.663 |
 | walker |  | 2079 | 32 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.663 |
-| walker |  | 2129 | 50 | Code::CodeKey { rung: Names, file: RowField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
-| walker |  | 2143 | 14 | Code::CodeKey { rung: Doc, file: RowField.h, decl: 2, sub: 0, line: 53 } |  |  | 0.663 |
-| walker |  | 2182 | 39 | Code::CodeKey { rung: Names, file: SwapMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
-| walker |  | 2249 | 67 | Code::CodeKey { rung: Decl, file: SwapMeter.h, decl: 1, sub: 0, line: 12 } |  |  | 0.663 |
-| walker |  | 2290 | 41 | Code::CodeKey { rung: Names, file: MemoryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
-| walker |  | 2381 | 91 | Code::CodeKey { rung: Decl, file: MemoryMeter.h, decl: 1, sub: 0, line: 13 } |  |  | 0.663 |
+| walker |  | 2378 | 299 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.663 |
 | ns | 2395 |  | 324 | Table.h: the Table struct and the TableClass scan protocol | 2.4 |  | 0.630 |
+| walker |  | 2428 | 50 | Code::CodeKey { rung: Names, file: RowField.h, decl: 0, sub: 0, line: 0 } |  |  | 0.630 |
+| walker |  | 2442 | 14 | Code::CodeKey { rung: Doc, file: RowField.h, decl: 2, sub: 0, line: 53 } |  |  | 0.630 |
+| walker |  | 2481 | 39 | Code::CodeKey { rung: Names, file: SwapMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.630 |
+| walker |  | 2548 | 67 | Code::CodeKey { rung: Decl, file: SwapMeter.h, decl: 1, sub: 0, line: 12 } |  |  | 0.630 |
+| walker |  | 2589 | 41 | Code::CodeKey { rung: Names, file: MemoryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.630 |
 | ns | 2624 |  | 229 | ProcessTable.h in full: the process-table subclass and its platform hooks | 2.5 |  | 0.604 |
-| walker |  | 2785 | 404 | Code::CodeKey { rung: Decl, file: RowField.h, decl: 1, sub: 0, line: 13 } |  |  | 0.608 |
-| walker |  | 2842 | 57 | Code::CodeKey { rung: Names, file: CommandLine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 2866 | 24 | Code::CodeKey { rung: Decl, file: CommandLine.h, decl: 1, sub: 0, line: 11 } |  |  | 0.608 |
-| walker |  | 2909 | 43 | Code::CodeKey { rung: Names, file: BatteryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 2933 | 24 | Code::CodeKey { rung: Decl, file: BatteryMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.608 |
-| ns | 2991 |  | 367 | Machine.h: the Machine struct, htop's per-host state | 2.6 |  | 0.578 |
-| walker |  | 3195 | 262 | Code::CodeKey { rung: Names, file: CRT.h, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| walker |  | 2680 | 91 | Code::CodeKey { rung: Decl, file: MemoryMeter.h, decl: 1, sub: 0, line: 13 } |  |  | 0.604 |
+| ns | 2991 |  | 367 | Machine.h: the Machine struct, htop's per-host state | 2.6 |  | 0.575 |
+| walker |  | 3084 | 404 | Code::CodeKey { rung: Decl, file: RowField.h, decl: 1, sub: 0, line: 13 } |  |  | 0.578 |
+| walker |  | 3141 | 57 | Code::CodeKey { rung: Names, file: CommandLine.h, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| walker |  | 3165 | 24 | Code::CodeKey { rung: Decl, file: CommandLine.h, decl: 1, sub: 0, line: 11 } |  |  | 0.578 |
+| walker |  | 3208 | 43 | Code::CodeKey { rung: Names, file: BatteryMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| walker |  | 3232 | 24 | Code::CodeKey { rung: Decl, file: BatteryMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.578 |
 | ns | 3245 |  | 254 | Panel.h: HandlerResult flags and the PanelClass event vtable | 2.7 |  | 0.560 |
-| walker |  | 3278 | 83 | Code::CodeKey { rung: Decl, file: CRT.h, decl: 3, sub: 0, line: 20 } |  |  | 0.560 |
-| walker |  | 3385 | 107 | Code::CodeKey { rung: Decl, file: CRT.h, decl: 4, sub: 0, line: 32 } |  |  | 0.561 |
-| walker |  | 3445 | 60 | Code::CodeKey { rung: Names, file: ColorsPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.561 |
-| walker |  | 3465 | 20 | Code::CodeKey { rung: Decl, file: ColorsPanel.h, decl: 1, sub: 0, line: 14 } |  |  | 0.561 |
-| walker |  | 3510 | 45 | Code::CodeKey { rung: Names, file: MeterMode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.561 |
-| ns | 3556 |  | 311 | Panel.h: the Panel struct (geometry, selection, scrolling, function bar) | 2.8 |  | 0.541 |
-| walker |  | 3579 | 69 | Code::CodeKey { rung: Decl, file: MeterMode.h, decl: 1, sub: 0, line: 11 } |  |  | 0.542 |
-| walker |  | 3658 | 79 | Code::CodeKey { rung: Decl, file: MeterMode.h, decl: 3, sub: 0, line: 22 } |  |  | 0.542 |
-| walker |  | 3703 | 45 | Code::CodeKey { rung: Names, file: NetworkIOMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.542 |
-| walker |  | 3747 | 44 | Code::CodeKey { rung: Decl, file: NetworkIOMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.542 |
+| walker |  | 3494 | 262 | Code::CodeKey { rung: Names, file: CRT.h, decl: 0, sub: 0, line: 0 } |  |  | 0.560 |
+| ns | 3556 |  | 311 | Panel.h: the Panel struct (geometry, selection, scrolling, function bar) | 2.8 |  | 0.540 |
+| walker |  | 3577 | 83 | Code::CodeKey { rung: Decl, file: CRT.h, decl: 3, sub: 0, line: 20 } |  |  | 0.540 |
+| walker |  | 3684 | 107 | Code::CodeKey { rung: Decl, file: CRT.h, decl: 4, sub: 0, line: 32 } |  |  | 0.541 |
+| walker |  | 3744 | 60 | Code::CodeKey { rung: Names, file: ColorsPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
+| walker |  | 3764 | 20 | Code::CodeKey { rung: Decl, file: ColorsPanel.h, decl: 1, sub: 0, line: 14 } |  |  | 0.541 |
+| walker |  | 3809 | 45 | Code::CodeKey { rung: Names, file: MeterMode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
 | ns | 3869 |  | 313 | Meter.h: MeterClass - the full definition record of a meter | 2.9 |  | 0.524 |
-| walker |  | 4046 | 299 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.524 |
+| walker |  | 3878 | 69 | Code::CodeKey { rung: Decl, file: MeterMode.h, decl: 1, sub: 0, line: 11 } |  |  | 0.524 |
+| walker |  | 3957 | 79 | Code::CodeKey { rung: Decl, file: MeterMode.h, decl: 3, sub: 0, line: 22 } |  |  | 0.524 |
+| walker |  | 4002 | 45 | Code::CodeKey { rung: Names, file: NetworkIOMeter.h, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 4046 | 44 | Code::CodeKey { rung: Decl, file: NetworkIOMeter.h, decl: 1, sub: 0, line: 15 } |  |  | 0.524 |
 | walker |  | 4124 | 78 | Code::CodeKey { rung: Names, file: CommandScreen.h, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
 | walker |  | 4131 | 7 | Code::CodeKey { rung: Decl, file: CommandScreen.h, decl: 1, sub: 0, line: 16 } |  |  | 0.524 |
 | walker |  | 4209 | 78 | Code::CodeKey { rung: Names, file: EnvScreen.h, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |

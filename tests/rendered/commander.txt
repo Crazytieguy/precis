@@ -26,6 +26,16 @@ Readme.md
   64→npm install commander
   65→```
   …
+  956→## Custom event listeners
+  957→
+  958→You can execute custom actions by listening to `command` and `option` events.
+  959→
+  960→```js
+  961→program.on('option:verbose', function () {
+  962→  process.env.VERBOSE = this.opts().verbose;
+  963→});
+  964→```
+  …
 Readme_zh-CN.md
   …
   59→## 安装
@@ -73,10 +83,6 @@ docs/
       98→### 方案二：把选项放在最后
       …
       120→### 方案三：使用选项替代命令参数
-      …
-      142→## 合并短选项和带有参数的选项
-      …
-      183→### 将短选项视作 boolean 类型选项合并
       …
     术语表.md
 eslint.config.js
@@ -221,15 +227,6 @@ lib/
     149→exports.Argument = Argument;
     150→exports.humanReadableArgName = humanReadableArgName;
   command.js
-    …
-    13→class Command extends EventEmitter {
-    …
-    2748→/**
-    …
-    2752→function useColor() {
-    …
-    2776→exports.Command = Command;
-    2777→exports.useColor = useColor; // exporting for tests
   error.js
   help.js
     …

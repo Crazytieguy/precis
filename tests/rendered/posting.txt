@@ -62,9 +62,21 @@ README.md
   33→# quickly install uv on MacOS/Linux
   34→curl -LsSf https://astral.sh/uv/install.sh | sh
   35→
-  …
+  36→# install Posting (will also quickly install Python 3.13 if needed)
+  37→uv tool install --python 3.13 posting
+  38→```
+  39→
+  40→ Now you can run Posting via the command line:
+  41→
+  42→```bash
+  43→posting
+  44→```
+  45→
+  46→Homebrew and NixOS are not officially supported at the moment.
+  47→
   48→### Prefer `pipx`?
-  …
+  49→
+  50→If you'd prefer to use `pipx`, that works too: `pipx install posting`.
   52→## Contributing
   53→
   54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
@@ -103,10 +115,6 @@ docs/
     environments.md
     external_tools.md
     help_system.md
-      1→## Overview
-      …
-      5→### Getting help for the focused widget
-      …
     importing.md
     index.md
     keymap.md
@@ -262,17 +270,8 @@ src/
     commands.py
     config.py
     exit_codes.py
-      1→GENERAL_ERROR = 1
     files.py
     help_data.py
-      …
-      4→@dataclass
-      5→class HelpData:
-      6→    """Data relating to the widget to be displayed in the HelpScreen"""
-      8→    title: str = field(default="")
-      9→    """Title of the widget"""
-      10→    description: str = field(default="")
-      11→    """Markdown description to be displayed in the HelpScreen"""
     help_screen.py
     highlight_url.py (empty)
     highlighters.py
@@ -296,8 +295,6 @@ src/
     user_host.py
     variables.py
     version.py
-      …
-      3→VERSION = version("posting")
     widgets/
       __init__.py (empty)
       center_middle.py
@@ -349,8 +346,6 @@ tests/
   sample-collections/
   sample-configs/
   sample-envs/
-    sample_base.env
-    sample_extra.env
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

@@ -38,6 +38,7 @@ README.md
   8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
   10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
   12→## Try it out
+  13→
   …
   18→## Installing
   …
@@ -58,7 +59,8 @@ README.md
   66→## Documentation
   …
   76→## Issues
-  …
+  77→
+  78→Create [issues](https://github.com/microsoft/monaco-editor/issues) in this repository for anything related to the Monaco Editor. Please search for existing issues to avoid duplicates.
   80→## FAQ
   …
   112→## Contributing / Local Development
@@ -66,7 +68,8 @@ README.md
   117→## Code of Conduct
   …
   121→## License
-  …
+  122→
+  123→Licensed under the [MIT](https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt) License.
 SECURITY.md
 ThirdPartyNotices.txt
 build/
@@ -119,8 +122,7 @@ package.json
 samples/
   README.md
     1→# Monaco Editor Samples
-    2→
-    3→Standalone HTML samples showing how to integrate the Monaco Editor.
+    …
     5→## Running
     …
     17→## Loading variations
@@ -128,8 +130,7 @@ samples/
     26→## Other examples & techniques
     …
     34→## License
-    35→
-    36→MIT
+    …
   browser-esm-esbuild/
     .gitignore
     build.js
@@ -311,9 +312,6 @@ samples/
     …
 scripts/
   ci/
-    build-monaco-editor-core-pkg.ts
-    build-monaco-editor-pkg.ts
-    env.ts
   lib/
     index.ts
 src/
@@ -520,12 +518,6 @@ src/
       typescript/
         languageFeatures.ts
         lib/
-          editor.worker.d.ts
-          lib.index.ts
-          lib.ts
-          typescriptServices.d.ts
-          typescriptServices.js
-          …
         register.ts
         ts.worker.ts
         tsMode.ts

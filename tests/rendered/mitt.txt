@@ -156,8 +156,14 @@ README.md
   160→If `handler` is omitted, all handlers of the given type are removed.
   161→
   162→#### Parameters
-  …
+  163→
+  164→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
+  165→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
   167→### emit
+  168→
+  169→Invoke all handlers for the given type.
+  170→If present, `'*'` handlers are invoked after type-matched handlers.
+  171→
   …
   179→## Contribute
   …
@@ -254,18 +260,3 @@ test/
   index_test.ts
   test-types-compilation.ts
 tsconfig.json
-  1→{
-  2→	"compileOnSave": false,
-  3→	"compilerOptions": {
-  4→		"strict": true,
-  5→		"noEmit": true,
-  6→		"declaration": true,
-  7→		"moduleResolution": "node",
-  8→		"skipLibCheck": true,
-  9→		"esModuleInterop": true,
-  10→	},
-  11→	"include": [
-  12→		"src/*.ts",
-  13→		"test/*.ts"
-  14→	]
-  15→}

@@ -1,4 +1,4 @@
-Score(3000)=0.673 I=0.891 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.575/0.776/0.774/0.673/0.592/0.525/0.478
+Score(3000)=0.673 I=0.891 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.552/0.775/0.774/0.673/0.592/0.525/0.478
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,30 +37,30 @@ Score(3000)=0.673 I=0.891 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | ns | 497 |  | 91 | Complete listing of docs/ — the LuaCATS API reference | 1.6 |  | 0.506 |
 | walker |  | 563 | 69 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.570 |
 | ns | 585 |  | 88 | Complete listing of test/ — runnable example entries and .game files | 1.7 |  | 0.490 |
-| walker |  | 598 | 35 | Fs::DirListing { dir: web/layouts/shortcodes } |  |  | 0.491 |
-| walker |  | 689 | 91 | Markdown::HeadingsOutline { file: README.zh-CN.md } |  |  | 0.491 |
-| ns | 700 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.467 |
-| walker |  | 803 | 114 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.631 |
-| walker |  | 829 | 26 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.631 |
-| walker |  | 874 | 45 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.653 |
+| walker |  | 677 | 114 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.662 |
+| ns | 700 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.630 |
+| walker |  | 712 | 35 | Fs::DirListing { dir: web/layouts/shortcodes } |  |  | 0.631 |
+| walker |  | 738 | 26 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.631 |
+| walker |  | 783 | 45 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.653 |
+| walker |  | 814 | 31 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.653 |
+| walker |  | 854 | 40 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.653 |
 | ns | 884 |  | 184 | Complete listing of src/ C and C++ translation units | 1.9 |  | 0.546 |
+| walker |  | 945 | 91 | Markdown::HeadingsOutline { file: README.zh-CN.md } |  |  | 0.546 |
 | ns | 1022 |  | 138 | Rest of src/: headers, GLSL shaders, and subdirectories | 1.10 | 1.9 | 0.490 |
 | ns | 1138 |  | 116 | A complete minimal game: test/window.lua | 2.1 |  | 0.468 |
-| walker |  | 1196 | 322 | Fs::DirListing { dir: src } |  |  | 0.740 |
-| walker |  | 1209 | 13 | Fs::DirListing { dir: src/platform } |  |  | 0.740 |
-| walker |  | 1215 | 6 | Fs::DirListing { dir: src/data } |  |  | 0.740 |
-| walker |  | 1238 | 23 | Fs::DirListing { dir: src/platform/wasm } |  |  | 0.740 |
-| ns | 1256 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.722 |
-| walker |  | 1263 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.732 |
-| walker |  | 1279 | 16 | Fs::DirListing { dir: src/platform/linux } |  |  | 0.732 |
-| walker |  | 1295 | 16 | Fs::DirListing { dir: src/platform/windows } |  |  | 0.732 |
-| walker |  | 1313 | 18 | Fs::DirListing { dir: src/platform/macos } |  |  | 0.732 |
-| walker |  | 1369 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.808 |
-| walker |  | 1400 | 31 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.808 |
-| ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.775 |
-| walker |  | 1446 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.776 |
-| ns | 1482 |  | 70 | All three .game setting files in test/ | 2.4 | 2.3 | 0.761 |
-| walker |  | 1486 | 40 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.761 |
+| ns | 1256 |  | 118 | Every callback a game may implement (docs/callback.lua roster) | 2.2 |  | 0.457 |
+| walker |  | 1267 | 322 | Fs::DirListing { dir: src } |  |  | 0.721 |
+| walker |  | 1280 | 13 | Fs::DirListing { dir: src/platform } |  |  | 0.721 |
+| walker |  | 1286 | 6 | Fs::DirListing { dir: src/data } |  |  | 0.721 |
+| walker |  | 1309 | 23 | Fs::DirListing { dir: src/platform/wasm } |  |  | 0.722 |
+| walker |  | 1334 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.732 |
+| walker |  | 1350 | 16 | Fs::DirListing { dir: src/platform/linux } |  |  | 0.732 |
+| walker |  | 1366 | 16 | Fs::DirListing { dir: src/platform/windows } |  |  | 0.732 |
+| walker |  | 1384 | 18 | Fs::DirListing { dir: src/platform/macos } |  |  | 0.732 |
+| ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.702 |
+| walker |  | 1440 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.775 |
+| ns | 1482 |  | 70 | All three .game setting files in test/ | 2.4 | 2.3 | 0.760 |
+| walker |  | 1486 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.761 |
 | walker |  | 1496 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.761 |
 | walker |  | 1574 | 78 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.761 |
 | walker |  | 1597 | 23 | Markdown::Section { file: README.zh-CN.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.761 |

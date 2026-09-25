@@ -85,11 +85,17 @@ README.md
   153→
   154→Go to [getting started](GETTING_STARTED.md)
   156→## Tutorials
-  …
+  157→
+  158→* [CockroachDB](database/cockroachdb/TUTORIAL.md)
+  159→* [PostgreSQL](database/postgres/TUTORIAL.md)
+  160→
+  161→(more tutorials to come)
   163→## Migration files
   …
   174→## Coming from another db migration tool?
-  …
+  175→
+  176→Check out [migradaptor](https://github.com/musinit/migradaptor/).
+  177→*Note: migradaptor is not affiliated or supported by this project*
   179→## Versions
   …
   187→## Development and Contributing
@@ -204,12 +210,6 @@ database/
     pgx_test.go
     v5/
       README.md
-        1→# pgx
-        …
-        28→## Upgrading from v1
-        …
-        36→## Multi-statement mode
-        …
       pgx.go
       pgx_test.go
   postgres/
@@ -254,16 +254,6 @@ database/
     snowflake.go
   spanner/
     README.md
-      1→# Google Cloud Spanner
-      2→
-      3→## Usage
-      …
-      33→## DDL with comments
-      …
-      38→## Multiple statements
-      …
-      42→## Testing
-      …
     examples/
     spanner.go
     spanner_test.go

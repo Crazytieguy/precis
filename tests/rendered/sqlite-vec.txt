@@ -57,7 +57,13 @@ README.md
   32→<code>sqlite-vec</code> is a
   33→<a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">Mozilla Builders project</a>,
   34→with additional sponsorship from
-  …
+  35→<a href="https://fly.io/"><img width=14px src="./.github/logos/flyio.small.ico"/> Fly.io </a>,
+  36→<a href="https://tur.so/sqlite-vec"><img width=14px src="./.github/logos/turso.small.ico"/> Turso</a>,
+  37→<a href="https://sqlitecloud.io/"><img width=14px src="./.github/logos/sqlitecloud.small.svg"/> SQLite Cloud</a>, and
+  38→<a href="https://shinkai.com/"><img width=14px src="./.github/logos/shinkai.small.svg"/> Shinkai</a>.
+  39→See <a href="#sponsors">the Sponsors section</a> for more details.
+  40→</i>
+  41→</p>
   43→## Installing
   …
   61→## Sample usage
@@ -96,6 +102,18 @@ README.md
   94→*/
   95→```
   97→## Sponsors
+  98→
+  99→Development of `sqlite-vec` is supported by multiple generous sponsors! Mozilla
+  100→is the main sponsor through the new Builders project.
+  101→<p align="center">
+  102→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
+  103→  <picture>
+  104→    <source media="(prefers-color-scheme: dark)" srcset="./.github/logos/mozilla.dark.svg">
+  105→    <source media="(prefers-color-scheme: light)" srcset="./.github/logos/mozilla.svg">
+  106→    <img alt="Mozilla Builders logo" width=400>
+  107→  </picture>
+  108→  </a>
+  109→</p>
   …
   152→## See Also
   153→
@@ -117,13 +135,10 @@ benchmarks/
     Cargo.lock
     Cargo.toml
     benches/
-      my_benchmark.rs
     build.rs
     src/
       lib.rs
   profiling/
-    build-from-npy.sql
-    query-k.sql
   self-params/
     build.py
     knn.py
@@ -139,30 +154,7 @@ bindings/
     Cargo.lock
     Cargo.toml.tmpl
     Makefile
-      1→VERSION=$(shell cat ../../VERSION)
-      2→
-      3→deps: Cargo.toml sqlite-vec.c sqlite-vec.h sqlite3ext.h sqlite3.h
-      4→
-      5→Cargo.toml: ../../VERSION Cargo.toml.tmpl
-      6→		VERSION=$(VERSION) envsubst < Cargo.toml.tmpl > $@
-      7→
-      8→sqlite-vec.c: ../../sqlite-vec.c
-      9→		cp $< $@
-      10→
-      11→sqlite-vec.h: ../../sqlite-vec.h
-      12→		cp $< $@
-      13→
-      14→sqlite3ext.h: ../../vendor/sqlite3ext.h
-      15→		cp $< $@
-      16→
-      17→sqlite3.h: ../../vendor/sqlite3.h
-      18→		cp $< $@
-      19→
-      20→.PHONY: deps
     build.rs
-      1→fn main() {
-      2→    cc::Build::new().file("sqlite-vec.c").define("SQLITE_CORE", None).compile("sqlite_vec0");
-      …
     src/
       lib.rs
 examples/
@@ -200,8 +192,6 @@ site/
   build-ref.mjs
   compiling.md
   features/
-    knn.md
-    vec0.md
   getting-started/
     installation.md
     introduction.md
@@ -257,14 +247,11 @@ tests/
   build.rs
   conftest.py
   correctness/
-    build.py
-    test-correctness.py
   fuzz/
     .gitignore
     Makefile
     README.md
     corpus/
-      vec0-create/
     exec.c
     exec.dict
     json.c
@@ -316,10 +303,4 @@ tmp-static.py
   33→
   34→    db.execute(
   35→        "insert into temp.vec_static_blobs(name, data) select ?, vec_static_blob_from_raw(?, ?, ?, ?)",
-  36→        [name, ptr, element_type, dimensions, nvectors],
-  37→    )
-  38→
-  39→    db.execute(
-  40→        f'create virtual table "{name_escaped}" using vec_static_blob_entries({name_escaped})'
-  41→    )
   …

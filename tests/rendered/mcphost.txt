@@ -45,7 +45,15 @@ README.md
   967→## MCP Server Compatibility 🔌
   968→
   969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
-  …
+  971→## Contributing 🤝
+  972→
+  973→Contributions are welcome! Feel free to:
+  974→- Submit bug reports or feature requests through issues
+  975→- Create pull requests for improvements
+  976→- Share your custom MCP servers
+  977→- Improve documentation
+  978→
+  979→Please ensure your contributions follow good coding practices and include appropriate tests.
   981→## License 📄
   982→
   983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -58,12 +66,6 @@ cmd/
   auth.go
     …
     17→var authCmd = &cobra.Command{
-    18→	Use:   "auth",
-    19→	Short: "Manage authentication credentials for AI providers",
-    20→	Long: `Manage authentication credentials for AI providers.
-    21→
-    22→This command allows you to securely authenticate and manage credentials for various AI providers
-    23→using OAuth flows. Stored credentials take precedence over environment variables.
     …
     37→var authLoginCmd = &cobra.Command{
     …
@@ -79,8 +81,7 @@ cmd/
     85→
     86→Example:
     87→  mcphost auth status`,
-    88→	RunE: runAuthStatus,
-    89→}
+    …
     91→func init() {
     …
     97→func runAuthLogin(cmd *cobra.Command, args []string) error {

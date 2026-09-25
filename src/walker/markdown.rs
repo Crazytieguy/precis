@@ -333,7 +333,7 @@ fn readme_index_decay(range: &SectionRange) -> f64 {
 /// doc.
 fn section_base_value(root_readme: bool, file: &Path, ctx: &WalkCtx) -> f64 {
     if root_readme {
-        return mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
+        return 1181.0 * path_depth_factor(file, ctx);
     }
     mix_signals(0.3, 0.5, 0.5, path_depth_factor(file, ctx))
 }

@@ -81,8 +81,18 @@ readme.md
   112→## API
   113→
   114→### chalk.`<style>[.<style>...](string, [string...])`
-  …
+  115→
+  116→Example: `chalk.red.bold.underline('Hello', 'world');`
+  117→
+  118→Chain [styles](#styles) and call the last one as a method with a string argument. Order doesn't matter, and later styles take precedent in case of a conflict. This simply means that `chalk.red.yellow.green` is equivalent to `chalk.green`.
+  119→
+  120→Multiple arguments will be separated by space.
+  121→
   122→### chalk.level
+  123→
+  124→Specifies the level of color support.
+  125→
+  126→Color support is automatically detected, but you can override it by setting the `level` property. You should however only do this in your own code as it applies globally to all Chalk consumers.
   …
   143→### supportsColor
   …
@@ -99,6 +109,15 @@ readme.md
   205→### Background colors
   …
   224→## 256 and Truecolor color support
+  225→
+  226→Chalk supports 256 colors and [Truecolor](https://github.com/termstandard/colors) (16 million colors) on supported terminal apps.
+  227→
+  228→Colors are downsampled from 16 million RGB values to an ANSI color format that is supported by the terminal emulator (or by specifying `{level: n}` as a Chalk option). For example, Chalk configured to run at level 1 (basic color support) will downsample an RGB value of #FF0000 (red) to 31 (ANSI escape for red).
+  229→
+  230→Examples:
+  231→
+  232→- `chalk.hex('#DEADED').underline('Hello, world!')`
+  233→- `chalk.rgb(15, 100, 204).inverse('Hello!')`
   …
   246→## Browser support
   247→
@@ -148,42 +167,7 @@ source/
     37→
     38→	By default, color support is automatically detected based on the environment.
     39→
-    40→	Levels:
-    41→	- `0` - All colors disabled.
-    42→	- `1` - Basic 16 colors support.
-    43→	- `2` - ANSI 256 colors support.
-    44→	- `3` - Truecolor 16 million colors support.
-    45→	*/
-    46→	level: ColorSupportLevel;
-    47→
-    48→	/**
-    49→	Use RGB values to set text color.
-    50→
-    51→	@example
-    52→	```
-    53→	import chalk from 'chalk';
-    54→
-    55→	chalk.rgb(222, 173, 237);
-    56→	```
-    57→	*/
-    58→	rgb: (red: number, green: number, blue: number) => this;
-    60→	/**
-    61→	Use HEX value to set text color.
-    62→
-    63→	@param color - Hexadecimal value representing the desired color.
-    64→
-    65→	@example
-    66→	```
-    67→	import chalk from 'chalk';
-    68→
-    69→	chalk.hex('#DEADED');
-    70→	```
-    71→	*/
-    72→	hex: (color: string) => this;
-    73→
-    74→	/**
     …
-    231→}
     233→/**
     234→Main Chalk object that allows to chain styles together.
     235→

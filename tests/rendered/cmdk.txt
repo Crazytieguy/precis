@@ -18,7 +18,7 @@ ARCHITECTURE.md
   …
   92→## Performance
   93→
-  94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
+  …
   96→## Groups
   97→
   98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
@@ -73,6 +73,11 @@ README.md
   431→
   432→**Accessible?** Yes. Labeling, aria attributes, and DOM ordering tested with Voice Over and Chrome DevTools. [Dialog](#dialog-cmdk-dialog-cmdk-overlay) composes an accessible Dialog implementation.
   433→
+  434→**Virtualization?** No. Good performance up to 2,000-3,000 items, though. Read below to bring your own.
+  435→
+  436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
+  437→
+  438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
   …
   456→## History
   457→
@@ -187,10 +192,6 @@ cmdk/
       897→ * Automatically renders when there are no results for the search query.
       898→ */
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-      900→  const render = useCmdk((state) => state.filtered.count === 0)
-      901→
-      902→  if (!render) return null
-      903→  return <Primitive.div ref={forwardedRef} {...props} cmdk-empty="" role="presentation" />
       …
       906→/**
       907→ * You should conditionally render this with `progress` while loading asynchronous items.
@@ -299,8 +300,5 @@ website/
     index.tsx
   public/
   styles/
-    cmdk/
-    globals.scss
-    index.module.scss
   tsconfig.json
   vercel.json

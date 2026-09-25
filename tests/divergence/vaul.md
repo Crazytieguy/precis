@@ -12,8 +12,8 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 202 | 71 | Fs::DirListing { dir: src } |  |  | 0.746 |
 | ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.737 |
 | walker |  | 223 | 21 | Json::Runtime { file: package.json } |  |  | 0.737 |
-| walker |  | 257 | 34 | Json::Dependencies { file: package.json } |  |  | 0.737 |
-| walker |  | 320 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.743 |
+| walker |  | 286 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.743 |
+| walker |  | 320 | 34 | Json::Dependencies { file: package.json } |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |
 | walker |  | 372 | 52 | Fs::DirListing { dir: test } |  |  | 0.622 |
 | walker |  | 375 | 3 | Fs::DirListing { dir: test/src } |  |  | 0.622 |

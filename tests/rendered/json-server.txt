@@ -37,6 +37,49 @@ README.md
   29→    { "id": "1", "text": "a comment about post 1", "postId": "1" },
   30→    { "id": "2", "text": "another comment about post 1", "postId": "1" }
   31→  ],
+  32→  "profile": {
+  33→    "name": "typicode"
+  34→  }
+  35→}
+  36→```
+  38→<details>
+  39→
+  40→<summary>View db.json5 example</summary>
+  41→
+  42→```json5
+  43→{
+  44→  posts: [
+  45→    { id: "1", title: "a title", views: 100 },
+  46→    { id: "2", title: "another title", views: 200 },
+  47→  ],
+  48→  comments: [
+  49→    { id: "1", text: "a comment about post 1", postId: "1" },
+  50→    { id: "2", text: "another comment about post 1", postId: "1" },
+  51→  ],
+  52→  profile: {
+  53→    name: "typicode",
+  54→  },
+  55→}
+  56→```
+  57→
+  58→You can read more about JSON5 format [here](https://github.com/json5/json5).
+  60→</details>
+  61→
+  62→Start JSON Server
+  63→
+  64→```bash
+  65→npx json-server db.json
+  66→```
+  67→
+  68→This starts the server at `http://localhost:3000`. You should see:
+  69→```
+  70→JSON Server started on PORT :3000
+  71→http://localhost:3000
+  72→```
+  73→
+  74→Access your REST API:
+  75→
+  76→```bash
   …
   91→## Sponsors ✨
   92→
@@ -174,29 +217,6 @@ src/
     normalized-adapter.test.ts
     normalized-adapter.ts
     observer.ts
-      …
-      4→export class Observer<T> {
-      …
-      7→  onReadStart = function () {
-      8→    return
-      …
-      10→  onReadEnd: (data: T | null) => void = function () {
-      11→    return
-      …
-      13→  onWriteStart = function () {
-      14→    return
-      …
-      16→  onWriteEnd = function () {
-      17→    return
-      …
-      20→  constructor(adapter: Adapter<T>) {
-      21→    this.#adapter = adapter
-      …
-      24→  async read() {
-      …
-      31→  async write(arg: T) {
-      …
-      36→}
   app.test.ts
   app.ts
     …
@@ -210,36 +230,12 @@ src/
   bin.ts
   matches-where.test.ts
   matches-where.ts
-    …
-    24→export function matchesWhere(obj: JsonObject, where: JsonObject): boolean {
-    …
   paginate.test.ts
   paginate.ts
-    1→export type PaginationResult<T> = {
-    2→  first: number
-    3→  prev: number | null
-    4→  next: number | null
-    5→  last: number
-    6→  pages: number
-    7→  items: number
-    8→  data: T[]
-    9→}
-    11→export function paginate<T>(items: T[], page: number, perPage: number): PaginationResult<T> {
-    …
   parse-where.test.ts
   parse-where.ts
     …
     58→export function parseWhere(query: string): JsonObject {
-    59→  const out: JsonObject = {}
-    60→  const params = new URLSearchParams(query)
-    61→
-    62→  for (const [rawKey, rawValue] of params.entries()) {
-    63→    const { path, op } = splitKey(rawKey)
-    64→    if (op === null) continue
-    65→    setPathOp(out, path, op, rawValue)
-    66→  }
-    67→
-    68→  return out
     …
   random-id.ts
     …

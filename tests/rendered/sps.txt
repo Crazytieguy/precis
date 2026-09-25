@@ -123,9 +123,31 @@ README.md
   120→
   121→-----
   123→## 🏗️ Building from Source
-  …
+  124→
+  125→**Prerequisites:** Rust toolchain (stable).
+  126→
+  127→```sh
+  128→git clone <repo-url>
+  129→cd sps
+  130→cargo build --release
+  131→```
+  132→
+  133→The `sps` binary will be at `target/release/sps`. Add it to your `PATH`.
+  134→
+  135→
+  136→-----
   138→## 📥 Using the Latest Nightly Build
-  …
+  139→
+  140→You can download the latest nightly build from [`actions/workflows/rust.yml`](../../actions/workflows/rust.yml) inside this repository (select a successful build and scroll down to `Artifacts`).
+  141→
+  142→After extracting the downloaded archive, you can run the binary directly:
+  143→
+  144→```sh
+  145→./sps --help
+  146→```
+  147→
+  148→
+  149→-----
   151→## 🤝 Contributing
   …
   164→## 📄 License
@@ -164,33 +186,6 @@ sps/
       …
       2→//! Defines the command-line argument structure using clap.
       …
-      10→pub mod info;
-      11→pub mod init;
-      12→pub mod install;
-      13→pub mod list;
-      14→pub mod reinstall;
-      15→pub mod search;
-      16→pub mod status;
-      17→pub mod uninstall;
-      18→pub mod update;
-      19→pub mod upgrade;
-      …
-      23→pub use crate::cli::init::InitArgs;
-      …
-      35→pub struct CliArgs {
-      …
-      43→#[derive(Subcommand, Debug)]
-      44→pub enum Command {
-      45→    Init(InitArgs),
-      46→    Search(Search),
-      47→    List(List),
-      48→    Info(Info),
-      …
-      56→impl Command {
-      57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-      …
-      71→}
-      …
     main.rs
       …
       17→mod cli;
@@ -208,8 +203,7 @@ sps/
       runner.rs
     pipeline.rs
       1→pub mod downloader;
-      2→pub mod planner;
-      3→pub mod runner;
+      …
 sps-common/
   Cargo.toml
   src/

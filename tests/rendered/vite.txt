@@ -42,7 +42,13 @@ README.md
   33→- 🔑 Fully Typed APIs
   34→
   35→Vite (French word for "quick", pronounced [`/viːt/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
-  …
+  37→- A dev server that provides [rich feature enhancements](https://vite.dev/guide/features) over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), for example extremely fast [Hot Module Replacement (HMR)](https://vite.dev/guide/features#hot-module-replacement).
+  38→
+  39→- A build command that bundles your code with [Rolldown](https://rolldown.rs), pre-configured to output highly optimized static assets for production.
+  40→
+  41→In addition, Vite is highly extensible via its [Plugin API](https://vite.dev/guide/api-plugin.html) and [JavaScript API](https://vite.dev/guide/api-javascript.html) with full typing support.
+  42→
+  43→[Read the Docs to Learn More](https://vite.dev).
   45→## Packages
   …
   53→## Contribution
@@ -275,13 +281,6 @@ patches/
   sirv@3.0.2.patch
 playground/
   alias/
-    __tests__/
-    customResolver.js
-    dir/
-    index.html
-    package.json
-    test.js
-    vite.config.js
   assets/
   assets-sanitize/
   backend-integration/
@@ -432,12 +431,6 @@ playground/
     test.css
     vite.config.js
   module-graph/
-    __tests__/
-    empty.js (empty)
-    imported-urls-order.js
-    index.html
-    package.json
-    …
   multiple-entrypoints/
   nested-deps/
   object-hooks/
@@ -491,14 +484,6 @@ playground/
     src/
       index.js
   resolve-tsconfig-paths/
-    __tests__/
-    fallback/
-      fallback.js
-    index.html
-    package.json
-    src/
-    tsconfig.json
-    vite.config.js
   shims.d.ts
   ssr/
     __tests__/
@@ -539,32 +524,10 @@ playground/
   ssr-webworker/
   tailwind/
   tailwind-sourcemap/
-    __tests__/
-    index.html
-    package.json
-    postcss.config.js
-    tailwind.css
-    vite.config.js
   tailwind-v3/
   test-utils.ts
   transform-plugin/
   tsconfig-json/
-    __tests__/
-    index.html
-    nested/
-      main.ts
-      not-used-type.ts
-      tsconfig.json
-    nested-with-extends/
-      main.ts
-      not-used-type.ts
-      tsconfig.json
-    package.json
-    src/
-      decorator.ts
-      main.ts
-      not-used-type.ts
-    tsconfig.json
   tsconfig-json-load-error/
     __tests__/
     has-error/

@@ -47,7 +47,15 @@ README.md
   126→## No-std support
   …
   144→## Comparison to failure
-  …
+  145→
+  146→The `anyhow::Error` type works something like `failure::Error`, but unlike
+  147→failure ours is built around the standard library's `std::error::Error` trait
+  148→rather than a separate trait `failure::Fail`. The standard library has adopted
+  149→the necessary improvements for this to be possible as part of [RFC 2504].
+  150→
+  151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
+  152→
+  153→<br>
   155→## Comparison to thiserror
   …
 build.rs
@@ -144,23 +152,9 @@ src/
     16→pub(crate) enum ChainState<'a> {
     …
     26→impl<'a> Chain<'a> {
-    27→    #[cold]
-    28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     …
-    33→}
     35→impl<'a> Iterator for Chain<'a> {
     …
-    57→impl DoubleEndedIterator for Chain<'_> {
-    …
-    76→impl ExactSizeIterator for Chain<'_> {
-    77→    fn len(&self) -> usize {
-    …
-    91→}
-    93→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-    94→impl Default for Chain<'_> {
-    95→    fn default() -> Self {
-    …
-    102→}
   context.rs
   ensure.rs
   error.rs

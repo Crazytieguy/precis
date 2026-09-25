@@ -22,6 +22,7 @@ README.md
   14→
   15→For microcontrollers, see the section on **compilation** below.
   17→## Compilation
+  18→Before compiling, you'll need to dump registry data from a vanilla Minecraft server. On Linux, this can be done automatically using the `extract_registries.sh` script. Otherwise, the manual process is as follows: create a folder called `notchian` here, and put a Minecraft server JAR in it. Then, follow [this guide](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Data_Generators) to dump all of the registries (use the _second_ command with the `--all` flag). Finally, run `build_registries.js` with either [bun](https://bun.sh/), [node](https://nodejs.org/en/download), or [deno](https://docs.deno.com/runtime/getting_started/installation/).
   …
   28→## Configuration
   29→Configuring the server requires compiling it from its source code as described in the section above.
@@ -137,18 +138,6 @@ include/
     196→} BlockChange;
     …
     200→typedef struct {
-    201→  uint8_t uuid[16];
-    202→  char name[16];
-    203→  int client_fd;
-    204→  short x;
-    205→  uint8_t y;
-    206→  short z;
-    207→  short visited_x[VISITED_HISTORY];
-    208→  short visited_z[VISITED_HISTORY];
-    209→  #ifdef SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT
-    210→    uint16_t packets_since_update;
-    211→  #endif
-    212→  int8_t yaw;
     …
     238→} PlayerData;
     239→
@@ -208,10 +197,8 @@ include/
   tools.h
     …
     8→static inline int mod_abs (int a, int b) {
-    9→  return ((a % b) + b) % b;
     …
     11→static inline int div_floor (int a, int b) {
-    12→  return a % b < 0 ? (a - b) / b : a / b;
     …
     15→extern uint64_t total_bytes_received;
     16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);

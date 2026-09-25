@@ -1,4 +1,4 @@
-Score(3000)=0.631 I=0.880 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.799/0.919/0.732/0.631/0.494/0.446/0.536
+Score(3000)=0.631 I=0.880 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.835/0.919/0.732/0.631/0.494/0.446/0.536
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,17 +16,17 @@ Score(3000)=0.631 I=0.880 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 411 | 27 | Fs::DirListing { dir: .github } |  |  | 0.864 |
 | walker |  | 419 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.788 |
 | ns | 419 |  | 106 | README: what instrumentation actually covers | 1.5 | 1.4 | 0.788 |
-| walker |  | 519 | 100 | Fs::DirListing { dir: tests } |  |  | 0.808 |
-| walker |  | 533 | 14 | Fs::DirListing { dir: tests/mypy } |  |  | 0.814 |
-| ns | 552 |  | 133 | README: the two instrumentation entry points | 1.6 |  | 0.708 |
-| ns | 748 |  | 196 | Public exports of typeguard/__init__.py, first half | 1.7 |  | 0.627 |
-| walker |  | 760 | 227 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
-| ns | 954 |  | 206 | Public exports of typeguard/__init__.py, second half | 1.8 | 1.7 | 0.691 |
-| walker |  | 987 | 227 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.799 |
-| walker |  | 1056 | 69 | Code::CodeKey { rung: Body, file: src/typeguard/__init__.py, decl: 2, sub: 0, line: 37 } |  |  | 0.802 |
-| ns | 1109 |  | 155 | Docs and test tree listings | 1.9 |  | 0.825 |
-| ns | 1339 |  | 230 | __init__.py package-level machinery | 1.10 | 1.8 | 0.758 |
-| walker |  | 1435 | 379 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.919 |
+| ns | 552 |  | 133 | README: the two instrumentation entry points | 1.6 |  | 0.686 |
+| ns | 748 |  | 196 | Public exports of typeguard/__init__.py, first half | 1.7 |  | 0.607 |
+| walker |  | 798 | 379 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.890 |
+| walker |  | 898 | 100 | Fs::DirListing { dir: tests } |  |  | 0.905 |
+| walker |  | 912 | 14 | Fs::DirListing { dir: tests/mypy } |  |  | 0.905 |
+| ns | 954 |  | 206 | Public exports of typeguard/__init__.py, second half | 1.8 | 1.7 | 0.828 |
+| ns | 1109 |  | 155 | Docs and test tree listings | 1.9 |  | 0.849 |
+| walker |  | 1139 | 227 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.928 |
+| ns | 1339 |  | 230 | __init__.py package-level machinery | 1.10 | 1.8 | 0.833 |
+| walker |  | 1366 | 227 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.901 |
+| walker |  | 1435 | 69 | Code::CodeKey { rung: Body, file: src/typeguard/__init__.py, decl: 2, sub: 0, line: 37 } |  |  | 0.919 |
 | ns | 1473 |  | 134 | docs/index.rst in full | 1.11 |  | 0.849 |
 | ns | 1636 |  | 163 | check_type(): real signature and the TypeCheckFailCallback alias | 2.1 |  | 0.807 |
 | ns | 1752 |  | 116 | @typechecked: implementation signature | 2.2 |  | 0.783 |

@@ -114,6 +114,20 @@ readme.md
   1264→### Extending types
   …
   1292→## FAQ
+  1293→
+  1294→#### How do I use this in Node.js?
+  1295→
+  1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
+  1297→
+  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
+  1299→
+  1300→Same as above.
+  1301→
+  1302→#### How do I test a browser library that uses this?
+  1303→
+  1304→Either use a test runner that can run in the browser, like Mocha, or use [AVA](https://avajs.dev) with `ky-universal`. [Read more.](https://github.com/sindresorhus/ky-universal#faq)
+  1305→
+  1306→#### How do I use this without a bundler like Webpack?
   …
   1339→## Browser support
   1340→
@@ -145,20 +159,6 @@ source/
     constants.ts
   errors/
     ForceRetryError.ts
-      …
-      4→/**
-      5→Internal error used to signal a forced retry from afterResponse hooks.
-      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
-      7→*/
-      8→export class ForceRetryError extends Error {
-      9→	override name = 'ForceRetryError' as const;
-      10→	customDelay: number | undefined;
-      11→	code: string | undefined;
-      12→	customRequest: Request | undefined;
-      13→
-      14→	constructor(options?: ForceRetryOptions) {
-      …
-      30→}
     HTTPError.ts
     NonError.ts
       1→/**
@@ -260,13 +260,7 @@ source/
       …
     options.ts
     request.ts
-      1→export type KyRequest<T = unknown> = {
-      2→	json: <J = T>() => Promise<J>;
-      3→} & Request;
     response.ts
-      1→export type KyResponse<T = unknown> = {
-      2→	json: <J = T >() => Promise<J>;
-      3→} & Response;
     retry.ts
       …
       3→export type ShouldRetryState = {
@@ -314,8 +308,6 @@ source/
       …
     type-guards.ts
     types.ts
-      1→export type Mutable<T> = {
-      …
 test/
   browser.ts
   bytes.ts

@@ -59,11 +59,51 @@ README.md
   56→## Usage<a name="usage"></a>
   57→
   58→### Parse a TOML string<a name="parse-a-toml-string"></a>
-  …
+  59→
+  60→```python
+  61→import tomli
+  62→
+  63→toml_str = """
+  64→[[players]]
+  65→name = "Lehtinen"
+  66→number = 26
+  67→
+  68→[[players]]
+  69→name = "Numminen"
+  70→number = 27
+  71→"""
+  72→
+  73→toml_dict = tomli.loads(toml_str)
+  74→assert toml_dict == {
+  75→    "players": [{"name": "Lehtinen", "number": 26}, {"name": "Numminen", "number": 27}]
+  76→}
+  77→```
+  78→
   79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-  …
+  80→
+  81→```python
+  82→import tomli
+  83→
+  84→with open("path_to_file/conf.toml", "rb") as f:
+  85→    toml_dict = tomli.load(f)
+  86→```
+  88→The file must be opened in binary mode (with the `"rb"` flag).
+  89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
+  90→both of which are required to correctly parse TOML.
+  91→
   92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
-  …
+  93→
+  94→```python
+  95→import tomli
+  96→
+  97→try:
+  98→    toml_dict = tomli.loads("]] this is invalid TOML [[")
+  99→except tomli.TOMLDecodeError:
+  100→    print("Yep, definitely not valid.")
+  101→```
+  102→
+  103→Note that error messages are considered informational only.
+  104→They should not be assumed to stay constant across Tomli versions.
   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
   …
   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
@@ -177,41 +217,14 @@ src/
       11→TYPE_CHECKING = False
       …
       17→_TIME_RE_STR: Final = r"""
-      18→([01][0-9]|2[0-3])             # hours
-      19→:([0-5][0-9])                  # minutes
-      20→(?:
-      21→    :([0-5][0-9])              # optional seconds
-      22→    (?:\.([0-9]{1,6})[0-9]*)?  # optional fractions of a second
-      23→)?
-      24→"""
+      …
       26→RE_NUMBER: Final = re.compile(
-      27→    r"""
-      28→0
-      29→(?:
       …
       45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
       46→RE_DATETIME: Final = re.compile(
-      47→    rf"""
-      48→([0-9]{{4}})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])  # date, e.g. 1988-10-27
-      49→(?:
-      50→    [Tt ]
-      51→    {_TIME_RE_STR}
-      52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
-      53→)?
-      54→""",
-      55→    flags=re.VERBOSE,
-      56→)
+      …
       59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
       …
-      98→@lru_cache(maxsize=None)
-      99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
-      …
-      109→def match_to_localtime(match: re.Match[str]) -> time:
-      …
-      116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-      117→    if match.group("floatpart"):
-      118→        return parse_float(match.group())
-      119→    return int(match.group(), 0)
     _types.py
       …
       8→ParseFloat = Callable[[str], Any]

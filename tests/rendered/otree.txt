@@ -45,17 +45,39 @@ README.md
   …
   5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
   7→## Install
-  …
+  8→
+  9→Download binary files from [release page](https://github.com/fioncat/otree/releases).
+  10→
+  11→You can also build it from source (require `cargo` installed):
+  12→
+  13→```bash
+  14→cargo install --git https://github.com/fioncat/otree
+  15→```
+  16→
   17→### Arch Linux (AUR)
-  …
+  18→
+  19→You can install `otree` from the [AUR](https://aur.archlinux.org/packages/otree) with using an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers).
+  20→
+  21→```bash
+  22→paru -S otree
+  23→```
+  24→
   25→### macOS and Linux (Homebrew)
-  …
+  26→
+  27→You can install [`otree`](https://formulae.brew.sh/formula/otree) using [Homebrew](https://brew.sh).
+  28→
+  29→```bash
+  30→brew install otree
+  31→```
   33→## Usage
   …
   52→## Roadmap
   …
   82→## Thanks
-  …
+  83→
+  84→I created this tool to better view those super deep YAML files of Kubernetes while [jnv](https://github.com/ynqa/jnv) only supports JSON.
+  85→
+  86→This is based on the amazing TUI framework [ratatui](https://github.com/ratatui-org/ratatui) and its tree widget [tui-tree-widget](https://github.com/EdJoPaTo/tui-rs-tree-widget.git).
 assets/
   screenshot.png
 build.rs
@@ -214,35 +236,6 @@ src/
     62→            if args.live_reload {
     63→                fw = Some(FileWatcher::new(
     64→                    path.clone(),
-    65→                    cfg.clone(),
-    66→                    content_type,
-    67→                    max_data_size,
-    68→                ));
-    69→            }
-    70→            fs::read(path).context("read file")?
-    71→        }
-    72→        None => {
-    73→            let mut data = Vec::new();
-    74→            io::stdin().read_to_end(&mut data).context("read stdin")?;
-    75→            data
-    76→        }
-    77→    };
-    79→    if let Some(target_type) = args.to {
-    80→        if matches!(target_type, ContentType::Any) {
-    81→            bail!("target content type cannot be 'any' when using '--to' option");
-    82→        }
-    83→        let parser = content_type.new_parser();
-    84→        let target_parser = target_type.new_parser();
-    85→
-    86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
-    87→        let tokens = target_parser.syntax_highlight("", &value);
-    88→        let text = SyntaxToken::pure_text(&tokens);
-    89→
-    90→        print!("{text}");
-    91→        return Ok(());
-    92→    }
-    93→
-    94→    if data.len() > max_data_size {
     …
     109→}
     111→fn main() {

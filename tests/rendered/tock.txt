@@ -45,6 +45,80 @@ README.md
   22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
   23→
   24→<hr clear="right"/>
+  26→## Quick Start
+  27→
+  28→### Installation
+  29→
+  30→#### Homebrew (macOS)
+  31→
+  32→```bash
+  33→# https://formulae.brew.sh/formula/tock
+  34→# Install from official repository (build from source)
+  35→brew install tock
+  36→
+  37→# Install pre-built binary via latest release (Goreleaser)
+  38→brew install kriuchkov/tap/tock
+  39→```
+  40→
+  41→#### Go Install
+  42→
+  43→```bash
+  44→go install github.com/kriuchkov/tock/cmd/tock@latest
+  45→```
+  46→
+  47→#### Build from source
+  48→
+  49→```bash
+  50→go build -o tock ./cmd/tock
+  51→```
+  52→
+  53→#### Install Script (Linux & macOS)
+  54→
+  55→```bash
+  56→curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
+  57→```
+  59→#### Download Binary
+  60→
+  61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
+  62→
+  63→### Basic Usage
+  64→
+  65→<img src="assets/demo.gif" width="820px" />
+  66→<hr clear="right"/>
+  67→
+  68→Start tracking time:
+  69→
+  70→```bash
+  71→tock start # Interactive mode (requires no arguments)
+  72→tock start "My Project" "Implementing features" # Quick start with arguments
+  73→tock start "My Project" "Implementing features" "Some notes" "tag1,tag2"  # Quick start with arguments + notes/tags
+  74→tock start -d "Implementing features" -p "My Project" # Start with flags
+  75→tock start -d "Implementing features" -p "My Project" -t 14:30 --note "Some notes" --tag "afternoon" # Start with flags + time + notes/tags
+  76→```
+  …
+  238→## Theming
+  239→
+  240→Tock supports customizable color themes for the calendar view.
+  241→
+  242→You can configure the theme in `tock.yaml`:
+  243→
+  244→```yaml
+  245→theme:
+  246→  name: custom
+  247→  primary: "#ff0000"
+  248→```
+  249→
+  250→Or use environment variables:
+  251→
+  252→### Theme Name
+  253→
+  254→Set `TOCK_THEME_NAME` (or `theme.name` in config) to one of:
+  255→
+  256→- `dark`: Standard 256-color dark theme
+  257→- `light`: Standard 256-color light theme
+  258→- `ansi_dark`: 16-color dark theme
+  259→- `ansi_light`: 16-color light theme
+  260→- `custom`: Use custom colors defined by environment variables
   …
   602→## Update Check
   603→
@@ -189,55 +263,8 @@ internal/
     config.go
       …
       12→type Config struct {
-      13→	Backend         string            `mapstructure:"backend"`
-      14→	File            FileConfig        `mapstructure:"file"`
-      15→	Timewarrior     TimewarriorConfig `mapstructure:"timewarrior"`
-      16→	Theme           ThemeConfig       `mapstructure:"theme"`
-      17→	Calendar        CalendarConfig    `mapstructure:"calendar"`
-      18→	TimeFormat      string            `mapstructure:"time_format"`
-      19→	Export          ExportConfig      `mapstructure:"export"`
-      20→	WeeklyTarget    time.Duration     `mapstructure:"weekly_target"`
-      21→	CheckUpdates    bool              `mapstructure:"check_updates"`
-      22→	LastUpdateCheck time.Time         `mapstructure:"last_update_check"`
-      23→}
+      …
       25→type CalendarConfig struct {
-      26→	TimeSpentFormat   string `mapstructure:"time_spent_format"`
-      27→	TimeStartFormat   string `mapstructure:"time_start_format"`
-      28→	TimeEndFormat     string `mapstructure:"time_end_format"`
-      29→	TimeTotalFormat   string `mapstructure:"time_total_format"`
-      30→	AlignDurationLeft bool   `mapstructure:"align_duration_left"`
-      31→}
-      33→type ExportConfig struct {
-      34→	ICal ICalConfig `mapstructure:"ical"`
-      35→}
-      37→type ICalConfig struct {
-      38→	FileName string `mapstructure:"file_name"`
-      39→}
-      41→type FileConfig struct {
-      42→	Path string `mapstructure:"path"`
-      43→}
-      45→type TimewarriorConfig struct {
-      46→	DataPath string `mapstructure:"data_path"`
-      47→}
-      49→type ThemeConfig struct {
-      50→	Name      string `mapstructure:"name"`
-      51→	Primary   string `mapstructure:"primary"`
-      52→	Secondary string `mapstructure:"secondary"`
-      53→	Text      string `mapstructure:"text"`
-      54→	SubText   string `mapstructure:"sub_text"`
-      55→	Faint     string `mapstructure:"faint"`
-      56→	Highlight string `mapstructure:"highlight"`
-      57→	Tag       string `mapstructure:"tag"`
-      58→}
-      60→type Option func(*viper.Viper)
-      61→
-      62→func WithConfigPath(path string) Option {
-      …
-      68→func WithConfigName(name string) Option {
-      …
-      74→func WithConfigFile(file string) Option {
-      …
-      80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
       …
     config_test.go
   core/
@@ -264,30 +291,5 @@ internal/
       generator.go
   timeutil/
     timeutil.go
-      …
-      11→type TimeFormat int
-      13→const (
-      14→	Format24Hour TimeFormat = iota // default
-      15→	Format12Hour
-      16→)
-      …
-      19→type Formatter struct {
-      20→	format TimeFormat
-      21→}
-      …
-      25→func NewFormatter(formatStr string) *Formatter {
-      …
-      34→func (f *Formatter) Format() TimeFormat {
-      …
-      39→func (f *Formatter) GetDisplayFormat() string {
-      …
-      47→func (f *Formatter) GetDisplayFormatWithDate() string {
-      …
-      56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
-      …
-      103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
-      …
-      158→func FormatDuration(d time.Duration, format string) string {
-      …
     timeutil_test.go
 tock.yaml.example

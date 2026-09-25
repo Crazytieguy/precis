@@ -46,6 +46,11 @@ README.md
   35→    +--------+-------------------------------+-----------+
   36→             |
   37→             `-> Pointer returned to the user.
+  39→Because of meta data stored before the actual returned pointer as a prefix,
+  40→and because of every SDS string implicitly adding a null term at the end of
+  41→the string regardless of the actual content of the string, SDS strings work
+  42→well together with C strings and the user is free to use them interchangeably
+  43→with other std C string functions that access the string in read-only.
   …
   55→Advantages and disadvantages of SDS
   56→===
@@ -120,15 +125,6 @@ README.md
   912→===
   …
 sds.c
-  …
-  42→const char *SDS_NOINIT = "SDS_NOINIT";
-  43→
-  44→static inline int sdsHdrSize(char type) {
-  …
-  60→static inline char sdsReqType(size_t string_size) {
-  …
-  89→sds sdsnewlen(const void *init, size_t initlen) {
-  …
 sds.h
   …
   36→#define SDS_MAX_PREALLOC (1024*1024)

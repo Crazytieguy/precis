@@ -44,6 +44,7 @@ README.md
   45→After installing the SDK, you can create a new instance of the API. When creating a new instance, you can either use environment variables or pass the credentials directly. It's strongly recommended to use environment variables to store the API credentials.<br>
   46→On creation, the Api won't connect to the 3x-ui app, so you can spawn new instances without spending resources. But after creating an instance, you'll need to call the `login` method to authenticate the user and save the cookie for future requests.
   48→### Installation
+  49→```bash
   …
   53→### Create a new instance of the API
   …

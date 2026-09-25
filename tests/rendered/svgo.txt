@@ -30,7 +30,19 @@ README.md
   10→
   11→SVG files, especially those exported from vector editors, usually contain a lot of redundant information. This includes editor metadata, comments, hidden elements, default or suboptimal values, and other stuff that can be safely removed or converted without impacting rendering.
   13→## Installation
-  …
+  14→
+  15→You can install SVGO globally through npm, yarn, or pnpm. Alternatively, drop the global flag (`global`/`-g`) to use it in your Node.js project.
+  16→
+  17→```sh
+  18→# npm
+  19→npm install -g svgo
+  20→
+  21→# yarn
+  22→yarn global add svgo
+  23→
+  24→# pnpm
+  25→pnpm add -g svgo
+  26→```
   28→## Command-line usage
   …
   48→## Configuration
@@ -297,19 +309,6 @@ plugins/
     51→    removeUselessDefs,
     52→    cleanupNumericValues,
     53→    convertColors,
-    54→    removeUnknownsAndDefaults,
-    55→    removeNonInheritableGroupAttrs,
-    56→    removeUselessStrokeAndFill,
-    57→    cleanupEnableBackground,
-    58→    removeHiddenElems,
-    59→    removeEmptyText,
-    60→    convertShapeToPath,
-    61→    convertEllipseToCircle,
-    62→    moveElemsAttrsToGroup,
-    63→    moveGroupAttrsToElems,
-    64→    collapseGroups,
-    65→    convertPathData,
-    66→    convertTransform,
     …
     77→export default presetDefault;
   removeAttributesBySelector.js

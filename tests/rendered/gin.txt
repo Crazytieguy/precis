@@ -37,7 +37,16 @@ Makefile
   …
 README.md
   1→# Gin Web Framework
-  …
+  3→<img align="right" width="159px" src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png">
+  4→
+  5→[![Build Status](https://github.com/gin-gonic/gin/actions/workflows/gin.yml/badge.svg?branch=master)](https://github.com/gin-gonic/gin/actions/workflows/gin.yml)
+  6→[![Trivy Security Scan](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml)
+  7→[![codecov](https://codecov.io/gh/gin-gonic/gin/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-gonic/gin)
+  8→[![Go Report Card](https://goreportcard.com/badge/github.com/gin-gonic/gin)](https://goreportcard.com/report/github.com/gin-gonic/gin)
+  9→[![Go Reference](https://pkg.go.dev/badge/github.com/gin-gonic/gin?status.svg)](https://pkg.go.dev/github.com/gin-gonic/gin?tab=doc)
+  10→[![Sourcegraph](https://sourcegraph.com/github.com/gin-gonic/gin/-/badge.svg)](https://sourcegraph.com/github.com/gin-gonic/gin?badge)
+  11→[![Open Source Helpers](https://www.codetriage.com/gin-gonic/gin/badges/users.svg)](https://www.codetriage.com/gin-gonic/gin)
+  12→[![Release](https://img.shields.io/github/release/gin-gonic/gin.svg?style=flat-square)](https://github.com/gin-gonic/gin/releases)
   14→## 📰 Gin 1.12.0 is now available!
   …
   43→## Getting Started
@@ -248,50 +257,24 @@ logger.go
   89→	// Keys are the keys set on the request's context.
   90→	Keys map[any]any
   91→}
-  93→// StatusCodeColor is the ANSI color for appropriately logging http status code to a terminal.
+  …
   94→func (p *LogFormatterParams) StatusCodeColor() string {
   …
-  111→// LatencyColor is the ANSI color for latency
   112→func (p *LogFormatterParams) LatencyColor() string {
   …
-  132→// MethodColor is the ANSI color for appropriately logging http method to a terminal.
   133→func (p *LogFormatterParams) MethodColor() string {
   …
-  156→// ResetColor resets all escape attributes.
   157→func (p *LogFormatterParams) ResetColor() string {
   …
-  161→// IsOutputColor indicates whether can colors be outputted to the log.
   162→func (p *LogFormatterParams) IsOutputColor() bool {
   …
   167→var defaultLogFormatter = func(param LogFormatterParams) string {
-  168→	var statusColor, methodColor, resetColor, latencyColor string
-  169→	if param.IsOutputColor() {
   …
-  196→// DisableConsoleColor disables color output in the console.
   197→func DisableConsoleColor() {
   …
-  201→// ForceConsoleColor force color output in the console.
   202→func ForceConsoleColor() {
   …
-  206→// ErrorLogger returns a HandlerFunc for any error type.
   207→func ErrorLogger() HandlerFunc {
-  …
-  211→// ErrorLoggerT returns a HandlerFunc for a given error type.
-  212→func ErrorLoggerT(typ ErrorType) HandlerFunc {
-  …
-  222→// Logger instances a Logger middleware that will write the logs to gin.DefaultWriter.
-  223→// By default, gin.DefaultWriter = os.Stdout.
-  224→func Logger() HandlerFunc {
-  …
-  228→// LoggerWithFormatter instance a Logger middleware with the specified log format function.
-  229→func LoggerWithFormatter(f LogFormatter) HandlerFunc {
-  …
-  235→// LoggerWithWriter instance a Logger middleware with the specified writer buffer.
-  236→// Example: os.Stdout, a file opened in write mode, a socket...
-  237→func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
-  …
-  244→// LoggerWithConfig instance a Logger middleware with config.
-  245→func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
   …
 logger_test.go
 middleware_test.go

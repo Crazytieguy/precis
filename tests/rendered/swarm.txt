@@ -31,12 +31,30 @@ README.md
   83→## Why Swarm
   …
   89→# Examples
+  90→
+  91→Check out `/examples` for inspiration! Learn more about each one in its README.
+  92→
+  93→- [`basic`](examples/basic): Simple examples of fundamentals like setup, function calling, handoffs, and context variables
+  94→- [`triage_agent`](examples/triage_agent): Simple example of setting up a basic triage step to hand off to the right agent
+  95→- [`weather_agent`](examples/weather_agent): Simple example of function calling
   …
   100→# Documentation
-  …
+  101→
+  102→![Swarm Diagram](assets/swarm_diagram.png)
+  103→
   104→## Running Swarm
-  …
+  105→
+  106→Start by instantiating a Swarm client (which internally just instantiates an `OpenAI` client).
+  107→
+  108→```python
+  109→from swarm import Swarm
+  110→
+  111→client = Swarm()
+  112→```
+  113→
   114→### `client.run()`
+  115→
+  116→Swarm's `run()` function is analogous to the `chat.completions.create()` function in the Chat Completions API – it takes `messages` and returns `messages` and saves no state between calls. Importantly, however, it also handles Agent function execution, hand-offs, context variable references, and can take multiple turns before returning to the user.
   …
   149→## Agents
   …
@@ -65,7 +83,13 @@ README.md
   347→run_demo_loop(agent, stream=True)
   348→```
   350→# Core Contributors
-  …
+  351→
+  352→- Ilan Bigio - [ibigio](https://github.com/ibigio)
+  353→- James Hills - [jhills20](https://github.com/jhills20)
+  354→- Shyamal Anadkat - [shyamal-anadkat](https://github.com/shyamal-anadkat)
+  355→- Charu Jaiswal - [charuj](https://github.com/charuj)
+  356→- Colin Jarvis - [colin-openai](https://github.com/colin-openai)
+  357→- Katia Gil Guzman - [katia-openai](https://github.com/katia-openai)
 SECURITY.md
 assets/
   diagram.png
@@ -201,26 +225,6 @@ setup.cfg
   6→long_description = file: README.md
   7→long_description_content_type = text/markdown
   8→license = MIT
-  9→
-  10→[options]
-  11→packages = find:
-  12→zip_safe = True
-  13→include_package_data = True
-  14→install_requires =
-  15→    numpy
-  16→    openai>=1.33.0
-  17→    pytest
-  18→    requests
-  19→    tqdm
-  20→    pre-commit
-  21→    instructor
-  22→python_requires = >=3.10
-  23→
-  24→[tool.autopep8]
-  25→max_line_length = 120
-  26→ignore = E501,W6
-  27→in-place = true
-  28→recursive = true
   …
 swarm/
   __init__.py
@@ -283,15 +287,6 @@ swarm/
     __init__.py
       1→from .repl import run_demo_loop
     repl.py
-      …
-      6→def process_and_print_streaming_response(response):
-      …
-      37→def pretty_print_messages(messages) -> None:
-      …
-      60→def run_demo_loop(
-      61→    starting_agent, context_variables=None, stream=False, debug=False
-      62→) -> None:
-      …
   types.py
     …
     11→AgentFunction = Callable[[], Union[str, "Agent", dict]]
@@ -335,30 +330,12 @@ swarm/
     17→        elif value is not None and isinstance(value, dict):
     18→            merge_fields(target[key], value)
     21→def merge_chunk(final_response: dict, delta: dict) -> None:
-    22→    delta.pop("role", None)
-    23→    merge_fields(final_response, delta)
-    24→
-    25→    tool_calls = delta.get("tool_calls")
-    26→    if tool_calls and len(tool_calls) > 0:
-    27→        index = tool_calls[0].pop("index")
-    28→        merge_fields(final_response["tool_calls"][index], tool_calls[0])
+    …
     31→def function_to_json(func) -> dict:
-    32→    """
-    33→    Converts a Python function into a JSON-serializable dictionary
-    34→    that describes the function's signature, including its name,
-    35→    description, and parameters.
-    36→
-    37→    Args:
-    38→        func: The function to be converted.
-    39→
-    40→    Returns:
-    41→        A dictionary representing the function's signature in JSON format.
-    42→    """
     …
 tests/
   __init__.py (empty)
   mock_client.py
   test_core.py
   test_runs/
-    test_20240402-113647.json
   test_util.py

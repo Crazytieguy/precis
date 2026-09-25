@@ -78,7 +78,12 @@ readme.md
   36→
   37→---
   39→## Install
-  …
+  40→
+  41→```sh
+  42→npm install p-queue
+  43→```
+  44→
+  45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
   47→## Usage
   …
   68→## API
@@ -253,17 +258,6 @@ source/
     902→	const queue = new PQueue({concurrency: 2});
     903→
     904→	// Backpressure handling
-    905→	if (queue.isSaturated) {
-    906→		console.log('Queue is saturated, waiting for capacity...');
-    907→		await queue.onSizeLessThan(queue.concurrency);
-    908→	}
-    909→
-    910→	// Monitoring for stuck tasks
-    911→	setInterval(() => {
-    912→		if (queue.isSaturated) {
-    913→			console.warn(`Queue saturated: ${queue.pending} running, ${queue.size} waiting`);
-    914→		}
-    915→	}, 60000);
     …
     918→	get isSaturated(): boolean {
     …

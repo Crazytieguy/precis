@@ -1,4 +1,4 @@
-Score(3000)=0.710 I=0.919 C=0.548 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.632/0.692/0.710/0.553/0.464/0.475
+Score(3000)=0.710 I=0.919 C=0.548 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.632/0.643/0.710/0.553/0.464/0.475
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,13 +20,13 @@ Score(3000)=0.710 I=0.919 C=0.548 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 447 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.916 |
 | walker |  | 477 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.916 |
 | ns | 541 |  | 146 | Canonical usage example: @app.route + `flask run` (README.md:20-36) | 1.5 |  | 0.783 |
-| walker |  | 653 | 176 | Fs::DirListing { dir: docs } |  |  | 0.787 |
-| walker |  | 680 | 27 | Fs::DirListing { dir: docs/_static } |  |  | 0.787 |
-| ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.719 |
-| walker |  | 744 | 64 | Fs::DirListing { dir: docs/deploying } |  |  | 0.719 |
-| walker |  | 822 | 78 | Fs::DirListing { dir: docs/tutorial } |  |  | 0.719 |
-| ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.669 |
-| walker |  | 944 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.733 |
+| walker |  | 599 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.858 |
+| ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.784 |
+| walker |  | 775 | 176 | Fs::DirListing { dir: docs } |  |  | 0.788 |
+| walker |  | 802 | 27 | Fs::DirListing { dir: docs/_static } |  |  | 0.788 |
+| ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.733 |
+| walker |  | 866 | 64 | Fs::DirListing { dir: docs/deploying } |  |  | 0.733 |
+| walker |  | 944 | 78 | Fs::DirListing { dir: docs/tutorial } |  |  | 0.733 |
 | walker |  | 1089 | 145 | Fs::DirListing { dir: docs/patterns } |  |  | 0.733 |
 | walker |  | 1113 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.733 |
 | walker |  | 1117 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.733 |
@@ -50,26 +50,26 @@ Score(3000)=0.710 I=0.919 C=0.548 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 1620 | 12 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps/admin } |  |  | 0.655 |
 | ns | 1639 |  | 94 | Scaffold routing decorators — every URL-registration method, names only (sansio/scaffold.py:284-436) | 2.3 | 2.2 | 0.633 |
 | walker |  | 1650 | 30 | Fs::DirListing { dir: examples/tutorial/tests } |  |  | 0.633 |
-| walker |  | 1685 | 35 | Fs::DirListing { dir: tests/test_apps/cliapp } |  |  | 0.633 |
-| walker |  | 1695 | 10 | Fs::DirListing { dir: tests/test_apps/cliapp/inner1 } |  |  | 0.633 |
-| walker |  | 1707 | 12 | Fs::DirListing { dir: tests/test_apps/cliapp/inner1/inner2 } |  |  | 0.633 |
+| walker |  | 1725 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.633 |
 | ns | 1745 |  | 106 | Scaffold request-hook and error-handler decorators, names only (sansio/scaffold.py:460-657) | 2.4 | 2.2 | 0.612 |
+| walker |  | 1815 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.612 |
+| walker |  | 1850 | 35 | Fs::DirListing { dir: tests/test_apps/cliapp } |  |  | 0.612 |
+| walker |  | 1860 | 10 | Fs::DirListing { dir: tests/test_apps/cliapp/inner1 } |  |  | 0.612 |
+| walker |  | 1872 | 12 | Fs::DirListing { dir: tests/test_apps/cliapp/inner1/inner2 } |  |  | 0.612 |
 | ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.586 |
-| walker |  | 1947 | 240 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
+| walker |  | 2112 | 240 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.621 |
 | ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.621 |
-| walker |  | 2287 | 340 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.720 |
-| ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.693 |
-| walker |  | 2436 | 149 | Code::CodeKey { rung: Names, file: src/flask/json/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.693 |
-| walker |  | 2461 | 25 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 5, sub: 0, line: 138 } |  |  | 0.693 |
-| walker |  | 2504 | 43 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 3, sub: 0, line: 77 } |  |  | 0.693 |
+| ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.598 |
+| walker |  | 2452 | 340 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.693 |
 | ns | 2510 |  | 216 | Class roster B: templating, testing, CLI, debug helpers (14 class statements) | 2.8 |  | 0.666 |
-| walker |  | 2547 | 43 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 4, sub: 0, line: 108 } |  |  | 0.666 |
-| walker |  | 2603 | 56 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 1, sub: 0, line: 13 } |  |  | 0.666 |
-| ns | 2655 |  | 145 | Class roster C: the whole src/flask/json subpackage (12 class statements) | 2.9 |  | 0.646 |
-| walker |  | 2663 | 60 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 2, sub: 0, line: 47 } |  |  | 0.646 |
-| walker |  | 2738 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.646 |
-| walker |  | 2828 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.646 |
-| walker |  | 2963 | 135 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.710 |
+| walker |  | 2587 | 135 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.732 |
+| ns | 2655 |  | 145 | Class roster C: the whole src/flask/json subpackage (12 class statements) | 2.9 |  | 0.710 |
+| walker |  | 2736 | 149 | Code::CodeKey { rung: Names, file: src/flask/json/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.710 |
+| walker |  | 2761 | 25 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 5, sub: 0, line: 138 } |  |  | 0.710 |
+| walker |  | 2804 | 43 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 3, sub: 0, line: 77 } |  |  | 0.710 |
+| walker |  | 2847 | 43 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 4, sub: 0, line: 108 } |  |  | 0.710 |
+| walker |  | 2903 | 56 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 1, sub: 0, line: 13 } |  |  | 0.710 |
+| walker |  | 2963 | 60 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 2, sub: 0, line: 47 } |  |  | 0.710 |
 | walker |  | 3012 | 49 | Plaintext::DeclSurface { file: docs/reqcontext.rst } |  |  | 0.710 |
 | ns | 3085 |  | 430 | Flask.default_config — all 29 config keys with their defaults (src/flask/app.py:206-238) | 3.1 |  | 0.657 |
 | ns | 3246 |  | 161 | Every Config loader method + the ConfigAttribute descriptor (src/flask/config.py:23-366) | 3.2 | 3.1 | 0.638 |

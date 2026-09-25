@@ -42,7 +42,10 @@ README.md
   15→crate, and the consumer of those libraries can choose the logging
   16→implementation that is most suitable for its use case.
   19→## Minimum supported `rustc`
-  …
+  20→
+  21→`1.68.0+`
+  22→
+  23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
   25→## Usage
   26→
   27→### In libraries
@@ -144,7 +147,7 @@ src/
     …
     558→    /// Returns the string representation of the `Level`.
     559→    ///
-    560→    /// This returns the same string as the `fmt::Display` implementation.
+    …
     561→    pub fn as_str(&self) -> &'static str {
     …
     579→    pub fn iter() -> impl Iterator<Item = Self> {
@@ -196,15 +199,9 @@ src/
     698→    #[inline]
     699→    pub fn max() -> LevelFilter {
     …
-    703→    /// Converts `self` to the equivalent `Level`.
-    704→    ///
-    …
     706→    #[inline]
     707→    pub fn to_level(&self) -> Option<Level> {
     …
-    711→    /// Returns the string representation of the `LevelFilter`.
-    712→    ///
-    713→    /// This returns the same string as the `fmt::Display` implementation.
     714→    pub fn as_str(&self) -> &'static str {
     …
     732→    pub fn iter() -> impl Iterator<Item = Self> {

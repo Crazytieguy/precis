@@ -24,7 +24,16 @@ README.md
   31→  --local-dir-use-symlinks False
   32→```
   34→## Quick Start
-  …
+  35→
+  36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
+  37→```python
+  38→from nanovllm import LLM, SamplingParams
+  39→llm = LLM("/YOUR/MODEL/PATH", enforce_eager=True, tensor_parallel_size=1)
+  40→sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
+  41→prompts = ["Hello, Nano-vLLM."]
+  42→outputs = llm.generate(prompts, sampling_params)
+  43→outputs[0]["text"]
+  44→```
   46→## Benchmark
   …
   64→## Star History
@@ -39,8 +48,6 @@ bench.py
 example.py
   …
   6→def main():
-  7→    path = os.path.expanduser("~/huggingface/Qwen3-0.6B/")
-  8→    tokenizer = AutoTokenizer.from_pretrained(path)
   …
 nanovllm/
   __init__.py
@@ -109,22 +116,14 @@ nanovllm/
       17→    def __init__(self, model, **kwargs):
       …
       36→    def exit(self):
-      37→        self.model_runner.call("exit")
-      38→        del self.model_runner
-      39→        for p in self.ps:
-      40→            p.join()
+      …
       42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
       …
       48→    def step(self):
       …
       56→    def is_finished(self):
-      57→        return self.scheduler.is_finished()
+      …
       59→    def generate(
-      60→        self,
-      61→        prompts: list[str] | list[list[int]],
-      62→        sampling_params: SamplingParams | list[SamplingParams],
-      63→        use_tqdm: bool = True,
-      64→    ) -> list[str]:
       …
     model_runner.py
       …

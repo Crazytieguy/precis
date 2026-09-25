@@ -1,4 +1,4 @@
-Score(3000)=0.796 I=0.876 C=0.724 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.620/0.751/0.787/0.796/0.759/0.640/0.604
+Score(3000)=0.796 I=0.876 C=0.724 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.620/0.751/0.785/0.796/0.759/0.640/0.604
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -34,15 +34,15 @@ Score(3000)=0.796 I=0.876 C=0.724 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 1358 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 2, sub: 0, line: 37 } |  |  | 0.740 |
 | ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.749 |
 | walker |  | 1438 | 80 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 3, sub: 0, line: 68 } |  |  | 0.751 |
-| walker |  | 1476 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.751 |
-| walker |  | 1490 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.751 |
-| walker |  | 1504 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.751 |
 | ns | 1569 |  | 135 | README Specs and Performance tests sections — how to run everything | 3.3 |  | 0.719 |
-| walker |  | 1735 | 231 | Markdown::Section { file: UPDATING.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.724 |
-| ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.700 |
-| walker |  | 1820 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.742 |
-| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.719 |
-| walker |  | 2089 | 269 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.793 |
+| walker |  | 1707 | 269 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.769 |
+| ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.773 |
+| walker |  | 1745 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.773 |
+| walker |  | 1759 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.773 |
+| walker |  | 1773 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.773 |
+| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.749 |
+| walker |  | 2004 | 231 | Markdown::Section { file: UPDATING.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.754 |
+| walker |  | 2089 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.793 |
 | ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.765 |
 | ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.766 |
 | walker |  | 2202 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.770 |

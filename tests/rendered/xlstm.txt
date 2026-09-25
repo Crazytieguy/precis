@@ -19,6 +19,9 @@ README.md
   49→## Requirements
   …
   61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
+  62→[![Paper](https://img.shields.io/static/v1?label=Paper&message=2503.13427&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2503.13427)
+  63→[![Hugging Face](https://img.shields.io/badge/HuggingFace-xLSTM_7B-yellow?logo=huggingface)](https://huggingface.co/NX-AI/xLSTM-7b)
+  64→[![License](https://img.shields.io/badge/license-nxai_community-green)](https://github.com/NX-AI/tirex-internal/blob/main/LICENSE)
   …
   80→## How to use the xLSTM Large 7B and its architecture
   …
@@ -288,18 +291,6 @@ xlstm/
     78→    config_class = xLSTMBlockStackConfig
     79→
     80→    def __init__(self, config: xLSTMBlockStackConfig):
-    …
-    90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
-    …
-    111→    def reset_parameters(self) -> None:
-    112→        for block in self.blocks:
-    113→            block.reset_parameters()
-    …
-    117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
-    …
-    126→    def step(
-    127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
-    128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     …
   xlstm_large/
     __init__.py

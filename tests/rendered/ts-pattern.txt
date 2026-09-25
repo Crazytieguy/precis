@@ -48,6 +48,29 @@ README.md
   56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
   57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
   …
+  67→## Installation
+  68→
+  69→Via npm
+  70→
+  71→```sh
+  72→npm install ts-pattern
+  73→```
+  74→
+  75→You can also use your favorite package manager:
+  76→
+  77→```sh
+  78→pnpm add ts-pattern
+  79→# OR
+  80→yarn add ts-pattern
+  81→# OR
+  82→bun add ts-pattern
+  83→# OR
+  84→npx jsr add @gabriel/ts-pattern
+  85→```
+  87→## Want to become a TypeScript Expert?
+  88→
+  89→Check out 👉 [Type-Level TypeScript](https://type-level-typescript.com/), an online course teaching you how to unleash the full potential of TypeScript's Turing-complete type system. You already know how to code, and types are simply another programming language to master. This course **bridges the gap**, helping you apply your **existing programming knowledge** to **TypeScript's type system**, so you never again struggle with type errors or feel unable to type complex generic code correctly!
+  …
 benchmarks/
   always-last-digit.ts
   nested-objects.ts
@@ -216,40 +239,10 @@ src/
     65→export { matcher };
     …
     81→export type unstable_Matchable<
-    82→  narrowedOrFn,
-    83→  input = unknown,
-    84→  pattern = never
-    85→> = CustomP<input, pattern, narrowedOrFn>;
     …
     100→export type unstable_Matcher<
-    101→  narrowedOrFn,
-    102→  input = unknown,
-    103→  pattern = never
-    104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
     …
     116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
-    …
-    131→export type narrow<input, pattern> = ExtractPreciseValue<
-    132→  input,
-    133→  InvertPattern<pattern, input>
-    134→>;
-    …
-    187→export function optional<
-    188→  input,
-    189→  const pattern extends unknown extends input
-    190→    ? UnknownValuePattern
-    191→    : Pattern<input>
-    192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
-    …
-    241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
-    242→export function array<
-    …
-    246→export function array(
-    …
-    294→export function set<input>(): Chainable<SetP<input, unknown>>;
-    295→export function set<
-    …
-    299→export function set<
     …
   types/
     BuildMany.ts

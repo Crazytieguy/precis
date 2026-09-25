@@ -265,11 +265,11 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 6934 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.664 |
 | walker |  | 6962 | 28 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.664 |
 | ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.657 |
-| walker |  | 7006 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.657 |
-| walker |  | 7080 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.657 |
+| walker |  | 7036 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.657 |
 | ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.653 |
 | ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.648 |
-| walker |  | 7452 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.677 |
+| walker |  | 7408 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.677 |
+| walker |  | 7452 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.677 |
 | walker |  | 7471 | 19 | Markdown::Section { file: server/migrations/readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.677 |
 | ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.663 |
 | walker |  | 7716 | 245 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.673 |

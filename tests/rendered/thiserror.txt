@@ -76,6 +76,20 @@ README.md
   41→
   42→<br>
   44→## Details
+  45→
+  46→- Thiserror deliberately does not appear in your public API. You get the same
+  47→  thing as if you had written an implementation of `std::error::Error` by hand,
+  48→  and switching from handwritten impls to thiserror or vice versa is not a
+  49→  breaking change.
+  50→
+  51→- Errors may be enums, structs with named fields, tuple structs, or unit
+  52→  structs.
+  53→
+  54→- A `Display` impl is generated for your error if you provide `#[error("...")]`
+  55→  messages on the struct or each variant of your enum, as shown above in the
+  56→  example.
+  57→
+  58→  The messages support a shorthand for interpolating fields from the error.
   …
   211→## Comparison to anyhow
   …
@@ -317,31 +331,4 @@ tests/
     duplicate-transparent.stderr
     expression-fallback.rs
     expression-fallback.stderr
-    fallback-impl-with-display.rs
-    fallback-impl-with-display.stderr
-    from-backtrace-backtrace.rs
-    from-backtrace-backtrace.stderr
-    from-not-source.rs
-    from-not-source.stderr
-    invalid-input-impl-anyway.rs
-    invalid-input-impl-anyway.stderr
-    lifetime.rs
-    lifetime.stderr
-    missing-display.rs
-    missing-display.stderr
-    missing-fmt.rs
-    missing-fmt.stderr
-    no-display.rs
-    no-display.stderr
-    numbered-positional-tuple.rs
-    numbered-positional-tuple.stderr
-    raw-identifier.rs
-    raw-identifier.stderr
-    same-from-type.rs
-    same-from-type.stderr
-    source-enum-not-error.rs
-    source-enum-not-error.stderr
-    source-enum-unnamed-field-not-error.rs
-    source-enum-unnamed-field-not-error.stderr
-    source-struct-not-error.rs
     …

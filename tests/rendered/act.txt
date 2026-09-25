@@ -99,9 +99,15 @@ README.md
   29→
   30→Need help? Ask in [discussions](https://github.com/nektos/act/discussions)!
   32→# Contributing
-  …
+  33→
+  34→Want to contribute to act? Awesome! Check out the [contributing guidelines](CONTRIBUTING.md) to get involved.
+  35→
   36→## Manually building from source
-  …
+  37→
+  38→- Install Go tools 1.20+ - (<https://golang.org/doc/install>)
+  39→- Clone this repo `git clone git@github.com:nektos/act.git`
+  40→- Run unit tests with `make test`
+  41→- Build and install: `make install`
 VERIFICATION
 VERSION
 act-cli.nuspec
@@ -119,15 +125,6 @@ cmd/
   input.go
   list.go
   notices.go
-    …
-    17→type Notice struct {
-    …
-    22→func displayNotices(input *Input) {
-    …
-    55→var noticesLoaded = make(chan []Notice)
-    56→
-    57→func loadVersionNotices(version string) {
-    …
   platforms.go
   root.go
   root_test.go
@@ -238,10 +235,7 @@ pkg/
     testdata/
       Dockerfile
         1→FROM scratch
-        2→ENV PATH="/this/path/does/not/exists/anywhere:/this/either"
-        3→ENV SOME_RANDOM_VAR=""
-        4→ENV ANOTHER_ONE="BUT_I_HAVE_VALUE"
-        5→ENV CONFLICT_VAR="I_EXIST_ONLY_HERE"
+        …
       docker-pull-options/
         config.json
       scratch/
@@ -268,7 +262,6 @@ pkg/
         1→World!
       for-hashing-3/
         data.txt
-          1→Knock knock!
         nested/
           nested-data.txt
   filecollector/

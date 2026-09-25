@@ -1,4 +1,4 @@
-Score(3000)=0.769 I=0.922 C=0.642 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.746/0.732/0.775/0.769/0.654/0.608/0.553
+Score(3000)=0.769 I=0.922 C=0.642 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.746/0.815/0.775/0.769/0.654/0.608/0.553
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,14 +35,14 @@ Score(3000)=0.769 I=0.922 C=0.642 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 1100 | 86 | Fs::DirListing { dir: docs/assets } |  |  | 0.771 |
 | ns | 1140 |  | 96 | Documentation tree listing | 1.10 |  | 0.785 |
 | walker |  | 1141 | 41 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.785 |
+| walker |  | 1191 | 50 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.785 |
 | ns | 1270 |  | 130 | Test tree and sample-collection listings | 1.11 |  | 0.731 |
-| walker |  | 1367 | 226 | Code::CodeKey { rung: Names, file: src/posting/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.731 |
-| walker |  | 1422 | 55 | Markdown::HeadingsOutline { file: docs/roadmap.md } |  |  | 0.731 |
-| ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.707 |
-| walker |  | 1521 | 99 | Fs::DirListing { dir: tests } |  |  | 0.750 |
-| walker |  | 1571 | 50 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.750 |
-| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.712 |
-| walker |  | 1828 | 257 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.803 |
+| walker |  | 1448 | 257 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.830 |
+| ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.803 |
+| walker |  | 1674 | 226 | Code::CodeKey { rung: Names, file: src/posting/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.803 |
+| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.763 |
+| walker |  | 1729 | 55 | Markdown::HeadingsOutline { file: docs/roadmap.md } |  |  | 0.763 |
+| walker |  | 1828 | 99 | Fs::DirListing { dir: tests } |  |  | 0.803 |
 | ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.774 |
 | walker |  | 1965 | 137 | Code::CodeKey { rung: Names, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.783 |
 | walker |  | 1977 | 12 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.786 |
@@ -62,18 +62,18 @@ Score(3000)=0.769 I=0.922 C=0.642 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 2727 | 300 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.808 |
 | walker |  | 2732 | 5 | Fs::DirListing { dir: .codex/environments } |  |  | 0.808 |
 | walker |  | 2737 | 5 | Fs::DirListing { dir: tests/__snapshots__ } |  |  | 0.808 |
-| walker |  | 2758 | 21 | Markdown::HeadingsOutline { file: docs/guide/command_palette.md } |  |  | 0.808 |
-| walker |  | 2766 | 8 | Fs::DirListing { dir: tests/resources } |  |  | 0.808 |
 | ns | 2774 |  | 240 | RequestModel field roster | 3.3 | 3.1 | 0.781 |
-| walker |  | 2776 | 10 | Code::CodeKey { rung: Names, file: src/posting/exit_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.781 |
-| walker |  | 2799 | 23 | Markdown::HeadingsOutline { file: docs/guide/help_system.md } |  |  | 0.781 |
-| walker |  | 2811 | 12 | Code::CodeKey { rung: Names, file: src/posting/help_data.py, decl: 0, sub: 0, line: 0 } |  |  | 0.781 |
-| walker |  | 2870 | 59 | Code::CodeKey { rung: Decl, file: src/posting/help_data.py, decl: 1, sub: 0, line: 4 } |  |  | 0.781 |
-| walker |  | 2887 | 17 | Code::CodeKey { rung: Doc, file: src/posting/help_data.py, decl: 1, sub: 0, line: 4 } |  |  | 0.781 |
-| walker |  | 2899 | 12 | Code::CodeKey { rung: Names, file: src/posting/version.py, decl: 0, sub: 0, line: 0 } |  |  | 0.781 |
-| walker |  | 2909 | 10 | Fs::DirListing { dir: tests/sample-envs } |  |  | 0.781 |
 | ns | 2934 |  | 160 | RequestModel behaviour roster | 3.4 |  | 0.769 |
-| walker |  | 3136 | 227 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.769 |
+| walker |  | 2964 | 227 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.769 |
+| walker |  | 2985 | 21 | Markdown::HeadingsOutline { file: docs/guide/command_palette.md } |  |  | 0.769 |
+| walker |  | 2993 | 8 | Fs::DirListing { dir: tests/resources } |  |  | 0.769 |
+| walker |  | 3003 | 10 | Code::CodeKey { rung: Names, file: src/posting/exit_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.769 |
+| walker |  | 3026 | 23 | Markdown::HeadingsOutline { file: docs/guide/help_system.md } |  |  | 0.769 |
+| walker |  | 3038 | 12 | Code::CodeKey { rung: Names, file: src/posting/help_data.py, decl: 0, sub: 0, line: 0 } |  |  | 0.769 |
+| walker |  | 3097 | 59 | Code::CodeKey { rung: Decl, file: src/posting/help_data.py, decl: 1, sub: 0, line: 4 } |  |  | 0.769 |
+| walker |  | 3114 | 17 | Code::CodeKey { rung: Doc, file: src/posting/help_data.py, decl: 1, sub: 0, line: 4 } |  |  | 0.769 |
+| walker |  | 3126 | 12 | Code::CodeKey { rung: Names, file: src/posting/version.py, decl: 0, sub: 0, line: 0 } |  |  | 0.769 |
+| walker |  | 3136 | 10 | Fs::DirListing { dir: tests/sample-envs } |  |  | 0.769 |
 | ns | 3145 |  | 211 | Key-value, option and script models | 3.5 | 3.1 | 0.741 |
 | walker |  | 3173 | 37 | Code::CodeKey { rung: Names, file: src/posting/jumper.py, decl: 0, sub: 0, line: 0 } |  |  | 0.741 |
 | walker |  | 3192 | 19 | Code::CodeKey { rung: Decl, file: src/posting/jumper.py, decl: 1, sub: 0, line: 9 } |  |  | 0.741 |

@@ -62,11 +62,23 @@ Readme.md
   76→  * Content negotiation
   77→  * Executable for generating applications quickly
   79→## Docs & Community
-  …
+  80→
+  81→  * [Website and Documentation](https://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
+  82→  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
+  83→  * [Github Discussions](https://github.com/expressjs/discussions) for discussion on the development and usage of Express
+  84→
+  85→**PROTIP** Be sure to read the [migration guide to v5](https://expressjs.com/en/guide/migrating-5)
   87→## Quick Start
   …
   117→## Philosophy
-  …
+  118→
+  119→  The Express philosophy is to provide small, robust tooling for HTTP servers, making
+  120→  it a great solution for single page applications, websites, hybrids, or public
+  121→  HTTP APIs.
+  122→
+  123→  Express does not force you to use any specific ORM or template engine. With support for over
+  124→  14 template engines via [@ladjs/consolidate](https://github.com/ladjs/consolidate),
+  125→  you can quickly craft your perfect framework.
   127→## Examples
   …
   147→## Contributing
@@ -121,15 +133,6 @@ lib/
     38→ */
     40→var app = exports = module.exports = {};
     …
-    49→/**
-    50→ * Initialize the server.
-    51→ *
-    52→ *   - setup default configuration
-    53→ *   - setup default middleware
-    54→ *   - setup route reflection methods
-    55→ *
-    56→ * @private
-    57→ */
     59→app.init = function init() {
     …
     85→/**
@@ -264,18 +267,9 @@ lib/
     126→ * Render with the given options.
     127→ *
     128→ * @param {object} options
-    129→ * @param {function} callback
-    130→ * @private
-    131→ */
+    …
     133→View.prototype.render = function render(options, callback) {
     …
-    161→/**
-    162→ * Resolve the file within the given directory.
-    163→ *
-    164→ * @param {string} dir
-    165→ * @param {string} file
-    166→ * @private
-    167→ */
     169→View.prototype.resolve = function resolve(dir, file) {
     …
 package.json
@@ -285,14 +279,6 @@ package.json
   4→  "version": "5.2.1",
   …
   15→  "license": "MIT",
-  …
-  34→  "dependencies": {
-  35→    "accepts": "^2.0.0",
-  36→    "body-parser": "^2.2.1",
-  37→    "content-disposition": "^1.0.0",
-  38→    "content-type": "^1.0.5",
-  39→    "cookie": "^0.7.1",
-  40→    "cookie-signature": "^1.2.1",
   …
   82→  "engines": {
   83→    "node": ">= 18"

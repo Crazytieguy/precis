@@ -65,7 +65,18 @@ README.md
   42→Rich works with Linux, macOS and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.8 or later.
   44→Rich works with [Jupyter notebooks](https://jupyter.org/) with no additional configuration required.
   46→## Installing
-  …
+  47→
+  48→Install with `pip` or your favorite PyPI package manager.
+  49→
+  50→```sh
+  51→python -m pip install rich
+  52→```
+  53→
+  54→Run the following to test Rich output on your terminal:
+  55→
+  56→```sh
+  57→python -m rich
+  58→```
   60→## Rich Print
   …
   72→## Rich REPL
@@ -256,8 +267,6 @@ rich/
     41→
     42→    Args:
     43→        *args (Any): Positional arguments for the replacement :class:`~rich.console.Console`.
-    44→        **kwargs (Any): Keyword arguments for the replacement :class:`~rich.console.Console`.
-    45→    """
     …
     53→def print(
     54→    *objects: Any,
@@ -331,14 +340,6 @@ rich/
   _timer.py
   _unicode_data/
     __init__.py
-      …
-      12→from importlib import import_module
-      13→from typing import TYPE_CHECKING, cast
-      14→
-      15→from rich._unicode_data._versions import VERSIONS
-      …
-      20→VERSION_ORDER = sorted(
-      …
     _versions.py
     unicode10-0-0.py
     unicode11-0-0.py
