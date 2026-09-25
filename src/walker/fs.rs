@@ -5,14 +5,14 @@
 //! per-language file enumeration).
 
 use std::{
-    cell::RefCell,
+    cell::{Cell, RefCell},
     collections::{BTreeMap, HashMap},
     path::{Path, PathBuf},
 };
 
 use crate::batch::{Batch, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
-use crate::fs_util::{DirFilter, EntryKind, list_dir};
+use crate::fs_util::{DirFilter, EntryKind, PROBE_ENTRY_CAP, list_dir};
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
@@ -250,6 +250,8 @@ fn has_module_sibling_file(dir: &Path) -> bool {
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
+    /// Entries the source probes have read, against [`PROBE_ENTRY_CAP`].
+    inventory_entries_read: Cell<usize>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
@@ -308,7 +310,12 @@ fn holds_source_uncached(state: &FsState, dir: &Path, filter: &DirFilter) -> boo
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return false;
     };
-    read_dir.flatten().any(|entry| {
+    let within_cap = |_: &std::fs::DirEntry| {
+        let entries_read = state.inventory_entries_read.get();
+        state.inventory_entries_read.set(entries_read + 1);
+        entries_read < PROBE_ENTRY_CAP
+    };
+    read_dir.flatten().take_while(within_cap).any(|entry| {
         let Ok(file_type) = entry.file_type() else {
             return false;
         };

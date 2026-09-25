@@ -17,7 +17,7 @@ use tree_sitter::{Language, Node, Tree};
 
 use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, Render, Span};
-use crate::fs_util::DirFilter;
+use crate::fs_util::{DirFilter, PROBE_ENTRY_CAP};
 use crate::render::{Source, SourceCache};
 
 pub(crate) mod code;
@@ -308,17 +308,23 @@ struct EssentialSource {
 /// `None` once the walk has seen more source than a file within
 /// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] can hold
 /// [`DOMINANT_SOURCE_MASS_SHARE`] of: no file can be the spine then, and
-/// stopping there keeps the survey from walking all of a huge tree.
+/// stopping there keeps the survey from walking all of a huge tree. `None`
+/// too once it has read [`PROBE_ENTRY_CAP`] entries.
 fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<EssentialSource> {
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
     let mut total = 0;
+    let mut entries_read = 0;
     let mut stack = vec![root.to_path_buf()];
     while let Some(dir) = stack.pop() {
         let Ok(entries) = std::fs::read_dir(&dir) else {
             continue;
         };
         for entry in entries.flatten() {
+            entries_read += 1;
+            if entries_read > PROBE_ENTRY_CAP {
+                return None;
+            }
             let Ok(file_type) = entry.file_type() else {
                 continue;
             };

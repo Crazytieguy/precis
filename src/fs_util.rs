@@ -57,6 +57,14 @@ pub(crate) fn should_skip_dir(name: &str) -> bool {
     )
 }
 
+/// Most directory entries a whole-tree probe (the spine survey, the
+/// source-inventory counts) reads in one run. Past it the probe answers
+/// as if nothing more were there, so a huge tree unrelated to any
+/// project, like a home directory, can't stall the summary. The corpus's
+/// probes read at most 3.5k entries and the 186-repo robustness sweep's
+/// inventory counts at most 12k.
+pub(crate) const PROBE_ENTRY_CAP: usize = 20_000;
+
 /// Gitignore-aware visibility filter for one walk root, built once per
 /// run and shared by every listing and file-enumeration call.
 ///
