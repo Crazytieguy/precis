@@ -1,4 +1,4 @@
-Score(3000)=0.483 I=0.599 C=0.389 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.615/0.556/0.483/0.426/0.408/0.373
+Score(3000)=0.466 I=0.593 C=0.366 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.615/0.535/0.466/0.412/0.397/0.365
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -51,151 +51,152 @@ Score(3000)=0.483 I=0.599 C=0.389 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 1944 | 211 | go names channel.go |  |  | 0.595 |
 | walker |  | 1961 | 17 | go doc channel.go:12 |  |  | 0.595 |
 | ns | 2051 |  | 440 | slice.go roster 1/2: transform, group, build (L12-L709) | 2.2 | 2.1 | 0.535 |
-| walker |  | 2058 | 97 | headings outline in README.md |  |  | 0.556 |
-| walker |  | 2259 | 201 | go names math.go |  |  | 0.556 |
-| ns | 2418 |  | 367 | slice.go roster 2/2: take/drop, reject, count, trim (L721-L1297) | 2.3 |  | 0.517 |
-| walker |  | 2469 | 210 | go names find.go |  |  | 0.518 |
-| ns | 2579 |  | 161 | find.go roster 1/2: index, find, uniques (L13-L270) | 2.4 |  | 0.511 |
-| walker |  | 2683 | 214 | go names types.go |  |  | 0.511 |
-| walker |  | 2702 | 19 | go decl types.go:10 |  |  | 0.511 |
-| walker |  | 2722 | 20 | go decl types.go:4 |  |  | 0.511 |
-| walker |  | 2748 | 26 | go decl types.go:22 |  |  | 0.511 |
-| walker |  | 2781 | 33 | go decl types.go:35 |  |  | 0.511 |
-| walker |  | 2821 | 40 | go decl types.go:49 |  |  | 0.511 |
-| walker |  | 2832 | 11 | go body types.go:17 |  |  | 0.511 |
-| walker |  | 2870 | 38 | go names internal/xtime/noCopy.go |  |  | 0.511 |
-| ns | 2911 |  | 332 | find.go roster 2/2: min/max, first/last/nth, sampling (L352-L988) | 2.5 |  | 0.483 |
-| walker |  | 2922 | 52 | go decl retry.go:10 |  |  | 0.483 |
-| walker |  | 3147 | 225 | go names concurrency.go |  |  | 0.483 |
-| walker |  | 3160 | 13 | go decl concurrency.go:9 |  |  | 0.483 |
-| walker |  | 3168 | 8 | go body concurrency.go:56 |  |  | 0.483 |
-| walker |  | 3221 | 53 | go decl retry.go:76 |  |  | 0.483 |
-| ns | 3284 |  | 373 | map.go roster: every map helper | 2.6 |  | 0.457 |
-| walker |  | 3462 | 241 | go names errors.go |  |  | 0.457 |
-| walker |  | 3474 | 12 | go body errors.go:72 |  |  | 0.457 |
-| walker |  | 3487 | 13 | go body errors.go:78 |  |  | 0.457 |
-| ns | 3491 |  | 207 | condition.go complete: Ternary plus the If/Switch builder types | 2.7 |  | 0.447 |
-| walker |  | 3506 | 19 | go body errors.go:65 |  |  | 0.447 |
-| walker |  | 3529 | 23 | go body errors.go:84 |  |  | 0.447 |
-| ns | 3722 |  | 231 | type_manipulation.go roster: pointer, zero-value, coalesce | 2.8 |  | 0.444 |
-| walker |  | 3767 | 238 | go names map.go |  |  | 0.447 |
-| walker |  | 3785 | 18 | go body map.go:47 |  |  | 0.447 |
-| walker |  | 3817 | 32 | go doc map.go:117 |  |  | 0.447 |
-| ns | 3910 |  | 188 | intersect.go roster: set predicates and set algebra | 2.9 |  | 0.442 |
-| walker |  | 4070 | 253 | go names string.go |  |  | 0.442 |
-| ns | 4085 |  | 175 | errors.go roster: Must, Try, Validate, and the Assert vars | 2.10 |  | 0.433 |
-| walker |  | 4126 | 56 | go decl string.go:16 |  |  | 0.433 |
-| walker |  | 4160 | 34 | go doc concurrency.go:56 |  |  | 0.433 |
-| walker |  | 4172 | 12 | go doc types.go:4 |  |  | 0.433 |
-| walker |  | 4207 | 35 | go doc map.go:5 |  |  | 0.433 |
-| ns | 4264 |  | 179 | channel.go roster: dispatcher, buffering, fan-in/fan-out | 2.11 |  | 0.426 |
-| walker |  | 4299 | 92 | go names it/channel.go |  |  | 0.426 |
-| walker |  | 4347 | 48 | go names internal/xrand/ordered_go118.go |  |  | 0.426 |
-| walker |  | 4395 | 48 | go names internal/xrand/ordered_go122.go |  |  | 0.426 |
-| walker |  | 4454 | 59 | listing of 'docs' |  |  | 0.446 |
-| walker |  | 4458 | 4 | listing of 'docs/plugins' |  |  | 0.446 |
-| walker |  | 4465 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.446 |
-| walker |  | 4501 | 36 | go doc find.go:56 |  |  | 0.446 |
-| ns | 4527 |  | 263 | tuples.go: eleven arity families, head and tail with elision | 2.12 |  | 0.429 |
-| walker |  | 4537 | 36 | go doc intersect.go:119 |  |  | 0.429 |
-| walker |  | 4573 | 36 | go doc map.go:47 |  |  | 0.429 |
-| walker |  | 4610 | 37 | go doc type_manipulation.go:34 |  |  | 0.429 |
-| walker |  | 4682 | 72 | README headline in exp/simd/README.md |  |  | 0.429 |
-| walker |  | 4733 | 51 | go names internal/constraints/constraints.go |  |  | 0.429 |
-| walker |  | 4748 | 15 | go decl internal/constraints/constraints.go:26 |  |  | 0.429 |
-| walker |  | 4764 | 16 | go decl internal/constraints/constraints.go:40 |  |  | 0.429 |
-| ns | 4779 |  | 252 | math.go and string.go rosters | 2.13 |  | 0.420 |
-| walker |  | 4782 | 18 | go decl internal/constraints/constraints.go:33 |  |  | 0.420 |
-| walker |  | 4811 | 29 | go decl internal/constraints/constraints.go:12 |  |  | 0.420 |
-| walker |  | 4843 | 32 | go decl internal/constraints/constraints.go:19 |  |  | 0.420 |
-| walker |  | 4881 | 38 | go doc find.go:40 |  |  | 0.420 |
-| walker |  | 4908 | 27 | README.md section #437 |  |  | 0.420 |
-| ns | 4916 |  | 137 | concurrency.go roster: Async, Synchronize, WaitFor | 2.14 |  | 0.422 |
-| walker |  | 4947 | 39 | go doc intersect.go:17 |  |  | 0.422 |
-| walker |  | 4986 | 39 | go doc math.go:71 |  |  | 0.422 |
-| walker |  | 5012 | 26 | go body errors.go:91 |  |  | 0.422 |
-| walker |  | 5053 | 41 | go doc intersect.go:5 |  |  | 0.422 |
-| ns | 5078 |  | 162 | retry.go roster: attempt, debounce, throttle, transaction | 2.15 |  | 0.417 |
-| ns | 5188 |  | 110 | time.go, func.go and constraints.go: complete small files | 2.16 |  | 0.414 |
-| walker |  | 5292 | 239 | go decl errors.go:34 |  |  | 0.414 |
-| ns | 5329 |  | 141 | types.go: Entry and the Tuple2..Tuple9 family | 2.17 |  | 0.413 |
-| ns | 5392 |  | 63 | Full signatures for the three flagship slice helpers | 2.18 | 2.2 | 0.412 |
-| ns | 5497 |  | 105 | it/ package header: the go1.23 build tag and its dependencies | 3.1 |  | 0.407 |
-| ns | 5952 |  | 455 | it/seq.go roster 1/2: sequence transforms (L16-L615) | 3.2 |  | 0.390 |
-| walker |  | 6229 | 937 | plaintext config Makefile |  |  | 0.408 |
-| walker |  | 6271 | 42 | go doc concurrency.go:21 |  |  | 0.408 |
-| ns | 6287 |  | 335 | it/seq.go roster 2/2: take/drop, count, trim, buffer (L627-L1169) | 3.3 |  | 0.397 |
-| walker |  | 6313 | 42 | go doc math.go:11 |  |  | 0.397 |
-| walker |  | 6355 | 42 | go doc math.go:23 |  |  | 0.397 |
-| walker |  | 6397 | 42 | go doc math.go:82 |  |  | 0.397 |
-| walker |  | 6612 | 215 | go names time.go |  |  | 0.400 |
-| walker |  | 6621 | 9 | go body time.go:9 |  |  | 0.400 |
-| walker |  | 6646 | 25 | go body time.go:15 |  |  | 0.400 |
-| ns | 6668 |  | 381 | it/find.go roster: the iterator search surface | 3.4 |  | 0.388 |
-| walker |  | 6675 | 29 | go body time.go:23 |  |  | 0.388 |
-| walker |  | 6708 | 33 | go body time.go:31 |  |  | 0.388 |
-| walker |  | 6717 | 9 | go body internal/xrand/ordered_go122.go:21 |  |  | 0.388 |
-| walker |  | 6760 | 43 | go doc intersect.go:162 |  |  | 0.388 |
-| walker |  | 6848 | 88 | README headline in internal/xtime/README.md |  |  | 0.388 |
-| ns | 6971 |  | 303 | it/map.go and it/type_manipulation.go rosters | 3.5 |  | 0.379 |
-| walker |  | 7231 | 383 | go names condition.go |  |  | 0.396 |
-| walker |  | 7251 | 20 | go decl condition.go:26 |  |  | 0.396 |
-| ns | 7275 |  | 304 | it/intersect.go, it/math.go, it/channel.go, it/string.go rosters | 3.6 |  | 0.388 |
-| walker |  | 7280 | 29 | go decl condition.go:97 |  |  | 0.388 |
-| walker |  | 7315 | 35 | go doc condition.go:33 |  |  | 0.388 |
-| walker |  | 7350 | 35 | go doc condition.go:105 |  |  | 0.388 |
-| ns | 7365 |  | 90 | it/tuples.go: four zip/cross-join families with elision | 3.7 |  | 0.384 |
-| walker |  | 7396 | 46 | go doc retry.go:56 |  |  | 0.384 |
-| walker |  | 7412 | 16 | go doc errors.go:34 |  |  | 0.384 |
-| walker |  | 7451 | 39 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.384 |
-| walker |  | 7451 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.384 |
-| walker |  | 7461 | 10 | go body internal/xrand/ordered_go122.go:15 |  |  | 0.384 |
-| ns | 7491 |  | 126 | mutable/ and parallel/: both packages in full | 3.8 |  | 0.381 |
-| walker |  | 7510 | 49 | go doc find.go:72 |  |  | 0.381 |
-| ns | 7605 |  | 114 | internal/constraints: the numeric constraint set | 3.9 |  | 0.385 |
-| walker |  | 7716 | 206 | go names slice.go |  |  | 0.387 |
-| walker |  | 7753 | 37 | go doc slice.go:57 |  |  | 0.387 |
-| walker |  | 7795 | 42 | go doc slice.go:45 |  |  | 0.387 |
-| ns | 7837 |  | 232 | internal/xtime: the swappable Clock, and internal/xrand | 3.10 |  | 0.381 |
-| walker |  | 7841 | 46 | go doc slice.go:12 |  |  | 0.384 |
-| walker |  | 7887 | 46 | go doc slice.go:73 |  |  | 0.383 |
-| ns | 7887 |  | 50 | TestMain: goleak plus the fake clock | 4.1 |  | 0.383 |
-| ns | 7940 |  | 53 | Unit-test conventions: testify, t.Parallel, `is := assert.New(t)` | 4.2 |  | 0.382 |
-| ns | 8003 |  | 63 | Example tests: the godoc `// Output:` convention | 4.3 |  | 0.380 |
-| ns | 8120 |  | 117 | benchmark/: shared generators and the parametric bench shape | 4.4 |  | 0.378 |
-| walker |  | 8173 | 286 | go module file go.mod |  |  | 0.379 |
-| walker |  | 8237 | 64 | go module file exp/simd/go.mod |  |  | 0.379 |
-| ns | 8271 |  | 151 | exp/simd: what it requires and why it is a separate module | 5.1 |  | 0.387 |
-| ns | 8434 |  | 163 | exp/simd/math.go: the seven dispatcher families with elision | 5.2 |  | 0.381 |
-| walker |  | 8564 | 327 | go names func.go |  |  | 0.386 |
-| walker |  | 8575 | 11 | go body func.go:13 |  |  | 0.386 |
-| walker |  | 8607 | 32 | go body func.go:5 |  |  | 0.386 |
-| walker |  | 8647 | 40 | go body func.go:19 |  |  | 0.386 |
-| ns | 8671 |  | 237 | exp/simd: runtime feature detection and the fallback path | 5.3 | 5.2 | 0.380 |
-| walker |  | 8693 | 46 | go doc func.go:13 |  |  | 0.380 |
-| walker |  | 8728 | 35 | go body condition.go:6 |  |  | 0.380 |
-| walker |  | 8763 | 35 | go body map.go:96 |  |  | 0.380 |
-| ns | 8789 |  | 118 | exp/simd width-specific files: the <Op><Type>x<Lanes> naming rule | 5.4 |  | 0.378 |
-| ns | 8889 |  | 100 | docs/ npm scripts: every documentation checker | 6.1 |  | 0.376 |
-| walker |  | 8959 | 196 | go names it/find.go |  |  | 0.377 |
-| ns | 8995 |  | 106 | docs/scripts and docs/docs listings | 6.2 |  | 0.373 |
-| walker |  | 8996 | 37 | go doc time.go:15 |  |  | 0.373 |
-| walker |  | 9010 | 14 | go body types.go:30 |  |  | 0.373 |
-| ns | 9136 |  | 141 | docs/docs category pages and the sidebar | 6.3 |  | 0.366 |
-| walker |  | 9209 | 199 | go names type_manipulation.go #1 |  |  | 0.379 |
-| walker |  | 9224 | 15 | go body type_manipulation.go:140 |  |  | 0.379 |
-| walker |  | 9241 | 17 | go body type_manipulation.go:147 |  |  | 0.379 |
-| walker |  | 9253 | 12 | go body internal/xrand/ordered_go118.go:8 |  |  | 0.379 |
-| walker |  | 9265 | 12 | go body internal/xrand/ordered_go122.go:8 |  |  | 0.379 |
-| ns | 9282 |  | 146 | Makefile recipes: race tests and the SIMD guard | 7.1 | 1.10 | 0.382 |
-| walker |  | 9466 | 201 | go names it/intersect.go |  |  | 0.385 |
-| walker |  | 9486 | 20 | go body it/intersect.go:14 |  |  | 0.385 |
-| walker |  | 9542 | 56 | go body find.go:13 |  |  | 0.385 |
-| ns | 9608 |  | 326 | golangci-lint: the enabled linter set | 7.2 |  | 0.378 |
-| walker |  | 9695 | 153 | go names parallel/slice.go |  |  | 0.379 |
-| walker |  | 9745 | 50 | headings outline in exp/simd/README.md |  |  | 0.379 |
-| walker |  | 9806 | 61 | go doc channel.go:88 |  |  | 0.379 |
-| ns | 9809 |  | 201 | golangci-lint: thresholds and exclusions | 7.3 |  | 0.375 |
-| walker |  | 9966 | 160 | go names mutable/slice.go |  |  | 0.382 |
-| ns | 9977 |  | 168 | CI: the Go version matrix | 7.4 |  | 0.379 |
-| ns | 9992 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.378 |
+| walker |  | 2162 | 201 | go names math.go |  |  | 0.536 |
+| walker |  | 2372 | 210 | go names find.go |  |  | 0.537 |
+| ns | 2418 |  | 367 | slice.go roster 2/2: take/drop, reject, count, trim (L721-L1297) | 2.3 |  | 0.499 |
+| ns | 2579 |  | 161 | find.go roster 1/2: index, find, uniques (L13-L270) | 2.4 |  | 0.493 |
+| walker |  | 2586 | 214 | go names types.go |  |  | 0.493 |
+| walker |  | 2605 | 19 | go decl types.go:10 |  |  | 0.493 |
+| walker |  | 2625 | 20 | go decl types.go:4 |  |  | 0.493 |
+| walker |  | 2651 | 26 | go decl types.go:22 |  |  | 0.493 |
+| walker |  | 2684 | 33 | go decl types.go:35 |  |  | 0.493 |
+| walker |  | 2724 | 40 | go decl types.go:49 |  |  | 0.493 |
+| walker |  | 2735 | 11 | go body types.go:17 |  |  | 0.493 |
+| walker |  | 2773 | 38 | go names internal/xtime/noCopy.go |  |  | 0.493 |
+| walker |  | 2825 | 52 | go decl retry.go:10 |  |  | 0.493 |
+| ns | 2911 |  | 332 | find.go roster 2/2: min/max, first/last/nth, sampling (L352-L988) | 2.5 |  | 0.466 |
+| walker |  | 3050 | 225 | go names concurrency.go |  |  | 0.466 |
+| walker |  | 3063 | 13 | go decl concurrency.go:9 |  |  | 0.466 |
+| walker |  | 3071 | 8 | go body concurrency.go:56 |  |  | 0.466 |
+| walker |  | 3124 | 53 | go decl retry.go:76 |  |  | 0.466 |
+| ns | 3284 |  | 373 | map.go roster: every map helper | 2.6 |  | 0.441 |
+| walker |  | 3365 | 241 | go names errors.go |  |  | 0.441 |
+| walker |  | 3377 | 12 | go body errors.go:72 |  |  | 0.441 |
+| walker |  | 3390 | 13 | go body errors.go:78 |  |  | 0.441 |
+| walker |  | 3409 | 19 | go body errors.go:65 |  |  | 0.441 |
+| walker |  | 3432 | 23 | go body errors.go:84 |  |  | 0.441 |
+| ns | 3491 |  | 207 | condition.go complete: Ternary plus the If/Switch builder types | 2.7 |  | 0.431 |
+| walker |  | 3670 | 238 | go names map.go |  |  | 0.434 |
+| walker |  | 3688 | 18 | go body map.go:47 |  |  | 0.434 |
+| walker |  | 3720 | 32 | go doc map.go:117 |  |  | 0.434 |
+| ns | 3722 |  | 231 | type_manipulation.go roster: pointer, zero-value, coalesce | 2.8 |  | 0.432 |
+| ns | 3910 |  | 188 | intersect.go roster: set predicates and set algebra | 2.9 |  | 0.428 |
+| walker |  | 3973 | 253 | go names string.go |  |  | 0.428 |
+| walker |  | 4029 | 56 | go decl string.go:16 |  |  | 0.428 |
+| walker |  | 4063 | 34 | go doc concurrency.go:56 |  |  | 0.428 |
+| walker |  | 4075 | 12 | go doc types.go:4 |  |  | 0.428 |
+| ns | 4085 |  | 175 | errors.go roster: Must, Try, Validate, and the Assert vars | 2.10 |  | 0.419 |
+| walker |  | 4110 | 35 | go doc map.go:5 |  |  | 0.419 |
+| walker |  | 4202 | 92 | go names it/channel.go |  |  | 0.419 |
+| walker |  | 4250 | 48 | go names internal/xrand/ordered_go118.go |  |  | 0.419 |
+| ns | 4264 |  | 179 | channel.go roster: dispatcher, buffering, fan-in/fan-out | 2.11 |  | 0.412 |
+| walker |  | 4298 | 48 | go names internal/xrand/ordered_go122.go |  |  | 0.412 |
+| walker |  | 4357 | 59 | listing of 'docs' |  |  | 0.432 |
+| walker |  | 4361 | 4 | listing of 'docs/plugins' |  |  | 0.432 |
+| walker |  | 4368 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.432 |
+| walker |  | 4404 | 36 | go doc find.go:56 |  |  | 0.432 |
+| walker |  | 4440 | 36 | go doc intersect.go:119 |  |  | 0.432 |
+| walker |  | 4476 | 36 | go doc map.go:47 |  |  | 0.432 |
+| walker |  | 4513 | 37 | go doc type_manipulation.go:34 |  |  | 0.432 |
+| ns | 4527 |  | 263 | tuples.go: eleven arity families, head and tail with elision | 2.12 |  | 0.416 |
+| walker |  | 4585 | 72 | README headline in exp/simd/README.md |  |  | 0.416 |
+| walker |  | 4636 | 51 | go names internal/constraints/constraints.go |  |  | 0.416 |
+| walker |  | 4651 | 15 | go decl internal/constraints/constraints.go:26 |  |  | 0.416 |
+| walker |  | 4667 | 16 | go decl internal/constraints/constraints.go:40 |  |  | 0.416 |
+| walker |  | 4685 | 18 | go decl internal/constraints/constraints.go:33 |  |  | 0.416 |
+| walker |  | 4714 | 29 | go decl internal/constraints/constraints.go:12 |  |  | 0.416 |
+| walker |  | 4746 | 32 | go decl internal/constraints/constraints.go:19 |  |  | 0.416 |
+| ns | 4779 |  | 252 | math.go and string.go rosters | 2.13 |  | 0.407 |
+| walker |  | 4784 | 38 | go doc find.go:40 |  |  | 0.407 |
+| walker |  | 4823 | 39 | go doc intersect.go:17 |  |  | 0.407 |
+| walker |  | 4862 | 39 | go doc math.go:71 |  |  | 0.407 |
+| walker |  | 4888 | 26 | go body errors.go:91 |  |  | 0.407 |
+| ns | 4916 |  | 137 | concurrency.go roster: Async, Synchronize, WaitFor | 2.14 |  | 0.410 |
+| walker |  | 4929 | 41 | go doc intersect.go:5 |  |  | 0.410 |
+| ns | 5078 |  | 162 | retry.go roster: attempt, debounce, throttle, transaction | 2.15 |  | 0.405 |
+| walker |  | 5168 | 239 | go decl errors.go:34 |  |  | 0.405 |
+| ns | 5188 |  | 110 | time.go, func.go and constraints.go: complete small files | 2.16 |  | 0.403 |
+| ns | 5329 |  | 141 | types.go: Entry and the Tuple2..Tuple9 family | 2.17 |  | 0.401 |
+| ns | 5392 |  | 63 | Full signatures for the three flagship slice helpers | 2.18 | 2.2 | 0.400 |
+| ns | 5497 |  | 105 | it/ package header: the go1.23 build tag and its dependencies | 3.1 |  | 0.395 |
+| ns | 5952 |  | 455 | it/seq.go roster 1/2: sequence transforms (L16-L615) | 3.2 |  | 0.379 |
+| walker |  | 6105 | 937 | plaintext config Makefile |  |  | 0.397 |
+| walker |  | 6147 | 42 | go doc concurrency.go:21 |  |  | 0.397 |
+| walker |  | 6189 | 42 | go doc math.go:11 |  |  | 0.397 |
+| walker |  | 6231 | 42 | go doc math.go:23 |  |  | 0.397 |
+| walker |  | 6273 | 42 | go doc math.go:82 |  |  | 0.397 |
+| ns | 6287 |  | 335 | it/seq.go roster 2/2: take/drop, count, trim, buffer (L627-L1169) | 3.3 |  | 0.386 |
+| walker |  | 6488 | 215 | go names time.go |  |  | 0.389 |
+| walker |  | 6497 | 9 | go body time.go:9 |  |  | 0.389 |
+| walker |  | 6522 | 25 | go body time.go:15 |  |  | 0.389 |
+| walker |  | 6551 | 29 | go body time.go:23 |  |  | 0.389 |
+| walker |  | 6584 | 33 | go body time.go:31 |  |  | 0.389 |
+| walker |  | 6593 | 9 | go body internal/xrand/ordered_go122.go:21 |  |  | 0.389 |
+| walker |  | 6636 | 43 | go doc intersect.go:162 |  |  | 0.389 |
+| ns | 6668 |  | 381 | it/find.go roster: the iterator search surface | 3.4 |  | 0.378 |
+| walker |  | 6724 | 88 | README headline in internal/xtime/README.md |  |  | 0.378 |
+| ns | 6971 |  | 303 | it/map.go and it/type_manipulation.go rosters | 3.5 |  | 0.369 |
+| walker |  | 7107 | 383 | go names condition.go |  |  | 0.386 |
+| walker |  | 7127 | 20 | go decl condition.go:26 |  |  | 0.386 |
+| walker |  | 7156 | 29 | go decl condition.go:97 |  |  | 0.386 |
+| walker |  | 7191 | 35 | go doc condition.go:33 |  |  | 0.386 |
+| walker |  | 7226 | 35 | go doc condition.go:105 |  |  | 0.386 |
+| walker |  | 7272 | 46 | go doc retry.go:56 |  |  | 0.386 |
+| ns | 7275 |  | 304 | it/intersect.go, it/math.go, it/channel.go, it/string.go rosters | 3.6 |  | 0.378 |
+| walker |  | 7288 | 16 | go doc errors.go:34 |  |  | 0.378 |
+| walker |  | 7327 | 39 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.378 |
+| walker |  | 7327 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.378 |
+| walker |  | 7337 | 10 | go body internal/xrand/ordered_go122.go:15 |  |  | 0.378 |
+| ns | 7365 |  | 90 | it/tuples.go: four zip/cross-join families with elision | 3.7 |  | 0.375 |
+| walker |  | 7386 | 49 | go doc find.go:72 |  |  | 0.375 |
+| ns | 7491 |  | 126 | mutable/ and parallel/: both packages in full | 3.8 |  | 0.372 |
+| walker |  | 7592 | 206 | go names slice.go |  |  | 0.374 |
+| ns | 7605 |  | 114 | internal/constraints: the numeric constraint set | 3.9 |  | 0.377 |
+| walker |  | 7629 | 37 | go doc slice.go:57 |  |  | 0.377 |
+| walker |  | 7671 | 42 | go doc slice.go:45 |  |  | 0.377 |
+| walker |  | 7717 | 46 | go doc slice.go:12 |  |  | 0.380 |
+| walker |  | 7763 | 46 | go doc slice.go:73 |  |  | 0.380 |
+| ns | 7837 |  | 232 | internal/xtime: the swappable Clock, and internal/xrand | 3.10 |  | 0.375 |
+| ns | 7887 |  | 50 | TestMain: goleak plus the fake clock | 4.1 |  | 0.374 |
+| ns | 7940 |  | 53 | Unit-test conventions: testify, t.Parallel, `is := assert.New(t)` | 4.2 |  | 0.373 |
+| ns | 8003 |  | 63 | Example tests: the godoc `// Output:` convention | 4.3 |  | 0.371 |
+| walker |  | 8049 | 286 | go module file go.mod |  |  | 0.373 |
+| walker |  | 8113 | 64 | go module file exp/simd/go.mod |  |  | 0.373 |
+| ns | 8120 |  | 117 | benchmark/: shared generators and the parametric bench shape | 4.4 |  | 0.371 |
+| ns | 8271 |  | 151 | exp/simd: what it requires and why it is a separate module | 5.1 |  | 0.378 |
+| ns | 8434 |  | 163 | exp/simd/math.go: the seven dispatcher families with elision | 5.2 |  | 0.373 |
+| walker |  | 8440 | 327 | go names func.go |  |  | 0.378 |
+| walker |  | 8451 | 11 | go body func.go:13 |  |  | 0.378 |
+| walker |  | 8483 | 32 | go body func.go:5 |  |  | 0.378 |
+| walker |  | 8523 | 40 | go body func.go:19 |  |  | 0.378 |
+| walker |  | 8569 | 46 | go doc func.go:13 |  |  | 0.378 |
+| walker |  | 8604 | 35 | go body condition.go:6 |  |  | 0.378 |
+| walker |  | 8639 | 35 | go body map.go:96 |  |  | 0.378 |
+| ns | 8671 |  | 237 | exp/simd: runtime feature detection and the fallback path | 5.3 | 5.2 | 0.372 |
+| ns | 8789 |  | 118 | exp/simd width-specific files: the <Op><Type>x<Lanes> naming rule | 5.4 |  | 0.369 |
+| walker |  | 8835 | 196 | go names it/find.go |  |  | 0.371 |
+| walker |  | 8872 | 37 | go doc time.go:15 |  |  | 0.371 |
+| walker |  | 8886 | 14 | go body types.go:30 |  |  | 0.371 |
+| ns | 8889 |  | 100 | docs/ npm scripts: every documentation checker | 6.1 |  | 0.369 |
+| ns | 8995 |  | 106 | docs/scripts and docs/docs listings | 6.2 |  | 0.365 |
+| walker |  | 9085 | 199 | go names type_manipulation.go #1 |  |  | 0.378 |
+| walker |  | 9100 | 15 | go body type_manipulation.go:140 |  |  | 0.378 |
+| walker |  | 9117 | 17 | go body type_manipulation.go:147 |  |  | 0.378 |
+| walker |  | 9129 | 12 | go body internal/xrand/ordered_go118.go:8 |  |  | 0.378 |
+| ns | 9136 |  | 141 | docs/docs category pages and the sidebar | 6.3 |  | 0.371 |
+| walker |  | 9141 | 12 | go body internal/xrand/ordered_go122.go:8 |  |  | 0.371 |
+| ns | 9282 |  | 146 | Makefile recipes: race tests and the SIMD guard | 7.1 | 1.10 | 0.374 |
+| walker |  | 9342 | 201 | go names it/intersect.go |  |  | 0.377 |
+| walker |  | 9362 | 20 | go body it/intersect.go:14 |  |  | 0.377 |
+| walker |  | 9418 | 56 | go body find.go:13 |  |  | 0.377 |
+| walker |  | 9571 | 153 | go names parallel/slice.go |  |  | 0.379 |
+| ns | 9608 |  | 326 | golangci-lint: the enabled linter set | 7.2 |  | 0.371 |
+| walker |  | 9621 | 50 | headings outline in exp/simd/README.md |  |  | 0.371 |
+| walker |  | 9682 | 61 | go doc channel.go:88 |  |  | 0.371 |
+| walker |  | 9703 | 21 | listing of 'docs/src' |  |  | 0.371 |
+| ns | 9809 |  | 201 | golangci-lint: thresholds and exclusions | 7.3 |  | 0.367 |
+| walker |  | 9863 | 160 | go names mutable/slice.go |  |  | 0.375 |
+| walker |  | 9905 | 42 | go doc concurrency.go:35 |  |  | 0.375 |
+| walker |  | 9969 | 64 | go doc channel.go:73 |  |  | 0.375 |
+| ns | 9977 |  | 168 | CI: the Go version matrix | 7.4 |  | 0.371 |
+| ns | 9992 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.371 |
