@@ -101,104 +101,103 @@ Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 4113 | 8 | python body microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.447 |
 | walker |  | 4121 | 8 | python body microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.447 |
 | walker |  | 4132 | 11 | python doc microbootstrap/settings.py:90 |  |  | 0.452 |
-| walker |  | 4147 | 15 | README.md section #22 |  |  | 0.452 |
 | ns | 4224 |  | 376 | `OpentelemetryConfig`: complete field set | 4.2 |  | 0.437 |
-| walker |  | 4261 | 114 | python decl microbootstrap/instruments/swagger_instrument.py:10 |  |  | 0.438 |
-| walker |  | 4379 | 118 | python decl microbootstrap/instruments/health_checks_instrument.py:14 |  |  | 0.439 |
+| walker |  | 4246 | 114 | python decl microbootstrap/instruments/swagger_instrument.py:10 |  |  | 0.438 |
+| walker |  | 4364 | 118 | python decl microbootstrap/instruments/health_checks_instrument.py:14 |  |  | 0.439 |
 | ns | 4499 |  | 275 | `LoggingConfig`: complete field set plus the exclude-endpoint validator | 4.3 |  | 0.427 |
-| walker |  | 4754 | 375 | README prelude in README.md |  |  | 0.632 |
-| walker |  | 4807 | 53 | README.md section #33 |  |  | 0.632 |
+| walker |  | 4739 | 375 | README prelude in README.md |  |  | 0.632 |
+| walker |  | 4792 | 53 | README.md section #20 |  |  | 0.632 |
 | ns | 4844 |  | 345 | Prometheus config family: `BasePrometheusConfig` and its three framework variants | 4.4 |  | 0.613 |
-| walker |  | 4932 | 125 | python decl microbootstrap/instruments/instrument_box.py:9 |  |  | 0.623 |
-| walker |  | 4940 | 8 | python decl microbootstrap/instruments/instrument_box.py:48 |  |  | 0.625 |
-| walker |  | 4968 | 28 | python decl microbootstrap/instruments/instrument_box.py:21 |  |  | 0.626 |
-| walker |  | 5006 | 38 | python decl microbootstrap/instruments/instrument_box.py:34 |  |  | 0.626 |
+| walker |  | 4917 | 125 | python decl microbootstrap/instruments/instrument_box.py:9 |  |  | 0.623 |
+| walker |  | 4925 | 8 | python decl microbootstrap/instruments/instrument_box.py:48 |  |  | 0.625 |
+| walker |  | 4953 | 28 | python decl microbootstrap/instruments/instrument_box.py:21 |  |  | 0.626 |
+| walker |  | 4991 | 38 | python decl microbootstrap/instruments/instrument_box.py:34 |  |  | 0.626 |
 | ns | 5111 |  | 267 | `CorsConfig` and `SwaggerConfig`: complete field sets | 4.5 |  | 0.620 |
-| walker |  | 5133 | 127 | python decl microbootstrap/instruments/cors_instrument.py:8 |  |  | 0.640 |
-| walker |  | 5384 | 251 | python decl microbootstrap/settings.py:29 |  |  | 0.681 |
+| walker |  | 5118 | 127 | python decl microbootstrap/instruments/cors_instrument.py:8 |  |  | 0.640 |
+| walker |  | 5369 | 251 | python decl microbootstrap/settings.py:29 |  |  | 0.681 |
 | ns | 5470 |  | 359 | `HealthCheckTypedDict` + `HealthChecksConfig`, and `PyroscopeConfig` | 4.6 |  | 0.672 |
-| walker |  | 5522 | 138 | python names microbootstrap/instruments/prometheus_instrument.py |  |  | 0.676 |
-| walker |  | 5546 | 24 | python decl microbootstrap/instruments/prometheus_instrument.py:24 |  |  | 0.678 |
-| walker |  | 5576 | 30 | python decl microbootstrap/instruments/prometheus_instrument.py:35 |  |  | 0.678 |
-| walker |  | 5624 | 48 | python decl microbootstrap/instruments/prometheus_instrument.py:17 |  |  | 0.683 |
-| walker |  | 5672 | 48 | python decl microbootstrap/instruments/prometheus_instrument.py:55 |  |  | 0.688 |
-| walker |  | 5739 | 67 | python decl microbootstrap/instruments/prometheus_instrument.py:60 |  |  | 0.691 |
-| walker |  | 5747 | 8 | python decl microbootstrap/instruments/prometheus_instrument.py:69 |  |  | 0.691 |
+| walker |  | 5507 | 138 | python names microbootstrap/instruments/prometheus_instrument.py |  |  | 0.676 |
+| walker |  | 5531 | 24 | python decl microbootstrap/instruments/prometheus_instrument.py:24 |  |  | 0.678 |
+| walker |  | 5561 | 30 | python decl microbootstrap/instruments/prometheus_instrument.py:35 |  |  | 0.678 |
+| walker |  | 5609 | 48 | python decl microbootstrap/instruments/prometheus_instrument.py:17 |  |  | 0.683 |
+| walker |  | 5657 | 48 | python decl microbootstrap/instruments/prometheus_instrument.py:55 |  |  | 0.688 |
+| walker |  | 5724 | 67 | python decl microbootstrap/instruments/prometheus_instrument.py:60 |  |  | 0.691 |
+| walker |  | 5732 | 8 | python decl microbootstrap/instruments/prometheus_instrument.py:69 |  |  | 0.691 |
 | ns | 5790 |  | 320 | Readiness predicates: `is_ready` for all eight instruments | 4.7 |  | 0.673 |
-| walker |  | 5849 | 102 | python decl microbootstrap/instruments/prometheus_instrument.py:28 |  |  | 0.686 |
+| walker |  | 5834 | 102 | python decl microbootstrap/instruments/prometheus_instrument.py:28 |  |  | 0.686 |
 | ns | 5885 |  | 95 | FastStream broker-middleware protocols and `FastStreamOpentelemetryConfig` | 4.8 |  | 0.681 |
-| walker |  | 5919 | 70 | python decl microbootstrap/instruments/prometheus_instrument.py:46 |  |  | 0.681 |
-| walker |  | 6070 | 151 | python names microbootstrap/bootstrappers/fastapi.py |  |  | 0.681 |
-| walker |  | 6102 | 32 | python decl microbootstrap/bootstrappers/fastapi.py:73 |  |  | 0.681 |
+| walker |  | 5904 | 70 | python decl microbootstrap/instruments/prometheus_instrument.py:46 |  |  | 0.681 |
+| walker |  | 6055 | 151 | python names microbootstrap/bootstrappers/fastapi.py |  |  | 0.681 |
+| walker |  | 6087 | 32 | python decl microbootstrap/bootstrappers/fastapi.py:73 |  |  | 0.681 |
 | ns | 6104 |  | 219 | Instrument method roster: every `bootstrap` / `teardown` / private override, by line | 4.9 |  | 0.662 |
-| walker |  | 6134 | 32 | python decl microbootstrap/bootstrappers/fastapi.py:92 |  |  | 0.662 |
-| walker |  | 6166 | 32 | python decl microbootstrap/bootstrappers/fastapi.py:103 |  |  | 0.662 |
-| walker |  | 6217 | 51 | python decl microbootstrap/bootstrappers/fastapi.py:57 |  |  | 0.662 |
-| walker |  | 6271 | 54 | python decl microbootstrap/bootstrappers/fastapi.py:113 |  |  | 0.663 |
-| walker |  | 6279 | 8 | python decl microbootstrap/bootstrappers/fastapi.py:131 |  |  | 0.663 |
-| walker |  | 6334 | 55 | python decl microbootstrap/bootstrappers/fastapi.py:136 |  |  | 0.663 |
+| walker |  | 6119 | 32 | python decl microbootstrap/bootstrappers/fastapi.py:92 |  |  | 0.662 |
+| walker |  | 6151 | 32 | python decl microbootstrap/bootstrappers/fastapi.py:103 |  |  | 0.662 |
+| walker |  | 6202 | 51 | python decl microbootstrap/bootstrappers/fastapi.py:57 |  |  | 0.662 |
+| walker |  | 6256 | 54 | python decl microbootstrap/bootstrappers/fastapi.py:113 |  |  | 0.663 |
+| walker |  | 6264 | 8 | python decl microbootstrap/bootstrappers/fastapi.py:131 |  |  | 0.663 |
+| walker |  | 6319 | 55 | python decl microbootstrap/bootstrappers/fastapi.py:136 |  |  | 0.663 |
 | ns | 6391 |  | 287 | Instrument module-level symbol roster: helpers not attached to any class | 4.10 |  | 0.646 |
-| walker |  | 6465 | 131 | python decl microbootstrap/bootstrappers/fastapi.py:27 |  |  | 0.647 |
-| walker |  | 6475 | 10 | python decl microbootstrap/bootstrappers/fastapi.py:33 |  |  | 0.647 |
-| walker |  | 6487 | 12 | python decl microbootstrap/bootstrappers/fastapi.py:41 |  |  | 0.647 |
-| walker |  | 6638 | 151 | python decl microbootstrap/instruments/pyroscope_instrument.py:15 |  |  | 0.667 |
-| walker |  | 6676 | 38 | listing of 'tests/bootstrappers' |  |  | 0.668 |
-| ns | 6684 |  | 293 | `ApplicationBootstrapper`: class attributes and complete member roster | 5.1 |  | 0.653 |
-| walker |  | 6686 | 10 | python body microbootstrap/instruments/instrument_box.py:48 |  |  | 0.654 |
-| walker |  | 6698 | 12 | python doc microbootstrap/settings.py:60 |  |  | 0.658 |
+| walker |  | 6450 | 131 | python decl microbootstrap/bootstrappers/fastapi.py:27 |  |  | 0.647 |
+| walker |  | 6460 | 10 | python decl microbootstrap/bootstrappers/fastapi.py:33 |  |  | 0.647 |
+| walker |  | 6472 | 12 | python decl microbootstrap/bootstrappers/fastapi.py:41 |  |  | 0.647 |
+| walker |  | 6623 | 151 | python decl microbootstrap/instruments/pyroscope_instrument.py:15 |  |  | 0.667 |
+| walker |  | 6661 | 38 | listing of 'tests/bootstrappers' |  |  | 0.668 |
+| walker |  | 6671 | 10 | python body microbootstrap/instruments/instrument_box.py:48 |  |  | 0.668 |
+| walker |  | 6683 | 12 | python doc microbootstrap/settings.py:60 |  |  | 0.672 |
+| ns | 6684 |  | 293 | `ApplicationBootstrapper`: class attributes and complete member roster | 5.1 |  | 0.658 |
 | ns | 6945 |  | 261 | `ApplicationBootstrapper.bootstrap()` — the whole application-assembly pipeline | 5.2 | 5.1 | 0.642 |
 | ns | 7214 |  | 269 | `ApplicationBootstrapper.__init__` and the `configure_*` fluent methods | 5.3 | 5.1 | 0.624 |
 | ns | 7344 |  | 130 | `use_instrument` decorator factory and `ApplicationBootstrapper.teardown` | 5.4 | 5.1 | 0.617 |
-| walker |  | 7392 | 694 | [dependencies] in pyproject.toml |  |  | 0.618 |
-| walker |  | 7583 | 191 | python names microbootstrap/bootstrappers/litestar.py |  |  | 0.618 |
-| walker |  | 7606 | 23 | python decl microbootstrap/bootstrappers/litestar.py:133 |  |  | 0.618 |
-| walker |  | 7631 | 25 | python decl microbootstrap/bootstrappers/litestar.py:62 |  |  | 0.618 |
-| walker |  | 7657 | 26 | python decl microbootstrap/bootstrappers/litestar.py:158 |  |  | 0.618 |
-| walker |  | 7687 | 30 | python decl microbootstrap/bootstrappers/litestar.py:73 |  |  | 0.619 |
+| walker |  | 7377 | 694 | [dependencies] in pyproject.toml |  |  | 0.618 |
+| walker |  | 7568 | 191 | python names microbootstrap/bootstrappers/litestar.py |  |  | 0.618 |
+| walker |  | 7591 | 23 | python decl microbootstrap/bootstrappers/litestar.py:133 |  |  | 0.618 |
+| walker |  | 7616 | 25 | python decl microbootstrap/bootstrappers/litestar.py:62 |  |  | 0.618 |
+| walker |  | 7642 | 26 | python decl microbootstrap/bootstrappers/litestar.py:158 |  |  | 0.618 |
+| walker |  | 7672 | 30 | python decl microbootstrap/bootstrappers/litestar.py:73 |  |  | 0.619 |
 | ns | 7696 |  | 352 | `bootstrappers/litestar.py` roster: bootstrapper, every registered instrument, every helper | 5.5 |  | 0.612 |
-| walker |  | 7717 | 30 | python decl microbootstrap/bootstrappers/litestar.py:108 |  |  | 0.614 |
-| walker |  | 7747 | 30 | python decl microbootstrap/bootstrappers/litestar.py:177 |  |  | 0.616 |
-| walker |  | 7777 | 30 | python decl microbootstrap/bootstrappers/litestar.py:190 |  |  | 0.619 |
-| walker |  | 7829 | 52 | python decl microbootstrap/bootstrappers/litestar.py:199 |  |  | 0.621 |
-| walker |  | 7837 | 8 | python decl microbootstrap/bootstrappers/litestar.py:217 |  |  | 0.621 |
-| walker |  | 7889 | 52 | python decl microbootstrap/bootstrappers/litestar.py:222 |  |  | 0.624 |
-| walker |  | 7970 | 81 | python decl microbootstrap/bootstrappers/litestar.py:48 |  |  | 0.634 |
+| walker |  | 7702 | 30 | python decl microbootstrap/bootstrappers/litestar.py:108 |  |  | 0.614 |
+| walker |  | 7732 | 30 | python decl microbootstrap/bootstrappers/litestar.py:177 |  |  | 0.616 |
+| walker |  | 7762 | 30 | python decl microbootstrap/bootstrappers/litestar.py:190 |  |  | 0.619 |
+| walker |  | 7814 | 52 | python decl microbootstrap/bootstrappers/litestar.py:199 |  |  | 0.621 |
+| walker |  | 7822 | 8 | python decl microbootstrap/bootstrappers/litestar.py:217 |  |  | 0.621 |
+| walker |  | 7874 | 52 | python decl microbootstrap/bootstrappers/litestar.py:222 |  |  | 0.624 |
+| walker |  | 7955 | 81 | python decl microbootstrap/bootstrappers/litestar.py:48 |  |  | 0.634 |
 | ns | 7978 |  | 282 | `bootstrappers/fastapi.py` roster: bootstrapper and every registered instrument | 5.6 |  | 0.641 |
-| walker |  | 8156 | 186 | python decl microbootstrap/instruments/base.py:23 |  |  | 0.661 |
-| walker |  | 8166 | 10 | python decl microbootstrap/instruments/base.py:42 |  |  | 0.662 |
-| walker |  | 8182 | 16 | python decl microbootstrap/instruments/base.py:45 |  |  | 0.664 |
-| walker |  | 8210 | 28 | python decl microbootstrap/instruments/base.py:29 |  |  | 0.665 |
-| walker |  | 8216 | 6 | python body microbootstrap/instruments/base.py:50 |  |  | 0.666 |
+| walker |  | 8141 | 186 | python decl microbootstrap/instruments/base.py:23 |  |  | 0.661 |
+| walker |  | 8151 | 10 | python decl microbootstrap/instruments/base.py:42 |  |  | 0.662 |
+| walker |  | 8167 | 16 | python decl microbootstrap/instruments/base.py:45 |  |  | 0.664 |
+| walker |  | 8195 | 28 | python decl microbootstrap/instruments/base.py:29 |  |  | 0.665 |
+| walker |  | 8201 | 6 | python body microbootstrap/instruments/base.py:50 |  |  | 0.666 |
 | ns | 8270 |  | 292 | `bootstrappers/faststream.py` roster: bootstrapper, loggers, every registered instrument | 5.7 |  | 0.655 |
-| walker |  | 8422 | 206 | python names microbootstrap/instruments/sentry_instrument.py |  |  | 0.657 |
-| walker |  | 8460 | 38 | python decl microbootstrap/instruments/sentry_instrument.py:67 |  |  | 0.653 |
+| walker |  | 8407 | 206 | python names microbootstrap/instruments/sentry_instrument.py |  |  | 0.657 |
+| walker |  | 8445 | 38 | python decl microbootstrap/instruments/sentry_instrument.py:67 |  |  | 0.657 |
 | ns | 8460 |  | 190 | `InstrumentsSetupper`: member roster and the four instruments it registers | 5.8 |  | 0.653 |
-| walker |  | 8538 | 78 | python decl microbootstrap/instruments/sentry_instrument.py:89 |  |  | 0.656 |
-| walker |  | 8546 | 8 | python decl microbootstrap/instruments/sentry_instrument.py:122 |  |  | 0.656 |
-| walker |  | 8554 | 8 | python body microbootstrap/instruments/sentry_instrument.py:122 |  |  | 0.656 |
+| walker |  | 8523 | 78 | python decl microbootstrap/instruments/sentry_instrument.py:89 |  |  | 0.656 |
+| walker |  | 8531 | 8 | python decl microbootstrap/instruments/sentry_instrument.py:122 |  |  | 0.656 |
+| walker |  | 8539 | 8 | python body microbootstrap/instruments/sentry_instrument.py:122 |  |  | 0.656 |
 | ns | 8692 |  | 232 | README Configuration: simple values overwrite, complex values merge | 5.9 |  | 0.652 |
-| walker |  | 8751 | 197 | python decl microbootstrap/config/faststream.py:20 |  |  | 0.652 |
+| walker |  | 8736 | 197 | python decl microbootstrap/config/faststream.py:20 |  |  | 0.652 |
 | ns | 8771 |  | 79 | `LitestarBootstrapper.bootstrap_before`: how the console table and teardown get attached | 5.10 |  | 0.649 |
 | ns | 8914 |  | 143 | `helpers.py`: complete function roster and `VALID_PATH_PATTERN` | 6.1 |  | 0.653 |
-| walker |  | 8961 | 210 | python names microbootstrap/bootstrappers/faststream.py |  |  | 0.658 |
-| walker |  | 8988 | 27 | python decl microbootstrap/bootstrappers/faststream.py:31 |  |  | 0.658 |
+| walker |  | 8946 | 210 | python names microbootstrap/bootstrappers/faststream.py |  |  | 0.658 |
+| walker |  | 8973 | 27 | python decl microbootstrap/bootstrappers/faststream.py:31 |  |  | 0.658 |
 | ns | 9021 |  | 107 | `exceptions.py`: the complete exception hierarchy | 6.2 |  | 0.659 |
-| walker |  | 9042 | 54 | python decl microbootstrap/bootstrappers/faststream.py:37 |  |  | 0.661 |
-| walker |  | 9103 | 61 | python decl microbootstrap/bootstrappers/faststream.py:79 |  |  | 0.663 |
-| walker |  | 9186 | 83 | python decl microbootstrap/bootstrappers/faststream.py:58 |  |  | 0.665 |
-| walker |  | 9194 | 8 | python decl microbootstrap/bootstrappers/faststream.py:70 |  |  | 0.665 |
+| walker |  | 9027 | 54 | python decl microbootstrap/bootstrappers/faststream.py:37 |  |  | 0.661 |
+| walker |  | 9088 | 61 | python decl microbootstrap/bootstrappers/faststream.py:79 |  |  | 0.663 |
+| walker |  | 9171 | 83 | python decl microbootstrap/bootstrappers/faststream.py:58 |  |  | 0.665 |
+| walker |  | 9179 | 8 | python decl microbootstrap/bootstrappers/faststream.py:70 |  |  | 0.665 |
 | ns | 9269 |  | 248 | Middleware builders and `create_granian_server`: signatures and returned classes | 6.3 |  | 0.660 |
-| walker |  | 9287 | 93 | python decl microbootstrap/bootstrappers/faststream.py:120 |  |  | 0.662 |
-| ns | 9376 |  | 107 | `config/litestar.py`: the `LitestarConfig` application-config dataclass | 6.4 |  | 0.665 |
-| walker |  | 9387 | 100 | python decl microbootstrap/bootstrappers/faststream.py:90 |  |  | 0.667 |
-| walker |  | 9395 | 8 | python decl microbootstrap/bootstrappers/faststream.py:115 |  |  | 0.667 |
-| walker |  | 9401 | 6 | python body microbootstrap/instruments/base.py:53 |  |  | 0.668 |
-| walker |  | 9510 | 109 | python decl microbootstrap/instruments/prometheus_instrument.py:37 |  |  | 0.668 |
+| walker |  | 9272 | 93 | python decl microbootstrap/bootstrappers/faststream.py:120 |  |  | 0.662 |
+| walker |  | 9372 | 100 | python decl microbootstrap/bootstrappers/faststream.py:90 |  |  | 0.664 |
+| ns | 9376 |  | 107 | `config/litestar.py`: the `LitestarConfig` application-config dataclass | 6.4 |  | 0.667 |
+| walker |  | 9380 | 8 | python decl microbootstrap/bootstrappers/faststream.py:115 |  |  | 0.667 |
+| walker |  | 9386 | 6 | python body microbootstrap/instruments/base.py:53 |  |  | 0.668 |
+| walker |  | 9495 | 109 | python decl microbootstrap/instruments/prometheus_instrument.py:37 |  |  | 0.668 |
 | ns | 9534 |  | 158 | Test tree listings (complete) and `.github/workflows/` | 7.1 |  | 0.664 |
 | ns | 9704 |  | 170 | `Justfile`: install, lint, lint-ci and test recipes | 7.2 |  | 0.657 |
-| walker |  | 9723 | 213 | python decl microbootstrap/bootstrappers/base.py:25 |  |  | 0.672 |
-| walker |  | 9754 | 31 | python decl microbootstrap/bootstrappers/base.py:39 |  |  | 0.673 |
-| walker |  | 9785 | 31 | python decl microbootstrap/bootstrappers/base.py:46 |  |  | 0.674 |
-| walker |  | 9817 | 32 | python decl microbootstrap/bootstrappers/base.py:53 |  |  | 0.676 |
-| walker |  | 9878 | 61 | python decl microbootstrap/bootstrappers/base.py:61 |  |  | 0.679 |
+| walker |  | 9708 | 213 | python decl microbootstrap/bootstrappers/base.py:25 |  |  | 0.672 |
+| walker |  | 9739 | 31 | python decl microbootstrap/bootstrappers/base.py:39 |  |  | 0.673 |
+| walker |  | 9770 | 31 | python decl microbootstrap/bootstrappers/base.py:46 |  |  | 0.674 |
+| walker |  | 9802 | 32 | python decl microbootstrap/bootstrappers/base.py:53 |  |  | 0.676 |
+| walker |  | 9863 | 61 | python decl microbootstrap/bootstrappers/base.py:61 |  |  | 0.679 |
 | ns | 9954 |  | 250 | `pyproject.toml`: identity, python requirement and optional-dependency extras | 7.3 |  | 0.685 |

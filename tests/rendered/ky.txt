@@ -84,22 +84,14 @@ readme.md
   125→### ky.patch(input, options?)
   126→### ky.head(input, options?)
   127→### ky.delete(input, options?)
-  129→Sets `options.method` to the method name and makes a request.
   …
   745→### ky.extend(defaultOptions)
-  747→Create a new `ky` instance with some defaults overridden with your own.
-  749→In contrast to `ky.create()`, `ky.extend()` inherits defaults from its parent.
-  751→You can pass headers as a `Headers` instance or a plain object.
   …
   811→### ky.create(defaultOptions)
   …
-  829→#### defaultOptions
-  830→
-  831→Type: `object`
   833→### ky.stop
   …
   864→### ky.retry(options?)
-  866→Force a retry from an `afterResponse` hook.
   …
   1000→### HTTPError
   …
@@ -121,7 +113,6 @@ readme.md
   …
   1264→### Extending types
   …
-  1290→This approach keeps your types scoped to where they're needed without polluting the global namespace.
   1292→## FAQ
   …
   1339→## Browser support
@@ -235,7 +226,13 @@ source/
     hooks.ts
       …
       5→export type BeforeRequestState = {
-      …
+      6→	/**
+      7→	The number of retries attempted. `0` for the initial request, increments with each retry.
+      8→
+      9→	This allows you to distinguish between initial requests and retries, which is useful when you need different behavior for retries (e.g., avoiding overwriting headers set in `beforeRetry`).
+      10→	*/
+      11→	retryCount: number;
+      12→};
       14→export type BeforeRequestHook = (
       15→	request: KyRequest,
       16→	options: NormalizedOptions,

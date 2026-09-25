@@ -56,18 +56,11 @@ README.md
   152→## FAQ<a name="faq"></a>
   153→
   154→### Why this parser?<a name="why-this-parser"></a>
-  156→- it's lil'
-  157→- pure Python with zero dependencies
   …
-  161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
-  …
-  165→- thoroughly tested: 100% branch coverage
   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-  169→No.
   …
   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
   …
-  181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
   …
   201→## Performance<a name="performance"></a>

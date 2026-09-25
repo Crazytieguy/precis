@@ -14,10 +14,9 @@
 //!   [`MAX_OUTLINE_HEADING_BYTES`]. Predecessor: the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s). Under an emitted outline a large H2 with
-//!   H3s splits per H3, and a large H3 into body blocks; on the root
-//!   README an oversize section splits into a head chunk plus chained
-//!   `OversizeTail` chunks. Predecessor: the outline, else the
-//!   headline.
+//!   H3s splits per H3, and any oversize section splits into a head
+//!   chunk plus chained `OversizeTail` chunks. Predecessor: the
+//!   outline, else the headline.
 //!
 //! Peripheral and auto-injected docs emit only their structural
 //! batches.
@@ -35,8 +34,8 @@ use crate::tokenizer;
 use crate::value::{is_peripheral_doc, mix_signals};
 
 use super::{
-    FileLines, WalkCtx, budget_chunk_ranges, extend_nonblank_rows, first_child_of_kind,
-    fs::files_with_extension, node_end_row_trimmed, path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, budget_chunk_ranges, first_child_of_kind, fs::files_with_extension,
+    node_end_row_trimmed, path_depth_factor, single_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -50,13 +49,10 @@ const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 /// Minimum H2 source bytes to split into H3 sub-sections.
 const H2_SPLIT_BYTES: usize = 600;
 
-/// Value multiplier for split children (`H3Child` / `BodyBlock`
-/// ranges) — compensates for their smaller marginal cost.
+/// Value multiplier for split children (`H3Child`) and headingless
+/// non-README bodies (`BodyBlock`) — a child compensates for its
+/// smaller marginal cost.
 const CHILD_SIGNAL_SCALE: f64 = 0.60;
-
-/// Minimum source bytes before a section is split into body blocks.
-/// Lower than `H2_SPLIT_BYTES` since it can apply after H2 splitting.
-const BODY_BLOCK_SPLIT_BYTES: usize = 350;
 
 /// Token threshold above which an otherwise-unsplit section is
 /// emitted as a head chunk plus predecessor-chained tail chunks.
@@ -1096,19 +1092,16 @@ fn is_admin_block_quote(block: Node, source: &str) -> bool {
     false
 }
 
-/// Link count of a paragraph whose substantive content is nothing but
-/// links separated by separator punctuation (`•`, `·`, `|`, `/`, `,`,
-/// dashes, brackets); 0 for any other paragraph. With three or more
-/// links it is a navigation row — multi-language READMEs'
-/// `[English](url) • [中文](url) • ...` — and with fewer, a pointer
-/// (`[[play](url)]`) that belongs to the block before it.
-fn link_only_paragraph_links(para: Node, source: &str) -> usize {
+/// A navigation row: three or more links and nothing else but separator
+/// punctuation (`•`, `·`, `|`, `/`, `,`, dashes) — multi-language
+/// READMEs' `[English](url) • [中文](url) • ...`.
+fn is_nav_link_paragraph(para: Node, source: &str) -> bool {
     let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
-        return 0;
+        return false;
     };
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
     let Some(tree) = parse_inline(inline_text) else {
-        return 0;
+        return false;
     };
     let named = named_decorative_candidates(tree.root_node(), inline_text);
     let mut cursor = 0usize;
@@ -1118,15 +1111,11 @@ fn link_only_paragraph_links(para: Node, source: &str) -> usize {
             "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link"
         ) || !is_separator_gap(&inline_text[cursor..n.start_byte()])
         {
-            return 0;
+            return false;
         }
         cursor = n.end_byte();
     }
-    if is_separator_gap(&inline_text[cursor..]) {
-        named.len()
-    } else {
-        0
-    }
+    named.len() >= 3 && is_separator_gap(&inline_text[cursor..])
 }
 
 fn is_separator_gap(s: &str) -> bool {
@@ -1134,17 +1123,7 @@ fn is_separator_gap(s: &str) -> bool {
         c.is_whitespace()
             || matches!(
                 c,
-                '\u{2022}'
-                    | '\u{00B7}'
-                    | '|'
-                    | '/'
-                    | '\\'
-                    | ','
-                    | '-'
-                    | '\u{2014}'
-                    | '\u{2013}'
-                    | '['
-                    | ']'
+                '\u{2022}' | '\u{00B7}' | '|' | '/' | '\\' | ',' | '-' | '\u{2014}' | '\u{2013}'
             )
     })
 }
@@ -1302,7 +1281,7 @@ enum SectionKind {
     Intro,
     /// One H3 sub-section under a split H2.
     H3Child,
-    /// One direct block inside a long split section.
+    /// A headingless non-README file's body.
     BodyBlock,
     /// Predecessor-chained tail chunk of an oversize head-split.
     OversizeTail,
@@ -1325,9 +1304,9 @@ fn is_catalog_line(line: &str) -> bool {
 
 /// Section ranges for batching. A large H2 with two or more H3s (under
 /// an emitted `HeadingsOutline`, which renders the heading rows the
-/// split drops) expands to an optional `Intro` plus one `H3Child` — or,
-/// for a large H3, its body blocks — per H3. Other top-level entries
-/// emit one `Whole`, head-split when oversize.
+/// split drops) expands to an optional `Intro` plus one `H3Child` per
+/// H3. Other top-level entries emit one `Whole`. Every range is
+/// head-split when oversize.
 fn logical_sections(
     file: &Path,
     tree: &Tree,
@@ -1715,104 +1694,25 @@ fn push_h3_child_or_body_blocks(
     if body.trim().is_empty() {
         return;
     }
-    let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
-    if h3_bytes >= BODY_BLOCK_SPLIT_BYTES {
-        let ranges = body_block_ranges(h3_section, source);
-        if ranges.len() >= 2 {
-            out.extend(
-                ranges.into_iter().map(|(start, end)| {
-                    SectionRange::new(start, end, SectionKind::BodyBlock, h2_idx)
-                }),
-            );
-            return;
-        }
-    }
     // The H3's OWN title carries the reference/usage match (e.g.
     // `### Colors`, `### Default preset`). Same gates as the H2 path.
     let (start, end) = node_row_range(h3_section, source);
-    out.push(SectionRange {
-        is_reference_usage_section: is_reference_usage_title(h3_section, source)
-            && reference_usage_body_ok(body),
-        ..SectionRange::new(start, end, SectionKind::H3Child, h2_idx)
-    });
-}
-
-fn substantive_item_ranges(list: Node<'_>, source: &str) -> Vec<(usize, usize)> {
-    top_level_list_items(list)
-        .into_iter()
-        .filter(|item| has_substantive_list_item(*item))
-        .map(|item| node_row_range(item, source))
-        .collect()
-}
-
-fn body_block_ranges(section: Node<'_>, source: &str) -> Vec<(usize, usize)> {
     let src_lines: Vec<&str> = source.lines().collect();
-    let mut cur = section.walk();
-    let children: Vec<Node> = section.children(&mut cur).collect();
-    let mut out = Vec::new();
-    let mut i = 0;
-    while i < children.len() {
-        let child = children[i];
-        match child.kind() {
-            kind if is_section_scaffolding(kind) => {
-                i += 1;
-            }
-            "paragraph" if is_decorative_paragraph(child, source) => {
-                i += 1;
-            }
-            "html_block" if is_decorative_html_block(child, source) => {
-                i += 1;
-            }
-            "paragraph"
-                if children
-                    .get(i + 1)
-                    .is_some_and(|n| n.kind() == "list" || is_code_block(n.kind())) =>
-            {
-                let next = children[i + 1];
-                let (start, _) = node_row_range(child, source);
-                let (_, end) = node_row_range(next, source);
-                out.push((start, end));
-                i += 2;
-            }
-            "list" => {
-                out.extend(substantive_item_ranges(child, source));
-                i += 1;
-            }
-            "paragraph" if link_only_paragraph_links(child, source) > 0 && !out.is_empty() => {
-                if let Some(last) = out.last_mut() {
-                    last.1 = node_row_range(child, source).1;
-                }
-                i += 1;
-            }
-            _ => {
-                if let Some(range) = nonblank_node_row_range(child, &src_lines, source) {
-                    out.push(range);
-                }
-                i += 1;
-            }
-        }
-    }
-    out
+    push_whole_or_head_split(
+        out,
+        &src_lines,
+        SectionRange {
+            is_reference_usage_section: is_reference_usage_title(h3_section, source)
+                && reference_usage_body_ok(body),
+            ..SectionRange::new(start, end, SectionKind::H3Child, h2_idx)
+        },
+    );
 }
 
 fn node_row_range(node: Node, source: &str) -> (usize, usize) {
     (
         node.start_position().row + 1,
         node_end_row_trimmed(node, source) + 1,
-    )
-}
-
-fn nonblank_node_row_range(node: Node, src_lines: &[&str], source: &str) -> Option<(usize, usize)> {
-    let (start, end) = node_row_range(node, source);
-    let mut rows = Vec::new();
-    extend_nonblank_rows(&mut rows, src_lines, start - 1, end - 1);
-    (!rows.is_empty()).then_some((start, end))
-}
-
-fn is_section_scaffolding(kind: &str) -> bool {
-    matches!(
-        kind,
-        "atx_heading" | "setext_heading" | "block_continuation"
     )
 }
 
@@ -1880,42 +1780,8 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
         .collect()
 }
 
-/// Top-level `list_item` children of a `list` node. Excludes nested
-/// list items inside an item's body — those would be returned by
-/// recursing into `list` grandchildren, which we deliberately don't
-/// do (nested-list splitting is out of scope).
-fn top_level_list_items<'a>(list: Node<'a>) -> Vec<Node<'a>> {
-    let mut cur = list.walk();
-    list.children(&mut cur)
-        .filter(|c| c.kind() == "list_item")
-        .collect()
-}
-
 fn is_code_block(kind: &str) -> bool {
     matches!(kind, "fenced_code_block" | "indented_code_block")
-}
-
-/// True iff a `list_item` has at least one non-marker, non-continuation
-/// child — i.e. a paragraph, code block, nested list, etc. An empty
-/// `- ` item has only marker children, so it's filtered to avoid
-/// scheduling a no-op batch (`ratio(value, 0) = INFINITY` smell).
-/// Distinct from a [`section_body`] check because a list item has no
-/// heading.
-fn has_substantive_list_item(item: Node) -> bool {
-    let mut cur = item.walk();
-    item.children(&mut cur).any(|c| {
-        !matches!(
-            c.kind(),
-            "list_marker_minus"
-                | "list_marker_plus"
-                | "list_marker_star"
-                | "list_marker_dot"
-                | "list_marker_parenthesis"
-                | "task_list_marker_checked"
-                | "task_list_marker_unchecked"
-                | "block_continuation"
-        )
-    })
 }
 
 /// Direct H3-section children of an H2 section node. Tree-sitter-md
@@ -2267,7 +2133,7 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) ->
 fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)
-        || (block.kind() == "paragraph" && link_only_paragraph_links(block, source) >= 3)
+        || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -3062,67 +2928,6 @@ mod tests {
         }
     }
 
-    // --- body-block splitting tests (logical_sections) ---
-
-    /// H3 split is not always fine-grained enough: a long H3 child with
-    /// several body blocks should refine to `BodyBlock` ranges while a
-    /// sibling H3 with one body block remains an `H3Child`.
-    #[test]
-    fn markdown_h3_child_body_block_split() {
-        let filler = "Additional prose keeps this sub-section large enough for \
-                      body-block splitting while still representing ordinary \
-                      markdown documentation text.\n"
-            .repeat(3);
-        let src = "# Title\n\nTagline.\n\n## Parts\n\n### One\n\n\
-                   Intro paragraph before the example.\n"
-            .to_owned()
-            + &filler
-            + "\n\
-                   ```tsx\nconst one = 1\n```\n\n\
-                   Follow-up paragraph with details.\n"
-            + &filler
-            + "\n\
-                   ### Two\n\n\
-                   Single compact paragraph.\n";
-        assert!(
-            src.len() >= H2_SPLIT_BYTES,
-            "test source must clear H2 split gate"
-        );
-        let ranges = sections("README.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert!(
-            kinds.contains(&SectionKind::BodyBlock),
-            "long H3 child must split into body blocks; got {ranges:?}"
-        );
-        assert!(
-            kinds.contains(&SectionKind::H3Child),
-            "single-block H3 child must remain whole; got {ranges:?}"
-        );
-    }
-
-    /// A link-only pointer paragraph (`[[play](url)]`) belongs to the
-    /// example before it, not to a body block of its own.
-    #[test]
-    fn markdown_link_only_paragraph_joins_previous_body_block() {
-        let filler = "Additional prose keeps this sub-section large enough for \
-                      body-block splitting while still representing ordinary \
-                      markdown documentation text.\n"
-            .repeat(3);
-        let src = "# Title\n\nTagline.\n\n## Parts\n\n### One\n\n".to_owned()
-            + &filler
-            + "\n```go\nx := one()\n```\n\n[[play](https://go.dev/play/p/x)]\n\n"
-            + &filler
-            + "\n### Two\n\nSingle compact paragraph.\n";
-        let play_row = src.lines().position(|l| l.starts_with("[[play]")).unwrap() + 1;
-        let ranges = sections("README.md", &src);
-        assert!(
-            ranges.iter().any(|r| r.kind == SectionKind::BodyBlock
-                && r.start < play_row
-                && r.end == play_row),
-            "play link must extend the example's block; got {ranges:?}"
-        );
-    }
-
     #[test]
     fn markdown_reference_usage_section_flagged() {
         // (title, body, expect_flag_on_some_whole_range)
@@ -3377,45 +3182,6 @@ mod tests {
             "outline must not claim H1 row; would override headline truncation. got {starts:?}"
         );
         assert_eq!(starts, vec![5, 9, 13]);
-    }
-
-    /// Adjacent top-level bullets with nested sub-bullets must split
-    /// into line-disjoint per-item sections. tree-sitter-markdown list
-    /// items swallow the next sibling's leading indentation, so a
-    /// newline-only end trim let item N's range claim item N+1's first
-    /// row — sibling Section batches then hit the scheduler's
-    /// non-ancestor overlap panic (tinyusb SEGGER_RTT README at 1M).
-    #[test]
-    fn walker_markdown_adjacent_nested_bullets_split_disjoint() {
-        let pad = "x".repeat(60);
-        let mut src = String::from(
-            "Title\n=====\n\nIntro paragraph prose.\n\n## Files\n\n### Included files\n\n",
-        );
-        for name in ["alpha", "beta", "gamma", "delta"] {
-            src.push_str(&format!("  * `{name}/`\n"));
-            src.push_str(&format!("    * `{name}.c` - {pad}\n"));
-            src.push_str(&format!("    * `{name}.h` - {pad}\n"));
-        }
-        src.push_str("\n### Layout\n\nThe tree mirrors the module layout.\n");
-        let tree = parse(&src);
-        let file = PathBuf::from("/x/README.md");
-        let gates = derive_outline_gates(&file, &tree, &src);
-        let ranges = logical_sections(&file, &tree, &src, gates.emits);
-        let items: Vec<(usize, usize)> = ranges
-            .iter()
-            .filter(|r| matches!(r.kind, SectionKind::BodyBlock))
-            .map(|r| (r.start, r.end))
-            .collect();
-        assert!(
-            items.len() >= 4,
-            "expected per-bullet split, got {ranges:?}"
-        );
-        for pair in items.windows(2) {
-            assert!(
-                pair[0].1 < pair[1].0,
-                "sibling item ranges overlap: {items:?}"
-            );
-        }
     }
 
     /// Overline-form headings must not leak their overline punctuation row

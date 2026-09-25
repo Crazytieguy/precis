@@ -99,9 +99,9 @@ Score(3000)=0.659 I=0.850 C=0.511 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 3246 | 15 | go body internal/ui/debug_logger.go:20 |  |  | 0.675 |
 | ns | 3250 |  | 181 | Config struct: generation-parameter and TLS keys | 3.3 |  | 0.660 |
 | walker |  | 3366 | 120 | headings outline in sdk/README.md |  |  | 0.660 |
-| walker |  | 3379 | 13 | sdk/README.md section #17 |  |  | 0.660 |
+| walker |  | 3379 | 13 | sdk/README.md section #9 |  |  | 0.660 |
 | walker |  | 3412 | 33 | sdk/README.md section #1 |  |  | 0.660 |
-| walker |  | 3508 | 96 | sdk/README.md section #16 |  |  | 0.660 |
+| walker |  | 3508 | 96 | sdk/README.md section #8 |  |  | 0.660 |
 | ns | 3514 |  | 264 | GetTransportType: type-to-transport mapping and legacy inference | 3.4 |  | 0.627 |
 | walker |  | 3540 | 32 | go doc sdk/types.go:18 |  |  | 0.627 |
 | walker |  | 3644 | 104 | go names internal/ui/tool_approval_input.go |  |  | 0.627 |

@@ -117,7 +117,7 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2835 | 198 | headings outline in README.md |  |  | 0.510 |
 | ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.493 |
 | walker |  | 2941 | 106 | README.md section #0 |  |  | 0.537 |
-| walker |  | 2962 | 21 | README.md section #20 |  |  | 0.537 |
+| walker |  | 2962 | 21 | README.md section #18 |  |  | 0.537 |
 | walker |  | 2996 | 34 | README.md section #6 |  |  | 0.537 |
 | walker |  | 3035 | 39 | listing of 'packages/app-client/src/modules/notes' |  |  | 0.538 |
 | walker |  | 3049 | 14 | listing of 'packages/app-client/src/modules/notes/components' |  |  | 0.538 |
@@ -240,46 +240,45 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 8008 | 68 | ts decl packages/app-server/src/modules/notes/notes.usecases.ts:7 |  |  | 0.514 |
 | walker |  | 8076 | 68 | ts decl packages/app-server/src/modules/tasks/task-scheduler.ts:11 |  |  | 0.514 |
 | walker |  | 8136 | 60 | json config renovate.json |  |  | 0.514 |
-| walker |  | 8165 | 29 | README.md section #19 |  |  | 0.514 |
-| walker |  | 8219 | 54 | ts names packages/app-server/src/modules/app/config/config.models.ts |  |  | 0.514 |
+| walker |  | 8190 | 54 | ts names packages/app-server/src/modules/app/config/config.models.ts |  |  | 0.514 |
 | ns | 8227 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.506 |
-| walker |  | 8273 | 54 | ts names packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts |  |  | 0.508 |
-| walker |  | 8352 | 79 | ts names packages/app-server/src/modules/notes/notes.errors.ts |  |  | 0.512 |
-| walker |  | 8390 | 38 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:3 |  |  | 0.514 |
-| walker |  | 8431 | 41 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:21 |  |  | 0.518 |
-| walker |  | 8473 | 42 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:9 |  |  | 0.522 |
-| ns | 8502 |  | 275 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.551 |
-| walker |  | 8521 | 48 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:15 |  |  | 0.557 |
-| walker |  | 8600 | 79 | ts names packages/app-server/src/modules/storage/storage.types.ts |  |  | 0.557 |
-| walker |  | 8631 | 31 | README.md section #18 |  |  | 0.557 |
-| walker |  | 8642 | 11 | ts names packages/app-client/src/modules/config/config.types.ts |  |  | 0.557 |
+| walker |  | 8244 | 54 | ts names packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts |  |  | 0.508 |
+| walker |  | 8323 | 79 | ts names packages/app-server/src/modules/notes/notes.errors.ts |  |  | 0.512 |
+| walker |  | 8361 | 38 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:3 |  |  | 0.514 |
+| walker |  | 8402 | 41 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:21 |  |  | 0.518 |
+| walker |  | 8444 | 42 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:9 |  |  | 0.522 |
+| walker |  | 8492 | 48 | ts decl packages/app-server/src/modules/notes/notes.errors.ts:15 |  |  | 0.528 |
+| ns | 8502 |  | 275 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.557 |
+| walker |  | 8571 | 79 | ts names packages/app-server/src/modules/storage/storage.types.ts |  |  | 0.557 |
+| walker |  | 8582 | 11 | ts names packages/app-client/src/modules/config/config.types.ts |  |  | 0.557 |
+| walker |  | 8702 | 120 | ts names packages/cli/src/config/config.models.ts |  |  | 0.557 |
+| walker |  | 8710 | 8 | ts body packages/cli/src/config/config.models.ts:61 |  |  | 0.557 |
+| walker |  | 8719 | 9 | ts body packages/cli/src/config/config.models.ts:57 |  |  | 0.557 |
 | ns | 8731 |  | 229 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.575 |
-| walker |  | 8762 | 120 | ts names packages/cli/src/config/config.models.ts |  |  | 0.575 |
-| walker |  | 8770 | 8 | ts body packages/cli/src/config/config.models.ts:61 |  |  | 0.575 |
-| walker |  | 8779 | 9 | ts body packages/cli/src/config/config.models.ts:57 |  |  | 0.575 |
-| walker |  | 8809 | 30 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.575 |
-| walker |  | 8827 | 18 | ts names packages/lib/src/api/api.constants.ts |  |  | 0.575 |
-| walker |  | 8942 | 115 | README.md section #12 |  |  | 0.575 |
+| walker |  | 8749 | 30 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.575 |
+| walker |  | 8767 | 18 | ts names packages/lib/src/api/api.constants.ts |  |  | 0.575 |
+| walker |  | 8882 | 115 | README.md section #12 |  |  | 0.575 |
+| walker |  | 8973 | 91 | ts names packages/app-server/src/modules/storage/storage.models.ts |  |  | 0.575 |
 | ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.564 |
-| walker |  | 9033 | 91 | ts names packages/app-server/src/modules/storage/storage.models.ts |  |  | 0.564 |
-| walker |  | 9041 | 8 | ts body packages/app-server/src/modules/storage/storage.models.ts:5 |  |  | 0.564 |
-| walker |  | 9049 | 8 | ts body packages/app-server/src/modules/storage/storage.models.ts:9 |  |  | 0.564 |
-| walker |  | 9060 | 11 | ts body packages/app-server/src/modules/app/auth/auth.routes.ts:10 |  |  | 0.564 |
-| walker |  | 9132 | 72 | ts names packages/app-server/src/modules/shared/errors/errors.ts |  |  | 0.564 |
-| walker |  | 9143 | 11 | ts body packages/app-server/src/modules/shared/errors/errors.ts:31 |  |  | 0.564 |
-| ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.560 |
-| walker |  | 9240 | 97 | ts decl packages/app-server/src/modules/notes/notes.types.ts:6 |  |  | 0.564 |
-| walker |  | 9278 | 38 | README.md section #17 |  |  | 0.564 |
+| walker |  | 8981 | 8 | ts body packages/app-server/src/modules/storage/storage.models.ts:5 |  |  | 0.564 |
+| walker |  | 8989 | 8 | ts body packages/app-server/src/modules/storage/storage.models.ts:9 |  |  | 0.564 |
+| walker |  | 9000 | 11 | ts body packages/app-server/src/modules/app/auth/auth.routes.ts:10 |  |  | 0.564 |
+| walker |  | 9072 | 72 | ts names packages/app-server/src/modules/shared/errors/errors.ts |  |  | 0.564 |
+| walker |  | 9083 | 11 | ts body packages/app-server/src/modules/shared/errors/errors.ts:31 |  |  | 0.564 |
+| walker |  | 9180 | 97 | ts decl packages/app-server/src/modules/notes/notes.types.ts:6 |  |  | 0.568 |
+| ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.564 |
 | ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.568 |
-| walker |  | 9439 | 161 | plaintext config pnpm-workspace.yaml |  |  | 0.592 |
-| walker |  | 9451 | 12 | ts body packages/app-server/src/modules/shared/logger/logger.ts:7 |  |  | 0.592 |
-| walker |  | 9466 | 15 | ts names packages/app-client/src/modules/theme/theme.store.ts |  |  | 0.592 |
+| walker |  | 9341 | 161 | plaintext config pnpm-workspace.yaml |  |  | 0.592 |
+| walker |  | 9353 | 12 | ts body packages/app-server/src/modules/shared/logger/logger.ts:7 |  |  | 0.592 |
+| walker |  | 9368 | 15 | ts names packages/app-client/src/modules/theme/theme.store.ts |  |  | 0.592 |
+| walker |  | 9495 | 127 | README.md section #14 |  |  | 0.592 |
 | ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.589 |
-| walker |  | 9593 | 127 | README.md section #14 |  |  | 0.589 |
-| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.592 |
-| walker |  | 9760 | 167 | ts names packages/crypto/src/web/crypto.web.usecases.ts |  |  | 0.593 |
-| walker |  | 9780 | 20 | ts body packages/crypto/src/web/crypto.web.usecases.ts:38 |  |  | 0.594 |
-| walker |  | 9830 | 50 | README.md section #10 |  |  | 0.594 |
+| walker |  | 9662 | 167 | ts names packages/crypto/src/web/crypto.web.usecases.ts |  |  | 0.590 |
+| walker |  | 9682 | 20 | ts body packages/crypto/src/web/crypto.web.usecases.ts:38 |  |  | 0.590 |
+| walker |  | 9732 | 50 | README.md section #10 |  |  | 0.590 |
+| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.594 |
+| walker |  | 9846 | 114 | ts names packages/app-server/src/modules/notes/notes.models.ts |  |  | 0.594 |
+| walker |  | 9871 | 25 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.594 |
 | ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.605 |
-| walker |  | 9944 | 114 | ts names packages/app-server/src/modules/notes/notes.models.ts |  |  | 0.605 |
-| walker |  | 9969 | 25 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.605 |
+| walker |  | 9978 | 107 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.605 |
+| walker |  | 9991 | 13 | ts body packages/app-server/src/modules/app/config/config.routes.ts:5 |  |  | 0.605 |

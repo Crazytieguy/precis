@@ -242,19 +242,17 @@ Score(3000)=0.624 I=0.819 C=0.475 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 9171 | 8 | python decl bookmarks/views/bundles.py:78 |  |  | 0.481 |
 | walker |  | 9179 | 8 | python decl bookmarks/views/bundles.py:83 |  |  | 0.481 |
 | walker |  | 9187 | 8 | python decl bookmarks/views/bundles.py:90 |  |  | 0.481 |
-| walker |  | 9204 | 17 | README.md section #11 |  |  | 0.481 |
-| walker |  | 9221 | 17 | README.md section #20 |  |  | 0.481 |
-| walker |  | 9334 | 113 | python names bookmarks/api/serializers.py |  |  | 0.489 |
-| walker |  | 9343 | 9 | python decl bookmarks/api/serializers.py:20 |  |  | 0.489 |
-| walker |  | 9356 | 13 | python decl bookmarks/api/serializers.py:24 |  |  | 0.489 |
-| walker |  | 9369 | 13 | python decl bookmarks/api/serializers.py:32 |  |  | 0.489 |
-| walker |  | 9433 | 64 | python decl bookmarks/api/serializers.py:196 |  |  | 0.489 |
+| walker |  | 9300 | 113 | python names bookmarks/api/serializers.py |  |  | 0.489 |
+| walker |  | 9309 | 9 | python decl bookmarks/api/serializers.py:20 |  |  | 0.489 |
+| walker |  | 9322 | 13 | python decl bookmarks/api/serializers.py:24 |  |  | 0.489 |
+| walker |  | 9335 | 13 | python decl bookmarks/api/serializers.py:32 |  |  | 0.489 |
+| walker |  | 9399 | 64 | python decl bookmarks/api/serializers.py:196 |  |  | 0.489 |
 | ns | 9438 |  | 269 | settings/base.py — deployment, auth and database LD_* options | 6.1 |  | 0.483 |
-| walker |  | 9532 | 99 | python decl bookmarks/api/serializers.py:181 |  |  | 0.483 |
-| walker |  | 9645 | 113 | python names bookmarks/services/auto_tagging.py |  |  | 0.483 |
-| walker |  | 9662 | 17 | python body bookmarks/utils.py:21 |  |  | 0.483 |
-| walker |  | 9709 | 47 | declaration surface of pytest.ini |  |  | 0.486 |
-| walker |  | 9777 | 68 | python decl bookmarks/management/commands/full_backup.py:9 |  |  | 0.486 |
+| walker |  | 9498 | 99 | python decl bookmarks/api/serializers.py:181 |  |  | 0.483 |
+| walker |  | 9611 | 113 | python names bookmarks/services/auto_tagging.py |  |  | 0.483 |
+| walker |  | 9628 | 17 | python body bookmarks/utils.py:21 |  |  | 0.483 |
+| walker |  | 9675 | 47 | declaration surface of pytest.ini |  |  | 0.486 |
+| walker |  | 9743 | 68 | python decl bookmarks/management/commands/full_backup.py:9 |  |  | 0.486 |
 | ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.479 |
 | ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.490 |
 | ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.500 |

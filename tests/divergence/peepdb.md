@@ -1,4 +1,4 @@
-Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.652/0.686/0.610/0.629/0.595/0.561
+Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.652/0.686/0.610/0.629/0.595/0.573
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -55,12 +55,12 @@ Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 1777 | 193 | headings outline in README.md |  |  | 0.742 |
 | walker |  | 1812 | 35 | README.md section #2 |  |  | 0.742 |
 | walker |  | 1842 | 30 | README.md section #5 |  |  | 0.742 |
-| walker |  | 1870 | 28 | README.md section #24 |  |  | 0.742 |
-| walker |  | 1900 | 30 | README.md section #23 |  |  | 0.742 |
+| walker |  | 1870 | 28 | README.md section #15 |  |  | 0.742 |
+| walker |  | 1900 | 30 | README.md section #14 |  |  | 0.742 |
 | ns | 1922 |  | 242 | `view` docstring + connection resolution (cli.py 134-155) | 2.4 | 1.6 | 0.686 |
 | walker |  | 1996 | 96 | README headline in docs/README.md |  |  | 0.686 |
 | walker |  | 2034 | 38 | python decl peepdb/db/oracle.py:36 |  |  | 0.686 |
-| walker |  | 2069 | 35 | README.md section #22 |  |  | 0.686 |
+| walker |  | 2069 | 35 | README.md section #13 |  |  | 0.686 |
 | walker |  | 2077 | 8 | python body peepdb/cli.py:86 |  |  | 0.686 |
 | ns | 2207 |  | 285 | `view` dispatch into peep_db + output rendering (cli.py 156-178) | 2.5 | 2.4 | 0.638 |
 | walker |  | 2219 | 142 | python decl peepdb/cli.py:126 |  |  | 0.664 |
@@ -103,101 +103,95 @@ Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 4125 | 9 | python decl peepdb/db/base.py:29 |  |  | 0.645 |
 | walker |  | 4130 | 5 | python body peepdb/db/base.py:17 |  |  | 0.648 |
 | ns | 4134 |  | 247 | format_value: numeric/date rendering rules (core.py 119-140) | 3.8 | 1.5 | 0.624 |
-| walker |  | 4153 | 23 | README.md section #10 |  |  | 0.624 |
-| walker |  | 4250 | 97 | headings outline in docs/usage.md |  |  | 0.624 |
-| walker |  | 4282 | 32 | docs/usage.md section #0 |  |  | 0.624 |
-| walker |  | 4287 | 5 | python body peepdb/db/base.py:21 |  |  | 0.626 |
-| walker |  | 4292 | 5 | python body peepdb/db/base.py:25 |  |  | 0.629 |
-| walker |  | 4319 | 27 | docs/installation.md section #1 |  |  | 0.629 |
+| walker |  | 4227 | 97 | headings outline in docs/usage.md |  |  | 0.624 |
+| walker |  | 4259 | 32 | docs/usage.md section #0 |  |  | 0.624 |
+| walker |  | 4264 | 5 | python body peepdb/db/base.py:21 |  |  | 0.626 |
+| walker |  | 4269 | 5 | python body peepdb/db/base.py:25 |  |  | 0.629 |
+| walker |  | 4296 | 27 | docs/installation.md section #1 |  |  | 0.629 |
 | ns | 4335 |  | 201 | format_as_table: the tabulate grid layout (core.py 102-115) | 3.9 | 1.5 | 0.615 |
 | ns | 4459 |  | 124 | core.py import header and module logger setup | 3.10 |  | 0.603 |
-| walker |  | 4487 | 168 | README.md section #1 |  |  | 0.627 |
-| walker |  | 4559 | 72 | docs/index.md section #0 |  |  | 0.627 |
-| walker |  | 4632 | 73 | docs/installation.md section #0 |  |  | 0.627 |
-| walker |  | 4653 | 21 | python body peepdb/db/firebase.py:26 |  |  | 0.627 |
-| walker |  | 4686 | 33 | README.md section #12 |  |  | 0.627 |
-| walker |  | 4840 | 154 | headings outline in docs/README.md |  |  | 0.627 |
-| walker |  | 4860 | 20 | docs/README.md section #2 |  |  | 0.627 |
-| walker |  | 4878 | 18 | docs/README.md section #6 |  |  | 0.627 |
-| walker |  | 4936 | 58 | docs/README.md section #1 |  |  | 0.627 |
+| walker |  | 4464 | 168 | README.md section #1 |  |  | 0.627 |
+| walker |  | 4536 | 72 | docs/index.md section #0 |  |  | 0.627 |
+| walker |  | 4609 | 73 | docs/installation.md section #0 |  |  | 0.627 |
+| walker |  | 4630 | 21 | python body peepdb/db/firebase.py:26 |  |  | 0.627 |
+| walker |  | 4784 | 154 | headings outline in docs/README.md |  |  | 0.627 |
+| walker |  | 4804 | 20 | docs/README.md section #2 |  |  | 0.627 |
+| walker |  | 4822 | 18 | docs/README.md section #6 |  |  | 0.627 |
+| walker |  | 4880 | 58 | docs/README.md section #1 |  |  | 0.627 |
 | ns | 4964 |  | 505 | Every class and method name across all eight backend modules | 4.1 | 3.1 | 0.660 |
-| walker |  | 5151 | 215 | docs/README.md section #0 |  |  | 0.660 |
-| walker |  | 5202 | 51 | docs/README.md section #7 |  |  | 0.660 |
-| walker |  | 5238 | 36 | README.md section #14 |  |  | 0.660 |
-| walker |  | 5243 | 5 | python body peepdb/db/base.py:29 |  |  | 0.662 |
+| walker |  | 5095 | 215 | docs/README.md section #0 |  |  | 0.660 |
+| walker |  | 5146 | 51 | docs/README.md section #7 |  |  | 0.660 |
+| walker |  | 5151 | 5 | python body peepdb/db/base.py:29 |  |  | 0.662 |
+| walker |  | 5177 | 26 | python doc peepdb/db/mongodb.py:42 |  |  | 0.662 |
+| walker |  | 5213 | 36 | docs/installation.md section #4 |  |  | 0.662 |
 | ns | 5263 |  | 299 | The table/collection-listing query of every backend | 4.2 | 4.1 | 0.642 |
-| walker |  | 5269 | 26 | python doc peepdb/db/mongodb.py:42 |  |  | 0.642 |
-| walker |  | 5307 | 38 | README.md section #13 |  |  | 0.642 |
-| walker |  | 5346 | 39 | README.md section #17 |  |  | 0.642 |
-| walker |  | 5383 | 37 | README.md section #18 |  |  | 0.642 |
-| walker |  | 5419 | 36 | docs/installation.md section #4 |  |  | 0.642 |
-| walker |  | 5543 | 124 | README.md section #21 |  |  | 0.642 |
-| walker |  | 5574 | 31 | python body peepdb/db/mariadb.py:30 |  |  | 0.643 |
-| ns | 5595 |  | 332 | MySQLDatabase — the canonical backend implementation | 4.3 | 4.1 | 0.620 |
-| walker |  | 5606 | 32 | python body peepdb/db/oracle.py:32 |  |  | 0.621 |
-| walker |  | 5639 | 33 | python body peepdb/db/firebase.py:10 |  |  | 0.621 |
-| walker |  | 5673 | 34 | python body peepdb/db/mysql.py:29 |  |  | 0.623 |
-| walker |  | 5714 | 41 | docs/usage.md section #2 |  |  | 0.623 |
-| walker |  | 5761 | 47 | README.md section #6 |  |  | 0.623 |
-| walker |  | 5811 | 50 | README.md section #9 |  |  | 0.623 |
-| walker |  | 5817 | 6 | python body peepdb/db/base.py:37 |  |  | 0.626 |
-| walker |  | 5857 | 40 | python body peepdb/db/postgresql.py:30 |  |  | 0.630 |
+| walker |  | 5337 | 124 | README.md section #12 |  |  | 0.642 |
+| walker |  | 5368 | 31 | python body peepdb/db/mariadb.py:30 |  |  | 0.643 |
+| walker |  | 5400 | 32 | python body peepdb/db/oracle.py:32 |  |  | 0.644 |
+| walker |  | 5433 | 33 | python body peepdb/db/firebase.py:10 |  |  | 0.644 |
+| walker |  | 5467 | 34 | python body peepdb/db/mysql.py:29 |  |  | 0.646 |
+| walker |  | 5508 | 41 | docs/usage.md section #2 |  |  | 0.646 |
+| walker |  | 5514 | 6 | python body peepdb/db/base.py:37 |  |  | 0.649 |
+| walker |  | 5554 | 40 | python body peepdb/db/postgresql.py:30 |  |  | 0.653 |
+| ns | 5595 |  | 332 | MySQLDatabase — the canonical backend implementation | 4.3 | 4.1 | 0.630 |
+| walker |  | 5604 | 50 | docs/index.md section #4 |  |  | 0.630 |
+| walker |  | 5681 | 77 | python body peepdb/config.py:41 |  |  | 0.630 |
+| walker |  | 5726 | 45 | python body peepdb/db/mssql.py:7 |  |  | 0.630 |
+| walker |  | 5781 | 55 | docs/usage.md section #7 |  |  | 0.630 |
+| walker |  | 5833 | 52 | python body peepdb/db/sqlite.py:22 |  |  | 0.630 |
+| walker |  | 5886 | 53 | python body peepdb/db/oracle.py:25 |  |  | 0.630 |
 | ns | 5897 |  | 302 | PostgreSQL, MariaDB and Oracle connect() — drivers, default ports, cursor factories | 4.4 | 4.1 | 0.609 |
-| walker |  | 5907 | 50 | docs/index.md section #4 |  |  | 0.609 |
-| walker |  | 5984 | 77 | python body peepdb/config.py:41 |  |  | 0.609 |
-| walker |  | 6029 | 45 | python body peepdb/db/mssql.py:7 |  |  | 0.609 |
-| walker |  | 6056 | 27 | docs/README.md section #10 |  |  | 0.609 |
-| walker |  | 6111 | 55 | docs/usage.md section #7 |  |  | 0.609 |
+| walker |  | 5940 | 54 | python body peepdb/db/mariadb.py:23 |  |  | 0.609 |
+| walker |  | 5994 | 54 | python body peepdb/db/mssql.py:28 |  |  | 0.609 |
+| walker |  | 6048 | 54 | python body peepdb/db/mysql.py:22 |  |  | 0.609 |
+| walker |  | 6102 | 54 | python body peepdb/db/postgresql.py:23 |  |  | 0.609 |
 | ns | 6156 |  | 259 | MongoDBDatabase.connect — URI construction from the generic parameters | 4.5 | 4.1 | 0.595 |
-| walker |  | 6163 | 52 | python body peepdb/db/sqlite.py:22 |  |  | 0.595 |
-| walker |  | 6229 | 66 | README.md section #8 |  |  | 0.595 |
-| walker |  | 6282 | 53 | python body peepdb/db/oracle.py:25 |  |  | 0.595 |
-| walker |  | 6349 | 67 | README.md section #7 |  |  | 0.595 |
-| walker |  | 6403 | 54 | python body peepdb/db/mariadb.py:23 |  |  | 0.595 |
-| ns | 6435 |  | 279 | MSSQLDatabase: constructor extras and the ODBC connection string | 4.6 | 4.1 | 0.585 |
-| walker |  | 6457 | 54 | python body peepdb/db/mssql.py:28 |  |  | 0.585 |
-| walker |  | 6511 | 54 | python body peepdb/db/mysql.py:22 |  |  | 0.585 |
-| walker |  | 6565 | 54 | python body peepdb/db/postgresql.py:23 |  |  | 0.585 |
-| ns | 6582 |  | 147 | FirebaseDatabase: the backend that does not call super().__init__ | 4.7 | 4.1 | 0.578 |
-| walker |  | 6766 | 201 | python body peepdb/core.py:101 |  |  | 0.598 |
-| walker |  | 6865 | 99 | docs/README.md section #8 |  |  | 0.598 |
-| ns | 6899 |  | 317 | SQLiteDatabase connect and fetch_data — file-path handling and print-based logging | 4.8 | 4.1 | 0.585 |
-| walker |  | 6938 | 73 | README.md section #20 |  |  | 0.585 |
-| walker |  | 7002 | 64 | docs/usage.md section #4 |  |  | 0.585 |
-| walker |  | 7066 | 64 | docs/usage.md section #5 |  |  | 0.585 |
-| walker |  | 7095 | 29 | python body peepdb/cli.py:113 |  |  | 0.587 |
-| ns | 7201 |  | 302 | The non-LIMIT/OFFSET pagination variants (MSSQL, Oracle, MongoDB, Firebase) | 4.9 | 4.1 | 0.574 |
-| walker |  | 7217 | 122 | docs/README.md section #5 |  |  | 0.574 |
-| walker |  | 7284 | 67 | docs/installation.md section #2 |  |  | 0.574 |
-| ns | 7310 |  | 109 | Where credentials live: config paths and KeySecurity modes | 5.1 | 1.9 | 0.579 |
-| walker |  | 7361 | 77 | README.md section #11 |  |  | 0.579 |
-| ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.571 |
-| walker |  | 7608 | 247 | python body peepdb/core.py:118 |  |  | 0.600 |
-| walker |  | 7656 | 48 | python body peepdb/db/mongodb.py:32 |  |  | 0.600 |
+| walker |  | 6303 | 201 | python body peepdb/core.py:101 |  |  | 0.616 |
+| walker |  | 6402 | 99 | docs/README.md section #8 |  |  | 0.616 |
+| ns | 6435 |  | 279 | MSSQLDatabase: constructor extras and the ODBC connection string | 4.6 | 4.1 | 0.605 |
+| walker |  | 6475 | 73 | README.md section #11 |  |  | 0.605 |
+| walker |  | 6539 | 64 | docs/usage.md section #4 |  |  | 0.605 |
+| ns | 6582 |  | 147 | FirebaseDatabase: the backend that does not call super().__init__ | 4.7 | 4.1 | 0.598 |
+| walker |  | 6603 | 64 | docs/usage.md section #5 |  |  | 0.598 |
+| walker |  | 6632 | 29 | python body peepdb/cli.py:113 |  |  | 0.600 |
+| walker |  | 6754 | 122 | docs/README.md section #5 |  |  | 0.600 |
+| walker |  | 6821 | 67 | docs/installation.md section #2 |  |  | 0.600 |
+| walker |  | 6898 | 77 | README.md section #7 |  |  | 0.600 |
+| ns | 6899 |  | 317 | SQLiteDatabase connect and fetch_data — file-path handling and print-based logging | 4.8 | 4.1 | 0.587 |
+| walker |  | 7145 | 247 | python body peepdb/core.py:118 |  |  | 0.617 |
+| walker |  | 7193 | 48 | python body peepdb/db/mongodb.py:32 |  |  | 0.617 |
+| ns | 7201 |  | 302 | The non-LIMIT/OFFSET pagination variants (MSSQL, Oracle, MongoDB, Firebase) | 4.9 | 4.1 | 0.604 |
+| ns | 7310 |  | 109 | Where credentials live: config paths and KeySecurity modes | 5.1 | 1.9 | 0.608 |
+| ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.600 |
 | ns | 7742 |  | 247 | The two key sources: PBKDF2 derivation and keyring fetch-or-create | 5.3 | 1.9 | 0.595 |
 | ns | 7987 |  | 245 | save_connection: the on-disk record shape and what is encrypted | 5.4 | 1.9 | 0.583 |
-| ns | 8167 |  | 180 | get_connection: the tuple contract and InvalidPassword | 5.5 | 1.9 | 0.574 |
-| ns | 8309 |  | 142 | add_key_security: first-run choice between keyring and password | 5.6 | 1.9 | 0.569 |
-| ns | 8403 |  | 94 | list/remove/remove_all_connections — the distinctive lines only | 5.7 | 1.9 | 0.564 |
-| walker |  | 8523 | 867 | plaintext config requirements.txt |  |  | 0.564 |
-| walker |  | 8604 | 81 | python body peepdb/db/firebase.py:30 |  |  | 0.570 |
-| walker |  | 8709 | 105 | python body peepdb/config.py:60 |  |  | 0.578 |
-| ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.565 |
-| walker |  | 8797 | 88 | docs/index.md section #2 |  |  | 0.565 |
-| walker |  | 8843 | 46 | docs/README.md section #9 |  |  | 0.565 |
-| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.561 |
-| walker |  | 8950 | 107 | README.md section #16 |  |  | 0.561 |
-| walker |  | 9046 | 96 | docs/usage.md section #3 |  |  | 0.561 |
-| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.555 |
-| walker |  | 9087 | 41 | python doc peepdb/cli.py:86 |  |  | 0.556 |
-| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.554 |
-| walker |  | 9190 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.561 |
-| walker |  | 9290 | 100 | docs/usage.md section #1 |  |  | 0.561 |
-| walker |  | 9304 | 14 | python body peepdb/db/base.py:33 |  |  | 0.565 |
-| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.561 |
-| walker |  | 9527 | 223 | docs/README.md section #3 |  |  | 0.561 |
-| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.563 |
-| walker |  | 9635 | 108 | python body peepdb/config.py:49 |  |  | 0.570 |
-| ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.563 |
-| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.563 |
-| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.561 |
+| walker |  | 8060 | 867 | plaintext config requirements.txt |  |  | 0.583 |
+| walker |  | 8141 | 81 | python body peepdb/db/firebase.py:30 |  |  | 0.589 |
+| ns | 8167 |  | 180 | get_connection: the tuple contract and InvalidPassword | 5.5 | 1.9 | 0.579 |
+| walker |  | 8246 | 105 | python body peepdb/config.py:60 |  |  | 0.588 |
+| ns | 8309 |  | 142 | add_key_security: first-run choice between keyring and password | 5.6 | 1.9 | 0.583 |
+| walker |  | 8334 | 88 | docs/index.md section #2 |  |  | 0.583 |
+| ns | 8403 |  | 94 | list/remove/remove_all_connections — the distinctive lines only | 5.7 | 1.9 | 0.578 |
+| walker |  | 8441 | 107 | README.md section #9 |  |  | 0.578 |
+| walker |  | 8537 | 96 | docs/usage.md section #3 |  |  | 0.578 |
+| walker |  | 8578 | 41 | python doc peepdb/cli.py:86 |  |  | 0.578 |
+| walker |  | 8681 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.586 |
+| ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.573 |
+| walker |  | 8781 | 100 | docs/usage.md section #1 |  |  | 0.573 |
+| walker |  | 8795 | 14 | python body peepdb/db/base.py:33 |  |  | 0.577 |
+| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.573 |
+| walker |  | 9018 | 223 | docs/README.md section #3 |  |  | 0.573 |
+| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.567 |
+| walker |  | 9126 | 108 | python body peepdb/config.py:49 |  |  | 0.575 |
+| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.573 |
+| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.568 |
+| walker |  | 9553 | 427 | python body peepdb/core.py:27 |  |  | 0.598 |
+| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.599 |
+| walker |  | 9667 | 114 | docs/usage.md section #6 |  |  | 0.599 |
+| walker |  | 9710 | 43 | python doc peepdb/cli.py:113 |  |  | 0.600 |
+| walker |  | 9726 | 16 | python names peepdb/tests/test_mongodb_uri.py |  |  | 0.600 |
+| walker |  | 9742 | 16 | python names peepdb/tests/test_sqlite.py |  |  | 0.600 |
+| ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.592 |
+| walker |  | 9870 | 128 | docs/installation.md section #3 |  |  | 0.592 |
+| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.592 |
+| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.589 |

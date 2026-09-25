@@ -24,8 +24,7 @@ package.json
   3→	"version": "5.6.2",
   4→	"description": "Terminal string styling done right",
   5→	"license": "MIT",
-  6→	"repository": "chalk/chalk",
-  7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
+  …
   8→	"type": "module",
   9→	"main": "./source/index.js",
   10→	"exports": "./source/index.js",
@@ -49,28 +48,6 @@ package.json
   28→		"source",
   29→		"!source/index.test-d.ts"
   30→	],
-  31→	"keywords": [
-  32→		"color",
-  33→		"colour",
-  34→		"colors",
-  35→		"terminal",
-  36→		"console",
-  37→		"cli",
-  38→		"string",
-  39→		"ansi",
-  40→		"style",
-  41→		"styles",
-  42→		"tty",
-  43→		"formatting",
-  44→		"rgb",
-  45→		"256",
-  46→		"shell",
-  47→		"xterm",
-  48→		"log",
-  49→		"logging",
-  50→		"command-line",
-  51→		"text"
-  52→	],
   …
 readme.md
   …
@@ -89,11 +66,8 @@ readme.md
   112→## API
   113→
   114→### chalk.`<style>[.<style>...](string, [string...])`
-  116→Example: `chalk.red.bold.underline('Hello', 'world');`
   …
-  120→Multiple arguments will be separated by space.
   122→### chalk.level
-  124→Specifies the level of color support.
   …
   143→### supportsColor
   …
@@ -104,14 +78,17 @@ readme.md
   171→## Styles
   172→
   173→### Modifiers
+  174→
   175→- `reset` - Reset the current style.
   176→- `bold` - Make the text bold.
   177→- `dim` - Make the text have lower opacity.
   178→- `italic` - Make the text italic. *(Not widely supported)*
-  …
+  179→- `underline` - Put a horizontal line below the text. *(Not widely supported)*
+  180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
   181→- `inverse` - Invert background and foreground colors.
   182→- `hidden` - Print the text but make it invisible.
-  …
+  183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
+  184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
   186→### Colors
   187→
   188→- `black`
@@ -230,11 +207,7 @@ source/
     300→Basic modifier names.
     301→*/
     302→export const modifiers: readonly Modifiers[];
-    304→/**
-    305→@deprecated Use `foregroundColorNames` instead.
-    306→
-    307→Basic foreground color names.
-    308→*/
+    …
     309→export const foregroundColors: readonly ForegroundColor[];
     …
     316→export const backgroundColors: readonly BackgroundColor[];
