@@ -172,19 +172,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             sibling_md_count,
             root_readme,
         };
-        let ranges = if suppress_body {
-            Vec::new()
-        } else {
-            let ranges = logical_sections(&file, &tree, &source, outline_emits);
-            if ranges.is_empty() && headed_sections(tree.root_node()).next().is_none() {
-                headingless_fallback_ranges(&source)
-            } else {
-                ranges
-            }
-        };
-        if ranges.is_empty() && !suppress_body {
-            continue;
-        }
 
         let mut headline_emitted: Option<BatchKey> = None;
         if let Some(spec) = &headline
@@ -230,12 +217,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if suppress_body {
             continue;
         }
-
         push_sections(
             &mut out,
             &file,
             &source,
-            &ranges,
+            &logical_sections(&file, &tree, &source, outline_emits),
             headline.as_ref(),
             section_predecessor,
             ctx,
@@ -435,9 +421,7 @@ fn build_outline_content(
 }
 
 /// Per-file derivation chain shared by `expand_in_dir` and the unit-test
-/// helpers, so the one question every split path asks — "which heading
-/// rows does the outline own?" — is answered in exactly one place:
-/// headline spec (READMEs only) → outline rows → outline gate.
+/// helpers: headline spec (READMEs only) → outline rows → outline gate.
 struct OutlineGates {
     headline: Option<HeadlineSpec>,
     rows: Vec<(usize, usize)>,
@@ -499,24 +483,6 @@ fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
             collect_heading_nodes(child, out);
         }
     }
-}
-
-fn headingless_fallback_ranges(source: &str) -> Vec<SectionRange> {
-    let src_lines: Vec<&str> = source.lines().collect();
-    let Some(start) = src_lines.iter().position(|line| !line.trim().is_empty()) else {
-        return Vec::new();
-    };
-    let end = src_lines
-        .iter()
-        .rposition(|line| !line.trim().is_empty())
-        .expect("non-empty start implies non-empty end");
-    let mut out = Vec::new();
-    push_whole_or_head_split(
-        &mut out,
-        &src_lines,
-        SectionRange::new(start + 1, end + 1, 0),
-    );
-    out
 }
 
 fn build_section_content(
@@ -1142,15 +1108,31 @@ fn is_catalog_line(line: &str) -> bool {
             .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
-/// Section ranges for batching: one `Whole` per top-level entry,
-/// head-split when oversize.
+/// Section ranges for batching: one per top-level entry — or, for a
+/// headingless file, one for its whole text — head-split when oversize.
 fn logical_sections(
     file: &Path,
     tree: &Tree,
     source: &str,
     outline_emits: bool,
 ) -> Vec<SectionRange> {
+    let src_lines: Vec<&str> = source.lines().collect();
     let entries = top_level_entries(tree.root_node(), source);
+    let mut out = Vec::with_capacity(entries.len());
+    if entries.is_empty() {
+        let nonblank = |line: &&str| !line.trim().is_empty();
+        if let (Some(start), Some(end)) = (
+            src_lines.iter().position(nonblank),
+            src_lines.iter().rposition(nonblank),
+        ) {
+            push_whole_or_head_split(
+                &mut out,
+                &src_lines,
+                SectionRange::new(start + 1, end + 1, 0),
+            );
+        }
+        return out;
+    }
     // The first real H2 is index 0; an H1-unwrap intro shares it.
     let h2_offset = usize::from(matches!(
         entries.first(),
@@ -1158,8 +1140,6 @@ fn logical_sections(
     ));
 
     let readme = is_readme(file);
-    let src_lines: Vec<&str> = source.lines().collect();
-    let mut out = Vec::with_capacity(entries.len());
     for (entry_idx, entry) in entries.iter().enumerate() {
         let h2_idx = entry_idx.saturating_sub(h2_offset);
         match entry {
