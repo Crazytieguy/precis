@@ -13,7 +13,6 @@ use std::{
 use crate::batch::{Batch, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::{DirFilter, EntryKind, list_dir};
-use crate::value::mix_signals;
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
@@ -95,9 +94,10 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
     })
 }
 
-/// Signal mix for every directory listing — classification moves a
-/// listing's depth prior, not its tier.
-const LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
+/// Value of a directory listing before its location prior —
+/// classification moves the prior, not this base. Set by a full-corpus
+/// sweep; see `git show a90ee9b6:docs/design-notes.md`.
+const LISTING_VALUE: f64 = 1300.63;
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);
@@ -184,17 +184,8 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    let (cat, fu, ztu) = LISTING_SIGNALS;
-    mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * LISTING_SCALE
+    LISTING_VALUE * depth * fanout * catalog_child_factor
 }
-
-/// Uniform price of the directory-listing class against the source
-/// batches it competes with. Set by a full-corpus sweep on 2026-07-28
-/// against the v2 answer key (zero point 0.6074), worth +0.0046 at
-/// Score(3000) in combination with the roster-mass-neutralization
-/// removal. Measured point grids are recorded in
-/// `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep curves").
-const LISTING_SCALE: f64 = 1.13;
 
 /// Min child-directory count for a parent to count as a "catalog" whose
 /// per-child listings are redundant with its own listing.
