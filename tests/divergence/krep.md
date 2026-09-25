@@ -31,9 +31,9 @@ Score(3000)=0.534 I=0.810 C=0.353 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | ns | 996 |  | 207 | aho_corasick.h: the complete second-module interface | 1.9 |  | 0.539 |
 | walker |  | 1004 | 282 | headings outline in README.md |  |  | 0.650 |
 | walker |  | 1022 | 18 | README.md section #12 |  |  | 0.650 |
-| walker |  | 1154 | 132 | README.md section #8 |  |  | 0.717 |
-| ns | 1173 |  | 177 | README Key Features, first half | 2.1 |  | 0.685 |
-| walker |  | 1269 | 115 | README.md section #0 |  |  | 0.687 |
+| walker |  | 1137 | 115 | README.md section #0 |  |  | 0.652 |
+| ns | 1173 |  | 177 | README Key Features, first half | 2.1 |  | 0.624 |
+| walker |  | 1269 | 132 | README.md section #8 |  |  | 0.687 |
 | walker |  | 1290 | 21 | README.md section #19 |  |  | 0.687 |
 | walker |  | 1319 | 29 | README.md section #20 |  |  | 0.687 |
 | ns | 1343 |  | 170 | README Key Features, second half | 2.2 |  | 0.659 |

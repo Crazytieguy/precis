@@ -408,46 +408,17 @@ const DENSE_MD_SIBLINGS: usize = 3;
 fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
         * readme_index_decay(range)
-        * canonical_usage_section_factor(range)
+        * if range.is_reference_usage_section {
+            REFERENCE_USAGE_SECTION_FACTOR
+        } else {
+            1.0
+        }
 }
 
-/// Boost for README H2 `Whole` sections whose title is a canonical-
-/// usage marker (see [`is_canonical_usage_h2_title`]) — the demo
-/// fence inside is the highest-value follow-up to the headline.
-const CANONICAL_USAGE_SECTION_FACTOR: f64 = 2.2;
-
-/// Modest parallel boost for README reference/usage sections whose
-/// title matches the broader vocabulary (see
-/// [`is_reference_usage_title`]) — applies REGARDLESS of code fraction,
-/// so prose/list/table reference sections (`## Options`, `### Colors`,
-/// `## Environment Variables`) clear the early budget instead of
-/// sinking below the README index decay. Smaller than the code-dominant
-/// canonical factor since these sections are less reliably the single
-/// highest-value follow-up.
+/// Boost for README usage/reference sections (see
+/// [`SectionRange::is_reference_usage_section`]) so they clear the
+/// early budget instead of sinking below the README index decay.
 const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
-
-/// Combined README section boost: the stronger of the code-dominant
-/// canonical demo and the modest reference/usage title class. Factors
-/// never stack.
-fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
-    // `OversizeTail` is the continuation of a boosted `Whole` head —
-    // it inherits the boost so the tail prices at head * tail factor.
-    let canonical = if range.parent_is_canonical_usage_h2
-        && matches!(
-            range.kind,
-            SectionKind::Whole | SectionKind::OversizeTail | SectionKind::LedeBody
-        ) {
-        CANONICAL_USAGE_SECTION_FACTOR
-    } else {
-        1.0
-    };
-    let reference = if range.is_reference_usage_section {
-        REFERENCE_USAGE_SECTION_FACTOR
-    } else {
-        1.0
-    };
-    canonical.max(reference)
-}
 
 /// Index decay for README sections. (An adaptive steeper falloff for
 /// long READMEs (≥18 H2s) was tuned on the pre-refreeze keys and
@@ -672,7 +643,6 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
             },
             parent_index: 0,
             synthetic_intro_present: false,
-            parent_is_canonical_usage_h2: false,
             is_reference_usage_section: false,
             chained_to_previous: false,
         },
@@ -1154,6 +1124,9 @@ fn is_rst_canonical_usage_title(title: &str) -> bool {
             | "demo"
     )
 }
+
+/// Boost for a canonical-usage or catalog-shaped RST section.
+const CANONICAL_USAGE_SECTION_FACTOR: f64 = 2.2;
 
 /// Down-weight for non-canonical, non-reference RST body sections.
 /// The reliable wins are the canonical example/demo section and
@@ -1779,14 +1752,12 @@ struct SectionRange {
     kind: SectionKind,
     parent_index: usize,
     synthetic_intro_present: bool,
-    /// Parent H2 title matches a canonical-usage marker (see
-    /// [`is_canonical_usage_h2_title`]). README-only.
-    parent_is_canonical_usage_h2: bool,
-    /// This range's own (or parent H2's, for `Whole`/`Intro`) title
-    /// matches the broader reference/usage vocabulary (see
-    /// [`is_reference_usage_title`]) and the section has non-trivial
-    /// body bytes. README-only; earns the modest
-    /// [`REFERENCE_USAGE_SECTION_FACTOR`].
+    /// README-only: this range's own (or parent H2's, for
+    /// `Whole`/`Intro`) section is a code-dominant canonical usage demo
+    /// ([`is_canonical_usage_h2`]), or is titled in the reference/usage
+    /// vocabulary ([`is_reference_usage_title`]) with a compact,
+    /// structured body. Earns [`REFERENCE_USAGE_SECTION_FACTOR`] and
+    /// the default concavity.
     is_reference_usage_section: bool,
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
@@ -1904,7 +1875,6 @@ fn logical_sections(
                         kind: SectionKind::Whole,
                         parent_index: parent_idx,
                         synthetic_intro_present,
-                        parent_is_canonical_usage_h2: false,
                         is_reference_usage_section: false,
                         chained_to_previous: false,
                     },
@@ -1914,17 +1884,18 @@ fn logical_sections(
             TopLevelEntry::H2Section { node, start, end } => {
                 let bytes = node.end_byte() - node.start_byte();
                 let structural_split_gate = outline_emits && bytes >= H2_SPLIT_BYTES;
-                let usage_h2 = readme && is_canonical_usage_h2(*node, source);
-                // README H2 whose title is in the reference/usage
-                // vocabulary, regardless of code fraction. Gates: a
-                // non-trivial but compact body (so stub H2s and large
-                // prose/demo blobs are excluded) AND structural
-                // reference content (list / table / code), so a
-                // prose-only intro under a reference title is skipped.
+                // README H2 that is either a code-dominant canonical
+                // usage demo, or titled in the reference/usage
+                // vocabulary with a non-trivial but compact body (so
+                // stub H2s and large prose/demo blobs are excluded) AND
+                // structural reference content (list / table / code),
+                // so a prose-only intro under a reference title is
+                // skipped.
                 let reference_h2 = readme
-                    && is_reference_usage_title(*node, source)
-                    && reference_usage_body_ok(*node)
-                    && reference_usage_has_structure(*node, source);
+                    && (is_canonical_usage_h2(*node, source)
+                        || (is_reference_usage_title(*node, source)
+                            && reference_usage_body_ok(*node)
+                            && reference_usage_has_structure(*node, source)));
 
                 let h3s = if structural_split_gate {
                     direct_h3_children(*node)
@@ -1959,7 +1930,6 @@ fn logical_sections(
                             kind: SectionKind::Whole,
                             parent_index: parent_idx,
                             synthetic_intro_present,
-                            parent_is_canonical_usage_h2: usage_h2,
                             is_reference_usage_section: reference_h2,
                             chained_to_previous: false,
                         },
@@ -2250,7 +2220,6 @@ fn push_whole_or_head_split(
                 kind: SectionKind::OversizeTail,
                 parent_index: head.parent_index,
                 synthetic_intro_present: head.synthetic_intro_present,
-                parent_is_canonical_usage_h2: head.parent_is_canonical_usage_h2,
                 is_reference_usage_section: head.is_reference_usage_section,
                 chained_to_previous: true,
             });
@@ -2290,7 +2259,6 @@ fn push_intro<'a>(
         kind: SectionKind::Intro,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h2,
         chained_to_previous: false,
     });
@@ -2346,7 +2314,6 @@ fn push_h3_child(
         kind: SectionKind::H3Child,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h3,
         chained_to_previous: false,
     });
@@ -2367,7 +2334,6 @@ fn push_body_block_ranges(
         kind: SectionKind::BodyBlock,
         parent_index: parent_idx,
         synthetic_intro_present,
-        parent_is_canonical_usage_h2: false,
         is_reference_usage_section: false,
         chained_to_previous: false,
     }));

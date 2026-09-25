@@ -36,46 +36,46 @@ Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 1309 | 17 | listing of 'test/classes' |  |  | 0.831 |
 | walker |  | 1444 | 135 | package entrypoints in package.json |  |  | 0.951 |
 | ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.900 |
-| walker |  | 1588 | 144 | package scripts in package.json |  |  | 0.901 |
-| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.832 |
-| walker |  | 1873 | 285 | README.md section #2 |  |  | 0.835 |
+| walker |  | 1729 | 285 | README.md section #2 |  |  | 0.903 |
+| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.834 |
+| walker |  | 1873 | 144 | package scripts in package.json |  |  | 0.835 |
+| walker |  | 1900 | 27 | listing of 'test/internal' |  |  | 0.835 |
+| walker |  | 1903 | 3 | listing of 'tap-snapshots/test' |  |  | 0.835 |
+| walker |  | 1924 | 21 | README.md section #22 |  |  | 0.835 |
+| walker |  | 1945 | 21 | README.md section #23 |  |  | 0.835 |
 | ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.785 |
+| walker |  | 1966 | 21 | README.md section #24 |  |  | 0.785 |
+| walker |  | 1987 | 21 | README.md section #25 |  |  | 0.785 |
+| walker |  | 2009 | 22 | README.md section #36 |  |  | 0.785 |
+| walker |  | 2031 | 22 | README.md section #53 |  |  | 0.785 |
+| walker |  | 2056 | 25 | README.md section #14 |  |  | 0.785 |
+| walker |  | 2161 | 105 | listing of 'test/functions' |  |  | 0.785 |
+| walker |  | 2185 | 24 | README.md section #44 |  |  | 0.785 |
+| walker |  | 2209 | 24 | README.md section #49 |  |  | 0.785 |
 | ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.732 |
+| walker |  | 2265 | 56 | listing of 'test/ranges' |  |  | 0.732 |
+| walker |  | 2294 | 29 | README.md section #15 |  |  | 0.732 |
 | ns | 2537 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.686 |
 | ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.676 |
-| walker |  | 2740 | 867 | README.md section #3 |  |  | 0.676 |
-| walker |  | 2767 | 27 | listing of 'test/internal' |  |  | 0.676 |
-| walker |  | 2770 | 3 | listing of 'tap-snapshots/test' |  |  | 0.676 |
-| walker |  | 2791 | 21 | README.md section #22 |  |  | 0.676 |
-| walker |  | 2812 | 21 | README.md section #23 |  |  | 0.676 |
-| walker |  | 2833 | 21 | README.md section #24 |  |  | 0.676 |
-| walker |  | 2854 | 21 | README.md section #25 |  |  | 0.676 |
 | ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.686 |
-| walker |  | 2876 | 22 | README.md section #36 |  |  | 0.686 |
-| walker |  | 2898 | 22 | README.md section #53 |  |  | 0.686 |
-| walker |  | 2923 | 25 | README.md section #14 |  |  | 0.686 |
-| walker |  | 3028 | 105 | listing of 'test/functions' |  |  | 0.686 |
-| walker |  | 3052 | 24 | README.md section #44 |  |  | 0.686 |
 | ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.670 |
-| walker |  | 3076 | 24 | README.md section #49 |  |  | 0.670 |
-| walker |  | 3132 | 56 | listing of 'test/ranges' |  |  | 0.670 |
-| walker |  | 3161 | 29 | README.md section #15 |  |  | 0.670 |
+| walker |  | 3161 | 867 | README.md section #3 |  |  | 0.670 |
 | ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.661 |
 | walker |  | 3184 | 23 | README.md section #35 |  |  | 0.661 |
 | walker |  | 3188 | 4 | listing of '.github/matchers' |  |  | 0.661 |
 | walker |  | 3192 | 4 | listing of 'test/integration' |  |  | 0.661 |
-| walker |  | 3221 | 29 | README.md section #27 |  |  | 0.661 |
-| walker |  | 3250 | 29 | README.md section #37 |  |  | 0.661 |
 | ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.648 |
-| walker |  | 3356 | 106 | README.md section #5 |  |  | 0.663 |
-| walker |  | 3386 | 30 | README.md section #40 |  |  | 0.663 |
-| ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.655 |
-| walker |  | 3470 | 84 | listing of 'test/fixtures' |  |  | 0.657 |
-| walker |  | 3503 | 33 | README.md section #32 |  |  | 0.657 |
-| walker |  | 3508 | 5 | listing of 'test/bin' |  |  | 0.657 |
-| ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.645 |
-| ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.632 |
-| walker |  | 4071 | 563 | README.md section #4 |  |  | 0.632 |
+| ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.640 |
+| ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.629 |
+| walker |  | 3755 | 563 | README.md section #4 |  |  | 0.629 |
+| walker |  | 3784 | 29 | README.md section #27 |  |  | 0.629 |
+| walker |  | 3813 | 29 | README.md section #37 |  |  | 0.629 |
+| ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.616 |
+| walker |  | 3919 | 106 | README.md section #5 |  |  | 0.630 |
+| walker |  | 3949 | 30 | README.md section #40 |  |  | 0.630 |
+| walker |  | 4033 | 84 | listing of 'test/fixtures' |  |  | 0.632 |
+| walker |  | 4066 | 33 | README.md section #32 |  |  | 0.632 |
+| walker |  | 4071 | 5 | listing of 'test/bin' |  |  | 0.632 |
 | walker |  | 4108 | 37 | README.md section #41 |  |  | 0.632 |
 | walker |  | 4144 | 36 | README.md section #42 |  |  | 0.632 |
 | ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.617 |

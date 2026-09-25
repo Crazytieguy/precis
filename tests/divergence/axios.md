@@ -1,4 +1,4 @@
-Score(3000)=0.563 I=0.805 C=0.394 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.933/0.777/0.669/0.563/0.473/0.399/0.349
+Score(3000)=0.563 I=0.805 C=0.394 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.933/0.777/0.669/0.563/0.473/0.399/0.348
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -233,22 +233,21 @@ Score(3000)=0.563 I=0.805 C=0.394 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 8700 | 30 | ts decl index.d.ts:46 |  |  | 0.342 |
 | walker |  | 8741 | 41 | ts decl index.d.ts:28 |  |  | 0.342 |
 | ns | 8842 |  | 242 | Helper signatures: URL, params and form-data | 6.2 |  | 0.348 |
-| walker |  | 8846 | 105 | listing of 'tests/unit' |  |  | 0.349 |
-| walker |  | 8879 | 33 | listing of 'tests/unit/adapters' |  |  | 0.349 |
-| walker |  | 8915 | 36 | listing of 'tests/unit/core' |  |  | 0.349 |
-| walker |  | 8919 | 4 | listing of 'docs/data' |  |  | 0.349 |
-| walker |  | 8923 | 4 | listing of 'examples/all' |  |  | 0.349 |
-| walker |  | 8927 | 4 | listing of 'examples/amd' |  |  | 0.349 |
-| walker |  | 8931 | 4 | listing of 'examples/transform-response' |  |  | 0.349 |
-| walker |  | 8990 | 59 | listing of 'tests/unit/utils' |  |  | 0.349 |
-| walker |  | 9022 | 32 | ts names lib/helpers/buildURL.js |  |  | 0.353 |
-| walker |  | 9245 | 223 | ts decl index.d.ts:366 |  |  | 0.368 |
-| ns | 9254 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.368 |
-| walker |  | 9382 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.368 |
-| walker |  | 9519 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.368 |
+| walker |  | 9044 | 303 | lib/adapters/README.md section #1 |  |  | 0.348 |
+| walker |  | 9149 | 105 | listing of 'tests/unit' |  |  | 0.349 |
+| walker |  | 9182 | 33 | listing of 'tests/unit/adapters' |  |  | 0.349 |
+| walker |  | 9218 | 36 | listing of 'tests/unit/core' |  |  | 0.349 |
+| walker |  | 9222 | 4 | listing of 'docs/data' |  |  | 0.349 |
+| walker |  | 9226 | 4 | listing of 'examples/all' |  |  | 0.349 |
+| walker |  | 9230 | 4 | listing of 'examples/amd' |  |  | 0.349 |
+| walker |  | 9234 | 4 | listing of 'examples/transform-response' |  |  | 0.349 |
+| ns | 9254 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.349 |
+| walker |  | 9293 | 59 | listing of 'tests/unit/utils' |  |  | 0.349 |
+| walker |  | 9325 | 32 | ts names lib/helpers/buildURL.js |  |  | 0.353 |
+| walker |  | 9548 | 223 | ts decl index.d.ts:366 |  |  | 0.368 |
 | ns | 9620 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.360 |
-| walker |  | 9656 | 137 | listing of 'docs/pages/advanced' |  |  | 0.362 |
-| walker |  | 9793 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.362 |
-| ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.394 |
-| walker |  | 9847 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.394 |
-| ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.411 |
+| walker |  | 9685 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.360 |
+| ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.359 |
+| walker |  | 9822 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.359 |
+| ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.378 |
+| walker |  | 9959 | 137 | listing of 'docs/pages/advanced' |  |  | 0.411 |

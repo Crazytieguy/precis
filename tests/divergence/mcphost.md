@@ -148,30 +148,30 @@ Score(3000)=0.659 I=0.850 C=0.511 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 6330 | 103 | go decl internal/agent/agent.go:67 |  |  | 0.515 |
 | ns | 6385 |  | 150 | ModelsRegistry: model validation and suggestion API | 5.3 |  | 0.510 |
 | ns | 6477 |  | 92 | The generated model catalogue: generator types and the DO-NOT-EDIT header | 5.4 |  | 0.509 |
-| walker |  | 6569 | 239 | go names internal/ui/messages.go |  |  | 0.509 |
-| walker |  | 6578 | 9 | go decl internal/ui/messages.go:17 |  |  | 0.509 |
-| walker |  | 6597 | 19 | go decl internal/ui/messages.go:47 |  |  | 0.509 |
-| walker |  | 6606 | 9 | go body internal/ui/messages.go:79 |  |  | 0.509 |
+| walker |  | 6588 | 258 | sdk/README.md section #2 |  |  | 0.509 |
 | ns | 6653 |  | 176 | Builtin server registry: the complete set of in-process servers | 6.1 |  | 0.500 |
-| walker |  | 6671 | 65 | go decl internal/ui/messages.go:29 |  |  | 0.500 |
 | ns | 6825 |  | 172 | Every top-level symbol of internal/builtin/registry.go (locations) | 6.2 | 6.1 | 0.494 |
-| walker |  | 6896 | 225 | go names internal/ui/compact_renderer.go |  |  | 0.494 |
-| walker |  | 6915 | 19 | go decl internal/ui/compact_renderer.go:14 |  |  | 0.494 |
-| walker |  | 6924 | 9 | go body internal/ui/compact_renderer.go:31 |  |  | 0.494 |
+| walker |  | 6827 | 239 | go names internal/ui/messages.go |  |  | 0.494 |
+| walker |  | 6836 | 9 | go decl internal/ui/messages.go:17 |  |  | 0.494 |
+| walker |  | 6855 | 19 | go decl internal/ui/messages.go:47 |  |  | 0.494 |
+| walker |  | 6864 | 9 | go body internal/ui/messages.go:79 |  |  | 0.494 |
+| walker |  | 6929 | 65 | go decl internal/ui/messages.go:29 |  |  | 0.494 |
 | ns | 7042 |  | 217 | Bash builtin: output/timeout limits and the complete banned-command list | 6.3 |  | 0.482 |
-| walker |  | 7055 | 131 | go decl internal/models/generate_models.go:37 |  |  | 0.482 |
-| walker |  | 7193 | 138 | go names internal/ui/styles.go |  |  | 0.482 |
-| walker |  | 7204 | 11 | go body internal/ui/styles.go:21 |  |  | 0.482 |
+| walker |  | 7154 | 225 | go names internal/ui/compact_renderer.go |  |  | 0.482 |
+| walker |  | 7173 | 19 | go decl internal/ui/compact_renderer.go:14 |  |  | 0.482 |
+| walker |  | 7182 | 9 | go body internal/ui/compact_renderer.go:31 |  |  | 0.482 |
 | ns | 7240 |  | 198 | The http builtin: its four tools and every symbol in http.go (locations) | 6.4 |  | 0.475 |
+| walker |  | 7313 | 131 | go decl internal/models/generate_models.go:37 |  |  | 0.475 |
 | ns | 7352 |  | 112 | HookEvent: the complete set of hook events | 7.1 |  | 0.482 |
-| walker |  | 7423 | 219 | go names internal/models/providers.go |  |  | 0.486 |
-| walker |  | 7491 | 68 | go decl internal/models/providers.go:28 |  |  | 0.486 |
-| ns | 7567 |  | 215 | Hook configuration schema: HookConfig, HookMatcher, HookEntry | 7.2 |  | 0.499 |
-| walker |  | 7587 | 96 | go decl internal/models/providers.go:124 |  |  | 0.499 |
-| walker |  | 7729 | 142 | go names internal/builtin/bash.go |  |  | 0.501 |
-| walker |  | 7738 | 9 | go decl internal/builtin/bash.go:14 |  |  | 0.502 |
-| ns | 7839 |  | 272 | Hook wire protocol: CommonInput and HookOutput | 7.3 |  | 0.499 |
-| walker |  | 7996 | 258 | sdk/README.md section #2 |  |  | 0.499 |
+| walker |  | 7451 | 138 | go names internal/ui/styles.go |  |  | 0.482 |
+| walker |  | 7462 | 11 | go body internal/ui/styles.go:21 |  |  | 0.482 |
+| ns | 7567 |  | 215 | Hook configuration schema: HookConfig, HookMatcher, HookEntry | 7.2 |  | 0.496 |
+| walker |  | 7681 | 219 | go names internal/models/providers.go |  |  | 0.499 |
+| walker |  | 7749 | 68 | go decl internal/models/providers.go:28 |  |  | 0.499 |
+| ns | 7839 |  | 272 | Hook wire protocol: CommonInput and HookOutput | 7.3 |  | 0.495 |
+| walker |  | 7845 | 96 | go decl internal/models/providers.go:124 |  |  | 0.495 |
+| walker |  | 7987 | 142 | go names internal/builtin/bash.go |  |  | 0.498 |
+| walker |  | 7996 | 9 | go decl internal/builtin/bash.go:14 |  |  | 0.499 |
 | ns | 8030 |  | 191 | Per-event hook input structs | 7.4 |  | 0.508 |
 | walker |  | 8313 | 317 | go names cmd/root.go |  |  | 0.508 |
 | walker |  | 8326 | 13 | go decl cmd/root.go:67 |  |  | 0.508 |

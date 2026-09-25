@@ -45,13 +45,13 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 1579 | 24 | listing of 'benchmarks/micro' |  |  | 0.483 |
 | walker |  | 1583 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.483 |
 | walker |  | 1600 | 17 | python body bindings/python/extra_init.py:6 |  |  | 0.483 |
-| walker |  | 1619 | 19 | python body bindings/python/extra_init.py:11 |  |  | 0.483 |
 | ns | 1629 |  | 195 | vec0 hard limits and column-index constants | 2.3 |  | 0.452 |
-| walker |  | 1641 | 22 | python doc bindings/python/extra_init.py:6 |  |  | 0.452 |
-| walker |  | 1663 | 22 | python doc bindings/python/extra_init.py:11 |  |  | 0.452 |
 | ns | 1829 |  | 200 | Shadow table name macros (complete set) | 2.4 |  | 0.437 |
-| ns | 2141 |  | 312 | Shadow table CREATE TABLE DDL | 2.5 | 2.4 | 0.397 |
-| walker |  | 2186 | 523 | README.md section #4 |  |  | 0.532 |
+| walker |  | 2123 | 523 | README.md section #4 |  |  | 0.584 |
+| ns | 2141 |  | 312 | Shadow table CREATE TABLE DDL | 2.5 | 2.4 | 0.532 |
+| walker |  | 2142 | 19 | python body bindings/python/extra_init.py:11 |  |  | 0.532 |
+| walker |  | 2164 | 22 | python doc bindings/python/extra_init.py:6 |  |  | 0.532 |
+| walker |  | 2186 | 22 | python doc bindings/python/extra_init.py:11 |  |  | 0.532 |
 | walker |  | 2200 | 14 | rust names benchmarks/micro/src/lib.rs |  |  | 0.532 |
 | ns | 2239 |  | 98 | vec0 query plan enum | 2.6 |  | 0.517 |
 | walker |  | 2321 | 121 | ARCHITECTURE.md section #0 |  |  | 0.521 |
