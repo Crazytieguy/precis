@@ -154,10 +154,8 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
 }
 
 /// Signal mix for every directory listing — classification moves a
-/// listing's depth prior, not its tier. Shared with the markdown walker,
-/// where a whole-file table of contents prices as the listing it
-/// duplicates rather than as an orientation doc.
-pub(super) const LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
+/// listing's depth prior, not its tier.
+const LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);

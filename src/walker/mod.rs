@@ -11,7 +11,7 @@
 //! [`WalkCtx`] and shared across all batches that touch the same file.
 
 use std::cell::{OnceCell, RefCell};
-use std::collections::{BTreeSet, HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap};
 use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
@@ -123,8 +123,6 @@ pub struct WalkCtx {
     json_state: json::JsonState,
     /// Run state of the code engine's language modules.
     code: code::CodeState,
-    /// Source files hyperlinked from the root README.
-    readme_cited_paths: OnceCell<HashSet<PathBuf>>,
     /// The tree's essential source, walked once.
     essential_source: OnceCell<EssentialSource>,
     /// The one source file that carries a dominant share of the tree's
@@ -147,7 +145,6 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             code: code::CodeState::default(),
-            readme_cited_paths: OnceCell::new(),
             essential_source: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
         }
@@ -171,18 +168,6 @@ impl WalkCtx {
         &self.source_cache
     }
 
-    /// Rendered token cost of `content` against an otherwise-empty
-    /// tree — the walkers' shared cost probe for split/chunk sizing.
-    pub(crate) fn marginal_tokens(&self, content: &crate::content::BatchContent) -> usize {
-        crate::render::RenderedTree::with_filter(
-            self.root.clone(),
-            self.source_cache.clone(),
-            self.dir_filter_handle(),
-        )
-        .marginal_cost(content)
-        .tokens
-    }
-
     /// Depth of `path` relative to the seed root (root itself = 0).
     /// **Fails open**: a path outside the root also reads as depth 0 —
     /// the same as the root itself — which un-damps every depth-priced
@@ -198,25 +183,6 @@ impl WalkCtx {
     /// Non-essential discount, scoped to this run's root.
     pub fn non_essential_factor(&self, path: &Path) -> f64 {
         crate::value::non_essential_factor(path, &self.root)
-    }
-
-    /// True iff `path` is README-cited, or a directory containing a
-    /// README-cited file.
-    pub fn is_readme_cited(&self, path: &Path) -> bool {
-        let cited = self
-            .readme_cited_paths
-            .get_or_init(|| collect_readme_cited_paths(&self.root));
-        if cited.is_empty() {
-            return false;
-        }
-        let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
-        if cited.contains(&canonical) {
-            return true;
-        }
-        // Directory case: any cited file lives under this directory.
-        cited
-            .iter()
-            .any(|cited_path| cited_path.starts_with(&canonical))
     }
 
     /// The single source file the repository is *about*, when one
@@ -418,123 +384,6 @@ fn language_group(path: &Path) -> Option<&'static str> {
     })
 }
 
-/// Scan the seed root's README for relative-path hyperlinks to source
-/// files. Returns canonicalized paths.
-fn collect_readme_cited_paths(root: &Path) -> HashSet<PathBuf> {
-    let Ok(entries) = std::fs::read_dir(root) else {
-        return HashSet::new();
-    };
-    let mut out = HashSet::new();
-    for entry in entries.flatten() {
-        let path = entry.path();
-        let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
-            continue;
-        };
-        let lower = name.to_ascii_lowercase();
-        let is_readme = matches!(lower.as_str(), "readme.md" | "readme.rst" | "readme.txt");
-        if !is_readme {
-            continue;
-        }
-        let Ok(text) = std::fs::read_to_string(&path) else {
-            continue;
-        };
-        for cited in extract_inline_link_targets(&text) {
-            // Only resolve relative references; skip URLs, anchors,
-            // and absolute paths.
-            if cited.starts_with("http")
-                || cited.starts_with("#")
-                || cited.starts_with('/')
-                || cited.starts_with("mailto:")
-            {
-                continue;
-            }
-            // Strip any anchor or query suffix.
-            let path_part = cited.split(['#', '?']).next().unwrap_or("");
-            if path_part.is_empty() {
-                continue;
-            }
-            // Only count source-file extensions to avoid matching
-            // image links / generic documentation links.
-            let lower = path_part.to_ascii_lowercase();
-            let is_source = [
-                ".js", ".mjs", ".cjs", ".ts", ".tsx", ".py", ".rs", ".go", ".c", ".h", ".cc",
-                ".cpp", ".hpp",
-            ]
-            .iter()
-            .any(|ext| lower.ends_with(ext));
-            if !is_source {
-                continue;
-            }
-            let trimmed = path_part.trim_start_matches("./");
-            let resolved = root.join(trimmed);
-            if let Ok(canonical) = resolved.canonicalize() {
-                out.insert(canonical);
-            }
-        }
-    }
-    out
-}
-
-/// Extract `(target)` from `[label](target)` patterns in markdown.
-/// Skips reference-style and image (`![alt](src)`) links.
-fn extract_inline_link_targets(text: &str) -> Vec<String> {
-    let bytes = text.as_bytes();
-    let mut out = Vec::new();
-    let mut i = 0;
-    while i < bytes.len() {
-        let c = bytes[i];
-        if c == b'!' {
-            // Skip image-link prefix; the image's `(target)` is rarely a
-            // source file.
-            i += 1;
-            continue;
-        }
-        if c != b'[' {
-            i += 1;
-            continue;
-        }
-        // Find the matching `]` then check for immediately-following `(`.
-        let mut depth = 1;
-        let mut j = i + 1;
-        while j < bytes.len() && depth > 0 {
-            match bytes[j] {
-                b'[' => depth += 1,
-                b']' => depth -= 1,
-                b'\\' => j += 1,
-                _ => {}
-            }
-            j += 1;
-        }
-        if depth != 0 || j >= bytes.len() || bytes[j] != b'(' {
-            i = j;
-            continue;
-        }
-        let target_start = j + 1;
-        let mut k = target_start;
-        let mut paren_depth = 1;
-        while k < bytes.len() && paren_depth > 0 {
-            match bytes[k] {
-                b'(' => paren_depth += 1,
-                b')' => paren_depth -= 1,
-                b'\\' => k += 1,
-                _ => {}
-            }
-            k += 1;
-        }
-        if paren_depth == 0 {
-            let target = &text[target_start..k - 1];
-            // Strip optional `"title"` suffix — `[label](url "title")`.
-            let target = target
-                .split_once(char::is_whitespace)
-                .map(|(t, _)| t)
-                .unwrap_or(target);
-            out.push(target.trim().to_string());
-        }
-        i = k;
-    }
-    out
-}
-
 /// Lines a collector wants to render for one file: `full` = emit
 /// verbatim; `ellipses` = emit a walker `…` marker (overrideable by
 /// descendant batches).
@@ -707,20 +556,6 @@ pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
 pub(crate) fn name_of<'a>(node: Node, source: &'a str) -> Option<&'a str> {
     let name = node.child_by_field_name("name")?;
     Some(&source[name.start_byte()..name.end_byte()])
-}
-
-/// Append non-blank rows from the inclusive 0-based range as 1-based lines.
-pub(crate) fn extend_nonblank_rows(
-    out: &mut Vec<usize>,
-    src_lines: &[&str],
-    start_row: usize,
-    end_row: usize,
-) {
-    for row in start_row..=end_row {
-        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(row + 1);
-        }
-    }
 }
 
 /// Consecutive doc-comment siblings touching `node`. End-of-line
