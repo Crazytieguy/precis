@@ -374,10 +374,14 @@ fn is_dependency_section(name: &str) -> bool {
         || is_dependency_group_section(name)
 }
 
-/// PEP 735 `[dependency-groups]` — named test / lint / docs rosters, the
-/// Python analogue of Cargo's `[dev-dependencies]`.
+/// Named test / lint / docs rosters, the Python analogue of Cargo's
+/// `[dev-dependencies]`: PEP 735 `[dependency-groups]` and Poetry's
+/// `[tool.poetry.group.*]` / `[tool.poetry.dev-dependencies]`.
 fn is_dependency_group_section(name: &str) -> bool {
-    name == "dependency-groups" || name.starts_with("dependency-groups.")
+    name == "dependency-groups"
+        || name.starts_with("dependency-groups.")
+        || name.starts_with("tool.poetry.group.")
+        || name == "tool.poetry.dev-dependencies"
 }
 
 fn is_ordinary_dependency_section(name: &str) -> bool {
