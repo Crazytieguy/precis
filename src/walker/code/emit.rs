@@ -83,7 +83,6 @@ impl Emitter<'_> {
                 .iter()
                 .map(|decl| Item::new(decl.name_rows.clone())),
         );
-        roster.sort_by_key(|item| item.rows.first().copied());
         let entries: usize = model
             .reexports
             .iter()
