@@ -87,11 +87,9 @@ pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 /// whose value is otherwise size-invariant while cost grows linearly
 /// with N, so `value/cost^k` systematically prefers tiny rosters over
 /// the complete catalogs NS authors anchor on. Scaling value by
-/// `(N / baseline)^k` pushes back against that. `k` is always
-/// [`DEFAULT_CONCAVITY_EXPONENT`], including for batches the scheduler
-/// prices at [`CATALOG_ROSTER_CONCAVITY_EXPONENT`], so the correction
-/// is approximate rather than exactly size-neutral for those. Boost-only (≥ 1) and capped: small
-/// rosters keep their existing rank rather than being demoted.
+/// `(N / baseline)^k`, `k` = [`DEFAULT_CONCAVITY_EXPONENT`], pushes back
+/// against that. Boost-only (≥ 1) and capped: small rosters keep their
+/// existing rank rather than being demoted.
 pub fn roster_mass_factor(entries: usize) -> f64 {
     (entries as f64 / ROSTER_MASS_BASELINE)
         .powf(DEFAULT_CONCAVITY_EXPONENT)
@@ -103,31 +101,6 @@ pub fn roster_mass_factor(entries: usize) -> f64 {
 const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
 /// Falloff per later chunk — 0.25 puts chunk 4 at ~half chunk 1.
 const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
-
-/// Per-chunk multiplier for a chunked names-surface batch, used by the
-/// C walker behind its own size gate. Surfaces that still
-/// split allocate a conserved total instead, via
-/// [`conserved_catalog_chunk_factors`].
-pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
-    if chunk_count <= 1 {
-        1.0
-    } else {
-        CHUNKED_NAMES_FIRST_CHUNK_FACTOR / (1.0 + chunk_index as f64 * CHUNKED_NAMES_FALLOFF)
-    }
-}
-
-/// Concavity exponent shared by the catalog-roster batch keys and the head-parity allocation in
-/// [`conserved_catalog_chunk_factors`] — the allocation is only
-/// ratio-neutral if it uses the exponent the scheduler ranks with.
-///
-/// Deliberately above [`DEFAULT_CONCAVITY_EXPONENT`]: rosters are the
-/// batch class whose value is most nearly size-invariant, so they
-/// tolerate more cost discounting than ordinary content before the
-/// scheduler starts overpaying for them. Set by a full-corpus sweep on
-/// 2026-07-28 against the v2 answer key (zero point 0.6074), worth
-/// +0.0027 at Score(3000). Measured point grid is recorded in
-/// `git show a90ee9b6:docs/design-notes.md` ("Post-refreeze re-sweep curves").
-pub const CATALOG_ROSTER_CONCAVITY_EXPONENT: f64 = 0.38;
 
 /// Head premium over ratio parity (`share_0^k`) inside the conserved
 /// total. Pure parity prices the head like the unsplit catalog — which
@@ -189,16 +162,6 @@ pub fn conserved_catalog_chunk_factors(chunk_costs: &[usize], cost_exponent: f64
         );
     }
     factors
-}
-
-/// Per-chunk multiplier for re-export-wall chunks. First chunk keeps
-/// full value; later groups fall off similar to names-surface chunks.
-pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
-    if chunk_count <= 1 {
-        1.0
-    } else {
-        1.0 / (1.0 + chunk_index as f64 * 0.2)
-    }
 }
 
 /// Base value of each code-engine rung (`walker::code`), before the file
@@ -720,8 +683,7 @@ mod tests {
             vec![250, 40, 300, 90, 120],
             vec![100; 8],
         ] {
-            let factors =
-                conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
+            let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
             assert_eq!(factors.len(), costs.len());
             let total: f64 = factors.iter().sum();
             assert!(
@@ -734,7 +696,7 @@ mod tests {
 
     #[test]
     fn conserved_catalog_chunk_factors_head_premium_is_bounded() {
-        let k = CATALOG_ROSTER_CONCAVITY_EXPONENT;
+        let k = DEFAULT_CONCAVITY_EXPONENT;
         let head_share: f64 = 1.0 / 3.0;
         let factors = conserved_catalog_chunk_factors(&[100, 100, 100], k);
         // Head = share^k (ratio parity with the unsplit catalog) times
@@ -749,7 +711,7 @@ mod tests {
 
     #[test]
     fn conserved_catalog_chunk_factors_degenerate_cases() {
-        let k = CATALOG_ROSTER_CONCAVITY_EXPONENT;
+        let k = DEFAULT_CONCAVITY_EXPONENT;
         assert_eq!(conserved_catalog_chunk_factors(&[], k), Vec::<f64>::new());
         assert_eq!(conserved_catalog_chunk_factors(&[500], k), vec![1.0]);
         assert_eq!(conserved_catalog_chunk_factors(&[0, 0], k), vec![0.5, 0.5]);

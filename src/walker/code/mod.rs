@@ -4,9 +4,6 @@
 //! Each `code/<lang>.rs` exports exactly this interface, and nothing else
 //! reaches into it:
 //!
-//! - `PORTED: bool`: whether [`expand_in_dir`] handles the language. False
-//!   until the language's port commit, which flips it and deletes the old
-//!   `walker/<lang>.rs` in the same commit.
 //! - `EXTENSIONS: &[&str]`: file extensions (matched case-insensitively)
 //!   the language claims. No two languages share one.
 //! - `grammar(path) -> tree_sitter::Language`: the grammar that parses
@@ -18,8 +15,8 @@
 //! - `file_weight(path, ctx) -> f64`: a language-specific file-role
 //!   multiplier on every batch of the file; 1.0 unless a measured rule
 //!   says otherwise.
-//! - `RunState`: per-run caches the language needs, reachable as
-//!   `ctx.code.<lang>`; empty unless needed.
+//! - `RunState` (only if needed): per-run caches the language needs,
+//!   reachable as `ctx.code.<lang>`.
 //!
 //! The engine (`emit`, `chunk`, `ledger`) owns keys, predecessors,
 //! chunking, row ownership and value; a language module never builds a
@@ -92,17 +89,6 @@ impl Language {
         }
     }
 
-    fn is_ported(self) -> bool {
-        match self {
-            Language::Rust => rust::PORTED,
-            Language::TypeScript => typescript::PORTED,
-            Language::Python => python::PORTED,
-            Language::Go => go::PORTED,
-            Language::C => c::PORTED,
-            Language::Lua => lua::PORTED,
-        }
-    }
-
     fn extensions(self) -> &'static [&'static str] {
         match self {
             Language::Rust => rust::EXTENSIONS,
@@ -159,19 +145,10 @@ impl Language {
     }
 }
 
-/// Per-run state of the language modules, one field per language.
+/// Per-run state of the language modules that keep any.
 #[derive(Default)]
-#[allow(
-    dead_code,
-    reason = "a language reads its field once its port needs run state"
-)]
 pub(crate) struct CodeState {
-    rust: rust::RunState,
     typescript: typescript::RunState,
-    python: python::RunState,
-    go: go::RunState,
-    c: c::RunState,
-    lua: lua::RunState,
 }
 
 /// One parsed source file, built once and shared by extraction and
@@ -270,17 +247,13 @@ impl SourceFile {
     }
 }
 
-/// Batches for every file in `dir` whose language is ported. Called by
-/// `FsWalker` once per scheduled directory listing.
+/// Batches for every source file in `dir`. Called by `FsWalker` once per
+/// scheduled directory listing.
 pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let extensions: Vec<&str> = Language::ALL
         .into_iter()
-        .filter(|language| language.is_ported())
         .flat_map(|language| language.extensions().iter().copied())
         .collect();
-    if extensions.is_empty() {
-        return Vec::new();
-    }
     let mut out = Vec::new();
     for path in files_with_any_extension(dir, &extensions, ctx) {
         let Some(language) = Language::from_path(&path) else {

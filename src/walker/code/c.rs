@@ -25,7 +25,6 @@ use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::{WalkCtx, collect_doc_comments_above_filtered};
 
-pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["c", "h"];
 
 /// Every batch of a `.c` file, relative to a header. The ratio of the old
@@ -71,9 +70,6 @@ pub(super) fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
         IMPLEMENTATION_FILE_WEIGHT
     }
 }
-
-#[derive(Default)]
-pub(crate) struct RunState {}
 
 fn is_header(path: &Path) -> bool {
     path.extension()

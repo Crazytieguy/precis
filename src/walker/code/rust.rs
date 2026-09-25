@@ -31,7 +31,6 @@ use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::WalkCtx;
 use crate::walker::markdown::{fence_closes, fence_marker};
 
-pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["rs"];
 
 pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
@@ -154,9 +153,6 @@ pub(super) fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
         _ => 1.0,
     }
 }
-
-#[derive(Default)]
-pub(crate) struct RunState {}
 
 /// What the outer attributes and doc comments above an item say about it.
 #[derive(Default)]

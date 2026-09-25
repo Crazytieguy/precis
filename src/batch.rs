@@ -647,14 +647,6 @@ fn describe_at_body(label: &str, file: &Path, line: usize, body: usize, root: &P
     format!("{label} at {}:{line} body {body}", display_path(file, root))
 }
 
-fn describe_chunked_surface(label: &str, file: &Path, chunk_index: usize, root: &Path) -> String {
-    if chunk_index == 0 {
-        describe_in(label, file, root)
-    } else {
-        format!("{label} #{chunk_index} in {}", display_path(file, root))
-    }
-}
-
 /// A walker-emitted scheduling unit. Carries the walker's key (so other
 /// candidates can name it as predecessor), the rendered content, and the
 /// scalar value used for ranking. The scheduler stamps a [`BatchId`] when

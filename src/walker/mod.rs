@@ -27,7 +27,6 @@ use crate::render::{Source, SourceCache};
 pub(crate) mod code;
 pub mod fs;
 pub mod go_mod;
-pub(crate) mod import_chunks;
 pub mod json;
 pub mod markdown;
 pub mod plaintext;
@@ -661,14 +660,6 @@ impl FileLines {
     }
 }
 
-pub(crate) fn file_lines_covered_by(child: &FileLines, parent: &FileLines) -> bool {
-    child.full.iter().all(|line| parent.full.contains(line))
-        && child
-            .ellipses
-            .iter()
-            .all(|line| parent.ellipses.contains(line) || parent.full.contains(line))
-}
-
 /// Path-relative location prior: depth penalty × non-essential-dir
 /// discount. Use [`file_depth_factor`] to add entrypoint pinning.
 pub(crate) fn path_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -856,91 +847,6 @@ pub(crate) fn extend_nonblank_rows(
             out.push(row + 1);
         }
     }
-}
-
-#[derive(Debug, Clone)]
-pub(crate) struct BodyPart {
-    pub lines: Vec<usize>,
-}
-
-impl BodyPart {
-    pub(crate) fn start_line(&self) -> Option<usize> {
-        self.lines.first().copied()
-    }
-}
-
-/// Minimum body interior lines for per-statement splitting.
-pub(crate) const BODY_SPLIT_MIN_LINES: usize = 12;
-
-pub(crate) fn body_part_value_factor(part_count: usize) -> f64 {
-    if part_count <= 1 {
-        1.0
-    } else {
-        1.0 / part_count as f64
-    }
-}
-
-/// Body slices for a brace-delimited statement block, using top-level
-/// statements inside the block. Blank lines are filtered exactly like
-/// materialized spans.
-pub(crate) fn statement_block_parts(
-    body: Option<Node>,
-    src_lines: &[&str],
-    block_kind: &str,
-) -> Vec<BodyPart> {
-    let Some(b) = body else { return Vec::new() };
-    if b.kind() != block_kind {
-        return Vec::new();
-    }
-    let mut cursor = b.walk();
-    let named_children: Vec<_> = b.named_children(&mut cursor).collect();
-    let content_start = b.start_position().row + 1;
-    let content_end = b.end_position().row.saturating_sub(1);
-    if content_end < content_start {
-        return Vec::new();
-    }
-    let mut interior = Vec::new();
-    extend_nonblank_rows(&mut interior, src_lines, content_start, content_end);
-    let interior = dedup_sorted(interior);
-    if interior.is_empty() {
-        return Vec::new();
-    }
-    if interior.len() <= BODY_SPLIT_MIN_LINES {
-        return vec![BodyPart { lines: interior }];
-    }
-
-    let mut parts = Vec::new();
-    let mut claimed_lines = HashSet::new();
-    for child in named_children {
-        let start_row = child.start_position().row.max(content_start);
-        let end_row = child.end_position().row.min(content_end);
-        if end_row < start_row {
-            continue;
-        }
-        let mut lines = Vec::new();
-        extend_nonblank_rows(&mut lines, src_lines, start_row, end_row);
-        let lines: Vec<usize> = dedup_sorted(lines)
-            .into_iter()
-            .filter(|line| claimed_lines.insert(*line))
-            .collect();
-        if !lines.is_empty() {
-            parts.push(BodyPart { lines });
-        }
-    }
-    if parts.len() <= 1 {
-        // Nothing meaningful to split — preserve the complete block.
-        vec![BodyPart { lines: interior }]
-    } else {
-        parts
-    }
-}
-
-/// 0-based row of a declaration's signature end: the row before its body
-/// starts, or its end row if there's no body field.
-pub(crate) fn signature_end_row(node: Node) -> usize {
-    node.child_by_field_name("body")
-        .map(|b| b.start_position().row)
-        .unwrap_or_else(|| node.end_position().row)
 }
 
 /// Consecutive doc-comment siblings touching `node`. End-of-line

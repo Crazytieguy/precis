@@ -25,7 +25,6 @@ use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::WalkCtx;
 use crate::walker::fs::is_source_dir;
 
-pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
 
 const ENTRYPOINT_STEMS: &[&str] = &["index", "main", "mod", "esm"];

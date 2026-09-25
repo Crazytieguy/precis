@@ -13,7 +13,6 @@ use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::{WalkCtx, collect_doc_comments_above};
 
-pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["go"];
 
 pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
@@ -61,9 +60,6 @@ pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
 pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
     1.0
 }
-
-#[derive(Default)]
-pub(crate) struct RunState {}
 
 fn package_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
     let mut cursor = root.walk();
