@@ -145,44 +145,44 @@ Score(3000)=0.680 I=0.862 C=0.537 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 6932 | 91 | docs/API.md section #95 |  |  | 0.490 |
 | ns | 7007 |  | 132 | Section map of Neco's own implementation | 4.3 |  | 0.486 |
 | walker |  | 7192 | 260 | c names neco.c |  |  | 0.486 |
-| walker |  | 7201 | 9 | c decl neco.c:201 |  |  | 0.486 |
-| walker |  | 7259 | 58 | c decl neco.c:1155 |  |  | 0.486 |
+| walker |  | 7250 | 58 | c decl neco.c:1155 |  |  | 0.486 |
 | ns | 7292 |  | 285 | struct coroutine: identity, stack, arguments, scheduling flags | 4.4 |  | 0.475 |
-| walker |  | 7464 | 205 | c decl neco.c:1124 |  |  | 0.475 |
-| walker |  | 7474 | 10 | c body neco.c:283 |  |  | 0.475 |
-| walker |  | 7496 | 22 | c body neco.c:1199 |  |  | 0.475 |
-| walker |  | 7514 | 18 | docs/assets/API_head.md section #11 |  |  | 0.475 |
+| walker |  | 7297 | 47 | c decl neco.c:133 |  |  | 0.475 |
+| walker |  | 7502 | 205 | c decl neco.c:1124 |  |  | 0.475 |
+| walker |  | 7512 | 10 | c body neco.c:283 |  |  | 0.475 |
+| walker |  | 7534 | 22 | c body neco.c:1199 |  |  | 0.475 |
+| walker |  | 7552 | 18 | docs/assets/API_head.md section #11 |  |  | 0.475 |
 | ns | 7585 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.466 |
-| walker |  | 7609 | 95 | docs/API.md section #92 |  |  | 0.466 |
-| walker |  | 7704 | 95 | docs/API.md section #98 |  |  | 0.466 |
+| walker |  | 7647 | 95 | docs/API.md section #92 |  |  | 0.466 |
+| walker |  | 7742 | 95 | docs/API.md section #98 |  |  | 0.466 |
 | ns | 7769 |  | 184 | Where the event queue backend is chosen | 4.6 |  | 0.459 |
-| walker |  | 7802 | 98 | docs/API.md section #103 |  |  | 0.459 |
-| walker |  | 7900 | 98 | docs/API.md section #151 |  |  | 0.459 |
+| walker |  | 7840 | 98 | docs/API.md section #103 |  |  | 0.459 |
+| walker |  | 7938 | 98 | docs/API.md section #151 |  |  | 0.459 |
 | ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.454 |
-| walker |  | 7999 | 99 | docs/API.md section #41 |  |  | 0.454 |
-| walker |  | 8223 | 224 | c names neco.h #4 |  |  | 0.473 |
-| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.464 |
+| walker |  | 8037 | 99 | docs/API.md section #41 |  |  | 0.454 |
+| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.446 |
+| walker |  | 8261 | 224 | c names neco.h #4 |  |  | 0.465 |
 | ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.461 |
-| walker |  | 8350 | 127 | c doc neco.h:135 |  |  | 0.462 |
-| walker |  | 8451 | 101 | docs/API.md section #149 |  |  | 0.462 |
-| walker |  | 8550 | 99 | docs/API.md section #150 |  |  | 0.462 |
+| walker |  | 8388 | 127 | c doc neco.h:135 |  |  | 0.462 |
+| walker |  | 8489 | 101 | docs/API.md section #149 |  |  | 0.462 |
+| walker |  | 8588 | 99 | docs/API.md section #150 |  |  | 0.462 |
 | ns | 8595 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.454 |
-| walker |  | 8651 | 101 | docs/API.md section #153 |  |  | 0.454 |
-| walker |  | 8755 | 104 | docs/API.md section #147 |  |  | 0.454 |
+| walker |  | 8689 | 101 | docs/API.md section #153 |  |  | 0.454 |
 | ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.447 |
-| walker |  | 8831 | 76 | README.md section #15 |  |  | 0.457 |
-| walker |  | 8936 | 105 | docs/API.md section #152 |  |  | 0.457 |
-| walker |  | 9044 | 108 | docs/API.md section #33 |  |  | 0.457 |
-| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.446 |
-| walker |  | 9152 | 108 | docs/API.md section #40 |  |  | 0.446 |
-| walker |  | 9260 | 108 | docs/API.md section #154 |  |  | 0.446 |
-| walker |  | 9368 | 108 | docs/API.md section #158 |  |  | 0.446 |
+| walker |  | 8793 | 104 | docs/API.md section #147 |  |  | 0.447 |
+| walker |  | 8869 | 76 | README.md section #15 |  |  | 0.457 |
+| walker |  | 8974 | 105 | docs/API.md section #152 |  |  | 0.457 |
+| walker |  | 9082 | 108 | docs/API.md section #33 |  |  | 0.457 |
+| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.447 |
+| walker |  | 9190 | 108 | docs/API.md section #40 |  |  | 0.447 |
+| walker |  | 9298 | 108 | docs/API.md section #154 |  |  | 0.447 |
 | ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.439 |
+| walker |  | 9406 | 108 | docs/API.md section #158 |  |  | 0.439 |
 | ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.434 |
-| ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.432 |
-| walker |  | 9670 | 302 | README.md section #13 |  |  | 0.453 |
-| walker |  | 9783 | 113 | docs/API.md section #157 |  |  | 0.453 |
-| ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.447 |
-| walker |  | 9899 | 116 | docs/API.md section #144 |  |  | 0.447 |
+| ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.433 |
+| walker |  | 9708 | 302 | README.md section #13 |  |  | 0.453 |
+| walker |  | 9821 | 113 | docs/API.md section #157 |  |  | 0.453 |
+| ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.448 |
+| walker |  | 9937 | 116 | docs/API.md section #144 |  |  | 0.448 |
 | ns | 9939 |  | 112 | CI | 6.6 |  | 0.457 |
-| ns | 9984 |  | 45 | License | 6.7 |  | 0.457 |
+| ns | 9984 |  | 45 | License | 6.7 |  | 0.458 |

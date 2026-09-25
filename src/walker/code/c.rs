@@ -47,7 +47,7 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut directives = Vec::new();
     walk_top_level(root, source, in_header, &mut |node| {
         if node.kind().starts_with('#') {
-            directives.push((node.start_position().row + 1, node.kind() == "#endif"));
+            directives.extend(gate_directive(node, file));
         } else {
             decls.extend(decl_info(node, file, in_header, guard_name, banner_end_row));
         }
@@ -134,42 +134,73 @@ fn decl_info(
     })
 }
 
-/// Adds the `#if` / `#else` / `#endif` rows of a descended feature gate
-/// to the head of the declaration they introduce (the next one) or close
-/// (the previous one), so a gated declaration never renders without its
-/// condition. A directive with another directive between it and that
-/// declaration, as around an empty branch, stays out.
-fn attach_directives(decls: &mut [DeclInfo], directives: &[(usize, bool)]) {
-    let first_row = |decl: &DeclInfo| {
-        let doc = decl.doc.iter().flat_map(|item| item.rows.iter());
-        doc.chain(&decl.head).copied().min().unwrap_or(usize::MAX)
+/// A directive of a descended feature gate: its rows (through the end
+/// of a multiline condition) and the rows of the whole gate.
+struct GateDirective {
+    rows: RangeInclusive<usize>,
+    gate: RangeInclusive<usize>,
+}
+
+/// `token` is an `#if` / `#ifdef` / `#elif` / `#else` / `#endif` token
+/// of a feature gate.
+fn gate_directive(token: Node, file: &SourceFile) -> Option<GateDirective> {
+    let branch = token.parent()?;
+    let mut gate = branch;
+    while matches!(
+        gate.kind(),
+        "preproc_else" | "preproc_elif" | "preproc_elifdef"
+    ) {
+        gate = gate.parent()?;
+    }
+    let start_row = token.start_position().row + 1;
+    let end_row = if token.kind() == "#endif" {
+        start_row
+    } else {
+        branch
+            .child_by_field_name("condition")
+            .or_else(|| branch.child_by_field_name("name"))
+            .map_or(start_row, |condition| condition.end_position().row + 1)
     };
-    let last_row = |decl: &DeclInfo| {
-        let body = decl.body.iter().flat_map(|item| item.rows.iter());
-        body.chain(&decl.head).copied().max().unwrap_or(0)
-    };
-    for &(row, closing) in directives {
-        let target = if closing {
-            decls
-                .iter_mut()
-                .filter(|decl| last_row(decl) < row)
-                .max_by_key(|decl| last_row(decl))
-        } else {
-            decls
-                .iter_mut()
-                .filter(|decl| first_row(decl) > row)
-                .min_by_key(|decl| first_row(decl))
+    Some(GateDirective {
+        rows: start_row..=end_row,
+        gate: file.node_rows(gate),
+    })
+}
+
+/// Adds each feature gate directive to the head of the nearest
+/// declaration inside its gate: the next one, or, for an `#endif` or a
+/// directive opening an empty trailing branch, the previous one. An
+/// enclosing gate's directives land on the same declarations as the
+/// nested gate's, so a gated declaration never renders without any of
+/// its conditions.
+fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
+    let spans: Vec<(usize, usize)> = decls
+        .iter()
+        .map(|decl| {
+            let doc = decl.doc.iter().flat_map(|item| item.rows.iter());
+            let body = decl.body.iter().flat_map(|item| item.rows.iter());
+            let rows = doc.chain(&decl.head).chain(body).copied();
+            (rows.clone().min().unwrap_or(0), rows.max().unwrap_or(0))
+        })
+        .collect();
+    for directive in directives {
+        let row = *directive.rows.start();
+        let in_gate = || {
+            spans
+                .iter()
+                .enumerate()
+                .filter(|(_, (first, _))| directive.gate.contains(first))
         };
-        let Some(decl) = target else {
-            continue;
-        };
-        let between = if closing {
-            last_row(decl)..row
-        } else {
-            row + 1..first_row(decl)
-        };
-        if directives.iter().all(|(other, _)| !between.contains(other)) {
-            decl.head.push(row);
+        let target = in_gate()
+            .filter(|(_, (first, _))| *first > row)
+            .min_by_key(|(_, (first, _))| *first)
+            .or_else(|| {
+                in_gate()
+                    .filter(|(_, (_, last))| *last < row)
+                    .max_by_key(|(_, (_, last))| *last)
+            });
+        if let Some((index, _)) = target {
+            decls[index].head.extend(directive.rows.clone());
         }
     }
 }
@@ -695,6 +726,12 @@ static inline int wraps_code(void) { return 1; }
 int only_branch;
 #else
 #endif
+#ifdef PLATFORM
+#if defined(FEATURE) && \\
+    defined(OTHER)
+int api(void);
+#endif
+#endif
 int after;
 #endif
 ";
@@ -707,7 +744,16 @@ int after;
                 head
             })
             .collect();
-        assert_eq!(heads, vec![vec![3, 4], vec![5, 6, 7], vec![8, 9], vec![12]]);
+        assert_eq!(
+            heads,
+            vec![
+                vec![3, 4],
+                vec![5, 6, 7],
+                vec![8, 9, 10, 11],
+                vec![12, 13, 14, 15, 16, 17],
+                vec![18],
+            ]
+        );
     }
 
     #[test]
