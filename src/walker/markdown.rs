@@ -82,7 +82,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     // RST README: line-scanned headings via `is_rst_underline`, dropping
     // `.. directive::` blocks — no tree-sitter parse.
     for file in files_with_extension(dir, "rst", ctx) {
-        if !is_readme(&file) {
+        if !reads_as_readme(&file, ctx) {
             continue;
         }
         let Some(source) = ctx.read_source(&file) else {
@@ -103,9 +103,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         push_sections(&mut out, &file, &source, &ranges, None, headline_emitted);
     }
 
-    // A markdown file precis was pointed at directly reads as its README.
     for file in files_with_extension(dir, "md", ctx) {
-        if !is_readme(&file) && !ctx.dir_filter().names_one_file() {
+        if !reads_as_readme(&file, ctx) {
             continue;
         }
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
@@ -329,6 +328,11 @@ fn build_section_content(
 
     let lines: Vec<usize> = (effective_start..=end).collect();
     single_file_lines_content(file, source, lines)
+}
+
+/// A document precis was pointed at directly reads as its README.
+fn reads_as_readme(file: &Path, ctx: &WalkCtx) -> bool {
+    is_readme(file) || ctx.dir_filter().names_one_file()
 }
 
 fn is_readme(file: &Path) -> bool {

@@ -54,6 +54,24 @@ fn single_file_markdown_renders_its_outline() {
 }
 
 #[test]
+fn single_file_rst_renders_its_outline() {
+    let temp = tempfile::tempdir().unwrap();
+    let file = write(
+        temp.path(),
+        "index.rst",
+        "Guide\n=====\n\nHow to use it.\n\nInstall\n-------\n\nRun the installer.\n",
+    );
+    write(temp.path(), "other.rst", "Other\n=====\n");
+
+    let out = render(&file, 3000, None);
+
+    assert!(out.starts_with("index.rst\n"), "{out}");
+    assert!(out.contains("1→Guide"), "{out}");
+    assert!(out.contains("Install"), "{out}");
+    assert!(!out.contains("other.rst"), "{out}");
+}
+
+#[test]
 fn single_file_unsupported_extension_renders_its_row() {
     let temp = tempfile::tempdir().unwrap();
     let file = write(temp.path(), "notes.xyz", "alpha\nbeta\n");
