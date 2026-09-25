@@ -977,12 +977,20 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                     continue;
                 }
                 let reference_h2 = is_reference_usage_section(*node, source);
+                // Back-matter subsections closing the section are dropped too.
+                let subsections: Vec<Node> = headed_sections(*node).collect();
+                let end = subsections
+                    .iter()
+                    .rev()
+                    .take_while(|sub| is_appendix_title_core(&section_title_core(**sub, source)))
+                    .last()
+                    .map_or(*end, |first_appendix| first_appendix.start_position().row);
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
                     SectionRange {
                         is_reference_usage_section: reference_h2,
-                        ..SectionRange::new(*start, *end, h2_idx)
+                        ..SectionRange::new(*start, end, h2_idx)
                     },
                 );
             }
@@ -2260,6 +2268,11 @@ mod tests {
         let ranges = sections(src);
         let bounds: Vec<_> = ranges.iter().map(|r| (r.start, r.end)).collect();
         assert_eq!(bounds, [(1, 4), (5, 7)]);
+
+        let src = "# Tool\n\nDoes things.\n\n## About\n\nIt is small.\n\n\
+                   ### Author\n\nMe.\n\n### License to use\n\nMIT.\n";
+        let bounds: Vec<_> = sections(src).iter().map(|r| (r.start, r.end)).collect();
+        assert_eq!(bounds, [(1, 4), (5, 8)]);
     }
 
     #[test]

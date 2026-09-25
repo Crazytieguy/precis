@@ -92,6 +92,16 @@ README.md
   58→  The messages support a shorthand for interpolating fields from the error.
   …
   211→## Comparison to anyhow
+  212→
+  213→Use thiserror if you care about designing your own dedicated error type(s) so
+  214→that the caller receives exactly the information that you choose in the event of
+  215→failure. This most often applies to library-like code. Use [Anyhow] if you don't
+  216→care what error type your functions return, you just want it to be easy. This is
+  217→common in application-like code.
+  218→
+  219→[Anyhow]: https://github.com/dtolnay/anyhow
+  220→
+  221→<br>
   …
 build/
   probe.rs
@@ -154,32 +164,21 @@ impl/
       …
       10→pub enum Input<'a> {
       11→    Struct(Struct<'a>),
-      12→    Enum(Enum<'a>),
-      13→}
+      …
       15→pub struct Struct<'a> {
-      16→    pub attrs: Attrs<'a>,
-      17→    pub ident: Ident,
-      18→    pub generics: &'a Generics,
-      19→    pub fields: Vec<Field<'a>>,
-      20→}
+      …
       22→pub struct Enum<'a> {
       …
       29→pub struct Variant<'a> {
-      30→    pub original: &'a syn::Variant,
       …
       36→pub struct Field<'a> {
       …
       45→pub enum ContainerKind {
       …
       54→impl<'a> Input<'a> {
-      55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-      …
-      65→}
       …
       174→impl Display for ContainerKind {
-      175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
       …
-      185→}
     attr.rs
     expand.rs
     fallback.rs
