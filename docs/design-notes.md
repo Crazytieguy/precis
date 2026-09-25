@@ -127,6 +127,11 @@ language.**
   so a core written in an unparsed language (a Zig database with a Rust
   client) is not crowded out by side clients the code engine parses.
   Every other fallback surface prices below a parsed declaration.
+  The language families (`language_group`) cover the fallback's
+  languages too, and the dominant-file rule reads the same primary
+  language, so a repository whose most essential bytes are in `.vue`
+  or `.php` has its spine file chosen from that language, not from
+  the parsed JS beside it.
 
 ## Output notation and the plugin cap
 
