@@ -1,9 +1,7 @@
 //! Rust extraction for the code engine.
 //!
 //! - **Module doc**: the file's leading `//!` / `/*! */` comments, one
-//!   [`Item`] per paragraph, without the leading paragraphs that are only
-//!   badges, link reference definitions or HTML (they render as nothing
-//!   readable).
+//!   [`Item`] per paragraph.
 //! - **Re-exports**: `pub use …;` and every `mod name;` declaration (the
 //!   file's module tree, whatever its visibility). Other `use` and
 //!   `extern crate` items are plumbing and not modeled; an inline
@@ -448,9 +446,6 @@ fn module_doc(file: &SourceFile, root: Node) -> Vec<Item> {
     rows.sort_unstable();
     rows.dedup();
     rustdoc_paragraphs(&rows, file)
-        .into_iter()
-        .skip_while(|paragraph| is_decorative_paragraph(paragraph, file))
-        .collect()
 }
 
 /// A doc comment row's markdown content: the comment marker and the one
@@ -523,41 +518,6 @@ fn is_rust_fence(info: &str) -> bool {
         || matches!(label, "no_run" | "ignore" | "compile_fail" | "should_panic")
 }
 
-/// A paragraph that renders as no prose: only images / badges, link
-/// reference definitions and HTML tags.
-fn is_decorative_paragraph(paragraph: &Item, file: &SourceFile) -> bool {
-    paragraph
-        .rows
-        .iter()
-        .all(|&row| is_decorative_line(rustdoc_content(file.line(row)).trim()))
-}
-
-fn is_decorative_line(content: &str) -> bool {
-    let is_reference_definition = content.starts_with('[')
-        && content
-            .find("]:")
-            .is_some_and(|close| !content[1..close].contains(']'));
-    if is_reference_definition {
-        return true;
-    }
-    let mut depth = 0usize;
-    let mut in_tag = false;
-    let mut in_entity = false;
-    for c in content.chars() {
-        match c {
-            '<' => in_tag = true,
-            '>' => in_tag = false,
-            '&' if !in_tag => in_entity = true,
-            ';' if in_entity => in_entity = false,
-            '[' | '(' if !in_tag => depth += 1,
-            ']' | ')' if !in_tag => depth = depth.saturating_sub(1),
-            _ if c.is_alphanumeric() && depth == 0 && !in_tag && !in_entity => return false,
-            _ => {}
-        }
-    }
-    content.contains("![") || !content.contains('[')
-}
-
 #[cfg(test)]
 mod tests {
     use super::super::test_support::rows;
@@ -589,7 +549,7 @@ mod tests {
     }
 
     #[test]
-    fn rust_extract_module_doc_drops_badges_and_hidden_doctest_lines() {
+    fn rust_extract_module_doc_drops_hidden_doctest_lines() {
         let source = "\
 // Copyright header, not documentation.
 
@@ -615,7 +575,13 @@ pub fn f() {}
         let (_, model) = extract_source("lib.rs", source);
         assert_eq!(
             rows(&model.module_doc),
-            vec![vec![8, 9, 10], vec![11, 12], vec![13, 14, 16, 17]]
+            vec![
+                vec![3, 4],
+                vec![5, 6, 7],
+                vec![8, 9, 10],
+                vec![11, 12],
+                vec![13, 14, 16, 17]
+            ]
         );
     }
 
