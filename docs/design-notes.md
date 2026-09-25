@@ -127,6 +127,13 @@ If an NS surfaces these files' content as primary atoms, that's an
 NS-author error to flag — don't move the goalpost by un-suppressing the
 walker.
 
+Peripheral admin markdown (`is_peripheral_doc`: changelogs, contributing
+guides, security policies, migration guides, …) gets the same body
+suppression. Unlike the auto-injected case this rests on measurement,
+not policy: suppressing them (dd69d57e) left every Score(3000)
+unchanged, and their bodies had been split into large candidate sets
+(express's `History.md` alone into ~2500) that the schedule never bought.
+
 ## Gitignored content doesn't belong in precis output either
 
 Filtering is `fs_util::DirFilter`, built once per run and threaded

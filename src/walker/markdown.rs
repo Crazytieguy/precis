@@ -389,9 +389,6 @@ fn build_outline_content(
     source: &Source,
     rows: &[(usize, usize)],
 ) -> Option<BatchContent> {
-    if rows.len() < 2 {
-        return None;
-    }
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for (start, end) in rows {
