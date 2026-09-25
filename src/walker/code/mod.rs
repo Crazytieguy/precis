@@ -161,6 +161,10 @@ impl Language {
 
 /// Per-run state of the language modules, one field per language.
 #[derive(Default)]
+#[allow(
+    dead_code,
+    reason = "a language reads its field once its port needs run state"
+)]
 pub(crate) struct CodeState {
     rust: rust::RunState,
     typescript: typescript::RunState,
@@ -198,6 +202,7 @@ impl SourceFile {
         self.source.line_count()
     }
 
+    #[allow(dead_code, reason = "extraction helper for the unported languages")]
     pub(crate) fn text(&self, node: Node) -> &str {
         &self.source[node.byte_range()]
     }

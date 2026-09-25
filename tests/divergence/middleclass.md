@@ -1,4 +1,4 @@
-Score(3000)=0.766 I=0.876 C=0.669 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.681/0.762/0.724/0.766/0.762/0.660/0.639
+Score(3000)=0.778 I=0.873 C=0.692 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.750/0.718/0.778/0.762/0.660/0.639
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,73 +11,57 @@ Score(3000)=0.766 I=0.876 C=0.669 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 146 | 58 | listing of 'spec' |  |  | 0.510 |
 | walker |  | 226 | 80 | listing of 'rockspecs' |  |  | 0.561 |
 | ns | 248 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.468 |
-| walker |  | 291 | 65 | lua module identity in middleclass.lua |  |  | 0.810 |
-| walker |  | 337 | 46 | headings outline in UPDATING.md |  |  | 0.811 |
-| walker |  | 362 | 25 | lua decl names surface in performance/run.lua |  |  | 0.811 |
-| walker |  | 362 | 0 | lua decl at performance/run.lua:19 |  |  | 0.811 |
-| walker |  | 362 | 0 | lua decl at performance/run.lua:37 |  |  | 0.811 |
+| walker |  | 251 | 25 | lua names performance/run.lua |  |  | 0.468 |
+| walker |  | 316 | 65 | lua module doc middleclass.lua |  |  | 0.810 |
+| walker |  | 362 | 46 | headings outline in UPDATING.md |  |  | 0.811 |
 | ns | 394 |  | 146 | Complete listings of spec/, performance/ and rockspecs/ | 1.5 |  | 0.835 |
 | ns | 442 |  | 48 | All README section headings | 1.6 |  | 0.766 |
-| walker |  | 443 | 81 | headings outline in README.md |  |  | 0.851 |
-| walker |  | 481 | 38 | lua decl names surface in spec/metamethods_spec.lua |  |  | 0.851 |
-| walker |  | 481 | 0 | lua decl at spec/metamethods_spec.lua:3 |  |  | 0.851 |
-| walker |  | 481 | 0 | lua decl at spec/metamethods_spec.lua:7 |  |  | 0.851 |
-| walker |  | 490 | 9 | lua decl body at performance/run.lua:19 |  |  | 0.851 |
-| walker |  | 499 | 9 | lua decl body at performance/run.lua:37 |  |  | 0.851 |
-| ns | 572 |  | 130 | DefaultMixin member roster — every default instance and static method name | 2.1 |  | 0.690 |
-| ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.628 |
-| walker |  | 805 | 306 | lua decl names surface in middleclass.lua |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:31 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:57 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:68 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:81 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:109 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:129 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:139 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:144 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:151 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:172 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:178 |  |  | 0.773 |
-| walker |  | 805 | 0 | lua decl at middleclass.lua:186 |  |  | 0.773 |
-| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.681 |
-| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.636 |
-| walker |  | 1121 | 316 | README.md section #0 |  |  | 0.651 |
-| walker |  | 1135 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.651 |
-| walker |  | 1149 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.651 |
-| ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.622 |
-| walker |  | 1199 | 50 | lua decl body at middleclass.lua:139 |  |  | 0.635 |
-| walker |  | 1249 | 50 | lua decl body at middleclass.lua:172 |  |  | 0.653 |
-| walker |  | 1301 | 52 | lua decl body at middleclass.lua:186 |  |  | 0.669 |
-| ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.693 |
-| walker |  | 1360 | 59 | lua decl body at middleclass.lua:144 |  |  | 0.724 |
-| walker |  | 1424 | 64 | lua decl body at middleclass.lua:178 |  |  | 0.754 |
-| ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.762 |
-| ns | 1569 |  | 135 | README Specs and Performance tests sections — how to run everything | 3.3 |  | 0.730 |
-| ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.705 |
-| walker |  | 1803 | 379 | YAML config at .travis.yml |  |  | 0.709 |
-| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.687 |
-| walker |  | 1883 | 80 | lua decl body at middleclass.lua:68 |  |  | 0.688 |
-| walker |  | 1968 | 85 | lua decl body at middleclass.lua:129 |  |  | 0.724 |
-| walker |  | 2081 | 113 | lua decl body at middleclass.lua:57 |  |  | 0.727 |
-| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.702 |
-| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.704 |
-| walker |  | 2239 | 158 | lua decl body at middleclass.lua:109 |  |  | 0.707 |
-| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.674 |
-| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.687 |
-| walker |  | 2508 | 269 | README.md section #1 |  |  | 0.750 |
-| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.733 |
-| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.723 |
-| walker |  | 2731 | 223 | lua decl body at middleclass.lua:151 |  |  | 0.780 |
-| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.755 |
-| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.760 |
-| walker |  | 2957 | 226 | lua decl body at middleclass.lua:31 |  |  | 0.766 |
-| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.770 |
-| ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.777 |
-| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.754 |
-| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.734 |
-| walker |  | 3815 | 858 | UPDATING.md section #0 |  |  | 0.769 |
-| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.734 |
-| walker |  | 4106 | 291 | lua decl body at middleclass.lua:81 |  |  | 0.782 |
+| ns | 572 |  | 130 | DefaultMixin member roster — every default instance and static method name | 2.1 |  | 0.621 |
+| walker |  | 668 | 306 | lua names middleclass.lua |  |  | 0.724 |
+| ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.661 |
+| walker |  | 706 | 38 | lua names spec/metamethods_spec.lua |  |  | 0.661 |
+| walker |  | 787 | 81 | headings outline in README.md |  |  | 0.720 |
+| walker |  | 796 | 9 | lua body performance/run.lua:19 |  |  | 0.720 |
+| walker |  | 805 | 9 | lua body performance/run.lua:37 |  |  | 0.720 |
+| walker |  | 819 | 14 | lua body spec/metamethods_spec.lua:3 |  |  | 0.720 |
+| walker |  | 833 | 14 | lua body spec/metamethods_spec.lua:7 |  |  | 0.720 |
+| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.635 |
+| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.593 |
+| walker |  | 1149 | 316 | README.md section #0 |  |  | 0.607 |
+| ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.581 |
+| walker |  | 1199 | 50 | lua body middleclass.lua:139 |  |  | 0.600 |
+| walker |  | 1249 | 50 | lua body middleclass.lua:172 |  |  | 0.625 |
+| walker |  | 1301 | 52 | lua body middleclass.lua:186 |  |  | 0.642 |
+| ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.669 |
+| walker |  | 1360 | 59 | lua body middleclass.lua:144 |  |  | 0.706 |
+| walker |  | 1424 | 64 | lua body middleclass.lua:178 |  |  | 0.741 |
+| ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.750 |
+| walker |  | 1504 | 80 | lua body middleclass.lua:68 |  |  | 0.751 |
+| ns | 1569 |  | 135 | README Specs and Performance tests sections — how to run everything | 3.3 |  | 0.719 |
+| walker |  | 1589 | 85 | lua body middleclass.lua:129 |  |  | 0.763 |
+| walker |  | 1702 | 113 | lua body middleclass.lua:57 |  |  | 0.767 |
+| ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.741 |
+| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.718 |
+| walker |  | 2081 | 379 | YAML config at .travis.yml |  |  | 0.722 |
+| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.696 |
+| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.698 |
+| walker |  | 2239 | 158 | lua body middleclass.lua:109 |  |  | 0.702 |
+| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.669 |
+| walker |  | 2462 | 223 | lua body middleclass.lua:151 |  |  | 0.737 |
+| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.740 |
+| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.723 |
+| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.714 |
+| walker |  | 2688 | 226 | lua body middleclass.lua:31 |  |  | 0.723 |
+| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.700 |
+| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.709 |
+| walker |  | 2979 | 291 | lua body middleclass.lua:81 |  |  | 0.778 |
+| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.781 |
+| walker |  | 3248 | 269 | README.md section #1 |  |  | 0.829 |
+| ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.831 |
+| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.807 |
+| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.786 |
+| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.750 |
+| walker |  | 4106 | 858 | UPDATING.md section #0 |  |  | 0.782 |
 | ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.744 |
 | walker |  | 4242 | 136 | headings outline in CHANGELOG.md |  |  | 0.761 |
 | walker |  | 4242 | 0 | CHANGELOG.md section #0 |  |  | 0.761 |

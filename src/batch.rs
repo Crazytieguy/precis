@@ -45,7 +45,6 @@ pub enum BatchKey {
     Go(GoKey),
     Python(PythonKey),
     Code(CodeKey),
-    Lua(LuaKey),
     Yaml(YamlKey),
     Sql(SqlKey),
 }
@@ -100,7 +99,6 @@ impl_batchkey! {
     Go => GoKey,
     Python => PythonKey,
     Code => CodeKey,
-    Lua => LuaKey,
     Yaml => YamlKey,
     Sql => SqlKey,
 }
@@ -630,33 +628,6 @@ pub enum Rung {
     Doc,
     /// One `Callable` declaration's body statements.
     Body,
-}
-
-/// Lua batches. LuaCATS spec files (`---@meta`, `---@class`,
-/// `---@alias`) get whole-file rendering when small; other Lua sources
-/// get the C/Python-style per-decl breakdown.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum LuaKey {
-    /// Top-of-file module identity table — a `local M = { _VERSION =
-    /// …, _DESCRIPTION = …, _URL = … }` metadata block (the standard
-    /// Lua library "what is this" idiom), truncated before long-string
-    /// fields like `_LICENSE = [[`.
-    ModuleIdentity { file: PathBuf },
-    /// Whole-file rendering for LuaCATS spec files (`---@meta` at top,
-    /// or majority-LuaCATS-tag comment density). Gated to small files.
-    MetaFileWhole { file: PathBuf },
-    /// Surface listing of every top-level fn name + table-method
-    /// assignment first line — one unified catalog per file.
-    DeclNames { file: PathBuf },
-    /// One top-level fn-like declaration's signature/header. Covers
-    /// `function foo()`, `local function foo()`, and `M.foo = function(...)`.
-    /// Keyed by start line.
-    Decl { file: PathBuf, start_line: usize },
-    /// LuaCATS `---@` comment block immediately above a decl.
-    /// Predecessor: matching `Decl`.
-    DeclDoc { file: PathBuf, start_line: usize },
-    /// Body interior of a fn decl. Predecessor: matching `Decl`.
-    DeclBody { file: PathBuf, start_line: usize },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -1438,50 +1409,6 @@ impl InnerKey for CodeKey {
             out.push_str(&format!(" #{}", self.sub));
         }
         out
-    }
-}
-
-impl InnerKey for LuaKey {
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(
-            self,
-            LuaKey::ModuleIdentity { .. }
-                | LuaKey::MetaFileWhole { .. }
-                | LuaKey::DeclNames { .. }
-                | LuaKey::Decl { .. }
-        )
-    }
-
-    /// Per-decl batches steepen to `0.45` (matches C / Python).
-    /// `MetaFileWhole` keeps the default — LuaCATS specs are
-    /// load-bearing and shouldn't be pushed later.
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            LuaKey::Decl { .. } | LuaKey::DeclBody { .. } => 0.45,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
-    /// The module identity table is orientation ("what is this library").
-    fn is_orientation(&self) -> bool {
-        matches!(self, LuaKey::ModuleIdentity { .. })
-    }
-
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            LuaKey::ModuleIdentity { file } => describe_in("lua module identity", file, root),
-            LuaKey::MetaFileWhole { file } => {
-                format!("lua meta-file at {}", display_path(file, root))
-            }
-            LuaKey::DeclNames { file } => describe_in("lua decl names surface", file, root),
-            LuaKey::Decl { file, start_line } => describe_at("lua decl", file, *start_line, root),
-            LuaKey::DeclDoc { file, start_line } => {
-                describe_at("lua decl doc", file, *start_line, root)
-            }
-            LuaKey::DeclBody { file, start_line } => {
-                describe_at("lua decl body", file, *start_line, root)
-            }
-        }
     }
 }
 

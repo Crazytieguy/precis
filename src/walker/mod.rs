@@ -25,16 +25,11 @@ use crate::fs_util::DirFilter;
 use crate::render::{Source, SourceCache};
 
 pub mod c;
-#[allow(
-    dead_code,
-    reason = "engine skeleton: the engine lane's emit consumes the model, chunk and ledger"
-)]
 pub(crate) mod code;
 pub mod fs;
 pub mod go;
 pub(crate) mod import_chunks;
 pub mod json;
-pub mod lua;
 pub mod markdown;
 pub mod plaintext;
 pub mod prisma;
@@ -123,7 +118,6 @@ impl Walker for FsWalker {
         out.extend(go::expand_in_dir(dir, ctx));
         out.extend(python::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
-        out.extend(lua::expand_in_dir(dir, ctx));
         out.extend(yaml::expand_in_dir(dir, ctx));
         out.extend(sql::expand_in_dir(dir, ctx));
         out
