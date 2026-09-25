@@ -79,10 +79,11 @@ pub(crate) struct CodeState {
 pub(crate) struct SourceFile {
     pub path: PathBuf,
     pub source: Arc<Source>,
-    pub tree: Arc<Tree>,
+    pub tree: Tree,
 }
 
 impl SourceFile {
+    #[cfg(test)]
     fn parse(path: &Path, language: &Language, ctx: &WalkCtx) -> Option<Self> {
         let (source, tree) = ctx.parse_tree(path, &(language.grammar)(path))?;
         Some(Self {
@@ -247,16 +248,17 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .into_iter()
         .filter_map(|path| Language::from_path(&path).map(|language| (path, language)))
         .collect();
-    ctx.parse_trees(
-        files
-            .iter()
-            .map(|(path, language)| (path.as_path(), (language.grammar)(path))),
-    );
+    let grammars: Vec<(&Path, tree_sitter::Language)> = files
+        .iter()
+        .map(|(path, language)| (path.as_path(), (language.grammar)(path)))
+        .collect();
+    let parsed = ctx.parse_trees(&grammars);
     let mut out = Vec::new();
-    for (path, language) in files {
-        let Some(file) = SourceFile::parse(&path, language, ctx) else {
+    for ((path, language), parsed) in files.into_iter().zip(parsed) {
+        let Some((source, tree)) = parsed else {
             continue;
         };
+        let file = SourceFile { path, source, tree };
         let model = (language.extract)(&file, ctx);
         out.extend(emit::emit_file(language, &file, model, ctx));
     }

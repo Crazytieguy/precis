@@ -4,9 +4,9 @@
 //! predecessor edge, fully-built `BatchContent`, and a scalar `value`. The
 //! scheduler ranks emitted batches by `value / cost^k`, gates by
 //! predecessor scheduling, and applies content to the rendered tree.
-//! Per-file parses are cached on [`WalkCtx`].
+//! Source text is cached on [`WalkCtx`]; parse trees are not.
 
-use std::cell::{OnceCell, RefCell};
+use std::cell::OnceCell;
 use std::collections::{BTreeSet, HashMap};
 use std::ops::Range;
 use std::path::{Path, PathBuf};
@@ -111,8 +111,6 @@ pub struct WalkCtx {
     /// discovery rather than filtered out downstream.
     dir_filter: Rc<DirFilter>,
     source_cache: SourceCache,
-    /// Tree-sitter parse results, keyed by path.
-    tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
     cargo_workspace: workspace::WorkspaceMembership,
     fs_state: fs::FsState,
     json_state: json::JsonState,
@@ -123,16 +121,6 @@ pub struct WalkCtx {
     /// The one source file that carries a dominant share of the tree's
     /// essential source bytes, if any.
     dominant_source_file: OnceCell<Option<PathBuf>>,
-}
-
-impl Drop for WalkCtx {
-    /// Freeing every parse tree is a measurable slice of a run and
-    /// nothing waits on it, so it happens on a background thread (which
-    /// the CLI exits without joining).
-    fn drop(&mut self) {
-        let trees = std::mem::take(self.tree_cache.get_mut());
-        std::thread::spawn(move || drop(trees));
-    }
 }
 
 impl WalkCtx {
@@ -150,7 +138,6 @@ impl WalkCtx {
             root: dir_filter.root().to_path_buf(),
             dir_filter: Rc::new(dir_filter),
             source_cache,
-            tree_cache: RefCell::new(HashMap::new()),
             cargo_workspace: workspace::WorkspaceMembership::default(),
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
@@ -220,65 +207,54 @@ impl WalkCtx {
         self.source_cache.get(path)
     }
 
-    /// Parse `path` with `language`, caching the result.
-    pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<Source>, Arc<Tree>)> {
+    /// Parse `path` with `language`. The tree is not cached: a file is
+    /// parsed while its directory expands, and its batches carry
+    /// everything they need from it.
+    pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<Source>, Tree)> {
         let source = self.read_source(path)?;
-        if let Some(tree) = self.tree_cache.borrow().get(path) {
-            return Some((source, tree.clone()));
-        }
-        let mut parser = tree_sitter::Parser::new();
-        parser
-            .set_language(language)
-            .expect("tree-sitter language load");
-        let tree = parser.parse(source.as_bytes(), None)?;
-        let arc = Arc::new(tree);
-        self.tree_cache
-            .borrow_mut()
-            .insert(path.to_path_buf(), arc.clone());
-        Some((source, arc))
+        let tree = parser_for(language).parse(source.as_bytes(), None)?;
+        Some((source, tree))
     }
 
-    /// Parse every file of `files` not parsed yet, across threads, into
-    /// the cache [`Self::parse_tree`] reads — for callers about to parse
-    /// a whole set of files one by one.
-    pub fn parse_trees<'a>(&self, files: impl IntoIterator<Item = (&'a Path, Language)>) {
-        let pending: Vec<(&Path, Arc<Source>, Language)> = files
-            .into_iter()
-            .filter(|(path, _)| !self.tree_cache.borrow().contains_key(*path))
-            .filter_map(|(path, language)| Some((path, self.read_source(path)?, language)))
+    /// [`Self::parse_tree`] for each of `files`, across threads, in order.
+    pub fn parse_trees(&self, files: &[(&Path, Language)]) -> Vec<Option<(Arc<Source>, Tree)>> {
+        let sources: Vec<Option<Arc<Source>>> = files
+            .iter()
+            .map(|(path, _)| self.read_source(path))
             .collect();
         let next = AtomicUsize::new(0);
         let parse_pending = || {
-            let mut parser = tree_sitter::Parser::new();
             let mut trees = Vec::new();
-            while let Some((path, source, language)) =
-                pending.get(next.fetch_add(1, Ordering::Relaxed))
-            {
-                parser
-                    .set_language(language)
-                    .expect("tree-sitter language load");
-                trees.extend(
-                    parser
-                        .parse(source.as_bytes(), None)
-                        .map(|tree| (*path, tree)),
-                );
+            loop {
+                let index = next.fetch_add(1, Ordering::Relaxed);
+                let (Some((_, language)), Some(source)) = (files.get(index), sources.get(index))
+                else {
+                    return trees;
+                };
+                if let Some(source) = source
+                    && let Some(tree) = parser_for(language).parse(source.as_bytes(), None)
+                {
+                    trees.push((index, tree));
+                }
             }
-            trees
         };
         let workers = std::thread::available_parallelism()
             .map_or(1, usize::from)
-            .min(pending.len());
-        let trees: Vec<(&Path, Tree)> = std::thread::scope(|scope| {
+            .min(files.len());
+        let mut parsed: Vec<Option<Tree>> = files.iter().map(|_| None).collect();
+        std::thread::scope(|scope| {
             let handles: Vec<_> = (0..workers).map(|_| scope.spawn(parse_pending)).collect();
-            handles
-                .into_iter()
-                .flat_map(|handle| handle.join().expect("parse worker panicked"))
-                .collect()
+            for handle in handles {
+                for (index, tree) in handle.join().expect("parse worker panicked") {
+                    parsed[index] = Some(tree);
+                }
+            }
         });
-        let mut cache = self.tree_cache.borrow_mut();
-        for (path, tree) in trees {
-            cache.insert(path.to_path_buf(), Arc::new(tree));
-        }
+        sources
+            .into_iter()
+            .zip(parsed)
+            .map(|(source, tree)| Some((source?, tree?)))
+            .collect()
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
@@ -297,6 +273,14 @@ impl WalkCtx {
         self.json_state
             .is_primary_workspace_member(file, &self.root)
     }
+}
+
+fn parser_for(language: &Language) -> tree_sitter::Parser {
+    let mut parser = tree_sitter::Parser::new();
+    parser
+        .set_language(language)
+        .expect("tree-sitter language load");
+    parser
 }
 
 pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
