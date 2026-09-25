@@ -1,4 +1,4 @@
-Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.895/0.801/0.695/0.609/0.576/0.497/0.557
+Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.895/0.801/0.695/0.609/0.576/0.497/0.551
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -154,77 +154,67 @@ Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 6703 | 218 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.473 |
 | ns | 6718 |  | 103 | impl Error — roster of the non-public fns | 5.4 | 5.3 | 0.470 |
 | ns | 6889 |  | 171 | Vtable function roster in error.rs | 5.5 | 5.1 | 0.463 |
-| walker |  | 6947 | 244 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.470 |
-| walker |  | 6964 | 17 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 31, sub: 0, line: 731 } |  |  | 0.470 |
-| walker |  | 6992 | 28 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 27, sub: 0, line: 719 } |  |  | 0.470 |
-| walker |  | 7020 | 28 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 29, sub: 0, line: 725 } |  |  | 0.470 |
-| ns | 7040 |  | 151 | ErrorImpl methods and trait impls | 5.6 | 5.2 | 0.464 |
-| walker |  | 7048 | 28 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 36, sub: 0, line: 775 } |  |  | 0.464 |
-| walker |  | 7093 | 45 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 25, sub: 0, line: 712 } |  |  | 0.464 |
-| walker |  | 7141 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 37, sub: 0, line: 787 } |  |  | 0.464 |
-| walker |  | 7189 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 38, sub: 0, line: 798 } |  |  | 0.464 |
-| walker |  | 7255 | 66 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 23, sub: 0, line: 703 } |  |  | 0.466 |
-| ns | 7275 |  | 235 | ptr.rs — Own / Ref / Mut / CastTo declarations | 5.7 |  | 0.490 |
-| walker |  | 7324 | 69 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 21, sub: 0, line: 691 } |  |  | 0.490 |
-| walker |  | 7330 | 6 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 22, sub: 0, line: 696 } |  |  | 0.490 |
-| ns | 7440 |  | 165 | chain.rs — Chain and ChainState | 6.1 |  | 0.501 |
-| ns | 7557 |  | 117 | chain.rs — every trait impl on Chain | 6.2 | 6.1 | 0.507 |
-| walker |  | 7601 | 271 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 33, sub: 0, line: 740 } |  |  | 0.524 |
-| ns | 7782 |  | 225 | wrapper.rs — the three error adapters and their impls | 6.3 |  | 0.535 |
-| walker |  | 7805 | 204 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 1, sub: 0, line: 19 } |  |  | 0.541 |
-| walker |  | 7842 | 37 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 7, sub: 0, line: 197 } |  |  | 0.541 |
-| walker |  | 7880 | 38 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 4, sub: 0, line: 137 } |  |  | 0.541 |
-| walker |  | 7919 | 39 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 6, sub: 0, line: 169 } |  |  | 0.541 |
-| ns | 7959 |  | 177 | context.rs — where .context() is implemented | 6.4 | 2.3 | 0.536 |
-| walker |  | 7967 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 3, sub: 0, line: 75 } |  |  | 0.536 |
-| walker |  | 8026 | 59 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 5, sub: 0, line: 145 } |  |  | 0.536 |
-| walker |  | 8094 | 68 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 2, sub: 0, line: 27 } |  |  | 0.536 |
-| ns | 8133 |  | 174 | context.rs — ContextError impls, Quoted, and the Sealed trait | 6.5 | 6.4 | 0.536 |
-| walker |  | 8162 | 68 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 9, sub: 0, line: 258 } |  |  | 0.536 |
-| ns | 8261 |  | 128 | fmt.rs — the rendering entry points | 6.6 | 5.6 | 0.540 |
-| walker |  | 8277 | 115 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 8, sub: 0, line: 225 } |  |  | 0.540 |
-| ns | 8413 |  | 152 | build.rs — the complete custom-cfg vocabulary | 7.1 |  | 0.536 |
-| walker |  | 8523 | 246 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 1, sub: 1, line: 19 } |  |  | 0.555 |
-| ns | 8527 |  | 114 | build.rs — which compiler turns each cfg on | 7.2 | 7.1 | 0.552 |
-| walker |  | 8535 | 12 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 20, sub: 0, line: 674 } |  |  | 0.552 |
-| walker |  | 8554 | 19 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 11, sub: 0, line: 431 } |  |  | 0.552 |
-| walker |  | 8583 | 29 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 12, sub: 0, line: 457 } |  |  | 0.552 |
-| walker |  | 8614 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 14, sub: 0, line: 482 } |  |  | 0.552 |
-| ns | 8637 |  | 110 | backtrace.rs — the three definitions of Backtrace | 7.3 |  | 0.549 |
-| walker |  | 8645 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 15, sub: 0, line: 490 } |  |  | 0.549 |
-| walker |  | 8676 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 16, sub: 0, line: 554 } |  |  | 0.549 |
-| walker |  | 8707 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 17, sub: 0, line: 568 } |  |  | 0.549 |
-| walker |  | 8744 | 37 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 13, sub: 0, line: 468 } |  |  | 0.549 |
-| walker |  | 8790 | 46 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 10, sub: 0, line: 370 } |  |  | 0.549 |
-| ns | 8813 |  | 176 | backtrace.rs — impl_backtrace! and backtrace!(), both arms each | 7.4 | 7.3 | 0.556 |
-| walker |  | 8866 | 76 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 18, sub: 0, line: 598 } |  |  | 0.556 |
-| ns | 8954 |  | 141 | backtrace.rs — backtrace_if_absent! and the vendored capture module | 7.5 | 7.3 | 0.557 |
-| walker |  | 8970 | 104 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 19, sub: 0, line: 640 } |  |  | 0.557 |
-| walker |  | 8985 | 15 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 17, sub: 0, line: 568 } |  |  | 0.557 |
-| walker |  | 9003 | 18 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 15, sub: 0, line: 490 } |  |  | 0.557 |
-| ns | 9086 |  | 132 | nightly.rs — the build probe and generic-member-access shims | 7.6 | 7.1 | 0.553 |
-| walker |  | 9202 | 199 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.564 |
-| ns | 9217 |  | 131 | Toolchain pin and the no_std check-crate | 7.7 |  | 0.558 |
-| walker |  | 9223 | 21 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 39, sub: 0, line: 809 } |  |  | 0.558 |
-| walker |  | 9244 | 21 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 43, sub: 0, line: 876 } |  |  | 0.558 |
-| walker |  | 9265 | 21 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 44, sub: 0, line: 892 } |  |  | 0.558 |
-| walker |  | 9305 | 40 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 40, sub: 0, line: 828 } |  |  | 0.558 |
-| walker |  | 9356 | 51 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 41, sub: 0, line: 838 } |  |  | 0.558 |
-| ns | 9378 |  | 161 | CI job roster and toolchain matrix | 7.8 |  | 0.552 |
-| walker |  | 9407 | 51 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 42, sub: 0, line: 858 } |  |  | 0.552 |
-| walker |  | 9482 | 75 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 45, sub: 0, line: 915 } |  |  | 0.552 |
-| ns | 9570 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.548 |
-| ns | 9658 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.545 |
-| walker |  | 9740 | 258 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.567 |
-| ns | 9740 |  | 82 | tests/ui file listing | 8.2 | 8.1 | 0.567 |
-| walker |  | 9773 | 33 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 48, sub: 0, line: 951 } |  |  | 0.568 |
-| walker |  | 9819 | 46 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 61, sub: 0, line: 1047 } |  |  | 0.568 |
-| walker |  | 9826 | 7 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 62, sub: 0, line: 1049 } |  |  | 0.568 |
-| ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.564 |
-| walker |  | 9870 | 44 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 63, sub: 0, line: 1055 } |  |  | 0.564 |
-| walker |  | 9877 | 7 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 64, sub: 0, line: 1057 } |  |  | 0.564 |
-| walker |  | 9921 | 44 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 65, sub: 0, line: 1063 } |  |  | 0.564 |
-| walker |  | 9928 | 7 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 66, sub: 0, line: 1065 } |  |  | 0.564 |
-| walker |  | 9977 | 49 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 69, sub: 0, line: 1078 } |  |  | 0.564 |
-| ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.558 |
-| walker |  | 9996 | 19 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 67, sub: 0, line: 1071 } |  |  | 0.558 |
+| ns | 7040 |  | 151 | ErrorImpl methods and trait impls | 5.6 | 5.2 | 0.458 |
+| ns | 7275 |  | 235 | ptr.rs — Own / Ref / Mut / CastTo declarations | 5.7 |  | 0.483 |
+| walker |  | 7335 | 632 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 70 } |  |  | 0.490 |
+| ns | 7440 |  | 165 | chain.rs — Chain and ChainState | 6.1 |  | 0.500 |
+| walker |  | 7543 | 208 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| ns | 7557 |  | 117 | chain.rs — every trait impl on Chain | 6.2 | 6.1 | 0.510 |
+| walker |  | 7560 | 17 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 31, sub: 0, line: 731 } |  |  | 0.510 |
+| walker |  | 7588 | 28 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 27, sub: 0, line: 719 } |  |  | 0.510 |
+| walker |  | 7616 | 28 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 29, sub: 0, line: 725 } |  |  | 0.510 |
+| walker |  | 7644 | 28 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 36, sub: 0, line: 775 } |  |  | 0.510 |
+| walker |  | 7689 | 45 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 25, sub: 0, line: 712 } |  |  | 0.510 |
+| walker |  | 7737 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 37, sub: 0, line: 787 } |  |  | 0.510 |
+| ns | 7782 |  | 225 | wrapper.rs — the three error adapters and their impls | 6.3 |  | 0.521 |
+| walker |  | 7803 | 66 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 23, sub: 0, line: 703 } |  |  | 0.523 |
+| walker |  | 7872 | 69 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 21, sub: 0, line: 691 } |  |  | 0.523 |
+| walker |  | 7878 | 6 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 22, sub: 0, line: 696 } |  |  | 0.523 |
+| ns | 7959 |  | 177 | context.rs — where .context() is implemented | 6.4 | 2.3 | 0.518 |
+| ns | 8133 |  | 174 | context.rs — ContextError impls, Quoted, and the Sealed trait | 6.5 | 6.4 | 0.518 |
+| walker |  | 8149 | 271 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 33, sub: 0, line: 740 } |  |  | 0.534 |
+| ns | 8261 |  | 128 | fmt.rs — the rendering entry points | 6.6 | 5.6 | 0.538 |
+| walker |  | 8319 | 170 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 1, sub: 0, line: 19 } |  |  | 0.541 |
+| walker |  | 8356 | 37 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 7, sub: 0, line: 197 } |  |  | 0.541 |
+| walker |  | 8394 | 38 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 4, sub: 0, line: 137 } |  |  | 0.541 |
+| ns | 8413 |  | 152 | build.rs — the complete custom-cfg vocabulary | 7.1 |  | 0.537 |
+| walker |  | 8433 | 39 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 6, sub: 0, line: 169 } |  |  | 0.537 |
+| walker |  | 8481 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 3, sub: 0, line: 75 } |  |  | 0.537 |
+| ns | 8527 |  | 114 | build.rs — which compiler turns each cfg on | 7.2 | 7.1 | 0.534 |
+| walker |  | 8540 | 59 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 5, sub: 0, line: 145 } |  |  | 0.534 |
+| walker |  | 8608 | 68 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 2, sub: 0, line: 27 } |  |  | 0.534 |
+| ns | 8637 |  | 110 | backtrace.rs — the three definitions of Backtrace | 7.3 |  | 0.531 |
+| walker |  | 8786 | 178 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 1, sub: 1, line: 19 } |  |  | 0.543 |
+| walker |  | 8805 | 19 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 11, sub: 0, line: 431 } |  |  | 0.543 |
+| ns | 8813 |  | 176 | backtrace.rs — impl_backtrace! and backtrace!(), both arms each | 7.4 | 7.3 | 0.549 |
+| walker |  | 8834 | 29 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 12, sub: 0, line: 457 } |  |  | 0.549 |
+| walker |  | 8865 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 14, sub: 0, line: 482 } |  |  | 0.549 |
+| walker |  | 8896 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 15, sub: 0, line: 490 } |  |  | 0.549 |
+| walker |  | 8927 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 16, sub: 0, line: 554 } |  |  | 0.549 |
+| ns | 8954 |  | 141 | backtrace.rs — backtrace_if_absent! and the vendored capture module | 7.5 | 7.3 | 0.551 |
+| walker |  | 8964 | 37 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 13, sub: 0, line: 468 } |  |  | 0.551 |
+| walker |  | 9010 | 46 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 10, sub: 0, line: 370 } |  |  | 0.551 |
+| walker |  | 9078 | 68 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 9, sub: 0, line: 258 } |  |  | 0.551 |
+| ns | 9086 |  | 132 | nightly.rs — the build probe and generic-member-access shims | 7.6 | 7.1 | 0.547 |
+| walker |  | 9193 | 115 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 8, sub: 0, line: 225 } |  |  | 0.547 |
+| walker |  | 9211 | 18 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 15, sub: 0, line: 490 } |  |  | 0.547 |
+| ns | 9217 |  | 131 | Toolchain pin and the no_std check-crate | 7.7 |  | 0.541 |
+| walker |  | 9313 | 102 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 1, sub: 2, line: 19 } |  |  | 0.551 |
+| walker |  | 9325 | 12 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 20, sub: 0, line: 674 } |  |  | 0.551 |
+| walker |  | 9356 | 31 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 17, sub: 0, line: 568 } |  |  | 0.551 |
+| ns | 9378 |  | 161 | CI job roster and toolchain matrix | 7.8 |  | 0.546 |
+| walker |  | 9432 | 76 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 18, sub: 0, line: 598 } |  |  | 0.546 |
+| walker |  | 9536 | 104 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 19, sub: 0, line: 640 } |  |  | 0.546 |
+| walker |  | 9551 | 15 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 17, sub: 0, line: 568 } |  |  | 0.546 |
+| ns | 9570 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.541 |
+| ns | 9658 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.538 |
+| walker |  | 9702 | 151 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.544 |
+| walker |  | 9723 | 21 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 39, sub: 0, line: 809 } |  |  | 0.544 |
+| ns | 9740 |  | 82 | tests/ui file listing | 8.2 | 8.1 | 0.551 |
+| walker |  | 9763 | 40 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 40, sub: 0, line: 828 } |  |  | 0.551 |
+| walker |  | 9811 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 38, sub: 0, line: 798 } |  |  | 0.551 |
+| ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.547 |
+| walker |  | 9862 | 51 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 41, sub: 0, line: 838 } |  |  | 0.547 |
+| walker |  | 9913 | 51 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 42, sub: 0, line: 858 } |  |  | 0.547 |
+| ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.541 |
+| walker |  | 9997 | 84 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.546 |

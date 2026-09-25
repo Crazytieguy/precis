@@ -334,8 +334,10 @@ type_manipulation.go
   7→func IsNil(x any) bool {
   …
   22→func IsNotNil(x any) bool {
+  23→	return !IsNil(x)
   …
   28→func ToPtr[T any](x T) *T {
+  29→	return &x
   …
   34→func Nil[T any]() *T {
   35→	return nil
@@ -353,8 +355,6 @@ type_manipulation.go
   99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
   …
   115→func ToAnySlice[T any](collection []T) []any {
-  …
-  126→func FromAnySlice[T any](in []any) ([]T, bool) {
   …
 type_manipulation_test.go
 types.go

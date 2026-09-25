@@ -214,6 +214,7 @@ src/
     42→void jq_get_debug_cb(jq_state *, jq_msg_cb *, void **);
     43→void jq_set_stderr_cb(jq_state *, jq_msg_cb, void *);
     44→void jq_get_stderr_cb(jq_state *, jq_msg_cb *, void **);
+    45→
     46→void jq_set_attrs(jq_state *, jv);
     47→jv jq_get_attrs(jq_state *);
     48→jv jq_get_jq_origin(jq_state *);
@@ -281,6 +282,9 @@ src/
     55→  do {                                          \
     56→    if (N) {                                    \
     57→      (Loc).start = YYRHSLOC(Rhs, 1).start;     \
+    58→      (Loc).end = YYRHSLOC(Rhs, N).end;         \
+    59→    } else {                                    \
+    60→      (Loc).start = YYRHSLOC(Rhs, 0).end;       \
     …
     70→  enum yytokentype
     …
@@ -302,13 +306,6 @@ src/
     138→#define EQ 266
     139→#define NEQ 267
     140→#define DEFINEDOR 268
-    141→#define AS 269
-    142→#define DEF 270
-    143→#define MODULE 271
-    144→#define IMPORT 272
-    145→#define INCLUDE 273
-    146→#define IF 274
-    147→#define THEN 275
     …
   parser.y
   util.c

@@ -168,15 +168,15 @@ Score(3000)=0.716 I=0.910 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 7712 |  | 110 | `status_codes.py`: how `requests.codes` is built | 5.6 |  | 0.609 |
 | walker |  | 7793 | 273 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 11, sub: 0, line: 395 } |  |  | 0.642 |
 | ns | 7954 |  | 242 | The five small modules: hooks, `_internal_utils`, compat, certs, packages | 5.7 |  | 0.634 |
-| walker |  | 8034 | 241 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 11, sub: 1, line: 395 } |  |  | 0.642 |
-| walker |  | 8077 | 43 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 21, sub: 0, line: 714 } |  |  | 0.642 |
-| walker |  | 8120 | 43 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 22, sub: 0, line: 728 } |  |  | 0.642 |
-| ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.635 |
-| walker |  | 8178 | 58 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 17, sub: 0, line: 655 } |  |  | 0.635 |
-| walker |  | 8250 | 72 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 20, sub: 0, line: 695 } |  |  | 0.635 |
-| ns | 8464 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.622 |
-| walker |  | 8501 | 251 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 16, sub: 0, line: 557 } |  |  | 0.641 |
-| walker |  | 8614 | 113 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 11, sub: 2, line: 395 } |  |  | 0.654 |
+| walker |  | 7978 | 185 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 11, sub: 1, line: 395 } |  |  | 0.639 |
+| walker |  | 8021 | 43 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 21, sub: 0, line: 714 } |  |  | 0.639 |
+| walker |  | 8064 | 43 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 22, sub: 0, line: 728 } |  |  | 0.639 |
+| walker |  | 8122 | 58 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 17, sub: 0, line: 655 } |  |  | 0.639 |
+| ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.632 |
+| walker |  | 8194 | 72 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 20, sub: 0, line: 695 } |  |  | 0.632 |
+| walker |  | 8445 | 251 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 16, sub: 0, line: 557 } |  |  | 0.652 |
+| ns | 8464 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.638 |
+| walker |  | 8614 | 169 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 11, sub: 2, line: 395 } |  |  | 0.654 |
 | walker |  | 8695 | 81 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 25, sub: 0, line: 831 } |  |  | 0.654 |
 | walker |  | 8711 | 16 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 27, sub: 0, line: 883 } |  |  | 0.654 |
 | ns | 8753 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.642 |
@@ -196,7 +196,7 @@ Score(3000)=0.716 I=0.910 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 9576 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.645 |
 | walker |  | 9588 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 3, sub: 0, line: 90 } |  |  | 0.645 |
 | ns | 9758 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.638 |
-| walker |  | 9868 | 280 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 34, sub: 0, line: 730 } |  |  | 0.659 |
+| walker |  | 9849 | 261 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 34, sub: 0, line: 730 } |  |  | 0.659 |
 | ns | 9915 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.652 |
-| ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.651 |
-| walker |  | 9998 | 130 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 34, sub: 1, line: 730 } |  |  | 0.654 |
+| ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.650 |
+| walker |  | 9993 | 144 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 34, sub: 1, line: 730 } |  |  | 0.654 |

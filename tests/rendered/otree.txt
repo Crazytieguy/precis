@@ -204,12 +204,12 @@ src/
     47→    if let Some(ref debug_file) = args.debug {
     48→        debug::set_file(debug_file.clone());
     49→    }
-    50→
     51→    // The user can specify the content type manually, or we can determine it based on the
     52→    // file extension.
     53→    // If the content type cannot be determined here, use `ContentType::Any` as default, let
     54→    // parser to detect it.
     55→    let content_type = args.get_content_type();
+    56→
     57→    let max_data_size = args.max_data_size.unwrap_or(cfg.data.max_data_size) * 1024 * 1024;
     58→    let mut fw = None;
     59→    let data = match args.path.as_ref() {

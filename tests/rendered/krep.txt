@@ -115,8 +115,7 @@ aho_corasick.h
   13→// Forward declaration for search_params_t instead of including krep.h
   14→struct search_params;
   15→typedef struct search_params search_params_t;
-  17→// Forward declaration for match_result_t (needed by aho_corasick_search)
-  18→// Use the same struct tag as defined in krep.h
+  …
   19→struct match_result_t;
   20→typedef struct match_result_t match_result_t;
   22→// Forward declaration for internal node structure
@@ -155,7 +154,8 @@ krep.h
   43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
   44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
   45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-  …
+  47→/* --- Match tracking structure --- */
+  48→// Define match_position_t BEFORE match_result_t
   49→typedef struct
   50→{
   51→   size_t start_offset; // Starting position of the match
@@ -169,8 +169,36 @@ krep.h
   59→   uint64_t capacity;           // Current allocated capacity of the positions array
   60→} match_result_t;               // Typedef remains the same
   …
+  64→// Parameters shared across search functions and threads
   65→typedef struct search_params
-  …
+  66→{
+  67→   // Single pattern legacy fields (still used by some functions)
+  68→   const char *pattern;
+  69→   size_t pattern_len;
+  70→
+  71→   // Multiple pattern fields
+  72→   const char **patterns; // Array of patterns (for multiple -e options)
+  73→   size_t *pattern_lens;  // Array of pattern lengths
+  74→   size_t num_patterns;   // Number of patterns
+  75→
+  76→   // Search options
+  77→   bool case_sensitive;
+  78→   bool use_regex;
+  79→   bool count_lines_mode;   // True for -c mode (count lines)
+  80→   bool count_matches_mode; // True for -co mode (count matches - internal concept)
+  81→   bool track_positions;    // True for default or -o mode (track positions)
+  82→   bool whole_word;         // True for -w mode (whole word search)
+  83→   // bool overlapping_mode; // Implicitly true for -o, handled by algorithm advance logic
+  84→
+  85→   // Compiled regex (if applicable, compiled once per file/string)
+  86→   const regex_t *compiled_regex;
+  87→
+  88→   // Compiled Aho-Corasick trie (if applicable)
+  89→   ac_trie_t *ac_trie; // Add pointer for pre-built trie
+  90→
+  91→   // Max count limit from options
+  92→   size_t max_count;
+  93→
   94→} search_params_t;
   …
   98→typedef uint64_t (*search_func_t)(const search_params_t *params,
@@ -179,36 +207,14 @@ krep.h
   101→                                  match_result_t *result);
   …
   104→typedef struct
-  105→{
-  106→   int thread_id;
-  107→   const search_params_t *params; // Pointer to shared search parameters
-  108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
-  109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
   …
   122→} thread_data_t;
-  124→/* --- Thread Pool Implementation --- */
+  …
   125→typedef struct task
-  126→{
-  127→   void *(*func)(void *); // Task function
-  128→   void *arg;             // Function argument
-  129→   struct task *next;     // Next task in queue
+  …
   130→} task_t;
   131→
   132→typedef struct
-  133→{
-  134→   pthread_t *threads;           // Array of worker threads
-  135→   int num_threads;              // Number of worker threads
-  136→   task_t *task_queue;           // Task queue head
-  137→   task_t *task_queue_tail;      // Task queue tail for faster enqueue
-  138→   pthread_mutex_t queue_mutex;  // Mutex for task queue access
-  139→   pthread_cond_t queue_cond;    // Condition variable for task availability
-  140→   pthread_cond_t complete_cond; // Condition variable for task completion
-  141→   size_t working_threads;       // Counter for busy threads
-  142→   atomic_bool shutdown;         // Shutdown flag
-  143→} thread_pool_t;
-  145→/* --- Thread Pool API --- */
-  146→thread_pool_t *thread_pool_init(int num_threads);
-  147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
   …
 test/
   benchmark_krep_vs_rg.sh

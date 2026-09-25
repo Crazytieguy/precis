@@ -232,13 +232,14 @@ Score(3000)=0.673 I=0.779 C=0.581 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | ns | 8640 |  | 119 | HTML pipeline entry points | 8.2 | 8.1 | 0.563 |
 | walker |  | 8664 | 33 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 14, sub: 0, line: 618 } |  |  | 0.563 |
 | ns | 8749 |  | 109 | `HtmlHandlebars` and its render steps | 8.3 |  | 0.559 |
-| ns | 8893 |  | 144 | Theme resolution | 8.4 |  | 0.555 |
-| walker |  | 9015 | 351 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
-| ns | 9021 |  | 128 | Search index, static files and handlebars helpers | 8.5 |  | 0.579 |
+| walker |  | 8864 | 200 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.563 |
+| ns | 8893 |  | 144 | Theme resolution | 8.4 |  | 0.559 |
+| ns | 9021 |  | 128 | Search index, static files and handlebars helpers | 8.5 |  | 0.555 |
+| walker |  | 9048 | 184 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.579 |
 | ns | 9219 |  | 198 | Testsuite module map and harness convention | 9.1 |  | 0.571 |
-| walker |  | 9269 | 254 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.571 |
+| walker |  | 9269 | 221 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.571 |
 | ns | 9335 |  | 116 | Snapshot testing with snapbox | 9.2 | 9.1 | 0.570 |
-| walker |  | 9458 | 189 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.570 |
+| walker |  | 9458 | 189 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.570 |
 | walker |  | 9485 | 27 | Code::CodeKey { rung: Body, file: crates/xtask/src/main.rs, decl: 9, sub: 0, line: 111 } |  |  | 0.570 |
 | walker |  | 9562 | 77 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/print.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
 | ns | 9669 |  | 334 | `BookTest` harness API | 9.3 | 9.1 | 0.561 |

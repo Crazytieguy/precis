@@ -167,8 +167,8 @@ neco.h
   100→int neco_gen_close(neco_gen *gen);
   …
   113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
+  114→
   115→#define NECO_MUTEX_INITIALIZER { 0 }
-  116→
   117→int neco_mutex_init(neco_mutex *mutex);
   118→int neco_mutex_lock(neco_mutex *mutex);
   119→int neco_mutex_lock_dl(neco_mutex *mutex, int64_t deadline);
@@ -189,7 +189,6 @@ neco.h
   …
   149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond;
   150→#define NECO_COND_INITIALIZER { 0 }
-  151→
   152→int neco_cond_init(neco_cond *cond);
   153→int neco_cond_signal(neco_cond *cond);
   154→int neco_cond_broadcast(neco_cond *cond);

@@ -171,7 +171,6 @@ src/
       43→
       44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
       45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-      46→
       47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
       48→
       49→TOML_WS: Final = frozenset(" \t")
@@ -203,24 +202,12 @@ src/
       89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
       90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
       91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      92→        *args: Any,
-      93→    ):
       …
       137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
       …
       149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
       …
       220→class Flags:
-      …
-      223→    # Marks an immutable namespace (inline array or inline table).
-      224→    FROZEN: Final = 0
-      225→    # Marks a nest that has been explicitly created and can no longer
-      226→    # be opened using the "[table]" syntax.
-      227→    EXPLICIT_NEST: Final = 1
-      228→
-      229→    def __init__(self) -> None:
-      …
-      233→    def add_pending(self, key: Key, flag: int) -> None:
       …
       278→class NestedDict:
       279→    def __init__(self) -> None:
@@ -238,6 +225,21 @@ src/
       313→    def __init__(self) -> None:
       …
       318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
+      …
+      327→def skip_until(
+      328→    src: str,
+      329→    pos: Pos,
+      330→    expect: str,
+      331→    *,
+      332→    error_on: frozenset[str],
+      333→    error_on_eof: bool,
+      334→) -> Pos:
+      …
+      349→def skip_comment(src: str, pos: Pos) -> Pos:
+      …
+      361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+      …
+      370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
       …
     _re.py
     _types.py

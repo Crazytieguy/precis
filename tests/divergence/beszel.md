@@ -270,12 +270,12 @@ Score(3000)=0.642 I=0.801 C=0.514 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | walker |  | 8815 | 119 | Code::CodeKey { rung: Names, file: agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.391 |
 | walker |  | 8832 | 17 | Code::CodeKey { rung: Doc, file: agent/agent.go, decl: 5, sub: 0, line: 218 } |  |  | 0.391 |
 | walker |  | 8855 | 23 | Code::CodeKey { rung: Body, file: agent/agent.go, decl: 5, sub: 0, line: 218 } |  |  | 0.391 |
-| walker |  | 9069 | 214 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 0, line: 24 } |  |  | 0.399 |
-| ns | 9087 |  | 297 | go.mod: module path, Go version, direct dependency roster | 5.5 |  | 0.420 |
-| ns | 9179 |  | 92 | supplemental/ tree and .github/workflows listings (complete) | 5.6 |  | 0.424 |
-| walker |  | 9267 | 198 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 1, line: 24 } |  |  | 0.438 |
-| ns | 9295 |  | 116 | internal/site/src/components listing (complete) | 6.1 |  | 0.454 |
-| walker |  | 9386 | 119 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 2, line: 24 } |  |  | 0.468 |
+| walker |  | 9029 | 174 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 0, line: 24 } |  |  | 0.397 |
+| ns | 9087 |  | 297 | go.mod: module path, Go version, direct dependency roster | 5.5 |  | 0.417 |
+| ns | 9179 |  | 92 | supplemental/ tree and .github/workflows listings (complete) | 5.6 |  | 0.422 |
+| walker |  | 9183 | 154 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 1, line: 24 } |  |  | 0.432 |
+| ns | 9295 |  | 116 | internal/site/src/components listing (complete) | 6.1 |  | 0.448 |
+| walker |  | 9386 | 203 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 2, line: 24 } |  |  | 0.468 |
 | ns | 9435 |  | 140 | Frontend route components (complete listings) | 6.2 |  | 0.484 |
 | ns | 9585 |  | 150 | Frontend chart, table, login and ui-primitive listings (complete) | 6.3 |  | 0.497 |
 | walker |  | 9664 | 278 | Code::CodeKey { rung: Names, file: agent/sensors_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |

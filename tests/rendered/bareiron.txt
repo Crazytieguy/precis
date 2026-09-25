@@ -144,15 +144,6 @@ include/
     215→  uint8_t health;
     216→  uint8_t hunger;
     217→  uint16_t saturation;
-    218→  uint8_t hotbar;
-    219→  uint16_t inventory_items[41];
-    220→  uint16_t craft_items[9];
-    221→  uint8_t inventory_count[41];
-    222→  uint8_t craft_count[9];
-    223→  // Usage depends on player's flags, see below
-    224→  // When no flags are set, acts as cursor item ID
-    225→  uint16_t flagval_16;
-    226→  // Usage depends on player's flags, see below
     …
     238→} PlayerData;
     239→
@@ -225,6 +216,15 @@ include/
     21→ssize_t writeUint16 (int client_fd, uint16_t num);
     22→ssize_t writeUint32 (int client_fd, uint32_t num);
     23→ssize_t writeUint64 (int client_fd, uint64_t num);
+    24→ssize_t writeFloat (int client_fd, float num);
+    25→ssize_t writeDouble (int client_fd, double num);
+    26→
+    27→uint8_t readByte (int client_fd);
+    28→uint16_t readUint16 (int client_fd);
+    29→int16_t readInt16 (int client_fd);
+    30→uint32_t readUint32 (int client_fd);
+    31→uint64_t readUint64 (int client_fd);
+    32→int64_t readInt64 (int client_fd);
     …
   varnum.h
     …

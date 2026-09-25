@@ -63,8 +63,9 @@ Score(3000)=0.829 I=0.902 C=0.762 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | walker |  | 4162 | 41 | Code::CodeKey { rung: Doc, file: truststore_java.go, decl: 6, sub: 0, line: 110 } |  |  | 0.794 |
 | walker |  | 4203 | 41 | Code::CodeKey { rung: Doc, file: truststore_nss.go, decl: 6, sub: 0, line: 120 } |  |  | 0.794 |
 | ns | 4374 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.752 |
-| walker |  | 4508 | 305 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 1, line: 87 } |  |  | 0.754 |
-| walker |  | 4769 | 261 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 2, line: 87 } |  |  | 0.757 |
+| walker |  | 4422 | 219 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 1, line: 87 } |  |  | 0.754 |
+| walker |  | 4614 | 192 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 2, line: 87 } |  |  | 0.755 |
+| walker |  | 4769 | 155 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 3, line: 87 } |  |  | 0.757 |
 | ns | 4776 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.720 |
 | walker |  | 4976 | 207 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.746 |
 | ns | 5035 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.720 |
@@ -96,16 +97,16 @@ Score(3000)=0.829 I=0.902 C=0.762 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | walker |  | 7633 | 143 | Code::CodeKey { rung: Body, file: truststore_nss.go, decl: 3, sub: 0, line: 73 } |  |  | 0.644 |
 | ns | 7759 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.635 |
 | walker |  | 7850 | 217 | Code::CodeKey { rung: Body, file: cert.go, decl: 4, sub: 0, line: 148 } |  |  | 0.636 |
-| walker |  | 7885 | 35 | Code::CodeKey { rung: Body, file: main.go, decl: 14, sub: 0, line: 358 } |  |  | 0.636 |
-| ns | 7999 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.626 |
-| walker |  | 8034 | 149 | Code::CodeKey { rung: Body, file: truststore_nss.go, decl: 5, sub: 0, line: 106 } |  |  | 0.628 |
-| walker |  | 8184 | 150 | Code::CodeKey { rung: Body, file: truststore_java.go, decl: 6, sub: 0, line: 110 } |  |  | 0.628 |
+| walker |  | 7999 | 149 | Code::CodeKey { rung: Body, file: truststore_nss.go, decl: 5, sub: 0, line: 106 } |  |  | 0.628 |
+| ns | 7999 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.628 |
+| walker |  | 8149 | 150 | Code::CodeKey { rung: Body, file: truststore_java.go, decl: 6, sub: 0, line: 110 } |  |  | 0.628 |
 | ns | 8212 |  | 213 | The identity strings: userAndHostname init, randomSerialNumber, caUniqueName | 4.9 | 1.6 | 0.633 |
-| walker |  | 8335 | 151 | Code::CodeKey { rung: Body, file: truststore_windows.go, decl: 4, sub: 0, line: 54 } |  |  | 0.634 |
+| walker |  | 8300 | 151 | Code::CodeKey { rung: Body, file: truststore_windows.go, decl: 4, sub: 0, line: 54 } |  |  | 0.634 |
 | ns | 8476 |  | 264 | makeCertFromCSR(): the template fix-ups applied to a supplied CSR | 4.10 | 1.6 | 0.624 |
-| walker |  | 8593 | 258 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 5, sub: 0, line: 77 } |  |  | 0.624 |
+| walker |  | 8558 | 258 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 5, sub: 0, line: 77 } |  |  | 0.624 |
 | ns | 8605 |  | 129 | printHosts(): the certificate name list and the second-level wildcard warning | 4.11 | 1.6 | 0.629 |
-| walker |  | 8855 | 262 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 4, sub: 0, line: 55 } |  |  | 0.629 |
+| walker |  | 8820 | 262 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 4, sub: 0, line: 55 } |  |  | 0.629 |
+| walker |  | 8855 | 35 | Code::CodeKey { rung: Body, file: main.go, decl: 14, sub: 0, line: 358 } |  |  | 0.629 |
 | ns | 8856 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.625 |
 | ns | 9088 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.622 |
 | walker |  | 9118 | 263 | Code::CodeKey { rung: Body, file: cert.go, decl: 6, sub: 0, line: 176 } |  |  | 0.646 |
@@ -115,8 +116,8 @@ Score(3000)=0.829 I=0.902 C=0.762 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.655 |
 | walker |  | 9589 | 217 | Code::CodeKey { rung: Body, file: truststore_nss.go, decl: 7, sub: 0, line: 131 } |  |  | 0.656 |
 | ns | 9610 |  | 142 | forEachNSSProfile(): how Firefox/Chromium profiles are discovered and which DB format is used | 5.5 | 1.9 | 0.661 |
-| walker |  | 9644 | 55 | Code::CodeKey { rung: Body, file: main.go, decl: 12, sub: 0, line: 336 } |  |  | 0.663 |
-| ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.667 |
-| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.665 |
-| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.665 |
-| walker |  | 9984 | 340 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 2, sub: 0, line: 27 } |  |  | 0.684 |
+| ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.665 |
+| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.662 |
+| walker |  | 9952 | 363 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 2, sub: 0, line: 27 } |  |  | 0.684 |
+| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.685 |
+| walker |  | 10000 | 48 | Code::CodeKey { rung: Body, file: truststore_windows.go, decl: 8, sub: 0, line: 91 } |  |  | 0.685 |

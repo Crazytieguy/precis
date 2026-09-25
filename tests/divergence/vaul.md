@@ -143,6 +143,7 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.651 |
 | ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.655 |
 | ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.655 |
+| walker |  | 9816 | 260 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.655 |
 | ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.649 |
 | ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.646 |
-| walker |  | 9996 | 440 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.646 |
+| walker |  | 9991 | 175 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 9, sub: 0, line: 996 } |  |  | 0.646 |

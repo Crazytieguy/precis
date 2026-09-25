@@ -71,11 +71,11 @@ Score(3000)=0.713 I=0.906 C=0.561 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 2934 |  | 69 | `Hooks`: the four hook arrays | 2.6 |  | 0.711 |
 | walker |  | 3064 | 290 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.715 |
 | ns | 3139 |  | 205 | `RetryOptions`: every retry field (types/retry.ts) | 2.7 |  | 0.682 |
-| walker |  | 3371 | 307 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 1, line: 5 } |  |  | 0.693 |
-| ns | 3480 |  | 341 | Hook function signatures and their `*State` objects | 2.8 | 2.6 | 0.654 |
-| walker |  | 3636 | 265 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 2, line: 5 } |  |  | 0.672 |
-| ns | 3745 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.653 |
-| walker |  | 3922 | 286 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 3, line: 5 } |  |  | 0.662 |
+| walker |  | 3267 | 203 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 1, line: 5 } |  |  | 0.688 |
+| walker |  | 3471 | 204 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 2, line: 5 } |  |  | 0.699 |
+| ns | 3480 |  | 341 | Hook function signatures and their `*State` objects | 2.8 | 2.6 | 0.659 |
+| ns | 3745 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.641 |
+| walker |  | 3922 | 451 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 3, line: 5 } |  |  | 0.662 |
 | ns | 4021 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.644 |
 | ns | 4199 |  | 178 | `ky.stop`, `ky.retry()` and the `ForceRetryOptions` fields | 2.11 |  | 0.624 |
 | ns | 4370 |  | 171 | `requestMethods`, `responseTypes` and `maxSafeTimeout` | 2.12 |  | 0.613 |

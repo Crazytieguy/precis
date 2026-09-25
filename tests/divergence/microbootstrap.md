@@ -25,14 +25,14 @@ Score(3000)=0.778 I=0.928 C=0.653 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 786 | 83 | Json::Scripts { file: package.json } |  |  | 0.541 |
 | ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.473 |
 | walker |  | 833 | 47 | Fs::DirListing { dir: tests } |  |  | 0.473 |
-| walker |  | 1060 | 227 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 1026 | 193 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
 | ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.415 |
 | ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.398 |
-| walker |  | 1435 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.743 |
+| walker |  | 1401 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.743 |
 | ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.681 |
-| walker |  | 1660 | 225 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.759 |
-| ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.678 |
-| walker |  | 1920 | 260 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.757 |
+| walker |  | 1695 | 294 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.773 |
+| ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.691 |
+| walker |  | 1920 | 225 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.757 |
 | walker |  | 1958 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.757 |
 | ns | 2007 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.709 |
 | ns | 2228 |  | 221 | README Settings section: env sourcing and `ENVIRONMENT_PREFIX` | 2.5 |  | 0.679 |

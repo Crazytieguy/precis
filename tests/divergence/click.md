@@ -27,13 +27,14 @@ Score(3000)=0.811 I=0.941 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 825 | 36 | Fs::DirListing { dir: examples } |  |  | 0.658 |
 | walker |  | 952 | 127 | Fs::DirListing { dir: tests } |  |  | 0.766 |
 | ns | 983 |  | 207 | Documentation listing: docs/ | 1.9 |  | 0.804 |
-| walker |  | 1200 | 248 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |
-| ns | 1248 |  | 265 | Public API surface, part 1: object model and decorators | 2.1 |  | 0.814 |
-| walker |  | 1433 | 233 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.827 |
-| ns | 1440 |  | 192 | Public API surface, part 2: exceptions, formatting, globals | 2.2 |  | 0.831 |
-| ns | 1629 |  | 189 | Public API surface, part 3: terminal UI exports | 2.3 |  | 0.801 |
-| walker |  | 1672 | 239 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.840 |
-| walker |  | 1892 | 220 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 3, line: 0 } |  |  | 0.847 |
+| walker |  | 1155 | 203 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
+| ns | 1248 |  | 265 | Public API surface, part 1: object model and decorators | 2.1 |  | 0.794 |
+| walker |  | 1347 | 192 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.824 |
+| ns | 1440 |  | 192 | Public API surface, part 2: exceptions, formatting, globals | 2.2 |  | 0.809 |
+| walker |  | 1540 | 193 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.834 |
+| ns | 1629 |  | 189 | Public API surface, part 3: terminal UI exports | 2.3 |  | 0.820 |
+| walker |  | 1736 | 196 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 3, line: 0 } |  |  | 0.842 |
+| walker |  | 1892 | 156 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 4, line: 0 } |  |  | 0.847 |
 | ns | 1899 |  | 270 | Public API surface, part 4: parameter types and utilities | 2.4 |  | 0.851 |
 | walker |  | 1948 | 56 | Fs::DirListing { dir: tests/typing } |  |  | 0.902 |
 | ns | 1980 |  | 81 | Deprecated names still resolvable via module __getattr__ | 2.5 |  | 0.877 |
@@ -111,51 +112,51 @@ Score(3000)=0.811 I=0.941 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 6137 | 468 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 100, sub: 0, line: 2147 } |  |  | 0.728 |
 | ns | 6209 |  | 97 | How tests are run: pytest configuration | 5.2 |  | 0.721 |
 | ns | 6270 |  | 61 | The pytest fixture every test uses | 5.3 |  | 0.715 |
-| walker |  | 6384 | 247 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 9, sub: 0, line: 185 } |  |  | 0.718 |
-| walker |  | 6392 | 8 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 11, sub: 0, line: 459 } |  |  | 0.718 |
-| walker |  | 6400 | 8 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 16, sub: 0, line: 549 } |  |  | 0.718 |
-| walker |  | 6409 | 9 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 15, sub: 0, line: 511 } |  |  | 0.718 |
-| ns | 6452 |  | 182 | CliRunner.invoke: running a CLI in a test | 5.4 |  | 0.709 |
-| walker |  | 6469 | 60 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 14, sub: 0, line: 497 } |  |  | 0.709 |
-| ns | 6581 |  | 129 | tox environments: the developer command surface | 5.5 |  | 0.702 |
-| walker |  | 6729 | 260 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 10, sub: 0, line: 289 } |  |  | 0.726 |
-| ns | 6818 |  | 237 | Lint and type-check configuration | 5.6 |  | 0.711 |
-| ns | 6868 |  | 50 | CI and repository automation listing | 5.7 |  | 0.709 |
-| ns | 6927 |  | 59 | The exact command CI runs | 5.8 |  | 0.707 |
-| walker |  | 6963 | 234 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 9, sub: 1, line: 185 } |  |  | 0.723 |
-| walker |  | 6971 | 8 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 22, sub: 0, line: 657 } |  |  | 0.723 |
-| walker |  | 7016 | 45 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 27, sub: 0, line: 718 } |  |  | 0.723 |
-| walker |  | 7065 | 49 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 28, sub: 0, line: 723 } |  |  | 0.723 |
-| walker |  | 7125 | 60 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 21, sub: 0, line: 639 } |  |  | 0.723 |
-| walker |  | 7136 | 11 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 31, sub: 0, line: 758 } |  |  | 0.723 |
-| walker |  | 7149 | 13 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 23, sub: 0, line: 676 } |  |  | 0.723 |
-| walker |  | 7165 | 16 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 24, sub: 0, line: 683 } |  |  | 0.723 |
-| ns | 7226 |  | 299 | types.py class roster: the ParamType hierarchy | 6.1 |  | 0.705 |
-| ns | 7306 |  | 80 | The exported type singletons | 6.2 |  | 0.701 |
-| walker |  | 7354 | 189 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 9, sub: 2, line: 185 } |  |  | 0.719 |
-| walker |  | 7364 | 10 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 37, sub: 0, line: 797 } |  |  | 0.719 |
-| walker |  | 7407 | 43 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 38, sub: 0, line: 800 } |  |  | 0.719 |
+| walker |  | 6331 | 194 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 9, sub: 0, line: 185 } |  |  | 0.717 |
+| walker |  | 6339 | 8 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 11, sub: 0, line: 459 } |  |  | 0.717 |
+| walker |  | 6347 | 8 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 16, sub: 0, line: 549 } |  |  | 0.717 |
+| walker |  | 6356 | 9 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 15, sub: 0, line: 511 } |  |  | 0.717 |
+| walker |  | 6416 | 60 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 14, sub: 0, line: 497 } |  |  | 0.717 |
+| ns | 6452 |  | 182 | CliRunner.invoke: running a CLI in a test | 5.4 |  | 0.707 |
+| ns | 6581 |  | 129 | tox environments: the developer command surface | 5.5 |  | 0.700 |
+| walker |  | 6676 | 260 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 10, sub: 0, line: 289 } |  |  | 0.725 |
+| ns | 6818 |  | 237 | Lint and type-check configuration | 5.6 |  | 0.710 |
+| walker |  | 6854 | 178 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 9, sub: 1, line: 185 } |  |  | 0.718 |
+| walker |  | 6862 | 8 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 22, sub: 0, line: 657 } |  |  | 0.718 |
+| ns | 6868 |  | 50 | CI and repository automation listing | 5.7 |  | 0.716 |
+| walker |  | 6922 | 60 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 21, sub: 0, line: 639 } |  |  | 0.716 |
+| ns | 6927 |  | 59 | The exact command CI runs | 5.8 |  | 0.714 |
+| walker |  | 6935 | 13 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 23, sub: 0, line: 676 } |  |  | 0.714 |
+| walker |  | 6951 | 16 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 24, sub: 0, line: 683 } |  |  | 0.714 |
+| ns | 7226 |  | 299 | types.py class roster: the ParamType hierarchy | 6.1 |  | 0.697 |
+| walker |  | 7249 | 298 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 9, sub: 2, line: 185 } |  |  | 0.722 |
+| walker |  | 7259 | 10 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 37, sub: 0, line: 797 } |  |  | 0.722 |
+| walker |  | 7302 | 43 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 38, sub: 0, line: 800 } |  |  | 0.722 |
+| ns | 7306 |  | 80 | The exported type singletons | 6.2 |  | 0.719 |
+| walker |  | 7347 | 45 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 27, sub: 0, line: 718 } |  |  | 0.719 |
+| walker |  | 7394 | 47 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 36, sub: 0, line: 792 } |  |  | 0.719 |
 | ns | 7442 |  | 136 | ParamType: the interface a custom type implements | 6.3 |  | 0.711 |
-| walker |  | 7454 | 47 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 36, sub: 0, line: 792 } |  |  | 0.711 |
-| walker |  | 7699 | 245 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 42, sub: 0, line: 903 } |  |  | 0.712 |
-| ns | 7707 |  | 265 | Exception hierarchy with exit codes | 6.4 |  | 0.713 |
-| walker |  | 7891 | 192 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 43, sub: 0, line: 965 } |  |  | 0.728 |
+| walker |  | 7443 | 49 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 28, sub: 0, line: 723 } |  |  | 0.711 |
+| walker |  | 7454 | 11 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 31, sub: 0, line: 758 } |  |  | 0.711 |
+| walker |  | 7662 | 208 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 42, sub: 0, line: 903 } |  |  | 0.711 |
+| ns | 7707 |  | 265 | Exception hierarchy with exit codes | 6.4 |  | 0.712 |
+| walker |  | 7854 | 192 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 43, sub: 0, line: 965 } |  |  | 0.728 |
 | ns | 7912 |  | 205 | decorators.py roster: every decorator and its overloads | 7.1 |  | 0.716 |
-| walker |  | 8125 | 234 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 42, sub: 1, line: 903 } |  |  | 0.724 |
-| walker |  | 8140 | 15 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 50, sub: 0, line: 1076 } |  |  | 0.724 |
-| ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.716 |
-| walker |  | 8156 | 16 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 52, sub: 0, line: 1111 } |  |  | 0.716 |
-| walker |  | 8174 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 56, sub: 0, line: 1166 } |  |  | 0.716 |
-| ns | 8347 |  | 204 | style and secho: colours and text attributes | 8.1 |  | 0.707 |
-| walker |  | 8387 | 213 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 42, sub: 2, line: 903 } |  |  | 0.723 |
-| walker |  | 8449 | 62 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 66, sub: 0, line: 1479 } |  |  | 0.723 |
-| walker |  | 8517 | 68 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 59, sub: 0, line: 1210 } |  |  | 0.723 |
+| walker |  | 8049 | 195 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 42, sub: 1, line: 903 } |  |  | 0.720 |
+| walker |  | 8064 | 15 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 50, sub: 0, line: 1076 } |  |  | 0.720 |
+| walker |  | 8080 | 16 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 52, sub: 0, line: 1111 } |  |  | 0.720 |
+| ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.712 |
+| ns | 8347 |  | 204 | style and secho: colours and text attributes | 8.1 |  | 0.704 |
+| walker |  | 8369 | 289 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 42, sub: 2, line: 903 } |  |  | 0.723 |
+| walker |  | 8431 | 62 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 66, sub: 0, line: 1479 } |  |  | 0.723 |
+| walker |  | 8499 | 68 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 59, sub: 0, line: 1210 } |  |  | 0.723 |
 | ns | 8590 |  | 243 | prompt and confirm signatures | 8.2 |  | 0.712 |
-| walker |  | 8619 | 102 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 64, sub: 0, line: 1356 } |  |  | 0.712 |
-| walker |  | 8725 | 106 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 65, sub: 0, line: 1366 } |  |  | 0.717 |
+| walker |  | 8601 | 102 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 64, sub: 0, line: 1356 } |  |  | 0.712 |
+| walker |  | 8707 | 106 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 65, sub: 0, line: 1366 } |  |  | 0.717 |
 | ns | 8798 |  | 208 | termui.py roster: the remaining terminal functions | 8.3 |  | 0.707 |
-| walker |  | 8833 | 108 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 63, sub: 0, line: 1346 } |  |  | 0.707 |
-| walker |  | 8848 | 15 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 67, sub: 0, line: 1511 } |  |  | 0.707 |
+| walker |  | 8815 | 108 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 63, sub: 0, line: 1346 } |  |  | 0.707 |
+| walker |  | 8830 | 15 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 67, sub: 0, line: 1511 } |  |  | 0.707 |
+| walker |  | 8848 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 56, sub: 0, line: 1166 } |  |  | 0.707 |
 | walker |  | 8866 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 57, sub: 0, line: 1189 } |  |  | 0.707 |
 | walker |  | 8884 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 58, sub: 0, line: 1201 } |  |  | 0.707 |
 | walker |  | 8916 | 32 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 33, sub: 0, line: 772 } |  |  | 0.707 |
@@ -164,17 +165,16 @@ Score(3000)=0.811 I=0.941 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 9159 |  | 196 | shell_completion.py roster: per-shell backends | 9.1 |  | 0.690 |
 | walker |  | 9283 | 335 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 72, sub: 0, line: 1531 } |  |  | 0.690 |
 | ns | 9340 |  | 181 | formatting.py: HelpFormatter and text wrapping | 9.2 |  | 0.682 |
-| walker |  | 9520 | 237 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 72, sub: 1, line: 1531 } |  |  | 0.691 |
-| walker |  | 9531 | 11 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 76, sub: 0, line: 1660 } |  |  | 0.691 |
-| walker |  | 9542 | 11 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 79, sub: 0, line: 1709 } |  |  | 0.691 |
-| ns | 9555 |  | 215 | parser.py: the private option parser | 9.3 |  | 0.682 |
-| walker |  | 9586 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 78, sub: 0, line: 1668 } |  |  | 0.682 |
-| walker |  | 9630 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 81, sub: 0, line: 1717 } |  |  | 0.682 |
-| walker |  | 9679 | 49 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 77, sub: 0, line: 1663 } |  |  | 0.682 |
-| walker |  | 9728 | 49 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 80, sub: 0, line: 1712 } |  |  | 0.682 |
-| ns | 9748 |  | 193 | globals.py and the UNSET sentinel | 9.4 |  | 0.676 |
-| ns | 9861 |  | 113 | _termui_impl.py roster: ProgressBar, pagers, Editor | 9.5 |  | 0.672 |
-| walker |  | 9893 | 165 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 73, sub: 0, line: 1584 } |  |  | 0.684 |
-| walker |  | 9914 | 21 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 84, sub: 0, line: 1812 } |  |  | 0.684 |
-| ns | 9959 |  | 98 | Changelog head: the unreleased 8.4.0 section | 10.1 |  | 0.679 |
-| walker |  | 9987 | 73 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 72, sub: 2, line: 1531 } |  |  | 0.684 |
+| walker |  | 9499 | 216 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 72, sub: 1, line: 1531 } |  |  | 0.689 |
+| walker |  | 9510 | 11 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 76, sub: 0, line: 1660 } |  |  | 0.689 |
+| walker |  | 9521 | 11 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 79, sub: 0, line: 1709 } |  |  | 0.689 |
+| ns | 9555 |  | 215 | parser.py: the private option parser | 9.3 |  | 0.681 |
+| walker |  | 9565 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 78, sub: 0, line: 1668 } |  |  | 0.681 |
+| walker |  | 9609 | 44 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 81, sub: 0, line: 1717 } |  |  | 0.681 |
+| walker |  | 9658 | 49 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 77, sub: 0, line: 1663 } |  |  | 0.681 |
+| walker |  | 9707 | 49 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 80, sub: 0, line: 1712 } |  |  | 0.681 |
+| ns | 9748 |  | 193 | globals.py and the UNSET sentinel | 9.4 |  | 0.675 |
+| ns | 9861 |  | 113 | _termui_impl.py roster: ProgressBar, pagers, Editor | 9.5 |  | 0.671 |
+| walker |  | 9872 | 165 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 73, sub: 0, line: 1584 } |  |  | 0.682 |
+| ns | 9959 |  | 98 | Changelog head: the unreleased 8.4.0 section | 10.1 |  | 0.678 |
+| walker |  | 9992 | 120 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 72, sub: 2, line: 1531 } |  |  | 0.685 |

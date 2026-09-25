@@ -34,10 +34,10 @@ Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 1361 |  | 136 | README testing steps (verbatim) | 1.9 | 1.7 | 0.789 |
 | walker |  | 1406 | 202 | Json::Scripts { file: package.json } |  |  | 0.851 |
 | ns | 1473 |  | 112 | index.tsx imports + 'use client' | 2.1 |  | 0.822 |
-| walker |  | 1628 | 222 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.824 |
-| walker |  | 1652 | 24 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 1, sub: 0, line: 149 } |  |  | 0.824 |
-| ns | 1690 |  | 217 | Public export surface (Command.* object + named exports) | 2.2 |  | 0.752 |
-| walker |  | 1884 | 232 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 1, line: 0 } |  |  | 0.802 |
+| walker |  | 1576 | 170 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.823 |
+| walker |  | 1600 | 24 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 1, sub: 0, line: 149 } |  |  | 0.823 |
+| ns | 1690 |  | 217 | Public export surface (Command.* object + named exports) | 2.2 |  | 0.751 |
+| walker |  | 1884 | 284 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 1, line: 0 } |  |  | 0.802 |
 | walker |  | 1943 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 12, sub: 0, line: 930 } |  |  | 0.845 |
 | walker |  | 1958 | 15 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 13, sub: 0, line: 1004 } |  |  | 0.845 |
 | walker |  | 1984 | 26 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 9, sub: 0, line: 882 } |  |  | 0.845 |
@@ -121,19 +121,19 @@ Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.507 |
 | ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.502 |
 | walker |  | 9265 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 787 } |  |  | 0.521 |
-| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.511 |
-| walker |  | 9493 | 228 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 0, line: 729 } |  |  | 0.512 |
-| walker |  | 9515 | 22 | Code::CodeKey { rung: Names, file: test/pages/dialog.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9537 | 22 | Code::CodeKey { rung: Names, file: test/pages/group.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9559 | 22 | Code::CodeKey { rung: Names, file: test/pages/huge.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9581 | 22 | Code::CodeKey { rung: Names, file: test/pages/item-advanced.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9603 | 22 | Code::CodeKey { rung: Names, file: test/pages/item.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9625 | 22 | Code::CodeKey { rung: Names, file: test/pages/keybinds.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9647 | 22 | Code::CodeKey { rung: Names, file: test/pages/numeric.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9669 | 22 | Code::CodeKey { rung: Names, file: test/pages/portal.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
-| walker |  | 9691 | 22 | Code::CodeKey { rung: Names, file: test/pages/props.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9464 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 0, line: 729 } |  |  | 0.522 |
+| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.512 |
+| walker |  | 9486 | 22 | Code::CodeKey { rung: Names, file: test/pages/dialog.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9508 | 22 | Code::CodeKey { rung: Names, file: test/pages/group.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9530 | 22 | Code::CodeKey { rung: Names, file: test/pages/huge.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9552 | 22 | Code::CodeKey { rung: Names, file: test/pages/item-advanced.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9574 | 22 | Code::CodeKey { rung: Names, file: test/pages/item.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9596 | 22 | Code::CodeKey { rung: Names, file: test/pages/keybinds.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9618 | 22 | Code::CodeKey { rung: Names, file: test/pages/numeric.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9640 | 22 | Code::CodeKey { rung: Names, file: test/pages/portal.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 9662 | 22 | Code::CodeKey { rung: Names, file: test/pages/props.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
 | ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.502 |
 | ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.495 |
-| walker |  | 9915 | 224 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 1, line: 729 } |  |  | 0.517 |
+| walker |  | 9915 | 253 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 5, sub: 1, line: 729 } |  |  | 0.517 |
 | ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.526 |
 | walker |  | 9991 | 76 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.526 |

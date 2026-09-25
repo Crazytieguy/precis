@@ -108,7 +108,6 @@ src/
     458→static MAX_LOG_LEVEL_FILTER: AtomicUsize = AtomicUsize::new(0);
     459→
     460→static LOG_LEVEL_NAMES: [&str; 6] = ["OFF", "ERROR", "WARN", "INFO", "DEBUG", "TRACE"];
-    461→
     462→static SET_LOGGER_ERROR: &str = "attempted to set a logger after the logging system \
     463→                                 was already initialized";
     464→static LEVEL_PARSE_ERROR: &str =
@@ -126,7 +125,21 @@ src/
     482→    Error = 1,
     483→    /// The "warn" level.
     484→    ///
-    …
+    485→    /// Designates hazardous situations.
+    486→    Warn,
+    487→    /// The "info" level.
+    488→    ///
+    489→    /// Designates useful information.
+    490→    Info,
+    491→    /// The "debug" level.
+    492→    ///
+    493→    /// Designates lower priority information.
+    494→    Debug,
+    495→    /// The "trace" level.
+    496→    ///
+    497→    /// Designates very low priority, often extremely verbose, information.
+    498→    Trace,
+    499→}
     501→impl PartialEq<LevelFilter> for Level {
     502→    #[inline]
     503→    fn eq(&self, other: &LevelFilter) -> bool {
@@ -152,6 +165,7 @@ src/
     547→    #[inline]
     548→    pub fn max() -> Level {
     …
+    552→    /// Converts the `Level` to the equivalent `LevelFilter`.
     553→    #[inline]
     554→    pub fn to_level_filter(&self) -> LevelFilter {
     …
@@ -202,6 +216,7 @@ src/
     682→}
     684→impl LevelFilter {
     …
+    697→    /// Returns the most verbose logging level filter.
     698→    #[inline]
     699→    pub fn max() -> LevelFilter {
     …
@@ -223,16 +238,7 @@ src/
     783→    Borrowed(&'a str),
     784→}
     …
-    841→#[derive(Clone, Debug)]
     842→pub struct Record<'a> {
-    843→    metadata: Metadata<'a>,
-    844→    args: fmt::Arguments<'a>,
-    845→    module_path: Option<MaybeStaticStr<'a>>,
-    846→    file: Option<MaybeStaticStr<'a>>,
-    847→    line: Option<u32>,
-    848→    #[cfg(feature = "kv")]
-    849→    key_values: KeyValues<'a>,
-    850→}
     …
     856→#[cfg(feature = "kv")]
     857→#[derive(Clone)]
@@ -243,57 +249,55 @@ src/
     …
     867→}
     869→impl<'a> Record<'a> {
-    870→    /// Returns a new builder.
-    871→    #[inline]
-    872→    pub fn builder() -> RecordBuilder<'a> {
-    …
-    876→    /// The message body.
-    877→    #[inline]
-    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
-    …
-    882→    /// Metadata about the log directive.
-    883→    #[inline]
-    884→    pub fn metadata(&self) -> &Metadata<'a> {
-    …
-    888→    /// The verbosity level of the message.
-    889→    #[inline]
-    890→    pub fn level(&self) -> Level {
-    …
-    895→    #[inline]
-    896→    pub fn target(&self) -> &'a str {
-    …
-    900→    /// The module path of the message.
-    901→    #[inline]
-    902→    pub fn module_path(&self) -> Option<&'a str> {
-    …
-    907→    #[inline]
-    908→    pub fn module_path_static(&self) -> Option<&'static str> {
-    …
-    915→    /// The source file containing the message.
-    916→    #[inline]
-    917→    pub fn file(&self) -> Option<&'a str> {
-    …
-    922→    #[inline]
-    923→    pub fn file_static(&self) -> Option<&'static str> {
-    …
-    930→    /// The line containing the message.
-    931→    #[inline]
-    932→    pub fn line(&self) -> Option<u32> {
-    …
-    937→    #[cfg(feature = "kv")]
-    938→    #[inline]
-    939→    pub fn key_values(&self) -> &dyn kv::Source {
-    …
-    944→    #[cfg(feature = "kv")]
-    945→    #[inline]
-    946→    pub fn to_builder(&self) -> RecordBuilder<'_> {
-    …
-    961→}
     …
     1002→#[derive(Debug)]
     1003→pub struct RecordBuilder<'a> {
     1004→    record: Record<'a>,
     1005→}
+    1007→impl<'a> RecordBuilder<'a> {
+    …
+    1113→impl Default for RecordBuilder<'_> {
+    1114→    fn default() -> Self {
+    …
+    1117→}
+    …
+    1157→#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
+    1158→pub struct Metadata<'a> {
+    1159→    level: Level,
+    1160→    target: &'a str,
+    1161→}
+    1163→impl<'a> Metadata<'a> {
+    …
+    1165→    #[inline]
+    1166→    pub fn builder() -> MetadataBuilder<'a> {
+    …
+    1171→    #[inline]
+    1172→    pub fn level(&self) -> Level {
+    …
+    1177→    #[inline]
+    1178→    pub fn target(&self) -> &'a str {
+    …
+    1181→}
+    …
+    1199→#[derive(Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
+    1200→pub struct MetadataBuilder<'a> {
+    1201→    metadata: Metadata<'a>,
+    1202→}
+    1204→impl<'a> MetadataBuilder<'a> {
+    …
+    1242→impl Default for MetadataBuilder<'_> {
+    1243→    fn default() -> Self {
+    …
+    1246→}
+    …
+    1249→pub trait Log: Sync + Send {
+    …
+    1262→    fn enabled(&self, metadata: &Metadata) -> bool;
+    …
+    1271→    fn log(&self, record: &Record);
+    …
+    1279→    fn flush(&self);
+    1280→}
     …
   macros.rs
   serde.rs

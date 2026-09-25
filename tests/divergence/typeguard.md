@@ -22,10 +22,10 @@ Score(3000)=0.619 I=0.875 C=0.438 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 898 | 100 | Fs::DirListing { dir: tests } |  |  | 0.905 |
 | walker |  | 912 | 14 | Fs::DirListing { dir: tests/mypy } |  |  | 0.905 |
 | ns | 954 |  | 206 | Public exports of typeguard/__init__.py, second half | 1.8 | 1.7 | 0.828 |
-| ns | 1109 |  | 155 | Docs and test tree listings | 1.9 |  | 0.849 |
-| walker |  | 1139 | 227 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.928 |
-| ns | 1339 |  | 230 | __init__.py package-level machinery | 1.10 | 1.8 | 0.833 |
-| walker |  | 1366 | 227 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.901 |
+| walker |  | 1105 | 193 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.898 |
+| ns | 1109 |  | 155 | Docs and test tree listings | 1.9 |  | 0.908 |
+| ns | 1339 |  | 230 | __init__.py package-level machinery | 1.10 | 1.8 | 0.815 |
+| walker |  | 1366 | 261 | Code::CodeKey { rung: Names, file: src/typeguard/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.901 |
 | ns | 1473 |  | 134 | docs/index.rst in full | 1.11 |  | 0.833 |
 | ns | 1636 |  | 163 | check_type(): real signature and the TypeCheckFailCallback alias | 2.1 |  | 0.791 |
 | ns | 1752 |  | 116 | @typechecked: implementation signature | 2.2 |  | 0.769 |
@@ -157,11 +157,11 @@ Score(3000)=0.619 I=0.875 C=0.438 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 8435 | 17 | Code::CodeKey { rung: Doc, file: src/typeguard/_transformer.py, decl: 56, sub: 0, line: 918 } |  |  | 0.535 |
 | walker |  | 8458 | 23 | Code::CodeKey { rung: Doc, file: src/typeguard/_transformer.py, decl: 60, sub: 0, line: 1138 } |  |  | 0.535 |
 | ns | 8556 |  | 232 | Roster of _utils.py helpers, including the version-gated evaluate_forwardref | 5.6 |  | 0.531 |
-| walker |  | 8679 | 221 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 0, line: 117 } |  |  | 0.531 |
+| walker |  | 8639 | 181 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 0, line: 117 } |  |  | 0.531 |
 | ns | 8731 |  | 175 | _transformer.py top-level structure: constants and the four visitor classes | 6.1 |  | 0.539 |
-| walker |  | 8886 | 207 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 1, line: 117 } |  |  | 0.539 |
+| walker |  | 8801 | 162 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 1, line: 117 } |  |  | 0.539 |
 | ns | 8963 |  | 232 | Complete method roster of TypeguardTransformer | 6.2 |  | 0.550 |
-| walker |  | 8999 | 113 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 2, line: 117 } |  |  | 0.550 |
+| walker |  | 8999 | 198 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 2, line: 117 } |  |  | 0.550 |
 | walker |  | 9012 | 13 | Code::CodeKey { rung: Doc, file: src/typeguard/_transformer.py, decl: 15, sub: 0, line: 225 } |  |  | 0.550 |
 | walker |  | 9041 | 29 | Code::CodeKey { rung: Doc, file: src/typeguard/_importhook.py, decl: 12, sub: 0, line: 156 } |  |  | 0.551 |
 | walker |  | 9061 | 20 | Code::CodeKey { rung: Body, file: src/typeguard/_decorators.py, decl: 2, sub: 0, line: 32 } |  |  | 0.551 |

@@ -16,7 +16,7 @@ use crate::walker::budget_chunk_ranges;
 /// A part costing more tokens than this is split.
 pub(super) const SPLIT_AT: usize = 300;
 /// Token size a chunk grows to before the next item starts a new one.
-pub(super) const TARGET: usize = 150;
+pub(super) const TARGET: usize = 120;
 /// A final chunk cheaper than this folds into the one before it.
 pub(super) const MIN_TAIL: usize = 75;
 

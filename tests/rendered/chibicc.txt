@@ -177,9 +177,6 @@ chibicc.h
   133→  int align;     // alignment
   134→
   135→  // Local variable
-  136→  int offset;
-  137→
-  138→  // Global variable or function
   …
   167→typedef struct Relocation Relocation;
   168→struct Relocation {
@@ -239,6 +236,9 @@ chibicc.h
   378→extern Type *ty_bool;
   379→
   380→extern Type *ty_char;
+  381→extern Type *ty_short;
+  382→extern Type *ty_int;
+  383→extern Type *ty_long;
   …
 codegen.c
 hashmap.c

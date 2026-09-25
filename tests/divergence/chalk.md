@@ -67,15 +67,16 @@ Score(3000)=0.671 I=0.862 C=0.523 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 3271 | 209 | Markdown::Section { file: readme.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.665 |
 | ns | 3571 |  | 304 | ansi-styles: the `styles.color` foreground code table | 3.2 | 3.1 | 0.640 |
 | walker |  | 3613 | 342 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 1, line: 32 } |  |  | 0.655 |
-| ns | 3885 |  | 314 | ansi-styles: the `styles.bgColor` background code table | 3.3 | 3.2 | 0.631 |
-| walker |  | 3923 | 310 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 2, line: 32 } |  |  | 0.648 |
-| ns | 3950 |  | 65 | ansi-styles: the four exported style-name arrays | 3.4 | 3.3 | 0.644 |
-| ns | 4159 |  | 209 | readme: modifier list with human descriptions | 3.5 | 1.7 | 0.653 |
-| walker |  | 4239 | 316 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 3, line: 32 } |  |  | 0.681 |
-| ns | 4467 |  | 308 | readme: 256/Truecolor section and the `rgb`/`hex`/`ansi256` colour models | 3.6 | 1.5 | 0.673 |
-| walker |  | 4523 | 284 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 4, line: 32 } |  |  | 0.706 |
-| ns | 4561 |  | 94 | `source/index.js` imports and the stdout/stderr colour split | 4.1 |  | 0.698 |
-| walker |  | 4833 | 310 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 5, line: 32 } |  |  | 0.747 |
+| walker |  | 3845 | 232 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 2, line: 32 } |  |  | 0.669 |
+| ns | 3885 |  | 314 | ansi-styles: the `styles.bgColor` background code table | 3.3 | 3.2 | 0.644 |
+| ns | 3950 |  | 65 | ansi-styles: the four exported style-name arrays | 3.4 | 3.3 | 0.640 |
+| walker |  | 4101 | 256 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 3, line: 32 } |  |  | 0.655 |
+| ns | 4159 |  | 209 | readme: modifier list with human descriptions | 3.5 | 1.7 | 0.664 |
+| walker |  | 4326 | 225 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 4, line: 32 } |  |  | 0.689 |
+| ns | 4467 |  | 308 | readme: 256/Truecolor section and the `rgb`/`hex`/`ansi256` colour models | 3.6 | 1.5 | 0.680 |
+| walker |  | 4546 | 220 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 5, line: 32 } |  |  | 0.713 |
+| ns | 4561 |  | 94 | `source/index.js` imports and the stdout/stderr colour split | 4.1 |  | 0.705 |
+| walker |  | 4833 | 287 | Code::CodeKey { rung: Decl, file: source/index.d.ts, decl: 3, sub: 6, line: 32 } |  |  | 0.747 |
 | ns | 4843 |  | 282 | `source/index.js`: complete top-level declaration roster | 4.2 |  | 0.729 |
 | walker |  | 4926 | 93 | Code::CodeKey { rung: Doc, file: source/index.d.ts, decl: 4, sub: 0, line: 242 } |  |  | 0.729 |
 | ns | 4982 |  | 139 | `Chalk` class, `chalkFactory`, `createChalk` | 4.3 | 4.2 | 0.716 |
@@ -129,8 +130,8 @@ Score(3000)=0.671 I=0.862 C=0.523 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 8683 |  | 209 | supports-color browser build: `browser.js` level detection and export shape | 5.10 |  | 0.596 |
 | ns | 8696 |  | 13 | `browser.d.ts` (one-line type re-export) | 5.11 |  | 0.596 |
 | ns | 8768 |  | 72 | ava test harness setup in `test/chalk.js` | 6.1 |  | 0.594 |
-| walker |  | 8881 | 255 | Code::CodeKey { rung: Decl, file: source/vendor/ansi-styles/index.d.ts, decl: 6, sub: 0, line: 135 } |  |  | 0.594 |
-| walker |  | 9122 | 241 | Code::CodeKey { rung: Decl, file: source/vendor/ansi-styles/index.d.ts, decl: 6, sub: 1, line: 135 } |  |  | 0.594 |
+| walker |  | 8809 | 183 | Code::CodeKey { rung: Decl, file: source/vendor/ansi-styles/index.d.ts, decl: 6, sub: 0, line: 135 } |  |  | 0.594 |
+| walker |  | 9122 | 313 | Code::CodeKey { rung: Decl, file: source/vendor/ansi-styles/index.d.ts, decl: 6, sub: 1, line: 135 } |  |  | 0.594 |
 | ns | 9189 |  | 421 | Every test title in `test/chalk.js` | 6.2 | 6.1 | 0.584 |
 | ns | 9425 |  | 236 | Every test title in the four remaining ava files | 6.3 |  | 0.580 |
 | ns | 9522 |  | 97 | `test/_fixture.js` in full, and the child process that runs it | 6.4 | 6.3 | 0.578 |
