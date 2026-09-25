@@ -3,7 +3,7 @@
 //! and exit non-zero if anything fails.
 //!
 //! Usage:
-//!   cargo run --bin validate-ns -- tests/north-stars/log.toml
+//!   cargo run --example validate_ns -- tests/north-stars/log.toml
 //!
 //! The fixture root is derived from the NS's `fixture = "…"` field,
 //! resolved as `tests/fixtures/<name>/` relative to the current workdir

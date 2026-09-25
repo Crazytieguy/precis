@@ -56,7 +56,7 @@ Check `tests/data/fixtures.rs` — the shared list of all fixture repos.
 Then:
 
 ```bash
-cargo run --bin clone_fixtures
+cargo run --example clone_fixtures
 ```
 
 Clones any missing fixtures to `tests/fixtures/<name>/` (strips `.git`,
@@ -71,7 +71,7 @@ Spawn one `north-star-author` agent with:
 - Fixture's revision pin: the SHA from `tests/data/fixtures.rs` (also
   in `tests/fixtures/<name>/.precis-pin`)
 
-The author iterates against `cargo run --bin validate-ns -- <path>`
+The author iterates against `cargo run --example validate_ns -- <path>`
 internally until clean. Takes 15–30 minutes.
 
 ## 3. Freeze (optional human review)

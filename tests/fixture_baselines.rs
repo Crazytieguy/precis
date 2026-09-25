@@ -231,7 +231,7 @@ fn require_fixture(fixture: &str) -> PathBuf {
     let p = fixture_path(fixture);
     assert!(
         p.exists(),
-        "fixture `{fixture}` not present at {}; run `cargo run --bin clone_fixtures`",
+        "fixture `{fixture}` not present at {}; run `cargo run --example clone_fixtures`",
         p.display()
     );
     p

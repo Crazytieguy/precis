@@ -25,7 +25,7 @@ fn fixture_pins_match_declarations() {
             Ok(s) => s.trim().to_string(),
             Err(_) => {
                 problems.push(format!(
-                    "{name}: missing {} (re-run `cargo run --bin clone_fixtures`)",
+                    "{name}: missing {} (re-run `cargo run --example clone_fixtures`)",
                     pin_path.display()
                 ));
                 continue;
@@ -33,7 +33,7 @@ fn fixture_pins_match_declarations() {
         };
         if actual != expected {
             problems.push(format!(
-                "{name}: pin {actual} != fixtures.rs {expected} (re-clone: rm -rf {} && cargo run --bin clone_fixtures)",
+                "{name}: pin {actual} != fixtures.rs {expected} (re-clone: rm -rf {} && cargo run --example clone_fixtures)",
                 dir.display()
             ));
         }

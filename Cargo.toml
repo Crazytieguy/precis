@@ -10,7 +10,7 @@ repository = "https://github.com/Crazytieguy/precis"
 homepage = "https://github.com/Crazytieguy/precis"
 keywords = ["codebase", "summarizer", "tree-sitter", "cli", "tokens"]
 categories = ["command-line-utilities", "development-tools"]
-default-run = "precis"
+include = ["/src", "/README.md"]
 
 [features]
 # Opt-in `Instant`-based timing instrumentation. Enabling adds per-phase
@@ -18,10 +18,6 @@ default-run = "precis"
 # `render()`. Without this feature the macros expand to nothing, so
 # release builds are byte-identical to today's.
 timing = []
-
-[[bin]]
-name = "validate-ns"
-path = "src/bin/validate_ns.rs"
 
 [dependencies]
 anyhow = "1"

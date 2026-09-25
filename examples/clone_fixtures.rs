@@ -2,7 +2,7 @@
 //!
 //! Clones at a pinned revision and removes .git so fixtures are static snapshots.
 //!
-//! Usage: cargo run --bin clone_fixtures
+//! Usage: cargo run --example clone_fixtures
 
 use std::path::Path;
 use std::process::Command;
@@ -12,7 +12,7 @@ macro_rules! with_fixtures {
         const FIXTURES: &[(&str, &str, &str)] = &[$(($dir, $url, $rev)),*];
     };
 }
-include!("../../tests/data/fixtures.rs");
+include!("../tests/data/fixtures.rs");
 
 fn main() {
     let fixtures_dir = match std::env::var_os("PRECIS_FIXTURE_DIR") {

@@ -16,7 +16,7 @@ fn readme_example_matches_output() {
         .join(README_EXAMPLE_FIXTURE);
     assert!(
         fixture_root.exists(),
-        "fixture `{README_EXAMPLE_FIXTURE}` not present at {}; run `cargo run --bin clone_fixtures`",
+        "fixture `{README_EXAMPLE_FIXTURE}` not present at {}; run `cargo run --example clone_fixtures`",
         fixture_root.display()
     );
     let output = precis::render(&[&fixture_root], README_EXAMPLE_BUDGET, None)

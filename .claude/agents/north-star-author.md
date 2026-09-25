@@ -1,6 +1,6 @@
 ---
 name: north-star-author
-description: "Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Use when adding a new fixture or regenerating an existing NS (typically invoked via the `add-fixture` skill). Emits TOML matching the schema at src/north_star.rs + src/content.rs; self-iterates against `cargo run --bin validate-ns` until clean — no caller follow-up needed. Spawn prompt provides only: fixture root, output path, and fixture revision pin (free-form text, no structured format). Long-running (~15–30 min); typically run in parallel and in the background."
+description: "Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Use when adding a new fixture or regenerating an existing NS (typically invoked via the `add-fixture` skill). Emits TOML matching the schema at src/north_star.rs + src/content.rs; self-iterates against `cargo run --example validate_ns` until clean — no caller follow-up needed. Spawn prompt provides only: fixture root, output path, and fixture revision pin (free-form text, no structured format). Long-running (~15–30 min); typically run in parallel and in the background."
 tools: Read, Glob, Grep, Bash, Write
 ---
 
@@ -200,7 +200,7 @@ boundaries are a judgment call per fixture.
      so the threshold test holds batch-by-batch as cuts fall inside
      the tier?
    - **Draft the tier's batches** into the TOML.
-   - **Run `cargo run --bin validate-ns -- <output_path>`**. Validator
+   - **Run `cargo run --example validate_ns -- <output_path>`**. Validator
      must report `OK` before you move on. Also re-rank or split
      batches that are surprisingly large (much bigger than neighbors
      is a signal to split or demote, even when envelope-clean).

@@ -1,4 +1,4 @@
-// Shared fixture repo list, included by src/bin/clone_fixtures.rs and
+// Shared fixture repo list, included by examples/clone_fixtures.rs and
 // tests/fixture_pins.rs. Includers must define a `with_fixtures!` macro that
 // accepts `($dir, $url, $rev)` tuples.
 //
