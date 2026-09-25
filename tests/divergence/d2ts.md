@@ -1,4 +1,4 @@
-Score(3000)=0.699 I=0.861 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.669/0.648/0.772/0.699/0.721/0.622/0.615
+Score(3000)=0.699 I=0.861 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.669/0.732/0.803/0.699/0.721/0.622/0.615
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,41 +37,41 @@ Score(3000)=0.699 I=0.861 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 971 | 9 | Fs::DirListing { dir: packages/d2ql/src/query-builder } |  |  | 0.669 |
 | walker |  | 1028 | 57 | Code::CodeKey { rung: ModuleDoc, file: packages/d2ql/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.669 |
 | ns | 1032 |  | 161 | Root README section map (every H2) | 1.10 |  | 0.589 |
-| walker |  | 1062 | 34 | Code::CodeKey { rung: Names, file: packages/d2ql/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
-| walker |  | 1132 | 70 | Code::CodeKey { rung: Names, file: packages/d2ts/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
-| walker |  | 1179 | 47 | Code::CodeKey { rung: Names, file: packages/d2mini/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
-| walker |  | 1256 | 77 | Markdown::ReadmeHeadline { file: packages/d2ql/README.md } |  |  | 0.593 |
-| ns | 1284 |  | 252 | README "Implementation Details" — provenance and the four core data structures | 1.11 | 1.10 | 0.528 |
-| walker |  | 1289 | 33 | Markdown::Section { file: packages/d2ql/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.528 |
-| walker |  | 1367 | 78 | Markdown::ReadmeHeadline { file: packages/d2ts/README.md } |  |  | 0.528 |
-| ns | 1392 |  | 108 | Every package's own root listing | 2.1 |  | 0.622 |
-| walker |  | 1405 | 38 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
-| ns | 1436 |  | 44 | packages/d2ts/src — complete module roster | 2.2 |  | 0.648 |
-| walker |  | 1461 | 56 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/index.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.648 |
-| ns | 1506 |  | 70 | packages/d2ts/src/index.ts — the public export barrel | 2.3 |  | 0.659 |
-| walker |  | 1548 | 87 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/index.ts, decl: 3, sub: 0, line: 496 } |  |  | 0.659 |
-| walker |  | 1587 | 39 | Markdown::Section { file: packages/d2mini/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.659 |
-| ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.692 |
-| walker |  | 1760 | 173 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.764 |
-| ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.715 |
-| walker |  | 1932 | 172 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.736 |
-| walker |  | 1956 | 24 | Fs::DirListing { dir: examples/electric } |  |  | 0.736 |
-| walker |  | 1964 | 8 | Fs::DirListing { dir: examples/electric/src } |  |  | 0.737 |
-| ns | 1981 |  | 137 | packages/d2mini/src and its operators directory | 2.6 |  | 0.757 |
-| walker |  | 1990 | 26 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.772 |
-| walker |  | 2126 | 136 | Json::Scripts { file: package.json } |  |  | 0.823 |
-| walker |  | 2155 | 29 | Fs::DirListing { dir: packages/d2mini/tests } |  |  | 0.823 |
-| ns | 2246 |  | 265 | packages/d2mini export barrels | 2.7 | 2.6 | 0.780 |
-| ns | 2324 |  | 78 | packages/d2ql/src and query-builder/ listings | 2.8 |  | 0.788 |
-| ns | 2441 |  | 117 | packages/d2ql export barrels | 2.9 | 2.8 | 0.784 |
-| ns | 2518 |  | 77 | packages/d2ts/src/sqlite — complete tree listing | 2.10 |  | 0.759 |
-| walker |  | 2538 | 383 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.761 |
-| walker |  | 2570 | 32 | Fs::DirListing { dir: examples/d2ql } |  |  | 0.763 |
-| walker |  | 2581 | 11 | Code::CodeKey { rung: Names, file: eslint.base.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
+| walker |  | 1105 | 77 | Markdown::ReadmeHeadline { file: packages/d2ql/README.md } |  |  | 0.590 |
+| walker |  | 1138 | 33 | Markdown::Section { file: packages/d2ql/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.590 |
+| walker |  | 1216 | 78 | Markdown::ReadmeHeadline { file: packages/d2ts/README.md } |  |  | 0.590 |
+| walker |  | 1255 | 39 | Markdown::Section { file: packages/d2mini/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.590 |
+| ns | 1284 |  | 252 | README "Implementation Details" — provenance and the four core data structures | 1.11 | 1.10 | 0.525 |
+| ns | 1392 |  | 108 | Every package's own root listing | 2.1 |  | 0.619 |
+| walker |  | 1428 | 173 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.717 |
+| ns | 1436 |  | 44 | packages/d2ts/src — complete module roster | 2.2 |  | 0.732 |
+| ns | 1506 |  | 70 | packages/d2ts/src/index.ts — the public export barrel | 2.3 |  | 0.714 |
+| walker |  | 1600 | 172 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.740 |
+| ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.761 |
+| walker |  | 1624 | 24 | Fs::DirListing { dir: examples/electric } |  |  | 0.762 |
+| walker |  | 1632 | 8 | Fs::DirListing { dir: examples/electric/src } |  |  | 0.762 |
+| walker |  | 1658 | 26 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.780 |
+| walker |  | 1794 | 136 | Json::Scripts { file: package.json } |  |  | 0.841 |
+| walker |  | 1823 | 29 | Fs::DirListing { dir: packages/d2mini/tests } |  |  | 0.841 |
+| ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.787 |
+| ns | 1981 |  | 137 | packages/d2mini/src and its operators directory | 2.6 |  | 0.803 |
+| walker |  | 2206 | 383 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.806 |
+| walker |  | 2238 | 32 | Fs::DirListing { dir: examples/d2ql } |  |  | 0.808 |
+| ns | 2246 |  | 265 | packages/d2mini export barrels | 2.7 | 2.6 | 0.763 |
+| walker |  | 2249 | 11 | Code::CodeKey { rung: Names, file: eslint.base.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
+| walker |  | 2283 | 34 | Code::CodeKey { rung: Names, file: packages/d2ql/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.764 |
+| ns | 2324 |  | 78 | packages/d2ql/src and query-builder/ listings | 2.8 |  | 0.774 |
+| ns | 2441 |  | 117 | packages/d2ql export barrels | 2.9 | 2.8 | 0.770 |
+| walker |  | 2458 | 175 | Json::Entry { file: packages/d2ts/package.json } |  |  | 0.770 |
+| ns | 2518 |  | 77 | packages/d2ts/src/sqlite — complete tree listing | 2.10 |  | 0.746 |
+| walker |  | 2528 | 70 | Code::CodeKey { rung: Names, file: packages/d2ts/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.761 |
+| walker |  | 2575 | 47 | Code::CodeKey { rung: Names, file: packages/d2mini/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
 | ns | 2701 |  | 183 | SQLite subpath export barrels | 2.11 | 2.10 | 0.740 |
-| walker |  | 2756 | 175 | Json::Entry { file: packages/d2ts/package.json } |  |  | 0.740 |
-| ns | 2886 |  | 185 | Test suite layout — immediate children of every tests/ directory | 2.12 |  | 0.697 |
-| walker |  | 2944 | 188 | Json::Scripts { file: packages/d2ts/package.json } |  |  | 0.699 |
+| walker |  | 2763 | 188 | Json::Scripts { file: packages/d2ts/package.json } |  |  | 0.742 |
+| walker |  | 2801 | 38 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.742 |
+| walker |  | 2857 | 56 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/index.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.742 |
+| ns | 2886 |  | 185 | Test suite layout — immediate children of every tests/ directory | 2.12 |  | 0.699 |
+| walker |  | 2944 | 87 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/index.ts, decl: 3, sub: 0, line: 496 } |  |  | 0.699 |
 | ns | 2982 |  | 96 | Example and benchmark source trees | 2.13 | 1.3 | 0.699 |
 | walker |  | 3001 | 57 | Fs::DirListing { dir: packages/d2ts/src/sqlite/operators } |  |  | 0.730 |
 | walker |  | 3042 | 41 | Fs::DirListing { dir: packages/d2ts/tests } |  |  | 0.739 |
@@ -96,36 +96,36 @@ Score(3000)=0.699 I=0.861 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 4818 | 172 | Markdown::Section { file: packages/d2ts/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.676 |
 | walker |  | 4923 | 105 | Markdown::Section { file: README.md, section_index: 18, keeps_default_concavity: false } |  |  | 0.676 |
 | ns | 4952 |  | 145 | README: MultiSet as a changeset, and keyed multisets | 4.6 | 1.10 | 0.673 |
-| walker |  | 5069 | 146 | Code::CodeKey { rung: Body, file: packages/d2ts-benchmark/src/index.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.673 |
-| walker |  | 5218 | 149 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.673 |
+| walker |  | 5072 | 149 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.673 |
 | ns | 5310 |  | 358 | multiset.ts — MultiSetArray, KeyedData and every MultiSet method | 4.7 |  | 0.656 |
 | ns | 5610 |  | 300 | types.ts — the operator message protocol | 4.8 |  | 0.634 |
-| walker |  | 5760 | 542 | Markdown::Section { file: packages/d2ql/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.634 |
+| walker |  | 5614 | 542 | Markdown::Section { file: packages/d2ql/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.634 |
 | ns | 5868 |  | 258 | types.ts — PipedOperator and the 20-deep pipe overload wall | 4.9 | 4.8 | 0.622 |
-| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.632 |
-| walker |  | 6335 | 575 | Markdown::Section { file: packages/d2mini/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.632 |
-| walker |  | 6397 | 62 | Json::Identity { file: packages/d2ts-benchmark/package.json } |  |  | 0.635 |
-| walker |  | 6484 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
-| walker |  | 6549 | 65 | Json::Dependencies { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
+| walker |  | 6189 | 575 | Markdown::Section { file: packages/d2mini/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.622 |
+| walker |  | 6251 | 62 | Json::Identity { file: packages/d2ts-benchmark/package.json } |  |  | 0.635 |
+| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.635 |
+| walker |  | 6338 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
+| walker |  | 6403 | 65 | Json::Dependencies { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
+| walker |  | 6560 | 157 | Json::IdentityMeta { file: packages/d2ts/package.json } |  |  | 0.643 |
 | ns | 6681 |  | 430 | packages/d2ts/README.md — complete heading map (1081-line API reference) | 5.2 |  | 0.627 |
-| walker |  | 6706 | 157 | Json::IdentityMeta { file: packages/d2ts/package.json } |  |  | 0.627 |
-| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.620 |
-| walker |  | 6902 | 196 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.623 |
-| walker |  | 7076 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.631 |
-| walker |  | 7167 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.644 |
+| walker |  | 6756 | 196 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.631 |
+| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.623 |
+| walker |  | 6930 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.631 |
+| walker |  | 7021 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.644 |
+| walker |  | 7104 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.644 |
+| walker |  | 7175 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.644 |
 | ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.625 |
-| walker |  | 7250 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.625 |
-| walker |  | 7321 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.625 |
+| walker |  | 7363 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.625 |
 | ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.616 |
-| walker |  | 7509 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.616 |
-| ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.609 |
-| walker |  | 7666 | 157 | Json::IdentityMeta { file: packages/d2mini/package.json } |  |  | 0.609 |
-| walker |  | 7760 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.622 |
+| walker |  | 7520 | 157 | Json::IdentityMeta { file: packages/d2mini/package.json } |  |  | 0.616 |
+| walker |  | 7614 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.629 |
+| ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.622 |
+| walker |  | 7786 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.622 |
 | ns | 7842 |  | 220 | D2QL identity and README section map | 6.1 |  | 0.618 |
-| walker |  | 7932 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.618 |
+| walker |  | 7974 | 188 | Json::Scripts { file: packages/d2ql/package.json } |  |  | 0.618 |
 | ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.610 |
-| walker |  | 8120 | 188 | Json::Scripts { file: packages/d2ql/package.json } |  |  | 0.610 |
-| walker |  | 8277 | 157 | Json::IdentityMeta { file: packages/d2ql/package.json } |  |  | 0.610 |
+| walker |  | 8131 | 157 | Json::IdentityMeta { file: packages/d2ql/package.json } |  |  | 0.610 |
+| walker |  | 8277 | 146 | Code::CodeKey { rung: Body, file: packages/d2ts-benchmark/src/index.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.610 |
 | walker |  | 8332 | 55 | Code::CodeKey { rung: Names, file: packages/d2ts/src/order.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
 | walker |  | 8349 | 17 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/order.ts, decl: 33, sub: 0, line: 277 } |  |  | 0.610 |
 | walker |  | 8357 | 8 | Code::CodeKey { rung: Body, file: packages/d2ts/src/order.ts, decl: 34, sub: 0, line: 278 } |  |  | 0.610 |

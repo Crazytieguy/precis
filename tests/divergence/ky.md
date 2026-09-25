@@ -1,4 +1,4 @@
-Score(3000)=0.720 I=0.916 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.803/0.790/0.889/0.720/0.693/0.613/0.558
+Score(3000)=0.720 I=0.916 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.803/0.790/0.746/0.720/0.693/0.613/0.558
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,17 +32,17 @@ Score(3000)=0.720 I=0.916 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 1174 | 16 | Markdown::Section { file: readme.md, section_index: 38, keeps_default_concavity: false } |  |  | 0.767 |
 | walker |  | 1194 | 20 | Markdown::Section { file: readme.md, section_index: 37, keeps_default_concavity: false } |  |  | 0.767 |
 | ns | 1221 |  | 98 | Complete `test/` tree, including helpers | 1.11 |  | 0.790 |
-| ns | 1461 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.803 |
-| walker |  | 1604 | 410 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.960 |
-| walker |  | 1698 | 94 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.961 |
-| ns | 1731 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.951 |
-| walker |  | 1768 | 70 | Markdown::Section { file: readme.md, section_index: 40, keeps_default_concavity: false } |  |  | 0.951 |
-| ns | 1983 |  | 252 | `KyInstance`: every member signature (types/ky.ts) | 2.1 |  | 0.881 |
-| walker |  | 2067 | 299 | Json::IdentityMeta { file: package.json } |  |  | 0.889 |
-| ns | 2094 |  | 111 | `ResponsePromise`: all six body-shortcut signatures | 2.2 |  | 0.863 |
+| walker |  | 1288 | 94 | Markdown::Section { file: readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.790 |
+| walker |  | 1358 | 70 | Markdown::Section { file: readme.md, section_index: 40, keeps_default_concavity: false } |  |  | 0.790 |
+| ns | 1461 |  | 240 | Every H3 heading in readme.md (API entries and tips) | 1.12 | 1.5 | 0.804 |
+| walker |  | 1657 | 299 | Json::IdentityMeta { file: package.json } |  |  | 0.813 |
+| ns | 1731 |  | 270 | Readme `ky(input, options?)` contract and the body shortcuts | 1.13 | 1.12 | 0.805 |
+| walker |  | 1732 | 75 | Markdown::Section { file: readme.md, section_index: 39, keeps_default_concavity: false } |  |  | 0.805 |
+| ns | 1983 |  | 252 | `KyInstance`: every member signature (types/ky.ts) | 2.1 |  | 0.746 |
+| ns | 2094 |  | 111 | `ResponsePromise`: all six body-shortcut signatures | 2.2 |  | 0.724 |
+| walker |  | 2142 | 410 | Code::CodeKey { rung: Names, file: source/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.864 |
 | ns | 2326 |  | 232 | `KyOptions`: every ky-specific option with its type | 2.3 |  | 0.801 |
-| walker |  | 2370 | 303 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.803 |
-| walker |  | 2445 | 75 | Markdown::Section { file: readme.md, section_index: 39, keeps_default_concavity: false } |  |  | 0.804 |
+| walker |  | 2445 | 303 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.804 |
 | walker |  | 2527 | 82 | Json::Whole { file: tsconfig.json } |  |  | 0.804 |
 | walker |  | 2554 | 27 | Code::CodeKey { rung: Names, file: source/types/retry.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.804 |
 | ns | 2600 |  | 274 | Concrete retry defaults (`defaultRetryOptions`, utils/normalize.ts) | 2.4 |  | 0.768 |

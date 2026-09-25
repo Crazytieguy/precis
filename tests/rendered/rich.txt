@@ -132,6 +132,42 @@ docs/
     prompt.rst
     protocol.rst
     reference/
+      abc.rst
+      align.rst
+      bar.rst
+      color.rst
+      columns.rst
+      console.rst
+      control.rst
+      emoji.rst
+      highlighter.rst
+      init.rst
+      json.rst
+      layout.rst
+      live.rst
+      logging.rst
+      markdown.rst
+      markup.rst
+      measure.rst
+      padding.rst
+      panel.rst
+      pretty.rst
+      progress.rst
+      progress_bar.rst
+      prompt.rst
+      protocol.rst
+      rule.rst
+      segment.rst
+      spinner.rst
+      status.rst
+      style.rst
+      styled.rst
+      syntax.rst
+      table.rst
+      text.rst
+      theme.rst
+      traceback.rst
+      tree.rst
     reference.rst
     style.rst
     syntax.rst
@@ -222,6 +258,11 @@ pyproject.toml
   …
 questions/
   README.md
+    2→# Questions
+    3→
+    4→Your questions should go in this directory.
+    5→
+    6→Question files should be named with the extension ".question.md".
   ansi_escapes.question.md
   emoji_broken.question.md
   highlight_incorrect.question.md
@@ -245,20 +286,8 @@ rich/
     14→_console: Optional["Console"] = None
     …
     23→def get_console() -> "Console":
-    24→    """Get a global :class:`~rich.console.Console` instance. This function is used when Rich requires a Console,
-    25→    and hasn't been explicitly given one.
-    26→
-    27→    Returns:
-    28→        Console: A console instance.
-    29→    """
     …
     39→def reconfigure(*args: Any, **kwargs: Any) -> None:
-    40→    """Reconfigures the global console by replacing it with another.
-    41→
-    42→    Args:
-    43→        *args (Any): Positional arguments for the replacement :class:`~rich.console.Console`.
-    44→        **kwargs (Any): Keyword arguments for the replacement :class:`~rich.console.Console`.
-    45→    """
     …
     53→def print(
     54→    *objects: Any,
@@ -268,10 +297,6 @@ rich/
     58→    flush: bool = False,
     59→) -> None:
     …
-    71→    from .console import Console
-    72→
-    73→    write_console = get_console() if file is None else Console(file=file)
-    74→    return write_console.print(*objects, sep=sep, end=end)
     77→def print_json(
     78→    json: Optional[str] = None,
     79→    *,

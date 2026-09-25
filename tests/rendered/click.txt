@@ -234,55 +234,7 @@ src/
       75→
       76→
       77→def __getattr__(name: str) -> object:
-      78→    import warnings
-      79→
-      80→    if name == "BaseCommand":
-      81→        from .core import _BaseCommand
-      82→
-      83→        warnings.warn(
-      84→            "'BaseCommand' is deprecated and will be removed in Click 9.0. Use"
-      85→            " 'Command' instead.",
-      86→            DeprecationWarning,
-      87→            stacklevel=2,
-      88→        )
-      89→        return _BaseCommand
-      90→
-      91→    if name == "MultiCommand":
-      92→        from .core import _MultiCommand
-      93→
-      94→        warnings.warn(
-      95→            "'MultiCommand' is deprecated and will be removed in Click 9.0. Use"
-      96→            " 'Group' instead.",
-      97→            DeprecationWarning,
-      98→            stacklevel=2,
-      99→        )
-      100→        return _MultiCommand
-      101→
-      102→    if name == "OptionParser":
-      103→        from .parser import _OptionParser
-      104→
-      105→        warnings.warn(
-      106→            "'OptionParser' is deprecated and will be removed in Click 9.0. The"
-      107→            " old parser is available in 'optparse'.",
-      108→            DeprecationWarning,
-      109→            stacklevel=2,
-      110→        )
-      111→        return _OptionParser
-      112→
-      113→    if name == "__version__":
-      114→        import importlib.metadata
-      115→        import warnings
-      116→
-      117→        warnings.warn(
-      118→            "The '__version__' attribute is deprecated and will be removed in"
-      119→            " Click 9.1. Use feature detection or"
-      120→            " 'importlib.metadata.version(\"click\")' instead.",
-      121→            DeprecationWarning,
-      122→            stacklevel=2,
-      123→        )
-      124→        return importlib.metadata.version("click")
-      125→
-      126→    raise AttributeError(name)
+      …
     _compat.py
     _termui_impl.py
     _textwrap.py
@@ -298,6 +250,65 @@ src/
     shell_completion.py
     termui.py
     testing.py
+      …
+      26→class EchoingStdin:
+      …
+      60→@contextlib.contextmanager
+      61→def _pause_echo(stream: EchoingStdin | None) -> cabc.Iterator[None]:
+      …
+      70→class BytesIOCopy(io.BytesIO):
+      …
+      76→    def __init__(self, copy_to: io.BytesIO) -> None:
+      …
+      80→    def flush(self) -> None:
+      …
+      84→    def write(self, b: ReadableBuffer) -> int:
+      …
+      89→class StreamMixer:
+      …
+      97→    def __init__(self) -> None:
+      …
+      103→class _NamedTextIOWrapper(io.TextIOWrapper):
+      …
+      163→def make_input_stream(
+      164→    input: str | bytes | t.IO[t.Any] | None, charset: str
+      165→) -> t.BinaryIO:
+      …
+      183→class Result:
+      …
+      205→    def __init__(
+      …
+      226→    @property
+      227→    def output(self) -> str:
+      …
+      238→    @property
+      239→    def stdout(self) -> str:
+      240→        """The standard output as unicode string."""
+      …
+      245→    @property
+      246→    def stderr(self) -> str:
+      …
+      256→    def __repr__(self) -> str:
+      …
+      261→class CliRunner:
+      …
+      283→    def __init__(
+      …
+      295→    def get_default_prog_name(self, cli: Command) -> str:
+      …
+      302→    def make_env(
+      303→        self, overrides: cabc.Mapping[str, str | None] | None = None
+      304→    ) -> cabc.Mapping[str, str | None]:
+      …
+      312→    def isolation(
+      …
+      525→    def invoke(
+      …
+      638→    @contextlib.contextmanager
+      639→    def isolated_filesystem(
+      640→        self, temp_dir: str | os.PathLike[str] | None = None
+      641→    ) -> cabc.Iterator[str]:
+      …
     types.py
     utils.py
 tests/

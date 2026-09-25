@@ -1,4 +1,4 @@
-Score(3000)=0.733 I=0.888 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.633/0.712/0.686/0.733/0.620/0.767/0.830
+Score(3000)=0.734 I=0.891 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.633/0.712/0.686/0.734/0.623/0.775/0.830
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -84,149 +84,149 @@ Score(3000)=0.733 I=0.888 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 2498 | 13 | Fs::DirListing { dir: apps/web/e2e/fixtures/base } |  |  | 0.711 |
 | ns | 2738 |  | 342 | `User` model — preference and archival-toggle fields | 2.5 | 2.4 | 0.675 |
 | walker |  | 2783 | 285 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 28 } |  |  | 0.733 |
-| walker |  | 2883 | 100 | Code::CodeKey { rung: Names, file: packages/filesystem/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.733 |
-| walker |  | 3020 | 137 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.733 |
-| walker |  | 3046 | 26 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.733 |
-| ns | 3055 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.698 |
-| walker |  | 3088 | 42 | Fs::DirListing { dir: apps/worker/lib/preservationScheme } |  |  | 0.699 |
-| walker |  | 3100 | 12 | Code::CodeKey { rung: Names, file: apps/worker/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
-| walker |  | 3196 | 96 | Json::Runtime { file: package.json } |  |  | 0.699 |
-| walker |  | 3351 | 155 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.699 |
-| ns | 3436 |  | 381 | `UsersAndCollections` join model (the permission bits) and `Tag` model | 2.7 | 2.1 | 0.660 |
-| walker |  | 3486 | 135 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.660 |
-| walker |  | 3513 | 27 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 5 } |  |  | 0.675 |
-| walker |  | 3529 | 16 | Plaintext::Whole { file: apps/web/e2e/.env.example } |  |  | 0.675 |
+| walker |  | 2920 | 137 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.733 |
+| walker |  | 2946 | 26 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.733 |
+| walker |  | 2988 | 42 | Fs::DirListing { dir: apps/worker/lib/preservationScheme } |  |  | 0.734 |
+| ns | 3055 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.699 |
+| walker |  | 3084 | 96 | Json::Runtime { file: package.json } |  |  | 0.699 |
+| walker |  | 3239 | 155 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.699 |
+| walker |  | 3374 | 135 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.699 |
+| walker |  | 3401 | 27 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 5 } |  |  | 0.716 |
+| walker |  | 3417 | 16 | Plaintext::Whole { file: apps/web/e2e/.env.example } |  |  | 0.716 |
+| ns | 3436 |  | 381 | `UsersAndCollections` join model (the permission bits) and `Tag` model | 2.7 | 2.1 | 0.675 |
+| walker |  | 3496 | 79 | Fs::DirListing { dir: apps/web/public } |  |  | 0.675 |
+| walker |  | 3506 | 10 | Fs::DirListing { dir: apps/web/public/screenshots } |  |  | 0.675 |
 | ns | 3594 |  | 158 | `AccessToken` model | 2.8 | 2.1 | 0.662 |
-| walker |  | 3608 | 79 | Fs::DirListing { dir: apps/web/public } |  |  | 0.662 |
 | ns | 3617 |  | 23 | Complete packages/prisma listing | 2.9 |  | 0.667 |
-| walker |  | 3618 | 10 | Fs::DirListing { dir: apps/web/public/screenshots } |  |  | 0.667 |
-| walker |  | 3644 | 26 | Code::CodeKey { rung: Names, file: apps/web/e2e/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.667 |
 | ns | 3733 |  | 116 | The process-wide `prisma` client singleton | 2.10 |  | 0.655 |
 | ns | 3817 |  | 84 | API version directories: every resource under pages/api/v1 (and the single v2 route) | 3.1 |  | 0.627 |
-| ns | 3885 |  | 68 | Route files for links, collections, tags and highlights | 3.2 |  | 0.611 |
-| ns | 3962 |  | 77 | Route files for auth, session, users, tokens, config, avatar and logins | 3.3 |  | 0.597 |
-| walker |  | 3964 | 320 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 126 } |  |  | 0.642 |
-| walker |  | 3986 | 22 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.642 |
-| ns | 4042 |  | 80 | Route files for archives, preserved, search, dashboard, rss, migration, payment, webhook, worker, getFavicon | 3.4 |  | 0.627 |
-| ns | 4083 |  | 41 | The unauthenticated `public/` route subtree | 3.5 |  | 0.618 |
-| walker |  | 4120 | 134 | Plaintext::Whole { file: .env.sample } |  |  | 0.618 |
-| walker |  | 4169 | 49 | Fs::DirListing { dir: apps/web/public/locales } |  |  | 0.620 |
-| walker |  | 4173 | 4 | Fs::DirListing { dir: apps/web/public/locales/de } |  |  | 0.620 |
-| walker |  | 4177 | 4 | Fs::DirListing { dir: apps/web/public/locales/en } |  |  | 0.620 |
-| walker |  | 4181 | 4 | Fs::DirListing { dir: apps/web/public/locales/es } |  |  | 0.620 |
-| walker |  | 4185 | 4 | Fs::DirListing { dir: apps/web/public/locales/fr } |  |  | 0.620 |
-| walker |  | 4189 | 4 | Fs::DirListing { dir: apps/web/public/locales/it } |  |  | 0.620 |
-| walker |  | 4193 | 4 | Fs::DirListing { dir: apps/web/public/locales/ja } |  |  | 0.620 |
-| walker |  | 4197 | 4 | Fs::DirListing { dir: apps/web/public/locales/nl } |  |  | 0.620 |
-| walker |  | 4201 | 4 | Fs::DirListing { dir: apps/web/public/locales/pl } |  |  | 0.620 |
-| walker |  | 4205 | 4 | Fs::DirListing { dir: apps/web/public/locales/pt-BR } |  |  | 0.620 |
-| walker |  | 4209 | 4 | Fs::DirListing { dir: apps/web/public/locales/ro } |  |  | 0.620 |
-| walker |  | 4213 | 4 | Fs::DirListing { dir: apps/web/public/locales/ru } |  |  | 0.620 |
-| walker |  | 4217 | 4 | Fs::DirListing { dir: apps/web/public/locales/tr } |  |  | 0.620 |
-| walker |  | 4221 | 4 | Fs::DirListing { dir: apps/web/public/locales/uk } |  |  | 0.620 |
-| walker |  | 4225 | 4 | Fs::DirListing { dir: apps/web/public/locales/zh } |  |  | 0.620 |
-| walker |  | 4229 | 4 | Fs::DirListing { dir: apps/web/public/locales/zh-TW } |  |  | 0.620 |
-| walker |  | 4258 | 29 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.620 |
-| walker |  | 4308 | 50 | Fs::DirListing { dir: apps/mobile/components/ui } |  |  | 0.620 |
-| ns | 4359 |  | 276 | The route-handler pattern, read from pages/api/v1/links/index.ts | 3.6 |  | 0.604 |
-| walker |  | 4394 | 86 | Fs::DirListing { dir: apps/web/pages } |  |  | 0.604 |
-| walker |  | 4400 | 6 | Fs::DirListing { dir: apps/web/pages/preserved } |  |  | 0.604 |
-| walker |  | 4408 | 8 | Fs::DirListing { dir: apps/web/pages/api } |  |  | 0.605 |
-| walker |  | 4411 | 3 | Fs::DirListing { dir: apps/web/pages/api/v2 } |  |  | 0.605 |
-| walker |  | 4420 | 9 | Fs::DirListing { dir: apps/web/pages/public } |  |  | 0.605 |
-| walker |  | 4425 | 5 | Fs::DirListing { dir: apps/web/pages/public/collections } |  |  | 0.605 |
-| walker |  | 4429 | 4 | Fs::DirListing { dir: apps/web/pages/api/v2/dashboard } |  |  | 0.606 |
-| walker |  | 4435 | 6 | Fs::DirListing { dir: apps/web/pages/public/links } |  |  | 0.606 |
-| walker |  | 4441 | 6 | Fs::DirListing { dir: apps/web/pages/public/preserved } |  |  | 0.606 |
-| walker |  | 4452 | 11 | Fs::DirListing { dir: apps/web/pages/collections } |  |  | 0.606 |
-| walker |  | 4463 | 11 | Fs::DirListing { dir: apps/web/pages/tags } |  |  | 0.606 |
-| walker |  | 4475 | 12 | Fs::DirListing { dir: apps/web/pages/auth } |  |  | 0.606 |
-| walker |  | 4491 | 16 | Fs::DirListing { dir: apps/web/pages/links } |  |  | 0.607 |
-| walker |  | 4510 | 19 | Fs::DirListing { dir: apps/web/pages/admin } |  |  | 0.607 |
-| walker |  | 4520 | 10 | Fs::DirListing { dir: apps/web/pages/public/collections/[id] } |  |  | 0.607 |
-| walker |  | 4534 | 14 | Code::CodeKey { rung: Names, file: apps/web/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.607 |
+| walker |  | 3826 | 320 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 126 } |  |  | 0.675 |
+| walker |  | 3848 | 22 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.675 |
+| ns | 3885 |  | 68 | Route files for links, collections, tags and highlights | 3.2 |  | 0.658 |
+| ns | 3962 |  | 77 | Route files for auth, session, users, tokens, config, avatar and logins | 3.3 |  | 0.642 |
+| walker |  | 3982 | 134 | Plaintext::Whole { file: .env.sample } |  |  | 0.643 |
+| walker |  | 4031 | 49 | Fs::DirListing { dir: apps/web/public/locales } |  |  | 0.644 |
+| walker |  | 4035 | 4 | Fs::DirListing { dir: apps/web/public/locales/de } |  |  | 0.644 |
+| walker |  | 4039 | 4 | Fs::DirListing { dir: apps/web/public/locales/en } |  |  | 0.644 |
+| ns | 4042 |  | 80 | Route files for archives, preserved, search, dashboard, rss, migration, payment, webhook, worker, getFavicon | 3.4 |  | 0.628 |
+| walker |  | 4043 | 4 | Fs::DirListing { dir: apps/web/public/locales/es } |  |  | 0.628 |
+| walker |  | 4047 | 4 | Fs::DirListing { dir: apps/web/public/locales/fr } |  |  | 0.628 |
+| walker |  | 4051 | 4 | Fs::DirListing { dir: apps/web/public/locales/it } |  |  | 0.628 |
+| walker |  | 4055 | 4 | Fs::DirListing { dir: apps/web/public/locales/ja } |  |  | 0.628 |
+| walker |  | 4059 | 4 | Fs::DirListing { dir: apps/web/public/locales/nl } |  |  | 0.628 |
+| walker |  | 4063 | 4 | Fs::DirListing { dir: apps/web/public/locales/pl } |  |  | 0.628 |
+| walker |  | 4067 | 4 | Fs::DirListing { dir: apps/web/public/locales/pt-BR } |  |  | 0.628 |
+| walker |  | 4071 | 4 | Fs::DirListing { dir: apps/web/public/locales/ro } |  |  | 0.628 |
+| walker |  | 4075 | 4 | Fs::DirListing { dir: apps/web/public/locales/ru } |  |  | 0.628 |
+| walker |  | 4079 | 4 | Fs::DirListing { dir: apps/web/public/locales/tr } |  |  | 0.628 |
+| walker |  | 4083 | 4 | Fs::DirListing { dir: apps/web/public/locales/uk } |  |  | 0.620 |
+| ns | 4083 |  | 41 | The unauthenticated `public/` route subtree | 3.5 |  | 0.620 |
+| walker |  | 4087 | 4 | Fs::DirListing { dir: apps/web/public/locales/zh } |  |  | 0.620 |
+| walker |  | 4091 | 4 | Fs::DirListing { dir: apps/web/public/locales/zh-TW } |  |  | 0.620 |
+| walker |  | 4120 | 29 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.620 |
+| walker |  | 4170 | 50 | Fs::DirListing { dir: apps/mobile/components/ui } |  |  | 0.620 |
+| walker |  | 4256 | 86 | Fs::DirListing { dir: apps/web/pages } |  |  | 0.621 |
+| walker |  | 4262 | 6 | Fs::DirListing { dir: apps/web/pages/preserved } |  |  | 0.621 |
+| walker |  | 4270 | 8 | Fs::DirListing { dir: apps/web/pages/api } |  |  | 0.621 |
+| walker |  | 4273 | 3 | Fs::DirListing { dir: apps/web/pages/api/v2 } |  |  | 0.621 |
+| walker |  | 4282 | 9 | Fs::DirListing { dir: apps/web/pages/public } |  |  | 0.622 |
+| walker |  | 4287 | 5 | Fs::DirListing { dir: apps/web/pages/public/collections } |  |  | 0.622 |
+| walker |  | 4291 | 4 | Fs::DirListing { dir: apps/web/pages/api/v2/dashboard } |  |  | 0.622 |
+| walker |  | 4297 | 6 | Fs::DirListing { dir: apps/web/pages/public/links } |  |  | 0.622 |
+| walker |  | 4303 | 6 | Fs::DirListing { dir: apps/web/pages/public/preserved } |  |  | 0.622 |
+| walker |  | 4314 | 11 | Fs::DirListing { dir: apps/web/pages/collections } |  |  | 0.623 |
+| walker |  | 4325 | 11 | Fs::DirListing { dir: apps/web/pages/tags } |  |  | 0.623 |
+| walker |  | 4337 | 12 | Fs::DirListing { dir: apps/web/pages/auth } |  |  | 0.623 |
+| walker |  | 4353 | 16 | Fs::DirListing { dir: apps/web/pages/links } |  |  | 0.623 |
+| ns | 4359 |  | 276 | The route-handler pattern, read from pages/api/v1/links/index.ts | 3.6 |  | 0.607 |
+| walker |  | 4372 | 19 | Fs::DirListing { dir: apps/web/pages/admin } |  |  | 0.607 |
+| walker |  | 4382 | 10 | Fs::DirListing { dir: apps/web/pages/public/collections/[id] } |  |  | 0.607 |
 | ns | 4568 |  | 209 | apps/web/lib: the server helper layer and its client/shared siblings | 3.7 |  | 0.581 |
-| walker |  | 4577 | 43 | Code::CodeKey { rung: Body, file: apps/web/pages/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.581 |
 | ns | 4667 |  | 99 | The controller tree: every resource directory under lib/api/controllers | 3.8 |  | 0.566 |
-| ns | 4823 |  | 156 | Controller files for links, collections, tags and highlights | 3.9 |  | 0.549 |
-| walker |  | 4950 | 373 | Prisma::DeclTail { file: packages/prisma/schema.prisma, start_line: 28, tail_start_line: 51 } |  |  | 0.590 |
-| walker |  | 4966 | 16 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 1 } |  |  | 0.597 |
-| walker |  | 4981 | 15 | Code::CodeKey { rung: Names, file: apps/mobile/app/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| ns | 5001 |  | 178 | Controller files for users, tokens, session, search, dashboard, worker, migration and public access | 3.10 |  | 0.578 |
-| walker |  | 5037 | 56 | Fs::DirListing { dir: apps/web/pages/settings } |  |  | 0.579 |
-| walker |  | 5074 | 37 | Code::CodeKey { rung: Names, file: packages/prisma/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
-| walker |  | 5150 | 76 | Code::CodeKey { rung: Decl, file: packages/prisma/index.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.588 |
-| ns | 5249 |  | 248 | Complete listings of packages/types, packages/lib, packages/filesystem and packages/router | 4.1 |  | 0.616 |
-| walker |  | 5585 | 435 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.656 |
-| ns | 5647 |  | 398 | packages/types/global.ts — every exported type, interface and enum declaration | 4.2 |  | 0.639 |
-| walker |  | 5664 | 79 | Fs::DirListing { dir: apps/web/lib/client } |  |  | 0.650 |
-| walker |  | 5761 | 97 | Fs::DirListing { dir: apps/web/lib/api } |  |  | 0.682 |
-| walker |  | 5774 | 13 | Fs::DirListing { dir: apps/web/lib/api/archives } |  |  | 0.682 |
-| walker |  | 5791 | 17 | Fs::DirListing { dir: apps/web/lib/api/preserved } |  |  | 0.683 |
-| ns | 5793 |  | 146 | `ArchivedFormat`, `LinkType` and `TokenExpiry` variants | 4.3 | 4.2 | 0.674 |
-| walker |  | 5824 | 33 | Fs::DirListing { dir: apps/web/lib/api/stripe } |  |  | 0.678 |
-| walker |  | 5860 | 36 | Fs::DirListing { dir: apps/web/lib/api/controllers } |  |  | 0.698 |
-| walker |  | 5865 | 5 | Fs::DirListing { dir: apps/web/lib/api/controllers/search } |  |  | 0.698 |
-| walker |  | 5870 | 5 | Fs::DirListing { dir: apps/web/lib/api/controllers/session } |  |  | 0.698 |
-| walker |  | 5876 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/worker } |  |  | 0.698 |
-| walker |  | 5885 | 9 | Fs::DirListing { dir: apps/web/lib/api/controllers/public } |  |  | 0.699 |
-| walker |  | 5889 | 4 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/links } |  |  | 0.699 |
-| walker |  | 5895 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/collections } |  |  | 0.700 |
-| walker |  | 5901 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/users } |  |  | 0.701 |
-| walker |  | 5908 | 7 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/links/linkId } |  |  | 0.701 |
-| walker |  | 5922 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/collections } |  |  | 0.702 |
-| walker |  | 5936 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/highlights } |  |  | 0.702 |
-| ns | 5945 |  | 152 | `ViewMode`, `Sort` and `TagSort` variants | 4.4 | 4.2 | 0.694 |
-| walker |  | 5950 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/tokens } |  |  | 0.697 |
-| walker |  | 5957 | 7 | Fs::DirListing { dir: apps/web/lib/api/controllers/tokens/tokenId } |  |  | 0.698 |
-| walker |  | 5971 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/users } |  |  | 0.701 |
-| walker |  | 5988 | 17 | Fs::DirListing { dir: apps/web/lib/api/controllers/links } |  |  | 0.703 |
-| walker |  | 6000 | 12 | Fs::DirListing { dir: apps/web/lib/api/controllers/links/bulk } |  |  | 0.705 |
-| walker |  | 6020 | 20 | Fs::DirListing { dir: apps/web/lib/api/controllers/dashboard } |  |  | 0.708 |
-| walker |  | 6047 | 27 | Fs::DirListing { dir: apps/web/lib/api/controllers/tags } |  |  | 0.714 |
-| walker |  | 6068 | 21 | Fs::DirListing { dir: apps/web/lib/api/controllers/collections/collectionId } |  |  | 0.718 |
-| walker |  | 6089 | 21 | Fs::DirListing { dir: apps/web/lib/api/controllers/tags/tagId } |  |  | 0.723 |
-| walker |  | 6113 | 24 | Fs::DirListing { dir: apps/web/lib/api/controllers/links/linkId } |  |  | 0.730 |
-| walker |  | 6119 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/links/linkId/highlight } |  |  | 0.732 |
-| walker |  | 6146 | 27 | Fs::DirListing { dir: apps/web/lib/api/controllers/users/userId } |  |  | 0.738 |
-| walker |  | 6215 | 69 | Fs::DirListing { dir: apps/web/pages/api/v1 } |  |  | 0.765 |
-| walker |  | 6219 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/dashboard } |  |  | 0.765 |
-| walker |  | 6223 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/getFavicon } |  |  | 0.766 |
-| walker |  | 6227 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/logins } |  |  | 0.766 |
-| walker |  | 6231 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/migration } |  |  | 0.766 |
-| walker |  | 6235 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/payment } |  |  | 0.766 |
-| walker |  | 6239 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/search } |  |  | 0.767 |
-| walker |  | 6243 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/session } |  |  | 0.767 |
-| walker |  | 6247 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/webhook } |  |  | 0.768 |
-| walker |  | 6253 | 6 | Fs::DirListing { dir: apps/web/pages/api/v1/avatar } |  |  | 0.768 |
-| walker |  | 6262 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/config } |  |  | 0.769 |
-| walker |  | 6271 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/public } |  |  | 0.770 |
-| walker |  | 6277 | 6 | Fs::DirListing { dir: apps/web/pages/api/v1/public/links } |  |  | 0.771 |
-| walker |  | 6283 | 6 | Fs::DirListing { dir: apps/web/pages/api/v1/public/users } |  |  | 0.772 |
-| ns | 6285 |  | 340 | packages/lib/schemaValidation.ts — every exported zod schema constant | 4.5 |  | 0.757 |
-| walker |  | 6292 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/worker } |  |  | 0.759 |
-| walker |  | 6302 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/collections } |  |  | 0.759 |
-| walker |  | 6312 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/highlights } |  |  | 0.760 |
-| walker |  | 6322 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/rss } |  |  | 0.762 |
-| walker |  | 6332 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/tokens } |  |  | 0.764 |
-| walker |  | 6344 | 12 | Fs::DirListing { dir: apps/web/pages/api/v1/links } |  |  | 0.766 |
-| walker |  | 6348 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/links/archive } |  |  | 0.767 |
-| walker |  | 6361 | 13 | Fs::DirListing { dir: apps/web/pages/api/v1/users } |  |  | 0.770 |
-| walker |  | 6370 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/users/[id] } |  |  | 0.773 |
-| walker |  | 6384 | 14 | Fs::DirListing { dir: apps/web/pages/api/v1/tags } |  |  | 0.777 |
-| walker |  | 6394 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/links/[id] } |  |  | 0.781 |
-| walker |  | 6398 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/links/[id]/archive } |  |  | 0.783 |
-| walker |  | 6402 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/links/[id]/highlights } |  |  | 0.785 |
-| walker |  | 6414 | 12 | Fs::DirListing { dir: apps/web/pages/api/v1/public/collections } |  |  | 0.789 |
-| walker |  | 6418 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/public/collections/links } |  |  | 0.791 |
-| walker |  | 6422 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/public/collections/tags } |  |  | 0.793 |
-| walker |  | 6440 | 18 | Fs::DirListing { dir: apps/web/pages/api/v1/preserved } |  |  | 0.798 |
-| walker |  | 6459 | 19 | Fs::DirListing { dir: apps/web/pages/api/v1/archives } |  |  | 0.804 |
-| walker |  | 6481 | 22 | Fs::DirListing { dir: apps/web/pages/api/v1/auth } |  |  | 0.811 |
-| walker |  | 6529 | 48 | Fs::DirListing { dir: apps/web/lib/api/controllers/migration } |  |  | 0.823 |
-| ns | 6542 |  | 257 | packages/router — the links, collections and tags hook exports | 4.6 |  | 0.804 |
-| ns | 6726 |  | 184 | packages/router — export lines of the remaining ten hook modules | 4.7 | 4.6 | 0.797 |
-| walker |  | 6839 | 310 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.799 |
+| walker |  | 4755 | 373 | Prisma::DeclTail { file: packages/prisma/schema.prisma, start_line: 28, tail_start_line: 51 } |  |  | 0.609 |
+| walker |  | 4771 | 16 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 1 } |  |  | 0.616 |
+| ns | 4823 |  | 156 | Controller files for links, collections, tags and highlights | 3.9 |  | 0.597 |
+| walker |  | 4827 | 56 | Fs::DirListing { dir: apps/web/pages/settings } |  |  | 0.599 |
+| walker |  | 4927 | 100 | Code::CodeKey { rung: Names, file: packages/filesystem/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
+| ns | 5001 |  | 178 | Controller files for users, tokens, session, search, dashboard, worker, migration and public access | 3.10 |  | 0.579 |
+| ns | 5249 |  | 248 | Complete listings of packages/types, packages/lib, packages/filesystem and packages/router | 4.1 |  | 0.609 |
+| walker |  | 5362 | 435 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.649 |
+| walker |  | 5441 | 79 | Fs::DirListing { dir: apps/web/lib/client } |  |  | 0.660 |
+| walker |  | 5453 | 12 | Code::CodeKey { rung: Names, file: apps/worker/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.660 |
+| walker |  | 5479 | 26 | Code::CodeKey { rung: Names, file: apps/web/e2e/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.660 |
+| walker |  | 5493 | 14 | Code::CodeKey { rung: Names, file: apps/web/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.660 |
+| walker |  | 5536 | 43 | Code::CodeKey { rung: Body, file: apps/web/pages/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.660 |
+| walker |  | 5633 | 97 | Fs::DirListing { dir: apps/web/lib/api } |  |  | 0.693 |
+| walker |  | 5646 | 13 | Fs::DirListing { dir: apps/web/lib/api/archives } |  |  | 0.694 |
+| ns | 5647 |  | 398 | packages/types/global.ts — every exported type, interface and enum declaration | 4.2 |  | 0.675 |
+| walker |  | 5663 | 17 | Fs::DirListing { dir: apps/web/lib/api/preserved } |  |  | 0.676 |
+| walker |  | 5696 | 33 | Fs::DirListing { dir: apps/web/lib/api/stripe } |  |  | 0.680 |
+| walker |  | 5732 | 36 | Fs::DirListing { dir: apps/web/lib/api/controllers } |  |  | 0.700 |
+| walker |  | 5737 | 5 | Fs::DirListing { dir: apps/web/lib/api/controllers/search } |  |  | 0.700 |
+| walker |  | 5742 | 5 | Fs::DirListing { dir: apps/web/lib/api/controllers/session } |  |  | 0.700 |
+| walker |  | 5748 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/worker } |  |  | 0.700 |
+| walker |  | 5757 | 9 | Fs::DirListing { dir: apps/web/lib/api/controllers/public } |  |  | 0.701 |
+| walker |  | 5761 | 4 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/links } |  |  | 0.702 |
+| walker |  | 5767 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/collections } |  |  | 0.702 |
+| walker |  | 5773 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/users } |  |  | 0.703 |
+| walker |  | 5780 | 7 | Fs::DirListing { dir: apps/web/lib/api/controllers/public/links/linkId } |  |  | 0.703 |
+| ns | 5793 |  | 146 | `ArchivedFormat`, `LinkType` and `TokenExpiry` variants | 4.3 | 4.2 | 0.695 |
+| walker |  | 5794 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/collections } |  |  | 0.695 |
+| walker |  | 5808 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/highlights } |  |  | 0.696 |
+| walker |  | 5822 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/tokens } |  |  | 0.698 |
+| walker |  | 5829 | 7 | Fs::DirListing { dir: apps/web/lib/api/controllers/tokens/tokenId } |  |  | 0.699 |
+| walker |  | 5843 | 14 | Fs::DirListing { dir: apps/web/lib/api/controllers/users } |  |  | 0.702 |
+| walker |  | 5860 | 17 | Fs::DirListing { dir: apps/web/lib/api/controllers/links } |  |  | 0.705 |
+| walker |  | 5872 | 12 | Fs::DirListing { dir: apps/web/lib/api/controllers/links/bulk } |  |  | 0.706 |
+| walker |  | 5892 | 20 | Fs::DirListing { dir: apps/web/lib/api/controllers/dashboard } |  |  | 0.710 |
+| walker |  | 5919 | 27 | Fs::DirListing { dir: apps/web/lib/api/controllers/tags } |  |  | 0.715 |
+| walker |  | 5940 | 21 | Fs::DirListing { dir: apps/web/lib/api/controllers/collections/collectionId } |  |  | 0.720 |
+| ns | 5945 |  | 152 | `ViewMode`, `Sort` and `TagSort` variants | 4.4 | 4.2 | 0.711 |
+| walker |  | 5961 | 21 | Fs::DirListing { dir: apps/web/lib/api/controllers/tags/tagId } |  |  | 0.716 |
+| walker |  | 5985 | 24 | Fs::DirListing { dir: apps/web/lib/api/controllers/links/linkId } |  |  | 0.724 |
+| walker |  | 5991 | 6 | Fs::DirListing { dir: apps/web/lib/api/controllers/links/linkId/highlight } |  |  | 0.726 |
+| walker |  | 6018 | 27 | Fs::DirListing { dir: apps/web/lib/api/controllers/users/userId } |  |  | 0.732 |
+| walker |  | 6033 | 15 | Code::CodeKey { rung: Names, file: apps/mobile/app/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.732 |
+| walker |  | 6102 | 69 | Fs::DirListing { dir: apps/web/pages/api/v1 } |  |  | 0.759 |
+| walker |  | 6106 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/dashboard } |  |  | 0.759 |
+| walker |  | 6110 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/getFavicon } |  |  | 0.759 |
+| walker |  | 6114 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/logins } |  |  | 0.759 |
+| walker |  | 6118 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/migration } |  |  | 0.760 |
+| walker |  | 6122 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/payment } |  |  | 0.760 |
+| walker |  | 6126 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/search } |  |  | 0.761 |
+| walker |  | 6130 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/session } |  |  | 0.761 |
+| walker |  | 6134 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/webhook } |  |  | 0.762 |
+| walker |  | 6140 | 6 | Fs::DirListing { dir: apps/web/pages/api/v1/avatar } |  |  | 0.762 |
+| walker |  | 6149 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/config } |  |  | 0.763 |
+| walker |  | 6158 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/public } |  |  | 0.764 |
+| walker |  | 6164 | 6 | Fs::DirListing { dir: apps/web/pages/api/v1/public/links } |  |  | 0.765 |
+| walker |  | 6170 | 6 | Fs::DirListing { dir: apps/web/pages/api/v1/public/users } |  |  | 0.766 |
+| walker |  | 6179 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/worker } |  |  | 0.767 |
+| walker |  | 6189 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/collections } |  |  | 0.768 |
+| walker |  | 6199 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/highlights } |  |  | 0.768 |
+| walker |  | 6209 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/rss } |  |  | 0.771 |
+| walker |  | 6219 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/tokens } |  |  | 0.772 |
+| walker |  | 6231 | 12 | Fs::DirListing { dir: apps/web/pages/api/v1/links } |  |  | 0.774 |
+| walker |  | 6235 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/links/archive } |  |  | 0.775 |
+| walker |  | 6248 | 13 | Fs::DirListing { dir: apps/web/pages/api/v1/users } |  |  | 0.779 |
+| walker |  | 6257 | 9 | Fs::DirListing { dir: apps/web/pages/api/v1/users/[id] } |  |  | 0.782 |
+| walker |  | 6271 | 14 | Fs::DirListing { dir: apps/web/pages/api/v1/tags } |  |  | 0.785 |
+| walker |  | 6281 | 10 | Fs::DirListing { dir: apps/web/pages/api/v1/links/[id] } |  |  | 0.790 |
+| walker |  | 6285 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/links/[id]/archive } |  |  | 0.777 |
+| ns | 6285 |  | 340 | packages/lib/schemaValidation.ts — every exported zod schema constant | 4.5 |  | 0.777 |
+| walker |  | 6289 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/links/[id]/highlights } |  |  | 0.779 |
+| walker |  | 6301 | 12 | Fs::DirListing { dir: apps/web/pages/api/v1/public/collections } |  |  | 0.783 |
+| walker |  | 6305 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/public/collections/links } |  |  | 0.785 |
+| walker |  | 6309 | 4 | Fs::DirListing { dir: apps/web/pages/api/v1/public/collections/tags } |  |  | 0.787 |
+| walker |  | 6327 | 18 | Fs::DirListing { dir: apps/web/pages/api/v1/preserved } |  |  | 0.793 |
+| walker |  | 6346 | 19 | Fs::DirListing { dir: apps/web/pages/api/v1/archives } |  |  | 0.798 |
+| walker |  | 6368 | 22 | Fs::DirListing { dir: apps/web/pages/api/v1/auth } |  |  | 0.805 |
+| walker |  | 6416 | 48 | Fs::DirListing { dir: apps/web/lib/api/controllers/migration } |  |  | 0.817 |
+| ns | 6542 |  | 257 | packages/router — the links, collections and tags hook exports | 4.6 |  | 0.798 |
+| walker |  | 6726 | 310 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.793 |
+| ns | 6726 |  | 184 | packages/router — export lines of the remaining ten hook modules | 4.7 | 4.6 | 0.793 |
+| walker |  | 6763 | 37 | Code::CodeKey { rung: Names, file: packages/prisma/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.793 |
+| walker |  | 6839 | 76 | Code::CodeKey { rung: Decl, file: packages/prisma/index.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.799 |
 | ns | 6892 |  | 166 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.804 |
 | ns | 7161 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.791 |
 | walker |  | 7216 | 377 | Json::Scripts { file: package.json } |  |  | 0.818 |
@@ -240,38 +240,37 @@ Score(3000)=0.733 I=0.888 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 7628 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.819 |
 | walker |  | 7690 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.819 |
 | walker |  | 7858 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.821 |
-| walker |  | 7959 | 101 | Code::CodeKey { rung: Body, file: apps/worker/index.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.821 |
+| walker |  | 7946 | 88 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.821 |
 | ns | 7965 |  | 358 | The flat components/ directory and the ui/ primitives | 6.2 |  | 0.829 |
-| walker |  | 8047 | 88 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.829 |
-| walker |  | 8151 | 104 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.829 |
-| walker |  | 8193 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.829 |
-| walker |  | 8205 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.829 |
-| ns | 8246 |  | 281 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.833 |
-| walker |  | 8247 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.834 |
-| walker |  | 8259 | 12 | Json::Entry { file: packages/router/package.json } |  |  | 0.834 |
-| walker |  | 8301 | 42 | Json::Identity { file: packages/types/package.json } |  |  | 0.834 |
-| walker |  | 8313 | 12 | Json::Entry { file: packages/types/package.json } |  |  | 0.834 |
-| walker |  | 8356 | 43 | Json::Dependencies { file: packages/types/package.json } |  |  | 0.834 |
-| walker |  | 8399 | 43 | Json::Identity { file: apps/worker/package.json } |  |  | 0.836 |
-| walker |  | 8411 | 12 | Json::Entry { file: apps/worker/package.json } |  |  | 0.836 |
-| walker |  | 8469 | 58 | Json::Scripts { file: apps/worker/package.json } |  |  | 0.836 |
-| ns | 8473 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.833 |
-| walker |  | 8512 | 43 | Json::Identity { file: packages/filesystem/package.json } |  |  | 0.835 |
-| walker |  | 8524 | 12 | Json::Entry { file: packages/filesystem/package.json } |  |  | 0.835 |
-| walker |  | 8558 | 34 | Json::Dependencies { file: packages/filesystem/package.json } |  |  | 0.835 |
-| walker |  | 8601 | 43 | Json::Identity { file: packages/prisma/package.json } |  |  | 0.837 |
-| walker |  | 8628 | 27 | Json::Entry { file: packages/prisma/package.json } |  |  | 0.837 |
-| walker |  | 8699 | 71 | Json::Scripts { file: packages/prisma/package.json } |  |  | 0.837 |
-| ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.825 |
-| walker |  | 8745 | 46 | Json::Dependencies { file: packages/prisma/package.json } |  |  | 0.825 |
-| walker |  | 8791 | 46 | Json::Identity { file: apps/mobile/package.json } |  |  | 0.827 |
-| walker |  | 8803 | 12 | Json::Entry { file: apps/mobile/package.json } |  |  | 0.827 |
-| walker |  | 8898 | 95 | Json::Scripts { file: apps/mobile/package.json } |  |  | 0.827 |
+| walker |  | 8050 | 104 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.829 |
+| walker |  | 8092 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.829 |
+| walker |  | 8104 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.829 |
+| walker |  | 8146 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.829 |
+| walker |  | 8158 | 12 | Json::Entry { file: packages/router/package.json } |  |  | 0.829 |
+| walker |  | 8200 | 42 | Json::Identity { file: packages/types/package.json } |  |  | 0.830 |
+| walker |  | 8212 | 12 | Json::Entry { file: packages/types/package.json } |  |  | 0.830 |
+| ns | 8246 |  | 281 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.834 |
+| walker |  | 8255 | 43 | Json::Dependencies { file: packages/types/package.json } |  |  | 0.834 |
+| walker |  | 8298 | 43 | Json::Identity { file: apps/worker/package.json } |  |  | 0.836 |
+| walker |  | 8310 | 12 | Json::Entry { file: apps/worker/package.json } |  |  | 0.836 |
+| walker |  | 8368 | 58 | Json::Scripts { file: apps/worker/package.json } |  |  | 0.836 |
+| walker |  | 8411 | 43 | Json::Identity { file: packages/filesystem/package.json } |  |  | 0.838 |
+| walker |  | 8423 | 12 | Json::Entry { file: packages/filesystem/package.json } |  |  | 0.838 |
+| walker |  | 8457 | 34 | Json::Dependencies { file: packages/filesystem/package.json } |  |  | 0.838 |
+| ns | 8473 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.835 |
+| walker |  | 8500 | 43 | Json::Identity { file: packages/prisma/package.json } |  |  | 0.837 |
+| walker |  | 8527 | 27 | Json::Entry { file: packages/prisma/package.json } |  |  | 0.837 |
+| walker |  | 8598 | 71 | Json::Scripts { file: packages/prisma/package.json } |  |  | 0.837 |
+| walker |  | 8644 | 46 | Json::Dependencies { file: packages/prisma/package.json } |  |  | 0.837 |
+| walker |  | 8690 | 46 | Json::Identity { file: apps/mobile/package.json } |  |  | 0.840 |
+| walker |  | 8702 | 12 | Json::Entry { file: apps/mobile/package.json } |  |  | 0.840 |
+| ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.827 |
+| walker |  | 8797 | 95 | Json::Scripts { file: apps/mobile/package.json } |  |  | 0.827 |
 | ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.830 |
 | ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.824 |
 | ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.815 |
 | ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.818 |
+| walker |  | 9616 | 819 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
 | ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.822 |
-| walker |  | 9717 | 819 | Plaintext::Whole { file: Dockerfile } |  |  | 0.822 |
+| walker |  | 9864 | 248 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.822 |
 | ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.825 |
-| walker |  | 9965 | 248 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.825 |

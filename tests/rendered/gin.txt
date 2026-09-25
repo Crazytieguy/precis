@@ -18,7 +18,16 @@ LICENSE
 Makefile
 README.md
   1→# Gin Web Framework
-  …
+  3→<img align="right" width="159px" src="https://raw.githubusercontent.com/gin-gonic/logo/master/color.png">
+  4→
+  5→[![Build Status](https://github.com/gin-gonic/gin/actions/workflows/gin.yml/badge.svg?branch=master)](https://github.com/gin-gonic/gin/actions/workflows/gin.yml)
+  6→[![Trivy Security Scan](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/gin-gonic/gin/actions/workflows/trivy-scan.yml)
+  7→[![codecov](https://codecov.io/gh/gin-gonic/gin/branch/master/graph/badge.svg)](https://codecov.io/gh/gin-gonic/gin)
+  8→[![Go Report Card](https://goreportcard.com/badge/github.com/gin-gonic/gin)](https://goreportcard.com/report/github.com/gin-gonic/gin)
+  9→[![Go Reference](https://pkg.go.dev/badge/github.com/gin-gonic/gin?status.svg)](https://pkg.go.dev/github.com/gin-gonic/gin?tab=doc)
+  10→[![Sourcegraph](https://sourcegraph.com/github.com/gin-gonic/gin/-/badge.svg)](https://sourcegraph.com/github.com/gin-gonic/gin?badge)
+  11→[![Open Source Helpers](https://www.codetriage.com/gin-gonic/gin/badges/users.svg)](https://www.codetriage.com/gin-gonic/gin)
+  12→[![Release](https://img.shields.io/github/release/gin-gonic/gin.svg?style=flat-square)](https://github.com/gin-gonic/gin/releases)
   14→## 📰 Gin 1.12.0 is now available!
   …
   43→## Getting Started
@@ -52,6 +61,41 @@ README.md
   222→### Getting Started with Contributing
   …
 auth.go
+  …
+  16→// AuthUserKey is the cookie name for user credential in basic auth.
+  17→const AuthUserKey = "user"
+  19→// AuthProxyUserKey is the cookie name for proxy_user credential in basic auth for proxy.
+  20→const AuthProxyUserKey = "proxy_user"
+  22→// Accounts defines a key/value for user/pass list of authorized logins.
+  23→type Accounts map[string]string
+  24→
+  25→type authPair struct {
+  26→	value string
+  27→	user  string
+  28→}
+  30→type authPairs []authPair
+  31→
+  32→func (a authPairs) searchCredential(authValue string) (string, bool) {
+  …
+  44→// BasicAuthForRealm returns a Basic HTTP Authorization middleware. It takes as arguments a map[string]string where
+  45→// the key is the user name and the value is the password, as well as the name of the Realm.
+  46→// If the realm is empty, "Authorization Required" will be used by default.
+  47→// (see http://tools.ietf.org/html/rfc2617#section-1.2)
+  48→func BasicAuthForRealm(accounts Accounts, realm string) HandlerFunc {
+  …
+  70→// BasicAuth returns a Basic HTTP Authorization middleware. It takes as argument a map[string]string where
+  71→// the key is the user name and the value is the password.
+  72→func BasicAuth(accounts Accounts) HandlerFunc {
+  73→	return BasicAuthForRealm(accounts, "")
+  …
+  76→func processAccounts(accounts Accounts) authPairs {
+  …
+  91→func authorizationHeader(user, password string) string {
+  …
+  96→// BasicAuthForProxy returns a Basic HTTP Proxy-Authorization middleware.
+  97→// If the realm is empty, "Proxy Authorization Required" will be used by default.
+  98→func BasicAuthForProxy(accounts Accounts, realm string) HandlerFunc {
+  …
 auth_test.go
 benchmarks_test.go
 binding/
@@ -102,6 +146,36 @@ context_appengine.go
 context_file_test.go
 context_test.go
 debug.go
+  …
+  16→const ginSupportMinGoVer = 25
+  17→
+  18→var runtimeVersion = runtime.Version()
+  20→// IsDebugging returns true if the framework is running in debug mode.
+  21→// Use SetMode(gin.ReleaseMode) to disable debug mode.
+  22→func IsDebugging() bool {
+  23→	return atomic.LoadInt32(&ginMode) == debugCode
+  …
+  26→// DebugPrintRouteFunc indicates debug log output format.
+  27→var DebugPrintRouteFunc func(httpMethod, absolutePath, handlerName string, nuHandlers int)
+  29→// DebugPrintFunc indicates debug log output format.
+  30→var DebugPrintFunc func(format string, values ...any)
+  31→
+  32→func debugPrintRoute(httpMethod, absolutePath string, handlers HandlersChain) {
+  …
+  44→func debugPrintLoadTemplate(tmpl *template.Template) {
+  …
+  56→func debugPrint(format string, values ...any) {
+  …
+  72→func getMinVer(v string) (uint64, error) {
+  …
+  81→func debugPrintWARNINGDefault() {
+  …
+  92→func debugPrintWARNINGNew() {
+  …
+  100→func debugPrintWARNINGSetHTMLTemplate() {
+  …
+  110→func debugPrintError(err error) {
+  …
 debug_test.go
 deprecated.go
 deprecated_test.go
@@ -139,146 +213,6 @@ examples/
 fs.go
 fs_test.go
 gin.go
-  …
-  25→const (
-  26→	defaultMultipartMemory = 32 << 20 // 32 MB
-  27→	escapedColon           = "\\:"
-  28→	colon                  = ":"
-  29→	backslash              = "\\"
-  30→)
-  32→var (
-  33→	default404Body = []byte("404 page not found")
-  34→	default405Body = []byte("405 method not allowed")
-  35→)
-  37→var defaultPlatform string
-  38→
-  39→var defaultTrustedCIDRs = []*net.IPNet{
-  …
-  50→// HandlerFunc defines the handler used by gin middleware as return value.
-  51→type HandlerFunc func(*Context)
-  53→// OptionFunc defines the function to change the default configuration
-  54→type OptionFunc func(*Engine)
-  56→// HandlersChain defines a HandlerFunc slice.
-  57→type HandlersChain []HandlerFunc
-  59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
-  60→func (c HandlersChain) Last() HandlerFunc {
-  …
-  67→// RouteInfo represents a request route's specification which contains method and path and its handler.
-  68→type RouteInfo struct {
-  69→	Method      string
-  70→	Path        string
-  71→	Handler     string
-  72→	HandlerFunc HandlerFunc
-  73→}
-  75→// RoutesInfo defines a RouteInfo slice.
-  76→type RoutesInfo []RouteInfo
-  78→// Trusted platforms
-  79→const (
-  80→	// PlatformGoogleAppEngine when running on Google App Engine. Trust X-Appengine-Remote-Addr
-  81→	// for determining the client's IP
-  82→	PlatformGoogleAppEngine = "X-Appengine-Remote-Addr"
-  83→	// PlatformCloudflare when using Cloudflare's CDN. Trust CF-Connecting-IP for determining
-  84→	// the client's IP
-  85→	PlatformCloudflare = "CF-Connecting-IP"
-  86→	// PlatformFlyIO when running on Fly.io. Trust Fly-Client-IP for determining the client's IP
-  87→	PlatformFlyIO = "Fly-Client-IP"
-  88→)
-  …
-  92→type Engine struct {
-  …
-  191→var _ IRouter = (*Engine)(nil)
-  …
-  202→func New(opts ...OptionFunc) *Engine {
-  …
-  235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
-  236→func Default(opts ...OptionFunc) *Engine {
-  …
-  243→func (engine *Engine) Handler() http.Handler {
-  …
-  252→func (engine *Engine) allocateContext(maxParams uint16) *Context {
-  …
-  258→// Delims sets template left and right delims and returns an Engine instance.
-  259→func (engine *Engine) Delims(left, right string) *Engine {
-  …
-  264→// SecureJsonPrefix sets the secureJSONPrefix used in Context.SecureJSON.
-  265→func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
-  …
-  270→// LoadHTMLGlob loads HTML files identified by glob pattern
-  271→// and associates the result with HTML renderer.
-  272→func (engine *Engine) LoadHTMLGlob(pattern string) {
-  …
-  286→// LoadHTMLFiles loads a slice of HTML files
-  287→// and associates the result with HTML renderer.
-  288→func (engine *Engine) LoadHTMLFiles(files ...string) {
-  …
-  298→// LoadHTMLFS loads an http.FileSystem and a slice of patterns
-  299→// and associates the result with HTML renderer.
-  300→func (engine *Engine) LoadHTMLFS(fs http.FileSystem, patterns ...string) {
-  …
-  311→// SetHTMLTemplate associate a template with HTML renderer.
-  312→func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
-  …
-  320→// SetFuncMap sets the FuncMap used for template.FuncMap.
-  321→func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
-  …
-  325→// NoRoute adds handlers for NoRoute. It returns a 404 code by default.
-  326→func (engine *Engine) NoRoute(handlers ...HandlerFunc) {
-  …
-  331→// NoMethod sets the handlers called when Engine.HandleMethodNotAllowed = true.
-  332→func (engine *Engine) NoMethod(handlers ...HandlerFunc) {
-  …
-  337→// Use attaches a global middleware to the router. i.e. the middleware attached through Use() will be
-  338→// included in the handlers chain for every single request. Even 404, 405, static files...
-  339→// For example, this is the right place for a logger or error management middleware.
-  340→func (engine *Engine) Use(middleware ...HandlerFunc) IRoutes {
-  …
-  347→// With returns an Engine with the configuration set in the OptionFunc.
-  348→func (engine *Engine) With(opts ...OptionFunc) *Engine {
-  …
-  356→func (engine *Engine) rebuild404Handlers() {
-  …
-  360→func (engine *Engine) rebuild405Handlers() {
-  …
-  364→func (engine *Engine) addRoute(method, path string, handlers HandlersChain) {
-  …
-  388→// Routes returns a slice of registered routes, including some useful information, such as:
-  389→// the http method, path, and the handler name.
-  390→func (engine *Engine) Routes() (routes RoutesInfo) {
-  …
-  397→func iterate(path, method string, routes RoutesInfo, root *node) RoutesInfo {
-  …
-  414→func (engine *Engine) prepareTrustedCIDRs() ([]*net.IPNet, error) {
-  …
-  451→func (engine *Engine) SetTrustedProxies(trustedProxies []string) error {
-  …
-  457→func (engine *Engine) isUnsafeTrustedProxies() bool {
-  …
-  461→// parseTrustedProxies parse Engine.trustedProxies to Engine.trustedCIDRs
-  462→func (engine *Engine) parseTrustedProxies() error {
-  …
-  469→func (engine *Engine) isTrustedProxy(ip net.IP) bool {
-  …
-  481→// validateHeader will parse X-Forwarded-For header and return the trusted client IP address
-  482→func (engine *Engine) validateHeader(header string) (clientIP string, valid bool) {
-  …
-  503→// updateRouteTree do update to the route tree recursively
-  504→func updateRouteTree(n *node) {
-  …
-  516→// updateRouteTrees do update to the route trees
-  517→func (engine *Engine) updateRouteTrees() {
-  …
-  525→func parseIP(ip string) net.IP {
-  …
-  537→// Run attaches the router to a http.Server and starts listening and serving HTTP requests.
-  538→// It is a shortcut for http.ListenAndServe(addr, router)
-  539→// Note: this method will block the calling goroutine indefinitely unless an error happens.
-  540→func (engine *Engine) Run(addr ...string) (err error) {
-  …
-  558→// RunTLS attaches the router to a http.Server and starts listening and serving HTTPS (secure) requests.
-  559→// It is a shortcut for http.ListenAndServeTLS(addr, certFile, keyFile, router)
-  560→// Note: this method will block the calling goroutine indefinitely unless an error happens.
-  561→func (engine *Engine) RunTLS(addr, certFile, keyFile string) (err error) {
-  …
 ginS/
   README.md
     1→# Gin Default Server
@@ -322,6 +256,15 @@ middleware_test.go
 mode.go
 mode_test.go
 path.go
+  …
+  8→const stackBufSize = 128
+  …
+  23→func cleanPath(p string) string {
+  …
+  128→func bufApp(buf *[]byte, s string, w int, c byte) {
+  …
+  155→func removeRepeatedChar(s string, char byte) string {
+  …
 path_test.go
 recovery.go
 recovery_test.go
@@ -363,5 +306,54 @@ testdata/
 tree.go
 tree_test.go
 utils.go
+  …
+  19→// BindKey indicates a default bind key.
+  20→const BindKey = "_gin-gonic/gin/bindkey"
+  22→// localhostIP indicates the default localhost IP address.
+  23→const localhostIP = "127.0.0.1"
+  25→// localhostIPv6 indicates the default localhost IPv6 address.
+  26→const localhostIPv6 = "::1"
+  28→// Bind is a helper function for given interface object and returns a Gin middleware.
+  29→func Bind(val any) HandlerFunc {
+  …
+  46→// WrapF is a helper function for wrapping http.HandlerFunc and returns a Gin middleware.
+  47→func WrapF(f http.HandlerFunc) HandlerFunc {
+  …
+  53→// WrapH is a helper function for wrapping http.Handler and returns a Gin middleware.
+  54→func WrapH(h http.Handler) HandlerFunc {
+  …
+  60→// H is a shortcut for map[string]any
+  61→type H map[string]any
+  63→// MarshalXML allows type H to be used with xml.Marshal.
+  64→func (h H) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+  …
+  85→func assert1(guard bool, text string) {
+  …
+  91→func filterFlags(content string) string {
+  …
+  100→func chooseData(custom, wildcard any) any {
+  …
+  110→func parseAccept(acceptHeader string) []string {
+  …
+  124→func lastChar(str string) uint8 {
+  …
+  131→func nameOfFunction(f any) string {
+  …
+  135→func joinPaths(absolutePath, relativePath string) string {
+  …
+  147→func resolveAddress(addr []string) string {
+  …
+  163→// https://stackoverflow.com/questions/53069040/checking-a-string-contains-only-ascii-characters
+  164→func isASCII(s string) bool {
+  …
+  173→// safeInt8 converts int to int8 safely, capping at math.MaxInt8
+  174→func safeInt8(n int) int8 {
+  …
+  181→// safeUint16 converts int to uint16 safely, capping at math.MaxUint16
+  182→func safeUint16(n int) uint16 {
+  …
 utils_test.go
 version.go
+  …
+  7→// Version is the current gin framework's version.
+  8→const Version = "v1.12.0"

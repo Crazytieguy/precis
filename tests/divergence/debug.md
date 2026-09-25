@@ -5,12 +5,12 @@ Score(3000)=0.582 I=0.777 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 31 | 31 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 45 |  | 45 | Repo identity: README title + one-sentence description | 1.1 |  | 0.000 |
 | walker |  | 47 | 16 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 90 | 43 | Code::CodeKey { rung: ModuleDoc, file: src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| ns | 92 |  | 47 | Complete file map: repo root and src/ | 1.2 |  | 0.633 |
-| walker |  | 135 | 45 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| walker |  | 200 | 65 | Json::Identity { file: package.json } |  |  | 1.000 |
-| ns | 205 |  | 113 | src/index.js in full — the environment dispatch | 1.3 |  | 0.791 |
-| walker |  | 232 | 32 | Json::Dependencies { file: package.json } |  |  | 0.791 |
+| walker |  | 92 | 45 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
+| ns | 92 |  | 47 | Complete file map: repo root and src/ | 1.2 |  | 1.000 |
+| walker |  | 157 | 65 | Json::Identity { file: package.json } |  |  | 1.000 |
+| walker |  | 189 | 32 | Json::Dependencies { file: package.json } |  |  | 1.000 |
+| ns | 205 |  | 113 | src/index.js in full — the environment dispatch | 1.3 |  | 0.755 |
+| walker |  | 232 | 43 | Code::CodeKey { rung: ModuleDoc, file: src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.791 |
 | walker |  | 264 | 32 | Json::Runtime { file: package.json } |  |  | 0.800 |
 | ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.758 |
 | walker |  | 332 | 68 | Json::Entry { file: package.json } |  |  | 0.830 |

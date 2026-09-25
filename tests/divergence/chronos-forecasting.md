@@ -1,4 +1,4 @@
-Score(3000)=0.319 I=0.543 C=0.187 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.498/0.439/0.382/0.319/0.408/0.481/0.527
+Score(3000)=0.319 I=0.543 C=0.187 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.499/0.437/0.305/0.319/0.408/0.481/0.527
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,26 +25,26 @@ Score(3000)=0.319 I=0.543 C=0.187 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | ns | 468 |  | 61 | Minimal forecasting example: import and load a pipeline | 1.6 |  | 0.609 |
 | walker |  | 532 | 78 | Fs::DirListing { dir: test } |  |  | 0.610 |
 | ns | 611 |  | 143 | README `predict_df` call with every keyword argument annotated | 1.7 |  | 0.555 |
-| walker |  | 640 | 108 | Code::CodeKey { rung: Names, file: src/chronos/chronos2/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.557 |
-| ns | 809 |  | 198 | Complete table of published model IDs | 1.8 |  | 0.498 |
-| ns | 1039 |  | 230 | `BaseChronosPipeline` complete member roster + `ForecastType` | 2.1 |  | 0.436 |
-| walker |  | 1066 | 426 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.438 |
-| walker |  | 1249 | 183 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.439 |
-| ns | 1448 |  | 409 | `Chronos2Pipeline` complete member roster | 2.2 |  | 0.366 |
-| ns | 1630 |  | 182 | `ChronosBoltPipeline` complete member roster | 2.3 |  | 0.342 |
-| walker |  | 1717 | 468 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.342 |
+| ns | 809 |  | 198 | Complete table of published model IDs | 1.8 |  | 0.496 |
+| walker |  | 958 | 426 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.499 |
+| ns | 1039 |  | 230 | `BaseChronosPipeline` complete member roster + `ForecastType` | 2.1 |  | 0.437 |
+| walker |  | 1141 | 183 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.437 |
+| ns | 1448 |  | 409 | `Chronos2Pipeline` complete member roster | 2.2 |  | 0.365 |
+| walker |  | 1609 | 468 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.365 |
+| ns | 1630 |  | 182 | `ChronosBoltPipeline` complete member roster | 2.3 |  | 0.340 |
+| walker |  | 1717 | 108 | Code::CodeKey { rung: Names, file: src/chronos/chronos2/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.342 |
+| walker |  | 1723 | 6 | Fs::DirListing { dir: ci/evaluate } |  |  | 0.342 |
 | ns | 1848 |  | 218 | `ChronosPipeline` complete member roster + class docstring | 2.4 |  | 0.317 |
-| walker |  | 2013 | 296 | Code::CodeKey { rung: Names, file: src/chronos/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.399 |
-| walker |  | 2019 | 6 | Fs::DirListing { dir: ci/evaluate } |  |  | 0.399 |
-| ns | 2031 |  | 183 | `BaseChronosPipeline.predict_df` full signature | 2.5 | 2.1 | 0.382 |
-| ns | 2173 |  | 142 | `BaseChronosPipeline.predict` / `predict_quantiles` full signatures | 2.6 | 2.1 | 0.372 |
-| walker |  | 2331 | 312 | Toml::Config { file: pyproject.toml } |  |  | 0.374 |
-| walker |  | 2338 | 7 | Fs::DirListing { dir: scripts/training } |  |  | 0.374 |
-| walker |  | 2347 | 9 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.374 |
-| ns | 2354 |  | 181 | `ChronosConfig` complete field list | 2.7 |  | 0.354 |
-| walker |  | 2357 | 10 | Markdown::ReadmeHeadline { file: scripts/README.md } |  |  | 0.354 |
-| walker |  | 2367 | 10 | Fs::DirListing { dir: test/dummy-chronos-bolt-model } |  |  | 0.354 |
-| walker |  | 2377 | 10 | Fs::DirListing { dir: test/dummy-chronos2-model } |  |  | 0.355 |
+| ns | 2031 |  | 183 | `BaseChronosPipeline.predict_df` full signature | 2.5 | 2.1 | 0.303 |
+| walker |  | 2035 | 312 | Toml::Config { file: pyproject.toml } |  |  | 0.304 |
+| walker |  | 2042 | 7 | Fs::DirListing { dir: scripts/training } |  |  | 0.304 |
+| walker |  | 2051 | 9 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.305 |
+| walker |  | 2061 | 10 | Markdown::ReadmeHeadline { file: scripts/README.md } |  |  | 0.305 |
+| walker |  | 2071 | 10 | Fs::DirListing { dir: test/dummy-chronos-bolt-model } |  |  | 0.305 |
+| walker |  | 2081 | 10 | Fs::DirListing { dir: test/dummy-chronos2-model } |  |  | 0.305 |
+| ns | 2173 |  | 142 | `BaseChronosPipeline.predict` / `predict_quantiles` full signatures | 2.6 | 2.1 | 0.297 |
+| ns | 2354 |  | 181 | `ChronosConfig` complete field list | 2.7 |  | 0.282 |
+| walker |  | 2377 | 296 | Code::CodeKey { rung: Names, file: src/chronos/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
 | walker |  | 2389 | 12 | Fs::DirListing { dir: test/dummy-chronos2-lora } |  |  | 0.355 |
 | walker |  | 2471 | 82 | Code::CodeKey { rung: Names, file: src/chronos/chronos.py, decl: 0, sub: 0, line: 0 } |  |  | 0.356 |
 | walker |  | 2531 | 60 | Code::CodeKey { rung: Decl, file: src/chronos/chronos.py, decl: 16, sub: 0, line: 243 } |  |  | 0.356 |

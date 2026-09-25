@@ -1,4 +1,4 @@
-Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.706/0.825/0.697/0.638/0.582/0.551/0.612
+Score(3000)=0.638 I=0.882 C=0.461 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.706/0.822/0.697/0.638/0.582/0.551/0.612
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -34,15 +34,15 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 1053 |  | 162 | index.js: pre-flight CLI dispatch (--help, --version, node version floor) | 1.10 | 1.9 | 0.653 |
 | walker |  | 1056 | 195 | Json::Dependencies { file: package.json } |  |  | 0.661 |
 | walker |  | 1163 | 107 | Json::Entry { file: package.json } |  |  | 0.842 |
-| walker |  | 1217 | 54 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.843 |
-| ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.781 |
-| walker |  | 1269 | 52 | Fs::DirListing { dir: docs } |  |  | 0.782 |
-| walker |  | 1278 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.782 |
-| walker |  | 1291 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.782 |
-| walker |  | 1411 | 120 | Json::Scripts { file: package.json } |  |  | 0.817 |
-| ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.825 |
-| walker |  | 1436 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.825 |
-| walker |  | 1606 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.830 |
+| walker |  | 1215 | 52 | Fs::DirListing { dir: docs } |  |  | 0.843 |
+| ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.778 |
+| walker |  | 1224 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.778 |
+| walker |  | 1237 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.779 |
+| walker |  | 1357 | 120 | Json::Scripts { file: package.json } |  |  | 0.813 |
+| walker |  | 1382 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.814 |
+| ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.822 |
+| walker |  | 1552 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.827 |
+| walker |  | 1606 | 54 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
 | walker |  | 1611 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.830 |
 | walker |  | 1621 | 10 | Code::CodeKey { rung: Names, file: lib/node.version.js, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
 | walker |  | 1638 | 17 | Code::CodeKey { rung: Decl, file: lib/node.version.js, decl: 1, sub: 0, line: 1 } |  |  | 0.830 |
@@ -68,32 +68,32 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 2400 | 12 | Code::CodeKey { rung: Names, file: lib/modes.js, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
 | walker |  | 2433 | 33 | Code::CodeKey { rung: Decl, file: lib/modes.js, decl: 1, sub: 0, line: 3 } |  |  | 0.641 |
 | ns | 2455 |  | 116 | README: --containerFilters semantics | 2.7 |  | 0.635 |
-| walker |  | 2528 | 95 | Code::CodeKey { rung: Body, file: index.js, decl: 3, sub: 0, line: 72 } |  |  | 0.636 |
-| walker |  | 2592 | 64 | Code::CodeKey { rung: Names, file: src/cli.js, decl: 0, sub: 0, line: 0 } |  |  | 0.645 |
-| walker |  | 2605 | 13 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.650 |
-| ns | 2625 |  | 170 | Dockerfile in full | 2.8 |  | 0.668 |
-| walker |  | 2638 | 33 | Code::CodeKey { rung: Doc, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.668 |
-| walker |  | 2699 | 61 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 2, sub: 0, line: 59 } |  |  | 0.671 |
-| ns | 2724 |  | 99 | README: running and building the docker image | 2.9 |  | 0.660 |
-| walker |  | 2736 | 37 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 9, sub: 0, line: 114 } |  |  | 0.660 |
+| walker |  | 2497 | 64 | Code::CodeKey { rung: Names, file: src/cli.js, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
+| walker |  | 2510 | 13 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.650 |
+| walker |  | 2543 | 33 | Code::CodeKey { rung: Doc, file: src/cli.js, decl: 4, sub: 0, line: 93 } |  |  | 0.650 |
+| walker |  | 2604 | 61 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 2, sub: 0, line: 59 } |  |  | 0.653 |
+| ns | 2625 |  | 170 | Dockerfile in full | 2.8 |  | 0.670 |
+| walker |  | 2641 | 37 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 9, sub: 0, line: 114 } |  |  | 0.670 |
+| ns | 2724 |  | 99 | README: running and building the docker image | 2.9 |  | 0.659 |
 | ns | 2876 |  | 152 | .github/workflows/main.yml: the lint job | 2.10 |  | 0.638 |
-| ns | 3087 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.620 |
+| ns | 3087 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.619 |
+| walker |  | 3108 | 467 | Json::IdentityMeta { file: package.json } |  |  | 0.619 |
 | ns | 3170 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.624 |
-| walker |  | 3203 | 467 | Json::IdentityMeta { file: package.json } |  |  | 0.624 |
-| walker |  | 3342 | 139 | Code::CodeKey { rung: Body, file: index.js, decl: 4, sub: 0, line: 86 } |  |  | 0.626 |
-| ns | 3375 |  | 205 | src/screen.js: imports and the mode -> grid-layout table | 3.2 |  | 0.610 |
-| walker |  | 3502 | 160 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.628 |
-| walker |  | 3544 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 17, sub: 0, line: 180 } |  |  | 0.628 |
-| ns | 3573 |  | 198 | src/screen.js: complete method roster of the `screen` class | 3.3 |  | 0.635 |
-| walker |  | 3689 | 145 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.635 |
+| walker |  | 3268 | 160 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.642 |
+| walker |  | 3310 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 17, sub: 0, line: 180 } |  |  | 0.642 |
+| ns | 3375 |  | 205 | src/screen.js: imports and the mode -> grid-layout table | 3.2 |  | 0.626 |
+| walker |  | 3455 | 145 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.626 |
+| walker |  | 3550 | 95 | Code::CodeKey { rung: Body, file: index.js, decl: 3, sub: 0, line: 72 } |  |  | 0.626 |
+| ns | 3573 |  | 198 | src/screen.js: complete method roster of the `screen` class | 3.3 |  | 0.633 |
+| walker |  | 3601 | 51 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 8, sub: 0, line: 107 } |  |  | 0.635 |
+| walker |  | 3643 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 18, sub: 0, line: 187 } |  |  | 0.635 |
 | ns | 3770 |  | 197 | src/screen.js: init() — the full boot sequence | 3.4 | 3.3 | 0.616 |
-| walker |  | 3873 | 184 | Code::CodeKey { rung: Body, file: index.js, decl: 2, sub: 0, line: 47 } |  |  | 0.616 |
-| ns | 3900 |  | 130 | src/screen.js: constructor state fields | 3.5 | 3.3 | 0.604 |
-| walker |  | 3924 | 51 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 8, sub: 0, line: 107 } |  |  | 0.606 |
-| walker |  | 3966 | 42 | Code::CodeKey { rung: Body, file: src/dockerUtil.js, decl: 18, sub: 0, line: 187 } |  |  | 0.606 |
-| ns | 4024 |  | 124 | src/screen.js: initScreen() — blessed screen and the 12x12 grid | 3.6 | 3.3 | 0.597 |
-| walker |  | 4150 | 184 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 3, sub: 0, line: 66 } |  |  | 0.599 |
-| walker |  | 4204 | 54 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 6, sub: 0, line: 79 } |  |  | 0.601 |
+| walker |  | 3827 | 184 | Code::CodeKey { rung: Body, file: src/cli.js, decl: 3, sub: 0, line: 66 } |  |  | 0.618 |
+| ns | 3900 |  | 130 | src/screen.js: constructor state fields | 3.5 | 3.3 | 0.606 |
+| walker |  | 3966 | 139 | Code::CodeKey { rung: Body, file: index.js, decl: 4, sub: 0, line: 86 } |  |  | 0.608 |
+| walker |  | 4020 | 54 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 6, sub: 0, line: 79 } |  |  | 0.609 |
+| ns | 4024 |  | 124 | src/screen.js: initScreen() — blessed screen and the 12x12 grid | 3.6 | 3.3 | 0.600 |
+| walker |  | 4204 | 184 | Code::CodeKey { rung: Body, file: index.js, decl: 2, sub: 0, line: 47 } |  |  | 0.601 |
 | walker |  | 4217 | 13 | Fs::DirListing { dir: docs/src/assets } |  |  | 0.601 |
 | walker |  | 4223 | 6 | Fs::DirListing { dir: docs/src/assets/css } |  |  | 0.601 |
 | ns | 4286 |  | 262 | src/screen.js: initHooks() and initWidgets() — instantiation and layout gating | 3.7 | 3.3 | 0.582 |

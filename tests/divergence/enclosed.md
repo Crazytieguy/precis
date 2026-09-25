@@ -221,10 +221,12 @@ Score(3000)=0.515 I=0.791 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.588 |
 | walker |  | 9440 | 281 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.589 |
 | walker |  | 9475 | 35 | Plaintext::DeclSurface { file: packages/app-client/public/robots.txt } |  |  | 0.589 |
+| walker |  | 9517 | 42 | Plaintext::DeclSurface { file: packages/app-client/public/humans.txt } |  |  | 0.589 |
 | ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.593 |
-| walker |  | 9649 | 174 | Code::CodeKey { rung: Names, file: packages/lib/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.600 |
-| walker |  | 9691 | 42 | Plaintext::DeclSurface { file: packages/app-client/public/humans.txt } |  |  | 0.600 |
-| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.604 |
-| ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.615 |
-| walker |  | 9917 | 226 | Json::Dependencies { file: packages/app-server/package.json } |  |  | 0.615 |
-| walker |  | 9948 | 31 | Markdown::Section { file: packages/docs/src/how-it-works.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.615 |
+| walker |  | 9743 | 226 | Json::Dependencies { file: packages/app-server/package.json } |  |  | 0.593 |
+| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.597 |
+| walker |  | 9774 | 31 | Markdown::Section { file: packages/docs/src/how-it-works.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.597 |
+| walker |  | 9828 | 54 | Markdown::Section { file: packages/docs/src/resources/brand-kit.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.597 |
+| ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.608 |
+| walker |  | 9913 | 85 | Markdown::HeadingsOutline { file: packages/docs/src/self-hosting/other-platforms.md } |  |  | 0.608 |
+| walker |  | 9945 | 32 | Code::CodeKey { rung: Names, file: packages/crypto/src/api-definition.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |

@@ -72,101 +72,103 @@ build.rs
 rust-toolchain.toml
 src/
   backtrace.rs
+    …
+    7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
+    8→pub(crate) enum Backtrace {}
+    10→#[cfg(std_backtrace)]
+    11→macro_rules! impl_backtrace {
+    12→    () => {
+    13→        std::backtrace::Backtrace
+    14→    };
+    15→}
+    17→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
+    18→macro_rules! impl_backtrace {
+    19→    () => {
+    20→        impl core::fmt::Debug + core::fmt::Display
+    21→    };
+    22→}
+    24→#[cfg(any(std_backtrace, feature = "backtrace"))]
+    25→macro_rules! backtrace {
+    26→    () => {
+    27→        Some(crate::backtrace::Backtrace::capture())
+    28→    };
+    29→}
+    31→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
+    32→macro_rules! backtrace {
+    33→    () => {
+    34→        None
+    35→    };
+    36→}
+    38→#[cfg(error_generic_member_access)]
+    39→macro_rules! backtrace_if_absent {
+    40→    ($err:expr) => {
+    41→        match $crate::nightly::request_ref_backtrace($err as &dyn core::error::Error) {
+    42→            Some(_) => None,
+    43→            None => backtrace!(),
+    44→        }
+    45→    };
+    46→}
+    48→#[cfg(all(
+    49→    any(feature = "std", not(anyhow_no_core_error)),
+    50→    not(error_generic_member_access),
+    51→    any(std_backtrace, feature = "backtrace")
+    52→))]
+    53→macro_rules! backtrace_if_absent {
+    54→    ($err:expr) => {
+    55→        backtrace!()
+    56→    };
+    57→}
+    59→#[cfg(all(
+    60→    any(feature = "std", not(anyhow_no_core_error)),
+    61→    not(std_backtrace),
+    62→    not(feature = "backtrace"),
+    63→))]
+    64→macro_rules! backtrace_if_absent {
+    65→    ($err:expr) => {
+    66→        None
+    67→    };
+    68→}
+    …
+    407→fn _assert_send_sync() {
+    …
   chain.rs
   context.rs
   ensure.rs
   error.rs
   fmt.rs
   kind.rs
+    …
+    55→pub struct Adhoc;
+    …
+    67→impl Adhoc {
+    68→    #[cold]
+    69→    pub fn new<M>(self, message: M) -> Error
+    70→    where
+    71→        M: Display + Debug + Send + Sync + 'static,
+    72→    {
+    …
+    75→}
+    77→pub struct Trait;
+    …
+    89→impl Trait {
+    90→    #[cold]
+    91→    pub fn new<E>(self, error: E) -> Error
+    92→    where
+    93→        E: Into<Error>,
+    94→    {
+    95→        error.into()
+    …
+    97→}
+    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    100→pub struct Boxed;
+    …
+    114→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
+    115→impl Boxed {
+    116→    #[cold]
+    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
+    …
+    121→}
   lib.rs
-    …
-    9→//! This library provides [`anyhow::Error`][Error], a trait object based error
-    10→//! type for easy idiomatic error handling in Rust applications.
-    11→//!
-    12→//! <br>
-    13→//!
-    14→//! # Details
-    15→//!
-    16→//! - Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as
-    17→//!   the return type of any fallible function.
-    18→//!
-    19→//!   Within the function, use `?` to easily propagate any error that implements
-    20→//!   the [`std::error::Error`] trait.
-    21→//!
-    22→//!   ```
-    …
-    38→//!   use anyhow::Result;
-    39→//!
-    40→//!   fn get_cluster_info() -> Result<ClusterMap> {
-    41→//!       let config = std::fs::read_to_string("cluster.json")?;
-    42→//!       let map: ClusterMap = serde_json::from_str(&config)?;
-    43→//!       Ok(map)
-    44→//!   }
-    …
-    47→//!   ```
-    48→//!
-    49→//! - Attach context to help the person troubleshooting the error understand
-    50→//!   where things went wrong. A low-level error like "No such file or
-    51→//!   directory" can be annoying to debug without more context about what higher
-    52→//!   level step the application was in the middle of.
-    53→//!
-    54→//!   ```
-    …
-    63→//!   use anyhow::{Context, Result};
-    64→//!
-    65→//!   fn main() -> Result<()> {
-    …
-    69→//!       ...
-    …
-    75→//!       it.detach().context("Failed to detach the important thing")?;
-    76→//!
-    77→//!       let content = std::fs::read(path)
-    78→//!           .with_context(|| format!("Failed to read instrs from {}", path))?;
-    …
-    81→//!       ...
-    …
-    85→//!   }
-    86→//!   ```
-    87→//!
-    88→//!   ```console
-    89→//!   Error: Failed to read instrs from ./path/to/instrs.json
-    90→//!
-    91→//!   Caused by:
-    92→//!       No such file or directory (os error 2)
-    93→//!   ```
-    94→//!
-    95→//! - Downcasting is supported and can be by value, by shared reference, or by
-    96→//!   mutable reference as needed.
-    97→//!
-    98→//!   ```
-    …
-    122→//!   // If the error was caused by redaction, then return a
-    123→//!   // tombstone instead of the content.
-    124→//!   match root_cause.downcast_ref::<DataStoreError>() {
-    125→//!       Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
-    126→//!       None => Err(error),
-    127→//!   }
-    …
-    129→//!   ```
-    130→//!
-    131→//! - If using Rust &ge; 1.65, a backtrace is captured and printed with the
-    132→//!   error if the underlying error type does not already provide its own. In
-    133→//!   order to see backtraces, they must be enabled through the environment
-    134→//!   variables described in [`std::backtrace`]:
-    135→//!
-    136→//!   - If you want panics and errors to both have backtraces, set
-    137→//!     `RUST_BACKTRACE=1`;
-    138→//!   - If you want only errors to have backtraces, set `RUST_LIB_BACKTRACE=1`;
-    139→//!   - If you want only panics to have backtraces, set `RUST_BACKTRACE=1` and
-    140→//!     `RUST_LIB_BACKTRACE=0`.
-    141→//!
-    142→//!   [`std::backtrace`]: std::backtrace#environment-variables
-    143→//!
-    144→//! - Anyhow works with any error type that has an impl of `std::error::Error`,
-    145→//!   including ones defined in your crate. We do not bundle a `derive(Error)`
-    146→//!   macro but you can write the impls yourself or use a standalone macro like
-    147→//!   [thiserror].
-    148→//!
     …
     251→#[macro_use]
     252→mod backtrace;
@@ -185,7 +187,6 @@ src/
     278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     279→trait StdError: Debug + Display {
     280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-    281→        None
     …
     283→}
     285→#[doc(no_inline)]
@@ -241,6 +242,45 @@ src/
     651→    Result::Ok(value)
     …
   macros.rs
+    …
+    56→#[macro_export]
+    57→#[cfg_attr(not(anyhow_no_clippy_format_args), clippy::format_args)]
+    58→macro_rules! bail {
+    59→    ($msg:literal $(,)?) => {
+    60→        return $crate::__private::Err($crate::__anyhow!($msg))
+    61→    };
+    62→    ($err:expr $(,)?) => {
+    63→        return $crate::__private::Err($crate::__anyhow!($err))
+    64→    };
+    65→    ($fmt:expr, $($arg:tt)*) => {
+    66→        return $crate::__private::Err($crate::__anyhow!($fmt, $($arg)*))
+    67→    };
+    68→}
+    70→macro_rules! __ensure {
+    …
+    202→#[macro_export]
+    203→#[cfg_attr(not(anyhow_no_clippy_format_args), clippy::format_args)]
+    204→macro_rules! anyhow {
+    205→    ($msg:literal $(,)?) => {
+    206→        $crate::__private::must_use({
+    207→            let error = $crate::__private::format_err($crate::__private::format_args!($msg));
+    208→            error
+    209→        })
+    210→    };
+    211→    ($err:expr $(,)?) => {
+    212→        $crate::__private::must_use({
+    213→            use $crate::__private::kind::*;
+    214→            let error = match $err {
+    215→                error => (&error).anyhow_kind().new(error),
+    216→            };
+    217→            error
+    218→        })
+    219→    };
+    220→    ($fmt:expr, $($arg:tt)*) => {
+    221→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
+    222→    };
+    223→}
+    …
   nightly.rs
   ptr.rs
   wrapper.rs

@@ -165,10 +165,6 @@ pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
 /// API, on its `Decl`, `Doc` and `Body` batches.
 pub const CODE_PRIVATE_FACTOR: f64 = 0.65;
 
-/// Code-engine factor on every batch of a language's entry file
-/// (`lib.rs`, `__init__.py`, …), on top of pinning its depth to 1.
-pub const CODE_ENTRYPOINT_FACTOR: f64 = 1.25;
-
 /// Down-weight a batch by filesystem depth — depth 0/1 unpenalized.
 pub fn depth_factor(depth: usize) -> f64 {
     1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.35)

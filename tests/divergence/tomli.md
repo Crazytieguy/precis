@@ -1,4 +1,4 @@
-Score(3000)=0.458 I=0.775 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.559/0.574/0.493/0.458/0.442/0.546/0.520
+Score(3000)=0.458 I=0.775 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.529/0.574/0.493/0.458/0.442/0.546/0.520
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -28,14 +28,14 @@ Score(3000)=0.458 I=0.775 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 682 |  | 60 | src/tomli/_types.py type aliases (complete file body) | 1.9 |  | 0.436 |
 | ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.419 |
 | walker |  | 847 | 393 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.604 |
-| walker |  | 884 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| walker |  | 928 | 44 | Plaintext::Whole { file: fuzzer/requirements.txt } |  |  | 0.639 |
-| ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.559 |
-| ns | 1220 |  | 248 | Complete roster of module-level functions in _parser.py (names only) | 2.1 |  | 0.485 |
-| walker |  | 1313 | 385 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.613 |
-| walker |  | 1322 | 9 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.613 |
-| ns | 1340 |  | 120 | Complete roster of classes in _parser.py, with Output's fields | 2.2 |  | 0.574 |
-| walker |  | 1347 | 25 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.574 |
+| walker |  | 891 | 44 | Plaintext::Whole { file: fuzzer/requirements.txt } |  |  | 0.604 |
+| ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.529 |
+| ns | 1220 |  | 248 | Complete roster of module-level functions in _parser.py (names only) | 2.1 |  | 0.459 |
+| walker |  | 1276 | 385 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.589 |
+| walker |  | 1285 | 9 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.589 |
+| walker |  | 1310 | 25 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.589 |
+| ns | 1340 |  | 120 | Complete roster of classes in _parser.py, with Output's fields | 2.2 |  | 0.551 |
+| walker |  | 1347 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
 | walker |  | 1353 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.574 |
 | walker |  | 1528 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.574 |
 | walker |  | 1542 | 14 | Code::CodeKey { rung: Names, file: profiler/profiler_script.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |

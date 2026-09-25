@@ -126,50 +126,6 @@ examples/
 logo.svg
 microbootstrap/
   __init__.py
-    1→from microbootstrap.instruments.cors_instrument import CorsConfig
-    2→from microbootstrap.instruments.health_checks_instrument import HealthChecksConfig
-    3→from microbootstrap.instruments.logging_instrument import LoggingConfig
-    4→from microbootstrap.instruments.opentelemetry_instrument import (
-    5→    FastStreamOpentelemetryConfig,
-    6→    FastStreamTelemetryMiddlewareProtocol,
-    7→    OpentelemetryConfig,
-    8→)
-    9→from microbootstrap.instruments.prometheus_instrument import (
-    10→    FastApiPrometheusConfig,
-    11→    FastStreamPrometheusConfig,
-    12→    FastStreamPrometheusMiddlewareProtocol,
-    13→    LitestarPrometheusConfig,
-    14→)
-    15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
-    16→from microbootstrap.instruments.sentry_instrument import SentryConfig
-    17→from microbootstrap.instruments.swagger_instrument import SwaggerConfig
-    18→from microbootstrap.settings import (
-    19→    FastApiSettings,
-    20→    FastStreamSettings,
-    21→    InstrumentsSetupperSettings,
-    22→    LitestarSettings,
-    23→)
-    24→
-    25→
-    26→__all__ = (
-    27→    "CorsConfig",
-    28→    "FastApiPrometheusConfig",
-    29→    "FastApiSettings",
-    30→    "FastStreamOpentelemetryConfig",
-    31→    "FastStreamPrometheusConfig",
-    32→    "FastStreamPrometheusMiddlewareProtocol",
-    33→    "FastStreamSettings",
-    34→    "FastStreamTelemetryMiddlewareProtocol",
-    35→    "HealthChecksConfig",
-    36→    "InstrumentsSetupperSettings",
-    37→    "LitestarPrometheusConfig",
-    38→    "LitestarSettings",
-    39→    "LoggingConfig",
-    40→    "OpentelemetryConfig",
-    41→    "PyroscopeConfig",
-    42→    "SentryConfig",
-    43→    "SwaggerConfig",
-    44→)
   bootstrappers/
     __init__.py (empty)
     base.py
@@ -204,7 +160,29 @@ microbootstrap/
     33→            self.rich_console.print(Rule("[yellow]Bootstrapping application[/yellow]", align="left"))
     34→            self.rich_console.print(self.rich_table)
   exceptions.py
+    1→class MicroBootstrapBaseError(Exception):
+    2→    """Base for all exceptions."""
+    5→class ConfigMergeError(MicroBootstrapBaseError):
+    …
+    9→class MissingInstrumentError(MicroBootstrapBaseError):
+    …
   granian_server.py
+    …
+    16→GRANIAN_LOG_LEVELS_MAP = {
+    17→    logging.CRITICAL: LogLevels.critical,
+    18→    logging.ERROR: LogLevels.error,
+    19→    logging.WARNING: LogLevels.warning,
+    20→    logging.WARNING: LogLevels.warn,
+    21→    logging.INFO: LogLevels.info,
+    22→    logging.DEBUG: LogLevels.debug,
+    23→}
+    …
+    27→def create_granian_server(
+    28→    target: str,
+    29→    settings: ServerConfig,
+    30→    **granian_options: typing.Any,  # noqa: ANN401
+    31→) -> GranianServer[typing.Any]:
+    …
   helpers.py
   instruments/
     __init__.py (empty)
@@ -221,6 +199,35 @@ microbootstrap/
   instruments_setupper.py
     …
     19→class InstrumentsSetupper:
+    20→    console_writer: ConsoleWriter
+    21→    instrument_box: InstrumentBox
+    22→
+    23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
+    …
+    28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
+    29→        self.instrument_box.configure_instrument(instrument_config)
+    30→        return self
+    32→    def configure_instruments(
+    33→        self,
+    34→        *instrument_configs: InstrumentConfigT,
+    35→    ) -> typing_extensions.Self:
+    …
+    40→    @classmethod
+    41→    def use_instrument(
+    42→        cls,
+    43→    ) -> typing.Callable[
+    44→        [type[Instrument[InstrumentConfigT]]],
+    45→        type[Instrument[InstrumentConfigT]],
+    46→    ]:
+    …
+    51→    def setup(self) -> None:
+    …
+    57→    def teardown(self) -> None:
+    …
+    62→    def __enter__(self) -> None:
+    63→        self.setup()
+    65→    def __exit__(self, *args: object) -> None:
+    66→        self.teardown()
     …
   middlewares/
     __init__.py (empty)

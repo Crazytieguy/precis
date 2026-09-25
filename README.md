@@ -31,7 +31,13 @@ README.md
   18→
   19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
   21→## Table of Contents
-  …
+  22→
+  23→-   [Install](#install)
+  24→-   [Usage](#usage)
+  25→-   [Examples & Demos](#examples--demos)
+  26→-   [API](#api)
+  27→-   [Contribute](#contribute)
+  28→-   [License](#license)
   30→## Install
   …
   56→## Usage
@@ -66,6 +72,19 @@ package.json
   2→  "name": "mitt",
   3→  "version": "3.0.1",
   4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
+  5→  "module": "dist/mitt.mjs",
+  6→  "main": "dist/mitt.js",
+  7→  "jsnext:main": "dist/mitt.mjs",
+  8→  "umd:main": "dist/mitt.umd.js",
+  9→  "source": "src/index.ts",
+  10→  "typings": "index.d.ts",
+  11→  "exports": {
+  12→    "types": "./index.d.ts",
+  13→    "module": "./dist/mitt.mjs",
+  14→    "import": "./dist/mitt.mjs",
+  15→    "require": "./dist/mitt.js",
+  16→    "default": "./dist/mitt.mjs"
+  17→  },
   …
   30→  "repository": "developit/mitt",
   31→  "keywords": [
@@ -79,32 +98,13 @@ package.json
   39→    "Jason Miller <jason@developit.ca>"
   40→  ],
   41→  "license": "MIT",
+  42→  "files": [
+  43→    "dist",
+  44→    "index.d.ts"
+  45→  ],
   …
 src/
   index.ts
-    1→export type EventType = string | symbol;
-    …
-    5→export type Handler<T = unknown> = (event: T) => void;
-    6→export type WildcardHandler<T = Record<string, unknown>> = (
-    7→	type: keyof T,
-    8→	event: T[keyof T]
-    9→) => void;
-    …
-    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
-    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
-    14→	WildcardHandler<T>
-    15→>;
-    …
-    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
-    19→	keyof Events | '*',
-    20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
-    21→>;
-    23→export interface Emitter<Events extends Record<EventType, unknown>> {
-    …
-    46→export default function mitt<Events extends Record<EventType, unknown>>(
-    47→	all?: EventHandlerMap<Events>
-    48→): Emitter<Events> {
-    …
 test/
   index_test.ts
   test-types-compilation.ts
@@ -112,7 +112,7 @@ tsconfig.json
 ```
 <!-- precis-example-end -->
 
-The file tree shows everything that exists; `package.json` identifies the package; the CI workflow shows how it is built and tested; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
+The file tree shows everything that exists; the README's lede and headings say what the package is and how its docs are organized; and `package.json` identifies the package and its entry points. At larger budgets `src/index.ts` follows with its exported types and signatures. Line numbers make every entry a precise jump target for follow-up reads.
 
 A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
 

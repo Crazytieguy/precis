@@ -1,4 +1,4 @@
-Score(3000)=0.636 I=0.789 C=0.513 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.713/0.714/0.636/0.628/0.532/0.536
+Score(3000)=0.636 I=0.789 C=0.513 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.624/0.662/0.714/0.636/0.628/0.532/0.536
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,14 +23,14 @@ Score(3000)=0.636 I=0.789 C=0.513 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 565 | 15 | Fs::DirListing { dir: examples/gif-fetcher } |  |  | 0.695 |
 | walker |  | 588 | 23 | Fs::DirListing { dir: examples/gif-fetcher/src } |  |  | 0.702 |
 | ns | 639 |  | 126 | README opening example: the match/with/exhaustive expression itself | 1.7 |  | 0.671 |
-| walker |  | 645 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.737 |
-| ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.675 |
-| walker |  | 974 | 329 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.684 |
-| ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.701 |
-| ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.685 |
-| walker |  | 1272 | 298 | Fs::DirListing { dir: tests } |  |  | 0.713 |
-| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.744 |
-| walker |  | 1533 | 261 | Markdown::Prelude { file: README.md } |  |  | 0.812 |
+| ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.615 |
+| walker |  | 917 | 329 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.624 |
+| ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.643 |
+| walker |  | 1215 | 298 | Fs::DirListing { dir: tests } |  |  | 0.672 |
+| ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.662 |
+| walker |  | 1476 | 261 | Markdown::Prelude { file: README.md } |  |  | 0.756 |
+| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.764 |
+| walker |  | 1533 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |
 | walker |  | 1681 | 148 | Markdown::HeadingsOutline { file: docs/v3-to-v4-migration-guide.md } |  |  | 0.812 |
 | ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.762 |
 | walker |  | 1831 | 150 | Markdown::HeadingsOutline { file: docs/v4-to-v5-migration-guide.md } |  |  | 0.763 |

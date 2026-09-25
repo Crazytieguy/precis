@@ -1,4 +1,4 @@
-Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.770/0.830/0.748/0.792/0.863/0.713/0.705
+Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.730/0.711/0.748/0.792/0.728/0.713/0.705
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -21,21 +21,21 @@ Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.757 |
 | walker |  | 605 | 115 | Json::IdentityMeta { file: package.json } |  |  | 0.760 |
 | ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.695 |
-| walker |  | 765 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.822 |
-| walker |  | 779 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.823 |
-| walker |  | 802 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.825 |
-| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.719 |
-| walker |  | 830 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.739 |
-| walker |  | 865 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.770 |
-| ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.687 |
-| walker |  | 1062 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.806 |
-| walker |  | 1108 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.812 |
-| ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.818 |
-| walker |  | 1191 | 83 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.818 |
-| ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.731 |
-| walker |  | 1403 | 212 | Json::Entry { file: package.json } |  |  | 0.830 |
-| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.768 |
-| walker |  | 1636 | 233 | Json::Scripts { file: package.json } |  |  | 0.777 |
+| walker |  | 688 | 83 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.695 |
+| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.579 |
+| walker |  | 900 | 212 | Json::Entry { file: package.json } |  |  | 0.730 |
+| ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.650 |
+| ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.620 |
+| walker |  | 1133 | 233 | Json::Scripts { file: package.json } |  |  | 0.631 |
+| walker |  | 1293 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.739 |
+| walker |  | 1307 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.748 |
+| walker |  | 1330 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.757 |
+| ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.676 |
+| walker |  | 1358 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.689 |
+| walker |  | 1393 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.711 |
+| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.658 |
+| walker |  | 1590 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.746 |
+| walker |  | 1636 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.777 |
 | ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.741 |
 | walker |  | 1747 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.742 |
 | ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.685 |
@@ -53,16 +53,16 @@ Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.775 |
 | walker |  | 3232 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.776 |
 | ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.758 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.722 |
-| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.733 |
-| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.725 |
-| walker |  | 4130 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.871 |
-| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.836 |
-| walker |  | 4279 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.863 |
-| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.836 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.813 |
-| walker |  | 4574 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.815 |
-| walker |  | 4694 | 120 | Plaintext::Whole { file: .github/workflows/compressed-size.yml } |  |  | 0.816 |
+| walker |  | 3381 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.792 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.755 |
+| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.764 |
+| walker |  | 3676 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.765 |
+| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.758 |
+| walker |  | 3796 | 120 | Plaintext::Whole { file: .github/workflows/compressed-size.yml } |  |  | 0.759 |
+| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.728 |
+| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.705 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.686 |
+| walker |  | 4694 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.816 |
 | ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.795 |
 | walker |  | 4911 | 217 | Plaintext::Whole { file: .github/workflows/main.yml } |  |  | 0.835 |
 | walker |  | 4930 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.835 |

@@ -26,6 +26,22 @@ README.rst
   14→=====
   15→
   16→Beets is the media library management system for obsessive music geeks.
+  18→The purpose of beets is to get your music collection right once and for all. It
+  19→catalogs your collection, automatically improving its metadata as it goes. It
+  20→then provides a suite of tools for manipulating and accessing your music.
+  21→
+  22→Here's an example of beets' brainy tag corrector doing its thing:
+  23→
+  24→::
+  25→
+  26→    $ beet import ~/music/ladytron
+  27→    Tagging:
+  28→        Ladytron - Witching Hour
+  29→    (Similarity: 98.4%)
+  30→     * Last One Standing      -> The Last One Standing
+  31→     * Beauty                 -> Beauty*2
+  32→     * White Light Generation -> Whitelightgenerator
+  33→     * All the Way            -> All the Way...
   …
 README_kr.rst
 SECURITY.md
@@ -105,50 +121,7 @@ beets/
         15→"""This module provides the default commands for beets' command-line
         16→interface.
         17→"""
-        19→from beets.util.deprecation import deprecate_imports
-        20→
-        21→from .completion import completion_cmd
-        22→from .config import config_cmd
-        23→from .fields import fields_cmd
-        24→from .help import HelpCommand
-        25→from .import_ import import_cmd
-        26→from .list import list_cmd
-        27→from .modify import modify_cmd
-        28→from .move import move_cmd
-        29→from .remove import remove_cmd
-        30→from .stats import stats_cmd
-        31→from .update import update_cmd
-        32→from .version import version_cmd
-        33→from .write import write_cmd
-        34→
-        35→
-        36→def __getattr__(name: str):
-        37→    """Handle deprecated imports."""
-        38→    return deprecate_imports(
-        39→        __name__,
-        40→        {
-        41→            "TerminalImportSession": "beets.ui.commands.import_.session",
-        42→            "PromptChoice": "beets.util",
-        43→        },
-        44→        name,
-        45→    )
         …
-        50→default_commands = [
-        51→    fields_cmd,
-        52→    HelpCommand(),
-        53→    import_cmd,
-        54→    list_cmd,
-        55→    update_cmd,
-        56→    remove_cmd,
-        57→    stats_cmd,
-        58→    version_cmd,
-        59→    modify_cmd,
-        60→    move_cmd,
-        61→    write_cmd,
-        62→    config_cmd,
-        63→    completion_cmd,
-        64→]
-        67→__all__ = ["default_commands"]
       completion.py
       completion_base.sh
       config.py
@@ -342,6 +315,79 @@ beetsplug/
       …
       15→"""A Web interface to beets."""
       …
+      23→from flask import jsonify
+      24→from unidecode import unidecode
+      25→from werkzeug.routing import BaseConverter, PathConverter
+      …
+      28→from beets import ui, util
+      29→from beets.dbcore.query import PathQuery
+      30→from beets.plugins import BeetsPlugin
+      …
+      46→def _rep(obj, expand=False):
+      …
+      83→def json_generator(items, root, expand=False):
+      …
+      103→def is_expand():
+      …
+      109→def is_delete():
+      …
+      117→def get_method():
+      …
+      122→def resource(name, patchable=False):
+      …
+      176→def resource_query(name, patchable=False):
+      …
+      223→def resource_list(name):
+      …
+      241→def _get_unique_table_field_values(model, field, sort_field):
+      …
+      252→class IdListConverter(BaseConverter):
+      …
+      268→class QueryConverter(PathConverter):
+      …
+      283→class EverythingConverter(PathConverter):
+      …
+      290→app = flask.Flask(__name__)
+      …
+      296→@app.before_request
+      297→def before_request():
+      …
+      306→def get_item(id):
+      …
+      313→def all_items():
+      …
+      318→def item_file(item_id):
+      …
+      340→def item_query(queries):
+      …
+      344→@app.route("/item/path/<everything:path>")
+      345→def item_at_path(path):
+      …
+      355→def item_unique_field_values(key):
+      …
+      371→def get_album(id):
+      …
+      378→def all_albums():
+      …
+      384→def album_query(queries):
+      …
+      389→def album_art(album_id):
+      …
+      398→def album_unique_field_values(key):
+      …
+      412→@app.route("/artist/")
+      413→def all_artists():
+      …
+      423→@app.route("/stats")
+      424→def stats():
+      …
+      439→@app.route("/")
+      440→def home():
+      …
+      447→class WebPlugin(BeetsPlugin):
+      …
+      520→class ReverseProxied:
+      …
     static/
       backbone.js
       beets.css
@@ -426,9 +472,13 @@ pyproject.toml
   2→name = "beets"
   3→version = "2.11.0"
   4→description = "music tagger and library organizer"
-  …
+  5→authors = ["Adrian Sampson <adrian@radbox.org>"]
+  6→maintainers = ["Serene-Arc"]
   7→license = "MIT"
   8→readme = "README.rst"
+  9→homepage = "https://beets.io/"
+  10→repository = "https://github.com/beetbox/beets"
+  11→documentation = "https://beets.readthedocs.io/en/stable/"
   …
   184→[tool.poetry.scripts]
   185→beet = "beets.ui:main"

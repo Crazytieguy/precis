@@ -303,7 +303,9 @@ samples/
     4→	"private": true,
     5→	"description": "Samples for using the Monaco Editor",
     6→	"main": "index.js",
-    …
+    7→	"scripts": {
+    8→		"simpleserver": "yaserver --root ./ --port 8888"
+    9→	},
     10→	"author": "Microsoft Corporation",
     11→	"license": "MIT",
     …

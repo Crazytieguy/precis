@@ -1,4 +1,4 @@
-Score(3000)=0.692 I=0.824 C=0.581 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.435/0.584/0.668/0.692/0.729/0.692/0.687
+Score(3000)=0.692 I=0.824 C=0.581 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.433/0.719/0.668/0.692/0.729/0.692/0.687
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -21,43 +21,43 @@ Score(3000)=0.692 I=0.824 C=0.581 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 565 | 48 | Fs::DirListing { dir: examples } |  |  | 0.541 |
 | walker |  | 582 | 17 | Fs::DirListing { dir: examples/weather_agent } |  |  | 0.541 |
 | walker |  | 602 | 20 | Fs::DirListing { dir: examples/personal_shopper } |  |  | 0.542 |
-| walker |  | 615 | 13 | Code::CodeKey { rung: Names, file: swarm/repl/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
-| walker |  | 638 | 23 | Fs::DirListing { dir: examples/triage_agent } |  |  | 0.547 |
-| walker |  | 646 | 8 | Code::CodeKey { rung: Names, file: swarm/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.548 |
-| ns | 684 |  | 210 | README section-heading roster (all remaining headings) | 1.8 | 1.1 | 0.443 |
-| walker |  | 726 | 80 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 1, sub: 0, line: 26 } |  |  | 0.453 |
-| walker |  | 789 | 63 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 5, sub: 0, line: 89 } |  |  | 0.457 |
-| ns | 815 |  | 131 | `Agent` model: every field with its default | 2.1 |  | 0.422 |
-| walker |  | 863 | 74 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 3, sub: 0, line: 32 } |  |  | 0.431 |
-| ns | 910 |  | 95 | `Swarm` class: complete method roster | 2.2 |  | 0.452 |
-| walker |  | 955 | 92 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 139 } |  |  | 0.460 |
-| ns | 998 |  | 88 | `Response` and `Result` models: every field | 2.3 | 2.1 | 0.435 |
-| walker |  | 1061 | 106 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.444 |
-| ns | 1070 |  | 72 | `swarm/util.py`: complete function roster | 2.4 |  | 0.433 |
-| walker |  | 1107 | 46 | Code::CodeKey { rung: Names, file: swarm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.472 |
-| ns | 1139 |  | 69 | `swarm/repl/repl.py`: complete function roster | 2.5 |  | 0.459 |
-| ns | 1245 |  | 106 | `Swarm.run()` full signature with defaults | 2.6 | 2.2 | 0.481 |
-| walker |  | 1300 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.576 |
-| ns | 1337 |  | 92 | `run_and_stream()` full signature | 2.7 | 2.2 | 0.584 |
-| ns | 1482 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.595 |
-| walker |  | 1491 | 191 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.765 |
-| walker |  | 1517 | 26 | Fs::DirListing { dir: examples/airline } |  |  | 0.766 |
-| walker |  | 1520 | 3 | Fs::DirListing { dir: examples/airline/data } |  |  | 0.766 |
-| walker |  | 1532 | 12 | Fs::DirListing { dir: examples/airline/data/routines } |  |  | 0.767 |
-| walker |  | 1548 | 16 | Fs::DirListing { dir: examples/airline/configs } |  |  | 0.767 |
-| ns | 1574 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.741 |
-| walker |  | 1575 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 2, sub: 0, line: 27 } |  |  | 0.741 |
-| walker |  | 1609 | 34 | Fs::DirListing { dir: examples/basic } |  |  | 0.744 |
-| walker |  | 1643 | 34 | Fs::DirListing { dir: examples/customer_service_streaming } |  |  | 0.745 |
-| walker |  | 1670 | 27 | Fs::DirListing { dir: examples/customer_service_streaming/configs } |  |  | 0.745 |
-| walker |  | 1682 | 12 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools } |  |  | 0.746 |
-| walker |  | 1716 | 34 | Fs::DirListing { dir: examples/customer_service_streaming/src } |  |  | 0.746 |
-| walker |  | 1735 | 19 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm } |  |  | 0.747 |
-| ns | 1748 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.693 |
-| walker |  | 1749 | 14 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm/engines } |  |  | 0.693 |
-| walker |  | 1752 | 3 | Fs::DirListing { dir: examples/customer_service } |  |  | 0.694 |
-| walker |  | 1755 | 3 | Fs::DirListing { dir: examples/customer_service_lite } |  |  | 0.694 |
-| walker |  | 1797 | 42 | Fs::DirListing { dir: examples/support_bot } |  |  | 0.697 |
+| walker |  | 625 | 23 | Fs::DirListing { dir: examples/triage_agent } |  |  | 0.544 |
+| walker |  | 633 | 8 | Code::CodeKey { rung: Names, file: swarm/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| ns | 684 |  | 210 | README section-heading roster (all remaining headings) | 1.8 | 1.1 | 0.440 |
+| walker |  | 713 | 80 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 1, sub: 0, line: 26 } |  |  | 0.451 |
+| walker |  | 776 | 63 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 5, sub: 0, line: 89 } |  |  | 0.455 |
+| ns | 815 |  | 131 | `Agent` model: every field with its default | 2.1 |  | 0.420 |
+| walker |  | 850 | 74 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 3, sub: 0, line: 32 } |  |  | 0.428 |
+| ns | 910 |  | 95 | `Swarm` class: complete method roster | 2.2 |  | 0.450 |
+| walker |  | 942 | 92 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 139 } |  |  | 0.458 |
+| ns | 998 |  | 88 | `Response` and `Result` models: every field | 2.3 | 2.1 | 0.433 |
+| walker |  | 1048 | 106 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.442 |
+| ns | 1070 |  | 72 | `swarm/util.py`: complete function roster | 2.4 |  | 0.431 |
+| ns | 1139 |  | 69 | `swarm/repl/repl.py`: complete function roster | 2.5 |  | 0.419 |
+| walker |  | 1241 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.525 |
+| ns | 1245 |  | 106 | `Swarm.run()` full signature with defaults | 2.6 | 2.2 | 0.540 |
+| ns | 1337 |  | 92 | `run_and_stream()` full signature | 2.7 | 2.2 | 0.550 |
+| walker |  | 1432 | 191 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.719 |
+| walker |  | 1458 | 26 | Fs::DirListing { dir: examples/airline } |  |  | 0.720 |
+| walker |  | 1461 | 3 | Fs::DirListing { dir: examples/airline/data } |  |  | 0.720 |
+| walker |  | 1473 | 12 | Fs::DirListing { dir: examples/airline/data/routines } |  |  | 0.721 |
+| ns | 1482 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.734 |
+| walker |  | 1489 | 16 | Fs::DirListing { dir: examples/airline/configs } |  |  | 0.735 |
+| walker |  | 1516 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 2, sub: 0, line: 27 } |  |  | 0.735 |
+| walker |  | 1550 | 34 | Fs::DirListing { dir: examples/basic } |  |  | 0.738 |
+| ns | 1574 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.712 |
+| walker |  | 1584 | 34 | Fs::DirListing { dir: examples/customer_service_streaming } |  |  | 0.714 |
+| walker |  | 1611 | 27 | Fs::DirListing { dir: examples/customer_service_streaming/configs } |  |  | 0.714 |
+| walker |  | 1623 | 12 | Fs::DirListing { dir: examples/customer_service_streaming/configs/tools } |  |  | 0.714 |
+| walker |  | 1657 | 34 | Fs::DirListing { dir: examples/customer_service_streaming/src } |  |  | 0.715 |
+| walker |  | 1676 | 19 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm } |  |  | 0.716 |
+| walker |  | 1690 | 14 | Fs::DirListing { dir: examples/customer_service_streaming/src/swarm/engines } |  |  | 0.716 |
+| walker |  | 1703 | 13 | Code::CodeKey { rung: Names, file: swarm/repl/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.718 |
+| walker |  | 1706 | 3 | Fs::DirListing { dir: examples/customer_service } |  |  | 0.718 |
+| walker |  | 1709 | 3 | Fs::DirListing { dir: examples/customer_service_lite } |  |  | 0.718 |
+| ns | 1748 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.666 |
+| walker |  | 1751 | 42 | Fs::DirListing { dir: examples/support_bot } |  |  | 0.669 |
+| walker |  | 1797 | 46 | Code::CodeKey { rung: Names, file: swarm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
 | ns | 1914 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.679 |
 | ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.668 |
 | walker |  | 2198 | 401 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.668 |

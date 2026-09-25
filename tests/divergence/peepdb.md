@@ -1,4 +1,4 @@
-Score(3000)=0.650 I=0.857 C=0.493 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.593/0.662/0.637/0.650/0.603/0.585/0.567
+Score(3000)=0.650 I=0.857 C=0.493 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.593/0.595/0.637/0.650/0.603/0.585/0.567
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,19 +32,19 @@ Score(3000)=0.650 I=0.857 C=0.493 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.591 |
 | walker |  | 1062 | 35 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.591 |
 | walker |  | 1108 | 46 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.591 |
+| walker |  | 1162 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.591 |
 | ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.628 |
-| walker |  | 1323 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.698 |
-| walker |  | 1377 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.698 |
-| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.662 |
-| walker |  | 1504 | 127 | Toml::Config { file: project.toml } |  |  | 0.662 |
-| walker |  | 1560 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.662 |
-| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.643 |
-| walker |  | 1616 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.643 |
-| walker |  | 1658 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.703 |
-| ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.681 |
-| walker |  | 1784 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.681 |
-| walker |  | 1881 | 97 | Markdown::HeadingsOutline { file: docs/usage.md } |  |  | 0.681 |
-| walker |  | 1913 | 32 | Markdown::Section { file: docs/usage.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.681 |
+| walker |  | 1289 | 127 | Toml::Config { file: project.toml } |  |  | 0.629 |
+| walker |  | 1345 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.629 |
+| walker |  | 1401 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.629 |
+| ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.595 |
+| walker |  | 1443 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.660 |
+| walker |  | 1569 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.660 |
+| ns | 1583 |  | 142 | `peepdb view` full option decorator block (cli.py 126-132) | 2.2 | 1.6 | 0.641 |
+| walker |  | 1666 | 97 | Markdown::HeadingsOutline { file: docs/usage.md } |  |  | 0.641 |
+| ns | 1680 |  | 97 | Remaining Click decorators: group, version option, confirmations | 2.3 | 1.6 | 0.621 |
+| walker |  | 1698 | 32 | Markdown::Section { file: docs/usage.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.621 |
+| walker |  | 1913 | 215 | Code::CodeKey { rung: Names, file: peepdb/db/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
 | ns | 1922 |  | 242 | `view` docstring + connection resolution (cli.py 134-155) | 2.4 | 1.6 | 0.629 |
 | walker |  | 1924 | 11 | Code::CodeKey { rung: Names, file: peepdb/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.634 |
 | walker |  | 1929 | 5 | Code::CodeKey { rung: Decl, file: peepdb/exceptions.py, decl: 1, sub: 0, line: 1 } |  |  | 0.637 |

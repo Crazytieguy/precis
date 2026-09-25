@@ -19,13 +19,60 @@ ARCHITECTURE.md
   92→## Performance
   …
   96→## Groups
-  …
+  97→
+  98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 LICENSE.md
 README.md
   …
   5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
   6→
   7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
+  9→## Install
+  10→
+  11→```bash
+  12→pnpm install cmdk
+  13→```
+  15→## Use
+  …
+  82→## Parts and styling
+  …
+  86→### Command `[cmdk-root]`
+  …
+  153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+  …
+  180→### Input `[cmdk-input]`
+  …
+  190→### List `[cmdk-list]`
+  …
+  212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+  …
+  242→### Group `[cmdk-group]` `[hidden?]`
+  …
+  256→### Separator `[cmdk-separator]`
+  …
+  260→### Empty `[cmdk-empty]`
+  …
+  264→### Loading `[cmdk-loading]`
+  …
+  274→### `useCommandState(state => state.selectedField)`
+  …
+  285→## Examples
+  …
+  289→### Nested items
+  …
+  338→### Show sub-items when searching
+  …
+  361→### Asynchronous results
+  …
+  397→### Use inside Popover
+  …
+  426→### Drop in stylesheets
+  …
+  430→## FAQ
+  …
+  456→## History
+  …
+  462→## Testing
   …
 cmdk/
   package.json
@@ -124,19 +171,7 @@ cmdk/
       80→type CommandProps = Children &
       …
       123→type Context = {
-      124→  value: (id: string, value: string, keywords?: string[]) => void
-      125→  item: (id: string, groupId: string) => () => void
-      126→  group: (id: string) => () => void
-      127→  filter: () => boolean
-      128→  label: string
-      129→  getDisablePointerSelection: () => boolean
-      130→  // Ids
-      131→  listId: string
-      132→  labelId: string
-      133→  inputId: string
-      134→  // Refs
-      135→  listInnerRef: React.RefObject<HTMLDivElement | null>
-      136→}
+      …
       137→type State = {
       138→  search: string
       139→  value: string
@@ -169,11 +204,6 @@ cmdk/
       167→const GroupContext = React.createContext<Group>(undefined)
       169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
       …
-      659→/**
-      660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
-      661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
-      662→ * the rendered item's `textContent`.
-      663→ */
       664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
       …
       725→/**
@@ -215,12 +245,26 @@ package.json
   …
   2→  "name": "cmdk-root",
   3→  "private": true,
+  4→  "scripts": {
+  5→    "build": "pnpm -F cmdk build",
+  6→    "dev": "pnpm -F cmdk build --watch",
+  7→    "website": "pnpm -F cmdk-website dev",
+  8→    "testsite": "pnpm -F cmdk-tests dev",
+  9→    "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
+  10→    "preinstall": "npx only-allow pnpm",
+  11→    "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
+  12→    "test": "playwright test"
+  13→  },
   …
   22→  "packageManager": "pnpm@8.8.0",
   …
 playwright.config.ts
 pnpm-lock.yaml
 pnpm-workspace.yaml
+  1→packages:
+  2→  - 'website'
+  3→  - 'test'
+  4→  - 'cmdk'
 test/
   basic.test.ts
   dialog.test.ts

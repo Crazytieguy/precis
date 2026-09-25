@@ -1,4 +1,4 @@
-Score(3000)=0.436 I=0.804 C=0.237 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.604/0.604/0.485/0.436/0.506/0.401/0.506
+Score(3000)=0.436 I=0.804 C=0.237 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.603/0.485/0.436/0.506/0.401/0.506
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,12 +22,12 @@ Score(3000)=0.436 I=0.804 C=0.237 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 886 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.685 |
 | ns | 962 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.603 |
 | walker |  | 973 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.603 |
-| walker |  | 988 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
-| walker |  | 1164 | 176 | Json::Scripts { file: package.json } |  |  | 0.691 |
-| ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.604 |
-| ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.548 |
-| walker |  | 1540 | 376 | Fs::DirListing { dir: test } |  |  | 0.555 |
-| walker |  | 1552 | 12 | Fs::DirListing { dir: test/support } |  |  | 0.555 |
+| walker |  | 1149 | 176 | Json::Scripts { file: package.json } |  |  | 0.690 |
+| ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.603 |
+| ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.547 |
+| walker |  | 1525 | 376 | Fs::DirListing { dir: test } |  |  | 0.554 |
+| walker |  | 1537 | 12 | Fs::DirListing { dir: test/support } |  |  | 0.554 |
+| walker |  | 1552 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.555 |
 | ns | 1663 |  | 198 | lib/view.js and lib/utils.js symbol rosters | 2.5 |  | 0.520 |
 | ns | 1896 |  | 233 | createApplication() body | 2.6 |  | 0.483 |
 | walker |  | 2012 | 460 | Json::Dependencies { file: package.json } |  |  | 0.485 |

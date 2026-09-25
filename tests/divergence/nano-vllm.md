@@ -23,11 +23,11 @@ Score(3000)=0.720 I=0.885 C=0.585 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 450 |  | 148 | README Quick Start usage snippet | 1.7 |  | 0.779 |
 | walker |  | 488 | 75 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.782 |
 | walker |  | 527 | 39 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.782 |
-| walker |  | 558 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.799 |
-| ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.699 |
-| walker |  | 654 | 96 | Toml::Config { file: pyproject.toml } |  |  | 0.699 |
-| walker |  | 665 | 11 | Code::CodeKey { rung: Names, file: bench.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
-| walker |  | 676 | 11 | Code::CodeKey { rung: Names, file: example.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
+| ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.684 |
+| walker |  | 623 | 96 | Toml::Config { file: pyproject.toml } |  |  | 0.684 |
+| walker |  | 634 | 11 | Code::CodeKey { rung: Names, file: bench.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
+| walker |  | 645 | 11 | Code::CodeKey { rung: Names, file: example.py, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
+| walker |  | 676 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
 | walker |  | 732 | 56 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.699 |
 | ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.591 |
 | walker |  | 824 | 92 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.593 |

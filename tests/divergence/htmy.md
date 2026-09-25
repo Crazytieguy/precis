@@ -1,4 +1,4 @@
-Score(3000)=0.753 I=0.909 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.675/0.770/0.774/0.753/0.590/0.546/0.527
+Score(3000)=0.753 I=0.909 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.682/0.657/0.817/0.753/0.590/0.546/0.527
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,9 +11,9 @@ Score(3000)=0.753 I=0.909 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 152 | 73 | Toml::Identity { file: pyproject.toml } |  |  | 0.476 |
 | ns | 208 |  | 103 | The `htmy/` package and its two subpackages (complete) | 1.3 |  | 0.272 |
 | walker |  | 219 | 67 | Fs::DirListing { dir: htmy } |  |  | 0.439 |
-| walker |  | 236 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.439 |
-| walker |  | 250 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.505 |
-| walker |  | 272 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 0.639 |
+| walker |  | 233 | 14 | Fs::DirListing { dir: htmy/md } |  |  | 0.505 |
+| walker |  | 255 | 22 | Fs::DirListing { dir: htmy/renderer } |  |  | 0.639 |
+| walker |  | 272 | 17 | Code::CodeKey { rung: ModuleDoc, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
 | walker |  | 314 | 42 | Fs::DirListing { dir: docs/api } |  |  | 0.639 |
 | walker |  | 326 | 12 | Fs::DirListing { dir: docs/api/renderer } |  |  | 0.639 |
 | ns | 349 |  | 141 | README key features, first half | 1.4 |  | 0.570 |
@@ -29,24 +29,24 @@ Score(3000)=0.753 I=0.909 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 716 | 56 | Markdown::HeadingsOutline { file: docs/components-guide.md } |  |  | 0.735 |
 | walker |  | 775 | 59 | Markdown::HeadingsOutline { file: docs/function-components.md } |  |  | 0.735 |
 | ns | 786 |  | 138 | `htmy/__init__.py` exports, part 2: `ErrorBoundary`, `component`, renderers, `Snippet`/`Slots`, tags | 1.7 | 1.6 | 0.675 |
-| ns | 1014 |  | 228 | `htmy/__init__.py` exports, part 3: the sixteen re-exported type names | 1.8 | 1.7 | 0.602 |
-| walker |  | 1021 | 246 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.751 |
-| ns | 1160 |  | 146 | `htmy/__init__.py` exports, part 4: `utils` helpers and the two aliases | 1.9 | 1.8 | 0.698 |
-| walker |  | 1263 | 242 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.818 |
-| walker |  | 1351 | 88 | Code::CodeKey { rung: Names, file: htmy/md/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.818 |
-| ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.770 |
-| walker |  | 1454 | 103 | Code::CodeKey { rung: Names, file: htmy/renderer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
-| walker |  | 1590 | 136 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.831 |
-| ns | 1612 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.810 |
-| walker |  | 1649 | 59 | Fs::DirListing { dir: tests } |  |  | 0.815 |
-| walker |  | 1677 | 28 | Fs::DirListing { dir: tests/renderer } |  |  | 0.818 |
-| ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.791 |
-| walker |  | 1889 | 212 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.792 |
-| ns | 1900 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.774 |
-| ns | 2170 |  | 270 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.751 |
-| walker |  | 2175 | 286 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.845 |
-| walker |  | 2208 | 33 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.845 |
-| walker |  | 2242 | 34 | Fs::DirListing { dir: docs/examples } |  |  | 0.845 |
+| walker |  | 834 | 59 | Fs::DirListing { dir: tests } |  |  | 0.679 |
+| walker |  | 862 | 28 | Fs::DirListing { dir: tests/renderer } |  |  | 0.682 |
+| ns | 1014 |  | 228 | `htmy/__init__.py` exports, part 3: the sixteen re-exported type names | 1.8 | 1.7 | 0.609 |
+| walker |  | 1074 | 212 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.609 |
+| ns | 1160 |  | 146 | `htmy/__init__.py` exports, part 4: `utils` helpers and the two aliases | 1.9 | 1.8 | 0.566 |
+| walker |  | 1360 | 286 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.697 |
+| walker |  | 1393 | 33 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.697 |
+| ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.657 |
+| walker |  | 1427 | 34 | Fs::DirListing { dir: docs/examples } |  |  | 0.657 |
+| ns | 1612 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.641 |
+| walker |  | 1673 | 246 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
+| ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.734 |
+| ns | 1900 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.718 |
+| walker |  | 1915 | 242 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.817 |
+| walker |  | 2003 | 88 | Code::CodeKey { rung: Names, file: htmy/md/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.817 |
+| walker |  | 2106 | 103 | Code::CodeKey { rung: Names, file: htmy/renderer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.819 |
+| ns | 2170 |  | 270 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.794 |
+| walker |  | 2242 | 136 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.845 |
 | walker |  | 2288 | 46 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.845 |
 | ns | 2330 |  | 160 | README "XSS prevention": escaping by default, and the two exceptions | 2.6 |  | 0.818 |
 | walker |  | 2360 | 72 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.818 |

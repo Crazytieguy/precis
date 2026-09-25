@@ -1,4 +1,4 @@
-Score(3000)=0.714 I=0.875 C=0.582 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.891/0.857/0.783/0.714/0.614/0.521/0.506
+Score(3000)=0.714 I=0.875 C=0.582 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.891/0.814/0.742/0.714/0.614/0.521/0.506
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,31 +38,31 @@ Score(3000)=0.714 I=0.875 C=0.582 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 648 |  | 114 | README feature list, second half | 1.8 |  | 0.704 |
 | walker |  | 703 | 86 | Fs::DirListing { dir: internal/ui } |  |  | 0.720 |
 | walker |  | 708 | 5 | Fs::DirListing { dir: internal/ui/progress } |  |  | 0.721 |
-| walker |  | 735 | 27 | Code::CodeKey { rung: Names, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
 | ns | 781 |  | 133 | Complete listings for the config / agent / tools / models packages | 1.9 |  | 0.726 |
-| walker |  | 964 | 229 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.829 |
-| walker |  | 974 | 10 | Markdown::Section { file: contribute/contribute.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.829 |
-| ns | 999 |  | 218 | Complete listings for the builtin / hooks / session / auth / tokens / ui packages | 1.10 |  | 0.852 |
-| walker |  | 1000 | 26 | Fs::DirListing { dir: internal/tools } |  |  | 0.891 |
-| walker |  | 1020 | 20 | Markdown::Section { file: contribute/contribute.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.891 |
+| walker |  | 937 | 229 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.829 |
+| walker |  | 947 | 10 | Markdown::Section { file: contribute/contribute.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.829 |
+| walker |  | 973 | 26 | Fs::DirListing { dir: internal/tools } |  |  | 0.887 |
+| walker |  | 993 | 20 | Markdown::Section { file: contribute/contribute.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.887 |
+| ns | 999 |  | 218 | Complete listings for the builtin / hooks / session / auth / tokens / ui packages | 1.10 |  | 0.891 |
 | ns | 1089 |  | 90 | Complete listings for examples/, contribute/ and .github/ | 1.11 |  | 0.848 |
-| walker |  | 1147 | 127 | Code::CodeKey { rung: Body, file: main.go, decl: 2, sub: 0, line: 14 } |  |  | 0.854 |
-| ns | 1243 |  | 154 | main.go entry point | 2.1 |  | 0.857 |
-| walker |  | 1267 | 120 | Markdown::HeadingsOutline { file: sdk/README.md } |  |  | 0.857 |
-| walker |  | 1280 | 13 | Markdown::Section { file: sdk/README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.857 |
-| walker |  | 1313 | 33 | Markdown::Section { file: sdk/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.857 |
-| walker |  | 1409 | 96 | Markdown::Section { file: sdk/README.md, section_index: 6, keeps_default_concavity: true } |  |  | 0.857 |
-| walker |  | 1457 | 48 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.858 |
-| walker |  | 1497 | 40 | Markdown::Section { file: README.md, section_index: 33, keeps_default_concavity: false } |  |  | 0.859 |
-| ns | 1504 |  | 261 | Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init) | 2.2 |  | 0.814 |
-| ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.783 |
-| walker |  | 2011 | 514 | GoMod::File { file: go.mod } |  |  | 0.783 |
-| ns | 2098 |  | 344 | Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags | 2.4 |  | 0.745 |
-| ns | 2224 |  | 126 | Provider and TLS flag registration | 2.5 |  | 0.738 |
-| walker |  | 2269 | 258 | Markdown::Section { file: sdk/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.738 |
-| ns | 2502 |  | 278 | Generation-parameter and Ollama flag registration, with the hidden flag | 2.6 |  | 0.719 |
-| walker |  | 2516 | 247 | Markdown::Section { file: sdk/README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.719 |
-| walker |  | 2574 | 58 | Markdown::Section { file: README.md, section_index: 31, keeps_default_concavity: false } |  |  | 0.721 |
+| walker |  | 1113 | 120 | Markdown::HeadingsOutline { file: sdk/README.md } |  |  | 0.848 |
+| walker |  | 1126 | 13 | Markdown::Section { file: sdk/README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.848 |
+| walker |  | 1159 | 33 | Markdown::Section { file: sdk/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.848 |
+| ns | 1243 |  | 154 | main.go entry point | 2.1 |  | 0.810 |
+| walker |  | 1255 | 96 | Markdown::Section { file: sdk/README.md, section_index: 6, keeps_default_concavity: true } |  |  | 0.810 |
+| walker |  | 1303 | 48 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.811 |
+| walker |  | 1343 | 40 | Markdown::Section { file: README.md, section_index: 33, keeps_default_concavity: false } |  |  | 0.812 |
+| walker |  | 1370 | 27 | Code::CodeKey { rung: Names, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
+| ns | 1504 |  | 261 | Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init) | 2.2 |  | 0.771 |
+| ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.742 |
+| walker |  | 1884 | 514 | GoMod::File { file: go.mod } |  |  | 0.742 |
+| ns | 2098 |  | 344 | Persistent flag registration, part 2: no-exit, max-steps, stream, compact, no-hooks, approve-tool-run, session flags | 2.4 |  | 0.705 |
+| walker |  | 2142 | 258 | Markdown::Section { file: sdk/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.705 |
+| ns | 2224 |  | 126 | Provider and TLS flag registration | 2.5 |  | 0.699 |
+| walker |  | 2389 | 247 | Markdown::Section { file: sdk/README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.699 |
+| walker |  | 2447 | 58 | Markdown::Section { file: README.md, section_index: 31, keeps_default_concavity: false } |  |  | 0.701 |
+| ns | 2502 |  | 278 | Generation-parameter and Ollama flag registration, with the hidden flag | 2.6 |  | 0.683 |
+| walker |  | 2574 | 127 | Code::CodeKey { rung: Body, file: main.go, decl: 2, sub: 0, line: 14 } |  |  | 0.721 |
 | ns | 2749 |  | 247 | MCPServerConfig: complete field set including the legacy block | 3.1 |  | 0.696 |
 | walker |  | 2772 | 198 | Code::CodeKey { rung: ModuleDoc, file: internal/tokens/anthropic.go, decl: 0, sub: 0, line: 0 } |  |  | 0.696 |
 | walker |  | 2838 | 66 | Markdown::Section { file: README.md, section_index: 34, keeps_default_concavity: false } |  |  | 0.698 |

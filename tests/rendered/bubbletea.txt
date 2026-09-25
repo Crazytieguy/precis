@@ -233,7 +233,6 @@ tea.go
   …
   426→type Program struct {
   …
-  554→// Quit is a special command that tells the Bubble Tea program to exit.
   555→func Quit() Msg {
   …
   561→type QuitMsg struct{}
@@ -245,8 +244,7 @@ tea.go
   578→type ResumeMsg struct{}
   …
   586→type InterruptMsg struct{}
-  588→// Interrupt is a special command that tells the Bubble Tea program to
-  589→// interrupt.
+  …
   590→func Interrupt() Msg {
   …
   594→// NewProgram creates a new [Program].
@@ -288,9 +286,21 @@ tty_windows.go
 tutorials/
   basics/
     README.md
+      1→# Bubble Tea Basics
+      2→
+      3→Bubble Tea is based on the functional design paradigms of [The Elm
+      4→Architecture][elm], which happens to work nicely with Go. It’s a delightful way
+      5→to build applications.
+      …
     main.go
   commands/
     README.md
+      1→# Commands in Bubble Tea
+      2→
+      3→This is the second tutorial for Bubble Tea covering commands, which deal with
+      4→I/O. The tutorial assumes you have a working knowledge of Go and a decent
+      5→understanding of [the first tutorial][basics].
+      …
     main.go
   go.mod
     1→module tutorial

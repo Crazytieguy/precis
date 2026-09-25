@@ -19,9 +19,7 @@ use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use super::{Language, SourceFile};
 use crate::batch::{Batch, BatchKey, CodeKey, Rung};
 use crate::content::{BatchContent, Render, Span};
-use crate::value::{
-    CODE_ENTRYPOINT_FACTOR, CODE_PRIVATE_FACTOR, DEFAULT_CONCAVITY_EXPONENT, code_rung_value,
-};
+use crate::value::{CODE_PRIVATE_FACTOR, DEFAULT_CONCAVITY_EXPONENT, code_rung_value};
 use crate::walker::{WalkCtx, file_depth_factor};
 
 /// Every batch of one file.
@@ -51,16 +49,11 @@ pub(super) fn emit_file(
 }
 
 /// Location prior shared by every batch of the file: depth (pinned to 1
-/// for an entry file), non-essential discount, entry-file factor and the
-/// language's file weight.
+/// for an entry file), non-essential discount and the language's file
+/// weight.
 fn file_prior(language: Language, path: &Path, ctx: &WalkCtx) -> f64 {
-    let entrypoint = language.is_entrypoint(path, ctx);
-    let entry_factor = if entrypoint {
-        CODE_ENTRYPOINT_FACTOR
-    } else {
-        1.0
-    };
-    file_depth_factor(path, ctx, entrypoint) * entry_factor * language.file_weight(path, ctx)
+    file_depth_factor(path, ctx, language.is_entrypoint(path, ctx))
+        * language.file_weight(path, ctx)
 }
 
 struct Emitter<'a> {

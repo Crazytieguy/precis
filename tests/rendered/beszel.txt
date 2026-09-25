@@ -222,6 +222,10 @@ internal/
       expirymap_test.go
     heartbeat/
       heartbeat.go
+        1→// Package heartbeat sends periodic outbound pings to an external monitoring
+        2→// endpoint (e.g. BetterStack, Uptime Kuma, Healthchecks.io) so operators can
+        3→// monitor Beszel without exposing it to the internet.
+        …
       heartbeat_test.go
     hub.go
       1→// Package hub handles updating systems and serving the web UI.
@@ -427,7 +431,8 @@ readme.md
   25→## Architecture
   …
   32→## Getting started
-  …
+  33→
+  34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
   36→## Screenshots
   …
   42→## Supported metrics

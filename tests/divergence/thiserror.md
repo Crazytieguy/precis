@@ -1,4 +1,4 @@
-Score(3000)=0.510 I=0.812 C=0.320 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.794/0.716/0.625/0.510/0.413/0.409/0.539
+Score(3000)=0.541 I=0.827 C=0.354 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.793/0.694/0.620/0.541/0.486/0.409/0.539
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,23 +23,23 @@ Score(3000)=0.510 I=0.812 C=0.320 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | ns | 612 |  | 136 | Root crate module structure and public re-export (src/lib.rs tail) | 1.7 |  | 0.662 |
 | ns | 707 |  | 95 | Root crate attributes: no_std, docs.rs root, nightly cfg gate | 1.8 |  | 0.629 |
 | walker |  | 710 | 196 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.797 |
-| walker |  | 781 | 71 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
-| ns | 814 |  | 107 | Cargo manifest: features, dependency on impl, workspace members | 1.9 |  | 0.812 |
-| walker |  | 853 | 72 | Fs::DirListing { dir: tests } |  |  | 0.814 |
-| ns | 870 |  | 56 | Documentation map: README section headings + rustdoc mirror in src/lib.rs | 2.1 |  | 0.794 |
-| walker |  | 1017 | 164 | Toml::Operational { file: Cargo.toml } |  |  | 0.821 |
-| ns | 1036 |  | 166 | Details: no public API footprint, allowed error shapes, Display generation | 2.2 |  | 0.773 |
-| walker |  | 1140 | 123 | Toml::Config { file: Cargo.toml } |  |  | 0.773 |
+| walker |  | 782 | 72 | Fs::DirListing { dir: tests } |  |  | 0.799 |
+| ns | 814 |  | 107 | Cargo manifest: features, dependency on impl, workspace members | 1.9 |  | 0.784 |
+| ns | 870 |  | 56 | Documentation map: README section headings + rustdoc mirror in src/lib.rs | 2.1 |  | 0.765 |
+| walker |  | 946 | 164 | Toml::Operational { file: Cargo.toml } |  |  | 0.793 |
+| ns | 1036 |  | 166 | Details: no public API footprint, allowed error shapes, Display generation | 2.2 |  | 0.746 |
+| walker |  | 1069 | 123 | Toml::Config { file: Cargo.toml } |  |  | 0.746 |
+| walker |  | 1140 | 71 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.773 |
 | walker |  | 1193 | 53 | Toml::Dependencies { file: impl/Cargo.toml } |  |  | 0.773 |
 | ns | 1222 |  | 186 | Display shorthand table: {var}, {0}, {var:?}, {0:?} | 2.3 |  | 0.738 |
-| walker |  | 1313 | 120 | Code::CodeKey { rung: Names, file: impl/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
-| walker |  | 1334 | 21 | Code::CodeKey { rung: Decl, file: impl/src/lib.rs, decl: 1, sub: 0, line: 39 } |  |  | 0.746 |
-| walker |  | 1346 | 12 | Code::CodeKey { rung: Decl, file: impl/src/lib.rs, decl: 2, sub: 0, line: 45 } |  |  | 0.746 |
-| walker |  | 1374 | 28 | Code::CodeKey { rung: Decl, file: impl/src/lib.rs, decl: 3, sub: 0, line: 48 } |  |  | 0.746 |
-| ns | 1404 |  | 182 | Details: #[from] generates From, with its field-count restriction | 2.4 |  | 0.700 |
-| walker |  | 1405 | 31 | Code::CodeKey { rung: Body, file: impl/src/lib.rs, decl: 1, sub: 0, line: 39 } |  |  | 0.716 |
-| walker |  | 1488 | 83 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
-| walker |  | 1534 | 46 | Code::CodeKey { rung: Decl, file: build.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.716 |
+| walker |  | 1276 | 83 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.739 |
+| walker |  | 1322 | 46 | Code::CodeKey { rung: Decl, file: build.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.739 |
+| ns | 1404 |  | 182 | Details: #[from] generates From, with its field-count restriction | 2.4 |  | 0.693 |
+| walker |  | 1442 | 120 | Code::CodeKey { rung: Names, file: impl/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
+| walker |  | 1463 | 21 | Code::CodeKey { rung: Decl, file: impl/src/lib.rs, decl: 1, sub: 0, line: 39 } |  |  | 0.700 |
+| walker |  | 1475 | 12 | Code::CodeKey { rung: Decl, file: impl/src/lib.rs, decl: 2, sub: 0, line: 45 } |  |  | 0.700 |
+| walker |  | 1503 | 28 | Code::CodeKey { rung: Decl, file: impl/src/lib.rs, decl: 3, sub: 0, line: 48 } |  |  | 0.700 |
+| walker |  | 1534 | 31 | Code::CodeKey { rung: Body, file: impl/src/lib.rs, decl: 1, sub: 0, line: 39 } |  |  | 0.716 |
 | ns | 1557 |  | 153 | Details: source() from #[source] or a field named `source` | 2.5 |  | 0.690 |
 | walker |  | 1615 | 81 | Code::CodeKey { rung: Names, file: build/probe.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.690 |
 | walker |  | 1644 | 29 | Code::CodeKey { rung: Decl, file: build/probe.rs, decl: 3, sub: 0, line: 14 } |  |  | 0.690 |
@@ -49,49 +49,49 @@ Score(3000)=0.510 I=0.812 C=0.320 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | walker |  | 1712 | 9 | Code::CodeKey { rung: Body, file: build/probe.rs, decl: 4, sub: 0, line: 15 } |  |  | 0.656 |
 | walker |  | 1721 | 9 | Code::CodeKey { rung: Body, file: build/probe.rs, decl: 6, sub: 0, line: 21 } |  |  | 0.656 |
 | walker |  | 1776 | 55 | Code::CodeKey { rung: Body, file: build.rs, decl: 5, sub: 0, line: 190 } |  |  | 0.656 |
+| walker |  | 1785 | 9 | Fs::DirListing { dir: tests/no-std } |  |  | 0.656 |
+| walker |  | 1799 | 14 | Code::CodeKey { rung: Body, file: build/probe.rs, decl: 8, sub: 0, line: 27 } |  |  | 0.656 |
 | ns | 1839 |  | 130 | Details: provide() and automatic Backtrace field detection | 2.7 |  | 0.635 |
 | ns | 1960 |  | 121 | Details: #[backtrace] on a source field forwards provide() | 2.8 |  | 0.624 |
-| ns | 2005 |  | 45 | Details: #[from] variants with a Backtrace field capture in From | 2.9 |  | 0.619 |
-| walker |  | 2050 | 274 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.625 |
-| ns | 2088 |  | 83 | Details example: extra format arguments (`max = i32::MAX`) | 2.10 |  | 0.611 |
-| ns | 2254 |  | 166 | Details example: referring to fields from format args via `.var` / `.0` | 2.11 |  | 0.588 |
-| walker |  | 2288 | 238 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.594 |
-| ns | 2410 |  | 156 | When to use thiserror vs anyhow | 2.12 |  | 0.579 |
-| ns | 2525 |  | 115 | impl/src/expand.rs: complete top-level function roster (names only) | 3.1 |  | 0.561 |
-| walker |  | 2561 | 273 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.561 |
-| ns | 2723 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.535 |
-| walker |  | 2794 | 233 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.535 |
-| ns | 2950 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.510 |
-| walker |  | 3040 | 246 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 4, line: 0 } |  |  | 0.510 |
-| ns | 3290 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.475 |
-| walker |  | 3429 | 389 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 5, line: 0 } |  |  | 0.475 |
-| ns | 3528 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.456 |
-| walker |  | 3653 | 224 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 6, line: 0 } |  |  | 0.456 |
-| ns | 3847 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.428 |
-| walker |  | 3991 | 338 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 7, line: 0 } |  |  | 0.428 |
-| ns | 4040 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.418 |
-| ns | 4186 |  | 146 | impl/src/valid.rs: container-level diagnostic messages | 3.8 |  | 0.413 |
-| walker |  | 4240 | 249 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 8, line: 0 } |  |  | 0.413 |
-| walker |  | 4349 | 109 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 9, line: 0 } |  |  | 0.413 |
-| walker |  | 4358 | 9 | Fs::DirListing { dir: tests/no-std } |  |  | 0.413 |
-| walker |  | 4372 | 14 | Code::CodeKey { rung: Body, file: build/probe.rs, decl: 8, sub: 0, line: 27 } |  |  | 0.413 |
-| ns | 4478 |  | 292 | valid.rs: attribute-placement and field-attribute diagnostic messages | 3.9 |  | 0.405 |
-| ns | 4647 |  | 169 | valid.rs: complete validate/check function roster | 3.10 |  | 0.397 |
-| ns | 4859 |  | 212 | attr.rs: which attributes `get` recognises, plus the file's function roster | 3.11 |  | 0.388 |
-| walker |  | 4900 | 528 | Fs::DirListing { dir: tests/ui } |  |  | 0.388 |
-| walker |  | 5022 | 122 | Toml::Identity { file: impl/Cargo.toml } |  |  | 0.388 |
-| ns | 5096 |  | 237 | impl/src/prop.rs: complete accessor roster for source/from/backtrace fields | 3.12 |  | 0.376 |
-| walker |  | 5181 | 159 | Toml::Config { file: impl/Cargo.toml } |  |  | 0.377 |
-| ns | 5305 |  | 209 | prop.rs: how the source and backtrace fields are actually chosen | 3.13 |  | 0.366 |
-| walker |  | 5375 | 194 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.395 |
-| ns | 5595 |  | 290 | impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping | 3.14 |  | 0.385 |
-| walker |  | 5626 | 251 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.419 |
-| walker |  | 5673 | 47 | Code::CodeKey { rung: Body, file: impl/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.419 |
-| walker |  | 5726 | 53 | Code::CodeKey { rung: Names, file: src/var.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.414 |
+| ns | 2005 |  | 45 | Details: #[from] variants with a Backtrace field capture in From | 2.9 |  | 0.620 |
+| ns | 2088 |  | 83 | Details example: extra format arguments (`max = i32::MAX`) | 2.10 |  | 0.606 |
+| ns | 2254 |  | 166 | Details example: referring to fields from format args via `.var` / `.0` | 2.11 |  | 0.583 |
+| walker |  | 2327 | 528 | Fs::DirListing { dir: tests/ui } |  |  | 0.583 |
+| ns | 2410 |  | 156 | When to use thiserror vs anyhow | 2.12 |  | 0.568 |
+| walker |  | 2449 | 122 | Toml::Identity { file: impl/Cargo.toml } |  |  | 0.568 |
+| ns | 2525 |  | 115 | impl/src/expand.rs: complete top-level function roster (names only) | 3.1 |  | 0.551 |
+| walker |  | 2608 | 159 | Toml::Config { file: impl/Cargo.toml } |  |  | 0.551 |
+| ns | 2723 |  | 198 | expand.rs: derive/try_expand — the whole expansion pipeline in 18 lines | 3.2 | 3.1 | 0.526 |
+| walker |  | 2802 | 194 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.568 |
+| ns | 2950 |  | 227 | expand.rs: the two emitted impl shapes (struct and enum quote! tails) | 3.3 |  | 0.541 |
+| walker |  | 3053 | 251 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.591 |
+| walker |  | 3106 | 53 | Code::CodeKey { rung: Names, file: src/var.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
+| walker |  | 3134 | 28 | Code::CodeKey { rung: Decl, file: src/var.rs, decl: 2, sub: 0, line: 5 } |  |  | 0.591 |
+| walker |  | 3148 | 14 | Code::CodeKey { rung: Body, file: src/var.rs, decl: 3, sub: 0, line: 6 } |  |  | 0.591 |
+| walker |  | 3265 | 117 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 179 } |  |  | 0.591 |
+| ns | 3290 |  | 340 | impl/src/ast.rs: the complete IR (Input, Struct, Enum, Variant, Field) | 3.4 |  | 0.550 |
+| ns | 3528 |  | 238 | impl/src/attr.rs: Attrs and the parsed Display attribute | 3.5 |  | 0.529 |
+| walker |  | 3539 | 274 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
+| walker |  | 3777 | 238 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.537 |
+| ns | 3847 |  | 319 | attr.rs: Source/From/Transparent/Fmt payloads and the Trait enum | 3.6 |  | 0.503 |
+| ns | 4040 |  | 193 | attr.rs: the three accepted forms of #[error(...)] | 3.7 |  | 0.492 |
+| walker |  | 4050 | 273 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.492 |
+| ns | 4186 |  | 146 | impl/src/valid.rs: container-level diagnostic messages | 3.8 |  | 0.486 |
+| walker |  | 4283 | 233 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.486 |
+| ns | 4478 |  | 292 | valid.rs: attribute-placement and field-attribute diagnostic messages | 3.9 |  | 0.476 |
+| walker |  | 4529 | 246 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 4, line: 0 } |  |  | 0.476 |
+| ns | 4647 |  | 169 | valid.rs: complete validate/check function roster | 3.10 |  | 0.467 |
+| ns | 4859 |  | 212 | attr.rs: which attributes `get` recognises, plus the file's function roster | 3.11 |  | 0.456 |
+| walker |  | 4918 | 389 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 5, line: 0 } |  |  | 0.456 |
+| ns | 5096 |  | 237 | impl/src/prop.rs: complete accessor roster for source/from/backtrace fields | 3.12 |  | 0.442 |
+| walker |  | 5142 | 224 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 6, line: 0 } |  |  | 0.442 |
+| ns | 5305 |  | 209 | prop.rs: how the source and backtrace fields are actually chosen | 3.13 |  | 0.430 |
+| walker |  | 5480 | 338 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 7, line: 0 } |  |  | 0.430 |
+| ns | 5595 |  | 290 | impl/src/fmt.rs: expand_shorthand and the format-spec → Trait mapping | 3.14 |  | 0.419 |
 | ns | 5726 |  | 131 | fmt.rs: FmtArguments and the remaining function roster | 3.15 | 3.14 | 0.414 |
-| walker |  | 5754 | 28 | Code::CodeKey { rung: Decl, file: src/var.rs, decl: 2, sub: 0, line: 5 } |  |  | 0.414 |
-| walker |  | 5768 | 14 | Code::CodeKey { rung: Body, file: src/var.rs, decl: 3, sub: 0, line: 6 } |  |  | 0.414 |
-| walker |  | 5885 | 117 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 179 } |  |  | 0.414 |
+| walker |  | 5729 | 249 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 8, line: 0 } |  |  | 0.414 |
+| walker |  | 5838 | 109 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 9, line: 0 } |  |  | 0.414 |
+| walker |  | 5885 | 47 | Code::CodeKey { rung: Body, file: impl/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.414 |
 | ns | 5905 |  | 179 | ast.rs: ContainerKind and its six display strings | 3.16 |  | 0.406 |
 | walker |  | 6190 | 305 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.417 |
 | ns | 6198 |  | 293 | ast.rs: complete from_syn constructor roster | 3.17 |  | 0.409 |

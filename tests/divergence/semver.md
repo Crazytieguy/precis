@@ -1,4 +1,4 @@
-Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.951/0.785/0.687/0.643/0.627/0.521
+Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.658/0.757/0.785/0.687/0.643/0.627/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,19 +24,19 @@ Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 573 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
 | walker |  | 633 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
 | walker |  | 650 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
-| walker |  | 662 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
-| ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.653 |
-| walker |  | 1042 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
-| walker |  | 1222 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.878 |
-| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.831 |
-| walker |  | 1247 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.831 |
-| walker |  | 1274 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.831 |
-| walker |  | 1409 | 135 | Json::Entry { file: package.json } |  |  | 0.951 |
-| ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.900 |
-| walker |  | 1694 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.903 |
-| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.834 |
-| walker |  | 1838 | 144 | Json::Scripts { file: package.json } |  |  | 0.835 |
+| walker |  | 830 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.724 |
+| walker |  | 855 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
+| walker |  | 882 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.724 |
+| ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.658 |
+| walker |  | 1017 | 135 | Json::Entry { file: package.json } |  |  | 0.787 |
+| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.754 |
+| walker |  | 1302 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.757 |
+| walker |  | 1446 | 144 | Json::Scripts { file: package.json } |  |  | 0.757 |
+| walker |  | 1458 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
+| ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.717 |
+| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.663 |
+| walker |  | 1838 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.835 |
 | walker |  | 1841 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
 | walker |  | 1946 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.835 |
 | walker |  | 1950 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |

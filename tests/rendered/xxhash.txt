@@ -108,9 +108,6 @@ xxhash.go
   …
   44→// NewWithSeed creates a new Digest with the given seed.
   45→func NewWithSeed(seed uint64) *Digest {
-  46→	var d Digest
-  47→	d.ResetWithSeed(seed)
-  48→	return &d
   …
   51→// Reset clears the Digest's state so that it can be reused.
   52→// It uses a seed value of zero.

@@ -1,4 +1,4 @@
-Score(3000)=0.481 I=0.758 C=0.306 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.688/0.607/0.521/0.481/0.444/0.468/0.547
+Score(3000)=0.481 I=0.758 C=0.306 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.607/0.521/0.481/0.444/0.468/0.547
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,15 +20,15 @@ Score(3000)=0.481 I=0.758 C=0.306 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 407 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.606 |
 | ns | 441 |  | 105 | index.js: the complete class + error export block | 1.7 |  | 0.495 |
 | walker |  | 442 | 35 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.495 |
-| walker |  | 453 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.495 |
-| walker |  | 550 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.508 |
-| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.551 |
-| ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.651 |
-| walker |  | 708 | 158 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.762 |
-| ns | 928 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.681 |
-| walker |  | 945 | 237 | Fs::DirListing { dir: examples } |  |  | 0.688 |
-| walker |  | 987 | 42 | Markdown::HeadingsOutline { file: docs/help-in-depth.md } |  |  | 0.688 |
-| walker |  | 1136 | 149 | Json::IdentityMeta { file: package.json } |  |  | 0.695 |
+| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.408 |
+| walker |  | 679 | 237 | Fs::DirListing { dir: examples } |  |  | 0.578 |
+| ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.578 |
+| walker |  | 690 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
+| walker |  | 787 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.659 |
+| walker |  | 829 | 42 | Markdown::HeadingsOutline { file: docs/help-in-depth.md } |  |  | 0.659 |
+| ns | 928 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.588 |
+| walker |  | 978 | 149 | Json::IdentityMeta { file: package.json } |  |  | 0.595 |
+| walker |  | 1136 | 158 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.695 |
 | ns | 1213 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.617 |
 | ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.600 |
 | walker |  | 1395 | 259 | Json::Scripts { file: package.json } |  |  | 0.607 |

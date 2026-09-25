@@ -224,18 +224,20 @@ Score(3000)=0.565 I=0.787 C=0.406 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 8395 | 213 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 114, sub: 0, line: 1395 } |  |  | 0.504 |
 | ns | 8588 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.495 |
 | walker |  | 8611 | 216 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 42, sub: 0, line: 752 } |  |  | 0.495 |
+| walker |  | 8694 | 83 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.495 |
 | ns | 8760 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.488 |
 | ns | 8837 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.486 |
-| walker |  | 8869 | 258 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 43, sub: 0, line: 774 } |  |  | 0.486 |
+| walker |  | 8952 | 258 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 43, sub: 0, line: 774 } |  |  | 0.486 |
 | ns | 9121 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.477 |
-| walker |  | 9128 | 259 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 118, sub: 0, line: 1529 } |  |  | 0.477 |
+| walker |  | 9211 | 259 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 118, sub: 0, line: 1529 } |  |  | 0.477 |
 | ns | 9297 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.472 |
-| walker |  | 9395 | 267 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 113, sub: 0, line: 1374 } |  |  | 0.472 |
 | ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.468 |
-| ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.462 |
-| ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.460 |
-| ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.458 |
-| walker |  | 9795 | 400 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 78, sub: 0, line: 1157 } |  |  | 0.458 |
-| ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.454 |
-| ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.453 |
-| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.451 |
+| walker |  | 9478 | 267 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 113, sub: 0, line: 1374 } |  |  | 0.468 |
+| walker |  | 9558 | 80 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
+| ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.471 |
+| ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.469 |
+| ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.467 |
+| ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.463 |
+| ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.462 |
+| walker |  | 9901 | 343 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 7, sub: 0, line: 390 } |  |  | 0.469 |
+| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.466 |

@@ -14,7 +14,8 @@ package.json
   3→	"version": "9.2.0",
   4→	"description": "Promise queue with concurrency control",
   5→	"license": "MIT",
-  …
+  6→	"repository": "sindresorhus/p-queue",
+  7→	"funding": "https://github.com/sponsors/sindresorhus",
   8→	"type": "module",
   9→	"exports": {
   10→		"types": "./dist/index.d.ts",
@@ -34,7 +35,28 @@ package.json
   24→		"dist"
   25→	],
   26→	"types": "dist/index.d.ts",
-  …
+  27→	"keywords": [
+  28→		"promise",
+  29→		"queue",
+  30→		"enqueue",
+  31→		"limit",
+  32→		"limited",
+  33→		"concurrency",
+  34→		"throttle",
+  35→		"throat",
+  36→		"rate",
+  37→		"batch",
+  38→		"ratelimit",
+  39→		"priority",
+  40→		"priorityqueue",
+  41→		"fifo",
+  42→		"job",
+  43→		"task",
+  44→		"async",
+  45→		"await",
+  46→		"promises",
+  47→		"bluebird"
+  48→	],
   49→	"dependencies": {
   50→		"eventemitter3": "^5.0.4",
   51→		"p-timeout": "^7.0.0"
@@ -46,9 +68,44 @@ readme.md
   3→> Promise queue with concurrency control
   4→
   5→Useful for rate-limiting async (or sync) operations. For example, when interacting with a REST API or when doing CPU/memory intensive tasks.
-  …
+  7→For servers, you probably want a Redis-backed [job queue](https://github.com/sindresorhus/awesome-nodejs#job-queues) instead.
+  8→
+  9→Note that the project is feature complete. We are happy to review pull requests, but we don't plan any further development. We are also not answering email support questions.
+  10→
+  11→---
+  12→
+  13→<br>
+  14→<div align="center">
+  15→	<p>
+  16→		<p>
+  17→			<sup>
+  18→				<a href="https://github.com/sponsors/sindresorhus">Sindre's open source work is supported by the community</a><br>Special thanks to:
+  19→			</sup>
+  20→		</p>
+  21→		<br>
+  22→		<br>
+  23→		<a href="https://fetchfox.ai?ref=sindre">
+  24→			<div>
+  25→				<img src="https://sindresorhus.com/assets/thanks/fetchfox-logo.svg" height="200"/>
+  26→			</div>
+  27→			<b>Scrape anything with FetchFox</b>
+  28→			<div>
+  29→				<sup>FetchFox is an AI powered scraping tool that lets you scrape data from any website</sup>
+  30→			</div>
+  31→		</a>
+  32→	</p>
+  33→	<br>
+  34→	<br>
+  35→</div>
+  36→
+  37→---
   39→## Install
-  …
+  40→
+  41→```sh
+  42→npm install p-queue
+  43→```
+  44→
+  45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
   47→## Usage
   …
   68→## API
@@ -68,7 +125,9 @@ readme.md
   847→## FAQ
   …
   1066→## Maintainers
-  …
+  1067→
+  1068→- [Sindre Sorhus](https://github.com/sindresorhus)
+  1069→- [Richie Bendall](https://github.com/Richienb)
   1071→## Related
   …
 source/
@@ -149,13 +208,6 @@ source/
     651→	*/
     652→	async onEmpty(): Promise<void> {
     …
-    661→	/**
-    662→	@returns A promise that settles when the queue size is less than the given limit: `queue.size < limit`.
-    663→
-    664→	If you want to avoid having the queue grow beyond a certain size you can `await queue.onSizeLessThan()` before adding a new item.
-    665→
-    666→	Note that this only limits the number of items waiting to start. There could still be up to `concurrency` jobs already running that this call does not include in its calculation.
-    667→	*/
     668→	async onSizeLessThan(limit: number): Promise<void> {
     …
     677→	/**
@@ -165,11 +217,6 @@ source/
     681→	*/
     682→	async onIdle(): Promise<void> {
     …
-    691→	/**
-    692→	The difference with `.onIdle` is that `.onPendingZero` only waits for currently running tasks to finish, ignoring queued tasks.
-    693→
-    694→	@returns A promise that settles when all currently running tasks have completed; `queue.pending === 0`.
-    695→	*/
     696→	async onPendingZero(): Promise<void> {
     …
     704→	/**
@@ -211,32 +258,6 @@ source/
     887→	*/
     888→	get isRateLimited(): boolean {
     …
-    892→	/**
-    893→	Whether the queue is saturated. Returns `true` when:
-    894→	- All concurrency slots are occupied and tasks are waiting, OR
-    895→	- The queue is rate-limited and tasks are waiting
-    896→
-    897→	Useful for detecting backpressure and potential hanging tasks.
-    898→
-    899→	```js
-    900→	import PQueue from 'p-queue';
-    901→
-    902→	const queue = new PQueue({concurrency: 2});
-    903→
-    904→	// Backpressure handling
-    905→	if (queue.isSaturated) {
-    906→		console.log('Queue is saturated, waiting for capacity...');
-    907→		await queue.onSizeLessThan(queue.concurrency);
-    908→	}
-    909→
-    910→	// Monitoring for stuck tasks
-    911→	setInterval(() => {
-    912→		if (queue.isSaturated) {
-    913→			console.warn(`Queue saturated: ${queue.pending} running, ${queue.size} waiting`);
-    914→		}
-    915→	}, 60000);
-    916→	```
-    917→	*/
     918→	get isSaturated(): boolean {
     …
     952→	get runningTasks(): ReadonlyArray<{

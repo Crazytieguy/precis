@@ -89,7 +89,22 @@ README.md
   37→
   38→Requests officially supports Python 3.10+.
   40→## Supported Features & Best–Practices
-  …
+  41→
+  42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
+  43→
+  44→- Keep-Alive & Connection Pooling
+  45→- International Domains and URLs
+  46→- Sessions with Cookie Persistence
+  47→- Browser-style TLS/SSL Verification
+  48→- Basic & Digest Authentication
+  49→- Familiar `dict`–like Cookies
+  50→- Automatic Content Decompression and Decoding
+  51→- Multi-part File Uploads
+  52→- SOCKS Proxy Support
+  53→- Connection Timeouts
+  54→- Streaming Downloads
+  55→- Automatic honoring of `.netrc`
+  56→- Chunked HTTP Requests
   58→## Cloning the repository
   …
 docs/
@@ -252,37 +267,6 @@ src/
       181→    TooManyRedirects,
       182→    URLRequired,
       183→)
-      184→from .models import PreparedRequest, Request, Response
-      185→from .sessions import Session, session
-      186→from .status_codes import codes
-      187→
-      188→__all__ = (
-      189→    "ConnectionError",
-      190→    "ConnectTimeout",
-      191→    "HTTPError",
-      192→    "JSONDecodeError",
-      193→    "PreparedRequest",
-      194→    "ReadTimeout",
-      195→    "Request",
-      196→    "RequestException",
-      197→    "Response",
-      198→    "Session",
-      199→    "Timeout",
-      200→    "TooManyRedirects",
-      201→    "URLRequired",
-      202→    "codes",
-      203→    "delete",
-      204→    "get",
-      205→    "head",
-      206→    "options",
-      207→    "packages",
-      208→    "patch",
-      209→    "post",
-      210→    "put",
-      211→    "request",
-      212→    "session",
-      213→    "utils",
-      214→)
       …
     __version__.py
       …
@@ -339,3 +323,16 @@ tests/
     server.py
   utils.py
 tox.ini
+  1→[tox]
+  2→envlist = py{310,311,312,313,314}-{default, use_chardet_on_py3}
+  3→
+  4→[testenv]
+  5→deps = -rrequirements-dev.txt
+  6→extras =
+  …
+  9→commands =
+  …
+  12→[testenv:default]
+  13→
+  14→[testenv:use_chardet_on_py3]
+  …

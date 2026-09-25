@@ -216,9 +216,6 @@ main.go
   361→	}
   …
   364→func fatalIfCmdErr(err error, cmd string, out []byte) {
-  365→	if err != nil {
-  366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
-  367→	}
   …
   370→func pathExists(path string) bool {
   371→	_, err := os.Stat(path)
@@ -243,7 +240,29 @@ truststore_darwin.go
   25→var trustSettings []interface{}
   26→var _, _ = plist.Unmarshal(trustSettingsData, &trustSettings)
   27→var trustSettingsData = []byte(`
-  …
+  28→<array>
+  29→	<dict>
+  30→		<key>kSecTrustSettingsPolicy</key>
+  31→		<data>
+  32→		KoZIhvdjZAED
+  33→		</data>
+  34→		<key>kSecTrustSettingsPolicyName</key>
+  35→		<string>sslServer</string>
+  36→		<key>kSecTrustSettingsResult</key>
+  37→		<integer>1</integer>
+  38→	</dict>
+  39→	<dict>
+  40→		<key>kSecTrustSettingsPolicy</key>
+  41→		<data>
+  42→		KoZIhvdjZAEC
+  43→		</data>
+  44→		<key>kSecTrustSettingsPolicyName</key>
+  45→		<string>basicX509</string>
+  46→		<key>kSecTrustSettingsResult</key>
+  47→		<integer>1</integer>
+  48→	</dict>
+  49→</array>
+  50→`)
   52→func (m *mkcert) installPlatform() bool {
   …
   105→func (m *mkcert) uninstallPlatform() bool {

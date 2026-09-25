@@ -1,4 +1,4 @@
-Score(3000)=0.577 I=0.757 C=0.440 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.806/0.755/0.623/0.577/0.534/0.539/0.539
+Score(3000)=0.577 I=0.757 C=0.440 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.615/0.755/0.623/0.577/0.534/0.539/0.539
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -29,12 +29,12 @@ Score(3000)=0.577 I=0.757 C=0.440 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 556 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.643 |
 | ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.577 |
 | walker |  | 618 | 62 | Fs::DirListing { dir: testing } |  |  | 0.703 |
+| walker |  | 665 | 47 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.703 |
 | ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.645 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.645 |
-| walker |  | 962 | 344 | Code::CodeKey { rung: Names, file: src/pluggy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.843 |
-| ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.806 |
-| walker |  | 1028 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.851 |
-| walker |  | 1075 | 47 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.851 |
+| ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.615 |
+| walker |  | 1009 | 344 | Code::CodeKey { rung: Names, file: src/pluggy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.806 |
+| walker |  | 1075 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.851 |
 | walker |  | 1115 | 40 | Plaintext::DeclSurface { file: changelog/590.trivial.rst } |  |  | 0.851 |
 | walker |  | 1212 | 97 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.851 |
 | ns | 1296 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.755 |
