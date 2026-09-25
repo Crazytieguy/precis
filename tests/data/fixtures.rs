@@ -1,9 +1,9 @@
 // The fixture corpus: `name url rev`, cloned to `tests/fixtures/<name>` with
-// `_` spelled `-` in the directory name. Included by
-// examples/clone_fixtures.rs and tests/fixture_baselines.rs, which each define
-// their own `fixtures!` macro. Every fixture is registered as a test: training
-// fixtures get a full divergence report, validation fixtures are held out
-// (see `Skill(iterate-divergence)`).
+// `_` spelled `-` in the directory name. Included by examples/clone_fixtures.rs
+// and tests/integration/fixture_baselines.rs, which each define their own
+// `fixtures!` macro. Every fixture is registered as a test: training fixtures
+// get a full divergence report, validation fixtures are held out (see
+// `Skill(iterate-divergence)`).
 
 fixtures! {
     training {

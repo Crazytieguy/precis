@@ -5,8 +5,6 @@
 //! which is how these two shapes were found. Both are exercised
 //! end-to-end through the real renderer so the assertion actually runs.
 
-use std::path::Path;
-
 /// A statement sharing a physical line with a declaration: the
 /// declaration's `ModuleItem` and the call's `ModuleStatements` batch
 /// would both claim row 1.
@@ -44,24 +42,10 @@ boot();
 start();
 ";
 
-fn render_project(dir: &Path, entry: &str) -> String {
-    std::fs::create_dir_all(dir).unwrap();
-    std::fs::write(dir.join("README.md"), "# demo\n\nA demo package.\n").unwrap();
-    std::fs::write(
-        dir.join("package.json"),
-        "{\n  \"name\": \"demo\",\n  \"version\": \"1.0.0\",\n  \"main\": \"index.js\"\n}\n",
-    )
-    .unwrap();
-    std::fs::write(dir.join("index.js"), entry).unwrap();
-    // A generous budget so nothing is dropped for cost reasons — the
-    // point is that every emitted batch is schedulable at all.
-    precis::render(&[dir], 20_000, None).unwrap()
-}
-
 #[test]
 fn js_statement_ownership_statement_sharing_a_declaration_line_is_schedulable() {
     let tmp = tempfile::tempdir().unwrap();
-    let out = render_project(&tmp.path().join("repo"), SHARED_LINE_SCRIPT);
+    let out = crate::render_js_project(&tmp.path().join("repo"), SHARED_LINE_SCRIPT);
     // The declaration's batch renders the row, so the text is present
     // exactly once and no peer batch fights it for ownership.
     assert!(
@@ -78,7 +62,7 @@ fn js_statement_ownership_statement_sharing_a_declaration_line_is_schedulable() 
 #[test]
 fn js_statement_ownership_surfaceless_script_emits_no_statement_batches() {
     let tmp = tempfile::tempdir().unwrap();
-    let out = render_project(&tmp.path().join("repo"), SURFACELESS_SCRIPT);
+    let out = crate::render_js_project(&tmp.path().join("repo"), SURFACELESS_SCRIPT);
     // Statements gate on the file's first admitted surface. With no
     // surface to buy first, admitting them would put root-level crumbs
     // ahead of every gated batch in the walk.
@@ -92,7 +76,7 @@ fn js_statement_ownership_surfaceless_script_emits_no_statement_batches() {
 #[test]
 fn js_statement_ownership_export_ellipsis_never_lands_on_a_statement_row() {
     let tmp = tempfile::tempdir().unwrap();
-    let out = render_project(&tmp.path().join("repo"), ELLIPSIS_COLLISION_SCRIPT);
+    let out = crate::render_js_project(&tmp.path().join("repo"), ELLIPSIS_COLLISION_SCRIPT);
     // In release the collision silently dropped the statement; the
     // executable's flow has to survive.
     assert!(

@@ -46,7 +46,7 @@ macro_rules! fixtures {
         }
     };
 }
-include!("data/fixtures.rs");
+include!("../data/fixtures.rs");
 
 fn repo_path(relative: &str) -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join(relative)

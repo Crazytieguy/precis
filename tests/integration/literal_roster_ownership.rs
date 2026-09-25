@@ -7,8 +7,6 @@
 //! silently drops the loser in release. Exercised end-to-end through the
 //! real renderer so the assertion actually runs.
 
-use std::path::Path;
-
 /// Twelve members puts the class in the per-member split range, and the
 /// constructor's option table qualifies for a key roster. Pre-fix the
 /// roster chained to the class `Export` while `handlers`' rows also
@@ -86,24 +84,10 @@ export class Registry {
 }
 ";
 
-fn render_project(dir: &Path, entry: &str) -> String {
-    std::fs::create_dir_all(dir).unwrap();
-    std::fs::write(dir.join("README.md"), "# demo\n\nA demo package.\n").unwrap();
-    std::fs::write(
-        dir.join("package.json"),
-        "{\n  \"name\": \"demo\",\n  \"version\": \"1.0.0\",\n  \"main\": \"index.js\"\n}\n",
-    )
-    .unwrap();
-    std::fs::write(dir.join("index.js"), entry).unwrap();
-    // A generous budget so nothing is dropped for cost reasons — the
-    // point is that every emitted batch is schedulable at all.
-    precis::render(&[dir], 20_000, None).unwrap()
-}
-
 #[test]
 fn literal_roster_ownership_split_class_member_table_is_schedulable() {
     let tmp = tempfile::tempdir().unwrap();
-    let out = render_project(&tmp.path().join("repo"), SPLIT_CLASS_WITH_MEMBER_TABLE);
+    let out = crate::render_js_project(&tmp.path().join("repo"), SPLIT_CLASS_WITH_MEMBER_TABLE);
     // Rendering at all is the assertion: in debug the sibling overlap
     // panicked inside the scheduler before this call could return.
     assert!(
