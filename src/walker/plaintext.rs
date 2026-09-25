@@ -205,9 +205,13 @@ pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
     // C family (`.c` / `.h` belong to the C walker)
     "cpp", "cc", "cxx", "hpp", "hh", "hxx", "m", "mm", "cu", "cuh",
     // other compiled languages
-    "swift", "zig", "dart", "nim", "cr", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex",
-    "exs", // scripting
-    "rb", "php", "pl", "pm", "r", "jl", "tcl", "pyi", // component-file web frameworks
+    "swift", "zig", "dart", "nim", "cr", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex", "exs",
+    "pas", "pp", "dpr", "lpr", "f", "f90", "f95", "f03", "f08", "for", "cob", "cbl", "cpy", "adb",
+    "ads", "sol", // hardware description
+    "v", "sv", "svh", "vhd", "vhdl", // scripting
+    "rb", "php", "pl", "pm", "r", "jl", "tcl", "pyi", "vim", "gd", "coffee", "el", "lisp", "scm",
+    "rkt", // TeX classes and packages (macro libraries, not documents)
+    "cls", "sty", // component-file web frameworks
     "vue", "svelte", "astro",
 ];
 
@@ -470,7 +474,7 @@ fn is_comment_line(trimmed: &str) -> bool {
             return true;
         }
     }
-    for marker in ["#", "*", "--", ";", "%", "..", "@rem", "rem "] {
+    for marker in ["#", "*", "--", ";", "%", "..", "\"", "@rem", "rem "] {
         if let Some(rest) = trimmed.strip_prefix(marker)
             && (rest.is_empty()
                 || rest.starts_with(char::is_whitespace)
