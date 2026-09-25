@@ -9,30 +9,7 @@ README.md
   1→# mkcert
   2→
   3→mkcert is a simple tool for making locally-trusted development certificates. It requires no configuration.
-  5→```
-  6→$ mkcert -install
-  7→Created a new local CA 💥
-  8→The local CA is now installed in the system trust store! ⚡️
-  9→The local CA is now installed in the Firefox trust store (requires browser restart)! 🦊
-  10→
-  11→$ mkcert example.com "*.example.com" example.test localhost 127.0.0.1 ::1
-  12→
-  13→Created a new certificate valid for the following names 📜
-  14→ - "example.com"
-  15→ - "*.example.com"
-  16→ - "example.test"
-  17→ - "localhost"
-  18→ - "127.0.0.1"
-  19→ - "::1"
-  20→
-  21→The certificate is at "./example.com+5.pem" and the key at "./example.com+5-key.pem" ✅
-  22→```
-  23→
-  24→<p align="center"><img width="498" alt="Chrome and Firefox screenshot" src="https://user-images.githubusercontent.com/1225294/51066373-96d4aa80-15be-11e9-91e2-f4e44a3a4458.png"></p>
-  25→
-  26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
-  27→
-  28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
+  …
   30→## Installation
   31→
   32→> **Warning**: the `rootCA-key.pem` file that mkcert automatically generates gives complete power to intercept secure requests from your machine. Do not share it.
@@ -42,15 +19,11 @@ README.md
   …
   92→### Windows
   …
-  107→or build from source (requires Go 1.10+), or use [the pre-built binaries](https://github.com/FiloSottile/mkcert/releases).
-  109→If you're running into permission problems try running `mkcert` as an Administrator.
   111→## Supported root stores
   …
   127→## Advanced topics
   128→
   129→### Advanced options
-  …
-  150→> **Note:** You _must_ place these options before the domain names list.
   …
   158→### S/MIME
   …
@@ -77,10 +50,6 @@ cert.go
   176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
   …
   202→func randomSerialNumber() *big.Int {
-  203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
-  204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
-  205→	fatalIfErr(err, "failed to generate serial number")
-  206→	return serialNumber
   …
   209→func (m *mkcert) makeCertFromCSR() {
   …
@@ -111,29 +80,7 @@ go.sum
 main.go
   …
   5→// Command mkcert is a simple zero-config tool to make development certificates.
-  6→package main
-  7→
-  8→import (
-  9→	"crypto"
-  10→	"crypto/x509"
-  11→	"flag"
-  12→	"fmt"
-  13→	"log"
-  14→	"net"
-  15→	"net/mail"
-  16→	"net/url"
-  17→	"os"
-  18→	"os/exec"
-  19→	"os/user"
-  20→	"path/filepath"
-  21→	"regexp"
-  22→	"runtime"
-  23→	"runtime/debug"
-  24→	"strings"
-  25→	"sync"
-  26→
-  27→	"golang.org/x/net/idna"
-  28→)
+  …
   30→const shortUsage = `Usage of mkcert:
   31→
   32→	$ mkcert -install
@@ -153,16 +100,45 @@ main.go
   46→
   47→`
   49→const advancedUsage = `Advanced options:
+  50→
+  51→	-cert-file FILE, -key-file FILE, -p12-file FILE
+  52→	    Customize the output paths.
+  53→
+  54→	-client
+  55→	    Generate a certificate for client authentication.
+  56→
+  57→	-ecdsa
+  58→	    Generate a certificate with an ECDSA key.
+  59→
+  60→	-pkcs12
+  61→	    Generate a ".p12" PKCS #12 file, also know as a ".pfx" file,
+  62→	    containing certificate and key for legacy applications.
+  63→
+  64→	-csr CSR
+  65→	    Generate a certificate based on the supplied CSR. Conflicts with
+  66→	    all other flags and arguments except -install and -cert-file.
+  67→
+  68→	-CAROOT
+  69→	    Print the CA certificate and key storage location.
+  70→
+  71→	$CAROOT (environment variable)
+  72→	    Set the CA certificate and key storage location. (This allows
+  73→	    maintaining multiple local CAs in parallel.)
+  74→
+  75→	$TRUST_STORES (environment variable)
+  76→	    A comma-separated list of trust stores to install the local
+  77→	    root CA into. Options are: "system", "java" and "nss" (includes
+  78→	    Firefox). Autodetected by default.
+  79→
+  80→`
   …
-  82→// Version can be set at link time to override debug.BuildInfo.Main.Version,
-  83→// which is "(devel)" when building from within the module. See
-  84→// golang.org/issue/29814 and golang.org/issue/29228.
   85→var Version string
   86→
   87→func main() {
   …
   152→const rootName = "rootCA.pem"
   153→const rootKeyName = "rootCA-key.pem"
+  154→
   155→type mkcert struct {
   156→	installMode, uninstallMode bool
   157→	pkcs12, ecdsa, client      bool
@@ -187,24 +163,8 @@ main.go
   307→func (m *mkcert) uninstall() {
   …
   336→func (m *mkcert) checkPlatform() bool {
-  337→	if m.ignoreCheckFailure {
-  338→		return true
-  339→	}
-  340→
-  341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
-  342→	return err == nil
   …
   345→func storeEnabled(name string) bool {
-  346→	stores := os.Getenv("TRUST_STORES")
-  347→	if stores == "" {
-  348→		return true
-  349→	}
-  350→	for _, store := range strings.Split(stores, ",") {
-  351→		if store == name {
-  352→			return true
-  353→		}
-  354→	}
-  355→	return false
   …
   358→func fatalIfErr(err error, msg string) {
   359→	if err != nil {
@@ -212,9 +172,6 @@ main.go
   361→	}
   …
   364→func fatalIfCmdErr(err error, cmd string, out []byte) {
-  365→	if err != nil {
-  366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
-  367→	}
   …
   370→func pathExists(path string) bool {
   371→	_, err := os.Stat(path)
@@ -229,6 +186,21 @@ main.go
   382→func commandWithSudo(cmd ...string) *exec.Cmd {
   …
 truststore_darwin.go
+  …
+  18→var (
+  19→	FirefoxProfiles     = []string{os.Getenv("HOME") + "/Library/Application Support/Firefox/Profiles/*"}
+  20→	CertutilInstallHelp = "brew install nss"
+  21→	NSSBrowsers         = "Firefox"
+  22→)
+  24→// https://github.com/golang/go/issues/24652#issuecomment-399826583
+  25→var trustSettings []interface{}
+  26→var _, _ = plist.Unmarshal(trustSettingsData, &trustSettings)
+  27→var trustSettingsData = []byte(`
+  …
+  52→func (m *mkcert) installPlatform() bool {
+  …
+  105→func (m *mkcert) uninstallPlatform() bool {
+  …
 truststore_java.go
   …
   21→var (
@@ -253,27 +225,48 @@ truststore_java.go
   110→func execKeytool(cmd *exec.Cmd) ([]byte, error) {
   …
 truststore_linux.go
+  …
+  17→var (
+  18→	FirefoxProfiles = []string{os.Getenv("HOME") + "/.mozilla/firefox/*",
+  19→		os.Getenv("HOME") + "/snap/firefox/common/.mozilla/firefox/*"}
+  20→	NSSBrowsers = "Firefox and/or Chrome/Chromium"
+  21→
+  22→	SystemTrustFilename string
+  23→	SystemTrustCommand  []string
+  24→	CertutilInstallHelp string
+  25→)
+  27→func init() {
+  …
+  51→func (m *mkcert) systemTrustFilename() string {
+  52→	return fmt.Sprintf(SystemTrustFilename, strings.Replace(m.caUniqueName(), " ", "_", -1))
+  …
+  55→func (m *mkcert) installPlatform() bool {
+  …
+  77→func (m *mkcert) uninstallPlatform() bool {
+  …
 truststore_nss.go
   …
-  5→package main
-  6→
-  7→import (
-  8→	"bytes"
-  9→	"log"
-  10→	"os"
-  11→	"os/exec"
-  12→	"path/filepath"
-  13→	"runtime"
-  14→	"strings"
-  15→)
-  …
+  17→var (
   18→	hasNSS       bool
   19→	hasCertutil  bool
   20→	certutilPath string
   21→	nssDBs       = []string{
-  …
+  22→		filepath.Join(os.Getenv("HOME"), ".pki/nssdb"),
+  23→		filepath.Join(os.Getenv("HOME"), "snap/chromium/current/.pki/nssdb"), // Snapcraft
+  24→		"/etc/pki/nssdb", // CentOS 7
+  25→	}
   26→	firefoxPaths = []string{
-  …
+  27→		"/usr/bin/firefox",
+  28→		"/usr/bin/firefox-nightly",
+  29→		"/usr/bin/firefox-developer-edition",
+  30→		"/snap/firefox",
+  31→		"/Applications/Firefox.app",
+  32→		"/Applications/FirefoxDeveloperEdition.app",
+  33→		"/Applications/Firefox Developer Edition.app",
+  34→		"/Applications/Firefox Nightly.app",
+  35→		"C:\\Program Files\\Mozilla Firefox",
+  36→	}
+  37→)
   39→func init() {
   …
   73→func (m *mkcert) checkNSS() bool {

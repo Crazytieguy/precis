@@ -42,7 +42,7 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use self::model::FileModel;
+use self::model::{FileModel, Item};
 use super::fs::files_with_any_extension;
 use super::{WalkCtx, node_end_row_trimmed};
 use crate::batch::{Batch, BatchKey};
@@ -202,7 +202,6 @@ impl SourceFile {
         self.source.line_count()
     }
 
-    #[allow(dead_code, reason = "extraction helper for the unported languages")]
     pub(crate) fn text(&self, node: Node) -> &str {
         &self.source[node.byte_range()]
     }
@@ -211,6 +210,63 @@ impl SourceFile {
     /// with whitespace.
     pub(crate) fn node_rows(&self, node: Node) -> RangeInclusive<usize> {
         node.start_position().row + 1..=node_end_row_trimmed(node, &self.source) + 1
+    }
+
+    /// One [`Item`] per node of `nodes` (statements, fields, specs), in
+    /// order, keeping only rows past `after_row`. A comment joins the
+    /// item after it (a leading comment), or the item before it when it
+    /// starts on that item's last row (a trailing comment); comments
+    /// after the last item form their own.
+    pub(crate) fn node_items<'tree>(
+        &self,
+        nodes: impl IntoIterator<Item = Node<'tree>>,
+        after_row: usize,
+    ) -> Vec<Item> {
+        let mut items: Vec<Item> = Vec::new();
+        let mut pending = Vec::new();
+        for node in nodes {
+            let rows: Vec<usize> = self
+                .node_rows(node)
+                .filter(|&row| row > after_row)
+                .collect();
+            let Some(&first) = rows.first() else {
+                continue;
+            };
+            if !node.kind().contains("comment") {
+                pending.extend(rows);
+                items.push(Item::new(std::mem::take(&mut pending)));
+            } else if pending.is_empty()
+                && let Some(last) = items.last_mut()
+                && last.rows.last() == Some(&first)
+            {
+                last.rows.extend(&rows[1..]);
+            } else {
+                pending.extend(rows);
+            }
+        }
+        if !pending.is_empty() {
+            items.push(Item::new(pending));
+        }
+        items
+    }
+
+    /// `rows` split into one [`Item`] per paragraph: runs of non-blank
+    /// rows, broken at blank rows and at gaps.
+    pub(crate) fn paragraphs(&self, rows: impl IntoIterator<Item = usize>) -> Vec<Item> {
+        let mut items: Vec<Item> = Vec::new();
+        let mut previous = None;
+        for row in rows {
+            if self.line(row).trim().is_empty() {
+                previous = None;
+                continue;
+            }
+            match items.last_mut() {
+                Some(item) if previous == Some(row - 1) => item.rows.push(row),
+                _ => items.push(Item::new([row])),
+            }
+            previous = Some(row);
+        }
+        items
     }
 }
 

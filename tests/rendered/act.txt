@@ -30,8 +30,7 @@ CLAUDE.md
 CONTRIBUTING.md
 IMAGES.md
   1→# List of Docker images for `act`
-  2→
-  3→**Warning:** Below badges with size for each image are displaying size of **compressed image size in registry. After pulling the image, size can be drastically different due to Docker uncompressing the image layers.**
+  …
   5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
   …
   27→## Images based on [`actions/virtual-environments`][gh/actions/virtual-environments]
@@ -86,16 +85,6 @@ cmd/
     7→func (i *Input) newPlatforms() map[string]string {
     …
   root.go
-    …
-    37→type Flag struct {
-    …
-    46→// Execute is the entry point to running the CLI
-    47→func Execute(ctx context.Context, version string) {
-    …
-    138→func configLocations() []string {
-    …
-    391→func newRunCommand(ctx context.Context, input *Input) func(*cobra.Command, []string) error {
-    …
   root_test.go
   secrets.go
     …
@@ -104,7 +93,6 @@ cmd/
     14→func newSecrets(secretList []string) secrets {
     …
     40→func (s secrets) AsMap() map[string]string {
-    41→	return s
     …
   testdata/
     env.actrc
@@ -120,14 +108,7 @@ go.mod
 go.sum
 install.sh
 main.go
-  1→package main
-  2→
-  3→import (
-  4→	_ "embed"
-  5→
-  6→	"github.com/nektos/act/cmd"
-  7→	"github.com/nektos/act/pkg/common"
-  8→)
+  …
   10→//go:embed VERSION
   11→var version string
   12→
@@ -145,9 +126,12 @@ pkg/
     handler.go
     handler_test.go
     model.go
-      1→package artifactcache
-      3→type Request struct {
       …
+      3→type Request struct {
+      4→	Key     string `json:"key" `
+      5→	Version string `json:"version"`
+      6→	Size    int64  `json:"cacheSize"`
+      7→}
       9→func (c *Request) ToCache() *Cache {
       …
       26→type Cache struct {
@@ -172,7 +156,6 @@ pkg/
     auth.go
     auth_test.go
     cartesian.go
-      1→package common
       …
       4→func CartesianProduct(mapOfLists map[string][]interface{}) []map[string]interface{} {
       …
@@ -192,10 +175,8 @@ pkg/
     executor_test.go
     file.go
       …
-      9→// CopyFile copy file
       10→func CopyFile(source string, dest string) (err error) {
       …
-      36→// CopyDir recursive copy of directory
       37→func CopyDir(source string, dest string) (err error) {
       …
     git/
@@ -215,11 +196,19 @@ pkg/
     docker_auth.go
     docker_build.go
     docker_cli.go
+      …
+      10→//nolint:unparam,errcheck
+      …
     docker_cli_test.go
     docker_images.go
     docker_images_test.go
     docker_logger.go
     docker_network.go
+      …
+      12→func NewDockerNetworkCreateExecutor(name string) common.Executor {
+      …
+      45→func NewDockerNetworkRemoveExecutor(name string) common.Executor {
+      …
     docker_pull.go
     docker_pull_test.go
     docker_run.go
@@ -228,6 +217,11 @@ pkg/
     docker_socket_test.go
     docker_stub.go
     docker_volume.go
+      …
+      12→func NewDockerVolumeRemoveExecutor(volumeName string, force bool) common.Executor {
+      …
+      36→func removeExecutor(volume string, force bool) common.Executor {
+      …
     executions_environment.go
       …
       5→type ExecutionsEnvironment interface {
@@ -252,6 +246,11 @@ pkg/
       valid.env
       valid.label
     util.go
+      …
+      12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
+      …
+      24→func openPty() (*os.File, *os.File, error) {
+      …
     util_openbsd_mips64.go
     util_plan9.go
     util_windows.go
@@ -280,15 +279,19 @@ pkg/
     LICENSE
     env.go
     error.go
-      1→package lookpath
+      …
       3→type Error struct {
       4→	Name string
       5→	Err  error
       6→}
       8→func (e *Error) Error() string {
-      9→	return e.Err.Error()
       …
     lp_js.go
+      …
+      14→var ErrNotFound = errors.New("executable file not found in $PATH")
+      …
+      20→func LookPath2(file string, lenv Env) (string, error) {
+      …
     lp_plan9.go
     lp_unix.go
     lp_windows.go
@@ -304,7 +307,7 @@ pkg/
     github_context.go
     github_context_test.go
     job_context.go
-      1→package model
+      …
       3→type JobContext struct {
       …
     planner.go

@@ -61,29 +61,6 @@ README.md
   …
   5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
   6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
-  8→## Features
-  9→
-  10→<img src="assets/demo.png" width="820px" />
-  11→
-  12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
-  13→
-  14→Features include:
-  15→
-  16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
-  17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
-  18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
-  19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
-  20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
-  21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
-  22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
-  23→
-  24→<hr clear="right"/>
-  …
-  602→## Update Check
-  603→
-  604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
-  605→
-  606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
   …
   713→## License
   714→
@@ -104,44 +81,6 @@ demo/
   demo_script.sh
 docs/
   commands.md
-    1→# Commands Reference
-    …
-    23→## Core Commands
-    24→
-    25→### `start`
-    …
-    55→---
-    57→### `stop` (alias: `s`)
-    …
-    84→---
-    86→### `add`
-    …
-    116→---
-    118→### `remove` (alias: `rm`)
-    120→Remove an activity.
-    …
-    141→---
-    143→### `continue` (alias: `c`)
-    …
-    186→---
-    188→## Viewing & Reporting
-    189→
-    190→### `calendar`
-    …
-    215→---
-    217→### `list` (alias: `ls`)
-    …
-    238→---
-    240→### `current`
-    …
-    260→### `last` (alias: `lt`)
-    …
-    283→### `report`
-    …
-    307→### `analyze`
-    …
-    330→### `ical`
-    …
 go.mod
   1→module github.com/kriuchkov/tock
   2→
@@ -170,7 +109,7 @@ internal/
         15→const (
         16→	defaultRecentActivitiesForContinuation = 10
         17→)
-        19→//nolint:funlen // Include all logic in one function
+        …
         20→func NewContinueCmd() *cobra.Command {
         …
       current.go
@@ -209,7 +148,6 @@ internal/
       root.go
       start.go
         …
-        16→//nolint:gocognit,funlen // Include all logic in one function
         17→func NewStartCmd() *cobra.Command {
         …
       stop.go
@@ -249,6 +187,48 @@ internal/
         repository_test.go
   config/
     config.go
+      …
+      12→type Config struct {
+      …
+      25→type CalendarConfig struct {
+      26→	TimeSpentFormat   string `mapstructure:"time_spent_format"`
+      27→	TimeStartFormat   string `mapstructure:"time_start_format"`
+      28→	TimeEndFormat     string `mapstructure:"time_end_format"`
+      29→	TimeTotalFormat   string `mapstructure:"time_total_format"`
+      30→	AlignDurationLeft bool   `mapstructure:"align_duration_left"`
+      31→}
+      33→type ExportConfig struct {
+      34→	ICal ICalConfig `mapstructure:"ical"`
+      35→}
+      37→type ICalConfig struct {
+      38→	FileName string `mapstructure:"file_name"`
+      39→}
+      41→type FileConfig struct {
+      42→	Path string `mapstructure:"path"`
+      43→}
+      45→type TimewarriorConfig struct {
+      46→	DataPath string `mapstructure:"data_path"`
+      47→}
+      49→type ThemeConfig struct {
+      50→	Name      string `mapstructure:"name"`
+      51→	Primary   string `mapstructure:"primary"`
+      52→	Secondary string `mapstructure:"secondary"`
+      53→	Text      string `mapstructure:"text"`
+      54→	SubText   string `mapstructure:"sub_text"`
+      55→	Faint     string `mapstructure:"faint"`
+      56→	Highlight string `mapstructure:"highlight"`
+      57→	Tag       string `mapstructure:"tag"`
+      58→}
+      60→type Option func(*viper.Viper)
+      61→
+      62→func WithConfigPath(path string) Option {
+      …
+      68→func WithConfigName(name string) Option {
+      …
+      74→func WithConfigFile(file string) Option {
+      …
+      80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
+      …
     config_test.go
   core/
     dto/
@@ -267,7 +247,13 @@ internal/
         20→	Tags    []string
         21→}
         23→type AddActivityRequest struct {
-        …
+        24→	Description string
+        25→	Project     string
+        26→	StartTime   time.Time
+        27→	EndTime     time.Time
+        28→	Notes       string
+        29→	Tags        []string
+        30→}
         32→type ActivityFilter struct {
         33→	FromDate    *time.Time
         34→	ToDate      *time.Time
@@ -296,6 +282,18 @@ internal/
         10→)
     models/
       activity.go
+        …
+        10→type Activity struct {
+        …
+        19→func (a Activity) ID() string {
+        20→	return a.StartTime.Format("150405")
+        …
+        23→func (a Activity) Duration() time.Duration {
+        …
+        31→func (a Activity) DurationString() string {
+        …
+        41→func (a Activity) MarshalJSON() ([]byte, error) {
+        …
     ports/
       mocks/
         mock_activityrepository.go
@@ -306,7 +304,11 @@ internal/
         11→type ActivityResolver interface {
         …
         22→type ActivityRepository interface {
-        …
+        23→	Save(ctx context.Context, activity models.Activity) error
+        24→	FindLast(ctx context.Context) (*models.Activity, error)
+        25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+        26→	Remove(ctx context.Context, activity models.Activity) error
+        27→}
         29→type NotesRepository interface {
         30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
         31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
@@ -324,13 +326,10 @@ internal/
     ics/
       generator.go
         …
-        11→// Generate returns a full iCalendar string for a single activity.
         12→func Generate(act models.Activity, uidKey string) string {
         …
-        17→// WrapCalendar wraps the given event(s) string in a VCALENDAR block.
         18→func WrapCalendar(eventsBody string) string {
         …
-        28→// GenerateEvent returns the VEVENT block for a single activity.
         29→func GenerateEvent(act models.Activity, uidKey string) string {
         …
         71→func escapeProperty(s string) string {

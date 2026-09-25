@@ -152,29 +152,14 @@ fn decl_info(node: Node, file: &SourceFile) -> DeclInfo {
         Some(block) => block.start_position().row.max(start),
         None => *rows.end(),
     };
-    let mut body = Vec::new();
-    let mut pending = Vec::new();
-    if let Some(block) = block {
+    let body = block.map_or_else(Vec::new, |block| {
         let mut cursor = block.walk();
-        for statement in block.named_children(&mut cursor) {
-            pending.extend(file.node_rows(statement).filter(|&row| row > head_end));
-            if statement.kind() != "comment" && !pending.is_empty() {
-                body.push(Item::new(std::mem::take(&mut pending)));
-            }
-        }
-    }
-    if !pending.is_empty() {
-        body.push(Item::new(pending));
-    }
-    let doc = collect_doc_comments_above(node, &file.source).full;
+        file.node_items(block.named_children(&mut cursor), head_end)
+    });
     DeclInfo {
         name_rows: vec![start],
         head: (start..=head_end).collect(),
-        doc: if doc.is_empty() {
-            Vec::new()
-        } else {
-            vec![Item::new(doc)]
-        },
+        doc: file.paragraphs(collect_doc_comments_above(node, &file.source).full),
         body,
         shape: Shape::Callable,
         visibility: Visibility::Public,

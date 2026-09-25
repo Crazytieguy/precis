@@ -13,63 +13,6 @@
 .golangci.yml
 LICENSE
 Makefile
-  1→# Only build/test/lint exp/simd when Go version is >= 1.26 (requires goexperiment.simd)
-  2→GO_VERSION := $(shell go version 2>/dev/null | sed -n 's/.*go\([0-9]*\)\.\([0-9]*\).*/\1.\2/p')
-  3→GO_SIMD_SUPPORT := $(shell ver="$(GO_VERSION)"; [ -n "$$ver" ] && [ "$$(printf '%s\n1.26\n' "$$ver" | sort -V | tail -1)" = "$$ver" ] && echo yes)
-  4→
-  5→build:
-  6→	go build -v ./...
-  7→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && GOEXPERIMENT=simd go build -v ./; fi
-  8→
-  9→test:
-  10→	go test -race ./...
-  11→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && GOEXPERIMENT=simd go test -race ./; fi
-  12→watch-test:
-  13→	reflex -t 50ms -s -- sh -c 'gotest -race ./...'
-  14→
-  15→bench:
-  16→	go test -v -run=^Benchmark -benchmem -count 3 -bench ./...
-  17→watch-bench:
-  18→	reflex -t 50ms -s -- sh -c 'go test -v -run=^Benchmark -benchmem -count 3 -bench ./...'
-  19→
-  20→coverage:
-  21→	go test -v -coverprofile=cover.out -covermode=atomic ./...
-  22→	go tool cover -html=cover.out -o cover.html
-  23→
-  24→tools:
-  25→	go install github.com/cespare/reflex@latest
-  26→	go install github.com/rakyll/gotest@latest
-  27→	go install github.com/psampaz/go-mod-outdated@latest
-  28→	go install github.com/jondot/goweight@latest
-  29→	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-  30→	go get -t -u golang.org/x/tools/cmd/cover
-  31→	go install github.com/sonatype-nexus-community/nancy@latest
-  32→	go install golang.org/x/perf/cmd/benchstat@latest
-  33→	go install github.com/cespare/prettybench@latest
-  34→	go mod tidy
-  35→
-  36→	# brew install hougesen/tap/mdsf
-  37→
-  38→lint:
-  39→	golangci-lint run --timeout 60s --max-same-issues 50 ./...
-  40→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && golangci-lint run --timeout 60s --max-same-issues 50 ./; fi
-  41→	# mdsf verify --debug --log-level warn docs/
-  42→lint-fix:
-  43→	golangci-lint run --timeout 60s --max-same-issues 50 --fix ./...
-  44→	@if [ -n "$(GO_SIMD_SUPPORT)" ]; then cd ./exp/simd && golangci-lint run --timeout 60s --max-same-issues 50 --fix ./; fi
-  45→	# mdsf format --debug --log-level warn docs/
-  46→
-  47→audit:
-  48→	go list -json -m all | nancy sleuth
-  49→
-  50→outdated:
-  51→	go list -u -m -json all | go-mod-outdated -update -direct
-  52→
-  53→weight:
-  54→	goweight
-  55→
-  56→doc:
-  57→	cd docs && npm install && npm start
 README.md
   2→# lo - Iterate over slices, maps, channels...
   …
@@ -88,110 +31,56 @@ README.md
   5073→## 🤝 Contributing
   …
   5093→## 👤 Contributors
-  5094→
-  5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
+  …
   5097→## 💫 Show your support
   …
   5103→## 📝 License
   …
 benchmark/
-  CLAUDE.md
-  core_condition_bench_test.go
-  core_find_bench_test.go
-  core_intersect_bench_test.go
-  core_map_bench_test.go
-  core_math_bench_test.go
-  core_slice_bench_test.go
-  core_string_bench_test.go
-  core_tuples_bench_test.go
-  core_type_manipulation_bench_test.go
-  helpers_test.go
-  it_find_bench_test.go
-  it_helpers_test.go
-  it_map_bench_test.go
-  it_math_bench_test.go
-  it_slice_bench_test.go
-  it_type_manipulation_bench_test.go
-  mutable_slice_bench_test.go
-  parallel_slice_bench_test.go
 channel.go
+  …
+  11→// DispatchingStrategy is a function that distributes messages to channels.
+  12→type DispatchingStrategy[T any] func(msg T, index uint64, channels []<-chan T) int
+  …
+  18→func ChannelDispatcher[T any](stream <-chan T, count, channelBufferCap int, strategy DispatchingStrategy[T]) []<-chan T {
+  …
+  40→func createChannels[T any](count, channelBufferCap int) []chan T {
+  …
+  50→func channelsToReadOnly[T any](children []chan T) []<-chan T {
+  …
+  60→func closeChannels[T any](children []chan T) {
+  …
+  66→func channelIsNotFull[T any](ch <-chan T) bool {
+  …
+  73→func DispatchingStrategyRoundRobin[T any](msg T, index uint64, channels []<-chan T) int {
+  …
+  88→func DispatchingStrategyRandom[T any](msg T, index uint64, channels []<-chan T) int {
+  …
 channel_test.go
 concurrency.go
 concurrency_test.go
 condition.go
 condition_test.go
 constraints.go
-  1→package lo
+  …
   3→// Clonable defines a constraint of types having Clone() T method.
   4→type Clonable[T any] interface {
   5→	Clone() T
   6→}
 docs/
-  .gitignore
-  CLAUDE.md
-  README.md
-  data/
-  docs/
-  docusaurus.config.ts
-  package-lock.json
-  package.json
-  plugins/
-    helpers-pages/
-      components/
-      index.ts
-  scripts/
-  sidebars.ts
-  src/
-    clientModules/
-    css/
-    pages/
-      community.module.css
-      community.tsx
-      index.module.css
-      index.tsx
-    prism-include-languages.js
-    theme/
-  static/
-  tsconfig.json
 errors.go
 errors_test.go
 exp/
   simd/
     BENCHMARK.md
-      1→# Benchmark
-      2→
-      3→## Summary
-      …
-      23→## Run
-      …
-      36→## Result
-      …
     README.md
-      1→# SIMD experiment (Go 1.26+)
-      2→
-      3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
-      4→
-      5→See [benchmarks](./BENCHMARK.md).
-      7→## CPU compatibility (avoiding SIGILL)
-      …
-      11→### Check support on Linux
-      …
-      29→### What the tests do
-      …
-      37→### Run only AVX tests
-      …
     cpu_amd64.go
     cpu_amd64_test.go
     go.mod
       1→module github.com/samber/lo/exp/simd
       2→
       3→go 1.26.0
-      4→
-      5→require github.com/samber/lo v0.0.0
-      6→
-      7→require golang.org/x/text v0.22.0 // indirect
-      8→
-      9→replace github.com/samber/lo => ../../
+      …
     go.sum
     intersect_avx512.go
     intersect_avx512_test.go
@@ -208,6 +97,23 @@ exp/
     simd_test.go
     unsafe.go
 find.go
+  …
+  13→func IndexOf[T comparable](collection []T, element T) int {
+  …
+  26→func LastIndexOf[T comparable](collection []T, element T) int {
+  …
+  40→func HasPrefix[T comparable](collection, prefix []T) bool {
+  …
+  56→func HasSuffix[T comparable](collection, suffix []T) bool {
+  …
+  72→func Find[T any](collection []T, predicate func(item T) bool) (T, bool) {
+  …
+  88→func FindErr[T any](collection []T, predicate func(item T) (bool, error)) (T, error) {
+  …
+  107→func FindIndexOf[T any](collection []T, predicate func(item T) bool) (T, int, bool) {
+  …
+  121→func FindLastIndexOf[T any](collection []T, predicate func(item T) bool) (T, int, bool) {
+  …
 find_test.go
 func.go
 func_test.go
@@ -215,26 +121,7 @@ go.mod
   1→module github.com/samber/lo
   2→
   3→go 1.18
-  4→
-  5→//
-  6→// Dev dependencies are excluded from releases. Please check CI.
-  7→//
-  8→
-  9→require (
-  10→	github.com/stretchr/testify v1.11.1
-  11→	github.com/thoas/go-funk v0.9.3
-  12→	go.uber.org/goleak v1.2.1
-  13→	golang.org/x/text v0.22.0
-  14→)
-  15→
-  16→require (
-  17→	github.com/davecgh/go-spew v1.1.1 // indirect
-  18→	github.com/kr/text v0.2.0 // indirect
-  19→	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
-  20→	github.com/pmezard/go-difflib v1.0.0 // indirect
-  21→	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
-  22→	gopkg.in/yaml.v3 v3.0.1 // indirect
-  23→)
+  …
 go.sum
 internal/
   constraints/
@@ -243,15 +130,16 @@ internal/
       3→
       4→This package is for Go 1.18 retrocompatiblity purpose.
     constraints.go
+      …
+      5→// Package constraints defines a set of useful constraints to be used
+      6→// with type parameters.
+      …
     ordered_go118.go
-      1→//go:build !go1.21
-      3→package constraints
       …
       9→type Ordered interface {
       10→	Integer | Float | ~string
       11→}
     ordered_go121.go
-      1→//go:build go1.21
       …
       13→type Ordered = cmp.Ordered
   xrand/
@@ -259,22 +147,43 @@ internal/
     ordered_go122.go
   xtime/
     README.md
-      2→# xtime
-      3→
-      4→Lightweight mock for time package.
-      5→
-      6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
     fake.go
+      1→//nolint:revive
+      …
     noCopy.go
-      1→package xtime
       …
       10→type noCopy struct{}
       …
       13→func (*noCopy) Lock()   {}
       14→func (*noCopy) Unlock() {}
     real.go
+      1→//nolint:revive
+      …
     time.go
+      1→//nolint:revive
+      …
 intersect.go
+  …
+  5→func Contains[T comparable](collection []T, element T) bool {
+  …
+  17→func ContainsBy[T any](collection []T, predicate func(item T) bool) bool {
+  …
+  29→func Every[T comparable](collection, subset []T) bool {
+  …
+  47→func EveryBy[T any](collection []T, predicate func(item T) bool) bool {
+  …
+  60→func Some[T comparable](collection, subset []T) bool {
+  …
+  78→func SomeBy[T any](collection []T, predicate func(item T) bool) bool {
+  …
+  90→func None[T comparable](collection, subset []T) bool {
+  …
+  107→func NoneBy[T any](collection []T, predicate func(item T) bool) bool {
+  …
+  119→func Intersect[T comparable, Slice ~[]T](lists ...Slice) Slice {
+  …
+  162→func IntersectBy[T any, K comparable, Slice ~[]T](transform func(T) K, lists ...Slice) Slice {
+  …
 intersect_test.go
 it/
   channel.go
@@ -296,10 +205,6 @@ it/
   seq_example_test.go
   seq_test.go
   string.go
-    1→//go:build go1.23
-    3→package it
-    4→
-    5→import "iter"
     …
     13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
     …
@@ -315,6 +220,21 @@ lo_test.go
 map.go
 map_test.go
 math.go
+  …
+  11→func Range(elementNum int) []int {
+  …
+  23→func RangeFrom[T constraints.Integer | constraints.Float](start T, elementNum int) []T {
+  …
+  36→func RangeWithSteps[T constraints.Integer | constraints.Float](start, end, step T) []T {
+  …
+  71→func Clamp[T constraints.Ordered](value, mIn, mAx T) T {
+  …
+  82→func Sum[T constraints.Float | constraints.Integer | constraints.Complex](collection []T) T {
+  …
+  92→func SumBy[T any, R constraints.Float | constraints.Integer | constraints.Complex](collection []T, iteratee func(item T) R) R {
+  …
+  103→func SumByErr[T any, R constraints.Float | constraints.Integer | constraints.Complex](collection []T, iteratee func(item T) (R, error)) (R, error) {
+  …
 math_test.go
 mutable/
   slice.go
@@ -324,6 +244,32 @@ parallel/
   slice.go
   slice_test.go
 retry.go
+  …
+  10→type debounce struct {
+  …
+  18→func (d *debounce) reset() {
+  …
+  42→func (d *debounce) cancel() {
+  …
+  56→func NewDebounce(duration time.Duration, f ...func()) (func(), func()) {
+  …
+  70→type debounceByItem struct {
+  71→	mu    *sync.Mutex
+  72→	timer *time.Timer
+  73→	count int
+  74→}
+  76→type debounceBy[T comparable] struct {
+  …
+  83→func (d *debounceBy[T]) reset(key T) {
+  …
+  119→func (d *debounceBy[T]) cancel(key T) {
+  …
+  139→func NewDebounceBy[T comparable](duration time.Duration, f ...func(key T, count int)) (func(key T), func(key T)) {
+  …
+  155→func Attempt(maxIteration int, f func(index int) error) (int, error) {
+  …
+  174→func AttemptWithDelay(maxIteration int, delay time.Duration, f func(index int, duration time.Duration) error) (int, time.Duration, error) {
+  …
 retry_example_test.go
 retry_test.go
 slice.go
@@ -335,5 +281,74 @@ time_test.go
 tuples.go
 tuples_test.go
 type_manipulation.go
+  …
+  7→func IsNil(x any) bool {
+  …
+  22→func IsNotNil(x any) bool {
+  23→	return !IsNil(x)
+  …
+  28→func ToPtr[T any](x T) *T {
+  29→	return &x
+  …
+  34→func Nil[T any]() *T {
+  35→	return nil
+  …
+  41→func EmptyableToPtr[T any](x T) *T {
+  …
+  53→func FromPtr[T any](x *T) T {
+  …
+  63→func FromPtrOr[T any](x *T, fallback T) T {
+  …
+  73→func ToSlicePtr[T any](collection []T) []*T {
+  …
+  85→func FromSlicePtr[T any](collection []*T) []T {
+  …
+  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
+  …
+  115→func ToAnySlice[T any](collection []T) []any {
+  …
+  126→func FromAnySlice[T any](in []any) ([]T, bool) {
+  …
 type_manipulation_test.go
 types.go
+  …
+  4→type Entry[K comparable, V any] struct {
+  5→	Key   K
+  6→	Value V
+  7→}
+  …
+  10→type Tuple2[A, B any] struct {
+  11→	A A
+  12→	B B
+  13→}
+  …
+  17→func (t Tuple2[A, B]) Unpack() (A, B) {
+  18→	return t.A, t.B
+  …
+  22→type Tuple3[A, B, C any] struct {
+  23→	A A
+  24→	B B
+  25→	C C
+  26→}
+  …
+  30→func (t Tuple3[A, B, C]) Unpack() (A, B, C) {
+  …
+  35→type Tuple4[A, B, C, D any] struct {
+  36→	A A
+  37→	B B
+  38→	C C
+  39→	D D
+  40→}
+  …
+  44→func (t Tuple4[A, B, C, D]) Unpack() (A, B, C, D) {
+  …
+  49→type Tuple5[A, B, C, D, E any] struct {
+  50→	A A
+  51→	B B
+  52→	C C
+  53→	D D
+  54→	E E
+  55→}
+  …
+  59→func (t Tuple5[A, B, C, D, E]) Unpack() (A, B, C, D, E) {
+  …

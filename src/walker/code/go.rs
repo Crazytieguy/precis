@@ -1,25 +1,61 @@
-//! Go extraction for the code engine. Not ported yet: `walker::go` still
-//! walks these files.
+//! Go extraction. Functions and methods are `Callable`; `type`, `const`
+//! and `var` declarations are `Whole`, and a grouped `( … )` declaration
+//! lists one roster row per spec. A name is public when exported (a
+//! method also needs an exported receiver type), and every declaration of
+//! `package main` is public: nothing imports it. The module doc is the
+//! package comment.
 
 use std::path::Path;
 
-use super::SourceFile;
-use super::model::FileModel;
-use crate::walker::WalkCtx;
+use tree_sitter::Node;
 
-pub(super) const PORTED: bool = false;
+use super::SourceFile;
+use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use crate::walker::{WalkCtx, collect_doc_comments_above};
+
+pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["go"];
 
 pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
     tree_sitter_go::LANGUAGE.into()
 }
 
-pub(super) fn extract(_file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
-    FileModel::default()
+pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+    let root = file.tree.root_node();
+    let package_main = package_name(root, &file.source) == Some("main");
+    let mut model = FileModel::default();
+    let mut cursor = root.walk();
+    for child in root.named_children(&mut cursor) {
+        let decl = match child.kind() {
+            "package_clause" => {
+                model.module_doc = doc_items(child, file);
+                continue;
+            }
+            "function_declaration" | "method_declaration" => callable(child, file),
+            "type_declaration" | "const_declaration" | "var_declaration" => whole(child, file),
+            _ => continue,
+        };
+        let Some((mut decl, exported)) = decl else {
+            continue;
+        };
+        if exported || package_main {
+            decl.visibility = Visibility::Public;
+        }
+        model.decls.push(decl);
+    }
+    model
 }
 
-pub(super) fn is_entrypoint(_path: &Path, _ctx: &WalkCtx) -> bool {
-    false
+/// A root-level file named after its package (`cobra/cobra.go`).
+pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+    if ctx.depth_from_root(path) > 1 {
+        return false;
+    }
+    let Some(stem) = path.file_stem().and_then(|stem| stem.to_str()) else {
+        return false;
+    };
+    ctx.parse_tree(path, &grammar(path))
+        .is_some_and(|(source, tree)| package_name(tree.root_node(), &source) == Some(stem))
 }
 
 pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
@@ -28,3 +64,268 @@ pub(super) fn file_weight(_path: &Path, _ctx: &WalkCtx) -> f64 {
 
 #[derive(Default)]
 pub(crate) struct RunState {}
+
+fn package_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
+    let mut cursor = root.walk();
+    let clause = root
+        .named_children(&mut cursor)
+        .find(|child| child.kind() == "package_clause")?;
+    let mut inner = clause.walk();
+    let name = clause
+        .named_children(&mut inner)
+        .find(|child| child.kind() == "package_identifier")?;
+    Some(&source[name.byte_range()])
+}
+
+/// Go's exported-name rule: an uppercase first letter.
+fn is_exported(name: &str) -> bool {
+    name.chars().next().is_some_and(char::is_uppercase)
+}
+
+fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
+    file.paragraphs(collect_doc_comments_above(node, &file.source).full)
+}
+
+/// A `Private` declaration whose head is every row of `node` outside the
+/// span of its `body` items.
+fn decl_info(
+    node: Node,
+    file: &SourceFile,
+    shape: Shape,
+    name_rows: Vec<usize>,
+    body: Vec<Item>,
+) -> DeclInfo {
+    let rows = file.node_rows(node);
+    let head = match (body.first(), body.last()) {
+        (Some(first), Some(last)) => (*rows.start()..first.rows[0])
+            .chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())
+            .collect(),
+        _ => rows.collect(),
+    };
+    DeclInfo {
+        name_rows,
+        head,
+        doc: doc_items(node, file),
+        body,
+        shape,
+        visibility: Visibility::Private,
+        members: Vec::new(),
+    }
+}
+
+fn callable(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
+    let name = file.text(node.child_by_field_name("name")?);
+    let receiver_exported = node.kind() != "method_declaration"
+        || receiver_type_name(node, &file.source).is_some_and(is_exported);
+    let start = *file.node_rows(node).start();
+    let mut statements = Vec::new();
+    if let Some(block) = node.child_by_field_name("body") {
+        let mut cursor = block.walk();
+        for child in block.named_children(&mut cursor) {
+            if child.kind() == "statement_list" {
+                let mut inner = child.walk();
+                statements.extend(child.named_children(&mut inner));
+            } else {
+                statements.push(child);
+            }
+        }
+    }
+    let body = file.node_items(statements, start);
+    // The closing `}` row belongs to no part.
+    let mut decl = decl_info(node, file, Shape::Callable, vec![start], body);
+    if !decl.body.is_empty() {
+        decl.head.retain(|&row| row < decl.body[0].rows[0]);
+    }
+    Some((decl, is_exported(name) && receiver_exported))
+}
+
+/// `type`, `const` or `var`: a grouped declaration's body is its specs;
+/// a single struct or interface type's body is its fields / methods.
+fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
+    let start = *file.node_rows(node).start();
+    let mut specs = Vec::new();
+    let mut group = None;
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        match child.kind() {
+            "(" => group = Some(node),
+            "var_spec_list" => {
+                group = Some(child);
+                let mut inner = child.walk();
+                specs.extend(child.named_children(&mut inner).filter(is_spec));
+            }
+            _ if is_spec(&child) => specs.push(child),
+            _ => {}
+        }
+    }
+    let exported = specs.iter().any(|spec| {
+        let mut names = spec.walk();
+        spec.children_by_field_name("name", &mut names)
+            .any(|name| is_exported(file.text(name)))
+    });
+    let (name_rows, body) = match group {
+        Some(group) => {
+            let mut inner = group.walk();
+            let body = file.node_items(group.named_children(&mut inner), start);
+            let name_rows = specs
+                .iter()
+                .map(|spec| *file.node_rows(*spec).start())
+                .collect();
+            (name_rows, body)
+        }
+        None => {
+            let members = specs
+                .first()
+                .and_then(|spec| spec.child_by_field_name("type"))
+                .and_then(|ty| match ty.kind() {
+                    "struct_type" => ty
+                        .named_children(&mut ty.walk())
+                        .find(|child| child.kind() == "field_declaration_list"),
+                    "interface_type" => Some(ty),
+                    _ => None,
+                });
+            let body = members.map_or_else(Vec::new, |list| {
+                let mut inner = list.walk();
+                file.node_items(list.named_children(&mut inner), start)
+            });
+            (vec![start], body)
+        }
+    };
+    if name_rows.is_empty() {
+        return None;
+    }
+    Some((
+        decl_info(node, file, Shape::Whole, name_rows, body),
+        exported,
+    ))
+}
+
+fn is_spec(node: &Node) -> bool {
+    matches!(
+        node.kind(),
+        "type_spec" | "type_alias" | "const_spec" | "var_spec"
+    )
+}
+
+/// Root identifier of a method's receiver type (`func (c *Context) …`
+/// → `Context`).
+fn receiver_type_name<'a>(method: Node, source: &'a str) -> Option<&'a str> {
+    let receiver = method.child_by_field_name("receiver")?;
+    let mut cursor = receiver.walk();
+    let parameter = receiver
+        .named_children(&mut cursor)
+        .find(|child| child.kind() == "parameter_declaration")?;
+    let mut ty = parameter.child_by_field_name("type")?;
+    loop {
+        ty = match ty.kind() {
+            "type_identifier" => return Some(&source[ty.byte_range()]),
+            "pointer_type" => ty.named_child(0)?,
+            "generic_type" => ty.child_by_field_name("type")?,
+            "qualified_type" => ty.child_by_field_name("name")?,
+            _ => return None,
+        };
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::walker::code::Language;
+
+    fn extract_source(source: &str) -> FileModel {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("a.go");
+        std::fs::write(&path, source).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let file = SourceFile::parse(&path, Language::Go, &ctx).unwrap();
+        extract(&file, &ctx)
+    }
+
+    fn body_rows(decl: &DeclInfo) -> Vec<Vec<usize>> {
+        decl.body.iter().map(|item| item.rows.clone()).collect()
+    }
+
+    #[test]
+    fn go_splits_functions_into_signature_doc_and_statements() {
+        let model = extract_source(
+            "\
+// Package foo does things.
+package foo
+
+// Run runs.
+func (s *Server) Run(
+\tctx context.Context,
+) error {
+\t// start
+\ts.start() // now
+\treturn nil
+}
+
+func helper() int { return 1 }
+",
+        );
+        assert_eq!(model.module_doc, [Item::new([1])]);
+        let run = &model.decls[0];
+        assert_eq!(
+            (run.head.clone(), run.name_rows.clone()),
+            (vec![5, 6, 7], vec![5])
+        );
+        assert_eq!(run.doc, [Item::new([4])]);
+        assert_eq!(body_rows(run), [vec![8, 9], vec![10]]);
+        assert_eq!(run.visibility, Visibility::Public);
+        let helper = &model.decls[1];
+        assert_eq!((helper.head.as_slice(), helper.body.len()), (&[13][..], 0));
+        assert_eq!(helper.visibility, Visibility::Private);
+    }
+
+    #[test]
+    fn go_grouped_declarations_list_one_row_per_spec() {
+        let model = extract_source(
+            "\
+package foo
+
+const (
+\t// A is a.
+\tA = iota
+\tb
+)
+
+var x, Y = 1, 2
+",
+        );
+        let group = &model.decls[0];
+        assert_eq!(group.name_rows, [5, 6]);
+        assert_eq!(group.head, [3, 7]);
+        assert_eq!(body_rows(group), [vec![4, 5], vec![6]]);
+        assert_eq!(group.visibility, Visibility::Public);
+        let single = &model.decls[1];
+        assert_eq!((single.head.as_slice(), single.body.len()), (&[9][..], 0));
+        assert_eq!(single.visibility, Visibility::Public);
+    }
+
+    #[test]
+    fn go_struct_body_is_its_fields() {
+        let model = extract_source(
+            "\
+package main
+
+type config struct {
+\tName string
+
+\t// Port to bind.
+\tPort int
+}
+
+func (c *config) load() {}
+",
+        );
+        let config = &model.decls[0];
+        assert_eq!(
+            (config.head.clone(), config.shape),
+            (vec![3, 8], Shape::Whole)
+        );
+        assert_eq!(body_rows(config), [vec![4], vec![6, 7]]);
+        assert_eq!(config.visibility, Visibility::Public, "package main");
+        assert_eq!(model.decls[1].visibility, Visibility::Public);
+    }
+}

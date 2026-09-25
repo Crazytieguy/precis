@@ -27,7 +27,7 @@ use crate::render::{Source, SourceCache};
 pub mod c;
 pub(crate) mod code;
 pub mod fs;
-pub mod go;
+pub mod go_mod;
 pub(crate) mod import_chunks;
 pub mod json;
 pub mod markdown;
@@ -115,7 +115,7 @@ impl Walker for FsWalker {
         out.extend(plaintext::expand_in_dir(dir, ctx));
         out.extend(prisma::expand_in_dir(dir, ctx));
         out.extend(c::expand_in_dir(dir, ctx));
-        out.extend(go::expand_in_dir(dir, ctx));
+        out.extend(go_mod::expand_in_dir(dir, ctx));
         out.extend(python::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
         out.extend(yaml::expand_in_dir(dir, ctx));

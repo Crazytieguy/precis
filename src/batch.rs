@@ -42,7 +42,7 @@ pub enum BatchKey {
     Plaintext(PlaintextKey),
     Prisma(PrismaKey),
     C(CKey),
-    Go(GoKey),
+    GoMod(GoModKey),
     Python(PythonKey),
     Code(CodeKey),
     Yaml(YamlKey),
@@ -96,7 +96,7 @@ impl_batchkey! {
     Plaintext => PlaintextKey,
     Prisma => PrismaKey,
     C => CKey,
-    Go => GoKey,
+    GoMod => GoModKey,
     Python => PythonKey,
     Code => CodeKey,
     Yaml => YamlKey,
@@ -489,42 +489,15 @@ pub enum CKey {
     },
 }
 
-/// Go batches. Emits all top-level decls regardless of export status
-/// — visibility is a value discount, not a filter. Grouped decls
-/// stay as one batch so iota / shared-comment semantics survive.
+/// `go.mod` / `go.work` batches.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum GoKey {
-    /// `// Package foo …` doc comment above `package`.
-    PackageDocLede { file: PathBuf },
-    /// Remainder of a `/* */` package godoc past the lede paragraph —
-    /// conventionally the package's canonical usage example.
-    /// Predecessor: matching `PackageDocLede`.
-    PackageDocBody { file: PathBuf },
-    /// Package clause + import block at the top of a `.go` file.
-    PackageImports { file: PathBuf },
-    /// Names-surface chunk for top-level decls (visibility-blind).
-    DeclNames { file: PathBuf, chunk_index: usize },
-    /// One top-level declaration (sig with body marker for fn/method).
-    Decl { file: PathBuf, start_line: usize },
-    /// Body interior of a fn/method def. Predecessor: matching `Decl`.
-    DeclBody { file: PathBuf, start_line: usize },
-    /// `//`/`/* */` run above a decl. Predecessor: matching `Decl`.
-    DeclDoc { file: PathBuf, start_line: usize },
-    /// Blank-line-separated field group in a big struct. Predecessor:
-    /// `Decl` (Decl span is trimmed to header + closer).
-    StructFieldGroup {
-        file: PathBuf,
-        start_line: usize,
-        group_start_line: usize,
-    },
-    /// Names surface for `Test*`/`Benchmark*`/`Example*` in `*_test.go`.
-    TestNames { file: PathBuf },
-    /// Identity slice of a `go.mod` / `go.work` — `module`, `go`,
-    /// `toolchain`. Predecessor of `GoMod`.
-    GoModIdentity { file: PathBuf },
-    /// Whole-file render of a `go.mod` / `go.work`. Line-capped.
-    /// Predecessor: matching `GoModIdentity`.
-    GoMod { file: PathBuf },
+pub enum GoModKey {
+    /// The `module`, `go` and `toolchain` directives. Predecessor of
+    /// `File`.
+    Identity { file: PathBuf },
+    /// The module file, whole when small, otherwise without its indirect
+    /// requires. Predecessor: matching `Identity`.
+    File { file: PathBuf },
 }
 
 /// Python batches. All top-level + class-body items emit; visibility
@@ -1165,58 +1138,11 @@ impl InnerKey for YamlKey {
     }
 }
 
-impl InnerKey for GoKey {
-    fn is_depth_follow_up(&self) -> bool {
-        // `DeclDoc` is deliberately absent: godoc comments are the API
-        // documentation in Go convention, and NS authors rank a
-        // primary file's doc train as wanted depth (bubbletea tea.go:
-        // -0.048 with it pressured).
-        matches!(self, GoKey::DeclBody { .. })
-    }
-
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(
-            self,
-            GoKey::PackageImports { .. } | GoKey::DeclNames { .. } | GoKey::Decl { .. }
-        )
-    }
-
-    /// Per-decl batches steepen to `0.45` (matches the C walker) —
-    /// short decls plus dozens per file would otherwise dominate the
-    /// rank against larger anchors at the default 0.35.
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            GoKey::Decl { .. } | GoKey::DeclBody { .. } | GoKey::StructFieldGroup { .. } => 0.45,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
+impl InnerKey for GoModKey {
     fn describe(&self, root: &Path) -> String {
         match self {
-            GoKey::PackageDocLede { file } => describe_in("go package doc lede", file, root),
-            GoKey::PackageDocBody { file } => describe_in("go package doc body", file, root),
-            GoKey::PackageImports { file } => describe_in("go package + imports", file, root),
-            GoKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("go decl names surface", file, *chunk_index, root)
-            }
-            GoKey::Decl { file, start_line } => describe_at("go decl", file, *start_line, root),
-            GoKey::DeclBody { file, start_line } => {
-                describe_at("go decl body", file, *start_line, root)
-            }
-            GoKey::DeclDoc { file, start_line } => {
-                describe_at("go decl doc", file, *start_line, root)
-            }
-            GoKey::StructFieldGroup {
-                file,
-                start_line,
-                group_start_line,
-            } => format!(
-                "go struct field group at {}:{start_line} group {group_start_line}",
-                display_path(file, root)
-            ),
-            GoKey::TestNames { file } => describe_in("go test names surface", file, root),
-            GoKey::GoModIdentity { file } => describe_in("go module identity", file, root),
-            GoKey::GoMod { file } => format!("go module file {}", display_path(file, root)),
+            GoModKey::Identity { file } => describe_in("go module identity", file, root),
+            GoModKey::File { file } => format!("go module file {}", display_path(file, root)),
         }
     }
 }

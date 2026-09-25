@@ -58,12 +58,9 @@ examples/
 exec.go
 exec_test.go
 focus.go
-  1→package tea
-  3→// FocusMsg represents a terminal focus message.
-  4→// This occurs when the terminal gains focus.
+  …
   5→type FocusMsg struct{}
-  7→// BlurMsg represents a terminal blur message.
-  8→// This occurs when the terminal loses focus.
+  …
   9→type BlurMsg struct{}
 go.mod
   1→module charm.land/bubbletea/v2
@@ -80,13 +77,12 @@ keyboard.go
 logging.go
   …
   23→func LogToFile(path string, prefix string) (*os.File, error) {
-  24→	return LogToFileWith(path, prefix, log.Default())
   …
   29→type LogOptionsSetter interface {
   30→	SetOutput(io.Writer)
   31→	SetPrefix(string)
   32→}
-  34→// LogToFileWith does allows to call LogToFile with a custom LogOptionsSetter.
+  …
   35→func LogToFileWith(path string, prefix string, log LogOptionsSetter) (*os.File, error) {
   …
 logging_test.go
@@ -96,7 +92,6 @@ nil_renderer.go
 options.go
 options_test.go
 paste.go
-  1→package tea
   …
   5→type PasteMsg struct {
   6→	Content string
@@ -114,7 +109,6 @@ profile.go
   14→	colorprofile.Profile
   15→}
 raw.go
-  1→package tea
   …
   5→type RawMsg struct {
   6→	Msg any
@@ -144,7 +138,13 @@ screen.go
   68→}
 screen_test.go
 signals_unix.go
+  …
+  15→func (p *Program) listenForResize(done chan struct{}) {
+  …
 signals_windows.go
+  …
+  8→func (p *Program) listenForResize(done chan struct{}) {
+  …
 tea.go
   1→// Package tea provides a framework for building rich terminal user interfaces
   2→// based on the paradigms of The Elm Architecture. It's well-suited for simple
@@ -156,17 +156,14 @@ tea.go
   8→//
   9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
   …
-  38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
   39→var ErrProgramPanic = errors.New("program experienced a panic")
-  41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
+  …
   42→var ErrProgramKilled = errors.New("program was killed")
-  44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
-  45→// signal, or when it receives a [InterruptMsg].
+  …
   46→var ErrInterrupted = errors.New("program was interrupted")
-  48→// Msg contain data from the result of a IO operation. Msgs trigger the update
-  49→// function and, henceforth, the UI.
+  …
   50→type Msg = uv.Event
-  52→// Model contains the program's state as well as its core functions.
+  …
   53→type Model interface {
   54→	// Init is the first function that will be called. It returns an optional
   55→	// initial command. To not perform an initial command return nil.
@@ -183,129 +180,88 @@ tea.go
   …
   76→func NewView(s string) View {
   …
-  82→// View represents a terminal view that can be composed of multiple layers.
-  83→// It can also contain a cursor that will be rendered on top of the layers.
   84→type View struct {
   …
-  96→	Content string
-  …
-  126→	OnMouse func(msg MouseMsg) Cmd
-  …
-  131→	Cursor *Cursor
-  …
-  135→	BackgroundColor color.Color
-  …
-  139→	ForegroundColor color.Color
-  …
-  143→	WindowTitle string
-  …
-  147→	ProgressBar *ProgressBar
-  …
-  161→	AltScreen bool
-  …
-  170→	ReportFocus bool
-  …
-  173→	DisableBracketedPasteMode bool
-  …
-  177→	MouseMode MouseMode
-  …
-  189→	KeyboardEnhancements KeyboardEnhancements
-  190→}
-  …
   241→type KeyboardEnhancements struct {
+  242→	// ReportEventTypes requests the terminal to report key repeat and release
+  243→	// events.
+  244→	// If supported, your program will receive [KeyReleaseMsg]s and
+  245→	// [KeyPressMsg] with the [Key.IsRepeat] field set indicating that this is
+  246→	// a it's part of a key repeat sequence.
+  247→	ReportEventTypes bool
+  248→
+  249→	// ReportAlternateKeys requests the terminal to report alternate key values
+  250→	// in addition to the main ones.
+  251→	// Note that only key events represented as escape codes will affected by
+  252→	// this enhancement.
+  253→	ReportAlternateKeys bool
+  254→
+  255→	// ReportAllKeysAsEscapeCodes requests the terminal to report all key
+  256→	// events, including plain text keys, as escape codes.
+  257→	// When this is enabled, text won't be sent as plain text but instead as
+  258→	// escape codes that encode the key value and modifiers.
+  259→	ReportAllKeysAsEscapeCodes bool
+  260→
+  261→	// ReportAssociatedText requests the terminal to report the text associated
+  262→	// with key events.
+  263→	// Note that this is an enhancement to
+  264→	// [KeyboardEnhancements.ReportAllKeysAsEscapeCodes] and only has an effect
+  265→	// if that is enabled.
+  266→	ReportAssociatedText bool
+  267→}
   …
-  356→// Cursor represents a cursor on the terminal screen.
-  357→type Cursor struct {
-  358→	// Position is a [Position] that determines the cursor's position on the
-  359→	// screen relative to the top left corner of the frame.
-  360→	Position
-  361→
-  362→	// Color is a [color.Color] that determines the cursor's color.
-  363→	Color color.Color
-  364→
-  365→	// Shape is a [CursorShape] that determines the cursor's shape.
-  366→	Shape CursorShape
-  367→
-  368→	// Blink is a boolean that determines whether the cursor should blink.
-  369→	Blink bool
-  370→}
-  372→// NewCursor returns a new cursor with the default settings and the given
-  373→// position.
-  374→func NewCursor(x, y int) *Cursor {
+  279→func (v *View) SetContent(s string) {
+  280→	v.Content = s
   …
-  390→type Cmd func() Msg
+  284→type MouseMode int
+  286→const (
+  287→	// MouseModeNone disables mouse events.
+  288→	MouseModeNone MouseMode = iota
+  289→
+  290→	// MouseModeCellMotion enables mouse click, release, and wheel events.
+  291→	// Mouse movement events are also captured if a mouse button is pressed
+  292→	// (i.e., drag events). Cell motion mode is better supported than all
+  293→	// motion mode.
+  294→	//
+  295→	// This will try to enable the mouse in extended mode (SGR), if that is not
+  296→	// supported by the terminal it will fall back to normal mode (X10).
+  297→	MouseModeCellMotion
+  298→
+  299→	// MouseModeAllMotion enables all mouse events, including click, release,
+  300→	// wheel, and movement events. You will receive mouse movement events even
+  301→	// when no buttons are pressed.
+  302→	//
+  303→	// This will try to enable the mouse in extended mode (SGR), if that is not
+  304→	// supported by the terminal it will fall back to normal mode (X10).
+  305→	MouseModeAllMotion
+  306→)
   …
-  395→type channelHandlers struct {
-  396→	handlers []chan struct{}
-  397→	mu       sync.RWMutex
-  398→}
+  309→type ProgressBarState int
+  311→// Progress bar states.
+  312→const (
+  313→	ProgressBarNone ProgressBarState = iota
+  314→	ProgressBarDefault
+  315→	ProgressBarError
+  316→	ProgressBarIndeterminate
+  317→	ProgressBarWarning
+  318→)
   …
-  402→func (h *channelHandlers) add(ch chan struct{}) {
+  321→func (s ProgressBarState) String() string {
   …
-  408→// shutdown waits for all handlers to terminate.
-  409→func (h *channelHandlers) shutdown() {
+  336→type ProgressBar struct {
+  337→	// State is the current state of the progress bar. It can be one of
+  338→	// [ProgressBarNone], [ProgressBarDefault], [ProgressBarError],
+  339→	// [ProgressBarIndeterminate], and [ProgressBarWarn].
+  340→	State ProgressBarState
+  341→	// Value is the current value of the progress bar. It should be between
+  342→	// 0 and 100.
+  343→	Value int
+  344→}
   …
-  425→// Program is a terminal user interface.
-  426→type Program struct {
-  …
-  429→	disableInput bool
-  …
-  433→	disableSignalHandler bool
-  …
-  439→	disableCatchPanics bool
-  …
-  472→	filter func(Model, Msg) Msg
-  …
-  477→	fps int
-  …
-  481→	initialModel Model
-  …
-  486→	disableRenderer bool
-  …
-  490→	handlers channelHandlers
-  …
-  494→	ctx    context.Context
-  495→	cancel context.CancelFunc
-  …
-  499→	externalCtx context.Context
-  501→	msgs         chan Msg
-  502→	errs         chan error
-  503→	finished     chan struct{}
-  504→	shutdownOnce sync.Once
-  506→	profile *colorprofile.Profile // the terminal color profile
-  …
-  509→	output    io.Writer
-  510→	outputBuf bytes.Buffer // buffer used to queue commands to be sent to the output
-  …
-  513→	ttyOutput           term.File
-  514→	previousOutputState *term.State
-  515→	renderer            renderer
-  …
-  518→	environ uv.Environ
-  …
-  520→	logger uv.Logger
-  …
-  532→	ignoreSignals uint32
-  …
-  535→	ticker *time.Ticker
-  …
-  538→	once sync.Once
-  …
-  541→	rendererDone chan struct{}
-  …
-  544→	width, height int
-  …
-  547→	useHardTabs bool
-  …
-  549→	useBackspace bool
-  551→	mu sync.Mutex
-  552→}
-  554→// Quit is a special command that tells the Bubble Tea program to exit.
-  555→func Quit() Msg {
+  349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
 tea_test.go
 termcap.go
-  1→package tea
   …
   5→type requestCapabilityMsg string
   …
@@ -319,28 +275,42 @@ termcap.go
   47→	return c.Content
   …
 termios_bsd.go
+  …
+  11→func (p *Program) checkOptimizedMovements(s *term.State) {
+  …
 termios_other.go
+  …
+  8→func (*Program) checkOptimizedMovements(*term.State) {}
 termios_unix.go
+  …
+  11→func (p *Program) checkOptimizedMovements(s *term.State) {
+  …
 termios_windows.go
+  …
+  8→func (p *Program) checkOptimizedMovements(*term.State) {
+  …
 testdata/
   TestClearMsg/
     bg_fg_cur_color.golden
     clear_screen.golden
     read_set_clipboard.golden
   TestViewModel/
-    altscreen.golden
-    altscreen_autoexit.golden
-    bg_set_color.golden
-    bp_stop_start.golden
-    cursor_hide.golden
-    cursor_hideshow.golden
-    kitty_stop_startreleases.golden
-    mouse_allmotion.golden
-    mouse_cellmotion.golden
-    mouse_disable.golden
 tty.go
 tty_unix.go
+  …
+  15→func (p *Program) initInput() (err error) {
+  …
+  37→const suspendSupported = true
+  …
+  40→func suspendProcess() {
+  …
 tty_windows.go
+  …
+  13→func (p *Program) initInput() (err error) {
+  …
+  62→const suspendSupported = false
+  63→
+  64→func suspendProcess() {}
 tutorials/
   basics/
     README.md
@@ -357,8 +327,7 @@ tutorials/
     …
   go.sum
 xterm.go
-  1→package tea
-  3→// TerminalVersionMsg is a message that represents the terminal version.
+  …
   4→type TerminalVersionMsg struct {
   5→	Name string
   6→}

@@ -105,7 +105,7 @@ const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
 const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
 
 /// Per-chunk multiplier for a chunked names-surface batch, used by the
-/// C and Go walkers behind their own size gates. Surfaces that still
+/// C walker behind its own size gate. Surfaces that still
 /// split allocate a conserved total instead, via
 /// [`conserved_catalog_chunk_factors`].
 pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {

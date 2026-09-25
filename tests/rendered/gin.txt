@@ -56,7 +56,6 @@ binding/
   toml_test.go
   uri.go
     …
-    5→package binding
     7→type uriBinding struct{}
     8→
     9→func (uriBinding) Name() string {
@@ -79,10 +78,7 @@ codecov.yml
 context.go
 context_appengine.go
   …
-  5→//go:build appengine
-  7→package gin
   9→func init() {
-  10→	defaultPlatform = PlatformGoogleAppEngine
   …
 context_file_test.go
 context_test.go
@@ -90,39 +86,12 @@ debug.go
 debug_test.go
 deprecated.go
   …
-  13→// BindWith binds the passed struct pointer using the specified binding engine.
-  14→// See the binding package.
-  15→//
-  16→// Deprecated: Use MustBindWith or ShouldBindWith.
   17→func (c *Context) BindWith(obj any, b binding.Binding) error {
   …
 deprecated_test.go
 doc.go
-  1→/*
-  2→Package gin implements a HTTP web framework called gin.
-  4→See https://gin-gonic.com/ for more information about gin.
-  5→
-  6→Example:
-  7→
-  8→	package main
-  9→
-  10→	import "github.com/gin-gonic/gin"
-  11→
-  12→	func main() {
-  13→		r := gin.Default()
-  14→		r.GET("/ping", func(c *gin.Context) {
-  15→			c.JSON(200, gin.H{
-  16→				"message": "pong",
-  17→			})
-  18→		})
-  19→		r.Run() // listen and serve on 0.0.0.0:8080
-  20→	}
-  21→*/
-  22→package gin // import "github.com/gin-gonic/gin"
 docs/
   doc.md
-    1→# Gin Quick Start
-    …
 errors.go
 errors_test.go
 examples/
@@ -136,11 +105,10 @@ fs.go
   17→// Open passes `Open` to the upstream implementation without `Readdir` functionality.
   18→func (o OnlyFilesFS) Open(name string) (http.File, error) {
   …
-  27→// neutralizedReaddirFile wraps http.File with a specific implementation of `Readdir`.
   28→type neutralizedReaddirFile struct {
   29→	http.File
   30→}
-  32→// Readdir overrides the http.File default implementation and always returns nil.
+  …
   33→func (n neutralizedReaddirFile) Readdir(_ int) ([]os.FileInfo, error) {
   …
   42→func Dir(root string, listDirectory bool) http.FileSystem {
@@ -162,20 +130,14 @@ gin.go
   38→
   39→var defaultTrustedCIDRs = []*net.IPNet{
   …
-  50→// HandlerFunc defines the handler used by gin middleware as return value.
   51→type HandlerFunc func(*Context)
-  53→// OptionFunc defines the function to change the default configuration
+  …
   54→type OptionFunc func(*Engine)
   56→// HandlersChain defines a HandlerFunc slice.
   57→type HandlersChain []HandlerFunc
-  59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
-  60→func (c HandlersChain) Last() HandlerFunc {
-  61→	if length := len(c); length > 0 {
-  62→		return c[length-1]
-  63→	}
-  64→	return nil
   …
-  67→// RouteInfo represents a request route's specification which contains method and path and its handler.
+  60→func (c HandlersChain) Last() HandlerFunc {
+  …
   68→type RouteInfo struct {
   69→	Method      string
   70→	Path        string
@@ -195,75 +157,9 @@ gin.go
   86→	// PlatformFlyIO when running on Fly.io. Trust Fly-Client-IP for determining the client's IP
   87→	PlatformFlyIO = "Fly-Client-IP"
   88→)
-  90→// Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
-  91→// Create an instance of Engine, by using New() or Default()
-  92→type Engine struct {
-  93→	RouterGroup
-  …
-  97→	routeTreesUpdated sync.Once
-  …
-  104→	RedirectTrailingSlash bool
-  …
-  115→	RedirectFixedPath bool
-  …
-  123→	HandleMethodNotAllowed bool
-  …
-  129→	ForwardedByClientIP bool
-  …
-  132→	// Deprecated: USE `TrustedPlatform` WITH VALUE `gin.PlatformGoogleAppEngine` INSTEAD
-  …
-  135→	AppEngine bool
-  …
-  140→	UseRawPath bool
-  …
-  144→	UseEscapedPath bool
-  …
-  149→	UnescapePathValues bool
-  …
-  153→	RemoveExtraSlash bool
-  …
-  159→	RemoteIPHeaders []string
-  …
-  163→	TrustedPlatform string
-  …
-  167→	MaxMultipartMemory int64
-  …
-  170→	UseH2C bool
-  …
-  173→	ContextWithFallback bool
-  …
-  189→}
-  191→var _ IRouter = (*Engine)(nil)
-  193→// New returns a new blank Engine instance without any middleware attached.
-  194→// By default, the configuration is:
-  195→// - RedirectTrailingSlash:  true
-  196→// - RedirectFixedPath:      false
-  197→// - HandleMethodNotAllowed: false
-  198→// - ForwardedByClientIP:    true
-  199→// - UseRawPath:             false
-  200→// - UseEscapedPath: 		 false
-  201→// - UnescapePathValues:     true
-  202→func New(opts ...OptionFunc) *Engine {
   …
 ginS/
   README.md
-    1→# Gin Default Server
-    2→
-    3→This is API experiment for Gin.
-    4→
-    5→```go
-    6→package main
-    7→
-    8→import (
-    9→	"github.com/gin-gonic/gin"
-    10→	"github.com/gin-gonic/gin/ginS"
-    11→)
-    12→
-    13→func main() {
-    14→	ginS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
-    15→	ginS.Run()
-    16→}
-    17→```
   gins.go
   gins_test.go
 gin_integration_test.go
@@ -286,15 +182,49 @@ internal/
     bytesconv_test.go
   fs/
     fs.go
+      …
+      9→type FileSystem struct {
+      10→	http.FileSystem
+      11→}
+      …
+      14→func (o FileSystem) Open(name string) (fs.File, error) {
+      …
     fs_test.go
 logger.go
+  …
+  17→type consoleColorModeValue int
+  19→const (
+  20→	autoColor consoleColorModeValue = iota
+  21→	disableColor
+  22→	forceColor
+  23→)
+  25→const (
+  26→	green   = "\033[97;42m"
+  27→	white   = "\033[90;47m"
+  28→	yellow  = "\033[90;43m"
+  29→	red     = "\033[97;41m"
+  30→	blue    = "\033[97;44m"
+  31→	magenta = "\033[97;45m"
+  32→	cyan    = "\033[97;46m"
+  33→	reset   = "\033[0m"
+  34→)
+  36→var consoleColorMode = autoColor
+  …
+  39→type LoggerConfig struct {
+  …
+  61→// Skipper is a function to skip logs based on provided Context
+  62→type Skipper func(c *Context) bool
+  64→// LogFormatter gives the signature of the formatter function passed to LoggerWithFormatter
+  65→type LogFormatter func(params LogFormatterParams) string
+  …
+  68→type LogFormatterParams struct {
+  …
 logger_test.go
 middleware_test.go
 mode.go
 mode_test.go
 path.go
   …
-  6→package gin
   8→const stackBufSize = 128
   …
   23→func cleanPath(p string) string {
@@ -308,38 +238,64 @@ recovery.go
 recovery_test.go
 render/
   bson.go
+    …
+    14→type BSON struct {
+    15→	Data any
+    16→}
+    18→var bsonContentType = []string{"application/bson"}
+    …
+    21→func (r BSON) Render(w http.ResponseWriter) error {
+    …
+    32→func (r BSON) WriteContentType(w http.ResponseWriter) {
+    …
   data.go
     …
-    12→// Data contains ContentType and bytes data.
     13→type Data struct {
     14→	ContentType string
     15→	Data        []byte
     16→}
-    18→// Render (Data) writes data with custom ContentType.
+    …
     19→func (r Data) Render(w http.ResponseWriter) (err error) {
     …
-    28→// WriteContentType (Data) writes custom ContentType.
     29→func (r Data) WriteContentType(w http.ResponseWriter) {
     …
   html.go
   json.go
   msgpack.go
   pdf.go
+    …
+    10→type PDF struct {
+    11→	Data []byte
+    12→}
+    14→var pdfContentType = []string{"application/pdf"}
+    …
+    17→func (r PDF) Render(w http.ResponseWriter) error {
+    …
+    24→func (r PDF) WriteContentType(w http.ResponseWriter) {
+    …
   protobuf.go
+    …
+    14→type ProtoBuf struct {
+    15→	Data any
+    16→}
+    18→var protobufContentType = []string{"application/x-protobuf"}
+    …
+    21→func (r ProtoBuf) Render(w http.ResponseWriter) error {
+    …
+    34→func (r ProtoBuf) WriteContentType(w http.ResponseWriter) {
+    …
   reader.go
   reader_test.go
   redirect.go
     …
-    12→// Redirect contains the http request reference and redirects status code and location.
     13→type Redirect struct {
     14→	Code     int
     15→	Request  *http.Request
     16→	Location string
     17→}
-    19→// Render (Redirect) redirects the http request to new location and writes redirect response.
+    …
     20→func (r Redirect) Render(w http.ResponseWriter) error {
     …
-    28→// WriteContentType (Redirect) don't write any ContentType.
     29→func (r Redirect) WriteContentType(http.ResponseWriter) {}
   render.go
   render_msgpack_test.go
@@ -351,6 +307,40 @@ render/
 response_writer.go
 response_writer_test.go
 routergroup.go
+  …
+  16→	regEnLetter = regexp.MustCompile("^[A-Z]+$")
+  …
+  19→	anyMethods = []string{
+  …
+  27→type IRouter interface {
+  28→	IRoutes
+  29→	Group(string, ...HandlerFunc) *RouterGroup
+  30→}
+  …
+  33→type IRoutes interface {
+  …
+  55→type RouterGroup struct {
+  56→	Handlers HandlersChain
+  57→	basePath string
+  58→	engine   *Engine
+  59→	root     bool
+  60→}
+  62→var _ IRouter = (*RouterGroup)(nil)
+  64→// Use adds middleware to the group, see example code in GitHub.
+  65→func (group *RouterGroup) Use(middleware ...HandlerFunc) IRoutes {
+  …
+  72→func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+  …
+  82→func (group *RouterGroup) BasePath() string {
+  83→	return group.basePath
+  …
+  86→func (group *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersChain) IRoutes {
+  …
+  103→func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) IRoutes {
+  …
+  111→func (group *RouterGroup) POST(relativePath string, handlers ...HandlerFunc) IRoutes {
+  112→	return group.handle(http.MethodPost, relativePath, handlers)
+  …
 routergroup_test.go
 routes_test.go
 test_helpers.go
@@ -366,11 +356,53 @@ testdata/
     raw.tmpl
   test_file.txt
 tree.go
+  …
+  17→type Param struct {
+  18→	Key   string
+  19→	Value string
+  20→}
+  …
+  25→type Params []Param
+  …
+  29→func (ps Params) Get(name string) (string, bool) {
+  …
+  40→func (ps Params) ByName(name string) (va string) {
+  41→	va, _ = ps.Get(name)
+  42→	return
+  …
+  45→type methodTree struct {
+  46→	method string
+  47→	root   *node
+  48→}
+  50→type methodTrees []methodTree
+  51→
+  52→func (trees methodTrees) get(method string) *node {
+  …
+  61→func longestCommonPrefix(a, b string) int {
+  …
+  71→func (n *node) addChild(child *node) {
+  …
+  80→func countParams(path string) uint16 {
+  …
+  86→func countSections(path string) uint16 {
+  …
+  90→type nodeType uint8
+  92→const (
+  93→	static nodeType = iota
+  94→	root
+  95→	param
+  96→	catchAll
+  97→)
+  99→type node struct {
+  …
+  111→func (n *node) incrementChildPrio(pos int) int {
+  …
+  135→func (n *node) addRoute(path string, handlers HandlersChain) {
+  …
 tree_test.go
 utils.go
 utils_test.go
 version.go
   …
-  5→package gin
   7→// Version is the current gin framework's version.
   8→const Version = "v1.12.0"

@@ -21,19 +21,7 @@ agent/
   agent_cache.go
   agent_cache_test.go
   agent_test_helpers.go
-    1→//go:build testing
-    3→package agent
-    …
-    6→func (a *Agent) GetConnectionManager() *ConnectionManager {
-    7→	return a.connectionManager
-    …
   battery/
-    battery.go
-    battery_darwin.go
-    battery_linux.go
-    battery_linux_test.go
-    battery_stub.go
-    battery_windows.go
   client.go
   client_test.go
   connection_manager.go
@@ -53,36 +41,15 @@ agent/
   emmc_linux.go
   emmc_linux_test.go
   emmc_stub.go
-    1→//go:build !linux
-    3→package agent
-    …
-    7→func scanEmmcDevices() []*DeviceInfo {
-    8→	return nil
-    …
-    11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
-    …
   fingerprint.go
   fingerprint_test.go
   gpu.go
   gpu_amd_linux.go
   gpu_amd_linux_test.go
   gpu_amd_unsupported.go
-    1→//go:build !linux
-    …
-    9→func (gm *GPUManager) hasAmdSysfs() bool {
-    10→	return false
-    …
-    13→func (gm *GPUManager) collectAmdStats() error {
-    …
   gpu_darwin.go
   gpu_darwin_test.go
   gpu_darwin_unsupported.go
-    1→//go:build !darwin
-    3→package agent
-    …
-    6→func (gm *GPUManager) startPowermetricsCollector() {}
-    …
-    9→func (gm *GPUManager) startMacmonCollector() {}
   gpu_intel.go
   gpu_nvml.go
   gpu_nvml_linux.go
@@ -101,34 +68,17 @@ agent/
   mdraid_linux.go
   mdraid_linux_test.go
   mdraid_stub.go
-    1→//go:build !linux
-    3→package agent
-    5→func scanMdraidDevices() []*DeviceInfo {
-    6→	return nil
-    …
-    9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
-    …
   network.go
   network_test.go
   response.go
-    …
-    13→func newAgentResponse(data any, requestID *uint32) common.AgentResponse {
-    …
   sensors.go
   sensors_default.go
-    1→//go:build !windows
-    …
-    9→var getSensorTemps = sensors.TemperaturesWithContext
   sensors_test.go
   sensors_windows.go
   server.go
   server_test.go
   smart.go
   smart_nonwindows.go
-    1→//go:build !windows
-    …
-    7→func ensureEmbeddedSmartctl() (string, error) {
-    …
   smart_test.go
   smart_windows.go
   system.go
@@ -138,17 +88,6 @@ agent/
   systemd_nonlinux_test.go
   systemd_test.go
   test-data/
-    amdgpu.ids
-    container.json
-    container2.json
-    nvtop.json
-    smart/
-      apple_nvme.json
-      nvme0.json
-      scan.json
-      scsi.json
-      sda.json
-    system_info.json
   tools/
   update.go
   utils/
@@ -158,16 +97,10 @@ agent/
     zfs_freebsd.go
     zfs_linux.go
     zfs_unsupported.go
-      1→//go:build !linux && !freebsd
-      …
-      7→func ARCSize() (uint64, error) {
-      …
 beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
-  3→package beszel
-  4→
-  5→import "github.com/blang/semver"
+  …
   7→const (
   8→	// Version is the current version of the application.
   9→	Version = "0.18.7"
@@ -188,6 +121,8 @@ i18n.yml
 internal/
   alerts/
     alerts.go
+      1→// Package alerts handles alert management and delivery.
+      …
     alerts_api.go
     alerts_api_test.go
     alerts_battery_test.go
@@ -232,15 +167,19 @@ internal/
   ghupdate/
     extract.go
     ghupdate.go
-      …
-      42→type HttpClient interface {
-      43→	Do(req *http.Request) (*http.Response, error)
-      44→}
-      …
-      49→type Config struct {
+      1→// Package ghupdate implements a new command to self update the current
+      2→// executable with the latest GitHub release. This is based on PocketBase's
+      3→// ghupdate package with modifications.
       …
     ghupdate_test.go
     release.go
+      …
+      8→type releaseAsset struct {
+      …
+      15→type release struct {
+      …
+      26→func (r *release) findAssetBySuffix(suffix string) (*releaseAsset, error) {
+      …
     selinux.go
       …
       10→func HandleSELinuxContext(path string) error {
@@ -254,9 +193,18 @@ internal/
     api.go
     api_test.go
     collections.go
+      …
+      8→type collectionRules struct {
+      …
+      17→func setCollectionAuthSettings(app core.App) error {
+      …
+      115→func applyCollectionRules(app core.App, collectionNames []string, rules collectionRules) error {
+      …
     collections_test.go
     config/
       config.go
+        1→// Package config provides functions for syncing systems with the config.yml file
+        …
       config_test.go
     expirymap/
       expirymap.go
@@ -265,11 +213,35 @@ internal/
       heartbeat.go
       heartbeat_test.go
     hub.go
+      1→// Package hub handles updating systems and serving the web UI.
+      …
     hub_test.go
     hub_test_helpers.go
     server.go
+      …
+      13→type PublicAppInfo struct {
+      14→	BASE_PATH           string
+      15→	HUB_VERSION         string
+      16→	HUB_URL             string
+      17→	OAUTH_DISABLE_POPUP bool `json:"OAUTH_DISABLE_POPUP,omitempty"`
+      18→}
+      …
+      21→func modifyIndexHTML(hub *Hub, html []byte) string {
+      …
+      31→func getPublicAppInfo(hub *Hub) PublicAppInfo {
+      …
     server_development.go
+      …
+      18→type responseModifier struct {
+      …
+      23→func (rm *responseModifier) RoundTrip(req *http.Request) (*http.Response, error) {
+      …
+      48→func (h *Hub) startServer(se *core.ServeEvent) error {
+      …
     server_production.go
+      …
+      18→func (h *Hub) startServer(se *core.ServeEvent) error {
+      …
     systems/
       system.go
       system_manager.go
@@ -279,11 +251,16 @@ internal/
       system_systemd_test.go
       system_test.go
       systems_production.go
+        …
+        9→func backgroundSmartFetchEnabled() bool { return true }
       systems_test.go
       systems_test_helpers.go
     transport/
       ssh.go
       transport.go
+        1→// Package transport provides a unified abstraction for hub-agent communication
+        2→// over different transports (WebSocket, SSH).
+        …
       websocket.go
     update.go
       …
@@ -293,6 +270,10 @@ internal/
       …
     utils/
       utils.go
+        1→// Package utils provides utility functions for the hub.
+        …
+        7→func GetEnv(key string) (value string, exists bool) {
+        …
     ws/
       handlers.go
       request_manager.go
@@ -300,14 +281,27 @@ internal/
       ws.go
       ws_test.go
       ws_test_helpers.go
+        …
+        6→func (rm *RequestManager) GetPendingCount() int {
+        …
   migrations/
   records/
     records.go
+      1→// Package records handles creating longer records and deleting old records.
+      …
     records_averaging_test.go
     records_deletion.go
     records_deletion_test.go
     records_test.go
     records_test_helpers.go
+      …
+      10→func DeleteOldSystemStats(app core.App) error {
+      …
+      15→func DeleteOldAlertsHistory(app core.App, countToKeep, countBeforeDeletion int) error {
+      …
+      20→func TwoDecimals(value float64) float64 {
+      21→	return twoDecimals(value)
+      …
   site/
     .gitignore
     .prettierrc
@@ -315,6 +309,7 @@ internal/
     bun.lock
     components.json
     embed.go
+      1→// Package site handles the Beszel frontend embedding.
       …
       10→var distDir embed.FS
       …
@@ -444,14 +439,14 @@ internal/
   tests/
   users/
     users.go
+      1→// Package users handles user-related custom functionality.
+      …
 readme.md
   1→# Beszel
   2→
   3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
   …
   14→## Features
-  16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
-  17→- **Simple**: Easy setup with little manual configuration required.
   …
   25→## Architecture
   …
