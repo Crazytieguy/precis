@@ -416,7 +416,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
         return false;
     };
     let stem = stem.replace('-', "_");
-    if [
+    [
         "CHANGELOG",
         "CHANGES",
         "HISTORY",
@@ -433,10 +433,6 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     ]
     .iter()
     .any(|s| stem.eq_ignore_ascii_case(s))
-    {
-        return true;
-    }
-    false
 }
 
 /// Default cost-side concavity for the scheduling ratio — gentle so

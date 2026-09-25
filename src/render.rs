@@ -5,10 +5,7 @@
 //!
 //! Span materialization happens here — walkers emit `Span { path, start,
 //! end, render }`, the tree stores per-line `(owner: BatchId, render: Render)`
-//! records, and `render()` reads source to produce the final text. This
-//! decouples the walker authoring substrate from the rendering pipeline
-//! and lets the NS schema reuse the same `Span`/`Render` types without any
-//! materialization going through a separate code path.
+//! records, and `render()` reads source to produce the final text.
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, BTreeSet, HashMap};
@@ -210,10 +207,6 @@ impl RenderedTree {
             file_empty: RefCell::new(HashMap::new()),
             dir_filter,
         }
-    }
-
-    pub fn root(&self) -> &Path {
-        &self.root
     }
 
     /// Marginal cost of applying `content` — exact tokens.

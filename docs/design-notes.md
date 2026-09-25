@@ -140,13 +140,6 @@ through `WalkCtx`. Decisions worth not re-litigating:
   structure; the parity test in `src/fs_util.rs` encodes it as the single
   expected difference from git.
 
-Two gotchas in this shape:
-
-- **A scan that starts below the walk root must ask about ancestors.** A
-  directory-only pattern (`examples/`) matches the directory, not the
-  files in it, so a traversal seeded inside an ignored directory reads
-  the whole subtree unless it uses
-  `DirFilter::excludes_tree` at its entry point.
 - **A directory can be ignored by a pattern inside it** (a `.gitignore`
   holding `*`). `DirFilter::hides_everything_in` answers this
   recursively. Use git's walk (`git ls-files --others

@@ -16,9 +16,10 @@
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
+use crate::fs_util::list_dir;
 
 use super::{
-    WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content, path_depth_factor,
+    WalkCtx, gated_read_source, gated_whole_file_content, path_depth_factor,
     single_file_lines_content,
 };
 

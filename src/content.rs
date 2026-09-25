@@ -125,8 +125,7 @@ pub(crate) fn with_truncate_regex<R>(
 /// `(path, line)`. Within one batch, spans must be disjoint —
 /// `OverlappingSpans` is a validator-caught violation; this fn
 /// `debug_assert`s on overlap and falls through to last-write-wins for
-/// release-build robustness. Shared by `render::cost_spans` /
-/// `render::apply_spans` / `divergence::graded_atoms`.
+/// release-build robustness.
 pub(crate) fn explode_spans(spans: &[Span]) -> Vec<(PathBuf, usize, Render)> {
     let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
     for span in spans {

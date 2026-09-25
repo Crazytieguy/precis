@@ -15,11 +15,11 @@ pub mod tokenizer;
 pub mod value;
 pub mod walker;
 
-pub use batch::{Batch, BatchKey};
-pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
-pub use fs_util::{DirFilter, EntryKind, list_dir};
-pub use render::{Cost, RenderedTree, SourceCache, char_units};
+pub use render::char_units;
 
+use content::BatchContent;
+use fs_util::DirFilter;
+use render::{RenderedTree, SourceCache};
 use scheduler::Scheduler;
 use walker::FsWalker;
 

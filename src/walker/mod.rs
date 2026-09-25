@@ -4,11 +4,7 @@
 //! predecessor edge, fully-built `BatchContent`, and a scalar `value`. The
 //! scheduler ranks emitted batches by `value / cost^k`, gates by
 //! predecessor scheduling, and applies content to the rendered tree.
-//!
-//! Walkers are encouraged to keep emission as cheap as feasible (the
-//! scheduler does the heavy lifting around ranking and applying), but
-//! parsing in `expand` is fine — every per-file parse is cached on
-//! [`WalkCtx`] and shared across all batches that touch the same file.
+//! Per-file parses are cached on [`WalkCtx`].
 
 use std::cell::{OnceCell, RefCell};
 use std::collections::{BTreeSet, HashMap};

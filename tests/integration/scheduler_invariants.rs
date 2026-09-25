@@ -445,11 +445,8 @@ fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
 #[test]
 fn scheduler_invariants_dependent_absorbed_before_predecessor() {
     // Predecessor keys are symbolic: a walker may emit a dependent
-    // before the batch that owns the predecessor key. The train
-    // member-count bookkeeping behind breadth pressure parks such
-    // dependents under a pseudo-root and reparents when the key
-    // materializes — this exercises that path end-to-end (absorb
-    // order: doc first, its `Decl` predecessor second).
+    // before the batch that owns the predecessor key (absorb order
+    // here: doc first, its `Decl` predecessor second).
     struct DependentFirst;
     impl Walker for DependentFirst {
         fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {

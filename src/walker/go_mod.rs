@@ -4,9 +4,10 @@
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, GoModKey};
+use crate::fs_util::list_dir;
 use crate::value::mix_signals;
 
-use super::{WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
+use super::{WalkCtx, path_depth_factor, single_file_lines_content};
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();

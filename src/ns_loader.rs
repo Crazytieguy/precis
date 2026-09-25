@@ -98,9 +98,8 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
 }
 
 fn resolve_fs_group(group: &FsGroup, fixture_root: &Path, filter: &DirFilter) -> Result<FsGroup> {
-    // Fs parents must stay inside the fixture root. Surfaces via
-    // FsResolveFailed so a frozen NS with an escaping parent fails
-    // divergence scoring loudly.
+    // Fs parents must stay inside the fixture root, so a frozen NS with
+    // an escaping parent fails divergence scoring loudly.
     if path_escapes_root(&group.parent) {
         bail!(
             "NS fs group parent must be fixture-root-relative: {}",

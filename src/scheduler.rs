@@ -46,11 +46,6 @@ pub struct ScheduledBatchRecord {
 pub struct RunReport {
     pub tree: RenderedTree,
     pub scheduled: Vec<ScheduledBatchRecord>,
-    /// All walker-emitted batches discovered during this run, including
-    /// batches that never made it into the prefix-monotone schedule. A
-    /// seed degraded by `Scheduler::schedule_partial_seed` appears in
-    /// the form it was scheduled in, not the form the walker emitted.
-    pub candidates: Vec<Batch>,
 }
 
 pub struct Scheduler<W: Walker> {
@@ -257,7 +252,6 @@ impl<W: Walker> Scheduler<W> {
         RunReport {
             tree: self.tree,
             scheduled,
-            candidates: entries,
         }
     }
 

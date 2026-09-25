@@ -12,8 +12,7 @@ use std::{
 
 use crate::batch::{Batch, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
-pub use crate::fs_util::list_dir;
-use crate::fs_util::{DirFilter, EntryKind};
+use crate::fs_util::{DirFilter, EntryKind, list_dir};
 use crate::value::mix_signals;
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
@@ -40,8 +39,6 @@ pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     }
     out
 }
-
-// ---- additional helpers ----
 
 /// Files in `dir` (non-recursive) whose extension matches.
 pub fn files_with_extension(dir: &Path, ext: &str, ctx: &WalkCtx) -> Vec<PathBuf> {
@@ -76,61 +73,6 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec
         .collect();
     out.sort();
     out
-}
-
-/// Recursively walk `dir` for files with `ext` (case-insensitive).
-///
-/// Callers hand this a directory they resolved themselves rather than
-/// one the listing walk reached, so `dir` itself has to clear the
-/// filter — ancestors included, since a directory-only ignore pattern
-/// matches the directory and not the files inside it.
-pub fn files_with_extension_recursive(dir: &Path, ext: &str, ctx: &WalkCtx) -> Vec<PathBuf> {
-    if ctx.dir_filter().excludes_tree(dir, true) {
-        return Vec::new();
-    }
-    let mut out = Vec::new();
-    walk_files_recursive(dir, dir, ext, ctx, &mut out);
-    out.sort();
-    out
-}
-
-fn walk_files_recursive(
-    dir: &Path,
-    traversal_root: &Path,
-    ext: &str,
-    ctx: &WalkCtx,
-    out: &mut Vec<PathBuf>,
-) {
-    let Ok(read_dir) = std::fs::read_dir(dir) else {
-        return;
-    };
-    for entry in read_dir.flatten() {
-        // Non-following entry types, for the reason spelled out in
-        // `files_with_any_extension`: `Path::is_dir`/`is_file` resolve
-        // links, so this walk would otherwise descend a `docs -> /etc`
-        // link straight out of the root — and a `link -> ..` one would
-        // never come back at all. Links are listed by
-        // `crate::fs_util::list_dir` when they stay inside the root;
-        // they are never a traversal edge.
-        let Ok(file_type) = entry.file_type() else {
-            continue;
-        };
-        let path = entry.path();
-        if file_type.is_dir() {
-            if should_recurse_dir(&path, traversal_root) && !ctx.dir_filter().excludes(&path, true)
-            {
-                walk_files_recursive(&path, traversal_root, ext, ctx, out);
-            }
-        } else if file_type.is_file()
-            && path
-                .extension()
-                .and_then(|e| e.to_str())
-                .is_some_and(|actual| actual.eq_ignore_ascii_case(ext))
-            && !ctx.dir_filter().excludes(&path, false)
-        {
-            out.push(path);
-        }
-    }
 }
 
 fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
@@ -632,9 +574,6 @@ fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
     };
-    // Lossy, matching the pre-consolidation call sites: a non-UTF-8
-    // directory name is still traversed unless its lossy form is on the
-    // skip list.
     let name = name.to_string_lossy();
     if name != "build" {
         return !crate::fs_util::should_skip_dir(&name);
@@ -698,27 +637,19 @@ mod tests {
         std::fs::write(root_build.join("probe.rs"), "pub fn probe() {}\n").unwrap();
         std::fs::write(target_build.join("mod.rs"), "pub fn generated() {}\n").unwrap();
 
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let before_build_script = files_with_extension_recursive(root, "rs", &ctx);
-        assert!(before_build_script.contains(&source_build.join("mod.rs")));
-        assert!(before_build_script.contains(&source_build_child.join("compile.rs")));
-        assert!(!before_build_script.contains(&root_build.join("probe.rs")));
-        assert!(!before_build_script.contains(&target_build.join("mod.rs")));
+        let lists = |dir: &Path, listed: &Path| {
+            let ctx = WalkCtx::new(root.to_path_buf());
+            expand_subdirs(dir, &ctx).iter().any(|batch| {
+                matches!(&batch.key, BatchKey::Fs(FsKey::DirListing { dir }) if dir == listed)
+            })
+        };
+        assert!(lists(&root.join("src"), &source_build));
+        assert!(!lists(root, &root_build));
+        assert!(!lists(root, &root.join("target")));
 
         std::fs::write(root.join("build.rs"), "fn main() {}\n").unwrap();
-        let after_build_script = files_with_extension_recursive(root, "rs", &ctx);
-        assert!(after_build_script.contains(&root_build.join("probe.rs")));
-        assert!(!after_build_script.contains(&target_build.join("mod.rs")));
-
-        let root_children = expand_subdirs(root, &ctx);
-        assert!(root_children.iter().any(|batch| matches!(
-            &batch.key,
-            BatchKey::Fs(FsKey::DirListing { dir }) if dir == &root_build
-        )));
-        assert!(!root_children.iter().any(|batch| matches!(
-            &batch.key,
-            BatchKey::Fs(FsKey::DirListing { dir }) if dir.starts_with(root.join("target"))
-        )));
+        assert!(lists(root, &root_build));
+        assert!(!lists(root, &root.join("target")));
     }
 
     /// A module's `src/` promotes a catalog partition but not a small

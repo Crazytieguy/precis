@@ -134,8 +134,7 @@ impl DirFilter {
     ///   reproducible.
     ///
     /// Directories below a repo root that aren't repo roots themselves
-    /// fall back to the walker's heavy-directory blocklist
-    /// (`walker::fs::should_skip_dir`).
+    /// fall back to the heavy-directory blocklist ([`should_skip_dir`]).
     ///
     /// Matching is pattern-only: the index is never consulted, so a
     /// force-added tracked file matching an ignore pattern is hidden
@@ -298,40 +297,6 @@ impl DirFilter {
             && surviving_subdirs
                 .iter()
                 .all(|child| self.hides_everything_in(child))
-    }
-
-    /// [`DirFilter::excludes`] extended to `path`'s ancestors — true
-    /// when `path` sits anywhere under an excluded directory.
-    ///
-    /// The listing walk doesn't need this: it prunes an ignored
-    /// directory before descending, so a surviving entry's ancestors are
-    /// known visible. Scans that *start* somewhere other than the walk
-    /// root do (`walker::rust`'s Cargo source dirs jump straight to
-    /// `<package>/examples`), and without it a directory-only pattern
-    /// like `examples/` hides the directory while every file under it
-    /// still gets read and parsed. Costs one match per ancestor, so use
-    /// it at traversal entry points, not per directory entry.
-    pub fn excludes_tree(&self, path: &Path, is_dir: bool) -> bool {
-        if self.only_file.is_some() {
-            return self.excludes(path, is_dir);
-        }
-        if self.repo.is_none() {
-            return false;
-        }
-        if self.excludes(path, is_dir) {
-            return true;
-        }
-        let mut dir = path.parent();
-        while let Some(current) = dir {
-            if current == self.root || !current.starts_with(&self.root) {
-                return false;
-            }
-            if self.excludes(current, true) {
-                return true;
-            }
-            dir = current.parent();
-        }
-        false
     }
 
     /// True when `path` must not appear in precis output.
@@ -715,27 +680,6 @@ mod tests {
             names_in(&root.join("src"), &filter),
             [".gitignore", "lib.rs", "trace.log"]
         );
-    }
-
-    /// A directory-only pattern hides the directory but matches none of
-    /// the files inside it, so scans that start below the walk root have
-    /// to ask about ancestors.
-    #[test]
-    fn fs_util_filter_excludes_tree_rejects_paths_under_an_ignored_dir() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        std::fs::create_dir(root.join(GIT_DIR)).unwrap();
-        std::fs::write(root.join(".gitignore"), "examples/\n").unwrap();
-        std::fs::create_dir_all(root.join("examples/nested")).unwrap();
-        std::fs::write(root.join("examples/nested/demo.rs"), "").unwrap();
-
-        let filter = DirFilter::without_global_excludes(root);
-        let demo = root.join("examples/nested/demo.rs");
-        assert!(!filter.excludes(&demo, false));
-        assert!(filter.excludes_tree(&demo, false));
-        assert!(filter.excludes_tree(&root.join("examples"), true));
-        // The walk root itself is always visible, ignored or not.
-        assert!(!filter.excludes_tree(root, true));
     }
 
     /// The self-ignoring-directory idiom: a scratch dir whose own
