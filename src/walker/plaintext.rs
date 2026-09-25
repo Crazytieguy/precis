@@ -433,19 +433,21 @@ const SOURCE_TEXT_BOILERPLATE_MARKERS: &[&str] = &[
     "type: ignore",
 ];
 
-/// Classify one trimmed surface line. `None` drops it.
-fn classify_surface_line(trimmed: &str) -> Option<SurfaceLine> {
+/// Classify one trimmed surface line, `in_block_comment` when it sits
+/// inside a comment opened on an earlier line. `None` drops it.
+fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<SurfaceLine> {
     if is_block_closer(trimmed) || trimmed.starts_with("#!") {
         return None;
     }
     let lower = trimmed.to_ascii_lowercase();
-    if SOURCE_TEXT_IMPORT_PREFIXES
-        .iter()
-        .any(|prefix| lower.starts_with(prefix))
+    if !in_block_comment
+        && SOURCE_TEXT_IMPORT_PREFIXES
+            .iter()
+            .any(|prefix| lower.starts_with(prefix))
     {
         return Some(SurfaceLine::Import);
     }
-    if !is_comment_line(trimmed) {
+    if !in_block_comment && !is_comment_line(trimmed) {
         return Some(SurfaceLine::Decl);
     }
     if SOURCE_TEXT_BOILERPLATE_MARKERS
@@ -468,7 +470,13 @@ fn is_block_closer(trimmed: &str) -> bool {
 /// Comment-opener detection across the covered languages. Ambiguous
 /// markers require a following space (or end of line) so CSS `#id {`
 /// and C `#include` are not read as comments.
+/// `#region` / `#endregion` (C#, Visual Basic, PHP) name a fold for the
+/// editor and read as comments too.
 fn is_comment_line(trimmed: &str) -> bool {
+    let lower = trimmed.to_ascii_lowercase();
+    if lower.starts_with("#region") || lower.starts_with("#endregion") {
+        return true;
+    }
     for marker in ["//", "/*", "<!--", "\"\"\"", "'''"] {
         if trimmed.starts_with(marker) {
             return true;
@@ -505,13 +513,13 @@ fn comment_text_is_empty(trimmed: &str) -> bool {
 fn boilerplate_banner_end(source: &str) -> usize {
     let mut block: Vec<&str> = Vec::new();
     let mut reached_content = false;
-    for line in source.lines() {
+    for (line, in_block_comment) in source.lines().zip(block_comment_interiors(source)) {
         let trimmed = line.trim();
         if trimmed.is_empty() || trimmed.starts_with("#!") {
             block.push(trimmed);
             continue;
         }
-        if !is_comment_line(trimmed) {
+        if !in_block_comment && !is_comment_line(trimmed) {
             reached_content = true;
             break;
         }
@@ -530,6 +538,27 @@ fn boilerplate_banner_end(source: &str) -> usize {
             .any(|marker| lower.contains(marker))
     });
     if is_banner { block.len() } else { 0 }
+}
+
+/// Per line, whether it sits inside a `/* … */` comment opened on an
+/// earlier line — interior lines carry no comment marker of their own.
+/// Only a line that starts with `/*` opens one, so a glob in a shell
+/// script (`rm build/*`) is not read as a comment.
+fn block_comment_interiors(source: &str) -> Vec<bool> {
+    let mut inside = false;
+    source
+        .lines()
+        .map(|line| {
+            let trimmed = line.trim();
+            let interior = inside;
+            if inside {
+                inside = !trimmed.contains("*/");
+            } else if let Some(rest) = trimmed.strip_prefix("/*") {
+                inside = !rest.contains("*/");
+            }
+            interior
+        })
+        .collect()
 }
 
 /// The file's **declaration surface**: the lines at the shallowest
@@ -562,12 +591,13 @@ fn boilerplate_banner_end(source: &str) -> usize {
 fn declaration_surface(source: &str) -> Vec<usize> {
     let banner_end = boilerplate_banner_end(source);
     let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
-    for (index, line) in source.lines().enumerate().skip(banner_end) {
+    let lines = source.lines().zip(block_comment_interiors(source));
+    for (index, (line, in_block_comment)) in lines.enumerate().skip(banner_end) {
         let trimmed = line.trim();
         if trimmed.is_empty() || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS {
             continue;
         }
-        let Some(class) = classify_surface_line(trimmed) else {
+        let Some(class) = classify_surface_line(trimmed, in_block_comment) else {
             continue;
         };
         let indent = line.len() - line.trim_start().len();
@@ -918,6 +948,19 @@ mod tests {
             SOURCE_TEXT_IMPORT_LINES,
             "imports not damped: {text:?}"
         );
+    }
+
+    /// A license inside a `/* … */` whose interior lines carry no `*`, and
+    /// inside an editor fold region, is still a banner.
+    #[test]
+    fn plaintext_source_text_surface_skips_a_folded_block_comment_banner() {
+        let csharp = "#region License Information (GPL v3)\n\n/*\n    ShareX - screenshots\n\
+                      Copyright (c) 2007-2026 ShareX Team\n\n    This program is free software.\n\
+                      */\n\n#endregion License Information (GPL v3)\n\n\
+                      using System;\n\nnamespace ShareX\n";
+        let lines: Vec<&str> = csharp.lines().collect();
+        let text: Vec<&str> = surface_of(csharp).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(text, vec!["using System;", "namespace ShareX"]);
     }
 
     #[test]
