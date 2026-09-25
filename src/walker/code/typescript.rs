@@ -934,8 +934,9 @@ fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>)
     }
 }
 
-/// Head through the row opening `block`, plus the closing row; one body
-/// item per entry of `block`. Without a block, all head.
+/// Head through the row opening `block`, plus the rows from its closing
+/// row through the declaration's end; one body item per entry of `block`.
+/// Without a block, all head.
 fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Node>) -> Parts {
     let Some(block) = block else {
         return Parts {
@@ -948,25 +949,21 @@ fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Nod
     };
     let open_row = block.start_position().row + 1;
     let body = entry_items(file, block, open_row);
-    let mut head: Vec<usize> = (span.start..=open_row).collect();
-    push_closing_row(&mut head, span, open_row, &body);
+    let last_body_row = body
+        .iter()
+        .flat_map(|item| item.rows.iter().copied())
+        .max()
+        .unwrap_or(open_row);
+    let suffix_start = Span::of(file, block).end.max(last_body_row + 1);
+    let head: Vec<usize> = (span.start..=open_row)
+        .chain(suffix_start.max(open_row + 1)..=span.end)
+        .collect();
     Parts {
         name_rows,
         head,
         body,
         shape: Shape::Whole,
         members: Vec::new(),
-    }
-}
-
-fn push_closing_row(head: &mut Vec<usize>, span: Span, open_row: usize, body: &[Item]) {
-    let last_body_row = body
-        .iter()
-        .flat_map(|item| item.rows.iter().copied())
-        .max()
-        .unwrap_or(open_row);
-    if span.end > last_body_row.max(open_row) {
-        head.push(span.end);
     }
 }
 
@@ -1402,6 +1399,12 @@ export type Id = string | number;
 export type Props = {
   open: boolean;
 } & (A | B);
+export type Picked = {
+  open: boolean;
+} & Pick<
+  Base,
+  'id'
+>;
 ",
         );
         assert_eq!(
@@ -1412,6 +1415,7 @@ export type Props = {
                 "Public Whole name [7] head [7, 10] doc [] body [[8], [9]]",
                 "Public Whole name [11] head [11] doc [] body []",
                 "Public Whole name [12] head [12, 14] doc [] body [[13]]",
+                "Public Whole name [15] head [15, 17, 18, 19, 20] doc [] body [[16]]",
             ]
         );
     }
