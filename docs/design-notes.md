@@ -202,8 +202,8 @@ must not undo:
 
 ## Threads
 
-- **Only parsing is parallel.** `WalkCtx::parse_trees` parses a
-  directory's files on scoped worker threads into the tree cache;
+- **Only parsing is parallel.** `WalkCtx::parse_each` parses a
+  directory's files on scoped threads, one group per core at a time;
   everything that decides output runs on the main thread in walk order,
   so output is independent of thread timing only while a parse stays a
   pure function of the file.
@@ -213,6 +213,31 @@ must not undo:
   starts it on a background thread and runs the essential-source scan
   meanwhile, unless the seed listing's approximate cost already exceeds
   the budget.
+
+## Resource bounds
+
+Measured on the 186-repo robustness sweep (`ignore/robust/`), not the
+corpus, which none of these bounds touch.
+
+- **Parse trees live only while their directory expands.** A tree is
+  several times its source's size and nothing reads one after its
+  file's batches are built, so none is cached; parsing a directory one
+  group per core at a time keeps a directory's trees from all being
+  alive at once. Source text stays cached: rendering and cost probes
+  read it.
+- **Nothing over 8 MiB is parsed** (`PARSE_BYTE_CAP`): such a file yields
+  no batches, like a generated or minified one. The sweep's largest
+  hand-written single-file library is `miniaudio.h` at 4.1 MB; a 25.9 MB
+  generated `parser.c` cost 900 MB and seconds.
+- **Whole-tree probes read at most 20k entries per run**
+  (`PROBE_ENTRY_CAP`): the spine survey and the source-inventory counts
+  look below what the summary shows, and on a tree with little source
+  (a home directory, `~/projects`) nothing else bounded them; a non-git
+  `~/projects` took 49 s. The spine survey also stops as soon as it has
+  seen more source than a spine could hold its share of, which is
+  exact. `hides_everything_in` is deliberately uncapped: its recursion
+  only descends through directories with nothing visible, and a capped
+  answer lists every such directory as `(empty)` rows.
 
 ## Open items
 
