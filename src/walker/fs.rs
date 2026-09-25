@@ -29,8 +29,9 @@ pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for (name, kind) in children.iter() {
         if matches!(kind, EntryKind::Directory)
-            && !crate::fs_util::should_skip_dir(name)
-            && let Some(batch) = dir_listing_batch(dir.join(name), ctx)
+            && let child = dir.join(name)
+            && should_recurse_dir(&child, ctx.root())
+            && let Some(batch) = dir_listing_batch(child, ctx)
         {
             out.push(batch);
         }
@@ -352,4 +353,90 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
     // act like entrypoints; floor non-essential at 0.5.
     let depth = ctx.depth_from_root(dir).min(2);
     crate::value::depth_factor(depth) * non_essential.max(0.5)
+}
+
+/// Path-aware exception to the name-only heavy-directory policy. A checked-in
+/// Rust module may legitimately be named `build/`; generated build output does
+/// not gain traversal merely by containing arbitrary artifacts.
+fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
+    let Some(name) = dir.file_name() else {
+        return false;
+    };
+    let name = name.to_string_lossy();
+    if name != "build" {
+        return !crate::fs_util::should_skip_dir(&name);
+    }
+    is_owned_rust_build_dir(dir, traversal_root)
+}
+
+/// A `build/` directory is plausibly project-owned Rust source when it has an
+/// immediate Rust file and either lives below a conventional source tree or is
+/// explicitly paired with the package's `build.rs` script.
+fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
+    // Existence check only — stop at the first Rust file instead of
+    // collecting and sorting the whole listing (this runs for every
+    // `build/` dir the traversal touches).
+    let has_rust_file = std::fs::read_dir(dir).is_ok_and(|entries| {
+        entries.flatten().any(|entry| {
+            let path = entry.path();
+            path.extension()
+                .and_then(|ext| ext.to_str())
+                .is_some_and(|ext| ext.eq_ignore_ascii_case("rs"))
+                && path.is_file()
+        })
+    });
+    if !has_rust_file {
+        return false;
+    }
+    let Some(parent) = dir.parent() else {
+        return false;
+    };
+    if parent.join("build.rs").is_file() {
+        return true;
+    }
+    dir.ancestors()
+        .skip(1)
+        .take_while(|ancestor| ancestor.starts_with(traversal_root))
+        .any(is_source_dir)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::batch::BatchKey;
+
+    #[test]
+    fn fs_owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let source_build = root.join("src/build");
+        let source_build_child = source_build.join("compile");
+        let root_build = root.join("build");
+        let target_build = root.join("target/debug/build/generated/src/build");
+        std::fs::create_dir_all(&source_build_child).unwrap();
+        std::fs::create_dir_all(&root_build).unwrap();
+        std::fs::create_dir_all(&target_build).unwrap();
+        std::fs::write(source_build.join("mod.rs"), "pub mod compile;\n").unwrap();
+        std::fs::write(
+            source_build_child.join("compile.rs"),
+            "pub fn compile() {}\n",
+        )
+        .unwrap();
+        std::fs::write(root_build.join("probe.rs"), "pub fn probe() {}\n").unwrap();
+        std::fs::write(target_build.join("mod.rs"), "pub fn generated() {}\n").unwrap();
+
+        let lists = |dir: &Path, listed: &Path| {
+            let ctx = WalkCtx::new(root.to_path_buf());
+            expand_subdirs(dir, &ctx).iter().any(|batch| {
+                matches!(&batch.key, BatchKey::Fs(FsKey::DirListing { dir }) if dir == listed)
+            })
+        };
+        assert!(lists(&root.join("src"), &source_build));
+        assert!(!lists(root, &root_build));
+        assert!(!lists(root, &root.join("target")));
+
+        std::fs::write(root.join("build.rs"), "fn main() {}\n").unwrap();
+        assert!(lists(root, &root_build));
+        assert!(!lists(root, &root.join("target")));
+    }
 }

@@ -94,6 +94,28 @@ README.md
   211→## Comparison to anyhow
   …
 build/
+  probe.rs
+    …
+    11→struct MyError(Thing);
+    12→struct Thing;
+    13→
+    14→impl Debug for MyError {
+    15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    16→        unimplemented!()
+    …
+    18→}
+    20→impl Display for MyError {
+    21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    22→        unimplemented!()
+    …
+    24→}
+    26→impl Error for MyError {
+    27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    28→        request.provide_ref(&self.0);
+    …
+    30→}
+    …
+    33→const _: Option<&str> = option_env!("RUSTC_BOOTSTRAP");
 build.rs
   …
   10→const PRIVATE: &str = "\
@@ -141,32 +163,14 @@ impl/
       19→    pub fields: Vec<Field<'a>>,
       20→}
       22→pub struct Enum<'a> {
-      23→    pub attrs: Attrs<'a>,
-      24→    pub ident: Ident,
-      25→    pub generics: &'a Generics,
-      26→    pub variants: Vec<Variant<'a>>,
-      27→}
+      …
       29→pub struct Variant<'a> {
       30→    pub original: &'a syn::Variant,
-      31→    pub attrs: Attrs<'a>,
-      32→    pub ident: Ident,
-      33→    pub fields: Vec<Field<'a>>,
-      34→}
-      36→pub struct Field<'a> {
-      37→    pub original: &'a syn::Field,
-      38→    pub attrs: Attrs<'a>,
-      39→    pub member: MemberUnraw,
-      40→    pub ty: &'a Type,
       …
-      44→#[derive(Copy, Clone)]
+      36→pub struct Field<'a> {
+      …
       45→pub enum ContainerKind {
-      46→    Struct,
-      47→    TupleStruct,
-      48→    UnitStruct,
-      49→    StructVariant,
-      50→    TupleVariant,
-      51→    UnitVariant,
-      52→}
+      …
       54→impl<'a> Input<'a> {
       55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
       …
