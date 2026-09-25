@@ -1314,8 +1314,11 @@ fn section_title_core(section: Node, source: &str) -> String {
 
 /// A README's back matter: who wrote, funds, maintains or may contribute
 /// to the project, and under what license — never what the code does.
-/// These sections emit no batch; the outline still names them.
+/// These sections emit no batch; the outline still names them. A title
+/// may name its object (`Contributing to X`, `Support this project`).
 fn is_appendix_title_core(core: &str) -> bool {
+    let core = core.split_once(" to ").map_or(core, |(head, _)| head);
+    let core = core.strip_suffix(" this project").unwrap_or(core);
     matches!(
         core,
         "license"
