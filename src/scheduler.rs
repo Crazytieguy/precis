@@ -108,10 +108,9 @@ pub struct Scheduler<W: Walker> {
 /// schedule breadth-first — every file's surface before any file's
 /// depth — while cheap follow-up batches (bodies, docs, members)
 /// otherwise out-ratio unopened siblings' surfaces and drive long
-/// same-train dives. Restricting the penalty to depth follow-ups is what
-/// keeps orientation trains (README headline -> outline -> sections)
-/// unpenalized — NS authors sequence those deep by design, and the
-/// blanket variant measured -0.004/-0.006.
+/// same-train dives. The penalty applies only to depth follow-ups
+/// ([`BatchKey::is_depth_follow_up`]), so orientation trains (README
+/// headline -> outline -> sections) stay unpenalized.
 const TRAIN_PRESSURE_K: f64 = 0.15;
 /// Scheduled batches a train may accumulate before pressure applies —
 /// normal decl -> doc -> body depth is wanted; 20-batch dives are not.

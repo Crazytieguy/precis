@@ -180,9 +180,8 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     //      no `index.js`) or generic `src/utils/` are the package's API
     //      partition. They lack a structural anchor (no entrypoint file,
     //      no sibling module), so the inventory probe is what surfaces
-    //      them — without it they fall to the catch-all listing tier and
-    //      their (legitimately) large listing loses every V/C race to
-    //      tiny sibling dirs.
+    //      them — without it their (legitimately) large listing loses
+    //      every V/C race to tiny sibling dirs.
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
     let under_root_source_ancestor = has_source_root_ancestor(dir, ctx);
     // The structural half of that probe — a catalog of source files that
