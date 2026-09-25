@@ -56,24 +56,25 @@ fn scan(source: &str) -> (Vec<usize>, Vec<usize>) {
     for (index, line) in source.lines().enumerate() {
         let row = index + 1;
         let trimmed = line.trim();
+        let code = strip_comment(trimmed).trim_end();
         if let Some((keyword, open_row)) = open_block {
-            if trimmed == ")" {
+            if code == ")" {
                 if !block_rows.is_empty() {
                     kept.push(open_row);
                     kept.append(&mut block_rows);
                     kept.push(row);
                 }
                 open_block = None;
-            } else if keep_block_entry(keyword, trimmed) {
+            } else if !code.is_empty() && keep_block_entry(keyword, trimmed) {
                 block_rows.push(row);
             }
             continue;
         }
-        if let Some(keyword) = block_start(trimmed) {
+        if let Some(keyword) = block_start(code) {
             open_block = Some((keyword, row));
             continue;
         }
-        let first = trimmed.split_whitespace().next().unwrap_or("");
+        let first = code.split_whitespace().next().unwrap_or("");
         if matches!(first, "module" | "go" | "toolchain") {
             identity.push(row);
         }
@@ -90,8 +91,29 @@ fn scan(source: &str) -> (Vec<usize>, Vec<usize>) {
     (identity, kept)
 }
 
-fn block_start(trimmed: &str) -> Option<&str> {
-    let (first, rest) = trimmed.split_once(char::is_whitespace)?;
+/// `line` up to its `//` comment, if any. go.mod strings are `"…"` with
+/// backslash escapes or backquoted raw strings; a `//` inside one is text.
+fn strip_comment(line: &str) -> &str {
+    let mut quote = None;
+    let mut escaped = false;
+    let mut previous_slash = false;
+    for (index, c) in line.char_indices() {
+        match quote {
+            Some('"') if escaped => escaped = false,
+            Some('"') if c == '\\' => escaped = true,
+            Some(open) if c == open => quote = None,
+            Some(_) => {}
+            None if c == '/' && previous_slash => return &line[..index - 1],
+            None if c == '"' || c == '`' => quote = Some(c),
+            None => {}
+        }
+        previous_slash = quote.is_none() && c == '/';
+    }
+    line
+}
+
+fn block_start(code: &str) -> Option<&str> {
+    let (first, rest) = code.split_once(char::is_whitespace)?;
     (rest.trim() == "(" && matches!(first, "require" | "replace" | "exclude" | "retract" | "use"))
         .then_some(first)
 }
@@ -104,9 +126,6 @@ fn keep_directive_line(first: &str, trimmed: &str) -> bool {
 }
 
 fn keep_block_entry(block: &str, trimmed: &str) -> bool {
-    if trimmed.is_empty() || trimmed.starts_with("//") {
-        return false;
-    }
     block != "require" || !trimmed.contains("// indirect")
 }
 
@@ -177,5 +196,24 @@ replace github.com/x/y => github.com/forked/y v2.0.0
         src.push_str(")\n\nexclude github.com/bad/module v1.0.0\n");
         let exclude_row = src.lines().count();
         assert_eq!(scan(&src).1, vec![1, exclude_row]);
+    }
+
+    #[test]
+    fn go_mod_recognizes_blocks_with_trailing_comments() {
+        let src = "\
+module example.com/foo
+
+require ( // direct dependencies
+\tgithub.com/x/y v1.0.0
+\tgithub.com/x/z v0.5.0 // indirect
+) // end
+";
+        assert_eq!(scan(src).1, vec![1, 3, 4, 6]);
+    }
+
+    #[test]
+    fn go_mod_keeps_go_work_members_under_a_commented_use_block() {
+        let src = "go 1.22\n\nuse ( // workspace packages\n\t./a\n\t\"./b//c\"\n)\n";
+        assert_eq!(scan(src).1, vec![1, 3, 4, 5, 6]);
     }
 }
