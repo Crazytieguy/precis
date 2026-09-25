@@ -492,9 +492,9 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> Rc<BTreeMap<String, EntryKin
 }
 
 /// Whether [`list_dir`] lists nothing for `path`, reading only as far
-/// as the first entry it would list. Asking this of every child of a
-/// listed directory is what renders an empty child as `(empty)`, and a
-/// full listing of each would read two levels below every listing.
+/// as the first entry it would list. Rendering asks this of every child
+/// directory in a listing to mark the empty ones; a full listing of each
+/// child would read two levels below every listing.
 pub fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
     if let Some(listing) = filter.listings.borrow().get(path) {
         return listing.is_empty();
