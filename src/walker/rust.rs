@@ -265,8 +265,7 @@ impl RustState {
         file: &Path,
         root: &Path,
     ) -> Option<PathBuf> {
-        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
-        if let Some(hit) = self.nearest_member_dir_lookup.borrow().get(&key) {
+        if let Some(hit) = self.nearest_member_dir_lookup.borrow().get(file) {
             return hit.clone();
         }
         let mut result = None;
@@ -286,7 +285,7 @@ impl RustState {
         }
         self.nearest_member_dir_lookup
             .borrow_mut()
-            .insert(key, result.clone());
+            .insert(file.to_path_buf(), result.clone());
         result
     }
 
