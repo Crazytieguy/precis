@@ -152,6 +152,15 @@ language.**
   and otherwise replaces it with a file path and a preview, so the
   default `--char-budget` is derived at runtime from the rendered help
   and the hook's wrapper text (`src/main.rs`).
+- **Under a char budget, batches rank on the budget they draw down
+  faster:** `max(tokens, chars × token_budget / char_budget)`. The
+  plugin's cap binds before its 3,000 tokens (it stopped at about 2,550
+  tokens on large repos), and token-only ranking underpriced deep
+  indentation and long listings exactly there. The rate comes from the
+  two budgets rather than a constant, so the subset property above holds
+  between char-capped runs whose budgets share one chars-per-token rate.
+  The grid runs uncapped, so it can't see this; it was judged on
+  plugin-mode output of external repos.
 
 ## Code engine (`walker::code`)
 

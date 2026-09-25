@@ -333,7 +333,7 @@ impl<W: Walker> Scheduler<W> {
             let entry = &self.entries[id.index()];
             let ratio = score_ratio(
                 entry.value,
-                exact_cost.tokens,
+                self.ranking_cost(exact_cost),
                 entry.key.concavity_exponent(),
             ) * pressure;
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
@@ -346,6 +346,19 @@ impl<W: Walker> Scheduler<W> {
             }
         }
         best.map(|(_, id, cost)| (id, cost))
+    }
+
+    /// Cost a batch ranks at, in tokens. Under a char budget, its chars
+    /// are converted at the budgets' own chars-per-token rate and the
+    /// larger of the two counts: a batch is priced in whichever budget
+    /// it draws down faster.
+    fn ranking_cost(&self, cost: Cost) -> usize {
+        match self.char_budget {
+            Some(cap) if cap > 0 => cost
+                .tokens
+                .max(cost.chars.saturating_mul(self.token_budget).div_ceil(cap)),
+            _ => cost.tokens,
+        }
     }
 
     fn fits(&self, cost: Cost) -> bool {

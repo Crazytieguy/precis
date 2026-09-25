@@ -446,3 +446,63 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
     assert!(rendered.contains("fn foo() {}"), "rendered: {rendered}");
     assert!(rendered.contains("// doc line"), "rendered: {rendered}");
 }
+
+#[test]
+fn scheduler_invariants_char_budget_prices_batches_in_chars() {
+    // Two equal-value batches: `dense.rs` costs more tokens, `wide.rs`
+    // more characters. Tokens alone rank `wide.rs` first; under a char
+    // budget whose chars-per-token rate makes characters the scarcer
+    // resource, `dense.rs` goes first.
+    const DENSE: &str = "a=b+c*d-e/f%g^h&i|j;\n";
+    const WIDE: &str = concat!(
+        "                                                                ",
+        "ok\n",
+    );
+    struct TwoFiles;
+    impl Walker for TwoFiles {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
+            vec![Batch {
+                key: listing_key(),
+                predecessor: None,
+                content: BatchContent::Fs {
+                    groups: vec![FsGroup {
+                        parent: stub_dir(),
+                        entries: FsEntries::Listed(vec!["dense.rs".into(), "wide.rs".into()]),
+                    }],
+                },
+                value: 900.0,
+            }]
+        }
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
+            if !matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
+                return Vec::new();
+            }
+            ["dense.rs", "wide.rs"]
+                .map(|file| Batch {
+                    key: code_key(Rung::Decl, file),
+                    predecessor: None,
+                    content: BatchContent::Lines {
+                        spans: single_span(stub_file(file), 1, 1, Render::Full),
+                    },
+                    value: 500.0,
+                })
+                .into()
+        }
+    }
+
+    assert!(precis::tokenizer::count(WIDE) < precis::tokenizer::count(DENSE));
+    let first_file_scheduled = |char_budget: Option<usize>| {
+        let cache = SourceCache::new();
+        preload(&cache, &stub_file("dense.rs"), DENSE);
+        preload(&cache, &stub_file("wide.rs"), WIDE);
+        let report = Scheduler::with_source_cache(stub_dir(), TwoFiles, 1_000, char_budget, cache)
+            .run_with_report();
+        match &report.scheduled[1].key {
+            BatchKey::Code(key) => key.file.clone(),
+            other => panic!("expected a code batch, got {other:?}"),
+        }
+    };
+    assert_eq!(first_file_scheduled(None), stub_file("wide.rs"));
+    assert_eq!(first_file_scheduled(Some(100_000)), stub_file("wide.rs"));
+    assert_eq!(first_file_scheduled(Some(1_000)), stub_file("dense.rs"));
+}
