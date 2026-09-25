@@ -171,11 +171,11 @@ must not undo:
   splits.
 - **Front doors and program flow are extraction decisions.** A file
   named after its project (a TS package's `lib/<package>.js`, a C
-  repository's `<repo>.h`) is an entrypoint: the depth pin only; front-door
-  file weights on top measured flat or negative (2026-09-25). A
-  program's `main`, and the file's other functions when `main` only
-  delegates, are `Whole` declarations, so their bodies price at the
-  `Decl` tier.
+  repository's `<repo>.h`) is an entrypoint: the depth pin only;
+  front-door file weights on top measured flat or negative (2026-09-25).
+  A program's `main`, and the file's other functions when `main` has at
+  most two top-level statements, are `Whole` declarations, so their
+  bodies price at the `Decl` tier.
 
 ## Threads
 

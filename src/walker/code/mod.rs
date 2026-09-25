@@ -222,9 +222,9 @@ fn is_named_after(path: &Path, dir: &Path) -> bool {
 type ProgramFunction = (usize, usize, bool);
 
 /// A program's control flow is what its entry file is about: its
-/// `main`, and when `main` only delegates (at most two statements), the
-/// file's other functions. They render with their bodies, as `Whole`
-/// declarations closed by their last row.
+/// `main`, and when `main` is short (at most two top-level statements,
+/// however large), the file's other functions. They render with their
+/// bodies, as `Whole` declarations closed by their last row.
 fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
     let Some(&(main, _, _)) = functions.iter().find(|(_, _, is_main)| *is_main) else {
         return;
