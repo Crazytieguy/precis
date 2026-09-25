@@ -132,18 +132,17 @@ Score(3000)=0.713 I=0.906 C=0.561 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 8692 | 21 | Code::CodeKey { rung: Body, file: source/utils/type-guards.ts, decl: 2, sub: 0, line: 49 } |  |  | 0.587 |
 | walker |  | 8713 | 21 | Code::CodeKey { rung: Body, file: source/utils/type-guards.ts, decl: 3, sub: 0, line: 71 } |  |  | 0.587 |
 | walker |  | 8736 | 23 | Code::CodeKey { rung: Body, file: source/utils/type-guards.ts, decl: 1, sub: 0, line: 27 } |  |  | 0.587 |
-| walker |  | 8759 | 23 | Code::CodeKey { rung: Body, file: source/utils/type-guards.ts, decl: 4, sub: 0, line: 98 } |  |  | 0.587 |
 | ns | 8953 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.578 |
 | ns | 9078 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.582 |
-| walker |  | 9154 | 395 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.583 |
+| walker |  | 9131 | 395 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.583 |
 | ns | 9235 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.582 |
 | ns | 9323 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.582 |
 | ns | 9426 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.585 |
 | ns | 9453 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.588 |
-| walker |  | 9515 | 361 | Code::CodeKey { rung: Names, file: source/types/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
-| walker |  | 9588 | 73 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 6, sub: 0, line: 16 } |  |  | 0.602 |
+| walker |  | 9492 | 361 | Code::CodeKey { rung: Names, file: source/types/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 9565 | 73 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 6, sub: 0, line: 16 } |  |  | 0.602 |
 | ns | 9647 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.611 |
-| walker |  | 9725 | 137 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 12, sub: 0, line: 373 } |  |  | 0.621 |
-| walker |  | 9870 | 145 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 11, sub: 0, line: 358 } |  |  | 0.621 |
+| walker |  | 9702 | 137 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 12, sub: 0, line: 373 } |  |  | 0.621 |
+| walker |  | 9847 | 145 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 11, sub: 0, line: 358 } |  |  | 0.621 |
 | ns | 9915 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.612 |
-| walker |  | 9987 | 117 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.615 |
+| walker |  | 9987 | 140 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.615 |

@@ -168,17 +168,16 @@ Score(3000)=0.578 I=0.656 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 9240 | 88 | Code::CodeKey { rung: Decl, file: LineEditor.h, decl: 2, sub: 0, line: 16 } |  |  | 0.466 |
 | walker |  | 9250 | 10 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 5, sub: 0, line: 31 } |  |  | 0.466 |
 | walker |  | 9260 | 10 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 8, sub: 0, line: 42 } |  |  | 0.466 |
-| walker |  | 9270 | 10 | Code::CodeKey { rung: Body, file: LineEditor.h, decl: 7, sub: 0, line: 37 } |  |  | 0.466 |
-| walker |  | 9282 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 3, sub: 0, line: 25 } |  |  | 0.466 |
-| walker |  | 9294 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 7, sub: 0, line: 37 } |  |  | 0.466 |
-| walker |  | 9307 | 13 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 4, sub: 0, line: 28 } |  |  | 0.466 |
-| walker |  | 9321 | 14 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 6, sub: 0, line: 34 } |  |  | 0.466 |
-| walker |  | 9339 | 18 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 9, sub: 0, line: 47 } |  |  | 0.466 |
+| walker |  | 9272 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 3, sub: 0, line: 25 } |  |  | 0.466 |
+| walker |  | 9284 | 12 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 7, sub: 0, line: 37 } |  |  | 0.466 |
+| walker |  | 9297 | 13 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 4, sub: 0, line: 28 } |  |  | 0.466 |
+| walker |  | 9311 | 14 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 6, sub: 0, line: 34 } |  |  | 0.466 |
+| walker |  | 9329 | 18 | Code::CodeKey { rung: Doc, file: LineEditor.h, decl: 9, sub: 0, line: 47 } |  |  | 0.466 |
 | ns | 9351 |  | 147 | dragonflybsd/, solaris/ and unsupported/ contents | 5.3 |  | 0.477 |
-| walker |  | 9470 | 131 | Code::CodeKey { rung: Names, file: MetersPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9460 | 131 | Code::CodeKey { rung: Names, file: MetersPanel.h, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
 | ns | 9474 |  | 123 | generic/ and zfs/: routines shared across platforms | 5.4 |  | 0.484 |
-| walker |  | 9546 | 76 | Code::CodeKey { rung: Decl, file: MetersPanel.h, decl: 3, sub: 0, line: 21 } |  |  | 0.484 |
+| walker |  | 9536 | 76 | Code::CodeKey { rung: Decl, file: MetersPanel.h, decl: 3, sub: 0, line: 21 } |  |  | 0.484 |
 | ns | 9622 |  | 148 | linux/Platform.h: the symbols every platform must provide | 5.5 |  | 0.479 |
 | ns | 9847 |  | 225 | pcp/: the Performance Co-Pilot back-end and its dynamic definition trees | 5.6 |  | 0.496 |
 | ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.493 |
-| walker |  | 10000 | 454 | Code::CodeKey { rung: Names, file: Settings.h, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |
+| walker |  | 9995 | 459 | Code::CodeKey { rung: Names, file: Settings.h, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |

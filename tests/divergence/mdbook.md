@@ -1,4 +1,4 @@
-Score(3000)=0.677 I=0.781 C=0.587 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.725/0.595/0.633/0.677/0.616/0.583/0.582
+Score(3000)=0.677 I=0.781 C=0.587 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.725/0.595/0.633/0.677/0.617/0.582/0.587
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -153,111 +153,116 @@ Score(3000)=0.677 I=0.781 C=0.587 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | ns | 3791 |  | 273 | Shared CLI argument builders | 4.3 |  | 0.647 |
 | walker |  | 3804 | 41 | Code::CodeKey { rung: Names, file: guide/src/for_developers/mdbook-wordcount/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.647 |
 | walker |  | 3860 | 56 | Code::CodeKey { rung: Decl, file: guide/src/for_developers/mdbook-wordcount/src/main.rs, decl: 3, sub: 0, line: 44 } |  |  | 0.647 |
-| walker |  | 3873 | 13 | Code::CodeKey { rung: Body, file: guide/src/for_developers/mdbook-wordcount/src/main.rs, decl: 2, sub: 0, line: 40 } |  |  | 0.647 |
 | ns | 4064 |  | 273 | `init` and `serve` subcommand flags | 4.4 |  | 0.631 |
-| walker |  | 4185 | 312 | Code::CodeKey { rung: Decl, file: guide/src/for_developers/mdbook-wordcount/src/main.rs, decl: 1, sub: 0, line: 12 } |  |  | 0.631 |
-| walker |  | 4203 | 18 | Code::CodeKey { rung: Doc, file: crates/mdbook-driver/src/lib.rs, decl: 1, sub: 0, line: 82 } |  |  | 0.631 |
-| walker |  | 4221 | 18 | Code::CodeKey { rung: Doc, file: crates/mdbook-renderer/src/lib.rs, decl: 7, sub: 0, line: 81 } |  |  | 0.631 |
+| walker |  | 4172 | 312 | Code::CodeKey { rung: Decl, file: guide/src/for_developers/mdbook-wordcount/src/main.rs, decl: 1, sub: 0, line: 12 } |  |  | 0.631 |
+| walker |  | 4190 | 18 | Code::CodeKey { rung: Doc, file: crates/mdbook-driver/src/lib.rs, decl: 1, sub: 0, line: 82 } |  |  | 0.631 |
+| walker |  | 4208 | 18 | Code::CodeKey { rung: Doc, file: crates/mdbook-renderer/src/lib.rs, decl: 7, sub: 0, line: 81 } |  |  | 0.631 |
 | ns | 4296 |  | 232 | `test`, `build`, `clean` and `watch` flags | 4.5 |  | 0.613 |
-| walker |  | 4335 | 114 | Code::CodeKey { rung: Names, file: crates/mdbook-preprocessor/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| walker |  | 4368 | 33 | Code::CodeKey { rung: Decl, file: crates/mdbook-preprocessor/src/lib.rs, decl: 6, sub: 0, line: 68 } |  |  | 0.617 |
-| walker |  | 4442 | 74 | Code::CodeKey { rung: Decl, file: crates/mdbook-preprocessor/src/lib.rs, decl: 1, sub: 0, line: 30 } |  |  | 0.625 |
-| walker |  | 4450 | 8 | Code::CodeKey { rung: Body, file: crates/mdbook-preprocessor/src/lib.rs, decl: 4, sub: 0, line: 42 } |  |  | 0.626 |
-| ns | 4483 |  | 187 | CLI function roster | 4.6 |  | 0.614 |
-| walker |  | 4668 | 218 | Code::CodeKey { rung: Decl, file: crates/mdbook-preprocessor/src/lib.rs, decl: 5, sub: 0, line: 49 } |  |  | 0.621 |
-| walker |  | 4680 | 12 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 7, sub: 0, line: 70 } |  |  | 0.621 |
-| walker |  | 4692 | 12 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 8, sub: 0, line: 82 } |  |  | 0.623 |
-| walker |  | 4706 | 14 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 2, sub: 0, line: 32 } |  |  | 0.626 |
-| ns | 4742 |  | 259 | Clap app assembly and `MDBOOK_LOG` | 4.7 |  | 0.614 |
-| walker |  | 4764 | 58 | Code::CodeKey { rung: Names, file: guide/guide-helper/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.614 |
-| ns | 4811 |  | 69 | `Book` — the tree type | 5.1 |  | 0.611 |
-| walker |  | 4813 | 49 | Code::CodeKey { rung: Decl, file: guide/guide-helper/src/lib.rs, decl: 3, sub: 0, line: 35 } |  |  | 0.611 |
-| walker |  | 4822 | 9 | Code::CodeKey { rung: Body, file: guide/guide-helper/src/lib.rs, decl: 4, sub: 0, line: 36 } |  |  | 0.611 |
-| walker |  | 4832 | 10 | Code::CodeKey { rung: Doc, file: guide/guide-helper/src/lib.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.611 |
-| ns | 4938 |  | 127 | `Book` method roster | 5.2 | 5.1 | 0.606 |
-| walker |  | 4949 | 117 | Code::CodeKey { rung: Names, file: crates/mdbook-compare/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.606 |
-| ns | 5009 |  | 71 | `BookItem` enum | 5.3 |  | 0.601 |
-| walker |  | 5015 | 66 | Code::CodeKey { rung: Decl, file: crates/mdbook-compare/src/main.rs, decl: 1, sub: 0, line: 6 } |  |  | 0.601 |
-| ns | 5150 |  | 141 | `Chapter` — first fields | 5.4 |  | 0.593 |
-| ns | 5335 |  | 185 | `Chapter` — `path` vs `source_path`, `parent_names` | 5.5 | 5.4 | 0.588 |
-| walker |  | 5361 | 346 | Code::CodeKey { rung: Decl, file: crates/mdbook-compare/src/main.rs, decl: 2, sub: 0, line: 14 } |  |  | 0.588 |
-| walker |  | 5396 | 35 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/theme/searcher.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.588 |
-| ns | 5450 |  | 115 | `Chapter` methods, `SectionNumber`, `BookItems` | 5.6 |  | 0.584 |
-| ns | 5593 |  | 143 | `Config` — the `book.toml` root | 6.1 |  | 0.577 |
-| walker |  | 5600 | 204 | Code::CodeKey { rung: Names, file: crates/mdbook-summary/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
-| walker |  | 5618 | 18 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 6, sub: 0, line: 108 } |  |  | 0.578 |
-| walker |  | 5640 | 22 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 9, sub: 0, line: 140 } |  |  | 0.578 |
-| walker |  | 5677 | 37 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 4, sub: 0, line: 96 } |  |  | 0.578 |
-| ns | 5731 |  | 138 | `Config` method roster | 6.2 | 6.1 | 0.574 |
-| walker |  | 5767 | 90 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 8, sub: 0, line: 120 } |  |  | 0.580 |
-| walker |  | 5875 | 108 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 11, sub: 0, line: 173 } |  |  | 0.580 |
-| ns | 5944 |  | 213 | `[book]`, `[build]` and `[rust]` keys | 6.3 |  | 0.571 |
-| walker |  | 6032 | 157 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 3, sub: 0, line: 82 } |  |  | 0.577 |
-| ns | 6056 |  | 112 | `RustEdition` variants | 6.4 |  | 0.572 |
-| walker |  | 6202 | 170 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 2, sub: 0, line: 65 } |  |  | 0.581 |
-| walker |  | 6212 | 10 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 8, sub: 0, line: 120 } |  |  | 0.583 |
-| ns | 6284 |  | 228 | `[output.html]` keys, first half | 6.5 |  | 0.574 |
-| ns | 6441 |  | 157 | `[output.html]` keys, second half | 6.6 | 6.5 | 0.569 |
-| walker |  | 6504 | 292 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 12, sub: 0, line: 190 } |  |  | 0.569 |
-| walker |  | 6517 | 13 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 5, sub: 0, line: 98 } |  |  | 0.569 |
-| walker |  | 6722 | 205 | Code::CodeKey { rung: Names, file: crates/xtask/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
-| walker |  | 6801 | 79 | Code::CodeKey { rung: Names, file: crates/mdbook-markdown/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
-| ns | 6803 |  | 362 | `[output.html.*]` sub-tables | 6.7 |  | 0.556 |
-| walker |  | 6820 | 19 | Code::CodeKey { rung: Decl, file: crates/mdbook-markdown/src/lib.rs, decl: 2, sub: 0, line: 33 } |  |  | 0.556 |
-| ns | 6912 |  | 109 | `MDBook` struct | 7.1 |  | 0.552 |
-| walker |  | 7006 | 186 | Code::CodeKey { rung: Decl, file: crates/mdbook-markdown/src/lib.rs, decl: 1, sub: 0, line: 14 } |  |  | 0.554 |
-| walker |  | 7014 | 8 | Code::CodeKey { rung: Doc, file: crates/mdbook-markdown/src/lib.rs, decl: 1, sub: 0, line: 14 } |  |  | 0.554 |
-| walker |  | 7031 | 17 | Code::CodeKey { rung: Doc, file: crates/mdbook-markdown/src/lib.rs, decl: 4, sub: 0, line: 44 } |  |  | 0.554 |
-| walker |  | 7051 | 20 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 2, sub: 0, line: 65 } |  |  | 0.554 |
-| walker |  | 7089 | 38 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/builtin_renderers/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
-| ns | 7134 |  | 222 | `MDBook` method roster | 7.2 | 7.1 | 0.547 |
-| walker |  | 7203 | 114 | Code::CodeKey { rung: Names, file: src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
-| walker |  | 7219 | 16 | Code::CodeKey { rung: Doc, file: src/main.rs, decl: 3, sub: 0, line: 58 } |  |  | 0.547 |
-| ns | 7480 |  | 346 | Which plugins run | 7.3 |  | 0.537 |
-| walker |  | 7657 | 438 | Code::CodeKey { rung: Decl, file: src/main.rs, decl: 2, sub: 0, line: 18 } |  |  | 0.551 |
-| walker |  | 7722 | 65 | Code::CodeKey { rung: ModuleDoc, file: src/cmd/watch/poller.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.551 |
-| ns | 7726 |  | 246 | Loading a book from disk, and `BookBuilder` | 7.4 |  | 0.545 |
-| walker |  | 7745 | 23 | Code::CodeKey { rung: Body, file: crates/xtask/src/main.rs, decl: 8, sub: 0, line: 106 } |  |  | 0.545 |
-| walker |  | 7879 | 134 | Fs::DirListing { dir: tests/testsuite } |  |  | 0.593 |
-| walker |  | 7903 | 24 | Code::CodeKey { rung: Body, file: crates/xtask/src/main.rs, decl: 10, sub: 0, line: 116 } |  |  | 0.593 |
-| ns | 7970 |  | 244 | The `links` preprocessor's helper syntax | 7.5 |  | 0.587 |
-| walker |  | 8144 | 241 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.587 |
-| ns | 8271 |  | 301 | The other built-in plugins | 7.6 |  | 0.579 |
-| walker |  | 8462 | 318 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 1, line: 13 } |  |  | 0.579 |
-| walker |  | 8489 | 27 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 5, sub: 0, line: 49 } |  |  | 0.579 |
-| walker |  | 8516 | 27 | Code::CodeKey { rung: Doc, file: crates/mdbook-renderer/src/lib.rs, decl: 3, sub: 0, line: 34 } |  |  | 0.579 |
-| ns | 8521 |  | 250 | The markdown-to-HTML pipeline | 8.1 |  | 0.571 |
-| walker |  | 8543 | 27 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 15, sub: 0, line: 634 } |  |  | 0.571 |
-| walker |  | 8593 | 50 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/tokenizer.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
-| walker |  | 8612 | 19 | Code::CodeKey { rung: Body, file: guide/guide-helper/src/lib.rs, decl: 5, sub: 0, line: 40 } |  |  | 0.571 |
+| walker |  | 4322 | 114 | Code::CodeKey { rung: Names, file: crates/mdbook-preprocessor/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 4355 | 33 | Code::CodeKey { rung: Decl, file: crates/mdbook-preprocessor/src/lib.rs, decl: 6, sub: 0, line: 68 } |  |  | 0.617 |
+| walker |  | 4429 | 74 | Code::CodeKey { rung: Decl, file: crates/mdbook-preprocessor/src/lib.rs, decl: 1, sub: 0, line: 30 } |  |  | 0.625 |
+| ns | 4483 |  | 187 | CLI function roster | 4.6 |  | 0.612 |
+| walker |  | 4647 | 218 | Code::CodeKey { rung: Decl, file: crates/mdbook-preprocessor/src/lib.rs, decl: 5, sub: 0, line: 49 } |  |  | 0.619 |
+| walker |  | 4659 | 12 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 7, sub: 0, line: 70 } |  |  | 0.619 |
+| walker |  | 4671 | 12 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 8, sub: 0, line: 82 } |  |  | 0.621 |
+| walker |  | 4685 | 14 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 2, sub: 0, line: 32 } |  |  | 0.624 |
+| ns | 4742 |  | 259 | Clap app assembly and `MDBOOK_LOG` | 4.7 |  | 0.612 |
+| walker |  | 4743 | 58 | Code::CodeKey { rung: Names, file: guide/guide-helper/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 4792 | 49 | Code::CodeKey { rung: Decl, file: guide/guide-helper/src/lib.rs, decl: 3, sub: 0, line: 35 } |  |  | 0.612 |
+| walker |  | 4802 | 10 | Code::CodeKey { rung: Doc, file: guide/guide-helper/src/lib.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.612 |
+| walker |  | 4811 | 9 | Code::CodeKey { rung: Body, file: guide/guide-helper/src/lib.rs, decl: 4, sub: 0, line: 36 } |  |  | 0.609 |
+| ns | 4811 |  | 69 | `Book` — the tree type | 5.1 |  | 0.609 |
+| walker |  | 4928 | 117 | Code::CodeKey { rung: Names, file: crates/mdbook-compare/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| ns | 4938 |  | 127 | `Book` method roster | 5.2 | 5.1 | 0.604 |
+| walker |  | 4994 | 66 | Code::CodeKey { rung: Decl, file: crates/mdbook-compare/src/main.rs, decl: 1, sub: 0, line: 6 } |  |  | 0.604 |
+| ns | 5009 |  | 71 | `BookItem` enum | 5.3 |  | 0.599 |
+| ns | 5150 |  | 141 | `Chapter` — first fields | 5.4 |  | 0.592 |
+| ns | 5335 |  | 185 | `Chapter` — `path` vs `source_path`, `parent_names` | 5.5 | 5.4 | 0.586 |
+| walker |  | 5340 | 346 | Code::CodeKey { rung: Decl, file: crates/mdbook-compare/src/main.rs, decl: 2, sub: 0, line: 14 } |  |  | 0.586 |
+| walker |  | 5375 | 35 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/theme/searcher.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
+| ns | 5450 |  | 115 | `Chapter` methods, `SectionNumber`, `BookItems` | 5.6 |  | 0.582 |
+| walker |  | 5579 | 204 | Code::CodeKey { rung: Names, file: crates/mdbook-summary/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
+| ns | 5593 |  | 143 | `Config` — the `book.toml` root | 6.1 |  | 0.576 |
+| walker |  | 5597 | 18 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 6, sub: 0, line: 108 } |  |  | 0.576 |
+| walker |  | 5619 | 22 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 9, sub: 0, line: 140 } |  |  | 0.576 |
+| walker |  | 5656 | 37 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 4, sub: 0, line: 96 } |  |  | 0.576 |
+| ns | 5731 |  | 138 | `Config` method roster | 6.2 | 6.1 | 0.572 |
+| walker |  | 5746 | 90 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 8, sub: 0, line: 120 } |  |  | 0.578 |
+| walker |  | 5854 | 108 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 11, sub: 0, line: 173 } |  |  | 0.578 |
+| ns | 5944 |  | 213 | `[book]`, `[build]` and `[rust]` keys | 6.3 |  | 0.569 |
+| walker |  | 6011 | 157 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 3, sub: 0, line: 82 } |  |  | 0.576 |
+| ns | 6056 |  | 112 | `RustEdition` variants | 6.4 |  | 0.570 |
+| walker |  | 6181 | 170 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 2, sub: 0, line: 65 } |  |  | 0.580 |
+| walker |  | 6191 | 10 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 8, sub: 0, line: 120 } |  |  | 0.582 |
+| ns | 6284 |  | 228 | `[output.html]` keys, first half | 6.5 |  | 0.572 |
+| ns | 6441 |  | 157 | `[output.html]` keys, second half | 6.6 | 6.5 | 0.567 |
+| walker |  | 6483 | 292 | Code::CodeKey { rung: Decl, file: crates/mdbook-summary/src/lib.rs, decl: 12, sub: 0, line: 190 } |  |  | 0.567 |
+| walker |  | 6496 | 13 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 5, sub: 0, line: 98 } |  |  | 0.567 |
+| walker |  | 6701 | 205 | Code::CodeKey { rung: Names, file: crates/xtask/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
+| walker |  | 6780 | 79 | Code::CodeKey { rung: Names, file: crates/mdbook-markdown/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
+| walker |  | 6799 | 19 | Code::CodeKey { rung: Decl, file: crates/mdbook-markdown/src/lib.rs, decl: 2, sub: 0, line: 33 } |  |  | 0.567 |
+| ns | 6803 |  | 362 | `[output.html.*]` sub-tables | 6.7 |  | 0.554 |
+| ns | 6912 |  | 109 | `MDBook` struct | 7.1 |  | 0.550 |
+| walker |  | 6985 | 186 | Code::CodeKey { rung: Decl, file: crates/mdbook-markdown/src/lib.rs, decl: 1, sub: 0, line: 14 } |  |  | 0.552 |
+| walker |  | 6993 | 8 | Code::CodeKey { rung: Doc, file: crates/mdbook-markdown/src/lib.rs, decl: 1, sub: 0, line: 14 } |  |  | 0.552 |
+| walker |  | 7010 | 17 | Code::CodeKey { rung: Doc, file: crates/mdbook-markdown/src/lib.rs, decl: 4, sub: 0, line: 44 } |  |  | 0.552 |
+| walker |  | 7030 | 20 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 2, sub: 0, line: 65 } |  |  | 0.552 |
+| walker |  | 7068 | 38 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/builtin_renderers/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
+| ns | 7134 |  | 222 | `MDBook` method roster | 7.2 | 7.1 | 0.545 |
+| walker |  | 7182 | 114 | Code::CodeKey { rung: Names, file: src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| walker |  | 7198 | 16 | Code::CodeKey { rung: Doc, file: src/main.rs, decl: 3, sub: 0, line: 58 } |  |  | 0.546 |
+| ns | 7480 |  | 346 | Which plugins run | 7.3 |  | 0.535 |
+| walker |  | 7636 | 438 | Code::CodeKey { rung: Decl, file: src/main.rs, decl: 2, sub: 0, line: 18 } |  |  | 0.550 |
+| walker |  | 7701 | 65 | Code::CodeKey { rung: ModuleDoc, file: src/cmd/watch/poller.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.550 |
+| ns | 7726 |  | 246 | Loading a book from disk, and `BookBuilder` | 7.4 |  | 0.544 |
+| walker |  | 7835 | 134 | Fs::DirListing { dir: tests/testsuite } |  |  | 0.591 |
+| ns | 7970 |  | 244 | The `links` preprocessor's helper syntax | 7.5 |  | 0.585 |
+| walker |  | 8076 | 241 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.585 |
+| ns | 8271 |  | 301 | The other built-in plugins | 7.6 |  | 0.578 |
+| walker |  | 8394 | 318 | Code::CodeKey { rung: Decl, file: crates/xtask/src/main.rs, decl: 2, sub: 1, line: 13 } |  |  | 0.578 |
+| walker |  | 8421 | 27 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 5, sub: 0, line: 49 } |  |  | 0.578 |
+| walker |  | 8448 | 27 | Code::CodeKey { rung: Doc, file: crates/mdbook-renderer/src/lib.rs, decl: 3, sub: 0, line: 34 } |  |  | 0.578 |
+| walker |  | 8475 | 27 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 15, sub: 0, line: 634 } |  |  | 0.578 |
+| ns | 8521 |  | 250 | The markdown-to-HTML pipeline | 8.1 |  | 0.570 |
+| walker |  | 8525 | 50 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/tokenizer.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
+| walker |  | 8544 | 19 | Code::CodeKey { rung: Body, file: guide/guide-helper/src/lib.rs, decl: 5, sub: 0, line: 40 } |  |  | 0.570 |
+| walker |  | 8575 | 31 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 3, sub: 0, line: 36 } |  |  | 0.570 |
+| walker |  | 8583 | 8 | Code::CodeKey { rung: Body, file: crates/mdbook-preprocessor/src/lib.rs, decl: 4, sub: 0, line: 42 } |  |  | 0.571 |
+| walker |  | 8616 | 33 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 14, sub: 0, line: 618 } |  |  | 0.571 |
+| walker |  | 8629 | 13 | Code::CodeKey { rung: Body, file: guide/src/for_developers/mdbook-wordcount/src/main.rs, decl: 2, sub: 0, line: 40 } |  |  | 0.571 |
 | ns | 8640 |  | 119 | HTML pipeline entry points | 8.2 | 8.1 | 0.567 |
-| walker |  | 8643 | 31 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 3, sub: 0, line: 36 } |  |  | 0.567 |
-| walker |  | 8676 | 33 | Code::CodeKey { rung: Doc, file: crates/mdbook-summary/src/lib.rs, decl: 14, sub: 0, line: 618 } |  |  | 0.567 |
 | ns | 8749 |  | 109 | `HtmlHandlebars` and its render steps | 8.3 |  | 0.563 |
-| walker |  | 8876 | 200 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
+| walker |  | 8829 | 200 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
 | ns | 8893 |  | 144 | Theme resolution | 8.4 |  | 0.562 |
-| ns | 9021 |  | 128 | Search index, static files and handlebars helpers | 8.5 |  | 0.558 |
-| walker |  | 9060 | 184 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.582 |
+| walker |  | 9013 | 184 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 1, line: 0 } |  |  | 0.587 |
+| ns | 9021 |  | 128 | Search index, static files and handlebars helpers | 8.5 |  | 0.582 |
 | ns | 9219 |  | 198 | Testsuite module map and harness convention | 9.1 |  | 0.575 |
-| walker |  | 9281 | 221 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.575 |
+| walker |  | 9234 | 221 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.575 |
 | ns | 9335 |  | 116 | Snapshot testing with snapbox | 9.2 | 9.1 | 0.574 |
-| walker |  | 9470 | 189 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.574 |
-| walker |  | 9547 | 77 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/print.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
-| walker |  | 9592 | 45 | Code::CodeKey { rung: Doc, file: crates/mdbook-core/src/lib.rs, decl: 1, sub: 0, line: 7 } |  |  | 0.574 |
-| walker |  | 9637 | 45 | Code::CodeKey { rung: Body, file: crates/mdbook-compare/src/main.rs, decl: 3, sub: 0, line: 39 } |  |  | 0.574 |
+| walker |  | 9423 | 189 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-driver/src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.574 |
+| walker |  | 9500 | 77 | Code::CodeKey { rung: ModuleDoc, file: crates/mdbook-html/src/html/print.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
+| walker |  | 9545 | 45 | Code::CodeKey { rung: Doc, file: crates/mdbook-core/src/lib.rs, decl: 1, sub: 0, line: 7 } |  |  | 0.574 |
+| walker |  | 9594 | 49 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 4, sub: 0, line: 42 } |  |  | 0.574 |
 | ns | 9669 |  | 334 | `BookTest` harness API | 9.3 | 9.1 | 0.564 |
-| walker |  | 9686 | 49 | Code::CodeKey { rung: Doc, file: crates/mdbook-preprocessor/src/lib.rs, decl: 4, sub: 0, line: 42 } |  |  | 0.564 |
-| walker |  | 9735 | 49 | Code::CodeKey { rung: Body, file: src/main.rs, decl: 6, sub: 0, line: 139 } |  |  | 0.564 |
-| ns | 9820 |  | 151 | Contributor workflow: CONTRIBUTING section map | 9.4 |  | 0.560 |
-| ns | 9884 |  | 64 | CI and repository automation listing | 9.6 |  | 0.561 |
-| walker |  | 9893 | 158 | Fs::DirListing { dir: tests/gui } |  |  | 0.583 |
-| walker |  | 9923 | 30 | Fs::DirListing { dir: tests/gui/books } |  |  | 0.582 |
+| walker |  | 9752 | 158 | Fs::DirListing { dir: tests/gui } |  |  | 0.586 |
+| walker |  | 9782 | 30 | Fs::DirListing { dir: tests/gui/books } |  |  | 0.586 |
+| walker |  | 9790 | 8 | Fs::DirListing { dir: tests/gui/books/basic } |  |  | 0.586 |
+| walker |  | 9798 | 8 | Fs::DirListing { dir: tests/gui/books/heading-nav-folded } |  |  | 0.586 |
+| walker |  | 9806 | 8 | Fs::DirListing { dir: tests/gui/books/sidebar-scroll } |  |  | 0.586 |
+| walker |  | 9816 | 10 | Fs::DirListing { dir: tests/gui/books/basic/src } |  |  | 0.586 |
+| ns | 9820 |  | 151 | Contributor workflow: CONTRIBUTING section map | 9.4 |  | 0.582 |
+| walker |  | 9828 | 12 | Fs::DirListing { dir: tests/gui/books/all-summary } |  |  | 0.582 |
+| walker |  | 9840 | 12 | Fs::DirListing { dir: tests/gui/books/heading-nav } |  |  | 0.582 |
+| walker |  | 9852 | 12 | Fs::DirListing { dir: tests/gui/books/highlighting } |  |  | 0.582 |
+| walker |  | 9860 | 8 | Fs::DirListing { dir: tests/gui/books/highlighting/src } |  |  | 0.582 |
+| walker |  | 9872 | 12 | Fs::DirListing { dir: tests/gui/books/redirect } |  |  | 0.582 |
+| walker |  | 9884 | 12 | Fs::DirListing { dir: tests/gui/books/search } |  |  | 0.583 |
+| ns | 9884 |  | 64 | CI and repository automation listing | 9.6 |  | 0.583 |
+| walker |  | 9897 | 13 | Fs::DirListing { dir: tests/gui/books/search/src } |  |  | 0.583 |
+| walker |  | 9903 | 6 | Fs::DirListing { dir: tests/gui/books/search/src/inner } |  |  | 0.583 |
+| walker |  | 9919 | 16 | Fs::DirListing { dir: tests/gui/books/heading-nav-folded/src } |  |  | 0.583 |
 | ns | 9923 |  | 39 | README tail: licence | 9.7 | 1.1 | 0.582 |
-| walker |  | 9931 | 8 | Fs::DirListing { dir: tests/gui/books/basic } |  |  | 0.582 |
-| walker |  | 9939 | 8 | Fs::DirListing { dir: tests/gui/books/heading-nav-folded } |  |  | 0.582 |
-| walker |  | 9947 | 8 | Fs::DirListing { dir: tests/gui/books/sidebar-scroll } |  |  | 0.582 |
-| walker |  | 9957 | 10 | Fs::DirListing { dir: tests/gui/books/basic/src } |  |  | 0.582 |
-| walker |  | 9969 | 12 | Fs::DirListing { dir: tests/gui/books/all-summary } |  |  | 0.582 |
-| walker |  | 9981 | 12 | Fs::DirListing { dir: tests/gui/books/heading-nav } |  |  | 0.582 |
-| walker |  | 9993 | 12 | Fs::DirListing { dir: tests/gui/books/highlighting } |  |  | 0.582 |
-| walker |  | 9999 | 6 | Fs::DirListing { dir: tests/gui/books/highlighting/src } |  |  | 0.582 |
+| walker |  | 9930 | 11 | Fs::DirListing { dir: tests/gui/books/heading-nav-folded/src/sub } |  |  | 0.582 |
+| walker |  | 9934 | 4 | Fs::DirListing { dir: tests/gui/books/heading-nav-folded/src/sub/inner } |  |  | 0.582 |
+| walker |  | 9956 | 22 | Fs::DirListing { dir: tests/gui/books/redirect/src } |  |  | 0.582 |
+| walker |  | 9998 | 42 | Fs::DirListing { dir: tests/gui/books/all-summary/src } |  |  | 0.582 |

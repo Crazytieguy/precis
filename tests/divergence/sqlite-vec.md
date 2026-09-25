@@ -64,8 +64,8 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 2853 | 39 | Code::CodeKey { rung: Names, file: bindings/python/extra_init.py, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
 | walker |  | 2870 | 17 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.467 |
 | ns | 2873 |  | 307 | idxStr block kinds (complete enum) | 2.9 |  | 0.438 |
-| walker |  | 2889 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
-| walker |  | 2911 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
+| walker |  | 2892 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
+| walker |  | 2911 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
 | walker |  | 2933 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
 | walker |  | 2948 | 15 | Fs::DirListing { dir: tests/leak-fixtures } |  |  | 0.438 |
 | ns | 3045 |  | 172 | Partition key operator encoding | 2.10 |  | 0.424 |

@@ -73,25 +73,21 @@ pub struct Scheduler<W: Walker> {
     /// premium escalates depth into a file already entered rather than
     /// pulling it in front of the repository's orientation.
     dominant_file_entered: bool,
-    /// Non-zero-cost code batches scheduled per source file — drives the
+    /// Code tokens scheduled per source file — drives the
     /// breadth-pressure ratio penalty.
-    code_batches_per_file: HashMap<PathBuf, usize>,
+    code_tokens_per_file: HashMap<PathBuf, usize>,
     /// Debug-only owner map for FS render cells — overlapping sibling
     /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
     fs_atom_owners: BTreeMap<(PathBuf, String), BatchKey>,
 }
 
-/// Breadth-pressure coefficient: past the free allowance, a `Body`
-/// batch of a source file that already has `n` scheduled non-zero-cost
-/// code batches ranks at `1/(1 + K*(n - FREE))` of its raw ratio. NS
-/// authors schedule breadth-first — every file's surface before any
+/// Breadth-pressure scale: a `Body` batch of a source file that already
+/// has `t` tokens scheduled ranks at `1/(1 + t/SCALE)` of its raw ratio.
+/// NS authors schedule breadth-first — every file's surface before any
 /// file's depth — while cheap function bodies otherwise out-ratio
 /// unopened siblings' surfaces and drive long same-file dives.
-const BREADTH_PRESSURE_K: f64 = 0.15;
-/// Scheduled batches a file may accumulate before pressure applies —
-/// normal decl -> doc -> body depth is wanted; 20-batch dives are not.
-const BREADTH_PRESSURE_FREE: usize = 4;
+const BREADTH_PRESSURE_TOKEN_SCALE: f64 = 1000.0;
 
 /// Ranking premium for content drawn from the tree's dominant source
 /// file ([`WalkCtx::dominant_source_file`]). When one file holds most of
@@ -156,7 +152,7 @@ impl<W: Walker> Scheduler<W> {
             batches_by_path: HashMap::new(),
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
-            code_batches_per_file: HashMap::new(),
+            code_tokens_per_file: HashMap::new(),
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
         }
@@ -431,15 +427,11 @@ impl<W: Walker> Scheduler<W> {
         );
 
         let entry_content = self.apply_and_record(id, cost);
-        // Zero-cost batches (already line-covered by an ancestor) don't
-        // consume budget, so they don't count toward breadth pressure.
-        if cost.tokens > 0
-            && let BatchKey::Code(key) = &self.entries[id.index()].key
-        {
+        if let BatchKey::Code(key) = &self.entries[id.index()].key {
             *self
-                .code_batches_per_file
+                .code_tokens_per_file
                 .entry(key.file.clone())
-                .or_default() += 1;
+                .or_default() += cost.tokens;
         }
 
         // Drop the scheduled batch's cached cost, plus every cached
@@ -501,9 +493,8 @@ impl<W: Walker> Scheduler<W> {
         else {
             return 1.0;
         };
-        let scheduled = self.code_batches_per_file.get(file).copied().unwrap_or(0);
-        let over = scheduled.saturating_sub(BREADTH_PRESSURE_FREE);
-        1.0 / (1.0 + BREADTH_PRESSURE_K * over as f64)
+        let scheduled = self.code_tokens_per_file.get(file).copied().unwrap_or(0);
+        1.0 / (1.0 + scheduled as f64 / BREADTH_PRESSURE_TOKEN_SCALE)
     }
 
     fn ancestors_of(&self, id: BatchId) -> HashSet<BatchId> {

@@ -186,23 +186,22 @@ Score(3000)=0.514 I=0.790 C=0.334 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 9188 | 26 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 8, sub: 0, line: 99 } |  |  | 0.539 |
 | ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.530 |
 | walker |  | 9214 | 26 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 9, sub: 0, line: 102 } |  |  | 0.531 |
-| walker |  | 9228 | 14 | Code::CodeKey { rung: Body, file: src/structs/types.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.531 |
-| walker |  | 9250 | 22 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.531 |
+| walker |  | 9236 | 22 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.531 |
 | ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.526 |
-| walker |  | 9419 | 169 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.535 |
-| walker |  | 9442 | 23 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 12, sub: 0, line: 144 } |  |  | 0.535 |
-| walker |  | 9482 | 40 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 14, sub: 0, line: 172 } |  |  | 0.535 |
+| walker |  | 9405 | 169 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.535 |
+| walker |  | 9428 | 23 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 12, sub: 0, line: 144 } |  |  | 0.535 |
+| walker |  | 9468 | 40 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 14, sub: 0, line: 172 } |  |  | 0.535 |
 | ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.536 |
 | ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.534 |
-| walker |  | 9676 | 194 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.548 |
-| walker |  | 9695 | 19 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 27, sub: 0, line: 295 } |  |  | 0.550 |
-| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.546 |
-| walker |  | 9726 | 31 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 21, sub: 0, line: 226 } |  |  | 0.550 |
-| walker |  | 9749 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 5, sub: 0, line: 60 } |  |  | 0.550 |
-| walker |  | 9772 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 6, sub: 0, line: 70 } |  |  | 0.550 |
-| walker |  | 9795 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 11, sub: 0, line: 131 } |  |  | 0.551 |
-| walker |  | 9818 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 13, sub: 0, line: 159 } |  |  | 0.551 |
-| walker |  | 9841 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 23, sub: 0, line: 258 } |  |  | 0.551 |
+| walker |  | 9662 | 194 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.548 |
+| walker |  | 9681 | 19 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 27, sub: 0, line: 295 } |  |  | 0.550 |
+| walker |  | 9712 | 31 | Code::CodeKey { rung: Decl, file: src/structs/types.ts, decl: 21, sub: 0, line: 226 } |  |  | 0.553 |
+| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.550 |
+| walker |  | 9735 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 5, sub: 0, line: 60 } |  |  | 0.550 |
+| walker |  | 9758 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 6, sub: 0, line: 70 } |  |  | 0.550 |
+| walker |  | 9781 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 11, sub: 0, line: 131 } |  |  | 0.551 |
+| walker |  | 9804 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 13, sub: 0, line: 159 } |  |  | 0.551 |
+| walker |  | 9827 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 23, sub: 0, line: 258 } |  |  | 0.551 |
 | ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.549 |
-| walker |  | 9864 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 25, sub: 0, line: 278 } |  |  | 0.549 |
-| walker |  | 9988 | 124 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 3, line: 0 } |  |  | 0.562 |
+| walker |  | 9850 | 23 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 25, sub: 0, line: 278 } |  |  | 0.549 |
+| walker |  | 9988 | 138 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 3, line: 0 } |  |  | 0.564 |

@@ -268,6 +268,12 @@ src/flask/
     21→        name: str,
     22→        import_name: str,
     23→        static_folder: str | os.PathLike[str] | None = None,
+    24→        static_url_path: str | None = None,
+    25→        template_folder: str | os.PathLike[str] | None = None,
+    26→        url_prefix: str | None = None,
+    27→        subdomain: str | None = None,
+    28→        url_defaults: dict[str, t.Any] | None = None,
+    29→        root_path: str | None = None,
     …
     55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
     …
@@ -295,16 +301,8 @@ src/flask/
       …
       77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
       …
-      102→    if current_app:
-      103→        return current_app.json.loads(s, **kwargs)
-      104→
-      105→    return _json.loads(s, **kwargs)
       108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
       …
-      132→    if current_app:
-      133→        return current_app.json.load(fp, **kwargs)
-      134→
-      135→    return _json.load(fp, **kwargs)
       138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
       …
       170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]

@@ -247,18 +247,18 @@ Score(3000)=0.740 I=0.895 C=0.611 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 9155 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.795 |
 | walker |  | 9165 | 43 | Code::CodeKey { rung: Body, file: apps/web/pages/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.795 |
 | walker |  | 9209 | 44 | Code::CodeKey { rung: Body, file: apps/web/pages/settings/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.795 |
-| walker |  | 9258 | 49 | Code::CodeKey { rung: Body, file: apps/web/pages/admin/index.tsx, decl: 1, sub: 0, line: 3 } |  |  | 0.795 |
 | ns | 9334 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.787 |
 | ns | 9466 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.779 |
-| walker |  | 9575 | 317 | Fs::DirListing { dir: apps/web/components } |  |  | 0.807 |
-| walker |  | 9584 | 9 | Fs::DirListing { dir: apps/web/components/LinkViews } |  |  | 0.807 |
-| walker |  | 9600 | 16 | Fs::DirListing { dir: apps/web/components/InputSelect } |  |  | 0.807 |
-| walker |  | 9626 | 26 | Fs::DirListing { dir: apps/web/components/Preservation } |  |  | 0.808 |
-| walker |  | 9667 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.816 |
-| ns | 9682 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.821 |
-| walker |  | 9729 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.825 |
-| ns | 9884 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.827 |
-| walker |  | 9897 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.845 |
+| walker |  | 9526 | 317 | Fs::DirListing { dir: apps/web/components } |  |  | 0.807 |
+| walker |  | 9535 | 9 | Fs::DirListing { dir: apps/web/components/LinkViews } |  |  | 0.807 |
+| walker |  | 9551 | 16 | Fs::DirListing { dir: apps/web/components/InputSelect } |  |  | 0.807 |
+| walker |  | 9577 | 26 | Fs::DirListing { dir: apps/web/components/Preservation } |  |  | 0.808 |
+| walker |  | 9618 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.816 |
+| walker |  | 9680 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.820 |
+| ns | 9682 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.825 |
+| walker |  | 9848 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.843 |
+| ns | 9884 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.845 |
+| walker |  | 9897 | 49 | Code::CodeKey { rung: Body, file: apps/web/pages/admin/index.tsx, decl: 1, sub: 0, line: 3 } |  |  | 0.845 |
 | walker |  | 9939 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.845 |
 | walker |  | 9951 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.845 |
 | walker |  | 9993 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.846 |

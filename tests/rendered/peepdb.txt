@@ -154,7 +154,7 @@ peepdb/
     60→def get_key():
     …
     70→def encrypt(message: str) -> str:
-    71→    return Fernet(get_key()).encrypt(message.encode()).decode()
+    …
     73→def decrypt(token: str) -> str:
     …
     76→def save_connection(name, db_type, host, port, user, password, database, trusted):
@@ -206,14 +206,14 @@ peepdb/
       23→        pass
       25→    @abstractmethod
       26→    def fetch_tables(self) -> List[str]:
-      …
+      27→        pass
       29→    @abstractmethod
       30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      …
+      31→        pass
       33→    def __enter__(self):
       …
       37→    def __exit__(self, exc_type, exc_val, exc_tb):
-      …
+      38→        self.disconnect()
     firebase.py
     mariadb.py
       …

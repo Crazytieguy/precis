@@ -154,8 +154,6 @@ src/
     76→impl ExactSizeIterator for Chain<'_> {
     77→    fn len(&self) -> usize {
     …
-    91→}
-    …
     94→impl Default for Chain<'_> {
     …
   context.rs
@@ -237,6 +235,7 @@ src/
     648→#[allow(non_snake_case)]
     649→#[inline]
     650→pub fn Ok<T>(value: T) -> Result<T> {
+    651→    Result::Ok(value)
     …
   macros.rs
     …

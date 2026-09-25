@@ -81,9 +81,9 @@ Score(3000)=0.545 I=0.767 C=0.388 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 3554 | 11 | Code::CodeKey { rung: Decl, file: cursor.go, decl: 4, sub: 0, line: 15 } |  |  | 0.540 |
 | walker |  | 3568 | 14 | Code::CodeKey { rung: Decl, file: cursor.go, decl: 2, sub: 0, line: 7 } |  |  | 0.540 |
 | walker |  | 3574 | 6 | Code::CodeKey { rung: Doc, file: cursor.go, decl: 4, sub: 0, line: 15 } |  |  | 0.540 |
-| walker |  | 3584 | 10 | Code::CodeKey { rung: Body, file: cursor.go, decl: 6, sub: 0, line: 26 } |  |  | 0.540 |
-| walker |  | 3595 | 11 | Code::CodeKey { rung: Doc, file: cursor.go, decl: 3, sub: 0, line: 12 } |  |  | 0.541 |
-| walker |  | 3608 | 13 | Code::CodeKey { rung: Doc, file: cursor.go, decl: 1, sub: 0, line: 4 } |  |  | 0.541 |
+| walker |  | 3585 | 11 | Code::CodeKey { rung: Doc, file: cursor.go, decl: 3, sub: 0, line: 12 } |  |  | 0.541 |
+| walker |  | 3598 | 13 | Code::CodeKey { rung: Doc, file: cursor.go, decl: 1, sub: 0, line: 4 } |  |  | 0.541 |
+| walker |  | 3608 | 10 | Code::CodeKey { rung: Body, file: cursor.go, decl: 6, sub: 0, line: 26 } |  |  | 0.541 |
 | walker |  | 3645 | 37 | Code::CodeKey { rung: Doc, file: tea.go, decl: 35, sub: 0, line: 743 } |  |  | 0.541 |
 | walker |  | 3682 | 37 | Code::CodeKey { rung: Doc, file: tea.go, decl: 48, sub: 0, line: 1269 } |  |  | 0.541 |
 | ns | 3693 |  | 219 | Debug hooks: `TEA_TRACE`, `TEA_DEBUG`, panic recovery | 2.11 |  | 0.531 |
@@ -112,8 +112,8 @@ Score(3000)=0.545 I=0.767 C=0.388 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 4687 | 8 | Code::CodeKey { rung: Body, file: clipboard.go, decl: 3, sub: 0, line: 20 } |  |  | 0.490 |
 | walker |  | 4696 | 9 | Code::CodeKey { rung: Body, file: clipboard.go, decl: 7, sub: 0, line: 42 } |  |  | 0.488 |
 | ns | 4696 |  | 146 | Command constructors, part 2: terminal queries and clipboard | 3.4 | 3.3 | 0.488 |
-| walker |  | 4706 | 10 | Code::CodeKey { rung: Body, file: clipboard.go, decl: 11, sub: 0, line: 68 } |  |  | 0.488 |
-| walker |  | 4721 | 15 | Code::CodeKey { rung: Doc, file: clipboard.go, decl: 3, sub: 0, line: 20 } |  |  | 0.488 |
+| walker |  | 4711 | 15 | Code::CodeKey { rung: Doc, file: clipboard.go, decl: 3, sub: 0, line: 20 } |  |  | 0.488 |
+| walker |  | 4721 | 10 | Code::CodeKey { rung: Body, file: clipboard.go, decl: 11, sub: 0, line: 68 } |  |  | 0.488 |
 | walker |  | 4776 | 55 | Code::CodeKey { rung: Names, file: termcap.go, decl: 0, sub: 0, line: 0 } |  |  | 0.493 |
 | walker |  | 4788 | 12 | Code::CodeKey { rung: Decl, file: termcap.go, decl: 3, sub: 0, line: 41 } |  |  | 0.494 |
 | walker |  | 4796 | 8 | Code::CodeKey { rung: Body, file: termcap.go, decl: 4, sub: 0, line: 46 } |  |  | 0.494 |
@@ -155,64 +155,57 @@ Score(3000)=0.545 I=0.767 C=0.388 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 8138 | 11 | Code::CodeKey { rung: Decl, file: mouse.go, decl: 2, sub: 0, line: 29 } |  |  | 0.489 |
 | walker |  | 8171 | 33 | Code::CodeKey { rung: Decl, file: mouse.go, decl: 4, sub: 0, line: 71 } |  |  | 0.494 |
 | walker |  | 8211 | 40 | Code::CodeKey { rung: Decl, file: mouse.go, decl: 3, sub: 0, line: 46 } |  |  | 0.498 |
-| walker |  | 8219 | 8 | Code::CodeKey { rung: Body, file: mouse.go, decl: 8, sub: 0, line: 93 } |  |  | 0.498 |
-| walker |  | 8227 | 8 | Code::CodeKey { rung: Body, file: mouse.go, decl: 11, sub: 0, line: 108 } |  |  | 0.498 |
-| walker |  | 8240 | 13 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 5, sub: 0, line: 78 } |  |  | 0.498 |
-| walker |  | 8254 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 7, sub: 0, line: 86 } |  |  | 0.498 |
-| walker |  | 8268 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 10, sub: 0, line: 101 } |  |  | 0.498 |
-| walker |  | 8282 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 13, sub: 0, line: 116 } |  |  | 0.498 |
-| walker |  | 8296 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 15, sub: 0, line: 128 } |  |  | 0.498 |
-| walker |  | 8310 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 16, sub: 0, line: 131 } |  |  | 0.498 |
-| walker |  | 8325 | 15 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 6, sub: 0, line: 83 } |  |  | 0.498 |
-| walker |  | 8340 | 15 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 9, sub: 0, line: 98 } |  |  | 0.498 |
-| walker |  | 8355 | 15 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 12, sub: 0, line: 113 } |  |  | 0.498 |
-| walker |  | 8373 | 18 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 1, sub: 0, line: 10 } |  |  | 0.498 |
+| walker |  | 8224 | 13 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 5, sub: 0, line: 78 } |  |  | 0.498 |
+| walker |  | 8238 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 7, sub: 0, line: 86 } |  |  | 0.498 |
+| walker |  | 8252 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 10, sub: 0, line: 101 } |  |  | 0.498 |
+| walker |  | 8266 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 13, sub: 0, line: 116 } |  |  | 0.498 |
+| walker |  | 8280 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 15, sub: 0, line: 128 } |  |  | 0.498 |
+| walker |  | 8294 | 14 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 16, sub: 0, line: 131 } |  |  | 0.498 |
+| walker |  | 8309 | 15 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 6, sub: 0, line: 83 } |  |  | 0.498 |
+| walker |  | 8324 | 15 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 9, sub: 0, line: 98 } |  |  | 0.498 |
+| walker |  | 8339 | 15 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 12, sub: 0, line: 113 } |  |  | 0.498 |
+| walker |  | 8357 | 18 | Code::CodeKey { rung: Doc, file: mouse.go, decl: 1, sub: 0, line: 10 } |  |  | 0.498 |
 | ns | 8420 |  | 381 | Platform matrix: build tags and per-OS terminal functions | 4.4 |  | 0.489 |
-| walker |  | 8556 | 183 | Code::CodeKey { rung: Names, file: key.go, decl: 0, sub: 1, line: 0 } |  |  | 0.501 |
-| walker |  | 8595 | 39 | Code::CodeKey { rung: Decl, file: key.go, decl: 11, sub: 0, line: 259 } |  |  | 0.506 |
-| walker |  | 8603 | 8 | Code::CodeKey { rung: Body, file: key.go, decl: 6, sub: 0, line: 219 } |  |  | 0.506 |
-| walker |  | 8611 | 8 | Code::CodeKey { rung: Body, file: key.go, decl: 10, sub: 0, line: 253 } |  |  | 0.506 |
+| walker |  | 8540 | 183 | Code::CodeKey { rung: Names, file: key.go, decl: 0, sub: 1, line: 0 } |  |  | 0.501 |
+| walker |  | 8579 | 39 | Code::CodeKey { rung: Decl, file: key.go, decl: 11, sub: 0, line: 259 } |  |  | 0.506 |
+| walker |  | 8593 | 14 | Code::CodeKey { rung: Doc, file: key.go, decl: 3, sub: 0, line: 191 } |  |  | 0.506 |
+| walker |  | 8607 | 14 | Code::CodeKey { rung: Doc, file: key.go, decl: 7, sub: 0, line: 224 } |  |  | 0.506 |
 | ns | 8618 |  | 198 | `tty.go`: terminal acquisition, input loop, resize detection | 4.5 |  | 0.502 |
-| walker |  | 8625 | 14 | Code::CodeKey { rung: Doc, file: key.go, decl: 3, sub: 0, line: 191 } |  |  | 0.502 |
-| walker |  | 8639 | 14 | Code::CodeKey { rung: Doc, file: key.go, decl: 7, sub: 0, line: 224 } |  |  | 0.502 |
-| walker |  | 8791 | 152 | Code::CodeKey { rung: Names, file: mod.go, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
-| walker |  | 8877 | 86 | Code::CodeKey { rung: Decl, file: mod.go, decl: 2, sub: 0, line: 9 } |  |  | 0.513 |
-| ns | 8882 |  | 264 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.550 |
-| walker |  | 8883 | 6 | Code::CodeKey { rung: Doc, file: mod.go, decl: 2, sub: 0, line: 9 } |  |  | 0.551 |
-| walker |  | 8894 | 11 | Code::CodeKey { rung: Doc, file: mod.go, decl: 1, sub: 0, line: 6 } |  |  | 0.554 |
+| walker |  | 8759 | 152 | Code::CodeKey { rung: Names, file: mod.go, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
+| walker |  | 8845 | 86 | Code::CodeKey { rung: Decl, file: mod.go, decl: 2, sub: 0, line: 9 } |  |  | 0.513 |
+| walker |  | 8851 | 6 | Code::CodeKey { rung: Doc, file: mod.go, decl: 2, sub: 0, line: 9 } |  |  | 0.515 |
+| walker |  | 8862 | 11 | Code::CodeKey { rung: Doc, file: mod.go, decl: 1, sub: 0, line: 6 } |  |  | 0.517 |
+| ns | 8882 |  | 264 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.554 |
 | ns | 9062 |  | 180 | `UPGRADE_GUIDE_V2.md`: complete section map | 5.2 |  | 0.547 |
-| walker |  | 9124 | 230 | Code::CodeKey { rung: Names, file: color.go, decl: 0, sub: 0, line: 0 } |  |  | 0.559 |
-| walker |  | 9133 | 9 | Code::CodeKey { rung: Body, file: color.go, decl: 2, sub: 0, line: 13 } |  |  | 0.559 |
-| walker |  | 9142 | 9 | Code::CodeKey { rung: Body, file: color.go, decl: 4, sub: 0, line: 21 } |  |  | 0.559 |
-| walker |  | 9151 | 9 | Code::CodeKey { rung: Body, file: color.go, decl: 6, sub: 0, line: 29 } |  |  | 0.559 |
-| walker |  | 9163 | 12 | Code::CodeKey { rung: Doc, file: color.go, decl: 8, sub: 0, line: 39 } |  |  | 0.559 |
-| walker |  | 9175 | 12 | Code::CodeKey { rung: Doc, file: color.go, decl: 11, sub: 0, line: 70 } |  |  | 0.559 |
-| walker |  | 9187 | 12 | Code::CodeKey { rung: Doc, file: color.go, decl: 14, sub: 0, line: 84 } |  |  | 0.559 |
-| walker |  | 9201 | 14 | Code::CodeKey { rung: Doc, file: color.go, decl: 9, sub: 0, line: 44 } |  |  | 0.559 |
-| walker |  | 9215 | 14 | Code::CodeKey { rung: Doc, file: color.go, decl: 12, sub: 0, line: 75 } |  |  | 0.559 |
-| walker |  | 9229 | 14 | Code::CodeKey { rung: Doc, file: color.go, decl: 15, sub: 0, line: 89 } |  |  | 0.559 |
-| walker |  | 9245 | 16 | Code::CodeKey { rung: Doc, file: color.go, decl: 2, sub: 0, line: 13 } |  |  | 0.559 |
-| walker |  | 9261 | 16 | Code::CodeKey { rung: Doc, file: color.go, decl: 4, sub: 0, line: 21 } |  |  | 0.559 |
-| walker |  | 9277 | 16 | Code::CodeKey { rung: Doc, file: color.go, decl: 6, sub: 0, line: 29 } |  |  | 0.559 |
-| walker |  | 9295 | 18 | Code::CodeKey { rung: Doc, file: color.go, decl: 1, sub: 0, line: 10 } |  |  | 0.559 |
-| walker |  | 9313 | 18 | Code::CodeKey { rung: Doc, file: color.go, decl: 3, sub: 0, line: 18 } |  |  | 0.559 |
-| walker |  | 9331 | 18 | Code::CodeKey { rung: Doc, file: color.go, decl: 5, sub: 0, line: 26 } |  |  | 0.559 |
+| walker |  | 9092 | 230 | Code::CodeKey { rung: Names, file: color.go, decl: 0, sub: 0, line: 0 } |  |  | 0.559 |
+| walker |  | 9104 | 12 | Code::CodeKey { rung: Doc, file: color.go, decl: 8, sub: 0, line: 39 } |  |  | 0.559 |
+| walker |  | 9116 | 12 | Code::CodeKey { rung: Doc, file: color.go, decl: 11, sub: 0, line: 70 } |  |  | 0.559 |
+| walker |  | 9128 | 12 | Code::CodeKey { rung: Doc, file: color.go, decl: 14, sub: 0, line: 84 } |  |  | 0.559 |
+| walker |  | 9142 | 14 | Code::CodeKey { rung: Doc, file: color.go, decl: 9, sub: 0, line: 44 } |  |  | 0.559 |
+| walker |  | 9156 | 14 | Code::CodeKey { rung: Doc, file: color.go, decl: 12, sub: 0, line: 75 } |  |  | 0.559 |
+| walker |  | 9170 | 14 | Code::CodeKey { rung: Doc, file: color.go, decl: 15, sub: 0, line: 89 } |  |  | 0.559 |
+| walker |  | 9186 | 16 | Code::CodeKey { rung: Doc, file: color.go, decl: 2, sub: 0, line: 13 } |  |  | 0.559 |
+| walker |  | 9202 | 16 | Code::CodeKey { rung: Doc, file: color.go, decl: 4, sub: 0, line: 21 } |  |  | 0.559 |
+| walker |  | 9218 | 16 | Code::CodeKey { rung: Doc, file: color.go, decl: 6, sub: 0, line: 29 } |  |  | 0.559 |
+| walker |  | 9236 | 18 | Code::CodeKey { rung: Doc, file: color.go, decl: 1, sub: 0, line: 10 } |  |  | 0.559 |
+| walker |  | 9254 | 18 | Code::CodeKey { rung: Doc, file: color.go, decl: 3, sub: 0, line: 18 } |  |  | 0.559 |
+| walker |  | 9272 | 18 | Code::CodeKey { rung: Doc, file: color.go, decl: 5, sub: 0, line: 26 } |  |  | 0.559 |
+| walker |  | 9318 | 46 | Code::CodeKey { rung: Doc, file: tea.go, decl: 49, sub: 0, line: 1294 } |  |  | 0.559 |
 | ns | 9347 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.554 |
-| walker |  | 9377 | 46 | Code::CodeKey { rung: Doc, file: tea.go, decl: 49, sub: 0, line: 1294 } |  |  | 0.554 |
 | ns | 9516 |  | 169 | README section map | 5.4 |  | 0.560 |
-| walker |  | 9583 | 206 | Code::CodeKey { rung: Names, file: options.go, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
-| walker |  | 9615 | 32 | Code::CodeKey { rung: Names, file: signals_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
-| walker |  | 9622 | 7 | Code::CodeKey { rung: Body, file: signals_windows.go, decl: 1, sub: 0, line: 8 } |  |  | 0.580 |
-| walker |  | 9767 | 145 | Code::CodeKey { rung: Names, file: commands.go, decl: 0, sub: 0, line: 0 } |  |  | 0.588 |
-| walker |  | 9776 | 9 | Code::CodeKey { rung: Body, file: commands.go, decl: 9, sub: 0, line: 173 } |  |  | 0.588 |
-| walker |  | 9791 | 15 | Code::CodeKey { rung: Body, file: commands.go, decl: 1, sub: 0, line: 15 } |  |  | 0.588 |
-| walker |  | 9806 | 15 | Code::CodeKey { rung: Body, file: commands.go, decl: 3, sub: 0, line: 25 } |  |  | 0.588 |
-| walker |  | 9824 | 18 | Code::CodeKey { rung: Doc, file: commands.go, decl: 4, sub: 0, line: 30 } |  |  | 0.589 |
-| walker |  | 9873 | 49 | Code::CodeKey { rung: Doc, file: tea.go, decl: 16, sub: 0, line: 349 } |  |  | 0.589 |
-| ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.577 |
-| walker |  | 9907 | 34 | Code::CodeKey { rung: Names, file: termios_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
-| ns | 9917 |  | 41 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.581 |
-| walker |  | 9953 | 46 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 0, line: 16 } |  |  | 0.585 |
-| walker |  | 9960 | 7 | Code::CodeKey { rung: Doc, file: key.go, decl: 2, sub: 0, line: 16 } |  |  | 0.585 |
-| walker |  | 9996 | 36 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 2, line: 16 } |  |  | 0.588 |
-| walker |  | 9996 | 0 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 3, line: 16 } |  |  | 0.588 |
+| walker |  | 9524 | 206 | Code::CodeKey { rung: Names, file: options.go, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
+| walker |  | 9556 | 32 | Code::CodeKey { rung: Names, file: signals_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
+| walker |  | 9563 | 7 | Code::CodeKey { rung: Body, file: signals_windows.go, decl: 1, sub: 0, line: 8 } |  |  | 0.580 |
+| walker |  | 9708 | 145 | Code::CodeKey { rung: Names, file: commands.go, decl: 0, sub: 0, line: 0 } |  |  | 0.588 |
+| walker |  | 9717 | 9 | Code::CodeKey { rung: Body, file: commands.go, decl: 9, sub: 0, line: 173 } |  |  | 0.588 |
+| walker |  | 9735 | 18 | Code::CodeKey { rung: Doc, file: commands.go, decl: 4, sub: 0, line: 30 } |  |  | 0.589 |
+| walker |  | 9784 | 49 | Code::CodeKey { rung: Doc, file: tea.go, decl: 16, sub: 0, line: 349 } |  |  | 0.589 |
+| walker |  | 9818 | 34 | Code::CodeKey { rung: Names, file: termios_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
+| walker |  | 9864 | 46 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 0, line: 16 } |  |  | 0.594 |
+| walker |  | 9871 | 7 | Code::CodeKey { rung: Doc, file: key.go, decl: 2, sub: 0, line: 16 } |  |  | 0.594 |
+| ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.582 |
+| walker |  | 9907 | 36 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 2, line: 16 } |  |  | 0.585 |
+| ns | 9917 |  | 41 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.588 |
+| walker |  | 9924 | 17 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 3, line: 16 } |  |  | 0.590 |
+| walker |  | 9960 | 36 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 8, line: 16 } |  |  | 0.594 |
+| walker |  | 10000 | 40 | Code::CodeKey { rung: Decl, file: key.go, decl: 2, sub: 10, line: 16 } |  |  | 0.598 |

@@ -147,6 +147,8 @@ include/
     218→  uint8_t hotbar;
     219→  uint16_t inventory_items[41];
     220→  uint16_t craft_items[9];
+    221→  uint8_t inventory_count[41];
+    222→  uint8_t craft_count[9];
     …
     238→} PlayerData;
     239→
@@ -206,7 +208,6 @@ include/
   tools.h
     …
     8→static inline int mod_abs (int a, int b) {
-    9→  return ((a % b) + b) % b;
     …
     11→static inline int div_floor (int a, int b) {
     …

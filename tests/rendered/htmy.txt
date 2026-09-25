@@ -296,7 +296,6 @@ htmy/
     …
     265→    def _render_text(self, text: str, context: Context) -> Component:
     …
-    270→        return SafeStr(text)
     272→    @staticmethod
     273→    @alru_cache()
     274→    async def _load_text_file(path: str | Path) -> str:
