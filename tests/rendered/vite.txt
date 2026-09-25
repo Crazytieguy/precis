@@ -233,11 +233,70 @@ packages/
         packages.ts
         plugin.ts
         plugins/
+          asset.ts
+          assetImportMetaUrl.ts
+          clientInjections.ts
+          css.ts
+          define.ts
+          dynamicImportVars.ts
+          esbuild.ts
+          esbuildBannerFooterCompatPlugin.ts
+          forwardConsole.ts
+          html.ts
+          importAnalysis.ts
+          importAnalysisBuild.ts
+          importMetaGlob.ts
+          index.ts
+          json.ts
+          license.ts
+          manifest.ts
+          modulePreloadPolyfill.ts
+          optimizedDeps.ts
+          oxc.ts
+          pluginFilter.ts
+          preAlias.ts
+          prepareOutDir.ts
+          reporter.ts
+          resolve.ts
+          terser.ts
+          wasm.ts
+          worker.ts
+          workerImportMetaUrl.ts
         preview.ts
         publicDir.ts
         server/
+          __tests__/
+          environment.ts
+          environments/
+            fetchableEnvironments.ts
+            fullBundleEnvironment.ts
+            runnableEnvironment.ts
+          hmr.ts
+          index.ts
+          middlewares/
+          mixedModuleGraph.ts
+          moduleGraph.ts
+          openBrowser.ts
+          pluginContainer.ts
+          searchRoot.ts
+          send.ts
+          sourcemap.ts
+          transformRequest.ts
+          warmup.ts
+          ws.ts
         shortcuts.ts
         ssr/
+          __tests__/
+          fetchModule.ts
+          index.ts
+          runnerImport.ts
+          runtime/
+            __tests__/
+            serverModuleRunner.ts
+          ssrManifestPlugin.ts
+          ssrModuleLoader.ts
+          ssrStacktrace.ts
+          ssrTransform.ts
         tsconfig.json
         typeUtils.ts
         utils.ts
@@ -281,35 +340,20 @@ playground/
   alias/
   assets/
   assets-sanitize/
-  backend-integration/
+    +circle.svg
+    .env
     __tests__/
-    dir/
-      custom.css
-      foo-background.svg
-      foo.css
-    frontend/
-      entrypoints/
-      images/
-        logo.png
-      styles/
+    _circle.svg
+    index.html
+    index.js
     package.json
-    references.css
     vite.config.js
+  backend-integration/
   base-conflict/
     __tests__/
     index.html
-    package.json
-    src/
-      importee.ts
-      main.ts
-      virtualModules.d.ts
-    vite.config.ts
+    …
   build-old/
-    __tests__/
-    dynamic.js
-    index.html
-    package.json
-    vite.config.js
   cli/
     __tests__/
     index.html
@@ -328,10 +372,27 @@ playground/
     package.json
     vite.config.ts
   csp/
+    __tests__/
+    dynamic.css
+    dynamic.js
+    from-js.css
+    index.html
+    index.js
+    linked.css
+    package.json
+    vite.config.js
   css/
   css-codesplit/
   css-codesplit-cjs/
   css-dynamic-import/
+    __tests__/
+    dynamic.css
+    dynamic.js
+    index.html
+    index.js
+    package.json
+    static.css
+    static.js
   css-lightningcss/
   css-lightningcss-proxy/
     __tests__/
@@ -344,6 +405,15 @@ playground/
     root/
     vite.config.js
   css-no-codesplit/
+    __tests__/
+    async-js.css
+    async-js.js
+    index.html
+    index.js
+    package.json
+    shared-linked.css
+    sub.html
+    vite.config.js
   css-sourcemap/
   data-uri/
   define/
@@ -356,30 +426,17 @@ playground/
     vite.config.ts
   dynamic-import/
   dynamic-import-inline/
-    __tests__/
-    index.html
-    package.json
-    src/
-      foo.js
-      index.js
-    vite.config.js
   env/
-  env-nested/
     .env
+    .env.development
+    .env.production
     __tests__/
-    envs/
-      .env.development
-      .env.production
     index.html
+    index.js
     package.json
     vite.config.js
+  env-nested/
   environment-react-ssr/
-    __tests__/
-    index.html
-    package.json
-    src/
-    tsconfig.json
-    vite.config.ts
   extensions/
     __tests__/
     index.html
@@ -387,13 +444,6 @@ playground/
     vite.config.js
   external/
   forward-console/
-    __test__/
-    fixtures/
-    index.html
-    package.json
-    src/
-      main.ts
-    vite.config.ts
   fs-serve/
   glob-import/
   hmr/
@@ -407,45 +457,28 @@ playground/
   hmr-ssr/
   html/
   import-assertion/
-    __tests__/
-    data.json
-    import-assertion-dep/
-      data.json
-      index.js
-      package.json
-    index.html
-    package.json
   js-sourcemap/
   json/
   legacy/
   lib/
   minify/
-    __tests__/
-    dir/
-      module/
-    index.html
-    main.js
-    package.json
-    test.css
-    vite.config.js
   module-graph/
   multiple-entrypoints/
+    __tests__/
+    deps.json
+    dynamic-a.js
+    dynamic-b.js
+    entrypoints/
+    index.html
+    index.js
+    package.json
+    reference.js
+    reference.scss
+    vite.config.js
   nested-deps/
   object-hooks/
-    __tests__/
-    index.html
-    main.ts
-    package.json
-    vite.config.ts
   optimize-deps/
   optimize-deps-no-discovery/
-    __tests__/
-    dep-no-discovery/
-      index.js
-      package.json
-    index.html
-    package.json
-    vite.config.js
   optimize-missing-deps/
   package.json
   preload/
@@ -453,11 +486,6 @@ playground/
     __tests__/
     index.html
     module-a/
-      linked.js
-      package.json
-      src/
-        data.js
-        index.js
     package.json
     src/
       main.js
@@ -467,14 +495,6 @@ playground/
     package.json
     vite.config.js
   proxy-hmr/
-    __tests__/
-    index.html
-    other-app/
-      index.html
-      package.json
-      vite.config.js
-    package.json
-    vite.config.js
   resolve/
   resolve-linked/
     dep.js
@@ -482,68 +502,33 @@ playground/
     src/
       index.js
   resolve-tsconfig-paths/
-    __tests__/
-    fallback/
-      fallback.js
-    index.html
-    package.json
-    src/
-    tsconfig.json
-    vite.config.js
   shims.d.ts
   ssr/
-    __tests__/
-    index.html
-    package.json
-    server.js
-    src/
-    vite.config.ts
   ssr-alias/
-    __tests__/
-    alias-original/
-      index.js
-      package.json
-    package.json
-    src/
-      alias-process.js
-      alias-replaced.js
-      main.js
-    vite.config.js
   ssr-conditions/
   ssr-deps/
   ssr-html/
   ssr-noexternal/
   ssr-pug/
-    __tests__/
-    index.pug
-    package.json
-    server.js
-    src/
-      app.js
   ssr-resolve/
   ssr-wasm/
-    __tests__/
-    package.json
-    server.js
-    src/
-    vite.config.ts
   ssr-webworker/
   tailwind/
   tailwind-sourcemap/
   tailwind-v3/
   test-utils.ts
   transform-plugin/
+    __tests__/
+    foo.json
+    index.html
+    index.js
+    package.json
+    plugin-dep-load.js
+    plugin-dep.js
+    vite.config-base.js
+    vite.config.js
   tsconfig-json/
   tsconfig-json-load-error/
-    __tests__/
-    has-error/
-      main.ts
-      tsconfig.json
-    index.html
-    package.json
-    src/
-      main.ts
-    tsconfig.json
   tsconfig.json
   vitestGlobalSetup.ts
   vitestSetup.ts

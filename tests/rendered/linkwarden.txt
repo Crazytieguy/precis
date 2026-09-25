@@ -34,26 +34,6 @@ README.md
   29→
   30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
   …
-  41→## Features
-  …
-  68→## Get Our Official Mobile App
-  …
-  87→## Like what we're doing? Give us a Star ⭐
-  …
-  91→## We're building our Community 🌐
-  …
-  101→## Suggestions
-  …
-  105→## Roadmap
-  …
-  109→## Community Projects
-  …
-  119→## Development
-  …
-  123→# Translations
-  …
-  132→## Security
-  …
 apps/
   mobile/
     .easignore
@@ -189,6 +169,61 @@ apps/
     next.config.js
     package.json
     pages/
+      _app.tsx
+      _document.tsx
+      admin/
+        background-jobs.tsx
+        index.tsx
+        user-administration.tsx
+      api/
+        v1/
+        v2/
+          dashboard/
+            index.ts
+      auth/
+        reset-password.tsx
+        verify-email.tsx
+      collections/
+        [id].tsx
+        index.tsx
+      confirmation.tsx
+      dashboard.tsx
+      forgot.tsx
+      index.tsx
+      links/
+        [id].tsx
+        index.tsx
+        pinned.tsx
+      login.tsx
+      member-onboarding.tsx
+      preserved/
+        [id].tsx
+      public/
+        collections/
+          [id]/
+            index.tsx
+            rss.tsx
+        links/
+          [id].tsx
+        preserved/
+          [id].tsx
+      register.tsx
+      search.tsx
+      settings/
+        access-tokens.tsx
+        account.tsx
+        background-jobs.tsx
+        billing.tsx
+        delete.tsx
+        index.tsx
+        password.tsx
+        preference.tsx
+        rss-subscriptions.tsx
+        worker.tsx
+      subscribe.tsx
+      tags/
+        [id].tsx
+        index.tsx
     playwright.config.ts
     postcss.config.js
     public/
@@ -326,19 +361,6 @@ packages/
       35→  image                   String?
       36→  password                String?
       37→  locale                  String                @default("en")
-      38→  parentSubscription      Subscription?         @relation("ChildUsers", fields: [parentSubscriptionId], references: [id])
-      39→  parentSubscriptionId    Int?
-      40→  accounts                Account[]
-      41→  collections             Collection[]
-      42→  tags                    Tag[]
-      43→  pinnedLinks             Link[]                @relation("PinnedLinks")
-      44→  createdLinks            Link[]                @relation("CreatedLinks")
-      45→  createdCollections      Collection[]          @relation("CreatedCollections")
-      46→  highlights              Highlight[]
-      47→  collectionsJoined       UsersAndCollections[]
-      48→  collectionOrder         Int[]                 @default([])
-      49→  whitelistedUsers        WhitelistedUser[]
-      50→  accessTokens            AccessToken[]
       …
       77→enum Theme {
       78→  dark

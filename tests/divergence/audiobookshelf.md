@@ -1,4 +1,4 @@
-Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.544/0.775/0.768/0.685/0.651
+Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.735/0.687/0.543/0.775/0.757/0.685/0.651
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,12 +20,12 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 405 | 65 | Fs::DirListing { dir: client } |  |  | 0.933 |
 | walker |  | 409 | 4 | Fs::DirListing { dir: client/middleware } |  |  | 0.933 |
 | walker |  | 418 | 9 | Fs::DirListing { dir: client/cypress } |  |  | 0.933 |
-| walker |  | 430 | 12 | Fs::DirListing { dir: client/layouts } |  |  | 0.933 |
-| walker |  | 447 | 17 | Fs::DirListing { dir: client/mixins } |  |  | 0.933 |
-| walker |  | 460 | 13 | Fs::DirListing { dir: client/cypress/support } |  |  | 0.933 |
-| walker |  | 486 | 26 | Fs::DirListing { dir: client/players } |  |  | 0.934 |
+| walker |  | 446 | 28 | Fs::DirListing { dir: client/store } |  |  | 0.933 |
+| walker |  | 458 | 12 | Fs::DirListing { dir: client/layouts } |  |  | 0.934 |
+| walker |  | 475 | 17 | Fs::DirListing { dir: client/mixins } |  |  | 0.934 |
+| walker |  | 488 | 13 | Fs::DirListing { dir: client/cypress/support } |  |  | 0.934 |
 | ns | 489 |  | 170 | Feature list, part 1 (streaming, podcasts, users, uploads) | 1.6 |  | 0.853 |
-| walker |  | 514 | 28 | Fs::DirListing { dir: client/store } |  |  | 0.854 |
+| walker |  | 514 | 26 | Fs::DirListing { dir: client/players } |  |  | 0.854 |
 | walker |  | 544 | 30 | Fs::DirListing { dir: docs/controllers } |  |  | 0.855 |
 | walker |  | 577 | 33 | Fs::DirListing { dir: docs/objects } |  |  | 0.857 |
 | walker |  | 582 | 5 | Fs::DirListing { dir: docs/objects/settings } |  |  | 0.857 |
@@ -46,64 +46,64 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 842 | 21 | Fs::DirListing { dir: docs/objects/metadata } |  |  | 0.787 |
 | walker |  | 848 | 6 | Fs::DirListing { dir: client/cypress/tests } |  |  | 0.787 |
 | walker |  | 851 | 3 | Fs::DirListing { dir: client/cypress/tests/components } |  |  | 0.787 |
-| walker |  | 917 | 66 | Json::Identity { file: client/package.json } |  |  | 0.787 |
-| walker |  | 929 | 12 | Json::Entry { file: client/package.json } |  |  | 0.787 |
-| walker |  | 978 | 49 | Fs::DirListing { dir: server/providers } |  |  | 0.732 |
-| ns | 978 |  | 211 | index.js: the complete CLI option table | 1.9 |  | 0.732 |
-| walker |  | 994 | 16 | Fs::DirListing { dir: .vscode } |  |  | 0.732 |
-| walker |  | 1020 | 26 | Fs::DirListing { dir: client/components/readers } |  |  | 0.732 |
-| walker |  | 1071 | 51 | Fs::DirListing { dir: client/pages } |  |  | 0.733 |
-| walker |  | 1075 | 4 | Fs::DirListing { dir: client/pages/audiobook } |  |  | 0.733 |
-| walker |  | 1079 | 4 | Fs::DirListing { dir: client/pages/batch } |  |  | 0.733 |
-| walker |  | 1083 | 4 | Fs::DirListing { dir: client/pages/item } |  |  | 0.733 |
-| walker |  | 1087 | 4 | Fs::DirListing { dir: client/pages/library } |  |  | 0.733 |
-| walker |  | 1091 | 4 | Fs::DirListing { dir: client/pages/upload } |  |  | 0.733 |
-| walker |  | 1096 | 5 | Fs::DirListing { dir: client/pages/author } |  |  | 0.733 |
-| walker |  | 1101 | 5 | Fs::DirListing { dir: client/pages/collection } |  |  | 0.733 |
-| walker |  | 1106 | 5 | Fs::DirListing { dir: client/pages/playlist } |  |  | 0.733 |
-| walker |  | 1111 | 5 | Fs::DirListing { dir: client/pages/share } |  |  | 0.733 |
-| walker |  | 1115 | 4 | Fs::DirListing { dir: client/pages/item/_id } |  |  | 0.733 |
-| walker |  | 1127 | 12 | Fs::DirListing { dir: client/pages/audiobook/_id } |  |  | 0.734 |
-| walker |  | 1179 | 52 | Fs::DirListing { dir: server/objects } |  |  | 0.736 |
-| walker |  | 1190 | 11 | Fs::DirListing { dir: server/objects/metadata } |  |  | 0.737 |
-| walker |  | 1205 | 15 | Fs::DirListing { dir: server/objects/settings } |  |  | 0.738 |
-| walker |  | 1226 | 21 | Fs::DirListing { dir: server/objects/files } |  |  | 0.739 |
-| ns | 1256 |  | 278 | index.js: config resolution and Server construction | 1.10 |  | 0.683 |
-| walker |  | 1280 | 54 | Fs::DirListing { dir: client/static } |  |  | 0.683 |
-| walker |  | 1283 | 3 | Fs::DirListing { dir: client/static/libs } |  |  | 0.683 |
-| walker |  | 1288 | 5 | Fs::DirListing { dir: client/static/textures } |  |  | 0.683 |
-| walker |  | 1298 | 10 | Fs::DirListing { dir: client/static/libarchive } |  |  | 0.683 |
-| walker |  | 1305 | 7 | Fs::DirListing { dir: client/static/libs/marked } |  |  | 0.683 |
-| walker |  | 1316 | 11 | Fs::DirListing { dir: client/static/libarchive/wasm-gen } |  |  | 0.683 |
-| walker |  | 1340 | 24 | Fs::DirListing { dir: client/static/fonts } |  |  | 0.683 |
-| walker |  | 1351 | 11 | Fs::DirListing { dir: client/static/fonts/Ubuntu_Mono } |  |  | 0.683 |
-| walker |  | 1369 | 18 | Fs::DirListing { dir: .devcontainer } |  |  | 0.683 |
-| walker |  | 1399 | 30 | Fs::DirListing { dir: client/components/covers } |  |  | 0.683 |
-| walker |  | 1466 | 67 | Fs::DirListing { dir: .github/workflows } |  |  | 0.684 |
-| walker |  | 1488 | 22 | Fs::DirListing { dir: client/static/fonts/absicons } |  |  | 0.684 |
-| walker |  | 1526 | 38 | Fs::DirListing { dir: client/components/controls } |  |  | 0.684 |
-| walker |  | 1601 | 75 | Fs::DirListing { dir: server/scanner } |  |  | 0.689 |
-| walker |  | 1644 | 43 | Fs::DirListing { dir: client/components/stats } |  |  | 0.689 |
-| walker |  | 1670 | 26 | Fs::DirListing { dir: client/pages/library/_library } |  |  | 0.690 |
-| walker |  | 1675 | 5 | Fs::DirListing { dir: client/pages/library/_library/bookshelf } |  |  | 0.690 |
-| walker |  | 1680 | 5 | Fs::DirListing { dir: client/pages/library/_library/series } |  |  | 0.690 |
-| walker |  | 1694 | 14 | Fs::DirListing { dir: client/pages/library/_library/podcast } |  |  | 0.691 |
-| ns | 1698 |  | 442 | Server runtime + dev dependency stack | 1.11 |  | 0.612 |
-| walker |  | 1722 | 28 | Fs::DirListing { dir: client/static/fonts/Source_Sans_Pro } |  |  | 0.612 |
-| walker |  | 1819 | 97 | Fs::DirListing { dir: server/managers } |  |  | 0.617 |
-| walker |  | 1871 | 52 | Fs::DirListing { dir: client/components/app } |  |  | 0.617 |
-| ns | 1879 |  | 181 | client/package.json: scripts (nuxt generate, cypress) | 1.12 |  | 0.595 |
-| walker |  | 1927 | 56 | Fs::DirListing { dir: client/pages/config } |  |  | 0.598 |
-| walker |  | 1931 | 4 | Fs::DirListing { dir: client/pages/config/api-keys } |  |  | 0.598 |
-| walker |  | 1939 | 8 | Fs::DirListing { dir: client/pages/config/users } |  |  | 0.598 |
-| ns | 1943 |  | 64 | readme top-level section headings | 1.13 |  | 0.586 |
-| walker |  | 1947 | 8 | Fs::DirListing { dir: client/pages/config/users/_id } |  |  | 0.586 |
-| walker |  | 1967 | 20 | Fs::DirListing { dir: client/pages/config/item-metadata-utils } |  |  | 0.587 |
-| walker |  | 2078 | 111 | Fs::DirListing { dir: server/utils } |  |  | 0.589 |
-| ns | 2080 |  | 137 | server/routers + server/controllers rosters (complete) | 2.1 |  | 0.544 |
-| walker |  | 2095 | 17 | Fs::DirListing { dir: server/utils/migrations } |  |  | 0.545 |
-| walker |  | 2114 | 19 | Fs::DirListing { dir: server/utils/generators } |  |  | 0.545 |
-| walker |  | 2159 | 45 | Fs::DirListing { dir: server/utils/queries } |  |  | 0.547 |
+| walker |  | 962 | 111 | Fs::DirListing { dir: server/utils } |  |  | 0.790 |
+| ns | 978 |  | 211 | index.js: the complete CLI option table | 1.9 |  | 0.734 |
+| walker |  | 979 | 17 | Fs::DirListing { dir: server/utils/migrations } |  |  | 0.735 |
+| walker |  | 998 | 19 | Fs::DirListing { dir: server/utils/generators } |  |  | 0.735 |
+| walker |  | 1064 | 66 | Json::Identity { file: client/package.json } |  |  | 0.735 |
+| walker |  | 1076 | 12 | Json::Entry { file: client/package.json } |  |  | 0.735 |
+| walker |  | 1125 | 49 | Fs::DirListing { dir: server/providers } |  |  | 0.737 |
+| walker |  | 1141 | 16 | Fs::DirListing { dir: .vscode } |  |  | 0.737 |
+| walker |  | 1167 | 26 | Fs::DirListing { dir: client/components/readers } |  |  | 0.737 |
+| walker |  | 1218 | 51 | Fs::DirListing { dir: client/pages } |  |  | 0.738 |
+| walker |  | 1222 | 4 | Fs::DirListing { dir: client/pages/audiobook } |  |  | 0.738 |
+| walker |  | 1226 | 4 | Fs::DirListing { dir: client/pages/batch } |  |  | 0.738 |
+| walker |  | 1230 | 4 | Fs::DirListing { dir: client/pages/item } |  |  | 0.738 |
+| walker |  | 1234 | 4 | Fs::DirListing { dir: client/pages/library } |  |  | 0.738 |
+| walker |  | 1238 | 4 | Fs::DirListing { dir: client/pages/upload } |  |  | 0.738 |
+| walker |  | 1243 | 5 | Fs::DirListing { dir: client/pages/author } |  |  | 0.738 |
+| walker |  | 1248 | 5 | Fs::DirListing { dir: client/pages/collection } |  |  | 0.738 |
+| walker |  | 1253 | 5 | Fs::DirListing { dir: client/pages/playlist } |  |  | 0.738 |
+| ns | 1256 |  | 278 | index.js: config resolution and Server construction | 1.10 |  | 0.681 |
+| walker |  | 1258 | 5 | Fs::DirListing { dir: client/pages/share } |  |  | 0.681 |
+| walker |  | 1262 | 4 | Fs::DirListing { dir: client/pages/item/_id } |  |  | 0.682 |
+| walker |  | 1274 | 12 | Fs::DirListing { dir: client/pages/audiobook/_id } |  |  | 0.682 |
+| walker |  | 1326 | 52 | Fs::DirListing { dir: server/objects } |  |  | 0.684 |
+| walker |  | 1337 | 11 | Fs::DirListing { dir: server/objects/metadata } |  |  | 0.685 |
+| walker |  | 1352 | 15 | Fs::DirListing { dir: server/objects/settings } |  |  | 0.686 |
+| walker |  | 1373 | 21 | Fs::DirListing { dir: server/objects/files } |  |  | 0.687 |
+| walker |  | 1427 | 54 | Fs::DirListing { dir: client/static } |  |  | 0.687 |
+| walker |  | 1430 | 3 | Fs::DirListing { dir: client/static/libs } |  |  | 0.687 |
+| walker |  | 1437 | 7 | Fs::DirListing { dir: client/static/libs/marked } |  |  | 0.687 |
+| walker |  | 1442 | 5 | Fs::DirListing { dir: client/static/textures } |  |  | 0.687 |
+| walker |  | 1452 | 10 | Fs::DirListing { dir: client/static/libarchive } |  |  | 0.687 |
+| walker |  | 1463 | 11 | Fs::DirListing { dir: client/static/libarchive/wasm-gen } |  |  | 0.687 |
+| walker |  | 1487 | 24 | Fs::DirListing { dir: client/static/fonts } |  |  | 0.687 |
+| walker |  | 1498 | 11 | Fs::DirListing { dir: client/static/fonts/Ubuntu_Mono } |  |  | 0.687 |
+| walker |  | 1516 | 18 | Fs::DirListing { dir: .devcontainer } |  |  | 0.687 |
+| walker |  | 1546 | 30 | Fs::DirListing { dir: client/components/covers } |  |  | 0.687 |
+| walker |  | 1613 | 67 | Fs::DirListing { dir: .github/workflows } |  |  | 0.688 |
+| walker |  | 1635 | 22 | Fs::DirListing { dir: client/static/fonts/absicons } |  |  | 0.688 |
+| walker |  | 1673 | 38 | Fs::DirListing { dir: client/components/controls } |  |  | 0.688 |
+| ns | 1698 |  | 442 | Server runtime + dev dependency stack | 1.11 |  | 0.609 |
+| walker |  | 1748 | 75 | Fs::DirListing { dir: server/scanner } |  |  | 0.614 |
+| walker |  | 1791 | 43 | Fs::DirListing { dir: client/components/stats } |  |  | 0.614 |
+| walker |  | 1817 | 26 | Fs::DirListing { dir: client/pages/library/_library } |  |  | 0.615 |
+| walker |  | 1822 | 5 | Fs::DirListing { dir: client/pages/library/_library/bookshelf } |  |  | 0.615 |
+| walker |  | 1827 | 5 | Fs::DirListing { dir: client/pages/library/_library/series } |  |  | 0.615 |
+| walker |  | 1841 | 14 | Fs::DirListing { dir: client/pages/library/_library/podcast } |  |  | 0.616 |
+| ns | 1879 |  | 181 | client/package.json: scripts (nuxt generate, cypress) | 1.12 |  | 0.594 |
+| walker |  | 1886 | 45 | Fs::DirListing { dir: server/utils/queries } |  |  | 0.596 |
+| walker |  | 1914 | 28 | Fs::DirListing { dir: client/static/fonts/Source_Sans_Pro } |  |  | 0.596 |
+| ns | 1943 |  | 64 | readme top-level section headings | 1.13 |  | 0.584 |
+| walker |  | 2011 | 97 | Fs::DirListing { dir: server/managers } |  |  | 0.588 |
+| walker |  | 2063 | 52 | Fs::DirListing { dir: client/components/app } |  |  | 0.588 |
+| ns | 2080 |  | 137 | server/routers + server/controllers rosters (complete) | 2.1 |  | 0.543 |
+| walker |  | 2119 | 56 | Fs::DirListing { dir: client/pages/config } |  |  | 0.546 |
+| walker |  | 2123 | 4 | Fs::DirListing { dir: client/pages/config/api-keys } |  |  | 0.546 |
+| walker |  | 2131 | 8 | Fs::DirListing { dir: client/pages/config/users } |  |  | 0.546 |
+| walker |  | 2139 | 8 | Fs::DirListing { dir: client/pages/config/users/_id } |  |  | 0.546 |
+| walker |  | 2159 | 20 | Fs::DirListing { dir: client/pages/config/item-metadata-utils } |  |  | 0.547 |
 | ns | 2196 |  | 116 | server/models roster (complete Sequelize entity set) | 2.2 |  | 0.510 |
 | walker |  | 2275 | 116 | Fs::DirListing { dir: server/models } |  |  | 0.605 |
 | ns | 2293 |  | 97 | server/managers roster (complete) | 2.3 |  | 0.632 |
@@ -137,120 +137,120 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 2798 | 14 | Fs::DirListing { dir: server/libs/busboy } |  |  | 0.766 |
 | walker |  | 2813 | 15 | Fs::DirListing { dir: server/libs/isexe } |  |  | 0.766 |
 | ns | 2815 |  | 118 | server/auth + server/objects tree rosters | 2.6 |  | 0.775 |
-| walker |  | 2822 | 9 | Fs::DirListing { dir: server/libs/busboy/types } |  |  | 0.775 |
-| walker |  | 2840 | 18 | Fs::DirListing { dir: server/libs/readChunk } |  |  | 0.775 |
-| walker |  | 2862 | 22 | Fs::DirListing { dir: server/libs/jsonwebtoken } |  |  | 0.775 |
-| walker |  | 2885 | 23 | Fs::DirListing { dir: server/libs/umzug } |  |  | 0.775 |
-| walker |  | 2909 | 24 | Fs::DirListing { dir: server/libs/jwa } |  |  | 0.775 |
-| walker |  | 2916 | 7 | Fs::DirListing { dir: server/libs/jwa/buffer-equal-constant-time } |  |  | 0.775 |
-| walker |  | 2940 | 24 | Fs::DirListing { dir: server/libs/libarchive } |  |  | 0.775 |
-| walker |  | 2956 | 16 | Fs::DirListing { dir: server/libs/jwa/ecdsa-sig-formatter } |  |  | 0.775 |
-| walker |  | 2975 | 19 | Fs::DirListing { dir: server/libs/jws/lib } |  |  | 0.775 |
-| walker |  | 3012 | 37 | Fs::DirListing { dir: server/libs/fsExtra } |  |  | 0.775 |
-| walker |  | 3016 | 4 | Fs::DirListing { dir: server/libs/fsExtra/empty } |  |  | 0.775 |
-| walker |  | 3020 | 4 | Fs::DirListing { dir: server/libs/fsExtra/fs } |  |  | 0.775 |
+| walker |  | 2831 | 18 | Fs::DirListing { dir: server/libs/readChunk } |  |  | 0.775 |
+| walker |  | 2853 | 22 | Fs::DirListing { dir: server/libs/jsonwebtoken } |  |  | 0.775 |
+| walker |  | 2876 | 23 | Fs::DirListing { dir: server/libs/umzug } |  |  | 0.775 |
+| walker |  | 2900 | 24 | Fs::DirListing { dir: server/libs/jwa } |  |  | 0.775 |
+| walker |  | 2907 | 7 | Fs::DirListing { dir: server/libs/jwa/buffer-equal-constant-time } |  |  | 0.775 |
+| walker |  | 2923 | 16 | Fs::DirListing { dir: server/libs/jwa/ecdsa-sig-formatter } |  |  | 0.775 |
+| walker |  | 2947 | 24 | Fs::DirListing { dir: server/libs/umzug/storage } |  |  | 0.775 |
+| walker |  | 2984 | 37 | Fs::DirListing { dir: server/libs/fsExtra } |  |  | 0.775 |
+| walker |  | 2988 | 4 | Fs::DirListing { dir: server/libs/fsExtra/empty } |  |  | 0.775 |
+| walker |  | 2992 | 4 | Fs::DirListing { dir: server/libs/fsExtra/fs } |  |  | 0.775 |
+| walker |  | 2996 | 4 | Fs::DirListing { dir: server/libs/fsExtra/path-exists } |  |  | 0.775 |
+| walker |  | 3005 | 9 | Fs::DirListing { dir: server/libs/fsExtra/remove } |  |  | 0.775 |
+| walker |  | 3018 | 13 | Fs::DirListing { dir: server/libs/fsExtra/copy } |  |  | 0.775 |
 | ns | 3023 |  | 208 | server/migrations roster (complete, version-named) | 2.7 |  | 0.755 |
-| walker |  | 3024 | 4 | Fs::DirListing { dir: server/libs/fsExtra/path-exists } |  |  | 0.755 |
-| walker |  | 3033 | 9 | Fs::DirListing { dir: server/libs/fsExtra/remove } |  |  | 0.755 |
-| walker |  | 3042 | 9 | Fs::DirListing { dir: server/libs/fsExtra/util } |  |  | 0.755 |
-| walker |  | 3055 | 13 | Fs::DirListing { dir: server/libs/fsExtra/copy } |  |  | 0.755 |
-| walker |  | 3068 | 13 | Fs::DirListing { dir: server/libs/fsExtra/mkdirs } |  |  | 0.755 |
-| walker |  | 3081 | 13 | Fs::DirListing { dir: server/libs/fsExtra/move } |  |  | 0.755 |
-| walker |  | 3120 | 39 | Fs::DirListing { dir: server/libs/fluentFfmpeg } |  |  | 0.755 |
-| walker |  | 3134 | 14 | Fs::DirListing { dir: server/libs/fluentFfmpeg/presets } |  |  | 0.755 |
-| walker |  | 3158 | 24 | Fs::DirListing { dir: server/libs/jsonwebtoken/lib } |  |  | 0.755 |
-| walker |  | 3182 | 24 | Fs::DirListing { dir: server/libs/umzug/storage } |  |  | 0.755 |
+| walker |  | 3031 | 13 | Fs::DirListing { dir: server/libs/fsExtra/mkdirs } |  |  | 0.755 |
+| walker |  | 3044 | 13 | Fs::DirListing { dir: server/libs/fsExtra/move } |  |  | 0.755 |
+| walker |  | 3074 | 30 | Fs::DirListing { dir: server/libs/fsExtra/ensure } |  |  | 0.755 |
+| walker |  | 3113 | 39 | Fs::DirListing { dir: server/libs/fluentFfmpeg } |  |  | 0.755 |
+| walker |  | 3158 | 45 | Fs::DirListing { dir: server/libs/nodeCron } |  |  | 0.755 |
+| walker |  | 3166 | 8 | Fs::DirListing { dir: server/libs/nodeCron/background-scheduled-task } |  |  | 0.755 |
+| walker |  | 3209 | 43 | Fs::DirListing { dir: server/libs/nodeCron/convert-expression } |  |  | 0.755 |
 | ns | 3214 |  | 191 | client/pages roster (complete SPA route tree) | 2.8 |  | 0.770 |
-| walker |  | 3227 | 45 | Fs::DirListing { dir: server/libs/nodeCron } |  |  | 0.770 |
-| walker |  | 3235 | 8 | Fs::DirListing { dir: server/libs/nodeCron/background-scheduled-task } |  |  | 0.770 |
-| walker |  | 3283 | 48 | Fs::DirListing { dir: server/libs/expressFileupload } |  |  | 0.770 |
-| walker |  | 3332 | 49 | Fs::DirListing { dir: server/libs/archiver } |  |  | 0.770 |
-| walker |  | 3339 | 7 | Fs::DirListing { dir: server/libs/archiver/buffer-crc32 } |  |  | 0.770 |
-| walker |  | 3346 | 7 | Fs::DirListing { dir: server/libs/archiver/crc32 } |  |  | 0.770 |
-| walker |  | 3353 | 7 | Fs::DirListing { dir: server/libs/archiver/normalize-path } |  |  | 0.770 |
-| walker |  | 3360 | 7 | Fs::DirListing { dir: server/libs/archiver/readdir-glob } |  |  | 0.770 |
-| walker |  | 3367 | 7 | Fs::DirListing { dir: server/libs/archiver/zip-stream } |  |  | 0.770 |
+| walker |  | 3257 | 48 | Fs::DirListing { dir: server/libs/expressFileupload } |  |  | 0.770 |
+| walker |  | 3306 | 49 | Fs::DirListing { dir: server/libs/archiver } |  |  | 0.770 |
+| walker |  | 3313 | 7 | Fs::DirListing { dir: server/libs/archiver/buffer-crc32 } |  |  | 0.770 |
+| walker |  | 3320 | 7 | Fs::DirListing { dir: server/libs/archiver/crc32 } |  |  | 0.770 |
+| walker |  | 3327 | 7 | Fs::DirListing { dir: server/libs/archiver/normalize-path } |  |  | 0.770 |
+| walker |  | 3334 | 7 | Fs::DirListing { dir: server/libs/archiver/readdir-glob } |  |  | 0.770 |
+| walker |  | 3341 | 7 | Fs::DirListing { dir: server/libs/archiver/zip-stream } |  |  | 0.770 |
+| walker |  | 3355 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons } |  |  | 0.770 |
+| walker |  | 3359 | 4 | Fs::DirListing { dir: server/libs/archiver/compress-commons/util } |  |  | 0.770 |
 | ns | 3377 |  | 163 | client component categories + store/plugins/players/mixins rosters | 2.9 |  | 0.780 |
-| walker |  | 3378 | 11 | Fs::DirListing { dir: server/libs/archiver/lib } |  |  | 0.780 |
-| walker |  | 3386 | 8 | Fs::DirListing { dir: server/libs/archiver/lib/plugins } |  |  | 0.780 |
-| walker |  | 3400 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons } |  |  | 0.780 |
-| walker |  | 3404 | 4 | Fs::DirListing { dir: server/libs/archiver/compress-commons/util } |  |  | 0.780 |
-| walker |  | 3418 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers } |  |  | 0.780 |
-| walker |  | 3440 | 22 | Fs::DirListing { dir: server/libs/archiver/crc32-stream } |  |  | 0.780 |
-| walker |  | 3469 | 29 | Fs::DirListing { dir: server/libs/fluentFfmpeg/options } |  |  | 0.780 |
-| walker |  | 3499 | 30 | Fs::DirListing { dir: server/libs/fsExtra/ensure } |  |  | 0.780 |
-| walker |  | 3542 | 43 | Fs::DirListing { dir: server/libs/nodeCron/convert-expression } |  |  | 0.780 |
+| walker |  | 3381 | 22 | Fs::DirListing { dir: server/libs/archiver/crc32-stream } |  |  | 0.780 |
+| walker |  | 3390 | 9 | Fs::DirListing { dir: server/libs/busboy/types } |  |  | 0.780 |
+| walker |  | 3399 | 9 | Fs::DirListing { dir: server/libs/fsExtra/util } |  |  | 0.780 |
+| walker |  | 3471 | 72 | Fs::DirListing { dir: server/libs/archiver/archiverUtils } |  |  | 0.780 |
+| walker |  | 3478 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/balancedMatch } |  |  | 0.780 |
+| walker |  | 3485 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/braceExpansion } |  |  | 0.780 |
+| walker |  | 3492 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/inflight } |  |  | 0.780 |
+| walker |  | 3499 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.difference } |  |  | 0.780 |
+| walker |  | 3506 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.flatten } |  |  | 0.780 |
+| walker |  | 3513 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.isplainobject } |  |  | 0.780 |
+| walker |  | 3520 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.union } |  |  | 0.780 |
+| walker |  | 3527 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/minimatch } |  |  | 0.780 |
+| walker |  | 3534 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/safeBuffer } |  |  | 0.780 |
+| walker |  | 3541 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/stringDecoder } |  |  | 0.780 |
+| walker |  | 3548 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/wrappy } |  |  | 0.780 |
+| walker |  | 3559 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/fsRealpath } |  |  | 0.780 |
+| walker |  | 3570 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream } |  |  | 0.780 |
+| walker |  | 3585 | 15 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/glob } |  |  | 0.780 |
+| walker |  | 3640 | 55 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream } |  |  | 0.780 |
+| walker |  | 3644 | 4 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/stream } |  |  | 0.780 |
+| walker |  | 3655 | 11 | Fs::DirListing { dir: server/libs/archiver/lib } |  |  | 0.780 |
+| walker |  | 3663 | 8 | Fs::DirListing { dir: server/libs/archiver/lib/plugins } |  |  | 0.780 |
 | ns | 3665 |  | 288 | test/ tree roster (complete mocha suite) | 2.10 |  | 0.746 |
-| walker |  | 3709 | 167 | Fs::DirListing { dir: client/strings } |  |  | 0.746 |
-| walker |  | 3806 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.746 |
-| walker |  | 3812 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.746 |
-| walker |  | 3818 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.755 |
+| walker |  | 3677 | 14 | Fs::DirListing { dir: server/libs/fluentFfmpeg/presets } |  |  | 0.746 |
+| walker |  | 3701 | 24 | Fs::DirListing { dir: server/libs/libarchive } |  |  | 0.746 |
+| walker |  | 3708 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/internal } |  |  | 0.746 |
+| walker |  | 3727 | 19 | Fs::DirListing { dir: server/libs/jws/lib } |  |  | 0.746 |
+| walker |  | 3741 | 14 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers } |  |  | 0.746 |
+| walker |  | 3765 | 24 | Fs::DirListing { dir: server/libs/jsonwebtoken/lib } |  |  | 0.746 |
+| walker |  | 3794 | 29 | Fs::DirListing { dir: server/libs/fluentFfmpeg/options } |  |  | 0.746 |
+| walker |  | 3807 | 13 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream } |  |  | 0.746 |
 | ns | 3818 |  | 153 | docs/ OpenAPI spec tree roster (complete) | 2.11 |  | 0.755 |
-| walker |  | 3828 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.755 |
-| walker |  | 3846 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.755 |
-| walker |  | 3944 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.755 |
+| walker |  | 3825 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/ours } |  |  | 0.755 |
 | ns | 3962 |  | 144 | server/libs roster: 35 vendored third-party packages | 2.12 |  | 0.762 |
-| walker |  | 3971 | 27 | Fs::DirListing { dir: test/server } |  |  | 0.764 |
-| walker |  | 3993 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.767 |
-| walker |  | 4096 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.767 |
-| walker |  | 4104 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.767 |
-| walker |  | 4116 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.767 |
-| walker |  | 4129 | 13 | Fs::DirListing { dir: server/libs/watcher/ripstat } |  |  | 0.767 |
-| ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.757 |
-| walker |  | 4166 | 37 | Fs::DirListing { dir: server/libs/watcher/atomically/utils } |  |  | 0.757 |
-| walker |  | 4374 | 208 | Fs::DirListing { dir: server/migrations } |  |  | 0.776 |
-| walker |  | 4422 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
-| ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.758 |
-| walker |  | 4706 | 284 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 1, sub: 0, line: 5 } |  |  | 0.758 |
+| walker |  | 3992 | 167 | Fs::DirListing { dir: client/strings } |  |  | 0.762 |
+| walker |  | 4089 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.762 |
+| walker |  | 4095 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.762 |
+| walker |  | 4101 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.762 |
+| walker |  | 4111 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.762 |
+| walker |  | 4129 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.762 |
+| ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.752 |
+| walker |  | 4227 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.753 |
+| walker |  | 4254 | 27 | Fs::DirListing { dir: test/server } |  |  | 0.755 |
+| walker |  | 4276 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.757 |
+| walker |  | 4379 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.757 |
+| walker |  | 4391 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.757 |
+| walker |  | 4404 | 13 | Fs::DirListing { dir: server/libs/watcher/ripstat } |  |  | 0.757 |
+| walker |  | 4412 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.757 |
+| ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.740 |
+| walker |  | 4449 | 37 | Fs::DirListing { dir: server/libs/watcher/atomically/utils } |  |  | 0.740 |
+| walker |  | 4657 | 208 | Fs::DirListing { dir: server/migrations } |  |  | 0.758 |
+| walker |  | 4705 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
 | ns | 4806 |  | 380 | API routes: libraries | 3.3 | 3.2 | 0.737 |
-| walker |  | 4820 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.737 |
-| walker |  | 4892 | 72 | Fs::DirListing { dir: server/libs/archiver/archiverUtils } |  |  | 0.737 |
-| walker |  | 4899 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/balancedMatch } |  |  | 0.737 |
-| walker |  | 4906 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/braceExpansion } |  |  | 0.737 |
-| walker |  | 4913 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/inflight } |  |  | 0.737 |
-| walker |  | 4920 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.difference } |  |  | 0.737 |
-| walker |  | 4927 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.flatten } |  |  | 0.737 |
-| walker |  | 4934 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.isplainobject } |  |  | 0.737 |
-| walker |  | 4941 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.union } |  |  | 0.737 |
-| walker |  | 4948 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/minimatch } |  |  | 0.737 |
-| walker |  | 4955 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/safeBuffer } |  |  | 0.737 |
-| walker |  | 4962 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/stringDecoder } |  |  | 0.737 |
-| walker |  | 4969 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/wrappy } |  |  | 0.737 |
-| walker |  | 4980 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/fsRealpath } |  |  | 0.737 |
-| walker |  | 4991 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream } |  |  | 0.737 |
-| walker |  | 5006 | 15 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/glob } |  |  | 0.737 |
-| walker |  | 5019 | 13 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream } |  |  | 0.737 |
-| walker |  | 5052 | 33 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.737 |
-| walker |  | 5085 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.741 |
-| walker |  | 5108 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.745 |
-| walker |  | 5152 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.745 |
-| ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.727 |
-| walker |  | 5196 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.727 |
-| walker |  | 5240 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.727 |
-| walker |  | 5284 | 44 | Plaintext::DeclSurface { file: client/pages/index.vue } |  |  | 0.727 |
-| walker |  | 5328 | 44 | Plaintext::DeclSurface { file: client/pages/login.vue } |  |  | 0.727 |
-| walker |  | 5372 | 44 | Plaintext::DeclSurface { file: client/pages/oops.vue } |  |  | 0.727 |
-| walker |  | 5406 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.727 |
+| walker |  | 4989 | 284 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 1, sub: 0, line: 5 } |  |  | 0.737 |
+| walker |  | 5103 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.737 |
+| walker |  | 5136 | 33 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.737 |
+| ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.720 |
+| walker |  | 5169 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.724 |
+| walker |  | 5192 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.727 |
+| walker |  | 5236 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.727 |
+| walker |  | 5280 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.727 |
+| walker |  | 5324 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.727 |
+| walker |  | 5368 | 44 | Plaintext::DeclSurface { file: client/pages/index.vue } |  |  | 0.727 |
+| walker |  | 5412 | 44 | Plaintext::DeclSurface { file: client/pages/login.vue } |  |  | 0.727 |
+| walker |  | 5456 | 44 | Plaintext::DeclSurface { file: client/pages/oops.vue } |  |  | 0.727 |
+| walker |  | 5490 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.727 |
 | ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.710 |
-| walker |  | 5553 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.710 |
-| walker |  | 5558 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.710 |
-| walker |  | 5563 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.710 |
-| walker |  | 5568 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.710 |
-| walker |  | 5574 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.710 |
-| walker |  | 5582 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.710 |
-| walker |  | 5594 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.710 |
-| walker |  | 5606 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.710 |
-| walker |  | 5621 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.710 |
-| walker |  | 5637 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.710 |
-| walker |  | 5654 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.710 |
-| walker |  | 5689 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.710 |
-| walker |  | 5699 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.710 |
-| walker |  | 5736 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.710 |
-| walker |  | 5768 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.710 |
-| walker |  | 5823 | 55 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream } |  |  | 0.710 |
-| walker |  | 5827 | 4 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/stream } |  |  | 0.710 |
-| walker |  | 5834 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/internal } |  |  | 0.710 |
-| walker |  | 5852 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/ours } |  |  | 0.710 |
+| walker |  | 5637 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.710 |
+| walker |  | 5642 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.710 |
+| walker |  | 5647 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.710 |
+| walker |  | 5652 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.710 |
+| walker |  | 5658 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.710 |
+| walker |  | 5666 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.710 |
+| walker |  | 5678 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.710 |
+| walker |  | 5690 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.710 |
+| walker |  | 5705 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.710 |
+| walker |  | 5721 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.710 |
+| walker |  | 5738 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.710 |
+| walker |  | 5773 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.710 |
+| walker |  | 5783 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.710 |
+| walker |  | 5820 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.710 |
+| walker |  | 5852 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.710 |
 | ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.694 |
 | walker |  | 6006 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.696 |
 | ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.685 |

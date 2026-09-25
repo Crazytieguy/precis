@@ -1,12 +1,12 @@
-Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.858/0.851/0.847/0.836/0.755/0.597/0.507
+Score(3000)=0.829 I=0.935 C=0.734 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.858/0.851/0.846/0.829/0.755/0.597/0.507
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 62 | 62 | Fs::DirListing { dir: . } |  |  | 1.000 |
 | ns | 62 |  | 62 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 75 | 13 | Fs::DirListing { dir: cmdk } |  |  | 1.000 |
-| walker |  | 102 | 27 | Json::Identity { file: package.json } |  |  | 1.000 |
-| walker |  | 112 | 10 | Fs::DirListing { dir: cmdk/src } |  |  | 1.000 |
+| walker |  | 85 | 10 | Fs::DirListing { dir: cmdk/src } |  |  | 1.000 |
+| walker |  | 112 | 27 | Json::Identity { file: package.json } |  |  | 1.000 |
 | walker |  | 154 | 42 | Json::Identity { file: cmdk/package.json } |  |  | 1.000 |
 | walker |  | 159 | 5 | Fs::DirListing { dir: .husky } |  |  | 1.000 |
 | walker |  | 167 | 8 | Fs::DirListing { dir: .github } |  |  | 1.000 |
@@ -21,51 +21,51 @@ Score(3000)=0.836 I=0.938 C=0.746 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 545 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.489 |
 | walker |  | 599 | 54 | Fs::DirListing { dir: website } |  |  | 0.594 |
 | walker |  | 613 | 14 | Fs::DirListing { dir: website/components } |  |  | 0.594 |
-| walker |  | 630 | 17 | Fs::DirListing { dir: website/pages } |  |  | 0.594 |
-| walker |  | 688 | 58 | Fs::DirListing { dir: test } |  |  | 0.796 |
-| walker |  | 711 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.797 |
+| walker |  | 623 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.594 |
+| walker |  | 633 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.594 |
+| walker |  | 650 | 17 | Fs::DirListing { dir: website/pages } |  |  | 0.594 |
+| walker |  | 708 | 58 | Fs::DirListing { dir: test } |  |  | 0.796 |
+| walker |  | 731 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.797 |
 | ns | 764 |  | 232 | Root package.json: identity and every workspace script | 1.6 |  | 0.722 |
-| walker |  | 856 | 145 | Json::Entry { file: cmdk/package.json } |  |  | 0.804 |
-| walker |  | 890 | 34 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.845 |
+| walker |  | 876 | 145 | Json::Entry { file: cmdk/package.json } |  |  | 0.804 |
+| walker |  | 910 | 34 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.845 |
 | ns | 1043 |  | 279 | README section map (all H2 + H3 headings) | 1.7 |  | 0.741 |
-| walker |  | 1178 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.880 |
-| walker |  | 1204 | 26 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.910 |
+| walker |  | 1198 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.880 |
+| walker |  | 1224 | 26 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.910 |
 | ns | 1225 |  | 182 | ARCHITECTURE: the core invariant + section map | 1.8 |  | 0.858 |
 | ns | 1361 |  | 136 | README testing steps (verbatim) | 1.9 | 1.7 | 0.789 |
-| walker |  | 1406 | 202 | Json::Scripts { file: package.json } |  |  | 0.851 |
+| walker |  | 1426 | 202 | Json::Scripts { file: package.json } |  |  | 0.851 |
 | ns | 1473 |  | 112 | index.tsx imports + 'use client' | 2.1 |  | 0.822 |
-| walker |  | 1576 | 170 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.823 |
-| walker |  | 1600 | 24 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 1, sub: 0, line: 149 } |  |  | 0.823 |
+| walker |  | 1596 | 170 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.823 |
+| walker |  | 1620 | 24 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 1, sub: 0, line: 149 } |  |  | 0.823 |
 | ns | 1690 |  | 217 | Public export surface (Command.* object + named exports) | 2.2 |  | 0.751 |
-| walker |  | 1884 | 284 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 1, line: 0 } |  |  | 0.802 |
-| walker |  | 1943 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 12, sub: 0, line: 930 } |  |  | 0.845 |
-| walker |  | 1958 | 15 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 13, sub: 0, line: 1004 } |  |  | 0.845 |
-| walker |  | 1984 | 26 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 9, sub: 0, line: 882 } |  |  | 0.845 |
-| walker |  | 2011 | 27 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 899 } |  |  | 0.846 |
-| walker |  | 2041 | 30 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 11, sub: 0, line: 909 } |  |  | 0.846 |
-| walker |  | 2078 | 37 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 5, sub: 0, line: 729 } |  |  | 0.847 |
-| walker |  | 2116 | 38 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 787 } |  |  | 0.848 |
-| ns | 2118 |  | 428 | README FAQ (all twelve entries) | 2.3 | 1.7 | 0.786 |
-| walker |  | 2164 | 48 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 774 } |  |  | 0.788 |
-| walker |  | 2216 | 52 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.790 |
-| walker |  | 2282 | 66 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 4, sub: 0, line: 664 } |  |  | 0.793 |
-| ns | 2297 |  | 179 | Component declaration roster (all nine forwardRef components) | 2.4 |  | 0.799 |
-| walker |  | 2342 | 60 | Fs::DirListing { dir: test/pages } |  |  | 0.800 |
+| walker |  | 1904 | 284 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 1, line: 0 } |  |  | 0.802 |
+| walker |  | 1963 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 12, sub: 0, line: 930 } |  |  | 0.845 |
+| walker |  | 1978 | 15 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 13, sub: 0, line: 1004 } |  |  | 0.845 |
+| walker |  | 2004 | 26 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 9, sub: 0, line: 882 } |  |  | 0.845 |
+| walker |  | 2031 | 27 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 899 } |  |  | 0.846 |
+| walker |  | 2061 | 30 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 11, sub: 0, line: 909 } |  |  | 0.846 |
+| walker |  | 2098 | 37 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 5, sub: 0, line: 729 } |  |  | 0.847 |
+| ns | 2118 |  | 428 | README FAQ (all twelve entries) | 2.3 | 1.7 | 0.785 |
+| walker |  | 2136 | 38 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 787 } |  |  | 0.786 |
+| walker |  | 2184 | 48 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 774 } |  |  | 0.788 |
+| walker |  | 2236 | 52 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 833 } |  |  | 0.790 |
+| ns | 2297 |  | 179 | Component declaration roster (all nine forwardRef components) | 2.4 |  | 0.796 |
+| walker |  | 2302 | 66 | Code::CodeKey { rung: Doc, file: cmdk/src/index.tsx, decl: 4, sub: 0, line: 664 } |  |  | 0.799 |
+| walker |  | 2362 | 60 | Fs::DirListing { dir: test/pages } |  |  | 0.800 |
 | ns | 2406 |  | 109 | Props type roster (all twelve type aliases) | 2.5 |  | 0.773 |
-| walker |  | 2483 | 141 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.834 |
-| walker |  | 2634 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.834 |
+| walker |  | 2503 | 141 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.834 |
+| walker |  | 2654 | 151 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.834 |
 | ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.844 |
-| walker |  | 2814 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.852 |
-| walker |  | 2827 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.852 |
+| walker |  | 2834 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.852 |
+| walker |  | 2847 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.852 |
 | ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.810 |
-| walker |  | 3075 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.858 |
+| walker |  | 3095 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.858 |
 | ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.822 |
-| walker |  | 3371 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.822 |
+| walker |  | 3391 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.822 |
 | ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.797 |
 | ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.776 |
-| walker |  | 3615 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.776 |
-| walker |  | 3625 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.776 |
-| walker |  | 3635 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.776 |
+| walker |  | 3635 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.776 |
 | walker |  | 3661 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
 | ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.760 |
 | ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.755 |

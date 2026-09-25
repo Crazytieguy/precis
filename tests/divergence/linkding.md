@@ -18,10 +18,10 @@ Score(3000)=0.665 I=0.850 C=0.521 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 445 |  | 97 | README feature overview (head) | 1.5 |  | 0.605 |
 | walker |  | 469 | 121 | Fs::DirListing { dir: bookmarks } |  |  | 0.894 |
 | walker |  | 472 | 3 | Fs::DirListing { dir: bookmarks/management } |  |  | 0.894 |
-| walker |  | 492 | 20 | Fs::DirListing { dir: bookmarks/api } |  |  | 0.895 |
-| walker |  | 512 | 20 | Fs::DirListing { dir: bookmarks/templatetags } |  |  | 0.895 |
-| walker |  | 534 | 22 | Fs::DirListing { dir: bookmarks/settings } |  |  | 0.898 |
-| walker |  | 552 | 18 | Fs::DirListing { dir: bookmarks/frontend } |  |  | 0.898 |
+| walker |  | 490 | 18 | Fs::DirListing { dir: bookmarks/frontend } |  |  | 0.894 |
+| walker |  | 510 | 20 | Fs::DirListing { dir: bookmarks/api } |  |  | 0.895 |
+| walker |  | 530 | 20 | Fs::DirListing { dir: bookmarks/templatetags } |  |  | 0.895 |
+| walker |  | 552 | 22 | Fs::DirListing { dir: bookmarks/settings } |  |  | 0.898 |
 | walker |  | 579 | 27 | Fs::DirListing { dir: bookmarks/templates } |  |  | 0.898 |
 | ns | 583 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.856 |
 | walker |  | 584 | 5 | Fs::DirListing { dir: bookmarks/templates/admin } |  |  | 0.856 |

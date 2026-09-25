@@ -371,8 +371,6 @@ server/
       LICENSE
       index.js
       types/
-        multipart.js
-        urlencoded.js
       utils.js
     commandLineArgs/
       index.js
@@ -388,11 +386,17 @@ server/
       LICENSE
       copy/
       empty/
+        index.js
       ensure/
       fs/
+        index.js
       index.js
       mkdirs/
-      …
+      move/
+      path-exists/
+        index.js
+      remove/
+      util/
     fusejs/
       index.js
     imageType/
@@ -425,16 +429,7 @@ server/
       LICENSE
       index.js
       lib/
-        data-stream.js
-        sign-stream.js
-        tostring.js
-        verify-stream.js
     libarchive/
-      LICENSE
-      archive.js
-      libarchiveWorker.js
-      wasm-libarchive.js
-      wasm-module.js
     lodash.once/
       LICENSE
       index.js
@@ -480,6 +475,12 @@ server/
       LICENSE
       index.js
       storage/
+        contract.js
+        index.js
+        json.js
+        memory.js
+        mongodb.js
+        sequelize.js
       templates.js
       types.js
       umzug.js

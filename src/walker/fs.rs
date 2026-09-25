@@ -227,14 +227,11 @@ fn has_module_entrypoint(dir: &Path) -> bool {
         .any(|name| dir.join(name).is_file())
 }
 
+/// A package module: a directory with its own entry file (`index.ts`,
+/// `mod.rs`, `__init__.py`) or a sibling file of the same stem
+/// (`foo.rs` next to `foo/`).
 fn is_module_source_dir(dir: &Path) -> bool {
-    let entrypoint_module = has_module_entrypoint(dir)
-        && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir));
-    entrypoint_module || has_module_sibling_file(dir)
-}
-
-fn has_python_module_entrypoint(dir: &Path) -> bool {
-    dir.join("__init__.py").is_file()
+    has_module_entrypoint(dir) || has_module_sibling_file(dir)
 }
 
 fn has_module_sibling_file(dir: &Path) -> bool {

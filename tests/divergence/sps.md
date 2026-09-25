@@ -1,4 +1,4 @@
-Score(3000)=0.691 I=0.840 C=0.568 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.499/0.454/0.680/0.691/0.678/0.619/0.572
+Score(3000)=0.691 I=0.840 C=0.568 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.525/0.721/0.691/0.678/0.619/0.572
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,43 +25,43 @@ Score(3000)=0.691 I=0.840 C=0.568 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 339 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.439 |
 | walker |  | 356 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.445 |
 | walker |  | 376 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.454 |
-| walker |  | 411 | 35 | Fs::DirListing { dir: sps-common/src } |  |  | 0.465 |
-| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.515 |
-| walker |  | 427 | 16 | Fs::DirListing { dir: sps-common/src/dependency } |  |  | 0.524 |
-| walker |  | 452 | 25 | Fs::DirListing { dir: sps-common/src/model } |  |  | 0.540 |
-| walker |  | 467 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.540 |
-| walker |  | 485 | 18 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.540 |
-| ns | 490 |  | 77 | Per-crate one-line role | 1.6 |  | 0.510 |
-| walker |  | 501 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.511 |
-| walker |  | 518 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/info.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
-| walker |  | 535 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/update.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.511 |
+| walker |  | 391 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.455 |
+| walker |  | 407 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.456 |
+| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.505 |
+| walker |  | 442 | 35 | Fs::DirListing { dir: sps-common/src } |  |  | 0.517 |
+| walker |  | 458 | 16 | Fs::DirListing { dir: sps-common/src/dependency } |  |  | 0.525 |
+| walker |  | 483 | 25 | Fs::DirListing { dir: sps-common/src/model } |  |  | 0.541 |
+| ns | 490 |  | 77 | Per-crate one-line role | 1.6 |  | 0.511 |
 | ns | 560 |  | 70 | Binary crate source tree (sps/src, cli/, pipeline/) | 1.7 |  | 0.565 |
-| walker |  | 567 | 32 | Toml::Operational { file: sps/Cargo.toml } |  |  | 0.565 |
-| ns | 657 |  | 97 | sps-common and sps-net source trees | 1.8 |  | 0.589 |
-| walker |  | 691 | 124 | Code::CodeKey { rung: Names, file: sps-common/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
-| ns | 785 |  | 128 | sps-core source tree (top level and first-level subdirs) | 1.9 |  | 0.582 |
-| walker |  | 787 | 96 | Code::CodeKey { rung: Names, file: sps-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.582 |
-| ns | 965 |  | 180 | sps-core leaf directories: bottle, cask, cask artifacts, compilers | 1.10 |  | 0.495 |
-| walker |  | 1071 | 284 | Code::CodeKey { rung: Names, file: sps-net/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.500 |
-| ns | 1286 |  | 321 | README usage: every documented sps subcommand | 1.11 | 1.4 | 0.439 |
-| ns | 1444 |  | 158 | README current status and roadmap | 1.12 | 1.4 | 0.426 |
-| walker |  | 1618 | 547 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.506 |
-| ns | 1655 |  | 211 | Library crate re-export surfaces | 1.13 |  | 0.517 |
-| walker |  | 1731 | 113 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.564 |
-| ns | 1797 |  | 142 | sps-common model and dependency re-exports | 1.14 |  | 0.547 |
-| walker |  | 1799 | 68 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.652 |
-| ns | 1873 |  | 76 | sps-core check/ re-exports and the install path helper | 1.15 |  | 0.643 |
-| walker |  | 1889 | 90 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.643 |
-| ns | 2098 |  | 225 | sps-core uninstall, upgrade and utils public names | 1.16 |  | 0.613 |
-| walker |  | 2249 | 360 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: true } |  |  | 0.720 |
-| walker |  | 2329 | 80 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.725 |
-| ns | 2340 |  | 242 | clap CliArgs and the complete Command enum | 2.1 |  | 0.690 |
-| walker |  | 2433 | 104 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.713 |
-| walker |  | 2524 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.713 |
-| walker |  | 2633 | 109 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.713 |
-| ns | 2687 |  | 347 | Shared pipeline job vocabulary (PipelinePackageType, JobAction, PlannedJob, WorkerJob) | 2.2 |  | 0.666 |
-| walker |  | 2745 | 112 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.666 |
-| walker |  | 2860 | 115 | Fs::DirListing { dir: sps-core/src/install/cask/artifacts } |  |  | 0.723 |
+| walker |  | 598 | 115 | Fs::DirListing { dir: sps-core/src/install/cask/artifacts } |  |  | 0.584 |
+| walker |  | 616 | 18 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
+| walker |  | 633 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/info.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
+| walker |  | 650 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/update.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
+| ns | 657 |  | 97 | sps-common and sps-net source trees | 1.8 |  | 0.610 |
+| walker |  | 682 | 32 | Toml::Operational { file: sps/Cargo.toml } |  |  | 0.610 |
+| ns | 785 |  | 128 | sps-core source tree (top level and first-level subdirs) | 1.9 |  | 0.602 |
+| walker |  | 806 | 124 | Code::CodeKey { rung: Names, file: sps-common/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
+| walker |  | 902 | 96 | Code::CodeKey { rung: Names, file: sps-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
+| ns | 965 |  | 180 | sps-core leaf directories: bottle, cask, cask artifacts, compilers | 1.10 |  | 0.575 |
+| walker |  | 1186 | 284 | Code::CodeKey { rung: Names, file: sps-net/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
+| ns | 1286 |  | 321 | README usage: every documented sps subcommand | 1.11 | 1.4 | 0.510 |
+| ns | 1444 |  | 158 | README current status and roadmap | 1.12 | 1.4 | 0.494 |
+| ns | 1655 |  | 211 | Library crate re-export surfaces | 1.13 |  | 0.501 |
+| walker |  | 1733 | 547 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.586 |
+| ns | 1797 |  | 142 | sps-common model and dependency re-exports | 1.14 |  | 0.568 |
+| walker |  | 1846 | 113 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.614 |
+| ns | 1873 |  | 76 | sps-core check/ re-exports and the install path helper | 1.15 |  | 0.605 |
+| walker |  | 1914 | 68 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.715 |
+| walker |  | 2004 | 90 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.715 |
+| ns | 2098 |  | 225 | sps-core uninstall, upgrade and utils public names | 1.16 |  | 0.683 |
+| ns | 2340 |  | 242 | clap CliArgs and the complete Command enum | 2.1 |  | 0.650 |
+| walker |  | 2364 | 360 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: true } |  |  | 0.747 |
+| walker |  | 2444 | 80 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.751 |
+| walker |  | 2548 | 104 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.773 |
+| walker |  | 2639 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.773 |
+| ns | 2687 |  | 347 | Shared pipeline job vocabulary (PipelinePackageType, JobAction, PlannedJob, WorkerJob) | 2.2 |  | 0.723 |
+| walker |  | 2748 | 109 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.723 |
+| walker |  | 2860 | 112 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.723 |
 | walker |  | 2884 | 24 | Code::CodeKey { rung: Names, file: sps/src/pipeline.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.723 |
 | ns | 2948 |  | 261 | PipelineEvent: all 23 variant names | 2.3 |  | 0.691 |
 | walker |  | 3013 | 129 | Code::CodeKey { rung: Names, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |

@@ -183,8 +183,11 @@ docs/
     theme/
       CodeBlock/
       ColorModeToggle/
+        index.tsx
       DocSidebar/
+        index.tsx
       NotFound/
+        index.tsx
       prism-include-languages.js
   static/
   tsconfig.json
@@ -353,8 +356,6 @@ type_manipulation.go
   85→func FromSlicePtr[T any](collection []*T) []T {
   …
   99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
-  …
-  115→func ToAnySlice[T any](collection []T) []any {
   …
 type_manipulation_test.go
 types.go

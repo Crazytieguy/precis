@@ -7,9 +7,9 @@ Score(3000)=0.671 I=0.862 C=0.523 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 58 | 12 | Fs::DirListing { dir: media } |  |  | 0.000 |
 | walker |  | 80 | 22 | Fs::DirListing { dir: source } |  |  | 0.000 |
 | walker |  | 89 | 9 | Fs::DirListing { dir: source/vendor } |  |  | 0.000 |
-| ns | 100 |  | 46 | Complete repository root listing | 1.2 |  | 0.598 |
-| walker |  | 107 | 18 | Fs::DirListing { dir: source/vendor/supports-color } |  |  | 0.629 |
-| walker |  | 116 | 9 | Fs::DirListing { dir: source/vendor/ansi-styles } |  |  | 0.650 |
+| walker |  | 98 | 9 | Fs::DirListing { dir: source/vendor/ansi-styles } |  |  | 0.000 |
+| ns | 100 |  | 46 | Complete repository root listing | 1.2 |  | 0.613 |
+| walker |  | 116 | 18 | Fs::DirListing { dir: source/vendor/supports-color } |  |  | 0.650 |
 | ns | 172 |  | 72 | package.json entry points: `main`, `exports`, `repository`, `type` | 1.3 |  | 0.560 |
 | walker |  | 182 | 66 | Json::Identity { file: package.json } |  |  | 0.892 |
 | walker |  | 190 | 8 | Fs::DirListing { dir: examples } |  |  | 0.892 |

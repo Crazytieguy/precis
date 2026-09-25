@@ -21,20 +21,20 @@ Score(3000)=0.609 I=0.846 C=0.439 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 582 | 110 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.703 |
 | ns | 645 |  | 138 | Cargo features — std default, optional backtrace | 1.8 |  | 0.723 |
 | walker |  | 672 | 90 | Fs::DirListing { dir: tests } |  |  | 0.894 |
+| walker |  | 676 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.894 |
+| walker |  | 680 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.894 |
 | ns | 793 |  | 148 | README lede, install snippet, and section map | 1.9 |  | 0.884 |
-| walker |  | 897 | 225 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.891 |
-| walker |  | 915 | 18 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.892 |
-| walker |  | 941 | 26 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 3, sub: 0, line: 389 } |  |  | 0.895 |
-| walker |  | 986 | 45 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 1, sub: 0, line: 278 } |  |  | 0.895 |
+| walker |  | 905 | 225 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.891 |
+| walker |  | 923 | 18 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.892 |
+| walker |  | 949 | 26 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 3, sub: 0, line: 389 } |  |  | 0.895 |
+| walker |  | 994 | 45 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 1, sub: 0, line: 278 } |  |  | 0.895 |
 | ns | 1009 |  | 216 | lib.rs crate attributes and module declarations | 1.10 |  | 0.801 |
-| walker |  | 1035 | 49 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 4, sub: 0, line: 413 } |  |  | 0.806 |
-| walker |  | 1091 | 56 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 6, sub: 0, line: 616 } |  |  | 0.806 |
-| walker |  | 1114 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.807 |
-| walker |  | 1148 | 34 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.808 |
-| walker |  | 1160 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.809 |
-| walker |  | 1229 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
-| walker |  | 1233 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.809 |
-| walker |  | 1237 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.809 |
+| walker |  | 1043 | 49 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 4, sub: 0, line: 413 } |  |  | 0.806 |
+| walker |  | 1099 | 56 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 6, sub: 0, line: 616 } |  |  | 0.806 |
+| walker |  | 1122 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.807 |
+| walker |  | 1156 | 34 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.808 |
+| walker |  | 1168 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.809 |
+| walker |  | 1237 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
 | ns | 1244 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.797 |
 | walker |  | 1267 | 30 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.799 |
 | walker |  | 1349 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.801 |

@@ -238,9 +238,6 @@ packages/
       36→  },
       37→  "scripts": {
       38→    "build": "tsc",
-      39→    "test": "vitest run",
-      40→    "lint": "eslint './src/**/*.ts' './tests/**/*.ts' --config eslint.config.mjs",
-      41→    "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",
@@ -313,6 +310,18 @@ packages/
           2→export * from './operators/index.js'
           3→export * from './database.js'
         operators/
+          buffer.ts
+          consolidate.ts
+          count.ts
+          distinct.ts
+          filterBy.ts
+          groupBy.ts
+          index.ts
+          join.ts
+          orderBy.ts
+          reduce.ts
+          topK.ts
+          topKWithFractionalIndex.ts
         version-index.ts
       types.ts
       utils.ts
