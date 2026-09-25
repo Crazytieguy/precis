@@ -25,7 +25,7 @@
 //! (`.env.sample` / `.env.example`) ARE admitted — they carry
 //! placeholder values by convention and are the deploy-facing
 //! config-key documentation. Shell scripts are only admitted to
-//! [`Class::BuildScript`] from build-script locations, and exact
+//! [`Class::Build`] from build-script locations, and exact
 //! env/secret/credential stems ([`is_credential_stem`]) are denied
 //! before any `.sh` classification — in the fallback too — because
 //! they commonly export tokens for local tooling.
@@ -49,12 +49,12 @@ const PLAINTEXT_LINE_CAP: usize = 60;
 /// FS-metadata pre-flight gate (≈80 bytes/line × line cap).
 const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
-/// Line cap on `Makefile` / `Dockerfile` whole batches.
-const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
+/// Line cap on a [`Class::Build`] batch, which renders whole or not at all.
+const BUILD_LINE_CAP: usize = 100;
 
-/// FS-metadata pre-flight gate for build entrypoints (same ≈80
+/// FS-metadata pre-flight gate for build files (same ≈80
 /// bytes/line multiplier as [`PLAINTEXT_BYTE_GATE`]).
-const BUILD_ENTRYPOINT_BYTE_GATE: usize = BUILD_ENTRYPOINT_LINE_CAP * 80;
+const BUILD_BYTE_GATE: usize = BUILD_LINE_CAP * 80;
 
 /// Promotion for a small root build file — see
 /// [`small_build_file_factor`]. Swept on the full corpus: +0.0013 at
@@ -125,11 +125,10 @@ pub(crate) enum Class {
     /// format config, version pins, `pnpm-workspace.yaml`, CI workflows
     /// and hook / docs-site YAML.
     Tooling,
-    /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
-    /// `Dockerfile`, compose files).
-    BuildEntrypoint,
-    /// Compact build/test plumbing scripts and manifests.
-    BuildScript,
+    /// Compact build/deploy entrypoints and plumbing (`Makefile`,
+    /// `Taskfile`, `Dockerfile`, compose files, `configure.ac`, shell
+    /// scripts in build-script locations).
+    Build,
     /// Project reference files: `setup.cfg`, `requirements.txt`, `TODO`,
     /// `VERSION`.
     ProjectNotes,
@@ -187,14 +186,14 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         // `Taskfile.yaml` is a `Makefile` in YAML clothing — the task
         // runner's target roster.
         "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "Dockerfile" | "Containerfile" => {
-            return Some(Class::BuildEntrypoint);
+            return Some(Class::Build);
         }
-        ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
+        ".gitmodules" | "configure.ac" => return Some(Class::Build),
         "setup.cfg" => return Some(Class::ProjectNotes),
         _ => {}
     }
     if is_docker_compose_name(&lower) {
-        return Some(Class::BuildEntrypoint);
+        return Some(Class::Build);
     }
     // Exact names, case-insensitive: exact equality (no stem matching)
     // is what keeps `version.h` and similar source headers out.
@@ -211,7 +210,7 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         if is_credential_stem(stem) {
             return None;
         }
-        return Some(Class::BuildScript);
+        return Some(Class::Build);
     }
     None
 }
@@ -750,10 +749,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             && (name.ends_with(".yml") || name.ends_with(".yaml"));
         let named = classify_plaintext(name)
             .or(is_workflow.then_some(Class::Tooling))
-            .filter(|class| match class {
-                Class::BuildScript => is_build_script_location(dir, ctx),
-                _ => true,
-            });
+            .filter(|_| !name.ends_with(".sh") || is_build_script_location(dir, ctx));
         // Root `README.rst` belongs to the markdown walker; emitting
         // a second slice of it would overlap its spans.
         let owned_by_markdown = dir == ctx.root() && super::markdown::is_readme_rst(&file);
@@ -772,19 +768,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             Class::DotenvSample => {
                 head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
             }
-            // Build entrypoints get headroom over the generic cap:
-            // real app Dockerfiles / Makefiles routinely run 60–100
-            // lines and are exactly the ops surface NS authors anchor
-            // on (audiobookshelf 73, linkwarden 70). Gated rather than
-            // head-sampled: a Makefile's first 100 lines are usually
-            // variable preamble, so a partial head is not the same
-            // artifact as the build surface.
-            Class::BuildEntrypoint => gated_whole_file_content(
-                &file,
-                ctx,
-                BUILD_ENTRYPOINT_BYTE_GATE,
-                BUILD_ENTRYPOINT_LINE_CAP,
-            ),
+            // Whole or nothing, with headroom over the generic cap: a
+            // Makefile's head is mostly variable preamble, not its
+            // targets.
+            Class::Build => gated_whole_file_content(&file, ctx, BUILD_BYTE_GATE, BUILD_LINE_CAP),
             _ => head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
         };
         let Some(content) = content else {
@@ -809,9 +796,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
         Class::License => 108.0,
-        Class::BuildEntrypoint | Class::BuildScript | Class::DotenvSample | Class::SourceText => {
-            905.0
-        }
+        Class::Build | Class::DotenvSample | Class::SourceText => 905.0,
         Class::ProjectNotes => 660.0,
         Class::Tooling | Class::SourceProse => 488.0,
     };
@@ -823,8 +808,8 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 /// NS authors buy in the first screenful — ahead of most of the source
 /// it builds — while the class's own preset prices it as one config
 /// file among many and it loses the `value/cost^k` race to source.
-/// The build-entrypoint class already renders only files of at most
-/// [`BUILD_ENTRYPOINT_LINE_CAP`] lines; a nested one is one
+/// The build class already renders only files of at most
+/// [`BUILD_LINE_CAP`] lines; a nested one is one
 /// component's build step rather than the project's.
 ///
 /// Narrow on purpose: deploy / CI / linter config describes the
@@ -835,7 +820,7 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         .file_name()
         .and_then(|name| name.to_str())
         .unwrap_or_default();
-    if matches!(class, Class::BuildEntrypoint | Class::BuildScript)
+    if class == Class::Build
         && matches!(
             name,
             "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "build.sh"
@@ -1070,24 +1055,24 @@ mod tests {
             (".python-version", Some(Class::Tooling)),
             (".tool-versions", Some(Class::Tooling)),
             ("pnpm-workspace.yaml", Some(Class::Tooling)),
-            ("Makefile", Some(Class::BuildEntrypoint)),
-            ("Taskfile.yaml", Some(Class::BuildEntrypoint)),
-            ("Taskfile.yml", Some(Class::BuildEntrypoint)),
-            ("Dockerfile", Some(Class::BuildEntrypoint)),
-            ("Containerfile", Some(Class::BuildEntrypoint)),
-            ("docker-compose.yml", Some(Class::BuildEntrypoint)),
-            ("Docker-Compose.YML", Some(Class::BuildEntrypoint)),
-            ("compose.override.yaml", Some(Class::BuildEntrypoint)),
-            ("compose-dev.yaml", Some(Class::BuildEntrypoint)),
+            ("Makefile", Some(Class::Build)),
+            ("Taskfile.yaml", Some(Class::Build)),
+            ("Taskfile.yml", Some(Class::Build)),
+            ("Dockerfile", Some(Class::Build)),
+            ("Containerfile", Some(Class::Build)),
+            ("docker-compose.yml", Some(Class::Build)),
+            ("Docker-Compose.YML", Some(Class::Build)),
+            ("compose.override.yaml", Some(Class::Build)),
+            ("compose-dev.yaml", Some(Class::Build)),
             ("composer.yml", None),
             ("compose-.yml", None),
             ("config.yaml", None),
             (".travis.yml", Some(Class::Tooling)),
             (".pre-commit-config.yaml", Some(Class::Tooling)),
-            ("testall.sh", Some(Class::BuildScript)),
-            ("build.sh", Some(Class::BuildScript)),
-            (".gitmodules", Some(Class::BuildScript)),
-            ("configure.ac", Some(Class::BuildScript)),
+            ("testall.sh", Some(Class::Build)),
+            ("build.sh", Some(Class::Build)),
+            (".gitmodules", Some(Class::Build)),
+            ("configure.ac", Some(Class::Build)),
             ("setup.cfg", Some(Class::ProjectNotes)),
             ("requirements.txt", Some(Class::ProjectNotes)),
             ("Requirements.txt", Some(Class::ProjectNotes)),
@@ -1157,23 +1142,14 @@ mod tests {
         let ctx = WalkCtx::new(root.to_path_buf());
 
         let factor = |path: &str, class| small_build_file_factor(class, &root.join(path), &ctx);
-        assert_eq!(
-            factor("Makefile", Class::BuildEntrypoint),
-            SMALL_BUILD_FILE_PROMOTION
-        );
-        assert_eq!(
-            factor("build.sh", Class::BuildScript),
-            SMALL_BUILD_FILE_PROMOTION
-        );
-        // Name gate: BuildScript siblings that are not the build surface.
-        assert_eq!(factor("release.sh", Class::BuildScript), 1.0);
-        assert_eq!(factor(".gitmodules", Class::BuildScript), 1.0);
+        assert_eq!(factor("Makefile", Class::Build), SMALL_BUILD_FILE_PROMOTION);
+        assert_eq!(factor("build.sh", Class::Build), SMALL_BUILD_FILE_PROMOTION);
+        // Name gate: build siblings that are not the build surface.
+        assert_eq!(factor("release.sh", Class::Build), 1.0);
+        assert_eq!(factor(".gitmodules", Class::Build), 1.0);
         // Depth gate: a nested `scripts/` dir still classifies as
-        // BuildScript, but is one component's build step.
-        assert_eq!(
-            factor("packages/api/scripts/build.sh", Class::BuildScript),
-            1.0
-        );
+        // Build, but is one component's build step.
+        assert_eq!(factor("packages/api/scripts/build.sh", Class::Build), 1.0);
         // Class gate: the fallback tiers never receive the promotion.
         assert_eq!(factor("build.sh", Class::SourceProse), 1.0);
     }
@@ -1200,10 +1176,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         let file = root.join("Makefile");
-        let source = format!(
-            "build: {}\n",
-            "dependency ".repeat(BUILD_ENTRYPOINT_BYTE_GATE)
-        );
+        let source = format!("build: {}\n", "dependency ".repeat(BUILD_BYTE_GATE));
         std::fs::write(&file, source).unwrap();
 
         let ctx = WalkCtx::new(root.to_path_buf());
