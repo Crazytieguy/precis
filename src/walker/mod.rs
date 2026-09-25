@@ -310,6 +310,11 @@ pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> 
 /// see `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
 const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 
+/// Upper bound on a spine file's size, checked before the file is read.
+/// Past this, a single file is a generated table or an amalgamated bundle
+/// rather than something a reader is meant to read more of.
+const DOMINANT_SOURCE_MAX_FILE_BYTES: u64 = 400_000;
+
 /// The tree's essential source files, as one walk: byte mass per
 /// language family, plus the per-file candidate list. Enumeration rules
 /// are documented on [`find_dominant_source_file`].
@@ -373,9 +378,10 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
 /// (the only thing bounding a walk of a non-repository tree, where the
 /// filter is inert by design), and non-following file types so a
 /// symlink is neither descended into nor weighed as source — the same
-/// containment answer typed source discovery gives. A candidate whose
-/// text reads as machine-generated (a banner, or minified line lengths)
-/// never wins.
+/// containment answer typed source discovery gives. A candidate over
+/// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] is never read, and one whose text
+/// reads as machine-generated (a banner, or minified line lengths) never
+/// wins.
 fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
@@ -405,7 +411,9 @@ fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
         .candidates
         .iter()
         .filter(|(_, len, language)| {
-            *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
+            *language == primary
+                && *len <= DOMINANT_SOURCE_MAX_FILE_BYTES
+                && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
         })
         .filter(|(path, _, _)| {
             std::fs::read_to_string(path)
@@ -655,6 +663,23 @@ mod tests {
 
         let found = dominant_source_file_of(root);
         assert_eq!(found.as_deref(), Some(root.join("src/core.ts").as_path()));
+    }
+
+    /// A checked-in table too large to be read as a spine still counts as
+    /// source mass, but is neither read nor picked.
+    #[test]
+    fn walker_mod_dominant_file_skips_oversized_source() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::create_dir_all(root.join("src/generated")).unwrap();
+        std::fs::write(
+            root.join("src/generated/table.c"),
+            "int t[] = {1, 2, 3};\n".repeat(25_000),
+        )
+        .unwrap();
+        std::fs::write(root.join("src/main.c"), "int main(void) { return 0; }\n").unwrap();
+
+        assert_eq!(dominant_source_file_of(root), None);
     }
 
     #[test]
