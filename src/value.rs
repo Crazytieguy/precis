@@ -195,12 +195,6 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
             return 0.2;
         }
     }
-    // Peripheral admin / release markdown (anywhere in the tree). NS
-    // authors treat these as "appendix" content; the walker should not
-    // let CHANGELOG, CONTRIBUTING, etc. crowd the primary-source schedule.
-    if is_peripheral_doc(target) {
-        return 0.2;
-    }
     for component in target.components() {
         let Some(raw) = component.as_os_str().to_str() else {
             continue;
@@ -326,40 +320,6 @@ pub(crate) fn is_scaffold_template_dir_name(name: &str) -> bool {
     lower.starts_with("template-") || lower.starts_with("cra-template-")
 }
 
-/// True for admin/release markdown — CHANGELOG / CONTRIBUTING /
-/// SECURITY / NOTICE / RELEASING / etc. —
-/// anywhere in the tree (monorepo per-package copies inherit the
-/// same admin-doc semantics).
-pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
-    let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
-        return false;
-    };
-    if !ext.eq_ignore_ascii_case("md") && !ext.eq_ignore_ascii_case("rst") {
-        return false;
-    }
-    let Some(stem) = target.file_stem().and_then(|s| s.to_str()) else {
-        return false;
-    };
-    let stem = stem.replace('-', "_");
-    [
-        "CHANGELOG",
-        "CHANGES",
-        "HISTORY",
-        "NEWS",
-        "RELEASING",
-        "RELEASES",
-        "RELEASE_NOTES",
-        "CONTRIBUTING",
-        "SECURITY",
-        "NOTICE",
-        "AUTHORS",
-        "CODE_OF_CONDUCT",
-        "FAQ",
-    ]
-    .iter()
-    .any(|s| stem.eq_ignore_ascii_case(s))
-}
-
 /// Default cost-side concavity for the scheduling ratio — gentle so
 /// big coherent anchor batches stay competitive against many small
 /// per-decl batches. Per-key overrides raise this for prose-shaped
@@ -448,19 +408,6 @@ mod tests {
             ),
             (1.0, ".github/workflows/ci.yml .github/workflows"),
             (0.2, ".github/dependabot.yml"),
-            // Top-level peripheral docs (admin / release / governance).
-            (
-                0.2,
-                "CHANGELOG.md changelog.rst HISTORY.md RELEASE_NOTES.md RELEASING.md \
-                 CONTRIBUTING.md SECURITY.md NOTICE.md AUTHORS.md CODE_OF_CONDUCT.md \
-                 NEWS.md news.rst FAQ.md",
-            ),
-            // Monorepo per-package CHANGELOGs etc. inherit admin-doc semantics.
-            (
-                0.2,
-                "docs/changelog.md docs/CONTRIBUTING.md \
-                 packages/d2mini/CHANGELOG.md subproject/CHANGELOG.md",
-            ),
             // Root dot-directories (IDE / tooling / CI / admin / skills).
             (
                 0.2,
