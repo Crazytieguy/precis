@@ -191,16 +191,10 @@ When the path is a git repository, `precis` honours `.gitignore` (including nest
 
 ## Supported languages
 
-- **Rust** — public item signatures, module docs, manifest + workspace structure
-- **TypeScript / JavaScript** (`.ts`/`.tsx`/`.js`/`.mjs`/`.cjs`) — exported types, classes, functions; package entry points and workspace layout
-- **Go** — exported functions, methods, types; package docs
-- **C** (`.c`/`.h`) — functions, aggregates, macros; header surfaces
-- **Python** — classes, functions, `__init__.py` re-exports, module constants
-- **Lua** — module functions and identity tables
-- **Markdown / reStructuredText** — README lede, heading outlines, key section bodies
-- **JSON / TOML** — manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, …) and workspace config
-- **YAML** — `docker-compose` files
-- **Prisma** — schema models and enums
-- **Plain text** — man pages, extensionless config files
+- **Parsed source** — Rust, TypeScript / JavaScript (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`), Python, Go, C (`.c`, `.h`) and Lua: module docs, declaration names and signatures, then doc comments and bodies as the budget allows.
+- **Docs** — Markdown and the root `README.rst`: the README's lede, heading outlines and section bodies.
+- **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
+- **Build and ops files** — Makefile, Taskfile, Dockerfile, compose files, CI workflows, build scripts, dotenv samples, license.
+- **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short.
 
-Files outside these get directory-listing coverage: every file appears in the tree even when its contents aren't summarized.
+Every file appears in the directory tree even when its contents aren't summarized.
