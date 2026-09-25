@@ -149,11 +149,12 @@ fn python_roster_mass_factor(file: &Path, entries: usize) -> f64 {
         .min(ROSTER_MASS_FACTOR_CAP)
 }
 
-/// Per-run Python walker state: spine-module sets cached per package
-/// root (computed once from the root `__init__.py`'s re-exports).
+/// Per-run Python walker state: the spine-module set of the package
+/// each directory sits in (`None` outside a package), cached per
+/// directory — finding the package root costs a stat per ancestor.
 #[derive(Default)]
 pub(in crate::walker) struct PythonState {
-    spine_modules: RefCell<HashMap<PathBuf, Arc<HashSet<PathBuf>>>>,
+    spine_modules: RefCell<HashMap<PathBuf, Option<Arc<HashSet<PathBuf>>>>>,
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -1627,17 +1628,16 @@ fn is_package_spine_module(file: &Path, ctx: &WalkCtx) -> bool {
     if is_python_entrypoint(file) {
         return false;
     }
-    let Some(package_root) = python_package_root(file, ctx) else {
+    let Some(dir) = file.parent() else {
         return false;
     };
-    package_spine_modules(ctx, &package_root).contains(file)
+    package_spine_modules(ctx, dir).is_some_and(|spine| spine.contains(file))
 }
 
-/// Topmost ancestor package dir of `file` (contiguous `__init__.py`
-/// chain, clipped to the walk root). `None` when the containing dir is
-/// not a package.
-fn python_package_root(file: &Path, ctx: &WalkCtx) -> Option<PathBuf> {
-    let mut dir = file.parent()?;
+/// Topmost ancestor package dir of `dir` (contiguous `__init__.py`
+/// chain, clipped to the walk root). `None` when `dir` is not a
+/// package.
+fn python_package_root(mut dir: &Path, ctx: &WalkCtx) -> Option<PathBuf> {
     if !dir.join("__init__.py").is_file() {
         return None;
     }
@@ -1650,15 +1650,16 @@ fn python_package_root(file: &Path, ctx: &WalkCtx) -> Option<PathBuf> {
     Some(dir.to_path_buf())
 }
 
-fn package_spine_modules(ctx: &WalkCtx, package_root: &Path) -> Arc<HashSet<PathBuf>> {
-    if let Some(cached) = ctx.python_state().spine_modules.borrow().get(package_root) {
-        return Arc::clone(cached);
+fn package_spine_modules(ctx: &WalkCtx, dir: &Path) -> Option<Arc<HashSet<PathBuf>>> {
+    if let Some(cached) = ctx.python_state().spine_modules.borrow().get(dir) {
+        return cached.clone();
     }
-    let computed = Arc::new(collect_spine_modules_uncached(ctx, package_root));
+    let computed = python_package_root(dir, ctx)
+        .map(|package_root| Arc::new(collect_spine_modules_uncached(ctx, &package_root)));
     ctx.python_state()
         .spine_modules
         .borrow_mut()
-        .insert(package_root.to_path_buf(), Arc::clone(&computed));
+        .insert(dir.to_path_buf(), computed.clone());
     computed
 }
 
