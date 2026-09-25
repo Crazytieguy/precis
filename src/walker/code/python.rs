@@ -44,7 +44,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             if is_entrypoint(&file.path, ctx) {
                 model
                     .module_doc
-                    .extend(paragraphs(file, file.node_rows(node)));
+                    .extend(file.paragraphs(file.node_rows(node)));
             }
             continue;
         }
@@ -155,9 +155,9 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
         .position(|node| node.kind() != "comment")
         .filter(|&index| is_docstring(statements[index]))
     {
-        let rows = file.node_rows(statements.remove(index));
-        after_row = *rows.end();
-        doc = paragraphs(file, rows.filter(|&row| row > head_end));
+        let docstring_rows = file.node_rows(statements.remove(index));
+        after_row = after_row.max(*docstring_rows.end());
+        doc = file.paragraphs(docstring_rows.filter(|&row| row > head_end));
     }
     let (body, members) = match shape {
         Shape::Callable => (file.node_items(statements, after_row), Vec::new()),
@@ -246,23 +246,6 @@ fn class_body(
     }
     body.extend(file.node_items(run, after_row));
     (body, members)
-}
-
-/// A docstring's `rows` split into paragraphs. A paragraph holding only
-/// a closing `"""` / `'''` joins the one before it.
-fn paragraphs(file: &SourceFile, rows: impl IntoIterator<Item = usize>) -> Vec<Item> {
-    let mut items: Vec<Item> = Vec::new();
-    for item in file.paragraphs(rows) {
-        let closing_only = item
-            .rows
-            .iter()
-            .all(|row| matches!(file.line(*row).trim(), "\"\"\"" | "'''"));
-        match items.last_mut() {
-            Some(last) if closing_only => last.rows.extend(item.rows),
-            _ => items.push(item),
-        }
-    }
-    items
 }
 
 #[cfg(test)]
