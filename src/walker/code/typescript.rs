@@ -661,14 +661,11 @@ fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node
     whole(file, span, vec![name_row], None)
 }
 
-/// How deep [`wrapped_function_block`] looks through call wrappers.
-const FUNCTION_WRAPPER_DEPTH: usize = 6;
-
 /// The statement block of a function value, seen through parentheses and
 /// the first argument of wrapper calls (`memo(forwardRef((p, r) => {…}))`).
 fn wrapped_function_block(value: Node) -> Option<Node> {
     let mut node = value;
-    for _ in 0..FUNCTION_WRAPPER_DEPTH {
+    loop {
         if is_function_kind(node.kind()) {
             return node
                 .child_by_field_name("body")
@@ -680,7 +677,6 @@ fn wrapped_function_block(value: Node) -> Option<Node> {
             _ => return None,
         };
     }
-    None
 }
 
 /// First and last row of a node, as [`SourceFile::node_rows`] counts them.
