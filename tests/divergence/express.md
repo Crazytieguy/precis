@@ -143,9 +143,8 @@ Score(3000)=0.507 I=0.807 C=0.318 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 8897 | 159 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 16, sub: 0, line: 522 } |  |  | 0.506 |
 | ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.501 |
 | walker |  | 9139 | 242 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.501 |
-| walker |  | 9363 | 224 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.513 |
-| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.523 |
-| walker |  | 9580 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.543 |
-| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.552 |
-| walker |  | 9857 | 277 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 1, line: 371 } |  |  | 0.553 |
+| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.512 |
+| walker |  | 9640 | 501 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.525 |
+| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.533 |
+| walker |  | 9857 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.553 |
 | ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.549 |

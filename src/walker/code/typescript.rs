@@ -828,7 +828,7 @@ fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
     })
 }
 
-/// The `/** … */` blocks directly above `node`, one item per paragraph.
+/// The `/** … */` blocks directly above `node`, one item per block.
 /// JSDoc is often separated from what it documents by one blank row
 /// (`/** … */`, blank, `function f`), so one blank row still attaches.
 fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
@@ -852,31 +852,8 @@ fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
     blocks
         .into_iter()
         .rev()
-        .flat_map(|comment| jsdoc_paragraphs(file, comment))
+        .map(|comment| Item::new(file.node_rows(comment)))
         .collect()
-}
-
-/// A JSDoc block split after each bare ` *` separator row.
-fn jsdoc_paragraphs(file: &SourceFile, comment: Node) -> Vec<Item> {
-    let span = Span::of(file, comment);
-    let mut paragraphs = Vec::new();
-    let mut paragraph = Vec::new();
-    for row in span.start..=span.end {
-        paragraph.push(row);
-        let separator = file
-            .line(row)
-            .trim_start()
-            .trim_start_matches('*')
-            .trim()
-            .is_empty();
-        if separator && row != span.start && row != span.end {
-            paragraphs.push(Item::new(std::mem::take(&mut paragraph)));
-        }
-    }
-    if !paragraph.is_empty() {
-        paragraphs.push(Item::new(paragraph));
-    }
-    paragraphs
 }
 
 #[cfg(test)]
@@ -915,7 +892,7 @@ mod tests {
     }
 
     #[test]
-    fn code_typescript_exported_function_splits_doc_signature_and_statements() {
+    fn code_typescript_exported_function_splits_signature_and_statements() {
         let model = extract_source(
             "src/util.ts",
             "\
@@ -936,7 +913,7 @@ export function add(
         );
         assert_eq!(
             describe(&model),
-            ["Callable name [6] head [6, 7, 8, 9] doc [[1, 2, 3], [4, 5]] body [[10, 11], [12]]"]
+            ["Callable name [6] head [6, 7, 8, 9] doc [[1, 2, 3, 4, 5]] body [[10, 11], [12]]"]
         );
     }
 
