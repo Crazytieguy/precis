@@ -148,15 +148,13 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "tools"
                 | "archived"
                 | "locales"
-                | "locale"
                 | "l10n"
                 | "translations"
                 | "third_party"
                 | "third-party"
                 | "thirdparty"
                 | "3rdparty"
-        ) || s.ends_with("-master")
-            || s.starts_with("test_")
+        ) || s.starts_with("test_")
             || s.starts_with("tests_")
             || is_scaffold_template_dir_name(s)
         {
@@ -346,13 +344,15 @@ mod tests {
                 0.2,
                 "_archived/guestbook/app.yaml samples/archived/x.cs \
                  apps/web/public/locales/en/common.json lessons/1/translations/README.es.md \
-                 src/third_party/zlib/zlib.h lib/3rdParty/x.c docs/_style/prism-master/prism.js \
+                 src/third_party/zlib/zlib.h lib/3rdParty/x.c \
                  dependencies/camlzip/zip.ml",
             ),
-            // `vendor/` below the root can be the project's own module.
+            // `vendor/`, `locale/` and `*-master/` below the root can be
+            // the project's own module.
             (
                 1.0,
-                "src/class/vendor/vendor_device.c source/vendor/ansi-styles/index.js",
+                "src/class/vendor/vendor_device.c source/vendor/ansi-styles/index.js \
+                 racket/src/io/locale/parameter.rkt drivers/i2c-master/i2c.c",
             ),
         ];
         let root = Path::new("/repo");
