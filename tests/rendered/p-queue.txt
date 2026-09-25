@@ -1,297 +1,297 @@
 .editorconfig …
 .gitattributes …
 .github/
-    security.md …
-    workflows/
-        main.yml
-               1→name: CI
-               2→on:
-               3→  - push
-               4→  - pull_request
-               5→jobs:
-               6→  test:
-               7→    name: Node.js ${{ matrix.node-version }}
-               8→    runs-on: ubuntu-latest
-               9→    strategy:
-              10→      fail-fast: false
-              11→      matrix:
-              12→        node-version:
-              13→          - 24
-              14→          - 20
-              15→    steps:
-              16→      - uses: actions/checkout@v5
-              17→      - uses: actions/setup-node@v5
-              18→        with:
-              19→          node-version: ${{ matrix.node-version }}
-              20→      - run: npm install
-              21→      - run: npm test
+  security.md …
+  workflows/
+    main.yml
+      1→name: CI
+      2→on:
+      3→  - push
+      4→  - pull_request
+      5→jobs:
+      6→  test:
+      7→    name: Node.js ${{ matrix.node-version }}
+      8→    runs-on: ubuntu-latest
+      9→    strategy:
+      10→      fail-fast: false
+      11→      matrix:
+      12→        node-version:
+      13→          - 24
+      14→          - 20
+      15→    steps:
+      16→      - uses: actions/checkout@v5
+      17→      - uses: actions/setup-node@v5
+      18→        with:
+      19→          node-version: ${{ matrix.node-version }}
+      20→      - run: npm install
+      21→      - run: npm test
 .gitignore …
 .npmrc …
 bench.ts …
 license …
 package.json
-    …
-       2→	"name": "p-queue",
-       3→	"version": "9.2.0",
-       4→	"description": "Promise queue with concurrency control",
-       5→	"license": "MIT",
-    …
-       8→	"type": "module",
-       9→	"exports": {
-      10→		"types": "./dist/index.d.ts",
-      11→		"default": "./dist/index.js"
-      12→	},
-      13→	"sideEffects": false,
-      14→	"engines": {
-      15→		"node": ">=20"
-      16→	},
-      17→	"scripts": {
-      18→		"build": "del-cli dist && tsc",
-      19→		"test": "xo && node --import=tsx/esm --test test/*.ts && del-cli dist && tsc && tsd",
-      20→		"bench": "node --import=tsx/esm bench.ts",
-      21→		"prepublishOnly": "del-cli dist && tsc"
-      22→	},
-      23→	"files": [
-      24→		"dist"
-      25→	],
-      26→	"types": "dist/index.d.ts",
-    …
-      49→	"dependencies": {
-      50→		"eventemitter3": "^5.0.4",
-      51→		"p-timeout": "^7.0.0"
-      52→	},
-    …
+  …
+  2→	"name": "p-queue",
+  3→	"version": "9.2.0",
+  4→	"description": "Promise queue with concurrency control",
+  5→	"license": "MIT",
+  …
+  8→	"type": "module",
+  9→	"exports": {
+  10→		"types": "./dist/index.d.ts",
+  11→		"default": "./dist/index.js"
+  12→	},
+  13→	"sideEffects": false,
+  14→	"engines": {
+  15→		"node": ">=20"
+  16→	},
+  17→	"scripts": {
+  18→		"build": "del-cli dist && tsc",
+  19→		"test": "xo && node --import=tsx/esm --test test/*.ts && del-cli dist && tsc && tsd",
+  20→		"bench": "node --import=tsx/esm bench.ts",
+  21→		"prepublishOnly": "del-cli dist && tsc"
+  22→	},
+  23→	"files": [
+  24→		"dist"
+  25→	],
+  26→	"types": "dist/index.d.ts",
+  …
+  49→	"dependencies": {
+  50→		"eventemitter3": "^5.0.4",
+  51→		"p-timeout": "^7.0.0"
+  52→	},
+  …
 readme.md
-       1→# p-queue
-       2→
-       3→> Promise queue with concurrency control
-       4→
-       5→Useful for rate-limiting async (or sync) operations. For example, when interacting with a REST API or when doing CPU/memory intensive tasks.
-    …
-      39→## Install
-    …
-      47→## Usage
-    …
-      68→## API
-      69→
-      70→### PQueue(options?)
-    …
-     162→### queue
-     164→`PQueue` instance.
-    …
-     440→#### [.concurrency](#concurrency)
-    …
-     512→## Events
-    …
-     698→## Advanced example
-    …
-     768→## Handling timeouts
-    …
-     813→## Custom QueueClass
-    …
-     847→## FAQ
-    …
-    1066→## Maintainers
-    …
-    1071→## Related
-    …
+  1→# p-queue
+  2→
+  3→> Promise queue with concurrency control
+  4→
+  5→Useful for rate-limiting async (or sync) operations. For example, when interacting with a REST API or when doing CPU/memory intensive tasks.
+  …
+  39→## Install
+  …
+  47→## Usage
+  …
+  68→## API
+  69→
+  70→### PQueue(options?)
+  …
+  162→### queue
+  164→`PQueue` instance.
+  …
+  440→#### [.concurrency](#concurrency)
+  …
+  512→## Events
+  …
+  698→## Advanced example
+  …
+  768→## Handling timeouts
+  …
+  813→## Custom QueueClass
+  …
+  847→## FAQ
+  …
+  1066→## Maintainers
+  …
+  1071→## Related
+  …
 source/
-    index.ts
-           1→import {EventEmitter} from 'eventemitter3';
-           2→import pTimeout from 'p-timeout';
-           3→import {type Queue, type RunFunction} from './queue.js';
-           4→import PriorityQueue from './priority-queue.js';
-           5→import {type QueueAddOptions, type Options, type TaskOptions} from './options.js';
-        …
-          13→/**
-          14→Promise queue with concurrency control.
-          15→*/
-          16→export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsType> = PriorityQueue, EnqueueOptionsType extends QueueAddOptions = QueueAddOptions> extends EventEmitter<EventName> { // eslint-disable-line @typescript-eslint/naming-convention
-        …
-          68→	/**
-          69→	Get or set the default timeout for all tasks. Can be changed at runtime.
-          70→
-          71→	Operations will throw a `TimeoutError` if they don't complete within the specified time.
-          72→
-          73→	The timeout begins when the operation is dequeued and starts execution, not while it's waiting in the queue.
-        …
-          83→	timeout?: number;
-          84→
-          85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
-        …
-         382→	get concurrency(): number {
-        …
-         386→	set concurrency(newConcurrency: number) {
-        …
-         396→	/**
-         397→	Updates the priority of a promise function by its id, affecting its execution order. Requires a defined concurrency limit to take effect.
-         398→
-         399→	For example, this can be used to prioritize a promise function to run earlier.
-        …
-         432→	setPriority(id: string, priority: number) {
-        …
-         440→	/**
-         441→	Adds a sync or async task to the queue. Always returns a promise.
-         442→	*/
-         443→	async add<TaskResultType>(function_: Task<TaskResultType>, options?: Partial<EnqueueOptionsType>): Promise<TaskResultType>;
-         444→	async add<TaskResultType>(function_: Task<TaskResultType>, options: Partial<EnqueueOptionsType> = {}): Promise<TaskResultType> {
-        …
-         576→	/**
-         577→	Same as `.add()`, but accepts an array of sync or async functions.
-         578→
-         579→	@returns A promise that resolves when all functions are resolved.
-         580→	*/
-         581→	async addAll<TaskResultsType>(
-         582→		functions: ReadonlyArray<Task<TaskResultsType>>,
-         583→		options?: Partial<EnqueueOptionsType>,
-         584→	): Promise<TaskResultsType[]>;
-         585→	async addAll<TaskResultsType>(
-         586→		functions: ReadonlyArray<Task<TaskResultsType>>,
-         587→		options?: Partial<EnqueueOptionsType>,
-         588→	): Promise<TaskResultsType[]> {
-        …
-         592→	/**
-         593→	Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
-         594→	*/
-         595→	start(): this {
-        …
-         606→	/**
-         607→	Put queue execution on hold.
-         608→	*/
-         609→	pause(): void {
-        …
-         613→	/**
-         614→	Clear the queue.
-         615→	*/
-         616→	clear(): void {
-        …
-         647→	/**
-         648→	Can be called multiple times. Useful if you for example add additional items at a later time.
-         649→
-         650→	@returns A promise that settles when the queue becomes empty.
-         651→	*/
-         652→	async onEmpty(): Promise<void> {
-        …
-         668→	async onSizeLessThan(limit: number): Promise<void> {
-        …
-         677→	/**
-         678→	The difference with `.onEmpty` is that `.onIdle` guarantees that all work from the queue has finished. `.onEmpty` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
-         679→
-         680→	@returns A promise that settles when the queue becomes empty, and all promises have completed; `queue.size === 0 && queue.pending === 0`.
-         681→	*/
-         682→	async onIdle(): Promise<void> {
-        …
-         691→	/**
-         692→	The difference with `.onIdle` is that `.onPendingZero` only waits for currently running tasks to finish, ignoring queued tasks.
-         693→
-         694→	@returns A promise that settles when all currently running tasks have completed; `queue.pending === 0`.
-         695→	*/
-         696→	async onPendingZero(): Promise<void> {
-        …
-         704→	/**
-         705→	@returns A promise that settles when the queue becomes rate-limited due to intervalCap.
-         706→	*/
-         707→	async onRateLimit(): Promise<void> {
-        …
-         715→	/**
-         716→	@returns A promise that settles when the queue is no longer rate-limited.
-         717→	*/
-         718→	async onRateLimitCleared(): Promise<void> {
-        …
-         726→	/**
-         727→	@returns A promise that rejects when any task in the queue errors.
-         728→
-         729→	Use with `Promise.race([queue.onError(), queue.onIdle()])` to fail fast on the first error while still resolving normally when the queue goes idle.
-         730→
-         731→	Important: The promise returned by `add()` still rejects. You must handle each `add()` promise (for example, `.catch(() => {})`) to avoid unhandled rejections.
-        …
-         756→	onError(): Promise<never> {
-        …
-         782→	/**
-         783→	Size of the queue, the number of queued items waiting to run.
-         784→	*/
-         785→	get size(): number {
-        …
-         789→	/**
-         790→	Size of the queue, filtered by the given options.
-         791→
-         792→	For example, this can be used to find the number of items remaining in the queue with a specific priority level.
-         793→	*/
-         794→	sizeBy(options: Readonly<Partial<EnqueueOptionsType>>): number {
-        …
-         799→	/**
-         800→	Number of running items (no longer in the queue).
-         801→	*/
-         802→	get pending(): number {
-        …
-         806→	/**
-         807→	Whether the queue is currently paused.
-         808→	*/
-         809→	get isPaused(): boolean {
-        …
-         885→	/**
-         886→	Whether the queue is currently rate-limited due to intervalCap.
-         887→	*/
-         888→	get isRateLimited(): boolean {
-        …
-         892→	/**
-         893→	Whether the queue is saturated. Returns `true` when:
-         894→	- All concurrency slots are occupied and tasks are waiting, OR
-         895→	- The queue is rate-limited and tasks are waiting
-         896→
-         897→	Useful for detecting backpressure and potential hanging tasks.
-        …
-         918→	get isSaturated(): boolean {
-        …
-         923→	/**
-         924→	The tasks currently being executed. Each task includes its `id`, `priority`, `startTime`, and `timeout` (if set).
-         925→
-         926→	Returns an array of task info objects.
-        …
-         952→	get runningTasks(): ReadonlyArray<{
-         953→		readonly id?: string;
-         954→		readonly priority: number;
-         955→		readonly startTime: number;
-         956→		readonly timeout?: number;
-         957→	}> {
-        …
-         963→export type {Queue} from './queue.js';
-         964→export {default as PriorityQueue} from './priority-queue.js';
-         965→export {type QueueAddOptions, type Options} from './options.js';
-        …
-         985→export {TimeoutError} from 'p-timeout';
-    lower-bound.ts …
-    options.ts …
-    priority-queue.ts
-        …
-           7→export type PriorityQueueOptions = {
-           8→	priority?: number;
-           9→} & QueueAddOptions;
-          11→export default class PriorityQueue implements Queue<RunFunction, PriorityQueueOptions> {
-        …
-          17→	enqueue(run: RunFunction, options?: Partial<PriorityQueueOptions>): void {
-        …
-          50→	setPriority(id: string, priority: number) {
-        …
-          61→	remove(id: string): void;
-          62→	remove(run: RunFunction): void;
-          63→	remove(idOrRun: string | RunFunction): void {
-        …
-          82→	dequeue(): RunFunction | undefined {
-        …
-         102→	filter(options: Readonly<Partial<PriorityQueueOptions>>): RunFunction[] {
-        …
-         115→	get size(): number {
-        …
-    queue.ts …
+  index.ts
+    1→import {EventEmitter} from 'eventemitter3';
+    2→import pTimeout from 'p-timeout';
+    3→import {type Queue, type RunFunction} from './queue.js';
+    4→import PriorityQueue from './priority-queue.js';
+    5→import {type QueueAddOptions, type Options, type TaskOptions} from './options.js';
+    …
+    13→/**
+    14→Promise queue with concurrency control.
+    15→*/
+    16→export default class PQueue<QueueType extends Queue<RunFunction, EnqueueOptionsType> = PriorityQueue, EnqueueOptionsType extends QueueAddOptions = QueueAddOptions> extends EventEmitter<EventName> { // eslint-disable-line @typescript-eslint/naming-convention
+    …
+    68→	/**
+    69→	Get or set the default timeout for all tasks. Can be changed at runtime.
+    70→
+    71→	Operations will throw a `TimeoutError` if they don't complete within the specified time.
+    72→
+    73→	The timeout begins when the operation is dequeued and starts execution, not while it's waiting in the queue.
+    …
+    83→	timeout?: number;
+    84→
+    85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
+    …
+    382→	get concurrency(): number {
+    …
+    386→	set concurrency(newConcurrency: number) {
+    …
+    396→	/**
+    397→	Updates the priority of a promise function by its id, affecting its execution order. Requires a defined concurrency limit to take effect.
+    398→
+    399→	For example, this can be used to prioritize a promise function to run earlier.
+    …
+    432→	setPriority(id: string, priority: number) {
+    …
+    440→	/**
+    441→	Adds a sync or async task to the queue. Always returns a promise.
+    442→	*/
+    443→	async add<TaskResultType>(function_: Task<TaskResultType>, options?: Partial<EnqueueOptionsType>): Promise<TaskResultType>;
+    444→	async add<TaskResultType>(function_: Task<TaskResultType>, options: Partial<EnqueueOptionsType> = {}): Promise<TaskResultType> {
+    …
+    576→	/**
+    577→	Same as `.add()`, but accepts an array of sync or async functions.
+    578→
+    579→	@returns A promise that resolves when all functions are resolved.
+    580→	*/
+    581→	async addAll<TaskResultsType>(
+    582→		functions: ReadonlyArray<Task<TaskResultsType>>,
+    583→		options?: Partial<EnqueueOptionsType>,
+    584→	): Promise<TaskResultsType[]>;
+    585→	async addAll<TaskResultsType>(
+    586→		functions: ReadonlyArray<Task<TaskResultsType>>,
+    587→		options?: Partial<EnqueueOptionsType>,
+    588→	): Promise<TaskResultsType[]> {
+    …
+    592→	/**
+    593→	Start (or resume) executing enqueued tasks within concurrency limit. No need to call this if queue is not paused (via `options.autoStart = false` or by `.pause()` method.)
+    594→	*/
+    595→	start(): this {
+    …
+    606→	/**
+    607→	Put queue execution on hold.
+    608→	*/
+    609→	pause(): void {
+    …
+    613→	/**
+    614→	Clear the queue.
+    615→	*/
+    616→	clear(): void {
+    …
+    647→	/**
+    648→	Can be called multiple times. Useful if you for example add additional items at a later time.
+    649→
+    650→	@returns A promise that settles when the queue becomes empty.
+    651→	*/
+    652→	async onEmpty(): Promise<void> {
+    …
+    668→	async onSizeLessThan(limit: number): Promise<void> {
+    …
+    677→	/**
+    678→	The difference with `.onEmpty` is that `.onIdle` guarantees that all work from the queue has finished. `.onEmpty` merely signals that the queue is empty, but it could mean that some promises haven't completed yet.
+    679→
+    680→	@returns A promise that settles when the queue becomes empty, and all promises have completed; `queue.size === 0 && queue.pending === 0`.
+    681→	*/
+    682→	async onIdle(): Promise<void> {
+    …
+    691→	/**
+    692→	The difference with `.onIdle` is that `.onPendingZero` only waits for currently running tasks to finish, ignoring queued tasks.
+    693→
+    694→	@returns A promise that settles when all currently running tasks have completed; `queue.pending === 0`.
+    695→	*/
+    696→	async onPendingZero(): Promise<void> {
+    …
+    704→	/**
+    705→	@returns A promise that settles when the queue becomes rate-limited due to intervalCap.
+    706→	*/
+    707→	async onRateLimit(): Promise<void> {
+    …
+    715→	/**
+    716→	@returns A promise that settles when the queue is no longer rate-limited.
+    717→	*/
+    718→	async onRateLimitCleared(): Promise<void> {
+    …
+    726→	/**
+    727→	@returns A promise that rejects when any task in the queue errors.
+    728→
+    729→	Use with `Promise.race([queue.onError(), queue.onIdle()])` to fail fast on the first error while still resolving normally when the queue goes idle.
+    730→
+    731→	Important: The promise returned by `add()` still rejects. You must handle each `add()` promise (for example, `.catch(() => {})`) to avoid unhandled rejections.
+    …
+    756→	onError(): Promise<never> {
+    …
+    782→	/**
+    783→	Size of the queue, the number of queued items waiting to run.
+    784→	*/
+    785→	get size(): number {
+    …
+    789→	/**
+    790→	Size of the queue, filtered by the given options.
+    791→
+    792→	For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+    793→	*/
+    794→	sizeBy(options: Readonly<Partial<EnqueueOptionsType>>): number {
+    …
+    799→	/**
+    800→	Number of running items (no longer in the queue).
+    801→	*/
+    802→	get pending(): number {
+    …
+    806→	/**
+    807→	Whether the queue is currently paused.
+    808→	*/
+    809→	get isPaused(): boolean {
+    …
+    885→	/**
+    886→	Whether the queue is currently rate-limited due to intervalCap.
+    887→	*/
+    888→	get isRateLimited(): boolean {
+    …
+    892→	/**
+    893→	Whether the queue is saturated. Returns `true` when:
+    894→	- All concurrency slots are occupied and tasks are waiting, OR
+    895→	- The queue is rate-limited and tasks are waiting
+    896→
+    897→	Useful for detecting backpressure and potential hanging tasks.
+    …
+    918→	get isSaturated(): boolean {
+    …
+    923→	/**
+    924→	The tasks currently being executed. Each task includes its `id`, `priority`, `startTime`, and `timeout` (if set).
+    925→
+    926→	Returns an array of task info objects.
+    …
+    952→	get runningTasks(): ReadonlyArray<{
+    953→		readonly id?: string;
+    954→		readonly priority: number;
+    955→		readonly startTime: number;
+    956→		readonly timeout?: number;
+    957→	}> {
+    …
+    963→export type {Queue} from './queue.js';
+    964→export {default as PriorityQueue} from './priority-queue.js';
+    965→export {type QueueAddOptions, type Options} from './options.js';
+    …
+    985→export {TimeoutError} from 'p-timeout';
+  lower-bound.ts …
+  options.ts …
+  priority-queue.ts
+    …
+    7→export type PriorityQueueOptions = {
+    8→	priority?: number;
+    9→} & QueueAddOptions;
+    11→export default class PriorityQueue implements Queue<RunFunction, PriorityQueueOptions> {
+    …
+    17→	enqueue(run: RunFunction, options?: Partial<PriorityQueueOptions>): void {
+    …
+    50→	setPriority(id: string, priority: number) {
+    …
+    61→	remove(id: string): void;
+    62→	remove(run: RunFunction): void;
+    63→	remove(idOrRun: string | RunFunction): void {
+    …
+    82→	dequeue(): RunFunction | undefined {
+    …
+    102→	filter(options: Readonly<Partial<PriorityQueueOptions>>): RunFunction[] {
+    …
+    115→	get size(): number {
+    …
+  queue.ts …
 test/
-    advanced.ts …
-    basic.ts …
-    debug.ts …
-    priority-queue.ts …
-    rate-limit.ts …
-    strict.ts …
-    validation.ts …
+  advanced.ts …
+  basic.ts …
+  debug.ts …
+  priority-queue.ts …
+  rate-limit.ts …
+  strict.ts …
+  validation.ts …
 test-d/
-    index.test-d.ts …
+  index.test-d.ts …
 tsconfig.json …

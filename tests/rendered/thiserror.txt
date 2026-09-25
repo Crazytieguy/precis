@@ -1,302 +1,302 @@
 .github/
-    FUNDING.yml …
-    workflows/
-        ci.yml …
+  FUNDING.yml …
+  workflows/
+    ci.yml …
 .gitignore …
 Cargo.toml
-       1→[package]
-       2→name = "thiserror"
-       3→version = "2.0.18"
-       4→authors = ["David Tolnay <dtolnay@gmail.com>"]
-       5→categories = ["rust-patterns", "no-std"]
-       6→description = "derive(Error)"
-       7→documentation = "https://docs.rs/thiserror"
-       8→edition = "2021"
-       9→keywords = ["error", "error-handling", "derive"]
-      10→license = "MIT OR Apache-2.0"
-      11→repository = "https://github.com/dtolnay/thiserror"
-      12→rust-version = "1.71"
-      14→[features]
-      15→default = ["std"]
-      16→
-      17→# Std feature enables support for formatting std::path::{Path, PathBuf}
-      18→# conveniently in an error message.
-      19→#
-      20→#     #[derive(Error, Debug)]
-      21→#     #[error("failed to create configuration file {path}")]
-      22→#     pub struct MyError {
-      23→#         pub path: PathBuf,
-      24→#         pub source: std::io::Error,
-      25→#     }
-      26→#
-      27→# Without std, this would need to be written #[error("... {}", path.display())].
-      28→std = []
-      30→[dependencies]
-      31→thiserror-impl = { version = "=2.0.18", path = "impl" }
-    …
-      39→[workspace]
-      40→members = ["impl", "tests/no-std"]
-      42→[package.metadata.docs.rs]
-      43→targets = ["x86_64-unknown-linux-gnu"]
-      44→rustdoc-args = [
-      45→    "--generate-link-to-definition",
-      46→    "--generate-macro-expansion",
-      47→    "--extern-html-root-url=core=https://doc.rust-lang.org",
-      48→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
-      49→    "--extern-html-root-url=std=https://doc.rust-lang.org",
-      50→]
+  1→[package]
+  2→name = "thiserror"
+  3→version = "2.0.18"
+  4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+  5→categories = ["rust-patterns", "no-std"]
+  6→description = "derive(Error)"
+  7→documentation = "https://docs.rs/thiserror"
+  8→edition = "2021"
+  9→keywords = ["error", "error-handling", "derive"]
+  10→license = "MIT OR Apache-2.0"
+  11→repository = "https://github.com/dtolnay/thiserror"
+  12→rust-version = "1.71"
+  14→[features]
+  15→default = ["std"]
+  16→
+  17→# Std feature enables support for formatting std::path::{Path, PathBuf}
+  18→# conveniently in an error message.
+  19→#
+  20→#     #[derive(Error, Debug)]
+  21→#     #[error("failed to create configuration file {path}")]
+  22→#     pub struct MyError {
+  23→#         pub path: PathBuf,
+  24→#         pub source: std::io::Error,
+  25→#     }
+  26→#
+  27→# Without std, this would need to be written #[error("... {}", path.display())].
+  28→std = []
+  30→[dependencies]
+  31→thiserror-impl = { version = "=2.0.18", path = "impl" }
+  …
+  39→[workspace]
+  40→members = ["impl", "tests/no-std"]
+  42→[package.metadata.docs.rs]
+  43→targets = ["x86_64-unknown-linux-gnu"]
+  44→rustdoc-args = [
+  45→    "--generate-link-to-definition",
+  46→    "--generate-macro-expansion",
+  47→    "--extern-html-root-url=core=https://doc.rust-lang.org",
+  48→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
+  49→    "--extern-html-root-url=std=https://doc.rust-lang.org",
+  50→]
 LICENSE-APACHE …
 LICENSE-MIT …
 README.md
-       1→derive(Error)
-       2→=============
-    …
-       9→This library provides a convenient derive macro for the standard library's
-      10→[`std::error::Error`] trait.
-      12→[`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
-      13→
-      14→```toml
-      15→[dependencies]
-      16→thiserror = "2"
-      17→```
-      18→
-      19→<br>
-      21→## Example
-      22→
-      23→```rust
-      24→use thiserror::Error;
-      25→
-      26→#[derive(Error, Debug)]
-      27→pub enum DataStoreError {
-      28→    #[error("data store disconnected")]
-      29→    Disconnect(#[from] io::Error),
-      30→    #[error("the data for key `{0}` is not available")]
-      31→    Redaction(String),
-      32→    #[error("invalid header (expected {expected:?}, found {found:?})")]
-      33→    InvalidHeader {
-      34→        expected: String,
-      35→        found: String,
-      36→    },
-      37→    #[error("unknown data store error")]
-      38→    Unknown,
-      39→}
-      40→```
-      41→
-      42→<br>
-      44→## Details
-    …
-      51→- Errors may be enums, structs with named fields, tuple structs, or unit
-      52→  structs.
-    …
-     211→## Comparison to anyhow
-    …
+  1→derive(Error)
+  2→=============
+  …
+  9→This library provides a convenient derive macro for the standard library's
+  10→[`std::error::Error`] trait.
+  12→[`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
+  13→
+  14→```toml
+  15→[dependencies]
+  16→thiserror = "2"
+  17→```
+  18→
+  19→<br>
+  21→## Example
+  22→
+  23→```rust
+  24→use thiserror::Error;
+  25→
+  26→#[derive(Error, Debug)]
+  27→pub enum DataStoreError {
+  28→    #[error("data store disconnected")]
+  29→    Disconnect(#[from] io::Error),
+  30→    #[error("the data for key `{0}` is not available")]
+  31→    Redaction(String),
+  32→    #[error("invalid header (expected {expected:?}, found {found:?})")]
+  33→    InvalidHeader {
+  34→        expected: String,
+  35→        found: String,
+  36→    },
+  37→    #[error("unknown data store error")]
+  38→    Unknown,
+  39→}
+  40→```
+  41→
+  42→<br>
+  44→## Details
+  …
+  51→- Errors may be enums, structs with named fields, tuple structs, or unit
+  52→  structs.
+  …
+  211→## Comparison to anyhow
+  …
 build/
-    probe.rs …
+  probe.rs …
 build.rs …
 impl/
-    Cargo.toml
-        …
-          14→[dependencies]
-          15→proc-macro2 = "1.0.74"
-          16→quote = "1.0.35"
-          17→syn = "2.0.87"
-        …
-    LICENSE-APACHE …
-    LICENSE-MIT …
-    src/
-        ast.rs …
-        attr.rs …
-        expand.rs
-            …
-              12→pub fn derive(input: &DeriveInput) -> TokenStream {
-            …
-              22→fn try_expand(input: &DeriveInput) -> Result<TokenStream> {
-            …
-              31→fn impl_struct(input: Struct) -> TokenStream {
-            …
-             221→fn impl_enum(input: Enum) -> TokenStream {
-            …
-             505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
-            …
-             511→fn fields_pat(fields: &[Field]) -> TokenStream {
-            …
-             526→fn use_as_display(needs_as_display: bool) -> Option<TokenStream> {
-            …
-             536→fn from_initializer(
-            …
-             565→fn type_is_option(ty: &Type) -> bool {
-            …
-             569→fn unoptional_type(ty: &Type) -> TokenStream {
-            …
-             574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
-            …
-        fallback.rs …
-        fmt.rs …
-        generics.rs
-            …
-               8→pub struct ParamsInScope<'a> {
-               9→    names: Set<&'a Ident>,
-              10→}
-            …
-              48→pub struct InferredBounds {
-              49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
-              50→    order: Vec<TokenStream>,
-              51→}
-            …
-        lib.rs
-            …
-              23→mod ast;
-              24→mod attr;
-              25→mod expand;
-              26→mod fallback;
-              27→mod fmt;
-              28→mod generics;
-              29→mod prop;
-              30→mod scan_expr;
-              31→mod unraw;
-              32→mod valid;
-              33→
-              34→use proc_macro::TokenStream;
-              35→use proc_macro2::{Ident, Span};
-              36→use quote::{ToTokens, TokenStreamExt as _};
-              37→use syn::{parse_macro_input, DeriveInput};
-              39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
-              40→pub fn derive_error(input: TokenStream) -> TokenStream {
-              41→    let input = parse_macro_input!(input as DeriveInput);
-              42→    expand::derive(&input).into()
-            …
-              48→impl ToTokens for private {
-              49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-              50→        tokens.append(Ident::new(
-              51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
-              52→            Span::call_site(),
-              53→        ));
-            …
-        prop.rs …
-        scan_expr.rs …
-        unraw.rs
-            …
-              10→#[derive(Clone)]
-              11→#[repr(transparent)]
-              12→pub struct IdentUnraw(Ident);
-            …
-              81→#[derive(Clone)]
-              82→pub enum MemberUnraw {
-              83→    Named(IdentUnraw),
-              84→    Unnamed(Index),
-              85→}
-            …
-        valid.rs …
+  Cargo.toml
+    …
+    14→[dependencies]
+    15→proc-macro2 = "1.0.74"
+    16→quote = "1.0.35"
+    17→syn = "2.0.87"
+    …
+  LICENSE-APACHE …
+  LICENSE-MIT …
+  src/
+    ast.rs …
+    attr.rs …
+    expand.rs
+      …
+      12→pub fn derive(input: &DeriveInput) -> TokenStream {
+      …
+      22→fn try_expand(input: &DeriveInput) -> Result<TokenStream> {
+      …
+      31→fn impl_struct(input: Struct) -> TokenStream {
+      …
+      221→fn impl_enum(input: Enum) -> TokenStream {
+      …
+      505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
+      …
+      511→fn fields_pat(fields: &[Field]) -> TokenStream {
+      …
+      526→fn use_as_display(needs_as_display: bool) -> Option<TokenStream> {
+      …
+      536→fn from_initializer(
+      …
+      565→fn type_is_option(ty: &Type) -> bool {
+      …
+      569→fn unoptional_type(ty: &Type) -> TokenStream {
+      …
+      574→fn type_parameter_of_option(ty: &Type) -> Option<&Type> {
+      …
+    fallback.rs …
+    fmt.rs …
+    generics.rs
+      …
+      8→pub struct ParamsInScope<'a> {
+      9→    names: Set<&'a Ident>,
+      10→}
+      …
+      48→pub struct InferredBounds {
+      49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
+      50→    order: Vec<TokenStream>,
+      51→}
+      …
+    lib.rs
+      …
+      23→mod ast;
+      24→mod attr;
+      25→mod expand;
+      26→mod fallback;
+      27→mod fmt;
+      28→mod generics;
+      29→mod prop;
+      30→mod scan_expr;
+      31→mod unraw;
+      32→mod valid;
+      33→
+      34→use proc_macro::TokenStream;
+      35→use proc_macro2::{Ident, Span};
+      36→use quote::{ToTokens, TokenStreamExt as _};
+      37→use syn::{parse_macro_input, DeriveInput};
+      39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
+      40→pub fn derive_error(input: TokenStream) -> TokenStream {
+      41→    let input = parse_macro_input!(input as DeriveInput);
+      42→    expand::derive(&input).into()
+      …
+      48→impl ToTokens for private {
+      49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+      50→        tokens.append(Ident::new(
+      51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
+      52→            Span::call_site(),
+      53→        ));
+      …
+    prop.rs …
+    scan_expr.rs …
+    unraw.rs
+      …
+      10→#[derive(Clone)]
+      11→#[repr(transparent)]
+      12→pub struct IdentUnraw(Ident);
+      …
+      81→#[derive(Clone)]
+      82→pub enum MemberUnraw {
+      83→    Named(IdentUnraw),
+      84→    Unnamed(Index),
+      85→}
+      …
+    valid.rs …
 rust-toolchain.toml …
 src/
-    aserror.rs
-        …
-           4→#[doc(hidden)]
-           5→pub trait AsDynError<'a>: Sealed {
-        …
-          44→#[doc(hidden)]
-          45→pub trait Sealed {}
-        …
-    display.rs
-        …
-           5→#[doc(hidden)]
-           6→pub trait AsDisplay<'a>: Sealed {
-        …
-          45→#[doc(hidden)]
-          46→pub trait Sealed {}
-        …
-    lib.rs
-           1→//! [![github]](https://github.com/dtolnay/thiserror)&ensp;[![crates-io]](https://crates.io/crates/thiserror)&ensp;[![docs-rs]](https://docs.rs/thiserror)
-           2→//!
-           3→//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
-           4→//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
-           5→//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
-           6→//!
-           7→//! <br>
-           8→//!
-           9→//! This library provides a convenient derive macro for the standard library's
-          10→//! [`std::error::Error`] trait.
-          11→//!
-          12→//! <br>
-          13→//!
-          14→//! # Example
-          15→//!
-          16→//! ```rust
-        …
-          18→//! use thiserror::Error;
-          19→//!
-          20→//! #[derive(Error, Debug)]
-          21→//! pub enum DataStoreError {
-          22→//!     #[error("data store disconnected")]
-          23→//!     Disconnect(#[from] io::Error),
-          24→//!     #[error("the data for key `{0}` is not available")]
-          25→//!     Redaction(String),
-          26→//!     #[error("invalid header (expected {expected:?}, found {found:?})")]
-          27→//!     InvalidHeader {
-          28→//!         expected: String,
-          29→//!         found: String,
-          30→//!     },
-          31→//!     #[error("unknown data store error")]
-          32→//!     Unknown,
-          33→//! }
-          34→//! ```
-          35→//!
-          36→//! <br>
-          37→//!
-          38→//! # Details
-          39→//!
-          40→//! - Thiserror deliberately does not appear in your public API. You get the
-          41→//!   same thing as if you had written an implementation of
-          42→//!   [`std::error::Error`] by hand, and switching from handwritten impls to
-          43→//!   thiserror or vice versa is not a breaking change.
-          44→//!
-          45→//! - Errors may be enums, structs with named fields, tuple structs, or unit
-          46→//!   structs.
-          47→//!
-          48→//! - A [`Display`] impl is generated for your error if you provide
-          49→//!   `#[error("...")]` messages on the struct or each variant of your enum, as
-          50→//!   shown above in the example.
-          51→//!
-          52→//!   The messages support a shorthand for interpolating fields from the error.
-          53→//!
-          54→//!     - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
-          55→//!     - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
-          56→//!     - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
-          57→//!     - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
-          58→//!
-        …
-         281→mod aserror;
-         282→mod display;
-         283→#[cfg(error_generic_member_access)]
-         284→mod provide;
-         285→mod var;
-         286→
-         287→pub use thiserror_impl::*;
-         288→
-         289→mod private;
-        …
-    private.rs …
-    provide.rs
-        …
-           3→#[doc(hidden)]
-           4→pub trait ThiserrorProvide: Sealed {
-        …
-          18→#[doc(hidden)]
-          19→pub trait Sealed {}
-        …
-    var.rs …
+  aserror.rs
+    …
+    4→#[doc(hidden)]
+    5→pub trait AsDynError<'a>: Sealed {
+    …
+    44→#[doc(hidden)]
+    45→pub trait Sealed {}
+    …
+  display.rs
+    …
+    5→#[doc(hidden)]
+    6→pub trait AsDisplay<'a>: Sealed {
+    …
+    45→#[doc(hidden)]
+    46→pub trait Sealed {}
+    …
+  lib.rs
+    1→//! [![github]](https://github.com/dtolnay/thiserror)&ensp;[![crates-io]](https://crates.io/crates/thiserror)&ensp;[![docs-rs]](https://docs.rs/thiserror)
+    2→//!
+    3→//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
+    4→//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
+    5→//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
+    6→//!
+    7→//! <br>
+    8→//!
+    9→//! This library provides a convenient derive macro for the standard library's
+    10→//! [`std::error::Error`] trait.
+    11→//!
+    12→//! <br>
+    13→//!
+    14→//! # Example
+    15→//!
+    16→//! ```rust
+    …
+    18→//! use thiserror::Error;
+    19→//!
+    20→//! #[derive(Error, Debug)]
+    21→//! pub enum DataStoreError {
+    22→//!     #[error("data store disconnected")]
+    23→//!     Disconnect(#[from] io::Error),
+    24→//!     #[error("the data for key `{0}` is not available")]
+    25→//!     Redaction(String),
+    26→//!     #[error("invalid header (expected {expected:?}, found {found:?})")]
+    27→//!     InvalidHeader {
+    28→//!         expected: String,
+    29→//!         found: String,
+    30→//!     },
+    31→//!     #[error("unknown data store error")]
+    32→//!     Unknown,
+    33→//! }
+    34→//! ```
+    35→//!
+    36→//! <br>
+    37→//!
+    38→//! # Details
+    39→//!
+    40→//! - Thiserror deliberately does not appear in your public API. You get the
+    41→//!   same thing as if you had written an implementation of
+    42→//!   [`std::error::Error`] by hand, and switching from handwritten impls to
+    43→//!   thiserror or vice versa is not a breaking change.
+    44→//!
+    45→//! - Errors may be enums, structs with named fields, tuple structs, or unit
+    46→//!   structs.
+    47→//!
+    48→//! - A [`Display`] impl is generated for your error if you provide
+    49→//!   `#[error("...")]` messages on the struct or each variant of your enum, as
+    50→//!   shown above in the example.
+    51→//!
+    52→//!   The messages support a shorthand for interpolating fields from the error.
+    53→//!
+    54→//!     - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+    55→//!     - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+    56→//!     - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+    57→//!     - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+    58→//!
+    …
+    281→mod aserror;
+    282→mod display;
+    283→#[cfg(error_generic_member_access)]
+    284→mod provide;
+    285→mod var;
+    286→
+    287→pub use thiserror_impl::*;
+    288→
+    289→mod private;
+    …
+  private.rs …
+  provide.rs
+    …
+    3→#[doc(hidden)]
+    4→pub trait ThiserrorProvide: Sealed {
+    …
+    18→#[doc(hidden)]
+    19→pub trait Sealed {}
+    …
+  var.rs …
 tests/
-    compiletest.rs …
-    no-std/ …
-    test_backtrace.rs …
-    test_display.rs …
-    test_error.rs …
-    test_expr.rs …
-    test_from.rs …
-    test_generics.rs …
-    test_lints.rs …
-    test_option.rs …
-    test_path.rs …
-    test_source.rs …
-    test_transparent.rs …
-    ui/ …
+  compiletest.rs …
+  no-std/ …
+  test_backtrace.rs …
+  test_display.rs …
+  test_error.rs …
+  test_expr.rs …
+  test_from.rs …
+  test_generics.rs …
+  test_lints.rs …
+  test_option.rs …
+  test_path.rs …
+  test_source.rs …
+  test_transparent.rs …
+  ui/ …

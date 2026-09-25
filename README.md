@@ -11,87 +11,87 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 .editorconfig …
 .eslintrc …
 .github/
-    PULL_REQUEST_TEMPLATE.md …
-    workflows/
-        compressed-size.yml …
-        main.yml
-               1→name: CI
-               2→
-               3→on:
-               4→  pull_request:
-               5→    branches:
-               6→      - "**"
-               7→  push:
-               8→    branches:
-               9→      - main
-              10→
-              11→jobs:
-              12→  build:
-              13→    runs-on: ubuntu-latest
-              14→    steps:
-              15→      - uses: actions/checkout@v2
-              16→      - uses: actions/setup-node@v2
-              17→        with:
-              18→          node-version: 14
-              19→      - name: npm install, build, and test
-              20→        run: |
-              21→          npm install
-              22→          npm run build --if-present
-              23→          npm test
-              24→        env:
-              25→          CI: true
+  PULL_REQUEST_TEMPLATE.md …
+  workflows/
+    compressed-size.yml …
+    main.yml
+      1→name: CI
+      2→
+      3→on:
+      4→  pull_request:
+      5→    branches:
+      6→      - "**"
+      7→  push:
+      8→    branches:
+      9→      - main
+      10→
+      11→jobs:
+      12→  build:
+      13→    runs-on: ubuntu-latest
+      14→    steps:
+      15→      - uses: actions/checkout@v2
+      16→      - uses: actions/setup-node@v2
+      17→        with:
+      18→          node-version: 14
+      19→      - name: npm install, build, and test
+      20→        run: |
+      21→          npm install
+      22→          npm run build --if-present
+      23→          npm test
+      24→        env:
+      25→          CI: true
 .gitignore …
 LICENSE …
 README.md
-    …
-       9→# Mitt
-      10→
-      11→> Tiny 200b functional event emitter / pubsub.
-      12→
-      13→-   **Microscopic:** weighs less than 200 bytes gzipped
-      14→-   **Useful:** a wildcard `"*"` event type listens to all events
-      15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-      16→-   **Functional:** methods don't rely on `this`
-      17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
-      18→
-      19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-    …
+  …
+  9→# Mitt
+  10→
+  11→> Tiny 200b functional event emitter / pubsub.
+  12→
+  13→-   **Microscopic:** weighs less than 200 bytes gzipped
+  14→-   **Useful:** a wildcard `"*"` event type listens to all events
+  15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+  16→-   **Functional:** methods don't rely on `this`
+  17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+  18→
+  19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+  …
 package.json
-    …
-       2→  "name": "mitt",
-       3→  "version": "3.0.1",
-       4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
-    …
-      41→  "license": "MIT",
-    …
+  …
+  2→  "name": "mitt",
+  3→  "version": "3.0.1",
+  4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
+  …
+  41→  "license": "MIT",
+  …
 src/
-    index.ts
-           1→export type EventType = string | symbol;
-        …
-           5→export type Handler<T = unknown> = (event: T) => void;
-           6→export type WildcardHandler<T = Record<string, unknown>> = (
-           7→	type: keyof T,
-           8→	event: T[keyof T]
-           9→) => void;
-        …
-          12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
-          13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
-          14→	WildcardHandler<T>
-          15→>;
-        …
-          18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
-          19→	keyof Events | '*',
-          20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
-          21→>;
-          23→export interface Emitter<Events extends Record<EventType, unknown>> {
-        …
-          46→export default function mitt<Events extends Record<EventType, unknown>>(
-          47→	all?: EventHandlerMap<Events>
-          48→): Emitter<Events> {
-        …
+  index.ts
+    1→export type EventType = string | symbol;
+    …
+    5→export type Handler<T = unknown> = (event: T) => void;
+    6→export type WildcardHandler<T = Record<string, unknown>> = (
+    7→	type: keyof T,
+    8→	event: T[keyof T]
+    9→) => void;
+    …
+    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
+    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+    14→	WildcardHandler<T>
+    15→>;
+    …
+    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+    19→	keyof Events | '*',
+    20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
+    21→>;
+    23→export interface Emitter<Events extends Record<EventType, unknown>> {
+    …
+    46→export default function mitt<Events extends Record<EventType, unknown>>(
+    47→	all?: EventHandlerMap<Events>
+    48→): Emitter<Events> {
+    …
 test/
-    index_test.ts …
-    test-types-compilation.ts …
+  index_test.ts …
+  test-types-compilation.ts …
 tsconfig.json …
 ```
 <!-- precis-example-end -->

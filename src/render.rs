@@ -24,7 +24,7 @@ use crate::content::{
 use crate::fs_util::{DirFilter, EntryKind, list_dir};
 use crate::tokenizer;
 
-const INDENT_UNIT: &str = "    ";
+const INDENT_UNIT: &str = "  ";
 
 /// A source file's text with its line index, built once per file so
 /// line lookups by number don't rescan the text.
@@ -859,11 +859,7 @@ fn format_line_row(
     indent_depth: usize,
 ) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    // Right-align the line number so the code column doesn't shift at
-    // digit boundaries (matters for indentation-significant sources).
-    // Fixed width keeps each row's cost independent of the file's
-    // other rendered rows; ≥5-digit numbers just extend the row.
-    let gutter = format!("{number:>4}");
+    let gutter = number.to_string();
     match render {
         Render::Ellipsis => {
             // Unreachable from render/cost paths — Ellipsis records

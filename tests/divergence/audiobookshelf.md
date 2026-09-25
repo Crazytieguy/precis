@@ -321,49 +321,49 @@ Score(3000)=0.771 I=0.863 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 7950 | 44 | declaration surface of client/components/modals/ApiKeyModal.vue |  |  | 0.642 |
 | walker |  | 7994 | 44 | declaration surface of client/components/modals/AudioFileDataModal.vue |  |  | 0.642 |
 | walker |  | 8038 | 44 | declaration surface of client/components/modals/BackupScheduleModal.vue |  |  | 0.642 |
+| walker |  | 8055 | 17 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.642 |
 | ns | 8065 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.631 |
-| walker |  | 8082 | 44 | declaration surface of client/components/modals/BatchQuickMatchModel.vue |  |  | 0.631 |
-| walker |  | 8126 | 44 | declaration surface of client/components/modals/BookmarksModal.vue |  |  | 0.631 |
-| walker |  | 8170 | 44 | declaration surface of client/components/modals/Dialog.vue |  |  | 0.631 |
-| walker |  | 8214 | 44 | declaration surface of client/components/modals/EditSeriesInputInnerModal.vue |  |  | 0.631 |
-| walker |  | 8258 | 44 | declaration surface of client/components/modals/ListeningSessionModal.vue |  |  | 0.631 |
-| walker |  | 8302 | 44 | declaration surface of client/components/modals/Modal.vue |  |  | 0.631 |
-| walker |  | 8346 | 44 | declaration surface of client/components/modals/PlayerSettingsModal.vue |  |  | 0.631 |
-| walker |  | 8390 | 44 | declaration surface of client/components/modals/RawCoverPreviewModal.vue |  |  | 0.631 |
+| walker |  | 8099 | 44 | declaration surface of client/components/modals/BatchQuickMatchModel.vue |  |  | 0.631 |
+| walker |  | 8143 | 44 | declaration surface of client/components/modals/BookmarksModal.vue |  |  | 0.631 |
+| walker |  | 8187 | 44 | declaration surface of client/components/modals/Dialog.vue |  |  | 0.631 |
+| walker |  | 8231 | 44 | declaration surface of client/components/modals/EditSeriesInputInnerModal.vue |  |  | 0.631 |
+| walker |  | 8275 | 44 | declaration surface of client/components/modals/ListeningSessionModal.vue |  |  | 0.631 |
+| walker |  | 8319 | 44 | declaration surface of client/components/modals/Modal.vue |  |  | 0.631 |
+| walker |  | 8363 | 44 | declaration surface of client/components/modals/PlayerSettingsModal.vue |  |  | 0.631 |
+| walker |  | 8407 | 44 | declaration surface of client/components/modals/RawCoverPreviewModal.vue |  |  | 0.631 |
 | ns | 8413 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.620 |
-| walker |  | 8434 | 44 | declaration surface of client/components/modals/ShareModal.vue |  |  | 0.620 |
-| walker |  | 8478 | 44 | declaration surface of client/components/modals/SleepTimerModal.vue |  |  | 0.620 |
-| walker |  | 8522 | 44 | declaration surface of client/components/modals/UploadImageModal.vue |  |  | 0.620 |
-| walker |  | 8566 | 44 | declaration surface of client/components/player/PlayerPlaybackControls.vue |  |  | 0.620 |
-| walker |  | 8610 | 44 | declaration surface of client/components/player/PlayerTrackBar.vue |  |  | 0.620 |
-| walker |  | 8654 | 44 | declaration surface of client/components/prompt/Dialog.vue |  |  | 0.620 |
-| walker |  | 8698 | 44 | declaration surface of client/components/stats/DailyListeningChart.vue |  |  | 0.620 |
+| walker |  | 8451 | 44 | declaration surface of client/components/modals/ShareModal.vue |  |  | 0.620 |
+| walker |  | 8495 | 44 | declaration surface of client/components/modals/SleepTimerModal.vue |  |  | 0.620 |
+| walker |  | 8539 | 44 | declaration surface of client/components/modals/UploadImageModal.vue |  |  | 0.620 |
+| walker |  | 8583 | 44 | declaration surface of client/components/player/PlayerPlaybackControls.vue |  |  | 0.620 |
+| walker |  | 8627 | 44 | declaration surface of client/components/player/PlayerTrackBar.vue |  |  | 0.620 |
+| walker |  | 8671 | 44 | declaration surface of client/components/prompt/Dialog.vue |  |  | 0.620 |
 | ns | 8702 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.610 |
-| walker |  | 8742 | 44 | declaration surface of client/components/stats/Heatmap.vue |  |  | 0.610 |
-| walker |  | 8786 | 44 | declaration surface of client/components/stats/PreviewIcons.vue |  |  | 0.610 |
-| walker |  | 8830 | 44 | declaration surface of client/components/stats/YearInReview.vue |  |  | 0.610 |
-| walker |  | 8874 | 44 | declaration surface of client/components/stats/YearInReviewBanner.vue |  |  | 0.610 |
-| walker |  | 8918 | 44 | declaration surface of client/components/stats/YearInReviewServer.vue |  |  | 0.610 |
+| walker |  | 8715 | 44 | declaration surface of client/components/stats/DailyListeningChart.vue |  |  | 0.610 |
+| walker |  | 8759 | 44 | declaration surface of client/components/stats/Heatmap.vue |  |  | 0.610 |
+| walker |  | 8803 | 44 | declaration surface of client/components/stats/PreviewIcons.vue |  |  | 0.610 |
+| walker |  | 8847 | 44 | declaration surface of client/components/stats/YearInReview.vue |  |  | 0.610 |
+| walker |  | 8891 | 44 | declaration surface of client/components/stats/YearInReviewBanner.vue |  |  | 0.610 |
+| walker |  | 8935 | 44 | declaration surface of client/components/stats/YearInReviewServer.vue |  |  | 0.610 |
 | ns | 8940 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.602 |
-| walker |  | 8962 | 44 | declaration surface of client/components/stats/YearInReviewShort.vue |  |  | 0.602 |
-| walker |  | 9006 | 44 | declaration surface of client/components/tables/AudioTracksTableRow.vue |  |  | 0.602 |
-| walker |  | 9050 | 44 | declaration surface of client/components/tables/ChaptersTable.vue |  |  | 0.602 |
-| walker |  | 9094 | 44 | declaration surface of client/components/tables/EbookFilesTable.vue |  |  | 0.602 |
-| walker |  | 9138 | 44 | declaration surface of client/components/tables/EbookFilesTableRow.vue |  |  | 0.602 |
+| walker |  | 8979 | 44 | declaration surface of client/components/stats/YearInReviewShort.vue |  |  | 0.602 |
+| walker |  | 9023 | 44 | declaration surface of client/components/tables/AudioTracksTableRow.vue |  |  | 0.602 |
+| walker |  | 9067 | 44 | declaration surface of client/components/tables/ChaptersTable.vue |  |  | 0.602 |
+| walker |  | 9111 | 44 | declaration surface of client/components/tables/EbookFilesTable.vue |  |  | 0.602 |
 | ns | 9139 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.597 |
-| walker |  | 9182 | 44 | declaration surface of client/components/tables/LibraryFilesTable.vue |  |  | 0.597 |
-| walker |  | 9226 | 44 | declaration surface of client/components/tables/LibraryFilesTableRow.vue |  |  | 0.597 |
-| walker |  | 9270 | 44 | declaration surface of client/components/tables/TracksTable.vue |  |  | 0.597 |
-| walker |  | 9314 | 44 | declaration surface of client/components/tables/UploadedFilesTable.vue |  |  | 0.597 |
-| walker |  | 9358 | 44 | declaration surface of client/components/ui/Btn.vue |  |  | 0.597 |
+| walker |  | 9155 | 44 | declaration surface of client/components/tables/EbookFilesTableRow.vue |  |  | 0.597 |
+| walker |  | 9199 | 44 | declaration surface of client/components/tables/LibraryFilesTable.vue |  |  | 0.597 |
+| walker |  | 9243 | 44 | declaration surface of client/components/tables/LibraryFilesTableRow.vue |  |  | 0.597 |
+| walker |  | 9287 | 44 | declaration surface of client/components/tables/TracksTable.vue |  |  | 0.597 |
+| walker |  | 9331 | 44 | declaration surface of client/components/tables/UploadedFilesTable.vue |  |  | 0.597 |
+| walker |  | 9375 | 44 | declaration surface of client/components/ui/Btn.vue |  |  | 0.597 |
 | ns | 9389 |  | 250 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.611 |
-| walker |  | 9402 | 44 | declaration surface of client/components/ui/Checkbox.vue |  |  | 0.611 |
-| walker |  | 9446 | 44 | declaration surface of client/components/ui/ContextMenuDropdown.vue |  |  | 0.611 |
-| walker |  | 9490 | 44 | declaration surface of client/components/ui/Dropdown.vue |  |  | 0.611 |
-| walker |  | 9534 | 44 | declaration surface of client/components/ui/FileInput.vue |  |  | 0.611 |
-| walker |  | 9578 | 44 | declaration surface of client/components/ui/LibraryIcon.vue |  |  | 0.611 |
-| walker |  | 9622 | 44 | declaration surface of client/components/ui/MediaIconPicker.vue |  |  | 0.611 |
-| walker |  | 9639 | 17 | listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams' |  |  | 0.611 |
+| walker |  | 9419 | 44 | declaration surface of client/components/ui/Checkbox.vue |  |  | 0.611 |
+| walker |  | 9463 | 44 | declaration surface of client/components/ui/ContextMenuDropdown.vue |  |  | 0.611 |
+| walker |  | 9507 | 44 | declaration surface of client/components/ui/Dropdown.vue |  |  | 0.611 |
+| walker |  | 9551 | 44 | declaration surface of client/components/ui/FileInput.vue |  |  | 0.611 |
+| walker |  | 9595 | 44 | declaration surface of client/components/ui/LibraryIcon.vue |  |  | 0.611 |
+| walker |  | 9639 | 44 | declaration surface of client/components/ui/MediaIconPicker.vue |  |  | 0.611 |
 | ns | 9657 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.606 |
 | walker |  | 9683 | 44 | declaration surface of client/components/ui/MultiSelectDropdown.vue |  |  | 0.606 |
 | walker |  | 9727 | 44 | declaration surface of client/components/ui/QueryInput.vue |  |  | 0.606 |

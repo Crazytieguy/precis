@@ -1,263 +1,263 @@
 .editorconfig …
 .gitignore …
 .travis.yml
-       1→sudo: false
-       2→
-       3→language: node_js
-       4→
-       5→node_js:
-       6→  - "6"
-       7→  - "8"
-       8→  - "10"
-       9→  - "11"
-      10→
-      11→install:
-      12→  - npm install
-      13→
-      14→script:
-      15→  - npm run lint
-      16→  - npm test
-      17→  - npm run test:coverage
+  1→sudo: false
+  2→
+  3→language: node_js
+  4→
+  5→node_js:
+  6→  - "6"
+  7→  - "8"
+  8→  - "10"
+  9→  - "11"
+  10→
+  11→install:
+  12→  - npm install
+  13→
+  14→script:
+  15→  - npm run lint
+  16→  - npm test
+  17→  - npm run test:coverage
 LICENSE …
 README.md
-       1→# debug
-    …
-       7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
-       8→technique. Works in Node.js and web browsers.
-      10→## Installation
-      11→
-      12→```bash
-      13→$ npm install debug
-      14→```
-      16→## Usage
-      17→
-      18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
-      19→
-      20→Example _app.js_:
-      21→
-      22→```js
-      23→var debug = require('debug')('http')
-      24→  , http = require('http')
-      25→  , name = 'My App';
-      26→
-      27→// fake app
-      28→
-      29→debug('booting %o', name);
-      30→
-      31→http.createServer(function(req, res){
-      32→  debug(req.method + ' ' + req.url);
-      33→  res.end('hello\n');
-      34→}).listen(3000, function(){
-      35→  debug('listening');
-      36→});
-      37→
-      38→// fake worker of some kind
-      39→
-      40→require('./worker');
-      41→```
-      43→Example _worker.js_:
-      44→
-      45→```js
-      46→var a = require('debug')('worker:a')
-      47→  , b = require('debug')('worker:b');
-      48→
-      49→function work() {
-      50→  a('doing lots of uninteresting work');
-      51→  setTimeout(work, Math.random() * 1000);
-      52→}
-      53→
-      54→work();
-      55→
-      56→function workb() {
-      57→  b('doing some work');
-      58→  setTimeout(workb, Math.random() * 2000);
-      59→}
-      60→
-      61→workb();
-      62→```
-      63→
-      64→The `DEBUG` environment variable is then used to enable these based on space or
-      65→comma-delimited names.
-      66→
-      67→Here are some examples:
-    …
-     110→## Namespace Colors
-    …
-     134→## Millisecond diff
-     135→
-     136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
-     137→
-     138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
-     139→
-     140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
-     141→
-     142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
-     145→## Conventions
-     146→
-     147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
-     149→## Wildcards
-     150→
-     151→The `*` character may be used as a wildcard. Suppose for example your library has
-     152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
-     153→instead of listing all three with
-     154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
-     155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
-     156→
-     157→You can also exclude specific debuggers by prefixing them with a "-" character.
-     158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
-     159→starting with "connect:".
-     161→## Environment Variables
-     162→
-     163→When running through Node.js, you can set a few environment variables that will
-     164→change the behavior of the debug logging:
-     165→
-     166→| Name      | Purpose                                         |
-     167→|-----------|-------------------------------------------------|
-     168→| `DEBUG`   | Enables/disables specific debugging namespaces. |
-     169→| `DEBUG_HIDE_DATE` | Hide date from debug output (non-TTY).  |
-     170→| `DEBUG_COLORS`| Whether or not to use colors in the debug output. |
-     171→| `DEBUG_DEPTH` | Object inspection depth.                    |
-     172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
-     173→
-     174→
-     175→__Note:__ The environment variables beginning with `DEBUG_` end up being
-     176→converted into an Options object that gets used with `%o`/`%O` formatters.
-     177→See the Node.js documentation for
-     178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
-     179→for the complete list.
-     181→## Formatters
-    …
-     196→### Custom formatters
-    …
-     215→## Browser Support
-    …
-     248→## Output streams
-    …
-     274→## Extend
-     275→You can simply extend debugger 
-     276→```js
-     277→const log = require('debug')('auth');
-     278→
-     279→//creates new debug instance with extended namespace
-     280→const logSign = log.extend('sign');
-     281→const logLogin = log.extend('login');
-     282→
-     283→log('hello'); // auth hello
-     284→logSign('hello'); //auth:sign hello
-     285→logLogin('hello'); //auth:login hello
-     286→```
-     288→## Set dynamically
-    …
-     341→## Checking whether a debug target is enabled
-     342→
-     343→After you've created a debug instance, you can determine whether or not it is
-     344→enabled by checking the `enabled` property:
-     345→
-     346→```javascript
-     347→const debug = require('debug')('http');
-     348→
-     349→if (debug.enabled) {
-     350→  // do stuff...
-     351→}
-     352→```
-     353→
-     354→You can also manually toggle this property to force the debug instance to be
-     355→enabled or disabled.
-     357→## Usage in child processes
-    …
-     379→## Authors
-     380→
-     381→ - TJ Holowaychuk
-     382→ - Nathan Rajlich
-     383→ - Andrew Rhyne
-     384→ - Josh Junon
-     386→## Backers
-    …
-     422→## Sponsors
-    …
-     457→## License
-    …
+  1→# debug
+  …
+  7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
+  8→technique. Works in Node.js and web browsers.
+  10→## Installation
+  11→
+  12→```bash
+  13→$ npm install debug
+  14→```
+  16→## Usage
+  17→
+  18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
+  19→
+  20→Example _app.js_:
+  21→
+  22→```js
+  23→var debug = require('debug')('http')
+  24→  , http = require('http')
+  25→  , name = 'My App';
+  26→
+  27→// fake app
+  28→
+  29→debug('booting %o', name);
+  30→
+  31→http.createServer(function(req, res){
+  32→  debug(req.method + ' ' + req.url);
+  33→  res.end('hello\n');
+  34→}).listen(3000, function(){
+  35→  debug('listening');
+  36→});
+  37→
+  38→// fake worker of some kind
+  39→
+  40→require('./worker');
+  41→```
+  43→Example _worker.js_:
+  44→
+  45→```js
+  46→var a = require('debug')('worker:a')
+  47→  , b = require('debug')('worker:b');
+  48→
+  49→function work() {
+  50→  a('doing lots of uninteresting work');
+  51→  setTimeout(work, Math.random() * 1000);
+  52→}
+  53→
+  54→work();
+  55→
+  56→function workb() {
+  57→  b('doing some work');
+  58→  setTimeout(workb, Math.random() * 2000);
+  59→}
+  60→
+  61→workb();
+  62→```
+  63→
+  64→The `DEBUG` environment variable is then used to enable these based on space or
+  65→comma-delimited names.
+  66→
+  67→Here are some examples:
+  …
+  110→## Namespace Colors
+  …
+  134→## Millisecond diff
+  135→
+  136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
+  137→
+  138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
+  139→
+  140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
+  141→
+  142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
+  145→## Conventions
+  146→
+  147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
+  149→## Wildcards
+  150→
+  151→The `*` character may be used as a wildcard. Suppose for example your library has
+  152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
+  153→instead of listing all three with
+  154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
+  155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
+  156→
+  157→You can also exclude specific debuggers by prefixing them with a "-" character.
+  158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
+  159→starting with "connect:".
+  161→## Environment Variables
+  162→
+  163→When running through Node.js, you can set a few environment variables that will
+  164→change the behavior of the debug logging:
+  165→
+  166→| Name      | Purpose                                         |
+  167→|-----------|-------------------------------------------------|
+  168→| `DEBUG`   | Enables/disables specific debugging namespaces. |
+  169→| `DEBUG_HIDE_DATE` | Hide date from debug output (non-TTY).  |
+  170→| `DEBUG_COLORS`| Whether or not to use colors in the debug output. |
+  171→| `DEBUG_DEPTH` | Object inspection depth.                    |
+  172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
+  173→
+  174→
+  175→__Note:__ The environment variables beginning with `DEBUG_` end up being
+  176→converted into an Options object that gets used with `%o`/`%O` formatters.
+  177→See the Node.js documentation for
+  178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
+  179→for the complete list.
+  181→## Formatters
+  …
+  196→### Custom formatters
+  …
+  215→## Browser Support
+  …
+  248→## Output streams
+  …
+  274→## Extend
+  275→You can simply extend debugger 
+  276→```js
+  277→const log = require('debug')('auth');
+  278→
+  279→//creates new debug instance with extended namespace
+  280→const logSign = log.extend('sign');
+  281→const logLogin = log.extend('login');
+  282→
+  283→log('hello'); // auth hello
+  284→logSign('hello'); //auth:sign hello
+  285→logLogin('hello'); //auth:login hello
+  286→```
+  288→## Set dynamically
+  …
+  341→## Checking whether a debug target is enabled
+  342→
+  343→After you've created a debug instance, you can determine whether or not it is
+  344→enabled by checking the `enabled` property:
+  345→
+  346→```javascript
+  347→const debug = require('debug')('http');
+  348→
+  349→if (debug.enabled) {
+  350→  // do stuff...
+  351→}
+  352→```
+  353→
+  354→You can also manually toggle this property to force the debug instance to be
+  355→enabled or disabled.
+  357→## Usage in child processes
+  …
+  379→## Authors
+  380→
+  381→ - TJ Holowaychuk
+  382→ - Nathan Rajlich
+  383→ - Andrew Rhyne
+  384→ - Josh Junon
+  386→## Backers
+  …
+  422→## Sponsors
+  …
+  457→## License
+  …
 karma.conf.js
-       1→module.exports = function (config) {
-    …
+  1→module.exports = function (config) {
+  …
 package.json
-    …
-       2→  "name": "debug",
-       3→  "version": "4.4.3",
-       4→  "repository": {
-       5→    "type": "git",
-       6→    "url": "https://github.com/debug-js/debug.git"
-       7→  },
-       8→  "description": "Lightweight debugging utility for Node.js and the browser",
-       9→  "keywords": [
-      10→    "debug",
-      11→    "log",
-      12→    "debugger"
-      13→  ],
-      14→  "files": [
-      15→    "src",
-      16→    "LICENSE",
-      17→    "README.md"
-      18→  ],
-      19→  "author": "Josh Junon (https://github.com/qix-)",
-      20→  "contributors": [
-      21→    "TJ Holowaychuk <tj@vision-media.ca>",
-      22→    "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io)",
-      23→    "Andrew Rhyne <rhyneandrew@gmail.com>"
-      24→  ],
-      25→  "license": "MIT",
-      26→  "scripts": {
-      27→    "lint": "xo",
-      28→    "test": "npm run test:node && npm run test:browser && npm run lint",
-      29→    "test:node": "mocha test.js test.node.js",
-      30→    "test:browser": "karma start --single-run",
-      31→    "test:coverage": "cat ./coverage/lcov.info | coveralls"
-      32→  },
-      33→  "dependencies": {
-      34→    "ms": "^2.1.3"
-      35→  },
-    …
-      54→  "main": "./src/index.js",
-      55→  "browser": "./src/browser.js",
-      56→  "engines": {
-      57→    "node": ">=6.0"
-      58→  },
-    …
+  …
+  2→  "name": "debug",
+  3→  "version": "4.4.3",
+  4→  "repository": {
+  5→    "type": "git",
+  6→    "url": "https://github.com/debug-js/debug.git"
+  7→  },
+  8→  "description": "Lightweight debugging utility for Node.js and the browser",
+  9→  "keywords": [
+  10→    "debug",
+  11→    "log",
+  12→    "debugger"
+  13→  ],
+  14→  "files": [
+  15→    "src",
+  16→    "LICENSE",
+  17→    "README.md"
+  18→  ],
+  19→  "author": "Josh Junon (https://github.com/qix-)",
+  20→  "contributors": [
+  21→    "TJ Holowaychuk <tj@vision-media.ca>",
+  22→    "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io)",
+  23→    "Andrew Rhyne <rhyneandrew@gmail.com>"
+  24→  ],
+  25→  "license": "MIT",
+  26→  "scripts": {
+  27→    "lint": "xo",
+  28→    "test": "npm run test:node && npm run test:browser && npm run lint",
+  29→    "test:node": "mocha test.js test.node.js",
+  30→    "test:browser": "karma start --single-run",
+  31→    "test:coverage": "cat ./coverage/lcov.info | coveralls"
+  32→  },
+  33→  "dependencies": {
+  34→    "ms": "^2.1.3"
+  35→  },
+  …
+  54→  "main": "./src/index.js",
+  55→  "browser": "./src/browser.js",
+  56→  "engines": {
+  57→    "node": ">=6.0"
+  58→  },
+  …
 src/
-    browser.js …
-    common.js
-        …
-           7→function setup(env) {
-        …
-          61→		let prevTime;
-          62→		let enableOverride = null;
-          63→		let namespacesCache;
-          64→		let enabledCache;
-        …
-         116→		debug.namespace = namespace;
-        …
-         119→		debug.extend = extend;
-        …
-         146→		return debug;
-        …
-         166→		createDebug.names = [];
-         167→		createDebug.skips = [];
-        …
-         292→module.exports = setup;
-    index.js
-           1→/**
-           2→ * Detect Electron renderer / nwjs process, which is node, but we should
-           3→ * treat as a browser.
-           4→ */
-           6→if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
-           7→	module.exports = require('./browser.js');
-           8→} else {
-           9→	module.exports = require('./node.js');
-          10→}
-    node.js …
+  browser.js …
+  common.js
+    …
+    7→function setup(env) {
+    …
+    61→		let prevTime;
+    62→		let enableOverride = null;
+    63→		let namespacesCache;
+    64→		let enabledCache;
+    …
+    116→		debug.namespace = namespace;
+    …
+    119→		debug.extend = extend;
+    …
+    146→		return debug;
+    …
+    166→		createDebug.names = [];
+    167→		createDebug.skips = [];
+    …
+    292→module.exports = setup;
+  index.js
+    1→/**
+    2→ * Detect Electron renderer / nwjs process, which is node, but we should
+    3→ * treat as a browser.
+    4→ */
+    6→if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
+    7→	module.exports = require('./browser.js');
+    8→} else {
+    9→	module.exports = require('./node.js');
+    10→}
+  node.js …
 test.js
-    …
-       3→const assert = require('assert');
-       4→const debug = require('./src');
-    …
+  …
+  3→const assert = require('assert');
+  4→const debug = require('./src');
+  …
 test.node.js …

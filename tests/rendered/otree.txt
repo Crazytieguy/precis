@@ -1,340 +1,340 @@
 .github/
-    dependabot.yml …
-    workflows/
-        cargo-check.yml …
-        release-binary.yml …
-        spell-check.yml …
+  dependabot.yml …
+  workflows/
+    cargo-check.yml …
+    release-binary.yml …
+    spell-check.yml …
 .gitignore …
 Cargo.lock …
 Cargo.toml
-       1→[package]
-       2→name = "otree"
-       3→version = "0.6.4"
-       4→edition = "2021"
-       5→build = "build.rs"
-       6→license = "MIT"
-       7→authors = ["fioncat"]
-       8→categories = ["command-line-utilities"]
-       9→readme = "README.md"
-      10→repository = "https://github.com/fioncat/otree"
-      11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
-    …
+  1→[package]
+  2→name = "otree"
+  3→version = "0.6.4"
+  4→edition = "2021"
+  5→build = "build.rs"
+  6→license = "MIT"
+  7→authors = ["fioncat"]
+  8→categories = ["command-line-utilities"]
+  9→readme = "README.md"
+  10→repository = "https://github.com/fioncat/otree"
+  11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
+  …
 LICENSE …
 README.md
-       1→# OTree - Object Tree TUI Viewer
-    …
-       5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
-       7→## Install
-    …
-      17→### Arch Linux (AUR)
-    …
-      25→### macOS and Linux (Homebrew)
-    …
-      33→## Usage
-    …
-      52→## Roadmap
-    …
-      82→## Thanks
-    …
+  1→# OTree - Object Tree TUI Viewer
+  …
+  5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
+  7→## Install
+  …
+  17→### Arch Linux (AUR)
+  …
+  25→### macOS and Linux (Homebrew)
+  …
+  33→## Usage
+  …
+  52→## Roadmap
+  …
+  82→## Thanks
+  …
 assets/
-    screenshot.png …
+  screenshot.png …
 build.rs …
 config/
-    default.toml …
-    themes/
-        catppuccin.toml …
+  default.toml …
+  themes/
+    catppuccin.toml …
 docs/
-    actions.md …
-    changelog.md …
-    colors.md
+  actions.md …
+  changelog.md …
+  colors.md
 examples/ …
 src/
-    clipboard.rs
-        …
-          28→pub fn write_clipboard(text: &str) -> Result<()> {
-        …
-    cmd.rs …
-    config/
-        colors.rs …
-        keys.rs
-            …
-              54→pub enum Key {
-            …
-             195→pub struct Keys {
-            …
-             351→pub struct KeyAction {
-            …
-        mod.rs
-            …
-              17→pub struct Config {
-            …
-              52→#[derive(Debug, Clone, Serialize, Deserialize)]
-              53→pub struct Tree {
-              54→    #[serde(default = "Config::disable")]
-              55→    pub disable_selected_highlight: bool,
-              56→
-              57→    #[serde(default = "String::new")]
-              58→    pub selected_symbol: String,
-              59→}
-              61→#[derive(Debug, Clone, Serialize, Deserialize)]
-              62→pub struct Editor {
-              63→    #[serde(default = "Editor::default_program")]
-              64→    pub program: String,
-              65→
-              66→    #[serde(default = "Editor::default_args")]
-              67→    pub args: Vec<String>,
-              68→
-              69→    #[serde(default = "Editor::default_dir")]
-              70→    pub dir: String,
-              71→}
-              73→#[derive(Debug, Clone, Serialize, Deserialize)]
-              74→pub struct Layout {
-              75→    #[serde(default = "Layout::default_direction")]
-              76→    pub direction: LayoutDirection,
-              77→
-              78→    #[serde(default = "Layout::default_tree_size")]
-              79→    pub tree_size: u16,
-              80→}
-              82→#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
-              83→pub enum LayoutDirection {
-              84→    #[serde(rename = "vertical")]
-              85→    Vertical,
-              86→    #[serde(rename = "horizontal")]
-              87→    Horizontal,
-              88→}
-              90→#[derive(Debug, Clone, Serialize, Deserialize)]
-              91→pub struct Header {
-              92→    #[serde(default = "Config::disable")]
-              93→    pub disable: bool,
-              94→
-              95→    #[serde(default = "Header::default_format")]
-              96→    pub format: String,
-              97→}
-              99→#[derive(Debug, Clone, Serialize, Deserialize)]
-             100→pub struct Footer {
-             101→    #[serde(default = "Config::disable")]
-             102→    pub disable: bool,
-             103→}
-             105→#[derive(Debug, Clone, Serialize, Deserialize)]
-             106→pub struct Filter {
-             107→    #[serde(default = "Config::disable")]
-             108→    pub disable: bool,
-             109→
-             110→    #[serde(default = "Filter::default_ignore_case")]
-             111→    pub ignore_case: bool,
-             112→
-             113→    #[serde(default = "Filter::default_exclude_mode")]
-             114→    pub exclude_mode: bool,
-             115→}
-             117→#[derive(Debug, Clone, Serialize, Deserialize)]
-             118→pub struct Data {
-             119→    #[serde(default = "Config::disable")]
-             120→    pub disable_highlight: bool,
-             121→    #[serde(default = "Config::default_max_data_size")]
-             122→    pub max_data_size: usize,
-             123→    #[serde(default = "Config::disable")]
-             124→    pub wrap: bool,
-             125→}
-            …
-        types.rs …
-    debug.rs
-        …
-           8→macro_rules! debug {
-        …
-          19→pub fn set_file(file: String) {
-        …
-          23→pub fn write_logs(mut msg: String) -> Result<()> {
-        …
-    edit.rs
-        …
-          10→pub struct Edit {
-          11→    path: String,
-          12→    data: String,
-          13→    cmd: Command,
-          14→}
-        …
-    live_reload.rs …
-    main.rs
-        …
-          27→fn run() -> Result<()> {
-          28→    let Some(args) = CommandArgs::parse()? else {
-          29→        return Ok(());
-          30→    };
-          32→    let mut cfg = if args.ignore_config {
-          33→        Config::default()
-          34→    } else {
-          35→        Config::load(args.config.clone())?
-          36→    };
-          38→    args.update_config(&mut cfg);
-          39→    cfg.parse().context("parse config")?;
-          41→    let cfg = Rc::new(cfg);
-          43→    if args.show_config {
-          44→        return cfg.show();
-          45→    }
-          47→    if let Some(ref debug_file) = args.debug {
-          48→        debug::set_file(debug_file.clone());
-          49→    }
-          51→    // The user can specify the content type manually, or we can determine it based on the
-          52→    // file extension.
-          53→    // If the content type cannot be determined here, use `ContentType::Any` as default, let
-          54→    // parser to detect it.
-          55→    let content_type = args.get_content_type();
-          57→    let max_data_size = args.max_data_size.unwrap_or(cfg.data.max_data_size) * 1024 * 1024;
-          58→    let mut fw = None;
-          59→    let data = match args.path.as_ref() {
-          60→        Some(path) => {
-          61→            let path = PathBuf::from(path);
-          62→            if args.live_reload {
-          63→                fw = Some(FileWatcher::new(
-          64→                    path.clone(),
-          65→                    cfg.clone(),
-          66→                    content_type,
-          67→                    max_data_size,
-          68→                ));
-          69→            }
-          70→            fs::read(path).context("read file")?
-          71→        }
-          72→        None => {
-          73→            let mut data = Vec::new();
-          74→            io::stdin().read_to_end(&mut data).context("read stdin")?;
-          75→            data
-          76→        }
-          77→    };
-          79→    if let Some(target_type) = args.to {
-          80→        if matches!(target_type, ContentType::Any) {
-          81→            bail!("target content type cannot be 'any' when using '--to' option");
-          82→        }
-          83→        let parser = content_type.new_parser();
-          84→        let target_parser = target_type.new_parser();
-          85→
-          86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
-          87→        let tokens = target_parser.syntax_highlight("", &value);
-          88→        let text = SyntaxToken::pure_text(&tokens);
-          89→
-          90→        print!("{text}");
-          91→        return Ok(());
-          92→    }
-          94→    if data.len() > max_data_size {
-          95→        bail!("the data size is too large, we limit the maximum size to {} to ensure TUI performance, you should try to reduce the read size. HINT: You can use command line arg `--max-data-size` or config option `data.max_data_size` to modify this limitation", humansize::format_size(max_data_size, humansize::BINARY));
-          96→    }
-          98→    let tree = Tree::parse(cfg.clone(), &data, content_type).context("parse data")?;
-          99→    let extension = tree.parser.extension();
-         101→    let mut app = App::new(cfg.clone(), tree, fw);
-         103→    if !cfg.header.disable {
-         104→        let header_ctx = HeaderContext::new(args.path, extension, data.len());
-         105→        app.set_header(&header_ctx);
-         106→    }
-         108→    ui::start(app)
-        …
-         111→fn main() {
-         112→    if let Err(err) = run() {
-         113→        eprintln!("Error: {err:#}");
-         114→        process::exit(1);
-         115→    }
-        …
-    parse/
-        any.rs
-            …
-               9→pub struct AnyParser {
-              10→    inner: RefCell<Option<Box<dyn Parser>>>,
-              11→}
-            …
-        hcl.rs …
-        json.rs …
-        jsonl.rs …
-        mod.rs
-            …
-              17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
-              18→pub enum ContentType {
-              19→    Json,
-              20→    Yaml,
-              21→    Toml,
-              22→    Xml,
-              23→
-              24→    /// See: <https://github.com/hashicorp/hcl>
-              25→    Hcl,
-              26→
-              27→    /// Useful for some logs file: <https://jsonlines.org/>
-              28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
-              29→    // basically jsonl but every json object is prefixed with 0x1e
-              30→    Jsonl,
-              31→
-              32→    #[clap(skip)]
-              33→    Any,
-              34→}
-              36→pub trait Parser {
-            …
-              66→impl ContentType {
-              67→    pub fn new_parser(self) -> Box<dyn Parser> {
-            …
-        syntax.rs …
-        test_cases/ …
-        toml.rs …
-        xml.rs …
-        yaml.rs …
-    tree.rs
-        …
-          14→pub struct Tree {
-        …
-          25→pub struct ItemValue {
-          26→    pub name: String,
-          27→    pub value: Value,
-          28→
-          29→    pub field_type: FieldType,
-          30→    pub description: Cow<'static, str>,
-          31→
-          32→    pub tokens: Vec<SyntaxToken>,
-          33→}
-          35→#[derive(Debug, Clone, Copy)]
-          36→pub struct HighlightKeyword<'a> {
-          37→    pub text: &'a str,
-          38→    pub ignore_case: bool,
-          39→}
-          41→#[derive(Debug, Clone, Copy)]
-          42→pub enum FieldType {
-          43→    Null,
-          44→    Num,
-          45→    Bool,
-          46→    Str,
-          47→    Obj,
-          48→    Arr,
-          49→}
-        …
-    ui/
-        app.rs …
-        data_block.rs …
-        filter.rs …
-        footer.rs
-            …
-              10→pub enum FooterText<'a> {
-              11→    Identify(&'a [String], Option<String>),
-              12→    Message(String),
-              13→    None,
-              14→}
-              16→pub struct Footer {
-              17→    cfg: Rc<Config>,
-              18→}
-            …
-        header.rs
-            …
-              11→pub struct HeaderContext {
-            …
-              41→pub struct Header {
-              42→    cfg: Rc<Config>,
-              43→    data: String,
-              44→}
-            …
-        mod.rs
-            …
-              35→pub fn start(mut app: App) -> Result<()> {
-            …
-        popup.rs
-            …
-              13→pub struct PopupData {
-              14→    pub title: Cow<'static, str>,
-              15→    pub text: Text<'static>,
-              16→}
-              18→pub struct Popup {
-            …
-        tree_overview.rs …
+  clipboard.rs
+    …
+    28→pub fn write_clipboard(text: &str) -> Result<()> {
+    …
+  cmd.rs …
+  config/
+    colors.rs …
+    keys.rs
+      …
+      54→pub enum Key {
+      …
+      195→pub struct Keys {
+      …
+      351→pub struct KeyAction {
+      …
+    mod.rs
+      …
+      17→pub struct Config {
+      …
+      52→#[derive(Debug, Clone, Serialize, Deserialize)]
+      53→pub struct Tree {
+      54→    #[serde(default = "Config::disable")]
+      55→    pub disable_selected_highlight: bool,
+      56→
+      57→    #[serde(default = "String::new")]
+      58→    pub selected_symbol: String,
+      59→}
+      61→#[derive(Debug, Clone, Serialize, Deserialize)]
+      62→pub struct Editor {
+      63→    #[serde(default = "Editor::default_program")]
+      64→    pub program: String,
+      65→
+      66→    #[serde(default = "Editor::default_args")]
+      67→    pub args: Vec<String>,
+      68→
+      69→    #[serde(default = "Editor::default_dir")]
+      70→    pub dir: String,
+      71→}
+      73→#[derive(Debug, Clone, Serialize, Deserialize)]
+      74→pub struct Layout {
+      75→    #[serde(default = "Layout::default_direction")]
+      76→    pub direction: LayoutDirection,
+      77→
+      78→    #[serde(default = "Layout::default_tree_size")]
+      79→    pub tree_size: u16,
+      80→}
+      82→#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+      83→pub enum LayoutDirection {
+      84→    #[serde(rename = "vertical")]
+      85→    Vertical,
+      86→    #[serde(rename = "horizontal")]
+      87→    Horizontal,
+      88→}
+      90→#[derive(Debug, Clone, Serialize, Deserialize)]
+      91→pub struct Header {
+      92→    #[serde(default = "Config::disable")]
+      93→    pub disable: bool,
+      94→
+      95→    #[serde(default = "Header::default_format")]
+      96→    pub format: String,
+      97→}
+      99→#[derive(Debug, Clone, Serialize, Deserialize)]
+      100→pub struct Footer {
+      101→    #[serde(default = "Config::disable")]
+      102→    pub disable: bool,
+      103→}
+      105→#[derive(Debug, Clone, Serialize, Deserialize)]
+      106→pub struct Filter {
+      107→    #[serde(default = "Config::disable")]
+      108→    pub disable: bool,
+      109→
+      110→    #[serde(default = "Filter::default_ignore_case")]
+      111→    pub ignore_case: bool,
+      112→
+      113→    #[serde(default = "Filter::default_exclude_mode")]
+      114→    pub exclude_mode: bool,
+      115→}
+      117→#[derive(Debug, Clone, Serialize, Deserialize)]
+      118→pub struct Data {
+      119→    #[serde(default = "Config::disable")]
+      120→    pub disable_highlight: bool,
+      121→    #[serde(default = "Config::default_max_data_size")]
+      122→    pub max_data_size: usize,
+      123→    #[serde(default = "Config::disable")]
+      124→    pub wrap: bool,
+      125→}
+      …
+    types.rs …
+  debug.rs
+    …
+    8→macro_rules! debug {
+    …
+    19→pub fn set_file(file: String) {
+    …
+    23→pub fn write_logs(mut msg: String) -> Result<()> {
+    …
+  edit.rs
+    …
+    10→pub struct Edit {
+    11→    path: String,
+    12→    data: String,
+    13→    cmd: Command,
+    14→}
+    …
+  live_reload.rs …
+  main.rs
+    …
+    27→fn run() -> Result<()> {
+    28→    let Some(args) = CommandArgs::parse()? else {
+    29→        return Ok(());
+    30→    };
+    32→    let mut cfg = if args.ignore_config {
+    33→        Config::default()
+    34→    } else {
+    35→        Config::load(args.config.clone())?
+    36→    };
+    38→    args.update_config(&mut cfg);
+    39→    cfg.parse().context("parse config")?;
+    41→    let cfg = Rc::new(cfg);
+    43→    if args.show_config {
+    44→        return cfg.show();
+    45→    }
+    47→    if let Some(ref debug_file) = args.debug {
+    48→        debug::set_file(debug_file.clone());
+    49→    }
+    51→    // The user can specify the content type manually, or we can determine it based on the
+    52→    // file extension.
+    53→    // If the content type cannot be determined here, use `ContentType::Any` as default, let
+    54→    // parser to detect it.
+    55→    let content_type = args.get_content_type();
+    57→    let max_data_size = args.max_data_size.unwrap_or(cfg.data.max_data_size) * 1024 * 1024;
+    58→    let mut fw = None;
+    59→    let data = match args.path.as_ref() {
+    60→        Some(path) => {
+    61→            let path = PathBuf::from(path);
+    62→            if args.live_reload {
+    63→                fw = Some(FileWatcher::new(
+    64→                    path.clone(),
+    65→                    cfg.clone(),
+    66→                    content_type,
+    67→                    max_data_size,
+    68→                ));
+    69→            }
+    70→            fs::read(path).context("read file")?
+    71→        }
+    72→        None => {
+    73→            let mut data = Vec::new();
+    74→            io::stdin().read_to_end(&mut data).context("read stdin")?;
+    75→            data
+    76→        }
+    77→    };
+    79→    if let Some(target_type) = args.to {
+    80→        if matches!(target_type, ContentType::Any) {
+    81→            bail!("target content type cannot be 'any' when using '--to' option");
+    82→        }
+    83→        let parser = content_type.new_parser();
+    84→        let target_parser = target_type.new_parser();
+    85→
+    86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
+    87→        let tokens = target_parser.syntax_highlight("", &value);
+    88→        let text = SyntaxToken::pure_text(&tokens);
+    89→
+    90→        print!("{text}");
+    91→        return Ok(());
+    92→    }
+    94→    if data.len() > max_data_size {
+    95→        bail!("the data size is too large, we limit the maximum size to {} to ensure TUI performance, you should try to reduce the read size. HINT: You can use command line arg `--max-data-size` or config option `data.max_data_size` to modify this limitation", humansize::format_size(max_data_size, humansize::BINARY));
+    96→    }
+    98→    let tree = Tree::parse(cfg.clone(), &data, content_type).context("parse data")?;
+    99→    let extension = tree.parser.extension();
+    101→    let mut app = App::new(cfg.clone(), tree, fw);
+    103→    if !cfg.header.disable {
+    104→        let header_ctx = HeaderContext::new(args.path, extension, data.len());
+    105→        app.set_header(&header_ctx);
+    106→    }
+    108→    ui::start(app)
+    …
+    111→fn main() {
+    112→    if let Err(err) = run() {
+    113→        eprintln!("Error: {err:#}");
+    114→        process::exit(1);
+    115→    }
+    …
+  parse/
+    any.rs
+      …
+      9→pub struct AnyParser {
+      10→    inner: RefCell<Option<Box<dyn Parser>>>,
+      11→}
+      …
+    hcl.rs …
+    json.rs …
+    jsonl.rs …
+    mod.rs
+      …
+      17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
+      18→pub enum ContentType {
+      19→    Json,
+      20→    Yaml,
+      21→    Toml,
+      22→    Xml,
+      23→
+      24→    /// See: <https://github.com/hashicorp/hcl>
+      25→    Hcl,
+      26→
+      27→    /// Useful for some logs file: <https://jsonlines.org/>
+      28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
+      29→    // basically jsonl but every json object is prefixed with 0x1e
+      30→    Jsonl,
+      31→
+      32→    #[clap(skip)]
+      33→    Any,
+      34→}
+      36→pub trait Parser {
+      …
+      66→impl ContentType {
+      67→    pub fn new_parser(self) -> Box<dyn Parser> {
+      …
+    syntax.rs …
+    test_cases/ …
+    toml.rs …
+    xml.rs …
+    yaml.rs …
+  tree.rs
+    …
+    14→pub struct Tree {
+    …
+    25→pub struct ItemValue {
+    26→    pub name: String,
+    27→    pub value: Value,
+    28→
+    29→    pub field_type: FieldType,
+    30→    pub description: Cow<'static, str>,
+    31→
+    32→    pub tokens: Vec<SyntaxToken>,
+    33→}
+    35→#[derive(Debug, Clone, Copy)]
+    36→pub struct HighlightKeyword<'a> {
+    37→    pub text: &'a str,
+    38→    pub ignore_case: bool,
+    39→}
+    41→#[derive(Debug, Clone, Copy)]
+    42→pub enum FieldType {
+    43→    Null,
+    44→    Num,
+    45→    Bool,
+    46→    Str,
+    47→    Obj,
+    48→    Arr,
+    49→}
+    …
+  ui/
+    app.rs …
+    data_block.rs …
+    filter.rs …
+    footer.rs
+      …
+      10→pub enum FooterText<'a> {
+      11→    Identify(&'a [String], Option<String>),
+      12→    Message(String),
+      13→    None,
+      14→}
+      16→pub struct Footer {
+      17→    cfg: Rc<Config>,
+      18→}
+      …
+    header.rs
+      …
+      11→pub struct HeaderContext {
+      …
+      41→pub struct Header {
+      42→    cfg: Rc<Config>,
+      43→    data: String,
+      44→}
+      …
+    mod.rs
+      …
+      35→pub fn start(mut app: App) -> Result<()> {
+      …
+    popup.rs
+      …
+      13→pub struct PopupData {
+      14→    pub title: Cow<'static, str>,
+      15→    pub text: Text<'static>,
+      16→}
+      18→pub struct Popup {
+      …
+    tree_overview.rs …
 typos.toml …
