@@ -272,7 +272,7 @@ pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
     // C family (`.c` / `.h` belong to the C walker)
     "cpp", "cc", "cxx", "hpp", "hh", "hxx", "m", "mm", "cu", "cuh",
     // other compiled languages
-    "swift", "zig", "dart", "nim", "cr", "d", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex",
+    "swift", "zig", "dart", "nim", "cr", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex",
     "exs", // scripting
     "rb", "php", "pl", "pm", "r", "jl", "tcl", "pyi", // component-file web frameworks
     "vue", "svelte", "astro", "jsx",
@@ -373,7 +373,7 @@ fn classify_source_text(name: &str) -> Option<Class> {
         return Some(Class::SourceText);
     }
     let (stem, ext) = lower.rsplit_once('.')?;
-    if is_credential_stem(stem) || is_credential_stem(&lower) {
+    if is_credential_stem(stem) {
         return None;
     }
     // Derived siblings of a hand-authored source: `app.min.js`,
@@ -651,10 +651,17 @@ fn declaration_surface(source: &str) -> Vec<usize> {
 }
 
 /// Declaration-surface content for one fallback file, or `None` when
-/// the file is unreadable, machine-generated, or has no surface.
-fn source_text_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+/// the file is unreadable, machine-generated, or has no surface. Line
+/// length says nothing about prose, which is often written one
+/// paragraph per line.
+fn source_text_content(
+    file: &Path,
+    ctx: &WalkCtx,
+    class: Class,
+) -> Option<crate::content::BatchContent> {
     let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
-    if is_machine_generated_text(&source) {
+    if has_generated_marker(&source) || (class == Class::SourceText && has_minified_lines(&source))
+    {
         return None;
     }
     let selected = declaration_surface(&source);
@@ -671,16 +678,22 @@ fn source_text_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::Bat
 /// wrapped by a human, or a generator banner near the top. Applied
 /// after the read because none of it is visible from the filename.
 pub(in crate::walker) fn is_machine_generated_text(source: &str) -> bool {
+    has_generated_marker(source) || has_minified_lines(source)
+}
+
+fn has_minified_lines(source: &str) -> bool {
+    let line_count = source.lines().count();
+    line_count == 0 || source.len() / line_count > SOURCE_TEXT_MAX_MEAN_LINE_BYTES
+}
+
+/// A NUL byte or a generator banner near the top.
+fn has_generated_marker(source: &str) -> bool {
     if source
         .as_bytes()
         .iter()
         .take(SOURCE_TEXT_NUL_SCAN_BYTES)
         .any(|byte| *byte == 0)
     {
-        return true;
-    }
-    let line_count = source.lines().count();
-    if line_count == 0 || source.len() / line_count > SOURCE_TEXT_MAX_MEAN_LINE_BYTES {
         return true;
     }
     source
@@ -726,7 +739,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         };
         if matches!(class, Class::SourceText | Class::SourceProse) {
-            if let Some(content) = source_text_content(&file, ctx) {
+            if let Some(content) = source_text_content(&file, ctx, class) {
                 out.push(Batch {
                     key: PlaintextKey::DeclSurface { file: file.clone() }.into(),
                     predecessor: None,
@@ -1000,6 +1013,27 @@ mod tests {
         // One very long line: a minified bundle, not hand-wrapped text.
         assert!(is_machine_generated_text(&"x".repeat(4096)));
         assert!(!is_machine_generated_text("class Foo {\n  int x;\n}\n"));
+    }
+
+    /// Prose written one paragraph per line has long lines by nature;
+    /// it still gets a surface (its short lines — headings, list items).
+    #[test]
+    fn plaintext_unwrapped_prose_is_not_machine_generated() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let paragraph = "word ".repeat(200);
+        let notes = format!("Design\n\n{paragraph}\n\nOpen questions\n\n{paragraph}\n");
+        std::fs::write(root.join("notes.txt"), &notes).unwrap();
+        std::fs::write(root.join("Notes.java"), &notes).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let surfaces: Vec<_> = expand_in_dir(root, &ctx)
+            .into_iter()
+            .filter_map(|batch| match batch.key {
+                BatchKey::Plaintext(PlaintextKey::DeclSurface { file }) => Some(file),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(surfaces, vec![root.join("notes.txt")]);
     }
 
     #[test]
