@@ -765,7 +765,8 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 /// A root Makefile too long to render whole still names what it can run:
-/// its `.PHONY` declarations, the author's own list of commands.
+/// its `.PHONY` declarations, the author's own list of commands, each
+/// through its backslash-continued lines.
 fn root_makefile_phony_targets(
     file: &Path,
     name: &str,
@@ -775,12 +776,15 @@ fn root_makefile_phony_targets(
         return None;
     }
     let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
-    let rows = source
-        .lines()
-        .enumerate()
-        .filter(|(_, line)| line.starts_with(".PHONY"))
-        .map(|(index, _)| index + 1)
-        .collect();
+    let mut rows = Vec::new();
+    let mut in_declaration = false;
+    for (index, line) in source.lines().enumerate() {
+        in_declaration |= line.starts_with(".PHONY");
+        if in_declaration {
+            rows.push(index + 1);
+            in_declaration = line.ends_with('\\');
+        }
+    }
     single_file_lines_content(file, &source, rows)
 }
 
@@ -1109,6 +1113,29 @@ mod tests {
         let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
         assert_eq!(rows, [(2, 2)]);
         assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
+    }
+
+    #[test]
+    fn plaintext_oversized_makefile_phony_targets_include_continuation_lines() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut source = String::from(
+            ".PHONY: build \\\n\ttest lint\nSHELL = /bin/sh\n.PHONY: \\\n\trelease \\\n\tdocs\n\n",
+        );
+        for index in 0..60 {
+            source.push_str(&format!(
+                "target-{index:02}: dep-{index:02}\n\tRECIPE_{index:02}\n"
+            ));
+        }
+        std::fs::write(root.join("Makefile"), &source).unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        let crate::content::BatchContent::Lines { spans } = &batches[0].content else {
+            panic!("expected a lines batch");
+        };
+        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
+        assert_eq!(rows, [(1, 2), (4, 6)]);
     }
 
     #[test]

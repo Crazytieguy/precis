@@ -20,6 +20,8 @@ MIGRATIONS.md
 Makefile
   …
   114→.PHONY: build build-docker build-cli clean test-short test test-with-flags html-coverage \
+  115→        restore-import-paths rewrite-import-paths list-external-deps release \
+  116→		docs kill-docs open-docs kill-orphaned-docker-containers echo-source echo-database
   …
 README.md
   …
@@ -302,11 +304,6 @@ migration.go
   29→	TargetVersion int
   30→
   31→	// Body holds an io.ReadCloser to the source.
-  32→	Body io.ReadCloser
-  33→
-  34→	// BufferedBody holds an buffered io.Reader to the underlying Body.
-  35→	BufferedBody io.Reader
-  36→
   …
   77→func NewMigration(body io.ReadCloser, identifier string,
   78→	version uint, targetVersion int) (*Migration, error) {
