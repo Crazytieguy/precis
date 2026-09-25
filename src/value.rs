@@ -376,17 +376,7 @@ pub(crate) fn non_essential_factor_inner(
         }
     }
     if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-        // File-level heuristic for Rust private-helper conventions:
-        // `__private_api.rs`, `__internals.rs`, `inner.rs`. The
-        // discount is intentionally Rust-only — `_hooks.py` /
-        // `__init__.py` are load-bearing Python (PEP 8 internal-but-
-        // public convention), and `_app.tsx` / `_routes.json` are
-        // framework orientation files (Next.js, Cloudflare). A blanket
-        // `_*` rule would penalize all of those.
         let ext = path.extension().and_then(|e| e.to_str());
-        if name == "inner.rs" || (ext == Some("rs") && name.starts_with("__")) {
-            return 0.5;
-        }
         // Python under a `docs/` subtree is Sphinx config / site
         // builders / schema validators. (`docs/examples/*.py` survives
         // because the `examples` dir classifier ran first.)
@@ -791,10 +781,7 @@ mod tests {
     #[test]
     fn value_non_essential_factor_cases() {
         let cases: &[(f64, &str)] = &[
-            // Rust underscore-prefix discount: only `inner.rs` and
-            // `__*.rs` discount; single-underscore `.rs` and Python/JS
-            // framework underscore files keep full weight.
-            (0.5, "src/__private_api.rs src/inner.rs"),
+            // Underscore-prefixed files keep full weight.
             (
                 1.0,
                 "src/pluggy/_hooks.py src/pluggy/__init__.py src/pkg/__main__.py \

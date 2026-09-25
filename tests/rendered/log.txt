@@ -53,6 +53,8 @@ rfcs/
   0296-structured-logging.md
 src/
   __private_api.rs
+    1→//! WARNING: this is not part of the crate's public API and is subject to change at any time
+    …
   kv/
     error.rs
     key.rs
@@ -295,9 +297,6 @@ src/
     29→}
     31→impl<'de> Deserialize<'de> for Level {
     32→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    33→    where
-    34→        D: Deserializer<'de>,
-    35→    {
     …
     108→}
     110→impl Serialize for LevelFilter {
