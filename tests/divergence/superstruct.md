@@ -126,26 +126,26 @@ Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 6144 | 40 | headings outline in docs/reference/errors.md |  |  | 0.610 |
 | ns | 6316 |  | 227 | Every heading in the six guides | 5.7 |  | 0.611 |
 | ns | 6379 |  | 63 | Readme section map | 5.8 |  | 0.614 |
-| walker |  | 6413 | 269 | ts names src/structs/types.ts #2 |  |  | 0.650 |
-| walker |  | 6432 | 19 | ts decl src/structs/types.ts:295 |  |  | 0.653 |
-| walker |  | 6454 | 22 | ts decl src/structs/types.ts:492 |  |  | 0.653 |
-| walker |  | 6488 | 34 | ts decl src/structs/types.ts:367 |  |  | 0.653 |
-| ns | 6519 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.647 |
-| walker |  | 6522 | 34 | ts decl src/structs/types.ts:456 |  |  | 0.647 |
-| walker |  | 6557 | 35 | ts decl src/structs/types.ts:522 |  |  | 0.647 |
-| walker |  | 6609 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.657 |
-| walker |  | 6651 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.658 |
-| walker |  | 6678 | 27 | docs/reference/typescript.md section #0 |  |  | 0.658 |
-| ns | 6690 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.652 |
-| walker |  | 6723 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.653 |
-| walker |  | 6760 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.653 |
-| walker |  | 6782 | 22 | ts names test/index.ts |  |  | 0.653 |
-| walker |  | 6802 | 20 | ts module doc test/index.ts |  |  | 0.653 |
-| walker |  | 6840 | 38 | docs/reference/errors.md section #0 |  |  | 0.653 |
-| ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.643 |
-| walker |  | 6951 | 111 | Readme.md section #9 |  |  | 0.643 |
-| ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.626 |
-| walker |  | 7252 | 301 | package identity metadata in package.json |  |  | 0.639 |
+| walker |  | 6445 | 301 | package identity metadata in package.json |  |  | 0.628 |
+| ns | 6519 |  | 140 | Doc anchors the source rosters do not cover | 5.9 |  | 0.622 |
+| ns | 6690 |  | 171 | The data-driven fixture runner | 5.10 |  | 0.616 |
+| walker |  | 6714 | 269 | ts names src/structs/types.ts #2 |  |  | 0.651 |
+| walker |  | 6733 | 19 | ts decl src/structs/types.ts:295 |  |  | 0.655 |
+| walker |  | 6755 | 22 | ts decl src/structs/types.ts:492 |  |  | 0.655 |
+| walker |  | 6789 | 34 | ts decl src/structs/types.ts:367 |  |  | 0.655 |
+| walker |  | 6823 | 34 | ts decl src/structs/types.ts:456 |  |  | 0.655 |
+| walker |  | 6858 | 35 | ts decl src/structs/types.ts:522 |  |  | 0.655 |
+| ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.645 |
+| walker |  | 6910 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.654 |
+| walker |  | 6952 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.656 |
+| walker |  | 6979 | 27 | docs/reference/typescript.md section #0 |  |  | 0.656 |
+| walker |  | 7024 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.657 |
+| walker |  | 7061 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.657 |
+| walker |  | 7083 | 22 | ts names test/index.ts |  |  | 0.657 |
+| walker |  | 7103 | 20 | ts module doc test/index.ts |  |  | 0.657 |
+| walker |  | 7141 | 38 | docs/reference/errors.md section #0 |  |  | 0.657 |
+| ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.639 |
+| walker |  | 7252 | 111 | Readme.md section #9 |  |  | 0.639 |
 | ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.633 |
 | walker |  | 7297 | 45 | Readme.md section #6 |  |  | 0.633 |
 | walker |  | 7341 | 44 | Readme.md section #7 |  |  | 0.633 |

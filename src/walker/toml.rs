@@ -26,7 +26,9 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::render::Source;
-use crate::value::{dependency_roster_value, dependency_table_mass_factor, mix_signals};
+use crate::value::{
+    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value, mix_signals,
+};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{
@@ -82,7 +84,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: TomlKey::PackageMetadata { file: file.clone() }.into(),
                     predecessor: Some(TomlKey::Identity { file: file.clone() }.into()),
                     content,
-                    value: config_value(&file, ctx),
+                    value: manifest_appendix_value(path_depth_factor(&file, ctx)),
                 });
             }
         }
@@ -143,7 +145,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TomlKey::Config { file: file.clone() }.into(),
                 predecessor: identity.clone(),
                 content,
-                value: config_value(&file, ctx),
+                value: manifest_appendix_value(path_depth_factor(&file, ctx)),
             });
         }
     }
@@ -543,10 +545,6 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Console entry points answer "how do I run this" — orientation that
     // a reader otherwise has to reconstruct from the source tree.
     mix_signals(0.70, 0.6, 0.65, path_depth_factor(file, ctx))
-}
-
-fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.45, 0.6, 0.45, path_depth_factor(file, ctx))
 }
 
 // --- parser ---

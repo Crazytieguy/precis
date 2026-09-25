@@ -1,4 +1,4 @@
-Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.486/0.411/0.634/0.586/0.553/0.578
+Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.486/0.411/0.634/0.586/0.553/0.555
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -164,20 +164,20 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.567 |
 | walker |  | 8376 | 112 | ts doc lib/svgo-node.js:44 |  |  | 0.567 |
 | ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.564 |
-| walker |  | 8599 | 223 | ts decl lib/types.ts:30 #1 |  |  | 0.564 |
 | ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.558 |
-| walker |  | 8764 | 165 | README.md section #3 |  |  | 0.582 |
-| ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.577 |
-| walker |  | 8987 | 223 | json config tsconfig.json |  |  | 0.578 |
-| ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.574 |
-| ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.574 |
-| walker |  | 9062 | 75 | ts doc lib/parser.js:12 |  |  | 0.574 |
-| walker |  | 9138 | 76 | ts doc lib/util/map-nodes-to-parents.js:9 |  |  | 0.574 |
-| ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.579 |
+| walker |  | 8878 | 502 | package identity metadata in package.json |  |  | 0.559 |
+| ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.555 |
+| ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.551 |
+| ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.551 |
+| walker |  | 9101 | 223 | ts decl lib/types.ts:30 #1 |  |  | 0.551 |
+| walker |  | 9266 | 165 | README.md section #3 |  |  | 0.575 |
+| ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.580 |
 | ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.587 |
-| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.584 |
-| ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.592 |
-| walker |  | 9640 | 502 | package identity metadata in package.json |  |  | 0.593 |
+| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.585 |
+| walker |  | 9489 | 223 | json config tsconfig.json |  |  | 0.585 |
+| walker |  | 9564 | 75 | ts doc lib/parser.js:12 |  |  | 0.585 |
+| ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.593 |
+| walker |  | 9640 | 76 | ts doc lib/util/map-nodes-to-parents.js:9 |  |  | 0.593 |
 | walker |  | 9692 | 52 | ts doc lib/svgo/tools.js:43 |  |  | 0.593 |
 | ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.589 |
 | walker |  | 9771 | 79 | ts doc lib/svgo/plugins.js:40 |  |  | 0.589 |

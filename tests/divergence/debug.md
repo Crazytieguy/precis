@@ -42,13 +42,13 @@ Score(3000)=0.492 I=0.749 C=0.323 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 1488 | 38 | ts doc src/common.js:7 |  |  | 0.623 |
 | ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.618 |
 | walker |  | 1527 | 39 | ts body src/node.js:155 |  |  | 0.618 |
-| walker |  | 1571 | 44 | ts doc src/browser.js:200 |  |  | 0.618 |
-| walker |  | 1617 | 46 | ts doc src/node.js:203 |  |  | 0.618 |
 | ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.621 |
-| walker |  | 1668 | 51 | ts doc src/browser.js:219 |  |  | 0.621 |
-| walker |  | 1719 | 51 | ts doc src/node.js:220 |  |  | 0.621 |
+| walker |  | 1706 | 179 | package identity metadata in package.json |  |  | 0.621 |
+| walker |  | 1750 | 44 | ts doc src/browser.js:200 |  |  | 0.621 |
+| walker |  | 1796 | 46 | ts doc src/node.js:203 |  |  | 0.621 |
 | ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.599 |
-| walker |  | 1898 | 179 | package identity metadata in package.json |  |  | 0.599 |
+| walker |  | 1847 | 51 | ts doc src/browser.js:219 |  |  | 0.599 |
+| walker |  | 1898 | 51 | ts doc src/node.js:220 |  |  | 0.599 |
 | walker |  | 1957 | 59 | ts doc src/node.js:124 |  |  | 0.599 |
 | ns | 1988 |  | 186 | README: the complete `%` formatter table | 3.2 |  | 0.576 |
 | walker |  | 2021 | 64 | ts doc src/node.js:231 |  |  | 0.576 |

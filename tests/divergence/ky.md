@@ -1,4 +1,4 @@
-Score(3000)=0.716 I=0.916 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.720/0.864/0.737/0.716/0.661/0.618/0.583
+Score(3000)=0.716 I=0.916 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.720/0.864/0.737/0.716/0.666/0.618/0.583
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -90,18 +90,18 @@ Score(3000)=0.716 I=0.916 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 3458 | 30 | ts names source/utils/is.ts |  |  | 0.686 |
 | ns | 3480 |  | 341 | Hook function signatures and their `*State` objects | 2.8 | 2.6 | 0.710 |
 | ns | 3745 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.699 |
-| walker |  | 3761 | 303 | ts body source/index.ts:10 |  |  | 0.701 |
-| walker |  | 3836 | 75 | readme.md section #51 |  |  | 0.701 |
-| walker |  | 3869 | 33 | readme.md section #8 |  |  | 0.701 |
-| walker |  | 3903 | 34 | ts names source/utils/types.ts |  |  | 0.701 |
-| walker |  | 3921 | 18 | ts decl source/utils/types.ts:1 |  |  | 0.702 |
-| walker |  | 3958 | 37 | ts names source/utils/options.ts |  |  | 0.702 |
-| walker |  | 3989 | 31 | ts decl source/utils/options.ts:4 |  |  | 0.702 |
-| ns | 4021 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.683 |
-| walker |  | 4025 | 36 | ts decl source/utils/types.ts:5 |  |  | 0.683 |
-| walker |  | 4062 | 37 | readme.md section #19 |  |  | 0.683 |
-| ns | 4199 |  | 178 | `ky.stop`, `ky.retry()` and the `ForceRetryOptions` fields | 2.11 |  | 0.661 |
-| walker |  | 4361 | 299 | package identity metadata in package.json |  |  | 0.666 |
+| walker |  | 3757 | 299 | package identity metadata in package.json |  |  | 0.704 |
+| ns | 4021 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.685 |
+| walker |  | 4060 | 303 | ts body source/index.ts:10 |  |  | 0.687 |
+| walker |  | 4135 | 75 | readme.md section #51 |  |  | 0.687 |
+| walker |  | 4168 | 33 | readme.md section #8 |  |  | 0.687 |
+| ns | 4199 |  | 178 | `ky.stop`, `ky.retry()` and the `ForceRetryOptions` fields | 2.11 |  | 0.666 |
+| walker |  | 4202 | 34 | ts names source/utils/types.ts |  |  | 0.666 |
+| walker |  | 4220 | 18 | ts decl source/utils/types.ts:1 |  |  | 0.666 |
+| walker |  | 4257 | 37 | ts names source/utils/options.ts |  |  | 0.666 |
+| walker |  | 4288 | 31 | ts decl source/utils/options.ts:4 |  |  | 0.666 |
+| walker |  | 4324 | 36 | ts decl source/utils/types.ts:5 |  |  | 0.666 |
+| walker |  | 4361 | 37 | readme.md section #19 |  |  | 0.666 |
 | ns | 4370 |  | 171 | `requestMethods`, `responseTypes` and `maxSafeTimeout` | 2.12 |  | 0.655 |
 | walker |  | 4408 | 47 | ts doc source/errors/ForceRetryError.ts:8 |  |  | 0.655 |
 | ns | 4571 |  | 201 | Option registries: `kyOptionKeys`, `requestOptionsRegistry`, `vendorSpecificOptions` | 2.13 |  | 0.636 |

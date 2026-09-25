@@ -161,32 +161,32 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 4017 | 42 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts |  |  | 0.545 |
 | ns | 4036 |  | 256 | @enclosed/crypto entry points: the eight exported names and the web/node swap | 2.11 |  | 0.527 |
 | walker |  | 4051 | 34 | ts decl packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts:9 |  |  | 0.527 |
-| walker |  | 4093 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.529 |
-| walker |  | 4111 | 18 | ts names packages/app-server/src/modules/app/auth/auth.errors.ts |  |  | 0.529 |
-| walker |  | 4226 | 115 | packages/lib/README.md section #2 |  |  | 0.529 |
-| walker |  | 4269 | 43 | headings outline in packages/docs/src/index.md |  |  | 0.529 |
+| walker |  | 4206 | 155 | package identity metadata in package.json |  |  | 0.527 |
+| walker |  | 4248 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.529 |
+| walker |  | 4266 | 18 | ts names packages/app-server/src/modules/app/auth/auth.errors.ts |  |  | 0.529 |
 | ns | 4311 |  | 275 | Key derivation parameters: generateBaseKey and deriveMasterKey (web implementation) | 2.12 | 2.11 | 0.513 |
-| walker |  | 4332 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.515 |
-| walker |  | 4351 | 19 | listing of 'packages/app-server/src/modules/notes/tasks' |  |  | 0.515 |
-| walker |  | 4369 | 18 | ts names packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts |  |  | 0.515 |
-| walker |  | 4394 | 25 | README.md section #3 |  |  | 0.519 |
-| walker |  | 4441 | 47 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts |  |  | 0.519 |
-| walker |  | 4486 | 45 | ts decl packages/cli/src/config/config.constants.ts:3 |  |  | 0.519 |
-| ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.511 |
-| walker |  | 4538 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.512 |
-| walker |  | 4561 | 23 | ts names packages/app-server/src/modules/app/middlewares/errors.middleware.ts |  |  | 0.512 |
-| walker |  | 4584 | 23 | ts names packages/app-server/src/modules/app/middlewares/logger.middleware.ts |  |  | 0.512 |
-| walker |  | 4617 | 33 | ts names packages/app-server/src/modules/notes/notes.usecases.ts |  |  | 0.512 |
-| ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.504 |
-| walker |  | 4664 | 47 | ts decl packages/docs/src/data/configuration.data.ts:55 |  |  | 0.504 |
-| walker |  | 4712 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.505 |
-| walker |  | 4736 | 24 | ts names packages/app-server/src/modules/shared/utils/random.ts |  |  | 0.505 |
-| walker |  | 4761 | 25 | ts names packages/app-server/src/modules/app/middlewares/cors.middleware.ts |  |  | 0.505 |
-| walker |  | 4786 | 25 | ts names packages/app-server/src/modules/app/middlewares/timeout.middleware.ts |  |  | 0.505 |
-| walker |  | 4822 | 36 | ts names packages/app-server/src/modules/notes/notes.repository.ts |  |  | 0.505 |
-| walker |  | 4859 | 37 | ts names packages/app-server/src/modules/notes/notes.routes.ts |  |  | 0.505 |
+| walker |  | 4381 | 115 | packages/lib/README.md section #2 |  |  | 0.513 |
+| walker |  | 4424 | 43 | headings outline in packages/docs/src/index.md |  |  | 0.513 |
+| walker |  | 4487 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.515 |
+| walker |  | 4506 | 19 | listing of 'packages/app-server/src/modules/notes/tasks' |  |  | 0.515 |
+| ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.507 |
+| walker |  | 4524 | 18 | ts names packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts |  |  | 0.507 |
+| walker |  | 4549 | 25 | README.md section #3 |  |  | 0.511 |
+| walker |  | 4596 | 47 | ts names packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts |  |  | 0.511 |
+| walker |  | 4641 | 45 | ts decl packages/cli/src/config/config.constants.ts:3 |  |  | 0.511 |
+| ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.503 |
+| walker |  | 4693 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.504 |
+| walker |  | 4716 | 23 | ts names packages/app-server/src/modules/app/middlewares/errors.middleware.ts |  |  | 0.504 |
+| walker |  | 4739 | 23 | ts names packages/app-server/src/modules/app/middlewares/logger.middleware.ts |  |  | 0.504 |
+| walker |  | 4772 | 33 | ts names packages/app-server/src/modules/notes/notes.usecases.ts |  |  | 0.504 |
+| walker |  | 4819 | 47 | ts decl packages/docs/src/data/configuration.data.ts:55 |  |  | 0.504 |
+| walker |  | 4867 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.505 |
 | ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.543 |
-| walker |  | 5014 | 155 | package identity metadata in package.json |  |  | 0.543 |
+| walker |  | 4891 | 24 | ts names packages/app-server/src/modules/shared/utils/random.ts |  |  | 0.543 |
+| walker |  | 4916 | 25 | ts names packages/app-server/src/modules/app/middlewares/cors.middleware.ts |  |  | 0.543 |
+| walker |  | 4941 | 25 | ts names packages/app-server/src/modules/app/middlewares/timeout.middleware.ts |  |  | 0.543 |
+| walker |  | 4977 | 36 | ts names packages/app-server/src/modules/notes/notes.repository.ts |  |  | 0.543 |
+| walker |  | 5014 | 37 | ts names packages/app-server/src/modules/notes/notes.routes.ts |  |  | 0.543 |
 | walker |  | 5041 | 27 | ts names packages/app-server/src/modules/app/middlewares/config.middleware.ts |  |  | 0.543 |
 | walker |  | 5068 | 27 | ts names packages/app-server/src/modules/app/middlewares/storage.middleware.ts |  |  | 0.543 |
 | walker |  | 5095 | 27 | ts names packages/app-server/src/modules/storage/factories/fs-lite.storage.ts |  |  | 0.543 |

@@ -1,4 +1,4 @@
-Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.873/0.831/0.785/0.689/0.637/0.592/0.535
+Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.831/0.785/0.689/0.637/0.592/0.535
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,10 +25,10 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 549 | 21 | ts names map.js |  |  | 0.836 |
 | walker |  | 582 | 33 | listing of 'test' |  |  | 0.837 |
 | walker |  | 620 | 38 | listing of 'benchmarks' |  |  | 0.838 |
+| walker |  | 680 | 60 | package identity metadata in package.json |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.653 |
-| walker |  | 1000 | 380 | ts decl index.js:45 |  |  | 0.873 |
-| walker |  | 1060 | 60 | package identity metadata in package.json |  |  | 0.873 |
+| walker |  | 1060 | 380 | ts decl index.js:45 |  |  | 0.873 |
 | ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.795 |
 | walker |  | 1240 | 180 | headings outline in README.md |  |  | 0.831 |
 | walker |  | 1265 | 25 | README.md section #1 |  |  | 0.831 |

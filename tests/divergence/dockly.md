@@ -87,19 +87,19 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 2901 | 27 | ts body src/dockerUtil.js:155 |  |  | 0.638 |
 | walker |  | 2906 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.638 |
 | walker |  | 2942 | 36 | ts body src/screen.js:120 |  |  | 0.638 |
-| walker |  | 3081 | 139 | ts body index.js:86 |  |  | 0.641 |
-| ns | 3087 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.622 |
-| ns | 3170 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.626 |
-| walker |  | 3172 | 91 | ts decl src/enum.js:1 |  |  | 0.627 |
-| walker |  | 3199 | 27 | ts body src/dockerUtil.js:160 |  |  | 0.627 |
-| walker |  | 3250 | 51 | ts names src/themes/styles.js |  |  | 0.627 |
-| ns | 3375 |  | 205 | src/screen.js: imports and the mode -> grid-layout table | 3.2 |  | 0.611 |
-| walker |  | 3410 | 160 | README.md section #2 |  |  | 0.629 |
-| walker |  | 3555 | 145 | README.md section #4 |  |  | 0.629 |
-| ns | 3573 |  | 198 | src/screen.js: complete method roster of the `screen` class | 3.3 |  | 0.634 |
-| ns | 3770 |  | 197 | src/screen.js: init() — the full boot sequence | 3.4 | 3.3 | 0.615 |
+| ns | 3087 |  | 211 | .github/workflows/main.yml: the semantic-release job | 2.11 |  | 0.620 |
+| ns | 3170 |  | 83 | lib/modes.js and lib/node.version.js in full | 3.1 |  | 0.624 |
+| ns | 3375 |  | 205 | src/screen.js: imports and the mode -> grid-layout table | 3.2 |  | 0.609 |
+| walker |  | 3409 | 467 | package identity metadata in package.json |  |  | 0.609 |
+| walker |  | 3548 | 139 | ts body index.js:86 |  |  | 0.611 |
+| ns | 3573 |  | 198 | src/screen.js: complete method roster of the `screen` class | 3.3 |  | 0.617 |
+| walker |  | 3639 | 91 | ts decl src/enum.js:1 |  |  | 0.618 |
+| walker |  | 3666 | 27 | ts body src/dockerUtil.js:160 |  |  | 0.618 |
+| walker |  | 3717 | 51 | ts names src/themes/styles.js |  |  | 0.618 |
+| ns | 3770 |  | 197 | src/screen.js: init() — the full boot sequence | 3.4 | 3.3 | 0.599 |
+| walker |  | 3877 | 160 | README.md section #2 |  |  | 0.615 |
 | ns | 3900 |  | 130 | src/screen.js: constructor state fields | 3.5 | 3.3 | 0.603 |
-| walker |  | 4022 | 467 | package identity metadata in package.json |  |  | 0.603 |
+| walker |  | 4022 | 145 | README.md section #4 |  |  | 0.603 |
 | ns | 4024 |  | 124 | src/screen.js: initScreen() — blessed screen and the 12x12 grid | 3.6 | 3.3 | 0.594 |
 | walker |  | 4206 | 184 | ts body index.js:47 |  |  | 0.594 |
 | walker |  | 4243 | 37 | ts body src/screen.js:114 |  |  | 0.596 |

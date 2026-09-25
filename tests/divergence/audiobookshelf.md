@@ -11,29 +11,29 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 158 | 33 | README headline in readme.md |  |  | 0.612 |
 | ns | 191 |  | 84 | Repository root listing (complete) | 1.3 |  | 0.816 |
 | walker |  | 227 | 69 | package identity in package.json |  |  | 0.903 |
+| walker |  | 240 | 13 | package identity metadata in package.json |  |  | 0.903 |
 | ns | 254 |  | 63 | server/ top-level listing (complete) | 1.4 |  | 0.691 |
-| walker |  | 290 | 63 | listing of 'server' |  |  | 0.923 |
-| walker |  | 305 | 15 | listing of 'server/finders' |  |  | 0.923 |
+| walker |  | 303 | 63 | listing of 'server' |  |  | 0.923 |
+| walker |  | 318 | 15 | listing of 'server/finders' |  |  | 0.923 |
 | ns | 319 |  | 65 | client/ top-level listing (complete) | 1.5 |  | 0.775 |
-| walker |  | 321 | 16 | listing of 'server/routers' |  |  | 0.775 |
-| walker |  | 340 | 19 | listing of 'server/auth' |  |  | 0.775 |
-| walker |  | 405 | 65 | listing of 'client' |  |  | 0.933 |
-| walker |  | 409 | 4 | listing of 'client/middleware' |  |  | 0.933 |
-| walker |  | 418 | 9 | listing of 'client/cypress' |  |  | 0.933 |
-| walker |  | 430 | 12 | listing of 'client/layouts' |  |  | 0.933 |
-| walker |  | 447 | 17 | listing of 'client/mixins' |  |  | 0.933 |
-| walker |  | 460 | 13 | listing of 'client/cypress/support' |  |  | 0.933 |
-| walker |  | 486 | 26 | listing of 'client/players' |  |  | 0.934 |
+| walker |  | 334 | 16 | listing of 'server/routers' |  |  | 0.775 |
+| walker |  | 353 | 19 | listing of 'server/auth' |  |  | 0.775 |
+| walker |  | 418 | 65 | listing of 'client' |  |  | 0.933 |
+| walker |  | 422 | 4 | listing of 'client/middleware' |  |  | 0.933 |
+| walker |  | 431 | 9 | listing of 'client/cypress' |  |  | 0.933 |
+| walker |  | 443 | 12 | listing of 'client/layouts' |  |  | 0.933 |
+| walker |  | 460 | 17 | listing of 'client/mixins' |  |  | 0.933 |
+| walker |  | 473 | 13 | listing of 'client/cypress/support' |  |  | 0.933 |
 | ns | 489 |  | 170 | Feature list, part 1 (streaming, podcasts, users, uploads) | 1.6 |  | 0.853 |
-| walker |  | 514 | 28 | listing of 'client/store' |  |  | 0.854 |
-| walker |  | 544 | 30 | listing of 'docs/controllers' |  |  | 0.855 |
-| walker |  | 577 | 33 | listing of 'docs/objects' |  |  | 0.857 |
-| walker |  | 582 | 5 | listing of 'docs/objects/settings' |  |  | 0.857 |
-| walker |  | 594 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.858 |
-| walker |  | 607 | 13 | listing of 'docs/objects/entities' |  |  | 0.859 |
-| walker |  | 623 | 16 | listing of 'docs/objects/files' |  |  | 0.860 |
-| ns | 634 |  | 145 | Feature list, part 2 (PWA, cast, metadata, m4b, ebooks, RSS) | 1.7 |  | 0.806 |
-| walker |  | 636 | 13 | package identity metadata in package.json |  |  | 0.806 |
+| walker |  | 499 | 26 | listing of 'client/players' |  |  | 0.853 |
+| walker |  | 527 | 28 | listing of 'client/store' |  |  | 0.854 |
+| walker |  | 557 | 30 | listing of 'docs/controllers' |  |  | 0.855 |
+| walker |  | 590 | 33 | listing of 'docs/objects' |  |  | 0.857 |
+| walker |  | 595 | 5 | listing of 'docs/objects/settings' |  |  | 0.857 |
+| walker |  | 607 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.858 |
+| walker |  | 620 | 13 | listing of 'docs/objects/entities' |  |  | 0.859 |
+| ns | 634 |  | 145 | Feature list, part 2 (PWA, cast, metadata, m4b, ebooks, RSS) | 1.7 |  | 0.805 |
+| walker |  | 636 | 16 | listing of 'docs/objects/files' |  |  | 0.806 |
 | walker |  | 672 | 36 | listing of 'client/plugins' |  |  | 0.808 |
 | walker |  | 698 | 26 | package entrypoints in package.json |  |  | 0.833 |
 | walker |  | 737 | 39 | listing of 'client/assets' |  |  | 0.833 |
@@ -80,13 +80,13 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 1364 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.683 |
 | walker |  | 1382 | 18 | listing of '.devcontainer' |  |  | 0.683 |
 | walker |  | 1412 | 30 | listing of 'client/components/covers' |  |  | 0.683 |
-| walker |  | 1479 | 67 | listing of '.github/workflows' |  |  | 0.684 |
+| walker |  | 1425 | 13 | package identity metadata in client/package.json |  |  | 0.683 |
+| walker |  | 1492 | 67 | listing of '.github/workflows' |  |  | 0.684 |
 | ns | 1698 |  | 442 | Server runtime + dev dependency stack | 1.11 |  | 0.606 |
-| walker |  | 1724 | 245 | ts names index.js |  |  | 0.647 |
-| walker |  | 1746 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.647 |
-| walker |  | 1784 | 38 | listing of 'client/components/controls' |  |  | 0.647 |
-| walker |  | 1859 | 75 | listing of 'server/scanner' |  |  | 0.652 |
-| walker |  | 1872 | 13 | package identity metadata in client/package.json |  |  | 0.652 |
+| walker |  | 1737 | 245 | ts names index.js |  |  | 0.647 |
+| walker |  | 1759 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.647 |
+| walker |  | 1797 | 38 | listing of 'client/components/controls' |  |  | 0.647 |
+| walker |  | 1872 | 75 | listing of 'server/scanner' |  |  | 0.652 |
 | ns | 1879 |  | 181 | client/package.json: scripts (nuxt generate, cypress) | 1.12 |  | 0.629 |
 | walker |  | 1915 | 43 | listing of 'client/components/stats' |  |  | 0.629 |
 | ns | 1943 |  | 64 | readme top-level section headings | 1.13 |  | 0.616 |

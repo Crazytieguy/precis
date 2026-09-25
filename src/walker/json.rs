@@ -19,7 +19,9 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::render::Source;
-use crate::value::{dependency_roster_value, dependency_table_mass_factor, mix_signals};
+use crate::value::{
+    dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value, mix_signals,
+};
 
 use super::workspace::{
     WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
@@ -180,7 +182,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
     collect(
         JsonKey::IdentityMeta { file: f.clone() },
-        identity_meta_value(file, ctx),
+        manifest_appendix_value(path_depth_factor(file, ctx)) * secondary_package_json_factor(file),
         is_identity_meta_key,
         false,
     );
@@ -365,21 +367,6 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     };
     let s = secondary_package_json_factor(file);
     mix_signals(m, 0.7 * m, 0.85 * m, manifest_depth_factor(file, ctx)) * s
-}
-
-fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // IdentityMeta (author/homepage/keywords/license/repository) is
-    // appendix-shape: NS authors anchor on it occasionally, but most
-    // anchor only on the core identity block. Dropped cat 0.6 → 0.4
-    // so primary-source batches reliably win the early budget across
-    // fixtures.
-    let m = if ctx.is_js_workspace_member(file) {
-        WORKSPACE_MEMBER_IDENTITY_FACTOR
-    } else {
-        1.0
-    };
-    let s = secondary_package_json_factor(file);
-    mix_signals(0.4 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx)) * s
 }
 
 /// Entrypoints, scripts and runtime constraints: how the package ships and

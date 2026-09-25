@@ -74,9 +74,9 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 2436 |  | 265 | Roster of every module-level function in src/ (names only) | 3.1 |  | 0.463 |
 | walker |  | 2444 | 11 | ts body src/adapters/normalized-adapter.ts:14 |  |  | 0.463 |
 | walker |  | 2455 | 11 | ts body src/adapters/observer.ts:20 |  |  | 0.464 |
-| walker |  | 2482 | 27 | README.md section #6 |  |  | 0.464 |
 | ns | 2603 |  | 167 | Roster of every exported type and class across src/ | 3.2 |  | 0.469 |
-| walker |  | 2666 | 184 | package identity metadata in package.json |  |  | 0.477 |
+| walker |  | 2639 | 184 | package identity metadata in package.json |  |  | 0.477 |
+| walker |  | 2666 | 27 | README.md section #6 |  |  | 0.477 |
 | walker |  | 2696 | 30 | README.md section #13 |  |  | 0.478 |
 | walker |  | 2717 | 21 | ts body src/adapters/normalized-adapter.ts:44 |  |  | 0.478 |
 | ns | 2736 |  | 133 | Roster of every Service method (names only) | 3.3 |  | 0.475 |

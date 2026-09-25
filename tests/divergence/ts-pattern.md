@@ -1,4 +1,4 @@
-Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.724/0.696/0.637/0.607/0.517/0.550
+Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.724/0.690/0.637/0.607/0.517/0.550
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,15 +46,15 @@ Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 1579 | 28 | README.md section #8 |  |  | 0.784 |
 | ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.737 |
 | walker |  | 1852 | 273 | package scripts in package.json |  |  | 0.738 |
-| walker |  | 1884 | 32 | README.md section #4 |  |  | 0.741 |
-| walker |  | 1916 | 32 | README.md section #3 |  |  | 0.744 |
-| ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.710 |
-| ns | 2047 |  | 82 | README `###`/`####` heading locations: the Types section | 1.14 |  | 0.696 |
-| ns | 2103 |  | 56 | src/patterns.ts module docstring | 2.1 |  | 0.685 |
-| walker |  | 2274 | 358 | package entrypoints in package.json |  |  | 0.700 |
-| ns | 2379 |  | 276 | Complete roster of every named export in src/patterns.ts (the `P` namespace) | 2.2 |  | 0.643 |
-| ns | 2425 |  | 46 | src/patterns.ts re-export block: `Pattern`, `unstable_Fn`, `matcher` | 2.3 |  | 0.633 |
-| walker |  | 2478 | 204 | package identity metadata in package.json |  |  | 0.633 |
+| ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.704 |
+| ns | 2047 |  | 82 | README `###`/`####` heading locations: the Types section | 1.14 |  | 0.690 |
+| walker |  | 2058 | 206 | package identity metadata in package.json |  |  | 0.690 |
+| walker |  | 2090 | 32 | README.md section #4 |  |  | 0.692 |
+| ns | 2103 |  | 56 | src/patterns.ts module docstring | 2.1 |  | 0.681 |
+| walker |  | 2122 | 32 | README.md section #3 |  |  | 0.685 |
+| ns | 2379 |  | 276 | Complete roster of every named export in src/patterns.ts (the `P` namespace) | 2.2 |  | 0.629 |
+| ns | 2425 |  | 46 | src/patterns.ts re-export block: `Pattern`, `unstable_Fn`, `matcher` | 2.3 |  | 0.619 |
+| walker |  | 2478 | 356 | package entrypoints in package.json |  |  | 0.633 |
 | walker |  | 2534 | 56 | ts module doc src/patterns.ts |  |  | 0.649 |
 | ns | 2555 |  | 130 | `match()` — doc summary, signature and body in src/match.ts | 2.4 |  | 0.641 |
 | ns | 2720 |  | 165 | `isMatching()` — both overload signatures with their doc summaries | 2.5 |  | 0.638 |

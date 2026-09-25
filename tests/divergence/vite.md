@@ -150,79 +150,79 @@ Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | ns | 5530 |  | 93 | ExperimentalOptions and FutureOptions | 3.8 |  | 0.344 |
 | walker |  | 5548 | 25 | ts decl packages/vite/types/metadata.d.ts:1 |  |  | 0.344 |
 | walker |  | 5592 | 44 | ts decl packages/vite/types/metadata.d.ts:6 |  |  | 0.344 |
-| walker |  | 5641 | 49 | listing of 'packages/vite/src/node/ssr' |  |  | 0.344 |
-| walker |  | 5652 | 11 | listing of 'packages/vite/src/node/ssr/runtime' |  |  | 0.344 |
-| walker |  | 5667 | 15 | ts names packages/vite/src/node/ssr/runnerImport.ts |  |  | 0.344 |
-| walker |  | 5683 | 16 | ts names packages/vite/src/node/ssr/ssrModuleLoader.ts |  |  | 0.344 |
-| walker |  | 5700 | 17 | ts names packages/vite/src/node/ssr/ssrManifestPlugin.ts |  |  | 0.344 |
-| walker |  | 5732 | 32 | listing of 'packages/vite/src/node/ssr/__tests__' |  |  | 0.344 |
-| walker |  | 5765 | 33 | ts decl packages/vite/src/shared/hmrHandler.ts:4 |  |  | 0.344 |
-| walker |  | 5800 | 35 | ts names packages/vite/src/module-runner/hmrLogger.ts |  |  | 0.344 |
+| walker |  | 5712 | 120 | package identity metadata in package.json |  |  | 0.344 |
+| walker |  | 5761 | 49 | listing of 'packages/vite/src/node/ssr' |  |  | 0.345 |
+| walker |  | 5772 | 11 | listing of 'packages/vite/src/node/ssr/runtime' |  |  | 0.345 |
+| walker |  | 5787 | 15 | ts names packages/vite/src/node/ssr/runnerImport.ts |  |  | 0.345 |
+| walker |  | 5803 | 16 | ts names packages/vite/src/node/ssr/ssrModuleLoader.ts |  |  | 0.345 |
 | ns | 5804 |  | 274 | CLI global options (all five commands) | 3.9 | 2.2 | 0.338 |
-| walker |  | 5821 | 21 | ts decl packages/vite/src/module-runner/hmrLogger.ts:5 |  |  | 0.338 |
-| walker |  | 5845 | 24 | ts names packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.338 |
-| walker |  | 5868 | 23 | ts decl packages/vite/src/node/optimizer/pluginConverter.ts:31 |  |  | 0.338 |
-| walker |  | 5927 | 59 | ts names packages/vite/types/importMeta.d.ts |  |  | 0.338 |
-| walker |  | 5943 | 16 | ts decl packages/vite/types/importMeta.d.ts:7 |  |  | 0.338 |
-| walker |  | 5963 | 20 | ts decl packages/vite/types/importMeta.d.ts:11 |  |  | 0.338 |
+| walker |  | 5820 | 17 | ts names packages/vite/src/node/ssr/ssrManifestPlugin.ts |  |  | 0.338 |
+| walker |  | 5852 | 32 | listing of 'packages/vite/src/node/ssr/__tests__' |  |  | 0.338 |
+| walker |  | 5885 | 33 | ts decl packages/vite/src/shared/hmrHandler.ts:4 |  |  | 0.338 |
+| walker |  | 5920 | 35 | ts names packages/vite/src/module-runner/hmrLogger.ts |  |  | 0.338 |
+| walker |  | 5941 | 21 | ts decl packages/vite/src/module-runner/hmrLogger.ts:5 |  |  | 0.338 |
+| walker |  | 5965 | 24 | ts names packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.338 |
+| walker |  | 5988 | 23 | ts decl packages/vite/src/node/optimizer/pluginConverter.ts:31 |  |  | 0.338 |
 | ns | 5995 |  | 191 | CLI dev-server flags | 3.10 | 2.2 | 0.333 |
-| walker |  | 6012 | 49 | ts decl packages/vite/types/importMeta.d.ts:14 |  |  | 0.333 |
-| walker |  | 6053 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.333 |
-| walker |  | 6074 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.333 |
-| walker |  | 6100 | 26 | ts names packages/vite/src/module-runner/sourcemap/decoder.ts |  |  | 0.333 |
-| walker |  | 6126 | 26 | ts names packages/vite/src/module-runner/sourcemap/interceptor.ts |  |  | 0.333 |
-| walker |  | 6152 | 26 | ts names packages/vite/src/node/ssr/fetchModule.ts |  |  | 0.333 |
-| walker |  | 6191 | 39 | ts names packages/vite/src/node/env.ts |  |  | 0.333 |
-| walker |  | 6215 | 24 | ts decl packages/vite/src/node/env.ts:98 |  |  | 0.333 |
-| walker |  | 6244 | 29 | ts decl packages/vite/src/node/env.ts:12 |  |  | 0.333 |
+| walker |  | 6047 | 59 | ts names packages/vite/types/importMeta.d.ts |  |  | 0.333 |
+| walker |  | 6063 | 16 | ts decl packages/vite/types/importMeta.d.ts:7 |  |  | 0.333 |
+| walker |  | 6083 | 20 | ts decl packages/vite/types/importMeta.d.ts:11 |  |  | 0.333 |
+| walker |  | 6132 | 49 | ts decl packages/vite/types/importMeta.d.ts:14 |  |  | 0.333 |
+| walker |  | 6173 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.333 |
+| walker |  | 6194 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.333 |
+| walker |  | 6220 | 26 | ts names packages/vite/src/module-runner/sourcemap/decoder.ts |  |  | 0.333 |
+| walker |  | 6246 | 26 | ts names packages/vite/src/module-runner/sourcemap/interceptor.ts |  |  | 0.333 |
+| walker |  | 6272 | 26 | ts names packages/vite/src/node/ssr/fetchModule.ts |  |  | 0.333 |
+| walker |  | 6311 | 39 | ts names packages/vite/src/node/env.ts |  |  | 0.333 |
+| walker |  | 6335 | 24 | ts decl packages/vite/src/node/env.ts:98 |  |  | 0.333 |
+| walker |  | 6364 | 29 | ts decl packages/vite/src/node/env.ts:12 |  |  | 0.333 |
 | ns | 6467 |  | 472 | CLI build flags | 3.11 | 2.2 | 0.320 |
-| walker |  | 6505 | 261 | ts names packages/vite/client.d.ts |  |  | 0.320 |
-| walker |  | 6527 | 22 | ts decl packages/vite/client.d.ts:56 |  |  | 0.320 |
-| walker |  | 6551 | 24 | ts decl packages/vite/client.d.ts:9 |  |  | 0.320 |
-| walker |  | 6575 | 24 | ts decl packages/vite/client.d.ts:13 |  |  | 0.320 |
-| walker |  | 6599 | 24 | ts decl packages/vite/client.d.ts:17 |  |  | 0.320 |
 | ns | 6622 |  | 155 | CLI optimize and preview flags | 3.12 | 2.2 | 0.317 |
-| walker |  | 6623 | 24 | ts decl packages/vite/client.d.ts:21 |  |  | 0.317 |
-| walker |  | 6647 | 24 | ts decl packages/vite/client.d.ts:25 |  |  | 0.317 |
-| walker |  | 6671 | 24 | ts decl packages/vite/client.d.ts:29 |  |  | 0.317 |
-| walker |  | 6695 | 24 | ts decl packages/vite/client.d.ts:33 |  |  | 0.317 |
-| walker |  | 6719 | 24 | ts decl packages/vite/client.d.ts:60 |  |  | 0.317 |
-| walker |  | 6745 | 26 | ts decl packages/vite/client.d.ts:37 |  |  | 0.317 |
+| walker |  | 6625 | 261 | ts names packages/vite/client.d.ts |  |  | 0.317 |
+| walker |  | 6647 | 22 | ts decl packages/vite/client.d.ts:56 |  |  | 0.317 |
+| walker |  | 6671 | 24 | ts decl packages/vite/client.d.ts:9 |  |  | 0.317 |
+| walker |  | 6695 | 24 | ts decl packages/vite/client.d.ts:13 |  |  | 0.317 |
+| walker |  | 6719 | 24 | ts decl packages/vite/client.d.ts:17 |  |  | 0.317 |
+| walker |  | 6743 | 24 | ts decl packages/vite/client.d.ts:21 |  |  | 0.317 |
 | ns | 6757 |  | 135 | src/node module roster (complete) | 4.1 |  | 0.368 |
-| walker |  | 6772 | 27 | ts names packages/vite/src/node/optimizer/optimizer.ts |  |  | 0.368 |
-| walker |  | 6791 | 19 | ts decl packages/vite/src/node/optimizer/optimizer.ts:40 |  |  | 0.368 |
-| walker |  | 6810 | 19 | ts decl packages/vite/src/node/optimizer/optimizer.ts:756 |  |  | 0.368 |
-| walker |  | 6854 | 44 | listing of 'packages/create-vite/template-svelte' |  |  | 0.368 |
-| walker |  | 6873 | 19 | listing of 'packages/create-vite/template-svelte/src' |  |  | 0.368 |
-| walker |  | 6878 | 5 | listing of 'packages/create-vite/template-svelte/src/lib' |  |  | 0.368 |
+| walker |  | 6767 | 24 | ts decl packages/vite/client.d.ts:25 |  |  | 0.368 |
+| walker |  | 6791 | 24 | ts decl packages/vite/client.d.ts:29 |  |  | 0.368 |
+| walker |  | 6815 | 24 | ts decl packages/vite/client.d.ts:33 |  |  | 0.368 |
+| walker |  | 6839 | 24 | ts decl packages/vite/client.d.ts:60 |  |  | 0.368 |
+| walker |  | 6865 | 26 | ts decl packages/vite/client.d.ts:37 |  |  | 0.368 |
+| walker |  | 6892 | 27 | ts names packages/vite/src/node/optimizer/optimizer.ts |  |  | 0.368 |
 | ns | 6906 |  | 149 | src/node/plugins roster (complete) | 4.2 |  | 0.406 |
-| walker |  | 6919 | 41 | ts names packages/vite/src/node/baseEnvironment.ts |  |  | 0.406 |
-| walker |  | 6935 | 16 | ts decl packages/vite/src/node/baseEnvironment.ts:135 |  |  | 0.406 |
-| walker |  | 6976 | 41 | ts names packages/vite/src/node/idResolver.ts |  |  | 0.406 |
-| ns | 6981 |  | 75 | src/node/server roster (complete) | 4.3 |  | 0.399 |
-| walker |  | 7009 | 33 | ts decl packages/vite/src/node/idResolver.ts:23 |  |  | 0.399 |
-| walker |  | 7042 | 33 | ts decl packages/vite/src/node/idResolver.ts:42 |  |  | 0.399 |
+| walker |  | 6911 | 19 | ts decl packages/vite/src/node/optimizer/optimizer.ts:40 |  |  | 0.406 |
+| walker |  | 6930 | 19 | ts decl packages/vite/src/node/optimizer/optimizer.ts:756 |  |  | 0.406 |
+| walker |  | 6974 | 44 | listing of 'packages/create-vite/template-svelte' |  |  | 0.406 |
+| ns | 6981 |  | 75 | src/node/server roster (complete) | 4.3 |  | 0.400 |
+| walker |  | 6993 | 19 | listing of 'packages/create-vite/template-svelte/src' |  |  | 0.400 |
+| walker |  | 6998 | 5 | listing of 'packages/create-vite/template-svelte/src/lib' |  |  | 0.400 |
+| walker |  | 7039 | 41 | ts names packages/vite/src/node/baseEnvironment.ts |  |  | 0.400 |
+| walker |  | 7055 | 16 | ts decl packages/vite/src/node/baseEnvironment.ts:135 |  |  | 0.400 |
 | ns | 7066 |  | 85 | Dev-server middlewares and per-environment implementations | 4.4 |  | 0.393 |
-| walker |  | 7083 | 41 | ts names packages/vite/src/shared/ssrTransform.ts |  |  | 0.393 |
-| walker |  | 7099 | 16 | ts decl packages/vite/src/shared/ssrTransform.ts:14 |  |  | 0.393 |
-| ns | 7144 |  | 78 | SSR and dependency-optimizer rosters | 4.5 |  | 0.409 |
+| walker |  | 7096 | 41 | ts names packages/vite/src/node/idResolver.ts |  |  | 0.393 |
+| walker |  | 7129 | 33 | ts decl packages/vite/src/node/idResolver.ts:23 |  |  | 0.393 |
+| ns | 7144 |  | 78 | SSR and dependency-optimizer rosters | 4.5 |  | 0.410 |
+| walker |  | 7162 | 33 | ts decl packages/vite/src/node/idResolver.ts:42 |  |  | 0.410 |
+| walker |  | 7203 | 41 | ts names packages/vite/src/shared/ssrTransform.ts |  |  | 0.410 |
+| walker |  | 7219 | 16 | ts decl packages/vite/src/shared/ssrTransform.ts:14 |  |  | 0.410 |
 | ns | 7287 |  | 143 | Browser client, module-runner and shared rosters | 4.6 |  | 0.437 |
 | ns | 7400 |  | 113 | resolvePlugins: the built-in plugin pipeline order | 4.7 |  | 0.433 |
 | ns | 7494 |  | 94 | Published and inlined type declarations | 4.8 |  | 0.447 |
-| walker |  | 7505 | 406 | listing of 'playground' |  |  | 0.451 |
-| walker |  | 7550 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.451 |
-| walker |  | 7571 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.451 |
-| ns | 7609 |  | 115 | Core internal entry-point signatures | 4.9 |  | 0.447 |
-| walker |  | 7616 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.447 |
-| walker |  | 7637 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.447 |
-| walker |  | 7677 | 40 | ts decl packages/vite/src/module-runner/hmrLogger.ts:10 |  |  | 0.447 |
-| walker |  | 7717 | 40 | ts decl packages/vite/src/node/environment.ts:7 |  |  | 0.447 |
-| walker |  | 7783 | 66 | ts names packages/vite/types/importGlob.d.ts |  |  | 0.447 |
-| walker |  | 7812 | 29 | ts decl packages/vite/types/importGlob.d.ts:44 |  |  | 0.447 |
-| walker |  | 7842 | 30 | ts decl packages/vite/types/importGlob.d.ts:49 |  |  | 0.447 |
-| walker |  | 7871 | 29 | listing of 'docs/.vitepress/theme/landing' |  |  | 0.447 |
-| ns | 7919 |  | 310 | CONTRIBUTING.md: every section heading | 5.1 |  | 0.437 |
-| walker |  | 7991 | 120 | package identity metadata in package.json |  |  | 0.438 |
+| ns | 7609 |  | 115 | Core internal entry-point signatures | 4.9 |  | 0.442 |
+| walker |  | 7625 | 406 | listing of 'playground' |  |  | 0.447 |
+| walker |  | 7670 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.447 |
+| walker |  | 7691 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.447 |
+| walker |  | 7736 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.447 |
+| walker |  | 7757 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.447 |
+| walker |  | 7797 | 40 | ts decl packages/vite/src/module-runner/hmrLogger.ts:10 |  |  | 0.447 |
+| walker |  | 7837 | 40 | ts decl packages/vite/src/node/environment.ts:7 |  |  | 0.447 |
+| walker |  | 7903 | 66 | ts names packages/vite/types/importGlob.d.ts |  |  | 0.447 |
+| ns | 7919 |  | 310 | CONTRIBUTING.md: every section heading | 5.1 |  | 0.438 |
+| walker |  | 7932 | 29 | ts decl packages/vite/types/importGlob.d.ts:44 |  |  | 0.438 |
+| walker |  | 7962 | 30 | ts decl packages/vite/types/importGlob.d.ts:49 |  |  | 0.438 |
+| walker |  | 7991 | 29 | listing of 'docs/.vitepress/theme/landing' |  |  | 0.438 |
 | walker |  | 8034 | 43 | ts names packages/vite/src/client/overlay.ts |  |  | 0.438 |
 | walker |  | 8077 | 43 | ts names packages/vite/src/shared/hmr.ts |  |  | 0.438 |
 | walker |  | 8107 | 30 | ts decl packages/vite/src/shared/hmr.ts:19 |  |  | 0.438 |

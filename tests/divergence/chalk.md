@@ -48,12 +48,12 @@ Score(3000)=0.666 I=0.887 C=0.500 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 2178 | 34 | ts doc source/index.d.ts:302 |  |  | 0.727 |
 | walker |  | 2214 | 36 | ts doc source/index.d.ts:268 |  |  | 0.727 |
 | walker |  | 2227 | 13 | ts names source/vendor/supports-color/browser.d.ts |  |  | 0.727 |
-| walker |  | 2263 | 36 | ts doc source/index.d.ts:309 |  |  | 0.727 |
 | ns | 2293 |  | 199 | All foreground colour properties, including the `gray`/`grey` aliases | 2.8 | 2.7 | 0.690 |
-| walker |  | 2309 | 46 | ts names source/utilities.js |  |  | 0.690 |
-| walker |  | 2417 | 108 | ts names source/vendor/ansi-styles/index.js |  |  | 0.691 |
-| ns | 2517 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.657 |
-| walker |  | 2646 | 229 | package identity metadata in package.json |  |  | 0.676 |
+| walker |  | 2456 | 229 | package identity metadata in package.json |  |  | 0.709 |
+| walker |  | 2492 | 36 | ts doc source/index.d.ts:309 |  |  | 0.710 |
+| ns | 2517 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.675 |
+| walker |  | 2538 | 46 | ts names source/utilities.js |  |  | 0.675 |
+| walker |  | 2646 | 108 | ts names source/vendor/ansi-styles/index.js |  |  | 0.676 |
 | walker |  | 2682 | 36 | ts doc source/index.d.ts:316 |  |  | 0.676 |
 | walker |  | 2704 | 22 | ts names source/vendor/supports-color/browser.js |  |  | 0.676 |
 | ns | 2767 |  | 250 | readme: `supportsColor`, the `--color`/`FORCE_COLOR` overrides, `chalkStderr` | 2.10 | 1.7 | 0.661 |

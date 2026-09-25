@@ -48,14 +48,14 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 1523 | 34 | ts doc lib/command.js:2752 |  |  | 0.565 |
 | ns | 1524 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.550 |
 | ns | 1657 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.525 |
-| walker |  | 1729 | 206 | ts decl lib/option.js:3 |  |  | 0.529 |
-| walker |  | 1745 | 16 | ts body lib/option.js:243 |  |  | 0.529 |
-| walker |  | 1763 | 18 | ts body lib/argument.js:119 |  |  | 0.529 |
-| ns | 1767 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.508 |
-| walker |  | 1781 | 18 | ts body lib/argument.js:129 |  |  | 0.508 |
-| walker |  | 1800 | 19 | ts body lib/option.js:120 |  |  | 0.508 |
-| ns | 1851 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.494 |
-| walker |  | 1949 | 149 | package identity metadata in package.json |  |  | 0.498 |
+| walker |  | 1672 | 149 | package identity metadata in package.json |  |  | 0.530 |
+| ns | 1767 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.509 |
+| ns | 1851 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.495 |
+| walker |  | 1878 | 206 | ts decl lib/option.js:3 |  |  | 0.498 |
+| walker |  | 1894 | 16 | ts body lib/option.js:243 |  |  | 0.498 |
+| walker |  | 1912 | 18 | ts body lib/argument.js:119 |  |  | 0.498 |
+| walker |  | 1930 | 18 | ts body lib/argument.js:129 |  |  | 0.498 |
+| walker |  | 1949 | 19 | ts body lib/option.js:120 |  |  | 0.498 |
 | ns | 1998 |  | 147 | Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983) | 2.4 | 2.3 | 0.479 |
 | ns | 2128 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.465 |
 | walker |  | 2208 | 259 | package scripts in package.json |  |  | 0.470 |

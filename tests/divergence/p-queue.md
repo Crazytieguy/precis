@@ -104,15 +104,15 @@ Score(3000)=0.709 I=0.830 C=0.605 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 4321 | 40 | ts names source/lower-bound.ts |  |  | 0.698 |
 | walker |  | 4445 | 124 | ts doc source/index.ts:668 |  |  | 0.725 |
 | ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.703 |
-| walker |  | 4574 | 129 | readme.md section #1 |  |  | 0.703 |
-| walker |  | 4604 | 30 | readme.md section #22 |  |  | 0.703 |
 | ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.705 |
-| walker |  | 4637 | 33 | readme.md section #19 |  |  | 0.705 |
-| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.696 |
-| walker |  | 5034 | 397 | ts decl source/options.ts:111 |  |  | 0.704 |
-| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.681 |
-| walker |  | 5068 | 34 | readme.md section #3 |  |  | 0.681 |
-| walker |  | 5307 | 239 | package identity metadata in package.json |  |  | 0.695 |
+| walker |  | 4684 | 239 | package identity metadata in package.json |  |  | 0.720 |
+| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.710 |
+| walker |  | 4813 | 129 | readme.md section #1 |  |  | 0.710 |
+| walker |  | 4843 | 30 | readme.md section #22 |  |  | 0.710 |
+| walker |  | 4876 | 33 | readme.md section #19 |  |  | 0.710 |
+| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.687 |
+| walker |  | 5273 | 397 | ts decl source/options.ts:111 |  |  | 0.695 |
+| walker |  | 5307 | 34 | readme.md section #3 |  |  | 0.695 |
 | ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.672 |
 | walker |  | 5356 | 49 | readme.md section #8 |  |  | 0.672 |
 | ns | 5589 |  | 257 | #tryToStartAnother: the admission decision and task dispatch | 4.3 | 4.1 | 0.647 |

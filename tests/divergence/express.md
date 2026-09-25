@@ -1,4 +1,4 @@
-Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.516/0.420/0.532
+Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.631/0.622/0.624/0.530/0.420/0.532
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -78,26 +78,26 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
 | walker |  | 3579 | 26 | Readme.md section #23 |  |  | 0.556 |
 | walker |  | 3604 | 25 | Readme.md section #24 |  |  | 0.556 |
-| walker |  | 3631 | 27 | Readme.md section #13 |  |  | 0.556 |
-| walker |  | 3657 | 26 | Readme.md section #14 |  |  | 0.556 |
-| walker |  | 3684 | 27 | Readme.md section #15 |  |  | 0.556 |
 | ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.544 |
-| walker |  | 3710 | 26 | Readme.md section #16 |  |  | 0.544 |
-| walker |  | 3735 | 25 | Readme.md section #17 |  |  | 0.544 |
-| ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.525 |
-| ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.514 |
-| walker |  | 4195 | 460 | package runtime dependencies in package.json |  |  | 0.516 |
-| walker |  | 4233 | 38 | ts body lib/request.js:214 |  |  | 0.516 |
-| walker |  | 4290 | 57 | ts doc lib/response.js:696 |  |  | 0.516 |
-| walker |  | 4318 | 28 | Readme.md section #22 |  |  | 0.516 |
-| ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.503 |
-| walker |  | 4348 | 30 | Readme.md section #27 |  |  | 0.503 |
-| walker |  | 4378 | 30 | Readme.md section #29 |  |  | 0.503 |
-| walker |  | 4407 | 29 | Readme.md section #28 |  |  | 0.503 |
-| walker |  | 4471 | 64 | ts doc lib/utils.js:130 |  |  | 0.503 |
-| ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.493 |
-| ns | 4735 |  | 257 | app.handle() — the per-request dispatch entry point | 4.1 | 2.8 | 0.477 |
-| walker |  | 4809 | 338 | package identity metadata in package.json |  |  | 0.492 |
+| walker |  | 3944 | 340 | package identity metadata in package.json |  |  | 0.561 |
+| walker |  | 3971 | 27 | Readme.md section #13 |  |  | 0.561 |
+| ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.542 |
+| walker |  | 3997 | 26 | Readme.md section #14 |  |  | 0.542 |
+| walker |  | 4024 | 27 | Readme.md section #15 |  |  | 0.542 |
+| walker |  | 4050 | 26 | Readme.md section #16 |  |  | 0.542 |
+| walker |  | 4075 | 25 | Readme.md section #17 |  |  | 0.542 |
+| ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.530 |
+| ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.517 |
+| ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.507 |
+| walker |  | 4533 | 458 | package runtime dependencies in package.json |  |  | 0.509 |
+| walker |  | 4571 | 38 | ts body lib/request.js:214 |  |  | 0.509 |
+| walker |  | 4628 | 57 | ts doc lib/response.js:696 |  |  | 0.509 |
+| walker |  | 4656 | 28 | Readme.md section #22 |  |  | 0.509 |
+| walker |  | 4686 | 30 | Readme.md section #27 |  |  | 0.509 |
+| walker |  | 4716 | 30 | Readme.md section #29 |  |  | 0.509 |
+| ns | 4735 |  | 257 | app.handle() — the per-request dispatch entry point | 4.1 | 2.8 | 0.492 |
+| walker |  | 4745 | 29 | Readme.md section #28 |  |  | 0.492 |
+| walker |  | 4809 | 64 | ts doc lib/utils.js:130 |  |  | 0.492 |
 | walker |  | 4841 | 32 | Readme.md section #11 |  |  | 0.492 |
 | walker |  | 4873 | 32 | Readme.md section #21 |  |  | 0.492 |
 | walker |  | 4905 | 32 | Readme.md section #31 |  |  | 0.492 |

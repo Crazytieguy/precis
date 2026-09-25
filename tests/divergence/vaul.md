@@ -45,13 +45,13 @@ Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 2038 | 172 | package entrypoints in package.json |  |  | 0.770 |
 | ns | 2198 |  | 167 | Docs for dismissible, modal and direction (fills 2.3's ellipses) | 2.6 | 2.3 | 0.741 |
 | walker |  | 2295 | 257 | ts decl src/index.tsx:50 #1 |  |  | 0.796 |
-| walker |  | 2331 | 36 | ts names src/context.ts |  |  | 0.796 |
-| walker |  | 2368 | 37 | ts names src/use-controllable-state.ts |  |  | 0.796 |
 | ns | 2398 |  | 200 | Docs for closeThreshold, noBodyStyles, setBackgroundColorOnScale, scrollLockTimeout | 2.7 | 2.2 | 0.804 |
+| walker |  | 2471 | 176 | package identity metadata in package.json |  |  | 0.804 |
 | ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.807 |
-| walker |  | 2583 | 215 | ts decl src/index.tsx:50 #2 |  |  | 0.840 |
-| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.813 |
-| walker |  | 2759 | 176 | package identity metadata in package.json |  |  | 0.813 |
+| walker |  | 2507 | 36 | ts names src/context.ts |  |  | 0.807 |
+| walker |  | 2544 | 37 | ts names src/use-controllable-state.ts |  |  | 0.807 |
+| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.781 |
+| walker |  | 2759 | 215 | ts decl src/index.tsx:50 #2 |  |  | 0.813 |
 | ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.794 |
 | walker |  | 2870 | 111 | json config tsconfig.json |  |  | 0.795 |
 | walker |  | 2922 | 52 | ts names src/types.ts |  |  | 0.795 |
