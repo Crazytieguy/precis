@@ -2,7 +2,6 @@
 //! section detection.
 //!
 //! Keys:
-//! - `SummaryWhole { file }` — `SUMMARY.md`, whole file (mdBook ToC)
 //! - `ReadmeHeadline { file }` — `README.md`, the heading's project-name
 //!   line plus the first non-decorative content. Decorative paragraphs
 //!   (image-only / badge-only) and `<img>`-only HTML blocks immediately
@@ -60,7 +59,6 @@ use crate::value::{is_orientation_doc, mix_signals, roster_mass_factor};
 use super::{
     FileLines, WalkCtx, budget_chunk_ranges, extend_nonblank_rows, first_child_of_kind,
     fs::files_with_extension, node_end_row_trimmed, path_depth_factor, single_file_lines_content,
-    whole_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -208,33 +206,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         return out;
     }
     for file in md_files {
-        let name = file
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or_default();
         // Auto-injected agent docs (AGENTS.md / CLAUDE.md / skill
         // files) are loaded into the model's context by the harness,
         // so emitting their bodies is pure waste. Skip the prose-body
-        // batches (SummaryWhole + Section); the structural batches
+        // batches (Prelude + Section); the structural batches
         // (HeadingsOutline + ReadmeHeadline) still emit so the file's
         // shape stays discoverable at large budgets, riding the 0.1×
         // value discount applied via `non_essential_factor`.
         let suppress_body = ctx.is_auto_injected_doc_file(&file);
-
-        if name.eq_ignore_ascii_case("SUMMARY.md") {
-            if suppress_body {
-                continue;
-            }
-            if let Some(content) = build_summary_content(&file, ctx) {
-                out.push(Batch {
-                    key: MarkdownKey::SummaryWhole { file: file.clone() }.into(),
-                    predecessor: None,
-                    content,
-                    value: summary_value(&file, ctx),
-                });
-            }
-            continue;
-        }
 
         let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
@@ -407,18 +386,6 @@ fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
 }
 
 // --- value ---
-
-/// A whole-file table of contents is a navigation index whose entries
-/// are the filenames the parent directory listing already emitted, so it
-/// prices as the listing it duplicates rather than as an orientation
-/// doc. Measured alone this is worth +0.0009 at the 3K mean on the one
-/// corpus carrier; it is fully absorbed once
-/// [`NavDensity::factor`] frees the same window (see the lane note in
-/// `git show a90ee9b6:docs/design-notes.md`).
-fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let (cat, fu, ztu) = super::fs::PLAIN_LISTING_SIGNALS;
-    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
-}
 
 fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
     mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx)) * nav.factor(file)
@@ -672,11 +639,6 @@ fn parse_inline(text: &str) -> Option<Tree> {
 }
 
 // --- content builders ---
-
-fn build_summary_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
-    let source = ctx.read_source(file)?;
-    whole_file_lines_content(file, &source)
-}
 
 fn build_headline_content(
     file: &Path,
@@ -5149,8 +5111,7 @@ mod tests {
     /// AGENTS.md / CLAUDE.md / skill bodies are already loaded into
     /// the model's context by the harness, so emitting their per-H2
     /// `Section` batches is pure waste. The walker must skip
-    /// `MarkdownKey::Section` and `MarkdownKey::SummaryWhole` for
-    /// these files while still emitting structural batches
+    /// `MarkdownKey::Section` for these files while still emitting structural batches
     /// (`HeadingsOutline`, `ReadmeHeadline`) so file shape stays
     /// discoverable at large budgets.
     #[test]
@@ -5174,7 +5135,6 @@ mod tests {
             .filter_map(|b| match &b.key {
                 BatchKey::Markdown(k) => match k {
                     MarkdownKey::Section { file, .. } if file == &agents_md => Some("section"),
-                    MarkdownKey::SummaryWhole { file } if file == &agents_md => Some("summary"),
                     MarkdownKey::HeadingsOutline { file } if file == &agents_md => Some("outline"),
                     MarkdownKey::ReadmeHeadline { file } if file == &agents_md => Some("headline"),
                     _ => None,
@@ -5185,10 +5145,6 @@ mod tests {
         assert!(
             !agents_keys.contains(&"section"),
             "AGENTS.md must not emit Section batches; got {agents_keys:?}",
-        );
-        assert!(
-            !agents_keys.contains(&"summary"),
-            "AGENTS.md must not emit SummaryWhole; got {agents_keys:?}",
         );
 
         // The companion notes.md (same content, normal filename) must

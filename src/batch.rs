@@ -117,8 +117,6 @@ trait InnerKey {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum MarkdownKey {
-    /// Whole `SUMMARY.md` (mdBook ToC).
-    SummaryWhole { file: PathBuf },
     /// README headline: first heading + first paragraph.
     ReadmeHeadline { file: PathBuf },
     /// The rest of a README's pre-heading prelude — hero/logo block,
@@ -340,9 +338,6 @@ impl InnerKey for MarkdownKey {
     }
     fn describe(&self, root: &Path) -> String {
         match self {
-            MarkdownKey::SummaryWhole { file } => {
-                format!("mdBook SUMMARY at {}", display_path(file, root))
-            }
             MarkdownKey::ReadmeHeadline { file } => describe_in("README headline", file, root),
             MarkdownKey::Prelude { file } => describe_in("README prelude", file, root),
             MarkdownKey::HeadingsOutline { file } => describe_in("headings outline", file, root),

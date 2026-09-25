@@ -114,8 +114,8 @@ Files the host harness already loads into the model's context —
 hierarchy is recursive), and text files under `.claude/skills/`,
 `.agent/skills/`, `.cursor/rules/` — should not have their bodies
 scheduled by precis. Their paths stay discoverable via fs listings, but
-the prose-body batches (`MarkdownKey::Section`,
-`MarkdownKey::SummaryWhole`) are walker-side suppressed. Residual
+the prose-body batches (`MarkdownKey::Prelude`, `MarkdownKey::Section`)
+are walker-side suppressed. Residual
 structural batches (`HeadingsOutline`, `ReadmeHeadline`) carry a 0.1×
 value discount.
 
