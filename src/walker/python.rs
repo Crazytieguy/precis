@@ -55,6 +55,7 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
+use crate::render::Source;
 use crate::value::{
     DEFAULT_CONCAVITY_EXPONENT, ROSTER_MASS_FACTOR_CAP, depth_factor, mix_signals,
     reexport_import_chunk_factor,
@@ -639,7 +640,7 @@ fn keyword_argument_name<'a>(keyword: Node<'a>, source: &'a str) -> Option<&'a s
 fn emit_methods(
     file: &Path,
     ctx: &WalkCtx,
-    source: &str,
+    source: &Source,
     src_lines: &[&str],
     class_decl: &DeclInfo,
     method_sigs_gate: Option<&BatchKey>,
@@ -1984,7 +1985,7 @@ fn is_test_file(file: &Path) -> bool {
         .is_some_and(|n| n.starts_with("test_") || n.ends_with("_test.py"))
 }
 
-fn parse_python(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_python(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_python::LANGUAGE.into())
 }
 

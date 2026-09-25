@@ -22,7 +22,7 @@ use tree_sitter::{Language, Node, Tree};
 use crate::batch::{Batch, BatchKey, FsKey, WalkerKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::fs_util::DirFilter;
-use crate::render::SourceCache;
+use crate::render::{Source, SourceCache};
 
 pub mod c;
 pub mod fs;
@@ -300,12 +300,12 @@ impl WalkCtx {
     }
 
     /// Read `path` into memory, caching the result.
-    pub fn read_source(&self, path: &Path) -> Option<Arc<str>> {
+    pub fn read_source(&self, path: &Path) -> Option<Arc<Source>> {
         self.source_cache.get(path)
     }
 
     /// Parse `path` with `language`, caching the result.
-    pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<str>, Arc<Tree>)> {
+    pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<Source>, Arc<Tree>)> {
         #[cfg(feature = "timing")]
         let _start = std::time::Instant::now();
         let source = self.read_source(path)?;
@@ -774,7 +774,7 @@ pub(crate) fn file_depth_factor(file: &Path, ctx: &WalkCtx, is_entrypoint: bool)
 /// the resulting span set is empty.
 pub(crate) fn single_file_lines_content(
     path: &Path,
-    source: &str,
+    source: &Source,
     lines: FileLines,
 ) -> Option<BatchContent> {
     let spans = build_file_spans(path, source, lines);
@@ -809,8 +809,8 @@ pub(crate) fn lines_content_tokens(source: &str, content: &BatchContent) -> usiz
 
 /// `BatchContent::Lines` covering every line of `source`. `None` when
 /// the file is empty (all-blank files fall out via empty spans).
-pub(crate) fn whole_file_lines_content(file: &Path, source: &str) -> Option<BatchContent> {
-    let lines: Vec<usize> = (1..=source.lines().count()).collect();
+pub(crate) fn whole_file_lines_content(file: &Path, source: &Source) -> Option<BatchContent> {
+    let lines: Vec<usize> = (1..=source.line_count()).collect();
     single_file_lines_content(file, source, FileLines::new(lines))
 }
 
@@ -818,7 +818,11 @@ pub(crate) fn whole_file_lines_content(file: &Path, source: &str) -> Option<Batc
 /// (and returns `None`) when the size hint alone disqualifies the
 /// file. Bytes-per-line multipliers are per-format — callers keep
 /// their own gate constants.
-pub(crate) fn gated_read_source(file: &Path, ctx: &WalkCtx, byte_gate: usize) -> Option<Arc<str>> {
+pub(crate) fn gated_read_source(
+    file: &Path,
+    ctx: &WalkCtx,
+    byte_gate: usize,
+) -> Option<Arc<Source>> {
     let byte_len = std::fs::metadata(file)
         .map(|m| m.len() as usize)
         .unwrap_or(usize::MAX);
@@ -849,7 +853,7 @@ pub(crate) fn gated_whole_file_content(
 pub(crate) fn build_per_file_content(
     file: &Path,
     ctx: &WalkCtx,
-    parse: impl Fn(&WalkCtx, &Path) -> Option<(Arc<str>, Arc<Tree>)>,
+    parse: impl Fn(&WalkCtx, &Path) -> Option<(Arc<Source>, Arc<Tree>)>,
     collect: impl Fn(&Tree, &str) -> FileLines,
 ) -> Option<BatchContent> {
     let (source, tree) = parse(ctx, file)?;
@@ -865,21 +869,13 @@ pub(crate) fn build_per_file_content(
 /// trailing blanks never render — `full` holds only non-blank rows, so
 /// every span starts and ends on content. Ellipses superseded by `Full`
 /// coverage are dropped.
-pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> Vec<Span> {
-    // Empty collectors are common (for example, one doc probe per C
-    // declaration). Bail out before indexing every source line: on a giant
-    // flat file, doing that scan once per empty collector is quadratic.
-    if lines.full.is_empty() && lines.ellipses.is_empty() {
-        return Vec::new();
-    }
-    let src_lines: Vec<&str> = source.lines().collect();
-    let blank = |n: usize| src_lines.get(n - 1).is_some_and(|t| t.trim().is_empty());
+pub(crate) fn build_file_spans(path: &Path, source: &Source, lines: FileLines) -> Vec<Span> {
+    let blank = |n: usize| source.line(n).is_some_and(|t| t.trim().is_empty());
     let full: BTreeSet<usize> = lines
         .full
         .into_iter()
-        .filter(|n| src_lines.get(*n - 1).is_some_and(|t| !t.trim().is_empty()))
+        .filter(|&n| source.line(n).is_some_and(|t| !t.trim().is_empty()))
         .collect();
-    let line_count = src_lines.len();
 
     let mut spans = Vec::new();
     // Merge runs of Full line numbers into single-range spans. An
@@ -906,7 +902,7 @@ pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> V
     let ellipses: BTreeSet<usize> = lines
         .ellipses
         .into_iter()
-        .filter(|n| *n >= 1 && *n <= line_count && !covered(*n))
+        .filter(|&n| source.line(n).is_some() && !covered(n))
         .collect();
     for n in ellipses {
         spans.push(Span {
@@ -1288,7 +1284,7 @@ mod tests {
     use super::*;
 
     fn span_shapes(source: &str, lines: FileLines) -> Vec<(usize, usize, Render)> {
-        build_file_spans(Path::new("f.txt"), source, lines)
+        build_file_spans(Path::new("f.txt"), &Source::new(source.into()), lines)
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()

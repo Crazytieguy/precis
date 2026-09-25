@@ -60,6 +60,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, CKey};
 use crate::content::BatchContent;
 use crate::fs_util::DirFilter;
+use crate::render::Source;
 use crate::value::{mix_signals, names_surface_chunk_factor, roster_mass_factor};
 
 /// Chunk size for C decl-name surfaces with no structural signal.
@@ -2105,7 +2106,7 @@ fn whole_small_header_eligible(file: &Path, ctx: &WalkCtx) -> bool {
 /// Whole-file content for a small public-API header, or `None` if it
 /// isn't [`whole_small_header_eligible`]. When `Some`, the caller emits
 /// a single verbatim batch and skips the per-file decomposition.
-fn whole_small_header_content(file: &Path, source: &str, ctx: &WalkCtx) -> Option<BatchContent> {
+fn whole_small_header_content(file: &Path, source: &Source, ctx: &WalkCtx) -> Option<BatchContent> {
     if !whole_small_header_eligible(file, ctx) {
         return None;
     }
@@ -2538,7 +2539,7 @@ fn aggregate_member_group_value(
 
 // --- parser -------------------------------------------------------------
 
-fn parse_c(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_c(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_c::LANGUAGE.into())
 }
 

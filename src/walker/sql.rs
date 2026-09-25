@@ -11,6 +11,7 @@ use std::ops::Range;
 use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchKey, SqlKey};
+use crate::render::Source;
 use crate::value::{DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals};
 
 use super::{
@@ -119,7 +120,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 fn contract_chunks(
     file: &Path,
-    source: &str,
+    source: &Source,
     contracts: &[Contract],
     all_lines: &[usize],
     ellipses: &[usize],

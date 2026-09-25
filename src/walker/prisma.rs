@@ -31,6 +31,7 @@
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PrismaKey};
+use crate::render::Source;
 use crate::value::mix_signals;
 
 use super::{FileLines, WalkCtx, fs::files_with_extension, single_file_lines_content};
@@ -172,7 +173,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 fn push_decl_batches(
     out: &mut Vec<Batch<BatchKey>>,
     file: &Path,
-    source: &str,
+    source: &Source,
     decl: &Decl,
     decl_index: usize,
     depth: f64,
@@ -235,7 +236,7 @@ fn model_split_line(decl: &Decl) -> Option<usize> {
 
 fn block_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     start_line: usize,
     end_line: usize,
 ) -> Option<crate::content::BatchContent> {

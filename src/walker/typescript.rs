@@ -56,6 +56,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::fs_util::DirFilter;
+use crate::render::Source;
 use crate::value::{
     DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals,
     reexport_import_chunk_factor, roster_mass_factor,
@@ -1293,7 +1294,7 @@ fn emitted_import_gate_for_file(file: &Path, ctx: &WalkCtx) -> Option<BatchKey> 
 
 struct ExportBodyEmitCtx<'a, 'b> {
     file: &'b Path,
-    source: &'b str,
+    source: &'b Source,
     ctx: &'b WalkCtx,
     js_factor: f64,
     per_export_factor: f64,
@@ -1387,7 +1388,7 @@ struct ValuedClassBodyPart {
 /// recreate the exact prefix blocker this shaping rule exists to prevent.
 fn bounded_class_body_parts(
     file: &Path,
-    source: &str,
+    source: &Source,
     parts: Vec<BodyPart>,
     ctx: &WalkCtx,
 ) -> Vec<ValuedClassBodyPart> {
@@ -3649,7 +3650,7 @@ fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64)
 
 // --- parser ---
 
-fn parse_ts(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_ts(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     let language = if is_tsx_file(path) {
         tree_sitter_typescript::LANGUAGE_TSX.into()
     } else {
@@ -4277,7 +4278,7 @@ fn header_surface_lines(anchor: Node, body: Option<Node>, decl: Node, source: &s
 fn oversized_export_class_chunks(
     file: &Path,
     item: &ExportInfo<'_>,
-    source: &str,
+    source: &Source,
     ctx: &WalkCtx,
 ) -> Option<Vec<FileLines>> {
     if !is_ts_or_tsx_file(file)
@@ -4556,7 +4557,7 @@ fn truncated_member_names_content(
 
 fn member_names_catalog_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     lines: &FileLines,
     truncate_to_name: bool,
 ) -> Option<BatchContent> {
@@ -4575,7 +4576,7 @@ fn member_names_catalog_content(
 /// the property the scheduler needs.
 fn member_names_catalog_cap_chunks(
     file: &Path,
-    source: &str,
+    source: &Source,
     catalog: &MemberNamesCatalog,
     ctx: &WalkCtx,
 ) -> Vec<FileLines> {
@@ -6379,8 +6380,13 @@ export function run(): void {}
         let tree = parse(&source);
         let exports = export_infos_for_path(&file, &tree, &source);
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let chunks =
-            oversized_export_class_chunks(&file, exports.first().unwrap(), &source, &ctx).unwrap();
+        let chunks = oversized_export_class_chunks(
+            &file,
+            exports.first().unwrap(),
+            &Source::new(source.into()),
+            &ctx,
+        )
+        .unwrap();
         assert!(chunks.len() > 2, "surface splits into head + several tails");
         for (member_start_line, predecessor) in docs {
             let Some(BatchKey::Typescript(TsKey::ExportTail { chunk_index, .. })) = predecessor
@@ -6557,8 +6563,9 @@ export interface Contract {
         let exports = export_infos_for_path(&file, &tree, &source);
         let item = exports.first().unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let chunks = oversized_export_class_chunks(&file, item, &source, &ctx)
-            .expect("expected oversized class chunks");
+        let chunks =
+            oversized_export_class_chunks(&file, item, &Source::new(source.as_str().into()), &ctx)
+                .expect("expected oversized class chunks");
         assert!(chunks.len() > 1);
         let covered_full: Vec<_> = chunks
             .iter()
@@ -6612,6 +6619,7 @@ export interface Contract {
         let exports = export_infos_for_path(&file, &tree, &source);
         let item = exports.first().unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let source = Source::new(source.into());
         let chunks = bounded_class_body_parts(&file, &source, item.body_parts.clone(), &ctx);
 
         assert!(chunks.len() > 1, "expected an oversized body to split");
@@ -6662,7 +6670,13 @@ export interface Contract {
         let exports = export_infos_for_path(&file, &tree, source);
         let ctx = WalkCtx::new(dir.path().to_path_buf());
         assert!(
-            oversized_export_class_chunks(&file, exports.first().unwrap(), source, &ctx,).is_none()
+            oversized_export_class_chunks(
+                &file,
+                exports.first().unwrap(),
+                &Source::new(source.into()),
+                &ctx,
+            )
+            .is_none()
         );
     }
 

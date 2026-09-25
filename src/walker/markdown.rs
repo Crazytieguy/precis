@@ -53,6 +53,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::{BatchContent, Render, Span};
+use crate::render::Source;
 use crate::tokenizer;
 use crate::value::{is_orientation_doc, mix_signals, roster_mass_factor};
 
@@ -662,7 +663,7 @@ fn is_changelog_class(file: &Path) -> bool {
 
 // --- parser ---
 
-fn parse_md(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_md(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_md::LANGUAGE.into())
 }
 
@@ -684,7 +685,11 @@ fn build_summary_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     whole_file_lines_content(file, &source)
 }
 
-fn build_headline_content(file: &Path, source: &str, spec: &HeadlineSpec) -> Option<BatchContent> {
+fn build_headline_content(
+    file: &Path,
+    source: &Source,
+    spec: &HeadlineSpec,
+) -> Option<BatchContent> {
     let spans = build_headline_spans(file, source, spec);
     if spans.is_empty() {
         return None;
@@ -694,7 +699,7 @@ fn build_headline_content(file: &Path, source: &str, spec: &HeadlineSpec) -> Opt
 
 fn build_outline_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     rows: &[(usize, usize)],
 ) -> Option<BatchContent> {
     if rows.len() < 2 {
@@ -888,7 +893,7 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
 
 fn build_section_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     section_index: usize,
     range: &SectionRange,
     headline: Option<&HeadlineSpec>,
@@ -932,7 +937,7 @@ pub(crate) fn is_readme_rst(file: &Path) -> bool {
 /// RST `ReadmeHeadline` content — title + first substantive paragraph,
 /// stopping at the next setext heading. Skips `.. directive::` blocks
 /// and their indented continuations.
-fn build_rst_readme_content(file: &Path, source: &str) -> Option<BatchContent> {
+fn build_rst_readme_content(file: &Path, source: &Source) -> Option<BatchContent> {
     let src_lines: Vec<&str> = source.lines().collect();
     if src_lines.is_empty() {
         return None;
@@ -1530,7 +1535,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     })
 }
 
-fn build_headline_spans(file: &Path, source: &str, spec: &HeadlineSpec) -> Vec<Span> {
+fn build_headline_spans(file: &Path, source: &Source, spec: &HeadlineSpec) -> Vec<Span> {
     let trunc_row = spec.truncate.as_ref().map(|t| t.row);
     let src_lines: Vec<&str> = source.lines().collect();
     let oversize_rows: Vec<usize> = spec
@@ -4389,7 +4394,11 @@ mod tests {
     fn rendered_spans(source: &str) -> Vec<Span> {
         let tree = parse(source);
         let spec = headline_spec(&tree, source).expect("headline spec");
-        build_headline_spans(&PathBuf::from("README.md"), source, &spec)
+        build_headline_spans(
+            &PathBuf::from("README.md"),
+            &Source::new(source.into()),
+            &spec,
+        )
     }
 
     const HEADLINE_COVERED_CASES: &[(&str, &str, &[usize], &[usize])] = &[

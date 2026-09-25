@@ -38,6 +38,7 @@ use std::ops::Range;
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
+use crate::render::Source;
 use crate::value::{
     DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals, roster_mass_factor,
 };
@@ -1251,7 +1252,12 @@ fn is_dotenv_entry_line(line: &str) -> bool {
 /// chunks. Each non-final chunk carries an ellipsis on the next chunk's
 /// first row; scheduling that descendant replaces the marker with full
 /// content, so every purchased prefix remains visibly incomplete.
-fn dotenv_tail_chunks(file: &Path, source: &str, head_end: usize, ctx: &WalkCtx) -> Vec<FileLines> {
+fn dotenv_tail_chunks(
+    file: &Path,
+    source: &Source,
+    head_end: usize,
+    ctx: &WalkCtx,
+) -> Vec<FileLines> {
     let lines: Vec<&str> = source.lines().collect();
     let groups = dotenv_tail_groups(&lines, head_end);
     let tail_len = lines.len().saturating_sub(head_end);

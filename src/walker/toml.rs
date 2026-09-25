@@ -32,6 +32,7 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TomlKey};
+use crate::render::Source;
 use crate::value::{dependency_table_mass_factor, mix_signals};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
@@ -214,7 +215,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 /// under `[project]`).
 fn build_dependencies_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     pairs: &[TablePair],
     sections: &[Section],
     python_project_manifest: bool,
@@ -252,7 +253,7 @@ fn build_dependencies_content(
 /// ordinary runtime dependency roster unaffordable.
 fn build_development_dependencies_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
@@ -280,7 +281,7 @@ fn build_development_dependencies_content(
 
 fn build_tool_config_contents(
     file: &Path,
-    source: &str,
+    source: &Source,
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Vec<(String, crate::content::BatchContent)> {
@@ -390,7 +391,7 @@ fn collect_tool_config_lines(sections: &[Section]) -> BTreeMap<String, Vec<usize
 /// batch owns — no two peer batches may claim the same row.
 fn build_package_metadata_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     pairs: &[TablePair],
     identity_residue: &HashSet<usize>,
 ) -> Option<crate::content::BatchContent> {
@@ -406,7 +407,7 @@ fn build_package_metadata_content(
 
 fn build_config_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
@@ -496,7 +497,7 @@ fn pair_value_node(pair: Node) -> Option<Node> {
 
 fn build_section_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     sections: &[Section],
     name_match: impl Fn(&str) -> bool,
     skipped_rows: &HashSet<usize>,
@@ -894,7 +895,7 @@ fn is_checking_toolchain_tool(tool: &str) -> bool {
 
 // --- parser ---
 
-fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_toml_ng::LANGUAGE.into())
 }
 

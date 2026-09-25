@@ -63,6 +63,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, GoKey};
 use crate::content::BatchContent;
+use crate::render::Source;
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
 use super::{
@@ -822,7 +823,7 @@ struct NamesChunk {
 struct RosterCtx<'a, 'tree> {
     file: &'a Path,
     ctx: &'a WalkCtx,
-    source: &'a str,
+    source: &'a Source,
     decls: &'a [(Node<'tree>, DeclInfo)],
     all_name_lines: &'a HashSet<usize>,
     row_claimants: &'a HashMap<usize, Vec<usize>>,
@@ -1655,7 +1656,7 @@ fn gomod_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 // --- parser -------------------------------------------------------------
 
-fn parse_go(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_go(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_go::LANGUAGE.into())
 }
 

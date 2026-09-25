@@ -26,16 +26,26 @@ use crate::tokenizer;
 
 const INDENT_UNIT: &str = "    ";
 
+/// A source file's text with its line index, built once per file so
+/// line lookups by number don't rescan the text.
 #[derive(Debug)]
-struct CachedSource {
+pub struct Source {
     text: Arc<str>,
     line_ranges: Box<[Range<usize>]>,
     /// Prefix count of non-blank lines; element 0 is the empty prefix.
     non_blank_prefix: Box<[usize]>,
 }
 
-impl CachedSource {
-    fn new(text: Arc<str>) -> Self {
+impl std::ops::Deref for Source {
+    type Target = str;
+
+    fn deref(&self) -> &str {
+        &self.text
+    }
+}
+
+impl Source {
+    pub fn new(text: Arc<str>) -> Self {
         let base = text.as_ptr() as usize;
         let mut line_ranges = Vec::new();
         let mut non_blank_prefix = vec![0];
@@ -54,12 +64,13 @@ impl CachedSource {
         }
     }
 
-    fn line(&self, number: usize) -> Option<&str> {
+    /// 1-based line `number`, without its line terminator.
+    pub fn line(&self, number: usize) -> Option<&str> {
         let range = self.line_ranges.get(number.checked_sub(1)?)?.clone();
         self.text.get(range)
     }
 
-    fn line_count(&self) -> usize {
+    pub fn line_count(&self) -> usize {
         self.line_ranges.len()
     }
 
@@ -75,7 +86,7 @@ impl CachedSource {
 
 /// Shared source-file cache — read and index each file at most once per run.
 #[derive(Clone, Debug, Default)]
-pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<CachedSource>>>>);
+pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<Source>>>>);
 
 impl SourceCache {
     pub fn new() -> Self {
@@ -83,22 +94,22 @@ impl SourceCache {
     }
 
     /// Read `path`, caching. Returns `None` on I/O error.
-    pub fn get(&self, path: &Path) -> Option<Arc<str>> {
+    pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
         #[cfg(feature = "timing")]
         let _start = std::time::Instant::now();
         if let Some(cached) = self.0.borrow().get(path) {
             #[cfg(feature = "timing")]
             crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(true));
-            return Some(cached.text.clone());
+            return Some(cached.clone());
         }
         let text = std::fs::read_to_string(path).ok()?;
-        let arc: Arc<str> = Arc::from(text);
+        let source = Arc::new(Source::new(Arc::from(text)));
         self.0
             .borrow_mut()
-            .insert(path.to_path_buf(), Arc::new(CachedSource::new(arc.clone())));
+            .insert(path.to_path_buf(), source.clone());
         #[cfg(feature = "timing")]
         crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(false));
-        Some(arc)
+        Some(source)
     }
 
     /// Insert a pre-loaded source. Idempotent.
@@ -106,14 +117,7 @@ impl SourceCache {
         self.0
             .borrow_mut()
             .entry(path)
-            .or_insert_with(|| Arc::new(CachedSource::new(source)));
-    }
-
-    fn view(&self, path: &Path) -> Option<Arc<CachedSource>> {
-        // Populate through the public read path so timing/cache behavior stays
-        // centralized, then borrow the already-built line index.
-        self.get(path)?;
-        self.0.borrow().get(path).cloned()
+            .or_insert_with(|| Arc::new(Source::new(source)));
     }
 }
 
@@ -454,7 +458,7 @@ impl RenderedTree {
         }
 
         for (path, file_spans) in by_path {
-            let source = self.source_cache.view(path);
+            let source = self.source_cache.get(path);
             let indent_depth = self.depth_from_root(path);
             let existing = match self.nodes.get(path) {
                 Some(TreeNode::File { content }) => Some(content),
@@ -633,7 +637,7 @@ impl RenderedTree {
             // entry row `render_dir` emitted, not on a row of its own.
             return;
         }
-        let source = self.source_cache.view(path);
+        let source = self.source_cache.get(path);
         let marker_row = format_marker_row(indent_depth);
         walk_anchor_gaps(&anchors, source.as_deref(), |event| match event {
             GapWalkEvent::Gap => out.push_str(&marker_row),
@@ -691,7 +695,7 @@ struct MarkerDelta {
 fn local_marker_delta(
     existing: Option<&BTreeMap<usize, LineRecord>>,
     spans: &[&Span],
-    source: Option<&CachedSource>,
+    source: Option<&Source>,
 ) -> MarkerDelta {
     let Some(first_changed) = spans.iter().map(|span| span.start).min() else {
         return MarkerDelta::default();
@@ -773,7 +777,7 @@ fn marker_count_between(
     left: Option<usize>,
     right: Option<usize>,
     inner: &BTreeSet<usize>,
-    source: &CachedSource,
+    source: &Source,
 ) -> usize {
     let mut count = 0;
     let mut previous = left.unwrap_or(0);
@@ -804,7 +808,7 @@ enum GapWalkEvent {
 /// differently, so both must go through here.
 fn walk_anchor_gaps(
     anchors: &BTreeSet<usize>,
-    source: Option<&CachedSource>,
+    source: Option<&Source>,
     mut visit: impl FnMut(GapWalkEvent),
 ) {
     let mut prev = 0usize;

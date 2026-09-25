@@ -16,6 +16,7 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, LuaKey};
+use crate::render::Source;
 use crate::value::mix_signals;
 
 use super::{
@@ -148,7 +149,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 // --- parser -------------------------------------------------------------
 
-fn parse_lua(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_lua(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_lua::LANGUAGE.into())
 }
 

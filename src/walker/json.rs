@@ -16,6 +16,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
+use crate::render::Source;
 use crate::value::{dependency_table_mass_factor, depth_factor, mix_signals};
 
 use super::workspace::{
@@ -318,7 +319,7 @@ fn package_json_name_ends_with(tree: &Tree, source: &str, suffix: &str) -> bool 
 
 fn section_content(
     file: &Path,
-    source: &str,
+    source: &Source,
     pairs: &[(String, usize, usize, bool)],
     name_match: fn(&str) -> bool,
 ) -> Option<BatchContent> {
@@ -649,7 +650,7 @@ fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
 
 // --- parser + AST helpers ---
 
-fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_json::LANGUAGE.into())
 }
 

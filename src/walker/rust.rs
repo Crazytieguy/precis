@@ -60,6 +60,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, RustKey};
 use crate::content::{BatchContent, Span};
+use crate::render::Source;
 use crate::value::{
     DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, depth_factor, mix_signals,
     roster_mass_factor,
@@ -1695,7 +1696,7 @@ fn sparse_gap_ellipses(full: &[usize]) -> Vec<usize> {
 
 // --- parser ---
 
-fn parse_rust(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
+fn parse_rust(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_rust::LANGUAGE.into())
 }
 
@@ -2331,7 +2332,7 @@ fn body_parts_for_item(child: Node, src_lines: &[&str]) -> Vec<BodyPart> {
 /// pressure rule for every entrypoint body.
 fn coalesce_src_main_body_parts(
     file: &Path,
-    source: &str,
+    source: &Source,
     parts: Vec<BodyPart>,
     ctx: &WalkCtx,
 ) -> Vec<ValuedBodyPart> {
@@ -2672,7 +2673,7 @@ fn push_where_clause_rows(out: &mut Vec<usize>, node: Node) {
 fn emit_impl_methods(
     file: &Path,
     ctx: &WalkCtx,
-    source: &str,
+    source: &Source,
     src_lines: &[&str],
     methods: &[ImplMethodInfo<'_>],
     sigs_gate: &BatchKey,
