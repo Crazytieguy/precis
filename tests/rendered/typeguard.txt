@@ -25,27 +25,6 @@ README.rst
   24→   * like ``isinstance()``, but supports arbitrary type annotations (within limits)
   25→   * can be used as a ``cast()`` replacement, but with actual checking of the value
   26→#. Code instrumentation:
-  27→
-  28→   * entire modules, or individual functions (via ``@typechecked``) are recompiled, with
-  29→     type checking code injected into them
-  30→   * automatically checks function arguments, return values and assignments to annotated
-  31→     local variables
-  32→   * for generator functions (regular and async), checks yield and send values
-  33→   * requires the original source code of the instrumented module(s) to be accessible
-  34→
-  35→Two options are provided for code instrumentation:
-  36→
-  37→#. the ``@typechecked`` function:
-  38→
-  39→   * can be applied to functions individually
-  40→#. the import hook (``typeguard.install_import_hook()``):
-  41→
-  42→   * automatically instruments targeted modules on import
-  43→   * no manual code changes required in the target modules
-  44→   * requires the import hook to be installed before the targeted modules are imported
-  45→   * may clash with other import hooks
-  46→
-  47→See the documentation_ for further information.
   …
 docs/
   api.rst
@@ -279,6 +258,26 @@ src/
       …
     _transformer.py
     _utils.py
+      …
+      66→def get_type_name(type_: Any) -> str:
+      …
+      104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
+      …
+      127→def function_name(func: Callable[..., Any]) -> str:
+      …
+      142→def resolve_reference(reference: str) -> Any:
+      …
+      154→def is_method_of(obj: object, cls: type) -> bool:
+      …
+      162→def get_stacklevel() -> int:
+      …
+      172→@final
+      173→class Unset:
+      174→    __slots__ = ()
+      175→
+      176→    def __repr__(self) -> str:
+      177→        return "<unset>"
+      180→unset = Unset()
     py.typed (empty)
 tests/
   __init__.py

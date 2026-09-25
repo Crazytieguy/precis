@@ -166,11 +166,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(source) = ctx.read_source(&file) else {
             continue;
         };
-        let (headline_rows, sections) = rst_readme(&source);
+        let (headline, ranges) = rst_readme(&source);
         let mut headline_emitted: Option<BatchKey> = None;
-        if let Some(content) =
-            single_file_lines_content(&file, &source, FileLines::new(headline_rows))
-        {
+        if let Some(content) = build_headline_content(&file, &source, &headline) {
             let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(Batch {
                 key: key.clone().into(),
@@ -187,25 +185,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
-        for (idx, section) in sections.into_iter().enumerate() {
-            let value = rst_section_value(&file, &section, ctx);
-            let reference = section.is_reference_usage;
-            if let Some(content) =
-                single_file_lines_content(&file, &source, FileLines::new(section.rows))
-            {
-                out.push(Batch {
-                    key: MarkdownKey::Section {
-                        file: file.clone(),
-                        section_index: idx,
-                        keeps_default_concavity: reference,
-                    }
-                    .into(),
-                    predecessor: headline_emitted.clone(),
-                    content,
-                    value,
-                });
-            }
-        }
+        push_sections(
+            &mut out,
+            &file,
+            &source,
+            &ranges,
+            Some(&headline),
+            headline_emitted,
+            ctx,
+        );
     }
 
     if md_files.is_empty() {
@@ -292,35 +280,58 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
-        let mut prev_section_key: Option<BatchKey> = None;
-        for (idx, range) in ranges.iter().enumerate() {
-            if let Some(content) = build_section_content(&file, &source, range, headline.as_ref()) {
-                let key = MarkdownKey::Section {
-                    file: file.clone(),
-                    section_index: idx,
-                    keeps_default_concavity: range.is_reference_usage_section
-                        || range.kind == SectionKind::LedeBody,
-                };
-                // Oversize tails deliver in source order: each chunk
-                // gates on its predecessor chunk.
-                let predecessor = if range.chained_to_previous {
-                    prev_section_key
-                        .clone()
-                        .or_else(|| section_predecessor.clone())
-                } else {
-                    section_predecessor.clone()
-                };
-                prev_section_key = Some(BatchKey::Markdown(key.clone()));
-                out.push(Batch {
-                    key: key.into(),
-                    predecessor,
-                    content,
-                    value: section_value(&file, range, ctx),
-                });
-            }
-        }
+        push_sections(
+            &mut out,
+            &file,
+            &source,
+            &ranges,
+            headline.as_ref(),
+            section_predecessor,
+            ctx,
+        );
     }
     out
+}
+
+/// Emit one `Section` batch per range. Each gates on
+/// `section_predecessor`, except oversize tails, which deliver in source
+/// order behind the chunk before them.
+fn push_sections(
+    out: &mut Vec<Batch<BatchKey>>,
+    file: &Path,
+    source: &Source,
+    ranges: &[SectionRange],
+    headline: Option<&HeadlineSpec>,
+    section_predecessor: Option<BatchKey>,
+    ctx: &WalkCtx,
+) {
+    let mut prev_section_key: Option<BatchKey> = None;
+    for (idx, range) in ranges.iter().enumerate() {
+        if let Some(content) = build_section_content(file, source, range, headline) {
+            let key = MarkdownKey::Section {
+                file: file.to_path_buf(),
+                section_index: idx,
+                keeps_default_concavity: range.is_reference_usage_section
+                    || range.kind == SectionKind::LedeBody,
+            };
+            // Oversize tails deliver in source order: each chunk
+            // gates on its predecessor chunk.
+            let predecessor = if range.chained_to_previous {
+                prev_section_key
+                    .clone()
+                    .or_else(|| section_predecessor.clone())
+            } else {
+                section_predecessor.clone()
+            };
+            prev_section_key = Some(BatchKey::Markdown(key.clone()));
+            out.push(Batch {
+                key: key.into(),
+                predecessor,
+                content,
+                value: section_value(file, range, ctx),
+            });
+        }
+    }
 }
 
 /// True if the outline batch should be emitted — bounded by both row
@@ -678,6 +689,7 @@ fn is_readme(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
+        || is_readme_rst(file)
 }
 
 /// Root `README.rst` is the one `.rst` this walker owns; the plaintext
@@ -711,29 +723,6 @@ fn is_rst_underline(line: &str, min_width: usize) -> bool {
 }
 
 // --- RST body sections ---
-
-/// Max body sections emitted from an RST README — keeps the tail off
-/// the early budget the way `MAX_OUTLINE_HEADINGS` bounds the .md
-/// outline. Generous enough for the typical orientation-bearing
-/// sections (overview, layout, feature lists) at the top of the file.
-const RST_MAX_BODY_SECTIONS: usize = 8;
-
-/// Source-byte cap per RST body section — a directive-heavy or
-/// reference-table section is truncated rather than dumped whole. About
-/// 500 tokens; comparable to the .md `H2_SPLIT_BYTES` ceiling on a
-/// single un-split section.
-const RST_MAX_SECTION_BYTES: usize = 1800;
-
-/// One RST README body section: the heading row + body rows (directive
-/// blocks already stripped), 1-based, plus its post-title index and
-/// whether its title is in the usage/reference vocabulary.
-struct RstSection {
-    rows: Vec<usize>,
-    /// Position among body sections (0-based), used for index decay —
-    /// the title section is excluded so the first body section is 0.
-    index: usize,
-    is_reference_usage: bool,
-}
 
 /// A scanned RST heading: the 1-based row of the title text and the
 /// 1-based row of the underline that closes it. `start_row` is the
@@ -786,78 +775,81 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     headings
 }
 
-/// An RST README split into `ReadmeHeadline` rows and `Section`s. The
-/// headline is the title plus the first prose paragraph under it — or,
-/// when the title carries none, the first prose paragraph of an
-/// intro-titled section (`Overview`, `Introduction`, …). The rest of the
-/// text before the first body heading is section 0, and every later
-/// heading opens one section (at most [`RST_MAX_BODY_SECTIONS`]).
-/// Section rows skip non-content directive blocks and stop at
-/// [`RST_MAX_SECTION_BYTES`].
-fn rst_readme(source: &str) -> (Vec<usize>, Vec<RstSection>) {
+/// An RST README split into its `ReadmeHeadline` and `Section` ranges.
+/// The headline is the title plus the first prose paragraph under it —
+/// or, when the title carries none, the first prose paragraph of an
+/// intro-titled section (`Overview`, `Introduction`, …). The text
+/// before the first body heading is a synthetic intro, and every later
+/// heading opens one section, each through the root-README head-split.
+fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
     let src_lines: Vec<&str> = source.lines().collect();
     let headings = scan_rst_headings(&src_lines);
     let intro_end = headings
         .get(1)
         .map_or(src_lines.len(), |next| next.start_row - 1);
-    let mut headline = Vec::new();
+    let mut covered_rows = BTreeSet::new();
     let mut intro_start = 1;
     if let Some(title) = headings.first() {
-        headline.extend(title.start_row..=title.underline_row);
+        covered_rows.extend(title.start_row..=title.underline_row);
         intro_start = title.underline_row + 1;
     }
+    let section_end = |i: usize| {
+        headings
+            .get(i + 1)
+            .map_or(src_lines.len(), |next| next.start_row - 1)
+    };
     let intro = rst_content_rows(&src_lines, intro_start, intro_end);
-    let body: Vec<(usize, &RstHeading, Vec<usize>)> = headings
-        .iter()
-        .enumerate()
-        .skip(1)
-        .map(|(i, heading)| {
-            let end_row = headings
-                .get(i + 1)
-                .map_or(src_lines.len(), |next| next.start_row - 1);
-            (
-                i - 1,
-                heading,
-                rst_content_rows(&src_lines, heading.title_row, end_row),
-            )
-        })
-        .collect();
-    let mut sections = Vec::new();
     if let Some(lede) = rst_lede(&src_lines, &intro) {
-        headline.extend(&intro[lede.clone()]);
-        let rest = cap_rst_rows(&src_lines, &intro[lede.end..]);
-        if !rest.is_empty() {
-            sections.push(RstSection {
-                rows: rest,
-                index: 0,
-                is_reference_usage: false,
-            });
-        }
-    } else if let Some((rows, lede)) = body.iter().find_map(|(_, heading, rows)| {
-        let title = title_core(src_lines[heading.title_row - 1]);
-        matches!(
+        covered_rows.extend(&intro[lede]);
+    } else if let Some((rows, lede)) = headings.iter().enumerate().skip(1).find_map(|(i, h)| {
+        let title = title_core(src_lines[h.title_row - 1]);
+        if !matches!(
             title.as_str(),
             "overview" | "introduction" | "about" | "summary"
-        )
-        .then(|| rst_lede(&src_lines, rows).map(|lede| (rows, lede)))
-        .flatten()
-    }) {
-        headline.extend(&rows[lede]);
-    }
-    for (body_idx, heading, rows) in body.into_iter().take(RST_MAX_BODY_SECTIONS) {
-        let rows = cap_rst_rows(&src_lines, &rows);
-        if rows.is_empty() {
-            continue;
+        ) {
+            return None;
         }
-        let title = title_core(src_lines[heading.title_row - 1]);
-        sections.push(RstSection {
-            rows,
-            index: body_idx,
-            is_reference_usage: is_canonical_usage_title_core(&title)
-                || is_reference_usage_title_core(&title),
-        });
+        let rows = rst_content_rows(&src_lines, h.title_row, section_end(i));
+        rst_lede(&src_lines, &rows).map(|lede| (rows, lede))
+    }) {
+        covered_rows.extend(&rows[lede]);
     }
-    (headline, sections)
+    let mut ranges = Vec::new();
+    let intro_range = SectionRange {
+        start: intro_start,
+        end: intro_end,
+        kind: SectionKind::Whole,
+        parent_index: 0,
+        synthetic_intro_present: true,
+        is_reference_usage_section: false,
+        chained_to_previous: false,
+    };
+    if intro_start <= intro_end {
+        push_whole_or_head_split(&mut ranges, &src_lines, intro_range, true);
+    }
+    for (i, heading) in headings.iter().enumerate().skip(1) {
+        let title = title_core(src_lines[heading.title_row - 1]);
+        push_whole_or_head_split(
+            &mut ranges,
+            &src_lines,
+            SectionRange {
+                start: heading.title_row,
+                end: section_end(i),
+                parent_index: i,
+                is_reference_usage_section: is_canonical_usage_title_core(&title)
+                    || is_reference_usage_title_core(&title),
+                ..intro_range
+            },
+            true,
+        );
+    }
+    (
+        HeadlineSpec {
+            covered_rows,
+            truncate: None,
+        },
+        ranges,
+    )
 }
 
 /// Index range in `rows` of the first prose paragraph: the first prose
@@ -874,11 +866,8 @@ fn rst_lede(src_lines: &[&str], rows: &[usize]) -> Option<std::ops::Range<usize>
     Some(start..start + len)
 }
 
-/// Non-blank rows (1-based) of `[start, end]`, skipping non-content
-/// `.. directive::` blocks (figure / image / raw / toctree /
-/// substitution / hyperlink-target comments) and their indented
-/// continuations. Content directives (`code-block`, `literalinclude`,
-/// …) are kept — their indented body is the example the NS wants.
+/// Non-blank rows (1-based) of `[start, end]` outside `.. directive::`
+/// blocks and their indented continuations — where a lede can sit.
 fn rst_content_rows(src_lines: &[&str], start: usize, end: usize) -> Vec<usize> {
     let mut rows = Vec::new();
     let mut directive_indent: Option<usize> = None;
@@ -893,46 +882,13 @@ fn rst_content_rows(src_lines: &[&str], start: usize, end: usize) -> Vec<usize> 
             continue;
         }
         directive_indent = None;
-        if trimmed.starts_with("..") && !is_rst_content_directive(trimmed) {
+        if trimmed.starts_with("..") {
             directive_indent = Some(indent);
             continue;
         }
         rows.push(row);
     }
     rows
-}
-
-/// Prefix of `rows` within [`RST_MAX_SECTION_BYTES`].
-fn cap_rst_rows(src_lines: &[&str], rows: &[usize]) -> Vec<usize> {
-    let mut bytes = 0usize;
-    rows.iter()
-        .copied()
-        .take_while(|&row| {
-            let fits = bytes < RST_MAX_SECTION_BYTES;
-            bytes += src_lines[row - 1].len();
-            fits
-        })
-        .collect()
-}
-
-/// True iff `trimmed` (a line already known to start with `..`) opens a
-/// content-bearing directive whose indented body is substantive (code /
-/// included source / literal blocks). These are kept; all other
-/// directives (figure, image, raw, toctree, `.. _ref:` targets,
-/// `.. |sub|` substitutions, plain `..` comments) are stripped.
-fn is_rst_content_directive(trimmed: &str) -> bool {
-    let Some(rest) = trimmed.strip_prefix("..") else {
-        return false;
-    };
-    let rest = rest.trim_start();
-    let name: String = rest
-        .chars()
-        .take_while(|c| c.is_ascii_alphanumeric() || *c == '-')
-        .collect();
-    matches!(
-        name.as_str(),
-        "code" | "code-block" | "sourcecode" | "literalinclude" | "parsed-literal"
-    )
 }
 
 /// Lowercased leading alphanumeric/whitespace run of a heading title.
@@ -944,20 +900,6 @@ fn title_core(title: &str) -> String {
         .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
         .collect();
     core.trim().to_string()
-}
-
-/// Value for an RST README body section — the .md
-/// [`readme_section_value`] computed from the RST section's index and
-/// title class. RST has no synthetic-intro wrap, so the first body
-/// section is index 0 directly.
-fn rst_section_value(file: &Path, section: &RstSection, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
-        * index_decay(section.index, 0.15, 0.7)
-        * if section.is_reference_usage {
-            REFERENCE_USAGE_SECTION_FACTOR
-        } else {
-            1.0
-        }
 }
 
 // --- headline spec + span construction ---
@@ -3766,10 +3708,10 @@ Details prose paragraph one.
         // title + Overview + Details
         assert_eq!(headings.len(), 3);
         let sections = rst_readme(src).1;
-        assert_eq!(sections.len(), 2, "Overview + Details");
+        assert_eq!(sections.len(), 3, "intro + Overview + Details");
         for section in &sections {
-            let own_start = section.rows.first().copied();
-            for &row in &section.rows {
+            let own_start = Some(section.start);
+            for row in section.start..=section.end {
                 // A section legitimately starts at its own overline row;
                 // it must not contain any *other* heading's overline row.
                 let foreign_overline = headings
