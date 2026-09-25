@@ -1641,13 +1641,24 @@ fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
         || is_table_of_contents(block, source)
 }
 
-/// A list whose every line links into the document (`[Install](#install)`).
+/// A list whose every item is a bare in-document link (`- [Install](#install)`).
 fn is_table_of_contents(block: Node, source: &str) -> bool {
     block.kind() == "list"
         && source[block.start_byte()..block.end_byte()]
             .lines()
             .filter(|line| !line.trim().is_empty())
-            .all(|line| line.contains("](#"))
+            .all(|line| {
+                line.trim()
+                    .trim_start_matches(|c: char| c.is_ascii_digit())
+                    .trim_start_matches(['-', '*', '+', '.', ')'])
+                    .trim_start()
+                    .strip_prefix('[')
+                    .and_then(|link| link.split_once("](#"))
+                    .is_some_and(|(text, target)| {
+                        !text.contains(']')
+                            && target.strip_suffix(')').is_some_and(|t| !t.contains(')'))
+                    })
+            })
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -1723,6 +1734,18 @@ mod tests {
         let spec = headline_rows(&tree, source).expect("headline");
         assert!(spec.contains(&5), "lede row in headline");
         assert_eq!(prelude_remainder_rows(&tree, source, &spec), vec![9]);
+    }
+
+    #[test]
+    fn markdown_table_of_contents_is_bare_section_links_only() {
+        let toc = "- [Install](#install)\n  - [From source](#from-source)\n1. [Usage](#usage)\n";
+        let features =
+            "- **Fast** — see [benchmarks](#benchmarks)\n- **Tiny** — see [size](#size)\n";
+        for (source, expected) in [(toc, true), (features, false)] {
+            let tree = parse(source);
+            let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
+            assert_eq!(is_table_of_contents(block, source), expected, "{source}");
+        }
     }
 
     /// A badge wall written as raw HTML inside a markdown paragraph is
