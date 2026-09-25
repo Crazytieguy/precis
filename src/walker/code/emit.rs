@@ -83,6 +83,7 @@ impl Emitter<'_> {
                 .iter()
                 .map(|decl| Item::new(decl.name_rows.clone())),
         );
+        roster.sort_by_key(|item| item.rows.first().copied());
         let entries: usize = roster.iter().map(|item| item.rows.len()).sum();
         let names_value = self.file_prior * (entries as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
         self.part(names, &roster, None, names_value);
@@ -460,6 +461,36 @@ mod tests {
             assert_eq!(pair[1].1.as_ref(), Some(&pair[0].0));
             assert_eq!(pair[1].0.sub, pair[0].0.sub + 1);
         }
+    }
+
+    /// The roster lists in source order, so an oversize trailing re-export
+    /// block chunks after the declarations named before it instead of
+    /// gating them.
+    #[test]
+    fn emit_roster_keeps_source_order_ahead_of_a_trailing_reexport_block() {
+        let decls = (1..=60).map(|row| decl(row, vec![row], Shape::Whole));
+        let batches = emit(
+            300,
+            FileModel {
+                reexports: vec![rows(61..=300)],
+                decls: decls.collect(),
+                ..FileModel::default()
+            },
+        );
+        let names: Vec<_> = batches
+            .iter()
+            .filter(|(key, _, _)| key.rung == Rung::Names)
+            .collect();
+        assert!(names.len() > 1);
+        assert_eq!(names[0].1, None);
+        assert_eq!(names[0].2.first(), Some(&1));
+        let (last, earlier) = names.split_last().unwrap();
+        assert_eq!(last.2.last(), Some(&300));
+        assert!(
+            earlier
+                .iter()
+                .all(|chunk| chunk.2.iter().all(|&row| row <= 60))
+        );
     }
 
     /// A member hangs under the container chunk that lists its name row;

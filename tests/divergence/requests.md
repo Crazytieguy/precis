@@ -1,4 +1,4 @@
-Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.725/0.657/0.715/0.603/0.621/0.597
+Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.721/0.657/0.715/0.603/0.621/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,11 +30,11 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 1066 | 41 | Fs::DirListing { dir: .github/workflows } |  |  | 0.758 |
 | walker |  | 1080 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.782 |
 | ns | 1187 |  | 302 | pyproject: build backend, metadata, runtime dependencies | 1.10 |  | 0.712 |
-| walker |  | 1371 | 291 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.723 |
-| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.725 |
-| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.709 |
-| walker |  | 1659 | 288 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.724 |
-| walker |  | 1706 | 47 | Code::CodeKey { rung: Decl, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.724 |
+| walker |  | 1390 | 310 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
+| walker |  | 1437 | 47 | Code::CodeKey { rung: Decl, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.721 |
+| ns | 1458 |  | 271 | `requests/__init__.py`: name → module re-export map | 2.1 |  | 0.715 |
+| ns | 1532 |  | 74 | `api.py`: names of all eight module-level functions | 2.2 |  | 0.699 |
+| walker |  | 1706 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.724 |
 | walker |  | 1769 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.724 |
 | ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.677 |
 | walker |  | 1910 | 141 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.686 |
