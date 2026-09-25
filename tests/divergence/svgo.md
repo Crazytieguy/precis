@@ -1,4 +1,4 @@
-Score(3000)=0.667 I=0.859 C=0.519 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.626/0.715/0.691/0.667/0.524/0.534/0.551
+Score(3000)=0.642 I=0.846 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.626/0.715/0.691/0.642/0.524/0.534/0.551
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,37 +44,37 @@ Score(3000)=0.667 I=0.859 C=0.519 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 2017 | 227 | Json::Entry { file: package.json } |  |  | 0.691 |
 | walker |  | 2066 | 49 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.691 |
 | walker |  | 2073 | 7 | Code::CodeKey { rung: Names, file: lib/types.js, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |
-| walker |  | 2346 | 273 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.693 |
-| walker |  | 2355 | 9 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 5, sub: 0, line: 108 } |  |  | 0.693 |
-| walker |  | 2377 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 12, sub: 0, line: 175 } |  |  | 0.693 |
-| walker |  | 2399 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 14, sub: 0, line: 185 } |  |  | 0.693 |
-| walker |  | 2422 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 13, sub: 0, line: 180 } |  |  | 0.694 |
-| ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.656 |
-| walker |  | 2446 | 24 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 2, sub: 0, line: 67 } |  |  | 0.656 |
-| walker |  | 2470 | 24 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 17, sub: 0, line: 205 } |  |  | 0.656 |
-| walker |  | 2501 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 6, sub: 0, line: 111 } |  |  | 0.656 |
-| walker |  | 2532 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 11, sub: 0, line: 169 } |  |  | 0.657 |
-| walker |  | 2570 | 38 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 9, sub: 0, line: 155 } |  |  | 0.657 |
-| walker |  | 2615 | 45 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 15, sub: 0, line: 190 } |  |  | 0.657 |
-| walker |  | 2661 | 46 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 10, sub: 0, line: 161 } |  |  | 0.658 |
-| ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.676 |
-| walker |  | 2714 | 53 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 8, sub: 0, line: 133 } |  |  | 0.676 |
-| ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.666 |
-| walker |  | 2774 | 60 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 16, sub: 0, line: 197 } |  |  | 0.667 |
-| walker |  | 2857 | 83 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 4, sub: 0, line: 100 } |  |  | 0.667 |
-| walker |  | 3013 | 156 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 7, sub: 0, line: 117 } |  |  | 0.667 |
-| ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.618 |
-| ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.608 |
-| walker |  | 3401 | 388 | Fs::DirListing { dir: docs/04-plugins } |  |  | 0.608 |
-| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.588 |
-| walker |  | 3458 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.588 |
+| ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.631 |
+| walker |  | 2461 | 388 | Fs::DirListing { dir: docs/04-plugins } |  |  | 0.631 |
+| walker |  | 2518 | 57 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.631 |
+| ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.651 |
+| ns | 2755 |  | 64 | Version constant | 1.14 |  | 0.642 |
+| walker |  | 2899 | 381 | Json::Scripts { file: package.json } |  |  | 0.642 |
+| walker |  | 2905 | 6 | Fs::DirListing { dir: .yarn/plugins } |  |  | 0.642 |
+| walker |  | 3034 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.642 |
+| ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.595 |
+| ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.585 |
+| walker |  | 3307 | 273 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
+| walker |  | 3316 | 9 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 5, sub: 0, line: 108 } |  |  | 0.605 |
+| walker |  | 3338 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 12, sub: 0, line: 175 } |  |  | 0.605 |
+| walker |  | 3360 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 14, sub: 0, line: 185 } |  |  | 0.605 |
+| walker |  | 3383 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 13, sub: 0, line: 180 } |  |  | 0.606 |
+| walker |  | 3407 | 24 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 2, sub: 0, line: 67 } |  |  | 0.606 |
+| walker |  | 3431 | 24 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 17, sub: 0, line: 205 } |  |  | 0.606 |
+| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.586 |
+| walker |  | 3462 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 6, sub: 0, line: 111 } |  |  | 0.586 |
+| walker |  | 3493 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 11, sub: 0, line: 169 } |  |  | 0.587 |
+| walker |  | 3531 | 38 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 9, sub: 0, line: 155 } |  |  | 0.587 |
+| walker |  | 3576 | 45 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 15, sub: 0, line: 190 } |  |  | 0.587 |
+| walker |  | 3622 | 46 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 10, sub: 0, line: 161 } |  |  | 0.588 |
 | ns | 3669 |  | 221 | createPreset -- how a preset validates and forwards overrides | 2.4 |  | 0.570 |
-| walker |  | 3748 | 290 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 3, sub: 0, line: 71 } |  |  | 0.570 |
-| ns | 3956 |  | 287 | visit() -- the AST traversal contract | 2.5 |  | 0.549 |
-| walker |  | 4129 | 381 | Json::Scripts { file: package.json } |  |  | 0.550 |
-| walker |  | 4135 | 6 | Fs::DirListing { dir: .yarn/plugins } |  |  | 0.550 |
+| walker |  | 3675 | 53 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 8, sub: 0, line: 133 } |  |  | 0.570 |
+| walker |  | 3735 | 60 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 16, sub: 0, line: 197 } |  |  | 0.571 |
+| walker |  | 3818 | 83 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 4, sub: 0, line: 100 } |  |  | 0.571 |
+| ns | 3956 |  | 287 | visit() -- the AST traversal contract | 2.5 |  | 0.550 |
+| walker |  | 3974 | 156 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 7, sub: 0, line: 117 } |  |  | 0.550 |
 | ns | 4139 |  | 183 | Anatomy of a plugin module (removeComments as exemplar) | 2.6 |  | 0.538 |
-| walker |  | 4264 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.538 |
+| walker |  | 4264 | 290 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 3, sub: 0, line: 71 } |  |  | 0.538 |
 | ns | 4291 |  | 152 | Overriding and disabling preset-default plugins (README) | 2.7 |  | 0.524 |
 | ns | 4408 |  | 117 | Custom plugin objects (docs/05-plugins-api.mdx) | 2.8 |  | 0.519 |
 | walker |  | 4480 | 216 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.519 |

@@ -69,59 +69,59 @@ Score(3000)=0.498 I=0.742 C=0.334 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 1472 | 50 | Fs::DirListing { dir: examples } |  |  | 0.688 |
 | walker |  | 1495 | 23 | Fs::DirListing { dir: tests/module/esm/tests } |  |  | 0.688 |
 | walker |  | 1514 | 19 | Fs::DirListing { dir: tests/module/esm/tests/helpers } |  |  | 0.688 |
+| walker |  | 1561 | 47 | Markdown::Section { file: lib/core/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.688 |
+| walker |  | 1596 | 35 | Fs::DirListing { dir: tests/smoke/deno/tests } |  |  | 0.688 |
 | ns | 1604 |  | 273 | Verb aliases with a body, and the *Form variants | 2.4 | 2.3 | 0.638 |
-| walker |  | 1765 | 251 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.638 |
+| walker |  | 1634 | 38 | Fs::DirListing { dir: tests/module/cjs/tests } |  |  | 0.638 |
+| walker |  | 1665 | 31 | Fs::DirListing { dir: tests/module/cjs/tests/helpers } |  |  | 0.638 |
+| walker |  | 1707 | 42 | Markdown::HeadingsOutline { file: CONTRIBUTORS.md } |  |  | 0.638 |
+| walker |  | 1727 | 20 | Markdown::Section { file: CONTRIBUTORS.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.638 |
+| walker |  | 1746 | 19 | Markdown::Section { file: CONTRIBUTORS.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.638 |
 | ns | 1778 |  | 174 | dispatchRequest: the adapter hand-off | 2.5 |  | 0.612 |
-| walker |  | 1782 | 17 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.612 |
-| walker |  | 1820 | 38 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 5, sub: 0, line: 16 } |  |  | 0.612 |
-| walker |  | 1860 | 40 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 4, sub: 0, line: 10 } |  |  | 0.612 |
-| walker |  | 1900 | 40 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 54, sub: 0, line: 131 } |  |  | 0.612 |
+| walker |  | 1822 | 76 | Markdown::Section { file: MIGRATION_GUIDE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.612 |
 | ns | 1942 |  | 164 | settle(): status → resolve or AxiosError | 2.6 |  | 0.592 |
-| walker |  | 1947 | 47 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 52, sub: 0, line: 122 } |  |  | 0.592 |
-| walker |  | 2002 | 55 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 48, sub: 0, line: 95 } |  |  | 0.592 |
-| walker |  | 2058 | 56 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 50, sub: 0, line: 112 } |  |  | 0.592 |
+| walker |  | 2100 | 278 | Code::CodeKey { rung: Names, file: index.d.cts, decl: 0, sub: 0, line: 0 } |  |  | 0.592 |
 | ns | 2106 |  | 164 | InterceptorManager: complete method set | 2.7 |  | 0.569 |
-| walker |  | 2131 | 73 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 49, sub: 0, line: 103 } |  |  | 0.569 |
-| walker |  | 2178 | 47 | Markdown::Section { file: lib/core/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.569 |
-| walker |  | 2213 | 35 | Fs::DirListing { dir: tests/smoke/deno/tests } |  |  | 0.569 |
-| walker |  | 2251 | 38 | Fs::DirListing { dir: tests/module/cjs/tests } |  |  | 0.569 |
-| walker |  | 2282 | 31 | Fs::DirListing { dir: tests/module/cjs/tests/helpers } |  |  | 0.569 |
-| walker |  | 2324 | 42 | Markdown::HeadingsOutline { file: CONTRIBUTORS.md } |  |  | 0.569 |
-| walker |  | 2344 | 20 | Markdown::Section { file: CONTRIBUTORS.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.569 |
-| walker |  | 2363 | 19 | Markdown::Section { file: CONTRIBUTORS.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.569 |
+| walker |  | 2138 | 38 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 2, sub: 0, line: 7 } |  |  | 0.569 |
+| walker |  | 2179 | 41 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 1, sub: 0, line: 1 } |  |  | 0.569 |
+| walker |  | 2226 | 47 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 6, sub: 0, line: 31 } |  |  | 0.569 |
+| walker |  | 2281 | 55 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 4, sub: 0, line: 14 } |  |  | 0.569 |
+| walker |  | 2357 | 76 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 5, sub: 0, line: 22 } |  |  | 0.569 |
 | ns | 2395 |  | 289 | _request: config normalization and header flattening | 2.8 |  | 0.540 |
-| walker |  | 2439 | 76 | Markdown::Section { file: MIGRATION_GUIDE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.540 |
 | ns | 2696 |  | 301 | Interceptor chain assembly (incl. the legacy ordering flag) | 2.9 |  | 0.515 |
-| walker |  | 2717 | 278 | Code::CodeKey { rung: Names, file: index.d.cts, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
-| walker |  | 2755 | 38 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 2, sub: 0, line: 7 } |  |  | 0.515 |
-| walker |  | 2796 | 41 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 1, sub: 0, line: 1 } |  |  | 0.515 |
-| walker |  | 2843 | 47 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 6, sub: 0, line: 31 } |  |  | 0.515 |
+| walker |  | 2740 | 383 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 50, sub: 0, line: 123 } |  |  | 0.515 |
+| walker |  | 2801 | 61 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 51, sub: 0, line: 124 } |  |  | 0.515 |
 | ns | 2872 |  | 176 | _request: the async promise-chain path | 2.10 | 2.9 | 0.498 |
-| walker |  | 2898 | 55 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 4, sub: 0, line: 14 } |  |  | 0.498 |
-| walker |  | 2974 | 76 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 5, sub: 0, line: 22 } |  |  | 0.498 |
+| walker |  | 2880 | 79 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 52, sub: 0, line: 141 } |  |  | 0.498 |
+| walker |  | 3084 | 204 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 0, line: 167 } |  |  | 0.498 |
+| walker |  | 3106 | 22 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 57, sub: 0, line: 175 } |  |  | 0.498 |
+| walker |  | 3137 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 58, sub: 0, line: 178 } |  |  | 0.498 |
 | ns | 3151 |  | 279 | _request: the synchronous fast path | 2.11 | 2.10 | 0.473 |
-| walker |  | 3357 | 383 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 50, sub: 0, line: 123 } |  |  | 0.473 |
+| walker |  | 3168 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 59, sub: 0, line: 182 } |  |  | 0.473 |
+| walker |  | 3201 | 33 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 60, sub: 0, line: 186 } |  |  | 0.473 |
 | ns | 3392 |  | 241 | transformData and buildFullPath | 2.12 |  | 0.459 |
-| walker |  | 3418 | 61 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 51, sub: 0, line: 124 } |  |  | 0.459 |
+| walker |  | 3402 | 201 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 1, line: 167 } |  |  | 0.459 |
+| walker |  | 3433 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 61, sub: 0, line: 190 } |  |  | 0.459 |
 | ns | 3455 |  | 63 | The defaults object: transitional, adapter preference, transformers | 3.1 |  | 0.454 |
-| walker |  | 3497 | 79 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 52, sub: 0, line: 141 } |  |  | 0.454 |
-| walker |  | 3701 | 204 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 0, line: 167 } |  |  | 0.454 |
-| walker |  | 3723 | 22 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 57, sub: 0, line: 175 } |  |  | 0.454 |
+| walker |  | 3473 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 62, sub: 0, line: 194 } |  |  | 0.454 |
+| walker |  | 3513 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 63, sub: 0, line: 199 } |  |  | 0.454 |
+| walker |  | 3553 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 64, sub: 0, line: 204 } |  |  | 0.454 |
+| walker |  | 3593 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 65, sub: 0, line: 209 } |  |  | 0.454 |
+| walker |  | 3633 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 66, sub: 0, line: 214 } |  |  | 0.454 |
+| walker |  | 3673 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 67, sub: 0, line: 219 } |  |  | 0.454 |
+| walker |  | 3713 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 68, sub: 0, line: 224 } |  |  | 0.454 |
 | ns | 3737 |  | 282 | Concrete default values | 3.2 | 3.1 | 0.436 |
-| walker |  | 3754 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 58, sub: 0, line: 178 } |  |  | 0.436 |
-| walker |  | 3785 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 59, sub: 0, line: 182 } |  |  | 0.436 |
 | ns | 3797 |  | 60 | transitional flags and their default values | 3.3 |  | 0.433 |
-| walker |  | 3818 | 33 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 60, sub: 0, line: 186 } |  |  | 0.433 |
-| walker |  | 4019 | 201 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 54, sub: 1, line: 167 } |  |  | 0.433 |
-| walker |  | 4050 | 31 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 61, sub: 0, line: 190 } |  |  | 0.433 |
-| walker |  | 4090 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 62, sub: 0, line: 194 } |  |  | 0.433 |
-| walker |  | 4130 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 63, sub: 0, line: 199 } |  |  | 0.433 |
+| walker |  | 3964 | 251 | Code::CodeKey { rung: Names, file: index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.433 |
+| walker |  | 3981 | 17 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.433 |
+| walker |  | 4019 | 38 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 5, sub: 0, line: 16 } |  |  | 0.433 |
+| walker |  | 4059 | 40 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 4, sub: 0, line: 10 } |  |  | 0.433 |
+| walker |  | 4099 | 40 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 54, sub: 0, line: 131 } |  |  | 0.433 |
+| walker |  | 4146 | 47 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 52, sub: 0, line: 122 } |  |  | 0.433 |
 | ns | 4166 |  | 369 | AxiosRequestConfig keys, part 1 of 3 (url … maxRate) | 3.4 |  | 0.417 |
-| walker |  | 4170 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 64, sub: 0, line: 204 } |  |  | 0.417 |
-| walker |  | 4210 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 65, sub: 0, line: 209 } |  |  | 0.417 |
-| walker |  | 4250 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 66, sub: 0, line: 214 } |  |  | 0.417 |
-| walker |  | 4290 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 67, sub: 0, line: 219 } |  |  | 0.417 |
-| walker |  | 4330 | 40 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 68, sub: 0, line: 224 } |  |  | 0.417 |
+| walker |  | 4201 | 55 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 48, sub: 0, line: 95 } |  |  | 0.417 |
+| walker |  | 4257 | 56 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 50, sub: 0, line: 112 } |  |  | 0.417 |
+| walker |  | 4330 | 73 | Code::CodeKey { rung: Decl, file: index.d.ts, decl: 49, sub: 0, line: 103 } |  |  | 0.417 |
 | walker |  | 4334 | 4 | Fs::DirListing { dir: docs/data } |  |  | 0.417 |
 | walker |  | 4338 | 4 | Fs::DirListing { dir: examples/all } |  |  | 0.417 |
 | walker |  | 4342 | 4 | Fs::DirListing { dir: examples/amd } |  |  | 0.417 |

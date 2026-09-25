@@ -186,58 +186,10 @@ src/
   bytecode.h
   compile.c
   compile.h
-    …
-    8→struct inst;
-    9→typedef struct inst inst;
-    10→
-    11→
-    12→typedef struct block {
-    13→  inst* first;
-    14→  inst* last;
-    15→} block;
-    16→
-    17→block gen_location(location, struct locfile*, block);
-    18→
-    19→block gen_noop(void);
-    20→int block_is_noop(block b);
-    21→block gen_op_simple(opcode op);
-    22→block gen_error(jv constant);
-    23→block gen_const(jv constant);
-    24→block gen_const_global(jv constant, const char *name);
-    25→int block_is_const(block b);
-    26→jv_kind block_const_kind(block b);
-    27→jv block_const(block b);
-    28→block gen_op_target(opcode op, block target);
-    29→block gen_op_unbound(opcode op, const char* name);
-    30→block gen_op_bound(opcode op, block binder);
-    31→block gen_op_var_fresh(opcode op, const char* name);
-    32→block gen_op_pushk_under(jv constant);
-    …
   exec_stack.h
   execute.c
   inject_errors.c
   jq.h
-    …
-    11→enum {
-    12→  JQ_DEBUG_TRACE = 1,
-    13→  JQ_DEBUG_TRACE_DETAIL = 2,
-    14→  JQ_DEBUG_TRACE_ALL = JQ_DEBUG_TRACE | JQ_DEBUG_TRACE_DETAIL,
-    15→};
-    17→typedef struct jq_state jq_state;
-    18→typedef void (*jq_msg_cb)(void *, jv);
-    19→
-    20→jq_state *jq_init(void);
-    21→void jq_set_error_cb(jq_state *, jq_msg_cb, void *);
-    22→void jq_get_error_cb(jq_state *, jq_msg_cb *, void **);
-    23→void jq_set_nomem_handler(jq_state *, void (*)(void *), void *);
-    24→jv jq_format_error(jv msg);
-    25→void jq_report_error(jq_state *, jv);
-    26→int jq_compile(jq_state *, const char*);
-    27→int jq_compile_args(jq_state *, const char*, jv);
-    28→void jq_dump_disassembly(jq_state *, int);
-    29→void jq_start(jq_state *, jv value, int);
-    30→jv jq_next(jq_state *);
-    …
   jq_parser.h
   jq_test.c
   jv.c
@@ -315,6 +267,59 @@ src/
     145→#define INCLUDE 273
     146→#define IF 274
     147→#define THEN 275
+    148→#define ELSE 276
+    149→#define ELSE_IF 277
+    150→#define REDUCE 278
+    151→#define FOREACH 279
+    152→#define END 280
+    153→#define AND 281
+    154→#define OR 282
+    155→#define TRY 283
+    156→#define CATCH 284
+    157→#define LABEL 285
+    158→#define BREAK 286
+    159→#define LOC 287
+    160→#define SETPIPE 288
+    161→#define SETPLUS 289
+    162→#define SETMINUS 290
+    163→#define SETMULT 291
+    164→#define SETDIV 292
+    165→#define SETDEFINEDOR 293
+    166→#define LESSEQ 294
+    167→#define GREATEREQ 295
+    168→#define ALTERNATION 296
+    169→#define QQSTRING_START 297
+    170→#define QQSTRING_TEXT 298
+    171→#define QQSTRING_INTERP_START 299
+    172→#define QQSTRING_INTERP_END 300
+    173→#define QQSTRING_END 301
+    174→#define FUNCDEF 302
+    175→#define NONOPT 303
+    …
+    178→#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+    179→union YYSTYPE
+    180→{
+    181→#line 32 "src/parser.y"
+    182→
+    183→  jv literal;
+    184→  block blk;
+    185→
+    186→#line 187 "src/parser.h"
+    187→
+    188→};
+    189→typedef union YYSTYPE YYSTYPE;
+    190→# define YYSTYPE_IS_TRIVIAL 1
+    191→# define YYSTYPE_IS_DECLARED 1
+    192→#endif
+    …
+    195→#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
+    196→typedef struct YYLTYPE YYLTYPE;
+    197→struct YYLTYPE
+    …
+    204→# define YYLTYPE_IS_DECLARED 1
+    205→# define YYLTYPE_IS_TRIVIAL 1
+    206→#endif
+    211→int yyparse (block* answer, int* errors, struct locfile* locations, struct lexer_param* lexer_param_ptr);
     …
   parser.y
   util.c

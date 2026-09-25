@@ -1,4 +1,4 @@
-Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.232/0.194/0.657/0.797/0.692/0.617/0.603
+Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.393/0.676/0.657/0.797/0.692/0.617/0.603
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -8,31 +8,31 @@ Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 148 | 117 | Plaintext::Whole { file: Makefile } |  |  | 0.360 |
 | ns | 251 |  | 126 | The header-before-the-pointer design + ASCII layout diagram | 1.3 |  | 0.275 |
 | walker |  | 257 | 109 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.288 |
+| walker |  | 290 | 33 | Code::CodeKey { rung: Names, file: sdsalloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.289 |
+| walker |  | 348 | 58 | Code::CodeKey { rung: Names, file: testhelp.h, decl: 0, sub: 0, line: 0 } |  |  | 0.289 |
 | ns | 365 |  | 114 | sds.h preamble: include guard, SDS_MAX_PREALLOC, SDS_NOINIT, `typedef char *sds` | 1.4 |  | 0.232 |
-| walker |  | 521 | 264 | Code::CodeKey { rung: Names, file: sds.h, decl: 0, sub: 0, line: 0 } |  |  | 0.260 |
-| ns | 533 |  | 168 | README headings, part 1: manual chapters through Error handling | 1.5 |  | 0.206 |
-| walker |  | 558 | 37 | Code::CodeKey { rung: Decl, file: sds.h, decl: 4, sub: 0, line: 47 } |  |  | 0.207 |
-| walker |  | 623 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 5, sub: 0, line: 51 } |  |  | 0.211 |
-| ns | 639 |  | 106 | README headings, part 2: internals chapter + back matter (696-911) | 1.6 | 1.5 | 0.192 |
-| walker |  | 688 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 6, sub: 0, line: 57 } |  |  | 0.194 |
-| walker |  | 753 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 7, sub: 0, line: 63 } |  |  | 0.197 |
-| ns | 756 |  | 117 | The complete Makefile (build + run the in-file unit tests) | 1.7 |  | 0.243 |
-| walker |  | 818 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 8, sub: 0, line: 69 } |  |  | 0.248 |
-| ns | 850 |  | 94 | README: embedding SDS into a project (which three files to copy) | 1.8 |  | 0.228 |
-| walker |  | 859 | 41 | Code::CodeKey { rung: Doc, file: sds.h, decl: 4, sub: 0, line: 47 } |  |  | 0.231 |
-| walker |  | 892 | 33 | Code::CodeKey { rung: Names, file: sdsalloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.231 |
-| walker |  | 950 | 58 | Code::CodeKey { rung: Names, file: testhelp.h, decl: 0, sub: 0, line: 0 } |  |  | 0.232 |
-| walker |  | 1009 | 59 | Code::CodeKey { rung: Decl, file: testhelp.h, decl: 3, sub: 0, line: 44 } |  |  | 0.232 |
-| ns | 1047 |  | 197 | sds.h prototypes: creation, destruction, growth, concat, copy (218-229) | 2.1 |  | 0.212 |
-| walker |  | 1108 | 99 | Code::CodeKey { rung: Decl, file: testhelp.h, decl: 4, sub: 0, line: 48 } |  |  | 0.214 |
-| ns | 1192 |  | 145 | All six `static inline` accessors in sds.h (signature lines only) | 2.2 |  | 0.205 |
-| ns | 1324 |  | 132 | sds.h prototypes: the printf-family, incl. the __GNUC__ format attribute (230-238) | 2.3 | 2.1 | 0.194 |
-| ns | 1501 |  | 177 | sds.h prototypes: trim/range/inspect/tokenize (239-248) | 2.4 | 2.3 | 0.183 |
-| walker |  | 1507 | 399 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.341 |
-| ns | 1621 |  | 120 | sds.h prototypes: repr/splitargs/mapchars/join (249-253) | 2.5 | 2.4 | 0.331 |
-| walker |  | 1629 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.331 |
-| ns | 1716 |  | 95 | sds.h low-level API block (255-260) | 2.6 | 2.5 | 0.321 |
-| walker |  | 1847 | 218 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.627 |
+| walker |  | 407 | 59 | Code::CodeKey { rung: Decl, file: testhelp.h, decl: 3, sub: 0, line: 44 } |  |  | 0.233 |
+| walker |  | 506 | 99 | Code::CodeKey { rung: Decl, file: testhelp.h, decl: 4, sub: 0, line: 48 } |  |  | 0.234 |
+| ns | 533 |  | 168 | README headings, part 1: manual chapters through Error handling | 1.5 |  | 0.186 |
+| ns | 639 |  | 106 | README headings, part 2: internals chapter + back matter (696-911) | 1.6 | 1.5 | 0.169 |
+| ns | 756 |  | 117 | The complete Makefile (build + run the in-file unit tests) | 1.7 |  | 0.216 |
+| ns | 850 |  | 94 | README: embedding SDS into a project (which three files to copy) | 1.8 |  | 0.198 |
+| walker |  | 905 | 399 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.393 |
+| walker |  | 1027 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.393 |
+| ns | 1047 |  | 197 | sds.h prototypes: creation, destruction, growth, concat, copy (218-229) | 2.1 |  | 0.360 |
+| ns | 1192 |  | 145 | All six `static inline` accessors in sds.h (signature lines only) | 2.2 |  | 0.345 |
+| walker |  | 1245 | 218 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.715 |
+| ns | 1324 |  | 132 | sds.h prototypes: the printf-family, incl. the __GNUC__ format attribute (230-238) | 2.3 | 2.1 | 0.676 |
+| ns | 1501 |  | 177 | sds.h prototypes: trim/range/inspect/tokenize (239-248) | 2.4 | 2.3 | 0.640 |
+| walker |  | 1509 | 264 | Code::CodeKey { rung: Names, file: sds.h, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
+| walker |  | 1546 | 37 | Code::CodeKey { rung: Decl, file: sds.h, decl: 4, sub: 0, line: 47 } |  |  | 0.654 |
+| walker |  | 1611 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 5, sub: 0, line: 51 } |  |  | 0.656 |
+| ns | 1621 |  | 120 | sds.h prototypes: repr/splitargs/mapchars/join (249-253) | 2.5 | 2.4 | 0.638 |
+| walker |  | 1676 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 6, sub: 0, line: 57 } |  |  | 0.639 |
+| ns | 1716 |  | 95 | sds.h low-level API block (255-260) | 2.6 | 2.5 | 0.620 |
+| walker |  | 1741 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 7, sub: 0, line: 63 } |  |  | 0.622 |
+| walker |  | 1806 | 65 | Code::CodeKey { rung: Decl, file: sds.h, decl: 8, sub: 0, line: 69 } |  |  | 0.625 |
+| walker |  | 1847 | 41 | Code::CodeKey { rung: Doc, file: sds.h, decl: 4, sub: 0, line: 47 } |  |  | 0.627 |
 | ns | 1864 |  | 148 | sds.h allocator exports + the REDIS_TEST-guarded sdsTest declaration (262-272) | 2.7 | 2.6 | 0.599 |
 | ns | 2045 |  | 181 | sdshdr5 and sdshdr8 struct definitions, with the 'sdshdr5 is never used' note | 3.1 |  | 0.628 |
 | walker |  | 2062 | 215 | Code::CodeKey { rung: Names, file: sds.h, decl: 0, sub: 1, line: 0 } |  |  | 0.657 |

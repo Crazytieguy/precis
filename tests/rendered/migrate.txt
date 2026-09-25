@@ -15,6 +15,16 @@ Dockerfile.circleci
 Dockerfile.github-actions
 FAQ.md
 GETTING_STARTED.md
+  1→# Getting started
+  …
+  6→## Create migrations
+  …
+  22→## Run migrations
+  …
+  37→## Forcing your database version
+  …
+  47→## Further reading:
+  …
 LICENSE
 MIGRATIONS.md
   1→# Migrations
@@ -31,7 +41,13 @@ README.md
   10→# migrate
   11→
   12→__Database migrations written in Go. Use as [CLI](#cli-usage) or import as [library](#use-in-your-go-project).__
-  …
+  14→* Migrate reads migrations from [sources](#migration-sources)
+  15→   and applies them in correct order to a [database](#databases).
+  16→* Drivers are "dumb", migrate glues everything together and makes sure the logic is bulletproof.
+  17→   (Keeps the drivers lightweight, too.)
+  18→* Database drivers don't assume things or try to correct user input. When in doubt, fail.
+  19→
+  20→Forked from [mattes/migrate](https://github.com/mattes/migrate)
   22→## Databases
   …
   48→### Database URLs
@@ -39,11 +55,25 @@ README.md
   69→## Migration Sources
   …
   84→## CLI usage
-  …
+  85→
+  86→* Simple wrapper around this library.
+  87→* Handles ctrl+c (SIGINT) gracefully.
+  88→* No config search paths, no config files, no magic ENV var injections.
+  89→
+  90→[CLI Documentation](cmd/migrate) (includes CLI install instructions)
+  91→
   92→### Basic usage
-  …
+  93→
+  94→```bash
+  95→$ migrate -source file://path/to/migrations -database postgres://localhost:5432/database up 2
+  96→```
+  97→
   98→### Docker usage
-  …
+  99→
+  100→```bash
+  101→$ docker run -v {{ migration dir }}:/migrations --network host migrate/migrate
+  102→    -path=/migrations/ -database postgres://localhost:5432/database up 2
+  103→```
   105→## Use in your Go project
   …
   152→## Getting started
@@ -143,6 +173,14 @@ database/
   parse_test.go
   pgx/
     README.md
+      1→# pgx
+      2→
+      3→This package is for [pgx/v4](https://pkg.go.dev/github.com/jackc/pgx/v4). A backend for the newer [pgx/v5](https://pkg.go.dev/github.com/jackc/pgx/v5) is [also available](v5).
+      …
+      30→## Upgrading from v1
+      …
+      38→## Multi-statement mode
+      …
     examples/
     pgx.go
     pgx_test.go
@@ -175,10 +213,26 @@ database/
     README.md (empty)
   snowflake/
     README.md
+      1→# Snowflake
+      2→
+      3→`snowflake://user:password@accountname/schema/dbname?query`
+      4→
+      5→| URL Query  | WithInstance Config | Description |
+      6→|------------|---------------------|-------------|
+      7→| `x-migrations-table` | `MigrationsTable` | Name of the migrations table |
+      9→Snowflake is PostgreSQL compatible but has some specific features (or lack thereof) that require slightly different behavior.
+      …
     snowflake.go
   spanner/
     README.md
       1→# Google Cloud Spanner
+      3→## Usage
+      …
+      33→## DDL with comments
+      …
+      38→## Multiple statements
+      …
+      42→## Testing
       …
     examples/
     spanner.go
@@ -248,61 +302,6 @@ migrate.go
   2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
   3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
   4→// in this package.
-  …
-  24→var DefaultPrefetchMigrations = uint(10)
-  26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
-  27→var DefaultLockTimeout = 15 * time.Second
-  29→var (
-  30→	ErrNoChange       = errors.New("no change")
-  31→	ErrNilVersion     = errors.New("no migration")
-  32→	ErrInvalidVersion = errors.New("version must be >= -1")
-  33→	ErrLocked         = errors.New("database locked")
-  34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
-  35→)
-  37→// ErrShortLimit is an error returned when not enough migrations
-  38→// can be returned by a source for a given limit.
-  39→type ErrShortLimit struct {
-  40→	Short uint
-  41→}
-  43→// Error implements the error interface.
-  44→func (e ErrShortLimit) Error() string {
-  …
-  48→type ErrDirty struct {
-  49→	Version int
-  50→}
-  52→func (e ErrDirty) Error() string {
-  …
-  56→type Migrate struct {
-  57→	sourceName         string
-  58→	sourceDrv          source.Driver
-  59→	databaseDriverName string
-  60→	databaseDrv        database.Driver
-  61→
-  62→	// Log accepts a Logger interface
-  63→	Log Logger
-  64→
-  65→	// GracefulStop accepts `true` and will stop executing migrations
-  66→	// as soon as possible at a safe break point, so that the database
-  67→	// is not corrupted.
-  68→	GracefulStop chan bool
-  69→	isLockedMu   *sync.Mutex
-  70→
-  71→	isGracefulStop bool
-  72→	isLocked       bool
-  73→
-  74→	// PrefetchMigrations defaults to DefaultPrefetchMigrations,
-  75→	// but can be set per Migrate instance.
-  76→	PrefetchMigrations uint
-  77→
-  78→	// LockTimeout defaults to DefaultLockTimeout,
-  79→	// but can be set per Migrate instance.
-  80→	LockTimeout time.Duration
-  81→}
-  83→// New returns a new Migrate instance from a source URL and a database URL.
-  84→// The URL scheme is defined by each driver.
-  85→func New(sourceURL, databaseURL string) (*Migrate, error) {
-  …
-  119→func NewWithDatabaseInstance(sourceURL string, databaseDriverName string, databaseInstance database.Driver) (*Migrate, error) {
   …
 migrate_test.go
 migration.go

@@ -157,7 +157,6 @@ impl Emitter<'_> {
         let part_cost: usize = costs.iter().sum();
         let ranges = chunk_ranges(&costs);
         let part_value = prior * code_rung_value(head.rung);
-        let head_premium = head.rung == Rung::Names;
         let mut gate = parent.cloned();
         let mut emitted_head = None;
         for (index, range) in ranges.iter().enumerate() {
@@ -176,8 +175,7 @@ impl Emitter<'_> {
                 continue;
             }
             let chunk_cost = costs[range.clone()].iter().sum();
-            let value = part_value
-                * chunk_value_factor(chunk_cost, part_cost, index, ranges.len(), head_premium);
+            let value = part_value * chunk_value_factor(chunk_cost, part_cost, ranges.len());
             self.out.push(Batch {
                 key: BatchKey::Code(key.clone()),
                 predecessor: gate.map(BatchKey::Code),

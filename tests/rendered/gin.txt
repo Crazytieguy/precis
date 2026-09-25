@@ -94,109 +94,11 @@ codec/
     sonic.go
 codecov.yml
 context.go
-  …
-  30→// Content-Type MIME of the most common data formats.
-  31→const (
-  32→	MIMEJSON              = binding.MIMEJSON
-  33→	MIMEHTML              = binding.MIMEHTML
-  34→	MIMEXML               = binding.MIMEXML
-  35→	MIMEXML2              = binding.MIMEXML2
-  36→	MIMEPlain             = binding.MIMEPlain
-  37→	MIMEPOSTForm          = binding.MIMEPOSTForm
-  38→	MIMEMultipartPOSTForm = binding.MIMEMultipartPOSTForm
-  39→	MIMEYAML              = binding.MIMEYAML
-  40→	MIMEYAML2             = binding.MIMEYAML2
-  41→	MIMETOML              = binding.MIMETOML
-  42→	MIMEPROTOBUF          = binding.MIMEPROTOBUF
-  43→	MIMEBSON              = binding.MIMEBSON
-  44→)
-  46→// BodyBytesKey indicates a default body bytes key.
-  47→const BodyBytesKey = "_gin-gonic/gin/bodybyteskey"
-  49→// ContextKey is the key that a Context returns itself for.
-  50→const ContextKey = "_gin-gonic/gin/contextkey"
-  52→type ContextKeyType int
-  53→
-  54→const ContextRequestKey ContextKeyType = 0
-  56→// abortIndex represents a typical value used in abort functions.
-  57→const abortIndex int8 = math.MaxInt8 >> 1
-  …
-  61→type Context struct {
-  62→	writermem responseWriter
-  63→	Request   *http.Request
-  64→	Writer    ResponseWriter
-  65→
-  66→	Params   Params
-  67→	handlers HandlersChain
-  68→	index    int8
-  69→	fullPath string
-  70→
-  71→	engine       *Engine
-  72→	params       *Params
-  73→	skippedNodes *[]skippedNode
-  74→
-  75→	// This mutex protects Keys map.
-  76→	mu sync.RWMutex
-  77→
-  78→	// Keys is a key/value pair exclusively for the context of each request.
-  79→	Keys map[any]any
-  80→
-  81→	// Errors is a list of errors attached to all the handlers/middlewares who used this context.
-  82→	Errors errorMsgs
-  83→
-  84→	// Accepted defines a list of manually accepted formats for content negotiation.
-  85→	Accepted []string
-  86→
-  87→	// queryCache caches the query result from c.Request.URL.Query().
-  88→	queryCache url.Values
-  89→
-  90→	// formCache caches c.Request.PostForm, which contains the parsed form data from POST, PATCH,
-  91→	// or PUT body parameters.
-  92→	formCache url.Values
-  93→
-  94→	// SameSite allows a server to define a cookie attribute making it impossible for
-  95→	// the browser to send this cookie along with cross-site requests.
-  96→	sameSite http.SameSite
-  97→}
-  …
-  103→func (c *Context) reset() {
-  …
-  120→// Copy returns a copy of the current context that can be safely used outside the request's scope.
-  121→// This has to be used when the context has to be passed to a goroutine.
-  122→func (c *Context) Copy() *Context {
-  …
-  147→// HandlerName returns the main handler's name. For example if the handler is "handleGetUsers()",
-  148→// this function will return "main.handleGetUsers".
-  149→func (c *Context) HandlerName() string {
-  …
-  153→// HandlerNames returns a list of all registered handlers for this context in descending order,
-  154→// following the semantics of HandlerName()
-  155→func (c *Context) HandlerNames() []string {
-  …
-  166→// Handler returns the main handler.
-  167→func (c *Context) Handler() HandlerFunc {
-  …
-  177→func (c *Context) FullPath() string {
-  …
-  185→// Next should be used only inside middleware.
-  186→// It executes the pending handlers in the chain inside the calling handler.
-  187→// See example in GitHub.
-  188→func (c *Context) Next() {
-  …
-  198→// IsAborted returns true if the current context was aborted.
-  199→func (c *Context) IsAborted() bool {
-  …
-  207→func (c *Context) Abort() {
-  …
-  211→// AbortWithStatus calls `Abort()` and writes the headers with the specified status code.
-  212→// For example, a failed attempt to authenticate a request could use: context.AbortWithStatus(401).
-  213→func (c *Context) AbortWithStatus(code int) {
-  …
-  219→// AbortWithStatusPureJSON calls `Abort()` and then `PureJSON` internally.
-  220→// This method stops the chain, writes the status code and return a JSON body without escaping.
-  221→// It also sets the Content-Type as "application/json".
-  222→func (c *Context) AbortWithStatusPureJSON(code int, jsonObj any) {
-  …
 context_appengine.go
+  …
+  9→func init() {
+  10→	defaultPlatform = PlatformGoogleAppEngine
+  …
 context_file_test.go
 context_test.go
 debug.go
@@ -281,6 +183,101 @@ gin.go
   86→	// PlatformFlyIO when running on Fly.io. Trust Fly-Client-IP for determining the client's IP
   87→	PlatformFlyIO = "Fly-Client-IP"
   88→)
+  …
+  92→type Engine struct {
+  …
+  191→var _ IRouter = (*Engine)(nil)
+  …
+  202→func New(opts ...OptionFunc) *Engine {
+  …
+  235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
+  236→func Default(opts ...OptionFunc) *Engine {
+  …
+  243→func (engine *Engine) Handler() http.Handler {
+  …
+  252→func (engine *Engine) allocateContext(maxParams uint16) *Context {
+  …
+  258→// Delims sets template left and right delims and returns an Engine instance.
+  259→func (engine *Engine) Delims(left, right string) *Engine {
+  …
+  264→// SecureJsonPrefix sets the secureJSONPrefix used in Context.SecureJSON.
+  265→func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
+  …
+  270→// LoadHTMLGlob loads HTML files identified by glob pattern
+  271→// and associates the result with HTML renderer.
+  272→func (engine *Engine) LoadHTMLGlob(pattern string) {
+  …
+  286→// LoadHTMLFiles loads a slice of HTML files
+  287→// and associates the result with HTML renderer.
+  288→func (engine *Engine) LoadHTMLFiles(files ...string) {
+  …
+  298→// LoadHTMLFS loads an http.FileSystem and a slice of patterns
+  299→// and associates the result with HTML renderer.
+  300→func (engine *Engine) LoadHTMLFS(fs http.FileSystem, patterns ...string) {
+  …
+  311→// SetHTMLTemplate associate a template with HTML renderer.
+  312→func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
+  …
+  320→// SetFuncMap sets the FuncMap used for template.FuncMap.
+  321→func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
+  …
+  325→// NoRoute adds handlers for NoRoute. It returns a 404 code by default.
+  326→func (engine *Engine) NoRoute(handlers ...HandlerFunc) {
+  …
+  331→// NoMethod sets the handlers called when Engine.HandleMethodNotAllowed = true.
+  332→func (engine *Engine) NoMethod(handlers ...HandlerFunc) {
+  …
+  337→// Use attaches a global middleware to the router. i.e. the middleware attached through Use() will be
+  338→// included in the handlers chain for every single request. Even 404, 405, static files...
+  339→// For example, this is the right place for a logger or error management middleware.
+  340→func (engine *Engine) Use(middleware ...HandlerFunc) IRoutes {
+  …
+  347→// With returns an Engine with the configuration set in the OptionFunc.
+  348→func (engine *Engine) With(opts ...OptionFunc) *Engine {
+  …
+  356→func (engine *Engine) rebuild404Handlers() {
+  …
+  360→func (engine *Engine) rebuild405Handlers() {
+  …
+  364→func (engine *Engine) addRoute(method, path string, handlers HandlersChain) {
+  …
+  388→// Routes returns a slice of registered routes, including some useful information, such as:
+  389→// the http method, path, and the handler name.
+  390→func (engine *Engine) Routes() (routes RoutesInfo) {
+  …
+  397→func iterate(path, method string, routes RoutesInfo, root *node) RoutesInfo {
+  …
+  414→func (engine *Engine) prepareTrustedCIDRs() ([]*net.IPNet, error) {
+  …
+  451→func (engine *Engine) SetTrustedProxies(trustedProxies []string) error {
+  …
+  457→func (engine *Engine) isUnsafeTrustedProxies() bool {
+  …
+  461→// parseTrustedProxies parse Engine.trustedProxies to Engine.trustedCIDRs
+  462→func (engine *Engine) parseTrustedProxies() error {
+  …
+  469→func (engine *Engine) isTrustedProxy(ip net.IP) bool {
+  …
+  481→// validateHeader will parse X-Forwarded-For header and return the trusted client IP address
+  482→func (engine *Engine) validateHeader(header string) (clientIP string, valid bool) {
+  …
+  503→// updateRouteTree do update to the route tree recursively
+  504→func updateRouteTree(n *node) {
+  …
+  516→// updateRouteTrees do update to the route trees
+  517→func (engine *Engine) updateRouteTrees() {
+  …
+  525→func parseIP(ip string) net.IP {
+  …
+  537→// Run attaches the router to a http.Server and starts listening and serving HTTP requests.
+  538→// It is a shortcut for http.ListenAndServe(addr, router)
+  539→// Note: this method will block the calling goroutine indefinitely unless an error happens.
+  540→func (engine *Engine) Run(addr ...string) (err error) {
+  …
+  558→// RunTLS attaches the router to a http.Server and starts listening and serving HTTPS (secure) requests.
+  559→// It is a shortcut for http.ListenAndServeTLS(addr, certFile, keyFile, router)
+  560→// Note: this method will block the calling goroutine indefinitely unless an error happens.
+  561→func (engine *Engine) RunTLS(addr, certFile, keyFile string) (err error) {
   …
 ginS/
   README.md

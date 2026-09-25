@@ -1,4 +1,4 @@
-Score(3000)=0.636 I=0.789 C=0.513 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.713/0.714/0.636/0.627/0.532/0.536
+Score(3000)=0.636 I=0.789 C=0.513 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.713/0.714/0.636/0.628/0.532/0.536
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -71,24 +71,24 @@ Score(3000)=0.636 I=0.789 C=0.513 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 3688 | 93 | Json::Whole { file: jsr.json } |  |  | 0.616 |
 | walker |  | 3703 | 15 | Fs::DirListing { dir: examples/one-file-demo } |  |  | 0.631 |
 | ns | 3821 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.615 |
-| walker |  | 3976 | 273 | Code::CodeKey { rung: Names, file: src/patterns.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.632 |
-| walker |  | 4001 | 25 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 4, sub: 0, line: 131 } |  |  | 0.632 |
-| walker |  | 4044 | 43 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 1, sub: 0, line: 81 } |  |  | 0.632 |
-| walker |  | 4093 | 49 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 2, sub: 0, line: 100 } |  |  | 0.632 |
-| ns | 4095 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.617 |
-| walker |  | 4153 | 60 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 5, sub: 0, line: 187 } |  |  | 0.618 |
-| ns | 4249 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.627 |
-| walker |  | 4329 | 176 | Code::CodeKey { rung: Doc, file: src/is-matching.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.632 |
-| ns | 4436 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.618 |
-| walker |  | 4559 | 230 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.621 |
-| ns | 4658 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.605 |
-| walker |  | 4768 | 209 | Code::CodeKey { rung: Doc, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.614 |
-| ns | 4864 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.599 |
-| walker |  | 4976 | 208 | Markdown::Section { file: docs/v3-to-v4-migration-guide.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.599 |
-| ns | 4981 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.589 |
-| walker |  | 5130 | 154 | Json::Whole { file: tsconfig.json } |  |  | 0.590 |
-| ns | 5188 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.578 |
-| walker |  | 5293 | 163 | Code::CodeKey { rung: ModuleDoc, file: src/internals/symbols.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| walker |  | 3879 | 176 | Code::CodeKey { rung: Doc, file: src/is-matching.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.621 |
+| ns | 4095 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.606 |
+| walker |  | 4109 | 230 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.608 |
+| ns | 4249 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.618 |
+| walker |  | 4318 | 209 | Code::CodeKey { rung: Doc, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.628 |
+| ns | 4436 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.614 |
+| walker |  | 4526 | 208 | Markdown::Section { file: docs/v3-to-v4-migration-guide.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.614 |
+| ns | 4658 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.599 |
+| walker |  | 4680 | 154 | Json::Whole { file: tsconfig.json } |  |  | 0.600 |
+| walker |  | 4843 | 163 | Code::CodeKey { rung: ModuleDoc, file: src/internals/symbols.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.600 |
+| ns | 4864 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.584 |
+| ns | 4981 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.575 |
+| walker |  | 5116 | 273 | Code::CodeKey { rung: Names, file: src/patterns.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
+| walker |  | 5141 | 25 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 4, sub: 0, line: 131 } |  |  | 0.590 |
+| walker |  | 5184 | 43 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 1, sub: 0, line: 81 } |  |  | 0.590 |
+| ns | 5188 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.577 |
+| walker |  | 5233 | 49 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 2, sub: 0, line: 100 } |  |  | 0.577 |
+| walker |  | 5293 | 60 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 5, sub: 0, line: 187 } |  |  | 0.578 |
 | ns | 5416 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.561 |
 | walker |  | 5556 | 263 | Code::CodeKey { rung: Names, file: src/patterns.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.575 |
 | walker |  | 5584 | 28 | Code::CodeKey { rung: Decl, file: src/patterns.ts, decl: 8, sub: 0, line: 246 } |  |  | 0.575 |

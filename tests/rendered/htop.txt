@@ -34,48 +34,6 @@ CPUMeter.c
 CPUMeter.h
 CRT.c
 CRT.h
-  …
-  17→#define SCREEN_TAB_MARGIN_LEFT 2
-  18→#define SCREEN_TAB_COLUMN_GAP  1
-  19→
-  20→typedef enum TreeStr_ {
-  21→   TREE_STR_VERT,
-  22→   TREE_STR_RTEE,
-  23→   TREE_STR_BEND,
-  24→   TREE_STR_TEND,
-  25→   TREE_STR_OPEN,
-  26→   TREE_STR_SHUT,
-  27→   TREE_STR_ASC,
-  28→   TREE_STR_DESC,
-  29→   LAST_TREE_STR
-  30→} TreeStr;
-  31→
-  32→typedef enum ColorScheme_ {
-  33→   COLORSCHEME_DEFAULT,
-  34→   COLORSCHEME_MONOCHROME,
-  35→   COLORSCHEME_BLACKONWHITE,
-  36→   COLORSCHEME_LIGHTTERMINAL,
-  37→   COLORSCHEME_MIDNIGHT,
-  38→   COLORSCHEME_BLACKNIGHT,
-  39→   COLORSCHEME_BROKENGRAY,
-  40→   COLORSCHEME_NORD,
-  41→   LAST_COLORSCHEME
-  42→} ColorScheme;
-  43→
-  44→typedef enum ColorElements_ {
-  …
-  162→} ColorElements;
-  …
-  175→#define KEY_WHEELUP    KEY_F(30)
-  176→#define KEY_WHEELDOWN  KEY_F(31)
-  177→#define KEY_RECLICK    KEY_F(32)
-  178→#define KEY_RIGHTCLICK KEY_F(33)
-  179→#define KEY_SHIFT_TAB  KEY_F(34)
-  180→#define KEY_ALT(x)     (KEY_F(64 - 26) + ((x) - 'A'))
-  181→#define KEY_FOCUS_IN   (KEY_MAX + 'I')
-  182→#define KEY_FOCUS_OUT  (KEY_MAX + 'O')
-  183→#define KEY_DEL_MAC    127
-  …
 CategoriesPanel.c
 CategoriesPanel.h
 ChangeLog
@@ -142,6 +100,24 @@ MemorySwapMeter.h
 Meter.c
 Meter.h
 MeterMode.h
+  …
+  11→enum MeterModeId_ {
+  12→   /* Meter mode 0 is reserved */
+  13→   BAR_METERMODE = 1,
+  14→   TEXT_METERMODE,
+  15→   GRAPH_METERMODE,
+  16→   LED_METERMODE,
+  17→   LAST_METERMODE
+  18→};
+  20→typedef unsigned int MeterModeId;
+  21→
+  22→#define METERMODE_DEFAULT_SUPPORTED ( \
+  23→   (1 << BAR_METERMODE) |             \
+  24→   (1 << TEXT_METERMODE) |            \
+  25→   (1 << GRAPH_METERMODE) |           \
+  26→   (1 << LED_METERMODE) |             \
+  27→   0) // Avoids edits when updating
+  …
 MetersPanel.c
 MetersPanel.h
 NEWS
@@ -166,7 +142,15 @@ ProvideTerm.h
 README
 README.md
   1→# [![htop logo](htop-logo.png)](https://htop.dev)
-  …
+  3→[![CI](https://github.com/htop-dev/htop/workflows/CI/badge.svg)](https://github.com/htop-dev/htop/actions)
+  4→[![Coverity Scan Build Status](https://scan.coverity.com/projects/21665/badge.svg)](https://scan.coverity.com/projects/21665)
+  5→[![Mailing List](https://img.shields.io/badge/Mailing%20List-htop-blue.svg)](https://groups.io/g/htop)
+  6→[![IRC #htop](https://img.shields.io/badge/IRC-htop-blue.svg)](https://web.libera.chat/#htop)
+  7→[![GitHub Release](https://img.shields.io/github/release/htop-dev/htop.svg)](https://github.com/htop-dev/htop/releases/latest)
+  8→[![Packaging status](https://repology.org/badge/tiny-repos/htop.svg)](https://repology.org/project/htop/versions)
+  9→[![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2+-blue.svg)](COPYING?raw=true)
+  10→
+  11→![Screenshot of htop](docs/images/screenshot.png?raw=true)
   13→## Introduction
   …
   30→## Usage
@@ -221,34 +205,11 @@ SysArchMeter.h
 TESTPLAN
 Table.c
 Table.h
-  …
-  20→struct Machine_;  // IWYU pragma: keep
-  21→struct Panel_;    // IWYU pragma: keep
-  22→struct Row_;      // IWYU pragma: keep
-  23→
-  24→typedef struct Table_ {
-  …
-  41→} Table;
-  42→
-  43→typedef Table* (*Table_New)(const struct Machine_*);
-  44→typedef void (*Table_ScanPrepare)(Table* this);
-  45→typedef void (*Table_ScanIterate)(Table* this);
-  46→typedef void (*Table_ScanCleanup)(Table* this);
-  47→
-  48→typedef struct TableClass_ {
-  49→   const ObjectClass super;
-  50→   const Table_ScanPrepare prepare;
-  51→   const Table_ScanIterate iterate;
-  52→   const Table_ScanCleanup cleanup;
-  53→} TableClass;
-  54→
-  55→#define As_Table(this_)  ((const TableClass*)((this_)->super.klass))
-  56→
-  57→#define Table_scanPrepare(t_)  (As_Table(t_)->prepare ? (As_Table(t_)->prepare(t_)) : Table_prepareEntries(t_))
-  58→#define Table_scanIterate(t_)  (As_Table(t_)->iterate(t_))  /* mandatory; must have a custom iterate method */
-  …
 TasksMeter.c
 TasksMeter.h
+  …
+  13→extern const MeterClass TasksMeter_class;
+  …
 TraceScreen.c
 TraceScreen.h
 UptimeMeter.c
@@ -391,9 +352,17 @@ netbsd/
     3→
     4→This implementation utilizes kvm_getprocs(3), sysctl(3), etc, eliminating the
     5→need for mount_procfs(8) with Linux compatibility enabled.
-    …
+    7→The implementation was initially based on the OpenBSD support in htop(1).
+    8→
     9→Notes on NetBSD curses
     10→---
+    11→
+    12→NetBSD is one of the last operating systems to use and maintain its own
+    13→implementation of Curses.
+    14→
+    15→htop(1) can be compiled against either ncurses or NetBSD's curses(3).
+    16→By default, htop(1) will use ncurses when it is found, as support for NetBSD's
+    17→curses in htop is limited.
     …
     32→What needs improvement
     33→---

@@ -25,17 +25,17 @@ Score(3000)=0.615 I=0.874 C=0.434 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 808 | 99 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.541 |
 | ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.473 |
 | walker |  | 1033 | 225 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.487 |
+| walker |  | 1071 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.488 |
 | ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.496 |
-| ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.476 |
-| walker |  | 1260 | 227 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| walker |  | 1298 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.477 |
-| ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.437 |
-| walker |  | 1673 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.759 |
-| walker |  | 1737 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.761 |
+| ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.477 |
+| walker |  | 1446 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.828 |
+| ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.759 |
+| walker |  | 1510 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.761 |
 | ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.680 |
 | ns | 2007 |  | 201 | `FastStreamSettings` and `InstrumentsSetupperSettings` mixin lists | 2.4 | 2.1 | 0.637 |
-| ns | 2228 |  | 221 | README Settings section: env sourcing and `ENVIRONMENT_PREFIX` | 2.5 |  | 0.610 |
-| walker |  | 2431 | 694 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.611 |
+| walker |  | 2204 | 694 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.638 |
+| ns | 2228 |  | 221 | README Settings section: env sourcing and `ENVIRONMENT_PREFIX` | 2.5 |  | 0.611 |
+| walker |  | 2431 | 227 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
 | ns | 2478 |  | 250 | `instruments/base.py`: `BaseInstrumentConfig`, `Instrument` header, complete method roster | 3.1 |  | 0.581 |
 | walker |  | 2691 | 260 | Code::CodeKey { rung: Names, file: microbootstrap/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.648 |
 | walker |  | 2703 | 12 | Code::CodeKey { rung: Names, file: microbootstrap/console_writer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |

@@ -90,7 +90,14 @@ README.md
   97→## Sponsors
   …
   152→## See Also
-  …
+  153→
+  154→- [**`sqlite-ecosystem`**](https://github.com/asg017/sqlite-ecosystem), Maybe
+  155→  more 3rd party SQLite extensions I've developed
+  156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
+  157→  embeddings from remote APIs like OpenAI/Nomic/Ollama, meant for testing and
+  158→  SQL scripts
+  159→- [**`sqlite-lembed`**](https://github.com/asg017/sqlite-lembed), Generate text
+  160→  embeddings locally from embedding models in the `.gguf` format
 SECURITY.md
 TODO
   1→- [ ] add `xyz_info` shadow table with version etc.
@@ -120,6 +127,7 @@ benchmarks/
     Cargo.lock
     Cargo.toml
     benches/
+      my_benchmark.rs
     build.rs
     src/
       lib.rs
@@ -248,6 +256,8 @@ tests/
   build.rs
   conftest.py
   correctness/
+    build.py
+    test-correctness.py
   fuzz/
     .gitignore
     Makefile

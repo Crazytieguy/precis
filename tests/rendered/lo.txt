@@ -82,6 +82,25 @@ README.md
   5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
   …
 benchmark/
+  CLAUDE.md
+  core_condition_bench_test.go
+  core_find_bench_test.go
+  core_intersect_bench_test.go
+  core_map_bench_test.go
+  core_math_bench_test.go
+  core_slice_bench_test.go
+  core_string_bench_test.go
+  core_tuples_bench_test.go
+  core_type_manipulation_bench_test.go
+  helpers_test.go
+  it_find_bench_test.go
+  it_helpers_test.go
+  it_map_bench_test.go
+  it_math_bench_test.go
+  it_slice_bench_test.go
+  it_type_manipulation_bench_test.go
+  mutable_slice_bench_test.go
+  parallel_slice_bench_test.go
 channel.go
 channel_test.go
 concurrency.go
@@ -89,12 +108,53 @@ concurrency_test.go
 condition.go
 condition_test.go
 constraints.go
+  …
+  3→// Clonable defines a constraint of types having Clone() T method.
+  4→type Clonable[T any] interface {
+  5→	Clone() T
+  6→}
 docs/
   .gitignore
   CLAUDE.md
   README.md
   data/
   docs/
+    _category_.json
+    about.md
+    contributing.md
+    core/
+      _category_.json
+      channel.md
+      concurrency.md
+      condition.md
+      error-handling.md
+      find.md
+      function.md
+      intersect.md
+      map.md
+      math.md
+      retry.md
+      slice.md
+      string.md
+      time.md
+      tuple.md
+      type.md
+    experimental/
+    getting-started.md
+    glossary.md
+    iter/
+      _category_.json
+      channel.md
+      find.md
+      intersect.md
+      map.md
+      sequence.md
+      slice.md
+      string.md
+      tuple.md
+      type.md
+    mutable/
+    parallel/
   docusaurus.config.ts
   package-lock.json
   package.json
@@ -296,39 +356,5 @@ time_test.go
 tuples.go
 tuples_test.go
 type_manipulation.go
-  …
-  7→func IsNil(x any) bool {
-  …
-  22→func IsNotNil(x any) bool {
-  23→	return !IsNil(x)
-  …
-  26→// ToPtr returns a pointer copy of value.
-  27→// Play: https://go.dev/play/p/P2sD0PMXw4F
-  28→func ToPtr[T any](x T) *T {
-  29→	return &x
-  …
-  32→// Nil returns a nil pointer of type.
-  33→// Play: https://go.dev/play/p/P2sD0PMXw4F
-  34→func Nil[T any]() *T {
-  35→	return nil
-  …
-  41→func EmptyableToPtr[T any](x T) *T {
-  …
-  51→// FromPtr returns the pointer value or empty.
-  52→// Play: https://go.dev/play/p/mhD9CwO3X0m
-  53→func FromPtr[T any](x *T) T {
-  …
-  63→func FromPtrOr[T any](x *T, fallback T) T {
-  …
-  73→func ToSlicePtr[T any](collection []T) []*T {
-  …
-  85→func FromSlicePtr[T any](collection []*T) []T {
-  …
-  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
-  …
-  115→func ToAnySlice[T any](collection []T) []any {
-  …
-  126→func FromAnySlice[T any](in []any) ([]T, bool) {
-  …
 type_manipulation_test.go
 types.go

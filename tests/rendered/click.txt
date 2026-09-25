@@ -4,6 +4,9 @@
 .editorconfig
 .github/
   ISSUE_TEMPLATE/
+    bug-report.md
+    config.yml
+    feature-request.md
   pull_request_template.md
   workflows/
     lock.yaml
@@ -34,7 +37,29 @@ README.md
   17→-   Automatic help page generation
   18→-   Supports lazy loading of subcommands at runtime
   21→## A Simple Example
-  …
+  22→
+  23→```python
+  24→import click
+  25→
+  26→@click.command()
+  27→@click.option("--count", default=1, help="Number of greetings.")
+  28→@click.option("--name", prompt="Your name", help="The person to greet.")
+  29→def hello(count, name):
+  30→    """Simple program that greets NAME for a total of COUNT times."""
+  31→    for _ in range(count):
+  32→        click.echo(f"Hello, {name}!")
+  33→
+  34→if __name__ == '__main__':
+  35→    hello()
+  36→```
+  37→
+  38→```
+  39→$ python hello.py --count=3
+  40→Your name: Click
+  41→Hello, Click!
+  42→Hello, Click!
+  43→Hello, Click!
+  44→```
   47→## Donate
   48→
   49→The Pallets organization develops and supports Click and other popular
@@ -209,30 +234,60 @@ src/
       75→
       76→
       77→def __getattr__(name: str) -> object:
-      …
+      78→    import warnings
+      79→
+      80→    if name == "BaseCommand":
+      81→        from .core import _BaseCommand
+      82→
+      83→        warnings.warn(
+      84→            "'BaseCommand' is deprecated and will be removed in Click 9.0. Use"
+      85→            " 'Command' instead.",
+      86→            DeprecationWarning,
+      87→            stacklevel=2,
+      88→        )
+      89→        return _BaseCommand
+      90→
+      91→    if name == "MultiCommand":
+      92→        from .core import _MultiCommand
+      93→
+      94→        warnings.warn(
+      95→            "'MultiCommand' is deprecated and will be removed in Click 9.0. Use"
+      96→            " 'Group' instead.",
+      97→            DeprecationWarning,
+      98→            stacklevel=2,
+      99→        )
+      100→        return _MultiCommand
+      101→
+      102→    if name == "OptionParser":
+      103→        from .parser import _OptionParser
+      104→
+      105→        warnings.warn(
+      106→            "'OptionParser' is deprecated and will be removed in Click 9.0. The"
+      107→            " old parser is available in 'optparse'.",
+      108→            DeprecationWarning,
+      109→            stacklevel=2,
+      110→        )
+      111→        return _OptionParser
+      112→
+      113→    if name == "__version__":
+      114→        import importlib.metadata
+      115→        import warnings
+      116→
+      117→        warnings.warn(
+      118→            "The '__version__' attribute is deprecated and will be removed in"
+      119→            " Click 9.1. Use feature detection or"
+      120→            " 'importlib.metadata.version(\"click\")' instead.",
+      121→            DeprecationWarning,
+      122→            stacklevel=2,
+      123→        )
+      124→        return importlib.metadata.version("click")
+      125→
+      126→    raise AttributeError(name)
     _compat.py
     _termui_impl.py
     _textwrap.py
     _utils.py
     _winconsole.py
-      …
-      40→c_ssize_p = POINTER(c_ssize_t)
-      41→
-      42→kernel32 = windll.kernel32
-      43→GetStdHandle = kernel32.GetStdHandle
-      44→ReadConsoleW = kernel32.ReadConsoleW
-      45→WriteConsoleW = kernel32.WriteConsoleW
-      46→GetConsoleMode = kernel32.GetConsoleMode
-      47→GetLastError = kernel32.GetLastError
-      48→GetCommandLineW = WINFUNCTYPE(LPWSTR)(("GetCommandLineW", windll.kernel32))
-      49→CommandLineToArgvW = WINFUNCTYPE(POINTER(LPWSTR), LPCWSTR, POINTER(c_int))(
-      50→    ("CommandLineToArgvW", windll.shell32)
-      51→)
-      52→LocalFree = WINFUNCTYPE(c_void_p, c_void_p)(("LocalFree", windll.kernel32))
-      53→
-      54→STDIN_HANDLE = GetStdHandle(-10)
-      55→STDOUT_HANDLE = GetStdHandle(-11)
-      …
     core.py
     decorators.py
     exceptions.py
@@ -244,53 +299,6 @@ src/
     termui.py
     testing.py
     types.py
-      …
-      29→ParamTypeValue = t.TypeVar("ParamTypeValue")
-      30→
-      31→
-      32→class ParamTypeInfoDict(t.TypedDict):
-      33→    param_type: str
-      34→    name: str
-      37→class ParamType(t.Generic[ParamTypeValue], abc.ABC):
-      …
-      173→class CompositeParamType(ParamType[ParamTypeValue]):
-      174→    is_composite = True
-      176→    @property
-      177→    @abc.abstractmethod
-      178→    def arity(self) -> int: ...  # type: ignore[override]
-      181→class FuncParamTypeInfoDict(ParamTypeInfoDict):
-      182→    func: t.Callable[[t.Any], t.Any]
-      185→class FuncParamType(ParamType[ParamTypeValue]):
-      …
-      210→class UnprocessedParamType(ParamType[t.Any]):
-      211→    name = "text"
-      212→
-      213→    def convert(
-      214→        self, value: t.Any, param: Parameter | None, ctx: Context | None
-      215→    ) -> t.Any:
-      …
-      218→    def __repr__(self) -> str:
-      …
-      222→class StringParamType(ParamType[str]):
-      223→    name = "text"
-      224→
-      225→    def convert(
-      226→        self, value: t.Any, param: Parameter | None, ctx: Context | None
-      227→    ) -> str:
-      …
-      244→    def __repr__(self) -> str:
-      …
-      248→class ChoiceInfoDict(ParamTypeInfoDict):
-      249→    choices: cabc.Sequence[t.Any]
-      250→    case_sensitive: bool
-      253→class Choice(ParamType[ParamTypeValue], t.Generic[ParamTypeValue]):
-      …
-      422→class DateTimeInfoDict(ParamTypeInfoDict):
-      423→    formats: cabc.Sequence[str]
-      426→class DateTime(ParamType[datetime]):
-      …
-      495→class _NumberParamTypeBase(ParamType[ParamTypeValue]):
-      …
     utils.py
 tests/
   conftest.py

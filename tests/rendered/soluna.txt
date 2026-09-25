@@ -116,6 +116,24 @@ docs/
   datalist.lua
   file.lua
   font.lua
+    …
+    10→---
+    11→--- Imports a TrueType font
+    12→---
+    13→---@param data string Raw TTF font data
+    14→function font.import(data) end
+    16→---
+    17→--- Gets font ID by name
+    18→---
+    19→---@param name string Font name (empty string for last imported font)
+    20→---@return integer? fontid Font ID, or nil if font not found
+    21→function font.name(name) end
+    23→---
+    24→--- Gets the font system C object
+    25→---
+    26→---@return userdata fontcobj Font system object
+    27→function font.cobj() end
+    …
   font_system.lua
   image.lua
   layout.lua
@@ -214,19 +232,6 @@ src/
   font_define.h
   font_manager.c
   font_manager.h
-    …
-    9→struct font_manager;
-    10→
-    11→size_t font_manager_sizeof();
-    12→void font_manager_init(struct font_manager *, void *L);
-    13→void* font_manager_shutdown(struct font_manager *);
-    14→void font_manager_import(struct font_manager *F, void* fontdata, size_t sz);
-    15→
-    16→int font_manager_addfont_with_family(struct font_manager *F, const char* family);
-    17→void font_manager_fontheight(struct font_manager *F, int fontid, int size, int *ascent, int *descent, int *lineGap);
-    18→int font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize);
-    19→const char* font_manager_glyph(struct font_manager *F, int fontid, int codepoint, int size, struct font_glyph *g, struct font_glyph *og);
-    …
   font_system.c
   gamepad.c
   image.c
@@ -310,7 +315,11 @@ src/
     7→#define INVALID_TEXTUREID 0xffff
     8→
     9→struct sprite_rect {
-    …
+    10→	uint32_t texid;
+    11→	uint32_t off;	// (dx + 0x8000) << (dy + 0x8000)
+    12→	uint32_t u;		// x << 16 | w
+    13→	uint32_t v;		// y << 16 | h
+    14→};
     16→struct sprite_bank {
     17→	int n;
     18→	int cap;

@@ -264,19 +264,14 @@ Score(3000)=0.733 I=0.888 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 8699 | 71 | Json::Scripts { file: packages/prisma/package.json } |  |  | 0.837 |
 | ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.825 |
 | walker |  | 8745 | 46 | Json::Dependencies { file: packages/prisma/package.json } |  |  | 0.825 |
-| ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.827 |
-| walker |  | 9000 | 255 | Code::CodeKey { rung: Names, file: packages/lib/schemaValidation.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
-| walker |  | 9013 | 13 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 3, sub: 0, line: 25 } |  |  | 0.830 |
-| walker |  | 9027 | 14 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 9, sub: 0, line: 115 } |  |  | 0.830 |
-| walker |  | 9042 | 15 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 1, sub: 0, line: 16 } |  |  | 0.830 |
-| walker |  | 9069 | 27 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 2, sub: 0, line: 20 } |  |  | 0.830 |
-| walker |  | 9098 | 29 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 4, sub: 0, line: 29 } |  |  | 0.830 |
-| walker |  | 9152 | 54 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 10, sub: 0, line: 119 } |  |  | 0.830 |
-| ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.825 |
-| ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.816 |
-| walker |  | 9354 | 202 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 15, sub: 0, line: 193 } |  |  | 0.816 |
-| ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.819 |
-| walker |  | 9596 | 242 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 11, sub: 0, line: 125 } |  |  | 0.819 |
-| ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.823 |
-| walker |  | 9870 | 274 | Code::CodeKey { rung: Decl, file: packages/lib/schemaValidation.ts, decl: 8, sub: 0, line: 97 } |  |  | 0.823 |
-| ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.826 |
+| walker |  | 8791 | 46 | Json::Identity { file: apps/mobile/package.json } |  |  | 0.827 |
+| walker |  | 8803 | 12 | Json::Entry { file: apps/mobile/package.json } |  |  | 0.827 |
+| walker |  | 8898 | 95 | Json::Scripts { file: apps/mobile/package.json } |  |  | 0.827 |
+| ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.830 |
+| ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.824 |
+| ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.815 |
+| ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.818 |
+| ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.822 |
+| walker |  | 9717 | 819 | Plaintext::Whole { file: Dockerfile } |  |  | 0.822 |
+| ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.825 |
+| walker |  | 9965 | 248 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.825 |

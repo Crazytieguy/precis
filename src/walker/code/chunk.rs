@@ -10,7 +10,7 @@ use std::ops::Range;
 
 use super::SourceFile;
 use super::model::Item;
-use crate::value::{CODE_NAMES_HEAD_PREMIUM, DEFAULT_CONCAVITY_EXPONENT};
+use crate::value::DEFAULT_CONCAVITY_EXPONENT;
 use crate::walker::budget_chunk_ranges;
 
 /// A part costing more tokens than this is split.
@@ -52,18 +52,10 @@ pub(super) fn chunk_ranges(item_costs: &[usize]) -> Vec<Range<usize>> {
     )
 }
 
-/// Value multiplier for chunk `index` of `chunk_count`, costing
-/// `chunk_cost` of the part's `part_cost`: `share^k` with `k` the
-/// default concavity exponent, so each chunk ranks like the unsplit
-/// part. A split roster's head (`head_premium`)
-/// takes [`CODE_NAMES_HEAD_PREMIUM`], bounded by the unsplit part's value.
-pub(super) fn chunk_value_factor(
-    chunk_cost: usize,
-    part_cost: usize,
-    index: usize,
-    chunk_count: usize,
-    head_premium: bool,
-) -> f64 {
+/// Value multiplier for a chunk costing `chunk_cost` of its part's
+/// `part_cost`: `share^k` with `k` the default concavity exponent, so
+/// each chunk ranks like the unsplit part.
+pub(super) fn chunk_value_factor(chunk_cost: usize, part_cost: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
         return 1.0;
     }
@@ -72,12 +64,7 @@ pub(super) fn chunk_value_factor(
     } else {
         chunk_cost as f64 / part_cost as f64
     };
-    let parity = share.powf(DEFAULT_CONCAVITY_EXPONENT);
-    if head_premium && index == 0 {
-        (parity * CODE_NAMES_HEAD_PREMIUM).min(1.0)
-    } else {
-        parity
-    }
+    share.powf(DEFAULT_CONCAVITY_EXPONENT)
 }
 
 #[cfg(test)]

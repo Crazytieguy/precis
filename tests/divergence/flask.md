@@ -1,4 +1,4 @@
-Score(3000)=0.685 I=0.892 C=0.526 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.793/0.780/0.685/0.581/0.495/0.462
+Score(3000)=0.685 I=0.892 C=0.526 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.716/0.780/0.685/0.581/0.495/0.480
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,23 +27,23 @@ Score(3000)=0.685 I=0.892 C=0.526 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 782 | 38 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.722 |
 | walker |  | 860 | 78 | Fs::DirListing { dir: docs/tutorial } |  |  | 0.722 |
 | ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.672 |
-| walker |  | 1100 | 240 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.778 |
-| ns | 1121 |  | 256 | Public export surface 3/3: all ten signals, template renderers, Request/Response (src/flask/__init__.py:24-39) | 1.8 | 1.7 | 0.710 |
-| walker |  | 1245 | 145 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.720 |
-| walker |  | 1367 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.775 |
-| ns | 1391 |  | 270 | Package identity + runtime dependency stack (pyproject.toml:1-8, 22-34) | 1.9 |  | 0.793 |
-| ns | 1468 |  | 77 | Why src/flask/sansio/ exists (src/flask/sansio/README.md:1-6) | 2.1 |  | 0.773 |
-| walker |  | 1512 | 145 | Fs::DirListing { dir: docs/patterns } |  |  | 0.773 |
-| ns | 1545 |  | 77 | The class spine: Scaffold -> App -> Flask and Scaffold -> Blueprint -> Blueprint (6 class statements) | 2.2 |  | 0.754 |
-| ns | 1639 |  | 94 | Scaffold routing decorators — every URL-registration method, names only (sansio/scaffold.py:284-436) | 2.3 | 2.2 | 0.728 |
-| ns | 1745 |  | 106 | Scaffold request-hook and error-handler decorators, names only (sansio/scaffold.py:460-657) | 2.4 | 2.2 | 0.705 |
-| walker |  | 1852 | 340 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.812 |
-| walker |  | 1876 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.812 |
-| walker |  | 1880 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.812 |
-| ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.777 |
-| walker |  | 1897 | 17 | Fs::DirListing { dir: examples/celery/src/task_app } |  |  | 0.777 |
-| walker |  | 2042 | 145 | Fs::DirListing { dir: tests } |  |  | 0.780 |
-| walker |  | 2061 | 19 | Fs::DirListing { dir: tests/type_check } |  |  | 0.780 |
+| walker |  | 1005 | 145 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.681 |
+| ns | 1121 |  | 256 | Public export surface 3/3: all ten signals, template renderers, Request/Response (src/flask/__init__.py:24-39) | 1.8 | 1.7 | 0.622 |
+| walker |  | 1127 | 122 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.681 |
+| walker |  | 1272 | 145 | Fs::DirListing { dir: docs/patterns } |  |  | 0.681 |
+| walker |  | 1296 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.681 |
+| walker |  | 1300 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.681 |
+| walker |  | 1317 | 17 | Fs::DirListing { dir: examples/celery/src/task_app } |  |  | 0.681 |
+| ns | 1391 |  | 270 | Package identity + runtime dependency stack (pyproject.toml:1-8, 22-34) | 1.9 |  | 0.716 |
+| walker |  | 1462 | 145 | Fs::DirListing { dir: tests } |  |  | 0.719 |
+| ns | 1468 |  | 77 | Why src/flask/sansio/ exists (src/flask/sansio/README.md:1-6) | 2.1 |  | 0.701 |
+| walker |  | 1481 | 19 | Fs::DirListing { dir: tests/type_check } |  |  | 0.701 |
+| ns | 1545 |  | 77 | The class spine: Scaffold -> App -> Flask and Scaffold -> Blueprint -> Blueprint (6 class statements) | 2.2 |  | 0.684 |
+| ns | 1639 |  | 94 | Scaffold routing decorators — every URL-registration method, names only (sansio/scaffold.py:284-436) | 2.3 | 2.2 | 0.660 |
+| walker |  | 1721 | 240 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.731 |
+| ns | 1745 |  | 106 | Scaffold request-hook and error-handler decorators, names only (sansio/scaffold.py:460-657) | 2.4 | 2.2 | 0.707 |
+| ns | 1896 |  | 151 | Rest of sansio/scaffold.py: constructor, static/template properties, module-level helpers | 2.5 | 2.2 | 0.677 |
+| walker |  | 2061 | 340 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.780 |
 | walker |  | 2088 | 27 | Fs::DirListing { dir: examples/javascript } |  |  | 0.780 |
 | walker |  | 2101 | 13 | Fs::DirListing { dir: examples/javascript/js_example } |  |  | 0.780 |
 | ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.741 |
@@ -91,111 +91,106 @@ Score(3000)=0.685 I=0.892 C=0.526 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | ns | 4848 |  | 184 | The `flask` command object and its app-discovery help text (src/flask/cli.py:1110-1127) | 4.5 |  | 0.537 |
 | ns | 4949 |  | 101 | The complete built-in command set: run, shell, routes (src/flask/cli.py:594-596, 882, 999, 1048) | 4.6 | 4.5 | 0.532 |
 | walker |  | 5057 | 298 | Plaintext::Whole { file: docs/Makefile } |  |  | 0.532 |
+| walker |  | 5081 | 24 | Code::CodeKey { rung: Names, file: src/flask/wrappers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
 | ns | 5097 |  | 148 | Every `flask run` flag, declaration lines only (src/flask/cli.py:883-925) | 4.7 | 4.6 | 0.526 |
-| ns | 5241 |  | 144 | The --app option: module:name form and factory auto-detection (src/flask/cli.py:453-462) | 4.8 | 4.5 | 0.518 |
-| walker |  | 5306 | 249 | Code::CodeKey { rung: Names, file: src/flask/cli.py, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| walker |  | 5332 | 26 | Code::CodeKey { rung: Decl, file: src/flask/cli.py, decl: 11, sub: 0, line: 293 } |  |  | 0.519 |
-| walker |  | 5368 | 36 | Code::CodeKey { rung: Decl, file: src/flask/cli.py, decl: 8, sub: 0, line: 241 } |  |  | 0.519 |
-| walker |  | 5416 | 48 | Code::CodeKey { rung: Decl, file: src/flask/cli.py, decl: 7, sub: 0, line: 235 } |  |  | 0.519 |
-| walker |  | 5463 | 47 | Code::CodeKey { rung: Decl, file: src/flask/cli.py, decl: 6, sub: 0, line: 229 } |  |  | 0.519 |
-| ns | 5487 |  | 246 | The remaining global options: --debug/--no-debug, -e/--env-file, --version (src/flask/cli.py:485-489, 517-527, 283-286) | 4.9 | 4.8 | 0.506 |
-| walker |  | 5524 | 61 | Code::CodeKey { rung: Decl, file: src/flask/cli.py, decl: 10, sub: 0, line: 283 } |  |  | 0.507 |
-| walker |  | 5601 | 77 | Code::CodeKey { rung: Decl, file: src/flask/cli.py, decl: 12, sub: 0, line: 305 } |  |  | 0.507 |
-| walker |  | 5615 | 14 | Code::CodeKey { rung: Doc, file: src/flask/cli.py, decl: 1, sub: 0, line: 37 } |  |  | 0.507 |
-| walker |  | 5653 | 38 | Code::CodeKey { rung: Doc, file: src/flask/cli.py, decl: 2, sub: 0, line: 41 } |  |  | 0.507 |
+| walker |  | 5154 | 73 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 13, sub: 0, line: 222 } |  |  | 0.526 |
+| walker |  | 5160 | 6 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.526 |
+| walker |  | 5223 | 63 | Code::CodeKey { rung: Doc, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.526 |
+| ns | 5241 |  | 144 | The --app option: module:name form and factory auto-detection (src/flask/cli.py:453-462) | 4.8 | 4.5 | 0.519 |
+| walker |  | 5288 | 65 | Code::CodeKey { rung: Body, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.519 |
+| walker |  | 5301 | 13 | Fs::DirListing { dir: tests/static } |  |  | 0.519 |
+| walker |  | 5305 | 4 | Fs::DirListing { dir: examples/tutorial/flaskr/static } |  |  | 0.519 |
+| walker |  | 5309 | 4 | Fs::DirListing { dir: tests/test_apps/subdomaintestmodule/static } |  |  | 0.519 |
+| walker |  | 5323 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.519 |
+| walker |  | 5338 | 15 | Code::CodeKey { rung: Names, file: src/flask/blueprints.py, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
+| walker |  | 5404 | 66 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 1, sub: 0, line: 18 } |  |  | 0.520 |
+| walker |  | 5446 | 42 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 5, sub: 0, line: 104 } |  |  | 0.520 |
+| ns | 5487 |  | 246 | The remaining global options: --debug/--no-debug, -e/--env-file, --version (src/flask/cli.py:485-489, 517-527, 283-286) | 4.9 | 4.8 | 0.507 |
+| walker |  | 5619 | 173 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 2, sub: 0, line: 19 } |  |  | 0.507 |
 | ns | 5659 |  | 172 | `flask routes` options + the injected --debug flag (src/flask/cli.py:1001, 1049-1060) | 4.10 | 4.6 | 0.499 |
-| walker |  | 5699 | 46 | Code::CodeKey { rung: Doc, file: src/flask/cli.py, decl: 4, sub: 0, line: 120 } |  |  | 0.499 |
-| ns | 5720 |  | 61 | CI and repo-automation inventory (.github, workflows, issue templates, .devcontainer — complete) | 4.11 |  | 0.504 |
-| walker |  | 5745 | 46 | Code::CodeKey { rung: Doc, file: src/flask/cli.py, decl: 5, sub: 0, line: 200 } |  |  | 0.504 |
-| walker |  | 5800 | 55 | Code::CodeKey { rung: Doc, file: src/flask/cli.py, decl: 13, sub: 0, line: 333 } |  |  | 0.504 |
-| walker |  | 5824 | 24 | Code::CodeKey { rung: Names, file: src/flask/wrappers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.505 |
-| walker |  | 5897 | 73 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 13, sub: 0, line: 222 } |  |  | 0.505 |
-| walker |  | 5903 | 6 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.505 |
-| ns | 5919 |  | 199 | CI interpreter matrix (.github/workflows/tests.yaml:19-29) | 4.12 | 4.11 | 0.499 |
-| walker |  | 5966 | 63 | Code::CodeKey { rung: Doc, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.499 |
-| walker |  | 6031 | 65 | Code::CodeKey { rung: Body, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.499 |
-| walker |  | 6044 | 13 | Fs::DirListing { dir: tests/static } |  |  | 0.499 |
-| walker |  | 6048 | 4 | Fs::DirListing { dir: examples/tutorial/flaskr/static } |  |  | 0.499 |
-| walker |  | 6052 | 4 | Fs::DirListing { dir: tests/test_apps/subdomaintestmodule/static } |  |  | 0.499 |
-| ns | 6063 |  | 144 | Flask methods 1/3: construction, resources, jinja, URL adapter, run (src/flask/app.py:254-632) | 5.1 |  | 0.492 |
-| walker |  | 6066 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.501 |
-| walker |  | 6081 | 15 | Code::CodeKey { rung: Names, file: src/flask/blueprints.py, decl: 0, sub: 0, line: 0 } |  |  | 0.501 |
-| walker |  | 6147 | 66 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 1, sub: 0, line: 18 } |  |  | 0.501 |
-| walker |  | 6189 | 42 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 5, sub: 0, line: 104 } |  |  | 0.501 |
+| walker |  | 5680 | 61 | Code::CodeKey { rung: Names, file: src/flask/views.py, decl: 0, sub: 0, line: 0 } |  |  | 0.500 |
+| walker |  | 5712 | 32 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 2, sub: 0, line: 11 } |  |  | 0.500 |
+| ns | 5720 |  | 61 | CI and repo-automation inventory (.github, workflows, issue templates, .devcontainer — complete) | 4.11 |  | 0.515 |
+| walker |  | 5760 | 48 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 6, sub: 0, line: 138 } |  |  | 0.515 |
+| ns | 5919 |  | 199 | CI interpreter matrix (.github/workflows/tests.yaml:19-29) | 4.12 | 4.11 | 0.508 |
+| walker |  | 6035 | 275 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 3, sub: 0, line: 16 } |  |  | 0.508 |
+| ns | 6063 |  | 144 | Flask methods 1/3: construction, resources, jinja, URL adapter, run (src/flask/app.py:254-632) | 5.1 |  | 0.502 |
 | ns | 6206 |  | 143 | Flask methods 2/3: test clients, error handling, request dispatch (src/flask/app.py:755-1079) | 5.2 | 5.1 | 0.495 |
+| walker |  | 6240 | 205 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 3, sub: 1, line: 16 } |  |  | 0.495 |
+| walker |  | 6284 | 44 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 5, sub: 0, line: 85 } |  |  | 0.495 |
+| walker |  | 6294 | 10 | Code::CodeKey { rung: Body, file: src/flask/views.py, decl: 4, sub: 0, line: 78 } |  |  | 0.495 |
+| walker |  | 6345 | 51 | Code::CodeKey { rung: Doc, file: src/flask/views.py, decl: 4, sub: 0, line: 78 } |  |  | 0.489 |
 | ns | 6345 |  | 139 | Flask methods 3/3: url_for, make_response, teardown, contexts, WSGI entry (src/flask/app.py:1102-1618) | 5.3 | 5.2 | 0.489 |
-| walker |  | 6362 | 173 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 2, sub: 0, line: 19 } |  |  | 0.489 |
-| walker |  | 6423 | 61 | Code::CodeKey { rung: Names, file: src/flask/views.py, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 6455 | 32 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 2, sub: 0, line: 11 } |  |  | 0.490 |
-| walker |  | 6503 | 48 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 6, sub: 0, line: 138 } |  |  | 0.490 |
-| ns | 6532 |  | 187 | App (sansio) methods 1/2: name, logger, jinja env, config/aborter factories, blueprint registration (sansio/app.py:279-605) | 5.4 |  | 0.482 |
-| ns | 6751 |  | 219 | App (sansio) methods 2/2: template filter/test/global decorators, teardown, error routing (sansio/app.py:664-981) | 5.5 | 5.4 | 0.473 |
-| walker |  | 6778 | 275 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 3, sub: 0, line: 16 } |  |  | 0.473 |
-| ns | 6936 |  | 185 | Every module-level function in src/flask/helpers.py (17 definitions) | 5.6 |  | 0.465 |
-| walker |  | 6983 | 205 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 3, sub: 1, line: 16 } |  |  | 0.465 |
-| walker |  | 7027 | 44 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 5, sub: 0, line: 85 } |  |  | 0.465 |
-| walker |  | 7037 | 10 | Code::CodeKey { rung: Body, file: src/flask/views.py, decl: 4, sub: 0, line: 78 } |  |  | 0.465 |
-| ns | 7064 |  | 128 | Blueprint (sansio) methods 1/2: setup state, deferred registration, register (sansio/blueprints.py:41-413) | 5.7 |  | 0.461 |
-| walker |  | 7088 | 51 | Code::CodeKey { rung: Doc, file: src/flask/views.py, decl: 4, sub: 0, line: 78 } |  |  | 0.461 |
-| walker |  | 7178 | 90 | Code::CodeKey { rung: Body, file: src/flask/blueprints.py, decl: 3, sub: 0, line: 55 } |  |  | 0.461 |
-| walker |  | 7229 | 51 | Plaintext::DeclSurface { file: docs/patterns/jquery.rst } |  |  | 0.461 |
-| ns | 7297 |  | 233 | Blueprint (sansio) methods 2/2: the app_* decorators (sansio/blueprints.py:444-685) | 5.8 | 5.7 | 0.452 |
-| ns | 7489 |  | 192 | The IO-side Blueprint overrides + the class-based view surface (blueprints.py, views.py) | 5.9 | 2.2 | 0.465 |
-| walker |  | 7520 | 291 | Code::CodeKey { rung: Names, file: src/flask/helpers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
-| walker |  | 7527 | 7 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 17, sub: 0, line: 644 } |  |  | 0.490 |
-| walker |  | 7564 | 37 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 3, sub: 0, line: 51 } |  |  | 0.490 |
-| walker |  | 7601 | 37 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 8, sub: 0, line: 254 } |  |  | 0.490 |
-| walker |  | 7640 | 39 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 12, sub: 0, line: 360 } |  |  | 0.490 |
-| walker |  | 7688 | 48 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 4, sub: 0, line: 57 } |  |  | 0.490 |
-| walker |  | 7737 | 49 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 15, sub: 0, line: 543 } |  |  | 0.490 |
+| walker |  | 6435 | 90 | Code::CodeKey { rung: Body, file: src/flask/blueprints.py, decl: 3, sub: 0, line: 55 } |  |  | 0.489 |
+| walker |  | 6486 | 51 | Plaintext::DeclSurface { file: docs/patterns/jquery.rst } |  |  | 0.489 |
+| ns | 6532 |  | 187 | App (sansio) methods 1/2: name, logger, jinja env, config/aborter factories, blueprint registration (sansio/app.py:279-605) | 5.4 |  | 0.481 |
+| ns | 6751 |  | 219 | App (sansio) methods 2/2: template filter/test/global decorators, teardown, error routing (sansio/app.py:664-981) | 5.5 | 5.4 | 0.472 |
+| walker |  | 6777 | 291 | Code::CodeKey { rung: Names, file: src/flask/helpers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.473 |
+| walker |  | 6784 | 7 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 17, sub: 0, line: 644 } |  |  | 0.473 |
+| walker |  | 6821 | 37 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 3, sub: 0, line: 51 } |  |  | 0.473 |
+| walker |  | 6858 | 37 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 8, sub: 0, line: 254 } |  |  | 0.473 |
+| walker |  | 6897 | 39 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 12, sub: 0, line: 360 } |  |  | 0.473 |
+| ns | 6936 |  | 185 | Every module-level function in src/flask/helpers.py (17 definitions) | 5.6 |  | 0.490 |
+| walker |  | 6945 | 48 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 4, sub: 0, line: 57 } |  |  | 0.490 |
+| walker |  | 6994 | 49 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 15, sub: 0, line: 543 } |  |  | 0.490 |
+| walker |  | 7049 | 55 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 5, sub: 0, line: 63 } |  |  | 0.490 |
+| ns | 7064 |  | 128 | Blueprint (sansio) methods 1/2: setup state, deferred registration, register (sansio/blueprints.py:41-413) | 5.7 |  | 0.485 |
+| walker |  | 7139 | 90 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 7, sub: 0, line: 200 } |  |  | 0.485 |
+| walker |  | 7282 | 143 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 14, sub: 0, line: 417 } |  |  | 0.485 |
+| ns | 7297 |  | 233 | Blueprint (sansio) methods 2/2: the app_* decorators (sansio/blueprints.py:444-685) | 5.8 | 5.7 | 0.476 |
+| walker |  | 7344 | 62 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 18, sub: 0, line: 654 } |  |  | 0.476 |
+| walker |  | 7403 | 59 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 21, sub: 0, line: 665 } |  |  | 0.476 |
+| walker |  | 7416 | 13 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 22, sub: 0, line: 676 } |  |  | 0.476 |
+| walker |  | 7466 | 50 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 1, sub: 0, line: 28 } |  |  | 0.476 |
+| ns | 7489 |  | 192 | The IO-side Blueprint overrides + the class-based view surface (blueprints.py, views.py) | 5.9 | 2.2 | 0.488 |
+| walker |  | 7548 | 82 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 2, sub: 0, line: 36 } |  |  | 0.488 |
+| walker |  | 7639 | 91 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 16, sub: 0, line: 587 } |  |  | 0.488 |
+| walker |  | 7721 | 82 | Code::CodeKey { rung: Names, file: src/flask/testing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.490 |
 | ns | 7742 |  | 253 | Request/Response attributes and properties (src/flask/wrappers.py) | 5.10 | 2.7 | 0.483 |
-| walker |  | 7792 | 55 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 5, sub: 0, line: 63 } |  |  | 0.483 |
-| walker |  | 7882 | 90 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 7, sub: 0, line: 200 } |  |  | 0.483 |
-| walker |  | 8025 | 143 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 14, sub: 0, line: 417 } |  |  | 0.483 |
+| walker |  | 7759 | 38 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 1, sub: 0, line: 27 } |  |  | 0.483 |
+| walker |  | 7801 | 42 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 14, sub: 0, line: 265 } |  |  | 0.483 |
+| walker |  | 7837 | 36 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 16, sub: 0, line: 275 } |  |  | 0.483 |
+| walker |  | 7852 | 15 | Code::CodeKey { rung: Body, file: src/flask/testing.py, decl: 3, sub: 0, line: 88 } |  |  | 0.483 |
+| walker |  | 7952 | 100 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 2, sub: 0, line: 49 } |  |  | 0.483 |
 | ns | 8041 |  | 299 | The session interface: SessionMixin/SecureCookieSession state + every SessionInterface method (sessions.py:28-263) | 5.11 | 2.7 | 0.473 |
-| walker |  | 8087 | 62 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 18, sub: 0, line: 654 } |  |  | 0.473 |
-| walker |  | 8146 | 59 | Code::CodeKey { rung: Decl, file: src/flask/helpers.py, decl: 21, sub: 0, line: 665 } |  |  | 0.473 |
-| ns | 8152 |  | 111 | The default cookie-signing session implementation (sessions.py:276-337) | 5.12 | 5.11 | 0.469 |
-| walker |  | 8159 | 13 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 22, sub: 0, line: 676 } |  |  | 0.469 |
-| walker |  | 8209 | 50 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 1, sub: 0, line: 28 } |  |  | 0.469 |
-| walker |  | 8291 | 82 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 2, sub: 0, line: 36 } |  |  | 0.469 |
+| walker |  | 8084 | 132 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 6, sub: 0, line: 109 } |  |  | 0.473 |
+| walker |  | 8125 | 41 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 8, sub: 0, line: 135 } |  |  | 0.473 |
+| ns | 8152 |  | 111 | The default cookie-signing session implementation (sessions.py:276-337) | 5.12 | 5.11 | 0.470 |
+| walker |  | 8179 | 54 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 13, sub: 0, line: 255 } |  |  | 0.470 |
+| walker |  | 8242 | 63 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 11, sub: 0, line: 204 } |  |  | 0.470 |
+| walker |  | 8275 | 33 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 10, sub: 0, line: 193 } |  |  | 0.470 |
+| walker |  | 8332 | 57 | Code::CodeKey { rung: Doc, file: src/flask/testing.py, decl: 3, sub: 0, line: 88 } |  |  | 0.470 |
 | ns | 8367 |  | 215 | The JSON subpackage API: module functions, provider methods, provider knobs | 5.13 | 2.9 | 0.463 |
-| walker |  | 8382 | 91 | Code::CodeKey { rung: Doc, file: src/flask/helpers.py, decl: 16, sub: 0, line: 587 } |  |  | 0.463 |
-| walker |  | 8464 | 82 | Code::CodeKey { rung: Names, file: src/flask/testing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
-| walker |  | 8502 | 38 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 1, sub: 0, line: 27 } |  |  | 0.465 |
-| ns | 8509 |  | 142 | The test-support API: EnvironBuilder, FlaskClient, FlaskCliRunner members (src/flask/testing.py) | 5.14 | 2.8 | 0.462 |
-| walker |  | 8544 | 42 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 14, sub: 0, line: 265 } |  |  | 0.463 |
-| walker |  | 8580 | 36 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 16, sub: 0, line: 275 } |  |  | 0.463 |
-| walker |  | 8595 | 15 | Code::CodeKey { rung: Body, file: src/flask/testing.py, decl: 3, sub: 0, line: 88 } |  |  | 0.463 |
-| walker |  | 8695 | 100 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 2, sub: 0, line: 49 } |  |  | 0.463 |
-| ns | 8737 |  | 228 | The context proxies: how current_app, g, request, session are bound (src/flask/globals.py:40-49, 57-62) | 6.1 | 1.6 | 0.457 |
-| walker |  | 8827 | 132 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 6, sub: 0, line: 109 } |  |  | 0.470 |
-| walker |  | 8868 | 41 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 8, sub: 0, line: 135 } |  |  | 0.470 |
-| walker |  | 8922 | 54 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 13, sub: 0, line: 255 } |  |  | 0.470 |
-| ns | 8967 |  | 230 | The context API: ctx.py module functions, the `g` object, AppContext members | 6.2 | 2.7 | 0.462 |
-| walker |  | 8985 | 63 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 11, sub: 0, line: 204 } |  |  | 0.462 |
-| walker |  | 9018 | 33 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 10, sub: 0, line: 193 } |  |  | 0.462 |
-| walker |  | 9075 | 57 | Code::CodeKey { rung: Doc, file: src/flask/testing.py, decl: 3, sub: 0, line: 88 } |  |  | 0.462 |
-| walker |  | 9139 | 64 | Code::CodeKey { rung: Doc, file: src/flask/testing.py, decl: 14, sub: 0, line: 265 } |  |  | 0.462 |
-| ns | 9223 |  | 256 | What changed in the unreleased 3.2.0 (CHANGES.rst:1-16) | 6.3 |  | 0.456 |
-| walker |  | 9289 | 150 | Code::CodeKey { rung: Names, file: src/flask/ctx.py, decl: 0, sub: 0, line: 0 } |  |  | 0.459 |
-| walker |  | 9316 | 27 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 12, sub: 0, line: 118 } |  |  | 0.459 |
-| walker |  | 9332 | 16 | Code::CodeKey { rung: Body, file: src/flask/ctx.py, decl: 16, sub: 0, line: 235 } |  |  | 0.459 |
-| walker |  | 9355 | 23 | Code::CodeKey { rung: Body, file: src/flask/ctx.py, decl: 15, sub: 0, line: 209 } |  |  | 0.459 |
-| ns | 9399 |  | 176 | Complete docs/ listing (35 entries) | 6.4 |  | 0.485 |
-| ns | 9544 |  | 145 | Complete tests/ listing (27 entries) | 6.5 |  | 0.502 |
-| walker |  | 9571 | 216 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 17, sub: 0, line: 260 } |  |  | 0.517 |
-| walker |  | 9579 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 19, sub: 0, line: 339 } |  |  | 0.517 |
-| walker |  | 9587 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 20, sub: 0, line: 350 } |  |  | 0.517 |
-| walker |  | 9595 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 22, sub: 0, line: 370 } |  |  | 0.517 |
-| walker |  | 9603 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 24, sub: 0, line: 395 } |  |  | 0.517 |
-| ns | 9611 |  | 67 | The three runnable example applications (examples/ and each app package) | 6.6 |  | 0.526 |
-| walker |  | 9661 | 58 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 18, sub: 0, line: 300 } |  |  | 0.526 |
-| walker |  | 9719 | 58 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 29, sub: 0, line: 510 } |  |  | 0.526 |
-| walker |  | 9735 | 16 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 20, sub: 0, line: 350 } |  |  | 0.526 |
-| walker |  | 9773 | 38 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 25, sub: 0, line: 405 } |  |  | 0.526 |
-| walker |  | 9828 | 55 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 22, sub: 0, line: 370 } |  |  | 0.526 |
-| walker |  | 9891 | 63 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 19, sub: 0, line: 339 } |  |  | 0.526 |
-| walker |  | 9959 | 68 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 24, sub: 0, line: 395 } |  |  | 0.526 |
-| walker |  | 9979 | 20 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 23, sub: 0, line: 381 } |  |  | 0.513 |
-| ns | 9979 |  | 368 | The canonical application factory (examples/tutorial/flaskr/__init__.py:1-48, comments elided) | 6.7 | 6.6 | 0.513 |
+| walker |  | 8396 | 64 | Code::CodeKey { rung: Doc, file: src/flask/testing.py, decl: 14, sub: 0, line: 265 } |  |  | 0.463 |
+| ns | 8509 |  | 142 | The test-support API: EnvironBuilder, FlaskClient, FlaskCliRunner members (src/flask/testing.py) | 5.14 | 2.8 | 0.473 |
+| walker |  | 8546 | 150 | Code::CodeKey { rung: Names, file: src/flask/ctx.py, decl: 0, sub: 0, line: 0 } |  |  | 0.475 |
+| walker |  | 8573 | 27 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 12, sub: 0, line: 118 } |  |  | 0.475 |
+| walker |  | 8589 | 16 | Code::CodeKey { rung: Body, file: src/flask/ctx.py, decl: 16, sub: 0, line: 235 } |  |  | 0.475 |
+| walker |  | 8612 | 23 | Code::CodeKey { rung: Body, file: src/flask/ctx.py, decl: 15, sub: 0, line: 209 } |  |  | 0.475 |
+| ns | 8737 |  | 228 | The context proxies: how current_app, g, request, session are bound (src/flask/globals.py:40-49, 57-62) | 6.1 | 1.6 | 0.469 |
+| walker |  | 8828 | 216 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 17, sub: 0, line: 260 } |  |  | 0.470 |
+| walker |  | 8836 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 19, sub: 0, line: 339 } |  |  | 0.470 |
+| walker |  | 8844 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 20, sub: 0, line: 350 } |  |  | 0.470 |
+| walker |  | 8852 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 22, sub: 0, line: 370 } |  |  | 0.470 |
+| walker |  | 8860 | 8 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 24, sub: 0, line: 395 } |  |  | 0.470 |
+| walker |  | 8918 | 58 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 18, sub: 0, line: 300 } |  |  | 0.470 |
+| ns | 8967 |  | 230 | The context API: ctx.py module functions, the `g` object, AppContext members | 6.2 | 2.7 | 0.480 |
+| walker |  | 8976 | 58 | Code::CodeKey { rung: Decl, file: src/flask/ctx.py, decl: 29, sub: 0, line: 510 } |  |  | 0.480 |
+| walker |  | 8992 | 16 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 20, sub: 0, line: 350 } |  |  | 0.480 |
+| walker |  | 9030 | 38 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 25, sub: 0, line: 405 } |  |  | 0.480 |
+| walker |  | 9085 | 55 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 22, sub: 0, line: 370 } |  |  | 0.480 |
+| walker |  | 9148 | 63 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 19, sub: 0, line: 339 } |  |  | 0.480 |
+| walker |  | 9216 | 68 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 24, sub: 0, line: 395 } |  |  | 0.480 |
+| ns | 9223 |  | 256 | What changed in the unreleased 3.2.0 (CHANGES.rst:1-16) | 6.3 |  | 0.474 |
+| walker |  | 9236 | 20 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 23, sub: 0, line: 381 } |  |  | 0.474 |
+| walker |  | 9334 | 98 | Code::CodeKey { rung: Doc, file: src/flask/ctx.py, decl: 21, sub: 0, line: 355 } |  |  | 0.474 |
+| ns | 9399 |  | 176 | Complete docs/ listing (35 entries) | 6.4 |  | 0.498 |
+| walker |  | 9520 | 186 | Code::CodeKey { rung: Names, file: src/flask/signals.py, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
+| ns | 9544 |  | 145 | Complete tests/ listing (27 entries) | 6.5 |  | 0.525 |
+| ns | 9611 |  | 67 | The three runnable example applications (examples/ and each app package) | 6.6 |  | 0.534 |
+| walker |  | 9843 | 323 | Code::CodeKey { rung: Names, file: src/flask/typing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
+| walker |  | 9878 | 35 | Code::CodeKey { rung: Decl, file: src/flask/typing.py, decl: 19, sub: 0, line: 84 } |  |  | 0.534 |
+| walker |  | 9915 | 37 | Code::CodeKey { rung: Decl, file: src/flask/typing.py, decl: 12, sub: 0, line: 64 } |  |  | 0.534 |
+| walker |  | 9954 | 39 | Code::CodeKey { rung: Decl, file: src/flask/typing.py, decl: 3, sub: 0, line: 29 } |  |  | 0.534 |
+| ns | 9979 |  | 368 | The canonical application factory (examples/tutorial/flaskr/__init__.py:1-48, comments elided) | 6.7 | 6.6 | 0.521 |
+| walker |  | 9993 | 39 | Code::CodeKey { rung: Decl, file: src/flask/typing.py, decl: 7, sub: 0, line: 50 } |  |  | 0.521 |

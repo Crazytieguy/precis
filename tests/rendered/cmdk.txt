@@ -33,6 +33,25 @@ cmdk/
     2→  "name": "cmdk",
     3→  "version": "1.1.1",
     4→  "license": "MIT",
+    5→  "main": "./dist/index.js",
+    6→  "module": "./dist/index.mjs",
+    7→  "types": "./dist/index.d.ts",
+    8→  "files": [
+    9→    "dist"
+    10→  ],
+    11→  "exports": {
+    12→    ".": {
+    13→      "types": "./dist/index.d.ts",
+    14→      "import": "./dist/index.mjs",
+    15→      "require": "./dist/index.js"
+    16→    }
+    17→  },
+    18→  "scripts": {
+    19→    "prepublishOnly": "cp ../README.md . && pnpm build",
+    20→    "postpublish": "rm README.md",
+    21→    "build": "tsup src",
+    22→    "dev": "tsup src --watch"
+    23→  },
     …
     28→  "dependencies": {
     29→    "@radix-ui/react-compose-refs": "^1.1.1",
@@ -40,6 +59,8 @@ cmdk/
     31→    "@radix-ui/react-id": "^1.1.0",
     32→    "@radix-ui/react-primitive": "^2.0.2"
     33→  },
+    …
+    37→  "sideEffects": false,
     …
   src/
     command-score.ts
@@ -189,76 +210,6 @@ cmdk/
       898→ */
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
       …
-      906→/**
-      907→ * You should conditionally render this with `progress` while loading asynchronous items.
-      908→ */
-      909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-      …
-      930→const pkg = Object.assign(Command, {
-      931→  List,
-      932→  Item,
-      933→  Input,
-      934→  Group,
-      935→  Separator,
-      936→  Dialog,
-      937→  Empty,
-      938→  Loading,
-      939→})
-      941→export { useCmdk as useCommandState }
-      942→export { pkg as Command }
-      943→export { defaultFilter }
-      944→
-      945→export { Command as CommandRoot }
-      946→export { List as CommandList }
-      947→export { Item as CommandItem }
-      948→export { Input as CommandInput }
-      949→export { Group as CommandGroup }
-      950→export { Separator as CommandSeparator }
-      951→export { Dialog as CommandDialog }
-      952→export { Empty as CommandEmpty }
-      953→export { Loading as CommandLoading }
-      …
-      963→function findNextSibling(el: Element, selector: string) {
-      …
-      972→function findPreviousSibling(el: Element, selector: string) {
-      …
-      981→function useAsRef<T>(data: T) {
-      …
-      991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
-      992→
-      993→function useLazyRef<T>(fn: () => T) {
-      …
-      1003→/** Run a selector against the store state. */
-      1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-      …
-      1010→function useValue(
-      1011→  id: string,
-      1012→  ref: React.RefObject<HTMLElement>,
-      1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
-      1014→  aliases: string[] = [],
-      1015→) {
-      …
-      1045→/** Imperatively run a function on the next layout effect cycle. */
-      1046→const useScheduleLayoutEffect = () => {
-      …
-      1061→function renderChildren(children: React.ReactElement) {
-      …
-      1071→function SlottableWithNestedChildren(
-      1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
-      1073→  render: (child: React.ReactNode) => JSX.Element,
-      1074→) {
-      …
-      1081→const srOnlyStyles = {
-      1082→  position: 'absolute',
-      1083→  width: '1px',
-      1084→  height: '1px',
-      1085→  padding: '0',
-      1086→  margin: '-1px',
-      1087→  overflow: 'hidden',
-      1088→  clip: 'rect(0, 0, 0, 0)',
-      1089→  whiteSpace: 'nowrap',
-      1090→  borderWidth: '0',
-      1091→} as const
   tsup.config.ts
 package.json
   …
@@ -271,5 +222,40 @@ playwright.config.ts
 pnpm-lock.yaml
 pnpm-workspace.yaml
 test/
+  basic.test.ts
+  dialog.test.ts
+  group.test.ts
+  item.test.ts
+  keybind.test.ts
+  next-env.d.ts
+  numeric.test.ts
+  package.json
+  pages/
+  props.test.ts
+  style.css
+  tsconfig.json
 tsconfig.json
 website/
+  .eslintrc.json
+  .gitignore
+  README.md
+  components/
+    cmdk/
+      framer.tsx
+      linear.tsx
+      raycast.tsx
+      vercel.tsx
+    code/
+    icons/
+    index.ts
+  next-env.d.ts
+  next.config.js
+  package.json
+  pages/
+    _app.tsx
+    _document.tsx
+    index.tsx
+  public/
+  styles/
+  tsconfig.json
+  vercel.json

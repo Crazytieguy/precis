@@ -169,11 +169,6 @@ pub const CODE_PRIVATE_FACTOR: f64 = 0.65;
 /// (`lib.rs`, `__init__.py`, …), on top of pinning its depth to 1.
 pub const CODE_ENTRYPOINT_FACTOR: f64 = 1.25;
 
-/// Premium on the first chunk of a split `Names` roster, bounded so it
-/// never prices above the unsplit roster: each file's roster head ranks
-/// ahead of every file's roster tail.
-pub const CODE_NAMES_HEAD_PREMIUM: f64 = 1.3;
-
 /// Down-weight a batch by filesystem depth — depth 0/1 unpenalized.
 pub fn depth_factor(depth: usize) -> f64 {
     1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.35)

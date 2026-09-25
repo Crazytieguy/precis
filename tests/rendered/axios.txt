@@ -165,7 +165,45 @@ index.d.cts
   42→declare class AxiosHeaders {
   …
   123→declare class AxiosError<T = unknown, D = any> extends Error {
-  …
+  124→  constructor(
+  125→    message?: string,
+  126→    code?: string,
+  127→    config?: axios.InternalAxiosRequestConfig<D>,
+  128→    request?: any,
+  129→    response?: axios.AxiosResponse<T, D>
+  130→  );
+  132→  config?: axios.InternalAxiosRequestConfig<D>;
+  133→  code?: string;
+  134→  request?: any;
+  135→  response?: axios.AxiosResponse<T, D>;
+  136→  isAxiosError: boolean;
+  137→  status?: number;
+  138→  toJSON: () => object;
+  139→  cause?: Error;
+  140→  event?: BrowserProgressEvent;
+  141→  static from<T = unknown, D = any>(
+  142→    error: Error | unknown,
+  143→    code?: string,
+  144→    config?: axios.InternalAxiosRequestConfig<D>,
+  145→    request?: any,
+  146→    response?: axios.AxiosResponse<T, D>,
+  147→    customProps?: object
+  148→  ): AxiosError<T, D>;
+  149→  static readonly ERR_FR_TOO_MANY_REDIRECTS = 'ERR_FR_TOO_MANY_REDIRECTS';
+  150→  static readonly ERR_BAD_OPTION_VALUE = 'ERR_BAD_OPTION_VALUE';
+  151→  static readonly ERR_BAD_OPTION = 'ERR_BAD_OPTION';
+  152→  static readonly ERR_NETWORK = 'ERR_NETWORK';
+  153→  static readonly ERR_DEPRECATED = 'ERR_DEPRECATED';
+  154→  static readonly ERR_BAD_RESPONSE = 'ERR_BAD_RESPONSE';
+  155→  static readonly ERR_BAD_REQUEST = 'ERR_BAD_REQUEST';
+  156→  static readonly ERR_NOT_SUPPORT = 'ERR_NOT_SUPPORT';
+  157→  static readonly ERR_INVALID_URL = 'ERR_INVALID_URL';
+  158→  static readonly ERR_CANCELED = 'ERR_CANCELED';
+  159→  static readonly ERR_FORM_DATA_DEPTH_EXCEEDED = 'ERR_FORM_DATA_DEPTH_EXCEEDED';
+  160→  static readonly ECONNABORTED = 'ECONNABORTED';
+  161→  static readonly ECONNREFUSED = 'ECONNREFUSED';
+  162→  static readonly ETIMEDOUT = 'ETIMEDOUT';
+  163→}
   165→declare class CanceledError<T> extends AxiosError<T> {}
   166→
   167→declare class Axios {
@@ -180,65 +218,6 @@ index.d.cts
   714→
   715→export = axios;
 index.d.ts
-  …
-  2→type StringLiteralsOrString<Literals extends string> = Literals | (string & {});
-  3→
-  4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
-  5→
-  6→export interface RawAxiosHeaders {
-  7→  [key: string]: AxiosHeaderValue;
-  8→}
-  10→type MethodsHeaders = Partial<
-  11→  {
-  12→    [Key in Method as Lowercase<Key>]: AxiosHeaders;
-  13→  } & { common: AxiosHeaders }
-  14→>;
-  16→type AxiosHeaderMatcher =
-  17→  | string
-  18→  | RegExp
-  19→  | ((this: AxiosHeaders, value: string, name: string) => boolean);
-  21→type AxiosHeaderParser = (this: AxiosHeaders, value: AxiosHeaderValue, header: string) => any;
-  22→
-  23→export class AxiosHeaders {
-  …
-  95→type CommonRequestHeadersList =
-  96→  | 'Accept'
-  97→  | 'Content-Length'
-  98→  | 'User-Agent'
-  99→  | 'Content-Encoding'
-  100→  | 'Authorization'
-  101→  | 'Location';
-  103→type ContentType =
-  104→  | AxiosHeaderValue
-  105→  | 'text/html'
-  106→  | 'text/plain'
-  107→  | 'multipart/form-data'
-  108→  | 'application/json'
-  109→  | 'application/x-www-form-urlencoded'
-  110→  | 'application/octet-stream';
-  112→export type RawAxiosRequestHeaders = Partial<
-  113→  RawAxiosHeaders & {
-  114→    [Key in CommonRequestHeadersList]: AxiosHeaderValue;
-  115→  } & {
-  116→    'Content-Type': ContentType;
-  117→  }
-  118→>;
-  120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
-  121→
-  122→type CommonResponseHeadersList =
-  123→  | 'Server'
-  124→  | 'Content-Type'
-  125→  | 'Content-Length'
-  126→  | 'Cache-Control'
-  127→  | 'Content-Encoding';
-  129→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
-  130→
-  131→type RawCommonResponseHeaders = {
-  132→  [Key in CommonResponseHeaderKey]: AxiosHeaderValue;
-  133→} & {
-  134→  'set-cookie': string[];
-  135→};
-  …
 index.js
 lib/
   adapters/

@@ -35,7 +35,22 @@ README.md
   28→  - [Pure Python](#pure-python)
   30→<!-- mdformat-toc end -->
   32→## Intro<a name="intro"></a>
-  …
+  33→
+  34→Tomli is a Python library for parsing [TOML](https://toml.io).
+  35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
+  36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
+  37→
+  38→A version of Tomli, the `tomllib` module,
+  39→was added to the standard library in Python 3.11
+  40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
+  41→Tomli continues to provide a backport on PyPI for Python versions
+  42→where the standard library module is not available
+  43→and that have not yet reached their end-of-life.
+  44→
+  45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
+  46→to generate binary wheels for most of the widely used platforms,
+  47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
+  48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
   50→## Installation<a name="installation"></a>
   51→
   52→```bash
@@ -44,11 +59,51 @@ README.md
   56→## Usage<a name="usage"></a>
   57→
   58→### Parse a TOML string<a name="parse-a-toml-string"></a>
-  …
+  59→
+  60→```python
+  61→import tomli
+  62→
+  63→toml_str = """
+  64→[[players]]
+  65→name = "Lehtinen"
+  66→number = 26
+  67→
+  68→[[players]]
+  69→name = "Numminen"
+  70→number = 27
+  71→"""
+  72→
+  73→toml_dict = tomli.loads(toml_str)
+  74→assert toml_dict == {
+  75→    "players": [{"name": "Lehtinen", "number": 26}, {"name": "Numminen", "number": 27}]
+  76→}
+  77→```
+  78→
   79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-  …
+  80→
+  81→```python
+  82→import tomli
+  83→
+  84→with open("path_to_file/conf.toml", "rb") as f:
+  85→    toml_dict = tomli.load(f)
+  86→```
+  88→The file must be opened in binary mode (with the `"rb"` flag).
+  89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
+  90→both of which are required to correctly parse TOML.
+  91→
   92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
-  …
+  93→
+  94→```python
+  95→import tomli
+  96→
+  97→try:
+  98→    toml_dict = tomli.loads("]] this is invalid TOML [[")
+  99→except tomli.TOMLDecodeError:
+  100→    print("Yep, definitely not valid.")
+  101→```
+  102→
+  103→Note that error messages are considered informational only.
+  104→They should not be assumed to stay constant across Tomli versions.
   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
   …
   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
@@ -56,9 +111,27 @@ README.md
   152→## FAQ<a name="faq"></a>
   153→
   154→### Why this parser?<a name="why-this-parser"></a>
-  …
+  155→
+  156→- it's lil'
+  157→- pure Python with zero dependencies
+  158→- the fastest pure Python parser [\*](#pure-python):
+  159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
+  160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
+  161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
+  162→- 100% spec compliant: passes all tests in
+  163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+  164→  test suite
+  165→- thoroughly tested: 100% branch coverage
   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-  …
+  168→
+  169→No.
+  170→
+  171→The `tomli.loads` function returns a plain `dict` that is populated with builtin types and types from the standard library only.
+  172→Preserving comments requires a custom type to be returned so will not be supported,
+  173→at least not by the `tomli.loads` and `tomli.load` functions.
+  174→
+  175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
+  176→
   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
   …
   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
@@ -145,81 +218,12 @@ src/
       6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
       8→from ._parser import TOMLDecodeError, load, loads
     _parser.py
-      …
-      19→TYPE_CHECKING = False
-      …
-      35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-      36→
-      37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
-      …
-      41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
-      42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
-      43→
-      44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-      45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-      46→
-      47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-      48→
-      49→TOML_WS: Final = frozenset(" \t")
-      50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
-      51→BARE_KEY_CHARS: Final = frozenset(
-      52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-      53→)
-      54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
-      55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
-      56→
-      57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-      58→    {
-      59→        "\\b": "\u0008",  # backspace
-      60→        "\\t": "\u0009",  # tab
-      61→        "\\n": "\u000a",  # linefeed
-      62→        "\\f": "\u000c",  # form feed
-      63→        "\\r": "\u000d",  # carriage return
-      64→        "\\e": "\u001b",  # escape
-      65→        '\\"': "\u0022",  # quote
-      66→        "\\\\": "\u005c",  # backslash
-      67→    }
-      68→)
-      71→class DEPRECATED_DEFAULT:
-      72→    """Sentinel to be used as default arg during deprecation
-      73→    period of TOMLDecodeError's free-form arguments."""
-      76→class TOMLDecodeError(ValueError):
-      …
-      87→    def __init__(
-      88→        self,
-      89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-      92→        *args: Any,
-      93→    ):
-      …
-      137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      138→    """Parse TOML from a binary file object."""
-      …
-      149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      150→    """Parse TOML from a string."""
-      …
-      220→class Flags:
-      …
-      278→class NestedDict:
-      279→    def __init__(self) -> None:
-      …
-      283→    def get_or_create_nest(
-      284→        self,
-      285→        key: Key,
-      286→        *,
-      287→        access_lists: bool = True,
-      288→    ) -> dict[str, Any]:
-      …
-      300→    def append_nest_to_list(self, key: Key) -> None:
-      …
-      312→class Output:
-      313→    def __init__(self) -> None:
-      …
-      318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
-      …
     _re.py
     _types.py
+      …
+      8→ParseFloat = Callable[[str], Any]
+      9→Key = Tuple[str, ...]
+      10→Pos = int
     py.typed
 tests/
   __init__.py

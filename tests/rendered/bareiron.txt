@@ -133,7 +133,9 @@ include/
     63→#define BIOME_SIZE (CHUNK_SIZE * 8)
     65→// Calculated from BIOME_SIZE
     66→#define BIOME_RADIUS (BIOME_SIZE / 2)
-    …
+    68→// How many visited chunk coordinates to "remember"
+    69→// The server will not re-send chunks that the player has recently been in
+    70→// Must be at least 1, otherwise chunks will be sent on each position update
     71→#define VISITED_HISTORY 4
     73→// How many player-made block changes to allow
     74→// Determines the fixed amount of memory allocated to blocks
@@ -141,6 +143,9 @@ include/
     …
     93→#define DISK_SYNC_INTERVAL 15000000
     …
+    100→// Time in microseconds to spend waiting for data transmission before
+    101→// timing out. Default is 15s, which leaves 5s to prevent starving other
+    102→// clients from Keep Alive packets.
     103→#define NETWORK_TIMEOUT_TIME 15000000
     105→// Size of the receive buffer for incoming string data
     106→#define MAX_RECV_BUF_LEN 256
@@ -164,56 +169,26 @@ include/
     181→extern char motd[];
     …
   packets.h
-    …
-    4→// Serverbound packets
-    5→int cs_handshake (int client_fd);
-    6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
-    7→int cs_clientInformation (int client_fd);
-    8→int cs_pluginMessage (int client_fd);
-    9→int cs_playerAction (int client_fd);
-    10→int cs_useItemOn (int client_fd);
-    11→int cs_useItem (int client_fd);
-    12→int cs_setPlayerPositionAndRotation (int client_fd, double *x, double *y, double *z, float *yaw, float *pitch, uint8_t *on_ground);
-    13→int cs_setPlayerPosition (int client_fd, double *x, double *y, double *z, uint8_t *on_ground);
-    14→int cs_setPlayerRotation (int client_fd, float *yaw, float *pitch, uint8_t *on_ground);
-    …
   procedures.h
-    …
-    8→extern int client_states[MAX_PLAYERS * 2];
-    9→
-    10→void setClientState (int client_fd, int new_state);
-    11→int getClientState (int client_fd);
-    12→int getClientIndex (int client_fd);
-    13→
-    14→void resetPlayerData (PlayerData *player);
-    15→int reservePlayerData (int client_fd, uint8_t *uuid, char* name);
-    16→int getPlayerData (int client_fd, PlayerData **output);
-    17→PlayerData *getPlayerByName (int start_offset, int end_offset, uint8_t *buffer);
-    18→void handlePlayerDisconnect (int client_fd);
-    19→void handlePlayerJoin (PlayerData* player);
-    20→void disconnectClient (int *client_fd, int cause);
-    21→int givePlayerItem (PlayerData *player, uint16_t item, uint8_t count);
-    …
   serialize.h
+    …
+    6→#ifdef SYNC_WORLD_TO_DISK
+    7→  int initSerializer ();
+    8→  void writeBlockChangesToDisk (int from, int to);
+    9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
+    10→  void writePlayerDataToDisk ();
+    11→  void writeDataToDiskOnInterval ();
+    12→#else
+    13→  // Define no-op placeholders for when disk syncing isn't enabled
+    14→  #define writeBlockChangesToDisk(a, b)
+    15→  #define writeChestChangesToDisk(a, b)
+    16→  #define writePlayerDataToDisk()
+    17→  #define writeDataToDiskOnInterval()
+    18→  #define initSerializer() 0
+    19→#endif
+    …
   structures.h
   tools.h
-    …
-    8→static inline int mod_abs (int a, int b) {
-    9→  return ((a % b) + b) % b;
-    …
-    11→static inline int div_floor (int a, int b) {
-    12→  return a % b < 0 ? (a - b) / b : a / b;
-    …
-    15→extern uint64_t total_bytes_received;
-    16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
-    17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
-    18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
-    19→
-    20→ssize_t writeByte (int client_fd, uint8_t byte);
-    21→ssize_t writeUint16 (int client_fd, uint16_t num);
-    22→ssize_t writeUint32 (int client_fd, uint32_t num);
-    23→ssize_t writeUint64 (int client_fd, uint64_t num);
-    …
   varnum.h
   worldgen.h
 src/

@@ -18,6 +18,7 @@
 .yarn/
   patches/
   plugins/
+    @yarnpkg/
 .yarnrc.yml
 CONTRIBUTING.md
 LICENSE
@@ -76,7 +77,10 @@ README.md
   169→## Donors
   …
   175→## License and Copyright
-  …
+  176→
+  177→This software is released under the terms of the [MIT license](https://github.com/svg/svgo/blob/main/LICENSE).
+  178→
+  179→Logo by [André Castillo](https://github.com/DerianAndre).
 bin/
   svgo.js
 cspell.jsonc
@@ -88,6 +92,60 @@ docs/
     index.mdx
   03-preset-default.mdx
   04-plugins/
+    addAttributesToSVGElement.mdx
+    addClassesToSVGElement.mdx
+    cleanupAttrs.mdx
+    cleanupEnableBackground.mdx
+    cleanupIds.mdx
+    cleanupListOfValues.mdx
+    cleanupNumericValues.mdx
+    collapseGroups.mdx
+    convertColors.mdx
+    convertEllipseToCircle.mdx
+    convertOneStopGradients.mdx
+    convertPathData.mdx
+    convertShapeToPath.mdx
+    convertStyleToAttrs.mdx
+    convertTransform.mdx
+    index.mdx
+    inlineStyles.mdx
+    mergePaths.mdx
+    mergeStyles.mdx
+    minifyStyles.mdx
+    moveElemsAttrsToGroup.mdx
+    moveGroupAttrsToElems.mdx
+    prefixIds.mdx
+    removeAttributesBySelector.mdx
+    removeAttrs.mdx
+    removeComments.mdx
+    removeDeprecatedAttrs.mdx
+    removeDesc.mdx
+    removeDimensions.mdx
+    removeDoctype.mdx
+    removeEditorsNSData.mdx
+    removeElementsByAttr.mdx
+    removeEmptyAttrs.mdx
+    removeEmptyContainers.mdx
+    removeEmptyText.mdx
+    removeHiddenElems.mdx
+    removeMetadata.mdx
+    removeNonInheritableGroupAttrs.mdx
+    removeOffCanvasPaths.mdx
+    removeRasterImages.mdx
+    removeScripts.mdx
+    removeStyleElement.mdx
+    removeTitle.mdx
+    removeUnknownsAndDefaults.mdx
+    removeUnusedNS.mdx
+    removeUselessDefs.mdx
+    removeUselessStrokeAndFill.mdx
+    removeViewBox.mdx
+    removeXMLNS.mdx
+    removeXMLProcInst.mdx
+    removeXlink.mdx
+    reusePaths.mdx
+    sortAttrs.mdx
+    sortDefsChildren.mdx
   05-plugins-api.mdx
   06-migrations/
     01-migration-from-v3-to-v4.mdx
@@ -119,85 +177,6 @@ lib/
   types.js
     1→export default {};
   types.ts
-    …
-    30→export type DefaultPlugins = {
-    …
-    67→export type PresetDefaultOverrides = {
-    68→  [Name in keyof DefaultPlugins]?: DefaultPlugins[Name] | false;
-    69→};
-    71→export type BuiltinsWithOptionalParams = DefaultPlugins & {
-    …
-    100→export type BuiltinsWithRequiredParams = {
-    101→  addAttributesToSVGElement: AddAttributesToSVGElementParams;
-    102→  addClassesToSVGElement: AddClassesToSVGElementParams;
-    103→  removeAttributesBySelector: RemoveAttributesBySelectorParams;
-    104→  removeAttrs: RemoveAttrsParams;
-    105→  removeElementsByAttr: RemoveElementsByAttrParams;
-    106→};
-    108→export type PluginsParams = BuiltinsWithOptionalParams &
-    109→  BuiltinsWithRequiredParams;
-    111→export type CustomPlugin<T = any> = {
-    112→  name: string;
-    113→  fn: Plugin<T>;
-    114→  params?: T;
-    115→};
-    117→export type PluginConfig =
-    …
-    133→export type BuiltinPlugin<Name extends string, Params> = {
-    134→  /** Name of the plugin, also known as the plugin ID. */
-    135→  name: Name;
-    136→  description?: string;
-    137→  fn: Plugin<Params>;
-    138→};
-    …
-    155→export type BuiltinPluginOrPreset<Name extends string, Params> = BuiltinPlugin<
-    156→  Name,
-    157→  Params
-    158→> &
-    159→  (PresetProperties<true> | Partial<PresetProperties<false>>);
-    161→export type XastDoctype = {
-    162→  type: 'doctype';
-    163→  name: string;
-    164→  data: {
-    165→    doctype: string;
-    166→  };
-    167→};
-    169→export type XastInstruction = {
-    170→  type: 'instruction';
-    171→  name: string;
-    172→  value: string;
-    173→};
-    175→export type XastComment = {
-    176→  type: 'comment';
-    177→  value: string;
-    178→};
-    180→export type XastCdata = {
-    181→  type: 'cdata';
-    182→  value: string;
-    183→};
-    185→export type XastText = {
-    186→  type: 'text';
-    187→  value: string;
-    188→};
-    190→export type XastElement = {
-    191→  type: 'element';
-    192→  name: string;
-    193→  attributes: Record<string, string>;
-    194→  children: XastChild[];
-    195→};
-    197→export type XastChild =
-    198→  | XastDoctype
-    199→  | XastInstruction
-    200→  | XastComment
-    201→  | XastCdata
-    202→  | XastText
-    203→  | XastElement;
-    205→export type XastRoot = {
-    206→  type: 'root';
-    207→  children: XastChild[];
-    208→};
-    210→export type XastParent = XastRoot | XastElement;
-    …
   util/
     map-nodes-to-parents.js
     visit.js
@@ -243,6 +222,23 @@ package.json
   74→  "engines": {
   75→    "node": ">=16"
   76→  },
+  77→  "scripts": {
+  78→    "build": "node scripts/sync-version.js && yarn build:bundles && yarn build:types",
+  79→    "build:bundles": "yarn clean:build && rollup -c",
+  80→    "build:types": "yarn clean:types && tsc && tsc -p tsconfig.build.json",
+  81→    "lint": "eslint . && prettier --check .",
+  82→    "lint:fix": "eslint --fix . && prettier --write .",
+  83→    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=4 --coverage",
+  84→    "test:bundles": "yarn build:bundles && node ./test/svgo.cjs && node ./test/browser.js",
+  85→    "test:types": "yarn build:types && tsc && tsd",
+  86→    "test:regression": "node ./test/regression/extract.js && node ./test/regression/optimize.js && cross-env NO_DIFF=1 node ./test/regression/compare.js",
+  87→    "qa": "yarn lint && yarn test:types && yarn test && yarn test:bundles && yarn test:regression",
+  88→    "clean": "yarn clean:build && yarn clean:types",
+  89→    "clean:build": "rimraf dist",
+  90→    "clean:types": "rimraf types",
+  91→    "spellcheck": "cspell -u .",
+  92→    "prepublishOnly": "yarn clean && yarn build"
+  93→  },
   …
   104→  "dependencies": {
   105→    "commander": "^11.1.0",

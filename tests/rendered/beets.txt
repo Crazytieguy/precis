@@ -99,48 +99,6 @@ beets/
       17→CLI commands are implemented in the ui.commands module.
       18→"""
       …
-      31→from functools import cache
-      32→from typing import TYPE_CHECKING, Any
-      …
-      36→from beets import config, library, logging, plugins, util
-      37→from beets.dbcore import db
-      38→from beets.dbcore import query as db_query
-      39→from beets.util import as_string
-      40→from beets.util.color import colorize
-      41→from beets.util.deprecation import deprecate_for_maintainers
-      42→from beets.util.diff import get_model_changes
-      43→from beets.util.functemplate import template
-      …
-      59→log = logging.getLogger("beets")
-      …
-      65→PF_KEY_QUERIES = {
-      66→    "comp": "comp:true",
-      67→    "singleton": "singleton:true",
-      68→}
-      71→class UserError(Exception):
-      72→    """UI exception. Commands should throw this in order to display
-      73→    nonrecoverable errors to the user.
-      74→    """
-      …
-      80→def _in_encoding():
-      81→    """Get the encoding to use for *inputting* strings from the console."""
-      82→    return _stream_encoding(sys.stdin)
-      85→def _out_encoding():
-      86→    """Get the encoding to use for *outputting* strings to the console."""
-      87→    return _stream_encoding(sys.stdout)
-      90→def _stream_encoding(stream, default="utf-8"):
-      …
-      111→def decargs(arglist):
-      112→    """Given a list of command-line argument bytestrings, attempts to
-      113→    decode them to Unicode strings when running under Python 2.
-      114→
-      115→    .. deprecated:: 2.4.0
-      116→       This function will be removed in 3.0.0.
-      117→    """
-      118→    deprecate_for_maintainers("'beets.ui.decargs'")
-      119→    return arglist
-      122→def print_(*strings: str, end: str = "\n") -> None:
-      …
     commands/
       __init__.py
         …
@@ -216,72 +174,6 @@ beets/
       …
       15→"""Miscellaneous utility functions."""
       …
-      31→from collections import Counter
-      32→from collections.abc import Sequence
-      33→from contextlib import suppress
-      34→from enum import Enum
-      35→from functools import cache
-      36→from importlib import import_module
-      37→from multiprocessing.pool import ThreadPool
-      38→from pathlib import Path
-      39→from re import Pattern
-      40→from typing import (
-      41→    TYPE_CHECKING,
-      42→    Any,
-      43→    AnyStr,
-      44→    ClassVar,
-      45→    Generic,
-      46→    NamedTuple,
-      47→    TypeVar,
-      48→    cast,
-      49→)
-      50→
-      51→from unidecode import unidecode
-      …
-      54→from beets.util import hidden
-      …
-      62→MAX_FILENAME_LENGTH = 200
-      63→WINDOWS_MAGIC_PREFIX = "\\\\?\\"
-      64→T = TypeVar("T")
-      65→StrPath = str | Path
-      66→PathLike = StrPath | bytes
-      67→Replacements = Sequence[tuple[Pattern[str], str]]
-      …
-      71→PathBytes = bytes
-      72→
-      73→
-      74→class HumanReadableError(Exception):
-      …
-      88→    error_kind = "Error"  # Human-readable description of error type.
-      89→
-      90→    def __init__(self, reason, verb, tb=None):
-      …
-      96→    def _gerund(self):
-      97→        """Generate a (likely) gerund form of the English verb."""
-      …
-      104→    def _reasonstr(self):
-      105→        """Get the reason as a string."""
-      …
-      115→    def get_message(self):
-      116→        """Create the human-readable description of the error, sans
-      117→        introduction.
-      118→        """
-      119→        raise NotImplementedError
-      121→    def log(self, logger):
-      122→        """Log to the provided `logger` a human-readable message as an
-      123→        error and a verbose traceback as a debug message.
-      124→        """
-      …
-      130→class FilesystemError(HumanReadableError):
-      131→    """An error that occurred while performing a filesystem manipulation
-      132→    via a function in this module. The `paths` field is a sequence of
-      133→    pathnames involved in the operation.
-      134→    """
-      136→    def __init__(self, reason, verb, paths, tb=None):
-      137→        self.paths = paths
-      138→        super().__init__(reason, verb, tb)
-      140→    def get_message(self):
-      …
     artresizer.py
     bluelet.py
     color.py
@@ -298,6 +190,170 @@ beets/
     pipeline.py
     units.py
 beetsplug/
+  _typing.py
+  _utils/
+    __init__.py
+    art.py
+    musicbrainz.py
+    playcount.py
+    requests.py
+    vfs.py
+  absubmit.py
+  acousticbrainz.py
+  advancedrewrite.py
+  albumtypes.py
+  aura.py
+  autobpm.py
+  badfiles.py
+  bareasc.py
+  beatport.py
+  bench.py
+  bpd/
+    __init__.py
+      …
+      15→"""A clone of the Music Player Daemon (MPD) that plays music from a
+      16→Beets library. Attempts to implement a compatible protocol to allow
+      17→use of the wide range of MPD clients.
+      18→"""
+      …
+    gstplayer.py
+  bpm.py
+  bpsync.py
+  bucket.py
+  chroma.py
+  convert.py
+  deezer.py
+  discogs/
+    __init__.py
+      …
+      15→"""Adds Discogs album search support to the autotagger. Requires the
+      16→python3-discogs-client library.
+      17→"""
+      …
+    states.py
+    types.py
+  duplicates.py
+  edit.py
+  embedart.py
+  embyupdate.py
+  export.py
+  fetchart.py
+  filefilter.py
+  fish.py
+  freedesktop.py
+  fromfilename.py
+  ftintitle.py
+  fuzzy.py
+  hook.py
+  ihate.py
+    …
+    22→__author__ = "baobab@heresiarch.info"
+    23→__version__ = "2.0"
+    …
+  importadded.py
+  importfeeds.py
+  importsource.py
+  info.py
+  inline.py
+  ipfs.py
+  keyfinder.py
+  kodiupdate.py
+  lastgenre/
+    __init__.py
+      …
+      16→"""Gets genres for imported music based on Last.fm tags.
+      17→
+      18→Uses a provided whitelist file to determine which tags are valid genres.
+      19→The included (default) genre list was originally produced by scraping Wikipedia
+      20→and has been edited to remove some questionable entries.
+      21→The scraper script used is available here:
+      22→https://gist.github.com/1241307
+      23→"""
+      …
+    client.py
+    genres-tree.yaml
+    genres.txt
+    utils.py
+  lastimport.py
+  limit.py
+  listenbrainz.py
+  loadext.py
+  lyrics.py
+  mbcollection.py
+  mbpseudo.py
+  mbsubmit.py
+  mbsync.py
+  metasync/
+    __init__.py
+      …
+      15→"""Synchronize information from music player libraries"""
+      …
+    amarok.py
+    itunes.py
+  missing.py
+  mpdstats.py
+  mpdupdate.py
+  musicbrainz.py
+  parentwork.py
+  permissions.py
+  play.py
+  playlist.py
+  plexupdate.py
+  random.py
+  replace.py
+  replaygain.py
+  rewrite.py
+  scrub.py
+  smartplaylist.py
+  sonosupdate.py
+  spotify.py
+  subsonicplaylist.py
+    …
+    29→__author__ = "https://github.com/MrNuggelz"
+    …
+  subsonicupdate.py
+    …
+    41→__author__ = "https://github.com/maffo999"
+    …
+  substitute.py
+  the.py
+    …
+    22→__author__ = "baobab@heresiarch.info"
+    23→__version__ = "1.1"
+    …
+  thumbnails.py
+  tidal/
+    __init__.py
+    api.py
+    api_types.py
+    session.py
+  titlecase.py
+    …
+    36→__author__ = "henryoberholtzer@gmail.com"
+    37→__version__ = "1.0"
+    …
+  types.py
+  unimported.py
+    …
+    26→__author__ = "https://github.com/MrNuggelz"
+    …
+  web/
+    __init__.py
+      …
+      15→"""A Web interface to beets."""
+      …
+    static/
+      backbone.js
+      beets.css
+      beets.js
+      jquery.js
+      underscore.js
+    templates/
+      index.html
+  zero.py
+    …
+    26→__author__ = "baobab@heresiarch.info"
+    …
 codecov.yml
 docs/
   .gitignore

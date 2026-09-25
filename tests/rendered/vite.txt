@@ -112,70 +112,6 @@ packages/
     package.json
     src/
       index.ts
-        …
-        11→const {
-        12→  blue,
-        13→  blueBright,
-        14→  cyan,
-        15→  green,
-        16→  greenBright,
-        17→  magenta,
-        18→  red,
-        19→  redBright,
-        20→  reset,
-        21→  underline,
-        22→  yellow,
-        23→} = createColors()
-        25→const argv = mri<{
-        26→  template?: string
-        27→  help?: boolean
-        28→  overwrite?: boolean
-        29→  immediate?: boolean
-        30→  interactive?: boolean
-        31→}>(process.argv.slice(2), {
-        32→  boolean: ['help', 'overwrite', 'immediate', 'interactive'],
-        33→  alias: { h: 'help', t: 'template', i: 'immediate' },
-        34→  string: ['template'],
-        35→})
-        36→const cwd = process.cwd()
-        …
-        39→const helpMessage = `\
-        …
-        63→type ColorFunc = (str: string) => string
-        64→type Framework = {
-        65→  name: string
-        66→  display: string
-        67→  color: ColorFunc
-        68→  variants: FrameworkVariant[]
-        69→}
-        70→type FrameworkVariant = {
-        71→  name: string
-        72→  display: string
-        73→  link?: `https://${string}`
-        74→  color: ColorFunc
-        75→  customCommand?: string
-        76→}
-        78→const FRAMEWORKS: Framework[] = [
-        …
-        387→const TEMPLATES = FRAMEWORKS.map((f) => f.variants.map((v) => v.name)).reduce(
-        388→  (a, b) => a.concat(b),
-        389→  [],
-        390→)
-        392→const renameFiles: Record<string, string | undefined> = {
-        393→  _gitignore: '.gitignore',
-        394→}
-        396→const defaultTargetDir = 'vite-project'
-        397→
-        398→function run([command, ...args]: string[], options?: SpawnOptions) {
-        …
-        411→function install(root: string, agent: string) {
-        …
-        425→function start(root: string, agent: string) {
-        …
-        437→async function init() {
-        …
-        702→function formatTargetDir(targetDir: string) {
-        …
     template-lit/
     template-lit-ts/
     template-preact/
@@ -205,40 +141,6 @@ packages/
         readme.spec.ts
         snippets.spec.ts
       index.ts
-        …
-        32→let babel: Promise<typeof import('@babel/core')> | undefined
-        33→async function loadBabel() {
-        34→  return (babel ??= import('@babel/core'))
-        …
-        39→const { loadConfig: browserslistLoadConfig } = browserslist
-        …
-        43→function toOutputFilePathInHtml(
-        44→  filename: string,
-        45→  type: 'asset' | 'public',
-        46→  hostId: string,
-        47→  hostType: 'js' | 'css' | 'html',
-        48→  config: ResolvedConfig,
-        49→  toRelative: (filename: string, importer: string) => string,
-        50→): string {
-        …
-        80→function getBaseInHTML(urlRelativePath: string, config: ResolvedConfig) {
-        …
-        90→function joinUrlSegments(a: string, b: string): string {
-        …
-        103→function toAssetPathFromHtml(
-        104→  filename: string,
-        105→  htmlPath: string,
-        106→  config: ResolvedConfig,
-        107→): string {
-        …
-        121→const legacyEnvVarMarker = `__VITE_IS_LEGACY__`
-        122→const modernEnvVarMarker = `__VITE_IS_MODERN__`
-        123→
-        124→const _require = createRequire(import.meta.url)
-        125→
-        126→const nonLeadingHashInFileNameRE = /[^/]+\[hash(?::\d+)?\]/
-        127→const prefixedHashInFileNameRE = /\W?\[hash(?::\d+)?\]/
-        …
       shims.d.ts
       snippets.ts
       types.ts
@@ -417,6 +319,233 @@ patches/
   dotenv-expand@13.0.0.patch
   sirv@3.0.2.patch
 playground/
+  alias/
+  assets/
+  assets-sanitize/
+  backend-integration/
+    __tests__/
+    dir/
+    frontend/
+      entrypoints/
+      images/
+        logo.png
+      styles/
+    package.json
+    references.css
+    vite.config.js
+  base-conflict/
+    __tests__/
+    index.html
+    package.json
+    src/
+    vite.config.ts
+  build-old/
+    __tests__/
+    dynamic.js
+    index.html
+    package.json
+    vite.config.js
+  cli/
+    __tests__/
+    index.html
+    index.js
+    package.json
+    vite.config.js
+  cli-module/
+    __tests__/
+    index.html
+    index.js
+    package.json
+    vite.config.js
+  client-reload/
+    __tests__/
+    index.html
+    package.json
+    vite.config.ts
+  csp/
+  css/
+  css-codesplit/
+  css-codesplit-cjs/
+  css-dynamic-import/
+  css-lightningcss/
+  css-lightningcss-proxy/
+    __tests__/
+    index.html
+    package.json
+    server.js
+  css-lightningcss-root/
+    __tests__/
+    package.json
+    root/
+    vite.config.js
+  css-no-codesplit/
+  css-sourcemap/
+  data-uri/
+  define/
+  devtools/
+    index.html
+    package.json
+    src/
+      counter.ts
+      main.ts
+    vite.config.ts
+  dynamic-import/
+  dynamic-import-inline/
+    __tests__/
+    index.html
+    package.json
+    src/
+      foo.js
+      index.js
+    vite.config.js
+  env/
+  env-nested/
+  environment-react-ssr/
+  extensions/
+    __tests__/
+    index.html
+    package.json
+    vite.config.js
+  external/
+  forward-console/
+    __test__/
+    fixtures/
+    index.html
+    package.json
+    src/
+      main.ts
+    vite.config.ts
+  fs-serve/
+  glob-import/
+  hmr/
+  hmr-full-bundle-mode/
+  hmr-root/
+    __tests__/
+    foo.js
+    root/
+      index.html
+    vite.config.ts
+  hmr-ssr/
+  html/
+  import-assertion/
+    __tests__/
+    data.json
+    import-assertion-dep/
+      data.json
+      index.js
+      package.json
+    index.html
+    package.json
+  js-sourcemap/
+  json/
+  legacy/
+  lib/
+  minify/
+  module-graph/
+  multiple-entrypoints/
+  nested-deps/
+  object-hooks/
+    __tests__/
+    index.html
+    main.ts
+    package.json
+    vite.config.ts
+  optimize-deps/
+  optimize-deps-no-discovery/
+    __tests__/
+    dep-no-discovery/
+      index.js
+      package.json
+    index.html
+    package.json
+    vite.config.js
+  optimize-missing-deps/
+  package.json
+  preload/
+  preserve-symlinks/
+    __tests__/
+    index.html
+    module-a/
+      linked.js
+      package.json
+      src/
+    package.json
+    src/
+      main.js
+  proxy-bypass/
+    __tests__/
+    index.html
+    package.json
+    vite.config.js
+  proxy-hmr/
+    __tests__/
+    index.html
+    other-app/
+    package.json
+    vite.config.js
+  resolve/
+  resolve-linked/
+    dep.js
+    package.json
+    src/
+      index.js
+  resolve-tsconfig-paths/
+  shims.d.ts
+  ssr/
+    __tests__/
+    index.html
+    package.json
+    server.js
+    src/
+    vite.config.ts
+  ssr-alias/
+    __tests__/
+    alias-original/
+      index.js
+      package.json
+    package.json
+    src/
+    vite.config.js
+  ssr-conditions/
+  ssr-deps/
+  ssr-html/
+  ssr-noexternal/
+  ssr-pug/
+    __tests__/
+    index.pug
+    package.json
+    server.js
+    src/
+      app.js
+  ssr-resolve/
+  ssr-wasm/
+    __tests__/
+    package.json
+    server.js
+    src/
+    vite.config.ts
+  ssr-webworker/
+  tailwind/
+  tailwind-sourcemap/
+  tailwind-v3/
+  test-utils.ts
+  transform-plugin/
+  tsconfig-json/
+  tsconfig-json-load-error/
+    __tests__/
+    has-error/
+      main.ts
+      tsconfig.json
+    index.html
+    package.json
+    src/
+      main.ts
+    tsconfig.json
+  tsconfig.json
+  vitestGlobalSetup.ts
+  vitestSetup.ts
+  wasm/
+  worker/
 pnpm-lock.yaml
 pnpm-workspace.yaml
 scripts/
