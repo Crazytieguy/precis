@@ -173,19 +173,17 @@ pub struct RenderedTree {
     root: PathBuf,
     nodes: HashMap<PathBuf, TreeNode>,
     source_cache: SourceCache,
-    /// Memo for "does this file hold anything on disk" — one `stat` per
+    /// Memo for "is this file empty on disk" — one `stat` per
     /// file, asked once per render and once per scheduler cost probe.
     /// Directories go through [`Self::dir_entry_counts`], which answers
     /// the same question and more.
-    entry_non_empty: RefCell<HashMap<PathBuf, bool>>,
+    file_empty: RefCell<HashMap<PathBuf, bool>>,
     /// Memo for "how many entries does this directory show" — the
     /// denominator behind [`Self::listing_partial`].
     dir_entry_counts: RefCell<HashMap<PathBuf, usize>>,
-    /// Same ignore rules discovery walks under, so the elision marker
-    /// means "content precis is withholding" rather than "content precis
-    /// would never show". A directory holding only ignored entries is
-    /// empty as far as the reader is concerned, and marking it would
-    /// promise substance that no budget can buy.
+    /// Same ignore rules discovery walks under: a directory holding only
+    /// ignored entries has nothing any budget could show, so it is marked
+    /// empty rather than read as unexpanded.
     ///
     /// Shared rather than owned: the filter's caches are what keep the
     /// "is anything visible beneath this directory" question from
@@ -212,7 +210,7 @@ impl RenderedTree {
             root,
             nodes,
             source_cache,
-            entry_non_empty: RefCell::new(HashMap::new()),
+            file_empty: RefCell::new(HashMap::new()),
             dir_entry_counts: RefCell::new(HashMap::new()),
             dir_filter,
         }
@@ -291,34 +289,22 @@ impl RenderedTree {
             .unwrap_or(0)
     }
 
-    /// Whether the node at `path` puts anything of its own below its
-    /// entry row — listed children for a directory, source rows for a
-    /// file. Ellipsis records are gap occupants, not rows.
-    fn renders_content(&self, path: &Path) -> bool {
-        match self.nodes.get(path) {
-            Some(TreeNode::Dir { children }) => !children.is_empty(),
-            Some(TreeNode::File { content }) => content.values().any(is_anchor_record),
-            None => false,
-        }
-    }
-
-    /// Whether `path` holds anything at all on disk. Guards the elision
-    /// marker so a genuinely empty directory or zero-byte file keeps
-    /// rendering as a bare name.
-    fn entry_non_empty(&self, path: &Path, kind: EntryKind) -> bool {
+    /// Whether `path` is known to hold nothing on disk: a directory with no
+    /// entries through the walk's ignore rules, or a zero-byte file.
+    fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
         // Directories answer from the entry-count memo — a second bool
-        // memo over the same key would be `count > 0` restated.
+        // memo over the same key would be `count == 0` restated.
         if matches!(kind, EntryKind::Directory) {
-            return self.dir_entry_count(path) > 0;
+            return self.dir_entry_count(path) == 0;
         }
-        if let Some(&known) = self.entry_non_empty.borrow().get(path) {
+        if let Some(&known) = self.file_empty.borrow().get(path) {
             return known;
         }
-        let non_empty = std::fs::metadata(path).is_ok_and(|m| m.len() > 0);
-        self.entry_non_empty
+        let empty = std::fs::metadata(path).is_ok_and(|m| m.len() == 0);
+        self.file_empty
             .borrow_mut()
-            .insert(path.to_path_buf(), non_empty);
-        non_empty
+            .insert(path.to_path_buf(), empty);
+        empty
     }
 
     /// Entries `dir` shows through the walk's ignore rules — the same
@@ -333,39 +319,6 @@ impl RenderedTree {
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
         count
-    }
-
-    /// Whether `path`'s entry row carries the elision marker: it shows
-    /// none of its contents, but there are contents to show.
-    fn entry_elided(&self, path: &Path, kind: EntryKind) -> bool {
-        !self.renders_content(path) && self.entry_non_empty(path, kind)
-    }
-
-    /// Marginal cost of the elision marker on `path`'s *own* entry row,
-    /// or `None` when there is no such row (the root) or it isn't marked.
-    /// Listing a directory's children — or admitting a file's first source
-    /// row — takes this marker back off the parent-emitted row, so both
-    /// cost paths refund it.
-    fn entry_marker_cost<T: Fn(&str) -> usize>(&self, path: &Path, tokens: &T) -> Option<Cost> {
-        if path == self.root {
-            return None;
-        }
-        let parent = path.parent()?;
-        let name = path.file_name()?.to_str()?;
-        let TreeNode::Dir { children } = self.nodes.get(parent)? else {
-            return None;
-        };
-        let kind = *children.get(name)?;
-        if !self.entry_elided(path, kind) {
-            return None;
-        }
-        let indent_depth = self.depth_from_root(parent);
-        let marked = format_entry_row(name, kind, indent_depth, true);
-        let plain = format_entry_row(name, kind, indent_depth, false);
-        Some(Cost {
-            tokens: tokens(&marked).saturating_sub(tokens(&plain)),
-            chars: char_units(&marked).saturating_sub(char_units(&plain)),
-        })
     }
 
     fn visit_fs_atom_costs<F, T>(&self, groups: &[FsGroup], tokens: &T, visit: &mut F)
@@ -389,10 +342,8 @@ impl RenderedTree {
                 _ => None,
             };
             let probed = list_dir(parent, &self.dir_filter);
-            // Signed per-group accounting: new entry rows, minus the
-            // elision marker the parent's own row sheds once it renders
-            // children, plus the change in its trailing partial-listing
-            // marker.
+            // Signed per-group accounting: new entry rows plus the change
+            // in the trailing partial-listing marker.
             let mut d_tokens: isize = 0;
             let mut d_chars: isize = 0;
             let listed_before = already_listed.map_or(0, |c| c.len());
@@ -406,17 +357,11 @@ impl RenderedTree {
                 }
                 let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
                 let child = parent.join(name);
-                let row =
-                    format_entry_row(name, kind, indent_depth, self.entry_elided(&child, kind));
+                let empty = self.entry_empty(&child, kind);
+                let row = format_entry_row(name, kind, indent_depth, empty);
                 d_tokens += tokens(&row) as isize;
                 d_chars += char_units(&row) as isize;
                 new_rows += 1;
-            }
-            if new_rows > 0
-                && let Some(marker) = self.entry_marker_cost(parent, tokens)
-            {
-                d_tokens -= marker.tokens as isize;
-                d_chars -= marker.chars as isize;
             }
             let shown = self.dir_entry_count(parent);
             let partial_delta = isize::from(listing_partial(listed_before + new_rows, shown))
@@ -492,17 +437,11 @@ impl RenderedTree {
                     }
                 }
             }
-            let delta = local_marker_delta(existing, &file_spans, source.as_deref());
-            if delta.gaps != 0 {
+            let gap_delta = local_gap_marker_delta(existing, &file_spans, source.as_deref());
+            if gap_delta != 0 {
                 let marker_row = format_marker_row(indent_depth);
-                d_tokens += delta.gaps * tokens(&marker_row) as isize;
-                d_chars += delta.gaps * char_units(&marker_row) as isize;
-            }
-            if delta.entry != 0
-                && let Some(marker) = self.entry_marker_cost(path, tokens)
-            {
-                d_tokens += delta.entry * marker.tokens as isize;
-                d_chars += delta.entry * marker.chars as isize;
+                d_tokens += gap_delta * tokens(&marker_row) as isize;
+                d_chars += gap_delta * char_units(&marker_row) as isize;
             }
             visit(Cost {
                 tokens: d_tokens.max(0) as usize,
@@ -599,7 +538,7 @@ impl RenderedTree {
                 name,
                 *kind,
                 indent_depth,
-                self.entry_elided(&child, *kind),
+                self.entry_empty(&child, *kind),
             ));
             match kind {
                 EntryKind::Directory => {
@@ -625,8 +564,6 @@ impl RenderedTree {
         // are gap occupants, not rows — synthesis subsumes them.
         let anchors = content_anchor_lines(content);
         if anchors.is_empty() {
-            // Nothing of this file is shown; the marker rides on the
-            // entry row `render_dir` emitted, not on a row of its own.
             return;
         }
         let source = self.source_cache.get(path);
@@ -671,26 +608,17 @@ fn is_anchor_record(record: &LineRecord) -> bool {
     !matches!(record.render, Render::Ellipsis)
 }
 
-/// Marker change caused by replacing `entries` in one file: `gaps` counts
-/// synthesized in-file `…` rows, `entry` the file's own entry-row elision
-/// marker (which exists exactly while the file shows no source at all).
-#[derive(Default)]
-struct MarkerDelta {
-    gaps: isize,
-    entry: isize,
-}
-
-/// Exact marker change caused by replacing `entries` in one file. Only the
-/// gap bounded by the nearest unchanged anchors can change, so this avoids
-/// cloning and rescanning the file's full accumulated anchor set for every
-/// scheduler probe.
-fn local_marker_delta(
+/// Change in synthesized in-file `…` rows caused by replacing `spans` in
+/// one file. Only the gap bounded by the nearest unchanged anchors can
+/// change, so this avoids cloning and rescanning the file's full
+/// accumulated anchor set for every scheduler probe.
+fn local_gap_marker_delta(
     existing: Option<&BTreeMap<usize, LineRecord>>,
     spans: &[&Span],
     source: Option<&Source>,
-) -> MarkerDelta {
+) -> isize {
     let Some(first_changed) = spans.iter().map(|span| span.start).min() else {
-        return MarkerDelta::default();
+        return 0;
     };
     let last_changed = spans
         .iter()
@@ -738,13 +666,13 @@ fn local_marker_delta(
     // `left`/`right` are the nearest anchors outside the changed range, so
     // either being present means the batch can't take the file's last
     // anchor away. Together with the local sets that decides whether the
-    // file shows any source at all before and after — which is what both
-    // the gap rows and the entry marker hinge on.
+    // file shows any source at all before and after; a file showing none
+    // has no gap rows.
     let outer_anchors = left.is_some() || right.is_some();
     let shown_before = outer_anchors || !before.is_empty();
     let shown_after = outer_anchors || !after.is_empty();
 
-    let gaps = source.map_or(0, |source| {
+    source.map_or(0, |source| {
         let before_count = if shown_before {
             marker_count_between(left, right, &before, source)
         } else {
@@ -756,11 +684,7 @@ fn local_marker_delta(
             0
         };
         after_count as isize - before_count as isize
-    });
-    MarkerDelta {
-        gaps,
-        entry: isize::from(!shown_after) - isize::from(!shown_before),
-    }
+    })
 }
 
 /// Count non-blank gaps between unchanged outer anchors. `inner` contains
@@ -816,13 +740,10 @@ fn walk_anchor_gaps(
     }
 }
 
-/// One synthesized elision marker row.
 /// Whether a directory showing `listed` of its `shown` entries needs a
-/// trailing `…` row. Same argument as the entry-row marker: a listing
-/// cut short is otherwise byte-identical to a complete one, and readers
-/// take marker-absence as proof of completeness. A directory showing
-/// none of its entries is covered by the marker on its own entry row
-/// instead.
+/// trailing `…` row: a listing cut short is otherwise identical to a
+/// complete one. A directory showing none of its entries reads as
+/// unexpanded without one.
 fn listing_partial(listed: usize, shown: usize) -> bool {
     listed > 0 && listed < shown
 }
@@ -834,11 +755,9 @@ fn format_marker_row(indent_depth: usize) -> String {
     s
 }
 
-/// One tree entry row. `elided` trails the same `…` glyph the in-file
-/// gap rows use: the entry holds content and none of it is shown. Without
-/// it a pruned entry is byte-identical to an empty one, and readers take
-/// marker-absence as proof of emptiness.
-fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize, elided: bool) -> String {
+/// One tree entry row. An entry with nothing rendered under it reads as
+/// unexpanded, so the rare entry that is empty on disk says so.
+fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize, empty: bool) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
     for ch in name.chars() {
         if ch.is_control() {
@@ -850,8 +769,8 @@ fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize, elided: bo
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
     }
-    if elided {
-        s.push_str(" …");
+    if empty {
+        s.push_str(" (empty)");
     }
     s.push('\n');
     s
@@ -990,7 +909,7 @@ mod tests {
     ];
 
     #[test]
-    fn render_entry_marker_separates_pruned_entries_from_empty_ones() {
+    fn render_empty_marker_separates_empty_entries_from_pruned_ones() {
         let temp = disk_fixture();
         let root = temp.path().to_path_buf();
         let mut tree = RenderedTree::new(root.clone(), SourceCache::new());
@@ -1011,24 +930,21 @@ mod tests {
         );
 
         let out = tree.render();
-        // Content is hidden behind these, so they say so.
-        assert!(out.contains("pruned/ …\n"), "output:\n{out}");
-        assert!(out.contains("hidden.rs …\n"), "output:\n{out}");
-        // These hold nothing; marking them would be the opposite lie.
-        assert!(out.contains("empty/\n"), "output:\n{out}");
-        assert!(out.contains("zero.rs\n"), "output:\n{out}");
-        // These render their contents, so the marker comes back off.
+        assert!(out.contains("pruned/\n"), "output:\n{out}");
+        assert!(out.contains("hidden.rs\n"), "output:\n{out}");
+        assert!(out.contains("empty/ (empty)\n"), "output:\n{out}");
+        assert!(out.contains("zero.rs (empty)\n"), "output:\n{out}");
         assert!(out.contains("listed/\n"), "output:\n{out}");
         assert!(out.contains("shown.rs\n"), "output:\n{out}");
     }
 
     #[test]
-    fn render_entry_marker_charged_cost_matches_rendered_rows() {
+    fn render_charged_cost_matches_rendered_rows_across_expansions() {
         let temp = disk_fixture();
         let root = temp.path().to_path_buf();
         let mut tree = RenderedTree::new(root.clone(), SourceCache::new());
-        // Each step takes a marker back off a row an earlier step paid
-        // for, so a stale charge shows up as a mismatch here.
+        // Each step expands an entry an earlier step listed, so a charge
+        // that ignores the tree state shows up as a mismatch here.
         let steps = [
             dir_listing(root.clone(), DISK_FIXTURE_ROOT_ENTRIES),
             dir_listing(root.join("listed"), &["c.rs"]),

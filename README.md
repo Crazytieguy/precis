@@ -8,12 +8,12 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 
 <!-- precis-example-start -->
 ```
-.editorconfig …
-.eslintrc …
+.editorconfig
+.eslintrc
 .github/
-  PULL_REQUEST_TEMPLATE.md …
+  PULL_REQUEST_TEMPLATE.md
   workflows/
-    compressed-size.yml …
+    compressed-size.yml
     main.yml
       1→name: CI
       2→
@@ -40,8 +40,8 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
       23→          npm test
       24→        env:
       25→          CI: true
-.gitignore …
-LICENSE …
+.gitignore
+LICENSE
 README.md
   …
   9→# Mitt
@@ -90,15 +90,15 @@ src/
     48→): Emitter<Events> {
     …
 test/
-  index_test.ts …
-  test-types-compilation.ts …
-tsconfig.json …
+  index_test.ts
+  test-types-compilation.ts
+tsconfig.json
 ```
 <!-- precis-example-end -->
 
 The file tree shows everything that exists; the README lede and heading outline give orientation; `package.json` identifies the package; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
 
-`…` always means "there is source here that isn't shown" — on a line of its own for a gap inside a file, and trailing a tree entry whose contents are entirely hidden. A name with no `…` and nothing under it is genuinely empty.
+A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
 
 ## Installation
 
@@ -165,9 +165,10 @@ Always use `precis` for codebase exploration. Run `precis .` for a full overview
 precis .                           # summarize the current directory
 precis ./src                       # zoom into a subdirectory
 precis . --token-budget 8000       # with a larger token budget
+precis . --char-budget 9000        # also cap the output's length
 ```
 
-The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation.
+The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; the plugin sets it so the injected context stays within Claude Code's 10,000-unit limit.
 
 When the path is a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are summarized normally.
 

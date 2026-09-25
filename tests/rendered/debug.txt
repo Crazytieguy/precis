@@ -1,5 +1,5 @@
-.editorconfig …
-.gitignore …
+.editorconfig
+.gitignore
 .travis.yml
   1→sudo: false
   2→
@@ -18,7 +18,7 @@
   15→  - npm run lint
   16→  - npm test
   17→  - npm run test:coverage
-LICENSE …
+LICENSE
 README.md
   1→# debug
   …
@@ -224,7 +224,7 @@ package.json
   58→  },
   …
 src/
-  browser.js …
+  browser.js
   common.js
     …
     7→function setup(env) {
@@ -254,10 +254,10 @@ src/
     8→} else {
     9→	module.exports = require('./node.js');
     10→}
-  node.js …
+  node.js
 test.js
   …
   3→const assert = require('assert');
   4→const debug = require('./src');
   …
-test.node.js …
+test.node.js

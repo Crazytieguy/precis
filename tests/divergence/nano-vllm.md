@@ -2,32 +2,32 @@ Score(3000)=0.734 I=0.902 C=0.598 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 28 | 28 | listing of '.' |  |  | 0.000 |
-| walker |  | 31 | 3 | listing of 'assets' |  |  | 0.000 |
+| walker |  | 26 | 26 | listing of '.' |  |  | 0.000 |
+| walker |  | 30 | 4 | listing of 'assets' |  |  | 0.000 |
 | ns | 33 |  | 33 | Project name and one-line description | 1.1 |  | 0.000 |
-| walker |  | 64 | 33 | README headline in README.md |  |  | 1.000 |
+| walker |  | 63 | 33 | README headline in README.md |  |  | 1.000 |
 | ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.537 |
-| walker |  | 99 | 35 | listing of 'nanovllm' |  |  | 0.577 |
-| ns | 117 |  | 28 | Complete repository root listing | 1.3 |  | 0.729 |
-| walker |  | 130 | 31 | python imports in nanovllm/__init__.py |  |  | 0.733 |
-| walker |  | 135 | 5 | listing of 'nanovllm/models' |  |  | 0.734 |
-| walker |  | 142 | 7 | listing of 'nanovllm/utils' |  |  | 0.735 |
-| ns | 152 |  | 35 | Complete nanovllm/ package listing | 1.4 |  | 0.756 |
-| walker |  | 165 | 23 | listing of 'nanovllm/engine' |  |  | 0.764 |
-| walker |  | 195 | 30 | listing of 'nanovllm/layers' |  |  | 0.778 |
-| ns | 230 |  | 78 | The complete public API: __init__.py and llm.py | 1.5 |  | 0.684 |
+| walker |  | 95 | 32 | listing of 'nanovllm' |  |  | 0.577 |
+| ns | 115 |  | 26 | Complete repository root listing | 1.3 |  | 0.729 |
+| walker |  | 126 | 31 | python imports in nanovllm/__init__.py |  |  | 0.733 |
+| walker |  | 132 | 6 | listing of 'nanovllm/models' |  |  | 0.734 |
+| walker |  | 140 | 8 | listing of 'nanovllm/utils' |  |  | 0.735 |
+| ns | 147 |  | 32 | Complete nanovllm/ package listing | 1.4 |  | 0.756 |
+| walker |  | 164 | 24 | listing of 'nanovllm/engine' |  |  | 0.764 |
+| walker |  | 195 | 31 | listing of 'nanovllm/layers' |  |  | 0.778 |
+| ns | 225 |  | 78 | The complete public API: __init__.py and llm.py | 1.5 |  | 0.684 |
 | walker |  | 251 | 56 | headings outline in README.md |  |  | 0.899 |
-| ns | 307 |  | 77 | README Key Features bullets | 1.6 |  | 0.835 |
+| ns | 302 |  | 77 | README Key Features bullets | 1.6 |  | 0.835 |
 | walker |  | 330 | 79 | [dependencies] in pyproject.toml |  |  | 0.836 |
 | walker |  | 407 | 77 | README.md section #1 |  |  | 0.911 |
 | walker |  | 446 | 39 | README.md section #2 |  |  | 0.911 |
-| ns | 455 |  | 148 | README Quick Start usage snippet | 1.7 |  | 0.794 |
+| ns | 450 |  | 148 | README Quick Start usage snippet | 1.7 |  | 0.794 |
 | walker |  | 457 | 11 | python decl names surface in bench.py |  |  | 0.794 |
 | walker |  | 457 | 0 | python decl at bench.py:8 |  |  | 0.794 |
 | walker |  | 468 | 11 | python decl names surface in example.py |  |  | 0.794 |
 | walker |  | 468 | 0 | python decl at example.py:6 |  |  | 0.794 |
 | walker |  | 558 | 90 | [package] in pyproject.toml |  |  | 0.797 |
-| ns | 572 |  | 117 | SamplingParams in full | 1.8 |  | 0.698 |
+| ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.698 |
 | walker |  | 580 | 22 | package metadata in pyproject.toml |  |  | 0.699 |
 | walker |  | 676 | 96 | manifest config in pyproject.toml |  |  | 0.699 |
 | walker |  | 689 | 13 | python imports in nanovllm/sampling_params.py |  |  | 0.701 |
@@ -35,22 +35,22 @@ Score(3000)=0.734 I=0.902 C=0.598 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 728 | 8 | python decl names surface in nanovllm/sampling_params.py |  |  | 0.704 |
 | walker |  | 736 | 8 | python decl at nanovllm/sampling_params.py:4 |  |  | 0.709 |
 | walker |  | 777 | 41 | python imports in bench.py |  |  | 0.709 |
-| ns | 786 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.599 |
+| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.599 |
 | walker |  | 833 | 56 | README.md section #6 |  |  | 0.599 |
 | walker |  | 847 | 14 | python method sigs in nanovllm/sampling_params.py |  |  | 0.607 |
 | walker |  | 847 | 0 | python method at nanovllm/sampling_params.py:10 |  |  | 0.607 |
 | walker |  | 867 | 20 | python imports in nanovllm/llm.py |  |  | 0.625 |
 | walker |  | 879 | 12 | python decl names surface in nanovllm/config.py |  |  | 0.625 |
 | walker |  | 886 | 7 | python decl at nanovllm/config.py:6 |  |  | 0.626 |
-| walker |  | 900 | 14 | python method sigs in nanovllm/config.py |  |  | 0.626 |
-| walker |  | 900 | 0 | python method at nanovllm/config.py:20 |  |  | 0.626 |
-| ns | 904 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.594 |
+| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.593 |
+| walker |  | 900 | 14 | python method sigs in nanovllm/config.py |  |  | 0.594 |
+| walker |  | 900 | 0 | python method at nanovllm/config.py:20 |  |  | 0.594 |
 | walker |  | 912 | 12 | python decl names surface in nanovllm/llm.py |  |  | 0.609 |
 | walker |  | 912 | 0 | python decl at nanovllm/llm.py:4 |  |  | 0.609 |
 | walker |  | 917 | 5 | python class body at nanovllm/llm.py:4 |  |  | 0.622 |
-| ns | 927 |  | 23 | Complete nanovllm/engine/ listing | 2.1 |  | 0.640 |
+| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.640 |
 | walker |  | 955 | 38 | python class body at nanovllm/sampling_params.py:4 |  |  | 0.671 |
-| ns | 972 |  | 45 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.699 |
+| ns | 972 |  | 49 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.699 |
 | ns | 1047 |  | 75 | LLMEngine method roster | 2.3 |  | 0.670 |
 | walker |  | 1112 | 157 | python class body at nanovllm/config.py:6 |  |  | 0.744 |
 | ns | 1121 |  | 74 | Scheduler method roster | 2.4 |  | 0.716 |

@@ -2,21 +2,21 @@ Score(3000)=0.766 I=0.876 C=0.669 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 36 | 36 | listing of '.' |  |  | 0.000 |
-| walker |  | 43 | 7 | listing of 'performance' |  |  | 0.000 |
+| walker |  | 33 | 33 | listing of '.' |  |  | 0.000 |
+| walker |  | 41 | 8 | listing of 'performance' |  |  | 0.000 |
 | ns | 65 |  | 65 | Module identity table (_VERSION / _DESCRIPTION / _URL) | 1.1 |  | 0.000 |
-| walker |  | 90 | 47 | README headline in README.md |  |  | 0.000 |
-| ns | 101 |  | 36 | Repository root listing (complete) | 1.2 |  | 0.479 |
-| walker |  | 147 | 57 | listing of 'spec' |  |  | 0.520 |
-| ns | 148 |  | 47 | README title and one-line pitch | 1.3 |  | 0.510 |
-| walker |  | 226 | 79 | listing of 'rockspecs' |  |  | 0.561 |
-| ns | 251 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.468 |
+| walker |  | 88 | 47 | README headline in README.md |  |  | 0.000 |
+| ns | 98 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.479 |
+| ns | 145 |  | 47 | README title and one-line pitch | 1.3 |  | 0.470 |
+| walker |  | 146 | 58 | listing of 'spec' |  |  | 0.510 |
+| walker |  | 226 | 80 | listing of 'rockspecs' |  |  | 0.561 |
+| ns | 248 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.468 |
 | walker |  | 291 | 65 | lua module identity in middleclass.lua |  |  | 0.810 |
 | walker |  | 337 | 46 | headings outline in UPDATING.md |  |  | 0.811 |
 | walker |  | 362 | 25 | lua decl names surface in performance/run.lua |  |  | 0.811 |
 | walker |  | 362 | 0 | lua decl at performance/run.lua:19 |  |  | 0.811 |
 | walker |  | 362 | 0 | lua decl at performance/run.lua:37 |  |  | 0.811 |
-| ns | 394 |  | 143 | Complete listings of spec/, performance/ and rockspecs/ | 1.5 |  | 0.835 |
+| ns | 394 |  | 146 | Complete listings of spec/, performance/ and rockspecs/ | 1.5 |  | 0.835 |
 | ns | 442 |  | 48 | All README section headings | 1.6 |  | 0.766 |
 | walker |  | 443 | 81 | headings outline in README.md |  |  | 0.851 |
 | walker |  | 481 | 38 | lua decl names surface in spec/metamethods_spec.lua |  |  | 0.851 |
