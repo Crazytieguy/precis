@@ -530,10 +530,9 @@ fn build_outline_content(
         // outline renders itself and so drops the marker. Fragile seam:
         // the outline is a DESCENDANT of `ReadmeHeadline`, and a
         // descendant `…` on an ancestor-rendered row silently demotes
-        // the paid row. Unreachable only because the decorative-title
-        // fallback ([`headline_spec`]) covers a contiguous run from the
-        // H1, and every heading it covers is dropped from `rows`.
-        // Widening that fallback past the first subsection arms this.
+        // the paid row. Unreachable only because [`headline_spec`]
+        // covers the first heading and blocks before the next one, and
+        // that heading is dropped from `rows`.
         ellipses.push(end + 1);
     }
     single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
@@ -1133,27 +1132,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     // `## About`) the first substantive paragraph IS the section body
     // and shouldn't pull in further content.
     let post: Vec<Node> = children_after(section, heading);
-    let captured_lede = extend_lede(&mut covered, &post, source, heading_level(heading) == 1);
-
-    // Decorative-title fallback: an image/badge-only H1 yields no lede,
-    // with the real "what is this" sentence pushed under the first
-    // subsection. When that subsection is intro-class (`## Introduction`
-    // / `## Overview` / `## About`), descend one level and capture its
-    // first substantive paragraph as the lede.
-    if !captured_lede
-        && heading_level(heading) == 1
-        && let Some(sub) = post.iter().find(|b| b.kind() == "section")
-        && let Some(sub_heading) = first_heading_child(*sub)
-        && is_intro_section_title(sub_heading, source)
-    {
-        extend_rows_inclusive(&mut covered, sub_heading, source);
-        extend_lede(
-            &mut covered,
-            &children_after(*sub, sub_heading),
-            source,
-            false,
-        );
-    }
+    extend_lede(&mut covered, &post, source, heading_level(heading) == 1);
 
     let truncate = compute_heading_truncation(heading, source);
 
@@ -2776,24 +2755,6 @@ fn first_heading_child(section: Node) -> Option<Node> {
         }
     }
     None
-}
-
-/// True iff `heading`'s title text names an orientation/intro section
-/// (`Introduction` / `Overview` / `About` / …) — the subsection a
-/// decorative-title README puts its "what is this" sentence under.
-fn is_intro_section_title(heading: Node, source: &str) -> bool {
-    let raw = &source[heading.start_byte()..heading.end_byte()];
-    let text = raw
-        .lines()
-        .next()
-        .unwrap_or("")
-        .trim_start_matches('#')
-        .trim()
-        .to_ascii_lowercase();
-    matches!(
-        text.as_str(),
-        "introduction" | "overview" | "about" | "summary" | "synopsis"
-    ) || text.starts_with("what is")
 }
 
 #[cfg(test)]
