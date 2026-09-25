@@ -1,4 +1,4 @@
-Score(3000)=0.572 I=0.823 C=0.397 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.559/0.424/0.570/0.572/0.527/0.590/0.571
+Score(3000)=0.572 I=0.825 C=0.397 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.560/0.424/0.570/0.572/0.527/0.590/0.584
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -231,3 +231,4 @@ Score(3000)=0.572 I=0.823 C=0.397 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9919 | 11 | Code::CodeKey { rung: Names, file: packages/cli/src/config/config.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
 | walker |  | 9956 | 37 | Code::CodeKey { rung: Decl, file: packages/cli/src/config/config.usecases.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.608 |
 | walker |  | 9967 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/configuration.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
+| walker |  | 9994 | 27 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/configuration.data.ts, decl: 1, sub: 0, line: 55 } |  |  | 0.608 |

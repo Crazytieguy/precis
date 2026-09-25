@@ -201,6 +201,18 @@ index.d.cts
   165→declare class CanceledError<T> extends AxiosError<T> {}
   166→
   167→declare class Axios {
+  168→  constructor(config?: axios.AxiosRequestConfig);
+  169→  defaults: axios.AxiosDefaults;
+  170→  interceptors: {
+  171→    request: axios.AxiosInterceptorManager<axios.InternalAxiosRequestConfig>;
+  172→    response: axios.AxiosInterceptorManager<axios.AxiosResponse>;
+  173→  };
+  174→  getUri(config?: axios.AxiosRequestConfig): string;
+  175→  request<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  178→  get<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  182→  delete<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
   231→declare enum HttpStatusCode {
   …

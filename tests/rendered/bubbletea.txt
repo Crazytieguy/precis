@@ -200,6 +200,13 @@ tea.go
   349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
   357→type Cursor struct {
+  358→	// Position is a [Position] that determines the cursor's position on the
+  359→	// screen relative to the top left corner of the frame.
+  360→	Position
+  361→
+  362→	// Color is a [color.Color] that determines the cursor's color.
+  363→	Color color.Color
+  364→
   …
   374→func NewCursor(x, y int) *Cursor {
   …

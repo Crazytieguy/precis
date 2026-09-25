@@ -266,6 +266,10 @@ src/
       679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
       …
       834→def check_protocol(
+      835→    value: Any,
+      836→    origin_type: Any,
+      837→    args: tuple[Any, ...],
+      838→    memo: TypeCheckMemo,
       …
       885→def check_byteslike(
       …

@@ -1,4 +1,4 @@
-Score(3000)=0.507 I=0.807 C=0.318 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.603/0.604/0.485/0.507/0.490/0.421/0.506
+Score(3000)=0.507 I=0.807 C=0.318 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.607/0.608/0.486/0.507/0.490/0.421/0.506
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -148,3 +148,4 @@ Score(3000)=0.507 I=0.807 C=0.318 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.533 |
 | walker |  | 9857 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.553 |
 | ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.549 |
+| walker |  | 9991 | 134 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 17, sub: 0, line: 598 } |  |  | 0.549 |

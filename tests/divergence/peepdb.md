@@ -1,4 +1,4 @@
-Score(3000)=0.625 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.592/0.595/0.681/0.625/0.627/0.599/0.567
+Score(3000)=0.639 I=0.846 C=0.483 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.592/0.649/0.681/0.639/0.627/0.605/0.571
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -191,3 +191,4 @@ Score(3000)=0.625 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 9851 | 88 | Markdown::Section { file: docs/index.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.588 |
 | ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.587 |
 | ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.585 |
+| walker |  | 9995 | 144 | Code::CodeKey { rung: Body, file: peepdb/db/sqlite.py, decl: 2, sub: 0, line: 7 } |  |  | 0.589 |

@@ -1,4 +1,4 @@
-Score(3000)=0.640 I=0.770 C=0.532 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.572/0.668/0.640/0.593/0.563/0.542
+Score(3000)=0.640 I=0.770 C=0.532 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.572/0.677/0.640/0.595/0.563/0.542
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -285,3 +285,4 @@ Score(3000)=0.640 I=0.770 C=0.532 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | walker |  | 9912 | 122 | Code::CodeKey { rung: Body, file: src/main.rs, decl: 5, sub: 0, line: 126 } |  |  | 0.545 |
 | ns | 9923 |  | 39 | README tail: licence | 9.7 | 1.1 | 0.546 |
 | walker |  | 9975 | 63 | Markdown::ReadmeHeadline { file: guide/src/format/theme/README.md } |  |  | 0.546 |
+| walker |  | 9997 | 22 | Markdown::HeadingsOutline { file: guide/src/format/mathjax.md } |  |  | 0.546 |

@@ -186,6 +186,12 @@ include/
     238→} PlayerData;
     239→
     240→typedef struct {
+    241→  uint8_t type;
+    242→  short x;
+    243→  // When the mob is dead (health is 0), the Y coordinate acts
+    244→  // as a timer for deleting and deallocating the mob
+    245→  uint8_t y;
+    246→  short z;
     …
     251→} MobData;
     …

@@ -1,4 +1,4 @@
-Score(3000)=0.707 I=0.862 C=0.580 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.704/0.745/0.717/0.707/0.671/0.602/0.598
+Score(3000)=0.707 I=0.862 C=0.580 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.705/0.745/0.737/0.707/0.671/0.602/0.599
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -238,3 +238,4 @@ Score(3000)=0.707 I=0.862 C=0.580 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 9865 |  | 181 | ParallelLMHead.forward — last-token selection and logit gather | 5.7 | 2.8 | 0.597 |
 | ns | 9974 |  | 109 | README benchmark pointer and throughput table | 6.1 |  | 0.599 |
 | walker |  | 9977 | 243 | Code::CodeKey { rung: Body, file: nanovllm/engine/llm_engine.py, decl: 2, sub: 0, line: 17 } |  |  | 0.616 |
+| walker |  | 9989 | 12 | Code::CodeKey { rung: Body, file: nanovllm/layers/linear.py, decl: 14, sub: 0, line: 78 } |  |  | 0.616 |

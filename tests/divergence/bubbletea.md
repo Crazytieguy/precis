@@ -1,4 +1,4 @@
-Score(3000)=0.549 I=0.774 C=0.389 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.584/0.531/0.612/0.549/0.507/0.504/0.549
+Score(3000)=0.549 I=0.774 C=0.389 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.584/0.531/0.612/0.549/0.519/0.505/0.549
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -242,3 +242,4 @@ Score(3000)=0.549 I=0.774 C=0.389 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 9647 | 46 | Code::CodeKey { rung: Body, file: renderer.go, decl: 4, sub: 0, line: 70 } |  |  | 0.570 |
 | ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.559 |
 | ns | 9917 |  | 41 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.563 |
+| walker |  | 9999 | 352 | Code::CodeKey { rung: Decl, file: renderer.go, decl: 2, sub: 0, line: 18 } |  |  | 0.570 |

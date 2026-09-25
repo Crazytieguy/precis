@@ -1,4 +1,4 @@
-Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.683/0.687/0.599/0.531/0.499/0.494/0.525
+Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.822/0.687/0.599/0.531/0.499/0.494/0.525
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -205,3 +205,4 @@ Score(3000)=0.531 I=0.815 C=0.346 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | ns | 9807 |  | 51 | Peripheral directory listings (docs, demo, assets, .github) | 8.2 |  | 0.544 |
 | ns | 9963 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.540 |
 | walker |  | 9975 | 241 | Markdown::Section { file: README.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.542 |
+| walker |  | 9992 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.542 |

@@ -1,4 +1,4 @@
-Score(3000)=0.565 I=0.787 C=0.406 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.594/0.561/0.565/0.553/0.553/0.486
+Score(3000)=0.565 I=0.787 C=0.406 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.695/0.594/0.565/0.565/0.561/0.553/0.486
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -241,3 +241,4 @@ Score(3000)=0.565 I=0.787 C=0.406 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.462 |
 | walker |  | 9901 | 343 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 7, sub: 0, line: 390 } |  |  | 0.469 |
 | ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.466 |
+| walker |  | 9991 | 90 | Toml::Operational { file: Cargo.toml } |  |  | 0.477 |

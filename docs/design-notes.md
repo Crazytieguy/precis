@@ -63,23 +63,14 @@
 ## Scheduler prefix-monotonicity (consequence for divergence)
 
 The scheduler stops on first ill-fit (`src/scheduler.rs` module doc has
-the algorithm). **Every decision taken at budget `T_small` up to its
-stopping point is also taken at `T_large`**, so `T_small`'s schedule is
-a true prefix of `T_large`'s, sub-budget snapshots are slices of a
-single `T_max` run, and the divergence metric runs the walker once per
-fixture rather than per budget.
-
-**Tradeoff**: when the top-ranked exact is too big, budget
-under-utilization can be as much as one batch's cost. This is
-deliberate pressure on walker calibration (if a top batch consistently
-blocks small budgets, split it or lower its rank) and on NS authoring
-(the growth envelope keeps NS prefixes coherent at small budgets).
-
-**The one exception is an unaffordable seed.** At round 0 a seed that
-doesn't fit would leave the pool permanently empty and return an empty
-string, so `Scheduler::schedule_partial_seed` schedules the longest
-affordable name-order prefix of the seed listing and stops. A partial
-listing renders a trailing `…` row.
+the algorithm), after spending what is left on the longest affordable
+prefix of that batch's entries or lines. **Every decision taken at
+budget `T_small` is also taken at `T_large`**, so `T_small`'s output is
+a subset of `T_large`'s, sub-budget outputs are replays of a single
+`T_max` schedule plus the head of the batch it stops on, and the
+divergence metric runs the walker once per fixture rather than per
+budget. Skipping an ill-fitting batch for a smaller one would break
+this.
 
 ## Auto-injected docs don't belong in precis output
 

@@ -1,4 +1,4 @@
-Score(3000)=0.483 I=0.764 C=0.306 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.688/0.607/0.521/0.483/0.446/0.545/0.573
+Score(3000)=0.483 I=0.764 C=0.306 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.695/0.607/0.525/0.483/0.450/0.545/0.573
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -205,3 +205,4 @@ Score(3000)=0.483 I=0.764 C=0.306 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 9882 | 68 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 23, sub: 0, line: 443 } |  |  | 0.586 |
 | ns | 9940 |  | 92 | jest.config.js | 5.4 |  | 0.583 |
 | walker |  | 9953 | 71 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 39, sub: 0, line: 618 } |  |  | 0.583 |
+| walker |  | 10000 | 47 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 42, sub: 0, line: 695 } |  |  | 0.583 |

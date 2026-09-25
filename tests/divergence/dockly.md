@@ -1,4 +1,4 @@
-Score(3000)=0.623 I=0.880 C=0.442 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.706/0.822/0.699/0.623/0.562/0.512/0.488
+Score(3000)=0.624 I=0.881 C=0.442 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.709/0.823/0.700/0.624/0.562/0.512/0.488
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -266,3 +266,4 @@ Score(3000)=0.623 I=0.880 C=0.442 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 9848 | 51 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 8, sub: 0, line: 107 } |  |  | 0.512 |
 | walker |  | 9927 | 79 | Code::CodeKey { rung: Body, file: widgets/containers/containerVsImages.widget.js, decl: 2, sub: 0, line: 5 } |  |  | 0.512 |
 | ns | 9988 |  | 249 | Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc | 8.3 |  | 0.506 |
+| walker |  | 9994 | 67 | Code::CodeKey { rung: Body, file: widgets/services/servicesVsImages.widget.js, decl: 2, sub: 0, line: 5 } |  |  | 0.506 |

@@ -1,4 +1,4 @@
-Score(3000)=0.634 I=0.788 C=0.511 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.593/0.590/0.579/0.634/0.556/0.475/0.407
+Score(3000)=0.634 I=0.788 C=0.511 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.594/0.599/0.579/0.634/0.556/0.475/0.407
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -255,3 +255,4 @@ Score(3000)=0.634 I=0.788 C=0.511 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 9898 | 309 | Code::CodeKey { rung: Names, file: beetsplug/discogs/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.388 |
 | walker |  | 9954 | 56 | Code::CodeKey { rung: Decl, file: beetsplug/discogs/__init__.py, decl: 4, sub: 0, line: 60 } |  |  | 0.388 |
 | ns | 9970 |  | 195 | beets/util/__init__.py: classes and the core path/file-operation helpers | 9.1 |  | 0.383 |
+| walker |  | 10000 | 46 | Code::CodeKey { rung: Decl, file: beetsplug/discogs/__init__.py, decl: 6, sub: 0, line: 83 } |  |  | 0.383 |

@@ -1,4 +1,4 @@
-Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.589/0.483/0.586/0.450/0.352/0.281/0.457
+Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.589/0.599/0.586/0.450/0.352/0.281/0.457
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -197,3 +197,4 @@ Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 9840 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.472 |
 | walker |  | 9914 | 263 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 1, line: 2887 } |  |  | 0.472 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.469 |
+| walker |  | 9998 | 84 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 13, line: 0 } |  |  | 0.473 |

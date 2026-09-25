@@ -1,4 +1,4 @@
-Score(3000)=0.553 I=0.835 C=0.366 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.473/0.477/0.638/0.553/0.640/0.589/0.595
+Score(3000)=0.553 I=0.836 C=0.366 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.473/0.479/0.638/0.553/0.640/0.589/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -195,3 +195,4 @@ Score(3000)=0.553 I=0.835 C=0.366 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9899 | 109 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/prometheus_instrument.py, decl: 6, sub: 0, line: 37 } |  |  | 0.645 |
 | walker |  | 9936 | 37 | Code::CodeKey { rung: Body, file: microbootstrap/instruments_setupper.py, decl: 2, sub: 0, line: 23 } |  |  | 0.645 |
 | ns | 9954 |  | 250 | `pyproject.toml`: identity, python requirement and optional-dependency extras | 7.3 |  | 0.651 |
+| walker |  | 9989 | 53 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/opentelemetry_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.651 |

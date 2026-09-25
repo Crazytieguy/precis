@@ -1,4 +1,4 @@
-Score(3000)=0.730 I=0.869 C=0.614 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.669/0.732/0.822/0.730/0.714/0.616/0.570
+Score(3000)=0.730 I=0.869 C=0.614 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.669/0.738/0.822/0.730/0.714/0.616/0.570
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -172,3 +172,4 @@ Score(3000)=0.730 I=0.869 C=0.614 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 9949 | 24 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/utils.ts, decl: 3, sub: 0, line: 36 } |  |  | 0.589 |
 | ns | 9977 |  | 150 | examples/electric — what the demo app does | 9.2 | 2.13 | 0.586 |
 | walker |  | 9986 | 37 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/utils.ts, decl: 6, sub: 0, line: 192 } |  |  | 0.586 |
+| walker |  | 9995 | 9 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/utils.ts, decl: 4, sub: 0, line: 55 } |  |  | 0.586 |

@@ -169,6 +169,15 @@ xxhash_other.go
   7→func Sum64(b []byte) uint64 {
   …
   64→func writeBlocks(d *Digest, b []byte) int {
+  65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
+  66→	n := len(b)
+  67→	for len(b) >= 32 {
+  68→		v1 = round(v1, u64(b[0:8:len(b)]))
+  69→		v2 = round(v2, u64(b[8:16:len(b)]))
+  70→		v3 = round(v3, u64(b[16:24:len(b)]))
+  71→		v4 = round(v4, u64(b[24:32:len(b)]))
+  72→		b = b[32:len(b):len(b)]
+  73→	}
   …
 xxhash_safe.go
   …

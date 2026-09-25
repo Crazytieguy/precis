@@ -1,4 +1,4 @@
-Score(3000)=0.575 I=0.649 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.814/0.763/0.663/0.575/0.524/0.432/0.473
+Score(3000)=0.575 I=0.649 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.815/0.764/0.663/0.575/0.524/0.432/0.473
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -171,3 +171,4 @@ Score(3000)=0.575 I=0.649 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 9887 | 25 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 5, sub: 0, line: 39 } |  |  | 0.532 |
 | walker |  | 9923 | 36 | Code::CodeKey { rung: Decl, file: Affinity.h, decl: 1, sub: 0, line: 26 } |  |  | 0.532 |
 | ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.528 |
+| walker |  | 9988 | 65 | Code::CodeKey { rung: Names, file: HeaderLayout.h, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |

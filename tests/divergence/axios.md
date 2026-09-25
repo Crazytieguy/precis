@@ -225,3 +225,4 @@ Score(3000)=0.498 I=0.742 C=0.334 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.312 |
 | walker |  | 9927 | 137 | Fs::DirListing { dir: docs/fr/pages/advanced } |  |  | 0.312 |
 | ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.333 |
+| walker |  | 9997 | 70 | Fs::DirListing { dir: docs/pages/advanced } |  |  | 0.348 |

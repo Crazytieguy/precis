@@ -1,4 +1,4 @@
-Score(3000)=0.533 I=0.747 C=0.381 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.583/0.607/0.533/0.559/0.573/0.597
+Score(3000)=0.533 I=0.747 C=0.381 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.583/0.607/0.533/0.561/0.581/0.618
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -118,3 +118,4 @@ Score(3000)=0.533 I=0.747 C=0.381 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 9722 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.574 |
 | walker |  | 9864 | 1223 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 1, line: 7 } |  |  | 0.662 |
 | ns | 9932 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.652 |
+| walker |  | 9993 | 129 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 2, line: 7 } |  |  | 0.659 |

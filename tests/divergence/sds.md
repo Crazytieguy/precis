@@ -1,4 +1,4 @@
-Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.393/0.346/0.414/0.797/0.692/0.617/0.603
+Score(3000)=0.798 I=0.893 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.393/0.347/0.416/0.798/0.693/0.617/0.606
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -133,3 +133,4 @@ Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 9794 |  | 129 | The complete Changelog (v1.0 and v2.0) | 7.4 |  | 0.607 |
 | walker |  | 9847 | 445 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.607 |
 | ns | 9921 |  | 127 | Authorship and licence: README credits, LICENSE header, .gitignore | 7.5 |  | 0.603 |
+| walker |  | 9997 | 150 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.603 |

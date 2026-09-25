@@ -308,6 +308,26 @@ packages/
       25→  @@unique([provider, providerAccountId])
       26→}
       28→model User {
+      29→  id                      Int                   @id @default(autoincrement())
+      30→  name                    String?
+      31→  username                String?               @unique
+      32→  email                   String?               @unique
+      33→  emailVerified           DateTime?
+      34→  unverifiedNewEmail      String?
+      35→  image                   String?
+      36→  password                String?
+      37→  locale                  String                @default("en")
+      38→  parentSubscription      Subscription?         @relation("ChildUsers", fields: [parentSubscriptionId], references: [id])
+      39→  parentSubscriptionId    Int?
+      40→  accounts                Account[]
+      41→  collections             Collection[]
+      42→  tags                    Tag[]
+      43→  pinnedLinks             Link[]                @relation("PinnedLinks")
+      44→  createdLinks            Link[]                @relation("CreatedLinks")
+      45→  createdCollections      Collection[]          @relation("CreatedCollections")
+      46→  highlights              Highlight[]
+      47→  collectionsJoined       UsersAndCollections[]
+      48→  collectionOrder         Int[]                 @default([])
       …
       77→enum Theme {
       78→  dark

@@ -1,4 +1,4 @@
-Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.559/0.574/0.493/0.459/0.493/0.546/0.520
+Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.564/0.574/0.493/0.459/0.495/0.546/0.520
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -137,3 +137,4 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 9759 | 15 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 47, sub: 0, line: 595 } |  |  | 0.518 |
 | ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.513 |
 | ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.507 |
+| walker |  | 9997 | 238 | Markdown::Section { file: tomllib.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.516 |

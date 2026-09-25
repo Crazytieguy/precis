@@ -1,4 +1,4 @@
-Score(3000)=0.483 I=0.783 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.556/0.500/0.483/0.473/0.642/0.592
+Score(3000)=0.497 I=0.819 C=0.302 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.577/0.586/0.500/0.497/0.480/0.642/0.592
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -214,3 +214,4 @@ Score(3000)=0.483 I=0.783 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.590 |
 | ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.588 |
 | walker |  | 9901 | 282 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.588 |
+| walker |  | 9996 | 95 | Code::CodeKey { rung: Names, file: src/structs/utilities.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |

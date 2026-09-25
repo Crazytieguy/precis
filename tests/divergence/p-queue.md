@@ -1,4 +1,4 @@
-Score(3000)=0.768 I=0.880 C=0.671 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.731/0.642/0.702/0.768/0.758/0.652/0.611
+Score(3000)=0.791 I=0.886 C=0.707 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.790/0.644/0.702/0.791/0.771/0.690/0.611
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -135,3 +135,4 @@ Score(3000)=0.768 I=0.880 C=0.671 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 9836 |  | 145 | The CI job definition itself | 7.6 | 7.5 | 0.603 |
 | ns | 9907 |  | 71 | bench.ts: the five benchmark cases | 7.7 |  | 0.600 |
 | ns | 9988 |  | 81 | tsconfig.json: the whole build configuration | 7.8 |  | 0.604 |
+| walker |  | 9990 | 263 | Markdown::Section { file: readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.604 |

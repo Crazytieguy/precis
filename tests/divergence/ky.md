@@ -1,4 +1,4 @@
-Score(3000)=0.719 I=0.914 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.803/0.790/0.889/0.719/0.668/0.646/0.621
+Score(3000)=0.719 I=0.914 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.818/0.811/0.889/0.719/0.668/0.646/0.621
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -161,3 +161,4 @@ Score(3000)=0.719 I=0.914 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 9802 | 152 | Code::CodeKey { rung: Body, file: source/utils/merge.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.663 |
 | walker |  | 9961 | 159 | Code::CodeKey { rung: Body, file: source/utils/timeout.ts, decl: 2, sub: 0, line: 9 } |  |  | 0.663 |
 | ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.654 |
+| walker |  | 9988 | 27 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.654 |

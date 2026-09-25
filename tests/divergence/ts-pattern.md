@@ -1,4 +1,4 @@
-Score(3000)=0.626 I=0.789 C=0.496 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.624/0.662/0.714/0.626/0.608/0.520/0.478
+Score(3000)=0.627 I=0.790 C=0.498 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.626/0.738/0.715/0.627/0.608/0.520/0.479
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -163,3 +163,4 @@ Score(3000)=0.626 I=0.789 C=0.496 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 9923 | 48 | Code::CodeKey { rung: Decl, file: src/internals/helpers.ts, decl: 5, sub: 0, line: 132 } |  |  | 0.468 |
 | walker |  | 9960 | 37 | Code::CodeKey { rung: Body, file: src/internals/helpers.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.471 |
 | ns | 9964 |  | 121 | `.prettierrc` in full, and the benchmark runner scripts | 5.11 |  | 0.468 |
+| walker |  | 9996 | 36 | Code::CodeKey { rung: Names, file: src/internals/symbols.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.468 |

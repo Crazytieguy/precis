@@ -240,6 +240,31 @@ source/
     887→	*/
     888→	get isRateLimited(): boolean {
     …
+    892→	/**
+    893→	Whether the queue is saturated. Returns `true` when:
+    894→	- All concurrency slots are occupied and tasks are waiting, OR
+    895→	- The queue is rate-limited and tasks are waiting
+    896→
+    897→	Useful for detecting backpressure and potential hanging tasks.
+    898→
+    899→	```js
+    900→	import PQueue from 'p-queue';
+    901→
+    902→	const queue = new PQueue({concurrency: 2});
+    903→
+    904→	// Backpressure handling
+    905→	if (queue.isSaturated) {
+    906→		console.log('Queue is saturated, waiting for capacity...');
+    907→		await queue.onSizeLessThan(queue.concurrency);
+    908→	}
+    909→
+    910→	// Monitoring for stuck tasks
+    911→	setInterval(() => {
+    912→		if (queue.isSaturated) {
+    913→			console.warn(`Queue saturated: ${queue.pending} running, ${queue.size} waiting`);
+    914→		}
+    915→	}, 60000);
+    …
     918→	get isSaturated(): boolean {
     …
     952→	get runningTasks(): ReadonlyArray<{

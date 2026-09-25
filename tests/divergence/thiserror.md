@@ -224,3 +224,4 @@ Score(3000)=0.502 I=0.813 C=0.310 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | ns | 9689 |  | 174 | CI job roster and the pinned toolchain components | 5.6 |  | 0.557 |
 | walker |  | 9750 | 66 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 19, sub: 0, line: 141 } |  |  | 0.557 |
 | walker |  | 9842 | 92 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 21, sub: 0, line: 166 } |  |  | 0.557 |
+| walker |  | 9984 | 142 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 20, sub: 0, line: 148 } |  |  | 0.557 |

@@ -1,4 +1,4 @@
-Score(3000)=0.754 I=0.910 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.682/0.657/0.817/0.754/0.590/0.543/0.553
+Score(3000)=0.754 I=0.910 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.683/0.659/0.818/0.754/0.590/0.546/0.554
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -220,3 +220,4 @@ Score(3000)=0.754 I=0.910 C=0.624 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 9932 | 21 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 7, sub: 0, line: 73 } |  |  | 0.622 |
 | walker |  | 9961 | 29 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 3, sub: 0, line: 49 } |  |  | 0.622 |
 | walker |  | 9992 | 31 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 2, sub: 0, line: 42 } |  |  | 0.622 |
+| walker |  | 9998 | 6 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 1, sub: 0, line: 12 } |  |  | 0.622 |

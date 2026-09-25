@@ -1,4 +1,4 @@
-Score(3000)=0.527 I=0.827 C=0.335 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.871/0.786/0.648/0.527/0.554/0.469/0.486
+Score(3000)=0.527 I=0.829 C=0.335 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.871/0.786/0.648/0.527/0.554/0.469/0.496
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -182,3 +182,4 @@ Score(3000)=0.527 I=0.827 C=0.335 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 9488 | 199 | Code::CodeKey { rung: Decl, file: src/config/types.rs, decl: 1, sub: 0, line: 3 } |  |  | 0.522 |
 | walker |  | 9849 | 361 | Code::CodeKey { rung: Decl, file: src/config/colors.rs, decl: 6, sub: 0, line: 161 } |  |  | 0.522 |
 | ns | 9997 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.531 |
+| walker |  | 9998 | 149 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.531 |

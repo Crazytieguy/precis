@@ -258,6 +258,10 @@ rich/
     29→    """
     …
     39→def reconfigure(*args: Any, **kwargs: Any) -> None:
+    40→    """Reconfigures the global console by replacing it with another.
+    41→
+    42→    Args:
+    43→        *args (Any): Positional arguments for the replacement :class:`~rich.console.Console`.
     …
     53→def print(
     54→    *objects: Any,

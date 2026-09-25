@@ -1,4 +1,4 @@
-Score(3000)=0.711 I=0.800 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.657/0.694/0.782/0.711/0.647/0.553/0.507
+Score(3000)=0.711 I=0.800 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.695/0.782/0.711/0.647/0.553/0.507
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -281,3 +281,4 @@ Score(3000)=0.711 I=0.800 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 9687 | 10 | Code::CodeKey { rung: Body, file: monaco-lsp-client/src/utils.ts, decl: 4, sub: 0, line: 12 } |  |  | 0.521 |
 | walker |  | 9750 | 63 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 5, sub: 0, line: 24 } |  |  | 0.521 |
 | ns | 9771 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.532 |
+| walker |  | 9974 | 224 | Json::Scripts { file: package.json } |  |  | 0.534 |

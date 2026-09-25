@@ -1,4 +1,4 @@
-Score(3000)=0.484 I=0.488 C=0.480 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.342/0.434/0.543/0.484/0.537/0.459/0.432
+Score(3000)=0.581 I=0.688 C=0.490 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.342/0.434/0.543/0.581/0.537/0.459/0.432
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -284,3 +284,4 @@ Score(3000)=0.484 I=0.488 C=0.480 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | ns | 9885 |  | 130 | agent/ test files and the shared test harness (completes agent/) | 7.1 |  | 0.512 |
 | walker |  | 9985 | 383 | Code::CodeKey { rung: Names, file: agent/connection_manager.go, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
 | walker |  | 9994 | 9 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 5, sub: 0, line: 47 } |  |  | 0.512 |
+| walker |  | 10000 | 6 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 4, sub: 0, line: 40 } |  |  | 0.512 |

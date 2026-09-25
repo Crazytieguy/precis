@@ -197,7 +197,7 @@ package.json
   3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
   4→  "version": "2.0.2",
   5→  "license": "MIT",
-  …
+  6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
   7→  "type": "module",
   8→  "main": "./dist/index.cjs",
   9→  "module": "./dist/index.mjs",
@@ -206,7 +206,9 @@ package.json
   12→  "files": [
   13→    "dist"
   14→  ],
-  …
+  15→  "publishConfig": {
+  16→    "registry": "https://registry.npmjs.org"
+  17→  },
   18→  "engines": {
   19→    "node": ">=14.0.0"
   20→  },
@@ -227,6 +229,23 @@ package.json
   51→    "test:watch": "vitest",
   52→    "watch": "npm run build -- --watch"
   53→  },
+  54→  "keywords": [
+  55→    "api",
+  56→    "array",
+  57→    "assert",
+  58→    "cast",
+  59→    "check",
+  60→    "checker",
+  61→    "collection",
+  62→    "data",
+  63→    "error",
+  64→    "express",
+  65→    "hapi",
+  66→    "interface",
+  67→    "invalid",
+  68→    "joi",
+  69→    "json",
+  70→    "list",
   …
 rollup.config.js
 src/

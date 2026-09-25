@@ -1,4 +1,4 @@
-Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.522/0.707/0.736/0.621/0.521/0.552
+Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.523/0.708/0.736/0.621/0.521/0.552
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -243,3 +243,4 @@ Score(3000)=0.736 I=0.858 C=0.631 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 9781 |  | 147 | benchmarks/, tools/, questions/ and .faq/ listings | 4.11 |  | 0.544 |
 | walker |  | 9876 | 248 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 12, sub: 0, line: 295 } |  |  | 0.544 |
 | ns | 9981 |  | 200 | rich/_unicode_data listing (complete) | 4.12 |  | 0.553 |
+| walker |  | 9992 | 116 | Code::CodeKey { rung: Decl, file: rich/traceback.py, decl: 5, sub: 0, line: 84 } |  |  | 0.553 |

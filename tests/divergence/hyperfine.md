@@ -1,4 +1,4 @@
-Score(3000)=0.644 I=0.896 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.721/0.857/0.715/0.644/0.712/0.628/0.651
+Score(3000)=0.644 I=0.896 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.784/0.857/0.715/0.644/0.712/0.648/0.651
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -248,3 +248,4 @@ Score(3000)=0.644 I=0.896 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 9982 |  | 192 | tests/: the shared harness helpers and the debug-mode test idiom | 7.3 |  | 0.633 |
 | walker |  | 9988 | 36 | Code::CodeKey { rung: Names, file: src/export/asciidoc.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
 | walker |  | 9996 | 8 | Code::CodeKey { rung: Decl, file: src/export/asciidoc.rs, decl: 1, sub: 0, line: 4 } |  |  | 0.633 |
+| walker |  | 9996 | 0 | Code::CodeKey { rung: Decl, file: src/export/asciidoc.rs, decl: 2, sub: 0, line: 7 } |  |  | 0.633 |

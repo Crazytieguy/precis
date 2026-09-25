@@ -238,6 +238,34 @@ impl RenderedTree {
         }
     }
 
+    /// Longest prefix of `content` — its listing entries or source
+    /// lines, in order — whose marginal cost `fits`, with that cost.
+    /// `None` when not even one entry or line fits.
+    pub fn affordable_prefix(
+        &self,
+        content: &BatchContent,
+        fits: impl Fn(Cost) -> bool,
+    ) -> Option<(BatchContent, Cost)> {
+        // Rows are nearly independent, so cost climbs with the prefix
+        // length — binary-search the boundary, keeping the longest
+        // prefix that fit. Nothing depends on the search finding the
+        // exact boundary: whatever it returns was measured.
+        let (mut lo, mut hi) = (0usize, content_len(content) + 1);
+        let mut affordable = None;
+        while hi - lo > 1 {
+            let mid = lo + (hi - lo) / 2;
+            let candidate = content_prefix(content, mid);
+            let cost = self.marginal_cost(&candidate);
+            if fits(cost) {
+                lo = mid;
+                affordable = Some((candidate, cost));
+            } else {
+                hi = mid;
+            }
+        }
+        affordable
+    }
+
     /// Apply `content` to the tree. Non-ancestor overlaps come back
     /// as [`ApplyConflict`]s for the caller to handle.
     pub fn apply(
@@ -565,6 +593,61 @@ impl std::ops::Add for Cost {
         Cost {
             tokens: self.tokens + other.tokens,
             chars: self.chars + other.chars,
+        }
+    }
+}
+
+/// Listing entries or source lines in `content`.
+fn content_len(content: &BatchContent) -> usize {
+    match content {
+        BatchContent::Fs { groups } => groups
+            .iter()
+            .map(|group| match &group.entries {
+                FsEntries::Listed(paths) => paths.len(),
+                FsEntries::All => 0,
+            })
+            .sum(),
+        BatchContent::Lines { spans } => spans.iter().map(|span| span.end + 1 - span.start).sum(),
+    }
+}
+
+/// The first `count` listing entries or source lines of `content`, in
+/// group order and (path, line) order.
+fn content_prefix(content: &BatchContent, count: usize) -> BatchContent {
+    let mut left = count;
+    match content {
+        BatchContent::Fs { groups } => BatchContent::Fs {
+            groups: groups
+                .iter()
+                .filter_map(|group| {
+                    let FsEntries::Listed(paths) = &group.entries else {
+                        return None;
+                    };
+                    let take = paths.len().min(left);
+                    left -= take;
+                    (take > 0).then(|| FsGroup {
+                        parent: group.parent.clone(),
+                        entries: FsEntries::Listed(paths[..take].to_vec()),
+                    })
+                })
+                .collect(),
+        },
+        BatchContent::Lines { spans } => {
+            let mut ordered: Vec<&Span> = spans.iter().collect();
+            ordered.sort_by(|a, b| (&a.path, a.start).cmp(&(&b.path, b.start)));
+            let mut prefix = Vec::new();
+            for span in ordered {
+                if left == 0 {
+                    break;
+                }
+                let take = (span.end + 1 - span.start).min(left);
+                left -= take;
+                prefix.push(Span {
+                    end: span.start + take - 1,
+                    ..span.clone()
+                });
+            }
+            BatchContent::Lines { spans: prefix }
         }
     }
 }

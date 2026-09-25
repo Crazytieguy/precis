@@ -236,3 +236,4 @@ Score(3000)=0.522 I=0.682 C=0.400 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.452 |
 | ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.456 |
 | walker |  | 9951 | 823 | GoMod::File { file: go.mod } |  |  | 0.456 |
+| walker |  | 10000 | 49 | Markdown::HeadingsOutline { file: cmd/migrate/README.md } |  |  | 0.456 |

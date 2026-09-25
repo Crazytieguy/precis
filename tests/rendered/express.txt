@@ -160,6 +160,9 @@ lib/
     451→app.enable = function enable(setting) {
     452→  return this.set(setting, true);
     …
+    455→/**
+    456→ * Disable `setting`.
+    …
     463→app.disable = function disable(setting) {
     464→  return this.set(setting, false);
     …

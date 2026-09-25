@@ -1,4 +1,4 @@
-Score(3000)=0.643 I=0.796 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.749/0.771/0.693/0.643/0.524/0.537/0.456
+Score(3000)=0.643 I=0.796 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.750/0.771/0.693/0.643/0.524/0.537/0.456
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -153,3 +153,4 @@ Score(3000)=0.643 I=0.796 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | ns | 9778 |  | 310 | execute.c: struct jq_state, the whole interpreter state | 5.8 |  | 0.411 |
 | walker |  | 9804 | 48 | Code::CodeKey { rung: Names, file: src/linker.h, decl: 0, sub: 0, line: 0 } |  |  | 0.415 |
 | ns | 9977 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.411 |
+| walker |  | 9998 | 194 | Code::CodeKey { rung: Names, file: src/jv.h, decl: 0, sub: 0, line: 0 } |  |  | 0.415 |

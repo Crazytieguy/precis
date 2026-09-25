@@ -6,9 +6,9 @@
 //! is already scheduled, and ranks eligible batches by
 //! `value / cost^k`. Under prefix-monotone scheduling (see
 //! `docs/design-notes.md`), if the top-ranked batch doesn't fit the
-//! scheduler stops, no fallback to smaller batches — with one
-//! exception at round 0, where stopping means returning nothing at all
-//! (`Scheduler::schedule_partial_seed`).
+//! scheduler spends what is left on the longest affordable prefix of
+//! that batch and stops — no fallback to smaller batches
+//! (`Scheduler::schedule_partial`).
 
 #[cfg(debug_assertions)]
 use std::collections::BTreeMap;
@@ -16,7 +16,7 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchId, BatchKey};
-use crate::content::{BatchContent, FsEntries, FsGroup};
+use crate::content::{BatchContent, FsEntries};
 use crate::fs_util::DirFilter;
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
@@ -193,11 +193,10 @@ impl<W: Walker> Scheduler<W> {
         }
 
         // Prefix-monotone scheduling — stop on the first top-ranked
-        // batch that doesn't fit (no fallback to smaller batches),
-        // except at round 0 where stopping yields nothing at all.
+        // batch that doesn't fit (no fallback to smaller batches).
         while let Some((id, cost)) = self.top_ranked() {
             if !self.fits(cost) {
-                self.schedule_partial_seed(id);
+                self.schedule_partial(id);
                 break;
             }
             self.schedule(id, cost);
@@ -399,73 +398,20 @@ impl<W: Walker> Scheduler<W> {
         entry_content
     }
 
-    /// Terminal degradation for a budget too small to open the walk.
-    /// Every batch a walker emits is gated, directly or transitively, on
-    /// the seed listing, so a seed that doesn't fit leaves the pool
-    /// permanently empty and the caller with an empty string — no
-    /// output at all, and no indication why. Schedule the longest
-    /// affordable prefix of the seed's entries instead; the renderer
-    /// marks the shortened listing `…`, and the budget buys the head of
-    /// the repo map rather than nothing.
-    ///
-    /// Only listings degrade this way: entry rows are independent, so a
-    /// prefix of one is a smaller listing, where a prefix of a line
-    /// batch is a severed piece of source. Restricting this to the
-    /// still-empty schedule keeps the stop-on-first-ill-fit rule (and
-    /// the prefix-monotone schedule it buys) intact everywhere else.
-    fn schedule_partial_seed(&mut self, id: BatchId) {
-        if !self.scheduled_log.is_empty() {
-            return;
-        }
-        let Some((prefix, cost)) = self.affordable_fs_prefix(&self.entries[id.index()].content)
+    /// Terminal step once the top-ranked batch doesn't fit: schedule
+    /// the longest affordable prefix of its entries or source lines, so
+    /// the budget left over is spent on the head of the batch every
+    /// larger budget shows in full. The prefix is a function of the
+    /// batch and the tree alone, so the output at a smaller budget stays
+    /// a subset of the output at a larger one.
+    fn schedule_partial(&mut self, id: BatchId) {
+        let content = &self.entries[id.index()].content;
+        let Some((prefix, cost)) = self.tree.affordable_prefix(content, |cost| self.fits(cost))
         else {
             return;
         };
         self.entries[id.index()].content = prefix;
         self.apply_and_record(id, cost);
-    }
-
-    /// Longest prefix of a listing's entries that fits the remaining
-    /// budget, with its exact cost. A seed is one directory's
-    /// listing; multi-group FS content comes only from NS TOML, which
-    /// never reaches the scheduler.
-    fn affordable_fs_prefix(&self, content: &BatchContent) -> Option<(BatchContent, Cost)> {
-        let BatchContent::Fs { groups } = content else {
-            return None;
-        };
-        let [
-            FsGroup {
-                parent,
-                entries: FsEntries::Listed(paths),
-            },
-        ] = groups.as_slice()
-        else {
-            return None;
-        };
-        let prefix = |k: usize| BatchContent::Fs {
-            groups: vec![FsGroup {
-                parent: parent.clone(),
-                entries: FsEntries::Listed(paths[..k].to_vec()),
-            }],
-        };
-        // Entry rows are independent, so cost climbs with the prefix
-        // length — binary-search the boundary, keeping the longest
-        // prefix that fit. Nothing downstream depends on the search
-        // finding the exact boundary: whatever it returns was measured.
-        let (mut lo, mut hi) = (0usize, paths.len());
-        let mut affordable = None;
-        while hi - lo > 1 {
-            let mid = lo + (hi - lo) / 2;
-            let candidate = prefix(mid);
-            let cost = self.tree.marginal_cost(&candidate);
-            if self.fits(cost) {
-                lo = mid;
-                affordable = Some((candidate, cost));
-            } else {
-                hi = mid;
-            }
-        }
-        affordable
     }
 
     fn schedule(&mut self, id: BatchId, cost: Cost) {

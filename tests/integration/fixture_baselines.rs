@@ -1,7 +1,7 @@
 //! Per-fixture regression baselines, one test per fixture in
 //! `tests/data/fixtures.rs`. Each runs the walker once at `SCHEDULE_BUDGET`;
 //! scheduler prefix-monotonicity (see `docs/design-notes.md`) makes every
-//! smaller budget a prefix of that schedule.
+//! smaller budget a prefix of that schedule plus a head of the next batch.
 //!
 //! - Training fixtures commit `tests/rendered/<fixture>.txt` (the output at
 //!   `RENDERED_BUDGET`) and `tests/divergence/<fixture>.md` (the report

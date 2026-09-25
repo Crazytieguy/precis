@@ -266,3 +266,4 @@ Score(3000)=0.546 I=0.865 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 9542 | 4 | Fs::DirListing { dir: examples/user-has-one-profile/src } |  |  | 0.665 |
 | ns | 9735 |  | 283 | The driver integration suite and its test roster (complete) | 7.2 |  | 0.653 |
 | ns | 9858 |  | 123 | The `toasty` crate's complete feature-flag set | 7.3 |  | 0.649 |
+| walker |  | 9997 | 455 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.649 |

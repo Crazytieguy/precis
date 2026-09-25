@@ -1,4 +1,4 @@
-Score(3000)=0.623 I=0.786 C=0.494 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.757/0.724/0.615/0.623/0.525/0.449/0.419
+Score(3000)=0.623 I=0.787 C=0.494 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.757/0.724/0.615/0.623/0.525/0.449/0.419
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -233,3 +233,4 @@ Score(3000)=0.623 I=0.786 C=0.494 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 9903 | 48 | Code::CodeKey { rung: Doc, file: context.go, decl: 17, sub: 0, line: 213 } |  |  | 0.430 |
 | walker |  | 9964 | 61 | Code::CodeKey { rung: Doc, file: context.go, decl: 18, sub: 0, line: 222 } |  |  | 0.430 |
 | ns | 9974 |  | 277 | Built-in middleware and helper constructors: complete package-level roster | 6.3 |  | 0.441 |
+| walker |  | 10000 | 36 | Code::CodeKey { rung: Decl, file: context.go, decl: 7, sub: 0, line: 61 } |  |  | 0.442 |

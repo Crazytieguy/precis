@@ -261,6 +261,13 @@ src/
       181→    TooManyRedirects,
       182→    URLRequired,
       183→)
+      184→from .models import PreparedRequest, Request, Response
+      185→from .sessions import Session, session
+      186→from .status_codes import codes
+      187→
+      188→__all__ = (
+      189→    "ConnectionError",
+      190→    "ConnectTimeout",
       …
     __version__.py
       …

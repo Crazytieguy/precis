@@ -1,4 +1,4 @@
-Score(3000)=0.614 I=0.846 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.895/0.807/0.696/0.614/0.580/0.501/0.559
+Score(3000)=0.615 I=0.846 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.895/0.807/0.699/0.615/0.580/0.501/0.559
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -227,3 +227,4 @@ Score(3000)=0.614 I=0.846 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.551 |
 | walker |  | 9976 | 258 | Code::CodeKey { rung: Names, file: src/error.rs, decl: 0, sub: 2, line: 0 } |  |  | 0.566 |
 | ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.560 |
+| walker |  | 9994 | 18 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 48, sub: 0, line: 951 } |  |  | 0.560 |

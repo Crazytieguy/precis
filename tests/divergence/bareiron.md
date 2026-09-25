@@ -1,4 +1,4 @@
-Score(3000)=0.544 I=0.802 C=0.368 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.631/0.523/0.544/0.679/0.802/0.727
+Score(3000)=0.570 I=0.809 C=0.402 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.631/0.551/0.570/0.694/0.808/0.727
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -166,3 +166,4 @@ Score(3000)=0.544 I=0.802 C=0.368 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.700 |
 | ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.701 |
 | ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.700 |
+| walker |  | 9990 | 118 | Code::CodeKey { rung: Names, file: src/packets.c, decl: 0, sub: 2, line: 0 } |  |  | 0.700 |

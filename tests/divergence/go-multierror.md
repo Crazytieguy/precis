@@ -1,4 +1,4 @@
-Score(3000)=0.547 I=0.559 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.423/0.427/0.478/0.547/0.621/0.876/0.804
+Score(3000)=0.552 I=0.564 C=0.540 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.438/0.427/0.478/0.552/0.647/0.884/0.804
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -155,3 +155,4 @@ Score(3000)=0.547 I=0.559 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 9744 |  | 267 | README badge block and the older-Go compile-error hint | 5.11 | 1.1 | 0.795 |
 | ns | 9803 |  | 59 | PR template section headings | 5.12 |  | 0.793 |
 | ns | 9840 |  | 37 | LICENSE identification lines | 5.13 |  | 0.792 |
+| walker |  | 9973 | 286 | Code::CodeKey { rung: Body, file: group_test.go, decl: 1, sub: 0, line: 12 } |  |  | 0.804 |

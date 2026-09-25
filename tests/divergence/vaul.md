@@ -1,4 +1,4 @@
-Score(3000)=0.875 I=0.929 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.741/0.875/0.797/0.732/0.653
+Score(3000)=0.875 I=0.929 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.875/0.798/0.732/0.653
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -146,3 +146,4 @@ Score(3000)=0.875 I=0.929 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.651 |
 | ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.655 |
 | ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.652 |
+| walker |  | 9996 | 494 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.656 |

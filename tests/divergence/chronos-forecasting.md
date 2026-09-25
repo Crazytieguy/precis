@@ -1,4 +1,4 @@
-Score(3000)=0.319 I=0.542 C=0.187 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.499/0.439/0.304/0.319/0.419/0.481/0.520
+Score(3000)=0.319 I=0.542 C=0.188 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.499/0.439/0.307/0.319/0.424/0.482/0.520
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -207,3 +207,4 @@ Score(3000)=0.319 I=0.542 C=0.187 ns_rows≤3K=18/59 grid(1000/1442/2080/3000/43
 | walker |  | 9947 | 97 | Code::CodeKey { rung: Decl, file: src/chronos/chronos2/model.py, decl: 18, sub: 0, line: 499 } |  |  | 0.527 |
 | ns | 9954 |  | 88 | Opt-in model-evaluation workflow | 6.14 |  | 0.526 |
 | ns | 9980 |  | 26 | Licensing statement | 6.15 |  | 0.527 |
+| walker |  | 9990 | 43 | Code::CodeKey { rung: Decl, file: src/chronos/chronos2/model.py, decl: 15, sub: 0, line: 315 } |  |  | 0.527 |

@@ -169,6 +169,12 @@ chibicc.h
   125→// Variable or function
   126→typedef struct Obj Obj;
   127→struct Obj {
+  128→  Obj *next;
+  129→  char *name;    // Variable name
+  130→  Type *ty;      // Type
+  131→  Token *tok;    // representative token
+  132→  bool is_local; // local or global/function
+  133→  int align;     // alignment
   …
   164→// Global variable can be initialized either by a constant expression
   165→// or a pointer to another global variable. This struct represents the

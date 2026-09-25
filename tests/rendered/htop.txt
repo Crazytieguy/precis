@@ -34,6 +34,30 @@ CPUMeter.c
 CPUMeter.h
 CRT.c
 CRT.h
+  …
+  17→#define SCREEN_TAB_MARGIN_LEFT 2
+  18→#define SCREEN_TAB_COLUMN_GAP  1
+  19→
+  20→typedef enum TreeStr_ {
+  …
+  30→} TreeStr;
+  31→
+  32→typedef enum ColorScheme_ {
+  …
+  42→} ColorScheme;
+  43→
+  44→typedef enum ColorElements_ {
+  …
+  162→} ColorElements;
+  …
+  175→#define KEY_WHEELUP    KEY_F(30)
+  176→#define KEY_WHEELDOWN  KEY_F(31)
+  177→#define KEY_RECLICK    KEY_F(32)
+  178→#define KEY_RIGHTCLICK KEY_F(33)
+  179→#define KEY_SHIFT_TAB  KEY_F(34)
+  180→#define KEY_ALT(x)     (KEY_F(64 - 26) + ((x) - 'A'))
+  181→#define KEY_FOCUS_IN   (KEY_MAX + 'I')
+  …
 CategoriesPanel.c
 CategoriesPanel.h
 ChangeLog

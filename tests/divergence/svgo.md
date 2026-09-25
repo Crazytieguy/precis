@@ -1,4 +1,4 @@
-Score(3000)=0.650 I=0.865 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.626/0.822/0.691/0.650/0.579/0.558/0.577
+Score(3000)=0.650 I=0.865 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.638/0.822/0.691/0.650/0.579/0.560/0.586
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -205,3 +205,4 @@ Score(3000)=0.650 I=0.865 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 9923 | 47 | Code::CodeKey { rung: Names, file: plugins/prefixIds.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
 | ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.598 |
 | walker |  | 9984 | 61 | Code::CodeKey { rung: Doc, file: plugins/prefixIds.js, decl: 3, sub: 0, line: 129 } |  |  | 0.598 |
+| walker |  | 10000 | 16 | Code::CodeKey { rung: Names, file: plugins/removeAttrs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |

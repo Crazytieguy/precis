@@ -105,6 +105,8 @@ demo.py
   78→    Returns:
   79→        str: The connection string.
   80→    """
+  81→    public_key = inbound.stream_settings.reality_settings.get("settings").get("publicKey")
+  82→    website_name = inbound.stream_settings.reality_settings.get("serverNames")[0]
   …
   103→connection_string = get_connection_string(inbound, "**********", email)
   …

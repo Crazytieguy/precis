@@ -1,4 +1,4 @@
-Score(3000)=0.725 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.658/0.757/0.786/0.725/0.637/0.610/0.541
+Score(3000)=0.725 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.756/0.757/0.786/0.725/0.637/0.610/0.541
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -180,3 +180,4 @@ Score(3000)=0.725 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.556 |
 | ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.555 |
 | ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.551 |
+| walker |  | 9985 | 362 | Code::CodeKey { rung: Body, file: functions/cmp.js, decl: 1, sub: 0, line: 10 } |  |  | 0.567 |

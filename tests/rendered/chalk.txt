@@ -164,6 +164,25 @@ source/
     30→export const Chalk: new (options?: Options) => ChalkInstance; // eslint-disable-line @typescript-eslint/naming-convention
     31→
     32→export interface ChalkInstance {
+    33→	(...text: unknown[]): string;
+    34→
+    35→	/**
+    36→	The color support for Chalk.
+    37→
+    38→	By default, color support is automatically detected based on the environment.
+    39→
+    40→	Levels:
+    41→	- `0` - All colors disabled.
+    42→	- `1` - Basic 16 colors support.
+    43→	- `2` - ANSI 256 colors support.
+    44→	- `3` - Truecolor 16 million colors support.
+    45→	*/
+    46→	level: ColorSupportLevel;
+    47→
+    48→	/**
+    49→	Use RGB values to set text color.
+    50→
+    51→	@example
     …
     233→/**
     234→Main Chalk object that allows to chain styles together.

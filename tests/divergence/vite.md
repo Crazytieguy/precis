@@ -1,4 +1,4 @@
-Score(3000)=0.465 I=0.821 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.822/0.771/0.603/0.465/0.382/0.317/0.410
+Score(3000)=0.465 I=0.821 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.822/0.771/0.605/0.465/0.382/0.317/0.410
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -373,3 +373,4 @@ Score(3000)=0.465 I=0.821 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | ns | 9827 |  | 150 | Repository automation: .github and release scripts | 5.13 |  | 0.445 |
 | walker |  | 9863 | 45 | Json::Identity { file: playground/ssr-webworker/worker-exports/package.json } |  |  | 0.445 |
 | walker |  | 9909 | 46 | Json::Identity { file: playground/ssr-noexternal/external-cjs/package.json } |  |  | 0.445 |
+| walker |  | 9999 | 90 | Fs::DirListing { dir: playground/css-sourcemap } |  |  | 0.445 |

@@ -115,6 +115,8 @@ nanovllm/
       56→    def is_finished(self):
       57→        return self.scheduler.is_finished()
       59→    def generate(
+      60→        self,
+      61→        prompts: list[str] | list[list[int]],
       …
     model_runner.py
       …

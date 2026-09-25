@@ -232,7 +232,16 @@ src/
       9→
       10→pub use syntax::SyntaxToken;
       …
+      17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
       18→pub enum ContentType {
+      19→    Json,
+      20→    Yaml,
+      21→    Toml,
+      22→    Xml,
+      23→
+      24→    /// See: <https://github.com/hashicorp/hcl>
+      25→    Hcl,
+      26→
       …
       36→pub trait Parser {
       37→    fn extension(&self) -> &'static str;

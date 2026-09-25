@@ -268,10 +268,12 @@ truststore_java.go
 truststore_linux.go
 truststore_nss.go
   …
+  17→var (
   18→	hasNSS       bool
   19→	hasCertutil  bool
   20→	certutilPath string
   21→	nssDBs       = []string{
+  22→		filepath.Join(os.Getenv("HOME"), ".pki/nssdb"),
   …
   26→	firefoxPaths = []string{
   …

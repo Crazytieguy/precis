@@ -233,6 +233,7 @@ src/
     34→): (value: unknown) => value is P.infer<p>;
     …
     48→export function isMatching<const T, const P extends PatternConstraint<T>>(
+    49→  pattern: P,
     …
     53→export function isMatching<const p extends Pattern<any>>(
     54→  ...args: [pattern: p, value?: any]

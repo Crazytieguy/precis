@@ -19,9 +19,10 @@
 //! `(parent, name)`. An atom's bytes are its rendered footprint: the line
 //! length for a full line, the regex match end for a truncated one, 1 for an
 //! ellipsis or a listing entry. Walker atoms from batches with
-//! `cum_tokens ≤ B` count toward `Score(B)`, each at the largest footprint
-//! the walker delivered. Scheduler prefix-monotonicity makes that slice the
-//! walker's output at budget `B`. NS costs `exp_t` are recomputed through
+//! `cum_tokens ≤ B`, plus the affordable prefix of the next batch, count
+//! toward `Score(B)`, each at the largest footprint the walker delivered.
+//! Scheduler prefix-monotonicity makes that the walker's output at budget
+//! `B`. NS costs `exp_t` are recomputed through
 //! the current renderer and tokenizer, so a render-format change re-prices
 //! the answer key.
 //!
@@ -132,13 +133,26 @@ pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
 /// smaller budget.
 pub fn render_with_schedule(schedule: &Schedule, budget: usize) -> String {
     let mut tree = RenderedTree::new(schedule.root.clone(), SourceCache::new());
+    replay(schedule, &mut tree, budget);
+    tree.render()
+}
+
+/// Apply to `tree` what the walker run at `budget` schedules: the batches
+/// whose cumulative cost fits, then the affordable prefix of the next
+/// one. Returns that prefix.
+fn replay(schedule: &Schedule, tree: &mut RenderedTree, budget: usize) -> Option<BatchContent> {
+    let mut spent = 0;
     for (i, batch) in schedule.batches.iter().enumerate() {
         if batch.cum_tokens > budget {
-            break;
+            let (prefix, _) =
+                tree.affordable_prefix(&batch.content, |cost| spent + cost.tokens <= budget)?;
+            tree.apply(&prefix, BatchId::new(i), |_| true);
+            return Some(prefix);
         }
         tree.apply(&batch.content, BatchId::new(i), |_| true);
+        spent = batch.cum_tokens;
     }
-    tree.render()
+    None
 }
 
 /// Markdown report for one fixture plus the scores in its headline.
@@ -208,6 +222,9 @@ struct Graded<'a> {
     walker_rows: Vec<Vec<(usize, usize)>>,
     /// Per atom id: `(NS row, NS bytes)` for every NS row holding it.
     occurrences: Vec<Vec<(usize, usize)>>,
+    /// Per [`BUDGETS`] entry: the graded atoms of the partial batch the
+    /// walker run at that budget ends on.
+    partial_rows: Vec<Vec<(usize, usize)>>,
 }
 
 struct NsRow {
@@ -261,14 +278,18 @@ impl<'a> Graded<'a> {
             });
         }
 
-        let walker_rows = schedule
-            .batches
+        let grade = |content: &BatchContent| -> Vec<(usize, usize)> {
+            graded_atoms(content, &source_cache, &fixture_root)
+                .into_iter()
+                .filter_map(|(atom, bytes)| Some((*ids.get(&atom)?, bytes)))
+                .collect()
+        };
+        let walker_rows = schedule.batches.iter().map(|b| grade(&b.content)).collect();
+        let partial_rows = BUDGETS
             .iter()
-            .map(|batch| {
-                graded_atoms(&batch.content, &source_cache, &fixture_root)
-                    .into_iter()
-                    .filter_map(|(atom, bytes)| Some((*ids.get(&atom)?, bytes)))
-                    .collect()
+            .map(|&budget| {
+                let mut tree = RenderedTree::new(schedule.root.clone(), source_cache.clone());
+                replay(schedule, &mut tree, budget).map_or_else(Vec::new, |prefix| grade(&prefix))
             })
             .collect();
         Ok(Self {
@@ -277,6 +298,7 @@ impl<'a> Graded<'a> {
             ns_rows,
             walker_rows,
             occurrences,
+            partial_rows,
         })
     }
 
@@ -302,7 +324,7 @@ impl<'a> Graded<'a> {
                 break;
             };
             while grid_index < BUDGETS.len() && BUDGETS[grid_index] < cum {
-                grid[grid_index] = state.score();
+                grid[grid_index] = state.score_with_partial(&self.partial_rows[grid_index]);
                 grid_index += 1;
             }
             // Every row at this cum is folded in before scoring, so tied rows
@@ -340,8 +362,8 @@ impl<'a> Graded<'a> {
                 writeln!(out, "{row} {score:.3} |").unwrap();
             }
         }
-        for budget_score in &mut grid[grid_index..] {
-            *budget_score = state.score();
+        for (index, budget_score) in grid.iter_mut().enumerate().skip(grid_index) {
+            *budget_score = state.score_with_partial(&self.partial_rows[index]);
         }
 
         let scores = Scores {
@@ -360,6 +382,7 @@ impl<'a> Graded<'a> {
 }
 
 /// Walker and NS progress along the merged cumulative axis.
+#[derive(Clone)]
 struct Running<'g> {
     graded: &'g Graded<'g>,
     /// Largest footprint the walker has delivered per atom id.
@@ -401,6 +424,14 @@ impl<'g> Running<'g> {
             self.a_b_atoms += 1;
             self.ideal_importance += 1.0 / self.a_b_atoms as f64;
         }
+    }
+
+    /// Score with `partial` — the atoms of the batch a run at this
+    /// budget ends on — folded in.
+    fn score_with_partial(&self, partial: &[(usize, usize)]) -> BudgetScore {
+        let mut with_partial = self.clone();
+        with_partial.fold_walker_row(partial);
+        with_partial.score()
     }
 
     fn score(&self) -> BudgetScore {
@@ -498,6 +529,7 @@ mod tests {
             }],
             walker_rows: vec![vec![(0, 10)]],
             occurrences: vec![vec![(0, 10)]],
+            partial_rows: vec![Vec::new(); BUDGETS.len()],
         };
         let (report, scores) = graded.report();
         let row_scores: Vec<&str> = report

@@ -193,6 +193,12 @@ microbootstrap/
   instruments_setupper.py
     …
     19→class InstrumentsSetupper:
+    20→    console_writer: ConsoleWriter
+    21→    instrument_box: InstrumentBox
+    22→
+    23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
+    …
+    28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
     …
   middlewares/
     __init__.py (empty)

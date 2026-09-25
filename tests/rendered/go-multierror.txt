@@ -132,6 +132,11 @@ group.go
   18→// If the function returns an error it is added to the group multierror which
   19→// is returned by Wait.
   20→func (g *Group) Go(f func() error) {
+  21→	g.wg.Add(1)
+  22→
+  23→	go func() {
+  24→		defer g.wg.Done()
+  25→
   …
   34→// Wait blocks until all function calls from the Go method have returned, then
   35→// returns the multierror.

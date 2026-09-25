@@ -206,6 +206,12 @@ middleclass.lua
   148→      return instance
   …
   151→    subclass = function(self, name)
+  152→      assert(type(self) == 'table', "Make sure that you are using 'Class:subclass' instead of 'Class.subclass'")
+  153→      assert(type(name) == "string", "You must provide a name(string) for your class")
+  154→
+  155→      local subclass = _createClass(name, self)
+  156→
+  157→      for methodName, f in pairs(self.__instanceDict) do
   …
   170→    subclassed = function(self, other) end,
   171→

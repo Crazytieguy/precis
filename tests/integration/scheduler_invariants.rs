@@ -184,6 +184,51 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     );
 }
 
+#[test]
+fn scheduler_invariants_unaffordable_batch_spends_the_rest_on_its_head() {
+    struct ListingThenFile;
+    impl Walker for ListingThenFile {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
+            vec![fs_listing_batch(900.0, "big.rs")]
+        }
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
+            if !matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
+                return Vec::new();
+            }
+            vec![Batch {
+                key: code_key(Rung::Body, "big.rs"),
+                predecessor: None,
+                content: BatchContent::Lines {
+                    spans: single_span(stub_file("big.rs"), 1, 40, Render::Full),
+                },
+                value: 500.0,
+            }]
+        }
+    }
+
+    let render_at = |budget: usize| {
+        let cache = SourceCache::new();
+        let body: String = (1..=40).map(|i| format!("let line_{i} = {i};\n")).collect();
+        preload(&cache, &stub_file("big.rs"), &body);
+        Scheduler::with_source_cache(stub_dir(), ListingThenFile, budget, None, cache)
+            .run()
+            .render()
+    };
+    let whole = render_at(10_000);
+    let budget = precis::tokenizer::count(&whole) / 2;
+    let partial = render_at(budget);
+    assert!(partial.contains("1→let line_1 = 1;"), "{partial}");
+    assert!(!partial.contains("40→"), "{partial}");
+    assert!(
+        partial.ends_with("…\n"),
+        "a cut-short file must say so: {partial}"
+    );
+    assert!(precis::tokenizer::count(&partial) <= budget, "{partial}");
+    for row in partial.lines().filter(|row| row.trim() != "…") {
+        assert!(whole.lines().any(|whole_row| whole_row == row), "{row}");
+    }
+}
+
 /// Walker that emits one batch: the listing of `.0`, exactly as
 /// `walker::fs` builds it, and nothing else.
 struct RootListing(PathBuf);

@@ -1,4 +1,4 @@
-Score(3000)=0.661 I=0.877 C=0.498 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.965/0.753/0.706/0.661/0.691/0.651/0.573
+Score(3000)=0.663 I=0.877 C=0.501 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.977/0.787/0.734/0.663/0.691/0.651/0.573
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -145,3 +145,4 @@ Score(3000)=0.661 I=0.877 C=0.498 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 9753 |  | 231 | ansi-styles `index.d.ts`: complete declaration roster | 7.1 |  | 0.602 |
 | ns | 9896 |  | 143 | `source/index.test-d.ts`: what the tsd suite asserts | 7.2 |  | 0.597 |
 | ns | 9989 |  | 93 | `benchmark.js` and both `examples/` scripts: purpose lines | 7.3 |  | 0.594 |
+| walker |  | 9998 | 306 | Markdown::Section { file: readme.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.594 |

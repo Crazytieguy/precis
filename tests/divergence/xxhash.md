@@ -1,4 +1,4 @@
-Score(3000)=0.730 I=0.820 C=0.650 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.569/0.531/0.695/0.730/0.600/0.684/0.740
+Score(3000)=0.733 I=0.824 C=0.652 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.570/0.531/0.696/0.733/0.600/0.691/0.750
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -164,3 +164,4 @@ Score(3000)=0.730 I=0.820 C=0.650 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | ns | 9348 |  | 172 | `xxhash_amd64.s`: `mergeRound` and `blockLoop` macros | 5.6 | 5.5 | 0.729 |
 | ns | 9400 |  | 52 | `xxhash_arm64.s`: the complete macro roster | 5.7 | 5.4 | 0.725 |
 | walker |  | 9409 | 149 | Code::CodeKey { rung: Body, file: dynamic/dynamic_test.go, decl: 2, sub: 0, line: 33 } |  |  | 0.733 |
+| walker |  | 9997 | 588 | Code::CodeKey { rung: Decl, file: xxhashbench/xxhashbench_test.go, decl: 2, sub: 0, line: 20 } |  |  | 0.744 |

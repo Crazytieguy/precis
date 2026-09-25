@@ -1,4 +1,4 @@
-Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.846/0.792/0.761/0.809/0.765/0.605/0.522
+Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.857/0.825/0.767/0.809/0.765/0.605/0.522
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -120,3 +120,4 @@ Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.489 |
 | walker |  | 9974 | 300 | Markdown::Section { file: ARCHITECTURE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.489 |
 | ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.499 |
+| walker |  | 9996 | 22 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 11, sub: 0, line: 909 } |  |  | 0.499 |

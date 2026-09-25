@@ -1,4 +1,4 @@
-Score(3000)=0.492 I=0.534 C=0.454 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.534/0.668/0.567/0.492/0.398/0.382/0.374
+Score(3000)=0.492 I=0.534 C=0.454 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.547/0.668/0.569/0.492/0.398/0.382/0.374
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -216,4 +216,5 @@ Score(3000)=0.492 I=0.534 C=0.454 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/43
 | ns | 9837 |  | 184 | `pyproject.toml` — project metadata, the dependency list marker, and package data | 6.1 |  | 0.376 |
 | walker |  | 9894 | 75 | Code::CodeKey { rung: Body, file: xlstm/xlstm_lm_model.py, decl: 4, sub: 0, line: 41 } |  |  | 0.376 |
 | walker |  | 9983 | 89 | Code::CodeKey { rung: Names, file: xlstm/components/feedforward.py, decl: 0, sub: 0, line: 0 } |  |  | 0.381 |
+| walker |  | 10000 | 17 | Code::CodeKey { rung: Decl, file: xlstm/components/feedforward.py, decl: 5, sub: 0, line: 49 } |  |  | 0.381 |
 | ns | 10005 |  | 168 | `pytest.ini` in full, and the README install commands | 6.2 | 1.6 | 0.379 |

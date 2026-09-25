@@ -1,4 +1,4 @@
-Score(3000)=0.702 I=0.851 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.504/0.749/0.731/0.702/0.672/0.618/0.739
+Score(3000)=0.702 I=0.852 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.513/0.749/0.731/0.702/0.696/0.618/0.739
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -123,4 +123,5 @@ Score(3000)=0.702 I=0.851 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 9849 | 13 | Code::CodeKey { rung: Doc, file: main.c, decl: 49, sub: 0, line: 586 } |  |  | 0.736 |
 | walker |  | 9864 | 15 | Code::CodeKey { rung: Doc, file: main.c, decl: 41, sub: 0, line: 433 } |  |  | 0.736 |
 | walker |  | 9919 | 55 | Code::CodeKey { rung: Doc, file: main.c, decl: 43, sub: 0, line: 461 } |  |  | 0.736 |
+| walker |  | 9982 | 63 | Code::CodeKey { rung: Names, file: tokenize.c, decl: 0, sub: 0, line: 0 } |  |  | 0.736 |
 | ns | 9989 |  | 233 | Every preprocessor directive chibicc handles | 6.3 |  | 0.730 |

@@ -1,4 +1,4 @@
-Score(3000)=0.631 I=0.881 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.758/0.732/0.631/0.494/0.441/0.536
+Score(3000)=0.631 I=0.881 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.799/0.919/0.732/0.631/0.494/0.441/0.536
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -192,3 +192,4 @@ Score(3000)=0.631 I=0.881 C=0.452 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 9860 |  | 35 | GitHub workflows and repository meta files | 7.3 |  | 0.593 |
 | ns | 9916 |  | 56 | CI interpreter matrix | 7.4 |  | 0.593 |
 | walker |  | 9923 | 104 | Code::CodeKey { rung: Decl, file: src/typeguard/_decorators.py, decl: 7, sub: 0, line: 150 } |  |  | 0.601 |
+| walker |  | 9993 | 70 | Code::CodeKey { rung: Decl, file: src/typeguard/_decorators.py, decl: 5, sub: 0, line: 136 } |  |  | 0.601 |

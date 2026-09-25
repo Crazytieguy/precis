@@ -315,6 +315,7 @@ src/
     195→#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
     196→typedef struct YYLTYPE YYLTYPE;
     197→struct YYLTYPE
+    198→{
     …
     204→# define YYLTYPE_IS_DECLARED 1
     205→# define YYLTYPE_IS_TRIVIAL 1
