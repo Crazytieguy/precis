@@ -103,15 +103,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             }
             TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
-        let parts = declaration_parts(file, statement, node);
-        model.decls.push(DeclInfo {
-            name_rows: parts.name_rows,
-            head: parts.head,
-            doc: doc_items(file, statement, &module_doc_rows),
-            body: parts.body,
-            shape: parts.shape,
-            members: parts.members,
-        });
+        let mut decl = declaration_parts(file, statement, node);
+        decl.doc = doc_items(file, statement, &module_doc_rows);
+        model.decls.push(decl);
     }
     model
 }
@@ -589,19 +583,11 @@ fn is_commonjs_target(file: &SourceFile, left: Node) -> bool {
     }
 }
 
-/// A declaration's rows other than its doc.
-struct Parts {
-    name_rows: Vec<usize>,
-    head: Vec<usize>,
-    body: Vec<Item>,
-    shape: Shape,
-    members: Vec<DeclInfo>,
-}
-
-/// The parts of the declaration `statement` introduces, shaped by `node`
-/// (the declaration or exported value inside it). The head starts at
-/// `statement`, so it carries `export`, `declare` and decorators.
-fn declaration_parts(file: &SourceFile, statement: Node, node: Node) -> Parts {
+/// The parts other than the doc of the declaration `statement`
+/// introduces, shaped by `node` (the declaration or exported value inside
+/// it). The head starts at `statement`, so it carries `export`, `declare`
+/// and decorators.
+fn declaration_parts(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
     let span = Span::of(file, statement);
     let name_row = name_row(node).unwrap_or(span.start);
     let kind = node.kind();
@@ -660,7 +646,7 @@ fn own_object_type(value: Node) -> Option<Node> {
 /// wrapped, `memo(forwardRef(() => { … }))`) is `Callable`; a class is a
 /// container; an object or array literal lists its entries; anything
 /// else is all head.
-fn value_parts(file: &SourceFile, span: Span, name_row: usize, value: Node) -> Parts {
+fn value_parts(file: &SourceFile, span: Span, name_row: usize, value: Node) -> DeclInfo {
     if is_class_kind(value.kind()) {
         return class(file, span, name_row, value.child_by_field_name("body"));
     }
@@ -724,7 +710,7 @@ fn name_row(node: Node) -> Option<usize> {
 
 /// Head through the row before the first statement (at least through the
 /// row opening the block and the name row); one body item per statement.
-fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> Parts {
+fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> DeclInfo {
     let first_statement = block.and_then(|block| block.named_child(0));
     let (head_end, body) = match (block, first_statement) {
         (Some(block), Some(first)) => {
@@ -735,9 +721,10 @@ fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>)
         }
         _ => (span.end, Vec::new()),
     };
-    Parts {
+    DeclInfo {
         name_rows: vec![name_row],
         head: (span.start..=head_end).collect(),
+        doc: Vec::new(),
         body,
         shape: Shape::Callable,
         members: Vec::new(),
@@ -747,11 +734,12 @@ fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>)
 /// Head through the row opening `block`, plus the rows from its closing
 /// row through the declaration's end; one body item per entry of `block`.
 /// Without a block, all head.
-fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Node>) -> Parts {
+fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Node>) -> DeclInfo {
     let Some(block) = block else {
-        return Parts {
+        return DeclInfo {
             name_rows,
             head: (span.start..=span.end).collect(),
+            doc: Vec::new(),
             body: Vec::new(),
             shape: Shape::Whole,
             members: Vec::new(),
@@ -768,9 +756,10 @@ fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Nod
     let head: Vec<usize> = (span.start..=open_row)
         .chain(suffix_start.max(open_row + 1)..=span.end)
         .collect();
-    Parts {
+    DeclInfo {
         name_rows,
         head,
+        doc: Vec::new(),
         body,
         shape: Shape::Whole,
         members: Vec::new(),
@@ -815,7 +804,7 @@ fn entry_items(file: &SourceFile, block: Node, after_row: usize) -> Vec<Item> {
 /// A class as a container: the header and closing row as head, each
 /// visible field (with its comments) as a body item, and each visible
 /// method or arrow-function field as a member listed by its name row.
-fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> Parts {
+fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> DeclInfo {
     let Some(block) = block else {
         return whole(file, span, vec![name_row], None);
     };
@@ -863,16 +852,10 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
             if is_member || function_block.is_some() {
                 let member_name_row = name_row_of_member(child).unwrap_or(span.start);
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
-                let parts = callable(file, span, member_name_row, block);
-                body.push(Item::new(parts.name_rows.iter().copied()));
-                members.push(DeclInfo {
-                    name_rows: parts.name_rows,
-                    head: parts.head,
-                    doc: doc_items(file, anchor, &HashSet::new()),
-                    body: parts.body,
-                    shape: Shape::Callable,
-                    members: Vec::new(),
-                });
+                let mut member = callable(file, span, member_name_row, block);
+                member.doc = doc_items(file, anchor, &HashSet::new());
+                body.push(Item::new(member.name_rows.iter().copied()));
+                members.push(member);
             } else {
                 let start = leading_comment.unwrap_or(span.start).max(last_row + 1);
                 if start <= span.end {
@@ -886,9 +869,10 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
     if span.end > last_row {
         head.push(span.end);
     }
-    Parts {
+    DeclInfo {
         name_rows: vec![name_row],
         head,
+        doc: Vec::new(),
         body,
         shape: Shape::Whole,
         members,
