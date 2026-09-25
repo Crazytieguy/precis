@@ -47,6 +47,12 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let type_visibility = declared_type_visibility(file, root);
     let mut cursor = root.walk();
     for node in root.named_children(&mut cursor) {
+        if matches!(
+            node.kind(),
+            "line_comment" | "block_comment" | "attribute_item"
+        ) {
+            continue;
+        }
         let leading = Leading::above(node, file);
         if leading.hidden {
             continue;
@@ -436,8 +442,9 @@ fn impl_container(
         let list = node.child_by_field_name("body")?;
         let mut cursor = list.walk();
         list.named_children(&mut cursor)
-            .filter(|child| !Leading::above(*child, file).hidden)
-            .filter_map(own_visibility)
+            .filter_map(|child| {
+                own_visibility(child).filter(|_| !Leading::above(child, file).hidden)
+            })
             .max()?
     };
     Some(container(
