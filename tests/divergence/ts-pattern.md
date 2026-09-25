@@ -1,4 +1,4 @@
-Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.724/0.690/0.637/0.607/0.517/0.550
+Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.724/0.690/0.637/0.623/0.524/0.550
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -70,86 +70,86 @@ Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 3068 | 29 | ts names src/types/DeepExclude.ts |  |  | 0.623 |
 | walker |  | 3088 | 20 | ts names examples/gif-fetcher/src/index.tsx |  |  | 0.623 |
 | walker |  | 3124 | 36 | ts module doc src/internals/helpers.ts |  |  | 0.623 |
-| ns | 3269 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.607 |
-| walker |  | 3278 | 154 | json config tsconfig.json |  |  | 0.608 |
-| walker |  | 3316 | 38 | ts names src/types/Match.ts |  |  | 0.609 |
-| walker |  | 3361 | 45 | ts names src/types/BuildMany.ts |  |  | 0.609 |
-| walker |  | 3381 | 20 | ts decl src/types/BuildMany.ts:4 |  |  | 0.609 |
-| walker |  | 3505 | 124 | README.md section #11 |  |  | 0.610 |
-| ns | 3536 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.591 |
-| walker |  | 3560 | 55 | README.md section #5 |  |  | 0.594 |
-| walker |  | 3708 | 148 | README.md section #10 |  |  | 0.595 |
-| walker |  | 3768 | 60 | README.md section #6 |  |  | 0.600 |
-| walker |  | 3772 | 4 | listing of 'examples/gif-fetcher/public' |  |  | 0.604 |
-| walker |  | 3780 | 8 | listing of 'tests/types-catalog' |  |  | 0.613 |
-| ns | 3821 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.598 |
-| walker |  | 3855 | 75 | ts body src/errors.ts:6 |  |  | 0.600 |
-| walker |  | 4006 | 151 | ts doc src/is-matching.ts:48 |  |  | 0.604 |
-| walker |  | 4079 | 73 | README.md section #1 |  |  | 0.611 |
-| ns | 4095 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.597 |
-| walker |  | 4172 | 93 | json config jsr.json |  |  | 0.597 |
-| ns | 4249 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.607 |
-| walker |  | 4435 | 263 | ts names src/patterns.ts #1 |  |  | 0.624 |
-| ns | 4436 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.611 |
-| walker |  | 4463 | 28 | ts decl src/patterns.ts:246 |  |  | 0.611 |
-| walker |  | 4492 | 29 | ts decl src/patterns.ts:643 |  |  | 0.611 |
-| walker |  | 4528 | 36 | ts decl src/patterns.ts:445 |  |  | 0.611 |
-| walker |  | 4570 | 42 | ts decl src/patterns.ts:611 |  |  | 0.611 |
-| walker |  | 4613 | 43 | ts decl src/patterns.ts:242 |  |  | 0.611 |
-| walker |  | 4656 | 43 | ts decl src/patterns.ts:295 |  |  | 0.611 |
+| walker |  | 3162 | 38 | ts names src/types/Match.ts |  |  | 0.624 |
+| walker |  | 3207 | 45 | ts names src/types/BuildMany.ts |  |  | 0.624 |
+| walker |  | 3227 | 20 | ts decl src/types/BuildMany.ts:4 |  |  | 0.624 |
+| ns | 3269 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.608 |
+| walker |  | 3351 | 124 | README.md section #11 |  |  | 0.609 |
+| walker |  | 3406 | 55 | README.md section #5 |  |  | 0.612 |
+| ns | 3536 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.593 |
+| walker |  | 3554 | 148 | README.md section #10 |  |  | 0.594 |
+| walker |  | 3614 | 60 | README.md section #6 |  |  | 0.599 |
+| walker |  | 3618 | 4 | listing of 'examples/gif-fetcher/public' |  |  | 0.603 |
+| walker |  | 3626 | 8 | listing of 'tests/types-catalog' |  |  | 0.612 |
+| walker |  | 3701 | 75 | ts body src/errors.ts:6 |  |  | 0.614 |
+| ns | 3821 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.599 |
+| walker |  | 3852 | 151 | ts doc src/is-matching.ts:48 |  |  | 0.603 |
+| walker |  | 3925 | 73 | README.md section #1 |  |  | 0.610 |
+| walker |  | 4018 | 93 | json config jsr.json |  |  | 0.610 |
+| ns | 4095 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.596 |
+| ns | 4249 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.606 |
+| walker |  | 4281 | 263 | ts names src/patterns.ts #1 |  |  | 0.623 |
+| walker |  | 4309 | 28 | ts decl src/patterns.ts:246 |  |  | 0.623 |
+| walker |  | 4338 | 29 | ts decl src/patterns.ts:643 |  |  | 0.623 |
+| walker |  | 4374 | 36 | ts decl src/patterns.ts:445 |  |  | 0.623 |
+| walker |  | 4416 | 42 | ts decl src/patterns.ts:611 |  |  | 0.623 |
+| ns | 4436 |  | 187 | src/internals/symbols.ts — the five protocol symbols in full | 3.1 |  | 0.610 |
+| walker |  | 4459 | 43 | ts decl src/patterns.ts:242 |  |  | 0.610 |
+| walker |  | 4502 | 43 | ts decl src/patterns.ts:295 |  |  | 0.610 |
+| walker |  | 4547 | 45 | ts decl src/patterns.ts:433 |  |  | 0.611 |
+| walker |  | 4592 | 45 | ts decl src/patterns.ts:536 |  |  | 0.611 |
+| walker |  | 4637 | 45 | ts decl src/patterns.ts:572 |  |  | 0.611 |
 | ns | 4658 |  | 222 | src/internals/helpers.ts — the three pattern predicates | 3.2 |  | 0.595 |
-| walker |  | 4701 | 45 | ts decl src/patterns.ts:433 |  |  | 0.596 |
-| walker |  | 4746 | 45 | ts decl src/patterns.ts:536 |  |  | 0.596 |
-| walker |  | 4791 | 45 | ts decl src/patterns.ts:572 |  |  | 0.596 |
-| walker |  | 4840 | 49 | ts decl src/patterns.ts:637 |  |  | 0.597 |
-| ns | 4864 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.582 |
-| walker |  | 4890 | 50 | ts decl src/patterns.ts:299 |  |  | 0.582 |
-| walker |  | 4942 | 52 | ts decl src/patterns.ts:646 |  |  | 0.582 |
-| ns | 4981 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.573 |
-| walker |  | 5020 | 78 | ts decl src/patterns.ts:357 |  |  | 0.573 |
-| walker |  | 5114 | 94 | ts decl src/patterns.ts:437 |  |  | 0.573 |
-| ns | 5188 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.561 |
-| walker |  | 5209 | 95 | ts decl src/patterns.ts:362 |  |  | 0.561 |
-| walker |  | 5308 | 99 | ts decl src/patterns.ts:686 |  |  | 0.561 |
-| ns | 5416 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.544 |
-| walker |  | 5458 | 150 | ts decl src/patterns.ts:673 |  |  | 0.544 |
-| walker |  | 5468 | 10 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.551 |
-| walker |  | 5549 | 81 | ts names src/internals/helpers.ts |  |  | 0.552 |
-| walker |  | 5563 | 14 | ts decl src/internals/helpers.ts:12 |  |  | 0.552 |
-| walker |  | 5593 | 30 | ts decl src/internals/helpers.ts:16 |  |  | 0.554 |
-| ns | 5635 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.544 |
-| walker |  | 5638 | 45 | ts decl src/internals/helpers.ts:32 |  |  | 0.546 |
-| walker |  | 5686 | 48 | ts decl src/internals/helpers.ts:132 |  |  | 0.548 |
-| walker |  | 5768 | 82 | ts names src/types/InvertPattern.ts |  |  | 0.549 |
-| walker |  | 5790 | 22 | ts decl src/types/InvertPattern.ts:106 |  |  | 0.549 |
-| walker |  | 5814 | 24 | ts decl src/types/InvertPattern.ts:303 |  |  | 0.549 |
-| ns | 6030 |  | 395 | `MatchExpression.with()` — multi-pattern, guard and selection semantics | 3.8 | 3.6 | 0.529 |
-| walker |  | 6044 | 230 | README.md section #9 |  |  | 0.531 |
-| ns | 6201 |  | 171 | `otherwise`, `exhaustive`, `run`, `returnType` and `narrow` bodies, and `defaultCatcher` | 3.9 | 3.6 | 0.517 |
-| walker |  | 6253 | 209 | ts doc src/match.ts:32 |  |  | 0.524 |
-| walker |  | 6345 | 92 | ts names src/types/DistributeUnions.ts |  |  | 0.525 |
-| ns | 6370 |  | 169 | The observable rules of `matchPattern`'s tuple/variadic branch | 3.10 | 3.3 | 0.517 |
-| walker |  | 6375 | 30 | ts decl src/types/DistributeUnions.ts:41 |  |  | 0.517 |
-| walker |  | 6470 | 95 | ts decl src/types/DistributeUnions.ts:174 |  |  | 0.517 |
-| ns | 6480 |  | 110 | `MatcherType` — the complete closed set of matcher kinds | 4.1 |  | 0.511 |
-| walker |  | 6569 | 99 | ts decl src/types/InvertPattern.ts:180 |  |  | 0.511 |
-| walker |  | 6670 | 101 | ts decl src/types/InvertPattern.ts:192 |  |  | 0.511 |
-| ns | 6710 |  | 230 | `MatcherProtocol` and `MatchResult` — the contract a custom pattern implements | 4.2 |  | 0.501 |
-| ns | 6867 |  | 157 | The `Matcher` interface and its `[symbols.isVariadic]` flag | 4.3 |  | 0.494 |
-| walker |  | 6939 | 269 | ts names src/patterns.ts #2 |  |  | 0.522 |
-| walker |  | 6969 | 30 | ts decl src/patterns.ts:1251 |  |  | 0.522 |
-| walker |  | 6999 | 30 | ts decl src/patterns.ts:1271 |  |  | 0.524 |
-| walker |  | 7043 | 44 | ts decl src/patterns.ts:696 |  |  | 0.524 |
-| ns | 7263 |  | 396 | Complete roster of the matcher-alias types (`ArrayP`, `SetP`, `SelectP`, …) | 4.4 |  | 0.510 |
-| walker |  | 7287 | 244 | ts names src/types/Pattern.ts |  |  | 0.513 |
-| walker |  | 7311 | 24 | ts decl src/types/Pattern.ts:74 |  |  | 0.513 |
-| walker |  | 7337 | 26 | ts decl src/types/Pattern.ts:38 |  |  | 0.514 |
-| walker |  | 7367 | 30 | ts decl src/types/Pattern.ts:96 |  |  | 0.514 |
-| walker |  | 7450 | 83 | ts decl src/types/Pattern.ts:83 |  |  | 0.515 |
-| walker |  | 7549 | 99 | ts decl src/types/Pattern.ts:7 |  |  | 0.529 |
-| ns | 7632 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.515 |
-| walker |  | 7725 | 176 | ts doc src/is-matching.ts:32 |  |  | 0.519 |
-| walker |  | 7740 | 15 | listing of 'examples/one-file-demo' |  |  | 0.527 |
+| walker |  | 4686 | 49 | ts decl src/patterns.ts:637 |  |  | 0.596 |
+| walker |  | 4736 | 50 | ts decl src/patterns.ts:299 |  |  | 0.596 |
+| walker |  | 4788 | 52 | ts decl src/patterns.ts:646 |  |  | 0.596 |
+| ns | 4864 |  | 206 | `matchPattern` signature and the Matcher-Protocol dispatch branch | 3.3 |  | 0.581 |
+| walker |  | 4866 | 78 | ts decl src/patterns.ts:357 |  |  | 0.581 |
+| walker |  | 4960 | 94 | ts decl src/patterns.ts:437 |  |  | 0.581 |
+| ns | 4981 |  | 117 | `matchPattern`'s object-key branch and the primitive fallback | 3.4 |  | 0.572 |
+| walker |  | 5055 | 95 | ts decl src/patterns.ts:362 |  |  | 0.572 |
+| walker |  | 5154 | 99 | ts decl src/patterns.ts:686 |  |  | 0.572 |
+| ns | 5188 |  | 207 | `getSelectionKeys` and `flatMap` in full — closing src/internals/helpers.ts | 3.5 |  | 0.560 |
+| walker |  | 5304 | 150 | ts decl src/patterns.ts:673 |  |  | 0.560 |
+| walker |  | 5314 | 10 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.567 |
+| walker |  | 5395 | 81 | ts names src/internals/helpers.ts |  |  | 0.568 |
+| walker |  | 5409 | 14 | ts decl src/internals/helpers.ts:12 |  |  | 0.568 |
+| ns | 5416 |  | 228 | The `MatchExpression` class and its complete method roster | 3.6 |  | 0.551 |
+| walker |  | 5439 | 30 | ts decl src/internals/helpers.ts:16 |  |  | 0.553 |
+| walker |  | 5484 | 45 | ts decl src/internals/helpers.ts:32 |  |  | 0.555 |
+| walker |  | 5532 | 48 | ts decl src/internals/helpers.ts:132 |  |  | 0.557 |
+| walker |  | 5614 | 82 | ts names src/types/InvertPattern.ts |  |  | 0.557 |
+| ns | 5635 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.548 |
+| walker |  | 5636 | 22 | ts decl src/types/InvertPattern.ts:106 |  |  | 0.548 |
+| walker |  | 5660 | 24 | ts decl src/types/InvertPattern.ts:303 |  |  | 0.548 |
+| walker |  | 5890 | 230 | README.md section #9 |  |  | 0.549 |
+| ns | 6030 |  | 395 | `MatchExpression.with()` — multi-pattern, guard and selection semantics | 3.8 | 3.6 | 0.530 |
+| walker |  | 6099 | 209 | ts doc src/match.ts:32 |  |  | 0.538 |
+| walker |  | 6191 | 92 | ts names src/types/DistributeUnions.ts |  |  | 0.538 |
+| ns | 6201 |  | 171 | `otherwise`, `exhaustive`, `run`, `returnType` and `narrow` bodies, and `defaultCatcher` | 3.9 | 3.6 | 0.524 |
+| walker |  | 6221 | 30 | ts decl src/types/DistributeUnions.ts:41 |  |  | 0.524 |
+| walker |  | 6316 | 95 | ts decl src/types/DistributeUnions.ts:174 |  |  | 0.524 |
+| ns | 6370 |  | 169 | The observable rules of `matchPattern`'s tuple/variadic branch | 3.10 | 3.3 | 0.516 |
+| walker |  | 6415 | 99 | ts decl src/types/InvertPattern.ts:180 |  |  | 0.516 |
+| ns | 6480 |  | 110 | `MatcherType` — the complete closed set of matcher kinds | 4.1 |  | 0.510 |
+| walker |  | 6516 | 101 | ts decl src/types/InvertPattern.ts:192 |  |  | 0.510 |
+| ns | 6710 |  | 230 | `MatcherProtocol` and `MatchResult` — the contract a custom pattern implements | 4.2 |  | 0.500 |
+| walker |  | 6785 | 269 | ts names src/patterns.ts #2 |  |  | 0.529 |
+| walker |  | 6815 | 30 | ts decl src/patterns.ts:1251 |  |  | 0.529 |
+| walker |  | 6845 | 30 | ts decl src/patterns.ts:1271 |  |  | 0.530 |
+| ns | 6867 |  | 157 | The `Matcher` interface and its `[symbols.isVariadic]` flag | 4.3 |  | 0.523 |
+| walker |  | 6889 | 44 | ts decl src/patterns.ts:696 |  |  | 0.523 |
+| walker |  | 7133 | 244 | ts names src/types/Pattern.ts |  |  | 0.524 |
+| walker |  | 7157 | 24 | ts decl src/types/Pattern.ts:74 |  |  | 0.524 |
+| walker |  | 7183 | 26 | ts decl src/types/Pattern.ts:38 |  |  | 0.524 |
+| walker |  | 7213 | 30 | ts decl src/types/Pattern.ts:96 |  |  | 0.524 |
+| ns | 7263 |  | 396 | Complete roster of the matcher-alias types (`ArrayP`, `SetP`, `SelectP`, …) | 4.4 |  | 0.514 |
+| walker |  | 7296 | 83 | ts decl src/types/Pattern.ts:83 |  |  | 0.514 |
+| walker |  | 7395 | 99 | ts decl src/types/Pattern.ts:7 |  |  | 0.528 |
+| walker |  | 7571 | 176 | ts doc src/is-matching.ts:32 |  |  | 0.532 |
+| walker |  | 7586 | 15 | listing of 'examples/one-file-demo' |  |  | 0.541 |
+| ns | 7632 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.526 |
+| walker |  | 7740 | 154 | json config tsconfig.json |  |  | 0.527 |
 | walker |  | 7869 | 129 | ts decl src/types/DistributeUnions.ts:183 |  |  | 0.527 |
 | walker |  | 7999 | 130 | ts decl src/types/DistributeUnions.ts:46 |  |  | 0.527 |
 | ns | 8004 |  | 372 | Headline export of every remaining src/types/ module, with its purpose line | 4.6 |  | 0.524 |

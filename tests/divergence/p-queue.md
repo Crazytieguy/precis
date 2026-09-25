@@ -1,4 +1,4 @@
-Score(3000)=0.709 I=0.830 C=0.605 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.661/0.663/0.664/0.709/0.698/0.666/0.597
+Score(3000)=0.709 I=0.830 C=0.605 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.661/0.663/0.664/0.709/0.697/0.666/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -89,34 +89,34 @@ Score(3000)=0.709 I=0.830 C=0.605 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.688 |
 | walker |  | 3346 | 75 | ts body source/index.ts:682 |  |  | 0.688 |
 | walker |  | 3426 | 80 | ts body source/index.ts:432 |  |  | 0.688 |
-| walker |  | 3507 | 81 | json config tsconfig.json |  |  | 0.689 |
-| walker |  | 3595 | 88 | ts body source/index.ts:756 |  |  | 0.689 |
-| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.664 |
-| walker |  | 3642 | 47 | readme.md section #43 |  |  | 0.664 |
-| ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.654 |
-| ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.652 |
-| walker |  | 4026 | 384 | readme.md section #0 |  |  | 0.685 |
-| walker |  | 4129 | 103 | ts doc source/index.ts:682 |  |  | 0.710 |
-| ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.696 |
-| walker |  | 4231 | 102 | ts body source/index.ts:386 |  |  | 0.697 |
-| walker |  | 4256 | 25 | readme.md section #9 |  |  | 0.697 |
-| walker |  | 4281 | 25 | readme.md section #25 |  |  | 0.697 |
-| walker |  | 4321 | 40 | ts names source/lower-bound.ts |  |  | 0.698 |
-| walker |  | 4445 | 124 | ts doc source/index.ts:668 |  |  | 0.725 |
-| ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.703 |
-| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.705 |
-| walker |  | 4684 | 239 | package identity metadata in package.json |  |  | 0.720 |
+| walker |  | 3514 | 88 | ts body source/index.ts:756 |  |  | 0.688 |
+| walker |  | 3561 | 47 | readme.md section #43 |  |  | 0.688 |
+| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.663 |
+| ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.653 |
+| walker |  | 3945 | 384 | readme.md section #0 |  |  | 0.687 |
+| ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.684 |
+| walker |  | 4048 | 103 | ts doc source/index.ts:682 |  |  | 0.709 |
+| walker |  | 4150 | 102 | ts body source/index.ts:386 |  |  | 0.711 |
+| ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.697 |
+| walker |  | 4175 | 25 | readme.md section #9 |  |  | 0.697 |
+| walker |  | 4200 | 25 | readme.md section #25 |  |  | 0.697 |
+| walker |  | 4240 | 40 | ts names source/lower-bound.ts |  |  | 0.697 |
+| walker |  | 4364 | 124 | ts doc source/index.ts:668 |  |  | 0.725 |
+| ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.702 |
+| walker |  | 4603 | 239 | package identity metadata in package.json |  |  | 0.717 |
+| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.719 |
+| walker |  | 4732 | 129 | readme.md section #1 |  |  | 0.719 |
+| walker |  | 4762 | 30 | readme.md section #22 |  |  | 0.719 |
 | ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.710 |
-| walker |  | 4813 | 129 | readme.md section #1 |  |  | 0.710 |
-| walker |  | 4843 | 30 | readme.md section #22 |  |  | 0.710 |
-| walker |  | 4876 | 33 | readme.md section #19 |  |  | 0.710 |
+| walker |  | 4795 | 33 | readme.md section #19 |  |  | 0.710 |
 | ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.687 |
-| walker |  | 5273 | 397 | ts decl source/options.ts:111 |  |  | 0.695 |
-| walker |  | 5307 | 34 | readme.md section #3 |  |  | 0.695 |
-| ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.672 |
-| walker |  | 5356 | 49 | readme.md section #8 |  |  | 0.672 |
-| ns | 5589 |  | 257 | #tryToStartAnother: the admission decision and task dispatch | 4.3 | 4.1 | 0.647 |
-| walker |  | 5637 | 281 | ts doc source/index.ts:918 |  |  | 0.663 |
+| walker |  | 5192 | 397 | ts decl source/options.ts:111 |  |  | 0.694 |
+| walker |  | 5226 | 34 | readme.md section #3 |  |  | 0.694 |
+| walker |  | 5275 | 49 | readme.md section #8 |  |  | 0.694 |
+| ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.671 |
+| walker |  | 5556 | 281 | ts doc source/index.ts:918 |  |  | 0.688 |
+| ns | 5589 |  | 257 | #tryToStartAnother: the admission decision and task dispatch | 4.3 | 4.1 | 0.663 |
+| walker |  | 5637 | 81 | json config tsconfig.json |  |  | 0.663 |
 | ns | 5749 |  | 160 | add(): option normalization and automatic id assignment | 4.4 | 2.3 | 0.651 |
 | walker |  | 5840 | 203 | readme.md section #2 |  |  | 0.682 |
 | ns | 5900 |  | 151 | add(): the run() prologue — pending accounting and runningTasks tracking | 4.5 | 4.4 | 0.669 |

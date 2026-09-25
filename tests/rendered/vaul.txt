@@ -236,6 +236,12 @@ src/
     5→}
     7→export type AnyFunction = (...args: any) => any;
   use-composed-refs.ts
+    …
+    23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
+    …
+    31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+    …
+    36→export { composeRefs, useComposedRefs };
   use-controllable-state.ts
     …
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
@@ -263,19 +269,27 @@ test/
   public/
   src/
     app/
+      controlled/
+      default-open/
+      different-directions/
+      globals.css
+      initial-snap/
+      layout.tsx
+      nested-drawers/
+      non-dismissible/
+      open-another-drawer/
+      page.tsx
+      parent-container/
+      scrollable-page/
+      scrollable-with-inputs/
+      with-handle/
+      with-modal-false/
+      with-redirect/
+      with-scaled-background/
+      with-snap-points/
+      without-scaled-background/
   tailwind.config.ts
   tests/
   tsconfig.json
 tsconfig.json
-  1→{
-  2→  "compilerOptions": {
-  3→    "jsx": "react",
-  4→    "target": "es2018",
-  5→    "moduleResolution": "node",
-  6→    "esModuleInterop": true,
-  7→    "lib": ["es2015", "dom"],
-  8→    "strict": true
-  9→  },
-  10→  "include": ["src"],
-  11→}
 turbo.json

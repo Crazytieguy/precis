@@ -1,4 +1,4 @@
-Score(3000)=0.537 I=0.784 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.394/0.309/0.277/0.537/0.811/0.731/0.648
+Score(3000)=0.537 I=0.784 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.394/0.309/0.277/0.537/0.811/0.735/0.648
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -93,45 +93,45 @@ Score(3000)=0.537 I=0.784 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 5274 | 63 | README.md section #10 |  |  | 0.819 |
 | ns | 5300 |  | 214 | Root keydown handler: IME guard, vim down bindings, ArrowDown | 3.6 | 3.4 | 0.793 |
 | walker |  | 5337 | 63 | README.md section #17 |  |  | 0.793 |
-| walker |  | 5579 | 242 | json config tsconfig.json |  |  | 0.793 |
-| walker |  | 5645 | 66 | README.md section #26 |  |  | 0.793 |
+| walker |  | 5403 | 66 | README.md section #26 |  |  | 0.793 |
+| walker |  | 5474 | 71 | README.md section #20 |  |  | 0.793 |
+| walker |  | 5547 | 73 | README.md section #27 |  |  | 0.793 |
+| walker |  | 5624 | 77 | README.md section #18 |  |  | 0.793 |
 | ns | 5678 |  | 378 | score() and sort(): per-group maximum score and the ordering rules | 4.1 | 3.4 | 0.757 |
-| walker |  | 5716 | 71 | README.md section #20 |  |  | 0.757 |
-| walker |  | 5789 | 73 | README.md section #27 |  |  | 0.757 |
-| walker |  | 5866 | 77 | README.md section #18 |  |  | 0.757 |
 | ns | 6027 |  | 349 | sort(): the DOM re-append loop | 4.2 | 4.1 | 0.731 |
-| walker |  | 6305 | 439 | ARCHITECTURE.md section #0 |  |  | 0.734 |
-| walker |  | 6387 | 82 | README.md section #15 |  |  | 0.734 |
-| walker |  | 6400 | 13 | listing of 'website/styles' |  |  | 0.734 |
-| walker |  | 6426 | 26 | ts doc cmdk/src/index.tsx:882 |  |  | 0.735 |
-| ns | 6432 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.705 |
-| walker |  | 6498 | 72 | ts names website/components/index.ts |  |  | 0.705 |
-| walker |  | 6590 | 92 | README.md section #32 |  |  | 0.705 |
-| walker |  | 6617 | 27 | ts doc cmdk/src/index.tsx:899 |  |  | 0.706 |
+| walker |  | 6063 | 439 | ARCHITECTURE.md section #0 |  |  | 0.734 |
+| walker |  | 6145 | 82 | README.md section #15 |  |  | 0.734 |
+| walker |  | 6158 | 13 | listing of 'website/styles' |  |  | 0.734 |
+| walker |  | 6184 | 26 | ts doc cmdk/src/index.tsx:882 |  |  | 0.735 |
+| walker |  | 6256 | 72 | ts names website/components/index.ts |  |  | 0.735 |
+| walker |  | 6348 | 92 | README.md section #32 |  |  | 0.735 |
+| walker |  | 6375 | 27 | ts doc cmdk/src/index.tsx:899 |  |  | 0.736 |
+| ns | 6432 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.706 |
+| walker |  | 6479 | 104 | README.md section #7 |  |  | 0.706 |
+| walker |  | 6584 | 105 | README.md section #14 |  |  | 0.706 |
+| walker |  | 6673 | 89 | README.md section #25 |  |  | 0.706 |
 | ns | 6702 |  | 270 | Item: value inference, render gate, select handlers | 4.4 | 2.6 | 0.689 |
-| walker |  | 6721 | 104 | README.md section #7 |  |  | 0.689 |
-| walker |  | 6826 | 105 | README.md section #14 |  |  | 0.689 |
+| walker |  | 6767 | 94 | README.md section #13 |  |  | 0.689 |
 | ns | 6880 |  | 178 | Item: rendered element and its attributes | 4.5 | 4.4 | 0.678 |
-| walker |  | 6915 | 89 | README.md section #25 |  |  | 0.678 |
-| walker |  | 7009 | 94 | README.md section #13 |  |  | 0.678 |
-| walker |  | 7127 | 118 | README.md section #16 |  |  | 0.678 |
-| walker |  | 7137 | 10 | listing of 'website/components/code' |  |  | 0.664 |
-| ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.664 |
-| walker |  | 7147 | 10 | listing of 'website/components/icons' |  |  | 0.664 |
-| walker |  | 7177 | 30 | ts doc cmdk/src/index.tsx:909 |  |  | 0.666 |
-| walker |  | 7303 | 126 | README.md section #6 |  |  | 0.666 |
+| walker |  | 6885 | 118 | README.md section #16 |  |  | 0.678 |
+| walker |  | 6895 | 10 | listing of 'website/components/code' |  |  | 0.678 |
+| walker |  | 6905 | 10 | listing of 'website/components/icons' |  |  | 0.678 |
+| walker |  | 6935 | 30 | ts doc cmdk/src/index.tsx:909 |  |  | 0.679 |
+| walker |  | 7061 | 126 | README.md section #6 |  |  | 0.679 |
+| ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.666 |
+| walker |  | 7192 | 131 | README.md section #9 |  |  | 0.666 |
+| walker |  | 7327 | 135 | README.md section #8 |  |  | 0.666 |
 | ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.655 |
-| walker |  | 7434 | 131 | README.md section #9 |  |  | 0.655 |
-| walker |  | 7569 | 135 | README.md section #8 |  |  | 0.655 |
-| ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.644 |
-| walker |  | 7606 | 37 | ts doc cmdk/src/index.tsx:729 |  |  | 0.647 |
-| walker |  | 7762 | 156 | README.md section #12 |  |  | 0.647 |
+| walker |  | 7364 | 37 | ts doc cmdk/src/index.tsx:729 |  |  | 0.658 |
+| walker |  | 7520 | 156 | README.md section #12 |  |  | 0.658 |
+| ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.647 |
+| walker |  | 7676 | 156 | README.md section #11 |  |  | 0.647 |
 | ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.651 |
-| walker |  | 7918 | 156 | README.md section #11 |  |  | 0.651 |
 | ns | 8098 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.637 |
-| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.635 |
-| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.640 |
-| walker |  | 8351 | 433 | README.md section #35 |  |  | 0.670 |
+| walker |  | 8109 | 433 | README.md section #35 |  |  | 0.667 |
+| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.665 |
+| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.670 |
+| walker |  | 8351 | 242 | json config tsconfig.json |  |  | 0.670 |
 | walker |  | 8389 | 38 | ts doc cmdk/src/index.tsx:787 |  |  | 0.673 |
 | ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.667 |
 | ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.661 |

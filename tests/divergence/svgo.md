@@ -176,14 +176,16 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.557 |
 | ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.565 |
 | walker |  | 9363 | 165 | README.md section #3 |  |  | 0.587 |
+| walker |  | 9438 | 75 | ts doc lib/parser.js:12 |  |  | 0.587 |
 | ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.585 |
+| walker |  | 9514 | 76 | ts doc lib/util/map-nodes-to-parents.js:9 |  |  | 0.585 |
+| walker |  | 9566 | 52 | ts doc lib/svgo/tools.js:43 |  |  | 0.585 |
 | ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.593 |
-| walker |  | 9586 | 223 | json config tsconfig.json |  |  | 0.593 |
-| walker |  | 9661 | 75 | ts doc lib/parser.js:12 |  |  | 0.593 |
+| walker |  | 9645 | 79 | ts doc lib/svgo/plugins.js:40 |  |  | 0.593 |
+| walker |  | 9688 | 43 | declaration surface of docs/04-plugins/mergePaths.mdx |  |  | 0.593 |
 | ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.589 |
-| walker |  | 9737 | 76 | ts doc lib/util/map-nodes-to-parents.js:9 |  |  | 0.589 |
-| walker |  | 9789 | 52 | ts doc lib/svgo/tools.js:43 |  |  | 0.589 |
+| walker |  | 9840 | 152 | ts body lib/svgo-node.js:83 |  |  | 0.593 |
 | ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.589 |
-| walker |  | 9868 | 79 | ts doc lib/svgo/plugins.js:40 |  |  | 0.589 |
-| walker |  | 9911 | 43 | declaration surface of docs/04-plugins/mergePaths.mdx |  |  | 0.589 |
+| walker |  | 9886 | 46 | declaration surface of docs/04-plugins/mergeStyles.mdx |  |  | 0.589 |
+| walker |  | 9968 | 82 | ts doc lib/xast.js:42 |  |  | 0.593 |
 | ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.593 |

@@ -253,7 +253,13 @@ source/
       30→export type BeforeRetryHook = (options: BeforeRetryState) => Request | Response | typeof stop | void | Promise<Request | Response | typeof stop | void>;
       31→
       32→export type AfterResponseState = {
-      …
+      33→	/**
+      34→	The number of retries attempted. `0` for the initial request, increments with each retry.
+      35→
+      36→	This allows you to distinguish between initial requests and retries, which is useful when you need different behavior for retries (e.g., showing a notification only on the final retry).
+      37→	*/
+      38→	retryCount: number;
+      39→};
       41→export type AfterResponseHook = (
       42→	request: KyRequest,
       43→	options: NormalizedOptions,
@@ -341,12 +347,3 @@ test/
   stream.ts
 tsconfig.dist.json
 tsconfig.json
-  1→{
-  2→	"extends": "@sindresorhus/tsconfig",
-  3→	"compilerOptions": {
-  4→		"exactOptionalPropertyTypes": true
-  5→	},
-  6→	"include": [
-  7→		"source"
-  8→	]
-  9→}

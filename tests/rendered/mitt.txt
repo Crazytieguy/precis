@@ -29,7 +29,30 @@ README.md
   27→-   [Contribute](#contribute)
   28→-   [License](#license)
   30→## Install
-  …
+  31→
+  32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
+  33→
+  34→```sh
+  35→$ npm install --save mitt
+  36→```
+  37→
+  38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
+  39→
+  40→```javascript
+  41→// using ES6 modules
+  42→import mitt from 'mitt'
+  43→
+  44→// using CommonJS modules
+  45→var mitt = require('mitt')
+  46→```
+  47→
+  48→The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
+  49→
+  50→```html
+  51→<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+  52→```
+  53→
+  54→You can find the library on `window.mitt`.
   56→## Usage
   …
   81→### Typescript
@@ -238,18 +261,3 @@ test/
   index_test.ts
   test-types-compilation.ts
 tsconfig.json
-  1→{
-  2→	"compileOnSave": false,
-  3→	"compilerOptions": {
-  4→		"strict": true,
-  5→		"noEmit": true,
-  6→		"declaration": true,
-  7→		"moduleResolution": "node",
-  8→		"skipLibCheck": true,
-  9→		"esModuleInterop": true,
-  10→	},
-  11→	"include": [
-  12→		"src/*.ts",
-  13→		"test/*.ts"
-  14→	]
-  15→}

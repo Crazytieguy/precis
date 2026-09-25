@@ -1,4 +1,4 @@
-Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.481/0.577/0.547/0.706
+Score(3000)=0.571 I=0.561 C=0.581 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.571/0.577/0.547/0.706
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -80,29 +80,29 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 2696 | 30 | README.md section #13 |  |  | 0.478 |
 | walker |  | 2717 | 21 | ts body src/adapters/normalized-adapter.ts:44 |  |  | 0.478 |
 | ns | 2736 |  | 133 | Roster of every Service method (names only) | 3.3 |  | 0.475 |
-| ns | 2862 |  | 126 | Full signatures of the Service read methods | 3.4 | 3.3 | 0.480 |
-| walker |  | 2869 | 152 | json config tsconfig.json |  |  | 0.481 |
-| walker |  | 3014 | 145 | README.md section #7 |  |  | 0.557 |
-| ns | 3061 |  | 199 | Full signatures of the Service mutation methods | 3.5 | 3.3 | 0.550 |
-| walker |  | 3131 | 117 | README.md section #19 |  |  | 0.565 |
-| walker |  | 3163 | 32 | ts body src/adapters/observer.ts:31 |  |  | 0.565 |
-| ns | 3244 |  | 183 | Complete route registration table in createApp | 3.6 |  | 0.547 |
-| walker |  | 3280 | 117 | ts body src/parse-where.ts:58 |  |  | 0.549 |
-| walker |  | 3328 | 48 | README.md section #15 |  |  | 0.553 |
-| ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.544 |
-| walker |  | 3368 | 40 | README.md section #16 |  |  | 0.546 |
-| ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.553 |
-| ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.558 |
-| walker |  | 3531 | 163 | README.md section #8 |  |  | 0.584 |
-| walker |  | 3574 | 43 | ts body src/adapters/observer.ts:24 |  |  | 0.584 |
+| walker |  | 2862 | 145 | README.md section #7 |  |  | 0.556 |
+| ns | 2862 |  | 126 | Full signatures of the Service read methods | 3.4 | 3.3 | 0.556 |
+| walker |  | 2979 | 117 | README.md section #19 |  |  | 0.571 |
+| walker |  | 3011 | 32 | ts body src/adapters/observer.ts:31 |  |  | 0.571 |
+| ns | 3061 |  | 199 | Full signatures of the Service mutation methods | 3.5 | 3.3 | 0.564 |
+| walker |  | 3128 | 117 | ts body src/parse-where.ts:58 |  |  | 0.566 |
+| walker |  | 3176 | 48 | README.md section #15 |  |  | 0.570 |
+| walker |  | 3216 | 40 | README.md section #16 |  |  | 0.572 |
+| ns | 3244 |  | 183 | Complete route registration table in createApp | 3.6 |  | 0.554 |
+| ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.545 |
+| walker |  | 3379 | 163 | README.md section #8 |  |  | 0.573 |
+| walker |  | 3422 | 43 | ts body src/adapters/observer.ts:24 |  |  | 0.573 |
+| ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.579 |
+| walker |  | 3510 | 88 | ts body src/service.ts:145 |  |  | 0.579 |
+| ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.583 |
+| walker |  | 3612 | 102 | json config schema.json |  |  | 0.583 |
 | ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.582 |
-| walker |  | 3662 | 88 | ts body src/service.ts:145 |  |  | 0.583 |
-| walker |  | 3764 | 102 | json config schema.json |  |  | 0.584 |
-| ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.581 |
-| walker |  | 3939 | 175 | README.md section #20 |  |  | 0.595 |
-| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.583 |
-| walker |  | 3994 | 55 | README.md section #12 |  |  | 0.592 |
-| walker |  | 4120 | 126 | ts body src/service.ts:96 |  |  | 0.592 |
+| walker |  | 3787 | 175 | README.md section #20 |  |  | 0.596 |
+| ns | 3811 |  | 173 | Observer adapter: all four lifecycle hooks | 3.11 | 3.2 | 0.593 |
+| walker |  | 3842 | 55 | README.md section #12 |  |  | 0.601 |
+| ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.590 |
+| walker |  | 3968 | 126 | ts body src/service.ts:96 |  |  | 0.590 |
+| walker |  | 4120 | 152 | json config tsconfig.json |  |  | 0.592 |
 | ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.573 |
 | walker |  | 4191 | 71 | README.md section #17 |  |  | 0.577 |
 | ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.557 |

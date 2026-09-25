@@ -126,130 +126,129 @@ Score(3000)=0.563 I=0.805 C=0.394 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 4149 | 17 | ts names lib/helpers/isAbsoluteURL.js |  |  | 0.490 |
 | walker |  | 4166 | 17 | ts names lib/helpers/isAxiosError.js |  |  | 0.473 |
 | ns | 4166 |  | 369 | AxiosRequestConfig keys, part 1 of 3 (url … maxRate) | 3.4 |  | 0.473 |
-| walker |  | 4250 | 84 | json config tsconfig.json |  |  | 0.473 |
-| walker |  | 4268 | 18 | ts names lib/helpers/bind.js |  |  | 0.473 |
-| walker |  | 4286 | 18 | ts names lib/helpers/shouldBypassProxy.js |  |  | 0.473 |
-| walker |  | 4297 | 11 | ts names lib/platform/browser/index.js |  |  | 0.473 |
-| walker |  | 4332 | 35 | listing of 'tests/smoke/deno/tests' |  |  | 0.473 |
-| walker |  | 4351 | 19 | ts names lib/core/Axios.js |  |  | 0.473 |
-| walker |  | 4370 | 19 | ts names lib/core/settle.js |  |  | 0.473 |
-| walker |  | 4389 | 19 | ts names lib/core/transformData.js |  |  | 0.473 |
-| walker |  | 4408 | 19 | ts names lib/helpers/estimateDataURLDecodedBytes.js |  |  | 0.473 |
+| walker |  | 4184 | 18 | ts names lib/helpers/bind.js |  |  | 0.473 |
+| walker |  | 4202 | 18 | ts names lib/helpers/shouldBypassProxy.js |  |  | 0.473 |
+| walker |  | 4213 | 11 | ts names lib/platform/browser/index.js |  |  | 0.473 |
+| walker |  | 4248 | 35 | listing of 'tests/smoke/deno/tests' |  |  | 0.473 |
+| walker |  | 4267 | 19 | ts names lib/core/Axios.js |  |  | 0.473 |
+| walker |  | 4286 | 19 | ts names lib/core/settle.js |  |  | 0.473 |
+| walker |  | 4305 | 19 | ts names lib/core/transformData.js |  |  | 0.473 |
+| walker |  | 4324 | 19 | ts names lib/helpers/estimateDataURLDecodedBytes.js |  |  | 0.473 |
 | ns | 4437 |  | 271 | AxiosRequestConfig keys, part 2 of 3 (beforeRedirect … env) | 3.5 | 3.4 | 0.460 |
+| walker |  | 4615 | 291 | ts names index.d.ts #1 |  |  | 0.460 |
+| walker |  | 4634 | 19 | ts decl index.d.ts:154 |  |  | 0.460 |
 | ns | 4639 |  | 202 | AxiosRequestConfig keys, part 3 of 3 (formSerializer … redact) | 3.6 | 3.5 | 0.452 |
-| walker |  | 4699 | 291 | ts names index.d.ts #1 |  |  | 0.452 |
-| walker |  | 4718 | 19 | ts decl index.d.ts:154 |  |  | 0.452 |
-| walker |  | 4739 | 21 | ts decl index.d.ts:158 |  |  | 0.452 |
-| walker |  | 4765 | 26 | ts decl index.d.ts:319 |  |  | 0.452 |
-| walker |  | 4791 | 26 | ts decl index.d.ts:323 |  |  | 0.452 |
-| walker |  | 4819 | 28 | ts decl index.d.ts:141 |  |  | 0.452 |
-| walker |  | 4849 | 30 | ts decl index.d.ts:274 |  |  | 0.452 |
-| walker |  | 4890 | 41 | ts decl index.d.ts:163 |  |  | 0.452 |
-| walker |  | 4935 | 45 | ts decl index.d.ts:309 |  |  | 0.452 |
+| walker |  | 4655 | 21 | ts decl index.d.ts:158 |  |  | 0.452 |
+| walker |  | 4681 | 26 | ts decl index.d.ts:319 |  |  | 0.452 |
+| walker |  | 4707 | 26 | ts decl index.d.ts:323 |  |  | 0.452 |
+| walker |  | 4735 | 28 | ts decl index.d.ts:141 |  |  | 0.452 |
+| walker |  | 4765 | 30 | ts decl index.d.ts:274 |  |  | 0.452 |
+| walker |  | 4806 | 41 | ts decl index.d.ts:163 |  |  | 0.452 |
+| walker |  | 4851 | 45 | ts decl index.d.ts:309 |  |  | 0.452 |
+| walker |  | 4898 | 47 | ts decl index.d.ts:293 |  |  | 0.452 |
 | ns | 4942 |  | 303 | Config validation inside _request | 3.7 | 2.8 | 0.437 |
-| walker |  | 4982 | 47 | ts decl index.d.ts:293 |  |  | 0.437 |
-| walker |  | 5031 | 49 | ts decl index.d.ts:279 |  |  | 0.437 |
+| walker |  | 4947 | 49 | ts decl index.d.ts:279 |  |  | 0.437 |
+| walker |  | 5005 | 58 | ts decl index.d.ts:145 |  |  | 0.437 |
+| walker |  | 5068 | 63 | ts decl index.d.ts:251 |  |  | 0.437 |
 | ns | 5084 |  | 142 | mergeConfig: the five merge strategies | 3.8 |  | 0.434 |
-| walker |  | 5089 | 58 | ts decl index.d.ts:145 |  |  | 0.434 |
-| walker |  | 5152 | 63 | ts decl index.d.ts:251 |  |  | 0.434 |
-| walker |  | 5219 | 67 | ts decl index.d.ts:286 |  |  | 0.434 |
-| walker |  | 5293 | 74 | ts decl index.d.ts:299 |  |  | 0.434 |
-| walker |  | 5392 | 99 | ts decl index.d.ts:236 |  |  | 0.434 |
-| walker |  | 5514 | 122 | ts decl index.d.ts:260 |  |  | 0.434 |
+| walker |  | 5135 | 67 | ts decl index.d.ts:286 |  |  | 0.434 |
+| walker |  | 5209 | 74 | ts decl index.d.ts:299 |  |  | 0.434 |
+| walker |  | 5308 | 99 | ts decl index.d.ts:236 |  |  | 0.434 |
+| walker |  | 5430 | 122 | ts decl index.d.ts:260 |  |  | 0.434 |
+| walker |  | 5449 | 19 | ts decl lib/platform/index.js:4 |  |  | 0.434 |
+| walker |  | 5469 | 20 | ts names lib/core/mergeConfig.js |  |  | 0.434 |
+| walker |  | 5489 | 20 | ts names lib/defaults/index.js |  |  | 0.434 |
+| walker |  | 5509 | 20 | ts names lib/helpers/combineURLs.js |  |  | 0.434 |
 | ns | 5520 |  | 436 | mergeConfig: the per-key strategy table | 3.9 |  | 0.419 |
-| walker |  | 5533 | 19 | ts decl lib/platform/index.js:4 |  |  | 0.419 |
-| walker |  | 5553 | 20 | ts names lib/core/mergeConfig.js |  |  | 0.419 |
-| walker |  | 5573 | 20 | ts names lib/defaults/index.js |  |  | 0.419 |
-| walker |  | 5593 | 20 | ts names lib/helpers/combineURLs.js |  |  | 0.419 |
-| walker |  | 5613 | 20 | ts names lib/helpers/deprecatedMethod.js |  |  | 0.419 |
-| walker |  | 5705 | 92 | ts names gulpfile.js |  |  | 0.419 |
-| walker |  | 5722 | 17 | ts decl gulpfile.js:12 |  |  | 0.419 |
+| walker |  | 5529 | 20 | ts names lib/helpers/deprecatedMethod.js |  |  | 0.419 |
+| walker |  | 5621 | 92 | ts names gulpfile.js |  |  | 0.419 |
+| walker |  | 5638 | 17 | ts decl gulpfile.js:12 |  |  | 0.419 |
 | ns | 5750 |  | 230 | mergeConfig: prototype-pollution-safe application | 3.10 | 3.8 | 0.414 |
-| walker |  | 5923 | 201 | ts decl index.d.cts:167 #1 |  |  | 0.414 |
-| walker |  | 5954 | 31 | ts decl index.d.cts:190 |  |  | 0.414 |
-| walker |  | 5994 | 40 | ts decl index.d.cts:194 |  |  | 0.414 |
+| walker |  | 5839 | 201 | ts decl index.d.cts:167 #1 |  |  | 0.414 |
+| walker |  | 5870 | 31 | ts decl index.d.cts:190 |  |  | 0.414 |
+| walker |  | 5910 | 40 | ts decl index.d.cts:194 |  |  | 0.414 |
+| walker |  | 5950 | 40 | ts decl index.d.cts:199 |  |  | 0.414 |
+| walker |  | 5990 | 40 | ts decl index.d.cts:204 |  |  | 0.414 |
 | ns | 6011 |  | 261 | Defaults-side config types | 3.11 |  | 0.405 |
-| walker |  | 6034 | 40 | ts decl index.d.cts:199 |  |  | 0.405 |
-| walker |  | 6074 | 40 | ts decl index.d.cts:204 |  |  | 0.405 |
+| walker |  | 6030 | 40 | ts decl index.d.cts:209 |  |  | 0.405 |
+| walker |  | 6070 | 40 | ts decl index.d.cts:214 |  |  | 0.405 |
 | ns | 6107 |  | 96 | AxiosResponse shape | 4.1 |  | 0.402 |
-| walker |  | 6114 | 40 | ts decl index.d.cts:209 |  |  | 0.402 |
-| walker |  | 6154 | 40 | ts decl index.d.cts:214 |  |  | 0.402 |
+| walker |  | 6110 | 40 | ts decl index.d.cts:219 |  |  | 0.402 |
+| walker |  | 6150 | 40 | ts decl index.d.cts:224 |  |  | 0.402 |
 | ns | 6172 |  | 65 | AxiosError: class surface | 4.2 |  | 0.399 |
-| walker |  | 6194 | 40 | ts decl index.d.cts:219 |  |  | 0.399 |
-| walker |  | 6234 | 40 | ts decl index.d.cts:224 |  |  | 0.399 |
-| walker |  | 6272 | 38 | listing of 'tests/module/cjs/tests' |  |  | 0.399 |
+| walker |  | 6188 | 38 | listing of 'tests/module/cjs/tests' |  |  | 0.399 |
+| walker |  | 6219 | 31 | listing of 'tests/module/cjs/tests/helpers' |  |  | 0.399 |
+| walker |  | 6240 | 21 | ts names lib/cancel/CancelToken.js |  |  | 0.399 |
+| walker |  | 6261 | 21 | ts names lib/core/AxiosHeaders.js |  |  | 0.399 |
 | ns | 6274 |  | 102 | AxiosError instance fields | 4.3 | 4.2 | 0.396 |
-| walker |  | 6303 | 31 | listing of 'tests/module/cjs/tests/helpers' |  |  | 0.396 |
-| walker |  | 6324 | 21 | ts names lib/cancel/CancelToken.js |  |  | 0.396 |
-| walker |  | 6345 | 21 | ts names lib/core/AxiosHeaders.js |  |  | 0.396 |
-| walker |  | 6366 | 21 | ts names lib/helpers/toURLEncodedForm.js |  |  | 0.396 |
-| walker |  | 6388 | 22 | ts names lib/helpers/HttpStatusCode.js |  |  | 0.396 |
-| walker |  | 6410 | 22 | ts names lib/helpers/fromDataURI.js |  |  | 0.396 |
-| walker |  | 6433 | 23 | ts names lib/core/AxiosError.js |  |  | 0.396 |
+| walker |  | 6282 | 21 | ts names lib/helpers/toURLEncodedForm.js |  |  | 0.396 |
+| walker |  | 6304 | 22 | ts names lib/helpers/HttpStatusCode.js |  |  | 0.396 |
+| walker |  | 6326 | 22 | ts names lib/helpers/fromDataURI.js |  |  | 0.396 |
+| walker |  | 6349 | 23 | ts names lib/core/AxiosError.js |  |  | 0.396 |
+| walker |  | 6372 | 23 | ts names lib/core/InterceptorManager.js |  |  | 0.396 |
+| walker |  | 6395 | 23 | ts names lib/helpers/throttle.js |  |  | 0.396 |
 | ns | 6444 |  | 170 | Error-code constant roster | 4.4 |  | 0.391 |
-| walker |  | 6456 | 23 | ts names lib/core/InterceptorManager.js |  |  | 0.391 |
-| walker |  | 6479 | 23 | ts names lib/helpers/throttle.js |  |  | 0.391 |
+| walker |  | 6630 | 235 | ts decl index.d.cts:231 |  |  | 0.391 |
 | ns | 6632 |  | 188 | AxiosHeaders: complete method surface | 4.5 |  | 0.381 |
-| walker |  | 6714 | 235 | ts decl index.d.cts:231 |  |  | 0.378 |
 | ns | 6714 |  | 82 | AxiosHeaders: generated accessors and frozen prototype | 4.6 | 4.5 | 0.378 |
 | ns | 6793 |  | 79 | CancelToken: complete member roster | 4.7 |  | 0.374 |
+| walker |  | 6865 | 235 | ts decl index.d.ts:170 |  |  | 0.374 |
+| walker |  | 6890 | 25 | ts names lib/core/buildFullPath.js |  |  | 0.375 |
 | ns | 6904 |  | 111 | CanceledError and isCancel | 4.8 |  | 0.372 |
-| walker |  | 6949 | 235 | ts decl index.d.ts:170 |  |  | 0.372 |
-| walker |  | 6974 | 25 | ts names lib/core/buildFullPath.js |  |  | 0.372 |
+| walker |  | 6963 | 73 | headings outline in ECOSYSTEM.md |  |  | 0.372 |
 | ns | 6983 |  | 79 | Adapter resolution: knownAdapters and getAdapter | 5.1 |  | 0.370 |
-| walker |  | 7047 | 73 | headings outline in ECOSYSTEM.md |  |  | 0.370 |
-| walker |  | 7083 | 36 | ECOSYSTEM.md section #0 |  |  | 0.370 |
-| walker |  | 7109 | 26 | ts names lib/cancel/CanceledError.js |  |  | 0.370 |
-| walker |  | 7129 | 20 | ts decl lib/cancel/CanceledError.js:5 |  |  | 0.370 |
+| walker |  | 6999 | 36 | ECOSYSTEM.md section #0 |  |  | 0.370 |
+| walker |  | 7025 | 26 | ts names lib/cancel/CanceledError.js |  |  | 0.370 |
+| walker |  | 7045 | 20 | ts decl lib/cancel/CanceledError.js:5 |  |  | 0.370 |
+| walker |  | 7071 | 26 | ts names lib/helpers/AxiosTransformStream.js |  |  | 0.370 |
+| walker |  | 7097 | 26 | ts names lib/helpers/speedometer.js |  |  | 0.370 |
 | ns | 7148 |  | 165 | The three adapter entry points and their support gates | 5.2 |  | 0.366 |
-| walker |  | 7155 | 26 | ts names lib/helpers/AxiosTransformStream.js |  |  | 0.366 |
-| walker |  | 7181 | 26 | ts names lib/helpers/speedometer.js |  |  | 0.366 |
-| walker |  | 7260 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.366 |
+| walker |  | 7176 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.366 |
+| walker |  | 7245 | 69 | COLLABORATOR_GUIDE.md section #0 |  |  | 0.366 |
+| walker |  | 7285 | 40 | COLLABORATOR_GUIDE.md section #1 |  |  | 0.366 |
+| walker |  | 7313 | 28 | ts names lib/helpers/callbackify.js |  |  | 0.366 |
 | ns | 7316 |  | 168 | Navigation map for the 1312-line Node adapter | 5.3 | 5.2 | 0.363 |
-| walker |  | 7329 | 69 | COLLABORATOR_GUIDE.md section #0 |  |  | 0.363 |
-| walker |  | 7369 | 40 | COLLABORATOR_GUIDE.md section #1 |  |  | 0.363 |
-| walker |  | 7397 | 28 | ts names lib/helpers/callbackify.js |  |  | 0.363 |
-| walker |  | 7425 | 28 | ts names lib/helpers/composeSignals.js |  |  | 0.363 |
-| walker |  | 7453 | 28 | ts names lib/helpers/formDataToJSON.js |  |  | 0.363 |
-| walker |  | 7481 | 28 | ts names lib/helpers/readBlob.js |  |  | 0.363 |
+| walker |  | 7341 | 28 | ts names lib/helpers/composeSignals.js |  |  | 0.363 |
+| walker |  | 7369 | 28 | ts names lib/helpers/formDataToJSON.js |  |  | 0.363 |
+| walker |  | 7397 | 28 | ts names lib/helpers/readBlob.js |  |  | 0.363 |
 | ns | 7573 |  | 257 | Platform selection: node and browser variants | 5.4 |  | 0.357 |
 | ns | 7634 |  | 61 | Environment capability flags | 5.5 |  | 0.355 |
-| walker |  | 7731 | 250 | ts decl index.d.cts:42 |  |  | 0.355 |
-| walker |  | 7762 | 31 | ts decl index.d.cts:65 |  |  | 0.355 |
-| walker |  | 7806 | 44 | ts decl index.d.cts:47 |  |  | 0.355 |
-| walker |  | 7835 | 29 | ts names lib/adapters/http.js |  |  | 0.355 |
-| walker |  | 7864 | 29 | ts names lib/helpers/AxiosURLSearchParams.js |  |  | 0.355 |
-| walker |  | 7875 | 11 | ts names lib/platform/node/classes/FormData.js |  |  | 0.355 |
+| walker |  | 7647 | 250 | ts decl index.d.cts:42 |  |  | 0.355 |
+| walker |  | 7678 | 31 | ts decl index.d.cts:65 |  |  | 0.355 |
+| walker |  | 7722 | 44 | ts decl index.d.cts:47 |  |  | 0.355 |
+| walker |  | 7751 | 29 | ts names lib/adapters/http.js |  |  | 0.355 |
+| walker |  | 7780 | 29 | ts names lib/helpers/AxiosURLSearchParams.js |  |  | 0.355 |
+| walker |  | 7791 | 11 | ts names lib/platform/node/classes/FormData.js |  |  | 0.355 |
+| walker |  | 8060 | 269 | ts names index.d.ts #2 |  |  | 0.355 |
 | ns | 8065 |  | 431 | Conditional exports map and browser file aliasing | 5.6 | 1.6 | 0.346 |
-| walker |  | 8144 | 269 | ts names index.d.ts #2 |  |  | 0.346 |
-| walker |  | 8158 | 14 | ts decl index.d.ts:457 |  |  | 0.346 |
-| walker |  | 8180 | 22 | ts decl index.d.ts:359 |  |  | 0.346 |
-| walker |  | 8204 | 24 | ts decl index.d.ts:327 |  |  | 0.346 |
-| walker |  | 8301 | 97 | ts decl index.d.ts:338 |  |  | 0.346 |
-| walker |  | 8450 | 149 | ts decl index.d.ts:461 |  |  | 0.357 |
-| walker |  | 8480 | 30 | ts names lib/helpers/ZlibHeaderTransformStream.js |  |  | 0.357 |
-| walker |  | 8510 | 30 | ts names lib/helpers/toFormData.js |  |  | 0.357 |
+| walker |  | 8074 | 14 | ts decl index.d.ts:457 |  |  | 0.346 |
+| walker |  | 8096 | 22 | ts decl index.d.ts:359 |  |  | 0.346 |
+| walker |  | 8120 | 24 | ts decl index.d.ts:327 |  |  | 0.346 |
+| walker |  | 8217 | 97 | ts decl index.d.ts:338 |  |  | 0.346 |
+| walker |  | 8366 | 149 | ts decl index.d.ts:461 |  |  | 0.357 |
+| walker |  | 8396 | 30 | ts names lib/helpers/ZlibHeaderTransformStream.js |  |  | 0.357 |
+| walker |  | 8426 | 30 | ts names lib/helpers/toFormData.js |  |  | 0.357 |
 | ns | 8600 |  | 535 | utils.js: the complete exported utility set | 6.1 |  | 0.342 |
-| walker |  | 8754 | 244 | ts decl index.d.ts:23 |  |  | 0.342 |
-| walker |  | 8784 | 30 | ts decl index.d.ts:46 |  |  | 0.342 |
-| walker |  | 8825 | 41 | ts decl index.d.ts:28 |  |  | 0.342 |
+| walker |  | 8670 | 244 | ts decl index.d.ts:23 |  |  | 0.342 |
+| walker |  | 8700 | 30 | ts decl index.d.ts:46 |  |  | 0.342 |
+| walker |  | 8741 | 41 | ts decl index.d.ts:28 |  |  | 0.342 |
 | ns | 8842 |  | 242 | Helper signatures: URL, params and form-data | 6.2 |  | 0.348 |
-| walker |  | 8930 | 105 | listing of 'tests/unit' |  |  | 0.349 |
-| walker |  | 8963 | 33 | listing of 'tests/unit/adapters' |  |  | 0.349 |
-| walker |  | 8999 | 36 | listing of 'tests/unit/core' |  |  | 0.349 |
-| walker |  | 9003 | 4 | listing of 'docs/data' |  |  | 0.349 |
-| walker |  | 9007 | 4 | listing of 'examples/all' |  |  | 0.349 |
-| walker |  | 9011 | 4 | listing of 'examples/amd' |  |  | 0.349 |
-| walker |  | 9015 | 4 | listing of 'examples/transform-response' |  |  | 0.349 |
-| walker |  | 9074 | 59 | listing of 'tests/unit/utils' |  |  | 0.349 |
-| walker |  | 9106 | 32 | ts names lib/helpers/buildURL.js |  |  | 0.353 |
-| ns | 9254 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.353 |
-| walker |  | 9329 | 223 | ts decl index.d.ts:366 |  |  | 0.368 |
-| walker |  | 9466 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.368 |
-| walker |  | 9603 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.368 |
+| walker |  | 8846 | 105 | listing of 'tests/unit' |  |  | 0.349 |
+| walker |  | 8879 | 33 | listing of 'tests/unit/adapters' |  |  | 0.349 |
+| walker |  | 8915 | 36 | listing of 'tests/unit/core' |  |  | 0.349 |
+| walker |  | 8919 | 4 | listing of 'docs/data' |  |  | 0.349 |
+| walker |  | 8923 | 4 | listing of 'examples/all' |  |  | 0.349 |
+| walker |  | 8927 | 4 | listing of 'examples/amd' |  |  | 0.349 |
+| walker |  | 8931 | 4 | listing of 'examples/transform-response' |  |  | 0.349 |
+| walker |  | 8990 | 59 | listing of 'tests/unit/utils' |  |  | 0.349 |
+| walker |  | 9022 | 32 | ts names lib/helpers/buildURL.js |  |  | 0.353 |
+| walker |  | 9245 | 223 | ts decl index.d.ts:366 |  |  | 0.368 |
+| ns | 9254 |  | 412 | Helper signatures: streaming, progress, security and validation | 6.3 |  | 0.368 |
+| walker |  | 9382 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.368 |
+| walker |  | 9519 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.368 |
 | ns | 9620 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.360 |
-| walker |  | 9740 | 137 | listing of 'docs/pages/advanced' |  |  | 0.362 |
+| walker |  | 9656 | 137 | listing of 'docs/pages/advanced' |  |  | 0.362 |
+| walker |  | 9793 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.362 |
 | ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.394 |
-| walker |  | 9877 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.394 |
-| walker |  | 9931 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.394 |
+| walker |  | 9847 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.394 |
 | ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.411 |

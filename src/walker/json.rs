@@ -396,11 +396,6 @@ fn manifest_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
-    // tsconfig.json sits at the top of the public-facing tooling — rate it
-    // just under package identity. Other configs are mid-rank. Sub-flavor
-    // tsconfigs (tsconfig.ts.json, tsconfig.build.json) are build-specific
-    // and don't carry the project's TS dialect like the root tsconfig
-    // does, so they get the lower mid-rank weight.
     let lower = name.to_ascii_lowercase();
     if lower.ends_with(".code-workspace") || lower.ends_with(".json5") {
         // These explicitly admitted sidecars are otherwise the only copy of
@@ -408,10 +403,7 @@ fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
         // keeps this identity-like admission value away from generated data.
         mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
     } else {
-        let is_root_tsconfig = lower == "tsconfig.json";
-        let cat = if is_root_tsconfig { 0.55 } else { 0.3 };
-        let ztu = if is_root_tsconfig { 0.7 } else { 0.45 };
-        mix_signals(cat, 0.55, ztu, path_depth_factor(file, ctx))
+        mix_signals(0.3, 0.55, 0.45, path_depth_factor(file, ctx))
     }
 }
 

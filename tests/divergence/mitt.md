@@ -1,4 +1,4 @@
-Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.665/0.774/0.904/0.712/0.698
+Score(3000)=0.832 I=0.926 C=0.747 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.662/0.832/0.904/0.712/0.698
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,24 +35,24 @@ Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 1522 | 233 | package scripts in package.json |  |  | 0.839 |
 | ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.777 |
 | ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.741 |
-| walker |  | 1671 | 149 | json config tsconfig.json |  |  | 0.745 |
-| walker |  | 1816 | 145 | README.md section #5 |  |  | 0.746 |
-| walker |  | 1899 | 83 | README.md section #1 |  |  | 0.746 |
-| ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.689 |
-| ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.665 |
-| ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.638 |
-| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.609 |
-| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.594 |
-| walker |  | 2797 | 898 | ts body src/index.ts:46 |  |  | 0.763 |
-| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.774 |
-| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.780 |
-| walker |  | 3077 | 280 | README.md section #2 |  |  | 0.839 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.842 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.822 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.784 |
-| walker |  | 3610 | 533 | README.md section #3 |  |  | 0.903 |
-| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.904 |
-| walker |  | 3721 | 111 | README.md section #4 |  |  | 0.904 |
+| walker |  | 1667 | 145 | README.md section #5 |  |  | 0.742 |
+| walker |  | 1750 | 83 | README.md section #1 |  |  | 0.742 |
+| ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.685 |
+| ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.662 |
+| ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.635 |
+| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.606 |
+| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.591 |
+| walker |  | 2648 | 898 | ts body src/index.ts:46 |  |  | 0.760 |
+| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.770 |
+| walker |  | 2928 | 280 | README.md section #2 |  |  | 0.832 |
+| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.835 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.809 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.789 |
+| walker |  | 3461 | 533 | README.md section #3 |  |  | 0.916 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.873 |
+| walker |  | 3572 | 111 | README.md section #4 |  |  | 0.874 |
+| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.876 |
+| walker |  | 3721 | 149 | json config tsconfig.json |  |  | 0.904 |
 | ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.895 |
 | walker |  | 3759 | 38 | README.md section #15 |  |  | 0.895 |
 | walker |  | 3790 | 31 | README.md section #18 |  |  | 0.895 |

@@ -35,7 +35,18 @@ README.md
   …
   116→[Become a sponsor and have your company logo here](https://github.com/users/typicode/sponsorship)
   118→## Query Capabilities
-  …
+  119→
+  120→JSON Server supports advanced querying out of the box:
+  121→
+  122→```http
+  123→GET /posts?views:gt=100                  # Filter by condition
+  124→GET /posts?_sort=-views                  # Sort by field (descending)
+  125→GET /posts?_page=1&_per_page=10          # Pagination
+  126→GET /posts?_embed=comments               # Include relations
+  127→GET /posts?_where={"or":[...]}           # Complex queries
+  128→```
+  129→
+  130→See detailed documentation below for each feature.
   132→## Routes
   133→
   134→### Array Resources
@@ -64,7 +75,17 @@ README.md
   238→DELETE /posts/1?_dependent=comments
   239→```
   241→## Static Files
-  …
+  242→
+  243→JSON Server automatically serves files from the `./public` directory.
+  244→
+  245→To serve additional static directories:
+  246→
+  247→```bash
+  248→json-server db.json -s ./static
+  249→json-server db.json -s ./static -s ./node_modules
+  250→```
+  251→
+  252→Static files are served with standard MIME types and can include HTML, CSS, JavaScript, images, and other assets.
   254→## Migration Notes (v0 → v1)
   …
 fixtures/
@@ -296,19 +317,5 @@ src/
     17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
     …
 tsconfig.json
-  1→{
-  2→  "exclude": ["src/**/*.test.ts"],
-  3→  "compilerOptions": {
-  4→    "outDir": "./lib",
-  5→    "target": "esnext",
-  6→    "module": "nodenext",
-  7→    "skipLibCheck": true,
-  8→    "strict": true,
-  9→    "allowImportingTsExtensions": true,
-  10→    "rewriteRelativeImportExtensions": true,
-  11→    "erasableSyntaxOnly": true,
-  12→    "verbatimModuleSyntax": true
-  13→  }
-  14→}
 views/
   index.html

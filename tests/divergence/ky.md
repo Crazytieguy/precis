@@ -1,4 +1,4 @@
-Score(3000)=0.716 I=0.916 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.720/0.864/0.737/0.716/0.666/0.618/0.583
+Score(3000)=0.716 I=0.917 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.720/0.864/0.737/0.716/0.666/0.618/0.583
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,71 +57,71 @@ Score(3000)=0.716 I=0.916 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 2133 | 15 | readme.md section #22 |  |  | 0.824 |
 | walker |  | 2151 | 18 | readme.md section #7 |  |  | 0.824 |
 | walker |  | 2170 | 19 | readme.md section #11 |  |  | 0.824 |
-| walker |  | 2252 | 82 | json config tsconfig.json |  |  | 0.824 |
-| walker |  | 2284 | 32 | listing of 'test/helpers' |  |  | 0.858 |
-| walker |  | 2305 | 21 | readme.md section #13 |  |  | 0.858 |
-| walker |  | 2325 | 20 | readme.md section #12 |  |  | 0.858 |
+| walker |  | 2202 | 32 | listing of 'test/helpers' |  |  | 0.858 |
+| walker |  | 2223 | 21 | readme.md section #13 |  |  | 0.858 |
+| walker |  | 2243 | 20 | readme.md section #12 |  |  | 0.858 |
+| walker |  | 2264 | 21 | ts body source/utils/type-guards.ts:49 |  |  | 0.858 |
+| walker |  | 2285 | 21 | ts body source/utils/type-guards.ts:71 |  |  | 0.858 |
+| walker |  | 2307 | 22 | readme.md section #18 |  |  | 0.858 |
 | ns | 2326 |  | 232 | `KyOptions`: every ky-specific option with its type | 2.3 |  | 0.796 |
-| walker |  | 2346 | 21 | ts body source/utils/type-guards.ts:49 |  |  | 0.796 |
-| walker |  | 2367 | 21 | ts body source/utils/type-guards.ts:71 |  |  | 0.796 |
-| walker |  | 2389 | 22 | readme.md section #18 |  |  | 0.796 |
-| walker |  | 2412 | 23 | ts body source/utils/type-guards.ts:27 |  |  | 0.796 |
-| walker |  | 2435 | 23 | ts body source/utils/type-guards.ts:98 |  |  | 0.796 |
-| walker |  | 2457 | 22 | readme.md section #45 |  |  | 0.796 |
-| walker |  | 2551 | 94 | readme.md section #1 |  |  | 0.797 |
+| walker |  | 2330 | 23 | ts body source/utils/type-guards.ts:27 |  |  | 0.796 |
+| walker |  | 2353 | 23 | ts body source/utils/type-guards.ts:98 |  |  | 0.796 |
+| walker |  | 2375 | 22 | readme.md section #45 |  |  | 0.796 |
+| walker |  | 2469 | 94 | readme.md section #1 |  |  | 0.796 |
+| walker |  | 2519 | 50 | ts decl source/core/Ky.ts:33 |  |  | 0.796 |
 | ns | 2600 |  | 274 | Concrete retry defaults (`defaultRetryOptions`, utils/normalize.ts) | 2.4 |  | 0.761 |
-| walker |  | 2601 | 50 | ts decl source/core/Ky.ts:33 |  |  | 0.761 |
-| walker |  | 2770 | 169 | ts names source/types/hooks.ts |  |  | 0.762 |
-| walker |  | 2816 | 46 | ts decl source/types/hooks.ts:14 |  |  | 0.763 |
-| ns | 2865 |  | 265 | Where the non-retry defaults are applied (core/Ky.ts constructor) | 2.5 |  | 0.728 |
-| walker |  | 2873 | 57 | ts decl source/types/hooks.ts:41 |  |  | 0.729 |
-| ns | 2934 |  | 69 | `Hooks`: the four hook arrays | 2.6 |  | 0.715 |
-| walker |  | 2961 | 88 | ts decl source/types/hooks.ts:20 |  |  | 0.716 |
-| walker |  | 3052 | 91 | ts decl source/types/hooks.ts:32 |  |  | 0.717 |
-| ns | 3139 |  | 205 | `RetryOptions`: every retry field (types/retry.ts) | 2.7 |  | 0.683 |
-| walker |  | 3145 | 93 | ts decl source/types/hooks.ts:5 |  |  | 0.684 |
-| walker |  | 3240 | 95 | ts decl source/types/hooks.ts:48 |  |  | 0.685 |
-| walker |  | 3266 | 26 | ts names source/utils/delay.ts |  |  | 0.685 |
-| walker |  | 3281 | 15 | ts decl source/utils/delay.ts:5 |  |  | 0.685 |
-| walker |  | 3307 | 26 | ts names source/utils/timeout.ts |  |  | 0.685 |
-| walker |  | 3330 | 23 | ts decl source/utils/timeout.ts:3 |  |  | 0.685 |
-| walker |  | 3358 | 28 | ts decl source/utils/delay.ts:9 |  |  | 0.685 |
-| walker |  | 3428 | 70 | readme.md section #52 |  |  | 0.685 |
-| walker |  | 3458 | 30 | ts names source/utils/is.ts |  |  | 0.686 |
+| walker |  | 2688 | 169 | ts names source/types/hooks.ts |  |  | 0.762 |
+| walker |  | 2734 | 46 | ts decl source/types/hooks.ts:14 |  |  | 0.762 |
+| walker |  | 2791 | 57 | ts decl source/types/hooks.ts:41 |  |  | 0.764 |
+| ns | 2865 |  | 265 | Where the non-retry defaults are applied (core/Ky.ts constructor) | 2.5 |  | 0.729 |
+| walker |  | 2879 | 88 | ts decl source/types/hooks.ts:20 |  |  | 0.731 |
+| ns | 2934 |  | 69 | `Hooks`: the four hook arrays | 2.6 |  | 0.716 |
+| walker |  | 2970 | 91 | ts decl source/types/hooks.ts:32 |  |  | 0.716 |
+| walker |  | 3063 | 93 | ts decl source/types/hooks.ts:5 |  |  | 0.717 |
+| ns | 3139 |  | 205 | `RetryOptions`: every retry field (types/retry.ts) | 2.7 |  | 0.684 |
+| walker |  | 3158 | 95 | ts decl source/types/hooks.ts:48 |  |  | 0.684 |
+| walker |  | 3184 | 26 | ts names source/utils/delay.ts |  |  | 0.685 |
+| walker |  | 3199 | 15 | ts decl source/utils/delay.ts:5 |  |  | 0.685 |
+| walker |  | 3225 | 26 | ts names source/utils/timeout.ts |  |  | 0.685 |
+| walker |  | 3248 | 23 | ts decl source/utils/timeout.ts:3 |  |  | 0.685 |
+| walker |  | 3276 | 28 | ts decl source/utils/delay.ts:9 |  |  | 0.685 |
+| walker |  | 3346 | 70 | readme.md section #52 |  |  | 0.685 |
+| walker |  | 3376 | 30 | ts names source/utils/is.ts |  |  | 0.686 |
 | ns | 3480 |  | 341 | Hook function signatures and their `*State` objects | 2.8 | 2.6 | 0.710 |
-| ns | 3745 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.699 |
-| walker |  | 3757 | 299 | package identity metadata in package.json |  |  | 0.704 |
-| ns | 4021 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.685 |
-| walker |  | 4060 | 303 | ts body source/index.ts:10 |  |  | 0.687 |
-| walker |  | 4135 | 75 | readme.md section #51 |  |  | 0.687 |
-| walker |  | 4168 | 33 | readme.md section #8 |  |  | 0.687 |
+| walker |  | 3675 | 299 | package identity metadata in package.json |  |  | 0.716 |
+| ns | 3745 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.704 |
+| walker |  | 3978 | 303 | ts body source/index.ts:10 |  |  | 0.706 |
+| ns | 4021 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.687 |
+| walker |  | 4053 | 75 | readme.md section #51 |  |  | 0.687 |
+| walker |  | 4086 | 33 | readme.md section #8 |  |  | 0.687 |
+| walker |  | 4120 | 34 | ts names source/utils/types.ts |  |  | 0.687 |
+| walker |  | 4138 | 18 | ts decl source/utils/types.ts:1 |  |  | 0.688 |
+| walker |  | 4175 | 37 | ts names source/utils/options.ts |  |  | 0.688 |
 | ns | 4199 |  | 178 | `ky.stop`, `ky.retry()` and the `ForceRetryOptions` fields | 2.11 |  | 0.666 |
-| walker |  | 4202 | 34 | ts names source/utils/types.ts |  |  | 0.666 |
-| walker |  | 4220 | 18 | ts decl source/utils/types.ts:1 |  |  | 0.666 |
-| walker |  | 4257 | 37 | ts names source/utils/options.ts |  |  | 0.666 |
-| walker |  | 4288 | 31 | ts decl source/utils/options.ts:4 |  |  | 0.666 |
-| walker |  | 4324 | 36 | ts decl source/utils/types.ts:5 |  |  | 0.666 |
-| walker |  | 4361 | 37 | readme.md section #19 |  |  | 0.666 |
+| walker |  | 4206 | 31 | ts decl source/utils/options.ts:4 |  |  | 0.666 |
+| walker |  | 4242 | 36 | ts decl source/utils/types.ts:5 |  |  | 0.666 |
+| walker |  | 4279 | 37 | readme.md section #19 |  |  | 0.666 |
+| walker |  | 4326 | 47 | ts doc source/errors/ForceRetryError.ts:8 |  |  | 0.666 |
 | ns | 4370 |  | 171 | `requestMethods`, `responseTypes` and `maxSafeTimeout` | 2.12 |  | 0.655 |
-| walker |  | 4408 | 47 | ts doc source/errors/ForceRetryError.ts:8 |  |  | 0.655 |
 | ns | 4571 |  | 201 | Option registries: `kyOptionKeys`, `requestOptionsRegistry`, `vendorSpecificOptions` | 2.13 |  | 0.636 |
-| walker |  | 4769 | 361 | ts names source/types/options.ts |  |  | 0.639 |
-| ns | 4784 |  | 213 | Core public type aliases: `Input`, `Progress`, search-param and method types | 2.14 |  | 0.638 |
-| walker |  | 4842 | 73 | ts decl source/types/options.ts:16 |  |  | 0.649 |
-| walker |  | 4979 | 137 | ts decl source/types/options.ts:373 |  |  | 0.667 |
+| walker |  | 4687 | 361 | ts names source/types/options.ts |  |  | 0.639 |
+| walker |  | 4760 | 73 | ts decl source/types/options.ts:16 |  |  | 0.639 |
+| ns | 4784 |  | 213 | Core public type aliases: `Input`, `Progress`, search-param and method types | 2.14 |  | 0.648 |
+| walker |  | 4897 | 137 | ts decl source/types/options.ts:373 |  |  | 0.666 |
+| walker |  | 5042 | 145 | ts decl source/types/options.ts:358 |  |  | 0.639 |
 | ns | 5042 |  | 258 | `Ky` class: every field and method, name-only (core/Ky.ts) | 3.1 |  | 0.639 |
-| walker |  | 5124 | 145 | ts decl source/types/options.ts:358 |  |  | 0.639 |
+| walker |  | 5071 | 29 | ts doc source/types/options.ts:373 |  |  | 0.639 |
+| walker |  | 5112 | 41 | ts decl source/errors/NonError.ts:6 |  |  | 0.639 |
 | ns | 5148 |  | 106 | Runtime capability flags exported by core/constants.ts | 3.2 |  | 0.634 |
-| walker |  | 5153 | 29 | ts doc source/types/options.ts:373 |  |  | 0.634 |
-| walker |  | 5194 | 41 | ts decl source/errors/NonError.ts:6 |  |  | 0.635 |
-| walker |  | 5242 | 48 | ts names source/utils/normalize.ts |  |  | 0.635 |
-| walker |  | 5264 | 22 | ts decl source/utils/normalize.ts:5 |  |  | 0.635 |
-| walker |  | 5312 | 48 | ts decl source/utils/timeout.ts:9 |  |  | 0.635 |
+| walker |  | 5160 | 48 | ts names source/utils/normalize.ts |  |  | 0.634 |
+| walker |  | 5182 | 22 | ts decl source/utils/normalize.ts:5 |  |  | 0.635 |
+| walker |  | 5230 | 48 | ts decl source/utils/timeout.ts:9 |  |  | 0.635 |
+| walker |  | 5278 | 48 | readme.md section #3 |  |  | 0.635 |
+| walker |  | 5326 | 48 | readme.md section #28 |  |  | 0.635 |
 | ns | 5339 |  | 191 | Every exported symbol of `source/utils/` (merge, normalize, options) | 3.3 |  | 0.624 |
-| walker |  | 5360 | 48 | readme.md section #3 |  |  | 0.624 |
-| walker |  | 5408 | 48 | readme.md section #28 |  |  | 0.624 |
-| walker |  | 5457 | 49 | readme.md section #14 |  |  | 0.624 |
-| walker |  | 5508 | 51 | readme.md section #27 |  |  | 0.624 |
+| walker |  | 5375 | 49 | readme.md section #14 |  |  | 0.624 |
+| walker |  | 5426 | 51 | readme.md section #27 |  |  | 0.624 |
+| walker |  | 5508 | 82 | json config tsconfig.json |  |  | 0.624 |
 | ns | 5633 |  | 294 | Every exported symbol of `source/utils/` (timeout, delay, body, guards, misc) | 3.4 | 3.3 | 0.627 |
 | ns | 5813 |  | 180 | Every readme option anchor (`##### <option>`) and hook anchor | 3.5 |  | 0.615 |
 | walker |  | 5920 | 412 | ts decl source/types/ResponsePromise.ts:6 |  |  | 0.630 |
