@@ -90,10 +90,10 @@ Score(3000)=0.566 I=0.807 C=0.398 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 2265 | 11 | Code::CodeKey { rung: Names, file: lib/platform/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
 | walker |  | 2284 | 19 | Code::CodeKey { rung: Decl, file: lib/platform/index.js, decl: 1, sub: 0, line: 4 } |  |  | 0.648 |
 | ns | 2395 |  | 289 | _request: config normalization and header flattening | 2.8 |  | 0.615 |
-| walker |  | 2451 | 167 | Json::Scripts { file: package.json } |  |  | 0.615 |
-| walker |  | 2596 | 145 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.615 |
+| walker |  | 2458 | 174 | Json::Scripts { file: package.json } |  |  | 0.615 |
+| walker |  | 2604 | 146 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.615 |
 | ns | 2696 |  | 301 | Interceptor chain assembly (incl. the legacy ordering flag) | 2.9 |  | 0.586 |
-| walker |  | 2746 | 150 | Json::ScriptsTail { file: package.json, chunk: 2 } |  |  | 0.586 |
+| walker |  | 2746 | 142 | Json::ScriptsTail { file: package.json, chunk: 2 } |  |  | 0.586 |
 | ns | 2872 |  | 176 | _request: the async promise-chain path | 2.10 | 2.9 | 0.566 |
 | walker |  | 3024 | 278 | Code::CodeKey { rung: Names, file: index.d.cts, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
 | walker |  | 3062 | 38 | Code::CodeKey { rung: Decl, file: index.d.cts, decl: 2, sub: 0, line: 7 } |  |  | 0.566 |

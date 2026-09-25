@@ -206,18 +206,21 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     }
 }
 
-/// A long `scripts` block's rows in source-order chunks (see
-/// [`chunk_ranges`]): the `"scripts": {` row leads the first chunk and the
-/// closing brace ends the last. `None` when it stays one batch.
+/// A long `scripts` block's rows in chunks (see [`chunk_ranges`]), the
+/// conventional entry points first and the rest in source order: the
+/// `"scripts": {` row leads the first chunk and the closing brace ends
+/// the last. `None` when it stays one batch.
 fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<BatchContent>> {
     let object = first_child_of_kind(tree.root_node(), "object")?;
     let scripts = object_field_value(object, "scripts", source)?;
     let mut cursor = scripts.walk();
-    let entries: Vec<(usize, usize)> = scripts
+    let mut entries: Vec<(usize, usize)> = scripts
         .children(&mut cursor)
         .filter(|child| child.kind() == "pair")
         .map(|pair| (pair.start_position().row + 1, pair.end_position().row + 1))
         .collect();
+    let lines: Vec<&str> = source.lines().collect();
+    entries.sort_by_key(|&(start, _)| !is_entry_point_script(lines[start - 1]));
     let lines: Vec<&str> = source.lines().collect();
     let costs: Vec<usize> = entries
         .iter()
@@ -247,10 +250,31 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
             if index == last {
                 rows.push(scripts.end_position().row + 1);
             }
+            rows.sort_unstable();
             rows.dedup();
             single_file_lines_content(file, source, rows)
         })
         .collect()
+}
+
+/// A script row named for one of the conventional entry points.
+fn is_entry_point_script(row: &str) -> bool {
+    let name = row.trim_start().trim_start_matches('"');
+    [
+        "build",
+        "test",
+        "lint",
+        "dev",
+        "start",
+        "check",
+        "typecheck",
+        "format",
+    ]
+    .iter()
+    .any(|entry_point| {
+        name.strip_prefix(entry_point)
+            .is_some_and(|rest| rest.starts_with('"'))
+    })
 }
 
 /// Emit `chunks` as `Scripts` then `ScriptsTail`s, each gated on the one
