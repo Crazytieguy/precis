@@ -31,9 +31,9 @@ pub(super) const LANGUAGE: Language = Language {
     file_weight: None,
 };
 
-fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
-    let entrypoint = is_entrypoint(&file.path, ctx);
+    let is_program = file.path.file_name().is_some_and(|name| name == "main.rs");
     let mut functions = Vec::new();
     let mut model = FileModel {
         module_doc: module_doc(file, root),
@@ -65,7 +65,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             "impl_item" => model.decls.extend(impl_container(node, leading, file)),
             "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
             "function_item" => {
-                if entrypoint {
+                if is_program {
                     let is_main = node
                         .child_by_field_name("name")
                         .is_some_and(|name| file.text(name) == "main");
