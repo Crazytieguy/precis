@@ -1,5 +1,5 @@
 //! Prisma schema walker. Emits a `Toc` batch listing the opening line
-//! of every top-level Prisma declaration in a `schema.prisma` file —
+//! of every top-level Prisma declaration in a `*.prisma` schema file —
 //! `model X { … }`, `enum Y { … }`, `datasource db { … }`,
 //! `generator client { … }` — plus a per-declaration `Decl` body batch
 //! delivering the brace block itself.
@@ -111,13 +111,6 @@ impl Decl {
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in files_with_extension(dir, "prisma", ctx) {
-        let name = file
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or_default();
-        if !name.eq_ignore_ascii_case("schema.prisma") {
-            continue;
-        }
         let Some(source) = ctx.read_source(&file) else {
             continue;
         };
