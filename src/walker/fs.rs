@@ -102,12 +102,6 @@ const LISTING_VALUE: f64 = 1300.63;
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);
     let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
-    let src_of_sibling_modules = source_dir
-        && module_sibling_child_dir_count(
-            dir,
-            children,
-            MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT,
-        ) >= MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT;
     let non_essential = ctx.non_essential_factor(dir);
     // Inventory promotion: covers two cases.
     //   1. Supporting corpora (`tests/`, `examples/`, `docs/`): the
@@ -141,7 +135,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         file_depth_factor(dir, ctx, true)
     } else if supporting_source_dir || source_inventory_dir {
         inventory_depth_factor(dir, ctx, non_essential)
-    } else if module_source_dir || src_of_sibling_modules {
+    } else if module_source_dir {
         file_depth_factor(dir, ctx, true)
     } else {
         path_depth_factor(dir, ctx)
@@ -236,7 +230,6 @@ pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
 ];
 const NON_JS_MODULE_ENTRYPOINT_FILES: &[&str] = &["mod.rs", "__init__.py"];
 const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
-const MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT: usize = 2;
 
 /// Case-insensitive, and `Sources/` counts: that is the spelling
 /// SwiftPM mandates, and the same for `Source/` in Objective-C and
@@ -289,23 +282,6 @@ fn has_module_sibling_file(dir: &Path) -> bool {
         sibling.set_extension(ext);
         sibling.is_file()
     })
-}
-
-fn module_sibling_child_dir_count(
-    dir: &Path,
-    children: &BTreeMap<String, EntryKind>,
-    target: usize,
-) -> usize {
-    let mut count = 0;
-    for (name, kind) in children {
-        if matches!(kind, EntryKind::Directory) && has_module_sibling_file(&dir.join(name)) {
-            count += 1;
-            if count >= target {
-                break;
-            }
-        }
-    }
-    count
 }
 
 #[derive(Default)]

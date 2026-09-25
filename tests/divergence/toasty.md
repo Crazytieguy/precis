@@ -1,4 +1,4 @@
-Score(3000)=0.546 I=0.865 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.463/0.514/0.655/0.546/0.470/0.542/0.635
+Score(3000)=0.546 I=0.865 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.420/0.554/0.649/0.546/0.470/0.542/0.635
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -29,72 +29,72 @@ Score(3000)=0.546 I=0.865 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 377 | 8 | Fs::DirListing { dir: crates/toasty-macros } |  |  | 0.602 |
 | walker |  | 381 | 4 | Fs::DirListing { dir: crates/toasty-macros/src } |  |  | 0.602 |
 | walker |  | 394 | 13 | Fs::DirListing { dir: crates/toasty-codegen } |  |  | 0.602 |
+| walker |  | 407 | 13 | Fs::DirListing { dir: crates/toasty-driver-sqlite } |  |  | 0.614 |
 | ns | 407 |  | 86 | docs/ tree: every documentation file (complete) | 1.5 |  | 0.614 |
-| walker |  | 412 | 18 | Fs::DirListing { dir: crates/toasty-codegen/src } |  |  | 0.614 |
-| walker |  | 425 | 13 | Fs::DirListing { dir: crates/toasty-driver-sqlite } |  |  | 0.614 |
-| walker |  | 461 | 36 | Fs::DirListing { dir: crates/toasty-codegen/src/expand } |  |  | 0.615 |
-| walker |  | 469 | 8 | Fs::DirListing { dir: crates/toasty-driver-mysql/src } |  |  | 0.616 |
-| walker |  | 477 | 8 | Fs::DirListing { dir: crates/toasty-driver-sqlite/src } |  |  | 0.616 |
-| walker |  | 493 | 16 | Fs::DirListing { dir: crates/toasty } |  |  | 0.616 |
-| walker |  | 509 | 16 | Fs::DirListing { dir: crates/toasty-core } |  |  | 0.616 |
+| walker |  | 415 | 8 | Fs::DirListing { dir: crates/toasty-driver-mysql/src } |  |  | 0.614 |
+| walker |  | 423 | 8 | Fs::DirListing { dir: crates/toasty-driver-sqlite/src } |  |  | 0.614 |
+| walker |  | 439 | 16 | Fs::DirListing { dir: crates/toasty } |  |  | 0.615 |
+| walker |  | 455 | 16 | Fs::DirListing { dir: crates/toasty-core } |  |  | 0.615 |
+| walker |  | 471 | 16 | Fs::DirListing { dir: crates/toasty-sql } |  |  | 0.615 |
+| walker |  | 488 | 17 | Fs::DirListing { dir: crates/toasty-driver-postgresql/src } |  |  | 0.616 |
+| walker |  | 506 | 18 | Fs::DirListing { dir: crates/toasty-codegen/src } |  |  | 0.616 |
 | ns | 538 |  | 131 | toasty crate public exports, first half of src/lib.rs | 1.6 |  | 0.532 |
-| walker |  | 545 | 36 | Fs::DirListing { dir: crates/toasty-core/src } |  |  | 0.533 |
-| walker |  | 560 | 15 | Fs::DirListing { dir: crates/toasty-core/src/driver } |  |  | 0.533 |
-| walker |  | 576 | 16 | Fs::DirListing { dir: crates/toasty-sql } |  |  | 0.533 |
-| walker |  | 598 | 22 | Fs::DirListing { dir: crates/toasty-sql/src } |  |  | 0.533 |
-| walker |  | 637 | 39 | Fs::DirListing { dir: crates/toasty-core/src/schema } |  |  | 0.535 |
-| walker |  | 641 | 4 | Fs::DirListing { dir: crates/toasty-core/src/schema/builder } |  |  | 0.535 |
-| walker |  | 648 | 7 | Fs::DirListing { dir: crates/toasty-core/src/schema/verify } |  |  | 0.535 |
-| walker |  | 656 | 8 | Fs::DirListing { dir: crates/toasty-core/src/schema/mapping } |  |  | 0.536 |
-| walker |  | 688 | 32 | Fs::DirListing { dir: crates/toasty-core/src/schema/db } |  |  | 0.537 |
-| ns | 719 |  | 181 | toasty crate public exports, remainder of src/lib.rs | 1.7 | 1.6 | 0.460 |
-| walker |  | 731 | 43 | Fs::DirListing { dir: crates/toasty-core/src/driver/operation } |  |  | 0.461 |
-| walker |  | 784 | 53 | Fs::DirListing { dir: crates/toasty-core/src/schema/app } |  |  | 0.465 |
-| walker |  | 788 | 4 | Fs::DirListing { dir: crates/toasty-core/src/schema/app/constraint } |  |  | 0.466 |
-| walker |  | 792 | 4 | Fs::DirListing { dir: crates/toasty-core/src/schema/app/field } |  |  | 0.466 |
-| walker |  | 807 | 15 | Fs::DirListing { dir: crates/toasty-core/src/schema/app/relation } |  |  | 0.467 |
-| walker |  | 861 | 54 | Fs::DirListing { dir: crates/toasty-sql/src/serializer } |  |  | 0.468 |
-| ns | 892 |  | 173 | crates/toasty source tree (complete) | 2.1 |  | 0.379 |
-| walker |  | 921 | 60 | Fs::DirListing { dir: crates/toasty/src } |  |  | 0.422 |
-| walker |  | 925 | 4 | Fs::DirListing { dir: crates/toasty/src/batch } |  |  | 0.426 |
-| walker |  | 937 | 12 | Fs::DirListing { dir: crates/toasty/src/db } |  |  | 0.441 |
-| walker |  | 956 | 19 | Fs::DirListing { dir: crates/toasty/src/relation } |  |  | 0.463 |
-| walker |  | 1017 | 61 | Fs::DirListing { dir: crates/toasty-codegen/src/schema } |  |  | 0.465 |
-| walker |  | 1079 | 62 | Fs::DirListing { dir: crates/toasty/src/stmt } |  |  | 0.562 |
-| ns | 1126 |  | 234 | Complete method roster of `Db` (src/db.rs) | 2.2 |  | 0.525 |
-| walker |  | 1144 | 65 | Fs::DirListing { dir: crates/toasty/src/engine } |  |  | 0.526 |
-| walker |  | 1149 | 5 | Fs::DirListing { dir: crates/toasty/src/engine/eval } |  |  | 0.526 |
-| walker |  | 1159 | 10 | Fs::DirListing { dir: crates/toasty/src/engine/index } |  |  | 0.526 |
-| walker |  | 1172 | 13 | Fs::DirListing { dir: crates/toasty/src/engine/plan } |  |  | 0.526 |
-| walker |  | 1188 | 16 | Fs::DirListing { dir: crates/toasty/src/engine/lower } |  |  | 0.526 |
-| ns | 1251 |  | 125 | Doc comments on the `Db` methods | 2.3 |  | 0.507 |
-| walker |  | 1259 | 71 | Fs::DirListing { dir: crates/toasty-sql/src/stmt } |  |  | 0.509 |
-| walker |  | 1276 | 17 | Fs::DirListing { dir: crates/toasty-driver-postgresql/src } |  |  | 0.510 |
-| walker |  | 1354 | 78 | Fs::DirListing { dir: crates/toasty/src/engine/exec } |  |  | 0.511 |
-| walker |  | 1433 | 79 | Fs::DirListing { dir: crates/toasty/src/engine/mir } |  |  | 0.514 |
-| ns | 1447 |  | 196 | `Db::builder()` — the complete `Builder` API (src/db/builder.rs) | 2.4 |  | 0.493 |
-| walker |  | 1515 | 82 | Fs::DirListing { dir: crates/toasty-core/src/error } |  |  | 0.498 |
-| walker |  | 1534 | 19 | Fs::DirListing { dir: crates/toasty-cli/src } |  |  | 0.498 |
-| walker |  | 1568 | 34 | Fs::DirListing { dir: crates/toasty-cli/src/migration } |  |  | 0.499 |
-| walker |  | 1587 | 19 | Fs::DirListing { dir: crates/toasty-driver-dynamodb/src } |  |  | 0.500 |
-| ns | 1606 |  | 159 | `Register`, `Model` and `Embed` trait signatures (src/model.rs) | 2.5 |  | 0.478 |
-| walker |  | 1626 | 39 | Fs::DirListing { dir: crates/toasty-driver-dynamodb/src/op } |  |  | 0.479 |
-| ns | 1679 |  | 73 | What an embedded type is (model.rs doc on `Embed`) | 2.6 | 2.5 | 0.472 |
-| walker |  | 1729 | 103 | Fs::DirListing { dir: crates/toasty/src/engine/simplify } |  |  | 0.475 |
-| walker |  | 1753 | 24 | Fs::DirListing { dir: crates/std-util/src } |  |  | 0.475 |
-| walker |  | 1777 | 24 | Fs::DirListing { dir: crates/toasty-driver-integration-suite-macros/src } |  |  | 0.475 |
-| walker |  | 1798 | 21 | Fs::DirListing { dir: examples } |  |  | 0.475 |
-| walker |  | 1866 | 68 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.509 |
-| ns | 1895 |  | 216 | The derive macros and their attributes (toasty-macros/src/lib.rs) | 2.7 |  | 0.486 |
-| walker |  | 1940 | 74 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.654 |
-| walker |  | 1951 | 11 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/schema/app.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
-| walker |  | 1990 | 39 | Markdown::HeadingsOutline { file: docs/CONTEXT.md } |  |  | 0.654 |
-| walker |  | 2039 | 49 | Fs::DirListing { dir: crates/toasty-driver-integration-suite/src } |  |  | 0.655 |
-| walker |  | 2052 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty/src/db/pool.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.655 |
-| walker |  | 2090 | 38 | Markdown::ReadmeHeadline { file: docs/roadmap/README.md } |  |  | 0.655 |
-| ns | 2121 |  | 226 | Typed statement builder exports (crates/toasty/src/stmt.rs) | 2.8 |  | 0.624 |
-| ns | 2334 |  | 213 | `Path<T>` filter and ordering operators (src/stmt/path.rs) | 2.9 |  | 0.600 |
-| walker |  | 2445 | 355 | Toml::Identity { file: Cargo.toml } |  |  | 0.600 |
+| walker |  | 542 | 36 | Fs::DirListing { dir: crates/toasty-codegen/src/expand } |  |  | 0.533 |
+| walker |  | 603 | 61 | Fs::DirListing { dir: crates/toasty-codegen/src/schema } |  |  | 0.535 |
+| walker |  | 622 | 19 | Fs::DirListing { dir: crates/toasty-cli/src } |  |  | 0.536 |
+| walker |  | 656 | 34 | Fs::DirListing { dir: crates/toasty-cli/src/migration } |  |  | 0.537 |
+| walker |  | 675 | 19 | Fs::DirListing { dir: crates/toasty-driver-dynamodb/src } |  |  | 0.538 |
+| walker |  | 714 | 39 | Fs::DirListing { dir: crates/toasty-driver-dynamodb/src/op } |  |  | 0.539 |
+| ns | 719 |  | 181 | toasty crate public exports, remainder of src/lib.rs | 1.7 | 1.6 | 0.461 |
+| walker |  | 736 | 22 | Fs::DirListing { dir: crates/toasty-sql/src } |  |  | 0.462 |
+| walker |  | 790 | 54 | Fs::DirListing { dir: crates/toasty-sql/src/serializer } |  |  | 0.463 |
+| walker |  | 861 | 71 | Fs::DirListing { dir: crates/toasty-sql/src/stmt } |  |  | 0.465 |
+| walker |  | 885 | 24 | Fs::DirListing { dir: crates/std-util/src } |  |  | 0.465 |
+| ns | 892 |  | 173 | crates/toasty source tree (complete) | 2.1 |  | 0.376 |
+| walker |  | 909 | 24 | Fs::DirListing { dir: crates/toasty-driver-integration-suite-macros/src } |  |  | 0.376 |
+| walker |  | 930 | 21 | Fs::DirListing { dir: examples } |  |  | 0.377 |
+| walker |  | 998 | 68 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.420 |
+| walker |  | 1034 | 36 | Fs::DirListing { dir: crates/toasty-core/src } |  |  | 0.420 |
+| walker |  | 1049 | 15 | Fs::DirListing { dir: crates/toasty-core/src/driver } |  |  | 0.420 |
+| walker |  | 1088 | 39 | Fs::DirListing { dir: crates/toasty-core/src/schema } |  |  | 0.422 |
+| walker |  | 1092 | 4 | Fs::DirListing { dir: crates/toasty-core/src/schema/builder } |  |  | 0.422 |
+| walker |  | 1099 | 7 | Fs::DirListing { dir: crates/toasty-core/src/schema/verify } |  |  | 0.422 |
+| walker |  | 1107 | 8 | Fs::DirListing { dir: crates/toasty-core/src/schema/mapping } |  |  | 0.422 |
+| ns | 1126 |  | 234 | Complete method roster of `Db` (src/db.rs) | 2.2 |  | 0.394 |
+| walker |  | 1139 | 32 | Fs::DirListing { dir: crates/toasty-core/src/schema/db } |  |  | 0.395 |
+| walker |  | 1182 | 43 | Fs::DirListing { dir: crates/toasty-core/src/driver/operation } |  |  | 0.397 |
+| walker |  | 1235 | 53 | Fs::DirListing { dir: crates/toasty-core/src/schema/app } |  |  | 0.399 |
+| walker |  | 1239 | 4 | Fs::DirListing { dir: crates/toasty-core/src/schema/app/constraint } |  |  | 0.400 |
+| walker |  | 1243 | 4 | Fs::DirListing { dir: crates/toasty-core/src/schema/app/field } |  |  | 0.400 |
+| ns | 1251 |  | 125 | Doc comments on the `Db` methods | 2.3 |  | 0.385 |
+| walker |  | 1258 | 15 | Fs::DirListing { dir: crates/toasty-core/src/schema/app/relation } |  |  | 0.386 |
+| walker |  | 1340 | 82 | Fs::DirListing { dir: crates/toasty-core/src/error } |  |  | 0.390 |
+| walker |  | 1414 | 74 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.554 |
+| walker |  | 1425 | 11 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/schema/app.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
+| ns | 1447 |  | 196 | `Db::builder()` — the complete `Builder` API (src/db/builder.rs) | 2.4 |  | 0.532 |
+| walker |  | 1464 | 39 | Markdown::HeadingsOutline { file: docs/CONTEXT.md } |  |  | 0.532 |
+| walker |  | 1513 | 49 | Fs::DirListing { dir: crates/toasty-driver-integration-suite/src } |  |  | 0.532 |
+| walker |  | 1551 | 38 | Markdown::ReadmeHeadline { file: docs/roadmap/README.md } |  |  | 0.532 |
+| ns | 1606 |  | 159 | `Register`, `Model` and `Embed` trait signatures (src/model.rs) | 2.5 |  | 0.509 |
+| ns | 1679 |  | 73 | What an embedded type is (model.rs doc on `Embed`) | 2.6 | 2.5 | 0.501 |
+| ns | 1895 |  | 216 | The derive macros and their attributes (toasty-macros/src/lib.rs) | 2.7 |  | 0.479 |
+| walker |  | 1906 | 355 | Toml::Identity { file: Cargo.toml } |  |  | 0.479 |
+| walker |  | 1966 | 60 | Fs::DirListing { dir: crates/toasty/src } |  |  | 0.519 |
+| walker |  | 1970 | 4 | Fs::DirListing { dir: crates/toasty/src/batch } |  |  | 0.523 |
+| walker |  | 1982 | 12 | Fs::DirListing { dir: crates/toasty/src/db } |  |  | 0.537 |
+| walker |  | 2001 | 19 | Fs::DirListing { dir: crates/toasty/src/relation } |  |  | 0.558 |
+| walker |  | 2063 | 62 | Fs::DirListing { dir: crates/toasty/src/stmt } |  |  | 0.649 |
+| ns | 2121 |  | 226 | Typed statement builder exports (crates/toasty/src/stmt.rs) | 2.8 |  | 0.619 |
+| walker |  | 2128 | 65 | Fs::DirListing { dir: crates/toasty/src/engine } |  |  | 0.619 |
+| walker |  | 2133 | 5 | Fs::DirListing { dir: crates/toasty/src/engine/eval } |  |  | 0.619 |
+| walker |  | 2143 | 10 | Fs::DirListing { dir: crates/toasty/src/engine/index } |  |  | 0.619 |
+| walker |  | 2156 | 13 | Fs::DirListing { dir: crates/toasty/src/engine/plan } |  |  | 0.619 |
+| walker |  | 2172 | 16 | Fs::DirListing { dir: crates/toasty/src/engine/lower } |  |  | 0.619 |
+| walker |  | 2250 | 78 | Fs::DirListing { dir: crates/toasty/src/engine/exec } |  |  | 0.620 |
+| walker |  | 2329 | 79 | Fs::DirListing { dir: crates/toasty/src/engine/mir } |  |  | 0.622 |
+| ns | 2334 |  | 213 | `Path<T>` filter and ordering operators (src/stmt/path.rs) | 2.9 |  | 0.598 |
+| walker |  | 2432 | 103 | Fs::DirListing { dir: crates/toasty/src/engine/simplify } |  |  | 0.600 |
+| walker |  | 2445 | 13 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty/src/db/pool.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.600 |
 | walker |  | 2487 | 42 | Code::CodeKey { rung: Names, file: crates/std-util/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.600 |
 | walker |  | 2510 | 23 | Fs::DirListing { dir: examples/todo-with-cli } |  |  | 0.601 |
 | walker |  | 2517 | 7 | Fs::DirListing { dir: examples/todo-with-cli/src } |  |  | 0.601 |
