@@ -1104,13 +1104,7 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
 
 fn is_decorative_block(block: Node, source: &str) -> bool {
     match block.kind() {
-        // A paragraph can be a badge wall written as raw HTML
-        // (`<a …><img …></a>` per line) rather than markdown images —
-        // same decoration, so the same tag-stripping test applies.
-        "paragraph" => {
-            is_decorative_paragraph(block, source)
-                || is_raw_html_markup(&source[block.start_byte()..block.end_byte()])
-        }
+        "paragraph" => is_decorative_paragraph(block, source),
         "html_block" => is_decorative_html_block(block, source),
         "block_quote" => is_admin_block_quote(block, source),
         _ => false,
@@ -1164,46 +1158,6 @@ fn is_decorative_html_block(block: Node, source: &str) -> bool {
     let raw = &source[block.start_byte()..block.end_byte()];
     let stripped = strip_html_tags(raw);
     stripped.trim().is_empty()
-}
-
-/// True when the text is nothing but HTML element tags and blank
-/// filler — a badge wall or hero written as raw `<a …><img …></a>`
-/// rather than markdown images. Unlike the `html_block` test this must
-/// see a real element tag, so a markdown autolink (`<https://…>`) or
-/// e-mail (`<a@b.c>`) still counts as content.
-fn is_raw_html_markup(raw: &str) -> bool {
-    let mut rest = raw;
-    let mut saw_tag = false;
-    while let Some(open) = rest.find('<') {
-        let Some(close) = rest[open..].find('>').map(|i| open + i) else {
-            return false;
-        };
-        if !is_blank_filler(&rest[..open]) || !is_html_element_tag(&rest[open + 1..close]) {
-            return false;
-        }
-        saw_tag = true;
-        rest = &rest[close + 1..];
-    }
-    saw_tag && is_blank_filler(rest)
-}
-
-/// A tag body naming an HTML element, as opposed to a markdown
-/// autolink's URL (`https://…`) or e-mail address (`a@b.c`), whose
-/// first token is not a bare element name.
-fn is_html_element_tag(body: &str) -> bool {
-    let name = body
-        .trim_start_matches(['/', '!', '?', '-', ' '])
-        .split([' ', '\t', '\n', '/', '='])
-        .next()
-        .unwrap_or_default();
-    name.starts_with(|c: char| c.is_ascii_alphabetic())
-        && name.chars().all(|c| c.is_ascii_alphanumeric() || c == '-')
-}
-
-/// Whitespace once HTML character references (`&nbsp;`, `&#8226;`) are
-/// removed — layout padding, not words.
-fn is_blank_filler(text: &str) -> bool {
-    strip_html_entities(text).trim().is_empty()
 }
 
 /// True when a `block_quote` is a GitHub-flavored admin callout

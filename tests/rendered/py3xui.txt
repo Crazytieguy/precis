@@ -122,7 +122,8 @@ py3xui/
     6→from py3xui.server.server import RealityKeyPair, Server
   api/
     README.md
-      …
+      1→<a id="api.api_database"></a>
+      2→
       3→# api.api\_database
       4→
       5→This module contains the DatabaseApi class, which is responsible handling database operations
@@ -178,7 +179,8 @@ py3xui/
       …
   async_api/
     README.md
-      …
+      1→<a id="async_api.async_api_inbound"></a>
+      2→
       3→# async\_api.async\_api\_inbound
       4→
       5→This module contains the InboundApi class which provides methods to interact with the
@@ -224,10 +226,12 @@ py3xui/
       …
   client/
     README.md
-      …
+      1→<a id="client.client"></a>
+      2→
       3→# client.client
       4→
       5→This module contains the Client class which represents a client in the XUI API.
+      6→
       7→<a id="client.client.ClientFields"></a>
       9→## ClientFields Objects
       …
@@ -244,7 +248,8 @@ py3xui/
       …
   inbound/
     README.md
-      …
+      1→<a id="inbound.settings"></a>
+      2→
       3→# inbound.settings
       4→
       5→This module contains the Settings class, which is used to parse the JSON response
@@ -300,10 +305,13 @@ py3xui/
       …
   server/
     README.md
-      …
+      1→<a id="server.server"></a>
+      2→
       3→# server.server
       4→
       5→This module contains the Server class which represents server information in XUI API.
+      6→
+      7→<a id="server.server.ServerFields"></a>
       …
     __init__.py
       …
@@ -311,10 +319,12 @@ py3xui/
     server.py
   utils/
     README.md
-      …
+      1→<a id="utils.env"></a>
+      2→
       3→# utils.env
       4→
       5→This module contains utility functions for parsing environment variables.
+      6→
       7→<a id="utils.env.parse_env"></a>
       …
     __init__.py
@@ -323,21 +333,6 @@ py3xui/
       3→
       4→COOKIE_NAMES = ["3x-ui", "session"]
     env.py
-      …
-      7→def parse_env(
-      8→    keys: list[str], postprocess_fn: Callable[[str], Any], raise_if_not_found: bool = True
-      9→) -> Any:
-      …
-      33→def xui_host() -> str:
-      …
-      49→def xui_username() -> str:
-      …
-      65→def xui_password() -> str:
-      …
-      81→def tls_verify() -> bool | None:
-      …
-      95→def tls_cert_path() -> str | None:
-      …
 pyproject.toml
   …
   5→[project]
