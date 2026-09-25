@@ -1424,9 +1424,13 @@ fn logical_sections(
     let mut out = Vec::with_capacity(entries.len());
     for (parent_idx, entry) in entries.iter().enumerate() {
         match entry {
-            TopLevelEntry::SyntheticIntro { h1, start, end } => {
+            TopLevelEntry::SyntheticIntro {
+                heading_only,
+                start,
+                end,
+            } => {
                 // A heading-only intro would re-sell the outline's H1 row.
-                if outline_emits && !has_substantive_body(*h1, *start, *end, source) {
+                if outline_emits && *heading_only {
                     continue;
                 }
                 push_whole_or_head_split(
@@ -1457,8 +1461,7 @@ fn logical_sections(
                 let reference_h2 = readme
                     && (is_canonical_usage_h2(*node, source)
                         || (is_reference_usage_title(*node, source)
-                            && reference_usage_body_ok(*node)
-                            && reference_usage_has_structure(*node, source)));
+                            && reference_usage_body_ok(section_body(*node, None, source))));
 
                 let h3s = if structural_split_gate {
                     direct_h3_children(*node)
@@ -1802,23 +1805,19 @@ fn push_intro<'a>(
     synthetic_intro_present: bool,
     source: &str,
 ) {
-    let h2_start = h2_section.start_position().row + 1;
-    let intro_end = (first_child.start_position().row + 1).saturating_sub(1);
-    if intro_end < h2_start {
-        return;
-    }
-    if !has_substantive_body(h2_section, h2_start, intro_end, source) {
+    let body = section_body(h2_section, Some(first_child), source);
+    if body.trim().is_empty() {
         return;
     }
     // The H2 title carries the reference/usage match; the prelude
     // before the first H3 inherits it. The compact-body gate measures
     // just the prelude rows (the whole split H2 is large by
     // construction). README-only — the caller is gated.
-    let reference_h2 = is_reference_usage_title(h2_section, source)
-        && reference_usage_row_range_ok(h2_section, h2_start, intro_end, source);
+    let reference_h2 =
+        is_reference_usage_title(h2_section, source) && reference_usage_body_ok(body);
     out.push(SectionRange {
-        start: h2_start,
-        end: intro_end,
+        start: h2_section.start_position().row + 1,
+        end: first_child.start_position().row,
         kind: SectionKind::Intro,
         parent_index: parent_idx,
         synthetic_intro_present,
@@ -1836,8 +1835,8 @@ fn push_h3_child_or_body_blocks(
     synthetic_intro_present: bool,
     source: &str,
 ) {
-    let (h3_start, h3_end) = node_row_range(h3_section, source);
-    if !has_substantive_body(h3_section, h3_start, h3_end, source) {
+    let body = section_body(h3_section, None, source);
+    if body.trim().is_empty() {
         return;
     }
     let h3_bytes = h3_section.end_byte() - h3_section.start_byte();
@@ -1847,37 +1846,16 @@ fn push_h3_child_or_body_blocks(
             return;
         }
     }
-    push_h3_child(
-        out,
-        h3_section,
-        h3_end,
-        parent_idx,
-        synthetic_intro_present,
-        source,
-    );
-}
-
-fn push_h3_child(
-    out: &mut Vec<SectionRange>,
-    h3_section: Node<'_>,
-    end: usize,
-    parent_idx: usize,
-    synthetic_intro_present: bool,
-    source: &str,
-) {
     // The H3's OWN title carries the reference/usage match (e.g.
-    // `### Colors`, `### Default preset`). Same gates as the H2 path:
-    // compact body + structural reference content.
-    let reference_h3 = is_reference_usage_title(h3_section, source)
-        && reference_usage_body_ok(h3_section)
-        && reference_usage_has_structure(h3_section, source);
+    // `### Colors`, `### Default preset`). Same gates as the H2 path.
     out.push(SectionRange {
         start: h3_section.start_position().row + 1,
-        end,
+        end: node_row_range(h3_section, source).1,
         kind: SectionKind::H3Child,
         parent_index: parent_idx,
         synthetic_intro_present,
-        is_reference_usage_section: reference_h3,
+        is_reference_usage_section: is_reference_usage_title(h3_section, source)
+            && reference_usage_body_ok(body),
         chained_to_previous: false,
     });
 }
@@ -1991,7 +1969,8 @@ fn is_section_scaffolding(kind: &str) -> bool {
 #[derive(Debug, Clone, Copy)]
 enum TopLevelEntry<'a> {
     SyntheticIntro {
-        h1: Node<'a>,
+        /// Nothing but the H1 heading before the first H2.
+        heading_only: bool,
         start: usize,
         end: usize,
     },
@@ -2021,7 +2000,7 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
             let mut out = Vec::with_capacity(h2s.len() + 1);
             if intro_end >= intro_start {
                 out.push(TopLevelEntry::SyntheticIntro {
-                    h1,
+                    heading_only: section_body(h1, Some(h2s[0]), source).trim().is_empty(),
                     start: intro_start,
                     end: intro_end,
                 });
@@ -2064,7 +2043,7 @@ fn is_code_block(kind: &str) -> bool {
 /// child — i.e. a paragraph, code block, nested list, etc. An empty
 /// `- ` item has only marker children, so it's filtered to avoid
 /// scheduling a no-op batch (`ratio(value, 0) = INFINITY` smell).
-/// Distinct from [`has_substantive_body`] because a list item has no
+/// Distinct from a [`section_body`] check because a list item has no
 /// heading.
 fn has_substantive_list_item(item: Node) -> bool {
     let mut cur = item.walk();
@@ -2189,45 +2168,24 @@ fn is_reference_usage_title_core(core: &str) -> bool {
 /// NS-anchored source content for no gain.
 const REFERENCE_USAGE_MAX_BODY_BYTES: usize = 1500;
 
-/// True iff `section`'s non-heading body is non-empty and at most
-/// [`REFERENCE_USAGE_MAX_BODY_BYTES`] — the body-size gate for the
-/// `Whole` (unsplit H2) and `H3Child` reference/usage boost. Measured
-/// over the whole node; the split-H2 `Intro` uses
-/// [`reference_usage_row_range_ok`] over just the prelude rows.
-fn reference_usage_body_ok(section: Node<'_>) -> bool {
+/// Source text of `section` after its heading, up to the start of
+/// `until` (a child the body stops at, e.g. the first H3 of a split H2)
+/// or the section's end. Empty for a section without a heading.
+fn section_body<'a>(section: Node, until: Option<Node>, source: &'a str) -> &'a str {
     let Some(heading) = first_heading_child(section) else {
-        return false;
+        return "";
     };
-    let heading_bytes = heading.end_byte() - heading.start_byte();
-    let body_bytes = (section.end_byte() - section.start_byte()).saturating_sub(heading_bytes);
-    body_bytes > 0 && body_bytes <= REFERENCE_USAGE_MAX_BODY_BYTES
+    let end = until.map_or(section.end_byte(), |node| node.start_byte());
+    &source[heading.end_byte().min(end)..end]
 }
 
-/// Like [`reference_usage_body_ok`] but over a 1-based source row range
-/// `[start, end]` (heading rows excluded). Used for a split H2's
-/// `Intro`, whose body is just the prelude before the first H3 — the
-/// whole-H2 byte count would always exceed the cap (the H2 split only
-/// because it's large), so svgo's `## Configuration` prelude would be
-/// wrongly rejected.
-fn reference_usage_row_range_ok(section: Node, start: usize, end: usize, source: &str) -> bool {
-    let Some(heading) = first_heading_child(section) else {
-        return false;
-    };
-    let heading_first_row = heading.start_position().row + 1;
-    let heading_last_row = node_end_row_trimmed(heading, source) + 1;
-    let body: Vec<&str> = source
-        .lines()
-        .enumerate()
-        .skip(start.saturating_sub(1))
-        .take(end.saturating_sub(start) + 1)
-        .filter(|(idx, _)| !(heading_first_row..=heading_last_row).contains(&(idx + 1)))
-        .map(|(_, line)| line)
-        .collect();
-    // +1 for the newline each line carried in the source.
-    let body_bytes: usize = body.iter().map(|l| l.len() + 1).sum();
-    body_bytes > 0
-        && body_bytes <= REFERENCE_USAGE_MAX_BODY_BYTES
-        && body.iter().any(|l| is_reference_structure_line(l))
+/// The body gate of the reference/usage class: non-empty, at most
+/// [`REFERENCE_USAGE_MAX_BODY_BYTES`], and holding structural reference
+/// content (see [`is_reference_structure_line`]).
+fn reference_usage_body_ok(body: &str) -> bool {
+    !body.trim().is_empty()
+        && body.len() <= REFERENCE_USAGE_MAX_BODY_BYTES
+        && body.lines().any(is_reference_structure_line)
 }
 
 /// True iff `line` is structural reference content: a bullet / numbered
@@ -2239,26 +2197,6 @@ fn reference_usage_row_range_ok(section: Node, start: usize, end: usize, source:
 fn is_reference_structure_line(line: &str) -> bool {
     let t = line.trim_start();
     is_catalog_line(line) || t.starts_with("```") || t.starts_with("~~~")
-}
-
-/// True iff the section node's body (heading excluded) contains
-/// structural reference content — see [`is_reference_structure_line`].
-/// Node-based variant for the `Whole` / `H3Child` paths.
-fn reference_usage_has_structure(section: Node<'_>, source: &str) -> bool {
-    let start = section.start_position().row + 1;
-    let end = node_end_row_trimmed(section, source) + 1;
-    let Some(heading) = first_heading_child(section) else {
-        return false;
-    };
-    let heading_first_row = heading.start_position().row + 1;
-    let heading_last_row = node_end_row_trimmed(heading, source) + 1;
-    source
-        .lines()
-        .enumerate()
-        .skip(start.saturating_sub(1))
-        .take(end.saturating_sub(start) + 1)
-        .filter(|(idx, _)| !(heading_first_row..=heading_last_row).contains(&(idx + 1)))
-        .any(|(_, line)| is_reference_structure_line(line))
 }
 
 /// True iff `section`'s direct children include at least one
@@ -2273,12 +2211,8 @@ fn reference_usage_has_structure(section: Node<'_>, source: &str) -> bool {
 /// by source bytes).
 const CANONICAL_USAGE_CODE_MIN_FRACTION: f64 = 0.85;
 
-fn section_is_code_dominant(section: Node<'_>, _source: &str) -> bool {
-    let Some(heading) = first_heading_child(section) else {
-        return false;
-    };
-    let heading_bytes = heading.end_byte() - heading.start_byte();
-    let body_bytes = (section.end_byte() - section.start_byte()).saturating_sub(heading_bytes);
+fn section_is_code_dominant(section: Node<'_>, source: &str) -> bool {
+    let body_bytes = section_body(section, None, source).len();
     if body_bytes == 0 {
         return false;
     }
@@ -2297,29 +2231,6 @@ fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
     let heading = first_heading_child(h2_section)?;
     let inline = first_child_of_kind(heading, "inline", false)?;
     Some(title_core(&source[inline.start_byte()..inline.end_byte()]))
-}
-
-/// True iff the source-row range `[start, end]` of `section` has any
-/// non-blank rows outside the section's heading. Used to drop an Intro
-/// or H3Child sub-range whose only content is the heading itself —
-/// without that filter, the post-outline marginal cost is 0 and
-/// `ratio(value, 0) = INFINITY` would unconditionally schedule a no-op
-/// batch.
-fn has_substantive_body(section: Node, start: usize, end: usize, source: &str) -> bool {
-    let Some(heading) = first_heading_child(section) else {
-        return false;
-    };
-    let heading_first_row = heading.start_position().row + 1;
-    let heading_last_row = node_end_row_trimmed(heading, source) + 1;
-    source
-        .lines()
-        .enumerate()
-        .skip(start.saturating_sub(1))
-        .take(end.saturating_sub(start) + 1)
-        .any(|(idx, line)| {
-            let row = idx + 1;
-            !(heading_first_row..=heading_last_row).contains(&row) && !line.trim().is_empty()
-        })
 }
 
 /// 1-based level of an `atx_heading` / `setext_heading` (`# → 1`,
