@@ -1,4 +1,4 @@
-Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.667/0.583/0.572/0.550/0.515/0.494
+Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.667/0.583/0.572/0.549/0.513/0.488
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -152,116 +152,114 @@ Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 3941 | 137 | headings outline in README.md |  |  | 0.533 |
 | walker |  | 3959 | 18 | README.md section #6 |  |  | 0.533 |
 | walker |  | 4084 | 125 | README.md section #0 |  |  | 0.565 |
-| walker |  | 4099 | 15 | go body source/errors.go:13 |  |  | 0.565 |
-| walker |  | 4152 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.565 |
 | ns | 4219 |  | 327 | "How to implement a database driver" — the 7-step checklist | 3.6 |  | 0.549 |
-| walker |  | 4252 | 100 | go names source/parse.go |  |  | 0.549 |
-| walker |  | 4263 | 11 | go decl source/parse.go:9 |  |  | 0.549 |
-| walker |  | 4272 | 9 | go decl source/parse.go:13 |  |  | 0.549 |
-| walker |  | 4283 | 11 | go doc source/parse.go:25 |  |  | 0.550 |
-| walker |  | 4338 | 55 | go names internal/url/url.go |  |  | 0.550 |
-| walker |  | 4418 | 80 | README headline in database/pgx/README.md |  |  | 0.550 |
-| walker |  | 4443 | 25 | headings outline in database/pgx/README.md |  |  | 0.550 |
-| walker |  | 4471 | 28 | go doc migration.go:122 |  |  | 0.550 |
+| walker |  | 4271 | 187 | README.md section #4 |  |  | 0.549 |
+| walker |  | 4286 | 15 | go body source/errors.go:13 |  |  | 0.549 |
+| walker |  | 4339 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.549 |
+| walker |  | 4439 | 100 | go names source/parse.go |  |  | 0.549 |
+| walker |  | 4450 | 11 | go decl source/parse.go:9 |  |  | 0.549 |
+| walker |  | 4459 | 9 | go decl source/parse.go:13 |  |  | 0.549 |
+| walker |  | 4470 | 11 | go doc source/parse.go:25 |  |  | 0.550 |
 | ns | 4503 |  | 284 | "How to implement a source driver" — checklist and guidelines | 3.7 |  | 0.536 |
-| walker |  | 4575 | 104 | go decl database/error.go:8 |  |  | 0.537 |
-| walker |  | 4593 | 18 | go doc database/error.go:8 |  |  | 0.537 |
-| walker |  | 4606 | 13 | go doc migrate.go:193 |  |  | 0.537 |
-| walker |  | 4664 | 58 | go names source/httpfs/driver.go |  |  | 0.537 |
-| walker |  | 4677 | 13 | go decl source/httpfs/driver.go:13 |  |  | 0.537 |
-| walker |  | 4715 | 38 | headings outline in database/spanner/README.md |  |  | 0.537 |
-| walker |  | 4806 | 91 | README headline in database/snowflake/README.md |  |  | 0.537 |
-| walker |  | 4832 | 26 | database/snowflake/README.md section #0 |  |  | 0.537 |
-| walker |  | 4895 | 63 | go names source/file/file.go |  |  | 0.537 |
-| walker |  | 4923 | 28 | go decl source/file/file.go:16 |  |  | 0.537 |
-| walker |  | 4943 | 20 | go doc database/util.go:23 |  |  | 0.512 |
-| ns | 4943 |  | 440 | database.Driver in full: per-method semantic contracts | 3.8 | 3.2 | 0.512 |
-| walker |  | 4953 | 10 | go body cmd/migrate/main.go:5 |  |  | 0.512 |
-| walker |  | 5046 | 93 | README headline in database/sqlite/README.md |  |  | 0.512 |
-| walker |  | 5142 | 96 | README headline in database/sqlite3/README.md |  |  | 0.512 |
-| walker |  | 5239 | 97 | README headline in database/mongodb/README.md |  |  | 0.512 |
-| walker |  | 5281 | 42 | headings outline in database/sqlserver/README.md |  |  | 0.512 |
-| walker |  | 5332 | 51 | go doc util.go:13 |  |  | 0.512 |
+| walker |  | 4525 | 55 | go names internal/url/url.go |  |  | 0.536 |
+| walker |  | 4605 | 80 | README headline in database/pgx/README.md |  |  | 0.536 |
+| walker |  | 4630 | 25 | headings outline in database/pgx/README.md |  |  | 0.536 |
+| walker |  | 4658 | 28 | go doc migration.go:122 |  |  | 0.536 |
+| walker |  | 4762 | 104 | go decl database/error.go:8 |  |  | 0.537 |
+| walker |  | 4780 | 18 | go doc database/error.go:8 |  |  | 0.537 |
+| walker |  | 4793 | 13 | go doc migrate.go:193 |  |  | 0.537 |
+| walker |  | 4851 | 58 | go names source/httpfs/driver.go |  |  | 0.537 |
+| walker |  | 4864 | 13 | go decl source/httpfs/driver.go:13 |  |  | 0.537 |
+| walker |  | 4902 | 38 | headings outline in database/spanner/README.md |  |  | 0.537 |
+| ns | 4943 |  | 440 | database.Driver in full: per-method semantic contracts | 3.8 | 3.2 | 0.511 |
+| walker |  | 4993 | 91 | README headline in database/snowflake/README.md |  |  | 0.511 |
+| walker |  | 5019 | 26 | database/snowflake/README.md section #0 |  |  | 0.511 |
+| walker |  | 5082 | 63 | go names source/file/file.go |  |  | 0.511 |
+| walker |  | 5110 | 28 | go decl source/file/file.go:16 |  |  | 0.511 |
+| walker |  | 5130 | 20 | go doc database/util.go:23 |  |  | 0.512 |
+| walker |  | 5140 | 10 | go body cmd/migrate/main.go:5 |  |  | 0.512 |
+| walker |  | 5233 | 93 | README headline in database/sqlite/README.md |  |  | 0.512 |
+| walker |  | 5329 | 96 | README headline in database/sqlite3/README.md |  |  | 0.512 |
+| walker |  | 5426 | 97 | README headline in database/mongodb/README.md |  |  | 0.512 |
 | ns | 5452 |  | 509 | source.Driver in full: per-method semantic contracts | 3.9 | 3.3 | 0.489 |
-| walker |  | 5466 | 134 | go names database/driver.go |  |  | 0.504 |
-| walker |  | 5475 | 9 | go decl database/driver.go:15 |  |  | 0.507 |
-| walker |  | 5486 | 11 | go doc database/driver.go:102 |  |  | 0.507 |
-| walker |  | 5497 | 11 | go doc database/driver.go:115 |  |  | 0.507 |
-| walker |  | 5509 | 12 | go doc database/driver.go:85 |  |  | 0.507 |
+| walker |  | 5468 | 42 | headings outline in database/sqlserver/README.md |  |  | 0.489 |
+| walker |  | 5519 | 51 | go doc util.go:13 |  |  | 0.489 |
+| walker |  | 5653 | 134 | go names database/driver.go |  |  | 0.504 |
+| walker |  | 5662 | 9 | go decl database/driver.go:15 |  |  | 0.507 |
+| walker |  | 5673 | 11 | go doc database/driver.go:102 |  |  | 0.507 |
+| walker |  | 5684 | 11 | go doc database/driver.go:115 |  |  | 0.507 |
 | ns | 5693 |  | 241 | database.Error: the query-level error type | 3.10 |  | 0.508 |
-| walker |  | 5725 | 216 | go names migrate.go #2 |  |  | 0.522 |
-| walker |  | 5827 | 102 | README headline in database/rqlite/README.md |  |  | 0.522 |
-| ns | 5832 |  | 139 | Shared driver helpers: GenerateAdvisoryLockId and CasRestoreOnErr | 3.11 |  | 0.521 |
-| walker |  | 5900 | 73 | go names source/godoc_vfs/vfs.go |  |  | 0.521 |
-| walker |  | 5933 | 33 | go decl source/godoc_vfs/vfs.go:23 |  |  | 0.521 |
-| walker |  | 5942 | 9 | go body source/godoc_vfs/vfs.go:33 |  |  | 0.521 |
-| walker |  | 5988 | 46 | headings outline in database/neo4j/TUTORIAL.md |  |  | 0.521 |
-| walker |  | 6004 | 16 | source/google_cloud_storage/README.md section #2 |  |  | 0.521 |
+| walker |  | 5696 | 12 | go doc database/driver.go:85 |  |  | 0.508 |
+| ns | 5832 |  | 139 | Shared driver helpers: GenerateAdvisoryLockId and CasRestoreOnErr | 3.11 |  | 0.508 |
+| walker |  | 5912 | 216 | go names migrate.go #2 |  |  | 0.521 |
+| walker |  | 6014 | 102 | README headline in database/rqlite/README.md |  |  | 0.521 |
 | ns | 6016 |  | 184 | internal/url: SchemeFromURL | 3.12 |  | 0.513 |
-| walker |  | 6210 | 206 | listing of 'internal/cli' |  |  | 0.515 |
-| walker |  | 6234 | 24 | go doc source/errors.go:7 |  |  | 0.515 |
-| ns | 6248 |  | 232 | Exemplar driver: postgres registration, defaults and Config | 3.13 |  | 0.503 |
-| walker |  | 6287 | 53 | GETTING_STARTED.md section #0 |  |  | 0.503 |
-| walker |  | 6338 | 51 | headings outline in source/go_bindata/README.md |  |  | 0.503 |
-| walker |  | 6364 | 26 | go doc database/util.go:13 |  |  | 0.505 |
-| walker |  | 6454 | 90 | go module doc source/godoc_vfs/vfs.go |  |  | 0.505 |
-| ns | 6457 |  | 209 | Migration filename grammar (MIGRATIONS.md:10-23) | 4.1 |  | 0.498 |
-| walker |  | 6468 | 14 | go doc internal/url/url.go:12 |  |  | 0.499 |
-| walker |  | 6491 | 23 | database/snowflake/README.md section #1 |  |  | 0.499 |
-| walker |  | 6506 | 15 | go doc cmd/migrate/version.go:4 |  |  | 0.499 |
-| walker |  | 6599 | 93 | go names database/multistmt/parse.go |  |  | 0.499 |
-| walker |  | 6613 | 14 | go doc database/multistmt/parse.go:35 |  |  | 0.499 |
-| ns | 6639 |  | 182 | source/parse.go: ErrParse, the Regex, and the Parse signature | 4.2 |  | 0.500 |
-| walker |  | 6692 | 79 | README headline in database/pgx/v5/README.md |  |  | 0.500 |
-| walker |  | 6717 | 25 | headings outline in database/pgx/v5/README.md |  |  | 0.500 |
-| walker |  | 6857 | 140 | README headline in database/neo4j/README.md |  |  | 0.500 |
+| walker |  | 6087 | 73 | go names source/godoc_vfs/vfs.go |  |  | 0.513 |
+| walker |  | 6120 | 33 | go decl source/godoc_vfs/vfs.go:23 |  |  | 0.513 |
+| walker |  | 6129 | 9 | go body source/godoc_vfs/vfs.go:33 |  |  | 0.513 |
+| walker |  | 6175 | 46 | headings outline in database/neo4j/TUTORIAL.md |  |  | 0.513 |
+| walker |  | 6191 | 16 | source/google_cloud_storage/README.md section #2 |  |  | 0.513 |
+| ns | 6248 |  | 232 | Exemplar driver: postgres registration, defaults and Config | 3.13 |  | 0.500 |
+| walker |  | 6397 | 206 | listing of 'internal/cli' |  |  | 0.503 |
+| walker |  | 6421 | 24 | go doc source/errors.go:7 |  |  | 0.503 |
+| ns | 6457 |  | 209 | Migration filename grammar (MIGRATIONS.md:10-23) | 4.1 |  | 0.496 |
+| walker |  | 6474 | 53 | GETTING_STARTED.md section #0 |  |  | 0.496 |
+| walker |  | 6525 | 51 | headings outline in source/go_bindata/README.md |  |  | 0.496 |
+| walker |  | 6551 | 26 | go doc database/util.go:13 |  |  | 0.498 |
+| ns | 6639 |  | 182 | source/parse.go: ErrParse, the Regex, and the Parse signature | 4.2 |  | 0.498 |
+| walker |  | 6641 | 90 | go module doc source/godoc_vfs/vfs.go |  |  | 0.498 |
+| walker |  | 6655 | 14 | go doc internal/url/url.go:12 |  |  | 0.499 |
+| walker |  | 6678 | 23 | database/snowflake/README.md section #1 |  |  | 0.499 |
+| walker |  | 6693 | 15 | go doc cmd/migrate/version.go:4 |  |  | 0.500 |
+| walker |  | 6786 | 93 | go names database/multistmt/parse.go |  |  | 0.500 |
+| walker |  | 6800 | 14 | go doc database/multistmt/parse.go:35 |  |  | 0.500 |
+| walker |  | 6879 | 79 | README headline in database/pgx/v5/README.md |  |  | 0.500 |
 | ns | 6897 |  | 258 | source.Direction and source.Migration | 4.3 |  | 0.488 |
-| walker |  | 6955 | 98 | go names source/github_ee/github_ee.go |  |  | 0.488 |
-| walker |  | 6965 | 10 | go decl source/github_ee/github_ee.go:21 |  |  | 0.488 |
-| walker |  | 7047 | 82 | listing of 'source/httpfs/testdata/sql' |  |  | 0.488 |
-| walker |  | 7053 | 6 | listing of 'source/httpfs/testdata/sql/subdirs-are-ignored' |  |  | 0.488 |
-| walker |  | 7074 | 21 | go doc dktesting/dktesting.go:20 |  |  | 0.488 |
+| walker |  | 6904 | 25 | headings outline in database/pgx/v5/README.md |  |  | 0.488 |
+| walker |  | 7044 | 140 | README headline in database/neo4j/README.md |  |  | 0.488 |
+| walker |  | 7142 | 98 | go names source/github_ee/github_ee.go |  |  | 0.488 |
+| walker |  | 7152 | 10 | go decl source/github_ee/github_ee.go:21 |  |  | 0.488 |
 | ns | 7180 |  | 283 | source.Migrations: the in-memory index every directory-tree driver uses | 4.4 |  | 0.478 |
+| walker |  | 7234 | 82 | listing of 'source/httpfs/testdata/sql' |  |  | 0.478 |
+| walker |  | 7240 | 6 | listing of 'source/httpfs/testdata/sql/subdirs-are-ignored' |  |  | 0.478 |
+| walker |  | 7261 | 21 | go doc dktesting/dktesting.go:20 |  |  | 0.478 |
 | ns | 7384 |  | 204 | migrate.Migration: type location, buffer default, and complete method set | 4.5 |  | 0.476 |
-| walker |  | 7513 | 439 | go decl migration.go:18 |  |  | 0.477 |
-| ns | 7583 |  | 199 | CLI entry points and the cli/ deprecation | 5.1 |  | 0.474 |
-| walker |  | 7623 | 110 | go module doc source/iofs/doc.go |  |  | 0.474 |
-| walker |  | 7729 | 106 | go names internal/cli/log.go |  |  | 0.474 |
-| walker |  | 7742 | 13 | go decl internal/cli/log.go:10 |  |  | 0.474 |
-| walker |  | 7750 | 8 | go body internal/cli/log.go:33 |  |  | 0.474 |
-| walker |  | 7760 | 10 | go doc internal/cli/log.go:10 |  |  | 0.474 |
-| walker |  | 7773 | 13 | go doc internal/cli/log.go:15 |  |  | 0.474 |
+| ns | 7583 |  | 199 | CLI entry points and the cli/ deprecation | 5.1 |  | 0.473 |
+| walker |  | 7700 | 439 | go decl migration.go:18 |  |  | 0.474 |
 | ns | 7789 |  | 206 | Complete internal/cli listing — the build-tag matrix | 5.2 |  | 0.493 |
+| walker |  | 7810 | 110 | go module doc source/iofs/doc.go |  |  | 0.493 |
+| walker |  | 7916 | 106 | go names internal/cli/log.go |  |  | 0.493 |
+| walker |  | 7929 | 13 | go decl internal/cli/log.go:10 |  |  | 0.493 |
+| walker |  | 7937 | 8 | go body internal/cli/log.go:33 |  |  | 0.493 |
+| walker |  | 7947 | 10 | go doc internal/cli/log.go:10 |  |  | 0.493 |
 | ns | 7955 |  | 166 | cli.Main and the complete global flag set | 5.3 |  | 0.489 |
-| walker |  | 7985 | 212 | go names database/mongodb/mongodb.go |  |  | 0.489 |
-| walker |  | 8039 | 54 | go doc util.go:21 |  |  | 0.489 |
+| walker |  | 7960 | 13 | go doc internal/cli/log.go:15 |  |  | 0.489 |
+| walker |  | 8172 | 212 | go names database/mongodb/mongodb.go |  |  | 0.489 |
+| walker |  | 8226 | 54 | go doc util.go:21 |  |  | 0.489 |
 | ns | 8287 |  | 332 | The `migrate -help` usage text, from source | 5.4 |  | 0.479 |
-| walker |  | 8332 | 293 | go names source/migration.go |  |  | 0.486 |
-| walker |  | 8341 | 9 | go decl source/migration.go:10 |  |  | 0.486 |
-| walker |  | 8369 | 28 | go decl source/migration.go:36 |  |  | 0.489 |
-| walker |  | 8381 | 12 | go doc source/migration.go:8 |  |  | 0.490 |
-| walker |  | 8519 | 138 | go decl source/migration.go:18 |  |  | 0.504 |
-| ns | 8594 |  | 307 | Subcommand usage strings (internal/cli/main.go:18-33) | 5.5 |  | 0.498 |
-| walker |  | 8780 | 261 | plaintext config Dockerfile |  |  | 0.498 |
-| walker |  | 8816 | 36 | go doc source/parse.go:22 |  |  | 0.503 |
-| ns | 8847 |  | 253 | Complete command-implementation roster (internal/cli/commands.go) | 5.6 |  | 0.499 |
-| walker |  | 8932 | 116 | go names source/pkger/pkger.go |  |  | 0.499 |
-| walker |  | 8947 | 15 | go decl source/pkger/pkger.go:20 |  |  | 0.499 |
-| ns | 8984 |  | 137 | A build-tag shim in full, and the tag-name traps | 5.7 |  | 0.494 |
-| walker |  | 9068 | 121 | go names migrate.go #3 |  |  | 0.504 |
-| walker |  | 9115 | 47 | README.md section #9 |  |  | 0.504 |
-| walker |  | 9140 | 25 | go doc source/migration.go:36 |  |  | 0.508 |
-| walker |  | 9153 | 13 | go doc internal/cli/log.go:33 |  |  | 0.508 |
-| ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.502 |
-| walker |  | 9333 | 180 | README headline in source/gitlab/README.md |  |  | 0.502 |
+| walker |  | 8519 | 293 | go names source/migration.go |  |  | 0.486 |
+| walker |  | 8528 | 9 | go decl source/migration.go:10 |  |  | 0.486 |
+| walker |  | 8556 | 28 | go decl source/migration.go:36 |  |  | 0.489 |
+| walker |  | 8568 | 12 | go doc source/migration.go:8 |  |  | 0.490 |
+| ns | 8594 |  | 307 | Subcommand usage strings (internal/cli/main.go:18-33) | 5.5 |  | 0.484 |
+| walker |  | 8706 | 138 | go decl source/migration.go:18 |  |  | 0.498 |
+| ns | 8847 |  | 253 | Complete command-implementation roster (internal/cli/commands.go) | 5.6 |  | 0.494 |
+| walker |  | 8967 | 261 | plaintext config Dockerfile |  |  | 0.494 |
+| ns | 8984 |  | 137 | A build-tag shim in full, and the tag-name traps | 5.7 |  | 0.488 |
+| walker |  | 9003 | 36 | go doc source/parse.go:22 |  |  | 0.494 |
+| walker |  | 9119 | 116 | go names source/pkger/pkger.go |  |  | 0.494 |
+| walker |  | 9134 | 15 | go decl source/pkger/pkger.go:20 |  |  | 0.494 |
+| walker |  | 9255 | 121 | go names migrate.go #3 |  |  | 0.504 |
+| ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.499 |
+| walker |  | 9302 | 47 | README.md section #9 |  |  | 0.499 |
+| walker |  | 9327 | 25 | go doc source/migration.go:36 |  |  | 0.502 |
+| walker |  | 9340 | 13 | go doc internal/cli/log.go:33 |  |  | 0.502 |
+| walker |  | 9520 | 180 | README headline in source/gitlab/README.md |  |  | 0.502 |
 | ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.496 |
-| walker |  | 9563 | 230 | go names database/mysql/mysql.go |  |  | 0.496 |
-| walker |  | 9570 | 7 | go decl database/mysql/mysql.go:32 |  |  | 0.496 |
-| walker |  | 9612 | 42 | go decl database/mysql/mysql.go:40 |  |  | 0.496 |
-| walker |  | 9693 | 81 | go decl database/mysql/mysql.go:47 |  |  | 0.496 |
-| walker |  | 9708 | 15 | go doc database/mysql/mysql.go:58 |  |  | 0.496 |
+| walker |  | 9750 | 230 | go names database/mysql/mysql.go |  |  | 0.496 |
+| walker |  | 9757 | 7 | go decl database/mysql/mysql.go:32 |  |  | 0.496 |
+| walker |  | 9799 | 42 | go decl database/mysql/mysql.go:40 |  |  | 0.496 |
 | ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.491 |
-| walker |  | 9941 | 233 | go names database/postgres/postgres.go |  |  | 0.493 |
-| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.492 |
-| walker |  | 9950 | 9 | go decl database/postgres/postgres.go:37 |  |  | 0.492 |
-| walker |  | 9959 | 9 | go decl database/postgres/postgres.go:30 |  |  | 0.493 |
+| walker |  | 9880 | 81 | go decl database/mysql/mysql.go:47 |  |  | 0.491 |
+| walker |  | 9895 | 15 | go doc database/mysql/mysql.go:58 |  |  | 0.491 |
+| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.490 |

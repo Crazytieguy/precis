@@ -1,4 +1,4 @@
-Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.587/0.491/0.494/0.575/0.610/0.602
+Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.587/0.491/0.494/0.575/0.610/0.602
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -34,27 +34,27 @@ Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 457 | 22 | package metadata in pyproject.toml |  |  | 0.586 |
 | walker |  | 513 | 56 | headings outline in README.md |  |  | 0.760 |
 | ns | 567 |  | 117 | SamplingParams in full | 1.8 |  | 0.666 |
-| walker |  | 588 | 75 | [dependencies] in pyproject.toml |  |  | 0.669 |
-| walker |  | 609 | 21 | python names nanovllm/engine/block_manager.py |  |  | 0.669 |
-| walker |  | 631 | 22 | python names nanovllm/engine/sequence.py |  |  | 0.669 |
-| walker |  | 659 | 28 | python decl nanovllm/engine/sequence.py:8 |  |  | 0.670 |
-| walker |  | 690 | 31 | python names nanovllm/layers/embed_head.py |  |  | 0.670 |
-| walker |  | 720 | 30 | python decl nanovllm/layers/embed_head.py:45 |  |  | 0.670 |
-| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.567 |
-| walker |  | 785 | 65 | python decl nanovllm/sampling_params.py:4 |  |  | 0.610 |
-| walker |  | 822 | 37 | python names nanovllm/layers/rotary_embedding.py |  |  | 0.610 |
-| walker |  | 846 | 24 | python decl nanovllm/layers/rotary_embedding.py:17 |  |  | 0.610 |
-| walker |  | 882 | 36 | python decl nanovllm/layers/activation.py:6 |  |  | 0.610 |
-| walker |  | 891 | 9 | python decl nanovllm/layers/activation.py:11 |  |  | 0.610 |
-| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.578 |
-| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.600 |
-| walker |  | 928 | 37 | python decl nanovllm/layers/sampler.py:5 |  |  | 0.600 |
-| walker |  | 937 | 9 | python decl nanovllm/layers/sampler.py:10 |  |  | 0.600 |
-| ns | 972 |  | 49 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.637 |
-| walker |  | 978 | 41 | python names nanovllm/utils/loader.py |  |  | 0.637 |
-| walker |  | 1017 | 39 | python decl nanovllm/layers/rotary_embedding.py:6 |  |  | 0.637 |
-| ns | 1047 |  | 75 | LLMEngine method roster | 2.3 |  | 0.612 |
-| walker |  | 1094 | 77 | README.md section #1 |  |  | 0.645 |
+| walker |  | 590 | 77 | README.md section #1 |  |  | 0.722 |
+| walker |  | 665 | 75 | [dependencies] in pyproject.toml |  |  | 0.725 |
+| walker |  | 686 | 21 | python names nanovllm/engine/block_manager.py |  |  | 0.726 |
+| walker |  | 708 | 22 | python names nanovllm/engine/sequence.py |  |  | 0.726 |
+| walker |  | 736 | 28 | python decl nanovllm/engine/sequence.py:8 |  |  | 0.726 |
+| walker |  | 767 | 31 | python names nanovllm/layers/embed_head.py |  |  | 0.727 |
+| ns | 781 |  | 214 | Config dataclass — every field with its default | 1.9 |  | 0.614 |
+| walker |  | 797 | 30 | python decl nanovllm/layers/embed_head.py:45 |  |  | 0.614 |
+| walker |  | 862 | 65 | python decl nanovllm/sampling_params.py:4 |  |  | 0.656 |
+| walker |  | 899 | 37 | python names nanovllm/layers/rotary_embedding.py |  |  | 0.622 |
+| ns | 899 |  | 118 | Config.__post_init__ validation and derivation | 1.10 |  | 0.622 |
+| walker |  | 923 | 24 | python decl nanovllm/layers/rotary_embedding.py:17 |  |  | 0.640 |
+| ns | 923 |  | 24 | Complete nanovllm/engine/ listing | 2.1 |  | 0.640 |
+| walker |  | 959 | 36 | python decl nanovllm/layers/activation.py:6 |  |  | 0.640 |
+| walker |  | 968 | 9 | python decl nanovllm/layers/activation.py:11 |  |  | 0.640 |
+| ns | 972 |  | 49 | Listings for layers/, models/, utils/ and assets/ | 2.2 |  | 0.672 |
+| walker |  | 1005 | 37 | python decl nanovllm/layers/sampler.py:5 |  |  | 0.672 |
+| walker |  | 1014 | 9 | python decl nanovllm/layers/sampler.py:10 |  |  | 0.672 |
+| ns | 1047 |  | 75 | LLMEngine method roster | 2.3 |  | 0.645 |
+| walker |  | 1055 | 41 | python names nanovllm/utils/loader.py |  |  | 0.645 |
+| walker |  | 1094 | 39 | python decl nanovllm/layers/rotary_embedding.py:6 |  |  | 0.645 |
 | ns | 1121 |  | 74 | Scheduler method roster | 2.4 |  | 0.622 |
 | walker |  | 1142 | 48 | python decl nanovllm/layers/layernorm.py:5 |  |  | 0.622 |
 | walker |  | 1181 | 39 | README.md section #2 |  |  | 0.622 |

@@ -1,4 +1,4 @@
-Score(3000)=0.671 I=0.890 C=0.505 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.691/0.671/0.636/0.595/0.601
+Score(3000)=0.669 I=0.886 C=0.505 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.691/0.669/0.636/0.595/0.601
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,49 +35,49 @@ Score(3000)=0.671 I=0.890 C=0.505 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 1353 | 260 | headings outline in readme.md |  |  | 0.775 |
 | ns | 1358 |  | 114 | `source/index.d.ts` top-level declaration roster | 2.2 |  | 0.750 |
 | walker |  | 1377 | 24 | readme.md section #30 |  |  | 0.750 |
-| walker |  | 1389 | 12 | readme.md section #6 |  |  | 0.750 |
-| walker |  | 1401 | 12 | readme.md section #7 |  |  | 0.750 |
-| walker |  | 1438 | 37 | readme.md section #31 |  |  | 0.750 |
-| ns | 1458 |  | 100 | readme: chaining semantics of `chalk.<style>[.<style>...]` | 2.3 | 1.7 | 0.733 |
-| walker |  | 1613 | 175 | package entrypoints in package.json |  |  | 0.812 |
-| walker |  | 1627 | 14 | readme.md section #17 |  |  | 0.812 |
-| walker |  | 1641 | 14 | readme.md section #18 |  |  | 0.812 |
-| walker |  | 1657 | 16 | readme.md section #19 |  |  | 0.812 |
-| ns | 1686 |  | 228 | readme: `chalk.level` and the 0–3 colour-level table | 2.4 | 1.7 | 0.756 |
-| walker |  | 1699 | 42 | readme.md section #40 |  |  | 0.756 |
-| ns | 1826 |  | 140 | `Options` interface body with level documentation | 2.5 | 2.2 | 0.725 |
+| ns | 1458 |  | 100 | readme: chaining semantics of `chalk.<style>[.<style>...]` | 2.3 | 1.7 | 0.731 |
+| walker |  | 1527 | 150 | readme.md section #27 |  |  | 0.731 |
+| ns | 1686 |  | 228 | readme: `chalk.level` and the 0–3 colour-level table | 2.4 | 1.7 | 0.680 |
+| walker |  | 1697 | 170 | readme.md section #28 |  |  | 0.680 |
+| walker |  | 1709 | 12 | readme.md section #6 |  |  | 0.682 |
+| walker |  | 1721 | 12 | readme.md section #7 |  |  | 0.683 |
+| walker |  | 1758 | 37 | readme.md section #31 |  |  | 0.683 |
+| ns | 1826 |  | 140 | `Options` interface body with level documentation | 2.5 | 2.2 | 0.655 |
+| walker |  | 1933 | 175 | package entrypoints in package.json |  |  | 0.725 |
+| walker |  | 1947 | 14 | readme.md section #17 |  |  | 0.725 |
+| walker |  | 1961 | 14 | readme.md section #18 |  |  | 0.725 |
 | ns | 1970 |  | 144 | `ChalkInstance` call signature, `level`, and all six colour-model methods | 2.6 | 2.2 | 0.691 |
-| walker |  | 2083 | 384 | ts names source/index.d.ts |  |  | 0.724 |
-| ns | 2094 |  | 124 | All ten `ChalkInstance` modifier properties | 2.7 | 2.6 | 0.687 |
-| walker |  | 2223 | 140 | ts decl source/index.d.ts:12 |  |  | 0.729 |
-| walker |  | 2241 | 18 | ts doc source/index.d.ts:30 |  |  | 0.729 |
-| walker |  | 2275 | 34 | ts doc source/index.d.ts:302 |  |  | 0.729 |
-| ns | 2293 |  | 199 | All foreground colour properties, including the `gray`/`grey` aliases | 2.8 | 2.7 | 0.692 |
-| walker |  | 2311 | 36 | ts doc source/index.d.ts:268 |  |  | 0.692 |
-| walker |  | 2330 | 19 | readme.md section #4 |  |  | 0.694 |
-| walker |  | 2348 | 18 | readme.md section #23 |  |  | 0.694 |
-| walker |  | 2365 | 17 | readme.md section #24 |  |  | 0.694 |
-| walker |  | 2385 | 20 | readme.md section #20 |  |  | 0.695 |
-| walker |  | 2398 | 13 | ts names source/vendor/supports-color/browser.d.ts |  |  | 0.695 |
-| ns | 2517 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.661 |
-| walker |  | 2627 | 229 | package identity metadata in package.json |  |  | 0.680 |
-| walker |  | 2663 | 36 | ts doc source/index.d.ts:309 |  |  | 0.680 |
-| walker |  | 2709 | 46 | ts names source/utilities.js |  |  | 0.680 |
-| walker |  | 2732 | 23 | readme.md section #21 |  |  | 0.680 |
-| walker |  | 2754 | 22 | readme.md section #22 |  |  | 0.680 |
-| ns | 2767 |  | 250 | readme: `supportsColor`, the `--color`/`FORCE_COLOR` overrides, `chalkStderr` | 2.10 | 1.7 | 0.665 |
-| ns | 2832 |  | 65 | readme: the exported style-name arrays and their use | 2.11 | 1.7 | 0.658 |
-| walker |  | 2845 | 91 | readme.md section #2 |  |  | 0.658 |
-| walker |  | 2953 | 108 | ts names source/vendor/ansi-styles/index.js |  |  | 0.659 |
-| ns | 2962 |  | 130 | `index.d.ts` type re-export blocks from the vendored packages | 2.12 |  | 0.671 |
-| walker |  | 2974 | 21 | readme.md section #37 |  |  | 0.671 |
+| walker |  | 1977 | 16 | readme.md section #19 |  |  | 0.691 |
+| walker |  | 2019 | 42 | readme.md section #40 |  |  | 0.691 |
+| ns | 2094 |  | 124 | All ten `ChalkInstance` modifier properties | 2.7 | 2.6 | 0.656 |
+| ns | 2293 |  | 199 | All foreground colour properties, including the `gray`/`grey` aliases | 2.8 | 2.7 | 0.622 |
+| walker |  | 2403 | 384 | ts names source/index.d.ts |  |  | 0.652 |
+| ns | 2517 |  | 224 | All background colour properties and the close of `ChalkInstance` | 2.9 | 2.8 | 0.620 |
+| walker |  | 2543 | 140 | ts decl source/index.d.ts:12 |  |  | 0.657 |
+| walker |  | 2561 | 18 | ts doc source/index.d.ts:30 |  |  | 0.657 |
+| walker |  | 2595 | 34 | ts doc source/index.d.ts:302 |  |  | 0.658 |
+| walker |  | 2631 | 36 | ts doc source/index.d.ts:268 |  |  | 0.658 |
+| walker |  | 2650 | 19 | readme.md section #4 |  |  | 0.660 |
+| walker |  | 2668 | 18 | readme.md section #23 |  |  | 0.660 |
+| walker |  | 2685 | 17 | readme.md section #24 |  |  | 0.660 |
+| walker |  | 2705 | 20 | readme.md section #20 |  |  | 0.660 |
+| walker |  | 2718 | 13 | ts names source/vendor/supports-color/browser.d.ts |  |  | 0.661 |
+| ns | 2767 |  | 250 | readme: `supportsColor`, the `--color`/`FORCE_COLOR` overrides, `chalkStderr` | 2.10 | 1.7 | 0.646 |
+| ns | 2832 |  | 65 | readme: the exported style-name arrays and their use | 2.11 | 1.7 | 0.639 |
+| walker |  | 2947 | 229 | package identity metadata in package.json |  |  | 0.657 |
+| ns | 2962 |  | 130 | `index.d.ts` type re-export blocks from the vendored packages | 2.12 |  | 0.669 |
+| walker |  | 2983 | 36 | ts doc source/index.d.ts:309 |  |  | 0.669 |
+| walker |  | 3029 | 46 | ts names source/utilities.js |  |  | 0.669 |
+| walker |  | 3052 | 23 | readme.md section #21 |  |  | 0.670 |
+| walker |  | 3074 | 22 | readme.md section #22 |  |  | 0.670 |
 | ns | 3093 |  | 131 | Deprecated type/const aliases in `index.d.ts` | 2.13 | 2.2 | 0.669 |
-| walker |  | 3124 | 150 | readme.md section #27 |  |  | 0.669 |
-| walker |  | 3160 | 36 | ts doc source/index.d.ts:316 |  |  | 0.672 |
-| walker |  | 3190 | 30 | readme.md section #25 |  |  | 0.672 |
-| walker |  | 3220 | 30 | readme.md section #26 |  |  | 0.672 |
-| ns | 3267 |  | 174 | ansi-styles: the `styles.modifier` code table | 3.1 |  | 0.657 |
-| walker |  | 3390 | 170 | readme.md section #28 |  |  | 0.657 |
+| walker |  | 3165 | 91 | readme.md section #2 |  |  | 0.669 |
+| ns | 3267 |  | 174 | ansi-styles: the `styles.modifier` code table | 3.1 |  | 0.653 |
+| walker |  | 3273 | 108 | ts names source/vendor/ansi-styles/index.js |  |  | 0.654 |
+| walker |  | 3294 | 21 | readme.md section #37 |  |  | 0.654 |
+| walker |  | 3330 | 36 | ts doc source/index.d.ts:316 |  |  | 0.656 |
+| walker |  | 3360 | 30 | readme.md section #25 |  |  | 0.656 |
+| walker |  | 3390 | 30 | readme.md section #26 |  |  | 0.657 |
 | walker |  | 3530 | 140 | readme.md section #1 |  |  | 0.657 |
 | walker |  | 3552 | 22 | ts names source/vendor/supports-color/browser.js |  |  | 0.657 |
 | ns | 3571 |  | 304 | ansi-styles: the `styles.color` foreground code table | 3.2 | 3.1 | 0.632 |

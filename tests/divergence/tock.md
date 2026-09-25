@@ -1,4 +1,4 @@
-Score(3000)=0.545 I=0.585 C=0.508 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.641/0.536/0.614/0.545/0.637/0.509/0.542
+Score(3000)=0.684 I=0.864 C=0.541 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.503/0.690/0.705/0.684/0.637/0.509/0.542
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -43,95 +43,95 @@ Score(3000)=0.545 I=0.585 C=0.508 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 734 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.495 |
 | walker |  | 752 | 18 | listing of 'internal/core/ports/mocks' |  |  | 0.529 |
 | walker |  | 790 | 38 | go names internal/extra/extra.go |  |  | 0.529 |
-| walker |  | 798 | 8 | go body cmd/tock/main.go:7 |  |  | 0.532 |
-| walker |  | 877 | 79 | listing of 'internal/adapters/cli' |  |  | 0.674 |
-| walker |  | 894 | 17 | go names internal/adapters/cli/start.go |  |  | 0.674 |
-| ns | 900 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.640 |
-| walker |  | 911 | 17 | go names internal/adapters/cli/stop.go |  |  | 0.640 |
-| walker |  | 943 | 32 | go names internal/adapters/cli/continue.go |  |  | 0.640 |
-| walker |  | 968 | 25 | README.md section #24 |  |  | 0.641 |
-| walker |  | 1003 | 35 | go names internal/core/ports/ports.go |  |  | 0.641 |
-| walker |  | 1014 | 11 | go decl internal/adapters/cli/continue.go:15 |  |  | 0.641 |
-| ns | 1024 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.615 |
-| walker |  | 1060 | 46 | go names internal/adapters/cli/update.go |  |  | 0.615 |
-| walker |  | 1109 | 49 | go names internal/adapters/cli/version.go |  |  | 0.615 |
-| walker |  | 1118 | 9 | go decl internal/adapters/cli/version.go:10 |  |  | 0.615 |
-| walker |  | 1168 | 50 | go names internal/adapters/cli/last.go |  |  | 0.615 |
-| ns | 1177 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.587 |
-| walker |  | 1218 | 50 | go names internal/adapters/cli/report.go |  |  | 0.587 |
-| ns | 1255 |  | 78 | Domain sentinel errors | 2.4 |  | 0.573 |
-| walker |  | 1273 | 55 | go decl internal/core/ports/ports.go:29 |  |  | 0.582 |
-| walker |  | 1339 | 66 | go names internal/adapters/cli/current.go |  |  | 0.582 |
-| walker |  | 1350 | 11 | go decl internal/adapters/cli/current.go:19 |  |  | 0.582 |
-| walker |  | 1418 | 68 | go names internal/services/ics/generator.go |  |  | 0.582 |
-| ns | 1442 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.536 |
-| walker |  | 1487 | 69 | go names internal/core/errors/errors.go |  |  | 0.551 |
-| walker |  | 1496 | 9 | go decl internal/core/errors/errors.go:5 |  |  | 0.558 |
-| ns | 1508 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.545 |
-| walker |  | 1566 | 70 | go names internal/core/dto/activity_dto.go |  |  | 0.549 |
-| walker |  | 1597 | 31 | go decl internal/core/dto/activity_dto.go:17 |  |  | 0.556 |
-| ns | 1603 |  | 95 | dto.Report and dto.ProjectReport | 2.7 |  | 0.538 |
-| walker |  | 1630 | 33 | go decl internal/core/dto/activity_dto.go:46 |  |  | 0.547 |
-| walker |  | 1668 | 38 | go decl internal/core/dto/activity_dto.go:40 |  |  | 0.568 |
-| ns | 1687 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.553 |
-| walker |  | 1716 | 48 | go decl internal/core/dto/activity_dto.go:9 |  |  | 0.571 |
-| walker |  | 1771 | 55 | go decl internal/core/dto/activity_dto.go:32 |  |  | 0.592 |
-| walker |  | 1829 | 58 | go decl internal/core/dto/activity_dto.go:23 |  |  | 0.626 |
-| ns | 1834 |  | 147 | models.Activity method bodies | 2.9 | 2.8 | 0.596 |
-| walker |  | 1901 | 72 | go names internal/adapters/cli/analyze.go |  |  | 0.596 |
-| walker |  | 1922 | 21 | go decl internal/adapters/cli/last.go:16 |  |  | 0.596 |
-| walker |  | 1995 | 73 | go decl internal/core/ports/ports.go:22 |  |  | 0.618 |
-| ns | 2002 |  | 168 | Root command declaration and the three persistent flags | 3.1 |  | 0.607 |
-| walker |  | 2074 | 79 | go names internal/core/models/activity.go |  |  | 0.614 |
-| walker |  | 2087 | 13 | go body internal/core/models/activity.go:19 |  |  | 0.617 |
-| ns | 2164 |  | 162 | Complete subcommand registration list | 3.2 |  | 0.594 |
-| walker |  | 2255 | 168 | go names internal/config/config.go |  |  | 0.594 |
-| walker |  | 2270 | 15 | go decl internal/config/config.go:41 |  |  | 0.594 |
-| walker |  | 2287 | 17 | go decl internal/config/config.go:37 |  |  | 0.594 |
-| walker |  | 2304 | 17 | go decl internal/config/config.go:45 |  |  | 0.594 |
-| walker |  | 2323 | 19 | go decl internal/config/config.go:33 |  |  | 0.594 |
-| ns | 2400 |  | 236 | Command declarations, part 1: add, analyze, calendar, continue, current, ical | 3.3 |  | 0.575 |
-| walker |  | 2413 | 90 | go decl internal/config/config.go:25 |  |  | 0.576 |
-| walker |  | 2527 | 114 | go decl internal/config/config.go:49 |  |  | 0.578 |
-| walker |  | 2715 | 188 | headings outline in docs/commands.md |  |  | 0.578 |
-| walker |  | 2720 | 5 | docs/commands.md section #5 |  |  | 0.578 |
-| walker |  | 2725 | 5 | docs/commands.md section #10 |  |  | 0.578 |
-| walker |  | 2730 | 5 | docs/commands.md section #15 |  |  | 0.578 |
-| walker |  | 2735 | 5 | docs/commands.md section #20 |  |  | 0.552 |
-| ns | 2735 |  | 335 | Command declarations, part 2: last, list, remove, report, start, stop, version, watch | 3.4 |  | 0.552 |
-| walker |  | 2740 | 5 | docs/commands.md section #30 |  |  | 0.552 |
-| walker |  | 2745 | 5 | docs/commands.md section #35 |  |  | 0.552 |
-| walker |  | 2750 | 5 | docs/commands.md section #40 |  |  | 0.552 |
-| ns | 2766 |  | 31 | docs/commands.md structure | 3.5 |  | 0.554 |
-| walker |  | 2845 | 95 | go names internal/adapters/cli/remove.go |  |  | 0.554 |
-| walker |  | 2861 | 16 | go doc internal/adapters/cli/continue.go:20 |  |  | 0.554 |
-| ns | 2958 |  | 192 | Flags of `start` and `stop` | 3.6 |  | 0.545 |
-| walker |  | 2963 | 102 | go names internal/adapters/cli/add.go |  |  | 0.545 |
-| walker |  | 3061 | 98 | go decl internal/core/models/activity.go:10 |  |  | 0.562 |
-| walker |  | 3073 | 12 | go doc internal/core/models/activity.go:10 |  |  | 0.567 |
-| walker |  | 3241 | 168 | go decl internal/config/config.go:12 |  |  | 0.569 |
-| walker |  | 3258 | 17 | go doc internal/services/ics/generator.go:12 |  |  | 0.569 |
-| walker |  | 3275 | 17 | go doc internal/services/ics/generator.go:29 |  |  | 0.569 |
-| ns | 3282 |  | 324 | Flags of `add` and `continue` | 3.7 |  | 0.555 |
-| walker |  | 3464 | 189 | go names internal/timeutil/timeutil.go |  |  | 0.556 |
-| walker |  | 3473 | 9 | go decl internal/timeutil/timeutil.go:13 |  |  | 0.556 |
-| walker |  | 3486 | 13 | go decl internal/timeutil/timeutil.go:19 |  |  | 0.556 |
-| walker |  | 3494 | 8 | go body internal/timeutil/timeutil.go:34 |  |  | 0.556 |
-| walker |  | 3504 | 10 | go doc internal/timeutil/timeutil.go:19 |  |  | 0.557 |
-| walker |  | 3518 | 14 | go doc internal/timeutil/timeutil.go:11 |  |  | 0.557 |
-| ns | 3585 |  | 303 | Flags of `report`, `last` and `analyze` | 3.8 |  | 0.545 |
-| walker |  | 3629 | 111 | go names internal/adapters/cli/calendar_sidebar.go |  |  | 0.545 |
-| walker |  | 3660 | 31 | go decl internal/adapters/cli/update.go:17 |  |  | 0.545 |
-| walker |  | 3675 | 15 | go doc internal/timeutil/timeutil.go:34 |  |  | 0.545 |
-| walker |  | 3694 | 19 | go doc internal/core/models/activity.go:31 |  |  | 0.550 |
-| ns | 3777 |  | 192 | Flags of `current`, `watch`, `ical` and `remove` | 3.9 |  | 0.543 |
-| walker |  | 3815 | 121 | go names internal/adapters/cli/theme.go |  |  | 0.543 |
-| walker |  | 3902 | 87 | go decl internal/adapters/cli/theme.go:11 |  |  | 0.544 |
-| walker |  | 3916 | 14 | go doc internal/adapters/cli/theme.go:11 |  |  | 0.545 |
-| walker |  | 3932 | 16 | go doc internal/adapters/cli/theme.go:167 |  |  | 0.545 |
-| walker |  | 3950 | 18 | go doc internal/adapters/cli/theme.go:40 |  |  | 0.545 |
-| ns | 4172 |  | 395 | PersistentPreRunE — dependency injection and backend selection | 3.10 |  | 0.512 |
-| walker |  | 4212 | 262 | README.md section #1 |  |  | 0.637 |
+| ns | 900 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.503 |
+| ns | 1024 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.482 |
+| walker |  | 1052 | 262 | README.md section #1 |  |  | 0.656 |
+| walker |  | 1060 | 8 | go body cmd/tock/main.go:7 |  |  | 0.659 |
+| walker |  | 1139 | 79 | listing of 'internal/adapters/cli' |  |  | 0.802 |
+| walker |  | 1156 | 17 | go names internal/adapters/cli/start.go |  |  | 0.802 |
+| walker |  | 1173 | 17 | go names internal/adapters/cli/stop.go |  |  | 0.802 |
+| ns | 1177 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.764 |
+| walker |  | 1205 | 32 | go names internal/adapters/cli/continue.go |  |  | 0.764 |
+| walker |  | 1230 | 25 | README.md section #24 |  |  | 0.765 |
+| ns | 1255 |  | 78 | Domain sentinel errors | 2.4 |  | 0.747 |
+| walker |  | 1265 | 35 | go names internal/core/ports/ports.go |  |  | 0.748 |
+| walker |  | 1276 | 11 | go decl internal/adapters/cli/continue.go:15 |  |  | 0.748 |
+| walker |  | 1322 | 46 | go names internal/adapters/cli/update.go |  |  | 0.748 |
+| walker |  | 1371 | 49 | go names internal/adapters/cli/version.go |  |  | 0.748 |
+| walker |  | 1380 | 9 | go decl internal/adapters/cli/version.go:10 |  |  | 0.748 |
+| walker |  | 1430 | 50 | go names internal/adapters/cli/last.go |  |  | 0.748 |
+| ns | 1442 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.690 |
+| walker |  | 1480 | 50 | go names internal/adapters/cli/report.go |  |  | 0.690 |
+| ns | 1508 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.674 |
+| walker |  | 1535 | 55 | go decl internal/core/ports/ports.go:29 |  |  | 0.683 |
+| walker |  | 1601 | 66 | go names internal/adapters/cli/current.go |  |  | 0.683 |
+| ns | 1603 |  | 95 | dto.Report and dto.ProjectReport | 2.7 |  | 0.659 |
+| walker |  | 1612 | 11 | go decl internal/adapters/cli/current.go:19 |  |  | 0.659 |
+| walker |  | 1680 | 68 | go names internal/services/ics/generator.go |  |  | 0.659 |
+| ns | 1687 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.641 |
+| walker |  | 1749 | 69 | go names internal/core/errors/errors.go |  |  | 0.656 |
+| walker |  | 1758 | 9 | go decl internal/core/errors/errors.go:5 |  |  | 0.664 |
+| walker |  | 1828 | 70 | go names internal/core/dto/activity_dto.go |  |  | 0.669 |
+| ns | 1834 |  | 147 | models.Activity method bodies | 2.9 | 2.8 | 0.638 |
+| walker |  | 1859 | 31 | go decl internal/core/dto/activity_dto.go:17 |  |  | 0.645 |
+| walker |  | 1892 | 33 | go decl internal/core/dto/activity_dto.go:46 |  |  | 0.654 |
+| walker |  | 1930 | 38 | go decl internal/core/dto/activity_dto.go:40 |  |  | 0.677 |
+| walker |  | 1978 | 48 | go decl internal/core/dto/activity_dto.go:9 |  |  | 0.697 |
+| ns | 2002 |  | 168 | Root command declaration and the three persistent flags | 3.1 |  | 0.684 |
+| walker |  | 2033 | 55 | go decl internal/core/dto/activity_dto.go:32 |  |  | 0.705 |
+| walker |  | 2091 | 58 | go decl internal/core/dto/activity_dto.go:23 |  |  | 0.741 |
+| walker |  | 2163 | 72 | go names internal/adapters/cli/analyze.go |  |  | 0.741 |
+| ns | 2164 |  | 162 | Complete subcommand registration list | 3.2 |  | 0.713 |
+| walker |  | 2184 | 21 | go decl internal/adapters/cli/last.go:16 |  |  | 0.713 |
+| walker |  | 2257 | 73 | go decl internal/core/ports/ports.go:22 |  |  | 0.736 |
+| walker |  | 2336 | 79 | go names internal/core/models/activity.go |  |  | 0.744 |
+| walker |  | 2349 | 13 | go body internal/core/models/activity.go:19 |  |  | 0.747 |
+| ns | 2400 |  | 236 | Command declarations, part 1: add, analyze, calendar, continue, current, ical | 3.3 |  | 0.722 |
+| walker |  | 2517 | 168 | go names internal/config/config.go |  |  | 0.722 |
+| walker |  | 2532 | 15 | go decl internal/config/config.go:41 |  |  | 0.722 |
+| walker |  | 2549 | 17 | go decl internal/config/config.go:37 |  |  | 0.722 |
+| walker |  | 2566 | 17 | go decl internal/config/config.go:45 |  |  | 0.722 |
+| walker |  | 2585 | 19 | go decl internal/config/config.go:33 |  |  | 0.723 |
+| walker |  | 2675 | 90 | go decl internal/config/config.go:25 |  |  | 0.723 |
+| ns | 2735 |  | 335 | Command declarations, part 2: last, list, remove, report, start, stop, version, watch | 3.4 |  | 0.690 |
+| ns | 2766 |  | 31 | docs/commands.md structure | 3.5 |  | 0.686 |
+| walker |  | 2789 | 114 | go decl internal/config/config.go:49 |  |  | 0.687 |
+| ns | 2958 |  | 192 | Flags of `start` and `stop` | 3.6 |  | 0.676 |
+| walker |  | 2977 | 188 | headings outline in docs/commands.md |  |  | 0.684 |
+| walker |  | 2982 | 5 | docs/commands.md section #5 |  |  | 0.684 |
+| walker |  | 2987 | 5 | docs/commands.md section #10 |  |  | 0.684 |
+| walker |  | 2992 | 5 | docs/commands.md section #15 |  |  | 0.684 |
+| walker |  | 2997 | 5 | docs/commands.md section #20 |  |  | 0.684 |
+| walker |  | 3002 | 5 | docs/commands.md section #30 |  |  | 0.684 |
+| walker |  | 3007 | 5 | docs/commands.md section #35 |  |  | 0.684 |
+| walker |  | 3012 | 5 | docs/commands.md section #40 |  |  | 0.684 |
+| walker |  | 3107 | 95 | go names internal/adapters/cli/remove.go |  |  | 0.684 |
+| walker |  | 3123 | 16 | go doc internal/adapters/cli/continue.go:20 |  |  | 0.684 |
+| walker |  | 3225 | 102 | go names internal/adapters/cli/add.go |  |  | 0.684 |
+| ns | 3282 |  | 324 | Flags of `add` and `continue` | 3.7 |  | 0.667 |
+| walker |  | 3323 | 98 | go decl internal/core/models/activity.go:10 |  |  | 0.686 |
+| walker |  | 3335 | 12 | go doc internal/core/models/activity.go:10 |  |  | 0.691 |
+| walker |  | 3503 | 168 | go decl internal/config/config.go:12 |  |  | 0.692 |
+| walker |  | 3520 | 17 | go doc internal/services/ics/generator.go:12 |  |  | 0.692 |
+| walker |  | 3537 | 17 | go doc internal/services/ics/generator.go:29 |  |  | 0.692 |
+| ns | 3585 |  | 303 | Flags of `report`, `last` and `analyze` | 3.8 |  | 0.678 |
+| walker |  | 3726 | 189 | go names internal/timeutil/timeutil.go |  |  | 0.678 |
+| walker |  | 3735 | 9 | go decl internal/timeutil/timeutil.go:13 |  |  | 0.679 |
+| walker |  | 3748 | 13 | go decl internal/timeutil/timeutil.go:19 |  |  | 0.679 |
+| walker |  | 3756 | 8 | go body internal/timeutil/timeutil.go:34 |  |  | 0.679 |
+| walker |  | 3766 | 10 | go doc internal/timeutil/timeutil.go:19 |  |  | 0.679 |
+| ns | 3777 |  | 192 | Flags of `current`, `watch`, `ical` and `remove` | 3.9 |  | 0.670 |
+| walker |  | 3780 | 14 | go doc internal/timeutil/timeutil.go:11 |  |  | 0.670 |
+| walker |  | 3891 | 111 | go names internal/adapters/cli/calendar_sidebar.go |  |  | 0.670 |
+| walker |  | 3922 | 31 | go decl internal/adapters/cli/update.go:17 |  |  | 0.670 |
+| walker |  | 3937 | 15 | go doc internal/timeutil/timeutil.go:34 |  |  | 0.670 |
+| walker |  | 3956 | 19 | go doc internal/core/models/activity.go:31 |  |  | 0.676 |
+| walker |  | 4077 | 121 | go names internal/adapters/cli/theme.go |  |  | 0.676 |
+| walker |  | 4164 | 87 | go decl internal/adapters/cli/theme.go:11 |  |  | 0.677 |
+| ns | 4172 |  | 395 | PersistentPreRunE — dependency injection and backend selection | 3.10 |  | 0.637 |
+| walker |  | 4178 | 14 | go doc internal/adapters/cli/theme.go:11 |  |  | 0.637 |
+| walker |  | 4194 | 16 | go doc internal/adapters/cli/theme.go:167 |  |  | 0.637 |
+| walker |  | 4212 | 18 | go doc internal/adapters/cli/theme.go:40 |  |  | 0.637 |
 | walker |  | 4232 | 20 | go doc internal/services/ics/generator.go:18 |  |  | 0.637 |
 | walker |  | 4240 | 8 | docs/commands.md section #16 |  |  | 0.637 |
 | walker |  | 4262 | 22 | go doc internal/adapters/cli/start.go:17 |  |  | 0.637 |

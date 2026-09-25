@@ -27,8 +27,8 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 1113 | 420 | README headline in Readme.md |  |  | 0.723 |
 | ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.631 |
 | walker |  | 1241 | 128 | headings outline in Readme.md |  |  | 0.631 |
-| walker |  | 1265 | 24 | ts body lib/request.js:171 |  |  | 0.631 |
-| walker |  | 1352 | 87 | Readme.md section #2 |  |  | 0.631 |
+| walker |  | 1328 | 87 | Readme.md section #2 |  |  | 0.631 |
+| walker |  | 1352 | 24 | ts body lib/request.js:171 |  |  | 0.631 |
 | walker |  | 1378 | 26 | ts doc lib/request.js:30 |  |  | 0.631 |
 | walker |  | 1403 | 25 | ts body lib/request.js:127 |  |  | 0.631 |
 | ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.579 |

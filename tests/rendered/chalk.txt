@@ -83,12 +83,7 @@ readme.md
   23→## Highlights
   …
   36→## Install
-  37→
-  38→```sh
-  39→npm install chalk
-  40→```
-  41→
-  42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
+  …
   44→## Usage
   …
   112→## API
@@ -113,15 +108,46 @@ readme.md
   176→- `bold` - Make the text bold.
   177→- `dim` - Make the text have lower opacity.
   178→- `italic` - Make the text italic. *(Not widely supported)*
-  179→- `underline` - Put a horizontal line below the text. *(Not widely supported)*
-  180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
+  …
   181→- `inverse` - Invert background and foreground colors.
   182→- `hidden` - Print the text but make it invisible.
   …
   186→### Colors
-  …
+  187→
+  188→- `black`
+  189→- `red`
+  190→- `green`
+  191→- `yellow`
+  192→- `blue`
+  193→- `magenta`
+  194→- `cyan`
+  195→- `white`
+  196→- `blackBright` (alias: `gray`, `grey`)
+  197→- `redBright`
+  198→- `greenBright`
+  199→- `yellowBright`
+  200→- `blueBright`
+  201→- `magentaBright`
+  202→- `cyanBright`
+  203→- `whiteBright`
   205→### Background colors
-  …
+  206→
+  207→- `bgBlack`
+  208→- `bgRed`
+  209→- `bgGreen`
+  210→- `bgYellow`
+  211→- `bgBlue`
+  212→- `bgMagenta`
+  213→- `bgCyan`
+  214→- `bgWhite`
+  215→- `bgBlackBright` (alias: `bgGray`, `bgGrey`)
+  216→- `bgRedBright`
+  217→- `bgGreenBright`
+  218→- `bgYellowBright`
+  219→- `bgBlueBright`
+  220→- `bgMagentaBright`
+  221→- `bgCyanBright`
+  222→- `bgWhiteBright`
   224→## 256 and Truecolor color support
   …
   246→## Browser support
@@ -134,7 +160,6 @@ readme.md
   255→
   256→### Why not switch to a smaller coloring package?
   …
-  268→*\- [Sindre](https://github.com/sindresorhus)*
   270→### But the smaller coloring package has benchmarks showing it is faster
   …
   274→## Related
@@ -292,26 +317,10 @@ source/
     225→export default chalk;
   index.test-d.ts
   utilities.js
-    …
-    2→export function stringReplaceAll(string, substring, replacer) {
-    …
-    21→export function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
-    …
   vendor/
     ansi-styles/
       index.d.ts
       index.js
-        …
-        68→export const modifierNames = Object.keys(styles.modifier);
-        69→export const foregroundColorNames = Object.keys(styles.color);
-        70→export const backgroundColorNames = Object.keys(styles.bgColor);
-        71→export const colorNames = [...foregroundColorNames, ...backgroundColorNames];
-        72→
-        73→function assembleStyles() {
-        …
-        221→const ansiStyles = assembleStyles();
-        222→
-        223→export default ansiStyles;
     supports-color/
       browser.d.ts
         1→export {default} from './index.js';

@@ -19,16 +19,60 @@ README.md
   134→## Millisecond diff
   …
   145→## Conventions
-  146→
-  147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
+  …
   149→## Wildcards
   …
   161→## Environment Variables
-  …
+  162→
+  163→When running through Node.js, you can set a few environment variables that will
+  164→change the behavior of the debug logging:
+  165→
+  166→| Name      | Purpose                                         |
+  167→|-----------|-------------------------------------------------|
+  168→| `DEBUG`   | Enables/disables specific debugging namespaces. |
+  169→| `DEBUG_HIDE_DATE` | Hide date from debug output (non-TTY).  |
+  170→| `DEBUG_COLORS`| Whether or not to use colors in the debug output. |
+  171→| `DEBUG_DEPTH` | Object inspection depth.                    |
+  172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
+  173→
+  174→
+  175→__Note:__ The environment variables beginning with `DEBUG_` end up being
+  176→converted into an Options object that gets used with `%o`/`%O` formatters.
+  177→See the Node.js documentation for
+  178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
+  179→for the complete list.
   181→## Formatters
-  …
+  182→
+  183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
+  184→Below are the officially supported formatters:
+  185→
+  186→| Formatter | Representation |
+  187→|-----------|----------------|
+  188→| `%O`      | Pretty-print an Object on multiple lines. |
+  189→| `%o`      | Pretty-print an Object all on a single line. |
+  190→| `%s`      | String. |
+  191→| `%d`      | Number (both integer and float). |
+  192→| `%j`      | JSON. Replaced with the string '[Circular]' if the argument contains circular references. |
+  193→| `%%`      | Single percent sign ('%'). This does not consume an argument. |
+  194→
+  195→
   196→### Custom formatters
-  …
+  197→
+  198→You can add custom formatters by extending the `debug.formatters` object.
+  199→For example, if you wanted to add support for rendering a Buffer as hex with
+  200→`%h`, you could do something like:
+  201→
+  202→```js
+  203→const createDebug = require('debug')
+  204→createDebug.formatters.h = (v) => {
+  205→  return v.toString('hex')
+  206→}
+  207→
+  208→// …elsewhere
+  209→const debug = createDebug('foo')
+  210→debug('this is hex: %h', new Buffer('hello world'))
+  211→//   foo this is hex: 68656c6c6f20776f726c6421 +0ms
+  212→```
   215→## Browser Support
   …
   248→## Output streams
@@ -117,37 +161,8 @@ src/
     19→		}
     20→	};
     21→})();
-    23→/**
-    24→ * Colors.
-    25→ */
-    27→exports.colors = [
-    28→	'#0000CC',
-    29→	'#0000FF',
-    30→	'#0033CC',
-    31→	'#0033FF',
-    32→	'#0066CC',
-    33→	'#0066FF',
-    34→	'#0099CC',
-    35→	'#0099FF',
-    36→	'#00CC00',
-    37→	'#00CC33',
-    38→	'#00CC66',
-    39→	'#00CC99',
-    40→	'#00CCCC',
-    41→	'#00CCFF',
-    42→	'#3300CC',
-    43→	'#3300FF',
-    44→	'#3333CC',
-    45→	'#3333FF',
-    46→	'#3366CC',
-    47→	'#3366FF',
-    48→	'#3399CC',
-    49→	'#3399FF',
-    50→	'#33CC00',
-    51→	'#33CC33',
-    52→	'#33CC66',
     …
-    104→];
+    27→exports.colors = [
     …
     115→function useColors() {
     …
@@ -174,16 +189,6 @@ src/
     198→ * @api private
     199→ */
     200→function save(namespaces) {
-    201→	try {
-    202→		if (namespaces) {
-    203→			exports.storage.setItem('debug', namespaces);
-    204→		} else {
-    205→			exports.storage.removeItem('debug');
-    206→		}
-    207→	} catch (error) {
-    208→		// Swallow
-    209→		// XXX (@Qix-) should we be logging these?
-    210→	}
     …
     213→/**
     214→ * Load `namespaces`.
@@ -204,14 +209,6 @@ src/
     244→ * @api private
     245→ */
     247→function localstorage() {
-    248→	try {
-    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
-    250→		// The Browser also has localStorage in the global context.
-    251→		return localStorage;
-    252→	} catch (error) {
-    253→		// Swallow
-    254→		// XXX (@Qix-) should we be logging these?
-    255→	}
     …
     258→module.exports = require('./common')(exports);
     …
@@ -283,13 +280,6 @@ src/
     201→ * @api private
     202→ */
     203→function save(namespaces) {
-    204→	if (namespaces) {
-    205→		process.env.DEBUG = namespaces;
-    206→	} else {
-    207→		// If you set a process.env field to null or undefined, it gets cast to the
-    208→		// string 'null' or 'undefined'. Just delete instead.
-    209→		delete process.env.DEBUG;
-    210→	}
     …
     213→/**
     214→ * Load `namespaces`.

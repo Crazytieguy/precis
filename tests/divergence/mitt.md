@@ -1,4 +1,4 @@
-Score(3000)=0.636 I=0.875 C=0.462 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.731/0.663/0.636/0.755/0.712/0.698
+Score(3000)=0.636 I=0.875 C=0.462 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.783/0.732/0.663/0.636/0.755/0.712/0.698
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,22 +26,22 @@ Score(3000)=0.636 I=0.875 C=0.462 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 772 | 187 | README headline in README.md |  |  | 0.757 |
 | ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.714 |
 | walker |  | 916 | 144 | headings outline in README.md |  |  | 0.783 |
-| walker |  | 947 | 31 | README.md section #18 |  |  | 0.783 |
-| walker |  | 993 | 46 | ts doc src/index.ts:46 |  |  | 0.788 |
-| walker |  | 1031 | 38 | README.md section #15 |  |  | 0.788 |
-| ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.809 |
-| walker |  | 1044 | 13 | README.md section #8 |  |  | 0.809 |
-| ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.815 |
-| walker |  | 1159 | 115 | package identity metadata in package.json |  |  | 0.818 |
-| walker |  | 1242 | 83 | README.md section #1 |  |  | 0.818 |
-| ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.731 |
-| walker |  | 1454 | 212 | package entrypoints in package.json |  |  | 0.830 |
-| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.768 |
-| ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.733 |
-| walker |  | 1687 | 233 | package scripts in package.json |  |  | 0.741 |
-| walker |  | 1706 | 19 | README.md section #13 |  |  | 0.741 |
-| walker |  | 1723 | 17 | README.md section #7 |  |  | 0.741 |
-| walker |  | 1868 | 145 | README.md section #5 |  |  | 0.743 |
+| ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.803 |
+| walker |  | 1061 | 145 | README.md section #5 |  |  | 0.805 |
+| walker |  | 1092 | 31 | README.md section #18 |  |  | 0.805 |
+| ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.778 |
+| walker |  | 1138 | 46 | ts doc src/index.ts:46 |  |  | 0.817 |
+| walker |  | 1176 | 38 | README.md section #15 |  |  | 0.817 |
+| walker |  | 1189 | 13 | README.md section #8 |  |  | 0.817 |
+| walker |  | 1304 | 115 | package identity metadata in package.json |  |  | 0.820 |
+| ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.732 |
+| walker |  | 1387 | 83 | README.md section #1 |  |  | 0.732 |
+| ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.677 |
+| walker |  | 1599 | 212 | package entrypoints in package.json |  |  | 0.769 |
+| ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.734 |
+| walker |  | 1832 | 233 | package scripts in package.json |  |  | 0.743 |
+| walker |  | 1851 | 19 | README.md section #13 |  |  | 0.743 |
+| walker |  | 1868 | 17 | README.md section #7 |  |  | 0.743 |
 | walker |  | 1898 | 30 | README.md section #12 |  |  | 0.743 |
 | ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.686 |
 | walker |  | 1931 | 33 | README.md section #10 |  |  | 0.686 |

@@ -1,4 +1,4 @@
-Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.486/0.411/0.634/0.586/0.553/0.555
+Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.486/0.411/0.634/0.629/0.590/0.582
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -83,109 +83,106 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 2961 | 19 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.634 |
 | walker |  | 3117 | 156 | ts decl lib/types.ts:117 |  |  | 0.634 |
 | ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.587 |
-| walker |  | 3153 | 36 | ts doc lib/path.js:302 |  |  | 0.587 |
-| walker |  | 3188 | 35 | ts body lib/xast.js:50 |  |  | 0.587 |
 | ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.577 |
-| walker |  | 3415 | 227 | package entrypoints in package.json |  |  | 0.616 |
-| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.599 |
-| walker |  | 3455 | 40 | ts doc lib/path.js:141 |  |  | 0.599 |
-| walker |  | 3490 | 35 | listing of 'test/regression' |  |  | 0.600 |
-| ns | 3669 |  | 221 | createPreset -- how a preset validates and forwards overrides | 2.4 |  | 0.581 |
-| walker |  | 3769 | 279 | ts names lib/types.ts #1 |  |  | 0.636 |
-| walker |  | 3781 | 12 | ts decl lib/types.ts:357 |  |  | 0.636 |
-| walker |  | 3803 | 22 | ts decl lib/types.ts:300 |  |  | 0.636 |
-| walker |  | 3826 | 23 | ts decl lib/types.ts:263 |  |  | 0.636 |
-| walker |  | 3849 | 23 | ts decl lib/types.ts:329 |  |  | 0.636 |
-| walker |  | 3879 | 30 | ts decl lib/types.ts:276 |  |  | 0.636 |
-| walker |  | 3909 | 30 | ts decl lib/types.ts:289 |  |  | 0.636 |
-| walker |  | 3940 | 31 | ts decl lib/types.ts:294 |  |  | 0.636 |
-| ns | 3956 |  | 287 | visit() -- the AST traversal contract | 2.5 |  | 0.612 |
-| walker |  | 3980 | 40 | ts decl lib/types.ts:268 |  |  | 0.613 |
-| walker |  | 4022 | 42 | ts decl lib/types.ts:282 |  |  | 0.613 |
-| walker |  | 4069 | 47 | ts decl lib/types.ts:248 |  |  | 0.613 |
-| walker |  | 4118 | 49 | ts decl lib/types.ts:243 |  |  | 0.613 |
-| ns | 4139 |  | 183 | Anatomy of a plugin module (removeComments as exemplar) | 2.6 |  | 0.599 |
-| walker |  | 4213 | 95 | ts decl lib/types.ts:253 |  |  | 0.601 |
-| ns | 4291 |  | 152 | Overriding and disabling preset-default plugins (README) | 2.7 |  | 0.586 |
-| walker |  | 4391 | 178 | ts decl lib/types.ts:307 |  |  | 0.586 |
-| ns | 4408 |  | 117 | Custom plugin objects (docs/05-plugins-api.mdx) | 2.8 |  | 0.580 |
-| ns | 4603 |  | 195 | Node entry point: loadConfig and the Node optimize wrapper | 2.9 |  | 0.569 |
-| walker |  | 4611 | 220 | ts decl lib/types.ts:336 |  |  | 0.571 |
-| ns | 4786 |  | 183 | Plugin descriptions: preset-default steps 1-9 | 3.1 |  | 0.563 |
-| walker |  | 4999 | 388 | listing of 'docs/04-plugins' |  |  | 0.563 |
-| ns | 5033 |  | 247 | Plugin descriptions: preset-default steps 10-18 | 3.2 |  | 0.554 |
-| walker |  | 5044 | 45 | ts doc lib/style.js:211 |  |  | 0.554 |
-| walker |  | 5101 | 57 | README.md section #14 |  |  | 0.554 |
-| walker |  | 5148 | 47 | ts doc lib/version.js:7 |  |  | 0.565 |
-| ns | 5238 |  | 205 | Plugin descriptions: preset-default steps 19-26 | 3.3 |  | 0.557 |
-| ns | 5405 |  | 167 | Plugin descriptions: preset-default steps 27-34 | 3.4 |  | 0.552 |
-| walker |  | 5438 | 290 | ts decl lib/types.ts:71 |  |  | 0.552 |
-| walker |  | 5730 | 292 | ts decl lib/types.ts:214 |  |  | 0.552 |
-| ns | 5778 |  | 373 | Plugin descriptions: opt-in plugins with optional params | 3.5 |  | 0.539 |
-| walker |  | 5895 | 165 | ts names lib/svgo/tools.js |  |  | 0.536 |
-| ns | 5895 |  | 117 | Plugin descriptions: plugins requiring params | 3.6 |  | 0.536 |
-| walker |  | 5911 | 16 | ts body lib/svgo/tools.js:194 |  |  | 0.536 |
-| walker |  | 5929 | 18 | ts body lib/svgo/tools.js:206 |  |  | 0.536 |
-| walker |  | 5956 | 27 | ts doc lib/svgo/coa.js:30 |  |  | 0.536 |
-| walker |  | 5984 | 28 | ts body lib/svgo/tools.js:250 |  |  | 0.536 |
-| walker |  | 6033 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.536 |
-| walker |  | 6096 | 63 | ts doc lib/style.js:253 |  |  | 0.536 |
-| ns | 6127 |  | 232 | Config and Output type bodies | 4.1 |  | 0.553 |
-| ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.571 |
-| walker |  | 6477 | 381 | package scripts in package.json |  |  | 0.571 |
-| walker |  | 6507 | 30 | README.md section #5 |  |  | 0.571 |
-| walker |  | 6575 | 68 | ts doc lib/svgo.js:81 |  |  | 0.587 |
-| walker |  | 6647 | 72 | ts doc lib/svgo-node.js:83 |  |  | 0.587 |
-| ns | 6652 |  | 212 | Visitor keys, VisitorNode, PluginInfo and Plugin bodies | 4.3 |  | 0.598 |
-| walker |  | 6696 | 49 | ts doc lib/xast.js:50 |  |  | 0.598 |
-| walker |  | 6770 | 74 | ts doc lib/parser.js:80 |  |  | 0.598 |
-| ns | 6809 |  | 157 | coa.js top-level function roster | 5.1 |  | 0.591 |
-| walker |  | 6899 | 129 | README.md section #2 |  |  | 0.591 |
-| ns | 6933 |  | 124 | CLI program metadata and positional argument | 5.2 |  | 0.587 |
-| walker |  | 7115 | 216 | ts decl lib/types.ts:30 |  |  | 0.587 |
-| walker |  | 7191 | 76 | ts doc lib/stringifier.js:66 |  |  | 0.587 |
-| ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.575 |
-| ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.563 |
-| ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.558 |
-| walker |  | 7691 | 500 | ts decl lib/builtin.js:62 |  |  | 0.559 |
-| walker |  | 7736 | 45 | ts doc lib/svgo/tools.js:215 |  |  | 0.559 |
-| walker |  | 7776 | 40 | README.md section #7 |  |  | 0.559 |
-| ns | 7790 |  | 115 | parseSvg and the sax configuration | 6.1 |  | 0.555 |
-| walker |  | 7828 | 52 | ts doc lib/svgo/coa.js:19 |  |  | 0.555 |
-| walker |  | 7878 | 50 | ts body lib/svgo/coa.js:19 |  |  | 0.555 |
-| ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.550 |
-| walker |  | 7978 | 100 | ts body lib/style.js:195 |  |  | 0.550 |
-| ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.553 |
-| walker |  | 8083 | 105 | ts doc lib/builtin.js:62 |  |  | 0.563 |
-| ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.567 |
-| walker |  | 8201 | 118 | README.md section #13 |  |  | 0.567 |
-| walker |  | 8207 | 6 | listing of '.yarn/plugins' |  |  | 0.567 |
-| walker |  | 8264 | 57 | ts doc lib/util/visit.js:8 |  |  | 0.567 |
-| ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.567 |
-| walker |  | 8376 | 112 | ts doc lib/svgo-node.js:44 |  |  | 0.567 |
-| ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.564 |
-| ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.558 |
-| walker |  | 8878 | 502 | package identity metadata in package.json |  |  | 0.559 |
-| ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.555 |
-| walker |  | 8910 | 32 | declaration surface of docs/04-plugins/cleanupListOfValues.mdx |  |  | 0.555 |
-| walker |  | 8942 | 32 | declaration surface of docs/04-plugins/convertEllipseToCircle.mdx |  |  | 0.555 |
-| ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.551 |
-| ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.551 |
-| walker |  | 9165 | 223 | ts decl lib/types.ts:30 #1 |  |  | 0.551 |
-| walker |  | 9198 | 33 | declaration surface of docs/04-plugins/convertOneStopGradients.mdx |  |  | 0.551 |
-| ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.557 |
-| ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.565 |
-| walker |  | 9363 | 165 | README.md section #3 |  |  | 0.587 |
-| walker |  | 9438 | 75 | ts doc lib/parser.js:12 |  |  | 0.587 |
-| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.585 |
-| walker |  | 9514 | 76 | ts doc lib/util/map-nodes-to-parents.js:9 |  |  | 0.585 |
-| walker |  | 9566 | 52 | ts doc lib/svgo/tools.js:43 |  |  | 0.585 |
-| ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.593 |
-| walker |  | 9645 | 79 | ts doc lib/svgo/plugins.js:40 |  |  | 0.593 |
-| walker |  | 9688 | 43 | declaration surface of docs/04-plugins/mergePaths.mdx |  |  | 0.593 |
-| ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.589 |
-| walker |  | 9840 | 152 | ts body lib/svgo-node.js:83 |  |  | 0.593 |
-| ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.589 |
-| walker |  | 9886 | 46 | declaration surface of docs/04-plugins/mergeStyles.mdx |  |  | 0.589 |
-| walker |  | 9968 | 82 | ts doc lib/xast.js:42 |  |  | 0.593 |
-| ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.593 |
+| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.562 |
+| walker |  | 3472 | 355 | README.md section #4 |  |  | 0.616 |
+| walker |  | 3508 | 36 | ts doc lib/path.js:302 |  |  | 0.616 |
+| walker |  | 3543 | 35 | ts body lib/xast.js:50 |  |  | 0.616 |
+| ns | 3669 |  | 221 | createPreset -- how a preset validates and forwards overrides | 2.4 |  | 0.598 |
+| walker |  | 3770 | 227 | package entrypoints in package.json |  |  | 0.632 |
+| walker |  | 3810 | 40 | ts doc lib/path.js:141 |  |  | 0.632 |
+| walker |  | 3845 | 35 | listing of 'test/regression' |  |  | 0.633 |
+| ns | 3956 |  | 287 | visit() -- the AST traversal contract | 2.5 |  | 0.609 |
+| walker |  | 4124 | 279 | ts names lib/types.ts #1 |  |  | 0.659 |
+| walker |  | 4136 | 12 | ts decl lib/types.ts:357 |  |  | 0.659 |
+| ns | 4139 |  | 183 | Anatomy of a plugin module (removeComments as exemplar) | 2.6 |  | 0.645 |
+| walker |  | 4158 | 22 | ts decl lib/types.ts:300 |  |  | 0.645 |
+| walker |  | 4181 | 23 | ts decl lib/types.ts:263 |  |  | 0.645 |
+| walker |  | 4204 | 23 | ts decl lib/types.ts:329 |  |  | 0.645 |
+| walker |  | 4234 | 30 | ts decl lib/types.ts:276 |  |  | 0.645 |
+| walker |  | 4264 | 30 | ts decl lib/types.ts:289 |  |  | 0.645 |
+| ns | 4291 |  | 152 | Overriding and disabling preset-default plugins (README) | 2.7 |  | 0.629 |
+| walker |  | 4295 | 31 | ts decl lib/types.ts:294 |  |  | 0.629 |
+| walker |  | 4335 | 40 | ts decl lib/types.ts:268 |  |  | 0.629 |
+| walker |  | 4377 | 42 | ts decl lib/types.ts:282 |  |  | 0.629 |
+| ns | 4408 |  | 117 | Custom plugin objects (docs/05-plugins-api.mdx) | 2.8 |  | 0.623 |
+| walker |  | 4424 | 47 | ts decl lib/types.ts:248 |  |  | 0.623 |
+| walker |  | 4473 | 49 | ts decl lib/types.ts:243 |  |  | 0.623 |
+| walker |  | 4568 | 95 | ts decl lib/types.ts:253 |  |  | 0.624 |
+| ns | 4603 |  | 195 | Node entry point: loadConfig and the Node optimize wrapper | 2.9 |  | 0.612 |
+| walker |  | 4746 | 178 | ts decl lib/types.ts:307 |  |  | 0.612 |
+| ns | 4786 |  | 183 | Plugin descriptions: preset-default steps 1-9 | 3.1 |  | 0.604 |
+| walker |  | 4966 | 220 | ts decl lib/types.ts:336 |  |  | 0.606 |
+| ns | 5033 |  | 247 | Plugin descriptions: preset-default steps 10-18 | 3.2 |  | 0.596 |
+| ns | 5238 |  | 205 | Plugin descriptions: preset-default steps 19-26 | 3.3 |  | 0.588 |
+| walker |  | 5354 | 388 | listing of 'docs/04-plugins' |  |  | 0.588 |
+| walker |  | 5399 | 45 | ts doc lib/style.js:211 |  |  | 0.588 |
+| ns | 5405 |  | 167 | Plugin descriptions: preset-default steps 27-34 | 3.4 |  | 0.582 |
+| walker |  | 5456 | 57 | README.md section #14 |  |  | 0.582 |
+| walker |  | 5503 | 47 | ts doc lib/version.js:7 |  |  | 0.593 |
+| ns | 5778 |  | 373 | Plugin descriptions: opt-in plugins with optional params | 3.5 |  | 0.579 |
+| walker |  | 5793 | 290 | ts decl lib/types.ts:71 |  |  | 0.579 |
+| ns | 5895 |  | 117 | Plugin descriptions: plugins requiring params | 3.6 |  | 0.576 |
+| walker |  | 6085 | 292 | ts decl lib/types.ts:214 |  |  | 0.576 |
+| ns | 6127 |  | 232 | Config and Output type bodies | 4.1 |  | 0.590 |
+| walker |  | 6250 | 165 | ts names lib/svgo/tools.js |  |  | 0.591 |
+| walker |  | 6266 | 16 | ts body lib/svgo/tools.js:194 |  |  | 0.591 |
+| walker |  | 6284 | 18 | ts body lib/svgo/tools.js:206 |  |  | 0.591 |
+| walker |  | 6311 | 27 | ts doc lib/svgo/coa.js:30 |  |  | 0.591 |
+| walker |  | 6339 | 28 | ts body lib/svgo/tools.js:250 |  |  | 0.591 |
+| walker |  | 6388 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.591 |
+| ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.605 |
+| walker |  | 6451 | 63 | ts doc lib/style.js:253 |  |  | 0.605 |
+| ns | 6652 |  | 212 | Visitor keys, VisitorNode, PluginInfo and Plugin bodies | 4.3 |  | 0.615 |
+| ns | 6809 |  | 157 | coa.js top-level function roster | 5.1 |  | 0.608 |
+| walker |  | 6832 | 381 | package scripts in package.json |  |  | 0.608 |
+| walker |  | 6862 | 30 | README.md section #5 |  |  | 0.608 |
+| walker |  | 6930 | 68 | ts doc lib/svgo.js:81 |  |  | 0.624 |
+| ns | 6933 |  | 124 | CLI program metadata and positional argument | 5.2 |  | 0.619 |
+| walker |  | 7002 | 72 | ts doc lib/svgo-node.js:83 |  |  | 0.619 |
+| walker |  | 7051 | 49 | ts doc lib/xast.js:50 |  |  | 0.619 |
+| walker |  | 7125 | 74 | ts doc lib/parser.js:80 |  |  | 0.619 |
+| ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.608 |
+| walker |  | 7254 | 129 | README.md section #2 |  |  | 0.608 |
+| walker |  | 7470 | 216 | ts decl lib/types.ts:30 |  |  | 0.608 |
+| walker |  | 7546 | 76 | ts doc lib/stringifier.js:66 |  |  | 0.608 |
+| ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.594 |
+| ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.589 |
+| ns | 7790 |  | 115 | parseSvg and the sax configuration | 6.1 |  | 0.585 |
+| ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.580 |
+| ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.582 |
+| walker |  | 8046 | 500 | ts decl lib/builtin.js:62 |  |  | 0.583 |
+| walker |  | 8091 | 45 | ts doc lib/svgo/tools.js:215 |  |  | 0.583 |
+| walker |  | 8131 | 40 | README.md section #7 |  |  | 0.583 |
+| ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.586 |
+| walker |  | 8183 | 52 | ts doc lib/svgo/coa.js:19 |  |  | 0.586 |
+| walker |  | 8233 | 50 | ts body lib/svgo/coa.js:19 |  |  | 0.586 |
+| ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.586 |
+| walker |  | 8333 | 100 | ts body lib/style.js:195 |  |  | 0.586 |
+| walker |  | 8438 | 105 | ts doc lib/builtin.js:62 |  |  | 0.596 |
+| ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.593 |
+| walker |  | 8556 | 118 | README.md section #13 |  |  | 0.593 |
+| walker |  | 8562 | 6 | listing of '.yarn/plugins' |  |  | 0.593 |
+| walker |  | 8619 | 57 | ts doc lib/util/visit.js:8 |  |  | 0.593 |
+| ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.586 |
+| walker |  | 8731 | 112 | ts doc lib/svgo-node.js:44 |  |  | 0.586 |
+| ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.582 |
+| ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.578 |
+| ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.578 |
+| walker |  | 9233 | 502 | package identity metadata in package.json |  |  | 0.579 |
+| walker |  | 9265 | 32 | declaration surface of docs/04-plugins/cleanupListOfValues.mdx |  |  | 0.579 |
+| ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.584 |
+| walker |  | 9297 | 32 | declaration surface of docs/04-plugins/convertEllipseToCircle.mdx |  |  | 0.584 |
+| ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.592 |
+| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.589 |
+| walker |  | 9520 | 223 | ts decl lib/types.ts:30 #1 |  |  | 0.589 |
+| walker |  | 9553 | 33 | declaration surface of docs/04-plugins/convertOneStopGradients.mdx |  |  | 0.589 |
+| ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.597 |
+| walker |  | 9718 | 165 | README.md section #3 |  |  | 0.619 |
+| ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.615 |
+| walker |  | 9793 | 75 | ts doc lib/parser.js:12 |  |  | 0.615 |
+| ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.611 |
+| walker |  | 9869 | 76 | ts doc lib/util/map-nodes-to-parents.js:9 |  |  | 0.611 |
+| walker |  | 9921 | 52 | ts doc lib/svgo/tools.js:43 |  |  | 0.611 |
+| ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.614 |
+| walker |  | 10000 | 79 | ts doc lib/svgo/plugins.js:40 |  |  | 0.614 |

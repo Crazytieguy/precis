@@ -27,6 +27,23 @@ README.md
   …
   5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
   6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
+  8→## Features
+  9→
+  10→<img src="assets/demo.png" width="820px" />
+  11→
+  12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
+  13→
+  14→Features include:
+  15→
+  16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
+  17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
+  18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
+  19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
+  20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
+  21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
+  22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
+  23→
+  24→<hr clear="right"/>
   …
   713→## License
   714→
@@ -65,15 +82,12 @@ docs/
     141→---
     143→### `continue` (alias: `c`)
     …
-    186→---
     188→## Viewing & Reporting
     189→
     190→### `calendar`
     …
-    215→---
     217→### `list` (alias: `ls`)
     …
-    238→---
     240→### `current`
     …
     260→### `last` (alias: `lt`)
@@ -95,17 +109,6 @@ internal/
   adapters/
     cli/
       add.go
-        …
-        16→type addOptions struct {
-        …
-        26→func NewAddCmd() *cobra.Command {
-        …
-        64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
-        …
-        124→func resolveStartTime(startStr string, theme Theme) (string, error) {
-        …
-        163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
-        …
       analyze.go
         …
         20→func NewAnalyzeCmd() *cobra.Command {
@@ -123,7 +126,7 @@ internal/
         15→const (
         16→	defaultRecentActivitiesForContinuation = 10
         17→)
-        19→//nolint:funlen // Include all logic in one function
+        …
         20→func NewContinueCmd() *cobra.Command {
         …
       current.go
@@ -151,15 +154,6 @@ internal/
         …
       list_gui.go
       remove.go
-        …
-        22→func NewRemoveCmd() *cobra.Command {
-        …
-        95→func parseRemoveIndex(s string) (time.Time, int, error) {
-        …
-        116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
-        …
-        127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
-        …
       report.go
         …
         20→type reportOptions struct {

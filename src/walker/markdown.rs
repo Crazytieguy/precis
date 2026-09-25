@@ -291,7 +291,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let key = MarkdownKey::Section {
                     file: file.clone(),
                     section_index: idx,
-                    keeps_default_concavity: range.reference_shaped
+                    keeps_default_concavity: range.is_reference_usage_section
                         || range.kind == SectionKind::LedeBody,
                 };
                 // Oversize tails deliver in source order: each chunk
@@ -674,7 +674,6 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
             synthetic_intro_present: false,
             parent_is_canonical_usage_h2: false,
             is_reference_usage_section: false,
-            reference_shaped: false,
             chained_to_previous: false,
         },
         true,
@@ -1789,12 +1788,6 @@ struct SectionRange {
     /// body bytes. README-only; earns the modest
     /// [`REFERENCE_USAGE_SECTION_FACTOR`].
     is_reference_usage_section: bool,
-    /// This range's body is structurally reference-shaped — dominated
-    /// by list items / table rows / code-fence lines (see
-    /// [`range_is_reference_shaped`]). README-only. Carried into the
-    /// `Section` key so the scheduler prices the range at the default
-    /// concavity instead of the steeper prose exponent.
-    reference_shaped: bool,
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
     chained_to_previous: bool,
@@ -1832,24 +1825,6 @@ const REFERENCE_SHAPED_MIN_CATALOG_ROWS: usize = 3;
 /// early purchase evicts NS-ranked content wholesale.
 const REFERENCE_SHAPED_MIN_BYTES: usize = 400;
 const REFERENCE_SHAPED_MAX_BYTES: usize = 1600;
-
-/// True iff the row range is dominated by catalog rows — list items and
-/// table rows, measured outside code fences (fence delimiters and
-/// interiors are neutral: excluded from both sides of the fraction) —
-/// and its total source bytes sit inside the reference-shaped bounds.
-/// Catalog sections (option tables, color/modifier lists, helper
-/// indexes) are roster-like: their per-row information density doesn't
-/// fall off the way prose does, so they shouldn't pay the steeper prose
-/// concavity. Fence dominance deliberately does NOT qualify — compact
-/// demo snippets on code-first repos are exactly what the prose
-/// exponent exists to demote.
-fn range_is_reference_shaped(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let last = end.min(src_lines.len());
-    if start > last {
-        return false;
-    }
-    lines_are_reference_shaped(src_lines[start - 1..last].iter().copied())
-}
 
 /// Shape test shared by the .md row-range and RST row-list callers —
 /// see [`range_is_reference_shaped`] for the semantics.
@@ -1931,7 +1906,6 @@ fn logical_sections(
                         synthetic_intro_present,
                         parent_is_canonical_usage_h2: false,
                         is_reference_usage_section: false,
-                        reference_shaped: false,
                         chained_to_previous: false,
                     },
                     root_readme,
@@ -1987,29 +1961,12 @@ fn logical_sections(
                             synthetic_intro_present,
                             parent_is_canonical_usage_h2: usage_h2,
                             is_reference_usage_section: reference_h2,
-                            reference_shaped: false,
                             chained_to_previous: false,
                         },
                         root_readme,
                     );
                 }
             }
-        }
-    }
-    // Root-README-only: mark catalog-dominant ranges so the scheduler
-    // prices them at the default concavity (the steeper `Section` prose
-    // exponent exists to demote prose, not catalogs). Gated on the
-    // reference-usage title vocabulary: structure alone misfires —
-    // sponsor tables, TOCs, "Supported root stores" / "Security"
-    // bullet lists are list-dominant but NS-tier-2, and flattening
-    // them displaced NS-ranked code surfaces (mkcert/peepdb/d2ts).
-    // Nested READMEs stay at prose pricing — flattening them re-fed
-    // the per-driver README flood the NS treats as catalog-listing
-    // material.
-    if root_readme {
-        for range in &mut out {
-            range.reference_shaped = range.is_reference_usage_section
-                && range_is_reference_shaped(&src_lines, range.start, range.end);
         }
     }
     out
@@ -2295,7 +2252,6 @@ fn push_whole_or_head_split(
                 synthetic_intro_present: head.synthetic_intro_present,
                 parent_is_canonical_usage_h2: head.parent_is_canonical_usage_h2,
                 is_reference_usage_section: head.is_reference_usage_section,
-                reference_shaped: false,
                 chained_to_previous: true,
             });
         }
@@ -2336,7 +2292,6 @@ fn push_intro<'a>(
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h2,
-        reference_shaped: false,
         chained_to_previous: false,
     });
 }
@@ -2393,7 +2348,6 @@ fn push_h3_child(
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h3,
-        reference_shaped: false,
         chained_to_previous: false,
     });
 }
@@ -2415,7 +2369,6 @@ fn push_body_block_ranges(
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: false,
-        reference_shaped: false,
         chained_to_previous: false,
     }));
     true

@@ -1,4 +1,4 @@
-Score(3000)=0.481 I=0.807 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.635/0.622/0.481/0.548/0.723/0.672
+Score(3000)=0.482 I=0.809 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.635/0.622/0.482/0.513/0.730/0.672
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -50,108 +50,108 @@ Score(3000)=0.481 I=0.807 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | ns | 2269 |  | 250 | globals.h — PlayerData fields (identity through inventory) | 3.2 |  | 0.578 |
 | walker |  | 2278 | 15 | c doc include/serialize.h:12 |  |  | 0.579 |
 | walker |  | 2303 | 25 | c body include/tools.h:11 |  |  | 0.579 |
-| walker |  | 2317 | 14 | c doc include/globals.h:19 |  |  | 0.579 |
 | ns | 2526 |  | 257 | globals.h — PlayerData flag bits and the overloaded flagval fields | 3.3 | 3.2 | 0.548 |
-| walker |  | 2537 | 220 | c names include/worldgen.h |  |  | 0.550 |
-| walker |  | 2571 | 34 | c decl include/worldgen.h:6 |  |  | 0.551 |
-| walker |  | 2605 | 34 | c decl include/worldgen.h:13 |  |  | 0.552 |
-| walker |  | 2657 | 52 | c names src/tools.c |  |  | 0.552 |
-| walker |  | 2712 | 55 | c names src/structures.c |  |  | 0.552 |
-| walker |  | 2726 | 14 | c doc include/globals.h:35 |  |  | 0.552 |
-| ns | 2756 |  | 230 | globals.h — MobData and EntityData | 3.4 |  | 0.516 |
-| walker |  | 2784 | 58 | c names src/varnum.c |  |  | 0.516 |
-| walker |  | 2851 | 67 | c names src/crafting.c |  |  | 0.516 |
-| walker |  | 2879 | 28 | c decl src/crafting.c:349 |  |  | 0.516 |
-| ns | 2994 |  | 238 | globals.h — all extern global state declarations | 3.5 |  | 0.481 |
-| walker |  | 2998 | 119 | README.md section #1 |  |  | 0.481 |
-| walker |  | 3265 | 267 | c names include/tools.h #1 |  |  | 0.484 |
-| walker |  | 3274 | 9 | c decl include/tools.h:43 |  |  | 0.484 |
-| walker |  | 3286 | 12 | c decl include/tools.h:46 |  |  | 0.484 |
-| ns | 3344 |  | 350 | build_registries.js — the template that generates include/registries.h | 3.6 |  | 0.458 |
-| walker |  | 3585 | 299 | c names include/globals.h #1 |  |  | 0.498 |
-| walker |  | 3593 | 8 | c doc include/globals.h:59 |  |  | 0.498 |
-| walker |  | 3607 | 14 | c doc src/structures.c:16 |  |  | 0.498 |
-| ns | 3704 |  | 360 | globals.h — configuration macro roster, part 1 (world and player sizing) | 3.7 |  | 0.542 |
-| walker |  | 3820 | 213 | c names include/procedures.h #1 |  |  | 0.544 |
-| walker |  | 3830 | 10 | c doc include/globals.h:66 |  |  | 0.544 |
-| ns | 3978 |  | 274 | globals.h — configuration macro roster, part 2 (feature toggles, including the commented-out ones) | 3.8 |  | 0.525 |
-| walker |  | 4066 | 236 | c names include/packets.h #1 |  |  | 0.564 |
-| walker |  | 4073 | 7 | c doc include/packets.h:28 |  |  | 0.566 |
-| ns | 4176 |  | 198 | src/globals.c — definitions of the global state, MOTD and brand | 3.9 |  | 0.549 |
-| ns | 4260 |  | 84 | README Configuration section — where the knobs live | 3.10 |  | 0.547 |
-| walker |  | 4269 | 196 | c names include/procedures.h #2 |  |  | 0.548 |
-| ns | 4402 |  | 142 | README Configuration — the maintainer's tuning guidance | 3.11 |  | 0.545 |
-| walker |  | 4485 | 216 | c names include/globals.h #2 |  |  | 0.590 |
-| ns | 4488 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.581 |
-| walker |  | 4490 | 5 | c decl include/globals.h:186 |  |  | 0.584 |
-| walker |  | 4498 | 8 | c decl include/globals.h:184 |  |  | 0.589 |
-| walker |  | 4519 | 21 | c decl include/globals.h:255 |  |  | 0.589 |
-| walker |  | 4553 | 34 | c decl include/globals.h:191 |  |  | 0.599 |
-| walker |  | 4602 | 49 | c decl include/globals.h:260 |  |  | 0.605 |
-| ns | 4721 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.620 |
-| walker |  | 4733 | 131 | c decl include/globals.h:240 |  |  | 0.657 |
-| walker |  | 4963 | 230 | c decl include/globals.h:200 |  |  | 0.704 |
-| ns | 4985 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.714 |
-| walker |  | 5157 | 194 | c names src/worldgen.c |  |  | 0.714 |
-| ns | 5304 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.698 |
-| walker |  | 5400 | 243 | c names src/procedures.c |  |  | 0.698 |
-| ns | 5415 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.706 |
-| walker |  | 5416 | 16 | c doc src/procedures.c:54 |  |  | 0.706 |
-| walker |  | 5432 | 16 | c doc src/procedures.c:75 |  |  | 0.706 |
-| walker |  | 5448 | 16 | c doc src/procedures.c:146 |  |  | 0.706 |
-| walker |  | 5466 | 18 | c doc src/procedures.c:177 |  |  | 0.706 |
-| ns | 5587 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.710 |
-| ns | 5794 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.715 |
-| ns | 5991 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.722 |
-| ns | 6129 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.723 |
-| walker |  | 6156 | 690 | plaintext config extract_registries.sh |  |  | 0.723 |
-| walker |  | 6325 | 169 | README.md section #2 |  |  | 0.728 |
-| ns | 6325 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.728 |
-| ns | 6410 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.727 |
-| ns | 6499 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.719 |
-| walker |  | 6684 | 359 | README.md section #3 |  |  | 0.719 |
-| ns | 6755 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.705 |
-| walker |  | 6918 | 234 | c names src/packets.c |  |  | 0.705 |
-| walker |  | 6931 | 13 | c doc include/globals.h:106 |  |  | 0.705 |
-| walker |  | 6948 | 17 | c doc include/globals.h:38 |  |  | 0.705 |
-| walker |  | 6967 | 19 | c doc include/globals.h:56 |  |  | 0.705 |
-| walker |  | 6994 | 27 | c doc include/globals.h:32 |  |  | 0.705 |
-| walker |  | 7021 | 27 | c doc include/globals.h:45 |  |  | 0.705 |
-| walker |  | 7048 | 27 | c doc include/globals.h:75 |  |  | 0.705 |
-| walker |  | 7079 | 31 | c doc include/globals.h:49 |  |  | 0.705 |
-| ns | 7081 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.685 |
-| walker |  | 7112 | 33 | c doc include/globals.h:63 |  |  | 0.685 |
-| walker |  | 7149 | 37 | c doc include/globals.h:53 |  |  | 0.685 |
-| walker |  | 7187 | 38 | c doc include/globals.h:23 |  |  | 0.685 |
-| walker |  | 7198 | 11 | c doc src/packets.c:49 |  |  | 0.685 |
-| walker |  | 7209 | 11 | c doc src/packets.c:66 |  |  | 0.685 |
-| walker |  | 7220 | 11 | c doc src/packets.c:85 |  |  | 0.685 |
-| walker |  | 7231 | 11 | c doc src/packets.c:183 |  |  | 0.685 |
-| walker |  | 7243 | 12 | c doc src/packets.c:190 |  |  | 0.685 |
-| walker |  | 7295 | 52 | c doc include/globals.h:103 |  |  | 0.685 |
-| walker |  | 7349 | 54 | c doc include/globals.h:71 |  |  | 0.685 |
-| ns | 7350 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.671 |
-| walker |  | 7362 | 13 | c doc src/packets.c:137 |  |  | 0.671 |
-| walker |  | 7375 | 13 | c doc src/packets.c:151 |  |  | 0.671 |
-| walker |  | 7388 | 13 | c doc src/packets.c:166 |  |  | 0.671 |
-| walker |  | 7401 | 13 | c doc src/packets.c:245 |  |  | 0.671 |
-| walker |  | 7416 | 15 | c doc src/packets.c:28 |  |  | 0.671 |
-| walker |  | 7435 | 19 | c doc src/procedures.c:130 |  |  | 0.671 |
-| walker |  | 7540 | 105 | c doc include/globals.h:93 |  |  | 0.671 |
-| walker |  | 7567 | 27 | c doc src/worldgen.c:160 |  |  | 0.671 |
-| ns | 7692 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.654 |
-| walker |  | 7780 | 213 | c names src/procedures.c #1 |  |  | 0.655 |
-| walker |  | 7795 | 15 | c doc src/procedures.c:495 |  |  | 0.655 |
-| walker |  | 7812 | 17 | c doc src/procedures.c:321 |  |  | 0.655 |
-| walker |  | 7835 | 23 | c doc src/procedures.c:396 |  |  | 0.655 |
-| ns | 8048 |  | 356 | main.c — the single-threaded accept and tick round-robin loop | 5.6 |  | 0.636 |
-| walker |  | 8063 | 228 | c names src/globals.c |  |  | 0.647 |
-| walker |  | 8257 | 194 | c names include/packets.h #2 |  |  | 0.665 |
-| ns | 8329 |  | 281 | main.c — the ESP32 entry points: FreeRTOS task, WiFi event handler, app_main | 5.7 |  | 0.650 |
-| walker |  | 8517 | 260 | c decl include/globals.h:200 #1 |  |  | 0.675 |
-| ns | 8553 |  | 224 | procedures.c — definition locations, part 1 (state, players, slots, block changes) | 6.1 |  | 0.682 |
-| ns | 8770 |  | 217 | procedures.c — definition locations, part 2 (mining, predicates, armour, eating, fluids) | 6.2 |  | 0.672 |
-| walker |  | 8846 | 329 | README.md section #4 |  |  | 0.678 |
+| walker |  | 2632 | 329 | README.md section #4 |  |  | 0.549 |
+| walker |  | 2646 | 14 | c doc include/globals.h:19 |  |  | 0.549 |
+| ns | 2756 |  | 230 | globals.h — MobData and EntityData | 3.4 |  | 0.514 |
+| walker |  | 2866 | 220 | c names include/worldgen.h |  |  | 0.515 |
+| walker |  | 2900 | 34 | c decl include/worldgen.h:6 |  |  | 0.516 |
+| walker |  | 2934 | 34 | c decl include/worldgen.h:13 |  |  | 0.517 |
+| walker |  | 2986 | 52 | c names src/tools.c |  |  | 0.517 |
+| ns | 2994 |  | 238 | globals.h — all extern global state declarations | 3.5 |  | 0.482 |
+| walker |  | 3041 | 55 | c names src/structures.c |  |  | 0.482 |
+| walker |  | 3055 | 14 | c doc include/globals.h:35 |  |  | 0.482 |
+| walker |  | 3113 | 58 | c names src/varnum.c |  |  | 0.482 |
+| walker |  | 3180 | 67 | c names src/crafting.c |  |  | 0.482 |
+| walker |  | 3208 | 28 | c decl src/crafting.c:349 |  |  | 0.482 |
+| walker |  | 3327 | 119 | README.md section #1 |  |  | 0.482 |
+| ns | 3344 |  | 350 | build_registries.js — the template that generates include/registries.h | 3.6 |  | 0.456 |
+| walker |  | 3594 | 267 | c names include/tools.h #1 |  |  | 0.458 |
+| walker |  | 3603 | 9 | c decl include/tools.h:43 |  |  | 0.458 |
+| walker |  | 3615 | 12 | c decl include/tools.h:46 |  |  | 0.459 |
+| ns | 3704 |  | 360 | globals.h — configuration macro roster, part 1 (world and player sizing) | 3.7 |  | 0.481 |
+| walker |  | 3914 | 299 | c names include/globals.h #1 |  |  | 0.543 |
+| walker |  | 3922 | 8 | c doc include/globals.h:59 |  |  | 0.543 |
+| walker |  | 3936 | 14 | c doc src/structures.c:16 |  |  | 0.543 |
+| ns | 3978 |  | 274 | globals.h — configuration macro roster, part 2 (feature toggles, including the commented-out ones) | 3.8 |  | 0.524 |
+| walker |  | 4149 | 213 | c names include/procedures.h #1 |  |  | 0.526 |
+| walker |  | 4159 | 10 | c doc include/globals.h:66 |  |  | 0.526 |
+| ns | 4176 |  | 198 | src/globals.c — definitions of the global state, MOTD and brand | 3.9 |  | 0.510 |
+| ns | 4260 |  | 84 | README Configuration section — where the knobs live | 3.10 |  | 0.513 |
+| walker |  | 4395 | 236 | c names include/packets.h #1 |  |  | 0.551 |
+| walker |  | 4402 | 7 | c doc include/packets.h:28 |  |  | 0.556 |
+| ns | 4402 |  | 142 | README Configuration — the maintainer's tuning guidance | 3.11 |  | 0.556 |
+| ns | 4488 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.548 |
+| walker |  | 4598 | 196 | c names include/procedures.h #2 |  |  | 0.550 |
+| ns | 4721 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.569 |
+| walker |  | 4814 | 216 | c names include/globals.h #2 |  |  | 0.609 |
+| walker |  | 4819 | 5 | c decl include/globals.h:186 |  |  | 0.612 |
+| walker |  | 4827 | 8 | c decl include/globals.h:184 |  |  | 0.616 |
+| walker |  | 4848 | 21 | c decl include/globals.h:255 |  |  | 0.616 |
+| walker |  | 4882 | 34 | c decl include/globals.h:191 |  |  | 0.626 |
+| walker |  | 4931 | 49 | c decl include/globals.h:260 |  |  | 0.631 |
+| ns | 4985 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.645 |
+| walker |  | 5062 | 131 | c decl include/globals.h:240 |  |  | 0.679 |
+| walker |  | 5292 | 230 | c decl include/globals.h:200 |  |  | 0.723 |
+| ns | 5304 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.707 |
+| ns | 5415 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.714 |
+| walker |  | 5486 | 194 | c names src/worldgen.c |  |  | 0.714 |
+| ns | 5587 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.718 |
+| walker |  | 5729 | 243 | c names src/procedures.c |  |  | 0.719 |
+| walker |  | 5745 | 16 | c doc src/procedures.c:54 |  |  | 0.719 |
+| walker |  | 5761 | 16 | c doc src/procedures.c:75 |  |  | 0.719 |
+| walker |  | 5777 | 16 | c doc src/procedures.c:146 |  |  | 0.719 |
+| ns | 5794 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.724 |
+| walker |  | 5795 | 18 | c doc src/procedures.c:177 |  |  | 0.724 |
+| ns | 5991 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.730 |
+| ns | 6129 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.730 |
+| ns | 6325 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.735 |
+| ns | 6410 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.734 |
+| walker |  | 6485 | 690 | plaintext config extract_registries.sh |  |  | 0.734 |
+| ns | 6499 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.727 |
+| walker |  | 6654 | 169 | README.md section #2 |  |  | 0.727 |
+| ns | 6755 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.713 |
+| walker |  | 7013 | 359 | README.md section #3 |  |  | 0.713 |
+| walker |  | 7026 | 13 | c doc include/globals.h:106 |  |  | 0.713 |
+| walker |  | 7043 | 17 | c doc include/globals.h:38 |  |  | 0.713 |
+| walker |  | 7062 | 19 | c doc include/globals.h:56 |  |  | 0.713 |
+| ns | 7081 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.692 |
+| walker |  | 7089 | 27 | c doc include/globals.h:32 |  |  | 0.692 |
+| walker |  | 7116 | 27 | c doc include/globals.h:45 |  |  | 0.692 |
+| walker |  | 7143 | 27 | c doc include/globals.h:75 |  |  | 0.692 |
+| walker |  | 7174 | 31 | c doc include/globals.h:49 |  |  | 0.692 |
+| walker |  | 7207 | 33 | c doc include/globals.h:63 |  |  | 0.692 |
+| walker |  | 7244 | 37 | c doc include/globals.h:53 |  |  | 0.692 |
+| walker |  | 7282 | 38 | c doc include/globals.h:23 |  |  | 0.692 |
+| walker |  | 7334 | 52 | c doc include/globals.h:103 |  |  | 0.692 |
+| ns | 7350 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.678 |
+| walker |  | 7388 | 54 | c doc include/globals.h:71 |  |  | 0.678 |
+| walker |  | 7407 | 19 | c doc src/procedures.c:130 |  |  | 0.678 |
+| walker |  | 7512 | 105 | c doc include/globals.h:93 |  |  | 0.678 |
+| ns | 7692 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.660 |
+| walker |  | 7746 | 234 | c names src/packets.c |  |  | 0.660 |
+| walker |  | 7757 | 11 | c doc src/packets.c:49 |  |  | 0.660 |
+| walker |  | 7768 | 11 | c doc src/packets.c:66 |  |  | 0.660 |
+| walker |  | 7779 | 11 | c doc src/packets.c:85 |  |  | 0.660 |
+| walker |  | 7790 | 11 | c doc src/packets.c:183 |  |  | 0.660 |
+| walker |  | 7802 | 12 | c doc src/packets.c:190 |  |  | 0.660 |
+| walker |  | 7815 | 13 | c doc src/packets.c:137 |  |  | 0.660 |
+| walker |  | 7828 | 13 | c doc src/packets.c:151 |  |  | 0.660 |
+| walker |  | 7841 | 13 | c doc src/packets.c:166 |  |  | 0.660 |
+| walker |  | 7854 | 13 | c doc src/packets.c:245 |  |  | 0.660 |
+| walker |  | 7869 | 15 | c doc src/packets.c:28 |  |  | 0.660 |
+| walker |  | 7896 | 27 | c doc src/worldgen.c:160 |  |  | 0.660 |
+| ns | 8048 |  | 356 | main.c — the single-threaded accept and tick round-robin loop | 5.6 |  | 0.642 |
+| walker |  | 8109 | 213 | c names src/procedures.c #1 |  |  | 0.643 |
+| walker |  | 8124 | 15 | c doc src/procedures.c:495 |  |  | 0.643 |
+| walker |  | 8141 | 17 | c doc src/procedures.c:321 |  |  | 0.643 |
+| walker |  | 8164 | 23 | c doc src/procedures.c:396 |  |  | 0.643 |
+| ns | 8329 |  | 281 | main.c — the ESP32 entry points: FreeRTOS task, WiFi event handler, app_main | 5.7 |  | 0.628 |
+| walker |  | 8392 | 228 | c names src/globals.c |  |  | 0.639 |
+| ns | 8553 |  | 224 | procedures.c — definition locations, part 1 (state, players, slots, block changes) | 6.1 |  | 0.647 |
+| walker |  | 8586 | 194 | c names include/packets.h #2 |  |  | 0.664 |
+| ns | 8770 |  | 217 | procedures.c — definition locations, part 2 (mining, predicates, armour, eating, fluids) | 6.2 |  | 0.654 |
+| walker |  | 8846 | 260 | c decl include/globals.h:200 #1 |  |  | 0.678 |
 | walker |  | 8879 | 33 | c doc src/procedures.c:434 |  |  | 0.678 |
 | ns | 8902 |  | 132 | procedures.c — definition locations, part 3 (actions, mobs, tick, entity data) | 6.3 |  | 0.672 |
 | walker |  | 8913 | 34 | c doc src/tools.c:42 |  |  | 0.672 |

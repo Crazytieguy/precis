@@ -18,13 +18,19 @@ README.md
   9→> [!WARNING]
   10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
   12→## Quick start
-  13→For PC x86_64 platforms, grab the [latest build binary](https://github.com/p2r3/bareiron/releases/download/latest/bareiron.exe) and run it. The file is a [Cosmopolitan polyglot](https://github.com/jart/cosmopolitan), which means it'll run on Windows, Linux, and possibly Mac, despite the file extension. Note that the server's default settings cannot be reconfigured without compiling from source.
-  14→
-  15→For microcontrollers, see the section on **compilation** below.
+  …
   17→## Compilation
   …
   28→## Configuration
-  …
+  29→Configuring the server requires compiling it from its source code as described in the section above.
+  30→
+  31→Most user-friendly configuration options are available in `include/globals.h`, including WiFi credentials for embedded setups. Some other details, like the MOTD or starting time of day, can be found in `src/globals.c`. For everything else, you'll have to dig through the code.
+  32→
+  33→Here's a summary of some of the more important yet less trivial options for those who plan to use this on a real microcontroller with real players:
+  34→
+  35→- Depending on the player count, the performance of the MCU, and the bandwidth of your network, player position broadcasting could potentially throttle your connection. If you find this to be the case, try commenting out `BROADCAST_ALL_MOVEMENT` and `SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT`. This will tie movement to the tickrate. If this change makes movement too choppy, you can decrease `TIME_BETWEEN_TICKS` at the cost of more compute.
+  36→- If you experience crashes or instability related to chests or water, those features can be disabled with `ALLOW_CHESTS` and `DO_FLUID_FLOW`, respectively.
+  37→- If you find frequent repeated chunk generation to choke the server, increasing `VISITED_HISTORY` might help. There isn't _that_ much of a memory footprint for this - increasing it to `64` for example would only take up 240 extra bytes per allocated player.
   39→## Non-volatile storage (optional)
   …
   48→## Contribution
@@ -104,7 +110,7 @@ include/
     29→#define MOB_DESPAWN_DISTANCE 256
     …
     32→#define GAMEMODE 0
-    34→// Max render distance, determines how many chunks to send
+    …
     35→#define VIEW_DISTANCE 2
     …
     38→#define TIME_BETWEEN_TICKS 1000000
@@ -228,13 +234,6 @@ include/
 src/
   CMakeLists.txt
   crafting.c
-    …
-    9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
-    …
-    349→#define registerSmeltingRecipe(a, b) \
-    350→  if (*material == a && (*output_item == b || *output_item == 0)) *output_item = b
-    352→void getSmeltingOutput (PlayerData *player) {
-    …
   globals.c
   main.c
     …
@@ -244,11 +243,6 @@ src/
   procedures.c
   serialize.c
   structures.c
-    …
-    9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
-    …
-    16→void placeTreeStructure (short x, uint8_t y, short z) {
-    …
   tools.c
     …
     42→uint64_t total_bytes_received = 0;
@@ -256,11 +250,4 @@ src/
     44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
     …
   varnum.c
-    …
-    14→int32_t readVarInt (int client_fd) {
-    …
-    34→int sizeVarInt (uint32_t value) {
-    …
-    43→void writeVarInt (int client_fd, uint32_t value) {
-    …
   worldgen.c
