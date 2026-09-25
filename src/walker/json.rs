@@ -750,7 +750,7 @@ mod tests {
         );
     }
 
-    /// Mixed declaration (Codex adversarial review regression guard):
+    /// Mixed declaration:
     /// `package.json#workspaces` lists `packages/*` and
     /// `pnpm-workspace.yaml` excludes one of them. The npm-source union
     /// path must not silently re-include the excluded package.

@@ -709,8 +709,7 @@ requires-python = ">=3.10"
 
     /// Poetry-style pyproject (`[tool.poetry]` as lede table) is
     /// classified the same as PEP 621 `[project]`: same lede rule,
-    /// same lede-detection signal. Both rich and beets ship Poetry
-    /// pyprojects in the corpus.
+    /// same lede-detection signal.
     #[test]
     fn walker_toml_poetry_table_treated_as_pyproject_identity() {
         assert!(is_pyproject_identity_table("tool.poetry"));
@@ -946,7 +945,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         );
     }
 
-    /// Codex no-ship regression: a non-workspace root with a path
+    /// A non-workspace root with a path
     /// dependency must NOT damp the dep's `[package]`. Path-dep
     /// auto-promotion is a workspace-only behavior.
     #[test]

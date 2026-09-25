@@ -1,32 +1,9 @@
-//! Prisma schema walker. Emits a `Toc` batch listing the opening line
-//! of every top-level Prisma declaration in a `*.prisma` schema file —
-//! `model X { … }`, `enum Y { … }`, `datasource db { … }`,
-//! `generator client { … }` — plus a per-declaration `Decl` body batch
-//! delivering the brace block itself.
-//!
-//! The TOC is analogous to the Rust walker's `PubItemNames` or the C
-//! walker's `DeclNames`: it tells the agent every entity that exists in
-//! the schema without delivering any of their bodies. The `Decl` bodies
-//! then mirror the code engine's roster → `Decl` ladder — each top-level
-//! declaration's body schedules independently, predecessor = the `Toc`,
-//! so the agent gets a catalog surface first and the concrete model /
-//! enum fields as budget allows.
-//!
-//! Scope: Prisma schemas are the canonical data model of any Node /
-//! TypeScript app that uses the Prisma ORM. A coding agent landing in a
-//! Prisma-shaped repo almost always needs the model/enum catalog — and,
-//! right after it, the actual field/enum-value lists — before any other
-//! backend question, but the schema's `*.prisma` extension is not
-//! covered by any other walker, so the file is otherwise only reachable
-//! via its parent dir listing.
-//!
-//! The schema is line-scanned, not parsed — Prisma's grammar isn't
-//! pulled in as a tree-sitter dependency. Top-level declarations are
-//! detected by a `^model `/`^enum `/`^datasource `/`^generator ` scan
-//! (Prisma requires these keywords to start the line of a top-level
-//! declaration; comments and nested blocks are indented). The body span
-//! of each declaration is found by brace-depth counting from its opener
-//! to the matching close brace.
+//! Prisma schema walker: a `Toc` batch of every top-level declaration's
+//! opening line (`model`, `enum`, `datasource`, `generator`), then one
+//! `Decl` batch per declaration body behind it — the code engine's
+//! roster → declaration ladder for an app's data model. The schema is
+//! line-scanned (top-level keywords start their line) and each body is
+//! found by brace counting.
 
 use std::path::Path;
 
@@ -35,12 +12,10 @@ use crate::render::Source;
 
 use super::{WalkCtx, fs::files_with_extension, single_file_lines_content};
 
-/// Field count at which a declaration body earns full base value. Wider
-/// models (User/Link/Collection) carry the schema's load-bearing
-/// relations and field semantics the NS wants. Scaling value by body
-/// size also neutralizes the scheduler's small-batch bias
-/// (`value / cost^0.35`), so a thin model doesn't out-rank a wide one
-/// purely on cost.
+/// Field count at which a declaration body earns full base value. Wide
+/// models carry the schema's relations; scaling value by body size also
+/// offsets the scheduler's small-batch bias (`value / cost^0.35`), so a
+/// thin model doesn't out-rank a wide one purely on cost.
 const FULL_VALUE_FIELD_ROWS: f64 = 24.0;
 
 /// A `model` body longer than this many rows is split at its row

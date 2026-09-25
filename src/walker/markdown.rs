@@ -316,9 +316,7 @@ const DENSE_MD_SIBLINGS: usize = 3;
 const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
 
 /// Index decay for README sections: `(idx + 1)^-0.15`, floored at 0.7,
-/// counting from the first real H2. (An adaptive steeper falloff for
-/// long READMEs (≥18 H2s) was tuned on the pre-refreeze keys and
-/// measured obsolete on the frozen ones — un-shipped 2026-07-06.)
+/// counting from the first real H2.
 fn readme_index_decay(range: &SectionRange) -> f64 {
     (range.h2_index as f64 + 1.0).powf(-0.15).max(0.7)
 }
@@ -436,8 +434,7 @@ fn build_section_content(
     // A README section starts past the last row `ReadmeHeadline`
     // covers — else those rows' marginal cost goes to 0 and
     // `ratio(value, 0) = ∞`. (`headline` is `Some` only for README.md.)
-    // Rows the headline stepped *over* are dropped with them: admitting
-    // that chrome measured −0.0033 corpus mean.
+    // Rows the headline stepped *over* (chrome) are dropped with them.
     let effective_start = match headline.and_then(|spec| spec.iter().next_back()) {
         Some(max_row) => (max_row + 1).max(start),
         None => start,
@@ -880,14 +877,10 @@ fn is_separator_gap(s: &str) -> bool {
     })
 }
 
-/// True iff the headline block reads as a "tagline" — short enough
-/// that the next non-decorative block is plausibly the actual prose
-/// lede the reader needs (posting's `**A powerful HTTP client...**`,
-/// ts-pattern's `<h1 align="center">TS-Pattern</h1>`). Bounded by the
-/// stripped-text length of the block: row count alone treats a single
-/// long sentence ("D2TS is a TypeScript implementation of differential
-/// dataflow ...") as short, but its ~250 chars of prose is the lede
-/// itself, not a tagline preceding one.
+/// True iff the headline block reads as a "tagline" (a bold one-liner,
+/// a centered `<h1>`) — short enough that the next non-decorative block
+/// is plausibly the prose lede. Measured on stripped text, not rows: a
+/// single long sentence is the lede itself, not a tagline preceding one.
 fn is_short_substantive_block(block: Node, source: &str) -> bool {
     let raw = &source[block.start_byte()..block.end_byte()];
     let stripped = strip_block_for_length(raw);
@@ -1288,8 +1281,8 @@ enum TopLevelEntry<'a> {
 /// Top-level section list with H1-unwrap. If the doc has exactly one
 /// top-level section and it's an H1, descend into its H2 children and
 /// synthesize an intro range for the H1 heading + pre-first-H2
-/// prelude. Without this, READMEs styled `# Title` (mitt, mdbook,
-/// otree) would collapse into one multi-KB blob.
+/// prelude. Without this, a README styled `# Title` would collapse into
+/// one multi-KB blob.
 fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'a>> {
     let top: Vec<Node> = headed_sections(root).collect();
     if top.len() == 1
@@ -1451,7 +1444,7 @@ fn heading_level(heading: Node) -> usize {
 }
 
 /// True for an HTML nav / table-of-contents block — a `<p>`/`<div>` whose
-/// links point at page sections (`href="#…"`), e.g. py3xui's
+/// links point at page sections (`href="#…"`), e.g. an
 /// `Overview • Quick Start • Examples` menu. Decorative chrome, not lede.
 fn is_html_nav_block(block: Node, source: &str) -> bool {
     if block.kind() != "html_block" {

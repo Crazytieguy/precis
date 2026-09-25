@@ -1,38 +1,17 @@
 //! Plaintext walker — the home for every file precis has no parser
 //! for. Two jobs:
 //!
-//! 1. **Named plaintext files** ([`classify_plaintext`]): build
-//!    entrypoints (`Makefile`, `Dockerfile`, compose files), build
-//!    scripts, dotenv samples, contributor tooling config (ignore lists,
-//!    version pins, CI workflow YAML), project notes (`setup.cfg`,
-//!    `requirements.txt`, `TODO`), version stamps and licenses. Each
-//!    renders whole or as a head slice at one of four value tiers.
-//! 2. **Every other source-like text file** ([`Class::SourceText`]):
-//!    the language-agnostic fallback for the ~90% of file formats no
-//!    tree-sitter walker in this crate claims — Java, C++, Ruby, PHP,
-//!    Swift, Kotlin, C#, Scala, Elixir, Haskell, Vue, Svelte, CSS,
-//!    reST, plain text and the rest of
-//!    [`SOURCE_TEXT_LANGUAGE_EXTENSIONS`]. Without it those files reach the
-//!    output as a bare filename in a directory listing and nothing
-//!    else, which is what a repository in any of those languages
-//!    renders as.
-//!
-//! The named whitelist is credential-aware (see [`classify_plaintext`]).
-//! Files with format-specific siblings (`.eslintrc.json`,
-//! `.prettierrc.js`, `LICENSE.md`) stay with the owning walker, and
-//! credential-bearing dotfiles (`.npmrc`, `.netrc`, `.env`, `.pypirc`)
-//! are NOT in the whitelist. Checked-in dotenv *samples*
-//! (`.env.sample` / `.env.example`) ARE admitted — they carry
-//! placeholder values by convention and are the deploy-facing
-//! config-key documentation. Shell scripts are only admitted to
-//! [`Class::Build`] from build-script locations, and exact
-//! env/secret/credential stems ([`is_credential_stem`]) are denied
-//! before any `.sh` classification — in the fallback too — because
-//! they commonly export tokens for local tooling.
-//!
-//! Budget protection: `PLAINTEXT_LINE_CAP` bounds a `Whole` batch;
-//! a file over the cap is head-sampled rather than dropped, so
-//! "slightly too long" never means "renders as nothing".
+//! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
+//!    samples, contributor tooling config, project notes and licenses,
+//!    each rendered whole or as a head slice at one of four value tiers.
+//!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
+//!    never admitted; dotenv *samples* are, since they carry
+//!    placeholders and document the deploy-facing config keys.
+//! 2. **Every other source-like text file** ([`Class::LanguageSource`],
+//!    [`Class::FlatText`]): the language-agnostic fallback for formats no
+//!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, CSS,
+//!    reST, …), rendered as its [`declaration_surface`] and, when short,
+//!    whole behind it. Without it those files show only as a filename.
 
 use std::path::Path;
 
@@ -57,19 +36,15 @@ const BUILD_LINE_CAP: usize = 100;
 const BUILD_BYTE_GATE: usize = BUILD_LINE_CAP * 80;
 
 /// Promotion for a small root build file — see
-/// [`small_build_file_factor`]. Swept on the full corpus: +0.0013 at
-/// ×1.15 and ×1.3, +0.0021 at ×1.5, and +0.0028 from ×1.8 upward, flat
-/// out to ×4.5 (the promoted files are cheap enough that once they win
-/// their rank race, more value cannot move them further). Set inside
-/// that plateau rather than at its edge.
+/// [`small_build_file_factor`]. Set inside a flat plateau of a sweep;
+/// see `git show 6a5c9887`.
 const SMALL_BUILD_FILE_PROMOTION: f64 = 2.0;
 
 /// Rows in the dotenv head batch — samples lead with the
-/// mandatory-settings block by convention (linkwarden's first 11 rows
-/// are NextAuth + database; linkding's are container/host/superuser).
+/// mandatory-settings block by convention.
 const DOTENV_MANDATORY_HEAD_LINES: usize = 12;
 
-/// Selection budget for a [`Class::SourceText`] declaration surface,
+/// Selection budget for a [`Class::LanguageSource`] declaration surface,
 /// per line class. Imports and comments are damped so a 40-import
 /// Java file or a 15-line license banner cannot consume the whole
 /// slice before the first declaration; declarations get the bulk.
@@ -137,13 +112,13 @@ pub(crate) enum Class {
     DotenvSample,
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
-    SourceText,
+    LanguageSource,
     /// A prose or flat-config file with no owning walker. Same
     /// extraction (a file with no nesting has every line at
     /// indentation zero, so the surface *is* its head slice), but a
     /// head slice claims much less than a declaration roster does and
     /// is priced for it.
-    SourceProse,
+    FlatText,
 }
 
 /// Classify a file by name. `None` for files the walker doesn't own
@@ -282,8 +257,7 @@ pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
 /// Gradle plugin and dependency blocks — but whose *directories* are
 /// schema or config trees rather than source packages. Same surface
 /// value as a language file, no source-inventory promotion: promoting
-/// them buys stacks of asset-tree listings (measured: dockly −0.078
-/// when stylesheet dirs were promoted).
+/// them buys stacks of asset-tree listings.
 const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
     "proto", "thrift", "graphql", "gql", "capnp", "fbs", "tf", "tfvars", "hcl", "nix", "dhall",
     "cue", "gradle", "gemspec", "podspec", "rake",
@@ -300,8 +274,7 @@ const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
 /// - stylesheets do have declarations at indentation zero, but a
 ///   selector list describes presentation, not what the program is
 ///   or does — nine 10-token stylesheet slices displacing a
-///   package's Python decl surfaces is a bad trade (measured:
-///   linkding −0.044 at language pricing).
+///   package's parsed decl surfaces is a bad trade.
 ///
 /// Claimed either way — a slice beats a bare filename — but priced
 /// near the floor, and never a source inventory.
@@ -369,7 +342,7 @@ const SOURCE_TEXT_FILENAMES: &[&str] = &[
 fn classify_source_text(name: &str) -> Option<Class> {
     let lower = name.to_ascii_lowercase();
     if SOURCE_TEXT_FILENAMES.contains(&name) {
-        return Some(Class::SourceText);
+        return Some(Class::LanguageSource);
     }
     let (stem, ext) = lower.rsplit_once('.')?;
     if is_credential_stem(stem) {
@@ -393,11 +366,11 @@ fn classify_source_text(name: &str) -> Option<Class> {
     if SOURCE_TEXT_LANGUAGE_EXTENSIONS.contains(&ext)
         || SOURCE_TEXT_DECLARATIVE_EXTENSIONS.contains(&ext)
     {
-        return Some(Class::SourceText);
+        return Some(Class::LanguageSource);
     }
     SOURCE_TEXT_FLAT_EXTENSIONS
         .contains(&ext)
-        .then_some(Class::SourceProse)
+        .then_some(Class::FlatText)
 }
 
 /// Line classes inside a declaration surface. The three get separate
@@ -646,7 +619,8 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
     let Some(source) = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE) else {
         return;
     };
-    if has_generated_marker(&source) || (class == Class::SourceText && has_minified_lines(&source))
+    if has_generated_marker(&source)
+        || (class == Class::LanguageSource && has_minified_lines(&source))
     {
         return;
     }
@@ -748,7 +722,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         }) else {
             continue;
         };
-        if matches!(class, Class::SourceText | Class::SourceProse) {
+        if matches!(class, Class::LanguageSource | Class::FlatText) {
             push_source_text_batches(&mut out, &file, ctx, class);
             continue;
         }
@@ -784,9 +758,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
         Class::License => 108.0,
-        Class::Build | Class::DotenvSample | Class::SourceText => 905.0,
+        Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::ProjectNotes => 660.0,
-        Class::Tooling | Class::SourceProse => 488.0,
+        Class::Tooling | Class::FlatText => 488.0,
     };
     tier * path_depth_factor(file, ctx) * small_build_file_factor(class, file, ctx)
 }
@@ -937,20 +911,26 @@ mod tests {
 
     #[test]
     fn plaintext_source_text_classification_rejects_derived_and_credential_files() {
-        assert_eq!(classify_source_text("Gson.java"), Some(Class::SourceText));
+        assert_eq!(
+            classify_source_text("Gson.java"),
+            Some(Class::LanguageSource)
+        );
         assert_eq!(
             classify_source_text("Session.swift"),
-            Some(Class::SourceText)
+            Some(Class::LanguageSource)
         );
-        assert_eq!(classify_source_text("Layout.vue"), Some(Class::SourceText));
-        assert_eq!(classify_source_text("Gemfile"), Some(Class::SourceText));
+        assert_eq!(
+            classify_source_text("Layout.vue"),
+            Some(Class::LanguageSource)
+        );
+        assert_eq!(classify_source_text("Gemfile"), Some(Class::LanguageSource));
         assert_eq!(
             classify_source_text("schema.proto"),
-            Some(Class::SourceText)
+            Some(Class::LanguageSource)
         );
-        assert_eq!(classify_source_text("guide.rst"), Some(Class::SourceProse));
-        assert_eq!(classify_source_text("app.css"), Some(Class::SourceProse));
-        assert_eq!(classify_source_text("build.sh"), Some(Class::SourceProse));
+        assert_eq!(classify_source_text("guide.rst"), Some(Class::FlatText));
+        assert_eq!(classify_source_text("app.css"), Some(Class::FlatText));
+        assert_eq!(classify_source_text("build.sh"), Some(Class::FlatText));
         // Derived artifacts and credentials never render.
         assert_eq!(classify_source_text("app.min.css"), None);
         assert_eq!(classify_source_text("vendor.bundle.css"), None);
@@ -1071,8 +1051,7 @@ mod tests {
             (".prettierrc.json", None),
             (".eslintrc.js", None),
             (".prettierrc.js", None),
-            // Credential-bearing — must not be classified (see module
-            // doc + Codex adversarial review).
+            // Credential-bearing — must not be classified.
             (".npmrc", None),
             (".netrc", None),
             (".env", None),
@@ -1126,7 +1105,7 @@ mod tests {
         // Build, but is one component's build step.
         assert_eq!(factor("packages/api/scripts/build.sh", Class::Build), 1.0);
         // Class gate: the fallback tiers never receive the promotion.
-        assert_eq!(factor("build.sh", Class::SourceProse), 1.0);
+        assert_eq!(factor("build.sh", Class::FlatText), 1.0);
     }
 
     #[test]
@@ -1176,7 +1155,7 @@ mod tests {
     }
 
     /// Drive the full `FsWalker` + scheduler against a real
-    /// directory (per Codex round-1 P2: in-memory `SourceCache`
+    /// directory (an in-memory `SourceCache`
     /// preload bypasses `read_dir` and never exercises the discovery
     /// path). Asserts the plaintext content lands in the rendered
     /// output and that the scheduler logs a `Plaintext::Whole` batch.
