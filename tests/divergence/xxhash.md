@@ -1,4 +1,4 @@
-Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.574/0.505/0.603/0.679/0.554/0.747/0.741
+Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.574/0.505/0.519/0.679/0.554/0.747/0.741
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,16 +57,16 @@ Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | walker |  | 1682 | 36 | go doc xxhash_asm.go:12 |  |  | 0.514 |
 | walker |  | 1693 | 11 | go doc xxhash.go:72 |  |  | 0.514 |
 | ns | 1718 |  | 177 | `Reset`, `ResetWithSeed`, `Size`, `BlockSize` signatures | 2.7 |  | 0.506 |
-| ns | 1830 |  | 112 | `Write`, `Sum`, `Sum64` doc comments + signatures | 2.8 |  | 0.495 |
-| walker |  | 1938 | 245 | README.md section #0 |  |  | 0.610 |
-| ns | 2022 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.602 |
-| walker |  | 2055 | 117 | plaintext config testall.sh |  |  | 0.603 |
-| walker |  | 2096 | 41 | go doc xxhash_unsafe.go:45 |  |  | 0.611 |
-| walker |  | 2140 | 44 | go doc xxhash_unsafe.go:38 |  |  | 0.623 |
-| ns | 2145 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.615 |
-| ns | 2217 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.620 |
-| walker |  | 2253 | 113 | go module file xxhashbench/go.mod |  |  | 0.621 |
-| walker |  | 2265 | 12 | go doc xxhash.go:129 |  |  | 0.624 |
+| walker |  | 1810 | 117 | plaintext config testall.sh |  |  | 0.507 |
+| ns | 1830 |  | 112 | `Write`, `Sum`, `Sum64` doc comments + signatures | 2.8 |  | 0.497 |
+| walker |  | 1851 | 41 | go doc xxhash_unsafe.go:45 |  |  | 0.506 |
+| walker |  | 1895 | 44 | go doc xxhash_unsafe.go:38 |  |  | 0.518 |
+| walker |  | 2008 | 113 | go module file xxhashbench/go.mod |  |  | 0.519 |
+| walker |  | 2020 | 12 | go doc xxhash.go:129 |  |  | 0.523 |
+| ns | 2022 |  | 192 | The five XXH64 primes and the `primes` array | 2.9 |  | 0.519 |
+| ns | 2145 |  | 123 | Marshaling: `magic`/`marshaledSize` constants + `MarshalBinary`/`UnmarshalBinary` signatures | 2.10 |  | 0.515 |
+| ns | 2217 |  | 72 | Roster: the byte-level helpers `appendUint64`, `consumeUint64`, `u64`, `u32` | 2.11 |  | 0.522 |
+| walker |  | 2265 | 245 | README.md section #0 |  |  | 0.624 |
 | walker |  | 2279 | 14 | go doc xxhash.go:176 |  |  | 0.631 |
 | walker |  | 2296 | 17 | go doc xxhash.go:45 |  |  | 0.637 |
 | walker |  | 2347 | 51 | go body xxhsum/xxhsum.go:34 |  |  | 0.638 |
@@ -75,21 +75,21 @@ Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | walker |  | 2449 | 84 | go body xxhash_unsafe.go:45 |  |  | 0.658 |
 | walker |  | 2505 | 56 | go body dynamic/plugin.go:19 |  |  | 0.659 |
 | ns | 2511 |  | 75 | `ResetWithSeed` body: how a seed becomes the four lanes | 3.1 | 2.7 | 0.646 |
-| walker |  | 2523 | 18 | go doc xxhash.go:190 |  |  | 0.654 |
-| walker |  | 2598 | 75 | go body xxhsum/xxhsum.go:43 |  |  | 0.655 |
-| ns | 2616 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.635 |
-| walker |  | 2617 | 19 | go doc xxhash.go:113 |  |  | 0.642 |
-| walker |  | 2659 | 42 | go doc xxhash_unsafe.go:55 |  |  | 0.654 |
-| walker |  | 2685 | 26 | go body xxhash.go:45 |  |  | 0.667 |
-| ns | 2737 |  | 121 | `xxhash_unsafe.go`: the actual unsafe string-to-slice conversion | 3.3 | 2.4 | 0.669 |
-| walker |  | 2821 | 136 | README.md section #1 |  |  | 0.670 |
-| walker |  | 2852 | 31 | go doc xxhash.go:53 |  |  | 0.679 |
+| ns | 2616 |  | 105 | `round` and `mergeRound` bodies | 3.2 | 2.12 | 0.626 |
+| walker |  | 2641 | 136 | README.md section #1 |  |  | 0.627 |
+| walker |  | 2659 | 18 | go doc xxhash.go:190 |  |  | 0.635 |
+| walker |  | 2734 | 75 | go body xxhsum/xxhsum.go:43 |  |  | 0.636 |
+| ns | 2737 |  | 121 | `xxhash_unsafe.go`: the actual unsafe string-to-slice conversion | 3.3 | 2.4 | 0.640 |
+| walker |  | 2753 | 19 | go doc xxhash.go:113 |  |  | 0.646 |
+| walker |  | 2900 | 147 | README.md section #3 |  |  | 0.646 |
+| walker |  | 2942 | 42 | go doc xxhash_unsafe.go:55 |  |  | 0.658 |
+| walker |  | 2968 | 26 | go body xxhash.go:45 |  |  | 0.670 |
+| walker |  | 2999 | 31 | go doc xxhash.go:53 |  |  | 0.679 |
 | ns | 3010 |  | 273 | `Write` body, part 1: buffering into `mem` and flushing a partial block | 3.4 | 2.8 | 0.645 |
-| ns | 3119 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.628 |
-| walker |  | 3163 | 311 | README.md section #2 |  |  | 0.630 |
-| walker |  | 3310 | 147 | README.md section #3 |  |  | 0.630 |
-| ns | 3328 |  | 209 | `Sum64` body, part 1: merging the four lanes (and the <32-byte shortcut) | 3.6 | 2.8 | 0.609 |
-| walker |  | 3345 | 35 | go doc xxhash.go:59 |  |  | 0.620 |
+| walker |  | 3034 | 35 | go doc xxhash.go:59 |  |  | 0.656 |
+| ns | 3119 |  | 109 | `Write` body, part 2: full blocks via `writeBlocks`, then store the remainder | 3.5 | 2.8 | 0.639 |
+| ns | 3328 |  | 209 | `Sum64` body, part 1: merging the four lanes (and the <32-byte shortcut) | 3.6 | 2.8 | 0.619 |
+| walker |  | 3345 | 311 | README.md section #2 |  |  | 0.620 |
 | walker |  | 3379 | 34 | go names xxhash_unsafe_test.go |  |  | 0.620 |
 | ns | 3593 |  | 265 | `Sum64` body, part 2: 8/4/1-byte tail loops and the final avalanche | 3.7 | 2.8 | 0.593 |
 | walker |  | 3612 | 233 | go body xxhsum/xxhsum.go:11 |  |  | 0.596 |

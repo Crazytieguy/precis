@@ -1,4 +1,4 @@
-Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.750/0.722/0.826/0.758/0.642/0.608
+Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.685/0.750/0.722/0.826/0.758/0.642/0.608
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,16 +25,16 @@ Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 805 | 9 | lua body performance/run.lua:37 |  |  | 0.720 |
 | walker |  | 819 | 14 | lua body spec/metamethods_spec.lua:3 |  |  | 0.720 |
 | walker |  | 833 | 14 | lua body spec/metamethods_spec.lua:7 |  |  | 0.720 |
-| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.635 |
-| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.593 |
-| walker |  | 1149 | 316 | README.md section #0 |  |  | 0.607 |
-| ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.581 |
-| walker |  | 1199 | 50 | lua body middleclass.lua:139 |  |  | 0.600 |
-| walker |  | 1249 | 50 | lua body middleclass.lua:172 |  |  | 0.625 |
-| walker |  | 1301 | 52 | lua body middleclass.lua:186 |  |  | 0.642 |
-| ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.669 |
-| walker |  | 1360 | 59 | lua body middleclass.lua:144 |  |  | 0.706 |
-| walker |  | 1424 | 64 | lua body middleclass.lua:178 |  |  | 0.741 |
+| walker |  | 883 | 50 | lua body middleclass.lua:139 |  |  | 0.745 |
+| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.656 |
+| walker |  | 933 | 50 | lua body middleclass.lua:172 |  |  | 0.666 |
+| walker |  | 985 | 52 | lua body middleclass.lua:186 |  |  | 0.685 |
+| walker |  | 1044 | 59 | lua body middleclass.lua:144 |  |  | 0.734 |
+| ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.702 |
+| walker |  | 1108 | 64 | lua body middleclass.lua:178 |  |  | 0.744 |
+| ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.709 |
+| ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.663 |
+| walker |  | 1424 | 316 | README.md section #0 |  |  | 0.741 |
 | ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.750 |
 | walker |  | 1504 | 80 | lua body middleclass.lua:68 |  |  | 0.751 |
 | ns | 1569 |  | 135 | README Specs and Performance tests sections — how to run everything | 3.3 |  | 0.719 |

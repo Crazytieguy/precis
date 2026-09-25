@@ -83,14 +83,22 @@ readme.md
   23→## Highlights
   …
   36→## Install
-  …
+  37→
+  38→```sh
+  39→npm install chalk
+  40→```
+  41→
+  42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
   44→## Usage
   …
   112→## API
   113→
   114→### chalk.`<style>[.<style>...](string, [string...])`
+  116→Example: `chalk.red.bold.underline('Hello', 'world');`
   …
+  120→Multiple arguments will be separated by space.
   122→### chalk.level
+  124→Specifies the level of color support.
   …
   143→### supportsColor
   …
@@ -101,6 +109,14 @@ readme.md
   171→## Styles
   172→
   173→### Modifiers
+  175→- `reset` - Reset the current style.
+  176→- `bold` - Make the text bold.
+  177→- `dim` - Make the text have lower opacity.
+  178→- `italic` - Make the text italic. *(Not widely supported)*
+  179→- `underline` - Put a horizontal line below the text. *(Not widely supported)*
+  180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
+  181→- `inverse` - Invert background and foreground colors.
+  182→- `hidden` - Print the text but make it invisible.
   …
   186→### Colors
   …
@@ -109,19 +125,24 @@ readme.md
   224→## 256 and Truecolor color support
   …
   246→## Browser support
-  …
+  247→
+  248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
   250→## Windows
-  …
+  251→
+  252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
   254→## FAQ
   255→
   256→### Why not switch to a smaller coloring package?
   …
+  268→*\- [Sindre](https://github.com/sindresorhus)*
   270→### But the smaller coloring package has benchmarks showing it is faster
   …
   274→## Related
   …
   294→## Maintainers
-  …
+  295→
+  296→- [Sindre Sorhus](https://github.com/sindresorhus)
+  297→- [Josh Junon](https://github.com/qix-)
 source/
   index.d.ts
     …
@@ -190,11 +211,7 @@ source/
     307→Basic foreground color names.
     308→*/
     309→export const foregroundColors: readonly ForegroundColor[];
-    311→/**
-    312→@deprecated Use `backgroundColorNames` instead.
-    313→
-    314→Basic background color names.
-    315→*/
+    …
     316→export const backgroundColors: readonly BackgroundColor[];
     …
     323→export const colors: readonly Color[];
@@ -283,41 +300,6 @@ source/
   vendor/
     ansi-styles/
       index.d.ts
-        1→export interface CSPair { // eslint-disable-line @typescript-eslint/naming-convention
-        …
-        13→export interface ColorBase {
-        …
-        26→export interface Modifier {
-        …
-        75→export interface ForegroundColor {
-        …
-        105→export interface BackgroundColor {
-        …
-        135→export interface ConvertColor {
-        …
-        186→export type ModifierName = keyof Modifier;
-        …
-        193→export type ForegroundColorName = keyof ForegroundColor;
-        …
-        200→export type BackgroundColorName = keyof BackgroundColor;
-        …
-        207→export type ColorName = ForegroundColorName | BackgroundColorName;
-        …
-        212→export const modifierNames: readonly ModifierName[];
-        …
-        217→export const foregroundColorNames: readonly ForegroundColorName[];
-        …
-        222→export const backgroundColorNames: readonly BackgroundColorName[];
-        …
-        227→export const colorNames: readonly ColorName[];
-        228→
-        229→declare const ansiStyles: {
-        230→	readonly modifier: Modifier;
-        231→	readonly color: ColorBase & ForegroundColor;
-        232→	readonly bgColor: ColorBase & BackgroundColor;
-        233→	readonly codes: ReadonlyMap<number, number>;
-        234→} & ForegroundColor & BackgroundColor & Modifier & ConvertColor;
-        236→export default ansiStyles;
       index.js
         …
         68→export const modifierNames = Object.keys(styles.modifier);
@@ -334,10 +316,6 @@ source/
       browser.d.ts
         1→export {default} from './index.js';
       browser.js
-        …
-        29→const supportsColor = {
-        …
-        34→export default supportsColor;
       index.d.ts
       index.js
 test/

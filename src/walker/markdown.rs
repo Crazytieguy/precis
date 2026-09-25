@@ -285,7 +285,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
-        let src_lines: Vec<&str> = source.lines().collect();
         let mut prev_section_key: Option<BatchKey> = None;
         for (idx, range) in ranges.iter().enumerate() {
             if let Some(content) = build_section_content(&file, &source, range, headline.as_ref()) {
@@ -309,50 +308,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: key.into(),
                     predecessor,
                     content,
-                    value: section_value(&file, range, &src_lines, root_readme, ctx),
+                    value: section_value(&file, range, ctx),
                 });
             }
         }
     }
     out
-}
-
-/// Essential source mass below which the root README stops reading as
-/// peripheral prose beside the code and becomes the repository's primary
-/// orientation: there is not enough source to learn the project from, so
-/// the document that explains it competes with the source rather than
-/// behind it. Doubling this admits addressable-reference READMEs whose
-/// valuable sections are late-index and measured worse.
-const THIN_SOURCE_BYTES: u64 = 24_000;
-
-/// Section size, in tokens, that prices at par under
-/// [`thin_source_orientation_factor`]. At 400 the par point lands above
-/// a whole README's sections and the shape becomes a flat damp.
-const THIN_SOURCE_PAR_TOKENS: f64 = 200.0;
-
-/// Exponent on the size ratio. Positive: in a thin-source repository the
-/// substantive sections are the orientation and the heading-sized stubs
-/// between them are not, which is the split an NS-aware oracle makes on
-/// these READMEs. Measured flat against 1.0 at the primary budget; the
-/// milder shape is kept.
-const THIN_SOURCE_MASS_EXPONENT: f64 = 0.5;
-
-/// Size-shaped premium for root-README sections of a thin-source
-/// repository. Sections at [`THIN_SOURCE_PAR_TOKENS`] are unchanged;
-/// larger sections rise and stub sections fall.
-fn thin_source_orientation_factor(
-    range: &SectionRange,
-    src_lines: &[&str],
-    root_readme: bool,
-    ctx: &WalkCtx,
-) -> f64 {
-    if !root_readme || ctx.essential_source_bytes() >= THIN_SOURCE_BYTES {
-        return 1.0;
-    }
-    let tokens: usize = (range.start..=range.end)
-        .map(|row| row_tokens(src_lines, row))
-        .sum();
-    (tokens as f64 / THIN_SOURCE_PAR_TOKENS).powf(THIN_SOURCE_MASS_EXPONENT)
 }
 
 /// True if the outline batch should be emitted — bounded by both row
@@ -538,18 +499,7 @@ fn heading_slab_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 /// Per-section value. Child ranges scale the parent's value so they
 /// don't over-rank once cost drops. `Intro` keeps full weight.
-fn section_value(
-    file: &Path,
-    range: &SectionRange,
-    src_lines: &[&str],
-    root_readme: bool,
-    ctx: &WalkCtx,
-) -> f64 {
-    section_signal_value(file, range, ctx)
-        * thin_source_orientation_factor(range, src_lines, root_readme, ctx)
-}
-
-fn section_signal_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
+fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     let parent = if is_readme(file) {
         readme_section_value(file, range, ctx)
     } else {

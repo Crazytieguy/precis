@@ -246,14 +246,6 @@ impl WalkCtx {
             .as_deref()
     }
 
-    /// Hand-authored essential source bytes across the whole tree — the
-    /// same universe [`dominant_source_file`](Self::dominant_source_file)
-    /// measures shares of. A repository-scale signal: how much source
-    /// there is for the orientation documents to compete against.
-    pub fn essential_source_bytes(&self) -> u64 {
-        self.essential_source().per_language.values().sum()
-    }
-
     fn essential_source(&self) -> &EssentialSource {
         self.essential_source
             .get_or_init(|| enumerate_essential_source(&self.root, &self.dir_filter))
