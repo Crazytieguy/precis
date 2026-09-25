@@ -4,7 +4,9 @@
 //! locals an `export { … }` clause, `export default X` or `export = X`
 //! names, and CommonJS `module.exports` / `exports.x` targets. Every
 //! top-level declaration of a `.d.ts` file is API (ambient declarations
-//! are implicitly exported); other unexported declarations are hidden.
+//! are implicitly exported), and so is every top-level declaration of an
+//! entrypoint that exports nothing (an application's startup file);
+//! other unexported declarations are hidden.
 //! `export … from` and the statements that export a name without
 //! declaring it are re-exports, listed on the roster.
 //!
@@ -52,7 +54,7 @@ fn grammar(path: &Path) -> tree_sitter::Language {
     }
 }
 
-fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut cursor = root.walk();
     let statements: Vec<Node> = root.children(&mut cursor).collect();
@@ -64,7 +66,12 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         .collect();
     scan.follow_local_factories(file, &classified);
 
-    let lists_unexported = is_declaration_file(&file.path);
+    let exports_nothing = scan.public_names.is_empty()
+        && classified
+            .iter()
+            .all(|(_, top_level)| !matches!(top_level, TopLevel::Exported(_) | TopLevel::Reexport));
+    let lists_unexported =
+        is_declaration_file(&file.path) || (exports_nothing && is_entrypoint(&file.path, ctx));
 
     let mut model = FileModel::default();
     for (statement, top_level) in classified {
@@ -1120,11 +1127,16 @@ export { local, type Shape };
     }
 
     #[test]
-    fn code_typescript_unexported_declarations_are_hidden() {
+    fn code_typescript_unexported_declarations_are_hidden_unless_an_entrypoint_exports_nothing() {
         let source = "import x from 'x';\nconst helper = 1;\nexport const api = 2;\n";
         let listed = |relative| extract_source(relative, source).decls.len();
         assert_eq!(listed("src/other.ts"), 1);
         assert_eq!(listed("src/index.ts"), 1);
+        let application = extract_source(
+            "src/main.ts",
+            "import { mount } from 'ui';\nfunction App() {}\nfunction start() {\n  mount(App);\n}\nstart();\n",
+        );
+        assert_eq!(application.decls.len(), 2);
         let script = extract_source(
             "scripts/build.js",
             "const fs = require('fs');\nfunction main() {}\nmain();\n",

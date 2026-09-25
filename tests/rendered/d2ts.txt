@@ -315,14 +315,6 @@ packages/
       multiset.test.ts
       operators/
       operators-sqlite/
-        buffer.test.ts
-        consolidate.test.ts
-        count.test.ts
-        distinct.test.ts
-        groupBy.test.ts
-        injection.test.ts
-        join.test.ts
-        reduce.test.ts
       order.test.ts
       utils.test.ts
       version-index.test.ts
@@ -335,6 +327,24 @@ packages/
       base.ts
       graph.ts
       index.ts
+        …
+        9→const generateData = (size: number) => {
+        …
+        25→function run({
+        26→  initialSize = 9000,
+        27→  incrementalRuns = 1000,
+        28→}: {
+        29→  initialSize: number
+        30→  incrementalRuns: number
+        31→}) {
+        …
+        496→const results = [
+        497→  run({ initialSize: 90, incrementalRuns: 1000 }),
+        498→  run({ initialSize: 900, incrementalRuns: 1000 }),
+        499→  run({ initialSize: 9000, incrementalRuns: 1000 }),
+        500→  run({ initialSize: 90000, incrementalRuns: 1000 }),
+        501→]
+        …
     tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml
