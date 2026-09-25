@@ -2,9 +2,9 @@
 //!
 //! The declarations of a file are its "effective top level": the body of
 //! a wrapping `#ifndef X` / `#define X` / `#endif` header guard, the body
-//! of `extern "C" { … }` (bare or `#ifdef __cplusplus`-wrapped), and, in
-//! headers, `#if` / `#ifdef` blocks holding only declarations and
-//! directives. Other conditional blocks stay opaque.
+//! of `extern "C" { … }` (bare or `#ifdef __cplusplus`-wrapped), and
+//! `#if` / `#ifdef` blocks holding only declarations and directives.
+//! Other conditional blocks stay opaque.
 //!
 //! - Function definitions are `Callable`; prototypes, typedefs, structs /
 //!   unions / enums, global variables and macros are `Whole`, with one
@@ -43,7 +43,7 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let guard_name = header_guard_name(root, source);
     let mut decls = Vec::new();
     let mut directives = Vec::new();
-    walk_top_level(root, source, in_header, &mut |node| {
+    walk_top_level(root, source, &mut |node| {
         if node.kind().starts_with('#') {
             directives.extend(gate_directive(node, file));
         } else {
@@ -389,53 +389,39 @@ fn banner_end_row(root: Node, file: &SourceFile) -> Option<usize> {
 // --- effective top level --------------------------------------------------
 
 /// Visit each "effective top-level" item: descends through the file's
-/// header guard and through `extern "C" { … }` linkage specs.
-/// `feature_gates` additionally descends declaration-only `#if` /
-/// `#ifdef` blocks.
-fn walk_top_level<'a, F: FnMut(Node<'a>)>(
-    root: Node<'a>,
-    source: &str,
-    feature_gates: bool,
-    visit: &mut F,
-) {
+/// header guard, through `extern "C" { … }` linkage specs and through
+/// declaration-only `#if` / `#ifdef` blocks.
+fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &mut F) {
     let header_guard_body = header_guard_body_node(root, source);
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         if Some(child) == header_guard_body {
-            descend_envelopes(child, source, feature_gates, visit);
+            descend_envelopes(child, source, visit);
         } else {
-            visit_with_envelope_descent(child, source, feature_gates, visit);
+            visit_with_envelope_descent(child, source, visit);
         }
     }
 }
 
-fn descend_envelopes<'a, F: FnMut(Node<'a>)>(
-    node: Node<'a>,
-    source: &str,
-    feature_gates: bool,
-    visit: &mut F,
-) {
+fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit: &mut F) {
     let mut cursor = node.walk();
     for child in node.named_children(&mut cursor) {
-        visit_with_envelope_descent(child, source, feature_gates, visit);
+        visit_with_envelope_descent(child, source, visit);
     }
 }
 
 /// Visit `node`, descending if it's an `extern "C" { … }` envelope (raw
-/// or `#ifdef __cplusplus`-wrapped) or, when `feature_gates`, a
-/// declaration-only feature gate.
+/// or `#ifdef __cplusplus`-wrapped) or a declaration-only feature gate.
 fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
     source: &str,
-    feature_gates: bool,
     visit: &mut F,
 ) {
     if let Some(decl_list) = extern_c_declaration_list(node, source) {
-        descend_envelopes(decl_list, source, feature_gates, visit);
+        descend_envelopes(decl_list, source, visit);
         return;
     }
-    if feature_gates
-        && matches!(node.kind(), "preproc_if" | "preproc_ifdef")
+    if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
         && !is_disabled_preproc_if(node, source)
         && feature_gate_is_declaration_only(node) == Some(true)
     {
@@ -460,7 +446,7 @@ fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
             "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
                 descend_feature_gate_branches(child, source, visit);
             }
-            _ => visit_with_envelope_descent(child, source, true, visit),
+            _ => visit_with_envelope_descent(child, source, visit),
         }
     }
 }
@@ -672,7 +658,7 @@ typedef int bar_t;
     }
 
     #[test]
-    fn c_feature_gates_descend_only_when_declaration_only_in_headers() {
+    fn c_feature_gates_descend_only_when_declaration_only() {
         let source = "\
 #ifdef HAVE_SIMD
 int search_simd(const char *text);
@@ -691,11 +677,9 @@ int gated_linkage(int x);
 static inline int wraps_code(void) { return 1; }
 #endif
 ";
-        assert_eq!(
-            name_rows_of(&model("krep.h", source)),
-            vec![vec![2], vec![4]]
-        );
-        assert!(model("krep.c", source).decls.is_empty());
+        for path in ["krep.h", "krep.c"] {
+            assert_eq!(name_rows_of(&model(path, source)), vec![vec![2], vec![4]]);
+        }
     }
 
     #[test]

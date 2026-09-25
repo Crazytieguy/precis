@@ -1,4 +1,4 @@
-Score(3000)=0.604 I=0.828 C=0.441 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.638/0.752/0.723/0.604/0.751/0.704/0.632
+Score(3000)=0.604 I=0.828 C=0.441 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.638/0.752/0.723/0.604/0.751/0.704/0.625
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -130,124 +130,132 @@ Score(3000)=0.604 I=0.828 C=0.441 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | walker |  | 6269 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 1, sub: 0, line: 39 } |  |  | 0.704 |
 | ns | 6272 |  | 258 | test/test_krep.c: complete roster of test functions, helpers and main | 4.10 |  | 0.685 |
 | ns | 6497 |  | 225 | test/test_regex.c and test/test_multiple_patterns.c rosters | 4.11 |  | 0.669 |
-| walker |  | 6498 | 229 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 1, line: 0 } |  |  | 0.670 |
-| walker |  | 6507 | 9 | Code::CodeKey { rung: Doc, file: krep.c, decl: 15, sub: 0, line: 93 } |  |  | 0.670 |
-| walker |  | 6523 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 20, sub: 0, line: 116 } |  |  | 0.670 |
+| walker |  | 6499 | 230 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 1, line: 0 } |  |  | 0.670 |
+| walker |  | 6512 | 13 | Code::CodeKey { rung: Decl, file: krep.c, decl: 21, sub: 0, line: 104 } |  |  | 0.670 |
+| walker |  | 6527 | 15 | Code::CodeKey { rung: Decl, file: krep.c, decl: 20, sub: 0, line: 101 } |  |  | 0.670 |
+| walker |  | 6536 | 9 | Code::CodeKey { rung: Doc, file: krep.c, decl: 15, sub: 0, line: 93 } |  |  | 0.670 |
+| walker |  | 6549 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 21, sub: 0, line: 104 } |  |  | 0.670 |
+| walker |  | 6563 | 14 | Code::CodeKey { rung: Doc, file: krep.c, decl: 20, sub: 0, line: 101 } |  |  | 0.670 |
 | ns | 6608 |  | 111 | test/test_directory.c roster: the separate recursive-search integration binary | 4.12 |  | 0.663 |
-| walker |  | 6743 | 220 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 2, line: 0 } |  |  | 0.666 |
-| walker |  | 6748 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 28, sub: 0, line: 128 } |  |  | 0.666 |
-| walker |  | 6753 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 29, sub: 0, line: 139 } |  |  | 0.666 |
-| walker |  | 6758 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 30, sub: 0, line: 175 } |  |  | 0.666 |
-| walker |  | 6763 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 31, sub: 0, line: 244 } |  |  | 0.666 |
-| walker |  | 6768 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 32, sub: 0, line: 256 } |  |  | 0.666 |
-| walker |  | 6778 | 10 | Code::CodeKey { rung: Doc, file: krep.c, decl: 29, sub: 0, line: 139 } |  |  | 0.666 |
-| walker |  | 6789 | 11 | Code::CodeKey { rung: Doc, file: krep.c, decl: 28, sub: 0, line: 128 } |  |  | 0.666 |
-| walker |  | 6801 | 12 | Code::CodeKey { rung: Doc, file: krep.c, decl: 27, sub: 0, line: 125 } |  |  | 0.666 |
-| walker |  | 6814 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 31, sub: 0, line: 244 } |  |  | 0.666 |
-| walker |  | 6832 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 30, sub: 0, line: 175 } |  |  | 0.666 |
-| ns | 6841 |  | 233 | test/test_compat.h: the TESTING wrapper roster and its guards | 4.13 |  | 0.654 |
-| walker |  | 6881 | 49 | Code::CodeKey { rung: Doc, file: krep.c, decl: 32, sub: 0, line: 256 } |  |  | 0.654 |
-| ns | 6972 |  | 131 | test/test_krep.h: shared test helper declarations | 4.14 |  | 0.646 |
-| ns | 7080 |  | 108 | Makefile compiler configuration: CC, CFLAGS, LDFLAGS, PREFIX | 5.1 |  | 0.640 |
-| walker |  | 7093 | 212 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 3, line: 0 } |  |  | 0.653 |
-| walker |  | 7098 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 34, sub: 0, line: 363 } |  |  | 0.653 |
-| walker |  | 7103 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 35, sub: 0, line: 401 } |  |  | 0.653 |
-| walker |  | 7108 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 36, sub: 0, line: 420 } |  |  | 0.653 |
-| walker |  | 7113 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 37, sub: 0, line: 438 } |  |  | 0.653 |
-| walker |  | 7118 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 38, sub: 0, line: 461 } |  |  | 0.653 |
-| walker |  | 7124 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 39, sub: 0, line: 1084 } |  |  | 0.653 |
-| walker |  | 7161 | 37 | Code::CodeKey { rung: Decl, file: krep.c, decl: 33, sub: 0, line: 329 } |  |  | 0.653 |
-| walker |  | 7177 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 35, sub: 0, line: 401 } |  |  | 0.653 |
-| walker |  | 7195 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 36, sub: 0, line: 420 } |  |  | 0.653 |
-| walker |  | 7215 | 20 | Code::CodeKey { rung: Doc, file: krep.c, decl: 33, sub: 0, line: 329 } |  |  | 0.653 |
-| walker |  | 7247 | 32 | Code::CodeKey { rung: Doc, file: krep.c, decl: 37, sub: 0, line: 438 } |  |  | 0.653 |
-| walker |  | 7284 | 37 | Code::CodeKey { rung: Doc, file: krep.c, decl: 39, sub: 0, line: 1084 } |  |  | 0.653 |
-| ns | 7316 |  | 236 | .github/workflows/ci.yml in full | 5.2 |  | 0.636 |
-| walker |  | 7324 | 40 | Code::CodeKey { rung: Doc, file: krep.c, decl: 34, sub: 0, line: 363 } |  |  | 0.636 |
-| walker |  | 7564 | 240 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 4, line: 0 } |  |  | 0.650 |
-| walker |  | 7570 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 40, sub: 0, line: 1125 } |  |  | 0.650 |
-| walker |  | 7576 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 41, sub: 0, line: 1137 } |  |  | 0.650 |
-| ns | 7580 |  | 264 | Makefile architecture detection: which SIMD flags each arch gets | 5.3 |  | 0.637 |
-| walker |  | 7582 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 42, sub: 0, line: 1198 } |  |  | 0.637 |
-| walker |  | 7588 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 43, sub: 0, line: 1213 } |  |  | 0.637 |
-| walker |  | 7594 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 46, sub: 0, line: 1585 } |  |  | 0.637 |
-| walker |  | 7600 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 48, sub: 0, line: 1771 } |  |  | 0.637 |
-| walker |  | 7606 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 49, sub: 0, line: 1873 } |  |  | 0.637 |
-| walker |  | 7647 | 41 | Code::CodeKey { rung: Decl, file: krep.c, decl: 45, sub: 0, line: 1389 } |  |  | 0.637 |
-| walker |  | 7697 | 50 | Code::CodeKey { rung: Decl, file: krep.c, decl: 44, sub: 0, line: 1259 } |  |  | 0.637 |
-| walker |  | 7747 | 50 | Code::CodeKey { rung: Decl, file: krep.c, decl: 47, sub: 0, line: 1628 } |  |  | 0.637 |
-| walker |  | 7757 | 10 | Code::CodeKey { rung: Doc, file: krep.c, decl: 41, sub: 0, line: 1137 } |  |  | 0.637 |
-| walker |  | 7768 | 11 | Code::CodeKey { rung: Doc, file: krep.c, decl: 40, sub: 0, line: 1125 } |  |  | 0.637 |
-| walker |  | 7783 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 43, sub: 0, line: 1213 } |  |  | 0.637 |
-| walker |  | 7800 | 17 | Code::CodeKey { rung: Doc, file: krep.c, decl: 42, sub: 0, line: 1198 } |  |  | 0.637 |
-| walker |  | 7819 | 19 | Code::CodeKey { rung: Doc, file: krep.c, decl: 49, sub: 0, line: 1873 } |  |  | 0.637 |
-| walker |  | 7855 | 36 | Code::CodeKey { rung: Doc, file: krep.c, decl: 44, sub: 0, line: 1259 } |  |  | 0.637 |
-| ns | 7883 |  | 303 | Makefile compile/link rules and the parallel -DTESTING build | 5.4 |  | 0.627 |
-| walker |  | 7911 | 56 | Code::CodeKey { rung: Doc, file: krep.c, decl: 47, sub: 0, line: 1628 } |  |  | 0.627 |
-| walker |  | 7970 | 59 | Code::CodeKey { rung: Doc, file: krep.c, decl: 46, sub: 0, line: 1585 } |  |  | 0.627 |
-| ns | 8052 |  | 169 | Makefile run targets: test, test-directory, ci, bench-rg, all-tests | 5.5 |  | 0.617 |
-| ns | 8209 |  | 157 | .github/workflows/release.yml: tag trigger and release artifacts | 5.6 |  | 0.606 |
-| walker |  | 8251 | 281 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 5, line: 0 } |  |  | 0.619 |
-| walker |  | 8257 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 50, sub: 0, line: 1919 } |  |  | 0.619 |
-| walker |  | 8263 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 51, sub: 0, line: 1964 } |  |  | 0.619 |
-| walker |  | 8269 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 52, sub: 0, line: 1999 } |  |  | 0.619 |
-| walker |  | 8275 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 54, sub: 0, line: 2252 } |  |  | 0.619 |
-| walker |  | 8281 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 55, sub: 0, line: 2265 } |  |  | 0.619 |
-| walker |  | 8287 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 56, sub: 0, line: 2274 } |  |  | 0.619 |
-| walker |  | 8293 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 57, sub: 0, line: 3071 } |  |  | 0.619 |
-| walker |  | 8299 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 58, sub: 0, line: 3090 } |  |  | 0.619 |
-| walker |  | 8305 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 59, sub: 0, line: 3122 } |  |  | 0.619 |
-| walker |  | 8311 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 62, sub: 0, line: 3163 } |  |  | 0.619 |
-| walker |  | 8317 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 63, sub: 0, line: 3180 } |  |  | 0.619 |
-| walker |  | 8351 | 34 | Code::CodeKey { rung: Decl, file: krep.c, decl: 60, sub: 0, line: 3146 } |  |  | 0.619 |
-| walker |  | 8408 | 57 | Code::CodeKey { rung: Decl, file: krep.c, decl: 61, sub: 0, line: 3154 } |  |  | 0.619 |
-| walker |  | 8418 | 10 | Code::CodeKey { rung: Doc, file: krep.c, decl: 53, sub: 0, line: 2249 } |  |  | 0.619 |
-| walker |  | 8431 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 55, sub: 0, line: 2265 } |  |  | 0.619 |
-| walker |  | 8445 | 14 | Code::CodeKey { rung: Doc, file: krep.c, decl: 62, sub: 0, line: 3163 } |  |  | 0.619 |
-| walker |  | 8460 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 57, sub: 0, line: 3071 } |  |  | 0.619 |
-| ns | 8462 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.623 |
-| walker |  | 8475 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 58, sub: 0, line: 3090 } |  |  | 0.623 |
-| walker |  | 8490 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 59, sub: 0, line: 3122 } |  |  | 0.623 |
-| walker |  | 8505 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 60, sub: 0, line: 3146 } |  |  | 0.623 |
-| walker |  | 8521 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 52, sub: 0, line: 1999 } |  |  | 0.623 |
-| walker |  | 8537 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 54, sub: 0, line: 2252 } |  |  | 0.623 |
-| walker |  | 8554 | 17 | Code::CodeKey { rung: Doc, file: krep.c, decl: 51, sub: 0, line: 1964 } |  |  | 0.623 |
-| walker |  | 8572 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 63, sub: 0, line: 3180 } |  |  | 0.623 |
-| walker |  | 8591 | 19 | Code::CodeKey { rung: Doc, file: krep.c, decl: 50, sub: 0, line: 1919 } |  |  | 0.623 |
-| walker |  | 8611 | 20 | Code::CodeKey { rung: Doc, file: krep.c, decl: 61, sub: 0, line: 3154 } |  |  | 0.624 |
-| ns | 8696 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.624 |
-| walker |  | 8914 | 303 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 6, line: 0 } |  |  | 0.640 |
-| walker |  | 8920 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 64, sub: 0, line: 3240 } |  |  | 0.640 |
-| walker |  | 8926 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 65, sub: 0, line: 3272 } |  |  | 0.640 |
-| walker |  | 8932 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 66, sub: 0, line: 3297 } |  |  | 0.640 |
-| walker |  | 8938 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 68, sub: 0, line: 3442 } |  |  | 0.640 |
-| walker |  | 8944 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 70, sub: 0, line: 4046 } |  |  | 0.640 |
-| walker |  | 8950 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 71, sub: 0, line: 4104 } |  |  | 0.640 |
-| walker |  | 8956 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 72, sub: 0, line: 4209 } |  |  | 0.640 |
-| walker |  | 8962 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 73, sub: 0, line: 4251 } |  |  | 0.640 |
-| ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.632 |
-| walker |  | 8968 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 74, sub: 0, line: 4313 } |  |  | 0.632 |
-| walker |  | 8974 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 75, sub: 0, line: 4332 } |  |  | 0.632 |
-| walker |  | 8998 | 24 | Code::CodeKey { rung: Decl, file: krep.c, decl: 67, sub: 0, line: 3310 } |  |  | 0.632 |
-| walker |  | 9039 | 41 | Code::CodeKey { rung: Decl, file: krep.c, decl: 69, sub: 0, line: 3891 } |  |  | 0.632 |
-| walker |  | 9080 | 41 | Code::CodeKey { rung: Decl, file: krep.c, decl: 76, sub: 0, line: 4371 } |  |  | 0.632 |
-| walker |  | 9091 | 11 | Code::CodeKey { rung: Doc, file: krep.c, decl: 75, sub: 0, line: 4332 } |  |  | 0.632 |
-| walker |  | 9104 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 69, sub: 0, line: 3891 } |  |  | 0.632 |
-| walker |  | 9117 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 74, sub: 0, line: 4313 } |  |  | 0.632 |
-| walker |  | 9131 | 14 | Code::CodeKey { rung: Doc, file: krep.c, decl: 72, sub: 0, line: 4209 } |  |  | 0.632 |
-| walker |  | 9146 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 67, sub: 0, line: 3310 } |  |  | 0.632 |
-| walker |  | 9161 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 73, sub: 0, line: 4251 } |  |  | 0.632 |
-| walker |  | 9177 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 70, sub: 0, line: 4046 } |  |  | 0.632 |
-| walker |  | 9195 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 71, sub: 0, line: 4104 } |  |  | 0.632 |
-| walker |  | 9215 | 20 | Code::CodeKey { rung: Doc, file: krep.c, decl: 65, sub: 0, line: 3272 } |  |  | 0.632 |
-| walker |  | 9236 | 21 | Code::CodeKey { rung: Doc, file: krep.c, decl: 66, sub: 0, line: 3297 } |  |  | 0.632 |
-| walker |  | 9257 | 21 | Code::CodeKey { rung: Doc, file: krep.c, decl: 76, sub: 0, line: 4371 } |  |  | 0.633 |
-| walker |  | 9281 | 24 | Code::CodeKey { rung: Doc, file: krep.c, decl: 64, sub: 0, line: 3240 } |  |  | 0.633 |
+| walker |  | 6796 | 233 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 2, line: 0 } |  |  | 0.663 |
+| walker |  | 6801 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 33, sub: 0, line: 128 } |  |  | 0.664 |
+| walker |  | 6806 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 34, sub: 0, line: 139 } |  |  | 0.664 |
+| walker |  | 6816 | 10 | Code::CodeKey { rung: Decl, file: krep.c, decl: 23, sub: 0, line: 109 } |  |  | 0.664 |
+| walker |  | 6827 | 11 | Code::CodeKey { rung: Decl, file: krep.c, decl: 22, sub: 0, line: 107 } |  |  | 0.664 |
+| walker |  | 6839 | 12 | Code::CodeKey { rung: Decl, file: krep.c, decl: 24, sub: 0, line: 111 } |  |  | 0.664 |
+| ns | 6841 |  | 233 | test/test_compat.h: the TESTING wrapper roster and its guards | 4.13 |  | 0.652 |
+| walker |  | 6849 | 10 | Code::CodeKey { rung: Doc, file: krep.c, decl: 34, sub: 0, line: 139 } |  |  | 0.652 |
+| walker |  | 6860 | 11 | Code::CodeKey { rung: Doc, file: krep.c, decl: 33, sub: 0, line: 128 } |  |  | 0.652 |
+| walker |  | 6872 | 12 | Code::CodeKey { rung: Doc, file: krep.c, decl: 32, sub: 0, line: 125 } |  |  | 0.652 |
+| walker |  | 6886 | 14 | Code::CodeKey { rung: Doc, file: krep.c, decl: 25, sub: 0, line: 116 } |  |  | 0.652 |
+| ns | 6972 |  | 131 | test/test_krep.h: shared test helper declarations | 4.14 |  | 0.644 |
+| ns | 7080 |  | 108 | Makefile compiler configuration: CC, CFLAGS, LDFLAGS, PREFIX | 5.1 |  | 0.638 |
+| walker |  | 7096 | 210 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 3, line: 0 } |  |  | 0.651 |
+| walker |  | 7101 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 35, sub: 0, line: 175 } |  |  | 0.651 |
+| walker |  | 7106 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 36, sub: 0, line: 244 } |  |  | 0.651 |
+| walker |  | 7111 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 37, sub: 0, line: 256 } |  |  | 0.651 |
+| walker |  | 7116 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 39, sub: 0, line: 363 } |  |  | 0.651 |
+| walker |  | 7121 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 40, sub: 0, line: 401 } |  |  | 0.651 |
+| walker |  | 7126 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 41, sub: 0, line: 420 } |  |  | 0.651 |
+| walker |  | 7131 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 42, sub: 0, line: 438 } |  |  | 0.651 |
+| walker |  | 7168 | 37 | Code::CodeKey { rung: Decl, file: krep.c, decl: 38, sub: 0, line: 329 } |  |  | 0.651 |
+| walker |  | 7181 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 36, sub: 0, line: 244 } |  |  | 0.651 |
+| walker |  | 7197 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 40, sub: 0, line: 401 } |  |  | 0.651 |
+| walker |  | 7215 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 35, sub: 0, line: 175 } |  |  | 0.651 |
+| walker |  | 7233 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 41, sub: 0, line: 420 } |  |  | 0.651 |
+| walker |  | 7253 | 20 | Code::CodeKey { rung: Doc, file: krep.c, decl: 38, sub: 0, line: 329 } |  |  | 0.651 |
+| walker |  | 7285 | 32 | Code::CodeKey { rung: Doc, file: krep.c, decl: 42, sub: 0, line: 438 } |  |  | 0.651 |
+| ns | 7316 |  | 236 | .github/workflows/ci.yml in full | 5.2 |  | 0.634 |
+| walker |  | 7325 | 40 | Code::CodeKey { rung: Doc, file: krep.c, decl: 39, sub: 0, line: 363 } |  |  | 0.634 |
+| walker |  | 7374 | 49 | Code::CodeKey { rung: Doc, file: krep.c, decl: 37, sub: 0, line: 256 } |  |  | 0.634 |
+| ns | 7580 |  | 264 | Makefile architecture detection: which SIMD flags each arch gets | 5.3 |  | 0.621 |
+| walker |  | 7590 | 216 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 4, line: 0 } |  |  | 0.629 |
+| walker |  | 7595 | 5 | Code::CodeKey { rung: Decl, file: krep.c, decl: 43, sub: 0, line: 461 } |  |  | 0.629 |
+| walker |  | 7601 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 44, sub: 0, line: 1084 } |  |  | 0.629 |
+| walker |  | 7607 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 45, sub: 0, line: 1125 } |  |  | 0.629 |
+| walker |  | 7613 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 46, sub: 0, line: 1137 } |  |  | 0.629 |
+| walker |  | 7619 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 47, sub: 0, line: 1198 } |  |  | 0.629 |
+| walker |  | 7625 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 48, sub: 0, line: 1213 } |  |  | 0.629 |
+| walker |  | 7666 | 41 | Code::CodeKey { rung: Decl, file: krep.c, decl: 50, sub: 0, line: 1389 } |  |  | 0.629 |
+| walker |  | 7716 | 50 | Code::CodeKey { rung: Decl, file: krep.c, decl: 49, sub: 0, line: 1259 } |  |  | 0.629 |
+| walker |  | 7726 | 10 | Code::CodeKey { rung: Doc, file: krep.c, decl: 46, sub: 0, line: 1137 } |  |  | 0.629 |
+| walker |  | 7737 | 11 | Code::CodeKey { rung: Doc, file: krep.c, decl: 45, sub: 0, line: 1125 } |  |  | 0.629 |
+| walker |  | 7752 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 48, sub: 0, line: 1213 } |  |  | 0.629 |
+| walker |  | 7769 | 17 | Code::CodeKey { rung: Doc, file: krep.c, decl: 47, sub: 0, line: 1198 } |  |  | 0.629 |
+| walker |  | 7805 | 36 | Code::CodeKey { rung: Doc, file: krep.c, decl: 49, sub: 0, line: 1259 } |  |  | 0.629 |
+| walker |  | 7842 | 37 | Code::CodeKey { rung: Doc, file: krep.c, decl: 44, sub: 0, line: 1084 } |  |  | 0.629 |
+| ns | 7883 |  | 303 | Makefile compile/link rules and the parallel -DTESTING build | 5.4 |  | 0.619 |
+| ns | 8052 |  | 169 | Makefile run targets: test, test-directory, ci, bench-rg, all-tests | 5.5 |  | 0.609 |
+| walker |  | 8075 | 233 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 5, line: 0 } |  |  | 0.624 |
+| walker |  | 8081 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 51, sub: 0, line: 1585 } |  |  | 0.624 |
+| walker |  | 8087 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 53, sub: 0, line: 1771 } |  |  | 0.624 |
+| walker |  | 8093 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 54, sub: 0, line: 1873 } |  |  | 0.624 |
+| walker |  | 8099 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 55, sub: 0, line: 1919 } |  |  | 0.624 |
+| walker |  | 8105 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 56, sub: 0, line: 1964 } |  |  | 0.624 |
+| walker |  | 8111 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 57, sub: 0, line: 1999 } |  |  | 0.624 |
+| walker |  | 8117 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 59, sub: 0, line: 2252 } |  |  | 0.624 |
+| walker |  | 8123 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 60, sub: 0, line: 2265 } |  |  | 0.624 |
+| walker |  | 8129 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 61, sub: 0, line: 2274 } |  |  | 0.624 |
+| walker |  | 8179 | 50 | Code::CodeKey { rung: Decl, file: krep.c, decl: 52, sub: 0, line: 1628 } |  |  | 0.624 |
+| walker |  | 8189 | 10 | Code::CodeKey { rung: Doc, file: krep.c, decl: 58, sub: 0, line: 2249 } |  |  | 0.624 |
+| walker |  | 8202 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 60, sub: 0, line: 2265 } |  |  | 0.624 |
+| ns | 8209 |  | 157 | .github/workflows/release.yml: tag trigger and release artifacts | 5.6 |  | 0.612 |
+| walker |  | 8218 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 57, sub: 0, line: 1999 } |  |  | 0.612 |
+| walker |  | 8234 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 59, sub: 0, line: 2252 } |  |  | 0.612 |
+| walker |  | 8251 | 17 | Code::CodeKey { rung: Doc, file: krep.c, decl: 56, sub: 0, line: 1964 } |  |  | 0.612 |
+| walker |  | 8270 | 19 | Code::CodeKey { rung: Doc, file: krep.c, decl: 54, sub: 0, line: 1873 } |  |  | 0.612 |
+| walker |  | 8289 | 19 | Code::CodeKey { rung: Doc, file: krep.c, decl: 55, sub: 0, line: 1919 } |  |  | 0.612 |
+| walker |  | 8345 | 56 | Code::CodeKey { rung: Doc, file: krep.c, decl: 52, sub: 0, line: 1628 } |  |  | 0.612 |
+| walker |  | 8404 | 59 | Code::CodeKey { rung: Doc, file: krep.c, decl: 51, sub: 0, line: 1585 } |  |  | 0.612 |
+| ns | 8462 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.616 |
+| walker |  | 8650 | 246 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 6, line: 0 } |  |  | 0.631 |
+| walker |  | 8656 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 62, sub: 0, line: 3071 } |  |  | 0.631 |
+| walker |  | 8662 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 63, sub: 0, line: 3090 } |  |  | 0.631 |
+| walker |  | 8668 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 64, sub: 0, line: 3122 } |  |  | 0.631 |
+| walker |  | 8674 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 67, sub: 0, line: 3163 } |  |  | 0.631 |
+| walker |  | 8680 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 68, sub: 0, line: 3180 } |  |  | 0.631 |
+| walker |  | 8686 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 69, sub: 0, line: 3240 } |  |  | 0.631 |
+| walker |  | 8692 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 70, sub: 0, line: 3272 } |  |  | 0.631 |
+| ns | 8696 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.631 |
+| walker |  | 8698 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 71, sub: 0, line: 3297 } |  |  | 0.631 |
+| walker |  | 8722 | 24 | Code::CodeKey { rung: Decl, file: krep.c, decl: 72, sub: 0, line: 3310 } |  |  | 0.631 |
+| walker |  | 8756 | 34 | Code::CodeKey { rung: Decl, file: krep.c, decl: 65, sub: 0, line: 3146 } |  |  | 0.631 |
+| walker |  | 8813 | 57 | Code::CodeKey { rung: Decl, file: krep.c, decl: 66, sub: 0, line: 3154 } |  |  | 0.632 |
+| walker |  | 8827 | 14 | Code::CodeKey { rung: Doc, file: krep.c, decl: 67, sub: 0, line: 3163 } |  |  | 0.632 |
+| walker |  | 8842 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 62, sub: 0, line: 3071 } |  |  | 0.632 |
+| walker |  | 8857 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 63, sub: 0, line: 3090 } |  |  | 0.632 |
+| walker |  | 8872 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 64, sub: 0, line: 3122 } |  |  | 0.632 |
+| walker |  | 8887 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 65, sub: 0, line: 3146 } |  |  | 0.632 |
+| walker |  | 8902 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 72, sub: 0, line: 3310 } |  |  | 0.632 |
+| walker |  | 8920 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 68, sub: 0, line: 3180 } |  |  | 0.632 |
+| walker |  | 8940 | 20 | Code::CodeKey { rung: Doc, file: krep.c, decl: 66, sub: 0, line: 3154 } |  |  | 0.632 |
+| walker |  | 8960 | 20 | Code::CodeKey { rung: Doc, file: krep.c, decl: 70, sub: 0, line: 3272 } |  |  | 0.632 |
+| ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.625 |
+| walker |  | 8981 | 21 | Code::CodeKey { rung: Doc, file: krep.c, decl: 71, sub: 0, line: 3297 } |  |  | 0.625 |
+| walker |  | 9005 | 24 | Code::CodeKey { rung: Doc, file: krep.c, decl: 69, sub: 0, line: 3240 } |  |  | 0.625 |
+| walker |  | 9207 | 202 | Code::CodeKey { rung: Names, file: krep.c, decl: 0, sub: 7, line: 0 } |  |  | 0.632 |
+| walker |  | 9213 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 73, sub: 0, line: 3442 } |  |  | 0.632 |
+| walker |  | 9219 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 75, sub: 0, line: 4046 } |  |  | 0.632 |
+| walker |  | 9225 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 76, sub: 0, line: 4104 } |  |  | 0.632 |
+| walker |  | 9231 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 77, sub: 0, line: 4209 } |  |  | 0.632 |
+| walker |  | 9237 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 78, sub: 0, line: 4251 } |  |  | 0.632 |
+| walker |  | 9243 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 79, sub: 0, line: 4313 } |  |  | 0.632 |
+| walker |  | 9249 | 6 | Code::CodeKey { rung: Decl, file: krep.c, decl: 80, sub: 0, line: 4332 } |  |  | 0.632 |
+| walker |  | 9290 | 41 | Code::CodeKey { rung: Decl, file: krep.c, decl: 74, sub: 0, line: 3891 } |  |  | 0.632 |
 | ns | 9299 |  | 333 | select_search_algorithm: dispatch head through the short-pattern branch | 6.4 |  | 0.619 |
-| walker |  | 9316 | 35 | Code::CodeKey { rung: Doc, file: krep.c, decl: 68, sub: 0, line: 3442 } |  |  | 0.619 |
-| walker |  | 9501 | 185 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.631 |
+| walker |  | 9331 | 41 | Code::CodeKey { rung: Decl, file: krep.c, decl: 81, sub: 0, line: 4371 } |  |  | 0.619 |
+| walker |  | 9342 | 11 | Code::CodeKey { rung: Doc, file: krep.c, decl: 80, sub: 0, line: 4332 } |  |  | 0.619 |
+| walker |  | 9355 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 74, sub: 0, line: 3891 } |  |  | 0.619 |
+| walker |  | 9368 | 13 | Code::CodeKey { rung: Doc, file: krep.c, decl: 79, sub: 0, line: 4313 } |  |  | 0.619 |
+| walker |  | 9382 | 14 | Code::CodeKey { rung: Doc, file: krep.c, decl: 77, sub: 0, line: 4209 } |  |  | 0.619 |
+| walker |  | 9397 | 15 | Code::CodeKey { rung: Doc, file: krep.c, decl: 78, sub: 0, line: 4251 } |  |  | 0.619 |
+| walker |  | 9413 | 16 | Code::CodeKey { rung: Doc, file: krep.c, decl: 75, sub: 0, line: 4046 } |  |  | 0.619 |
+| walker |  | 9431 | 18 | Code::CodeKey { rung: Doc, file: krep.c, decl: 76, sub: 0, line: 4104 } |  |  | 0.619 |
+| walker |  | 9452 | 21 | Code::CodeKey { rung: Doc, file: krep.c, decl: 81, sub: 0, line: 4371 } |  |  | 0.619 |
+| walker |  | 9487 | 35 | Code::CodeKey { rung: Doc, file: krep.c, decl: 73, sub: 0, line: 3442 } |  |  | 0.619 |
+| walker |  | 9672 | 185 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.631 |
 | ns | 9685 |  | 386 | select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback | 6.5 | 6.4 | 0.616 |
-| walker |  | 9699 | 198 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: true } |  |  | 0.633 |
-| walker |  | 9828 | 129 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.643 |
-| ns | 9868 |  | 183 | gitignore data model: pattern record and parent-chained context | 6.6 |  | 0.648 |
-| ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.642 |
+| ns | 9868 |  | 183 | gitignore data model: pattern record and parent-chained context | 6.6 |  | 0.622 |
+| walker |  | 9870 | 198 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: true } |  |  | 0.638 |
+| ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.632 |
+| walker |  | 9999 | 129 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.642 |
