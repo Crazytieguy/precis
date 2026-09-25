@@ -672,6 +672,7 @@ fn title_core(title: &str) -> String {
         .trim()
         .to_ascii_lowercase()
         .chars()
+        .skip_while(|c| !c.is_ascii_alphanumeric())
         .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
         .collect();
     core.trim().to_string()
@@ -2529,6 +2530,13 @@ Overview trailing details stay here.
         }
         assert_eq!(headline_spans, vec![(1, 2), (12, 12)]);
         assert_eq!(section_spans, vec![(4, 7), (14, 14)]);
+    }
+
+    #[test]
+    fn markdown_title_core_reads_past_leading_symbols() {
+        assert_eq!(title_core("🚀 Quick Start"), "quick start");
+        assert_eq!(title_core("**Usage**"), "usage");
+        assert_eq!(title_core("Usage: CLI"), "usage");
     }
 
     /// A non-ASCII tagline whose UTF-8 byte length exceeds the tagline

@@ -20,11 +20,6 @@ Cargo.toml
   13→sps-net     = { path = "sps-net" }
   14→
   15→# Shared dependencies defined once
-  16→[workspace.dependencies]
-  17→anyhow = "1.0.99"
-  18→thiserror = "2.0.16"
-  19→serde = { version = "1.0.219", features = ["derive"] } # Using the highest specified version and common features
-  20→serde_json = "1.0.143" # Used across multiple crates
   …
   43→[profile.release]
   44→lto = true
@@ -93,7 +88,50 @@ README.md
   63→## Trying it out:
   …
   77→## 📦 Usage
-  …
+  78→
+  79→```sh
+  80→# Print help
+  81→sps --help
+  82→
+  83→# Update metadata
+  84→sps update
+  85→
+  86→# List all installed packages
+  87→sps list
+  88→
+  89→# List only installed formulae
+  90→sps list --formula
+  91→
+  92→# List only installed casks
+  93→sps list --cask
+  94→
+  95→# Search for packages
+  96→sps search <formula/cask>
+  97→
+  98→# Get package info
+  99→sps info <formula/cask>
+  100→
+  101→# Install bottles or casks
+  102→sps install <formula/cask>
+  103→
+  104→# Build and install a formula from source
+  105→sps install --build-from-source <formula>
+  106→
+  107→# Uninstall
+  108→sps uninstall <formula/cask>
+  109→
+  110→# Reinstall
+  111→sps reinstall <formula/cask>
+  112→
+  113→#Upgrade
+  114→sps upgrade <formula/cask> or --all
+  115→
+  116→# (coming soon)
+  117→sps cleanup
+  118→sps init
+  119→```
+  120→
+  121→-----
   123→## 🏗️ Building from Source
   …
   138→## 📥 Using the Latest Nightly Build
@@ -144,32 +182,7 @@ sps/
       …
       23→pub use crate::cli::init::InitArgs;
       …
-      32→#[derive(Parser, Debug)]
-      33→#[command(author, version, about, long_about = None, name = "sps", bin_name = "sps")]
-      34→#[command(propagate_version = true)]
       35→pub struct CliArgs {
-      36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-      37→    pub verbose: u8,
-      38→
-      39→    #[command(subcommand)]
-      40→    pub command: Command,
-      41→}
-      43→#[derive(Subcommand, Debug)]
-      44→pub enum Command {
-      45→    Init(InitArgs),
-      46→    Search(Search),
-      47→    List(List),
-      48→    Info(Info),
-      49→    Update(Update),
-      50→    Install(InstallArgs),
-      51→    Uninstall(Uninstall),
-      52→    Reinstall(ReinstallArgs),
-      53→    Upgrade(UpgradeArgs),
-      54→}
-      56→impl Command {
-      57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-      …
-      71→}
       …
     main.rs
       …
