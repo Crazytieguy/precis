@@ -135,10 +135,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // `schema.prisma` files holding only `datasource` / `generator`
         // config. Those are build wiring, not the application's data
         // model, and earn no root pin.
+        //
+        // A schema that does declare the application's persistent
+        // entities is application spine: every backend question resolves
+        // against it, and where it sits in the tree records only which
+        // workspace package owns the ORM client. It takes the same
+        // root-tier depth pin an entrypoint gets.
         let declares_data_model = decls
             .iter()
             .any(|d| matches!(d.kind, DeclKind::Model | DeclKind::Enum));
-        let depth = schema_depth_factor(&file, ctx, declares_data_model);
+        let depth = super::file_depth_factor(&file, ctx, declares_data_model);
 
         let toc_key: BatchKey = PrismaKey::Toc { file: file.clone() }.into();
         out.push(Batch {
@@ -175,8 +181,7 @@ fn push_decl_batches(
     .into();
 
     let split_at = (decl.kind == DeclKind::Model && body_rows > MODEL_SPLIT_MIN_ROWS)
-        .then(|| model_split_line(decl))
-        .flatten();
+        .then(|| model_split_line(decl));
 
     let head_end = split_at.map_or(decl.close_line, |s| s - 1);
     let Some(head_content) = block_content(file, source, decl.open_line, head_end) else {
@@ -208,17 +213,12 @@ fn push_decl_batches(
     });
 }
 
-/// Split line for a wide model: the midpoint row of the block, kept
-/// strictly interior. No field-line awareness — the split can land on a
-/// blank/comment/continuation row, which is harmless because
-/// `build_file_spans` trims blank rows at span edges, so each half
-/// still starts and ends on content. Returns `None` only when the block has no strictly
-/// interior row (< 3 rows), which the `MODEL_SPLIT_MIN_ROWS` gate at the
-/// sole call site makes unreachable in production.
-fn model_split_line(decl: &Decl) -> Option<usize> {
-    let mid = decl.open_line + (decl.close_line - decl.open_line) / 2;
-    // Keep the split strictly interior to the block.
-    (mid > decl.open_line && mid < decl.close_line).then_some(mid)
+/// Split line for a wide model: the midpoint row of the block. No
+/// field-line awareness — the split can land on a blank/comment row,
+/// which is harmless because `build_file_spans` trims blank rows at span
+/// edges. Strictly interior for any block past `MODEL_SPLIT_MIN_ROWS`.
+fn model_split_line(decl: &Decl) -> usize {
+    decl.open_line + (decl.close_line - decl.open_line) / 2
 }
 
 fn block_content(
@@ -227,11 +227,6 @@ fn block_content(
     start_line: usize,
     end_line: usize,
 ) -> Option<crate::content::BatchContent> {
-    // `start_line`/`end_line` are already 1-based (from `decls`), so the
-    // span rows are the inclusive range directly. Routing through `push_rows`
-    // (0-based-in → 1-based-out) would add a second +1 and shift every body
-    // down a line, dropping the `model X {` opener. FileLines is 1-based,
-    // matching how the Toc consumes `open_line`.
     let rows: Vec<usize> = (start_line..=end_line).collect();
     single_file_lines_content(file, source, FileLines::new(rows))
 }
@@ -288,33 +283,6 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
 
 fn toc_value(depth: f64) -> f64 {
     mix_signals(1.0, 0.7, 0.85, depth)
-}
-
-/// Depth factor for a data-model definition file, pinned to root tier
-/// when it actually declares a data model.
-///
-/// A schema that declares the application's persistent entities is
-/// application spine: every backend question resolves against it, and
-/// the NS ranks its catalog beside the root manifest. Where it sits in
-/// the tree records only which workspace package owns the ORM client
-/// (`packages/prisma/`, `db/`, `server/prisma/`), so the generic
-/// depth damp reads that packaging choice as a centrality signal and
-/// pushes the catalog behind hundreds of directory listings. Pinning is
-/// the same clamp [`super::file_depth_factor`] already grants an
-/// entrypoint, for the same reason.
-///
-/// The pin is bound to the *data model*, not to configuration in
-/// general: deploy / CI / tool config (compose files, workflows,
-/// Makefiles, tsconfig) describes how the project is built and run, and
-/// its depth genuinely tracks its scope — a workflow under
-/// `apps/web/.github/` governs only that app. Nothing outside this
-/// walker's `schema.prisma` gate is affected. That binding is enforced
-/// by `declares_data_model` rather than by the filename: a
-/// `schema.prisma` holding only `datasource` / `generator` blocks — a
-/// multi-file layout's config half, a generated client's copy — keeps
-/// ordinary path-depth pricing.
-fn schema_depth_factor(file: &Path, ctx: &WalkCtx, declares_data_model: bool) -> f64 {
-    super::file_depth_factor(file, ctx, declares_data_model)
 }
 
 /// Per-decl body value. Below the TOC cat (so the catalog surface
@@ -455,8 +423,8 @@ model Real {
         .unwrap();
 
         let ctx = WalkCtx::new(root.to_path_buf());
-        let unpinned = schema_depth_factor(&config_only, &ctx, false);
-        let pinned = schema_depth_factor(&config_only, &ctx, true);
+        let unpinned = crate::walker::file_depth_factor(&config_only, &ctx, false);
+        let pinned = crate::walker::file_depth_factor(&config_only, &ctx, true);
         assert!(
             unpinned < pinned,
             "a nested config-only schema must not reach root tier: {unpinned} vs {pinned}"
@@ -491,7 +459,7 @@ model Real {
             close_line: 40,
             kind: DeclKind::Model,
         };
-        let split = model_split_line(&decl).expect("wide model splits");
+        let split = model_split_line(&decl);
         assert!(split > 1 && split < 40);
     }
 }
