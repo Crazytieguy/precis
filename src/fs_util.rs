@@ -216,9 +216,9 @@ impl DirFilter {
         &self.root
     }
 
-    /// True for a [`Self::single_file`] walk.
-    pub fn names_one_file(&self) -> bool {
-        self.only_file.is_some()
+    /// The file a [`Self::single_file`] walk admits.
+    pub fn named_file(&self) -> Option<&Path> {
+        self.only_file.as_deref()
     }
 
     /// True when `dir` is a symbolic link rather than a real directory,

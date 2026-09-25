@@ -332,7 +332,7 @@ fn build_section_content(
 
 /// A document precis was pointed at directly reads as its README.
 fn reads_as_readme(file: &Path, ctx: &WalkCtx) -> bool {
-    is_readme(file) || ctx.dir_filter().names_one_file()
+    is_readme(file) || ctx.dir_filter().named_file().is_some()
 }
 
 fn is_readme(file: &Path) -> bool {

@@ -14,7 +14,11 @@
 //!    whole behind it. Without it those files show only as a filename.
 //!    Markup documents (reST, AsciiDoc, …) are not claimed: like
 //!    markdown beyond the root README, they are left to the listing.
+//!
+//! In a single-file walk it also renders whatever of the named file the
+//! other walkers leave unshown ([`named_file_rest`]).
 
+use std::collections::HashSet;
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
@@ -67,7 +71,9 @@ const SOURCE_TEXT_MAX_INDENT_LEVELS: usize = 4;
 
 /// Pre-flight byte gate for the fallback. Generous — only the
 /// declaration surface is rendered, not the file — but bounded so a
-/// stray data blob is never read.
+/// stray data blob is never read. Also how far into a named file
+/// [`named_file_rest`] reaches, so a multi-megabyte file is not
+/// tokenized whole for a budget that shows its head.
 const SOURCE_TEXT_BYTE_GATE: usize = 512 * 1024;
 
 /// Mean bytes per line above which a file is machine-generated rather
@@ -86,8 +92,7 @@ const SOURCE_TEXT_MAX_LINE_CHARS: usize = 200;
 /// Leading lines scanned for a generated-file banner.
 const SOURCE_TEXT_GENERATED_SCAN_LINES: usize = 8;
 
-/// Bytes scanned for a NUL, which no text file contains but a binary
-/// misnamed `.txt` (or a UTF-8-decodable data blob) does.
+/// Bytes scanned by [`has_nul_byte`].
 const SOURCE_TEXT_NUL_SCAN_BYTES: usize = 8192;
 
 /// Pre-flight byte gate for dotenv samples — generous (only the head
@@ -646,14 +651,19 @@ fn has_minified_lines(source: &str) -> bool {
     line_count == 0 || source.len() / line_count > SOURCE_TEXT_MAX_MEAN_LINE_BYTES
 }
 
-/// A NUL byte or a generator banner near the top.
-fn has_generated_marker(source: &str) -> bool {
-    if source
+/// A NUL byte, which no text file contains but a binary misnamed `.txt`
+/// (or a UTF-8-decodable data blob) does.
+fn has_nul_byte(source: &str) -> bool {
+    source
         .as_bytes()
         .iter()
         .take(SOURCE_TEXT_NUL_SCAN_BYTES)
         .any(|byte| *byte == 0)
-    {
+}
+
+/// A NUL byte or a generator banner near the top.
+fn has_generated_marker(source: &str) -> bool {
+    if has_nul_byte(source) {
         return true;
     }
     source
@@ -723,6 +733,46 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         });
     }
     out
+}
+
+/// In a single-file walk, the named file's rows that none of `emitted`
+/// shows, worth nothing: it ranks behind every batch a walker chose and
+/// spends only the budget they leave. A file that fits renders whole,
+/// and a file no walker has anything to say about renders its head
+/// rather than its name alone.
+pub(super) fn named_file_rest(emitted: &[Batch], ctx: &WalkCtx) -> Option<Batch> {
+    let file = ctx.dir_filter().named_file()?;
+    let source = ctx.read_source(file)?;
+    if has_nul_byte(&source) {
+        return None;
+    }
+    let shown: HashSet<usize> = emitted
+        .iter()
+        .filter_map(|batch| match &batch.content {
+            crate::content::BatchContent::Lines { spans } => Some(spans),
+            crate::content::BatchContent::Fs { .. } => None,
+        })
+        .flatten()
+        .filter(|span| span.path == file)
+        .flat_map(|span| span.start..=span.end)
+        .collect();
+    let mut bytes_before = 0;
+    let rows = (1..=source.line_count())
+        .take_while(|&row| {
+            bytes_before += source.line(row).map_or(0, str::len) + 1;
+            bytes_before <= SOURCE_TEXT_BYTE_GATE
+        })
+        .filter(|row| !shown.contains(row))
+        .collect();
+    Some(Batch {
+        key: PlaintextKey::Rest {
+            file: file.to_path_buf(),
+        }
+        .into(),
+        predecessor: None,
+        content: single_file_lines_content(file, &source, rows)?,
+        value: 0.0,
+    })
 }
 
 /// Two tiers. The ops surface (how the project is built, deployed and

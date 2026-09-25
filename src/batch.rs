@@ -130,6 +130,9 @@ pub enum PlaintextKey {
     /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
     /// Vue, CSS, reST, …). The language-agnostic fallback.
     DeclSurface { file: PathBuf },
+    /// In a single-file walk, the named file's rows no other batch
+    /// shows.
+    Rest { file: PathBuf },
 }
 
 /// Prisma schema batches.

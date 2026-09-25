@@ -98,6 +98,7 @@ impl Walker for FsWalker {
         out.extend(prisma::expand_in_dir(dir, ctx));
         out.extend(go_mod::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
+        out.extend(plaintext::named_file_rest(&out, ctx));
         out
     }
 }
