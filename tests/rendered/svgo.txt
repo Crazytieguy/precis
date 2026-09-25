@@ -1,10 +1,6 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
-    bug_report.md
-    config.yml
-    feature_request.md
-    plugin_request.md
   dependabot.yml
   workflows/
     ci.yml
@@ -23,7 +19,8 @@ CONTRIBUTING.md
 LICENSE
 README.md
   …
-  5→# SVGO…
+  5→# SVGO [![npm](https://img.shields.io/npm/v/svgo)](https://npmjs.org/package/svgo) [![chat](https://img.shields.io/discord/815166721315831868)](https://discord.gg/z8jX8NYxrE) [![docs](https://img.shields.io/badge/docs-svgo.dev-blue)](https://svgo.dev/)
+  6→
   7→SVGO, short for **SVG O**ptimizer, is a Node.js library and command-line application for optimizing SVG files.
   9→## Why?
   10→
@@ -266,7 +263,6 @@ lib/
     23→  return selectAll(selector, node, createCssSelectOptions(node, parents));
     …
     32→export const querySelector = (node, selector, parents) => {
-    33→  return selectOne(selector, node, createCssSelectOptions(node, parents));
     …
     42→export const matches = (node, selector, parents) => {
     43→  return is(node, selector, createCssSelectOptions(node, parents));

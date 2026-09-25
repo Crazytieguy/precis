@@ -6,7 +6,7 @@
 //! - `ReadmeHeadline` (READMEs) — the first heading plus the lede: the
 //!   first substantive block before it and the blocks under it through
 //!   the first paragraph, stepping over chrome (badges, logos, nav
-//!   rows). A heading whose tail is a badge run renders `Truncated`.
+//!   rows).
 //! - `Prelude` (READMEs) — the rest of the text above the first
 //!   heading, chrome excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
@@ -727,7 +727,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
     (
         HeadlineSpec {
             covered_rows,
-            truncated: Vec::new(),
+            truncated_rows: BTreeSet::new(),
         },
         ranges,
     )
@@ -785,21 +785,12 @@ fn title_core(title: &str) -> String {
 
 // --- headline spec + span construction ---
 
-/// Computed shape of `ReadmeHeadline` — rendered source rows plus the
-/// covered rows rendered as a prefix: a heading's trailing badge run,
-/// and the long rows of an oversize lede block.
+/// Computed shape of `ReadmeHeadline` — rendered source rows, and the
+/// long rows of an oversize lede block, which render as a prefix.
 #[derive(Debug, Clone, Default)]
 struct HeadlineSpec {
     covered_rows: BTreeSet<usize>,
-    truncated: Vec<TruncatedRow>,
-}
-
-/// Per-row truncation override — paired so "rows without pattern" is
-/// unrepresentable.
-#[derive(Debug, Clone)]
-struct TruncatedRow {
-    row: usize,
-    pattern: String,
+    truncated_rows: BTreeSet<usize>,
 }
 
 /// Block kinds that bound a section — `ReadmeHeadline` never reaches
@@ -831,8 +822,6 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     let post: Vec<Node> = children_after(section, heading);
     extend_lede(&mut spec, &post, source, heading_level(heading) == 1);
 
-    spec.truncated
-        .extend(compute_heading_truncation(heading, source));
     debug_assert!(
         spec.covered_rows.contains(&heading_first_row),
         "headline covered_rows missing heading row"
@@ -845,17 +834,17 @@ fn build_headline_spans(file: &Path, source: &Source, spec: &HeadlineSpec) -> Ve
         .covered_rows
         .iter()
         .copied()
-        .filter(|row| spec.truncated.iter().all(|t| t.row != *row))
+        .filter(|row| !spec.truncated_rows.contains(row))
         .collect();
     // Full rows go through `build_file_spans` (blank-filter + merge);
     // splice the truncated-row spans in afterwards.
     let mut spans = super::build_file_spans(file, source, FileLines::new(full_rows));
-    spans.extend(spec.truncated.iter().map(|t| Span {
+    spans.extend(spec.truncated_rows.iter().map(|&row| Span {
         path: file.to_path_buf(),
-        start: t.row,
-        end: t.row,
+        start: row,
+        end: row,
         render: Render::Truncated {
-            pattern: t.pattern.clone(),
+            pattern: format!(r"(?s)^.{{1,{HEADLINE_OVERSIZE_LINE_CHARS}}}"),
         },
     }));
     spans.sort_by_key(|span| span.start);
@@ -887,10 +876,7 @@ fn extend_headline_block_rows(spec: &mut HeadlineSpec, node: Node, source: &str)
         }
         spec.covered_rows.insert(row + 1);
         if line.chars().count() > HEADLINE_OVERSIZE_LINE_CHARS {
-            spec.truncated.push(TruncatedRow {
-                row: row + 1,
-                pattern: format!(r"(?s)^.{{1,{HEADLINE_OVERSIZE_LINE_CHARS}}}"),
-            });
+            spec.truncated_rows.insert(row + 1);
         }
         bytes += line.len() + 1;
         if bytes >= HEADLINE_OVERSIZE_LEDE_BYTES {
@@ -1007,7 +993,14 @@ fn inline_root_is_all_decorative(root: Node, inline_text: &str) -> bool {
             return false;
         }
     }
-    any_decorative && plain_text_gaps_are_blank(&named, inline_text, 0)
+    let mut cursor = 0;
+    for node in &named {
+        if !inline_text[cursor..node.start_byte()].trim().is_empty() {
+            return false;
+        }
+        cursor = node.end_byte();
+    }
+    any_decorative && inline_text[cursor..].trim().is_empty()
 }
 
 fn named_decorative_candidates<'a>(root: Node<'a>, inline_text: &str) -> Vec<Node<'a>> {
@@ -1015,22 +1008,6 @@ fn named_decorative_candidates<'a>(root: Node<'a>, inline_text: &str) -> Vec<Nod
     root.children(&mut cur)
         .filter(|c| c.is_named() && !is_skippable_inline(*c, inline_text))
         .collect()
-}
-
-/// True iff the byte range `[gap_start, named[0].start)` plus the gaps
-/// between consecutive named children plus the tail after the last
-/// named child are all whitespace-only. Used to enforce "no real prose
-/// between badges" in both decorative-paragraph and heading-truncation
-/// classifications.
-fn plain_text_gaps_are_blank(named: &[Node], inline_text: &str, gap_start: usize) -> bool {
-    let mut cursor = gap_start;
-    for n in named {
-        if !inline_text[cursor..n.start_byte()].trim().is_empty() {
-            return false;
-        }
-        cursor = n.end_byte();
-    }
-    inline_text[cursor..].trim().is_empty()
 }
 
 /// An `html_block` is decorative iff its source text contains nothing
@@ -1145,64 +1122,6 @@ fn strip_html_tags(s: &str) -> String {
         }
     }
     out
-}
-
-// --- heading truncation ---
-
-/// Returns the truncation override if the heading should render its
-/// row as `Render::Truncated { pattern }` to drop a trailing badge run.
-/// Pre-conditions:
-/// * `inline` child exists (atx_heading or setext_heading)
-/// * the inline opens with non-empty plain-text content (the project
-///   name) before its first named child
-/// * every named inline child is decorative AND no non-whitespace
-///   plain text sits between or after them
-/// * the truncated render saves at least one token vs `Render::Full`.
-///
-/// Returns `None` whenever any condition fails — caller renders the
-/// heading row verbatim.
-fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRow> {
-    let inline_block = first_child_of_kind(heading, "inline", false)?;
-    let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
-    let tree = parse_inline(inline_text)?;
-    let named = named_decorative_candidates(tree.root_node(), inline_text);
-    if named.is_empty() {
-        return None;
-    }
-
-    // Plain-text gap before the first named child = the project name.
-    // Empty means the heading opens with a link/image (e.g.
-    // `# [Project](url)`) — don't truncate, would erase the name.
-    if inline_text[..named[0].start_byte()].trim().is_empty() {
-        return None;
-    }
-    if !named.iter().all(|n| is_decorative_inline(*n, inline_text)) {
-        return None;
-    }
-    if !plain_text_gaps_are_blank(&named[1..], inline_text, named[0].end_byte()) {
-        return None;
-    }
-
-    // Pattern includes the heading marker (`# `, `## `, …) because
-    // `Render::Truncated` only renders matched bytes.
-    let abs_trim = inline_block.start_byte() + named[0].start_byte();
-    let prefix = source[heading.start_byte()..abs_trim].trim_end();
-    if prefix.contains('\n') || prefix.is_empty() {
-        return None;
-    }
-
-    let row = inline_block.start_position().row + 1;
-    let line = source.lines().nth(row.saturating_sub(1)).unwrap_or("");
-    let full_tokens = tokenizer::count(&format!("{line}\n"));
-    let truncated_tokens = tokenizer::count(&format!("{prefix}…\n"));
-    if truncated_tokens >= full_tokens {
-        return None;
-    }
-
-    Some(TruncatedRow {
-        row,
-        pattern: regex::escape(prefix),
-    })
 }
 
 // --- tree-sitter-md helpers ---
@@ -2458,55 +2377,6 @@ mod tests {
         assert_eq!(covered(src).into_iter().collect::<Vec<_>>(), vec![1]);
     }
 
-    /// cmdk shape: H1 with project name then trailing image-link badges.
-    /// Heading line emits Render::Truncated.
-    #[test]
-    fn markdown_heading_with_inline_badges_truncates_cmdk_shape() {
-        let src = "# Project [![badge1](https://example/b1.svg)](https://example/r1) [![badge2](https://example/b2.svg)](https://example/r2)\n\
-                   \n\
-                   The actual tagline content.\n";
-        let spans = rendered_spans(src);
-        // Find the span at row 1 — it must be Truncated.
-        let heading_span = spans
-            .iter()
-            .find(|s| s.start <= 1 && s.end >= 1)
-            .expect("no span covers row 1");
-        match &heading_span.render {
-            Render::Truncated { pattern } => {
-                assert!(
-                    pattern.contains("Project"),
-                    "pattern should keep project name: got {pattern}"
-                );
-                assert!(
-                    !pattern.contains("badge"),
-                    "pattern must not include badge text"
-                );
-                assert!(
-                    pattern.starts_with("\\#"),
-                    "pattern must include heading marker: got {pattern}"
-                );
-            }
-            other => panic!("expected Render::Truncated, got {other:?}"),
-        }
-        // Tagline at row 3 still rendered.
-        assert!(spans.iter().any(|s| s.start <= 3 && s.end >= 3));
-    }
-
-    /// Heading whose sole content is a link — must NOT truncate (the
-    /// project-name text isn't there to keep).
-    #[test]
-    fn markdown_heading_with_only_link_not_truncated() {
-        let src = "# [Project](https://example/repo)\n\
-                   \n\
-                   Tagline.\n";
-        let spans = rendered_spans(src);
-        let heading_span = spans
-            .iter()
-            .find(|s| s.start <= 1 && s.end >= 1)
-            .expect("no span covers row 1");
-        assert!(matches!(heading_span.render, Render::Full));
-    }
-
     /// Short bold tagline followed by a prose lede: the extension
     /// takes the prose paragraph so the headline carries the full
     /// "what is this" snippet (posting shape).
@@ -2903,35 +2773,6 @@ mod tests {
                  ({sparse_value} sparse vs {dense_value} crowded)",
             );
         }
-    }
-
-    /// cmdk shape: H1 with badge tail + 3 H2s. Headline truncates row
-    /// 1 to drop the badges; outline must skip row 1 so the headline's
-    /// `Render::Truncated` isn't overridden.
-    #[test]
-    fn markdown_outline_preserves_cmdk_headline_truncation() {
-        let src = "# cmdk [![badge1](https://example/b1.svg)](https://example/r1) [![badge2](https://example/b2.svg)](https://example/r2)\n\
-                   \n\
-                   The actual tagline content.\n\
-                   \n\
-                   ## Install\n\
-                   \n\
-                   body\n\
-                   \n\
-                   ## Use\n\
-                   \n\
-                   body\n\
-                   \n\
-                   ## Parts\n\
-                   \n\
-                   body\n";
-        let rows = outline_rows("README.md", src);
-        let starts: Vec<usize> = rows.iter().map(|(s, _)| *s).collect();
-        assert!(
-            !starts.contains(&1),
-            "outline must not claim H1 row; would override headline truncation. got {starts:?}"
-        );
-        assert_eq!(starts, vec![5, 9, 13]);
     }
 
     /// Overline-form headings must not leak their overline punctuation row

@@ -39,7 +39,8 @@ LICENSE
 Makefile
 README.md
   …
-  3→# Overview…
+  3→# Overview [![push](https://github.com/nektos/act/workflows/push/badge.svg?branch=master&event=push)](https://github.com/nektos/act/actions) [![Go Report Card](https://goreportcard.com/badge/github.com/nektos/act)](https://goreportcard.com/report/github.com/nektos/act) [![awesome-runners](https://img.shields.io/badge/listed%20on-awesome--runners-blue.svg)](https://github.com/jonico/awesome-runners)
+  4→
   5→> "Think globally, `act` locally"
   6→
   7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
@@ -246,11 +247,6 @@ pkg/
       valid.env
       valid.label
     util.go
-      …
-      12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
-      …
-      24→func openPty() (*os.File, *os.File, error) {
-      …
     util_openbsd_mips64.go
     util_plan9.go
     util_windows.go
@@ -287,11 +283,6 @@ pkg/
       8→func (e *Error) Error() string {
       …
     lp_js.go
-      …
-      14→var ErrNotFound = errors.New("executable file not found in $PATH")
-      …
-      20→func LookPath2(file string, lenv Env) (string, error) {
-      …
     lp_plan9.go
     lp_unix.go
     lp_windows.go

@@ -23,7 +23,8 @@ ARCHITECTURE.md
 LICENSE.md
 README.md
   …
-  5→# ⌘K…
+  5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
+  6→
   7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
   …
 cmdk/
@@ -237,16 +238,7 @@ cmdk/
       1074→) {
       …
       1081→const srOnlyStyles = {
-      1082→  position: 'absolute',
-      1083→  width: '1px',
-      1084→  height: '1px',
-      1085→  padding: '0',
-      1086→  margin: '-1px',
-      1087→  overflow: 'hidden',
-      1088→  clip: 'rect(0, 0, 0, 0)',
-      1089→  whiteSpace: 'nowrap',
-      1090→  borderWidth: '0',
-      1091→} as const
+      …
   tsup.config.ts
 package.json
   …
