@@ -309,7 +309,9 @@ struct EssentialSource {
 /// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] can hold
 /// [`DOMINANT_SOURCE_MASS_SHARE`] of: no file can be the spine then, and
 /// stopping there keeps the survey from walking all of a huge tree. `None`
-/// too once it has read [`PROBE_ENTRY_CAP`] entries.
+/// too once it has read [`PROBE_ENTRY_CAP`] entries; non-essential
+/// directories are not entered, since nothing under one counts, so a
+/// large test corpus can't spend that budget.
 fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<EssentialSource> {
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
@@ -335,7 +337,9 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<Essenti
             if file_type.is_dir() {
                 let name = entry.file_name();
                 let name = name.to_string_lossy();
-                if !crate::fs_util::should_skip_dir(&name) {
+                if !crate::fs_util::should_skip_dir(&name)
+                    && crate::value::non_essential_factor(&path, root) >= 1.0
+                {
                     stack.push(path);
                 }
             } else if file_type.is_file() {
