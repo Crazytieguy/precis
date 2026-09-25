@@ -284,6 +284,25 @@ must not undo:
   negative on the grid and were removed (2026-09-25); re-adding one
   needs a fresh measurement.
 
+## Threads
+
+- **Only parsing is parallel.** `WalkCtx::parse_trees` parses a
+  directory's code and markdown files (and each TypeScript re-export
+  level) on scoped worker threads into the tree cache; everything that
+  decides output runs on the main thread in walk order. Output is
+  independent of thread timing only while a parse stays a pure function
+  of the file.
+- **Tokenizing on workers doesn't pay** (measured 2026-09-25).
+  Pre-counting every line of a directory's code files cost about 4× the
+  main-thread counting it replaced; pre-counting exactly the model's
+  item rows cut wall time 2–10% on the slowest repos but added 70–150 ms
+  of CPU per run: the same lines took about twice the CPU on workers as
+  on the main thread.
+- **The o200k table build (~55 ms) is fixed per run** and dominates
+  small repos. It happens inside `tiktoken_rs::o200k_base()`, so only
+  replacing the tokenizer would shrink it; the scheduler starts it on a
+  background thread and runs the essential-source scan meanwhile.
+
 ## Open items
 
 - **Ellipsis atoms are credited on schedule content, not rendered
