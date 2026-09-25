@@ -137,9 +137,10 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         | "mkdocs.yml" => {
             return Some(Class::Tooling);
         }
-        // `Taskfile.yaml` is a `Makefile` in YAML clothing — the task
-        // runner's target roster.
-        "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "Dockerfile" | "Containerfile" => {
+        // `Taskfile.yaml` is a `Makefile` in YAML clothing and a `justfile` one
+        // in its own syntax — the task runner's target roster.
+        "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "justfile" | "Justfile" | ".justfile"
+        | "Dockerfile" | "Containerfile" => {
             return Some(Class::Build);
         }
         _ => {}
@@ -285,8 +286,6 @@ const SOURCE_TEXT_FILENAMES: &[&str] = &[
     "Podfile",
     "Procfile",
     "Vagrantfile",
-    "Justfile",
-    "justfile",
     "Jenkinsfile",
     "Berksfile",
     "Appfile",
@@ -970,6 +969,7 @@ mod tests {
             ("Makefile", Some(Class::Build)),
             ("Taskfile.yaml", Some(Class::Build)),
             ("Taskfile.yml", Some(Class::Build)),
+            ("justfile", Some(Class::Build)),
             ("Dockerfile", Some(Class::Build)),
             ("Containerfile", Some(Class::Build)),
             ("docker-compose.yml", Some(Class::Build)),

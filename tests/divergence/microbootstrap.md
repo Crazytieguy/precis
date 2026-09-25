@@ -1,4 +1,4 @@
-Score(3000)=0.609 I=0.855 C=0.434 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.475/0.482/0.638/0.609/0.649/0.603/0.619
+Score(3000)=0.609 I=0.855 C=0.434 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.480/0.797/0.638/0.609/0.649/0.603/0.619
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,19 +20,18 @@ Score(3000)=0.609 I=0.855 C=0.434 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 404 | 18 | Fs::DirListing { dir: examples } |  |  | 0.470 |
 | ns | 439 |  | 86 | `bootstrappers/`, `config/`, `middlewares/`, `examples/` listings (complete) | 1.6 |  | 0.480 |
 | walker |  | 444 | 40 | Json::Dependencies { file: package.json } |  |  | 0.480 |
-| walker |  | 515 | 71 | Plaintext::DeclSurface { file: Justfile } |  |  | 0.480 |
-| ns | 641 |  | 202 | `microbootstrap/__init__.py` — the complete `__all__` export block | 1.7 |  | 0.411 |
-| walker |  | 774 | 259 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.541 |
+| ns | 641 |  | 202 | `microbootstrap/__init__.py` — the complete `__all__` export block | 1.7 |  | 0.410 |
+| walker |  | 703 | 259 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.541 |
+| walker |  | 786 | 83 | Json::Scripts { file: package.json } |  |  | 0.541 |
 | ns | 824 |  | 183 | README canonical usage snippet: settings class -> bootstrapper -> application | 1.8 |  | 0.473 |
-| walker |  | 857 | 83 | Json::Scripts { file: package.json } |  |  | 0.473 |
-| walker |  | 904 | 47 | Fs::DirListing { dir: tests } |  |  | 0.473 |
-| ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.415 |
-| walker |  | 1129 | 225 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.496 |
-| walker |  | 1167 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.496 |
+| walker |  | 833 | 47 | Fs::DirListing { dir: tests } |  |  | 0.473 |
+| walker |  | 1058 | 225 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.487 |
+| walker |  | 1096 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.488 |
+| ns | 1115 |  | 291 | README section map: every `##`/`###`/`####` heading location | 1.9 |  | 0.496 |
 | ns | 1241 |  | 126 | `settings.py` roster: env-prefix constants and all six class names | 2.1 |  | 0.477 |
-| walker |  | 1405 | 238 | Plaintext::Whole { file: Justfile } |  |  | 0.479 |
-| ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.439 |
-| walker |  | 1780 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.761 |
+| walker |  | 1471 | 375 | Markdown::Prelude { file: README.md } |  |  | 0.828 |
+| ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.759 |
+| walker |  | 1780 | 309 | Plaintext::Whole { file: Justfile } |  |  | 0.761 |
 | ns | 1806 |  | 314 | `ServerConfig` fields; `LitestarSettings` and `FastApiSettings` mixin lists | 2.3 | 2.1 | 0.680 |
 | walker |  | 1844 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.681 |
 | walker |  | 1856 | 12 | Code::CodeKey { rung: Names, file: microbootstrap/console_writer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
