@@ -45,9 +45,9 @@ Score(3000)=0.726 I=0.913 C=0.576 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.689 |
 | walker |  | 2208 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
 | walker |  | 2281 | 73 | Plaintext::DeclSurface { file: requirements-dev.txt } |  |  | 0.772 |
-| walker |  | 2294 | 13 | Code::CodeKey { rung: ModuleDoc, file: tests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
 | ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.727 |
-| walker |  | 2404 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.727 |
+| walker |  | 2391 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.727 |
+| walker |  | 2404 | 13 | Code::CodeKey { rung: ModuleDoc, file: tests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.727 |
 | walker |  | 2580 | 176 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.727 |
 | ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.699 |
 | ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.676 |
@@ -112,8 +112,8 @@ Score(3000)=0.726 I=0.913 C=0.576 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 6244 | 12 | Code::CodeKey { rung: Doc, file: src/requests/compat.py, decl: 1, sub: 0, line: 37 } |  |  | 0.637 |
 | ns | 6540 |  | 311 | `_types.py`: the `Unpack` kwargs TypedDicts | 4.2 | 4.1 | 0.622 |
 | walker |  | 6597 | 353 | Code::CodeKey { rung: Names, file: src/requests/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.657 |
-| walker |  | 6605 | 8 | Code::CodeKey { rung: Doc, file: src/requests/exceptions.py, decl: 15, sub: 0, line: 106 } |  |  | 0.657 |
-| walker |  | 6653 | 48 | Code::CodeKey { rung: Decl, file: src/requests/exceptions.py, decl: 4, sub: 0, line: 42 } |  |  | 0.657 |
+| walker |  | 6645 | 48 | Code::CodeKey { rung: Decl, file: src/requests/exceptions.py, decl: 4, sub: 0, line: 42 } |  |  | 0.657 |
+| walker |  | 6653 | 8 | Code::CodeKey { rung: Doc, file: src/requests/exceptions.py, decl: 15, sub: 0, line: 106 } |  |  | 0.657 |
 | walker |  | 6662 | 9 | Code::CodeKey { rung: Doc, file: src/requests/exceptions.py, decl: 3, sub: 0, line: 38 } |  |  | 0.657 |
 | walker |  | 6671 | 9 | Code::CodeKey { rung: Doc, file: src/requests/exceptions.py, decl: 7, sub: 0, line: 66 } |  |  | 0.657 |
 | walker |  | 6680 | 9 | Code::CodeKey { rung: Doc, file: src/requests/exceptions.py, decl: 8, sub: 0, line: 70 } |  |  | 0.657 |
@@ -202,9 +202,11 @@ Score(3000)=0.726 I=0.913 C=0.576 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 9608 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 3, sub: 0, line: 90 } |  |  | 0.620 |
 | walker |  | 9623 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 8, sub: 0, line: 171 } |  |  | 0.620 |
 | walker |  | 9641 | 18 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 2, sub: 0, line: 74 } |  |  | 0.620 |
-| walker |  | 9731 | 90 | Code::CodeKey { rung: Doc, file: src/requests/api.py, decl: 3, sub: 0, line: 90 } |  |  | 0.620 |
+| walker |  | 9659 | 18 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 6, sub: 0, line: 137 } |  |  | 0.620 |
+| walker |  | 9749 | 90 | Code::CodeKey { rung: Doc, file: src/requests/api.py, decl: 3, sub: 0, line: 90 } |  |  | 0.620 |
 | ns | 9758 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.614 |
-| walker |  | 9821 | 90 | Code::CodeKey { rung: Doc, file: src/requests/api.py, decl: 8, sub: 0, line: 171 } |  |  | 0.614 |
+| walker |  | 9839 | 90 | Code::CodeKey { rung: Doc, file: src/requests/api.py, decl: 8, sub: 0, line: 171 } |  |  | 0.614 |
 | ns | 9915 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.608 |
-| walker |  | 9927 | 106 | Code::CodeKey { rung: Doc, file: src/requests/exceptions.py, decl: 6, sub: 0, line: 55 } |  |  | 0.608 |
 | ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.606 |
+| walker |  | 9965 | 126 | Code::CodeKey { rung: Names, file: src/requests/auth.py, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 9987 | 22 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 4, sub: 0, line: 78 } |  |  | 0.610 |

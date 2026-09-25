@@ -75,8 +75,8 @@ Score(3000)=0.575 I=0.649 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 4085 | 142 | Code::CodeKey { rung: Names, file: History.h, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
 | walker |  | 4092 | 7 | Code::CodeKey { rung: Doc, file: History.h, decl: 4, sub: 0, line: 31 } |  |  | 0.524 |
 | walker |  | 4107 | 15 | Code::CodeKey { rung: Doc, file: History.h, decl: 6, sub: 0, line: 38 } |  |  | 0.524 |
-| walker |  | 4127 | 20 | Code::CodeKey { rung: Doc, file: History.h, decl: 8, sub: 0, line: 46 } |  |  | 0.524 |
-| walker |  | 4245 | 118 | Code::CodeKey { rung: Decl, file: History.h, decl: 2, sub: 0, line: 18 } |  |  | 0.524 |
+| walker |  | 4225 | 118 | Code::CodeKey { rung: Decl, file: History.h, decl: 2, sub: 0, line: 18 } |  |  | 0.524 |
+| walker |  | 4245 | 20 | Code::CodeKey { rung: Doc, file: History.h, decl: 8, sub: 0, line: 46 } |  |  | 0.524 |
 | walker |  | 4268 | 23 | Code::CodeKey { rung: Doc, file: History.h, decl: 3, sub: 0, line: 28 } |  |  | 0.524 |
 | walker |  | 4301 | 33 | Code::CodeKey { rung: Doc, file: History.h, decl: 5, sub: 0, line: 35 } |  |  | 0.524 |
 | ns | 4343 |  | 474 | Process.h: every field of the Process struct, declarations only | 2.10 |  | 0.498 |
@@ -118,8 +118,8 @@ Score(3000)=0.575 I=0.649 C=0.510 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 6592 | 401 | Code::CodeKey { rung: Names, file: Vector.h, decl: 0, sub: 0, line: 0 } |  |  | 0.418 |
 | walker |  | 6602 | 10 | Code::CodeKey { rung: Body, file: Vector.h, decl: 17, sub: 0, line: 88 } |  |  | 0.418 |
 | walker |  | 6621 | 19 | Code::CodeKey { rung: Body, file: Vector.h, decl: 7, sub: 0, line: 39 } |  |  | 0.418 |
-| walker |  | 6642 | 21 | Code::CodeKey { rung: Doc, file: Vector.h, decl: 13, sub: 0, line: 58 } |  |  | 0.418 |
-| walker |  | 6770 | 128 | Code::CodeKey { rung: Decl, file: Vector.h, decl: 2, sub: 0, line: 17 } |  |  | 0.418 |
+| walker |  | 6749 | 128 | Code::CodeKey { rung: Decl, file: Vector.h, decl: 2, sub: 0, line: 17 } |  |  | 0.418 |
+| walker |  | 6770 | 21 | Code::CodeKey { rung: Doc, file: Vector.h, decl: 13, sub: 0, line: 58 } |  |  | 0.418 |
 | walker |  | 6825 | 55 | Code::CodeKey { rung: Doc, file: Vector.h, decl: 12, sub: 0, line: 55 } |  |  | 0.418 |
 | ns | 6948 |  | 393 | A real htoprc: the config file format, meter vocabulary and screen definitions | 3.6 |  | 0.411 |
 | walker |  | 7068 | 243 | Code::CodeKey { rung: Names, file: LineEditor.h, decl: 0, sub: 0, line: 0 } |  |  | 0.411 |

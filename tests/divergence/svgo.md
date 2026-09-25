@@ -23,8 +23,8 @@ Score(3000)=0.642 I=0.846 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 455 | 19 | Fs::DirListing { dir: lib/svgo } |  |  | 0.700 |
 | walker |  | 468 | 13 | Fs::DirListing { dir: lib/util } |  |  | 0.739 |
 | ns | 496 |  | 110 | README section heading roster | 1.5 |  | 0.662 |
-| walker |  | 509 | 41 | Code::CodeKey { rung: ModuleDoc, file: lib/path.js, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
-| walker |  | 643 | 134 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.694 |
+| walker |  | 602 | 134 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.694 |
+| walker |  | 643 | 41 | Code::CodeKey { rung: ModuleDoc, file: lib/path.js, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
 | walker |  | 692 | 49 | Json::Runtime { file: package.json } |  |  | 0.695 |
 | ns | 715 |  | 219 | lib/svgo.js module graph and public re-exports | 1.6 |  | 0.608 |
 | walker |  | 798 | 106 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.694 |
@@ -147,40 +147,40 @@ Score(3000)=0.642 I=0.846 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 7071 | 216 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.546 |
 | ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.536 |
 | walker |  | 7294 | 223 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.536 |
-| walker |  | 7381 | 87 | Code::CodeKey { rung: Doc, file: plugins/reusePaths.js, decl: 3, sub: 0, line: 18 } |  |  | 0.536 |
-| walker |  | 7425 | 44 | Code::CodeKey { rung: Names, file: plugins/removeEmptyAttrs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.536 |
-| walker |  | 7482 | 57 | Code::CodeKey { rung: Doc, file: plugins/removeEmptyAttrs.js, decl: 3, sub: 0, line: 13 } |  |  | 0.536 |
-| walker |  | 7526 | 44 | Code::CodeKey { rung: Names, file: plugins/removeRasterImages.js, decl: 0, sub: 0, line: 0 } |  |  | 0.538 |
-| ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.526 |
-| walker |  | 7610 | 84 | Code::CodeKey { rung: Doc, file: plugins/removeRasterImages.js, decl: 3, sub: 0, line: 15 } |  |  | 0.526 |
-| walker |  | 7654 | 44 | Code::CodeKey { rung: Names, file: plugins/removeUnknownsAndDefaults.js, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
-| walker |  | 7674 | 20 | Code::CodeKey { rung: Decl, file: plugins/removeUnknownsAndDefaults.js, decl: 2, sub: 0, line: 32 } |  |  | 0.529 |
+| walker |  | 7338 | 44 | Code::CodeKey { rung: Names, file: plugins/removeEmptyAttrs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.536 |
+| walker |  | 7395 | 57 | Code::CodeKey { rung: Doc, file: plugins/removeEmptyAttrs.js, decl: 3, sub: 0, line: 13 } |  |  | 0.536 |
+| walker |  | 7439 | 44 | Code::CodeKey { rung: Names, file: plugins/removeRasterImages.js, decl: 0, sub: 0, line: 0 } |  |  | 0.538 |
+| walker |  | 7523 | 84 | Code::CodeKey { rung: Doc, file: plugins/removeRasterImages.js, decl: 3, sub: 0, line: 15 } |  |  | 0.538 |
+| walker |  | 7567 | 44 | Code::CodeKey { rung: Names, file: plugins/removeUnknownsAndDefaults.js, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
+| ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.527 |
+| walker |  | 7587 | 20 | Code::CodeKey { rung: Decl, file: plugins/removeUnknownsAndDefaults.js, decl: 2, sub: 0, line: 32 } |  |  | 0.529 |
+| walker |  | 7665 | 78 | Code::CodeKey { rung: Doc, file: plugins/removeUnknownsAndDefaults.js, decl: 3, sub: 0, line: 103 } |  |  | 0.529 |
 | ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.524 |
-| walker |  | 7752 | 78 | Code::CodeKey { rung: Doc, file: plugins/removeUnknownsAndDefaults.js, decl: 3, sub: 0, line: 103 } |  |  | 0.524 |
-| walker |  | 7782 | 30 | Code::CodeKey { rung: Names, file: lib/path.js, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 7695 | 30 | Code::CodeKey { rung: Names, file: lib/path.js, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 7727 | 32 | Code::CodeKey { rung: Decl, file: lib/path.js, decl: 2, sub: 0, line: 302 } |  |  | 0.525 |
+| walker |  | 7763 | 36 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 2, sub: 0, line: 302 } |  |  | 0.525 |
 | ns | 7790 |  | 115 | parseSvg and the sax configuration | 6.1 |  | 0.520 |
-| walker |  | 7814 | 32 | Code::CodeKey { rung: Decl, file: lib/path.js, decl: 2, sub: 0, line: 302 } |  |  | 0.520 |
-| walker |  | 7850 | 36 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 2, sub: 0, line: 302 } |  |  | 0.520 |
-| walker |  | 7890 | 40 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 1, sub: 0, line: 141 } |  |  | 0.520 |
-| ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.516 |
-| walker |  | 7935 | 45 | Code::CodeKey { rung: Names, file: plugins/collapseGroups.js, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
-| walker |  | 7980 | 45 | Code::CodeKey { rung: Names, file: plugins/mergeStyles.js, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
+| walker |  | 7803 | 40 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 1, sub: 0, line: 141 } |  |  | 0.520 |
+| walker |  | 7848 | 45 | Code::CodeKey { rung: Names, file: plugins/collapseGroups.js, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
+| walker |  | 7893 | 45 | Code::CodeKey { rung: Names, file: plugins/mergeStyles.js, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |
+| ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.519 |
+| walker |  | 7956 | 63 | Code::CodeKey { rung: Doc, file: plugins/mergeStyles.js, decl: 3, sub: 0, line: 14 } |  |  | 0.519 |
 | ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.517 |
-| walker |  | 8043 | 63 | Code::CodeKey { rung: Doc, file: plugins/mergeStyles.js, decl: 3, sub: 0, line: 14 } |  |  | 0.517 |
-| walker |  | 8088 | 45 | Code::CodeKey { rung: Names, file: plugins/removeDeprecatedAttrs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
-| walker |  | 8123 | 35 | Code::CodeKey { rung: Doc, file: plugins/removeDeprecatedAttrs.js, decl: 1, sub: 0, line: 10 } |  |  | 0.518 |
-| walker |  | 8168 | 45 | Code::CodeKey { rung: Doc, file: plugins/removeDeprecatedAttrs.js, decl: 3, sub: 0, line: 76 } |  |  | 0.518 |
-| ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.514 |
-| walker |  | 8213 | 45 | Code::CodeKey { rung: Names, file: plugins/removeDoctype.js, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
-| walker |  | 8276 | 63 | Code::CodeKey { rung: Body, file: plugins/removeDoctype.js, decl: 3, sub: 0, line: 30 } |  |  | 0.516 |
-| walker |  | 8321 | 45 | Code::CodeKey { rung: Names, file: plugins/removeViewBox.js, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 8001 | 45 | Code::CodeKey { rung: Names, file: plugins/removeDeprecatedAttrs.js, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
+| walker |  | 8036 | 35 | Code::CodeKey { rung: Doc, file: plugins/removeDeprecatedAttrs.js, decl: 1, sub: 0, line: 10 } |  |  | 0.518 |
+| walker |  | 8081 | 45 | Code::CodeKey { rung: Doc, file: plugins/removeDeprecatedAttrs.js, decl: 3, sub: 0, line: 76 } |  |  | 0.518 |
+| walker |  | 8126 | 45 | Code::CodeKey { rung: Names, file: plugins/removeDoctype.js, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
+| ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.516 |
+| walker |  | 8189 | 63 | Code::CodeKey { rung: Body, file: plugins/removeDoctype.js, decl: 3, sub: 0, line: 30 } |  |  | 0.516 |
+| walker |  | 8234 | 45 | Code::CodeKey { rung: Names, file: plugins/removeViewBox.js, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 8321 | 87 | Code::CodeKey { rung: Doc, file: plugins/reusePaths.js, decl: 3, sub: 0, line: 18 } |  |  | 0.517 |
 | ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.512 |
 | walker |  | 8367 | 46 | Code::CodeKey { rung: Names, file: plugins/removeComments.js, decl: 0, sub: 0, line: 0 } |  |  | 0.514 |
 | walker |  | 8410 | 43 | Code::CodeKey { rung: Doc, file: plugins/removeComments.js, decl: 1, sub: 0, line: 8 } |  |  | 0.517 |
 | walker |  | 8456 | 46 | Code::CodeKey { rung: Names, file: plugins/removeStyleElement.js, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
 | ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.516 |
-| walker |  | 8539 | 83 | Code::CodeKey { rung: Doc, file: plugins/removeStyleElement.js, decl: 3, sub: 0, line: 15 } |  |  | 0.516 |
-| walker |  | 8621 | 82 | Code::CodeKey { rung: Body, file: plugins/removeStyleElement.js, decl: 3, sub: 0, line: 15 } |  |  | 0.516 |
+| walker |  | 8538 | 82 | Code::CodeKey { rung: Body, file: plugins/removeStyleElement.js, decl: 3, sub: 0, line: 15 } |  |  | 0.516 |
+| walker |  | 8621 | 83 | Code::CodeKey { rung: Doc, file: plugins/removeStyleElement.js, decl: 3, sub: 0, line: 15 } |  |  | 0.516 |
 | walker |  | 8667 | 46 | Code::CodeKey { rung: Names, file: plugins/removeXMLNS.js, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
 | ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.512 |
 | walker |  | 8743 | 76 | Code::CodeKey { rung: Body, file: plugins/removeXMLNS.js, decl: 3, sub: 0, line: 16 } |  |  | 0.512 |
@@ -198,9 +198,9 @@ Score(3000)=0.642 I=0.846 C=0.488 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 9439 | 101 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 9, sub: 0, line: 2111 } |  |  | 0.536 |
 | ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.533 |
 | walker |  | 9461 | 22 | Code::CodeKey { rung: Doc, file: plugins/_collections.js, decl: 3, sub: 0, line: 117 } |  |  | 0.533 |
-| walker |  | 9488 | 27 | Code::CodeKey { rung: Doc, file: plugins/_collections.js, decl: 11, sub: 0, line: 2179 } |  |  | 0.533 |
 | ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.543 |
-| walker |  | 9646 | 158 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 6, sub: 0, line: 389 } |  |  | 0.543 |
+| walker |  | 9619 | 158 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 6, sub: 0, line: 389 } |  |  | 0.543 |
+| walker |  | 9646 | 27 | Code::CodeKey { rung: Doc, file: plugins/_collections.js, decl: 11, sub: 0, line: 2179 } |  |  | 0.543 |
 | walker |  | 9698 | 52 | Code::CodeKey { rung: Doc, file: plugins/_collections.js, decl: 9, sub: 0, line: 2111 } |  |  | 0.543 |
 | ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.539 |
 | walker |  | 9754 | 56 | Code::CodeKey { rung: Doc, file: plugins/_collections.js, decl: 14, sub: 0, line: 2387 } |  |  | 0.539 |

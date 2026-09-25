@@ -1,4 +1,4 @@
-Score(3000)=0.640 I=0.885 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.728/0.857/0.714/0.640/0.712/0.692/0.650
+Score(3000)=0.640 I=0.885 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.728/0.857/0.714/0.640/0.712/0.691/0.650
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -28,8 +28,8 @@ Score(3000)=0.640 I=0.885 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 570 | 21 | Fs::DirListing { dir: tests } |  |  | 0.833 |
 | ns | 643 |  | 94 | src/main.rs: module declarations and the types the entry point imports | 1.9 |  | 0.772 |
 | walker |  | 719 | 149 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.861 |
-| walker |  | 816 | 97 | Code::CodeKey { rung: ModuleDoc, file: src/outlier_detection.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.861 |
-| walker |  | 887 | 71 | Toml::Config { file: Cargo.toml } |  |  | 0.861 |
+| walker |  | 790 | 71 | Toml::Config { file: Cargo.toml } |  |  | 0.861 |
+| walker |  | 887 | 97 | Code::CodeKey { rung: ModuleDoc, file: src/outlier_detection.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.861 |
 | ns | 899 |  | 256 | src/main.rs: the run() pipeline | 1.10 | 1.9 | 0.754 |
 | walker |  | 943 | 56 | Fs::DirListing { dir: scripts } |  |  | 0.762 |
 | walker |  | 982 | 39 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.762 |
@@ -136,10 +136,10 @@ Score(3000)=0.640 I=0.885 C=0.462 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 6171 | 50 | Code::CodeKey { rung: Decl, file: src/export/mod.rs, decl: 3, sub: 0, line: 48 } |  |  | 0.706 |
 | walker |  | 6181 | 10 | Code::CodeKey { rung: Doc, file: src/export/mod.rs, decl: 2, sub: 0, line: 46 } |  |  | 0.707 |
 | walker |  | 6192 | 11 | Code::CodeKey { rung: Doc, file: src/export/mod.rs, decl: 6, sub: 0, line: 67 } |  |  | 0.707 |
-| walker |  | 6205 | 13 | Code::CodeKey { rung: Doc, file: src/export/mod.rs, decl: 3, sub: 0, line: 48 } |  |  | 0.707 |
-| ns | 6208 |  | 275 | src/benchmark/mod.rs: Benchmark struct, MIN_EXECUTION_TIME, and the complete method roster | 4.10 |  | 0.692 |
-| walker |  | 6284 | 79 | Code::CodeKey { rung: Decl, file: src/export/mod.rs, decl: 7, sub: 0, line: 73 } |  |  | 0.692 |
-| walker |  | 6328 | 44 | Code::CodeKey { rung: Decl, file: src/export/mod.rs, decl: 8, sub: 0, line: 76 } |  |  | 0.692 |
+| ns | 6208 |  | 275 | src/benchmark/mod.rs: Benchmark struct, MIN_EXECUTION_TIME, and the complete method roster | 4.10 |  | 0.691 |
+| walker |  | 6271 | 79 | Code::CodeKey { rung: Decl, file: src/export/mod.rs, decl: 7, sub: 0, line: 73 } |  |  | 0.691 |
+| walker |  | 6315 | 44 | Code::CodeKey { rung: Decl, file: src/export/mod.rs, decl: 8, sub: 0, line: 76 } |  |  | 0.691 |
+| walker |  | 6328 | 13 | Code::CodeKey { rung: Doc, file: src/export/mod.rs, decl: 3, sub: 0, line: 48 } |  |  | 0.692 |
 | walker |  | 6343 | 15 | Code::CodeKey { rung: Doc, file: src/export/mod.rs, decl: 9, sub: 0, line: 103 } |  |  | 0.692 |
 | walker |  | 6358 | 15 | Code::CodeKey { rung: Doc, file: src/export/mod.rs, decl: 11, sub: 0, line: 158 } |  |  | 0.692 |
 | ns | 6418 |  | 210 | How the number of runs is decided | 4.11 | 4.10 | 0.679 |

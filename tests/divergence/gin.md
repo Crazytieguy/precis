@@ -61,9 +61,9 @@ Score(3000)=0.623 I=0.786 C=0.494 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 2436 | 40 | Code::CodeKey { rung: Doc, file: auth.go, decl: 11, sub: 0, line: 98 } |  |  | 0.615 |
 | ns | 2443 |  | 421 | Engine constructor New(): every default value | 2.4 | 2.2 | 0.575 |
 | walker |  | 2478 | 42 | Code::CodeKey { rung: Doc, file: auth.go, decl: 8, sub: 0, line: 72 } |  |  | 0.575 |
-| walker |  | 2577 | 99 | Code::CodeKey { rung: Doc, file: auth.go, decl: 7, sub: 0, line: 48 } |  |  | 0.575 |
-| walker |  | 2594 | 17 | Code::CodeKey { rung: Names, file: version.go, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
-| walker |  | 2608 | 14 | Code::CodeKey { rung: Doc, file: version.go, decl: 1, sub: 0, line: 8 } |  |  | 0.655 |
+| walker |  | 2495 | 17 | Code::CodeKey { rung: Names, file: version.go, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
+| walker |  | 2509 | 14 | Code::CodeKey { rung: Doc, file: version.go, decl: 1, sub: 0, line: 8 } |  |  | 0.655 |
+| walker |  | 2608 | 99 | Code::CodeKey { rung: Doc, file: auth.go, decl: 7, sub: 0, line: 48 } |  |  | 0.655 |
 | ns | 2636 |  | 193 | Default(), RouterGroup struct, and the IRouter assertions | 2.5 | 2.3 | 0.633 |
 | ns | 2831 |  | 195 | Run* server entry points: all six transports | 2.6 |  | 0.623 |
 | walker |  | 2835 | 227 | Code::CodeKey { rung: Names, file: debug.go, decl: 0, sub: 0, line: 0 } |  |  | 0.623 |

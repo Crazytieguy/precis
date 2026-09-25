@@ -32,10 +32,10 @@ Score(3000)=0.630 I=0.795 C=0.500 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 477 | 16 | Fs::DirListing { dir: sps-common/src/dependency } |  |  | 0.619 |
 | ns | 490 |  | 77 | Per-crate one-line role | 1.6 |  | 0.583 |
 | walker |  | 502 | 25 | Fs::DirListing { dir: sps-common/src/model } |  |  | 0.597 |
-| walker |  | 520 | 18 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 535 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.597 |
+| walker |  | 517 | 15 | Fs::DirListing { dir: sps-core/src/install/cask } |  |  | 0.597 |
 | ns | 560 |  | 70 | Binary crate source tree (sps/src, cli/, pipeline/) | 1.7 |  | 0.654 |
-| walker |  | 650 | 115 | Fs::DirListing { dir: sps-core/src/install/cask/artifacts } |  |  | 0.668 |
+| walker |  | 632 | 115 | Fs::DirListing { dir: sps-core/src/install/cask/artifacts } |  |  | 0.668 |
+| walker |  | 650 | 18 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
 | ns | 657 |  | 97 | sps-common and sps-net source trees | 1.8 |  | 0.694 |
 | walker |  | 666 | 16 | Fs::DirListing { dir: sps-core/src/install/bottle } |  |  | 0.699 |
 | walker |  | 683 | 17 | Code::CodeKey { rung: ModuleDoc, file: sps/src/cli/info.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |

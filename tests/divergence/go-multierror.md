@@ -32,8 +32,8 @@ Score(3000)=0.547 I=0.559 C=0.536 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 1028 | 13 | Code::CodeKey { rung: Body, file: multierror.go, decl: 11, sub: 0, line: 122 } |  |  | 0.466 |
 | ns | 1070 |  | 124 | `Append` doc comment: nil handling and one-level flattening | 2.2 | 1.6 | 0.444 |
 | walker |  | 1100 | 72 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 3, sub: 0, line: 31 } |  |  | 0.445 |
-| walker |  | 1218 | 118 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 5, sub: 0, line: 53 } |  |  | 0.451 |
-| walker |  | 1233 | 15 | Code::CodeKey { rung: Body, file: multierror.go, decl: 4, sub: 0, line: 42 } |  |  | 0.455 |
+| walker |  | 1115 | 15 | Code::CodeKey { rung: Body, file: multierror.go, decl: 4, sub: 0, line: 42 } |  |  | 0.449 |
+| walker |  | 1233 | 118 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 5, sub: 0, line: 53 } |  |  | 0.455 |
 | ns | 1360 |  | 290 | README: stdlib compatibility, install, and the go 1.13 requirement | 2.3 |  | 0.419 |
 | walker |  | 1408 | 175 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.424 |
 | ns | 1580 |  | 220 | README: the canonical accumulate-with-Append recipe | 2.4 |  | 0.389 |

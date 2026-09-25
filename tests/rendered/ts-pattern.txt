@@ -184,21 +184,6 @@ src/
       5→ */
       …
     symbols.ts
-      1→/**
-      2→ * Symbols used internally within ts-pattern to construct and discriminate
-      3→ * Guard, Not, and Select, and AnonymousSelect patterns
-      4→ *
-      5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
-      6→ * user defined patterns, and eliminate the risk of property
-      7→ * overlap between ts-pattern internals and user defined patterns.
-      8→ *
-      9→ * These symbols have to be visible to tsc for type inference to work, but
-      10→ * users should not import them
-      11→ * @module
-      12→ * @private
-      13→ * @internal
-      14→ */
-      …
   is-matching.ts
   match.ts
   patterns.ts
@@ -248,6 +233,11 @@ src/
     134→>;
     …
     187→export function optional<
+    188→  input,
+    189→  const pattern extends unknown extends input
+    190→    ? UnknownValuePattern
+    191→    : Pattern<input>
+    192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
     …
     241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
     …

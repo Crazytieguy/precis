@@ -148,16 +148,7 @@ tea.go
   265→	// if that is enabled.
   266→	ReportAssociatedText bool
   267→}
-  269→// SetContent is a helper method to set the content of a [View] with a styled
-  270→// string. A styled string represents text with styles and hyperlinks encoded
-  271→// as ANSI escape codes.
-  272→//
-  273→// Example:
-  274→//
-  275→//	```go
-  276→//	var v tea.View
-  277→//	v.SetContent("Hello, World!")
-  278→//	```
+  …
   279→func (v *View) SetContent(s string) {
   280→	v.Content = s
   …
@@ -234,10 +225,11 @@ tea.go
   …
   426→type Program struct {
   …
+  554→// Quit is a special command that tells the Bubble Tea program to exit.
   555→func Quit() Msg {
   …
   561→type QuitMsg struct{}
-  …
+  563→// Suspend is a special command that tells the Bubble Tea program to suspend.
   564→func Suspend() Msg {
   …
   574→type SuspendMsg struct{}
@@ -245,7 +237,8 @@ tea.go
   578→type ResumeMsg struct{}
   …
   586→type InterruptMsg struct{}
-  …
+  588→// Interrupt is a special command that tells the Bubble Tea program to
+  589→// interrupt.
   590→func Interrupt() Msg {
   …
   594→// NewProgram creates a new [Program].

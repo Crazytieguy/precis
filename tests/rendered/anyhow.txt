@@ -114,12 +114,35 @@ src/
     34→        None
     35→    };
     36→}
-    …
+    38→#[cfg(error_generic_member_access)]
     39→macro_rules! backtrace_if_absent {
-    …
+    40→    ($err:expr) => {
+    41→        match $crate::nightly::request_ref_backtrace($err as &dyn core::error::Error) {
+    42→            Some(_) => None,
+    43→            None => backtrace!(),
+    44→        }
+    45→    };
+    46→}
+    48→#[cfg(all(
+    49→    any(feature = "std", not(anyhow_no_core_error)),
+    50→    not(error_generic_member_access),
+    51→    any(std_backtrace, feature = "backtrace")
+    52→))]
     53→macro_rules! backtrace_if_absent {
-    …
+    54→    ($err:expr) => {
+    55→        backtrace!()
+    56→    };
+    57→}
+    59→#[cfg(all(
+    60→    any(feature = "std", not(anyhow_no_core_error)),
+    61→    not(std_backtrace),
+    62→    not(feature = "backtrace"),
+    63→))]
     64→macro_rules! backtrace_if_absent {
+    65→    ($err:expr) => {
+    66→        None
+    67→    };
+    68→}
     …
     407→fn _assert_send_sync() {
     …
@@ -189,25 +212,7 @@ src/
     390→pub struct Error {
     391→    inner: Own<ErrorImpl>,
     392→}
-    394→/// Iterator of a chain of source errors.
-    395→///
-    396→/// This type is the iterator returned by [`Error::chain`].
-    397→///
-    398→/// # Example
-    399→///
-    400→/// ```
-    401→/// use anyhow::Error;
-    402→/// use std::io;
-    403→///
-    404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
-    405→///     for cause in error.chain() {
-    406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
-    407→///             return Some(io_error.kind());
-    408→///         }
-    409→///     }
-    410→///     None
-    411→/// }
-    412→/// ```
+    …
     413→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     414→#[derive(Clone)]
     415→pub struct Chain<'a> {

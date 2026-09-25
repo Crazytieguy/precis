@@ -154,6 +154,6 @@ Score(3000)=0.719 I=0.914 C=0.566 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 9500 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.625 |
 | walker |  | 9618 | 360 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.641 |
 | ns | 9694 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.648 |
-| walker |  | 9793 | 175 | Code::CodeKey { rung: Doc, file: source/utils/type-guards.ts, decl: 2, sub: 0, line: 49 } |  |  | 0.648 |
-| walker |  | 9960 | 167 | Code::CodeKey { rung: Body, file: source/utils/delay.ts, decl: 2, sub: 0, line: 9 } |  |  | 0.648 |
-| ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.639 |
+| walker |  | 9785 | 167 | Code::CodeKey { rung: Body, file: source/utils/delay.ts, decl: 2, sub: 0, line: 9 } |  |  | 0.648 |
+| walker |  | 9874 | 89 | Code::CodeKey { rung: Names, file: source/utils/body.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
+| ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.643 |

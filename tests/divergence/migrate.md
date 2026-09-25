@@ -78,16 +78,16 @@ Score(3000)=0.522 I=0.682 C=0.400 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 1349 |  | 252 | Package-level sentinel errors and tuning defaults | 2.3 |  | 0.642 |
 | walker |  | 1363 | 26 | Fs::DirListing { dir: database/neo4j } |  |  | 0.642 |
 | walker |  | 1378 | 15 | Fs::DirListing { dir: database/pgx/v5 } |  |  | 0.642 |
-| walker |  | 1399 | 21 | Code::CodeKey { rung: ModuleDoc, file: database/multistmt/parse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.642 |
-| walker |  | 1417 | 18 | Fs::DirListing { dir: source/httpfs/testdata/duplicates } |  |  | 0.642 |
+| walker |  | 1396 | 18 | Fs::DirListing { dir: source/httpfs/testdata/duplicates } |  |  | 0.642 |
+| walker |  | 1417 | 21 | Code::CodeKey { rung: ModuleDoc, file: database/multistmt/parse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.642 |
 | walker |  | 1450 | 33 | Markdown::ReadmeHeadline { file: source/file/README.md } |  |  | 0.642 |
 | ns | 1462 |  | 113 | Logger interface (log.go, whole file) | 2.4 |  | 0.614 |
 | walker |  | 1486 | 36 | Markdown::ReadmeHeadline { file: source/iofs/README.md } |  |  | 0.614 |
 | walker |  | 1503 | 17 | Markdown::HeadingsOutline { file: source/google_cloud_storage/README.md } |  |  | 0.614 |
-| walker |  | 1561 | 58 | Code::CodeKey { rung: ModuleDoc, file: database/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.614 |
-| walker |  | 1619 | 58 | Code::CodeKey { rung: ModuleDoc, file: source/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
-| walker |  | 1660 | 41 | Markdown::ReadmeHeadline { file: source/bitbucket/README.md } |  |  | 0.615 |
-| walker |  | 1705 | 45 | Markdown::ReadmeHeadline { file: database/clickhouse/README.md } |  |  | 0.615 |
+| walker |  | 1544 | 41 | Markdown::ReadmeHeadline { file: source/bitbucket/README.md } |  |  | 0.614 |
+| walker |  | 1589 | 45 | Markdown::ReadmeHeadline { file: database/clickhouse/README.md } |  |  | 0.614 |
+| walker |  | 1647 | 58 | Code::CodeKey { rung: ModuleDoc, file: database/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.614 |
+| walker |  | 1705 | 58 | Code::CodeKey { rung: ModuleDoc, file: source/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
 | ns | 1738 |  | 276 | The Migrate struct and its documented public knobs | 2.5 |  | 0.564 |
 | walker |  | 1757 | 52 | Markdown::ReadmeHeadline { file: database/firebird/README.md } |  |  | 0.564 |
 | walker |  | 1811 | 54 | Markdown::ReadmeHeadline { file: database/cockroachdb/README.md } |  |  | 0.564 |
@@ -128,11 +128,11 @@ Score(3000)=0.522 I=0.682 C=0.400 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 3784 | 53 | Markdown::Section { file: GETTING_STARTED.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.457 |
 | ns | 3798 |  | 88 | Driver registries: Open / Register / List in both packages | 3.4 |  | 0.453 |
 | walker |  | 3835 | 51 | Markdown::HeadingsOutline { file: source/go_bindata/README.md } |  |  | 0.453 |
+| walker |  | 3858 | 23 | Markdown::Section { file: database/snowflake/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.453 |
 | ns | 3892 |  | 94 | database package constants, sentinel errors and the registry map | 3.5 |  | 0.447 |
-| walker |  | 3927 | 92 | Code::CodeKey { rung: ModuleDoc, file: source/godoc_vfs/vfs.go, decl: 0, sub: 0, line: 0 } |  |  | 0.447 |
-| walker |  | 3950 | 23 | Markdown::Section { file: database/snowflake/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.447 |
-| walker |  | 4029 | 79 | Markdown::ReadmeHeadline { file: database/pgx/v5/README.md } |  |  | 0.447 |
-| walker |  | 4054 | 25 | Markdown::HeadingsOutline { file: database/pgx/v5/README.md } |  |  | 0.447 |
+| walker |  | 3937 | 79 | Markdown::ReadmeHeadline { file: database/pgx/v5/README.md } |  |  | 0.447 |
+| walker |  | 3962 | 25 | Markdown::HeadingsOutline { file: database/pgx/v5/README.md } |  |  | 0.447 |
+| walker |  | 4054 | 92 | Code::CodeKey { rung: ModuleDoc, file: source/godoc_vfs/vfs.go, decl: 0, sub: 0, line: 0 } |  |  | 0.447 |
 | walker |  | 4194 | 140 | Markdown::ReadmeHeadline { file: database/neo4j/README.md } |  |  | 0.447 |
 | walker |  | 4206 | 12 | Code::CodeKey { rung: Names, file: log.go, decl: 0, sub: 0, line: 0 } |  |  | 0.447 |
 | ns | 4219 |  | 327 | "How to implement a database driver" — the 7-step checklist | 3.6 |  | 0.434 |
@@ -140,9 +140,9 @@ Score(3000)=0.522 I=0.682 C=0.400 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 4297 | 25 | Code::CodeKey { rung: Doc, file: log.go, decl: 1, sub: 0, line: 5 } |  |  | 0.454 |
 | walker |  | 4379 | 82 | Fs::DirListing { dir: source/httpfs/testdata/sql } |  |  | 0.454 |
 | walker |  | 4385 | 6 | Fs::DirListing { dir: source/httpfs/testdata/sql/subdirs-are-ignored } |  |  | 0.454 |
-| walker |  | 4495 | 110 | Code::CodeKey { rung: ModuleDoc, file: source/iofs/doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.454 |
 | ns | 4503 |  | 284 | "How to implement a source driver" — checklist and guidelines | 3.7 |  | 0.443 |
-| walker |  | 4756 | 261 | Plaintext::Whole { file: Dockerfile } |  |  | 0.443 |
+| walker |  | 4646 | 261 | Plaintext::Whole { file: Dockerfile } |  |  | 0.443 |
+| walker |  | 4756 | 110 | Code::CodeKey { rung: ModuleDoc, file: source/iofs/doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.443 |
 | walker |  | 4803 | 47 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.443 |
 | ns | 4943 |  | 440 | database.Driver in full: per-method semantic contracts | 3.8 | 3.2 | 0.422 |
 | walker |  | 4983 | 180 | Markdown::ReadmeHeadline { file: source/gitlab/README.md } |  |  | 0.422 |
