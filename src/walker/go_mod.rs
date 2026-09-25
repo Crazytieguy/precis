@@ -8,9 +8,9 @@ use crate::batch::{Batch, BatchKey, GoModKey};
 use crate::content::BatchContent;
 use crate::value::mix_signals;
 
-use super::{FileLines, WalkCtx, file_depth_factor, fs::list_dir, single_file_lines_content};
+use super::{FileLines, WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
 
-const GOMOD_WHOLE_LINE_CAP: usize = 72;
+const WHOLE_LINE_CAP: usize = 72;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
@@ -22,18 +22,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let path = dir.join(name);
-        let identity_emitted = if let Some(content) = build_gomod_identity_content(&path, ctx) {
+        let identity_emitted = if let Some(content) = build_identity_content(&path, ctx) {
             out.push(Batch {
                 key: GoModKey::Identity { file: path.clone() }.into(),
                 predecessor: None,
                 content,
-                value: gomod_identity_value(&path, ctx),
+                value: identity_value(&path, ctx),
             });
             true
         } else {
             false
         };
-        let Some(content) = build_gomod_content(&path, ctx) else {
+        let Some(content) = build_file_content(&path, ctx) else {
             continue;
         };
         // Only declare the identity batch as predecessor when it was
@@ -45,7 +45,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             key: GoModKey::File { file: path.clone() }.into(),
             predecessor,
             content,
-            value: gomod_value(&path, ctx),
+            value: file_value(&path, ctx),
         });
     }
     out
@@ -53,7 +53,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 
 /// Identity slice of `go.mod` / `go.work` — `module`/`go`/`toolchain`
 /// directives only; block bodies are skipped.
-fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
+fn build_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let mut lines = Vec::new();
     let mut in_block = false;
@@ -63,7 +63,7 @@ fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchConte
         // can't shadow identity keywords; go.mod allows directives in
         // any order, so module/go/toolchain are collected wherever
         // they appear at top level.
-        if gomod_block_start(trimmed).is_some() {
+        if block_start(trimmed).is_some() {
             in_block = true;
             continue;
         }
@@ -86,13 +86,13 @@ fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchConte
 
 /// `GoMod` content — whole for compact module files; sampled for large
 /// generated dependency closures.
-fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
+fn build_file_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let total_lines = source.lines().count();
     if total_lines == 0 {
         return None;
     }
-    if total_lines <= GOMOD_WHOLE_LINE_CAP {
+    if total_lines <= WHOLE_LINE_CAP {
         return single_file_lines_content(
             file,
             &source,
@@ -100,22 +100,22 @@ fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
         );
     }
 
-    single_file_lines_content(file, &source, bounded_gomod_lines(&source))
+    single_file_lines_content(file, &source, bounded_lines(&source))
 }
 
-fn bounded_gomod_lines(source: &str) -> FileLines {
+fn bounded_lines(source: &str) -> FileLines {
     let src_lines: Vec<&str> = source.lines().collect();
     let mut full = Vec::new();
     let mut i = 0;
     while i < src_lines.len() {
         let line_no = i + 1;
         let trimmed = src_lines[i].trim();
-        if let Some(block) = gomod_block_start(trimmed) {
+        if let Some(block) = block_start(trimmed) {
             let start_line = line_no;
             let mut body = Vec::new();
             i += 1;
             while i < src_lines.len() && src_lines[i].trim() != ")" {
-                if keep_gomod_block_entry(block, src_lines[i].trim()) {
+                if keep_block_entry(block, src_lines[i].trim()) {
                     body.push(i + 1);
                 }
                 i += 1;
@@ -133,18 +133,18 @@ fn bounded_gomod_lines(source: &str) -> FileLines {
             }
             continue;
         }
-        if keep_gomod_directive_line(trimmed) {
+        if keep_directive_line(trimmed) {
             full.push(line_no);
         }
         i += 1;
     }
     full.sort_unstable();
     full.dedup();
-    let ellipses = gomod_ellipses_for_gaps(&full, &src_lines);
+    let ellipses = ellipses_for_gaps(&full, &src_lines);
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-fn gomod_ellipses_for_gaps(full: &[usize], src_lines: &[&str]) -> Vec<usize> {
+fn ellipses_for_gaps(full: &[usize], src_lines: &[&str]) -> Vec<usize> {
     if full.is_empty() {
         return Vec::new();
     }
@@ -160,7 +160,7 @@ fn gomod_ellipses_for_gaps(full: &[usize], src_lines: &[&str]) -> Vec<usize> {
         let has_substantive_omission = (omitted_start..=omitted_end).any(|line_no| {
             src_lines
                 .get(line_no - 1)
-                .is_some_and(|line| is_substantive_gomod_line(line.trim()))
+                .is_some_and(|line| is_substantive_line(line.trim()))
         });
         if has_substantive_omission {
             ellipses.push(omitted_start);
@@ -169,17 +169,17 @@ fn gomod_ellipses_for_gaps(full: &[usize], src_lines: &[&str]) -> Vec<usize> {
     ellipses
 }
 
-fn is_substantive_gomod_line(trimmed: &str) -> bool {
+fn is_substantive_line(trimmed: &str) -> bool {
     !trimmed.is_empty() && !trimmed.starts_with("//") && trimmed != ")"
 }
 
-fn gomod_block_start(trimmed: &str) -> Option<&str> {
+fn block_start(trimmed: &str) -> Option<&str> {
     let (first, rest) = trimmed.split_once(char::is_whitespace)?;
     (rest.trim() == "(" && matches!(first, "require" | "replace" | "exclude" | "retract" | "use"))
         .then_some(first)
 }
 
-fn keep_gomod_directive_line(trimmed: &str) -> bool {
+fn keep_directive_line(trimmed: &str) -> bool {
     let Some(first) = trimmed.split_whitespace().next() else {
         return false;
     };
@@ -189,22 +189,22 @@ fn keep_gomod_directive_line(trimmed: &str) -> bool {
     ) || (first == "require" && !trimmed.contains("// indirect"))
 }
 
-fn keep_gomod_block_entry(block: &str, trimmed: &str) -> bool {
+fn keep_block_entry(block: &str, trimmed: &str) -> bool {
     if trimmed.is_empty() || trimmed.starts_with("//") {
         return false;
     }
     block != "require" || !trimmed.contains("// indirect")
 }
 
-fn gomod_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn file_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Identity directives split into [`GoModKey::Identity`]; this
     // batch reflects the residual require / replace / exclude /
     // retract content.
-    mix_signals(0.80, 0.60, 0.5, file_depth_factor(file, ctx, false))
+    mix_signals(0.80, 0.60, 0.5, path_depth_factor(file, ctx))
 }
 
-fn gomod_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.90, 0.75, 0.35, file_depth_factor(file, ctx, false))
+fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.90, 0.75, 0.35, path_depth_factor(file, ctx))
 }
 
 #[cfg(test)]
@@ -224,7 +224,7 @@ mod tests {
         let path = dir.path().join("go.mod");
         std::fs::write(&path, src).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_gomod_content(&path, &ctx).expect("emits content");
+        let content = build_file_content(&path, &ctx).expect("emits content");
         let BatchContent::Lines { spans } = content else {
             panic!("expected Lines content");
         };
@@ -239,7 +239,7 @@ mod tests {
         let path = dir.path().join("go.mod");
         std::fs::write(&path, src).unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_gomod_identity_content(&path, &ctx).expect("emits content");
+        let content = build_identity_content(&path, &ctx).expect("emits content");
         let BatchContent::Lines { spans } = content else {
             panic!("expected Lines content");
         };
