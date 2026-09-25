@@ -112,6 +112,16 @@ apps/
     components/
     components.json
     e2e/
+      .env.example
+      data/
+        user.ts
+      fixtures/
+      index.ts
+        1→export { test } from "./fixtures";
+        2→export { expect } from "@playwright/test";
+      tests/
+        global/
+        public/
     hooks/
     layouts/
       AdminLayout.tsx
@@ -254,18 +264,12 @@ packages/
       4→export function formatAvailable(
       …
       11→export const atLeastOneFormatAvailable = (
-      12→  link: Link | LinkIncludingShortenedCollectionAndTags
-      13→) => {
       …
     generatePreview.ts
       …
       5→export const generatePreview = async (
       …
     getFormatBasedOnPreference.ts
-      …
-      15→const getFormatBasedOnPreference = ({
-      …
-      50→export default getFormatBasedOnPreference;
     getFormatFromContentType.ts
     getLinkTypeFromFormat.ts
     getOriginalFormat.ts

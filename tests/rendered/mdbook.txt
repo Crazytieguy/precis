@@ -302,9 +302,15 @@ crates/
   xtask/
     Cargo.toml
     README.md
+      1→# xtask
+      2→
+      3→This is a CLI utility for running development commands for mdbook.
+      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
     src/
       changelog.rs
       main.rs
+        1→//! Helper for local development.
+        …
 eslint.config.mjs
 examples/
   nop-preprocessor.rs

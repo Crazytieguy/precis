@@ -1,4 +1,4 @@
-Score(3000)=0.459 I=0.801 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.466/0.745/0.600/0.459/0.380/0.333/0.480
+Score(3000)=0.459 I=0.801 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.466/0.745/0.600/0.459/0.380/0.319/0.440
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -102,181 +102,263 @@ Score(3000)=0.459 I=0.801 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | walker |  | 4311 | 12 | Code::CodeKey { rung: Names, file: packages/vite/src/types/connect.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
 | walker |  | 4326 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/types/dynamicImportVars.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
 | walker |  | 4342 | 16 | Code::CodeKey { rung: Names, file: packages/vite/src/types/commonjs.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
-| walker |  | 4366 | 24 | Fs::DirListing { dir: packages/create-vite/template-preact } |  |  | 0.380 |
-| walker |  | 4385 | 19 | Fs::DirListing { dir: packages/create-vite/template-preact/src } |  |  | 0.380 |
 | ns | 4401 |  | 290 | UserConfig keys: server, build, env, worker and the rest | 3.2 | 3.1 | 0.366 |
 | ns | 4571 |  | 170 | Per-environment options (SharedEnvironmentOptions / EnvironmentOptions) | 3.3 |  | 0.358 |
-| walker |  | 4575 | 190 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.376 |
-| walker |  | 4630 | 55 | Fs::DirListing { dir: packages/vite/src/shared } |  |  | 0.377 |
-| walker |  | 4642 | 12 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/builtin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
-| walker |  | 4657 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/hmrHandler.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
-| walker |  | 4682 | 25 | Code::CodeKey { rung: Names, file: packages/vite/src/node/environment.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
-| walker |  | 4707 | 25 | Code::CodeKey { rung: Names, file: packages/vite/src/node/internalIndex.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
-| ns | 4707 |  | 136 | CommonServerOptions: the host/port/https/proxy/cors keys | 3.4 |  | 0.372 |
-| walker |  | 4724 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
-| walker |  | 4741 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/forwardConsole.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
-| walker |  | 4758 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/prepareOutDir.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
-| walker |  | 4782 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/assetSource.ts, decl: 1, sub: 0, line: 111 } |  |  | 0.372 |
-| walker |  | 4799 | 17 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/forwardConsole.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.372 |
-| walker |  | 4817 | 18 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/wasm.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
-| walker |  | 4844 | 27 | Code::CodeKey { rung: Names, file: packages/vite/src/node/publicDir.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
-| walker |  | 4869 | 25 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/publicDir.ts, decl: 1, sub: 0, line: 13 } |  |  | 0.372 |
-| walker |  | 4895 | 26 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/hmrHandler.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.372 |
-| walker |  | 4923 | 28 | Fs::DirListing { dir: packages/create-vite/template-qwik } |  |  | 0.372 |
-| walker |  | 4942 | 19 | Fs::DirListing { dir: packages/create-vite/template-qwik/src } |  |  | 0.372 |
-| ns | 4944 |  | 237 | ServerOptions and FileSystemServeOptions keys | 3.5 |  | 0.362 |
-| walker |  | 4970 | 28 | Fs::DirListing { dir: packages/create-vite/template-solid } |  |  | 0.362 |
-| walker |  | 4989 | 19 | Fs::DirListing { dir: packages/create-vite/template-solid/src } |  |  | 0.362 |
-| walker |  | 5017 | 28 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/createImportMeta.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
-| walker |  | 5037 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/createImportMeta.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.362 |
-| walker |  | 5057 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/createImportMeta.ts, decl: 2, sub: 0, line: 41 } |  |  | 0.362 |
-| walker |  | 5084 | 27 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/cli.ts, decl: 1, sub: 0, line: 68 } |  |  | 0.362 |
-| walker |  | 5113 | 29 | Fs::DirListing { dir: docs/.vitepress/theme/landing } |  |  | 0.362 |
-| walker |  | 5141 | 28 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/builtin.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.362 |
-| walker |  | 5161 | 20 | Code::CodeKey { rung: Names, file: packages/vite/src/node/optimizer/pluginConverter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
-| ns | 5180 |  | 236 | BuildEnvironmentOptions keys: output, assets, CSS, minification | 3.6 |  | 0.355 |
-| walker |  | 5190 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/environment.ts, decl: 2, sub: 0, line: 20 } |  |  | 0.355 |
-| walker |  | 5219 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/publicDir.ts, decl: 2, sub: 0, line: 36 } |  |  | 0.355 |
-| walker |  | 5240 | 21 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/reporter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
-| walker |  | 5271 | 31 | Code::CodeKey { rung: Names, file: packages/vite/src/node/nodeResolve.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
-| walker |  | 5295 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/nodeResolve.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.355 |
-| walker |  | 5315 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts, decl: 1, sub: 0, line: 13 } |  |  | 0.355 |
-| walker |  | 5347 | 32 | Fs::DirListing { dir: docs/.vitepress/theme/live } |  |  | 0.355 |
-| ns | 5437 |  | 257 | BuildEnvironmentOptions keys: bundler passthrough, lib, ssr, reporting | 3.7 | 3.6 | 0.347 |
-| walker |  | 5469 | 122 | Markdown::ReadmeHeadline { file: packages/plugin-legacy/README.md } |  |  | 0.347 |
-| walker |  | 5519 | 50 | Code::CodeKey { rung: Names, file: packages/vite/types/metadata.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.347 |
-| ns | 5530 |  | 93 | ExperimentalOptions and FutureOptions | 3.8 |  | 0.344 |
-| walker |  | 5544 | 25 | Code::CodeKey { rung: Decl, file: packages/vite/types/metadata.d.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.344 |
-| walker |  | 5588 | 44 | Code::CodeKey { rung: Decl, file: packages/vite/types/metadata.d.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.344 |
-| walker |  | 5621 | 33 | Fs::DirListing { dir: packages/create-vite/template-react } |  |  | 0.344 |
-| walker |  | 5640 | 19 | Fs::DirListing { dir: packages/create-vite/template-react/src } |  |  | 0.344 |
-| walker |  | 5673 | 33 | Fs::DirListing { dir: packages/create-vite/template-vue } |  |  | 0.344 |
-| walker |  | 5691 | 18 | Fs::DirListing { dir: packages/create-vite/template-vue/src } |  |  | 0.344 |
-| ns | 5804 |  | 274 | CLI global options (all five commands) | 3.9 | 2.2 | 0.337 |
-| walker |  | 5811 | 120 | Json::IdentityMeta { file: package.json } |  |  | 0.338 |
-| walker |  | 5860 | 49 | Fs::DirListing { dir: packages/vite/src/node/ssr } |  |  | 0.338 |
-| walker |  | 5871 | 11 | Fs::DirListing { dir: packages/vite/src/node/ssr/runtime } |  |  | 0.338 |
-| walker |  | 5886 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/runnerImport.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
-| walker |  | 5902 | 16 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/ssrModuleLoader.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
-| walker |  | 5919 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/ssrManifestPlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
-| walker |  | 5951 | 32 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__ } |  |  | 0.338 |
-| walker |  | 5984 | 33 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/hmrHandler.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.338 |
-| ns | 5995 |  | 191 | CLI dev-server flags | 3.10 | 2.2 | 0.333 |
-| walker |  | 6019 | 35 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/hmrLogger.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| walker |  | 6040 | 21 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/hmrLogger.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.333 |
-| walker |  | 6064 | 24 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/sourcemap/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| walker |  | 6087 | 23 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/optimizer/pluginConverter.ts, decl: 1, sub: 0, line: 31 } |  |  | 0.333 |
-| walker |  | 6146 | 59 | Code::CodeKey { rung: Names, file: packages/vite/types/importMeta.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| walker |  | 6162 | 16 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.333 |
-| walker |  | 6182 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.333 |
-| walker |  | 6231 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.333 |
-| walker |  | 6257 | 26 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/sourcemap/decoder.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| walker |  | 6283 | 26 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/sourcemap/interceptor.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| walker |  | 6309 | 26 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/fetchModule.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| walker |  | 6348 | 39 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__/fixtures } |  |  | 0.333 |
-| walker |  | 6362 | 14 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__/fixtures/named-overwrite-all } |  |  | 0.333 |
-| walker |  | 6378 | 16 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__/fixtures/modules } |  |  | 0.333 |
-| walker |  | 6396 | 18 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__/fixtures/multi-source-sourcemaps } |  |  | 0.333 |
-| walker |  | 6420 | 24 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__/fixtures/errors } |  |  | 0.333 |
-| walker |  | 6459 | 39 | Code::CodeKey { rung: Names, file: packages/vite/src/node/env.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
-| ns | 6467 |  | 472 | CLI build flags | 3.11 | 2.2 | 0.320 |
-| walker |  | 6483 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/env.ts, decl: 3, sub: 0, line: 98 } |  |  | 0.320 |
-| walker |  | 6512 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/env.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.320 |
-| ns | 6622 |  | 155 | CLI optimize and preview flags | 3.12 | 2.2 | 0.317 |
-| ns | 6757 |  | 135 | src/node module roster (complete) | 4.1 |  | 0.368 |
-| walker |  | 6773 | 261 | Code::CodeKey { rung: Names, file: packages/vite/client.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.368 |
-| walker |  | 6795 | 22 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 19, sub: 0, line: 56 } |  |  | 0.368 |
-| walker |  | 6819 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 3, sub: 0, line: 9 } |  |  | 0.368 |
-| walker |  | 6843 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 4, sub: 0, line: 13 } |  |  | 0.368 |
-| walker |  | 6867 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 5, sub: 0, line: 17 } |  |  | 0.368 |
-| walker |  | 6891 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 6, sub: 0, line: 21 } |  |  | 0.368 |
-| ns | 6906 |  | 149 | src/node/plugins roster (complete) | 4.2 |  | 0.406 |
-| walker |  | 6915 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 7, sub: 0, line: 25 } |  |  | 0.406 |
-| walker |  | 6939 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 8, sub: 0, line: 29 } |  |  | 0.406 |
-| walker |  | 6963 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 9, sub: 0, line: 33 } |  |  | 0.406 |
-| ns | 6981 |  | 75 | src/node/server roster (complete) | 4.3 |  | 0.400 |
-| walker |  | 6987 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 20, sub: 0, line: 60 } |  |  | 0.400 |
-| walker |  | 7013 | 26 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 10, sub: 0, line: 37 } |  |  | 0.400 |
-| walker |  | 7040 | 27 | Code::CodeKey { rung: Names, file: packages/vite/src/node/optimizer/optimizer.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.400 |
-| walker |  | 7059 | 19 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/optimizer/optimizer.ts, decl: 1, sub: 0, line: 40 } |  |  | 0.400 |
-| ns | 7066 |  | 85 | Dev-server middlewares and per-environment implementations | 4.4 |  | 0.393 |
-| walker |  | 7078 | 19 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/optimizer/optimizer.ts, decl: 2, sub: 0, line: 756 } |  |  | 0.393 |
-| walker |  | 7119 | 41 | Fs::DirListing { dir: packages/create-vite/template-preact-ts } |  |  | 0.393 |
-| walker |  | 7140 | 21 | Fs::DirListing { dir: packages/create-vite/template-preact-ts/src } |  |  | 0.393 |
-| ns | 7144 |  | 78 | SSR and dependency-optimizer rosters | 4.5 |  | 0.410 |
-| walker |  | 7181 | 41 | Code::CodeKey { rung: Names, file: packages/vite/src/node/baseEnvironment.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.410 |
-| walker |  | 7197 | 16 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/baseEnvironment.ts, decl: 7, sub: 0, line: 135 } |  |  | 0.410 |
-| walker |  | 7238 | 41 | Code::CodeKey { rung: Names, file: packages/vite/src/node/idResolver.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.410 |
-| walker |  | 7271 | 33 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/idResolver.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.410 |
-| ns | 7287 |  | 143 | Browser client, module-runner and shared rosters | 4.6 |  | 0.437 |
-| walker |  | 7304 | 33 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/idResolver.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.437 |
-| walker |  | 7345 | 41 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/ssrTransform.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.437 |
-| walker |  | 7361 | 16 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/ssrTransform.ts, decl: 2, sub: 0, line: 14 } |  |  | 0.437 |
-| ns | 7400 |  | 113 | resolvePlugins: the built-in plugin pipeline order | 4.7 |  | 0.433 |
-| walker |  | 7403 | 42 | Fs::DirListing { dir: docs/config } |  |  | 0.433 |
-| walker |  | 7443 | 40 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/hmrLogger.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.433 |
-| walker |  | 7483 | 40 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/environment.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.433 |
-| ns | 7494 |  | 94 | Published and inlined type declarations | 4.8 |  | 0.447 |
-| walker |  | 7549 | 66 | Code::CodeKey { rung: Names, file: packages/vite/types/importGlob.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.447 |
-| walker |  | 7578 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/types/importGlob.d.ts, decl: 3, sub: 0, line: 44 } |  |  | 0.447 |
-| walker |  | 7608 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/types/importGlob.d.ts, decl: 4, sub: 0, line: 49 } |  |  | 0.447 |
-| ns | 7609 |  | 115 | Core internal entry-point signatures | 4.9 |  | 0.442 |
-| walker |  | 7651 | 43 | Code::CodeKey { rung: Names, file: packages/vite/src/client/overlay.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.442 |
-| walker |  | 7694 | 43 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/hmr.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.442 |
-| walker |  | 7724 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/hmr.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.442 |
-| walker |  | 7768 | 44 | Fs::DirListing { dir: docs/.vitepress/theme/components } |  |  | 0.442 |
-| walker |  | 7812 | 44 | Fs::DirListing { dir: packages/create-vite/template-svelte } |  |  | 0.442 |
-| walker |  | 7831 | 19 | Fs::DirListing { dir: packages/create-vite/template-svelte/src } |  |  | 0.442 |
-| walker |  | 7836 | 5 | Fs::DirListing { dir: packages/create-vite/template-svelte/src/lib } |  |  | 0.442 |
-| walker |  | 7880 | 44 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/evaluatedModules.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.442 |
-| walker |  | 7910 | 30 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/json.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.442 |
-| walker |  | 7919 | 9 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/json.ts, decl: 2, sub: 0, line: 18 } |  |  | 0.433 |
-| ns | 7919 |  | 310 | CONTRIBUTING.md: every section heading | 5.1 |  | 0.433 |
-| ns | 8109 |  | 190 | CONTRIBUTING: local development loop | 5.2 | 5.1 | 0.431 |
-| walker |  | 8325 | 406 | Fs::DirListing { dir: playground } |  |  | 0.435 |
-| walker |  | 8370 | 45 | Fs::DirListing { dir: docs/changes } |  |  | 0.435 |
-| walker |  | 8415 | 45 | Fs::DirListing { dir: packages/create-vite/template-qwik-ts } |  |  | 0.435 |
-| walker |  | 8436 | 21 | Fs::DirListing { dir: packages/create-vite/template-qwik-ts/src } |  |  | 0.435 |
-| walker |  | 8481 | 45 | Fs::DirListing { dir: packages/create-vite/template-solid-ts } |  |  | 0.435 |
-| walker |  | 8502 | 21 | Fs::DirListing { dir: packages/create-vite/template-solid-ts/src } |  |  | 0.435 |
-| ns | 8515 |  | 406 | playground/ roster (complete e2e corpus) | 5.3 |  | 0.489 |
-| walker |  | 8545 | 43 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/nodeResolve.ts, decl: 2, sub: 0, line: 14 } |  |  | 0.489 |
-| walker |  | 8555 | 10 | Code::CodeKey { rung: Names, file: packages/plugin-legacy/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| walker |  | 8599 | 44 | Code::CodeKey { rung: Decl, file: packages/vite/src/client/overlay.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.489 |
-| walker |  | 8629 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/sourcemap/decoder.ts, decl: 3, sub: 0, line: 58 } |  |  | 0.489 |
-| walker |  | 8676 | 47 | Code::CodeKey { rung: Names, file: packages/vite/src/node/external.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| walker |  | 8703 | 27 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/external.ts, decl: 2, sub: 0, line: 35 } |  |  | 0.489 |
-| walker |  | 8739 | 36 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/external.ts, decl: 1, sub: 0, line: 22 } |  |  | 0.489 |
-| walker |  | 8771 | 32 | Code::CodeKey { rung: Names, file: packages/vite/src/node/optimizer/rolldownDepPlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
-| ns | 8802 |  | 287 | CONTRIBUTING: how the integration tests work | 5.4 | 5.3 | 0.488 |
-| ns | 8919 |  | 117 | Unit test locations under packages/vite/src | 5.5 |  | 0.480 |
-| walker |  | 8954 | 183 | Markdown::ReadmeHeadline { file: packages/vite/README.md } |  |  | 0.480 |
-| walker |  | 8969 | 15 | Code::CodeKey { rung: Body, file: packages/plugin-legacy/src/index.ts, decl: 30, sub: 0, line: 1069 } |  |  | 0.480 |
-| walker |  | 9000 | 31 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/sourcemap/interceptor.ts, decl: 1, sub: 0, line: 16 } |  |  | 0.480 |
-| walker |  | 9031 | 31 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/sourcemap/interceptor.ts, decl: 2, sub: 0, line: 59 } |  |  | 0.480 |
-| ns | 9050 |  | 131 | How the unit and e2e vitest runs are separated | 5.6 |  | 0.477 |
-| walker |  | 9081 | 50 | Fs::DirListing { dir: packages/create-vite/template-react-ts } |  |  | 0.477 |
-| walker |  | 9102 | 21 | Fs::DirListing { dir: packages/create-vite/template-react-ts/src } |  |  | 0.477 |
-| ns | 9114 |  | 64 | docs/ site roster | 5.7 |  | 0.487 |
-| walker |  | 9152 | 50 | Fs::DirListing { dir: packages/create-vite/template-vue-ts } |  |  | 0.487 |
-| walker |  | 9170 | 18 | Fs::DirListing { dir: packages/create-vite/template-vue-ts/src } |  |  | 0.487 |
-| walker |  | 9244 | 74 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 4, sub: 0, line: 22 } |  |  | 0.487 |
-| ns | 9298 |  | 184 | docs/guide and docs/config page rosters | 5.8 |  | 0.478 |
-| ns | 9343 |  | 45 | docs/changes: the breaking-change / migration notes | 5.9 |  | 0.481 |
-| ns | 9501 |  | 158 | CONTRIBUTING: the dependency policy | 5.10 | 5.1 | 0.479 |
-| walker |  | 9563 | 319 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 4, sub: 0, line: 39 } |  |  | 0.479 |
-| walker |  | 9597 | 34 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/preAlias.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
-| ns | 9624 |  | 123 | create-vite: package layout and template roster | 5.11 |  | 0.491 |
-| walker |  | 9627 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/preAlias.ts, decl: 2, sub: 0, line: 129 } |  |  | 0.491 |
-| ns | 9677 |  | 53 | plugin-legacy: package layout | 5.12 |  | 0.497 |
-| walker |  | 9683 | 56 | Fs::DirListing { dir: packages/create-vite/template-svelte-ts } |  |  | 0.497 |
-| walker |  | 9702 | 19 | Fs::DirListing { dir: packages/create-vite/template-svelte-ts/src } |  |  | 0.497 |
-| walker |  | 9707 | 5 | Fs::DirListing { dir: packages/create-vite/template-svelte-ts/src/lib } |  |  | 0.497 |
-| walker |  | 9756 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/env.ts, decl: 2, sub: 0, line: 28 } |  |  | 0.497 |
-| walker |  | 9805 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/idResolver.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.497 |
-| ns | 9827 |  | 150 | Repository automation: .github and release scripts | 5.13 |  | 0.509 |
-| walker |  | 9854 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/ssrTransform.ts, decl: 3, sub: 0, line: 23 } |  |  | 0.509 |
-| walker |  | 9888 | 34 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/ssr/runnerImport.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.509 |
-| walker |  | 9963 | 75 | Fs::DirListing { dir: packages/vite/src/node/server } |  |  | 0.521 |
-| walker |  | 9981 | 18 | Fs::DirListing { dir: packages/vite/src/node/server/environments } |  |  | 0.521 |
-| walker |  | 9994 | 13 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/openBrowser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
+| ns | 4707 |  | 136 | CommonServerOptions: the host/port/https/proxy/cors keys | 3.4 |  | 0.353 |
+| walker |  | 4748 | 406 | Fs::DirListing { dir: playground } |  |  | 0.357 |
+| walker |  | 4759 | 11 | Fs::DirListing { dir: playground/resolve-linked } |  |  | 0.357 |
+| walker |  | 4763 | 4 | Fs::DirListing { dir: playground/resolve-linked/src } |  |  | 0.357 |
+| walker |  | 4788 | 25 | Code::CodeKey { rung: Names, file: playground/resolve-linked/src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.357 |
+| walker |  | 4804 | 16 | Fs::DirListing { dir: playground/devtools } |  |  | 0.357 |
+| walker |  | 4812 | 8 | Fs::DirListing { dir: playground/devtools/src } |  |  | 0.357 |
+| walker |  | 4846 | 34 | Code::CodeKey { rung: Names, file: playground/devtools/src/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.357 |
+| walker |  | 4863 | 17 | Fs::DirListing { dir: playground/css-lightningcss-proxy } |  |  | 0.357 |
+| walker |  | 4880 | 17 | Fs::DirListing { dir: playground/css-lightningcss-root } |  |  | 0.357 |
+| walker |  | 4897 | 17 | Fs::DirListing { dir: playground/hmr-root } |  |  | 0.357 |
+| walker |  | 4901 | 4 | Fs::DirListing { dir: playground/hmr-root/root } |  |  | 0.357 |
+| walker |  | 4919 | 18 | Fs::DirListing { dir: playground/client-reload } |  |  | 0.357 |
+| walker |  | 4937 | 18 | Fs::DirListing { dir: playground/extensions } |  |  | 0.357 |
+| ns | 4944 |  | 237 | ServerOptions and FileSystemServeOptions keys | 3.5 |  | 0.348 |
+| walker |  | 4955 | 18 | Fs::DirListing { dir: playground/proxy-bypass } |  |  | 0.348 |
+| walker |  | 4975 | 20 | Fs::DirListing { dir: playground/preserve-symlinks } |  |  | 0.348 |
+| walker |  | 4979 | 4 | Fs::DirListing { dir: playground/preserve-symlinks/src } |  |  | 0.348 |
+| walker |  | 5000 | 21 | Fs::DirListing { dir: playground/base-conflict } |  |  | 0.348 |
+| walker |  | 5021 | 21 | Fs::DirListing { dir: playground/dynamic-import-inline } |  |  | 0.348 |
+| walker |  | 5029 | 8 | Fs::DirListing { dir: playground/dynamic-import-inline/src } |  |  | 0.348 |
+| walker |  | 5045 | 16 | Code::CodeKey { rung: Names, file: playground/dynamic-import-inline/src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.348 |
+| walker |  | 5066 | 21 | Fs::DirListing { dir: playground/ssr-alias } |  |  | 0.348 |
+| walker |  | 5074 | 8 | Fs::DirListing { dir: playground/ssr-alias/alias-original } |  |  | 0.348 |
+| walker |  | 5095 | 21 | Fs::DirListing { dir: playground/ssr-pug } |  |  | 0.348 |
+| walker |  | 5099 | 4 | Fs::DirListing { dir: playground/ssr-pug/src } |  |  | 0.348 |
+| walker |  | 5120 | 21 | Fs::DirListing { dir: playground/ssr-wasm } |  |  | 0.348 |
+| walker |  | 5131 | 11 | Fs::DirListing { dir: playground/preserve-symlinks/module-a } |  |  | 0.348 |
+| walker |  | 5153 | 22 | Fs::DirListing { dir: playground/build-old } |  |  | 0.348 |
+| walker |  | 5175 | 22 | Fs::DirListing { dir: playground/cli } |  |  | 0.348 |
+| ns | 5180 |  | 236 | BuildEnvironmentOptions keys: output, assets, CSS, minification | 3.6 |  | 0.341 |
+| walker |  | 5197 | 22 | Fs::DirListing { dir: playground/cli-module } |  |  | 0.341 |
+| walker |  | 5219 | 22 | Fs::DirListing { dir: playground/object-hooks } |  |  | 0.341 |
+| walker |  | 5236 | 17 | Code::CodeKey { rung: Names, file: playground/object-hooks/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.341 |
+| walker |  | 5258 | 22 | Fs::DirListing { dir: playground/proxy-hmr } |  |  | 0.341 |
+| walker |  | 5282 | 24 | Fs::DirListing { dir: playground/backend-integration } |  |  | 0.341 |
+| walker |  | 5292 | 10 | Fs::DirListing { dir: playground/backend-integration/frontend } |  |  | 0.341 |
+| walker |  | 5296 | 4 | Fs::DirListing { dir: playground/backend-integration/frontend/images } |  |  | 0.341 |
+| walker |  | 5320 | 24 | Fs::DirListing { dir: playground/forward-console } |  |  | 0.341 |
+| walker |  | 5324 | 4 | Fs::DirListing { dir: playground/forward-console/src } |  |  | 0.341 |
+| walker |  | 5398 | 74 | Code::CodeKey { rung: Names, file: playground/forward-console/src/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.341 |
+| walker |  | 5410 | 12 | Code::CodeKey { rung: Decl, file: playground/forward-console/src/main.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.341 |
+| walker |  | 5424 | 14 | Code::CodeKey { rung: Decl, file: playground/forward-console/src/main.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.341 |
+| ns | 5437 |  | 257 | BuildEnvironmentOptions keys: bundler passthrough, lib, ssr, reporting | 3.7 | 3.6 | 0.333 |
+| walker |  | 5448 | 24 | Fs::DirListing { dir: playground/optimize-deps-no-discovery } |  |  | 0.333 |
+| walker |  | 5456 | 8 | Fs::DirListing { dir: playground/optimize-deps-no-discovery/dep-no-discovery } |  |  | 0.333 |
+| walker |  | 5481 | 25 | Fs::DirListing { dir: playground/import-assertion } |  |  | 0.333 |
+| walker |  | 5493 | 12 | Fs::DirListing { dir: playground/import-assertion/import-assertion-dep } |  |  | 0.333 |
+| walker |  | 5518 | 25 | Fs::DirListing { dir: playground/ssr } |  |  | 0.333 |
+| ns | 5530 |  | 93 | ExperimentalOptions and FutureOptions | 3.8 |  | 0.330 |
+| walker |  | 5543 | 25 | Fs::DirListing { dir: playground/tsconfig-json-load-error } |  |  | 0.330 |
+| walker |  | 5547 | 4 | Fs::DirListing { dir: playground/tsconfig-json-load-error/src } |  |  | 0.330 |
+| walker |  | 5556 | 9 | Fs::DirListing { dir: playground/tsconfig-json-load-error/has-error } |  |  | 0.330 |
+| walker |  | 5569 | 13 | Fs::DirListing { dir: playground/backend-integration/dir } |  |  | 0.330 |
+| walker |  | 5582 | 13 | Fs::DirListing { dir: playground/proxy-hmr/other-app } |  |  | 0.330 |
+| walker |  | 5608 | 26 | Fs::DirListing { dir: playground/env-nested } |  |  | 0.330 |
+| walker |  | 5619 | 11 | Fs::DirListing { dir: playground/env-nested/envs } |  |  | 0.330 |
+| walker |  | 5645 | 26 | Fs::DirListing { dir: playground/environment-react-ssr } |  |  | 0.330 |
+| walker |  | 5653 | 8 | Fs::DirListing { dir: playground/preserve-symlinks/module-a/src } |  |  | 0.330 |
+| walker |  | 5667 | 14 | Code::CodeKey { rung: Names, file: playground/preserve-symlinks/module-a/src/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.330 |
+| walker |  | 5675 | 8 | Code::CodeKey { rung: Body, file: playground/preserve-symlinks/module-a/src/index.js, decl: 1, sub: 0, line: 3 } |  |  | 0.330 |
+| walker |  | 5690 | 15 | Fs::DirListing { dir: playground/base-conflict/src } |  |  | 0.330 |
+| walker |  | 5705 | 15 | Fs::DirListing { dir: playground/ssr-alias/src } |  |  | 0.330 |
+| walker |  | 5716 | 11 | Code::CodeKey { rung: Names, file: playground/ssr-alias/src/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.330 |
+| walker |  | 5749 | 33 | Code::CodeKey { rung: Decl, file: playground/ssr-alias/src/main.js, decl: 1, sub: 0, line: 5 } |  |  | 0.330 |
+| walker |  | 5778 | 29 | Fs::DirListing { dir: playground/minify } |  |  | 0.330 |
+| walker |  | 5781 | 3 | Fs::DirListing { dir: playground/minify/dir } |  |  | 0.330 |
+| ns | 5804 |  | 274 | CLI global options (all five commands) | 3.9 | 2.2 | 0.324 |
+| walker |  | 5810 | 29 | Fs::DirListing { dir: playground/resolve-tsconfig-paths } |  |  | 0.324 |
+| walker |  | 5814 | 4 | Fs::DirListing { dir: playground/resolve-tsconfig-paths/fallback } |  |  | 0.324 |
+| walker |  | 5843 | 29 | Fs::DirListing { dir: playground/tailwind-sourcemap } |  |  | 0.324 |
+| walker |  | 5873 | 30 | Fs::DirListing { dir: playground/alias } |  |  | 0.324 |
+| walker |  | 5903 | 30 | Fs::DirListing { dir: playground/tsconfig-json } |  |  | 0.324 |
+| walker |  | 5917 | 14 | Fs::DirListing { dir: playground/tsconfig-json/src } |  |  | 0.324 |
+| walker |  | 5953 | 36 | Code::CodeKey { rung: Names, file: playground/tsconfig-json/src/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.324 |
+| walker |  | 5970 | 17 | Code::CodeKey { rung: Decl, file: playground/tsconfig-json/src/main.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.324 |
+| walker |  | 5985 | 15 | Fs::DirListing { dir: playground/tsconfig-json/nested } |  |  | 0.324 |
+| ns | 5995 |  | 191 | CLI dev-server flags | 3.10 | 2.2 | 0.319 |
+| walker |  | 6021 | 36 | Code::CodeKey { rung: Names, file: playground/tsconfig-json/nested/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.319 |
+| walker |  | 6038 | 17 | Code::CodeKey { rung: Decl, file: playground/tsconfig-json/nested/main.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.319 |
+| walker |  | 6053 | 15 | Fs::DirListing { dir: playground/tsconfig-json/nested-with-extends } |  |  | 0.319 |
+| walker |  | 6101 | 48 | Code::CodeKey { rung: Names, file: playground/tsconfig-json/nested-with-extends/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.319 |
+| walker |  | 6118 | 17 | Code::CodeKey { rung: Decl, file: playground/tsconfig-json/nested-with-extends/main.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.319 |
+| walker |  | 6149 | 31 | Fs::DirListing { dir: playground/module-graph } |  |  | 0.319 |
+| walker |  | 6180 | 31 | Fs::DirListing { dir: playground/ssr-webworker } |  |  | 0.319 |
+| walker |  | 6189 | 9 | Fs::DirListing { dir: playground/ssr-webworker/src } |  |  | 0.319 |
+| walker |  | 6201 | 12 | Fs::DirListing { dir: playground/ssr-webworker/browser-exports } |  |  | 0.319 |
+| walker |  | 6217 | 16 | Fs::DirListing { dir: playground/ssr-webworker/worker-exports } |  |  | 0.319 |
+| walker |  | 6249 | 32 | Fs::DirListing { dir: playground/optimize-missing-deps } |  |  | 0.319 |
+| walker |  | 6257 | 8 | Fs::DirListing { dir: playground/optimize-missing-deps/missing-dep } |  |  | 0.319 |
+| walker |  | 6270 | 13 | Fs::DirListing { dir: playground/optimize-missing-deps/multi-entry-dep } |  |  | 0.319 |
+| walker |  | 6287 | 17 | Fs::DirListing { dir: playground/environment-react-ssr/src } |  |  | 0.319 |
+| walker |  | 6320 | 33 | Fs::DirListing { dir: playground/css-dynamic-import } |  |  | 0.319 |
+| walker |  | 6353 | 33 | Fs::DirListing { dir: playground/define } |  |  | 0.319 |
+| walker |  | 6361 | 8 | Fs::DirListing { dir: playground/define/commonjs-dep } |  |  | 0.319 |
+| walker |  | 6394 | 33 | Fs::DirListing { dir: playground/ssr-conditions } |  |  | 0.319 |
+| walker |  | 6398 | 4 | Fs::DirListing { dir: playground/ssr-conditions/src } |  |  | 0.319 |
+| walker |  | 6432 | 34 | Fs::DirListing { dir: playground/css-codesplit-cjs } |  |  | 0.319 |
+| walker |  | 6466 | 34 | Fs::DirListing { dir: playground/tailwind } |  |  | 0.319 |
+| ns | 6467 |  | 472 | CLI build flags | 3.11 | 2.2 | 0.306 |
+| walker |  | 6470 | 4 | Fs::DirListing { dir: playground/tailwind/public } |  |  | 0.306 |
+| walker |  | 6480 | 10 | Fs::DirListing { dir: playground/tailwind/src } |  |  | 0.306 |
+| walker |  | 6502 | 22 | Code::CodeKey { rung: Names, file: playground/tailwind/src/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.306 |
+| walker |  | 6507 | 5 | Fs::DirListing { dir: playground/tailwind/src/components } |  |  | 0.306 |
+| walker |  | 6512 | 5 | Fs::DirListing { dir: playground/tailwind/src/views } |  |  | 0.306 |
+| walker |  | 6604 | 92 | Code::CodeKey { rung: Decl, file: playground/tailwind/src/main.js, decl: 1, sub: 0, line: 3 } |  |  | 0.306 |
+| walker |  | 6622 | 18 | Fs::DirListing { dir: playground/css-lightningcss-root/root } |  |  | 0.303 |
+| ns | 6622 |  | 155 | CLI optimize and preview flags | 3.12 | 2.2 | 0.303 |
+| walker |  | 6657 | 35 | Fs::DirListing { dir: playground/fs-serve } |  |  | 0.303 |
+| walker |  | 6661 | 4 | Fs::DirListing { dir: playground/fs-serve/nested } |  |  | 0.303 |
+| walker |  | 6697 | 36 | Fs::DirListing { dir: playground/assets-sanitize } |  |  | 0.303 |
+| walker |  | 6733 | 36 | Fs::DirListing { dir: playground/external } |  |  | 0.303 |
+| walker |  | 6741 | 8 | Fs::DirListing { dir: playground/external/dep-that-imports } |  |  | 0.303 |
+| walker |  | 6749 | 8 | Fs::DirListing { dir: playground/external/dep-that-requires } |  |  | 0.303 |
+| ns | 6757 |  | 135 | src/node module roster (complete) | 4.1 |  | 0.357 |
+| walker |  | 6759 | 10 | Fs::DirListing { dir: playground/external/public } |  |  | 0.357 |
+| walker |  | 6769 | 10 | Fs::DirListing { dir: playground/external/src } |  |  | 0.357 |
+| walker |  | 6788 | 19 | Fs::DirListing { dir: playground/resolve-tsconfig-paths/src } |  |  | 0.357 |
+| walker |  | 6829 | 41 | Fs::DirListing { dir: playground/resolve-tsconfig-paths/src/nested } |  |  | 0.357 |
+| walker |  | 6866 | 37 | Fs::DirListing { dir: playground/env } |  |  | 0.357 |
+| walker |  | 6903 | 37 | Fs::DirListing { dir: playground/ssr-noexternal } |  |  | 0.357 |
+| ns | 6906 |  | 149 | src/node/plugins roster (complete) | 4.2 |  | 0.395 |
+| walker |  | 6908 | 5 | Fs::DirListing { dir: playground/ssr-noexternal/src } |  |  | 0.395 |
+| walker |  | 6916 | 8 | Fs::DirListing { dir: playground/ssr-noexternal/require-external-cjs } |  |  | 0.395 |
+| walker |  | 6930 | 14 | Fs::DirListing { dir: playground/ssr-noexternal/external-cjs } |  |  | 0.395 |
+| walker |  | 6967 | 37 | Fs::DirListing { dir: playground/tailwind-v3 } |  |  | 0.395 |
+| walker |  | 6977 | 10 | Fs::DirListing { dir: playground/tailwind-v3/src } |  |  | 0.395 |
+| ns | 6981 |  | 75 | src/node/server roster (complete) | 4.3 |  | 0.389 |
+| walker |  | 6999 | 22 | Code::CodeKey { rung: Names, file: playground/tailwind-v3/src/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.389 |
+| walker |  | 7004 | 5 | Fs::DirListing { dir: playground/tailwind-v3/src/components } |  |  | 0.389 |
+| walker |  | 7009 | 5 | Fs::DirListing { dir: playground/tailwind-v3/src/views } |  |  | 0.389 |
+| ns | 7066 |  | 85 | Dev-server middlewares and per-environment implementations | 4.4 |  | 0.383 |
+| walker |  | 7101 | 92 | Code::CodeKey { rung: Decl, file: playground/tailwind-v3/src/main.js, decl: 1, sub: 0, line: 3 } |  |  | 0.383 |
+| walker |  | 7140 | 39 | Fs::DirListing { dir: playground/csp } |  |  | 0.383 |
+| ns | 7144 |  | 78 | SSR and dependency-optimizer rosters | 4.5 |  | 0.381 |
+| walker |  | 7179 | 39 | Fs::DirListing { dir: playground/ssr-resolve } |  |  | 0.381 |
+| walker |  | 7187 | 8 | Fs::DirListing { dir: playground/ssr-resolve/pkg-module-sync } |  |  | 0.381 |
+| walker |  | 7198 | 11 | Fs::DirListing { dir: playground/ssr-resolve/entries } |  |  | 0.381 |
+| walker |  | 7202 | 4 | Fs::DirListing { dir: playground/ssr-resolve/entries/dir } |  |  | 0.381 |
+| walker |  | 7214 | 12 | Fs::DirListing { dir: playground/ssr-resolve/pkg-exports } |  |  | 0.381 |
+| walker |  | 7231 | 17 | Fs::DirListing { dir: playground/ssr-resolve/deep-import } |  |  | 0.381 |
+| walker |  | 7235 | 4 | Fs::DirListing { dir: playground/ssr-resolve/deep-import/bar } |  |  | 0.381 |
+| walker |  | 7239 | 4 | Fs::DirListing { dir: playground/ssr-resolve/deep-import/utils } |  |  | 0.381 |
+| walker |  | 7247 | 8 | Fs::DirListing { dir: playground/ssr-resolve/deep-import/foo } |  |  | 0.381 |
+| walker |  | 7259 | 12 | Fs::DirListing { dir: playground/minify/dir/module } |  |  | 0.381 |
+| ns | 7287 |  | 143 | Browser client, module-runner and shared rosters | 4.6 |  | 0.388 |
+| walker |  | 7299 | 40 | Fs::DirListing { dir: playground/json } |  |  | 0.388 |
+| walker |  | 7303 | 4 | Fs::DirListing { dir: playground/json/public } |  |  | 0.388 |
+| walker |  | 7309 | 6 | Fs::DirListing { dir: playground/json/json-bom } |  |  | 0.388 |
+| walker |  | 7317 | 8 | Fs::DirListing { dir: playground/json/json-module } |  |  | 0.388 |
+| walker |  | 7329 | 12 | Fs::DirListing { dir: playground/json/dep-json-require } |  |  | 0.388 |
+| walker |  | 7385 | 56 | Json::Identity { file: playground/package.json } |  |  | 0.388 |
+| ns | 7400 |  | 113 | resolvePlugins: the built-in plugin pipeline order | 4.7 |  | 0.384 |
+| walker |  | 7426 | 41 | Fs::DirListing { dir: playground/css-no-codesplit } |  |  | 0.384 |
+| walker |  | 7467 | 41 | Fs::DirListing { dir: playground/dynamic-import } |  |  | 0.384 |
+| walker |  | 7471 | 4 | Fs::DirListing { dir: playground/dynamic-import/css } |  |  | 0.384 |
+| walker |  | 7478 | 7 | Fs::DirListing { dir: playground/dynamic-import/(app) } |  |  | 0.384 |
+| walker |  | 7482 | 4 | Fs::DirListing { dir: playground/dynamic-import/(app)/nest } |  |  | 0.384 |
+| walker |  | 7492 | 10 | Fs::DirListing { dir: playground/dynamic-import/files } |  |  | 0.384 |
+| ns | 7494 |  | 94 | Published and inlined type declarations | 4.8 |  | 0.401 |
+| walker |  | 7504 | 12 | Fs::DirListing { dir: playground/dynamic-import/pkg } |  |  | 0.401 |
+| walker |  | 7520 | 16 | Fs::DirListing { dir: playground/dynamic-import/alias } |  |  | 0.401 |
+| walker |  | 7537 | 17 | Fs::DirListing { dir: playground/dynamic-import/views } |  |  | 0.401 |
+| walker |  | 7580 | 43 | Fs::DirListing { dir: playground/ssr-html } |  |  | 0.401 |
+| walker |  | 7590 | 10 | Fs::DirListing { dir: playground/ssr-html/public } |  |  | 0.401 |
+| ns | 7609 |  | 115 | Core internal entry-point signatures | 4.9 |  | 0.397 |
+| walker |  | 7633 | 43 | Fs::DirListing { dir: playground/wasm } |  |  | 0.397 |
+| walker |  | 7656 | 23 | Fs::DirListing { dir: playground/alias/dir } |  |  | 0.397 |
+| walker |  | 7664 | 8 | Fs::DirListing { dir: playground/alias/dir/module } |  |  | 0.397 |
+| walker |  | 7709 | 45 | Fs::DirListing { dir: playground/hmr-full-bundle-mode } |  |  | 0.397 |
+| walker |  | 7754 | 45 | Fs::DirListing { dir: playground/transform-plugin } |  |  | 0.397 |
+| walker |  | 7778 | 24 | Fs::DirListing { dir: playground/ssr-wasm/src } |  |  | 0.397 |
+| walker |  | 7826 | 48 | Fs::DirListing { dir: playground/multiple-entrypoints } |  |  | 0.397 |
+| walker |  | 7877 | 51 | Fs::DirListing { dir: playground/preload } |  |  | 0.397 |
+| walker |  | 7882 | 5 | Fs::DirListing { dir: playground/preload/public } |  |  | 0.397 |
+| walker |  | 7890 | 8 | Fs::DirListing { dir: playground/preload/dep-a } |  |  | 0.397 |
+| walker |  | 7898 | 8 | Fs::DirListing { dir: playground/preload/dep-including-a } |  |  | 0.397 |
+| walker |  | 7919 | 21 | Fs::DirListing { dir: playground/preload/src } |  |  | 0.388 |
+| ns | 7919 |  | 310 | CONTRIBUTING.md: every section heading | 5.1 |  | 0.388 |
+| walker |  | 7931 | 12 | Code::CodeKey { rung: Names, file: playground/preload/src/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.388 |
+| walker |  | 7942 | 11 | Code::CodeKey { rung: Names, file: playground/resolve-tsconfig-paths/src/imported.js, decl: 0, sub: 0, line: 0 } |  |  | 0.388 |
+| walker |  | 7953 | 11 | Code::CodeKey { rung: Names, file: playground/ssr-webworker/src/dynamic.js, decl: 0, sub: 0, line: 0 } |  |  | 0.388 |
+| walker |  | 7980 | 27 | Fs::DirListing { dir: playground/ssr-conditions/external } |  |  | 0.388 |
+| walker |  | 8007 | 27 | Fs::DirListing { dir: playground/ssr-conditions/no-external } |  |  | 0.388 |
+| walker |  | 8060 | 53 | Fs::DirListing { dir: playground/nested-deps } |  |  | 0.388 |
+| walker |  | 8068 | 8 | Fs::DirListing { dir: playground/nested-deps/test-package-a } |  |  | 0.388 |
+| walker |  | 8076 | 8 | Fs::DirListing { dir: playground/nested-deps/test-package-f } |  |  | 0.388 |
+| walker |  | 8087 | 11 | Fs::DirListing { dir: playground/nested-deps/self-referencing } |  |  | 0.388 |
+| walker |  | 8099 | 12 | Fs::DirListing { dir: playground/nested-deps/test-package-b } |  |  | 0.388 |
+| ns | 8109 |  | 190 | CONTRIBUTING: local development loop | 5.2 | 5.1 | 0.386 |
+| walker |  | 8114 | 15 | Fs::DirListing { dir: playground/nested-deps/test-package-d } |  |  | 0.386 |
+| walker |  | 8122 | 8 | Fs::DirListing { dir: playground/nested-deps/test-package-d/test-package-d-nested } |  |  | 0.386 |
+| walker |  | 8139 | 17 | Fs::DirListing { dir: playground/nested-deps/test-package-c } |  |  | 0.386 |
+| walker |  | 8161 | 22 | Fs::DirListing { dir: playground/nested-deps/test-package-e } |  |  | 0.386 |
+| walker |  | 8169 | 8 | Fs::DirListing { dir: playground/nested-deps/test-package-e/test-package-e-excluded } |  |  | 0.386 |
+| walker |  | 8177 | 8 | Fs::DirListing { dir: playground/nested-deps/test-package-e/test-package-e-included } |  |  | 0.386 |
+| walker |  | 8194 | 17 | Fs::DirListing { dir: playground/backend-integration/frontend/styles } |  |  | 0.386 |
+| walker |  | 8224 | 30 | Fs::DirListing { dir: playground/ssr/src } |  |  | 0.386 |
+| walker |  | 8236 | 12 | Fs::DirListing { dir: playground/ssr/src/circular-import } |  |  | 0.386 |
+| walker |  | 8248 | 12 | Fs::DirListing { dir: playground/ssr/src/circular-import2 } |  |  | 0.386 |
+| walker |  | 8291 | 43 | Json::Identity { file: playground/css-lightningcss-root/package.json } |  |  | 0.386 |
+| walker |  | 8304 | 13 | Code::CodeKey { rung: Names, file: playground/resolve-tsconfig-paths/src/js.js, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8317 | 13 | Code::CodeKey { rung: Names, file: playground/resolve-tsconfig-paths/src/ts.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8330 | 13 | Code::CodeKey { rung: Names, file: playground/ssr-wasm/src/app.js, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8362 | 32 | Fs::DirListing { dir: playground/dynamic-import/nested } |  |  | 0.386 |
+| walker |  | 8366 | 4 | Fs::DirListing { dir: playground/dynamic-import/nested/nested } |  |  | 0.386 |
+| walker |  | 8376 | 10 | Fs::DirListing { dir: playground/dynamic-import/nested/treeshaken } |  |  | 0.386 |
+| walker |  | 8408 | 32 | Fs::DirListing { dir: playground/ssr-html/src } |  |  | 0.386 |
+| walker |  | 8418 | 10 | Code::CodeKey { rung: Names, file: playground/ssr-html/src/network-imports.js, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8429 | 11 | Code::CodeKey { rung: Names, file: playground/ssr-html/src/error-js.js, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8440 | 11 | Code::CodeKey { rung: Names, file: playground/ssr-html/src/error-ts.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8451 | 11 | Code::CodeKey { rung: Names, file: playground/ssr-html/src/importedVirtual.js, decl: 0, sub: 0, line: 0 } |  |  | 0.386 |
+| walker |  | 8513 | 62 | Fs::DirListing { dir: playground/data-uri } |  |  | 0.386 |
+| ns | 8515 |  | 406 | playground/ roster (complete e2e corpus) | 5.3 |  | 0.449 |
+| walker |  | 8557 | 44 | Json::Identity { file: playground/css-lightningcss-proxy/package.json } |  |  | 0.449 |
+| walker |  | 8566 | 9 | Code::CodeKey { rung: Body, file: playground/forward-console/src/main.ts, decl: 5, sub: 0, line: 37 } |  |  | 0.449 |
+| walker |  | 8580 | 14 | Code::CodeKey { rung: Names, file: playground/environment-react-ssr/src/root.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 8594 | 14 | Code::CodeKey { rung: Names, file: playground/resolve-tsconfig-paths/src/hash.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 8608 | 14 | Code::CodeKey { rung: Names, file: playground/ssr-html/src/has-error-deep.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 8622 | 14 | Code::CodeKey { rung: Names, file: playground/ssr-wasm/src/static-heavy.js, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 8636 | 14 | Code::CodeKey { rung: Names, file: playground/ssr-wasm/src/static-light.js, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| walker |  | 8695 | 59 | Code::CodeKey { rung: Decl, file: playground/tsconfig-json/nested/main.ts, decl: 3, sub: 0, line: 10 } |  |  | 0.449 |
+| walker |  | 8754 | 59 | Code::CodeKey { rung: Decl, file: playground/tsconfig-json/src/main.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.449 |
+| walker |  | 8775 | 21 | Fs::DirListing { dir: playground/ssr/src/circular-dep-init } |  |  | 0.449 |
+| walker |  | 8790 | 15 | Code::CodeKey { rung: Names, file: playground/ssr/src/utils.js, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
+| ns | 8802 |  | 287 | CONTRIBUTING: how the integration tests work | 5.4 | 5.3 | 0.447 |
+| walker |  | 8805 | 15 | Code::CodeKey { rung: Names, file: playground/ssr-conditions/src/app.js, decl: 0, sub: 0, line: 0 } |  |  | 0.447 |
+| walker |  | 8867 | 62 | Code::CodeKey { rung: Decl, file: playground/tsconfig-json/nested-with-extends/main.ts, decl: 3, sub: 0, line: 10 } |  |  | 0.447 |
+| walker |  | 8897 | 30 | Json::Identity { file: playground/nested-deps/self-referencing/package.json } |  |  | 0.447 |
+| ns | 8919 |  | 117 | Unit test locations under packages/vite/src | 5.5 |  | 0.440 |
+| walker |  | 8951 | 54 | Json::Identity { file: playground/env/package.json } |  |  | 0.440 |
+| walker |  | 9005 | 54 | Json::Identity { file: playground/json/package.json } |  |  | 0.440 |
+| ns | 9050 |  | 131 | How the unit and e2e vitest runs are separated | 5.6 |  | 0.438 |
+| walker |  | 9060 | 55 | Json::Identity { file: playground/alias/package.json } |  |  | 0.438 |
+| ns | 9114 |  | 64 | docs/ site roster | 5.7 |  | 0.448 |
+| walker |  | 9115 | 55 | Json::Identity { file: playground/build-old/package.json } |  |  | 0.448 |
+| walker |  | 9170 | 55 | Json::Identity { file: playground/cli/package.json } |  |  | 0.448 |
+| walker |  | 9225 | 55 | Json::Identity { file: playground/cli-module/package.json } |  |  | 0.448 |
+| walker |  | 9280 | 55 | Json::Identity { file: playground/csp/package.json } |  |  | 0.448 |
+| ns | 9298 |  | 184 | docs/guide and docs/config page rosters | 5.8 |  | 0.439 |
+| walker |  | 9335 | 55 | Json::Identity { file: playground/data-uri/package.json } |  |  | 0.439 |
+| ns | 9343 |  | 45 | docs/changes: the breaking-change / migration notes | 5.9 |  | 0.437 |
+| walker |  | 9390 | 55 | Json::Identity { file: playground/define/package.json } |  |  | 0.437 |
+| walker |  | 9445 | 55 | Json::Identity { file: playground/devtools/package.json } |  |  | 0.437 |
+| walker |  | 9500 | 55 | Json::Identity { file: playground/extensions/package.json } |  |  | 0.437 |
+| ns | 9501 |  | 158 | CONTRIBUTING: the dependency policy | 5.10 | 5.1 | 0.435 |
+| walker |  | 9555 | 55 | Json::Identity { file: playground/external/package.json } |  |  | 0.435 |
+| walker |  | 9610 | 55 | Json::Identity { file: playground/forward-console/package.json } |  |  | 0.435 |
+| ns | 9624 |  | 123 | create-vite: package layout and template roster | 5.11 |  | 0.449 |
+| walker |  | 9665 | 55 | Json::Identity { file: playground/minify/package.json } |  |  | 0.449 |
+| ns | 9677 |  | 53 | plugin-legacy: package layout | 5.12 |  | 0.456 |
+| walker |  | 9720 | 55 | Json::Identity { file: playground/module-graph/package.json } |  |  | 0.456 |
+| walker |  | 9775 | 55 | Json::Identity { file: playground/object-hooks/package.json } |  |  | 0.456 |
+| ns | 9827 |  | 150 | Repository automation: .github and release scripts | 5.13 |  | 0.469 |
+| walker |  | 9830 | 55 | Json::Identity { file: playground/preload/package.json } |  |  | 0.469 |
+| walker |  | 9885 | 55 | Json::Identity { file: playground/tailwind/package.json } |  |  | 0.469 |
+| walker |  | 9940 | 55 | Json::Identity { file: playground/transform-plugin/package.json } |  |  | 0.469 |
+| walker |  | 9995 | 55 | Json::Identity { file: playground/wasm/package.json } |  |  | 0.469 |

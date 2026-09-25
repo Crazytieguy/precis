@@ -276,19 +276,9 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "benchmark"
                 | "benchmarks"
                 | "fixtures"
-                | "rfcs"
-                | "xtask"
                 | "ci"
-                | "website"
-                | "demo"
-                | "playground"
-                | "storybook"
-                | "fuzz"
-                | "fuzzer"
-                | "profiler"
                 | "scripts"
                 | "tools"
-                | "e2e"
         ) || s.starts_with("test_")
             || s.starts_with("tests_")
             || s.starts_with("guide-helper")

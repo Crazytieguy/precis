@@ -77,10 +77,32 @@ benchmark/
   run.py
 fuzzer/
   fuzz.py
+    …
+    20→def test_one_input(input_bytes: bytes) -> None:
+    …
+    53→def print_err(data):
+    54→    codepoints = [hex(ord(x)) for x in data]
+    55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
+    56→    sys.stderr.flush()
+    59→def normalize_toml_obj(toml_obj: dict) -> None:
+    60→    """Make NaNs equal when compared (without using recursion)."""
+    …
+    71→def main():
+    …
   requirements.txt
+    1→# sudo apt-get install clang
+    2→wheel
+    3→atheris==2.0.7
+    4→tomli_w>=0.2.2
 profiler/
   profiler_script.py
+    …
+    12→benchmark_toml = (
+    13→    (Path(__file__).parent.parent / "benchmark" / "data.toml").read_bytes().decode()
+    14→)
+    …
   requirements.txt
+    1→gprof2dot
 pyproject.toml
   …
   5→[project]
@@ -160,7 +182,6 @@ src/
       137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
       …
       149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      150→    """Parse TOML from a string."""
       …
       220→class Flags:
       …
@@ -227,9 +248,7 @@ src/
       109→def match_to_localtime(match: re.Match[str]) -> time:
       …
       116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-      117→    if match.group("floatpart"):
-      118→        return parse_float(match.group())
-      119→    return int(match.group(), 0)
+      …
     _types.py
       …
       8→ParseFloat = Callable[[str], Any]
@@ -243,8 +262,6 @@ tests/
     …
   burntsushi.py
   data/
-    invalid/
-    valid/
   test_data.py
   test_error.py
   test_misc.py

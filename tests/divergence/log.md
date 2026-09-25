@@ -4,19 +4,19 @@ Score(3000)=0.577 I=0.790 C=0.422 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 34 |  | 34 | Crate identity: README title and one-line description | 1.1 |  | 0.000 |
 | walker |  | 46 | 46 | Fs::DirListing { dir: . } |  |  | 0.000 |
-| walker |  | 67 | 21 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| ns | 80 |  | 46 | Complete root listing | 1.2 |  | 0.574 |
-| walker |  | 87 | 20 | Fs::DirListing { dir: src/kv } |  |  | 0.634 |
-| walker |  | 90 | 3 | Fs::DirListing { dir: .github } |  |  | 0.634 |
-| walker |  | 94 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.635 |
-| walker |  | 98 | 4 | Fs::DirListing { dir: benches } |  |  | 0.637 |
-| ns | 121 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.632 |
-| walker |  | 150 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| ns | 156 |  | 35 | Listings for the remaining directories | 1.4 |  | 0.877 |
-| walker |  | 158 | 8 | Fs::DirListing { dir: tests } |  |  | 0.911 |
-| walker |  | 168 | 10 | Code::CodeKey { rung: ModuleDoc, file: src/kv/key.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.911 |
-| walker |  | 177 | 9 | Fs::DirListing { dir: test_max_level_features } |  |  | 0.965 |
-| walker |  | 187 | 10 | Fs::DirListing { dir: rfcs } |  |  | 1.000 |
+| walker |  | 56 | 10 | Fs::DirListing { dir: rfcs } |  |  | 0.000 |
+| walker |  | 77 | 21 | Fs::DirListing { dir: src } |  |  | 0.000 |
+| ns | 80 |  | 46 | Complete root listing | 1.2 |  | 0.575 |
+| walker |  | 97 | 20 | Fs::DirListing { dir: src/kv } |  |  | 0.635 |
+| walker |  | 100 | 3 | Fs::DirListing { dir: .github } |  |  | 0.635 |
+| walker |  | 104 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.637 |
+| walker |  | 108 | 4 | Fs::DirListing { dir: benches } |  |  | 0.641 |
+| ns | 121 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.636 |
+| ns | 156 |  | 35 | Listings for the remaining directories | 1.4 |  | 0.566 |
+| walker |  | 160 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.891 |
+| walker |  | 168 | 8 | Fs::DirListing { dir: tests } |  |  | 0.935 |
+| walker |  | 178 | 10 | Code::CodeKey { rung: ModuleDoc, file: src/kv/key.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.935 |
+| walker |  | 187 | 9 | Fs::DirListing { dir: test_max_level_features } |  |  | 1.000 |
 | walker |  | 215 | 28 | Code::CodeKey { rung: ModuleDoc, file: src/__private_api.rs, decl: 0, sub: 0, line: 0 } |  |  | 1.000 |
 | ns | 223 |  | 67 | Facade semantics: the noop fallback | 1.5 |  | 0.934 |
 | ns | 304 |  | 81 | Facade semantics: what a log request is | 1.6 |  | 0.878 |
