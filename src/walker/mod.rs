@@ -482,12 +482,6 @@ pub(crate) fn single_file_lines_content(
     Some(BatchContent::Lines { spans })
 }
 
-/// `BatchContent::Lines` covering every line of `source`. `None` when
-/// the file is empty (all-blank files fall out via empty spans).
-pub(crate) fn whole_file_lines_content(file: &Path, source: &Source) -> Option<BatchContent> {
-    single_file_lines_content(file, source, (1..=source.line_count()).collect())
-}
-
 /// Cached read behind an FS-metadata byte pre-flight — skips the read
 /// (and returns `None`) when the size hint alone disqualifies the
 /// file. Bytes-per-line multipliers are per-format — callers keep
@@ -515,11 +509,10 @@ pub(crate) fn gated_whole_file_content(
     line_cap: usize,
 ) -> Option<BatchContent> {
     let source = gated_read_source(file, ctx, byte_gate)?;
-    let line_count = source.lines().count();
-    if line_count == 0 || line_count > line_cap {
+    if source.line_count() > line_cap {
         return None;
     }
-    whole_file_lines_content(file, &source)
+    single_file_lines_content(file, &source, (1..=source.line_count()).collect())
 }
 
 /// Rows (any order, duplicates allowed) → contiguous full-line [`Span`]
