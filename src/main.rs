@@ -21,9 +21,9 @@ const HOOK_WRAPPER: [&str; 3] = [
 const ABOUT: &str = "\
 Summarize a directory within a token budget.
 
-`N→` rows are source lines, N the line number. A `…` row marks hidden
-source in a file, or hidden entries in a directory. An entry with nothing
-under it wasn't expanded, unless marked `(empty)`.";
+`N→` rows are source line N (a trailing `…` cuts it short). A `…` row
+marks hidden source in a file, or hidden entries in a directory. An entry
+with nothing under it wasn't expanded, unless marked `(empty)`.";
 
 #[derive(Parser)]
 #[command(about = ABOUT, version)]
