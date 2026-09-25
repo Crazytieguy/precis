@@ -34,31 +34,6 @@ README.md
   29→
   30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
   …
-  41→## Features
-  …
-  68→## Get Our Official Mobile App
-  …
-  87→## Like what we're doing? Give us a Star ⭐
-  88→
-  89→![Star Us](https://raw.githubusercontent.com/linkwarden/linkwarden/main/assets/star_repo.gif)
-  91→## We're building our Community 🌐
-  …
-  101→## Suggestions
-  …
-  105→## Roadmap
-  …
-  109→## Community Projects
-  …
-  119→## Development
-  …
-  123→# Translations
-  …
-  132→## Security
-  …
-  136→## Support <3
-  …
-  148→## Thanks to All the Contributors 💪
-  …
 apps/
   mobile/
     .easignore
@@ -226,13 +201,6 @@ apps/
       getLinkBatch.ts
       getLinkBatchFairly.ts
       preservationScheme/
-        handleArchivePreview.ts
-        handleMonolith.ts
-        handleReadability.ts
-        handleScreenshotAndPdf.ts
-        imageHandler.ts
-        pdfHandler.ts
-        sendToWayback.ts
       prompts.ts
       protectPageRequests.ts
     package.json
@@ -325,30 +293,23 @@ packages/
       5→datasource db {
       …
       10→model Account {
-      …
+      11→  id                String  @id @default(cuid())
+      12→  userId            Int
+      13→  type              String
+      14→  provider          String
+      15→  providerAccountId String
+      16→  refresh_token     String?
+      17→  access_token      String?
+      18→  expires_at        Int?
+      19→  token_type        String?
+      20→  scope             String?
+      21→  id_token          String?
+      22→  session_state     String?
+      23→  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+      24→
+      25→  @@unique([provider, providerAccountId])
+      26→}
       28→model User {
-      29→  id                      Int                   @id @default(autoincrement())
-      30→  name                    String?
-      31→  username                String?               @unique
-      32→  email                   String?               @unique
-      33→  emailVerified           DateTime?
-      34→  unverifiedNewEmail      String?
-      35→  image                   String?
-      36→  password                String?
-      37→  locale                  String                @default("en")
-      38→  parentSubscription      Subscription?         @relation("ChildUsers", fields: [parentSubscriptionId], references: [id])
-      39→  parentSubscriptionId    Int?
-      40→  accounts                Account[]
-      41→  collections             Collection[]
-      42→  tags                    Tag[]
-      43→  pinnedLinks             Link[]                @relation("PinnedLinks")
-      44→  createdLinks            Link[]                @relation("CreatedLinks")
-      45→  createdCollections      Collection[]          @relation("CreatedCollections")
-      46→  highlights              Highlight[]
-      47→  collectionsJoined       UsersAndCollections[]
-      48→  collectionOrder         Int[]                 @default([])
-      49→  whitelistedUsers        WhitelistedUser[]
-      50→  accessTokens            AccessToken[]
       …
       77→enum Theme {
       78→  dark
@@ -372,7 +333,14 @@ packages/
       99→model WhitelistedUser {
       …
       108→model VerificationToken {
-      …
+      109→  identifier String
+      110→  token      String   @unique
+      111→  expires    DateTime
+      112→  createdAt  DateTime @default(now())
+      113→  updatedAt  DateTime @default(now()) @updatedAt
+      114→
+      115→  @@unique([identifier, token])
+      116→}
       118→model PasswordResetToken {
       …
       126→model Collection {

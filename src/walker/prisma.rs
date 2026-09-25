@@ -43,16 +43,6 @@ use super::{WalkCtx, fs::files_with_extension, single_file_lines_content};
 /// purely on cost.
 const FULL_VALUE_FIELD_ROWS: f64 = 24.0;
 
-/// Minimum field rows for a `model` body to be worth a per-decl batch.
-/// Field-rich models (entities with relations + many columns) answer
-/// "what fields / relations does X have" directly; narrow bookkeeping
-/// tables (join rows, token rows, single-purpose lookup models) are
-/// already covered by the TOC opener and aren't worth the budget they'd
-/// displace from orientation surfaces. Enums always emit regardless of
-/// size — their value lists are what "what values can field X take"
-/// resolves against, and individually they're cheap.
-const MIN_MODEL_FIELDS: usize = 18;
-
 /// A `model` body longer than this many rows is split at its row
 /// midpoint into a head `Decl` + a `DeclTail`, so the high-value
 /// identity / relation fields at the top schedule ahead of the
@@ -88,17 +78,6 @@ impl Decl {
     /// Body rows excluding the opener and closer brace lines.
     fn field_rows(&self) -> usize {
         (self.close_line.saturating_sub(self.open_line) + 1).saturating_sub(2)
-    }
-
-    /// Whether this declaration is worth its own body batch. Enums and
-    /// header blocks (the datasource/generator config the agent needs to
-    /// see the DB binding) always qualify; models must clear the
-    /// field-richness floor.
-    fn warrants_body(&self) -> bool {
-        match self.kind {
-            DeclKind::Enum | DeclKind::Header => true,
-            DeclKind::Model => self.field_rows() >= MIN_MODEL_FIELDS,
-        }
     }
 }
 
@@ -139,7 +118,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             value: toc_value(depth),
         });
 
-        for decl in decls.iter().filter(|decl| decl.warrants_body()) {
+        for decl in decls.iter() {
             push_decl_batches(&mut out, &file, &source, decl, depth, &toc_key);
         }
     }
@@ -328,37 +307,6 @@ enum Theme {
                 DeclKind::Enum,
             ]
         );
-    }
-
-    #[test]
-    fn prisma_warrants_body_filters_narrow_models_not_enums() {
-        // Enum and header blocks always warrant a body, regardless of size.
-        let enum_decl = Decl {
-            open_line: 1,
-            close_line: 4,
-            kind: DeclKind::Enum,
-        };
-        assert!(enum_decl.warrants_body());
-        let header = Decl {
-            open_line: 1,
-            close_line: 4,
-            kind: DeclKind::Header,
-        };
-        assert!(header.warrants_body());
-        // A narrow model (below the field floor) does not.
-        let narrow = Decl {
-            open_line: 1,
-            close_line: 6, // 4 field rows
-            kind: DeclKind::Model,
-        };
-        assert!(!narrow.warrants_body());
-        // A wide model does.
-        let wide = Decl {
-            open_line: 1,
-            close_line: 1 + MIN_MODEL_FIELDS + 1, // MIN_MODEL_FIELDS field rows
-            kind: DeclKind::Model,
-        };
-        assert!(wide.warrants_body());
     }
 
     #[test]
