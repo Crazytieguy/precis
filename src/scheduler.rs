@@ -21,7 +21,7 @@
 
 #[cfg(debug_assertions)]
 use std::collections::BTreeMap;
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchId, WalkerKey};
@@ -72,6 +72,10 @@ pub struct Scheduler<W: Walker> {
     key_to_id: HashMap<W::Key, BatchId>,
     /// Scheduled batches.
     scheduled: HashSet<BatchId>,
+    /// Unscheduled batches whose predecessor (if any) is scheduled.
+    eligible: BTreeSet<BatchId>,
+    /// Batches gated on a predecessor key not yet scheduled, by that key.
+    waiting: HashMap<W::Key, Vec<BatchId>>,
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
     /// Cached exact marginal cost per emitted batch.
@@ -180,6 +184,8 @@ impl<W: Walker> Scheduler<W> {
             entries: Vec::new(),
             key_to_id: HashMap::new(),
             scheduled: HashSet::new(),
+            eligible: BTreeSet::new(),
+            waiting: HashMap::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
             approx_cost_cache: HashMap::new(),
@@ -300,6 +306,19 @@ impl<W: Walker> Scheduler<W> {
             }
         }
 
+        match &batch.predecessor {
+            Some(pred)
+                if !self
+                    .key_to_id
+                    .get(pred)
+                    .is_some_and(|pred_id| self.scheduled.contains(pred_id)) =>
+            {
+                self.waiting.entry(pred.clone()).or_default().push(id);
+            }
+            _ => {
+                self.eligible.insert(id);
+            }
+        }
         self.entries.push(batch);
 
         // Non-memoized root walk for the member count (the ranking-time
@@ -400,30 +419,13 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// Eligibility — predecessor scheduled, or no predecessor.
-    fn eligible(&self, pred: Option<&W::Key>) -> bool {
-        match pred {
-            None => true,
-            Some(p) => self
-                .key_to_id
-                .get(p)
-                .is_some_and(|id| self.scheduled.contains(id)),
-        }
-    }
-
     // ---- exact pool ----
 
     /// Top-ranked eligible batch + its cost.
     fn best_exact(&mut self) -> Option<(BatchId, Cost)> {
         crate::time_counter!(best_exact);
 
-        let eligible: Vec<BatchId> = (0..self.entries.len())
-            .map(BatchId::new)
-            .filter(|id| {
-                !self.scheduled.contains(id)
-                    && self.eligible(self.entries[id.index()].predecessor.as_ref())
-            })
-            .collect();
+        let eligible: Vec<BatchId> = self.eligible.iter().copied().collect();
         if eligible.is_empty() {
             return None;
         }
@@ -541,6 +543,10 @@ impl<W: Walker> Scheduler<W> {
             );
         }
         self.scheduled.insert(id);
+        self.eligible.remove(&id);
+        if let Some(released) = self.waiting.remove(&self.entries[id.index()].key) {
+            self.eligible.extend(released);
+        }
         self.dominant_file_entered |= self.dominant_file_batches.contains(&id);
         self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;
