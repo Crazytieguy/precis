@@ -18,18 +18,18 @@ Score(3000)=0.574 I=0.644 C=0.512 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 309 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/fake.go, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
 | walker |  | 322 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/real.go, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
 | walker |  | 335 | 13 | Code::CodeKey { rung: ModuleDoc, file: internal/xtime/time.go, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 459 | 124 | Fs::DirListing { dir: exp/simd } |  |  | 0.000 |
-| ns | 481 |  | 175 | Complete root directory listing | 1.5 |  | 0.477 |
-| walker |  | 542 | 83 | GoMod::File { file: go.mod } |  |  | 0.477 |
-| ns | 639 |  | 158 | Sibling helper packages: it/, mutable/, parallel/ listings | 1.6 |  | 0.386 |
-| walker |  | 672 | 130 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.588 |
-| walker |  | 806 | 134 | Fs::DirListing { dir: it } |  |  | 0.773 |
-| walker |  | 825 | 19 | Fs::DirListing { dir: .github } |  |  | 0.773 |
-| ns | 831 |  | 192 | internal/ and exp/ listings | 1.7 |  | 0.771 |
-| walker |  | 851 | 26 | Fs::DirListing { dir: .github/workflows } |  |  | 0.772 |
-| walker |  | 882 | 31 | Markdown::ReadmeHeadline { file: internal/constraints/README.md } |  |  | 0.772 |
-| walker |  | 917 | 35 | GoMod::Identity { file: exp/simd/go.mod } |  |  | 0.772 |
-| walker |  | 947 | 30 | Code::CodeKey { rung: ModuleDoc, file: internal/constraints/constraints.go, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
+| walker |  | 418 | 83 | GoMod::File { file: go.mod } |  |  | 0.000 |
+| ns | 481 |  | 175 | Complete root directory listing | 1.5 |  | 0.439 |
+| walker |  | 548 | 130 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.701 |
+| ns | 639 |  | 158 | Sibling helper packages: it/, mutable/, parallel/ listings | 1.6 |  | 0.567 |
+| walker |  | 682 | 134 | Fs::DirListing { dir: it } |  |  | 0.748 |
+| walker |  | 701 | 19 | Fs::DirListing { dir: .github } |  |  | 0.748 |
+| walker |  | 727 | 26 | Fs::DirListing { dir: .github/workflows } |  |  | 0.749 |
+| walker |  | 758 | 31 | Markdown::ReadmeHeadline { file: internal/constraints/README.md } |  |  | 0.749 |
+| walker |  | 788 | 30 | Code::CodeKey { rung: ModuleDoc, file: internal/constraints/constraints.go, decl: 0, sub: 0, line: 0 } |  |  | 0.749 |
+| ns | 831 |  | 192 | internal/ and exp/ listings | 1.7 |  | 0.652 |
+| walker |  | 912 | 124 | Fs::DirListing { dir: exp/simd } |  |  | 0.772 |
+| walker |  | 947 | 35 | GoMod::Identity { file: exp/simd/go.mod } |  |  | 0.772 |
 | walker |  | 984 | 37 | GoMod::File { file: exp/simd/go.mod } |  |  | 0.773 |
 | walker |  | 1056 | 72 | Markdown::ReadmeHeadline { file: exp/simd/README.md } |  |  | 0.773 |
 | ns | 1088 |  | 257 | Non-Go trees: docs/, benchmark/, .github/ listings | 1.8 |  | 0.664 |

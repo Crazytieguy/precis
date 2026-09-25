@@ -1,4 +1,4 @@
-Score(3000)=0.573 I=0.856 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.449/0.654/0.571/0.573/0.503/0.472/0.512
+Score(3000)=0.573 I=0.856 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.654/0.571/0.573/0.503/0.472/0.512
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,41 +23,41 @@ Score(3000)=0.573 I=0.856 C=0.383 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.393 |
 | walker |  | 414 | 46 | Fs::DirListing { dir: cmd } |  |  | 0.495 |
 | walker |  | 433 | 19 | Fs::DirListing { dir: cmd/testdata } |  |  | 0.495 |
-| walker |  | 489 | 56 | Fs::DirListing { dir: pkg/model } |  |  | 0.571 |
-| walker |  | 497 | 8 | Fs::DirListing { dir: .vscode } |  |  | 0.571 |
-| walker |  | 507 | 10 | Plaintext::Whole { file: VERSION } |  |  | 0.573 |
-| walker |  | 586 | 79 | Fs::DirListing { dir: pkg/common } |  |  | 0.578 |
-| ns | 591 |  | 186 | pkg/runner/: complete file list | 1.7 |  | 0.464 |
-| walker |  | 595 | 9 | Fs::DirListing { dir: pkg/common/git } |  |  | 0.465 |
-| walker |  | 613 | 18 | Fs::DirListing { dir: pkg/artifacts/testdata } |  |  | 0.465 |
-| walker |  | 617 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/GHSL-2023-004 } |  |  | 0.465 |
-| walker |  | 621 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/upload-and-download } |  |  | 0.465 |
-| walker |  | 625 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/v4 } |  |  | 0.465 |
-| walker |  | 646 | 21 | Fs::DirListing { dir: pkg/model/testdata } |  |  | 0.465 |
-| walker |  | 650 | 4 | Fs::DirListing { dir: pkg/model/testdata/container-volumes } |  |  | 0.465 |
-| walker |  | 654 | 4 | Fs::DirListing { dir: pkg/model/testdata/strategy } |  |  | 0.465 |
-| walker |  | 660 | 6 | Fs::DirListing { dir: pkg/model/testdata/empty-workflow } |  |  | 0.465 |
-| walker |  | 667 | 7 | Fs::DirListing { dir: pkg/model/testdata/nested } |  |  | 0.465 |
-| walker |  | 673 | 6 | Fs::DirListing { dir: pkg/model/testdata/nested/workflows } |  |  | 0.465 |
-| walker |  | 696 | 23 | Fs::DirListing { dir: pkg/exprparser/testdata } |  |  | 0.465 |
-| walker |  | 703 | 7 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3 } |  |  | 0.465 |
-| walker |  | 708 | 5 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3/nested } |  |  | 0.465 |
-| walker |  | 728 | 20 | Fs::DirListing { dir: .github } |  |  | 0.465 |
-| walker |  | 754 | 26 | Fs::DirListing { dir: .github/workflows } |  |  | 0.466 |
-| ns | 762 |  | 171 | README: how act works, end to end | 1.8 |  | 0.464 |
-| ns | 804 |  | 42 | Module path, Go version, released version | 1.9 |  | 0.468 |
-| walker |  | 914 | 160 | Fs::DirListing { dir: pkg/container } |  |  | 0.473 |
-| ns | 919 |  | 115 | cmd.Execute: CLI entry | 2.1 |  | 0.449 |
-| walker |  | 932 | 18 | Code::CodeKey { rung: ModuleDoc, file: pkg/container/docker_cli.go, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
-| walker |  | 969 | 37 | Fs::DirListing { dir: pkg/container/testdata } |  |  | 0.449 |
-| walker |  | 973 | 4 | Fs::DirListing { dir: pkg/container/testdata/docker-pull-options } |  |  | 0.449 |
-| walker |  | 977 | 4 | Fs::DirListing { dir: pkg/container/testdata/scratch } |  |  | 0.449 |
-| ns | 1131 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.428 |
-| walker |  | 1162 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.573 |
-| walker |  | 1217 | 55 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.573 |
-| walker |  | 1403 | 186 | Fs::DirListing { dir: pkg/runner } |  |  | 0.733 |
-| walker |  | 1407 | 4 | Fs::DirListing { dir: pkg/runner/hashfiles } |  |  | 0.733 |
-| walker |  | 1411 | 4 | Fs::DirListing { dir: pkg/runner/res } |  |  | 0.733 |
+| walker |  | 512 | 79 | Fs::DirListing { dir: pkg/common } |  |  | 0.499 |
+| walker |  | 521 | 9 | Fs::DirListing { dir: pkg/common/git } |  |  | 0.500 |
+| walker |  | 577 | 56 | Fs::DirListing { dir: pkg/model } |  |  | 0.576 |
+| walker |  | 585 | 8 | Fs::DirListing { dir: .vscode } |  |  | 0.577 |
+| ns | 591 |  | 186 | pkg/runner/: complete file list | 1.7 |  | 0.463 |
+| ns | 762 |  | 171 | README: how act works, end to end | 1.8 |  | 0.461 |
+| walker |  | 771 | 186 | Fs::DirListing { dir: pkg/runner } |  |  | 0.620 |
+| walker |  | 775 | 4 | Fs::DirListing { dir: pkg/runner/hashfiles } |  |  | 0.620 |
+| walker |  | 779 | 4 | Fs::DirListing { dir: pkg/runner/res } |  |  | 0.620 |
+| ns | 804 |  | 42 | Module path, Go version, released version | 1.9 |  | 0.615 |
+| ns | 919 |  | 115 | cmd.Execute: CLI entry | 2.1 |  | 0.584 |
+| walker |  | 939 | 160 | Fs::DirListing { dir: pkg/container } |  |  | 0.589 |
+| walker |  | 949 | 10 | Plaintext::Whole { file: VERSION } |  |  | 0.594 |
+| walker |  | 967 | 18 | Fs::DirListing { dir: pkg/artifacts/testdata } |  |  | 0.595 |
+| walker |  | 971 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/GHSL-2023-004 } |  |  | 0.595 |
+| walker |  | 975 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/upload-and-download } |  |  | 0.595 |
+| walker |  | 979 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/v4 } |  |  | 0.595 |
+| walker |  | 1000 | 21 | Fs::DirListing { dir: pkg/model/testdata } |  |  | 0.595 |
+| walker |  | 1004 | 4 | Fs::DirListing { dir: pkg/model/testdata/container-volumes } |  |  | 0.595 |
+| walker |  | 1008 | 4 | Fs::DirListing { dir: pkg/model/testdata/strategy } |  |  | 0.595 |
+| walker |  | 1014 | 6 | Fs::DirListing { dir: pkg/model/testdata/empty-workflow } |  |  | 0.595 |
+| walker |  | 1021 | 7 | Fs::DirListing { dir: pkg/model/testdata/nested } |  |  | 0.595 |
+| walker |  | 1027 | 6 | Fs::DirListing { dir: pkg/model/testdata/nested/workflows } |  |  | 0.595 |
+| walker |  | 1050 | 23 | Fs::DirListing { dir: pkg/exprparser/testdata } |  |  | 0.595 |
+| walker |  | 1057 | 7 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3 } |  |  | 0.595 |
+| walker |  | 1062 | 5 | Fs::DirListing { dir: pkg/exprparser/testdata/for-hashing-3/nested } |  |  | 0.595 |
+| walker |  | 1080 | 18 | Code::CodeKey { rung: ModuleDoc, file: pkg/container/docker_cli.go, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 1100 | 20 | Fs::DirListing { dir: .github } |  |  | 0.595 |
+| walker |  | 1126 | 26 | Fs::DirListing { dir: .github/workflows } |  |  | 0.596 |
+| ns | 1131 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.568 |
+| walker |  | 1163 | 37 | Fs::DirListing { dir: pkg/container/testdata } |  |  | 0.568 |
+| walker |  | 1167 | 4 | Fs::DirListing { dir: pkg/container/testdata/docker-pull-options } |  |  | 0.568 |
+| walker |  | 1171 | 4 | Fs::DirListing { dir: pkg/container/testdata/scratch } |  |  | 0.568 |
+| walker |  | 1356 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.733 |
+| walker |  | 1411 | 55 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.733 |
 | ns | 1432 |  | 301 | Command-local flags: names and shorthands | 2.3 |  | 0.654 |
 | walker |  | 1435 | 24 | Fs::DirListing { dir: pkg/model/testdata/invalid-job-name } |  |  | 0.654 |
 | ns | 1782 |  | 350 | Persistent flags: names and shorthands | 2.4 |  | 0.588 |

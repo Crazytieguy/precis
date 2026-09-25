@@ -269,53 +269,10 @@ fn has_module_entrypoint(dir: &Path) -> bool {
         .any(|name| dir.join(name).is_file())
 }
 
-/// Go module-source detection — a dir with multiple non-test `.go`
-/// files, restricted to root-level subpackages or those directly
-/// under a root-level `pkg/` wrapper.
-fn is_go_module_subpackage(dir: &Path) -> bool {
-    const MIN_GO_FILES: usize = 5;
-    // Either the parent has a go.mod (subpackage of an outer Go module —
-    // gin's `binding`, lo's `it`), or the dir itself does (nested Go
-    // module — lo's `exp/simd`, bubbletea's `examples`/`tutorials`).
-    // Both shapes carry an API-surface listing NS authors anchor on.
-    let Some(parent) = dir.parent() else {
-        return false;
-    };
-    let has_outer_module = parent.join("go.mod").is_file();
-    let has_own_module = dir.join("go.mod").is_file();
-    let under_pkg_wrapper = is_go_pkg_wrapper(parent);
-    if !has_outer_module && !has_own_module && !under_pkg_wrapper {
-        return false;
-    }
-    count_go_package_source(dir, MIN_GO_FILES) >= MIN_GO_FILES
-}
-
-fn count_go_package_source(dir: &Path, target: usize) -> usize {
-    let Ok(read_dir) = std::fs::read_dir(dir) else {
-        return 0;
-    };
-    let mut count = 0;
-    for entry in read_dir.flatten() {
-        let Ok(ft) = entry.file_type() else { continue };
-        if !ft.is_file() {
-            continue;
-        }
-        let name = entry.file_name();
-        let Some(name) = name.to_str() else { continue };
-        if name.ends_with(".go") && !name.ends_with("_test.go") {
-            count += 1;
-            if count >= target {
-                return count;
-            }
-        }
-    }
-    count
-}
-
 fn is_module_source_dir(dir: &Path) -> bool {
     let entrypoint_module = has_module_entrypoint(dir)
         && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir));
-    entrypoint_module || has_module_sibling_file(dir) || is_go_module_subpackage(dir)
+    entrypoint_module || has_module_sibling_file(dir)
 }
 
 fn has_python_module_entrypoint(dir: &Path) -> bool {
