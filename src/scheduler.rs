@@ -13,11 +13,11 @@
 #[cfg(debug_assertions)]
 use std::collections::BTreeMap;
 use std::collections::{BTreeSet, HashMap, HashSet};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchId, BatchKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
-use crate::fs_util::{DirFilter, EntryKind, list_dir};
+use crate::fs_util::DirFilter;
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
@@ -425,9 +425,8 @@ impl<W: Walker> Scheduler<W> {
         self.apply_and_record(id, cost);
     }
 
-    /// Longest prefix of a listing's entries — taken in
-    /// [`rank_seed_entries`] order, not name order — that fits the
-    /// remaining budget, with its exact cost. A seed is one directory's
+    /// Longest prefix of a listing's entries that fits the remaining
+    /// budget, with its exact cost. A seed is one directory's
     /// listing; multi-group FS content comes only from NS TOML, which
     /// never reaches the scheduler.
     fn affordable_fs_prefix(&self, content: &BatchContent) -> Option<(BatchContent, Cost)> {
@@ -443,25 +442,17 @@ impl<W: Walker> Scheduler<W> {
         else {
             return None;
         };
-        let ranked = rank_seed_entries(parent, paths, self.ctx.dir_filter());
-        let prefix = |k: usize| {
-            // Back to name order: a degraded listing is otherwise an
-            // ordinary listing of a subset, and every consumer of batch
-            // content expects the sorted form `list_dir` produces.
-            let mut kept = ranked[..k].to_vec();
-            kept.sort();
-            BatchContent::Fs {
-                groups: vec![FsGroup {
-                    parent: parent.clone(),
-                    entries: FsEntries::Listed(kept),
-                }],
-            }
+        let prefix = |k: usize| BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: parent.clone(),
+                entries: FsEntries::Listed(paths[..k].to_vec()),
+            }],
         };
         // Entry rows are independent, so cost climbs with the prefix
         // length — binary-search the boundary, keeping the longest
         // prefix that fit. Nothing downstream depends on the search
         // finding the exact boundary: whatever it returns was measured.
-        let (mut lo, mut hi) = (0usize, ranked.len());
+        let (mut lo, mut hi) = (0usize, paths.len());
         let mut affordable = None;
         while hi - lo > 1 {
             let mid = lo + (hi - lo) / 2;
@@ -593,68 +584,4 @@ impl<W: Walker> Scheduler<W> {
         }
         set
     }
-}
-
-/// Order a listing's entries by how much a bare name row tells a reader
-/// meeting the repository, most informative first.
-///
-/// Only [`Scheduler::affordable_fs_prefix`] consults this. A listing
-/// that fits renders every one of its rows, in name order, whatever
-/// this returns; the ranking decides only *which* entries a budget too
-/// small for the whole listing keeps. The order is a function of the
-/// listing alone, never of the budget, so a smaller budget's prefix
-/// stays a subset of a larger one's.
-///
-/// Three tiers, each a naming or filesystem convention rather than a
-/// list of names, so the rule holds on any repository:
-///
-/// - **Hidden entries last.** A leading `.` is the filesystem's own
-///   "not part of the ordinary view of this directory", and what lives
-///   behind it at a repository root is tooling and editor configuration
-///   rather than the project.
-/// - **Directories before files.** A directory row stands for a whole
-///   subtree and is the only kind of row that says how the repository
-///   is organized, where a file row names one leaf.
-/// - **All-caps documents after other files.** The convention exists so
-///   that `README` / `LICENSE` / `CHANGELOG` / `CONTRIBUTING` are
-///   recognizable everywhere, which is exactly what makes their names
-///   uninformative — a reader assumes they are there. A row naming the
-///   manifest, the entrypoint or the build file does not. Within the
-///   documents the unqualified name outranks the variants that add a
-///   component to it, so `README.md` outranks `README.ja.md`.
-///
-/// Name order breaks ties, so the result is total and deterministic.
-fn rank_seed_entries(parent: &Path, paths: &[PathBuf], filter: &DirFilter) -> Vec<PathBuf> {
-    // Re-probe to recover kinds. Uses the walk's own filter rather than
-    // an unfiltered listing: its caches are already warm, and it is the
-    // filter that decides whether a symlinked entry is a directory at
-    // all, so asking anything else here could rank an entry as a file
-    // that the listing itself resolved to a directory.
-    let kinds = list_dir(parent, filter);
-    let mut ranked = paths.to_vec();
-    ranked.sort_by_cached_key(|path| {
-        let name = path
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or_default()
-            .to_string();
-        let hidden = name.starts_with('.');
-        let is_file = !matches!(kinds.get(&name), Some(EntryKind::Directory));
-        let root_document = is_file && is_root_document_name(&name);
-        let doc_variant = if root_document {
-            name.matches('.').count()
-        } else {
-            0
-        };
-        (hidden, is_file, root_document, doc_variant, name)
-    });
-    ranked
-}
-
-/// Whether `name` follows the all-caps root-document convention —
-/// `README.md`, `LICENSE`, `CHANGELOG.md`, `CONTRIBUTING.md`, `AUTHORS`,
-/// `COPYING`, and their translated variants.
-fn is_root_document_name(name: &str) -> bool {
-    let stem = name.split('.').next().unwrap_or(name);
-    stem.chars().any(char::is_uppercase) && !stem.chars().any(char::is_lowercase)
 }

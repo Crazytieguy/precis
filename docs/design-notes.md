@@ -77,19 +77,9 @@ blocks small budgets, split it or lower its rank) and on NS authoring
 
 **The one exception is an unaffordable seed.** At round 0 a seed that
 doesn't fit would leave the pool permanently empty and return an empty
-string. `Scheduler::schedule_partial_seed` degrades that one round to
-the longest affordable prefix of the seed listing's entry rows, ordered
-by `rank_seed_entries` (hidden entries last, directories before files,
-all-caps root documents after other files — conventions that hold on
-any repository, not a list of names), and then stops. Listings only: a
-prefix of a listing is a smaller listing, where a prefix of a line
-batch is severed source. The ranking is a function of the listing
-alone, never of the budget, so `output(T₁) ⊆ output(T₂)` still holds;
-it is consulted only on this degraded path, and a partial listing
-renders a trailing `…` row so it can't be mistaken for a complete one.
-Chunking the root listing in the walker instead would move scheduling
-at every budget to fix a failure that only exists below the root
-listing's own cost.
+string, so `Scheduler::schedule_partial_seed` schedules the longest
+affordable name-order prefix of the seed listing and stops. A partial
+listing renders a trailing `…` row.
 
 ## Auto-injected docs don't belong in precis output
 
