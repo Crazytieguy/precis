@@ -545,53 +545,34 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
 /// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>`
 /// anywhere in the tree, where `<locale>` is shaped like an
 /// ISO-639-style code (2-3 lowercase ASCII letters, optional `-`/`_`
-/// region suffix). A small blocklist in `is_locale_language` rules out
-/// non-locale suffixes sharing that shape (`README.api.md` /
-/// `README.dev.md` / `README.old.md`).
+/// region suffix). A small blocklist rules out non-locale suffixes
+/// sharing that shape (`README.api.md` / `README.dev.md` /
+/// `README.old.md`); a whitelist of ISO codes could never keep up with
+/// the ones in the wild.
 fn is_localized_readme(target: &std::path::Path) -> bool {
     let Some(name) = target.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
     let lower = name.to_ascii_lowercase();
-    let stem_lower = lower
+    let Some(stem) = lower
         .strip_suffix(".md")
-        .or_else(|| lower.strip_suffix(".rst"));
-    let Some(stem_lower) = stem_lower else {
+        .or_else(|| lower.strip_suffix(".rst"))
+    else {
         return false;
     };
-    let rest = stem_lower
+    let Some(locale) = stem
         .strip_prefix("readme.")
-        .or_else(|| stem_lower.strip_prefix("readme_"));
-    let Some(rest) = rest else { return false };
-    if rest.is_empty() {
+        .or_else(|| stem.strip_prefix("readme_"))
+    else {
         return false;
-    }
-    is_locale_language(rest)
-}
-
-fn is_locale_language(s: &str) -> bool {
-    // We accept both `<lang>-<REGION>` and `<lang>_<REGION>` forms;
-    // normalize the separator before matching. Comparison is
-    // case-insensitive because the caller already lowercased the stem.
-    let normalized = s.replace('_', "-");
-    let lang_root = normalized
-        .split_once('-')
-        .map_or(normalized.as_str(), |(l, r)| {
-            if r.is_empty() { normalized.as_str() } else { l }
-        });
-    // Accept any 2-3-character ASCII-letter token that isn't a known
-    // false-positive stem (`api` / `dev` / `old` / `template` / etc.).
-    // A whitelist of ~50 ISO codes can never keep up with new ones in
-    // the wild; the blocklist of non-locale README suffixes is small and
-    // stable.
-    let len = lang_root.len();
-    if !(2..=3).contains(&len) || !lang_root.bytes().all(|b| b.is_ascii_lowercase()) {
-        return false;
-    }
-    !matches!(
-        lang_root,
-        "api" | "dev" | "old" | "new" | "min" | "tmp" | "bak" | "pre"
-    )
+    };
+    let lang = locale.split(['-', '_']).next().unwrap_or_default();
+    (2..=3).contains(&lang.len())
+        && lang.bytes().all(|b| b.is_ascii_lowercase())
+        && !matches!(
+            lang,
+            "api" | "dev" | "old" | "new" | "min" | "tmp" | "bak" | "pre"
+        )
 }
 
 /// Default cost-side concavity for the scheduling ratio — gentle so
