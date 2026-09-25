@@ -55,7 +55,9 @@ ill-fitting batch for a smaller one would break this.
 ## Auto-injected docs don't belong in precis output
 
 Files the host harness already loads into the model's context —
-`AGENTS.md` / `CLAUDE.md` at any depth, and text files under
+`CLAUDE.md` at any depth, `AGENTS.md` where Claude Code loads it (a
+directory's AGENTS.md only when it has no CLAUDE.md, or its CLAUDE.md is
+the same text or imports `@AGENTS.md`), and text files under
 `.claude/skills/`, `.agent/skills/`, `.cursor/rules/` — keep their
 listing rows, but their prose bodies are never scheduled and their
 structural batches carry a 0.1× discount. An NS that ranks their content

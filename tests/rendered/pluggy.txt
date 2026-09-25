@@ -10,6 +10,9 @@
 .pre-commit-config.yaml
 .readthedocs.yml
 AGENTS.md
+  1→# AGENTS.md
+  2→
+  3→See @CLAUDE.md for AI coding agent instructions.
 CHANGELOG.rst
 CLAUDE.md
 LICENSE
@@ -246,8 +249,6 @@ src/
       365→    def __init__(self) -> None:
       …
       368→    if TYPE_CHECKING:
-      369→
-      370→        def __getattr__(self, name: str) -> HookCaller: ...
       …
       374→_HookRelay = HookRelay
       375→

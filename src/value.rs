@@ -340,8 +340,9 @@ pub(crate) fn is_scaffold_template_dir_name(name: &str) -> bool {
     lower.starts_with("template-") || lower.starts_with("cra-template-")
 }
 
-/// Auto-injected agent-instruction files (CLAUDE.md / AGENTS.md /
-/// skill docs). Matches anywhere in the tree — CLAUDE.md is recursive.
+/// Auto-injected agent-instruction files (CLAUDE.md, skill docs, and
+/// AGENTS.md where Claude Code loads it). Matches anywhere in the tree —
+/// CLAUDE.md is recursive.
 pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path) -> bool {
     let target = path.strip_prefix(root).unwrap_or(path);
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
@@ -353,10 +354,13 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
     {
         return false;
     }
-    if let Some(stem) = target.file_stem().and_then(|s| s.to_str())
-        && (stem.eq_ignore_ascii_case("AGENTS") || stem.eq_ignore_ascii_case("CLAUDE"))
-    {
-        return true;
+    if let Some(stem) = target.file_stem().and_then(|s| s.to_str()) {
+        if stem.eq_ignore_ascii_case("CLAUDE") {
+            return true;
+        }
+        if stem.eq_ignore_ascii_case("AGENTS") {
+            return claude_code_loads_agents_md(path);
+        }
     }
     // Skill / rules subtrees: any text file whose path contains an
     // adjacent `(agent-dir, subdir)` pair, e.g. `.claude/skills`,
@@ -371,6 +375,28 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
             || (a.eq_ignore_ascii_case(".agent") && b.eq_ignore_ascii_case("skills"))
             || (a.eq_ignore_ascii_case(".cursor") && b.eq_ignore_ascii_case("rules"))
     })
+}
+
+/// Claude Code reads a directory's AGENTS.md only in place of its
+/// CLAUDE.md: when the directory has none, or when that CLAUDE.md is
+/// the same text (a symlink or copy) or imports `@AGENTS.md`. Otherwise
+/// the AGENTS.md is a document the agent has not seen.
+fn claude_code_loads_agents_md(agents: &std::path::Path) -> bool {
+    let Some(dir) = agents.parent() else {
+        return true;
+    };
+    let Some(claude) = [dir.join("CLAUDE.md"), dir.join(".claude").join("CLAUDE.md")]
+        .into_iter()
+        .find(|candidate| candidate.is_file())
+    else {
+        return true;
+    };
+    let Ok(claude_text) = std::fs::read_to_string(claude) else {
+        return true;
+    };
+    claude_text.contains("@AGENTS.md")
+        || claude_text.contains("@./AGENTS.md")
+        || std::fs::read_to_string(agents).is_ok_and(|agents_text| agents_text == claude_text)
 }
 
 /// True for admin/release markdown — CHANGELOG / CONTRIBUTING /
@@ -567,5 +593,24 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn value_agents_md_is_injected_only_where_claude_code_loads_it() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let agents = root.join("AGENTS.md");
+        std::fs::write(&agents, "Run the tests with make test.\n").unwrap();
+        assert!(is_auto_injected_doc_file(&agents, root), "no CLAUDE.md");
+        std::fs::write(root.join("CLAUDE.md"), "Use tabs.\n").unwrap();
+        assert!(
+            !is_auto_injected_doc_file(&agents, root),
+            "an unrelated CLAUDE.md replaces it"
+        );
+        std::fs::write(root.join("CLAUDE.md"), "@AGENTS.md\n").unwrap();
+        assert!(is_auto_injected_doc_file(&agents, root), "imported");
+        std::fs::remove_file(root.join("CLAUDE.md")).unwrap();
+        std::os::unix::fs::symlink("AGENTS.md", root.join("CLAUDE.md")).unwrap();
+        assert!(is_auto_injected_doc_file(&agents, root), "symlinked");
     }
 }
