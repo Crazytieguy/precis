@@ -164,21 +164,20 @@ Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 8556 |  | 232 | Roster of _utils.py helpers, including the version-gated evaluate_forwardref | 5.6 |  | 0.499 |
 | ns | 8731 |  | 175 | _transformer.py top-level structure: constants and the four visitor classes | 6.1 |  | 0.509 |
 | walker |  | 8956 | 494 | python decl src/typeguard/_checkers.py:99 |  |  | 0.509 |
+| walker |  | 8963 | 7 | python body src/typeguard/_importhook.py:167 |  |  | 0.520 |
 | ns | 8963 |  | 232 | Complete method roster of TypeguardTransformer | 6.2 |  | 0.520 |
-| walker |  | 8967 | 11 | python module doc tests/dummymodule.py |  |  | 0.520 |
-| walker |  | 8974 | 7 | python body src/typeguard/_importhook.py:167 |  |  | 0.520 |
 | ns | 9434 |  | 471 | Docstrings of the TypeguardTransformer visit_ handlers | 6.3 | 6.2 | 0.508 |
-| walker |  | 9490 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.545 |
-| walker |  | 9509 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.546 |
-| walker |  | 9622 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.546 |
+| walker |  | 9479 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.545 |
+| walker |  | 9498 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.546 |
+| walker |  | 9611 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.546 |
 | ns | 9624 |  | 190 | pyproject.toml: package identity, runtime requirements, pytest entry point | 7.1 |  | 0.553 |
-| walker |  | 9735 | 113 | python doc src/typeguard/_config.py:14 |  |  | 0.566 |
-| walker |  | 9783 | 48 | tool.mypy config in pyproject.toml |  |  | 0.566 |
+| walker |  | 9724 | 113 | python doc src/typeguard/_config.py:14 |  |  | 0.566 |
+| walker |  | 9772 | 48 | tool.mypy config in pyproject.toml |  |  | 0.566 |
 | ns | 9825 |  | 201 | pyproject.toml: dependency groups and pytest configuration | 7.2 |  | 0.561 |
+| walker |  | 9853 | 81 | python doc src/typeguard/_utils.py:104 |  |  | 0.561 |
 | ns | 9860 |  | 35 | GitHub workflows and repository meta files | 7.3 |  | 0.564 |
-| walker |  | 9864 | 81 | python doc src/typeguard/_utils.py:104 |  |  | 0.564 |
-| walker |  | 9878 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.564 |
-| walker |  | 9887 | 9 | python body src/typeguard/_importhook.py:161 |  |  | 0.564 |
-| ns | 9916 |  | 56 | CI interpreter matrix | 7.4 |  | 0.564 |
-| walker |  | 9917 | 30 | python doc src/typeguard/_exceptions.py:26 |  |  | 0.566 |
-| walker |  | 9935 | 18 | python body src/typeguard/_importhook.py:51 |  |  | 0.566 |
+| walker |  | 9867 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.564 |
+| walker |  | 9876 | 9 | python body src/typeguard/_importhook.py:161 |  |  | 0.564 |
+| walker |  | 9906 | 30 | python doc src/typeguard/_exceptions.py:26 |  |  | 0.567 |
+| ns | 9916 |  | 56 | CI interpreter matrix | 7.4 |  | 0.566 |
+| walker |  | 9924 | 18 | python body src/typeguard/_importhook.py:51 |  |  | 0.566 |

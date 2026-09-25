@@ -187,12 +187,6 @@ src/
       …
     _compat.py
     _termui_impl.py
-      1→"""
-      2→This module contains implementations for the termui module. To keep the
-      3→import time of Click down, some infrequently used functionality is
-      4→placed in this module and only imported as needed.
-      5→"""
-      …
     _textwrap.py
       …
       8→class TextWrapper(textwrap.TextWrapper):
@@ -238,6 +232,12 @@ src/
       26→) -> cabc.Iterator[tuple[str, ...]]:
       …
       31→def wrap_text(
+      32→    text: str,
+      33→    width: int = 78,
+      34→    initial_indent: str = "",
+      35→    subsequent_indent: str = "",
+      36→    preserve_paragraphs: bool = False,
+      37→) -> str:
       …
       104→class HelpFormatter:
       …

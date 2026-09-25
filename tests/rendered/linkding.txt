@@ -114,6 +114,30 @@ bookmarks/
     20→def app_version(request):
     21→    return {"app_version": utils.app_version}
   feeds.py
+    …
+    14→@dataclass
+    15→class FeedContext:
+    16→    request: HttpRequest
+    17→    feed_token: FeedToken | None
+    18→    query_set: QuerySet[Bookmark]
+    21→def sanitize(text: str):
+    …
+    31→class BaseBookmarksFeed(Feed):
+    …
+    73→class AllBookmarksFeed(BaseBookmarksFeed):
+    74→    title = "All bookmarks"
+    75→    description = "All bookmarks"
+    76→
+    77→    def get_query_set(self, feed_token: FeedToken, search: BookmarkSearch):
+    …
+    80→    def link(self, context: FeedContext):
+    …
+    84→class UnreadBookmarksFeed(BaseBookmarksFeed):
+    …
+    97→class SharedBookmarksFeed(BaseBookmarksFeed):
+    …
+    110→class PublicSharedBookmarksFeed(BaseBookmarksFeed):
+    …
   forms.py
   frontend/
     api.js
@@ -221,14 +245,7 @@ bookmarks/
     base.py
     custom.py
     dev.py
-      1→"""
-      2→Development settings for linkding webapp
-      3→"""
-      …
     prod.py
-      1→"""
-      2→Production settings for linkding webapp
-      3→"""
       …
       15→DEBUG = False
       …
@@ -349,9 +366,6 @@ bookmarks/
   tests/
   tests_e2e/
   type_defs.py
-    1→"""
-    2→Stuff in here is only used for type hints
-    3→"""
     …
     11→class HttpRequest(http.HttpRequest):
     12→    global_settings: GlobalSettings
@@ -458,11 +472,6 @@ bookmarks/
     67→    def render(self, name, value, attrs=None, renderer=None):
     …
   wsgi.py
-    1→"""
-    2→WSGI config for linkding.
-    3→
-    4→It exposes the WSGI callable as a module-level variable named ``application``.
-    5→"""
     …
     13→application = get_wsgi_application()
 bootstrap.sh
@@ -481,8 +490,6 @@ docs/
   tsconfig.json
 install-linkding.sh
 manage.py
-  …
-  2→"""Django's command-line utility for administrative tasks."""
   …
   7→def main():
   …

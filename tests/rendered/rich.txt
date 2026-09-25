@@ -250,6 +250,19 @@ rich/
     77→def print_json(
     …
     120→def inspect(
+    121→    obj: Any,
+    122→    *,
+    123→    console: Optional["Console"] = None,
+    124→    title: Optional[str] = None,
+    125→    help: bool = False,
+    126→    methods: bool = False,
+    127→    docs: bool = True,
+    128→    private: bool = False,
+    129→    dunder: bool = False,
+    130→    sort: bool = True,
+    131→    all: bool = False,
+    132→    value: bool = True,
+    133→) -> None:
     …
   __main__.py
     …
@@ -309,10 +322,6 @@ rich/
     14→    def push(self, item: T) -> None:
     …
   _timer.py
-    1→"""
-    2→Timer context manager, only used in debug.
-    3→
-    4→"""
     …
     12→@contextlib.contextmanager
     13→def timer(subject: str = "time") -> Generator[None, None, None]:

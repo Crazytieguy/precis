@@ -36,11 +36,28 @@ beets/
       …
       15→"""Facilities for automatically determining files' correct metadata."""
       …
+      19→from importlib import import_module
+      …
+      22→from beets.util.deprecation import deprecate_for_maintainers, deprecate_imports
+      23→
+      24→from .hooks import AlbumInfo, AlbumMatch, TrackInfo, TrackMatch
+      25→from .match import Proposal, Recommendation, tag_album, tag_item
+      26→
+      27→
+      28→def __getattr__(name: str):
+      …
+      40→__all__ = [
+      41→    "AlbumInfo",
+      42→    "AlbumMatch",
+      43→    "Proposal",
+      44→    "Recommendation",
+      45→    "TrackInfo",
+      46→    "TrackMatch",
+      47→    "tag_album",
+      48→    "tag_item",
+      49→]
     distance.py
     hooks.py
-      …
-      15→"""Glue between metadata sources and the matching logic."""
-      …
     match.py
   config_default.yaml
   context.py
@@ -52,22 +69,10 @@ beets/
       17→"""
       …
     db.py
-      …
-      15→"""The central Model and Database constructs for DBCore."""
-      …
     pathutils.py
     query.py
-      …
-      15→"""The Query type hierarchy for DBCore."""
-      …
     queryparse.py
-      …
-      15→"""Parsing of strings into DBCore queries."""
-      …
     types.py
-      …
-      15→"""Representation of type information for DBCore model fields."""
-      …
   importer/
     __init__.py
       …
@@ -114,9 +119,6 @@ beets/
   mediafile.py
   metadata_plugins.py
   plugins.py
-    …
-    15→"""Support for beets plugins."""
-    …
   py.typed (empty)
   test/
   ui/
@@ -219,11 +221,17 @@ beets/
           12→
           13→
           14→def paths_from_logfile(path):
+          15→    """Parse the logfile and yield skipped paths to pass to the `import`
+          16→    command.
+          17→    """
           …
           34→def parse_logfiles(logfiles):
           35→    """Parse all `logfiles` and yield paths from it."""
           …
           49→def import_files(lib, paths: list[bytes], query):
+          50→    """Import the files in the given list of paths or matching the
+          51→    query.
+          52→    """
           …
           81→def import_func(lib, opts, args: list[str]):
           …
@@ -311,26 +319,15 @@ beets/
     deprecation.py
     diff.py
     extension.py
-      …
-      15→"""A tool that finds an extension for files without one"""
-      …
     functemplate.py
     hidden.py
-      …
-      16→"""Simple library to work out if a file is hidden on different platforms."""
       …
       25→def is_hidden(path: bytes | Path) -> bool:
       …
     id_extractors.py
-      …
-      15→"""Helpers around the extraction of album/track ID's from metadata sources."""
-      …
     layout.py
     lyrics.py
     m3u.py
-      …
-      15→"""Provides utilities to read, write and manipulate m3u playlist files."""
-      …
     pipeline.py
     units.py
 beetsplug/
@@ -392,9 +389,6 @@ extra/
   ascii_logo.txt
   beets.reg
   release.py
-    …
-    3→"""A utility script for automating the beets release process."""
-    …
 poetry.lock
 pyproject.toml
   …

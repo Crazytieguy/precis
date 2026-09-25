@@ -80,7 +80,14 @@ README.md
   27→
   28→Requests is one of the most downloaded Python packages today, pulling in around `300M downloads / week` — according to GitHub, Requests is currently [depended upon](https://github.com/psf/requests/network/dependents?package_id=UGFja2FnZS01NzA4OTExNg%3D%3D) by `4,000,000+` repositories.
   30→## Installing Requests and Supported Versions
-  …
+  31→
+  32→Requests is available on PyPI:
+  33→
+  34→```console
+  35→$ python -m pip install requests
+  36→```
+  37→
+  38→Requests officially supports Python 3.10+.
   40→## Supported Features & Best–Practices
   …
   58→## Cloning the repository
@@ -136,10 +143,20 @@ pyproject.toml
   8→readme = "README.md"
   …
   17→requires-python = ">=3.10"
+  18→dependencies = [
+  19→    "charset_normalizer>=2,<4",
+  20→    "idna>=2.5,<4",
+  21→    "urllib3>=1.26,<3",
+  22→    "certifi>=2023.5.7"
+  23→]
   …
   49→[project.urls]
   50→Documentation = "https://requests.readthedocs.io"
   51→Source = "https://github.com/psf/requests"
+  53→[project.optional-dependencies]
+  54→security = []
+  55→socks = ["PySocks>=1.5.6, !=1.5.7"]
+  56→use_chardet_on_py3 = ["chardet>=3.0.2,<8"]
   …
   74→[tool.setuptools]
   75→license-files = ["LICENSE", "NOTICE"]
@@ -234,61 +251,42 @@ src/
       …
     __version__.py
     _internal_utils.py
-      1→"""
-      2→requests._internal_utils
-      3→~~~~~~~~~~~~~~
-      4→
-      5→Provides utility functions that are consumed internally by Requests
-      6→which depend on extremely few external helpers (such as compat)
-      7→"""
-      …
     _types.py
     adapters.py
-      1→"""
-      2→requests.adapters
-      3→~~~~~~~~~~~~~~~~~
-      4→
-      5→This module contains the transport adapters that Requests uses to define
-      6→and maintain connections.
-      7→"""
+      …
+      79→DEFAULT_POOLBLOCK = False
+      80→DEFAULT_POOLSIZE = 10
+      81→DEFAULT_RETRIES = 0
+      82→DEFAULT_POOL_TIMEOUT = None
+      83→
+      84→
+      85→def _urllib3_request_context(
+      …
+      122→class BaseAdapter:
+      123→    """The Base Transport Adapter"""
+      125→    def __init__(self) -> None:
+      126→        super().__init__()
+      128→    def send(
+      …
+      153→    def close(self) -> None:
+      …
+      158→class HTTPAdapter(BaseAdapter):
       …
     api.py
     auth.py
-      1→"""
-      2→requests.auth
-      3→~~~~~~~~~~~~~
-      4→
-      5→This module contains the authentication handlers for Requests.
-      6→"""
-      …
     certs.py
     compat.py
     cookies.py
-      1→"""
-      2→requests.cookies
-      3→~~~~~~~~~~~~~~~~
-      4→
-      5→Compatibility code to be able to use `http.cookiejar.CookieJar` with requests.
-      6→
-      7→requests.utils imports from here, so be careful with imports.
-      8→"""
-      …
     exceptions.py
-      1→"""
-      2→requests.exceptions
-      3→~~~~~~~~~~~~~~~~~~~
-      4→
-      5→This module contains the set of Requests' exceptions.
-      6→"""
-      …
     help.py
-      1→"""Module containing bug report helper(s)."""
       …
       37→def _implementation():
       …
       69→def info() -> dict[str, Any]:
+      70→    """Generate information for a bug report."""
       …
       128→def main():
+      129→    """Pretty-print the bug information as JSON."""
       …
     hooks.py
       …
@@ -305,23 +303,9 @@ src/
       37→) -> Response:
       …
     models.py
-      1→"""
-      2→requests.models
-      3→~~~~~~~~~~~~~~~
-      4→
-      5→This module contains the primary objects that power Requests.
-      6→"""
-      …
     packages.py
     py.typed (empty)
     sessions.py
-      1→"""
-      2→requests.sessions
-      3→~~~~~~~~~~~~~~~~~
-      4→
-      5→This module provides a Session object to manage and persist settings across
-      6→requests (cookies, auth, proxies).
-      7→"""
       …
       76→def merge_setting(
       77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
@@ -350,21 +334,15 @@ src/
       109→def _init():
       …
     structures.py
-      1→"""
-      2→requests.structures
-      3→~~~~~~~~~~~~~~~~~~~
-      4→
-      5→Data structures that power Requests.
-      6→"""
+      …
+      16→_VT = TypeVar("_VT")
+      17→_D = TypeVar("_D")
+      18→
+      19→
+      20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
+      …
+      96→class LookupDict(dict[str, _VT]):
       …
     utils.py
-      1→"""
-      2→requests.utils
-      3→~~~~~~~~~~~~~~
-      4→
-      5→This module provides utility functions that are used within Requests
-      6→that are also useful for external consumption.
-      7→"""
-      …
 tests/
 tox.ini

@@ -8,9 +8,10 @@
 //! - **Doc**: the docstring opening a `def` / `class` body.
 //! - **Visibility**: a leading `_` that isn't a `__dunder__` is `Private`.
 //!   Test files (`test_*.py`, `*_test.py`) are hidden entirely.
-//! - **Module doc**: the module docstring and dunder assignments other
-//!   than `__all__`. Leading `#` comments (shebangs, license headers) are
-//!   not module doc.
+//! - **Module doc**: an entry file's (`__init__.py`, `__main__.py`)
+//!   module docstring, and dunder assignments other than `__all__`.
+//!   Other modules' docstrings and leading `#` comments (shebangs, license
+//!   headers) are in no part.
 //! - **Re-exports**: `__all__`, and in `__init__.py` every top-level
 //!   `from … import …`.
 
@@ -30,7 +31,7 @@ pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
     tree_sitter_python::LANGUAGE.into()
 }
 
-pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();
     if is_test_file(&file.path) {
         return model;
@@ -45,9 +46,11 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         }
         let is_first_statement = std::mem::replace(&mut first_statement, false);
         if is_first_statement && is_docstring(node) {
-            model
-                .module_doc
-                .extend(paragraphs(file, file.node_rows(node), &HashSet::new()));
+            if is_entrypoint(&file.path, ctx) {
+                model
+                    .module_doc
+                    .extend(paragraphs(file, file.node_rows(node), &HashSet::new()));
+            }
             continue;
         }
         let rows = || Item::new(file.node_rows(node));
@@ -376,9 +379,7 @@ mod tests {
 
     #[test]
     fn code_python_module_doc_skips_license_header_and_keeps_dunders() {
-        let model = extract_source(
-            "pkg/core.py",
-            "\
+        let source = "\
 # Copyright (c) 2020 Someone
 # SPDX-License-Identifier: MIT
 \"\"\"Core helpers.
@@ -391,11 +392,13 @@ import os
 __version__ = \"1.0\"
 __all__ = [\"run\", \"Thing\"]
 __all__ += [\"extra\"]
-",
-        );
+";
+        let model = extract_source("pkg/__main__.py", source);
         assert_eq!(rows(&model.module_doc), vec![vec![3], vec![5, 6], vec![10]]);
         assert_eq!(rows(&model.reexports), vec![vec![11], vec![12]]);
         assert!(model.decls.is_empty());
+        let module = extract_source("pkg/core.py", source);
+        assert_eq!(rows(&module.module_doc), vec![vec![10]]);
     }
 
     #[test]
