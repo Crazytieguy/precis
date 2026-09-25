@@ -1,14 +1,16 @@
 //! Lua extraction. Declarations are the top-level function forms, all
 //! `Callable`:
 //!  - `function_declaration` (incl. `local function`),
-//!  - `assignment_statement` / `variable_declaration` with a
-//!    `function_definition` right-hand side, and
+//!  - `assignment_statement` / `variable_declaration` / `return_statement`
+//!    with a `function_definition` right-hand side, and
 //!  - function-valued `field`s inside a top-level table-constructor
 //!    right-hand side (the tables-as-classes idiom:
 //!    `local M = { foo = function() ... end }`), surfaced one level deep
 //!    so a `static = { ... }` sub-table resolves.
 //!
-//! The module doc is a top-of-file identity table (`_VERSION`, …).
+//! The module doc is a top-of-file identity table (`_VERSION`, …). What
+//! `require` returns (the top-level `return` and a `setmetatable(…)` call)
+//! joins the roster as re-export rows.
 
 use tree_sitter::Node;
 
@@ -32,12 +34,28 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         } else {
             vec![Item::new(identity)]
         },
-        reexports: Vec::new(),
+        reexports: module_exports(file),
         decls: find_decls(file.tree.root_node())
             .into_iter()
             .map(|node| callable(node, file))
             .collect(),
     }
+}
+
+/// What `require` returns: the top-level `return`, and a
+/// `setmetatable(…)` call that makes the module callable.
+fn module_exports(file: &SourceFile) -> Vec<Item> {
+    let root = file.tree.root_node();
+    let mut cursor = root.walk();
+    root.children(&mut cursor)
+        .filter(|child| {
+            (child.kind() == "return_statement"
+                && rhs_of_kind(*child, "function_definition").is_none())
+                || (child.kind() == "function_call"
+                    && file.text(*child).starts_with("setmetatable"))
+        })
+        .map(|child| Item::new(file.node_rows(child)))
+        .collect()
 }
 
 /// Top-level fn-like declarations. Tables-as-classes
@@ -48,6 +66,9 @@ fn find_decls(root: Node) -> Vec<Node> {
     for child in root.children(&mut cursor) {
         match child.kind() {
             "function_declaration" => out.push(child),
+            "return_statement" if rhs_of_kind(child, "function_definition").is_some() => {
+                out.push(child)
+            }
             "variable_declaration" | "assignment_statement" => {
                 if rhs_of_kind(child, "function_definition").is_some() {
                     out.push(child);
@@ -116,7 +137,7 @@ fn rhs_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
 fn body_block(node: Node) -> Option<Node> {
     match node.kind() {
         "function_declaration" => node.child_by_field_name("body"),
-        "assignment_statement" | "variable_declaration" => {
+        "assignment_statement" | "variable_declaration" | "return_statement" => {
             rhs_of_kind(node, "function_definition")?.child_by_field_name("body")
         }
         "field" => {
@@ -236,6 +257,38 @@ return M
 ",
         );
         assert_eq!(name_rows(&model), [2, 3, 4, 8, 9, 10]);
+    }
+
+    #[test]
+    fn lua_roster_lists_what_require_returns() {
+        let model = extract_source(
+            "\
+local M = {}
+function M.new() end
+setmetatable(M, {
+  __call = function(_, ...) return M.new(...) end,
+})
+local helper = 1
+return M
+",
+        );
+        let exports: Vec<Vec<usize>> = model
+            .reexports
+            .iter()
+            .map(|item| item.rows.clone())
+            .collect();
+        assert_eq!(exports, [vec![3, 4, 5], vec![7]]);
+
+        let returns_function = extract_source(
+            "\
+return function(title, f)
+  f()
+end
+",
+        );
+        assert!(returns_function.reexports.is_empty());
+        assert_eq!(returns_function.decls[0].head, [1]);
+        assert_eq!(returns_function.decls[0].body, [Item::new([2])]);
     }
 
     #[test]

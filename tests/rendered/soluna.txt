@@ -82,7 +82,21 @@ docs/
   args.lua
   callback.lua
   coroutine.lua
+    …
+    18→function coroutine.create(f) end
+    …
+    30→function coroutine.resume(co, ...) end
+    …
+    40→function coroutine.yield(...) end
+    41→
+    42→return coroutine
   crypt.lua
+    …
+    17→function crypt.hexencode(data) end
+    …
+    26→function crypt.sha1(data) end
+    27→
+    28→return crypt
   datalist.lua
   file.lua
     …
@@ -122,7 +136,8 @@ docs/
     48→---@param path string Directory path
     49→---@return function iterator Iterator function
     50→function file.dir(path) end
-    …
+    51→
+    52→return file
   font.lua
     …
     10→---
@@ -141,7 +156,8 @@ docs/
     25→---
     26→---@return userdata fontcobj Font system object
     27→function font.cobj() end
-    …
+    28→
+    29→return font
   font_system.lua
   image.lua
   layout.lua
@@ -152,7 +168,19 @@ docs/
   material_text.lua
   soluna.lua
   text.lua
+    …
+    17→function text.init(bundle_file) end
+    …
+    36→return text
   url.lua
+    …
+    10→---
+    11→--- Opens a URL in the system's default web browser
+    12→---
+    13→---@param link string The URL to open
+    14→function url.open(link) end
+    15→
+    16→return url
   zip.lua
 make.lua
   …
@@ -314,25 +342,6 @@ src/
     settings.lua
     start.lua
   sprite_submit.h
-    …
-    9→static inline int32_t
-    10→to_fixpoint_(float v) {
-    …
-    15→static inline void
-    16→sprite_set_xy(struct draw_primitive *p, float x, float y) {
-    …
-    21→static inline void
-    22→sprite_apply_xy(struct draw_primitive *p, float x, float y) {
-    …
-    27→static inline int
-    28→convert_scale_(float scale) {
-    …
-    43→static inline uint32_t
-    44→convert_scale_part_(uint32_t scale12) {
-    …
-    56→static inline int
-    57→convert_rot_(float rot) {
-    …
   spritemgr.c
   spritemgr.h
     …
@@ -341,9 +350,7 @@ src/
     9→struct sprite_rect {
     10→	uint32_t texid;
     11→	uint32_t off;	// (dx + 0x8000) << (dy + 0x8000)
-    12→	uint32_t u;		// x << 16 | w
-    13→	uint32_t v;		// y << 16 | h
-    14→};
+    …
     16→struct sprite_bank {
     17→	int n;
     18→	int cap;
