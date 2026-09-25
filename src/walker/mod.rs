@@ -131,6 +131,16 @@ pub struct WalkCtx {
     dominant_source_file: OnceCell<Option<PathBuf>>,
 }
 
+impl Drop for WalkCtx {
+    /// Freeing every parse tree is a measurable slice of a run and
+    /// nothing waits on it, so it happens on a background thread (which
+    /// the CLI exits without joining).
+    fn drop(&mut self) {
+        let trees = std::mem::take(self.tree_cache.get_mut());
+        std::thread::spawn(move || drop(trees));
+    }
+}
+
 impl WalkCtx {
     pub fn new(root: PathBuf) -> Self {
         Self::with_cache(root, SourceCache::new())
