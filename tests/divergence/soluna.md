@@ -249,4 +249,4 @@ Score(3000)=0.675 I=0.896 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 9923 | 52 | Code::CodeKey { rung: Body, file: script/hashversion.lua, decl: 1, sub: 0, line: 1 } |  |  | 0.512 |
 | ns | 9926 |  | 102 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.521 |
 | walker |  | 9950 | 27 | Code::CodeKey { rung: Body, file: src/service/loader.lua, decl: 4, sub: 0, line: 56 } |  |  | 0.521 |
-| walker |  | 9996 | 46 | Plaintext::DeclSurface { file: src/platform/macos/soluna_macos_ime.m } |  |  | 0.521 |
+| walker |  | 9982 | 32 | Code::CodeKey { rung: Doc, file: docs/callback.lua, decl: 2, sub: 0, line: 18 } |  |  | 0.522 |

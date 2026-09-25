@@ -460,11 +460,12 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
     Some(SurfaceLine::Comment)
 }
 
-/// A line that only closes a block carries no information the opening
-/// line didn't already give.
+/// A line that only closes a block, or only opens one on the line after
+/// its declaration, carries no information the declaration line didn't
+/// already give.
 fn is_block_closer(trimmed: &str) -> bool {
     matches!(trimmed, "end" | "fi" | "done" | "esac" | "#endif" | "*/")
-        || trimmed.chars().all(|c| "}])>;,`".contains(c))
+        || trimmed.chars().all(|c| "{}])>;,`".contains(c))
 }
 
 /// Comment-opener detection across the covered languages. Ambiguous
@@ -586,8 +587,9 @@ fn block_comment_interiors(source: &str) -> Vec<bool> {
 /// The result is a *surface*, not a summary: no parse, no signature
 /// reconstruction, no bodies. It is priced accordingly in
 /// [`class_value`].
-fn declaration_surface(source: &str) -> Vec<usize> {
+fn declaration_surface(source: &str, class: Class) -> Vec<usize> {
     let banner_end = boilerplate_banner_end(source);
+    let opens_block = block_openers(source);
     let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
     let lines = source.lines().zip(block_comment_interiors(source));
     for (index, (line, in_block_comment)) in lines.enumerate().skip(banner_end) {
@@ -598,8 +600,7 @@ fn declaration_surface(source: &str) -> Vec<usize> {
         let Some(class) = classify_surface_line(trimmed, in_block_comment) else {
             continue;
         };
-        let indent = line.len() - line.trim_start().len();
-        rows.push((indent, index + 1, class));
+        rows.push((indentation(line), index + 1, class));
     }
 
     let mut levels: Vec<usize> = rows.iter().map(|(indent, ..)| *indent).collect();
@@ -613,9 +614,16 @@ fn declaration_surface(source: &str) -> Vec<usize> {
     ];
     let mut used = [0usize; 3];
     let mut selected: Vec<usize> = Vec::new();
+    // In a language file, a declaration that opens a block (a class, a
+    // function, a module) is what the roster is for; statements and
+    // directives take the slots it leaves. A flat file's surface stays
+    // its head.
+    if class == Class::LanguageSource {
+        rows.sort_by_key(|&(_, line, kind)| kind == SurfaceLine::Decl && !opens_block[line - 1]);
+    }
     for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
-        for &(_, line, class) in rows.iter().filter(|(indent, ..)| *indent == level) {
-            let slot = match class {
+        for &(_, line, kind) in rows.iter().filter(|(indent, ..)| *indent == level) {
+            let slot = match kind {
                 SurfaceLine::Import => 0,
                 SurfaceLine::Comment => 1,
                 SurfaceLine::Decl => 2,
@@ -634,6 +642,28 @@ fn declaration_surface(source: &str) -> Vec<usize> {
     selected
 }
 
+fn indentation(line: &str) -> usize {
+    line.len() - line.trim_start().len()
+}
+
+/// Per line, whether the next line with content is indented deeper — the
+/// line heads a block. A line of only brackets is skipped over, so an
+/// Allman-style `{` does not take the heading from the line above it.
+fn block_openers(source: &str) -> Vec<bool> {
+    let lines: Vec<&str> = source.lines().collect();
+    let mut opens = vec![false; lines.len()];
+    let mut next_indent: Option<usize> = None;
+    for (index, line) in lines.iter().enumerate().rev() {
+        let indent = indentation(line);
+        opens[index] = next_indent.is_some_and(|next| next > indent);
+        let trimmed = line.trim();
+        if !trimmed.is_empty() && !is_block_closer(trimmed) {
+            next_indent = Some(indent);
+        }
+    }
+    opens
+}
+
 /// A fallback file's declaration surface, then — when the surface
 /// elides part of a file short enough to render whole — the whole file
 /// behind it. Nothing when the file is unreadable, machine-generated, or
@@ -648,7 +678,7 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
     {
         return;
     }
-    let selected = declaration_surface(&source);
+    let selected = declaration_surface(&source, class);
     let surface_rows = selected.len();
     let Some(content) = single_file_lines_content(file, &source, selected) else {
         return;
@@ -927,7 +957,7 @@ mod tests {
 
     /// Line numbers a surface selects, for readable assertions.
     fn surface_of(source: &str) -> Vec<usize> {
-        declaration_surface(source)
+        declaration_surface(source, Class::LanguageSource)
     }
 
     #[test]
@@ -971,6 +1001,30 @@ mod tests {
         let lines: Vec<&str> = csharp.lines().collect();
         let text: Vec<&str> = surface_of(csharp).iter().map(|n| lines[n - 1]).collect();
         assert_eq!(text, vec!["using System;", "namespace ShareX"]);
+    }
+
+    /// Column-zero statements ahead of a file's functions do not take the
+    /// roster's slots from them, in a language file; a flat file's surface
+    /// stays its head.
+    #[test]
+    fn plaintext_source_text_surface_prefers_lines_that_open_blocks() {
+        let setup: String = (0..SOURCE_TEXT_DECL_LINES)
+            .map(|n| format!("let g:setting_{n} = {n}\n"))
+            .collect();
+        let vim = setup + "\nfunction! plug#begin(...)\n  return 1\nendfunction\n";
+        let lines: Vec<&str> = vim.lines().collect();
+        let text = |class| -> Vec<&str> {
+            declaration_surface(&vim, class)
+                .iter()
+                .map(|n| lines[n - 1])
+                .collect()
+        };
+        assert!(
+            text(Class::LanguageSource).contains(&"function! plug#begin(...)"),
+            "{:?}",
+            text(Class::LanguageSource)
+        );
+        assert!(!text(Class::FlatText).contains(&"function! plug#begin(...)"));
     }
 
     #[test]
