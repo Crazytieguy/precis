@@ -15,7 +15,7 @@ use std::collections::BTreeMap;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
 
-use crate::batch::{Batch, BatchId, BatchKey};
+use crate::batch::{Batch, BatchId, BatchKey, CodeKey, Rung};
 use crate::content::BatchContent;
 use crate::fs_util::DirFilter;
 use crate::render::{Cost, RenderedTree, SourceCache};
@@ -73,32 +73,25 @@ pub struct Scheduler<W: Walker> {
     /// premium escalates depth into a file already entered rather than
     /// pulling it in front of the repository's orientation.
     dominant_file_entered: bool,
-    /// Memoized transitive predecessor root per batch (the head of its
-    /// gated train). Resolved at ranking time, when eligibility
-    /// guarantees the chain is fully materialized.
-    train_root_memo: HashMap<BatchId, BatchId>,
-    /// Non-zero-cost batches scheduled per train root — drives the
+    /// Non-zero-cost code batches scheduled per source file — drives the
     /// breadth-pressure ratio penalty.
-    scheduled_per_root: HashMap<BatchId, usize>,
+    code_batches_per_file: HashMap<PathBuf, usize>,
     /// Debug-only owner map for FS render cells — overlapping sibling
     /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
     fs_atom_owners: BTreeMap<(PathBuf, String), BatchKey>,
 }
 
-/// Breadth-pressure coefficient: past the free allowance, a candidate
-/// whose train root already has `n` scheduled non-zero-cost batches
-/// ranks at `1/(1 + K*(n - FREE))` of its raw ratio. NS authors
-/// schedule breadth-first — every file's surface before any file's
-/// depth — while cheap follow-up batches (bodies, docs, members)
-/// otherwise out-ratio unopened siblings' surfaces and drive long
-/// same-train dives. The penalty applies only to depth follow-ups
-/// ([`BatchKey::is_depth_follow_up`]), so orientation trains (README
-/// headline -> outline -> sections) stay unpenalized.
-const TRAIN_PRESSURE_K: f64 = 0.15;
-/// Scheduled batches a train may accumulate before pressure applies —
+/// Breadth-pressure coefficient: past the free allowance, a `Body`
+/// batch of a source file that already has `n` scheduled non-zero-cost
+/// code batches ranks at `1/(1 + K*(n - FREE))` of its raw ratio. NS
+/// authors schedule breadth-first — every file's surface before any
+/// file's depth — while cheap function bodies otherwise out-ratio
+/// unopened siblings' surfaces and drive long same-file dives.
+const BREADTH_PRESSURE_K: f64 = 0.15;
+/// Scheduled batches a file may accumulate before pressure applies —
 /// normal decl -> doc -> body depth is wanted; 20-batch dives are not.
-const TRAIN_PRESSURE_FREE: usize = 4;
+const BREADTH_PRESSURE_FREE: usize = 4;
 
 /// Ranking premium for content drawn from the tree's dominant source
 /// file ([`WalkCtx::dominant_source_file`]). When one file holds most of
@@ -163,8 +156,7 @@ impl<W: Walker> Scheduler<W> {
             batches_by_path: HashMap::new(),
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
-            train_root_memo: HashMap::new(),
-            scheduled_per_root: HashMap::new(),
+            code_batches_per_file: HashMap::new(),
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
         }
@@ -328,7 +320,7 @@ impl<W: Walker> Scheduler<W> {
                 let c = self.tree.marginal_cost(content);
                 self.cost_cache.insert(id, c);
             }
-            let pressure = self.train_pressure(id) * self.dominant_file_boost(id);
+            let pressure = self.breadth_pressure(id) * self.dominant_file_boost(id);
             let exact_cost = self.cost_cache[&id];
             let entry = &self.entries[id.index()];
             let ratio = score_ratio(
@@ -440,10 +432,14 @@ impl<W: Walker> Scheduler<W> {
 
         let entry_content = self.apply_and_record(id, cost);
         // Zero-cost batches (already line-covered by an ancestor) don't
-        // consume budget, so they don't count toward train pressure.
-        if cost.tokens > 0 {
-            let root = self.train_root(id);
-            *self.scheduled_per_root.entry(root).or_insert(0) += 1;
+        // consume budget, so they don't count toward breadth pressure.
+        if cost.tokens > 0
+            && let BatchKey::Code(key) = &self.entries[id.index()].key
+        {
+            *self
+                .code_batches_per_file
+                .entry(key.file.clone())
+                .or_default() += 1;
         }
 
         // Drop the scheduled batch's cached cost, plus every cached
@@ -484,25 +480,6 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// Transitive predecessor root of `id` — the head of its gated
-    /// train. Memoized; safe to resolve at ranking time because an
-    /// eligible batch's chain is fully materialized.
-    fn train_root(&mut self, id: BatchId) -> BatchId {
-        if let Some(&root) = self.train_root_memo.get(&id) {
-            return root;
-        }
-        let pred_id = self.entries[id.index()]
-            .predecessor
-            .as_ref()
-            .and_then(|pred_key| self.key_to_id.get(pred_key).copied());
-        let root = match pred_id {
-            Some(pred_id) => self.train_root(pred_id),
-            None => id,
-        };
-        self.train_root_memo.insert(id, root);
-        root
-    }
-
     /// Ratio premium for `id` when it draws only on the dominant source
     /// file.
     fn dominant_file_boost(&self, id: BatchId) -> f64 {
@@ -514,16 +491,19 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// Breadth-pressure multiplier for `id`'s ratio. Applies only to
-    /// depth follow-up batches (doc/body/member refinements) — surface
-    /// batches always rank at their raw ratio.
-    fn train_pressure(&mut self, id: BatchId) -> f64 {
-        if !self.entries[id.index()].key.is_depth_follow_up() {
+    /// function bodies — surfaces always rank at their raw ratio.
+    fn breadth_pressure(&self, id: BatchId) -> f64 {
+        let BatchKey::Code(CodeKey {
+            rung: Rung::Body,
+            file,
+            ..
+        }) = &self.entries[id.index()].key
+        else {
             return 1.0;
-        }
-        let root = self.train_root(id);
-        let n = self.scheduled_per_root.get(&root).copied().unwrap_or(0);
-        let over = n.saturating_sub(TRAIN_PRESSURE_FREE);
-        1.0 / (1.0 + TRAIN_PRESSURE_K * over as f64)
+        };
+        let scheduled = self.code_batches_per_file.get(file).copied().unwrap_or(0);
+        let over = scheduled.saturating_sub(BREADTH_PRESSURE_FREE);
+        1.0 / (1.0 + BREADTH_PRESSURE_K * over as f64)
     }
 
     fn ancestors_of(&self, id: BatchId) -> HashSet<BatchId> {

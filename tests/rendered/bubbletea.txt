@@ -139,7 +139,6 @@ tea.go
   267→}
   …
   279→func (v *View) SetContent(s string) {
-  280→	v.Content = s
   …
   283→// MouseMode represents the mouse mode of a view.
   284→type MouseMode int
@@ -282,6 +281,8 @@ tea.go
   1323→func (p *Program) releaseTerminal(reset bool) error {
   …
   1344→func (p *Program) RestoreTerminal() error {
+  …
+  1372→func (p *Program) Println(args ...any) {
   …
 tea_test.go
 termcap.go

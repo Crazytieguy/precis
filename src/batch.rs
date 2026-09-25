@@ -257,19 +257,6 @@ impl BatchKey {
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
-
-    /// True for depth follow-up batches — body refinements of an
-    /// already-delivered surface. Drives the scheduler's breadth-pressure
-    /// penalty; surfaces never qualify.
-    pub fn is_depth_follow_up(&self) -> bool {
-        matches!(
-            self,
-            BatchKey::Code(CodeKey {
-                rung: Rung::Body,
-                ..
-            })
-        )
-    }
 }
 
 /// A walker-emitted scheduling unit. Carries the walker's key (so other
