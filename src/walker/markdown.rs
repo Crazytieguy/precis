@@ -10,8 +10,8 @@
 //! - `Prelude` (READMEs) — the rest of the text above the first
 //!   heading, chrome excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
-//!   cover, when 2..=[`MAX_OUTLINE_HEADINGS`] rows fit
-//!   [`MAX_OUTLINE_HEADING_BYTES`]. Predecessor: the headline.
+//!   cover, when there are 2..=[`MAX_OUTLINE_HEADINGS`] of them.
+//!   Predecessor: the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s); an oversize section splits into a head
 //!   chunk plus chained `OversizeTail` chunks. Predecessor: the
@@ -41,9 +41,6 @@ use super::{
 /// suppresses itself — the outline predecesses every section, so an
 /// oversize outline would block the whole file.
 const MAX_OUTLINE_HEADINGS: usize = 30;
-
-/// Source-byte cap on the outline's heading content (~400 tokens).
-const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
 /// Token threshold above which an otherwise-unsplit section is
 /// emitted as a head chunk plus predecessor-chained tail chunks.
@@ -289,24 +286,6 @@ fn push_sections(
     }
 }
 
-/// True if the outline batch should be emitted — bounded by both row
-/// count and total source bytes.
-fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
-    if rows.len() < 2 || rows.len() > MAX_OUTLINE_HEADINGS {
-        return false;
-    }
-    let src_lines: Vec<&str> = source.lines().collect();
-    let bytes: usize = rows
-        .iter()
-        .flat_map(|(s, e)| {
-            (*s..=*e)
-                .filter_map(|r| src_lines.get(r - 1))
-                .map(|l| l.len())
-        })
-        .sum();
-    bytes <= MAX_OUTLINE_HEADING_BYTES
-}
-
 // --- value ---
 
 fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
@@ -470,7 +449,7 @@ fn derive_outline_gates(file: &Path, tree: &Tree, source: &str) -> OutlineGates 
         .then(|| headline_spec(tree, source))
         .flatten();
     let rows = collectable_outline_rows(tree, source, headline.as_ref());
-    let emits = outline_emits_for(&rows, source);
+    let emits = (2..=MAX_OUTLINE_HEADINGS).contains(&rows.len());
     OutlineGates {
         headline,
         rows,
@@ -2485,25 +2464,6 @@ mod tests {
         assert!(
             rows.is_empty(),
             "outline must not include H4+; got {rows:?}"
-        );
-    }
-
-    /// Long heading lines can exceed the byte cap even when the row
-    /// count is safe. The codex adversarial review of v0.2's outline
-    /// flagged this exact failure mode (5 100-char H2s would otherwise
-    /// pass the count cap but produce a ~500-token outline that becomes
-    /// a hard predecessor for every section).
-    #[test]
-    fn markdown_outline_byte_cap_catches_long_headings() {
-        let long = "x".repeat(400);
-        let src = format!(
-            "# Title\n\nIntro.\n\n## {long}\n\nbody.\n\n## {long}\n\nbody.\n\n## {long}\n\nbody.\n\n## {long}\n\nbody.\n",
-        );
-        let rows = outline_rows("README.md", &src);
-        assert!(rows.len() <= MAX_OUTLINE_HEADINGS);
-        assert!(
-            !outline_emits_for(&rows, &src),
-            "byte cap must reject long-heading outlines"
         );
     }
 
