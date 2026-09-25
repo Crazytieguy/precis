@@ -41,11 +41,6 @@ use super::{
     path_depth_factor, single_file_lines_content,
 };
 
-/// In a primary-name collision, manifests that definitely are not a
-/// primary candidate stay behind the equally damped candidates. This is
-/// not promotion: every candidate retains the normal member damp.
-const AMBIGUOUS_SECONDARY_IDENTITY_FACTOR: f64 = WORKSPACE_MEMBER_IDENTITY_FACTOR * 0.7;
-
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
 
@@ -732,14 +727,7 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let m = if let Some(factor) = pyproject_identity_factor(file, ctx) {
         factor
     } else if ctx.is_workspace_member(file) {
-        if ctx
-            .cargo_workspace()
-            .is_definite_secondary_member(file, ctx.root())
-        {
-            AMBIGUOUS_SECONDARY_IDENTITY_FACTOR
-        } else {
-            WORKSPACE_MEMBER_IDENTITY_FACTOR
-        }
+        WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
@@ -1044,65 +1032,13 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     candidates
 }
 
-/// What the workspace members' own manifests say about which one is
-/// primary, gathered in a single read pass over them.
-pub(super) struct MemberFacts {
-    /// Members whose `[package].name` matches the repository basename
-    /// case-insensitively.
-    basename_matches: HashSet<PathBuf>,
-    /// `false` when a member manifest could not be read or declares no
-    /// package: the skipped member's name could have changed the answer, so
-    /// [`Self::ambiguous_primary`] refuses to answer on partial facts.
-    complete: bool,
-}
-
-impl MemberFacts {
-    /// The colliding candidates when more than one member's package name
-    /// matches the repository basename. Callers use this explicit ambiguity
-    /// state to fail closed instead of letting an exact-case basename
-    /// shortcut select one candidate or a definite secondary win a cost tie.
-    pub(super) fn ambiguous_primary(&self) -> Option<&HashSet<PathBuf>> {
-        (self.complete && self.basename_matches.len() > 1).then_some(&self.basename_matches)
-    }
-}
-
 /// The `path = "..."` of a dependency-style entry, if it has one.
 fn dep_path(spec: &toml::Value) -> Option<&str> {
     spec.as_table()?.get("path")?.as_str()
 }
 
-fn package_name(manifest: &toml::Value) -> Option<&str> {
-    manifest.get("package")?.as_table()?.get("name")?.as_str()
-}
-
 fn parse_manifest(path: &Path) -> Option<toml::Value> {
     toml::from_str(&std::fs::read_to_string(path).ok()?).ok()
-}
-
-/// Read every workspace member's manifest once.
-pub(super) fn read_member_facts(root: &Path, members: &HashSet<PathBuf>) -> MemberFacts {
-    let target = root.file_name().and_then(|n| n.to_str());
-    let mut basename_matches = HashSet::new();
-    let mut complete = true;
-
-    for manifest in members {
-        let Some(value) = parse_manifest(manifest) else {
-            complete = false;
-            continue;
-        };
-        let Some(name) = package_name(&value) else {
-            complete = false;
-            continue;
-        };
-        if target.is_some_and(|target| name.eq_ignore_ascii_case(target)) {
-            basename_matches.insert(manifest.clone());
-        }
-    }
-
-    MemberFacts {
-        basename_matches,
-        complete,
-    }
 }
 
 #[cfg(test)]
@@ -1149,68 +1085,6 @@ mod tests {
         }
         let members = collect_workspace_members(dir.path());
         (dir, members)
-    }
-
-    fn case_collision_workspace() -> (tempfile::TempDir, PathBuf, Vec<PathBuf>) {
-        let outer = tempfile::tempdir().unwrap();
-        let root = outer.path().join("acme");
-        fs::create_dir(&root).unwrap();
-        fs::write(
-            root.join("Cargo.toml"),
-            "[workspace]\nmembers=['crates/acme','crates/upper','crates/mixed','crates/other']\n",
-        )
-        .unwrap();
-        let packages = [
-            ("crates/acme", "acme"),
-            ("crates/upper", "ACME"),
-            ("crates/mixed", "Acme"),
-            ("crates/other", "other"),
-        ];
-        let manifests = packages
-            .iter()
-            .map(|(rel, name)| {
-                let dir = root.join(rel);
-                fs::create_dir_all(dir.join("src")).unwrap();
-                let manifest = dir.join("Cargo.toml");
-                fs::write(
-                    &manifest,
-                    format!("[package]\nname='{name}'\nversion='0.1.0'\n"),
-                )
-                .unwrap();
-                fs::write(dir.join("src/lib.rs"), "").unwrap();
-                manifest.canonicalize().unwrap()
-            })
-            .collect();
-        (outer, root, manifests)
-    }
-
-    #[test]
-    fn walker_toml_primary_member_case_collision_fails_closed_without_inversion() {
-        let (_outer, root, manifests) = case_collision_workspace();
-        let members = collect_workspace_members(&root);
-        let member_facts = read_member_facts(&root, &members);
-        let ambiguous = member_facts.ambiguous_primary().unwrap();
-
-        assert_eq!(ambiguous.len(), 3);
-        assert!(manifests[..3].iter().all(|path| ambiguous.contains(path)));
-        assert!(!ambiguous.contains(&manifests[3]));
-
-        let ctx = WalkCtx::new(root.clone());
-        let candidate_values: Vec<f64> = manifests[..3]
-            .iter()
-            .map(|manifest| identity_value(manifest, &ctx))
-            .collect();
-        assert!(candidate_values.windows(2).all(|pair| pair[0] == pair[1]));
-        assert!(identity_value(&manifests[3], &ctx) < candidate_values[0]);
-
-        let output = crate::render(&root, 200, None).unwrap();
-        assert!(
-            ["acme", "ACME", "Acme"]
-                .iter()
-                .any(|name| output.contains(&format!("name='{name}'"))),
-            "a colliding candidate must win before a definite secondary:\n{output}"
-        );
-        assert!(!output.contains("name='other'"), "output:\n{output}");
     }
 
     #[test]

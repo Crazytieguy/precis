@@ -293,10 +293,6 @@ impl WalkCtx {
         Some((source, arc))
     }
 
-    pub(in crate::walker) fn cargo_workspace(&self) -> &workspace::CargoWorkspace {
-        &self.cargo_workspace
-    }
-
     pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
         &self.fs_state
     }

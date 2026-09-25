@@ -48,12 +48,10 @@ impl WorkspaceMembership {
     }
 }
 
-/// Per-run Cargo workspace state: the member manifests and the facts
-/// primary-member election reads from them.
+/// Per-run Cargo workspace state: the member manifests.
 #[derive(Default)]
 pub(super) struct CargoWorkspace {
     membership: WorkspaceMembership,
-    member_facts: OnceCell<super::toml::MemberFacts>,
 }
 
 impl CargoWorkspace {
@@ -61,22 +59,6 @@ impl CargoWorkspace {
     pub(super) fn is_member(&self, file: &Path, root: &Path) -> bool {
         self.membership
             .is_member(file, || super::toml::collect_workspace_members(root))
-    }
-
-    /// `true` when the workspace's primary member is ambiguous and `file` is
-    /// not one of the colliding candidates — the only case where a member can
-    /// be called definitely-secondary without knowing which one is primary.
-    pub(super) fn is_definite_secondary_member(&self, file: &Path, root: &Path) -> bool {
-        let members = self
-            .membership
-            .members(|| super::toml::collect_workspace_members(root));
-        let facts = self
-            .member_facts
-            .get_or_init(|| super::toml::read_member_facts(root, members));
-        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
-        facts
-            .ambiguous_primary()
-            .is_some_and(|members| !members.contains(&key))
     }
 }
 
