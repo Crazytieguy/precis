@@ -103,7 +103,12 @@ monaco-lsp-client/
       230→	value: StructureLiteral;
       231→}
       233→interface StructureLiteral {
-      …
+      234→	properties: Property[];
+      235→	documentation?: string;
+      236→	since?: string;
+      237→	proposed?: boolean;
+      238→	deprecated?: string;
+      239→}
       241→interface StringLiteralType {
       242→	kind: 'stringLiteral';
       243→	value: string;
@@ -307,10 +312,7 @@ src/
       monaco.contribution.ts
     editor/
       editor.main.ts
-        1→export * from '../../index';
       editor.worker.ts
-        …
-        26→export { initialize };
     language/
       css/
         css.worker.ts
@@ -541,8 +543,6 @@ webpack-plugin/
   src/
     index.ts
     loader-utils.d.ts
-      1→declare module 'loader-utils' {
-      …
     loaders/
       include.ts
     plugins/

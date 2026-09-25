@@ -238,6 +238,46 @@ src/
       79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
       …
     refinements.ts
+      …
+      8→export function empty<
+      9→  T extends string | any[] | Map<any, any> | Set<any>,
+      10→  S extends any,
+      11→>(struct: Struct<T, S>): Struct<T, S> {
+      …
+      33→export function max<T extends number | Date, S extends any>(
+      34→  struct: Struct<T, S>,
+      35→  threshold: T,
+      36→  options: {
+      37→    exclusive?: boolean
+      38→  } = {}
+      39→): Struct<T, S> {
+      …
+      55→export function min<T extends number | Date, S extends any>(
+      56→  struct: Struct<T, S>,
+      57→  threshold: T,
+      58→  options: {
+      59→    exclusive?: boolean
+      60→  } = {}
+      61→): Struct<T, S> {
+      …
+      77→export function nonempty<
+      78→  T extends string | any[] | Map<any, any> | Set<any>,
+      79→  S extends any,
+      80→>(struct: Struct<T, S>): Struct<T, S> {
+      …
+      93→export function pattern<T extends string, S extends any>(
+      94→  struct: Struct<T, S>,
+      95→  regexp: RegExp
+      96→): Struct<T, S> {
+      …
+      109→export function size<
+      …
+      146→export function refine<T, S>(
+      147→  struct: Struct<T, S>,
+      148→  name: string,
+      149→  refiner: Refiner<T>
+      150→): Struct<T, S> {
+      …
     types.ts
       …
       19→export function any(): Struct<any, null> {
@@ -253,68 +293,23 @@ src/
       83→export function date(): Struct<Date, null> {
       …
       99→export function enums<U extends number, T extends readonly U[]>(
-      …
+      100→  values: T
+      101→): Struct<T[number], { [K in T[number]]: K }>
       102→export function enums<U extends string, T extends readonly U[]>(
-      …
+      103→  values: T
+      104→): Struct<T[number], { [K in T[number]]: K }>
       105→export function enums<U extends string | number, T extends readonly U[]>(
+      106→  values: T
+      107→): any {
       …
       131→export function func(): Struct<Function, null> {
       …
       144→export function instance<T extends { new (...args: any): any }>(
+      145→  Class: T
+      146→): Struct<InstanceType<T>, null> {
       …
     utilities.ts
   utils.ts
-    …
-    16→export function isObject(x: unknown): x is object {
-    …
-    24→export function isNonArrayObject(x: unknown): x is object {
-    …
-    32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
-    …
-    45→export function print(value: any): string {
-    …
-    58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
-    …
-    67→export function toFailure<T, S>(
-    68→  result: string | boolean | Partial<Failure>,
-    69→  context: Context,
-    70→  struct: Struct<T, S>,
-    71→  value: any
-    72→): Failure | undefined {
-    …
-    106→export function* toFailures<T, S>(
-    107→  result: Result,
-    108→  context: Context,
-    109→  struct: Struct<T, S>,
-    110→  value: any
-    111→): IterableIterator<Failure> {
-    …
-    130→export function* run<T, S>(
-    131→  value: unknown,
-    132→  struct: Struct<T, S>,
-    133→  options: {
-    134→    path?: any[]
-    135→    branch?: any[]
-    136→    coerce?: boolean
-    137→    mask?: boolean
-    138→    message?: string
-    139→  } = {}
-    140→): IterableIterator<[Failure, undefined] | [undefined, T]> {
-    …
-    202→export type UnionToIntersection<U> = (
-    203→  U extends any ? (arg: U) => any : never
-    204→) extends (arg: infer I) => void
-    205→  ? I
-    206→  : never
-    …
-    212→export type Assign<T, U> = Simplify<U & Omit<T, keyof U>>
-    …
-    218→export type EnumSchema<T extends string | number | undefined | null> = {
-    219→  [K in NonNullable<T>]: K
-    220→}
-    …
-    227→export type IsMatch<T, G> = T extends G ? (G extends T ? T : never) : never
-    …
 test/
   api/
     assert.test.ts

@@ -8,21 +8,21 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 111 | 5 | listing of 'bin' |  |  | 0.000 |
 | walker |  | 123 | 12 | ts names index.js |  |  | 0.000 |
 | walker |  | 140 | 17 | listing of 'classes' |  |  | 0.000 |
-| walker |  | 154 | 14 | ts names preload.js |  |  | 0.000 |
-| walker |  | 180 | 26 | README headline in README.md |  |  | 0.219 |
+| walker |  | 166 | 26 | README headline in README.md |  |  | 0.219 |
 | ns | 182 |  | 103 | Complete root directory listing | 1.2 |  | 0.661 |
-| walker |  | 207 | 27 | listing of 'internal' |  |  | 0.687 |
-| walker |  | 228 | 21 | ts names map.js |  |  | 0.687 |
-| walker |  | 289 | 61 | package identity in package.json |  |  | 0.945 |
+| walker |  | 193 | 27 | listing of 'internal' |  |  | 0.687 |
+| walker |  | 254 | 61 | package identity in package.json |  |  | 0.945 |
 | ns | 307 |  | 125 | package.json `bin` + `files`: CLI entry point and published surface | 1.3 |  | 0.756 |
-| walker |  | 345 | 56 | listing of 'ranges' |  |  | 0.768 |
+| walker |  | 310 | 56 | listing of 'ranges' |  |  | 0.768 |
 | ns | 356 |  | 49 | Complete listings of classes/, internal/ and bin/ | 1.4 |  | 0.786 |
-| walker |  | 450 | 105 | listing of 'functions' |  |  | 0.820 |
+| walker |  | 415 | 105 | listing of 'functions' |  |  | 0.820 |
+| walker |  | 445 | 30 | package runtime metadata in package.json |  |  | 0.820 |
+| walker |  | 459 | 14 | ts names preload.js |  |  | 0.820 |
 | ns | 461 |  | 105 | Complete listing of functions/ (24 version-level modules) | 1.5 |  | 0.834 |
-| walker |  | 480 | 30 | package runtime metadata in package.json |  |  | 0.834 |
-| walker |  | 508 | 28 | listing of '.github' |  |  | 0.834 |
+| walker |  | 487 | 28 | listing of '.github' |  |  | 0.834 |
 | ns | 517 |  | 56 | Complete listing of ranges/ (11 range-level modules) | 1.6 |  | 0.835 |
-| walker |  | 549 | 41 | listing of '.github/workflows' |  |  | 0.836 |
+| walker |  | 528 | 41 | listing of '.github/workflows' |  |  | 0.836 |
+| walker |  | 549 | 21 | ts names map.js |  |  | 0.836 |
 | walker |  | 582 | 33 | listing of 'test' |  |  | 0.837 |
 | walker |  | 620 | 38 | listing of 'benchmarks' |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |

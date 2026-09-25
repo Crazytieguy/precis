@@ -1,4 +1,18 @@
 .github/
+  CODEOWNERS
+  FUNDING.yml
+  ISSUE_TEMPLATE.md
+  PULL_REQUEST_TEMPLATE.md
+  copilot-instructions.md
+  dependabot.yml
+  workflows/
+    lockfile-lint.yml
+    moderator.yml
+    publish.yml
+    release-branch.yml
+    run-ci.yml
+    verify-build-reproducibility.yml
+    zizmor.yml
 .gitignore
 .husky/
   commit-msg
@@ -20,36 +34,135 @@ README.md
 SECURITY.md
 THREATMODEL.md
 docs/
+  .vitepress/
+  data/
+  es/
+    index.md
+    pages/
+      advanced/
+      getting-started/
+        examples/
+        features.md
+        first-steps.md
+        upgrade-guide.md
+      misc/
+        security.md
+        semver.md
+        sponsors.md
+  favicon.ico
+  fr/
+    index.md
+    pages/
+      advanced/
+      getting-started/
+        examples/
+        features.md
+        first-steps.md
+        upgrade-guide.md
+      misc/
+        security.md
+        semver.md
+        sponsors.md
+  index.md
+  package-lock.json
+  package.json
+  pages/
+    advanced/
+    getting-started/
+      examples/
+      features.md
+      first-steps.md
+      upgrade-guide.md
+    misc/
+      security.md
+      semver.md
+      sponsors.md
+  patches/
+  public/
+  scripts/
+  site.webmanifest
+  zh/
+    index.md
+    pages/
+      advanced/
+      getting-started/
+        examples/
+        features.md
+        first-steps.md
+        upgrade-guide.md
+      misc/
+        security.md
+        semver.md
+        sponsors.md
 eslint.config.js
 examples/
+  README.md
+  abort-controller/
+  all/
+  amd/
+  get/
+  improved-network-errors.md
+  network_enhanced.js
+  post/
+  postMultipartFormData/
+  server.js
+  transform-response/
+  upload/
 gulpfile.js
-  …
-  12→const clear = gulp.task('clear', async function () {
-  13→  await fs.emptyDir('./dist/');
-  14→});
-  …
-  36→const packageJSON = gulp.task('package', async function () {
-  …
-  60→const env = gulp.task('env', async function () {
-  61→  var npm = JSON.parse(await fs.readFile('package.json'));
-  62→
-  63→  const envFilePath = './lib/env/data.js';
-  64→
-  65→  await fs.writeFile(
-  66→    envFilePath,
-  67→    Object.entries({
-  68→      VERSION: (argv.bump || npm.version).replace(/^v/, ''),
-  69→    })
-  70→      .map(([key, value]) => {
-  71→        return `export const ${key} = ${JSON.stringify(value)};`;
-  72→      })
-  73→      .join('\n')
-  74→  );
-  75→});
-  77→const version = gulp.series('env', 'package');
-  78→
-  79→export { env, clear, version, packageJSON };
 index.d.cts
+  1→type MethodsHeaders = Partial<
+  2→  {
+  3→    [Key in axios.Method as Lowercase<Key>]: AxiosHeaders;
+  4→  } & { common: AxiosHeaders }
+  5→>;
+  7→type AxiosHeaderMatcher =
+  8→  | string
+  9→  | RegExp
+  10→  | ((this: AxiosHeaders, value: string, name: string) => boolean);
+  12→type AxiosHeaderParser = (this: AxiosHeaders, value: axios.AxiosHeaderValue, header: string) => any;
+  13→
+  14→type CommonRequestHeadersList =
+  15→  | 'Accept'
+  16→  | 'Content-Length'
+  17→  | 'User-Agent'
+  18→  | 'Content-Encoding'
+  19→  | 'Authorization'
+  20→  | 'Location';
+  22→type ContentType =
+  23→  | axios.AxiosHeaderValue
+  24→  | 'text/html'
+  25→  | 'text/plain'
+  26→  | 'multipart/form-data'
+  27→  | 'application/json'
+  28→  | 'application/x-www-form-urlencoded'
+  29→  | 'application/octet-stream';
+  31→type CommonResponseHeadersList =
+  32→  | 'Server'
+  33→  | 'Content-Type'
+  34→  | 'Content-Length'
+  35→  | 'Cache-Control'
+  36→  | 'Content-Encoding';
+  38→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
+  39→
+  40→type BrowserProgressEvent = any;
+  41→
+  42→declare class AxiosHeaders {
+  …
+  123→declare class AxiosError<T = unknown, D = any> extends Error {
+  …
+  165→declare class CanceledError<T> extends AxiosError<T> {}
+  166→
+  167→declare class Axios {
+  …
+  231→declare enum HttpStatusCode {
+  …
+  297→type InternalAxiosError<T = unknown, D = any> = AxiosError<T, D>;
+  298→
+  299→declare namespace axios {
+  …
+  713→declare const axios: axios.AxiosStatic;
+  714→
+  715→export = axios;
 index.d.ts
   …
   2→type StringLiteralsOrString<Literals extends string> = Literals | (string & {});
@@ -113,7 +226,24 @@ index.d.ts
 index.js
   …
   6→const {
-  …
+  7→  Axios,
+  8→  AxiosError,
+  9→  CanceledError,
+  10→  isCancel,
+  11→  CancelToken,
+  12→  VERSION,
+  13→  all,
+  14→  Cancel,
+  15→  isAxiosError,
+  16→  spread,
+  17→  toFormData,
+  18→  AxiosHeaders,
+  19→  HttpStatusCode,
+  20→  formToJSON,
+  21→  getAdapter,
+  22→  mergeConfig,
+  23→  create,
+  24→} = axios;
   26→export {
   27→  axios as default,
   28→  create,
@@ -144,81 +274,32 @@ lib/
     adapters.js
     fetch.js
     http.js
-      …
-      517→export default isHttpAdapterSupported &&
-      …
-      1312→export const __setProxy = setProxy;
     xhr.js
-      …
-      15→export default isXHRAdapterSupported &&
-      …
   axios.js
   cancel/
     CancelToken.js
-      …
-      12→class CancelToken {
-      …
-      135→export default CancelToken;
     CanceledError.js
-      …
-      5→class CanceledError extends AxiosError {
-      …
-      15→  constructor(message, config, request) {
-      …
-      20→}
-      22→export default CanceledError;
     isCancel.js
-      …
-      3→export default function isCancel(value) {
-      …
   core/
     Axios.js
-      …
-      22→class Axios {
-      …
-      281→export default Axios;
     AxiosError.js
-      …
-      75→class AxiosError extends Error {
-      …
-      176→export default AxiosError;
     AxiosHeaders.js
-      …
-      80→class AxiosHeaders {
-      …
-      348→export default AxiosHeaders;
     InterceptorManager.js
-      …
-      5→class InterceptorManager {
-      …
-      72→export default InterceptorManager;
     README.md
+      1→# axios // core
+      2→
+      3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
+      5→- Dispatching requests
+      6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
+      7→- Managing interceptors
+      8→- Handling config
     buildFullPath.js
-      …
-      16→export default function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
-      …
     dispatchRequest.js
-      …
-      34→export default function dispatchRequest(config) {
-      …
     mergeConfig.js
-      …
-      17→export default function mergeConfig(config1, config2) {
-      …
     settle.js
-      …
-      14→export default function settle(resolve, reject, response) {
-      …
     transformData.js
-      …
-      15→export default function transformData(fns, response) {
-      …
   defaults/
     index.js
-      …
-      38→const defaults = {
-      …
-      177→export default defaults;
     transitional.js
       …
       3→export default {
@@ -231,143 +312,47 @@ lib/
     classes/
       FormData.js
     data.js
-      1→export const VERSION = "1.16.1";
   helpers/
     AxiosTransformStream.js
-      …
-      8→class AxiosTransformStream extends stream.Transform {
-      …
-      156→export default AxiosTransformStream;
     AxiosURLSearchParams.js
-      …
-      35→function AxiosURLSearchParams(params, options) {
-      …
-      61→export default AxiosURLSearchParams;
     HttpStatusCode.js
-      1→const HttpStatusCode = {
-      …
-      77→export default HttpStatusCode;
     README.md
+      1→# axios // helpers
+      2→
+      3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
+      5→- Browser polyfills
+      6→- Managing cookies
+      7→- Parsing HTTP headers
     ZlibHeaderTransformStream.js
-      …
-      5→class ZlibHeaderTransformStream extends stream.Transform {
-      6→  __transform(chunk, encoding, callback) {
-      …
-      11→  _transform(chunk, encoding, callback) {
-      …
-      27→}
-      29→export default ZlibHeaderTransformStream;
     bind.js
-      …
-      10→export default function bind(fn, thisArg) {
-      …
     buildURL.js
-      …
-      14→export function encode(val) {
-      …
-      31→export default function buildURL(url, params, options) {
-      …
     callbackify.js
-      …
-      3→const callbackify = (fn, reducer) => {
-      …
-      18→export default callbackify;
     combineURLs.js
-      …
-      11→export default function combineURLs(baseURL, relativeURL) {
-      …
     composeSignals.js
-      …
-      5→const composeSignals = (signals, timeout) => {
-      …
-      57→export default composeSignals;
     cookies.js
-      …
-      4→export default platform.hasStandardBrowserEnv
-      …
     deprecatedMethod.js
-      …
-      15→export default function deprecatedMethod(method, instead, docs) {
-      …
     estimateDataURLDecodedBytes.js
-      …
-      10→export default function estimateDataURLDecodedBytes(url) {
-      …
     formDataToJSON.js
-      …
-      49→function formDataToJSON(formData) {
-      …
-      97→export default formDataToJSON;
     formDataToStream.js
-      …
-      68→const formDataToStream = (form, headersHandler, options) => {
-      …
-      119→export default formDataToStream;
     fromDataURI.js
-      …
-      21→export default function fromDataURI(uri, asBlob, options) {
-      …
     isAbsoluteURL.js
-      …
-      10→export default function isAbsoluteURL(url) {
-      …
     isAxiosError.js
-      …
-      12→export default function isAxiosError(payload) {
-      …
     isURLSameOrigin.js
-      …
-      3→export default platform.hasStandardBrowserEnv
-      …
     null.js
       …
       2→export default null;
     parseHeaders.js
-      …
-      41→export default (rawHeaders) => {
-      …
     parseProtocol.js
-      …
-      3→export default function parseProtocol(url) {
-      …
     progressEventReducer.js
     readBlob.js
-      …
-      3→const readBlob = async function* (blob) {
-      …
-      15→export default readBlob;
     resolveConfig.js
-      …
-      38→export default (config) => {
-      …
     sanitizeHeaderValue.js
     shouldBypassProxy.js
-      …
-      127→export default function shouldBypassProxy(location) {
-      …
     speedometer.js
-      …
-      9→function speedometer(samplesCount, min) {
-      …
-      55→export default speedometer;
     spread.js
-      …
-      24→export default function spread(callback) {
-      …
     throttle.js
-      …
-      7→function throttle(fn, freq) {
-      …
-      44→export default throttle;
     toFormData.js
-      …
-      89→function toFormData(obj, formData, options) {
-      …
-      249→export default toFormData;
     toURLEncodedForm.js
-      …
-      7→export default function toURLEncodedForm(data, options) {
-      …
     trackStream.js
     validator.js
   platform/
@@ -377,25 +362,13 @@ lib/
         FormData.js
         URLSearchParams.js
       index.js
-        …
-        5→export default {
-        …
     common/
       utils.js
     index.js
-      …
-      4→export default {
-      5→  ...utils,
-      6→  ...platform,
-      7→};
     node/
       classes/
         FormData.js
-          …
-          3→export default FormData;
         URLSearchParams.js
-          …
-          4→export default url.URLSearchParams;
       index.js
   utils.js
 package-lock.json
@@ -428,9 +401,33 @@ tests/
   browser/
   module/
     cjs/
+      package-lock.json
+      package.json
+      tests/
     esm/
+      package-lock.json
+      package.json
+      tests/
+      vitest.config.js
   setup/
   smoke/
+    bun/
+      bun.lock
+      package.json
+      tests/
+    cjs/
+      package-lock.json
+      package.json
+      tests/
+    deno/
+      deno.json
+      deno.lock
+      tests/
+    esm/
+      package-lock.json
+      package.json
+      tests/
+      vitest.config.js
   unit/
 tsconfig.json
 tslint.json

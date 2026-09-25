@@ -155,6 +155,8 @@ pub(super) fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
         CONFIG_FILE_WEIGHT
     } else if is_javascript(path) && !is_in_source_tree(path, ctx.root()) {
         SECONDARY_JAVASCRIPT_WEIGHT
+    } else if !ctx.code.typescript.is_public_surface(path, ctx) {
+        OFF_SURFACE_WEIGHT
     } else {
         1.0
     }
@@ -162,6 +164,7 @@ pub(super) fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
 
 const CONFIG_FILE_WEIGHT: f64 = 0.001;
 const SECONDARY_JAVASCRIPT_WEIGHT: f64 = 0.05;
+const OFF_SURFACE_WEIGHT: f64 = 0.5;
 
 fn is_config_file(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
@@ -197,9 +200,33 @@ fn is_in_source_tree(path: &Path, root: &Path) -> bool {
 pub(crate) struct RunState {
     /// Nearest enclosing package directory of each directory asked about.
     package_dirs: RefCell<HashMap<PathBuf, PathBuf>>,
+    /// Per package directory, the files its entry files expose.
+    surfaces: RefCell<HashMap<PathBuf, HashSet<PathBuf>>>,
 }
 
 impl RunState {
+    /// True when `path` is an entry file of its package, is reached from
+    /// one through relative `export … from` or `require('./…')`
+    /// specifiers (a `.d.ts` counts as its runtime twin), or its package
+    /// has no entry file.
+    fn is_public_surface(&self, path: &Path, ctx: &WalkCtx) -> bool {
+        let Some(dir) = path.parent() else {
+            return true;
+        };
+        let package_dir = self.package_dir(dir, ctx.root());
+        if !self.surfaces.borrow().contains_key(&package_dir) {
+            let surface = package_surface(&package_dir, ctx);
+            self.surfaces
+                .borrow_mut()
+                .insert(package_dir.clone(), surface);
+        }
+        let surfaces = self.surfaces.borrow();
+        let surface = &surfaces[&package_dir];
+        surface.is_empty()
+            || surface.contains(path)
+            || declaration_twins(path).any(|twin| surface.contains(&twin))
+    }
+
     /// The nearest directory at or above `dir` holding a `package.json`,
     /// stopping at `root`; `root` when there is none.
     fn package_dir(&self, dir: &Path, root: &Path) -> PathBuf {
@@ -221,6 +248,114 @@ impl RunState {
             .insert(dir.to_path_buf(), package_dir.clone());
         package_dir
     }
+}
+
+/// `x.js`, `x.ts`, … for a declaration file `x.d.ts`.
+fn declaration_twins(path: &Path) -> impl Iterator<Item = PathBuf> {
+    let stem = is_declaration_file(path).then(|| path.with_extension("").with_extension(""));
+    EXTENSIONS
+        .iter()
+        .filter_map(move |extension| Some(stem.as_ref()?.with_extension(extension)))
+}
+
+fn package_surface(package_dir: &Path, ctx: &WalkCtx) -> HashSet<PathBuf> {
+    let child_dirs = std::fs::read_dir(package_dir)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .map(|entry| entry.path())
+        .filter(|path| path.is_dir() && !ctx.dir_filter().excludes(path, true));
+    let mut pending: Vec<PathBuf> = std::iter::once(package_dir.to_path_buf())
+        .chain(child_dirs)
+        .flat_map(|dir| std::fs::read_dir(dir).into_iter().flatten().flatten())
+        .map(|entry| entry.path())
+        .filter(|path| path.is_file() && is_entrypoint(path, ctx))
+        .collect();
+    let mut surface = HashSet::new();
+    while let Some(file) = pending.pop() {
+        if !surface.insert(file.clone()) {
+            continue;
+        }
+        let Some((source, tree)) = ctx.parse_tree(&file, &grammar(&file)) else {
+            continue;
+        };
+        let root = tree.root_node();
+        let mut cursor = root.walk();
+        for statement in root.children(&mut cursor) {
+            for specifier in module_specifiers(statement, &source) {
+                pending.extend(resolve_relative_module(&file, specifier));
+            }
+        }
+    }
+    surface
+}
+
+/// `x` of `export … from 'x'`, and of every `require('x')` inside a
+/// statement.
+fn module_specifiers<'source>(statement: Node, source: &'source str) -> Vec<&'source str> {
+    let unquote = |node: Node| source[node.byte_range()].trim_matches(['\'', '"', '`']);
+    let mut specifiers: Vec<&str> = statement
+        .child_by_field_name("source")
+        .filter(|_| statement.kind() == "export_statement")
+        .map(unquote)
+        .into_iter()
+        .collect();
+    let mut stack = vec![statement];
+    while let Some(node) = stack.pop() {
+        if node.kind() == "call_expression"
+            && node
+                .child_by_field_name("function")
+                .is_some_and(|callee| &source[callee.byte_range()] == "require")
+            && let Some(argument) = node
+                .child_by_field_name("arguments")
+                .and_then(|arguments| arguments.named_child(0))
+                .filter(|argument| argument.kind() == "string")
+        {
+            specifiers.push(unquote(argument));
+        }
+        let mut cursor = node.walk();
+        stack.extend(node.named_children(&mut cursor));
+    }
+    specifiers
+}
+
+/// The TS/JS file a relative specifier names: the path itself, with its
+/// extension swapped for or set to a TS/JS one, or as a directory's
+/// `index`.
+fn resolve_relative_module(from: &Path, specifier: &str) -> Option<PathBuf> {
+    if !specifier.starts_with('.') {
+        return None;
+    }
+    let mut base = from.parent()?.to_path_buf();
+    for component in Path::new(specifier).components() {
+        match component {
+            std::path::Component::ParentDir => {
+                base.pop();
+            }
+            std::path::Component::Normal(part) => base.push(part),
+            _ => {}
+        }
+    }
+    let stem = base.with_extension("");
+    let candidates = std::iter::once(base.clone())
+        .chain(
+            EXTENSIONS
+                .iter()
+                .map(|extension| stem.with_extension(extension)),
+        )
+        .chain(
+            EXTENSIONS
+                .iter()
+                .map(|extension| base.join("index").with_extension(extension)),
+        );
+    candidates.into_iter().find(|candidate| {
+        candidate.is_file()
+            && EXTENSIONS.iter().any(|extension| {
+                candidate
+                    .extension()
+                    .is_some_and(|own| own.eq_ignore_ascii_case(extension))
+            })
+    })
 }
 
 fn is_declaration_file(path: &Path) -> bool {
@@ -1644,5 +1779,44 @@ export const c = 3;
         ] {
             assert_eq!(weight(config), CONFIG_FILE_WEIGHT, "{config}");
         }
+    }
+
+    #[test]
+    fn code_typescript_files_off_the_entry_files_reach_weigh_half() {
+        let files = [
+            ("package.json", "{}"),
+            (
+                "src/index.ts",
+                "export * from './api.js';\nexport {x} from './lib';\n",
+            ),
+            (
+                "src/api.ts",
+                "export const api = require('../helpers/util');\n",
+            ),
+            ("src/api.d.ts", ""),
+            ("src/lib/index.ts", ""),
+            ("helpers/util.js", ""),
+            ("src/internal.ts", ""),
+            ("packages/solo/package.json", "{}"),
+            ("packages/solo/deep/x.ts", ""),
+        ];
+        let dir = tempfile::tempdir().unwrap();
+        for (relative, content) in files {
+            let path = dir.path().join(relative);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, content).unwrap();
+        }
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let off_surface: Vec<&str> = files
+            .iter()
+            .map(|(relative, _)| *relative)
+            .filter(|relative| relative.ends_with("ts") || relative.ends_with("js"))
+            .filter(|relative| {
+                !ctx.code
+                    .typescript
+                    .is_public_surface(&dir.path().join(relative), &ctx)
+            })
+            .collect();
+        assert_eq!(off_surface, ["src/internal.ts"]);
     }
 }

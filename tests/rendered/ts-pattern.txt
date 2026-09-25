@@ -38,6 +38,13 @@ README.md
   45→
   46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
   …
+  51→- **Typesafe**, with helpful [type inference](#type-inference).
+  52→- **Exhaustiveness checking** support, enforcing that you are matching every possible case with [`.exhaustive()`](#exhaustive).
+  53→- Use [patterns](#patterns) to **validate** the shape of your data with [`isMatching`](#ismatching).
+  …
+  56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
+  57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
+  …
 benchmarks/
   always-last-digit.ts
   nested-objects.ts
@@ -53,6 +60,11 @@ examples/
     package.json
     public/
     src/
+      App.tsx
+      constants.ts
+      index.tsx
+      searchGif.ts
+      styles.css
     tsconfig.json
   one-file-demo/
 jest.config.cjs
@@ -64,14 +76,83 @@ package.json
   3→  "version": "5.9.0",
   4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
   5→  "type": "module",
-  …
+  6→  "sideEffects": false,
+  7→  "source": "src/index.ts",
+  8→  "exports": {
+  9→    ".": {
+  10→      "require": {
+  11→        "types": "./dist/index.d.cts",
+  12→        "default": "./dist/index.cjs"
+  13→      },
+  14→      "import": {
+  15→        "types": "./dist/index.d.ts",
+  16→        "default": "./dist/index.js"
+  17→      },
+  18→      "types": "./dist/index.d.ts",
+  19→      "default": "./dist/index.js"
+  20→    },
+  21→    "./types": {
+  22→      "require": {
+  23→        "types": "./dist/types/index.d.cts"
+  24→      },
+  25→      "import": {
+  26→        "types": "./dist/types/index.d.ts"
+  27→      },
+  28→      "types": "./dist/types/index.d.ts"
+  29→    },
+  30→    "./package.json": "./package.json"
+  31→  },
+  32→  "types": "dist/index.d.ts",
+  33→  "main": "dist/index.cjs",
+  34→  "module": "dist/index.js",
+  35→  "unpkg": "dist/index.umd.js",
+  36→  "scripts": {
+  37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
+  38→    "dev": "microbundle watch",
+  39→    "prepublishOnly": "npm run test && npm run build",
+  40→    "publish:jsr": "npm run prepublishOnly && npx jsr publish",
+  41→    "release": "npm run prepublishOnly && npm publish && npx jsr publish",
+  42→    "test": "jest",
+  43→    "clear-test": "jest --clearCache",
+  44→    "fmt": "prettier ./src/** ./tests/** -w",
+  45→    "check": "tsc --strict --noEmit --extendedDiagnostics",
+  46→    "perf": "tsc --project tests/tsconfig.json --noEmit --extendedDiagnostics",
+  47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
+  48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
+  49→  },
+  50→  "files": [
+  51→    "dist/**/*",
+  52→    "package.json"
+  53→  ],
+  54→  "repository": {
+  55→    "type": "git",
+  56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
+  57→  },
+  58→  "keywords": [
+  59→    "pattern",
+  60→    "matching",
+  61→    "pattern-matching",
+  62→    "typescript",
+  63→    "match-with",
+  64→    "match",
+  65→    "switch",
+  66→    "adt"
+  67→  ],
+  68→  "author": "Gabriel Vergnaud",
   69→  "license": "MIT",
+  70→  "bugs": {
+  71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
+  72→  },
+  73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
   …
 scripts/
   generate-cts.sh
 src/
   errors.ts
-    …
+    1→/**
+    2→ * Error when the given input value does not match any included pattern
+    3→ * and .exhaustive() was specified
+    4→ */
     5→export class NonExhaustiveError extends Error {
     6→  constructor(public input: unknown) {
     …
@@ -84,12 +165,6 @@ src/
     6→export { NonExhaustiveError } from './errors';
   internals/
     helpers.ts
-      1→/**
-      2→ * @module
-      3→ * @private
-      4→ * @internal
-      5→ */
-      …
     symbols.ts
   is-matching.ts
     …
@@ -166,122 +241,69 @@ src/
     192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
     …
     241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
-    242→export function array<
-    243→  input,
-    244→  const pattern extends Pattern<WithDefault<UnwrapArray<input>, unknown>>
-    245→>(pattern: pattern): ArrayChainable<ArrayP<input, pattern>>;
-    246→export function array(
-    247→  ...args: [pattern?: any]
-    248→): ArrayChainable<ArrayP<any, any>> {
-    …
-    294→export function set<input>(): Chainable<SetP<input, unknown>>;
-    295→export function set<
-    296→  input,
-    297→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
-    298→>(pattern: pattern): Chainable<SetP<input, pattern>>;
-    299→export function set<
-    300→  input,
-    301→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
-    302→>(...args: [pattern?: pattern]): Chainable<SetP<input, pattern>> {
-    …
-    356→export function map<input>(): Chainable<MapP<input, unknown, unknown>>;
-    357→export function map<
-    358→  input,
-    359→  const pkey extends Pattern<WithDefault<UnwrapMapKey<input>, unknown>>,
-    360→  const pvalue extends Pattern<WithDefault<UnwrapMapValue<input>, unknown>>
-    361→>(patternKey: pkey, patternValue: pvalue): Chainable<MapP<input, pkey, pvalue>>;
-    362→export function map<
-    363→  input,
-    364→  const pkey extends Pattern<WithDefault<UnwrapMapKey<input>, unknown>>,
-    365→  const pvalue extends Pattern<WithDefault<UnwrapMapValue<input>, unknown>>
-    366→>(
-    367→  ...args: [patternKey?: pkey, patternValue?: pvalue]
-    368→): Chainable<MapP<input, pkey, pvalue>> {
-    …
-    433→export function record<
-    434→  input,
-    435→  const pvalue extends Pattern<UnwrapRecordValue<input>>
-    436→>(patternValue: pvalue): Chainable<RecordP<input, StringPattern, pvalue>>;
-    437→export function record<
-    438→  input,
-    439→  const pkey extends Pattern<WithDefault<UnwrapRecordKey<input>, PropertyKey>>,
-    440→  const pvalue extends Pattern<WithDefault<UnwrapRecordValue<input>, unknown>>
-    441→>(
-    442→  patternKey: pkey,
-    443→  patternValue?: pvalue
-    444→): Chainable<RecordP<input, pkey, pvalue>>;
-    445→export function record(
-    446→  ...args: [patternKey?: unknown, patternValue?: unknown]
-    447→): Chainable<RecordP<unknown, unknown, unknown>> {
-    …
-    536→export function intersection<
-    537→  input,
-    538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
-    539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
-    …
-    572→export function union<
-    573→  input,
-    574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
-    575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
-    …
-    611→export function not<
-    612→  input,
-    613→  const pattern extends Pattern<input> | UnknownValuePattern
-    614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
-    …
-    637→export function when<input, predicate extends (value: input) => unknown>(
-    638→  predicate: predicate
-    639→): GuardP<
-    640→  input,
-    641→  predicate extends (value: any) => value is infer narrowed ? narrowed : never
-    642→>;
-    643→export function when<input, narrowed extends input, excluded>(
-    644→  predicate: (input: input) => input is narrowed
-    645→): GuardExcludeP<input, narrowed, excluded>;
-    646→export function when<input, predicate extends (value: input) => unknown>(
-    647→  predicate: predicate
-    648→): GuardP<
-    649→  input,
-    650→  predicate extends (value: any) => value is infer narrowed ? narrowed : never
-    651→> {
-    …
-    672→export function select(): Chainable<AnonymousSelectP, 'select' | 'or' | 'and'>;
-    673→export function select<
-    …
-    686→export function select<
     …
   types/
     BuildMany.ts
-      …
-      4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
-      5→  ? BuildOne<data, xs>
-      6→  : never;
-      …
-      19→export type SetDeep<data, value, path> = path extends readonly [
-      …
     DeepExclude.ts
-      …
-      3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
     DistributeUnions.ts
     ExtractPreciseValue.ts
-      …
-      13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
-      …
     FindSelected.ts
     InvertPattern.ts
     IsMatching.ts
-      …
-      57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
-      …
     Match.ts
-      …
-      8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
-      …
-      22→export type Match<
-      …
     Pattern.ts
     helpers.ts
     index.ts
       1→export * from './Pattern';
 tests/
+  bigints.test.ts
+  branded-nominal-types.test.ts
+  build-many.test.ts
+  chainable.test.ts
+  deep-exclude.test.ts
+  distribute-unions.test.ts
+  exhaustive-fallback.test.ts
+  exhaustive-match.test.ts
+  extract-precise-value.test.ts
+  find-selected.test.ts
+  generics.test.ts
+  helpers.test.ts
+  infer.test.ts
+  instance-of.test.ts
+  intersection-and-union.test.ts
+  invert-pattern.test.ts
+  is-matching.test.ts
+  large-exhaustive.test.ts
+  lists.test.ts
+  maps.test.ts
+  matcher-protocol.test.ts
+  multiple-patterns.test.ts
+  narrow.test.ts
+  nesting.test.ts
+  not.test.ts
+  numbers.test.ts
+  objects.test.ts
+  optional-props.test.ts
+  optional.test.ts
+  otherwise.test.ts
+  output-type.test.ts
+  pattern.test.ts
+  primitive-values.test.ts
+  readonly.test.ts
+  real-world.test.ts
+  record.test.ts
+  return-type.test.ts
+  select.test.ts
+  sets.test.ts
+  strings.test.ts
+  tsconfig.json
+  tuples.test.ts
+  type-error.test.ts
+  type-is-matching.test.ts
+  types-catalog/
+  types.test.ts
+  unions.test.ts
+  variadic-tuples.test.ts
+  when.test.ts
+  wildcards.test.ts
 tsconfig.json

@@ -40,12 +40,37 @@ docs/
     118→## Layout
     …
   options-in-depth.md
+    …
+    2→# Options in Depth
+    …
+    15→## Options taking varying numbers of option-arguments
+    …
+    30→### Parsing ambiguity
+    …
+    148→## Combining short options, and options taking arguments
+    …
+    191→### Combining short options as if boolean
+    …
   parsing-and-hooks.md
   release-policy.md
   terminology.md
   zh-CN/
     不再推荐使用的功能.md
     可变参数的选项.md
+      1→# 可变参数的选项
+      …
+      26→## 解析中的歧义
+      …
+      73→### 方案一：让`--`成为语法的一部分
+      …
+      98→### 方案二：把选项放在最后
+      …
+      120→### 方案三：使用选项替代命令参数
+      …
+      142→## 合并短选项和带有参数的选项
+      …
+      183→### 将短选项视作 boolean 类型选项合并
+      …
     术语表.md
 eslint.config.js
 esm.mjs
@@ -141,6 +166,8 @@ lib/
     73→  default(value, description) {
     …
     86→  argParser(fn) {
+    87→    this.parseArg = fn;
+    88→    return this;
     …
     98→  choices(values) {
     …
@@ -194,6 +221,9 @@ lib/
     12→class Help {
     …
     740→function stripColor(str) {
+    741→  // eslint-disable-next-line no-control-regex
+    742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
+    743→  return str.replace(sgrPattern, '');
     …
     746→exports.Help = Help;
     747→exports.stripColor = stripColor;
@@ -216,6 +246,8 @@ lib/
     122→    return this;
     …
     132→  argParser(fn) {
+    133→    this.parseArg = fn;
+    134→    return this;
     …
     144→  makeOptionMandatory(mandatory = true) {
     …
@@ -250,6 +282,13 @@ lib/
     380→exports.DualOptions = DualOptions;
   suggestSimilar.js
     …
+    48→/**
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+    52→ * @param {string[]} candidates
+    53→ * @returns {string}
+    54→ */
     56→function suggestSimilar(word, candidates) {
     …
     101→exports.suggestSimilar = suggestSimilar;
@@ -260,11 +299,65 @@ package.json
   2→  "name": "commander",
   3→  "version": "14.0.3",
   4→  "description": "the complete solution for node.js command-line programs",
-  …
+  5→  "keywords": [
+  6→    "commander",
+  7→    "command",
+  8→    "option",
+  9→    "parser",
+  10→    "cli",
+  11→    "argument",
+  12→    "args",
+  13→    "argv"
+  14→  ],
+  15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
   16→  "license": "MIT",
-  …
+  17→  "repository": {
+  18→    "type": "git",
+  19→    "url": "git+https://github.com/tj/commander.js.git"
+  20→  },
+  21→  "scripts": {
+  22→    "check": "npm run check:type && npm run check:lint && npm run check:format",
+  23→    "check:format": "prettier --check .",
+  24→    "check:lint": "eslint .",
+  25→    "check:type": "npm run check:type:js && npm run check:type:ts",
+  26→    "check:type:ts": "tsd && tsc -p tsconfig.ts.json",
+  27→    "check:type:js": "tsc -p tsconfig.js.json",
+  28→    "fix": "npm run fix:lint && npm run fix:format",
+  29→    "fix:format": "prettier --write .",
+  30→    "fix:lint": "eslint --fix .",
+  31→    "test": "jest && npm run check:type:ts",
+  32→    "test-all": "jest && npm run test-esm && npm run check",
+  33→    "test-esm": "node ./tests/esm-imports-test.mjs"
+  34→  },
+  35→  "files": [
+  36→    "index.js",
+  37→    "lib/*.js",
+  38→    "esm.mjs",
+  39→    "typings/index.d.ts",
+  40→    "typings/esm.d.mts",
+  41→    "package-support.json"
+  42→  ],
   43→  "type": "commonjs",
+  44→  "main": "./index.js",
+  45→  "exports": {
+  46→    ".": {
+  47→      "require": {
+  48→        "types": "./typings/index.d.ts",
+  49→        "default": "./index.js"
+  50→      },
+  51→      "import": {
+  52→        "types": "./typings/esm.d.mts",
+  53→        "default": "./esm.mjs"
+  54→      },
+  55→      "default": "./index.js"
+  56→    },
+  57→    "./esm.mjs": {
+  58→      "types": "./typings/esm.d.mts",
+  59→      "import": "./esm.mjs"
+  60→    }
+  61→  },
   …
+  77→  "types": "typings/index.d.ts",
   78→  "engines": {
   79→    "node": ">=20"
   80→  },
@@ -278,110 +371,4 @@ typings/
     …
     3→export * from './index.js';
   index.d.ts
-    …
-    12→type LiteralUnion<LiteralType, BaseType extends string | number> =
-    13→  | LiteralType
-    14→  | (BaseType & Record<never, never>);
-    16→export class CommanderError extends Error {
-    17→  code: string;
-    18→  exitCode: number;
-    19→  message: string;
-    20→  nestedError?: string;
-    …
-    28→  constructor(exitCode: number, code: string, message: string);
-    29→}
-    31→export class InvalidArgumentError extends CommanderError {
-    …
-    36→  constructor(message: string);
-    37→}
-    38→export { InvalidArgumentError as InvalidOptionArgumentError }; // deprecated old name
-    39→
-    40→export interface ErrorOptions {
-    41→  // optional parameter for error()
-    42→  /** an id string representing the error */
-    43→  code?: string;
-    44→  /** suggested exit code which could be used with process.exit */
-    45→  exitCode?: number;
-    46→}
-    48→export class Argument {
-    49→  description: string;
-    50→  required: boolean;
-    51→  variadic: boolean;
-    52→  defaultValue?: any;
-    53→  defaultValueDescription?: string;
-    54→  parseArg?: <T>(value: string, previous: T) => T;
-    55→  argChoices?: string[];
-    …
-    62→  constructor(arg: string, description?: string);
-    …
-    67→  name(): string;
-    …
-    72→  default(value: unknown, description?: string): this;
-    …
-    77→  argParser<T>(fn: (value: string, previous: T) => T): this;
-    …
-    82→  choices(values: readonly string[]): this;
-    …
-    87→  argRequired(): this;
-    …
-    92→  argOptional(): this;
-    93→}
-    95→export class Option {
-    …
-    210→export class Help {
-    …
-    340→export type HelpConfiguration = Partial<Help>;
-    341→
-    342→export interface ParseOptions {
-    343→  from: 'node' | 'electron' | 'user';
-    344→}
-    345→export interface HelpContext {
-    346→  // optional parameter for .help() and .outputHelp()
-    347→  error: boolean;
-    348→}
-    349→export interface AddHelpTextContext {
-    350→  // passed to text function used with .addHelpText()
-    351→  error: boolean;
-    352→  command: Command;
-    353→}
-    354→export interface OutputConfiguration {
-    355→  writeOut?(str: string): void;
-    356→  writeErr?(str: string): void;
-    357→  outputError?(str: string, write: (str: string) => void): void;
-    358→
-    359→  getOutHelpWidth?(): number;
-    360→  getErrHelpWidth?(): number;
-    361→
-    362→  getOutHasColors?(): boolean;
-    363→  getErrHasColors?(): boolean;
-    364→  stripColor?(str: string): string;
-    365→}
-    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-    …
-    370→export type OptionValueSource =
-    371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-    372→  | undefined;
-    374→export type OptionValues = Record<string, any>;
-    375→
-    376→export class Command {
-    …
-    1094→export interface CommandOptions {
-    1095→  hidden?: boolean;
-    1096→  isDefault?: boolean;
-    1097→  /** @deprecated since v7, replaced by hidden */
-    1098→  noHelp?: boolean;
-    1099→}
-    1100→export interface ExecutableCommandOptions extends CommandOptions {
-    1101→  executableFile?: string;
-    1102→}
-    1104→export interface ParseOptionsResult {
-    1105→  operands: string[];
-    1106→  unknown: string[];
-    1107→}
-    1109→export function createCommand(name?: string): Command;
-    1110→export function createOption(flags: string, description?: string): Option;
-    1111→export function createArgument(name: string, description?: string): Argument;
-    1112→
-    1113→export const program: Command;
   index.test-d.ts

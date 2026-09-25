@@ -118,6 +118,13 @@ eslint.base.mjs
 examples/
   basic.ts
   d2ql/
+    README.md
+    basic_select.ts
+    functions.ts
+    group_by.ts
+    joins.ts
+    kitchen_sink.ts
+    where_conditions.ts
   electric/
     CHANGELOG.md
     README.md
@@ -153,15 +160,23 @@ packages/
         3→export * from './operators/index.js'
         4→export * from './types.js'
       indexes.ts
-        …
-        9→export class Index<K, V> {
-        …
       multiset.ts
       operators/
         concat.ts
         consolidate.ts
         count.ts
         debug.ts
+          …
+          12→export class DebugOperator<T> extends UnaryOperator<T> {
+          …
+          16→  constructor(
+          …
+          28→  run(): void {
+          …
+          35→}
+          …
+          42→export function debug<T>(
+          …
         distinct.ts
         filter.ts
         filterBy.ts
@@ -176,18 +191,37 @@ packages/
         negate.ts
         orderBy.ts
         orderByBTree.ts
-          …
-          5→export function orderByWithFractionalIndexBTree<
-          …
         output.ts
+          …
+          13→export class OutputOperator<T> extends UnaryOperator<T> {
+          …
+          16→  constructor(
+          …
+          26→  run(): void {
+          …
+          32→}
+          …
+          38→export function output<T>(
+          …
         pipe.ts
         reduce.ts
         topK.ts
+          …
+          22→export function topK<
+          …
+          60→export function topKWithIndex<
+          …
         topKWithFractionalIndex.ts
         topKWithFractionalIndexBTree.ts
       types.ts
       utils.ts
     tests/
+      graph.test.ts
+      indexes.test.ts
+      multiset.test.ts
+      operators/
+      test-utils.ts
+      utils.test.ts
     tsconfig.json
   d2ql/
     README.md
@@ -209,19 +243,9 @@ packages/
         19→): T {
         …
       evaluators.ts
-        …
-        14→export function evaluateConditionOnNestedRow(
-        …
-        126→export function evaluateSimpleConditionOnNestedRow(
-        …
       extractors.ts
       functions.ts
       group-by.ts
-        …
-        20→export function processGroupBy(
-        …
-        98→export function getAggregateFunction(
-        …
       index.ts
         1→/**
         2→ * D2QL is a SQL-like query language for D2TS.
@@ -231,29 +255,14 @@ packages/
         7→export * from './types.js'
         8→export { compileQuery } from './compiler.js'
       joins.ts
-        …
-        16→export function processJoinClause(
-        …
-        124→export function processJoinResults(
-        …
       key-by.ts
-        …
-        4→export function processKeyBy(
-        …
       order-by.ts
-        …
-        16→export function processOrderBy(
-        …
       query-builder/
         index.ts
-          1→export { queryBuilder, type ResultFromQueryBuilder } from './query-builder.js'
         query-builder.ts
       schema.json
       schema.ts
       select.ts
-        …
-        7→export function processSelect(
-        …
       store.ts
       types.ts
       utils.ts
@@ -303,6 +312,11 @@ packages/
         consolidate.ts
         count.ts
         debug.ts
+          …
+          18→export class DebugOperator<T> extends UnaryOperator<T> {
+          …
+          74→export function debug<T>(
+          …
         distinct.ts
         filter.ts
         filterBy.ts
@@ -321,6 +335,11 @@ packages/
         pipe.ts
         reduce.ts
         topK.ts
+          …
+          22→export function topK<
+          …
+          60→export function topKWithIndex<
+          …
         topKWithFractionalIndex.ts
       order.ts
       sqlite/
@@ -329,9 +348,6 @@ packages/
         index.ts
         operators/
         version-index.ts
-          …
-          60→export class SQLIndex<K, V> {
-          …
       types.ts
       utils.ts
       version-index.ts
@@ -348,17 +364,7 @@ packages/
     package.json
     src/
       base.ts
-        …
-        4→export interface Benchmark<T> {
-        …
-        19→export interface SuiteOptions {
-        …
-        27→export class Suite {
-        …
       graph.ts
-        …
-        20→export function generateGraph(results: SizeResults[]) {
-        …
       index.ts
         …
         9→const generateData = (size: number) => {

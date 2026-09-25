@@ -37,7 +37,11 @@ README.md
   26→## Introduction
   27→
   28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
-  …
+  30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
+  31→
+  32→A live instance is available at [enclosed.cc](https://enclosed.cc).
+  33→
+  34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
   36→## Features
   …
   52→## Self host
@@ -51,7 +55,8 @@ README.md
   75→## How It Works
   …
   93→## CLI
-  …
+  94→
+  95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
   97→### Installation
   …
   110→### Create a note
@@ -75,7 +80,8 @@ README.md
   188→### Inspiration
   …
   194→## Contact Information
-  …
+  195→
+  196→Please use the issue tracker on GitHub for any questions or feedback.
 docker-compose.yml
   1→services:
   2→  enclosed:
@@ -152,9 +158,6 @@ packages/
         it.json
         locales.test.ts
         locales.ts
-          …
-          2→export const locales = [
-          …
         nl.json
         pl.json
         pt-BR.json
@@ -173,13 +176,8 @@ packages/
             login.page.tsx
         config/
           config.constants.ts
-            …
-            3→export const buildTimeConfig: Config = {
-            …
           config.provider.tsx
           config.types.ts
-            1→export type Config = {
-            …
         docs/
           docs.models.test.ts
           docs.models.ts
@@ -208,17 +206,11 @@ packages/
             copy.tsx
         theme/
           theme.store.ts
-            …
-            4→export function useThemeStore() {
-            …
         ui/
           components/
           layouts/
             app.layout.tsx
       routes.tsx
-        …
-        11→export function getRoutes(): RouteDefinition[] {
-        …
       scripts/
     tsconfig.json
     uno.config.ts
@@ -439,13 +431,7 @@ packages/
     src/
       api/
         api.client.ts
-          …
-          4→export { apiClient };
-          …
-          20→async function apiClient<T>({
-          …
         api.constants.ts
-          1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
         api.models.test.ts
         api.models.ts
       crypto/
@@ -493,11 +479,6 @@ packages/
         notes.services.ts
         notes.types.ts
         notes.usecases.ts
-          …
-          8→export { createNote };
-          …
-          12→async function createNote({
-          …
     tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml

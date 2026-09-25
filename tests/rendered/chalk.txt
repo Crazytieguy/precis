@@ -316,26 +316,23 @@ source/
     ansi-styles/
       index.d.ts
       index.js
+        …
+        68→export const modifierNames = Object.keys(styles.modifier);
+        69→export const foregroundColorNames = Object.keys(styles.color);
+        70→export const backgroundColorNames = Object.keys(styles.bgColor);
+        71→export const colorNames = [...foregroundColorNames, ...backgroundColorNames];
+        72→
+        73→function assembleStyles() {
+        …
+        221→const ansiStyles = assembleStyles();
+        222→
+        223→export default ansiStyles;
     supports-color/
       browser.d.ts
         1→export {default} from './index.js';
       browser.js
-        …
-        29→const supportsColor = {
-        30→	stdout: colorSupport,
-        31→	stderr: colorSupport,
-        32→};
-        34→export default supportsColor;
       index.d.ts
       index.js
-        …
-        176→export function createSupportsColor(stream, options = {}) {
-        …
-        185→const supportsColor = {
-        186→	stdout: createSupportsColor({isTTY: tty.isatty(1)}),
-        187→	stderr: createSupportsColor({isTTY: tty.isatty(2)}),
-        188→};
-        190→export default supportsColor;
 test/
   _fixture.js
   chalk.js

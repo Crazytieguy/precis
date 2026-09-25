@@ -1,19 +1,19 @@
-Score(3000)=0.494 I=0.756 C=0.323 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.714/0.617/0.578/0.494/0.571/0.534/0.591
+Score(3000)=0.494 I=0.756 C=0.323 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.714/0.617/0.578/0.494/0.571/0.557/0.583
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 31 | 31 | listing of '.' |  |  | 0.000 |
 | ns | 45 |  | 45 | Repo identity: README title + one-sentence description | 1.1 |  | 0.000 |
 | walker |  | 47 | 16 | listing of 'src' |  |  | 0.000 |
-| walker |  | 61 | 14 | ts names karma.conf.js |  |  | 0.000 |
-| ns | 92 |  | 47 | Complete file map: repo root and src/ | 1.2 |  | 0.620 |
-| walker |  | 104 | 43 | ts module doc src/index.js |  |  | 0.633 |
-| walker |  | 149 | 45 | README headline in README.md |  |  | 1.000 |
-| ns | 205 |  | 113 | src/index.js in full — the environment dispatch | 1.3 |  | 0.782 |
-| walker |  | 214 | 65 | package identity in package.json |  |  | 0.791 |
-| walker |  | 246 | 32 | package runtime dependencies in package.json |  |  | 0.791 |
-| walker |  | 268 | 22 | ts names src/common.js |  |  | 0.791 |
-| walker |  | 300 | 32 | package runtime metadata in package.json |  |  | 0.800 |
+| walker |  | 90 | 43 | ts module doc src/index.js |  |  | 0.000 |
+| ns | 92 |  | 47 | Complete file map: repo root and src/ | 1.2 |  | 0.633 |
+| walker |  | 135 | 45 | README headline in README.md |  |  | 1.000 |
+| walker |  | 200 | 65 | package identity in package.json |  |  | 1.000 |
+| ns | 205 |  | 113 | src/index.js in full — the environment dispatch | 1.3 |  | 0.791 |
+| walker |  | 232 | 32 | package runtime dependencies in package.json |  |  | 0.791 |
+| walker |  | 254 | 22 | ts names src/common.js |  |  | 0.791 |
+| walker |  | 286 | 32 | package runtime metadata in package.json |  |  | 0.800 |
+| walker |  | 300 | 14 | ts names karma.conf.js |  |  | 0.800 |
 | ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.759 |
 | walker |  | 368 | 68 | package entrypoints in package.json |  |  | 0.830 |
 | ns | 436 |  | 108 | package.json `scripts` — every build/test/lint entry point | 1.5 |  | 0.744 |
@@ -97,29 +97,29 @@ Score(3000)=0.494 I=0.756 C=0.323 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 5732 |  | 199 | src/common.js: `enable()` body — parsing the namespace string | 5.1 | 2.3 | 0.502 |
 | walker |  | 5749 | 389 | README.md section #10 |  |  | 0.548 |
 | ns | 5950 |  | 218 | src/common.js: `debug(...args)` — enabled guard, ms-diff bookkeeping, `%O` coercion | 5.2 | 2.3 | 0.534 |
-| ns | 6264 |  | 314 | src/common.js: `debug(...args)` — the `%`-formatter substitution loop and log dispatch | 5.3 | 5.2 | 0.519 |
-| walker |  | 6386 | 637 | ts body karma.conf.js:1 |  |  | 0.573 |
-| ns | 6598 |  | 334 | src/common.js: per-instance properties and the `enabled` getter/setter | 5.4 | 2.3 | 0.553 |
-| walker |  | 6615 | 229 | README.md section #16 |  |  | 0.574 |
-| walker |  | 6861 | 246 | ts decl src/browser.js:27 #2 |  |  | 0.574 |
-| ns | 6990 |  | 392 | src/common.js: `matchesTemplate()` — the wildcard matcher | 5.5 | 2.3 | 0.555 |
-| ns | 7187 |  | 197 | src/common.js: `disable()` and `enabled()` bodies | 5.6 | 2.3 | 0.544 |
-| walker |  | 7231 | 370 | README.md section #5 |  |  | 0.559 |
-| ns | 7436 |  | 249 | src/common.js: `selectColor()` and `extend()` bodies | 5.7 | 2.3 | 0.549 |
-| walker |  | 7497 | 266 | README.md section #12 |  |  | 0.568 |
-| ns | 7571 |  | 135 | src/common.js: `coerce()` and the deprecated `destroy()` stub | 5.8 | 2.3 | 0.562 |
-| ns | 7647 |  | 76 | src/common.js: adapter-property spread and `createDebug`'s closure state | 5.9 | 2.1 | 0.558 |
-| walker |  | 7887 | 390 | ts body src/browser.js:149 |  |  | 0.560 |
-| ns | 7942 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.572 |
-| ns | 8206 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.567 |
-| walker |  | 8368 | 481 | ts body src/browser.js:115 |  |  | 0.578 |
-| ns | 8528 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.580 |
-| walker |  | 8718 | 350 | README.md section #20 |  |  | 0.580 |
-| ns | 8861 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.591 |
-| ns | 9045 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.595 |
-| walker |  | 9120 | 402 | README.md section #11 |  |  | 0.608 |
-| ns | 9397 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.617 |
-| ns | 9541 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.610 |
-| walker |  | 9630 | 510 | README.md section #4 |  |  | 0.625 |
-| ns | 9722 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.617 |
-| ns | 9932 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.607 |
+| walker |  | 5978 | 229 | README.md section #16 |  |  | 0.557 |
+| walker |  | 6224 | 246 | ts decl src/browser.js:27 #2 |  |  | 0.557 |
+| ns | 6264 |  | 314 | src/common.js: `debug(...args)` — the `%`-formatter substitution loop and log dispatch | 5.3 | 5.2 | 0.541 |
+| walker |  | 6594 | 370 | README.md section #5 |  |  | 0.558 |
+| ns | 6598 |  | 334 | src/common.js: per-instance properties and the `enabled` getter/setter | 5.4 | 2.3 | 0.539 |
+| walker |  | 6860 | 266 | README.md section #12 |  |  | 0.560 |
+| ns | 6990 |  | 392 | src/common.js: `matchesTemplate()` — the wildcard matcher | 5.5 | 2.3 | 0.542 |
+| ns | 7187 |  | 197 | src/common.js: `disable()` and `enabled()` bodies | 5.6 | 2.3 | 0.531 |
+| walker |  | 7250 | 390 | ts body src/browser.js:149 |  |  | 0.533 |
+| ns | 7436 |  | 249 | src/common.js: `selectColor()` and `extend()` bodies | 5.7 | 2.3 | 0.524 |
+| ns | 7571 |  | 135 | src/common.js: `coerce()` and the deprecated `destroy()` stub | 5.8 | 2.3 | 0.519 |
+| ns | 7647 |  | 76 | src/common.js: adapter-property spread and `createDebug`'s closure state | 5.9 | 2.1 | 0.515 |
+| walker |  | 7731 | 481 | ts body src/browser.js:115 |  |  | 0.515 |
+| ns | 7942 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.530 |
+| walker |  | 8081 | 350 | README.md section #20 |  |  | 0.530 |
+| ns | 8206 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.537 |
+| walker |  | 8483 | 402 | README.md section #11 |  |  | 0.552 |
+| ns | 8528 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.554 |
+| ns | 8861 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.567 |
+| walker |  | 8993 | 510 | README.md section #4 |  |  | 0.583 |
+| ns | 9045 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.587 |
+| ns | 9397 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.597 |
+| walker |  | 9470 | 477 | README.md section #14 |  |  | 0.626 |
+| ns | 9541 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.619 |
+| ns | 9722 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.612 |
+| ns | 9932 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.602 |
