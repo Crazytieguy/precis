@@ -52,23 +52,17 @@ of `T_large`'s, and the divergence metric replays one `T_max` schedule
 per fixture instead of running the walker per budget. Skipping an
 ill-fitting batch for a smaller one would break this.
 
-## Auto-injected docs don't belong in precis output
+## Only the root README is read as a document
 
-Files the host harness already loads into the model's context —
-`CLAUDE.md` at any depth, `AGENTS.md` where Claude Code loads it (a
-directory's AGENTS.md only when it has no CLAUDE.md, or its CLAUDE.md is
-the same text or imports `@AGENTS.md`), and text files under
-`.claude/skills/`, `.agent/skills/`, `.cursor/rules/` — keep their
-listing rows, but their prose bodies are never scheduled and their
-structural batches carry a 0.1× discount. An NS that ranks their content
-as primary is an NS-author error, not a reason to un-suppress.
-
-More generally, the root README is the only document the markdown
-walker reads (a single named file reads as one); every other `.md` is a
-listing row. Pricing other docs' sections, then their outlines, at any
-tier measured flat to negative on the grid (2026-09-25): the schedule
-bought the wrong pages (translations, migration guides, nested package
-READMEs) and never reached the ones NS ranks.
+The root README is the only document the markdown walker reads (a
+single named file reads as one); every other `.md` is a listing row.
+That includes the files the host harness already loads into the model's
+context — `CLAUDE.md`, `AGENTS.md`, skill and rules files — so they need
+no special case: an NS that ranks their content as primary is an
+NS-author error. Pricing other docs' sections, then their outlines, at
+any tier measured flat to negative on the grid (2026-09-25): the
+schedule bought the wrong pages (translations, migration guides, nested
+package READMEs) and never reached the ones NS ranks.
 
 ## Gitignored content doesn't belong in precis output either
 
