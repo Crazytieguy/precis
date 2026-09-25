@@ -168,21 +168,9 @@ fn build_dependencies_content(
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
-    let cargo_manifest = is_cargo_manifest(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if (python_project_manifest
-            && is_dependency_section(name)
-            && !is_dependency_group_section(name))
-            || (cargo_manifest && is_ordinary_dependency_section(name))
-            // Non-manifest TOMLs keep the pre-split exclusion of
-            // pyproject-shaped sections: a poetry/PEP-621 dep table in a
-            // template or sample file is not a manifest roster.
-            || (!python_project_manifest
-                && !cargo_manifest
-                && is_dependency_section(name)
-                && !(name.starts_with("project.") || name.starts_with("tool.poetry.")))
-        {
+        if is_ordinary_dependency_section(name) {
             line_numbers.extend(*start..=*end);
         }
     }
@@ -317,10 +305,6 @@ fn build_section_content(
         return None;
     }
     single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
-}
-
-fn is_cargo_manifest(file: &Path) -> bool {
-    file.file_name().and_then(|name| name.to_str()) == Some("Cargo.toml")
 }
 
 /// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table —
@@ -858,10 +842,6 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
 
     #[test]
     fn walker_toml_cargo_dependency_classes_are_disjoint() {
-        assert!(is_cargo_manifest(&PathBuf::from("Cargo.toml")));
-        assert!(!is_cargo_manifest(&PathBuf::from("pyproject.toml")));
-        assert!(!is_cargo_manifest(&PathBuf::from("config.toml")));
-
         for name in [
             "dependencies",
             "dependencies.serde",
