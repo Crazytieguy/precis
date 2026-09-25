@@ -392,6 +392,7 @@ fn is_ordinary_dependency_section(name: &str) -> bool {
             | "tool.poetry.dependencies"
             | "project.optional-dependencies"
     ) || name.starts_with("dependencies.")
+        || name.starts_with("workspace.dependencies.")
 }
 
 fn is_cargo_development_dependency_section(name: &str) -> bool {
@@ -420,8 +421,7 @@ fn is_config_section(name: &str) -> bool {
     !(matches!(
         name,
         "package" | "workspace" | "workspace.package" | "features"
-    ) || name.starts_with("workspace.")
-        || is_pyproject_identity_table(name)
+    ) || is_pyproject_identity_table(name)
         || is_scripts_section(name)
         || is_dependency_section(name))
 }

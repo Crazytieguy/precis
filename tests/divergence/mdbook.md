@@ -233,50 +233,50 @@ Score(3000)=0.654 I=0.757 C=0.564 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | walker |  | 7704 | 118 | README headline in guide/src/for_developers/README.md |  |  | 0.552 |
 | ns | 7726 |  | 246 | Loading a book from disk, and `BookBuilder` | 7.4 |  | 0.546 |
 | walker |  | 7731 | 27 | headings outline in guide/src/for_developers/README.md |  |  | 0.546 |
-| walker |  | 7922 | 191 | manifest config in Cargo.toml |  |  | 0.546 |
+| walker |  | 7786 | 55 | headings outline in guide/src/for_developers/preprocessors.md |  |  | 0.546 |
+| walker |  | 7902 | 116 | README.md section #1 |  |  | 0.546 |
 | ns | 7970 |  | 244 | The `links` preprocessor's helper syntax | 7.5 |  | 0.540 |
-| walker |  | 7977 | 55 | headings outline in guide/src/for_developers/preprocessors.md |  |  | 0.540 |
-| walker |  | 8093 | 116 | README.md section #1 |  |  | 0.540 |
-| walker |  | 8227 | 134 | listing of 'tests/testsuite' |  |  | 0.587 |
-| walker |  | 8242 | 15 | rust names crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs |  |  | 0.587 |
+| walker |  | 8036 | 134 | listing of 'tests/testsuite' |  |  | 0.587 |
+| walker |  | 8051 | 15 | rust names crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs |  |  | 0.587 |
+| walker |  | 8094 | 43 | [dependencies] in crates/mdbook-markdown/Cargo.toml |  |  | 0.587 |
+| walker |  | 8132 | 38 | crates/mdbook-core/README.md section #1 |  |  | 0.587 |
+| walker |  | 8170 | 38 | crates/mdbook-driver/README.md section #1 |  |  | 0.587 |
+| walker |  | 8208 | 38 | crates/mdbook-html/README.md section #1 |  |  | 0.587 |
+| walker |  | 8246 | 38 | crates/mdbook-markdown/README.md section #1 |  |  | 0.587 |
 | ns | 8271 |  | 301 | The other built-in plugins | 7.6 |  | 0.580 |
-| walker |  | 8285 | 43 | [dependencies] in crates/mdbook-markdown/Cargo.toml |  |  | 0.580 |
-| walker |  | 8323 | 38 | crates/mdbook-core/README.md section #1 |  |  | 0.580 |
-| walker |  | 8361 | 38 | crates/mdbook-driver/README.md section #1 |  |  | 0.580 |
-| walker |  | 8399 | 38 | crates/mdbook-html/README.md section #1 |  |  | 0.580 |
-| walker |  | 8437 | 38 | crates/mdbook-markdown/README.md section #1 |  |  | 0.580 |
-| walker |  | 8475 | 38 | crates/mdbook-preprocessor/README.md section #1 |  |  | 0.580 |
-| walker |  | 8513 | 38 | crates/mdbook-renderer/README.md section #1 |  |  | 0.580 |
+| walker |  | 8284 | 38 | crates/mdbook-preprocessor/README.md section #1 |  |  | 0.580 |
+| walker |  | 8322 | 38 | crates/mdbook-renderer/README.md section #1 |  |  | 0.580 |
+| walker |  | 8360 | 38 | crates/mdbook-summary/README.md section #1 |  |  | 0.580 |
+| walker |  | 8423 | 63 | README headline in guide/src/format/theme/README.md |  |  | 0.580 |
+| walker |  | 8455 | 32 | headings outline in guide/src/format/mathjax.md |  |  | 0.580 |
 | ns | 8521 |  | 250 | The markdown-to-HTML pipeline | 8.1 |  | 0.571 |
-| walker |  | 8551 | 38 | crates/mdbook-summary/README.md section #1 |  |  | 0.571 |
-| walker |  | 8614 | 63 | README headline in guide/src/format/theme/README.md |  |  | 0.571 |
+| walker |  | 8531 | 76 | README headline in guide/src/format/README.md |  |  | 0.571 |
+| walker |  | 8557 | 26 | rust names crates/mdbook-driver/src/mdbook/tests.rs |  |  | 0.571 |
+| walker |  | 8577 | 20 | rust doc crates/mdbook-summary/src/lib.rs:65 |  |  | 0.571 |
 | ns | 8640 |  | 119 | HTML pipeline entry points | 8.2 | 8.1 | 0.567 |
-| walker |  | 8646 | 32 | headings outline in guide/src/format/mathjax.md |  |  | 0.567 |
-| walker |  | 8722 | 76 | README headline in guide/src/format/README.md |  |  | 0.567 |
-| walker |  | 8748 | 26 | rust names crates/mdbook-driver/src/mdbook/tests.rs |  |  | 0.567 |
+| walker |  | 8658 | 81 | headings outline in guide/src/continuous-integration.md |  |  | 0.567 |
+| walker |  | 8709 | 51 | [dependencies] in crates/mdbook-preprocessor/Cargo.toml |  |  | 0.567 |
 | ns | 8749 |  | 109 | `HtmlHandlebars` and its render steps | 8.3 |  | 0.563 |
-| walker |  | 8768 | 20 | rust doc crates/mdbook-summary/src/lib.rs:65 |  |  | 0.563 |
-| walker |  | 8849 | 81 | headings outline in guide/src/continuous-integration.md |  |  | 0.563 |
-| ns | 8893 |  | 144 | Theme resolution | 8.4 |  | 0.559 |
-| walker |  | 8900 | 51 | [dependencies] in crates/mdbook-preprocessor/Cargo.toml |  |  | 0.559 |
-| walker |  | 8951 | 51 | [dependencies] in crates/mdbook-renderer/Cargo.toml |  |  | 0.559 |
-| walker |  | 8970 | 19 | rust doc src/cmd/watch/poller.rs:18 |  |  | 0.559 |
-| walker |  | 8984 | 14 | rust doc crates/mdbook-preprocessor/src/lib.rs:32 |  |  | 0.561 |
+| walker |  | 8760 | 51 | [dependencies] in crates/mdbook-renderer/Cargo.toml |  |  | 0.563 |
+| walker |  | 8779 | 19 | rust doc src/cmd/watch/poller.rs:18 |  |  | 0.563 |
+| walker |  | 8793 | 14 | rust doc crates/mdbook-preprocessor/src/lib.rs:32 |  |  | 0.565 |
+| walker |  | 8842 | 49 | headings outline in guide/src/guide/reading.md |  |  | 0.565 |
+| walker |  | 8876 | 34 | rust doc src/cmd/clean.rs:38 |  |  | 0.565 |
+| walker |  | 8890 | 14 | rust body crates/mdbook-renderer/src/lib.rs:81 |  |  | 0.565 |
+| ns | 8893 |  | 144 | Theme resolution | 8.4 |  | 0.561 |
+| walker |  | 8967 | 77 | headings outline in guide/src/for_developers/backends.md |  |  | 0.561 |
+| walker |  | 8999 | 32 | guide/src/404.md section #0 |  |  | 0.561 |
 | ns | 9021 |  | 128 | Search index, static files and handlebars helpers | 8.5 |  | 0.557 |
-| walker |  | 9033 | 49 | headings outline in guide/src/guide/reading.md |  |  | 0.557 |
-| walker |  | 9067 | 34 | rust doc src/cmd/clean.rs:38 |  |  | 0.557 |
-| walker |  | 9081 | 14 | rust body crates/mdbook-renderer/src/lib.rs:81 |  |  | 0.557 |
-| walker |  | 9158 | 77 | headings outline in guide/src/for_developers/backends.md |  |  | 0.557 |
-| walker |  | 9190 | 32 | guide/src/404.md section #0 |  |  | 0.557 |
 | ns | 9219 |  | 198 | Testsuite module map and harness convention | 9.1 |  | 0.550 |
 | ns | 9335 |  | 116 | Snapshot testing with snapbox | 9.2 | 9.1 | 0.549 |
-| walker |  | 9541 | 351 | rust module doc crates/mdbook-driver/src/lib.rs |  |  | 0.576 |
-| walker |  | 9603 | 62 | rust decl src/cmd/serve.rs:108 |  |  | 0.576 |
+| walker |  | 9350 | 351 | rust module doc crates/mdbook-driver/src/lib.rs |  |  | 0.576 |
+| walker |  | 9412 | 62 | rust decl src/cmd/serve.rs:108 |  |  | 0.576 |
+| walker |  | 9497 | 85 | guide/src/for_developers/README.md section #0 |  |  | 0.576 |
 | ns | 9669 |  | 334 | `BookTest` harness API | 9.3 | 9.1 | 0.567 |
-| walker |  | 9688 | 85 | guide/src/for_developers/README.md section #0 |  |  | 0.567 |
+| walker |  | 9688 | 191 | listing of 'crates/mdbook-html/front-end/fonts' |  |  | 0.567 |
+| walker |  | 9723 | 35 | rust module doc crates/mdbook-html/src/theme/searcher.rs |  |  | 0.567 |
+| walker |  | 9782 | 59 | headings outline in guide/src/guide/installation.md |  |  | 0.567 |
+| walker |  | 9815 | 33 | rust names crates/mdbook-html/src/html_handlebars/static_files.rs |  |  | 0.567 |
 | ns | 9820 |  | 151 | Contributor workflow: CONTRIBUTING section map | 9.4 |  | 0.562 |
-| walker |  | 9879 | 191 | listing of 'crates/mdbook-html/front-end/fonts' |  |  | 0.562 |
-| ns | 9884 |  | 64 | CI and repository automation listing | 9.6 |  | 0.563 |
-| walker |  | 9914 | 35 | rust module doc crates/mdbook-html/src/theme/searcher.rs |  |  | 0.563 |
+| ns | 9884 |  | 64 | CI and repository automation listing | 9.6 |  | 0.564 |
 | ns | 9923 |  | 39 | README tail: licence | 9.7 | 1.1 | 0.564 |
-| walker |  | 9973 | 59 | headings outline in guide/src/guide/installation.md |  |  | 0.564 |
