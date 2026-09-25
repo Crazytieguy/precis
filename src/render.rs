@@ -943,6 +943,15 @@ fn format_entry_row(names: &[String], kind: EntryKind, indent_depth: usize, empt
     s
 }
 
+/// The part of `source_line` a `Full` row shows: at most
+/// [`MAX_ROW_CHARS`] characters, the rest replaced by `…`.
+pub fn visible_full_line(source_line: &str) -> &str {
+    match source_line.char_indices().nth(MAX_ROW_CHARS) {
+        Some((cut, _)) => &source_line[..cut],
+        None => source_line,
+    }
+}
+
 /// Render one line: render spec + raw source text (empty string when
 /// unavailable — release tolerates, debug asserts).
 fn format_line_row(
@@ -961,13 +970,10 @@ fn format_line_row(
             s.push('…');
         }
         Render::Full => {
-            let _ = write!(s, "{number}→");
-            match source_line.char_indices().nth(MAX_ROW_CHARS) {
-                Some((cut, _)) => {
-                    s.push_str(&source_line[..cut]);
-                    s.push('…');
-                }
-                None => s.push_str(source_line),
+            let visible = visible_full_line(source_line);
+            let _ = write!(s, "{number}→{visible}");
+            if visible.len() < source_line.len() {
+                s.push('…');
             }
         }
         Render::Truncated { pattern } => {

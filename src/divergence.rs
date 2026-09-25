@@ -49,7 +49,7 @@ use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, explode_spans, with_truncate_regex};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
-use crate::render::{RenderedTree, SourceCache};
+use crate::render::{RenderedTree, SourceCache, visible_full_line};
 use crate::scheduler::{ScheduledBatchRecord, Scheduler};
 use crate::walker::FsWalker;
 
@@ -196,7 +196,7 @@ fn graded_atoms(
                 let source = source_cache.get(&fixture_root.join(&path));
                 let source_line = source.as_deref().and_then(|s| s.line(line)).unwrap_or("");
                 let bytes = match render {
-                    Render::Full => source_line.len(),
+                    Render::Full => visible_full_line(source_line).len(),
                     Render::Ellipsis => 1,
                     Render::Truncated { pattern } => with_truncate_regex(&pattern, |re| {
                         re.and_then(|re| re.find(source_line).map(|m| m.end()))
