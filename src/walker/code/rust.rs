@@ -467,23 +467,27 @@ fn base_type_name<'a>(self_type: Node, file: &'a SourceFile) -> &'a str {
         .trim()
 }
 
-/// Top-level type and trait names → their visibility (`None`: hidden).
+/// Top-level type and trait names → their visibility (`None`: hidden). A
+/// name declared more than once (e.g. under `#[cfg(test)]` and
+/// `#[cfg(not(test))]`) takes its most visible declaration.
 fn declared_type_visibility(file: &SourceFile, root: Node) -> HashMap<String, Option<Visibility>> {
+    let mut declared: HashMap<String, Option<Visibility>> = HashMap::new();
     let mut cursor = root.walk();
-    root.named_children(&mut cursor)
-        .filter(|node| {
-            matches!(
-                node.kind(),
-                "struct_item" | "enum_item" | "union_item" | "type_item" | "trait_item"
-            )
-        })
-        .filter_map(|node| {
-            let name = file.text(node.child_by_field_name("name")?).to_string();
-            let visibility =
-                (!Leading::above(node, file).hidden).then(|| item_visibility(node, file));
-            Some((name, visibility))
-        })
-        .collect()
+    for node in root.named_children(&mut cursor) {
+        if !matches!(
+            node.kind(),
+            "struct_item" | "enum_item" | "union_item" | "type_item" | "trait_item"
+        ) {
+            continue;
+        }
+        let Some(name) = node.child_by_field_name("name") else {
+            continue;
+        };
+        let visibility = (!Leading::above(node, file).hidden).then(|| item_visibility(node, file));
+        let entry = declared.entry(file.text(name).to_string()).or_default();
+        *entry = (*entry).max(visibility);
+    }
+    declared
 }
 
 /// The row of the delimiter opening a `macro_rules!` body.
@@ -988,6 +992,30 @@ impl Sealed for Engine {}
         let display = &model.decls[3];
         assert_eq!(sorted(display.head.clone()), vec![8, 12]);
         assert_eq!(rows(&display.body), vec![vec![9]]);
+    }
+
+    #[test]
+    fn rust_extract_impl_of_a_type_with_a_test_substitute_stays_visible() {
+        for (first, second) in [("not(test)", "test"), ("test", "not(test)")] {
+            let source = format!(
+                "\
+#[cfg({first})]
+pub struct Client;
+#[cfg({second})]
+pub struct Client;
+impl Client {{
+    pub fn connect(&self) {{}}
+}}
+"
+            );
+            let (_, model) = extract_source("a.rs", &source);
+            let client_impl = model
+                .decls
+                .iter()
+                .find(|decl| !decl.members.is_empty())
+                .expect("impl Client admitted");
+            assert_eq!(client_impl.visibility, Visibility::Public);
+        }
     }
 
     #[test]
