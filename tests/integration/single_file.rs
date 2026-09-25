@@ -86,3 +86,18 @@ fn single_file_path_errors_when_missing() {
     let temp = tempfile::tempdir().unwrap();
     assert!(precis::render(&temp.path().join("absent.rs"), 3000, None).is_err());
 }
+
+#[cfg(unix)]
+#[test]
+fn single_file_path_errors_on_a_fifo_instead_of_reading_it() {
+    let temp = tempfile::tempdir().unwrap();
+    let fifo = temp.path().join("events.txt");
+    let status = std::process::Command::new("mkfifo")
+        .arg(&fifo)
+        .status()
+        .unwrap();
+    assert!(status.success());
+
+    let error = precis::render(&fifo, 3000, None).unwrap_err();
+    assert!(error.to_string().contains("regular file"), "{error}");
+}

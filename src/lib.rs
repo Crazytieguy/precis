@@ -91,6 +91,12 @@ fn walk_scope(path: &Path) -> Result<DirFilter> {
             .with_context(|| format!("failed to read directory {}", resolved.display()))?;
         return Ok(DirFilter::new(&resolved));
     }
+    if !resolved.is_file() {
+        bail!(
+            "{} is neither a directory nor a regular file",
+            path.display()
+        );
+    }
     // A named file that is a link gets the containment rule a listing
     // applies to a linked entry: it must resolve inside its own directory.
     let named_dir = match path.parent() {
