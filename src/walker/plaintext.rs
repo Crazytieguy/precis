@@ -3,7 +3,7 @@
 //!
 //! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
 //!    samples, contributor tooling config and project notes,
-//!    each rendered whole or as a head slice at one of four value tiers.
+//!    each rendered whole or as a head slice at one of three value tiers.
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
 //!    placeholders and document the deploy-facing config keys.
@@ -96,8 +96,8 @@ const DOTENV_BYTE_GATE: usize = 64 * 1024;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
     /// Contributor-toolchain config: ignore lists, editor / lint /
-    /// format config, version pins, `pnpm-workspace.yaml`, CI workflows
-    /// and hook / docs-site YAML.
+    /// format config, version pins, `pnpm-workspace.yaml`, and hook /
+    /// docs-site YAML.
     Tooling,
     /// Compact build/deploy entrypoints and plumbing (`Makefile`,
     /// `Taskfile`, `Dockerfile`, compose files, `configure.ac`, shell
@@ -709,10 +709,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let file = dir.join(name);
         // A `.sh` outside a build-script location falls through to the
         // fallback rather than out of the output.
-        let is_workflow = dir.strip_prefix(ctx.root()) == Ok(Path::new(".github/workflows"))
-            && (name.ends_with(".yml") || name.ends_with(".yaml"));
         let named = classify_plaintext(name)
-            .or(is_workflow.then_some(Class::Tooling))
             .filter(|_| !name.ends_with(".sh") || is_build_script_location(dir, ctx));
         // Root `README.rst` belongs to the markdown walker and parsed
         // languages to the code engine; a second slice of either would
@@ -753,7 +750,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     out
 }
 
-/// Four tiers. The ops surface (how the project is built, deployed and
+/// Three tiers. The ops surface (how the project is built, deployed and
 /// versioned) and an unparsed language's declaration surface sit at the
 /// top — the latter still below every parsed walker's roster, so it
 /// loses to any walker that understands the file. Project notes and

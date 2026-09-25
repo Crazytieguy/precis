@@ -1,4 +1,4 @@
-Score(3000)=0.592 I=0.574 C=0.610 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.573/0.497/0.592/0.719/0.656/0.731
+Score(3000)=0.592 I=0.574 C=0.610 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.606/0.573/0.497/0.592/0.719/0.656/0.738
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -116,28 +116,26 @@ Score(3000)=0.592 I=0.574 C=0.610 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 6254 | 126 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 8, sub: 0, line: 96 } |  |  | 0.656 |
 | ns | 6390 |  | 286 | embed(): singular vs plural relation resolution | 4.7 | 3.1 | 0.640 |
 | walker |  | 6473 | 219 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 5, sub: 0, line: 18 } |  |  | 0.642 |
-| walker |  | 6669 | 196 | Plaintext::Whole { file: .github/workflows/node.js.yml } |  |  | 0.642 |
 | ns | 6690 |  | 300 | nullifyForeignKey and deleteDependents | 4.8 | 3.1 | 0.623 |
 | ns | 6942 |  | 252 | paginate: clamping arithmetic (body head) | 4.9 | 3.9 | 0.633 |
 | ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.622 |
-| walker |  | 7498 | 829 | Code::CodeKey { rung: Body, file: src/matches-where.ts, decl: 1, sub: 0, line: 24 } |  |  | 0.682 |
-| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.664 |
-| walker |  | 7671 | 173 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.686 |
-| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.672 |
-| walker |  | 7924 | 253 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 0, line: 94 } |  |  | 0.696 |
-| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.704 |
-| walker |  | 8197 | 273 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 1, line: 94 } |  |  | 0.712 |
+| walker |  | 7302 | 829 | Code::CodeKey { rung: Body, file: src/matches-where.ts, decl: 1, sub: 0, line: 24 } |  |  | 0.682 |
+| walker |  | 7475 | 173 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.704 |
+| ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.686 |
+| walker |  | 7728 | 253 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 0, line: 94 } |  |  | 0.710 |
+| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.696 |
+| walker |  | 8001 | 273 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 1, line: 94 } |  |  | 0.705 |
+| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.712 |
 | ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.699 |
-| ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.692 |
-| walker |  | 8524 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.726 |
-| ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.729 |
-| walker |  | 8788 | 264 | Plaintext::Whole { file: .github/workflows/publish.yml } |  |  | 0.729 |
-| ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.717 |
-| walker |  | 9025 | 237 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.738 |
-| walker |  | 9056 | 31 | Json::Whole { file: .oxfmtrc.json } |  |  | 0.738 |
-| walker |  | 9107 | 51 | Plaintext::Whole { file: .gitignore } |  |  | 0.738 |
+| walker |  | 8328 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.733 |
+| ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.726 |
+| walker |  | 8565 | 237 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.747 |
+| ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.750 |
+| walker |  | 8596 | 31 | Json::Whole { file: .oxfmtrc.json } |  |  | 0.750 |
+| walker |  | 8647 | 51 | Plaintext::Whole { file: .gitignore } |  |  | 0.750 |
+| walker |  | 8872 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.750 |
+| ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.738 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.743 |
-| walker |  | 9332 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.743 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.734 |
 | ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.722 |
 | ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.713 |

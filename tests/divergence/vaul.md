@@ -1,4 +1,4 @@
-Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.798/0.733/0.654
+Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.690/0.750/0.797/0.877/0.798/0.733/0.658
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -132,18 +132,17 @@ Score(3000)=0.877 I=0.934 C=0.824 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 8614 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.658 |
 | ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.662 |
 | walker |  | 8649 | 35 | Markdown::HeadingsOutline { file: test/README.md } |  |  | 0.662 |
+| walker |  | 8880 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 5, sub: 0, line: 72 } |  |  | 0.662 |
 | ns | 8915 |  | 293 | Spec-suite to demo-route map for every Playwright file | 6.4 |  | 0.653 |
-| walker |  | 8960 | 311 | Plaintext::Whole { file: .github/workflows/playwright.yml } |  |  | 0.654 |
-| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.645 |
-| walker |  | 9191 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 5, sub: 0, line: 72 } |  |  | 0.645 |
-| ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.641 |
-| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.647 |
-| ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.643 |
-| ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.648 |
-| walker |  | 9707 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.652 |
+| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.644 |
+| ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.640 |
+| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.646 |
+| walker |  | 9396 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.650 |
+| ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.647 |
+| ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.651 |
+| walker |  | 9664 | 268 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 1, line: 15 } |  |  | 0.651 |
 | ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.655 |
-| ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.656 |
-| ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.660 |
-| walker |  | 9975 | 268 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 1, line: 15 } |  |  | 0.660 |
-| ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.656 |
-| walker |  | 9996 | 21 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.656 |
+| ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.655 |
+| ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.649 |
+| ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.646 |
+| walker |  | 9999 | 335 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 2, line: 15 } |  |  | 0.646 |

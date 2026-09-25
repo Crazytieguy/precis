@@ -1,4 +1,4 @@
-Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.754/0.793/0.804/0.711/0.703
+Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.754/0.793/0.817/0.676/0.678
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,41 +58,39 @@ Score(3000)=0.793 I=0.948 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.761 |
 | walker |  | 3676 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.763 |
 | ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.755 |
-| walker |  | 3796 | 120 | Plaintext::Whole { file: .github/workflows/compressed-size.yml } |  |  | 0.756 |
-| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.726 |
-| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.703 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.683 |
-| walker |  | 4694 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.814 |
+| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.725 |
+| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.702 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.682 |
+| walker |  | 4574 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.813 |
+| walker |  | 4593 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.813 |
+| walker |  | 4609 | 16 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.813 |
+| walker |  | 4683 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.813 |
+| walker |  | 4711 | 28 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.813 |
 | ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.793 |
-| walker |  | 4911 | 217 | Plaintext::Whole { file: .github/workflows/main.yml } |  |  | 0.833 |
-| walker |  | 4930 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.833 |
-| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.813 |
-| walker |  | 4946 | 16 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.813 |
-| walker |  | 5020 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.814 |
-| walker |  | 5048 | 28 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.814 |
-| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.795 |
-| walker |  | 5158 | 110 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.795 |
-| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.779 |
-| walker |  | 5323 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.780 |
-| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.758 |
-| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.741 |
-| walker |  | 5823 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.745 |
-| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.733 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.711 |
-| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.696 |
-| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.678 |
-| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.668 |
-| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.674 |
-| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.677 |
-| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.683 |
-| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.691 |
-| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.698 |
-| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.699 |
-| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.686 |
-| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.695 |
-| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.703 |
-| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.703 |
-| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.707 |
-| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.709 |
-| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.706 |
-| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.705 |
+| walker |  | 4821 | 110 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.794 |
+| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.775 |
+| walker |  | 4986 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.776 |
+| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.758 |
+| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.742 |
+| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.721 |
+| walker |  | 5486 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.725 |
+| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.708 |
+| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.697 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.676 |
+| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.662 |
+| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.645 |
+| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.635 |
+| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.642 |
+| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.645 |
+| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.653 |
+| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.661 |
+| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.670 |
+| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.671 |
+| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.659 |
+| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.668 |
+| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.678 |
+| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.679 |
+| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.673 |
+| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.676 |
+| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.672 |
+| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.672 |

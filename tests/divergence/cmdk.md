@@ -120,5 +120,5 @@ Score(3000)=0.809 I=0.929 C=0.705 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9850 | 186 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 11, sub: 0, line: 909 } |  |  | 0.501 |
 | walker |  | 9885 | 35 | Markdown::HeadingsOutline { file: website/README.md } |  |  | 0.501 |
 | ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.495 |
-| walker |  | 9987 | 102 | Plaintext::Whole { file: .github/workflows/test.yml } |  |  | 0.507 |
-| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.507 |
+| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.504 |
+| walker |  | 9994 | 109 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 787 } |  |  | 0.504 |
