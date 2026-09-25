@@ -279,39 +279,25 @@ fn class_body(
     (body, members)
 }
 
-/// `rows` split at blank lines into one [`Item`] per paragraph, without
-/// `excluded` rows. A paragraph holding only a closing `"""` / `'''`
-/// joins the one before it.
+/// A docstring's `rows` split into paragraphs, without `excluded` rows.
+/// A paragraph holding only a closing `"""` / `'''` joins the one
+/// before it.
 fn paragraphs(
     file: &SourceFile,
     rows: impl IntoIterator<Item = usize>,
     excluded: &HashSet<usize>,
 ) -> Vec<Item> {
     let mut items: Vec<Item> = Vec::new();
-    let mut current: Vec<usize> = Vec::new();
-    let flush = |current: &mut Vec<usize>, items: &mut Vec<Item>| {
-        if current.is_empty() {
-            return;
-        }
-        let closing_only = current
+    for item in file.paragraphs(rows.into_iter().filter(|row| !excluded.contains(row))) {
+        let closing_only = item
+            .rows
             .iter()
             .all(|row| matches!(file.line(*row).trim(), "\"\"\"" | "'''"));
         match items.last_mut() {
-            Some(last) if closing_only => last.rows.append(current),
-            _ => items.push(Item::new(current.drain(..))),
-        }
-    };
-    for row in rows {
-        if excluded.contains(&row) {
-            continue;
-        }
-        if file.line(row).trim().is_empty() {
-            flush(&mut current, &mut items);
-        } else {
-            current.push(row);
+            Some(last) if closing_only => last.rows.extend(item.rows),
+            _ => items.push(item),
         }
     }
-    flush(&mut current, &mut items);
     items
 }
 
