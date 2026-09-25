@@ -251,7 +251,7 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         "setup.cfg" => return Some(Class::PackageConfig),
         _ => {}
     }
-    if is_requirements_filename(&lower) {
+    if lower == "requirements.txt" {
         return Some(Class::Requirements);
     }
     if crate::value::is_dotenv_sample_filename(name) {
@@ -276,258 +276,6 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::Todo);
     }
     None
-}
-
-/// Names that *may* be a pip requirements roster: `requirements.txt`
-/// and the conventional qualified spellings (`requirements-dev.txt`,
-/// `dev-requirements.txt`). Without them a qualified roster falls to
-/// the `.txt` prose fallback, which prices it as an unclassified head
-/// slice rather than as the dependency list it is.
-///
-/// Name evidence alone is not enough for the qualified spellings —
-/// `requirements-notes.txt` attaches the word to a document, not a
-/// roster — so `expand_in_dir` confirms them against
-/// [`reads_as_requirements_roster`]. The split layout
-/// (`requirements/base.txt`) has no name evidence at all and is
-/// reached through [`is_split_requirements_file`] instead.
-fn is_requirements_filename(lower: &str) -> bool {
-    lower.strip_suffix(".txt").is_some_and(|stem| {
-        stem == "requirements"
-            || stem.starts_with("requirements-")
-            || stem.ends_with("-requirements")
-    })
-}
-
-/// A `.txt` directly beneath a `requirements/` directory — the split
-/// layout, where the roster names are `base.txt` / `dev.txt` /
-/// `docs.txt` and only the directory says what they are.
-fn is_split_requirements_file(name: &str, dir: &Path) -> bool {
-    name.to_ascii_lowercase().ends_with(".txt")
-        && dir
-            .file_name()
-            .and_then(|d| d.to_str())
-            .is_some_and(|d| d.eq_ignore_ascii_case("requirements"))
-}
-
-/// Bytes read when deciding whether a file reads as a requirements
-/// roster. Deliberately not [`PLAINTEXT_BYTE_GATE`]: that gate says how
-/// much of a file this walker is willing to *render*, and reusing it
-/// here would make "too big to print" mean "not a dependency list" — a
-/// generated freeze of a few hundred pins would be handed to the prose
-/// fallback without a single line being read. A roster's shape is
-/// evident in its first lines, so a bounded prefix decides it.
-const REQUIREMENTS_SNIFF_BYTES: usize = 4096;
-
-/// Whether a file's body reads as a pip requirements roster: most of
-/// its content lines are requirement specifiers rather than sentences.
-/// Required of every spelling except the exact `requirements.txt`,
-/// because the roster treatment is destructive when it lands on prose
-/// — an 8-line head sample behind a roster-sized byte gate turns a
-/// long notes document into nothing at all.
-fn reads_as_requirements_roster(file: &Path) -> bool {
-    let Some(prefix) = read_head_bytes(file, REQUIREMENTS_SNIFF_BYTES) else {
-        return false;
-    };
-    let (mut lines, mut specifiers) = (0usize, 0usize);
-    for line in prefix.lines() {
-        let body = strip_hash_comment(line);
-        if body.is_empty() {
-            continue;
-        }
-        lines += 1;
-        specifiers += usize::from(is_requirement_specifier(body));
-    }
-    lines > 0 && specifiers * 2 > lines
-}
-
-/// A file's leading `limit` bytes as text, truncated back to the last
-/// complete line so the caller never judges a half-read one. Lossy on
-/// purpose — this decides a classification, and a file whose prefix
-/// needs replacement characters is not a requirements roster anyway.
-fn read_head_bytes(file: &Path, limit: usize) -> Option<String> {
-    use std::io::Read;
-    let mut buf = Vec::with_capacity(limit);
-    std::fs::File::open(file)
-        .ok()?
-        .take(limit as u64)
-        .read_to_end(&mut buf)
-        .ok()?;
-    let text = String::from_utf8_lossy(&buf).into_owned();
-    if buf.len() < limit {
-        return Some(text);
-    }
-    let end = text.rfind('\n')?;
-    Some(text[..end].to_string())
-}
-
-/// A requirements line with its trailing comment removed. `#` only
-/// opens a comment at the start of the line or after whitespace —
-/// inside a direct reference it is the URL fragment that carries the
-/// `#egg=` name.
-fn strip_hash_comment(line: &str) -> &str {
-    let trimmed = line.trim();
-    if trimmed.starts_with('#') {
-        return "";
-    }
-    let mut after_space = false;
-    for (offset, ch) in trimmed.char_indices() {
-        if ch == '#' && after_space {
-            return trimmed[..offset].trim_end();
-        }
-        after_space = ch.is_whitespace();
-    }
-    trimmed
-}
-
-/// Whether one comment-stripped line is a requirements-file entry. The
-/// whole line has to fit one of the grammar's shapes, not just its
-/// first token — "Development requirements" opens with a valid
-/// distribution name and would pass any check that stops there.
-///
-/// The shapes: a pip option (`-r base.txt`, `-e .`, `--hash=sha256:…`),
-/// a direct reference (VCS URL, wheel URL, `file://`, a local path), or
-/// a distribution name followed by nothing but extras, a version
-/// constraint and an environment marker.
-fn is_requirement_specifier(body: &str) -> bool {
-    // A continuation backslash belongs to the line above's constraint
-    // list and says nothing about this line's shape.
-    let body = body.strip_suffix('\\').unwrap_or(body).trim_end();
-    if body.is_empty() {
-        return false;
-    }
-    if is_pip_option(body) {
-        return true;
-    }
-    let (spec, marker) = match body.split_once(';') {
-        Some((spec, marker)) => (spec.trim_end(), Some(marker.trim())),
-        None => (body, None),
-    };
-    if marker.is_some_and(|marker| !is_environment_marker(marker)) {
-        return false;
-    }
-    is_requirement_spec(spec)
-}
-
-/// `-r`/`-c`/`-e` and the `--long` options, but not a prose bullet:
-/// a short option is one letter followed by its argument separator, so
-/// `- pin urllib3` is not read as `-p`.
-fn is_pip_option(body: &str) -> bool {
-    if let Some(rest) = body.strip_prefix("--") {
-        return rest.starts_with(|c: char| c.is_ascii_alphabetic());
-    }
-    let Some(rest) = body.strip_prefix('-') else {
-        return false;
-    };
-    let mut chars = rest.chars();
-    chars.next().is_some_and(|c| c.is_ascii_alphabetic())
-        && chars.next().is_none_or(|c| c == ' ' || c == '=')
-}
-
-/// The marker half of a PEP 508 line: comparisons between environment
-/// variables and quoted literals (`python_version < "3.9"`). Prose
-/// after a semicolon has neither.
-fn is_environment_marker(marker: &str) -> bool {
-    !marker.is_empty()
-        && (marker.contains('\'')
-            || marker.contains('"')
-            || marker.contains("==")
-            || marker.contains("!=")
-            || marker.contains('<')
-            || marker.contains('>'))
-}
-
-/// The requirement half of a line, with any environment marker already
-/// removed.
-fn is_requirement_spec(spec: &str) -> bool {
-    let spec = spec.trim();
-    if spec.is_empty() {
-        return false;
-    }
-    if is_direct_reference(spec) {
-        return true;
-    }
-    // PEP 508 `name @ url`.
-    if let Some((name, url)) = spec.split_once('@') {
-        return is_distribution_name(name.trim()) && is_direct_reference(url.trim());
-    }
-    let (name, rest) = split_distribution_name(spec);
-    is_distribution_name(name) && is_version_constraint(rest)
-}
-
-/// A URL, VCS reference or local path standing on its own — the forms
-/// that carry no distribution name at all.
-fn is_direct_reference(spec: &str) -> bool {
-    if spec.split_whitespace().count() != 1 {
-        return false;
-    }
-    let lower = spec.to_ascii_lowercase();
-    ["git+", "hg+", "bzr+", "svn+"]
-        .iter()
-        .chain(["http://", "https://", "file://", "ftp://"].iter())
-        .any(|prefix| lower.starts_with(prefix))
-        || spec == "."
-        || spec.starts_with("./")
-        || spec.starts_with("../")
-        || spec.starts_with('/')
-}
-
-/// Split off the leading distribution name and its optional extras
-/// block, returning the name and whatever follows.
-fn split_distribution_name(spec: &str) -> (&str, &str) {
-    let name_end = spec
-        .find(|c: char| !c.is_ascii_alphanumeric() && !matches!(c, '.' | '_' | '-'))
-        .unwrap_or(spec.len());
-    let (name, rest) = spec.split_at(name_end);
-    let rest = rest.trim_start();
-    match rest.strip_prefix('[').and_then(|r| r.split_once(']')) {
-        Some((_, after_extras)) => (name, after_extras.trim_start()),
-        None => (name, rest),
-    }
-}
-
-fn is_distribution_name(name: &str) -> bool {
-    name.starts_with(|c: char| c.is_ascii_alphanumeric())
-        && name
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-'))
-}
-
-/// Whatever trails a distribution name: either nothing, or a version
-/// constraint list. The leading comparison operator is what separates
-/// `requests >= 2.0` from `Development requirements` — a second bare
-/// word is prose, not a constraint.
-fn is_version_constraint(rest: &str) -> bool {
-    let rest = rest.trim();
-    if rest.is_empty() {
-        return true;
-    }
-    let inner = rest
-        .strip_prefix('(')
-        .and_then(|r| r.strip_suffix(')'))
-        .unwrap_or(rest)
-        .trim();
-    inner.starts_with(['<', '>', '=', '!', '~'])
-        && inner.chars().all(|c| {
-            c.is_ascii_alphanumeric()
-                || c.is_ascii_whitespace()
-                || matches!(
-                    c,
-                    '.' | '*' | ',' | '<' | '>' | '=' | '!' | '~' | '+' | '-' | '_'
-                )
-        })
-}
-
-/// Whether a requirements roster is the project's runtime install
-/// list. Only the repository root's plain `requirements.txt` is: a
-/// qualified variant names the contributor toolchain it installs
-/// (`-dev`, `-docs`, `-test`), and one nested under `docs/`,
-/// `examples/` or `scripts/` is that subtree's install list rather
-/// than the project's. Everything else is the pip analogue of Cargo's
-/// `[dev-dependencies]` and npm's `devDependencies`, and gets their
-/// demotion — see [`crate::value::DEV_DEPENDENCY_ROSTER_SCALE`].
-fn is_runtime_requirements(file: &Path, ctx: &WalkCtx) -> bool {
-    file.file_name().and_then(|n| n.to_str()) == Some("requirements.txt")
-        && ctx.depth_from_root(file) == 1
 }
 
 /// File stems that never render regardless of extension — they
@@ -1009,20 +757,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // A named class whose location gate rejects it (a nested
         // `Makefile`, a `.sh` outside a build-script location) falls
         // through to the fallback rather than out of the output.
-        let named = classify_plaintext(&name)
-            .or_else(|| is_split_requirements_file(&name, dir).then_some(Class::Requirements))
-            .filter(|class| match class {
-                Class::BuildEntrypoint | Class::Dockerfile => dir == ctx.root(),
-                Class::BuildScript => is_build_script_location(&file, dir, ctx),
-                // Only the exact spelling is a roster on its name
-                // alone; every qualified or directory-derived one has
-                // to read like one too.
-                Class::Requirements => {
-                    name.eq_ignore_ascii_case("requirements.txt")
-                        || reads_as_requirements_roster(&file)
-                }
-                _ => true,
-            });
+        let named = classify_plaintext(&name).filter(|class| match class {
+            Class::BuildEntrypoint | Class::Dockerfile => dir == ctx.root(),
+            Class::BuildScript => is_build_script_location(&file, dir, ctx),
+            _ => true,
+        });
         // Root `README.rst` belongs to the markdown walker; emitting
         // a second slice of it would overlap its spans.
         let owned_by_markdown = dir == ctx.root() && super::markdown::is_readme_rst(&file);
@@ -1126,15 +865,8 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         // is whatever `.txt`/`.rst`/`.ini` happened to be in the tree.
         Class::SourceProse => (0.22, 0.30, 0.25),
     };
-    let dev_roster = if matches!(class, Class::Requirements) && !is_runtime_requirements(file, ctx)
-    {
-        crate::value::DEV_DEPENDENCY_ROSTER_SCALE
-    } else {
-        1.0
-    };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
         * small_build_file_factor(class, file, ctx)
-        * dev_roster
 }
 
 /// Conventional names for the file that says how a project is built
@@ -1974,13 +1706,8 @@ mod tests {
             ("configure.ac", Some(Class::BuildScript)),
             ("setup.cfg", Some(Class::PackageConfig)),
             ("requirements.txt", Some(Class::Requirements)),
-            ("requirements-dev.txt", Some(Class::Requirements)),
-            ("requirements-docs.txt", Some(Class::Requirements)),
-            ("dev-requirements.txt", Some(Class::Requirements)),
-            // Not a requirements roster: the qualifier has to attach to
-            // the word, not merely contain it. Falls to the `.txt`
-            // prose fallback, which `classify_plaintext` does not own.
-            ("requirementsfoo.txt", None),
+            ("Requirements.txt", Some(Class::Requirements)),
+            ("requirements-dev.txt", None),
             (".env.sample", Some(Class::DotenvSample)),
             (".env.example", Some(Class::DotenvSample)),
             (".env.template", Some(Class::DotenvSample)),
@@ -2073,164 +1800,6 @@ mod tests {
         assert_eq!(factor("configure.ac", Class::BuildScript), 1.0);
         // Class gate: the fallback tiers never receive the promotion.
         assert_eq!(factor("build.sh", Class::SourceProse), 1.0);
-    }
-
-    /// The class the walker lands on for `name`, via the batch key it
-    /// emits: a roster is a `Whole` batch, the prose fallback a
-    /// `DeclSurface` one.
-    fn expanded_key_kind(dir: &Path, ctx: &WalkCtx, name: &str) -> &'static str {
-        let file = dir.join(name);
-        expand_in_dir(dir, ctx)
-            .iter()
-            .find_map(|batch| match &batch.key {
-                BatchKey::Plaintext(PlaintextKey::Whole { file: f }) if *f == file => Some("whole"),
-                BatchKey::Plaintext(PlaintextKey::DeclSurface { file: f }) if *f == file => {
-                    Some("surface")
-                }
-                _ => None,
-            })
-            .unwrap_or("absent")
-    }
-
-    #[test]
-    fn plaintext_split_requirements_dir_files_are_rosters() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let reqs = root.join("requirements");
-        std::fs::create_dir(&reqs).unwrap();
-        // The canonical split layout: the per-file names carry no
-        // `requirements` token of their own.
-        std::fs::write(reqs.join("base.txt"), "django==5.0\nredis>=4\n").unwrap();
-        std::fs::write(reqs.join("dev.txt"), "-r base.txt\npytest\nruff == 0.5\n").unwrap();
-        // A prose sibling in the same directory is not promoted with them.
-        std::fs::write(
-            reqs.join("notes.txt"),
-            "We pin Django to the LTS line because the admin templates\n\
-             diverged after the 5.1 release and our overrides broke.\n",
-        )
-        .unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert_eq!(expanded_key_kind(&reqs, &ctx, "base.txt"), "whole");
-        assert_eq!(expanded_key_kind(&reqs, &ctx, "dev.txt"), "whole");
-        assert_eq!(expanded_key_kind(&reqs, &ctx, "notes.txt"), "surface");
-
-        // Neither is the project's runtime install list.
-        for name in ["base.txt", "dev.txt"] {
-            assert!(!is_runtime_requirements(&reqs.join(name), &ctx));
-        }
-    }
-
-    #[test]
-    fn plaintext_prose_under_a_requirements_name_is_not_a_roster() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::write(
-            root.join("requirements-notes.txt"),
-            "This document records why each pin exists. The urllib3 cap\n\
-             is a transitive constraint from botocore, not a choice we\n\
-             made, and it lifts once the SDK ships its 2.x support.\n",
-        )
-        .unwrap();
-        std::fs::write(
-            root.join("design-requirements.txt"),
-            "The exporter must stream rows rather than buffer them, and\n\
-             it must survive a mid-transfer disconnect without losing\n\
-             the cursor position it had reached.\n",
-        )
-        .unwrap();
-        std::fs::write(
-            root.join("requirements-dev.txt"),
-            "-r requirements.txt\npytest>=8\nruff\nmypy == 1.10\n",
-        )
-        .unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert_eq!(
-            expanded_key_kind(root, &ctx, "requirements-notes.txt"),
-            "surface",
-        );
-        assert_eq!(
-            expanded_key_kind(root, &ctx, "design-requirements.txt"),
-            "surface",
-        );
-        assert_eq!(
-            expanded_key_kind(root, &ctx, "requirements-dev.txt"),
-            "whole"
-        );
-    }
-
-    #[test]
-    fn plaintext_requirements_sniff_is_independent_of_the_render_gate() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        // A generated freeze is a roster no matter how long it is. The
-        // byte gate says how much this walker will render, and must not
-        // double as evidence about what the file *is*.
-        let body: String = (0..400)
-            .map(|i| format!("package-with-a-longish-name-{i}==1.{i}.0\n"))
-            .collect();
-        assert!(body.len() > PLAINTEXT_BYTE_GATE);
-        std::fs::write(root.join("requirements-dev.txt"), &body).unwrap();
-
-        // It classifies as a roster, so it takes the roster's fate at
-        // the render gate — suppressed, exactly as an oversized
-        // `requirements.txt` already is. What it must *not* do is fall
-        // to the prose fallback, which is what happens when the render
-        // gate is consulted as classification evidence.
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert_eq!(
-            expanded_key_kind(root, &ctx, "requirements-dev.txt"),
-            "absent",
-        );
-    }
-
-    #[test]
-    fn plaintext_requirement_specifier_covers_direct_references_and_rejects_terse_prose() {
-        for line in [
-            "git+https://github.com/psf/requests.git@v2.31.0#egg=requests",
-            "git+ssh://git@github.com/acme/lib.git",
-            "https://files.example.org/wheels/acme-1.0-py3-none-any.whl",
-            "file:///opt/wheels/acme-1.0.tar.gz",
-            "./vendor/acme",
-            "../shared",
-            ".",
-            "acme @ https://files.example.org/acme-1.0.tar.gz",
-            "uvicorn[standard] >= 0.30, < 0.40",
-            "numpy ; python_version < '3.9'",
-            "-r base.txt",
-            "--hash=sha256:0123456789abcdef",
-            "django==5.0 \\",
-        ] {
-            assert!(is_requirement_specifier(line), "specifier: {line:?}");
-        }
-        for line in [
-            "Development requirements",
-            "Run tests locally",
-            "Install these first",
-            "Pinned for CI",
-            "- pin urllib3",
-        ] {
-            assert!(!is_requirement_specifier(line), "prose: {line:?}");
-        }
-    }
-
-    #[test]
-    fn plaintext_vcs_only_split_roster_is_a_roster() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let reqs = root.join("requirements");
-        std::fs::create_dir(&reqs).unwrap();
-        std::fs::write(
-            reqs.join("vendor.txt"),
-            "git+https://github.com/acme/lib.git@main#egg=lib\n\
-             https://files.example.org/wheels/acme-1.0-py3-none-any.whl\n\
-             file:///opt/wheels/tool-2.0.tar.gz\n",
-        )
-        .unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert_eq!(expanded_key_kind(&reqs, &ctx, "vendor.txt"), "whole");
     }
 
     #[test]
@@ -2614,29 +2183,6 @@ CMD [\"node\", \"index.js\"]\n";
         let lines = head_lines(12, REQUIREMENTS_HEAD_LINE_CAP);
         assert_eq!(lines.full, vec![1, 2, 3, 4, 5, 6, 7, 8]);
         assert_eq!(lines.ellipses, vec![9]);
-    }
-
-    #[test]
-    fn plaintext_non_runtime_requirements_price_as_dev_rosters() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        std::fs::create_dir(root.join("docs")).unwrap();
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let runtime = class_value(Class::Requirements, &root.join("requirements.txt"), &ctx);
-        for name in ["requirements-dev.txt", "dev-requirements.txt"] {
-            let dev = class_value(Class::Requirements, &root.join(name), &ctx);
-            assert!(
-                (dev / runtime - crate::value::DEV_DEPENDENCY_ROSTER_SCALE).abs() < 1e-9,
-                "{name} must carry the dev-roster demotion: {dev} vs {runtime}",
-            );
-        }
-        // A nested `requirements.txt` is that subtree's install list,
-        // not the project's — same demotion, before depth pricing.
-        let nested = root.join("docs").join("requirements.txt");
-        assert!(
-            class_value(Class::Requirements, &nested, &ctx)
-                < runtime * crate::value::DEV_DEPENDENCY_ROSTER_SCALE * 1.000_001,
-        );
     }
 
     #[test]

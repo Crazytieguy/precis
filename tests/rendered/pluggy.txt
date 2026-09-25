@@ -107,6 +107,10 @@ docs/
     toy-example.py
   index.rst
   requirements.txt
+    1→# Higher bound for safety, can bump it if builds fine with new major versions.
+    2→sphinx>=6,<8
+    3→pygments
+    4→towncrier
 downstream/
   .gitignore
   README.md

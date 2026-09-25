@@ -132,53 +132,55 @@ Score(3000)=0.417 I=0.756 C=0.230 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 6674 | 13 | python doc src/tomli/_parser.py:149 |  |  | 0.496 |
 | walker |  | 6688 | 14 | python doc src/tomli/_parser.py:220 |  |  | 0.499 |
 | ns | 6690 |  | 179 | parse_key_part(): bare, literal and basic key forms | 4.6 | 2.1 | 0.492 |
-| walker |  | 6872 | 184 | README.md section #27 |  |  | 0.492 |
-| walker |  | 6934 | 62 | python names fuzzer/fuzz.py |  |  | 0.492 |
+| walker |  | 6696 | 8 | plaintext config scripts/requirements.txt |  |  | 0.492 |
+| walker |  | 6880 | 184 | README.md section #27 |  |  | 0.492 |
+| walker |  | 6942 | 62 | python names fuzzer/fuzz.py |  |  | 0.492 |
 | ns | 6975 |  | 285 | parse_array(): array literals and trailing commas | 4.7 | 2.1 | 0.480 |
-| walker |  | 6994 | 60 | python decl benchmark/run.py:15 |  |  | 0.480 |
-| walker |  | 7122 | 128 | tomllib.md section #6 |  |  | 0.480 |
-| walker |  | 7137 | 15 | python doc src/tomli/_parser.py:137 |  |  | 0.484 |
-| walker |  | 7409 | 272 | tool.mypy config in pyproject.toml |  |  | 0.484 |
-| walker |  | 7424 | 15 | python body src/tomli/_parser.py:595 |  |  | 0.484 |
+| walker |  | 7002 | 60 | python decl benchmark/run.py:15 |  |  | 0.480 |
+| walker |  | 7011 | 9 | plaintext config profiler/requirements.txt |  |  | 0.480 |
+| walker |  | 7139 | 128 | tomllib.md section #6 |  |  | 0.480 |
+| walker |  | 7154 | 15 | python doc src/tomli/_parser.py:137 |  |  | 0.484 |
+| walker |  | 7426 | 272 | tool.mypy config in pyproject.toml |  |  | 0.484 |
+| walker |  | 7441 | 15 | python body src/tomli/_parser.py:595 |  |  | 0.484 |
 | ns | 7464 |  | 489 | parse_inline_table(): inline tables and their local flag scope | 4.8 | 2.1 | 0.468 |
-| walker |  | 7475 | 51 | headings outline in benchmark/README.md |  |  | 0.468 |
+| walker |  | 7492 | 51 | headings outline in benchmark/README.md |  |  | 0.468 |
 | ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.463 |
-| walker |  | 7736 | 261 | README.md section #24 |  |  | 0.463 |
+| walker |  | 7753 | 261 | README.md section #24 |  |  | 0.463 |
 | ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.459 |
-| walker |  | 7822 | 86 | python names tests/burntsushi.py |  |  | 0.464 |
-| walker |  | 7846 | 24 | python body src/tomli/_parser.py:497 |  |  | 0.465 |
-| walker |  | 7859 | 13 | python body src/tomli/_parser.py:233 |  |  | 0.467 |
-| walker |  | 7886 | 27 | python body src/tomli/_parser.py:760 |  |  | 0.467 |
-| walker |  | 7918 | 32 | python doc src/tomli/_parser.py:71 |  |  | 0.475 |
-| walker |  | 7937 | 19 | python body src/tomli/_parser.py:313 |  |  | 0.482 |
-| walker |  | 7988 | 51 | python body src/tomli/_parser.py:318 |  |  | 0.482 |
-| walker |  | 8016 | 28 | python body src/tomli/_parser.py:279 |  |  | 0.488 |
+| walker |  | 7839 | 86 | python names tests/burntsushi.py |  |  | 0.464 |
+| walker |  | 7863 | 24 | python body src/tomli/_parser.py:497 |  |  | 0.465 |
+| walker |  | 7876 | 13 | python body src/tomli/_parser.py:233 |  |  | 0.467 |
+| walker |  | 7903 | 27 | python body src/tomli/_parser.py:760 |  |  | 0.467 |
+| walker |  | 7935 | 32 | python doc src/tomli/_parser.py:71 |  |  | 0.475 |
+| walker |  | 7954 | 19 | python body src/tomli/_parser.py:313 |  |  | 0.482 |
+| walker |  | 8005 | 51 | python body src/tomli/_parser.py:318 |  |  | 0.482 |
+| walker |  | 8033 | 28 | python body src/tomli/_parser.py:279 |  |  | 0.488 |
 | ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.479 |
-| walker |  | 8086 | 70 | python body src/tomli/_parser.py:361 |  |  | 0.479 |
-| walker |  | 8124 | 38 | python body src/tomli/_parser.py:229 |  |  | 0.485 |
-| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.490 |
-| walker |  | 8162 | 38 | python body src/tomli/_parser.py:236 |  |  | 0.492 |
-| walker |  | 8252 | 90 | python body src/tomli/_parser.py:612 |  |  | 0.502 |
-| walker |  | 8347 | 95 | python doc src/tomli/_parser.py:764 |  |  | 0.507 |
-| ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.498 |
-| walker |  | 8444 | 97 | python body src/tomli/_parser.py:137 |  |  | 0.509 |
+| walker |  | 8103 | 70 | python body src/tomli/_parser.py:361 |  |  | 0.479 |
+| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.485 |
+| walker |  | 8141 | 38 | python body src/tomli/_parser.py:229 |  |  | 0.490 |
+| walker |  | 8179 | 38 | python body src/tomli/_parser.py:236 |  |  | 0.492 |
+| walker |  | 8269 | 90 | python body src/tomli/_parser.py:612 |  |  | 0.502 |
+| ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.494 |
+| walker |  | 8364 | 95 | python doc src/tomli/_parser.py:764 |  |  | 0.498 |
+| walker |  | 8461 | 97 | python body src/tomli/_parser.py:137 |  |  | 0.509 |
 | ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.520 |
-| walker |  | 8544 | 100 | python body src/tomli/_parser.py:349 |  |  | 0.520 |
-| walker |  | 8654 | 110 | python doc src/tomli/_parser.py:76 |  |  | 0.540 |
-| walker |  | 8718 | 64 | python body src/tomli/_parser.py:241 |  |  | 0.541 |
+| walker |  | 8561 | 100 | python body src/tomli/_parser.py:349 |  |  | 0.520 |
+| walker |  | 8671 | 110 | python doc src/tomli/_parser.py:76 |  |  | 0.540 |
+| walker |  | 8735 | 64 | python body src/tomli/_parser.py:241 |  |  | 0.541 |
 | ns | 8772 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.552 |
-| walker |  | 8848 | 130 | python body src/tomli/_parser.py:764 |  |  | 0.569 |
+| walker |  | 8865 | 130 | python body src/tomli/_parser.py:764 |  |  | 0.569 |
 | ns | 8901 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.568 |
-| walker |  | 8996 | 148 | python body src/tomli/_parser.py:447 |  |  | 0.568 |
+| walker |  | 9013 | 148 | python body src/tomli/_parser.py:447 |  |  | 0.568 |
 | ns | 9133 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.562 |
-| walker |  | 9144 | 148 | python body src/tomli/_parser.py:599 |  |  | 0.575 |
-| walker |  | 9300 | 156 | python body src/tomli/_parser.py:327 |  |  | 0.575 |
+| walker |  | 9161 | 148 | python body src/tomli/_parser.py:599 |  |  | 0.575 |
+| walker |  | 9317 | 156 | python body src/tomli/_parser.py:327 |  |  | 0.575 |
 | ns | 9339 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.579 |
-| walker |  | 9465 | 165 | python body src/tomli/_parser.py:481 |  |  | 0.593 |
-| ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.586 |
+| ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.572 |
+| walker |  | 9482 | 165 | python body src/tomli/_parser.py:481 |  |  | 0.586 |
 | ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.582 |
-| walker |  | 9649 | 184 | python body src/tomli/_parser.py:463 |  |  | 0.582 |
-| walker |  | 9758 | 109 | python body src/tomli/_parser.py:300 |  |  | 0.583 |
+| walker |  | 9666 | 184 | python body src/tomli/_parser.py:463 |  |  | 0.582 |
+| walker |  | 9775 | 109 | python body src/tomli/_parser.py:300 |  |  | 0.583 |
 | ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.577 |
-| walker |  | 9880 | 122 | python body src/tomli/_parser.py:283 |  |  | 0.578 |
+| walker |  | 9897 | 122 | python body src/tomli/_parser.py:283 |  |  | 0.578 |
 | ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.572 |

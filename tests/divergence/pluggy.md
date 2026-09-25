@@ -1,4 +1,4 @@
-Score(3000)=0.644 I=0.777 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.467/0.610/0.605/0.644/0.584/0.546/0.515
+Score(3000)=0.644 I=0.777 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.467/0.610/0.605/0.644/0.574/0.546/0.515
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -70,113 +70,114 @@ Score(3000)=0.644 I=0.777 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 2881 | 8 | python decl src/pluggy/_result.py:56 |  |  | 0.639 |
 | ns | 2887 |  | 324 | Complete symbol rosters for the two remaining modules: `_tracing.py` and `_warnings.py` | 2.7 |  | 0.644 |
 | walker |  | 2921 | 40 | python decl src/pluggy/_result.py:31 |  |  | 0.644 |
-| walker |  | 3273 | 352 | python names src/pluggy/_hooks.py |  |  | 0.659 |
-| ns | 3298 |  | 411 | Complete section map of the 1082-line manual `docs/index.rst` | 2.8 |  | 0.603 |
-| walker |  | 3353 | 80 | python decl src/pluggy/_hooks.py:358 |  |  | 0.603 |
-| walker |  | 3377 | 24 | python decl src/pluggy/_hooks.py:377 |  |  | 0.603 |
-| walker |  | 3471 | 94 | python decl src/pluggy/_hooks.py:77 |  |  | 0.603 |
+| walker |  | 2968 | 47 | plaintext config docs/requirements.txt |  |  | 0.644 |
+| ns | 3298 |  | 411 | Complete section map of the 1082-line manual `docs/index.rst` | 2.8 |  | 0.589 |
+| walker |  | 3320 | 352 | python names src/pluggy/_hooks.py |  |  | 0.603 |
+| walker |  | 3400 | 80 | python decl src/pluggy/_hooks.py:358 |  |  | 0.603 |
+| walker |  | 3424 | 24 | python decl src/pluggy/_hooks.py:377 |  |  | 0.603 |
+| walker |  | 3518 | 94 | python decl src/pluggy/_hooks.py:77 |  |  | 0.603 |
 | ns | 3543 |  | 245 | The real call signatures of `@hookspec` and `@hookimpl` — every accepted option with its default | 3.1 |  | 0.581 |
-| walker |  | 3565 | 94 | python decl src/pluggy/_hooks.py:164 |  |  | 0.581 |
-| walker |  | 3599 | 34 | python decl src/pluggy/_hooks.py:33 |  |  | 0.581 |
-| walker |  | 3728 | 129 | python decl src/pluggy/_hooks.py:696 |  |  | 0.583 |
+| walker |  | 3612 | 94 | python decl src/pluggy/_hooks.py:164 |  |  | 0.581 |
+| walker |  | 3646 | 34 | python decl src/pluggy/_hooks.py:33 |  |  | 0.581 |
+| walker |  | 3775 | 129 | python decl src/pluggy/_hooks.py:696 |  |  | 0.583 |
 | ns | 3791 |  | 248 | `HookimplOpts` in full: every hook-implementation option and what it means | 3.2 | 2.3 | 0.563 |
-| walker |  | 3879 | 151 | python decl src/pluggy/_hooks.py:638 |  |  | 0.566 |
-| walker |  | 3942 | 63 | python decl src/pluggy/_hooks.py:656 |  |  | 0.566 |
+| walker |  | 3926 | 151 | python decl src/pluggy/_hooks.py:638 |  |  | 0.566 |
 | ns | 3975 |  | 184 | `HookspecOpts` in full: every hook-specification option | 3.3 | 2.3 | 0.553 |
-| walker |  | 4106 | 164 | python decl src/pluggy/_hooks.py:40 |  |  | 0.574 |
-| walker |  | 4201 | 95 | python decl src/pluggy/_hooks.py:91 |  |  | 0.574 |
-| walker |  | 4298 | 97 | python decl src/pluggy/_hooks.py:111 |  |  | 0.584 |
-| walker |  | 4401 | 103 | python decl src/pluggy/_hooks.py:101 |  |  | 0.584 |
+| walker |  | 3989 | 63 | python decl src/pluggy/_hooks.py:656 |  |  | 0.553 |
+| walker |  | 4153 | 164 | python decl src/pluggy/_hooks.py:40 |  |  | 0.574 |
+| walker |  | 4248 | 95 | python decl src/pluggy/_hooks.py:91 |  |  | 0.574 |
+| walker |  | 4345 | 97 | python decl src/pluggy/_hooks.py:111 |  |  | 0.584 |
 | ns | 4407 |  | 432 | Hook implementation ordering: the `_hookimpls` layout comment and `_add_hookimpl` in full | 3.4 | 2.4 | 0.556 |
-| walker |  | 4511 | 110 | python decl src/pluggy/_hooks.py:178 |  |  | 0.557 |
+| walker |  | 4448 | 103 | python decl src/pluggy/_hooks.py:101 |  |  | 0.556 |
+| walker |  | 4558 | 110 | python decl src/pluggy/_hooks.py:178 |  |  | 0.557 |
 | ns | 4613 |  | 206 | `HookCaller.__call__` in full: what `pm.hook.myhook(...)` actually does | 3.5 | 2.4 | 0.544 |
-| walker |  | 4623 | 112 | python decl src/pluggy/_hooks.py:202 |  |  | 0.570 |
-| walker |  | 4741 | 118 | python decl src/pluggy/_hooks.py:190 |  |  | 0.570 |
-| walker |  | 4967 | 226 | python decl src/pluggy/_hooks.py:56 |  |  | 0.597 |
+| walker |  | 4670 | 112 | python decl src/pluggy/_hooks.py:202 |  |  | 0.570 |
+| walker |  | 4788 | 118 | python decl src/pluggy/_hooks.py:190 |  |  | 0.570 |
+| walker |  | 5014 | 226 | python decl src/pluggy/_hooks.py:56 |  |  | 0.597 |
 | ns | 5078 |  | 465 | `_multicall` part 1: the setup / non-wrapper call loop | 3.6 |  | 0.565 |
-| walker |  | 5261 | 294 | python decl src/pluggy/_hooks.py:382 |  |  | 0.588 |
-| walker |  | 5292 | 31 | python decl src/pluggy/_hooks.py:543 |  |  | 0.588 |
-| walker |  | 5333 | 41 | python decl src/pluggy/_hooks.py:424 |  |  | 0.588 |
-| walker |  | 5385 | 52 | python decl src/pluggy/_hooks.py:516 |  |  | 0.589 |
-| walker |  | 5455 | 70 | python decl src/pluggy/_hooks.py:393 |  |  | 0.589 |
-| walker |  | 5486 | 31 | python doc src/pluggy/_callers.py:27 |  |  | 0.589 |
+| walker |  | 5308 | 294 | python decl src/pluggy/_hooks.py:382 |  |  | 0.588 |
+| walker |  | 5339 | 31 | python decl src/pluggy/_hooks.py:543 |  |  | 0.588 |
+| walker |  | 5380 | 41 | python decl src/pluggy/_hooks.py:424 |  |  | 0.588 |
+| walker |  | 5432 | 52 | python decl src/pluggy/_hooks.py:516 |  |  | 0.589 |
+| walker |  | 5502 | 70 | python decl src/pluggy/_hooks.py:393 |  |  | 0.589 |
 | ns | 5521 |  | 443 | `_multicall` part 2: the teardown loop, exception routing and `firstresult` collapse | 3.7 | 3.6 | 0.557 |
-| walker |  | 5545 | 59 | python decl src/pluggy/_callers.py:82 |  |  | 0.568 |
-| walker |  | 5554 | 9 | python body src/pluggy/_manager.py:68 |  |  | 0.568 |
-| walker |  | 5567 | 13 | python body src/pluggy/_tracing.py:64 |  |  | 0.568 |
-| walker |  | 5589 | 22 | python names docs/examples/eggsample/eggsample/__init__.py |  |  | 0.568 |
-| walker |  | 5599 | 10 | python body src/pluggy/_result.py:51 |  |  | 0.568 |
-| walker |  | 5616 | 17 | python body src/pluggy/_tracing.py:67 |  |  | 0.568 |
-| walker |  | 5626 | 10 | python doc src/pluggy/_result.py:51 |  |  | 0.568 |
-| walker |  | 5639 | 13 | python body src/pluggy/_manager.py:76 |  |  | 0.568 |
+| walker |  | 5533 | 31 | python doc src/pluggy/_callers.py:27 |  |  | 0.557 |
+| walker |  | 5592 | 59 | python decl src/pluggy/_callers.py:82 |  |  | 0.568 |
+| walker |  | 5601 | 9 | python body src/pluggy/_manager.py:68 |  |  | 0.568 |
+| walker |  | 5614 | 13 | python body src/pluggy/_tracing.py:64 |  |  | 0.568 |
+| walker |  | 5636 | 22 | python names docs/examples/eggsample/eggsample/__init__.py |  |  | 0.568 |
+| walker |  | 5646 | 10 | python body src/pluggy/_result.py:51 |  |  | 0.568 |
+| walker |  | 5663 | 17 | python body src/pluggy/_tracing.py:67 |  |  | 0.568 |
+| walker |  | 5673 | 10 | python doc src/pluggy/_result.py:51 |  |  | 0.568 |
 | ns | 5677 |  | 156 | `PluginManager.register` docstring: naming, blocking and the duplicate-registration contract | 3.8 | 2.1 | 0.559 |
-| walker |  | 5679 | 40 | declaration surface of changelog/590.trivial.rst |  |  | 0.559 |
-| walker |  | 5776 | 97 | declaration surface of tox.ini |  |  | 0.559 |
+| walker |  | 5686 | 13 | python body src/pluggy/_manager.py:76 |  |  | 0.559 |
+| walker |  | 5726 | 40 | declaration surface of changelog/590.trivial.rst |  |  | 0.559 |
+| walker |  | 5823 | 97 | declaration surface of tox.ini |  |  | 0.559 |
 | ns | 5973 |  | 296 | `PluginManager.register` body: how hook implementations are discovered and attached | 3.9 | 3.8 | 0.546 |
-| walker |  | 6116 | 340 | python decl src/pluggy/_hooks.py:593 |  |  | 0.546 |
-| walker |  | 6124 | 8 | python decl src/pluggy/_hooks.py:626 |  |  | 0.546 |
-| walker |  | 6132 | 8 | python decl src/pluggy/_hooks.py:630 |  |  | 0.546 |
-| walker |  | 6147 | 15 | python decl src/pluggy/_hooks.py:618 |  |  | 0.546 |
-| walker |  | 6360 | 213 | python decl src/pluggy/_manager.py:83 |  |  | 0.554 |
-| walker |  | 6391 | 31 | python decl src/pluggy/_manager.py:278 |  |  | 0.554 |
-| walker |  | 6426 | 35 | python decl src/pluggy/_manager.py:201 |  |  | 0.554 |
+| walker |  | 6163 | 340 | python decl src/pluggy/_hooks.py:593 |  |  | 0.546 |
+| walker |  | 6171 | 8 | python decl src/pluggy/_hooks.py:626 |  |  | 0.546 |
+| walker |  | 6179 | 8 | python decl src/pluggy/_hooks.py:630 |  |  | 0.546 |
+| walker |  | 6194 | 15 | python decl src/pluggy/_hooks.py:618 |  |  | 0.546 |
+| walker |  | 6407 | 213 | python decl src/pluggy/_manager.py:83 |  |  | 0.554 |
 | ns | 6431 |  | 458 | `PluginManager._verify_hook`: every validation error message pluggy can raise | 3.10 | 2.1 | 0.535 |
-| walker |  | 6490 | 64 | python decl src/pluggy/_manager.py:114 |  |  | 0.535 |
-| walker |  | 6508 | 18 | python body src/pluggy/_tracing.py:60 |  |  | 0.535 |
-| walker |  | 6520 | 12 | python doc src/pluggy/_result.py:31 |  |  | 0.535 |
+| walker |  | 6438 | 31 | python decl src/pluggy/_manager.py:278 |  |  | 0.535 |
+| walker |  | 6473 | 35 | python decl src/pluggy/_manager.py:201 |  |  | 0.535 |
+| walker |  | 6537 | 64 | python decl src/pluggy/_manager.py:114 |  |  | 0.535 |
+| walker |  | 6555 | 18 | python body src/pluggy/_tracing.py:60 |  |  | 0.535 |
+| walker |  | 6567 | 12 | python doc src/pluggy/_result.py:31 |  |  | 0.535 |
 | ns | 6627 |  | 196 | `PluginManager.__init__`: the complete state of a plugin manager | 3.11 | 2.1 | 0.528 |
-| walker |  | 6654 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.528 |
-| walker |  | 6668 | 14 | python names scripts/towncrier-draft-to-file.py |  |  | 0.528 |
-| walker |  | 6964 | 296 | python decl src/pluggy/_manager.py:83 #1 |  |  | 0.562 |
-| walker |  | 6992 | 28 | python decl src/pluggy/_manager.py:512 |  |  | 0.562 |
-| ns | 6993 |  | 366 | Historic hooks end to end: `set_specification`, `call_historic`, `_maybe_apply_history` | 3.12 | 2.4 | 0.547 |
-| walker |  | 7023 | 31 | python decl src/pluggy/_manager.py:450 |  |  | 0.547 |
-| walker |  | 7035 | 12 | python doc src/pluggy/_result.py:42 |  |  | 0.547 |
-| walker |  | 7073 | 38 | dev/build/target dependencies in pyproject.toml |  |  | 0.547 |
-| walker |  | 7157 | 84 | declaration surface of downstream/tox.sh |  |  | 0.547 |
+| walker |  | 6701 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.528 |
+| walker |  | 6715 | 14 | python names scripts/towncrier-draft-to-file.py |  |  | 0.528 |
+| ns | 6993 |  | 366 | Historic hooks end to end: `set_specification`, `call_historic`, `_maybe_apply_history` | 3.12 | 2.4 | 0.514 |
+| walker |  | 7011 | 296 | python decl src/pluggy/_manager.py:83 #1 |  |  | 0.547 |
+| walker |  | 7039 | 28 | python decl src/pluggy/_manager.py:512 |  |  | 0.547 |
+| walker |  | 7070 | 31 | python decl src/pluggy/_manager.py:450 |  |  | 0.547 |
+| walker |  | 7082 | 12 | python doc src/pluggy/_result.py:42 |  |  | 0.547 |
+| walker |  | 7120 | 38 | dev/build/target dependencies in pyproject.toml |  |  | 0.547 |
 | ns | 7193 |  | 200 | Complete attribute sets of `HookImpl` and `HookSpec` (`__slots__`) | 3.13 |  | 0.561 |
-| walker |  | 7244 | 87 | declaration surface of downstream/conda.sh |  |  | 0.561 |
-| walker |  | 7256 | 12 | python doc src/pluggy/_result.py:56 |  |  | 0.561 |
-| walker |  | 7346 | 90 | declaration surface of docs/api_reference.rst |  |  | 0.561 |
-| walker |  | 7437 | 91 | declaration surface of downstream/pytest.sh |  |  | 0.561 |
+| walker |  | 7204 | 84 | declaration surface of downstream/tox.sh |  |  | 0.561 |
+| walker |  | 7291 | 87 | declaration surface of downstream/conda.sh |  |  | 0.561 |
+| walker |  | 7303 | 12 | python doc src/pluggy/_result.py:56 |  |  | 0.561 |
+| walker |  | 7393 | 90 | declaration surface of docs/api_reference.rst |  |  | 0.561 |
+| walker |  | 7484 | 91 | declaration surface of downstream/pytest.sh |  |  | 0.561 |
 | ns | 7503 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.547 |
-| walker |  | 7530 | 93 | declaration surface of downstream/datasette.sh |  |  | 0.547 |
+| walker |  | 7577 | 93 | declaration surface of downstream/datasette.sh |  |  | 0.547 |
 | ns | 7697 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.539 |
-| walker |  | 7719 | 189 | python doc src/pluggy/_warnings.py:10 |  |  | 0.545 |
-| walker |  | 7814 | 95 | declaration surface of downstream/hatch.sh |  |  | 0.545 |
-| walker |  | 7913 | 99 | declaration surface of changelog/_template.rst |  |  | 0.545 |
-| walker |  | 7924 | 11 | listing of 'docs/examples/eggsample-spam' |  |  | 0.551 |
-| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.544 |
-| walker |  | 8032 | 108 | declaration surface of downstream/devpi.sh |  |  | 0.544 |
-| walker |  | 8059 | 27 | python names testing/test_result.py |  |  | 0.544 |
-| walker |  | 8197 | 138 | declaration surface of downstream/python-lsp-server.sh |  |  | 0.544 |
+| walker |  | 7766 | 189 | python doc src/pluggy/_warnings.py:10 |  |  | 0.545 |
+| walker |  | 7861 | 95 | declaration surface of downstream/hatch.sh |  |  | 0.545 |
+| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.539 |
+| walker |  | 7960 | 99 | declaration surface of changelog/_template.rst |  |  | 0.539 |
+| walker |  | 7971 | 11 | listing of 'docs/examples/eggsample-spam' |  |  | 0.544 |
+| walker |  | 8079 | 108 | declaration surface of downstream/devpi.sh |  |  | 0.544 |
+| walker |  | 8106 | 27 | python names testing/test_result.py |  |  | 0.544 |
+| walker |  | 8244 | 138 | declaration surface of downstream/python-lsp-server.sh |  |  | 0.544 |
 | ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.530 |
-| walker |  | 8327 | 130 | README.rst section #1 |  |  | 0.530 |
-| walker |  | 8362 | 35 | python names testing/conftest.py |  |  | 0.530 |
-| walker |  | 8370 | 8 | python decl testing/conftest.py:23 |  |  | 0.530 |
-| walker |  | 8402 | 32 | python doc src/pluggy/_result.py:24 |  |  | 0.534 |
-| walker |  | 8451 | 49 | python body src/pluggy/_tracing.py:17 |  |  | 0.534 |
-| walker |  | 8507 | 56 | python doc src/pluggy/_callers.py:82 |  |  | 0.534 |
+| walker |  | 8374 | 130 | README.rst section #1 |  |  | 0.530 |
+| walker |  | 8409 | 35 | python names testing/conftest.py |  |  | 0.530 |
+| walker |  | 8417 | 8 | python decl testing/conftest.py:23 |  |  | 0.530 |
+| walker |  | 8449 | 32 | python doc src/pluggy/_result.py:24 |  |  | 0.534 |
+| walker |  | 8498 | 49 | python body src/pluggy/_tracing.py:17 |  |  | 0.534 |
 | ns | 8540 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.524 |
-| walker |  | 8553 | 46 | python decl testing/conftest.py:7 |  |  | 0.524 |
-| walker |  | 8566 | 13 | python body src/pluggy/_manager.py:425 |  |  | 0.524 |
+| walker |  | 8554 | 56 | python doc src/pluggy/_callers.py:82 |  |  | 0.524 |
+| walker |  | 8600 | 46 | python decl testing/conftest.py:7 |  |  | 0.524 |
+| walker |  | 8613 | 13 | python body src/pluggy/_manager.py:425 |  |  | 0.524 |
 | ns | 8760 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.515 |
-| walker |  | 8909 | 343 | python names docs/conf.py |  |  | 0.515 |
-| walker |  | 8937 | 28 | python decl docs/conf.py:54 |  |  | 0.515 |
-| walker |  | 8944 | 7 | python body docs/conf.py:130 |  |  | 0.515 |
-| walker |  | 9012 | 68 | python decl docs/conf.py:9 |  |  | 0.515 |
-| walker |  | 9093 | 81 | python decl docs/conf.py:83 |  |  | 0.515 |
+| walker |  | 8956 | 343 | python names docs/conf.py |  |  | 0.515 |
+| walker |  | 8984 | 28 | python decl docs/conf.py:54 |  |  | 0.515 |
+| walker |  | 8991 | 7 | python body docs/conf.py:130 |  |  | 0.515 |
+| walker |  | 9059 | 68 | python decl docs/conf.py:9 |  |  | 0.515 |
 | ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.504 |
-| walker |  | 9227 | 134 | python decl docs/conf.py:96 |  |  | 0.504 |
+| walker |  | 9140 | 81 | python decl docs/conf.py:83 |  |  | 0.504 |
 | ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.500 |
-| walker |  | 9371 | 144 | python decl docs/conf.py:41 |  |  | 0.500 |
+| walker |  | 9274 | 134 | python decl docs/conf.py:96 |  |  | 0.500 |
+| walker |  | 9418 | 144 | python decl docs/conf.py:41 |  |  | 0.500 |
 | ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.494 |
-| walker |  | 9529 | 158 | python decl docs/conf.py:66 |  |  | 0.494 |
+| walker |  | 9576 | 158 | python decl docs/conf.py:66 |  |  | 0.494 |
 | ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.499 |
-| walker |  | 9765 | 236 | declaration surface of changelog/README.rst |  |  | 0.499 |
-| walker |  | 9774 | 9 | python body testing/conftest.py:23 |  |  | 0.500 |
+| walker |  | 9812 | 236 | declaration surface of changelog/README.rst |  |  | 0.499 |
+| walker |  | 9821 | 9 | python body testing/conftest.py:23 |  |  | 0.500 |
 | ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.495 |
-| walker |  | 9833 | 59 | python names testing/test_warnings.py |  |  | 0.495 |
-| walker |  | 9847 | 14 | python doc src/pluggy/_manager.py:300 |  |  | 0.495 |
+| walker |  | 9880 | 59 | python names testing/test_warnings.py |  |  | 0.495 |
+| walker |  | 9894 | 14 | python doc src/pluggy/_manager.py:300 |  |  | 0.495 |
 | ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.493 |
 | ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.496 |
