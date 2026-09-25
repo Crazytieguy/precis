@@ -422,7 +422,9 @@ impl<'source> ExportScan<'source> {
         match statement.kind() {
             "export_statement" => {
                 if let Some(declaration) = statement.child_by_field_name("declaration") {
-                    return TopLevel::Exported(unwrap_ambient(declaration));
+                    let declaration = unwrap_ambient(declaration);
+                    self.public_names.extend(declared_names(file, declaration));
+                    return TopLevel::Exported(declaration);
                 }
                 if let Some(value) = statement.child_by_field_name("value") {
                     return self.exported_value(file, value);
@@ -1632,6 +1634,21 @@ app.name = 'app';
                 "Public Callable name [2] head [2] doc [] body []",
             ]
         );
+        for source in [
+            "export function Router() {}\nRouter.prototype.route = () => {};\nRouter.create = () => {};\n",
+            "function Router() {}\nRouter.prototype.route = () => {};\nRouter.create = () => {};\nexport { Router };\n",
+            "export default function Router() {}\nRouter.prototype.route = () => {};\nRouter.create = () => {};\n",
+        ] {
+            assert_eq!(
+                describe(&extract_source("lib/router.js", source))[..3],
+                [
+                    "Public Callable name [1] head [1] doc [] body []",
+                    "Public Callable name [2] head [2] doc [] body []",
+                    "Public Callable name [3] head [3] doc [] body []",
+                ],
+                "{source}"
+            );
+        }
     }
 
     #[test]
