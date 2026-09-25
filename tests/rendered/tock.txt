@@ -24,7 +24,8 @@ Makefile
   13→	--entrypoint "" golang:1.25.6-alpine sh -c "go test -v -count=1 -p 4 -coverprofile=coverage.out ./... && go tool cover -func=coverage.out && go tool cover -html=coverage.out -o coverage.html"
 README.md
   1→# Tock
-  …
+  3→[![Release](https://img.shields.io/github/v/release/kriuchkov/tock?style=flat-square)](https://github.com/kriuchkov/tock/releases) [![License](https://img.shields.io/github/license/kriuchkov/tock?style=flat-square)](LICENSE) [![Stars](https://img.shields.io/github/stars/kriuchkov/tock?style=flat-square)](https://github.com/kriuchkov/tock/stargazers) [![Go Version](https://img.shields.io/github/go-mod/go-version/kriuchkov/tock?style=flat-square&logo=go&label=Go)](go.mod) [![CI](https://img.shields.io/github/actions/workflow/status/kriuchkov/tock/ci.yml?style=flat-square&label=tests)](https://github.com/kriuchkov/tock/actions)
+  4→
   5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
   6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
   8→## Features
@@ -64,40 +65,6 @@ demo/
   demo_script.sh
 docs/
   commands.md
-    1→# Commands Reference
-    …
-    23→## Core Commands
-    24→
-    25→### `start`
-    …
-    55→---
-    57→### `stop` (alias: `s`)
-    …
-    84→---
-    86→### `add`
-    …
-    116→---
-    118→### `remove` (alias: `rm`)
-    …
-    141→---
-    143→### `continue` (alias: `c`)
-    …
-    188→## Viewing & Reporting
-    189→
-    190→### `calendar`
-    …
-    217→### `list` (alias: `ls`)
-    …
-    240→### `current`
-    …
-    260→### `last` (alias: `lt`)
-    …
-    283→### `report`
-    …
-    307→### `analyze`
-    …
-    330→### `ical`
-    …
 go.mod
   1→module github.com/kriuchkov/tock
   2→

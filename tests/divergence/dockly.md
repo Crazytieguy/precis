@@ -33,8 +33,7 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 630 | 20 | listing of '.github/workflows' |  |  | 0.735 |
 | ns | 630 |  | 97 | Published `files` allow-list and the node engines floor | 1.7 |  | 0.735 |
 | ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.683 |
-| walker |  | 770 | 140 | README headline in README.md |  |  | 0.688 |
-| walker |  | 793 | 23 | README prelude in README.md |  |  | 0.688 |
+| walker |  | 793 | 163 | README headline in README.md |  |  | 0.688 |
 | walker |  | 857 | 64 | ts names src/cli.js |  |  | 0.689 |
 | ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.649 |
 | walker |  | 960 | 103 | headings outline in README.md |  |  | 0.709 |

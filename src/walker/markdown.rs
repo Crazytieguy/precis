@@ -1118,63 +1118,22 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
 
     let mut covered: BTreeSet<usize> = BTreeSet::new();
     // Prelude content: README opens with HTML title blocks / badges /
-    // lede paragraph before the first heading. Surface up to one
-    // substantive paragraph, skipping decoratives.
-    extend_prelude_lede(&mut covered, tree.root_node(), section, source);
+    // lede paragraph before the first heading.
+    extend_lede(
+        &mut covered,
+        &prelude_blocks(tree.root_node(), section),
+        source,
+        true,
+    );
     extend_rows_inclusive(&mut covered, heading, source);
     let heading_first_row = heading.start_position().row + 1;
 
-    // Skip leading decorative paragraphs / image-only HTML / admin
-    // block_quotes, then include blocks until the first substantive
-    // paragraph. Short H1 taglines get one more non-decorative block.
+    // The "tagline + lede" extension only fires under the project's
+    // title heading (H1). For non-H1 first-headed sections (`### Usage`,
+    // `## About`) the first substantive paragraph IS the section body
+    // and shouldn't pull in further content.
     let post: Vec<Node> = children_after(section, heading);
-    let mut i = 0;
-    while i < post.len() {
-        let block = post[i];
-        if is_section_boundary(block.kind()) {
-            break;
-        }
-        if !is_decorative_block(block, source) {
-            break;
-        }
-        i += 1;
-    }
-    let mut state = HeadlineExtend::SeekFirst;
-    let mut captured_lede = false;
-    while i < post.len() {
-        let block = post[i];
-        if is_section_boundary(block.kind()) {
-            break;
-        }
-        if is_decorative_block(block, source) {
-            i += 1;
-            continue;
-        }
-        extend_headline_block_rows(&mut covered, block, source);
-        // Any substantive post-H1 block (paragraph, block_quote, list,
-        // code lede) counts as a lede — the decorative-title fallback
-        // below must only fire for a genuinely bare image/badge title,
-        // not displace a non-paragraph lede.
-        captured_lede = true;
-        match state {
-            HeadlineExtend::SeekFirst => {
-                if block.kind() == "paragraph" {
-                    // The "tagline + lede" extension only fires under
-                    // the project's title heading (H1). For non-H1
-                    // first-headed sections (`### Usage`, `## About`)
-                    // the first substantive paragraph IS the section
-                    // body and shouldn't pull in further content.
-                    if heading_level(heading) == 1 && is_short_substantive_block(block, source) {
-                        state = HeadlineExtend::SeekExtension;
-                    } else {
-                        break;
-                    }
-                }
-            }
-            HeadlineExtend::SeekExtension => break,
-        }
-        i += 1;
-    }
+    let captured_lede = extend_lede(&mut covered, &post, source, heading_level(heading) == 1);
 
     // Decorative-title fallback: an image/badge-only H1 yields no lede,
     // with the real "what is this" sentence pushed under the first
@@ -1188,18 +1147,12 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         && is_intro_section_title(sub_heading, source)
     {
         extend_rows_inclusive(&mut covered, sub_heading, source);
-        for inner in children_after(*sub, sub_heading) {
-            if is_section_boundary(inner.kind()) {
-                break;
-            }
-            if is_decorative_block(inner, source) {
-                continue;
-            }
-            extend_headline_block_rows(&mut covered, inner, source);
-            if inner.kind() == "paragraph" {
-                break;
-            }
-        }
+        extend_lede(
+            &mut covered,
+            &children_after(*sub, sub_heading),
+            source,
+            false,
+        );
     }
 
     let truncate = compute_heading_truncation(heading, source);
@@ -1572,16 +1525,6 @@ fn strip_block_for_length(raw: &str) -> String {
         .chars()
         .filter(|c| !matches!(c, '>' | '*' | '_' | '`'))
         .collect()
-}
-
-/// State for the post-heading walk inside [`headline_spec`].
-/// Transitions: `SeekFirst` (taking blocks until the first substantive
-/// paragraph) → `SeekExtension` (only if that paragraph was a short
-/// tagline under an H1, take one more non-decorative block then stop).
-#[derive(Copy, Clone)]
-enum HeadlineExtend {
-    SeekFirst,
-    SeekExtension,
 }
 
 fn strip_html_tags(s: &str) -> String {
@@ -2711,43 +2654,39 @@ fn strip_html_entities(text: &str) -> String {
     out
 }
 
-/// Collect prelude lede rows for [`headline_spec`]: walk the `section`
-/// children of the root that appear *before* `first_headed` (i.e. the
-/// heading-less prelude tree-sitter-md wraps when the README opens with
-/// HTML title blocks or badges), skip leading decorative paragraphs /
-/// image-only HTML, then include blocks until the first substantive
-/// paragraph (inclusive) or end of prelude. Mirrors the
-/// post-heading-skip-then-include walk inside `headline_spec`.
-fn extend_prelude_lede(
+/// Include `blocks` through the first substantive paragraph, stepping
+/// over chrome ([`is_prelude_chrome_block`]); after a short tagline
+/// paragraph, take one more block. Any non-chrome block counts as a
+/// lede. Returns whether a lede was taken.
+fn extend_lede(
     covered: &mut BTreeSet<usize>,
-    root: Node<'_>,
-    first_headed: Node<'_>,
+    blocks: &[Node],
     source: &str,
-) {
-    let prelude_blocks = prelude_blocks(root, first_headed);
-
-    let mut i = 0;
-    while i < prelude_blocks.len() {
-        if !is_prelude_chrome_block(prelude_blocks[i], source) {
+    allow_tagline_extension: bool,
+) -> bool {
+    let mut captured = false;
+    let mut extending = false;
+    for &block in blocks {
+        if is_section_boundary(block.kind()) {
             break;
         }
-        i += 1;
-    }
-    // Include the first substantive prelude block. Short taglines
-    // extend to one more non-decorative block (skipping decoratives
-    // between).
-    if let Some(block) = prelude_blocks.get(i) {
-        extend_rows_inclusive(covered, *block, source);
-        if is_short_substantive_block(*block, source) {
-            let mut j = i + 1;
-            while j < prelude_blocks.len() && is_prelude_chrome_block(prelude_blocks[j], source) {
-                j += 1;
-            }
-            if let Some(extra) = prelude_blocks.get(j) {
-                extend_rows_inclusive(covered, *extra, source);
+        if is_prelude_chrome_block(block, source) {
+            continue;
+        }
+        extend_headline_block_rows(covered, block, source);
+        captured = true;
+        if extending {
+            break;
+        }
+        if block.kind() == "paragraph" {
+            if allow_tagline_extension && is_short_substantive_block(block, source) {
+                extending = true;
+            } else {
+                break;
             }
         }
     }
+    captured
 }
 
 /// Top-level blocks above the first headed section.
