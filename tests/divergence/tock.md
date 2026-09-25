@@ -1,4 +1,4 @@
-Score(3000)=0.549 I=0.818 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.731/0.632/0.549/0.504/0.504/0.545
+Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.731/0.632/0.549/0.517/0.504/0.545
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,155 +46,155 @@ Score(3000)=0.549 I=0.818 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.715 |
 | ns | 1175 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.681 |
 | ns | 1253 |  | 78 | Domain sentinel errors | 2.4 |  | 0.665 |
-| walker |  | 1294 | 279 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.665 |
-| walker |  | 1373 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.794 |
+| walker |  | 1257 | 242 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.665 |
+| walker |  | 1336 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.794 |
+| walker |  | 1415 | 79 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.794 |
 | ns | 1440 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.731 |
-| walker |  | 1452 | 79 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.731 |
 | ns | 1506 |  | 66 | dto.ActivityFilter — the query type | 2.6 |  | 0.714 |
 | ns | 1601 |  | 95 | dto.Report and dto.ProjectReport | 2.7 |  | 0.690 |
-| ns | 1685 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.671 |
-| walker |  | 1694 | 242 | GoMod::File { file: go.mod } |  |  | 0.672 |
-| walker |  | 1775 | 81 | Markdown::Section { file: README.md, section_index: 25, keeps_default_concavity: false } |  |  | 0.672 |
+| walker |  | 1657 | 242 | GoMod::File { file: go.mod } |  |  | 0.691 |
+| ns | 1685 |  | 84 | models.Activity method roster (bodies elided) | 2.8 |  | 0.672 |
+| walker |  | 1738 | 81 | Markdown::Section { file: README.md, section_index: 25, keeps_default_concavity: false } |  |  | 0.672 |
 | ns | 1832 |  | 147 | models.Activity method bodies | 2.9 | 2.8 | 0.640 |
-| walker |  | 1890 | 115 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.640 |
-| ns | 2000 |  | 168 | Root command declaration and the three persistent flags | 3.1 |  | 0.628 |
-| walker |  | 2002 | 112 | Plaintext::DeclSurface { file: install.sh } |  |  | 0.628 |
-| walker |  | 2014 | 12 | Code::CodeKey { rung: Names, file: cmd/tock/main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
-| walker |  | 2025 | 11 | Code::CodeKey { rung: Decl, file: cmd/tock/main.go, decl: 1, sub: 0, line: 7 } |  |  | 0.632 |
+| walker |  | 1853 | 115 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.640 |
+| walker |  | 1965 | 112 | Plaintext::DeclSurface { file: install.sh } |  |  | 0.640 |
+| walker |  | 1977 | 12 | Code::CodeKey { rung: Names, file: cmd/tock/main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.641 |
+| walker |  | 1988 | 11 | Code::CodeKey { rung: Decl, file: cmd/tock/main.go, decl: 1, sub: 0, line: 7 } |  |  | 0.644 |
+| ns | 2000 |  | 168 | Root command declaration and the three persistent flags | 3.1 |  | 0.632 |
 | ns | 2162 |  | 162 | Complete subcommand registration list | 3.2 |  | 0.609 |
-| walker |  | 2248 | 223 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.609 |
+| walker |  | 2211 | 223 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.609 |
 | ns | 2398 |  | 236 | Command declarations, part 1: add, analyze, calendar, continue, current, ical | 3.3 |  | 0.588 |
-| walker |  | 2531 | 283 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.588 |
+| walker |  | 2494 | 283 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.588 |
 | ns | 2733 |  | 335 | Command declarations, part 2: last, list, remove, report, start, stop, version, watch | 3.4 |  | 0.561 |
+| walker |  | 2761 | 267 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.561 |
 | ns | 2764 |  | 31 | docs/commands.md structure | 3.5 |  | 0.558 |
-| walker |  | 2798 | 267 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.558 |
+| walker |  | 2929 | 168 | Code::CodeKey { rung: Names, file: internal/config/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.558 |
+| walker |  | 2944 | 15 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 5, sub: 0, line: 41 } |  |  | 0.558 |
 | ns | 2956 |  | 192 | Flags of `start` and `stop` | 3.6 |  | 0.549 |
-| walker |  | 2966 | 168 | Code::CodeKey { rung: Names, file: internal/config/config.go, decl: 0, sub: 0, line: 0 } |  |  | 0.549 |
-| walker |  | 2981 | 15 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 5, sub: 0, line: 41 } |  |  | 0.549 |
-| walker |  | 2998 | 17 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 4, sub: 0, line: 37 } |  |  | 0.549 |
-| walker |  | 3015 | 17 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 0, line: 45 } |  |  | 0.549 |
-| walker |  | 3034 | 19 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 3, sub: 0, line: 33 } |  |  | 0.549 |
-| walker |  | 3124 | 90 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 2, sub: 0, line: 25 } |  |  | 0.550 |
-| walker |  | 3238 | 114 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 7, sub: 0, line: 49 } |  |  | 0.551 |
+| walker |  | 2961 | 17 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 4, sub: 0, line: 37 } |  |  | 0.549 |
+| walker |  | 2978 | 17 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 6, sub: 0, line: 45 } |  |  | 0.549 |
+| walker |  | 2997 | 19 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 3, sub: 0, line: 33 } |  |  | 0.549 |
+| walker |  | 3087 | 90 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 2, sub: 0, line: 25 } |  |  | 0.550 |
+| walker |  | 3201 | 114 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 7, sub: 0, line: 49 } |  |  | 0.551 |
 | ns | 3280 |  | 324 | Flags of `add` and `continue` | 3.7 |  | 0.538 |
-| walker |  | 3406 | 168 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 1, sub: 0, line: 12 } |  |  | 0.539 |
+| walker |  | 3369 | 168 | Code::CodeKey { rung: Decl, file: internal/config/config.go, decl: 1, sub: 0, line: 12 } |  |  | 0.539 |
 | ns | 3583 |  | 303 | Flags of `report`, `last` and `analyze` | 3.8 |  | 0.528 |
-| walker |  | 3671 | 265 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.528 |
+| walker |  | 3634 | 265 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.528 |
 | ns | 3775 |  | 192 | Flags of `current`, `watch`, `ical` and `remove` | 3.9 |  | 0.521 |
-| walker |  | 3860 | 189 | Code::CodeKey { rung: Names, file: internal/timeutil/timeutil.go, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
-| walker |  | 3869 | 9 | Code::CodeKey { rung: Decl, file: internal/timeutil/timeutil.go, decl: 2, sub: 0, line: 13 } |  |  | 0.521 |
-| walker |  | 3882 | 13 | Code::CodeKey { rung: Decl, file: internal/timeutil/timeutil.go, decl: 3, sub: 0, line: 19 } |  |  | 0.521 |
-| walker |  | 3890 | 8 | Code::CodeKey { rung: Body, file: internal/timeutil/timeutil.go, decl: 5, sub: 0, line: 34 } |  |  | 0.521 |
-| walker |  | 3900 | 10 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 3, sub: 0, line: 19 } |  |  | 0.522 |
-| walker |  | 3914 | 14 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 1, sub: 0, line: 11 } |  |  | 0.522 |
-| walker |  | 3929 | 15 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 5, sub: 0, line: 34 } |  |  | 0.522 |
-| walker |  | 3945 | 16 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 7, sub: 0, line: 47 } |  |  | 0.522 |
-| walker |  | 3962 | 17 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 6, sub: 0, line: 39 } |  |  | 0.522 |
+| walker |  | 3823 | 189 | Code::CodeKey { rung: Names, file: internal/timeutil/timeutil.go, decl: 0, sub: 0, line: 0 } |  |  | 0.521 |
+| walker |  | 3832 | 9 | Code::CodeKey { rung: Decl, file: internal/timeutil/timeutil.go, decl: 2, sub: 0, line: 13 } |  |  | 0.521 |
+| walker |  | 3845 | 13 | Code::CodeKey { rung: Decl, file: internal/timeutil/timeutil.go, decl: 3, sub: 0, line: 19 } |  |  | 0.521 |
+| walker |  | 3853 | 8 | Code::CodeKey { rung: Body, file: internal/timeutil/timeutil.go, decl: 5, sub: 0, line: 34 } |  |  | 0.521 |
+| walker |  | 3863 | 10 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 3, sub: 0, line: 19 } |  |  | 0.522 |
+| walker |  | 3877 | 14 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 1, sub: 0, line: 11 } |  |  | 0.522 |
+| walker |  | 3892 | 15 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 5, sub: 0, line: 34 } |  |  | 0.522 |
+| walker |  | 3908 | 16 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 7, sub: 0, line: 47 } |  |  | 0.522 |
+| walker |  | 3925 | 17 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 6, sub: 0, line: 39 } |  |  | 0.522 |
+| walker |  | 4156 | 231 | Markdown::Section { file: README.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.522 |
 | ns | 4170 |  | 395 | PersistentPreRunE — dependency injection and backend selection | 3.10 |  | 0.491 |
-| walker |  | 4193 | 231 | Markdown::Section { file: README.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.491 |
-| walker |  | 4228 | 35 | Code::CodeKey { rung: Names, file: internal/core/ports/ports.go, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
-| walker |  | 4283 | 55 | Code::CodeKey { rung: Decl, file: internal/core/ports/ports.go, decl: 3, sub: 0, line: 29 } |  |  | 0.497 |
-| walker |  | 4356 | 73 | Code::CodeKey { rung: Decl, file: internal/core/ports/ports.go, decl: 2, sub: 0, line: 22 } |  |  | 0.517 |
+| walker |  | 4191 | 35 | Code::CodeKey { rung: Names, file: internal/core/ports/ports.go, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
+| walker |  | 4246 | 55 | Code::CodeKey { rung: Decl, file: internal/core/ports/ports.go, decl: 3, sub: 0, line: 29 } |  |  | 0.497 |
+| walker |  | 4319 | 73 | Code::CodeKey { rung: Decl, file: internal/core/ports/ports.go, decl: 2, sub: 0, line: 22 } |  |  | 0.517 |
 | ns | 4404 |  | 234 | Execute, the context keys, and the accessor helpers | 3.11 |  | 0.499 |
-| walker |  | 4515 | 159 | Code::CodeKey { rung: Decl, file: internal/core/ports/ports.go, decl: 1, sub: 0, line: 11 } |  |  | 0.524 |
-| ns | 4548 |  | 144 | `current --format` template variables (Long help) | 3.12 |  | 0.516 |
-| walker |  | 4585 | 70 | Code::CodeKey { rung: Names, file: internal/core/dto/activity_dto.go, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
-| walker |  | 4616 | 31 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 2, sub: 0, line: 17 } |  |  | 0.524 |
-| walker |  | 4649 | 33 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 6, sub: 0, line: 46 } |  |  | 0.531 |
-| walker |  | 4687 | 38 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 5, sub: 0, line: 40 } |  |  | 0.546 |
-| ns | 4713 |  | 165 | `ical` argument semantics and `remove` Long help | 3.13 |  | 0.540 |
-| walker |  | 4735 | 48 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 1, sub: 0, line: 9 } |  |  | 0.553 |
-| walker |  | 4790 | 55 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 4, sub: 0, line: 32 } |  |  | 0.568 |
-| ns | 4835 |  | 122 | Shell-completion machinery | 3.14 |  | 0.562 |
-| walker |  | 4848 | 58 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 3, sub: 0, line: 23 } |  |  | 0.587 |
+| walker |  | 4478 | 159 | Code::CodeKey { rung: Decl, file: internal/core/ports/ports.go, decl: 1, sub: 0, line: 11 } |  |  | 0.524 |
+| walker |  | 4548 | 70 | Code::CodeKey { rung: Names, file: internal/core/dto/activity_dto.go, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
+| ns | 4548 |  | 144 | `current --format` template variables (Long help) | 3.12 |  | 0.520 |
+| walker |  | 4579 | 31 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 2, sub: 0, line: 17 } |  |  | 0.524 |
+| walker |  | 4612 | 33 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 6, sub: 0, line: 46 } |  |  | 0.531 |
+| walker |  | 4650 | 38 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 5, sub: 0, line: 40 } |  |  | 0.546 |
+| walker |  | 4698 | 48 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 1, sub: 0, line: 9 } |  |  | 0.560 |
+| ns | 4713 |  | 165 | `ical` argument semantics and `remove` Long help | 3.13 |  | 0.553 |
+| walker |  | 4753 | 55 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 4, sub: 0, line: 32 } |  |  | 0.568 |
+| walker |  | 4811 | 58 | Code::CodeKey { rung: Decl, file: internal/core/dto/activity_dto.go, decl: 3, sub: 0, line: 23 } |  |  | 0.593 |
+| ns | 4835 |  | 122 | Shell-completion machinery | 3.14 |  | 0.587 |
 | ns | 4926 |  | 91 | activity.service struct and constructor | 4.1 |  | 0.580 |
 | ns | 5193 |  | 267 | service method roster (bodies elided) | 4.2 |  | 0.565 |
-| walker |  | 5256 | 408 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.565 |
-| walker |  | 5305 | 49 | Code::CodeKey { rung: Names, file: internal/adapters/cli/version.go, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5314 | 9 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/version.go, decl: 1, sub: 0, line: 10 } |  |  | 0.565 |
+| walker |  | 5219 | 408 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.565 |
+| walker |  | 5268 | 49 | Code::CodeKey { rung: Names, file: internal/adapters/cli/version.go, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
+| walker |  | 5277 | 9 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/version.go, decl: 1, sub: 0, line: 10 } |  |  | 0.565 |
 | ns | 5427 |  | 234 | Service.Start — implicit stop of running activities | 4.3 | 4.2 | 0.549 |
-| walker |  | 5570 | 256 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.549 |
+| walker |  | 5533 | 256 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.549 |
 | ns | 5646 |  | 219 | Service.Stop — target selection and validation | 4.4 | 4.2 | 0.533 |
-| walker |  | 5731 | 161 | Markdown::Section { file: README.md, section_index: 24, keeps_default_concavity: false } |  |  | 0.533 |
-| walker |  | 5852 | 121 | Code::CodeKey { rung: Names, file: internal/adapters/cli/theme.go, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
+| walker |  | 5694 | 161 | Markdown::Section { file: README.md, section_index: 24, keeps_default_concavity: false } |  |  | 0.533 |
+| walker |  | 5815 | 121 | Code::CodeKey { rung: Names, file: internal/adapters/cli/theme.go, decl: 0, sub: 0, line: 0 } |  |  | 0.533 |
 | ns | 5885 |  | 239 | GetRecent de-duplication and note enrichment | 4.5 | 4.2 | 0.520 |
-| walker |  | 5939 | 87 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.520 |
-| ns | 6089 |  | 204 | Bartib log line format: layouts and FormatActivity | 5.1 |  | 0.511 |
-| walker |  | 6112 | 173 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.511 |
-| walker |  | 6126 | 14 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.512 |
-| walker |  | 6142 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.512 |
-| walker |  | 6158 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 3, sub: 0, line: 40 } |  |  | 0.512 |
-| walker |  | 6174 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 9, sub: 0, line: 167 } |  |  | 0.512 |
-| walker |  | 6192 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 4, sub: 0, line: 53 } |  |  | 0.512 |
-| walker |  | 6211 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 8, sub: 0, line: 122 } |  |  | 0.512 |
+| walker |  | 5902 | 87 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.520 |
+| walker |  | 6075 | 173 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.520 |
+| walker |  | 6089 | 14 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 1, sub: 0, line: 11 } |  |  | 0.512 |
+| ns | 6089 |  | 204 | Bartib log line format: layouts and FormatActivity | 5.1 |  | 0.512 |
+| walker |  | 6105 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 2, sub: 0, line: 22 } |  |  | 0.512 |
+| walker |  | 6121 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 3, sub: 0, line: 40 } |  |  | 0.512 |
+| walker |  | 6137 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 9, sub: 0, line: 167 } |  |  | 0.512 |
+| walker |  | 6155 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 4, sub: 0, line: 53 } |  |  | 0.512 |
+| walker |  | 6174 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 8, sub: 0, line: 122 } |  |  | 0.512 |
+| walker |  | 6220 | 46 | Code::CodeKey { rung: Names, file: internal/adapters/cli/update.go, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
 | ns | 6227 |  | 138 | ParseActivity — the reading half of the format | 5.2 | 5.1 | 0.504 |
-| walker |  | 6257 | 46 | Code::CodeKey { rung: Names, file: internal/adapters/cli/update.go, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
-| walker |  | 6288 | 31 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/update.go, decl: 1, sub: 0, line: 17 } |  |  | 0.504 |
-| walker |  | 6367 | 79 | Code::CodeKey { rung: Names, file: internal/core/models/activity.go, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
-| ns | 6430 |  | 203 | file repository: struct, constructor and complete method roster | 5.3 |  | 0.502 |
-| walker |  | 6465 | 98 | Code::CodeKey { rung: Decl, file: internal/core/models/activity.go, decl: 1, sub: 0, line: 10 } |  |  | 0.515 |
-| walker |  | 6477 | 12 | Code::CodeKey { rung: Doc, file: internal/core/models/activity.go, decl: 1, sub: 0, line: 10 } |  |  | 0.519 |
-| walker |  | 6490 | 13 | Code::CodeKey { rung: Body, file: internal/core/models/activity.go, decl: 2, sub: 0, line: 19 } |  |  | 0.520 |
-| walker |  | 6509 | 19 | Code::CodeKey { rung: Doc, file: internal/core/models/activity.go, decl: 4, sub: 0, line: 31 } |  |  | 0.524 |
-| walker |  | 6529 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 5, sub: 0, line: 66 } |  |  | 0.524 |
-| walker |  | 6561 | 32 | Code::CodeKey { rung: Names, file: internal/adapters/cli/continue.go, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
-| walker |  | 6572 | 11 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/continue.go, decl: 1, sub: 0, line: 15 } |  |  | 0.524 |
-| walker |  | 6588 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/continue.go, decl: 2, sub: 0, line: 20 } |  |  | 0.524 |
+| walker |  | 6251 | 31 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/update.go, decl: 1, sub: 0, line: 17 } |  |  | 0.504 |
+| walker |  | 6330 | 79 | Code::CodeKey { rung: Names, file: internal/core/models/activity.go, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
+| walker |  | 6428 | 98 | Code::CodeKey { rung: Decl, file: internal/core/models/activity.go, decl: 1, sub: 0, line: 10 } |  |  | 0.522 |
+| ns | 6430 |  | 203 | file repository: struct, constructor and complete method roster | 5.3 |  | 0.515 |
+| walker |  | 6440 | 12 | Code::CodeKey { rung: Doc, file: internal/core/models/activity.go, decl: 1, sub: 0, line: 10 } |  |  | 0.519 |
+| walker |  | 6453 | 13 | Code::CodeKey { rung: Body, file: internal/core/models/activity.go, decl: 2, sub: 0, line: 19 } |  |  | 0.520 |
+| walker |  | 6472 | 19 | Code::CodeKey { rung: Doc, file: internal/core/models/activity.go, decl: 4, sub: 0, line: 31 } |  |  | 0.524 |
+| walker |  | 6492 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 5, sub: 0, line: 66 } |  |  | 0.524 |
+| walker |  | 6524 | 32 | Code::CodeKey { rung: Names, file: internal/adapters/cli/continue.go, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 6535 | 11 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/continue.go, decl: 1, sub: 0, line: 15 } |  |  | 0.524 |
+| walker |  | 6551 | 16 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/continue.go, decl: 2, sub: 0, line: 20 } |  |  | 0.524 |
 | ns | 6635 |  | 205 | file repository Save — activity identity is minute-precision StartTime | 5.4 | 5.3 | 0.517 |
-| walker |  | 6728 | 140 | Plaintext::DeclSurface { file: demo/demo_script.sh } |  |  | 0.517 |
-| walker |  | 6794 | 66 | Code::CodeKey { rung: Names, file: internal/adapters/cli/current.go, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
-| walker |  | 6805 | 11 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/current.go, decl: 1, sub: 0, line: 19 } |  |  | 0.517 |
-| walker |  | 6818 | 13 | Code::CodeKey { rung: Body, file: internal/adapters/cli/current.go, decl: 2, sub: 0, line: 23 } |  |  | 0.517 |
-| walker |  | 6839 | 21 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 6, sub: 0, line: 79 } |  |  | 0.517 |
+| walker |  | 6691 | 140 | Plaintext::DeclSurface { file: demo/demo_script.sh } |  |  | 0.517 |
+| walker |  | 6757 | 66 | Code::CodeKey { rung: Names, file: internal/adapters/cli/current.go, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 6768 | 11 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/current.go, decl: 1, sub: 0, line: 19 } |  |  | 0.517 |
+| walker |  | 6781 | 13 | Code::CodeKey { rung: Body, file: internal/adapters/cli/current.go, decl: 2, sub: 0, line: 23 } |  |  | 0.517 |
+| walker |  | 6802 | 21 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/theme.go, decl: 6, sub: 0, line: 79 } |  |  | 0.517 |
+| walker |  | 6852 | 50 | Code::CodeKey { rung: Names, file: internal/adapters/cli/last.go, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 6873 | 21 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/last.go, decl: 1, sub: 0, line: 16 } |  |  | 0.517 |
 | ns | 6874 |  | 239 | notes repository: sidecar file layout and YAML front matter | 5.5 |  | 0.506 |
-| walker |  | 6889 | 50 | Code::CodeKey { rung: Names, file: internal/adapters/cli/last.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
-| walker |  | 6910 | 21 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/last.go, decl: 1, sub: 0, line: 16 } |  |  | 0.506 |
-| walker |  | 6960 | 50 | Code::CodeKey { rung: Names, file: internal/adapters/cli/report.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
-| walker |  | 7034 | 74 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/report.go, decl: 1, sub: 0, line: 20 } |  |  | 0.506 |
+| walker |  | 6923 | 50 | Code::CodeKey { rung: Names, file: internal/adapters/cli/report.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
+| walker |  | 6997 | 74 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/report.go, decl: 1, sub: 0, line: 20 } |  |  | 0.506 |
+| walker |  | 7015 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/report.go, decl: 3, sub: 0, line: 61 } |  |  | 0.506 |
 | ns | 7045 |  | 171 | timewarrior repository: interval shape and data layout | 5.6 |  | 0.497 |
-| walker |  | 7052 | 18 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/report.go, decl: 3, sub: 0, line: 61 } |  |  | 0.497 |
-| walker |  | 7088 | 36 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 8, sub: 0, line: 56 } |  |  | 0.497 |
-| walker |  | 7105 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/start.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
-| walker |  | 7122 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/stop.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
+| walker |  | 7051 | 36 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 8, sub: 0, line: 56 } |  |  | 0.497 |
+| walker |  | 7068 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/start.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
+| walker |  | 7085 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/stop.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
 | ns | 7231 |  | 186 | timewarrior repository function roster (names only) | 5.7 |  | 0.491 |
-| walker |  | 7292 | 170 | Code::CodeKey { rung: Names, file: internal/adapters/cli/watch.go, decl: 0, sub: 0, line: 0 } |  |  | 0.491 |
-| walker |  | 7314 | 22 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 4, sub: 0, line: 90 } |  |  | 0.491 |
-| walker |  | 7406 | 92 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 3, sub: 0, line: 77 } |  |  | 0.491 |
+| walker |  | 7255 | 170 | Code::CodeKey { rung: Names, file: internal/adapters/cli/watch.go, decl: 0, sub: 0, line: 0 } |  |  | 0.491 |
+| walker |  | 7277 | 22 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 4, sub: 0, line: 90 } |  |  | 0.491 |
+| walker |  | 7369 | 92 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 3, sub: 0, line: 77 } |  |  | 0.491 |
 | ns | 7465 |  | 234 | iCalendar generator | 5.8 |  | 0.482 |
+| walker |  | 7642 | 273 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 9, sub: 0, line: 248 } |  |  | 0.482 |
 | ns | 7647 |  | 182 | config.Config — the top-level settings struct | 6.1 |  | 0.493 |
-| walker |  | 7679 | 273 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/watch.go, decl: 9, sub: 0, line: 248 } |  |  | 0.493 |
-| walker |  | 7747 | 68 | Code::CodeKey { rung: Names, file: internal/services/ics/generator.go, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
-| walker |  | 7764 | 17 | Code::CodeKey { rung: Doc, file: internal/services/ics/generator.go, decl: 1, sub: 0, line: 12 } |  |  | 0.496 |
-| walker |  | 7781 | 17 | Code::CodeKey { rung: Doc, file: internal/services/ics/generator.go, decl: 3, sub: 0, line: 29 } |  |  | 0.496 |
-| walker |  | 7801 | 20 | Code::CodeKey { rung: Doc, file: internal/services/ics/generator.go, decl: 2, sub: 0, line: 18 } |  |  | 0.497 |
-| walker |  | 7870 | 69 | Code::CodeKey { rung: Names, file: internal/core/errors/errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.503 |
-| walker |  | 7879 | 9 | Code::CodeKey { rung: Decl, file: internal/core/errors/errors.go, decl: 1, sub: 0, line: 5 } |  |  | 0.507 |
-| walker |  | 7901 | 22 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/start.go, decl: 1, sub: 0, line: 17 } |  |  | 0.507 |
-| walker |  | 7923 | 22 | Code::CodeKey { rung: Body, file: internal/services/ics/generator.go, decl: 1, sub: 0, line: 12 } |  |  | 0.509 |
+| walker |  | 7710 | 68 | Code::CodeKey { rung: Names, file: internal/services/ics/generator.go, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
+| walker |  | 7727 | 17 | Code::CodeKey { rung: Doc, file: internal/services/ics/generator.go, decl: 1, sub: 0, line: 12 } |  |  | 0.496 |
+| walker |  | 7744 | 17 | Code::CodeKey { rung: Doc, file: internal/services/ics/generator.go, decl: 3, sub: 0, line: 29 } |  |  | 0.496 |
+| walker |  | 7764 | 20 | Code::CodeKey { rung: Doc, file: internal/services/ics/generator.go, decl: 2, sub: 0, line: 18 } |  |  | 0.497 |
+| walker |  | 7833 | 69 | Code::CodeKey { rung: Names, file: internal/core/errors/errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.503 |
+| walker |  | 7842 | 9 | Code::CodeKey { rung: Decl, file: internal/core/errors/errors.go, decl: 1, sub: 0, line: 5 } |  |  | 0.507 |
+| walker |  | 7864 | 22 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/start.go, decl: 1, sub: 0, line: 17 } |  |  | 0.507 |
+| walker |  | 7886 | 22 | Code::CodeKey { rung: Body, file: internal/services/ics/generator.go, decl: 1, sub: 0, line: 12 } |  |  | 0.509 |
 | ns | 8013 |  | 366 | All nested config structs (complete) | 6.2 |  | 0.529 |
 | ns | 8127 |  | 114 | Config defaults | 6.3 |  | 0.525 |
-| walker |  | 8192 | 269 | Code::CodeKey { rung: Names, file: internal/adapters/cli/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
-| walker |  | 8201 | 9 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/root.go, decl: 1, sub: 0, line: 21 } |  |  | 0.534 |
-| walker |  | 8273 | 72 | Code::CodeKey { rung: Names, file: internal/adapters/cli/analyze.go, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
-| walker |  | 8428 | 155 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/analyze.go, decl: 2, sub: 0, line: 70 } |  |  | 0.535 |
-| walker |  | 8443 | 15 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/analyze.go, decl: 3, sub: 0, line: 84 } |  |  | 0.535 |
+| walker |  | 8155 | 269 | Code::CodeKey { rung: Names, file: internal/adapters/cli/root.go, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
+| walker |  | 8164 | 9 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/root.go, decl: 1, sub: 0, line: 21 } |  |  | 0.534 |
+| walker |  | 8236 | 72 | Code::CodeKey { rung: Names, file: internal/adapters/cli/analyze.go, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
+| walker |  | 8391 | 155 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/analyze.go, decl: 2, sub: 0, line: 70 } |  |  | 0.535 |
+| walker |  | 8406 | 15 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/analyze.go, decl: 3, sub: 0, line: 84 } |  |  | 0.535 |
+| walker |  | 8426 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/analyze.go, decl: 4, sub: 0, line: 206 } |  |  | 0.535 |
 | ns | 8452 |  | 325 | Complete TOCK_* environment variable bindings | 6.4 |  | 0.528 |
-| walker |  | 8463 | 20 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/analyze.go, decl: 4, sub: 0, line: 206 } |  |  | 0.528 |
-| walker |  | 8574 | 111 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar_sidebar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
-| walker |  | 8593 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/calendar_sidebar.go, decl: 2, sub: 0, line: 15 } |  |  | 0.528 |
-| walker |  | 8633 | 40 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 4, sub: 0, line: 25 } |  |  | 0.528 |
+| walker |  | 8537 | 111 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar_sidebar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
+| walker |  | 8556 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/calendar_sidebar.go, decl: 2, sub: 0, line: 15 } |  |  | 0.528 |
+| walker |  | 8596 | 40 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 4, sub: 0, line: 25 } |  |  | 0.528 |
 | ns | 8700 |  | 248 | timeutil.Formatter — 12/24-hour formats and method roster | 6.5 |  | 0.534 |
-| walker |  | 8843 | 210 | Code::CodeKey { rung: Names, file: internal/adapters/cli/list_gui.go, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
+| walker |  | 8806 | 210 | Code::CodeKey { rung: Names, file: internal/adapters/cli/list_gui.go, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
 | ns | 8888 |  | 188 | Theme type and the complete theme constructor roster | 6.6 |  | 0.545 |
-| walker |  | 8941 | 98 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/list_gui.go, decl: 2, sub: 0, line: 45 } |  |  | 0.545 |
-| walker |  | 8948 | 7 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 9, sub: 0, line: 200 } |  |  | 0.545 |
+| walker |  | 8904 | 98 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/list_gui.go, decl: 2, sub: 0, line: 45 } |  |  | 0.545 |
+| walker |  | 8911 | 7 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 9, sub: 0, line: 200 } |  |  | 0.545 |
 | ns | 9046 |  | 158 | GetTheme — accepted theme names and auto-detection | 6.7 | 6.6 | 0.537 |
 | ns | 9216 |  | 170 | Type roster of the cli package (names only) | 7.1 |  | 0.536 |
 | ns | 9371 |  | 155 | AnalysisStats — everything `tock analyze` computes | 7.2 | 7.1 | 0.543 |
-| walker |  | 9460 | 512 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.543 |
+| walker |  | 9423 | 512 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.543 |
 | ns | 9517 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.535 |
 | ns | 9754 |  | 237 | Direct dependency set | 8.1 |  | 0.541 |
 | ns | 9805 |  | 51 | Peripheral directory listings (docs, demo, assets, .github) | 8.2 |  | 0.547 |
-| walker |  | 9934 | 474 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.547 |
+| walker |  | 9897 | 474 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.547 |
 | ns | 9961 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.543 |
-| walker |  | 9998 | 64 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.543 |
+| walker |  | 9999 | 102 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.543 |

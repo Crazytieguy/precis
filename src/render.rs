@@ -24,6 +24,10 @@ use crate::tokenizer;
 
 const INDENT_UNIT: &str = "  ";
 
+/// Longest source text a `Full` row shows; the rest of the line is
+/// replaced by `…`.
+const MAX_ROW_CHARS: usize = 500;
+
 /// Directory entries by parent, for listings a cost probe adds to the tree.
 type Listings = HashMap<PathBuf, BTreeMap<String, EntryKind>>;
 
@@ -957,7 +961,14 @@ fn format_line_row(
             s.push('…');
         }
         Render::Full => {
-            let _ = write!(s, "{number}→{source_line}");
+            let _ = write!(s, "{number}→");
+            match source_line.char_indices().nth(MAX_ROW_CHARS) {
+                Some((cut, _)) => {
+                    s.push_str(&source_line[..cut]);
+                    s.push('…');
+                }
+                None => s.push_str(source_line),
+            }
         }
         Render::Truncated { pattern } => {
             let _ = write!(s, "{number}→");
@@ -1174,6 +1185,18 @@ mod tests {
             );
             assert_eq!(charged, tokenizer::count(&out), "output:\n{out}");
         }
+    }
+
+    #[test]
+    fn render_full_row_longer_than_the_cap_ends_in_ellipsis() {
+        let long = "é".repeat(MAX_ROW_CHARS + 1);
+        let row = format_line_row(7, &Render::Full, &long, 0);
+        assert_eq!(row, format!("7→{}…\n", "é".repeat(MAX_ROW_CHARS)));
+        let fits = &long[..long.len() - 'é'.len_utf8()];
+        assert_eq!(
+            format_line_row(7, &Render::Full, fits, 0),
+            format!("7→{fits}\n")
+        );
     }
 
     #[test]

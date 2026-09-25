@@ -59,68 +59,68 @@ Score(3000)=0.797 I=0.892 C=0.713 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 3748 | 418 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.700 |
 | ns | 3791 |  | 141 | sds.c includes + SDS_NOINIT definition, and the sdsalloc.h allocator macros | 4.3 |  | 0.685 |
 | ns | 4007 |  | 216 | sdsHdrSize() and sdsReqType() — the type-selection policy | 4.4 | 4.1 | 0.659 |
-| walker |  | 4156 | 408 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.659 |
+| walker |  | 4153 | 405 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.659 |
 | ns | 4216 |  | 209 | sdsnewlen() doc comment — NULL vs SDS_NOINIT init, and the always-null-terminated guarantee | 4.5 |  | 0.644 |
 | ns | 4537 |  | 321 | sdsnewlen() body — single allocation, header write, type-5-to-8 upgrade | 4.6 | 4.1 | 0.618 |
-| walker |  | 4683 | 527 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.619 |
+| walker |  | 4680 | 527 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.619 |
 | ns | 4883 |  | 346 | sdsMakeRoomFor(): contract comment and the growth policy (198-222) | 4.7 | 4.1 | 0.595 |
-| walker |  | 5128 | 445 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.595 |
+| walker |  | 5125 | 445 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.595 |
 | ns | 5253 |  | 370 | sdsMakeRoomFor(): the realloc-vs-move-header branch (224-248) | 4.8 | 4.7 | 0.574 |
 | ns | 5486 |  | 233 | sdsempty/sdsnew/sdsdup/sdsfree bodies, with sdsfree's NULL contract | 4.9 | 4.1 | 0.557 |
-| walker |  | 5632 | 504 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.557 |
+| walker |  | 5629 | 504 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.557 |
 | ns | 5808 |  | 322 | sdsIncrLen() doc comment — the zero-copy read-into-the-buffer pattern | 4.10 |  | 0.541 |
-| walker |  | 5836 | 204 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
-| walker |  | 5848 | 12 | Code::CodeKey { rung: Doc, file: sds.c, decl: 7, sub: 0, line: 160 } |  |  | 0.554 |
-| walker |  | 5861 | 13 | Code::CodeKey { rung: Body, file: sds.c, decl: 5, sub: 0, line: 149 } |  |  | 0.555 |
-| walker |  | 5878 | 17 | Code::CodeKey { rung: Body, file: sds.c, decl: 7, sub: 0, line: 160 } |  |  | 0.556 |
-| walker |  | 5898 | 20 | Code::CodeKey { rung: Doc, file: sds.c, decl: 6, sub: 0, line: 154 } |  |  | 0.558 |
-| walker |  | 5921 | 23 | Code::CodeKey { rung: Doc, file: sds.c, decl: 8, sub: 0, line: 165 } |  |  | 0.561 |
+| walker |  | 5833 | 204 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
+| walker |  | 5845 | 12 | Code::CodeKey { rung: Doc, file: sds.c, decl: 7, sub: 0, line: 160 } |  |  | 0.554 |
+| walker |  | 5858 | 13 | Code::CodeKey { rung: Body, file: sds.c, decl: 5, sub: 0, line: 149 } |  |  | 0.555 |
+| walker |  | 5875 | 17 | Code::CodeKey { rung: Body, file: sds.c, decl: 7, sub: 0, line: 160 } |  |  | 0.556 |
+| walker |  | 5895 | 20 | Code::CodeKey { rung: Doc, file: sds.c, decl: 6, sub: 0, line: 154 } |  |  | 0.558 |
+| walker |  | 5918 | 23 | Code::CodeKey { rung: Doc, file: sds.c, decl: 8, sub: 0, line: 165 } |  |  | 0.561 |
 | ns | 6023 |  | 215 | sdscatfmt() doc comment — the supported format specifiers | 4.11 |  | 0.550 |
-| walker |  | 6110 | 189 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 1, line: 0 } |  |  | 0.573 |
+| walker |  | 6107 | 189 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 1, line: 0 } |  |  | 0.573 |
 | ns | 6118 |  | 95 | README: the error-handling contract (NULL on out of memory) | 5.1 |  | 0.569 |
-| walker |  | 6278 | 168 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 2, line: 0 } |  |  | 0.576 |
-| walker |  | 6299 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 24, sub: 0, line: 494 } |  |  | 0.576 |
-| walker |  | 6321 | 22 | Code::CodeKey { rung: Doc, file: sds.c, decl: 26, sub: 0, line: 534 } |  |  | 0.576 |
+| walker |  | 6275 | 168 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 2, line: 0 } |  |  | 0.576 |
+| walker |  | 6296 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 24, sub: 0, line: 494 } |  |  | 0.576 |
+| walker |  | 6318 | 22 | Code::CodeKey { rung: Doc, file: sds.c, decl: 26, sub: 0, line: 534 } |  |  | 0.576 |
 | ns | 6345 |  | 227 | README: the preallocation algorithm and the SDS_MAX_PREALLOC cap | 5.2 |  | 0.567 |
 | ns | 6485 |  | 140 | README: the internals section's `struct sdshdr` — documentation that is stale | 5.3 |  | 0.559 |
-| walker |  | 6504 | 183 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 3, line: 0 } |  |  | 0.569 |
-| walker |  | 6525 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 31, sub: 0, line: 783 } |  |  | 0.569 |
-| walker |  | 6546 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 32, sub: 0, line: 790 } |  |  | 0.569 |
+| walker |  | 6501 | 183 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 3, line: 0 } |  |  | 0.569 |
+| walker |  | 6522 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 31, sub: 0, line: 783 } |  |  | 0.569 |
+| walker |  | 6543 | 21 | Code::CodeKey { rung: Doc, file: sds.c, decl: 32, sub: 0, line: 790 } |  |  | 0.569 |
 | ns | 6751 |  | 266 | README: the two disadvantages — reassign the return value, and shared strings | 5.4 |  | 0.578 |
-| walker |  | 6757 | 211 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 4, line: 0 } |  |  | 0.600 |
-| walker |  | 6777 | 20 | Code::CodeKey { rung: Doc, file: sds.c, decl: 42, sub: 0, line: 1120 } |  |  | 0.600 |
-| walker |  | 6803 | 26 | Code::CodeKey { rung: Doc, file: sds.c, decl: 35, sub: 0, line: 885 } |  |  | 0.600 |
-| walker |  | 6836 | 33 | Code::CodeKey { rung: Doc, file: sds.c, decl: 37, sub: 0, line: 925 } |  |  | 0.600 |
-| walker |  | 6870 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 14, sub: 0, line: 307 } |  |  | 0.600 |
-| walker |  | 6904 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 38, sub: 0, line: 932 } |  |  | 0.600 |
-| walker |  | 6940 | 36 | Code::CodeKey { rung: Doc, file: sds.c, decl: 5, sub: 0, line: 149 } |  |  | 0.604 |
+| walker |  | 6754 | 211 | Code::CodeKey { rung: Names, file: sds.c, decl: 0, sub: 4, line: 0 } |  |  | 0.600 |
+| walker |  | 6774 | 20 | Code::CodeKey { rung: Doc, file: sds.c, decl: 42, sub: 0, line: 1120 } |  |  | 0.600 |
+| walker |  | 6800 | 26 | Code::CodeKey { rung: Doc, file: sds.c, decl: 35, sub: 0, line: 885 } |  |  | 0.600 |
+| walker |  | 6833 | 33 | Code::CodeKey { rung: Doc, file: sds.c, decl: 37, sub: 0, line: 925 } |  |  | 0.600 |
+| walker |  | 6867 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 14, sub: 0, line: 307 } |  |  | 0.600 |
+| walker |  | 6901 | 34 | Code::CodeKey { rung: Doc, file: sds.c, decl: 38, sub: 0, line: 932 } |  |  | 0.600 |
+| walker |  | 6937 | 36 | Code::CodeKey { rung: Doc, file: sds.c, decl: 5, sub: 0, line: 149 } |  |  | 0.604 |
 | ns | 6968 |  | 217 | README basics: `sds` is a `char *`, and the three rules of the minimal program | 5.5 |  | 0.610 |
-| walker |  | 6978 | 38 | Code::CodeKey { rung: Doc, file: sds.c, decl: 41, sub: 0, line: 1108 } |  |  | 0.610 |
-| walker |  | 7019 | 41 | Code::CodeKey { rung: Doc, file: sds.c, decl: 21, sub: 0, line: 440 } |  |  | 0.610 |
-| walker |  | 7061 | 42 | Code::CodeKey { rung: Doc, file: sds.c, decl: 20, sub: 0, line: 427 } |  |  | 0.610 |
-| walker |  | 7112 | 51 | Code::CodeKey { rung: Doc, file: sds.c, decl: 25, sub: 0, line: 526 } |  |  | 0.610 |
+| walker |  | 6975 | 38 | Code::CodeKey { rung: Doc, file: sds.c, decl: 41, sub: 0, line: 1108 } |  |  | 0.610 |
+| walker |  | 7016 | 41 | Code::CodeKey { rung: Doc, file: sds.c, decl: 21, sub: 0, line: 440 } |  |  | 0.610 |
+| walker |  | 7058 | 42 | Code::CodeKey { rung: Doc, file: sds.c, decl: 20, sub: 0, line: 427 } |  |  | 0.610 |
+| walker |  | 7109 | 51 | Code::CodeKey { rung: Doc, file: sds.c, decl: 25, sub: 0, line: 526 } |  |  | 0.610 |
 | ns | 7160 |  | 192 | README: why sdstrim/sdsrange return void, and how negative indexes work | 5.6 |  | 0.603 |
-| walker |  | 7179 | 67 | Code::CodeKey { rung: Doc, file: sds.c, decl: 19, sub: 0, line: 421 } |  |  | 0.603 |
-| walker |  | 7247 | 68 | Code::CodeKey { rung: Doc, file: sds.c, decl: 18, sub: 0, line: 413 } |  |  | 0.603 |
-| walker |  | 7316 | 69 | Code::CodeKey { rung: Doc, file: sds.c, decl: 10, sub: 0, line: 193 } |  |  | 0.603 |
+| walker |  | 7176 | 67 | Code::CodeKey { rung: Doc, file: sds.c, decl: 19, sub: 0, line: 421 } |  |  | 0.603 |
+| walker |  | 7244 | 68 | Code::CodeKey { rung: Doc, file: sds.c, decl: 18, sub: 0, line: 413 } |  |  | 0.603 |
+| walker |  | 7313 | 69 | Code::CodeKey { rung: Doc, file: sds.c, decl: 10, sub: 0, line: 193 } |  |  | 0.603 |
 | ns | 7382 |  | 222 | README: swapping the allocator, and why sds_malloc/sds_realloc/sds_free are exported | 5.7 |  | 0.595 |
-| walker |  | 7389 | 73 | Code::CodeKey { rung: Doc, file: sds.c, decl: 16, sub: 0, line: 380 } |  |  | 0.595 |
+| walker |  | 7386 | 73 | Code::CodeKey { rung: Doc, file: sds.c, decl: 16, sub: 0, line: 380 } |  |  | 0.595 |
 | ns | 7527 |  | 145 | README: the exact escaping rules sdscatrepr applies | 5.8 |  | 0.592 |
 | ns | 7716 |  | 189 | README: tokenizer ownership rules and sdssplitargs' quoting behaviour | 5.9 |  | 0.585 |
 | ns | 7880 |  | 164 | README: the camelCase warning and how heap checkers see SDS strings | 5.10 |  | 0.581 |
-| walker |  | 8003 | 614 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.581 |
+| walker |  | 8000 | 614 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.581 |
 | ns | 8197 |  | 317 | sdsrange() body — negative-index normalisation and clamping | 6.1 | 4.2 | 0.567 |
 | ns | 8383 |  | 186 | sdscatlen/sdscat/sdscatsds bodies — the append path | 6.2 | 4.1 | 0.560 |
-| walker |  | 8523 | 520 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.560 |
+| walker |  | 8520 | 520 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.560 |
 | ns | 8591 |  | 208 | sdsRemoveFreeSpace() — contract and the shrink decision | 6.3 | 4.1 | 0.552 |
 | ns | 8763 |  | 172 | sdstrim() body — how both ends are walked and the survivor moved down | 6.4 | 4.2 | 0.545 |
-| walker |  | 8972 | 449 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.553 |
+| walker |  | 8969 | 449 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.553 |
 | ns | 9015 |  | 252 | sdssplitargs() doc comment — REPL-style parsing and its failure mode | 6.5 |  | 0.544 |
 | ns | 9256 |  | 241 | The small inspect/reset bodies: sdsupdatelen, sdsclear, sdsAllocSize, sdsAllocPtr | 6.6 | 4.1 | 0.541 |
 | ns | 9375 |  | 119 | The test entry points in sds.c: the SDS_TEST_MAIN guard, sdsTest() and main() | 7.1 | 4.2 | 0.536 |
-| walker |  | 9573 | 601 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.541 |
+| walker |  | 9570 | 601 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.541 |
 | ns | 9582 |  | 207 | testhelp.h: the complete test_cond / test_report macro pair | 7.2 |  | 0.549 |
 | ns | 9665 |  | 83 | A representative excerpt of the sdsTest() body | 7.3 |  | 0.546 |
 | ns | 9794 |  | 129 | The complete Changelog (v1.0 and v2.0) | 7.4 |  | 0.541 |
 | ns | 9921 |  | 127 | Authorship and licence: README credits, LICENSE header, .gitignore | 7.5 |  | 0.538 |
-| walker |  | 9987 | 414 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.538 |
+| walker |  | 9984 | 414 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.538 |

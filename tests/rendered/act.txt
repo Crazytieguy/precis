@@ -83,7 +83,12 @@ README.md
   7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
   …
   16→# How Does It Work?
-  …
+  17→
+  18→When you run `act` it reads in your GitHub Actions from `.github/workflows/` and determines the set of actions that need to be run. It uses the Docker API to either pull or build the necessary images, as defined in your workflow files and finally determines the execution path based on the dependencies that were defined. Once it has the execution path, it then uses the Docker API to run containers for each action based on the images prepared earlier. The [environment variables](https://help.githu…
+  19→
+  20→Let's see it in action with a [sample repo](https://github.com/cplee/github-actions-demo)!
+  21→
+  22→![Demo](https://raw.githubusercontent.com/wiki/nektos/act/quickstart/act-quickstart-2.gif)
   24→# Act User Guide
   25→
   26→Please look at the [act user guide](https://nektosact.com) for more documentation.
@@ -108,33 +113,12 @@ cmd/
   execute_test.go
   graph.go
   input.go
-    …
-    10→type Input struct {
-    …
-    70→func (i *Input) resolve(path string) string {
-    …
   list.go
   notices.go
     …
     17→type Notice struct {
-    18→	Level   string `json:"level"`
-    19→	Message string `json:"message"`
-    20→}
+    …
     22→func displayNotices(input *Input) {
-    …
-    55→var noticesLoaded = make(chan []Notice)
-    56→
-    57→func loadVersionNotices(version string) {
-    …
-    63→const NoticeURL = "https://api.nektosact.com/notices"
-    64→
-    65→func getVersionNotices(version string) []Notice {
-    …
-    121→func loadNoticesEtag() string {
-    …
-    130→func saveNoticesEtag(etag string) {
-    …
-    138→func etagPath() string {
     …
   platforms.go
   root.go

@@ -77,7 +77,7 @@ README.md
   142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
   145→## Conventions
   146→
-  147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
+  147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  Yo…
   149→## Wildcards
   150→
   151→The `*` character may be used as a wildcard. Suppose for example your library has
@@ -216,6 +216,7 @@ src/
     31→	'#0033FF',
     32→	'#0066CC',
     33→	'#0066FF',
+    34→	'#0099CC',
     …
     115→function useColors() {
     …

@@ -22,7 +22,7 @@ README.md
   14→
   15→For microcontrollers, see the section on **compilation** below.
   17→## Compilation
-  18→Before compiling, you'll need to dump registry data from a vanilla Minecraft server. On Linux, this can be done automatically using the `extract_registries.sh` script. Otherwise, the manual process is as follows: create a folder called `notchian` here, and put a Minecraft server JAR in it. Then, follow [this guide](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Data_Generators) to dump all of the registries (use the _second_ command with the `--all` flag). Finally, run `build_registries.js` with either [bun](https://bun.sh/), [node](https://nodejs.org/en/download), or [deno](https://docs.deno.com/runtime/getting_started/installation/).
+  18→Before compiling, you'll need to dump registry data from a vanilla Minecraft server. On Linux, this can be done automatically using the `extract_registries.sh` script. Otherwise, the manual process is as follows: create a folder called `notchian` here, and put a Minecraft server JAR in it. Then, follow [this guide](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Data_Generators) to dump all of the registries (use the _second_ command with the `--all` flag). Finally, run `build_reg…
   …
   28→## Configuration
   29→Configuring the server requires compiling it from its source code as described in the section above.
@@ -144,6 +144,9 @@ include/
     215→  uint8_t health;
     216→  uint8_t hunger;
     217→  uint16_t saturation;
+    218→  uint8_t hotbar;
+    219→  uint16_t inventory_items[41];
+    220→  uint16_t craft_items[9];
     …
     238→} PlayerData;
     239→
