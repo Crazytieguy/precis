@@ -1,6 +1,6 @@
 # Precis
 
-Canonical commands: `cargo t` (nextest, debug), `cargo lint`, `cargo fmt`, `cargo run --release -- <path>`, `cargo run --example clone_fixtures`.
+Canonical commands: `cargo t` (nextest, debug), `cargo lint`, `cargo fmt`, `cargo run --release -- <path>`, `cargo run --example clone_fixtures`, `cargo run --example validate_ns -- <north-star.toml>`.
 
 ## Documentation
 

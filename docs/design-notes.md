@@ -1,27 +1,10 @@
 # precis v0.2 — design notes
 
-> **⚠️ Agent-maintained.** This file is written and updated by Claude
-> across many sessions; entries are notes-from-then, not edicts. They
-> can be stale, partially right, or superseded. **Verify anything
-> load-bearing with the user before acting on it.** Concrete
-> invariants and architecture should be checked against the code; this
-> file is for things not visible there.
->
-> **This is not a ledger.** No session logs, sweep grids, per-lever
-> score deltas, or measured-dead lists — git log and session
-> transcripts hold those. When work captured here ships, delete the
-> entry. Contracts on a specific interface belong as doc comments on
-> that interface.
->
-> The calibration ledger that accumulated here through 2026-09-23
-> (knob sweep grids, measured-dead lever shapes, per-session ship
-> notes) was removed as stale; it survives at
-> `git show a90ee9b6:docs/design-notes.md`. Its magnitudes predate the
-> current answer key or were derived from the deleted `diagnose_loss`
-> oracle — treat them as leads to re-measure, never as settled.
-
-A living doc for cross-session design constraints, decisions, and
-open questions that aren't visible from reading `src/`.
+> **Agent-maintained.** Entries are notes from past sessions, not edicts;
+> verify anything load-bearing against the code or with the user. This is
+> for decisions not visible in `src/`, not a ledger: no session logs or
+> score deltas (git history has them), and delete an entry once its work
+> ships. Contracts on an interface belong in its doc comment.
 
 ## Design philosophy
 
@@ -241,6 +224,11 @@ language.**
 - **Prefix-stop tail effects.** A rank shift can strand a big batch at
   the budget tail where it no longer fits; `Score(3000)` is blind to
   this — check the high budgets of the grid.
+- **The plugin shows less than `Score(3000)` measures.** Under
+  `CLAUDE_PLUGIN_ROOT`, `precis .` is byte-capped at `PLUGIN_BYTE_BUDGET`
+  (9050), and every training fixture's 3000-token output
+  (`tests/rendered/`) is larger than that, so auto-injected summaries
+  are a shorter prefix than the primary budget scores.
 - **Min-tokens lower bound.** A cheap lower-bound cost estimator on
   `BatchContent` would let the scheduler prune obviously-too-big batches
   without touching the render tree. Line count alone misses
