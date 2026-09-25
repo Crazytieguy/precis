@@ -1,4 +1,4 @@
-Score(3000)=0.628 I=0.771 C=0.512 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.792/0.755/0.627/0.628/0.580/0.546/0.541
+Score(3000)=0.628 I=0.771 C=0.512 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/4327/6240/9000)=0.806/0.755/0.627/0.628/0.580/0.546/0.541
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,14 +30,14 @@ Score(3000)=0.628 I=0.771 C=0.512 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 568 | 26 | Markdown::Section { file: downstream/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.661 |
 | ns | 615 |  | 94 | Complete listings of `testing/` and `docs/` | 1.6 |  | 0.703 |
 | walker |  | 648 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.703 |
-| walker |  | 695 | 47 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.703 |
 | ns | 839 |  | 224 | What pluggy is and what problem it solves (docs/index.rst lede) | 1.7 |  | 0.645 |
 | ns | 893 |  | 54 | Complete listing of the two worked example packages under docs/examples/ | 1.8 |  | 0.645 |
 | ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.615 |
-| walker |  | 1039 | 344 | Code::CodeKey { rung: Names, file: src/pluggy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.806 |
-| walker |  | 1105 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.851 |
-| walker |  | 1145 | 40 | Plaintext::DeclSurface { file: changelog/590.trivial.rst } |  |  | 0.851 |
-| walker |  | 1242 | 97 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.851 |
+| walker |  | 992 | 344 | Code::CodeKey { rung: Names, file: src/pluggy/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.806 |
+| walker |  | 1058 | 66 | Code::CodeKey { rung: Body, file: src/pluggy/__init__.py, decl: 1, sub: 0, line: 32 } |  |  | 0.851 |
+| walker |  | 1098 | 40 | Plaintext::DeclSurface { file: changelog/590.trivial.rst } |  |  | 0.851 |
+| walker |  | 1195 | 97 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.851 |
+| walker |  | 1242 | 47 | Plaintext::DeclSurface { file: docs/requirements.txt } |  |  | 0.851 |
 | ns | 1296 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.755 |
 | walker |  | 1376 | 134 | Plaintext::DeclSurface { file: TIDELIFT.rst } |  |  | 0.755 |
 | ns | 1528 |  | 232 | The rest of `_manager.py`: PluginValidationError, DistFacade, and the two module helpers | 2.2 |  | 0.701 |

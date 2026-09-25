@@ -38,13 +38,13 @@ Score(3000)=0.745 I=0.920 C=0.603 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 1713 | 77 | Fs::DirListing { dir: tests } |  |  | 0.689 |
 | walker |  | 1725 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.701 |
 | walker |  | 1739 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.730 |
-| walker |  | 1778 | 39 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.730 |
 | ns | 1885 |  | 353 | `exceptions.py`: the complete class hierarchy | 2.3 |  | 0.683 |
-| walker |  | 1936 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.768 |
-| walker |  | 2061 | 125 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.772 |
+| walker |  | 1897 | 158 | Code::CodeKey { rung: ModuleDoc, file: src/requests/__version__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.768 |
+| walker |  | 2022 | 125 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.806 |
 | ns | 2061 |  | 176 | `Session` class declaration + docstring | 2.4 |  | 0.772 |
-| walker |  | 2134 | 73 | Plaintext::DeclSurface { file: requirements-dev.txt } |  |  | 0.772 |
-| walker |  | 2281 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.772 |
+| walker |  | 2095 | 73 | Plaintext::DeclSurface { file: requirements-dev.txt } |  |  | 0.772 |
+| walker |  | 2242 | 147 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.772 |
+| walker |  | 2281 | 39 | Plaintext::DeclSurface { file: docs/requirements.txt } |  |  | 0.772 |
 | ns | 2332 |  | 271 | `Session` attribute set: typed fields + `__attrs__` | 2.5 | 2.4 | 0.727 |
 | walker |  | 2391 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.727 |
 | walker |  | 2449 | 58 | Plaintext::Whole { file: tox.ini } |  |  | 0.727 |

@@ -1,4 +1,4 @@
-Score(3000)=0.667 I=0.836 C=0.532 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.857/0.829/0.725/0.667/0.633/0.546/0.462
+Score(3000)=0.667 I=0.836 C=0.532 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.865/0.829/0.725/0.667/0.633/0.546/0.462
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,30 +15,30 @@ Score(3000)=0.667 I=0.836 C=0.532 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 262 | 54 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.945 |
 | walker |  | 348 | 86 | Toml::Identity { file: pyproject.toml } |  |  | 0.649 |
 | ns | 348 |  | 121 | bookmarks/ app package listing (complete) | 1.4 |  | 0.649 |
-| walker |  | 358 | 10 | Plaintext::Whole { file: version.txt } |  |  | 0.649 |
 | ns | 445 |  | 97 | README feature overview (head) | 1.5 |  | 0.605 |
-| walker |  | 479 | 121 | Fs::DirListing { dir: bookmarks } |  |  | 0.894 |
-| walker |  | 482 | 3 | Fs::DirListing { dir: bookmarks/management } |  |  | 0.894 |
-| walker |  | 502 | 20 | Fs::DirListing { dir: bookmarks/api } |  |  | 0.895 |
-| walker |  | 522 | 20 | Fs::DirListing { dir: bookmarks/templatetags } |  |  | 0.895 |
-| walker |  | 544 | 22 | Fs::DirListing { dir: bookmarks/settings } |  |  | 0.898 |
-| walker |  | 562 | 18 | Fs::DirListing { dir: bookmarks/frontend } |  |  | 0.898 |
+| walker |  | 469 | 121 | Fs::DirListing { dir: bookmarks } |  |  | 0.894 |
+| walker |  | 472 | 3 | Fs::DirListing { dir: bookmarks/management } |  |  | 0.894 |
+| walker |  | 492 | 20 | Fs::DirListing { dir: bookmarks/api } |  |  | 0.895 |
+| walker |  | 512 | 20 | Fs::DirListing { dir: bookmarks/templatetags } |  |  | 0.895 |
+| walker |  | 534 | 22 | Fs::DirListing { dir: bookmarks/settings } |  |  | 0.898 |
+| walker |  | 552 | 18 | Fs::DirListing { dir: bookmarks/frontend } |  |  | 0.898 |
+| walker |  | 579 | 27 | Fs::DirListing { dir: bookmarks/templates } |  |  | 0.898 |
 | ns | 583 |  | 138 | README feature overview (tail) | 1.6 | 1.5 | 0.856 |
-| walker |  | 589 | 27 | Fs::DirListing { dir: bookmarks/templates } |  |  | 0.856 |
-| walker |  | 594 | 5 | Fs::DirListing { dir: bookmarks/templates/admin } |  |  | 0.856 |
-| walker |  | 610 | 16 | Fs::DirListing { dir: bookmarks/templates/registration } |  |  | 0.856 |
-| ns | 679 |  | 96 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.748 |
-| walker |  | 686 | 76 | Fs::DirListing { dir: bookmarks/views } |  |  | 0.878 |
-| ns | 762 |  | 83 | bookmarks/services/ listing (complete) | 1.8 |  | 0.800 |
-| walker |  | 769 | 83 | Fs::DirListing { dir: bookmarks/services } |  |  | 0.891 |
-| walker |  | 789 | 20 | Fs::DirListing { dir: bookmarks/templates/bundles } |  |  | 0.891 |
-| walker |  | 809 | 20 | Fs::DirListing { dir: bookmarks/templates/tags } |  |  | 0.891 |
-| walker |  | 836 | 27 | Fs::DirListing { dir: bookmarks/frontend/utils } |  |  | 0.891 |
-| walker |  | 863 | 27 | Fs::DirListing { dir: bookmarks/templates/settings } |  |  | 0.891 |
+| walker |  | 584 | 5 | Fs::DirListing { dir: bookmarks/templates/admin } |  |  | 0.856 |
+| walker |  | 600 | 16 | Fs::DirListing { dir: bookmarks/templates/registration } |  |  | 0.856 |
+| walker |  | 676 | 76 | Fs::DirListing { dir: bookmarks/views } |  |  | 0.878 |
+| ns | 679 |  | 96 | bookmarks/views/ and bookmarks/api/ listings (complete) | 1.7 |  | 0.878 |
+| walker |  | 759 | 83 | Fs::DirListing { dir: bookmarks/services } |  |  | 0.893 |
+| ns | 762 |  | 83 | bookmarks/services/ listing (complete) | 1.8 |  | 0.891 |
+| walker |  | 779 | 20 | Fs::DirListing { dir: bookmarks/templates/bundles } |  |  | 0.891 |
+| walker |  | 799 | 20 | Fs::DirListing { dir: bookmarks/templates/tags } |  |  | 0.891 |
+| walker |  | 826 | 27 | Fs::DirListing { dir: bookmarks/frontend/utils } |  |  | 0.891 |
+| walker |  | 853 | 27 | Fs::DirListing { dir: bookmarks/templates/settings } |  |  | 0.891 |
 | ns | 937 |  | 175 | Dev prerequisites + core make targets | 1.9 |  | 0.819 |
 | ns | 1154 |  | 217 | Remaining make targets: lint, format, e2e, frontend | 1.10 | 1.9 | 0.749 |
-| walker |  | 1224 | 361 | Plaintext::Whole { file: Makefile } |  |  | 0.881 |
-| walker |  | 1293 | 69 | Fs::DirListing { dir: bookmarks/styles } |  |  | 0.881 |
+| walker |  | 1214 | 361 | Plaintext::Whole { file: Makefile } |  |  | 0.881 |
+| walker |  | 1283 | 69 | Fs::DirListing { dir: bookmarks/styles } |  |  | 0.881 |
+| walker |  | 1293 | 10 | Plaintext::DeclSurface { file: version.txt } |  |  | 0.881 |
 | walker |  | 1334 | 41 | Fs::DirListing { dir: bookmarks/templates/shared } |  |  | 0.881 |
 | walker |  | 1380 | 46 | Fs::DirListing { dir: bookmarks/management/commands } |  |  | 0.882 |
 | ns | 1438 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.829 |

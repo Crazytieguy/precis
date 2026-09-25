@@ -96,28 +96,11 @@ README.md
   156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
   157→  embeddings from remote APIs like OpenAI/Nomic/Ollama, meant for testing and
   158→  SQL scripts
-  …
+  159→- [**`sqlite-lembed`**](https://github.com/asg017/sqlite-lembed), Generate text
+  160→  embeddings locally from embedding models in the `.gguf` format
 SECURITY.md
 TODO
-  1→- [ ] add `xyz_info` shadow table with version etc.
-  2→
-  3→- later
-  4→  - [ ] partition: UPDATE support
-  5→  - [ ] skip invalid validity entries in knn filter?
-  6→  - [ ] nulls in metadata
-  7→  - [ ] partition `x in (...)` handling
-  8→  - [ ] blobs/date/datetime
-  9→  - [ ] uuid/ulid perf
-  10→  - [ ] Aux columns: `NOT NULL` constraint
-  11→  - [ ] Metadata columns: `NOT NULL` constraint
-  12→   - [ ] Partiion key: `NOT NULL` constraint
-  13→  - [ ] dictionary encoding?
-  14→  - [ ] properly sqlite3_vtab_nochange / sqlite3_value_nochange handling
-  15→  - [ ] perf
-  16→    - [ ] aux: cache INSERT
-  17→    - [ ] aux: LEFT JOIN on `_rowids` queries to avoid N lookup queries
 VERSION
-  1→0.1.7-alpha.10
 benchmarks/
   README.md (empty)
   exhaustive-memory/
@@ -126,10 +109,13 @@ benchmarks/
     Cargo.lock
     Cargo.toml
     benches/
+      my_benchmark.rs
     build.rs
     src/
       lib.rs
   profiling/
+    build-from-npy.sql
+    query-k.sql
   self-params/
     build.py
     knn.py
@@ -145,6 +131,26 @@ bindings/
     Cargo.lock
     Cargo.toml.tmpl
     Makefile
+      1→VERSION=$(shell cat ../../VERSION)
+      2→
+      3→deps: Cargo.toml sqlite-vec.c sqlite-vec.h sqlite3ext.h sqlite3.h
+      4→
+      5→Cargo.toml: ../../VERSION Cargo.toml.tmpl
+      6→		VERSION=$(VERSION) envsubst < Cargo.toml.tmpl > $@
+      7→
+      8→sqlite-vec.c: ../../sqlite-vec.c
+      9→		cp $< $@
+      10→
+      11→sqlite-vec.h: ../../sqlite-vec.h
+      12→		cp $< $@
+      13→
+      14→sqlite3ext.h: ../../vendor/sqlite3ext.h
+      15→		cp $< $@
+      16→
+      17→sqlite3.h: ../../vendor/sqlite3.h
+      18→		cp $< $@
+      19→
+      20→.PHONY: deps
     build.rs
       1→fn main() {
       2→    cc::Build::new().file("sqlite-vec.c").define("SQLITE_CORE", None).compile("sqlite_vec0");

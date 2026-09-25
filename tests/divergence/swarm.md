@@ -1,4 +1,4 @@
-Score(3000)=0.749 I=0.921 C=0.609 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.526/0.765/0.738/0.749/0.772/0.724/0.716
+Score(3000)=0.763 I=0.927 C=0.627 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.526/0.765/0.712/0.763/0.772/0.724/0.716
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -61,27 +61,28 @@ Score(3000)=0.749 I=0.921 C=0.609 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 1872 | 75 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.738 |
 | ns | 1914 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.719 |
 | walker |  | 1954 | 82 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.721 |
-| walker |  | 2017 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.727 |
-| walker |  | 2050 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.738 |
-| ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.726 |
-| walker |  | 2085 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.746 |
-| walker |  | 2173 | 88 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 2, sub: 0, line: 14 } |  |  | 0.783 |
-| ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.771 |
-| walker |  | 2245 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.786 |
-| walker |  | 2306 | 61 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 2, sub: 0, line: 13 } |  |  | 0.786 |
+| walker |  | 2044 | 90 | Plaintext::DeclSurface { file: setup.cfg } |  |  | 0.721 |
+| ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.710 |
+| walker |  | 2107 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
+| walker |  | 2140 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.727 |
+| walker |  | 2175 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.746 |
+| ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.735 |
+| walker |  | 2263 | 88 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 2, sub: 0, line: 14 } |  |  | 0.771 |
+| walker |  | 2335 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.786 |
+| walker |  | 2396 | 61 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 2, sub: 0, line: 13 } |  |  | 0.787 |
 | ns | 2398 |  | 156 | `Response` fields table (complete) | 3.4 |  | 0.775 |
-| walker |  | 2574 | 268 | Plaintext::Whole { file: setup.cfg } |  |  | 0.777 |
-| ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.761 |
-| walker |  | 2661 | 87 | Code::CodeKey { rung: Doc, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.765 |
-| walker |  | 2751 | 90 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 1, sub: 0, line: 5 } |  |  | 0.765 |
+| walker |  | 2483 | 87 | Code::CodeKey { rung: Doc, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.779 |
+| walker |  | 2573 | 90 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 1, sub: 0, line: 5 } |  |  | 0.779 |
+| ns | 2603 |  | 205 | `Agent` fields table (the README's documented subset) | 3.5 |  | 0.763 |
+| walker |  | 2667 | 94 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 3, sub: 0, line: 21 } |  |  | 0.764 |
 | ns | 2766 |  | 163 | Function/tool rules: return values, context, errors, ordering | 3.6 |  | 0.752 |
-| walker |  | 2845 | 94 | Code::CodeKey { rung: Body, file: swarm/util.py, decl: 3, sub: 0, line: 21 } |  |  | 0.754 |
-| ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.745 |
-| walker |  | 2953 | 108 | Code::CodeKey { rung: Doc, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.745 |
-| walker |  | 2964 | 11 | Fs::DirListing { dir: tests/test_runs } |  |  | 0.745 |
-| walker |  | 3007 | 43 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.752 |
-| ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.740 |
-| walker |  | 3033 | 26 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.751 |
+| walker |  | 2775 | 108 | Code::CodeKey { rung: Doc, file: swarm/util.py, decl: 4, sub: 0, line: 31 } |  |  | 0.752 |
+| walker |  | 2786 | 11 | Fs::DirListing { dir: tests/test_runs } |  |  | 0.752 |
+| walker |  | 2829 | 43 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
+| walker |  | 2855 | 26 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.769 |
+| ns | 2897 |  | 131 | Handoffs and `Result`: the documented rules | 3.7 |  | 0.761 |
+| ns | 3018 |  | 121 | Function-schema conversion rules | 3.8 |  | 0.749 |
+| walker |  | 3033 | 178 | Plaintext::Whole { file: setup.cfg } |  |  | 0.751 |
 | walker |  | 3037 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/configs/assistants } |  |  | 0.751 |
 | walker |  | 3041 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/src/runs } |  |  | 0.751 |
 | walker |  | 3045 | 4 | Fs::DirListing { dir: examples/customer_service_streaming/src/tasks } |  |  | 0.751 |
@@ -158,9 +159,8 @@ Score(3000)=0.749 I=0.921 C=0.609 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 9815 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 5, sub: 0, line: 89 } |  |  | 0.753 |
 | ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.743 |
 | walker |  | 9870 | 55 | Fs::DirListing { dir: examples/customer_service/logs } |  |  | 0.743 |
-| walker |  | 9879 | 9 | Plaintext::Whole { file: examples/support_bot/requirements.txt } |  |  | 0.743 |
 | ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.743 |
-| walker |  | 9907 | 28 | Markdown::HeadingsOutline { file: examples/personal_shopper/README.md } |  |  | 0.743 |
-| walker |  | 9935 | 28 | Markdown::HeadingsOutline { file: examples/support_bot/README.md } |  |  | 0.743 |
-| walker |  | 9964 | 29 | Markdown::HeadingsOutline { file: examples/weather_agent/README.md } |  |  | 0.743 |
-| walker |  | 9992 | 28 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.744 |
+| walker |  | 9898 | 28 | Markdown::HeadingsOutline { file: examples/personal_shopper/README.md } |  |  | 0.743 |
+| walker |  | 9926 | 28 | Markdown::HeadingsOutline { file: examples/support_bot/README.md } |  |  | 0.743 |
+| walker |  | 9955 | 29 | Markdown::HeadingsOutline { file: examples/weather_agent/README.md } |  |  | 0.743 |
+| walker |  | 9992 | 37 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.745 |

@@ -1,4 +1,4 @@
-Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.564/0.574/0.493/0.459/0.495/0.546/0.521
+Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.568/0.574/0.493/0.459/0.495/0.546/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,8 +19,8 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 300 |  | 30 | Source package listing: src/ and src/tomli/ | 1.5 |  | 0.605 |
 | walker |  | 335 | 58 | Markdown::HeadingsOutline { file: tomllib.md } |  |  | 0.605 |
 | walker |  | 355 | 20 | Fs::DirListing { dir: benchmark } |  |  | 0.608 |
-| walker |  | 364 | 9 | Plaintext::Whole { file: profiler/requirements.txt } |  |  | 0.608 |
-| walker |  | 394 | 30 | Fs::DirListing { dir: tests } |  |  | 0.610 |
+| walker |  | 385 | 30 | Fs::DirListing { dir: tests } |  |  | 0.610 |
+| walker |  | 394 | 9 | Plaintext::DeclSurface { file: profiler/requirements.txt } |  |  | 0.610 |
 | ns | 408 |  | 108 | README: the tomllib stdlib relationship | 1.6 |  | 0.554 |
 | ns | 496 |  | 88 | Entry points: load() and loads() signatures with docstrings | 1.7 |  | 0.523 |
 | ns | 622 |  | 126 | TOMLDecodeError class docstring and its attributes | 1.8 |  | 0.463 |
@@ -28,24 +28,24 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.418 |
 | walker |  | 787 | 393 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.603 |
 | walker |  | 847 | 60 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.604 |
-| walker |  | 891 | 44 | Plaintext::Whole { file: fuzzer/requirements.txt } |  |  | 0.604 |
-| walker |  | 928 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
+| walker |  | 884 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
 | ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.559 |
 | ns | 1220 |  | 248 | Complete roster of module-level functions in _parser.py (names only) | 2.1 |  | 0.485 |
-| walker |  | 1313 | 385 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.613 |
-| walker |  | 1322 | 9 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 1269 | 385 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.613 |
+| walker |  | 1278 | 9 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 1303 | 25 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 1317 | 14 | Code::CodeKey { rung: Names, file: profiler/profiler_script.py, decl: 0, sub: 0, line: 0 } |  |  | 0.613 |
 | ns | 1340 |  | 120 | Complete roster of classes in _parser.py, with Output's fields | 2.2 |  | 0.574 |
-| walker |  | 1347 | 25 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.574 |
-| walker |  | 1361 | 14 | Code::CodeKey { rung: Names, file: profiler/profiler_script.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
-| walker |  | 1393 | 32 | Code::CodeKey { rung: Decl, file: profiler/profiler_script.py, decl: 1, sub: 0, line: 12 } |  |  | 0.574 |
-| walker |  | 1399 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.574 |
-| walker |  | 1461 | 62 | Code::CodeKey { rung: Names, file: fuzzer/fuzz.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
-| walker |  | 1479 | 18 | Code::CodeKey { rung: Doc, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.574 |
-| walker |  | 1536 | 57 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 2, sub: 0, line: 53 } |  |  | 0.574 |
+| walker |  | 1349 | 32 | Code::CodeKey { rung: Decl, file: profiler/profiler_script.py, decl: 1, sub: 0, line: 12 } |  |  | 0.574 |
+| walker |  | 1355 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.574 |
+| walker |  | 1417 | 62 | Code::CodeKey { rung: Names, file: fuzzer/fuzz.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
+| walker |  | 1435 | 18 | Code::CodeKey { rung: Doc, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.574 |
+| walker |  | 1492 | 57 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 2, sub: 0, line: 53 } |  |  | 0.574 |
+| walker |  | 1556 | 64 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 4, sub: 0, line: 71 } |  |  | 0.574 |
 | ns | 1576 |  | 236 | loads(): parse state setup and the statement-loop rule enumeration | 2.3 | 1.7 | 0.525 |
-| walker |  | 1600 | 64 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 4, sub: 0, line: 71 } |  |  | 0.525 |
 | ns | 1719 |  | 143 | parse_value() signature and the inline-nesting recursion guard | 2.4 | 2.1 | 0.503 |
-| walker |  | 1775 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.503 |
+| walker |  | 1731 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.503 |
+| walker |  | 1775 | 44 | Plaintext::DeclSurface { file: fuzzer/requirements.txt } |  |  | 0.503 |
 | walker |  | 1809 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
 | walker |  | 1915 | 106 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.513 |
 | ns | 1924 |  | 205 | MAX_INLINE_NESTING and the mypyc stack-overflow rationale | 2.5 | 2.4 | 0.493 |
@@ -119,9 +119,8 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.484 |
 | ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.481 |
 | walker |  | 7821 | 343 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 1, sub: 0, line: 20 } |  |  | 0.481 |
-| walker |  | 7829 | 8 | Plaintext::Whole { file: scripts/requirements.txt } |  |  | 0.481 |
-| walker |  | 7912 | 83 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 8, sub: 0, line: 109 } |  |  | 0.481 |
-| walker |  | 7925 | 13 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 22, sub: 0, line: 233 } |  |  | 0.482 |
+| walker |  | 7904 | 83 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 8, sub: 0, line: 109 } |  |  | 0.481 |
+| walker |  | 7917 | 13 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 22, sub: 0, line: 233 } |  |  | 0.482 |
 | ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.479 |
 | ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.484 |
 | ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.476 |
@@ -132,8 +131,8 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 9339 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.496 |
 | ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.490 |
 | ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.486 |
-| walker |  | 9735 | 1810 | Toml::Config { file: pyproject.toml } |  |  | 0.518 |
-| walker |  | 9750 | 15 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 47, sub: 0, line: 595 } |  |  | 0.518 |
+| walker |  | 9727 | 1810 | Toml::Config { file: pyproject.toml } |  |  | 0.518 |
+| walker |  | 9742 | 15 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 47, sub: 0, line: 595 } |  |  | 0.518 |
 | ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.513 |
-| ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.507 |
-| walker |  | 9999 | 249 | Markdown::Section { file: tomllib.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.516 |
+| walker |  | 9991 | 249 | Markdown::Section { file: tomllib.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.522 |
+| ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.516 |

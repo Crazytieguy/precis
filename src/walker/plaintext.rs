@@ -2,8 +2,8 @@
 //! for. Two jobs:
 //!
 //! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
-//!    samples, contributor tooling config and project notes,
-//!    each rendered whole or as a head slice at one of three value tiers.
+//!    samples and contributor tooling config, each rendered whole or as
+//!    a head slice at one of two value tiers.
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
 //!    placeholders and document the deploy-facing config keys.
@@ -103,9 +103,6 @@ pub(crate) enum Class {
     /// `Taskfile`, `Dockerfile`, compose files, `configure.ac`, shell
     /// scripts in build-script locations).
     Build,
-    /// Project reference files: `setup.cfg`, `requirements.txt`, `TODO`,
-    /// `VERSION`.
-    ProjectNotes,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
@@ -147,19 +144,10 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
             return Some(Class::Build);
         }
         ".gitmodules" | "configure.ac" => return Some(Class::Build),
-        "setup.cfg" => return Some(Class::ProjectNotes),
         _ => {}
     }
     if is_docker_compose_name(&lower) {
         return Some(Class::Build);
-    }
-    // Exact names, case-insensitive: exact equality (no stem matching)
-    // is what keeps `version.h` and similar source headers out.
-    if matches!(
-        lower.as_str(),
-        "requirements.txt" | "todo" | "version" | "version.txt"
-    ) {
-        return Some(Class::ProjectNotes);
     }
     if crate::value::is_dotenv_sample_filename(name) {
         return Some(Class::DotenvSample);
@@ -750,16 +738,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     out
 }
 
-/// Three tiers. The ops surface (how the project is built, deployed and
+/// Two tiers. The ops surface (how the project is built, deployed and
 /// versioned) and an unparsed language's declaration surface sit at the
 /// top — the latter still below every parsed walker's roster, so it
-/// loses to any walker that understands the file. Project notes and
-/// rosters sit mid, and contributor tooling and unclassified prose /
-/// flat config low.
+/// loses to any walker that understands the file. Contributor tooling
+/// and unclassified prose / flat config sit low.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
         Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
-        Class::ProjectNotes => 660.0,
         Class::Tooling | Class::FlatText => 488.0,
     };
     tier * path_depth_factor(file, ctx) * small_build_file_factor(class, file, ctx)
@@ -1020,23 +1006,11 @@ mod tests {
             ("build.sh", Some(Class::Build)),
             (".gitmodules", Some(Class::Build)),
             ("configure.ac", Some(Class::Build)),
-            ("setup.cfg", Some(Class::ProjectNotes)),
-            ("requirements.txt", Some(Class::ProjectNotes)),
-            ("Requirements.txt", Some(Class::ProjectNotes)),
             ("requirements-dev.txt", None),
             (".env.sample", Some(Class::DotenvSample)),
             (".env.example", Some(Class::DotenvSample)),
             (".env.template", Some(Class::DotenvSample)),
             (".env.dist", Some(Class::DotenvSample)),
-            // Extensionless orientation files (case-insensitive on the
-            // stem). `VERSION` is a one-line version stamp common in
-            // C-shaped projects; `TODO` is a plain backlog file. The
-            // `version.txt` variant is Python convention.
-            ("VERSION", Some(Class::ProjectNotes)),
-            ("version", Some(Class::ProjectNotes)),
-            ("version.txt", Some(Class::ProjectNotes)),
-            ("VERSION.txt", Some(Class::ProjectNotes)),
-            ("TODO", Some(Class::ProjectNotes)),
             // Owned by other walkers.
             ("LICENSE.md", None),
             (".eslintrc.json", None),
@@ -1250,11 +1224,11 @@ mod tests {
         let body: String = (0..(PLAINTEXT_LINE_CAP + 5))
             .map(|i| format!("line {i}\n"))
             .collect();
-        std::fs::write(root.join("requirements.txt"), body).unwrap();
+        std::fs::write(root.join(".gitignore"), body).unwrap();
 
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
-        assert_has_plaintext_whole(&report, "requirements.txt");
+        assert_has_plaintext_whole(&report, ".gitignore");
         let rendered = report.tree.render();
         assert!(rendered.contains("line 0"), "{rendered}");
         assert!(
@@ -1268,18 +1242,18 @@ mod tests {
     }
 
     #[test]
-    fn plaintext_oversized_requirements_skipped() {
+    fn plaintext_oversized_named_file_skipped() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         let long_line = "x".repeat(250);
         let body: String = std::iter::repeat_n(long_line.as_str(), 60)
             .collect::<Vec<_>>()
             .join("\n");
-        std::fs::write(root.join("requirements.txt"), body).unwrap();
+        std::fs::write(root.join(".gitignore"), body).unwrap();
 
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
-        assert_no_plaintext_whole(&report, "requirements.txt");
+        assert_no_plaintext_whole(&report, ".gitignore");
     }
 
     fn assert_has_plaintext_whole(report: &crate::scheduler::RunReport, suffix: &str) {
