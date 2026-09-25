@@ -22,22 +22,20 @@ README.md
   …
   4→⚠️ The secret token feature was removed in the 3x-UI 2.6.0. ⚠️     
   5→The corresponding `token` parameter in the Api and AsyncApi constructors was removed in py3xui 0.5.0. This changed the order of constructor arguments, so please be aware of this change when updating the SDK.
-  7→Sync and Async Object-oriented Python SDK for the 3x-ui API.
-  …
-  17→[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/iwatkot/py3xui)](https://github.com/iwatkot/py3xui/releases)
-  18→[![PyPI - Version](https://img.shields.io/pypi/v/py3xui)](https://pypi.org/project/py3xui/)
-  19→[![GitHub issues](https://img.shields.io/github/issues/iwatkot/py3xui)](https://github.com/iwatkot/py3xui/issues)
-  20→[![Build Status](https://github.com/iwatkot/py3xui/actions/workflows/checks.yml/badge.svg)](https://github.com/iwatkot/py3xui/actions)
-  21→[![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)<br>
-  22→[![PyPI - Downloads](https://img.shields.io/pypi/dm/py3xui)](https://pypi.org/project/py3xui/)
-  23→[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py3xui)](https://pypi.org/project/py3xui/)
-  24→[![codecov](https://codecov.io/github/iwatkot/py3xui/graph/badge.svg?token=M9EYR3D23P)](https://codecov.io/github/iwatkot/py3xui)
-  26→_ℹ️ If you need a JavaScript SDK, check out [js3xui](https://github.com/iwatkot/js3xui)._
   …
   29→## Overview
   30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` m…
   31→Used dependencies:
-  …
+  32→- `requests` for synchronous API
+  33→- `httpx` for asynchronous API
+  34→- `pydantic` for models
+  35→
+  36→Supported Python versions:
+  37→- 3.11
+  38→- 3.12
+  39→
+  40→Since the 3x-ui app is under development, the SDK may not be compatible with all versions of the app. The developer of SDK is not related to the 3x-ui app, therefore the latest versions of the software are not guaranteed to be compatible with the SDK. <br>
+  41→The SDK does not support versions of the 3x-ui older than `2.3.7`.
   43→## Quick Start
   …
   48→### Installation

@@ -2711,28 +2711,6 @@ fn strip_html_entities(text: &str) -> String {
     out
 }
 
-/// True for an admin/migration warning paragraph (`⚠️ …`, deprecation /
-/// breaking-change notices) READMEs place above the lede. These are
-/// appendix, not the project's "what is this" sentence — skip them so the
-/// real lede is what the headline captures.
-fn is_admin_warning_paragraph(para: Node, source: &str) -> bool {
-    let text = source[para.start_byte()..para.end_byte()].trim_start();
-    if ["⚠", "🚨", "❗", "‼", "🛑"]
-        .iter()
-        .any(|m| text.starts_with(m))
-    {
-        return true;
-    }
-    let lower = text.to_ascii_lowercase();
-    let head = lower.trim_start_matches(['*', '>', '_', ' ']);
-    head.starts_with("warning")
-        || head.starts_with("note:")
-        || head.starts_with("caution")
-        || head.starts_with("deprecated")
-        || head.starts_with("important:")
-        || head.starts_with("breaking change")
-}
-
 /// Collect prelude lede rows for [`headline_spec`]: walk the `section`
 /// children of the root that appear *before* `first_headed` (i.e. the
 /// heading-less prelude tree-sitter-md wraps when the README opens with
@@ -2750,7 +2728,7 @@ fn extend_prelude_lede(
 
     let mut i = 0;
     while i < prelude_blocks.len() {
-        if !is_headline_skippable_block(prelude_blocks[i], source) {
+        if !is_prelude_chrome_block(prelude_blocks[i], source) {
             break;
         }
         i += 1;
@@ -2762,8 +2740,7 @@ fn extend_prelude_lede(
         extend_rows_inclusive(covered, *block, source);
         if is_short_substantive_block(*block, source) {
             let mut j = i + 1;
-            while j < prelude_blocks.len() && is_headline_skippable_block(prelude_blocks[j], source)
-            {
+            while j < prelude_blocks.len() && is_prelude_chrome_block(prelude_blocks[j], source) {
                 j += 1;
             }
             if let Some(extra) = prelude_blocks.get(j) {
@@ -2790,14 +2767,6 @@ fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
             }
         })
         .collect()
-}
-
-/// Blocks [`headline_spec`] steps over when looking for the lede: the
-/// chrome of [`is_prelude_chrome_block`], plus admin/deprecation
-/// warnings — real prose, but not the "what is this" sentence.
-fn is_headline_skippable_block(block: Node, source: &str) -> bool {
-    is_prelude_chrome_block(block, source)
-        || (block.kind() == "paragraph" && is_admin_warning_paragraph(block, source))
 }
 
 /// Prelude rows `ReadmeHeadline` left behind — the substantive blocks
@@ -2843,8 +2812,7 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) ->
 /// once: decoration is image/badge-only paragraphs, tag-only HTML
 /// wrappers, and in-page nav menus. Everything else above the first
 /// heading is substance. Both readers of that region use this —
-/// `ReadmeHeadline` via [`is_headline_skippable_block`] (which adds
-/// admin warnings) and [`prelude_remainder_rows`] directly.
+/// `ReadmeHeadline` and [`prelude_remainder_rows`].
 fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)
