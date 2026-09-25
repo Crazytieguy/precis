@@ -51,7 +51,7 @@ open questions that aren't visible from reading `src/`.
   `load_ns_checked` enforces it in every fixture test.
 - **The corpus has been re-frozen wholesale twice** (22d2f7b3, 2026-07-05;
   2fbbe8d4, 2026-07-28). Scores are only comparable within one key; the
-  previous corpus is kept at `tests/north-stars-v1/`.
+  previous corpus is `git show 2fbbe8d4^:tests/north-stars/<fixture>.toml`.
 - **Training vs validation tier.** Training fixtures get a full divergence
   report at `tests/divergence/<name>.md` and drive calibration; validation
   fixtures get a one-line score at `tests/validation/<name>.md` and are
