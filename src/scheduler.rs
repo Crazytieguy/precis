@@ -365,7 +365,7 @@ impl<W: Walker> Scheduler<W> {
 
     /// Apply `id`'s content to the tree and log it as scheduled.
     /// Returns the applied content. Bookkeeping that only pays off in a
-    /// *later* round — cost invalidation, train counters, walker
+    /// *later* round — cost invalidation, breadth-pressure counters, walker
     /// expansion — lives in [`Self::schedule`]; a terminal partial
     /// schedule skips it.
     fn apply_and_record(&mut self, id: BatchId, cost: Cost) -> BatchContent {
