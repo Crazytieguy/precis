@@ -1,4 +1,4 @@
-Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.710/0.633/0.700/0.638/0.577/0.547/0.597
+Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.710/0.795/0.700/0.638/0.577/0.547/0.597
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,11 +9,11 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 109 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.000 |
 | walker |  | 119 | 10 | Code::CodeKey { rung: Names, file: lib/node.version.js, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
 | walker |  | 124 | 5 | Fs::DirListing { dir: .devcontainer } |  |  | 0.000 |
-| walker |  | 163 | 39 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| ns | 167 |  | 72 | Complete root directory listing | 1.2 |  | 0.560 |
-| walker |  | 172 | 9 | Fs::DirListing { dir: src/themes } |  |  | 0.561 |
-| walker |  | 203 | 31 | Fs::DirListing { dir: src/widgetsTemplates } |  |  | 0.577 |
-| walker |  | 240 | 37 | Fs::DirListing { dir: widgets } |  |  | 0.626 |
+| walker |  | 161 | 37 | Fs::DirListing { dir: widgets } |  |  | 0.000 |
+| ns | 167 |  | 72 | Complete root directory listing | 1.2 |  | 0.546 |
+| walker |  | 200 | 39 | Fs::DirListing { dir: src } |  |  | 0.610 |
+| walker |  | 209 | 9 | Fs::DirListing { dir: src/themes } |  |  | 0.612 |
+| walker |  | 240 | 31 | Fs::DirListing { dir: src/widgetsTemplates } |  |  | 0.626 |
 | walker |  | 252 | 12 | Code::CodeKey { rung: Names, file: lib/modes.js, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
 | ns | 276 |  | 109 | Complete listings of the four runtime code directories: src/, hooks/, lib/, widgets/ | 1.3 |  | 0.625 |
 | walker |  | 306 | 54 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.625 |
@@ -44,13 +44,13 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 1114 | 109 | Plaintext::Whole { file: dockerRunScript.sh } |  |  | 0.658 |
 | ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.610 |
 | walker |  | 1309 | 195 | Json::Dependencies { file: package.json } |  |  | 0.617 |
-| walker |  | 1361 | 52 | Fs::DirListing { dir: docs } |  |  | 0.617 |
-| walker |  | 1370 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.618 |
-| walker |  | 1383 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.618 |
-| ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.633 |
-| walker |  | 1490 | 107 | Json::Entry { file: package.json } |  |  | 0.796 |
-| walker |  | 1515 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.797 |
-| walker |  | 1635 | 120 | Json::Scripts { file: package.json } |  |  | 0.829 |
+| ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.632 |
+| walker |  | 1416 | 107 | Json::Entry { file: package.json } |  |  | 0.795 |
+| walker |  | 1468 | 52 | Fs::DirListing { dir: docs } |  |  | 0.796 |
+| walker |  | 1477 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.796 |
+| walker |  | 1490 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.796 |
+| walker |  | 1610 | 120 | Json::Scripts { file: package.json } |  |  | 0.828 |
+| walker |  | 1635 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.829 |
 | walker |  | 1654 | 19 | Code::CodeKey { rung: Names, file: src/baseWidget.js, decl: 0, sub: 0, line: 0 } |  |  | 0.829 |
 | ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.765 |
 | walker |  | 1824 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.769 |

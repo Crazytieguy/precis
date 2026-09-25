@@ -4,22 +4,22 @@ Score(3000)=0.634 I=0.866 C=0.464 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 56 | 56 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 74 |  | 74 | What py3xui is: distribution name, version, one-line purpose | 1.1 |  | 0.000 |
-| walker |  | 83 | 27 | Fs::DirListing { dir: dev } |  |  | 0.000 |
-| walker |  | 108 | 25 | Fs::DirListing { dir: py3xui } |  |  | 0.000 |
-| walker |  | 122 | 14 | Fs::DirListing { dir: py3xui/client } |  |  | 0.000 |
-| ns | 130 |  | 56 | Complete repository root listing | 1.2 |  | 0.619 |
-| walker |  | 138 | 16 | Code::CodeKey { rung: Names, file: py3xui/client/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
-| walker |  | 152 | 14 | Fs::DirListing { dir: py3xui/server } |  |  | 0.623 |
-| walker |  | 172 | 20 | Code::CodeKey { rung: Names, file: py3xui/server/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.624 |
-| walker |  | 186 | 14 | Fs::DirListing { dir: py3xui/utils } |  |  | 0.629 |
-| ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.543 |
-| walker |  | 221 | 35 | Code::CodeKey { rung: Names, file: py3xui/utils/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
+| walker |  | 81 | 25 | Fs::DirListing { dir: py3xui } |  |  | 0.000 |
+| walker |  | 95 | 14 | Fs::DirListing { dir: py3xui/client } |  |  | 0.000 |
+| walker |  | 111 | 16 | Code::CodeKey { rung: Names, file: py3xui/client/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
+| walker |  | 125 | 14 | Fs::DirListing { dir: py3xui/server } |  |  | 0.000 |
+| ns | 130 |  | 56 | Complete repository root listing | 1.2 |  | 0.623 |
+| walker |  | 139 | 14 | Fs::DirListing { dir: py3xui/utils } |  |  | 0.628 |
+| walker |  | 159 | 20 | Code::CodeKey { rung: Names, file: py3xui/server/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
+| walker |  | 194 | 35 | Code::CodeKey { rung: Names, file: py3xui/utils/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.632 |
+| ns | 212 |  | 82 | Top-level public exports: py3xui/__init__.py in full | 1.3 |  | 0.545 |
+| walker |  | 221 | 27 | Fs::DirListing { dir: dev } |  |  | 0.545 |
 | ns | 237 |  | 25 | py3xui/ package listing — the six sub-packages | 1.4 |  | 0.563 |
 | walker |  | 253 | 32 | Fs::DirListing { dir: py3xui/inbound } |  |  | 0.583 |
 | walker |  | 293 | 40 | Fs::DirListing { dir: py3xui/api } |  |  | 0.592 |
-| walker |  | 361 | 68 | Code::CodeKey { rung: Names, file: py3xui/api/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
-| ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.533 |
-| walker |  | 407 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.556 |
+| walker |  | 339 | 46 | Fs::DirListing { dir: py3xui/async_api } |  |  | 0.617 |
+| ns | 377 |  | 140 | README Overview: purpose and runtime dependencies | 1.5 |  | 0.553 |
+| walker |  | 407 | 68 | Code::CodeKey { rung: Names, file: py3xui/api/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.556 |
 | walker |  | 478 | 71 | Toml::Identity { file: pyproject.toml } |  |  | 0.665 |
 | walker |  | 548 | 70 | Code::CodeKey { rung: Names, file: py3xui/inbound/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.673 |
 | ns | 590 |  | 213 | Every remaining README section heading (complete map of the root README) | 1.6 |  | 0.534 |

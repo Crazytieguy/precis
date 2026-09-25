@@ -11,10 +11,10 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 182 | 64 | Json::Identity { file: package.json } |  |  | 0.000 |
 | walker |  | 205 | 23 | Fs::DirListing { dir: packages/app-server } |  |  | 0.000 |
 | ns | 223 |  | 82 | Repository shape: complete root listing and complete packages/ listing | 1.3 |  | 0.547 |
-| walker |  | 231 | 26 | Fs::DirListing { dir: packages/lib } |  |  | 0.548 |
-| walker |  | 247 | 16 | Fs::DirListing { dir: packages/lib/src } |  |  | 0.551 |
-| walker |  | 252 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.552 |
-| walker |  | 278 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.553 |
+| walker |  | 231 | 26 | Fs::DirListing { dir: packages/crypto } |  |  | 0.548 |
+| walker |  | 257 | 26 | Fs::DirListing { dir: packages/lib } |  |  | 0.549 |
+| walker |  | 273 | 16 | Fs::DirListing { dir: packages/lib/src } |  |  | 0.552 |
+| walker |  | 278 | 5 | Fs::DirListing { dir: packages/lib/src/files } |  |  | 0.553 |
 | walker |  | 307 | 29 | Fs::DirListing { dir: packages/cli } |  |  | 0.553 |
 | walker |  | 312 | 5 | Fs::DirListing { dir: packages/cli/bin } |  |  | 0.553 |
 | walker |  | 333 | 21 | Fs::DirListing { dir: packages/app-server/src } |  |  | 0.554 |
@@ -52,8 +52,8 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1107 | 21 | Fs::DirListing { dir: packages/crypto/src/node } |  |  | 0.501 |
 | walker |  | 1128 | 21 | Fs::DirListing { dir: packages/crypto/src/web } |  |  | 0.502 |
 | walker |  | 1149 | 21 | Fs::DirListing { dir: packages/lib/src/api } |  |  | 0.503 |
-| walker |  | 1160 | 11 | Fs::DirListing { dir: packages/docs/.vitepress } |  |  | 0.504 |
-| walker |  | 1211 | 51 | Json::Runtime { file: package.json } |  |  | 0.531 |
+| walker |  | 1200 | 51 | Json::Runtime { file: package.json } |  |  | 0.531 |
+| walker |  | 1211 | 11 | Fs::DirListing { dir: packages/docs/.vitepress } |  |  | 0.531 |
 | walker |  | 1222 | 11 | Code::CodeKey { rung: Names, file: packages/cli/src/config/config.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
 | walker |  | 1233 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/configuration.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
 | ns | 1237 |  | 161 | CONTRIBUTING: local development setup commands | 1.9 |  | 0.460 |
@@ -163,16 +163,16 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 4530 | 18 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
 | walker |  | 4577 | 47 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
 | walker |  | 4622 | 45 | Code::CodeKey { rung: Decl, file: packages/cli/src/config/config.constants.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.532 |
+| walker |  | 4645 | 23 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/app/middlewares/errors.middleware.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
 | ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.524 |
-| walker |  | 4674 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.525 |
-| walker |  | 4697 | 23 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/app/middlewares/errors.middleware.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
-| walker |  | 4720 | 23 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/app/middlewares/logger.middleware.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
-| walker |  | 4753 | 33 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/notes/notes.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
-| walker |  | 4800 | 47 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/configuration.data.ts, decl: 1, sub: 0, line: 55 } |  |  | 0.525 |
-| walker |  | 4848 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.526 |
-| walker |  | 4872 | 24 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/shared/utils/random.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
-| ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.562 |
-| walker |  | 4987 | 115 | Markdown::Section { file: packages/lib/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.562 |
+| walker |  | 4668 | 23 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/app/middlewares/logger.middleware.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 4701 | 33 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/notes/notes.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 4748 | 47 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/configuration.data.ts, decl: 1, sub: 0, line: 55 } |  |  | 0.524 |
+| walker |  | 4796 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.525 |
+| walker |  | 4820 | 24 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/shared/utils/random.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
+| ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.561 |
+| walker |  | 4935 | 115 | Markdown::Section { file: packages/lib/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.561 |
+| walker |  | 4987 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.562 |
 | walker |  | 5012 | 25 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/app/middlewares/cors.middleware.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
 | walker |  | 5037 | 25 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/app/middlewares/timeout.middleware.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
 | walker |  | 5073 | 36 | Code::CodeKey { rung: Names, file: packages/app-server/src/modules/notes/notes.repository.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |

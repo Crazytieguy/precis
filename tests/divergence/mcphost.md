@@ -61,11 +61,11 @@ Score(3000)=0.659 I=0.850 C=0.511 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 1504 |  | 261 | Complete cobra command tree: script, auth (login/logout/status), hooks (list/validate/init) | 2.2 |  | 0.737 |
 | walker |  | 1549 | 46 | Code::CodeKey { rung: Decl, file: internal/models/models_data.go, decl: 2, sub: 0, line: 18 } |  |  | 0.737 |
 | walker |  | 1601 | 52 | Code::CodeKey { rung: Decl, file: internal/models/models_data.go, decl: 4, sub: 0, line: 32 } |  |  | 0.737 |
-| walker |  | 1627 | 26 | Fs::DirListing { dir: internal/tools } |  |  | 0.769 |
-| walker |  | 1694 | 67 | Code::CodeKey { rung: Names, file: internal/ui/factory.go, decl: 0, sub: 0, line: 0 } |  |  | 0.769 |
-| walker |  | 1747 | 53 | Code::CodeKey { rung: Decl, file: internal/ui/factory.go, decl: 1, sub: 0, line: 13 } |  |  | 0.770 |
-| ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.741 |
-| walker |  | 1757 | 10 | Markdown::Section { file: contribute/contribute.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.741 |
+| walker |  | 1668 | 67 | Code::CodeKey { rung: Names, file: internal/ui/factory.go, decl: 0, sub: 0, line: 0 } |  |  | 0.737 |
+| walker |  | 1721 | 53 | Code::CodeKey { rung: Decl, file: internal/ui/factory.go, decl: 1, sub: 0, line: 13 } |  |  | 0.737 |
+| walker |  | 1731 | 10 | Markdown::Section { file: contribute/contribute.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.737 |
+| ns | 1754 |  | 250 | Persistent flag registration, part 1: config, system-prompt, model, debug, prompt, quiet | 2.3 |  | 0.709 |
+| walker |  | 1757 | 26 | Fs::DirListing { dir: internal/tools } |  |  | 0.741 |
 | walker |  | 1823 | 66 | Code::CodeKey { rung: Decl, file: internal/models/models_data.go, decl: 1, sub: 0, line: 7 } |  |  | 0.741 |
 | walker |  | 1843 | 20 | Markdown::Section { file: contribute/contribute.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.741 |
 | walker |  | 1917 | 74 | Code::CodeKey { rung: Names, file: internal/hooks/schemas.go, decl: 0, sub: 0, line: 0 } |  |  | 0.741 |

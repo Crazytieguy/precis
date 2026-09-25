@@ -1,4 +1,4 @@
-Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.479/0.411/0.594/0.578/0.506/0.426/0.494
+Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.478/0.411/0.594/0.578/0.506/0.426/0.494
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -7,38 +7,38 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | ns | 135 |  | 86 | main.go: process entry point | 1.2 |  | 0.000 |
 | walker |  | 152 | 25 | Code::CodeKey { rung: Names, file: main.go, decl: 0, sub: 0, line: 0 } |  |  | 0.106 |
 | ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.068 |
-| walker |  | 193 | 41 | Fs::DirListing { dir: pkg } |  |  | 0.445 |
-| walker |  | 209 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.445 |
-| ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.352 |
-| walker |  | 231 | 22 | Fs::DirListing { dir: pkg/exprparser } |  |  | 0.352 |
-| walker |  | 240 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.352 |
-| walker |  | 264 | 24 | Fs::DirListing { dir: pkg/artifacts } |  |  | 0.353 |
-| walker |  | 289 | 25 | Fs::DirListing { dir: pkg/artifactcache } |  |  | 0.354 |
-| walker |  | 292 | 3 | Fs::DirListing { dir: pkg/artifactcache/testdata } |  |  | 0.354 |
-| walker |  | 305 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.354 |
-| walker |  | 309 | 4 | Fs::DirListing { dir: pkg/artifactcache/testdata/example } |  |  | 0.354 |
-| walker |  | 342 | 33 | Fs::DirListing { dir: pkg/lookpath } |  |  | 0.355 |
-| ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.449 |
-| walker |  | 374 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.453 |
+| walker |  | 184 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.069 |
+| ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.055 |
+| walker |  | 225 | 41 | Fs::DirListing { dir: pkg } |  |  | 0.354 |
+| walker |  | 241 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.354 |
+| walker |  | 250 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.354 |
+| walker |  | 272 | 22 | Fs::DirListing { dir: pkg/exprparser } |  |  | 0.355 |
+| walker |  | 296 | 24 | Fs::DirListing { dir: pkg/artifacts } |  |  | 0.355 |
+| walker |  | 321 | 25 | Fs::DirListing { dir: pkg/artifactcache } |  |  | 0.356 |
+| walker |  | 324 | 3 | Fs::DirListing { dir: pkg/artifactcache/testdata } |  |  | 0.356 |
+| walker |  | 337 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.357 |
+| walker |  | 341 | 4 | Fs::DirListing { dir: pkg/artifactcache/testdata/example } |  |  | 0.357 |
+| ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.452 |
+| walker |  | 374 | 33 | Fs::DirListing { dir: pkg/lookpath } |  |  | 0.453 |
 | walker |  | 393 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.454 |
 | walker |  | 403 | 10 | Code::CodeKey { rung: Doc, file: main.go, decl: 1, sub: 0, line: 11 } |  |  | 0.481 |
 | ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.436 |
 | walker |  | 449 | 46 | Fs::DirListing { dir: cmd } |  |  | 0.538 |
 | walker |  | 468 | 19 | Fs::DirListing { dir: cmd/testdata } |  |  | 0.538 |
-| walker |  | 476 | 8 | Fs::DirListing { dir: .vscode } |  |  | 0.538 |
-| walker |  | 494 | 18 | Code::CodeKey { rung: Names, file: cmd/graph.go, decl: 0, sub: 0, line: 0 } |  |  | 0.538 |
-| walker |  | 512 | 18 | Code::CodeKey { rung: Names, file: cmd/list.go, decl: 0, sub: 0, line: 0 } |  |  | 0.538 |
-| walker |  | 568 | 56 | Fs::DirListing { dir: pkg/model } |  |  | 0.617 |
+| walker |  | 524 | 56 | Fs::DirListing { dir: pkg/model } |  |  | 0.616 |
+| walker |  | 532 | 8 | Fs::DirListing { dir: .vscode } |  |  | 0.616 |
+| walker |  | 550 | 18 | Code::CodeKey { rung: Names, file: cmd/graph.go, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
+| walker |  | 568 | 18 | Code::CodeKey { rung: Names, file: cmd/list.go, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
 | walker |  | 578 | 10 | Plaintext::Whole { file: VERSION } |  |  | 0.618 |
 | ns | 591 |  | 186 | pkg/runner/: complete file list | 1.7 |  | 0.497 |
 | walker |  | 599 | 21 | Code::CodeKey { rung: Names, file: cmd/platforms.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
-| walker |  | 617 | 18 | Fs::DirListing { dir: pkg/artifacts/testdata } |  |  | 0.497 |
-| walker |  | 621 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/GHSL-2023-004 } |  |  | 0.497 |
-| walker |  | 625 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/upload-and-download } |  |  | 0.497 |
-| walker |  | 629 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/v4 } |  |  | 0.497 |
-| walker |  | 642 | 13 | Code::CodeKey { rung: Names, file: pkg/model/job_context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.497 |
-| walker |  | 721 | 79 | Fs::DirListing { dir: pkg/common } |  |  | 0.500 |
-| walker |  | 730 | 9 | Fs::DirListing { dir: pkg/common/git } |  |  | 0.501 |
+| walker |  | 678 | 79 | Fs::DirListing { dir: pkg/common } |  |  | 0.500 |
+| walker |  | 687 | 9 | Fs::DirListing { dir: pkg/common/git } |  |  | 0.501 |
+| walker |  | 705 | 18 | Fs::DirListing { dir: pkg/artifacts/testdata } |  |  | 0.501 |
+| walker |  | 709 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/GHSL-2023-004 } |  |  | 0.501 |
+| walker |  | 713 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/upload-and-download } |  |  | 0.501 |
+| walker |  | 717 | 4 | Fs::DirListing { dir: pkg/artifacts/testdata/v4 } |  |  | 0.501 |
+| walker |  | 730 | 13 | Code::CodeKey { rung: Names, file: pkg/model/job_context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.501 |
 | walker |  | 751 | 21 | Fs::DirListing { dir: pkg/model/testdata } |  |  | 0.501 |
 | walker |  | 755 | 4 | Fs::DirListing { dir: pkg/model/testdata/container-volumes } |  |  | 0.501 |
 | walker |  | 759 | 4 | Fs::DirListing { dir: pkg/model/testdata/strategy } |  |  | 0.501 |
@@ -56,25 +56,25 @@ Score(3000)=0.578 I=0.857 C=0.390 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 892 | 20 | Fs::DirListing { dir: .github } |  |  | 0.503 |
 | walker |  | 918 | 26 | Fs::DirListing { dir: .github/workflows } |  |  | 0.504 |
 | ns | 919 |  | 115 | cmd.Execute: CLI entry | 2.1 |  | 0.478 |
-| walker |  | 943 | 25 | Code::CodeKey { rung: Names, file: pkg/gh/gh.go, decl: 0, sub: 0, line: 0 } |  |  | 0.478 |
-| walker |  | 994 | 51 | Code::CodeKey { rung: Names, file: cmd/secrets.go, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
-| ns | 1131 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.456 |
-| walker |  | 1154 | 160 | Fs::DirListing { dir: pkg/container } |  |  | 0.461 |
-| walker |  | 1168 | 14 | Code::CodeKey { rung: Names, file: pkg/container/executions_environment.go, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
-| walker |  | 1186 | 18 | Code::CodeKey { rung: ModuleDoc, file: pkg/container/docker_cli.go, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
-| walker |  | 1223 | 37 | Fs::DirListing { dir: pkg/container/testdata } |  |  | 0.461 |
-| walker |  | 1227 | 4 | Fs::DirListing { dir: pkg/container/testdata/docker-pull-options } |  |  | 0.461 |
-| walker |  | 1231 | 4 | Fs::DirListing { dir: pkg/container/testdata/scratch } |  |  | 0.461 |
+| walker |  | 1078 | 160 | Fs::DirListing { dir: pkg/container } |  |  | 0.483 |
+| walker |  | 1092 | 14 | Code::CodeKey { rung: Names, file: pkg/container/executions_environment.go, decl: 0, sub: 0, line: 0 } |  |  | 0.483 |
+| walker |  | 1110 | 18 | Code::CodeKey { rung: ModuleDoc, file: pkg/container/docker_cli.go, decl: 0, sub: 0, line: 0 } |  |  | 0.483 |
+| ns | 1131 |  | 212 | Root cobra.Command definition | 2.2 |  | 0.460 |
+| walker |  | 1135 | 25 | Code::CodeKey { rung: Names, file: pkg/gh/gh.go, decl: 0, sub: 0, line: 0 } |  |  | 0.460 |
+| walker |  | 1172 | 37 | Fs::DirListing { dir: pkg/container/testdata } |  |  | 0.460 |
+| walker |  | 1176 | 4 | Fs::DirListing { dir: pkg/container/testdata/docker-pull-options } |  |  | 0.460 |
+| walker |  | 1180 | 4 | Fs::DirListing { dir: pkg/container/testdata/scratch } |  |  | 0.460 |
+| walker |  | 1231 | 51 | Code::CodeKey { rung: Names, file: cmd/secrets.go, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
 | walker |  | 1259 | 28 | Code::CodeKey { rung: Names, file: pkg/container/parse_env_file.go, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
 | walker |  | 1287 | 28 | Code::CodeKey { rung: Names, file: pkg/lookpath/error.go, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
 | walker |  | 1305 | 18 | Code::CodeKey { rung: Decl, file: pkg/lookpath/error.go, decl: 1, sub: 0, line: 3 } |  |  | 0.461 |
 | ns | 1432 |  | 301 | Command-local flags: names and shorthands | 2.3 |  | 0.411 |
 | walker |  | 1490 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.536 |
 | walker |  | 1545 | 55 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.536 |
-| walker |  | 1569 | 24 | Fs::DirListing { dir: pkg/model/testdata/invalid-job-name } |  |  | 0.536 |
-| walker |  | 1755 | 186 | Fs::DirListing { dir: pkg/runner } |  |  | 0.681 |
-| walker |  | 1759 | 4 | Fs::DirListing { dir: pkg/runner/hashfiles } |  |  | 0.681 |
-| walker |  | 1763 | 4 | Fs::DirListing { dir: pkg/runner/res } |  |  | 0.681 |
+| walker |  | 1731 | 186 | Fs::DirListing { dir: pkg/runner } |  |  | 0.681 |
+| walker |  | 1735 | 4 | Fs::DirListing { dir: pkg/runner/hashfiles } |  |  | 0.681 |
+| walker |  | 1739 | 4 | Fs::DirListing { dir: pkg/runner/res } |  |  | 0.681 |
+| walker |  | 1763 | 24 | Fs::DirListing { dir: pkg/model/testdata/invalid-job-name } |  |  | 0.681 |
 | ns | 1782 |  | 350 | Persistent flags: names and shorthands | 2.4 |  | 0.613 |
 | ns | 1928 |  | 146 | Input struct + path accessor roster | 2.5 |  | 0.594 |
 | ns | 2206 |  | 278 | Config-file discovery: .actrc locations | 2.6 |  | 0.563 |

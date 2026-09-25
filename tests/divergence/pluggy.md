@@ -36,8 +36,8 @@ Score(3000)=0.659 I=0.781 C=0.555 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 952 | 20 | Fs::DirListing { dir: docs/examples/eggsample/eggsample } |  |  | 0.756 |
 | ns | 985 |  | 92 | Lazy `__version__` resolution in `__init__.py` | 1.9 | 1.5 | 0.763 |
 | walker |  | 1032 | 80 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.763 |
-| walker |  | 1094 | 62 | Fs::DirListing { dir: testing } |  |  | 0.851 |
-| walker |  | 1161 | 67 | Code::CodeKey { rung: Names, file: src/pluggy/_tracing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.851 |
+| walker |  | 1099 | 67 | Code::CodeKey { rung: Names, file: src/pluggy/_tracing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.764 |
+| walker |  | 1161 | 62 | Fs::DirListing { dir: testing } |  |  | 0.851 |
 | walker |  | 1228 | 67 | Code::CodeKey { rung: Decl, file: src/pluggy/_tracing.py, decl: 10, sub: 0, line: 59 } |  |  | 0.852 |
 | ns | 1296 |  | 311 | Every method name on `PluginManager` (complete roster, names only) | 2.1 |  | 0.756 |
 | walker |  | 1308 | 80 | Code::CodeKey { rung: Names, file: src/pluggy/_callers.py, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |

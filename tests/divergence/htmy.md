@@ -1,4 +1,4 @@
-Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.567/0.659/0.713/0.627/0.601/0.559/0.590
+Score(3000)=0.664 I=0.853 C=0.517 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.567/0.659/0.713/0.664/0.601/0.559/0.590
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,12 +41,12 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 1424 |  | 264 | README "Built-in components": one line of semantics per built-in | 2.1 |  | 0.659 |
 | walker |  | 1443 | 242 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.772 |
 | walker |  | 1456 | 13 | Fs::DirListing { dir: examples/internationalization } |  |  | 0.772 |
-| walker |  | 1532 | 76 | Code::CodeKey { rung: Names, file: htmy/tag.py, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
-| walker |  | 1589 | 57 | Code::CodeKey { rung: Decl, file: htmy/tag.py, decl: 14, sub: 0, line: 84 } |  |  | 0.772 |
+| walker |  | 1470 | 14 | Fs::DirListing { dir: examples/markdown_customization } |  |  | 0.772 |
+| walker |  | 1484 | 14 | Fs::DirListing { dir: examples/markdown_essentials } |  |  | 0.772 |
+| walker |  | 1560 | 76 | Code::CodeKey { rung: Names, file: htmy/tag.py, decl: 0, sub: 0, line: 0 } |  |  | 0.772 |
 | ns | 1612 |  | 188 | README: the definition of a component (duck-typed `htmy()` method) | 2.2 |  | 0.753 |
-| walker |  | 1650 | 61 | Code::CodeKey { rung: Decl, file: htmy/tag.py, decl: 8, sub: 0, line: 56 } |  |  | 0.753 |
-| walker |  | 1664 | 14 | Fs::DirListing { dir: examples/markdown_customization } |  |  | 0.753 |
-| walker |  | 1678 | 14 | Fs::DirListing { dir: examples/markdown_essentials } |  |  | 0.753 |
+| walker |  | 1617 | 57 | Code::CodeKey { rung: Decl, file: htmy/tag.py, decl: 14, sub: 0, line: 84 } |  |  | 0.753 |
+| walker |  | 1678 | 61 | Code::CodeKey { rung: Decl, file: htmy/tag.py, decl: 8, sub: 0, line: 56 } |  |  | 0.753 |
 | walker |  | 1754 | 76 | Code::CodeKey { rung: Decl, file: htmy/error_boundary.py, decl: 1, sub: 0, line: 15 } |  |  | 0.754 |
 | ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.729 |
 | walker |  | 1831 | 77 | Code::CodeKey { rung: Decl, file: htmy/tag.py, decl: 11, sub: 0, line: 73 } |  |  | 0.729 |
@@ -67,25 +67,25 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 2350 | 60 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 1, sub: 0, line: 19 } |  |  | 0.721 |
 | walker |  | 2411 | 61 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 4, sub: 0, line: 38 } |  |  | 0.721 |
 | walker |  | 2466 | 55 | Code::CodeKey { rung: Decl, file: htmy/error_boundary.py, decl: 2, sub: 0, line: 25 } |  |  | 0.721 |
-| ns | 2534 |  | 204 | `pyproject.toml` project block: runtime deps, Python floor, optional `lxml` | 3.1 |  | 0.732 |
-| walker |  | 2590 | 124 | Code::CodeKey { rung: Decl, file: htmy/snippet.py, decl: 5, sub: 0, line: 158 } |  |  | 0.732 |
-| walker |  | 2608 | 18 | Code::CodeKey { rung: Decl, file: htmy/snippet.py, decl: 10, sub: 0, line: 272 } |  |  | 0.732 |
-| walker |  | 2619 | 11 | Code::CodeKey { rung: Doc, file: htmy/snippet.py, decl: 7, sub: 0, line: 241 } |  |  | 0.732 |
-| ns | 2688 |  | 154 | `[tool.poe.tasks]`: the project's canonical commands | 3.2 |  | 0.696 |
-| walker |  | 2744 | 125 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 7, sub: 0, line: 64 } |  |  | 0.696 |
-| walker |  | 2752 | 8 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 11, sub: 0, line: 127 } |  |  | 0.696 |
-| ns | 2794 |  | 106 | Test suite and CI workflow listings (complete) | 3.3 |  | 0.659 |
-| walker |  | 2820 | 68 | Code::CodeKey { rung: Decl, file: htmy/snippet.py, decl: 6, sub: 0, line: 218 } |  |  | 0.659 |
-| ns | 2950 |  | 156 | `tests/conftest.py` in full: the three session-scoped renderer fixtures | 3.4 |  | 0.627 |
-| walker |  | 2959 | 139 | Code::CodeKey { rung: Names, file: htmy/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.627 |
-| walker |  | 3005 | 46 | Code::CodeKey { rung: Decl, file: htmy/utils.py, decl: 1, sub: 0, line: 12 } |  |  | 0.628 |
-| walker |  | 3019 | 14 | Code::CodeKey { rung: Body, file: htmy/utils.py, decl: 5, sub: 0, line: 62 } |  |  | 0.628 |
-| walker |  | 3035 | 16 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 5, sub: 0, line: 62 } |  |  | 0.628 |
-| walker |  | 3051 | 16 | Code::CodeKey { rung: Body, file: htmy/utils.py, decl: 2, sub: 0, line: 42 } |  |  | 0.628 |
-| ns | 3118 |  | 168 | `pyproject.toml` build backend, version source and type/test settings | 3.5 |  | 0.598 |
-| walker |  | 3124 | 73 | Code::CodeKey { rung: Names, file: htmy/renderer/default.py, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
-| walker |  | 3185 | 61 | Code::CodeKey { rung: Decl, file: htmy/renderer/default.py, decl: 13, sub: 0, line: 228 } |  |  | 0.598 |
-| walker |  | 3244 | 59 | Fs::DirListing { dir: tests } |  |  | 0.633 |
+| walker |  | 2525 | 59 | Fs::DirListing { dir: tests } |  |  | 0.726 |
+| ns | 2534 |  | 204 | `pyproject.toml` project block: runtime deps, Python floor, optional `lxml` | 3.1 |  | 0.736 |
+| walker |  | 2649 | 124 | Code::CodeKey { rung: Decl, file: htmy/snippet.py, decl: 5, sub: 0, line: 158 } |  |  | 0.736 |
+| walker |  | 2667 | 18 | Code::CodeKey { rung: Decl, file: htmy/snippet.py, decl: 10, sub: 0, line: 272 } |  |  | 0.736 |
+| walker |  | 2678 | 11 | Code::CodeKey { rung: Doc, file: htmy/snippet.py, decl: 7, sub: 0, line: 241 } |  |  | 0.736 |
+| ns | 2688 |  | 154 | `[tool.poe.tasks]`: the project's canonical commands | 3.2 |  | 0.700 |
+| ns | 2794 |  | 106 | Test suite and CI workflow listings (complete) | 3.3 |  | 0.698 |
+| walker |  | 2803 | 125 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 7, sub: 0, line: 64 } |  |  | 0.698 |
+| walker |  | 2811 | 8 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 11, sub: 0, line: 127 } |  |  | 0.698 |
+| walker |  | 2879 | 68 | Code::CodeKey { rung: Decl, file: htmy/snippet.py, decl: 6, sub: 0, line: 218 } |  |  | 0.698 |
+| ns | 2950 |  | 156 | `tests/conftest.py` in full: the three session-scoped renderer fixtures | 3.4 |  | 0.664 |
+| walker |  | 3018 | 139 | Code::CodeKey { rung: Names, file: htmy/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.664 |
+| walker |  | 3064 | 46 | Code::CodeKey { rung: Decl, file: htmy/utils.py, decl: 1, sub: 0, line: 12 } |  |  | 0.665 |
+| walker |  | 3078 | 14 | Code::CodeKey { rung: Body, file: htmy/utils.py, decl: 5, sub: 0, line: 62 } |  |  | 0.665 |
+| walker |  | 3094 | 16 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 5, sub: 0, line: 62 } |  |  | 0.665 |
+| walker |  | 3110 | 16 | Code::CodeKey { rung: Body, file: htmy/utils.py, decl: 2, sub: 0, line: 42 } |  |  | 0.665 |
+| ns | 3118 |  | 168 | `pyproject.toml` build backend, version source and type/test settings | 3.5 |  | 0.633 |
+| walker |  | 3183 | 73 | Code::CodeKey { rung: Names, file: htmy/renderer/default.py, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
+| walker |  | 3244 | 61 | Code::CodeKey { rung: Decl, file: htmy/renderer/default.py, decl: 13, sub: 0, line: 228 } |  |  | 0.633 |
 | walker |  | 3272 | 28 | Fs::DirListing { dir: tests/renderer } |  |  | 0.656 |
 | ns | 3335 |  | 217 | `htmy/typing.py` lines 4-27: `T`/`U`, property types, the context types | 4.1 |  | 0.620 |
 | walker |  | 3484 | 212 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.621 |
@@ -102,13 +102,13 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 4138 | 10 | Code::CodeKey { rung: Doc, file: htmy/renderer/typing.py, decl: 1, sub: 0, line: 12 } |  |  | 0.609 |
 | walker |  | 4149 | 11 | Code::CodeKey { rung: Doc, file: htmy/renderer/typing.py, decl: 4, sub: 0, line: 36 } |  |  | 0.609 |
 | walker |  | 4166 | 17 | Code::CodeKey { rung: Doc, file: htmy/utils.py, decl: 6, sub: 0, line: 67 } |  |  | 0.609 |
-| walker |  | 4200 | 34 | Fs::DirListing { dir: docs/examples } |  |  | 0.609 |
-| walker |  | 4233 | 33 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.609 |
-| walker |  | 4319 | 86 | Code::CodeKey { rung: Names, file: htmy/md/typing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 4199 | 33 | Markdown::Section { file: README.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.609 |
+| walker |  | 4285 | 86 | Code::CodeKey { rung: Names, file: htmy/md/typing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 4310 | 25 | Code::CodeKey { rung: Decl, file: htmy/md/typing.py, decl: 2, sub: 0, line: 14 } |  |  | 0.609 |
+| walker |  | 4321 | 11 | Code::CodeKey { rung: Doc, file: htmy/md/typing.py, decl: 2, sub: 0, line: 14 } |  |  | 0.609 |
 | ns | 4327 |  | 242 | `htmy/renderer/typing.py`: all four symbols of the renderer protocol module | 5.2 |  | 0.601 |
-| walker |  | 4344 | 25 | Code::CodeKey { rung: Decl, file: htmy/md/typing.py, decl: 2, sub: 0, line: 14 } |  |  | 0.601 |
-| walker |  | 4355 | 11 | Code::CodeKey { rung: Doc, file: htmy/md/typing.py, decl: 2, sub: 0, line: 14 } |  |  | 0.601 |
-| walker |  | 4381 | 26 | Code::CodeKey { rung: Body, file: htmy/io.py, decl: 1, sub: 0, line: 11 } |  |  | 0.601 |
+| walker |  | 4347 | 26 | Code::CodeKey { rung: Body, file: htmy/io.py, decl: 1, sub: 0, line: 11 } |  |  | 0.601 |
+| walker |  | 4381 | 34 | Fs::DirListing { dir: docs/examples } |  |  | 0.601 |
 | ns | 4508 |  | 181 | `Renderer` in `htmy/renderer/default.py`: strategy docstring and `__init__` | 5.3 |  | 0.587 |
 | walker |  | 4553 | 172 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 19, sub: 0, line: 201 } |  |  | 0.587 |
 | walker |  | 4611 | 58 | Code::CodeKey { rung: Decl, file: htmy/core.py, decl: 20, sub: 0, line: 222 } |  |  | 0.588 |

@@ -42,12 +42,12 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 1010 | 31 | Code::CodeKey { rung: Names, file: lib/svgo/coa.js, decl: 0, sub: 0, line: 0 } |  |  | 0.549 |
 | walker |  | 1042 | 32 | Code::CodeKey { rung: Names, file: lib/svgo/plugins.js, decl: 0, sub: 0, line: 0 } |  |  | 0.549 |
 | walker |  | 1075 | 33 | Code::CodeKey { rung: Names, file: lib/util/visit.js, decl: 0, sub: 0, line: 0 } |  |  | 0.549 |
-| walker |  | 1109 | 34 | Fs::DirListing { dir: test } |  |  | 0.549 |
-| walker |  | 1113 | 4 | Fs::DirListing { dir: test/fixtures } |  |  | 0.549 |
-| walker |  | 1182 | 69 | Code::CodeKey { rung: Names, file: lib/style.js, decl: 0, sub: 0, line: 0 } |  |  | 0.550 |
-| walker |  | 1222 | 40 | Code::CodeKey { rung: Decl, file: lib/style.js, decl: 4, sub: 0, line: 286 } |  |  | 0.550 |
-| ns | 1231 |  | 356 | Complete plugins/ listing (all 58 modules) | 1.8 |  | 0.426 |
-| walker |  | 1328 | 106 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.486 |
+| walker |  | 1144 | 69 | Code::CodeKey { rung: Names, file: lib/style.js, decl: 0, sub: 0, line: 0 } |  |  | 0.549 |
+| walker |  | 1184 | 40 | Code::CodeKey { rung: Decl, file: lib/style.js, decl: 4, sub: 0, line: 286 } |  |  | 0.550 |
+| ns | 1231 |  | 356 | Complete plugins/ listing (all 58 modules) | 1.8 |  | 0.425 |
+| walker |  | 1290 | 106 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.486 |
+| walker |  | 1324 | 34 | Fs::DirListing { dir: test } |  |  | 0.486 |
+| walker |  | 1328 | 4 | Fs::DirListing { dir: test/fixtures } |  |  | 0.486 |
 | ns | 1470 |  | 239 | svgo.config.mjs shape (README Configuration) | 1.9 |  | 0.449 |
 | walker |  | 1601 | 273 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.451 |
 | walker |  | 1610 | 9 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 5, sub: 0, line: 108 } |  |  | 0.451 |
@@ -68,8 +68,8 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 2112 | 83 | Code::CodeKey { rung: Names, file: lib/xast.js, decl: 0, sub: 0, line: 0 } |  |  | 0.411 |
 | walker |  | 2195 | 83 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 4, sub: 0, line: 100 } |  |  | 0.411 |
 | walker |  | 2238 | 43 | Code::CodeKey { rung: Decl, file: lib/svgo/plugins.js, decl: 1, sub: 0, line: 14 } |  |  | 0.411 |
-| walker |  | 2257 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.411 |
-| walker |  | 2350 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.420 |
+| walker |  | 2331 | 93 | Code::CodeKey { rung: Names, file: lib/svgo.js, decl: 0, sub: 0, line: 0 } |  |  | 0.420 |
+| walker |  | 2350 | 19 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.420 |
 | ns | 2423 |  | 550 | Complete exported type roster of lib/types.ts | 1.12 |  | 0.410 |
 | ns | 2691 |  | 268 | Package identity, entry points and engines | 1.13 |  | 0.399 |
 | walker |  | 2706 | 356 | Fs::DirListing { dir: plugins } |  |  | 0.560 |
@@ -81,16 +81,16 @@ Score(3000)=0.634 I=0.856 C=0.469 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 3025 | 20 | Code::CodeKey { rung: Body, file: lib/xast.js, decl: 2, sub: 0, line: 32 } |  |  | 0.634 |
 | ns | 3125 |  | 370 | preset-default: the complete default pipeline in execution order | 2.1 |  | 0.587 |
 | walker |  | 3181 | 156 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 7, sub: 0, line: 117 } |  |  | 0.587 |
-| walker |  | 3216 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.588 |
-| ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.578 |
-| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.563 |
-| walker |  | 3500 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.563 |
+| ns | 3259 |  | 134 | builtinPlugins registry | 2.2 |  | 0.577 |
+| ns | 3448 |  | 189 | invokePlugins -- the plugin engine | 2.3 |  | 0.562 |
+| walker |  | 3465 | 284 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.562 |
+| walker |  | 3500 | 35 | Fs::DirListing { dir: test/regression } |  |  | 0.563 |
 | walker |  | 3536 | 36 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 2, sub: 0, line: 302 } |  |  | 0.563 |
 | walker |  | 3571 | 35 | Code::CodeKey { rung: Body, file: lib/xast.js, decl: 4, sub: 0, line: 50 } |  |  | 0.563 |
-| walker |  | 3620 | 49 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.563 |
 | ns | 3669 |  | 221 | createPreset -- how a preset validates and forwards overrides | 2.4 |  | 0.546 |
-| walker |  | 3847 | 227 | Json::Entry { file: package.json } |  |  | 0.581 |
-| walker |  | 3887 | 40 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 1, sub: 0, line: 141 } |  |  | 0.581 |
+| walker |  | 3798 | 227 | Json::Entry { file: package.json } |  |  | 0.581 |
+| walker |  | 3838 | 40 | Code::CodeKey { rung: Doc, file: lib/path.js, decl: 1, sub: 0, line: 141 } |  |  | 0.581 |
+| walker |  | 3887 | 49 | Fs::DirListing { dir: test/fixtures/config-loader } |  |  | 0.581 |
 | ns | 3956 |  | 287 | visit() -- the AST traversal contract | 2.5 |  | 0.560 |
 | ns | 4139 |  | 183 | Anatomy of a plugin module (removeComments as exemplar) | 2.6 |  | 0.548 |
 | walker |  | 4166 | 279 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.599 |

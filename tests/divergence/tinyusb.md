@@ -1,4 +1,4 @@
-Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.791/0.716/0.619/0.620/0.552/0.474/0.392
+Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.791/0.716/0.619/0.620/0.551/0.474/0.392
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,14 +12,14 @@ Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 179 | 7 | Fs::DirListing { dir: lib/rt-thread/port } |  |  | 0.000 |
 | ns | 205 |  | 115 | README 'Key Features' bullet list | 1.2 |  | 0.000 |
 | walker |  | 214 | 35 | Fs::DirListing { dir: lib/SEGGER_RTT/RTT } |  |  | 0.000 |
-| walker |  | 251 | 37 | Fs::DirListing { dir: lib/networking } |  |  | 0.000 |
-| walker |  | 266 | 15 | Fs::DirListing { dir: hw/mcu } |  |  | 0.000 |
-| walker |  | 271 | 5 | Fs::DirListing { dir: hw/mcu/bridgetek } |  |  | 0.000 |
-| walker |  | 276 | 5 | Fs::DirListing { dir: hw/mcu/sony } |  |  | 0.000 |
-| walker |  | 282 | 6 | Fs::DirListing { dir: hw/mcu/nordic } |  |  | 0.000 |
-| walker |  | 288 | 6 | Fs::DirListing { dir: .claude } |  |  | 0.000 |
-| walker |  | 297 | 9 | Fs::DirListing { dir: lib/SEGGER_RTT/Config } |  |  | 0.000 |
-| walker |  | 303 | 6 | Fs::DirListing { dir: .PVS-Studio } |  |  | 0.000 |
+| walker |  | 229 | 15 | Fs::DirListing { dir: hw/mcu } |  |  | 0.000 |
+| walker |  | 234 | 5 | Fs::DirListing { dir: hw/mcu/bridgetek } |  |  | 0.000 |
+| walker |  | 239 | 5 | Fs::DirListing { dir: hw/mcu/sony } |  |  | 0.000 |
+| walker |  | 245 | 6 | Fs::DirListing { dir: hw/mcu/nordic } |  |  | 0.000 |
+| walker |  | 282 | 37 | Fs::DirListing { dir: lib/networking } |  |  | 0.000 |
+| walker |  | 291 | 9 | Fs::DirListing { dir: lib/SEGGER_RTT/Config } |  |  | 0.000 |
+| walker |  | 297 | 6 | Fs::DirListing { dir: .PVS-Studio } |  |  | 0.000 |
+| walker |  | 303 | 6 | Fs::DirListing { dir: .claude } |  |  | 0.000 |
 | ns | 312 |  | 107 | Complete repository root listing | 1.3 |  | 0.434 |
 | walker |  | 313 | 10 | Fs::DirListing { dir: hw/mcu/dialog } |  |  | 0.434 |
 | walker |  | 363 | 50 | Fs::DirListing { dir: src } |  |  | 0.444 |
@@ -29,15 +29,15 @@ Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 481 | 46 | Fs::DirListing { dir: src/class } |  |  | 0.480 |
 | ns | 487 |  | 175 | README annotated top-level directory tree | 1.4 |  | 0.422 |
 | walker |  | 566 | 85 | Fs::DirListing { dir: src/portable } |  |  | 0.456 |
-| walker |  | 622 | 56 | Fs::DirListing { dir: src/common } |  |  | 0.480 |
-| walker |  | 675 | 53 | Fs::DirListing { dir: docs } |  |  | 0.481 |
-| walker |  | 679 | 4 | Fs::DirListing { dir: docs/_static } |  |  | 0.481 |
-| walker |  | 693 | 14 | Fs::DirListing { dir: docs/assets } |  |  | 0.481 |
+| walker |  | 619 | 53 | Fs::DirListing { dir: docs } |  |  | 0.457 |
+| walker |  | 623 | 4 | Fs::DirListing { dir: docs/_static } |  |  | 0.457 |
+| walker |  | 637 | 14 | Fs::DirListing { dir: docs/assets } |  |  | 0.457 |
+| walker |  | 693 | 56 | Fs::DirListing { dir: src/common } |  |  | 0.481 |
 | walker |  | 717 | 24 | Fs::DirListing { dir: docs/info } |  |  | 0.481 |
+| walker |  | 725 | 8 | Fs::DirListing { dir: hw/mcu/bridgetek/ft9xx } |  |  | 0.481 |
 | ns | 729 |  | 242 | Core stack file inventory: src/ and its non-fanout subdirectories | 1.5 |  | 0.464 |
-| walker |  | 781 | 64 | Fs::DirListing { dir: src/osal } |  |  | 0.553 |
-| walker |  | 789 | 8 | Fs::DirListing { dir: hw/mcu/bridgetek/ft9xx } |  |  | 0.553 |
-| walker |  | 797 | 8 | Fs::DirListing { dir: hw/mcu/sony/cxd56 } |  |  | 0.553 |
+| walker |  | 733 | 8 | Fs::DirListing { dir: hw/mcu/sony/cxd56 } |  |  | 0.464 |
+| walker |  | 797 | 64 | Fs::DirListing { dir: src/osal } |  |  | 0.553 |
 | walker |  | 806 | 9 | Fs::DirListing { dir: .circleci } |  |  | 0.553 |
 | walker |  | 816 | 10 | Fs::DirListing { dir: test } |  |  | 0.553 |
 | walker |  | 853 | 37 | Fs::DirListing { dir: docs/reference } |  |  | 0.554 |
@@ -63,11 +63,11 @@ Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 1258 | 17 | Fs::DirListing { dir: test/unit-test/test } |  |  | 0.750 |
 | walker |  | 1328 | 70 | Markdown::ReadmeHeadline { file: lib/SEGGER_RTT/README.md } |  |  | 0.750 |
 | ns | 1333 |  | 96 | README supported-CPU matrix: heading, elided table body, legend | 1.9 |  | 0.716 |
-| walker |  | 1360 | 32 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/src } |  |  | 0.716 |
-| walker |  | 1381 | 21 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/mcu } |  |  | 0.716 |
-| walker |  | 1440 | 59 | Code::CodeKey { rung: Names, file: src/common/tusb_debug.h, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
-| walker |  | 1524 | 84 | Fs::DirListing { dir: tools } |  |  | 0.718 |
-| walker |  | 1560 | 36 | Fs::DirListing { dir: hw/mcu/sony/cxd56/mkspk } |  |  | 0.718 |
+| walker |  | 1349 | 21 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/include/mcu } |  |  | 0.716 |
+| walker |  | 1408 | 59 | Code::CodeKey { rung: Names, file: src/common/tusb_debug.h, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
+| walker |  | 1440 | 32 | Fs::DirListing { dir: hw/mcu/dialog/da1469x/src } |  |  | 0.716 |
+| walker |  | 1476 | 36 | Fs::DirListing { dir: hw/mcu/sony/cxd56/mkspk } |  |  | 0.716 |
+| walker |  | 1560 | 84 | Fs::DirListing { dir: tools } |  |  | 0.718 |
 | ns | 1579 |  | 246 | src/tusb.h: the stack-wide entry points | 2.1 |  | 0.679 |
 | walker |  | 1629 | 69 | Code::CodeKey { rung: Names, file: lib/networking/dnserver.h, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
 | ns | 1791 |  | 212 | src/device/usbd.h: complete roster of the tud_* application API (names only) | 2.2 |  | 0.641 |
@@ -76,15 +76,15 @@ Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 1952 |  | 161 | src/device/usbd.h: complete roster of tud_*_cb application callbacks | 2.3 |  | 0.619 |
 | walker |  | 1985 | 35 | Code::CodeKey { rung: Decl, file: lib/networking/dhserver.h, decl: 1, sub: 0, line: 42 } |  |  | 0.619 |
 | walker |  | 2050 | 65 | Code::CodeKey { rung: Decl, file: lib/networking/dhserver.h, decl: 2, sub: 0, line: 49 } |  |  | 0.619 |
-| walker |  | 2084 | 34 | Fs::DirListing { dir: examples/dual } |  |  | 0.619 |
-| walker |  | 2108 | 24 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc } |  |  | 0.619 |
-| walker |  | 2124 | 16 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc/src } |  |  | 0.619 |
+| walker |  | 2097 | 47 | Markdown::ReadmeHeadline { file: hw/mcu/bridgetek/ft9xx/Readme.md } |  |  | 0.619 |
+| walker |  | 2131 | 34 | Fs::DirListing { dir: examples/dual } |  |  | 0.619 |
 | ns | 2132 |  | 180 | src/host/usbh.h: host lifecycle API + application callback roster | 2.4 |  | 0.596 |
-| walker |  | 2148 | 24 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc } |  |  | 0.596 |
-| walker |  | 2170 | 22 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc/src } |  |  | 0.596 |
-| walker |  | 2198 | 28 | Fs::DirListing { dir: examples/dual/dynamic_switch } |  |  | 0.596 |
-| walker |  | 2220 | 22 | Fs::DirListing { dir: examples/dual/dynamic_switch/src } |  |  | 0.596 |
-| walker |  | 2267 | 47 | Markdown::ReadmeHeadline { file: hw/mcu/bridgetek/ft9xx/Readme.md } |  |  | 0.596 |
+| walker |  | 2155 | 24 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc } |  |  | 0.596 |
+| walker |  | 2171 | 16 | Fs::DirListing { dir: examples/dual/host_hid_to_device_cdc/src } |  |  | 0.596 |
+| walker |  | 2195 | 24 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc } |  |  | 0.596 |
+| walker |  | 2217 | 22 | Fs::DirListing { dir: examples/dual/host_info_to_device_cdc/src } |  |  | 0.596 |
+| walker |  | 2245 | 28 | Fs::DirListing { dir: examples/dual/dynamic_switch } |  |  | 0.596 |
+| walker |  | 2267 | 22 | Fs::DirListing { dir: examples/dual/dynamic_switch/src } |  |  | 0.596 |
 | walker |  | 2303 | 36 | Fs::DirListing { dir: test/hil } |  |  | 0.596 |
 | ns | 2318 |  | 186 | src/host/usbh.h: per-device query API and endpoint/transfer API rosters | 2.5 |  | 0.574 |
 | ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.551 |
@@ -118,40 +118,40 @@ Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 3818 |  | 332 | src/tusb_option.h: every device class-driver enable macro with its default | 3.4 |  | 0.569 |
 | walker |  | 3904 | 213 | Code::CodeKey { rung: Names, file: src/host/usbh_pvt.h, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
 | walker |  | 3922 | 18 | Code::CodeKey { rung: Doc, file: src/host/usbh_pvt.h, decl: 8, sub: 0, line: 63 } |  |  | 0.570 |
-| walker |  | 3977 | 55 | Fs::DirListing { dir: test/fuzz } |  |  | 0.571 |
-| walker |  | 3988 | 11 | Fs::DirListing { dir: test/fuzz/device } |  |  | 0.571 |
-| walker |  | 4001 | 13 | Fs::DirListing { dir: test/fuzz/device/net } |  |  | 0.571 |
-| walker |  | 4022 | 21 | Fs::DirListing { dir: test/fuzz/device/cdc } |  |  | 0.571 |
-| walker |  | 4038 | 16 | Fs::DirListing { dir: test/fuzz/device/cdc/src } |  |  | 0.571 |
-| walker |  | 4059 | 21 | Fs::DirListing { dir: test/fuzz/device/msc } |  |  | 0.571 |
-| walker |  | 4075 | 16 | Fs::DirListing { dir: test/fuzz/device/msc/src } |  |  | 0.571 |
-| walker |  | 4100 | 25 | Fs::DirListing { dir: test/fuzz/device/net/src } |  |  | 0.571 |
-| ns | 4148 |  | 330 | src/tusb_option.h: every host class-driver enable macro, with elided VID/PID tables | 3.5 |  | 0.552 |
-| walker |  | 4311 | 211 | Code::CodeKey { rung: Names, file: src/osal/osal_mynewt.h, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
-| walker |  | 4322 | 11 | Code::CodeKey { rung: Decl, file: src/osal/osal_mynewt.h, decl: 4, sub: 0, line: 52 } |  |  | 0.552 |
-| walker |  | 4331 | 9 | Code::CodeKey { rung: Body, file: src/osal/osal_mynewt.h, decl: 5, sub: 0, line: 55 } |  |  | 0.552 |
-| walker |  | 4347 | 16 | Code::CodeKey { rung: Body, file: src/osal/osal_mynewt.h, decl: 2, sub: 0, line: 43 } |  |  | 0.552 |
-| walker |  | 4366 | 19 | Code::CodeKey { rung: Body, file: src/osal/osal_mynewt.h, decl: 1, sub: 0, line: 39 } |  |  | 0.552 |
-| ns | 4497 |  | 349 | src/tusb_option.h: OS selector and roothub mode/speed constants | 3.6 |  | 0.539 |
-| walker |  | 4577 | 211 | Code::CodeKey { rung: Names, file: src/osal/osal_rtthread.h, decl: 0, sub: 0, line: 0 } |  |  | 0.539 |
-| walker |  | 4588 | 11 | Code::CodeKey { rung: Decl, file: src/osal/osal_rtthread.h, decl: 4, sub: 0, line: 54 } |  |  | 0.539 |
-| walker |  | 4599 | 11 | Code::CodeKey { rung: Body, file: src/osal/osal_rtthread.h, decl: 5, sub: 0, line: 57 } |  |  | 0.539 |
-| walker |  | 4611 | 12 | Code::CodeKey { rung: Body, file: src/osal/osal_rtthread.h, decl: 1, sub: 0, line: 41 } |  |  | 0.539 |
-| walker |  | 4633 | 22 | Code::CodeKey { rung: Doc, file: src/osal/osal_rtthread.h, decl: 1, sub: 0, line: 41 } |  |  | 0.539 |
-| ns | 4693 |  | 196 | src/tusb_option.h: common (CFG_TUSB_*) option defaults | 3.7 | 3.2 | 0.530 |
-| ns | 4865 |  | 172 | src/tusb_option.h: device-side sizing and behaviour defaults | 3.8 | 3.2 | 0.524 |
-| walker |  | 4898 | 265 | Code::CodeKey { rung: Names, file: lib/embedded-cli/embedded_cli.h, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
-| walker |  | 4916 | 18 | Code::CodeKey { rung: Decl, file: lib/embedded-cli/embedded_cli.h, decl: 2, sub: 0, line: 58 } |  |  | 0.524 |
-| ns | 4922 |  | 57 | src/tusb_option.h: host-side sizing defaults | 3.9 | 3.2 | 0.521 |
-| walker |  | 4942 | 26 | Code::CodeKey { rung: Decl, file: lib/embedded-cli/embedded_cli.h, decl: 1, sub: 0, line: 28 } |  |  | 0.521 |
-| ns | 5032 |  | 110 | src/tusb_option.h: per-controller (USBIP) configuration sub-sections | 3.10 |  | 0.515 |
-| ns | 5126 |  | 94 | src/tusb_option.h: TypeC enable and compile-time configuration validation | 3.11 |  | 0.510 |
-| walker |  | 5173 | 231 | Code::CodeKey { rung: Names, file: src/osal/osal_freertos.h, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
-| walker |  | 5178 | 5 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 4, sub: 0, line: 51 } |  |  | 0.510 |
-| walker |  | 5185 | 7 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 3, sub: 0, line: 47 } |  |  | 0.510 |
-| walker |  | 5198 | 13 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 1, sub: 0, line: 44 } |  |  | 0.510 |
-| walker |  | 5260 | 62 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 9, sub: 0, line: 79 } |  |  | 0.510 |
-| walker |  | 5369 | 109 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 8, sub: 0, line: 58 } |  |  | 0.510 |
+| walker |  | 4133 | 211 | Code::CodeKey { rung: Names, file: src/osal/osal_mynewt.h, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
+| walker |  | 4144 | 11 | Code::CodeKey { rung: Decl, file: src/osal/osal_mynewt.h, decl: 4, sub: 0, line: 52 } |  |  | 0.570 |
+| ns | 4148 |  | 330 | src/tusb_option.h: every host class-driver enable macro, with elided VID/PID tables | 3.5 |  | 0.551 |
+| walker |  | 4153 | 9 | Code::CodeKey { rung: Body, file: src/osal/osal_mynewt.h, decl: 5, sub: 0, line: 55 } |  |  | 0.551 |
+| walker |  | 4169 | 16 | Code::CodeKey { rung: Body, file: src/osal/osal_mynewt.h, decl: 2, sub: 0, line: 43 } |  |  | 0.551 |
+| walker |  | 4188 | 19 | Code::CodeKey { rung: Body, file: src/osal/osal_mynewt.h, decl: 1, sub: 0, line: 39 } |  |  | 0.551 |
+| walker |  | 4399 | 211 | Code::CodeKey { rung: Names, file: src/osal/osal_rtthread.h, decl: 0, sub: 0, line: 0 } |  |  | 0.551 |
+| walker |  | 4410 | 11 | Code::CodeKey { rung: Decl, file: src/osal/osal_rtthread.h, decl: 4, sub: 0, line: 54 } |  |  | 0.551 |
+| walker |  | 4421 | 11 | Code::CodeKey { rung: Body, file: src/osal/osal_rtthread.h, decl: 5, sub: 0, line: 57 } |  |  | 0.551 |
+| walker |  | 4433 | 12 | Code::CodeKey { rung: Body, file: src/osal/osal_rtthread.h, decl: 1, sub: 0, line: 41 } |  |  | 0.551 |
+| walker |  | 4455 | 22 | Code::CodeKey { rung: Doc, file: src/osal/osal_rtthread.h, decl: 1, sub: 0, line: 41 } |  |  | 0.551 |
+| ns | 4497 |  | 349 | src/tusb_option.h: OS selector and roothub mode/speed constants | 3.6 |  | 0.538 |
+| ns | 4693 |  | 196 | src/tusb_option.h: common (CFG_TUSB_*) option defaults | 3.7 | 3.2 | 0.529 |
+| walker |  | 4720 | 265 | Code::CodeKey { rung: Names, file: lib/embedded-cli/embedded_cli.h, decl: 0, sub: 0, line: 0 } |  |  | 0.529 |
+| walker |  | 4738 | 18 | Code::CodeKey { rung: Decl, file: lib/embedded-cli/embedded_cli.h, decl: 2, sub: 0, line: 58 } |  |  | 0.529 |
+| walker |  | 4764 | 26 | Code::CodeKey { rung: Decl, file: lib/embedded-cli/embedded_cli.h, decl: 1, sub: 0, line: 28 } |  |  | 0.529 |
+| ns | 4865 |  | 172 | src/tusb_option.h: device-side sizing and behaviour defaults | 3.8 | 3.2 | 0.523 |
+| ns | 4922 |  | 57 | src/tusb_option.h: host-side sizing defaults | 3.9 | 3.2 | 0.520 |
+| walker |  | 4995 | 231 | Code::CodeKey { rung: Names, file: src/osal/osal_freertos.h, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
+| walker |  | 5000 | 5 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 4, sub: 0, line: 51 } |  |  | 0.520 |
+| walker |  | 5007 | 7 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 3, sub: 0, line: 47 } |  |  | 0.520 |
+| walker |  | 5020 | 13 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 1, sub: 0, line: 44 } |  |  | 0.520 |
+| ns | 5032 |  | 110 | src/tusb_option.h: per-controller (USBIP) configuration sub-sections | 3.10 |  | 0.514 |
+| walker |  | 5082 | 62 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 9, sub: 0, line: 79 } |  |  | 0.514 |
+| ns | 5126 |  | 94 | src/tusb_option.h: TypeC enable and compile-time configuration validation | 3.11 |  | 0.509 |
+| walker |  | 5191 | 109 | Code::CodeKey { rung: Decl, file: src/osal/osal_freertos.h, decl: 8, sub: 0, line: 58 } |  |  | 0.509 |
+| walker |  | 5246 | 55 | Fs::DirListing { dir: test/fuzz } |  |  | 0.510 |
+| walker |  | 5257 | 11 | Fs::DirListing { dir: test/fuzz/device } |  |  | 0.510 |
+| walker |  | 5270 | 13 | Fs::DirListing { dir: test/fuzz/device/net } |  |  | 0.510 |
+| walker |  | 5291 | 21 | Fs::DirListing { dir: test/fuzz/device/cdc } |  |  | 0.510 |
+| walker |  | 5307 | 16 | Fs::DirListing { dir: test/fuzz/device/cdc/src } |  |  | 0.510 |
+| walker |  | 5328 | 21 | Fs::DirListing { dir: test/fuzz/device/msc } |  |  | 0.510 |
+| walker |  | 5344 | 16 | Fs::DirListing { dir: test/fuzz/device/msc/src } |  |  | 0.510 |
+| walker |  | 5369 | 25 | Fs::DirListing { dir: test/fuzz/device/net/src } |  |  | 0.510 |
 | ns | 5479 |  | 353 | src/device/usbd_pvt.h: the device class-driver vtable | 4.1 |  | 0.499 |
 | walker |  | 5583 | 214 | Code::CodeKey { rung: Names, file: src/osal/osal_pico.h, decl: 0, sub: 0, line: 0 } |  |  | 0.499 |
 | walker |  | 5593 | 10 | Code::CodeKey { rung: Body, file: src/osal/osal_pico.h, decl: 1, sub: 0, line: 42 } |  |  | 0.499 |
@@ -225,24 +225,23 @@ Score(3000)=0.620 I=0.876 C=0.439 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 9008 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.385 |
 | walker |  | 9068 | 151 | Code::CodeKey { rung: Decl, file: src/host/usbh_pvt.h, decl: 6, sub: 0, line: 47 } |  |  | 0.396 |
 | walker |  | 9089 | 21 | Code::CodeKey { rung: Doc, file: src/host/usbh_pvt.h, decl: 6, sub: 0, line: 47 } |  |  | 0.396 |
-| walker |  | 9154 | 65 | Fs::DirListing { dir: examples/host } |  |  | 0.396 |
-| walker |  | 9182 | 28 | Fs::DirListing { dir: examples/host/cdc_msc_hid } |  |  | 0.396 |
-| ns | 9196 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.392 |
-| walker |  | 9210 | 28 | Fs::DirListing { dir: examples/host/cdc_msc_hid_freertos } |  |  | 0.392 |
-| walker |  | 9238 | 28 | Fs::DirListing { dir: examples/host/hid_controller } |  |  | 0.392 |
-| walker |  | 9257 | 19 | Fs::DirListing { dir: examples/host/hid_controller/src } |  |  | 0.392 |
-| walker |  | 9288 | 31 | Fs::DirListing { dir: examples/host/cdc_msc_hid/src } |  |  | 0.392 |
-| walker |  | 9320 | 32 | Fs::DirListing { dir: examples/host/msc_file_explorer } |  |  | 0.392 |
-| walker |  | 9347 | 27 | Fs::DirListing { dir: examples/host/msc_file_explorer/src } |  |  | 0.392 |
-| walker |  | 9379 | 32 | Fs::DirListing { dir: examples/host/msc_file_explorer_freertos } |  |  | 0.392 |
-| walker |  | 9412 | 33 | Fs::DirListing { dir: examples/host/msc_file_explorer_freertos/src } |  |  | 0.392 |
-| walker |  | 9449 | 37 | Fs::DirListing { dir: examples/host/cdc_msc_hid_freertos/src } |  |  | 0.392 |
-| walker |  | 9466 | 17 | Code::CodeKey { rung: Body, file: src/osal/osal_rtx4.h, decl: 8, sub: 0, line: 78 } |  |  | 0.392 |
-| ns | 9543 |  | 347 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.387 |
-| ns | 9679 |  | 136 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.413 |
-| ns | 9686 |  | 7 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.414 |
-| walker |  | 9697 | 231 | Code::CodeKey { rung: Names, file: src/device/usbd_pvt.h, decl: 0, sub: 0, line: 0 } |  |  | 0.415 |
-| walker |  | 9722 | 25 | Code::CodeKey { rung: Decl, file: src/device/usbd_pvt.h, decl: 2, sub: 0, line: 43 } |  |  | 0.415 |
-| walker |  | 9731 | 9 | Code::CodeKey { rung: Doc, file: src/device/usbd_pvt.h, decl: 10, sub: 0, line: 83 } |  |  | 0.415 |
-| ns | 9884 |  | 198 | Maintenance tooling and documentation sources | 7.5 |  | 0.443 |
-| walker |  | 9889 | 158 | Code::CodeKey { rung: Decl, file: lib/embedded-cli/embedded_cli.h, decl: 7, sub: 0, line: 67 } |  |  | 0.443 |
+| walker |  | 9106 | 17 | Code::CodeKey { rung: Body, file: src/osal/osal_rtx4.h, decl: 8, sub: 0, line: 78 } |  |  | 0.396 |
+| ns | 9196 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.391 |
+| walker |  | 9337 | 231 | Code::CodeKey { rung: Names, file: src/device/usbd_pvt.h, decl: 0, sub: 0, line: 0 } |  |  | 0.392 |
+| walker |  | 9362 | 25 | Code::CodeKey { rung: Decl, file: src/device/usbd_pvt.h, decl: 2, sub: 0, line: 43 } |  |  | 0.392 |
+| walker |  | 9371 | 9 | Code::CodeKey { rung: Doc, file: src/device/usbd_pvt.h, decl: 10, sub: 0, line: 83 } |  |  | 0.392 |
+| walker |  | 9529 | 158 | Code::CodeKey { rung: Decl, file: lib/embedded-cli/embedded_cli.h, decl: 7, sub: 0, line: 67 } |  |  | 0.392 |
+| ns | 9543 |  | 347 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.380 |
+| ns | 9679 |  | 136 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.406 |
+| ns | 9686 |  | 7 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.408 |
+| walker |  | 9770 | 241 | Code::CodeKey { rung: Names, file: src/common/tusb_private.h, decl: 0, sub: 0, line: 0 } |  |  | 0.408 |
+| walker |  | 9789 | 19 | Code::CodeKey { rung: Decl, file: src/common/tusb_private.h, decl: 8, sub: 0, line: 84 } |  |  | 0.408 |
+| walker |  | 9799 | 10 | Code::CodeKey { rung: Doc, file: src/common/tusb_private.h, decl: 9, sub: 0, line: 88 } |  |  | 0.408 |
+| walker |  | 9809 | 10 | Code::CodeKey { rung: Doc, file: src/common/tusb_private.h, decl: 10, sub: 0, line: 91 } |  |  | 0.408 |
+| walker |  | 9827 | 18 | Code::CodeKey { rung: Doc, file: src/common/tusb_private.h, decl: 8, sub: 0, line: 84 } |  |  | 0.408 |
+| ns | 9884 |  | 198 | Maintenance tooling and documentation sources | 7.5 |  | 0.437 |
+| walker |  | 9892 | 65 | Fs::DirListing { dir: examples/host } |  |  | 0.443 |
+| walker |  | 9920 | 28 | Fs::DirListing { dir: examples/host/cdc_msc_hid } |  |  | 0.443 |
+| walker |  | 9948 | 28 | Fs::DirListing { dir: examples/host/cdc_msc_hid_freertos } |  |  | 0.443 |
+| walker |  | 9976 | 28 | Fs::DirListing { dir: examples/host/hid_controller } |  |  | 0.443 |
+| walker |  | 9995 | 19 | Fs::DirListing { dir: examples/host/hid_controller/src } |  |  | 0.443 |

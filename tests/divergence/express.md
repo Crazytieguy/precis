@@ -63,9 +63,9 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.572 |
 | walker |  | 3414 | 460 | Json::Dependencies { file: package.json } |  |  | 0.574 |
 | walker |  | 3440 | 26 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 3, sub: 0, line: 140 } |  |  | 0.574 |
-| walker |  | 3526 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.576 |
-| ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.557 |
-| walker |  | 3568 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.557 |
+| walker |  | 3482 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.574 |
+| ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
+| walker |  | 3568 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.557 |
 | walker |  | 3613 | 45 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 4, sub: 0, line: 61 } |  |  | 0.557 |
 | walker |  | 3661 | 48 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 2, sub: 0, line: 104 } |  |  | 0.557 |
 | ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.545 |

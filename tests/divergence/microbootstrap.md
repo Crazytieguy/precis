@@ -44,11 +44,11 @@ Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1279 | 259 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.399 |
 | walker |  | 1358 | 79 | Code::CodeKey { rung: Decl, file: microbootstrap/granian_server.py, decl: 1, sub: 0, line: 16 } |  |  | 0.399 |
 | walker |  | 1374 | 16 | Code::CodeKey { rung: Doc, file: microbootstrap/exceptions.py, decl: 2, sub: 0, line: 5 } |  |  | 0.399 |
-| walker |  | 1427 | 53 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/health_checks_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.400 |
-| walker |  | 1459 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/health_checks_instrument.py, decl: 1, sub: 0, line: 8 } |  |  | 0.400 |
-| walker |  | 1476 | 17 | Code::CodeKey { rung: Doc, file: microbootstrap/exceptions.py, decl: 3, sub: 0, line: 9 } |  |  | 0.400 |
+| walker |  | 1421 | 47 | Fs::DirListing { dir: tests } |  |  | 0.400 |
+| walker |  | 1474 | 53 | Code::CodeKey { rung: Names, file: microbootstrap/instruments/health_checks_instrument.py, decl: 0, sub: 0, line: 0 } |  |  | 0.400 |
 | ns | 1492 |  | 251 | `BaseServiceSettings`: all five service fields and the env-sourcing `model_config` | 2.2 | 2.1 | 0.367 |
-| walker |  | 1523 | 47 | Fs::DirListing { dir: tests } |  |  | 0.367 |
+| walker |  | 1506 | 32 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/health_checks_instrument.py, decl: 1, sub: 0, line: 8 } |  |  | 0.367 |
+| walker |  | 1523 | 17 | Code::CodeKey { rung: Doc, file: microbootstrap/exceptions.py, decl: 3, sub: 0, line: 9 } |  |  | 0.367 |
 | walker |  | 1632 | 109 | Code::CodeKey { rung: Decl, file: microbootstrap/console_writer.py, decl: 1, sub: 0, line: 10 } |  |  | 0.367 |
 | walker |  | 1682 | 50 | Code::CodeKey { rung: Decl, file: microbootstrap/console_writer.py, decl: 3, sub: 0, line: 22 } |  |  | 0.367 |
 | walker |  | 1744 | 62 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/swagger_instrument.py, decl: 2, sub: 0, line: 21 } |  |  | 0.367 |
@@ -100,8 +100,8 @@ Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 4105 | 7 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/pyroscope_instrument.py, decl: 4, sub: 0, line: 34 } |  |  | 0.447 |
 | walker |  | 4113 | 8 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/health_checks_instrument.py, decl: 6, sub: 0, line: 40 } |  |  | 0.447 |
 | walker |  | 4121 | 8 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/pyroscope_instrument.py, decl: 6, sub: 0, line: 52 } |  |  | 0.447 |
-| walker |  | 4132 | 11 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 8, sub: 0, line: 90 } |  |  | 0.452 |
-| walker |  | 4170 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.452 |
+| walker |  | 4159 | 38 | Fs::DirListing { dir: tests/bootstrappers } |  |  | 0.447 |
+| walker |  | 4170 | 11 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 8, sub: 0, line: 90 } |  |  | 0.452 |
 | ns | 4224 |  | 376 | `OpentelemetryConfig`: complete field set | 4.2 |  | 0.437 |
 | walker |  | 4284 | 114 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/swagger_instrument.py, decl: 1, sub: 0, line: 10 } |  |  | 0.438 |
 | walker |  | 4402 | 118 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/health_checks_instrument.py, decl: 2, sub: 0, line: 14 } |  |  | 0.439 |
@@ -141,8 +141,8 @@ Score(3000)=0.423 I=0.460 C=0.389 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 6445 | 10 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 3, sub: 0, line: 33 } |  |  | 0.647 |
 | walker |  | 6457 | 12 | Code::CodeKey { rung: Decl, file: microbootstrap/bootstrappers/fastapi.py, decl: 4, sub: 0, line: 41 } |  |  | 0.647 |
 | walker |  | 6608 | 151 | Code::CodeKey { rung: Decl, file: microbootstrap/instruments/pyroscope_instrument.py, decl: 1, sub: 0, line: 15 } |  |  | 0.668 |
-| walker |  | 6618 | 10 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/instrument_box.py, decl: 5, sub: 0, line: 48 } |  |  | 0.668 |
-| walker |  | 6682 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.669 |
+| walker |  | 6672 | 64 | Fs::DirListing { dir: tests/instruments } |  |  | 0.669 |
+| walker |  | 6682 | 10 | Code::CodeKey { rung: Body, file: microbootstrap/instruments/instrument_box.py, decl: 5, sub: 0, line: 48 } |  |  | 0.669 |
 | ns | 6684 |  | 293 | `ApplicationBootstrapper`: class attributes and complete member roster | 5.1 |  | 0.655 |
 | walker |  | 6694 | 12 | Code::CodeKey { rung: Doc, file: microbootstrap/settings.py, decl: 6, sub: 0, line: 60 } |  |  | 0.659 |
 | ns | 6945 |  | 261 | `ApplicationBootstrapper.bootstrap()` — the whole application-assembly pipeline | 5.2 | 5.1 | 0.643 |

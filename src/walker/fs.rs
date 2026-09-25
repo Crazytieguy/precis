@@ -153,9 +153,8 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
     })
 }
 
-/// Signal mix for a directory whose contents the walker did not
-/// positively classify — the plain "here is what is in this directory"
-/// tier every listing falls back to. Shared with the markdown walker,
+/// Signal mix for every directory listing — classification moves a
+/// listing's depth prior, not its tier. Shared with the markdown walker,
 /// where a whole-file table of contents prices as the listing it
 /// duplicates rather than as an orientation doc.
 pub(super) const PLAIN_LISTING_SIGNALS: (f64, f64, f64) = (0.95, 0.45, 0.25);
@@ -194,34 +193,6 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         && !module_source_dir
         && is_source_inventory_dir(dir, ctx)
         && (non_essential < 1.0 || under_root_source_ancestor);
-    let readme_cited = ctx.is_readme_cited(dir);
-    let (cat, fu, ztu) = if dir == ctx.root() {
-        (0.95, 0.6, 0.5)
-    } else if src_of_sibling_modules || module_source_dir {
-        // `module_source_dir` joins the sibling-module tier: a directory
-        // with its own module entrypoint (`__init__.py` / `index.ts` /
-        // `mod.rs`) is the package's API surface root, and its listing
-        // is itself a high-value NS anchor (rich/ NS row 1.10 is "rich/
-        // package listing — all ~80 modules"). At the lower 0.6 cat,
-        // an 80-name listing's ratio loses to small sibling listings of
-        // peripheral dirs.
-        (0.85, 0.55, 0.35)
-    } else if source_dir || source_inventory_dir || readme_cited {
-        // README-cited dirs (an `examples/` directory the README links
-        // canonical scripts from) are part of the documented public
-        // surface; treat them on par with source-inventory dirs so the
-        // listing schedules early enough for per-file batches inside it
-        // to compete in the early budget.
-        //
-        // `cat` is held at the catch-all's level rather than below it: a
-        // directory we positively recognize as source should not be
-        // priced under one we failed to classify. Swept 2026-07-26 —
-        // the response is a shallow ridge over 0.95–1.08 and falls off
-        // sharply outside it, so this sits at the low-churn end.
-        (0.95, 0.5, 0.3)
-    } else {
-        PLAIN_LISTING_SIGNALS
-    };
     let depth = if source_inventory_dir && under_root_source_ancestor {
         // A flat partition under a root-adjacent `lib/`/`src/` is the
         // package's API surface root (alongside the module-source tier)
@@ -275,13 +246,12 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
+    let (cat, fu, ztu) = PLAIN_LISTING_SIGNALS;
     mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * LISTING_TIER_SCALE
 }
 
 /// Uniform price of the directory-listing class against the source
-/// batches it competes with. The tier triples above set listings'
-/// ranking *among themselves*; this sets where the whole class sits
-/// against parsed source. Set by a full-corpus sweep on 2026-07-28
+/// batches it competes with. Set by a full-corpus sweep on 2026-07-28
 /// against the v2 answer key (zero point 0.6074), worth +0.0046 at
 /// Score(3000) in combination with the roster-mass-neutralization
 /// removal. Measured point grids are recorded in

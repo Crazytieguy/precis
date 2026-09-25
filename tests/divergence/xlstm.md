@@ -88,21 +88,21 @@ Score(3000)=0.408 I=0.477 C=0.349 ns_rows≤3K=16/45 grid(1000/1442/2080/3000/43
 | walker |  | 2900 | 56 | Code::CodeKey { rung: Decl, file: xlstm/xlstm_block_stack.py, decl: 10, sub: 0, line: 126 } |  |  | 0.407 |
 | walker |  | 2936 | 36 | Code::CodeKey { rung: Names, file: xlstm/blocks/mlstm/layer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.408 |
 | walker |  | 2972 | 36 | Code::CodeKey { rung: Names, file: xlstm/blocks/slstm/layer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.408 |
-| walker |  | 2995 | 23 | Code::CodeKey { rung: Names, file: experiments/data/formal_language/tasks/cycle_navigation.py, decl: 0, sub: 0, line: 0 } |  |  | 0.408 |
-| ns | 3038 |  | 147 | `xLSTMLarge.__init__` — embedding, backbone, lm_head | 2.8 | 2.2 | 0.397 |
-| walker |  | 3054 | 59 | Code::CodeKey { rung: Decl, file: xlstm/components/ln.py, decl: 1, sub: 0, line: 8 } |  |  | 0.397 |
-| walker |  | 3062 | 8 | Code::CodeKey { rung: Decl, file: xlstm/components/ln.py, decl: 3, sub: 0, line: 27 } |  |  | 0.397 |
-| walker |  | 3182 | 120 | Code::CodeKey { rung: Decl, file: xlstm/xlstm_lm_model.py, decl: 2, sub: 0, line: 22 } |  |  | 0.398 |
-| walker |  | 3241 | 59 | Code::CodeKey { rung: Decl, file: xlstm/xlstm_lm_model.py, decl: 6, sub: 0, line: 56 } |  |  | 0.398 |
-| ns | 3269 |  | 231 | `xLSTMLarge.forward` — signature, shape assert, `soft_cap`, and the conditional state return | 2.9 | 2.8 | 0.382 |
-| ns | 3417 |  | 148 | `xLSTMLarge.generate` — signature and delegation to `generate_tokens` | 2.10 | 2.8 | 0.371 |
-| walker |  | 3427 | 186 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.415 |
-| walker |  | 3490 | 63 | Code::CodeKey { rung: Decl, file: xlstm/components/conv.py, decl: 3, sub: 0, line: 24 } |  |  | 0.415 |
-| walker |  | 3613 | 123 | Code::CodeKey { rung: Decl, file: xlstm/utils.py, decl: 1, sub: 0, line: 11 } |  |  | 0.415 |
-| ns | 3633 |  | 216 | `xLSTMLargeBlockStack.__init__` — the `mLSTMBlock` list and the `add_out_norm` switch | 2.11 | 2.2 | 0.399 |
-| walker |  | 3651 | 38 | Code::CodeKey { rung: Decl, file: xlstm/blocks/slstm/block.py, decl: 3, sub: 0, line: 29 } |  |  | 0.399 |
-| walker |  | 3691 | 40 | Code::CodeKey { rung: Names, file: xlstm/blocks/mlstm/backends.py, decl: 0, sub: 0, line: 0 } |  |  | 0.400 |
-| walker |  | 3746 | 55 | Fs::DirListing { dir: tests } |  |  | 0.432 |
+| walker |  | 3027 | 55 | Fs::DirListing { dir: tests } |  |  | 0.446 |
+| ns | 3038 |  | 147 | `xLSTMLarge.__init__` — embedding, backbone, lm_head | 2.8 | 2.2 | 0.434 |
+| walker |  | 3050 | 23 | Code::CodeKey { rung: Names, file: experiments/data/formal_language/tasks/cycle_navigation.py, decl: 0, sub: 0, line: 0 } |  |  | 0.434 |
+| walker |  | 3109 | 59 | Code::CodeKey { rung: Decl, file: xlstm/components/ln.py, decl: 1, sub: 0, line: 8 } |  |  | 0.434 |
+| walker |  | 3117 | 8 | Code::CodeKey { rung: Decl, file: xlstm/components/ln.py, decl: 3, sub: 0, line: 27 } |  |  | 0.434 |
+| walker |  | 3237 | 120 | Code::CodeKey { rung: Decl, file: xlstm/xlstm_lm_model.py, decl: 2, sub: 0, line: 22 } |  |  | 0.435 |
+| ns | 3269 |  | 231 | `xLSTMLarge.forward` — signature, shape assert, `soft_cap`, and the conditional state return | 2.9 | 2.8 | 0.417 |
+| walker |  | 3296 | 59 | Code::CodeKey { rung: Decl, file: xlstm/xlstm_lm_model.py, decl: 6, sub: 0, line: 56 } |  |  | 0.417 |
+| ns | 3417 |  | 148 | `xLSTMLarge.generate` — signature and delegation to `generate_tokens` | 2.10 | 2.8 | 0.406 |
+| walker |  | 3482 | 186 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.448 |
+| walker |  | 3545 | 63 | Code::CodeKey { rung: Decl, file: xlstm/components/conv.py, decl: 3, sub: 0, line: 24 } |  |  | 0.448 |
+| ns | 3633 |  | 216 | `xLSTMLargeBlockStack.__init__` — the `mLSTMBlock` list and the `add_out_norm` switch | 2.11 | 2.2 | 0.432 |
+| walker |  | 3668 | 123 | Code::CodeKey { rung: Decl, file: xlstm/utils.py, decl: 1, sub: 0, line: 11 } |  |  | 0.432 |
+| walker |  | 3706 | 38 | Code::CodeKey { rung: Decl, file: xlstm/blocks/slstm/block.py, decl: 3, sub: 0, line: 29 } |  |  | 0.432 |
+| walker |  | 3746 | 40 | Code::CodeKey { rung: Names, file: xlstm/blocks/mlstm/backends.py, decl: 0, sub: 0, line: 0 } |  |  | 0.432 |
 | walker |  | 3873 | 127 | Code::CodeKey { rung: Decl, file: xlstm/utils.py, decl: 3, sub: 0, line: 32 } |  |  | 0.432 |
 | walker |  | 3883 | 10 | Code::CodeKey { rung: Body, file: xlstm/utils.py, decl: 4, sub: 0, line: 33 } |  |  | 0.432 |
 | ns | 3894 |  | 261 | `xLSTMLargeBlockStack.forward` — the in-place per-layer state update | 2.12 | 2.11 | 0.417 |

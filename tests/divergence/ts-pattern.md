@@ -12,15 +12,15 @@ Score(3000)=0.619 I=0.781 C=0.491 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 174 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.443 |
 | ns | 180 |  | 48 | Complete repository root listing | 1.3 |  | 0.561 |
 | walker |  | 247 | 73 | Json::Identity { file: package.json } |  |  | 0.572 |
-| walker |  | 265 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
 | ns | 273 |  | 93 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.437 |
-| walker |  | 282 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.437 |
-| walker |  | 338 | 56 | Fs::DirListing { dir: src/types } |  |  | 0.641 |
+| walker |  | 303 | 56 | Fs::DirListing { dir: src/types } |  |  | 0.640 |
+| walker |  | 321 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
+| walker |  | 338 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.641 |
 | walker |  | 347 | 9 | Fs::DirListing { dir: .github } |  |  | 0.642 |
 | ns | 357 |  | 84 | package.json identity: name, version, description, module type, entry source | 1.5 |  | 0.616 |
 | walker |  | 367 | 20 | Code::CodeKey { rung: Names, file: src/match.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
-| walker |  | 377 | 10 | Fs::DirListing { dir: examples } |  |  | 0.618 |
-| walker |  | 397 | 20 | Code::CodeKey { rung: Decl, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.618 |
+| walker |  | 387 | 20 | Code::CodeKey { rung: Decl, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.617 |
+| walker |  | 397 | 10 | Fs::DirListing { dir: examples } |  |  | 0.618 |
 | ns | 513 |  | 156 | All top-level (# / ##) README headings with line numbers | 1.6 |  | 0.534 |
 | walker |  | 547 | 150 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.757 |
 | walker |  | 573 | 26 | Fs::DirListing { dir: benchmarks } |  |  | 0.760 |
@@ -29,9 +29,9 @@ Score(3000)=0.619 I=0.781 C=0.491 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 658 | 27 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.728 |
 | walker |  | 691 | 33 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 3, sub: 0, line: 53 } |  |  | 0.728 |
 | walker |  | 730 | 39 | Code::CodeKey { rung: Decl, file: src/is-matching.ts, decl: 2, sub: 0, line: 48 } |  |  | 0.729 |
-| walker |  | 745 | 15 | Fs::DirListing { dir: examples/gif-fetcher } |  |  | 0.733 |
-| ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.671 |
-| walker |  | 854 | 109 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.671 |
+| ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.667 |
+| walker |  | 839 | 109 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.667 |
+| walker |  | 854 | 15 | Fs::DirListing { dir: examples/gif-fetcher } |  |  | 0.671 |
 | walker |  | 870 | 16 | Code::CodeKey { rung: Body, file: src/match.ts, decl: 1, sub: 0, line: 32 } |  |  | 0.671 |
 | walker |  | 893 | 23 | Fs::DirListing { dir: examples/gif-fetcher/src } |  |  | 0.677 |
 | ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.640 |

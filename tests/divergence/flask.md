@@ -1,28 +1,28 @@
-Score(3000)=0.674 I=0.886 C=0.513 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.664/0.778/0.674/0.552/0.509/0.534
+Score(3000)=0.675 I=0.888 C=0.513 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.773/0.664/0.778/0.675/0.552/0.509/0.534
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 53 | 3 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 62 | 9 | Fs::DirListing { dir: examples } |  |  | 0.000 |
 | ns | 97 |  | 97 | README title + what Flask is (README.md:3, 5-9) | 1.1 |  | 0.000 |
-| ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.484 |
-| walker |  | 149 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 0.488 |
+| walker |  | 140 | 87 | Toml::Identity { file: pyproject.toml } |  |  | 0.000 |
+| ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.488 |
+| walker |  | 149 | 9 | Fs::DirListing { dir: examples } |  |  | 0.488 |
 | walker |  | 160 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.489 |
 | walker |  | 185 | 25 | Toml::Operational { file: pyproject.toml } |  |  | 0.489 |
-| walker |  | 198 | 13 | Fs::DirListing { dir: .github } |  |  | 0.490 |
-| walker |  | 221 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.492 |
-| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.291 |
-| walker |  | 323 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.594 |
-| walker |  | 353 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.594 |
-| ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.542 |
-| walker |  | 446 | 93 | Fs::DirListing { dir: src/flask } |  |  | 0.765 |
-| walker |  | 460 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 0.826 |
-| walker |  | 477 | 17 | Fs::DirListing { dir: src/flask/sansio } |  |  | 0.916 |
-| ns | 541 |  | 146 | Canonical usage example: @app.route + `flask run` (README.md:20-36) | 1.5 |  | 0.784 |
-| ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.716 |
-| walker |  | 717 | 240 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.814 |
-| walker |  | 732 | 15 | Code::CodeKey { rung: Names, file: src/flask/blueprints.py, decl: 0, sub: 0, line: 0 } |  |  | 0.815 |
+| ns | 271 |  | 124 | Complete source-package listing: src/flask, src/flask/json, src/flask/sansio | 1.3 |  | 0.289 |
+| walker |  | 278 | 93 | Fs::DirListing { dir: src/flask } |  |  | 0.492 |
+| walker |  | 292 | 14 | Fs::DirListing { dir: src/flask/json } |  |  | 0.549 |
+| walker |  | 309 | 17 | Fs::DirListing { dir: src/flask/sansio } |  |  | 0.634 |
+| ns | 395 |  | 124 | README positioning: no enforced dependencies/layout, extension ecosystem (README.md:11-18) | 1.4 |  | 0.578 |
+| ns | 541 |  | 146 | Canonical usage example: @app.route + `flask run` (README.md:20-36) | 1.5 |  | 0.494 |
+| walker |  | 549 | 240 | Code::CodeKey { rung: Names, file: src/flask/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
+| walker |  | 562 | 13 | Fs::DirListing { dir: .github } |  |  | 0.515 |
+| walker |  | 585 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.517 |
+| walker |  | 600 | 15 | Code::CodeKey { rung: Names, file: src/flask/blueprints.py, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
+| walker |  | 702 | 102 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.798 |
+| ns | 707 |  | 166 | Public export surface 1/3: Flask, Blueprint, Config, json, context fns, globals (src/flask/__init__.py:1-12) | 1.6 |  | 0.813 |
+| walker |  | 732 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.815 |
 | ns | 865 |  | 158 | Public export surface 2/3: the `helpers` free functions + jsonify (src/flask/__init__.py:13-23) | 1.7 | 1.6 | 0.773 |
 | walker |  | 881 | 149 | Code::CodeKey { rung: Names, file: src/flask/json/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.773 |
 | walker |  | 906 | 25 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 5, sub: 0, line: 138 } |  |  | 0.773 |
@@ -48,41 +48,41 @@ Score(3000)=0.674 I=0.886 C=0.513 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | ns | 2112 |  | 216 | The complete signal registry (src/flask/signals.py:1-16, whole file) | 2.6 |  | 0.740 |
 | walker |  | 2207 | 145 | Fs::DirListing { dir: docs/patterns } |  |  | 0.740 |
 | walker |  | 2263 | 56 | Code::CodeKey { rung: Names, file: src/flask/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.740 |
-| walker |  | 2287 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.740 |
-| walker |  | 2291 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.740 |
 | ns | 2294 |  | 182 | Class roster A: request/response, views, sessions, context, config (13 class statements) | 2.7 |  | 0.716 |
-| walker |  | 2308 | 17 | Fs::DirListing { dir: examples/celery/src/task_app } |  |  | 0.716 |
-| walker |  | 2369 | 61 | Code::CodeKey { rung: Names, file: src/flask/views.py, decl: 0, sub: 0, line: 0 } |  |  | 0.720 |
-| walker |  | 2401 | 32 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 2, sub: 0, line: 11 } |  |  | 0.720 |
-| walker |  | 2449 | 48 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 6, sub: 0, line: 138 } |  |  | 0.720 |
+| walker |  | 2324 | 61 | Code::CodeKey { rung: Names, file: src/flask/views.py, decl: 0, sub: 0, line: 0 } |  |  | 0.720 |
+| walker |  | 2356 | 32 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 2, sub: 0, line: 11 } |  |  | 0.720 |
+| walker |  | 2404 | 48 | Code::CodeKey { rung: Decl, file: src/flask/views.py, decl: 6, sub: 0, line: 138 } |  |  | 0.720 |
+| walker |  | 2428 | 24 | Fs::DirListing { dir: examples/celery } |  |  | 0.720 |
+| walker |  | 2432 | 4 | Fs::DirListing { dir: examples/celery/src } |  |  | 0.720 |
+| walker |  | 2449 | 17 | Fs::DirListing { dir: examples/celery/src/task_app } |  |  | 0.720 |
 | ns | 2510 |  | 216 | Class roster B: templating, testing, CLI, debug helpers (14 class statements) | 2.8 |  | 0.691 |
 | walker |  | 2594 | 145 | Fs::DirListing { dir: tests } |  |  | 0.694 |
 | walker |  | 2613 | 19 | Fs::DirListing { dir: tests/type_check } |  |  | 0.694 |
-| walker |  | 2640 | 27 | Fs::DirListing { dir: examples/javascript } |  |  | 0.694 |
-| walker |  | 2653 | 13 | Fs::DirListing { dir: examples/javascript/js_example } |  |  | 0.694 |
 | ns | 2655 |  | 145 | Class roster C: the whole src/flask/json subpackage (12 class statements) | 2.9 |  | 0.673 |
-| walker |  | 2680 | 27 | Fs::DirListing { dir: examples/tutorial } |  |  | 0.673 |
-| walker |  | 2740 | 60 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 2, sub: 0, line: 47 } |  |  | 0.673 |
-| walker |  | 2806 | 66 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 1, sub: 0, line: 18 } |  |  | 0.673 |
-| walker |  | 2835 | 29 | Fs::DirListing { dir: tests/test_apps } |  |  | 0.673 |
-| walker |  | 2844 | 9 | Fs::DirListing { dir: tests/test_apps/blueprintapp } |  |  | 0.673 |
-| walker |  | 2853 | 9 | Fs::DirListing { dir: tests/test_apps/subdomaintestmodule } |  |  | 0.673 |
-| walker |  | 2867 | 14 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps } |  |  | 0.673 |
-| walker |  | 2876 | 9 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps/frontend } |  |  | 0.673 |
-| walker |  | 2888 | 12 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps/admin } |  |  | 0.673 |
-| walker |  | 2931 | 43 | Code::CodeKey { rung: Names, file: src/flask/json/provider.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
-| walker |  | 2961 | 30 | Fs::DirListing { dir: examples/tutorial/tests } |  |  | 0.674 |
-| walker |  | 3034 | 73 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 13, sub: 0, line: 222 } |  |  | 0.674 |
-| walker |  | 3040 | 6 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.674 |
+| walker |  | 2673 | 60 | Code::CodeKey { rung: Body, file: src/flask/json/__init__.py, decl: 2, sub: 0, line: 47 } |  |  | 0.673 |
+| walker |  | 2739 | 66 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 1, sub: 0, line: 18 } |  |  | 0.673 |
+| walker |  | 2766 | 27 | Fs::DirListing { dir: examples/javascript } |  |  | 0.673 |
+| walker |  | 2779 | 13 | Fs::DirListing { dir: examples/javascript/js_example } |  |  | 0.673 |
+| walker |  | 2806 | 27 | Fs::DirListing { dir: examples/tutorial } |  |  | 0.673 |
+| walker |  | 2849 | 43 | Code::CodeKey { rung: Names, file: src/flask/json/provider.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
+| walker |  | 2877 | 28 | Fs::DirListing { dir: examples/tutorial/flaskr } |  |  | 0.675 |
+| walker |  | 2906 | 29 | Fs::DirListing { dir: tests/test_apps } |  |  | 0.675 |
+| walker |  | 2915 | 9 | Fs::DirListing { dir: tests/test_apps/blueprintapp } |  |  | 0.675 |
+| walker |  | 2924 | 9 | Fs::DirListing { dir: tests/test_apps/subdomaintestmodule } |  |  | 0.675 |
+| walker |  | 2938 | 14 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps } |  |  | 0.675 |
+| walker |  | 2947 | 9 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps/frontend } |  |  | 0.675 |
+| walker |  | 2959 | 12 | Fs::DirListing { dir: tests/test_apps/blueprintapp/apps/admin } |  |  | 0.675 |
+| walker |  | 3032 | 73 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 13, sub: 0, line: 222 } |  |  | 0.675 |
+| walker |  | 3038 | 6 | Code::CodeKey { rung: Decl, file: src/flask/wrappers.py, decl: 14, sub: 0, line: 246 } |  |  | 0.675 |
 | ns | 3085 |  | 430 | Flask.default_config — all 29 config keys with their defaults (src/flask/app.py:206-238) | 3.1 |  | 0.625 |
-| walker |  | 3117 | 77 | Code::CodeKey { rung: Names, file: src/flask/logging.py, decl: 0, sub: 0, line: 0 } |  |  | 0.625 |
-| walker |  | 3125 | 8 | Code::CodeKey { rung: Decl, file: src/flask/logging.py, decl: 1, sub: 0, line: 15 } |  |  | 0.625 |
-| walker |  | 3207 | 82 | Code::CodeKey { rung: Names, file: src/flask/testing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
-| walker |  | 3245 | 38 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 1, sub: 0, line: 27 } |  |  | 0.626 |
-| ns | 3246 |  | 161 | Every Config loader method + the ConfigAttribute descriptor (src/flask/config.py:23-366) | 3.2 | 3.1 | 0.608 |
-| walker |  | 3287 | 42 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 14, sub: 0, line: 265 } |  |  | 0.608 |
-| walker |  | 3323 | 36 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 16, sub: 0, line: 275 } |  |  | 0.608 |
-| walker |  | 3351 | 28 | Fs::DirListing { dir: examples/tutorial/flaskr } |  |  | 0.609 |
+| walker |  | 3115 | 77 | Code::CodeKey { rung: Names, file: src/flask/logging.py, decl: 0, sub: 0, line: 0 } |  |  | 0.625 |
+| walker |  | 3123 | 8 | Code::CodeKey { rung: Decl, file: src/flask/logging.py, decl: 1, sub: 0, line: 15 } |  |  | 0.625 |
+| walker |  | 3153 | 30 | Fs::DirListing { dir: examples/tutorial/tests } |  |  | 0.625 |
+| walker |  | 3235 | 82 | Code::CodeKey { rung: Names, file: src/flask/testing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.627 |
+| ns | 3246 |  | 161 | Every Config loader method + the ConfigAttribute descriptor (src/flask/config.py:23-366) | 3.2 | 3.1 | 0.609 |
+| walker |  | 3273 | 38 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 1, sub: 0, line: 27 } |  |  | 0.609 |
+| walker |  | 3315 | 42 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 14, sub: 0, line: 265 } |  |  | 0.609 |
+| walker |  | 3351 | 36 | Code::CodeKey { rung: Decl, file: src/flask/testing.py, decl: 16, sub: 0, line: 275 } |  |  | 0.609 |
 | walker |  | 3393 | 42 | Code::CodeKey { rung: Decl, file: src/flask/blueprints.py, decl: 5, sub: 0, line: 104 } |  |  | 0.609 |
 | walker |  | 3470 | 77 | Markdown::ReadmeHeadline { file: src/flask/sansio/README.md } |  |  | 0.626 |
 | ns | 3588 |  | 342 | Every App/Flask class-level customization hook (sansio/app.py:164-277, app.py:242-252) | 3.3 | 3.1 | 0.601 |

@@ -1,4 +1,4 @@
-Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.639/0.635/0.576/0.579/0.625/0.599
+Score(3000)=0.623 I=0.771 C=0.503 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.639/0.635/0.623/0.579/0.625/0.599
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -53,17 +53,17 @@ Score(3000)=0.576 I=0.718 C=0.462 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 2569 | 13 | Code::CodeKey { rung: Doc, file: src/requests/help.py, decl: 2, sub: 0, line: 69 } |  |  | 0.598 |
 | walker |  | 2583 | 14 | Code::CodeKey { rung: Doc, file: src/requests/help.py, decl: 3, sub: 0, line: 128 } |  |  | 0.598 |
 | ns | 2620 |  | 288 | `Session` method roster (complete, with line coordinates) | 2.6 | 2.4 | 0.576 |
-| walker |  | 2672 | 89 | Code::CodeKey { rung: Names, file: src/requests/adapters.py, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 2712 | 40 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.576 |
-| walker |  | 2721 | 9 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.576 |
-| walker |  | 2728 | 7 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 7, sub: 0, line: 125 } |  |  | 0.576 |
-| ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.557 |
-| walker |  | 2997 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.576 |
-| ns | 3054 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.562 |
-| walker |  | 3122 | 125 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.591 |
-| walker |  | 3199 | 77 | Fs::DirListing { dir: tests } |  |  | 0.624 |
-| walker |  | 3213 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.643 |
-| walker |  | 3225 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.654 |
+| walker |  | 2660 | 77 | Fs::DirListing { dir: tests } |  |  | 0.611 |
+| walker |  | 2672 | 12 | Fs::DirListing { dir: tests/testserver } |  |  | 0.621 |
+| walker |  | 2686 | 14 | Fs::DirListing { dir: tests/certs } |  |  | 0.644 |
+| walker |  | 2775 | 89 | Code::CodeKey { rung: Names, file: src/requests/adapters.py, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
+| walker |  | 2815 | 40 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.644 |
+| walker |  | 2824 | 9 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.645 |
+| walker |  | 2831 | 7 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 7, sub: 0, line: 125 } |  |  | 0.645 |
+| ns | 2871 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.623 |
+| ns | 3054 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.607 |
+| walker |  | 3100 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.626 |
+| walker |  | 3225 | 125 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.654 |
 | walker |  | 3264 | 39 | Plaintext::Whole { file: docs/requirements.txt } |  |  | 0.654 |
 | walker |  | 3281 | 17 | Code::CodeKey { rung: Body, file: src/requests/hooks.py, decl: 2, sub: 0, line: 25 } |  |  | 0.654 |
 | walker |  | 3299 | 18 | Code::CodeKey { rung: Doc, file: src/requests/hooks.py, decl: 3, sub: 0, line: 32 } |  |  | 0.654 |

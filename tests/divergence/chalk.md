@@ -20,14 +20,14 @@ Score(3000)=0.649 I=0.863 C=0.488 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 356 | 46 | Json::Runtime { file: package.json } |  |  | 0.916 |
 | ns | 361 |  | 131 | readme tagline + every `##` section heading | 1.5 |  | 0.767 |
 | walker |  | 405 | 49 | Json::Scripts { file: package.json } |  |  | 0.770 |
-| walker |  | 432 | 27 | Fs::DirListing { dir: test } |  |  | 0.781 |
-| ns | 568 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.684 |
-| ns | 708 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.628 |
-| ns | 770 |  | 62 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.674 |
-| walker |  | 914 | 482 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.690 |
-| walker |  | 927 | 13 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 8, sub: 0, line: 34 } |  |  | 0.690 |
-| walker |  | 936 | 9 | Code::CodeKey { rung: Body, file: source/index.js, decl: 11, sub: 0, line: 50 } |  |  | 0.690 |
-| walker |  | 974 | 38 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 5, sub: 0, line: 15 } |  |  | 0.690 |
+| ns | 568 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.674 |
+| ns | 708 |  | 140 | readme `###` subsection headings | 1.7 | 1.5 | 0.619 |
+| ns | 770 |  | 62 | Complete listing of `test/`, `examples/`, `.github/`, `media/` | 1.8 |  | 0.597 |
+| walker |  | 887 | 482 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 900 | 13 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 8, sub: 0, line: 34 } |  |  | 0.612 |
+| walker |  | 909 | 9 | Code::CodeKey { rung: Body, file: source/index.js, decl: 11, sub: 0, line: 50 } |  |  | 0.612 |
+| walker |  | 947 | 38 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 5, sub: 0, line: 15 } |  |  | 0.612 |
+| walker |  | 974 | 27 | Fs::DirListing { dir: test } |  |  | 0.690 |
 | walker |  | 1000 | 26 | Code::CodeKey { rung: Body, file: source/index.js, decl: 9, sub: 0, line: 35 } |  |  | 0.690 |
 | ns | 1030 |  | 260 | CI workflow in full | 1.9 |  | 0.594 |
 | walker |  | 1093 | 93 | Code::CodeKey { rung: Decl, file: source/index.js, decl: 14, sub: 0, line: 119 } |  |  | 0.596 |

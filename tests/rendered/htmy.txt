@@ -310,21 +310,6 @@ htmy/
     …
   typing.py
   utils.py
-    …
-    12→def join_components(
-    …
-    42→def join(*items: str | None, separator: str = " ") -> str:
-    …
-    49→def is_htmy_component_type(comp: Any) -> TypeGuard[HTMYComponentType]:
-    …
-    55→def is_component_type(comp: Any) -> TypeGuard[ComponentType]:
-    …
-    62→def is_component_sequence(comp: Component) -> TypeGuard[ComponentSequence]:
-    …
-    67→def as_component_sequence(comp: Component) -> ComponentSequence:
-    …
-    73→def as_component_type(comp: Component) -> ComponentType:
-    …
 mkdocs.yaml
 pyproject.toml
   1→[project]
@@ -345,3 +330,14 @@ pyproject.toml
   16→lxml = ["lxml>=6.0.0"]
   …
 tests/
+  __init__.py (empty)
+  conftest.py
+  data/
+  renderer/
+  test_formatter.py
+  test_function_component.py
+  test_i18n.py
+  test_main_components.py
+  test_md.py
+  test_snippet.py
+  utils.py

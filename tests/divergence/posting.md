@@ -29,14 +29,14 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 827 | 10 | Code::CodeKey { rung: Names, file: src/posting/exit_codes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
 | walker |  | 839 | 12 | Code::CodeKey { rung: Names, file: src/posting/help_data.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
 | walker |  | 851 | 12 | Code::CodeKey { rung: Names, file: src/posting/version.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
-| walker |  | 865 | 14 | Code::CodeKey { rung: Names, file: src/posting/messages.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
-| walker |  | 880 | 15 | Code::CodeKey { rung: Names, file: src/posting/_start_time.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
 | ns | 936 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.618 |
-| walker |  | 969 | 89 | Fs::DirListing { dir: src/posting/widgets } |  |  | 0.739 |
-| walker |  | 999 | 30 | Fs::DirListing { dir: src/posting/widgets/response } |  |  | 0.740 |
-| ns | 1044 |  | 108 | UI sub-package listings: request, response, collection | 1.9 |  | 0.682 |
-| walker |  | 1067 | 68 | Fs::DirListing { dir: src/posting/widgets/request } |  |  | 0.754 |
-| walker |  | 1077 | 10 | Fs::DirListing { dir: src/posting/widgets/collection } |  |  | 0.771 |
+| walker |  | 940 | 89 | Fs::DirListing { dir: src/posting/widgets } |  |  | 0.739 |
+| walker |  | 970 | 30 | Fs::DirListing { dir: src/posting/widgets/response } |  |  | 0.740 |
+| walker |  | 1038 | 68 | Fs::DirListing { dir: src/posting/widgets/request } |  |  | 0.748 |
+| ns | 1044 |  | 108 | UI sub-package listings: request, response, collection | 1.9 |  | 0.754 |
+| walker |  | 1048 | 10 | Fs::DirListing { dir: src/posting/widgets/collection } |  |  | 0.771 |
+| walker |  | 1062 | 14 | Code::CodeKey { rung: Names, file: src/posting/messages.py, decl: 0, sub: 0, line: 0 } |  |  | 0.771 |
+| walker |  | 1077 | 15 | Code::CodeKey { rung: Names, file: src/posting/_start_time.py, decl: 0, sub: 0, line: 0 } |  |  | 0.771 |
 | walker |  | 1092 | 15 | Code::CodeKey { rung: Decl, file: src/posting/messages.py, decl: 1, sub: 0, line: 6 } |  |  | 0.771 |
 | ns | 1140 |  | 96 | Documentation tree listing | 1.10 |  | 0.785 |
 | walker |  | 1229 | 137 | Code::CodeKey { rung: Names, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.786 |
@@ -111,13 +111,13 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 3393 | 56 | Code::CodeKey { rung: Decl, file: src/posting/help_screen.py, decl: 2, sub: 0, line: 22 } |  |  | 0.590 |
 | walker |  | 3402 | 9 | Code::CodeKey { rung: Doc, file: src/posting/help_screen.py, decl: 2, sub: 0, line: 22 } |  |  | 0.590 |
 | walker |  | 3458 | 56 | Code::CodeKey { rung: Decl, file: src/posting/help_screen.py, decl: 3, sub: 0, line: 33 } |  |  | 0.590 |
-| walker |  | 3557 | 99 | Fs::DirListing { dir: tests } |  |  | 0.619 |
-| ns | 3563 |  | 214 | config.py structure and settings-source configuration | 4.1 |  | 0.602 |
-| walker |  | 3582 | 25 | Code::CodeKey { rung: Names, file: src/posting/widgets/response/response_trace.py, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
-| walker |  | 3593 | 11 | Code::CodeKey { rung: Doc, file: src/posting/save_request.py, decl: 2, sub: 0, line: 8 } |  |  | 0.602 |
-| walker |  | 3648 | 55 | Markdown::HeadingsOutline { file: docs/roadmap.md } |  |  | 0.602 |
-| walker |  | 3659 | 11 | Code::CodeKey { rung: Body, file: src/posting/save_request.py, decl: 3, sub: 0, line: 15 } |  |  | 0.602 |
-| walker |  | 3695 | 36 | Code::CodeKey { rung: Decl, file: src/posting/commands.py, decl: 3, sub: 0, line: 15 } |  |  | 0.602 |
+| walker |  | 3483 | 25 | Code::CodeKey { rung: Names, file: src/posting/widgets/response/response_trace.py, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
+| walker |  | 3494 | 11 | Code::CodeKey { rung: Doc, file: src/posting/save_request.py, decl: 2, sub: 0, line: 8 } |  |  | 0.591 |
+| walker |  | 3549 | 55 | Markdown::HeadingsOutline { file: docs/roadmap.md } |  |  | 0.591 |
+| walker |  | 3560 | 11 | Code::CodeKey { rung: Body, file: src/posting/save_request.py, decl: 3, sub: 0, line: 15 } |  |  | 0.591 |
+| ns | 3563 |  | 214 | config.py structure and settings-source configuration | 4.1 |  | 0.574 |
+| walker |  | 3596 | 36 | Code::CodeKey { rung: Decl, file: src/posting/commands.py, decl: 3, sub: 0, line: 15 } |  |  | 0.574 |
+| walker |  | 3695 | 99 | Fs::DirListing { dir: tests } |  |  | 0.602 |
 | ns | 3714 |  | 151 | Settings keys, part 1 | 4.2 |  | 0.590 |
 | walker |  | 3722 | 27 | Code::CodeKey { rung: Names, file: src/posting/widgets/request/request_scripts.py, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
 | walker |  | 3750 | 28 | Code::CodeKey { rung: Names, file: src/posting/widgets/request/form_editor.py, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |

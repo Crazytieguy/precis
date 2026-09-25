@@ -1,4 +1,4 @@
-Score(3000)=0.520 I=0.781 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.498/0.577/0.520/0.539/0.611/0.610
+Score(3000)=0.520 I=0.781 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.497/0.577/0.520/0.539/0.611/0.610
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,12 +24,12 @@ Score(3000)=0.520 I=0.781 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 480 | 51 | Fs::DirListing { dir: docs/guides } |  |  | 0.940 |
 | walker |  | 510 | 30 | Markdown::HeadingsOutline { file: docs/summary.md } |  |  | 0.940 |
 | walker |  | 528 | 18 | Markdown::HeadingsOutline { file: docs/resources/links.md } |  |  | 0.940 |
-| walker |  | 556 | 28 | Fs::DirListing { dir: test } |  |  | 0.941 |
-| ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.778 |
-| walker |  | 753 | 197 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.785 |
-| walker |  | 807 | 54 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.786 |
-| ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.711 |
-| walker |  | 873 | 66 | Markdown::Prelude { file: Readme.md } |  |  | 0.728 |
+| ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.777 |
+| walker |  | 725 | 197 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.784 |
+| walker |  | 779 | 54 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.785 |
+| ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.710 |
+| walker |  | 845 | 66 | Markdown::Prelude { file: Readme.md } |  |  | 0.727 |
+| walker |  | 873 | 28 | Fs::DirListing { dir: test } |  |  | 0.728 |
 | walker |  | 892 | 19 | Markdown::Section { file: Readme.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.728 |
 | walker |  | 968 | 76 | Json::Entry { file: package.json } |  |  | 0.728 |
 | ns | 971 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.639 |
@@ -37,16 +37,16 @@ Score(3000)=0.520 I=0.781 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 1066 |  | 95 | src/struct.ts symbol roster: methods and top-level helpers | 2.1 |  | 0.600 |
 | walker |  | 1180 | 131 | Markdown::ReadmeHeadline { file: docs/readme.md } |  |  | 0.600 |
 | walker |  | 1246 | 66 | Markdown::Prelude { file: docs/readme.md } |  |  | 0.600 |
-| walker |  | 1301 | 55 | Fs::DirListing { dir: examples } |  |  | 0.602 |
+| walker |  | 1304 | 58 | Code::CodeKey { rung: Names, file: src/structs/coercions.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
 | ns | 1318 |  | 252 | Complete roster of the 25 type structs | 2.2 |  | 0.521 |
-| walker |  | 1359 | 58 | Code::CodeKey { rung: Names, file: src/structs/coercions.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |
-| walker |  | 1406 | 47 | Code::CodeKey { rung: Decl, file: src/structs/coercions.ts, decl: 1, sub: 0, line: 16 } |  |  | 0.523 |
-| ns | 1420 |  | 102 | Complete roster of src/structs/utilities.ts | 2.3 |  | 0.498 |
-| walker |  | 1463 | 57 | Code::CodeKey { rung: Decl, file: src/structs/coercions.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.498 |
-| walker |  | 1488 | 25 | Fs::DirListing { dir: test/api } |  |  | 0.499 |
-| ns | 1503 |  | 83 | Complete roster of src/structs/refinements.ts | 2.4 |  | 0.481 |
+| walker |  | 1351 | 47 | Code::CodeKey { rung: Decl, file: src/structs/coercions.ts, decl: 1, sub: 0, line: 16 } |  |  | 0.521 |
+| walker |  | 1408 | 57 | Code::CodeKey { rung: Decl, file: src/structs/coercions.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.521 |
+| ns | 1420 |  | 102 | Complete roster of src/structs/utilities.ts | 2.3 |  | 0.497 |
+| ns | 1503 |  | 83 | Complete roster of src/structs/refinements.ts | 2.4 |  | 0.479 |
+| walker |  | 1521 | 113 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.480 |
 | ns | 1537 |  | 34 | Complete roster of src/structs/coercions.ts | 2.5 |  | 0.492 |
-| walker |  | 1601 | 113 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.494 |
+| walker |  | 1576 | 55 | Fs::DirListing { dir: examples } |  |  | 0.493 |
+| walker |  | 1601 | 25 | Fs::DirListing { dir: test/api } |  |  | 0.494 |
 | ns | 1651 |  | 114 | Failure - the shape of every validation failure | 2.6 |  | 0.509 |
 | ns | 1829 |  | 178 | StructError class: doc, fields, and its early-exit contract | 2.7 |  | 0.501 |
 | walker |  | 1834 | 233 | Markdown::Section { file: Readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.584 |
@@ -82,10 +82,10 @@ Score(3000)=0.520 I=0.781 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 3426 | 40 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 8, sub: 0, line: 123 } |  |  | 0.531 |
 | walker |  | 3467 | 41 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 16, sub: 0, line: 243 } |  |  | 0.549 |
 | walker |  | 3550 | 83 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.549 |
-| ns | 3716 |  | 305 | Public overload declarations of the six overloaded factories | 3.6 | 2.2 | 0.530 |
-| walker |  | 3733 | 183 | Fs::DirListing { dir: test/typings } |  |  | 0.535 |
-| walker |  | 3755 | 22 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.535 |
-| walker |  | 3774 | 19 | Code::CodeKey { rung: Body, file: src/structs/coercions.ts, decl: 3, sub: 0, line: 79 } |  |  | 0.535 |
+| walker |  | 3572 | 22 | Code::CodeKey { rung: Doc, file: src/structs/types.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.549 |
+| walker |  | 3591 | 19 | Code::CodeKey { rung: Body, file: src/structs/coercions.ts, decl: 3, sub: 0, line: 79 } |  |  | 0.549 |
+| ns | 3716 |  | 305 | Public overload declarations of the six overloaded factories | 3.6 | 2.2 | 0.531 |
+| walker |  | 3774 | 183 | Fs::DirListing { dir: test/typings } |  |  | 0.535 |
 | walker |  | 3793 | 19 | Markdown::Section { file: docs/resources/links.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.535 |
 | ns | 3959 |  | 243 | Struct method semantics: mask recursion and validate options | 3.7 | 2.1 | 0.522 |
 | walker |  | 4024 | 231 | Code::CodeKey { rung: Names, file: src/structs/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.556 |

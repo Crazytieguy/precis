@@ -74,20 +74,20 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 2812 | 127 | Markdown::HeadingsOutline { file: docs/zh-CN/可变参数的选项.md } |  |  | 0.454 |
 | ns | 2851 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.477 |
 | walker |  | 2877 | 65 | Code::CodeKey { rung: Doc, file: lib/suggestSimilar.js, decl: 1, sub: 0, line: 56 } |  |  | 0.477 |
+| walker |  | 2949 | 72 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 43, sub: 0, line: 740 } |  |  | 0.477 |
 | ns | 2994 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.491 |
 | ns | 3122 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.510 |
 | ns | 3353 |  | 231 | lib/error.js — both error classes in full | 2.15 |  | 0.497 |
 | ns | 3396 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.496 |
 | ns | 3476 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.489 |
 | ns | 3608 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.478 |
-| walker |  | 3690 | 813 | Fs::DirListing { dir: tests } |  |  | 0.487 |
-| walker |  | 3719 | 29 | Fs::DirListing { dir: tests/fixtures-extensions } |  |  | 0.487 |
+| walker |  | 3762 | 813 | Fs::DirListing { dir: tests } |  |  | 0.487 |
+| walker |  | 3791 | 29 | Fs::DirListing { dir: tests/fixtures-extensions } |  |  | 0.487 |
 | ns | 3804 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.473 |
-| walker |  | 3812 | 93 | Fs::DirListing { dir: tests/fixtures } |  |  | 0.474 |
-| walker |  | 3815 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.474 |
-| walker |  | 3818 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.474 |
-| ns | 3874 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.473 |
-| walker |  | 3890 | 72 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 43, sub: 0, line: 740 } |  |  | 0.473 |
+| ns | 3874 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.472 |
+| walker |  | 3884 | 93 | Fs::DirListing { dir: tests/fixtures } |  |  | 0.473 |
+| walker |  | 3887 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.473 |
+| walker |  | 3890 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.473 |
 | ns | 3891 |  | 17 | typings/ listing | 3.1 |  | 0.478 |
 | walker |  | 3909 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 10, sub: 0, line: 156 } |  |  | 0.478 |
 | walker |  | 3999 | 90 | Markdown::Section { file: Readme.md, section_index: 29, keeps_default_concavity: false } |  |  | 0.478 |

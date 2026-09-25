@@ -1,4 +1,4 @@
-Score(3000)=0.537 I=0.785 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.382/0.300/0.277/0.537/0.811/0.772/0.661
+Score(3000)=0.455 I=0.701 C=0.295 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.382/0.300/0.277/0.455/0.811/0.772/0.661
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,15 +46,15 @@ Score(3000)=0.537 I=0.785 C=0.368 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2336 | 14 | Fs::DirListing { dir: website/components } |  |  | 0.380 |
 | walker |  | 2353 | 17 | Fs::DirListing { dir: website/pages } |  |  | 0.380 |
 | ns | 2406 |  | 109 | Props type roster (all twelve type aliases) | 2.5 |  | 0.418 |
-| walker |  | 2411 | 58 | Fs::DirListing { dir: test } |  |  | 0.517 |
-| walker |  | 2434 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.517 |
-| ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.478 |
-| walker |  | 2816 | 382 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 3, line: 0 } |  |  | 0.528 |
-| walker |  | 2875 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 39, sub: 0, line: 930 } |  |  | 0.565 |
-| walker |  | 2925 | 50 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 49, sub: 0, line: 1071 } |  |  | 0.565 |
-| ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.537 |
-| walker |  | 2990 | 65 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 46, sub: 0, line: 1010 } |  |  | 0.537 |
-| walker |  | 3112 | 122 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 50, sub: 0, line: 1081 } |  |  | 0.537 |
+| ns | 2730 |  | 324 | Per-component JSDoc blocks | 2.6 | 2.4 | 0.387 |
+| walker |  | 2735 | 382 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 3, line: 0 } |  |  | 0.440 |
+| walker |  | 2794 | 59 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 39, sub: 0, line: 930 } |  |  | 0.479 |
+| walker |  | 2844 | 50 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 49, sub: 0, line: 1071 } |  |  | 0.479 |
+| walker |  | 2909 | 65 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 46, sub: 0, line: 1010 } |  |  | 0.479 |
+| ns | 2984 |  | 254 | CommandProps: label, shouldFilter, filter, defaultValue | 2.7 | 2.5 | 0.455 |
+| walker |  | 3031 | 122 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 50, sub: 0, line: 1081 } |  |  | 0.455 |
+| walker |  | 3089 | 58 | Fs::DirListing { dir: test } |  |  | 0.537 |
+| walker |  | 3112 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.537 |
 | ns | 3203 |  | 219 | CommandProps: value, onValueChange, loop, disablePointerSelection, vimBindings | 2.8 | 2.7 | 0.515 |
 | walker |  | 3257 | 145 | Json::Entry { file: cmdk/package.json } |  |  | 0.550 |
 | ns | 3430 |  | 227 | ItemProps (full, with JSDoc) | 2.9 | 2.5 | 0.571 |

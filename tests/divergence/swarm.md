@@ -19,13 +19,13 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 296 | 32 | Toml::Config { file: pyproject.toml } |  |  | 0.579 |
 | ns | 301 |  | 59 | Public exports of `swarm` and `swarm.repl` | 1.5 | 1.4 | 0.585 |
 | walker |  | 359 | 63 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 5, sub: 0, line: 89 } |  |  | 0.590 |
-| ns | 399 |  | 98 | README: expressive power, and the statelessness NOTE | 1.6 | 1.3 | 0.558 |
-| walker |  | 433 | 74 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 3, sub: 0, line: 32 } |  |  | 0.571 |
-| ns | 474 |  | 75 | `examples/` and `tests/` directory listings (complete) | 1.7 |  | 0.458 |
-| walker |  | 496 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
-| walker |  | 529 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.464 |
-| walker |  | 564 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.470 |
-| walker |  | 591 | 27 | Fs::DirListing { dir: tests } |  |  | 0.490 |
+| walker |  | 386 | 27 | Fs::DirListing { dir: tests } |  |  | 0.596 |
+| ns | 399 |  | 98 | README: expressive power, and the statelessness NOTE | 1.6 | 1.3 | 0.563 |
+| walker |  | 460 | 74 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 3, sub: 0, line: 32 } |  |  | 0.576 |
+| ns | 474 |  | 75 | `examples/` and `tests/` directory listings (complete) | 1.7 |  | 0.478 |
+| walker |  | 523 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.480 |
+| walker |  | 556 | 33 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 3, sub: 0, line: 23 } |  |  | 0.484 |
+| walker |  | 591 | 35 | Code::CodeKey { rung: Decl, file: swarm/types.py, decl: 4, sub: 0, line: 29 } |  |  | 0.490 |
 | walker |  | 663 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.495 |
 | ns | 684 |  | 210 | README section-heading roster (all remaining headings) | 1.8 | 1.1 | 0.400 |
 | walker |  | 755 | 92 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 139 } |  |  | 0.407 |
@@ -43,8 +43,8 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 1359 | 341 | Fs::DirListing { dir: logs } |  |  | 0.539 |
 | walker |  | 1407 | 48 | Fs::DirListing { dir: examples } |  |  | 0.618 |
 | walker |  | 1424 | 17 | Fs::DirListing { dir: examples/weather_agent } |  |  | 0.618 |
-| walker |  | 1447 | 23 | Fs::DirListing { dir: examples/triage_agent } |  |  | 0.620 |
-| walker |  | 1467 | 20 | Fs::DirListing { dir: examples/personal_shopper } |  |  | 0.621 |
+| walker |  | 1444 | 20 | Fs::DirListing { dir: examples/personal_shopper } |  |  | 0.619 |
+| walker |  | 1467 | 23 | Fs::DirListing { dir: examples/triage_agent } |  |  | 0.621 |
 | ns | 1482 |  | 145 | Internal `Swarm` method signatures: completion + tool dispatch | 2.8 | 2.2 | 0.626 |
 | ns | 1574 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.604 |
 | walker |  | 1660 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.679 |

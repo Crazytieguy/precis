@@ -1,4 +1,4 @@
-Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.622/0.547/0.673/0.646/0.572/0.545/0.656
+Score(3000)=0.672 I=0.865 C=0.522 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.622/0.547/0.673/0.672/0.572/0.545/0.656
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -68,14 +68,14 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 1673 | 24 | Fs::DirListing { dir: apps/web/layouts } |  |  | 0.651 |
 | walker |  | 1693 | 20 | Fs::DirListing { dir: apps/web/lib/shared } |  |  | 0.651 |
 | ns | 1697 |  | 158 | All five schema enums, fully expanded | 2.2 | 2.1 | 0.606 |
-| walker |  | 1722 | 29 | Fs::DirListing { dir: .github } |  |  | 0.606 |
-| walker |  | 1743 | 21 | Fs::DirListing { dir: .github/workflows } |  |  | 0.607 |
-| walker |  | 1767 | 24 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 77 } |  |  | 0.612 |
-| walker |  | 1784 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/collections } |  |  | 0.612 |
-| walker |  | 1801 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/dashboard } |  |  | 0.612 |
-| walker |  | 1818 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/settings } |  |  | 0.612 |
-| walker |  | 1835 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/tags } |  |  | 0.613 |
-| walker |  | 1884 | 49 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 90 } |  |  | 0.630 |
+| walker |  | 1717 | 24 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 77 } |  |  | 0.611 |
+| walker |  | 1734 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/collections } |  |  | 0.612 |
+| walker |  | 1751 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/dashboard } |  |  | 0.612 |
+| walker |  | 1768 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/settings } |  |  | 0.612 |
+| walker |  | 1785 | 17 | Fs::DirListing { dir: apps/mobile/app/(tabs)/tags } |  |  | 0.613 |
+| walker |  | 1834 | 49 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 90 } |  |  | 0.630 |
+| walker |  | 1863 | 29 | Fs::DirListing { dir: .github } |  |  | 0.630 |
+| walker |  | 1884 | 21 | Fs::DirListing { dir: .github/workflows } |  |  | 0.630 |
 | walker |  | 1917 | 33 | Code::CodeKey { rung: Names, file: packages/router/publicLinks.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.630 |
 | walker |  | 1950 | 33 | Code::CodeKey { rung: Names, file: packages/router/publicTags.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.630 |
 | walker |  | 1976 | 26 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 304 } |  |  | 0.646 |
@@ -85,32 +85,32 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 2396 |  | 313 | `User` model — identity, relations and subscription linkage | 2.4 | 2.1 | 0.607 |
 | walker |  | 2400 | 179 | Prisma::DeclTail { file: packages/prisma/schema.prisma, start_line: 166, tail_start_line: 182 } |  |  | 0.678 |
 | walker |  | 2535 | 135 | Json::Dependencies { file: package.json } |  |  | 0.678 |
-| walker |  | 2644 | 109 | Fs::DirListing { dir: packages/lib } |  |  | 0.681 |
-| walker |  | 2657 | 13 | Code::CodeKey { rung: Names, file: packages/lib/transporter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 2671 | 14 | Code::CodeKey { rung: Names, file: packages/lib/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 2685 | 14 | Code::CodeKey { rung: Names, file: packages/lib/safeFetch.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 2700 | 15 | Code::CodeKey { rung: Names, file: packages/lib/generatePreview.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 2715 | 15 | Code::CodeKey { rung: Names, file: packages/lib/rssHandler.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| walker |  | 2731 | 16 | Code::CodeKey { rung: Names, file: packages/lib/verifyCapacity.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.681 |
-| ns | 2738 |  | 342 | `User` model — preference and archival-toggle fields | 2.5 | 2.4 | 0.646 |
-| walker |  | 2748 | 17 | Code::CodeKey { rung: Names, file: packages/lib/meilisearchClient.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2766 | 18 | Code::CodeKey { rung: Names, file: packages/lib/getPreservedFormatUrl.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2789 | 23 | Code::CodeKey { rung: Names, file: packages/lib/isArchivalTag.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2813 | 24 | Code::CodeKey { rung: Names, file: packages/lib/getOriginalFormat.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2839 | 26 | Code::CodeKey { rung: Decl, file: packages/lib/getOriginalFormat.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.646 |
-| walker |  | 2867 | 28 | Code::CodeKey { rung: Names, file: packages/lib/formatStats.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2891 | 24 | Code::CodeKey { rung: Decl, file: packages/lib/formatStats.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.646 |
-| walker |  | 2919 | 28 | Code::CodeKey { rung: Names, file: packages/lib/getFormatBasedOnPreference.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2947 | 28 | Code::CodeKey { rung: Names, file: packages/lib/getLinkTypeFromFormat.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.646 |
-| walker |  | 2975 | 28 | Code::CodeKey { rung: Decl, file: packages/lib/verifyCapacity.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.646 |
-| walker |  | 3005 | 30 | Code::CodeKey { rung: Decl, file: packages/lib/rssHandler.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.646 |
-| walker |  | 3035 | 30 | Code::CodeKey { rung: Decl, file: packages/lib/safeFetch.ts, decl: 1, sub: 0, line: 95 } |  |  | 0.646 |
-| ns | 3055 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.616 |
-| walker |  | 3069 | 34 | Code::CodeKey { rung: Decl, file: packages/lib/getLinkTypeFromFormat.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.616 |
-| walker |  | 3106 | 37 | Code::CodeKey { rung: Names, file: packages/lib/getFormatFromContentType.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
-| walker |  | 3163 | 57 | Fs::DirListing { dir: apps/worker/lib } |  |  | 0.617 |
-| walker |  | 3202 | 39 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 289 } |  |  | 0.641 |
-| walker |  | 3222 | 20 | Plaintext::Whole { file: apps/mobile/.env.sample } |  |  | 0.641 |
+| walker |  | 2574 | 39 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 289 } |  |  | 0.705 |
+| walker |  | 2594 | 20 | Plaintext::Whole { file: apps/mobile/.env.sample } |  |  | 0.705 |
+| walker |  | 2703 | 109 | Fs::DirListing { dir: packages/lib } |  |  | 0.708 |
+| walker |  | 2716 | 13 | Code::CodeKey { rung: Names, file: packages/lib/transporter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
+| walker |  | 2730 | 14 | Code::CodeKey { rung: Names, file: packages/lib/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
+| ns | 2738 |  | 342 | `User` model — preference and archival-toggle fields | 2.5 | 2.4 | 0.672 |
+| walker |  | 2744 | 14 | Code::CodeKey { rung: Names, file: packages/lib/safeFetch.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2759 | 15 | Code::CodeKey { rung: Names, file: packages/lib/generatePreview.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2774 | 15 | Code::CodeKey { rung: Names, file: packages/lib/rssHandler.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2790 | 16 | Code::CodeKey { rung: Names, file: packages/lib/verifyCapacity.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2807 | 17 | Code::CodeKey { rung: Names, file: packages/lib/meilisearchClient.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2825 | 18 | Code::CodeKey { rung: Names, file: packages/lib/getPreservedFormatUrl.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2848 | 23 | Code::CodeKey { rung: Names, file: packages/lib/isArchivalTag.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2872 | 24 | Code::CodeKey { rung: Names, file: packages/lib/getOriginalFormat.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2898 | 26 | Code::CodeKey { rung: Decl, file: packages/lib/getOriginalFormat.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.672 |
+| walker |  | 2926 | 28 | Code::CodeKey { rung: Names, file: packages/lib/formatStats.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 2950 | 24 | Code::CodeKey { rung: Decl, file: packages/lib/formatStats.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.672 |
+| walker |  | 2978 | 28 | Code::CodeKey { rung: Names, file: packages/lib/getFormatBasedOnPreference.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 3006 | 28 | Code::CodeKey { rung: Names, file: packages/lib/getLinkTypeFromFormat.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
+| walker |  | 3034 | 28 | Code::CodeKey { rung: Decl, file: packages/lib/verifyCapacity.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.672 |
+| ns | 3055 |  | 317 | `Collection` model — every field, including the self-relation | 2.6 | 2.1 | 0.640 |
+| walker |  | 3064 | 30 | Code::CodeKey { rung: Decl, file: packages/lib/rssHandler.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.640 |
+| walker |  | 3094 | 30 | Code::CodeKey { rung: Decl, file: packages/lib/safeFetch.ts, decl: 1, sub: 0, line: 95 } |  |  | 0.640 |
+| walker |  | 3128 | 34 | Code::CodeKey { rung: Decl, file: packages/lib/getLinkTypeFromFormat.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.640 |
+| walker |  | 3165 | 37 | Code::CodeKey { rung: Names, file: packages/lib/getFormatFromContentType.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
+| walker |  | 3222 | 57 | Fs::DirListing { dir: apps/worker/lib } |  |  | 0.641 |
 | walker |  | 3261 | 39 | Code::CodeKey { rung: Decl, file: packages/lib/generatePreview.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.641 |
 | walker |  | 3320 | 59 | Fs::DirListing { dir: apps/mobile/components } |  |  | 0.642 |
 | walker |  | 3346 | 26 | Fs::DirListing { dir: apps/mobile/components/Formats } |  |  | 0.642 |
@@ -122,18 +122,18 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 3527 | 41 | Code::CodeKey { rung: Decl, file: packages/lib/transporter.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.606 |
 | walker |  | 3589 | 62 | Fs::DirListing { dir: apps/web/hooks } |  |  | 0.607 |
 | ns | 3594 |  | 158 | `AccessToken` model | 2.8 | 2.1 | 0.594 |
-| walker |  | 3607 | 18 | Fs::DirListing { dir: apps/web/e2e } |  |  | 0.595 |
-| walker |  | 3613 | 6 | Fs::DirListing { dir: apps/web/e2e/tests } |  |  | 0.595 |
 | ns | 3617 |  | 23 | Complete packages/prisma listing | 2.9 |  | 0.601 |
-| walker |  | 3630 | 17 | Fs::DirListing { dir: apps/web/e2e/fixtures } |  |  | 0.602 |
-| walker |  | 3643 | 13 | Fs::DirListing { dir: apps/web/e2e/fixtures/base } |  |  | 0.602 |
-| walker |  | 3689 | 46 | Code::CodeKey { rung: Names, file: packages/router/worker.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
-| ns | 3733 |  | 116 | The process-wide `prisma` client singleton | 2.10 |  | 0.604 |
-| walker |  | 3736 | 47 | Code::CodeKey { rung: Names, file: packages/lib/utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
-| ns | 3817 |  | 84 | API version directories: every resource under pages/api/v1 (and the single v2 route) | 3.1 |  | 0.578 |
-| ns | 3885 |  | 68 | Route files for links, collections, tags and highlights | 3.2 |  | 0.563 |
-| ns | 3962 |  | 77 | Route files for auth, session, users, tokens, config, avatar and logins | 3.3 |  | 0.550 |
-| walker |  | 4021 | 285 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 28 } |  |  | 0.594 |
+| walker |  | 3635 | 46 | Code::CodeKey { rung: Names, file: packages/router/worker.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
+| walker |  | 3682 | 47 | Code::CodeKey { rung: Names, file: packages/lib/utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
+| ns | 3733 |  | 116 | The process-wide `prisma` client singleton | 2.10 |  | 0.602 |
+| ns | 3817 |  | 84 | API version directories: every resource under pages/api/v1 (and the single v2 route) | 3.1 |  | 0.577 |
+| ns | 3885 |  | 68 | Route files for links, collections, tags and highlights | 3.2 |  | 0.562 |
+| ns | 3962 |  | 77 | Route files for auth, session, users, tokens, config, avatar and logins | 3.3 |  | 0.549 |
+| walker |  | 3967 | 285 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 28 } |  |  | 0.593 |
+| walker |  | 3985 | 18 | Fs::DirListing { dir: apps/web/e2e } |  |  | 0.593 |
+| walker |  | 3991 | 6 | Fs::DirListing { dir: apps/web/e2e/tests } |  |  | 0.593 |
+| walker |  | 4008 | 17 | Fs::DirListing { dir: apps/web/e2e/fixtures } |  |  | 0.594 |
+| walker |  | 4021 | 13 | Fs::DirListing { dir: apps/web/e2e/fixtures/base } |  |  | 0.594 |
 | ns | 4042 |  | 80 | Route files for archives, preserved, search, dashboard, rss, migration, payment, webhook, worker, getFavicon | 3.4 |  | 0.580 |
 | ns | 4083 |  | 41 | The unauthenticated `public/` route subtree | 3.5 |  | 0.572 |
 | walker |  | 4158 | 137 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.572 |
@@ -148,15 +148,15 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 4667 |  | 99 | The controller tree: every resource directory under lib/api/controllers | 3.8 |  | 0.520 |
 | walker |  | 4690 | 27 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 5 } |  |  | 0.531 |
 | walker |  | 4741 | 51 | Code::CodeKey { rung: Decl, file: packages/lib/formatStats.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.531 |
-| walker |  | 4763 | 22 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.531 |
+| walker |  | 4820 | 79 | Fs::DirListing { dir: apps/web/public } |  |  | 0.531 |
 | ns | 4823 |  | 156 | Controller files for links, collections, tags and highlights | 3.9 |  | 0.515 |
-| walker |  | 4842 | 79 | Fs::DirListing { dir: apps/web/public } |  |  | 0.515 |
-| walker |  | 4852 | 10 | Fs::DirListing { dir: apps/web/public/screenshots } |  |  | 0.515 |
-| walker |  | 4905 | 53 | Code::CodeKey { rung: Decl, file: packages/lib/getFormatBasedOnPreference.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.515 |
-| ns | 5001 |  | 178 | Controller files for users, tokens, session, search, dashboard, worker, migration and public access | 3.10 |  | 0.499 |
-| walker |  | 5225 | 320 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 126 } |  |  | 0.535 |
+| walker |  | 4830 | 10 | Fs::DirListing { dir: apps/web/public/screenshots } |  |  | 0.515 |
+| walker |  | 4883 | 53 | Code::CodeKey { rung: Decl, file: packages/lib/getFormatBasedOnPreference.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.515 |
+| ns | 5001 |  | 178 | Controller files for users, tokens, session, search, dashboard, worker, migration and public access | 3.10 |  | 0.498 |
+| walker |  | 5203 | 320 | Prisma::Decl { file: packages/prisma/schema.prisma, start_line: 126 } |  |  | 0.535 |
 | ns | 5249 |  | 248 | Complete listings of packages/types, packages/lib, packages/filesystem and packages/router | 4.1 |  | 0.569 |
-| walker |  | 5280 | 55 | Code::CodeKey { rung: Decl, file: packages/lib/meilisearchClient.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.569 |
+| walker |  | 5258 | 55 | Code::CodeKey { rung: Decl, file: packages/lib/meilisearchClient.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.569 |
+| walker |  | 5280 | 22 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.569 |
 | walker |  | 5414 | 134 | Plaintext::Whole { file: .env.sample } |  |  | 0.569 |
 | walker |  | 5463 | 49 | Fs::DirListing { dir: apps/web/public/locales } |  |  | 0.570 |
 | walker |  | 5467 | 4 | Fs::DirListing { dir: apps/web/public/locales/de } |  |  | 0.570 |

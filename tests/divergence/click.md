@@ -1,4 +1,4 @@
-Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.605/0.768/0.778/0.668/0.634/0.570/0.542
+Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/4327/6240/9000)=0.605/0.768/0.778/0.668/0.599/0.570/0.542
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,15 +12,15 @@ Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 270 |  | 88 | Complete module roster of the package: src/click/ | 1.3 |  | 0.355 |
 | walker |  | 273 | 30 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.355 |
 | walker |  | 284 | 11 | Fs::DirListing { dir: .devcontainer } |  |  | 0.355 |
-| walker |  | 297 | 13 | Fs::DirListing { dir: .github } |  |  | 0.355 |
-| walker |  | 320 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.528 |
-| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.528 |
-| walker |  | 408 | 88 | Fs::DirListing { dir: src/click } |  |  | 0.811 |
+| ns | 320 |  | 50 | Repository root listing | 1.4 |  | 0.527 |
+| walker |  | 372 | 88 | Fs::DirListing { dir: src/click } |  |  | 0.810 |
+| walker |  | 447 | 75 | Code::CodeKey { rung: ModuleDoc, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
 | ns | 476 |  | 156 | The canonical hello-world program | 1.5 |  | 0.694 |
-| walker |  | 483 | 75 | Code::CodeKey { rung: ModuleDoc, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
-| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.663 |
-| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.524 |
-| walker |  | 731 | 248 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
+| ns | 524 |  | 48 | The terminal session that program produces | 1.6 | 1.5 | 0.662 |
+| walker |  | 695 | 248 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.671 |
+| ns | 707 |  | 183 | Test suite listing: tests/ and tests/typing/ | 1.7 |  | 0.531 |
+| walker |  | 708 | 13 | Fs::DirListing { dir: .github } |  |  | 0.531 |
+| walker |  | 731 | 23 | Fs::DirListing { dir: .github/workflows } |  |  | 0.532 |
 | walker |  | 747 | 16 | Code::CodeKey { rung: Names, file: src/click/_textwrap.py, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
 | ns | 776 |  | 69 | Examples listing | 1.8 |  | 0.484 |
 | walker |  | 785 | 38 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.484 |
@@ -87,24 +87,24 @@ Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 3871 |  | 260 | Group and CommandCollection method rosters | 3.10 |  | 0.594 |
 | walker |  | 3972 | 220 | Code::CodeKey { rung: Names, file: src/click/__init__.py, decl: 0, sub: 3, line: 0 } |  |  | 0.632 |
 | walker |  | 4005 | 33 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 45, sub: 0, line: 495 } |  |  | 0.632 |
-| walker |  | 4061 | 56 | Fs::DirListing { dir: tests/typing } |  |  | 0.670 |
-| walker |  | 4200 | 139 | Code::CodeKey { rung: Names, file: src/click/parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.670 |
-| ns | 4212 |  | 341 | Context method roster (core.py 460-884) | 3.11 |  | 0.640 |
-| walker |  | 4220 | 20 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 12, sub: 0, line: 216 } |  |  | 0.640 |
-| walker |  | 4259 | 39 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 9, sub: 0, line: 185 } |  |  | 0.640 |
-| ns | 4321 |  | 109 | CommandCollection: composing several groups | 3.12 | 3.1 | 0.634 |
-| walker |  | 4334 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.634 |
-| ns | 4451 |  | 130 | ParameterSource members: where a value came from | 3.13 |  | 0.626 |
-| walker |  | 4477 | 143 | Code::CodeKey { rung: Names, file: src/click/globals.py, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
-| walker |  | 4484 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 2, sub: 0, line: 12 } |  |  | 0.626 |
-| walker |  | 4491 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 3, sub: 0, line: 16 } |  |  | 0.626 |
-| walker |  | 4501 | 10 | Code::CodeKey { rung: Body, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.626 |
-| walker |  | 4514 | 13 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.626 |
-| walker |  | 4530 | 16 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 5, sub: 0, line: 44 } |  |  | 0.626 |
-| ns | 4551 |  | 100 | Parameter: the shared base of options and arguments | 4.1 | 3.1 | 0.620 |
-| walker |  | 4670 | 140 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 38, sub: 0, line: 426 } |  |  | 0.620 |
-| walker |  | 4703 | 33 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 43, sub: 0, line: 468 } |  |  | 0.620 |
-| walker |  | 4744 | 41 | Code::CodeKey { rung: Decl, file: src/click/_compat.py, decl: 8, sub: 0, line: 56 } |  |  | 0.620 |
+| walker |  | 4144 | 139 | Code::CodeKey { rung: Names, file: src/click/parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.632 |
+| walker |  | 4164 | 20 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 12, sub: 0, line: 216 } |  |  | 0.632 |
+| walker |  | 4203 | 39 | Code::CodeKey { rung: Decl, file: src/click/parser.py, decl: 9, sub: 0, line: 185 } |  |  | 0.632 |
+| ns | 4212 |  | 341 | Context method roster (core.py 460-884) | 3.11 |  | 0.604 |
+| walker |  | 4278 | 75 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.604 |
+| ns | 4321 |  | 109 | CommandCollection: composing several groups | 3.12 | 3.1 | 0.599 |
+| walker |  | 4421 | 143 | Code::CodeKey { rung: Names, file: src/click/globals.py, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
+| walker |  | 4428 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 2, sub: 0, line: 12 } |  |  | 0.599 |
+| walker |  | 4435 | 7 | Code::CodeKey { rung: Decl, file: src/click/globals.py, decl: 3, sub: 0, line: 16 } |  |  | 0.599 |
+| walker |  | 4445 | 10 | Code::CodeKey { rung: Body, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.599 |
+| ns | 4451 |  | 130 | ParameterSource members: where a value came from | 3.13 |  | 0.591 |
+| walker |  | 4458 | 13 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 6, sub: 0, line: 49 } |  |  | 0.591 |
+| walker |  | 4474 | 16 | Code::CodeKey { rung: Doc, file: src/click/globals.py, decl: 5, sub: 0, line: 44 } |  |  | 0.591 |
+| ns | 4551 |  | 100 | Parameter: the shared base of options and arguments | 4.1 | 3.1 | 0.585 |
+| walker |  | 4614 | 140 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 38, sub: 0, line: 426 } |  |  | 0.585 |
+| walker |  | 4647 | 33 | Code::CodeKey { rung: Decl, file: src/click/types.py, decl: 43, sub: 0, line: 468 } |  |  | 0.585 |
+| walker |  | 4688 | 41 | Code::CodeKey { rung: Decl, file: src/click/_compat.py, decl: 8, sub: 0, line: 56 } |  |  | 0.585 |
+| walker |  | 4744 | 56 | Fs::DirListing { dir: tests/typing } |  |  | 0.620 |
 | ns | 4832 |  | 281 | Parameter constructor: settings shared by options and arguments | 4.2 |  | 0.605 |
 | walker |  | 4834 | 90 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.605 |
 | ns | 4894 |  | 62 | Option: what it adds over a plain parameter | 4.3 | 3.1 | 0.600 |

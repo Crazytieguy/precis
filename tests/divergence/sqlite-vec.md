@@ -1,4 +1,4 @@
-Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.490/0.479/0.437/0.450/0.352/0.279/0.366
+Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.583/0.479/0.437/0.450/0.352/0.279/0.366
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,14 +30,14 @@ Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 638 |  | 46 | README sample usage: loading and creating a vec0 table | 1.7 |  | 0.562 |
 | walker |  | 756 | 150 | Code::CodeKey { rung: Decl, file: tmp-static.py, decl: 4, sub: 0, line: 13 } |  |  | 0.562 |
 | walker |  | 795 | 39 | Code::CodeKey { rung: Names, file: bindings/python/extra_init.py, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
-| walker |  | 867 | 72 | Fs::DirListing { dir: site } |  |  | 0.563 |
 | ns | 874 |  | 236 | README sample usage: inserting vectors | 1.8 | 1.7 | 0.525 |
-| walker |  | 875 | 8 | Fs::DirListing { dir: site/.vitepress } |  |  | 0.525 |
-| walker |  | 892 | 17 | Fs::DirListing { dir: site/.vitepress/theme } |  |  | 0.525 |
-| ns | 978 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.490 |
-| walker |  | 1049 | 157 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.584 |
+| walker |  | 952 | 157 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.626 |
+| ns | 978 |  | 104 | README sample usage: the KNN query | 1.9 | 1.8 | 0.583 |
+| walker |  | 1108 | 156 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.583 |
+| walker |  | 1180 | 72 | Fs::DirListing { dir: site } |  |  | 0.584 |
+| walker |  | 1188 | 8 | Fs::DirListing { dir: site/.vitepress } |  |  | 0.584 |
 | ns | 1194 |  | 216 | vec0Module: read-side method table (iVersion through xRowid) | 2.1 |  | 0.526 |
-| walker |  | 1205 | 156 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.526 |
+| walker |  | 1205 | 17 | Fs::DirListing { dir: site/.vitepress/theme } |  |  | 0.526 |
 | walker |  | 1285 | 80 | Fs::DirListing { dir: examples } |  |  | 0.527 |
 | walker |  | 1309 | 24 | Fs::DirListing { dir: benchmarks/micro } |  |  | 0.527 |
 | walker |  | 1313 | 4 | Fs::DirListing { dir: benchmarks/micro/src } |  |  | 0.527 |
@@ -49,13 +49,13 @@ Score(3000)=0.450 I=0.769 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 1829 |  | 200 | Shadow table name macros (complete set) | 2.4 |  | 0.437 |
 | walker |  | 2123 | 523 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.584 |
 | ns | 2141 |  | 312 | Shadow table CREATE TABLE DDL | 2.5 | 2.4 | 0.532 |
-| walker |  | 2172 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.533 |
-| walker |  | 2191 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.533 |
+| walker |  | 2142 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.532 |
+| walker |  | 2190 | 48 | Fs::DirListing { dir: tests/fuzz } |  |  | 0.532 |
+| walker |  | 2239 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.518 |
 | ns | 2239 |  | 98 | vec0 query plan enum | 2.6 |  | 0.518 |
-| walker |  | 2242 | 51 | Fs::DirListing { dir: site/guides } |  |  | 0.518 |
-| walker |  | 2264 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.518 |
-| walker |  | 2286 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.518 |
-| walker |  | 2334 | 48 | Fs::DirListing { dir: tests/fuzz } |  |  | 0.518 |
+| walker |  | 2290 | 51 | Fs::DirListing { dir: site/guides } |  |  | 0.518 |
+| walker |  | 2312 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.518 |
+| walker |  | 2334 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.518 |
 | walker |  | 2348 | 14 | Code::CodeKey { rung: Names, file: benchmarks/micro/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.518 |
 | ns | 2392 |  | 153 | vec0BestIndex query-plan selection rules | 2.7 |  | 0.497 |
 | walker |  | 2469 | 121 | Markdown::Section { file: ARCHITECTURE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.501 |

@@ -7,14 +7,14 @@ Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | ns | 33 |  | 33 | Project name and one-line description | 1.1 |  | 0.000 |
 | walker |  | 41 | 11 | Code::CodeKey { rung: Names, file: bench.py, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
 | walker |  | 52 | 11 | Code::CodeKey { rung: Names, file: example.py, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
-| walker |  | 85 | 33 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.537 |
-| ns | 115 |  | 26 | Complete repository root listing | 1.3 |  | 0.678 |
-| walker |  | 117 | 32 | Fs::DirListing { dir: nanovllm } |  |  | 0.729 |
-| walker |  | 123 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.729 |
-| walker |  | 131 | 8 | Fs::DirListing { dir: nanovllm/utils } |  |  | 0.730 |
-| ns | 147 |  | 32 | Complete nanovllm/ package listing | 1.4 |  | 0.751 |
-| walker |  | 162 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.756 |
+| walker |  | 84 | 32 | Fs::DirListing { dir: nanovllm } |  |  | 0.000 |
+| ns | 89 |  | 56 | All README H2 section headings | 1.2 |  | 0.000 |
+| walker |  | 90 | 6 | Fs::DirListing { dir: nanovllm/models } |  |  | 0.000 |
+| walker |  | 98 | 8 | Fs::DirListing { dir: nanovllm/utils } |  |  | 0.000 |
+| ns | 115 |  | 26 | Complete repository root listing | 1.3 |  | 0.370 |
+| walker |  | 129 | 31 | Code::CodeKey { rung: Names, file: nanovllm/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| ns | 147 |  | 32 | Complete nanovllm/ package listing | 1.4 |  | 0.418 |
+| walker |  | 162 | 33 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.756 |
 | walker |  | 173 | 11 | Code::CodeKey { rung: Names, file: nanovllm/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
 | walker |  | 185 | 12 | Code::CodeKey { rung: Names, file: nanovllm/sampling_params.py, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
 | walker |  | 201 | 16 | Code::CodeKey { rung: Names, file: nanovllm/llm.py, decl: 0, sub: 0, line: 0 } |  |  | 0.761 |

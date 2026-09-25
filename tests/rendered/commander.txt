@@ -227,6 +227,13 @@ lib/
     …
     12→class Help {
     …
+    732→/**
+    733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+    734→ *
+    735→ * @param {string} str
+    736→ * @returns {string}
+    737→ * @package
+    738→ */
     740→function stripColor(str) {
     741→  // eslint-disable-next-line no-control-regex
     742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;

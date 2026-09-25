@@ -13,9 +13,9 @@ Score(3000)=0.447 I=0.790 C=0.253 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | ns | 117 |  | 38 | Complete src/ listing — the module roster | 1.3 |  | 0.754 |
 | walker |  | 124 | 16 | Fs::DirListing { dir: src/config } |  |  | 0.756 |
 | walker |  | 159 | 35 | Fs::DirListing { dir: src/ui } |  |  | 0.785 |
-| walker |  | 203 | 44 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
-| ns | 211 |  | 94 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.783 |
-| walker |  | 246 | 43 | Fs::DirListing { dir: src/parse } |  |  | 1.000 |
+| walker |  | 202 | 43 | Fs::DirListing { dir: src/parse } |  |  | 0.848 |
+| ns | 211 |  | 94 | Complete listings of src/ui, src/parse, src/config | 1.4 | 1.3 | 0.802 |
+| walker |  | 246 | 44 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | walker |  | 254 | 8 | Fs::DirListing { dir: .github } |  |  | 1.000 |
 | ns | 268 |  | 57 | Cargo package identity — name, version, description | 1.5 |  | 0.967 |
 | walker |  | 270 | 16 | Fs::DirListing { dir: .github/workflows } |  |  | 0.967 |

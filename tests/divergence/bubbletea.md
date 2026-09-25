@@ -209,11 +209,11 @@ Score(3000)=0.466 I=0.667 C=0.326 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 8607 | 516 | Code::CodeKey { rung: Decl, file: tea.go, decl: 7, sub: 0, line: 84 } |  |  | 0.505 |
 | ns | 8618 |  | 198 | `tty.go`: terminal acquisition, input loop, resize detection | 4.5 |  | 0.507 |
 | walker |  | 8639 | 32 | Code::CodeKey { rung: Body, file: exec.go, decl: 2, sub: 0, line: 22 } |  |  | 0.507 |
+| walker |  | 8649 | 10 | Code::CodeKey { rung: Doc, file: cursed_renderer.go, decl: 8, sub: 0, line: 249 } |  |  | 0.507 |
+| walker |  | 8659 | 10 | Code::CodeKey { rung: Body, file: mouse.go, decl: 10, sub: 0, line: 101 } |  |  | 0.507 |
+| walker |  | 8672 | 13 | Code::CodeKey { rung: Body, file: color.go, decl: 11, sub: 0, line: 70 } |  |  | 0.507 |
 | ns | 8882 |  | 264 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.480 |
-| walker |  | 8889 | 250 | Fs::DirListing { dir: examples } |  |  | 0.543 |
-| walker |  | 8899 | 10 | Code::CodeKey { rung: Doc, file: cursed_renderer.go, decl: 8, sub: 0, line: 249 } |  |  | 0.543 |
-| walker |  | 8909 | 10 | Code::CodeKey { rung: Body, file: mouse.go, decl: 10, sub: 0, line: 101 } |  |  | 0.543 |
-| walker |  | 8922 | 13 | Code::CodeKey { rung: Body, file: color.go, decl: 11, sub: 0, line: 70 } |  |  | 0.543 |
+| walker |  | 8922 | 250 | Fs::DirListing { dir: examples } |  |  | 0.543 |
 | walker |  | 8938 | 16 | Code::CodeKey { rung: Doc, file: tty.go, decl: 4, sub: 0, line: 41 } |  |  | 0.543 |
 | walker |  | 8954 | 16 | Code::CodeKey { rung: Doc, file: tty.go, decl: 5, sub: 0, line: 56 } |  |  | 0.543 |
 | ns | 9062 |  | 180 | `UPGRADE_GUIDE_V2.md`: complete section map | 5.2 |  | 0.536 |

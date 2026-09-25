@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.570/0.789/0.770/0.707/0.661
+Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.570/0.789/0.765/0.707/0.661
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,9 +44,9 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 809 | 6 | Fs::DirListing { dir: client/components/content } |  |  | 0.786 |
 | walker |  | 817 | 8 | Fs::DirListing { dir: client/components/prompt } |  |  | 0.786 |
 | walker |  | 834 | 17 | Fs::DirListing { dir: client/components/player } |  |  | 0.786 |
-| walker |  | 840 | 6 | Fs::DirListing { dir: client/cypress/tests } |  |  | 0.786 |
-| walker |  | 843 | 3 | Fs::DirListing { dir: client/cypress/tests/components } |  |  | 0.786 |
-| walker |  | 864 | 21 | Fs::DirListing { dir: docs/objects/metadata } |  |  | 0.787 |
+| walker |  | 855 | 21 | Fs::DirListing { dir: docs/objects/metadata } |  |  | 0.787 |
+| walker |  | 861 | 6 | Fs::DirListing { dir: client/cypress/tests } |  |  | 0.787 |
+| walker |  | 864 | 3 | Fs::DirListing { dir: client/cypress/tests/components } |  |  | 0.787 |
 | walker |  | 930 | 66 | Json::Identity { file: client/package.json } |  |  | 0.787 |
 | walker |  | 942 | 12 | Json::Entry { file: client/package.json } |  |  | 0.787 |
 | ns | 978 |  | 211 | index.js: the complete CLI option table | 1.9 |  | 0.731 |
@@ -163,9 +163,9 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 3472 | 13 | Fs::DirListing { dir: server/libs/fsExtra/copy } |  |  | 0.795 |
 | walker |  | 3485 | 13 | Fs::DirListing { dir: server/libs/fsExtra/mkdirs } |  |  | 0.795 |
 | walker |  | 3498 | 13 | Fs::DirListing { dir: server/libs/fsExtra/move } |  |  | 0.795 |
-| walker |  | 3522 | 24 | Fs::DirListing { dir: server/libs/jsonwebtoken/lib } |  |  | 0.795 |
-| walker |  | 3561 | 39 | Fs::DirListing { dir: server/libs/fluentFfmpeg } |  |  | 0.795 |
-| walker |  | 3575 | 14 | Fs::DirListing { dir: server/libs/fluentFfmpeg/presets } |  |  | 0.795 |
+| walker |  | 3537 | 39 | Fs::DirListing { dir: server/libs/fluentFfmpeg } |  |  | 0.795 |
+| walker |  | 3551 | 14 | Fs::DirListing { dir: server/libs/fluentFfmpeg/presets } |  |  | 0.795 |
+| walker |  | 3575 | 24 | Fs::DirListing { dir: server/libs/jsonwebtoken/lib } |  |  | 0.795 |
 | walker |  | 3599 | 24 | Fs::DirListing { dir: server/libs/umzug/storage } |  |  | 0.795 |
 | walker |  | 3644 | 45 | Fs::DirListing { dir: server/libs/nodeCron } |  |  | 0.795 |
 | walker |  | 3652 | 8 | Fs::DirListing { dir: server/libs/nodeCron/background-scheduled-task } |  |  | 0.795 |
@@ -192,16 +192,16 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 3995 | 43 | Fs::DirListing { dir: server/libs/nodeCron/convert-expression } |  |  | 0.775 |
 | ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.765 |
 | walker |  | 4162 | 167 | Fs::DirListing { dir: client/strings } |  |  | 0.765 |
-| walker |  | 4189 | 27 | Fs::DirListing { dir: test/server } |  |  | 0.767 |
-| walker |  | 4211 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.770 |
-| walker |  | 4308 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.770 |
-| walker |  | 4314 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.770 |
-| walker |  | 4320 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.770 |
-| walker |  | 4330 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.770 |
-| walker |  | 4348 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.770 |
-| ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.752 |
-| walker |  | 4512 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.767 |
-| walker |  | 4610 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.767 |
+| walker |  | 4259 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.765 |
+| walker |  | 4265 | 6 | Fs::DirListing { dir: client/components/tables/collection } |  |  | 0.765 |
+| walker |  | 4271 | 6 | Fs::DirListing { dir: client/components/tables/playlist } |  |  | 0.765 |
+| walker |  | 4281 | 10 | Fs::DirListing { dir: client/components/tables/library } |  |  | 0.765 |
+| walker |  | 4299 | 18 | Fs::DirListing { dir: client/components/tables/podcast } |  |  | 0.765 |
+| ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.748 |
+| walker |  | 4463 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.762 |
+| walker |  | 4561 | 98 | Fs::DirListing { dir: client/components/widgets } |  |  | 0.763 |
+| walker |  | 4588 | 27 | Fs::DirListing { dir: test/server } |  |  | 0.765 |
+| walker |  | 4610 | 22 | Fs::DirListing { dir: test/server/managers } |  |  | 0.767 |
 | walker |  | 4713 | 103 | Fs::DirListing { dir: server/libs/watcher } |  |  | 0.767 |
 | walker |  | 4721 | 8 | Fs::DirListing { dir: server/libs/watcher/aborter } |  |  | 0.767 |
 | walker |  | 4733 | 12 | Fs::DirListing { dir: server/libs/watcher/atomically } |  |  | 0.767 |
@@ -214,30 +214,30 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | ns | 5159 |  | 353 | API routes: library items | 3.4 | 3.2 | 0.746 |
 | walker |  | 5171 | 114 | Fs::DirListing { dir: client/components/cards } |  |  | 0.746 |
 | walker |  | 5201 | 30 | Code::CodeKey { rung: Names, file: server/libs/archiver/lib/error.js, decl: 0, sub: 0, line: 0 } |  |  | 0.746 |
-| walker |  | 5234 | 33 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.746 |
-| walker |  | 5267 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.750 |
-| walker |  | 5290 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.753 |
-| walker |  | 5391 | 101 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.753 |
-| walker |  | 5422 | 31 | Code::CodeKey { rung: Names, file: server/libs/jsonwebtoken/lib/JsonWebTokenError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.753 |
-| walker |  | 5453 | 31 | Code::CodeKey { rung: Names, file: server/libs/jsonwebtoken/lib/NotBeforeError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.753 |
-| walker |  | 5485 | 32 | Code::CodeKey { rung: Names, file: server/libs/jsonwebtoken/lib/TokenExpiredError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.753 |
-| ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.735 |
-| walker |  | 5557 | 72 | Fs::DirListing { dir: server/libs/archiver/archiverUtils } |  |  | 0.735 |
-| walker |  | 5564 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/balancedMatch } |  |  | 0.735 |
-| walker |  | 5571 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/braceExpansion } |  |  | 0.735 |
-| walker |  | 5578 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/inflight } |  |  | 0.735 |
-| walker |  | 5585 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.difference } |  |  | 0.735 |
-| walker |  | 5592 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.flatten } |  |  | 0.735 |
-| walker |  | 5599 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.isplainobject } |  |  | 0.735 |
-| walker |  | 5606 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.union } |  |  | 0.735 |
-| walker |  | 5613 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/minimatch } |  |  | 0.735 |
-| walker |  | 5620 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/safeBuffer } |  |  | 0.735 |
-| walker |  | 5627 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/stringDecoder } |  |  | 0.735 |
-| walker |  | 5634 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/wrappy } |  |  | 0.735 |
-| walker |  | 5645 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/fsRealpath } |  |  | 0.735 |
-| walker |  | 5656 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream } |  |  | 0.735 |
-| walker |  | 5671 | 15 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/glob } |  |  | 0.735 |
-| walker |  | 5684 | 13 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream } |  |  | 0.735 |
+| walker |  | 5302 | 101 | Markdown::Section { file: docs/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.746 |
+| walker |  | 5333 | 31 | Code::CodeKey { rung: Names, file: server/libs/jsonwebtoken/lib/JsonWebTokenError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.746 |
+| walker |  | 5364 | 31 | Code::CodeKey { rung: Names, file: server/libs/jsonwebtoken/lib/NotBeforeError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.746 |
+| walker |  | 5396 | 32 | Code::CodeKey { rung: Names, file: server/libs/jsonwebtoken/lib/TokenExpiredError.js, decl: 0, sub: 0, line: 0 } |  |  | 0.746 |
+| walker |  | 5468 | 72 | Fs::DirListing { dir: server/libs/archiver/archiverUtils } |  |  | 0.746 |
+| walker |  | 5475 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/balancedMatch } |  |  | 0.746 |
+| walker |  | 5482 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/braceExpansion } |  |  | 0.746 |
+| walker |  | 5489 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/inflight } |  |  | 0.746 |
+| walker |  | 5496 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.difference } |  |  | 0.746 |
+| walker |  | 5503 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.flatten } |  |  | 0.746 |
+| walker |  | 5510 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.isplainobject } |  |  | 0.746 |
+| ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.728 |
+| walker |  | 5517 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lodash.union } |  |  | 0.728 |
+| walker |  | 5524 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/minimatch } |  |  | 0.728 |
+| walker |  | 5531 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/safeBuffer } |  |  | 0.728 |
+| walker |  | 5538 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/stringDecoder } |  |  | 0.728 |
+| walker |  | 5545 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/wrappy } |  |  | 0.728 |
+| walker |  | 5556 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/fsRealpath } |  |  | 0.728 |
+| walker |  | 5567 | 11 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream } |  |  | 0.728 |
+| walker |  | 5582 | 15 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/glob } |  |  | 0.728 |
+| walker |  | 5595 | 13 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream } |  |  | 0.728 |
+| walker |  | 5628 | 33 | Fs::DirListing { dir: client/cypress/tests/components/cards } |  |  | 0.728 |
+| walker |  | 5661 | 33 | Fs::DirListing { dir: test/server/utils } |  |  | 0.732 |
+| walker |  | 5684 | 23 | Fs::DirListing { dir: test/server/utils/parsers } |  |  | 0.735 |
 | walker |  | 5728 | 44 | Plaintext::DeclSurface { file: client/layouts/blank.vue } |  |  | 0.735 |
 | walker |  | 5772 | 44 | Plaintext::DeclSurface { file: client/layouts/error.vue } |  |  | 0.735 |
 | walker |  | 5816 | 44 | Plaintext::DeclSurface { file: client/pages/account.vue } |  |  | 0.735 |
@@ -271,15 +271,15 @@ Score(3000)=0.789 I=0.875 C=0.713 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 6812 | 39 | Code::CodeKey { rung: Names, file: server/libs/jws/lib/sign-stream.js, decl: 0, sub: 0, line: 0 } |  |  | 0.715 |
 | ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.700 |
 | walker |  | 6851 | 39 | Code::CodeKey { rung: Names, file: server/libs/jws/lib/verify-stream.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
-| walker |  | 6895 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.700 |
 | ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.691 |
-| walker |  | 7049 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.694 |
+| walker |  | 7005 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.694 |
 | ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.690 |
 | ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.684 |
-| walker |  | 7368 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.691 |
-| walker |  | 7368 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.691 |
-| walker |  | 7402 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.691 |
-| walker |  | 7430 | 28 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 7324 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.691 |
+| walker |  | 7324 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 7358 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 7386 | 28 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.691 |
+| walker |  | 7430 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.691 |
 | walker |  | 7504 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.691 |
 | ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.676 |
 | walker |  | 7876 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.705 |

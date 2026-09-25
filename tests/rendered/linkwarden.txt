@@ -38,6 +38,8 @@ apps/
   mobile/
     .easignore
     .env.sample
+      1→LINKWARDEN_URL=
+      2→EXPO_PUBLIC_SHOW_LOGS=
     .gitignore
     app/
       (tabs)/
@@ -266,10 +268,6 @@ packages/
       50→export default getFormatBasedOnPreference;
     getFormatFromContentType.ts
     getLinkTypeFromFormat.ts
-      …
-      3→const getLinkTypeFromFormat = (
-      …
-      21→export default getLinkTypeFromFormat;
     getOriginalFormat.ts
       …
       6→const getOriginalFormat = (
@@ -309,9 +307,6 @@ packages/
     verifyCapacity.ts
       …
       8→export const hasPassedLimit = async (
-      9→  userId: number,
-      10→  numberOfImports: number
-      11→) => {
       …
   prisma/
     client/
@@ -417,7 +412,11 @@ packages/
       275→model DashboardSection {
       …
       289→enum DashboardSectionType {
-      …
+      290→  STATS
+      291→  RECENT_LINKS
+      292→  PINNED_LINKS
+      293→  COLLECTION
+      294→}
       296→model AppMigration {
       …
       304→enum AppMigrationStatus {

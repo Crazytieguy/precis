@@ -1,4 +1,4 @@
-Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.548/0.522/0.707/0.674/0.621/0.537/0.527
+Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.549/0.522/0.707/0.674/0.621/0.537/0.527
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,8 +23,8 @@ Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 898 | 23 | Fs::DirListing { dir: .github } |  |  | 0.316 |
 | walker |  | 928 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.316 |
 | ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.548 |
-| walker |  | 1009 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.548 |
-| walker |  | 1032 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.549 |
+| walker |  | 951 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.549 |
+| walker |  | 1032 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.549 |
 | walker |  | 1123 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.647 |
 | walker |  | 1145 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.656 |
 | walker |  | 1196 | 51 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.750 |
@@ -134,46 +134,46 @@ Score(3000)=0.674 I=0.837 C=0.543 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 4618 |  | 40 | Style module symbols | 3.4 |  | 0.593 |
 | walker |  | 4634 | 28 | Code::CodeKey { rung: Decl, file: rich/constrain.py, decl: 4, sub: 0, line: 31 } |  |  | 0.593 |
 | walker |  | 4663 | 29 | Code::CodeKey { rung: Decl, file: rich/constrain.py, decl: 3, sub: 0, line: 22 } |  |  | 0.593 |
-| walker |  | 4720 | 57 | Code::CodeKey { rung: Decl, file: rich/_windows.py, decl: 1, sub: 0, line: 5 } |  |  | 0.593 |
-| walker |  | 4728 | 8 | Code::CodeKey { rung: Doc, file: rich/_windows.py, decl: 1, sub: 0, line: 5 } |  |  | 0.593 |
-| walker |  | 4738 | 10 | Code::CodeKey { rung: Doc, file: rich/emoji.py, decl: 2, sub: 0, line: 16 } |  |  | 0.593 |
-| walker |  | 4748 | 10 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 1, sub: 0, line: 5 } |  |  | 0.593 |
-| walker |  | 4808 | 60 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 7, sub: 0, line: 81 } |  |  | 0.593 |
-| walker |  | 4874 | 66 | Code::CodeKey { rung: Names, file: rich/filesize.py, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 4924 | 50 | Code::CodeKey { rung: Decl, file: rich/filesize.py, decl: 3, sub: 0, line: 52 } |  |  | 0.594 |
+| walker |  | 4863 | 200 | Fs::DirListing { dir: rich/_unicode_data } |  |  | 0.595 |
+| walker |  | 4873 | 10 | Code::CodeKey { rung: Names, file: rich/_unicode_data/_versions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4887 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode10-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4901 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode11-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4915 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode12-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4929 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode12-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4943 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode13-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4957 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode14-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4971 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode15-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 4985 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode15-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
 | ns | 4986 |  | 368 | Style method roster | 3.5 | 3.4 | 0.571 |
-| walker |  | 4987 | 63 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 1, sub: 0, line: 7 } |  |  | 0.571 |
-| walker |  | 4995 | 8 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 3, sub: 0, line: 29 } |  |  | 0.571 |
-| walker |  | 5027 | 32 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 2, sub: 0, line: 17 } |  |  | 0.571 |
-| walker |  | 5227 | 200 | Fs::DirListing { dir: rich/_unicode_data } |  |  | 0.572 |
+| walker |  | 4999 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode16-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5013 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode17-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5027 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode4-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5041 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode5-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5055 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode5-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5069 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode5-2-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5083 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5097 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5111 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-2-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5125 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-3-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5139 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode7-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5153 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode8-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
+| walker |  | 5167 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode9-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
 | ns | 5233 |  | 247 | Colour system, palettes and themes | 3.6 |  | 0.562 |
-| walker |  | 5237 | 10 | Code::CodeKey { rung: Names, file: rich/_unicode_data/_versions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
-| walker |  | 5251 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode10-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
-| walker |  | 5265 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode11-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
 | ns | 5276 |  | 43 | Segment — the atomic unit of rendered output | 3.7 |  | 0.565 |
-| walker |  | 5279 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode12-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5293 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode12-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5307 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode13-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5321 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode14-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5335 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode15-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5349 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode15-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5363 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode16-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5377 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode17-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5391 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode4-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5405 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode5-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5419 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode5-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5433 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode5-2-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5447 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5461 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-1-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5475 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-2-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5489 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode6-3-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| walker |  | 5503 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode7-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
-| ns | 5513 |  | 237 | Progress bars — functions, columns and classes | 3.8 |  | 0.552 |
-| walker |  | 5517 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode8-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
-| walker |  | 5531 | 14 | Code::CodeKey { rung: Names, file: rich/_unicode_data/unicode9-0-0.py, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
-| walker |  | 5658 | 127 | Code::CodeKey { rung: Names, file: rich/_unicode_data/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
-| walker |  | 5665 | 7 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.552 |
-| walker |  | 5717 | 52 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 1, sub: 0, line: 20 } |  |  | 0.552 |
+| walker |  | 5294 | 127 | Code::CodeKey { rung: Names, file: rich/_unicode_data/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
+| walker |  | 5301 | 7 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 4, sub: 0, line: 58 } |  |  | 0.565 |
+| walker |  | 5353 | 52 | Code::CodeKey { rung: Decl, file: rich/_unicode_data/__init__.py, decl: 1, sub: 0, line: 20 } |  |  | 0.565 |
+| walker |  | 5410 | 57 | Code::CodeKey { rung: Decl, file: rich/_windows.py, decl: 1, sub: 0, line: 5 } |  |  | 0.565 |
+| walker |  | 5418 | 8 | Code::CodeKey { rung: Doc, file: rich/_windows.py, decl: 1, sub: 0, line: 5 } |  |  | 0.565 |
+| walker |  | 5428 | 10 | Code::CodeKey { rung: Doc, file: rich/emoji.py, decl: 2, sub: 0, line: 16 } |  |  | 0.565 |
+| walker |  | 5438 | 10 | Code::CodeKey { rung: Doc, file: rich/pager.py, decl: 1, sub: 0, line: 5 } |  |  | 0.565 |
+| walker |  | 5498 | 60 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 7, sub: 0, line: 81 } |  |  | 0.565 |
+| ns | 5513 |  | 237 | Progress bars — functions, columns and classes | 3.8 |  | 0.551 |
+| walker |  | 5564 | 66 | Code::CodeKey { rung: Names, file: rich/filesize.py, decl: 0, sub: 0, line: 0 } |  |  | 0.552 |
+| walker |  | 5614 | 50 | Code::CodeKey { rung: Decl, file: rich/filesize.py, decl: 3, sub: 0, line: 52 } |  |  | 0.552 |
+| walker |  | 5677 | 63 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 1, sub: 0, line: 7 } |  |  | 0.552 |
+| walker |  | 5685 | 8 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 3, sub: 0, line: 29 } |  |  | 0.552 |
+| walker |  | 5717 | 32 | Code::CodeKey { rung: Decl, file: rich/theme.py, decl: 2, sub: 0, line: 17 } |  |  | 0.552 |
 | ns | 5723 |  | 210 | Live display, status, spinners, bars, screen | 3.9 |  | 0.550 |
 | walker |  | 5728 | 11 | Code::CodeKey { rung: Doc, file: rich/_stack.py, decl: 2, sub: 0, line: 6 } |  |  | 0.550 |
 | walker |  | 5793 | 65 | Code::CodeKey { rung: Decl, file: rich/spinner.py, decl: 1, sub: 0, line: 13 } |  |  | 0.550 |

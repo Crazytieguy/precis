@@ -10,9 +10,9 @@ Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 131 | 58 | Json::Identity { file: package.json } |  |  | 0.460 |
 | ns | 148 |  | 62 | Complete repository root listing | 1.2 |  | 0.677 |
 | walker |  | 167 | 36 | Json::Dependencies { file: package.json } |  |  | 0.677 |
+| walker |  | 186 | 19 | Json::Runtime { file: package.json } |  |  | 0.677 |
 | ns | 219 |  | 71 | Complete src/ listing — the shipped library | 1.3 |  | 0.507 |
-| walker |  | 238 | 71 | Fs::DirListing { dir: src } |  |  | 0.737 |
-| walker |  | 257 | 19 | Json::Runtime { file: package.json } |  |  | 0.737 |
+| walker |  | 257 | 71 | Fs::DirListing { dir: src } |  |  | 0.737 |
 | walker |  | 320 | 63 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |
 | ns | 402 |  | 68 | README: the unmaintained notice (whole file) | 1.5 |  | 0.616 |
@@ -33,11 +33,11 @@ Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 1394 | 318 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 4, sub: 0, line: 139 } |  |  | 0.581 |
 | walker |  | 1408 | 14 | Code::CodeKey { rung: Names, file: src/use-position-fixed.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
 | walker |  | 1422 | 14 | Code::CodeKey { rung: Names, file: src/use-snap-points.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
-| walker |  | 1474 | 52 | Fs::DirListing { dir: test } |  |  | 0.583 |
-| walker |  | 1477 | 3 | Fs::DirListing { dir: test/src } |  |  | 0.583 |
-| walker |  | 1492 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
-| ns | 1494 |  | 237 | DialogProps declarations, second half (lines 86-137) plus the union tail | 2.3 | 2.2 | 0.524 |
-| walker |  | 1706 | 214 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 0, line: 50 } |  |  | 0.546 |
+| walker |  | 1437 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
+| ns | 1494 |  | 237 | DialogProps declarations, second half (lines 86-137) plus the union tail | 2.3 | 2.2 | 0.522 |
+| walker |  | 1651 | 214 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 0, line: 50 } |  |  | 0.545 |
+| walker |  | 1703 | 52 | Fs::DirListing { dir: test } |  |  | 0.546 |
+| walker |  | 1706 | 3 | Fs::DirListing { dir: test/src } |  |  | 0.546 |
 | walker |  | 1729 | 23 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.546 |
 | ns | 1812 |  | 318 | Root's destructured parameter list — every prop's default value | 2.4 | 1.6 | 0.587 |
 | walker |  | 1866 | 137 | Json::Scripts { file: package.json } |  |  | 0.622 |
@@ -50,11 +50,11 @@ Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.807 |
 | walker |  | 2507 | 36 | Code::CodeKey { rung: Names, file: src/context.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
 | walker |  | 2544 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
-| walker |  | 2643 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.809 |
-| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.783 |
-| walker |  | 2703 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 14, sub: 0, line: 1130 } |  |  | 0.783 |
-| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.765 |
-| walker |  | 2918 | 215 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.796 |
+| walker |  | 2604 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 14, sub: 0, line: 1130 } |  |  | 0.807 |
+| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.781 |
+| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.763 |
+| walker |  | 2819 | 215 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.794 |
+| walker |  | 2918 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.796 |
 | walker |  | 2984 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.797 |
 | ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.765 |
 | walker |  | 3036 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |

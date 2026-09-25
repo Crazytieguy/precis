@@ -17,10 +17,10 @@ Score(3000)=0.699 I=0.825 C=0.591 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 309 | 31 | Fs::DirListing { dir: docs/public } |  |  | 0.916 |
 | walker |  | 313 | 4 | Fs::DirListing { dir: docs/public/css } |  |  | 0.916 |
 | walker |  | 318 | 5 | Fs::DirListing { dir: docs/public/js } |  |  | 0.916 |
-| walker |  | 330 | 12 | Fs::DirListing { dir: vendor } |  |  | 0.916 |
+| walker |  | 330 | 12 | Fs::DirListing { dir: .github } |  |  | 0.916 |
 | ns | 334 |  | 119 | Back-end landmarks: load_program, builtins_bind, and who owns the bytecode format | 1.4 |  | 0.785 |
-| walker |  | 342 | 12 | Fs::DirListing { dir: .github } |  |  | 0.785 |
-| walker |  | 377 | 35 | Fs::DirListing { dir: .github/workflows } |  |  | 0.789 |
+| walker |  | 365 | 35 | Fs::DirListing { dir: .github/workflows } |  |  | 0.788 |
+| walker |  | 377 | 12 | Fs::DirListing { dir: vendor } |  |  | 0.789 |
 | walker |  | 398 | 21 | Fs::DirListing { dir: docs/templates/shared } |  |  | 0.789 |
 | walker |  | 412 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.789 |
 | walker |  | 459 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.789 |
@@ -65,12 +65,12 @@ Score(3000)=0.699 I=0.825 C=0.591 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 2018 | 16 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 1, sub: 0, line: 44 } |  |  | 0.659 |
 | walker |  | 2026 | 8 | Code::CodeKey { rung: Doc, file: src/parser.h, decl: 7, sub: 0, line: 126 } |  |  | 0.659 |
 | walker |  | 2078 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.659 |
+| walker |  | 2196 | 118 | Code::CodeKey { rung: Names, file: src/locfile.h, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
 | ns | 2202 |  | 223 | main.c usage(): synopsis and one-paragraph description | 3.1 |  | 0.643 |
-| walker |  | 2243 | 165 | Fs::DirListing { dir: tests } |  |  | 0.735 |
-| walker |  | 2361 | 118 | Code::CodeKey { rung: Names, file: src/locfile.h, decl: 0, sub: 0, line: 0 } |  |  | 0.735 |
-| walker |  | 2369 | 8 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 1, sub: 0, line: 6 } |  |  | 0.735 |
-| walker |  | 2446 | 77 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 2, sub: 0, line: 12 } |  |  | 0.735 |
-| walker |  | 2566 | 120 | Code::CodeKey { rung: Decl, file: src/builtin.h, decl: 2, sub: 0, line: 10 } |  |  | 0.735 |
+| walker |  | 2204 | 8 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 1, sub: 0, line: 6 } |  |  | 0.643 |
+| walker |  | 2281 | 77 | Code::CodeKey { rung: Decl, file: src/locfile.h, decl: 2, sub: 0, line: 12 } |  |  | 0.643 |
+| walker |  | 2401 | 120 | Code::CodeKey { rung: Decl, file: src/builtin.h, decl: 2, sub: 0, line: 10 } |  |  | 0.643 |
+| walker |  | 2566 | 165 | Fs::DirListing { dir: tests } |  |  | 0.735 |
 | ns | 2653 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.699 |
 | walker |  | 2699 | 133 | Code::CodeKey { rung: Names, file: src/jv_alloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.699 |
 | walker |  | 2843 | 144 | Code::CodeKey { rung: Decl, file: src/parser.h, decl: 4, sub: 0, line: 54 } |  |  | 0.699 |

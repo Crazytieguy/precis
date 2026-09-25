@@ -158,14 +158,15 @@ examples/
     LICENSE.txt
     README.rst
     flaskr/
+      __init__.py
+      auth.py
+      blog.py
+      db.py
+      schema.sql
+      static/
+      templates/
     pyproject.toml
     tests/
-      conftest.py
-      data.sql
-      test_auth.py
-      test_blog.py
-      test_db.py
-      test_factory.py
 pyproject.toml
   1→[project]
   2→name = "Flask"

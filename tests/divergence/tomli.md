@@ -21,8 +21,8 @@ Score(3000)=0.422 I=0.760 C=0.235 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 372 | 58 | Markdown::HeadingsOutline { file: tomllib.md } |  |  | 0.650 |
 | walker |  | 392 | 20 | Fs::DirListing { dir: benchmark } |  |  | 0.653 |
 | ns | 408 |  | 108 | README: the tomllib stdlib relationship | 1.6 |  | 0.592 |
-| walker |  | 426 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.596 |
-| walker |  | 456 | 30 | Fs::DirListing { dir: tests } |  |  | 0.598 |
+| walker |  | 422 | 30 | Fs::DirListing { dir: tests } |  |  | 0.594 |
+| walker |  | 456 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
 | ns | 496 |  | 88 | Entry points: load() and loads() signatures with docstrings | 1.7 |  | 0.564 |
 | walker |  | 516 | 60 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.566 |
 | ns | 622 |  | 126 | TOMLDecodeError class docstring and its attributes | 1.8 |  | 0.501 |

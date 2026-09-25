@@ -18,9 +18,9 @@ Score(3000)=0.367 I=0.463 C=0.290 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 385 | 38 | Code::CodeKey { rung: ModuleDoc, file: beets/importer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
 | walker |  | 425 | 40 | Code::CodeKey { rung: ModuleDoc, file: beets/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
 | ns | 442 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 1.5 |  | 0.516 |
-| walker |  | 466 | 41 | Code::CodeKey { rung: ModuleDoc, file: beets/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
-| walker |  | 494 | 28 | Fs::DirListing { dir: beets/dbcore } |  |  | 0.569 |
-| walker |  | 529 | 35 | Code::CodeKey { rung: ModuleDoc, file: beets/dbcore/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
+| walker |  | 453 | 28 | Fs::DirListing { dir: beets/dbcore } |  |  | 0.569 |
+| walker |  | 488 | 35 | Code::CodeKey { rung: ModuleDoc, file: beets/dbcore/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
+| walker |  | 529 | 41 | Code::CodeKey { rung: ModuleDoc, file: beets/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
 | ns | 542 |  | 100 | Project metadata header (poetry, version, license, URLs) | 1.6 |  | 0.556 |
 | walker |  | 559 | 30 | Fs::DirListing { dir: beets/library } |  |  | 0.641 |
 | walker |  | 623 | 64 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.641 |
@@ -36,17 +36,17 @@ Score(3000)=0.367 I=0.463 C=0.290 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 1097 | 14 | Fs::DirListing { dir: beets/ui/commands/import_ } |  |  | 0.506 |
 | walker |  | 1117 | 20 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/commands/import_/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
 | walker |  | 1150 | 33 | Code::CodeKey { rung: ModuleDoc, file: beets/ui/commands/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
-| walker |  | 1227 | 77 | Fs::DirListing { dir: docs } |  |  | 0.477 |
-| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.477 |
-| walker |  | 1231 | 4 | Fs::DirListing { dir: docs/_templates } |  |  | 0.477 |
-| walker |  | 1235 | 4 | Fs::DirListing { dir: docs/extensions } |  |  | 0.477 |
-| walker |  | 1249 | 14 | Fs::DirListing { dir: docs/_static } |  |  | 0.477 |
-| walker |  | 1271 | 22 | Fs::DirListing { dir: docs/api } |  |  | 0.477 |
-| walker |  | 1297 | 26 | Fs::DirListing { dir: docs/guides } |  |  | 0.477 |
-| walker |  | 1323 | 26 | Fs::DirListing { dir: docs/reference } |  |  | 0.477 |
-| walker |  | 1351 | 28 | Fs::DirListing { dir: docs/dev } |  |  | 0.477 |
-| walker |  | 1426 | 75 | Fs::DirListing { dir: beets/util } |  |  | 0.566 |
-| walker |  | 1440 | 14 | Code::CodeKey { rung: ModuleDoc, file: beets/util/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
+| walker |  | 1225 | 75 | Fs::DirListing { dir: beets/util } |  |  | 0.600 |
+| ns | 1227 |  | 176 | Canonical test / lint / typecheck commands | 1.10 |  | 0.562 |
+| walker |  | 1239 | 14 | Code::CodeKey { rung: ModuleDoc, file: beets/util/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
+| walker |  | 1316 | 77 | Fs::DirListing { dir: docs } |  |  | 0.566 |
+| walker |  | 1320 | 4 | Fs::DirListing { dir: docs/_templates } |  |  | 0.566 |
+| walker |  | 1324 | 4 | Fs::DirListing { dir: docs/extensions } |  |  | 0.566 |
+| walker |  | 1338 | 14 | Fs::DirListing { dir: docs/_static } |  |  | 0.566 |
+| walker |  | 1360 | 22 | Fs::DirListing { dir: docs/api } |  |  | 0.566 |
+| walker |  | 1386 | 26 | Fs::DirListing { dir: docs/guides } |  |  | 0.566 |
+| walker |  | 1412 | 26 | Fs::DirListing { dir: docs/reference } |  |  | 0.566 |
+| walker |  | 1440 | 28 | Fs::DirListing { dir: docs/dev } |  |  | 0.566 |
 | ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.503 |
 | walker |  | 1454 | 14 | Code::CodeKey { rung: Names, file: beets/library/library.py, decl: 0, sub: 0, line: 0 } |  |  | 0.503 |
 | walker |  | 1481 | 27 | Toml::Operational { file: pyproject.toml } |  |  | 0.505 |
@@ -106,22 +106,22 @@ Score(3000)=0.367 I=0.463 C=0.290 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 4584 | 15 | Code::CodeKey { rung: Decl, file: beets/util/config.py, decl: 3, sub: 0, line: 78 } |  |  | 0.367 |
 | walker |  | 4609 | 25 | Code::CodeKey { rung: Decl, file: beets/util/config.py, decl: 1, sub: 0, line: 9 } |  |  | 0.367 |
 | walker |  | 4630 | 21 | Code::CodeKey { rung: Names, file: beets/ui/commands/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.367 |
-| walker |  | 4670 | 40 | Code::CodeKey { rung: Names, file: beets/library/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.367 |
-| ns | 4673 |  | 382 | config_default.yaml: autotagger thresholds and distance weights | 3.7 |  | 0.353 |
-| walker |  | 4683 | 13 | Code::CodeKey { rung: Decl, file: beets/library/exceptions.py, decl: 4, sub: 0, line: 27 } |  |  | 0.353 |
-| walker |  | 4696 | 13 | Code::CodeKey { rung: Decl, file: beets/library/exceptions.py, decl: 6, sub: 0, line: 34 } |  |  | 0.353 |
-| walker |  | 4726 | 30 | Code::CodeKey { rung: Decl, file: beets/library/exceptions.py, decl: 1, sub: 0, line: 4 } |  |  | 0.353 |
-| walker |  | 4765 | 39 | Fs::DirListing { dir: .github } |  |  | 0.353 |
-| walker |  | 4796 | 31 | Fs::DirListing { dir: .github/workflows } |  |  | 0.353 |
-| ns | 4813 |  | 140 | config_default.yaml: terminal UI, colour names, import layout | 3.8 |  | 0.347 |
-| walker |  | 4877 | 81 | Code::CodeKey { rung: Names, file: beets/context.py, decl: 0, sub: 0, line: 0 } |  |  | 0.347 |
-| walker |  | 4885 | 8 | Code::CodeKey { rung: Decl, file: beets/context.py, decl: 4, sub: 0, line: 18 } |  |  | 0.347 |
-| walker |  | 4897 | 12 | Code::CodeKey { rung: Body, file: beets/context.py, decl: 2, sub: 0, line: 8 } |  |  | 0.347 |
-| walker |  | 4908 | 11 | Code::CodeKey { rung: Doc, file: beets/context.py, decl: 2, sub: 0, line: 8 } |  |  | 0.347 |
-| walker |  | 4920 | 12 | Code::CodeKey { rung: Body, file: beets/context.py, decl: 3, sub: 0, line: 13 } |  |  | 0.347 |
-| walker |  | 4977 | 57 | Code::CodeKey { rung: Body, file: beets/__init__.py, decl: 1, sub: 0, line: 26 } |  |  | 0.347 |
-| ns | 4986 |  | 173 | Album method roster (complete, names only) | 4.1 | 2.5 | 0.342 |
-| walker |  | 4992 | 15 | Fs::DirListing { dir: beets/test } |  |  | 0.351 |
+| walker |  | 4645 | 15 | Fs::DirListing { dir: beets/test } |  |  | 0.377 |
+| ns | 4673 |  | 382 | config_default.yaml: autotagger thresholds and distance weights | 3.7 |  | 0.363 |
+| walker |  | 4685 | 40 | Code::CodeKey { rung: Names, file: beets/library/exceptions.py, decl: 0, sub: 0, line: 0 } |  |  | 0.363 |
+| walker |  | 4698 | 13 | Code::CodeKey { rung: Decl, file: beets/library/exceptions.py, decl: 4, sub: 0, line: 27 } |  |  | 0.363 |
+| walker |  | 4711 | 13 | Code::CodeKey { rung: Decl, file: beets/library/exceptions.py, decl: 6, sub: 0, line: 34 } |  |  | 0.363 |
+| walker |  | 4741 | 30 | Code::CodeKey { rung: Decl, file: beets/library/exceptions.py, decl: 1, sub: 0, line: 4 } |  |  | 0.363 |
+| ns | 4813 |  | 140 | config_default.yaml: terminal UI, colour names, import layout | 3.8 |  | 0.356 |
+| walker |  | 4822 | 81 | Code::CodeKey { rung: Names, file: beets/context.py, decl: 0, sub: 0, line: 0 } |  |  | 0.356 |
+| walker |  | 4830 | 8 | Code::CodeKey { rung: Decl, file: beets/context.py, decl: 4, sub: 0, line: 18 } |  |  | 0.356 |
+| walker |  | 4842 | 12 | Code::CodeKey { rung: Body, file: beets/context.py, decl: 2, sub: 0, line: 8 } |  |  | 0.356 |
+| walker |  | 4853 | 11 | Code::CodeKey { rung: Doc, file: beets/context.py, decl: 2, sub: 0, line: 8 } |  |  | 0.356 |
+| walker |  | 4865 | 12 | Code::CodeKey { rung: Body, file: beets/context.py, decl: 3, sub: 0, line: 13 } |  |  | 0.356 |
+| walker |  | 4922 | 57 | Code::CodeKey { rung: Body, file: beets/__init__.py, decl: 1, sub: 0, line: 26 } |  |  | 0.356 |
+| walker |  | 4961 | 39 | Fs::DirListing { dir: .github } |  |  | 0.356 |
+| ns | 4986 |  | 173 | Album method roster (complete, names only) | 4.1 | 2.5 | 0.351 |
+| walker |  | 4992 | 31 | Fs::DirListing { dir: .github/workflows } |  |  | 0.351 |
 | walker |  | 5033 | 41 | Fs::DirListing { dir: docs/dev/plugins/other } |  |  | 0.351 |
 | walker |  | 5061 | 28 | Code::CodeKey { rung: Decl, file: beets/ui/commands/help.py, decl: 1, sub: 0, line: 6 } |  |  | 0.351 |
 | walker |  | 5072 | 11 | Code::CodeKey { rung: Doc, file: beets/context.py, decl: 3, sub: 0, line: 13 } |  |  | 0.351 |

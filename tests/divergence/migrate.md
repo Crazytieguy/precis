@@ -1,4 +1,4 @@
-Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.667/0.583/0.572/0.549/0.513/0.489
+Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.523/0.583/0.572/0.549/0.513/0.489
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,8 +37,8 @@ Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 636 | 20 | Fs::DirListing { dir: source/bitbucket } |  |  | 0.565 |
 | walker |  | 657 | 21 | Fs::DirListing { dir: source/github } |  |  | 0.565 |
 | ns | 659 |  | 89 | Complete source/ listing — every source driver package | 1.7 |  | 0.608 |
-| walker |  | 679 | 22 | Fs::DirListing { dir: source/github_ee } |  |  | 0.608 |
-| walker |  | 688 | 9 | Fs::DirListing { dir: source/stub } |  |  | 0.608 |
+| walker |  | 666 | 9 | Fs::DirListing { dir: source/stub } |  |  | 0.608 |
+| walker |  | 688 | 22 | Fs::DirListing { dir: source/github_ee } |  |  | 0.608 |
 | walker |  | 711 | 23 | Fs::DirListing { dir: source/gitlab } |  |  | 0.608 |
 | walker |  | 735 | 24 | Fs::DirListing { dir: source/go_bindata } |  |  | 0.608 |
 | walker |  | 740 | 5 | Fs::DirListing { dir: source/go_bindata/testdata } |  |  | 0.608 |
@@ -52,52 +52,52 @@ Score(3000)=0.572 I=0.647 C=0.505 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 841 | 11 | Markdown::ReadmeHeadline { file: source/google_cloud_storage/README.md } |  |  | 0.567 |
 | walker |  | 852 | 11 | Fs::DirListing { dir: source/httpfs/testdata } |  |  | 0.567 |
 | walker |  | 858 | 6 | Fs::DirListing { dir: source/httpfs/testdata/no-migrations } |  |  | 0.567 |
-| walker |  | 871 | 13 | Fs::DirListing { dir: testing } |  |  | 0.567 |
 | ns | 917 |  | 121 | All four Migrate constructors (full signatures) | 2.1 |  | 0.556 |
-| ns | 1097 |  | 180 | Complete exported *Migrate method set (full signatures) | 2.2 |  | 0.533 |
-| walker |  | 1109 | 238 | Code::CodeKey { rung: Names, file: migrate.go, decl: 0, sub: 0, line: 0 } |  |  | 0.540 |
-| walker |  | 1118 | 9 | Code::CodeKey { rung: Decl, file: migrate.go, decl: 3, sub: 0, line: 29 } |  |  | 0.540 |
-| walker |  | 1128 | 10 | Code::CodeKey { rung: Decl, file: migrate.go, decl: 6, sub: 0, line: 48 } |  |  | 0.541 |
-| walker |  | 1141 | 13 | Code::CodeKey { rung: Decl, file: migrate.go, decl: 4, sub: 0, line: 39 } |  |  | 0.541 |
-| walker |  | 1150 | 9 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 5, sub: 0, line: 44 } |  |  | 0.541 |
+| walker |  | 1096 | 238 | Code::CodeKey { rung: Names, file: migrate.go, decl: 0, sub: 0, line: 0 } |  |  | 0.563 |
+| ns | 1097 |  | 180 | Complete exported *Migrate method set (full signatures) | 2.2 |  | 0.540 |
+| walker |  | 1105 | 9 | Code::CodeKey { rung: Decl, file: migrate.go, decl: 3, sub: 0, line: 29 } |  |  | 0.540 |
+| walker |  | 1115 | 10 | Code::CodeKey { rung: Decl, file: migrate.go, decl: 6, sub: 0, line: 48 } |  |  | 0.541 |
+| walker |  | 1128 | 13 | Code::CodeKey { rung: Decl, file: migrate.go, decl: 4, sub: 0, line: 39 } |  |  | 0.541 |
+| walker |  | 1137 | 9 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 5, sub: 0, line: 44 } |  |  | 0.541 |
+| walker |  | 1150 | 13 | Fs::DirListing { dir: testing } |  |  | 0.541 |
 | walker |  | 1216 | 66 | Code::CodeKey { rung: Decl, file: log.go, decl: 1, sub: 0, line: 5 } |  |  | 0.544 |
 | walker |  | 1247 | 31 | Code::CodeKey { rung: Names, file: source/errors.go, decl: 0, sub: 0, line: 0 } |  |  | 0.544 |
 | walker |  | 1267 | 20 | Code::CodeKey { rung: Decl, file: source/errors.go, decl: 1, sub: 0, line: 7 } |  |  | 0.544 |
+| walker |  | 1283 | 16 | Code::CodeKey { rung: Body, file: migrate.go, decl: 5, sub: 0, line: 44 } |  |  | 0.545 |
 | ns | 1349 |  | 252 | Package-level sentinel errors and tuning defaults | 2.3 |  | 0.523 |
-| walker |  | 1389 | 122 | Fs::DirListing { dir: database } |  |  | 0.667 |
-| walker |  | 1395 | 6 | Fs::DirListing { dir: database/crate } |  |  | 0.667 |
-| walker |  | 1401 | 6 | Fs::DirListing { dir: database/shell } |  |  | 0.667 |
-| walker |  | 1410 | 9 | Fs::DirListing { dir: database/multistmt } |  |  | 0.667 |
-| walker |  | 1419 | 9 | Fs::DirListing { dir: database/snowflake } |  |  | 0.667 |
-| walker |  | 1428 | 9 | Fs::DirListing { dir: database/stub } |  |  | 0.667 |
-| walker |  | 1444 | 16 | Fs::DirListing { dir: database/mongodb } |  |  | 0.667 |
-| walker |  | 1460 | 16 | Fs::DirListing { dir: database/mysql } |  |  | 0.667 |
-| ns | 1462 |  | 113 | Logger interface (log.go, whole file) | 2.4 |  | 0.654 |
-| walker |  | 1476 | 16 | Fs::DirListing { dir: database/sqlite } |  |  | 0.654 |
-| walker |  | 1494 | 18 | Fs::DirListing { dir: database/cassandra } |  |  | 0.654 |
-| walker |  | 1512 | 18 | Fs::DirListing { dir: database/clickhouse } |  |  | 0.654 |
-| walker |  | 1530 | 18 | Fs::DirListing { dir: database/firebird } |  |  | 0.654 |
-| walker |  | 1548 | 18 | Fs::DirListing { dir: database/redshift } |  |  | 0.654 |
-| walker |  | 1566 | 18 | Fs::DirListing { dir: database/spanner } |  |  | 0.654 |
-| walker |  | 1584 | 18 | Fs::DirListing { dir: database/sqlcipher } |  |  | 0.654 |
-| walker |  | 1602 | 18 | Fs::DirListing { dir: database/sqlite3 } |  |  | 0.654 |
-| walker |  | 1620 | 18 | Fs::DirListing { dir: database/sqlserver } |  |  | 0.654 |
-| walker |  | 1640 | 20 | Fs::DirListing { dir: database/ql } |  |  | 0.654 |
-| walker |  | 1660 | 20 | Fs::DirListing { dir: database/rqlite } |  |  | 0.654 |
-| walker |  | 1682 | 22 | Fs::DirListing { dir: database/pgx } |  |  | 0.654 |
-| walker |  | 1704 | 22 | Fs::DirListing { dir: database/postgres } |  |  | 0.654 |
-| walker |  | 1716 | 12 | Markdown::ReadmeHeadline { file: database/spanner/README.md } |  |  | 0.654 |
-| ns | 1738 |  | 276 | The Migrate struct and its documented public knobs | 2.5 |  | 0.599 |
-| walker |  | 1740 | 24 | Fs::DirListing { dir: database/yugabytedb } |  |  | 0.599 |
-| walker |  | 1766 | 26 | Fs::DirListing { dir: database/cockroachdb } |  |  | 0.599 |
-| walker |  | 1792 | 26 | Fs::DirListing { dir: database/neo4j } |  |  | 0.599 |
-| walker |  | 1807 | 15 | Fs::DirListing { dir: database/pgx/v5 } |  |  | 0.599 |
-| walker |  | 1834 | 27 | Code::CodeKey { rung: Names, file: database/error.go, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
-| walker |  | 1850 | 16 | Code::CodeKey { rung: Body, file: migrate.go, decl: 5, sub: 0, line: 44 } |  |  | 0.600 |
+| walker |  | 1365 | 82 | Code::CodeKey { rung: Names, file: util.go, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |
+| walker |  | 1379 | 14 | Code::CodeKey { rung: Decl, file: util.go, decl: 1, sub: 0, line: 13 } |  |  | 0.523 |
+| walker |  | 1406 | 27 | Markdown::ReadmeHeadline { file: source/aws_s3/README.md } |  |  | 0.523 |
+| ns | 1462 |  | 113 | Logger interface (log.go, whole file) | 2.4 |  | 0.519 |
+| walker |  | 1528 | 122 | Fs::DirListing { dir: database } |  |  | 0.655 |
+| walker |  | 1534 | 6 | Fs::DirListing { dir: database/crate } |  |  | 0.655 |
+| walker |  | 1540 | 6 | Fs::DirListing { dir: database/shell } |  |  | 0.655 |
+| walker |  | 1549 | 9 | Fs::DirListing { dir: database/multistmt } |  |  | 0.655 |
+| walker |  | 1558 | 9 | Fs::DirListing { dir: database/snowflake } |  |  | 0.655 |
+| walker |  | 1567 | 9 | Fs::DirListing { dir: database/stub } |  |  | 0.655 |
+| walker |  | 1583 | 16 | Fs::DirListing { dir: database/mongodb } |  |  | 0.655 |
+| walker |  | 1599 | 16 | Fs::DirListing { dir: database/mysql } |  |  | 0.655 |
+| walker |  | 1615 | 16 | Fs::DirListing { dir: database/sqlite } |  |  | 0.655 |
+| walker |  | 1633 | 18 | Fs::DirListing { dir: database/cassandra } |  |  | 0.655 |
+| walker |  | 1651 | 18 | Fs::DirListing { dir: database/clickhouse } |  |  | 0.655 |
+| walker |  | 1669 | 18 | Fs::DirListing { dir: database/firebird } |  |  | 0.655 |
+| walker |  | 1687 | 18 | Fs::DirListing { dir: database/redshift } |  |  | 0.655 |
+| walker |  | 1705 | 18 | Fs::DirListing { dir: database/spanner } |  |  | 0.655 |
+| walker |  | 1723 | 18 | Fs::DirListing { dir: database/sqlcipher } |  |  | 0.655 |
+| ns | 1738 |  | 276 | The Migrate struct and its documented public knobs | 2.5 |  | 0.600 |
+| walker |  | 1741 | 18 | Fs::DirListing { dir: database/sqlite3 } |  |  | 0.600 |
+| walker |  | 1759 | 18 | Fs::DirListing { dir: database/sqlserver } |  |  | 0.600 |
+| walker |  | 1779 | 20 | Fs::DirListing { dir: database/ql } |  |  | 0.600 |
+| walker |  | 1799 | 20 | Fs::DirListing { dir: database/rqlite } |  |  | 0.600 |
+| walker |  | 1821 | 22 | Fs::DirListing { dir: database/pgx } |  |  | 0.600 |
+| walker |  | 1843 | 22 | Fs::DirListing { dir: database/postgres } |  |  | 0.600 |
+| walker |  | 1855 | 12 | Markdown::ReadmeHeadline { file: database/spanner/README.md } |  |  | 0.600 |
+| walker |  | 1879 | 24 | Fs::DirListing { dir: database/yugabytedb } |  |  | 0.600 |
+| walker |  | 1905 | 26 | Fs::DirListing { dir: database/cockroachdb } |  |  | 0.600 |
 | ns | 1916 |  | 178 | Structured error types ErrShortLimit and ErrDirty | 2.6 |  | 0.583 |
-| walker |  | 1932 | 82 | Code::CodeKey { rung: Names, file: util.go, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
-| walker |  | 1946 | 14 | Code::CodeKey { rung: Decl, file: util.go, decl: 1, sub: 0, line: 13 } |  |  | 0.583 |
-| walker |  | 1973 | 27 | Markdown::ReadmeHeadline { file: source/aws_s3/README.md } |  |  | 0.583 |
+| walker |  | 1931 | 26 | Fs::DirListing { dir: database/neo4j } |  |  | 0.583 |
+| walker |  | 1946 | 15 | Fs::DirListing { dir: database/pgx/v5 } |  |  | 0.583 |
+| walker |  | 1973 | 27 | Code::CodeKey { rung: Names, file: database/error.go, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
 | walker |  | 1994 | 21 | Code::CodeKey { rung: ModuleDoc, file: database/multistmt/parse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
 | walker |  | 2092 | 98 | Code::CodeKey { rung: Names, file: migration.go, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
 | walker |  | 2109 | 17 | Code::CodeKey { rung: Decl, file: migration.go, decl: 3, sub: 0, line: 77 } |  |  | 0.583 |

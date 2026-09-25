@@ -1,4 +1,4 @@
-Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.777/0.623/0.497/0.688/0.575/0.476/0.520
+Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.777/0.623/0.606/0.688/0.575/0.476/0.520
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,24 +38,24 @@ Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 1439 | 92 | Code::CodeKey { rung: Decl, file: src/typeguard/_config.py, decl: 5, sub: 0, line: 62 } |  |  | 0.623 |
 | walker |  | 1448 | 9 | Code::CodeKey { rung: Body, file: src/typeguard/_exceptions.py, decl: 3, sub: 0, line: 15 } |  |  | 0.623 |
 | ns | 1473 |  | 134 | docs/index.rst in full | 1.11 |  | 0.576 |
-| walker |  | 1565 | 117 | Code::CodeKey { rung: Names, file: src/typeguard/_importhook.py, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
-| walker |  | 1597 | 32 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 5, sub: 0, line: 55 } |  |  | 0.576 |
-| ns | 1636 |  | 163 | check_type(): real signature and the TypeCheckFailCallback alias | 2.1 |  | 0.548 |
-| walker |  | 1646 | 49 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 17, sub: 0, line: 183 } |  |  | 0.548 |
-| walker |  | 1706 | 60 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 12, sub: 0, line: 156 } |  |  | 0.548 |
-| walker |  | 1711 | 5 | Code::CodeKey { rung: Body, file: src/typeguard/_importhook.py, decl: 14, sub: 0, line: 164 } |  |  | 0.548 |
-| ns | 1752 |  | 116 | @typechecked: implementation signature | 2.2 |  | 0.533 |
-| walker |  | 1772 | 61 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 8, sub: 0, line: 109 } |  |  | 0.533 |
-| walker |  | 1824 | 52 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 15, sub: 0, line: 167 } |  |  | 0.533 |
-| walker |  | 1880 | 56 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 10, sub: 0, line: 124 } |  |  | 0.533 |
-| walker |  | 1997 | 117 | Code::CodeKey { rung: Names, file: src/typeguard/_suppression.py, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
-| walker |  | 2003 | 6 | Code::CodeKey { rung: Decl, file: src/typeguard/_suppression.py, decl: 5, sub: 0, line: 22 } |  |  | 0.534 |
-| walker |  | 2009 | 6 | Code::CodeKey { rung: Decl, file: src/typeguard/_suppression.py, decl: 6, sub: 0, line: 26 } |  |  | 0.534 |
-| walker |  | 2043 | 34 | Code::CodeKey { rung: Decl, file: src/typeguard/_suppression.py, decl: 7, sub: 0, line: 30 } |  |  | 0.535 |
-| ns | 2059 |  | 307 | check_type() docstring: semantics and the global-config exemption | 2.3 | 2.1 | 0.497 |
-| walker |  | 2076 | 33 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 3, sub: 0, line: 45 } |  |  | 0.497 |
-| walker |  | 2176 | 100 | Fs::DirListing { dir: tests } |  |  | 0.584 |
-| walker |  | 2190 | 14 | Fs::DirListing { dir: tests/mypy } |  |  | 0.608 |
+| walker |  | 1548 | 100 | Fs::DirListing { dir: tests } |  |  | 0.677 |
+| walker |  | 1562 | 14 | Fs::DirListing { dir: tests/mypy } |  |  | 0.705 |
+| ns | 1636 |  | 163 | check_type(): real signature and the TypeCheckFailCallback alias | 2.1 |  | 0.670 |
+| walker |  | 1679 | 117 | Code::CodeKey { rung: Names, file: src/typeguard/_importhook.py, decl: 0, sub: 0, line: 0 } |  |  | 0.671 |
+| walker |  | 1711 | 32 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 5, sub: 0, line: 55 } |  |  | 0.671 |
+| ns | 1752 |  | 116 | @typechecked: implementation signature | 2.2 |  | 0.651 |
+| walker |  | 1760 | 49 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 17, sub: 0, line: 183 } |  |  | 0.652 |
+| walker |  | 1820 | 60 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 12, sub: 0, line: 156 } |  |  | 0.652 |
+| walker |  | 1825 | 5 | Code::CodeKey { rung: Body, file: src/typeguard/_importhook.py, decl: 14, sub: 0, line: 164 } |  |  | 0.652 |
+| walker |  | 1886 | 61 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 8, sub: 0, line: 109 } |  |  | 0.653 |
+| walker |  | 1938 | 52 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 15, sub: 0, line: 167 } |  |  | 0.653 |
+| walker |  | 1994 | 56 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 10, sub: 0, line: 124 } |  |  | 0.653 |
+| ns | 2059 |  | 307 | check_type() docstring: semantics and the global-config exemption | 2.3 | 2.1 | 0.606 |
+| walker |  | 2111 | 117 | Code::CodeKey { rung: Names, file: src/typeguard/_suppression.py, decl: 0, sub: 0, line: 0 } |  |  | 0.607 |
+| walker |  | 2117 | 6 | Code::CodeKey { rung: Decl, file: src/typeguard/_suppression.py, decl: 5, sub: 0, line: 22 } |  |  | 0.607 |
+| walker |  | 2123 | 6 | Code::CodeKey { rung: Decl, file: src/typeguard/_suppression.py, decl: 6, sub: 0, line: 26 } |  |  | 0.608 |
+| walker |  | 2157 | 34 | Code::CodeKey { rung: Decl, file: src/typeguard/_suppression.py, decl: 7, sub: 0, line: 30 } |  |  | 0.608 |
+| walker |  | 2190 | 33 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 3, sub: 0, line: 45 } |  |  | 0.608 |
 | ns | 2451 |  | 392 | @typechecked docstring: what it instruments and the -O no-op | 2.4 | 2.2 | 0.561 |
 | walker |  | 2569 | 379 | Markdown::Section { file: README.rst, section_index: 0, keeps_default_concavity: false } |  |  | 0.678 |
 | ns | 2613 |  | 162 | ForwardRefPolicy enum with member docs | 2.5 |  | 0.656 |

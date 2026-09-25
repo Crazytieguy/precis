@@ -234,37 +234,6 @@ src/
       181→    TooManyRedirects,
       182→    URLRequired,
       183→)
-      184→from .models import PreparedRequest, Request, Response
-      185→from .sessions import Session, session
-      186→from .status_codes import codes
-      187→
-      188→__all__ = (
-      189→    "ConnectionError",
-      190→    "ConnectTimeout",
-      191→    "HTTPError",
-      192→    "JSONDecodeError",
-      193→    "PreparedRequest",
-      194→    "ReadTimeout",
-      195→    "Request",
-      196→    "RequestException",
-      197→    "Response",
-      198→    "Session",
-      199→    "Timeout",
-      200→    "TooManyRedirects",
-      201→    "URLRequired",
-      202→    "codes",
-      203→    "delete",
-      204→    "get",
-      205→    "head",
-      206→    "options",
-      207→    "packages",
-      208→    "patch",
-      209→    "post",
-      210→    "put",
-      211→    "request",
-      212→    "session",
-      213→    "utils",
-      214→)
       …
     __version__.py
     _internal_utils.py
@@ -362,4 +331,25 @@ src/
       …
     utils.py
 tests/
+  __init__.py
+  certs/
+    README.md
+    expired/
+    mtls/
+    valid/
+  compat.py
+  conftest.py
+  test_adapters.py
+  test_help.py
+  test_hooks.py
+  test_lowlevel.py
+  test_packages.py
+  test_requests.py
+  test_structures.py
+  test_testserver.py
+  test_utils.py
+  testserver/
+    __init__.py (empty)
+    server.py
+  utils.py
 tox.ini

@@ -10,10 +10,10 @@ Score(3000)=0.572 I=0.768 C=0.426 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | ns | 227 |  | 129 | go.mod: module path, Go version floor, and the four dependencies | 1.2 |  | 0.000 |
 | walker |  | 244 | 30 | GoMod::Identity { file: go.mod } |  |  | 0.121 |
 | walker |  | 280 | 36 | Code::CodeKey { rung: Names, file: command_win.go, decl: 0, sub: 0, line: 0 } |  |  | 0.121 |
-| walker |  | 306 | 26 | Fs::DirListing { dir: site/content } |  |  | 0.122 |
-| walker |  | 354 | 48 | Code::CodeKey { rung: ModuleDoc, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.238 |
-| ns | 366 |  | 139 | Complete .go roster of the root package: sources and colocated tests | 1.3 |  | 0.499 |
-| walker |  | 413 | 59 | Fs::DirListing { dir: doc } |  |  | 0.509 |
+| walker |  | 339 | 59 | Fs::DirListing { dir: doc } |  |  | 0.124 |
+| walker |  | 365 | 26 | Fs::DirListing { dir: site/content } |  |  | 0.125 |
+| ns | 366 |  | 139 | Complete .go roster of the root package: sources and colocated tests | 1.3 |  | 0.443 |
+| walker |  | 413 | 48 | Code::CodeKey { rung: ModuleDoc, file: command.go, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
 | walker |  | 426 | 13 | Fs::DirListing { dir: .github } |  |  | 0.515 |
 | walker |  | 435 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.519 |
 | ns | 507 |  | 141 | README 'Overview': what the library does, first half | 1.4 |  | 0.453 |

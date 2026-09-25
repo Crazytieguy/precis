@@ -15,19 +15,19 @@ Score(3000)=0.652 I=0.800 C=0.531 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 188 | 40 | Fs::DirListing { dir: sps/src/cli } |  |  | 0.706 |
 | walker |  | 209 | 21 | Fs::DirListing { dir: sps-net/src } |  |  | 0.708 |
 | ns | 223 |  | 95 | README deprecation warning: sps will be superseded by sps2 | 1.3 |  | 0.606 |
-| walker |  | 234 | 25 | Fs::DirListing { dir: sps-core/src } |  |  | 0.609 |
-| walker |  | 245 | 11 | Fs::DirListing { dir: sps-core/src/build } |  |  | 0.612 |
-| walker |  | 257 | 12 | Fs::DirListing { dir: sps-core/src/check } |  |  | 0.615 |
-| walker |  | 269 | 12 | Fs::DirListing { dir: sps-core/src/pipeline } |  |  | 0.618 |
-| walker |  | 283 | 14 | Fs::DirListing { dir: sps-core/src/utils } |  |  | 0.622 |
-| walker |  | 300 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.629 |
-| walker |  | 317 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.636 |
-| ns | 336 |  | 113 | README section headings (all H2s) | 1.4 |  | 0.518 |
-| walker |  | 337 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.527 |
-| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.459 |
-| walker |  | 414 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.600 |
-| walker |  | 422 | 8 | Fs::DirListing { dir: .github } |  |  | 0.600 |
-| walker |  | 426 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.601 |
+| walker |  | 286 | 77 | Toml::Identity { file: Cargo.toml } |  |  | 0.635 |
+| walker |  | 294 | 8 | Fs::DirListing { dir: .github } |  |  | 0.636 |
+| walker |  | 298 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.636 |
+| walker |  | 323 | 25 | Fs::DirListing { dir: sps-core/src } |  |  | 0.639 |
+| walker |  | 334 | 11 | Fs::DirListing { dir: sps-core/src/build } |  |  | 0.641 |
+| ns | 336 |  | 113 | README section headings (all H2s) | 1.4 |  | 0.521 |
+| walker |  | 346 | 12 | Fs::DirListing { dir: sps-core/src/check } |  |  | 0.523 |
+| walker |  | 358 | 12 | Fs::DirListing { dir: sps-core/src/pipeline } |  |  | 0.526 |
+| walker |  | 372 | 14 | Fs::DirListing { dir: sps-core/src/utils } |  |  | 0.529 |
+| walker |  | 389 | 17 | Fs::DirListing { dir: sps-core/src/uninstall } |  |  | 0.535 |
+| walker |  | 406 | 17 | Fs::DirListing { dir: sps-core/src/upgrade } |  |  | 0.540 |
+| ns | 413 |  | 77 | Workspace membership | 1.5 |  | 0.591 |
+| walker |  | 426 | 20 | Fs::DirListing { dir: sps-core/src/install } |  |  | 0.601 |
 | ns | 490 |  | 77 | Per-crate one-line role | 1.6 |  | 0.567 |
 | walker |  | 517 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
 | walker |  | 527 | 10 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 0, line: 56 } |  |  | 0.567 |

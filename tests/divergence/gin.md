@@ -1,4 +1,4 @@
-Score(3000)=0.390 I=0.326 C=0.467 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.454/0.396/0.433/0.390/0.337/0.478/0.440
+Score(3000)=0.390 I=0.326 C=0.467 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/4327/6240/9000)=0.454/0.510/0.433/0.390/0.337/0.478/0.440
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,17 +45,17 @@ Score(3000)=0.390 I=0.326 C=0.467 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 1204 | 15 | Code::CodeKey { rung: Decl, file: fs.go, decl: 1, sub: 0, line: 13 } |  |  | 0.380 |
 | walker |  | 1216 | 12 | Code::CodeKey { rung: Decl, file: fs.go, decl: 3, sub: 0, line: 28 } |  |  | 0.380 |
 | ns | 1238 |  | 117 | Remaining source/data directory listings (codec, ginS, internal, docs, examples, testdata) | 1.9 |  | 0.405 |
-| walker |  | 1264 | 48 | Code::CodeKey { rung: Names, file: render/redirect.go, decl: 0, sub: 0, line: 0 } |  |  | 0.405 |
-| walker |  | 1295 | 31 | Code::CodeKey { rung: Decl, file: render/redirect.go, decl: 1, sub: 0, line: 13 } |  |  | 0.405 |
-| walker |  | 1314 | 19 | Code::CodeKey { rung: Doc, file: fs.go, decl: 2, sub: 0, line: 18 } |  |  | 0.405 |
-| ns | 1436 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.396 |
-| walker |  | 1558 | 244 | Code::CodeKey { rung: Names, file: logger.go, decl: 0, sub: 0, line: 0 } |  |  | 0.396 |
-| walker |  | 1567 | 9 | Code::CodeKey { rung: Decl, file: logger.go, decl: 2, sub: 0, line: 19 } |  |  | 0.396 |
-| walker |  | 1574 | 7 | Code::CodeKey { rung: Decl, file: logger.go, decl: 3, sub: 0, line: 25 } |  |  | 0.396 |
-| walker |  | 1592 | 18 | Code::CodeKey { rung: Doc, file: logger.go, decl: 6, sub: 0, line: 62 } |  |  | 0.396 |
-| walker |  | 1610 | 18 | Code::CodeKey { rung: Doc, file: logger.go, decl: 7, sub: 0, line: 65 } |  |  | 0.396 |
-| ns | 1686 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.359 |
-| walker |  | 1766 | 156 | Fs::DirListing { dir: binding } |  |  | 0.462 |
+| walker |  | 1372 | 156 | Fs::DirListing { dir: binding } |  |  | 0.527 |
+| walker |  | 1420 | 48 | Code::CodeKey { rung: Names, file: render/redirect.go, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
+| ns | 1436 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.510 |
+| walker |  | 1451 | 31 | Code::CodeKey { rung: Decl, file: render/redirect.go, decl: 1, sub: 0, line: 13 } |  |  | 0.510 |
+| walker |  | 1470 | 19 | Code::CodeKey { rung: Doc, file: fs.go, decl: 2, sub: 0, line: 18 } |  |  | 0.510 |
+| ns | 1686 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.462 |
+| walker |  | 1714 | 244 | Code::CodeKey { rung: Names, file: logger.go, decl: 0, sub: 0, line: 0 } |  |  | 0.462 |
+| walker |  | 1723 | 9 | Code::CodeKey { rung: Decl, file: logger.go, decl: 2, sub: 0, line: 19 } |  |  | 0.462 |
+| walker |  | 1730 | 7 | Code::CodeKey { rung: Decl, file: logger.go, decl: 3, sub: 0, line: 25 } |  |  | 0.462 |
+| walker |  | 1748 | 18 | Code::CodeKey { rung: Doc, file: logger.go, decl: 6, sub: 0, line: 62 } |  |  | 0.462 |
+| walker |  | 1766 | 18 | Code::CodeKey { rung: Doc, file: logger.go, decl: 7, sub: 0, line: 65 } |  |  | 0.462 |
 | walker |  | 1786 | 20 | Code::CodeKey { rung: Doc, file: fs.go, decl: 1, sub: 0, line: 13 } |  |  | 0.462 |
 | walker |  | 1839 | 53 | Code::CodeKey { rung: Names, file: binding/query.go, decl: 0, sub: 0, line: 0 } |  |  | 0.462 |
 | ns | 2022 |  | 336 | IRoutes / IRouter: the complete route-registration interface | 2.3 |  | 0.433 |

@@ -5,10 +5,10 @@ Score(3000)=0.577 I=0.790 C=0.422 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | ns | 34 |  | 34 | Crate identity: README title and one-line description | 1.1 |  | 0.000 |
 | walker |  | 46 | 46 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | walker |  | 67 | 21 | Fs::DirListing { dir: src } |  |  | 0.000 |
-| walker |  | 70 | 3 | Fs::DirListing { dir: .github } |  |  | 0.000 |
-| walker |  | 74 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.000 |
-| ns | 80 |  | 46 | Complete root listing | 1.2 |  | 0.575 |
-| walker |  | 94 | 20 | Fs::DirListing { dir: src/kv } |  |  | 0.635 |
+| ns | 80 |  | 46 | Complete root listing | 1.2 |  | 0.574 |
+| walker |  | 87 | 20 | Fs::DirListing { dir: src/kv } |  |  | 0.634 |
+| walker |  | 90 | 3 | Fs::DirListing { dir: .github } |  |  | 0.634 |
+| walker |  | 94 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.635 |
 | walker |  | 98 | 4 | Fs::DirListing { dir: benches } |  |  | 0.637 |
 | ns | 121 |  | 41 | Complete src/ and src/kv/ listings | 1.3 |  | 0.632 |
 | walker |  | 150 | 52 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |

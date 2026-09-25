@@ -140,24 +140,12 @@ internal/
     server.go
       …
       13→type PublicAppInfo struct {
-      14→	BASE_PATH           string
-      15→	HUB_VERSION         string
-      16→	HUB_URL             string
-      17→	OAUTH_DISABLE_POPUP bool `json:"OAUTH_DISABLE_POPUP,omitempty"`
-      18→}
       …
       21→func modifyIndexHTML(hub *Hub, html []byte) string {
       …
       31→func getPublicAppInfo(hub *Hub) PublicAppInfo {
       …
     server_development.go
-      …
-      18→type responseModifier struct {
-      …
-      23→func (rm *responseModifier) RoundTrip(req *http.Request) (*http.Response, error) {
-      …
-      48→func (h *Hub) startServer(se *core.ServeEvent) error {
-      …
     server_production.go
       …
       18→func (h *Hub) startServer(se *core.ServeEvent) error {
@@ -227,14 +215,6 @@ internal/
     records_deletion_test.go
     records_test.go
     records_test_helpers.go
-      …
-      10→func DeleteOldSystemStats(app core.App) error {
-      …
-      15→func DeleteOldAlertsHistory(app core.App, countToKeep, countBeforeDeletion int) error {
-      …
-      20→func TwoDecimals(value float64) float64 {
-      21→	return twoDecimals(value)
-      …
   site/
     .gitignore
     .prettierrc
@@ -350,17 +330,6 @@ internal/
           use-toast.ts
       index.css
       lib/
-        alerts.ts
-        api.ts
-        enums.ts
-        i18n.ts
-        languages.ts
-        shiki.ts
-        stores.ts
-        systemsManager.ts
-        time.ts (empty)
-        use-intersection-observer.ts
-        utils.ts
       locales/
       main.tsx
         …
@@ -414,8 +383,7 @@ readme.md
   56→## Help and discussion
   …
   68→## License
-  69→
-  70→Beszel is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+  …
 supplemental/
   CHANGELOG.md
   debian/

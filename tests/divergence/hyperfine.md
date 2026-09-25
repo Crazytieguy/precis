@@ -35,8 +35,8 @@ Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 751 | 172 | Toml::Identity { file: Cargo.toml } |  |  | 0.918 |
 | walker |  | 786 | 35 | Toml::Operational { file: Cargo.toml } |  |  | 0.918 |
 | walker |  | 827 | 41 | Code::CodeKey { rung: Names, file: src/cli.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.918 |
-| walker |  | 848 | 21 | Fs::DirListing { dir: tests } |  |  | 0.921 |
-| walker |  | 890 | 42 | Code::CodeKey { rung: Decl, file: src/cli.rs, decl: 1, sub: 0, line: 8 } |  |  | 0.921 |
+| walker |  | 869 | 42 | Code::CodeKey { rung: Decl, file: src/cli.rs, decl: 1, sub: 0, line: 8 } |  |  | 0.918 |
+| walker |  | 890 | 21 | Fs::DirListing { dir: tests } |  |  | 0.921 |
 | ns | 899 |  | 256 | src/main.rs: the run() pipeline | 1.10 | 1.9 | 0.806 |
 | ns | 983 |  | 84 | src/main.rs: main() error reporting and exit code | 1.11 | 1.10 | 0.772 |
 | walker |  | 1039 | 149 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.843 |
@@ -89,15 +89,15 @@ Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 2366 |  | 220 | src/options.rs: the Options struct, run bounds through setup_command | 3.1 |  | 0.600 |
 | walker |  | 2387 | 52 | Code::CodeKey { rung: Decl, file: src/benchmark/scheduler.rs, decl: 1, sub: 0, line: 13 } |  |  | 0.600 |
 | walker |  | 2439 | 52 | Code::CodeKey { rung: Decl, file: src/output/warnings.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.601 |
-| walker |  | 2495 | 56 | Fs::DirListing { dir: scripts } |  |  | 0.648 |
-| ns | 2577 |  | 211 | src/options.rs: remaining Options fields (output, sort, executor, I/O, time unit) | 3.2 | 3.1 | 0.627 |
-| walker |  | 2606 | 111 | Code::CodeKey { rung: Decl, file: src/command.rs, decl: 1, sub: 0, line: 21 } |  |  | 0.627 |
-| walker |  | 2616 | 10 | Code::CodeKey { rung: Doc, file: src/output/warnings.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.627 |
-| walker |  | 2626 | 10 | Code::CodeKey { rung: Doc, file: src/util/units.rs, decl: 2, sub: 0, line: 6 } |  |  | 0.627 |
-| walker |  | 2639 | 13 | Code::CodeKey { rung: Doc, file: src/command.rs, decl: 1, sub: 0, line: 21 } |  |  | 0.628 |
-| walker |  | 2701 | 62 | Code::CodeKey { rung: Names, file: src/export/markup.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.628 |
-| walker |  | 2714 | 13 | Code::CodeKey { rung: Decl, file: src/export/markup.rs, decl: 10, sub: 0, line: 108 } |  |  | 0.628 |
-| walker |  | 2731 | 17 | Code::CodeKey { rung: Decl, file: src/export/markup.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.628 |
+| walker |  | 2550 | 111 | Code::CodeKey { rung: Decl, file: src/command.rs, decl: 1, sub: 0, line: 21 } |  |  | 0.601 |
+| walker |  | 2560 | 10 | Code::CodeKey { rung: Doc, file: src/output/warnings.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.601 |
+| walker |  | 2570 | 10 | Code::CodeKey { rung: Doc, file: src/util/units.rs, decl: 2, sub: 0, line: 6 } |  |  | 0.601 |
+| ns | 2577 |  | 211 | src/options.rs: remaining Options fields (output, sort, executor, I/O, time unit) | 3.2 | 3.1 | 0.581 |
+| walker |  | 2583 | 13 | Code::CodeKey { rung: Doc, file: src/command.rs, decl: 1, sub: 0, line: 21 } |  |  | 0.581 |
+| walker |  | 2645 | 62 | Code::CodeKey { rung: Names, file: src/export/markup.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
+| walker |  | 2658 | 13 | Code::CodeKey { rung: Decl, file: src/export/markup.rs, decl: 10, sub: 0, line: 108 } |  |  | 0.581 |
+| walker |  | 2675 | 17 | Code::CodeKey { rung: Decl, file: src/export/markup.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.581 |
+| walker |  | 2731 | 56 | Fs::DirListing { dir: scripts } |  |  | 0.628 |
 | walker |  | 2797 | 66 | Code::CodeKey { rung: Names, file: src/parameter/mod.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.628 |
 | walker |  | 2829 | 32 | Code::CodeKey { rung: Decl, file: src/parameter/mod.rs, decl: 1, sub: 0, line: 7 } |  |  | 0.628 |
 | ns | 2839 |  | 262 | src/options.rs: impl Default for Options -- the concrete default values | 3.3 | 3.1 | 0.597 |

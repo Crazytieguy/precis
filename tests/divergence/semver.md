@@ -25,8 +25,8 @@ Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 549 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
 | walker |  | 582 | 33 | Fs::DirListing { dir: test } |  |  | 0.837 |
 | walker |  | 620 | 38 | Fs::DirListing { dir: benchmarks } |  |  | 0.838 |
-| walker |  | 637 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
-| walker |  | 697 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
+| walker |  | 680 | 60 | Json::IdentityMeta { file: package.json } |  |  | 0.838 |
+| walker |  | 697 | 17 | Fs::DirListing { dir: test/classes } |  |  | 0.838 |
 | ns | 712 |  | 195 | index.js aggregate export object, first half (parse..Range) | 1.7 |  | 0.719 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.653 |
 | walker |  | 1077 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.873 |
@@ -42,9 +42,9 @@ Score(3000)=0.687 I=0.902 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 1876 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.835 |
 | ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.785 |
 | walker |  | 1981 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.785 |
-| walker |  | 2037 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.785 |
-| walker |  | 2041 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |
-| walker |  | 2045 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.785 |
+| walker |  | 1985 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.785 |
+| walker |  | 1989 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.785 |
+| walker |  | 2045 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.785 |
 | walker |  | 2129 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.787 |
 | walker |  | 2134 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.787 |
 | ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.734 |

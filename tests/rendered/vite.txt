@@ -2,27 +2,6 @@
 .git-blame-ignore-revs
 .gitattributes
 .github/
-  ISSUE_TEMPLATE/
-  PULL_REQUEST_TEMPLATE.md
-  SECURITY.md
-  commit-convention.md
-  copilot-instructions.md
-  renovate.json5
-  workflows/
-    ci.yml
-    copilot-setup-steps.yml
-    ecosystem-ci-trigger.yml
-    issue-close-require.yml
-    issue-labeled.yml
-    issue-template-check.yml
-    lock-closed-issues.yml
-    preview-release.yml
-    publish.yml
-    pull-request-template-check.yml
-    release-tag.yml
-    semantic-pull-request.yml
-    zizmor.yml
-  zizmor.yml
 .gitignore
 .oxfmtrc.json
 CODE_OF_CONDUCT.md
@@ -54,26 +33,6 @@ README.md
   61→## Sponsors
   …
 docs/
-  .vitepress/
-  _data/
-    acknowledgements.data.ts
-    blog.data.ts
-    team.js
-  acknowledgements.md
-  blog/
-  blog.md
-  changes/
-  config/
-  guide/
-  images/
-  index.md
-  live.md
-  package.json
-  plugins/
-  public/
-  releases.md
-  team.md
-  tsconfig.json
 eslint.config.js
 netlify.toml
 package.json
@@ -97,6 +56,45 @@ packages/
     package.json
     src/
       index.ts
+        …
+        11→const {
+        …
+        25→const argv = mri<{
+        …
+        36→const cwd = process.cwd()
+        …
+        39→const helpMessage = `\
+        …
+        63→type ColorFunc = (str: string) => string
+        64→type Framework = {
+        65→  name: string
+        66→  display: string
+        67→  color: ColorFunc
+        68→  variants: FrameworkVariant[]
+        69→}
+        70→type FrameworkVariant = {
+        …
+        78→const FRAMEWORKS: Framework[] = [
+        …
+        387→const TEMPLATES = FRAMEWORKS.map((f) => f.variants.map((v) => v.name)).reduce(
+        388→  (a, b) => a.concat(b),
+        389→  [],
+        390→)
+        392→const renameFiles: Record<string, string | undefined> = {
+        393→  _gitignore: '.gitignore',
+        394→}
+        396→const defaultTargetDir = 'vite-project'
+        397→
+        398→function run([command, ...args]: string[], options?: SpawnOptions) {
+        …
+        411→function install(root: string, agent: string) {
+        …
+        425→function start(root: string, agent: string) {
+        …
+        437→async function init() {
+        …
+        702→function formatTargetDir(targetDir: string) {
+        …
     template-lit/
     template-lit-ts/
     template-preact/
