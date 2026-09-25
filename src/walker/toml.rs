@@ -11,8 +11,9 @@
 //!   and maintainer rosters, project URLs, keywords
 //! - `Operational { file }` — `[features]`, and a Python manifest's
 //!   `[project.scripts]` / `[tool.poetry.scripts]`
-//! - `Dependencies { file }` — Cargo `[dependencies]` /
-//!   `[workspace.dependencies]`, `[tool.poetry.dependencies]`, and the PEP
+//! - `Dependencies { file }` — Cargo `[dependencies]` (platform-specific
+//!   ones included) / `[workspace.dependencies]`,
+//!   `[tool.poetry.dependencies]`, and the PEP
 //!   621 dependency arrays under `[project]`
 //! - `Config { file }` — every other table of a manifest, whatever it is
 //!   named: build systems, targets, profiles, lints, patches, packaging;
@@ -265,6 +266,7 @@ fn is_dependency_group_section(name: &str) -> bool {
 }
 
 fn is_ordinary_dependency_section(name: &str) -> bool {
+    let name = untargeted_cargo_table(name);
     matches!(
         name,
         "dependencies"
@@ -276,16 +278,28 @@ fn is_ordinary_dependency_section(name: &str) -> bool {
 }
 
 fn is_cargo_development_dependency_section(name: &str) -> bool {
+    let name = untargeted_cargo_table(name);
     matches!(name, "dev-dependencies" | "build-dependencies")
         || name.starts_with("dev-dependencies.")
         || name.starts_with("build-dependencies.")
-        || (name.starts_with("target.")
-            && name.split('.').any(|segment| {
-                matches!(
-                    segment,
-                    "dependencies" | "dev-dependencies" | "build-dependencies"
-                )
-            }))
+}
+
+/// A Cargo platform-specific dependency table read as the table it scopes:
+/// `target.'cfg(unix)'.dependencies.libc` is `dependencies.libc`. Any other
+/// name comes back unchanged.
+fn untargeted_cargo_table(name: &str) -> &str {
+    let Some(rest) = name.strip_prefix("target.") else {
+        return name;
+    };
+    rest.match_indices('.')
+        .map(|(dot, _)| &rest[dot + 1..])
+        .find(|tail| {
+            matches!(
+                tail.split('.').next(),
+                Some("dependencies" | "dev-dependencies" | "build-dependencies")
+            )
+        })
+        .unwrap_or(name)
 }
 
 fn is_scripts_section(name: &str) -> bool {
@@ -756,6 +770,9 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
             "dependencies",
             "dependencies.serde",
             "workspace.dependencies",
+            "target.'cfg(unix)'.dependencies",
+            "target.'cfg(unix)'.dependencies.libc",
+            "target.x86_64-pc-windows-msvc.dependencies",
         ] {
             assert!(is_ordinary_dependency_section(name), "ordinary: {name}");
             assert!(
@@ -768,22 +785,46 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
             "dev-dependencies.proptest",
             "build-dependencies",
             "build-dependencies.cc",
-            "target.'cfg(unix)'.dependencies",
             "target.'cfg(windows)'.dev-dependencies",
             "target.'cfg(target_os = \"macos\")'.build-dependencies.bindgen",
         ] {
             assert!(
                 is_cargo_development_dependency_section(name),
-                "development/build/target: {name}"
+                "development/build: {name}"
             );
             assert!(
                 !is_ordinary_dependency_section(name),
                 "not ordinary: {name}"
             );
         }
-        for name in ["profile.release", "bin", "example", "test", "bench"] {
+        for name in [
+            "profile.release",
+            "bin",
+            "example",
+            "test",
+            "bench",
+            "target.'cfg(unix)'.rustflags",
+        ] {
             assert!(!is_dependency_section(name), "config/target only: {name}");
         }
+    }
+
+    /// Platform-specific runtime dependencies ship with the package like
+    /// untargeted ones, so they join the dependency roster; platform-specific
+    /// dev- and build-dependencies stay out of it, as their untargeted
+    /// tables do.
+    #[test]
+    fn walker_toml_cargo_target_runtime_dependencies_join_the_roster() {
+        let source = "[package]\nname = \"demo\"\n\n\
+                      [dependencies]\nserde = \"1\"\n\n\
+                      [target.'cfg(unix)'.dependencies]\nlibc = \"0.2\"\n\n\
+                      [target.'cfg(windows)'.dependencies.windows-sys]\nversion = \"0.59\"\n\n\
+                      [target.'cfg(unix)'.dev-dependencies]\nnix = \"0.29\"\n";
+        let sections = collect_sections(&parse(source), source);
+        assert_eq!(
+            section_rows(&sections, is_ordinary_dependency_section),
+            vec![4, 5, 6, 7, 8, 9, 10, 11, 12],
+        );
     }
 
     /// A manifest's config appendix is a qualifier on the package the
