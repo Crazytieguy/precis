@@ -112,46 +112,46 @@ Score(3000)=0.517 I=0.569 C=0.470 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.853 |
 | walker |  | 6269 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.853 |
 | walker |  | 6444 | 175 | go doc multierror.go:71 |  |  | 0.868 |
-| walker |  | 6621 | 177 | go doc multierror.go:99 |  |  | 0.881 |
-| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.852 |
-| walker |  | 6787 | 166 | go names multierror_test.go |  |  | 0.866 |
-| walker |  | 6798 | 11 | go body multierror_test.go:13 |  |  | 0.866 |
-| walker |  | 6813 | 15 | go doc multierror_test.go:209 |  |  | 0.866 |
-| ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.852 |
-| walker |  | 6863 | 50 | go body prefix_test.go:22 |  |  | 0.852 |
-| walker |  | 6918 | 55 | go body flatten_test.go:43 |  |  | 0.852 |
-| walker |  | 6977 | 59 | go body append_test.go:45 |  |  | 0.852 |
-| walker |  | 7001 | 24 | .github/pull_request_template.md section #0 |  |  | 0.852 |
-| walker |  | 7064 | 63 | go body append_test.go:71 |  |  | 0.852 |
-| walker |  | 7130 | 66 | go body append_test.go:62 |  |  | 0.852 |
-| walker |  | 7196 | 66 | go body append_test.go:79 |  |  | 0.852 |
-| ns | 7254 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.823 |
-| walker |  | 7263 | 67 | go body append_test.go:53 |  |  | 0.824 |
-| ns | 7361 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.813 |
-| ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.813 |
-| ns | 7461 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.815 |
-| ns | 7710 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.817 |
-| ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.795 |
-| walker |  | 8120 | 857 | plaintext config .github/workflows/go-multierror.yml |  |  | 0.809 |
-| walker |  | 8207 | 87 | go body prefix_test.go:30 |  |  | 0.809 |
-| walker |  | 8298 | 91 | go body prefix_test.go:11 |  |  | 0.809 |
+| walker |  | 6610 | 166 | go names multierror_test.go |  |  | 0.882 |
+| walker |  | 6621 | 11 | go body multierror_test.go:13 |  |  | 0.882 |
+| walker |  | 6636 | 15 | go doc multierror_test.go:209 |  |  | 0.882 |
+| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.853 |
+| walker |  | 6686 | 50 | go body prefix_test.go:22 |  |  | 0.853 |
+| walker |  | 6741 | 55 | go body flatten_test.go:43 |  |  | 0.853 |
+| walker |  | 6800 | 59 | go body append_test.go:45 |  |  | 0.853 |
+| walker |  | 6824 | 24 | .github/pull_request_template.md section #0 |  |  | 0.853 |
+| ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.840 |
+| walker |  | 6887 | 63 | go body append_test.go:71 |  |  | 0.840 |
+| walker |  | 6953 | 66 | go body append_test.go:62 |  |  | 0.840 |
+| walker |  | 7019 | 66 | go body append_test.go:79 |  |  | 0.840 |
+| ns | 7254 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.811 |
+| ns | 7361 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.800 |
+| ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.801 |
+| ns | 7461 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.802 |
+| ns | 7710 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.805 |
+| walker |  | 7876 | 857 | plaintext config .github/workflows/go-multierror.yml |  |  | 0.808 |
+| walker |  | 7963 | 87 | go body prefix_test.go:30 |  |  | 0.808 |
+| ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.797 |
+| walker |  | 8140 | 177 | go doc multierror.go:99 |  |  | 0.808 |
+| walker |  | 8231 | 91 | go body prefix_test.go:11 |  |  | 0.808 |
+| walker |  | 8298 | 67 | go body append_test.go:53 |  |  | 0.809 |
 | walker |  | 8403 | 105 | go body format_test.go:11 |  |  | 0.809 |
 | ns | 8467 |  | 432 | CI steps: the `go fmt` gate and the golangci-lint job | 5.5 | 5.4 | 0.812 |
 | walker |  | 8526 | 123 | go body format_test.go:27 |  |  | 0.812 |
 | walker |  | 8653 | 127 | go body multierror_test.go:17 |  |  | 0.812 |
 | walker |  | 8782 | 129 | go body multierror_test.go:33 |  |  | 0.818 |
 | ns | 8852 |  | 385 | CI: how the linux test job actually runs the suite | 5.6 | 5.4 | 0.804 |
-| walker |  | 8915 | 133 | go body multierror_test.go:51 |  |  | 0.804 |
+| walker |  | 8917 | 135 | go body sort_test.go:13 |  |  | 0.804 |
+| walker |  | 8940 | 23 | .github/pull_request_template.md section #2 |  |  | 0.804 |
 | ns | 9035 |  | 183 | CI: what the windows job does differently | 5.7 | 5.4 | 0.796 |
-| walker |  | 9050 | 135 | go body sort_test.go:13 |  |  | 0.796 |
-| walker |  | 9073 | 23 | .github/pull_request_template.md section #2 |  |  | 0.796 |
-| walker |  | 9221 | 148 | go body multierror_test.go:65 |  |  | 0.796 |
+| walker |  | 9131 | 191 | go body sort_test.go:32 |  |  | 0.796 |
 | ns | 9237 |  | 202 | actionlint workflow, in full | 5.8 |  | 0.798 |
+| walker |  | 9264 | 133 | go body multierror_test.go:51 |  |  | 0.798 |
 | ns | 9388 |  | 151 | Dependabot configuration | 5.9 |  | 0.789 |
-| walker |  | 9412 | 191 | go body sort_test.go:32 |  |  | 0.789 |
 | ns | 9477 |  | 89 | CHANGELOG skeleton, CODEOWNERS, and the pinned Go toolchain file | 5.10 |  | 0.786 |
-| walker |  | 9650 | 238 | go body flatten_test.go:13 |  |  | 0.800 |
-| walker |  | 9687 | 37 | .github/pull_request_template.md section #1 |  |  | 0.800 |
+| walker |  | 9502 | 238 | go body flatten_test.go:13 |  |  | 0.800 |
+| walker |  | 9539 | 37 | .github/pull_request_template.md section #1 |  |  | 0.800 |
+| walker |  | 9687 | 148 | go body multierror_test.go:65 |  |  | 0.800 |
 | ns | 9744 |  | 267 | README badge block and the older-Go compile-error hint | 5.11 | 1.1 | 0.795 |
 | ns | 9803 |  | 59 | PR template section headings | 5.12 |  | 0.793 |
 | ns | 9840 |  | 37 | LICENSE identification lines | 5.13 |  | 0.792 |

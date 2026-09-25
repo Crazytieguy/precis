@@ -133,17 +133,14 @@ Score(3000)=0.416 I=0.754 C=0.230 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 9432 | 51 | headings outline in benchmark/README.md |  |  | 0.506 |
 | ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.500 |
 | walker |  | 9518 | 86 | python names tests/burntsushi.py |  |  | 0.503 |
-| walker |  | 9542 | 24 | python body src/tomli/_parser.py:497 |  |  | 0.505 |
-| walker |  | 9555 | 13 | python body src/tomli/_parser.py:233 |  |  | 0.506 |
-| walker |  | 9582 | 27 | python body src/tomli/_parser.py:760 |  |  | 0.506 |
-| walker |  | 9614 | 32 | python doc src/tomli/_parser.py:71 |  |  | 0.513 |
-| walker |  | 9633 | 19 | python body src/tomli/_parser.py:313 |  |  | 0.518 |
-| ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.514 |
-| walker |  | 9684 | 51 | python body src/tomli/_parser.py:318 |  |  | 0.514 |
-| walker |  | 9712 | 28 | python body src/tomli/_parser.py:279 |  |  | 0.519 |
-| walker |  | 9782 | 70 | python body src/tomli/_parser.py:361 |  |  | 0.519 |
-| ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.514 |
-| walker |  | 9820 | 38 | python body src/tomli/_parser.py:229 |  |  | 0.519 |
-| walker |  | 9858 | 38 | python body src/tomli/_parser.py:236 |  |  | 0.520 |
-| walker |  | 9948 | 90 | python body src/tomli/_parser.py:612 |  |  | 0.528 |
-| ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.522 |
+| walker |  | 9614 | 96 | python decl tests/test_misc.py:17 |  |  | 0.508 |
+| ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.504 |
+| walker |  | 9714 | 100 | python decl tests/test_error.py:13 |  |  | 0.515 |
+| walker |  | 9732 | 18 | python doc fuzzer/fuzz.py:59 |  |  | 0.515 |
+| ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.510 |
+| walker |  | 9846 | 114 | python names tests/test_data.py |  |  | 0.516 |
+| walker |  | 9868 | 22 | python decl tests/test_data.py:27 |  |  | 0.519 |
+| walker |  | 9958 | 90 | benchmark/README.md section #0 |  |  | 0.519 |
+| walker |  | 9982 | 24 | python body src/tomli/_parser.py:497 |  |  | 0.521 |
+| ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.515 |
+| walker |  | 9995 | 13 | python body src/tomli/_parser.py:233 |  |  | 0.516 |

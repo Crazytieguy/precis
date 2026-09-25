@@ -198,9 +198,6 @@ src/
       24→  async read() {
       …
       31→  async write(arg: T) {
-      32→    this.onWriteStart()
-      33→    await this.#adapter.write(arg)
-      34→    this.onWriteEnd()
       …
       36→}
   app.test.ts
@@ -236,6 +233,16 @@ src/
   parse-where.ts
     …
     58→export function parseWhere(query: string): JsonObject {
+    59→  const out: JsonObject = {}
+    60→  const params = new URLSearchParams(query)
+    61→
+    62→  for (const [rawKey, rawValue] of params.entries()) {
+    63→    const { path, op } = splitKey(rawKey)
+    64→    if (op === null) continue
+    65→    setPathOp(out, path, op, rawValue)
+    66→  }
+    67→
+    68→  return out
     …
   random-id.ts
     …
@@ -260,7 +267,6 @@ src/
     85→    this.#db = db
     …
     92→  has(name: string): boolean {
-    93→    return Object.prototype.hasOwnProperty.call(this.#db?.data, name)
     …
     96→  findById(name: string, id: string, query: { _embed?: string[] | string }): Item | undefined {
     …
@@ -284,10 +290,8 @@ src/
     191→    return this.#updateOrPatch(name, body, true)
     …
     194→  async updateById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
-    195→    return this.#updateOrPatchById(name, id, body, false)
     …
     198→  async patchById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
-    199→    return this.#updateOrPatchById(name, id, body, true)
     …
     202→  async destroyById(
     203→    name: string,

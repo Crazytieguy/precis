@@ -19,7 +19,8 @@ README.md
   134→## Millisecond diff
   …
   145→## Conventions
-  …
+  146→
+  147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
   149→## Wildcards
   …
   161→## Environment Variables
@@ -161,8 +162,37 @@ src/
     19→		}
     20→	};
     21→})();
-    …
+    23→/**
+    24→ * Colors.
+    25→ */
     27→exports.colors = [
+    28→	'#0000CC',
+    29→	'#0000FF',
+    30→	'#0033CC',
+    31→	'#0033FF',
+    32→	'#0066CC',
+    33→	'#0066FF',
+    34→	'#0099CC',
+    35→	'#0099FF',
+    36→	'#00CC00',
+    37→	'#00CC33',
+    38→	'#00CC66',
+    39→	'#00CC99',
+    40→	'#00CCCC',
+    41→	'#00CCFF',
+    42→	'#3300CC',
+    43→	'#3300FF',
+    44→	'#3333CC',
+    45→	'#3333FF',
+    46→	'#3366CC',
+    47→	'#3366FF',
+    48→	'#3399CC',
+    49→	'#3399FF',
+    50→	'#33CC00',
+    51→	'#33CC33',
+    52→	'#33CC66',
+    …
+    104→];
     …
     115→function useColors() {
     …
@@ -198,16 +228,6 @@ src/
     218→ */
     219→function load() {
     …
-    236→/**
-    237→ * Localstorage attempts to return the localstorage.
-    238→ *
-    239→ * This is necessary because safari throws
-    240→ * when a user disables cookies/localstorage
-    241→ * and you attempt to access it.
-    242→ *
-    243→ * @return {LocalStorage}
-    244→ * @api private
-    245→ */
     247→function localstorage() {
     …
     258→module.exports = require('./common')(exports);
@@ -243,11 +263,6 @@ src/
     25→ */
     27→exports.colors = [6, 2, 3, 4, 5, 1];
     …
-    118→/**
-    119→ * Build up the default `inspectOpts` object from the environment variables.
-    120→ *
-    121→ *   $ DEBUG_COLORS=no DEBUG_DEPTH=10 DEBUG_SHOW_HIDDEN=enabled node script.js
-    122→ */
     124→exports.inspectOpts = Object.keys(process.env).filter(key => {
     125→	return /^debug_/i.test(key);
     126→}).reduce((obj, key) => {
@@ -256,9 +271,6 @@ src/
     152→ * Is stdout a TTY? Colored output is enabled when `true`.
     153→ */
     155→function useColors() {
-    156→	return 'colors' in exports.inspectOpts ?
-    157→		Boolean(exports.inspectOpts.colors) :
-    158→		tty.isatty(process.stderr.fd);
     …
     161→/**
     162→ * Adds ANSI color escape codes if enabled.
@@ -273,36 +285,12 @@ src/
     193→function log(...args) {
     194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
     …
-    197→/**
-    198→ * Save `namespaces`.
-    199→ *
-    200→ * @param {String} namespaces
-    201→ * @api private
-    202→ */
     203→function save(namespaces) {
     …
-    213→/**
-    214→ * Load `namespaces`.
-    215→ *
-    216→ * @return {String} returns the previously persisted debug modes
-    217→ * @api private
-    218→ */
     220→function load() {
     221→	return process.env.DEBUG;
     …
-    224→/**
-    225→ * Init logic for `debug` instances.
-    226→ *
-    227→ * Create a new `inspectOpts` object in case `useColors` is set
-    228→ * differently for a particular `debug` instance.
-    229→ */
     231→function init(debug) {
-    232→	debug.inspectOpts = {};
-    233→
-    234→	const keys = Object.keys(exports.inspectOpts);
-    235→	for (let i = 0; i < keys.length; i++) {
-    236→		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
-    237→	}
     …
     240→module.exports = require('./common')(exports);
     …

@@ -75,11 +75,7 @@ src/
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
     39→}
-    41→/**
-    42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
-    43→ * @name mitt
-    44→ * @returns {Mitt}
-    45→ */
+    …
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {

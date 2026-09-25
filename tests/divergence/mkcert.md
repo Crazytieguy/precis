@@ -1,4 +1,4 @@
-Score(3000)=0.838 I=0.911 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.838/0.764/0.674/0.629
+Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.837/0.763/0.625/0.608
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,77 +45,79 @@ Score(3000)=0.838 I=0.911 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | ns | 2335 |  | 207 | README: the supported root stores list and the TRUST_STORES subset note | 2.6 |  | 0.793 |
 | walker |  | 2348 | 17 | go doc cert.go:282 |  |  | 0.793 |
 | walker |  | 2367 | 19 | go body cert.go:366 |  |  | 0.793 |
-| walker |  | 2411 | 44 | go body main.go:364 |  |  | 0.793 |
-| walker |  | 2466 | 55 | go body main.go:336 |  |  | 0.793 |
-| walker |  | 2527 | 61 | go doc main.go:85 |  |  | 0.793 |
-| ns | 2566 |  | 231 | The per-platform constant blocks of all three GOOS truststore files | 2.7 | 1.8 | 0.781 |
-| walker |  | 2662 | 135 | headings outline in README.md |  |  | 0.818 |
-| walker |  | 2872 | 210 | go decl truststore_nss.go:17 |  |  | 0.830 |
-| ns | 2893 |  | 327 | NSS and Java constant blocks: the nssDBs / firefoxPaths search lists and the keytool state vars | 2.8 | 1.9 | 0.838 |
-| walker |  | 2913 | 41 | go doc truststore_java.go:110 |  |  | 0.838 |
-| walker |  | 2954 | 41 | go doc truststore_nss.go:120 |  |  | 0.838 |
-| walker |  | 3222 | 268 | go decl truststore_darwin.go:27 |  |  | 0.838 |
+| walker |  | 2502 | 135 | headings outline in README.md |  |  | 0.832 |
+| ns | 2566 |  | 231 | The per-platform constant blocks of all three GOOS truststore files | 2.7 | 1.8 | 0.818 |
+| walker |  | 2712 | 210 | go decl truststore_nss.go:17 |  |  | 0.829 |
+| walker |  | 2753 | 41 | go doc truststore_java.go:110 |  |  | 0.829 |
+| walker |  | 2794 | 41 | go doc truststore_nss.go:120 |  |  | 0.829 |
+| ns | 2893 |  | 327 | NSS and Java constant blocks: the nssDBs / firefoxPaths search lists and the keytool state vars | 2.8 | 1.9 | 0.837 |
+| walker |  | 3062 | 268 | go decl truststore_darwin.go:27 |  |  | 0.837 |
 | ns | 3259 |  | 366 | Linux platform detection: init() choosing the distro trust anchor directory and certutil install hint | 2.9 | 1.7 | 0.797 |
-| walker |  | 3315 | 93 | go body main.go:345 |  |  | 0.800 |
-| walker |  | 3537 | 222 | README.md section #0 |  |  | 0.800 |
-| ns | 3644 |  | 385 | NSS detection: init() setting hasNSS, hasCertutil and certutilPath | 2.10 | 1.9 | 0.750 |
-| walker |  | 3732 | 195 | README.md section #1 |  |  | 0.750 |
-| ns | 3943 |  | 299 | Java detection: init() resolving JAVA_HOME, keytool and the cacerts keystore | 2.11 | 1.9 | 0.717 |
-| walker |  | 4102 | 370 | go names truststore_windows.go |  |  | 0.755 |
-| walker |  | 4111 | 9 | go decl truststore_windows.go:25 |  |  | 0.758 |
-| walker |  | 4120 | 9 | go decl truststore_windows.go:19 |  |  | 0.764 |
-| walker |  | 4185 | 65 | go body truststore_windows.go:83 |  |  | 0.764 |
-| walker |  | 4253 | 68 | go body cert.go:202 |  |  | 0.764 |
-| walker |  | 4330 | 77 | go body truststore_darwin.go:105 |  |  | 0.764 |
-| ns | 4374 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.723 |
-| walker |  | 4412 | 82 | go body cert.go:166 |  |  | 0.724 |
-| walker |  | 4578 | 166 | go body main.go:382 |  |  | 0.725 |
-| walker |  | 4694 | 116 | go body truststore_nss.go:120 |  |  | 0.725 |
+| walker |  | 3284 | 222 | README.md section #0 |  |  | 0.797 |
+| walker |  | 3479 | 195 | README.md section #1 |  |  | 0.797 |
+| ns | 3644 |  | 385 | NSS detection: init() setting hasNSS, hasCertutil and certutilPath | 2.10 | 1.9 | 0.747 |
+| walker |  | 3849 | 370 | go names truststore_windows.go |  |  | 0.787 |
+| walker |  | 3858 | 9 | go decl truststore_windows.go:25 |  |  | 0.790 |
+| walker |  | 3867 | 9 | go decl truststore_windows.go:19 |  |  | 0.796 |
+| walker |  | 3932 | 65 | go body truststore_windows.go:83 |  |  | 0.796 |
+| ns | 3943 |  | 299 | Java detection: init() resolving JAVA_HOME, keytool and the cacerts keystore | 2.11 | 1.9 | 0.761 |
+| walker |  | 3976 | 44 | go body main.go:364 |  |  | 0.761 |
+| walker |  | 4044 | 68 | go body cert.go:202 |  |  | 0.761 |
+| walker |  | 4121 | 77 | go body truststore_darwin.go:105 |  |  | 0.762 |
+| walker |  | 4203 | 82 | go body cert.go:166 |  |  | 0.763 |
+| walker |  | 4258 | 55 | go body main.go:336 |  |  | 0.763 |
+| walker |  | 4374 | 116 | go body truststore_nss.go:120 |  |  | 0.722 |
+| ns | 4374 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.722 |
+| walker |  | 4496 | 122 | go body truststore_windows.go:71 |  |  | 0.722 |
+| walker |  | 4630 | 134 | go body truststore_java.go:81 |  |  | 0.722 |
+| walker |  | 4768 | 138 | go body truststore_java.go:94 |  |  | 0.725 |
 | ns | 4776 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.689 |
-| walker |  | 4811 | 117 | go body cert.go:37 |  |  | 0.691 |
-| walker |  | 4933 | 122 | go body truststore_windows.go:71 |  |  | 0.691 |
-| ns | 5035 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.666 |
-| walker |  | 5067 | 134 | go body truststore_java.go:81 |  |  | 0.667 |
-| ns | 5189 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.675 |
-| walker |  | 5323 | 256 | go body main.go:240 |  |  | 0.714 |
-| walker |  | 5461 | 138 | go body truststore_java.go:94 |  |  | 0.716 |
-| ns | 5543 |  | 354 | main(): flag conflict validation and construction of the mkcert value | 3.5 | 2.1 | 0.696 |
-| walker |  | 5604 | 143 | go body truststore_nss.go:73 |  |  | 0.696 |
-| ns | 5695 |  | 152 | main(): the flag.Usage override, -help and -version handling | 3.6 | 2.1 | 0.682 |
-| walker |  | 5753 | 149 | go body truststore_nss.go:106 |  |  | 0.684 |
-| ns | 5876 |  | 181 | commandWithSudo(): how every privileged trust-store command is wrapped | 3.7 | 1.5 | 0.690 |
-| walker |  | 5903 | 150 | go body truststore_java.go:110 |  |  | 0.690 |
-| ns | 5961 |  | 85 | generateKey(): the key algorithm and sizes | 4.1 | 1.6 | 0.692 |
-| walker |  | 6054 | 151 | go body truststore_windows.go:54 |  |  | 0.693 |
-| ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.674 |
-| walker |  | 6444 | 390 | go body main.go:307 |  |  | 0.677 |
-| ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.660 |
-| walker |  | 6654 | 210 | go body truststore_windows.go:35 |  |  | 0.661 |
-| walker |  | 6867 | 213 | go body truststore_windows.go:91 |  |  | 0.661 |
-| ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.643 |
-| walker |  | 7084 | 217 | go body cert.go:148 |  |  | 0.643 |
-| ns | 7232 |  | 251 | makeCert(): signing, and the two write paths (PEM pair vs PKCS#12) with their file modes | 4.5 | 4.4 | 0.633 |
-| walker |  | 7301 | 217 | go body truststore_nss.go:131 |  |  | 0.634 |
-| ns | 7515 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.620 |
-| walker |  | 7557 | 256 | go body truststore_nss.go:89 |  |  | 0.621 |
-| ns | 7759 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.613 |
-| walker |  | 7815 | 258 | go body truststore_linux.go:77 |  |  | 0.613 |
-| ns | 7999 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.603 |
-| walker |  | 8077 | 262 | go body truststore_linux.go:55 |  |  | 0.604 |
-| ns | 8212 |  | 213 | The identity strings: userAndHostname init, randomSerialNumber, caUniqueName | 4.9 | 1.6 | 0.610 |
-| walker |  | 8340 | 263 | go body cert.go:176 |  |  | 0.637 |
-| ns | 8476 |  | 264 | makeCertFromCSR(): the template fix-ups applied to a supplied CSR | 4.10 | 1.6 | 0.626 |
-| ns | 8605 |  | 129 | printHosts(): the certificate name list and the second-level wildcard warning | 4.11 | 1.6 | 0.631 |
-| walker |  | 8733 | 393 | go body main.go:267 |  |  | 0.633 |
-| ns | 8856 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.629 |
-| walker |  | 9029 | 296 | go body truststore_java.go:31 |  |  | 0.654 |
-| ns | 9088 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.662 |
-| walker |  | 9236 | 207 | README.md section #5 |  |  | 0.679 |
-| ns | 9331 |  | 243 | installNSS(): the certutil invocation and its failure advice | 5.3 | 1.9 | 0.683 |
-| ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.686 |
-| walker |  | 9578 | 342 | go body truststore_java.go:57 |  |  | 0.686 |
-| ns | 9610 |  | 142 | forEachNSSProfile(): how Firefox/Chromium profiles are discovered and which DB format is used | 5.5 | 1.9 | 0.690 |
-| ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.693 |
-| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.696 |
-| walker |  | 9941 | 363 | go body truststore_linux.go:27 |  |  | 0.717 |
-| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.716 |
+| walker |  | 4911 | 143 | go body truststore_nss.go:73 |  |  | 0.689 |
+| walker |  | 4972 | 61 | go doc main.go:85 |  |  | 0.689 |
+| ns | 5035 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.665 |
+| walker |  | 5089 | 117 | go body cert.go:37 |  |  | 0.666 |
+| ns | 5189 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.654 |
+| walker |  | 5238 | 149 | go body truststore_nss.go:106 |  |  | 0.656 |
+| walker |  | 5388 | 150 | go body truststore_java.go:110 |  |  | 0.656 |
+| walker |  | 5539 | 151 | go body truststore_windows.go:54 |  |  | 0.657 |
+| ns | 5543 |  | 354 | main(): flag conflict validation and construction of the mkcert value | 3.5 | 2.1 | 0.638 |
+| ns | 5695 |  | 152 | main(): the flag.Usage override, -help and -version handling | 3.6 | 2.1 | 0.626 |
+| walker |  | 5797 | 258 | go body truststore_linux.go:77 |  |  | 0.627 |
+| ns | 5876 |  | 181 | commandWithSudo(): how every privileged trust-store command is wrapped | 3.7 | 1.5 | 0.617 |
+| ns | 5961 |  | 85 | generateKey(): the key algorithm and sizes | 4.1 | 1.6 | 0.621 |
+| walker |  | 6059 | 262 | go body truststore_linux.go:55 |  |  | 0.622 |
+| walker |  | 6152 | 93 | go body main.go:345 |  |  | 0.642 |
+| ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.625 |
+| walker |  | 6359 | 207 | README.md section #5 |  |  | 0.647 |
+| ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.631 |
+| walker |  | 6654 | 295 | README.md section #2 |  |  | 0.631 |
+| walker |  | 6902 | 248 | README.md section #3 |  |  | 0.631 |
+| ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.613 |
+| walker |  | 7141 | 239 | README.md section #4 |  |  | 0.613 |
+| walker |  | 7150 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.619 |
+| ns | 7232 |  | 251 | makeCert(): signing, and the two write paths (PEM pair vs PKCS#12) with their file modes | 4.5 | 4.4 | 0.609 |
+| walker |  | 7381 | 231 | README.md section #6 |  |  | 0.609 |
+| ns | 7515 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.596 |
+| walker |  | 7635 | 254 | README.md section #7 |  |  | 0.599 |
+| ns | 7759 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.590 |
+| walker |  | 7845 | 210 | go body truststore_windows.go:35 |  |  | 0.591 |
+| ns | 7999 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.582 |
+| walker |  | 8062 | 217 | go body cert.go:148 |  |  | 0.582 |
+| ns | 8212 |  | 213 | The identity strings: userAndHostname init, randomSerialNumber, caUniqueName | 4.9 | 1.6 | 0.590 |
+| walker |  | 8279 | 217 | go body truststore_nss.go:131 |  |  | 0.591 |
+| ns | 8476 |  | 264 | makeCertFromCSR(): the template fix-ups applied to a supplied CSR | 4.10 | 1.6 | 0.581 |
+| ns | 8605 |  | 129 | printHosts(): the certificate name list and the second-level wildcard warning | 4.11 | 1.6 | 0.586 |
+| walker |  | 8642 | 363 | go body truststore_linux.go:27 |  |  | 0.612 |
+| walker |  | 8855 | 213 | go body truststore_windows.go:91 |  |  | 0.612 |
+| ns | 8856 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.608 |
+| ns | 9088 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.618 |
+| walker |  | 9151 | 296 | go body truststore_java.go:31 |  |  | 0.643 |
+| walker |  | 9317 | 166 | go body main.go:382 |  |  | 0.655 |
+| ns | 9331 |  | 243 | installNSS(): the certutil invocation and its failure advice | 5.3 | 1.9 | 0.649 |
+| ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.652 |
+| walker |  | 9573 | 256 | go body truststore_nss.go:89 |  |  | 0.664 |
+| ns | 9610 |  | 142 | forEachNSSProfile(): how Firefox/Chromium profiles are discovered and which DB format is used | 5.5 | 1.9 | 0.669 |
+| ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.672 |
+| walker |  | 9836 | 263 | go body cert.go:176 |  |  | 0.694 |
+| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.697 |
+| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.697 |

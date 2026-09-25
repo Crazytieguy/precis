@@ -123,10 +123,6 @@ lib/
     …
     59→app.init = function init() {
     …
-    85→/**
-    86→ * Initialize application configuration.
-    87→ * @private
-    88→ */
     90→app.defaultConfiguration = function defaultConfiguration() {
     …
     152→app.handle = function handle(req, res, callback) {
@@ -143,9 +139,6 @@ lib/
     351→app.set = function set(setting, val) {
     …
     399→app.path = function path() {
-    400→  return this.parent
-    401→    ? this.parent.path() + this.mountpath
-    402→    : '';
     …
     420→app.enabled = function enabled(setting) {
     421→  return Boolean(this.set(setting));
@@ -198,8 +191,6 @@ lib/
     129→  return accept.types.apply(accept, arguments);
     …
     140→req.acceptsEncodings = function(){
-    141→  var accept = accepts(this);
-    142→  return accept.encodings.apply(accept, arguments);
     …
     171→req.acceptsCharsets = function(...charsets) {
     172→  const accept = accepts(this);

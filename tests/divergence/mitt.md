@@ -1,4 +1,4 @@
-Score(3000)=0.790 I=0.936 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.748/0.790/0.863/0.713/0.705
+Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.748/0.792/0.728/0.713/0.705
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,10 +24,10 @@ Score(3000)=0.790 I=0.936 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 585 | 197 | ts decl src/index.ts:23 |  |  | 0.523 |
 | ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.479 |
 | walker |  | 772 | 187 | README headline in README.md |  |  | 0.757 |
-| walker |  | 818 | 46 | ts doc src/index.ts:46 |  |  | 0.762 |
-| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.718 |
-| walker |  | 962 | 144 | headings outline in README.md |  |  | 0.788 |
-| walker |  | 993 | 31 | README.md section #10 |  |  | 0.788 |
+| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.714 |
+| walker |  | 916 | 144 | headings outline in README.md |  |  | 0.783 |
+| walker |  | 947 | 31 | README.md section #10 |  |  | 0.783 |
+| walker |  | 993 | 46 | ts doc src/index.ts:46 |  |  | 0.788 |
 | ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.809 |
 | walker |  | 1108 | 115 | package identity metadata in package.json |  |  | 0.812 |
 | ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.818 |
@@ -46,23 +46,23 @@ Score(3000)=0.790 I=0.936 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.783 |
 | walker |  | 2555 | 280 | README.md section #2 |  |  | 0.853 |
 | ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.831 |
-| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.790 |
-| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.796 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.771 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.753 |
-| walker |  | 3453 | 898 | ts body src/index.ts:46 |  |  | 0.916 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.873 |
-| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.875 |
-| walker |  | 3665 | 212 | README.md section #6 |  |  | 0.877 |
-| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.868 |
-| walker |  | 3967 | 302 | README.md section #7 |  |  | 0.870 |
-| walker |  | 4130 | 163 | README.md section #8 |  |  | 0.871 |
-| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.836 |
-| walker |  | 4279 | 149 | json config tsconfig.json |  |  | 0.863 |
-| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.836 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.813 |
-| walker |  | 4574 | 295 | README.md section #9 |  |  | 0.815 |
-| walker |  | 4694 | 120 | plaintext config .github/workflows/compressed-size.yml |  |  | 0.816 |
+| walker |  | 2767 | 212 | README.md section #6 |  |  | 0.833 |
+| ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.792 |
+| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.798 |
+| walker |  | 3069 | 302 | README.md section #7 |  |  | 0.800 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.775 |
+| walker |  | 3232 | 163 | README.md section #8 |  |  | 0.776 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.758 |
+| walker |  | 3381 | 149 | json config tsconfig.json |  |  | 0.792 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.755 |
+| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.764 |
+| walker |  | 3676 | 295 | README.md section #9 |  |  | 0.765 |
+| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.758 |
+| walker |  | 3796 | 120 | plaintext config .github/workflows/compressed-size.yml |  |  | 0.759 |
+| ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.728 |
+| ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.705 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.686 |
+| walker |  | 4694 | 898 | ts body src/index.ts:46 |  |  | 0.816 |
 | ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.795 |
 | walker |  | 4911 | 217 | plaintext config .github/workflows/main.yml |  |  | 0.835 |
 | walker |  | 4930 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.835 |

@@ -41,19 +41,40 @@ README.md
   41→See the [github wiki page](https://github.com/kikito/middleclass/wiki) for examples & documentation.
   42→
   43→You can read the `CHANGELOG.md` file to see what has changed on each version of this library.
-  …
+  45→If you need help updating to a new middleclass version, read `UPDATING.md`.
+  46→
   47→Installation
   48→============
-  …
+  49→
+  50→Just copy the middleclass.lua file wherever you want it (for example on a lib/ folder). Then write this in any Lua file where you want to use it:
+  51→
+  52→```lua
+  53→local class = require 'middleclass'
+  54→```
+  55→
   56→Specs
   57→=====
-  …
+  58→
+  59→This project uses [busted](http://olivinelabs.com/busted/) for its specs. If you want to run the specs, you will have to install it first. Then just execute the following:
+  60→
+  61→```bash
+  62→cd /folder/where/the/spec/folder/is
+  63→busted
+  64→```
+  65→
   66→Performance tests
   67→=================
-  …
+  68→
+  69→Middleclass also comes with a small performance test suite. Just run the following command:
+  70→
+  71→```bash
+  72→lua performance/run.lua
+  73→```
+  74→
   75→License
   76→=======
-  …
+  77→
+  78→Middleclass is distributed under the MIT license.
 UPDATING.md
   1→Updating from 3.x to 4.x
   2→========================
@@ -102,29 +123,6 @@ middleclass.lua
   4→  _URL         = 'https://github.com/kikito/middleclass',
   …
   31→local function _createIndexWrapper(aClass, f)
-  32→  if f == nil then
-  33→    return aClass.__instanceDict
-  34→  elseif type(f) == "function" then
-  35→    return function(self, name)
-  36→      local value = aClass.__instanceDict[name]
-  37→
-  38→      if value ~= nil then
-  39→        return value
-  40→      else
-  41→        return (f(self, name))
-  42→      end
-  43→    end
-  44→  else -- if  type(f) == "table" then
-  45→    return function(self, name)
-  46→      local value = aClass.__instanceDict[name]
-  47→
-  48→      if value ~= nil then
-  49→        return value
-  50→      else
-  51→        return f[name]
-  52→      end
-  53→    end
-  54→  end
   …
   57→local function _propagateInstanceMethod(aClass, name, f)
   58→  f = name == "__index" and _createIndexWrapper(aClass, f) or f

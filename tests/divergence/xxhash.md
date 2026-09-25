@@ -1,4 +1,4 @@
-Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.574/0.505/0.519/0.679/0.554/0.747/0.741
+Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.574/0.505/0.519/0.679/0.554/0.718/0.741
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -112,57 +112,57 @@ Score(3000)=0.679 I=0.793 C=0.581 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | ns | 5049 |  | 265 | `xxhash_other.go` `Sum64`, part 3: tail loops and avalanche | 3.15 | 2.3 | 0.646 |
 | walker |  | 5199 | 168 | go names xxhash_test.go |  |  | 0.647 |
 | walker |  | 5307 | 108 | go body xxhash.go:113 |  |  | 0.668 |
-| walker |  | 5344 | 37 | go body xxhash.go:222 |  |  | 0.674 |
-| walker |  | 5383 | 39 | go body xxhash.go:208 |  |  | 0.681 |
-| ns | 5393 |  | 344 | `xxhash_unsafe.go`: the inliner-cost design commentary | 3.16 | 2.4 | 0.661 |
-| walker |  | 5424 | 41 | go body xxhash.go:229 |  |  | 0.671 |
-| ns | 5510 |  | 117 | `testall.sh` in full: the four tag/arch test combinations | 4.1 |  | 0.675 |
-| walker |  | 5569 | 145 | go body xxhash.go:176 |  |  | 0.692 |
-| ns | 5608 |  | 98 | Roster of every function in `xxhash_test.go` | 4.2 |  | 0.695 |
-| walker |  | 5622 | 53 | go doc xxhash.go:23 |  |  | 0.706 |
-| walker |  | 5826 | 204 | go body xxhash.go:190 |  |  | 0.729 |
-| ns | 5936 |  | 328 | The complete golden-vector table in `TestAll` | 4.3 | 4.2 | 0.713 |
-| ns | 6083 |  | 147 | `bench_test.go`: the input-size table and all four benchmark names | 4.4 |  | 0.705 |
-| ns | 6175 |  | 92 | `xxhash_unsafe_test.go`: build tag and both test names | 4.5 |  | 0.701 |
-| walker |  | 6210 | 384 | go body xxhash.go:75 |  |  | 0.747 |
-| ns | 6298 |  | 123 | `TestInlining`: which functions must inline, and how it checks | 4.6 | 4.5 | 0.737 |
-| ns | 6520 |  | 222 | `xxhsum/`: the CLI's usage text and argument handling | 4.7 |  | 0.730 |
-| walker |  | 6681 | 471 | go body xxhash.go:129 |  |  | 0.779 |
-| walker |  | 6689 | 8 | plaintext config dynamic/.gitignore |  |  | 0.779 |
-| walker |  | 6786 | 97 | go names xxhashbench/xxhashbench_test.go |  |  | 0.779 |
-| ns | 6790 |  | 270 | `xxhsum/`: the file loop, `contains`, and the output format | 4.8 | 4.7 | 0.778 |
-| walker |  | 6826 | 40 | go doc xxhash_unsafe_test.go:31 |  |  | 0.781 |
-| walker |  | 6835 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.781 |
-| walker |  | 6923 | 88 | go decl bench_test.go:8 |  |  | 0.793 |
-| ns | 6928 |  | 138 | `dynamic/`: the `plugin` build-tag file and its two exported tests | 4.9 |  | 0.789 |
-| walker |  | 7031 | 108 | go body bench_test.go:34 |  |  | 0.789 |
-| walker |  | 7157 | 126 | go body bench_test.go:63 |  |  | 0.789 |
-| ns | 7158 |  | 230 | `dynamic/dynamic_test.go`: building the plugin and calling into it | 4.10 |  | 0.772 |
-| walker |  | 7291 | 134 | go body bench_test.go:19 |  |  | 0.772 |
-| ns | 7367 |  | 209 | `xxhashbench/`: separate module, `replace ../`, and its deprecation TODO | 4.11 |  | 0.767 |
-| walker |  | 7442 | 151 | go body xxhash_unsafe_test.go:13 |  |  | 0.767 |
-| ns | 7566 |  | 199 | `xxhashbench/`: the comparison table's shape and every hash it compares | 4.12 | 4.11 | 0.754 |
-| walker |  | 7594 | 152 | go body bench_test.go:46 |  |  | 0.754 |
-| walker |  | 7761 | 167 | go body xxhash_test.go:97 |  |  | 0.754 |
-| ns | 7899 |  | 333 | CI: the test matrix and the exact commands run | 4.13 |  | 0.738 |
-| walker |  | 7936 | 175 | go body xxhash_test.go:114 |  |  | 0.738 |
-| walker |  | 7996 | 60 | go body xxhash_test.go:193 |  |  | 0.738 |
+| walker |  | 5315 | 8 | plaintext config dynamic/.gitignore |  |  | 0.668 |
+| walker |  | 5352 | 37 | go body xxhash.go:222 |  |  | 0.674 |
+| ns | 5393 |  | 344 | `xxhash_unsafe.go`: the inliner-cost design commentary | 3.16 | 2.4 | 0.655 |
+| walker |  | 5449 | 97 | go names xxhashbench/xxhashbench_test.go |  |  | 0.655 |
+| walker |  | 5489 | 40 | go doc xxhash_unsafe_test.go:31 |  |  | 0.655 |
+| walker |  | 5498 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.655 |
+| ns | 5510 |  | 117 | `testall.sh` in full: the four tag/arch test combinations | 4.1 |  | 0.660 |
+| walker |  | 5537 | 39 | go body xxhash.go:208 |  |  | 0.667 |
+| walker |  | 5578 | 41 | go body xxhash.go:229 |  |  | 0.676 |
+| ns | 5608 |  | 98 | Roster of every function in `xxhash_test.go` | 4.2 |  | 0.680 |
+| walker |  | 5666 | 88 | go decl bench_test.go:8 |  |  | 0.681 |
+| walker |  | 5811 | 145 | go body xxhash.go:176 |  |  | 0.697 |
+| walker |  | 5864 | 53 | go doc xxhash.go:23 |  |  | 0.708 |
+| ns | 5936 |  | 328 | The complete golden-vector table in `TestAll` | 4.3 | 4.2 | 0.693 |
+| walker |  | 6068 | 204 | go body xxhash.go:190 |  |  | 0.715 |
+| ns | 6083 |  | 147 | `bench_test.go`: the input-size table and all four benchmark names | 4.4 |  | 0.720 |
+| ns | 6175 |  | 92 | `xxhash_unsafe_test.go`: build tag and both test names | 4.5 |  | 0.718 |
+| walker |  | 6176 | 108 | go body bench_test.go:34 |  |  | 0.718 |
+| ns | 6298 |  | 123 | `TestInlining`: which functions must inline, and how it checks | 4.6 | 4.5 | 0.709 |
+| walker |  | 6302 | 126 | go body bench_test.go:63 |  |  | 0.709 |
+| walker |  | 6436 | 134 | go body bench_test.go:19 |  |  | 0.709 |
+| ns | 6520 |  | 222 | `xxhsum/`: the CLI's usage text and argument handling | 4.7 |  | 0.703 |
+| walker |  | 6587 | 151 | go body xxhash_unsafe_test.go:13 |  |  | 0.703 |
+| walker |  | 6754 | 167 | go body xxhash_test.go:97 |  |  | 0.703 |
+| ns | 6790 |  | 270 | `xxhsum/`: the file loop, `contains`, and the output format | 4.8 | 4.7 | 0.705 |
+| ns | 6928 |  | 138 | `dynamic/`: the `plugin` build-tag file and its two exported tests | 4.9 |  | 0.703 |
+| walker |  | 6929 | 175 | go body xxhash_test.go:114 |  |  | 0.703 |
+| ns | 7158 |  | 230 | `dynamic/dynamic_test.go`: building the plugin and calling into it | 4.10 |  | 0.688 |
+| walker |  | 7313 | 384 | go body xxhash.go:75 |  |  | 0.728 |
+| ns | 7367 |  | 209 | `xxhashbench/`: separate module, `replace ../`, and its deprecation TODO | 4.11 |  | 0.724 |
+| walker |  | 7373 | 60 | go body xxhash_test.go:193 |  |  | 0.724 |
+| walker |  | 7525 | 152 | go body bench_test.go:46 |  |  | 0.724 |
+| ns | 7566 |  | 199 | `xxhashbench/`: the comparison table's shape and every hash it compares | 4.12 | 4.11 | 0.711 |
+| ns | 7899 |  | 333 | CI: the test matrix and the exact commands run | 4.13 |  | 0.697 |
+| walker |  | 7996 | 471 | go body xxhash.go:129 |  |  | 0.738 |
 | ns | 8030 |  | 131 | README: Compatibility section body | 4.14 | 1.8 | 0.740 |
 | walker |  | 8256 | 260 | go body xxhash_test.go:170 |  |  | 0.740 |
 | ns | 8336 |  | 306 | README: measured purego-vs-asm throughput table and how it was produced | 4.15 | 1.8 | 0.743 |
 | ns | 8364 |  | 28 | License identification | 4.16 |  | 0.742 |
 | ns | 8514 |  | 150 | `xxhash_amd64.s`: build tags and both `TEXT` symbol definitions | 5.1 |  | 0.734 |
 | walker |  | 8555 | 299 | go body xxhash_unsafe_test.go:31 |  |  | 0.745 |
-| walker |  | 8655 | 100 | go body xxhash_test.go:88 |  |  | 0.745 |
 | ns | 8664 |  | 150 | `xxhash_arm64.s`: build tags and both `TEXT` symbol definitions | 5.2 |  | 0.738 |
-| walker |  | 8802 | 147 | go body dynamic/dynamic_test.go:17 |  |  | 0.741 |
+| walker |  | 8702 | 147 | go body dynamic/dynamic_test.go:17 |  |  | 0.741 |
 | ns | 8821 |  | 157 | `xxhash_amd64.s`: the complete register-allocation map | 5.3 | 5.1 | 0.733 |
-| walker |  | 8951 | 149 | go body dynamic/dynamic_test.go:33 |  |  | 0.741 |
-| walker |  | 8998 | 47 | go body xxhashbench/xxhashbench_test.go:152 |  |  | 0.741 |
+| walker |  | 8851 | 149 | go body dynamic/dynamic_test.go:33 |  |  | 0.741 |
+| walker |  | 8898 | 47 | go body xxhashbench/xxhashbench_test.go:152 |  |  | 0.741 |
+| walker |  | 8945 | 47 | go body xxhashbench/xxhashbench_test.go:159 |  |  | 0.741 |
 | ns | 9036 |  | 215 | `xxhash_arm64.s`: the complete register-allocation map | 5.4 | 5.2 | 0.731 |
-| walker |  | 9045 | 47 | go body xxhashbench/xxhashbench_test.go:159 |  |  | 0.731 |
 | ns | 9176 |  | 140 | `xxhash_amd64.s`: `round` and `round0` macro bodies | 5.5 | 5.3 | 0.725 |
-| ns | 9348 |  | 172 | `xxhash_amd64.s`: `mergeRound` and `blockLoop` macros | 5.6 | 5.5 | 0.718 |
-| ns | 9400 |  | 52 | `xxhash_arm64.s`: the complete macro roster | 5.7 | 5.4 | 0.713 |
-| walker |  | 9449 | 404 | go body xxhash_test.go:131 |  |  | 0.713 |
-| walker |  | 9761 | 312 | plaintext config LICENSE.txt |  |  | 0.716 |
+| walker |  | 9257 | 312 | plaintext config LICENSE.txt |  |  | 0.727 |
+| ns | 9348 |  | 172 | `xxhash_amd64.s`: `mergeRound` and `blockLoop` macros | 5.6 | 5.5 | 0.720 |
+| walker |  | 9357 | 100 | go body xxhash_test.go:88 |  |  | 0.720 |
+| ns | 9400 |  | 52 | `xxhash_arm64.s`: the complete macro roster | 5.7 | 5.4 | 0.716 |
+| walker |  | 9761 | 404 | go body xxhash_test.go:131 |  |  | 0.716 |

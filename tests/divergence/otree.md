@@ -161,61 +161,49 @@ Score(3000)=0.447 I=0.790 C=0.253 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 6622 | 22 | rust decl src/parse/syntax.rs:151 |  |  | 0.527 |
 | walker |  | 6648 | 26 | rust decl src/parse/syntax.rs:156 |  |  | 0.529 |
 | walker |  | 6686 | 38 | rust decl src/parse/syntax.rs:29 |  |  | 0.533 |
-| walker |  | 6696 | 10 | rust body src/tree.rs:94 |  |  | 0.533 |
 | ns | 6707 |  | 348 | generate_actions! — the complete Action vocabulary | 5.3 |  | 0.518 |
-| walker |  | 6708 | 12 | rust body src/tree.rs:98 |  |  | 0.518 |
-| walker |  | 6722 | 14 | rust body src/tree.rs:386 |  |  | 0.518 |
-| walker |  | 6749 | 27 | rust decl src/parse/syntax.rs:136 |  |  | 0.518 |
-| walker |  | 6798 | 49 | rust decl src/parse/syntax.rs:32 |  |  | 0.518 |
-| walker |  | 6815 | 17 | rust body src/tree.rs:390 |  |  | 0.518 |
-| walker |  | 6933 | 118 | rust decl src/parse/syntax.rs:11 |  |  | 0.539 |
-| walker |  | 7069 | 136 | rust decl src/ui/filter.rs:40 |  |  | 0.540 |
-| walker |  | 7079 | 10 | rust body src/ui/filter.rs:102 |  |  | 0.540 |
+| walker |  | 6713 | 27 | rust decl src/parse/syntax.rs:136 |  |  | 0.518 |
+| walker |  | 6762 | 49 | rust decl src/parse/syntax.rs:32 |  |  | 0.518 |
+| walker |  | 6880 | 118 | rust decl src/parse/syntax.rs:11 |  |  | 0.539 |
+| walker |  | 7016 | 136 | rust decl src/ui/filter.rs:40 |  |  | 0.540 |
+| walker |  | 7057 | 41 | rust decl src/parse/xml.rs:37 |  |  | 0.540 |
 | ns | 7113 |  | 406 | The complete colour schema — groups, per-group fields, and the Color type | 5.4 |  | 0.525 |
-| walker |  | 7120 | 41 | rust decl src/parse/xml.rs:37 |  |  | 0.525 |
-| ns | 7236 |  | 123 | The Types section — customisable type labels | 5.5 | 5.1 | 0.520 |
-| walker |  | 7262 | 142 | rust decl src/ui/popup.rs:26 |  |  | 0.521 |
-| walker |  | 7272 | 10 | rust body src/ui/popup.rs:87 |  |  | 0.521 |
-| walker |  | 7283 | 11 | rust body src/ui/popup.rs:35 |  |  | 0.521 |
+| walker |  | 7199 | 142 | rust decl src/ui/popup.rs:26 |  |  | 0.526 |
+| walker |  | 7209 | 10 | rust body src/ui/popup.rs:87 |  |  | 0.526 |
+| ns | 7236 |  | 123 | The Types section — customisable type labels | 5.5 | 5.1 | 0.521 |
+| walker |  | 7352 | 143 | rust decl src/config/keys.rs:53 |  |  | 0.521 |
 | ns | 7374 |  | 138 | Every method on Config (names only) | 5.6 | 5.1 | 0.520 |
-| walker |  | 7426 | 143 | rust decl src/config/keys.rs:53 |  |  | 0.520 |
-| walker |  | 7569 | 143 | rust decl src/ui/tree_overview.rs:19 |  |  | 0.520 |
+| walker |  | 7495 | 143 | rust decl src/ui/tree_overview.rs:19 |  |  | 0.520 |
 | ns | 7590 |  | 216 | The App control enums — Refresh, ElementInFocus, ScrollDirection | 6.1 |  | 0.511 |
-| walker |  | 7754 | 185 | rust names src/ui/mod.rs |  |  | 0.512 |
-| walker |  | 7767 | 13 | rust body src/parse/json.rs:21 |  |  | 0.512 |
-| walker |  | 7781 | 14 | rust body src/parse/hcl.rs:23 |  |  | 0.512 |
-| walker |  | 7795 | 14 | rust body src/parse/xml.rs:32 |  |  | 0.512 |
-| walker |  | 7809 | 14 | rust body src/ui/filter.rs:106 |  |  | 0.512 |
-| walker |  | 7858 | 49 | rust decl src/parse/xml.rs:42 |  |  | 0.512 |
-| walker |  | 7873 | 15 | rust body src/parse/any.rs:20 |  |  | 0.512 |
-| walker |  | 7888 | 15 | rust body src/parse/jsonl.rs:35 |  |  | 0.512 |
-| walker |  | 7940 | 52 | rust decl src/ui/app.rs:38 |  |  | 0.518 |
-| walker |  | 7993 | 53 | rust decl src/parse/toml.rs:88 |  |  | 0.518 |
-| walker |  | 8009 | 16 | rust body src/parse/any.rs:26 |  |  | 0.518 |
-| ns | 8139 |  | 549 | Every method on App, plus its layout and polling constants | 6.2 | 6.1 | 0.506 |
-| walker |  | 8203 | 194 | rust decl src/config/types.rs:27 |  |  | 0.514 |
-| walker |  | 8397 | 194 | rust decl src/parse/mod.rs:17 |  |  | 0.534 |
-| walker |  | 8414 | 17 | rust body src/parse/any.rs:34 |  |  | 0.534 |
-| walker |  | 8431 | 17 | rust body src/parse/json.rs:17 |  |  | 0.534 |
-| walker |  | 8489 | 58 | rust decl src/parse/xml.rs:60 |  |  | 0.534 |
-| walker |  | 8693 | 204 | rust decl src/ui/data_block.rs:32 |  |  | 0.535 |
+| walker |  | 7680 | 185 | rust names src/ui/mod.rs |  |  | 0.512 |
+| walker |  | 7693 | 13 | rust body src/parse/json.rs:21 |  |  | 0.512 |
+| walker |  | 7707 | 14 | rust body src/parse/hcl.rs:23 |  |  | 0.512 |
+| walker |  | 7756 | 49 | rust decl src/parse/xml.rs:42 |  |  | 0.512 |
+| walker |  | 7771 | 15 | rust body src/parse/any.rs:20 |  |  | 0.512 |
+| walker |  | 7786 | 15 | rust body src/parse/jsonl.rs:35 |  |  | 0.512 |
+| walker |  | 7838 | 52 | rust decl src/ui/app.rs:38 |  |  | 0.518 |
+| walker |  | 7891 | 53 | rust decl src/parse/toml.rs:88 |  |  | 0.518 |
+| walker |  | 7902 | 11 | rust body src/ui/popup.rs:35 |  |  | 0.518 |
+| walker |  | 8096 | 194 | rust decl src/config/types.rs:27 |  |  | 0.526 |
+| ns | 8139 |  | 549 | Every method on App, plus its layout and polling constants | 6.2 | 6.1 | 0.514 |
+| walker |  | 8290 | 194 | rust decl src/parse/mod.rs:17 |  |  | 0.534 |
+| walker |  | 8348 | 58 | rust decl src/parse/xml.rs:60 |  |  | 0.534 |
+| walker |  | 8552 | 204 | rust decl src/ui/data_block.rs:32 |  |  | 0.535 |
+| walker |  | 8613 | 61 | rust decl src/ui/data_block.rs:147 |  |  | 0.535 |
+| walker |  | 8662 | 49 | rust body build.rs:8 |  |  | 0.535 |
+| walker |  | 8672 | 10 | rust body src/tree.rs:94 |  |  | 0.535 |
 | ns | 8734 |  | 595 | TreeOverview — complete method roster and its two constants | 6.3 |  | 0.522 |
-| walker |  | 8754 | 61 | rust decl src/ui/data_block.rs:147 |  |  | 0.522 |
-| walker |  | 8772 | 18 | rust body src/parse/any.rs:30 |  |  | 0.522 |
-| walker |  | 8790 | 18 | rust body src/parse/hcl.rs:19 |  |  | 0.522 |
-| walker |  | 8808 | 18 | rust body src/ui/app.rs:133 |  |  | 0.522 |
-| walker |  | 8857 | 49 | rust body build.rs:8 |  |  | 0.522 |
-| walker |  | 8961 | 104 | README.md section #4 |  |  | 0.522 |
-| ns | 9136 |  | 402 | Filter widget — the filter types and complete method roster | 6.4 |  | 0.533 |
-| walker |  | 9193 | 232 | rust decl src/config/colors.rs:20 |  |  | 0.541 |
-| walker |  | 9237 | 44 | rust body src/live_reload.rs:64 |  |  | 0.541 |
-| ns | 9456 |  | 320 | DataBlock — complete method roster and the scroll-retain constant | 6.5 |  | 0.541 |
-| walker |  | 9506 | 269 | rust decl src/ui/tree_overview.rs:32 |  |  | 0.546 |
-| walker |  | 9517 | 11 | rust body src/ui/tree_overview.rs:67 |  |  | 0.546 |
-| walker |  | 9529 | 12 | rust body src/ui/tree_overview.rs:59 |  |  | 0.546 |
-| walker |  | 9541 | 12 | rust body src/ui/tree_overview.rs:63 |  |  | 0.546 |
-| walker |  | 9820 | 279 | rust decl src/ui/app.rs:53 |  |  | 0.546 |
-| walker |  | 9867 | 47 | rust body src/tree.rs:52 |  |  | 0.547 |
-| walker |  | 9893 | 26 | rust body src/parse/any.rs:14 |  |  | 0.547 |
-| walker |  | 9983 | 90 | rust decl src/ui/app.rs:27 |  |  | 0.561 |
-| ns | 9997 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.568 |
+| walker |  | 8776 | 104 | README.md section #4 |  |  | 0.522 |
+| walker |  | 9008 | 232 | rust decl src/config/colors.rs:20 |  |  | 0.530 |
+| ns | 9136 |  | 402 | Filter widget — the filter types and complete method roster | 6.4 |  | 0.541 |
+| walker |  | 9277 | 269 | rust decl src/ui/tree_overview.rs:32 |  |  | 0.547 |
+| walker |  | 9288 | 11 | rust body src/ui/tree_overview.rs:67 |  |  | 0.547 |
+| walker |  | 9300 | 12 | rust body src/ui/tree_overview.rs:59 |  |  | 0.547 |
+| walker |  | 9312 | 12 | rust body src/ui/tree_overview.rs:63 |  |  | 0.547 |
+| walker |  | 9328 | 16 | rust body src/parse/any.rs:26 |  |  | 0.547 |
+| ns | 9456 |  | 320 | DataBlock — complete method roster and the scroll-retain constant | 6.5 |  | 0.546 |
+| walker |  | 9607 | 279 | rust decl src/ui/app.rs:53 |  |  | 0.546 |
+| walker |  | 9624 | 17 | rust body src/parse/json.rs:17 |  |  | 0.546 |
+| walker |  | 9714 | 90 | rust decl src/ui/app.rs:27 |  |  | 0.561 |
+| walker |  | 9732 | 18 | rust body src/parse/hcl.rs:19 |  |  | 0.561 |
+| ns | 9997 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.567 |
