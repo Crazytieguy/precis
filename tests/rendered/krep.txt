@@ -18,9 +18,10 @@ README.md
   13→## The Story Behind the Name
   …
   19→## Key Features
-  …
+  20→
+  21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
   22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
-  …
+  23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
   24→- **Memory-mapped I/O**: Maximizes throughput when processing large files
   25→- **Multi-threaded search**: Automatically parallelizes searches across available CPU cores
   26→- **Regex support**: POSIX Extended Regular Expression searching
@@ -29,7 +30,7 @@ README.md
   29→- **Gitignore support**: Respect `.gitignore` files during recursive search with `--gitignore`
   30→- **Stdin pattern input**: Read patterns from stdin with `-f -` for seamless pipeline integration
   31→- **Colored output**: Highlights matches for better readability
-  …
+  32→- **UI/UX refresh (v2.2)**: New terminal color palette, clearer `-o` line index styling, and a redesigned help screen
   33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
   34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
   36→## What's New in v2.2.0
@@ -61,24 +62,7 @@ README.md
   96→## Usage Examples
   …
   134→## Command Line Options
-  136→- `-i, --ignore-case` Case-insensitive search
-  137→- `-c, --count` Count matching lines only
-  138→- `-o, --only-matching` Print only the matched parts of lines
-  139→- `-e PATTERN, --pattern=PATTERN` Specify pattern(s). Can be used multiple times.
-  140→- `-f FILE, --file=FILE` Read patterns from FILE, one per line. Use `-` for stdin.
-  141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
-  142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
-  143→- `-F, --fixed-strings` Interpret pattern as fixed string(s) (default unless -E is used)
-  144→- `-r, --recursive` Recursively search directories
-  145→- `--gitignore` Respect `.gitignore` files during recursive search
-  146→- `--algo=ALGO` Force search algorithm: `auto` (default), `bm` (Boyer-Moore), `kmp` (KMP)
-  147→- `-t NUM, --threads=NUM` Use NUM threads for file search (default: auto)
-  148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
-  149→- `-w, --word-regexp` Match only whole words
-  150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
-  151→- `--no-simd` Explicitly disable SIMD acceleration
-  152→- `-v, --version` Show version information
-  153→- `-h, --help` Show help message
+  …
   155→## Performance Benchmarks
   …
   171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)

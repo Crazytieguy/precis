@@ -1,4 +1,4 @@
-Score(3000)=0.696 I=0.852 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.656/0.648/0.757/0.696/0.676/0.623/0.548
+Score(3000)=0.698 I=0.857 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.656/0.648/0.757/0.698/0.676/0.625/0.566
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -80,170 +80,165 @@ Score(3000)=0.696 I=0.852 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 2517 | 31 | ts names packages/d2ts/src/operators/debug.ts |  |  | 0.786 |
 | ns | 2518 |  | 77 | packages/d2ts/src/sqlite — complete tree listing | 2.10 |  | 0.761 |
 | walker |  | 2544 | 27 | ts decl packages/d2ts/src/operators/debug.ts:18 |  |  | 0.761 |
-| walker |  | 2574 | 30 | ts decl packages/d2mini/src/operators/output.ts:38 |  |  | 0.761 |
-| walker |  | 2628 | 54 | ts names packages/d2mini/src/d2.ts |  |  | 0.761 |
-| walker |  | 2654 | 26 | ts decl packages/d2mini/src/d2.ts:146 |  |  | 0.761 |
-| walker |  | 2687 | 33 | ts decl packages/d2mini/src/operators/debug.ts:42 |  |  | 0.761 |
 | ns | 2701 |  | 183 | SQLite subpath export barrels | 2.11 | 2.10 | 0.738 |
-| walker |  | 2720 | 33 | ts decl packages/d2ts/src/operators/debug.ts:74 |  |  | 0.738 |
-| walker |  | 2775 | 55 | ts names packages/d2ts/src/order.ts |  |  | 0.738 |
-| walker |  | 2792 | 17 | ts decl packages/d2ts/src/order.ts:277 |  |  | 0.738 |
 | ns | 2886 |  | 185 | Test suite layout — immediate children of every tests/ directory | 2.12 |  | 0.695 |
-| walker |  | 2967 | 175 | package entrypoints in packages/d2ts/package.json |  |  | 0.695 |
-| ns | 2982 |  | 96 | Example and benchmark source trees | 2.13 | 1.3 | 0.696 |
-| walker |  | 3023 | 56 | ts names packages/d2mini/src/multiset.ts |  |  | 0.696 |
-| walker |  | 3079 | 56 | ts names packages/d2ts/src/multiset.ts |  |  | 0.696 |
-| walker |  | 3115 | 36 | ts names packages/d2mini/src/operators/count.ts |  |  | 0.696 |
-| walker |  | 3129 | 14 | ts decl packages/d2mini/src/operators/count.ts:9 |  |  | 0.696 |
-| walker |  | 3165 | 36 | ts names packages/d2ts/src/operators/count.ts |  |  | 0.696 |
-| ns | 3172 |  | 190 | Per-package scripts: build, test, lint, typecheck, format | 3.1 | 1.7 | 0.686 |
-| walker |  | 3179 | 14 | ts decl packages/d2ts/src/operators/count.ts:10 |  |  | 0.686 |
-| walker |  | 3216 | 37 | ts names packages/d2ts/src/operators/distinct.ts |  |  | 0.686 |
-| walker |  | 3230 | 14 | ts decl packages/d2ts/src/operators/distinct.ts:10 |  |  | 0.686 |
-| ns | 3259 |  | 87 | d2ts-benchmark scripts — the benchmark entry points | 3.2 | 3.1 | 0.680 |
-| walker |  | 3271 | 41 | listing of 'packages/d2ts/tests' |  |  | 0.689 |
-| ns | 3452 |  | 193 | CI pipeline stages | 3.3 |  | 0.666 |
-| walker |  | 3459 | 188 | package scripts in packages/d2ts/package.json |  |  | 0.682 |
-| walker |  | 3481 | 22 | README.md section #5 |  |  | 0.682 |
-| walker |  | 3521 | 40 | ts names packages/d2ts/src/operators/buffer.ts |  |  | 0.682 |
-| walker |  | 3539 | 18 | ts decl packages/d2ts/src/operators/buffer.ts:17 |  |  | 0.682 |
-| walker |  | 3596 | 57 | listing of 'packages/d2ts/src/sqlite/operators' |  |  | 0.710 |
-| walker |  | 3637 | 41 | ts names packages/d2mini/src/operators/concat.ts |  |  | 0.710 |
-| walker |  | 3653 | 16 | ts decl packages/d2mini/src/operators/concat.ts:9 |  |  | 0.710 |
-| ns | 3656 |  | 204 | README: constructing a D2 graph and sending to an input stream | 4.1 | 1.10 | 0.701 |
-| walker |  | 3682 | 29 | ts decl packages/d2mini/src/operators/concat.ts:25 |  |  | 0.701 |
-| walker |  | 3723 | 41 | ts names packages/d2mini/src/operators/consolidate.ts |  |  | 0.701 |
-| walker |  | 3739 | 16 | ts decl packages/d2mini/src/operators/consolidate.ts:9 |  |  | 0.701 |
-| walker |  | 3780 | 41 | ts names packages/d2ts/src/operators/concat.ts |  |  | 0.701 |
-| walker |  | 3796 | 16 | ts decl packages/d2ts/src/operators/concat.ts:11 |  |  | 0.701 |
-| walker |  | 3825 | 29 | ts decl packages/d2ts/src/operators/concat.ts:54 |  |  | 0.701 |
-| walker |  | 3866 | 41 | ts names packages/d2ts/src/operators/consolidate.ts |  |  | 0.701 |
-| walker |  | 3884 | 18 | ts decl packages/d2ts/src/operators/consolidate.ts:16 |  |  | 0.701 |
-| walker |  | 3925 | 41 | ts names packages/d2ts/src/operators/topKWithFractionalIndex.ts |  |  | 0.701 |
-| ns | 3981 |  | 325 | d2.ts — D2Options and the complete D2 class method roster | 4.2 |  | 0.678 |
-| walker |  | 3992 | 67 | ts names packages/d2ts/src/d2.ts |  |  | 0.678 |
-| walker |  | 4014 | 22 | ts decl packages/d2ts/src/d2.ts:11 |  |  | 0.679 |
-| walker |  | 4052 | 38 | ts decl packages/d2ts/src/d2.ts:166 |  |  | 0.679 |
-| walker |  | 4095 | 43 | ts names packages/d2ts/src/operators/reduce.ts |  |  | 0.679 |
-| walker |  | 4122 | 27 | ts decl packages/d2ts/src/operators/reduce.ts:15 |  |  | 0.679 |
-| walker |  | 4166 | 44 | ts names packages/d2mini/src/operators/negate.ts |  |  | 0.679 |
-| ns | 4171 |  | 190 | README: what versions and frontiers actually mean | 4.3 | 1.10 | 0.675 |
-| walker |  | 4190 | 24 | ts decl packages/d2mini/src/operators/negate.ts:10 |  |  | 0.675 |
-| walker |  | 4234 | 44 | ts names packages/d2ts/src/operators/negate.ts |  |  | 0.676 |
-| walker |  | 4258 | 24 | ts decl packages/d2ts/src/operators/negate.ts:10 |  |  | 0.676 |
-| walker |  | 4282 | 24 | README.md section #2 |  |  | 0.676 |
-| walker |  | 4328 | 46 | ts names packages/d2mini/src/operators/reduce.ts |  |  | 0.676 |
-| walker |  | 4355 | 27 | ts decl packages/d2mini/src/operators/reduce.ts:14 |  |  | 0.676 |
-| walker |  | 4393 | 38 | ts decl packages/d2ts/src/d2.ts:167 |  |  | 0.676 |
-| walker |  | 4443 | 50 | ts names packages/d2ts/src/operators/output.ts |  |  | 0.676 |
-| walker |  | 4470 | 27 | ts decl packages/d2ts/src/operators/output.ts:19 |  |  | 0.676 |
-| ns | 4517 |  | 346 | order.ts — v() factory and the complete Version method roster | 4.4 |  | 0.652 |
-| walker |  | 4521 | 51 | ts names packages/d2mini/src/operators/distinct.ts |  |  | 0.652 |
-| walker |  | 4548 | 27 | ts decl packages/d2mini/src/operators/distinct.ts:17 |  |  | 0.652 |
-| walker |  | 4575 | 27 | README.md section #4 |  |  | 0.652 |
-| walker |  | 4627 | 52 | ts names packages/d2mini/src/operators/filter.ts |  |  | 0.652 |
-| walker |  | 4662 | 35 | ts decl packages/d2mini/src/operators/filter.ts:10 |  |  | 0.652 |
-| walker |  | 4714 | 52 | ts names packages/d2ts/src/operators/filter.ts |  |  | 0.652 |
-| walker |  | 4749 | 35 | ts decl packages/d2ts/src/operators/filter.ts:11 |  |  | 0.652 |
-| walker |  | 4773 | 24 | README.md section #10 |  |  | 0.652 |
-| ns | 4807 |  | 290 | order.ts — Antichain method roster and Frontier | 4.5 | 4.4 | 0.633 |
-| walker |  | 4823 | 50 | ts decl packages/d2ts/src/operators/topKWithFractionalIndex.ts:29 |  |  | 0.633 |
-| walker |  | 4876 | 53 | ts names packages/d2ts/src/operators/orderBy.ts |  |  | 0.634 |
-| walker |  | 4932 | 56 | ts names packages/d2mini/src/operators/map.ts |  |  | 0.634 |
-| ns | 4952 |  | 145 | README: MultiSet as a changeset, and keyed multisets | 4.6 | 1.10 | 0.631 |
-| walker |  | 4967 | 35 | ts decl packages/d2mini/src/operators/map.ts:10 |  |  | 0.631 |
-| walker |  | 5023 | 56 | ts names packages/d2ts/src/operators/map.ts |  |  | 0.631 |
-| walker |  | 5058 | 35 | ts decl packages/d2ts/src/operators/map.ts:11 |  |  | 0.631 |
-| walker |  | 5173 | 115 | listing of 'packages/d2ql/tests' |  |  | 0.674 |
-| ns | 5310 |  | 358 | multiset.ts — MultiSetArray, KeyedData and every MultiSet method | 4.7 |  | 0.657 |
-| walker |  | 5531 | 358 | ts decl eslint.base.mjs:6 |  |  | 0.657 |
-| walker |  | 5572 | 41 | listing of 'packages/d2ts/tests/operators-sqlite' |  |  | 0.657 |
-| walker |  | 5585 | 13 | ts names packages/d2ql/src/select.ts |  |  | 0.657 |
-| ns | 5610 |  | 300 | types.ts — the operator message protocol | 4.8 |  | 0.635 |
-| walker |  | 5860 | 275 | ts names packages/d2ql/src/schema.ts |  |  | 0.635 |
-| ns | 5868 |  | 258 | types.ts — PipedOperator and the 20-deep pipe overload wall | 4.9 | 4.8 | 0.623 |
-| walker |  | 5875 | 15 | ts decl packages/d2ql/src/schema.ts:48 |  |  | 0.623 |
-| walker |  | 5891 | 16 | ts decl packages/d2ql/src/schema.ts:36 |  |  | 0.623 |
-| walker |  | 5925 | 34 | ts decl packages/d2ql/src/schema.ts:152 |  |  | 0.623 |
-| walker |  | 5969 | 44 | ts decl packages/d2ql/src/schema.ts:123 |  |  | 0.623 |
-| walker |  | 6015 | 46 | ts decl packages/d2ql/src/schema.ts:65 |  |  | 0.623 |
-| walker |  | 6063 | 48 | ts decl packages/d2ql/src/schema.ts:80 |  |  | 0.623 |
-| walker |  | 6113 | 50 | ts decl packages/d2ql/src/schema.ts:24 |  |  | 0.623 |
-| walker |  | 6167 | 54 | ts decl packages/d2ql/src/schema.ts:39 |  |  | 0.623 |
-| walker |  | 6229 | 62 | ts decl packages/d2ql/src/schema.ts:71 |  |  | 0.623 |
-| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.612 |
-| walker |  | 6293 | 64 | ts decl packages/d2ql/src/schema.ts:13 |  |  | 0.612 |
-| walker |  | 6370 | 77 | ts decl packages/d2ql/src/schema.ts:143 |  |  | 0.612 |
-| walker |  | 6449 | 79 | ts decl packages/d2ql/src/schema.ts:94 |  |  | 0.612 |
-| walker |  | 6531 | 82 | ts decl packages/d2ql/src/schema.ts:130 |  |  | 0.612 |
-| walker |  | 6589 | 58 | ts decl packages/d2mini/src/operators/count.ts:30 |  |  | 0.612 |
-| walker |  | 6647 | 58 | ts decl packages/d2ts/src/operators/count.ts:32 |  |  | 0.612 |
-| ns | 6681 |  | 430 | packages/d2ts/README.md — complete heading map (1081-line API reference) | 5.2 |  | 0.588 |
-| walker |  | 6705 | 58 | ts decl packages/d2ts/src/operators/distinct.ts:37 |  |  | 0.588 |
-| walker |  | 6713 | 8 | ts body packages/d2ts/src/order.ts:278 |  |  | 0.588 |
-| walker |  | 6772 | 59 | ts decl packages/d2ts/src/operators/orderBy.ts:23 |  |  | 0.588 |
-| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.593 |
-| walker |  | 6865 | 93 | ts decl packages/d2ql/src/schema.ts:53 |  |  | 0.593 |
-| walker |  | 6879 | 14 | ts names packages/d2ql/src/key-by.ts |  |  | 0.593 |
-| walker |  | 6893 | 14 | ts names packages/d2ql/src/order-by.ts |  |  | 0.593 |
-| walker |  | 6962 | 69 | ts names packages/d2ts/src/operators/iterate.ts |  |  | 0.596 |
-| walker |  | 6978 | 16 | ts decl packages/d2ts/src/operators/iterate.ts:15 |  |  | 0.596 |
-| walker |  | 6994 | 16 | ts decl packages/d2ts/src/operators/iterate.ts:46 |  |  | 0.596 |
-| walker |  | 7021 | 27 | ts decl packages/d2ts/src/operators/iterate.ts:80 |  |  | 0.596 |
-| walker |  | 7048 | 27 | ts decl packages/d2ts/src/operators/iterate.ts:225 |  |  | 0.596 |
-| walker |  | 7159 | 111 | ts names packages/d2mini/src/types.ts |  |  | 0.596 |
-| walker |  | 7180 | 21 | ts decl packages/d2mini/src/types.ts:83 |  |  | 0.596 |
-| walker |  | 7203 | 23 | ts decl packages/d2mini/src/types.ts:6 |  |  | 0.596 |
-| walker |  | 7228 | 25 | ts decl packages/d2mini/src/types.ts:11 |  |  | 0.596 |
-| ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.580 |
-| walker |  | 7266 | 38 | ts decl packages/d2mini/src/types.ts:16 |  |  | 0.580 |
-| walker |  | 7345 | 79 | ts decl packages/d2mini/src/types.ts:21 |  |  | 0.580 |
-| ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.585 |
-| walker |  | 7453 | 108 | ts decl packages/d2ql/src/schema.ts:105 |  |  | 0.585 |
-| walker |  | 7469 | 16 | ts names packages/d2mini/src/indexes.ts |  |  | 0.585 |
-| walker |  | 7523 | 54 | listing of 'packages/d2ql/tests/query-builder' |  |  | 0.585 |
-| walker |  | 7604 | 81 | ts names packages/d2mini/src/operators/keying.ts |  |  | 0.585 |
-| ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.579 |
-| walker |  | 7637 | 33 | ts decl packages/d2mini/src/operators/keying.ts:13 |  |  | 0.579 |
-| walker |  | 7677 | 40 | ts decl packages/d2mini/src/operators/keying.ts:30 |  |  | 0.579 |
-| walker |  | 7758 | 81 | ts names packages/d2ts/src/operators/keying.ts |  |  | 0.581 |
-| walker |  | 7791 | 33 | ts decl packages/d2ts/src/operators/keying.ts:13 |  |  | 0.581 |
-| walker |  | 7831 | 40 | ts decl packages/d2ts/src/operators/keying.ts:30 |  |  | 0.581 |
-| ns | 7842 |  | 220 | D2QL identity and README section map | 6.1 |  | 0.576 |
-| walker |  | 7909 | 78 | ts decl packages/d2mini/src/operators/filterBy.ts:14 |  |  | 0.576 |
-| walker |  | 7987 | 78 | ts decl packages/d2ts/src/operators/filterBy.ts:14 |  |  | 0.576 |
-| walker |  | 8005 | 18 | ts names packages/d2ts-benchmark/src/graph.ts |  |  | 0.576 |
-| walker |  | 8035 | 30 | packages/d2ql/README.md section #4 |  |  | 0.577 |
-| ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.569 |
-| walker |  | 8119 | 84 | ts names packages/d2mini/src/operators/orderBy.ts |  |  | 0.569 |
-| walker |  | 8161 | 42 | ts decl packages/d2mini/src/operators/orderBy.ts:9 |  |  | 0.569 |
-| walker |  | 8220 | 59 | ts decl packages/d2mini/src/operators/orderBy.ts:23 |  |  | 0.569 |
-| walker |  | 8231 | 11 | ts body packages/d2mini/src/d2.ts:147 |  |  | 0.569 |
-| walker |  | 8261 | 30 | README.md section #20 |  |  | 0.570 |
-| walker |  | 8392 | 131 | ts decl packages/d2mini/src/d2.ts:10 |  |  | 0.570 |
-| ns | 8442 |  | 358 | schema.ts — the Query interface family | 6.3 |  | 0.557 |
-| walker |  | 8477 | 85 | ts decl packages/d2mini/src/operators/reduce.ts:106 |  |  | 0.557 |
-| walker |  | 8562 | 85 | ts decl packages/d2ts/src/operators/reduce.ts:127 |  |  | 0.557 |
-| walker |  | 8592 | 30 | README.md section #6 |  |  | 0.557 |
-| ns | 8604 |  | 162 | schema.ts — the Comparator and LogicalOperator vocabularies | 6.4 | 6.3 | 0.560 |
-| walker |  | 8623 | 31 | README.md section #12 |  |  | 0.560 |
-| walker |  | 8710 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:76 |  |  | 0.560 |
-| ns | 8735 |  | 131 | compileQuery — the package's single entry point | 6.5 |  | 0.557 |
-| walker |  | 8797 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:199 |  |  | 0.557 |
-| walker |  | 8884 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:76 |  |  | 0.557 |
-| walker |  | 8971 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:140 |  |  | 0.557 |
-| ns | 8978 |  | 243 | query-builder.ts — the fluent builder's complete method set | 6.6 |  | 0.548 |
-| ns | 9076 |  | 98 | d2mini README — how it differs from d2ts | 7.1 |  | 0.550 |
-| walker |  | 9110 | 139 | listing of 'packages/d2mini/tests/operators' |  |  | 0.550 |
-| walker |  | 9159 | 49 | ts decl packages/d2mini/src/operators/count.ts:10 |  |  | 0.550 |
-| ns | 9165 |  | 89 | d2mini/src/d2.ts — the versionless D2 constructor | 7.2 | 7.1 | 0.547 |
-| walker |  | 9172 | 13 | ts body packages/d2ts/src/d2.ts:167 |  |  | 0.547 |
-| ns | 9401 |  | 236 | README: using the SQLite backend | 8.1 | 1.10 | 0.542 |
-| walker |  | 9522 | 350 | ts decl eslint.base.mjs:6 #1 |  |  | 0.542 |
-| ns | 9529 |  | 128 | sqlite/database.ts — the SQLiteDb driver interface | 8.2 | 8.1 | 0.537 |
-| ns | 9683 |  | 154 | withSQLite, SQLIndex and the Electric bridge exports | 8.3 | 8.2 | 0.534 |
-| walker |  | 9705 | 183 | README.md section #1 |  |  | 0.534 |
-| walker |  | 9722 | 17 | ts doc packages/d2mini/src/operators/distinct.ts:85 |  |  | 0.534 |
-| ns | 9827 |  | 144 | README: what each example demonstrates | 9.1 | 1.10 | 0.531 |
-| walker |  | 9878 | 156 | ts decl packages/d2ts/src/version-index.ts:8 |  |  | 0.531 |
-| ns | 9977 |  | 150 | examples/electric — what the demo app does | 9.2 | 2.13 | 0.528 |
+| walker |  | 2927 | 383 | README.md section #2 |  |  | 0.697 |
+| walker |  | 2957 | 30 | ts decl packages/d2mini/src/operators/output.ts:38 |  |  | 0.697 |
+| ns | 2982 |  | 96 | Example and benchmark source trees | 2.13 | 1.3 | 0.698 |
+| walker |  | 3011 | 54 | ts names packages/d2mini/src/d2.ts |  |  | 0.698 |
+| walker |  | 3037 | 26 | ts decl packages/d2mini/src/d2.ts:146 |  |  | 0.698 |
+| walker |  | 3070 | 33 | ts decl packages/d2mini/src/operators/debug.ts:42 |  |  | 0.698 |
+| walker |  | 3103 | 33 | ts decl packages/d2ts/src/operators/debug.ts:74 |  |  | 0.698 |
+| walker |  | 3158 | 55 | ts names packages/d2ts/src/order.ts |  |  | 0.698 |
+| ns | 3172 |  | 190 | Per-package scripts: build, test, lint, typecheck, format | 3.1 | 1.7 | 0.688 |
+| walker |  | 3175 | 17 | ts decl packages/d2ts/src/order.ts:277 |  |  | 0.688 |
+| ns | 3259 |  | 87 | d2ts-benchmark scripts — the benchmark entry points | 3.2 | 3.1 | 0.682 |
+| walker |  | 3350 | 175 | package entrypoints in packages/d2ts/package.json |  |  | 0.682 |
+| walker |  | 3406 | 56 | ts names packages/d2mini/src/multiset.ts |  |  | 0.682 |
+| ns | 3452 |  | 193 | CI pipeline stages | 3.3 |  | 0.659 |
+| walker |  | 3462 | 56 | ts names packages/d2ts/src/multiset.ts |  |  | 0.659 |
+| walker |  | 3498 | 36 | ts names packages/d2mini/src/operators/count.ts |  |  | 0.659 |
+| walker |  | 3512 | 14 | ts decl packages/d2mini/src/operators/count.ts:9 |  |  | 0.659 |
+| walker |  | 3548 | 36 | ts names packages/d2ts/src/operators/count.ts |  |  | 0.659 |
+| walker |  | 3562 | 14 | ts decl packages/d2ts/src/operators/count.ts:10 |  |  | 0.659 |
+| walker |  | 3599 | 37 | ts names packages/d2ts/src/operators/distinct.ts |  |  | 0.659 |
+| walker |  | 3613 | 14 | ts decl packages/d2ts/src/operators/distinct.ts:10 |  |  | 0.659 |
+| walker |  | 3654 | 41 | listing of 'packages/d2ts/tests' |  |  | 0.668 |
+| ns | 3656 |  | 204 | README: constructing a D2 graph and sending to an input stream | 4.1 | 1.10 | 0.659 |
+| walker |  | 3842 | 188 | package scripts in packages/d2ts/package.json |  |  | 0.675 |
+| walker |  | 3882 | 40 | ts names packages/d2ts/src/operators/buffer.ts |  |  | 0.675 |
+| walker |  | 3900 | 18 | ts decl packages/d2ts/src/operators/buffer.ts:17 |  |  | 0.675 |
+| walker |  | 3957 | 57 | listing of 'packages/d2ts/src/sqlite/operators' |  |  | 0.703 |
+| ns | 3981 |  | 325 | d2.ts — D2Options and the complete D2 class method roster | 4.2 |  | 0.679 |
+| walker |  | 3998 | 41 | ts names packages/d2mini/src/operators/concat.ts |  |  | 0.679 |
+| walker |  | 4014 | 16 | ts decl packages/d2mini/src/operators/concat.ts:9 |  |  | 0.679 |
+| walker |  | 4043 | 29 | ts decl packages/d2mini/src/operators/concat.ts:25 |  |  | 0.679 |
+| walker |  | 4084 | 41 | ts names packages/d2mini/src/operators/consolidate.ts |  |  | 0.679 |
+| walker |  | 4100 | 16 | ts decl packages/d2mini/src/operators/consolidate.ts:9 |  |  | 0.679 |
+| walker |  | 4141 | 41 | ts names packages/d2ts/src/operators/concat.ts |  |  | 0.680 |
+| walker |  | 4157 | 16 | ts decl packages/d2ts/src/operators/concat.ts:11 |  |  | 0.680 |
+| ns | 4171 |  | 190 | README: what versions and frontiers actually mean | 4.3 | 1.10 | 0.676 |
+| walker |  | 4186 | 29 | ts decl packages/d2ts/src/operators/concat.ts:54 |  |  | 0.676 |
+| walker |  | 4227 | 41 | ts names packages/d2ts/src/operators/consolidate.ts |  |  | 0.676 |
+| walker |  | 4245 | 18 | ts decl packages/d2ts/src/operators/consolidate.ts:16 |  |  | 0.676 |
+| walker |  | 4286 | 41 | ts names packages/d2ts/src/operators/topKWithFractionalIndex.ts |  |  | 0.676 |
+| walker |  | 4353 | 67 | ts names packages/d2ts/src/d2.ts |  |  | 0.676 |
+| walker |  | 4375 | 22 | ts decl packages/d2ts/src/d2.ts:11 |  |  | 0.677 |
+| walker |  | 4413 | 38 | ts decl packages/d2ts/src/d2.ts:166 |  |  | 0.677 |
+| walker |  | 4456 | 43 | ts names packages/d2ts/src/operators/reduce.ts |  |  | 0.677 |
+| walker |  | 4483 | 27 | ts decl packages/d2ts/src/operators/reduce.ts:15 |  |  | 0.677 |
+| ns | 4517 |  | 346 | order.ts — v() factory and the complete Version method roster | 4.4 |  | 0.653 |
+| walker |  | 4527 | 44 | ts names packages/d2mini/src/operators/negate.ts |  |  | 0.653 |
+| walker |  | 4551 | 24 | ts decl packages/d2mini/src/operators/negate.ts:10 |  |  | 0.653 |
+| walker |  | 4595 | 44 | ts names packages/d2ts/src/operators/negate.ts |  |  | 0.653 |
+| walker |  | 4619 | 24 | ts decl packages/d2ts/src/operators/negate.ts:10 |  |  | 0.653 |
+| walker |  | 4665 | 46 | ts names packages/d2mini/src/operators/reduce.ts |  |  | 0.653 |
+| walker |  | 4692 | 27 | ts decl packages/d2mini/src/operators/reduce.ts:14 |  |  | 0.653 |
+| walker |  | 4730 | 38 | ts decl packages/d2ts/src/d2.ts:167 |  |  | 0.653 |
+| walker |  | 4780 | 50 | ts names packages/d2ts/src/operators/output.ts |  |  | 0.654 |
+| walker |  | 4807 | 27 | ts decl packages/d2ts/src/operators/output.ts:19 |  |  | 0.635 |
+| ns | 4807 |  | 290 | order.ts — Antichain method roster and Frontier | 4.5 | 4.4 | 0.635 |
+| walker |  | 4858 | 51 | ts names packages/d2mini/src/operators/distinct.ts |  |  | 0.635 |
+| walker |  | 4885 | 27 | ts decl packages/d2mini/src/operators/distinct.ts:17 |  |  | 0.635 |
+| walker |  | 4937 | 52 | ts names packages/d2mini/src/operators/filter.ts |  |  | 0.635 |
+| ns | 4952 |  | 145 | README: MultiSet as a changeset, and keyed multisets | 4.6 | 1.10 | 0.632 |
+| walker |  | 4972 | 35 | ts decl packages/d2mini/src/operators/filter.ts:10 |  |  | 0.632 |
+| walker |  | 5024 | 52 | ts names packages/d2ts/src/operators/filter.ts |  |  | 0.632 |
+| walker |  | 5059 | 35 | ts decl packages/d2ts/src/operators/filter.ts:11 |  |  | 0.632 |
+| walker |  | 5083 | 24 | README.md section #7 |  |  | 0.632 |
+| walker |  | 5133 | 50 | ts decl packages/d2ts/src/operators/topKWithFractionalIndex.ts:29 |  |  | 0.632 |
+| walker |  | 5186 | 53 | ts names packages/d2ts/src/operators/orderBy.ts |  |  | 0.632 |
+| walker |  | 5242 | 56 | ts names packages/d2mini/src/operators/map.ts |  |  | 0.632 |
+| walker |  | 5277 | 35 | ts decl packages/d2mini/src/operators/map.ts:10 |  |  | 0.632 |
+| ns | 5310 |  | 358 | multiset.ts — MultiSetArray, KeyedData and every MultiSet method | 4.7 |  | 0.617 |
+| walker |  | 5333 | 56 | ts names packages/d2ts/src/operators/map.ts |  |  | 0.617 |
+| walker |  | 5368 | 35 | ts decl packages/d2ts/src/operators/map.ts:11 |  |  | 0.617 |
+| walker |  | 5483 | 115 | listing of 'packages/d2ql/tests' |  |  | 0.659 |
+| ns | 5610 |  | 300 | types.ts — the operator message protocol | 4.8 |  | 0.637 |
+| walker |  | 5841 | 358 | ts decl eslint.base.mjs:6 |  |  | 0.637 |
+| ns | 5868 |  | 258 | types.ts — PipedOperator and the 20-deep pipe overload wall | 4.9 | 4.8 | 0.625 |
+| walker |  | 5882 | 41 | listing of 'packages/d2ts/tests/operators-sqlite' |  |  | 0.625 |
+| walker |  | 5895 | 13 | ts names packages/d2ql/src/select.ts |  |  | 0.625 |
+| walker |  | 6170 | 275 | ts names packages/d2ql/src/schema.ts |  |  | 0.625 |
+| walker |  | 6185 | 15 | ts decl packages/d2ql/src/schema.ts:48 |  |  | 0.625 |
+| walker |  | 6201 | 16 | ts decl packages/d2ql/src/schema.ts:36 |  |  | 0.625 |
+| walker |  | 6235 | 34 | ts decl packages/d2ql/src/schema.ts:152 |  |  | 0.625 |
+| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.634 |
+| walker |  | 6279 | 44 | ts decl packages/d2ql/src/schema.ts:123 |  |  | 0.634 |
+| walker |  | 6325 | 46 | ts decl packages/d2ql/src/schema.ts:65 |  |  | 0.634 |
+| walker |  | 6373 | 48 | ts decl packages/d2ql/src/schema.ts:80 |  |  | 0.634 |
+| walker |  | 6423 | 50 | ts decl packages/d2ql/src/schema.ts:24 |  |  | 0.634 |
+| walker |  | 6477 | 54 | ts decl packages/d2ql/src/schema.ts:39 |  |  | 0.634 |
+| walker |  | 6539 | 62 | ts decl packages/d2ql/src/schema.ts:71 |  |  | 0.634 |
+| walker |  | 6603 | 64 | ts decl packages/d2ql/src/schema.ts:13 |  |  | 0.634 |
+| walker |  | 6680 | 77 | ts decl packages/d2ql/src/schema.ts:143 |  |  | 0.634 |
+| ns | 6681 |  | 430 | packages/d2ts/README.md — complete heading map (1081-line API reference) | 5.2 |  | 0.610 |
+| walker |  | 6759 | 79 | ts decl packages/d2ql/src/schema.ts:94 |  |  | 0.610 |
+| walker |  | 6841 | 82 | ts decl packages/d2ql/src/schema.ts:130 |  |  | 0.610 |
+| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.614 |
+| walker |  | 6899 | 58 | ts decl packages/d2mini/src/operators/count.ts:30 |  |  | 0.614 |
+| walker |  | 6957 | 58 | ts decl packages/d2ts/src/operators/count.ts:32 |  |  | 0.614 |
+| walker |  | 7015 | 58 | ts decl packages/d2ts/src/operators/distinct.ts:37 |  |  | 0.614 |
+| walker |  | 7023 | 8 | ts body packages/d2ts/src/order.ts:278 |  |  | 0.614 |
+| walker |  | 7082 | 59 | ts decl packages/d2ts/src/operators/orderBy.ts:23 |  |  | 0.614 |
+| walker |  | 7175 | 93 | ts decl packages/d2ql/src/schema.ts:53 |  |  | 0.614 |
+| walker |  | 7189 | 14 | ts names packages/d2ql/src/key-by.ts |  |  | 0.614 |
+| walker |  | 7203 | 14 | ts names packages/d2ql/src/order-by.ts |  |  | 0.614 |
+| ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.598 |
+| walker |  | 7272 | 69 | ts names packages/d2ts/src/operators/iterate.ts |  |  | 0.600 |
+| walker |  | 7288 | 16 | ts decl packages/d2ts/src/operators/iterate.ts:15 |  |  | 0.600 |
+| walker |  | 7304 | 16 | ts decl packages/d2ts/src/operators/iterate.ts:46 |  |  | 0.600 |
+| walker |  | 7331 | 27 | ts decl packages/d2ts/src/operators/iterate.ts:80 |  |  | 0.600 |
+| walker |  | 7358 | 27 | ts decl packages/d2ts/src/operators/iterate.ts:225 |  |  | 0.600 |
+| ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.605 |
+| walker |  | 7469 | 111 | ts names packages/d2mini/src/types.ts |  |  | 0.605 |
+| walker |  | 7490 | 21 | ts decl packages/d2mini/src/types.ts:83 |  |  | 0.605 |
+| walker |  | 7513 | 23 | ts decl packages/d2mini/src/types.ts:6 |  |  | 0.605 |
+| walker |  | 7538 | 25 | ts decl packages/d2mini/src/types.ts:11 |  |  | 0.605 |
+| walker |  | 7576 | 38 | ts decl packages/d2mini/src/types.ts:16 |  |  | 0.605 |
+| ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.598 |
+| walker |  | 7655 | 79 | ts decl packages/d2mini/src/types.ts:21 |  |  | 0.598 |
+| walker |  | 7763 | 108 | ts decl packages/d2ql/src/schema.ts:105 |  |  | 0.598 |
+| walker |  | 7779 | 16 | ts names packages/d2mini/src/indexes.ts |  |  | 0.598 |
+| walker |  | 7833 | 54 | listing of 'packages/d2ql/tests/query-builder' |  |  | 0.598 |
+| ns | 7842 |  | 220 | D2QL identity and README section map | 6.1 |  | 0.593 |
+| walker |  | 7914 | 81 | ts names packages/d2mini/src/operators/keying.ts |  |  | 0.593 |
+| walker |  | 7947 | 33 | ts decl packages/d2mini/src/operators/keying.ts:13 |  |  | 0.593 |
+| walker |  | 7987 | 40 | ts decl packages/d2mini/src/operators/keying.ts:30 |  |  | 0.593 |
+| walker |  | 8068 | 81 | ts names packages/d2ts/src/operators/keying.ts |  |  | 0.596 |
+| ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.588 |
+| walker |  | 8101 | 33 | ts decl packages/d2ts/src/operators/keying.ts:13 |  |  | 0.588 |
+| walker |  | 8141 | 40 | ts decl packages/d2ts/src/operators/keying.ts:30 |  |  | 0.588 |
+| walker |  | 8219 | 78 | ts decl packages/d2mini/src/operators/filterBy.ts:14 |  |  | 0.588 |
+| walker |  | 8297 | 78 | ts decl packages/d2ts/src/operators/filterBy.ts:14 |  |  | 0.588 |
+| walker |  | 8315 | 18 | ts names packages/d2ts-benchmark/src/graph.ts |  |  | 0.588 |
+| walker |  | 8345 | 30 | packages/d2ql/README.md section #4 |  |  | 0.588 |
+| walker |  | 8429 | 84 | ts names packages/d2mini/src/operators/orderBy.ts |  |  | 0.588 |
+| ns | 8442 |  | 358 | schema.ts — the Query interface family | 6.3 |  | 0.576 |
+| walker |  | 8471 | 42 | ts decl packages/d2mini/src/operators/orderBy.ts:9 |  |  | 0.576 |
+| walker |  | 8530 | 59 | ts decl packages/d2mini/src/operators/orderBy.ts:23 |  |  | 0.576 |
+| walker |  | 8541 | 11 | ts body packages/d2mini/src/d2.ts:147 |  |  | 0.576 |
+| walker |  | 8571 | 30 | README.md section #17 |  |  | 0.576 |
+| ns | 8604 |  | 162 | schema.ts — the Comparator and LogicalOperator vocabularies | 6.4 | 6.3 | 0.578 |
+| walker |  | 8702 | 131 | ts decl packages/d2mini/src/d2.ts:10 |  |  | 0.578 |
+| ns | 8735 |  | 131 | compileQuery — the package's single entry point | 6.5 |  | 0.575 |
+| walker |  | 8787 | 85 | ts decl packages/d2mini/src/operators/reduce.ts:106 |  |  | 0.575 |
+| walker |  | 8872 | 85 | ts decl packages/d2ts/src/operators/reduce.ts:127 |  |  | 0.575 |
+| walker |  | 8902 | 30 | README.md section #3 |  |  | 0.575 |
+| walker |  | 8933 | 31 | README.md section #9 |  |  | 0.575 |
+| ns | 8978 |  | 243 | query-builder.ts — the fluent builder's complete method set | 6.6 |  | 0.566 |
+| walker |  | 9020 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:76 |  |  | 0.566 |
+| ns | 9076 |  | 98 | d2mini README — how it differs from d2ts | 7.1 |  | 0.567 |
+| walker |  | 9107 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:199 |  |  | 0.567 |
+| ns | 9165 |  | 89 | d2mini/src/d2.ts — the versionless D2 constructor | 7.2 | 7.1 | 0.564 |
+| walker |  | 9194 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:76 |  |  | 0.564 |
+| walker |  | 9281 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:140 |  |  | 0.564 |
+| ns | 9401 |  | 236 | README: using the SQLite backend | 8.1 | 1.10 | 0.559 |
+| walker |  | 9420 | 139 | listing of 'packages/d2mini/tests/operators' |  |  | 0.559 |
+| walker |  | 9469 | 49 | ts decl packages/d2mini/src/operators/count.ts:10 |  |  | 0.559 |
+| walker |  | 9482 | 13 | ts body packages/d2ts/src/d2.ts:167 |  |  | 0.559 |
+| ns | 9529 |  | 128 | sqlite/database.ts — the SQLiteDb driver interface | 8.2 | 8.1 | 0.554 |
+| ns | 9683 |  | 154 | withSQLite, SQLIndex and the Electric bridge exports | 8.3 | 8.2 | 0.551 |
+| ns | 9827 |  | 144 | README: what each example demonstrates | 9.1 | 1.10 | 0.548 |
+| walker |  | 9832 | 350 | ts decl eslint.base.mjs:6 #1 |  |  | 0.548 |
+| ns | 9977 |  | 150 | examples/electric — what the demo app does | 9.2 | 2.13 | 0.545 |

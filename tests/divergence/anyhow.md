@@ -222,7 +222,7 @@ Score(3000)=0.601 I=0.823 C=0.438 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 9528 | 14 | rust body src/nightly.rs:45 |  |  | 0.541 |
 | ns | 9570 |  | 192 | CI commands — the canonical build/test/lint invocations | 7.9 | 7.8 | 0.537 |
 | ns | 9658 |  | 88 | trybuild UI harness — tests/compiletest.rs in full | 8.1 |  | 0.534 |
-| walker |  | 9665 | 137 | README.md section #8 |  |  | 0.534 |
+| walker |  | 9665 | 137 | README.md section #5 |  |  | 0.534 |
 | walker |  | 9738 | 73 | rust body build.rs:199 |  |  | 0.534 |
 | ns | 9740 |  | 82 | tests/ui file listing | 8.2 | 8.1 | 0.542 |
 | ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.537 |

@@ -1,4 +1,4 @@
-Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.724/0.690/0.637/0.623/0.524/0.550
+Score(3000)=0.653 I=0.788 C=0.541 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.667/0.696/0.715/0.653/0.623/0.524/0.550
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,56 +35,49 @@ Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 1100 | 261 | README prelude in README.md |  |  | 0.754 |
 | walker |  | 1116 | 16 | ts body src/match.ts:32 |  |  | 0.754 |
 | walker |  | 1131 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.758 |
-| walker |  | 1141 | 10 | ts names src/types/index.ts |  |  | 0.758 |
 | ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.696 |
-| walker |  | 1439 | 298 | listing of 'tests' |  |  | 0.724 |
-| walker |  | 1462 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.764 |
-| walker |  | 1484 | 22 | README.md section #2 |  |  | 0.764 |
-| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.781 |
-| walker |  | 1524 | 40 | ts doc src/errors.ts:5 |  |  | 0.782 |
-| walker |  | 1551 | 27 | README.md section #7 |  |  | 0.783 |
-| walker |  | 1579 | 28 | README.md section #8 |  |  | 0.784 |
-| ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.737 |
-| walker |  | 1852 | 273 | package scripts in package.json |  |  | 0.738 |
-| ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.704 |
-| ns | 2047 |  | 82 | README `###`/`####` heading locations: the Types section | 1.14 |  | 0.690 |
-| walker |  | 2058 | 206 | package identity metadata in package.json |  |  | 0.690 |
-| walker |  | 2090 | 32 | README.md section #4 |  |  | 0.692 |
-| ns | 2103 |  | 56 | src/patterns.ts module docstring | 2.1 |  | 0.681 |
-| walker |  | 2122 | 32 | README.md section #3 |  |  | 0.685 |
-| ns | 2379 |  | 276 | Complete roster of every named export in src/patterns.ts (the `P` namespace) | 2.2 |  | 0.629 |
-| ns | 2425 |  | 46 | src/patterns.ts re-export block: `Pattern`, `unstable_Fn`, `matcher` | 2.3 |  | 0.619 |
-| walker |  | 2478 | 356 | package entrypoints in package.json |  |  | 0.633 |
-| walker |  | 2534 | 56 | ts module doc src/patterns.ts |  |  | 0.649 |
-| ns | 2555 |  | 130 | `match()` — doc summary, signature and body in src/match.ts | 2.4 |  | 0.641 |
-| ns | 2720 |  | 165 | `isMatching()` — both overload signatures with their doc summaries | 2.5 |  | 0.638 |
-| walker |  | 2807 | 273 | ts names src/patterns.ts |  |  | 0.659 |
-| walker |  | 2832 | 25 | ts decl src/patterns.ts:131 |  |  | 0.659 |
-| walker |  | 2875 | 43 | ts decl src/patterns.ts:81 |  |  | 0.659 |
-| ns | 2887 |  | 167 | Complete method roster of the `Match<>` builder type (src/types/Match.ts) | 2.6 |  | 0.636 |
-| walker |  | 2924 | 49 | ts decl src/patterns.ts:100 |  |  | 0.636 |
-| walker |  | 2984 | 60 | ts decl src/patterns.ts:187 |  |  | 0.637 |
-| walker |  | 3011 | 27 | ts names src/types/ExtractPreciseValue.ts |  |  | 0.637 |
-| walker |  | 3039 | 28 | ts names src/types/IsMatching.ts |  |  | 0.637 |
-| ns | 3042 |  | 155 | `chainable()` — the `.optional()/.and()/.or()/.select()` methods every pattern carries | 2.7 |  | 0.623 |
-| walker |  | 3068 | 29 | ts names src/types/DeepExclude.ts |  |  | 0.623 |
-| walker |  | 3088 | 20 | ts names examples/gif-fetcher/src/index.tsx |  |  | 0.623 |
-| walker |  | 3124 | 36 | ts module doc src/internals/helpers.ts |  |  | 0.623 |
-| walker |  | 3162 | 38 | ts names src/types/Match.ts |  |  | 0.624 |
-| walker |  | 3207 | 45 | ts names src/types/BuildMany.ts |  |  | 0.624 |
-| walker |  | 3227 | 20 | ts decl src/types/BuildMany.ts:4 |  |  | 0.624 |
-| ns | 3269 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.608 |
-| walker |  | 3351 | 124 | README.md section #11 |  |  | 0.609 |
-| walker |  | 3406 | 55 | README.md section #5 |  |  | 0.612 |
-| ns | 3536 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.593 |
-| walker |  | 3554 | 148 | README.md section #10 |  |  | 0.594 |
-| walker |  | 3614 | 60 | README.md section #6 |  |  | 0.599 |
-| walker |  | 3618 | 4 | listing of 'examples/gif-fetcher/public' |  |  | 0.603 |
-| walker |  | 3626 | 8 | listing of 'tests/types-catalog' |  |  | 0.612 |
-| walker |  | 3701 | 75 | ts body src/errors.ts:6 |  |  | 0.614 |
-| ns | 3821 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.599 |
-| walker |  | 3852 | 151 | ts doc src/is-matching.ts:48 |  |  | 0.603 |
-| walker |  | 3925 | 73 | README.md section #1 |  |  | 0.610 |
+| walker |  | 1460 | 329 | README.md section #1 |  |  | 0.743 |
+| walker |  | 1470 | 10 | ts names src/types/index.ts |  |  | 0.743 |
+| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.598 |
+| ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.562 |
+| walker |  | 1768 | 298 | listing of 'tests' |  |  | 0.739 |
+| walker |  | 1791 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.764 |
+| walker |  | 1831 | 40 | ts doc src/errors.ts:5 |  |  | 0.765 |
+| ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.729 |
+| ns | 2047 |  | 82 | README `###`/`####` heading locations: the Types section | 1.14 |  | 0.715 |
+| ns | 2103 |  | 56 | src/patterns.ts module docstring | 2.1 |  | 0.703 |
+| walker |  | 2104 | 273 | package scripts in package.json |  |  | 0.705 |
+| walker |  | 2310 | 206 | package identity metadata in package.json |  |  | 0.705 |
+| ns | 2379 |  | 276 | Complete roster of every named export in src/patterns.ts (the `P` namespace) | 2.2 |  | 0.648 |
+| ns | 2425 |  | 46 | src/patterns.ts re-export block: `Pattern`, `unstable_Fn`, `matcher` | 2.3 |  | 0.637 |
+| ns | 2555 |  | 130 | `match()` — doc summary, signature and body in src/match.ts | 2.4 |  | 0.630 |
+| walker |  | 2666 | 356 | package entrypoints in package.json |  |  | 0.643 |
+| ns | 2720 |  | 165 | `isMatching()` — both overload signatures with their doc summaries | 2.5 |  | 0.640 |
+| walker |  | 2722 | 56 | ts module doc src/patterns.ts |  |  | 0.655 |
+| ns | 2887 |  | 167 | Complete method roster of the `Match<>` builder type (src/types/Match.ts) | 2.6 |  | 0.633 |
+| walker |  | 2995 | 273 | ts names src/patterns.ts |  |  | 0.653 |
+| walker |  | 3020 | 25 | ts decl src/patterns.ts:131 |  |  | 0.653 |
+| ns | 3042 |  | 155 | `chainable()` — the `.optional()/.and()/.or()/.select()` methods every pattern carries | 2.7 |  | 0.639 |
+| walker |  | 3063 | 43 | ts decl src/patterns.ts:81 |  |  | 0.639 |
+| walker |  | 3112 | 49 | ts decl src/patterns.ts:100 |  |  | 0.639 |
+| walker |  | 3172 | 60 | ts decl src/patterns.ts:187 |  |  | 0.640 |
+| walker |  | 3199 | 27 | ts names src/types/ExtractPreciseValue.ts |  |  | 0.640 |
+| walker |  | 3227 | 28 | ts names src/types/IsMatching.ts |  |  | 0.640 |
+| walker |  | 3256 | 29 | ts names src/types/DeepExclude.ts |  |  | 0.640 |
+| ns | 3269 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.623 |
+| walker |  | 3276 | 20 | ts names examples/gif-fetcher/src/index.tsx |  |  | 0.623 |
+| walker |  | 3312 | 36 | ts module doc src/internals/helpers.ts |  |  | 0.623 |
+| walker |  | 3350 | 38 | ts names src/types/Match.ts |  |  | 0.623 |
+| walker |  | 3395 | 45 | ts names src/types/BuildMany.ts |  |  | 0.623 |
+| walker |  | 3415 | 20 | ts decl src/types/BuildMany.ts:4 |  |  | 0.623 |
+| ns | 3536 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.604 |
+| walker |  | 3539 | 124 | README.md section #4 |  |  | 0.605 |
+| walker |  | 3687 | 148 | README.md section #3 |  |  | 0.607 |
+| walker |  | 3691 | 4 | listing of 'examples/gif-fetcher/public' |  |  | 0.611 |
+| walker |  | 3699 | 8 | listing of 'tests/types-catalog' |  |  | 0.620 |
+| walker |  | 3774 | 75 | ts body src/errors.ts:6 |  |  | 0.621 |
+| ns | 3821 |  | 285 | `numberChainable` — all nine `P.number.*` refinement methods | 2.10 |  | 0.606 |
+| walker |  | 3925 | 151 | ts doc src/is-matching.ts:48 |  |  | 0.610 |
 | walker |  | 4018 | 93 | json config jsr.json |  |  | 0.610 |
 | ns | 4095 |  | 274 | `bigintChainable` — all seven `P.bigint.*` refinement methods | 2.11 |  | 0.596 |
 | ns | 4249 |  | 154 | src/errors.ts in full — `NonExhaustiveError` | 2.12 |  | 0.606 |
@@ -122,7 +115,7 @@ Score(3000)=0.637 I=0.777 C=0.522 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | ns | 5635 |  | 219 | `isMatching`'s runtime implementation — the arity dispatch | 3.7 |  | 0.548 |
 | walker |  | 5636 | 22 | ts decl src/types/InvertPattern.ts:106 |  |  | 0.548 |
 | walker |  | 5660 | 24 | ts decl src/types/InvertPattern.ts:303 |  |  | 0.548 |
-| walker |  | 5890 | 230 | README.md section #9 |  |  | 0.549 |
+| walker |  | 5890 | 230 | README.md section #2 |  |  | 0.549 |
 | ns | 6030 |  | 395 | `MatchExpression.with()` — multi-pattern, guard and selection semantics | 3.8 | 3.6 | 0.530 |
 | walker |  | 6099 | 209 | ts doc src/match.ts:32 |  |  | 0.538 |
 | walker |  | 6191 | 92 | ts names src/types/DistributeUnions.ts |  |  | 0.538 |

@@ -20,7 +20,26 @@ README.md
   36→## Table of Contents
   …
   51→## Key Features
-  …
+  52→
+  53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
+  54→- **Rich Operators**: Supports common operations with a pipeline API:
+  55→  - [`buffer`](#buffer): Buffer and emit versions when they are complete
+  56→  - [`concat`](#concat): Concatenate two streams
+  57→  - [`consolidate`](#consolidate): Consolidates the elements in the stream at each version
+  58→  - [`count`](#count): Count elements by key
+  59→  - [`distinct`](#distinct): Remove duplicates
+  60→  - [`filter`](#filter): Filter elements based on predicates
+  61→  - [`iterate`](#iterate): Perform iterative computations
+  62→  - [`join`](#join): Join two streams
+  63→  - [`keyBy`](#keyBy): Key a stream by a property
+  64→  - [`map`](#map): Transform elements in a stream
+  65→  - [`reduce`](#reduce): Aggregate values by key
+  66→  - [`rekey`](#rekey): Change the key of a keyed stream
+  67→  - [`unkey`](#unkey): Remove keys from a keyed stream
+  68→  - [`output`](#output): Output the messages of the stream
+  69→  - [`pipe`](#pipe): Build a pipeline of operators enabling reuse of combinations of operators
+  70→- **SQLite Integration**: Optional SQLite backend for persisting operator state allowing for larger datasets and resumable pipelines
+  71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
   73→## Quick Start
   74→
   75→### Installation
@@ -107,15 +126,6 @@ packages/
     package.json
     src/
       d2.ts
-        …
-        10→export class D2 implements ID2 {
-        …
-        73→export class StreamBuilder<T> implements IStreamBuilder<T> {
-        …
-        146→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-        147→  sendData(collection: MultiSet<T> | MultiSetArray<T>): void {
-        …
-        150→}
       graph.ts
       index.ts
         1→export * from './d2.js'
@@ -139,9 +149,6 @@ packages/
           35→}
           …
           42→export function debug<T>(
-          43→  name: string,
-          44→  indent: boolean = false,
-          45→): PipedOperator<T, T> {
           …
         distinct.ts
         filter.ts
@@ -253,22 +260,6 @@ packages/
       5→  "description": "D2TS is a TypeScript implementation of Differential Dataflow.",
       …
       20→  "type": "module",
-      21→  "main": "dist/index.js",
-      22→  "types": "dist/index.d.ts",
-      23→  "exports": {
-      24→    ".": {
-      25→      "types": "./dist/index.d.ts",
-      26→      "default": "./dist/index.js"
-      27→    },
-      28→    "./sqlite": {
-      29→      "types": "./dist/sqlite/index.d.ts",
-      30→      "default": "./dist/sqlite/index.js"
-      31→    },
-      32→    "./electric": {
-      33→      "types": "./dist/electric/index.d.ts",
-      34→      "default": "./dist/electric/index.js"
-      35→    }
-      36→  },
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",
@@ -306,9 +297,6 @@ packages/
           67→}
           …
           74→export function debug<T>(
-          75→  name: string,
-          76→  indent: boolean = false,
-          77→): PipedOperator<T, T> {
           …
         distinct.ts
         filter.ts
@@ -335,17 +323,6 @@ packages/
           …
         topKWithFractionalIndex.ts
       order.ts
-        …
-        10→export function v(version: number | number[]): Version {
-        …
-        29→export class Version {
-        …
-        138→export class Antichain {
-        …
-        277→export class Frontier extends Antichain {
-        278→  constructor(...elements: Version[]) {
-        …
-        281→}
       sqlite/
         context.ts
         database.ts

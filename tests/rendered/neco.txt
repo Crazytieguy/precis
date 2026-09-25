@@ -48,7 +48,24 @@ README.md
   54→cc -c neco.c
   55→```
   57→## Example 1 (Start a coroutine)
-  …
+  58→
+  59→A coroutine is started with the [`neco_start()`](docs/API.md#neco_start) function.
+  60→
+  61→When `neco_start()` is called for the first time it will initialize a Neco runtime and scheduler for the current thread, and then blocks until the coroutine and all child coroutines have terminated.
+  62→
+  63→```c
+  64→#include <stdio.h>
+  65→#include "neco.h"
+  66→
+  67→void coroutine(int argc, void *argv[]) {
+  68→    printf("main coroutine started\n");
+  69→}
+  70→
+  71→int main(int argc, char *argv[]) {
+  72→    neco_start(coroutine, 0);
+  73→    return 0;
+  74→}
+  75→```
   77→## Example 2 (Use neco_main instead of main)
   78→
   79→Optionally, [`neco_main()`](docs/API.md#neco_main) can be used in place of the standard `main()`.
@@ -124,23 +141,18 @@ docs/
     10→For a more general overview please see the project 
     11→[README](https://github.com/tidwall/neco). 
     …
-    17→- [Basic operations](#basic-operations)
-    18→- [Channels](#channels)
-    19→- [Generators](#generators)
-    20→- [Mutexes](#mutexes)
-    21→- [WaitGroups](#waitgroups)
-    22→- [Condition variables](#condition-variables)
-    …
-    25→- [Networking utilities](#Networking-utilities)
-    …
-    27→- [Random number generator](#random-number-generator)
-    28→- [Error handling](#error-handling)
-    29→- [Background worker](#background-worker)
-    30→- [Time](#time)
-    31→- [Signals](#signals)
-    32→- [Cancelation](#cancelation)
-    33→- [Stats and information](#stats-and-information)
-    34→- [Global environment](#global-environment)
+    476→## neco_chan
+    477→```c
+    478→struct neco_chan;
+    479→```
+    480→
+    481→<a name='structneco__stream'></a>
+    482→## neco_stream
+    483→```c
+    484→struct neco_stream;
+    485→```
+    486→
+    487→<a name='structneco__gen'></a>
     …
   README.md
     1→# Neco Documentation

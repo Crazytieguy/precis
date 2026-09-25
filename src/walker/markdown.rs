@@ -2176,7 +2176,6 @@ fn logical_sections(
             TopLevelEntry::H2Section { node, start, end } => {
                 let bytes = node.end_byte() - node.start_byte();
                 let structural_split_gate = outline_emits && bytes >= H2_SPLIT_BYTES;
-                let body_block_split_gate = bytes >= H2_SPLIT_BYTES;
                 let usage_h2 = readme && is_canonical_usage_h2(*node, source);
                 // README H2 whose title is in the reference/usage
                 // vocabulary, regardless of code fraction. Gates: a
@@ -2222,17 +2221,7 @@ fn logical_sections(
                         );
                     }
                 } else {
-                    let did_body_split = body_block_split_gate
-                        && push_list_body_blocks(
-                            &mut out,
-                            *node,
-                            outline_emits,
-                            parent_idx,
-                            synthetic_intro_present,
-                            source,
-                        );
-                    let did_fence_split = !did_body_split
-                        && root_readme
+                    let did_fence_split = root_readme
                         && usage_h2
                         && bytes >= H2_SPLIT_BYTES
                         && push_canonical_usage_fence_split(
@@ -2244,7 +2233,7 @@ fn logical_sections(
                             synthetic_intro_present,
                             source,
                         );
-                    if !did_body_split && !did_fence_split {
+                    if !did_fence_split {
                         push_whole_or_head_split(
                             &mut out,
                             &src_lines,
@@ -2764,53 +2753,6 @@ fn push_body_block_ranges(
         chained_to_previous: false,
     }));
     true
-}
-
-fn push_list_body_blocks(
-    out: &mut Vec<SectionRange>,
-    section: Node<'_>,
-    outline_emits: bool,
-    parent_idx: usize,
-    synthetic_intro_present: bool,
-    source: &str,
-) -> bool {
-    let Some(mut ranges) = list_only_body_block_ranges(section, source) else {
-        return false;
-    };
-    // Unlike the structural split, this one does not require the outline
-    // to emit at all — a single-heading list doc splits with no outline
-    // behind it, and then only the first item can carry the title.
-    if !outline_emits && let Some((start, _)) = ranges.first_mut() {
-        *start = (section.start_position().row + 1).min(*start);
-    }
-    push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present)
-}
-
-fn list_only_body_block_ranges(section: Node<'_>, source: &str) -> Option<Vec<(usize, usize)>> {
-    Some(substantive_item_ranges(
-        single_list_with_decorative_siblings(section, source)?,
-        source,
-    ))
-}
-
-fn single_list_with_decorative_siblings<'a>(section: Node<'a>, source: &str) -> Option<Node<'a>> {
-    let mut cur = section.walk();
-    let mut list: Option<Node<'a>> = None;
-    for child in section.children(&mut cur) {
-        match child.kind() {
-            kind if is_section_scaffolding(kind) => continue,
-            "list" => {
-                if list.is_some() {
-                    return None;
-                }
-                list = Some(child);
-            }
-            "paragraph" if is_decorative_paragraph(child, source) => continue,
-            "html_block" if is_decorative_html_block(child, source) => continue,
-            _ => return None,
-        }
-    }
-    list
 }
 
 fn substantive_item_ranges(list: Node<'_>, source: &str) -> Vec<(usize, usize)> {
@@ -4289,114 +4231,7 @@ mod tests {
         }
     }
 
-    // --- bullet-splitting tests (logical_sections) ---
-
-    /// Build a section with `n_items` bullet items each filled with
-    /// `filler` lines of body text. Returns the source string.
-    fn make_bullet_section(prefix: &str, n_items: usize, filler_per_item: usize) -> String {
-        let mut s = String::from(prefix);
-        for i in 0..n_items {
-            s.push_str(&format!("\n- Bullet item {i} headline.\n"));
-            for _ in 0..filler_per_item {
-                s.push_str(
-                    "  Some prose body for the item, multi-line. \
-                            Enough characters to clear the per-item byte gate.\n",
-                );
-            }
-        }
-        s
-    }
-
-    /// anyhow `## Details` shape — heading + bulleted list of items
-    /// each containing a code-block-ish prose blob, then a trailing
-    /// `<br>` html_block before the next H2. Must split into BodyBlock
-    /// ranges; trailing decorative html_block is tolerated; no Intro
-    /// (heading-only prelude).
-    #[test]
-    fn markdown_h2_split_bullets_anyhow_details_shape() {
-        let prefix = "# Title\n\nTagline.\n\n## Details";
-        let mut src = make_bullet_section(prefix, 3, 4);
-        src.push_str("\n<br>\n\n## Next\n\nbody.\n");
-        let ranges = sections("README.md", &src);
-        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
-        assert!(
-            !kinds.contains(&SectionKind::Intro),
-            "no Intro for heading-only prelude; got {ranges:?}"
-        );
-        let body_blocks: Vec<&SectionRange> = ranges
-            .iter()
-            .filter(|r| r.kind == SectionKind::BodyBlock)
-            .collect();
-        assert_eq!(
-            body_blocks.len(),
-            3,
-            "expected 3 BodyBlock ranges; got {ranges:?}"
-        );
-        // Trailing `<br>` row sits after the last bullet's range.
-        let br_row = src
-            .lines()
-            .position(|l| l.trim() == "<br>")
-            .map(|i| i + 1)
-            .expect("test source must contain <br>");
-        assert!(
-            body_blocks.iter().all(|b| b.end < br_row),
-            "<br> must not be inside any body-block range"
-        );
-    }
-
-    /// Real anyhow `## Details` text (rows 21-125 of fixture README,
-    /// trailing `<br>` included) must produce one BodyBlock per real
-    /// item. Catches "predicate filters out the item" regressions
-    /// against the data the feature is sized for.
-    #[test]
-    fn markdown_h2_split_bullets_real_anyhow_details() {
-        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .join("tests/fixtures/anyhow/README.md");
-        let body = std::fs::read_to_string(&path).expect("read anyhow README fixture");
-        let lines: Vec<&str> = body.lines().collect();
-        let details_start = lines
-            .iter()
-            .position(|l| l.starts_with("## Details"))
-            .expect("anyhow fixture has ## Details");
-        let next_h2 = lines[details_start + 1..]
-            .iter()
-            .position(|l| l.starts_with("## "))
-            .map(|i| details_start + 1 + i)
-            .expect("anyhow fixture has H2 after Details");
-        let details = lines[details_start..next_h2].join("\n");
-        let src = format!("# Title\n\nTagline.\n\n{details}\n## Next\n\nbody.\n");
-        let ranges = sections("README.md", &src);
-        let body_blocks: Vec<&SectionRange> = ranges
-            .iter()
-            .filter(|r| r.kind == SectionKind::BodyBlock)
-            .collect();
-        // anyhow's ## Details has 6 top-level bullets; expect each to survive.
-        assert_eq!(
-            body_blocks.len(),
-            6,
-            "expected 6 BodyBlock ranges from real anyhow ## Details; got {ranges:?}"
-        );
-    }
-
-    /// A long list-only section splits into one body block per item.
-    #[test]
-    fn markdown_h2_body_block_split_short_bullets() {
-        let prefix = "# Title\n\nTagline.\n\n## Features";
-        let mut src = String::from(prefix);
-        for i in 0..40 {
-            src.push_str(&format!("\n- short item {i}\n"));
-        }
-        src.push_str("\n## Next\n\nbody.\n");
-        let ranges = sections("README.md", &src);
-        let body_blocks = ranges
-            .iter()
-            .filter(|r| r.kind == SectionKind::BodyBlock)
-            .count();
-        assert_eq!(
-            body_blocks, 40,
-            "long bullet list must split into body blocks; got {ranges:?}"
-        );
-    }
+    // --- body-block splitting tests (logical_sections) ---
 
     /// H3 split is not always fine-grained enough: a long H3 child with
     /// several body blocks should refine to `BodyBlock` ranges while a
@@ -4523,90 +4358,6 @@ mod tests {
         let prose = "# Project\n\nTagline.\n\n## How Project Works\n\nOne plain paragraph.\n";
         let ranges = sections("README.md", prose);
         assert!(ranges.iter().all(|r| !r.is_canonical_operational_section));
-    }
-
-    /// Trailing decorative HTML block after the list (anyhow's
-    /// `<br>` shape, or an image-only `<p><img/></p>`) is tolerated
-    /// by the predicate and falls outside every emitted range. This
-    /// is the same trade-off `ReadmeHeadline` and the rest of the
-    /// markdown walker make for image-only / badge-only content:
-    /// there's no semantic value to preserve, so dropping it is
-    /// fine.
-    #[test]
-    fn markdown_h2_split_bullets_trailing_decorative_html_block() {
-        let prefix = "# Title\n\nTagline.\n\n## Details";
-        let mut src = make_bullet_section(prefix, 3, 4);
-        src.push_str(
-            "\n<p align=\"center\"><img src=\"./assets/footer.png\"/></p>\n\n## Next\n\nbody.\n",
-        );
-        let ranges = sections("README.md", &src);
-        let body_blocks: Vec<&SectionRange> = ranges
-            .iter()
-            .filter(|r| r.kind == SectionKind::BodyBlock)
-            .collect();
-        assert_eq!(
-            body_blocks.len(),
-            3,
-            "trailing decorative html_block must not block the body-block split; got {ranges:?}"
-        );
-        let footer_row = src
-            .lines()
-            .position(|l| l.contains("./assets/footer.png"))
-            .map(|i| i + 1)
-            .expect("test source must contain footer marker");
-        let row_in_any_range =
-            |row: usize| -> bool { ranges.iter().any(|r| (r.start..=r.end).contains(&row)) };
-        assert!(
-            !row_in_any_range(footer_row),
-            "trailing image row {footer_row} leaked into a range; got {ranges:?}"
-        );
-    }
-
-    /// Section has prose paragraph then list — list-only predicate
-    /// rejects because the paragraph is a non-decorative non-list
-    /// child, so no body-block split fires.
-    #[test]
-    fn markdown_h2_no_split_bullets_with_prose() {
-        let prose = "Here are the details:\n\
-                     This paragraph keeps adding bytes so the gate \
-                     conditions are met but the predicate must reject.\n";
-        let mut src = String::from("# Title\n\nTagline.\n\n## Details\n\n");
-        src.push_str(prose);
-        // Append substantive bullets too.
-        for i in 0..3 {
-            src.push_str(&format!(
-                "\n- Bullet item {i} with extra body text long enough to clear the per-item \
-                 gate without the help of any code blocks etc.\n"
-            ));
-        }
-        src.push_str("\n## Next\n\nbody.\n");
-        let ranges = sections("README.md", &src);
-        assert!(
-            !ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
-            "prose-then-list section must not body-block-split; got {ranges:?}"
-        );
-    }
-
-    /// Outline-omitted file still uses the body-block fallback for
-    /// list-only H2 sections.
-    #[test]
-    fn markdown_h2_body_block_bullets_when_outline_omitted() {
-        let mut src = String::from("# Title\n\nTagline.\n\n");
-        src.push_str(&make_bullet_section("## Details", 3, 4));
-        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
-            src.push_str(&format!("\n## Other {i}\n\nbody.\n"));
-        }
-        let tree = parse(&src);
-        let gates = derive_outline_gates(&PathBuf::from("README.md"), &tree, &src);
-        assert!(
-            !gates.emits,
-            "outline must be count-capped for the test premise to hold"
-        );
-        let ranges = sections("README.md", &src);
-        assert!(
-            ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
-            "outline-capped long list should fall back to body blocks; got {ranges:?}",
-        );
     }
 
     /// `# Title` README's first real H2 must get readme-index decay
@@ -4845,13 +4596,15 @@ mod tests {
     #[test]
     fn walker_markdown_adjacent_nested_bullets_split_disjoint() {
         let pad = "x".repeat(60);
-        let mut src =
-            String::from("Title\n=====\n\nIntro paragraph prose.\n\n## Included files\n\n");
+        let mut src = String::from(
+            "Title\n=====\n\nIntro paragraph prose.\n\n## Files\n\n### Included files\n\n",
+        );
         for name in ["alpha", "beta", "gamma", "delta"] {
             src.push_str(&format!("  * `{name}/`\n"));
             src.push_str(&format!("    * `{name}.c` - {pad}\n"));
             src.push_str(&format!("    * `{name}.h` - {pad}\n"));
         }
+        src.push_str("\n### Layout\n\nThe tree mirrors the module layout.\n");
         let tree = parse(&src);
         let file = PathBuf::from("/x/README.md");
         let gates = derive_outline_gates(&file, &tree, &src);
@@ -4938,37 +4691,6 @@ Details prose paragraph one.
         assert!(
             stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS,
             "tagline is short by char count despite exceeding byte threshold"
-        );
-    }
-
-    /// A single-heading list doc splits into per-item body blocks with no
-    /// outline behind it (the outline needs two heading rows to emit), so
-    /// nothing else can carry the section's own title. Without an owner
-    /// that row is unrenderable at every budget, 1M included.
-    #[test]
-    fn markdown_list_split_without_an_outline_keeps_the_heading_row() {
-        let mut src = String::from("## Supported functions\n\n");
-        for i in 0..12 {
-            src.push_str(&format!(
-                "- `helper{i}(input)` — returns the transformed input for case {i}.\n"
-            ));
-        }
-        assert!(
-            src.len() >= H2_SPLIT_BYTES,
-            "shape must clear the body-block split gate"
-        );
-        let dir = tempfile::tempdir().unwrap();
-        std::fs::write(dir.path().join("guide.md"), &src).unwrap();
-
-        let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None);
-        let rendered = scheduler.run().render();
-        assert!(
-            rendered.contains("helper0(input)"),
-            "expected the per-item split to render: {rendered}"
-        );
-        assert!(
-            rendered.contains("Supported functions"),
-            "section title has no owner at any budget: {rendered}"
         );
     }
 }

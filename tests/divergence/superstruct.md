@@ -1,4 +1,4 @@
-Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.495/0.569/0.514/0.577/0.624/0.618
+Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.495/0.569/0.514/0.577/0.624/0.619
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -31,7 +31,7 @@ Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 867 | 54 | headings outline in Readme.md |  |  | 0.725 |
 | walker |  | 885 | 18 | headings outline in docs/resources/links.md |  |  | 0.725 |
 | walker |  | 913 | 28 | listing of 'test' |  |  | 0.725 |
-| walker |  | 932 | 19 | Readme.md section #12 |  |  | 0.725 |
+| walker |  | 932 | 19 | Readme.md section #8 |  |  | 0.725 |
 | ns | 971 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.637 |
 | walker |  | 1008 | 76 | package entrypoints in package.json |  |  | 0.637 |
 | ns | 1066 |  | 95 | src/struct.ts symbol roster: methods and top-level helpers | 2.1 |  | 0.595 |
@@ -144,52 +144,51 @@ Score(3000)=0.514 I=0.765 C=0.345 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 6816 | 20 | ts module doc test/index.ts |  |  | 0.667 |
 | walker |  | 6854 | 38 | docs/reference/errors.md section #0 |  |  | 0.667 |
 | ns | 6891 |  | 201 | Runner assertions: output-style vs failures-style fixtures | 5.11 | 5.10 | 0.657 |
-| walker |  | 6965 | 111 | Readme.md section #9 |  |  | 0.657 |
+| walker |  | 6965 | 111 | Readme.md section #5 |  |  | 0.657 |
 | walker |  | 6996 | 31 | docs/summary.md section #2 |  |  | 0.657 |
-| walker |  | 7041 | 45 | Readme.md section #6 |  |  | 0.657 |
-| walker |  | 7085 | 44 | Readme.md section #7 |  |  | 0.657 |
-| walker |  | 7147 | 62 | headings outline in docs/reference/core.md |  |  | 0.658 |
-| walker |  | 7147 | 0 | docs/reference/core.md section #0 |  |  | 0.658 |
+| walker |  | 7058 | 62 | headings outline in docs/reference/core.md |  |  | 0.658 |
+| walker |  | 7058 | 0 | docs/reference/core.md section #0 |  |  | 0.658 |
 | ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.640 |
-| walker |  | 7254 | 107 | ts doc src/error.ts:25 |  |  | 0.654 |
+| walker |  | 7165 | 107 | ts doc src/error.ts:25 |  |  | 0.654 |
 | ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.648 |
-| walker |  | 7304 | 50 | Readme.md section #5 |  |  | 0.648 |
-| ns | 7481 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.639 |
-| walker |  | 7542 | 238 | ts names src/utils.ts |  |  | 0.649 |
-| walker |  | 7562 | 20 | ts decl src/utils.ts:218 |  |  | 0.649 |
-| walker |  | 7612 | 50 | ts decl src/utils.ts:106 |  |  | 0.649 |
-| walker |  | 7662 | 50 | ts decl src/utils.ts:202 |  |  | 0.649 |
-| walker |  | 7716 | 54 | ts decl src/utils.ts:67 |  |  | 0.649 |
-| walker |  | 7769 | 53 | Readme.md section #4 |  |  | 0.649 |
-| walker |  | 7871 | 102 | ts decl src/utils.ts:130 |  |  | 0.656 |
+| walker |  | 7403 | 238 | ts names src/utils.ts |  |  | 0.658 |
+| walker |  | 7423 | 20 | ts decl src/utils.ts:218 |  |  | 0.658 |
+| walker |  | 7473 | 50 | ts decl src/utils.ts:106 |  |  | 0.658 |
+| ns | 7481 |  | 186 | toFailure(): result normalisation and default message text | 6.1 | 2.9 | 0.649 |
+| walker |  | 7523 | 50 | ts decl src/utils.ts:202 |  |  | 0.649 |
+| walker |  | 7577 | 54 | ts decl src/utils.ts:67 |  |  | 0.649 |
+| walker |  | 7679 | 102 | ts decl src/utils.ts:130 |  |  | 0.656 |
+| walker |  | 7742 | 63 | docs/reference/coercions.md section #0 |  |  | 0.656 |
+| walker |  | 7821 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.656 |
+| walker |  | 7851 | 30 | docs/reference/utilities.md section #0 |  |  | 0.656 |
+| walker |  | 7862 | 11 | ts body src/struct.ts:83 |  |  | 0.656 |
 | ns | 7894 |  | 413 | object() implementation, including the mask special case | 6.2 | 3.6 | 0.636 |
-| walker |  | 7934 | 63 | docs/reference/coercions.md section #0 |  |  | 0.636 |
-| walker |  | 8013 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.636 |
-| walker |  | 8043 | 30 | docs/reference/utilities.md section #0 |  |  | 0.636 |
-| walker |  | 8054 | 11 | ts body src/struct.ts:83 |  |  | 0.636 |
-| ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.628 |
-| walker |  | 8179 | 125 | docs/summary.md section #0 |  |  | 0.628 |
-| ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.624 |
-| walker |  | 8261 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.625 |
-| walker |  | 8314 | 53 | docs/reference/refinements.md section #0 |  |  | 0.625 |
-| walker |  | 8391 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.625 |
-| walker |  | 8415 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.625 |
-| walker |  | 8438 | 23 | ts doc src/struct.ts:175 |  |  | 0.625 |
+| walker |  | 7987 | 125 | docs/summary.md section #0 |  |  | 0.636 |
+| walker |  | 8069 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.637 |
+| ns | 8085 |  | 191 | refine() and define() bodies - the extension points | 6.3 | 2.4 | 0.630 |
+| walker |  | 8122 | 53 | docs/reference/refinements.md section #0 |  |  | 0.630 |
+| walker |  | 8199 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.625 |
+| ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.625 |
+| walker |  | 8223 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.625 |
+| walker |  | 8246 | 23 | ts doc src/struct.ts:175 |  |  | 0.625 |
+| walker |  | 8356 | 110 | json config jsr.json |  |  | 0.625 |
 | ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.630 |
-| walker |  | 8548 | 110 | json config jsr.json |  |  | 0.630 |
+| walker |  | 8562 | 206 | Readme.md section #6 |  |  | 0.630 |
+| walker |  | 8588 | 26 | package identity in examples/package.json |  |  | 0.630 |
+| walker |  | 8611 | 23 | ts doc src/struct.ts:243 |  |  | 0.630 |
 | ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.626 |
-| walker |  | 8754 | 206 | Readme.md section #10 |  |  | 0.626 |
+| walker |  | 8719 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.626 |
 | ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.624 |
-| walker |  | 8780 | 26 | package identity in examples/package.json |  |  | 0.624 |
-| walker |  | 8803 | 23 | ts doc src/struct.ts:243 |  |  | 0.624 |
-| walker |  | 8911 | 108 | docs/guides/03-coercing-data.md section #0 |  |  | 0.624 |
-| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.618 |
-| walker |  | 9022 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.618 |
-| walker |  | 9104 | 82 | ts doc src/structs/coercions.ts:38 |  |  | 0.618 |
-| walker |  | 9123 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.619 |
+| walker |  | 8830 | 111 | docs/guides/04-refining-validation.md section #0 |  |  | 0.624 |
+| walker |  | 8912 | 82 | ts doc src/structs/coercions.ts:38 |  |  | 0.625 |
+| walker |  | 8931 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.626 |
+| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.619 |
 | ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.612 |
 | ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.606 |
 | ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.612 |
 | ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.609 |
 | ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.605 |
 | ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.602 |
+| walker |  | 9884 | 953 | docs/readme.md section #0 |  |  | 0.602 |
+| walker |  | 9910 | 26 | ts doc src/structs/refinements.ts:33 |  |  | 0.602 |
+| walker |  | 9927 | 17 | ts body src/utils.ts:16 |  |  | 0.602 |

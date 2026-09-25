@@ -11,30 +11,23 @@ README.md
   2→
   3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
   5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
-  7→## Table of Contents
-  8→
-  9→- [Overview](#overview-)
-  10→- [Features](#features-)
-  11→- [Requirements](#requirements-)
-  12→- [Environment Setup](#environment-setup-)
-  13→- [Installation](#installation-)
-  14→- [SDK Usage](#sdk-usage-)
   …
-  35→- [Automation & Scripting](#automation--scripting-)
-  36→- [MCP Server Compatibility](#mcp-server-compatibility-)
-  37→- [Contributing](#contributing-)
-  38→- [License](#license-)
-  39→- [Acknowledgments](#acknowledgments-)
-  …
+  60→## Features ✨
+  61→
+  62→- Interactive conversations with multiple AI models
   63→- **Non-interactive mode** for scripting and automation
   64→- **Script mode** for executable YAML-based automation scripts
   65→- Support for multiple concurrent MCP servers
-  …
+  66→- **Tool filtering** with `allowedTools` and `excludedTools` per server
   67→- Dynamic tool discovery and integration
   68→- Tool calling capabilities across all supported models
   69→- Configurable MCP server locations and arguments
   70→- Consistent command interface across model types
   71→- Configurable message history window for context management
+  72→- **OAuth authentication** support for Anthropic (alternative to API keys)
+  73→- **Hooks system** for custom integrations and security policies
+  74→- **Environment variable substitution** in configs and scripts
+  75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
   …
 cmd/
   auth.go
@@ -166,6 +159,10 @@ internal/
       16→}
       …
       21→type HookMatcher struct {
+      22→	Matcher string      `yaml:"matcher,omitempty" json:"matcher,omitempty"`
+      23→	Merge   string      `yaml:"_merge,omitempty" json:"_merge,omitempty"`
+      24→	Hooks   []HookEntry `yaml:"hooks" json:"hooks"`
+      25→}
       …
       30→type HookEntry struct {
       31→	Type    string `yaml:"type" json:"type"`
@@ -332,6 +329,7 @@ internal/
       28→func (l *CLIDebugLogger) LogDebug(message string) {
       …
       84→func (l *CLIDebugLogger) IsDebugEnabled() bool {
+      85→	return l.cli != nil && l.cli.debug
       …
     enhanced_styles.go
     factory.go
