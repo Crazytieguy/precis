@@ -33,26 +33,7 @@ README.md
   3→**A powerful HTTP client that lives in your terminal.**
   4→
   5→Posting is an HTTP client, not unlike Postman and Insomnia. As a TUI application, it can be used over SSH and enables efficient keyboard-centric workflows. Your requests are stored locally in simple YAML files, so they're easy to read and version control.
-  7→<img width="968" alt="image" src="https://github.com/user-attachments/assets/78359ab0-5e0c-4c0b-a60b-dce06b11bbf5" />
-  8→
-  9→Some notable features include:
-  10→
-  11→- "jump mode" navigation
-  12→- environments/variables
-  13→- autocompletion
-  14→- syntax highlighting using tree-sitter
-  15→- Vim keys
-  16→- customizable keybindings
-  17→- user-defined themes
-  18→- run Python code before and after requests
-  19→- extensive configuration
-  20→- open in $EDITOR/$PAGER
-  21→- import curl commands by pasting them into the URL bar
-  22→- export requests as cURL commands
-  23→- import from Postman and OpenAPI specs
-  24→- a command palette for quickly accessing functionality
-  25→
-  26→Visit the [website](https://posting.sh) for more information, the roadmap, and the user guide.
+  …
   28→## Installation
   …
   48→### Prefer `pipx`?
@@ -61,10 +42,7 @@ README.md
   53→
   54→Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines, information on setting up your development environment, and running tests.
   56→## Learn More
-  57→
-  58→Learn more about Posting at [https://posting.sh](https://posting.sh).
-  59→
-  60→Posting was built with [Textual](https://github.com/textualize/textual).
+  …
 docs/
   CHANGELOG.md
   CNAME
@@ -103,101 +81,17 @@ docs/
   overrides/
     home.html
   roadmap.md
-    1→## About this document
-    …
-    47→## Next planned features 🚀
-    …
-    57→## Longer Term 🔮
-    …
-    89→## Completed ✓
-    …
-    117→## Legend
-    …
   stylesheets/
     extra.css
 mkdocs.yml
-  1→site_name: Posting
-  2→site_url: https://posting.sh
-  3→repo_url: https://github.com/darrenburns/posting
-  4→repo_name: darrenburns/posting
-  5→theme:
-  6→  name: material
-  7→  palette:
-  8→    scheme: slate
-  9→    primary: custom
-  10→  custom_dir: docs/overrides
-  11→  icon:
-  12→    logo: fontawesome/solid/paper-plane
-  13→  font:
-  14→    text: Open Sans
-  15→  features:
-  16→    - search.suggest
-  17→    - search.highlight
-  18→    - header.autohide
-  19→    - navigation.tabs
-  20→    - navigation.tabs.sticky
-  21→    - navigation.footer
-  22→    - toc.integrate
-  23→extra_css:
-  24→  - stylesheets/extra.css
-  25→nav:
-  26→  - Home: "index.md"
-  27→  - Guide:
-  28→    - "Getting Started": "guide/index.md"
-  29→    - "Navigation": "guide/navigation.md"
-  30→    - "Collections": "guide/collections.md"
-  31→    - "Requests": "guide/requests.md"
-  32→    - "Configuration": "guide/configuration.md"
-  33→    - "Environments": "guide/environments.md"
-  34→    - "Command Palette": "guide/command_palette.md"
-  35→    - "Themes": "guide/themes.md"
-  36→    - "External Tools": "guide/external_tools.md"
-  37→    - "Keymaps": "guide/keymap.md"
-  38→    - "Importing": "guide/importing.md"
-  39→    - "Scripting": "guide/scripting.md"
-  40→    - "Help System": "guide/help_system.md"
-  41→  - Roadmap: "roadmap.md"
-  42→  - Changelog: "CHANGELOG.md"
-  43→  - FAQ: "faq.md"
-  44→plugins:
-  45→  - search
-  46→  - tags
-  47→markdown_extensions:
-  48→  - abbr
-  49→  - admonition
-  50→  - attr_list
-  51→  - def_list
-  52→  - toc:
-  53→      permalink: true
-  54→  - footnotes
-  55→  - tables
-  56→  - pymdownx.keys
-  57→  - pymdownx.highlight:
-  58→      use_pygments: true
-  59→  - pymdownx.superfences
-  60→  - pymdownx.details
-  61→extra:
-  62→  social:
-  63→    - icon: fontawesome/brands/mastodon 
-  64→      link: https://fosstodon.org/@darrenburns
-  65→    - icon: fontawesome/brands/x-twitter
-  66→      link: https://x.com/_darrenburns
-  67→    - icon: fontawesome/brands/github
-  68→      link: https://github.com/darrenburns
-  69→copyright: Copyright &copy; 2024 Darren Burns
 pyproject.toml
   1→[project]
   2→name = "posting"
   3→version = "2.10.0"
   4→description = "The modern API client that lives in your terminal."
-  5→authors = [
-  6→    { name = "Darren Burns", email = "darrenb900@gmail.com" }
-  7→]
   …
   25→readme = "README.md"
   26→requires-python = ">= 3.11"
-  27→license = { file = "LICENSE" }
-  28→keywords = ["tui", "http", "client", "terminal", "api", "testing", "textual", "cli", "posting", "developer-tool"]
   …
   49→[project.scripts]
   50→posting = "posting.__main__:cli"
@@ -205,11 +99,8 @@ pyproject.toml
 src/
   posting/
     __init__.py
-      1→# This import should be the first thing to run, to ensure that
-      2→# the START_TIME is set as early as possible.
-      3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
       …
-      7→import sys
+      3→from posting._start_time import START_TIME  # type: ignore # noqa: F401
       …
       10→from .collection import (
       11→    Auth,
@@ -238,118 +129,290 @@ src/
       34→    "Posting",
       35→]
     __main__.py
+      1→"""The main entry point for the Posting CLI."""
+      …
+      21→def create_config_file() -> None:
+      …
+      32→def create_default_collection() -> Path:
+      …
+      45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
+      46→def cli() -> None:
+      47→    """A TUI for testing HTTP APIs."""
+      50→@cli.command()
+      51→@click.option(
+      52→    "--collection",
+      53→    "-c",
+      54→    type=click.Path(exists=True),
+      55→    help="Path to the collection directory",
+      56→)
+      57→@click.option(
+      58→    "--env",
+      59→    "-e",
+      60→    type=click.Path(exists=True),
+      61→    help="Path to the .env environment file(s)",
+      62→    multiple=True,
+      63→)
+      64→def default(collection: str | None = None, env: tuple[str, ...] = ()) -> None:
+      …
+      76→@cli.command()
+      77→@click.argument(
+      78→    "thing_to_locate",
+      79→)
+      80→def locate(thing_to_locate: str) -> None:
+      …
+      96→@cli.command(name="import")
+      97→@click.argument("spec_path", type=click.Path(exists=True))
+      98→@click.option(
+      99→    "--output",
+      100→    "-o",
+      101→    type=click.Path(),
+      102→    help="Path to save the imported collection",
+      103→    default=None,
+      104→)
+      105→@click.option(
+      106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
+      107→)
+      108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
+      109→    """Import an OpenAPI specification into a Posting collection."""
+      …
+      177→@cli.command(name="sponsors")
+      178→def sponsors() -> None:
+      179→    """Show the list of sponsors."""
+      …
+      194→def make_posting(
+      195→    collection: Path,
+      196→    env: tuple[str, ...] = (),
+      197→    using_default_collection: bool = False,
+      198→) -> Posting:
+      …
     _start_time.py
-      1→import time
+      …
       4→START_TIME = time.perf_counter_ns()
     app.py
+      …
+      93→class AppHeader(Horizontal):
+      …
+      96→    def compose(self) -> ComposeResult:
+      …
+      108→class AppBody(Vertical):
+      …
+      112→class MainScreen(Screen[None]):
+      …
+      1205→class Posting(App[None], inherit_bindings=False):
+      …
     auth.py
+      …
+      6→class HttpxBearerTokenAuth(httpx.Auth):
+      7→    def __init__(self, token: str):
+      …
+      10→    def auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+      …
     collection.py
-      …
-      23→class Auth(BaseModel):
-      …
-      56→class BasicAuth(BaseModel):
-      57→    username: str = Field(default="")
-      58→    password: str = Field(default="")
-      61→class DigestAuth(BaseModel):
-      62→    username: str = Field(default="")
-      63→    password: str = Field(default="")
-      …
-      138→class Scripts(BaseModel):
-      139→    """The scripts associated with the request.
-      140→
-      141→    Paths are relative to the collection directory root.
-      142→    """
-      …
-      553→def load_request_from_yaml(file_path: str) -> RequestModel:
-      …
     commands.py
+      …
+      11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
+      12→
+      13→
+      14→class PostingProvider(Provider):
+      …
     config.py
     exit_codes.py
+      1→GENERAL_ERROR = 1
     files.py
     help_data.py
+      …
+      5→class HelpData:
+      …
     help_screen.py
     highlight_url.py (empty)
     highlighters.py
     importing/
       curl.py
+        …
+        22→class CurlImport:
+        …
       open_api.py
       postman.py
     jump_overlay.py
+      …
+      16→class JumpOverlay(ModalScreen[str | Widget | None]):
+      …
     jumper.py
+      …
+      9→@runtime_checkable
+      10→class Jumpable(Protocol):
+      …
+      13→    jump_key: str
+      16→class JumpInfo(NamedTuple):
+      …
+      19→    key: str
+      20→    """The key which should trigger the jump."""
+      21→
+      22→    widget: str | Widget
+      23→    """Either the ID or a direct reference to the widget."""
+      26→class Jumper:
+      …
+      29→    def __init__(self, ids_to_keys: Mapping[str, str], screen: Screen[Any]) -> None:
+      …
+      34→    def get_overlays(self) -> dict[Offset, JumpInfo]:
+      …
     locations.py
     messages.py
+      …
+      6→@dataclass
+      7→class HttpResponseReceived(Message):
+      8→    response: Response
     posting.scss
     request_headers.py
-      1→from typing import TypedDict
+      …
+      4→class RequestHeader(TypedDict):
+      5→    section: str
+      6→    name: str
+      7→    description: str
+      8→    experimental: bool
+      9→    url: str
+      12→REQUEST_HEADERS: list[RequestHeader] = [
       …
     save_request.py
+      …
+      5→FILE_SUFFIX = ".posting.yaml"
+      6→
+      7→
+      8→def slugify(text: str) -> str:
+      …
+      15→def generate_request_filename(request_title: str) -> str:
+      …
     scripts.py
     suggesters.py
+      …
+      2→HEADER_SUGGESTION_LISTS = {
+      …
     themes.py
     tuple_to_multidict.py
     types.py
+      …
+      3→PostingLayout = Literal["horizontal", "vertical"]
+      …
+      6→CertTypes = Union[
+      …
     urls.py
     user_host.py
+      …
+      9→def get_user_host_string() -> Text:
+      …
     variables.py
     version.py
+      …
+      3→VERSION = version("posting")
     widgets/
       __init__.py (empty)
       center_middle.py
+        …
+        4→class CenterMiddle(Widget, inherit_bindings=False):
+        …
       collection/
         browser.py
         new_request_modal.py
       confirmation.py
+        1→"""A modal screen for confirming a destructive action."""
+        …
+        12→class ConfirmationModal(ModalScreen[bool]):
+        …
       datatable.py
+        …
+        27→class PostingDataTable(DataTable[str | Text]):
+        …
       input.py
+        …
+        9→class PostingInput(Input):
+        …
       key_value.py
+        …
+        19→class KeyValueInput(Horizontal):
+        …
+        127→class KeyValueEditor(Vertical):
+        …
       key_value_copy_modal.py
       load_env_file_dialog.py
+        1→"""A modal screen for loading environment variables from a file."""
+        …
       request/
         __init__.py (empty)
         form_editor.py
         header_editor.py
         method_selection.py
+          …
+          14→class MethodSelector(PostingSelect[str]):
+          …
         path_editor.py
         query_editor.py
         request_auth.py
         request_body.py
         request_editor.py
         request_metadata.py
+          …
+          11→class RequestMetadata(VerticalScroll):
+          …
         request_options.py
+          …
+          12→class RequestOptions(VerticalScroll):
+          …
         request_scripts.py
         url_bar.py
       response/
         cookies_table.py
+          …
+          9→class CookiesSection(Vertical):
+          …
         response_area.py
         response_body.py
+          …
+          8→class ResponseTextArea(ReadOnlyTextArea):
+          …
         response_headers.py
+          …
+          4→class ResponseHeadersTable(PostingDataTable):
+          5→    def on_mount(self) -> None:
+          …
         response_trace.py
         script_output.py
       rich_log.py
+        …
+        7→class RichLogIO(StringIO):
+        …
+        37→class PostingRichLog(RichLog):
+        …
       select.py
       tabbed_content.py
+        …
+        5→class PostingTabbedContent(TabbedContent):
+        …
       text_area.py
       tree.py
+        …
+        6→T = TypeVar("T")
+        7→
+        8→
+        9→class PostingTree(Tree[T]):
+        …
       variable_autocomplete.py
+        …
+        18→class VariableAutoComplete(AutoComplete):
+        …
       variable_input.py
+        …
+        12→class VariableInput(PostingInput):
+        …
     xresources.py
+      …
+      8→XRDB_MAPPING = {
+      …
+      20→def load_xresources_themes() -> dict[str, TextualTheme]:
+      …
     yaml.py
+      …
+      10→def str_presenter(dumper: Dumper, data: str) -> yaml.ScalarNode:
+      …
+      23→__all__ = ["load", "dump", "Loader", "Dumper"]
 tests/
-  __snapshots__/
-  posting_snapshot_app.py
-  resources/
-  sample-collections/
-  sample-configs/
-  sample-envs/
-  sample-importable-collections/
-  sample-themes/
-  test_curl_export.py
-  test_curl_import.py
-  test_files.py
-  test_load_env_file_dialog.py
-  test_open_api_import.py
-  test_postman_import.py
-  test_snapshots.py
-  test_urls.py
-  test_variables.py
 uv.lock

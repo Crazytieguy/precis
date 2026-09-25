@@ -98,10 +98,6 @@ docs/
   examples/
     eggsample/
       eggsample/
-        __init__.py
-        hookspecs.py
-        host.py
-        lib.py
       setup.py
     eggsample-spam/
     toy-example.py
@@ -182,10 +178,24 @@ src/
       27→from ._result import Result
       28→from ._warnings import PluggyTeardownRaisedWarning
       29→from ._warnings import PluggyWarning
+      30→
+      31→
       32→def __getattr__(name: str) -> str:
-      …
+      33→    if name == "__version__":
+      34→        from importlib.metadata import version
+      35→
+      36→        return version("pluggy")
+      37→
+      38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
     _callers.py
+      1→"""
+      2→Call loop machinery
+      3→"""
+      …
     _hooks.py
+      1→"""
+      2→Internal hook annotation, representation and calling machinery.
+      3→"""
       …
       28→_T = TypeVar("_T")
       29→_F = TypeVar("_F", bound=Callable[..., object])
@@ -193,18 +203,24 @@ src/
       31→_Namespace: TypeAlias = ModuleType | type
       32→_Plugin: TypeAlias = object
       33→_HookExec: TypeAlias = Callable[
-      …
+      34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
+      35→    object | list[object],
+      36→]
       37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
+      38→
+      39→
       40→class HookspecOpts(TypedDict):
-      41→    """Options for a hook specification."""
       …
       56→class HookimplOpts(TypedDict):
-      57→    """Options for a hook implementation."""
       …
       77→@final
       78→class HookspecMarker:
       …
+      86→    __slots__ = ("project_name",)
+      87→
       88→    def __init__(self, project_name: str) -> None:
+      …
+      92→    def __call__(
       …
       102→    def __call__(  # noqa: F811
       …
@@ -213,7 +229,11 @@ src/
       164→@final
       165→class HookimplMarker:
       …
+      173→    __slots__ = ("project_name",)
+      174→
       175→    def __init__(self, project_name: str) -> None:
+      …
+      179→    def __call__(
       …
       191→    def __call__(  # noqa: F811
       …
@@ -228,11 +248,14 @@ src/
       …
       358→@final
       359→class HookRelay:
-      360→    """Hook holder object for performing 1:N hook calls where N is the number
-      361→    of registered plugins."""
       …
+      363→    __slots__ = ("__dict__",)
+      364→
       365→    def __init__(self) -> None:
-      366→        """:meta private:"""
+      …
+      368→    if TYPE_CHECKING:
+      369→
+      370→        def __getattr__(self, name: str) -> HookCaller: ...
       …
       374→_HookRelay = HookRelay
       375→
@@ -241,88 +264,81 @@ src/
       378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
       379→]
       382→class HookCaller:
-      383→    """A caller of all registered implementations of a hook specification."""
-      …
-      393→    def __init__(
-      …
-      420→    def has_spec(self) -> bool:
-      …
-      424→    def set_specification(
-      425→        self,
-      426→        specmodule_or_class: _Namespace,
-      427→        spec_opts: HookspecOpts,
-      428→    ) -> None:
-      …
-      438→    def is_historic(self) -> bool:
-      …
-      442→    def _remove_plugin(self, plugin: _Plugin) -> None:
-      …
-      449→    def get_hookimpls(self) -> list[HookImpl]:
-      450→        """Get all registered hook implementations for this hook."""
-      …
-      453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
-      …
-      477→    def __repr__(self) -> str:
-      …
-      480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
-      481→        # This is written to avoid expensive operations when not needed.
-      …
-      499→    def __call__(self, **kwargs: object) -> Any:
-      …
-      516→    def call_historic(
-      517→        self,
-      518→        result_callback: Callable[[Any], None] | None = None,
-      519→        kwargs: Mapping[str, object] | None = None,
-      520→    ) -> None:
-      …
-      543→    def call_extra(
-      544→        self, methods: Sequence[Callable[..., object]], kwargs: Mapping[str, object]
-      545→    ) -> Any:
-      …
-      577→    def _maybe_apply_history(self, method: HookImpl) -> None:
       …
       590→_HookCaller = HookCaller
       591→
       592→
       593→class _SubsetHookCaller(HookCaller):
       …
-      612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
-      …
-      618→    @property  # type: ignore[misc]
-      619→    def _hookimpls(self) -> list[HookImpl]:
-      …
-      626→    @property
-      627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-      …
-      630→    @property
-      631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
-      …
-      634→    def __repr__(self) -> str:
-      …
       638→@final
       639→class HookImpl:
-      640→    """A hook implementation in a :class:`HookCaller`."""
       …
+      642→    __slots__ = (
+      643→        "function",
+      644→        "argnames",
+      645→        "kwargnames",
+      646→        "plugin",
+      647→        "opts",
+      648→        "plugin_name",
+      649→        "wrapper",
+      650→        "hookwrapper",
+      651→        "optionalhook",
+      652→        "tryfirst",
+      653→        "trylast",
+      654→    )
+      655→
       656→    def __init__(
       …
       692→    def __repr__(self) -> str:
       …
       696→@final
       697→class HookSpec:
-      …
+      698→    __slots__ = (
+      699→        "namespace",
+      700→        "function",
+      701→        "name",
+      702→        "argnames",
+      703→        "kwargnames",
+      704→        "opts",
+      705→        "warn_on_impl",
+      706→        "warn_on_impl_args",
+      707→    )
+      708→
       709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
       …
     _manager.py
     _result.py
+      1→"""
+      2→Hook wrapper "result" utilities.
+      3→"""
+      …
     _tracing.py
+      1→"""
+      2→Tracing utils
+      3→"""
+      …
+      12→_Writer = Callable[[str], object]
+      13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
+      14→
+      15→
+      16→class TagTracer:
+      …
+      59→class TagTracerSub:
+      60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+      …
+      64→    def __call__(self, *args: object) -> None:
+      …
+      67→    def get(self, name: str) -> TagTracerSub:
+      …
     _warnings.py
-      1→from typing import final
+      …
       4→class PluggyWarning(UserWarning):
-      5→    """Base class for all warnings emitted by pluggy."""
+      …
       7→    __module__ = "pluggy"
       10→@final
       11→class PluggyTeardownRaisedWarning(PluggyWarning):
       …
+      27→    __module__ = "pluggy"
     py.typed (empty)
 testing/
   benchmark.py

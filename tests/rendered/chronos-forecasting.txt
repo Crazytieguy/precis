@@ -14,19 +14,9 @@ NOTICE
 README.md
   …
   3→# Chronos: Pretrained Models for Time Series Forecasting
-  5→[![preprint](https://img.shields.io/static/v1?label=Chronos-Paper&message=2403.07815&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2403.07815)
-  6→[![preprint](https://img.shields.io/static/v1?label=Chronos-2-Report&message=2510.15821&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2510.15821)
-  7→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Datasets-FFD21E)](https://huggingface.co/datasets/autogluon/chronos_datasets)
-  8→[![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20HF-Models-FFD21E)](https://huggingface.co/collections/amazon/chronos-models-65f1791d630a8d57cb718444)
-  9→[![fev](https://img.shields.io/static/v1?label=fev&message=Benchmark&color=B31B1B&logo=github)](https://github.com/autogluon/fev)
-  10→[![aws](https://img.shields.io/static/v1?label=SageMaker&message=Deploy&color=FF9900&logo=amazon-web-services)](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
-  11→[![faq](https://img.shields.io/badge/FAQ-Questions%3F-blue)](https://github.com/amazon-science/chronos-forecasting/issues?q=is%3Aissue+label%3AFAQ)
-  12→[![License: MIT](https://img.shields.io/badge/License-Apache--2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
-  13→
-  14→</div>
+  …
   17→## 🚀 News
   …
-  22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
   24→## ✨ Introduction
   …
   32→### Available Models
@@ -77,9 +67,7 @@ src/
     __about__.py
       1→__version__ = "2.2.2"
     __init__.py
-      1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-      2→# SPDX-License-Identifier: Apache-2.0
-      3→
+      …
       4→from .__about__ import __version__
       5→from .base import BaseChronosPipeline, ForecastType
       6→from .chronos import (
@@ -114,67 +102,48 @@ src/
       29→    QUANTILES = "quantiles"
       32→class PipelineRegistry(type):
       33→    REGISTRY: Dict[str, "PipelineRegistry"] = {}
+      34→
       35→    def __new__(cls, name, bases, attrs):
-      36→        """See, https://github.com/faif/python-patterns."""
       …
       44→class BaseChronosPipeline(metaclass=PipelineRegistry):
-      45→    forecast_type: ForecastType
-      46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
-      48→    def __init__(self, inner_model: "PreTrainedModel"):
-      …
-      58→    @property
-      59→    def model_context_length(self) -> int:
-      60→        raise NotImplementedError()
-      62→    @property
-      63→    def model_prediction_length(self) -> int:
-      64→        raise NotImplementedError()
-      66→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
-      …
-      76→    def predict(self, inputs: Union[torch.Tensor, List[torch.Tensor]], prediction_length: Optional[int] = None):
-      …
-      100→    def predict_quantiles(
-      …
-      135→    def predict_df(
-      …
-      252→    def predict_fev(
-      253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
-      254→    ) -> tuple[list["datasets.DatasetDict"], float]:
-      …
-      336→    @classmethod
-      337→    def from_pretrained(
-      338→        cls,
-      339→        pretrained_model_name_or_path: Union[str, Path],
-      340→        *model_args,
-      341→        force_s3_download=False,
-      342→        **kwargs,
-      343→    ):
       …
     boto_utils.py
+      …
+      18→logger = logging.getLogger(__name__)
+      19→
+      20→MODEL_FILENAMES = ["config.json", "model.safetensors", "LICENSE.txt"]
+      21→CLOUDFRONT_MAPPING = {"s3://autogluon/chronos-2": "https://d7057vjasule5.cloudfront.net"}
+      22→CHUNK_SIZE = 1024 * 1024  # 1MB
+      23→
+      24→
+      25→def download_model_files_from_cloudfront(
+      26→    cloudfront_url: str,
+      27→    bucket: str,
+      28→    prefix: str,
+      29→    local_path: Path,
+      30→    force_download: bool = False,
+      31→) -> None:
+      …
+      53→def download_model_files_from_s3(
+      …
+      98→def cache_model_from_s3(
+      99→    s3_uri: str,
+      100→    force_download: bool = False,
+      101→    boto3_session: boto3.Session | None = None,
+      102→):
+      …
     chronos.py
       …
       24→logger = logging.getLogger(__file__)
-      25→
-      26→
-      27→@dataclass
+      …
       28→class ChronosConfig:
-      29→    """
-      30→    This class holds all the configuration parameters to be used
-      31→    by ``ChronosTokenizer`` and ``ChronosModel``.
-      32→    """
-      …
-      49→    def __post_init__(self):
-      …
-      54→    def create_tokenizer(self) -> "ChronosTokenizer":
       …
       59→class ChronosTokenizer:
-      60→    """
-      61→    A ``ChronosTokenizer`` defines how time series are mapped into token IDs
-      62→    and back.
-      63→
-      64→    For details, see the ``input_transform`` and ``output_transform`` methods,
-      65→    which concrete classes must implement.
-      66→    """
+      …
       68→    def context_input_transform(
+      69→        self,
+      70→        context: torch.Tensor,
+      71→    ) -> Tuple:
       …
       100→    def label_input_transform(self, label: torch.Tensor, tokenizer_state: Any) -> Tuple:
       …
@@ -201,38 +170,18 @@ src/
       262→    def device(self):
       …
       265→    def encode(
+      266→        self,
+      267→        input_ids: torch.Tensor,
+      268→        attention_mask: torch.Tensor,
+      269→    ):
       …
       292→    def forward(
       …
       355→class ChronosPipeline(BaseChronosPipeline):
       …
-      375→    def __init__(self, tokenizer, model):
-      …
-      380→    @property
-      381→    def model_context_length(self) -> int:
-      …
-      384→    @property
-      385→    def model_prediction_length(self) -> int:
-      …
-      388→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
-      …
-      398→    @torch.no_grad()
-      399→    def embed(self, context: Union[torch.Tensor, List[torch.Tensor]]) -> Tuple[torch.Tensor, Any]:
-      …
-      430→    def predict(
-      …
-      513→    def predict_quantiles(
-      …
-      535→    @classmethod
-      536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
-      …
     chronos2/
       __init__.py
-        1→# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-        2→# SPDX-License-Identifier: Apache-2.0
-        3→
-        4→# Authors: Abdul Fatir Ansari <ansarnd@amazon.com>
-        5→
+        …
         6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
         7→from .model import Chronos2Model
         8→from .pipeline import Chronos2Pipeline
@@ -240,14 +189,116 @@ src/
         10→
         11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
       config.py
+        …
+        12→class Chronos2CoreConfig(PretrainedConfig):
+        …
+        103→class Chronos2ForecastingConfig:
+        …
       dataset.py
       layers.py
       model.py
       pipeline.py
+        …
+        36→logger = logging.getLogger(__name__)
+        37→
+        38→
+        39→class Chronos2Pipeline(BaseChronosPipeline):
+        …
       trainer.py
+        …
+        17→def seed_worker(worker_id: int):
+        …
+        30→class EvaluateAndSaveFinalStepCallback(TrainerCallback):
+        …
+        33→    def on_step_end(self, args, state, control, **kwargs):
+        …
+        40→class Chronos2Trainer(Trainer):
+        …
+        46→    def get_train_dataloader(self) -> DataLoader:
+        …
+        77→    def get_eval_dataloader(self, eval_dataset: str | Dataset | None = None) -> DataLoader:
+        …
     chronos_bolt.py
+      …
+      29→logger = logging.getLogger(__file__)
+      32→@dataclass
+      33→class ChronosBoltConfig:
+      34→    context_length: int
+      35→    prediction_length: int
+      36→    input_patch_size: int
+      37→    input_patch_stride: int
+      38→    quantiles: List[float]
+      39→    use_reg_token: bool = False
+      42→@dataclass
+      43→class ChronosBoltOutput(ModelOutput):
+      44→    loss: Optional[torch.Tensor] = None
+      45→    quantile_preds: Optional[torch.Tensor] = None
+      46→    attentions: Optional[torch.Tensor] = None
+      47→    cross_attentions: Optional[torch.Tensor] = None
+      50→class Patch(nn.Module):
+      51→    def __init__(self, patch_size: int, patch_stride: int) -> None:
+      …
+      56→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      71→class InstanceNorm(nn.Module):
+      …
+      76→    def __init__(self, eps: float = 1e-5, use_arcsinh: bool = False) -> None:
+      …
+      81→    def forward(
+      82→        self, x: torch.Tensor, loc_scale: tuple[torch.Tensor, torch.Tensor] | None = None
+      83→    ) -> tuple[torch.Tensor, tuple[torch.Tensor, torch.Tensor]]:
+      …
+      100→    def inverse(self, x: torch.Tensor, loc_scale: tuple[torch.Tensor, torch.Tensor]) -> torch.Tensor:
+      …
+      113→class ResidualBlock(nn.Module):
+      114→    def __init__(
+      …
+      135→    def forward(self, x: torch.Tensor):
+      …
+      147→class ChronosBoltModelForForecasting(T5PreTrainedModel):
+      …
+      403→class ChronosBoltPipeline(BaseChronosPipeline):
+      …
     df_utils.py
+      …
+      16→def _validate_df_types_and_cast(
+      …
+      59→def validate_df_inputs(
+      60→    df: "pd.DataFrame",
+      61→    future_df: "pd.DataFrame | None",
+      62→    target_columns: list[str],
+      63→    prediction_length: int,
+      64→    id_column: str = "item_id",
+      65→    timestamp_column: str = "timestamp",
+      66→) -> tuple["pd.DataFrame", "pd.DataFrame | None", str, list[int], np.ndarray]:
+      …
+      199→def convert_df_input_to_list_of_dicts_input(
+      200→    df: "pd.DataFrame",
+      201→    future_df: "pd.DataFrame | None",
+      202→    target_columns: list[str],
+      203→    prediction_length: int,
+      204→    id_column: str = "item_id",
+      205→    timestamp_column: str = "timestamp",
+      206→    validate_inputs: bool = True,
+      207→    freq: str | None = None,
+      208→) -> tuple[list[dict[str, np.ndarray | dict[str, np.ndarray]]], np.ndarray, dict[str, "pd.DatetimeIndex"]]:
+      …
     utils.py
+      …
+      11→def left_pad_and_stack_1D(tensors: List[torch.Tensor]) -> torch.Tensor:
+      …
+      22→def interpolate_quantiles(
+      23→    query_quantile_levels: torch.Tensor | list[float],
+      24→    original_quantile_levels: torch.Tensor | list[float],
+      25→    original_values: torch.Tensor,
+      26→) -> torch.Tensor:
+      …
+      135→def weighted_quantile(
+      136→    query_quantile_levels: torch.Tensor | list[float],
+      137→    sample_weights: torch.Tensor | list[float],
+      138→    samples: torch.Tensor,
+      139→):
+      …
 test/
   __init__.py
   dummy-chronos-bolt-model/

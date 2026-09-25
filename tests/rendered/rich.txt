@@ -204,15 +204,6 @@ imgs/
 make.bat
 poetry.lock
 pyproject.toml
-  1→[tool.poetry]
-  2→name = "rich"
-  3→homepage = "https://github.com/Textualize/rich"
-  4→documentation = "https://rich.readthedocs.io/en/latest/"
-  5→version = "15.0.0"
-  6→description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
-  7→authors = ["Will McGugan <willmcgugan@gmail.com>"]
-  8→license = "MIT"
-  9→readme = "README.md"
   …
   29→[tool.poetry.dependencies]
   30→python = ">=3.9.0"
@@ -222,11 +213,6 @@ pyproject.toml
   …
 questions/
   README.md
-    2→# Questions
-    3→
-    4→Your questions should go in this directory.
-    5→
-    6→Question files should be named with the extension ".question.md".
   ansi_escapes.question.md
   emoji_broken.question.md
   highlight_incorrect.question.md
@@ -240,8 +226,7 @@ questions/
 rich/
   __init__.py
     1→"""Rich text and beautiful formatting in the terminal."""
-    2→
-    3→import os
+    …
     4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
     5→
     6→from ._extension import load_ipython_extension  # noqa: F401
@@ -251,12 +236,6 @@ rich/
     14→_console: Optional["Console"] = None
     …
     23→def get_console() -> "Console":
-    24→    """Get a global :class:`~rich.console.Console` instance. This function is used when Rich requires a Console,
-    25→    and hasn't been explicitly given one.
-    26→
-    27→    Returns:
-    28→        Console: A console instance.
-    29→    """
     …
     39→def reconfigure(*args: Any, **kwargs: Any) -> None:
     …
@@ -282,98 +261,79 @@ rich/
     33→    def __rich_measure__(
     34→        self, console: "Console", options: ConsoleOptions
     35→    ) -> Measurement:
-    36→        return Measurement(1, options.max_width)
+    …
     39→def make_test_card() -> Table:
     40→    """Get a renderable that demonstrates a number of features."""
     …
   _emoji_codes.py
+    1→EMOJI = {
+    …
   _emoji_replace.py
   _export_format.py
   _extension.py
-    1→from typing import Any
+    …
+    4→def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
     …
   _fileno.py
+    …
+    6→def get_fileno(file_like: IO[str]) -> int | None:
+    …
   _inspect.py
   _log_render.py
   _loop.py
-    1→from typing import Iterable, Tuple, TypeVar
-    …
   _null_file.py
-  _palettes.py
-    1→from .palette import Palette
     …
+    5→class NullFile(IO[str]):
+    …
+    69→NULL_FILE = NullFile()
+  _palettes.py
   _pick.py
-    1→from typing import Optional
+    …
+    4→def pick_bool(*values: Optional[bool]) -> bool:
     …
   _ratio.py
   _spinners.py
+    …
+    22→SPINNERS = {
+    …
   _stack.py
-    1→from typing import List, TypeVar
+    …
+    3→T = TypeVar("T")
+    4→
+    5→
+    6→class Stack(List[T]):
+    …
+    9→    @property
+    10→    def top(self) -> T:
+    …
+    14→    def push(self, item: T) -> None:
     …
   _timer.py
+    1→"""
+    2→Timer context manager, only used in debug.
+    3→
+    4→"""
+    …
+    12→@contextlib.contextmanager
+    13→def timer(subject: str = "time") -> Generator[None, None, None]:
+    …
   _unicode_data/
-    __init__.py
-      1→from __future__ import annotations
-      2→
-      3→import bisect
-      4→import os
-      5→import sys
-      …
-      12→from importlib import import_module
-      13→from typing import TYPE_CHECKING, cast
-      14→
-      15→from rich._unicode_data._versions import VERSIONS
-      …
-      20→VERSION_ORDER = sorted(
-      21→    [
-      22→        tuple(
-      23→            map(int, version.split(".")),
-      24→        )
-      25→        for version in VERSIONS
-      26→    ]
-      27→)
-      28→VERSION_SET = frozenset(VERSIONS)
-      29→
-      30→
-      31→def _parse_version(version: str) -> tuple[int, int, int]:
-      …
-      58→@cache
-      59→def load(unicode_version: str = "auto") -> CellTable:
-      60→    """Load a cell table for the given unicode version.
-      61→
-      62→    Args:
-      63→        unicode_version: Unicode version, or `None` to auto-detect.
-      64→
-      65→    """
-      …
-    _versions.py
-    unicode10-0-0.py
-    unicode11-0-0.py
-    unicode12-0-0.py
-    unicode12-1-0.py
-    unicode13-0-0.py
-    unicode14-0-0.py
-    unicode15-0-0.py
-    unicode15-1-0.py
-    unicode16-0-0.py
-    unicode17-0-0.py
-    unicode4-1-0.py
-    unicode5-0-0.py
-    unicode5-1-0.py
-    unicode5-2-0.py
-    unicode6-0-0.py
-    unicode6-1-0.py
-    unicode6-2-0.py
-    unicode6-3-0.py
-    unicode7-0-0.py
-    unicode8-0-0.py
-    unicode9-0-0.py
   _win32_console.py
   _windows.py
+    …
+    6→class WindowsConsoleFeatures:
+    …
   _windows_renderer.py
+    …
+    7→def legacy_windows_render(buffer: Iterable[Segment], term: LegacyWindowsTerm) -> None:
+    …
   _wrap.py
   abc.py
-    1→from abc import ABC
+    …
+    4→class RichRenderable(ABC):
+    …
+    15→    @classmethod
+    16→    def __subclasshook__(cls, other: type) -> bool:
     …
   align.py
   ansi.py
@@ -382,33 +342,79 @@ rich/
   cells.py
   color.py
   color_triplet.py
-    1→from typing import NamedTuple, Tuple
+    …
+    4→class ColorTriplet(NamedTuple):
     …
   columns.py
+    …
+    16→class Columns(JupyterMixin):
+    …
   console.py
   constrain.py
+    …
+    10→class Constrain(JupyterMixin):
+    …
   containers.py
   control.py
   default_styles.py
+    …
+    5→DEFAULT_STYLES: Dict[str, Style] = {
+    …
   diagnose.py
+    …
+    10→def report() -> None:  # pragma: no cover
+    …
   emoji.py
   errors.py
   file_proxy.py
+    …
+    11→class FileProxy(io.TextIOBase):
+    …
   filesize.py
   highlighter.py
   json.py
+    …
+    9→class JSON:
+    …
   jupyter.py
   layout.py
   live.py
+    …
+    22→class _RefreshThread(Thread):
+    …
+    41→class Live(JupyterMixin, RenderHook):
+    …
   live_render.py
   logging.py
+    …
+    24→class RichHandler(Handler):
+    …
   markdown.py
   markup.py
   measure.py
+    …
+    11→class Measurement(NamedTuple):
+    …
+    125→def measure_renderables(
+    …
   padding.py
   pager.py
+    …
+    5→class Pager(ABC):
+    …
+    8→    @abstractmethod
+    9→    def show(self, content: str) -> None:
+    …
+    17→class SystemPager(Pager):
+    …
   palette.py
+    …
+    11→class Palette:
+    …
   panel.py
+    …
+    17→class Panel(JupyterMixin):
+    …
   pretty.py
   progress.py
   progress_bar.py
@@ -416,23 +422,51 @@ rich/
   protocol.py
   py.typed (empty)
   region.py
-    1→from typing import NamedTuple
+    …
+    4→class Region(NamedTuple):
     …
   repr.py
   rule.py
+    …
+    12→class Rule(JupyterMixin):
+    …
   scope.py
+    …
+    14→def render_scope(
+    …
   screen.py
+    …
+    18→class Screen:
+    …
   segment.py
   spinner.py
+    …
+    13→class Spinner:
+    …
   status.py
+    …
+    11→class Status(JupyterMixin):
+    …
   style.py
   styled.py
+    …
+    11→class Styled:
+    …
   syntax.py
   table.py
   terminal_theme.py
   text.py
   theme.py
+    …
+    7→class Theme:
+    …
+    77→class ThemeStackError(Exception):
+    …
+    81→class ThemeStack:
+    …
   themes.py
+    …
+    5→DEFAULT = Theme(DEFAULT_STYLES)
   traceback.py
   tree.py
 setup.py

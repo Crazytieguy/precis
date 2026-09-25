@@ -58,12 +58,7 @@ docs/
   userguide.rst
   versionhistory.rst
 pyproject.toml
-  1→[build-system]
-  2→requires = [
-  3→    "setuptools >= 77",
-  4→    "setuptools_scm[toml] >= 6.4"
-  5→]
-  6→build-backend = "setuptools.build_meta"
+  …
   8→[project]
   9→name = "typeguard"
   10→description = "Run-time type checker for Python"
@@ -77,42 +72,11 @@ pyproject.toml
   29→    "typing_extensions >= 4.14.0",
   30→]
   31→dynamic = ["version"]
-  33→[project.urls]
-  34→Documentation = "https://typeguard.readthedocs.io/en/latest/"
-  35→"Change log" = "https://typeguard.readthedocs.io/en/latest/versionhistory.html"
-  36→"Source code" = "https://github.com/agronholm/typeguard"
-  37→"Issue tracker" = "https://github.com/agronholm/typeguard/issues"
-  38→
-  39→[project.entry-points]
-  40→pytest11 = {typeguard = "typeguard._pytest_plugin"}
-  …
-  55→[tool.setuptools.package-data]
-  56→typeguard = ["py.typed"]
-  57→
-  58→[tool.setuptools_scm]
-  59→version_scheme = "post-release"
-  60→local_scheme = "dirty-tag"
-  61→
-  62→[tool.pytest.ini_options]
-  63→addopts = "--tb=short"
-  64→testpaths = "tests"
-  65→xfail_strict = true
-  66→filterwarnings = ["error"]
-  67→
-  68→[tool.coverage.run]
-  69→source = ["typeguard"]
-  70→
-  71→[tool.coverage.report]
-  72→show_missing = true
-  73→exclude_lines = [
-  74→    "pragma: no cover",
-  75→    "if TYPE_CHECKING:"
-  76→]
   …
 src/
   typeguard/
     __init__.py
-      1→import os
+      …
       2→from typing import Any
       3→
       4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
@@ -151,50 +115,6 @@ src/
       43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
       …
     _checkers.py
-      …
-      153→def check_callable(
-      154→    value: Any,
-      155→    origin_type: Any,
-      156→    args: tuple[Any, ...],
-      157→    memo: TypeCheckMemo,
-      158→) -> None:
-      …
-      212→def check_mapping(
-      213→    value: Any,
-      214→    origin_type: Any,
-      215→    args: tuple[Any, ...],
-      216→    memo: TypeCheckMemo,
-      217→) -> None:
-      …
-      247→def check_typed_dict(
-      248→    value: Any,
-      249→    origin_type: Any,
-      250→    args: tuple[Any, ...],
-      251→    memo: TypeCheckMemo,
-      252→) -> None:
-      …
-      305→def check_list(
-      306→    value: Any,
-      307→    origin_type: Any,
-      308→    args: tuple[Any, ...],
-      309→    memo: TypeCheckMemo,
-      310→) -> None:
-      …
-      324→def check_sequence(
-      325→    value: Any,
-      326→    origin_type: Any,
-      327→    args: tuple[Any, ...],
-      328→    memo: TypeCheckMemo,
-      329→) -> None:
-      …
-      924→def check_type_internal(
-      925→    value: Any,
-      926→    annotation: Any,
-      927→    memo: TypeCheckMemo,
-      928→) -> None:
-      …
-      1099→def load_plugins() -> None:
-      …
     _config.py
       …
       11→T = TypeVar("T")
@@ -209,59 +129,138 @@ src/
       …
       49→    FIRST_ITEM = auto()
       50→    ALL_ITEMS = auto()
+      51→
+      52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
       …
       62→@dataclass
       63→class TypeCheckConfiguration:
-      64→    """
-      65→     You can change Typeguard's behavior with these settings.
       …
+      98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
+      99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
+      100→    collection_check_strategy: CollectionCheckStrategy = (
+      101→        CollectionCheckStrategy.FIRST_ITEM
+      102→    )
+      103→    debug_instrumentation: bool = False
       106→global_config = TypeCheckConfiguration()
     _decorators.py
+      …
+      19→T_CallableOrType = TypeVar("T_CallableOrType", bound=Callable[..., Any])
+      …
+      32→def make_cell(value: object) -> _Cell:
+      …
+      36→def find_target_function(
+      37→    new_code: CodeType, target_path: Sequence[str], firstlineno: int
+      38→) -> CodeType | None:
+      …
+      56→def instrument(f: T_CallableOrType) -> FunctionType | str:
+      …
+      136→@overload
+      137→def typechecked(
+      138→    *,
+      139→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+      140→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+      141→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+      142→    debug_instrumentation: bool | Unset = unset,
+      143→) -> Callable[[T_CallableOrType], T_CallableOrType]: ...
+      146→@overload
+      147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
+      148→
+      149→
+      150→def typechecked(
+      151→    target: T_CallableOrType | None = None,
+      152→    *,
+      153→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+      154→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+      155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+      156→    debug_instrumentation: bool | Unset = unset,
+      157→) -> Any:
+      …
     _exceptions.py
-      1→from collections import deque
-      2→from typing import Deque
+      …
       5→class TypeHintWarning(UserWarning):
-      6→    """
-      7→    A warning that is emitted when a type hint in string form could not be resolved to
-      8→    an actual type.
-      9→    """
+      …
       12→class TypeCheckWarning(UserWarning):
-      13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
+      …
       15→    def __init__(self, message: str):
       16→        super().__init__(message)
       19→class InstrumentationWarning(UserWarning):
-      20→    """Emitted when there's a problem with instrumenting a function for type checks."""
+      …
       22→    def __init__(self, message: str):
-      23→        super().__init__(message)
+      …
       26→class TypeCheckError(Exception):
-      27→    """
-      28→    Raised by typeguard's type checkers when a type mismatch is detected.
-      29→    """
+      …
       31→    def __init__(self, message: str):
       …
       35→    def append_path_element(self, element: str) -> None:
-      36→        self._path.append(element)
+      …
       38→    def __str__(self) -> str:
       …
     _functions.py
     _importhook.py
+      …
+      40→P = ParamSpec("P")
+      41→T = TypeVar("T")
+      …
+      45→def _call_with_frames_removed(
+      46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+      47→) -> T:
+      …
+      51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
+      …
+      55→class TypeguardLoader(SourceFileLoader):
+      …
+      57→    def source_to_code(
+      …
+      99→    def exec_module(self, module: ModuleType) -> None:
+      …
+      109→class TypeguardFinder(MetaPathFinder):
+      …
+      120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
+      …
+      124→    def find_spec(
+      125→        self,
+      126→        fullname: str,
+      127→        path: Sequence[str] | None,
+      128→        target: types.ModuleType | None = None,
+      129→    ) -> ModuleSpec | None:
+      …
+      138→    def should_instrument(self, module_name: str) -> bool:
+      …
+      156→class ImportHookManager:
+      …
+      161→    def __init__(self, hook: MetaPathFinder):
+      …
+      164→    def __enter__(self) -> None:
+      165→        pass
+      167→    def __exit__(
+      168→        self,
+      169→        exc_type: type[BaseException],
+      170→        exc_val: BaseException,
+      171→        exc_tb: TracebackType,
+      172→    ) -> None:
+      …
+      175→    def uninstall(self) -> None:
+      …
+      183→def install_import_hook(
+      184→    packages: Iterable[str] | None = None,
+      185→    *,
+      186→    cls: type[TypeguardFinder] = TypeguardFinder,
+      187→) -> ImportHookManager:
+      …
     _memo.py
       …
       8→class TypeCheckMemo:
-      9→    """
-      10→    Contains information necessary for type checkers to do their work.
       …
       35→    __slots__ = "globals", "locals", "self_type", "config"
+      36→
       37→    def __init__(
-      38→        self,
-      39→        globals: dict[str, Any],
-      40→        locals: dict[str, Any],
-      41→        *,
-      42→        self_type: type | None = None,
-      43→        config: TypeCheckConfiguration = global_config,
-      44→    ):
       …
     _pytest_plugin.py
+      …
+      16→def pytest_addoption(parser: Parser) -> None:
+      …
+      75→def pytest_configure(config: Config) -> None:
+      …
     _suppression.py
       …
       15→P = ParamSpec("P")
@@ -273,6 +272,8 @@ src/
       23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
       26→@overload
       27→def suppress_type_checks() -> ContextManager[None]: ...
+      28→
+      29→
       30→def suppress_type_checks(
       31→    func: Callable[P, T] | None = None,
       32→) -> Callable[P, T] | ContextManager[None]:

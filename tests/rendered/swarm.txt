@@ -269,6 +269,7 @@ swarm/
     4→__all__ = ["Swarm", "Agent", "Response"]
   core.py
     …
+    23→__CTX_VARS_NAME__ = "context_variables"
     26→class Swarm:
     27→    def __init__(self, client=None):
     …
@@ -319,9 +320,14 @@ swarm/
     __init__.py
       1→from .repl import run_demo_loop
     repl.py
-      1→import json
-      2→
-      3→from swarm import Swarm
+      …
+      6→def process_and_print_streaming_response(response):
+      …
+      37→def pretty_print_messages(messages) -> None:
+      …
+      60→def run_demo_loop(
+      61→    starting_agent, context_variables=None, stream=False, debug=False
+      62→) -> None:
       …
   types.py
     …
@@ -352,26 +358,18 @@ swarm/
     40→    agent: Optional[Agent] = None
     41→    context_variables: dict = {}
   util.py
-    1→import inspect
-    2→from datetime import datetime
+    …
     5→def debug_print(debug: bool, *args: str) -> None:
     …
     13→def merge_fields(target, source):
-    …
+    14→    for key, value in source.items():
+    15→        if isinstance(value, str):
+    16→            target[key] += value
+    17→        elif value is not None and isinstance(value, dict):
+    18→            merge_fields(target[key], value)
     21→def merge_chunk(final_response: dict, delta: dict) -> None:
     …
     31→def function_to_json(func) -> dict:
-    32→    """
-    33→    Converts a Python function into a JSON-serializable dictionary
-    34→    that describes the function's signature, including its name,
-    35→    description, and parameters.
-    36→
-    37→    Args:
-    38→        func: The function to be converted.
-    39→
-    40→    Returns:
-    41→        A dictionary representing the function's signature in JSON format.
-    42→    """
     …
 tests/
   __init__.py (empty)

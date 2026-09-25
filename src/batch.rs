@@ -41,7 +41,6 @@ pub enum BatchKey {
     Plaintext(PlaintextKey),
     Prisma(PrismaKey),
     GoMod(GoModKey),
-    Python(PythonKey),
     Code(CodeKey),
     Yaml(YamlKey),
     Sql(SqlKey),
@@ -93,7 +92,6 @@ impl_batchkey! {
     Plaintext => PlaintextKey,
     Prisma => PrismaKey,
     GoMod => GoModKey,
-    Python => PythonKey,
     Code => CodeKey,
     Yaml => YamlKey,
     Sql => SqlKey,
@@ -374,73 +372,6 @@ pub enum GoModKey {
     /// The module file, whole when small, otherwise without its indirect
     /// requires. Predecessor: matching `Identity`.
     File { file: PathBuf },
-}
-
-/// Python batches. All top-level + class-body items emit; visibility
-/// is a value discount, not a filter. Decorated defs use the
-/// `decorated_definition` wrapper as the unit (decorator rows included).
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum PythonKey {
-    /// `import` / `from … import …` + module docstring + `__all__` +
-    /// module-level dunder assignments.
-    Imports { file: PathBuf },
-    /// Chunked `Imports` for large `__init__.py` re-export walls.
-    ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Names surface for top-level class/def/non-dunder consts — one
-    /// unified catalog per file however large it grows. On a directory's
-    /// spine module this is the entry slice carved off the catalog's
-    /// head: a discounted view of the roster that makes the file cheap to
-    /// enter.
-    DeclNames { file: PathBuf },
-    /// The rest of a spine module's names surface, once `DeclNames` has
-    /// taken its entry slice. The two are disjoint siblings, neither
-    /// gated on the other, so this is independently schedulable and
-    /// carries the whole catalog's value. `chunk_index` is always 1 —
-    /// it survives from the chunk chain this replaced.
-    DeclNamesChunk { file: PathBuf, chunk_index: usize },
-    /// One top-level item — header + up to 2 docstring-summary rows
-    /// for class/def, or assignment line(s) for const.
-    Decl { file: PathBuf, start_line: usize },
-    /// Top-level def/class docstring — the lede paragraph when the
-    /// docstring is split. Predecessor: matching `Decl`.
-    DeclDoc { file: PathBuf, start_line: usize },
-    /// Remainder of a split docstring (parameter docs, examples).
-    /// Predecessor: matching `DeclDoc`.
-    DeclDocRest { file: PathBuf, start_line: usize },
-    /// Body slice of a top-level def (docstring excluded). Predecessor:
-    /// matching `Decl`.
-    DeclBody {
-        file: PathBuf,
-        start_line: usize,
-        body_start_line: usize,
-    },
-    /// Class body excluding method-def signatures and the leading
-    /// docstring — TypedDict / dataclass / Protocol / Pydantic fields,
-    /// `__slots__`, class-level constants. Predecessor: matching
-    /// class `Decl`.
-    ClassBody { file: PathBuf, start_line: usize },
-    /// Surface listing of every method's inner `def` line across every
-    /// top-level class; decorator rows are owned by the per-method batch.
-    /// Catastrophic-omission hedge.
-    MethodSigs { file: PathBuf },
-    /// Method-level `Decl` analog for a method inside a top-level
-    /// class. Predecessor: enclosing class's `Decl`.
-    Method { file: PathBuf, start_line: usize },
-    /// Method's docstring. Predecessor: matching `Method`.
-    MethodDoc { file: PathBuf, start_line: usize },
-    /// Method body slice, split by top-level statement, sans leading
-    /// docstring. Predecessor: matching `Method`.
-    MethodBody {
-        file: PathBuf,
-        start_line: usize,
-        body_start_line: usize,
-    },
-    /// Legacy packaging dependency metadata: the `install_requires`
-    /// keyword argument span within the top-level `setup(...)` call.
-    SetupManifest { file: PathBuf, start_line: usize },
-    /// Surface listing of every `def test_*` first line in a `test_*.py`
-    /// / `*_test.py` file (top-level + class-body, decorator-aware).
-    TestNames { file: PathBuf },
 }
 
 /// Batches of the shared code engine (`walker::code`): one key shape for
@@ -909,107 +840,6 @@ impl InnerKey for GoModKey {
         match self {
             GoModKey::Identity { file } => describe_in("go module identity", file, root),
             GoModKey::File { file } => format!("go module file {}", display_path(file, root)),
-        }
-    }
-}
-
-impl InnerKey for PythonKey {
-    fn is_depth_follow_up(&self) -> bool {
-        matches!(
-            self,
-            PythonKey::DeclDocRest { .. }
-                | PythonKey::DeclBody { .. }
-                | PythonKey::MethodBody { .. }
-        )
-    }
-
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(
-            self,
-            PythonKey::Imports { .. }
-                | PythonKey::ImportChunk { .. }
-                | PythonKey::DeclNames { .. }
-                | PythonKey::DeclNamesChunk { .. }
-                | PythonKey::Decl { .. }
-                | PythonKey::MethodSigs { .. }
-                | PythonKey::Method { .. }
-        )
-    }
-
-    /// `DeclNames` / `DeclNamesChunk` + `ImportChunk` use the mild
-    /// [`crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT`] (broad
-    /// catalog-shaped surfaces). Per-decl / per-method batches use
-    /// `0.45` (matches C / Go) for the same reason — short decls
-    /// emitted in bulk. `ClassBody` keeps the default; field listings
-    /// tie structurally to the class.
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            PythonKey::ImportChunk { .. }
-            | PythonKey::DeclNames { .. }
-            | PythonKey::DeclNamesChunk { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
-            PythonKey::Decl { .. }
-            | PythonKey::DeclBody { .. }
-            | PythonKey::Method { .. }
-            | PythonKey::MethodBody { .. } => 0.45,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            PythonKey::Imports { file } => describe_in("python imports", file, root),
-            PythonKey::ImportChunk { file, chunk_index } => {
-                describe_chunked_surface("python imports", file, *chunk_index, root)
-            }
-            PythonKey::DeclNames { file } => describe_in("python decl names surface", file, root),
-            PythonKey::DeclNamesChunk { file, chunk_index } => {
-                describe_chunked_surface("python decl names surface", file, *chunk_index, root)
-            }
-            PythonKey::Decl { file, start_line } => {
-                describe_at("python decl", file, *start_line, root)
-            }
-            PythonKey::DeclDoc { file, start_line } => {
-                describe_at("python decl doc", file, *start_line, root)
-            }
-            PythonKey::DeclDocRest { file, start_line } => {
-                describe_at("python decl doc rest", file, *start_line, root)
-            }
-            PythonKey::DeclBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body(
-                "python decl body",
-                file,
-                *start_line,
-                *body_start_line,
-                root,
-            ),
-            PythonKey::ClassBody { file, start_line } => {
-                describe_at("python class body", file, *start_line, root)
-            }
-            PythonKey::MethodSigs { file } => describe_in("python method sigs", file, root),
-            PythonKey::Method { file, start_line } => {
-                describe_at("python method", file, *start_line, root)
-            }
-            PythonKey::MethodDoc { file, start_line } => {
-                describe_at("python method doc", file, *start_line, root)
-            }
-            PythonKey::MethodBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body(
-                "python method body",
-                file,
-                *start_line,
-                *body_start_line,
-                root,
-            ),
-            PythonKey::SetupManifest { file, start_line } => {
-                describe_at("python setup manifest", file, *start_line, root)
-            }
-            PythonKey::TestNames { file } => describe_in("python test names surface", file, root),
         }
     }
 }

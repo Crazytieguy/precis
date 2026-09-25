@@ -19,69 +19,7 @@ README.md
   12→**Async**, **pure-Python** server-side rendering engine.
   13→
   14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
-  16→## Key features
-  18→- **Async**-first, to let you make the best use of modern async tools.
-  19→- **Powerful**, React-like **context support**, so you can avoid prop-drilling.
-  20→- Sync and async **function components** with **decorator syntax**.
-  21→- All baseline **HTML** tags built-in.
-  22→- **Async HTML streaming** support for optimal TTFB (time to first byte).
-  23→- Support for **native HTML/XML** documents with dynamic formatting and **slot rendering**, **without custom syntax**.
-  24→- **Markdown** support with tools for customization.
-  25→- Async, JSON based **internationalization**.
-  26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
-  27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
-  28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
-  29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
-  30→- **Compatible** with any other templating library through wrappers.
-  31→- **Fully-typed**.
-  33→## Testimonials
   …
-  47→## Support
-  48→
-  49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
-  51→## Installation
-  …
-  63→## Concepts
-  …
-  69→### Components
-  …
-  167→### Built-in components
-  …
-  179→### Rendering
-  181→`htmy.Renderer` is the built-in, default renderer of the library.
-  …
-  211→### Context
-  …
-  279→### Formatter
-  …
-  291→### Error boundary
-  …
-  299→### Sync or async?
-  301→In general, a component should be async if it must await some async call inside.
-  …
-  305→In all other cases, it's best to use sync components.
-  307→## XSS prevention
-  …
-  316→## AI assistance
-  …
-  324→## Compatibility and performance
-  …
-  330→## Framework integrations
-  …
-  337→## External examples
-  338→
-  339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
-  341→## Why
-  …
-  353→## Dependencies
-  …
-  361→## Development
-  …
-  367→## Contributing
-  …
-  377→## License - MIT
-  378→
-  379→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
 docs/
   api/
     core.md
@@ -107,11 +45,6 @@ docs/
     184→## When to use components, when to use component factories?
     …
   examples/
-    fastapi-htmx-tailwind-daisyui.md
-    index.md
-    internationalization.md
-    markdown.md
-    snippet-slots-fastapi.md
   function-components.md
     1→# Function components
     …
@@ -185,34 +118,96 @@ htmy/
     42→from .utils import is_htmy_component_type as is_htmy_component_type
     43→from .utils import join
     44→from .utils import join_components as join_components
+    45→
     46→join_classes = join
     47→
     48→HTMY = Renderer
     …
   core.py
+    …
+    19→class Fragment:
+    …
+    22→    __slots__ = ("_children",)
+    23→
+    24→    def __init__(self, *children: ComponentType) -> None:
+    …
+    33→    def htmy(self, context: Context) -> Component:
+    …
+    38→class WithContext(Fragment):
+    …
+    43→    __slots__ = ("_context",)
+    44→
+    45→    def __init__(self, *children: ComponentType, context: Context) -> None:
+    …
+    56→    def htmy_context(self) -> Context:
+    …
+    64→class ContextAware:
+    …
+    100→    __slots__ = ()
+    101→
+    102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+    103→
+    104→    def __init_subclass__(cls) -> None:
+    …
+    108→    def in_context(self, *children: ComponentType) -> WithContext:
+    …
+    115→    def to_context(self) -> Context:
+    …
+    127→    @classmethod
+    128→    def from_context(cls, context: Context, default: Self | None = None) -> Self:
+    …
+    146→class SkipProperty(Exception):
+    …
+    149→    ...
+    151→    @classmethod
+    152→    def format_property(cls, _: Any) -> Never:
+    …
+    157→class Text(str):
+    …
+    160→    ...
+    163→class SafeStr(Text):
+    …
+    172→    ...
+    175→class XBool(enum.Enum):
+    …
+    183→    true = True
+    184→    false = False
+    185→
+    186→    def format(self) -> str:
+    …
+    196→def xml_format_string(value: str) -> str:
+    …
+    201→class Formatter(ContextAware):
+    …
   error_boundary.py
     …
     15→class ErrorBoundary:
     …
+    23→    __slots__ = ("_children", "_errors", "_fallback")
+    24→
+    25→    def __init__(
+    26→        self,
+    27→        *children: ComponentType,
+    28→        fallback: Component = None,
+    29→        errors: Container[type[Exception]] | None = None,
+    30→    ) -> None:
+    …
+    45→    async def htmy(self, context: Context) -> Component:
+    …
+    56→    def _fallback_component(self, error: Exception) -> ComponentType:
+    …
   etree.py
+    …
+    23→class ETreeConverter:
+    …
   function_component.py
   html.py
-    …
-    13→class DOCTYPE:
-    14→    """Document type declaration."""
-    16→    html = SafeStr("<!DOCTYPE html>")
-    17→    """HTML document type."""
-    …
-    63→class Link:
-    64→    """`link` tag factories."""
-    …
-    79→class Meta:
-    80→    """`meta` tag factories."""
-    …
-    831→class entity:
-    …
   i18n.py
   io.py
+    …
+    11→async def load_text_file(path: str | Path) -> str:
+    12→    """Loads the text content from the given path."""
+    …
   md/
     __init__.py
       1→from .core import MD as MD
@@ -222,6 +217,11 @@ htmy/
       5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
       6→from .typing import ParsedMarkdown as ParsedMarkdown
     core.py
+      …
+      20→class MarkdownParser(ContextAware):
+      …
+      81→class MD(Snippet):
+      …
     typing.py
   py.typed (empty)
   renderer/
@@ -230,6 +230,7 @@ htmy/
       2→from .default import Renderer as _DefaultRenderer
       3→from .typing import is_renderer as is_renderer
       4→from .typing import is_streaming_renderer as is_streaming_renderer
+      5→
       6→Renderer = _DefaultRenderer
       …
       9→StreamingRenderer = _BaselineRenderer
@@ -237,7 +238,16 @@ htmy/
       12→BaselineRenderer = _BaselineRenderer
       …
     baseline.py
+      …
+      18→class Renderer:
+      …
     context.py
+      …
+      6→class RendererContext:
+      …
+      11→    @classmethod
+      12→    def from_context(cls, context: Context) -> RendererType:
+      …
     default.py
     typing.py
   snippet.py
@@ -245,12 +255,76 @@ htmy/
     27→class Slots:
     …
     158→class Snippet:
-    159→    """
-    160→    Component that renders text, which may be asynchronously loaded from a file.
+    …
+    216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
+    217→
+    218→    def __init__(
+    219→        self,
+    220→        path_or_text: Text | str | Path,
+    221→        text_resolver: TextResolver | None = None,
+    222→        *,
+    223→        text_processor: TextProcessor | None = None,
+    224→    ) -> None:
+    …
+    241→    async def htmy(self, context: Context) -> Component:
+    242→        """Renders the component."""
+    …
+    256→    async def _get_text_content(self) -> str:
+    …
+    265→    def _render_text(self, text: str, context: Context) -> Component:
+    …
+    272→    @staticmethod
+    273→    @alru_cache()
+    274→    async def _load_text_file(path: str | Path) -> str:
     …
   tag.py
+    …
+    12→class _TagWithPropsImpl:
+    …
+    24→class _TagImpl:
+    …
+    53→_default_formatter = Formatter()
+    54→
+    55→
+    56→class TagWithProps:
+    …
+    64→    __slots__ = ("name",)
+    65→
+    66→    def __init__(self, name: str) -> None:
+    67→        self.name = name
+    69→    def __call__(self, **props: PropertyValue) -> ComponentType:
+    …
+    73→class Tag:
+    74→    __slots__ = ("child_separator", "name")
+    75→
+    76→    def __init__(self, name: str, child_separator: ComponentType = "\n") -> None:
+    …
+    80→    def __call__(self, *children: ComponentType, **props: PropertyValue) -> ComponentType:
+    …
+    84→def wildcard_tag(
+    85→    *children: ComponentType,
+    86→    htmy_name: str,
+    87→    htmy_child_separator: ComponentType = None,
+    88→    **props: PropertyValue,
+    89→) -> ComponentType:
+    …
   typing.py
   utils.py
+    …
+    12→def join_components(
+    …
+    42→def join(*items: str | None, separator: str = " ") -> str:
+    …
+    49→def is_htmy_component_type(comp: Any) -> TypeGuard[HTMYComponentType]:
+    …
+    55→def is_component_type(comp: Any) -> TypeGuard[ComponentType]:
+    …
+    62→def is_component_sequence(comp: Component) -> TypeGuard[ComponentSequence]:
+    …
+    67→def as_component_sequence(comp: Component) -> ComponentSequence:
+    …
+    73→def as_component_type(comp: Component) -> ComponentType:
+    …
 mkdocs.yaml
 pyproject.toml
   1→[project]
@@ -273,52 +347,5 @@ pyproject.toml
   35→[build-system]
   36→requires = ["pdm-backend"]
   37→build-backend = "pdm.backend"
-  39→[tool.mypy]
-  40→strict = true
-  41→show_error_codes = true
-  42→
-  43→[tool.pdm.build]
-  44→excludes = ["tests/", "examples/"]
-  45→
-  46→[tool.pdm.version]
-  47→source = "file"
-  48→path = "htmy/__init__.py"
-  49→
-  50→[tool.pyright]
-  51→venvPath = "."
-  52→venv = ".venv"
-  53→
-  54→[tool.pytest.ini_options]
-  55→addopts = "--random-order"
   …
-  81→[tool.poe.tasks]
-  82→format = "ruff format --check ."
-  83→format-fix = "ruff format ."
-  84→
-  85→lint = "ruff check ."
-  86→lint-fix = "ruff . --fix"
-  87→
-  88→mypy = "mypy ."
-  89→
-  90→check.sequence = ["format", "lint", "mypy"]
-  91→check.ignore_fail = "return_non_zero"
-  92→
-  93→test = "python -m pytest tests"
-  94→
-  95→serve-docs = "zensical serve"
 tests/
-  __init__.py (empty)
-  conftest.py
-  data/
-  renderer/
-    test_default_renderer.py
-    test_renderer_comparison.py
-    test_renderer_in_context.py
-    test_streaming_renderers.py
-  test_formatter.py
-  test_function_component.py
-  test_i18n.py
-  test_main_components.py
-  test_md.py
-  test_snippet.py
-  utils.py

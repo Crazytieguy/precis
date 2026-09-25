@@ -120,6 +120,14 @@ bindings/
       go-sqlite3.patch
   python/
     extra_init.py
+      …
+      6→def serialize_float32(vector: List[float]) -> bytes:
+      7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
+      8→    return pack("%sf" % len(vector), *vector)
+      11→def serialize_int8(vector: List[int]) -> bytes:
+      12→    """Serializes a list of integers into the "raw bytes" format sqlite-vec expects"""
+      13→    return pack("%sb" % len(vector), *vector)
+      …
   rust/
     .gitignore
     Cargo.lock
@@ -226,15 +234,6 @@ site/
   features/
   getting-started/
   guides/
-    arithmetic.md
-    binary-quant.md
-    classifiers.md (empty)
-    hybrid-search.md (empty)
-    matryoshka.md
-    performance.md
-    rag.md
-    scalar-quant.md
-    semantic-search.md (empty)
   index.md
   package-lock.json
   package.json
@@ -242,17 +241,6 @@ site/
   public/
   sqlite.tmlanguage.json
   using/
-    android-ios.md
-    c.md
-    datasette.md
-    go.md
-    js.md
-    python.md
-    rqlite.md
-    ruby.md
-    rust.md
-    sqlite-utils.md
-    wasm.md
   versioning.md
 sqlite-dist.toml
   1→[package]
@@ -348,8 +336,7 @@ tests/
   utils.py
   uv.lock
 tmp-static.py
-  1→import sqlite3
-  2→import numpy as np
+  …
   4→db = sqlite3.connect(":memory:")
   …
   11→x = np.array([[0.1, 0.2, 0.3, 0.4], [0.9, 0.8, 0.7, 0.6]], dtype=np.float32)

@@ -32,7 +32,6 @@ pub mod json;
 pub mod markdown;
 pub mod plaintext;
 pub mod prisma;
-pub mod python;
 pub mod sql;
 pub mod toml;
 pub mod typescript;
@@ -112,7 +111,6 @@ impl Walker for FsWalker {
         out.extend(plaintext::expand_in_dir(dir, ctx));
         out.extend(prisma::expand_in_dir(dir, ctx));
         out.extend(go_mod::expand_in_dir(dir, ctx));
-        out.extend(python::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
         out.extend(yaml::expand_in_dir(dir, ctx));
         out.extend(sql::expand_in_dir(dir, ctx));
@@ -135,7 +133,6 @@ pub struct WalkCtx {
     fs_state: fs::FsState,
     json_state: json::JsonState,
     typescript_state: typescript::TypescriptState,
-    python_state: python::PythonState,
     /// Run state of the code engine's language modules.
     #[allow(
         dead_code,
@@ -169,7 +166,6 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             typescript_state: typescript::TypescriptState::new(),
-            python_state: python::PythonState::default(),
             code: code::CodeState::default(),
             readme_cited_paths: OnceCell::new(),
             sql_cited_paths: OnceCell::new(),
@@ -333,10 +329,6 @@ impl WalkCtx {
 
     pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
         &self.fs_state
-    }
-
-    pub(in crate::walker) fn python_state(&self) -> &python::PythonState {
-        &self.python_state
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
@@ -1000,25 +992,8 @@ pub(crate) fn statement_block_parts(
     }
     let mut cursor = b.walk();
     let named_children: Vec<_> = b.named_children(&mut cursor).collect();
-    let body_start = b.start_position().row;
-    let body_end = b.end_position().row;
-    // Python function blocks are indent-delimited (no brace rows).
-    let undelimited_block = block_kind == "block"
-        && b.parent()
-            .is_some_and(|parent| parent.kind() == "function_definition")
-        && named_children
-            .first()
-            .is_some_and(|child| child.start_position().row == body_start);
-    let content_start = if undelimited_block {
-        body_start
-    } else {
-        body_start + 1
-    };
-    let content_end = if undelimited_block {
-        body_end
-    } else {
-        body_end.saturating_sub(1)
-    };
+    let content_start = b.start_position().row + 1;
+    let content_end = b.end_position().row.saturating_sub(1);
     if content_end < content_start {
         return Vec::new();
     }

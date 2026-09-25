@@ -16,43 +16,21 @@ README.md
   22→pip install git+https://github.com/GeeeekExplorer/nano-vllm.git
   23→```
   25→## Model Download
-  26→
-  27→To download the model weights manually, use the following command:
-  28→```bash
-  29→huggingface-cli download --resume-download Qwen/Qwen3-0.6B \
-  30→  --local-dir ~/huggingface/Qwen3-0.6B/ \
-  31→  --local-dir-use-symlinks False
-  32→```
+  …
   34→## Quick Start
-  35→
-  36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
-  37→```python
-  38→from nanovllm import LLM, SamplingParams
-  39→llm = LLM("/YOUR/MODEL/PATH", enforce_eager=True, tensor_parallel_size=1)
-  40→sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
-  41→prompts = ["Hello, Nano-vLLM."]
-  42→outputs = llm.generate(prompts, sampling_params)
-  43→outputs[0]["text"]
-  44→```
+  …
   46→## Benchmark
   …
   64→## Star History
-  65→
-  66→[![Star History Chart](https://api.star-history.com/svg?repos=GeeeekExplorer/nano-vllm&type=Date)](https://www.star-history.com/#GeeeekExplorer/nano-vllm&Date)
+  …
 assets/
   logo.png
 bench.py
-  1→import os
-  2→import time
-  3→from random import randint, seed
-  4→from nanovllm import LLM, SamplingParams
   …
   8→def main():
   …
 example.py
-  1→import os
-  2→from nanovllm import LLM, SamplingParams
-  3→from transformers import AutoTokenizer
+  …
   6→def main():
   …
 nanovllm/
@@ -60,106 +38,45 @@ nanovllm/
     1→from nanovllm.llm import LLM
     2→from nanovllm.sampling_params import SamplingParams
   config.py
-    1→import os
-    2→from dataclasses import dataclass
-    3→from transformers import AutoConfig
-    6→@dataclass
+    …
     7→class Config:
-    8→    model: str
-    9→    max_num_batched_tokens: int = 16384
-    10→    max_num_seqs: int = 512
-    11→    max_model_len: int = 4096
-    12→    gpu_memory_utilization: float = 0.9
-    13→    tensor_parallel_size: int = 1
-    14→    enforce_eager: bool = False
-    15→    hf_config: AutoConfig | None = None
-    16→    eos: int = -1
-    17→    kvcache_block_size: int = 256
-    18→    num_kvcache_blocks: int = -1
-    20→    def __post_init__(self):
     …
   engine/
     block_manager.py
       …
       8→class Block:
+      9→
       10→    def __init__(self, block_id):
       …
       16→    def update(self, hash: int, token_ids: list[int]):
-      17→        self.hash = hash
-      18→        self.token_ids = token_ids
+      …
       20→    def reset(self):
       …
       26→class BlockManager:
-      28→    def __init__(self, num_blocks: int, block_size: int):
-      …
-      35→    @classmethod
-      36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
-      …
-      43→    def _allocate_block(self, block_id: int) -> Block:
-      …
-      51→    def _deallocate_block(self, block_id: int) -> Block:
-      …
-      56→    def can_allocate(self, seq: Sequence) -> bool:
-      57→        return len(self.free_block_ids) >= seq.num_blocks
-      59→    def allocate(self, seq: Sequence):
-      …
-      84→    def deallocate(self, seq: Sequence):
-      …
-      93→    def can_append(self, seq: Sequence) -> bool:
-      …
-      96→    def may_append(self, seq: Sequence):
       …
     llm_engine.py
+      …
+      15→class LLMEngine:
+      16→
+      17→    def __init__(self, model, **kwargs):
+      …
+      36→    def exit(self):
+      …
+      42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
+      …
+      48→    def step(self):
+      …
+      56→    def is_finished(self):
+      …
+      59→    def generate(
+      …
     model_runner.py
       …
       15→class ModelRunner:
-      17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
-      …
-      50→    def exit(self):
-      …
-      61→    def loop(self):
-      …
-      68→    def read_shm(self):
-      …
-      76→    def write_shm(self, method_name, *args):
-      …
-      85→    def call(self, method_name, *args):
-      …
-      91→    def warmup_model(self):
-      …
-      100→    def allocate_kv_cache(self):
-      …
-      120→    def prepare_block_tables(self, seqs: list[Sequence]):
-      …
-      126→    def prepare_prefill(self, seqs: list[Sequence]):
-      …
-      164→    def prepare_decode(self, seqs: list[Sequence]):
-      …
-      182→    def prepare_sample(self, seqs: list[Sequence]):
-      …
-      189→    @torch.inference_mode()
-      190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
-      …
-      208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
-      …
-      216→    @torch.inference_mode()
-      217→    def capture_cudagraph(self):
       …
     scheduler.py
       …
       8→class Scheduler:
-      10→    def __init__(self, config: Config):
-      …
-      18→    def is_finished(self):
-      19→        return not self.waiting and not self.running
-      21→    def add(self, seq: Sequence):
-      22→        self.waiting.append(seq)
-      24→    def schedule(self) -> tuple[list[Sequence], bool]:
-      25→        # prefill
-      …
-      60→    def preempt(self, seq: Sequence):
-      …
-      65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
       …
     sequence.py
       …
@@ -168,60 +85,74 @@ nanovllm/
       10→    RUNNING = auto()
       11→    FINISHED = auto()
       14→class Sequence:
-      15→    block_size = 256
-      16→    counter = count()
-      18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
-      …
-      31→    def __len__(self):
-      …
-      34→    def __getitem__(self, key):
-      …
-      37→    @property
-      38→    def is_finished(self):
-      …
-      41→    @property
-      42→    def num_completion_tokens(self):
-      …
-      45→    @property
-      46→    def prompt_token_ids(self):
-      …
-      49→    @property
-      50→    def completion_token_ids(self):
-      …
-      53→    @property
-      54→    def num_cached_blocks(self):
-      …
-      57→    @property
-      58→    def num_blocks(self):
-      …
-      61→    @property
-      62→    def last_block_num_tokens(self):
-      …
-      65→    def block(self, i):
-      …
-      69→    def append_token(self, token_id: int):
-      …
-      74→    def __getstate__(self):
-      …
-      78→    def __setstate__(self, state):
       …
   layers/
     activation.py
-      1→import torch
-      2→from torch import nn
-      3→import torch.nn.functional as F
+      …
       6→class SiluAndMul(nn.Module):
+      7→
       8→    def __init__(self):
       9→        super().__init__()
       11→    @torch.compile
       12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
       …
     attention.py
+      …
+      10→@triton.jit
+      11→def store_kvcache_kernel(
+      12→    key_ptr,
+      13→    key_stride,
+      14→    value_ptr,
+      15→    value_stride,
+      16→    k_cache_ptr,
+      17→    v_cache_ptr,
+      18→    slot_mapping_ptr,
+      19→    D: tl.constexpr,
+      20→):
+      …
+      33→def store_kvcache(key: torch.Tensor, value: torch.Tensor, k_cache: torch.Tensor, v_cache: torch.Tensor, slot_mapping: torch.Tensor):
+      …
+      43→class Attention(nn.Module):
+      44→
+      45→    def __init__(
+      46→        self,
+      47→        num_heads,
+      48→        head_dim,
+      49→        scale,
+      50→        num_kv_heads,
+      51→    ):
+      …
+      59→    def forward(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor):
+      …
     embed_head.py
+      …
+      9→class VocabParallelEmbedding(nn.Module):
+      10→
+      11→    def __init__(
+      12→        self,
+      13→        num_embeddings: int,
+      14→        embedding_dim: int,
+      15→    ):
+      …
+      27→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
+      …
+      34→    def forward(self, x: torch.Tensor):
+      …
+      45→class ParallelLMHead(VocabParallelEmbedding):
+      46→
+      47→    def __init__(
+      48→        self,
+      49→        num_embeddings: int,
+      50→        embedding_dim: int,
+      51→        bias: bool = False,
+      52→    ):
+      …
+      56→    def forward(self, x: torch.Tensor):
+      …
     layernorm.py
-      1→import torch
-      2→from torch import nn
+      …
       5→class RMSNorm(nn.Module):
+      6→
       7→    def __init__(
       8→        self,
       9→        hidden_size: int,
@@ -234,12 +165,7 @@ nanovllm/
       19→        x: torch.Tensor,
       20→    ) -> torch.Tensor:
       …
-      28→    @torch.compile
       29→    def add_rms_forward(
-      30→        self,
-      31→        x: torch.Tensor,
-      32→        residual: torch.Tensor,
-      33→    ) -> tuple[torch.Tensor, torch.Tensor]:
       …
       42→    def forward(
       43→        self,
@@ -248,46 +174,173 @@ nanovllm/
       46→    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
       …
     linear.py
+      …
+      7→def divide(numerator, denominator):
+      …
+      12→class LinearBase(nn.Module):
+      13→
+      14→    def __init__(
+      …
+      33→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      37→class ReplicatedLinear(LinearBase):
+      38→
+      39→    def __init__(
+      40→        self,
+      41→        input_size: int,
+      42→        output_size: int,
+      43→        bias: bool = False,
+      44→    ):
+      …
+      47→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
+      …
+      50→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      54→class ColumnParallelLinear(LinearBase):
+      55→
+      56→    def __init__(
+      57→        self,
+      58→        input_size: int,
+      59→        output_size: int,
+      60→        bias: bool = False,
+      61→    ):
+      …
+      65→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
+      …
+      72→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      76→class MergedColumnParallelLinear(ColumnParallelLinear):
+      77→
+      78→    def __init__(
+      79→        self,
+      80→        input_size: int,
+      81→        output_sizes: list[int],
+      82→        bias: bool = False,
+      83→    ):
+      …
+      87→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: int):
+      …
+      96→class QKVParallelLinear(ColumnParallelLinear):
+      97→
+      98→    def __init__(
+      …
+      114→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: str):
+      …
+      131→class RowParallelLinear(LinearBase):
+      132→
+      133→    def __init__(
+      134→        self,
+      135→        input_size: int,
+      136→        output_size: int,
+      137→        bias: bool = False,
+      138→    ):
+      …
+      142→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
+      …
+      149→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
     rotary_embedding.py
-      1→from functools import lru_cache
-      2→import torch
-      3→from torch import nn
+      …
       6→def apply_rotary_emb(
+      7→    x: torch.Tensor,
+      8→    cos: torch.Tensor,
+      9→    sin: torch.Tensor,
+      10→) -> torch.Tensor:
       …
       17→class RotaryEmbedding(nn.Module):
+      18→
+      19→    def __init__(
+      …
+      38→    def forward(
       …
       51→@lru_cache(1)
+      52→def get_rope(
+      53→    head_size: int,
+      54→    rotary_dim: int,
+      55→    max_position: int,
+      56→    base: float,
+      57→    rope_scaling: dict | None = None,
+      58→):
       …
     sampler.py
-      1→import torch
-      2→from torch import nn
+      …
       5→class Sampler(nn.Module):
+      6→
       7→    def __init__(self):
       8→        super().__init__()
       10→    @torch.compile
       11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
       …
   llm.py
-    1→from nanovllm.engine.llm_engine import LLMEngine
+    …
     4→class LLM(LLMEngine):
     5→    pass
   models/
     qwen3.py
+      …
+      14→class Qwen3Attention(nn.Module):
+      15→
+      16→    def __init__(
+      …
+      71→    def forward(
+      72→        self,
+      73→        positions: torch.Tensor,
+      74→        hidden_states: torch.Tensor,
+      75→    ) -> torch.Tensor:
+      …
+      90→class Qwen3MLP(nn.Module):
+      91→
+      92→    def __init__(
+      93→        self,
+      94→        hidden_size: int,
+      95→        intermediate_size: int,
+      96→        hidden_act: str,
+      97→    ) -> None:
+      …
+      112→    def forward(self, x):
+      …
+      119→class Qwen3DecoderLayer(nn.Module):
+      120→
+      121→    def __init__(
+      122→        self,
+      123→        config: Qwen3Config,
+      124→    ) -> None:
+      …
+      145→    def forward(
+      …
+      161→class Qwen3Model(nn.Module):
+      162→
+      163→    def __init__(
+      164→        self,
+      165→        config: Qwen3Config,
+      166→    ) -> None:
+      …
+      172→    def forward(
+      173→        self,
+      174→        input_ids: torch.Tensor,
+      175→        positions: torch.Tensor,
+      176→    ) -> torch.Tensor:
+      …
+      185→class Qwen3ForCausalLM(nn.Module):
+      …
   sampling_params.py
-    1→from dataclasses import dataclass
+    …
     4→@dataclass
     5→class SamplingParams:
     6→    temperature: float = 1.0
     7→    max_tokens: int = 64
     8→    ignore_eos: bool = False
+    9→
     10→    def __post_init__(self):
-    11→        assert self.temperature > 1e-10, "greedy sampling is not permitted"
+    …
   utils/
     context.py
-      1→from dataclasses import dataclass
-      2→import torch
-      …
     loader.py
+      …
+      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
+      9→    param.data.copy_(loaded_weight)
+      12→def load_model(model: nn.Module, path: str):
+      …
 pyproject.toml
   1→[build-system]
   2→requires = ["setuptools>=61"]

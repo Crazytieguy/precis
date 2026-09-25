@@ -1,19 +1,5 @@
 .git-blame-ignore-revs
 .github/
-  CODEOWNERS
-  ISSUE_TEMPLATE/
-  copilot-instructions.md
-  labeler.yaml
-  problem-matchers/
-  pull_request_template.md
-  stale.yml
-  workflows/
-    changelog_reminder.yaml
-    ci.yaml
-    integration_test.yaml
-    label-issues.yaml
-    lint.yaml
-    make_release.yaml
 .gitignore
 .pre-commit-config.yaml
 .readthedocs.yaml
@@ -25,89 +11,102 @@ README_kr.rst
 SECURITY.md
 beets/
   __init__.py
-    1→# This file is part of beets.
-    2→# Copyright 2016, Adrian Sampson.
-    3→#
-    4→# Permission is hereby granted, free of charge, to any person obtaining
-    5→# a copy of this software and associated documentation files (the
-    6→# "Software"), to deal in the Software without restriction, including
-    7→# without limitation the rights to use, copy, modify, merge, publish,
-    8→# distribute, sublicense, and/or sell copies of the Software, and to
-    9→# permit persons to whom the Software is furnished to do so, subject to
-    10→# the following conditions:
-    11→#
-    12→# The above copyright notice and this permission notice shall be
-    13→# included in all copies or substantial portions of the Software.
-    14→
-    15→
+    …
     16→from sys import stderr
-    17→
-    18→import confuse
-    19→
+    …
     20→from .util.deprecation import deprecate_imports
-    21→
     22→__version__ = "2.11.0"
     23→__author__ = "Adrian Sampson <adrian@radbox.org>"
     26→def __getattr__(name: str):
     27→    """Handle deprecated imports."""
     …
     35→class IncludeLazyConfig(confuse.LazyConfig):
-    36→    """A version of Confuse's LazyConfig that also merges in data from
-    37→    YAML files specified in an `include` setting.
-    38→    """
+    …
     40→    def read(self, user: bool = True, defaults: bool = True) -> None:
     …
     52→config = IncludeLazyConfig("beets", __name__)
   __main__.py
+    …
+    15→"""The __main__ module lets you run the beets CLI interface by typing
+    16→`python -m beets`.
+    17→"""
+    …
   autotag/
     __init__.py
       …
-      28→def __getattr__(name: str):
+      15→"""Facilities for automatically determining files' correct metadata."""
       …
     distance.py
     hooks.py
+      …
+      15→"""Glue between metadata sources and the matching logic."""
+      …
     match.py
   config_default.yaml
   context.py
   dbcore/
     __init__.py
+      …
+      15→"""DBCore is an abstract database package that forms the basis for beets'
+      16→Library.
+      17→"""
+      …
     db.py
+      …
+      15→"""The central Model and Database constructs for DBCore."""
+      …
     pathutils.py
     query.py
+      …
+      15→"""The Query type hierarchy for DBCore."""
+      …
     queryparse.py
+      …
+      15→"""Parsing of strings into DBCore queries."""
+      …
     types.py
+      …
+      15→"""Representation of type information for DBCore model fields."""
+      …
   importer/
     __init__.py
+      …
+      15→"""Provides the basic, interface-agnostic workflow for importing and
+      16→autotagging music files.
+      17→"""
+      19→from .session import ImportAbortError, ImportSession
+      20→from .tasks import (
+      21→    Action,
+      22→    ArchiveImportTask,
+      23→    ImportTask,
+      24→    SentinelImportTask,
+      25→    SingletonImportTask,
+      26→)
+      …
+      30→__all__ = [
+      31→    "Action",
+      32→    "ArchiveImportTask",
+      33→    "ImportAbortError",
+      34→    "ImportSession",
+      35→    "ImportTask",
+      36→    "SentinelImportTask",
+      37→    "SingletonImportTask",
+      38→]
     session.py
     stages.py
     state.py
     tasks.py
   library/
     __init__.py
-      1→from beets.util.deprecation import deprecate_imports
-      2→
-      3→from .exceptions import FileOperationError, ReadError, WriteError
-      4→from .library import Library
-      5→from .models import Album, Item, LibModel
-      6→from .queries import parse_query_parts, parse_query_string
-      8→NEW_MODULE_BY_NAME = dict.fromkeys(
-      …
-      15→def __getattr__(name: str):
-      16→    return deprecate_imports(__name__, NEW_MODULE_BY_NAME, name)
-      19→__all__ = [
-      20→    "Album",
-      21→    "FileOperationError",
-      22→    "Item",
-      23→    "LibModel",
-      24→    "Library",
-      25→    "ReadError",
-      26→    "WriteError",
-      27→    "parse_query_parts",
-      28→    "parse_query_string",
-      29→]
     exceptions.py
     fields.py
+      …
+      3→TYPE_BY_FIELD: dict[str, types.Type] = {
+      …
     library.py
+      …
+      20→class Library(dbcore.Database):
+      …
     migrations.py
     models.py
     queries.py
@@ -115,21 +114,93 @@ beets/
   mediafile.py
   metadata_plugins.py
   plugins.py
+    …
+    15→"""Support for beets plugins."""
+    …
   py.typed (empty)
   test/
-    __init__.py
-    _common.py
-    helper.py
   ui/
     __init__.py
+      …
+      15→"""This module contains all of the core logic for beets' command-line
+      16→interface. To invoke the CLI, just call beets.ui.main(). The actual
+      17→CLI commands are implemented in the ui.commands module.
+      18→"""
+      …
+      31→from functools import cache
+      32→from typing import TYPE_CHECKING, Any
+      …
+      36→from beets import config, library, logging, plugins, util
+      37→from beets.dbcore import db
+      38→from beets.dbcore import query as db_query
+      39→from beets.util import as_string
+      40→from beets.util.color import colorize
+      41→from beets.util.deprecation import deprecate_for_maintainers
+      42→from beets.util.diff import get_model_changes
+      43→from beets.util.functemplate import template
+      …
+      59→log = logging.getLogger("beets")
+      …
+      65→PF_KEY_QUERIES = {
+      66→    "comp": "comp:true",
+      67→    "singleton": "singleton:true",
+      68→}
+      71→class UserError(Exception):
+      …
+      80→def _in_encoding():
+      …
+      85→def _out_encoding():
+      …
+      90→def _stream_encoding(stream, default="utf-8"):
+      …
+      111→def decargs(arglist):
+      …
+      118→    deprecate_for_maintainers("'beets.ui.decargs'")
+      119→    return arglist
+      122→def print_(*strings: str, end: str = "\n") -> None:
+      …
     commands/
       __init__.py
         …
+        15→"""This module provides the default commands for beets' command-line
+        16→interface.
+        17→"""
+        19→from beets.util.deprecation import deprecate_imports
+        20→
+        21→from .completion import completion_cmd
+        22→from .config import config_cmd
+        23→from .fields import fields_cmd
+        24→from .help import HelpCommand
+        25→from .import_ import import_cmd
+        26→from .list import list_cmd
+        27→from .modify import modify_cmd
+        28→from .move import move_cmd
+        29→from .remove import remove_cmd
+        30→from .stats import stats_cmd
+        31→from .update import update_cmd
+        32→from .version import version_cmd
+        33→from .write import write_cmd
+        34→
+        35→
         36→def __getattr__(name: str):
         37→    """Handle deprecated imports."""
         …
         50→default_commands = [
-        …
+        51→    fields_cmd,
+        52→    HelpCommand(),
+        53→    import_cmd,
+        54→    list_cmd,
+        55→    update_cmd,
+        56→    remove_cmd,
+        57→    stats_cmd,
+        58→    version_cmd,
+        59→    modify_cmd,
+        60→    move_cmd,
+        61→    write_cmd,
+        62→    config_cmd,
+        63→    completion_cmd,
+        64→]
+        67→__all__ = ["default_commands"]
       completion.py
       completion_base.sh
       config.py
@@ -138,13 +209,29 @@ beets/
       import_/
         __init__.py
           1→"""The `import` command: import new music into the library."""
-          2→
-          3→import os
-          4→
+          …
           5→from beets import config, logging, plugins, ui
           6→from beets.util import displayable_path, normpath, syspath
           7→
           8→from .session import TerminalImportSession
+          …
+          11→log = logging.getLogger("beets")
+          12→
+          13→
+          14→def paths_from_logfile(path):
+          …
+          34→def parse_logfiles(logfiles):
+          35→    """Parse all `logfiles` and yield paths from it."""
+          …
+          49→def import_files(lib, paths: list[bytes], query):
+          …
+          81→def import_func(lib, opts, args: list[str]):
+          …
+          134→def _store_dict(option, opt_str, value, parser):
+          …
+          160→import_cmd = ui.Subcommand(
+          161→    "import", help="import new music", aliases=("imp", "im")
+          162→)
           …
         display.py
         session.py
@@ -161,16 +248,61 @@ beets/
     __init__.py
       …
       15→"""Miscellaneous utility functions."""
-      17→from __future__ import annotations
-      19→import contextvars
-      20→import errno
-      21→import fnmatch
-      22→import os
-      23→import platform
-      24→import re
-      25→import shlex
-      26→import shutil
-      27→import subprocess
+      …
+      31→from collections import Counter
+      32→from collections.abc import Sequence
+      33→from contextlib import suppress
+      34→from enum import Enum
+      35→from functools import cache
+      36→from importlib import import_module
+      37→from multiprocessing.pool import ThreadPool
+      38→from pathlib import Path
+      39→from re import Pattern
+      40→from typing import (
+      41→    TYPE_CHECKING,
+      42→    Any,
+      43→    AnyStr,
+      44→    ClassVar,
+      45→    Generic,
+      46→    NamedTuple,
+      47→    TypeVar,
+      48→    cast,
+      49→)
+      50→
+      51→from unidecode import unidecode
+      …
+      54→from beets.util import hidden
+      …
+      62→MAX_FILENAME_LENGTH = 200
+      63→WINDOWS_MAGIC_PREFIX = "\\\\?\\"
+      64→T = TypeVar("T")
+      65→StrPath = str | Path
+      66→PathLike = StrPath | bytes
+      67→Replacements = Sequence[tuple[Pattern[str], str]]
+      …
+      71→PathBytes = bytes
+      72→
+      73→
+      74→class HumanReadableError(Exception):
+      …
+      88→    error_kind = "Error"  # Human-readable description of error type.
+      89→
+      90→    def __init__(self, reason, verb, tb=None):
+      …
+      96→    def _gerund(self):
+      …
+      104→    def _reasonstr(self):
+      …
+      115→    def get_message(self):
+      …
+      119→        raise NotImplementedError
+      121→    def log(self, logger):
+      …
+      130→class FilesystemError(HumanReadableError):
+      …
+      136→    def __init__(self, reason, verb, paths, tb=None):
+      …
+      140→    def get_message(self):
       …
     artresizer.py
     bluelet.py
@@ -179,161 +311,29 @@ beets/
     deprecation.py
     diff.py
     extension.py
+      …
+      15→"""A tool that finds an extension for files without one"""
+      …
     functemplate.py
     hidden.py
+      …
+      16→"""Simple library to work out if a file is hidden on different platforms."""
+      …
+      25→def is_hidden(path: bytes | Path) -> bool:
+      …
     id_extractors.py
+      …
+      15→"""Helpers around the extraction of album/track ID's from metadata sources."""
+      …
     layout.py
     lyrics.py
     m3u.py
+      …
+      15→"""Provides utilities to read, write and manipulate m3u playlist files."""
+      …
     pipeline.py
     units.py
 beetsplug/
-  _typing.py
-  _utils/
-  absubmit.py
-  acousticbrainz.py
-  advancedrewrite.py
-  albumtypes.py
-  aura.py
-  autobpm.py
-  badfiles.py
-  bareasc.py
-  beatport.py
-  bench.py
-  bpd/
-    __init__.py
-    gstplayer.py
-  bpm.py
-  bpsync.py
-  bucket.py
-  chroma.py
-  convert.py
-  deezer.py
-  discogs/
-    __init__.py
-    states.py
-    types.py
-  duplicates.py
-  edit.py
-  embedart.py
-  embyupdate.py
-  export.py
-  fetchart.py
-  filefilter.py
-  fish.py
-  freedesktop.py
-  fromfilename.py
-  ftintitle.py
-  fuzzy.py
-  hook.py
-  ihate.py
-  importadded.py
-  importfeeds.py
-  importsource.py
-  info.py
-  inline.py
-  ipfs.py
-  keyfinder.py
-  kodiupdate.py
-  lastgenre/
-    __init__.py
-    client.py
-    genres-tree.yaml
-    genres.txt
-    utils.py
-  lastimport.py
-  limit.py
-  listenbrainz.py
-  loadext.py
-  lyrics.py
-  mbcollection.py
-  mbpseudo.py
-  mbsubmit.py
-  mbsync.py
-  metasync/
-    __init__.py
-      1→# This file is part of beets.
-      2→# Copyright 2016, Heinz Wiesinger.
-      3→#
-      4→# Permission is hereby granted, free of charge, to any person obtaining
-      5→# a copy of this software and associated documentation files (the
-      6→# "Software"), to deal in the Software without restriction, including
-      7→# without limitation the rights to use, copy, modify, merge, publish,
-      8→# distribute, sublicense, and/or sell copies of the Software, and to
-      9→# permit persons to whom the Software is furnished to do so, subject to
-      10→# the following conditions:
-      11→#
-      12→# The above copyright notice and this permission notice shall be
-      13→# included in all copies or substantial portions of the Software.
-      14→
-      15→"""Synchronize information from music player libraries"""
-      16→
-      17→from __future__ import annotations
-      18→
-      19→from abc import ABCMeta, abstractmethod
-      20→from importlib import import_module
-      21→from typing import TYPE_CHECKING, ClassVar
-      22→
-      23→from confuse import ConfigValueError
-      24→
-      25→from beets import ui
-      26→from beets.plugins import BeetsPlugin
-      …
-    amarok.py
-    itunes.py
-  missing.py
-  mpdstats.py
-  mpdupdate.py
-  musicbrainz.py
-  parentwork.py
-  permissions.py
-  play.py
-  playlist.py
-  plexupdate.py
-  random.py
-  replace.py
-  replaygain.py
-  rewrite.py
-  scrub.py
-  smartplaylist.py
-  sonosupdate.py
-  spotify.py
-  subsonicplaylist.py
-  subsonicupdate.py
-  substitute.py
-  the.py
-  thumbnails.py
-  tidal/
-    __init__.py
-      1→from __future__ import annotations
-      2→
-      3→import itertools
-      4→import os
-      5→import re
-      6→from functools import cached_property
-      7→from typing import TYPE_CHECKING, overload
-      8→
-      9→import confuse
-      10→
-      11→from beets import ui
-      12→from beets.autotag.hooks import AlbumInfo, TrackInfo
-      13→from beets.logging import getLogger
-      14→from beets.metadata_plugins import MetadataSourcePlugin
-      15→
-      16→from .api import TidalAPI
-      …
-    api.py
-    api_types.py
-    session.py
-  titlecase.py
-  types.py
-  unimported.py
-  web/
-    __init__.py
-    static/
-    templates/
-      index.html
-  zero.py
 codecov.yml
 docs/
   .gitignore
@@ -368,14 +368,6 @@ docs/
       events.rst
       index.rst
       other/
-        config.rst
-        fields.rst
-        import.rst
-        index.rst
-        logging.rst
-        mediafile.rst
-        prompts.rst
-        templates.rst
   extensions/
     conf.py
   faq.rst
@@ -400,24 +392,14 @@ extra/
   ascii_logo.txt
   beets.reg
   release.py
+    …
+    3→"""A utility script for automating the beets release process."""
+    …
 poetry.lock
 pyproject.toml
-  1→[tool.poetry]
-  2→name = "beets"
-  3→version = "2.11.0"
-  4→description = "music tagger and library organizer"
-  …
-  7→license = "MIT"
-  8→readme = "README.rst"
   …
   184→[tool.poetry.scripts]
   185→beet = "beets.ui:main"
-  187→[build-system]
-  188→requires = ["poetry-core>=1.0.0"]
-  189→build-backend = "poetry.core.masonry.api"
-  191→[tool.pipx-install]
-  192→poethepoet = ">=0.26"
-  193→poetry = ">=1.8,<2"
   …
 setup.cfg
 test/

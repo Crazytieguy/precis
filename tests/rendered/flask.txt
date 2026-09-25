@@ -36,20 +36,9 @@ README.md
   20→## A Simple Example
   …
   38→## Donate
-  39→
-  40→The Pallets organization develops and supports Flask and the libraries
-  41→it uses. In order to grow the community of contributors and users, and
-  42→allow the maintainers to devote more time to the projects, [please
-  43→donate today].
-  44→
-  45→[please donate today]: https://palletsprojects.com/donate
+  …
   47→## Contributing
-  48→
-  49→See our [detailed contributing documentation][contrib] for many ways to
-  50→contribute, including reporting issues, requesting features, asking or answering
-  51→questions, and making PRs.
-  52→
-  53→[contrib]: https://palletsprojects.com/contributing/
+  …
 docs/
   Makefile
   _static/
@@ -144,46 +133,8 @@ docs/
   web-security.rst
 examples/
   celery/
-    README.md
-    make_celery.py
-    pyproject.toml
-    requirements.txt
-    src/
-      task_app/
-        __init__.py
-        tasks.py
-        templates/
-        views.py
   javascript/
-    .gitignore
-    LICENSE.txt
-    README.rst
-    js_example/
-      __init__.py
-      templates/
-      views.py
-    pyproject.toml
-    tests/
   tutorial/
-    .gitignore
-    LICENSE.txt
-    README.rst
-    flaskr/
-      __init__.py
-      auth.py
-      blog.py
-      db.py
-      schema.sql
-      static/
-      templates/
-    pyproject.toml
-    tests/
-      conftest.py
-      data.sql
-      test_auth.py
-      test_blog.py
-      test_db.py
-      test_factory.py
 pyproject.toml
   1→[project]
   2→name = "Flask"
@@ -208,17 +159,8 @@ pyproject.toml
   33→async = ["asgiref>=3.2"]
   34→dotenv = ["python-dotenv"]
   …
-  74→[project.urls]
-  75→Donate = "https://palletsprojects.com/donate"
-  76→Documentation = "https://flask.palletsprojects.com/"
-  77→Changes = "https://flask.palletsprojects.com/page/changes/"
-  78→Source = "https://github.com/pallets/flask/"
-  79→Chat = "https://discord.gg/pallets"
   81→[project.scripts]
   82→flask = "flask.cli:main"
-  84→[build-system]
-  85→requires = ["flit_core>=3.11,<4"]
-  86→build-backend = "flit_core.buildapi"
   …
 src/
   flask/
@@ -263,57 +205,90 @@ src/
       38→from .wrappers import Request as Request
       39→from .wrappers import Response as Response
     __main__.py
-      1→from .cli import main
-      …
     app.py
     blueprints.py
+      …
+      18→class Blueprint(SansioBlueprint):
+      19→    def __init__(
+      …
+      55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
+      …
+      82→    def send_static_file(self, filename: str) -> Response:
+      …
+      104→    def open_resource(
+      …
     cli.py
     config.py
+      …
+      17→T = t.TypeVar("T")
+      18→
+      19→
+      20→class ConfigAttribute(t.Generic[T]):
+      …
+      50→class Config(dict):  # type: ignore[type-arg]
+      …
     ctx.py
     debughelpers.py
     globals.py
     helpers.py
     json/
       __init__.py
-        1→from __future__ import annotations
-        2→
-        3→import json as _json
-        4→import typing as t
-        5→
+        …
         6→from ..globals import current_app
         7→from .provider import _default
         …
         13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
-        14→    """Serialize data as JSON.
         …
+        40→    if current_app:
+        41→        return current_app.json.dumps(obj, **kwargs)
+        42→
+        43→    kwargs.setdefault("default", _default)
+        44→    return _json.dumps(obj, **kwargs)
         47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
-        48→    """Serialize data as JSON and write to a file.
         …
+        70→    if current_app:
+        71→        current_app.json.dump(obj, fp, **kwargs)
+        72→    else:
+        73→        kwargs.setdefault("default", _default)
+        74→        _json.dump(obj, fp, **kwargs)
         77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
-        78→    """Deserialize data as JSON.
         …
+        102→    if current_app:
+        103→        return current_app.json.loads(s, **kwargs)
+        104→
+        105→    return _json.loads(s, **kwargs)
         108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
-        109→    """Deserialize data as JSON read from a file.
         …
+        132→    if current_app:
+        133→        return current_app.json.load(fp, **kwargs)
+        134→
+        135→    return _json.load(fp, **kwargs)
         138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
-        139→    """Serialize the given arguments as JSON, and return a
-        140→    :class:`~flask.Response` object with the ``application/json``
-        141→    mimetype. A dict or list returned from a view will be converted to a
-        142→    JSON response automatically without needing to call this.
         …
         170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
       provider.py
+        …
+        19→class JSONProvider:
+        …
+        108→def _default(o: t.Any) -> t.Any:
+        …
+        124→class DefaultJSONProvider(JSONProvider):
+        …
       tag.py
     logging.py
+      …
+      15→@LocalProxy
+      16→def wsgi_errors_stream() -> t.TextIO:
+      …
+      31→def has_level_handler(logger: logging.Logger) -> bool:
+      …
+      52→default_handler = logging.StreamHandler(wsgi_errors_stream)  # type: ignore
+      …
+      58→def create_logger(app: App) -> logging.Logger:
+      …
     py.typed (empty)
     sansio/
       README.md
-        1→# Sansio
-        2→
-        3→This folder contains code that can be used by alternative Flask
-        4→implementations, for example Quart. The code therefore cannot do any
-        5→IO, nor be part of a likely IO path. Finally this code cannot use the
-        6→Flask globals.
       app.py
       blueprints.py
       scaffold.py
@@ -321,33 +296,54 @@ src/
     signals.py
     templating.py
     testing.py
+      …
+      27→class EnvironBuilder(werkzeug.test.EnvironBuilder):
+      …
+      97→_werkzeug_version = ""
+      98→
+      99→
+      100→def _get_werkzeug_version() -> str:
+      …
+      109→class FlaskClient(Client):
+      …
+      265→class FlaskCliRunner(CliRunner):
+      …
     typing.py
     views.py
+      …
+      9→F = t.TypeVar("F", bound=t.Callable[..., t.Any])
+      10→
+      11→http_method_funcs = frozenset(
+      12→    ["get", "post", "head", "options", "delete", "put", "trace", "patch"]
+      13→)
+      16→class View:
+      …
+      138→class MethodView(View):
+      …
+      165→    def __init_subclass__(cls, **kwargs: t.Any) -> None:
+      …
+      182→    def dispatch_request(self, **kwargs: t.Any) -> ft.ResponseReturnValue:
+      …
     wrappers.py
+      …
+      18→class Request(RequestBase):
+      …
+      222→class Response(ResponseBase):
+      …
+      240→    default_mimetype: str | None = "text/html"
+      241→
+      242→    json_module = json
+      243→
+      244→    autocorrect_location_header = False
+      246→    @property
+      247→    def max_cookie_size(self) -> int:  # type: ignore
+      …
 tests/
   conftest.py
   static/
   templates/
   test_appctx.py
   test_apps/
-    .env
-    .flaskenv
-    blueprintapp/
-      __init__.py
-      apps/
-        __init__.py (empty)
-        admin/
-          __init__.py
-          static/
-          templates/
-        frontend/
-          __init__.py
-          templates/
-    cliapp/
-    helloworld/
-    subdomaintestmodule/
-      __init__.py
-      static/
   test_async.py
   test_basic.py
   test_blueprints.py

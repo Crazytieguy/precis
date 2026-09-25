@@ -1,5 +1,4 @@
-//! Python extraction for the code engine. Not ported yet: `walker::python` still
-//! walks these files.
+//! Python extraction for the code engine.
 //!
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
@@ -24,7 +23,7 @@ use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::{WalkCtx, name_of};
 
-pub(super) const PORTED: bool = false;
+pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["py"];
 
 pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
