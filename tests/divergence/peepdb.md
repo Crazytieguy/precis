@@ -163,7 +163,7 @@ Score(3000)=0.625 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 7130 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.610 |
 | ns | 7201 |  | 302 | The non-LIMIT/OFFSET pagination variants (MSSQL, Oracle, MongoDB, Firebase) | 4.9 | 4.1 | 0.597 |
 | ns | 7310 |  | 109 | Where credentials live: config paths and KeySecurity modes | 5.1 | 1.9 | 0.601 |
-| walker |  | 7331 | 201 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: true } |  |  | 0.601 |
+| walker |  | 7331 | 201 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.601 |
 | walker |  | 7453 | 122 | Markdown::Section { file: docs/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.601 |
 | ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.593 |
 | walker |  | 7520 | 67 | Markdown::Section { file: docs/installation.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.593 |

@@ -52,32 +52,6 @@ Readme.md
   68→// This will throw an error when the data is invalid.
   69→// If you'd rather not throw, you can use `is()` or `validate()`.
   70→```
-  72→Superstruct ships with validators for all the common JavaScript data types, and you can define custom ones too:
-  73→
-  74→```js
-  75→import { is, define, object, string } from 'superstruct'
-  76→import isUuid from 'is-uuid'
-  77→import isEmail from 'is-email'
-  78→
-  79→const Email = define('Email', isEmail)
-  80→const Uuid = define('Uuid', isUuid.v4)
-  81→
-  82→const User = object({
-  83→  id: Uuid,
-  84→  email: Email,
-  85→  name: string(),
-  86→})
-  87→
-  88→const data = {
-  89→  id: 'c8d63140-a1f7-45e0-bfc6-df72973fea86',
-  90→  email: 'jane@example.com',
-  91→  name: 'Jane',
-  92→}
-  93→
-  94→if (is(data, User)) {
-  95→  // Your data is guaranteed to be valid in this block.
-  96→}
-  97→```
   …
   145→### Why?
   …
@@ -176,6 +150,14 @@ docs/
     coercions.md
     core.md
     errors.md
+      1→# Errors
+      …
+      5→### `StructError`
+      …
+      19→### Error Properties
+      …
+      32→### Multiple Errors
+      …
     refinements.md
     types.md
     typescript.md
@@ -249,7 +231,9 @@ package.json
 rollup.config.js
 src/
   error.ts
-    …
+    1→/**
+    2→ * A `StructFailure` represents a single specific failure in validation.
+    3→ */
     5→export type Failure = {
     6→  value: any
     7→  key: any
@@ -262,7 +246,18 @@ src/
     14→}
     …
     25→export class StructError extends TypeError {
+    26→  value: any
+    27→  key!: any
+    28→  type!: string
+    29→  refinement!: string | undefined
+    30→  path!: Array<any>
+    31→  branch!: Array<any>
+    32→  failures: () => Array<Failure>;
+    33→  [x: string]: any
+    34→
+    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     …
+    49→}
   index.ts
     1→export * from './error.js'
     2→export * from './struct.js'

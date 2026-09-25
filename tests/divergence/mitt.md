@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.938 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.730/0.711/0.748/0.789/0.726/0.711/0.703
+Score(3000)=0.793 I=0.947 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.730/0.711/0.748/0.793/0.726/0.711/0.703
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -42,18 +42,18 @@ Score(3000)=0.789 I=0.938 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 1977 | 230 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.774 |
 | ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.748 |
 | ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.718 |
-| walker |  | 2275 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.817 |
-| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.780 |
-| walker |  | 2555 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.850 |
-| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.828 |
-| walker |  | 2767 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.830 |
+| walker |  | 2257 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.795 |
+| ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.759 |
+| walker |  | 2469 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.761 |
+| ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.741 |
+| walker |  | 2767 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.830 |
 | ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.789 |
-| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.795 |
-| walker |  | 3069 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.797 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.772 |
-| walker |  | 3232 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.773 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.755 |
-| walker |  | 3381 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.789 |
+| walker |  | 2916 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.793 |
+| ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.799 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.805 |
+| walker |  | 3218 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.807 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.788 |
+| walker |  | 3381 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.789 |
 | ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.753 |
 | ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.761 |
 | walker |  | 3676 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.763 |

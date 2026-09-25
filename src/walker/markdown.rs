@@ -247,7 +247,7 @@ fn push_sections(
             let key = MarkdownKey::Section {
                 file: file.to_path_buf(),
                 section_index: idx,
-                keeps_default_concavity: range.is_reference_usage_section || range.is_lede_body,
+                keeps_default_concavity: range.is_reference_usage_section,
             };
             // Oversize tails deliver in source order: each chunk
             // gates on its predecessor chunk.
@@ -1038,10 +1038,6 @@ struct SectionRange {
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
     chained_to_previous: bool,
-    /// The section body directly behind a carved lede — the rest of what
-    /// the unsplit section would have delivered, so it keeps the index-0
-    /// concavity.
-    is_lede_body: bool,
 }
 
 impl SectionRange {
@@ -1052,7 +1048,6 @@ impl SectionRange {
             h2_index,
             is_reference_usage_section: false,
             chained_to_previous: false,
-            is_lede_body: false,
         }
     }
 }
@@ -1129,13 +1124,8 @@ fn logical_sections(
 /// cut is skipped when the next non-blank row opens a fence (the
 /// fence binds to the paragraph introducing it) or when the remainder
 /// would fall below [`OVERSIZE_CHUNK_MIN_TAIL_TOKENS`]. Chunk 0 is
-/// then refined into a lede plus body; the returned flag says whether
-/// that lede cut was taken.
-fn oversize_chunk_bounds(
-    src_lines: &[&str],
-    start: usize,
-    end: usize,
-) -> (Vec<(usize, usize)>, bool) {
+/// then refined into a lede plus body.
+fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(usize, usize)> {
     let item_count = end - start + 1;
     let mut token_prefix = Vec::with_capacity(item_count + 1);
     token_prefix.push(0);
@@ -1225,11 +1215,10 @@ fn oversize_chunk_bounds(
         ranges[0] = index..head.end;
         ranges.insert(0, head.start..index);
     }
-    let bounds = ranges
+    ranges
         .into_iter()
         .map(|range| (start + range.start, start + range.end - 1))
-        .collect();
-    (bounds, lede.is_some())
+        .collect()
 }
 
 /// Per-row token count (row is 1-based; includes the newline). Rides
@@ -1346,8 +1335,7 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 /// includes the section heading, so no outline is required to preserve
 /// it) and follow it with predecessor-chained tail chunks priced like
 /// the head: a tail is the direct continuation of content whose head
-/// just won purchase. When the head itself carves a lede
-/// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is the lede body.
+/// just won purchase.
 fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], head: SectionRange) {
     let (start, end) = (head.start, head.end);
     let tokens: usize = (start..=end).map(|r| row_tokens(src_lines, r)).sum();
@@ -1355,28 +1343,16 @@ fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], hea
         out.push(head);
         return;
     }
-    let (bounds, lede) = oversize_chunk_bounds(src_lines, start, end);
-    for (i, (chunk_start, chunk_end)) in bounds.into_iter().enumerate() {
-        // Chunk 0 is the lede when one was carved; the chunk directly
-        // behind it is the section remainder and keeps the section's
-        // own price (the entry-slice law: re-pricing the remainder
-        // demotes the content the carve exists to reach). Only further
-        // chunks are continuations.
-        if i == 0 {
-            out.push(SectionRange {
-                start: chunk_start,
-                end: chunk_end,
-                ..head
-            });
-        } else {
-            out.push(SectionRange {
-                start: chunk_start,
-                end: chunk_end,
-                chained_to_previous: true,
-                is_lede_body: i == 1 && lede,
-                ..head
-            });
-        }
+    for (i, (chunk_start, chunk_end)) in oversize_chunk_bounds(src_lines, start, end)
+        .into_iter()
+        .enumerate()
+    {
+        out.push(SectionRange {
+            start: chunk_start,
+            end: chunk_end,
+            chained_to_previous: i > 0,
+            ..head
+        });
     }
 }
 
@@ -1768,7 +1744,7 @@ mod tests {
     fn chunk_bounds_of(source: &str) -> Vec<(usize, usize)> {
         let src_lines: Vec<&str> = source.lines().collect();
         let end = src_lines.len();
-        oversize_chunk_bounds(&src_lines, 1, end).0
+        oversize_chunk_bounds(&src_lines, 1, end)
     }
 
     /// A blank-separated prose paragraph of ~`tokens` tokens.

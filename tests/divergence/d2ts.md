@@ -117,7 +117,7 @@ Score(3000)=0.730 I=0.869 C=0.614 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 7011 | 17 | Code::CodeKey { rung: Body, file: packages/d2ts-benchmark/src/base.ts, decl: 5, sub: 0, line: 44 } |  |  | 0.614 |
 | walker |  | 7207 | 196 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.618 |
 | ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.599 |
-| walker |  | 7381 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.607 |
+| walker |  | 7381 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.607 |
 | ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.598 |
 | walker |  | 7472 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.611 |
 | walker |  | 7555 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.611 |

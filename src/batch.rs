@@ -83,14 +83,10 @@ pub enum MarkdownKey {
     /// Predecessor of every same-file `Section`.
     HeadingsOutline { file: PathBuf },
     /// One scheduling unit of a markdown body, indexed by post-split
-    /// position: a whole H2, an H2 intro, an H3 child, a headingless body, or
-    /// an oversize chunk.
-    /// `keeps_default_concavity` exempts a range from the steeper
-    /// index-≥1 prose exponent: README ranges dominated by list /
-    /// table / fence rows (catalogs, not prose), and the body behind a
-    /// carved section lede (the body is the same content the unsplit
-    /// section priced at index 0 — the lede taking slot 0 must not
-    /// re-price it).
+    /// position: a whole top-level section, an H1 intro, a headingless
+    /// body, or an oversize chunk. `keeps_default_concavity` exempts a
+    /// README reference section (usage demo, options, API) from the
+    /// steeper index-≥1 prose exponent.
     Section {
         file: PathBuf,
         section_index: usize,

@@ -69,18 +69,18 @@ Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 3578 | 180 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.758 |
 | ns | 3588 |  | 158 | GroupProps, SeparatorProps, EmptyProps | 2.10 | 2.5 | 0.738 |
 | ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.724 |
-| walker |  | 3826 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: true } |  |  | 0.766 |
-| ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.761 |
-| walker |  | 4265 | 439 | Markdown::Section { file: ARCHITECTURE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.765 |
-| walker |  | 4275 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.765 |
-| walker |  | 4285 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.765 |
-| walker |  | 4311 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.765 |
+| walker |  | 4017 | 439 | Markdown::Section { file: ARCHITECTURE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.728 |
+| walker |  | 4027 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.728 |
+| walker |  | 4037 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.728 |
+| walker |  | 4063 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.728 |
+| ns | 4080 |  | 365 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.723 |
+| walker |  | 4311 | 248 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.765 |
 | ns | 4438 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.727 |
 | walker |  | 4439 | 128 | Code::CodeKey { rung: Body, file: cmdk/src/command-score.ts, decl: 1, sub: 0, line: 155 } |  |  | 0.728 |
 | ns | 4659 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.712 |
 | walker |  | 4735 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.712 |
 | ns | 4873 |  | 214 | Roster of Command's internal functions | 3.4 |  | 0.698 |
-| walker |  | 4979 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.698 |
+| walker |  | 4979 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.698 |
 | walker |  | 5083 | 104 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 774 } |  |  | 0.698 |
 | ns | 5086 |  | 213 | Store: subscribe/snapshot and the 'search' setState branch | 3.5 |  | 0.678 |
 | walker |  | 5102 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.678 |
@@ -99,7 +99,7 @@ Score(3000)=0.809 I=0.929 C=0.704 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.546 |
 | walker |  | 7205 | 244 | Markdown::Section { file: ARCHITECTURE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.558 |
 | ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.549 |
-| walker |  | 7415 | 210 | Markdown::Section { file: ARCHITECTURE.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.553 |
+| walker |  | 7415 | 210 | Markdown::Section { file: ARCHITECTURE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.553 |
 | ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.544 |
 | ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.539 |
 | walker |  | 8056 | 641 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.539 |

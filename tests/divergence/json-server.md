@@ -82,7 +82,7 @@ Score(3000)=0.561 I=0.558 C=0.564 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 3267 | 236 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.595 |
 | ns | 3337 |  | 93 | createApp frame: AppOptions fields, construction, return | 3.7 | 3.1 | 0.585 |
 | ns | 3457 |  | 120 | where-operators.ts in full (the operator source of truth) | 3.8 | 3.2 | 0.592 |
-| walker |  | 3505 | 238 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.592 |
+| walker |  | 3505 | 238 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.592 |
 | ns | 3527 |  | 70 | PaginationResult<T> field list | 3.9 | 3.2 | 0.597 |
 | ns | 3638 |  | 111 | NormalizedAdapter surface and DEFAULT_SCHEMA_PATH | 3.10 | 3.2 | 0.585 |
 | walker |  | 3753 | 248 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.722 |
@@ -111,7 +111,7 @@ Score(3000)=0.561 I=0.558 C=0.564 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 5460 | 322 | Code::CodeKey { rung: Body, file: src/paginate.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.628 |
 | walker |  | 5753 | 293 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.661 |
 | ns | 5863 |  | 465 | matchesWhere: the complete operator comparison chain | 4.5 | 4.4 | 0.642 |
-| walker |  | 6010 | 257 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: true } |  |  | 0.653 |
+| walker |  | 6010 | 257 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.653 |
 | ns | 6104 |  | 241 | Service.find: embed, filter, sort, paginate pipeline | 4.6 | 3.4 | 0.636 |
 | walker |  | 6177 | 167 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.656 |
 | walker |  | 6303 | 126 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 8, sub: 0, line: 96 } |  |  | 0.656 |

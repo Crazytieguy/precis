@@ -23,52 +23,9 @@ README.md
   21→pip install git+https://github.com/openai/swarm.git
   22→```
   24→## Usage
-  25→
-  26→```python
-  27→from swarm import Swarm, Agent
-  28→
-  29→client = Swarm()
-  30→
-  31→def transfer_to_agent_b():
-  32→    return agent_b
-  33→
-  34→
-  35→agent_a = Agent(
-  36→    name="Agent A",
-  37→    instructions="You are a helpful agent.",
-  38→    functions=[transfer_to_agent_b],
-  39→)
-  40→
-  41→agent_b = Agent(
-  42→    name="Agent B",
-  43→    instructions="Only speak in Haikus.",
-  44→)
-  45→
-  46→response = client.run(
-  47→    agent=agent_a,
-  48→    messages=[{"role": "user", "content": "I want to talk to agent B."}],
-  49→)
-  50→
-  51→print(response.messages[-1]["content"])
-  52→```
-  53→
-  54→```
-  55→Hope glimmers brightly,
-  56→New paths converge gracefully,
-  57→What can I assist?
-  58→```
-  59→
+  …
   60→## Table of Contents
-  61→
-  62→- [Overview](#overview)
-  63→- [Examples](#examples)
-  64→- [Documentation](#documentation)
-  65→  - [Running Swarm](#running-swarm)
-  66→  - [Agents](#agents)
-  67→  - [Functions](#functions)
-  68→  - [Streaming](#streaming)
-  69→- [Evaluations](#evaluations)
-  70→- [Utils](#utils)
+  …
   72→# Overview
   …
   83→## Why Swarm
@@ -346,14 +303,25 @@ swarm/
     25→    agent: Optional[Agent] = None
     26→    context_variables: dict = {}
     29→class Result(BaseModel):
-    …
+    30→    """
+    31→    Encapsulates the possible return values for an agent function.
+    32→
+    33→    Attributes:
+    34→        value (str): The result value as a string.
+    35→        agent (Agent): The agent instance, if applicable.
+    36→        context_variables (dict): A dictionary of context variables.
+    37→    """
     39→    value: str = ""
     40→    agent: Optional[Agent] = None
     41→    context_variables: dict = {}
   util.py
     …
     5→def debug_print(debug: bool, *args: str) -> None:
-    …
+    6→    if not debug:
+    7→        return
+    8→    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    9→    message = " ".join(map(str, args))
+    10→    print(f"\033[97m[\033[90m{timestamp}\033[97m]\033[90m {message}\033[0m")
     13→def merge_fields(target, source):
     14→    for key, value in source.items():
     15→        if isinstance(value, str):
@@ -361,12 +329,30 @@ swarm/
     17→        elif value is not None and isinstance(value, dict):
     18→            merge_fields(target[key], value)
     21→def merge_chunk(final_response: dict, delta: dict) -> None:
-    …
+    22→    delta.pop("role", None)
+    23→    merge_fields(final_response, delta)
+    24→
+    25→    tool_calls = delta.get("tool_calls")
+    26→    if tool_calls and len(tool_calls) > 0:
+    27→        index = tool_calls[0].pop("index")
+    28→        merge_fields(final_response["tool_calls"][index], tool_calls[0])
     31→def function_to_json(func) -> dict:
+    32→    """
+    33→    Converts a Python function into a JSON-serializable dictionary
+    34→    that describes the function's signature, including its name,
+    35→    description, and parameters.
+    36→
+    37→    Args:
+    38→        func: The function to be converted.
+    39→
+    40→    Returns:
+    41→        A dictionary representing the function's signature in JSON format.
+    42→    """
     …
 tests/
   __init__.py (empty)
   mock_client.py
   test_core.py
   test_runs/
+    test_20240402-113647.json
   test_util.py

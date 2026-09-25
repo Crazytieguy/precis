@@ -256,6 +256,6 @@ Score(3000)=0.603 I=0.828 C=0.440 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | walker |  | 9672 | 185 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.631 |
 | ns | 9685 |  | 386 | select_search_algorithm: SIMD length limits and the KMP/Boyer-Moore fallback | 6.5 | 6.4 | 0.616 |
 | ns | 9868 |  | 183 | gitignore data model: pattern record and parent-chained context | 6.6 |  | 0.621 |
-| walker |  | 9870 | 198 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: true } |  |  | 0.638 |
+| walker |  | 9870 | 198 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.638 |
 | ns | 9993 |  | 125 | Licence header, dependabot config and .gitignore | 7.1 |  | 0.632 |
 | walker |  | 9999 | 129 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.642 |

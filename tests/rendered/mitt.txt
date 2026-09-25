@@ -253,3 +253,18 @@ test/
   index_test.ts
   test-types-compilation.ts
 tsconfig.json
+  1→{
+  2→	"compileOnSave": false,
+  3→	"compilerOptions": {
+  4→		"strict": true,
+  5→		"noEmit": true,
+  6→		"declaration": true,
+  7→		"moduleResolution": "node",
+  8→		"skipLibCheck": true,
+  9→		"esModuleInterop": true,
+  10→	},
+  11→	"include": [
+  12→		"src/*.ts",
+  13→		"test/*.ts"
+  14→	]
+  15→}

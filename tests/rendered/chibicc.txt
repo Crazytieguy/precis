@@ -68,15 +68,6 @@ README.md
   15→suites. So, chibicc actually supports a wide variety of C11 features
   16→and is able to compile hundreds of thousands of lines of real-world C
   17→code correctly.
-  19→chibicc is developed as the reference implementation for a book I'm
-  20→currently writing about the C compiler and the low-level programming.
-  21→The book covers the vast topic with an incremental approach; in the first
-  22→chapter, readers will implement a "compiler" that accepts just a single
-  23→number as a "language", which will then gain one feature at a time in each
-  24→section of the book until the language that the compiler accepts matches
-  25→what the C11 spec specifies. I took this incremental approach from [the
-  26→paper](http://scheme2006.cs.uchicago.edu/11-ghuloum.pdf) by Abdulaziz
-  27→Ghuloum.
   …
   55→## Status
   …
@@ -179,6 +170,9 @@ chibicc.h
   126→typedef struct Obj Obj;
   127→struct Obj {
   …
+  164→// Global variable can be initialized either by a constant expression
+  165→// or a pointer to another global variable. This struct represents the
+  166→// latter.
   167→typedef struct Relocation Relocation;
   168→struct Relocation {
   169→  Relocation *next;
@@ -198,7 +192,22 @@ chibicc.h
   295→Obj *parse(Token *tok);
   …
   301→typedef enum {
-  …
+  302→  TY_VOID,
+  303→  TY_BOOL,
+  304→  TY_CHAR,
+  305→  TY_SHORT,
+  306→  TY_INT,
+  307→  TY_LONG,
+  308→  TY_FLOAT,
+  309→  TY_DOUBLE,
+  310→  TY_LDOUBLE,
+  311→  TY_ENUM,
+  312→  TY_PTR,
+  313→  TY_FUNC,
+  314→  TY_ARRAY,
+  315→  TY_VLA, // variable-length array
+  316→  TY_STRUCT,
+  317→  TY_UNION,
   318→} TypeKind;
   319→
   320→struct Type {
