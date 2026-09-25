@@ -578,7 +578,7 @@ fn is_localized_readme(target: &std::path::Path) -> bool {
 /// Default cost-side concavity for the scheduling ratio — gentle so
 /// big coherent anchor batches stay competitive against many small
 /// per-decl batches. Per-key overrides raise this for prose-shaped
-/// batches via [`crate::batch::WalkerKey::concavity_exponent`].
+/// batches via [`crate::batch::BatchKey::concavity_exponent`].
 pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 
 /// Convert a value and a marginal token cost into the scheduling ratio.

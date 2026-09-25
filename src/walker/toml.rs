@@ -39,7 +39,7 @@ use super::{
 
 type Section = (String, usize, usize);
 
-pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for file in files_with_extension(dir, "toml", ctx) {
         let Some((source, tree)) = parse_toml(ctx, &file) else {

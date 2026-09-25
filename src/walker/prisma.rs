@@ -107,7 +107,7 @@ impl Decl {
     }
 }
 
-pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for file in files_with_extension(dir, "prisma", ctx) {
         let Some(source) = ctx.read_source(&file) else {
@@ -157,7 +157,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 /// into a head `Decl` + a `DeclTail`; everything else emits a single
 /// whole-block `Decl`.
 fn push_decl_batches(
-    out: &mut Vec<Batch<BatchKey>>,
+    out: &mut Vec<Batch>,
     file: &Path,
     source: &Source,
     decl: &Decl,

@@ -42,7 +42,7 @@ use tree_sitter::{Node, Tree};
 use self::model::{FileModel, Item};
 use super::fs::files_with_any_extension;
 use super::{WalkCtx, node_end_row_trimmed};
-use crate::batch::{Batch, BatchKey};
+use crate::batch::Batch;
 use crate::render::Source;
 
 /// The languages the engine can walk: a closed set, dispatched by `match`.
@@ -75,18 +75,6 @@ impl Language {
                 .iter()
                 .any(|candidate| extension.eq_ignore_ascii_case(candidate))
         })
-    }
-
-    /// Short name leading every `CodeKey` descriptor.
-    pub(crate) fn label(self) -> &'static str {
-        match self {
-            Language::Rust => "rust",
-            Language::TypeScript => "ts",
-            Language::Python => "python",
-            Language::Go => "go",
-            Language::C => "c",
-            Language::Lua => "lua",
-        }
     }
 
     fn extensions(self) -> &'static [&'static str] {
@@ -249,7 +237,7 @@ impl SourceFile {
 
 /// Batches for every source file in `dir`. Called by `FsWalker` once per
 /// scheduled directory listing.
-pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let extensions: Vec<&str> = Language::ALL
         .into_iter()
         .flat_map(|language| language.extensions().iter().copied())
@@ -271,34 +259,14 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::batch::{CodeKey, Rung, WalkerKey};
 
     #[test]
-    fn code_mod_describe_names_language_rung_line_and_chunk() {
-        let root = Path::new("/repo");
-        let describe = |rung, file: &str, sub, line| {
-            BatchKey::from(CodeKey {
-                rung,
-                file: root.join(file),
-                decl: 3,
-                sub,
-                line,
-            })
-            .describe(root)
-        };
-        assert_eq!(
-            describe(Rung::Decl, "pkg/a.go", 0, 42),
-            "go decl pkg/a.go:42"
-        );
-        assert_eq!(
-            describe(Rung::Names, "src/lib.rs", 1, 0),
-            "rust names src/lib.rs #1"
-        );
-        assert_eq!(
-            describe(Rung::Body, "web/App.JSX", 2, 7),
-            "ts body web/App.JSX:7 #2"
-        );
+    fn code_mod_language_from_path_matches_extensions_case_insensitively() {
         assert_eq!(Language::from_path(Path::new("x.h")), Some(Language::C));
+        assert_eq!(
+            Language::from_path(Path::new("web/App.JSX")),
+            Some(Language::TypeScript)
+        );
         assert_eq!(Language::from_path(Path::new("x.cpp")), None);
     }
 }

@@ -1,6 +1,6 @@
 //! Scheduler: greedy value/cost picker with predecessor-gated eligibility.
 //!
-//! Walkers emit [`Batch<K>`] units directly (key + optional predecessor +
+//! Walkers emit [`Batch`] units directly (key + optional predecessor +
 //! content + scalar value). The scheduler absorbs each into a single
 //! pool, gates eligibility on whether the batch's predecessor (if any)
 //! is already scheduled, and ranks eligible batches by
@@ -13,18 +13,13 @@
 //! scheduler stops, no fallback to smaller batches — with one
 //! exception at round 0, where stopping means returning nothing at all
 //! (`Scheduler::schedule_partial_seed`).
-//!
-//! Generic over `W: Walker` so the scheduler never names any walker-
-//! specific key variant. `W::Key` is an opaque [`WalkerKey`] as far as
-//! the scheduler is concerned — it needs identity (`Eq`/`Hash`) and
-//! tiebreak order (`Ord`) only.
 
 #[cfg(debug_assertions)]
 use std::collections::BTreeMap;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
-use crate::batch::{Batch, BatchId, WalkerKey};
+use crate::batch::{Batch, BatchId, BatchKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::{DirFilter, EntryKind, list_dir};
 use crate::render::{Cost, RenderedTree, SourceCache};
@@ -37,10 +32,10 @@ use crate::walker::{WalkCtx, Walker};
 const CONTENDER_POOL_K: usize = 128;
 
 /// A single scheduled batch, captured in order for snapshots and the
-/// divergence metric. Generic over the walker's key type.
+/// divergence metric.
 #[derive(Debug, Clone)]
-pub struct ScheduledBatchRecord<K> {
-    pub key: K,
+pub struct ScheduledBatchRecord {
+    pub key: BatchKey,
     pub content: BatchContent,
     pub cost: Cost,
     pub cum_tokens: usize,
@@ -48,14 +43,14 @@ pub struct ScheduledBatchRecord<K> {
 
 /// Scheduler output: rendered tree + ordered log of scheduled batches.
 #[derive(Debug)]
-pub struct RunReport<K: WalkerKey> {
+pub struct RunReport {
     pub tree: RenderedTree,
-    pub scheduled: Vec<ScheduledBatchRecord<K>>,
+    pub scheduled: Vec<ScheduledBatchRecord>,
     /// All walker-emitted batches discovered during this run, including
     /// batches that never made it into the prefix-monotone schedule. A
     /// seed degraded by `Scheduler::schedule_partial_seed` appears in
     /// the form it was scheduled in, not the form the walker emitted.
-    pub candidates: Vec<Batch<K>>,
+    pub candidates: Vec<Batch>,
 }
 
 pub struct Scheduler<W: Walker> {
@@ -67,15 +62,15 @@ pub struct Scheduler<W: Walker> {
     consumed: Cost,
 
     /// Walker-emitted batches, indexed by [`BatchId`] (which is the position).
-    entries: Vec<Batch<W::Key>>,
+    entries: Vec<Batch>,
     /// Stable key→id lookup for predecessor resolution + dedup.
-    key_to_id: HashMap<W::Key, BatchId>,
+    key_to_id: HashMap<BatchKey, BatchId>,
     /// Scheduled batches.
     scheduled: HashSet<BatchId>,
     /// Unscheduled batches whose predecessor (if any) is scheduled.
     eligible: BTreeSet<BatchId>,
     /// Batches gated on a predecessor key not yet scheduled, by that key.
-    waiting: HashMap<W::Key, Vec<BatchId>>,
+    waiting: HashMap<BatchKey, Vec<BatchId>>,
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
     /// Cached exact marginal cost per emitted batch.
@@ -104,7 +99,7 @@ pub struct Scheduler<W: Walker> {
     /// Debug-only owner map for FS render cells — overlapping sibling
     /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
-    fs_atom_owners: BTreeMap<(PathBuf, String), W::Key>,
+    fs_atom_owners: BTreeMap<(PathBuf, String), BatchKey>,
 }
 
 /// Breadth-pressure coefficient: past the free allowance, a candidate
@@ -179,7 +174,7 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// Run the scheduler and return the tree plus the scheduled-batches log.
-    pub fn run_with_report(mut self) -> RunReport<W::Key> {
+    pub fn run_with_report(mut self) -> RunReport {
         for batch in self.walker.seed(&self.ctx) {
             self.absorb(batch);
         }
@@ -239,7 +234,7 @@ impl<W: Walker> Scheduler<W> {
     // ---- absorption ----
 
     /// Add a walker-emitted batch to the pool. Idempotent on key.
-    fn absorb(&mut self, batch: Batch<W::Key>) {
+    fn absorb(&mut self, batch: Batch) {
         if self.key_to_id.contains_key(&batch.key) {
             return;
         }
@@ -287,7 +282,7 @@ impl<W: Walker> Scheduler<W> {
     }
 
     #[cfg(debug_assertions)]
-    fn assert_disjoint_fs_atoms(&mut self, batch: &Batch<W::Key>) {
+    fn assert_disjoint_fs_atoms(&mut self, batch: &Batch) {
         let BatchContent::Fs { groups } = &batch.content else {
             return;
         };

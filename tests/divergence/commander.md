@@ -4,74 +4,74 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 34 |  | 34 | Readme title + one-line pitch | 1.1 |  | 0.000 |
 | ns | 59 |  | 25 | lib/ listing — the entire implementation | 1.2 |  | 0.000 |
-| walker |  | 102 | 102 | listing of '.' |  |  | 0.000 |
+| walker |  | 102 | 102 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 109 |  | 50 | package.json name, version, npm description | 1.3 |  | 0.000 |
-| walker |  | 113 | 11 | ts names esm.mjs |  |  | 0.000 |
-| walker |  | 130 | 17 | listing of 'typings' |  |  | 0.000 |
-| walker |  | 155 | 25 | listing of 'lib' |  |  | 0.538 |
+| walker |  | 113 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.000 |
+| walker |  | 130 | 17 | Fs::DirListing { dir: typings } |  |  | 0.000 |
+| walker |  | 155 | 25 | Fs::DirListing { dir: lib } |  |  | 0.538 |
 | ns | 180 |  | 71 | package.json module type, main, types, engines | 1.4 |  | 0.354 |
-| walker |  | 191 | 36 | listing of 'docs' |  |  | 0.356 |
+| walker |  | 191 | 36 | Fs::DirListing { dir: docs } |  |  | 0.356 |
 | ns | 265 |  | 85 | index.js: which lib module each public class comes from | 1.5 |  | 0.311 |
-| walker |  | 268 | 77 | package identity in package.json |  |  | 0.421 |
-| walker |  | 293 | 25 | listing of 'docs/zh-CN' |  |  | 0.421 |
+| walker |  | 268 | 77 | Json::Identity { file: package.json } |  |  | 0.421 |
+| walker |  | 293 | 25 | Fs::DirListing { dir: docs/zh-CN } |  |  | 0.421 |
 | ns | 336 |  | 71 | index.js: the `program` singleton and the three createX factories | 1.6 |  | 0.377 |
-| walker |  | 358 | 65 | README headline in Readme.md |  |  | 0.554 |
+| walker |  | 358 | 65 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.554 |
 | ns | 441 |  | 105 | index.js: the complete class + error export block | 1.7 |  | 0.453 |
-| walker |  | 455 | 97 | ts decl esm.mjs:4 |  |  | 0.465 |
-| walker |  | 483 | 28 | ts names lib/suggestSimilar.js |  |  | 0.465 |
-| walker |  | 513 | 30 | package runtime metadata in package.json |  |  | 0.507 |
+| walker |  | 455 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.465 |
+| walker |  | 483 | 28 | Code::CodeKey { rung: Names, file: lib/suggestSimilar.js, decl: 0, sub: 0, line: 0 } |  |  | 0.465 |
+| walker |  | 513 | 30 | Json::Runtime { file: package.json } |  |  | 0.507 |
 | ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.550 |
-| walker |  | 671 | 158 | ts names index.js |  |  | 0.717 |
+| walker |  | 671 | 158 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
 | ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.762 |
-| walker |  | 713 | 42 | ts names lib/option.js |  |  | 0.762 |
-| walker |  | 746 | 33 | ts decl lib/option.js:268 |  |  | 0.763 |
-| walker |  | 789 | 43 | ts names lib/help.js |  |  | 0.763 |
-| walker |  | 809 | 20 | listing of '.github' |  |  | 0.763 |
-| walker |  | 819 | 10 | listing of '.github/workflows' |  |  | 0.764 |
-| walker |  | 869 | 50 | ts names lib/argument.js |  |  | 0.765 |
-| walker |  | 922 | 53 | ts names lib/command.js |  |  | 0.765 |
+| walker |  | 713 | 42 | Code::CodeKey { rung: Names, file: lib/option.js, decl: 0, sub: 0, line: 0 } |  |  | 0.762 |
+| walker |  | 746 | 33 | Code::CodeKey { rung: Decl, file: lib/option.js, decl: 18, sub: 0, line: 268 } |  |  | 0.763 |
+| walker |  | 789 | 43 | Code::CodeKey { rung: Names, file: lib/help.js, decl: 0, sub: 0, line: 0 } |  |  | 0.763 |
+| walker |  | 809 | 20 | Fs::DirListing { dir: .github } |  |  | 0.763 |
+| walker |  | 819 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.764 |
+| walker |  | 869 | 50 | Code::CodeKey { rung: Names, file: lib/argument.js, decl: 0, sub: 0, line: 0 } |  |  | 0.765 |
+| walker |  | 922 | 53 | Code::CodeKey { rung: Names, file: lib/command.js, decl: 0, sub: 0, line: 0 } |  |  | 0.765 |
 | ns | 928 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.683 |
-| walker |  | 975 | 53 | ts names lib/error.js |  |  | 0.684 |
-| walker |  | 991 | 16 | ts decl lib/error.js:25 |  |  | 0.684 |
-| walker |  | 1014 | 23 | ts decl lib/error.js:4 |  |  | 0.684 |
-| walker |  | 1049 | 35 | Readme.md section #2 |  |  | 0.684 |
+| walker |  | 975 | 53 | Code::CodeKey { rung: Names, file: lib/error.js, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
+| walker |  | 991 | 16 | Code::CodeKey { rung: Decl, file: lib/error.js, decl: 3, sub: 0, line: 25 } |  |  | 0.684 |
+| walker |  | 1014 | 23 | Code::CodeKey { rung: Decl, file: lib/error.js, decl: 1, sub: 0, line: 4 } |  |  | 0.684 |
+| walker |  | 1049 | 35 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.684 |
 | ns | 1213 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.607 |
-| walker |  | 1286 | 237 | listing of 'examples' |  |  | 0.614 |
+| walker |  | 1286 | 237 | Fs::DirListing { dir: examples } |  |  | 0.614 |
 | ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.597 |
-| walker |  | 1320 | 34 | ts doc lib/command.js:2752 |  |  | 0.597 |
-| walker |  | 1333 | 13 | ts names typings/esm.d.mts |  |  | 0.597 |
-| walker |  | 1350 | 17 | ts doc lib/error.js:4 |  |  | 0.597 |
+| walker |  | 1320 | 34 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 101, sub: 0, line: 2752 } |  |  | 0.597 |
+| walker |  | 1333 | 13 | Code::CodeKey { rung: Names, file: typings/esm.d.mts, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
+| walker |  | 1350 | 17 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 1, sub: 0, line: 4 } |  |  | 0.597 |
 | ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.563 |
-| walker |  | 1453 | 103 | ts decl lib/argument.js:3 |  |  | 0.565 |
-| walker |  | 1471 | 18 | ts doc lib/error.js:25 |  |  | 0.565 |
-| walker |  | 1481 | 10 | ts body lib/argument.js:48 |  |  | 0.565 |
-| walker |  | 1523 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.565 |
+| walker |  | 1453 | 103 | Code::CodeKey { rung: Decl, file: lib/argument.js, decl: 1, sub: 0, line: 3 } |  |  | 0.565 |
+| walker |  | 1471 | 18 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 3, sub: 0, line: 25 } |  |  | 0.565 |
+| walker |  | 1481 | 10 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 3, sub: 0, line: 48 } |  |  | 0.565 |
+| walker |  | 1523 | 42 | Markdown::HeadingsOutline { file: docs/help-in-depth.md } |  |  | 0.565 |
 | ns | 1524 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.550 |
 | ns | 1657 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.525 |
-| walker |  | 1672 | 149 | package identity metadata in package.json |  |  | 0.530 |
+| walker |  | 1672 | 149 | Json::IdentityMeta { file: package.json } |  |  | 0.530 |
 | ns | 1767 |  | 110 | Command roster 2/10 — command-arguments, help command, hooks, action (316-556) | 2.2 | 2.1 | 0.509 |
 | ns | 1851 |  | 84 | Command roster 3/10 — option creation and registration (585-805) | 2.3 | 2.2 | 0.495 |
-| walker |  | 1878 | 206 | ts decl lib/option.js:3 |  |  | 0.498 |
-| walker |  | 1894 | 16 | ts body lib/option.js:243 |  |  | 0.498 |
-| walker |  | 1912 | 18 | ts body lib/argument.js:119 |  |  | 0.498 |
-| walker |  | 1930 | 18 | ts body lib/argument.js:129 |  |  | 0.498 |
-| walker |  | 1949 | 19 | ts body lib/option.js:120 |  |  | 0.498 |
+| walker |  | 1878 | 206 | Code::CodeKey { rung: Decl, file: lib/option.js, decl: 1, sub: 0, line: 3 } |  |  | 0.498 |
+| walker |  | 1894 | 16 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 16, sub: 0, line: 243 } |  |  | 0.498 |
+| walker |  | 1912 | 18 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 8, sub: 0, line: 119 } |  |  | 0.498 |
+| walker |  | 1930 | 18 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 9, sub: 0, line: 129 } |  |  | 0.498 |
+| walker |  | 1949 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 7, sub: 0, line: 120 } |  |  | 0.498 |
 | ns | 1998 |  | 147 | Command roster 4/10 — parsing-behaviour toggles and the option-value store (826-983) | 2.4 | 2.3 | 0.479 |
 | ns | 2128 |  | 130 | Command roster 5/10 — parse entry points and stand-alone-executable dispatch (1001-1380) | 2.5 | 2.4 | 0.465 |
-| walker |  | 2208 | 259 | package scripts in package.json |  |  | 0.470 |
+| walker |  | 2208 | 259 | Json::Scripts { file: package.json } |  |  | 0.470 |
 | ns | 2284 |  | 156 | Command roster 6/10 — argument processing, hook chaining, lookup and conflict checks (1403-1723) | 2.6 | 2.5 | 0.455 |
 | ns | 2358 |  | 74 | Command roster 7/10 — parseOptions, opts, error, env/implied resolution (1748-1996) | 2.7 | 2.6 | 0.447 |
 | ns | 2443 |  | 85 | Command roster 8/10 — the complete set of user-facing error reporters (2034-2162) | 2.8 | 2.7 | 0.438 |
-| walker |  | 2488 | 280 | package entrypoints in package.json |  |  | 0.478 |
-| walker |  | 2557 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.478 |
+| walker |  | 2488 | 280 | Json::Entry { file: package.json } |  |  | 0.478 |
+| walker |  | 2557 | 69 | Markdown::HeadingsOutline { file: docs/options-in-depth.md } |  |  | 0.478 |
 | ns | 2595 |  | 152 | Command roster 9/10 — metadata and help-grouping accessors (2195-2437) | 2.9 | 2.8 | 0.461 |
-| walker |  | 2609 | 52 | ts body lib/help.js:740 |  |  | 0.461 |
-| walker |  | 2628 | 19 | ts body lib/argument.js:86 |  |  | 0.461 |
-| walker |  | 2647 | 19 | ts body lib/option.js:132 |  |  | 0.461 |
+| walker |  | 2609 | 52 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 43, sub: 0, line: 740 } |  |  | 0.461 |
+| walker |  | 2628 | 19 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 6, sub: 0, line: 86 } |  |  | 0.461 |
+| walker |  | 2647 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 8, sub: 0, line: 132 } |  |  | 0.461 |
 | ns | 2703 |  | 108 | Command roster 10/10 — help output and help-option API (2450-2686) | 2.10 | 2.9 | 0.451 |
 | ns | 2755 |  | 52 | lib/command.js module-level helpers and exports | 2.11 | 2.10 | 0.454 |
-| walker |  | 2774 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.454 |
-| walker |  | 2839 | 65 | ts doc lib/suggestSimilar.js:56 |  |  | 0.454 |
+| walker |  | 2774 | 127 | Markdown::HeadingsOutline { file: docs/zh-CN/可变参数的选项.md } |  |  | 0.454 |
+| walker |  | 2839 | 65 | Code::CodeKey { rung: Doc, file: lib/suggestSimilar.js, decl: 1, sub: 0, line: 56 } |  |  | 0.454 |
 | ns | 2851 |  | 96 | lib/option.js roster 1/2 — Option's declaration methods (3-156) | 2.12 |  | 0.477 |
 | ns | 2994 |  | 143 | lib/option.js roster 2/2 — remaining Option methods, DualOptions, module functions and exports | 2.13 | 2.12 | 0.491 |
 | ns | 3122 |  | 128 | lib/argument.js — complete roster (150-line file) | 2.14 |  | 0.510 |
@@ -79,103 +79,103 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | ns | 3396 |  | 43 | lib/suggestSimilar.js — complete symbol set | 2.16 |  | 0.496 |
 | ns | 3476 |  | 80 | lib/help.js roster 1/4 — visibility and ordering (12-139) | 2.17 |  | 0.489 |
 | ns | 3608 |  | 132 | lib/help.js roster 2/4 — term/description/width methods (162-372) | 2.18 | 2.17 | 0.478 |
-| walker |  | 3652 | 813 | listing of 'tests' |  |  | 0.487 |
-| walker |  | 3681 | 29 | listing of 'tests/fixtures-extensions' |  |  | 0.487 |
-| walker |  | 3774 | 93 | listing of 'tests/fixtures' |  |  | 0.489 |
+| walker |  | 3652 | 813 | Fs::DirListing { dir: tests } |  |  | 0.487 |
+| walker |  | 3681 | 29 | Fs::DirListing { dir: tests/fixtures-extensions } |  |  | 0.487 |
+| walker |  | 3774 | 93 | Fs::DirListing { dir: tests/fixtures } |  |  | 0.489 |
 | ns | 3804 |  | 196 | lib/help.js roster 3/4 — assembly plus the complete styleX hook set (403-606) | 2.19 | 2.18 | 0.474 |
-| walker |  | 3846 | 72 | ts doc lib/help.js:740 |  |  | 0.474 |
-| walker |  | 3865 | 19 | ts body lib/option.js:156 |  |  | 0.474 |
+| walker |  | 3846 | 72 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 43, sub: 0, line: 740 } |  |  | 0.474 |
+| walker |  | 3865 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 10, sub: 0, line: 156 } |  |  | 0.474 |
 | ns | 3874 |  | 70 | lib/help.js roster 4/4 — layout tail, stripColor, exports (618-747) | 2.20 | 2.19 | 0.473 |
 | ns | 3891 |  | 17 | typings/ listing | 3.1 |  | 0.477 |
-| walker |  | 3955 | 90 | Readme.md section #29 |  |  | 0.477 |
+| walker |  | 3955 | 90 | Markdown::Section { file: Readme.md, section_index: 29, keeps_default_concavity: false } |  |  | 0.477 |
 | ns | 4013 |  | 122 | typings/index.d.ts — every exported class declaration | 3.2 |  | 0.471 |
-| walker |  | 4118 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.471 |
-| walker |  | 4139 | 21 | ts doc lib/argument.js:56 |  |  | 0.471 |
+| walker |  | 4118 | 163 | Markdown::HeadingsOutline { file: docs/zh-CN/不再推荐使用的功能.md } |  |  | 0.471 |
+| walker |  | 4139 | 21 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 4, sub: 0, line: 56 } |  |  | 0.471 |
 | ns | 4258 |  | 245 | typings/index.d.ts — every exported interface, type alias, function and const | 3.3 | 3.2 | 0.460 |
 | ns | 4322 |  | 64 | typings/index.d.ts — Command's public instance properties | 3.4 |  | 0.456 |
 | ns | 4413 |  | 91 | Readme.md top-level section map (all H2 headings) | 3.5 |  | 0.452 |
 | ns | 4449 |  | 36 | docs/ listing | 3.6 |  | 0.461 |
 | ns | 4564 |  | 115 | docs/*.md top-level heading map | 3.7 |  | 0.466 |
 | ns | 4729 |  | 165 | Readme.md subsection map 1/2 — Options and Commands (H3/H4, lines 211-725) | 3.8 |  | 0.457 |
-| walker |  | 4941 | 802 | Readme.md section #1 |  |  | 0.457 |
+| walker |  | 4941 | 802 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.457 |
 | ns | 4992 |  | 263 | Readme.md subsection map 2/2 — Automated help, Bits and pieces, Support (H3, lines 787-1172) | 3.9 | 3.8 | 0.445 |
-| walker |  | 5212 | 271 | ts decl lib/help.js:12 |  |  | 0.486 |
-| walker |  | 5221 | 9 | ts body lib/help.js:182 |  |  | 0.486 |
-| walker |  | 5230 | 9 | ts body lib/help.js:193 |  |  | 0.486 |
+| walker |  | 5212 | 271 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 0, line: 12 } |  |  | 0.486 |
+| walker |  | 5221 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 10, sub: 0, line: 182 } |  |  | 0.486 |
+| walker |  | 5230 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 11, sub: 0, line: 193 } |  |  | 0.486 |
 | ns | 5241 |  | 249 | docs/ subsection map — the complete deprecation list plus options-in-depth subsections | 3.10 |  | 0.476 |
-| walker |  | 5251 | 21 | ts body lib/help.js:29 |  |  | 0.476 |
-| walker |  | 5254 | 3 | listing of 'tests/fixtures/another-dir' |  |  | 0.476 |
-| walker |  | 5257 | 3 | listing of 'tests/fixtures/other-dir' |  |  | 0.476 |
+| walker |  | 5251 | 21 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 3, sub: 0, line: 29 } |  |  | 0.476 |
+| walker |  | 5254 | 3 | Fs::DirListing { dir: tests/fixtures/another-dir } |  |  | 0.476 |
+| walker |  | 5257 | 3 | Fs::DirListing { dir: tests/fixtures/other-dir } |  |  | 0.476 |
 | ns | 5478 |  | 237 | examples/ listing (complete, 45 entries) | 3.11 |  | 0.517 |
-| walker |  | 5513 | 256 | ts decl lib/command.js:13 |  |  | 0.543 |
-| walker |  | 5523 | 10 | ts body lib/command.js:192 |  |  | 0.543 |
-| walker |  | 5535 | 12 | ts body lib/command.js:316 |  |  | 0.543 |
-| walker |  | 5550 | 15 | ts body lib/command.js:203 |  |  | 0.543 |
-| walker |  | 5574 | 24 | ts body lib/command.js:273 |  |  | 0.543 |
-| walker |  | 5607 | 33 | ts doc lib/command.js:121 |  |  | 0.543 |
+| walker |  | 5513 | 256 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 0, line: 13 } |  |  | 0.543 |
+| walker |  | 5523 | 10 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 6, sub: 0, line: 192 } |  |  | 0.543 |
+| walker |  | 5535 | 12 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 13, sub: 0, line: 316 } |  |  | 0.543 |
+| walker |  | 5550 | 15 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 7, sub: 0, line: 203 } |  |  | 0.543 |
+| walker |  | 5574 | 24 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 11, sub: 0, line: 273 } |  |  | 0.543 |
+| walker |  | 5607 | 33 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 4, sub: 0, line: 121 } |  |  | 0.543 |
 | ns | 5609 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.537 |
-| walker |  | 5626 | 19 | ts body lib/option.js:256 |  |  | 0.537 |
-| walker |  | 5670 | 44 | ts doc lib/error.js:30 |  |  | 0.537 |
-| walker |  | 5712 | 42 | ts doc lib/command.js:20 |  |  | 0.537 |
-| walker |  | 5736 | 24 | ts body lib/help.js:300 |  |  | 0.537 |
+| walker |  | 5626 | 19 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 17, sub: 0, line: 256 } |  |  | 0.537 |
+| walker |  | 5670 | 44 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 4, sub: 0, line: 30 } |  |  | 0.537 |
+| walker |  | 5712 | 42 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 2, sub: 0, line: 20 } |  |  | 0.537 |
+| walker |  | 5736 | 24 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 17, sub: 0, line: 300 } |  |  | 0.537 |
 | ns | 5748 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.531 |
-| walker |  | 5756 | 20 | ts body lib/option.js:65 |  |  | 0.531 |
+| walker |  | 5756 | 20 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 4, sub: 0, line: 65 } |  |  | 0.531 |
 | ns | 5869 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.526 |
-| walker |  | 6045 | 289 | ts decl lib/help.js:12 #1 |  |  | 0.559 |
-| walker |  | 6053 | 8 | ts body lib/help.js:545 |  |  | 0.559 |
-| walker |  | 6061 | 8 | ts body lib/help.js:575 |  |  | 0.559 |
-| walker |  | 6069 | 8 | ts body lib/help.js:597 |  |  | 0.559 |
-| walker |  | 6077 | 8 | ts body lib/help.js:600 |  |  | 0.559 |
-| walker |  | 6332 | 255 | ts decl lib/command.js:13 #1 |  |  | 0.586 |
-| walker |  | 6344 | 12 | ts body lib/command.js:585 |  |  | 0.586 |
-| walker |  | 6365 | 21 | ts body lib/command.js:788 |  |  | 0.586 |
-| walker |  | 6420 | 55 | ts body lib/argument.js:143 |  |  | 0.586 |
-| walker |  | 6428 | 8 | ts body lib/help.js:603 |  |  | 0.586 |
-| walker |  | 6633 | 205 | Readme.md section #6 |  |  | 0.586 |
+| walker |  | 6045 | 289 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 1, line: 12 } |  |  | 0.559 |
+| walker |  | 6053 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 25, sub: 0, line: 545 } |  |  | 0.559 |
+| walker |  | 6061 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 31, sub: 0, line: 575 } |  |  | 0.559 |
+| walker |  | 6069 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 35, sub: 0, line: 597 } |  |  | 0.559 |
+| walker |  | 6077 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 36, sub: 0, line: 600 } |  |  | 0.559 |
+| walker |  | 6332 | 255 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 1, line: 13 } |  |  | 0.586 |
+| walker |  | 6344 | 12 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 24, sub: 0, line: 585 } |  |  | 0.586 |
+| walker |  | 6365 | 21 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 30, sub: 0, line: 788 } |  |  | 0.586 |
+| walker |  | 6420 | 55 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 10, sub: 0, line: 143 } |  |  | 0.586 |
+| walker |  | 6428 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 37, sub: 0, line: 603 } |  |  | 0.586 |
+| walker |  | 6633 | 205 | Markdown::Section { file: Readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.586 |
 | ns | 6682 |  | 813 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.636 |
 | ns | 6810 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.644 |
-| walker |  | 6839 | 206 | Readme.md section #7 |  |  | 0.644 |
+| walker |  | 6839 | 206 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.644 |
 | ns | 6840 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.646 |
-| walker |  | 6862 | 23 | ts body lib/command.js:837 |  |  | 0.646 |
+| walker |  | 6862 | 23 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 33, sub: 0, line: 837 } |  |  | 0.646 |
 | ns | 6900 |  | 60 | Help's five data properties | 4.1 |  | 0.643 |
-| walker |  | 7057 | 195 | Readme.md section #15 |  |  | 0.644 |
+| walker |  | 7057 | 195 | Markdown::Section { file: Readme.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.644 |
 | ns | 7143 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.636 |
-| walker |  | 7319 | 262 | Readme.md section #16 |  |  | 0.636 |
-| walker |  | 7339 | 20 | ts body lib/option.js:230 |  |  | 0.636 |
+| walker |  | 7319 | 262 | Markdown::Section { file: Readme.md, section_index: 16, keeps_default_concavity: true } |  |  | 0.636 |
+| walker |  | 7339 | 20 | Code::CodeKey { rung: Body, file: lib/option.js, decl: 15, sub: 0, line: 230 } |  |  | 0.636 |
 | ns | 7538 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.623 |
-| walker |  | 7727 | 388 | ts names typings/index.d.ts |  |  | 0.647 |
-| walker |  | 7742 | 15 | ts decl typings/index.d.ts:31 |  |  | 0.647 |
-| walker |  | 7757 | 15 | ts decl typings/index.d.ts:1100 |  |  | 0.647 |
-| walker |  | 7778 | 21 | ts decl typings/index.d.ts:342 |  |  | 0.647 |
-| walker |  | 7801 | 23 | ts decl typings/index.d.ts:12 |  |  | 0.647 |
-| walker |  | 7825 | 24 | ts decl typings/index.d.ts:1104 |  |  | 0.647 |
-| walker |  | 7854 | 29 | ts decl typings/index.d.ts:345 |  |  | 0.648 |
-| walker |  | 7890 | 36 | ts decl typings/index.d.ts:370 |  |  | 0.650 |
+| walker |  | 7727 | 388 | Code::CodeKey { rung: Names, file: typings/index.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.647 |
+| walker |  | 7742 | 15 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 4, sub: 0, line: 31 } |  |  | 0.647 |
+| walker |  | 7757 | 15 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 171, sub: 0, line: 1100 } |  |  | 0.647 |
+| walker |  | 7778 | 21 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 72, sub: 0, line: 342 } |  |  | 0.647 |
+| walker |  | 7801 | 23 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.647 |
+| walker |  | 7825 | 24 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 172, sub: 0, line: 1104 } |  |  | 0.647 |
+| walker |  | 7854 | 29 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 73, sub: 0, line: 345 } |  |  | 0.648 |
+| walker |  | 7890 | 36 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 78, sub: 0, line: 370 } |  |  | 0.650 |
 | ns | 7892 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.638 |
-| walker |  | 7928 | 38 | ts decl typings/index.d.ts:349 |  |  | 0.640 |
-| walker |  | 7981 | 53 | ts decl typings/index.d.ts:1094 |  |  | 0.645 |
-| walker |  | 8043 | 62 | ts decl typings/index.d.ts:16 |  |  | 0.645 |
+| walker |  | 7928 | 38 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 74, sub: 0, line: 349 } |  |  | 0.640 |
+| walker |  | 7981 | 53 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 170, sub: 0, line: 1094 } |  |  | 0.645 |
+| walker |  | 8043 | 62 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 2, sub: 0, line: 16 } |  |  | 0.645 |
 | ns | 8051 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.640 |
-| walker |  | 8106 | 63 | ts decl typings/index.d.ts:40 |  |  | 0.646 |
-| walker |  | 8237 | 131 | ts decl typings/index.d.ts:354 |  |  | 0.655 |
-| walker |  | 8245 | 8 | ts body lib/help.js:606 |  |  | 0.655 |
+| walker |  | 8106 | 63 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 6, sub: 0, line: 40 } |  |  | 0.646 |
+| walker |  | 8237 | 131 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 75, sub: 0, line: 354 } |  |  | 0.655 |
+| walker |  | 8245 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 38, sub: 0, line: 606 } |  |  | 0.655 |
 | ns | 8270 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.649 |
-| walker |  | 8436 | 191 | Readme.md section #30 |  |  | 0.649 |
+| walker |  | 8436 | 191 | Markdown::Section { file: Readme.md, section_index: 30, keeps_default_concavity: false } |  |  | 0.649 |
 | ns | 8482 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.644 |
-| walker |  | 8669 | 233 | Readme.md section #31 |  |  | 0.644 |
+| walker |  | 8669 | 233 | Markdown::Section { file: Readme.md, section_index: 31, keeps_default_concavity: true } |  |  | 0.644 |
 | ns | 8764 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.632 |
-| walker |  | 8879 | 210 | docs/help-in-depth.md section #0 |  |  | 0.632 |
-| walker |  | 8903 | 24 | ts body lib/command.js:826 |  |  | 0.632 |
-| walker |  | 8964 | 61 | ts doc lib/argument.js:143 |  |  | 0.632 |
+| walker |  | 8879 | 210 | Markdown::Section { file: docs/help-in-depth.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.632 |
+| walker |  | 8903 | 24 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 32, sub: 0, line: 826 } |  |  | 0.632 |
+| walker |  | 8964 | 61 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 10, sub: 0, line: 143 } |  |  | 0.632 |
 | ns | 9094 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.623 |
-| walker |  | 9182 | 218 | Readme.md section #23 |  |  | 0.624 |
+| walker |  | 9182 | 218 | Markdown::Section { file: Readme.md, section_index: 23, keeps_default_concavity: false } |  |  | 0.624 |
 | ns | 9210 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.620 |
 | ns | 9471 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.624 |
-| walker |  | 9482 | 300 | Readme.md section #24 |  |  | 0.624 |
-| walker |  | 9539 | 57 | ts body lib/error.js:30 |  |  | 0.628 |
+| walker |  | 9482 | 300 | Markdown::Section { file: Readme.md, section_index: 24, keeps_default_concavity: true } |  |  | 0.624 |
+| walker |  | 9539 | 57 | Code::CodeKey { rung: Body, file: lib/error.js, decl: 4, sub: 0, line: 30 } |  |  | 0.628 |
 | ns | 9673 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.622 |
-| walker |  | 9734 | 195 | ts decl typings/index.d.ts:48 |  |  | 0.622 |
+| walker |  | 9734 | 195 | Code::CodeKey { rung: Decl, file: typings/index.d.ts, decl: 7, sub: 0, line: 48 } |  |  | 0.622 |
 | ns | 9848 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.626 |
 | ns | 9940 |  | 92 | jest.config.js | 5.4 |  | 0.623 |
-| walker |  | 9957 | 223 | docs/options-in-depth.md section #0 |  |  | 0.623 |
-| walker |  | 9978 | 21 | ts doc lib/option.js:165 |  |  | 0.623 |
+| walker |  | 9957 | 223 | Markdown::Section { file: docs/options-in-depth.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.623 |
+| walker |  | 9978 | 21 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 11, sub: 0, line: 165 } |  |  | 0.623 |

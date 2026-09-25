@@ -1,6 +1,6 @@
 //! Walker trait + shared context.
 //!
-//! A walker emits [`Batch<K>`] units containing the key, optional
+//! A walker emits [`Batch`] units containing the key, optional
 //! predecessor edge, fully-built `BatchContent`, and a scalar `value`. The
 //! scheduler ranks emitted batches by `value / cost^k`, gates by
 //! predecessor scheduling, and applies content to the rendered tree.
@@ -19,7 +19,7 @@ use std::sync::Arc;
 
 use tree_sitter::{Language, Node, Tree};
 
-use crate::batch::{Batch, BatchKey, FsKey, WalkerKey};
+use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::fs_util::DirFilter;
 use crate::render::{Source, SourceCache};
@@ -68,18 +68,16 @@ pub(super) fn budget_chunk_ranges(
     ranges
 }
 
-/// Walker contract — `Key` is walker-private so the scheduler/render
-/// code stays generic over walkers.
+/// Walker contract. [`FsWalker`] is the production walker; tests drive
+/// the scheduler with stub walkers.
 pub trait Walker {
-    type Key: WalkerKey;
-
     /// Initial batches before any scheduling decision (typically the
     /// root FS listing).
-    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch>;
 
     /// Called when a batch is scheduled — returns newly-discovered
     /// batches.
-    fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
+    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Batch>;
 }
 
 /// Top-level walker: FS listings drive discovery; per-language modules
@@ -88,13 +86,11 @@ pub trait Walker {
 pub struct FsWalker;
 
 impl Walker for FsWalker {
-    type Key = BatchKey;
-
-    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch> {
         fs::seed(ctx)
     }
 
-    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Batch> {
         let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
             return Vec::new();
         };

@@ -83,7 +83,7 @@ impl JsonState {
     }
 }
 
-pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     // Keep admission extension-bounded: these are explicit JSON-family
     // formats, not files guessed to be JSON from their contents.
     let json_family_files =
@@ -110,7 +110,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
+fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch> {
     let content = gated_whole_file_content(file, ctx, WHOLE_BYTE_GATE, WHOLE_LINE_CAP)?;
     Some(Batch {
         key: JsonKey::Whole {
@@ -130,7 +130,7 @@ fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
 /// chain because the scheduler only permits line overlap along predecessor
 /// ancestry. The `devDependencies` / `peerDependencies` rosters are left
 /// for an explicit read.
-fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
+fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     let Some((source, tree)) = parse_json(ctx, file) else {
         return;
     };

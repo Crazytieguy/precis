@@ -42,7 +42,7 @@ fn listing_key() -> BatchKey {
     BatchKey::Fs(FsKey::DirListing { dir: stub_dir() })
 }
 
-fn fs_listing_batch(value: f64, child: &str) -> Batch<BatchKey> {
+fn fs_listing_batch(value: f64, child: &str) -> Batch {
     Batch {
         key: listing_key(),
         predecessor: None,
@@ -77,12 +77,10 @@ fn scheduler_invariants_override_via_predecessor_chain() {
     // that overrides line 1 with its Full version.
     struct OverrideChain;
     impl Walker for OverrideChain {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
             vec![fs_listing_batch(900.0, "synthetic.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 let pub_item_key = code_key(Rung::Decl, "synthetic.rs");
                 vec![
@@ -148,12 +146,10 @@ fn scheduler_invariants_override_via_predecessor_chain() {
 fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     struct OneEntry;
     impl Walker for OneEntry {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
             vec![fs_listing_batch(900.0, "synthetic.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 vec![Batch {
                     key: code_key(Rung::Decl, "synthetic.rs"),
@@ -193,9 +189,7 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
 struct RootListing(PathBuf);
 
 impl Walker for RootListing {
-    type Key = BatchKey;
-
-    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch> {
         let dir = self.0.clone();
         vec![Batch {
             key: BatchKey::Fs(FsKey::DirListing { dir: dir.clone() }),
@@ -215,7 +209,7 @@ impl Walker for RootListing {
             value: 900.0,
         }]
     }
-    fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
         Vec::new()
     }
 }
@@ -349,12 +343,10 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
     // line. Release compiles out the assert; this test only asserts debug.
     struct OverlappingWalker;
     impl Walker for OverlappingWalker {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
             vec![fs_listing_batch(900.0, "f.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 let line_content = || BatchContent::Lines {
                     spans: single_span(stub_file("f.rs"), 1, 1, Render::Full),
@@ -410,9 +402,7 @@ fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
 
     struct OverlapWalker;
     impl Walker for OverlapWalker {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
             vec![
                 Batch {
                     key: key_a(),
@@ -442,7 +432,7 @@ fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
             ]
         }
 
-        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
             Vec::new()
         }
     }
@@ -462,12 +452,10 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
     // order: doc first, its `Decl` predecessor second).
     struct DependentFirst;
     impl Walker for DependentFirst {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
             vec![fs_listing_batch(900.0, "synthetic.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 let pub_item_key = code_key(Rung::Decl, "synthetic.rs");
                 vec![

@@ -31,7 +31,7 @@ pub(super) fn emit_file(
     file: &SourceFile,
     model: FileModel,
     ctx: &WalkCtx,
-) -> Vec<Batch<BatchKey>> {
+) -> Vec<Batch> {
     let model = normalize(model, file);
     let mut emitter = Emitter {
         file,
@@ -68,7 +68,7 @@ struct Emitter<'a> {
     file: &'a SourceFile,
     file_prior: f64,
     ledger: Ledger,
-    out: Vec<Batch<BatchKey>>,
+    out: Vec<Batch>,
 }
 
 impl Emitter<'_> {

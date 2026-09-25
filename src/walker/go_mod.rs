@@ -12,7 +12,7 @@ use super::{FileLines, WalkCtx, file_depth_factor, fs::list_dir, single_file_lin
 
 const GOMOD_WHOLE_LINE_CAP: usize = 72;
 
-pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for (name, kind) in list_dir(dir, ctx.dir_filter()) {
         if !matches!(kind, crate::fs_util::EntryKind::File) {

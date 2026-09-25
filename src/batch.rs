@@ -29,8 +29,8 @@ impl BatchId {
     }
 }
 
-/// Default walker-key sum. Scheduler/render code depends on the
-/// [`WalkerKey`] trait, not this enum.
+/// Walker-key sum: one variant per walker, each wrapping that walker's
+/// own key.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum BatchKey {
     Fs(FsKey),
@@ -49,32 +49,18 @@ pub enum FsKey {
     DirListing { dir: PathBuf },
 }
 
-/// Generates the `From<XKey> for BatchKey` forwarders and the
-/// `WalkerKey for BatchKey` dispatch from a single variant list. Each
-/// inner key implements [`InnerKey`] for the dispatch body.
-macro_rules! impl_batchkey {
+/// `From<XKey> for BatchKey` for every per-walker key.
+macro_rules! impl_from_walker_keys {
     ($($variant:ident => $key:ident),* $(,)?) => {
         $(
             impl From<$key> for BatchKey {
                 fn from(k: $key) -> Self { BatchKey::$variant(k) }
             }
         )*
-
-        impl WalkerKey for BatchKey {
-            fn describe(&self, fixture_root: &Path) -> String {
-                match self { $(BatchKey::$variant(k) => InnerKey::describe(k, fixture_root),)* }
-            }
-            fn concavity_exponent(&self) -> f64 {
-                match self { $(BatchKey::$variant(k) => InnerKey::concavity_exponent(k),)* }
-            }
-            fn is_depth_follow_up(&self) -> bool {
-                match self { $(BatchKey::$variant(k) => InnerKey::is_depth_follow_up(k),)* }
-            }
-        }
     };
 }
 
-impl_batchkey! {
+impl_from_walker_keys! {
     Fs => FsKey,
     Markdown => MarkdownKey,
     Toml => TomlKey,
@@ -83,22 +69,6 @@ impl_batchkey! {
     Prisma => PrismaKey,
     GoMod => GoModKey,
     Code => CodeKey,
-}
-
-/// Per-walker contributions to the [`WalkerKey`] dispatch on
-/// [`BatchKey`]. Defaults match [`WalkerKey`]'s defaults so walkers
-/// only implement the methods they override.
-trait InnerKey {
-    fn describe(&self, fixture_root: &Path) -> String;
-    fn concavity_exponent(&self) -> f64 {
-        crate::value::DEFAULT_CONCAVITY_EXPONENT
-    }
-    /// True for depth follow-up batches — doc/body/member refinements
-    /// of an already-delivered surface. Drives the scheduler's
-    /// breadth-pressure penalty; surfaces never qualify.
-    fn is_depth_follow_up(&self) -> bool {
-        false
-    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -213,7 +183,7 @@ pub struct CodeKey {
     /// Chunk index within the part; 0 is the head chunk.
     pub sub: u32,
     /// The declaration's first source row (1-based), shown by
-    /// [`WalkerKey::describe`]. `decl` already determines it, so it never
+    /// [`BatchKey::describe`]. `decl` already determines it, so it never
     /// decides identity or order; a container and its first member can
     /// share it. 0 for the file-level rungs.
     pub line: usize,
@@ -256,213 +226,55 @@ pub enum TomlKey {
     Config { file: PathBuf },
 }
 
-/// Opaque walker-key contract — scheduler + renderer depend on this
-/// trait so a new walker doesn't touch them.
-pub trait WalkerKey:
-    Clone
-    + std::fmt::Debug
-    + std::hash::Hash
-    + Eq
-    + Ord
-    + PartialEq
-    + PartialOrd
-    + Send
-    + Sync
-    + 'static
-{
-    /// One-line human descriptor for snapshots and divergence reports.
-    /// `fixture_root` is stripped from embedded paths.
-    fn describe(&self, fixture_root: &Path) -> String;
-
-    /// Per-key cost concavity for the scheduling ratio
-    /// (`value / cost^exponent`). Raise on prose-shaped batches.
-    fn concavity_exponent(&self) -> f64 {
-        crate::value::DEFAULT_CONCAVITY_EXPONENT
-    }
-
-    /// True for depth follow-up batches — doc/body/member refinements
-    /// of an already-delivered surface. Drives the scheduler's
-    /// breadth-pressure penalty.
-    fn is_depth_follow_up(&self) -> bool {
-        false
-    }
-}
-
-impl InnerKey for FsKey {
-    fn describe(&self, root: &Path) -> String {
-        let FsKey::DirListing { dir } = self;
-        let shown = display_path(dir, root);
-        if shown.is_empty() {
-            "listing of '.'".to_string()
-        } else {
-            format!("listing of '{shown}'")
-        }
-    }
-}
-
-impl InnerKey for MarkdownKey {
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            MarkdownKey::ReadmeHeadline { file } => describe_in("README headline", file, root),
-            MarkdownKey::Prelude { file } => describe_in("README prelude", file, root),
-            MarkdownKey::HeadingsOutline { file } => describe_in("headings outline", file, root),
-            MarkdownKey::Section {
-                file,
-                section_index,
-                ..
-            } => format!("{} section #{section_index}", display_path(file, root)),
+impl BatchKey {
+    /// One-line descriptor for divergence reports: the key's `Debug` form
+    /// with `fixture_root` stripped from its paths, e.g.
+    /// `Markdown::Section { file: README.md, section_index: 2, .. }`.
+    pub fn describe(&self, fixture_root: &Path) -> String {
+        let root = format!("{fixture_root:?}");
+        let root = root.trim_matches('"');
+        let debug = format!("{self:?}")
+            .replace(&format!("{root}/"), "")
+            .replace(root, ".")
+            .replace('"', "");
+        match debug.split_once('(') {
+            Some((walker, inner)) => {
+                format!("{walker}::{}", inner.strip_suffix(')').unwrap_or(inner))
+            }
+            None => debug,
         }
     }
 
-    /// `Section` at index ≥1 steepens to `0.45` to demote prose body
-    /// against structural anchors of the same value; index 0 keeps the
-    /// default since READMEs often lead with their canonical claim.
-    /// See `keeps_default_concavity` for the exemptions.
-    fn concavity_exponent(&self) -> f64 {
+    /// Cost concavity for the scheduling ratio (`value / cost^exponent`).
+    /// `0.45` for prose-shaped batches whose cost grows without
+    /// proportional structural value: markdown sections past the first
+    /// (index 0 is where READMEs lead with their canonical claim; see
+    /// `keeps_default_concavity` for the exemptions) and verbatim JSON
+    /// config dumps.
+    pub fn concavity_exponent(&self) -> f64 {
         match self {
-            MarkdownKey::Section {
+            BatchKey::Markdown(MarkdownKey::Section {
                 section_index,
                 keeps_default_concavity,
                 ..
-            } if *section_index >= 1 && !keeps_default_concavity => 0.45,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-}
-
-impl InnerKey for TomlKey {
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            TomlKey::Identity { file } => describe_in("[package]", file, root),
-            TomlKey::PackageMetadata { file } => describe_in("package metadata", file, root),
-            TomlKey::Operational { file } => {
-                describe_in("[features] / entry-point scripts", file, root)
-            }
-            TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
-            TomlKey::Config { file } => describe_in("manifest config", file, root),
-        }
-    }
-}
-
-impl InnerKey for JsonKey {
-    /// `Whole` steepens to `0.45` — verbatim JSON config bodies grow
-    /// in cost without proportional structural value. Other variants
-    /// (package.json sections) stay at the default; they're short and
-    /// structural.
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            JsonKey::Whole { .. } => 0.45,
+            }) if *section_index >= 1 && !keeps_default_concavity => 0.45,
+            BatchKey::Json(JsonKey::Whole { .. }) => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            JsonKey::Identity { file } => describe_in("package identity", file, root),
-            JsonKey::IdentityMeta { file } => describe_in("package identity metadata", file, root),
-            JsonKey::Entry { file } => describe_in("package entrypoints", file, root),
-            JsonKey::Runtime { file } => describe_in("package runtime metadata", file, root),
-            JsonKey::Scripts { file } => describe_in("package scripts", file, root),
-            JsonKey::Dependencies { file } => {
-                describe_in("package runtime dependencies", file, root)
-            }
-            JsonKey::Whole { file } => format!("json config {}", display_path(file, root)),
-        }
+    /// True for depth follow-up batches — doc/body refinements of an
+    /// already-delivered surface. Drives the scheduler's breadth-pressure
+    /// penalty; surfaces never qualify.
+    pub fn is_depth_follow_up(&self) -> bool {
+        matches!(
+            self,
+            BatchKey::Code(CodeKey {
+                rung: Rung::Doc | Rung::Body,
+                ..
+            })
+        )
     }
-}
-
-impl InnerKey for PlaintextKey {
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            PlaintextKey::Whole { file } => {
-                format!("plaintext config {}", display_path(file, root))
-            }
-            PlaintextKey::DeclSurface { file } => {
-                format!("declaration surface of {}", display_path(file, root))
-            }
-        }
-    }
-}
-
-impl InnerKey for PrismaKey {
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            PrismaKey::Toc { file } => describe_in("Prisma schema TOC", file, root),
-            PrismaKey::Decl { file, start_line } => {
-                describe_at("Prisma decl", file, *start_line, root)
-            }
-            PrismaKey::DeclTail {
-                file,
-                start_line,
-                tail_start_line,
-            } => describe_at_body(
-                "Prisma decl tail",
-                file,
-                *start_line,
-                *tail_start_line,
-                root,
-            ),
-        }
-    }
-}
-
-impl InnerKey for GoModKey {
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            GoModKey::Identity { file } => describe_in("go module identity", file, root),
-            GoModKey::File { file } => format!("go module file {}", display_path(file, root)),
-        }
-    }
-}
-
-impl InnerKey for CodeKey {
-    fn is_depth_follow_up(&self) -> bool {
-        matches!(self.rung, Rung::Doc | Rung::Body)
-    }
-
-    /// `"<lang> <rung> <path>[:<line>][ #<sub>]"`, e.g. `go decl pkg/a.go:42`
-    /// or `rust names src/lib.rs #1`.
-    fn describe(&self, root: &Path) -> String {
-        let language = crate::walker::code::Language::from_path(&self.file)
-            .map_or("code", |language| language.label());
-        let rung = match self.rung {
-            Rung::ModuleDoc => "module doc",
-            Rung::Names => "names",
-            Rung::Decl => "decl",
-            Rung::Doc => "doc",
-            Rung::Body => "body",
-        };
-        let mut out = format!("{language} {rung} {}", display_path(&self.file, root));
-        if matches!(self.rung, Rung::Decl | Rung::Doc | Rung::Body) {
-            out.push_str(&format!(":{}", self.line));
-        }
-        if self.sub > 0 {
-            out.push_str(&format!(" #{}", self.sub));
-        }
-        out
-    }
-}
-
-fn display_path(path: &Path, fixture_root: &Path) -> String {
-    path.strip_prefix(fixture_root)
-        .unwrap_or(path)
-        .display()
-        .to_string()
-}
-
-/// `"<label> in <path>"`.
-fn describe_in(label: &str, file: &Path, root: &Path) -> String {
-    format!("{label} in {}", display_path(file, root))
-}
-
-/// `"<label> at <path>:<line>"`.
-fn describe_at(label: &str, file: &Path, line: usize, root: &Path) -> String {
-    format!("{label} at {}:{line}", display_path(file, root))
-}
-
-/// `"<label> at <path>:<line> body <body>"`.
-fn describe_at_body(label: &str, file: &Path, line: usize, body: usize, root: &Path) -> String {
-    format!("{label} at {}:{line} body {body}", display_path(file, root))
 }
 
 /// A walker-emitted scheduling unit. Carries the walker's key (so other
@@ -475,12 +287,12 @@ fn describe_at_body(label: &str, file: &Path, line: usize, body: usize, root: &P
 /// scale (calibration across walkers is a divergence-reports problem,
 /// not a code-level invariant).
 #[derive(Debug, Clone)]
-pub struct Batch<K: WalkerKey> {
-    pub key: K,
+pub struct Batch {
+    pub key: BatchKey,
     /// Optional predecessor edge. The batch stays pending until its
     /// predecessor is scheduled; line overlap with earlier batches is only
     /// permitted along this chain (see [`crate::content`] / `render`).
-    pub predecessor: Option<K>,
+    pub predecessor: Option<BatchKey>,
     pub content: BatchContent,
     pub value: f64,
 }

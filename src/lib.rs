@@ -15,7 +15,7 @@ pub mod tokenizer;
 pub mod value;
 pub mod walker;
 
-pub use batch::{Batch, BatchKey, WalkerKey};
+pub use batch::{Batch, BatchKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
 pub use fs_util::{DirFilter, EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache, char_units};
@@ -69,7 +69,7 @@ pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
         .scheduled
         .into_iter()
         .map(|b| ScheduledBatch {
-            descriptor: WalkerKey::describe(&b.key, &root),
+            descriptor: b.key.describe(&root),
             cost_tokens: b.cost.tokens,
             cum_tokens: b.cum_tokens,
             content: b.content,

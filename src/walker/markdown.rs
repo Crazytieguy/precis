@@ -87,7 +87,7 @@ const HEADLINE_OVERSIZE_LINE_CHARS: usize = 320;
 /// unsplittable early-budget lump.
 const PRELUDE_MAX_BYTES: usize = 2_500;
 
-pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let md_files = files_with_extension(dir, "md", ctx);
     let sibling_md_count = md_files.len();
     let mut out = Vec::new();
@@ -226,7 +226,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 /// `section_predecessor`, except oversize tails, which deliver in source
 /// order behind the chunk before them.
 fn push_sections(
-    out: &mut Vec<Batch<BatchKey>>,
+    out: &mut Vec<Batch>,
     file: &Path,
     source: &Source,
     ranges: &[SectionRange],
@@ -2619,7 +2619,7 @@ mod tests {
         // Every nav batch either walk emitted for `file`, keyed by kind.
         // Gathered rather than looked up by key so the assertions cover
         // whichever of the three this README shape produces.
-        let nav_values = |batches: &[Batch<BatchKey>], file: &Path| {
+        let nav_values = |batches: &[Batch], file: &Path| {
             let mut found: Vec<(&'static str, f64)> = batches
                 .iter()
                 .filter_map(|b| {

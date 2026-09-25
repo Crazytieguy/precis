@@ -2,84 +2,84 @@ Score(3000)=0.792 I=0.940 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 29 | 29 | listing of '.' |  |  | 0.000 |
+| walker |  | 29 | 29 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 32 |  | 32 | README title and one-line tagline | 1.1 |  | 0.000 |
-| walker |  | 33 | 4 | listing of 'src' |  |  | 0.000 |
+| walker |  | 33 | 4 | Fs::DirListing { dir: src } |  |  | 0.000 |
 | ns | 61 |  | 29 | Complete root directory listing | 1.2 |  | 0.572 |
-| walker |  | 97 | 64 | package identity in package.json |  |  | 0.577 |
-| walker |  | 107 | 10 | listing of '.github' |  |  | 0.585 |
-| walker |  | 116 | 9 | listing of '.github/workflows' |  |  | 0.600 |
-| walker |  | 128 | 12 | listing of 'test' |  |  | 0.622 |
+| walker |  | 97 | 64 | Json::Identity { file: package.json } |  |  | 0.577 |
+| walker |  | 107 | 10 | Fs::DirListing { dir: .github } |  |  | 0.585 |
+| walker |  | 116 | 9 | Fs::DirListing { dir: .github/workflows } |  |  | 0.600 |
+| walker |  | 128 | 12 | Fs::DirListing { dir: test } |  |  | 0.622 |
 | ns | 150 |  | 89 | Every exported name in src/index.ts (names only) | 1.3 |  | 0.457 |
 | ns | 266 |  | 116 | README feature bullets | 1.4 |  | 0.400 |
-| walker |  | 288 | 160 | ts names src/index.ts |  |  | 0.616 |
+| walker |  | 288 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |
 | ns | 295 |  | 29 | README: runtime support and dependency claim | 1.5 |  | 0.602 |
-| walker |  | 302 | 14 | ts decl src/index.ts:13 |  |  | 0.604 |
-| walker |  | 325 | 23 | ts decl src/index.ts:46 |  |  | 0.606 |
+| walker |  | 302 | 14 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 5, sub: 0, line: 13 } |  |  | 0.604 |
+| walker |  | 325 | 23 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.606 |
 | ns | 330 |  | 35 | Complete listings of src/, test/, .github/ and .github/workflows/ | 1.6 |  | 0.619 |
-| walker |  | 353 | 28 | ts decl src/index.ts:6 |  |  | 0.623 |
-| walker |  | 388 | 35 | ts decl src/index.ts:18 |  |  | 0.630 |
+| walker |  | 353 | 28 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 3, sub: 0, line: 6 } |  |  | 0.623 |
+| walker |  | 388 | 35 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 6, sub: 0, line: 18 } |  |  | 0.630 |
 | ns | 397 |  | 67 | All seven README `##` section headings | 1.7 |  | 0.561 |
 | ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.502 |
-| walker |  | 585 | 197 | ts decl src/index.ts:23 |  |  | 0.523 |
+| walker |  | 585 | 197 | Code::CodeKey { rung: Decl, file: src/index.ts, decl: 7, sub: 0, line: 23 } |  |  | 0.523 |
 | ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.479 |
-| walker |  | 772 | 187 | README headline in README.md |  |  | 0.757 |
-| walker |  | 818 | 46 | ts doc src/index.ts:46 |  |  | 0.762 |
+| walker |  | 772 | 187 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.757 |
+| walker |  | 818 | 46 | Code::CodeKey { rung: Doc, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.762 |
 | ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.718 |
-| walker |  | 962 | 144 | headings outline in README.md |  |  | 0.788 |
-| walker |  | 993 | 31 | README.md section #10 |  |  | 0.788 |
+| walker |  | 962 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.788 |
+| walker |  | 993 | 31 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.788 |
 | ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.809 |
-| walker |  | 1108 | 115 | package identity metadata in package.json |  |  | 0.812 |
+| walker |  | 1108 | 115 | Json::IdentityMeta { file: package.json } |  |  | 0.812 |
 | ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.818 |
-| walker |  | 1191 | 83 | README.md section #1 |  |  | 0.818 |
+| walker |  | 1191 | 83 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.818 |
 | ns | 1332 |  | 222 | README Usage code block | 2.3 |  | 0.731 |
-| walker |  | 1403 | 212 | package entrypoints in package.json |  |  | 0.830 |
+| walker |  | 1403 | 212 | Json::Entry { file: package.json } |  |  | 0.830 |
 | ns | 1533 |  | 201 | README `### Typescript` section: strict mode and inference example | 2.4 |  | 0.768 |
-| walker |  | 1636 | 233 | package scripts in package.json |  |  | 0.777 |
+| walker |  | 1636 | 233 | Json::Scripts { file: package.json } |  |  | 0.777 |
 | ns | 1638 |  | 105 | README: annotating a variable with the exported `Emitter` type | 2.5 |  | 0.741 |
-| walker |  | 1747 | 111 | README.md section #5 |  |  | 0.742 |
+| walker |  | 1747 | 111 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.742 |
 | ns | 1913 |  | 275 | README Install section body | 2.6 |  | 0.685 |
-| walker |  | 1977 | 230 | README.md section #3 |  |  | 0.774 |
+| walker |  | 1977 | 230 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.774 |
 | ns | 2007 |  | 94 | Factory body preamble: `GenericEventHandler`, default Map, `all` member | 3.1 |  | 0.748 |
 | ns | 2208 |  | 201 | `on()` implementation with JSDoc | 3.2 | 3.1 | 0.718 |
-| walker |  | 2275 | 298 | README.md section #4 |  |  | 0.821 |
+| walker |  | 2275 | 298 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.821 |
 | ns | 2448 |  | 240 | `off()` implementation with JSDoc | 3.3 |  | 0.783 |
-| walker |  | 2555 | 280 | README.md section #2 |  |  | 0.853 |
+| walker |  | 2555 | 280 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.853 |
 | ns | 2585 |  | 137 | `emit()` JSDoc, including the wildcard-ordering contract | 3.4 |  | 0.831 |
-| walker |  | 2767 | 212 | README.md section #6 |  |  | 0.833 |
+| walker |  | 2767 | 212 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.833 |
 | ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.792 |
 | ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.798 |
-| walker |  | 3069 | 302 | README.md section #7 |  |  | 0.800 |
+| walker |  | 3069 | 302 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.800 |
 | ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.775 |
-| walker |  | 3232 | 163 | README.md section #8 |  |  | 0.776 |
+| walker |  | 3232 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.776 |
 | ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.758 |
 | ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.722 |
 | ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.733 |
 | ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.725 |
-| walker |  | 4130 | 898 | ts body src/index.ts:46 |  |  | 0.871 |
+| walker |  | 4130 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.871 |
 | ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.836 |
-| walker |  | 4279 | 149 | json config tsconfig.json |  |  | 0.863 |
+| walker |  | 4279 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.863 |
 | ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.836 |
 | ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.813 |
-| walker |  | 4574 | 295 | README.md section #9 |  |  | 0.815 |
-| walker |  | 4694 | 120 | plaintext config .github/workflows/compressed-size.yml |  |  | 0.816 |
+| walker |  | 4574 | 295 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.815 |
+| walker |  | 4694 | 120 | Plaintext::Whole { file: .github/workflows/compressed-size.yml } |  |  | 0.816 |
 | ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.795 |
-| walker |  | 4911 | 217 | plaintext config .github/workflows/main.yml |  |  | 0.835 |
-| walker |  | 4930 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.835 |
+| walker |  | 4911 | 217 | Plaintext::Whole { file: .github/workflows/main.yml } |  |  | 0.835 |
+| walker |  | 4930 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.835 |
 | ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.815 |
-| walker |  | 4946 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.815 |
-| walker |  | 5020 | 74 | plaintext config .gitignore |  |  | 0.816 |
-| walker |  | 5048 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.816 |
+| walker |  | 4946 | 16 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.815 |
+| walker |  | 5020 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.816 |
+| walker |  | 5048 | 28 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.816 |
 | ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.797 |
-| walker |  | 5158 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.797 |
+| walker |  | 5158 | 110 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.797 |
 | ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.781 |
-| walker |  | 5323 | 165 | plaintext config .editorconfig |  |  | 0.782 |
+| walker |  | 5323 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.782 |
 | ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.760 |
-| walker |  | 5632 | 309 | plaintext config LICENSE |  |  | 0.760 |
+| walker |  | 5632 | 309 | Plaintext::Whole { file: LICENSE } |  |  | 0.760 |
 | ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.742 |
 | ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.731 |
 | ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.709 |
-| walker |  | 6132 | 500 | plaintext config .eslintrc |  |  | 0.713 |
+| walker |  | 6132 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.713 |
 | ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.698 |
 | ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.680 |
 | ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.670 |

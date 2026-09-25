@@ -36,7 +36,7 @@
 
 use std::path::Path;
 
-use crate::batch::{Batch, BatchKey, PlaintextKey};
+use crate::batch::{Batch, PlaintextKey};
 
 use super::{
     FileLines, WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content,
@@ -697,7 +697,7 @@ fn is_machine_generated_text(source: &str) -> bool {
         })
 }
 
-pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let entries = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
     for (name, kind) in entries {
@@ -846,6 +846,7 @@ fn head_sampled_content(
 
 #[cfg(test)]
 mod tests {
+    use crate::batch::BatchKey;
     use crate::scheduler::Scheduler;
     use crate::walker::FsWalker;
 
@@ -1277,7 +1278,7 @@ mod tests {
         assert_no_plaintext_whole(&report, "requirements.txt");
     }
 
-    fn assert_has_plaintext_whole(report: &crate::scheduler::RunReport<BatchKey>, suffix: &str) {
+    fn assert_has_plaintext_whole(report: &crate::scheduler::RunReport, suffix: &str) {
         let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
         assert!(
             keys.iter().any(|k| matches!(
@@ -1288,7 +1289,7 @@ mod tests {
         );
     }
 
-    fn assert_no_plaintext_whole(report: &crate::scheduler::RunReport<BatchKey>, suffix: &str) {
+    fn assert_no_plaintext_whole(report: &crate::scheduler::RunReport, suffix: &str) {
         let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
         assert!(
             !keys.iter().any(|k| matches!(

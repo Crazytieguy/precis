@@ -2,282 +2,282 @@ Score(3000)=0.461 I=0.808 C=0.263 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 91 | 91 | listing of '.' |  |  | 0.000 |
+| walker |  | 91 | 91 | Fs::DirListing { dir: . } |  |  | 0.000 |
 | ns | 100 |  | 100 | README title, tagline and feature bullets | 1.1 |  | 0.000 |
-| walker |  | 104 | 13 | listing of 'packages' |  |  | 0.000 |
+| walker |  | 104 | 13 | Fs::DirListing { dir: packages } |  |  | 0.000 |
 | ns | 113 |  | 13 | The three workspace packages | 1.2 |  | 0.292 |
 | ns | 130 |  | 17 | packages/vite/src top-level split | 1.3 |  | 0.233 |
-| walker |  | 146 | 42 | package identity in package.json |  |  | 0.236 |
-| walker |  | 179 | 33 | listing of 'patches' |  |  | 0.236 |
+| walker |  | 146 | 42 | Json::Identity { file: package.json } |  |  | 0.236 |
+| walker |  | 179 | 33 | Fs::DirListing { dir: patches } |  |  | 0.236 |
 | ns | 205 |  | 75 | README: Vite's one-sentence definition | 1.4 | 1.1 | 0.227 |
-| walker |  | 209 | 30 | listing of 'packages/plugin-legacy' |  |  | 0.228 |
-| walker |  | 232 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.228 |
+| walker |  | 209 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.228 |
+| walker |  | 232 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.228 |
 | ns | 296 |  | 91 | Repository root listing (complete) | 1.5 |  | 0.400 |
 | ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.372 |
-| walker |  | 476 | 244 | ts names packages/plugin-legacy/src/index.ts |  |  | 0.372 |
-| walker |  | 513 | 37 | ts decl packages/plugin-legacy/src/index.ts:103 |  |  | 0.372 |
+| walker |  | 476 | 244 | Code::CodeKey { rung: Names, file: packages/plugin-legacy/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
+| walker |  | 513 | 37 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 7, sub: 0, line: 103 } |  |  | 0.372 |
 | ns | 543 |  | 77 | packages/vite top-level listing | 1.7 |  | 0.309 |
-| walker |  | 590 | 77 | listing of 'packages/vite' |  |  | 0.447 |
-| walker |  | 599 | 9 | listing of 'packages/vite/bin' |  |  | 0.447 |
+| walker |  | 590 | 77 | Fs::DirListing { dir: packages/vite } |  |  | 0.447 |
+| walker |  | 599 | 9 | Fs::DirListing { dir: packages/vite/bin } |  |  | 0.447 |
 | ns | 636 |  | 93 | Root package.json identity, engines, package manager | 1.8 |  | 0.426 |
-| walker |  | 672 | 73 | package identity in packages/vite/package.json |  |  | 0.432 |
-| walker |  | 689 | 17 | listing of 'packages/vite/src' |  |  | 0.507 |
-| walker |  | 760 | 71 | listing of 'packages/vite/src/module-runner' |  |  | 0.509 |
-| walker |  | 778 | 18 | listing of 'packages/vite/misc' |  |  | 0.509 |
-| walker |  | 792 | 14 | ts names packages/vite/rollupLicensePlugin.ts |  |  | 0.509 |
-| walker |  | 809 | 17 | listing of 'packages/vite/src/client' |  |  | 0.510 |
-| walker |  | 849 | 40 | package runtime metadata in packages/vite/package.json |  |  | 0.510 |
+| walker |  | 672 | 73 | Json::Identity { file: packages/vite/package.json } |  |  | 0.432 |
+| walker |  | 689 | 17 | Fs::DirListing { dir: packages/vite/src } |  |  | 0.507 |
+| walker |  | 760 | 71 | Fs::DirListing { dir: packages/vite/src/module-runner } |  |  | 0.509 |
+| walker |  | 778 | 18 | Fs::DirListing { dir: packages/vite/misc } |  |  | 0.509 |
+| walker |  | 792 | 14 | Code::CodeKey { rung: Names, file: packages/vite/rollupLicensePlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
+| walker |  | 809 | 17 | Fs::DirListing { dir: packages/vite/src/client } |  |  | 0.510 |
+| walker |  | 849 | 40 | Json::Runtime { file: packages/vite/package.json } |  |  | 0.510 |
 | ns | 859 |  | 223 | Root pnpm scripts: lint, typecheck and the test entry points | 1.9 |  | 0.459 |
-| walker |  | 861 | 12 | listing of 'packages/vite/src/module-runner/sourcemap' |  |  | 0.459 |
-| walker |  | 996 | 135 | listing of 'packages/vite/src/node' |  |  | 0.466 |
+| walker |  | 861 | 12 | Fs::DirListing { dir: packages/vite/src/module-runner/sourcemap } |  |  | 0.459 |
+| walker |  | 996 | 135 | Fs::DirListing { dir: packages/vite/src/node } |  |  | 0.466 |
 | ns | 1118 |  | 259 | Root pnpm scripts: debug, docs, build, release | 1.10 | 1.9 | 0.429 |
-| walker |  | 1145 | 149 | listing of 'packages/vite/src/node/plugins' |  |  | 0.435 |
+| walker |  | 1145 | 149 | Fs::DirListing { dir: packages/vite/src/node/plugins } |  |  | 0.435 |
 | ns | 1225 |  | 107 | vite package manifest: name, version, description, bin | 1.11 |  | 0.429 |
-| walker |  | 1330 | 185 | README headline in README.md |  |  | 0.745 |
-| walker |  | 1366 | 36 | headings outline in README.md |  |  | 0.745 |
-| walker |  | 1378 | 12 | README.md section #3 |  |  | 0.745 |
-| walker |  | 1397 | 19 | README.md section #2 |  |  | 0.745 |
-| walker |  | 1415 | 18 | ts names packages/vite/misc/false.d.ts |  |  | 0.745 |
-| walker |  | 1433 | 18 | ts names packages/vite/misc/true.d.ts |  |  | 0.745 |
-| walker |  | 1477 | 44 | listing of 'packages/vite/types' |  |  | 0.746 |
+| walker |  | 1330 | 185 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.745 |
+| walker |  | 1366 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.745 |
+| walker |  | 1378 | 12 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.745 |
+| walker |  | 1397 | 19 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.745 |
+| walker |  | 1415 | 18 | Code::CodeKey { rung: Names, file: packages/vite/misc/false.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
+| walker |  | 1433 | 18 | Code::CodeKey { rung: Names, file: packages/vite/misc/true.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
+| walker |  | 1477 | 44 | Fs::DirListing { dir: packages/vite/types } |  |  | 0.746 |
 | ns | 1485 |  | 260 | vite package exports and internal import aliases | 1.12 | 1.11 | 0.660 |
-| walker |  | 1507 | 30 | listing of 'scripts' |  |  | 0.660 |
-| walker |  | 1566 | 59 | package runtime metadata in package.json |  |  | 0.684 |
-| walker |  | 1579 | 13 | ts names packages/vite/src/module-runner/runner.ts |  |  | 0.684 |
+| walker |  | 1507 | 30 | Fs::DirListing { dir: scripts } |  |  | 0.660 |
+| walker |  | 1566 | 59 | Json::Runtime { file: package.json } |  |  | 0.684 |
+| walker |  | 1579 | 13 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/runner.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
 | ns | 1640 |  | 155 | src/node/index.ts: primary API factories | 2.1 |  | 0.642 |
-| walker |  | 1713 | 134 | package runtime dependencies in packages/vite/package.json |  |  | 0.642 |
-| walker |  | 1727 | 14 | ts names packages/vite/src/node/cli.ts |  |  | 0.642 |
-| walker |  | 1817 | 90 | ts decl packages/plugin-legacy/src/index.ts:43 |  |  | 0.642 |
+| walker |  | 1713 | 134 | Json::Dependencies { file: packages/vite/package.json } |  |  | 0.642 |
+| walker |  | 1727 | 14 | Code::CodeKey { rung: Names, file: packages/vite/src/node/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.642 |
+| walker |  | 1817 | 90 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 4, sub: 0, line: 43 } |  |  | 0.642 |
 | ns | 1853 |  | 213 | vite CLI: the complete command roster | 2.2 |  | 0.600 |
 | ns | 2118 |  | 265 | src/node/index.ts: transform helpers and environment factories | 2.3 | 2.1 | 0.555 |
-| walker |  | 2160 | 343 | ts names packages/plugin-legacy/src/index.ts #1 |  |  | 0.555 |
-| walker |  | 2194 | 34 | ts decl packages/plugin-legacy/src/index.ts:128 |  |  | 0.555 |
-| walker |  | 2208 | 14 | ts decl packages/plugin-legacy/src/index.ts:146 |  |  | 0.555 |
+| walker |  | 2160 | 343 | Code::CodeKey { rung: Names, file: packages/plugin-legacy/src/index.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.555 |
+| walker |  | 2194 | 34 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 13, sub: 0, line: 128 } |  |  | 0.555 |
+| walker |  | 2208 | 14 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 16, sub: 0, line: 146 } |  |  | 0.555 |
 | ns | 2242 |  | 124 | src/node/index.ts: SSR/module-runner exports | 2.4 | 2.3 | 0.541 |
-| walker |  | 2257 | 49 | ts decl packages/plugin-legacy/src/index.ts:794 |  |  | 0.541 |
-| walker |  | 2323 | 66 | ts decl packages/plugin-legacy/src/index.ts:1057 |  |  | 0.541 |
-| walker |  | 2344 | 21 | ts decl packages/plugin-legacy/src/index.ts:999 |  |  | 0.541 |
-| walker |  | 2372 | 28 | ts decl packages/plugin-legacy/src/index.ts:940 |  |  | 0.541 |
-| walker |  | 2406 | 34 | ts decl packages/plugin-legacy/src/index.ts:143 |  |  | 0.541 |
-| walker |  | 2472 | 66 | ts decl packages/plugin-legacy/src/index.ts:132 |  |  | 0.541 |
-| walker |  | 2488 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.541 |
-| walker |  | 2503 | 15 | ts names packages/vite/src/node/assetSource.ts |  |  | 0.541 |
-| walker |  | 2544 | 41 | listing of '.github' |  |  | 0.541 |
+| walker |  | 2257 | 49 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 18, sub: 0, line: 794 } |  |  | 0.541 |
+| walker |  | 2323 | 66 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 29, sub: 0, line: 1057 } |  |  | 0.541 |
+| walker |  | 2344 | 21 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 25, sub: 0, line: 999 } |  |  | 0.541 |
+| walker |  | 2372 | 28 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 21, sub: 0, line: 940 } |  |  | 0.541 |
+| walker |  | 2406 | 34 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 15, sub: 0, line: 143 } |  |  | 0.541 |
+| walker |  | 2472 | 66 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 14, sub: 0, line: 132 } |  |  | 0.541 |
+| walker |  | 2488 | 16 | Fs::DirListing { dir: packages/plugin-legacy/src/__tests__ } |  |  | 0.541 |
+| walker |  | 2503 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/node/assetSource.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
+| walker |  | 2544 | 41 | Fs::DirListing { dir: .github } |  |  | 0.541 |
 | ns | 2571 |  | 329 | src/node/index.ts: constants, utils and remaining value exports | 2.5 | 2.4 | 0.494 |
-| walker |  | 2623 | 79 | listing of '.github/workflows' |  |  | 0.495 |
-| walker |  | 2687 | 64 | listing of 'docs' |  |  | 0.496 |
-| walker |  | 2724 | 37 | listing of 'packages/vite/types/internal' |  |  | 0.496 |
-| walker |  | 2847 | 123 | listing of 'packages/create-vite' |  |  | 0.498 |
-| walker |  | 2851 | 4 | listing of 'packages/create-vite/src' |  |  | 0.498 |
+| walker |  | 2623 | 79 | Fs::DirListing { dir: .github/workflows } |  |  | 0.495 |
+| walker |  | 2687 | 64 | Fs::DirListing { dir: docs } |  |  | 0.496 |
+| walker |  | 2724 | 37 | Fs::DirListing { dir: packages/vite/types/internal } |  |  | 0.496 |
+| walker |  | 2847 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.498 |
+| walker |  | 2851 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.498 |
 | ns | 2859 |  | 288 | index.ts type re-exports: config, server, build and plugin-option types | 2.6 | 2.5 | 0.461 |
-| walker |  | 3102 | 251 | ts names packages/create-vite/src/index.ts |  |  | 0.461 |
-| walker |  | 3118 | 16 | ts decl packages/create-vite/src/index.ts:392 |  |  | 0.461 |
-| walker |  | 3142 | 24 | ts decl packages/create-vite/src/index.ts:387 |  |  | 0.461 |
-| walker |  | 3183 | 41 | ts decl packages/create-vite/src/index.ts:64 |  |  | 0.461 |
-| walker |  | 3236 | 53 | ts decl packages/create-vite/src/index.ts:70 |  |  | 0.461 |
-| walker |  | 3282 | 46 | README headline in packages/create-vite/README.md |  |  | 0.461 |
+| walker |  | 3102 | 251 | Code::CodeKey { rung: Names, file: packages/create-vite/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
+| walker |  | 3118 | 16 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 10, sub: 0, line: 392 } |  |  | 0.461 |
+| walker |  | 3142 | 24 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 9, sub: 0, line: 387 } |  |  | 0.461 |
+| walker |  | 3183 | 41 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 6, sub: 0, line: 64 } |  |  | 0.461 |
+| walker |  | 3236 | 53 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 7, sub: 0, line: 70 } |  |  | 0.461 |
+| walker |  | 3282 | 46 | Markdown::ReadmeHeadline { file: packages/create-vite/README.md } |  |  | 0.461 |
 | ns | 3307 |  | 448 | index.ts type re-exports: server internals, HMR payloads, vendored types | 2.7 | 2.6 | 0.429 |
 | ns | 3569 |  | 262 | Plugin interface: every Vite-specific hook and flag (names only) | 2.8 |  | 0.412 |
-| walker |  | 3594 | 312 | ts names packages/create-vite/src/index.ts #1 |  |  | 0.412 |
-| walker |  | 3615 | 21 | ts decl packages/create-vite/src/index.ts:759 |  |  | 0.412 |
-| walker |  | 3703 | 88 | ts decl packages/create-vite/src/index.ts:11 |  |  | 0.412 |
-| walker |  | 3727 | 24 | headings outline in packages/create-vite/README.md |  |  | 0.412 |
-| walker |  | 3744 | 17 | ts names packages/vite/src/module-runner/esmEvaluator.ts |  |  | 0.412 |
-| walker |  | 3761 | 17 | ts names packages/vite/src/module-runner/hmrHandler.ts |  |  | 0.412 |
-| walker |  | 3778 | 17 | ts names packages/vite/types/internal/lightningcssOptions.d.ts |  |  | 0.412 |
-| walker |  | 3894 | 116 | ts decl packages/create-vite/src/index.ts:25 |  |  | 0.412 |
+| walker |  | 3594 | 312 | Code::CodeKey { rung: Names, file: packages/create-vite/src/index.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.412 |
+| walker |  | 3615 | 21 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 23, sub: 0, line: 759 } |  |  | 0.412 |
+| walker |  | 3703 | 88 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.412 |
+| walker |  | 3727 | 24 | Markdown::HeadingsOutline { file: packages/create-vite/README.md } |  |  | 0.412 |
+| walker |  | 3744 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/esmEvaluator.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.412 |
+| walker |  | 3761 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/hmrHandler.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.412 |
+| walker |  | 3778 | 17 | Code::CodeKey { rung: Names, file: packages/vite/types/internal/lightningcssOptions.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.412 |
+| walker |  | 3894 | 116 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 2, sub: 0, line: 25 } |  |  | 0.412 |
 | ns | 3931 |  | 362 | ViteDevServer: every member (names only) | 2.9 |  | 0.388 |
-| walker |  | 3942 | 48 | ts decl packages/vite/rollupLicensePlugin.ts:7 |  |  | 0.388 |
-| walker |  | 3964 | 22 | listing of 'packages/vite/src/node/__tests_dts__' |  |  | 0.388 |
-| walker |  | 3993 | 29 | listing of 'packages/vite/src/node/optimizer' |  |  | 0.388 |
+| walker |  | 3942 | 48 | Code::CodeKey { rung: Decl, file: packages/vite/rollupLicensePlugin.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.388 |
+| walker |  | 3964 | 22 | Fs::DirListing { dir: packages/vite/src/node/__tests_dts__ } |  |  | 0.388 |
+| walker |  | 3993 | 29 | Fs::DirListing { dir: packages/vite/src/node/optimizer } |  |  | 0.388 |
 | ns | 4111 |  | 180 | UserConfig keys: project, sources and transform options | 3.1 |  | 0.379 |
-| walker |  | 4125 | 132 | ts decl packages/plugin-legacy/src/index.ts:840 |  |  | 0.379 |
-| walker |  | 4158 | 33 | ts names packages/vite/types/hot.d.ts |  |  | 0.379 |
-| walker |  | 4175 | 17 | ts decl packages/vite/types/hot.d.ts:3 |  |  | 0.379 |
-| walker |  | 4190 | 15 | listing of 'docs/_data' |  |  | 0.379 |
-| walker |  | 4214 | 24 | listing of 'packages/create-vite/template-preact' |  |  | 0.379 |
-| walker |  | 4264 | 50 | listing of 'packages/vite/src/types' |  |  | 0.380 |
-| walker |  | 4283 | 19 | package identity in packages/vite/src/types/package.json |  |  | 0.380 |
-| walker |  | 4295 | 12 | ts names packages/vite/src/types/connect.d.ts |  |  | 0.380 |
-| walker |  | 4310 | 15 | ts names packages/vite/src/types/dynamicImportVars.d.ts |  |  | 0.380 |
-| walker |  | 4326 | 16 | ts names packages/vite/src/types/commonjs.d.ts |  |  | 0.380 |
+| walker |  | 4125 | 132 | Code::CodeKey { rung: Decl, file: packages/plugin-legacy/src/index.ts, decl: 19, sub: 0, line: 840 } |  |  | 0.379 |
+| walker |  | 4158 | 33 | Code::CodeKey { rung: Names, file: packages/vite/types/hot.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.379 |
+| walker |  | 4175 | 17 | Code::CodeKey { rung: Decl, file: packages/vite/types/hot.d.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.379 |
+| walker |  | 4190 | 15 | Fs::DirListing { dir: docs/_data } |  |  | 0.379 |
+| walker |  | 4214 | 24 | Fs::DirListing { dir: packages/create-vite/template-preact } |  |  | 0.379 |
+| walker |  | 4264 | 50 | Fs::DirListing { dir: packages/vite/src/types } |  |  | 0.380 |
+| walker |  | 4283 | 19 | Json::Identity { file: packages/vite/src/types/package.json } |  |  | 0.380 |
+| walker |  | 4295 | 12 | Code::CodeKey { rung: Names, file: packages/vite/src/types/connect.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
+| walker |  | 4310 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/types/dynamicImportVars.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
+| walker |  | 4326 | 16 | Code::CodeKey { rung: Names, file: packages/vite/src/types/commonjs.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
 | ns | 4401 |  | 290 | UserConfig keys: server, build, env, worker and the rest | 3.2 | 3.1 | 0.366 |
-| walker |  | 4516 | 190 | README.md section #0 |  |  | 0.384 |
-| walker |  | 4571 | 55 | listing of 'packages/vite/src/shared' |  |  | 0.377 |
+| walker |  | 4516 | 190 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.384 |
+| walker |  | 4571 | 55 | Fs::DirListing { dir: packages/vite/src/shared } |  |  | 0.377 |
 | ns | 4571 |  | 170 | Per-environment options (SharedEnvironmentOptions / EnvironmentOptions) | 3.3 |  | 0.377 |
-| walker |  | 4583 | 12 | ts names packages/vite/src/shared/builtin.ts |  |  | 0.377 |
-| walker |  | 4598 | 15 | ts names packages/vite/src/shared/hmrHandler.ts |  |  | 0.377 |
-| walker |  | 4623 | 25 | ts names packages/vite/src/node/environment.ts |  |  | 0.377 |
-| walker |  | 4648 | 25 | ts names packages/vite/src/node/internalIndex.ts |  |  | 0.377 |
-| walker |  | 4665 | 17 | ts names packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts |  |  | 0.377 |
-| walker |  | 4682 | 17 | ts names packages/vite/src/node/plugins/forwardConsole.ts |  |  | 0.377 |
-| walker |  | 4699 | 17 | ts names packages/vite/src/node/plugins/prepareOutDir.ts |  |  | 0.377 |
+| walker |  | 4583 | 12 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/builtin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| walker |  | 4598 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/hmrHandler.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| walker |  | 4623 | 25 | Code::CodeKey { rung: Names, file: packages/vite/src/node/environment.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| walker |  | 4648 | 25 | Code::CodeKey { rung: Names, file: packages/vite/src/node/internalIndex.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| walker |  | 4665 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| walker |  | 4682 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/forwardConsole.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
+| walker |  | 4699 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/prepareOutDir.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.377 |
 | ns | 4707 |  | 136 | CommonServerOptions: the host/port/https/proxy/cors keys | 3.4 |  | 0.372 |
-| walker |  | 4723 | 24 | ts decl packages/vite/src/node/assetSource.ts:111 |  |  | 0.372 |
-| walker |  | 4751 | 28 | listing of 'packages/create-vite/template-qwik' |  |  | 0.372 |
-| walker |  | 4779 | 28 | listing of 'packages/create-vite/template-solid' |  |  | 0.372 |
-| walker |  | 4796 | 17 | ts decl packages/vite/src/node/plugins/forwardConsole.ts:11 |  |  | 0.372 |
-| walker |  | 4814 | 18 | ts names packages/vite/src/node/plugins/wasm.ts |  |  | 0.372 |
-| walker |  | 4841 | 27 | ts names packages/vite/src/node/publicDir.ts |  |  | 0.372 |
-| walker |  | 4866 | 25 | ts decl packages/vite/src/node/publicDir.ts:13 |  |  | 0.372 |
-| walker |  | 4892 | 26 | ts decl packages/vite/src/module-runner/hmrHandler.ts:7 |  |  | 0.372 |
-| walker |  | 4911 | 19 | listing of 'docs/.vitepress' |  |  | 0.372 |
-| walker |  | 4930 | 19 | listing of 'packages/create-vite/template-preact/src' |  |  | 0.372 |
+| walker |  | 4723 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/assetSource.ts, decl: 1, sub: 0, line: 111 } |  |  | 0.372 |
+| walker |  | 4751 | 28 | Fs::DirListing { dir: packages/create-vite/template-qwik } |  |  | 0.372 |
+| walker |  | 4779 | 28 | Fs::DirListing { dir: packages/create-vite/template-solid } |  |  | 0.372 |
+| walker |  | 4796 | 17 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/forwardConsole.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.372 |
+| walker |  | 4814 | 18 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/wasm.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
+| walker |  | 4841 | 27 | Code::CodeKey { rung: Names, file: packages/vite/src/node/publicDir.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.372 |
+| walker |  | 4866 | 25 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/publicDir.ts, decl: 1, sub: 0, line: 13 } |  |  | 0.372 |
+| walker |  | 4892 | 26 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/hmrHandler.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.372 |
+| walker |  | 4911 | 19 | Fs::DirListing { dir: docs/.vitepress } |  |  | 0.372 |
+| walker |  | 4930 | 19 | Fs::DirListing { dir: packages/create-vite/template-preact/src } |  |  | 0.372 |
 | ns | 4944 |  | 237 | ServerOptions and FileSystemServeOptions keys | 3.5 |  | 0.362 |
-| walker |  | 4949 | 19 | listing of 'packages/create-vite/template-qwik/src' |  |  | 0.362 |
-| walker |  | 4968 | 19 | listing of 'packages/create-vite/template-solid/src' |  |  | 0.362 |
-| walker |  | 4996 | 28 | ts names packages/vite/src/module-runner/createImportMeta.ts |  |  | 0.362 |
-| walker |  | 5016 | 20 | ts decl packages/vite/src/module-runner/createImportMeta.ts:14 |  |  | 0.362 |
-| walker |  | 5036 | 20 | ts decl packages/vite/src/module-runner/createImportMeta.ts:41 |  |  | 0.362 |
-| walker |  | 5063 | 27 | ts decl packages/vite/src/node/cli.ts:68 |  |  | 0.362 |
-| walker |  | 5091 | 28 | ts decl packages/vite/src/shared/builtin.ts:1 |  |  | 0.362 |
-| walker |  | 5111 | 20 | ts names packages/vite/src/node/optimizer/pluginConverter.ts |  |  | 0.362 |
-| walker |  | 5144 | 33 | listing of 'packages/create-vite/template-react' |  |  | 0.362 |
-| walker |  | 5163 | 19 | listing of 'packages/create-vite/template-react/src' |  |  | 0.362 |
+| walker |  | 4949 | 19 | Fs::DirListing { dir: packages/create-vite/template-qwik/src } |  |  | 0.362 |
+| walker |  | 4968 | 19 | Fs::DirListing { dir: packages/create-vite/template-solid/src } |  |  | 0.362 |
+| walker |  | 4996 | 28 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/createImportMeta.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
+| walker |  | 5016 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/createImportMeta.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.362 |
+| walker |  | 5036 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/createImportMeta.ts, decl: 2, sub: 0, line: 41 } |  |  | 0.362 |
+| walker |  | 5063 | 27 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/cli.ts, decl: 1, sub: 0, line: 68 } |  |  | 0.362 |
+| walker |  | 5091 | 28 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/builtin.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.362 |
+| walker |  | 5111 | 20 | Code::CodeKey { rung: Names, file: packages/vite/src/node/optimizer/pluginConverter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.362 |
+| walker |  | 5144 | 33 | Fs::DirListing { dir: packages/create-vite/template-react } |  |  | 0.362 |
+| walker |  | 5163 | 19 | Fs::DirListing { dir: packages/create-vite/template-react/src } |  |  | 0.362 |
 | ns | 5180 |  | 236 | BuildEnvironmentOptions keys: output, assets, CSS, minification | 3.6 |  | 0.355 |
-| walker |  | 5196 | 33 | listing of 'packages/create-vite/template-vue' |  |  | 0.355 |
-| walker |  | 5214 | 18 | listing of 'packages/create-vite/template-vue/src' |  |  | 0.355 |
-| walker |  | 5243 | 29 | ts decl packages/vite/src/node/environment.ts:20 |  |  | 0.355 |
-| walker |  | 5272 | 29 | ts decl packages/vite/src/node/publicDir.ts:36 |  |  | 0.355 |
-| walker |  | 5293 | 21 | listing of 'docs/.vitepress/theme' |  |  | 0.355 |
-| walker |  | 5314 | 21 | ts names packages/vite/src/node/plugins/reporter.ts |  |  | 0.355 |
-| walker |  | 5345 | 31 | ts names packages/vite/src/node/nodeResolve.ts |  |  | 0.355 |
-| walker |  | 5369 | 24 | ts decl packages/vite/src/node/nodeResolve.ts:6 |  |  | 0.355 |
-| walker |  | 5389 | 20 | ts decl packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts:13 |  |  | 0.355 |
+| walker |  | 5196 | 33 | Fs::DirListing { dir: packages/create-vite/template-vue } |  |  | 0.355 |
+| walker |  | 5214 | 18 | Fs::DirListing { dir: packages/create-vite/template-vue/src } |  |  | 0.355 |
+| walker |  | 5243 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/environment.ts, decl: 2, sub: 0, line: 20 } |  |  | 0.355 |
+| walker |  | 5272 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/publicDir.ts, decl: 2, sub: 0, line: 36 } |  |  | 0.355 |
+| walker |  | 5293 | 21 | Fs::DirListing { dir: docs/.vitepress/theme } |  |  | 0.355 |
+| walker |  | 5314 | 21 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/reporter.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
+| walker |  | 5345 | 31 | Code::CodeKey { rung: Names, file: packages/vite/src/node/nodeResolve.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.355 |
+| walker |  | 5369 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/nodeResolve.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.355 |
+| walker |  | 5389 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/esbuildBannerFooterCompatPlugin.ts, decl: 1, sub: 0, line: 13 } |  |  | 0.355 |
 | ns | 5437 |  | 257 | BuildEnvironmentOptions keys: bundler passthrough, lib, ssr, reporting | 3.7 | 3.6 | 0.347 |
-| walker |  | 5511 | 122 | README headline in packages/plugin-legacy/README.md |  |  | 0.347 |
+| walker |  | 5511 | 122 | Markdown::ReadmeHeadline { file: packages/plugin-legacy/README.md } |  |  | 0.347 |
 | ns | 5530 |  | 93 | ExperimentalOptions and FutureOptions | 3.8 |  | 0.344 |
-| walker |  | 5561 | 50 | ts names packages/vite/types/metadata.d.ts |  |  | 0.344 |
-| walker |  | 5586 | 25 | ts decl packages/vite/types/metadata.d.ts:1 |  |  | 0.344 |
-| walker |  | 5630 | 44 | ts decl packages/vite/types/metadata.d.ts:6 |  |  | 0.344 |
-| walker |  | 5750 | 120 | package identity metadata in package.json |  |  | 0.344 |
-| walker |  | 5799 | 49 | listing of 'packages/vite/src/node/ssr' |  |  | 0.345 |
+| walker |  | 5561 | 50 | Code::CodeKey { rung: Names, file: packages/vite/types/metadata.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.344 |
+| walker |  | 5586 | 25 | Code::CodeKey { rung: Decl, file: packages/vite/types/metadata.d.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.344 |
+| walker |  | 5630 | 44 | Code::CodeKey { rung: Decl, file: packages/vite/types/metadata.d.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.344 |
+| walker |  | 5750 | 120 | Json::IdentityMeta { file: package.json } |  |  | 0.344 |
+| walker |  | 5799 | 49 | Fs::DirListing { dir: packages/vite/src/node/ssr } |  |  | 0.345 |
 | ns | 5804 |  | 274 | CLI global options (all five commands) | 3.9 | 2.2 | 0.338 |
-| walker |  | 5810 | 11 | listing of 'packages/vite/src/node/ssr/runtime' |  |  | 0.338 |
-| walker |  | 5825 | 15 | ts names packages/vite/src/node/ssr/runnerImport.ts |  |  | 0.338 |
-| walker |  | 5841 | 16 | ts names packages/vite/src/node/ssr/ssrModuleLoader.ts |  |  | 0.338 |
-| walker |  | 5858 | 17 | ts names packages/vite/src/node/ssr/ssrManifestPlugin.ts |  |  | 0.338 |
-| walker |  | 5890 | 32 | listing of 'packages/vite/src/node/ssr/__tests__' |  |  | 0.338 |
-| walker |  | 5923 | 33 | ts decl packages/vite/src/shared/hmrHandler.ts:4 |  |  | 0.338 |
-| walker |  | 5958 | 35 | ts names packages/vite/src/module-runner/hmrLogger.ts |  |  | 0.338 |
-| walker |  | 5979 | 21 | ts decl packages/vite/src/module-runner/hmrLogger.ts:5 |  |  | 0.338 |
+| walker |  | 5810 | 11 | Fs::DirListing { dir: packages/vite/src/node/ssr/runtime } |  |  | 0.338 |
+| walker |  | 5825 | 15 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/runnerImport.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
+| walker |  | 5841 | 16 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/ssrModuleLoader.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
+| walker |  | 5858 | 17 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/ssrManifestPlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
+| walker |  | 5890 | 32 | Fs::DirListing { dir: packages/vite/src/node/ssr/__tests__ } |  |  | 0.338 |
+| walker |  | 5923 | 33 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/hmrHandler.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.338 |
+| walker |  | 5958 | 35 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/hmrLogger.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.338 |
+| walker |  | 5979 | 21 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/hmrLogger.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.338 |
 | ns | 5995 |  | 191 | CLI dev-server flags | 3.10 | 2.2 | 0.333 |
-| walker |  | 6003 | 24 | ts names packages/vite/src/module-runner/sourcemap/index.ts |  |  | 0.333 |
-| walker |  | 6026 | 23 | ts decl packages/vite/src/node/optimizer/pluginConverter.ts:31 |  |  | 0.333 |
-| walker |  | 6085 | 59 | ts names packages/vite/types/importMeta.d.ts |  |  | 0.333 |
-| walker |  | 6101 | 16 | ts decl packages/vite/types/importMeta.d.ts:7 |  |  | 0.333 |
-| walker |  | 6121 | 20 | ts decl packages/vite/types/importMeta.d.ts:11 |  |  | 0.333 |
-| walker |  | 6170 | 49 | ts decl packages/vite/types/importMeta.d.ts:14 |  |  | 0.333 |
-| walker |  | 6211 | 41 | listing of 'packages/create-vite/template-preact-ts' |  |  | 0.333 |
-| walker |  | 6232 | 21 | listing of 'packages/create-vite/template-preact-ts/src' |  |  | 0.333 |
-| walker |  | 6258 | 26 | ts names packages/vite/src/module-runner/sourcemap/decoder.ts |  |  | 0.333 |
-| walker |  | 6284 | 26 | ts names packages/vite/src/module-runner/sourcemap/interceptor.ts |  |  | 0.333 |
-| walker |  | 6310 | 26 | ts names packages/vite/src/node/ssr/fetchModule.ts |  |  | 0.333 |
-| walker |  | 6349 | 39 | ts names packages/vite/src/node/env.ts |  |  | 0.333 |
-| walker |  | 6373 | 24 | ts decl packages/vite/src/node/env.ts:98 |  |  | 0.333 |
-| walker |  | 6402 | 29 | ts decl packages/vite/src/node/env.ts:12 |  |  | 0.333 |
+| walker |  | 6003 | 24 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/sourcemap/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
+| walker |  | 6026 | 23 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/optimizer/pluginConverter.ts, decl: 1, sub: 0, line: 31 } |  |  | 0.333 |
+| walker |  | 6085 | 59 | Code::CodeKey { rung: Names, file: packages/vite/types/importMeta.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
+| walker |  | 6101 | 16 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.333 |
+| walker |  | 6121 | 20 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.333 |
+| walker |  | 6170 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.333 |
+| walker |  | 6211 | 41 | Fs::DirListing { dir: packages/create-vite/template-preact-ts } |  |  | 0.333 |
+| walker |  | 6232 | 21 | Fs::DirListing { dir: packages/create-vite/template-preact-ts/src } |  |  | 0.333 |
+| walker |  | 6258 | 26 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/sourcemap/decoder.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
+| walker |  | 6284 | 26 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/sourcemap/interceptor.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
+| walker |  | 6310 | 26 | Code::CodeKey { rung: Names, file: packages/vite/src/node/ssr/fetchModule.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
+| walker |  | 6349 | 39 | Code::CodeKey { rung: Names, file: packages/vite/src/node/env.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.333 |
+| walker |  | 6373 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/env.ts, decl: 3, sub: 0, line: 98 } |  |  | 0.333 |
+| walker |  | 6402 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/env.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.333 |
 | ns | 6467 |  | 472 | CLI build flags | 3.11 | 2.2 | 0.320 |
 | ns | 6622 |  | 155 | CLI optimize and preview flags | 3.12 | 2.2 | 0.317 |
-| walker |  | 6663 | 261 | ts names packages/vite/client.d.ts |  |  | 0.317 |
-| walker |  | 6685 | 22 | ts decl packages/vite/client.d.ts:56 |  |  | 0.317 |
-| walker |  | 6709 | 24 | ts decl packages/vite/client.d.ts:9 |  |  | 0.317 |
-| walker |  | 6733 | 24 | ts decl packages/vite/client.d.ts:13 |  |  | 0.317 |
-| walker |  | 6757 | 24 | ts decl packages/vite/client.d.ts:17 |  |  | 0.368 |
+| walker |  | 6663 | 261 | Code::CodeKey { rung: Names, file: packages/vite/client.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.317 |
+| walker |  | 6685 | 22 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 19, sub: 0, line: 56 } |  |  | 0.317 |
+| walker |  | 6709 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 3, sub: 0, line: 9 } |  |  | 0.317 |
+| walker |  | 6733 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 4, sub: 0, line: 13 } |  |  | 0.317 |
+| walker |  | 6757 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 5, sub: 0, line: 17 } |  |  | 0.368 |
 | ns | 6757 |  | 135 | src/node module roster (complete) | 4.1 |  | 0.368 |
-| walker |  | 6781 | 24 | ts decl packages/vite/client.d.ts:21 |  |  | 0.368 |
-| walker |  | 6805 | 24 | ts decl packages/vite/client.d.ts:25 |  |  | 0.368 |
-| walker |  | 6829 | 24 | ts decl packages/vite/client.d.ts:29 |  |  | 0.368 |
-| walker |  | 6853 | 24 | ts decl packages/vite/client.d.ts:33 |  |  | 0.368 |
-| walker |  | 6877 | 24 | ts decl packages/vite/client.d.ts:60 |  |  | 0.368 |
-| walker |  | 6903 | 26 | ts decl packages/vite/client.d.ts:37 |  |  | 0.368 |
+| walker |  | 6781 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 6, sub: 0, line: 21 } |  |  | 0.368 |
+| walker |  | 6805 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 7, sub: 0, line: 25 } |  |  | 0.368 |
+| walker |  | 6829 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 8, sub: 0, line: 29 } |  |  | 0.368 |
+| walker |  | 6853 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 9, sub: 0, line: 33 } |  |  | 0.368 |
+| walker |  | 6877 | 24 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 20, sub: 0, line: 60 } |  |  | 0.368 |
+| walker |  | 6903 | 26 | Code::CodeKey { rung: Decl, file: packages/vite/client.d.ts, decl: 10, sub: 0, line: 37 } |  |  | 0.368 |
 | ns | 6906 |  | 149 | src/node/plugins roster (complete) | 4.2 |  | 0.406 |
-| walker |  | 6930 | 27 | ts names packages/vite/src/node/optimizer/optimizer.ts |  |  | 0.406 |
-| walker |  | 6949 | 19 | ts decl packages/vite/src/node/optimizer/optimizer.ts:40 |  |  | 0.406 |
-| walker |  | 6968 | 19 | ts decl packages/vite/src/node/optimizer/optimizer.ts:756 |  |  | 0.406 |
+| walker |  | 6930 | 27 | Code::CodeKey { rung: Names, file: packages/vite/src/node/optimizer/optimizer.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.406 |
+| walker |  | 6949 | 19 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/optimizer/optimizer.ts, decl: 1, sub: 0, line: 40 } |  |  | 0.406 |
+| walker |  | 6968 | 19 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/optimizer/optimizer.ts, decl: 2, sub: 0, line: 756 } |  |  | 0.406 |
 | ns | 6981 |  | 75 | src/node/server roster (complete) | 4.3 |  | 0.400 |
-| walker |  | 7012 | 44 | listing of 'packages/create-vite/template-svelte' |  |  | 0.400 |
-| walker |  | 7031 | 19 | listing of 'packages/create-vite/template-svelte/src' |  |  | 0.400 |
-| walker |  | 7036 | 5 | listing of 'packages/create-vite/template-svelte/src/lib' |  |  | 0.400 |
+| walker |  | 7012 | 44 | Fs::DirListing { dir: packages/create-vite/template-svelte } |  |  | 0.400 |
+| walker |  | 7031 | 19 | Fs::DirListing { dir: packages/create-vite/template-svelte/src } |  |  | 0.400 |
+| walker |  | 7036 | 5 | Fs::DirListing { dir: packages/create-vite/template-svelte/src/lib } |  |  | 0.400 |
 | ns | 7066 |  | 85 | Dev-server middlewares and per-environment implementations | 4.4 |  | 0.393 |
-| walker |  | 7077 | 41 | ts names packages/vite/src/node/baseEnvironment.ts |  |  | 0.393 |
-| walker |  | 7093 | 16 | ts decl packages/vite/src/node/baseEnvironment.ts:135 |  |  | 0.393 |
-| walker |  | 7134 | 41 | ts names packages/vite/src/node/idResolver.ts |  |  | 0.393 |
+| walker |  | 7077 | 41 | Code::CodeKey { rung: Names, file: packages/vite/src/node/baseEnvironment.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.393 |
+| walker |  | 7093 | 16 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/baseEnvironment.ts, decl: 7, sub: 0, line: 135 } |  |  | 0.393 |
+| walker |  | 7134 | 41 | Code::CodeKey { rung: Names, file: packages/vite/src/node/idResolver.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.393 |
 | ns | 7144 |  | 78 | SSR and dependency-optimizer rosters | 4.5 |  | 0.410 |
-| walker |  | 7167 | 33 | ts decl packages/vite/src/node/idResolver.ts:23 |  |  | 0.410 |
-| walker |  | 7200 | 33 | ts decl packages/vite/src/node/idResolver.ts:42 |  |  | 0.410 |
-| walker |  | 7241 | 41 | ts names packages/vite/src/shared/ssrTransform.ts |  |  | 0.410 |
-| walker |  | 7257 | 16 | ts decl packages/vite/src/shared/ssrTransform.ts:14 |  |  | 0.410 |
+| walker |  | 7167 | 33 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/idResolver.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.410 |
+| walker |  | 7200 | 33 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/idResolver.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.410 |
+| walker |  | 7241 | 41 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/ssrTransform.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.410 |
+| walker |  | 7257 | 16 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/ssrTransform.ts, decl: 2, sub: 0, line: 14 } |  |  | 0.410 |
 | ns | 7287 |  | 143 | Browser client, module-runner and shared rosters | 4.6 |  | 0.437 |
 | ns | 7400 |  | 113 | resolvePlugins: the built-in plugin pipeline order | 4.7 |  | 0.433 |
 | ns | 7494 |  | 94 | Published and inlined type declarations | 4.8 |  | 0.447 |
 | ns | 7609 |  | 115 | Core internal entry-point signatures | 4.9 |  | 0.442 |
-| walker |  | 7663 | 406 | listing of 'playground' |  |  | 0.447 |
-| walker |  | 7708 | 45 | listing of 'packages/create-vite/template-qwik-ts' |  |  | 0.447 |
-| walker |  | 7729 | 21 | listing of 'packages/create-vite/template-qwik-ts/src' |  |  | 0.447 |
-| walker |  | 7774 | 45 | listing of 'packages/create-vite/template-solid-ts' |  |  | 0.447 |
-| walker |  | 7795 | 21 | listing of 'packages/create-vite/template-solid-ts/src' |  |  | 0.447 |
-| walker |  | 7835 | 40 | ts decl packages/vite/src/module-runner/hmrLogger.ts:10 |  |  | 0.447 |
-| walker |  | 7875 | 40 | ts decl packages/vite/src/node/environment.ts:7 |  |  | 0.447 |
+| walker |  | 7663 | 406 | Fs::DirListing { dir: playground } |  |  | 0.447 |
+| walker |  | 7708 | 45 | Fs::DirListing { dir: packages/create-vite/template-qwik-ts } |  |  | 0.447 |
+| walker |  | 7729 | 21 | Fs::DirListing { dir: packages/create-vite/template-qwik-ts/src } |  |  | 0.447 |
+| walker |  | 7774 | 45 | Fs::DirListing { dir: packages/create-vite/template-solid-ts } |  |  | 0.447 |
+| walker |  | 7795 | 21 | Fs::DirListing { dir: packages/create-vite/template-solid-ts/src } |  |  | 0.447 |
+| walker |  | 7835 | 40 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/hmrLogger.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.447 |
+| walker |  | 7875 | 40 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/environment.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.447 |
 | ns | 7919 |  | 310 | CONTRIBUTING.md: every section heading | 5.1 |  | 0.438 |
-| walker |  | 7941 | 66 | ts names packages/vite/types/importGlob.d.ts |  |  | 0.438 |
-| walker |  | 7970 | 29 | ts decl packages/vite/types/importGlob.d.ts:44 |  |  | 0.438 |
-| walker |  | 8000 | 30 | ts decl packages/vite/types/importGlob.d.ts:49 |  |  | 0.438 |
-| walker |  | 8029 | 29 | listing of 'docs/.vitepress/theme/landing' |  |  | 0.438 |
-| walker |  | 8072 | 43 | ts names packages/vite/src/client/overlay.ts |  |  | 0.438 |
+| walker |  | 7941 | 66 | Code::CodeKey { rung: Names, file: packages/vite/types/importGlob.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
+| walker |  | 7970 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/types/importGlob.d.ts, decl: 3, sub: 0, line: 44 } |  |  | 0.438 |
+| walker |  | 8000 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/types/importGlob.d.ts, decl: 4, sub: 0, line: 49 } |  |  | 0.438 |
+| walker |  | 8029 | 29 | Fs::DirListing { dir: docs/.vitepress/theme/landing } |  |  | 0.438 |
+| walker |  | 8072 | 43 | Code::CodeKey { rung: Names, file: packages/vite/src/client/overlay.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.438 |
 | ns | 8109 |  | 190 | CONTRIBUTING: local development loop | 5.2 | 5.1 | 0.435 |
-| walker |  | 8115 | 43 | ts names packages/vite/src/shared/hmr.ts |  |  | 0.435 |
-| walker |  | 8145 | 30 | ts decl packages/vite/src/shared/hmr.ts:19 |  |  | 0.435 |
-| walker |  | 8189 | 44 | ts names packages/vite/src/module-runner/evaluatedModules.ts |  |  | 0.435 |
-| walker |  | 8219 | 30 | ts names packages/vite/src/node/plugins/json.ts |  |  | 0.435 |
-| walker |  | 8228 | 9 | ts decl packages/vite/src/node/plugins/json.ts:18 |  |  | 0.435 |
-| walker |  | 8271 | 43 | ts decl packages/vite/src/node/nodeResolve.ts:14 |  |  | 0.435 |
-| walker |  | 8321 | 50 | listing of 'packages/create-vite/template-react-ts' |  |  | 0.435 |
-| walker |  | 8342 | 21 | listing of 'packages/create-vite/template-react-ts/src' |  |  | 0.435 |
-| walker |  | 8392 | 50 | listing of 'packages/create-vite/template-vue-ts' |  |  | 0.435 |
-| walker |  | 8410 | 18 | listing of 'packages/create-vite/template-vue-ts/src' |  |  | 0.435 |
-| walker |  | 8420 | 10 | ts names packages/plugin-legacy/src/types.ts |  |  | 0.435 |
-| walker |  | 8464 | 44 | ts decl packages/vite/src/client/overlay.ts:10 |  |  | 0.435 |
-| walker |  | 8494 | 30 | ts decl packages/vite/src/module-runner/sourcemap/decoder.ts:58 |  |  | 0.435 |
+| walker |  | 8115 | 43 | Code::CodeKey { rung: Names, file: packages/vite/src/shared/hmr.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.435 |
+| walker |  | 8145 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/hmr.ts, decl: 1, sub: 0, line: 19 } |  |  | 0.435 |
+| walker |  | 8189 | 44 | Code::CodeKey { rung: Names, file: packages/vite/src/module-runner/evaluatedModules.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.435 |
+| walker |  | 8219 | 30 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/json.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.435 |
+| walker |  | 8228 | 9 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/json.ts, decl: 2, sub: 0, line: 18 } |  |  | 0.435 |
+| walker |  | 8271 | 43 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/nodeResolve.ts, decl: 2, sub: 0, line: 14 } |  |  | 0.435 |
+| walker |  | 8321 | 50 | Fs::DirListing { dir: packages/create-vite/template-react-ts } |  |  | 0.435 |
+| walker |  | 8342 | 21 | Fs::DirListing { dir: packages/create-vite/template-react-ts/src } |  |  | 0.435 |
+| walker |  | 8392 | 50 | Fs::DirListing { dir: packages/create-vite/template-vue-ts } |  |  | 0.435 |
+| walker |  | 8410 | 18 | Fs::DirListing { dir: packages/create-vite/template-vue-ts/src } |  |  | 0.435 |
+| walker |  | 8420 | 10 | Code::CodeKey { rung: Names, file: packages/plugin-legacy/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.435 |
+| walker |  | 8464 | 44 | Code::CodeKey { rung: Decl, file: packages/vite/src/client/overlay.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.435 |
+| walker |  | 8494 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/sourcemap/decoder.ts, decl: 3, sub: 0, line: 58 } |  |  | 0.435 |
 | ns | 8515 |  | 406 | playground/ roster (complete e2e corpus) | 5.3 |  | 0.489 |
-| walker |  | 8526 | 32 | listing of 'docs/.vitepress/theme/live' |  |  | 0.489 |
-| walker |  | 8573 | 47 | ts names packages/vite/src/node/external.ts |  |  | 0.489 |
-| walker |  | 8600 | 27 | ts decl packages/vite/src/node/external.ts:35 |  |  | 0.489 |
-| walker |  | 8636 | 36 | ts decl packages/vite/src/node/external.ts:22 |  |  | 0.489 |
-| walker |  | 8692 | 56 | listing of 'packages/create-vite/template-svelte-ts' |  |  | 0.489 |
-| walker |  | 8711 | 19 | listing of 'packages/create-vite/template-svelte-ts/src' |  |  | 0.489 |
-| walker |  | 8716 | 5 | listing of 'packages/create-vite/template-svelte-ts/src/lib' |  |  | 0.489 |
-| walker |  | 8748 | 32 | ts names packages/vite/src/node/optimizer/rolldownDepPlugin.ts |  |  | 0.489 |
+| walker |  | 8526 | 32 | Fs::DirListing { dir: docs/.vitepress/theme/live } |  |  | 0.489 |
+| walker |  | 8573 | 47 | Code::CodeKey { rung: Names, file: packages/vite/src/node/external.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
+| walker |  | 8600 | 27 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/external.ts, decl: 2, sub: 0, line: 35 } |  |  | 0.489 |
+| walker |  | 8636 | 36 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/external.ts, decl: 1, sub: 0, line: 22 } |  |  | 0.489 |
+| walker |  | 8692 | 56 | Fs::DirListing { dir: packages/create-vite/template-svelte-ts } |  |  | 0.489 |
+| walker |  | 8711 | 19 | Fs::DirListing { dir: packages/create-vite/template-svelte-ts/src } |  |  | 0.489 |
+| walker |  | 8716 | 5 | Fs::DirListing { dir: packages/create-vite/template-svelte-ts/src/lib } |  |  | 0.489 |
+| walker |  | 8748 | 32 | Code::CodeKey { rung: Names, file: packages/vite/src/node/optimizer/rolldownDepPlugin.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.489 |
 | ns | 8802 |  | 287 | CONTRIBUTING: how the integration tests work | 5.4 | 5.3 | 0.488 |
 | ns | 8919 |  | 117 | Unit test locations under packages/vite/src | 5.5 |  | 0.479 |
-| walker |  | 8931 | 183 | README headline in packages/vite/README.md |  |  | 0.479 |
-| walker |  | 8946 | 15 | ts body packages/plugin-legacy/src/index.ts:1069 |  |  | 0.479 |
-| walker |  | 8977 | 31 | ts decl packages/vite/src/module-runner/sourcemap/interceptor.ts:16 |  |  | 0.479 |
-| walker |  | 9008 | 31 | ts decl packages/vite/src/module-runner/sourcemap/interceptor.ts:59 |  |  | 0.479 |
+| walker |  | 8931 | 183 | Markdown::ReadmeHeadline { file: packages/vite/README.md } |  |  | 0.479 |
+| walker |  | 8946 | 15 | Code::CodeKey { rung: Body, file: packages/plugin-legacy/src/index.ts, decl: 30, sub: 0, line: 1069 } |  |  | 0.479 |
+| walker |  | 8977 | 31 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/sourcemap/interceptor.ts, decl: 1, sub: 0, line: 16 } |  |  | 0.479 |
+| walker |  | 9008 | 31 | Code::CodeKey { rung: Decl, file: packages/vite/src/module-runner/sourcemap/interceptor.ts, decl: 2, sub: 0, line: 59 } |  |  | 0.479 |
 | ns | 9050 |  | 131 | How the unit and e2e vitest runs are separated | 5.6 |  | 0.477 |
-| walker |  | 9082 | 74 | ts decl packages/vite/types/importMeta.d.ts:22 |  |  | 0.477 |
+| walker |  | 9082 | 74 | Code::CodeKey { rung: Decl, file: packages/vite/types/importMeta.d.ts, decl: 4, sub: 0, line: 22 } |  |  | 0.477 |
 | ns | 9114 |  | 64 | docs/ site roster | 5.7 |  | 0.486 |
 | ns | 9298 |  | 184 | docs/guide and docs/config page rosters | 5.8 |  | 0.476 |
 | ns | 9343 |  | 45 | docs/changes: the breaking-change / migration notes | 5.9 |  | 0.474 |
-| walker |  | 9401 | 319 | ts decl packages/create-vite/src/index.ts:39 |  |  | 0.474 |
-| walker |  | 9435 | 34 | ts names packages/vite/src/node/plugins/preAlias.ts |  |  | 0.474 |
-| walker |  | 9465 | 30 | ts decl packages/vite/src/node/plugins/preAlias.ts:129 |  |  | 0.474 |
+| walker |  | 9401 | 319 | Code::CodeKey { rung: Decl, file: packages/create-vite/src/index.ts, decl: 4, sub: 0, line: 39 } |  |  | 0.474 |
+| walker |  | 9435 | 34 | Code::CodeKey { rung: Names, file: packages/vite/src/node/plugins/preAlias.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.474 |
+| walker |  | 9465 | 30 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/plugins/preAlias.ts, decl: 2, sub: 0, line: 129 } |  |  | 0.474 |
 | ns | 9501 |  | 158 | CONTRIBUTING: the dependency policy | 5.10 | 5.1 | 0.472 |
-| walker |  | 9514 | 49 | ts decl packages/vite/src/node/env.ts:28 |  |  | 0.472 |
-| walker |  | 9563 | 49 | ts decl packages/vite/src/node/idResolver.ts:11 |  |  | 0.472 |
-| walker |  | 9612 | 49 | ts decl packages/vite/src/shared/ssrTransform.ts:23 |  |  | 0.472 |
+| walker |  | 9514 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/env.ts, decl: 2, sub: 0, line: 28 } |  |  | 0.472 |
+| walker |  | 9563 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/idResolver.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.472 |
+| walker |  | 9612 | 49 | Code::CodeKey { rung: Decl, file: packages/vite/src/shared/ssrTransform.ts, decl: 3, sub: 0, line: 23 } |  |  | 0.472 |
 | ns | 9624 |  | 123 | create-vite: package layout and template roster | 5.11 |  | 0.485 |
-| walker |  | 9646 | 34 | ts decl packages/vite/src/node/ssr/runnerImport.ts:15 |  |  | 0.485 |
+| walker |  | 9646 | 34 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/ssr/runnerImport.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.485 |
 | ns | 9677 |  | 53 | plugin-legacy: package layout | 5.12 |  | 0.491 |
-| walker |  | 9721 | 75 | listing of 'packages/vite/src/node/server' |  |  | 0.504 |
-| walker |  | 9739 | 18 | listing of 'packages/vite/src/node/server/environments' |  |  | 0.504 |
-| walker |  | 9752 | 13 | ts names packages/vite/src/node/server/openBrowser.ts |  |  | 0.504 |
-| walker |  | 9766 | 14 | ts names packages/vite/src/node/server/warmup.ts |  |  | 0.504 |
-| walker |  | 9789 | 23 | ts names packages/vite/src/node/server/send.ts |  |  | 0.504 |
-| walker |  | 9813 | 24 | ts names packages/vite/src/node/server/mixedModuleGraph.ts |  |  | 0.504 |
+| walker |  | 9721 | 75 | Fs::DirListing { dir: packages/vite/src/node/server } |  |  | 0.504 |
+| walker |  | 9739 | 18 | Fs::DirListing { dir: packages/vite/src/node/server/environments } |  |  | 0.504 |
+| walker |  | 9752 | 13 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/openBrowser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 9766 | 14 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/warmup.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 9789 | 23 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/send.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 9813 | 24 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/mixedModuleGraph.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
 | ns | 9827 |  | 150 | Repository automation: .github and release scripts | 5.13 |  | 0.515 |
-| walker |  | 9852 | 39 | listing of 'packages/vite/src/node/server/__tests__' |  |  | 0.515 |
-| walker |  | 9880 | 28 | ts names packages/vite/src/node/server/environment.ts |  |  | 0.515 |
-| walker |  | 9908 | 28 | ts names packages/vite/src/node/server/searchRoot.ts |  |  | 0.515 |
-| walker |  | 9935 | 27 | ts decl packages/vite/src/node/server/searchRoot.ts:68 |  |  | 0.515 |
-| walker |  | 9964 | 29 | ts decl packages/vite/src/node/server/warmup.ts:10 |  |  | 0.515 |
-| walker |  | 9995 | 31 | ts decl packages/vite/src/node/server/searchRoot.ts:84 |  |  | 0.515 |
+| walker |  | 9852 | 39 | Fs::DirListing { dir: packages/vite/src/node/server/__tests__ } |  |  | 0.515 |
+| walker |  | 9880 | 28 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/environment.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
+| walker |  | 9908 | 28 | Code::CodeKey { rung: Names, file: packages/vite/src/node/server/searchRoot.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
+| walker |  | 9935 | 27 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/server/searchRoot.ts, decl: 1, sub: 0, line: 68 } |  |  | 0.515 |
+| walker |  | 9964 | 29 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/server/warmup.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.515 |
+| walker |  | 9995 | 31 | Code::CodeKey { rung: Decl, file: packages/vite/src/node/server/searchRoot.ts, decl: 2, sub: 0, line: 84 } |  |  | 0.515 |

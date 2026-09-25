@@ -10,7 +10,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use crate::batch::{Batch, BatchKey, FsKey};
+use crate::batch::{Batch, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 pub use crate::fs_util::list_dir;
 use crate::fs_util::{DirFilter, EntryKind};
@@ -19,14 +19,14 @@ use crate::value::mix_signals;
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
 /// Seed: list the root directory.
-pub fn seed(ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn seed(ctx: &WalkCtx) -> Vec<Batch> {
     dir_listing_batch(ctx.root().to_path_buf(), ctx)
         .into_iter()
         .collect()
 }
 
 /// Subdirectory listings for the just-scheduled dir's listing.
-pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let children = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
     for (name, kind) in children {
@@ -133,7 +133,7 @@ fn walk_files_recursive(
     }
 }
 
-fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
+fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
     let children = list_dir(&dir, ctx.dir_filter());
     if children.is_empty() {
         return None;
@@ -763,6 +763,7 @@ fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::batch::BatchKey;
 
     #[test]
     fn fs_owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
