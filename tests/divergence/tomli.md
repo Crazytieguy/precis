@@ -60,13 +60,13 @@ Score(3000)=0.458 I=0.775 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 3122 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.428 |
 | walker |  | 3136 | 175 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.429 |
 | walker |  | 3148 | 12 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.429 |
-| walker |  | 3307 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.429 |
-| walker |  | 3341 | 34 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 9, sub: 0, line: 116 } |  |  | 0.429 |
+| walker |  | 3252 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.429 |
+| walker |  | 3411 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.429 |
+| walker |  | 3445 | 34 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 9, sub: 0, line: 116 } |  |  | 0.429 |
 | ns | 3453 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.412 |
 | ns | 3550 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.405 |
-| walker |  | 3578 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.406 |
-| ns | 3662 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.399 |
-| walker |  | 3682 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.400 |
+| ns | 3662 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.398 |
+| walker |  | 3682 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.400 |
 | walker |  | 3744 | 62 | Code::CodeKey { rung: Doc, file: src/tomli/_re.py, decl: 6, sub: 0, line: 59 } |  |  | 0.400 |
 | ns | 3836 |  | 174 | BASIC_STR_ESCAPE_REPLACEMENTS: the full escape table | 2.12 |  | 0.390 |
 | ns | 3872 |  | 36 | tests/ and tests/data/ listings (complete) | 3.1 |  | 0.409 |

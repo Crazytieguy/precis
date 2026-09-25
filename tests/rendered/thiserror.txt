@@ -138,6 +138,14 @@ build.rs
   91→fn compile_probe(rustc_bootstrap: bool) -> bool {
   …
   179→fn rustc_minor_version() -> Option<u32> {
+  180→    let rustc = cargo_env_var("RUSTC");
+  181→    let output = Command::new(rustc).arg("--version").output().ok()?;
+  182→    let version = str::from_utf8(&output.stdout).ok()?;
+  183→    let mut pieces = version.split('.');
+  184→    if pieces.next() != Some("rustc 1") {
+  185→        return None;
+  186→    }
+  187→    pieces.next()?.parse().ok()
   …
   190→fn cargo_env_var(key: &str) -> OsString {
   191→    env::var_os(key).unwrap_or_else(|| {

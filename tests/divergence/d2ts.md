@@ -88,44 +88,44 @@ Score(3000)=0.699 I=0.861 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 4099 | 139 | Fs::DirListing { dir: packages/d2mini/tests/operators } |  |  | 0.725 |
 | ns | 4171 |  | 190 | README: what versions and frontiers actually mean | 4.3 | 1.10 | 0.721 |
 | walker |  | 4258 | 159 | Fs::DirListing { dir: packages/d2ts/tests/operators } |  |  | 0.721 |
-| walker |  | 4288 | 30 | Markdown::Section { file: packages/d2ql/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.721 |
-| walker |  | 4471 | 183 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.721 |
+| walker |  | 4404 | 146 | Code::CodeKey { rung: Body, file: packages/d2ts-benchmark/src/index.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.721 |
+| walker |  | 4434 | 30 | Markdown::Section { file: packages/d2ql/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.721 |
 | ns | 4517 |  | 346 | order.ts — v() factory and the complete Version method roster | 4.4 |  | 0.695 |
-| walker |  | 4646 | 175 | Markdown::HeadingsOutline { file: packages/d2ts/README.md } |  |  | 0.696 |
+| walker |  | 4617 | 183 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.695 |
+| walker |  | 4792 | 175 | Markdown::HeadingsOutline { file: packages/d2ts/README.md } |  |  | 0.696 |
 | ns | 4807 |  | 290 | order.ts — Antichain method roster and Frontier | 4.5 | 4.4 | 0.676 |
-| walker |  | 4818 | 172 | Markdown::Section { file: packages/d2ts/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.676 |
-| walker |  | 4923 | 105 | Markdown::Section { file: README.md, section_index: 18, keeps_default_concavity: false } |  |  | 0.676 |
 | ns | 4952 |  | 145 | README: MultiSet as a changeset, and keyed multisets | 4.6 | 1.10 | 0.673 |
-| walker |  | 5072 | 149 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.673 |
+| walker |  | 4964 | 172 | Markdown::Section { file: packages/d2ts/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.673 |
+| walker |  | 5069 | 105 | Markdown::Section { file: README.md, section_index: 18, keeps_default_concavity: false } |  |  | 0.673 |
+| walker |  | 5218 | 149 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.673 |
 | ns | 5310 |  | 358 | multiset.ts — MultiSetArray, KeyedData and every MultiSet method | 4.7 |  | 0.656 |
 | ns | 5610 |  | 300 | types.ts — the operator message protocol | 4.8 |  | 0.634 |
-| walker |  | 5614 | 542 | Markdown::Section { file: packages/d2ql/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.634 |
+| walker |  | 5760 | 542 | Markdown::Section { file: packages/d2ql/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.634 |
 | ns | 5868 |  | 258 | types.ts — PipedOperator and the 20-deep pipe overload wall | 4.9 | 4.8 | 0.622 |
-| walker |  | 6189 | 575 | Markdown::Section { file: packages/d2mini/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.622 |
-| walker |  | 6251 | 62 | Json::Identity { file: packages/d2ts-benchmark/package.json } |  |  | 0.635 |
-| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.635 |
-| walker |  | 6338 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
-| walker |  | 6403 | 65 | Json::Dependencies { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
-| walker |  | 6560 | 157 | Json::IdentityMeta { file: packages/d2ts/package.json } |  |  | 0.643 |
+| ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.632 |
+| walker |  | 6335 | 575 | Markdown::Section { file: packages/d2mini/README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.632 |
+| walker |  | 6397 | 62 | Json::Identity { file: packages/d2ts-benchmark/package.json } |  |  | 0.635 |
+| walker |  | 6484 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
+| walker |  | 6549 | 65 | Json::Dependencies { file: packages/d2ts-benchmark/package.json } |  |  | 0.643 |
 | ns | 6681 |  | 430 | packages/d2ts/README.md — complete heading map (1081-line API reference) | 5.2 |  | 0.627 |
-| walker |  | 6756 | 196 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.631 |
-| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.623 |
-| walker |  | 6930 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.631 |
-| walker |  | 7021 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.644 |
-| walker |  | 7104 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.644 |
-| walker |  | 7175 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.644 |
+| walker |  | 6706 | 157 | Json::IdentityMeta { file: packages/d2ts/package.json } |  |  | 0.627 |
+| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.620 |
+| walker |  | 6902 | 196 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.623 |
+| walker |  | 7076 | 174 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: true } |  |  | 0.631 |
+| walker |  | 7167 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.644 |
 | ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.625 |
-| walker |  | 7363 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.625 |
+| walker |  | 7250 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.625 |
+| walker |  | 7321 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.625 |
 | ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.616 |
-| walker |  | 7520 | 157 | Json::IdentityMeta { file: packages/d2mini/package.json } |  |  | 0.616 |
-| walker |  | 7614 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.629 |
-| ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.622 |
-| walker |  | 7786 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.622 |
+| walker |  | 7509 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.616 |
+| ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.609 |
+| walker |  | 7666 | 157 | Json::IdentityMeta { file: packages/d2mini/package.json } |  |  | 0.609 |
+| walker |  | 7760 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.622 |
 | ns | 7842 |  | 220 | D2QL identity and README section map | 6.1 |  | 0.618 |
-| walker |  | 7974 | 188 | Json::Scripts { file: packages/d2ql/package.json } |  |  | 0.618 |
+| walker |  | 7932 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.618 |
 | ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.610 |
-| walker |  | 8131 | 157 | Json::IdentityMeta { file: packages/d2ql/package.json } |  |  | 0.610 |
-| walker |  | 8277 | 146 | Code::CodeKey { rung: Body, file: packages/d2ts-benchmark/src/index.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.610 |
+| walker |  | 8120 | 188 | Json::Scripts { file: packages/d2ql/package.json } |  |  | 0.610 |
+| walker |  | 8277 | 157 | Json::IdentityMeta { file: packages/d2ql/package.json } |  |  | 0.610 |
 | walker |  | 8312 | 35 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/base.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
 | walker |  | 8369 | 57 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 2, sub: 0, line: 19 } |  |  | 0.610 |
 | ns | 8442 |  | 358 | schema.ts — the Query interface family | 6.3 |  | 0.596 |

@@ -116,9 +116,11 @@ Score(3000)=0.699 I=0.845 C=0.579 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | ns | 9430 |  | 247 | The statement grammar (comment above stmt()) | 6.1 |  | 0.720 |
 | walker |  | 9531 | 237 | Code::CodeKey { rung: Names, file: main.c, decl: 0, sub: 1, line: 0 } |  |  | 0.726 |
 | walker |  | 9540 | 9 | Code::CodeKey { rung: Doc, file: main.c, decl: 36, sub: 0, line: 367 } |  |  | 0.726 |
+| walker |  | 9572 | 32 | Code::CodeKey { rung: Body, file: main.c, decl: 27, sub: 0, line: 37 } |  |  | 0.726 |
+| walker |  | 9604 | 32 | Code::CodeKey { rung: Body, file: main.c, decl: 37, sub: 0, line: 375 } |  |  | 0.726 |
 | ns | 9756 |  | 326 | The expression precedence chain, as grammar comments | 6.2 | 3.9 | 0.718 |
-| walker |  | 9772 | 232 | Code::CodeKey { rung: Names, file: main.c, decl: 0, sub: 2, line: 0 } |  |  | 0.736 |
-| walker |  | 9785 | 13 | Code::CodeKey { rung: Doc, file: main.c, decl: 49, sub: 0, line: 586 } |  |  | 0.736 |
-| walker |  | 9807 | 22 | Code::CodeKey { rung: Body, file: main.c, decl: 49, sub: 0, line: 586 } |  |  | 0.736 |
-| walker |  | 9822 | 15 | Code::CodeKey { rung: Doc, file: main.c, decl: 41, sub: 0, line: 433 } |  |  | 0.736 |
+| walker |  | 9836 | 232 | Code::CodeKey { rung: Names, file: main.c, decl: 0, sub: 2, line: 0 } |  |  | 0.736 |
+| walker |  | 9849 | 13 | Code::CodeKey { rung: Doc, file: main.c, decl: 49, sub: 0, line: 586 } |  |  | 0.736 |
+| walker |  | 9864 | 15 | Code::CodeKey { rung: Doc, file: main.c, decl: 41, sub: 0, line: 433 } |  |  | 0.736 |
+| walker |  | 9919 | 55 | Code::CodeKey { rung: Doc, file: main.c, decl: 43, sub: 0, line: 461 } |  |  | 0.736 |
 | ns | 9989 |  | 233 | Every preprocessor directive chibicc handles | 6.3 |  | 0.730 |

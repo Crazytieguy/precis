@@ -15,7 +15,7 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::SourceFile;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use crate::walker::{WalkCtx, collect_doc_comments_above};
 
 pub(super) const EXTENSIONS: &[&str] = &["lua"];
@@ -158,7 +158,6 @@ fn decl_info(node: Node, file: &SourceFile) -> DeclInfo {
         doc: file.paragraphs(collect_doc_comments_above(node, &file.source).full),
         body,
         shape: Shape::Callable,
-        visibility: Visibility::Public,
         members: Vec::new(),
     }
 }

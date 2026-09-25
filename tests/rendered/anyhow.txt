@@ -66,8 +66,23 @@ build.rs
   99→fn compile_probe(rustc_bootstrap: bool) -> bool {
   …
   188→fn rustc_minor_version() -> Option<u32> {
+  189→    let rustc = cargo_env_var("RUSTC");
+  190→    let output = Command::new(rustc).arg("--version").output().ok()?;
+  191→    let version = str::from_utf8(&output.stdout).ok()?;
+  192→    let mut pieces = version.split('.');
+  193→    if pieces.next() != Some("rustc 1") {
+  194→        return None;
+  195→    }
+  196→    pieces.next()?.parse().ok()
   …
   199→fn cargo_env_var(key: &str) -> OsString {
+  200→    env::var_os(key).unwrap_or_else(|| {
+  201→        eprintln!(
+  202→            "Environment variable ${} is not set during execution of build script",
+  203→            key,
+  204→        );
+  205→        process::exit(1);
+  206→    })
   …
 rust-toolchain.toml
 src/
@@ -99,35 +114,12 @@ src/
     34→        None
     35→    };
     36→}
-    38→#[cfg(error_generic_member_access)]
+    …
     39→macro_rules! backtrace_if_absent {
-    40→    ($err:expr) => {
-    41→        match $crate::nightly::request_ref_backtrace($err as &dyn core::error::Error) {
-    42→            Some(_) => None,
-    43→            None => backtrace!(),
-    44→        }
-    45→    };
-    46→}
-    48→#[cfg(all(
-    49→    any(feature = "std", not(anyhow_no_core_error)),
-    50→    not(error_generic_member_access),
-    51→    any(std_backtrace, feature = "backtrace")
-    52→))]
+    …
     53→macro_rules! backtrace_if_absent {
-    54→    ($err:expr) => {
-    55→        backtrace!()
-    56→    };
-    57→}
-    59→#[cfg(all(
-    60→    any(feature = "std", not(anyhow_no_core_error)),
-    61→    not(std_backtrace),
-    62→    not(feature = "backtrace"),
-    63→))]
+    …
     64→macro_rules! backtrace_if_absent {
-    65→    ($err:expr) => {
-    66→        None
-    67→    };
-    68→}
     …
     407→fn _assert_send_sync() {
     …
@@ -187,6 +179,7 @@ src/
     278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     279→trait StdError: Debug + Display {
     280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+    281→        None
     …
     283→}
     285→#[doc(no_inline)]

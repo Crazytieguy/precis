@@ -15,11 +15,11 @@ use std::path::Path;
 
 use super::chunk::{chunk_ranges, chunk_value_factor, item_cost};
 use super::ledger::Ledger;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
 use crate::batch::{Batch, BatchKey, CodeKey, Rung};
 use crate::content::{BatchContent, Render, Span};
-use crate::value::{CODE_PRIVATE_FACTOR, DEFAULT_CONCAVITY_EXPONENT, code_rung_value};
+use crate::value::{DEFAULT_CONCAVITY_EXPONENT, code_rung_value};
 use crate::walker::{WalkCtx, file_depth_factor};
 
 /// Every batch of one file.
@@ -107,10 +107,7 @@ impl Emitter<'_> {
         container: Option<&CodeKey>,
     ) -> Option<CodeKey> {
         let parent = self.ledger.owner(decl.name_rows[0]).or(container).cloned();
-        let mut value = self.file_prior;
-        if decl.visibility == Visibility::Private {
-            value *= CODE_PRIVATE_FACTOR;
-        }
+        let value = self.file_prior;
         let path = self.file.path.clone();
         let key = |rung| CodeKey {
             rung,
@@ -331,7 +328,6 @@ fn merge_into(target: &mut DeclInfo, other: DeclInfo) {
     target.doc.extend(other.doc);
     target.body.extend(other.body);
     target.members.extend(other.members);
-    target.visibility = target.visibility.max(other.visibility);
     let reclean = |_: usize| true;
     clean_rows(&mut target.name_rows, &reclean);
     clean_rows(&mut target.head, &reclean);
@@ -354,7 +350,6 @@ mod tests {
             doc: Vec::new(),
             body: Vec::new(),
             shape,
-            visibility: Visibility::Public,
             members: Vec::new(),
         }
     }
@@ -518,8 +513,7 @@ mod tests {
         spilling.members = vec![spilling_member];
         let mut next = decl(4, vec![4], Shape::Whole);
         next.doc = vec![rows(3..=3)];
-        let mut same_row = decl(3, vec![4], Shape::Whole);
-        same_row.visibility = Visibility::Private;
+        let same_row = decl(3, vec![4], Shape::Whole);
         let model = with_file(4, |file| {
             normalize(
                 FileModel {
@@ -535,6 +529,5 @@ mod tests {
         assert_eq!(model.decls[0].members[0].head, [2]);
         assert_eq!(model.decls[0].members[0].doc, [rows(1..=1)]);
         assert_eq!(model.decls[1].name_rows, [3, 4]);
-        assert_eq!(model.decls[1].visibility, Visibility::Public);
     }
 }

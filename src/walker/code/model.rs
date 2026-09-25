@@ -67,30 +67,16 @@
 //! body) must be absent from the container's `head` and `body`. Fields are
 //! body [`Item`]s, not members.
 //!
-//! # Visibility
+//! # Hidden declarations
 //!
-//! Three outcomes, decided by the language module; the engine never
-//! changes them and applies no per-file-role adjustment:
-//!
-//! - **Hidden**: leave the declaration out of the model entirely (not in
-//!   `decls`, not in a container's `members`, its name rows not in a
-//!   container's `body`). For test code (`#[cfg(test)]`, `#[test]`),
-//!   `#[doc(hidden)]`, C non-`inline` `static` in a header, and members the
-//!   language enforces as private to their container (TS `private` /
-//!   `protected` / `#name`, a Rust inherent-`impl` fn without `pub`).
-//! - [`Visibility::Private`]: a real declaration outside the language's
-//!   public API (priced lower). For example Rust `pub(crate)` /
-//!   `pub(super)` / no `pub`, a Go unexported name outside `package main`,
-//!   a Python `_name` that is not a `__dunder__`, C `static` in a `.c`
-//!   file, a TS / JS declaration that isn't exported.
-//! - [`Visibility::Public`]: part of the language's public API.
-//!
-//! A member of an admitted container takes the lower of the container's
-//! visibility and its own, where a member with no marker of its own takes
-//! the container's: Rust trait and trait-`impl` methods (no `pub`) and TS
-//! members without a modifier take the container's; a `pub(crate)` method
-//! in a public `impl`, or a Python `_name` method in a public class, is
-//! `Private`.
+//! The language module decides which declarations to leave out of the
+//! model entirely (not in `decls`, not in a container's `members`, their
+//! name rows not in a container's `body`): test code (`#[cfg(test)]`,
+//! `#[test]`), `#[doc(hidden)]`, C non-`inline` `static` in a header, and
+//! members the language enforces as private to their container (TS
+//! `private` / `protected` / `#name`, a Rust inherent-`impl` fn without
+//! `pub`). Every declaration in the model is priced alike; public and
+//! internal declarations are not told apart.
 //!
 //! # Disjointness
 //!
@@ -118,9 +104,9 @@
 //!   the smallest row in any of the declaration's parts, `doc` included;
 //!   `decls` may come in any order.
 //! - Merges declarations (or members of one container) whose first rows are
-//!   equal into one: the union of each part, the first one's shape, the
-//!   higher visibility (Go `var a = 1; var b = 2` on one row, C same-row
-//!   declarations, two TS members on one row).
+//!   equal into one: the union of each part and the first one's shape (Go
+//!   `var a = 1; var b = 2` on one row, C same-row declarations, two TS
+//!   members on one row).
 //! - **Trims at the next sibling**: drops from each declaration every row at
 //!   or past the next declaration's first row (for members, the next member
 //!   of the same container). Tree-sitter sometimes extends a node into the
@@ -176,7 +162,6 @@ pub(crate) struct DeclInfo {
     /// rows (`Whole`).
     pub body: Vec<Item>,
     pub shape: Shape,
-    pub visibility: Visibility,
     /// A container's admitted members. Always empty on a member.
     pub members: Vec<DeclInfo>,
 }
@@ -205,12 +190,4 @@ pub(crate) enum Shape {
     /// Type, struct, enum, interface, alias, typedef, constant, macro, and
     /// every container: the `Decl` is head plus body.
     Whole,
-}
-
-/// See "Visibility" in the module docs. Hidden declarations are omitted
-/// from the model, so they have no variant.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub(crate) enum Visibility {
-    Private,
-    Public,
 }

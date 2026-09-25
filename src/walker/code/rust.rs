@@ -11,13 +11,10 @@
 //! - **Declarations**: `fn` is `Callable`; `struct`, `enum`, `union`,
 //!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait` and
 //!   `impl` are `Whole` containers whose members are their functions.
-//! - **Visibility**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
-//!   items are hidden. Bare `pub` (or `#[macro_export]`) is public;
-//!   `pub(…)` and no modifier are private. Trait and trait-impl functions
-//!   take their container's visibility; an inherent-impl function without
-//!   `pub` is hidden, and the impl is as visible as its most visible
-//!   member. An impl never outranks its self type or trait when the same
-//!   file declares them, and is hidden with either.
+//! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
+//!   items, and an inherent-impl function without a visibility modifier.
+//!   An inherent impl with no admitted function is hidden, and so is an
+//!   impl whose self type or trait this file declares only hidden.
 
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
@@ -25,7 +22,7 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::SourceFile;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use crate::walker::WalkCtx;
 use crate::walker::markdown::{fence_closes, fence_marker};
 
@@ -41,7 +38,7 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         module_doc: module_doc(file, root),
         ..FileModel::default()
     };
-    let type_visibility = declared_type_visibility(file, root);
+    let hidden_types = hidden_type_names(file, root);
     let mut cursor = root.walk();
     for node in root.named_children(&mut cursor) {
         if matches!(
@@ -58,64 +55,33 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             "use_declaration" | "mod_item" => {
                 let is_declaration_only = node.child_by_field_name("body").is_none();
                 if is_declaration_only
-                    && (node.kind() == "mod_item"
-                        || modifier_visibility(node, file) == Some(Visibility::Public))
+                    && (node.kind() == "mod_item" || visibility_modifier(node, file) == Some("pub"))
                 {
                     let mut rows = leading.attribute_rows;
                     rows.extend(file.node_rows(node));
                     model.reexports.push(Item::new(rows));
                 }
             }
-            "impl_item" => {
-                model
-                    .decls
-                    .extend(impl_container(node, leading, file, &type_visibility))
-            }
-            "trait_item" => {
-                let visibility = item_visibility(node, file);
-                model
-                    .decls
-                    .push(container(node, leading, file, visibility, |_| {
-                        Some(visibility)
-                    }));
-            }
-            "function_item" => {
-                let visibility = item_visibility(node, file);
-                model.decls.push(callable(node, leading, file, visibility));
-            }
+            "impl_item" => model
+                .decls
+                .extend(impl_container(node, leading, file, &hidden_types)),
+            "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
+            "function_item" => model.decls.push(callable(node, leading, file)),
             "macro_definition" => {
-                let visibility = if leading.macro_export {
-                    Visibility::Public
-                } else {
-                    Visibility::Private
-                };
                 let body = macro_open_row(node, file).map(|open_row| (open_row, node));
                 let entries = list_entries(node, file, |child| child.kind() == "macro_rule");
-                model.decls.push(whole(
-                    node,
-                    leading,
-                    file,
-                    visibility,
-                    body,
-                    entries,
-                    Vec::new(),
-                ));
+                model
+                    .decls
+                    .push(whole(node, leading, file, body, entries, Vec::new()));
             }
             "struct_item" | "enum_item" | "union_item" | "type_item" | "const_item"
             | "static_item" => {
-                let visibility = item_visibility(node, file);
                 let list = node.child_by_field_name("body");
                 let body = list.map(|list| (list.start_position().row + 1, list));
                 let entries = list.map_or_else(Vec::new, |list| list_entries(list, file, |_| true));
-                model.decls.push(whole(
-                    node,
-                    leading,
-                    file,
-                    visibility,
-                    body,
-                    entries,
-                    Vec::new(),
-                ));
+                model
+                    .decls
+                    .push(whole(node, leading, file, body, entries, Vec::new()));
             }
             _ => {}
         }
@@ -142,7 +108,6 @@ struct Leading {
     doc_rows: Vec<usize>,
     /// `#[cfg(test)]`, `#[test]` / `#[tokio::test]`-style or `#[doc(hidden)]`.
     hidden: bool,
-    macro_export: bool,
 }
 
 impl Leading {
@@ -160,7 +125,6 @@ impl Leading {
                     let is_test = path.rsplit("::").next() == Some("test");
                     leading.hidden |=
                         is_test || attribute == "cfg(test)" || attribute == "doc(hidden)";
-                    leading.macro_export |= path == "macro_export";
                     if attribute.starts_with("doc=") {
                         leading.doc_rows.extend(file.node_rows(sibling));
                     } else {
@@ -207,22 +171,13 @@ fn starts_own_line(node: Node, file: &SourceFile) -> bool {
     line.len() - line.trim_start().len() == node.start_position().column
 }
 
-/// `Some(Public)` for bare `pub`, `Some(Private)` for `pub(…)`, `None`
-/// without a modifier.
-fn modifier_visibility(node: Node, file: &SourceFile) -> Option<Visibility> {
+/// `pub`, `pub(crate)`, …: the item's visibility modifier, if any.
+fn visibility_modifier<'a>(node: Node, file: &'a SourceFile) -> Option<&'a str> {
     let mut cursor = node.walk();
     let modifier = node
         .children(&mut cursor)
         .find(|child| child.kind() == "visibility_modifier")?;
-    Some(if file.text(modifier).trim() == "pub" {
-        Visibility::Public
-    } else {
-        Visibility::Private
-    })
-}
-
-fn item_visibility(node: Node, file: &SourceFile) -> Visibility {
-    modifier_visibility(node, file).unwrap_or(Visibility::Private)
+    Some(file.text(modifier).trim())
 }
 
 fn name_rows(node: Node, field: &str) -> Vec<usize> {
@@ -239,7 +194,7 @@ fn doc_items(leading: &Leading, file: &SourceFile) -> Vec<Item> {
 
 /// A function: the head runs from its first attribute through the row
 /// before its first statement; each statement is one body item.
-fn callable(node: Node, leading: Leading, file: &SourceFile, visibility: Visibility) -> DeclInfo {
+fn callable(node: Node, leading: Leading, file: &SourceFile) -> DeclInfo {
     let name_rows = name_rows(node, "name");
     let first_row = node.start_position().row + 1;
     let statements = node
@@ -262,7 +217,6 @@ fn callable(node: Node, leading: Leading, file: &SourceFile, visibility: Visibil
         doc: doc_items(&leading, file),
         body,
         shape: Shape::Callable,
-        visibility,
         members: Vec::new(),
     }
 }
@@ -276,7 +230,6 @@ fn whole(
     node: Node,
     leading: Leading,
     file: &SourceFile,
-    visibility: Visibility,
     body: Option<(usize, Node)>,
     mut entries: Vec<Item>,
     members: Vec<DeclInfo>,
@@ -322,31 +275,21 @@ fn whole(
         doc: doc_items(&leading, file),
         body,
         shape: Shape::Whole,
-        visibility,
         members,
     }
 }
 
-/// A `trait` or `impl`: functions in its declaration list become members
-/// with the visibility `member_visibility` gives them (`None` hides one);
-/// associated types and constants are body entries.
+/// A `trait` or `impl`: functions in its declaration list that `admit`
+/// accepts become members; associated types and constants are body
+/// entries.
 fn container(
     node: Node,
     leading: Leading,
     file: &SourceFile,
-    visibility: Visibility,
-    member_visibility: impl Fn(Node) -> Option<Visibility>,
+    admit: impl Fn(Node) -> bool,
 ) -> DeclInfo {
     let Some(list) = node.child_by_field_name("body") else {
-        return whole(
-            node,
-            leading,
-            file,
-            visibility,
-            None,
-            Vec::new(),
-            Vec::new(),
-        );
+        return whole(node, leading, file, None, Vec::new(), Vec::new());
     };
     let mut members = Vec::new();
     let is_function =
@@ -360,75 +303,55 @@ fn container(
         if member_leading.hidden {
             continue;
         }
-        if let Some(own) = member_visibility(child) {
-            members.push(callable(child, member_leading, file, own.min(visibility)));
+        if admit(child) {
+            members.push(callable(child, member_leading, file));
         }
     }
     let entries = list_entries(list, file, |child| {
-        !is_function(child)
-            && !Leading::above(child, file).hidden
-            && member_visibility(child).is_some()
+        !is_function(child) && !Leading::above(child, file).hidden && admit(child)
     });
     let open_row = list.start_position().row + 1;
     whole(
         node,
         leading,
         file,
-        visibility,
         Some((open_row, list)),
         entries,
         members,
     )
 }
 
-/// A trait impl is public, an inherent impl as visible as its most visible
-/// member (`pub fn` / `pub(…) fn`; functions without `pub` are hidden), and
-/// neither is more visible than its self type or trait when this file
-/// declares them. `None` when nothing in the impl is admitted or its type
-/// or trait is hidden.
+/// A trait impl admits every function; an inherent impl only those with
+/// a visibility modifier (`pub`, `pub(…)`), and is hidden without one.
+/// Either is hidden when this file declares its self type or trait only
+/// hidden.
 fn impl_container(
     node: Node,
     leading: Leading,
     file: &SourceFile,
-    type_visibility: &HashMap<String, Option<Visibility>>,
+    hidden_types: &HashMap<String, bool>,
 ) -> Option<DeclInfo> {
-    let mut declared_cap = Visibility::Public;
-    for field in ["type", "trait"] {
-        let declared = node
-            .child_by_field_name(field)
-            .and_then(|named| type_visibility.get(base_type_name(named, file)));
-        match declared {
-            Some(None) => return None,
-            Some(Some(visibility)) => declared_cap = declared_cap.min(*visibility),
-            None => {}
-        }
+    let declared_hidden = ["type", "trait"].into_iter().any(|field| {
+        node.child_by_field_name(field)
+            .and_then(|named| hidden_types.get(base_type_name(named, file)))
+            == Some(&true)
+    });
+    if declared_hidden {
+        return None;
     }
     let is_trait_impl = node.child_by_field_name("trait").is_some();
-    let own_visibility = |child: Node| {
-        if is_trait_impl {
-            Some(Visibility::Public)
-        } else {
-            modifier_visibility(child, file)
-        }
-    };
-    let visibility = if is_trait_impl {
-        Visibility::Public
-    } else {
+    let admit = |child: Node| is_trait_impl || visibility_modifier(child, file).is_some();
+    if !is_trait_impl {
         let list = node.child_by_field_name("body")?;
         let mut cursor = list.walk();
-        list.named_children(&mut cursor)
-            .filter_map(|child| {
-                own_visibility(child).filter(|_| !Leading::above(child, file).hidden)
-            })
-            .max()?
-    };
-    Some(container(
-        node,
-        leading,
-        file,
-        visibility.min(declared_cap),
-        own_visibility,
-    ))
+        let admits_any = list
+            .named_children(&mut cursor)
+            .any(|child| admit(child) && !Leading::above(child, file).hidden);
+        if !admits_any {
+            return None;
+        }
+    }
+    Some(container(node, leading, file, admit))
 }
 
 /// `Foo` for `Foo`, `Foo<T>` and `module::Foo<T>`.
@@ -442,11 +365,11 @@ fn base_type_name<'a>(self_type: Node, file: &'a SourceFile) -> &'a str {
         .trim()
 }
 
-/// Top-level type and trait names → their visibility (`None`: hidden). A
-/// name declared more than once (e.g. under `#[cfg(test)]` and
-/// `#[cfg(not(test))]`) takes its most visible declaration.
-fn declared_type_visibility(file: &SourceFile, root: Node) -> HashMap<String, Option<Visibility>> {
-    let mut declared: HashMap<String, Option<Visibility>> = HashMap::new();
+/// Top-level type and trait names → whether every declaration of the name
+/// is hidden (e.g. one under `#[cfg(test)]` and one under
+/// `#[cfg(not(test))]` is not).
+fn hidden_type_names(file: &SourceFile, root: Node) -> HashMap<String, bool> {
+    let mut declared: HashMap<String, bool> = HashMap::new();
     let mut cursor = root.walk();
     for node in root.named_children(&mut cursor) {
         if !matches!(
@@ -458,9 +381,9 @@ fn declared_type_visibility(file: &SourceFile, root: Node) -> HashMap<String, Op
         let Some(name) = node.child_by_field_name("name") else {
             continue;
         };
-        let visibility = (!Leading::above(node, file).hidden).then(|| item_visibility(node, file));
-        let entry = declared.entry(file.text(name).to_string()).or_default();
-        *entry = (*entry).max(visibility);
+        let hidden = Leading::above(node, file).hidden;
+        let entry = declared.entry(file.text(name).to_string()).or_insert(true);
+        *entry &= hidden;
     }
     declared
 }
@@ -719,22 +642,19 @@ mod tests {
         rows
     }
 
-    /// Each declaration's name row text and visibility, in source order.
-    fn roster(file: &SourceFile, decls: &[DeclInfo]) -> Vec<(String, Visibility)> {
+    /// Each declaration's name row text, in source order.
+    fn roster(file: &SourceFile, decls: &[DeclInfo]) -> Vec<String> {
         let mut out: Vec<_> = decls
             .iter()
             .map(|decl| {
                 (
                     decl.name_rows[0],
                     file.line(decl.name_rows[0]).trim().to_string(),
-                    decl.visibility,
                 )
             })
             .collect();
         out.sort();
-        out.into_iter()
-            .map(|(_, line, visibility)| (line, visibility))
-            .collect()
+        out.into_iter().map(|(_, line)| line).collect()
     }
 
     #[test]
@@ -790,7 +710,7 @@ pub fn parse() {}
     }
 
     #[test]
-    fn rust_extract_visibility_follows_pub_and_hides_tests_and_doc_hidden() {
+    fn rust_extract_hides_tests_and_doc_hidden() {
         let source = "\
 pub struct Public;
 pub(crate) struct Crate;
@@ -814,10 +734,10 @@ pub fn latest() {}
         assert_eq!(
             roster(&file, &model.decls),
             vec![
-                ("pub struct Public;".to_string(), Visibility::Public),
-                ("pub(crate) struct Crate;".to_string(), Visibility::Private),
-                ("struct Private;".to_string(), Visibility::Private),
-                ("pub fn latest() {}".to_string(), Visibility::Public),
+                "pub struct Public;",
+                "pub(crate) struct Crate;",
+                "struct Private;",
+                "pub fn latest() {}",
             ]
         );
     }
@@ -877,7 +797,7 @@ pub struct Point { pub x: i32 }
     }
 
     #[test]
-    fn rust_extract_trait_members_inherit_its_visibility() {
+    fn rust_extract_trait_functions_are_members() {
         let source = "\
 pub trait Store {
     type Key;
@@ -900,20 +820,17 @@ pub(crate) trait Internal {
         let members: Vec<_> = store
             .members
             .iter()
-            .map(|member| (member.name_rows.clone(), member.visibility))
+            .map(|member| member.name_rows.clone())
             .collect();
-        assert_eq!(
-            members,
-            vec![(vec![5], Visibility::Public), (vec![7], Visibility::Public)]
-        );
+        assert_eq!(members, vec![vec![5], vec![7]]);
         assert_eq!(rows(&store.members[0].doc), vec![vec![4]]);
         assert_eq!(sorted(store.members[1].head.clone()), vec![7]);
         assert_eq!(rows(&store.members[1].body), vec![vec![8]]);
-        assert_eq!(model.decls[1].members[0].visibility, Visibility::Private);
+        assert_eq!(model.decls[1].members.len(), 1);
     }
 
     #[test]
-    fn rust_extract_impl_visibility_comes_from_members_and_self_type() {
+    fn rust_extract_impl_members_follow_modifiers_and_self_type() {
         let source = "\
 pub struct Engine;
 struct Helper;
@@ -946,23 +863,12 @@ impl Sealed for Engine {}
                 let members: Vec<_> = decl
                     .members
                     .iter()
-                    .map(|member| (member.name_rows[0], member.visibility))
+                    .map(|member| member.name_rows[0])
                     .collect();
-                (decl.name_rows[0], decl.visibility, members)
+                (decl.name_rows[0], members)
             })
             .collect();
-        assert_eq!(
-            impls,
-            vec![
-                (
-                    3,
-                    Visibility::Public,
-                    vec![(4, Visibility::Public), (5, Visibility::Private)]
-                ),
-                (8, Visibility::Public, vec![(9, Visibility::Public)]),
-                (13, Visibility::Private, vec![(14, Visibility::Private)]),
-            ]
-        );
+        assert_eq!(impls, vec![(3, vec![4, 5]), (8, vec![9]), (13, vec![14])]);
         assert_eq!(model.decls.len(), 5);
         let display = &model.decls[3];
         assert_eq!(sorted(display.head.clone()), vec![8, 12]);
@@ -984,12 +890,10 @@ impl Client {{
 "
             );
             let (_, model) = extract_source("a.rs", &source);
-            let client_impl = model
-                .decls
-                .iter()
-                .find(|decl| !decl.members.is_empty())
-                .expect("impl Client admitted");
-            assert_eq!(client_impl.visibility, Visibility::Public);
+            assert!(
+                model.decls.iter().any(|decl| !decl.members.is_empty()),
+                "impl Client admitted"
+            );
         }
     }
 
@@ -1019,7 +923,7 @@ extern crate alloc;
     }
 
     #[test]
-    fn rust_extract_macros_are_whole_and_public_only_when_exported() {
+    fn rust_extract_macros_are_whole() {
         let source = "\
 /// Bails.
 #[macro_export]
@@ -1043,10 +947,7 @@ macro_rules! __private {
         let (file, model) = extract_source("a.rs", source);
         assert_eq!(
             roster(&file, &model.decls),
-            vec![
-                ("macro_rules! bail {".to_string(), Visibility::Public),
-                ("macro_rules! local {".to_string(), Visibility::Private),
-            ]
+            vec!["macro_rules! bail {", "macro_rules! local {",]
         );
         let bail = &model.decls[0];
         assert_eq!(sorted(bail.head.clone()), vec![2, 3, 10]);

@@ -1,16 +1,13 @@
 //! Go extraction. Functions and methods are `Callable`; `type`, `const`
 //! and `var` declarations are `Whole`, and a grouped `( … )` declaration
-//! lists one roster row per spec. A name is public when exported (a
-//! method also needs an exported receiver type), and every declaration of
-//! `package main` is public: nothing imports it. The module doc is the
-//! package comment.
+//! lists one roster row per spec. The module doc is the package comment.
 
 use std::path::Path;
 
 use tree_sitter::Node;
 
 use super::SourceFile;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use crate::walker::{WalkCtx, collect_doc_comments_above};
 
 pub(super) const EXTENSIONS: &[&str] = &["go"];
@@ -21,7 +18,6 @@ pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
 
 pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
-    let package_main = package_name(root, &file.source) == Some("main");
     let mut model = FileModel::default();
     let mut cursor = root.walk();
     for child in root.named_children(&mut cursor) {
@@ -34,13 +30,7 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             "type_declaration" | "const_declaration" | "var_declaration" => whole(child, file),
             _ => continue,
         };
-        let Some((mut decl, exported)) = decl else {
-            continue;
-        };
-        if exported || package_main {
-            decl.visibility = Visibility::Public;
-        }
-        model.decls.push(decl);
+        model.decls.extend(decl);
     }
     model
 }
@@ -73,17 +63,12 @@ fn package_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
     Some(&source[name.byte_range()])
 }
 
-/// Go's exported-name rule: an uppercase first letter.
-fn is_exported(name: &str) -> bool {
-    name.chars().next().is_some_and(char::is_uppercase)
-}
-
 fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
     file.paragraphs(collect_doc_comments_above(node, &file.source).full)
 }
 
-/// A `Private` declaration whose head is every row of `node` outside the
-/// span of its `body` items.
+/// A declaration whose head is every row of `node` outside the span of
+/// its `body` items.
 fn decl_info(
     node: Node,
     file: &SourceFile,
@@ -104,15 +89,12 @@ fn decl_info(
         doc: doc_items(node, file),
         body,
         shape,
-        visibility: Visibility::Private,
         members: Vec::new(),
     }
 }
 
-fn callable(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
-    let name = file.text(node.child_by_field_name("name")?);
-    let receiver_exported = node.kind() != "method_declaration"
-        || receiver_type_name(node, &file.source).is_some_and(is_exported);
+fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
+    node.child_by_field_name("name")?;
     let start = *file.node_rows(node).start();
     let block = node.child_by_field_name("body");
     let open_row = block.map_or(start, |block| *file.node_rows(block).start());
@@ -133,12 +115,12 @@ fn callable(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
     if !decl.body.is_empty() {
         decl.head = (start..=open_row).collect();
     }
-    Some((decl, is_exported(name) && receiver_exported))
+    Some(decl)
 }
 
 /// `type`, `const` or `var`: a grouped declaration's body is its specs;
 /// a single struct or interface type's body is its fields / methods.
-fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
+fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     let start = *file.node_rows(node).start();
     let mut specs = Vec::new();
     let mut group = None;
@@ -157,11 +139,6 @@ fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
             _ => {}
         }
     }
-    let exported = specs.iter().any(|spec| {
-        let mut names = spec.walk();
-        spec.children_by_field_name("name", &mut names)
-            .any(|name| is_exported(file.text(name)))
-    });
     let (name_rows, body) = match group {
         Some(group) => {
             let mut inner = group.walk();
@@ -193,10 +170,7 @@ fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
     if name_rows.is_empty() {
         return None;
     }
-    Some((
-        decl_info(node, file, Shape::Whole, name_rows, body),
-        exported,
-    ))
+    Some(decl_info(node, file, Shape::Whole, name_rows, body))
 }
 
 fn is_spec(node: &Node) -> bool {
@@ -204,26 +178,6 @@ fn is_spec(node: &Node) -> bool {
         node.kind(),
         "type_spec" | "type_alias" | "const_spec" | "var_spec"
     )
-}
-
-/// Root identifier of a method's receiver type (`func (c *Context) …`
-/// → `Context`).
-fn receiver_type_name<'a>(method: Node, source: &'a str) -> Option<&'a str> {
-    let receiver = method.child_by_field_name("receiver")?;
-    let mut cursor = receiver.walk();
-    let parameter = receiver
-        .named_children(&mut cursor)
-        .find(|child| child.kind() == "parameter_declaration")?;
-    let mut ty = parameter.child_by_field_name("type")?;
-    loop {
-        ty = match ty.kind() {
-            "type_identifier" => return Some(&source[ty.byte_range()]),
-            "pointer_type" => ty.named_child(0)?,
-            "generic_type" => ty.child_by_field_name("type")?,
-            "qualified_type" => ty.child_by_field_name("name")?,
-            _ => return None,
-        };
-    }
 }
 
 #[cfg(test)]
@@ -277,10 +231,8 @@ func Exported(
         );
         assert_eq!(run.doc, [Item::new([4])]);
         assert_eq!(body_rows(run), [vec![8, 9], vec![10]]);
-        assert_eq!(run.visibility, Visibility::Public);
         let helper = &model.decls[1];
         assert_eq!((helper.head.as_slice(), helper.body.len()), (&[13][..], 0));
-        assert_eq!(helper.visibility, Visibility::Private);
         let shared_open_row = &model.decls[2];
         assert_eq!(shared_open_row.head, [15, 16, 17]);
         assert_eq!(body_rows(shared_open_row), [vec![18]]);
@@ -305,10 +257,8 @@ var x, Y = 1, 2
         assert_eq!(group.name_rows, [5, 6]);
         assert_eq!(group.head, [3, 7]);
         assert_eq!(body_rows(group), [vec![4, 5], vec![6]]);
-        assert_eq!(group.visibility, Visibility::Public);
         let single = &model.decls[1];
         assert_eq!((single.head.as_slice(), single.body.len()), (&[9][..], 0));
-        assert_eq!(single.visibility, Visibility::Public);
     }
 
     #[test]
@@ -333,7 +283,5 @@ func (c *config) load() {}
             (vec![3, 8], Shape::Whole)
         );
         assert_eq!(body_rows(config), [vec![4], vec![6, 7]]);
-        assert_eq!(config.visibility, Visibility::Public, "package main");
-        assert_eq!(model.decls[1].visibility, Visibility::Public);
     }
 }

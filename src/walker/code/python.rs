@@ -6,7 +6,6 @@
 //!   starts at its first decorator; its name row is the `def` / `class`
 //!   row.
 //! - **Doc**: the docstring opening a `def` / `class` body.
-//! - **Visibility**: a leading `_` that isn't a `__dunder__` is `Private`.
 //! - **Module doc**: an entry file's (`__init__.py`, `__main__.py`)
 //!   module docstring, and dunder assignments other than `__all__`.
 //!   Other modules' docstrings and leading `#` comments (shebangs, license
@@ -20,8 +19,8 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::SourceFile;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
-use crate::walker::{WalkCtx, name_of};
+use super::model::{DeclInfo, FileModel, Item, Shape};
+use crate::walker::WalkCtx;
 
 pub(super) const EXTENSIONS: &[&str] = &["py"];
 
@@ -51,15 +50,12 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         let rows = || Item::new(file.node_rows(node));
         match node.kind() {
             "function_definition" | "class_definition" | "decorated_definition" => {
-                model.decls.extend(definition(file, node, None));
+                model.decls.extend(definition(file, node, false));
             }
             "import_from_statement" if is_package_init => model.reexports.push(rows()),
             "type_alias_statement" => {
-                if let Some(left) = node.child_by_field_name("left") {
-                    let name = file.text(left).split('[').next().unwrap_or_default();
-                    model
-                        .decls
-                        .push(whole_statement(file, node, name_visibility(name.trim())));
+                if node.child_by_field_name("left").is_some() {
+                    model.decls.push(whole_statement(file, node));
                 }
             }
             "expression_statement" => match assignment_target(file, node) {
@@ -67,11 +63,7 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                     model.reexports.push(rows());
                 }
                 Some(Assignment::Plain(name)) if is_dunder(name) => model.module_doc.push(rows()),
-                Some(Assignment::Plain(name)) => {
-                    model
-                        .decls
-                        .push(whole_statement(file, node, name_visibility(name)));
-                }
+                Some(Assignment::Plain(_)) => model.decls.push(whole_statement(file, node)),
                 Some(Assignment::Augmented(_)) | None => {}
             },
             _ => {}
@@ -94,14 +86,6 @@ fn file_name(path: &Path) -> Option<&str> {
 
 fn is_dunder(name: &str) -> bool {
     name.len() >= 4 && name.starts_with("__") && name.ends_with("__")
-}
-
-fn name_visibility(name: &str) -> Visibility {
-    if name.starts_with('_') && !is_dunder(name) {
-        Visibility::Private
-    } else {
-        Visibility::Public
-    }
 }
 
 enum Assignment<'a> {
@@ -138,7 +122,7 @@ fn is_docstring(node: Node) -> bool {
 }
 
 /// A constant or alias: all head, no body.
-fn whole_statement(file: &SourceFile, node: Node, visibility: Visibility) -> DeclInfo {
+fn whole_statement(file: &SourceFile, node: Node) -> DeclInfo {
     let rows = file.node_rows(node);
     DeclInfo {
         name_rows: vec![*rows.start()],
@@ -146,27 +130,23 @@ fn whole_statement(file: &SourceFile, node: Node, visibility: Visibility) -> Dec
         doc: Vec::new(),
         body: Vec::new(),
         shape: Shape::Whole,
-        visibility,
         members: Vec::new(),
     }
 }
 
 /// A `def` or `class`, possibly wrapped in `decorated_definition`.
-/// `container` is the enclosing class's visibility for a method; a class
-/// inside a class is not a member and yields `None` there.
-fn definition(file: &SourceFile, unit: Node, container: Option<Visibility>) -> Option<DeclInfo> {
+/// A class inside a class (`in_class`) is not a member and yields `None`.
+fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo> {
     let inner = if unit.kind() == "decorated_definition" {
         unit.child_by_field_name("definition")?
     } else {
         unit
     };
-    let shape = match (inner.kind(), container) {
+    let shape = match (inner.kind(), in_class) {
         ("function_definition", _) => Shape::Callable,
-        ("class_definition", None) => Shape::Whole,
+        ("class_definition", false) => Shape::Whole,
         _ => return None,
     };
-    let own = name_visibility(name_of(inner, &file.source).unwrap_or_default());
-    let visibility = container.map_or(own, |container| container.min(own));
     let name_row = inner.start_position().row + 1;
     let head_end = colon_row(inner).max(name_row);
     let head: Vec<usize> = (unit.start_position().row + 1..=head_end).collect();
@@ -184,7 +164,7 @@ fn definition(file: &SourceFile, unit: Node, container: Option<Visibility>) -> O
     }
     let (body, members) = match shape {
         Shape::Callable => (statement_items(file, &statements, &excluded), Vec::new()),
-        Shape::Whole => class_body(file, &statements, &excluded, visibility),
+        Shape::Whole => class_body(file, &statements, &excluded),
     };
     Some(DeclInfo {
         name_rows: vec![name_row],
@@ -192,7 +172,6 @@ fn definition(file: &SourceFile, unit: Node, container: Option<Visibility>) -> O
         doc,
         body,
         shape,
-        visibility,
         members,
     })
 }
@@ -274,13 +253,12 @@ fn class_body(
     file: &SourceFile,
     statements: &[Node],
     excluded: &HashSet<usize>,
-    visibility: Visibility,
 ) -> (Vec<Item>, Vec<DeclInfo>) {
     let mut body = Vec::new();
     let mut members = Vec::new();
     let mut run: Vec<Node> = Vec::new();
     for node in statements {
-        if let Some(member) = definition(file, *node, Some(visibility)) {
+        if let Some(member) = definition(file, *node, true) {
             let last_statement_end = run
                 .iter()
                 .rfind(|pending| pending.kind() != "comment")
@@ -429,7 +407,6 @@ def greet(
             panic!("one decl: {:?}", model.decls);
         };
         assert_eq!(decl.shape, Shape::Callable);
-        assert_eq!(decl.visibility, Visibility::Public);
         assert_eq!(decl.name_rows, vec![3]);
         assert_eq!(decl.head, vec![1, 2, 3, 4, 5]);
         assert_eq!(rows(&decl.doc), vec![vec![6], vec![8, 9]]);
@@ -451,21 +428,14 @@ def _helper(x):  # noqa
         let summary: Vec<_> = model
             .decls
             .iter()
-            .map(|decl| {
-                (
-                    decl.head.clone(),
-                    decl.doc.len(),
-                    rows(&decl.body),
-                    decl.visibility,
-                )
-            })
+            .map(|decl| (decl.head.clone(), decl.doc.len(), rows(&decl.body)))
             .collect();
         assert_eq!(
             summary,
             vec![
-                (vec![1], 0, vec![], Visibility::Public),
-                (vec![2], 0, vec![], Visibility::Public),
-                (vec![3], 0, vec![vec![4]], Visibility::Private),
+                (vec![1], 0, vec![]),
+                (vec![2], 0, vec![]),
+                (vec![3], 0, vec![vec![4]]),
             ]
         );
     }
@@ -525,49 +495,18 @@ class Config(Base):  # the config
                     member.head.clone(),
                     rows(&member.doc),
                     rows(&member.body),
-                    member.visibility,
                 )
             })
             .collect();
         assert_eq!(
             members,
             vec![
-                (
-                    vec![11],
-                    vec![10, 11],
-                    vec![vec![12]],
-                    vec![vec![13]],
-                    Visibility::Public
-                ),
-                (
-                    vec![15],
-                    vec![15],
-                    vec![],
-                    vec![vec![16]],
-                    Visibility::Public
-                ),
-                (vec![18], vec![18], vec![], vec![], Visibility::Private),
+                (vec![11], vec![10, 11], vec![vec![12]], vec![vec![13]],),
+                (vec![15], vec![15], vec![], vec![vec![16]],),
+                (vec![18], vec![18], vec![], vec![]),
             ]
         );
         assert!(class.members.iter().all(|member| member.members.is_empty()));
-    }
-
-    #[test]
-    fn code_python_private_class_members_are_private() {
-        let model = extract_source(
-            "m.py",
-            "class _Impl:\n    def run(self):\n        pass\n    def __repr__(self):\n        return ''\n",
-        );
-        let [class] = model.decls.as_slice() else {
-            panic!("one decl: {:?}", model.decls);
-        };
-        assert_eq!(class.visibility, Visibility::Private);
-        assert!(
-            class
-                .members
-                .iter()
-                .all(|member| member.visibility == Visibility::Private)
-        );
     }
 
     #[test]
@@ -590,21 +529,14 @@ if TYPE_CHECKING:
         let summary: Vec<_> = model
             .decls
             .iter()
-            .map(|decl| {
-                (
-                    decl.name_rows.clone(),
-                    decl.head.clone(),
-                    decl.shape,
-                    decl.visibility,
-                )
-            })
+            .map(|decl| (decl.name_rows.clone(), decl.head.clone(), decl.shape))
             .collect();
         assert_eq!(
             summary,
             vec![
-                (vec![1], vec![1, 2, 3], Shape::Whole, Visibility::Public),
-                (vec![4], vec![4], Shape::Whole, Visibility::Private),
-                (vec![8], vec![8], Shape::Whole, Visibility::Public),
+                (vec![1], vec![1, 2, 3], Shape::Whole),
+                (vec![4], vec![4], Shape::Whole),
+                (vec![8], vec![8], Shape::Whole),
             ]
         );
         assert!(model.decls.iter().all(|decl| decl.body.is_empty()));
@@ -619,18 +551,8 @@ _first = second = 0
 ";
         let model = extract_source("pkg/__main__.py", source);
         assert_eq!(rows(&model.module_doc), vec![vec![1]]);
-        let summary: Vec<_> = model
-            .decls
-            .iter()
-            .map(|decl| (decl.head.clone(), decl.visibility))
-            .collect();
-        assert_eq!(
-            summary,
-            vec![
-                (vec![2], Visibility::Public),
-                (vec![3], Visibility::Private),
-            ]
-        );
+        let summary: Vec<_> = model.decls.iter().map(|decl| decl.head.clone()).collect();
+        assert_eq!(summary, vec![vec![2], vec![3]]);
     }
 
     #[test]

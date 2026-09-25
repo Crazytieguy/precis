@@ -161,10 +161,6 @@ pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
     }
 }
 
-/// Code-engine factor for a declaration outside its language's public
-/// API, on its `Decl`, `Doc` and `Body` batches.
-pub const CODE_PRIVATE_FACTOR: f64 = 0.65;
-
 /// Down-weight a batch by filesystem depth — depth 0/1 unpenalized.
 pub fn depth_factor(depth: usize) -> f64 {
     1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.35)

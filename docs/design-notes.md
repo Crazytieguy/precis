@@ -277,7 +277,7 @@ must not undo:
   rosters no longer win on size alone, and a long public roster is
   not capped below its short peers (+0.006 at 3000 over the capped
   `roster_mass_factor`). Per-language pricing enters only through
-  `is_entrypoint`, `file_weight` and visibility.
+  `is_entrypoint`, `file_weight` and what `extract` hides.
 
 ## Open items
 

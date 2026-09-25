@@ -111,16 +111,6 @@ changelog/
     1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
   README.rst
   _template.rst
-    1→{% for section in sections %}
-    2→{% set underline = "-" %}
-    3→{% if section %}
-    4→{{section}}
-    5→{{ underline * section|length }}{% set underline = "~" %}
-    6→
-    7→{% endif %}
-    8→{% if sections[section] %}
-    9→{% for category, val in definitions.items() if category in sections[section] %}
-    …
 codecov.yml
 docs/
   _static/
@@ -300,17 +290,17 @@ src/
       85→    caller_kwargs: Mapping[str, object],
       86→    firstresult: bool,
       87→) -> object | list[object]:
+      88→    """Execute a call into multiple python functions/methods and return the
+      89→    result(s).
+      90→
+      91→    ``caller_kwargs`` comes from HookCaller.__call__().
+      92→    """
       …
     _hooks.py
     _manager.py
     _result.py
     _tracing.py
     _warnings.py
-      …
-      4→class PluggyWarning(UserWarning):
-      …
-      11→class PluggyTeardownRaisedWarning(PluggyWarning):
-      …
     py.typed (empty)
 testing/
   benchmark.py

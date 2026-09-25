@@ -9,8 +9,7 @@
 //! - Function definitions are `Callable`; prototypes, typedefs, structs /
 //!   unions / enums, global variables and macros are `Whole`, with one
 //!   body [`Item`] per field or enumerator.
-//! - A non-`inline` `static` in a header is hidden; a `static` in a `.c`
-//!   file is `Private`; everything else is `Public`.
+//! - A non-`inline` `static` in a header is hidden.
 //! - A declaration's doc is the comment run directly above it, never
 //!   reaching into the file's leading comment run (the banner). The
 //!   banner, in C most often a license or authorship notice, is not
@@ -22,7 +21,7 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::SourceFile;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use crate::walker::{WalkCtx, collect_doc_comments_above_filtered};
 
 pub(super) const EXTENSIONS: &[&str] = &["c", "h"];
@@ -101,9 +100,10 @@ fn decl_info(
     // A header's `static inline` definition is the header-only accessor
     // idiom: part of the API. Any other `static` in a header is an
     // implementation leak.
-    let internal = has_storage_class(node, source, "static")
-        && !(in_header && has_storage_class(node, source, "inline"));
-    if internal && in_header {
+    if in_header
+        && has_storage_class(node, source, "static")
+        && !has_storage_class(node, source, "inline")
+    {
         return None;
     }
     let name_rows = name_rows(node);
@@ -121,11 +121,6 @@ fn decl_info(
         doc: comment_paragraphs(file, doc_rows),
         body,
         shape,
-        visibility: if internal {
-            Visibility::Private
-        } else {
-            Visibility::Public
-        },
         members: Vec::new(),
     })
 }
@@ -673,12 +668,7 @@ typedef int bar_t;
 ";
         let wrapped = model("api.h", wrapped);
         assert_eq!(name_rows_of(&wrapped), vec![vec![5], vec![6]]);
-        assert!(
-            wrapped
-                .decls
-                .iter()
-                .all(|decl| decl.shape == Shape::Whole && decl.visibility == Visibility::Public)
-        );
+        assert!(wrapped.decls.iter().all(|decl| decl.shape == Shape::Whole));
     }
 
     #[test]
@@ -753,33 +743,22 @@ int after;
     }
 
     #[test]
-    fn c_statics_are_hidden_in_headers_and_private_in_sources() {
+    fn c_statics_are_hidden_in_headers_only() {
         let source = "\
 static inline int sdslen(const char *s) { return 0; }
 static int helper(void) { return 0; }
 static const int table_size = 4;
 int api(void);
 ";
-        let visibilities = |file_name| {
+        let listed = |file_name| {
             model(file_name, source)
                 .decls
                 .iter()
-                .map(|decl| (decl.name_rows[0], decl.visibility))
+                .map(|decl| decl.name_rows[0])
                 .collect::<Vec<_>>()
         };
-        assert_eq!(
-            visibilities("sds.h"),
-            vec![(1, Visibility::Public), (4, Visibility::Public)]
-        );
-        assert_eq!(
-            visibilities("sds.c"),
-            vec![
-                (1, Visibility::Private),
-                (2, Visibility::Private),
-                (3, Visibility::Private),
-                (4, Visibility::Public),
-            ]
-        );
+        assert_eq!(listed("sds.h"), vec![1, 4]);
+        assert_eq!(listed("sds.c"), vec![1, 2, 3, 4]);
     }
 
     #[test]
@@ -812,7 +791,6 @@ int add(int a,
             panic!("{:?}", model.decls);
         };
         assert_eq!(sdsnewlen.shape, Shape::Callable);
-        assert_eq!(sdsnewlen.visibility, Visibility::Private);
         assert_eq!(sdsnewlen.name_rows, vec![3, 4]);
         assert_eq!(sdsnewlen.head, vec![3, 4, 5, 6]);
         assert_eq!(

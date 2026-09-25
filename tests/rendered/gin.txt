@@ -175,6 +175,9 @@ debug.go
   100→func debugPrintWARNINGSetHTMLTemplate() {
   …
   110→func debugPrintError(err error) {
+  111→	if err != nil && IsDebugging() {
+  112→		fmt.Fprintf(DefaultErrorWriter, "[GIN-debug] [ERROR] %v\n", err)
+  113→	}
   …
 debug_test.go
 deprecated.go
@@ -256,15 +259,6 @@ middleware_test.go
 mode.go
 mode_test.go
 path.go
-  …
-  8→const stackBufSize = 128
-  …
-  23→func cleanPath(p string) string {
-  …
-  128→func bufApp(buf *[]byte, s string, w int, c byte) {
-  …
-  155→func removeRepeatedChar(s string, char byte) string {
-  …
 path_test.go
 recovery.go
 recovery_test.go

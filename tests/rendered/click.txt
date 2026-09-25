@@ -270,6 +270,26 @@ src/
       …
       103→class _NamedTextIOWrapper(io.TextIOWrapper):
       …
+      117→    def __init__(
+      118→        self,
+      119→        buffer: t.BinaryIO,
+      120→        name: str,
+      121→        mode: str,
+      122→        *,
+      123→        original_fd: int = -1,
+      124→        **kwargs: t.Any,
+      125→    ) -> None:
+      …
+      131→    def close(self) -> None:
+      …
+      139→    def fileno(self) -> int:
+      …
+      154→    @property
+      155→    def name(self) -> str:
+      …
+      158→    @property
+      159→    def mode(self) -> str:
+      …
       163→def make_input_stream(
       164→    input: str | bytes | t.IO[t.Any] | None, charset: str
       165→) -> t.BinaryIO:
@@ -283,7 +303,6 @@ src/
       …
       238→    @property
       239→    def stdout(self) -> str:
-      240→        """The standard output as unicode string."""
       …
       245→    @property
       246→    def stderr(self) -> str:
@@ -291,23 +310,6 @@ src/
       256→    def __repr__(self) -> str:
       …
       261→class CliRunner:
-      …
-      283→    def __init__(
-      …
-      295→    def get_default_prog_name(self, cli: Command) -> str:
-      …
-      302→    def make_env(
-      303→        self, overrides: cabc.Mapping[str, str | None] | None = None
-      304→    ) -> cabc.Mapping[str, str | None]:
-      …
-      312→    def isolation(
-      …
-      525→    def invoke(
-      …
-      638→    @contextlib.contextmanager
-      639→    def isolated_filesystem(
-      640→        self, temp_dir: str | os.PathLike[str] | None = None
-      641→    ) -> cabc.Iterator[str]:
       …
     types.py
     utils.py

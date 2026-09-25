@@ -132,38 +132,7 @@ hooks/
     175→}
     177→module.exports = hook
   images.hook.js
-    …
-    5→class hook extends baseHook {
-    6→  init () {
-    …
-    27→  getSelectedItem () {
-    28→    if (!this.widgetsRepo.has('imageList')) {
-    29→      return null
-    30→    }
-    31→
-    32→    return this.widgetsRepo.get('imageList').getSelectedImage()
-    …
-    35→  notifyOnImageUpdate () {
-    …
-    65→  removeImage () {
-    …
-    95→}
-    97→module.exports = hook
   services.hook.js
-    …
-    5→class hook extends baseHook {
-    6→  init () {
-    …
-    46→  setupSwitchFocus () {
-    …
-    61→  notifyOnServiceInfo () {
-    …
-    72→  getFreshData (cb) {
-    …
-    86→  getSelectedItem () {
-    …
-    93→}
-    95→module.exports = hook
   shell.hook.js
 index.js
   …
@@ -172,8 +141,32 @@ index.js
   47→function initDockerConnection () {
   …
   72→function initScreens (utils) {
+  73→  return new Promise((resolve, reject) => {
+  74→    let screen
+  75→    try {
+  76→      screen = new Screen(utils)
+  77→      screen.init()
+  78→    } catch (err) {
+  79→      return reject(err)
+  80→    }
+  81→
+  82→    return resolve(screen)
+  83→  })
   …
   86→function exitError (err) {
+  87→  cli.showUsage()
+  88→
+  89→  if (err && err.message) {
+  90→    console.log('\x1b[31m')
+  91→    console.trace(err)
+  92→
+  93→    if (err.message === 'Unable to determine the domain name') {
+  94→      console.log('-> check your connection options to the docker daemon and confirm containers exist')
+  95→    }
+  96→    console.log('\x1b[0m')
+  97→  }
+  98→
+  99→  process.exit(-1)
   …
 lib/
   modes.js

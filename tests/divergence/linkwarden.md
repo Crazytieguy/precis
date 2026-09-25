@@ -226,52 +226,53 @@ Score(3000)=0.734 I=0.891 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 6542 |  | 257 | packages/router — the links, collections and tags hook exports | 4.6 |  | 0.798 |
 | ns | 6726 |  | 184 | packages/router — export lines of the remaining ten hook modules | 4.7 | 4.6 | 0.792 |
 | walker |  | 6738 | 310 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.793 |
-| walker |  | 6775 | 37 | Code::CodeKey { rung: Names, file: packages/prisma/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.793 |
-| walker |  | 6851 | 76 | Code::CodeKey { rung: Decl, file: packages/prisma/index.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.799 |
-| ns | 6892 |  | 166 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.804 |
+| walker |  | 6839 | 101 | Code::CodeKey { rung: Body, file: apps/worker/index.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.793 |
+| walker |  | 6876 | 37 | Code::CodeKey { rung: Names, file: packages/prisma/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.793 |
+| ns | 6892 |  | 166 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.798 |
+| walker |  | 6952 | 76 | Code::CodeKey { rung: Decl, file: packages/prisma/index.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.804 |
 | ns | 7161 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.791 |
-| walker |  | 7228 | 377 | Json::Scripts { file: package.json } |  |  | 0.818 |
-| walker |  | 7231 | 3 | Fs::DirListing { dir: apps/web/scripts } |  |  | 0.818 |
+| walker |  | 7329 | 377 | Json::Scripts { file: package.json } |  |  | 0.818 |
+| walker |  | 7332 | 3 | Fs::DirListing { dir: apps/web/scripts } |  |  | 0.818 |
 | ns | 7354 |  | 193 | archiveHandler's signature and its SSRF / skip-preservation guard | 5.3 |  | 0.807 |
-| walker |  | 7548 | 317 | Fs::DirListing { dir: apps/web/components } |  |  | 0.810 |
-| walker |  | 7557 | 9 | Fs::DirListing { dir: apps/web/components/LinkViews } |  |  | 0.810 |
-| walker |  | 7573 | 16 | Fs::DirListing { dir: apps/web/components/InputSelect } |  |  | 0.810 |
-| walker |  | 7599 | 26 | Fs::DirListing { dir: apps/web/components/Preservation } |  |  | 0.810 |
-| ns | 7607 |  | 253 | Every UI page route under apps/web/pages | 6.1 |  | 0.818 |
-| walker |  | 7640 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.819 |
-| walker |  | 7702 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.819 |
-| walker |  | 7870 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.821 |
-| walker |  | 7958 | 88 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.821 |
-| ns | 7965 |  | 358 | The flat components/ directory and the ui/ primitives | 6.2 |  | 0.829 |
-| walker |  | 8062 | 104 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.829 |
-| walker |  | 8104 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.829 |
-| walker |  | 8116 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.829 |
-| walker |  | 8158 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.829 |
-| walker |  | 8170 | 12 | Json::Entry { file: packages/router/package.json } |  |  | 0.829 |
-| walker |  | 8212 | 42 | Json::Identity { file: packages/types/package.json } |  |  | 0.830 |
-| walker |  | 8224 | 12 | Json::Entry { file: packages/types/package.json } |  |  | 0.830 |
-| ns | 8246 |  | 281 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.834 |
-| walker |  | 8267 | 43 | Json::Dependencies { file: packages/types/package.json } |  |  | 0.834 |
-| walker |  | 8310 | 43 | Json::Identity { file: apps/worker/package.json } |  |  | 0.836 |
-| walker |  | 8322 | 12 | Json::Entry { file: apps/worker/package.json } |  |  | 0.836 |
-| walker |  | 8380 | 58 | Json::Scripts { file: apps/worker/package.json } |  |  | 0.836 |
-| walker |  | 8423 | 43 | Json::Identity { file: packages/filesystem/package.json } |  |  | 0.838 |
-| walker |  | 8435 | 12 | Json::Entry { file: packages/filesystem/package.json } |  |  | 0.838 |
-| walker |  | 8469 | 34 | Json::Dependencies { file: packages/filesystem/package.json } |  |  | 0.838 |
-| ns | 8473 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.835 |
-| walker |  | 8512 | 43 | Json::Identity { file: packages/prisma/package.json } |  |  | 0.837 |
-| walker |  | 8539 | 27 | Json::Entry { file: packages/prisma/package.json } |  |  | 0.837 |
-| walker |  | 8610 | 71 | Json::Scripts { file: packages/prisma/package.json } |  |  | 0.837 |
-| walker |  | 8656 | 46 | Json::Dependencies { file: packages/prisma/package.json } |  |  | 0.837 |
-| walker |  | 8702 | 46 | Json::Identity { file: apps/mobile/package.json } |  |  | 0.840 |
-| ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.827 |
-| walker |  | 8714 | 12 | Json::Entry { file: apps/mobile/package.json } |  |  | 0.827 |
-| walker |  | 8809 | 95 | Json::Scripts { file: apps/mobile/package.json } |  |  | 0.827 |
+| ns | 7607 |  | 253 | Every UI page route under apps/web/pages | 6.1 |  | 0.814 |
+| walker |  | 7649 | 317 | Fs::DirListing { dir: apps/web/components } |  |  | 0.818 |
+| walker |  | 7658 | 9 | Fs::DirListing { dir: apps/web/components/LinkViews } |  |  | 0.818 |
+| walker |  | 7674 | 16 | Fs::DirListing { dir: apps/web/components/InputSelect } |  |  | 0.818 |
+| walker |  | 7700 | 26 | Fs::DirListing { dir: apps/web/components/Preservation } |  |  | 0.818 |
+| walker |  | 7741 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.819 |
+| walker |  | 7803 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.819 |
+| ns | 7965 |  | 358 | The flat components/ directory and the ui/ primitives | 6.2 |  | 0.826 |
+| walker |  | 7971 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.829 |
+| walker |  | 8059 | 88 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.829 |
+| walker |  | 8163 | 104 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.829 |
+| walker |  | 8205 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.829 |
+| walker |  | 8217 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.829 |
+| ns | 8246 |  | 281 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.833 |
+| walker |  | 8259 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.834 |
+| walker |  | 8271 | 12 | Json::Entry { file: packages/router/package.json } |  |  | 0.834 |
+| walker |  | 8313 | 42 | Json::Identity { file: packages/types/package.json } |  |  | 0.834 |
+| walker |  | 8325 | 12 | Json::Entry { file: packages/types/package.json } |  |  | 0.834 |
+| walker |  | 8368 | 43 | Json::Dependencies { file: packages/types/package.json } |  |  | 0.834 |
+| walker |  | 8411 | 43 | Json::Identity { file: apps/worker/package.json } |  |  | 0.836 |
+| walker |  | 8423 | 12 | Json::Entry { file: apps/worker/package.json } |  |  | 0.836 |
+| ns | 8473 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.833 |
+| walker |  | 8481 | 58 | Json::Scripts { file: apps/worker/package.json } |  |  | 0.833 |
+| walker |  | 8524 | 43 | Json::Identity { file: packages/filesystem/package.json } |  |  | 0.835 |
+| walker |  | 8536 | 12 | Json::Entry { file: packages/filesystem/package.json } |  |  | 0.835 |
+| walker |  | 8570 | 34 | Json::Dependencies { file: packages/filesystem/package.json } |  |  | 0.835 |
+| walker |  | 8613 | 43 | Json::Identity { file: packages/prisma/package.json } |  |  | 0.837 |
+| walker |  | 8640 | 27 | Json::Entry { file: packages/prisma/package.json } |  |  | 0.837 |
+| walker |  | 8711 | 71 | Json::Scripts { file: packages/prisma/package.json } |  |  | 0.837 |
+| ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.825 |
+| walker |  | 8757 | 46 | Json::Dependencies { file: packages/prisma/package.json } |  |  | 0.825 |
+| walker |  | 8803 | 46 | Json::Identity { file: apps/mobile/package.json } |  |  | 0.827 |
+| walker |  | 8815 | 12 | Json::Entry { file: apps/mobile/package.json } |  |  | 0.827 |
+| walker |  | 8910 | 95 | Json::Scripts { file: apps/mobile/package.json } |  |  | 0.827 |
 | ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.830 |
 | ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.824 |
 | ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.815 |
 | ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.818 |
-| walker |  | 9628 | 819 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
 | ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.822 |
-| walker |  | 9876 | 248 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.822 |
+| walker |  | 9729 | 819 | Plaintext::Whole { file: Dockerfile } |  |  | 0.822 |
 | ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.825 |
+| walker |  | 9977 | 248 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.825 |

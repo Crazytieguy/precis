@@ -211,6 +211,12 @@ source/
     …
     39→}
     41→const chalkFactory = options => {
+    42→	const chalk = (...strings) => strings.join(' ');
+    43→	applyOptions(chalk, options);
+    44→
+    45→	Object.setPrototypeOf(chalk, createChalk.prototype);
+    46→
+    47→	return chalk;
     …
     50→function createChalk(options) {
     51→	return chalkFactory(options);

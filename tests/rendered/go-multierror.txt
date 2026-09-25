@@ -81,6 +81,14 @@ flatten.go
   17→	return flatErr
   …
   20→func flatten(err error, flatErr *Error) {
+  21→	switch err := err.(type) {
+  22→	case *Error:
+  23→		for _, e := range err.Errors {
+  24→			flatten(e, flatErr)
+  25→		}
+  26→	default:
+  27→		flatErr.Errors = append(flatErr.Errors, err)
+  28→	}
   …
 flatten_test.go
 format.go
@@ -124,17 +132,6 @@ group.go
   18→// If the function returns an error it is added to the group multierror which
   19→// is returned by Wait.
   20→func (g *Group) Go(f func() error) {
-  21→	g.wg.Add(1)
-  22→
-  23→	go func() {
-  24→		defer g.wg.Done()
-  25→
-  26→		if err := f(); err != nil {
-  27→			g.mutex.Lock()
-  28→			g.err = Append(g.err, err)
-  29→			g.mutex.Unlock()
-  30→		}
-  31→	}()
   …
   34→// Wait blocks until all function calls from the Go method have returned, then
   35→// returns the multierror.
@@ -216,6 +213,7 @@ multierror.go
   …
   121→// Is implements errors.Is by comparing the current value directly.
   122→func (e chain) Is(target error) bool {
+  123→	return errors.Is(e[0], target)
   …
 multierror_test.go
 prefix.go

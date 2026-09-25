@@ -172,6 +172,13 @@ src/
     29→fn run() -> Result<()> {
     …
     53→fn main() {
+    54→    match run() {
+    55→        Ok(_) => {}
+    56→        Err(e) => {
+    57→            eprintln!("{} {:#}", "Error:".red(), e);
+    58→            std::process::exit(1);
+    59→        }
+    60→    }
     …
   options.rs
     …

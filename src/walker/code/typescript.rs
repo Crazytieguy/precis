@@ -4,8 +4,8 @@
 //! locals an `export { … }` clause, `export default X` or `export = X`
 //! names, and CommonJS `module.exports` / `exports.x` targets. Every
 //! top-level declaration of a `.d.ts` file is API (ambient declarations
-//! are implicitly exported). Other top-level declarations are `Private`
-//! in entrypoint files and hidden elsewhere. `export … from` and the statements that export a
+//! are implicitly exported). Other top-level declarations are listed in
+//! entrypoint files and hidden elsewhere. `export … from` and the statements that export a
 //! name without declaring it are re-exports, listed on the roster.
 //!
 //! Classes are containers: methods (and arrow-function fields) are
@@ -21,7 +21,7 @@ use std::path::{Path, PathBuf};
 use tree_sitter::Node;
 
 use super::SourceFile;
-use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
+use super::model::{DeclInfo, FileModel, Item, Shape};
 use crate::walker::WalkCtx;
 
 pub(super) const EXTENSIONS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
@@ -68,54 +68,42 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         .iter()
         .flat_map(|item| item.rows.iter().copied())
         .collect();
-    let unexported = if is_declaration_file(&file.path) {
-        Some(Visibility::Public)
-    } else if entrypoint {
-        Some(Visibility::Private)
-    } else {
-        None
-    };
+    let lists_unexported = entrypoint || is_declaration_file(&file.path);
 
     let mut model = FileModel {
         module_doc,
         ..FileModel::default()
     };
     for (statement, top_level) in classified {
-        let (node, visibility) = match top_level {
+        let node = match top_level {
             TopLevel::Reexport => {
                 model.reexports.push(Item::new(file.node_rows(statement)));
                 continue;
             }
-            TopLevel::Exported(node) => (node, Visibility::Public),
+            TopLevel::Exported(node) => node,
             TopLevel::Local(node) => {
                 let exported = declared_names(file, node)
                     .iter()
                     .any(|name| scan.public_names.contains(*name));
-                let visibility = if exported {
-                    Some(Visibility::Public)
-                } else {
-                    unexported
-                };
-                let Some(visibility) = visibility else {
+                if !exported && !lists_unexported {
                     continue;
-                };
-                (node, visibility)
+                }
+                node
             }
             TopLevel::Method { receiver, value }
                 if scan.public_names.contains(file.text(receiver)) =>
             {
-                (value, Visibility::Public)
+                value
             }
             TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
-        let parts = declaration_parts(file, statement, node, visibility);
+        let parts = declaration_parts(file, statement, node);
         model.decls.push(DeclInfo {
             name_rows: parts.name_rows,
             head: parts.head,
             doc: doc_items(file, statement, &module_doc_rows),
             body: parts.body,
             shape: parts.shape,
-            visibility,
             members: parts.members,
         });
     }
@@ -607,12 +595,7 @@ struct Parts {
 /// The parts of the declaration `statement` introduces, shaped by `node`
 /// (the declaration or exported value inside it). The head starts at
 /// `statement`, so it carries `export`, `declare` and decorators.
-fn declaration_parts(
-    file: &SourceFile,
-    statement: Node,
-    node: Node,
-    visibility: Visibility,
-) -> Parts {
+fn declaration_parts(file: &SourceFile, statement: Node, node: Node) -> Parts {
     let span = Span::of(file, statement);
     let name_row = name_row(node).unwrap_or(span.start);
     let kind = node.kind();
@@ -620,13 +603,7 @@ fn declaration_parts(
         return callable(file, span, name_row, node.child_by_field_name("body"));
     }
     if is_class_kind(kind) {
-        return class(
-            file,
-            span,
-            name_row,
-            node.child_by_field_name("body"),
-            visibility,
-        );
+        return class(file, span, name_row, node.child_by_field_name("body"));
     }
     match kind {
         "interface_declaration" | "enum_declaration" | "internal_module" | "module" => {
@@ -640,7 +617,7 @@ fn declaration_parts(
         "statement_block" => whole(file, span, vec![span.start], Some(node)),
         "lexical_declaration" | "variable_declaration" => match single_declarator(node) {
             Some(declarator) => match declarator.child_by_field_name("value") {
-                Some(value) => value_parts(file, span, name_row, value, visibility),
+                Some(value) => value_parts(file, span, name_row, value),
                 None => whole(file, span, vec![name_row], None),
             },
             None => {
@@ -653,7 +630,7 @@ fn declaration_parts(
                 whole(file, span, name_rows, None)
             }
         },
-        _ => value_parts(file, span, span.start, node, visibility),
+        _ => value_parts(file, span, span.start, node),
     }
 }
 
@@ -677,21 +654,9 @@ fn own_object_type(value: Node) -> Option<Node> {
 /// wrapped, `memo(forwardRef(() => { … }))`) is `Callable`; a class is a
 /// container; an object or array literal lists its entries; anything
 /// else is all head.
-fn value_parts(
-    file: &SourceFile,
-    span: Span,
-    name_row: usize,
-    value: Node,
-    visibility: Visibility,
-) -> Parts {
+fn value_parts(file: &SourceFile, span: Span, name_row: usize, value: Node) -> Parts {
     if is_class_kind(value.kind()) {
-        return class(
-            file,
-            span,
-            name_row,
-            value.child_by_field_name("body"),
-            visibility,
-        );
+        return class(file, span, name_row, value.child_by_field_name("body"));
     }
     if matches!(value.kind(), "object" | "array") {
         return whole(file, span, vec![name_row], Some(value));
@@ -844,13 +809,7 @@ fn entry_items(file: &SourceFile, block: Node, after_row: usize) -> Vec<Item> {
 /// A class as a container: the header and closing row as head, each
 /// visible field (with its comments) as a body item, and each visible
 /// method or arrow-function field as a member listed by its name row.
-fn class(
-    file: &SourceFile,
-    span: Span,
-    name_row: usize,
-    block: Option<Node>,
-    visibility: Visibility,
-) -> Parts {
+fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> Parts {
     let Some(block) = block else {
         return whole(file, span, vec![name_row], None);
     };
@@ -906,7 +865,6 @@ fn class(
                     doc: doc_items(file, anchor, &HashSet::new()),
                     body: parts.body,
                     shape: Shape::Callable,
-                    visibility,
                     members: Vec::new(),
                 });
             } else {
@@ -1066,13 +1024,12 @@ mod tests {
         items.iter().map(|item| item.rows.clone()).collect()
     }
 
-    /// One line per declaration (members indented): visibility, shape,
-    /// name rows, head, doc and body.
+    /// One line per declaration (members indented): shape, name rows,
+    /// head, doc and body.
     fn describe(model: &FileModel) -> Vec<String> {
         fn line(decl: &DeclInfo, indent: &str) -> String {
             format!(
-                "{indent}{:?} {:?} name {:?} head {:?} doc {:?} body {:?}",
-                decl.visibility,
+                "{indent}{:?} name {:?} head {:?} doc {:?} body {:?}",
                 decl.shape,
                 decl.name_rows,
                 decl.head,
@@ -1111,9 +1068,7 @@ export function add(
         );
         assert_eq!(
             describe(&model),
-            [
-                "Public Callable name [6] head [6, 7, 8, 9] doc [[1, 2, 3], [4, 5]] body [[10, 11], [12]]"
-            ]
+            ["Callable name [6] head [6, 7, 8, 9] doc [[1, 2, 3], [4, 5]] body [[10, 11], [12]]"]
         );
     }
 
@@ -1126,8 +1081,8 @@ export function add(
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [1] head [1] doc [] body []",
-                "Public Callable name [2] head [2] doc [] body []",
+                "Callable name [1] head [1] doc [] body []",
+                "Callable name [2] head [2] doc [] body []",
             ]
         );
     }
@@ -1171,11 +1126,11 @@ export class Queue<T>
         assert_eq!(
             describe(&model),
             [
-                "Public Whole name [1] head [1, 2, 29] doc [] body [[3, 4], [10], [16], [24], [26]]",
-                "  Public Callable name [10] head [10] doc [] body [[11]]",
-                "  Public Callable name [16] head [15, 16] doc [[14]] body [[17]]",
-                "  Public Callable name [24] head [24] doc [] body []",
-                "  Public Callable name [26] head [26] doc [] body [[27]]",
+                "Whole name [1] head [1, 2, 29] doc [] body [[3, 4], [10], [16], [24], [26]]",
+                "  Callable name [10] head [10] doc [] body [[11]]",
+                "  Callable name [16] head [15, 16] doc [[14]] body [[17]]",
+                "  Callable name [24] head [24] doc [] body []",
+                "  Callable name [26] head [26] doc [] body [[27]]",
             ]
         );
     }
@@ -1198,11 +1153,11 @@ export abstract class Shape {
         assert_eq!(
             describe(&model),
             [
-                "Public Whole name [1] head [1, 8] doc [] body [[2], [3], [4], [5]]",
-                "  Public Callable name [2] head [2] doc [] body []",
-                "  Public Callable name [3] head [3] doc [] body []",
-                "  Public Callable name [4] head [4] doc [] body []",
-                "  Public Callable name [5] head [5] doc [] body [[6]]",
+                "Whole name [1] head [1, 8] doc [] body [[2], [3], [4], [5]]",
+                "  Callable name [2] head [2] doc [] body []",
+                "  Callable name [3] head [3] doc [] body []",
+                "  Callable name [4] head [4] doc [] body []",
+                "  Callable name [5] head [5] doc [] body [[6]]",
             ]
         );
     }
@@ -1213,8 +1168,8 @@ export abstract class Shape {
         assert_eq!(
             describe(&model),
             [
-                "Public Whole name [1] head [1] doc [] body [[1]]",
-                "  Public Callable name [1] head [1] doc [] body [[2]]",
+                "Whole name [1] head [1] doc [] body [[1]]",
+                "  Callable name [1] head [1] doc [] body [[2]]",
             ]
         );
     }
@@ -1249,12 +1204,12 @@ export type Picked = {
         assert_eq!(
             describe(&model),
             [
-                "Public Whole name [1] head [1, 5] doc [] body [[2, 3], [4]]",
-                "Public Whole name [6] head [6] doc [] body []",
-                "Public Whole name [7] head [7, 10] doc [] body [[8], [9]]",
-                "Public Whole name [11] head [11] doc [] body []",
-                "Public Whole name [12] head [12, 14] doc [] body [[13]]",
-                "Public Whole name [15] head [15, 17, 18, 19, 20] doc [] body [[16]]",
+                "Whole name [1] head [1, 5] doc [] body [[2, 3], [4]]",
+                "Whole name [6] head [6] doc [] body []",
+                "Whole name [7] head [7, 10] doc [] body [[8], [9]]",
+                "Whole name [11] head [11] doc [] body []",
+                "Whole name [12] head [12, 14] doc [] body [[13]]",
+                "Whole name [15] head [15, 17, 18, 19, 20] doc [] body [[16]]",
             ]
         );
     }
@@ -1276,7 +1231,7 @@ export const config = {
         );
         assert_eq!(
             describe(&model),
-            ["Public Whole name [1] head [1, 8] doc [] body [[2], [3, 4], [5, 6, 7]]"]
+            ["Whole name [1] head [1, 8] doc [] body [[2], [3, 4], [5, 6, 7]]"]
         );
     }
 
@@ -1297,27 +1252,18 @@ export { local, type Shape };
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [3] head [3] doc [] body []",
-                "Public Whole name [5] head [5] doc [] body []",
+                "Callable name [3] head [3] doc [] body []",
+                "Whole name [5] head [5] doc [] body []",
             ]
         );
     }
 
     #[test]
-    fn code_typescript_unexported_declarations_are_private_only_in_entrypoints() {
+    fn code_typescript_unexported_declarations_are_listed_only_in_entrypoints() {
         let source = "import x from 'x';\nconst helper = 1;\nexport const api = 2;\n";
-        let visibilities = |relative| {
-            extract_source(relative, source)
-                .decls
-                .iter()
-                .map(|decl| decl.visibility)
-                .collect::<Vec<_>>()
-        };
-        assert_eq!(visibilities("src/other.ts"), [Visibility::Public]);
-        assert_eq!(
-            visibilities("src/index.ts"),
-            [Visibility::Private, Visibility::Public]
-        );
+        let listed = |relative| extract_source(relative, source).decls.len();
+        assert_eq!(listed("src/other.ts"), 1);
+        assert_eq!(listed("src/index.ts"), 2);
         let script = extract_source(
             "scripts/build.js",
             "const fs = require('fs');\nfunction main() {}\nmain();\n",
@@ -1342,8 +1288,8 @@ export default instance;
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [1] head [1] doc [] body [[2]]",
-                "Public Whole name [4] head [4] doc [] body []",
+                "Callable name [1] head [1] doc [] body [[2]]",
+                "Whole name [4] head [4] doc [] body []",
             ]
         );
     }
@@ -1356,7 +1302,7 @@ export default instance;
         );
         assert_eq!(
             describe(&model),
-            ["Public Callable name [1] head [1] doc [] body [[2]]"]
+            ["Callable name [1] head [1] doc [] body [[2]]"]
         );
         let object = extract_source(
             "src/plugin.js",
@@ -1364,7 +1310,7 @@ export default instance;
         );
         assert_eq!(
             describe(&object),
-            ["Public Whole name [1] head [1, 4] doc [] body [[2], [3]]"]
+            ["Whole name [1] head [1, 4] doc [] body [[2], [3]]"]
         );
     }
 
@@ -1381,7 +1327,7 @@ export const Item = React.memo(React.forwardRef((props, ref) => {
         );
         assert_eq!(
             describe(&model),
-            ["Public Callable name [1] head [1] doc [] body [[2], [3]]"]
+            ["Callable name [1] head [1] doc [] body [[2], [3]]"]
         );
     }
 
@@ -1413,10 +1359,10 @@ exports.static = require('serve-static');
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [4] head [4] doc [] body []",
-                "Public Callable name [5] head [5] doc [] body []",
-                "Public Callable name [8] head [8] doc [] body [[9]]",
-                "Public Whole name [11] head [11] doc [] body []",
+                "Callable name [4] head [4] doc [] body []",
+                "Callable name [5] head [5] doc [] body []",
+                "Callable name [8] head [8] doc [] body [[9]]",
+                "Whole name [11] head [11] doc [] body []",
             ]
         );
     }
@@ -1440,8 +1386,8 @@ app.name = 'app';
         assert_eq!(
             describe(&model),
             [
-                "Public Whole name [1] head [1] doc [] body []",
-                "Public Callable name [2] head [2] doc [] body [[3]]",
+                "Whole name [1] head [1] doc [] body []",
+                "Callable name [2] head [2] doc [] body [[3]]",
             ]
         );
         let router = extract_source(
@@ -1451,8 +1397,8 @@ app.name = 'app';
         assert_eq!(
             describe(&router),
             [
-                "Public Callable name [1] head [1] doc [] body []",
-                "Public Callable name [2] head [2] doc [] body []",
+                "Callable name [1] head [1] doc [] body []",
+                "Callable name [2] head [2] doc [] body []",
             ]
         );
         for source in [
@@ -1463,9 +1409,9 @@ app.name = 'app';
             assert_eq!(
                 describe(&extract_source("lib/router.js", source))[..3],
                 [
-                    "Public Callable name [1] head [1] doc [] body []",
-                    "Public Callable name [2] head [2] doc [] body []",
-                    "Public Callable name [3] head [3] doc [] body []",
+                    "Callable name [1] head [1] doc [] body []",
+                    "Callable name [2] head [2] doc [] body []",
+                    "Callable name [3] head [3] doc [] body []",
                 ],
                 "{source}"
             );
@@ -1481,8 +1427,8 @@ app.name = 'app';
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [1] head [1] doc [] body [[2]]",
-                "Public Whole name [5] head [5] doc [] body []",
+                "Callable name [1] head [1] doc [] body [[2]]",
+                "Whole name [5] head [5] doc [] body []",
             ]
         );
     }
@@ -1502,9 +1448,9 @@ export function parse(input: unknown): Ast {
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [1] head [1] doc [] body []",
-                "Public Callable name [2] head [2] doc [] body []",
-                "Public Callable name [3] head [3] doc [] body [[4]]",
+                "Callable name [1] head [1] doc [] body []",
+                "Callable name [2] head [2] doc [] body []",
+                "Callable name [3] head [3] doc [] body [[4]]",
             ]
         );
     }
@@ -1528,10 +1474,10 @@ declare namespace Greeter {
         assert_eq!(
             describe(&model),
             [
-                "Public Callable name [1] head [1] doc [] body []",
-                "Public Whole name [2] head [2] doc [] body []",
-                "Public Whole name [3] head [3, 5] doc [] body [[4]]",
-                "Public Whole name [6] head [6, 9] doc [] body [[7], [8]]",
+                "Callable name [1] head [1] doc [] body []",
+                "Whole name [2] head [2] doc [] body []",
+                "Whole name [3] head [3, 5] doc [] body [[4]]",
+                "Whole name [6] head [6, 9] doc [] body [[7], [8]]",
             ]
         );
     }

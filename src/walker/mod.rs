@@ -568,12 +568,6 @@ pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
     node.start_position().row + text.trim_end().split('\n').count().max(1) - 1
 }
 
-/// Declared `name` field as source text, when the grammar exposes one.
-pub(crate) fn name_of<'a>(node: Node, source: &'a str) -> Option<&'a str> {
-    let name = node.child_by_field_name("name")?;
-    Some(&source[name.start_byte()..name.end_byte()])
-}
-
 /// Consecutive doc-comment siblings touching `node`. End-of-line
 /// comments on a previous sibling's line are skipped (they would
 /// trip non-ancestor overlap). `attribute_item` siblings are skipped
