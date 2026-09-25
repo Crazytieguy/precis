@@ -149,6 +149,8 @@ fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
         match child.kind() {
+            // `const` / `type` groups hold their `(` directly; `var` wraps
+            // its specs in a `var_spec_list`.
             "(" => group = Some(node),
             "var_spec_list" => {
                 group = Some(child);
@@ -175,7 +177,7 @@ fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
             (name_rows, body)
         }
         None => {
-            let members = specs
+            let field_list = specs
                 .first()
                 .and_then(|spec| spec.child_by_field_name("type"))
                 .and_then(|ty| match ty.kind() {
@@ -185,7 +187,7 @@ fn whole(node: Node, file: &SourceFile) -> Option<(DeclInfo, bool)> {
                     "interface_type" => Some(ty),
                     _ => None,
                 });
-            let body = members.map_or_else(Vec::new, |list| {
+            let body = field_list.map_or_else(Vec::new, |list| {
                 let mut inner = list.walk();
                 file.node_items(list.named_children(&mut inner), start)
             });

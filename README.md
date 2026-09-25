@@ -176,7 +176,7 @@ When the path is a git repository, `precis` honours `.gitignore` (including nest
 
 - **Rust** — public item signatures, module docs, manifest + workspace structure
 - **TypeScript / JavaScript** (`.ts`/`.tsx`/`.js`/`.mjs`/`.cjs`) — exported types, classes, functions; package entry points and workspace layout
-- **Go** — exported functions, methods, types; package doc ledes
+- **Go** — exported functions, methods, types; package docs
 - **C** (`.c`/`.h`) — functions, aggregates, macros; header surfaces
 - **Python** — classes, functions, `__init__.py` re-exports, module constants
 - **Lua** — module functions and identity tables

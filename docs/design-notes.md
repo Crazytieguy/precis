@@ -226,6 +226,33 @@ language.**
   default `--char-budget` is derived at runtime from the rendered help
   and the hook's wrapper text (`src/main.rs`).
 
+## Code engine (`walker::code`)
+
+Source languages share one declaration ladder: a language module's
+`extract` returns a `FileModel` (contract in `walker/code/model.rs`),
+and the engine alone builds batches from it. Decisions a new port
+must not undo:
+
+- **Five rungs:** `ModuleDoc`, `Names`, `Decl`, `Doc`, `Body`. A
+  `CodeKey` is identified by `(rung, file, decl index, chunk)`, never
+  by source line: a container and its first member can share a row.
+- **Engine-side normalization** (sort, dedup, blank-row drop,
+  `module_doc` strip, same-first-row merge, trim at the next sibling,
+  part disjointness) so `extract` can list rows loosely. The
+  next-sibling trim is load-bearing: without it a node that spills into
+  the next declaration claims its roster row and becomes its
+  predecessor.
+- **Ownership ledger, not assertions:** a row claimed outside the
+  claiming batch's predecessor chain is dropped and counted (asserted
+  zero in unit tests), so one extraction quirk loses a row instead of
+  failing a fixture run. A batch whose rows its ancestors already
+  render is skipped, and its descendants gate on the ancestor.
+- **Full-line spans only:** the engine emits no Ellipsis records.
+- **One value table:** `value::code_rung_value` per rung, one chunk
+  exponent (`DEFAULT_CONCAVITY_EXPONENT`), and `Names` ≥ `Decl` by
+  design (breadth first). Per-language pricing enters only through
+  `is_entrypoint`, `file_weight` and visibility.
+
 ## Open items
 
 - **Ellipsis atoms are credited on schedule content, not rendered

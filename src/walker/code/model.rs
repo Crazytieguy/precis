@@ -107,6 +107,11 @@
 //! engine's unit tests), so a violation loses content rather than
 //! failing the run.
 //!
+//! A row in no part of any declaration and in neither `module_doc` nor
+//! `reexports` is never rendered. That includes context wrapping several
+//! declarations (a C `#ifdef … #endif` guard, a TS `declare namespace X {`
+//! line) unless `extract` assigns its rows to a part.
+//!
 //! # What the engine does, so `extract` doesn't
 //!
 //! - Orders declarations (and each container's members) by **first row**,
