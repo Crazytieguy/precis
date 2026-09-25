@@ -1261,7 +1261,6 @@ fn oversize_chunk_bounds(
         OVERSIZE_CHUNK_TARGET_TOKENS,
         OVERSIZE_CHUNK_MIN_TAIL_TOKENS,
         |index| legal_split[index],
-        |_| true,
     );
     // The lede cut refines chunk 0 only: the earliest legal boundary
     // past `LEDE_TARGET_TOKENS`, taken when enough of that chunk

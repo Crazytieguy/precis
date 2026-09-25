@@ -166,7 +166,7 @@ impl Emitter<'_> {
                 continue;
             }
             let chunk_cost = costs[range.clone()].iter().sum();
-            let value = part_value * chunk_value_factor(chunk_cost, part_cost, ranges.len());
+            let value = part_value * chunk_value_factor(chunk_cost, part_cost);
             self.out.push(Batch {
                 key: BatchKey::Code(key.clone()),
                 predecessor: gate.map(BatchKey::Code),
@@ -245,17 +245,13 @@ fn normalize_siblings(decls: Vec<DeclInfo>, keep: &dyn Fn(usize) -> bool) -> Vec
             _ => merged.push((first, decl)),
         }
     }
-    let next_firsts: Vec<Option<usize>> = merged
-        .iter()
-        .skip(1)
-        .map(|(first, _)| Some(*first))
-        .chain(std::iter::once(None))
-        .collect();
+    let firsts: Vec<usize> = merged.iter().map(|(first, _)| *first).collect();
     merged
         .into_iter()
-        .zip(next_firsts)
-        .filter_map(|((_, mut decl), next_first)| {
-            let before_next = |row: usize| next_first.is_none_or(|limit| row < limit);
+        .enumerate()
+        .filter_map(|(index, (_, mut decl))| {
+            let next_first = firsts.get(index + 1);
+            let before_next = |row: usize| next_first.is_none_or(|&limit| row < limit);
             clean_decl(&mut decl, &before_next);
             let member_keep = |row: usize| keep(row) && before_next(row);
             decl.members = normalize_siblings(std::mem::take(&mut decl.members), &member_keep);
@@ -275,6 +271,10 @@ fn clean_decl(decl: &mut DeclInfo, keep: &dyn Fn(usize) -> bool) {
 
 fn clean_rows(rows: &mut Vec<usize>, keep: &dyn Fn(usize) -> bool) {
     rows.retain(|&row| keep(row));
+    sort_dedup(rows);
+}
+
+fn sort_dedup(rows: &mut Vec<usize>) {
     rows.sort_unstable();
     rows.dedup();
 }
@@ -329,9 +329,8 @@ fn merge_into(target: &mut DeclInfo, other: DeclInfo) {
     target.doc.extend(other.doc);
     target.body.extend(other.body);
     target.members.extend(other.members);
-    let reclean = |_: usize| true;
-    clean_rows(&mut target.name_rows, &reclean);
-    clean_rows(&mut target.head, &reclean);
+    sort_dedup(&mut target.name_rows);
+    sort_dedup(&mut target.head);
     target.doc.sort_by_key(|item| item.rows[0]);
     target.body.sort_by_key(|item| item.rows[0]);
 }

@@ -48,23 +48,17 @@ pub(super) fn chunk_ranges(item_costs: &[usize]) -> Vec<Range<usize>> {
         target,
         MIN_TAIL,
         |_| true,
-        |_| true,
     )
 }
 
 /// Value multiplier for a chunk costing `chunk_cost` of its part's
 /// `part_cost`: `share^k` with `k` the default concavity exponent, so
 /// each chunk ranks like the unsplit part.
-pub(super) fn chunk_value_factor(chunk_cost: usize, part_cost: usize, chunk_count: usize) -> f64 {
-    if chunk_count <= 1 {
+pub(super) fn chunk_value_factor(chunk_cost: usize, part_cost: usize) -> f64 {
+    if chunk_cost == part_cost {
         return 1.0;
     }
-    let share = if part_cost == 0 {
-        1.0 / chunk_count as f64
-    } else {
-        chunk_cost as f64 / part_cost as f64
-    };
-    share.powf(DEFAULT_CONCAVITY_EXPONENT)
+    (chunk_cost as f64 / part_cost as f64).powf(DEFAULT_CONCAVITY_EXPONENT)
 }
 
 #[cfg(test)]

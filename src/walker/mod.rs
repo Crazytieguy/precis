@@ -36,16 +36,15 @@ pub mod toml;
 mod workspace;
 
 /// Greedily partition source-ordered items once a range reaches `target`.
-/// A final range cheaper than `min_tail` folds into its predecessor when
-/// `merge_tail` accepts the combined range. `split_after` uses exclusive
-/// item indices, allowing callers to preserve structural cut boundaries.
+/// A final range cheaper than `min_tail` folds into its predecessor.
+/// `split_after` uses exclusive item indices, allowing callers to
+/// preserve structural cut boundaries.
 pub(super) fn budget_chunk_ranges(
     item_count: usize,
     cost: impl Fn(Range<usize>) -> usize,
     target: usize,
     min_tail: usize,
     split_after: impl Fn(usize) -> bool,
-    merge_tail: impl Fn(Range<usize>) -> bool,
 ) -> Vec<Range<usize>> {
     let mut ranges = Vec::new();
     let mut start = 0;
@@ -59,7 +58,6 @@ pub(super) fn budget_chunk_ranges(
         let tail = start..item_count;
         if cost(tail.clone()) < min_tail
             && let Some(previous) = ranges.last_mut()
-            && merge_tail(previous.start..tail.end)
         {
             previous.end = tail.end;
         } else {
