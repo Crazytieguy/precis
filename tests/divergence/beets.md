@@ -47,7 +47,7 @@ Score(3000)=0.333 I=0.398 C=0.279 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 1331 | 14 | python module doc beets/util/__init__.py |  |  | 0.512 |
 | walker |  | 1345 | 14 | python names beets/library/library.py |  |  | 0.512 |
 | walker |  | 1366 | 21 | listing of 'docs/_templates/autosummary' |  |  | 0.512 |
-| walker |  | 1395 | 29 | entry-point scripts in pyproject.toml |  |  | 0.514 |
+| walker |  | 1395 | 29 | [features] / entry-point scripts in pyproject.toml |  |  | 0.514 |
 | ns | 1445 |  | 218 | test/ and docs/ top-level listings (complete) | 1.11 |  | 0.458 |
 | walker |  | 1606 | 211 | python names beets/ui/commands/__init__.py |  |  | 0.458 |
 | walker |  | 1616 | 10 | python doc beets/ui/commands/__init__.py:36 |  |  | 0.458 |

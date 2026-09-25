@@ -10,7 +10,7 @@ Score(3000)=0.601 I=0.823 C=0.438 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | ns | 119 |  | 34 | Repository root listing | 1.2 |  | 0.523 |
 | walker |  | 162 | 67 | README headline in README.md |  |  | 0.527 |
 | ns | 168 |  | 49 | src/ module inventory | 1.3 |  | 0.548 |
-| walker |  | 189 | 27 | [features] in Cargo.toml |  |  | 0.549 |
+| walker |  | 189 | 27 | [features] / entry-point scripts in Cargo.toml |  |  | 0.549 |
 | walker |  | 258 | 69 | rust names build.rs |  |  | 0.549 |
 | ns | 259 |  | 91 | What `anyhow::Error` is — a Box<dyn Error> that must be Send + Sync | 1.4 |  | 0.486 |
 | walker |  | 302 | 44 | headings outline in README.md |  |  | 0.494 |

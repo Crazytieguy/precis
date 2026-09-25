@@ -135,10 +135,10 @@ Score(3000)=0.661 I=0.753 C=0.580 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | walker |  | 3525 | 62 | README headline in crates/mdbook-preprocessor/README.md |  |  | 0.639 |
 | walker |  | 3588 | 63 | README headline in crates/mdbook-core/README.md |  |  | 0.639 |
 | walker |  | 3660 | 72 | README headline in crates/mdbook-html/README.md |  |  | 0.639 |
-| walker |  | 3681 | 21 | [features] in crates/mdbook-driver/Cargo.toml |  |  | 0.639 |
+| walker |  | 3681 | 21 | [features] / entry-point scripts in crates/mdbook-driver/Cargo.toml |  |  | 0.639 |
 | walker |  | 3693 | 12 | rust module doc crates/mdbook-html/src/utils.rs |  |  | 0.639 |
 | ns | 3791 |  | 273 | Shared CLI argument builders | 4.3 |  | 0.622 |
-| walker |  | 3795 | 102 | [features] in Cargo.toml |  |  | 0.632 |
+| walker |  | 3795 | 102 | [features] / entry-point scripts in Cargo.toml |  |  | 0.632 |
 | walker |  | 3999 | 204 | rust names crates/mdbook-summary/src/lib.rs |  |  | 0.633 |
 | walker |  | 4017 | 18 | rust decl crates/mdbook-summary/src/lib.rs:108 |  |  | 0.633 |
 | walker |  | 4039 | 22 | rust decl crates/mdbook-summary/src/lib.rs:140 |  |  | 0.633 |
@@ -151,7 +151,7 @@ Score(3000)=0.661 I=0.753 C=0.580 ns_rows≤3K=25/63 grid(1000/1442/2080/3000/43
 | ns | 4483 |  | 187 | CLI function roster | 4.6 |  | 0.605 |
 | walker |  | 4503 | 170 | rust decl crates/mdbook-summary/src/lib.rs:65 |  |  | 0.616 |
 | walker |  | 4537 | 34 | rust names src/cmd/watch/poller.rs |  |  | 0.616 |
-| walker |  | 4561 | 24 | [features] in crates/mdbook-html/Cargo.toml |  |  | 0.616 |
+| walker |  | 4561 | 24 | [features] / entry-point scripts in crates/mdbook-html/Cargo.toml |  |  | 0.616 |
 | walker |  | 4575 | 14 | rust module doc crates/mdbook-core/src/book.rs |  |  | 0.616 |
 | walker |  | 4589 | 14 | rust module doc crates/mdbook-driver/src/init.rs |  |  | 0.616 |
 | ns | 4742 |  | 259 | Clap app assembly and `MDBOOK_LOG` | 4.7 |  | 0.605 |

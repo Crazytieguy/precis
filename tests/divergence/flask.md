@@ -9,7 +9,7 @@ Score(3000)=0.676 I=0.885 C=0.516 ns_rows≤3K=18/57 grid(1000/1442/2080/3000/43
 | walker |  | 86 | 13 | listing of '.github' |  |  | 0.000 |
 | ns | 97 |  | 97 | README title + what Flask is (README.md:3, 5-9) | 1.1 |  | 0.000 |
 | walker |  | 109 | 23 | listing of '.github/workflows' |  |  | 0.000 |
-| walker |  | 136 | 27 | entry-point scripts in pyproject.toml |  |  | 0.000 |
+| walker |  | 136 | 27 | [features] / entry-point scripts in pyproject.toml |  |  | 0.000 |
 | ns | 147 |  | 50 | Repository root listing (complete) | 1.2 |  | 0.488 |
 | walker |  | 238 | 102 | README headline in README.md |  |  | 1.000 |
 | walker |  | 268 | 30 | headings outline in README.md |  |  | 1.000 |

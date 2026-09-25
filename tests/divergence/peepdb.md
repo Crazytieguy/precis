@@ -26,7 +26,7 @@ Score(3000)=0.615 I=0.863 C=0.438 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 385 | 15 | python names peepdb/db/mssql.py |  |  | 0.577 |
 | walker |  | 400 | 15 | python names peepdb/db/mysql.py |  |  | 0.577 |
 | walker |  | 415 | 15 | python names peepdb/db/postgresql.py |  |  | 0.578 |
-| walker |  | 444 | 29 | entry-point scripts in project.toml |  |  | 0.580 |
+| walker |  | 444 | 29 | [features] / entry-point scripts in project.toml |  |  | 0.580 |
 | ns | 497 |  | 119 | peepdb/db/__init__.py — backend class ↔ module map | 1.7 |  | 0.510 |
 | walker |  | 659 | 215 | python names peepdb/db/__init__.py |  |  | 0.621 |
 | ns | 676 |  | 179 | README feature bullets | 1.8 |  | 0.569 |

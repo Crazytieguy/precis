@@ -46,7 +46,7 @@ Score(3000)=0.509 I=0.833 C=0.311 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | walker |  | 1474 | 30 | rust names impl/src/fallback.rs |  |  | 0.694 |
 | walker |  | 1488 | 14 | rust body src/var.rs:6 |  |  | 0.694 |
 | ns | 1557 |  | 153 | Details: source() from #[source] or a field named `source` | 2.5 |  | 0.668 |
-| walker |  | 1652 | 164 | [features] in Cargo.toml |  |  | 0.690 |
+| walker |  | 1652 | 164 | [features] / entry-point scripts in Cargo.toml |  |  | 0.690 |
 | ns | 1709 |  | 152 | Details: #[error(transparent)] forwarding | 2.6 |  | 0.656 |
 | walker |  | 1775 | 123 | manifest config in Cargo.toml |  |  | 0.656 |
 | walker |  | 1828 | 53 | [dependencies] in impl/Cargo.toml |  |  | 0.656 |

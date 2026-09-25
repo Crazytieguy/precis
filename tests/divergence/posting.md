@@ -16,7 +16,7 @@ Score(3000)=0.621 I=0.793 C=0.486 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 341 | 219 | plaintext config Makefile |  |  | 0.416 |
 | ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.368 |
 | walker |  | 432 | 91 | README headline in README.md |  |  | 0.683 |
-| walker |  | 458 | 26 | entry-point scripts in pyproject.toml |  |  | 0.683 |
+| walker |  | 458 | 26 | [features] / entry-point scripts in pyproject.toml |  |  | 0.683 |
 | walker |  | 500 | 42 | headings outline in README.md |  |  | 0.683 |
 | ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.467 |
 | walker |  | 556 | 56 | listing of 'docs/guide' |  |  | 0.474 |

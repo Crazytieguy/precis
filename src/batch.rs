@@ -259,11 +259,9 @@ pub enum TomlKey {
     /// maintainer rosters, project URLs, keywords, trove classifiers and
     /// packaging globs. Predecessor: `Identity` on the same file.
     PackageMetadata { file: PathBuf },
-    /// Entry-point console scripts: `[project.scripts]` (PEP 621) or
-    /// `[tool.poetry.scripts]` — the "how do I run this" surface.
-    Scripts { file: PathBuf },
-    /// `[features]` table.
-    Features { file: PathBuf },
+    /// How the package runs: `[features]`, and a Python manifest's console
+    /// scripts (`[project.scripts]`, `[tool.poetry.scripts]`).
+    Operational { file: PathBuf },
     /// Ordinary `[dependencies]` / `[workspace.dependencies]` tables,
     /// plus Python-manifest dependency sections.
     Dependencies { file: PathBuf },
@@ -384,8 +382,9 @@ impl InnerKey for TomlKey {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),
             TomlKey::PackageMetadata { file } => describe_in("package metadata", file, root),
-            TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
-            TomlKey::Features { file } => describe_in("[features]", file, root),
+            TomlKey::Operational { file } => {
+                describe_in("[features] / entry-point scripts", file, root)
+            }
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
             TomlKey::Config { file } => describe_in("manifest config", file, root),
         }

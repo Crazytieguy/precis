@@ -1,7 +1,7 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
-//! section group (identity / scripts / features / ordinary dependencies /
-//! development dependencies / per-tool config / other config).
+//! section group (identity / package metadata / operational /
+//! dependencies / config).
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
@@ -9,8 +9,8 @@
 //!   only, so the batch stays cheap enough to win an early slot
 //! - `PackageMetadata { file }` — the rest of a Python identity table: author
 //!   and maintainer rosters, project URLs, keywords
-//! - `Scripts { file }` — `[project.scripts]`, `[tool.poetry.scripts]`
-//! - `Features { file }` — `[features]`
+//! - `Operational { file }` — `[features]`, and a Python manifest's
+//!   `[project.scripts]` / `[tool.poetry.scripts]`
 //! - `Dependencies { file }` — Cargo `[dependencies]` /
 //!   `[workspace.dependencies]`, `[tool.poetry.dependencies]`, and the PEP
 //!   621 dependency arrays under `[project]`
@@ -91,22 +91,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: manifest_appendix_value(depth),
             });
         }
-        let scripts_rows = section_rows(&sections, |n| {
-            python_project_manifest && is_scripts_section(n)
+        let operational_rows = section_rows(&sections, |n| {
+            n == "features" || (python_project_manifest && is_scripts_section(n))
         });
-        if let Some(content) = rows_content(&file, &source, scripts_rows) {
+        if let Some(content) = rows_content(&file, &source, operational_rows) {
             out.push(Batch {
-                key: TomlKey::Scripts { file: file.clone() }.into(),
-                predecessor: None,
-                content,
-                value: manifest_operational_value(depth),
-            });
-        }
-        if let Some(content) =
-            rows_content(&file, &source, section_rows(&sections, |n| n == "features"))
-        {
-            out.push(Batch {
-                key: TomlKey::Features { file: file.clone() }.into(),
+                key: TomlKey::Operational { file: file.clone() }.into(),
                 predecessor: None,
                 content,
                 value: manifest_operational_value(depth),
@@ -128,7 +118,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // The config appendix of a manifest gates behind that manifest's
         // identity block: linter settings and build-backend tables are
         // qualifiers on a package the reader has not been told the name of
-        // yet. The load-bearing sections (scripts, features, dependency
+        // yet. The load-bearing sections (operational, dependency
         // rosters) stay ungated — they answer what the project is on their
         // own, and gating them costs more than it buys.
         if is_manifest_toml(&sections, python_project_manifest)

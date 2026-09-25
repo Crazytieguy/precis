@@ -32,7 +32,7 @@ Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 606 | 19 | rust names src/parameter/tokenize.rs |  |  | 0.537 |
 | ns | 643 |  | 94 | src/main.rs: module declarations and the types the entry point imports | 1.9 |  | 0.544 |
 | walker |  | 778 | 172 | [package] in Cargo.toml |  |  | 0.918 |
-| walker |  | 813 | 35 | [features] in Cargo.toml |  |  | 0.918 |
+| walker |  | 813 | 35 | [features] / entry-point scripts in Cargo.toml |  |  | 0.918 |
 | walker |  | 854 | 41 | rust names src/cli.rs |  |  | 0.918 |
 | walker |  | 875 | 21 | listing of 'tests' |  |  | 0.921 |
 | ns | 899 |  | 256 | src/main.rs: the run() pipeline | 1.10 | 1.9 | 0.806 |
