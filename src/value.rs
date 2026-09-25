@@ -221,7 +221,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
             // not tooling plumbing — exempt from the dot-prefix damp
             // (cf. the `.github/workflows` exception above).
             return 0.2;
-        } else if is_root_level_vendor_dir_name(first) {
+        } else if is_vendor_dir_name(first) {
             // Depth-1-only: a project that vendors *as part of* its
             // own `source/` (chalk) keeps full weight on its vendored
             // modules.
@@ -351,10 +351,10 @@ fn is_docs_site_subtree(first_component: &str, root: &std::path::Path) -> bool {
     root.join(first_component).join("package.json").is_file()
 }
 
-/// Root-level dirs holding vendored / third-party content. Depth-1
-/// only so nested vendored modules under a project's own source tree
-/// keep full weight.
-fn is_root_level_vendor_dir_name(s: &str) -> bool {
+/// Dirs holding vendored / third-party content. The non-essential
+/// discount applies it at depth 1 only, so nested vendored modules under
+/// a project's own source tree keep full weight.
+pub(crate) fn is_vendor_dir_name(s: &str) -> bool {
     let lower = s.to_ascii_lowercase();
     matches!(
         lower.as_str(),

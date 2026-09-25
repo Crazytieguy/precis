@@ -670,7 +670,7 @@ fn source_text_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::Bat
 /// a NUL byte (no text file has one), lines too long to have been
 /// wrapped by a human, or a generator banner near the top. Applied
 /// after the read because none of it is visible from the filename.
-fn is_machine_generated_text(source: &str) -> bool {
+pub(in crate::walker) fn is_machine_generated_text(source: &str) -> bool {
     if source
         .as_bytes()
         .iter()
