@@ -99,12 +99,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
             if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
                 return 0.2;
             }
-        } else if first.starts_with('.') && first != "." {
-            return 0.2;
-        } else if is_vendor_dir_name(first) {
-            // Depth-1-only: a project that vendors *as part of* its
-            // own `source/` (chalk) keeps full weight on its vendored
-            // modules.
+        } else if (first.starts_with('.') && first != ".") || is_vendor_dir_name(first) {
             return 0.2;
         } else if is_docs_site_subtree(first, root) {
             // Separate documentation-site sub-app at the repo root
@@ -156,7 +151,12 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "locale"
                 | "l10n"
                 | "translations"
-        ) || s.starts_with("test_")
+                | "third_party"
+                | "third-party"
+                | "thirdparty"
+                | "3rdparty"
+        ) || s.ends_with("-master")
+            || s.starts_with("test_")
             || s.starts_with("tests_")
             || is_scaffold_template_dir_name(s)
         {
@@ -220,14 +220,15 @@ fn is_docs_site_subtree(first_component: &str, root: &std::path::Path) -> bool {
     root.join(first_component).join("package.json").is_file()
 }
 
-/// Dirs holding vendored / third-party content. The non-essential
-/// discount applies it at depth 1 only, so nested vendored modules under
-/// a project's own source tree keep full weight.
-pub(crate) fn is_vendor_dir_name(s: &str) -> bool {
+/// Dirs that hold vendored content at the root but can name a project's
+/// own module further down (a USB `vendor` class, chalk's
+/// `source/vendor`), so the non-essential discount applies them at depth
+/// 1 only. Unambiguous third-party names apply at any depth.
+fn is_vendor_dir_name(s: &str) -> bool {
     let lower = s.to_ascii_lowercase();
     matches!(
         lower.as_str(),
-        "deps" | "vendor" | "third_party" | "third-party" | "external" | "3rd" | "sig"
+        "deps" | "vendor" | "external" | "3rd" | "sig" | "dependencies"
     )
 }
 
@@ -340,11 +341,18 @@ mod tests {
                 "src/node/__tests__/serve.ts src/node/__tests__/__snapshots__/x.snap",
             ),
             (1.0, "src/__internal__/queue.ts src/pkg/__pycache__/x.pyc"),
-            // Archived and translated copies, at any depth.
+            // Archived, translated and third-party copies, at any depth.
             (
                 0.2,
                 "_archived/guestbook/app.yaml samples/archived/x.cs \
-                 apps/web/public/locales/en/common.json lessons/1/translations/README.es.md",
+                 apps/web/public/locales/en/common.json lessons/1/translations/README.es.md \
+                 src/third_party/zlib/zlib.h lib/3rdParty/x.c docs/_style/prism-master/prism.js \
+                 dependencies/camlzip/zip.ml",
+            ),
+            // `vendor/` below the root can be the project's own module.
+            (
+                1.0,
+                "src/class/vendor/vendor_device.c source/vendor/ansi-styles/index.js",
             ),
         ];
         let root = Path::new("/repo");
