@@ -11,11 +11,11 @@ Score(3000)=0.619 I=0.781 C=0.491 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 168 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.442 |
 | walker |  | 174 | 6 | Fs::DirListing { dir: scripts } |  |  | 0.443 |
 | ns | 180 |  | 48 | Complete repository root listing | 1.3 |  | 0.561 |
-| walker |  | 230 | 56 | Fs::DirListing { dir: src/types } |  |  | 0.635 |
-| ns | 273 |  | 93 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.631 |
-| walker |  | 303 | 73 | Json::Identity { file: package.json } |  |  | 0.640 |
-| walker |  | 321 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
-| walker |  | 338 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.641 |
+| walker |  | 247 | 73 | Json::Identity { file: package.json } |  |  | 0.572 |
+| walker |  | 265 | 18 | Code::CodeKey { rung: Names, file: src/errors.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| ns | 273 |  | 93 | Complete listings of src/, src/internals/ and src/types/ | 1.4 |  | 0.437 |
+| walker |  | 282 | 17 | Code::CodeKey { rung: Decl, file: src/errors.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.437 |
+| walker |  | 338 | 56 | Fs::DirListing { dir: src/types } |  |  | 0.641 |
 | walker |  | 347 | 9 | Fs::DirListing { dir: .github } |  |  | 0.642 |
 | ns | 357 |  | 84 | package.json identity: name, version, description, module type, entry source | 1.5 |  | 0.616 |
 | walker |  | 367 | 20 | Code::CodeKey { rung: Names, file: src/match.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.616 |

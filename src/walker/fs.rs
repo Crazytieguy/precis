@@ -440,26 +440,13 @@ fn count_go_package_source(dir: &Path, target: usize) -> usize {
 }
 
 fn is_module_source_dir(dir: &Path) -> bool {
-    if is_type_surface_dir(dir) {
-        return false;
-    }
     let entrypoint_module = has_module_entrypoint(dir)
         && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir));
-    entrypoint_module || is_sibling_module_source_dir(dir) || is_go_module_subpackage(dir)
-}
-
-fn is_type_surface_dir(dir: &Path) -> bool {
-    dir.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|name| matches!(name, "type" | "types" | "typings"))
+    entrypoint_module || has_module_sibling_file(dir) || is_go_module_subpackage(dir)
 }
 
 fn has_python_module_entrypoint(dir: &Path) -> bool {
     dir.join("__init__.py").is_file()
-}
-
-fn is_sibling_module_source_dir(dir: &Path) -> bool {
-    has_module_sibling_file(dir) && !is_type_surface_dir(dir)
 }
 
 fn has_module_sibling_file(dir: &Path) -> bool {
