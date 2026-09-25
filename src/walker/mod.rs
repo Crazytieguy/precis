@@ -115,8 +115,6 @@ pub struct WalkCtx {
     json_state: json::JsonState,
     /// Run state of the code engine's language modules.
     code: code::CodeState,
-    /// The tree's essential source, walked once.
-    essential_source: OnceCell<EssentialSource>,
     /// The one source file that carries a dominant share of the tree's
     /// essential source bytes, if any.
     dominant_source_file: OnceCell<Option<PathBuf>>,
@@ -141,7 +139,6 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             code: code::CodeState::default(),
-            essential_source: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
         }
     }
@@ -192,13 +189,11 @@ impl WalkCtx {
     /// the common case.
     pub fn dominant_source_file(&self) -> Option<&Path> {
         self.dominant_source_file
-            .get_or_init(|| find_dominant_source_file(self.essential_source()))
+            .get_or_init(|| {
+                enumerate_essential_source(&self.root, &self.dir_filter)
+                    .and_then(|source| find_dominant_source_file(&source))
+            })
             .as_deref()
-    }
-
-    fn essential_source(&self) -> &EssentialSource {
-        self.essential_source
-            .get_or_init(|| enumerate_essential_source(&self.root, &self.dir_filter))
     }
 
     /// Read `path` into memory, caching the result.
@@ -310,9 +305,14 @@ struct EssentialSource {
     candidates: Vec<(PathBuf, u64, &'static str)>,
 }
 
-fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSource {
+/// `None` once the walk has seen more source than a file within
+/// [`DOMINANT_SOURCE_MAX_FILE_BYTES`] can hold
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of: no file can be the spine then, and
+/// stopping there keeps the survey from walking all of a huge tree.
+fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> Option<EssentialSource> {
     let mut per_language: HashMap<&'static str, u64> = HashMap::new();
     let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
+    let mut total = 0;
     let mut stack = vec![root.to_path_buf()];
     while let Some(dir) = stack.pop() {
         let Ok(entries) = std::fs::read_dir(&dir) else {
@@ -344,13 +344,18 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
                 };
                 *per_language.entry(language).or_default() += len;
                 candidates.push((path, len, language));
+                total += len;
+                if total as f64 * DOMINANT_SOURCE_MASS_SHARE > DOMINANT_SOURCE_MAX_FILE_BYTES as f64
+                {
+                    return None;
+                }
             }
         }
     }
-    EssentialSource {
+    Some(EssentialSource {
         per_language,
         candidates,
-    }
+    })
 }
 
 /// Select a source file that carries at least
@@ -554,7 +559,8 @@ mod tests {
     }
 
     fn dominant_source_file_of(root: &Path) -> Option<PathBuf> {
-        find_dominant_source_file(&enumerate_essential_source(root, &DirFilter::new(root)))
+        enumerate_essential_source(root, &DirFilter::new(root))
+            .and_then(|source| find_dominant_source_file(&source))
     }
 
     /// The spine detector runs on whatever path a user points precis
