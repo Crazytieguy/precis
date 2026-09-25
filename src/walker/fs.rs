@@ -6,11 +6,11 @@
 
 use std::{
     cell::RefCell,
-    collections::{BTreeMap, HashMap},
+    collections::{BTreeMap, BTreeSet, HashMap},
     path::{Path, PathBuf},
 };
 
-use crate::batch::{Batch, FsKey};
+use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::{DirFilter, EntryKind, PROBE_ENTRY_CAP, list_dir};
 
@@ -18,25 +18,28 @@ use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
 /// Seed: list the root directory.
 pub fn seed(ctx: &WalkCtx) -> Vec<Batch> {
-    dir_listing_batch(ctx.root().to_path_buf(), ctx)
-        .into_iter()
-        .collect()
+    dir_listing_batches(ctx.root().to_path_buf(), ctx)
 }
 
-/// Subdirectory listings for the just-scheduled dir's listing.
-pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
+/// Listings of the subdirectories a just-scheduled listing names, and the
+/// listed directory once all its entries are listed, for the file
+/// walkers: a file's content never renders under a row that isn't there.
+pub fn expand_listed<'k>(key: &'k FsKey, ctx: &WalkCtx) -> (Vec<Batch>, Option<&'k Path>) {
+    let (FsKey::DirListing { dir } | FsKey::DirListingTail { dir }) = key;
     let children = list_dir(dir, ctx.dir_filter());
+    let head = listing_head(dir, &children, ctx);
+    let tail = matches!(key, FsKey::DirListingTail { .. });
     let mut out = Vec::new();
     for (name, kind) in children.iter() {
         if matches!(kind, EntryKind::Directory)
+            && head.as_ref().is_none_or(|head| head.contains(name) != tail)
             && let child = dir.join(name)
             && should_recurse_dir(&child, ctx.root())
-            && let Some(batch) = dir_listing_batch(child, ctx)
         {
-            out.push(batch);
+            out.extend(dir_listing_batches(child, ctx));
         }
     }
-    out
+    (out, (head.is_none() || tail).then_some(dir.as_path()))
 }
 
 /// Files in `dir` (non-recursive) whose extension matches.
@@ -77,24 +80,20 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec
 /// Listing of `dir`, run on through every directory that holds only one
 /// subdirectory (`src/main/java/org/acme/`): such a listing names one
 /// path segment, so it is bought and keyed with the first listing below
-/// it that names more, at the lower of the two listings' values.
-fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
+/// it that names more, at the lower of the two listings' values. A long
+/// last listing is split into its head and the rest.
+fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
     let mut dir = dir;
     let mut children = list_dir(&dir, ctx.dir_filter());
     if children.is_empty() {
-        return None;
+        return Vec::new();
     }
-    let head_value = dir_listing_value(&dir, &children, ctx);
+    let chain_head_value = dir_listing_value(&dir, &children, ctx);
     let mut groups = Vec::new();
     loop {
-        let entries = children
-            .keys()
-            .filter(|name| !is_sidecar(name, &children))
-            .map(PathBuf::from)
-            .collect();
         groups.push(FsGroup {
             parent: dir.clone(),
-            entries: FsEntries::Listed(entries),
+            entries: FsEntries::Listed(listed_entries(&children).map(PathBuf::from).collect()),
         });
         let Some((name, EntryKind::Directory)) = children.iter().next() else {
             break;
@@ -110,12 +109,71 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
         dir = only_child;
         children = grandchildren;
     }
-    Some(Batch {
-        value: head_value.min(dir_listing_value(&dir, &children, ctx)),
-        key: FsKey::DirListing { dir }.into(),
+    let value = chain_head_value.min(dir_listing_value(&dir, &children, ctx));
+    let head_key: BatchKey = FsKey::DirListing { dir: dir.clone() }.into();
+    let mut tail = None;
+    if let Some(head) = listing_head(&dir, &children, ctx) {
+        let (head_entries, tail_entries): (Vec<&String>, Vec<&String>) =
+            listed_entries(&children).partition(|name| head.contains(*name));
+        let tail_share =
+            tail_entries.len() as f64 / (head_entries.len() + tail_entries.len()) as f64;
+        if let Some(last) = groups.last_mut() {
+            last.entries = FsEntries::Listed(head_entries.into_iter().map(PathBuf::from).collect());
+        }
+        tail = Some(Batch {
+            key: FsKey::DirListingTail { dir: dir.clone() }.into(),
+            predecessor: Some(head_key.clone()),
+            content: BatchContent::Fs {
+                groups: vec![FsGroup {
+                    parent: dir,
+                    entries: FsEntries::Listed(
+                        tail_entries.into_iter().map(PathBuf::from).collect(),
+                    ),
+                }],
+            },
+            value: value * tail_share.powf(crate::value::DEFAULT_CONCAVITY_EXPONENT),
+        });
+    }
+    let head = Batch {
+        key: head_key,
         predecessor: None,
         content: BatchContent::Fs { groups },
-    })
+        value,
+    };
+    std::iter::once(head).chain(tail).collect()
+}
+
+/// Entries a listing of `children` names: all but asset sidecars.
+fn listed_entries(children: &BTreeMap<String, EntryKind>) -> impl Iterator<Item = &String> {
+    children.keys().filter(|name| !is_sidecar(name, children))
+}
+
+/// A listing of more entries than this is split into a head and the rest.
+const LISTING_SPLIT_ENTRIES: usize = 120;
+/// Entries in a split listing's head.
+const LISTING_HEAD_ENTRIES: usize = 40;
+
+/// The entries a long listing names first — its subdirectories, then its
+/// files, up to [`LISTING_HEAD_ENTRIES`] — or `None` for a listing that
+/// is delivered whole. The root listing always is: everything else hangs
+/// off it.
+fn listing_head(
+    dir: &Path,
+    children: &BTreeMap<String, EntryKind>,
+    ctx: &WalkCtx,
+) -> Option<BTreeSet<String>> {
+    if dir == ctx.root() || listed_entries(children).count() <= LISTING_SPLIT_ENTRIES {
+        return None;
+    }
+    let (dirs, files): (Vec<&String>, Vec<&String>) =
+        listed_entries(children).partition(|name| children[*name] == EntryKind::Directory);
+    Some(
+        dirs.into_iter()
+            .chain(files)
+            .take(LISTING_HEAD_ENTRIES)
+            .cloned()
+            .collect(),
+    )
 }
 
 /// A game engine's per-asset metadata file (`player.png.meta`,
@@ -463,7 +521,49 @@ fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::batch::BatchKey;
+
+    #[test]
+    fn fs_long_listing_splits_into_a_directories_first_head_and_the_rest() {
+        let temp = tempfile::tempdir().unwrap();
+        let big = temp.path().join("big");
+        std::fs::create_dir_all(big.join("sub")).unwrap();
+        std::fs::write(big.join("sub/x.md"), "").unwrap();
+        for i in 0..LISTING_SPLIT_ENTRIES {
+            std::fs::write(big.join(format!("f{i:03}.md")), "").unwrap();
+        }
+        let ctx = WalkCtx::new(temp.path().to_path_buf());
+        let batches = dir_listing_batches(big.clone(), &ctx);
+        let [head, tail] = &batches[..] else {
+            panic!("expected a head and a tail, got {}", batches.len());
+        };
+        let listed = |batch: &Batch| match &batch.content {
+            BatchContent::Fs { groups } => match &groups[0].entries {
+                FsEntries::Listed(entries) => entries.clone(),
+                FsEntries::All => Vec::new(),
+            },
+            BatchContent::Lines { .. } => Vec::new(),
+        };
+        assert_eq!(listed(head).len(), LISTING_HEAD_ENTRIES);
+        assert!(listed(head).contains(&PathBuf::from("sub")));
+        assert_eq!(
+            listed(tail).len(),
+            LISTING_SPLIT_ENTRIES + 1 - LISTING_HEAD_ENTRIES
+        );
+        assert_eq!(tail.predecessor.as_ref(), Some(&head.key));
+
+        let BatchKey::Fs(head_key) = &head.key else {
+            panic!("a listing has an Fs key");
+        };
+        let (subdirs, files_listed) = expand_listed(head_key, &ctx);
+        assert_eq!(subdirs.len(), 1);
+        assert_eq!(files_listed, None);
+        let BatchKey::Fs(tail_key) = &tail.key else {
+            panic!("a listing has an Fs key");
+        };
+        let (subdirs, files_listed) = expand_listed(tail_key, &ctx);
+        assert!(subdirs.is_empty());
+        assert_eq!(files_listed, Some(big.as_path()));
+    }
 
     #[test]
     fn fs_listing_leaves_out_asset_sidecars() {
@@ -512,7 +612,10 @@ mod tests {
 
         let lists = |dir: &Path, listed: &Path| {
             let ctx = WalkCtx::new(root.to_path_buf());
-            expand_subdirs(dir, &ctx).iter().any(|batch| {
+            let key = FsKey::DirListing {
+                dir: dir.to_path_buf(),
+            };
+            expand_listed(&key, &ctx).0.iter().any(|batch| {
                 matches!(&batch.key, BatchKey::Fs(FsKey::DirListing { dir }) if dir == listed)
             })
         };

@@ -16,7 +16,7 @@ use std::sync::{Arc, Mutex, mpsc};
 
 use tree_sitter::{Language, Node, Tree};
 
-use crate::batch::{Batch, BatchKey, FsKey};
+use crate::batch::{Batch, BatchKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::fs_util::{DirFilter, PROBE_ENTRY_CAP};
 use crate::render::{Source, SourceCache};
@@ -86,11 +86,13 @@ impl Walker for FsWalker {
     }
 
     fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Batch> {
-        let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
+        let BatchKey::Fs(key) = scheduled else {
             return Vec::new();
         };
-        let mut out = Vec::new();
-        out.extend(fs::expand_subdirs(dir, ctx));
+        let (mut out, fully_listed) = fs::expand_listed(key, ctx);
+        let Some(dir) = fully_listed else {
+            return out;
+        };
         out.extend(markdown::expand_in_dir(dir, ctx));
         out.extend(toml::expand_in_dir(dir, ctx));
         out.extend(json::expand_in_dir(dir, ctx));

@@ -271,6 +271,10 @@ corpus, which none of these bounds touch.
   listing, a media-share discount, a steeper listing cost exponent)
   lost on the grid, because NS authors rank those listings early.
   Moving that trade needs an answer-key revision, not a walker tweak.
+  The same holds for splitting long listings into a head and the rest:
+  training answer keys rank complete listings of up to 113 entries, so
+  the split starts above 120; starting it at 60 measured −0.0033 at
+  3000 (2026-09-25).
 - **Unopened rosters rank by row length, not centrality.** A roster's
   ratio is `350 · prior / (tokens per row)^k`, so a directory's
   rosters sit in a narrow band (about 115–145 in a Go root) and open
