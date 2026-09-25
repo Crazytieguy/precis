@@ -1,5 +1,13 @@
 .editorconfig
 .github/
+  FUNDING.yml
+  dependabot.yml
+  workflows/
+    build_release.yml
+    ci.yml
+    codeql-analysis.yml
+    coverity.yml
+    htoprc
 .gitignore
 .travis.yml
 AGENTS.md
@@ -10,13 +18,6 @@ Affinity.c
 Affinity.h
 AffinityPanel.c
 AffinityPanel.h
-  …
-  15→extern const PanelClass AffinityPanel_class;
-  16→
-  17→Panel* AffinityPanel_new(Machine* host, const Affinity* affinity, int* width);
-  18→
-  19→Affinity* AffinityPanel_getAffinity(Panel* super, Machine* host);
-  …
 AvailableColumnsPanel.c
 AvailableColumnsPanel.h
 AvailableMetersPanel.c
@@ -150,18 +151,6 @@ Header.h
 HeaderLayout.h
 HeaderOptionsPanel.c
 HeaderOptionsPanel.h
-  …
-  15→typedef struct HeaderOptionsPanel_ {
-  16→   Panel super;
-  17→
-  18→   ScreenManager* scr;
-  19→   Settings* settings;
-  20→} HeaderOptionsPanel;
-  21→
-  22→extern const PanelClass HeaderOptionsPanel_class;
-  23→
-  24→HeaderOptionsPanel* HeaderOptionsPanel_new(Settings* settings, ScreenManager* scr);
-  …
 History.c
 History.h
 HostnameMeter.c
@@ -209,13 +198,7 @@ Meter.h
 MeterMode.h
   …
   11→enum MeterModeId_ {
-  12→   /* Meter mode 0 is reserved */
-  13→   BAR_METERMODE = 1,
-  14→   TEXT_METERMODE,
-  15→   GRAPH_METERMODE,
-  16→   LED_METERMODE,
-  17→   LAST_METERMODE
-  18→};
+  …
   20→typedef unsigned int MeterModeId;
   21→
   22→#define METERMODE_DEFAULT_SUPPORTED ( \
@@ -298,10 +281,7 @@ SwapMeter.c
 SwapMeter.h
   …
   12→typedef enum {
-  13→   SWAP_METER_USED = 0,
-  14→   SWAP_METER_CACHE = 1,
-  15→   SWAP_METER_FRONTSWAP = 2,
-  16→   SWAP_METER_ITEMCOUNT = 3, // number of entries in this enum
+  …
   17→} SwapMeterValues;
   18→
   19→extern const MeterClass SwapMeter_class;
@@ -340,9 +320,37 @@ XUtils.h
   172→static inline int xDirfd(DIR* dirp) {
   …
 autogen.sh
+  1→#!/bin/sh
+  2→autoreconf --force --install --verbose -Wall
 check-pcp-style.sh
 configure.ac
 darwin/
+  DarwinMachine.c
+  DarwinMachine.h
+    …
+    18→typedef struct DarwinMachine_ {
+    …
+    29→} DarwinMachine;
+    …
+  DarwinProcess.c
+  DarwinProcess.h
+  DarwinProcessTable.c
+  DarwinProcessTable.h
+    …
+    16→typedef struct DarwinProcessTable_ {
+    17→   ProcessTable super;
+    18→
+    19→   uint64_t global_diff;
+    20→} DarwinProcessTable;
+    …
+  Platform.c
+  Platform.h
+  PlatformHelpers.c
+  PlatformHelpers.h
+  ProcessField.h
+    …
+    11→#define PLATFORM_PROCESS_FIELDS  \
+    …
 docs/
   ai-contributions-policy.md
   images/
@@ -350,25 +358,21 @@ docs/
   styleguide.md
   understanding-htop-versions.md
 dragonflybsd/
+  DragonFlyBSDMachine.c
+  DragonFlyBSDMachine.h
+  DragonFlyBSDProcess.c
+  DragonFlyBSDProcess.h
+  DragonFlyBSDProcessTable.c
+  DragonFlyBSDProcessTable.h
+  Platform.c
+  Platform.h
+  ProcessField.h
+    …
+    11→#define PLATFORM_PROCESS_FIELDS  \
+    …
 freebsd/
   FreeBSDMachine.c
   FreeBSDMachine.h
-    …
-    20→typedef struct CPUData_ {
-    21→   double userPercent;
-    22→   double nicePercent;
-    23→   double systemPercent;
-    24→   double irqPercent;
-    25→   double systemAllPercent;
-    26→
-    27→   double frequency;
-    28→   double temperature;
-    29→} CPUData;
-    30→
-    31→typedef struct FreeBSDMachine_ {
-    …
-    56→} FreeBSDMachine;
-    …
   FreeBSDProcess.c
   FreeBSDProcess.h
   FreeBSDProcessTable.c
@@ -387,6 +391,30 @@ freebsd/
     11→#define PLATFORM_PROCESS_FIELDS  \
     …
 generic/
+  Demangle.c
+  Demangle.h
+  ProvideDemangle.h
+  UnwindPtrace.c
+  UnwindPtrace.h
+    …
+    16→void UnwindPtrace_makeBacktrace(Vector* frames, pid_t pid, char** error);
+    …
+  fdstat_sysctl.c
+  fdstat_sysctl.h
+    …
+    11→void Generic_getFileDescriptors_sysctl(double* used, double* max);
+    …
+  gettime.c
+  gettime.h
+  hostname.c
+  hostname.h
+    …
+    13→void Generic_hostname(char* buffer, size_t size);
+    …
+  openzfs_sysctl.c
+  openzfs_sysctl.h
+  uname.c
+  uname.h
 htop-logo.png
 htop.1.in
 htop.c
@@ -394,21 +422,30 @@ htop.desktop
 htop.png
 htop.svg
 iwyu/
+  htop.imp
+  run_iwyu.sh
 linux/
 m4/
+  ax_check_compile_flag.m4
 netbsd/
+  NetBSDMachine.c
+  NetBSDMachine.h
+  NetBSDProcess.c
+  NetBSDProcess.h
+  NetBSDProcessTable.c
+  NetBSDProcessTable.h
+    …
+    20→typedef struct NetBSDProcessTable_ {
+    21→   ProcessTable super;
+    22→} NetBSDProcessTable;
+    …
+  Platform.c
+  Platform.h
+  ProcessField.h
+  README.md
 openbsd/
   OpenBSDMachine.c
   OpenBSDMachine.h
-    …
-    18→typedef struct CPUData_ {
-    …
-    38→} CPUData;
-    39→
-    40→typedef struct OpenBSDMachine_ {
-    …
-    57→} OpenBSDMachine;
-    …
   OpenBSDProcess.c
   OpenBSDProcess.h
   OpenBSDProcessTable.c
@@ -469,11 +506,6 @@ unsupported/
 zfs/
   ZfsArcMeter.c
   ZfsArcMeter.h
-    …
-    15→void ZfsArcMeter_readStats(Meter* this, const ZfsArcStats* stats);
-    16→
-    17→extern const MeterClass ZfsArcMeter_class;
-    …
   ZfsArcStats.h
     …
     10→typedef struct ZfsArcStats_ {
@@ -482,8 +514,3 @@ zfs/
     …
   ZfsCompressedArcMeter.c
   ZfsCompressedArcMeter.h
-    …
-    15→void ZfsCompressedArcMeter_readStats(Meter* this, const ZfsArcStats* stats);
-    16→
-    17→extern const MeterClass ZfsCompressedArcMeter_class;
-    …

@@ -280,6 +280,54 @@ src/
     9→luaL_getbuffer(lua_State *L, size_t *sz) {
     …
   lualib/
+    coroutine.lua
+    fontmgr.lua
+    icon.lua
+      …
+      10→function icon.bundle(filename)
+      …
+      27→function icon.symbol(name, size, color)
+      …
+    initsetting.lua
+      …
+      10→local function patch(s, k, v)
+      …
+      44→local function settings_filename(filename, change_root)
+      …
+      62→function S.init(args, change_root)
+      …
+    layout.lua
+    main.lua
+      …
+      19→	local function embedloader(name)
+      …
+      50→local function start(config)
+      …
+      159→function api.start(app)
+      …
+      183→function api.init(desc)
+      184→	-- todo : settings
+      …
+    packageloader.lua
+      …
+      14→local function load_zips(zipnames)
+      …
+      163→local function fileload(name, fullname)
+      …
+      169→local function search_file(name)
+      …
+    print_r.lua
+    soluna.lua
+    spritebundle.lua
+    text.lua
+    util.lua
+      …
+      9→function func_chain:add(f)
+      …
+      13→function func_chain:__call()
+      …
+      20→function util.func_chain()
+      …
   luamods.c
   luayoga.c
   luazip.c
@@ -325,10 +373,26 @@ src/
   sdftext.glsl
   service/
     gamepad.lua
+      …
+      10→function S.register(addr, msg)
+      …
+      15→function S.update()
+      …
     loader.lua
     log.lua
+      …
+      12→local function writelog()
+      …
+      38→function S.quit()
+      …
     render.lua
     settings.lua
+      …
+      9→function S.init(args)
+      …
+      14→function S.get()
+      15→	return setting
+      …
     start.lua
   sprite_submit.h
   spritemgr.c
@@ -352,54 +416,10 @@ src/
     …
   srbuffer.c
   srbuffer.h
-    …
-    7→struct sr_mat {
-    8→	float v[4];
-    9→};
-    11→struct sr_buffer {
-    12→	int n;
-    13→	int cap;
-    14→	int current_n;
-    15→	uint8_t dirty;
-    16→	uint8_t current_frame;
-    17→	uint8_t *frame;
-    18→	uint16_t *cache;
-    19→	uint32_t *key;
-    20→	struct sr_mat *data;
-    21→};
-    23→size_t srbuffer_size(int n);
-    24→void srbuffer_init(struct sr_buffer *SR, int n);
-    25→int srbuffer_add(struct sr_buffer *SR, uint32_t sr);
-    26→void * srbuffer_commit(struct sr_buffer *SR, int *sz);
-    …
   texquad.glsl
   tmpbuffer.h
-    …
-    7→struct tmp_buffer {
-    8→	void *ptr;
-    9→	size_t sz;
-    10→};
-    12→#define TMPBUFFER_PTR(type, obj) (type *)((obj)->ptr)
-    13→#define TMPBUFFER_SIZE(type, obj) ((obj)->sz / sizeof(type))
-    14→
-    15→static inline void
-    16→tmp_buffer_init(lua_State *L, struct tmp_buffer *tmp, int uv_index, const char *key) {
-    …
   transform.c
   transform.h
-    …
-    6→struct transform {
-    …
-    14→struct draw_primitive;
-    15→
-    16→static inline void
-    17→sprite_transform_identity(struct transform * t) {
-    …
-    24→void sprite_transform_init();
-    25→void sprite_transform_set(struct transform *t, float s, float r, float x, float y);
-    26→void sprite_transform_apply(struct draw_primitive *p, struct transform * t);
-    27→void sprite_transform_point(const struct transform *t, int *x, int *y);
-    …
   truetype.c
   truetype.h
   version.h

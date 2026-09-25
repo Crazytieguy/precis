@@ -24,7 +24,9 @@ README.md
   2→
   3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
   5→## Documentation
-  …
+  6→
+  7→- **Official Documentation**: [jqlang.org](https://jqlang.org)
+  8→- **Try jq Online**: [play.jqlang.org](https://play.jqlang.org)
   10→## Installation
   11→
   12→### Prebuilt Binaries
@@ -141,33 +143,6 @@ src/
   builtin.jq
   bytecode.c
   bytecode.h
-    …
-    20→enum {
-    …
-    32→struct opcode_description {
-    …
-    44→const struct opcode_description* opcode_describe(opcode op);
-    45→
-    46→
-    47→#define MAX_CFUNCTION_ARGS 4
-    48→struct cfunction {
-    …
-    59→struct symbol_table {
-    60→  struct cfunction* cfunctions;
-    61→  int ncfunctions;
-    62→  jv cfunc_names;
-    63→};
-    …
-    70→#define ARG_NEWCLOSURE 0x1000
-    71→
-    72→struct bytecode {
-    …
-    90→void dump_disassembly(int, struct bytecode* code);
-    91→void dump_operation(struct bytecode* bc, uint16_t* op);
-    92→
-    93→int bytecode_operation_length(uint16_t* codeptr);
-    94→void bytecode_free(struct bytecode* bc);
-    …
   compile.c
   compile.h
   exec_stack.h
@@ -239,6 +214,9 @@ src/
     3→struct dtoa_context *tsd_dtoa_context_get(void);
     …
   jv_file.c
+    …
+    12→jv jv_load_file(const char* filename, int raw) {
+    …
   jv_parse.c
   jv_print.c
   jv_private.h
@@ -360,6 +338,37 @@ src/
     63→char* strptime(const char *buf, const char *fmt, struct tm *tm);
     …
 tests/
+  base64.test
+  base64test
+  jq-f-test.sh
+  jq.test
+  jq_fuzz_compile.c
+  jq_fuzz_execute.cpp
+  jq_fuzz_fixed.cpp
+  jq_fuzz_load_file.c
+  jq_fuzz_parse.c
+  jq_fuzz_parse_extended.c
+  jq_fuzz_parse_stream.c
+  jqtest
+  local.supp
+  man.test
+  manonig.test
+  manonigtest
+  mantest
+  modules/
+  no-main-program.jq
+  onig.supp
+  onig.test
+  onigtest
+  optional.test
+  optionaltest
+  setup
+  shtest
+  torture/
+  uri.test
+  uritest
+  utf8test
+  yes-main-program.jq
 vendor/
   decNumber/
   oniguruma/ (empty)

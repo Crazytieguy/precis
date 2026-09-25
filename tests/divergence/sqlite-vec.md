@@ -47,34 +47,34 @@ Score(3000)=0.449 I=0.764 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 1729 | 128 | SQL SELECT/WHERE contracts chunk #1 in test.sql |  |  | 0.452 |
 | ns | 1829 |  | 200 | Shadow table name macros (complete set) | 2.4 |  | 0.437 |
 | walker |  | 1938 | 209 | SQL schema contracts chunk #1 in test.sql |  |  | 0.437 |
-| walker |  | 1950 | 12 | c names tests/sqlite-vec-internal.h |  |  | 0.437 |
 | ns | 2141 |  | 312 | Shadow table CREATE TABLE DDL | 2.5 | 2.4 | 0.397 |
 | ns | 2239 |  | 98 | vec0 query plan enum | 2.6 |  | 0.386 |
 | ns | 2392 |  | 153 | vec0BestIndex query-plan selection rules | 2.7 |  | 0.370 |
-| walker |  | 2473 | 523 | README.md section #4 |  |  | 0.496 |
+| walker |  | 2461 | 523 | README.md section #4 |  |  | 0.496 |
 | ns | 2566 |  | 174 | vec0 user column kinds | 2.8 |  | 0.473 |
-| walker |  | 2605 | 132 | python decl names surface in tmp-static.py |  |  | 0.473 |
-| walker |  | 2605 | 0 | python decl at tmp-static.py:25 |  |  | 0.473 |
-| walker |  | 2726 | 121 | ARCHITECTURE.md section #0 |  |  | 0.477 |
-| walker |  | 2775 | 49 | listing of 'site/using' |  |  | 0.478 |
-| walker |  | 2789 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.478 |
-| walker |  | 2840 | 51 | listing of 'site/guides' |  |  | 0.478 |
+| walker |  | 2593 | 132 | python decl names surface in tmp-static.py |  |  | 0.473 |
+| walker |  | 2593 | 0 | python decl at tmp-static.py:25 |  |  | 0.473 |
+| walker |  | 2714 | 121 | ARCHITECTURE.md section #0 |  |  | 0.477 |
+| walker |  | 2763 | 49 | listing of 'site/using' |  |  | 0.478 |
+| walker |  | 2777 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.478 |
+| walker |  | 2828 | 51 | listing of 'site/guides' |  |  | 0.478 |
 | ns | 2873 |  | 307 | idxStr block kinds (complete enum) | 2.9 |  | 0.449 |
-| walker |  | 2990 | 150 | python decl at tmp-static.py:13 |  |  | 0.449 |
-| walker |  | 3038 | 48 | listing of 'tests/fuzz' |  |  | 0.449 |
+| walker |  | 2978 | 150 | python decl at tmp-static.py:13 |  |  | 0.449 |
+| walker |  | 3026 | 48 | listing of 'tests/fuzz' |  |  | 0.449 |
 | ns | 3045 |  | 172 | Partition key operator encoding | 2.10 |  | 0.434 |
+| walker |  | 3275 | 249 | plaintext config TODO |  |  | 0.435 |
 | ns | 3277 |  | 232 | Metadata and distance-constraint operator encodings | 2.11 | 2.10 | 0.415 |
-| walker |  | 3287 | 249 | plaintext config TODO |  |  | 0.415 |
-| walker |  | 3317 | 30 | python imports in bindings/python/extra_init.py |  |  | 0.415 |
-| walker |  | 3474 | 157 | README.md section #8 |  |  | 0.415 |
-| walker |  | 3482 | 8 | listing of 'site/getting-started' |  |  | 0.416 |
+| walker |  | 3305 | 30 | python imports in bindings/python/extra_init.py |  |  | 0.415 |
+| walker |  | 3462 | 157 | README.md section #8 |  |  | 0.415 |
+| walker |  | 3470 | 8 | listing of 'site/getting-started' |  |  | 0.416 |
 | ns | 3608 |  | 331 | struct vec0_vtab: field roster | 2.12 |  | 0.390 |
-| walker |  | 3677 | 195 | README.md section #5 |  |  | 0.390 |
+| walker |  | 3665 | 195 | README.md section #5 |  |  | 0.390 |
 | ns | 3720 |  | 112 | struct vec0_vtab: cached prepared statements | 2.13 | 2.12 | 0.381 |
 | ns | 3934 |  | 214 | Column definition structs and distance metrics | 2.14 |  | 0.363 |
-| walker |  | 3951 | 274 | README.md section #6 |  |  | 0.363 |
-| walker |  | 3956 | 5 | listing of 'tests/fuzz/corpus' |  |  | 0.363 |
-| walker |  | 3966 | 10 | listing of 'site/features' |  |  | 0.363 |
+| walker |  | 3939 | 274 | README.md section #6 |  |  | 0.363 |
+| walker |  | 3944 | 5 | listing of 'tests/fuzz/corpus' |  |  | 0.363 |
+| walker |  | 3954 | 10 | listing of 'site/features' |  |  | 0.363 |
+| walker |  | 3966 | 12 | c names tests/sqlite-vec-internal.h |  |  | 0.363 |
 | walker |  | 3977 | 11 | listing of 'tests/correctness' |  |  | 0.363 |
 | walker |  | 4014 | 37 | ARCHITECTURE.md section #6 |  |  | 0.368 |
 | ns | 4027 |  | 93 | Metadata column kinds | 2.15 |  | 0.363 |
@@ -113,58 +113,58 @@ Score(3000)=0.449 I=0.764 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 5514 | 53 | ARCHITECTURE.md section #1 |  |  | 0.339 |
 | ns | 5530 |  | 226 | vec0 read path (roster) | 2.23 |  | 0.331 |
 | walker |  | 5555 | 41 | [package] in tests/Cargo.toml |  |  | 0.331 |
-| walker |  | 5659 | 104 | c decl tests/sqlite-vec-internal.h:3 |  |  | 0.331 |
-| walker |  | 5683 | 24 | listing of 'tests/afbd' |  |  | 0.331 |
-| walker |  | 5722 | 39 | pub item body at benchmarks/micro/src/lib.rs:8 body 9 |  |  | 0.331 |
-| walker |  | 5729 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.331 |
-| walker |  | 5797 | 68 | ARCHITECTURE.md section #11 |  |  | 0.331 |
+| walker |  | 5579 | 24 | listing of 'tests/afbd' |  |  | 0.331 |
+| walker |  | 5618 | 39 | pub item body at benchmarks/micro/src/lib.rs:8 body 9 |  |  | 0.331 |
+| walker |  | 5625 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.331 |
+| walker |  | 5693 | 68 | ARCHITECTURE.md section #11 |  |  | 0.331 |
+| walker |  | 5760 | 67 | ARCHITECTURE.md section #12 |  |  | 0.331 |
+| walker |  | 5768 | 8 | listing of 'tests/fuzz/corpus/vec0-create' |  |  | 0.331 |
 | ns | 5816 |  | 286 | vec0 write path (roster) | 2.24 |  | 0.321 |
-| walker |  | 5864 | 67 | ARCHITECTURE.md section #12 |  |  | 0.321 |
-| walker |  | 5872 | 8 | listing of 'tests/fuzz/corpus/vec0-create' |  |  | 0.321 |
 | ns | 5995 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.314 |
 | ns | 6096 |  | 101 | Registered virtual table modules | 3.2 |  | 0.311 |
+| walker |  | 6106 | 338 | README.md section #7 |  |  | 0.311 |
+| walker |  | 6180 | 74 | ARCHITECTURE.md section #15 |  |  | 0.311 |
 | ns | 6205 |  | 109 | vec_debug build string | 3.3 |  | 0.309 |
-| walker |  | 6210 | 338 | README.md section #7 |  |  | 0.309 |
-| walker |  | 6284 | 74 | ARCHITECTURE.md section #15 |  |  | 0.309 |
-| walker |  | 6315 | 31 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.309 |
+| walker |  | 6211 | 31 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.309 |
+| walker |  | 6424 | 213 | c names sqlite-vec.c #2 |  |  | 0.309 |
+| walker |  | 6436 | 12 | c decl sqlite-vec.c:481 |  |  | 0.309 |
 | ns | 6439 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.302 |
-| walker |  | 6528 | 213 | c names sqlite-vec.c #2 |  |  | 0.302 |
 | ns | 6530 |  | 91 | Vector element types | 3.5 |  | 0.316 |
-| walker |  | 6540 | 12 | c decl sqlite-vec.c:481 |  |  | 0.316 |
 | ns | 6805 |  | 275 | Distance functions, scalar and SIMD (roster) | 3.6 |  | 0.331 |
 | ns | 6981 |  | 176 | Vector value conversion helpers (roster) | 3.7 |  | 0.325 |
 | ns | 7189 |  | 208 | vec_each table function: structs, columns, methods, module | 3.8 |  | 0.320 |
+| walker |  | 7257 | 821 | c decl sqlite-vec.c:501 |  |  | 0.320 |
 | ns | 7329 |  | 140 | vec_npy_each: .npy readers and vtab entry points | 3.9 |  | 0.316 |
-| walker |  | 7361 | 821 | c decl sqlite-vec.c:501 |  |  | 0.316 |
 | ns | 7395 |  | 66 | vec_static_blobs / vec_static_blob_entries: entry points | 3.10 |  | 0.315 |
 | ns | 7623 |  | 228 | Makefile: complete target roster | 4.1 |  | 0.308 |
 | ns | 7801 |  | 178 | Makefile: platform and SIMD detection | 4.2 |  | 0.303 |
 | ns | 7992 |  | 191 | Compile-time options | 4.3 |  | 0.301 |
+| walker |  | 8093 | 836 | c decl sqlite-vec.c:567 |  |  | 0.301 |
+| walker |  | 8134 | 41 | [package] in benchmarks/micro/Cargo.toml |  |  | 0.301 |
 | ns | 8136 |  | 144 | Public header template | 4.4 |  | 0.297 |
-| walker |  | 8197 | 836 | c decl sqlite-vec.c:567 |  |  | 0.297 |
-| walker |  | 8238 | 41 | [package] in benchmarks/micro/Cargo.toml |  |  | 0.297 |
 | ns | 8331 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.293 |
 | ns | 8490 |  | 159 | Distribution manifest | 4.6 |  | 0.318 |
 | ns | 8655 |  | 165 | TODO / roadmap | 4.7 |  | 0.333 |
 | ns | 8667 |  | 12 | CI workflows | 4.8 |  | 0.336 |
 | ns | 8811 |  | 144 | tests/ listing (complete) | 5.1 |  | 0.368 |
 | ns | 8898 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.365 |
-| walker |  | 9146 | 908 | README.md section #3 |  |  | 0.365 |
-| walker |  | 9186 | 40 | listing of 'tests/__snapshots__' |  |  | 0.365 |
+| walker |  | 9042 | 908 | README.md section #3 |  |  | 0.365 |
+| walker |  | 9082 | 40 | listing of 'tests/__snapshots__' |  |  | 0.365 |
+| walker |  | 9128 | 46 | listing of 'site/public' |  |  | 0.365 |
 | ns | 9200 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.357 |
-| walker |  | 9232 | 46 | listing of 'site/public' |  |  | 0.357 |
+| walker |  | 9239 | 111 | ARCHITECTURE.md section #13 |  |  | 0.357 |
 | ns | 9280 |  | 80 | examples/ listing (complete) | 5.4 |  | 0.373 |
-| walker |  | 9343 | 111 | ARCHITECTURE.md section #13 |  |  | 0.373 |
+| walker |  | 9363 | 124 | ARCHITECTURE.md section #10 |  |  | 0.373 |
 | ns | 9451 |  | 171 | Python example, end to end | 5.5 |  | 0.368 |
-| walker |  | 9467 | 124 | ARCHITECTURE.md section #10 |  |  | 0.368 |
+| walker |  | 9487 | 124 | ARCHITECTURE.md section #9 |  |  | 0.368 |
 | ns | 9501 |  | 50 | bindings/ listings (complete) | 5.6 |  | 0.379 |
-| walker |  | 9591 | 124 | ARCHITECTURE.md section #9 |  |  | 0.379 |
 | ns | 9640 |  | 139 | Documentation site listings (complete) | 5.7 |  | 0.404 |
-| walker |  | 9828 | 237 | c names sqlite-vec.c #3 |  |  | 0.411 |
+| walker |  | 9724 | 237 | c names sqlite-vec.c #3 |  |  | 0.411 |
+| walker |  | 9766 | 42 | c decl sqlite-vec.c:598 |  |  | 0.411 |
+| walker |  | 9792 | 26 | c decl sqlite-vec.c:811 |  |  | 0.411 |
+| walker |  | 9819 | 27 | c decl sqlite-vec.c:687 |  |  | 0.411 |
 | ns | 9840 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.406 |
-| walker |  | 9870 | 42 | c decl sqlite-vec.c:598 |  |  | 0.406 |
-| walker |  | 9896 | 26 | c decl sqlite-vec.c:811 |  |  | 0.406 |
-| walker |  | 9923 | 27 | c decl sqlite-vec.c:687 |  |  | 0.406 |
-| walker |  | 9953 | 30 | [dependencies] in tests/pyproject.toml |  |  | 0.403 |
+| walker |  | 9849 | 30 | [dependencies] in tests/pyproject.toml |  |  | 0.406 |
+| walker |  | 9869 | 20 | pub item at benchmarks/micro/benches/my_benchmark.rs:44 |  |  | 0.406 |
+| walker |  | 9932 | 63 | README headline in benchmarks/exhaustive-memory/README.md |  |  | 0.406 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.403 |
-| walker |  | 9973 | 20 | pub item at benchmarks/micro/benches/my_benchmark.rs:44 |  |  | 0.403 |

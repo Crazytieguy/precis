@@ -117,6 +117,33 @@ deps/
 docs/
   .gitignore
   API.md
+    …
+    3→# Neco C API
+    4→
+    5→C API for the Neco coroutine library.
+    6→
+    7→This document provides a detailed description of the functions and types in the
+    8→[neco.h](../neco.h) and [neco.c](../neco.c) source files for the Neco library.
+    9→
+    10→For a more general overview please see the project 
+    11→[README](https://github.com/tidwall/neco). 
+    …
+    17→- [Basic operations](#basic-operations)
+    18→- [Channels](#channels)
+    19→- [Generators](#generators)
+    20→- [Mutexes](#mutexes)
+    21→- [WaitGroups](#waitgroups)
+    22→- [Condition variables](#condition-variables)
+    …
+    27→- [Random number generator](#random-number-generator)
+    28→- [Error handling](#error-handling)
+    29→- [Background worker](#background-worker)
+    30→- [Time](#time)
+    31→- [Signals](#signals)
+    32→- [Cancelation](#cancelation)
+    33→- [Stats and information](#stats-and-information)
+    34→- [Global environment](#global-environment)
+    …
   README.md
     1→# Neco Documentation
     3→## [API.md](API.md)
@@ -223,22 +250,6 @@ neco.h
   90→typedef struct neco_gen neco_gen;
   91→
   92→int neco_gen_start(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, ...);
-  93→int neco_gen_startv(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
-  94→int neco_gen_retain(neco_gen *gen);
-  95→int neco_gen_release(neco_gen *gen);
-  96→int neco_gen_yield(void *data);
-  97→int neco_gen_yield_dl(void *data, int64_t deadline);
-  98→int neco_gen_next(neco_gen *gen, void *data);
-  99→int neco_gen_next_dl(neco_gen *gen, void *data, int64_t deadline);
-  100→int neco_gen_close(neco_gen *gen);
-  …
-  107→/// @defgroup Mutexes Mutexes
-  108→/// A mutex is synchronization mechanism that blocks access to variables by
-  109→/// multiple coroutines at once. This enforces exclusive access by a coroutine
-  110→/// to a variable or set of variables and helps to avoid data inconsistencies
-  111→/// due to race conditions.
-  112→/// @{
-  113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
   …
 tests/
   README.md

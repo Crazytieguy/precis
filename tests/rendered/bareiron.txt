@@ -1,5 +1,8 @@
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
+    feature_request.md
+    optimization-idea.md
   workflows/
     build.yml
 .gitignore
@@ -15,7 +18,9 @@ README.md
   9→> [!WARNING]
   10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
   12→## Quick start
-  …
+  13→For PC x86_64 platforms, grab the [latest build binary](https://github.com/p2r3/bareiron/releases/download/latest/bareiron.exe) and run it. The file is a [Cosmopolitan polyglot](https://github.com/jart/cosmopolitan), which means it'll run on Windows, Linux, and possibly Mac, despite the file extension. Note that the server's default settings cannot be reconfigured without compiling from source.
+  14→
+  15→For microcontrollers, see the section on **compilation** below.
   17→## Compilation
   …
   28→## Configuration
@@ -180,28 +185,6 @@ include/
     21→ssize_t writeUint16 (int client_fd, uint16_t num);
     22→ssize_t writeUint32 (int client_fd, uint32_t num);
     23→ssize_t writeUint64 (int client_fd, uint64_t num);
-    24→ssize_t writeFloat (int client_fd, float num);
-    25→ssize_t writeDouble (int client_fd, double num);
-    26→
-    27→uint8_t readByte (int client_fd);
-    28→uint16_t readUint16 (int client_fd);
-    29→int16_t readInt16 (int client_fd);
-    30→uint32_t readUint32 (int client_fd);
-    31→uint64_t readUint64 (int client_fd);
-    32→int64_t readInt64 (int client_fd);
-    33→float readFloat (int client_fd);
-    34→double readDouble (int client_fd);
-    35→
-    36→ssize_t readLengthPrefixedData (int client_fd);
-    37→void readString (int client_fd);
-    38→void readStringN (int client_fd, uint32_t max_length);
-    39→
-    40→uint32_t fast_rand ();
-    41→uint64_t splitmix64 (uint64_t state);
-    …
-    45→  #define get_program_time esp_timer_get_time
-    …
-    47→  int64_t get_program_time ();
     …
   varnum.h
     …
@@ -242,12 +225,39 @@ include/
 src/
   CMakeLists.txt
   crafting.c
+    …
+    9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
+    …
+    349→#define registerSmeltingRecipe(a, b) \
+    350→  if (*material == a && (*output_item == b || *output_item == 0)) *output_item = b
+    352→void getSmeltingOutput (PlayerData *player) {
+    …
   globals.c
   main.c
+    …
+    68→void handlePacket (int client_fd, int length, int packet_id, int state) {
+    …
   packets.c
   procedures.c
   serialize.c
   structures.c
+    …
+    9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
+    …
+    16→void placeTreeStructure (short x, uint8_t y, short z) {
+    …
   tools.c
+    …
+    42→uint64_t total_bytes_received = 0;
+    43→
+    44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
+    …
   varnum.c
+    …
+    14→int32_t readVarInt (int client_fd) {
+    …
+    34→int sizeVarInt (uint32_t value) {
+    …
+    43→void writeVarInt (int client_fd, uint32_t value) {
+    …
   worldgen.c

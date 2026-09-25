@@ -57,6 +57,26 @@ README.md
   3→(The old master has moved to
   4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
   5→branch. This is a new one uploaded in September 2020.)
+  7→chibicc is yet another small C compiler that implements most C11
+  8→features. Even though it still probably falls into the "toy compilers"
+  9→category just like other small compilers do, chibicc can compile
+  10→several real-world programs, including [Git](https://git-scm.com/),
+  11→[SQLite](https://sqlite.org),
+  12→[libpng](http://www.libpng.org/pub/png/libpng.html) and chibicc
+  13→itself, without making modifications to the compiled programs.
+  14→Generated executables of these programs pass their corresponding test
+  15→suites. So, chibicc actually supports a wide variety of C11 features
+  16→and is able to compile hundreds of thousands of lines of real-world C
+  17→code correctly.
+  19→chibicc is developed as the reference implementation for a book I'm
+  20→currently writing about the C compiler and the low-level programming.
+  21→The book covers the vast topic with an incremental approach; in the first
+  22→chapter, readers will implement a "compiler" that accepts just a single
+  23→number as a "language", which will then gain one feature at a time in each
+  24→section of the book until the language that the compiler accepts matches
+  25→what the C11 spec specifies. I took this incremental approach from [the
+  26→paper](http://scheme2006.cs.uchicago.edu/11-ghuloum.pdf) by Abdulaziz
+  27→Ghuloum.
   …
   55→## Status
   …
@@ -180,48 +200,13 @@ include/
     16→#define va_end(ap)
     …
     44→#define va_arg(ap, ty)                                                  \
-    45→  ({                                                                    \
-    46→    int klass = __builtin_reg_class(ty);                                \
-    47→    *(ty *)(klass == 0 ? __va_arg_gp(ap, sizeof(ty), _Alignof(ty)) :    \
-    48→            klass == 1 ? __va_arg_fp(ap, sizeof(ty), _Alignof(ty)) :    \
-    49→            __va_arg_mem(ap, sizeof(ty), _Alignof(ty)));                \
-    50→  })
+    …
     52→#define va_copy(dest, src) ((dest)[0] = (src)[0])
     53→
     54→#define __GNUC_VA_LIST 1
     55→typedef va_list __gnuc_va_list;
     …
   stdatomic.h
-    …
-    4→#define ATOMIC_BOOL_LOCK_FREE 1
-    5→#define ATOMIC_CHAR_LOCK_FREE 1
-    6→#define ATOMIC_CHAR16_T_LOCK_FREE 1
-    7→#define ATOMIC_CHAR32_T_LOCK_FREE 1
-    8→#define ATOMIC_WCHAR_T_LOCK_FREE 1
-    9→#define ATOMIC_SHORT_LOCK_FREE 1
-    10→#define ATOMIC_INT_LOCK_FREE 1
-    11→#define ATOMIC_LONG_LOCK_FREE 1
-    12→#define ATOMIC_LLONG_LOCK_FREE 1
-    13→#define ATOMIC_POINTER_LOCK_FREE 1
-    14→
-    15→typedef enum {
-    16→  memory_order_relaxed,
-    17→  memory_order_consume,
-    18→  memory_order_acquire,
-    19→  memory_order_release,
-    20→  memory_order_acq_rel,
-    21→  memory_order_seq_cst,
-    22→} memory_order;
-    23→
-    24→#define ATOMIC_FLAG_INIT(x) (x)
-    25→#define atomic_init(addr, val) (*(addr) = (val))
-    26→#define kill_dependency(x) (x)
-    27→#define atomic_thread_fence(order)
-    28→#define atomic_signal_fence(order)
-    29→#define atomic_is_lock_free(x) 1
-    30→
-    31→#define atomic_load(addr) (*(addr))
-    …
   stdbool.h
     …
     4→#define bool _Bool
@@ -254,6 +239,55 @@ strings.c
   20→char *format(char *fmt, ...) {
   …
 test/
+  alignof.c
+  alloca.c
+  arith.c
+  asm.c
+  atomic.c
+  attribute.c
+  bitfield.c
+  builtin.c
+  cast.c
+  common
+  commonsym.c
+  compat.c
+  complit.c
+  const.c
+  constexpr.c
+  control.c
+  decl.c
+  driver.sh
+  enum.c
+  extern.c
+  float.c
+  function.c
+  generic.c
+  include1.h
+  include2.h
+  include3.h
+  include4.h
+  initializer.c
+  line.c
+  literal.c
+  macro.c
+  offsetof.c
+  pointer.c
+  pragma-once.c
+  sizeof.c
+  stdhdr.c
+  string.c
+  struct.c
+  test.h
+  thirdparty/
+  tls.c
+  typedef.c
+  typeof.c
+  unicode.c
+  union.c
+  usualconv.c
+  varargs.c
+  variable.c
+  vla.c
 tokenize.c
 type.c
 unicode.c

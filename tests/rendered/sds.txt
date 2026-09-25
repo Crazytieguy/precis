@@ -19,7 +19,114 @@ README.md
   6→This version is **NOT* binary compatible** with SDS verison 1, but the API
   7→is 99% compatible so switching to the new lib should be trivial.
   …
+  18→How SDS strings work
+  19→===
+  …
+  55→Advantages and disadvantages of SDS
+  56→===
+  …
+  119→SDS basics
+  120→===
+  …
+  143→Creating SDS strings
+  144→---
+  …
+  195→Obtaining the string length
+  196→---
+  …
+  224→Destroying strings
+  225→---
+  …
+  243→Concatenating strings
+  244→---
+  …
+  310→Formatting strings
+  311→---
+  …
+  350→Fast number to string operations
+  351→---
+  …
+  370→Trimming strings and getting ranges
+  371→---
+  …
+  464→String copying
+  465→---
+  …
+  509→Quoting strings
+  510→---
+  …
+  563→Tokenization
+  564→---
+  …
+  622→Command line oriented tokenization
+  623→---
+  …
+  658→String joining
+  659→---
+  …
+  686→Error handling
+  687→---
+  …
+  696→SDS internals and advanced usage
+  697→===
+  …
+  761→Shrinking strings
+  762→---
+  …
+  796→Manual modifications of SDS strings
+  797→---
+  …
+  820→Sharing SDS strings
+  821→---
+  …
+  851→Interactions with heap checkers
+  852→---
+  …
+  860→Zero copy append from syscalls
+  861→----
+  …
+  882→Embedding SDS into your project
+  883→===
+  …
+  895→Using a different allocator for SDS
+  896→===
+  …
+  911→Credits and license
+  912→===
+  …
 sds.c
+  …
+  42→const char *SDS_NOINIT = "SDS_NOINIT";
+  43→
+  44→static inline int sdsHdrSize(char type) {
+  …
+  60→static inline char sdsReqType(size_t string_size) {
+  …
+  89→sds sdsnewlen(const void *init, size_t initlen) {
+  …
+  149→sds sdsempty(void) {
+  150→    return sdsnewlen("",0);
+  …
+  153→/* Create a new sds string starting from a null terminated C string. */
+  154→sds sdsnew(const char *init) {
+  …
+  159→/* Duplicate an sds string. */
+  160→sds sdsdup(const sds s) {
+  161→    return sdsnewlen(s, sdslen(s));
+  …
+  164→/* Free an sds string. No operation is performed if 's' is NULL. */
+  165→void sdsfree(sds s) {
+  …
+  184→void sdsupdatelen(sds s) {
+  …
+  193→void sdsclear(sds s) {
+  …
+  204→sds sdsMakeRoomFor(sds s, size_t addlen) {
+  …
+  256→sds sdsRemoveFreeSpace(sds s) {
+  …
+  300→size_t sdsAllocSize(sds s) {
+  …
 sds.h
   1→/* SDSLib 2.0 -- A C dynamic strings library
   2→ *
@@ -40,24 +147,13 @@ sds.h
   17→ *     to endorse or promote products derived from this software without
   18→ *     specific prior written permission.
   19→ *
-  20→ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  21→ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  22→ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  23→ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-  24→ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  25→ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-  26→ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-  27→ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-  28→ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  29→ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-  30→ * POSSIBILITY OF SUCH DAMAGE.
-  31→ */
   …
   36→#define SDS_MAX_PREALLOC (1024*1024)
   37→extern const char *SDS_NOINIT;
   …
   43→typedef char *sds;
-  …
+  45→/* Note: sdshdr5 is never used, we just access the flags byte directly.
+  46→ * However is here to document the layout of type 5 SDS strings. */
   47→struct __attribute__ ((__packed__)) sdshdr5 {
   48→    unsigned char flags; /* 3 lsb of type, and 5 msb of string length */
   49→    char buf[];
@@ -112,20 +208,6 @@ sds.h
   …
   218→sds sdsnewlen(const void *init, size_t initlen);
   219→sds sdsnew(const char *init);
-  220→sds sdsempty(void);
-  221→sds sdsdup(const sds s);
-  222→void sdsfree(sds s);
-  223→sds sdsgrowzero(sds s, size_t len);
-  224→sds sdscatlen(sds s, const void *t, size_t len);
-  225→sds sdscat(sds s, const char *t);
-  226→sds sdscatsds(sds s, const sds t);
-  227→sds sdscpylen(sds s, const char *t, size_t len);
-  228→sds sdscpy(sds s, const char *t);
-  229→
-  230→sds sdscatvprintf(sds s, const char *fmt, va_list ap);
-  …
-  232→sds sdscatprintf(sds s, const char *fmt, ...)
-  233→    __attribute__((format(printf, 2, 3)));
   …
 sdsalloc.h
   1→/* SDSLib 2.0 -- A C dynamic strings library
@@ -177,18 +259,6 @@ testhelp.h
   23→ *     to endorse or promote products derived from this software without
   24→ *     specific prior written permission.
   25→ *
-  26→ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  27→ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  28→ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  29→ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-  30→ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  31→ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-  32→ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-  33→ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-  34→ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  35→ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-  36→ * POSSIBILITY OF SUCH DAMAGE.
-  37→ */
   …
   42→int __failed_tests = 0;
   43→int __test_num = 0;

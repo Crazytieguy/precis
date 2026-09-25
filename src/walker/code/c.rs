@@ -32,11 +32,6 @@ pub(super) const EXTENSIONS: &[&str] = &["c", "h"];
 /// (0.60).
 const IMPLEMENTATION_FILE_WEIGHT: f64 = 0.6;
 
-/// Deepest level at which a header still reads as the project's public
-/// include surface: the repo root, or directly inside one of its
-/// top-level directories (`src/`, `include/`).
-const PUBLIC_HEADER_MAX_DEPTH: usize = 2;
-
 pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
     tree_sitter_c::LANGUAGE.into()
 }
@@ -61,9 +56,8 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     }
 }
 
-/// Headers on the project's public include surface.
-pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
-    is_header(path) && ctx.depth_from_root(path) <= PUBLIC_HEADER_MAX_DEPTH
+pub(super) fn is_entrypoint(_path: &Path, _ctx: &WalkCtx) -> bool {
+    false
 }
 
 pub(super) fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
@@ -809,13 +803,8 @@ int next;
     }
 
     #[test]
-    fn c_entrypoint_and_weight_follow_the_header_convention() {
+    fn c_file_weight_follows_the_header_convention() {
         let ctx = WalkCtx::new("/repo".into());
-        let entry = |path: &str| is_entrypoint(Path::new(path), &ctx);
-        assert!(entry("/repo/sds.h"));
-        assert!(entry("/repo/include/tusb.h"));
-        assert!(!entry("/repo/src/class/cdc.h"));
-        assert!(!entry("/repo/sds.c"));
         assert_eq!(file_weight(Path::new("/repo/SDS.H"), &ctx), 1.0);
         assert_eq!(
             file_weight(Path::new("/repo/sds.c"), &ctx),

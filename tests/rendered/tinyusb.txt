@@ -46,11 +46,30 @@ README.rst
   2→=======
   3→
   4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
+  6→Sponsors
+  7→--------
+  8→
+  9→TinyUSB is funded by: Adafruit. Purchasing products from them helps to support this project.
+  …
+  20→Overview
+  21→--------
   …
   31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
   32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
   33→small footprint, and real-time performance across 50+ MCU families.
   …
+  67→Getting started
+  68→---------------
+  69→
+  70→See the `online documentation <https://docs.tinyusb.org>`_ for information about using TinyUSB and how it is implemented.
+  71→
+  72→Check out `Getting Started`_ guide for adding TinyUSB to your project or building the examples. If you are new to TinyUSB, we recommend starting with the ``cdc_msc`` example. There is a handful of `Supported Boards`_ that should work out of the box.
+  73→
+  74→We use `GitHub Discussions <https://github.com/hathach/tinyusb/discussions>`_ as our forum. It is a great place to ask questions and advice from the community or to discuss your TinyUSB-based projects.
+  75→
+  76→For bugs and feature requests, please `raise an issue <https://github.com/hathach/tinyusb/issues>`_ and follow the templates there.
+  77→
+  78→See `Porting`_ guide for adding support for new MCUs and boards.
   80→Device Stack
   81→------------
   82→
@@ -138,6 +157,10 @@ hw/
     bridgetek/
       ft9xx/
         Readme.md
+          1→# BridgeTek FT9xx MCU
+          2→
+          3→**BridgeTek** provides a hardware abstraction library with software source code for the SDKs for FT9xx software family.
+          …
         scripts/
     dialog/
       README.md
@@ -152,7 +175,15 @@ hw/
           hal/
             hal_gpio.h
           mcu/
+            da1469x_clock.h
+            da1469x_hal.h
+            mcu.h
         src/
+          da1469x_clock.c
+          hal_gpio.c
+          hal_system.c
+          hal_system_start.c
+          system_da1469x.c
     nordic/
       nrf5x/
         s140_nrf52_6.1.1_API/
@@ -160,6 +191,13 @@ hw/
     sony/
       cxd56/
         mkspk/
+          .gitignore
+          Makefile
+          clefia.c
+          clefia.h
+          elf32.h
+          mkspk.c
+          mkspk.h
         tools/
 lib/
   SEGGER_RTT/
@@ -167,6 +205,14 @@ lib/
       SEGGER_RTT_Conf.h
     LICENSE.md
     README.md
+      1→RTT
+      2→===
+      3→
+      4→SEGGER RTT Sources
+      5→
+      6→https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer
+      7→https://wiki.segger.com/RTT
+      …
     RTT/
       SEGGER_RTT.c
       SEGGER_RTT.h
@@ -177,8 +223,35 @@ lib/
   networking/
     dhserver.c
     dhserver.h
+      …
+      42→typedef struct dhcp_entry
+      43→{
+      44→	uint8_t    mac[6];
+      45→	ip4_addr_t addr;
+      46→	uint32_t   lease;
+      47→} dhcp_entry_t;
+      48→
+      49→typedef struct dhcp_config
+      50→{
+      51→	ip4_addr_t    router;
+      52→	uint16_t      port;
+      53→	ip4_addr_t    dns;
+      54→	const char   *domain;
+      55→	int           num_entry;
+      56→	dhcp_entry_t *entries;
+      57→} dhcp_config_t;
+      …
+      62→err_t dhserv_init(const dhcp_config_t *c);
+      63→void dhserv_free(void);
+      …
     dnserver.c
     dnserver.h
+      …
+      42→typedef bool (*dns_query_proc_t)(const char *name, ip4_addr_t *addr);
+      …
+      47→err_t dnserv_init(const ip_addr_t *bind, uint16_t port, dns_query_proc_t query_proc);
+      48→void  dnserv_free(void);
+      …
     ndis.h
     rndis_protocol.h
     rndis_reports.c
@@ -212,6 +285,13 @@ src/
     tusb_common.h
     tusb_compiler.h
     tusb_debug.h
+      …
+      144→#define TU_LOG0(...)
+      145→#define TU_LOG0_MEM(...)
+      146→#define TU_LOG0_BUF(...)
+      147→#define TU_LOG0_INT(...)
+      148→#define TU_LOG0_HEX(...)
+      …
     tusb_fifo.c
     tusb_fifo.h
     tusb_mcu.h
@@ -266,50 +346,6 @@ src/
   tinyusb.mk
   tusb.c
   tusb.h
-    1→/*
-    2→ * The MIT License (MIT)
-    3→ *
-    4→ * Copyright (c) 2019 Ha Thach (tinyusb.org)
-    5→ *
-    6→ * Permission is hereby granted, free of charge, to any person obtaining a copy
-    7→ * of this software and associated documentation files (the "Software"), to deal
-    8→ * in the Software without restriction, including without limitation the rights
-    9→ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    10→ * copies of the Software, and to permit persons to whom the Software is
-    11→ * furnished to do so, subject to the following conditions:
-    12→ *
-    13→ * The above copyright notice and this permission notice shall be included in
-    14→ * all copies or substantial portions of the Software.
-    15→ *
-    16→ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    17→ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    18→ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    19→ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    20→ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    21→ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    22→ * THE SOFTWARE.
-    23→ *
-    24→ * This file is part of the TinyUSB stack.
-    25→ */
-    …
-    146→// Internal helper for backward compatible with tusb_init(void)
-    147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
-    …
-    159→#define _tusb_init_arg1(_rhport)             _tusb_init_arg0()
-    160→#define _tusb_init_arg2(_rhport, _rh_init)   tusb_rhport_init(_rhport, _rh_init)
-    161→#define tusb_init(...)                       TU_FUNC_OPTIONAL_ARG(_tusb_init, __VA_ARGS__)
-    163→// Check if stack is initialized
-    164→bool tusb_inited(void);
-    166→// Called to handle usb interrupt/event. tusb_init(rhport, role) must be called before
-    167→void tusb_int_handler(uint8_t rhport, bool in_isr);
-    169→// Deinit usb stack on roothub port
-    170→bool tusb_deinit(uint8_t rhport);
-    …
-    174→#define tusb_init(...)  (false)
-    175→#define tusb_int_handler(...)  do {}while(0)
-    176→#define tusb_inited()  (false)
-    177→#define tusb_deinit(...) (false)
-    …
   tusb_option.h
   typec/
     pd_types.h
@@ -320,5 +356,28 @@ test/
   fuzz/
   hil/
   unit-test/
+    CMakeLists.txt
+    ceedling
+    project.yml
+    test/
+      device/
+      support/
+      test_common_func.c
+      test_fifo.c
 tools/
+  build.py
+  build_utils.py
+  codespell/
+  file2carray.py
+  gen_doc.py
+  gen_presets.py
+  get_deps.py
+  iar_gen.py
+  iar_template.ipcf
+  make_release.py
+  metrics.py
+  metrics_compare_base.py
+  mksunxi.py
+  pcapng_to_corpus.py
+  usb_drivers/
 version.yml
