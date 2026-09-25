@@ -376,11 +376,27 @@ fn root_readme(dir: &Path, ctx: &WalkCtx) -> Option<(PathBuf, ReadmeMarkup)> {
         .min_by_key(|(file, markup)| (*markup, file.extension().is_none()))
 }
 
-/// True for a real RST prose line — not a heading underline, badge row
-/// (`|Build Status| …`), or directive (`.. figure::`).
+/// True for a real reST/AsciiDoc prose line — not a heading underline,
+/// badge row (`|Build Status| …`, `image:…[…]`), directive (`.. figure::`,
+/// `toc::[]`, `ifdef::…`), link macro, or attribute entry (`:toc: macro`).
 fn is_rst_prose_line(line: &str) -> bool {
     let t = line.trim();
     if t.is_empty() || t.starts_with("..") || t.starts_with('|') || is_rst_underline(t, 1) {
+        return false;
+    }
+    let first_word = t.split_whitespace().next().unwrap_or_default();
+    if first_word.contains("::")
+        || t.starts_with("image:")
+        || t.starts_with("link:")
+        || t.strip_prefix(':')
+            .and_then(|rest| rest.split_once(':'))
+            .is_some_and(|(name, _)| {
+                !name.is_empty()
+                    && name
+                        .chars()
+                        .all(|c| c.is_alphanumeric() || c == '-' || c == '_')
+            })
+    {
         return false;
     }
     t.split_whitespace()
@@ -2430,6 +2446,25 @@ mod tests {
         assert_eq!(headline.into_iter().collect::<Vec<_>>(), vec![1, 3]);
         let last = sections.last().unwrap();
         assert_eq!((last.start, last.end), (5, 7));
+    }
+
+    #[test]
+    fn markdown_asciidoc_readme_lede_skips_badges_and_attributes() {
+        let src = "\
+image:https://img.shields.io/badge/a-b-c.svg[Badge above the title, link=x]
+
+= Tool
+:description: A fast tool for the useful thing.
+:toc: macro
+
+image:https://github.com/x/tool/workflows/CI/badge.svg[CI, link=x] image:https://img.shields.io/crates/v/tool.svg[Crates.io, link=x]
+
+toc::[]
+
+Tool is a small utility that does the useful thing for you.
+";
+        let (headline, _) = line_scanned_readme(src, ReadmeMarkup::AsciiDoc);
+        assert_eq!(headline.into_iter().collect::<Vec<_>>(), vec![3, 11]);
     }
 
     /// Overline-form headings must not leak their overline punctuation row
