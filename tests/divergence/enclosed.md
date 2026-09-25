@@ -1,4 +1,4 @@
-Score(3000)=0.515 I=0.790 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.530/0.425/0.569/0.515/0.527/0.590/0.571
+Score(3000)=0.572 I=0.823 C=0.397 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.559/0.424/0.570/0.572/0.527/0.590/0.571
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -39,81 +39,81 @@ Score(3000)=0.515 I=0.790 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 726 |  | 180 | Root package.json: version, package manager, engines, release and docker scripts | 1.6 |  | 0.566 |
 | walker |  | 738 | 26 | Fs::DirListing { dir: packages/app-client/src } |  |  | 0.567 |
 | walker |  | 742 | 4 | Fs::DirListing { dir: packages/app-client/src/assets } |  |  | 0.567 |
-| walker |  | 829 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.567 |
-| walker |  | 842 | 13 | Fs::DirListing { dir: packages/app-server/src/modules/storage } |  |  | 0.568 |
-| walker |  | 851 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/errors } |  |  | 0.568 |
-| walker |  | 860 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/validation } |  |  | 0.568 |
-| walker |  | 881 | 21 | Fs::DirListing { dir: packages/cli/src/config } |  |  | 0.569 |
-| ns | 890 |  | 164 | README feature list, first half | 1.7 |  | 0.527 |
-| walker |  | 902 | 21 | Fs::DirListing { dir: packages/cli/src/create-note } |  |  | 0.527 |
-| walker |  | 923 | 21 | Fs::DirListing { dir: packages/crypto/src/node } |  |  | 0.528 |
-| walker |  | 944 | 21 | Fs::DirListing { dir: packages/crypto/src/web } |  |  | 0.529 |
-| walker |  | 965 | 21 | Fs::DirListing { dir: packages/lib/src/api } |  |  | 0.530 |
-| walker |  | 1016 | 51 | Json::Runtime { file: package.json } |  |  | 0.559 |
-| walker |  | 1027 | 11 | Fs::DirListing { dir: packages/docs/.vitepress } |  |  | 0.560 |
-| walker |  | 1070 | 43 | Markdown::ReadmeHeadline { file: packages/app-client/README.md } |  |  | 0.560 |
-| ns | 1076 |  | 186 | README feature list, second half | 1.8 |  | 0.527 |
-| walker |  | 1095 | 25 | Fs::DirListing { dir: packages/lib/src/crypto } |  |  | 0.530 |
-| walker |  | 1122 | 27 | Fs::DirListing { dir: packages/lib/src/notes } |  |  | 0.533 |
-| walker |  | 1151 | 29 | Fs::DirListing { dir: .github } |  |  | 0.533 |
-| walker |  | 1232 | 81 | Fs::DirListing { dir: .github/workflows } |  |  | 0.534 |
+| walker |  | 755 | 13 | Fs::DirListing { dir: packages/app-server/src/modules/storage } |  |  | 0.567 |
+| walker |  | 764 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/errors } |  |  | 0.567 |
+| walker |  | 773 | 9 | Fs::DirListing { dir: packages/app-server/src/modules/shared/validation } |  |  | 0.567 |
+| walker |  | 794 | 21 | Fs::DirListing { dir: packages/cli/src/config } |  |  | 0.568 |
+| walker |  | 815 | 21 | Fs::DirListing { dir: packages/cli/src/create-note } |  |  | 0.569 |
+| walker |  | 836 | 21 | Fs::DirListing { dir: packages/crypto/src/node } |  |  | 0.569 |
+| walker |  | 857 | 21 | Fs::DirListing { dir: packages/crypto/src/web } |  |  | 0.570 |
+| walker |  | 878 | 21 | Fs::DirListing { dir: packages/lib/src/api } |  |  | 0.572 |
+| ns | 890 |  | 164 | README feature list, first half | 1.7 |  | 0.530 |
+| walker |  | 929 | 51 | Json::Runtime { file: package.json } |  |  | 0.559 |
+| walker |  | 940 | 11 | Fs::DirListing { dir: packages/docs/.vitepress } |  |  | 0.559 |
+| walker |  | 983 | 43 | Markdown::ReadmeHeadline { file: packages/app-client/README.md } |  |  | 0.559 |
+| walker |  | 1008 | 25 | Fs::DirListing { dir: packages/lib/src/crypto } |  |  | 0.562 |
+| walker |  | 1035 | 27 | Fs::DirListing { dir: packages/lib/src/notes } |  |  | 0.565 |
+| walker |  | 1064 | 29 | Fs::DirListing { dir: .github } |  |  | 0.565 |
+| ns | 1076 |  | 186 | README feature list, second half | 1.8 |  | 0.532 |
+| walker |  | 1145 | 81 | Fs::DirListing { dir: .github/workflows } |  |  | 0.533 |
+| walker |  | 1174 | 29 | Fs::DirListing { dir: packages/app-client/src/modules } |  |  | 0.534 |
+| walker |  | 1179 | 5 | Fs::DirListing { dir: packages/app-client/src/modules/theme } |  |  | 0.534 |
+| walker |  | 1185 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/ui } |  |  | 0.534 |
+| walker |  | 1191 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/ui/layouts } |  |  | 0.534 |
+| walker |  | 1202 | 11 | Fs::DirListing { dir: packages/app-client/src/modules/docs } |  |  | 0.534 |
+| walker |  | 1213 | 11 | Fs::DirListing { dir: packages/app-client/src/modules/files } |  |  | 0.535 |
+| walker |  | 1228 | 15 | Fs::DirListing { dir: packages/app-client/src/modules/shared } |  |  | 0.535 |
+| walker |  | 1232 | 4 | Fs::DirListing { dir: packages/app-client/src/modules/shared/hooks } |  |  | 0.535 |
+| walker |  | 1236 | 4 | Fs::DirListing { dir: packages/app-client/src/modules/shared/style } |  |  | 0.535 |
 | ns | 1237 |  | 161 | CONTRIBUTING: local development setup commands | 1.9 |  | 0.463 |
-| walker |  | 1261 | 29 | Fs::DirListing { dir: packages/app-client/src/modules } |  |  | 0.463 |
-| walker |  | 1266 | 5 | Fs::DirListing { dir: packages/app-client/src/modules/theme } |  |  | 0.464 |
-| walker |  | 1272 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/ui } |  |  | 0.464 |
-| walker |  | 1278 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/ui/layouts } |  |  | 0.464 |
-| walker |  | 1289 | 11 | Fs::DirListing { dir: packages/app-client/src/modules/docs } |  |  | 0.464 |
-| walker |  | 1300 | 11 | Fs::DirListing { dir: packages/app-client/src/modules/files } |  |  | 0.464 |
-| walker |  | 1315 | 15 | Fs::DirListing { dir: packages/app-client/src/modules/shared } |  |  | 0.465 |
-| walker |  | 1319 | 4 | Fs::DirListing { dir: packages/app-client/src/modules/shared/hooks } |  |  | 0.465 |
-| walker |  | 1323 | 4 | Fs::DirListing { dir: packages/app-client/src/modules/shared/style } |  |  | 0.465 |
-| walker |  | 1328 | 5 | Fs::DirListing { dir: packages/app-client/src/modules/shared/utils } |  |  | 0.465 |
-| walker |  | 1336 | 8 | Fs::DirListing { dir: packages/app-client/src/modules/shared/files } |  |  | 0.465 |
-| walker |  | 1352 | 16 | Fs::DirListing { dir: packages/app-client/src/modules/config } |  |  | 0.465 |
-| walker |  | 1370 | 18 | Fs::DirListing { dir: packages/app-client/src/modules/auth } |  |  | 0.466 |
-| walker |  | 1376 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/auth/pages } |  |  | 0.466 |
+| walker |  | 1241 | 5 | Fs::DirListing { dir: packages/app-client/src/modules/shared/utils } |  |  | 0.463 |
+| walker |  | 1249 | 8 | Fs::DirListing { dir: packages/app-client/src/modules/shared/files } |  |  | 0.464 |
+| walker |  | 1265 | 16 | Fs::DirListing { dir: packages/app-client/src/modules/config } |  |  | 0.464 |
+| walker |  | 1283 | 18 | Fs::DirListing { dir: packages/app-client/src/modules/auth } |  |  | 0.464 |
+| walker |  | 1289 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/auth/pages } |  |  | 0.464 |
+| walker |  | 1320 | 31 | Fs::DirListing { dir: packages/docs/src/self-hosting } |  |  | 0.465 |
+| walker |  | 1377 | 57 | Markdown::ReadmeHeadline { file: packages/cli/README.md } |  |  | 0.465 |
 | ns | 1399 |  | 162 | Self-host quickstart: docker run invocation plus the whole docker-compose.yml | 1.10 |  | 0.424 |
-| walker |  | 1407 | 31 | Fs::DirListing { dir: packages/docs/src/self-hosting } |  |  | 0.425 |
-| walker |  | 1464 | 57 | Markdown::ReadmeHeadline { file: packages/cli/README.md } |  |  | 0.425 |
-| walker |  | 1523 | 59 | Markdown::ReadmeHeadline { file: packages/lib/README.md } |  |  | 0.425 |
-| walker |  | 1545 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/app } |  |  | 0.426 |
-| walker |  | 1550 | 5 | Fs::DirListing { dir: packages/app-server/src/modules/app/users } |  |  | 0.426 |
-| walker |  | 1572 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/tasks } |  |  | 0.426 |
-| walker |  | 1587 | 15 | Fs::DirListing { dir: packages/app-server/src/modules/shared/logger } |  |  | 0.426 |
-| walker |  | 1665 | 78 | Json::Scripts { file: package.json } |  |  | 0.499 |
-| walker |  | 1688 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/i18n } |  |  | 0.500 |
-| walker |  | 1711 | 23 | Fs::DirListing { dir: packages/crypto/src/node/encryption-algorithms } |  |  | 0.500 |
-| walker |  | 1734 | 23 | Fs::DirListing { dir: packages/crypto/src/web/encryption-algorithms } |  |  | 0.501 |
+| walker |  | 1436 | 59 | Markdown::ReadmeHeadline { file: packages/lib/README.md } |  |  | 0.424 |
+| walker |  | 1458 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/app } |  |  | 0.424 |
+| walker |  | 1463 | 5 | Fs::DirListing { dir: packages/app-server/src/modules/app/users } |  |  | 0.424 |
+| walker |  | 1485 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/tasks } |  |  | 0.425 |
+| walker |  | 1500 | 15 | Fs::DirListing { dir: packages/app-server/src/modules/shared/logger } |  |  | 0.425 |
+| walker |  | 1578 | 78 | Json::Scripts { file: package.json } |  |  | 0.498 |
+| walker |  | 1601 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/i18n } |  |  | 0.498 |
+| walker |  | 1624 | 23 | Fs::DirListing { dir: packages/crypto/src/node/encryption-algorithms } |  |  | 0.499 |
+| walker |  | 1647 | 23 | Fs::DirListing { dir: packages/crypto/src/web/encryption-algorithms } |  |  | 0.499 |
+| walker |  | 1711 | 64 | Fs::DirListing { dir: packages/app-client/public } |  |  | 0.499 |
+| walker |  | 1735 | 24 | Fs::DirListing { dir: packages/lib/src/crypto/encryption-algorithms } |  |  | 0.501 |
 | ns | 1758 |  | 359 | packages/lib/src/index.ts in full — the definitive @enclosed/lib export surface | 2.1 |  | 0.438 |
-| walker |  | 1798 | 64 | Fs::DirListing { dir: packages/app-client/public } |  |  | 0.438 |
-| walker |  | 1822 | 24 | Fs::DirListing { dir: packages/lib/src/crypto/encryption-algorithms } |  |  | 0.439 |
-| walker |  | 1928 | 106 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.477 |
-| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.517 |
-| walker |  | 1954 | 26 | Fs::DirListing { dir: packages/lib/src/crypto/serialization } |  |  | 0.554 |
-| walker |  | 1969 | 15 | Fs::DirListing { dir: packages/lib/src/crypto/serialization/cbor-array } |  |  | 0.569 |
-| walker |  | 2040 | 71 | Markdown::ReadmeHeadline { file: packages/crypto/README.md } |  |  | 0.569 |
-| walker |  | 2069 | 29 | Markdown::HeadingsOutline { file: packages/crypto/README.md } |  |  | 0.569 |
-| walker |  | 2119 | 50 | Fs::DirListing { dir: packages/crypto/src/encryption-algorithms } |  |  | 0.572 |
-| walker |  | 2157 | 38 | Markdown::HeadingsOutline { file: packages/lib/README.md } |  |  | 0.572 |
-| walker |  | 2209 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.572 |
+| walker |  | 1841 | 106 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.475 |
+| walker |  | 1867 | 26 | Fs::DirListing { dir: packages/lib/src/crypto/serialization } |  |  | 0.479 |
+| walker |  | 1882 | 15 | Fs::DirListing { dir: packages/lib/src/crypto/serialization/cbor-array } |  |  | 0.480 |
+| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.568 |
+| walker |  | 1953 | 71 | Markdown::ReadmeHeadline { file: packages/crypto/README.md } |  |  | 0.568 |
+| walker |  | 1982 | 29 | Markdown::HeadingsOutline { file: packages/crypto/README.md } |  |  | 0.568 |
+| walker |  | 2032 | 50 | Fs::DirListing { dir: packages/crypto/src/encryption-algorithms } |  |  | 0.570 |
+| walker |  | 2070 | 38 | Markdown::HeadingsOutline { file: packages/lib/README.md } |  |  | 0.570 |
+| walker |  | 2122 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.570 |
+| walker |  | 2145 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.570 |
+| walker |  | 2180 | 35 | Plaintext::Whole { file: packages/app-client/.env.example } |  |  | 0.570 |
+| walker |  | 2205 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.571 |
 | ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.553 |
-| walker |  | 2232 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.554 |
-| walker |  | 2267 | 35 | Plaintext::Whole { file: packages/app-client/.env.example } |  |  | 0.554 |
-| walker |  | 2292 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.555 |
-| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.525 |
-| walker |  | 2490 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.525 |
-| walker |  | 2596 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.574 |
-| walker |  | 2617 | 21 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.574 |
-| walker |  | 2656 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.575 |
-| ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.533 |
-| walker |  | 2670 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.533 |
-| walker |  | 2684 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.533 |
-| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.515 |
-| walker |  | 3023 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.573 |
-| walker |  | 3056 | 33 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.573 |
+| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.523 |
+| walker |  | 2403 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.524 |
+| walker |  | 2509 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 2530 | 21 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 2569 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.573 |
+| walker |  | 2583 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.573 |
+| walker |  | 2597 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.574 |
+| ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.532 |
+| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.514 |
+| walker |  | 2936 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.572 |
+| walker |  | 2969 | 33 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.572 |
+| walker |  | 3013 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.572 |
+| walker |  | 3049 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.573 |
 | ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.549 |
-| walker |  | 3100 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.549 |
-| walker |  | 3136 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.550 |
+| walker |  | 3136 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.550 |
 | walker |  | 3192 | 56 | Markdown::ReadmeHeadline { file: packages/app-client/src/locales/README.md } |  |  | 0.550 |
 | walker |  | 3214 | 22 | Markdown::HeadingsOutline { file: packages/app-client/src/locales/README.md } |  |  | 0.550 |
 | walker |  | 3252 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.551 |

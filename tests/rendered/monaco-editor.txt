@@ -37,6 +37,36 @@ README.md
   …
   8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
   …
+  12→## Try it out
+  …
+  18→## Installing
+  …
+  31→## Localization
+  …
+  40→## Concepts
+  …
+  44→### Models
+  …
+  48→### URIs
+  …
+  52→### Editors
+  …
+  56→### Providers
+  …
+  62→### Disposables
+  …
+  66→## Documentation
+  …
+  76→## Issues
+  …
+  80→## FAQ
+  …
+  112→## Contributing / Local Development
+  …
+  117→## Code of Conduct
+  …
+  121→## License
+  …
 SECURITY.md
 ThirdPartyNotices.txt
 build/
@@ -77,29 +107,6 @@ monaco-lsp-client/
       LspConnection.ts
       TextDocumentSynchronizer.ts
       languageFeatures/
-        LspCodeActionFeature.ts
-        LspCodeLensFeature.ts
-        LspCompletionFeature.ts
-        LspDeclarationFeature.ts
-        LspDefinitionFeature.ts
-        LspDiagnosticsFeature.ts
-        LspDocumentHighlightFeature.ts
-        LspDocumentLinkFeature.ts
-        LspDocumentSymbolFeature.ts
-        LspFoldingRangeFeature.ts
-        LspFormattingFeature.ts
-        LspHoverFeature.ts
-        LspImplementationFeature.ts
-        LspInlayHintsFeature.ts
-        LspOnTypeFormattingFeature.ts
-        LspRangeFormattingFeature.ts
-        LspReferencesFeature.ts
-        LspRenameFeature.ts
-        LspSelectionRangeFeature.ts
-        LspSemanticTokensFeature.ts
-        LspSignatureHelpFeature.ts
-        LspTypeDefinitionFeature.ts
-        common.ts
     index.ts
     types.ts
     utils.ts
@@ -254,6 +261,8 @@ samples/
     webpack.config.js
   legacy/
     README.md
+      1→These AMD samples are not supported anymore and will be removed in future releases.
+      2→Please use the ESM version of the editor!
     browser-amd-diff-editor/
       index.html
       modified.txt

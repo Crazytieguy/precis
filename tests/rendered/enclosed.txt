@@ -43,7 +43,20 @@ README.md
   33→
   34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
   36→## Features
-  …
+  37→
+  38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
+  39→- **File Attachments**: Share files securely with your notes.
+  40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
+  41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
+  42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
+  43→- **i18n Support**: Available in multiple languages.
+  44→- **Authentication**: Optional email/password authentication to create notes.
+  45→- **Dark Mode**: A dark theme for late-night note sharing.
+  46→- **Responsive Design**: Works on all devices, from desktops to mobile phones.
+  47→- **Open Source**: The source code is available under the Apache 2.0 License.
+  48→- **Self-Hostable**: Run your instance of Enclosed for private note sharing.
+  49→- **CLI**: A command-line interface for creating notes from the terminal.
+  50→- **Very low environmental impact**: the app and the docs is rated A+ on websitecarbon.com (see [here](https://www.websitecarbon.com/website/enclosed-cc/) and [here](https://www.websitecarbon.com/website/docs-enclosed-cc/)).
   52→## Self host
   53→
   54→### Try it with Docker
@@ -69,7 +82,8 @@ README.md
   150→## Contributing
   …
   155→## License
-  …
+  156→
+  157→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
   159→## Credits and Acknowledgements
   …
   168→### Stack
@@ -146,26 +160,6 @@ packages/
         favicon.ico
       index.tsx
       locales/
-        README.md
-        ar.json
-        de.json
-        en.json
-        es.json
-        fr.json
-        hu.json
-        id.json
-        it.json
-        locales.test.ts
-        locales.ts
-        nl.json
-        pl.json
-        pt-BR.json
-        pt.json
-        ru.json
-        tr.json
-        vi.json
-        zh-CN.json
-        zh-TW.json
       modules/
         auth/
           auth.models.ts

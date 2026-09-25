@@ -399,99 +399,19 @@ fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
         >= MIN_SOURCE_FILES
 }
 
-/// True when `dir` lies under a `src`/`lib`/`source`/`pkg/` dir that
-/// belongs to a package root — the repo's own, or any module's.
-/// Promotes flat source partitions into the inventory tier.
+/// True when `dir` lies under the repository's own top-level
+/// `src`/`lib`/`source`/`pkg/` dir. Promotes flat source partitions
+/// into the inventory tier.
 fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
-    let root = ctx.root();
-    let mut parent = dir.parent();
-    while let Some(p) = parent {
-        if p == root || !p.starts_with(root) {
-            return false;
-        }
-        if (is_source_dir(p) || is_go_pkg_wrapper(p))
-            && p.parent().is_some_and(|owner| {
-                // The repo's own `src/` promotes everything beneath it;
-                // a module's `src/` promotes only its catalogs.
-                owner == root
-                    || (list_dir(dir, ctx.dir_filter()).len() >= MODULE_SOURCE_ROOT_MIN_ENTRIES
-                        && is_package_root_dir(owner, ctx.dir_filter()))
-            })
-        {
-            return true;
-        }
-        parent = p.parent();
-    }
-    false
-}
-
-/// Entries a directory under a *module's* source root needs before its
-/// listing is promoted into the inventory tier.
-///
-/// The repo has one `src/`, so promoting everything under it costs a
-/// bounded number of listings. A monorepo has one per package, and
-/// promoting every directory beneath every package floods the early
-/// budget with small leaf partitions — measured at 35 listings before
-/// the first line of code in a six-package monorepo, and ~570 tokens
-/// of component directories from an embedded frontend in another.
-/// Those listings are individually cheap, which is exactly why they
-/// win the `value/cost^k` race and exactly why they are the wrong
-/// thing to buy first: at 1000–2000 tokens there is no budget left for
-/// the files they name, so the listing is paid for and nothing comes
-/// back. By 3000 the files start landing and it turns positive.
-///
-/// Requiring the listing to be a *catalog* — a package's API
-/// partition, not a leaf of four files — keeps the promotion for the
-/// directories whose names are worth the tokens.
-///
-/// Swept 10 / 16 / 20 / 25 / 35 across the budget grid. The response
-/// is a monotone trade curve, not a peak: raising it recovers early
-/// budgets and gives back some of the 3000–6240 gain, and by 35 the
-/// promotion is inert on the corpus. This value is therefore a
-/// position on that curve, not an optimum — 20 keeps the 3000–6240
-/// gain whole. `git show a90ee9b6:docs/design-notes.md` records the full
-/// grid and what 25 buys if the early budgets are ever weighted higher.
-const MODULE_SOURCE_ROOT_MIN_ENTRIES: usize = 20;
-
-/// Manifest filenames that mark a directory as a package root — the
-/// point a language's source layout is measured from.
-const PACKAGE_MANIFEST_FILES: &[&str] = &[
-    "pom.xml",
-    "build.gradle",
-    "build.gradle.kts",
-    "build.sbt",
-    "package.json",
-    "Cargo.toml",
-    "pyproject.toml",
-    "setup.py",
-    "go.mod",
-    "composer.json",
-    "Gemfile",
-    "Package.swift",
-    "pubspec.yaml",
-    "mix.exs",
-];
-
-/// A directory holding its own package manifest. In a multi-module
-/// repo (Maven/Gradle reactors, Cargo workspaces, npm monorepos) the
-/// module directory plays the role the repo root plays in a
-/// single-module one, so `<module>/src/…` is as much a source root as
-/// `<root>/src/…`. Without this a Maven reactor's
-/// `gson/src/main/java/com/google/gson/` never registers as a source
-/// inventory, its 60-file listing loses the ratio race at depth 7,
-/// and nothing inside it is ever discovered.
-///
-/// Reads through the walk's ignore filter: a manifest git ignores is
-/// not this repository's statement about its own layout.
-fn is_package_root_dir(dir: &Path, filter: &DirFilter) -> bool {
-    let entries = list_dir(dir, filter);
-    PACKAGE_MANIFEST_FILES
-        .iter()
-        .any(|manifest| matches!(entries.get(*manifest), Some(EntryKind::File)))
-        || entries.iter().any(|(name, kind)| {
-            matches!(kind, EntryKind::File)
-                && (name.ends_with(".gemspec") || name.ends_with(".csproj"))
-        })
+    let Ok(relative) = dir.strip_prefix(ctx.root()) else {
+        return false;
+    };
+    let mut components = relative.components();
+    let Some(top) = components.next() else {
+        return false;
+    };
+    let top = ctx.root().join(top);
+    components.next().is_some() && (is_source_dir(&top) || is_go_pkg_wrapper(&top))
 }
 
 fn source_inventory_count_uncached(
@@ -641,55 +561,5 @@ mod tests {
         std::fs::write(root.join("build.rs"), "fn main() {}\n").unwrap();
         assert!(lists(root, &root_build));
         assert!(!lists(root, &root.join("target")));
-    }
-
-    /// A module's `src/` promotes a catalog partition but not a small
-    /// leaf, and only when the manifest that makes it a module is
-    /// something the repository actually declares.
-    #[test]
-    fn fs_module_source_root_promotes_catalogs_and_respects_ignored_manifests() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        let catalog = root.join("packages/lib/src/api");
-        let leaf = root.join("packages/lib/src/files");
-        std::fs::create_dir_all(&catalog).unwrap();
-        std::fs::create_dir_all(&leaf).unwrap();
-        std::fs::write(root.join("packages/lib/package.json"), "{}\n").unwrap();
-        for i in 0..MODULE_SOURCE_ROOT_MIN_ENTRIES {
-            std::fs::write(catalog.join(format!("m{i}.ts")), "export const x = 1;\n").unwrap();
-        }
-        for i in 0..3 {
-            std::fs::write(leaf.join(format!("f{i}.ts")), "export const y = 1;\n").unwrap();
-        }
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        assert!(has_source_root_ancestor(&catalog, &ctx));
-        assert!(
-            !has_source_root_ancestor(&leaf, &ctx),
-            "a four-file leaf is not a package's API partition"
-        );
-
-        // Same tree, but the manifest is gitignored: a manifest git
-        // hides is not the repository's statement about its layout,
-        // and the walker never lists it either.
-        let ignored = tempfile::tempdir().unwrap();
-        let iroot = ignored.path();
-        let icatalog = iroot.join("packages/lib/src/api");
-        std::fs::create_dir_all(&icatalog).unwrap();
-        std::fs::create_dir_all(iroot.join(".git")).unwrap();
-        std::fs::write(iroot.join(".gitignore"), "package.json\n").unwrap();
-        std::fs::write(iroot.join("packages/lib/package.json"), "{}\n").unwrap();
-        for i in 0..MODULE_SOURCE_ROOT_MIN_ENTRIES {
-            std::fs::write(icatalog.join(format!("m{i}.ts")), "export const x = 1;\n").unwrap();
-        }
-        let ictx = WalkCtx::new(iroot.to_path_buf());
-        assert!(!has_source_root_ancestor(&icatalog, &ictx));
-
-        // Controlled comparison: the same tree with the manifest
-        // un-ignored does promote, so the assertion above is about the
-        // ignore rules and not about the tree's shape.
-        std::fs::write(iroot.join(".gitignore"), "\n").unwrap();
-        let visible_ctx = WalkCtx::new(iroot.to_path_buf());
-        assert!(has_source_root_ancestor(&icatalog, &visible_ctx));
     }
 }

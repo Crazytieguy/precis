@@ -141,6 +141,29 @@ go.mod
   1→module github.com/henrygd/beszel
   2→
   3→go 1.26.1
+  4→
+  5→require (
+  6→	github.com/blang/semver v3.5.1+incompatible
+  7→	github.com/coreos/go-systemd/v22 v22.7.0
+  8→	github.com/ebitengine/purego v0.10.0
+  9→	github.com/fxamacker/cbor/v2 v2.9.0
+  10→	github.com/gliderlabs/ssh v0.3.8
+  11→	github.com/google/uuid v1.6.0
+  12→	github.com/lxzan/gws v1.9.1
+  13→	github.com/nicholas-fedor/shoutrrr v0.14.3
+  14→	github.com/pocketbase/dbx v1.12.0
+  15→	github.com/pocketbase/pocketbase v0.36.8
+  16→	github.com/shirou/gopsutil/v4 v4.26.3
+  17→	github.com/spf13/cast v1.10.0
+  18→	github.com/spf13/cobra v1.10.2
+  19→	github.com/spf13/pflag v1.0.10
+  20→	github.com/stretchr/testify v1.11.1
+  21→	golang.org/x/crypto v0.49.0
+  22→	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
+  23→	golang.org/x/sys v0.42.0
+  24→	gopkg.in/yaml.v3 v3.0.1
+  25→	howett.net/plist v1.0.1
+  26→)
   …
 go.sum
 i18n.yml
@@ -300,89 +323,6 @@ internal/
         manifest.json
     src/
       components/
-        active-alerts.tsx
-        add-system.tsx
-        alerts/
-          alert-button.tsx
-          alerts-sheet.tsx
-        alerts-history-columns.tsx
-        charts/
-          area-chart.tsx
-          chart-time-select.tsx
-          hooks.ts
-          line-chart.tsx
-        command-palette.tsx
-        containers-table/
-          containers-table-columns.tsx
-          containers-table.tsx
-        copy-to-clipboard.tsx
-        footer-repo-link.tsx
-        install-dropdowns.tsx
-        lang-toggle.tsx
-        login/
-          auth-form.tsx
-          forgot-pass-form.tsx
-          login.tsx
-          otp-forms.tsx
-        logo.tsx
-        mode-toggle.tsx
-        navbar.tsx
-        router.tsx
-        routes/
-          containers.tsx
-          home.tsx
-          settings/
-          smart.tsx
-          system/
-            chart-card.tsx
-            chart-data.ts
-            charts/
-            cpu-sheet.tsx
-            disk-io-sheet.tsx
-            info-bar.tsx
-            lazy-tables.tsx
-            network-sheet.tsx
-            smart-table.tsx
-            use-system-data.ts
-          system.tsx
-        spinner.tsx
-        systemd-table/
-          systemd-table-columns.tsx
-          systemd-table.tsx
-        systems-table/
-          systems-table-columns.tsx
-          systems-table.tsx
-        theme-provider.tsx
-        ui/
-          alert-dialog.tsx
-          alert.tsx
-          badge.tsx
-          button.tsx
-          card.tsx
-          chart.tsx
-          checkbox.tsx
-          collapsible.tsx
-          command.tsx
-          dialog.tsx
-          dropdown-menu.tsx
-          icons.tsx
-          input-copy.tsx
-          input-tags.tsx
-          input.tsx
-          label.tsx
-          otp.tsx
-          select.tsx
-          separator.tsx
-          sheet.tsx
-          slider.tsx
-          switch.tsx
-          table.tsx
-          tabs.tsx
-          textarea.tsx
-          toast.tsx
-          toaster.tsx
-          tooltip.tsx
-          use-toast.ts
       index.css
       lib/
         alerts.ts

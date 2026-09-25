@@ -245,35 +245,6 @@ packages/
         packages.ts
         plugin.ts
         plugins/
-          asset.ts
-          assetImportMetaUrl.ts
-          clientInjections.ts
-          css.ts
-          define.ts
-          dynamicImportVars.ts
-          esbuild.ts
-          esbuildBannerFooterCompatPlugin.ts
-          forwardConsole.ts
-          html.ts
-          importAnalysis.ts
-          importAnalysisBuild.ts
-          importMetaGlob.ts
-          index.ts
-          json.ts
-          license.ts
-          manifest.ts
-          modulePreloadPolyfill.ts
-          optimizedDeps.ts
-          oxc.ts
-          pluginFilter.ts
-          preAlias.ts
-          prepareOutDir.ts
-          reporter.ts
-          resolve.ts
-          terser.ts
-          wasm.ts
-          worker.ts
-          workerImportMetaUrl.ts
         preview.ts
         publicDir.ts
         server/
@@ -325,6 +296,9 @@ playground/
   backend-integration/
     __tests__/
     dir/
+      custom.css
+      foo-background.svg
+      foo.css
     frontend/
       entrypoints/
       images/
@@ -338,6 +312,9 @@ playground/
     index.html
     package.json
     src/
+      importee.ts
+      main.ts
+      virtualModules.d.ts
     vite.config.ts
   build-old/
     __tests__/
@@ -400,7 +377,21 @@ playground/
     vite.config.js
   env/
   env-nested/
+    .env
+    __tests__/
+    envs/
+      .env.development
+      .env.production
+    index.html
+    package.json
+    vite.config.js
   environment-react-ssr/
+    __tests__/
+    index.html
+    package.json
+    src/
+    tsconfig.json
+    vite.config.ts
   extensions/
     __tests__/
     index.html
@@ -469,6 +460,8 @@ playground/
       linked.js
       package.json
       src/
+        data.js
+        index.js
     package.json
     src/
       main.js
@@ -481,6 +474,9 @@ playground/
     __tests__/
     index.html
     other-app/
+      index.html
+      package.json
+      vite.config.js
     package.json
     vite.config.js
   resolve/
@@ -505,6 +501,9 @@ playground/
       package.json
     package.json
     src/
+      alias-process.js
+      alias-replaced.js
+      main.js
     vite.config.js
   ssr-conditions/
   ssr-deps/
