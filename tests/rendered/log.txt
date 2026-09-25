@@ -63,6 +63,10 @@ src/
     value.rs
   lib.rs
     …
+    405→#[macro_use]
+    406→mod macros;
+    407→mod serde;
+    408→
     409→#[cfg(feature = "kv")]
     410→pub mod kv;
     …
@@ -305,9 +309,6 @@ src/
     124→}
     126→impl<'de> Deserialize<'de> for LevelFilter {
     127→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    128→    where
-    129→        D: Deserializer<'de>,
-    130→    {
     …
     203→}
     …

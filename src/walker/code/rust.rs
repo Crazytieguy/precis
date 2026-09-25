@@ -4,8 +4,9 @@
 //!   [`Item`] per paragraph, without the leading paragraphs that are only
 //!   badges, link reference definitions or HTML (they render as nothing
 //!   readable).
-//! - **Re-exports**: `pub use …;` and `pub mod name;`. Other `use`, `mod`
-//!   and `extern crate` items are plumbing and not modeled; an inline
+//! - **Re-exports**: `pub use …;` and every `mod name;` declaration (the
+//!   file's module tree, whatever its visibility). Other `use` and
+//!   `extern crate` items are plumbing and not modeled; an inline
 //!   `mod name { … }` is left out with its contents.
 //! - **Declarations**: `fn` is `Callable`; `struct`, `enum`, `union`,
 //!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait` and
@@ -52,7 +53,8 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             "use_declaration" | "mod_item" => {
                 let is_declaration_only = node.child_by_field_name("body").is_none();
                 if is_declaration_only
-                    && modifier_visibility(node, file) == Some(Visibility::Public)
+                    && (node.kind() == "mod_item"
+                        || modifier_visibility(node, file) == Some(Visibility::Public))
                 {
                     let mut rows = leading.attribute_rows;
                     rows.extend(file.node_rows(node));
@@ -961,7 +963,7 @@ impl Sealed for Engine {}
     }
 
     #[test]
-    fn rust_extract_reexports_are_pub_use_and_pub_mod_declarations() {
+    fn rust_extract_reexports_are_pub_use_and_mod_declarations() {
         let source = "\
 use std::io;
 mod private;
@@ -978,7 +980,10 @@ pub mod inline {
 extern crate alloc;
 ";
         let (_, model) = extract_source("lib.rs", source);
-        assert_eq!(rows(&model.reexports), vec![vec![4, 5], vec![6, 7, 8, 9]]);
+        assert_eq!(
+            rows(&model.reexports),
+            vec![vec![2], vec![4, 5], vec![6, 7, 8, 9]]
+        );
         assert!(model.decls.is_empty());
     }
 

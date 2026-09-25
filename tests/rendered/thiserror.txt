@@ -218,6 +218,17 @@ impl/
       83→}
     lib.rs
       …
+      23→mod ast;
+      24→mod attr;
+      25→mod expand;
+      26→mod fallback;
+      27→mod fmt;
+      28→mod generics;
+      29→mod prop;
+      30→mod scan_expr;
+      31→mod unraw;
+      32→mod valid;
+      …
       39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
       40→pub fn derive_error(input: TokenStream) -> TokenStream {
       41→    let input = parse_macro_input!(input as DeriveInput);
@@ -236,11 +247,7 @@ impl/
       6→enum Input {
       …
       25→enum Action {
-      26→    SetState(&'static [(Input, Action)]),
-      27→    IncDepth,
-      28→    DecDepth,
-      29→    Finish,
-      30→}
+      …
       32→static INIT: [(Input, Action); 28] = [
       …
       63→static POSTFIX: [(Input, Action); 10] = [
@@ -262,9 +269,7 @@ impl/
       106→    (ConsumeAny, SetState(&CLOSURE_ARGS)),
       107→];
       109→static CLOSURE_RET: [(Input, Action); 2] = [
-      110→    (Punct("->"), SetState(&[(ExpectType, SetState(&BLOCK))])),
-      111→    (Otherwise, SetState(&INIT)),
-      112→];
+      …
       114→static CONST: [(Input, Action); 2] = [
       115→    (Punct("|"), SetState(&CLOSURE_ARGS)),
       116→    (ConsumeBrace, SetState(&POSTFIX)),
@@ -290,7 +295,15 @@ src/
   display.rs
   lib.rs
     …
+    281→mod aserror;
+    282→mod display;
+    283→#[cfg(error_generic_member_access)]
+    284→mod provide;
+    285→mod var;
+    286→
     287→pub use thiserror_impl::*;
+    288→
+    289→mod private;
     …
   private.rs
   provide.rs

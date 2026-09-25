@@ -159,6 +159,15 @@ src/
     118→fn watch_file(path: &Path, data: Arc<Mutex<Data>>) -> Result<()> {
     …
   main.rs
+    1→mod clipboard;
+    2→mod cmd;
+    3→mod config;
+    4→mod debug;
+    5→mod edit;
+    6→mod live_reload;
+    7→mod parse;
+    8→mod tree;
+    9→mod ui;
     …
     27→fn run() -> Result<()> {
     …
@@ -201,17 +210,6 @@ src/
       9→impl Parser for JsonlParser {
       …
     mod.rs
-      …
-      10→pub use syntax::SyntaxToken;
-      …
-      18→pub enum ContentType {
-      …
-      36→pub trait Parser {
-      …
-      66→impl ContentType {
-      67→    pub fn new_parser(self) -> Box<dyn Parser> {
-      …
-      78→}
     syntax.rs
     test_cases/
     toml.rs

@@ -92,6 +92,8 @@ crates/
         67→pub mod builtin_preprocessors;
         68→pub mod builtin_renderers;
         69→pub mod init;
+        70→mod load;
+        71→mod mdbook;
         …
         74→pub use mdbook::MDBook;
         75→pub use mdbook_core::{book, config, errors};
@@ -119,9 +121,6 @@ crates/
         highlight.js
       playground_editor/
       searcher/
-        elasticlunr.min.js
-        mark.min.js
-        searcher.js
       templates/
     src/
       html/
@@ -141,9 +140,11 @@ crates/
         static_files.rs
       lib.rs
         1→//! mdBook HTML renderer.
-        …
+        3→mod html;
+        4→mod html_handlebars;
         5→pub mod theme;
-        …
+        6→pub(crate) mod utils;
+        7→
         8→pub use html_handlebars::HtmlHandlebars;
       theme/
         fonts.rs
@@ -383,6 +384,8 @@ src/
   main.rs
     1→//! The mdbook CLI.
     …
+    14→mod cmd;
+    15→
     16→const VERSION: &str = concat!("v", clap::crate_version!());
     17→
     18→fn main() {

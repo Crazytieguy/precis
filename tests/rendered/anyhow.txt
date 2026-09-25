@@ -127,14 +127,7 @@ src/
     42→impl<T, E> Context<T, E> for Result<T, E>
     …
     90→impl<T> Context<T, Infallible> for Option<T> {
-    91→    fn context<C>(self, context: C) -> Result<T, Error>
-    92→    where
-    93→        C: Display + Send + Sync + 'static,
-    94→    {
     …
-    103→    fn with_context<C, F>(self, context: F) -> Result<T, Error>
-    …
-    113→}
     115→impl<C, E> Debug for ContextError<C, E>
     …
     128→impl<C, E> Display for ContextError<C, E>
@@ -262,6 +255,20 @@ src/
     …
     121→}
   lib.rs
+    …
+    251→#[macro_use]
+    252→mod backtrace;
+    253→mod chain;
+    254→mod context;
+    255→mod ensure;
+    256→mod error;
+    257→mod fmt;
+    258→mod kind;
+    259→mod macros;
+    260→#[cfg(error_generic_member_access)]
+    261→mod nightly;
+    262→mod ptr;
+    263→mod wrapper;
     …
     278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     279→trait StdError: Debug + Display {

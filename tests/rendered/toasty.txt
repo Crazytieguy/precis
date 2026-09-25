@@ -96,7 +96,10 @@ crates/
     src/
       config.rs
       lib.rs
-        …
+        1→mod config;
+        2→mod migration;
+        3→mod theme;
+        4→
         5→pub use config::*;
         6→pub use migration::*;
         …
@@ -138,6 +141,8 @@ crates/
         util.rs
       expand.rs
       lib.rs
+        1→mod expand;
+        2→mod schema;
         …
         6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
         …
@@ -180,20 +185,6 @@ crates/
       error/
       error.rs
       lib.rs
-        …
-        4→pub mod driver;
-        5→pub use driver::Connection;
-        …
-        8→pub use error::Error;
-        9→
-        10→pub mod schema;
-        11→pub use schema::Schema;
-        12→
-        13→pub mod stmt;
-        15→/// A Result type alias that uses Toasty's [`Error`] type.
-        16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-        17→
-        18→pub use async_trait::async_trait;
       macros.rs
       schema/
         app/
@@ -266,6 +257,8 @@ crates/
     src/
       lib.rs
         …
+        3→mod value;
+        …
         21→#[derive(Debug)]
         22→pub struct MySQL {
         23→    url: String,
@@ -315,6 +308,9 @@ crates/
     Cargo.toml
     src/
       lib.rs
+        1→mod statement_cache;
+        2→mod r#type;
+        3→mod value;
         …
         23→#[derive(Debug)]
         24→pub struct PostgreSQL {
@@ -362,6 +358,11 @@ crates/
         357→    ) -> Result<Vec<toasty_core::schema::db::AppliedMigration>> {
         …
         390→    async fn apply_migration(
+        391→        &mut self,
+        392→        id: u64,
+        393→        name: String,
+        394→        migration: &toasty_core::schema::db::Migration,
+        395→    ) -> Result<()> {
         …
         454→}
       statement_cache.rs
@@ -372,6 +373,7 @@ crates/
     Cargo.toml
     src/
       lib.rs
+        1→mod value;
         …
         22→#[derive(Debug)]
         23→pub enum Sqlite {
