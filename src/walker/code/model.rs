@@ -129,6 +129,10 @@
 //!   that is both a module doc and a declaration's doc stays module doc. A
 //!   language whose module doc boundary is subtler (C's license banner end)
 //!   still draws it in `extract`.
+//! - Makes each declaration's parts disjoint: drops `doc` rows from `head`
+//!   and `body`, and `head` rows from `body`, so a row listed in two parts
+//!   renders once, in the earlier rung. Members are also trimmed at their
+//!   container's next sibling.
 //! - Chunks oversize parts, values batches and gates each batch on its
 //!   predecessor.
 

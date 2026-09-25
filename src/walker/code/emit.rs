@@ -10,6 +10,7 @@
 //! members of a container. Chunk `i > 0` of any part is gated on the last
 //! emitted chunk before it.
 
+use std::collections::HashSet;
 use std::path::Path;
 
 use super::chunk::{chunk_ranges, chunk_value_factor, item_cost};
@@ -229,12 +230,13 @@ fn spans(file: &SourceFile, rows: &[usize]) -> Vec<Span> {
 /// The engine-side steps of the [`super::model`] contract: drop blank and
 /// out-of-range rows, sort and dedup rows, strip `module_doc` rows from
 /// every other part, order by first row, merge same-first-row
-/// declarations, trim at the next sibling.
+/// declarations, trim at the next sibling, make each declaration's parts
+/// disjoint.
 pub(super) fn normalize(mut model: FileModel, file: &SourceFile) -> FileModel {
     let content_row =
         |row: usize| (1..=file.line_count()).contains(&row) && !file.line(row).trim().is_empty();
     clean_items(&mut model.module_doc, &content_row);
-    let module_doc_rows: std::collections::HashSet<usize> = model
+    let module_doc_rows: HashSet<usize> = model
         .module_doc
         .iter()
         .flat_map(|item| item.rows.iter().copied())
@@ -247,7 +249,7 @@ pub(super) fn normalize(mut model: FileModel, file: &SourceFile) -> FileModel {
 
 /// Cleans, orders, merges and trims one sibling list (top-level
 /// declarations, or one container's members), and their members.
-fn normalize_siblings(decls: Vec<DeclInfo>, keep: &impl Fn(usize) -> bool) -> Vec<DeclInfo> {
+fn normalize_siblings(decls: Vec<DeclInfo>, keep: &dyn Fn(usize) -> bool) -> Vec<DeclInfo> {
     let mut decls: Vec<(usize, DeclInfo)> = decls
         .into_iter()
         .filter_map(|mut decl| {
@@ -275,11 +277,10 @@ fn normalize_siblings(decls: Vec<DeclInfo>, keep: &impl Fn(usize) -> bool) -> Ve
         .into_iter()
         .zip(next_firsts)
         .filter_map(|((_, mut decl), next_first)| {
-            if let Some(limit) = next_first {
-                let before_next = |row: usize| row < limit;
-                clean_decl(&mut decl, &before_next);
-            }
-            decl.members = normalize_siblings(std::mem::take(&mut decl.members), keep);
+            let before_next = |row: usize| next_first.is_none_or(|limit| row < limit);
+            clean_decl(&mut decl, &before_next);
+            let member_keep = |row: usize| keep(row) && before_next(row);
+            decl.members = normalize_siblings(std::mem::take(&mut decl.members), &member_keep);
             finish_decl(decl)
         })
         .collect()
@@ -287,30 +288,39 @@ fn normalize_siblings(decls: Vec<DeclInfo>, keep: &impl Fn(usize) -> bool) -> Ve
 
 /// Keeps only `keep` rows in every part, sorted and deduplicated. Members
 /// are cleaned by their own sibling pass.
-fn clean_decl(decl: &mut DeclInfo, keep: &impl Fn(usize) -> bool) {
+fn clean_decl(decl: &mut DeclInfo, keep: &dyn Fn(usize) -> bool) {
     clean_rows(&mut decl.name_rows, keep);
     clean_rows(&mut decl.head, keep);
     clean_items(&mut decl.doc, keep);
     clean_items(&mut decl.body, keep);
 }
 
-fn clean_rows(rows: &mut Vec<usize>, keep: &impl Fn(usize) -> bool) {
+fn clean_rows(rows: &mut Vec<usize>, keep: &dyn Fn(usize) -> bool) {
     rows.retain(|&row| keep(row));
     rows.sort_unstable();
     rows.dedup();
 }
 
-fn clean_items(items: &mut Vec<Item>, keep: &impl Fn(usize) -> bool) {
+fn clean_items(items: &mut Vec<Item>, keep: &dyn Fn(usize) -> bool) {
     for item in items.iter_mut() {
         clean_rows(&mut item.rows, keep);
     }
     items.retain(|item| !item.rows.is_empty());
 }
 
-/// Restores the non-empty `head` / `name_rows` invariant after cleaning:
+/// Makes the parts disjoint (`doc` wins over `head`, `head` over
+/// `body`), then restores the non-empty `head` / `name_rows` invariant:
 /// an empty head falls back to the name rows and vice versa; a
 /// declaration with neither is dropped.
 fn finish_decl(mut decl: DeclInfo) -> Option<DeclInfo> {
+    let mut claimed: HashSet<usize> = decl
+        .doc
+        .iter()
+        .flat_map(|item| item.rows.iter().copied())
+        .collect();
+    decl.head.retain(|row| !claimed.contains(row));
+    claimed.extend(&decl.head);
+    clean_items(&mut decl.body, &|row| !claimed.contains(&row));
     if decl.head.is_empty() {
         decl.head = decl.name_rows.clone();
     }
@@ -345,12 +355,13 @@ fn merge_into(target: &mut DeclInfo, other: DeclInfo) {
     let reclean = |_: usize| true;
     clean_rows(&mut target.name_rows, &reclean);
     clean_rows(&mut target.head, &reclean);
+    target.doc.sort_by_key(|item| item.rows[0]);
+    target.body.sort_by_key(|item| item.rows[0]);
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashSet;
 
     fn rows(range: std::ops::RangeInclusive<usize>) -> Item {
         Item::new(range)
@@ -522,6 +533,9 @@ mod tests {
     fn emit_normalize_merges_same_row_decls_and_trims_at_next_sibling() {
         let mut spilling = decl(1, vec![1, 2, 3, 4], Shape::Whole);
         spilling.body = vec![rows(2..=3)];
+        let mut spilling_member = decl(2, vec![2, 3, 4], Shape::Callable);
+        spilling_member.doc = vec![rows(1..=1)];
+        spilling.members = vec![spilling_member];
         let mut next = decl(4, vec![4], Shape::Whole);
         next.doc = vec![rows(3..=3)];
         let mut same_row = decl(3, vec![4], Shape::Whole);
@@ -537,7 +551,9 @@ mod tests {
         });
         assert_eq!(model.decls.len(), 2);
         assert_eq!(model.decls[0].head, [1, 2]);
-        assert_eq!(model.decls[0].body, [rows(2..=2)]);
+        assert!(model.decls[0].body.is_empty(), "head rows leave the body");
+        assert_eq!(model.decls[0].members[0].head, [2]);
+        assert_eq!(model.decls[0].members[0].doc, [rows(1..=1)]);
         assert_eq!(model.decls[1].name_rows, [3, 4]);
         assert_eq!(model.decls[1].visibility, Visibility::Public);
     }
