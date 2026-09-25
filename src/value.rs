@@ -144,7 +144,7 @@ pub fn conserved_catalog_chunk_factors(chunk_costs: &[usize], cost_exponent: f64
 }
 
 /// Base value of each code-engine rung (`walker::code`), before the file
-/// prior, the declaration factors and the chunk share. Starting values
+/// prior and the chunk share. Starting values
 /// were the medians of the pre-engine walkers' effective values per rung.
 /// `Names` is tuned on the corpus grid and is the value of a one-entry
 /// roster: the engine scales it by `entries^k` (`k` the default concavity
