@@ -519,10 +519,10 @@ fn comment_text_is_empty(trimmed: &str) -> bool {
 /// Whole-block, not per-line: a marker matches "Copyright (c) 2014"
 /// but not the eight continuation lines of the same Apache header,
 /// and admitting those is exactly the failure v0.1's head slice had.
-fn boilerplate_banner_end(source: &str) -> usize {
+fn boilerplate_banner_end(lines: &[&str], in_block_comment: &[bool]) -> usize {
     let mut block: Vec<&str> = Vec::new();
     let mut reached_content = false;
-    for (line, in_block_comment) in source.lines().zip(block_comment_interiors(source)) {
+    for (line, &in_block_comment) in lines.iter().zip(in_block_comment) {
         let trimmed = line.trim();
         if trimmed.is_empty() || trimmed.starts_with("#!") {
             block.push(trimmed);
@@ -553,10 +553,10 @@ fn boilerplate_banner_end(source: &str) -> usize {
 /// earlier line — interior lines carry no comment marker of their own.
 /// Only a line that starts with `/*` opens one, so a glob in a shell
 /// script (`rm build/*`) is not read as a comment.
-fn block_comment_interiors(source: &str) -> Vec<bool> {
+fn block_comment_interiors(lines: &[&str]) -> Vec<bool> {
     let mut inside = false;
-    source
-        .lines()
+    lines
+        .iter()
         .map(|line| {
             let trimmed = line.trim();
             let interior = inside;
@@ -596,11 +596,16 @@ fn block_comment_interiors(source: &str) -> Vec<bool> {
 /// reconstruction, no bodies. It is priced accordingly in
 /// [`class_value`].
 fn declaration_surface(source: &str, class: Class) -> Vec<usize> {
-    let banner_end = boilerplate_banner_end(source);
-    let opens_block = block_openers(source);
+    let lines: Vec<&str> = source.lines().collect();
+    let in_block_comment = block_comment_interiors(&lines);
+    let banner_end = boilerplate_banner_end(&lines, &in_block_comment);
     let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
-    let lines = source.lines().zip(block_comment_interiors(source));
-    for (index, (line, in_block_comment)) in lines.enumerate().skip(banner_end) {
+    for (index, (line, &in_block_comment)) in lines
+        .iter()
+        .zip(&in_block_comment)
+        .enumerate()
+        .skip(banner_end)
+    {
         let trimmed = line.trim();
         if trimmed.is_empty() || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS {
             continue;
@@ -627,6 +632,7 @@ fn declaration_surface(source: &str, class: Class) -> Vec<usize> {
     // directives take the slots it leaves. A flat file's surface stays
     // its head.
     if class == Class::LanguageSource {
+        let opens_block = block_openers(&lines);
         rows.sort_by_key(|&(_, line, kind)| kind == SurfaceLine::Decl && !opens_block[line - 1]);
     }
     for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
@@ -657,8 +663,7 @@ fn indentation(line: &str) -> usize {
 /// Per line, whether the next line with content is indented deeper — the
 /// line heads a block. A line of only brackets is skipped over, so an
 /// Allman-style `{` does not take the heading from the line above it.
-fn block_openers(source: &str) -> Vec<bool> {
-    let lines: Vec<&str> = source.lines().collect();
+fn block_openers(lines: &[&str]) -> Vec<bool> {
     let mut opens = vec![false; lines.len()];
     let mut next_indent: Option<usize> = None;
     for (index, line) in lines.iter().enumerate().rev() {
