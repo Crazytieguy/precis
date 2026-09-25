@@ -1,4 +1,4 @@
-Score(3000)=0.479 I=0.800 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.631/0.524/0.479/0.447/0.594/0.648
+Score(3000)=0.479 I=0.800 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.631/0.524/0.479/0.447/0.671/0.710
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -73,103 +73,92 @@ Score(3000)=0.479 I=0.800 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | walker |  | 4193 | 359 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.443 |
 | ns | 4260 |  | 84 | README Configuration section — where the knobs live | 3.10 |  | 0.447 |
 | ns | 4402 |  | 142 | README Configuration — the maintainer's tuning guidance | 3.11 |  | 0.453 |
-| walker |  | 4413 | 220 | Code::CodeKey { rung: Names, file: include/worldgen.h, decl: 0, sub: 0, line: 0 } |  |  | 0.454 |
-| walker |  | 4447 | 34 | Code::CodeKey { rung: Decl, file: include/worldgen.h, decl: 1, sub: 0, line: 6 } |  |  | 0.454 |
-| walker |  | 4481 | 34 | Code::CodeKey { rung: Decl, file: include/worldgen.h, decl: 2, sub: 0, line: 13 } |  |  | 0.455 |
+| walker |  | 4460 | 267 | Code::CodeKey { rung: Names, file: include/tools.h, decl: 0, sub: 1, line: 0 } |  |  | 0.455 |
+| walker |  | 4469 | 9 | Code::CodeKey { rung: Decl, file: include/tools.h, decl: 26, sub: 0, line: 43 } |  |  | 0.455 |
+| walker |  | 4481 | 12 | Code::CodeKey { rung: Decl, file: include/tools.h, decl: 27, sub: 0, line: 46 } |  |  | 0.455 |
 | ns | 4488 |  | 86 | build_registries.js — the complete biome list | 3.12 |  | 0.449 |
-| walker |  | 4533 | 52 | Code::CodeKey { rung: Names, file: src/tools.c, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
-| walker |  | 4588 | 55 | Code::CodeKey { rung: Names, file: src/structures.c, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
-| walker |  | 4602 | 14 | Code::CodeKey { rung: Doc, file: src/structures.c, decl: 2, sub: 0, line: 16 } |  |  | 0.449 |
-| walker |  | 4660 | 58 | Code::CodeKey { rung: Names, file: src/varnum.c, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
-| walker |  | 4694 | 34 | Code::CodeKey { rung: Doc, file: src/tools.c, decl: 1, sub: 0, line: 42 } |  |  | 0.449 |
 | ns | 4721 |  | 233 | procedures.h — client state and player lifecycle API | 4.1 |  | 0.470 |
-| walker |  | 4761 | 67 | Code::CodeKey { rung: Names, file: src/crafting.c, decl: 0, sub: 0, line: 0 } |  |  | 0.470 |
-| walker |  | 4789 | 28 | Code::CodeKey { rung: Decl, file: src/crafting.c, decl: 2, sub: 0, line: 349 } |  |  | 0.470 |
-| ns | 4985 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.457 |
-| walker |  | 5056 | 267 | Code::CodeKey { rung: Names, file: include/tools.h, decl: 0, sub: 1, line: 0 } |  |  | 0.460 |
-| walker |  | 5065 | 9 | Code::CodeKey { rung: Decl, file: include/tools.h, decl: 26, sub: 0, line: 43 } |  |  | 0.460 |
-| walker |  | 5077 | 12 | Code::CodeKey { rung: Decl, file: include/tools.h, decl: 27, sub: 0, line: 46 } |  |  | 0.460 |
-| ns | 5304 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.447 |
-| walker |  | 5376 | 299 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 1, line: 0 } |  |  | 0.497 |
-| walker |  | 5384 | 8 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 19, sub: 0, line: 59 } |  |  | 0.497 |
-| walker |  | 5394 | 10 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 21, sub: 0, line: 66 } |  |  | 0.497 |
-| walker |  | 5407 | 13 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 26, sub: 0, line: 106 } |  |  | 0.497 |
+| walker |  | 4780 | 299 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 1, line: 0 } |  |  | 0.523 |
+| walker |  | 4788 | 8 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 19, sub: 0, line: 59 } |  |  | 0.523 |
+| walker |  | 4798 | 10 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 21, sub: 0, line: 66 } |  |  | 0.523 |
+| walker |  | 4811 | 13 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 26, sub: 0, line: 106 } |  |  | 0.523 |
+| walker |  | 4838 | 27 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 23, sub: 0, line: 75 } |  |  | 0.523 |
+| walker |  | 4871 | 33 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 20, sub: 0, line: 63 } |  |  | 0.523 |
+| walker |  | 4923 | 52 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 25, sub: 0, line: 103 } |  |  | 0.523 |
+| walker |  | 4977 | 54 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 22, sub: 0, line: 71 } |  |  | 0.523 |
+| ns | 4985 |  | 264 | procedures.h — metadata broadcast, slot mapping and block predicates | 4.2 |  | 0.509 |
+| walker |  | 5082 | 105 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 24, sub: 0, line: 93 } |  |  | 0.509 |
+| walker |  | 5302 | 220 | Code::CodeKey { rung: Names, file: include/worldgen.h, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
+| ns | 5304 |  | 319 | procedures.h — mining, actions, fluids, mobs, tick and entity-data API | 4.3 |  | 0.496 |
+| walker |  | 5336 | 34 | Code::CodeKey { rung: Decl, file: include/worldgen.h, decl: 1, sub: 0, line: 6 } |  |  | 0.497 |
+| walker |  | 5370 | 34 | Code::CodeKey { rung: Decl, file: include/worldgen.h, decl: 2, sub: 0, line: 13 } |  |  | 0.497 |
 | ns | 5415 |  | 111 | worldgen.h — ChunkAnchor and ChunkFeature | 4.4 |  | 0.514 |
-| walker |  | 5434 | 27 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 23, sub: 0, line: 75 } |  |  | 0.514 |
-| walker |  | 5467 | 33 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 20, sub: 0, line: 63 } |  |  | 0.514 |
-| walker |  | 5519 | 52 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 25, sub: 0, line: 103 } |  |  | 0.514 |
-| walker |  | 5573 | 54 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 22, sub: 0, line: 71 } |  |  | 0.514 |
-| ns | 5587 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.524 |
-| walker |  | 5678 | 105 | Code::CodeKey { rung: Doc, file: include/globals.h, decl: 24, sub: 0, line: 93 } |  |  | 0.524 |
-| ns | 5794 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.536 |
-| walker |  | 5876 | 198 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.536 |
-| walker |  | 5982 | 106 | Plaintext::DeclSurface { file: src/CMakeLists.txt } |  |  | 0.557 |
-| ns | 5991 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.571 |
-| ns | 6129 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.576 |
-| walker |  | 6195 | 213 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 1, line: 0 } |  |  | 0.594 |
-| walker |  | 6254 | 59 | Code::CodeKey { rung: Body, file: src/structures.c, decl: 1, sub: 0, line: 9 } |  |  | 0.594 |
-| ns | 6325 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.604 |
-| ns | 6410 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.604 |
-| ns | 6499 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.598 |
-| walker |  | 6529 | 275 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.598 |
-| walker |  | 6590 | 61 | Code::CodeKey { rung: Body, file: src/varnum.c, decl: 2, sub: 0, line: 34 } |  |  | 0.598 |
-| ns | 6755 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.587 |
-| walker |  | 6826 | 236 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 1, line: 0 } |  |  | 0.612 |
-| walker |  | 6833 | 7 | Code::CodeKey { rung: Doc, file: include/packets.h, decl: 22, sub: 0, line: 28 } |  |  | 0.613 |
-| walker |  | 7029 | 196 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 2, line: 0 } |  |  | 0.627 |
-| ns | 7081 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.609 |
-| walker |  | 7245 | 216 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 2, line: 0 } |  |  | 0.636 |
-| walker |  | 7250 | 5 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 42, sub: 0, line: 186 } |  |  | 0.638 |
-| walker |  | 7258 | 8 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 41, sub: 0, line: 184 } |  |  | 0.640 |
-| walker |  | 7279 | 21 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 47, sub: 0, line: 255 } |  |  | 0.640 |
-| walker |  | 7313 | 34 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 44, sub: 0, line: 191 } |  |  | 0.647 |
-| ns | 7350 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.634 |
-| walker |  | 7362 | 49 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 48, sub: 0, line: 260 } |  |  | 0.638 |
-| walker |  | 7493 | 131 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 46, sub: 0, line: 240 } |  |  | 0.663 |
-| ns | 7692 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.645 |
-| walker |  | 7723 | 230 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 45, sub: 0, line: 200 } |  |  | 0.677 |
-| walker |  | 7983 | 260 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 45, sub: 1, line: 200 } |  |  | 0.703 |
-| ns | 8048 |  | 356 | main.c — the single-threaded accept and tick round-robin loop | 5.6 |  | 0.684 |
-| walker |  | 8177 | 194 | Code::CodeKey { rung: Names, file: src/worldgen.c, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
-| walker |  | 8204 | 27 | Code::CodeKey { rung: Doc, file: src/worldgen.c, decl: 7, sub: 0, line: 160 } |  |  | 0.684 |
-| walker |  | 8256 | 52 | Code::CodeKey { rung: Doc, file: src/worldgen.c, decl: 5, sub: 0, line: 126 } |  |  | 0.684 |
-| ns | 8329 |  | 281 | main.c — the ESP32 entry points: FreeRTOS task, WiFi event handler, app_main | 5.7 |  | 0.669 |
-| walker |  | 8499 | 243 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 0, line: 0 } |  |  | 0.669 |
-| walker |  | 8515 | 16 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 5, sub: 0, line: 54 } |  |  | 0.669 |
-| walker |  | 8531 | 16 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 6, sub: 0, line: 75 } |  |  | 0.669 |
-| walker |  | 8547 | 16 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 9, sub: 0, line: 146 } |  |  | 0.669 |
-| ns | 8553 |  | 224 | procedures.c — definition locations, part 1 (state, players, slots, block changes) | 6.1 |  | 0.664 |
-| walker |  | 8565 | 18 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 10, sub: 0, line: 177 } |  |  | 0.664 |
-| walker |  | 8584 | 19 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 8, sub: 0, line: 130 } |  |  | 0.664 |
-| walker |  | 8652 | 68 | Code::CodeKey { rung: Body, file: src/procedures.c, decl: 4, sub: 0, line: 45 } |  |  | 0.664 |
-| walker |  | 8732 | 80 | Code::CodeKey { rung: Body, file: src/worldgen.c, decl: 4, sub: 0, line: 117 } |  |  | 0.664 |
-| ns | 8770 |  | 217 | procedures.c — definition locations, part 2 (mining, predicates, armour, eating, fluids) | 6.2 |  | 0.654 |
-| walker |  | 8815 | 83 | Code::CodeKey { rung: Body, file: src/worldgen.c, decl: 1, sub: 0, line: 13 } |  |  | 0.654 |
-| ns | 8902 |  | 132 | procedures.c — definition locations, part 3 (actions, mobs, tick, entity data) | 6.3 |  | 0.648 |
-| walker |  | 9049 | 234 | Code::CodeKey { rung: Names, file: src/packets.c, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
-| walker |  | 9060 | 11 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 2, sub: 0, line: 49 } |  |  | 0.648 |
-| walker |  | 9071 | 11 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 3, sub: 0, line: 66 } |  |  | 0.648 |
-| walker |  | 9082 | 11 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 4, sub: 0, line: 85 } |  |  | 0.648 |
-| walker |  | 9093 | 11 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 9, sub: 0, line: 183 } |  |  | 0.648 |
-| walker |  | 9105 | 12 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 10, sub: 0, line: 190 } |  |  | 0.648 |
-| ns | 9117 |  | 215 | worldgen.c — every definition, including the five private generator stages | 6.4 |  | 0.642 |
-| walker |  | 9118 | 13 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 6, sub: 0, line: 137 } |  |  | 0.642 |
-| walker |  | 9131 | 13 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 7, sub: 0, line: 151 } |  |  | 0.642 |
-| walker |  | 9144 | 13 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 8, sub: 0, line: 166 } |  |  | 0.642 |
-| walker |  | 9157 | 13 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 11, sub: 0, line: 245 } |  |  | 0.642 |
-| walker |  | 9172 | 15 | Code::CodeKey { rung: Doc, file: src/packets.c, decl: 1, sub: 0, line: 28 } |  |  | 0.642 |
-| walker |  | 9245 | 73 | Code::CodeKey { rung: Body, file: src/procedures.c, decl: 3, sub: 0, line: 37 } |  |  | 0.642 |
-| ns | 9304 |  | 187 | serialize.c — the world file path and all five persistence entry points | 6.5 |  | 0.635 |
-| walker |  | 9458 | 213 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 1, line: 0 } |  |  | 0.649 |
-| walker |  | 9473 | 15 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 19, sub: 0, line: 495 } |  |  | 0.649 |
-| ns | 9485 |  | 181 | packets.c — the chat command surface (!msg and !help) | 6.6 |  | 0.643 |
-| walker |  | 9490 | 17 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 15, sub: 0, line: 321 } |  |  | 0.643 |
-| walker |  | 9513 | 23 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 16, sub: 0, line: 396 } |  |  | 0.643 |
-| walker |  | 9546 | 33 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 17, sub: 0, line: 434 } |  |  | 0.643 |
-| walker |  | 9591 | 45 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 21, sub: 0, line: 652 } |  |  | 0.643 |
-| ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.636 |
-| ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.638 |
-| walker |  | 9819 | 228 | Code::CodeKey { rung: Names, file: src/globals.c, decl: 0, sub: 0, line: 0 } |  |  | 0.647 |
-| ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.649 |
-| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.646 |
-| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.645 |
+| walker |  | 5586 | 216 | Code::CodeKey { rung: Names, file: include/globals.h, decl: 0, sub: 2, line: 0 } |  |  | 0.551 |
+| ns | 5587 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.560 |
+| walker |  | 5591 | 5 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 42, sub: 0, line: 186 } |  |  | 0.562 |
+| walker |  | 5599 | 8 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 41, sub: 0, line: 184 } |  |  | 0.566 |
+| walker |  | 5620 | 21 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 47, sub: 0, line: 255 } |  |  | 0.566 |
+| walker |  | 5654 | 34 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 44, sub: 0, line: 191 } |  |  | 0.575 |
+| walker |  | 5703 | 49 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 48, sub: 0, line: 260 } |  |  | 0.580 |
+| ns | 5794 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.589 |
+| walker |  | 5834 | 131 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 46, sub: 0, line: 240 } |  |  | 0.620 |
+| ns | 5991 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.630 |
+| walker |  | 6064 | 230 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 45, sub: 0, line: 200 } |  |  | 0.669 |
+| ns | 6129 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.671 |
+| walker |  | 6324 | 260 | Code::CodeKey { rung: Decl, file: include/globals.h, decl: 45, sub: 1, line: 200 } |  |  | 0.703 |
+| ns | 6325 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.708 |
+| walker |  | 6376 | 52 | Code::CodeKey { rung: Names, file: src/tools.c, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
+| ns | 6410 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.707 |
+| walker |  | 6431 | 55 | Code::CodeKey { rung: Names, file: src/structures.c, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
+| walker |  | 6445 | 14 | Code::CodeKey { rung: Doc, file: src/structures.c, decl: 2, sub: 0, line: 16 } |  |  | 0.707 |
+| ns | 6499 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.700 |
+| walker |  | 6658 | 213 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 1, line: 0 } |  |  | 0.716 |
+| ns | 6755 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.702 |
+| walker |  | 6854 | 196 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 2, line: 0 } |  |  | 0.715 |
+| walker |  | 7046 | 192 | Code::CodeKey { rung: Names, file: include/procedures.h, decl: 0, sub: 3, line: 0 } |  |  | 0.735 |
+| ns | 7081 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.714 |
+| walker |  | 7104 | 58 | Code::CodeKey { rung: Names, file: src/varnum.c, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
+| walker |  | 7138 | 34 | Code::CodeKey { rung: Doc, file: src/tools.c, decl: 1, sub: 0, line: 42 } |  |  | 0.714 |
+| walker |  | 7205 | 67 | Code::CodeKey { rung: Names, file: src/crafting.c, decl: 0, sub: 0, line: 0 } |  |  | 0.714 |
+| walker |  | 7233 | 28 | Code::CodeKey { rung: Decl, file: src/crafting.c, decl: 2, sub: 0, line: 349 } |  |  | 0.714 |
+| ns | 7350 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.700 |
+| walker |  | 7469 | 236 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 1, line: 0 } |  |  | 0.723 |
+| walker |  | 7476 | 7 | Code::CodeKey { rung: Doc, file: include/packets.h, decl: 22, sub: 0, line: 28 } |  |  | 0.724 |
+| walker |  | 7670 | 194 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 2, line: 0 } |  |  | 0.742 |
+| ns | 7692 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.723 |
+| walker |  | 7890 | 220 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 3, line: 0 } |  |  | 0.739 |
+| ns | 8048 |  | 356 | main.c — the single-threaded accept and tick round-robin loop | 5.6 |  | 0.718 |
+| walker |  | 8084 | 194 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 4, line: 0 } |  |  | 0.727 |
+| walker |  | 8197 | 113 | Code::CodeKey { rung: Names, file: include/packets.h, decl: 0, sub: 5, line: 0 } |  |  | 0.741 |
+| ns | 8329 |  | 281 | main.c — the ESP32 entry points: FreeRTOS task, WiFi event handler, app_main | 5.7 |  | 0.724 |
+| walker |  | 8395 | 198 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.725 |
+| walker |  | 8501 | 106 | Plaintext::DeclSurface { file: src/CMakeLists.txt } |  |  | 0.741 |
+| ns | 8553 |  | 224 | procedures.c — definition locations, part 1 (state, players, slots, block changes) | 6.1 |  | 0.727 |
+| walker |  | 8560 | 59 | Code::CodeKey { rung: Body, file: src/structures.c, decl: 1, sub: 0, line: 9 } |  |  | 0.727 |
+| ns | 8770 |  | 217 | procedures.c — definition locations, part 2 (mining, predicates, armour, eating, fluids) | 6.2 |  | 0.717 |
+| walker |  | 8835 | 275 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.717 |
+| walker |  | 8896 | 61 | Code::CodeKey { rung: Body, file: src/varnum.c, decl: 2, sub: 0, line: 34 } |  |  | 0.717 |
+| ns | 8902 |  | 132 | procedures.c — definition locations, part 3 (actions, mobs, tick, entity data) | 6.3 |  | 0.710 |
+| walker |  | 9090 | 194 | Code::CodeKey { rung: Names, file: src/worldgen.c, decl: 0, sub: 0, line: 0 } |  |  | 0.710 |
+| walker |  | 9117 | 27 | Code::CodeKey { rung: Doc, file: src/worldgen.c, decl: 7, sub: 0, line: 160 } |  |  | 0.704 |
+| ns | 9117 |  | 215 | worldgen.c — every definition, including the five private generator stages | 6.4 |  | 0.704 |
+| walker |  | 9169 | 52 | Code::CodeKey { rung: Doc, file: src/worldgen.c, decl: 5, sub: 0, line: 126 } |  |  | 0.704 |
+| ns | 9304 |  | 187 | serialize.c — the world file path and all five persistence entry points | 6.5 |  | 0.696 |
+| walker |  | 9412 | 243 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 0, line: 0 } |  |  | 0.703 |
+| walker |  | 9428 | 16 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 5, sub: 0, line: 54 } |  |  | 0.703 |
+| walker |  | 9444 | 16 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 6, sub: 0, line: 75 } |  |  | 0.703 |
+| walker |  | 9460 | 16 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 9, sub: 0, line: 146 } |  |  | 0.703 |
+| walker |  | 9478 | 18 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 10, sub: 0, line: 177 } |  |  | 0.703 |
+| ns | 9485 |  | 181 | packets.c — the chat command surface (!msg and !help) | 6.6 |  | 0.696 |
+| walker |  | 9497 | 19 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 8, sub: 0, line: 130 } |  |  | 0.696 |
+| walker |  | 9710 | 213 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 1, line: 0 } |  |  | 0.709 |
+| walker |  | 9725 | 15 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 19, sub: 0, line: 495 } |  |  | 0.709 |
+| walker |  | 9742 | 17 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 15, sub: 0, line: 321 } |  |  | 0.709 |
+| ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.701 |
+| walker |  | 9765 | 23 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 16, sub: 0, line: 396 } |  |  | 0.701 |
+| ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.703 |
+| walker |  | 9798 | 33 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 17, sub: 0, line: 434 } |  |  | 0.703 |
+| walker |  | 9843 | 45 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 21, sub: 0, line: 652 } |  |  | 0.703 |
+| ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.705 |
+| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.702 |
+| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.701 |

@@ -175,6 +175,17 @@ htmy/
     35→from .typing import StrictComponentType as StrictComponentType
     36→from .typing import SyncComponent as SyncComponent
     37→from .typing import SyncContextProvider as SyncContextProvider
+    38→from .utils import as_component_sequence as as_component_sequence
+    39→from .utils import as_component_type as as_component_type
+    40→from .utils import is_component_sequence as is_component_sequence
+    41→from .utils import is_component_type as is_component_type
+    42→from .utils import is_htmy_component_type as is_htmy_component_type
+    43→from .utils import join
+    44→from .utils import join_components as join_components
+    45→
+    46→join_classes = join
+    47→
+    48→HTMY = Renderer
     …
   core.py
   error_boundary.py
@@ -197,26 +208,6 @@ htmy/
   etree.py
     …
     23→class ETreeConverter:
-    …
-    38→    __slots__ = ("_rules",)
-    39→
-    40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
-    41→    """
-    42→    Placeholder tag name that's used to wrap possibly multi-root XML snippets into a valid
-    43→    XML document with a single root that can be processed by standard tools.
-    44→    """
-    45→
-    46→    def __init__(self, rules: Mapping[str, Callable[..., ComponentType]]) -> None:
-    …
-    55→    def convert(self, element: str) -> ComponentType:
-    …
-    63→    def convert_element(self, element: Element) -> ComponentType:
-    …
-    83→    def _convert_properties(self, element: Element) -> Properties:
-    …
-    91→    def _convert_children(self, element: Element) -> Generator[ComponentType, None, None]:
-    …
-    103→    def _process_text(self, escaped_text: str | None) -> str | None:
     …
   function_component.py
   html.py

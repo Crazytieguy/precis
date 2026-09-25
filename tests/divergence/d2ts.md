@@ -87,18 +87,18 @@ Score(3000)=0.699 I=0.861 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 3638 | 115 | Fs::DirListing { dir: packages/d2ql/tests } |  |  | 0.760 |
 | ns | 3656 |  | 204 | README: constructing a D2 graph and sending to an input stream | 4.1 | 1.10 | 0.750 |
 | walker |  | 3692 | 54 | Fs::DirListing { dir: packages/d2ql/tests/query-builder } |  |  | 0.750 |
-| walker |  | 3831 | 139 | Fs::DirListing { dir: packages/d2mini/tests/operators } |  |  | 0.750 |
 | ns | 3981 |  | 325 | d2.ts — D2Options and the complete D2 class method roster | 4.2 |  | 0.725 |
-| walker |  | 3990 | 159 | Fs::DirListing { dir: packages/d2ts/tests/operators } |  |  | 0.725 |
-| walker |  | 4068 | 78 | Code::CodeKey { rung: Decl, file: packages/d2mini/src/operators/filterBy.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.725 |
-| walker |  | 4146 | 78 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/operators/filterBy.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.725 |
+| walker |  | 4042 | 350 | Code::CodeKey { rung: Decl, file: eslint.base.mjs, decl: 1, sub: 1, line: 6 } |  |  | 0.725 |
 | ns | 4171 |  | 190 | README: what versions and frontiers actually mean | 4.3 | 1.10 | 0.721 |
-| walker |  | 4184 | 38 | Code::CodeKey { rung: Names, file: packages/d2ts/src/version-index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| walker |  | 4214 | 30 | Markdown::Section { file: packages/d2ql/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.721 |
-| walker |  | 4240 | 26 | Code::CodeKey { rung: Names, file: packages/d2mini/src/operators/topK.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| walker |  | 4266 | 26 | Code::CodeKey { rung: Names, file: packages/d2ts/src/operators/topK.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.721 |
-| ns | 4517 |  | 346 | order.ts — v() factory and the complete Version method roster | 4.4 |  | 0.696 |
-| walker |  | 4616 | 350 | Code::CodeKey { rung: Decl, file: eslint.base.mjs, decl: 1, sub: 1, line: 6 } |  |  | 0.696 |
+| walker |  | 4181 | 139 | Fs::DirListing { dir: packages/d2mini/tests/operators } |  |  | 0.721 |
+| walker |  | 4340 | 159 | Fs::DirListing { dir: packages/d2ts/tests/operators } |  |  | 0.721 |
+| walker |  | 4418 | 78 | Code::CodeKey { rung: Decl, file: packages/d2mini/src/operators/filterBy.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.721 |
+| walker |  | 4496 | 78 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/operators/filterBy.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.721 |
+| ns | 4517 |  | 346 | order.ts — v() factory and the complete Version method roster | 4.4 |  | 0.695 |
+| walker |  | 4534 | 38 | Code::CodeKey { rung: Names, file: packages/d2ts/src/version-index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.695 |
+| walker |  | 4564 | 30 | Markdown::Section { file: packages/d2ql/README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.696 |
+| walker |  | 4590 | 26 | Code::CodeKey { rung: Names, file: packages/d2mini/src/operators/topK.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.696 |
+| walker |  | 4616 | 26 | Code::CodeKey { rung: Names, file: packages/d2ts/src/operators/topK.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.696 |
 | walker |  | 4799 | 183 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.696 |
 | ns | 4807 |  | 290 | order.ts — Antichain method roster and Frontier | 4.5 | 4.4 | 0.675 |
 | ns | 4952 |  | 145 | README: MultiSet as a changeset, and keyed multisets | 4.6 | 1.10 | 0.672 |

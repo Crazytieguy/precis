@@ -1,4 +1,4 @@
-Score(3000)=0.726 I=0.914 C=0.577 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.630/0.689/0.726/0.613/0.597/0.589
+Score(3000)=0.726 I=0.914 C=0.577 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.630/0.689/0.726/0.628/0.597/0.589
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -69,34 +69,34 @@ Score(3000)=0.726 I=0.914 C=0.577 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 3257 | 26 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 8, sub: 0, line: 309 } |  |  | 0.709 |
 | walker |  | 3283 | 26 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 10, sub: 0, line: 370 } |  |  | 0.709 |
 | walker |  | 3328 | 45 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 9, sub: 0, line: 334 } |  |  | 0.709 |
-| walker |  | 3346 | 18 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 6, sub: 0, line: 154 } |  |  | 0.709 |
-| walker |  | 3366 | 20 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 5, sub: 0, line: 134 } |  |  | 0.710 |
-| ns | 3407 |  | 353 | `models.py` module map: constants, all five classes, `Request` fields | 3.1 |  | 0.679 |
-| walker |  | 3439 | 73 | Code::CodeKey { rung: Names, file: src/requests/structures.py, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 3641 | 202 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.679 |
-| walker |  | 3648 | 7 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 20, sub: 0, line: 126 } |  |  | 0.679 |
-| walker |  | 3657 | 9 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 19, sub: 0, line: 123 } |  |  | 0.679 |
-| walker |  | 3665 | 8 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.679 |
-| ns | 3728 |  | 321 | `PreparedRequest`: attributes + every `prepare_*` step | 3.2 | 3.1 | 0.657 |
-| walker |  | 3875 | 210 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 3, sub: 0, line: 20 } |  |  | 0.658 |
-| walker |  | 3929 | 54 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 4, sub: 0, line: 49 } |  |  | 0.658 |
-| walker |  | 3945 | 16 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 10, sub: 0, line: 76 } |  |  | 0.658 |
-| ns | 4031 |  | 303 | `Response` attribute set: typed fields + `__attrs__` | 3.3 | 3.1 | 0.629 |
-| walker |  | 4080 | 135 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.629 |
-| walker |  | 4099 | 19 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.629 |
-| walker |  | 4209 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.629 |
-| walker |  | 4298 | 89 | Code::CodeKey { rung: Names, file: src/requests/adapters.py, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
-| ns | 4313 |  | 282 | `Response`: `__init__`, dunders and every `@property` | 3.4 | 3.3 | 0.613 |
-| walker |  | 4338 | 40 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.613 |
-| walker |  | 4347 | 9 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.613 |
-| walker |  | 4354 | 7 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 7, sub: 0, line: 125 } |  |  | 0.613 |
-| walker |  | 4364 | 10 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.613 |
-| walker |  | 4375 | 11 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.613 |
-| ns | 4465 |  | 152 | `Response`: the remaining members (`iter_content` … `close`) | 3.5 | 3.4 | 0.604 |
-| walker |  | 4472 | 97 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 8, sub: 0, line: 128 } |  |  | 0.606 |
-| walker |  | 4542 | 70 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 5, sub: 0, line: 85 } |  |  | 0.606 |
-| ns | 4680 |  | 215 | `adapters.py`: pool defaults + the `BaseAdapter` contract | 3.6 |  | 0.621 |
-| walker |  | 4811 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.636 |
+| ns | 3407 |  | 353 | `models.py` module map: constants, all five classes, `Request` fields | 3.1 |  | 0.678 |
+| walker |  | 3597 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.696 |
+| walker |  | 3615 | 18 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 6, sub: 0, line: 154 } |  |  | 0.696 |
+| walker |  | 3635 | 20 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 5, sub: 0, line: 134 } |  |  | 0.697 |
+| walker |  | 3708 | 73 | Code::CodeKey { rung: Names, file: src/requests/structures.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
+| ns | 3728 |  | 321 | `PreparedRequest`: attributes + every `prepare_*` step | 3.2 | 3.1 | 0.674 |
+| walker |  | 3910 | 202 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.674 |
+| walker |  | 3917 | 7 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 20, sub: 0, line: 126 } |  |  | 0.674 |
+| walker |  | 3926 | 9 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 19, sub: 0, line: 123 } |  |  | 0.674 |
+| walker |  | 3934 | 8 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.674 |
+| ns | 4031 |  | 303 | `Response` attribute set: typed fields + `__attrs__` | 3.3 | 3.1 | 0.644 |
+| walker |  | 4144 | 210 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 3, sub: 0, line: 20 } |  |  | 0.645 |
+| walker |  | 4198 | 54 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 4, sub: 0, line: 49 } |  |  | 0.645 |
+| walker |  | 4214 | 16 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 10, sub: 0, line: 76 } |  |  | 0.645 |
+| ns | 4313 |  | 282 | `Response`: `__init__`, dunders and every `@property` | 3.4 | 3.3 | 0.628 |
+| walker |  | 4349 | 135 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.629 |
+| walker |  | 4368 | 19 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.629 |
+| ns | 4465 |  | 152 | `Response`: the remaining members (`iter_content` … `close`) | 3.5 | 3.4 | 0.620 |
+| walker |  | 4478 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.620 |
+| walker |  | 4567 | 89 | Code::CodeKey { rung: Names, file: src/requests/adapters.py, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
+| walker |  | 4607 | 40 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.620 |
+| walker |  | 4616 | 9 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.620 |
+| walker |  | 4623 | 7 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 7, sub: 0, line: 125 } |  |  | 0.620 |
+| walker |  | 4633 | 10 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.620 |
+| walker |  | 4644 | 11 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.620 |
+| ns | 4680 |  | 215 | `adapters.py`: pool defaults + the `BaseAdapter` contract | 3.6 |  | 0.614 |
+| walker |  | 4741 | 97 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 8, sub: 0, line: 128 } |  |  | 0.636 |
+| walker |  | 4811 | 70 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 5, sub: 0, line: 85 } |  |  | 0.636 |
 | walker |  | 4933 | 122 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 2, sub: 0, line: 99 } |  |  | 0.636 |
 | walker |  | 4990 | 57 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 2, sub: 0, line: 108 } |  |  | 0.636 |
 | ns | 5044 |  | 364 | `HTTPAdapter`: constructor knobs + complete method roster | 3.7 | 3.6 | 0.613 |

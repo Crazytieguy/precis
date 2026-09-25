@@ -211,9 +211,6 @@ Score(3000)=0.513 I=0.613 C=0.429 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 9725 | 253 | Code::CodeKey { rung: Names, file: string.go, decl: 0, sub: 0, line: 0 } |  |  | 0.376 |
 | walker |  | 9781 | 56 | Code::CodeKey { rung: Decl, file: string.go, decl: 1, sub: 0, line: 16 } |  |  | 0.376 |
 | ns | 9809 |  | 201 | golangci-lint: thresholds and exclusions | 7.3 |  | 0.372 |
-| walker |  | 9873 | 92 | Code::CodeKey { rung: Names, file: it/channel.go, decl: 0, sub: 0, line: 0 } |  |  | 0.373 |
-| walker |  | 9911 | 38 | Code::CodeKey { rung: Doc, file: it/channel.go, decl: 1, sub: 0, line: 13 } |  |  | 0.373 |
-| walker |  | 9952 | 41 | Code::CodeKey { rung: Doc, file: it/channel.go, decl: 2, sub: 0, line: 29 } |  |  | 0.373 |
-| ns | 9977 |  | 168 | CI: the Go version matrix | 7.4 |  | 0.370 |
-| ns | 9992 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.369 |
-| walker |  | 9995 | 43 | Code::CodeKey { rung: Doc, file: it/channel.go, decl: 3, sub: 0, line: 45 } |  |  | 0.369 |
+| ns | 9977 |  | 168 | CI: the Go version matrix | 7.4 |  | 0.369 |
+| walker |  | 9980 | 199 | Code::CodeKey { rung: Names, file: type_manipulation.go, decl: 0, sub: 1, line: 0 } |  |  | 0.381 |
+| ns | 9992 |  | 15 | Contribution surface: PR templates and the contributor loop | 7.5 |  | 0.381 |

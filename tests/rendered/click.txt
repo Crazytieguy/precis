@@ -192,6 +192,23 @@ src/
       58→from .types import File as File
       59→from .types import FLOAT as FLOAT
       60→from .types import FloatRange as FloatRange
+      61→from .types import INT as INT
+      62→from .types import IntRange as IntRange
+      63→from .types import ParamType as ParamType
+      64→from .types import Path as Path
+      65→from .types import STRING as STRING
+      66→from .types import Tuple as Tuple
+      67→from .types import UNPROCESSED as UNPROCESSED
+      68→from .types import UUID as UUID
+      69→from .utils import echo as echo
+      70→from .utils import format_filename as format_filename
+      71→from .utils import get_app_dir as get_app_dir
+      72→from .utils import get_binary_stream as get_binary_stream
+      73→from .utils import get_text_stream as get_text_stream
+      74→from .utils import open_file as open_file
+      75→
+      76→
+      77→def __getattr__(name: str) -> object:
       …
     _compat.py
     _termui_impl.py
@@ -253,20 +270,11 @@ src/
       181→class FuncParamTypeInfoDict(ParamTypeInfoDict):
       182→    func: t.Callable[[t.Any], t.Any]
       185→class FuncParamType(ParamType[ParamTypeValue]):
-      186→    def __init__(self, func: t.Callable[[t.Any], ParamTypeValue]) -> None:
-      …
-      190→    def to_info_dict(self) -> FuncParamTypeInfoDict:
-      …
-      193→    def convert(
-      194→        self, value: t.Any, param: Parameter | None, ctx: Context | None
-      195→    ) -> ParamTypeValue:
       …
       210→class UnprocessedParamType(ParamType[t.Any]):
       211→    name = "text"
       212→
       213→    def convert(
-      214→        self, value: t.Any, param: Parameter | None, ctx: Context | None
-      215→    ) -> t.Any:
       …
       218→    def __repr__(self) -> str:
       …
@@ -274,8 +282,6 @@ src/
       223→    name = "text"
       224→
       225→    def convert(
-      226→        self, value: t.Any, param: Parameter | None, ctx: Context | None
-      227→    ) -> str:
       …
       244→    def __repr__(self) -> str:
       …
@@ -289,9 +295,6 @@ src/
       426→class DateTime(ParamType[datetime]):
       …
       495→class _NumberParamTypeBase(ParamType[ParamTypeValue]):
-      496→    _number_class: t.Callable[[t.Any], ParamTypeValue]
-      497→
-      498→    def convert(
       …
     utils.py
 tests/

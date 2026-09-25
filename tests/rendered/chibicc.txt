@@ -153,6 +153,16 @@ chibicc.h
   91→  Token *origin;    // If this is expanded from a macro, the original token
   92→};
   94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
+  95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+  96→noreturn void error_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+  97→void warn_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
+  98→bool equal(Token *tok, char *op);
+  99→Token *skip(Token *tok, char *op);
+  100→bool consume(Token **rest, Token *tok, char *str);
+  101→void convert_pp_tokens(Token *tok);
+  102→File **get_input_files(void);
+  103→File *new_file(char *name, int file_no, char *contents);
+  104→Token *tokenize_string_literal(Token *tok, Type *basety);
   …
 codegen.c
 hashmap.c
@@ -183,27 +193,6 @@ include/
     7→#define __alignof_is_defined 1
     …
   stdarg.h
-    …
-    4→typedef struct {
-    5→  unsigned int gp_offset;
-    6→  unsigned int fp_offset;
-    7→  void *overflow_arg_area;
-    8→  void *reg_save_area;
-    9→} __va_elem;
-    10→
-    11→typedef __va_elem va_list[1];
-    12→
-    13→#define va_start(ap, last) \
-    14→  do { *(ap) = *(__va_elem *)__va_area__; } while (0)
-    16→#define va_end(ap)
-    …
-    44→#define va_arg(ap, ty)                                                  \
-    …
-    52→#define va_copy(dest, src) ((dest)[0] = (src)[0])
-    53→
-    54→#define __GNUC_VA_LIST 1
-    55→typedef va_list __gnuc_va_list;
-    …
   stdatomic.h
   stdbool.h
     …

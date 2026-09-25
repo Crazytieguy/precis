@@ -1,4 +1,4 @@
-Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.688/0.600/0.479/0.491/0.456/0.526/0.543
+Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.688/0.600/0.479/0.491/0.456/0.534/0.584
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -116,75 +116,70 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 5706 | 9 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 11, sub: 0, line: 193 } |  |  | 0.511 |
 | walker |  | 5727 | 21 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 3, sub: 0, line: 29 } |  |  | 0.511 |
 | ns | 5748 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.505 |
-| walker |  | 5781 | 54 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 15, sub: 0, line: 230 } |  |  | 0.505 |
-| walker |  | 5836 | 55 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 17, sub: 0, line: 300 } |  |  | 0.505 |
 | ns | 5869 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.500 |
-| walker |  | 5891 | 55 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 10, sub: 0, line: 156 } |  |  | 0.500 |
-| walker |  | 6147 | 256 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 0, line: 13 } |  |  | 0.526 |
-| walker |  | 6157 | 10 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 6, sub: 0, line: 192 } |  |  | 0.526 |
-| walker |  | 6169 | 12 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 13, sub: 0, line: 316 } |  |  | 0.526 |
-| walker |  | 6184 | 15 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 7, sub: 0, line: 203 } |  |  | 0.526 |
-| walker |  | 6217 | 33 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 4, sub: 0, line: 121 } |  |  | 0.526 |
-| walker |  | 6259 | 42 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 2, sub: 0, line: 20 } |  |  | 0.526 |
-| walker |  | 6324 | 65 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 7, sub: 0, line: 203 } |  |  | 0.526 |
-| walker |  | 6390 | 66 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 16, sub: 0, line: 375 } |  |  | 0.526 |
-| walker |  | 6460 | 70 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 10, sub: 0, line: 261 } |  |  | 0.526 |
-| walker |  | 6532 | 72 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 11, sub: 0, line: 273 } |  |  | 0.526 |
-| walker |  | 6628 | 96 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 8, sub: 0, line: 215 } |  |  | 0.526 |
-| ns | 6682 |  | 813 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.588 |
-| walker |  | 6730 | 102 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 3, sub: 0, line: 99 } |  |  | 0.588 |
-| ns | 6810 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.598 |
-| walker |  | 6838 | 108 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 18, sub: 0, line: 443 } |  |  | 0.598 |
-| ns | 6840 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.600 |
-| ns | 6900 |  | 60 | Help's five data properties | 4.1 |  | 0.598 |
-| walker |  | 6949 | 111 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 6, sub: 0, line: 192 } |  |  | 0.598 |
-| walker |  | 7061 | 112 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 12, sub: 0, line: 288 } |  |  | 0.598 |
-| ns | 7143 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.590 |
-| walker |  | 7176 | 115 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 15, sub: 0, line: 359 } |  |  | 0.590 |
-| walker |  | 7300 | 124 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 13, sub: 0, line: 316 } |  |  | 0.590 |
-| walker |  | 7358 | 58 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 7, sub: 0, line: 98 } |  |  | 0.590 |
-| walker |  | 7416 | 58 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 12, sub: 0, line: 181 } |  |  | 0.590 |
-| walker |  | 7526 | 110 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 18, sub: 0, line: 268 } |  |  | 0.590 |
-| ns | 7538 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.579 |
-| walker |  | 7586 | 60 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 10, sub: 0, line: 182 } |  |  | 0.579 |
-| walker |  | 7646 | 60 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 11, sub: 0, line: 193 } |  |  | 0.579 |
-| walker |  | 7706 | 60 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 19, sub: 0, line: 325 } |  |  | 0.579 |
-| walker |  | 7766 | 60 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 20, sub: 0, line: 372 } |  |  | 0.579 |
-| walker |  | 7827 | 61 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 8, sub: 0, line: 139 } |  |  | 0.579 |
-| walker |  | 7888 | 61 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 9, sub: 0, line: 162 } |  |  | 0.579 |
-| ns | 7892 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.568 |
-| walker |  | 7949 | 61 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 14, sub: 0, line: 217 } |  |  | 0.568 |
-| walker |  | 8011 | 62 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 6, sub: 0, line: 86 } |  |  | 0.568 |
-| ns | 8051 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.563 |
-| walker |  | 8073 | 62 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 8, sub: 0, line: 132 } |  |  | 0.563 |
-| walker |  | 8136 | 63 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 7, sub: 0, line: 112 } |  |  | 0.563 |
-| walker |  | 8199 | 63 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 9, sub: 0, line: 144 } |  |  | 0.563 |
-| walker |  | 8263 | 64 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 16, sub: 0, line: 276 } |  |  | 0.563 |
-| ns | 8270 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.557 |
-| walker |  | 8328 | 65 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 2, sub: 0, line: 11 } |  |  | 0.557 |
-| walker |  | 8394 | 66 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 5, sub: 0, line: 62 } |  |  | 0.557 |
-| walker |  | 8462 | 68 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 12, sub: 0, line: 205 } |  |  | 0.557 |
-| ns | 8482 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.552 |
-| walker |  | 8530 | 68 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 13, sub: 0, line: 224 } |  |  | 0.552 |
-| walker |  | 8598 | 68 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 15, sub: 0, line: 258 } |  |  | 0.552 |
-| walker |  | 8667 | 69 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 14, sub: 0, line: 241 } |  |  | 0.552 |
-| walker |  | 8736 | 69 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 16, sub: 0, line: 243 } |  |  | 0.552 |
-| ns | 8764 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.543 |
-| walker |  | 8807 | 71 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 6, sub: 0, line: 79 } |  |  | 0.543 |
-| walker |  | 8879 | 72 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 4, sub: 0, line: 40 } |  |  | 0.543 |
-| walker |  | 9079 | 200 | Markdown::HeadingsOutline { file: docs/deprecated.md } |  |  | 0.555 |
-| ns | 9094 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.547 |
-| walker |  | 9154 | 75 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 20, sub: 0, line: 297 } |  |  | 0.547 |
-| ns | 9210 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.543 |
-| walker |  | 9240 | 86 | Markdown::Section { file: Readme_zh-CN.md, section_index: 28, keeps_default_concavity: false } |  |  | 0.543 |
-| walker |  | 9316 | 76 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 18, sub: 0, line: 313 } |  |  | 0.543 |
-| walker |  | 9393 | 77 | Code::CodeKey { rung: Doc, file: lib/argument.js, decl: 5, sub: 0, line: 73 } |  |  | 0.543 |
-| walker |  | 9470 | 77 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 3, sub: 0, line: 47 } |  |  | 0.543 |
-| ns | 9471 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.549 |
-| walker |  | 9548 | 78 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 17, sub: 0, line: 256 } |  |  | 0.549 |
-| ns | 9673 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.544 |
-| walker |  | 9837 | 289 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 1, line: 12 } |  |  | 0.564 |
-| ns | 9848 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.570 |
-| walker |  | 9901 | 64 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 40, sub: 0, line: 633 } |  |  | 0.570 |
-| ns | 9940 |  | 92 | jest.config.js | 5.4 |  | 0.567 |
-| walker |  | 9967 | 66 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 24, sub: 0, line: 535 } |  |  | 0.567 |
+| walker |  | 6016 | 289 | Code::CodeKey { rung: Decl, file: lib/help.js, decl: 1, sub: 1, line: 12 } |  |  | 0.534 |
+| walker |  | 6024 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 25, sub: 0, line: 545 } |  |  | 0.534 |
+| walker |  | 6032 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 31, sub: 0, line: 575 } |  |  | 0.534 |
+| walker |  | 6040 | 8 | Code::CodeKey { rung: Body, file: lib/help.js, decl: 35, sub: 0, line: 597 } |  |  | 0.534 |
+| walker |  | 6094 | 54 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 15, sub: 0, line: 230 } |  |  | 0.534 |
+| walker |  | 6149 | 55 | Code::CodeKey { rung: Doc, file: lib/help.js, decl: 17, sub: 0, line: 300 } |  |  | 0.534 |
+| walker |  | 6204 | 55 | Code::CodeKey { rung: Doc, file: lib/option.js, decl: 10, sub: 0, line: 156 } |  |  | 0.534 |
+| walker |  | 6460 | 256 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 0, line: 13 } |  |  | 0.559 |
+| walker |  | 6470 | 10 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 6, sub: 0, line: 192 } |  |  | 0.559 |
+| walker |  | 6482 | 12 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 13, sub: 0, line: 316 } |  |  | 0.559 |
+| walker |  | 6497 | 15 | Code::CodeKey { rung: Body, file: lib/command.js, decl: 7, sub: 0, line: 203 } |  |  | 0.559 |
+| walker |  | 6530 | 33 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 4, sub: 0, line: 121 } |  |  | 0.559 |
+| walker |  | 6572 | 42 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 2, sub: 0, line: 20 } |  |  | 0.559 |
+| walker |  | 6637 | 65 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 7, sub: 0, line: 203 } |  |  | 0.559 |
+| ns | 6682 |  | 813 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.614 |
+| walker |  | 6703 | 66 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 16, sub: 0, line: 375 } |  |  | 0.614 |
+| walker |  | 6773 | 70 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 10, sub: 0, line: 261 } |  |  | 0.614 |
+| ns | 6810 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.623 |
+| ns | 6840 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.625 |
+| walker |  | 6845 | 72 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 11, sub: 0, line: 273 } |  |  | 0.625 |
+| ns | 6900 |  | 60 | Help's five data properties | 4.1 |  | 0.622 |
+| walker |  | 6941 | 96 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 8, sub: 0, line: 215 } |  |  | 0.622 |
+| walker |  | 7043 | 102 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 3, sub: 0, line: 99 } |  |  | 0.622 |
+| ns | 7143 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.614 |
+| walker |  | 7151 | 108 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 18, sub: 0, line: 443 } |  |  | 0.614 |
+| walker |  | 7262 | 111 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 6, sub: 0, line: 192 } |  |  | 0.614 |
+| walker |  | 7374 | 112 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 12, sub: 0, line: 288 } |  |  | 0.614 |
+| walker |  | 7489 | 115 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 15, sub: 0, line: 359 } |  |  | 0.614 |
+| ns | 7538 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.602 |
+| walker |  | 7613 | 124 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 13, sub: 0, line: 316 } |  |  | 0.602 |
+| walker |  | 7868 | 255 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 1, line: 13 } |  |  | 0.622 |
+| ns | 7892 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.611 |
+| walker |  | 7918 | 50 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 19, sub: 0, line: 463 } |  |  | 0.611 |
+| walker |  | 7977 | 59 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 28, sub: 0, line: 670 } |  |  | 0.611 |
+| walker |  | 8040 | 63 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 29, sub: 0, line: 741 } |  |  | 0.611 |
+| ns | 8051 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.606 |
+| walker |  | 8110 | 70 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 26, sub: 0, line: 619 } |  |  | 0.606 |
+| walker |  | 8185 | 75 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 20, sub: 0, line: 487 } |  |  | 0.606 |
+| walker |  | 8260 | 75 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 27, sub: 0, line: 644 } |  |  | 0.606 |
+| ns | 8270 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.599 |
+| walker |  | 8341 | 81 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 21, sub: 0, line: 508 } |  |  | 0.599 |
+| walker |  | 8423 | 82 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 33, sub: 0, line: 837 } |  |  | 0.599 |
+| ns | 8482 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.594 |
+| walker |  | 8517 | 94 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 34, sub: 0, line: 848 } |  |  | 0.594 |
+| walker |  | 8615 | 98 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 25, sub: 0, line: 599 } |  |  | 0.594 |
+| walker |  | 8728 | 113 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 22, sub: 0, line: 533 } |  |  | 0.594 |
+| ns | 8764 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.584 |
+| walker |  | 8852 | 124 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 24, sub: 0, line: 585 } |  |  | 0.584 |
+| ns | 9094 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.575 |
+| walker |  | 9112 | 260 | Code::CodeKey { rung: Decl, file: lib/command.js, decl: 1, sub: 2, line: 13 } |  |  | 0.592 |
+| walker |  | 9133 | 21 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 37, sub: 0, line: 885 } |  |  | 0.592 |
+| walker |  | 9187 | 54 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 39, sub: 0, line: 925 } |  |  | 0.592 |
+| ns | 9210 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.588 |
+| walker |  | 9258 | 71 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 44, sub: 0, line: 1001 } |  |  | 0.588 |
+| walker |  | 9330 | 72 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 40, sub: 0, line: 940 } |  |  | 0.588 |
+| walker |  | 9403 | 73 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 42, sub: 0, line: 971 } |  |  | 0.588 |
+| ns | 9471 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.593 |
+| walker |  | 9483 | 80 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 43, sub: 0, line: 983 } |  |  | 0.593 |
+| walker |  | 9569 | 86 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 49, sub: 0, line: 1158 } |  |  | 0.593 |
+| walker |  | 9657 | 88 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 50, sub: 0, line: 1183 } |  |  | 0.593 |
+| ns | 9673 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.587 |
+| walker |  | 9753 | 96 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 48, sub: 0, line: 1141 } |  |  | 0.587 |
+| ns | 9848 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.593 |
+| walker |  | 9850 | 97 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 38, sub: 0, line: 905 } |  |  | 0.593 |
+| ns | 9940 |  | 92 | jest.config.js | 5.4 |  | 0.590 |
+| walker |  | 9952 | 102 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 41, sub: 0, line: 953 } |  |  | 0.590 |

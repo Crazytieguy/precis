@@ -122,17 +122,17 @@ Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 7216 |  | 274 | Service.create and Service.destroyById bodies | 4.10 | 3.5 | 0.680 |
 | walker |  | 7455 | 253 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 0, line: 94 } |  |  | 0.706 |
 | ns | 7552 |  | 336 | parseListParams: query string to find() options | 4.11 | 3.12 | 0.687 |
-| walker |  | 7719 | 264 | Plaintext::Whole { file: .github/workflows/publish.yml } |  |  | 0.687 |
-| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.673 |
-| walker |  | 7845 | 126 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 8, sub: 0, line: 96 } |  |  | 0.673 |
-| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.660 |
-| walker |  | 8064 | 219 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 5, sub: 0, line: 18 } |  |  | 0.684 |
-| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.671 |
-| walker |  | 8337 | 273 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 1, line: 94 } |  |  | 0.679 |
-| ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.672 |
-| walker |  | 8510 | 173 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.692 |
-| ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.696 |
-| walker |  | 8837 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.729 |
+| walker |  | 7728 | 273 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 1, line: 94 } |  |  | 0.691 |
+| ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.682 |
+| ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.668 |
+| walker |  | 8055 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.704 |
+| ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.691 |
+| walker |  | 8319 | 264 | Plaintext::Whole { file: .github/workflows/publish.yml } |  |  | 0.691 |
+| walker |  | 8445 | 126 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 8, sub: 0, line: 96 } |  |  | 0.691 |
+| ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.684 |
+| ns | 8571 |  | 111 | matchesWhere: nested-object recursion and the fallback returns | 4.16 | 4.4 | 0.688 |
+| walker |  | 8664 | 219 | Code::CodeKey { rung: Body, file: src/adapters/normalized-adapter.ts, decl: 5, sub: 0, line: 18 } |  |  | 0.710 |
+| walker |  | 8837 | 173 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 15, sub: 0, line: 202 } |  |  | 0.729 |
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.717 |
 | walker |  | 9074 | 237 | Code::CodeKey { rung: Body, file: src/service.ts, decl: 9, sub: 0, line: 110 } |  |  | 0.738 |
 | walker |  | 9105 | 31 | Json::Whole { file: .oxfmtrc.json } |  |  | 0.738 |

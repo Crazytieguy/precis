@@ -258,33 +258,35 @@ Score(3000)=0.517 I=0.519 C=0.516 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 8628 | 45 | Code::CodeKey { rung: Doc, file: beetsplug/metasync/__init__.py, decl: 6, sub: 0, line: 52 } |  |  | 0.345 |
 | ns | 8633 |  | 312 | MetadataSourcePlugin: the metadata-backend contract | 6.5 |  | 0.341 |
 | walker |  | 8635 | 7 | Code::CodeKey { rung: Body, file: beetsplug/metasync/__init__.py, decl: 10, sub: 0, line: 79 } |  |  | 0.341 |
-| walker |  | 8671 | 36 | Code::CodeKey { rung: Names, file: beetsplug/duplicates.py, decl: 0, sub: 0, line: 0 } |  |  | 0.341 |
-| walker |  | 8760 | 89 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 8, sub: 0, line: 122 } |  |  | 0.341 |
 | ns | 8830 |  | 197 | Query-string prefixes: how `beet ls artist:foo` is parsed | 7.1 |  | 0.337 |
-| walker |  | 8877 | 117 | Code::CodeKey { rung: Decl, file: beetsplug/replace.py, decl: 1, sub: 0, line: 16 } |  |  | 0.337 |
-| walker |  | 8914 | 37 | Code::CodeKey { rung: Names, file: beetsplug/deezer.py, decl: 0, sub: 0, line: 0 } |  |  | 0.337 |
+| walker |  | 8920 | 285 | Code::CodeKey { rung: Names, file: beets/ui/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.337 |
+| walker |  | 8927 | 7 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 18, sub: 0, line: 459 } |  |  | 0.337 |
+| walker |  | 8991 | 64 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 13, sub: 0, line: 207 } |  |  | 0.337 |
+| walker |  | 9063 | 72 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 19, sub: 0, line: 466 } |  |  | 0.337 |
+| walker |  | 9089 | 26 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 40, sub: 0, line: 807 } |  |  | 0.337 |
+| walker |  | 9105 | 16 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 17, sub: 0, line: 445 } |  |  | 0.337 |
+| walker |  | 9121 | 16 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 18, sub: 0, line: 459 } |  |  | 0.337 |
 | ns | 9187 |  | 357 | dbcore/query.py class roster (complete) | 7.2 |  | 0.330 |
-| walker |  | 9233 | 319 | Code::CodeKey { rung: Names, file: beets/util/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.330 |
-| walker |  | 9267 | 34 | Code::CodeKey { rung: Decl, file: beets/util/__init__.py, decl: 14, sub: 0, line: 130 } |  |  | 0.330 |
-| walker |  | 9363 | 96 | Code::CodeKey { rung: Decl, file: beets/util/__init__.py, decl: 8, sub: 0, line: 74 } |  |  | 0.330 |
-| walker |  | 9373 | 10 | Code::CodeKey { rung: Body, file: beets/util/__init__.py, decl: 12, sub: 0, line: 115 } |  |  | 0.330 |
-| walker |  | 9396 | 23 | Code::CodeKey { rung: Body, file: beets/util/__init__.py, decl: 15, sub: 0, line: 136 } |  |  | 0.330 |
-| walker |  | 9424 | 28 | Code::CodeKey { rung: Doc, file: beets/util/__init__.py, decl: 12, sub: 0, line: 115 } |  |  | 0.330 |
-| walker |  | 9478 | 54 | Code::CodeKey { rung: Doc, file: beets/util/__init__.py, decl: 14, sub: 0, line: 130 } |  |  | 0.330 |
-| walker |  | 9519 | 41 | Code::CodeKey { rung: Doc, file: beets/util/__init__.py, decl: 13, sub: 0, line: 121 } |  |  | 0.330 |
-| walker |  | 9532 | 13 | Code::CodeKey { rung: Doc, file: beets/util/__init__.py, decl: 11, sub: 0, line: 104 } |  |  | 0.330 |
+| walker |  | 9219 | 98 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 33, sub: 0, line: 676 } |  |  | 0.330 |
+| walker |  | 9324 | 105 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 27, sub: 0, line: 637 } |  |  | 0.330 |
+| walker |  | 9332 | 8 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 31, sub: 0, line: 664 } |  |  | 0.330 |
+| walker |  | 9342 | 10 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 32, sub: 0, line: 668 } |  |  | 0.330 |
+| walker |  | 9455 | 113 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 20, sub: 0, line: 498 } |  |  | 0.330 |
+| walker |  | 9469 | 14 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 26, sub: 0, line: 621 } |  |  | 0.330 |
+| walker |  | 9498 | 29 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 33, sub: 0, line: 676 } |  |  | 0.330 |
+| walker |  | 9530 | 32 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 16, sub: 0, line: 433 } |  |  | 0.330 |
 | ns | 9539 |  | 352 | beets.autotag exports, Recommendation, Proposal | 8.1 |  | 0.324 |
-| walker |  | 9543 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/albumtypes.py, decl: 2, sub: 0, line: 32 } |  |  | 0.324 |
-| walker |  | 9554 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/scrub.py, decl: 8, sub: 0, line: 147 } |  |  | 0.324 |
-| walker |  | 9565 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/substitute.py, decl: 2, sub: 0, line: 33 } |  |  | 0.324 |
-| walker |  | 9737 | 172 | Code::CodeKey { rung: Names, file: beets/ui/commands/import_/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.324 |
-| walker |  | 9763 | 26 | Code::CodeKey { rung: Decl, file: beets/ui/commands/import_/__init__.py, decl: 7, sub: 0, line: 160 } |  |  | 0.324 |
+| walker |  | 9549 | 19 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 35, sub: 0, line: 701 } |  |  | 0.324 |
+| walker |  | 9585 | 36 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 27, sub: 0, line: 637 } |  |  | 0.324 |
+| walker |  | 9624 | 39 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 10, sub: 0, line: 160 } |  |  | 0.324 |
+| walker |  | 9663 | 39 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 45, sub: 0, line: 996 } |  |  | 0.324 |
+| walker |  | 9678 | 15 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 43, sub: 0, line: 879 } |  |  | 0.324 |
+| walker |  | 9733 | 55 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 14, sub: 0, line: 383 } |  |  | 0.324 |
+| walker |  | 9750 | 17 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 41, sub: 0, line: 830 } |  |  | 0.324 |
+| walker |  | 9770 | 20 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 9, sub: 0, line: 150 } |  |  | 0.324 |
 | ns | 9775 |  | 236 | autotag/hooks.py and distance.py symbol roster | 8.2 |  | 0.321 |
-| walker |  | 9781 | 18 | Code::CodeKey { rung: Doc, file: beets/ui/commands/import_/__init__.py, decl: 3, sub: 0, line: 34 } |  |  | 0.321 |
-| walker |  | 9813 | 32 | Code::CodeKey { rung: Doc, file: beets/ui/commands/import_/__init__.py, decl: 4, sub: 0, line: 49 } |  |  | 0.321 |
-| walker |  | 9846 | 33 | Code::CodeKey { rung: Doc, file: beets/ui/commands/import_/__init__.py, decl: 2, sub: 0, line: 14 } |  |  | 0.321 |
-| walker |  | 9866 | 20 | Code::CodeKey { rung: Names, file: beets/library/fields.py, decl: 0, sub: 0, line: 0 } |  |  | 0.321 |
-| walker |  | 9886 | 20 | Code::CodeKey { rung: Names, file: beets/util/hidden.py, decl: 0, sub: 0, line: 0 } |  |  | 0.321 |
-| walker |  | 9897 | 11 | Code::CodeKey { rung: Body, file: beetsplug/keyfinder.py, decl: 5, sub: 0, line: 48 } |  |  | 0.321 |
-| walker |  | 9919 | 22 | Code::CodeKey { rung: Doc, file: beetsplug/hook.py, decl: 1, sub: 0, line: 28 } |  |  | 0.321 |
+| walker |  | 9843 | 73 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 12, sub: 0, line: 187 } |  |  | 0.321 |
+| walker |  | 9882 | 39 | Code::CodeKey { rung: Doc, file: beets/ui/__init__.py, decl: 38, sub: 0, line: 770 } |  |  | 0.321 |
+| walker |  | 9949 | 67 | Code::CodeKey { rung: Decl, file: beets/ui/__init__.py, decl: 23, sub: 0, line: 534 } |  |  | 0.321 |
 | ns | 9970 |  | 195 | beets/util/__init__.py: classes and the core path/file-operation helpers | 9.1 |  | 0.317 |
+| walker |  | 9985 | 36 | Code::CodeKey { rung: Names, file: beetsplug/duplicates.py, decl: 0, sub: 0, line: 0 } |  |  | 0.317 |

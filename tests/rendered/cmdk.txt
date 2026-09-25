@@ -33,19 +33,7 @@ cmdk/
     2→  "name": "cmdk",
     3→  "version": "1.1.1",
     4→  "license": "MIT",
-    5→  "main": "./dist/index.js",
-    6→  "module": "./dist/index.mjs",
-    7→  "types": "./dist/index.d.ts",
-    8→  "files": [
-    9→    "dist"
-    10→  ],
-    11→  "exports": {
-    12→    ".": {
-    13→      "types": "./dist/index.d.ts",
-    14→      "import": "./dist/index.mjs",
-    15→      "require": "./dist/index.js"
-    16→    }
-    17→  },
+    …
     18→  "scripts": {
     19→    "prepublishOnly": "cp ../README.md . && pnpm build",
     20→    "postpublish": "rm README.md",
@@ -59,8 +47,6 @@ cmdk/
     31→    "@radix-ui/react-id": "^1.1.0",
     32→    "@radix-ui/react-primitive": "^2.0.2"
     33→  },
-    …
-    37→  "sideEffects": false,
     …
   src/
     command-score.ts
@@ -136,28 +122,7 @@ cmdk/
       78→}
       79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
       80→type CommandProps = Children &
-      81→  DivProps & {
-      82→    /**
-      83→     * Accessible label for this command menu. Not shown visibly.
-      84→     */
-      85→    label?: string
-      86→    /**
-      87→     * Optionally set to `false` to turn off the automatic filtering and sorting.
-      88→     * If `false`, you must conditionally render valid items based on the search query yourself.
-      89→     */
-      90→    shouldFilter?: boolean
-      91→    /**
-      92→     * Custom filter function for whether each command menu item should matches the given search query.
-      93→     * It should return a number between 0 and 1, with 1 being the best match and 0 being hidden entirely.
-      94→     * By default, uses the `command-score` library.
-      95→     */
-      96→    filter?: CommandFilter
-      97→    /**
-      98→     * Optional default item value when it is initially rendered.
-      99→     */
-      100→    defaultValue?: string
       …
-      121→  }
       123→type Context = {
       124→  value: (id: string, value: string, keywords?: string[]) => void
       125→  item: (id: string, groupId: string) => () => void
@@ -204,6 +169,11 @@ cmdk/
       167→const GroupContext = React.createContext<Group>(undefined)
       169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
       …
+      659→/**
+      660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
+      661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
+      662→ * the rendered item's `textContent`.
+      663→ */
       664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
       …
       725→/**
@@ -212,6 +182,10 @@ cmdk/
       728→ */
       729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
       …
+      770→/**
+      771→ * A visual and semantic separator between items or groups.
+      772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
+      773→ */
       774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
       …
       783→/**
@@ -220,6 +194,10 @@ cmdk/
       786→ */
       787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
       …
+      829→/**
+      830→ * Contains `Item`, `Group`, and `Separator`.
+      831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
+      832→ */
       833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
       …
       879→/**
@@ -243,23 +221,7 @@ package.json
 playwright.config.ts
 pnpm-lock.yaml
 pnpm-workspace.yaml
-  1→packages:
-  2→  - 'website'
-  3→  - 'test'
-  4→  - 'cmdk'
 test/
-  basic.test.ts
-  dialog.test.ts
-  group.test.ts
-  item.test.ts
-  keybind.test.ts
-  next-env.d.ts
-  numeric.test.ts
-  package.json
-  pages/
-  props.test.ts
-  style.css
-  tsconfig.json
 tsconfig.json
 website/
   .eslintrc.json
@@ -267,10 +229,6 @@ website/
   README.md
   components/
     cmdk/
-      framer.tsx
-      linear.tsx
-      raycast.tsx
-      vercel.tsx
     code/
     icons/
     index.ts

@@ -230,6 +230,41 @@ src/
     51→//!
     52→//!   The messages support a shorthand for interpolating fields from the error.
     53→//!
+    54→//!     - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+    55→//!     - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+    56→//!     - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+    57→//!     - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+    58→//!
+    59→//!   These shorthands can be used together with any additional format args,
+    60→//!   which may be arbitrary expressions. For example:
+    61→//!
+    62→//!   ```rust
+    …
+    66→//!   #[derive(Error, Debug)]
+    67→//!   pub enum Error {
+    68→//!       #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
+    69→//!       InvalidLookahead(u32),
+    70→//!   }
+    71→//!   ```
+    72→//!
+    73→//!   If one of the additional expression arguments needs to refer to a field of
+    74→//!   the struct or enum, then refer to named fields as `.var` and tuple fields
+    75→//!   as `.0`.
+    76→//!
+    77→//!   ```rust
+    …
+    90→//!   #[derive(Error, Debug)]
+    91→//!   pub enum Error {
+    92→//!       #[error("first letter must be lowercase but was {:?}", first_char(.0))]
+    93→//!       WrongCase(String),
+    94→//!       #[error("invalid index {idx}, expected at least {} and at most {}", .limits.lo, .limits.hi)]
+    95→//!       OutOfBounds { idx: usize, limits: Limits },
+    96→//!   }
+    97→//!   ```
+    98→//!
+    99→//! - A [`From`] impl is generated for each variant that contains a `#[from]`
+    100→//!   attribute.
+    101→//!
     …
     281→mod aserror;
     282→mod display;
@@ -255,8 +290,6 @@ src/
 tests/
   compiletest.rs
   no-std/
-    Cargo.toml
-    test.rs
   test_backtrace.rs
   test_display.rs
   test_error.rs
@@ -269,77 +302,3 @@ tests/
   test_source.rs
   test_transparent.rs
   ui/
-    bad-field-attr.rs
-    bad-field-attr.stderr
-    concat-display.rs
-    concat-display.stderr
-    display-underscore.rs
-    display-underscore.stderr
-    duplicate-enum-source.rs
-    duplicate-enum-source.stderr
-    duplicate-fmt.rs
-    duplicate-fmt.stderr
-    duplicate-struct-source.rs
-    duplicate-struct-source.stderr
-    duplicate-transparent.rs
-    duplicate-transparent.stderr
-    expression-fallback.rs
-    expression-fallback.stderr
-    fallback-impl-with-display.rs
-    fallback-impl-with-display.stderr
-    from-backtrace-backtrace.rs
-    from-backtrace-backtrace.stderr
-    from-not-source.rs
-    from-not-source.stderr
-    invalid-input-impl-anyway.rs
-    invalid-input-impl-anyway.stderr
-    lifetime.rs
-    lifetime.stderr
-    missing-display.rs
-    missing-display.stderr
-    missing-fmt.rs
-    missing-fmt.stderr
-    no-display.rs
-    no-display.stderr
-    numbered-positional-tuple.rs
-    numbered-positional-tuple.stderr
-    raw-identifier.rs
-    raw-identifier.stderr
-    same-from-type.rs
-    same-from-type.stderr
-    source-enum-not-error.rs
-    source-enum-not-error.stderr
-    source-enum-unnamed-field-not-error.rs
-    source-enum-unnamed-field-not-error.stderr
-    source-struct-not-error.rs
-    source-struct-not-error.stderr
-    source-struct-unnamed-field-not-error.rs
-    source-struct-unnamed-field-not-error.stderr
-    struct-with-fmt.rs
-    struct-with-fmt.stderr
-    transparent-display.rs
-    transparent-display.stderr
-    transparent-enum-many.rs
-    transparent-enum-many.stderr
-    transparent-enum-not-error.rs
-    transparent-enum-not-error.stderr
-    transparent-enum-source.rs
-    transparent-enum-source.stderr
-    transparent-enum-unnamed-field-not-error.rs
-    transparent-enum-unnamed-field-not-error.stderr
-    transparent-struct-many.rs
-    transparent-struct-many.stderr
-    transparent-struct-not-error.rs
-    transparent-struct-not-error.stderr
-    transparent-struct-source.rs
-    transparent-struct-source.stderr
-    transparent-struct-unnamed-field-not-error.rs
-    transparent-struct-unnamed-field-not-error.stderr
-    unconditional-recursion.rs
-    unconditional-recursion.stderr
-    unexpected-field-fmt.rs
-    unexpected-field-fmt.stderr
-    unexpected-struct-source.rs
-    unexpected-struct-source.stderr
-    union.rs
-    union.stderr

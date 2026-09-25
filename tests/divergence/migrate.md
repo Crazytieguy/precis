@@ -1,4 +1,4 @@
-Score(3000)=0.548 I=0.692 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.559/0.645/0.565/0.548/0.534/0.484/0.474
+Score(3000)=0.548 I=0.692 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.559/0.645/0.565/0.548/0.534/0.498/0.477
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -191,66 +191,75 @@ Score(3000)=0.548 I=0.692 C=0.434 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 5927 | 79 | Markdown::ReadmeHeadline { file: database/pgx/v5/README.md } |  |  | 0.494 |
 | walker |  | 5952 | 25 | Markdown::HeadingsOutline { file: database/pgx/v5/README.md } |  |  | 0.494 |
 | ns | 6016 |  | 184 | internal/url: SchemeFromURL | 3.12 |  | 0.484 |
-| walker |  | 6092 | 140 | Markdown::ReadmeHeadline { file: database/neo4j/README.md } |  |  | 0.484 |
-| walker |  | 6174 | 82 | Fs::DirListing { dir: source/httpfs/testdata/sql } |  |  | 0.484 |
-| walker |  | 6180 | 6 | Fs::DirListing { dir: source/httpfs/testdata/sql/subdirs-are-ignored } |  |  | 0.484 |
-| ns | 6248 |  | 232 | Exemplar driver: postgres registration, defaults and Config | 3.13 |  | 0.473 |
-| ns | 6457 |  | 209 | Migration filename grammar (MIGRATIONS.md:10-23) | 4.1 |  | 0.466 |
-| walker |  | 6619 | 439 | Code::CodeKey { rung: Decl, file: migration.go, decl: 2, sub: 0, line: 18 } |  |  | 0.466 |
-| ns | 6639 |  | 182 | source/parse.go: ErrParse, the Regex, and the Parse signature | 4.2 |  | 0.458 |
-| walker |  | 6659 | 40 | Code::CodeKey { rung: Doc, file: migration.go, decl: 2, sub: 0, line: 18 } |  |  | 0.459 |
-| walker |  | 6769 | 110 | Code::CodeKey { rung: ModuleDoc, file: source/iofs/doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.459 |
-| ns | 6897 |  | 258 | source.Direction and source.Migration | 4.3 |  | 0.448 |
-| walker |  | 7030 | 261 | Plaintext::Whole { file: Dockerfile } |  |  | 0.448 |
-| walker |  | 7077 | 47 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.448 |
-| ns | 7180 |  | 283 | source.Migrations: the in-memory index every directory-tree driver uses | 4.4 |  | 0.439 |
-| walker |  | 7257 | 180 | Markdown::ReadmeHeadline { file: source/gitlab/README.md } |  |  | 0.439 |
-| walker |  | 7336 | 79 | Markdown::HeadingsOutline { file: database/cockroachdb/TUTORIAL.md } |  |  | 0.439 |
-| ns | 7384 |  | 204 | migrate.Migration: type location, buffer default, and complete method set | 4.5 |  | 0.449 |
-| walker |  | 7392 | 56 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.449 |
-| walker |  | 7424 | 32 | Markdown::Section { file: database/rqlite/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.449 |
-| walker |  | 7512 | 88 | Markdown::HeadingsOutline { file: database/postgres/TUTORIAL.md } |  |  | 0.449 |
-| ns | 7583 |  | 199 | CLI entry points and the cli/ deprecation | 5.1 |  | 0.447 |
-| walker |  | 7593 | 81 | Code::CodeKey { rung: Names, file: source/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.449 |
-| walker |  | 7604 | 11 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 5, sub: 0, line: 97 } |  |  | 0.449 |
-| walker |  | 7615 | 11 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 6, sub: 0, line: 110 } |  |  | 0.449 |
-| walker |  | 7627 | 12 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 4, sub: 0, line: 76 } |  |  | 0.449 |
-| walker |  | 7631 | 4 | Fs::DirListing { dir: source/testing } |  |  | 0.449 |
-| ns | 7789 |  | 206 | Complete internal/cli listing — the build-tag matrix | 5.2 |  | 0.469 |
-| walker |  | 7847 | 216 | Code::CodeKey { rung: Names, file: migrate.go, decl: 0, sub: 1, line: 0 } |  |  | 0.481 |
-| walker |  | 7859 | 12 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 19, sub: 0, line: 307 } |  |  | 0.481 |
-| walker |  | 7872 | 13 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 14, sub: 0, line: 193 } |  |  | 0.481 |
-| walker |  | 7904 | 32 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 15, sub: 0, line: 212 } |  |  | 0.481 |
-| walker |  | 7937 | 33 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 17, sub: 0, line: 265 } |  |  | 0.482 |
-| ns | 7955 |  | 166 | cli.Main and the complete global flag set | 5.3 |  | 0.478 |
-| walker |  | 7970 | 33 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 18, sub: 0, line: 287 } |  |  | 0.478 |
-| walker |  | 8007 | 37 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 16, sub: 0, line: 234 } |  |  | 0.478 |
-| walker |  | 8069 | 62 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 20, sub: 0, line: 321 } |  |  | 0.478 |
-| walker |  | 8143 | 74 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 12, sub: 0, line: 171 } |  |  | 0.478 |
-| walker |  | 8221 | 78 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 11, sub: 0, line: 145 } |  |  | 0.478 |
-| ns | 8287 |  | 332 | The `migrate -help` usage text, from source | 5.4 |  | 0.468 |
-| walker |  | 8309 | 88 | Code::CodeKey { rung: Names, file: database/util.go, decl: 0, sub: 0, line: 0 } |  |  | 0.470 |
-| walker |  | 8329 | 20 | Code::CodeKey { rung: Doc, file: database/util.go, decl: 3, sub: 0, line: 23 } |  |  | 0.471 |
-| walker |  | 8355 | 26 | Code::CodeKey { rung: Doc, file: database/util.go, decl: 2, sub: 0, line: 13 } |  |  | 0.473 |
-| walker |  | 8393 | 38 | Markdown::Section { file: database/sqlite3/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.473 |
-| walker |  | 8493 | 100 | Code::CodeKey { rung: Names, file: source/parse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.476 |
-| walker |  | 8504 | 11 | Code::CodeKey { rung: Decl, file: source/parse.go, decl: 1, sub: 0, line: 9 } |  |  | 0.477 |
-| walker |  | 8513 | 9 | Code::CodeKey { rung: Decl, file: source/parse.go, decl: 2, sub: 0, line: 13 } |  |  | 0.479 |
-| walker |  | 8524 | 11 | Code::CodeKey { rung: Doc, file: source/parse.go, decl: 4, sub: 0, line: 25 } |  |  | 0.481 |
-| walker |  | 8560 | 36 | Code::CodeKey { rung: Doc, file: source/parse.go, decl: 3, sub: 0, line: 22 } |  |  | 0.487 |
-| ns | 8594 |  | 307 | Subcommand usage strings (internal/cli/main.go:18-33) | 5.5 |  | 0.481 |
-| walker |  | 8829 | 269 | Markdown::ReadmeHeadline { file: database/cassandra/README.md } |  |  | 0.481 |
-| ns | 8847 |  | 253 | Complete command-implementation roster (internal/cli/commands.go) | 5.6 |  | 0.477 |
-| walker |  | 8849 | 20 | Markdown::HeadingsOutline { file: database/cassandra/README.md } |  |  | 0.477 |
-| walker |  | 8904 | 55 | Code::CodeKey { rung: Names, file: internal/url/url.go, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
-| walker |  | 8918 | 14 | Code::CodeKey { rung: Doc, file: internal/url/url.go, decl: 3, sub: 0, line: 12 } |  |  | 0.479 |
-| ns | 8984 |  | 137 | A build-tag shim in full, and the tag-name traps | 5.7 |  | 0.474 |
-| ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.469 |
-| ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.463 |
-| walker |  | 9741 | 823 | GoMod::File { file: go.mod } |  |  | 0.463 |
-| walker |  | 9799 | 58 | Code::CodeKey { rung: Names, file: source/httpfs/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.463 |
-| walker |  | 9812 | 13 | Code::CodeKey { rung: Decl, file: source/httpfs/driver.go, decl: 1, sub: 0, line: 13 } |  |  | 0.463 |
-| walker |  | 9855 | 43 | Code::CodeKey { rung: Doc, file: util.go, decl: 4, sub: 0, line: 45 } |  |  | 0.465 |
-| ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.461 |
-| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.464 |
-| walker |  | 9984 | 129 | Markdown::HeadingsOutline { file: cmd/migrate/README.md } |  |  | 0.464 |
+| walker |  | 6168 | 216 | Code::CodeKey { rung: Names, file: migrate.go, decl: 0, sub: 1, line: 0 } |  |  | 0.498 |
+| walker |  | 6180 | 12 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 19, sub: 0, line: 307 } |  |  | 0.498 |
+| walker |  | 6193 | 13 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 14, sub: 0, line: 193 } |  |  | 0.498 |
+| walker |  | 6225 | 32 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 15, sub: 0, line: 212 } |  |  | 0.498 |
+| ns | 6248 |  | 232 | Exemplar driver: postgres registration, defaults and Config | 3.13 |  | 0.486 |
+| walker |  | 6258 | 33 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 17, sub: 0, line: 265 } |  |  | 0.488 |
+| walker |  | 6291 | 33 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 18, sub: 0, line: 287 } |  |  | 0.488 |
+| walker |  | 6328 | 37 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 16, sub: 0, line: 234 } |  |  | 0.488 |
+| walker |  | 6390 | 62 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 20, sub: 0, line: 321 } |  |  | 0.488 |
+| ns | 6457 |  | 209 | Migration filename grammar (MIGRATIONS.md:10-23) | 4.1 |  | 0.481 |
+| walker |  | 6464 | 74 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 12, sub: 0, line: 171 } |  |  | 0.481 |
+| walker |  | 6542 | 78 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 11, sub: 0, line: 145 } |  |  | 0.481 |
+| ns | 6639 |  | 182 | source/parse.go: ErrParse, the Regex, and the Parse signature | 4.2 |  | 0.473 |
+| walker |  | 6758 | 216 | Code::CodeKey { rung: Names, file: migrate.go, decl: 0, sub: 2, line: 0 } |  |  | 0.485 |
+| walker |  | 6792 | 34 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 22, sub: 0, line: 383 } |  |  | 0.485 |
+| walker |  | 6832 | 40 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 21, sub: 0, line: 365 } |  |  | 0.485 |
+| walker |  | 6862 | 30 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 27, sub: 0, line: 776 } |  |  | 0.485 |
+| walker |  | 6892 | 30 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 29, sub: 0, line: 832 } |  |  | 0.485 |
+| ns | 6897 |  | 258 | source.Direction and source.Migration | 4.3 |  | 0.474 |
+| walker |  | 7032 | 140 | Markdown::ReadmeHeadline { file: database/neo4j/README.md } |  |  | 0.474 |
+| walker |  | 7114 | 82 | Fs::DirListing { dir: source/httpfs/testdata/sql } |  |  | 0.474 |
+| walker |  | 7120 | 6 | Fs::DirListing { dir: source/httpfs/testdata/sql/subdirs-are-ignored } |  |  | 0.474 |
+| ns | 7180 |  | 283 | source.Migrations: the in-memory index every directory-tree driver uses | 4.4 |  | 0.464 |
+| walker |  | 7241 | 121 | Code::CodeKey { rung: Names, file: migrate.go, decl: 0, sub: 3, line: 0 } |  |  | 0.477 |
+| walker |  | 7256 | 15 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 33, sub: 0, line: 961 } |  |  | 0.477 |
+| walker |  | 7272 | 16 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 35, sub: 0, line: 975 } |  |  | 0.477 |
+| walker |  | 7294 | 22 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 34, sub: 0, line: 968 } |  |  | 0.477 |
+| walker |  | 7322 | 28 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 32, sub: 0, line: 953 } |  |  | 0.477 |
+| walker |  | 7356 | 34 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 30, sub: 0, line: 887 } |  |  | 0.478 |
+| ns | 7384 |  | 204 | migrate.Migration: type location, buffer default, and complete method set | 4.5 |  | 0.478 |
+| ns | 7583 |  | 199 | CLI entry points and the cli/ deprecation | 5.1 |  | 0.476 |
+| ns | 7789 |  | 206 | Complete internal/cli listing — the build-tag matrix | 5.2 |  | 0.495 |
+| walker |  | 7795 | 439 | Code::CodeKey { rung: Decl, file: migration.go, decl: 2, sub: 0, line: 18 } |  |  | 0.496 |
+| walker |  | 7835 | 40 | Code::CodeKey { rung: Doc, file: migration.go, decl: 2, sub: 0, line: 18 } |  |  | 0.502 |
+| walker |  | 7945 | 110 | Code::CodeKey { rung: ModuleDoc, file: source/iofs/doc.go, decl: 0, sub: 0, line: 0 } |  |  | 0.502 |
+| ns | 7955 |  | 166 | cli.Main and the complete global flag set | 5.3 |  | 0.499 |
+| walker |  | 7991 | 46 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 31, sub: 0, line: 938 } |  |  | 0.499 |
+| walker |  | 8252 | 261 | Plaintext::Whole { file: Dockerfile } |  |  | 0.499 |
+| ns | 8287 |  | 332 | The `migrate -help` usage text, from source | 5.4 |  | 0.488 |
+| walker |  | 8299 | 47 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.488 |
+| walker |  | 8479 | 180 | Markdown::ReadmeHeadline { file: source/gitlab/README.md } |  |  | 0.488 |
+| walker |  | 8531 | 52 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 28, sub: 0, line: 815 } |  |  | 0.488 |
+| ns | 8594 |  | 307 | Subcommand usage strings (internal/cli/main.go:18-33) | 5.5 |  | 0.483 |
+| walker |  | 8610 | 79 | Markdown::HeadingsOutline { file: database/cockroachdb/TUTORIAL.md } |  |  | 0.483 |
+| walker |  | 8666 | 56 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.483 |
+| walker |  | 8698 | 32 | Markdown::Section { file: database/rqlite/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.483 |
+| walker |  | 8786 | 88 | Markdown::HeadingsOutline { file: database/postgres/TUTORIAL.md } |  |  | 0.483 |
+| ns | 8847 |  | 253 | Complete command-implementation roster (internal/cli/commands.go) | 5.6 |  | 0.479 |
+| walker |  | 8867 | 81 | Code::CodeKey { rung: Names, file: source/driver.go, decl: 0, sub: 0, line: 0 } |  |  | 0.480 |
+| walker |  | 8878 | 11 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 5, sub: 0, line: 97 } |  |  | 0.480 |
+| walker |  | 8889 | 11 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 6, sub: 0, line: 110 } |  |  | 0.480 |
+| walker |  | 8901 | 12 | Code::CodeKey { rung: Doc, file: source/driver.go, decl: 4, sub: 0, line: 76 } |  |  | 0.480 |
+| walker |  | 8905 | 4 | Fs::DirListing { dir: source/testing } |  |  | 0.480 |
+| ns | 8984 |  | 137 | A build-tag shim in full, and the tag-name traps | 5.7 |  | 0.475 |
+| walker |  | 8993 | 88 | Code::CodeKey { rung: Names, file: database/util.go, decl: 0, sub: 0, line: 0 } |  |  | 0.477 |
+| walker |  | 9013 | 20 | Code::CodeKey { rung: Doc, file: database/util.go, decl: 3, sub: 0, line: 23 } |  |  | 0.478 |
+| walker |  | 9039 | 26 | Code::CodeKey { rung: Doc, file: database/util.go, decl: 2, sub: 0, line: 13 } |  |  | 0.480 |
+| walker |  | 9077 | 38 | Markdown::Section { file: database/sqlite3/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.480 |
+| walker |  | 9177 | 100 | Code::CodeKey { rung: Names, file: source/parse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.483 |
+| walker |  | 9188 | 11 | Code::CodeKey { rung: Decl, file: source/parse.go, decl: 1, sub: 0, line: 9 } |  |  | 0.484 |
+| walker |  | 9197 | 9 | Code::CodeKey { rung: Decl, file: source/parse.go, decl: 2, sub: 0, line: 13 } |  |  | 0.485 |
+| walker |  | 9208 | 11 | Code::CodeKey { rung: Doc, file: source/parse.go, decl: 4, sub: 0, line: 25 } |  |  | 0.487 |
+| walker |  | 9244 | 36 | Code::CodeKey { rung: Doc, file: source/parse.go, decl: 3, sub: 0, line: 22 } |  |  | 0.493 |
+| ns | 9275 |  | 291 | Complete FAQ question roster (every #### heading) | 6.1 |  | 0.488 |
+| walker |  | 9320 | 76 | Code::CodeKey { rung: Doc, file: migrate.go, decl: 23, sub: 0, line: 400 } |  |  | 0.488 |
+| ns | 9546 |  | 271 | Makefile: default driver tag sets and the test targets | 6.2 |  | 0.482 |
+| walker |  | 9589 | 269 | Markdown::ReadmeHeadline { file: database/cassandra/README.md } |  |  | 0.482 |
+| walker |  | 9609 | 20 | Markdown::HeadingsOutline { file: database/cassandra/README.md } |  |  | 0.482 |
+| walker |  | 9664 | 55 | Code::CodeKey { rung: Names, file: internal/url/url.go, decl: 0, sub: 0, line: 0 } |  |  | 0.483 |
+| walker |  | 9678 | 14 | Code::CodeKey { rung: Doc, file: internal/url/url.go, decl: 3, sub: 0, line: 12 } |  |  | 0.484 |
+| ns | 9863 |  | 317 | Shared conformance-test harnesses (complete function rosters) | 6.3 |  | 0.479 |
+| ns | 9944 |  | 81 | Remaining doc heading rosters (MIGRATIONS.md, GETTING_STARTED.md) | 6.4 |  | 0.482 |

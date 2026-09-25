@@ -147,19 +147,6 @@ docs/
     485→```
     486→
     487→<a name='structneco__gen'></a>
-    488→## neco_gen
-    489→```c
-    490→struct neco_gen;
-    491→```
-    492→
-    493→<a name='group___basic_operations_1gacfbcf6055ddaa921e490d1126b098c6b'></a>
-    …
-    1847→## neco_cancel()
-    1848→```c
-    1849→int neco_cancel(int64_t id);
-    1850→```
-    1851→
-    1852→<a name='group___cancelation_1ga85143c030d2055da855a9451980585af'></a>
     …
   README.md
     1→# Neco Documentation
@@ -198,14 +185,7 @@ docs/
       3→Generated with the help of [doxygen](https://www.doxygen.nl/index.html)
     API_head.md
       1→# Neco C API
-      2→
-      3→C API for the Neco coroutine library.
-      4→
-      5→This document provides a detailed description of the functions and types in the
-      6→[neco.h](../neco.h) and [neco.c](../neco.c) source files for the Neco library.
-      7→
-      8→For a more general overview please see the project 
-      9→[README](https://github.com/tidwall/neco). 
+      …
       12→## Table of contents
       …
       34→## Programming notes
@@ -256,6 +236,24 @@ neco.h
   46→int64_t neco_getid(void);
   47→int64_t neco_lastid(void);
   48→int64_t neco_starterid(void);
+  …
+  55→/// @defgroup Channels Channels
+  56→/// Channels allow for sending and receiving values between coroutines.
+  57→/// By default, sends and receives will block until the other side is ready.
+  58→/// This allows the coroutines to synchronize without using locks or condition
+  59→/// variables.
+  60→/// @{
+  61→typedef struct neco_chan neco_chan;
+  62→
+  63→int neco_chan_make(neco_chan **chan, size_t data_size, size_t capacity);
+  64→int neco_chan_retain(neco_chan *chan);
+  65→int neco_chan_release(neco_chan *chan);
+  66→int neco_chan_send(neco_chan *chan, void *data);
+  67→int neco_chan_send_dl(neco_chan *chan, void *data, int64_t deadline);
+  68→int neco_chan_broadcast(neco_chan *chan, void *data);
+  69→int neco_chan_recv(neco_chan *chan, void *data);
+  70→int neco_chan_recv_dl(neco_chan *chan, void *data, int64_t deadline);
+  71→int neco_chan_tryrecv(neco_chan *chan, void *data);
   …
 tests/
   README.md

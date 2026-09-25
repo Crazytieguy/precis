@@ -1,4 +1,4 @@
-Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.548/0.615/0.770/0.765/0.753/0.715/0.670
+Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.548/0.615/0.685/0.884/0.753/0.715/0.670
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,31 +38,31 @@ Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 1609 | 318 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 4, sub: 0, line: 139 } |  |  | 0.567 |
 | ns | 1812 |  | 318 | Root's destructured parameter list — every prop's default value | 2.4 | 1.6 | 0.604 |
 | walker |  | 1823 | 214 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 0, line: 50 } |  |  | 0.622 |
-| walker |  | 1995 | 172 | Json::Entry { file: package.json } |  |  | 0.760 |
-| ns | 2031 |  | 219 | Snap-point prop documentation (fills 2.1's ellipses) | 2.5 | 2.1 | 0.770 |
-| ns | 2198 |  | 167 | Docs for dismissible, modal and direction (fills 2.3's ellipses) | 2.6 | 2.3 | 0.741 |
-| walker |  | 2252 | 257 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 1, line: 50 } |  |  | 0.796 |
-| ns | 2398 |  | 200 | Docs for closeThreshold, noBodyStyles, setBackgroundColorOnScale, scrollLockTimeout | 2.7 | 2.2 | 0.804 |
-| walker |  | 2428 | 176 | Json::IdentityMeta { file: package.json } |  |  | 0.804 |
-| walker |  | 2488 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 14, sub: 0, line: 1130 } |  |  | 0.804 |
-| ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.807 |
-| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.781 |
-| walker |  | 2703 | 215 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.813 |
-| walker |  | 2802 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.796 |
-| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.796 |
-| walker |  | 2868 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.797 |
-| walker |  | 2882 | 14 | Code::CodeKey { rung: Names, file: src/use-position-fixed.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
-| walker |  | 2896 | 14 | Code::CodeKey { rung: Names, file: src/use-snap-points.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
-| walker |  | 2911 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
-| ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.765 |
-| ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.753 |
-| walker |  | 3190 | 279 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 3, line: 50 } |  |  | 0.821 |
-| walker |  | 3199 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.821 |
-| ns | 3242 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.807 |
-| ns | 3354 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.796 |
-| walker |  | 3446 | 247 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.796 |
-| ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.769 |
-| walker |  | 3651 | 205 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 4, line: 50 } |  |  | 0.819 |
+| ns | 2031 |  | 219 | Snap-point prop documentation (fills 2.1's ellipses) | 2.5 | 2.1 | 0.631 |
+| walker |  | 2080 | 257 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 1, line: 50 } |  |  | 0.685 |
+| ns | 2198 |  | 167 | Docs for dismissible, modal and direction (fills 2.3's ellipses) | 2.6 | 2.3 | 0.659 |
+| walker |  | 2295 | 215 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.693 |
+| ns | 2398 |  | 200 | Docs for closeThreshold, noBodyStyles, setBackgroundColorOnScale, scrollLockTimeout | 2.7 | 2.2 | 0.698 |
+| ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.700 |
+| walker |  | 2574 | 279 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 3, line: 50 } |  |  | 0.742 |
+| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.743 |
+| walker |  | 2779 | 205 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 4, line: 50 } |  |  | 0.777 |
+| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.777 |
+| walker |  | 2951 | 172 | Json::Entry { file: package.json } |  |  | 0.921 |
+| ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.884 |
+| ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.871 |
+| walker |  | 3127 | 176 | Json::IdentityMeta { file: package.json } |  |  | 0.871 |
+| walker |  | 3226 | 99 | Fs::DirListing { dir: test/src/app } |  |  | 0.873 |
+| ns | 3242 |  | 173 | src/helpers.ts — all eight exported helper signatures | 3.3 |  | 0.858 |
+| walker |  | 3292 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.859 |
+| walker |  | 3306 | 14 | Code::CodeKey { rung: Names, file: src/use-position-fixed.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.859 |
+| walker |  | 3320 | 14 | Code::CodeKey { rung: Names, file: src/use-snap-points.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.859 |
+| walker |  | 3335 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.859 |
+| ns | 3354 |  | 112 | src/browser.ts — the complete platform-detection roster | 3.4 |  | 0.847 |
+| walker |  | 3395 | 60 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 14, sub: 0, line: 1130 } |  |  | 0.847 |
+| walker |  | 3404 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.847 |
+| ns | 3633 |  | 279 | DrawerContextValue, first half — refs and pointer callbacks | 3.5 |  | 0.819 |
+| walker |  | 3651 | 247 | Markdown::Section { file: LICENSE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.819 |
 | walker |  | 3687 | 36 | Code::CodeKey { rung: Names, file: src/context.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
 | walker |  | 3724 | 37 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.820 |
 | ns | 3813 |  | 180 | DrawerContextValue, second half — snap points, direction, container | 3.6 | 3.5 | 0.797 |
@@ -141,17 +141,17 @@ Score(3000)=0.765 I=0.900 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 8990 | 636 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 11, sub: 0, line: 996 } |  |  | 0.670 |
 | walker |  | 9004 | 14 | Code::CodeKey { rung: Names, file: test/src/app/page.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.670 |
 | ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.661 |
-| walker |  | 9150 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.661 |
-| walker |  | 9181 | 31 | Code::CodeKey { rung: Names, file: test/tests/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
-| ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.658 |
-| walker |  | 9240 | 59 | Code::CodeKey { rung: Decl, file: test/tests/helpers.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.658 |
-| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.663 |
-| walker |  | 9397 | 157 | Markdown::Section { file: test/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.663 |
+| ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.657 |
+| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.662 |
+| walker |  | 9463 | 459 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 11, sub: 1, line: 996 } |  |  | 0.662 |
 | ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.659 |
+| walker |  | 9609 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 42 } |  |  | 0.659 |
+| walker |  | 9640 | 31 | Code::CodeKey { rung: Names, file: test/tests/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
 | ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.663 |
+| walker |  | 9699 | 59 | Code::CodeKey { rung: Decl, file: test/tests/helpers.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.663 |
 | ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.666 |
 | ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.667 |
-| walker |  | 9856 | 459 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 11, sub: 1, line: 996 } |  |  | 0.667 |
+| walker |  | 9856 | 157 | Markdown::Section { file: test/README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.667 |
 | walker |  | 9896 | 40 | Json::Identity { file: test/package.json } |  |  | 0.667 |
 | ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.670 |
 | walker |  | 9959 | 63 | Json::Scripts { file: test/package.json } |  |  | 0.670 |

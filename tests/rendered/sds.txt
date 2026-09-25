@@ -120,63 +120,6 @@ README.md
   912→===
   …
 sds.c
-  …
-  42→const char *SDS_NOINIT = "SDS_NOINIT";
-  43→
-  44→static inline int sdsHdrSize(char type) {
-  …
-  60→static inline char sdsReqType(size_t string_size) {
-  …
-  89→sds sdsnewlen(const void *init, size_t initlen) {
-  …
-  147→/* Create an empty (zero length) sds string. Even in this case the string
-  148→ * always has an implicit null term. */
-  149→sds sdsempty(void) {
-  150→    return sdsnewlen("",0);
-  …
-  153→/* Create a new sds string starting from a null terminated C string. */
-  154→sds sdsnew(const char *init) {
-  …
-  159→/* Duplicate an sds string. */
-  160→sds sdsdup(const sds s) {
-  161→    return sdsnewlen(s, sdslen(s));
-  …
-  164→/* Free an sds string. No operation is performed if 's' is NULL. */
-  165→void sdsfree(sds s) {
-  …
-  184→void sdsupdatelen(sds s) {
-  …
-  189→/* Modify an sds string in-place to make it empty (zero length).
-  190→ * However all the existing buffer is not discarded but set as free space
-  191→ * so that next append operations will not require allocations up to the
-  192→ * number of bytes previously available. */
-  193→void sdsclear(sds s) {
-  …
-  198→/* Enlarge the free space at the end of the sds string so that the caller
-  199→ * is sure that after calling this function can overwrite up to addlen
-  200→ * bytes after the end of the string, plus one more byte for nul term.
-  201→ *
-  202→ * Note: this does not change the *length* of the sds string as returned
-  203→ * by sdslen(), but only the free buffer space we have. */
-  204→sds sdsMakeRoomFor(sds s, size_t addlen) {
-  …
-  250→/* Reallocate the sds string so that it has no free space at the end. The
-  251→ * contained string remains not altered, but next concatenation operations
-  252→ * will require a reallocation.
-  253→ *
-  254→ * After the call, the passed sds string is no longer valid and all the
-  255→ * references must be substituted with the new pointer returned by the call. */
-  256→sds sdsRemoveFreeSpace(sds s) {
-  …
-  293→/* Return the total size of the allocation of the specified sds string,
-  294→ * including:
-  295→ * 1) The sds header before the pointer.
-  296→ * 2) The string.
-  297→ * 3) The free buffer at the end if any.
-  298→ * 4) The implicit null term.
-  299→ */
-  300→size_t sdsAllocSize(sds s) {
-  …
 sds.h
   …
   36→#define SDS_MAX_PREALLOC (1024*1024)
@@ -239,6 +182,55 @@ sds.h
   …
   218→sds sdsnewlen(const void *init, size_t initlen);
   219→sds sdsnew(const char *init);
+  220→sds sdsempty(void);
+  221→sds sdsdup(const sds s);
+  222→void sdsfree(sds s);
+  223→sds sdsgrowzero(sds s, size_t len);
+  224→sds sdscatlen(sds s, const void *t, size_t len);
+  225→sds sdscat(sds s, const char *t);
+  226→sds sdscatsds(sds s, const sds t);
+  227→sds sdscpylen(sds s, const char *t, size_t len);
+  228→sds sdscpy(sds s, const char *t);
+  229→
+  230→sds sdscatvprintf(sds s, const char *fmt, va_list ap);
+  231→#ifdef __GNUC__
+  232→sds sdscatprintf(sds s, const char *fmt, ...)
+  233→    __attribute__((format(printf, 2, 3)));
+  234→#else
+  235→sds sdscatprintf(sds s, const char *fmt, ...);
+  236→#endif
+  238→sds sdscatfmt(sds s, char const *fmt, ...);
+  239→sds sdstrim(sds s, const char *cset);
+  240→void sdsrange(sds s, ssize_t start, ssize_t end);
+  241→void sdsupdatelen(sds s);
+  242→void sdsclear(sds s);
+  243→int sdscmp(const sds s1, const sds s2);
+  244→sds *sdssplitlen(const char *s, ssize_t len, const char *sep, int seplen, int *count);
+  245→void sdsfreesplitres(sds *tokens, int count);
+  246→void sdstolower(sds s);
+  247→void sdstoupper(sds s);
+  248→sds sdsfromlonglong(long long value);
+  249→sds sdscatrepr(sds s, const char *p, size_t len);
+  250→sds *sdssplitargs(const char *line, int *argc);
+  251→sds sdsmapchars(sds s, const char *from, const char *to, size_t setlen);
+  252→sds sdsjoin(char **argv, int argc, char *sep);
+  253→sds sdsjoinsds(sds *argv, int argc, const char *sep, size_t seplen);
+  255→/* Low level functions exposed to the user API */
+  256→sds sdsMakeRoomFor(sds s, size_t addlen);
+  257→void sdsIncrLen(sds s, ssize_t incr);
+  258→sds sdsRemoveFreeSpace(sds s);
+  259→size_t sdsAllocSize(sds s);
+  260→void *sdsAllocPtr(sds s);
+  262→/* Export the allocator used by SDS to the program using SDS.
+  263→ * Sometimes the program SDS is linked to, may use a different set of
+  264→ * allocators, but may want to allocate or free things that SDS will
+  265→ * respectively free or allocate. */
+  266→void *sds_malloc(size_t size);
+  267→void *sds_realloc(void *ptr, size_t size);
+  268→void sds_free(void *ptr);
+  270→#ifdef REDIS_TEST
+  271→int sdsTest(int argc, char *argv[]);
+  272→#endif
   …
 sdsalloc.h
   …

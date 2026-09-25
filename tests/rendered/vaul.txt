@@ -42,22 +42,8 @@ package.json
   28→    "format": "prettier --write .",
   29→    "test": "playwright test"
   30→  },
-  31→  "keywords": [
-  32→    "react",
-  33→    "drawer",
-  34→    "dialog",
-  35→    "modal"
-  36→  ],
-  37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+  …
   38→  "license": "MIT",
-  39→  "homepage": "https://vaul.emilkowal.ski/",
-  40→  "repository": {
-  41→    "type": "git",
-  42→    "url": "https://github.com/emilkowalski/vaul.git"
-  43→  },
-  44→  "bugs": {
-  45→    "url": "https://github.com/emilkowalski/vaul/issues"
-  46→  },
   …
   65→  "packageManager": "pnpm@8.8.0",
   66→  "dependencies": {
@@ -149,7 +135,42 @@ src/
     98→  modal?: boolean;
     99→  nested?: boolean;
     100→  onClose?: () => void;
-    …
+    101→  /**
+    102→   * Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.
+    103→   * @default 'bottom'
+    104→   */
+    105→  direction?: 'top' | 'bottom' | 'left' | 'right';
+    106→  /**
+    107→   * Opened by default, skips initial enter animation. Still reacts to `open` state changes
+    108→   * @default false
+    109→   */
+    110→  defaultOpen?: boolean;
+    111→  /**
+    112→   * When set to `true` prevents scrolling on the document body on mount, and restores it on unmount.
+    113→   * @default false
+    114→   */
+    115→  disablePreventScroll?: boolean;
+    116→  /**
+    117→   * When `true` Vaul will reposition inputs rather than scroll then into view if the keyboard is in the way.
+    118→   * Setting it to `false` will fall back to the default browser behavior.
+    119→   * @default true when {@link snapPoints} is defined
+    120→   */
+    121→  repositionInputs?: boolean;
+    122→  /**
+    123→   * Disabled velocity based swiping for snap points.
+    124→   * This means that a snap point won't be skipped even if the velocity is high enough.
+    125→   * Useful if each snap point in a drawer is equally important.
+    126→   * @default false
+    127→   */
+    128→  snapToSequentialPoint?: boolean;
+    129→  container?: HTMLElement | null;
+    130→  /**
+    131→   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the drawer by the time the function was triggered.
+    132→   * Useful to revert any state changes for example.
+    133→   */
+    134→  onAnimationEnd?: (open: boolean) => void;
+    135→  preventScrollRestoration?: boolean;
+    136→  autoFocus?: boolean;
     137→} & (WithFadeFromProps | WithoutFadeFromProps);
     139→export function Root({
     140→  open: openProp,
@@ -209,10 +230,6 @@ src/
     1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
     1129→
     1130→export function Portal(props: PortalProps) {
-    1131→  const context = useDrawerContext();
-    1132→  const { container = context.container, ...portalProps } = props;
-    1133→
-    1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
     …
     1137→export const Drawer = {
     1138→  Root,
@@ -231,18 +248,9 @@ src/
   use-composed-refs.ts
   use-controllable-state.ts
   use-position-fixed.ts
-    …
-    15→export function usePositionFixed({
-    …
   use-prevent-scroll.ts
   use-scale-background.ts
-    …
-    8→export function useScaleBackground() {
-    …
   use-snap-points.ts
-    …
-    7→export function useSnapPoints({
-    …
 test/
   .eslintrc.json
   .gitignore
@@ -253,38 +261,8 @@ test/
   public/
   src/
     app/
-      controlled/
-      default-open/
-      different-directions/
-      globals.css
-      initial-snap/
-      layout.tsx
-      nested-drawers/
-      non-dismissible/
-      open-another-drawer/
-      page.tsx
-      parent-container/
-      scrollable-page/
-      scrollable-with-inputs/
-      with-handle/
-      with-modal-false/
-      with-redirect/
-      with-scaled-background/
-      with-snap-points/
-      without-scaled-background/
   tailwind.config.ts
   tests/
-    base.spec.ts
-    constants.ts
-    controlled.spec.ts
-    helpers.ts
-    initial-snap.spec.ts
-    nested.spec.ts
-    non-dismissible.spec.ts
-    with-handle.spec.ts
-    with-redirect.spec.ts
-    with-scaled-background.spec.ts
-    without-scaled-background.spec.ts
   tsconfig.json
 tsconfig.json
 turbo.json

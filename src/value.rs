@@ -170,10 +170,6 @@ pub const CODE_MEMBER_FACTOR: f64 = 0.8;
 /// (`lib.rs`, `__init__.py`, …), on top of pinning its depth to 1.
 pub const CODE_ENTRYPOINT_FACTOR: f64 = 1.25;
 
-/// Per-index decay of a chunked code part: chunk `i` is worth
-/// `CODE_CHUNK_TAIL_DECAY^i` times its cost share of the unsplit part.
-pub const CODE_CHUNK_TAIL_DECAY: f64 = 0.85;
-
 /// Premium on the first chunk of a split `Names` roster, bounded so it
 /// never prices above the unsplit roster: each file's roster head ranks
 /// ahead of every file's roster tail.
