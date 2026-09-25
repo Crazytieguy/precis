@@ -14,7 +14,6 @@ use std::rc::Rc;
 
 use ignore::Match;
 use ignore::gitignore::{Gitignore, GitignoreBuilder};
-use serde::{Deserialize, Serialize};
 
 /// Name of the precis-internal per-fixture revision-pin file. Never
 /// appears in listings — it's tooling metadata, not fixture content.
@@ -28,11 +27,9 @@ const GITIGNORE_FILE: &str = ".gitignore";
 
 /// Directory entry kind. Internal to the walker + renderer; not part of
 /// the public batch content vocabulary.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
-#[serde(rename_all = "lowercase")]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum EntryKind {
     File,
-    #[serde(rename = "dir")]
     Directory,
 }
 

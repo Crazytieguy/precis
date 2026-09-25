@@ -10,13 +10,13 @@
 //! Loading + resolution (expanding `FsEntries::All` to `Listed`, checking
 //! the fixture's revision pin) lives in [`crate::ns_loader`].
 
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 use crate::content::BatchContent;
 
 /// A frozen North Star document for one fixture: ranked batches with
 /// declarative spans + render specs.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct NorthStar {
     /// Fixture directory name under `tests/fixtures/`, e.g. `"log"`.
     pub fixture: String,
@@ -35,7 +35,7 @@ pub struct NorthStar {
 }
 
 /// One ranked batch in a North Star.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct NsBatch {
     /// Major.minor id (`"1.1"`, `"2.10"`). Numeric-sortable per `.`-
     /// separated component; don't mix with pure-numeric or string ids.
@@ -50,7 +50,7 @@ pub struct NsBatch {
     /// parent's ellipsis lines with real content). A batch may overlap
     /// another's rendered lines only if one is the transitive predecessor
     /// of the other. The simulator validates ancestor closure.
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
     pub predecessor: Option<String>,
     /// The batch's content: filesystem listings (possibly with
     /// `FsEntries::All` sentinel expanded at load time) or

@@ -6,10 +6,10 @@ use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Deserializer};
 
 /// A batch's content — FS listings or source line ranges. `kind` in TOML.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum BatchContent {
     /// Directory listings.
@@ -20,7 +20,7 @@ pub enum BatchContent {
 }
 
 /// One directory listing — parent directory + entries to show.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct FsGroup {
     pub parent: PathBuf,
     pub entries: FsEntries,
@@ -33,15 +33,6 @@ pub enum FsEntries {
     /// `Listed`; walker output never carries `All`.
     All,
     Listed(Vec<PathBuf>),
-}
-
-impl Serialize for FsEntries {
-    fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
-        match self {
-            FsEntries::All => s.serialize_str("all"),
-            FsEntries::Listed(paths) => paths.serialize(s),
-        }
-    }
 }
 
 impl<'de> Deserialize<'de> for FsEntries {
@@ -63,7 +54,7 @@ impl<'de> Deserialize<'de> for FsEntries {
 }
 
 /// A contiguous range of source lines in one file plus how to render them.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct Span {
     /// Source file. Relative in NS input; absolutized at load time.
     pub path: PathBuf,
@@ -92,11 +83,11 @@ pub struct Span {
 ///   number and no content. A later batch can replace it with `Full`
 ///   or `Truncated` at the same `(path, line)`. **Single-line only**:
 ///   `start` and `end` must be equal. A multi-line `Ellipsis` span is
-///   rejected by the validator (`EllipsisMultiLine`): it would render
+///   rejected by the validator: it would render
 ///   one `…` marker per covered line — redundant noise. Use one
 ///   single-line `Ellipsis` span per line, or `Full`/`Truncated` if
 ///   the lines should render.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum Render {
     Full,
