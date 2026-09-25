@@ -148,6 +148,7 @@ src/
       41→    eos_token_id: int
       42→    use_eos_token: bool
       43→    model_type: Literal["causal", "seq2seq"]
+      44→    num_samples: int
       …
       59→class ChronosTokenizer:
       …
@@ -183,7 +184,7 @@ src/
       …
       261→    @property
       262→    def device(self):
-      263→        return self.model.device
+      …
       265→    def encode(
       266→        self,
       267→        input_ids: torch.Tensor,

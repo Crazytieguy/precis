@@ -114,24 +114,11 @@ fuzzer/
     20→def test_one_input(input_bytes: bytes) -> None:
     …
     53→def print_err(data):
-    54→    codepoints = [hex(ord(x)) for x in data]
-    55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
-    56→    sys.stderr.flush()
+    …
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
-    61→    to_process = [toml_obj]
-    62→    while to_process:
-    63→        cont = to_process.pop()
-    64→        for k, v in cont.items() if isinstance(cont, dict) else enumerate(cont):
-    65→            if isinstance(v, float) and isnan(v):
-    66→                cont[k] = "nan"
-    67→            elif isinstance(v, (dict, list)):
-    68→                to_process.append(v)
+    …
     71→def main():
-    72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
-    73→    fuzzer_options = sys.argv
-    74→    atheris.Setup(fuzzer_options, test_one_input)
-    75→    atheris.Fuzz()
     …
   requirements.txt
     1→# sudo apt-get install clang
@@ -198,7 +185,15 @@ src/
       57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
       58→    {
       59→        "\\b": "\u0008",  # backspace
-      …
+      60→        "\\t": "\u0009",  # tab
+      61→        "\\n": "\u000a",  # linefeed
+      62→        "\\f": "\u000c",  # form feed
+      63→        "\\r": "\u000d",  # carriage return
+      64→        "\\e": "\u001b",  # escape
+      65→        '\\"': "\u0022",  # quote
+      66→        "\\\\": "\u005c",  # backslash
+      67→    }
+      68→)
       71→class DEPRECATED_DEFAULT:
       …
       76→class TOMLDecodeError(ValueError):
@@ -212,12 +207,20 @@ src/
       93→    ):
       …
       137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      138→    """Parse TOML from a binary file object."""
       …
       149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
-      150→    """Parse TOML from a string."""
       …
       220→class Flags:
+      …
+      223→    # Marks an immutable namespace (inline array or inline table).
+      224→    FROZEN: Final = 0
+      225→    # Marks a nest that has been explicitly created and can no longer
+      226→    # be opened using the "[table]" syntax.
+      227→    EXPLICIT_NEST: Final = 1
+      228→
+      229→    def __init__(self) -> None:
+      …
+      233→    def add_pending(self, key: Key, flag: int) -> None:
       …
       278→class NestedDict:
       279→    def __init__(self) -> None:

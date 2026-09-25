@@ -98,70 +98,56 @@ docs/
     27→
     28→return crypt
   datalist.lua
+    …
+    15→function datalist.parse(data) end
+    …
+    22→function datalist.quote(str) end
+    23→
+    24→return datalist
   file.lua
     …
-    10→---
-    11→--- Loads a file's contents
-    12→---
-    13→---@param filename string File path
-    14→---@return string? content File contents or nil on error
     15→function file.load(filename) end
-    17→---
-    18→--- Gets file attributes
-    19→---
-    20→---@param filename string File path
-    21→---@return table? attributes File attributes or nil
+    …
     22→function file.attributes(filename) end
-    24→---
-    25→--- Checks if a file exists
-    26→---
-    27→---@param filename string File path
-    28→---@return boolean? exists True if file exists, nil if not
+    …
     29→function file.exist(filename) end
-    31→---
-    32→--- Checks if a local file exists
-    33→---
-    34→---@param filename string File path
-    35→---@return boolean? exists True if file exists, nil if not
+    …
     36→function file.local_exist(filename) end
-    38→---
-    39→--- Loads a local file's contents
-    40→---
-    41→---@param filename string File path
-    42→---@return string? content File contents or nil
+    …
     43→function file.local_load(filename) end
-    45→---
-    46→--- Iterates over directory entries
-    47→---
-    48→---@param path string Directory path
-    49→---@return function iterator Iterator function
+    …
     50→function file.dir(path) end
     51→
     52→return file
   font.lua
     …
-    10→---
-    11→--- Imports a TrueType font
-    12→---
-    13→---@param data string Raw TTF font data
     14→function font.import(data) end
-    16→---
-    17→--- Gets font ID by name
-    18→---
-    19→---@param name string Font name (empty string for last imported font)
-    20→---@return integer? fontid Font ID, or nil if font not found
+    …
     21→function font.name(name) end
-    23→---
-    24→--- Gets the font system C object
-    25→---
-    26→---@return userdata fontcobj Font system object
+    …
     27→function font.cobj() end
     28→
     29→return font
   font_system.lua
+    …
+    15→function font_system.ttfdata(name) end
+    16→
+    17→return font_system
   image.lua
   layout.lua
+    …
+    22→function layout.load(filename_or_list, scripts) end
+    …
+    32→function layout.calc(document) end
+    33→
+    34→return layout
   lfs.lua
+    …
+    15→function lfs.attributes(filename) end
+    …
+    22→function lfs.dir(path) end
+    23→
+    24→return lfs
   material_mask.lua
   material_perspective_quad.lua
   material_quad.lua
@@ -174,32 +160,23 @@ docs/
     36→return text
   url.lua
     …
-    10→---
-    11→--- Opens a URL in the system's default web browser
-    12→---
-    13→---@param link string The URL to open
     14→function url.open(link) end
     15→
     16→return url
   zip.lua
+    …
+    19→function zip.open(filename, mode) end
+    20→
+    21→return zip
 make.lua
   …
   4→local function detect_emcc()
-  5→  if lm.compiler == "emcc" then
-  6→    return true
-  7→  end
-  8→  if type(lm.cc) == "string" and lm.cc:find("emcc", 1, true) then
-  9→    return true
-  10→  end
-  11→  return false
   …
 script/
   build_web.lua
     1→local function trim(s)
-    2→  return (s:gsub("^%s+", ""):gsub("%s+$", ""))
     …
     5→local function shell_quote(value)
-    6→  return "'" .. value:gsub("'", "'\\''") .. "'"
     …
     9→local function run(cmd)
     …
@@ -208,7 +185,6 @@ script/
     23→local function write_file(path, data)
     …
     29→local function write_lines(path, lines)
-    30→  write_file(path, table.concat(lines, "\n") .. "\n")
     …
     33→local function read_lines(path)
     …
@@ -221,10 +197,8 @@ script/
     82→local function json_encode(value)
     …
     111→local function yaml_quote(value)
-    112→  return value:gsub("\\", "\\\\"):gsub("\"", "\\\"")
     …
     115→local function shortcode_quote(value)
-    116→  return value:gsub("\\", "\\\\"):gsub("\"", "\\\"")
     …
     119→local function html_escape(value)
     …
@@ -243,16 +217,28 @@ script/
   datalist2c.lua
   hashversion.lua
     1→local function get_rev()
-    2→	local f = io.popen "git rev-parse HEAD"
-    3→	local rev = f:read "a"
-    4→	f:close()
-    5→	return rev:match "[%da-f]*"
     …
   lua2c.lua
 src/
   appevent.h
   batch.c
   batch.h
+    …
+    6→struct draw_primitive {
+    7→	int32_t x;		// sign bit + 23 + 8   fix number
+    8→	int32_t y;
+    9→	uint32_t sr;	// scale + rot
+    10→	int32_t sprite;		// negative : material 
+    11→};
+    13→struct draw_primitive_external {
+    14→	int sprite;
+    15→};
+    17→struct draw_batch;
+    18→
+    19→struct draw_batch * batch_new(int size);
+    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
+    21→void batch_delete(struct draw_batch *);
+    …
   blit.glsl
   colorquad.glsl
   data/
@@ -342,6 +328,39 @@ src/
     settings.lua
     start.lua
   sprite_submit.h
+    …
+    9→static inline int32_t
+    10→to_fixpoint_(float v) {
+    …
+    15→static inline void
+    16→sprite_set_xy(struct draw_primitive *p, float x, float y) {
+    …
+    21→static inline void
+    22→sprite_apply_xy(struct draw_primitive *p, float x, float y) {
+    …
+    27→static inline int
+    28→convert_scale_(float scale) {
+    …
+    43→static inline uint32_t
+    44→convert_scale_part_(uint32_t scale12) {
+    …
+    56→static inline int
+    57→convert_rot_(float rot) {
+    …
+    66→static inline void
+    67→sprite_set_scale(struct draw_primitive *p, float scale) {
+    68→	p->sr = convert_scale_(scale) << 12;
+    …
+    71→static inline void
+    72→sprite_set_rot(struct draw_primitive *p, float rot) {
+    73→	p->sr = convert_rot_(rot);
+    …
+    76→static inline void
+    77→sprite_set_sr(struct draw_primitive *p, float scale, float rot) {
+    …
+    81→static inline void
+    82→sprite_apply_scale(struct draw_primitive *p, uint32_t scale_fix12) {
+    …
   spritemgr.c
   spritemgr.h
     …
@@ -350,7 +369,9 @@ src/
     9→struct sprite_rect {
     10→	uint32_t texid;
     11→	uint32_t off;	// (dx + 0x8000) << (dy + 0x8000)
-    …
+    12→	uint32_t u;		// x << 16 | w
+    13→	uint32_t v;		// y << 16 | h
+    14→};
     16→struct sprite_bank {
     17→	int n;
     18→	int cap;

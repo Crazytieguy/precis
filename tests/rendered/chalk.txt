@@ -168,16 +168,25 @@ source/
     40→	Levels:
     41→	- `0` - All colors disabled.
     42→	- `1` - Basic 16 colors support.
+    43→	- `2` - ANSI 256 colors support.
+    44→	- `3` - Truecolor 16 million colors support.
+    45→	*/
+    46→	level: ColorSupportLevel;
+    47→
+    48→	/**
+    49→	Use RGB values to set text color.
+    50→
+    51→	@example
+    52→	```
+    53→	import chalk from 'chalk';
+    54→
+    55→	chalk.rgb(222, 173, 237);
+    56→	```
+    57→	*/
+    58→	rgb: (red: number, green: number, blue: number) => this;
     …
-    233→/**
-    234→Main Chalk object that allows to chain styles together.
-    235→
-    236→Call the last one as a method with a string argument.
-    237→
-    238→Order doesn't matter, and later styles take precedent in case of a conflict.
-    239→
-    240→This simply means that `chalk.red.yellow.green` is equivalent to `chalk.green`.
-    241→*/
+    231→}
+    …
     242→declare const chalk: ChalkInstance;
     243→
     244→export const supportsColor: ColorInfo;
@@ -222,11 +231,7 @@ source/
     286→export type BackgroundColor = BackgroundColorName;
     288→/**
     289→@deprecated Use `ColorName` instead.
-    290→
-    291→Basic color names. The combination of foreground and background color names.
-    292→
-    293→[More colors here.](https://github.com/chalk/chalk/blob/main/readme.md#256-and-truecolor-color-support)
-    294→*/
+    …
     295→export type Color = ColorName;
     297→/**
     298→@deprecated Use `modifierNames` instead.

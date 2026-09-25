@@ -210,15 +210,6 @@ src/
       64→) -> None:
       …
       99→def _check_cryptography(cryptography_version: str) -> None:
-      100→    # cryptography < 1.3.4
-      101→    try:
-      102→        cryptography_version_list = list(map(int, cryptography_version.split(".")))
-      103→    except ValueError:
-      104→        return
-      105→
-      106→    if cryptography_version_list < [1, 3, 4]:
-      107→        warning = f"Old version of cryptography ({cryptography_version_list}) may cause slowdown."
-      108→        warnings.warn(warning, RequestsDependencyWarning)
       …
       150→from urllib3.exceptions import DependencyWarning
       …
@@ -318,14 +309,23 @@ src/
       109→    request_hooks: _t.HooksType,
       110→    session_hooks: _t.HooksType,
       111→    dict_class: type = OrderedDict,
+      112→) -> _t.HooksType:
       …
       127→class SessionRedirectMixin:
+      128→    max_redirects: int
+      129→    trust_env: bool
+      130→    cookies: RequestsCookieJar
+      131→
+      132→    def send(self, request: PreparedRequest, **kwargs: Any) -> Response: ...
+      133→
+      134→    def get_redirect_target(self, resp: Response) -> str | None:
+      …
+      154→    def should_strip_auth(self, old_url: str, new_url: str) -> bool:
       …
       395→class Session(SessionRedirectMixin):
       …
       908→def session() -> Session:
       …
-      920→    return Session()
     status_codes.py
     structures.py
     utils.py

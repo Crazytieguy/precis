@@ -53,6 +53,27 @@ README.md
   188→### Installing the CA on other systems
   …
 cert.go
+  …
+  35→var userAndHostname string
+  36→
+  37→func init() {
+  …
+  50→func (m *mkcert) makeCert(hosts []string) {
+  …
+  148→func (m *mkcert) printHosts(hosts []string) {
+  …
+  166→func (m *mkcert) generateKey(rootCA bool) (crypto.PrivateKey, error) {
+  …
+  176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
+  …
+  202→func randomSerialNumber() *big.Int {
+  …
+  209→func (m *mkcert) makeCertFromCSR() {
+  …
+  282→func (m *mkcert) loadCA() {
+  …
+  310→func (m *mkcert) newCA() {
+  …
 go.mod
   1→module filippo.io/mkcert
   2→
@@ -119,9 +140,7 @@ main.go
   78→	    Firefox). Autodetected by default.
   79→
   80→`
-  82→// Version can be set at link time to override debug.BuildInfo.Main.Version,
-  83→// which is "(devel)" when building from within the module. See
-  84→// golang.org/issue/29814 and golang.org/issue/29228.
+  …
   85→var Version string
   86→
   87→func main() {
@@ -157,9 +176,6 @@ main.go
   345→func storeEnabled(name string) bool {
   …
   358→func fatalIfErr(err error, msg string) {
-  359→	if err != nil {
-  360→		log.Fatalf("ERROR: %s: %s", msg, err)
-  361→	}
   …
   364→func fatalIfCmdErr(err error, cmd string, out []byte) {
   …
@@ -168,8 +184,6 @@ main.go
   372→	return err == nil
   …
   375→func binaryExists(name string) bool {
-  376→	_, err := exec.LookPath(name)
-  377→	return err == nil
   …
   380→var sudoWarningOnce sync.Once
   381→
@@ -205,7 +219,10 @@ truststore_darwin.go
   44→		<key>kSecTrustSettingsPolicyName</key>
   45→		<string>basicX509</string>
   46→		<key>kSecTrustSettingsResult</key>
-  …
+  47→		<integer>1</integer>
+  48→	</dict>
+  49→</array>
+  50→`)
   52→func (m *mkcert) installPlatform() bool {
   …
   105→func (m *mkcert) uninstallPlatform() bool {
@@ -229,8 +246,6 @@ truststore_java.go
   …
   94→func (m *mkcert) uninstallJava() {
   …
-  108→// execKeytool will execute a "keytool" command and if needed re-execute
-  109→// the command with commandWithSudo to work around file permissions.
   110→func execKeytool(cmd *exec.Cmd) ([]byte, error) {
   …
 truststore_linux.go
@@ -247,7 +262,6 @@ truststore_linux.go
   27→func init() {
   …
   51→func (m *mkcert) systemTrustFilename() string {
-  52→	return fmt.Sprintf(SystemTrustFilename, strings.Replace(m.caUniqueName(), " ", "_", -1))
   …
   55→func (m *mkcert) installPlatform() bool {
   …
@@ -284,8 +298,6 @@ truststore_nss.go
   …
   106→func (m *mkcert) uninstallNSS() {
   …
-  118→// execCertutil will execute a "certutil" command and if needed re-execute
-  119→// the command with commandWithSudo to work around file permissions.
   120→func execCertutil(cmd *exec.Cmd) ([]byte, error) {
   …
   131→func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {

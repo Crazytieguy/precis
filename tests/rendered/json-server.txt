@@ -80,6 +80,14 @@ README.md
   74→Access your REST API:
   75→
   76→```bash
+  77→curl http://localhost:3000/posts/1
+  78→```
+  79→
+  80→**Response:**
+  81→```json
+  82→{
+  83→  "id": "1",
+  84→  "title": "a title",
   …
   91→## Sponsors ✨
   92→
@@ -250,7 +258,6 @@ src/
     11→export type Data = Record<string, Item[] | Item>
     12→
     13→export function isItem(obj: unknown): obj is Item {
-    14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
     …
     17→export type PaginatedItems = PaginationResult<Item>
     …
@@ -284,10 +291,8 @@ src/
     191→    return this.#updateOrPatch(name, body, true)
     …
     194→  async updateById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
-    195→    return this.#updateOrPatchById(name, id, body, false)
     …
     198→  async patchById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
-    199→    return this.#updateOrPatchById(name, id, body, true)
     …
     202→  async destroyById(
     203→    name: string,

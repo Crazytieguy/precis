@@ -153,7 +153,7 @@ beets/
       11→    ("BLOB_TYPE", "SingletonQuery", "PathQuery"), "beets.dbcore.query"
       12→)
       15→def __getattr__(name: str):
-      16→    return deprecate_imports(__name__, NEW_MODULE_BY_NAME, name)
+      …
       19→__all__ = [
       20→    "Album",
       21→    "FileOperationError",
@@ -372,6 +372,7 @@ beetsplug/
       25→from werkzeug.routing import BaseConverter, PathConverter
       …
       28→from beets import ui, util
+      29→from beets.dbcore.query import PathQuery
       …
     static/
       backbone.js

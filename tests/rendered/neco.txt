@@ -31,7 +31,15 @@ README.md
   35→It may also be worthwhile to see the [Bluebox](https://github.com/tidwall/bluebox) project for a
   36→more complete example of using Neco, including benchmarks.
   38→## Goals
-  …
+  39→
+  40→- Give C programs fast single-threaded concurrency.
+  41→- To use a concurrency model that resembles the simplicity of pthreads or Go.
+  42→- Provide an API for concurrent networking and I/O.
+  43→- Make it easy to interop with existing Posix functions.
+  44→
+  45→It's a non-goal for Neco to provide a scalable multithreaded runtime, where the
+  46→coroutine scheduler is shared among multiple cpu cores. Or to use other 
+  47→concurrency models like async/await.
   49→## Using
   50→
   51→Just drop the "neco.c" and "neco.h" files into your project. Most modern C compilers should work.
@@ -111,11 +119,6 @@ examples/
 neco.c
 neco.h
   …
-  30→/// @defgroup BasicOperations Basic operations
-  31→/// Neco provides standard operations for starting a coroutine, sleeping, 
-  32→/// suspending, resuming, yielding to another coroutine, joining/waiting for
-  33→/// child coroutines, and exiting a running coroutine.
-  34→/// @{
   35→int neco_start(void(*coroutine)(int argc, void *argv[]), int argc, ...);
   36→int neco_startv(void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
   37→int neco_yield(void);
@@ -131,12 +134,6 @@ neco.h
   47→int64_t neco_lastid(void);
   48→int64_t neco_starterid(void);
   …
-  55→/// @defgroup Channels Channels
-  56→/// Channels allow for sending and receiving values between coroutines.
-  57→/// By default, sends and receives will block until the other side is ready.
-  58→/// This allows the coroutines to synchronize without using locks or condition
-  59→/// variables.
-  60→/// @{
   61→typedef struct neco_chan neco_chan;
   62→
   63→int neco_chan_make(neco_chan **chan, size_t data_size, size_t capacity);
@@ -157,10 +154,6 @@ neco.h
   78→int neco_chan_tryselectv(int nchans, neco_chan *chans[]);
   79→int neco_chan_case(neco_chan *chan, void *data);
   …
-  86→/// @defgroup Generators Generators
-  87→/// A generator is a specialized iterator-bound coroutine that can produce a
-  88→/// sequence of values to be iterated over.
-  89→/// @{
   90→typedef struct neco_gen neco_gen;
   91→
   92→int neco_gen_start(neco_gen **gen, size_t data_size, void(*coroutine)(int argc, void *argv[]), int argc, ...);
@@ -173,12 +166,6 @@ neco.h
   99→int neco_gen_next_dl(neco_gen *gen, void *data, int64_t deadline);
   100→int neco_gen_close(neco_gen *gen);
   …
-  107→/// @defgroup Mutexes Mutexes
-  108→/// A mutex is synchronization mechanism that blocks access to variables by
-  109→/// multiple coroutines at once. This enforces exclusive access by a coroutine
-  110→/// to a variable or set of variables and helps to avoid data inconsistencies
-  111→/// due to race conditions.
-  112→/// @{
   113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
   115→#define NECO_MUTEX_INITIALIZER { 0 }
   116→
@@ -200,10 +187,6 @@ neco.h
   141→int neco_waitgroup_wait(neco_waitgroup *waitgroup);
   142→int neco_waitgroup_wait_dl(neco_waitgroup *waitgroup, int64_t deadline);
   …
-  145→/// @defgroup CondVar Condition variables
-  146→/// A condition variable is a synchronization mechanism that allows coroutines
-  147→/// to suspend execution until some condition is true. 
-  148→/// @{
   149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond;
   150→#define NECO_COND_INITIALIZER { 0 }
   151→
@@ -223,10 +206,22 @@ neco.h
   175→int neco_connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
   176→int neco_connect_dl(int sockfd, const struct sockaddr *addr, socklen_t addrlen, int64_t deadline);
   177→int neco_getaddrinfo(const char *node, const char *service,
-  …
+  178→    const struct addrinfo *hints, struct addrinfo **res);
   179→int neco_getaddrinfo_dl(const char *node, const char *service,
+  180→    const struct addrinfo *hints, struct addrinfo **res, int64_t deadline);
   …
+  187→// utility for enabling non-blocking on existing file descriptors
   188→int neco_setnonblock(int fd, bool nonblock, bool *oldnonblock);
+  190→// wait for a file descriptor to be readable or writeable.
+  191→#define NECO_WAIT_READ  1
+  192→#define NECO_WAIT_WRITE 2
+  193→
+  194→int neco_wait(int fd, int mode);
+  195→int neco_wait_dl(int fd, int mode, int64_t deadline);
+  …
+  206→int neco_serve(const char *network, const char *address);
+  207→int neco_serve_dl(const char *network, const char *address, int64_t deadline);
+  208→int neco_dial(const char *network, const char *address);
   …
 tests/
   README.md

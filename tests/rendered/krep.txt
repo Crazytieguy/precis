@@ -155,8 +155,7 @@ krep.h
   43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
   44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
   45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-  47→/* --- Match tracking structure --- */
-  48→// Define match_position_t BEFORE match_result_t
+  …
   49→typedef struct
   50→{
   51→   size_t start_offset; // Starting position of the match
@@ -173,8 +172,7 @@ krep.h
   65→typedef struct search_params
   …
   94→} search_params_t;
-  96→/* --- Function Pointer Type for Search Algorithms --- */
-  97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
+  …
   98→typedef uint64_t (*search_func_t)(const search_params_t *params,
   99→                                  const char *text_start,
   100→                                  size_t text_len,
@@ -184,6 +182,8 @@ krep.h
   105→{
   106→   int thread_id;
   107→   const search_params_t *params; // Pointer to shared search parameters
+  108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
+  109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
   …
   122→} thread_data_t;
   124→/* --- Thread Pool Implementation --- */

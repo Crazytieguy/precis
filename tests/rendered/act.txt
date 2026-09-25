@@ -109,6 +109,11 @@ cmd/
   execute_test.go
   graph.go
   input.go
+    …
+    10→type Input struct {
+    …
+    70→func (i *Input) resolve(path string) string {
+    …
   list.go
   notices.go
     …
@@ -121,9 +126,6 @@ cmd/
     55→var noticesLoaded = make(chan []Notice)
     56→
     57→func loadVersionNotices(version string) {
-    58→	go func() {
-    59→		noticesLoaded <- getVersionNotices(version)
-    60→	}()
     …
     63→const NoticeURL = "https://api.nektosact.com/notices"
     64→

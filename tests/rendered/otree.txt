@@ -80,19 +80,8 @@ assets/
 build.rs
   …
   8→fn uncommitted_count() -> Result<usize, Box<dyn Error>> {
-  9→    let output = exec_git(&["status", "-s"])?;
-  10→    let lines = output.lines();
-  11→    Ok(lines.filter(|line| !line.trim().is_empty()).count())
   …
   14→fn exec_git(args: &[&str]) -> Result<String, Box<dyn Error>> {
-  15→    let mut cmd = Command::new("git");
-  16→    let output = cmd.args(args).output()?;
-  17→    if !output.status.success() {
-  18→        let cmd = format!("git {}", args.join(" "));
-  19→        bail!("Execute git command {} failed", cmd);
-  20→    }
-  21→    let output = String::from_utf8(output.stdout)?;
-  22→    Ok(output.trim().to_string())
   …
   25→fn fetch_git_info() -> Result<(), Box<dyn Error>> {
   …
@@ -170,10 +159,6 @@ src/
     33→    ) -> Self {
     …
     64→    pub fn get_err(&self) -> Option<String> {
-    65→        let data_lock = self.data.lock().unwrap();
-    66→        let err = data_lock.get_err();
-    67→        drop(data_lock);
-    68→        err
     …
     71→    pub fn parse_tree(&self) -> Option<Tree> {
     …
@@ -244,6 +229,24 @@ src/
     73→            let mut data = Vec::new();
     74→            io::stdin().read_to_end(&mut data).context("read stdin")?;
     75→            data
+    76→        }
+    77→    };
+    79→    if let Some(target_type) = args.to {
+    80→        if matches!(target_type, ContentType::Any) {
+    81→            bail!("target content type cannot be 'any' when using '--to' option");
+    82→        }
+    83→        let parser = content_type.new_parser();
+    84→        let target_parser = target_type.new_parser();
+    85→
+    86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
+    87→        let tokens = target_parser.syntax_highlight("", &value);
+    88→        let text = SyntaxToken::pure_text(&tokens);
+    89→
+    90→        print!("{text}");
+    91→        return Ok(());
+    92→    }
+    93→
+    94→    if data.len() > max_data_size {
     …
     109→}
     111→fn main() {
@@ -304,10 +307,8 @@ src/
     58→    pub fn from_value(cfg: Rc<Config>, value: Value, parser: Rc<Box<dyn Parser>>) -> Self {
     …
     94→    pub fn get_value(&self, path: &str) -> Option<&ItemValue> {
-    95→        self.values.get(path)
     …
     98→    pub fn get_parser(&self) -> Rc<Box<dyn Parser>> {
-    99→        Rc::clone(&self.parser)
     …
     383→}
     385→impl ItemValue {

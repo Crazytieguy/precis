@@ -106,12 +106,6 @@ src/
       35→
       36→
       37→def __getattr__(name: str) -> Any:
-      38→    if name == "config":
-      39→        from ._config import global_config
-      40→
-      41→        return global_config
-      42→
-      43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
       …
     _checkers.py
       …
@@ -275,8 +269,15 @@ src/
       886→    value: Any,
       887→    origin_type: Any,
       888→    args: tuple[Any, ...],
+      889→    memo: TypeCheckMemo,
+      890→) -> None:
       …
       895→def check_self(
+      896→    value: Any,
+      897→    origin_type: Any,
+      898→    args: tuple[Any, ...],
+      899→    memo: TypeCheckMemo,
+      900→) -> None:
       …
       915→def check_paramspec(
       …

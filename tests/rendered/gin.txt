@@ -232,7 +232,7 @@ logger.go
   62→type Skipper func(c *Context) bool
   64→// LogFormatter gives the signature of the formatter function passed to LoggerWithFormatter
   65→type LogFormatter func(params LogFormatterParams) string
-  67→// LogFormatterParams is the structure any formatter will be handed when time to log comes
+  …
   68→type LogFormatterParams struct {
   69→	Request *http.Request
   70→
@@ -264,6 +264,7 @@ logger.go
   …
   133→func (p *LogFormatterParams) MethodColor() string {
   …
+  156→// ResetColor resets all escape attributes.
   157→func (p *LogFormatterParams) ResetColor() string {
   …
   162→func (p *LogFormatterParams) IsOutputColor() bool {
@@ -275,6 +276,16 @@ logger.go
   202→func ForceConsoleColor() {
   …
   207→func ErrorLogger() HandlerFunc {
+  …
+  212→func ErrorLoggerT(typ ErrorType) HandlerFunc {
+  …
+  224→func Logger() HandlerFunc {
+  …
+  229→func LoggerWithFormatter(f LogFormatter) HandlerFunc {
+  …
+  237→func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
+  …
+  245→func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
   …
 logger_test.go
 middleware_test.go
@@ -312,12 +323,8 @@ mode.go
   81→func DisableBindValidation() {
   82→	binding.Validator = nil
   …
-  85→// EnableJsonDecoderUseNumber sets true for binding.EnableDecoderUseNumber to
-  86→// call the UseNumber method on the JSON Decoder instance.
   87→func EnableJsonDecoderUseNumber() {
   …
-  91→// EnableJsonDecoderDisallowUnknownFields sets true for binding.EnableDecoderDisallowUnknownFields to
-  92→// call the DisallowUnknownFields method on the JSON Decoder instance.
   93→func EnableJsonDecoderDisallowUnknownFields() {
   …
   97→// Mode returns current gin mode.

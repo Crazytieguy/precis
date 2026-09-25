@@ -107,42 +107,18 @@ peepdb/
     63→@click.option('--database', required=False, help='Database name (not required for SQLite/Firebase/MSSQL)')
     64→@click.option('--trusted', is_flag=True, help='Use Windows Authentication (Trusted Connection) for MSSQL')
     65→def save(connection_name, db_type, host, port, user, password, database, trusted):
-    66→    """
-    67→    Save a new database connection.
-    68→
-    69→    Example:
-    70→    peepdb save test_conn --db-type mssql --host localhost --port 1433 --trusted --database SomeDB
-    71→    """
     …
     86→@cli.command()
     87→def list():
-    88→    """
-    89→    List saved connections.
-    90→
-    91→    Example:
-    92→    peepdb list
-    93→    """
-    94→    list_connections()
+    …
     97→@cli.command()
     98→@click.argument('connection_name')
     99→@click.confirmation_option(prompt='Are you sure you want to remove this connection?')
     100→def remove(connection_name):
-    101→    """
-    102→    Remove a specific saved connection.
-    103→
-    104→    Example:
-    105→    peepdb remove mydb
-    106→    """
     …
     113→@cli.command()
     114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
     115→def remove_all():
-    116→    """
-    117→    Remove all saved connections.
-    118→
-    119→    Example:
-    120→    peepdb remove-all
-    121→    """
     …
     126→@cli.command()
     127→@click.argument('connection_name')
@@ -152,15 +128,8 @@ peepdb/
     131→@click.option('--page-size', type=int, default=50, help='Number of rows per page')
     132→@click.option('--scientific', is_flag=True, help='Use scientific notation for numbers')
     133→def view(connection_name, table, format, page, page_size, scientific):
-    134→    """
-    135→    View data from a saved connection.
-    136→
-    137→    Example:
-    138→    peepdb view mydb --table SomeTable
-    139→    """
     …
     181→def main():
-    182→    cli()
     …
   config.py
     …
@@ -188,7 +157,7 @@ peepdb/
     70→def encrypt(message: str) -> str:
     71→    return Fernet(get_key()).encrypt(message.encode()).decode()
     73→def decrypt(token: str) -> str:
-    74→    return Fernet(get_key()).decrypt(token.encode()).decode()
+    …
     76→def save_connection(name, db_type, host, port, user, password, database, trusted):
     …
     112→def get_connection(name):
@@ -238,17 +207,31 @@ peepdb/
       23→        pass
       25→    @abstractmethod
       26→    def fetch_tables(self) -> List[str]:
-      27→        pass
+      …
       29→    @abstractmethod
       30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-      31→        pass
+      …
       33→    def __enter__(self):
       …
       37→    def __exit__(self, exc_type, exc_val, exc_tb):
-      38→        self.disconnect()
+      …
     firebase.py
     mariadb.py
+      …
+      5→class MariaDBDatabase(BaseDatabase):
+      6→    def connect(self) -> None:
+      …
+      23→    def disconnect(self) -> None:
+      …
+      30→    def fetch_tables(self) -> List[str]:
+      …
+      34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+      …
     mongodb.py
+      …
+      8→class MongoDBDatabase(BaseDatabase):
+      9→    def connect(self) -> None:
+      …
     mssql.py
     mysql.py
     oracle.py
@@ -256,8 +239,26 @@ peepdb/
       7→class OracleDatabase(BaseDatabase):
       8→    def connect(self) -> None:
       …
+      25→    def disconnect(self) -> None:
+      …
+      32→    def fetch_tables(self) -> List[str]:
+      …
+      36→    def fetch_data(
+      37→        self, table: str, page: int = 1, page_size: int = 100
+      38→    ) -> Dict[str, Any]:
+      …
     postgresql.py
     sqlite.py
+      …
+      6→class SQLiteDatabase(BaseDatabase):
+      7→    def connect(self) -> None:
+      …
+      22→    def disconnect(self) -> None:
+      …
+      29→    def fetch_tables(self) -> List[str]:
+      …
+      43→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+      …
   exceptions.py
     1→class InvalidPassword(Exception):
     2→    pass

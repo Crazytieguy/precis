@@ -125,6 +125,14 @@ bindings/
       go-sqlite3.patch
   python/
     extra_init.py
+      …
+      6→def serialize_float32(vector: List[float]) -> bytes:
+      7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
+      8→    return pack("%sf" % len(vector), *vector)
+      11→def serialize_int8(vector: List[int]) -> bytes:
+      12→    """Serializes a list of integers into the "raw bytes" format sqlite-vec expects"""
+      13→    return pack("%sb" % len(vector), *vector)
+      …
   rust/
     .gitignore
     Cargo.lock
@@ -152,7 +160,6 @@ bindings/
       20→.PHONY: deps
     build.rs
       1→fn main() {
-      2→    cc::Build::new().file("sqlite-vec.c").define("SQLITE_CORE", None).compile("sqlite_vec0");
       …
     src/
       lib.rs
@@ -236,6 +243,16 @@ sqlite-dist.toml
   8→git_tag_format = "v$VERSION"
   …
 sqlite-vec.c
+  …
+  68→typedef u_int8_t uint8_t;
+  69→typedef u_int16_t uint16_t;
+  70→typedef u_int64_t uint64_t;
+  …
+  76→typedef int8_t i8;
+  77→typedef uint8_t u8;
+  78→typedef int16_t i16;
+  79→typedef int32_t i32;
+  …
 sqlite-vec.h.tmpl
 test.sql
 tests/
@@ -265,7 +282,13 @@ tests/
     vec0-create.dict
   fuzz.py
   leak-fixtures/
+    each.sql
+    knn.sql
+    vec0-create.sql
   minimum/
+    .gitignore
+    Makefile
+    demo.c
   pyproject.toml
   skip.test-correctness.py
   sqlite-vec-internal.h
@@ -297,20 +320,4 @@ tmp-static.py
   21→    dtype=np.float32,
   22→)
   25→def register_np(array, name):
-  26→    ptr = array.__array_interface__["data"][0]
-  27→    nvectors, dimensions = array.__array_interface__["shape"]
-  28→    element_type = array.__array_interface__["typestr"]
-  29→
-  30→    assert element_type == "<f4"
-  31→
-  32→    name_escaped = db.execute("select printf('%w', ?)", [name]).fetchone()[0]
-  33→
-  34→    db.execute(
-  35→        "insert into temp.vec_static_blobs(name, data) select ?, vec_static_blob_from_raw(?, ?, ?, ?)",
-  36→        [name, ptr, element_type, dimensions, nvectors],
-  37→    )
-  38→
-  39→    db.execute(
-  40→        f'create virtual table "{name_escaped}" using vec_static_blob_entries({name_escaped})'
-  41→    )
   …

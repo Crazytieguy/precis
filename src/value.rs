@@ -143,7 +143,7 @@ pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
     match rung {
         Rung::ModuleDoc | Rung::Decl => 1130.0,
         Rung::Names => 350.0,
-        Rung::Doc | Rung::Body => 600.0,
+        Rung::Doc | Rung::Body => 380.0,
     }
 }
 

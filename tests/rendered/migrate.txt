@@ -267,8 +267,6 @@ internal/
     url_test.go
 log.go
   …
-  3→// Logger is an interface so you can pass in your own
-  4→// logging implementation.
   5→type Logger interface {
   6→
   7→	// Printf is like fmt.Printf
@@ -286,8 +284,6 @@ migrate.go
 migrate_test.go
 migration.go
   …
-  11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every
-  12→// pre-read migration (see DefaultPrefetchMigrations).
   13→var DefaultBufferSize = uint(100000)
   …
   18→type Migration struct {
@@ -304,19 +300,27 @@ migration.go
   29→	TargetVersion int
   30→
   31→	// Body holds an io.ReadCloser to the source.
+  32→	Body io.ReadCloser
+  33→
+  34→	// BufferedBody holds an buffered io.Reader to the underlying Body.
+  35→	BufferedBody io.Reader
+  36→
+  37→	// BufferSize defaults to DefaultBufferSize
+  38→	BufferSize uint
+  39→
+  40→	// bufferWriter holds an io.WriteCloser and pipes to BufferBody.
+  41→	// It's an *Closer for flow control.
+  42→	bufferWriter io.WriteCloser
   …
   77→func NewMigration(body io.ReadCloser, identifier string,
   78→	version uint, targetVersion int) (*Migration, error) {
   …
   106→// String implements string.Stringer and is used in tests.
   107→func (m *Migration) String() string {
-  108→	return fmt.Sprintf("%v [%v=>%v]", m.Identifier, m.Version, m.TargetVersion)
   …
   111→// LogString returns a string describing this migration to humans.
   112→func (m *Migration) LogString() string {
   …
-  120→// Buffer buffers Body up to BufferSize.
-  121→// Calling this function blocks. Call with goroutine.
   122→func (m *Migration) Buffer() (berr error) {
   …
 migration_test.go

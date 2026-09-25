@@ -114,7 +114,18 @@ src/
     464→static LEVEL_PARSE_ERROR: &str =
     465→    "attempted to convert a string that doesn't match an existing log level";
     …
+    473→#[repr(usize)]
+    474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
     475→pub enum Level {
+    476→    /// The "error" level.
+    477→    ///
+    478→    /// Designates very serious errors.
+    479→    // This way these line up with the discriminants for LevelFilter below
+    480→    // This works because Rust treats field-less enums the same way as C does:
+    481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
+    482→    Error = 1,
+    483→    /// The "warn" level.
+    484→    ///
     …
     501→impl PartialEq<LevelFilter> for Level {
     502→    #[inline]
@@ -141,12 +152,8 @@ src/
     547→    #[inline]
     548→    pub fn max() -> Level {
     …
-    552→    /// Converts the `Level` to the equivalent `LevelFilter`.
     553→    #[inline]
     554→    pub fn to_level_filter(&self) -> LevelFilter {
-    …
-    558→    /// Returns the string representation of the `Level`.
-    559→    ///
     …
     561→    pub fn as_str(&self) -> &'static str {
     …
@@ -195,7 +202,6 @@ src/
     682→}
     684→impl LevelFilter {
     …
-    697→    /// Returns the most verbose logging level filter.
     698→    #[inline]
     699→    pub fn max() -> LevelFilter {
     …
@@ -253,7 +259,6 @@ src/
     889→    #[inline]
     890→    pub fn level(&self) -> Level {
     …
-    894→    /// The name of the target of the directive.
     895→    #[inline]
     896→    pub fn target(&self) -> &'a str {
     …
@@ -261,7 +266,6 @@ src/
     901→    #[inline]
     902→    pub fn module_path(&self) -> Option<&'a str> {
     …
-    906→    /// The module path of the message, if it is a `'static` string.
     907→    #[inline]
     908→    pub fn module_path_static(&self) -> Option<&'static str> {
     …
@@ -269,7 +273,6 @@ src/
     916→    #[inline]
     917→    pub fn file(&self) -> Option<&'a str> {
     …
-    921→    /// The source file containing the message, if it is a `'static` string.
     922→    #[inline]
     923→    pub fn file_static(&self) -> Option<&'static str> {
     …
@@ -277,12 +280,10 @@ src/
     931→    #[inline]
     932→    pub fn line(&self) -> Option<u32> {
     …
-    936→    /// The structured key-value pairs associated with the message.
     937→    #[cfg(feature = "kv")]
     938→    #[inline]
     939→    pub fn key_values(&self) -> &dyn kv::Source {
     …
-    943→    /// Create a new [`RecordBuilder`](struct.RecordBuilder.html) based on this record.
     944→    #[cfg(feature = "kv")]
     945→    #[inline]
     946→    pub fn to_builder(&self) -> RecordBuilder<'_> {

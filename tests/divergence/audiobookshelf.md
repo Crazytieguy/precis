@@ -1,4 +1,4 @@
-Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.544/0.775/0.768/0.685/0.636
+Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.544/0.775/0.768/0.685/0.651
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -273,42 +273,45 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 7616 | 16 | Code::CodeKey { rung: Body, file: server/utils/index.js, decl: 3, sub: 0, line: 45 } |  |  | 0.677 |
 | walker |  | 7639 | 23 | Code::CodeKey { rung: Body, file: server/utils/index.js, decl: 4, sub: 0, line: 49 } |  |  | 0.663 |
 | ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.663 |
-| walker |  | 7676 | 37 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 9, sub: 0, line: 92 } |  |  | 0.663 |
-| walker |  | 7724 | 48 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 6, sub: 0, line: 62 } |  |  | 0.663 |
-| walker |  | 7764 | 40 | Code::CodeKey { rung: Body, file: server/utils/index.js, decl: 6, sub: 0, line: 62 } |  |  | 0.663 |
 | ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.651 |
-| walker |  | 8131 | 367 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.651 |
-| walker |  | 8150 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.651 |
-| walker |  | 8172 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.651 |
-| walker |  | 8223 | 51 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 19, sub: 0, line: 249 } |  |  | 0.651 |
-| walker |  | 8275 | 52 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 20, sub: 0, line: 260 } |  |  | 0.651 |
+| walker |  | 8006 | 367 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.651 |
+| walker |  | 8025 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.651 |
+| walker |  | 8047 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.651 |
 | ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.640 |
-| walker |  | 8329 | 54 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 18, sub: 0, line: 233 } |  |  | 0.640 |
-| walker |  | 8389 | 60 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 15, sub: 0, line: 200 } |  |  | 0.640 |
-| walker |  | 8454 | 65 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 16, sub: 0, line: 210 } |  |  | 0.640 |
-| walker |  | 8531 | 77 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 17, sub: 0, line: 222 } |  |  | 0.640 |
-| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.629 |
-| walker |  | 8627 | 96 | Code::CodeKey { rung: Doc, file: server/utils/index.js, decl: 21, sub: 0, line: 274 } |  |  | 0.629 |
-| ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.621 |
-| walker |  | 9008 | 381 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
-| ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.634 |
-| walker |  | 9172 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.645 |
+| walker |  | 8428 | 381 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
+| walker |  | 8592 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.670 |
+| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.660 |
+| ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.651 |
+| walker |  | 8898 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 6, sub: 0, line: 22 } |  |  | 0.651 |
+| walker |  | 8936 | 38 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib } |  |  | 0.651 |
+| walker |  | 8939 | 3 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal } |  |  | 0.651 |
+| walker |  | 8957 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams } |  |  | 0.651 |
+| walker |  | 9001 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.651 |
+| ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.645 |
+| walker |  | 9045 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.645 |
+| walker |  | 9089 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.645 |
+| walker |  | 9133 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.645 |
+| walker |  | 9177 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.645 |
+| walker |  | 9221 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.645 |
+| walker |  | 9265 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.645 |
 | ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.658 |
-| walker |  | 9478 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 6, sub: 0, line: 22 } |  |  | 0.658 |
-| walker |  | 9516 | 38 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib } |  |  | 0.658 |
-| walker |  | 9519 | 3 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal } |  |  | 0.658 |
-| walker |  | 9537 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams } |  |  | 0.658 |
+| walker |  | 9309 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.658 |
+| walker |  | 9353 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.658 |
+| walker |  | 9397 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.658 |
+| walker |  | 9441 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.658 |
+| walker |  | 9485 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.658 |
+| walker |  | 9529 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.658 |
 | ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.652 |
-| walker |  | 9581 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.652 |
-| walker |  | 9625 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.652 |
-| walker |  | 9669 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.652 |
-| walker |  | 9713 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.652 |
-| walker |  | 9757 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.652 |
+| walker |  | 9573 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.652 |
+| walker |  | 9617 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.652 |
+| walker |  | 9661 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.652 |
+| walker |  | 9705 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.652 |
+| walker |  | 9749 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.652 |
 | ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.650 |
-| walker |  | 9801 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.650 |
-| walker |  | 9845 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.650 |
-| walker |  | 9889 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.650 |
+| walker |  | 9793 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.650 |
+| walker |  | 9837 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.650 |
+| walker |  | 9881 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.650 |
 | ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.650 |
-| walker |  | 9933 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.650 |
-| walker |  | 9977 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.650 |
-| walker |  | 10000 | 23 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.650 |
+| walker |  | 9925 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.650 |
+| walker |  | 9969 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.650 |
+| walker |  | 9999 | 30 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.650 |

@@ -135,57 +135,27 @@ lib/
     …
     13→  constructor(name, description) {
     …
-    42→  /**
-    43→   * Return argument name.
-    44→   *
-    45→   * @return {string}
-    46→   */
     48→  name() {
     49→    return this._name;
     …
-    52→  /**
-    53→   * @package
-    54→   */
     56→  _collectValue(value, previous) {
     …
     73→  default(value, description) {
     …
     86→  argParser(fn) {
     …
-    91→  /**
-    92→   * Only allow argument value to be one of choices.
-    93→   *
-    94→   * @param {string[]} values
-    95→   * @return {Argument}
-    96→   */
     98→  choices(values) {
     …
-    114→  /**
-    115→   * Make argument required.
-    116→   *
-    117→   * @returns {Argument}
-    118→   */
     119→  argRequired() {
     120→    this.required = true;
     121→    return this;
     …
-    124→  /**
-    125→   * Make argument optional.
-    126→   *
-    127→   * @returns {Argument}
-    128→   */
     129→  argOptional() {
     130→    this.required = false;
     131→    return this;
     …
     133→}
-    135→/**
-    136→ * Takes an argument and returns its human readable equivalent for help usage.
-    137→ *
-    138→ * @param {Argument} arg
-    139→ * @return {string}
-    140→ * @private
-    141→ */
+    …
     143→function humanReadableArgName(arg) {
     …
     149→exports.Argument = Argument;
@@ -215,8 +185,6 @@ lib/
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
-    26→  /**
-    27→   * Constructs the InvalidArgumentError class
     …
     30→  constructor(message) {
     …
@@ -228,9 +196,6 @@ lib/
     12→class Help {
     …
     740→function stripColor(str) {
-    741→  // eslint-disable-next-line no-control-regex
-    742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
-    743→  return str.replace(sgrPattern, '');
     …
     746→exports.Help = Help;
     747→exports.stripColor = stripColor;
@@ -249,53 +214,23 @@ lib/
     100→  implies(impliedOptionValues) {
     …
     120→  env(name) {
+    121→    this.envVar = name;
+    122→    return this;
     …
     132→  argParser(fn) {
     …
     144→  makeOptionMandatory(mandatory = true) {
     …
-    149→  /**
-    150→   * Hide option in help.
-    151→   *
-    152→   * @param {boolean} [hide=true]
-    153→   * @return {Option}
-    154→   */
     156→  hideHelp(hide = true) {
     …
-    161→  /**
-    162→   * @package
-    163→   */
     165→  _collectValue(value, previous) {
     …
-    174→  /**
-    175→   * Only allow option value to be one of choices.
-    176→   *
-    177→   * @param {string[]} values
-    178→   * @return {Option}
-    179→   */
     181→  choices(values) {
     …
-    197→  /**
-    198→   * Return option name.
-    199→   *
-    200→   * @return {string}
-    201→   */
     203→  name() {
     …
-    210→  /**
-    211→   * Return option name, in a camelcase format that can be used
-    212→   * as an object attribute key.
-    213→   *
-    214→   * @return {string}
-    215→   */
     217→  attributeName() {
     …
-    224→  /**
-    225→   * Set the help group heading.
-    226→   *
-    227→   * @param {string} heading
-    228→   * @return {Option}
-    229→   */
     230→  helpGroup(heading) {
     …
     243→  is(arg) {
@@ -306,9 +241,7 @@ lib/
     259→}
     …
     268→class DualOptions {
-    269→  /**
-    270→   * @param {Option[]} options
-    271→   */
+    …
     272→  constructor(options) {
     …
     297→  valueFromOption(value, option) {
@@ -318,6 +251,10 @@ lib/
     379→exports.Option = Option;
     380→exports.DualOptions = DualOptions;
   suggestSimilar.js
+    …
+    56→function suggestSimilar(word, candidates) {
+    …
+    101→exports.suggestSimilar = suggestSimilar;
 package-lock.json
 package-support.json
 package.json
@@ -376,6 +313,89 @@ package.json
   80→  },
   …
 tests/
+  args.literal.test.js
+  args.variadic.test.js
+  argument.chain.test.js
+  argument.choices.test.js
+  argument.custom-processing.test.js
+  argument.required.test.js
+  argument.variadic.test.js
+  command.action.test.js
+  command.addCommand.test.js
+  command.addHelpOption.test.js
+  command.addHelpText.test.js
+  command.alias.test.js
+  command.allowExcessArguments.test.js
+  command.allowUnknownOption.test.js
+  command.argumentVariations.test.js
+  command.asterisk.test.js
+  command.chain.test.js
+  command.commandHelp.test.js
+  command.configureHelp.test.js
+  command.configureOutput.test.js
+  command.copySettings.test.js
+  command.createArgument.test.js
+  command.createHelp.test.js
+  command.createOption.test.js
+  command.default.test.js
+  command.description.test.js
+  command.error.test.js
+  command.executableSubcommand.inspect.test.js
+  command.executableSubcommand.lookup.test.js
+  command.executableSubcommand.mock.test.js
+  command.executableSubcommand.search.test.js
+  command.executableSubcommand.signals.test.js
+  command.executableSubcommand.test.js
+  command.exitOverride.test.js
+  command.help.test.js
+  command.helpCommand.test.js
+  command.helpOption.test.js
+  command.hook.test.js
+  command.name.test.js
+  command.nested.test.js
+  command.onCommand.test.js
+  command.option-misuse.test.js
+  command.parse.test.js
+  command.parseOptions.test.js
+  command.positionalOptions.test.js
+  command.registerClash.test.js
+  command.showHelpAfterError.test.js
+  command.showSuggestionAfterError.test.js
+  command.summary.test.js
+  command.unknownCommand.test.js
+  command.unknownOption.test.js
+  command.usage.test.js
+  commander.configureCommand.test.js
+  createCommand.test.js
+  deprecated.test.js
+  esm-imports-test.mjs
+  fixtures/
+  fixtures-extensions/
+  help.argumentDescription.test.js
+  help.boxWrap.test.js
+  help.commandTerm.test.js
+  help.commandUsage.test.js
+  help.longestArgumentTermLength.test.js
+  help.longestCommandTermLength.test.js
+  help.longestOptionTermLength.test.js
+  help.minWidthToWrap.test.js
+  help.optionDescription.test.js
+  help.optionTerm.test.js
+  help.padWidth.test.js
+  help.preformatted.test.js
+  help.showGlobalOptions.test.js
+  help.sortCommands.test.js
+  help.sortOptions.test.js
+  help.stripAnsi.test.js
+  help.style.test.js
+  help.subcommandDescription.test.js
+  help.suggestion.test.js
+  help.visibleArguments.test.js
+  help.visibleCommands.test.js
+  help.visibleGlobalOptions.test.js
+  help.visibleOptions.test.js
+  helpGroup.test.js
+  …
 tsconfig.js.json
 tsconfig.json
 tsconfig.ts.json

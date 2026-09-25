@@ -85,7 +85,25 @@ readme.md
   44→
   45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
   47→## Usage
-  …
+  48→
+  49→Here we run only one promise at a time. For example, set `concurrency` to 4 to run four promises at the same time.
+  50→
+  51→```js
+  52→import PQueue from 'p-queue';
+  53→import got from 'got';
+  54→
+  55→const queue = new PQueue({concurrency: 1});
+  56→
+  57→(async () => {
+  58→	await queue.add(() => got('https://sindresorhus.com'));
+  59→	console.log('Done: sindresorhus.com');
+  60→})();
+  61→
+  62→(async () => {
+  63→	await queue.add(() => got('https://avajs.dev'));
+  64→	console.log('Done: avajs.dev');
+  65→})();
+  66→```
   68→## API
   69→
   70→### PQueue(options?)
@@ -133,7 +151,6 @@ source/
     85→	constructor(options?: Options<QueueType, EnqueueOptionsType>) {
     …
     382→	get concurrency(): number {
-    383→		return this.#concurrency;
     …
     386→	set concurrency(newConcurrency: number) {
     …
@@ -181,13 +198,6 @@ source/
     651→	*/
     652→	async onEmpty(): Promise<void> {
     …
-    661→	/**
-    662→	@returns A promise that settles when the queue size is less than the given limit: `queue.size < limit`.
-    663→
-    664→	If you want to avoid having the queue grow beyond a certain size you can `await queue.onSizeLessThan()` before adding a new item.
-    665→
-    666→	Note that this only limits the number of items waiting to start. There could still be up to `concurrency` jobs already running that this call does not include in its calculation.
-    667→	*/
     668→	async onSizeLessThan(limit: number): Promise<void> {
     …
     677→	/**
@@ -243,23 +253,6 @@ source/
     887→	*/
     888→	get isRateLimited(): boolean {
     …
-    892→	/**
-    893→	Whether the queue is saturated. Returns `true` when:
-    894→	- All concurrency slots are occupied and tasks are waiting, OR
-    895→	- The queue is rate-limited and tasks are waiting
-    896→
-    897→	Useful for detecting backpressure and potential hanging tasks.
-    898→
-    899→	```js
-    900→	import PQueue from 'p-queue';
-    901→
-    902→	const queue = new PQueue({concurrency: 2});
-    903→
-    904→	// Backpressure handling
-    905→	if (queue.isSaturated) {
-    906→		console.log('Queue is saturated, waiting for capacity...');
-    907→		await queue.onSizeLessThan(queue.concurrency);
-    …
     918→	get isSaturated(): boolean {
     …
     952→	get runningTasks(): ReadonlyArray<{
@@ -279,6 +272,15 @@ source/
   options.ts
   priority-queue.ts
   queue.ts
+    1→export type RunFunction = () => Promise<unknown>;
+    2→
+    3→export type Queue<Element, Options> = {
+    4→	size: number;
+    5→	filter: (options: Readonly<Partial<Options>>) => Element[];
+    6→	dequeue: () => Element | undefined;
+    7→	enqueue: (run: Element, options?: Partial<Options>) => void;
+    8→	setPriority: (id: string, priority: number) => void;
+    …
 test/
   advanced.ts
   basic.ts

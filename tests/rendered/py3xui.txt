@@ -97,16 +97,6 @@ demo.py
   68→
   69→
   70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
-  71→    """Prepare a connection string for the given inbound, user UUID and telegram ID.
-  72→
-  73→    Arguments:
-  74→        inbound (Inbound): The inbound object.
-  75→        user_uuid (str): The UUID of the user.
-  76→        user_email (int): The email of the user.
-  77→
-  78→    Returns:
-  79→        str: The connection string.
-  80→    """
   …
   103→connection_string = get_connection_string(inbound, "**********", email)
   …
@@ -156,19 +146,9 @@ py3xui/
       …
       93→    @property
       94→    def session(self) -> str | None:
-      95→        """The session cookie for the XUI API.
-      96→
-      97→        Returns:
-      98→            str: The session cookie for the XUI API.
-      99→        """
-      100→        return self._session
+      …
       102→    @session.setter
       103→    def session(self, value: str) -> None:
-      104→        """Sets the session cookie for the XUI API.
-      105→
-      106→        Arguments:
-      107→            value (str): The session cookie to set.
-      108→        """
       …
       115→    @property
       116→    def cookie_name(self) -> str | None:
@@ -204,6 +184,14 @@ py3xui/
       18→class AsyncApi:
       …
       72→    def __init__(
+      73→        self,
+      74→        host: str,
+      75→        username: str,
+      76→        password: str,
+      77→        use_tls_verify: bool = True,
+      78→        custom_certificate_path: str | None = None,
+      79→        logger: Any | None = None,
+      80→    ):  # pylint: disable=R0913, R0917
       …
       98→    @property
       99→    def session(self) -> str | None:
@@ -222,6 +210,8 @@ py3xui/
       146→        cls,
       147→        use_tls_verify: bool | None = None,
       148→        custom_certificate_path: str | None = None,
+      149→        logger: Any | None = None,
+      150→    ) -> AsyncApi:
       …
       194→    async def login(self, two_factor_code: str | int | None = None) -> None:
       …
@@ -238,7 +228,7 @@ py3xui/
     client.py
       …
       7→class ClientFields:
-      8→    """Stores the fields returned by the XUI API for parsing."""
+      …
       10→    EMAIL = "email"
       11→    ENABLE = "enable"
       12→    PASSWORD = "password"
@@ -276,6 +266,17 @@ py3xui/
     bases.py
     inbound.py
     settings.py
+      …
+      9→class SettingsFields:
+      …
+      12→    CLIENTS = "clients"
+      13→    DECRYPTION = "decryption"
+      14→    FALLBACKS = "fallbacks"
+      17→class Settings(JsonStringModel):
+      …
+      26→    clients: list[Client] = []
+      27→    decryption: str = ""
+      28→    fallbacks: list = []
     sniffing.py
     stream_settings.py
   server/
@@ -284,6 +285,11 @@ py3xui/
       …
       2→from py3xui.server.server import RealityKeyPair, Server
     server.py
+      …
+      7→class ServerFields:
+      …
+      43→class MemoryInfo(BaseModel):
+      …
   utils/
     README.md
     __init__.py

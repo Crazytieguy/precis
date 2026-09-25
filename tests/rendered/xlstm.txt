@@ -249,7 +249,7 @@ xlstm/
     34→    _block_map: str = None
     36→    @property
     37→    def block_map(self) -> list[int]:
-    38→        return list(map(int, self._block_map.split(",")))
+    …
     40→    def _create_block_map(self) -> str:
     41→        """Creates the block map, that specifies which block is used at which position."""
     …
@@ -263,10 +263,7 @@ xlstm/
     90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
     …
     111→    def reset_parameters(self) -> None:
-    112→        for block in self.blocks:
-    113→            block.reset_parameters()
-    114→        if not isinstance(self.post_blocks_norm, nn.Identity):
-    115→            self.post_blocks_norm.reset_parameters()
+    …
     117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
     …
     126→    def step(
@@ -300,6 +297,8 @@ xlstm/
     49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
     …
     56→    def step(
+    57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
+    58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     …
     65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …

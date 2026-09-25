@@ -103,6 +103,13 @@ README.md
   79→const semverLtr = require('semver/ranges/ltr')
   80→const semverIntersects = require('semver/ranges/intersects')
   81→const semverSimplifyRange = require('semver/ranges/simplify')
+  82→const semverRangeSubset = require('semver/ranges/subset')
+  83→```
+  85→As a command-line utility:
+  86→
+  87→```
+  88→$ semver -h
+  89→
   …
   139→## Versions
   …
@@ -162,11 +169,6 @@ classes/
     10→  constructor (version, options) {
     …
     81→  format () {
-    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
-    83→    if (this.prerelease.length) {
-    84→      this.version += `-${this.prerelease.join('.')}`
-    85→    }
-    86→    return this.version
     …
     89→  toString () {
     90→    return this.version

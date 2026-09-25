@@ -84,15 +84,12 @@ tea.go
   8→//
   9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
   …
-  38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
   39→var ErrProgramPanic = errors.New("program experienced a panic")
   41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
   42→var ErrProgramKilled = errors.New("program was killed")
-  44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
-  45→// signal, or when it receives a [InterruptMsg].
+  …
   46→var ErrInterrupted = errors.New("program was interrupted")
-  48→// Msg contain data from the result of a IO operation. Msgs trigger the update
-  49→// function and, henceforth, the UI.
+  …
   50→type Msg = uv.Event
   52→// Model contains the program's state as well as its core functions.
   53→type Model interface {
@@ -142,7 +139,6 @@ tea.go
   267→}
   …
   279→func (v *View) SetContent(s string) {
-  280→	v.Content = s
   …
   283→// MouseMode represents the mouse mode of a view.
   284→type MouseMode int
@@ -180,11 +176,6 @@ tea.go
   320→// String return a human-readable value for the given [ProgressBarState].
   321→func (s ProgressBarState) String() string {
   …
-  331→// ProgressBar represents the terminal progress bar.
-  332→//
-  333→// Support depends on the terminal.
-  334→//
-  335→// See https://learn.microsoft.com/en-us/windows/terminal/tutorials/progress-bar-sequences
   336→type ProgressBar struct {
   337→	// State is the current state of the progress bar. It can be one of
   338→	// [ProgressBarNone], [ProgressBarDefault], [ProgressBarError],
@@ -194,9 +185,7 @@ tea.go
   342→	// 0 and 100.
   343→	Value int
   344→}
-  346→// NewProgressBar returns a new progress bar with the given state and value.
-  347→// The value is ignored if the state is [ProgressBarNone] or
-  348→// [ProgressBarIndeterminate].
+  …
   349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
   356→// Cursor represents a cursor on the terminal screen.
@@ -214,8 +203,7 @@ tea.go
   368→	// Blink is a boolean that determines whether the cursor should blink.
   369→	Blink bool
   370→}
-  372→// NewCursor returns a new cursor with the default settings and the given
-  373→// position.
+  …
   374→func NewCursor(x, y int) *Cursor {
   …
   390→type Cmd func() Msg
@@ -224,8 +212,7 @@ tea.go
   396→	handlers []chan struct{}
   397→	mu       sync.RWMutex
   398→}
-  400→// Adds a channel to the list of handlers. We wait for all handlers to terminate
-  401→// gracefully on shutdown.
+  …
   402→func (h *channelHandlers) add(ch chan struct{}) {
   …
   408→// shutdown waits for all handlers to terminate.
@@ -233,7 +220,6 @@ tea.go
   …
   426→type Program struct {
   …
-  554→// Quit is a special command that tells the Bubble Tea program to exit.
   555→func Quit() Msg {
   …
   561→type QuitMsg struct{}
@@ -241,13 +227,11 @@ tea.go
   564→func Suspend() Msg {
   …
   574→type SuspendMsg struct{}
-  576→// ResumeMsg can be listen to do something once a program is resumed back
-  577→// from a suspend state.
+  …
   578→type ResumeMsg struct{}
   …
   586→type InterruptMsg struct{}
-  588→// Interrupt is a special command that tells the Bubble Tea program to
-  589→// interrupt.
+  …
   590→func Interrupt() Msg {
   …
   594→// NewProgram creates a new [Program].
@@ -258,11 +242,45 @@ tea.go
   684→// handleResize handles terminal resize events.
   685→func (p *Program) handleResize() chan struct{} {
   …
-  698→// handleCommands runs commands in a goroutine and sends the result to the
-  699→// program's message channel.
   700→func (p *Program) handleCommands(cmds chan Cmd) chan struct{} {
   …
   743→func (p *Program) eventLoop(model Model, cmds chan Cmd) (Model, error) {
+  …
+  885→// render renders the given view to the renderer.
+  886→func (p *Program) render(model Model) {
+  …
+  892→func (p *Program) execSequenceMsg(msg sequenceMsg) {
+  …
+  918→func (p *Program) execBatchMsg(msg BatchMsg) {
+  …
+  972→func shouldQuerySynchronizedOutput(environ uv.Environ) bool {
+  …
+  991→func (p *Program) Run() (returnModel Model, returnErr error) {
+  …
+  1183→func (p *Program) Send(msg Msg) {
+  …
+  1197→func (p *Program) Quit() {
+  …
+  1204→func (p *Program) Kill() {
+  …
+  1208→// Wait waits/blocks until the underlying Program finished shutting down.
+  1209→func (p *Program) Wait() {
+  …
+  1213→// execute writes the given sequence to the program output.
+  1214→func (p *Program) execute(seq string) {
+  …
+  1220→// flush flushes the output buffer to the program output.
+  1221→func (p *Program) flush() error {
+  …
+  1241→func (p *Program) shutdown(kill bool) {
+  …
+  1269→func (p *Program) recoverFromPanic(r interface{}) {
+  …
+  1294→func (p *Program) recoverFromGoPanic(r interface{}) {
+  …
+  1319→func (p *Program) ReleaseTerminal() error {
+  …
+  1323→func (p *Program) releaseTerminal(reset bool) error {
   …
 tea_test.go
 termcap.go

@@ -182,13 +182,7 @@ lib/
   svgo.js
     …
     72→export * from './types.js';
-    74→/**
-    75→ * The core of SVGO.
-    76→ *
-    77→ * @param {string} input
-    78→ * @param {import('./types.js').Config=} config
-    79→ * @returns {import('./types.js').Output}
-    80→ */
+    …
     81→export const optimize = (input, config) => {
     …
     136→export {
@@ -309,6 +303,13 @@ plugins/
     51→    removeUselessDefs,
     52→    cleanupNumericValues,
     53→    convertColors,
+    54→    removeUnknownsAndDefaults,
+    55→    removeNonInheritableGroupAttrs,
+    56→    removeUselessStrokeAndFill,
+    57→    cleanupEnableBackground,
+    58→    removeHiddenElems,
+    59→    removeEmptyText,
+    60→    convertShapeToPath,
     …
     77→export default presetDefault;
   removeAttributesBySelector.js

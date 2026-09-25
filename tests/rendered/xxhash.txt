@@ -57,12 +57,28 @@ dynamic/
   .gitignore
   dynamic_test.go
   plugin.go
+    1→//go:build ignore
+    …
+    14→const (
+    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
+    16→	want = uint64(0x02a2e85470d6fd96)
+    17→)
+    19→func TestSum(t *testing.T) {
+    …
+    26→func TestDigest(t *testing.T) {
+    …
 go.mod
   1→module github.com/cespare/xxhash/v2
   2→
   3→go 1.11
 go.sum (empty)
 testall.sh
+  …
+  2→set -eu -o pipefail
+  3→
+  4→# Small convenience script for running the tests with various combinations of
+  5→# arch/tags. This assumes we're running on amd64 and have qemu available.
+  …
 xxhash.go
   1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
   2→// at https://xxhash.com/.
@@ -193,7 +209,6 @@ xxhash_unsafe.go
   43→// WriteString adds more data to d. It always returns len(s), nil.
   44→// It may be faster than Write([]byte(s)) by avoiding a copy.
   45→func (d *Digest) WriteString(s string) (n int, err error) {
-  46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
   …
   53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
   54→// of the first two words is the same as the layout of a string.
@@ -237,18 +252,6 @@ xxhsum/
     31→	}
     32→}
     34→func contains(ss []string, s string) bool {
-    35→	for _, s1 := range ss {
-    36→		if s1 == s {
-    37→			return true
-    38→		}
-    39→	}
-    40→	return false
     …
     43→func printHash(r io.Reader, name string) {
-    44→	h := xxhash.New()
-    45→	if _, err := io.Copy(h, r); err != nil {
-    46→		fmt.Fprintln(os.Stderr, err)
-    47→		return
-    48→	}
-    49→	fmt.Printf("%016x  %s\n", h.Sum64(), name)
     …

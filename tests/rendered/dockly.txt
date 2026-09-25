@@ -2,6 +2,7 @@
   devcontainer.json
 .github/
   ISSUE_TEMPLATE/
+    bug_report.yaml
   PULL_REQUEST_TEMPLATE.md
   mergify.yml
   workflows/
@@ -113,11 +114,6 @@ hooks/
     138→  stopContainer () {
     …
     168→  getSelectedItem () {
-    169→    if (!this.widgetsRepo.has('containerList')) {
-    170→      return null
-    171→    }
-    172→
-    173→    return this.widgetsRepo.get('containerList').getSelectedContainer()
     …
     175→}
     177→module.exports = hook
@@ -127,11 +123,6 @@ hooks/
     6→  init () {
     …
     27→  getSelectedItem () {
-    28→    if (!this.widgetsRepo.has('imageList')) {
-    29→      return null
-    30→    }
-    31→
-    32→    return this.widgetsRepo.get('imageList').getSelectedImage()
     …
     35→  notifyOnImageUpdate () {
     …
@@ -142,8 +133,29 @@ hooks/
   services.hook.js
     …
     5→class hook extends baseHook {
+    6→  init () {
     …
+    46→  setupSwitchFocus () {
+    …
+    61→  notifyOnServiceInfo () {
+    …
+    72→  getFreshData (cb) {
+    …
+    86→  getSelectedItem () {
+    …
+    93→}
+    95→module.exports = hook
   shell.hook.js
+    …
+    8→class hook extends baseWidget() {
+    9→  init () {
+    …
+    23→  openShell () {
+    …
+    59→  emitActionStatus (title, message) {
+    …
+    66→}
+    68→module.exports = hook
 index.js
   …
   5→EventEmitter.defaultMaxListeners = 50
@@ -182,6 +194,12 @@ index.js
   …
 lib/
   modes.js
+    …
+    3→module.exports = {
+    4→  container: 'containers',
+    5→  service: 'services',
+    6→  image: 'images'
+    7→}
   node.version.js
     1→module.exports = {
     2→  minimum: '7.6.0'
@@ -236,8 +254,6 @@ src/
     …
     10→class assetsLoader {
     11→  static load () {
-    12→    const assets = this.resolveAssetFiles()
-    13→    return assets
     …
     16→  static resolveAssetFiles () {
     …
@@ -248,6 +264,15 @@ src/
     44→module.exports = assetsLoader
   baseWidget.js
   cli.js
+    …
+    8→function Cli () {
+    …
+    59→Cli.prototype.showVersion = function () {
+    …
+    66→Cli.prototype.showUsage = function () {
+    …
+    93→Cli.prototype.cliParse = function () {
+    …
   dockerUtil.js
     …
     5→class Util {
@@ -272,22 +297,14 @@ src/
     124→  getInfo (cb) {
     …
     155→  getContainer (containerId, cb) {
-    156→    const container = this.dockerCon.getContainer(containerId)
-    157→    return container.inspect(cb)
     …
     160→  getService (serviceId, cb) {
     …
     165→  getImage (imageId, cb) {
-    166→    const image = this.dockerCon.getImage(imageId)
-    167→    image.inspect(cb)
     …
     170→  restartContainer (containerId, cb) {
-    171→    const container = this.dockerCon.getContainer(containerId)
-    172→    container.restart(cb)
     …
     175→  stopContainer (containerId, cb) {
-    176→    const container = this.dockerCon.getContainer(containerId)
-    177→    container.stop(cb)
     …
     180→  removeContainer (containerId, cb) {
     …
@@ -336,14 +353,8 @@ src/
     120→  setWidgetsUtils () {
     …
     126→  setWidgetsInit () {
-    127→    for (let widgetObject of this.widgetsRepository.values()) {
-    128→      widgetObject.init()
-    129→    }
     …
     132→  renderWidgets () {
-    133→    for (let widgetObject of this.widgets.values()) {
-    134→      widgetObject.renderWidget()
-    135→    }
     …
     138→  toggleMode () {
     …
@@ -377,6 +388,13 @@ widgets/
     containerUtilization.widget.js
     containerVsImages.widget.js
   help.widget.js
+    …
+    5→class myWidget extends HelpWidget {
+    6→  getLabel () {
+    7→    return 'Dockly Help'
+    …
+    9→}
+    11→module.exports = myWidget
   images/
     imageInfo.widget.js
     imageList.widget.js

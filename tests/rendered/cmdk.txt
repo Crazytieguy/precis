@@ -72,6 +72,8 @@ README.md
   445→
   446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
   447→
+  448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
+  449→
   …
   456→## History
   457→
@@ -218,9 +220,6 @@ cmdk/
       …
       1003→/** Run a selector against the store state. */
       1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-      1005→  const store = useStore()
-      1006→  const cb = () => selector(store.snapshot())
-      1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
       …
   tsup.config.ts
 package.json

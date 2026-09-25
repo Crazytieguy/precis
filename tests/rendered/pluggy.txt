@@ -148,12 +148,7 @@ src/
       30→
       31→
       32→def __getattr__(name: str) -> str:
-      33→    if name == "__version__":
-      34→        from importlib.metadata import version
-      35→
-      36→        return version("pluggy")
-      37→
-      38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
+      …
     _callers.py
     _hooks.py
       …
@@ -260,7 +255,7 @@ src/
       363→    __slots__ = ("__dict__",)
       364→
       365→    def __init__(self) -> None:
-      366→        """:meta private:"""
+      …
       368→    if TYPE_CHECKING:
       369→
       370→        def __getattr__(self, name: str) -> HookCaller: ...
@@ -278,7 +273,15 @@ src/
       592→
       593→class _SubsetHookCaller(HookCaller):
       …
+      638→@final
       639→class HookImpl:
+      …
+      642→    __slots__ = (
+      643→        "function",
+      644→        "argnames",
+      645→        "kwargnames",
+      646→        "plugin",
+      647→        "opts",
       …
       696→@final
       697→class HookSpec:
@@ -293,6 +296,7 @@ src/
       706→        "warn_on_impl_args",
       707→    )
       708→
+      709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
       …
     _manager.py
     _result.py

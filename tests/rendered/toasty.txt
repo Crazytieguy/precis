@@ -219,25 +219,20 @@ crates/
         5→pub use config::*;
         6→pub use migration::*;
         …
-        12→/// Toasty CLI library for building custom command-line tools
         13→pub struct ToastyCli {
         14→    db: Db,
         15→    config: Config,
         16→}
         18→impl ToastyCli {
-        19→    /// Create a new ToastyCli instance with the given database connection
+        …
         20→    pub fn new(db: Db) -> Self {
         …
-        27→    /// Create a new ToastyCli instance with a custom configuration
         28→    pub fn with_config(db: Db, config: Config) -> Self {
         …
-        32→    /// Get a reference to the configuration
         33→    pub fn config(&self) -> &Config {
         …
-        37→    /// Parse and execute CLI commands from command-line arguments
         38→    pub async fn parse_and_run(&self) -> Result<()> {
         …
-        43→    /// Parse and execute CLI commands from an iterator of arguments
         44→    pub async fn parse_from<I, T>(&self, args: I) -> Result<()>
         45→    where
         46→        I: IntoIterator<Item = T>,
@@ -397,6 +392,24 @@ crates/
         entry_path.rs
         eval.rs
         expr.rs
+        expr_and.rs
+        expr_any.rs
+        expr_arg.rs
+        expr_begins_with.rs
+        expr_binary_op.rs
+        expr_cast.rs
+        expr_concat.rs
+        expr_concat_str.rs
+        expr_exists.rs
+        expr_func.rs
+        expr_in_list.rs
+        expr_in_subquery.rs
+        expr_is_null.rs
+        expr_key.rs
+        expr_like.rs
+        expr_list.rs
+        expr_map.rs
+        expr_not.rs
         …
       stmt.rs
     tests/

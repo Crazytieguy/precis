@@ -175,10 +175,12 @@ chibicc.h
   131→  Token *tok;    // representative token
   132→  bool is_local; // local or global/function
   133→  int align;     // alignment
+  134→
+  135→  // Local variable
+  136→  int offset;
+  137→
+  138→  // Global variable or function
   …
-  164→// Global variable can be initialized either by a constant expression
-  165→// or a pointer to another global variable. This struct represents the
-  166→// latter.
   167→typedef struct Relocation Relocation;
   168→struct Relocation {
   169→  Relocation *next;

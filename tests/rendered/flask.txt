@@ -258,6 +258,24 @@ src/
     __main__.py
     app.py
     blueprints.py
+      …
+      18→class Blueprint(SansioBlueprint):
+      19→    def __init__(
+      20→        self,
+      21→        name: str,
+      22→        import_name: str,
+      23→        static_folder: str | os.PathLike[str] | None = None,
+      24→        static_url_path: str | None = None,
+      25→        template_folder: str | os.PathLike[str] | None = None,
+      …
+      55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
+      …
+      82→    def send_static_file(self, filename: str) -> Response:
+      …
+      104→    def open_resource(
+      105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
+      106→    ) -> t.IO[t.AnyStr]:
+      …
     cli.py
     config.py
     ctx.py
@@ -272,18 +290,8 @@ src/
         …
         13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
         …
-        40→    if current_app:
-        41→        return current_app.json.dumps(obj, **kwargs)
-        42→
-        43→    kwargs.setdefault("default", _default)
-        44→    return _json.dumps(obj, **kwargs)
         47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
         …
-        70→    if current_app:
-        71→        current_app.json.dump(obj, fp, **kwargs)
-        72→    else:
-        73→        kwargs.setdefault("default", _default)
-        74→        _json.dump(obj, fp, **kwargs)
         77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
         …
         102→    if current_app:
@@ -327,13 +335,6 @@ src/
       244→    autocorrect_location_header = False
       246→    @property
       247→    def max_cookie_size(self) -> int:  # type: ignore
-      248→        """Read-only view of the :data:`MAX_COOKIE_SIZE` config key.
-      249→
-      250→        See :attr:`~werkzeug.wrappers.Response.max_cookie_size` in
-      251→        Werkzeug's docs.
-      252→        """
-      253→        if current_app:
-      254→            return current_app.config["MAX_COOKIE_SIZE"]  # type: ignore[no-any-return]
       …
 tests/
   conftest.py

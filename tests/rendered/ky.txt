@@ -163,14 +163,12 @@ source/
       11→	code: string | undefined;
       12→	customRequest: Request | undefined;
       13→
+      14→	constructor(options?: ForceRetryOptions) {
       …
+      30→}
     HTTPError.ts
     NonError.ts
-      1→/**
-      2→Wrapper for non-Error values that were thrown.
-      3→
-      4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
-      5→*/
+      …
       6→export class NonError extends Error {
       7→	override name = 'NonError';
       8→	readonly value: unknown;
@@ -184,35 +182,11 @@ source/
       4→	public request: KyRequest;
       5→
       6→	constructor(request: Request) {
-      7→		super(`Request timed out: ${request.method} ${request.url}`);
-      8→		this.name = 'TimeoutError';
-      9→		this.request = request;
       …
       11→}
   index.ts
     …
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-    12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
-    13→
-    14→	for (const method of requestMethods) {
-    15→		// eslint-disable-next-line @typescript-eslint/promise-function-async
-    16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
-    17→	}
-    18→
-    19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
-    20→	ky.extend = (newDefaults?: Partial<Options> | ((parentDefaults: Partial<Options>) => Partial<Options>)) => {
-    21→		if (typeof newDefaults === 'function') {
-    22→			newDefaults = newDefaults(defaults ?? {});
-    23→		}
-    24→
-    25→		return createInstance(validateAndMerge(defaults, newDefaults));
-    26→	};
-    27→
-    28→	ky.stop = stop;
-    29→	ky.retry = retry;
-    30→
-    31→	return ky as KyInstance;
     …
     34→const ky = createInstance();
     35→
@@ -262,10 +236,37 @@ source/
     ky.ts
       …
       5→export type KyInstance = {
+      6→	/**
+      7→	Fetch the given `url`.
+      8→
+      9→	@param url - `Request` object, `URL` object, or URL string.
+      10→	@returns A promise with `Body` method added.
+      11→
+      12→	@example
+      13→	```
+      14→	import ky from 'ky';
+      15→
+      16→	const json = await ky('https://example.com', {json: {foo: true}}).json();
+      17→
+      18→	console.log(json);
+      19→	//=> `{data: '🦄'}`
+      20→	```
+      21→	*/
+      22→	<T>(url: Input, options?: Options): ResponsePromise<T>;
+      23→
+      24→	/**
+      25→	Fetch the given `url` using the option `{method: 'get'}`.
+      26→
       …
     options.ts
     request.ts
+      1→export type KyRequest<T = unknown> = {
+      2→	json: <J = T>() => Promise<J>;
+      3→} & Request;
     response.ts
+      1→export type KyResponse<T = unknown> = {
+      2→	json: <J = T >() => Promise<J>;
+      3→} & Response;
     retry.ts
       …
       3→export type ShouldRetryState = {
@@ -313,6 +314,12 @@ source/
       …
     type-guards.ts
     types.ts
+      1→export type Mutable<T> = {
+      2→	-readonly[P in keyof T]: T[P]
+      3→};
+      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
+      6→	? Array<[string, U]>
+      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
 test/
   browser.ts
   bytes.ts

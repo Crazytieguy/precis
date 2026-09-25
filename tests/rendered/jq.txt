@@ -221,12 +221,7 @@ src/
     50→jv jq_get_lib_dirs(jq_state *);
     51→void jq_set_attr(jq_state *, jv, jv);
     52→jv jq_get_attr(jq_state *, jv);
-    54→/*
-    55→ * We use char * instead of jf for filenames here because filenames
-    56→ * should be in the process' locale's codeset, which may not be UTF-8,
-    57→ * whereas jv string values must be in UTF-8.  This way the caller
-    58→ * doesn't have to perform any codeset conversions.
-    59→ */
+    …
     60→typedef struct jq_util_input_state jq_util_input_state;
     61→typedef void (*jq_util_msg_cb)(void *, const char *);
     62→
@@ -275,16 +270,22 @@ src/
   parser.c
   parser.h
     …
+    44→#if YYDEBUG
     45→extern int yydebug;
+    46→#endif
     …
     51→struct lexer_param;
     52→
     53→#define YYLTYPE location
     54→#define YYLLOC_DEFAULT(Loc, Rhs, N)             \
+    55→  do {                                          \
+    56→    if (N) {                                    \
+    57→      (Loc).start = YYRHSLOC(Rhs, 1).start;     \
     …
     70→  enum yytokentype
     …
     123→  typedef enum yytokentype yytoken_kind_t;
+    124→#endif
     …
     126→#define YYEMPTY -2
     127→#define YYEOF 0
@@ -307,6 +308,7 @@ src/
     144→#define IMPORT 272
     145→#define INCLUDE 273
     146→#define IF 274
+    147→#define THEN 275
     …
   parser.y
   util.c

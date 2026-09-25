@@ -235,6 +235,8 @@ microbootstrap/
     36→        validation_alias=pydantic.AliasChoices("SERVICE_NAME", f"{ENV_PREFIX}SERVICE_NAME"),
     37→    )
     38→    service_description: str = "Micro service description"
+    39→    service_version: str = pydantic.Field(
+    40→        "1.0.0",
     …
     53→class ServerConfig(pydantic.BaseModel):
     54→    server_host: str = "0.0.0.0"  # noqa: S104
@@ -253,7 +255,7 @@ microbootstrap/
     69→    HealthChecksConfig,
     70→    PyroscopeConfig,
     71→):
-    72→    """Settings for a litestar botstrap."""
+    …
     75→class FastApiSettings(  # type: ignore[misc]
     76→    BaseServiceSettings,
     77→    ServerConfig,
@@ -266,7 +268,7 @@ microbootstrap/
     84→    HealthChecksConfig,
     85→    PyroscopeConfig,
     86→):
-    87→    """Settings for a fastapi botstrap."""
+    …
     90→class FastStreamSettings(  # type: ignore[misc]
     91→    BaseServiceSettings,
     92→    ServerConfig,

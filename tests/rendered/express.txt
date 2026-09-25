@@ -135,10 +135,6 @@ lib/
     …
     59→app.init = function init() {
     …
-    85→/**
-    86→ * Initialize application configuration.
-    87→ * @private
-    88→ */
     90→app.defaultConfiguration = function defaultConfiguration() {
     …
     152→app.handle = function handle(req, res, callback) {
@@ -162,23 +158,9 @@ lib/
     439→app.disabled = function disabled(setting) {
     440→  return !this.set(setting);
     …
-    443→/**
-    444→ * Enable `setting`.
-    445→ *
-    446→ * @param {String} setting
-    447→ * @return {app} for chaining
-    448→ * @public
-    449→ */
     451→app.enable = function enable(setting) {
     452→  return this.set(setting, true);
     …
-    455→/**
-    456→ * Disable `setting`.
-    457→ *
-    458→ * @param {String} setting
-    459→ * @return {app} for chaining
-    460→ * @public
-    461→ */
     463→app.disable = function disable(setting) {
     464→  return this.set(setting, false);
     …
@@ -213,32 +195,15 @@ lib/
     81→exports.urlencoded = bodyParser.urlencoded
   request.js
     …
-    25→/**
-    26→ * Request prototype.
-    27→ * @public
-    28→ */
     30→var req = Object.create(http.IncomingMessage.prototype)
     …
     37→module.exports = req
     …
     127→req.accepts = function(){
-    128→  var accept = accepts(this);
-    129→  return accept.types.apply(accept, arguments);
     …
-    132→/**
-    133→ * Check if the given `encoding`s are accepted.
-    134→ *
-    135→ * @param {String} ...encoding
-    136→ * @return {String|Array}
-    137→ * @public
-    138→ */
     140→req.acceptsEncodings = function(){
-    141→  var accept = accepts(this);
-    142→  return accept.encodings.apply(accept, arguments);
     …
     171→req.acceptsCharsets = function(...charsets) {
-    172→  const accept = accepts(this);
-    173→  return accept.charsets(...charsets);
     …
     185→req.acceptsLanguages = function(...languages) {
     186→  return accepts(this).languages(...languages);
@@ -255,18 +220,7 @@ lib/
     …
     52→function View(name, options) {
     …
-    97→/**
-    98→ * Lookup view by the given `name`
-    99→ *
-    100→ * @param {string} name
-    101→ * @private
-    102→ */
     104→View.prototype.lookup = function lookup(name) {
-    …
-    125→/**
-    126→ * Render with the given options.
-    127→ *
-    128→ * @param {object} options
     …
     133→View.prototype.render = function render(options, callback) {
     …
@@ -279,6 +233,32 @@ package.json
   4→  "version": "5.2.1",
   …
   15→  "license": "MIT",
+  …
+  34→  "dependencies": {
+  35→    "accepts": "^2.0.0",
+  36→    "body-parser": "^2.2.1",
+  37→    "content-disposition": "^1.0.0",
+  38→    "content-type": "^1.0.5",
+  39→    "cookie": "^0.7.1",
+  40→    "cookie-signature": "^1.2.1",
+  41→    "debug": "^4.4.0",
+  42→    "depd": "^2.0.0",
+  43→    "encodeurl": "^2.0.0",
+  44→    "escape-html": "^1.0.3",
+  45→    "etag": "^1.8.1",
+  46→    "finalhandler": "^2.1.0",
+  47→    "fresh": "^2.0.0",
+  48→    "http-errors": "^2.0.0",
+  49→    "merge-descriptors": "^2.0.0",
+  50→    "mime-types": "^3.0.0",
+  51→    "on-finished": "^2.4.1",
+  52→    "once": "^1.4.0",
+  53→    "parseurl": "^1.3.3",
+  54→    "proxy-addr": "^2.0.7",
+  55→    "qs": "^6.14.2",
+  56→    "range-parser": "^1.2.1",
+  57→    "router": "^2.2.0",
+  58→    "send": "^1.1.0",
   …
   82→  "engines": {
   83→    "node": ">= 18"

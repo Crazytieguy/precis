@@ -168,9 +168,7 @@ package.json
 rollup.config.js
 src/
   error.ts
-    1→/**
-    2→ * A `StructFailure` represents a single specific failure in validation.
-    3→ */
+    …
     5→export type Failure = {
     6→  value: any
     7→  key: any
@@ -216,6 +214,9 @@ src/
     …
     157→export function mask<T, S>(
     158→  value: unknown,
+    159→  struct: Struct<T, S>,
+    160→  message?: string
+    161→): T {
     …
     175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
     …

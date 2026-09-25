@@ -23,6 +23,15 @@ README.md
   21→pip install git+https://github.com/openai/swarm.git
   22→```
   24→## Usage
+  25→
+  26→```python
+  27→from swarm import Swarm, Agent
+  28→
+  29→client = Swarm()
+  30→
+  31→def transfer_to_agent_b():
+  32→    return agent_b
+  33→
   …
   60→## Table of Contents
   …
@@ -34,7 +43,12 @@ README.md
   90→
   91→Check out `/examples` for inspiration! Learn more about each one in its README.
   92→
-  …
+  93→- [`basic`](examples/basic): Simple examples of fundamentals like setup, function calling, handoffs, and context variables
+  94→- [`triage_agent`](examples/triage_agent): Simple example of setting up a basic triage step to hand off to the right agent
+  95→- [`weather_agent`](examples/weather_agent): Simple example of function calling
+  96→- [`airline`](examples/airline): A multi-agent setup for handling different customer service requests in an airline context.
+  97→- [`support_bot`](examples/support_bot): A customer service bot which includes a user interface agent and a help center agent with several tools
+  98→- [`personal_shopper`](examples/personal_shopper): A personal shopping agent that can help with making sales and refunding orders
   100→# Documentation
   101→
   102→![Swarm Diagram](assets/swarm_diagram.png)
@@ -312,31 +326,16 @@ swarm/
     25→    agent: Optional[Agent] = None
     26→    context_variables: dict = {}
     29→class Result(BaseModel):
-    30→    """
-    31→    Encapsulates the possible return values for an agent function.
-    32→
-    33→    Attributes:
-    34→        value (str): The result value as a string.
-    35→        agent (Agent): The agent instance, if applicable.
-    36→        context_variables (dict): A dictionary of context variables.
-    37→    """
+    …
     39→    value: str = ""
     40→    agent: Optional[Agent] = None
     41→    context_variables: dict = {}
   util.py
     …
     5→def debug_print(debug: bool, *args: str) -> None:
-    6→    if not debug:
-    7→        return
-    8→    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    9→    message = " ".join(map(str, args))
-    10→    print(f"\033[97m[\033[90m{timestamp}\033[97m]\033[90m {message}\033[0m")
+    …
     13→def merge_fields(target, source):
-    14→    for key, value in source.items():
-    15→        if isinstance(value, str):
-    16→            target[key] += value
-    17→        elif value is not None and isinstance(value, dict):
-    18→            merge_fields(target[key], value)
+    …
     21→def merge_chunk(final_response: dict, delta: dict) -> None:
     …
     31→def function_to_json(func) -> dict:
@@ -346,4 +345,5 @@ tests/
   mock_client.py
   test_core.py
   test_runs/
+    test_20240402-113647.json
   test_util.py

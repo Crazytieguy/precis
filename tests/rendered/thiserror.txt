@@ -130,14 +130,6 @@ build.rs
   91→fn compile_probe(rustc_bootstrap: bool) -> bool {
   …
   179→fn rustc_minor_version() -> Option<u32> {
-  180→    let rustc = cargo_env_var("RUSTC");
-  181→    let output = Command::new(rustc).arg("--version").output().ok()?;
-  182→    let version = str::from_utf8(&output.stdout).ok()?;
-  183→    let mut pieces = version.split('.');
-  184→    if pieces.next() != Some("rustc 1") {
-  185→        return None;
-  186→    }
-  187→    pieces.next()?.parse().ok()
   …
   190→fn cargo_env_var(key: &str) -> OsString {
   191→    env::var_os(key).unwrap_or_else(|| {
@@ -187,10 +179,6 @@ impl/
       47→
       48→impl ToTokens for private {
       49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-      50→        tokens.append(Ident::new(
-      51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
-      52→            Span::call_site(),
-      53→        ));
       …
       55→}
     prop.rs
@@ -204,25 +192,21 @@ src/
     9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    12→        self
     …
     14→}
     16→impl<'a> AsDynError<'a> for dyn Error + 'a {
     17→    #[inline]
     18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    19→        self
     …
     21→}
     23→impl<'a> AsDynError<'a> for dyn Error + Send + 'a {
     24→    #[inline]
     25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    26→        self
     …
     28→}
     30→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a {
     31→    #[inline]
     32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    33→        self
     …
     35→}
     37→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a {
@@ -245,7 +229,6 @@ src/
     18→    type Target = &'a T;
     19→
     20→    fn as_display(&'a self) -> Self::Target {
-    21→        *self
     …
     23→}
     25→#[cfg(feature = "std")]
@@ -253,7 +236,6 @@ src/
     27→    type Target = path::Display<'a>;
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
-    31→        self.display()
     …
     33→}
     35→#[cfg(feature = "std")]
@@ -261,7 +243,6 @@ src/
     37→    type Target = path::Display<'a>;
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
-    41→        self.display()
     …
     43→}
     …
@@ -331,4 +312,33 @@ tests/
     duplicate-transparent.stderr
     expression-fallback.rs
     expression-fallback.stderr
+    fallback-impl-with-display.rs
+    fallback-impl-with-display.stderr
+    from-backtrace-backtrace.rs
+    from-backtrace-backtrace.stderr
+    from-not-source.rs
+    from-not-source.stderr
+    invalid-input-impl-anyway.rs
+    invalid-input-impl-anyway.stderr
+    lifetime.rs
+    lifetime.stderr
+    missing-display.rs
+    missing-display.stderr
+    missing-fmt.rs
+    missing-fmt.stderr
+    no-display.rs
+    no-display.stderr
+    numbered-positional-tuple.rs
+    numbered-positional-tuple.stderr
+    raw-identifier.rs
+    raw-identifier.stderr
+    same-from-type.rs
+    same-from-type.stderr
+    source-enum-not-error.rs
+    source-enum-not-error.stderr
+    source-enum-unnamed-field-not-error.rs
+    source-enum-unnamed-field-not-error.stderr
+    source-struct-not-error.rs
+    source-struct-not-error.stderr
+    source-struct-unnamed-field-not-error.rs
     …

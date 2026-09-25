@@ -74,6 +74,15 @@ cmd/
     42→This will open your browser to complete the OAuth authentication process.
     43→Your credentials will be securely stored and will take precedence over 
     44→environment variables when making API calls.
+    45→
+    46→Available providers:
+    47→  - anthropic: Anthropic Claude API (OAuth)
+    48→
+    49→Example:
+    50→  mcphost auth login anthropic`,
+    51→	Args: cobra.ExactArgs(1),
+    52→	RunE: runAuthLogin,
+    53→}
     …
     58→var authLogoutCmd = &cobra.Command{
     59→	Use:   "logout [provider]",
@@ -118,17 +127,12 @@ cmd/
     …
   hooks.go
     …
-    13→// hooksCmd represents the hooks command for managing MCPHost hook configurations.
-    14→// Hooks allow users to execute custom scripts or commands at various points
-    15→// during MCPHost execution, such as before/after tool use or when prompts are submitted.
     16→var hooksCmd = &cobra.Command{
     17→	Use:   "hooks",
     18→	Short: "Manage MCPHost hooks",
     19→	Long:  "Commands for managing and testing MCPHost hooks configuration",
     20→}
-    22→// hooksListCmd represents the list subcommand for displaying all configured hooks.
-    23→// It shows a formatted table of hook events, matchers, commands, and timeouts
-    24→// to help users understand their current hook configuration.
+    …
     25→var hooksListCmd = &cobra.Command{
     26→	Use:   "list",
     27→	Short: "List all configured hooks",
@@ -157,9 +161,7 @@ cmd/
     50→		return w.Flush()
     51→	},
     52→}
-    54→// hooksValidateCmd represents the validate subcommand for checking hook configuration validity.
-    55→// It loads and validates the hooks configuration file, ensuring proper syntax,
-    56→// valid event types, and correct matcher patterns before use.
+    …
     57→var hooksValidateCmd = &cobra.Command{
     58→	Use:   "validate",
     59→	Short: "Validate hooks configuration",
@@ -340,3 +342,13 @@ sdk/
   mcphost.go
   mcphost_test.go
   types.go
+    …
+    10→type Message = session.Message
+    …
+    14→type ToolCall = session.ToolCall
+    …
+    18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
+    19→	return msg.ConvertToSchemaMessage()
+    …
+    24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
+    …

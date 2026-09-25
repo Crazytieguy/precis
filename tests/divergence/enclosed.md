@@ -197,20 +197,19 @@ Score(3000)=0.594 I=0.833 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 8731 |  | 229 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.623 |
 | ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.612 |
 | walker |  | 9054 | 464 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.622 |
-| walker |  | 9145 | 91 | Code::CodeKey { rung: Body, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.622 |
-| walker |  | 9170 | 25 | Code::CodeKey { rung: Names, file: packages/lib/src/api/api.client.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 9079 | 25 | Code::CodeKey { rung: Names, file: packages/lib/src/api/api.client.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 9169 | 90 | Code::CodeKey { rung: Decl, file: packages/lib/src/api/api.client.ts, decl: 1, sub: 0, line: 20 } |  |  | 0.622 |
+| walker |  | 9207 | 38 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
 | ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.618 |
-| walker |  | 9260 | 90 | Code::CodeKey { rung: Decl, file: packages/lib/src/api/api.client.ts, decl: 1, sub: 0, line: 20 } |  |  | 0.618 |
-| walker |  | 9298 | 38 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
-| walker |  | 9320 | 22 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 2, sub: 0, line: 12 } |  |  | 0.618 |
+| walker |  | 9229 | 22 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 2, sub: 0, line: 12 } |  |  | 0.618 |
+| walker |  | 9278 | 49 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.618 |
 | ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.626 |
-| walker |  | 9369 | 49 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.626 |
-| walker |  | 9460 | 91 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 3, sub: 0, line: 17 } |  |  | 0.626 |
+| walker |  | 9369 | 91 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 3, sub: 0, line: 17 } |  |  | 0.626 |
+| walker |  | 9511 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.626 |
+| walker |  | 9524 | 13 | Code::CodeKey { rung: Names, file: packages/app-client/src/locales/locales.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
 | ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.629 |
-| walker |  | 9602 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.629 |
-| walker |  | 9615 | 13 | Code::CodeKey { rung: Names, file: packages/app-client/src/locales/locales.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
 | ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.633 |
+| walker |  | 9849 | 325 | Code::CodeKey { rung: Decl, file: packages/app-client/src/locales/locales.ts, decl: 1, sub: 0, line: 2 } |  |  | 0.633 |
+| walker |  | 9890 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
 | ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.643 |
-| walker |  | 9940 | 325 | Code::CodeKey { rung: Decl, file: packages/app-client/src/locales/locales.ts, decl: 1, sub: 0, line: 2 } |  |  | 0.643 |
-| walker |  | 9981 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.643 |
-| walker |  | 9995 | 14 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.643 |
+| walker |  | 9996 | 106 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.644 |
