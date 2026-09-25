@@ -12,6 +12,7 @@
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::fmt::Write as _;
 use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
@@ -785,7 +786,6 @@ fn format_line_row(
     indent_depth: usize,
 ) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    let gutter = number.to_string();
     match render {
         Render::Ellipsis => {
             // Unreachable from render/cost paths — Ellipsis records
@@ -795,13 +795,10 @@ fn format_line_row(
             s.push('…');
         }
         Render::Full => {
-            s.push_str(&gutter);
-            s.push('→');
-            s.push_str(source_line);
+            let _ = write!(s, "{number}→{source_line}");
         }
         Render::Truncated { pattern } => {
-            s.push_str(&gutter);
-            s.push('→');
+            let _ = write!(s, "{number}→");
             with_truncate_regex(pattern, |re| {
                 debug_assert!(
                     re.is_some(),
