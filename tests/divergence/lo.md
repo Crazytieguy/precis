@@ -52,7 +52,6 @@ Score(3000)=0.483 I=0.599 C=0.389 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | walker |  | 1961 | 17 | go doc channel.go:12 |  |  | 0.595 |
 | ns | 2051 |  | 440 | slice.go roster 1/2: transform, group, build (L12-L709) | 2.2 | 2.1 | 0.535 |
 | walker |  | 2058 | 97 | headings outline in README.md |  |  | 0.556 |
-| walker |  | 2058 | 0 | README.md section #1 |  |  | 0.556 |
 | walker |  | 2259 | 201 | go names math.go |  |  | 0.556 |
 | ns | 2418 |  | 367 | slice.go roster 2/2: take/drop, reject, count, trim (L721-L1297) | 2.3 |  | 0.517 |
 | walker |  | 2469 | 210 | go names find.go |  |  | 0.518 |

@@ -298,9 +298,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let src_lines: Vec<&str> = source.lines().collect();
         let mut prev_section_key: Option<BatchKey> = None;
         for (idx, range) in ranges.iter().enumerate() {
-            if let Some(content) =
-                build_section_content(&file, &source, idx, range, headline.as_ref())
-            {
+            if let Some(content) = build_section_content(&file, &source, range, headline.as_ref()) {
                 let key = MarkdownKey::Section {
                     file: file.clone(),
                     section_index: idx,
@@ -848,23 +846,19 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
 fn build_section_content(
     file: &Path,
     source: &Source,
-    section_index: usize,
     range: &SectionRange,
     headline: Option<&HeadlineSpec>,
 ) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
 
-    // For README section 0, skip lines `ReadmeHeadline` covers — else
-    // their marginal cost goes to 0 and `ratio(value, 0) = ∞`.
-    // (`headline` is `Some` only for READMEs.) Rows the headline
-    // stepped *over* are dropped with them: admitting that chrome
-    // measured −0.0033 corpus mean.
-    let effective_start = if section_index == 0
-        && let Some(max_row) = headline.and_then(|spec| spec.covered_rows.iter().next_back())
-    {
-        (max_row + 1).max(start)
-    } else {
-        start
+    // A README section starts past the last row `ReadmeHeadline`
+    // covers — else those rows' marginal cost goes to 0 and
+    // `ratio(value, 0) = ∞`. (`headline` is `Some` only for READMEs.)
+    // Rows the headline stepped *over* are dropped with them: admitting
+    // that chrome measured −0.0033 corpus mean.
+    let effective_start = match headline.and_then(|spec| spec.covered_rows.iter().next_back()) {
+        Some(max_row) => (max_row + 1).max(start),
+        None => start,
     };
     if effective_start > end {
         return None;
