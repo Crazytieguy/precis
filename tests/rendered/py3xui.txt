@@ -42,7 +42,7 @@ README.md
   43→## Quick Start
   44→You can use both synchronous and asynchronous methods to interact with the 3x-ui app. Both APIs have the same methods and return the same data, so it's up to you to choose which one to use.<br>
   45→After installing the SDK, you can create a new instance of the API. When creating a new instance, you can either use environment variables or pass the credentials directly. It's strongly recommended to use environment variables to store the API credentials.<br>
-  …
+  46→On creation, the Api won't connect to the 3x-ui app, so you can spawn new instances without spending resources. But after creating an instance, you'll need to call the `login` method to authenticate the user and save the cookie for future requests.
   48→### Installation
   …
   53→### Create a new instance of the API
@@ -325,10 +325,8 @@ pyproject.toml
   6→name = "py3xui"
   7→version = "0.5.0"
   8→description = "Sync and Async Object-oriented Python SDK for the 3x-ui app."
-  9→authors = [{name = "iwatkot", email = "iwatkot@gmail.com"}]
-  10→license = {text = "MIT License"}
+  …
   11→readme = "README.md"
-  12→keywords = ["vpn", "3x-ui", "sdk", "api"]
   …
   19→dependencies = [
   20→    "pydantic>=2.0.0",

@@ -49,7 +49,7 @@ README.md
   33→```
   34→$ flask run
   35→  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-  …
+  36→```
   38→## Donate
   39→
   40→The Pallets organization develops and supports Flask and the libraries
@@ -134,6 +134,12 @@ docs/
     wtforms.rst
   quickstart.rst
   reqcontext.rst
+    1→:orphan:
+    2→
+    3→The Request Context
+    4→===================
+    5→
+    …
   server.rst
   shell.rst
   signals.rst
@@ -206,8 +212,6 @@ pyproject.toml
   4→description = "A simple framework for building complex web applications."
   5→readme = "README.md"
   6→license = "BSD-3-Clause"
-  7→license-files = ["LICENSE.txt"]
-  8→maintainers = [{name = "Pallets", email = "contact@palletsprojects.com"}]
   …
   22→requires-python = ">=3.10"
   23→dependencies = [

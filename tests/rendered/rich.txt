@@ -206,11 +206,10 @@ poetry.lock
 pyproject.toml
   1→[tool.poetry]
   2→name = "rich"
-  3→homepage = "https://github.com/Textualize/rich"
-  4→documentation = "https://rich.readthedocs.io/en/latest/"
+  …
   5→version = "15.0.0"
   6→description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
-  7→authors = ["Will McGugan <willmcgugan@gmail.com>"]
+  …
   8→license = "MIT"
   9→readme = "README.md"
   …
@@ -334,6 +333,11 @@ rich/
     __init__.py
       …
       12→from importlib import import_module
+      13→from typing import TYPE_CHECKING, cast
+      14→
+      15→from rich._unicode_data._versions import VERSIONS
+      …
+      20→VERSION_ORDER = sorted(
       …
     _versions.py
     unicode10-0-0.py

@@ -55,18 +55,10 @@ notebooks/
 pyproject.toml
   1→[project]
   2→name = "chronos-forecasting"
-  3→dynamic = ["version"]
-  4→authors = [
-  5→  { name = "Abdul Fatir Ansari", email = "ansarnd@amazon.com" },
-  6→  { name = "Lorenzo Stella", email = "stellalo@amazon.com" },
-  7→  { name = "Caner Turkmen", email = "atturkm@amazon.com" },
-  8→  { name = "Oleksandr Shchur", email = "shchuro@amazon.com" },
-  9→  { name = "Jaris Küken", email = "kuekenj@amazon.com" },
-  10→  { name = "Andreas Auer", email = "auerand@amazon.com" },
-  11→]
+  …
   12→description = "Chronos: Pretrained models for time series forecasting"
   13→readme = "README.md"
-  14→license = { file = "LICENSE" }
+  …
   15→requires-python = ">=3.10"
   16→dependencies = [
   17→  "torch>=2.2,<3",
@@ -149,8 +141,12 @@ src/
     chronos.py
       …
       24→logger = logging.getLogger(__file__)
-      …
+      27→@dataclass
       28→class ChronosConfig:
+      …
+      34→    tokenizer_class: str
+      35→    tokenizer_kwargs: Dict[str, Any]
+      36→    context_length: int
       …
       59→class ChronosTokenizer:
       …
@@ -231,8 +227,16 @@ src/
       435→        temperature: Optional[float] = None,
       436→        top_k: Optional[int] = None,
       437→        top_p: Optional[float] = None,
+      438→        limit_prediction_length: bool = False,
+      439→    ) -> torch.Tensor:
       …
       513→    def predict_quantiles(
+      514→        self,
+      515→        inputs: Union[torch.Tensor, List[torch.Tensor]],
+      516→        prediction_length: Optional[int] = None,
+      517→        quantile_levels: List[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+      518→        **predict_kwargs,
+      519→    ) -> Tuple[torch.Tensor, torch.Tensor]:
       …
       535→    @classmethod
       536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):

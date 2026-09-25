@@ -94,17 +94,12 @@ pyproject.toml
   5→[project]
   6→name = "xlstm"
   7→version = "2.0.5"
-  8→authors = [
-  9→  { name="Maximilian Beck", email="beck@ml.jku.at" },
-  10→  { name="Korbinian Poeppel", email="poeppel@ml.jku.at" },
-  11→  { name="Andreas Auer", email="auer@ml.jku.at" },
-  12→]
+  …
   13→description = "A novel LSTM variant with promising performance compared to Transformers or State Space Models."
   14→readme = "README.md"
-  15→license = {file="LICENSE"}
+  …
   16→requires-python = ">=3.9"
   …
-  21→keywords = ["LSTM", "Transformer", "Machine Learning", "Deep Learning", "State Space Models"]
   22→dependencies = [
   23→    "torch",
   24→    "einops",
@@ -125,8 +120,6 @@ pyproject.toml
   39→    "seaborn",
   40→    "mlstm_kernels",
   41→]
-  44→# [tool.setuptools]
-  45→# include_package_data = true
   …
 pytest.ini
   1→[pytest]
@@ -297,6 +290,16 @@ xlstm/
     80→    def __init__(self, config: xLSTMBlockStackConfig):
     …
     90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
+    …
+    111→    def reset_parameters(self) -> None:
+    112→        for block in self.blocks:
+    113→            block.reset_parameters()
+    …
+    117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
+    …
+    126→    def step(
+    127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
+    128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     …
   xlstm_large/
     __init__.py

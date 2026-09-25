@@ -138,8 +138,6 @@ pyproject.toml
   4→description = "Composable command line interface toolkit"
   5→readme = "README.md"
   6→license = "BSD-3-Clause"
-  7→license-files = ["LICENSE.txt"]
-  8→maintainers = [{name = "Pallets", email = "contact@palletsprojects.com"}]
   …
   16→requires-python = ">=3.10"
   17→dependencies = [
@@ -313,7 +311,10 @@ src/
       …
       525→    def invoke(
       …
+      638→    @contextlib.contextmanager
       639→    def isolated_filesystem(
+      640→        self, temp_dir: str | os.PathLike[str] | None = None
+      641→    ) -> cabc.Iterator[str]:
       …
     types.py
     utils.py

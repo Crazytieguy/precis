@@ -126,14 +126,10 @@ pyproject.toml
   …
   8→[project]
   9→name = "pluggy"
-  10→license = {text = "MIT"}
-  11→authors = [{name = "Holger Krekel"}]
-  12→maintainers = [{name="pytest core team", email="core@pytest.org"}]
   …
   33→description = "plugin and hook calling mechanisms for python"
-  34→readme = {file = "README.rst", content-type = "text/x-rst"}
+  …
   35→requires-python = ">=3.10"
-  37→dynamic = ["version"]
   …
 scripts/
   release.py
@@ -230,7 +226,11 @@ src/
       …
       56→class HookimplOpts(TypedDict):
       …
+      77→@final
       78→class HookspecMarker:
+      …
+      86→    __slots__ = ("project_name",)
+      87→
       …
       165→class HookimplMarker:
       …
@@ -247,8 +247,10 @@ src/
       363→    __slots__ = ("__dict__",)
       364→
       365→    def __init__(self) -> None:
-      …
+      366→        """:meta private:"""
       368→    if TYPE_CHECKING:
+      369→
+      370→        def __getattr__(self, name: str) -> HookCaller: ...
       …
       374→_HookRelay = HookRelay
       375→

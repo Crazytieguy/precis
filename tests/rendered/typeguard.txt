@@ -63,7 +63,7 @@ pyproject.toml
   9→name = "typeguard"
   10→description = "Run-time type checker for Python"
   11→readme = "README.rst"
-  12→authors = [{name = "Alex Grönholm", email = "alex.gronholm@nextday.fi"}]
+  …
   13→license = "MIT"
   …
   26→requires-python = ">= 3.9"
@@ -71,7 +71,6 @@ pyproject.toml
   28→    "importlib_metadata >= 3.6; python_version < '3.10'",
   29→    "typing_extensions >= 4.14.0",
   30→]
-  31→dynamic = ["version"]
   …
 src/
   typeguard/
@@ -270,8 +269,12 @@ src/
       836→    origin_type: Any,
       837→    args: tuple[Any, ...],
       838→    memo: TypeCheckMemo,
+      839→) -> None:
       …
       885→def check_byteslike(
+      886→    value: Any,
+      887→    origin_type: Any,
+      888→    args: tuple[Any, ...],
       …
       895→def check_self(
       …

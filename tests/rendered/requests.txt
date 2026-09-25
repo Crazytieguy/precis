@@ -142,14 +142,7 @@ pyproject.toml
   6→name = "requests"
   7→description = "Python HTTP for Humans."
   8→readme = "README.md"
-  9→license = {text = "Apache-2.0"}
-  10→authors = [
-  11→    { name = "Kenneth Reitz", email = "me@kennethreitz.org" },
-  12→]
-  13→maintainers = [
-  14→    {name = "Ian Stapleton Cordasco", email="graffatcolmingov@gmail.com"},
-  15→    {name = "Nate Prewitt", email="nate.prewitt@gmail.com"}
-  16→]
+  …
   17→requires-python = ">=3.10"
   18→dependencies = [
   19→    "charset_normalizer>=2,<4",
@@ -157,7 +150,6 @@ pyproject.toml
   21→    "urllib3>=1.26,<3",
   22→    "certifi>=2023.5.7"
   23→]
-  24→dynamic = ["version"]
   …
   53→[project.optional-dependencies]
   54→security = []
@@ -268,6 +260,20 @@ src/
       188→__all__ = (
       189→    "ConnectionError",
       190→    "ConnectTimeout",
+      191→    "HTTPError",
+      192→    "JSONDecodeError",
+      193→    "PreparedRequest",
+      194→    "ReadTimeout",
+      195→    "Request",
+      196→    "RequestException",
+      197→    "Response",
+      198→    "Session",
+      199→    "Timeout",
+      200→    "TooManyRedirects",
+      201→    "URLRequired",
+      202→    "codes",
+      203→    "delete",
+      204→    "get",
       …
     __version__.py
       …

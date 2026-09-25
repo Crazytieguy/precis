@@ -1,4 +1,4 @@
-Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.568/0.574/0.493/0.459/0.495/0.546/0.520
+Score(3000)=0.459 I=0.776 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.582/0.574/0.492/0.459/0.495/0.538/0.514
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,150 +27,150 @@ Score(3000)=0.459 I=0.778 C=0.271 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 682 |  | 60 | src/tomli/_types.py type aliases (complete file body) | 1.9 |  | 0.434 |
 | ns | 766 |  | 84 | README mypyc/pure-Python distribution note | 1.10 |  | 0.418 |
 | walker |  | 787 | 393 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.603 |
-| walker |  | 847 | 60 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.604 |
-| walker |  | 884 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
-| ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.559 |
-| ns | 1220 |  | 248 | Complete roster of module-level functions in _parser.py (names only) | 2.1 |  | 0.485 |
-| walker |  | 1269 | 385 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.613 |
-| walker |  | 1278 | 9 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.613 |
-| walker |  | 1303 | 25 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.613 |
-| walker |  | 1317 | 14 | Code::CodeKey { rung: Names, file: profiler/profiler_script.py, decl: 0, sub: 0, line: 0 } |  |  | 0.613 |
+| walker |  | 824 | 37 | Code::CodeKey { rung: Names, file: src/tomli/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.638 |
+| ns | 972 |  | 206 | README section map: every H2 and H3 heading | 1.11 |  | 0.558 |
+| walker |  | 1209 | 385 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.706 |
+| walker |  | 1218 | 9 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.706 |
+| ns | 1220 |  | 248 | Complete roster of module-level functions in _parser.py (names only) | 2.1 |  | 0.612 |
+| walker |  | 1243 | 25 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.612 |
+| walker |  | 1257 | 14 | Code::CodeKey { rung: Names, file: profiler/profiler_script.py, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
+| walker |  | 1289 | 32 | Code::CodeKey { rung: Decl, file: profiler/profiler_script.py, decl: 1, sub: 0, line: 12 } |  |  | 0.612 |
+| walker |  | 1295 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.612 |
 | ns | 1340 |  | 120 | Complete roster of classes in _parser.py, with Output's fields | 2.2 |  | 0.574 |
-| walker |  | 1349 | 32 | Code::CodeKey { rung: Decl, file: profiler/profiler_script.py, decl: 1, sub: 0, line: 12 } |  |  | 0.574 |
-| walker |  | 1355 | 6 | Fs::DirListing { dir: tests/data } |  |  | 0.574 |
-| walker |  | 1417 | 62 | Code::CodeKey { rung: Names, file: fuzzer/fuzz.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
-| walker |  | 1435 | 18 | Code::CodeKey { rung: Doc, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.574 |
-| walker |  | 1492 | 57 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 2, sub: 0, line: 53 } |  |  | 0.574 |
-| walker |  | 1556 | 64 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 4, sub: 0, line: 71 } |  |  | 0.574 |
-| ns | 1576 |  | 236 | loads(): parse state setup and the statement-loop rule enumeration | 2.3 | 1.7 | 0.525 |
-| ns | 1719 |  | 143 | parse_value() signature and the inline-nesting recursion guard | 2.4 | 2.1 | 0.503 |
-| walker |  | 1731 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.503 |
-| walker |  | 1775 | 44 | Plaintext::DeclSurface { file: fuzzer/requirements.txt } |  |  | 0.503 |
-| walker |  | 1809 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
-| walker |  | 1915 | 106 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.513 |
-| ns | 1924 |  | 205 | MAX_INLINE_NESTING and the mypyc stack-overflow rationale | 2.5 | 2.4 | 0.493 |
-| walker |  | 2103 | 188 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.493 |
-| walker |  | 2233 | 130 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.493 |
-| ns | 2357 |  | 433 | loads(): the statement dispatch body and its two top-level errors | 2.6 | 2.3 | 0.432 |
-| walker |  | 2534 | 301 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.504 |
-| walker |  | 2709 | 175 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.505 |
-| walker |  | 2721 | 12 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.505 |
-| ns | 2734 |  | 377 | parse_value(): string, boolean, array and inline-table dispatch | 2.7 | 2.4 | 0.459 |
-| walker |  | 2825 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.459 |
-| walker |  | 2984 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.459 |
-| walker |  | 3018 | 34 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 9, sub: 0, line: 116 } |  |  | 0.459 |
+| walker |  | 1357 | 62 | Code::CodeKey { rung: Names, file: fuzzer/fuzz.py, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
+| walker |  | 1375 | 18 | Code::CodeKey { rung: Doc, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.574 |
+| walker |  | 1432 | 57 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 2, sub: 0, line: 53 } |  |  | 0.574 |
+| walker |  | 1496 | 64 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 4, sub: 0, line: 71 } |  |  | 0.574 |
+| ns | 1576 |  | 236 | loads(): parse state setup and the statement-loop rule enumeration | 2.3 | 1.7 | 0.524 |
+| walker |  | 1671 | 175 | Markdown::Section { file: tomllib.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.524 |
+| walker |  | 1715 | 44 | Plaintext::DeclSurface { file: fuzzer/requirements.txt } |  |  | 0.524 |
+| ns | 1719 |  | 143 | parse_value() signature and the inline-nesting recursion guard | 2.4 | 2.1 | 0.502 |
+| walker |  | 1749 | 34 | Code::CodeKey { rung: Names, file: src/tomli/_types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 1855 | 106 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 3, sub: 0, line: 59 } |  |  | 0.512 |
+| ns | 1924 |  | 205 | MAX_INLINE_NESTING and the mypyc stack-overflow rationale | 2.5 | 2.4 | 0.492 |
+| walker |  | 2043 | 188 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.492 |
+| walker |  | 2173 | 130 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.492 |
+| ns | 2357 |  | 433 | loads(): the statement dispatch body and its two top-level errors | 2.6 | 2.3 | 0.431 |
+| walker |  | 2474 | 301 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.503 |
+| walker |  | 2649 | 175 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 2661 | 12 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.504 |
+| ns | 2734 |  | 377 | parse_value(): string, boolean, array and inline-table dispatch | 2.7 | 2.4 | 0.458 |
+| walker |  | 2765 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.459 |
+| walker |  | 2924 | 159 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 5, sub: 0, line: 46 } |  |  | 0.459 |
+| walker |  | 2958 | 34 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 9, sub: 0, line: 116 } |  |  | 0.459 |
 | ns | 3122 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.429 |
-| walker |  | 3255 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.431 |
-| walker |  | 3317 | 62 | Code::CodeKey { rung: Doc, file: src/tomli/_re.py, decl: 6, sub: 0, line: 59 } |  |  | 0.431 |
+| walker |  | 3195 | 237 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 3, sub: 0, line: 26 } |  |  | 0.430 |
+| walker |  | 3257 | 62 | Code::CodeKey { rung: Doc, file: src/tomli/_re.py, decl: 6, sub: 0, line: 59 } |  |  | 0.430 |
 | ns | 3453 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.413 |
-| ns | 3550 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.406 |
-| walker |  | 3558 | 241 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.428 |
-| ns | 3662 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.421 |
-| walker |  | 3786 | 228 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 1, line: 0 } |  |  | 0.443 |
-| walker |  | 3797 | 11 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.443 |
-| walker |  | 3811 | 14 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 31, sub: 0, line: 312 } |  |  | 0.446 |
-| walker |  | 3834 | 23 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 11, sub: 0, line: 51 } |  |  | 0.455 |
+| walker |  | 3498 | 241 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.434 |
+| ns | 3550 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.427 |
+| ns | 3662 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.420 |
+| walker |  | 3726 | 228 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 1, line: 0 } |  |  | 0.443 |
+| walker |  | 3737 | 11 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.443 |
+| walker |  | 3751 | 14 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 31, sub: 0, line: 312 } |  |  | 0.445 |
+| walker |  | 3774 | 23 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 11, sub: 0, line: 51 } |  |  | 0.454 |
+| walker |  | 3824 | 50 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 27, sub: 0, line: 278 } |  |  | 0.456 |
 | ns | 3836 |  | 174 | BASIC_STR_ESCAPE_REPLACEMENTS: the full escape table | 2.12 |  | 0.445 |
-| ns | 3872 |  | 36 | tests/ and tests/data/ listings (complete) | 3.1 |  | 0.460 |
-| walker |  | 3884 | 50 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 27, sub: 0, line: 278 } |  |  | 0.461 |
-| walker |  | 3930 | 46 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 29, sub: 0, line: 283 } |  |  | 0.462 |
-| ns | 3931 |  | 59 | tests/__init__.py: the tomli-as-tomllib alias | 3.2 |  | 0.457 |
-| walker |  | 3943 | 13 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 19, sub: 0, line: 149 } |  |  | 0.462 |
-| walker |  | 4026 | 83 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 17, sub: 0, line: 87 } |  |  | 0.462 |
-| walker |  | 4041 | 15 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 18, sub: 0, line: 137 } |  |  | 0.468 |
-| ns | 4195 |  | 264 | Complete roster of test classes and test methods | 3.3 |  | 0.452 |
-| walker |  | 4197 | 156 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 14, sub: 0, line: 57 } |  |  | 0.483 |
-| walker |  | 4229 | 32 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 15, sub: 0, line: 71 } |  |  | 0.493 |
-| ns | 4371 |  | 176 | tox core configuration: the interpreter matrix and default command | 3.4 |  | 0.484 |
-| walker |  | 4444 | 215 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.487 |
-| walker |  | 4458 | 14 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.493 |
+| walker |  | 3870 | 46 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 29, sub: 0, line: 283 } |  |  | 0.446 |
+| ns | 3872 |  | 36 | tests/ and tests/data/ listings (complete) | 3.1 |  | 0.461 |
+| walker |  | 3883 | 13 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 19, sub: 0, line: 149 } |  |  | 0.465 |
+| ns | 3931 |  | 59 | tests/__init__.py: the tomli-as-tomllib alias | 3.2 |  | 0.461 |
+| walker |  | 3966 | 83 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 17, sub: 0, line: 87 } |  |  | 0.461 |
+| walker |  | 3981 | 15 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 18, sub: 0, line: 137 } |  |  | 0.467 |
+| walker |  | 4137 | 156 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 14, sub: 0, line: 57 } |  |  | 0.499 |
+| walker |  | 4169 | 32 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 15, sub: 0, line: 71 } |  |  | 0.509 |
+| ns | 4195 |  | 264 | Complete roster of test classes and test methods | 3.3 |  | 0.492 |
+| ns | 4371 |  | 176 | tox core configuration: the interpreter matrix and default command | 3.4 |  | 0.483 |
+| walker |  | 4384 | 215 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.486 |
+| walker |  | 4398 | 14 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.492 |
 | ns | 4523 |  | 152 | setup.py: the mypyc build path | 3.5 |  | 0.481 |
-| walker |  | 4668 | 210 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 2, line: 0 } |  |  | 0.495 |
-| walker |  | 4703 | 35 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 39, sub: 0, line: 413 } |  |  | 0.495 |
-| ns | 4717 |  | 194 | pyproject.toml: build backend and project metadata | 3.6 |  | 0.502 |
-| walker |  | 4741 | 38 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 40, sub: 0, line: 447 } |  |  | 0.502 |
-| ns | 4775 |  | 58 | Listings of the helper trees: benchmark, fuzzer, profiler, scripts, workflows | 3.7 |  | 0.518 |
-| walker |  | 4807 | 66 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 34, sub: 0, line: 327 } |  |  | 0.518 |
-| ns | 4958 |  | 183 | test_data.py: how the TOML corpus is discovered and compared | 3.8 | 3.3 | 0.508 |
-| walker |  | 5034 | 227 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 3, line: 0 } |  |  | 0.548 |
-| walker |  | 5066 | 32 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 46, sub: 0, line: 564 } |  |  | 0.548 |
-| ns | 5097 |  | 139 | tests/burntsushi.py: purpose and complete function roster | 3.9 |  | 0.541 |
-| walker |  | 5102 | 36 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 52, sub: 0, line: 684 } |  |  | 0.543 |
-| walker |  | 5139 | 37 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 44, sub: 0, line: 502 } |  |  | 0.543 |
-| walker |  | 5178 | 39 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 45, sub: 0, line: 528 } |  |  | 0.543 |
-| walker |  | 5273 | 95 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 54, sub: 0, line: 764 } |  |  | 0.543 |
-| ns | 5348 |  | 251 | Flags: the two flag constants, the state fields, and the complete method roster | 4.1 | 2.2 | 0.546 |
-| walker |  | 5383 | 110 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.573 |
-| ns | 5472 |  | 124 | NestedDict: the parsed-document container and its two methods | 4.2 | 2.2 | 0.573 |
-| walker |  | 5625 | 242 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.573 |
-| ns | 5733 |  | 261 | create_dict_rule(): the [table] statement | 4.3 | 2.1 | 0.560 |
-| walker |  | 5801 | 176 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.560 |
-| ns | 6033 |  | 300 | create_list_rule(): the [[array of tables]] statement | 4.4 | 2.1 | 0.546 |
-| walker |  | 6142 | 341 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.546 |
-| walker |  | 6316 | 174 | Markdown::Section { file: tomllib.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.546 |
-| walker |  | 6386 | 70 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.547 |
-| ns | 6511 |  | 478 | key_value_rule(): dotted keys, pending flags and immutability | 4.5 | 2.1 | 0.527 |
-| ns | 6690 |  | 179 | parse_key_part(): bare, literal and basic key forms | 4.6 | 2.1 | 0.519 |
-| walker |  | 6778 | 392 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.519 |
-| walker |  | 6962 | 184 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.519 |
-| ns | 6975 |  | 285 | parse_array(): array literals and trailing commas | 4.7 | 2.1 | 0.507 |
-| ns | 7464 |  | 489 | parse_inline_table(): inline tables and their local flag scope | 4.8 | 2.1 | 0.490 |
-| walker |  | 7478 | 516 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.490 |
-| ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.484 |
-| ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.481 |
-| walker |  | 7821 | 343 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 1, sub: 0, line: 20 } |  |  | 0.481 |
-| walker |  | 7904 | 83 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 8, sub: 0, line: 109 } |  |  | 0.481 |
-| walker |  | 7917 | 13 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 22, sub: 0, line: 233 } |  |  | 0.482 |
-| walker |  | 7932 | 15 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 47, sub: 0, line: 595 } |  |  | 0.482 |
-| ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.479 |
-| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.484 |
-| walker |  | 8285 | 353 | Markdown::Section { file: tomllib.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.485 |
-| walker |  | 8304 | 19 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 32, sub: 0, line: 313 } |  |  | 0.491 |
-| walker |  | 8312 | 8 | Plaintext::DeclSurface { file: scripts/requirements.txt } |  |  | 0.491 |
-| walker |  | 8336 | 24 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 43, sub: 0, line: 497 } |  |  | 0.493 |
-| ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.484 |
-| walker |  | 8401 | 65 | Markdown::HeadingsOutline { file: benchmark/README.md } |  |  | 0.484 |
-| walker |  | 8428 | 27 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 53, sub: 0, line: 760 } |  |  | 0.485 |
-| walker |  | 8529 | 101 | Fs::DirListing { dir: tests/data/valid } |  |  | 0.485 |
-| walker |  | 8534 | 5 | Fs::DirListing { dir: tests/data/valid/_external } |  |  | 0.485 |
-| ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.498 |
-| walker |  | 8540 | 6 | Fs::DirListing { dir: tests/data/valid/_external/toml-test } |  |  | 0.498 |
-| walker |  | 8562 | 22 | Fs::DirListing { dir: tests/data/valid/dates-and-times } |  |  | 0.498 |
-| walker |  | 8588 | 26 | Fs::DirListing { dir: tests/data/valid/array } |  |  | 0.498 |
-| walker |  | 8614 | 26 | Fs::DirListing { dir: tests/data/valid/inline-table } |  |  | 0.498 |
-| walker |  | 8642 | 28 | Fs::DirListing { dir: tests/data/valid/multiline-basic-str } |  |  | 0.498 |
-| walker |  | 8670 | 28 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 28, sub: 0, line: 279 } |  |  | 0.503 |
-| walker |  | 8708 | 38 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 21, sub: 0, line: 229 } |  |  | 0.508 |
-| ns | 8772 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.521 |
-| ns | 8901 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.520 |
-| walker |  | 9045 | 337 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 6, sub: 0, line: 59 } |  |  | 0.520 |
-| ns | 9133 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.515 |
-| walker |  | 9199 | 154 | Fs::DirListing { dir: tests/data/invalid } |  |  | 0.515 |
-| walker |  | 9204 | 5 | Fs::DirListing { dir: tests/data/invalid/_external } |  |  | 0.515 |
-| walker |  | 9210 | 6 | Fs::DirListing { dir: tests/data/invalid/dates-and-times } |  |  | 0.515 |
-| walker |  | 9216 | 6 | Fs::DirListing { dir: tests/data/invalid/literal-str } |  |  | 0.515 |
-| walker |  | 9222 | 6 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test } |  |  | 0.515 |
-| walker |  | 9237 | 15 | Fs::DirListing { dir: tests/data/invalid/multiline-literal-str } |  |  | 0.515 |
-| walker |  | 9255 | 18 | Fs::DirListing { dir: tests/data/invalid/array-of-tables } |  |  | 0.515 |
-| walker |  | 9273 | 18 | Fs::DirListing { dir: tests/data/invalid/boolean } |  |  | 0.515 |
-| walker |  | 9294 | 21 | Fs::DirListing { dir: tests/data/invalid/table } |  |  | 0.515 |
-| walker |  | 9317 | 23 | Fs::DirListing { dir: tests/data/invalid/array } |  |  | 0.515 |
-| ns | 9339 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.522 |
-| walker |  | 9350 | 33 | Fs::DirListing { dir: tests/data/invalid/dotted-keys } |  |  | 0.522 |
-| walker |  | 9390 | 40 | Fs::DirListing { dir: tests/data/invalid/keys-and-vals } |  |  | 0.522 |
-| walker |  | 9432 | 42 | Fs::DirListing { dir: tests/data/invalid/multiline-basic-str } |  |  | 0.522 |
-| ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.516 |
-| walker |  | 9521 | 89 | Fs::DirListing { dir: tests/data/invalid/inline-table } |  |  | 0.516 |
-| walker |  | 9538 | 17 | Code::CodeKey { rung: Names, file: tests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
-| walker |  | 9576 | 38 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 23, sub: 0, line: 236 } |  |  | 0.517 |
-| walker |  | 9632 | 56 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid } |  |  | 0.517 |
-| ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.513 |
-| walker |  | 9683 | 51 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 33, sub: 0, line: 318 } |  |  | 0.513 |
-| walker |  | 9734 | 51 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-time } |  |  | 0.513 |
-| walker |  | 9761 | 27 | Code::CodeKey { rung: Names, file: benchmark/run.py, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
-| ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.509 |
-| walker |  | 9821 | 60 | Code::CodeKey { rung: Decl, file: benchmark/run.py, decl: 1, sub: 0, line: 15 } |  |  | 0.509 |
-| walker |  | 9885 | 64 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 24, sub: 0, line: 241 } |  |  | 0.510 |
-| walker |  | 9900 | 15 | Code::CodeKey { rung: Names, file: tests/test_error.py, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
-| ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.504 |
-| walker |  | 10000 | 100 | Code::CodeKey { rung: Decl, file: tests/test_error.py, decl: 1, sub: 0, line: 13 } |  |  | 0.508 |
+| walker |  | 4608 | 210 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 2, line: 0 } |  |  | 0.495 |
+| walker |  | 4643 | 35 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 39, sub: 0, line: 413 } |  |  | 0.495 |
+| walker |  | 4681 | 38 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 40, sub: 0, line: 447 } |  |  | 0.495 |
+| ns | 4717 |  | 194 | pyproject.toml: build backend and project metadata | 3.6 |  | 0.491 |
+| walker |  | 4747 | 66 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 34, sub: 0, line: 327 } |  |  | 0.491 |
+| ns | 4775 |  | 58 | Listings of the helper trees: benchmark, fuzzer, profiler, scripts, workflows | 3.7 |  | 0.507 |
+| ns | 4958 |  | 183 | test_data.py: how the TOML corpus is discovered and compared | 3.8 | 3.3 | 0.497 |
+| walker |  | 4974 | 227 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 3, line: 0 } |  |  | 0.538 |
+| walker |  | 5006 | 32 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 46, sub: 0, line: 564 } |  |  | 0.538 |
+| walker |  | 5042 | 36 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 52, sub: 0, line: 684 } |  |  | 0.540 |
+| walker |  | 5079 | 37 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 44, sub: 0, line: 502 } |  |  | 0.540 |
+| ns | 5097 |  | 139 | tests/burntsushi.py: purpose and complete function roster | 3.9 |  | 0.533 |
+| walker |  | 5118 | 39 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 45, sub: 0, line: 528 } |  |  | 0.533 |
+| walker |  | 5213 | 95 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 54, sub: 0, line: 764 } |  |  | 0.533 |
+| walker |  | 5323 | 110 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.561 |
+| ns | 5348 |  | 251 | Flags: the two flag constants, the state fields, and the complete method roster | 4.1 | 2.2 | 0.564 |
+| ns | 5472 |  | 124 | NestedDict: the parsed-document container and its two methods | 4.2 | 2.2 | 0.564 |
+| walker |  | 5565 | 242 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.564 |
+| ns | 5733 |  | 261 | create_dict_rule(): the [table] statement | 4.3 | 2.1 | 0.551 |
+| walker |  | 5741 | 176 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.551 |
+| ns | 6033 |  | 300 | create_list_rule(): the [[array of tables]] statement | 4.4 | 2.1 | 0.538 |
+| walker |  | 6082 | 341 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.538 |
+| walker |  | 6256 | 174 | Markdown::Section { file: tomllib.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.538 |
+| walker |  | 6326 | 70 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.538 |
+| ns | 6511 |  | 478 | key_value_rule(): dotted keys, pending flags and immutability | 4.5 | 2.1 | 0.519 |
+| ns | 6690 |  | 179 | parse_key_part(): bare, literal and basic key forms | 4.6 | 2.1 | 0.511 |
+| walker |  | 6718 | 392 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.511 |
+| walker |  | 6902 | 184 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.511 |
+| ns | 6975 |  | 285 | parse_array(): array literals and trailing commas | 4.7 | 2.1 | 0.499 |
+| walker |  | 7418 | 516 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.499 |
+| ns | 7464 |  | 489 | parse_inline_table(): inline tables and their local flag scope | 4.8 | 2.1 | 0.482 |
+| ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.477 |
+| walker |  | 7761 | 343 | Code::CodeKey { rung: Body, file: fuzzer/fuzz.py, decl: 1, sub: 0, line: 20 } |  |  | 0.477 |
+| ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.473 |
+| walker |  | 7844 | 83 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 8, sub: 0, line: 109 } |  |  | 0.473 |
+| walker |  | 7857 | 13 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 22, sub: 0, line: 233 } |  |  | 0.474 |
+| walker |  | 7872 | 15 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 47, sub: 0, line: 595 } |  |  | 0.474 |
+| ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.471 |
+| ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.477 |
+| walker |  | 8225 | 353 | Markdown::Section { file: tomllib.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.477 |
+| walker |  | 8244 | 19 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 32, sub: 0, line: 313 } |  |  | 0.484 |
+| walker |  | 8252 | 8 | Plaintext::DeclSurface { file: scripts/requirements.txt } |  |  | 0.484 |
+| walker |  | 8276 | 24 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 43, sub: 0, line: 497 } |  |  | 0.485 |
+| walker |  | 8341 | 65 | Markdown::HeadingsOutline { file: benchmark/README.md } |  |  | 0.485 |
+| ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.477 |
+| walker |  | 8368 | 27 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 53, sub: 0, line: 760 } |  |  | 0.478 |
+| walker |  | 8469 | 101 | Fs::DirListing { dir: tests/data/valid } |  |  | 0.478 |
+| walker |  | 8474 | 5 | Fs::DirListing { dir: tests/data/valid/_external } |  |  | 0.478 |
+| walker |  | 8480 | 6 | Fs::DirListing { dir: tests/data/valid/_external/toml-test } |  |  | 0.478 |
+| walker |  | 8502 | 22 | Fs::DirListing { dir: tests/data/valid/dates-and-times } |  |  | 0.478 |
+| walker |  | 8528 | 26 | Fs::DirListing { dir: tests/data/valid/array } |  |  | 0.478 |
+| ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.491 |
+| walker |  | 8554 | 26 | Fs::DirListing { dir: tests/data/valid/inline-table } |  |  | 0.491 |
+| walker |  | 8582 | 28 | Fs::DirListing { dir: tests/data/valid/multiline-basic-str } |  |  | 0.491 |
+| walker |  | 8610 | 28 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 28, sub: 0, line: 279 } |  |  | 0.496 |
+| walker |  | 8648 | 38 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 21, sub: 0, line: 229 } |  |  | 0.502 |
+| ns | 8772 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.514 |
+| ns | 8901 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.514 |
+| walker |  | 8985 | 337 | Code::CodeKey { rung: Body, file: src/tomli/_re.py, decl: 6, sub: 0, line: 59 } |  |  | 0.514 |
+| ns | 9133 |  | 232 | Complete roster of tox environments with their descriptions | 6.1 | 3.4 | 0.509 |
+| walker |  | 9139 | 154 | Fs::DirListing { dir: tests/data/invalid } |  |  | 0.509 |
+| walker |  | 9144 | 5 | Fs::DirListing { dir: tests/data/invalid/_external } |  |  | 0.509 |
+| walker |  | 9150 | 6 | Fs::DirListing { dir: tests/data/invalid/dates-and-times } |  |  | 0.509 |
+| walker |  | 9156 | 6 | Fs::DirListing { dir: tests/data/invalid/literal-str } |  |  | 0.509 |
+| walker |  | 9162 | 6 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test } |  |  | 0.509 |
+| walker |  | 9177 | 15 | Fs::DirListing { dir: tests/data/invalid/multiline-literal-str } |  |  | 0.509 |
+| walker |  | 9195 | 18 | Fs::DirListing { dir: tests/data/invalid/array-of-tables } |  |  | 0.509 |
+| walker |  | 9213 | 18 | Fs::DirListing { dir: tests/data/invalid/boolean } |  |  | 0.509 |
+| walker |  | 9234 | 21 | Fs::DirListing { dir: tests/data/invalid/table } |  |  | 0.509 |
+| walker |  | 9257 | 23 | Fs::DirListing { dir: tests/data/invalid/array } |  |  | 0.509 |
+| walker |  | 9290 | 33 | Fs::DirListing { dir: tests/data/invalid/dotted-keys } |  |  | 0.509 |
+| walker |  | 9330 | 40 | Fs::DirListing { dir: tests/data/invalid/keys-and-vals } |  |  | 0.509 |
+| ns | 9339 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.516 |
+| walker |  | 9372 | 42 | Fs::DirListing { dir: tests/data/invalid/multiline-basic-str } |  |  | 0.516 |
+| walker |  | 9461 | 89 | Fs::DirListing { dir: tests/data/invalid/inline-table } |  |  | 0.516 |
+| ns | 9473 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.510 |
+| walker |  | 9478 | 17 | Code::CodeKey { rung: Names, file: tests/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
+| walker |  | 9516 | 38 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 23, sub: 0, line: 236 } |  |  | 0.511 |
+| walker |  | 9572 | 56 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid } |  |  | 0.511 |
+| walker |  | 9623 | 51 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 33, sub: 0, line: 318 } |  |  | 0.511 |
+| ns | 9638 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.507 |
+| walker |  | 9674 | 51 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-time } |  |  | 0.507 |
+| walker |  | 9701 | 27 | Code::CodeKey { rung: Names, file: benchmark/run.py, decl: 0, sub: 0, line: 0 } |  |  | 0.507 |
+| walker |  | 9761 | 60 | Code::CodeKey { rung: Decl, file: benchmark/run.py, decl: 1, sub: 0, line: 15 } |  |  | 0.507 |
+| ns | 9809 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.503 |
+| walker |  | 9825 | 64 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 24, sub: 0, line: 241 } |  |  | 0.504 |
+| walker |  | 9840 | 15 | Code::CodeKey { rung: Names, file: tests/test_error.py, decl: 0, sub: 0, line: 0 } |  |  | 0.504 |
+| walker |  | 9940 | 100 | Code::CodeKey { rung: Decl, file: tests/test_error.py, decl: 1, sub: 0, line: 13 } |  |  | 0.508 |
+| walker |  | 9993 | 53 | Code::CodeKey { rung: Body, file: tests/test_error.py, decl: 4, sub: 0, line: 40 } |  |  | 0.508 |
+| ns | 9994 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.502 |

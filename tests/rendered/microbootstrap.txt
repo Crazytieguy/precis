@@ -259,8 +259,16 @@ microbootstrap/
     29→class BaseServiceSettings(
     …
     53→class ServerConfig(pydantic.BaseModel):
-    …
+    54→    server_host: str = "0.0.0.0"  # noqa: S104
+    55→    server_port: int = 8000
+    56→    server_reload: bool = True
+    57→    server_workers_count: int = 1
     60→class LitestarSettings(  # type: ignore[misc]
+    61→    BaseServiceSettings,
+    62→    ServerConfig,
+    63→    LoggingConfig,
+    64→    OpentelemetryConfig,
+    65→    SentryConfig,
     …
     75→class FastApiSettings(  # type: ignore[misc]
     …
@@ -299,19 +307,8 @@ pyproject.toml
   3→description = "Package for bootstrapping new micro-services"
   4→readme = "README.md"
   5→requires-python = ">=3.10,<4"
-  6→keywords = [
-  7→    "python",
-  8→    "microservice",
-  9→    "bootstrap",
-  10→    "opentelemetry",
-  11→    "logging",
-  12→    "error-tracing",
-  13→    "litestar",
-  14→    "fastapi",
-  15→]
   …
   59→version = "0"
-  60→authors = [{ name = "community-of-python" }]
   …
 tests/
   __init__.py (empty)

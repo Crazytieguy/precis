@@ -1,15 +1,13 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
-//! section group (identity / package metadata / operational /
-//! dependencies). Every other table — build systems, profiles, lints,
-//! tool config — is left to an explicit read.
+//! section group (identity / operational / dependencies). Every other
+//! table — build systems, profiles, lints, tool config — and the
+//! metadata rest of a Python identity table are left to an explicit read.
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
 //!   `[project]`, `[tool.poetry]`; the Python tables contribute their lede
 //!   only, so the batch stays cheap enough to win an early slot
-//! - `PackageMetadata { file }` — the rest of a Python identity table: author
-//!   and maintainer rosters, project URLs, keywords
 //! - `Operational { file }` — `[features]`, and a Python manifest's
 //!   `[project.scripts]` / `[tool.poetry.scripts]`
 //! - `Dependencies { file }` — Cargo `[dependencies]` (platform-specific
@@ -22,12 +20,9 @@ use std::path::{Path, PathBuf};
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{Batch, BatchKey, TomlKey};
+use crate::batch::{Batch, TomlKey};
 use crate::render::Source;
-use crate::value::{
-    dependency_roster_value, manifest_appendix_value, manifest_identity_value,
-    manifest_operational_value,
-};
+use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content};
@@ -58,33 +53,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .into_iter()
         .filter(|row| !identity_residue.contains(row))
         .collect();
-        let identity_key: BatchKey = TomlKey::Identity { file: file.clone() }.into();
-        let identity = rows_content(&file, &source, identity_rows).map(|content| {
+        if let Some(content) = rows_content(&file, &source, identity_rows) {
             let scale = if ctx.is_workspace_member(&file) {
                 WORKSPACE_MEMBER_IDENTITY_FACTOR
             } else {
                 1.0
             };
             out.push(Batch {
-                key: identity_key.clone(),
+                key: TomlKey::Identity { file: file.clone() }.into(),
                 predecessor: None,
                 content,
                 value: manifest_identity_value(scale, depth),
-            });
-            identity_key
-        });
-        if let Some(identity) = &identity
-            && let Some(content) = rows_content(
-                &file,
-                &source,
-                package_metadata_rows(&pairs, &identity_residue),
-            )
-        {
-            out.push(Batch {
-                key: TomlKey::PackageMetadata { file: file.clone() }.into(),
-                predecessor: Some(identity.clone()),
-                content,
-                value: manifest_appendix_value(depth),
             });
         }
         let operational_rows = section_rows(&sections, |n| {
@@ -133,15 +112,6 @@ fn rows_content(
         return None;
     }
     single_file_lines_content(file, source, rows)
-}
-
-/// The identity-table residue, minus the dependency arrays the dependency
-/// batch owns — no two peer batches may claim the same row.
-fn package_metadata_rows(pairs: &[TablePair], identity_residue: &HashSet<usize>) -> Vec<usize> {
-    let dropped: HashSet<usize> = pep621_dependency_array_rows(pairs)
-        .chain(packaging_mechanics_rows(pairs))
-        .collect();
-    identity_residue.difference(&dropped).copied().collect()
 }
 
 /// One `key = value` pair written directly under a top-level `[table]`, with
@@ -302,24 +272,6 @@ fn is_lede_pair_line(line: &str) -> bool {
 /// dependency batches.
 fn is_pep621_dependency_key(key: &str) -> bool {
     matches!(key, "dependencies" | "optional-dependencies")
-}
-
-/// Rows of the identity-table keys that no batch emits at any budget: the
-/// trove-classifier list, which restates in a fixed registry vocabulary what
-/// `license`, `requires-python` and `description` already say, and the
-/// archive-selection globs, which describe how the package is built rather
-/// than what it is. Both are among the longest keys a manifest declares.
-fn packaging_mechanics_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> {
-    pairs
-        .iter()
-        .filter(|pair| {
-            is_pyproject_identity_table(&pair.table)
-                && matches!(
-                    pair.key.as_str(),
-                    "classifiers" | "packages" | "include" | "exclude"
-                )
-        })
-        .flat_map(|pair| pair.start..=pair.end)
 }
 
 fn pep621_dependency_array_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> {

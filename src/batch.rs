@@ -208,10 +208,6 @@ pub enum Rung {
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block.
     Identity { file: PathBuf },
-    /// The rest of a Python identity table once the lede is taken: author and
-    /// maintainer rosters, project URLs, keywords, trove classifiers and
-    /// packaging globs. Predecessor: `Identity` on the same file.
-    PackageMetadata { file: PathBuf },
     /// How the package runs: `[features]`, and a Python manifest's console
     /// scripts (`[project.scripts]`, `[tool.poetry.scripts]`).
     Operational { file: PathBuf },

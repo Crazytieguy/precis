@@ -153,15 +153,11 @@ pyproject.toml
   6→name = "tomli"
   7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
   8→description = "A lil' TOML parser"
-  9→authors = [
-  10→    { name = "Taneli Hukkinen", email = "hukkin@users.noreply.github.com" },
-  11→]
+  …
   12→license = "MIT"
-  13→license-files = ["LICENSE"]
+  …
   14→requires-python = ">=3.8"
   15→readme = "README.md"
-  …
-  26→keywords = ["toml"]
   …
 scripts/
   mypyc_tox
@@ -189,6 +185,9 @@ src/
       23→)?
       24→"""
       26→RE_NUMBER: Final = re.compile(
+      27→    r"""
+      28→0
+      29→(?:
       …
       45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
       46→RE_DATETIME: Final = re.compile(
@@ -211,7 +210,8 @@ src/
       …
       116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
       117→    if match.group("floatpart"):
-      …
+      118→        return parse_float(match.group())
+      119→    return int(match.group(), 0)
     _types.py
       …
       8→ParseFloat = Callable[[str], Any]
