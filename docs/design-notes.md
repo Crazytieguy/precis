@@ -246,11 +246,12 @@ language.**
 - **Prefix-stop tail effects.** A rank shift can strand a big batch at
   the budget tail where it no longer fits; `Score(3000)` is blind to
   this — check the high budgets of the grid.
-- **The plugin shows less than `Score(3000)` measures.** Under
-  `CLAUDE_PLUGIN_ROOT`, `precis .` is byte-capped at `PLUGIN_BYTE_BUDGET`
-  (9050), and every training fixture's 3000-token output
-  (`tests/rendered/`) is larger than that, so auto-injected summaries
-  are a shorter prefix than the primary budget scores.
+- **The plugin can show less than `Score(3000)` measures.** Under
+  `CLAUDE_PLUGIN_ROOT`, `precis .` is capped at `plugin_char_budget()`
+  (about 9,330 UTF-16 units after `--help` and the hook wrapper), and
+  31 of the 71 training fixtures' 3000-token outputs (`tests/rendered/`)
+  exceed it (measured 2026-09-25), so on those the auto-injected
+  summary is a shorter prefix than the primary budget scores.
 - **Min-tokens lower bound.** A cheap lower-bound cost estimator on
   `BatchContent` would let the scheduler prune obviously-too-big batches
   without touching the render tree. Line count alone misses
