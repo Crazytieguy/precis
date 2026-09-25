@@ -99,7 +99,7 @@ tsconfig.json
 ```
 <!-- precis-example-end -->
 
-The file tree shows everything that exists; the README lede and heading outline give orientation; `package.json` identifies the package; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
+The file tree shows everything that exists; `package.json` identifies the package; the CI workflow shows how it is built and tested; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
 
 A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
 
