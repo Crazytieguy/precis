@@ -169,15 +169,14 @@ Score(3000)=0.636 I=0.925 C=0.437 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 5317 | 120 | rust decl crates/toasty-driver-mysql/src/lib.rs:62 |  |  | 0.569 |
 | walker |  | 5441 | 124 | rust decl crates/toasty-driver-postgresql/src/lib.rs:79 |  |  | 0.569 |
 | walker |  | 5561 | 120 | headings outline in docs/ARCHITECTURE.md |  |  | 0.569 |
-| walker |  | 5561 | 0 | docs/ARCHITECTURE.md section #0 |  |  | 0.569 |
 | ns | 5567 |  | 261 | The `Driver` trait — the database extension point | 4.4 |  | 0.559 |
-| walker |  | 5597 | 36 | docs/ARCHITECTURE.md section #1 |  |  | 0.559 |
+| walker |  | 5597 | 36 | docs/ARCHITECTURE.md section #0 |  |  | 0.559 |
 | walker |  | 5735 | 138 | rust names crates/toasty-core/src/lib.rs |  |  | 0.576 |
 | ns | 5750 |  | 183 | The `Connection` trait: exec, push_schema, migrations | 4.5 |  | 0.569 |
 | walker |  | 5751 | 16 | rust doc crates/toasty-core/src/lib.rs:16 |  |  | 0.574 |
 | ns | 5869 |  | 119 | The eight driver `Operation` enum variants | 4.6 |  | 0.569 |
 | walker |  | 5927 | 176 | rust names crates/toasty-driver-integration-suite/src/lib.rs |  |  | 0.569 |
-| walker |  | 5940 | 13 | docs/ARCHITECTURE.md section #2 |  |  | 0.569 |
+| walker |  | 5940 | 13 | docs/ARCHITECTURE.md section #1 |  |  | 0.569 |
 | walker |  | 5957 | 17 | rust names crates/toasty/src/stmt/primitive_jiff.rs |  |  | 0.569 |
 | walker |  | 6098 | 141 | rust decl crates/toasty-driver-sqlite/src/lib.rs:59 |  |  | 0.569 |
 | ns | 6278 |  | 409 | The statement AST node roster (crates/toasty-core/src/stmt/, complete) | 4.7 |  | 0.529 |
@@ -195,7 +194,7 @@ Score(3000)=0.636 I=0.925 C=0.437 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 6751 | 19 | rust names crates/toasty/src/relation/option.rs |  |  | 0.515 |
 | walker |  | 6795 | 44 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:247 |  |  | 0.515 |
 | walker |  | 6807 | 12 | rust body crates/toasty-driver-integration-suite-macros/src/lib.rs:20 |  |  | 0.515 |
-| walker |  | 6853 | 46 | docs/ARCHITECTURE.md section #13 |  |  | 0.515 |
+| walker |  | 6853 | 46 | docs/ARCHITECTURE.md section #12 |  |  | 0.515 |
 | walker |  | 6867 | 14 | rust names crates/toasty/src/engine/exec/output.rs |  |  | 0.515 |
 | walker |  | 6888 | 21 | rust names crates/toasty/src/db/builder.rs |  |  | 0.515 |
 | ns | 6902 |  | 250 | `StorageTypes`, `SchemaMutations`, and the four per-database presets | 4.10 |  | 0.508 |
@@ -232,8 +231,8 @@ Score(3000)=0.636 I=0.925 C=0.437 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 7461 | 57 | rust decl crates/toasty-driver-dynamodb/src/lib.rs:344 |  |  | 0.508 |
 | ns | 7473 |  | 369 | crates/toasty/src/engine tree (complete) | 5.1 |  | 0.553 |
 | walker |  | 7475 | 14 | rust names crates/std-util/src/option.rs |  |  | 0.553 |
-| walker |  | 7493 | 18 | docs/ARCHITECTURE.md section #8 |  |  | 0.553 |
-| walker |  | 7511 | 18 | docs/ARCHITECTURE.md section #11 |  |  | 0.553 |
+| walker |  | 7493 | 18 | docs/ARCHITECTURE.md section #7 |  |  | 0.553 |
+| walker |  | 7511 | 18 | docs/ARCHITECTURE.md section #10 |  |  | 0.553 |
 | ns | 7756 |  | 283 | `Engine`: the four-phase pipeline doc and `exec` entry point | 5.2 |  | 0.546 |
 | ns | 7872 |  | 116 | engine.rs module roster and private-module boundary | 5.3 |  | 0.541 |
 | walker |  | 7920 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.614 |
@@ -265,7 +264,7 @@ Score(3000)=0.636 I=0.925 C=0.437 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 8397 | 12 | rust names crates/toasty-core/src/stmt/limit.rs |  |  | 0.621 |
 | walker |  | 8409 | 12 | rust names crates/toasty-core/src/stmt/offset.rs |  |  | 0.621 |
 | ns | 8412 |  | 187 | The codegen entry points: `generate_model` / `generate_embed` | 6.2 |  | 0.617 |
-| walker |  | 8431 | 22 | docs/ARCHITECTURE.md section #6 |  |  | 0.617 |
+| walker |  | 8431 | 22 | docs/ARCHITECTURE.md section #5 |  |  | 0.617 |
 | walker |  | 8444 | 13 | rust module doc crates/toasty-driver-integration-suite/src/tests/one_model_batch_create.rs |  |  | 0.617 |
 | walker |  | 8463 | 19 | rust names crates/toasty-cli/src/theme.rs |  |  | 0.617 |
 | walker |  | 8482 | 19 | rust names crates/toasty-driver-integration-suite/src/setup.rs |  |  | 0.617 |

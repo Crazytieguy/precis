@@ -257,7 +257,6 @@ Score(3000)=0.537 I=0.794 C=0.363 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 8732 | 8 | ts body packages/cli/src/config/config.models.ts:61 |  |  | 0.575 |
 | walker |  | 8741 | 9 | ts body packages/cli/src/config/config.models.ts:57 |  |  | 0.575 |
 | walker |  | 8771 | 30 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.575 |
-| walker |  | 8771 | 0 | packages/docs/src/self-hosting/troubleshooting.md section #0 |  |  | 0.575 |
 | walker |  | 8789 | 18 | ts names packages/lib/src/api/api.constants.ts |  |  | 0.575 |
 | walker |  | 8904 | 115 | README.md section #12 |  |  | 0.575 |
 | ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.564 |

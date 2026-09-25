@@ -145,7 +145,6 @@ Score(3000)=0.466 I=0.593 C=0.366 ns_rows≤3K=16/55 grid(1000/1442/2080/3000/43
 | ns | 7275 |  | 304 | it/intersect.go, it/math.go, it/channel.go, it/string.go rosters | 3.6 |  | 0.378 |
 | walker |  | 7288 | 16 | go doc errors.go:34 |  |  | 0.378 |
 | walker |  | 7327 | 39 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.378 |
-| walker |  | 7327 | 0 | exp/simd/BENCHMARK.md section #0 |  |  | 0.378 |
 | walker |  | 7337 | 10 | go body internal/xrand/ordered_go122.go:15 |  |  | 0.378 |
 | ns | 7365 |  | 90 | it/tuples.go: four zip/cross-join families with elision | 3.7 |  | 0.375 |
 | walker |  | 7386 | 49 | go doc find.go:72 |  |  | 0.375 |

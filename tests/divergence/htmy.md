@@ -48,7 +48,6 @@ Score(3000)=0.627 I=0.845 C=0.466 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 1758 |  | 146 | README "Rendering": how to actually invoke the renderer | 2.3 |  | 0.729 |
 | walker |  | 1790 | 77 | python decl htmy/tag.py:73 |  |  | 0.729 |
 | walker |  | 1846 | 56 | headings outline in docs/components-guide.md |  |  | 0.729 |
-| walker |  | 1846 | 0 | docs/components-guide.md section #0 |  |  | 0.729 |
 | walker |  | 1861 | 15 | python doc htmy/io.py:11 |  |  | 0.729 |
 | ns | 1900 |  | 142 | README "Context": the prop-drilling escape hatch and `htmy_context()` | 2.4 |  | 0.713 |
 | walker |  | 1920 | 59 | headings outline in docs/function-components.md |  |  | 0.713 |

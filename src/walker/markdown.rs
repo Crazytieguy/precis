@@ -1425,7 +1425,11 @@ fn logical_sections(
     let mut out = Vec::with_capacity(entries.len());
     for (parent_idx, entry) in entries.iter().enumerate() {
         match entry {
-            TopLevelEntry::SyntheticIntro { start, end } => {
+            TopLevelEntry::SyntheticIntro { h1, start, end } => {
+                // A heading-only intro would re-sell the outline's H1 row.
+                if outline_emits && !has_substantive_body(*h1, *start, *end, source) {
+                    continue;
+                }
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
@@ -1981,13 +1985,14 @@ fn is_section_scaffolding(kind: &str) -> bool {
 
 /// One entry in the un-split top-level section list. `SyntheticIntro`
 /// is the row range carved out by H1-unwrap to preserve the H1 heading
-/// and the prelude before the first H2 (no tree-sitter node — it's a
-/// virtual section). `H2Section` carries the tree-sitter node so
+/// and the prelude before the first H2 (a virtual section inside the
+/// H1's node). `H2Section` carries the tree-sitter node so
 /// [`direct_h3_children`] and source-byte length can be derived without
 /// re-walking from the root.
 #[derive(Debug, Clone, Copy)]
 enum TopLevelEntry<'a> {
     SyntheticIntro {
+        h1: Node<'a>,
         start: usize,
         end: usize,
     },
@@ -2017,6 +2022,7 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
             let mut out = Vec::with_capacity(h2s.len() + 1);
             if intro_end >= intro_start {
                 out.push(TopLevelEntry::SyntheticIntro {
+                    h1,
                     start: intro_start,
                     end: intro_end,
                 });

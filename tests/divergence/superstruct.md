@@ -97,7 +97,6 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 4330 | 34 | headings outline in docs/guides/03-coercing-data.md |  |  | 0.578 |
 | walker |  | 4364 | 34 | headings outline in docs/guides/04-refining-validation.md |  |  | 0.578 |
 | walker |  | 4400 | 36 | headings outline in docs/guides/01-getting-started.md |  |  | 0.579 |
-| walker |  | 4400 | 0 | docs/guides/01-getting-started.md section #0 |  |  | 0.579 |
 | ns | 4427 |  | 129 | run() stage 1: coercion, then the struct's own validator | 4.2 | 4.1 | 0.567 |
 | walker |  | 4726 | 326 | package scripts in package.json |  |  | 0.568 |
 | ns | 4759 |  | 332 | run() stage 2: recursive descent over entries | 4.3 | 4.1 | 0.542 |
@@ -147,7 +146,6 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 6995 | 111 | Readme.md section #5 |  |  | 0.657 |
 | walker |  | 7026 | 31 | docs/summary.md section #2 |  |  | 0.657 |
 | walker |  | 7088 | 62 | headings outline in docs/reference/core.md |  |  | 0.659 |
-| walker |  | 7088 | 0 | docs/reference/core.md section #0 |  |  | 0.659 |
 | ns | 7164 |  | 273 | A failures-style and an output-style fixture, in full | 5.12 | 5.10 | 0.641 |
 | walker |  | 7195 | 107 | ts doc src/error.ts:25 |  |  | 0.655 |
 | ns | 7295 |  | 131 | The typings harness and one typings test | 5.13 | 5.6 | 0.649 |

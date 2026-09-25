@@ -165,7 +165,6 @@ Score(3000)=0.638 I=0.883 C=0.462 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 7943 | 16 | docs/README.md section #1 |  |  | 0.580 |
 | walker |  | 7997 | 54 | headings outline in CONTRIBUTING.md |  |  | 0.580 |
 | walker |  | 8033 | 36 | headings outline in .github/PULL_REQUEST_TEMPLATE.md |  |  | 0.580 |
-| walker |  | 8033 | 0 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.580 |
 | walker |  | 8049 | 16 | ts body src/widgetsTemplates/list.widget.template.js:135 |  |  | 0.580 |
 | walker |  | 8118 | 69 | ts body src/themes/theme.selector.js:13 |  |  | 0.581 |
 | ns | 8128 |  | 209 | hooks/containers.hook.js: the toolbar key dispatch inside init() | 6.2 | 6.1 | 0.572 |
