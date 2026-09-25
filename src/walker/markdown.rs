@@ -503,11 +503,14 @@ fn parse_md(ctx: &WalkCtx, path: &Path) -> Option<(Arc<Source>, Arc<Tree>)> {
 /// `inline_link` / `html_tag` children that the block grammar leaves
 /// as opaque bytes.
 fn parse_inline(text: &str) -> Option<Tree> {
-    let mut parser = tree_sitter::Parser::new();
-    parser
-        .set_language(&tree_sitter_md::INLINE_LANGUAGE.into())
-        .ok()?;
-    parser.parse(text, None)
+    thread_local! {
+        static INLINE_PARSER: std::cell::RefCell<Option<tree_sitter::Parser>> = {
+            let mut parser = tree_sitter::Parser::new();
+            let loaded = parser.set_language(&tree_sitter_md::INLINE_LANGUAGE.into());
+            std::cell::RefCell::new(loaded.ok().map(|()| parser))
+        };
+    }
+    INLINE_PARSER.with_borrow_mut(|parser| parser.as_mut()?.parse(text, None))
 }
 
 // --- content builders ---
