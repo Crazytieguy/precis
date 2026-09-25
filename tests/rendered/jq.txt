@@ -227,18 +227,6 @@ src/
   jv_thread.h
   jv_unicode.c
   jv_unicode.h
-    …
-    4→const char* jvp_utf8_backtrack(const char* start, const char* min, int *missing_bytes);
-    5→const char* jvp_utf8_next(const char* in, const char* end, int* codepoint);
-    6→int jvp_utf8_is_valid(const char* in, const char* end);
-    7→
-    8→int jvp_utf8_decode_length(char startchar);
-    9→
-    10→int jvp_utf8_encode_length(int codepoint);
-    11→int jvp_utf8_encode(int codepoint, char* out);
-    12→
-    13→int jvp_codepoint_is_whitespace(int c);
-    …
   jv_utf8_tables.h
     1→#define UTF8_CONTINUATION_BYTE ((unsigned char)255)
     …
@@ -280,7 +268,9 @@ src/
   parser.c
   parser.h
     …
+    44→#if YYDEBUG
     45→extern int yydebug;
+    46→#endif
     …
     51→struct lexer_param;
     52→
@@ -299,7 +289,7 @@ src/
     70→  enum yytokentype
     …
     123→  typedef enum yytokentype yytoken_kind_t;
-    …
+    124→#endif
     125→/* Token kinds.  */
     126→#define YYEMPTY -2
     127→#define YYEOF 0
@@ -335,7 +325,9 @@ src/
     44→const void *_jq_memmem(const void *haystack, size_t haystacklen,
     45→                       const void *needle, size_t needlelen);
     …
+    62→#ifndef HAVE_STRPTIME
     63→char* strptime(const char *buf, const char *fmt, struct tm *tm);
+    64→#endif
     …
 tests/
   base64.test

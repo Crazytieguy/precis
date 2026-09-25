@@ -44,9 +44,15 @@ pub(super) fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let banner_end_row = banner_end_row(root, file);
     let guard_name = header_guard_name(root, source);
     let mut decls = Vec::new();
+    let mut directives = Vec::new();
     walk_top_level(root, source, in_header, &mut |node| {
-        decls.extend(decl_info(node, file, in_header, guard_name, banner_end_row));
+        if node.kind().starts_with('#') {
+            directives.push((node.start_position().row + 1, node.kind() == "#endif"));
+        } else {
+            decls.extend(decl_info(node, file, in_header, guard_name, banner_end_row));
+        }
     });
+    attach_directives(&mut decls, &directives);
     FileModel {
         module_doc: Vec::new(),
         reexports: Vec::new(),
@@ -126,6 +132,46 @@ fn decl_info(
         },
         members: Vec::new(),
     })
+}
+
+/// Adds the `#if` / `#else` / `#endif` rows of a descended feature gate
+/// to the head of the declaration they introduce (the next one) or close
+/// (the previous one), so a gated declaration never renders without its
+/// condition. A directive with another directive between it and that
+/// declaration, as around an empty branch, stays out.
+fn attach_directives(decls: &mut [DeclInfo], directives: &[(usize, bool)]) {
+    let first_row = |decl: &DeclInfo| {
+        let doc = decl.doc.iter().flat_map(|item| item.rows.iter());
+        doc.chain(&decl.head).copied().min().unwrap_or(usize::MAX)
+    };
+    let last_row = |decl: &DeclInfo| {
+        let body = decl.body.iter().flat_map(|item| item.rows.iter());
+        body.chain(&decl.head).copied().max().unwrap_or(0)
+    };
+    for &(row, closing) in directives {
+        let target = if closing {
+            decls
+                .iter_mut()
+                .filter(|decl| last_row(decl) < row)
+                .max_by_key(|decl| last_row(decl))
+        } else {
+            decls
+                .iter_mut()
+                .filter(|decl| first_row(decl) > row)
+                .min_by_key(|decl| first_row(decl))
+        };
+        let Some(decl) = target else {
+            continue;
+        };
+        let between = if closing {
+            last_row(decl)..row
+        } else {
+            row + 1..first_row(decl)
+        };
+        if directives.iter().all(|(other, _)| !between.contains(other)) {
+            decl.head.push(row);
+        }
+    }
 }
 
 /// The declaration's first row, plus the row of each name it declares:
@@ -348,7 +394,7 @@ fn descend_envelopes<'a, F: FnMut(Node<'a>)>(
     visit: &mut F,
 ) {
     let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
+    for child in node.named_children(&mut cursor) {
         visit_with_envelope_descent(child, source, feature_gates, visit);
     }
 }
@@ -377,16 +423,17 @@ fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     visit(node);
 }
 
-/// Visit every branch of a declaration-only feature gate: direct children
-/// plus the bodies of `#else` / `#elif` alternates. Nested gates descend
-/// (or stay opaque) on their own merits.
+/// Visit every branch of a declaration-only feature gate: its children,
+/// directive tokens (`#ifdef`, `#else`, `#endif`) included, plus the
+/// bodies of `#else` / `#elif` alternates. Nested gates descend (or stay
+/// opaque) on their own merits.
 fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
     source: &str,
     visit: &mut F,
 ) {
     let mut cursor = node.walk();
-    for child in node.named_children(&mut cursor) {
+    for child in node.children(&mut cursor) {
         match child.kind() {
             "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
                 descend_feature_gate_branches(child, source, visit);
@@ -632,6 +679,35 @@ static inline int wraps_code(void) { return 1; }
             vec![vec![2], vec![4]]
         );
         assert!(model("krep.c", source).decls.is_empty());
+    }
+
+    #[test]
+    fn c_feature_gate_directives_join_the_declarations_they_wrap() {
+        let source = "\
+#ifndef GLOBALS_H
+#define GLOBALS_H
+#ifdef ESP_PLATFORM
+  void task_yield(void);
+#else
+  #define task_yield()
+#endif
+#ifdef EMPTY_BRANCH
+int only_branch;
+#else
+#endif
+int after;
+#endif
+";
+        let heads: Vec<Vec<usize>> = model("globals.h", source)
+            .decls
+            .iter()
+            .map(|decl| {
+                let mut head = decl.head.clone();
+                head.sort_unstable();
+                head
+            })
+            .collect();
+        assert_eq!(heads, vec![vec![3, 4], vec![5, 6, 7], vec![8, 9], vec![12]]);
     }
 
     #[test]

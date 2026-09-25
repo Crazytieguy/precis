@@ -202,8 +202,9 @@ xlstm/
           support.h
           util.h
             …
+            3→#ifndef uint
             4→typedef unsigned int uint;
-            …
+            5→#endif
         vanilla/
           __init__.py
             1→# Copyright (c) NXAI GmbH and its affiliates 2023

@@ -85,12 +85,13 @@ include/
     …
   globals.h
     …
+    7→#ifdef ESP_PLATFORM
     8→  #define WIFI_SSID "your-ssid"
     9→  #define WIFI_PASS "your-password"
     10→  void task_yield ();
-    …
+    11→#else
     12→  #define task_yield();
-    …
+    13→#endif
     15→#define true 1
     16→#define false 0
     18→// TCP port, Minecraft's default is 25565
@@ -105,7 +106,7 @@ include/
     32→#define GAMEMODE 0
     34→// Max render distance, determines how many chunks to send
     35→#define VIEW_DISTANCE 2
-    37→// Time between server ticks in microseconds (default = 1s)
+    …
     38→#define TIME_BETWEEN_TICKS 1000000
     40→// Calculated from TIME_BETWEEN_TICKS
     41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
@@ -151,18 +152,20 @@ include/
     …
   serialize.h
     …
+    6→#ifdef SYNC_WORLD_TO_DISK
     7→  int initSerializer ();
     8→  void writeBlockChangesToDisk (int from, int to);
     9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
     10→  void writePlayerDataToDisk ();
     11→  void writeDataToDiskOnInterval ();
-    …
+    12→#else
     13→  // Define no-op placeholders for when disk syncing isn't enabled
     14→  #define writeBlockChangesToDisk(a, b)
     15→  #define writeChestChangesToDisk(a, b)
     16→  #define writePlayerDataToDisk()
     17→  #define writeDataToDiskOnInterval()
     18→  #define initSerializer() 0
+    19→#endif
     …
   structures.h
     …

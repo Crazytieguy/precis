@@ -74,149 +74,151 @@ Score(3000)=0.587 I=0.675 C=0.511 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 2456 | 28 | c names freebsd/FreeBSDProcessTable.h |  |  | 0.643 |
 | walker |  | 2478 | 22 | c decl freebsd/FreeBSDProcessTable.h:17 |  |  | 0.643 |
 | walker |  | 2506 | 28 | c names generic/UnwindPtrace.h |  |  | 0.643 |
-| walker |  | 2534 | 28 | c names netbsd/NetBSDProcessTable.h |  |  | 0.643 |
-| walker |  | 2541 | 7 | c decl netbsd/NetBSDProcessTable.h:20 |  |  | 0.643 |
-| walker |  | 2569 | 28 | c names openbsd/OpenBSDProcessTable.h |  |  | 0.643 |
-| walker |  | 2576 | 7 | c decl openbsd/OpenBSDProcessTable.h:17 |  |  | 0.643 |
-| walker |  | 2604 | 28 | c names zfs/ZfsArcStats.h |  |  | 0.643 |
-| walker |  | 2617 | 13 | listing of '.github' |  |  | 0.643 |
+| walker |  | 2527 | 21 | c decl generic/UnwindPtrace.h:15 |  |  | 0.643 |
+| walker |  | 2555 | 28 | c names netbsd/NetBSDProcessTable.h |  |  | 0.643 |
+| walker |  | 2562 | 7 | c decl netbsd/NetBSDProcessTable.h:20 |  |  | 0.643 |
+| walker |  | 2590 | 28 | c names openbsd/OpenBSDProcessTable.h |  |  | 0.643 |
+| walker |  | 2597 | 7 | c decl openbsd/OpenBSDProcessTable.h:17 |  |  | 0.643 |
 | ns | 2624 |  | 229 | ProcessTable.h in full: the process-table subclass and its platform hooks | 2.5 |  | 0.617 |
-| walker |  | 2642 | 25 | listing of '.github/workflows' |  |  | 0.617 |
-| walker |  | 2711 | 69 | c names CategoriesPanel.h |  |  | 0.617 |
-| walker |  | 2745 | 34 | c decl CategoriesPanel.h:16 |  |  | 0.617 |
-| walker |  | 2815 | 70 | c names DisplayOptionsPanel.h |  |  | 0.617 |
-| walker |  | 2857 | 42 | c decl DisplayOptionsPanel.h:16 |  |  | 0.617 |
-| walker |  | 2927 | 70 | c names GPUMeter.h |  |  | 0.617 |
-| walker |  | 2967 | 40 | c decl GPUMeter.h:15 |  |  | 0.617 |
+| walker |  | 2625 | 28 | c names zfs/ZfsArcStats.h |  |  | 0.617 |
+| walker |  | 2638 | 13 | listing of '.github' |  |  | 0.617 |
+| walker |  | 2663 | 25 | listing of '.github/workflows' |  |  | 0.617 |
+| walker |  | 2732 | 69 | c names CategoriesPanel.h |  |  | 0.617 |
+| walker |  | 2766 | 34 | c decl CategoriesPanel.h:16 |  |  | 0.617 |
+| walker |  | 2836 | 70 | c names DisplayOptionsPanel.h |  |  | 0.617 |
+| walker |  | 2878 | 42 | c decl DisplayOptionsPanel.h:16 |  |  | 0.617 |
+| walker |  | 2948 | 70 | c names GPUMeter.h |  |  | 0.617 |
+| walker |  | 2988 | 40 | c decl GPUMeter.h:15 |  |  | 0.617 |
 | ns | 2991 |  | 367 | Machine.h: the Machine struct, htop's per-host state | 2.6 |  | 0.587 |
-| walker |  | 3037 | 70 | c names HeaderOptionsPanel.h |  |  | 0.587 |
-| walker |  | 3067 | 30 | c decl HeaderOptionsPanel.h:15 |  |  | 0.587 |
-| walker |  | 3134 | 67 | c decl SwapMeter.h:12 |  |  | 0.587 |
-| walker |  | 3164 | 30 | c names dragonflybsd/DragonFlyBSDProcessTable.h |  |  | 0.587 |
-| walker |  | 3171 | 7 | c decl dragonflybsd/DragonFlyBSDProcessTable.h:17 |  |  | 0.587 |
-| walker |  | 3243 | 72 | c names AffinityPanel.h |  |  | 0.587 |
+| walker |  | 3058 | 70 | c names HeaderOptionsPanel.h |  |  | 0.587 |
+| walker |  | 3088 | 30 | c decl HeaderOptionsPanel.h:15 |  |  | 0.587 |
+| walker |  | 3155 | 67 | c decl SwapMeter.h:12 |  |  | 0.587 |
+| walker |  | 3185 | 30 | c names dragonflybsd/DragonFlyBSDProcessTable.h |  |  | 0.587 |
+| walker |  | 3192 | 7 | c decl dragonflybsd/DragonFlyBSDProcessTable.h:17 |  |  | 0.587 |
 | ns | 3245 |  | 254 | Panel.h: HandlerResult flags and the PanelClass event vtable | 2.7 |  | 0.569 |
-| walker |  | 3312 | 69 | c decl MeterMode.h:11 |  |  | 0.570 |
-| walker |  | 3390 | 78 | c names CommandScreen.h |  |  | 0.570 |
-| walker |  | 3397 | 7 | c decl CommandScreen.h:16 |  |  | 0.570 |
-| walker |  | 3475 | 78 | c names EnvScreen.h |  |  | 0.570 |
-| walker |  | 3482 | 7 | c decl EnvScreen.h:17 |  |  | 0.570 |
-| walker |  | 3501 | 19 | c names SignalsPanel.c |  |  | 0.570 |
+| walker |  | 3264 | 72 | c names AffinityPanel.h |  |  | 0.569 |
+| walker |  | 3333 | 69 | c decl MeterMode.h:11 |  |  | 0.570 |
+| walker |  | 3411 | 78 | c names CommandScreen.h |  |  | 0.570 |
+| walker |  | 3418 | 7 | c decl CommandScreen.h:16 |  |  | 0.570 |
+| walker |  | 3496 | 78 | c names EnvScreen.h |  |  | 0.570 |
+| walker |  | 3503 | 7 | c decl EnvScreen.h:17 |  |  | 0.570 |
+| walker |  | 3522 | 19 | c names SignalsPanel.c |  |  | 0.570 |
 | ns | 3556 |  | 311 | Panel.h: the Panel struct (geometry, selection, scrolling, function bar) | 2.8 |  | 0.549 |
-| walker |  | 3584 | 83 | c names DiskIOMeter.h |  |  | 0.549 |
-| walker |  | 3631 | 47 | c decl DiskIOMeter.h:15 |  |  | 0.549 |
-| walker |  | 3749 | 118 | listing of 'pcp' |  |  | 0.549 |
-| walker |  | 3764 | 15 | c names pcp/ProcessField.h |  |  | 0.549 |
-| walker |  | 3796 | 32 | listing of 'pcp/meters' |  |  | 0.550 |
-| walker |  | 3822 | 26 | c names pcp/PCPProcessTable.h |  |  | 0.550 |
-| walker |  | 3829 | 7 | c decl pcp/PCPProcessTable.h:20 |  |  | 0.550 |
-| walker |  | 3866 | 37 | listing of 'pcp/columns' |  |  | 0.551 |
-| ns | 3869 |  | 313 | Meter.h: MeterClass - the full definition record of a meter | 2.9 |  | 0.534 |
-| walker |  | 3904 | 38 | listing of 'pcp/screens' |  |  | 0.535 |
-| walker |  | 3983 | 79 | c decl MeterMode.h:22 |  |  | 0.535 |
-| walker |  | 4245 | 262 | c names CRT.h |  |  | 0.535 |
-| walker |  | 4330 | 85 | c names HeaderLayout.h |  |  | 0.535 |
+| walker |  | 3605 | 83 | c names DiskIOMeter.h |  |  | 0.549 |
+| walker |  | 3652 | 47 | c decl DiskIOMeter.h:15 |  |  | 0.549 |
+| walker |  | 3770 | 118 | listing of 'pcp' |  |  | 0.549 |
+| walker |  | 3785 | 15 | c names pcp/ProcessField.h |  |  | 0.549 |
+| walker |  | 3817 | 32 | listing of 'pcp/meters' |  |  | 0.550 |
+| walker |  | 3843 | 26 | c names pcp/PCPProcessTable.h |  |  | 0.550 |
+| walker |  | 3850 | 7 | c decl pcp/PCPProcessTable.h:20 |  |  | 0.550 |
+| ns | 3869 |  | 313 | Meter.h: MeterClass - the full definition record of a meter | 2.9 |  | 0.533 |
+| walker |  | 3887 | 37 | listing of 'pcp/columns' |  |  | 0.534 |
+| walker |  | 3925 | 38 | listing of 'pcp/screens' |  |  | 0.535 |
+| walker |  | 4004 | 79 | c decl MeterMode.h:22 |  |  | 0.535 |
+| walker |  | 4266 | 262 | c names CRT.h |  |  | 0.535 |
 | ns | 4343 |  | 474 | Process.h: every field of the Process struct, declarations only | 2.10 |  | 0.508 |
-| walker |  | 4415 | 85 | c names OpenFilesScreen.h |  |  | 0.508 |
-| walker |  | 4431 | 16 | c decl OpenFilesScreen.h:17 |  |  | 0.508 |
-| walker |  | 4445 | 14 | c doc RowField.h:53 |  |  | 0.508 |
-| walker |  | 4531 | 86 | c names AvailableMetersPanel.h |  |  | 0.508 |
+| walker |  | 4351 | 85 | c names HeaderLayout.h |  |  | 0.508 |
+| walker |  | 4436 | 85 | c names OpenFilesScreen.h |  |  | 0.508 |
+| walker |  | 4452 | 16 | c decl OpenFilesScreen.h:17 |  |  | 0.508 |
+| walker |  | 4466 | 14 | c doc RowField.h:53 |  |  | 0.508 |
 | ns | 4536 |  | 193 | Process.h: the shared ProcessState enum | 2.11 |  | 0.497 |
-| walker |  | 4586 | 55 | c decl AvailableMetersPanel.h:19 |  |  | 0.497 |
-| walker |  | 4603 | 17 | listing of 'scripts' |  |  | 0.497 |
+| walker |  | 4552 | 86 | c names AvailableMetersPanel.h |  |  | 0.497 |
+| walker |  | 4607 | 55 | c decl AvailableMetersPanel.h:19 |  |  | 0.497 |
+| walker |  | 4624 | 17 | listing of 'scripts' |  |  | 0.497 |
 | ns | 4664 |  | 128 | Process.h: ProcessFieldData, the per-column metadata record | 2.12 |  | 0.490 |
-| walker |  | 4686 | 83 | c decl CRT.h:20 |  |  | 0.490 |
-| walker |  | 4777 | 91 | c decl MemoryMeter.h:13 |  |  | 0.490 |
+| walker |  | 4707 | 83 | c decl CRT.h:20 |  |  | 0.490 |
+| walker |  | 4798 | 91 | c decl MemoryMeter.h:13 |  |  | 0.490 |
 | ns | 4831 |  | 167 | Process.h: ProcessClass, the Process_fields table and the platform-implemented entry points | 2.13 |  | 0.484 |
-| walker |  | 4880 | 103 | c names AvailableColumnsPanel.h |  |  | 0.484 |
-| walker |  | 4895 | 15 | c decl AvailableColumnsPanel.h:14 |  |  | 0.484 |
-| walker |  | 5000 | 105 | c names TraceScreen.h |  |  | 0.484 |
-| walker |  | 5061 | 61 | c decl TraceScreen.h:19 |  |  | 0.484 |
+| walker |  | 4901 | 103 | c names AvailableColumnsPanel.h |  |  | 0.484 |
+| walker |  | 4916 | 15 | c decl AvailableColumnsPanel.h:14 |  |  | 0.484 |
+| walker |  | 5021 | 105 | c names TraceScreen.h |  |  | 0.484 |
 | ns | 5066 |  | 235 | Settings.h: the Settings struct, part 1 (files, dynamic registries, screens, colour, delay) | 2.14 |  | 0.471 |
+| walker |  | 5082 | 61 | c decl TraceScreen.h:19 |  |  | 0.471 |
 | ns | 5258 |  | 192 | Settings.h: the ScreenSettings record behind each screen tab | 2.15 |  | 0.464 |
-| walker |  | 5332 | 271 | c names Table.h |  |  | 0.464 |
-| walker |  | 5377 | 45 | c decl Table.h:48 |  |  | 0.467 |
-| walker |  | 5444 | 67 | README headline in netbsd/README.md |  |  | 0.467 |
-| walker |  | 5491 | 47 | c names generic/openzfs_sysctl.h |  |  | 0.467 |
-| walker |  | 5538 | 47 | c names zfs/ZfsArcMeter.h |  |  | 0.467 |
+| walker |  | 5353 | 271 | c names Table.h |  |  | 0.464 |
+| walker |  | 5398 | 45 | c decl Table.h:48 |  |  | 0.467 |
+| walker |  | 5465 | 67 | README headline in netbsd/README.md |  |  | 0.467 |
+| walker |  | 5512 | 47 | c names generic/openzfs_sysctl.h |  |  | 0.467 |
+| walker |  | 5559 | 47 | c names zfs/ZfsArcMeter.h |  |  | 0.467 |
 | ns | 5629 |  | 371 | Action_setBindings, part 1: punctuation and uppercase key bindings | 3.1 |  | 0.455 |
-| walker |  | 5645 | 107 | c decl CRT.h:32 |  |  | 0.455 |
-| walker |  | 5691 | 46 | c decl darwin/ProcessField.h:11 |  |  | 0.455 |
-| walker |  | 5806 | 115 | c names ColumnsPanel.h |  |  | 0.455 |
-| walker |  | 5844 | 38 | c decl ColumnsPanel.h:17 |  |  | 0.455 |
-| walker |  | 5893 | 49 | c names zfs/ZfsCompressedArcMeter.h |  |  | 0.455 |
-| walker |  | 6009 | 116 | c names UsersTable.h |  |  | 0.455 |
+| walker |  | 5666 | 107 | c decl CRT.h:32 |  |  | 0.455 |
+| walker |  | 5712 | 46 | c decl darwin/ProcessField.h:11 |  |  | 0.455 |
+| walker |  | 5827 | 115 | c names ColumnsPanel.h |  |  | 0.455 |
+| walker |  | 5865 | 38 | c decl ColumnsPanel.h:17 |  |  | 0.455 |
+| walker |  | 5914 | 49 | c names zfs/ZfsCompressedArcMeter.h |  |  | 0.455 |
 | ns | 6010 |  | 381 | Action_setBindings, part 2: control characters and lowercase keys | 3.2 | 3.1 | 0.444 |
-| walker |  | 6016 | 7 | c decl UsersTable.h:13 |  |  | 0.444 |
+| walker |  | 6030 | 116 | c names UsersTable.h |  |  | 0.444 |
+| walker |  | 6037 | 7 | c decl UsersTable.h:13 |  |  | 0.444 |
 | ns | 6264 |  | 254 | Action_setBindings, part 3: function keys, mouse and screen-tab keys | 3.3 | 3.2 | 0.438 |
-| walker |  | 6326 | 310 | c names OptionItem.h |  |  | 0.438 |
-| walker |  | 6346 | 20 | c decl OptionItem.h:31 |  |  | 0.438 |
-| walker |  | 6367 | 21 | c decl OptionItem.h:37 |  |  | 0.438 |
-| walker |  | 6391 | 24 | c decl OptionItem.h:22 |  |  | 0.438 |
-| walker |  | 6420 | 29 | c decl OptionItem.h:43 |  |  | 0.438 |
+| walker |  | 6347 | 310 | c names OptionItem.h |  |  | 0.438 |
+| walker |  | 6367 | 20 | c decl OptionItem.h:31 |  |  | 0.438 |
+| walker |  | 6388 | 21 | c decl OptionItem.h:37 |  |  | 0.438 |
+| walker |  | 6412 | 24 | c decl OptionItem.h:22 |  |  | 0.438 |
+| walker |  | 6441 | 29 | c decl OptionItem.h:43 |  |  | 0.438 |
 | ns | 6446 |  | 182 | Action.h: the Htop_Reaction flag set every action handler returns | 3.4 |  | 0.433 |
-| walker |  | 6450 | 30 | c decl OptionItem.h:16 |  |  | 0.433 |
-| walker |  | 6555 | 105 | c decl OptionItem.h:50 |  |  | 0.430 |
+| walker |  | 6471 | 30 | c decl OptionItem.h:16 |  |  | 0.433 |
 | ns | 6555 |  | 109 | Action.h: the State struct every action handler receives | 3.5 |  | 0.430 |
-| walker |  | 6794 | 239 | c names Meter.h |  |  | 0.430 |
-| walker |  | 6885 | 91 | c decl Meter.h:25 |  |  | 0.430 |
-| walker |  | 6936 | 51 | c names freebsd/FreeBSDMachine.h |  |  | 0.430 |
+| walker |  | 6576 | 105 | c decl OptionItem.h:50 |  |  | 0.430 |
+| walker |  | 6815 | 239 | c names Meter.h |  |  | 0.430 |
+| walker |  | 6906 | 91 | c decl Meter.h:25 |  |  | 0.430 |
 | ns | 6948 |  | 393 | A real htoprc: the config file format, meter vocabulary and screen definitions | 3.6 |  | 0.422 |
-| walker |  | 6987 | 51 | c names netbsd/NetBSDMachine.h |  |  | 0.422 |
-| walker |  | 7038 | 51 | c names openbsd/OpenBSDMachine.h |  |  | 0.422 |
-| walker |  | 7070 | 32 | headings outline in netbsd/README.md |  |  | 0.422 |
-| walker |  | 7197 | 127 | c names Affinity.h |  |  | 0.422 |
-| walker |  | 7233 | 36 | c decl Affinity.h:26 |  |  | 0.422 |
-| walker |  | 7355 | 122 | c decl Meter.h:34 |  |  | 0.422 |
+| walker |  | 6957 | 51 | c names freebsd/FreeBSDMachine.h |  |  | 0.422 |
+| walker |  | 7008 | 51 | c names netbsd/NetBSDMachine.h |  |  | 0.422 |
+| walker |  | 7059 | 51 | c names openbsd/OpenBSDMachine.h |  |  | 0.422 |
+| walker |  | 7091 | 32 | headings outline in netbsd/README.md |  |  | 0.422 |
+| walker |  | 7218 | 127 | c names Affinity.h |  |  | 0.422 |
+| walker |  | 7241 | 23 | c decl Affinity.h:43 |  |  | 0.422 |
+| walker |  | 7266 | 25 | c decl Affinity.h:39 |  |  | 0.422 |
+| walker |  | 7302 | 36 | c decl Affinity.h:26 |  |  | 0.422 |
+| walker |  | 7424 | 122 | c decl Meter.h:34 |  |  | 0.422 |
 | ns | 7440 |  | 492 | RowField.h: the reserved column ids that htoprc and --sort-key speak | 3.7 |  | 0.408 |
-| walker |  | 7484 | 129 | c names DynamicMeter.h |  |  | 0.408 |
 | ns | 7530 |  | 90 | MeterMode.h in full: the four meter display modes | 3.8 |  | 0.414 |
-| walker |  | 7536 | 52 | c decl DynamicMeter.h:17 |  |  | 0.414 |
+| walker |  | 7553 | 129 | c names DynamicMeter.h |  |  | 0.414 |
+| walker |  | 7605 | 52 | c decl DynamicMeter.h:17 |  |  | 0.414 |
 | ns | 7661 |  | 131 | CRT.h: the colour schemes selectable by color_scheme / -C | 3.9 |  | 0.422 |
-| walker |  | 7667 | 131 | c names MetersPanel.h |  |  | 0.422 |
-| walker |  | 7743 | 76 | c decl MetersPanel.h:21 |  |  | 0.422 |
-| walker |  | 7832 | 89 | man-page NAME + DESCRIPTION in htop.1.in |  |  | 0.422 |
+| walker |  | 7736 | 131 | c names MetersPanel.h |  |  | 0.422 |
+| walker |  | 7812 | 76 | c decl MetersPanel.h:21 |  |  | 0.422 |
+| walker |  | 7901 | 89 | man-page NAME + DESCRIPTION in htop.1.in |  |  | 0.422 |
 | ns | 7974 |  | 313 | Makefile.am: what gets built, and the per-platform conditional blocks | 4.1 |  | 0.414 |
-| walker |  | 8031 | 199 | listing of 'linux' |  |  | 0.416 |
-| walker |  | 8046 | 15 | c names linux/ProcessField.h |  |  | 0.416 |
-| walker |  | 8063 | 17 | c names linux/HugePageMeter.h |  |  | 0.416 |
-| walker |  | 8080 | 17 | c names linux/SELinuxMeter.h |  |  | 0.416 |
-| walker |  | 8106 | 26 | c names linux/ZramStats.h |  |  | 0.416 |
-| walker |  | 8132 | 26 | c names linux/ZswapStats.h |  |  | 0.416 |
-| walker |  | 8165 | 33 | c names linux/GPU.h |  |  | 0.416 |
-| walker |  | 8198 | 33 | c decl linux/ZramStats.h:12 |  |  | 0.416 |
-| walker |  | 8234 | 36 | c names linux/CGroupUtils.h |  |  | 0.416 |
-| walker |  | 8270 | 36 | c names linux/OpenRCMeter.h |  |  | 0.416 |
+| walker |  | 8100 | 199 | listing of 'linux' |  |  | 0.416 |
+| walker |  | 8115 | 15 | c names linux/ProcessField.h |  |  | 0.416 |
+| walker |  | 8132 | 17 | c names linux/HugePageMeter.h |  |  | 0.416 |
+| walker |  | 8149 | 17 | c names linux/SELinuxMeter.h |  |  | 0.416 |
+| walker |  | 8175 | 26 | c names linux/ZramStats.h |  |  | 0.416 |
+| walker |  | 8201 | 26 | c names linux/ZswapStats.h |  |  | 0.416 |
+| walker |  | 8234 | 33 | c names linux/GPU.h |  |  | 0.416 |
+| walker |  | 8267 | 33 | c decl linux/ZramStats.h:12 |  |  | 0.416 |
 | ns | 8275 |  | 301 | configure.ac: the complete list of build options | 4.2 |  | 0.410 |
-| walker |  | 8306 | 36 | c names linux/SystemdMeter.h |  |  | 0.410 |
-| walker |  | 8347 | 41 | c names linux/ZramMeter.h |  |  | 0.410 |
-| walker |  | 8391 | 44 | c names linux/IOPriorityPanel.h |  |  | 0.410 |
-| walker |  | 8441 | 50 | c names linux/LibNl.h |  |  | 0.410 |
-| walker |  | 8494 | 53 | c names linux/LinuxProcessTable.h |  |  | 0.410 |
-| walker |  | 8530 | 36 | c decl linux/LinuxProcessTable.h:15 |  |  | 0.410 |
+| walker |  | 8303 | 36 | c names linux/CGroupUtils.h |  |  | 0.410 |
+| walker |  | 8339 | 36 | c names linux/OpenRCMeter.h |  |  | 0.410 |
+| walker |  | 8375 | 36 | c names linux/SystemdMeter.h |  |  | 0.410 |
+| walker |  | 8416 | 41 | c names linux/ZramMeter.h |  |  | 0.410 |
+| walker |  | 8460 | 44 | c names linux/IOPriorityPanel.h |  |  | 0.410 |
+| walker |  | 8510 | 50 | c names linux/LibNl.h |  |  | 0.410 |
 | ns | 8559 |  | 284 | CI: every job in the GitHub Actions build matrix | 4.3 |  | 0.404 |
-| walker |  | 8582 | 52 | c decl linux/ZramMeter.h:13 |  |  | 0.404 |
-| walker |  | 8636 | 54 | c decl linux/ZswapStats.h:12 |  |  | 0.404 |
+| walker |  | 8563 | 53 | c names linux/LinuxProcessTable.h |  |  | 0.404 |
+| walker |  | 8599 | 36 | c decl linux/LinuxProcessTable.h:15 |  |  | 0.404 |
+| walker |  | 8651 | 52 | c decl linux/ZramMeter.h:13 |  |  | 0.404 |
+| walker |  | 8705 | 54 | c decl linux/ZswapStats.h:12 |  |  | 0.404 |
 | ns | 8707 |  | 148 | How htop is tested: TESTPLAN and the lua/rote UI harness | 4.4 |  | 0.401 |
-| walker |  | 8778 | 142 | c names History.h |  |  | 0.401 |
-| walker |  | 8785 | 7 | c doc History.h:31 |  |  | 0.401 |
 | ns | 8793 |  | 86 | Auxiliary directory listings: docs, scripts, iwyu, m4, workflows | 4.5 |  | 0.411 |
-| walker |  | 8800 | 15 | c doc History.h:38 |  |  | 0.411 |
-| walker |  | 8820 | 20 | c doc History.h:46 |  |  | 0.411 |
-| walker |  | 8938 | 118 | c decl History.h:18 |  |  | 0.411 |
+| walker |  | 8847 | 142 | c names History.h |  |  | 0.411 |
+| walker |  | 8854 | 7 | c doc History.h:31 |  |  | 0.411 |
+| walker |  | 8869 | 15 | c doc History.h:38 |  |  | 0.411 |
+| walker |  | 8889 | 20 | c doc History.h:46 |  |  | 0.411 |
 | ns | 8992 |  | 199 | linux/: the complete Linux platform back-end | 5.1 |  | 0.432 |
-| walker |  | 8996 | 58 | c decl dragonflybsd/ProcessField.h:11 |  |  | 0.432 |
-| walker |  | 9030 | 34 | c names htop.c |  |  | 0.432 |
-| walker |  | 9182 | 152 | c names ScreensPanel.h |  |  | 0.432 |
+| walker |  | 9007 | 118 | c decl History.h:18 |  |  | 0.432 |
+| walker |  | 9065 | 58 | c decl dragonflybsd/ProcessField.h:11 |  |  | 0.432 |
+| walker |  | 9099 | 34 | c names htop.c |  |  | 0.432 |
 | ns | 9204 |  | 212 | darwin/, freebsd/, netbsd/ and openbsd/ contents | 5.2 |  | 0.453 |
-| walker |  | 9209 | 27 | c decl ScreensPanel.h:42 |  |  | 0.453 |
+| walker |  | 9251 | 152 | c names ScreensPanel.h |  |  | 0.453 |
+| walker |  | 9278 | 27 | c decl ScreensPanel.h:42 |  |  | 0.453 |
 | ns | 9351 |  | 147 | dragonflybsd/, solaris/ and unsupported/ contents | 5.3 |  | 0.465 |
-| walker |  | 9353 | 144 | c decl ScreensPanel.h:27 |  |  | 0.465 |
+| walker |  | 9422 | 144 | c decl ScreensPanel.h:27 |  |  | 0.465 |
 | ns | 9474 |  | 123 | generic/ and zfs/: routines shared across platforms | 5.4 |  | 0.473 |
-| walker |  | 9507 | 154 | c names DynamicScreen.h |  |  | 0.473 |
-| walker |  | 9595 | 88 | c decl DynamicScreen.h:16 |  |  | 0.473 |
+| walker |  | 9576 | 154 | c names DynamicScreen.h |  |  | 0.473 |
 | ns | 9622 |  | 148 | linux/Platform.h: the symbols every platform must provide | 5.5 |  | 0.469 |
-| walker |  | 9842 | 247 | c names Panel.h |  |  | 0.469 |
+| walker |  | 9664 | 88 | c decl DynamicScreen.h:16 |  |  | 0.469 |
 | ns | 9847 |  | 225 | pcp/: the Performance Co-Pilot back-end and its dynamic definition trees | 5.6 |  | 0.489 |
-| walker |  | 9954 | 112 | c decl Panel.h:23 |  |  | 0.493 |
-| ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.490 |
+| walker |  | 9911 | 247 | c names Panel.h |  |  | 0.489 |
+| ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.486 |

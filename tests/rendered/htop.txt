@@ -397,7 +397,9 @@ generic/
   UnwindPtrace.c
   UnwindPtrace.h
     …
+    15→#ifdef HAVE_LIBUNWIND_PTRACE
     16→void UnwindPtrace_makeBacktrace(Vector* frames, pid_t pid, char** error);
+    17→#endif
     …
   fdstat_sysctl.c
   fdstat_sysctl.h
