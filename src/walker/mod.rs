@@ -16,6 +16,7 @@ use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
+use std::sync::atomic::{AtomicUsize, Ordering};
 
 use tree_sitter::{Language, Node, Tree};
 
@@ -226,6 +227,49 @@ impl WalkCtx {
             .borrow_mut()
             .insert(path.to_path_buf(), arc.clone());
         Some((source, arc))
+    }
+
+    /// Parse every file of `files` not parsed yet, across threads, into
+    /// the cache [`Self::parse_tree`] reads — for callers about to parse
+    /// a whole set of files one by one.
+    pub fn parse_trees<'a>(&self, files: impl IntoIterator<Item = (&'a Path, Language)>) {
+        let pending: Vec<(&Path, Arc<Source>, Language)> = files
+            .into_iter()
+            .filter(|(path, _)| !self.tree_cache.borrow().contains_key(*path))
+            .filter_map(|(path, language)| Some((path, self.read_source(path)?, language)))
+            .collect();
+        let next = AtomicUsize::new(0);
+        let parse_pending = || {
+            let mut parser = tree_sitter::Parser::new();
+            let mut trees = Vec::new();
+            while let Some((path, source, language)) =
+                pending.get(next.fetch_add(1, Ordering::Relaxed))
+            {
+                parser
+                    .set_language(language)
+                    .expect("tree-sitter language load");
+                trees.extend(
+                    parser
+                        .parse(source.as_bytes(), None)
+                        .map(|tree| (*path, tree)),
+                );
+            }
+            trees
+        };
+        let workers = std::thread::available_parallelism()
+            .map_or(1, usize::from)
+            .min(pending.len());
+        let trees: Vec<(&Path, Tree)> = std::thread::scope(|scope| {
+            let handles: Vec<_> = (0..workers).map(|_| scope.spawn(parse_pending)).collect();
+            handles
+                .into_iter()
+                .flat_map(|handle| handle.join().expect("parse worker panicked"))
+                .collect()
+        });
+        let mut cache = self.tree_cache.borrow_mut();
+        for (path, tree) in trees {
+            cache.insert(path.to_path_buf(), Arc::new(tree));
+        }
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.

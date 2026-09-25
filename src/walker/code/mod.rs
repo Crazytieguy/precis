@@ -242,11 +242,17 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .into_iter()
         .flat_map(|language| language.extensions().iter().copied())
         .collect();
+    let files: Vec<(PathBuf, Language)> = files_with_any_extension(dir, &extensions, ctx)
+        .into_iter()
+        .filter_map(|path| Language::from_path(&path).map(|language| (path, language)))
+        .collect();
+    ctx.parse_trees(
+        files
+            .iter()
+            .map(|(path, language)| (path.as_path(), language.grammar(path))),
+    );
     let mut out = Vec::new();
-    for path in files_with_any_extension(dir, &extensions, ctx) {
-        let Some(language) = Language::from_path(&path) else {
-            continue;
-        };
+    for (path, language) in files {
         let Some(file) = SourceFile::parse(&path, language, ctx) else {
             continue;
         };
