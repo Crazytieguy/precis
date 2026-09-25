@@ -1035,11 +1035,13 @@ fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
 
 // --- decorative classifiers ---
 
-/// Inline children with no semantic content — whitespace and breaks.
+/// Inline children with no semantic content — whitespace, breaks, and
+/// HTML tags other than `<img>` (a tag's text sits outside it).
 fn is_skippable_inline(node: Node, source: &str) -> bool {
     match node.kind() {
         "text" => source[node.start_byte()..node.end_byte()].trim().is_empty(),
         "hard_line_break" | "soft_line_break" => true,
+        "html_tag" => !is_img_html_tag(node, source),
         _ => false,
     }
 }
@@ -1118,12 +1120,17 @@ fn is_decorative_block(block: Node, source: &str) -> bool {
 /// True iff every fragment (named + plain-text gaps) is decorative or
 /// whitespace, and at least one fragment exists.
 fn inline_root_is_all_decorative(root: Node, inline_text: &str) -> bool {
-    let named = named_decorative_candidates(root, inline_text);
-    if named.is_empty() {
-        return false;
+    let mut cur = root.walk();
+    let named: Vec<Node> = root.children(&mut cur).filter(|c| c.is_named()).collect();
+    let mut any_decorative = false;
+    for node in &named {
+        if is_decorative_inline(*node, inline_text) {
+            any_decorative = true;
+        } else if !is_skippable_inline(*node, inline_text) {
+            return false;
+        }
     }
-    named.iter().all(|n| is_decorative_inline(*n, inline_text))
-        && plain_text_gaps_are_blank(&named, inline_text, 0)
+    any_decorative && plain_text_gaps_are_blank(&named, inline_text, 0)
 }
 
 fn named_decorative_candidates<'a>(root: Node<'a>, inline_text: &str) -> Vec<Node<'a>> {
@@ -2916,6 +2923,18 @@ mod tests {
                    \n\
                    Tagline.\n",
             &[1, 7],
+            &[3, 4],
+        ),
+        // A badge wall broken with inline `<br>` is still decorative.
+        (
+            "markdown_badge_wall_with_br_is_decorative",
+            "# Title\n\
+                   \n\
+                   [![a](https://e.x/a.svg)](https://e.x)<br>\n\
+                   [![b](https://e.x/b.svg)](https://e.x)\n\
+                   \n\
+                   Tagline.\n",
+            &[1, 6],
             &[3, 4],
         ),
         // Plain-text autolink paragraph is NOT decorative.
