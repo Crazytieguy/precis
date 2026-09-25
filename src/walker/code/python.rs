@@ -81,29 +81,38 @@ fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
     file_name(path).is_some_and(|name| name.starts_with("__") && name.ends_with("__.py"))
 }
 
-/// A module its package's `__init__.py` imports names from (`from .core
-/// import Engine`, `from pkg.core import Engine`) implements the package's
-/// public API, so it outranks its sibling helper modules.
+/// A module a package `__init__.py` above it imports names from
+/// (`from .core import Engine`, `from .engine.core import Engine`,
+/// `from pkg.engine.core import Engine`) implements a package's public API,
+/// so it outranks its sibling helper modules.
 fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
-    let (Some(stem), Some(package_dir)) =
-        (path.file_stem().and_then(|s| s.to_str()), path.parent())
-    else {
+    let Some(stem) = path.file_stem().and_then(|s| s.to_str()) else {
         return 1.0;
     };
-    let Some(init) = ctx.read_source(&package_dir.join("__init__.py")) else {
-        return 1.0;
-    };
-    let package = package_dir
-        .file_name()
-        .and_then(|s| s.to_str())
-        .unwrap_or("");
-    let relative = format!("from .{stem} import");
-    let absolute = format!("from {package}.{stem} import");
-    let imported_by_init = init
-        .lines()
-        .map(str::trim_start)
-        .any(|line| line.starts_with(&relative) || line.starts_with(&absolute));
-    if imported_by_init {
+    let mut module_path = vec![stem];
+    let mut inits = Vec::new();
+    let mut dir = path.parent();
+    while let Some(package_dir) = dir.filter(|dir| dir.starts_with(ctx.root()))
+        && let Some(init) = ctx.read_source(&package_dir.join("__init__.py"))
+    {
+        inits.push((module_path.len(), init));
+        let Some(package) = package_dir.file_name().and_then(|s| s.to_str()) else {
+            break;
+        };
+        module_path.insert(0, package);
+        dir = package_dir.parent();
+    }
+    let absolute = format!("from {} import", module_path.join("."));
+    let imported_by_an_init = inits.iter().any(|(components_below, init)| {
+        let relative = format!(
+            "from .{} import",
+            module_path[module_path.len() - components_below..].join(".")
+        );
+        init.lines()
+            .map(str::trim_start)
+            .any(|line| line.starts_with(&relative) || line.starts_with(&absolute))
+    });
+    if imported_by_an_init {
         PUBLIC_API_MODULE_WEIGHT
     } else {
         1.0
@@ -530,21 +539,29 @@ _first = second = 0
     }
 
     #[test]
-    fn code_python_file_weight_favors_modules_the_package_init_imports_from() {
+    fn code_python_file_weight_favors_modules_a_package_init_imports_from() {
         let dir = tempfile::tempdir().unwrap();
-        let package = dir.path().join("pkg");
-        std::fs::create_dir_all(&package).unwrap();
-        std::fs::write(
-            package.join("__init__.py"),
-            "from .core import Engine\nfrom pkg.api import run\n",
-        )
-        .unwrap();
+        let write = |relative: &str, content: &str| {
+            let path = dir.path().join(relative);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, content).unwrap();
+        };
+        write(
+            "pkg/__init__.py",
+            "from .core import Engine\nfrom .engine.runner import run\n",
+        );
+        write(
+            "pkg/engine/__init__.py",
+            "from pkg.engine.plan import Plan\n",
+        );
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let weight = |name: &str| file_weight(&package.join(name), &ctx);
-        assert_eq!(weight("core.py"), PUBLIC_API_MODULE_WEIGHT);
-        assert_eq!(weight("api.py"), PUBLIC_API_MODULE_WEIGHT);
-        assert_eq!(weight("helpers.py"), 1.0);
-        assert_eq!(file_weight(&dir.path().join("script.py"), &ctx), 1.0);
+        let weight = |relative: &str| file_weight(&dir.path().join(relative), &ctx);
+        assert_eq!(weight("pkg/core.py"), PUBLIC_API_MODULE_WEIGHT);
+        assert_eq!(weight("pkg/engine/runner.py"), PUBLIC_API_MODULE_WEIGHT);
+        assert_eq!(weight("pkg/engine/plan.py"), PUBLIC_API_MODULE_WEIGHT);
+        assert_eq!(weight("pkg/helpers.py"), 1.0);
+        assert_eq!(weight("pkg/engine/helpers.py"), 1.0);
+        assert_eq!(weight("script.py"), 1.0);
     }
 
     #[test]

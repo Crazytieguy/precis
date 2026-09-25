@@ -44,30 +44,8 @@ README.md
   45→After installing the SDK, you can create a new instance of the API. When creating a new instance, you can either use environment variables or pass the credentials directly. It's strongly recommended to use environment variables to store the API credentials.<br>
   46→On creation, the Api won't connect to the 3x-ui app, so you can spawn new instances without spending resources. But after creating an instance, you'll need to call the `login` method to authenticate the user and save the cookie for future requests.
   48→### Installation
-  49→```bash
-  50→pip install py3xui
-  51→```
-  52→
+  …
   53→### Create a new instance of the API
-  54→It's recommended to use an environment variable to store the API credentials:
-  55→```python
-  56→import os
-  57→
-  58→os.environ["XUI_HOST"] = "http://your-3x-ui-host.com:2053"
-  59→os.environ["XUI_USERNAME"] = "your-username"
-  60→os.environ["XUI_PASSWORD"] = "your-password"
-  61→```
-  62→
-  63→To work synchronously:
-  64→```python
-  65→from py3xui import Api
-  66→
-  67→# Using environment variables:
-  68→api = Api.from_env()
-  69→
-  70→# Or using the credentials directly:
-  71→api = Api("http://your-3x-ui-host.com:2053", "your-username", "your-password")
-  72→```
   …
   89→### Using TLS and custom certificates
   …
@@ -129,17 +107,6 @@ demo.py
   78→    Returns:
   79→        str: The connection string.
   80→    """
-  81→    public_key = inbound.stream_settings.reality_settings.get("settings").get("publicKey")
-  82→    website_name = inbound.stream_settings.reality_settings.get("serverNames")[0]
-  83→    short_id = inbound.stream_settings.reality_settings.get("shortIds")[0]
-  84→
-  85→    connection_string = (
-  86→        f"vless://{user_uuid}@{XUI_EXTERNAL_IP}:{SERVER_PORT}"
-  87→        f"?type=tcp&security=reality&pbk={public_key}&fp=firefox&sni={website_name}"
-  88→        f"&sid={short_id}&spx=%2F#{MAIN_REMARK}-{user_email}"
-  89→    )
-  90→
-  91→    return connection_string
   …
   103→connection_string = get_connection_string(inbound, "**********", email)
   …
@@ -197,6 +164,11 @@ py3xui/
       100→        return self._session
       102→    @session.setter
       103→    def session(self, value: str) -> None:
+      104→        """Sets the session cookie for the XUI API.
+      105→
+      106→        Arguments:
+      107→            value (str): The session cookie to set.
+      108→        """
       …
       115→    @property
       116→    def cookie_name(self) -> str | None:
@@ -215,19 +187,6 @@ py3xui/
       189→    def login(self, two_factor_code: str | int | None = None) -> None:
       …
     api_base.py
-      …
-      15→class ApiFields:
-      16→    """Stores the fields returned by the XUI API for parsing."""
-      18→    SUCCESS = "success"
-      19→    MSG = "msg"
-      20→    OBJ = "obj"
-      21→    CLIENT_STATS = "clientStats"
-      22→    NO_IP_RECORD = "No IP Record"
-      23→    GET = "GET"
-      24→    POST = "POST"
-      …
-      28→class BaseApi:
-      …
     api_client.py
     api_database.py
     api_inbound.py
@@ -241,6 +200,31 @@ py3xui/
       4→from py3xui.async_api.async_api_inbound import AsyncInboundApi
       5→from py3xui.async_api.async_api_server import AsyncServerApi
     async_api.py
+      …
+      18→class AsyncApi:
+      …
+      72→    def __init__(
+      …
+      98→    @property
+      99→    def session(self) -> str | None:
+      …
+      107→    @session.setter
+      108→    def session(self, value: str) -> None:
+      …
+      120→    @property
+      121→    def cookie_name(self) -> str | None:
+      …
+      129→    @cookie_name.setter
+      130→    def cookie_name(self, value: str | None) -> None:
+      …
+      144→    @classmethod
+      145→    def from_env(
+      146→        cls,
+      147→        use_tls_verify: bool | None = None,
+      148→        custom_certificate_path: str | None = None,
+      …
+      194→    async def login(self, two_factor_code: str | int | None = None) -> None:
+      …
     async_api_base.py
     async_api_client.py
     async_api_database.py
@@ -252,6 +236,35 @@ py3xui/
       …
       2→from py3xui.client.client import Client
     client.py
+      …
+      7→class ClientFields:
+      8→    """Stores the fields returned by the XUI API for parsing."""
+      10→    EMAIL = "email"
+      11→    ENABLE = "enable"
+      12→    PASSWORD = "password"
+      13→
+      14→    ID = "id"
+      15→    INBOUND_ID = "inboundId"
+      16→
+      17→    UP = "up"
+      18→    DOWN = "down"
+      19→
+      20→    EXPIRY_TIME = "expiryTime"
+      21→
+      22→    TOTAL = "total"
+      23→    RESET = "reset"
+      24→
+      25→    FLOW = "flow"
+      26→    METHOD = "method"
+      27→    LIMIT_IP = "limitIp"
+      28→    SUB_ID = "subId"
+      29→    COMMENT = "comment"
+      30→    TG_ID = "tgId"
+      31→    TOTAL_GB = "totalGB"
+      32→
+      33→    UUID = "uuid"
+      36→class Client(BaseModel):
+      …
   inbound/
     README.md
     __init__.py
