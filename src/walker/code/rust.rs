@@ -560,72 +560,11 @@ fn is_decorative_line(content: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use super::super::test_support::rows;
     use super::*;
 
     fn extract_source(file_name: &str, source: &str) -> (SourceFile, FileModel) {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join(file_name);
-        std::fs::write(&path, source).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
-        let model = extract(&file, &ctx);
-        assert_contract(&model);
-        (file, model)
-    }
-
-    fn part_rows(items: &[Item]) -> HashSet<usize> {
-        items
-            .iter()
-            .flat_map(|item| item.rows.iter().copied())
-            .collect()
-    }
-
-    /// The [`super::super::model`] invariants a Rust model must hold:
-    /// non-empty head and name rows, name rows inside the rendered decl,
-    /// disjoint parts, one level of members sharing only their name rows
-    /// with the container, and no row in two file-level owners.
-    fn assert_contract(model: &FileModel) {
-        let mut owned = part_rows(&model.module_doc);
-        for row in part_rows(&model.reexports) {
-            assert!(owned.insert(row), "re-export row {row} owned twice");
-        }
-        let check_decl = |decl: &DeclInfo| {
-            assert!(!decl.name_rows.is_empty() && !decl.head.is_empty());
-            let head: HashSet<usize> = decl.head.iter().copied().collect();
-            let doc = part_rows(&decl.doc);
-            let body = part_rows(&decl.body);
-            assert!(head.is_disjoint(&doc) && head.is_disjoint(&body) && doc.is_disjoint(&body));
-            let rendered: HashSet<usize> = match decl.shape {
-                Shape::Callable => head.clone(),
-                Shape::Whole => head.union(&body).copied().collect(),
-            };
-            assert!(decl.name_rows.iter().all(|row| rendered.contains(row)));
-            head.union(&doc)
-                .chain(body.iter())
-                .copied()
-                .collect::<HashSet<_>>()
-        };
-        for decl in &model.decls {
-            let container_rows = check_decl(decl);
-            let mut decl_rows = container_rows.clone();
-            for member in &decl.members {
-                assert!(member.members.is_empty());
-                let member_rows = check_decl(member);
-                let shared: Vec<_> = member_rows.intersection(&container_rows).collect();
-                assert!(
-                    shared.iter().all(|row| member.name_rows.contains(row)),
-                    "member rows {shared:?} also in its container"
-                );
-                decl_rows.extend(member_rows);
-            }
-            for row in decl_rows {
-                assert!(owned.insert(row), "declaration row {row} owned twice");
-            }
-        }
-    }
-
-    fn rows(items: &[Item]) -> Vec<Vec<usize>> {
-        items.iter().map(|item| item.rows.clone()).collect()
+        super::super::test_support::extract_in(&LANGUAGE, &[(file_name, source)], file_name)
     }
 
     fn sorted(mut rows: Vec<usize>) -> Vec<usize> {

@@ -229,6 +229,94 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 }
 
 #[cfg(test)]
+pub(super) mod test_support {
+    use std::collections::HashSet;
+
+    use super::model::{DeclInfo, Shape};
+    use super::*;
+
+    /// Writes `files` under a fresh root and extracts `target` with
+    /// `language`, asserting the [`model`] invariants on the normalized
+    /// result.
+    pub(crate) fn extract_in(
+        language: &Language,
+        files: &[(&str, &str)],
+        target: &str,
+    ) -> (SourceFile, FileModel) {
+        let dir = tempfile::tempdir().unwrap();
+        for (relative, content) in files {
+            let path = dir.path().join(relative);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(path, content).unwrap();
+        }
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let file = SourceFile::parse(&dir.path().join(target), language, &ctx).unwrap();
+        let model = (language.extract)(&file, &ctx);
+        assert_contract(&emit::normalize(model.clone(), &file));
+        (file, model)
+    }
+
+    pub(crate) fn extract_source(language: &Language, relative: &str, source: &str) -> FileModel {
+        extract_in(language, &[(relative, source)], relative).1
+    }
+
+    pub(crate) fn rows(items: &[Item]) -> Vec<Vec<usize>> {
+        items.iter().map(|item| item.rows.clone()).collect()
+    }
+
+    fn part_rows(items: &[Item]) -> HashSet<usize> {
+        items
+            .iter()
+            .flat_map(|item| item.rows.iter().copied())
+            .collect()
+    }
+
+    /// The [`model`] invariants: non-empty head and name rows, name rows
+    /// inside the rendered decl, disjoint parts, one level of members
+    /// sharing only their name rows with the container, and no row in
+    /// two file-level owners.
+    fn assert_contract(model: &FileModel) {
+        let mut owned = part_rows(&model.module_doc);
+        for row in part_rows(&model.reexports) {
+            assert!(owned.insert(row), "re-export row {row} owned twice");
+        }
+        let check_decl = |decl: &DeclInfo| {
+            assert!(!decl.name_rows.is_empty() && !decl.head.is_empty());
+            let head: HashSet<usize> = decl.head.iter().copied().collect();
+            let doc = part_rows(&decl.doc);
+            let body = part_rows(&decl.body);
+            assert!(head.is_disjoint(&doc) && head.is_disjoint(&body) && doc.is_disjoint(&body));
+            let rendered: HashSet<usize> = match decl.shape {
+                Shape::Callable => head.clone(),
+                Shape::Whole => head.union(&body).copied().collect(),
+            };
+            assert!(decl.name_rows.iter().all(|row| rendered.contains(row)));
+            head.union(&doc)
+                .chain(body.iter())
+                .copied()
+                .collect::<HashSet<_>>()
+        };
+        for decl in &model.decls {
+            let container_rows = check_decl(decl);
+            let mut decl_rows = container_rows.clone();
+            for member in &decl.members {
+                assert!(member.members.is_empty());
+                let member_rows = check_decl(member);
+                let shared: Vec<_> = member_rows.intersection(&container_rows).collect();
+                assert!(
+                    shared.iter().all(|row| member.name_rows.contains(row)),
+                    "member rows {shared:?} also in its container"
+                );
+                decl_rows.extend(member_rows);
+            }
+            for row in decl_rows {
+                assert!(owned.insert(row), "declaration row {row} owned twice");
+            }
+        }
+    }
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
 

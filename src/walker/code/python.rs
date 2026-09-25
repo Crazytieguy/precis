@@ -269,20 +269,11 @@ fn paragraphs(file: &SourceFile, rows: impl IntoIterator<Item = usize>) -> Vec<I
 mod tests {
     use std::path::PathBuf;
 
+    use super::super::test_support::rows;
     use super::*;
 
     fn extract_source(relative_path: &str, source: &str) -> FileModel {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join(relative_path);
-        std::fs::create_dir_all(path.parent().unwrap()).unwrap();
-        std::fs::write(&path, source).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
-        extract(&file, &ctx)
-    }
-
-    fn rows(items: &[Item]) -> Vec<Vec<usize>> {
-        items.iter().map(|item| item.rows.clone()).collect()
+        super::super::test_support::extract_source(&LANGUAGE, relative_path, source)
     }
 
     #[test]

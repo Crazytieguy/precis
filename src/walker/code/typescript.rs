@@ -953,27 +953,15 @@ fn module_doc(file: &SourceFile, statements: &[Node], entrypoint: bool) -> Vec<I
 
 #[cfg(test)]
 mod tests {
+    use super::super::test_support::rows;
     use super::*;
 
-    /// Writes `files` under a fresh root and extracts `target`.
     fn extract_in(files: &[(&str, &str)], target: &str) -> FileModel {
-        let dir = tempfile::tempdir().unwrap();
-        for (relative, content) in files {
-            let path = dir.path().join(relative);
-            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
-            std::fs::write(path, content).unwrap();
-        }
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&dir.path().join(target), &LANGUAGE, &ctx).unwrap();
-        extract(&file, &ctx)
+        super::super::test_support::extract_in(&LANGUAGE, files, target).1
     }
 
     fn extract_source(relative: &str, source: &str) -> FileModel {
         extract_in(&[(relative, source)], relative)
-    }
-
-    fn rows(items: &[Item]) -> Vec<Vec<usize>> {
-        items.iter().map(|item| item.rows.clone()).collect()
     }
 
     /// One line per declaration (members indented): shape, name rows,

@@ -183,16 +183,11 @@ mod tests {
     use super::*;
 
     fn extract_source(source: &str) -> FileModel {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("a.go");
-        std::fs::write(&path, source).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
-        extract(&file, &ctx)
+        super::super::test_support::extract_source(&LANGUAGE, "a.go", source)
     }
 
     fn body_rows(decl: &DeclInfo) -> Vec<Vec<usize>> {
-        decl.body.iter().map(|item| item.rows.clone()).collect()
+        super::super::test_support::rows(&decl.body)
     }
 
     #[test]

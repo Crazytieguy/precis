@@ -570,19 +570,11 @@ fn has_storage_class(node: Node, source: &str, keyword: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use super::super::test_support::rows;
     use super::*;
 
     fn model(file_name: &str, source: &str) -> FileModel {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join(file_name);
-        std::fs::write(&path, source).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let file = SourceFile::parse(&path, &LANGUAGE, &ctx).unwrap();
-        extract(&file, &ctx)
-    }
-
-    fn rows(items: &[Item]) -> Vec<Vec<usize>> {
-        items.iter().map(|item| item.rows.clone()).collect()
+        super::super::test_support::extract_source(&LANGUAGE, file_name, source)
     }
 
     fn name_rows_of(model: &FileModel) -> Vec<Vec<usize>> {
