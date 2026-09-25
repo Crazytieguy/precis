@@ -1,7 +1,8 @@
-//! README walker: the root `README.md`, parsed with `tree-sitter-md`'s
-//! block grammar, and the root `README.rst`, line-scanned into the same
-//! shapes (see [`rst_readme`]). Every other document is left to the
-//! listing, which names it.
+//! README walker: the one root README (see [`root_readme`]). Markdown is
+//! parsed with `tree-sitter-md`'s block grammar; reST, AsciiDoc and plain
+//! text are line-scanned into the same shapes (see
+//! [`line_scanned_readme`]). Every other document is left to the listing,
+//! which names it.
 //!
 //! In document order:
 //! - `ReadmeHeadline` — the first heading plus the lede: the first
@@ -18,18 +19,19 @@
 //!   outline, else the headline.
 
 use std::collections::BTreeSet;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::BatchContent;
+use crate::fs_util::{EntryKind, list_dir};
 use crate::render::Source;
 use crate::tokenizer;
 
 use super::{
-    WalkCtx, budget_chunk_ranges, first_child_of_kind, fs::files_with_extension,
-    node_end_row_trimmed, single_file_lines_content,
+    WalkCtx, budget_chunk_ranges, first_child_of_kind, node_end_row_trimmed,
+    single_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -79,16 +81,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     if dir != ctx.root() {
         return out;
     }
-    // RST README: line-scanned headings via `is_rst_underline`, dropping
-    // `.. directive::` blocks — no tree-sitter parse.
-    for file in files_with_extension(dir, "rst", ctx) {
-        if !reads_as_readme(&file, ctx) {
-            continue;
-        }
+    let Some((file, markup)) = root_readme(dir, ctx) else {
+        return out;
+    };
+    // reST and AsciiDoc: line-scanned headings, no tree-sitter parse.
+    if markup != ReadmeMarkup::Markdown {
         let Some(source) = ctx.read_source(&file) else {
-            continue;
+            return out;
         };
-        let (headline, ranges) = rst_readme(&source);
+        let (headline, ranges) = line_scanned_readme(&source, markup);
         let mut headline_emitted: Option<BatchKey> = None;
         if let Some(content) = build_headline_content(&file, &source, &headline) {
             let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
@@ -101,64 +102,60 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             headline_emitted = Some(BatchKey::Markdown(key));
         }
         push_sections(&mut out, &file, &source, &ranges, None, headline_emitted);
+        return out;
     }
 
-    for file in files_with_extension(dir, "md", ctx) {
-        if !reads_as_readme(&file, ctx) {
-            continue;
-        }
-        let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
-            continue;
-        };
-        let headline = headline_rows(&tree, &source);
-        let outline_rows = outline_rows(&tree, &source, headline.as_ref());
-        let outline_emits = !outline_rows.is_empty();
+    let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
+        return out;
+    };
+    let headline = headline_rows(&tree, &source);
+    let outline_rows = outline_rows(&tree, &source, headline.as_ref());
+    let outline_emits = !outline_rows.is_empty();
 
-        let mut headline_emitted: Option<BatchKey> = None;
-        if let Some(spec) = &headline
-            && let Some(content) = build_headline_content(&file, &source, spec)
-        {
-            let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
+    let mut headline_emitted: Option<BatchKey> = None;
+    if let Some(spec) = &headline
+        && let Some(content) = build_headline_content(&file, &source, spec)
+    {
+        let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
+        out.push(Batch {
+            key: key.clone().into(),
+            predecessor: None,
+            content,
+            value: README_HEADLINE_VALUE,
+        });
+        headline_emitted = Some(BatchKey::Markdown(key));
+    }
+    if let Some(spec) = &headline {
+        let rows = prelude_remainder_rows(&tree, &source, spec);
+        if let Some(content) = single_file_lines_content(&file, &source, rows) {
             out.push(Batch {
-                key: key.clone().into(),
-                predecessor: None,
-                content,
-                value: README_HEADLINE_VALUE,
-            });
-            headline_emitted = Some(BatchKey::Markdown(key));
-        }
-        if let Some(spec) = &headline {
-            let rows = prelude_remainder_rows(&tree, &source, spec);
-            if let Some(content) = single_file_lines_content(&file, &source, rows) {
-                out.push(Batch {
-                    key: MarkdownKey::Prelude { file: file.clone() }.into(),
-                    predecessor: headline_emitted.clone(),
-                    content,
-                    value: README_SECTION_VALUE,
-                });
-            }
-        }
-        let mut outline_emitted: Option<BatchKey> = None;
-        if let Some(content) = build_outline_content(&file, &source, &outline_rows) {
-            let key = MarkdownKey::HeadingsOutline { file: file.clone() };
-            out.push(Batch {
-                key: key.clone().into(),
+                key: MarkdownKey::Prelude { file: file.clone() }.into(),
                 predecessor: headline_emitted.clone(),
                 content,
-                value: HEADINGS_OUTLINE_VALUE,
+                value: README_SECTION_VALUE,
             });
-            outline_emitted = Some(BatchKey::Markdown(key));
         }
-
-        push_sections(
-            &mut out,
-            &file,
-            &source,
-            &logical_sections(&tree, &source, outline_emits),
-            headline.as_ref(),
-            outline_emitted.or(headline_emitted),
-        );
     }
+    let mut outline_emitted: Option<BatchKey> = None;
+    if let Some(content) = build_outline_content(&file, &source, &outline_rows) {
+        let key = MarkdownKey::HeadingsOutline { file: file.clone() };
+        out.push(Batch {
+            key: key.clone().into(),
+            predecessor: headline_emitted.clone(),
+            content,
+            value: HEADINGS_OUTLINE_VALUE,
+        });
+        outline_emitted = Some(BatchKey::Markdown(key));
+    }
+
+    push_sections(
+        &mut out,
+        &file,
+        &source,
+        &logical_sections(&tree, &source, outline_emits),
+        headline.as_ref(),
+        outline_emitted.or(headline_emitted),
+    );
     out
 }
 
@@ -330,15 +327,46 @@ fn build_section_content(
     single_file_lines_content(file, source, lines)
 }
 
-/// A document precis was pointed at directly reads as its README.
-fn reads_as_readme(file: &Path, ctx: &WalkCtx) -> bool {
-    is_readme(file) || ctx.dir_filter().named_file().is_some()
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+enum ReadmeMarkup {
+    Markdown,
+    Rst,
+    AsciiDoc,
 }
 
-fn is_readme(file: &Path) -> bool {
-    file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-        n.eq_ignore_ascii_case("README.md") || n.eq_ignore_ascii_case("README.rst")
-    })
+/// The root README, preferring Markdown, then reST, then AsciiDoc, and a
+/// name with an extension over a bare `README` of the same markup. A
+/// document precis was pointed at directly reads as its README. An
+/// extensionless `README` is Markdown when it has an ATX heading, else
+/// it is scanned for reST-style underlined headings.
+fn root_readme(dir: &Path, ctx: &WalkCtx) -> Option<(PathBuf, ReadmeMarkup)> {
+    let single_file = ctx.dir_filter().named_file().is_some();
+    list_dir(dir, ctx.dir_filter())
+        .iter()
+        .filter(|(_, kind)| matches!(kind, EntryKind::File))
+        .filter_map(|(name, _)| {
+            let (stem, extension) = name.split_once('.').unwrap_or((name, ""));
+            if !single_file && !stem.eq_ignore_ascii_case("readme") {
+                return None;
+            }
+            let file = dir.join(name);
+            let markup = match extension.to_ascii_lowercase().as_str() {
+                "md" | "markdown" | "mkdn" | "mdown" => ReadmeMarkup::Markdown,
+                "rst" => ReadmeMarkup::Rst,
+                "adoc" | "asciidoc" | "asc" => ReadmeMarkup::AsciiDoc,
+                "" if !single_file => {
+                    let source = ctx.read_source(&file)?;
+                    if source.lines().any(|line| line.starts_with("# ")) {
+                        ReadmeMarkup::Markdown
+                    } else {
+                        ReadmeMarkup::Rst
+                    }
+                }
+                _ => return None,
+            };
+            Some((file, markup))
+        })
+        .min_by_key(|(file, markup)| (*markup, file.extension().is_none()))
 }
 
 /// True for a real RST prose line — not a heading underline, badge row
@@ -416,36 +444,62 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     headings
 }
 
-/// An RST README split into its `ReadmeHeadline` and `Section` ranges.
-/// The headline is the title plus the first prose paragraph under it —
-/// or, when the title carries none, the first prose paragraph of an
-/// intro-titled section (`Overview`, `Introduction`, …). The text
-/// before the first body heading is a synthetic intro, and every later
-/// heading opens one section, each through the oversize head-split.
-fn rst_readme(source: &str) -> (BTreeSet<usize>, Vec<SectionRange>) {
+/// Line-scan AsciiDoc section titles (`= Title`, `== Section`, …).
+fn scan_asciidoc_headings(src_lines: &[&str]) -> Vec<RstHeading> {
+    src_lines
+        .iter()
+        .enumerate()
+        .filter(|(_, line)| {
+            let rest = line.trim_start_matches('=');
+            (1..=6).contains(&(line.len() - rest.len())) && rest.starts_with(' ')
+        })
+        .map(|(i, _)| RstHeading {
+            start_row: i + 1,
+            title_row: i + 1,
+            underline_row: i + 1,
+        })
+        .collect()
+}
+
+/// A reST or AsciiDoc README split into its `ReadmeHeadline` and
+/// `Section` ranges. The first heading is the title unless prose
+/// precedes it. The headline is the title plus the first prose paragraph
+/// under it — or, when there is none, the first prose paragraph of an
+/// intro-titled section (`Overview`, `Introduction`, …). The text before
+/// the first body heading is a synthetic intro, and every body heading
+/// opens one section, each through the oversize head-split.
+fn line_scanned_readme(source: &str, markup: ReadmeMarkup) -> (BTreeSet<usize>, Vec<SectionRange>) {
     let src_lines: Vec<&str> = source.lines().collect();
-    let headings = scan_rst_headings(&src_lines);
-    let intro_end = headings
-        .get(1)
+    let headings = if markup == ReadmeMarkup::AsciiDoc {
+        scan_asciidoc_headings(&src_lines)
+    } else {
+        scan_rst_headings(&src_lines)
+    };
+    let has_title = headings.first().is_some_and(|first| {
+        let above = rst_content_rows(&src_lines, 1, first.start_row - 1);
+        rst_lede(&src_lines, &above).is_none()
+    });
+    let body = &headings[usize::from(has_title)..];
+    let section_end = |i: usize| {
+        body.get(i + 1)
+            .map_or(src_lines.len(), |next| next.start_row - 1)
+    };
+    let intro_end = body
+        .first()
         .map_or(src_lines.len(), |next| next.start_row - 1);
     let mut covered_rows = BTreeSet::new();
     let mut intro_start = 1;
-    if let Some(title) = headings.first() {
+    if has_title {
+        let title = &headings[0];
         covered_rows.extend(title.start_row..=title.underline_row);
         intro_start = title.underline_row + 1;
     }
-    let section_end = |i: usize| {
-        headings
-            .get(i + 1)
-            .map_or(src_lines.len(), |next| next.start_row - 1)
-    };
     let intro = rst_content_rows(&src_lines, intro_start, intro_end);
-    // `lede_section` is 0 for the intro, else the heading index.
+    // `lede_section` is `None` for the intro, else the body heading index.
     let mut lede_section = None;
     if let Some(lede) = rst_lede(&src_lines, &intro) {
         covered_rows.extend(&intro[lede]);
-        lede_section = Some(0);
-    } else if let Some((i, rows, lede)) = headings.iter().enumerate().skip(1).find_map(|(i, h)| {
+    } else if let Some((i, rows, lede)) = body.iter().enumerate().find_map(|(i, h)| {
         let title = title_core(src_lines[h.title_row - 1]);
         if !matches!(
             title.as_str(),
@@ -462,21 +516,21 @@ fn rst_readme(source: &str) -> (BTreeSet<usize>, Vec<SectionRange>) {
     // The section holding the lede starts past it, dropping the rows the
     // headline stepped over; every other section stays whole.
     let lede_end = covered_rows.last().copied().unwrap_or(0);
-    let start_for = |section: usize, start: usize| {
-        if lede_section == Some(section) {
-            lede_end + 1
+    let start_for = |section: Option<usize>, start: usize| {
+        if lede_section == section {
+            (lede_end + 1).max(start)
         } else {
             start
         }
     };
     let mut ranges = Vec::new();
-    let intro_start = start_for(0, intro_start);
+    let intro_start = start_for(None, intro_start);
     if intro_start <= intro_end {
         let intro = SectionRange::new(intro_start, intro_end, 0);
         push_whole_or_head_split(&mut ranges, &src_lines, intro);
     }
-    for (i, heading) in headings.iter().enumerate().skip(1) {
-        let (start, end) = (start_for(i, heading.title_row), section_end(i));
+    for (i, heading) in body.iter().enumerate() {
+        let (start, end) = (start_for(Some(i), heading.title_row), section_end(i));
         if start > end {
             continue;
         }
@@ -490,7 +544,7 @@ fn rst_readme(source: &str) -> (BTreeSet<usize>, Vec<SectionRange>) {
             SectionRange {
                 is_reference_usage_section: is_canonical_usage_title_core(&title)
                     || is_reference_usage_title_core(&title),
-                ..SectionRange::new(start, end, i - 1)
+                ..SectionRange::new(start, end, i)
             },
         );
     }
@@ -2229,6 +2283,57 @@ mod tests {
         assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
     }
 
+    /// A root README in any recognized markup is read — Markdown first,
+    /// and an extensionless one by its content.
+    #[test]
+    fn markdown_root_readme_recognizes_markups() {
+        use std::fs;
+        type Case<'a> = (&'a [(&'a str, &'a str)], Option<(&'a str, ReadmeMarkup)>);
+        let cases: [Case; 5] = [
+            (
+                &[("README.adoc", "= T\n"), ("README.rst", "T\n=\n")],
+                Some(("README.rst", ReadmeMarkup::Rst)),
+            ),
+            (
+                &[("README.asciidoc", "= T\n")],
+                Some(("README.asciidoc", ReadmeMarkup::AsciiDoc)),
+            ),
+            (
+                &[("README", "# T\n"), ("README.md", "# T\n")],
+                Some(("README.md", ReadmeMarkup::Markdown)),
+            ),
+            (
+                &[("README", "Title\n=====\n")],
+                Some(("README", ReadmeMarkup::Rst)),
+            ),
+            (
+                &[("README.html", "<h1>T</h1>\n"), ("README-dev.md", "# T\n")],
+                None,
+            ),
+        ];
+        for (files, expected) in cases {
+            let dir = tempfile::tempdir().unwrap();
+            for (name, body) in files {
+                fs::write(dir.path().join(name), body).unwrap();
+            }
+            let ctx = WalkCtx::new(dir.path().to_path_buf());
+            let found = root_readme(dir.path(), &ctx);
+            assert_eq!(
+                found,
+                expected.map(|(name, markup)| (dir.path().join(name), markup))
+            );
+        }
+    }
+
+    #[test]
+    fn markdown_asciidoc_readme_title_heads_the_headline() {
+        let src = "= Tool\n\nTool does the useful thing for you.\n\n== Install\n\nrun make\n";
+        let (headline, sections) = line_scanned_readme(src, ReadmeMarkup::AsciiDoc);
+        assert_eq!(headline.into_iter().collect::<Vec<_>>(), vec![1, 3]);
+        let last = sections.last().unwrap();
+        assert_eq!((last.start, last.end), (5, 7));
+    }
+
     /// Overline-form headings must not leak their overline punctuation row
     /// into the *preceding* section's span: a section bounds at the next
     /// heading's `start_row - 1` (the overline row), not its title row.
@@ -2257,7 +2362,7 @@ Details prose paragraph one.
         let headings = scan_rst_headings(&src_lines);
         // title + Overview + Details
         assert_eq!(headings.len(), 3);
-        let sections = rst_readme(src).1;
+        let sections = line_scanned_readme(src, ReadmeMarkup::Rst).1;
         assert_eq!(sections.len(), 3, "intro + Overview + Details");
         for section in &sections {
             let own_start = Some(section.start);
