@@ -813,7 +813,7 @@ struct SectionRange {
     start: usize,
     end: usize,
     h2_index: usize,
-    /// README-only: [`is_reference_usage_section`]. Earns
+    /// [`is_reference_usage_section`]. Earns
     /// [`REFERENCE_USAGE_SECTION_FACTOR`] and the default concavity.
     is_reference_usage_section: bool,
     /// Oversize tail chunks gate on the previous chunk so the section
