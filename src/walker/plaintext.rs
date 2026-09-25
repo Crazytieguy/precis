@@ -717,7 +717,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let named = classify_plaintext(&name)
             .or(is_workflow.then_some(Class::Tooling))
             .filter(|class| match class {
-                Class::BuildScript => is_build_script_location(&file, dir, ctx),
+                Class::BuildScript => is_build_script_location(dir, ctx),
                 _ => true,
             });
         // Root `README.rst` belongs to the markdown walker; emitting
@@ -824,19 +824,10 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
-    let Some(name) = file.file_name().and_then(|name| name.to_str()) else {
-        return false;
-    };
-    if matches!(name, ".gitmodules" | "configure.ac") {
-        return dir == ctx.root();
-    }
-    name.ends_with(".sh")
-        && (dir == ctx.root()
-            || dir
-                .file_name()
-                .and_then(|name| name.to_str())
-                .is_some_and(|name| name == "scripts"))
+/// Build scripts count at the repository root or in a `scripts/`
+/// directory; anywhere else they fall to the fallback.
+fn is_build_script_location(dir: &Path, ctx: &WalkCtx) -> bool {
+    dir == ctx.root() || dir.file_name().is_some_and(|name| name == "scripts")
 }
 
 /// Whole file when it fits `head_line_cap`, else the head rows with a
