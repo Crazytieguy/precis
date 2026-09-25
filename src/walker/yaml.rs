@@ -8,8 +8,7 @@
 //! configs are line-oriented enough that the whole-file `Whole` batch is
 //! sufficient — splitting per-service/job/hook would either produce many
 //! tiny batches or require a real YAML parser to handle block-style
-//! nesting. The one exception is the reference-map class, whose key
-//! surface is genuinely a roster.
+//! nesting.
 //!
 //! **Secrets safety**: env values inlined in `environment:` blocks
 //! (`DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@…`) are
@@ -60,8 +59,6 @@ const WORKFLOW_HEAD_BYTE_GATE: usize = 3_000;
 /// whose CI lives in one long workflow renders nothing but the
 /// filename at every budget.
 const WORKFLOW_PERIPHERAL_HEAD_BYTE_GATE: usize = WORKFLOW_HEAD_LINE_CAP * 200;
-const REFERENCE_MAP_BYTE_GATE: usize = 80_000;
-const REFERENCE_MAP_KEY_LINE_CAP: usize = 80;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
@@ -75,9 +72,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         else {
             continue;
         };
-        if class == YamlClass::ReferenceMap {
-            push_reference_map_batches(&file, ctx, &mut out);
-        } else if let Some(content) = class.content(&file, ctx) {
+        if let Some(content) = class.content(&file, ctx) {
             out.push(Batch {
                 key: YamlKey::Whole { file: file.clone() }.into(),
                 predecessor: None,
@@ -98,7 +93,6 @@ enum YamlClass {
     Lint,
     Hook,
     DocsSite,
-    ReferenceMap,
 }
 
 impl YamlClass {
@@ -133,7 +127,6 @@ impl YamlClass {
                     TOOLING_HEAD_LINE_CAP,
                 )
             }
-            YamlClass::ReferenceMap => reference_map_key_content(file, ctx),
         }
     }
 
@@ -144,42 +137,8 @@ impl YamlClass {
             YamlClass::WorkflowPeripheral => peripheral_ci_value(file, ctx),
             YamlClass::Lint | YamlClass::Hook => lint_hook_value(file, ctx),
             YamlClass::DocsSite => docs_site_value(file, ctx),
-            YamlClass::ReferenceMap => reference_map_value(file, ctx),
         }
     }
-}
-
-fn reference_map_key_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
-    let byte_len = std::fs::metadata(file)
-        .map(|m| m.len() as usize)
-        .unwrap_or(usize::MAX);
-    if byte_len > REFERENCE_MAP_BYTE_GATE {
-        return None;
-    }
-    let source = ctx.read_source(file)?;
-    let lines = reference_map_key_lines(&source);
-    if lines.full.len() > REFERENCE_MAP_KEY_LINE_CAP {
-        return None;
-    }
-    single_file_lines_content(file, &source, lines)
-}
-
-/// The top-level key roster of a root reference/spec YAML: the file's
-/// own table of contents. Deep-leaf contract slices used to hang off
-/// this roster; they were un-shipped after measuring negative.
-fn push_reference_map_batches(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
-    let Some(roster_content) = reference_map_key_content(file, ctx) else {
-        return;
-    };
-    out.push(Batch {
-        key: YamlKey::TopLevelKeys {
-            file: file.to_path_buf(),
-        }
-        .into(),
-        predecessor: None,
-        content: roster_content,
-        value: reference_map_value(file, ctx),
-    });
 }
 
 fn head_capped_yaml_content(
@@ -249,70 +208,7 @@ fn yaml_class(
     if name.eq_ignore_ascii_case("mkdocs.yml") && is_root_file(file, ctx) {
         return Some(YamlClass::DocsSite);
     }
-    if is_root_file(file, ctx) && is_reference_map_name(name) {
-        return Some(YamlClass::ReferenceMap);
-    }
     None
-}
-
-fn is_reference_map_name(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    let stem = lower
-        .strip_suffix(".yaml")
-        .or_else(|| lower.strip_suffix(".yml"))
-        .unwrap_or(&lower);
-    stem == "reference"
-        || stem == "references"
-        || stem == "api"
-        || stem == "api-reference"
-        || stem == "api_reference"
-        || stem == "openapi"
-        || stem == "swagger"
-        || stem == "spec"
-        || stem == "schema"
-}
-
-fn reference_map_key_lines(source: &str) -> FileLines {
-    let mut full = Vec::new();
-    let mut ellipses = Vec::new();
-    let mut previous_kept = None;
-    for (idx, raw) in source.lines().enumerate() {
-        let line_no = idx + 1;
-        let trimmed = raw.trim();
-        if trimmed.is_empty()
-            || trimmed.starts_with('#')
-            || trimmed.starts_with('-')
-            || !trimmed.contains(':')
-        {
-            continue;
-        }
-        if raw
-            .chars()
-            .next()
-            .is_some_and(|c| c.is_whitespace() && c != ' ')
-        {
-            continue;
-        }
-        let indent = raw.chars().take_while(|c| *c == ' ').count();
-        if indent > 2 {
-            continue;
-        }
-        if is_yaml_document_marker(trimmed) {
-            continue;
-        }
-        if let Some(prev) = previous_kept
-            && line_no > prev + 1
-        {
-            ellipses.push(prev + 1);
-        }
-        full.push(line_no);
-        previous_kept = Some(line_no);
-    }
-    FileLines::new(full).with_ellipses(ellipses)
-}
-
-fn is_yaml_document_marker(trimmed: &str) -> bool {
-    matches!(trimmed, "---" | "...")
 }
 
 fn workflow_name_rank(name: &str) -> Option<usize> {
@@ -478,14 +374,6 @@ fn docs_site_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(1.0, 0.55, 0.85, path_depth_factor(file, ctx))
 }
 
-fn reference_map_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // A root reference/spec map is often the structured source of truth
-    // for public API docs. Its root and child keys give the agent a
-    // compact "what domains and entries exist here" catalog without
-    // spending budget on each nested entry's prose.
-    mix_signals(1.9, 1.0, 1.45, path_depth_factor(file, ctx))
-}
-
 #[cfg(test)]
 mod tests {
     use crate::scheduler::Scheduler;
@@ -641,57 +529,6 @@ mod tests {
                 .iter()
                 .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Whole { .. }))),
             "unclassified yaml should not emit Yaml::Whole; scheduled keys: {keys:?}",
-        );
-    }
-
-    #[test]
-    fn yaml_emits_root_reference_map_roster_only() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let file = root.join("reference.yaml");
-        std::fs::write(
-            &file,
-            "constructors:\n  vec_f32:\n    params: [vector]\n    schema:\n      type: array\n    desc: A description.\nmeta:\n  vec_version:\n    params: []\n    desc: Returns the version.\n",
-        )
-        .unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 100_000, None);
-        let report = scheduler.run_with_report();
-        let rendered = report.tree.render();
-
-        assert!(rendered.contains("constructors:"), "{rendered}");
-        assert!(rendered.contains("meta:"), "{rendered}");
-        // The roster is the file's own table of contents; deep leaves
-        // and their contract bodies are not extracted.
-        assert!(!rendered.contains("params: [vector]"), "{rendered}");
-        assert!(!rendered.contains("type: array"), "{rendered}");
-
-        let roster_key = BatchKey::Yaml(YamlKey::TopLevelKeys { file });
-        assert!(
-            report
-                .candidates
-                .iter()
-                .any(|batch| batch.key == roster_key),
-            "missing YAML reference roster",
-        );
-    }
-
-    #[test]
-    fn yaml_reference_map_rule_is_root_only() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let nested = root.join("docs/reference.yaml");
-        std::fs::create_dir_all(nested.parent().unwrap()).unwrap();
-        std::fs::write(nested, "constructors:\n  - vec_f32\n").unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
-        let report = scheduler.run_with_report();
-        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
-        assert!(
-            !keys
-                .iter()
-                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::TopLevelKeys { .. }))),
-            "nested reference map should not emit Yaml::TopLevelKeys; scheduled keys: {keys:?}",
         );
     }
 

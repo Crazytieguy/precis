@@ -93,6 +93,23 @@ README.md
   …
 SECURITY.md
 TODO
+  1→- [ ] add `xyz_info` shadow table with version etc.
+  2→
+  3→- later
+  4→  - [ ] partition: UPDATE support
+  5→  - [ ] skip invalid validity entries in knn filter?
+  6→  - [ ] nulls in metadata
+  7→  - [ ] partition `x in (...)` handling
+  8→  - [ ] blobs/date/datetime
+  9→  - [ ] uuid/ulid perf
+  10→  - [ ] Aux columns: `NOT NULL` constraint
+  11→  - [ ] Metadata columns: `NOT NULL` constraint
+  12→   - [ ] Partiion key: `NOT NULL` constraint
+  13→  - [ ] dictionary encoding?
+  14→  - [ ] properly sqlite3_vtab_nochange / sqlite3_value_nochange handling
+  15→  - [ ] perf
+  16→    - [ ] aux: cache INSERT
+  17→    - [ ] aux: LEFT JOIN on `_rowids` queries to avoid N lookup queries
 VERSION
   1→0.1.7-alpha.10
 benchmarks/
@@ -156,65 +173,6 @@ examples/
   sqlite3-cli/
   wasm/
 reference.yaml
-  1→sections:
-  2→  constructors:
-  …
-  9→  op:
-  …
-  13→  distance:
-  …
-  16→  quantization:
-  …
-  19→  numpy:
-  …
-  22→  meta:
-  …
-  25→  entrypoints:
-  …
-  31→meta:
-  32→  vec_version:
-  …
-  36→  vec_debug:
-  …
-  40→constructors:
-  41→  vec_f32:
-  …
-  55→  vec_int8:
-  …
-  72→  vec_bit:
-  …
-  83→op:
-  84→  vec_length:
-  …
-  97→  vec_type:
-  …
-  109→  vec_add:
-  …
-  141→  vec_sub:
-  …
-  173→  vec_normalize:
-  …
-  192→  vec_slice:
-  …
-  227→  vec_to_json:
-  …
-  239→  vec_each:
-  …
-  258→distance:
-  259→  vec_distance_L2:
-  …
-  276→  vec_distance_cosine:
-  …
-  293→  vec_distance_hamming:
-  …
-  308→quantization:
-  309→  vec_quantize_binary:
-  …
-  324→  vec_quantize_i8:
-  …
-  328→vec0:
-  329→  vec0:
-  …
 scripts/
   progress.ts
   publish-release.sh
@@ -343,4 +301,20 @@ tmp-static.py
   21→    dtype=np.float32,
   22→)
   25→def register_np(array, name):
+  26→    ptr = array.__array_interface__["data"][0]
+  27→    nvectors, dimensions = array.__array_interface__["shape"]
+  28→    element_type = array.__array_interface__["typestr"]
+  29→
+  30→    assert element_type == "<f4"
+  31→
+  32→    name_escaped = db.execute("select printf('%w', ?)", [name]).fetchone()[0]
+  33→
+  34→    db.execute(
+  35→        "insert into temp.vec_static_blobs(name, data) select ?, vec_static_blob_from_raw(?, ?, ?, ?)",
+  36→        [name, ptr, element_type, dimensions, nvectors],
+  37→    )
+  38→
+  39→    db.execute(
+  40→        f'create virtual table "{name_escaped}" using vec_static_blob_entries({name_escaped})'
+  41→    )
   …
