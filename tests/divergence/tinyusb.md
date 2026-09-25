@@ -1,4 +1,4 @@
-Score(3000)=0.535 I=0.707 C=0.405 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.791/0.744/0.642/0.535/0.477/0.410/0.337
+Score(3000)=0.631 I=0.878 C=0.453 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.791/0.715/0.619/0.631/0.551/0.473/0.402
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,187 +46,195 @@ Score(3000)=0.535 I=0.707 C=0.405 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | ns | 879 |  | 150 | Architecture doc: layer/component overview | 1.6 |  | 0.529 |
 | walker |  | 1000 | 130 | README headline in README.rst |  |  | 0.791 |
 | ns | 1010 |  | 131 | The two fan-out directories: src/class/* and src/portable/* (directory names) | 1.7 |  | 0.802 |
-| walker |  | 1156 | 156 | README.rst section #5 |  |  | 0.807 |
-| ns | 1237 |  | 227 | README host-stack and Power-Delivery capability lists | 1.8 |  | 0.780 |
-| ns | 1333 |  | 96 | README supported-CPU matrix: heading, elided table body, legend | 1.9 |  | 0.744 |
-| walker |  | 1375 | 219 | README.rst section #7 |  |  | 0.744 |
-| walker |  | 1393 | 18 | listing of '.github' |  |  | 0.744 |
-| walker |  | 1415 | 22 | listing of '.idea' |  |  | 0.744 |
-| walker |  | 1485 | 70 | listing of '.github/workflows' |  |  | 0.744 |
-| walker |  | 1509 | 24 | listing of 'hw/mcu/dialog/da1469x' |  |  | 0.744 |
-| walker |  | 1512 | 3 | listing of 'hw/mcu/dialog/da1469x/SDK_10.0.8.105' |  |  | 0.744 |
-| walker |  | 1515 | 3 | listing of 'hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk' |  |  | 0.744 |
-| walker |  | 1522 | 7 | listing of 'hw/mcu/dialog/da1469x/include' |  |  | 0.744 |
-| walker |  | 1527 | 5 | listing of 'hw/mcu/dialog/da1469x/include/hal' |  |  | 0.744 |
-| ns | 1579 |  | 246 | src/tusb.h: the stack-wide entry points | 2.1 |  | 0.704 |
-| ns | 1791 |  | 212 | src/device/usbd.h: complete roster of the tud_* application API (names only) | 2.2 |  | 0.665 |
-| walker |  | 1946 | 419 | README.rst section #4 |  |  | 0.665 |
-| ns | 1952 |  | 161 | src/device/usbd.h: complete roster of tud_*_cb application callbacks | 2.3 |  | 0.642 |
-| walker |  | 1954 | 8 | listing of 'hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk/bsp' |  |  | 0.642 |
-| walker |  | 1988 | 34 | python names .github/workflows/ci_set_matrix.py |  |  | 0.642 |
-| walker |  | 2022 | 34 | listing of 'examples' |  |  | 0.642 |
-| walker |  | 2092 | 70 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.642 |
-| walker |  | 2124 | 32 | listing of 'hw/mcu/dialog/da1469x/src' |  |  | 0.642 |
-| ns | 2132 |  | 180 | src/host/usbh.h: host lifecycle API + application callback roster | 2.4 |  | 0.617 |
-| walker |  | 2145 | 21 | listing of 'hw/mcu/dialog/da1469x/include/mcu' |  |  | 0.617 |
-| walker |  | 2204 | 59 | c names src/common/tusb_debug.h |  |  | 0.617 |
-| walker |  | 2288 | 84 | listing of 'tools' |  |  | 0.619 |
-| ns | 2318 |  | 186 | src/host/usbh.h: per-device query API and endpoint/transfer API rosters | 2.5 |  | 0.596 |
-| walker |  | 2324 | 36 | listing of 'hw/mcu/sony/cxd56/mkspk' |  |  | 0.596 |
-| walker |  | 2393 | 69 | c names lib/networking/dnserver.h |  |  | 0.596 |
-| walker |  | 2411 | 18 | listing of 'test/unit-test' |  |  | 0.596 |
-| walker |  | 2428 | 17 | listing of 'test/unit-test/test' |  |  | 0.596 |
-| ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.573 |
-| walker |  | 2665 | 237 | README.rst section #3 |  |  | 0.573 |
-| walker |  | 2747 | 82 | c names lib/networking/dhserver.h |  |  | 0.573 |
-| walker |  | 2782 | 35 | c decl lib/networking/dhserver.h:42 |  |  | 0.573 |
-| ns | 2825 |  | 268 | src/host/usbh.h: the tuh_xfer_t transfer descriptor | 2.7 |  | 0.548 |
-| walker |  | 2847 | 65 | c decl lib/networking/dhserver.h:49 |  |  | 0.548 |
-| walker |  | 2894 | 47 | README headline in hw/mcu/bridgetek/ft9xx/Readme.md |  |  | 0.548 |
-| walker |  | 2907 | 13 | README.rst section #1 |  |  | 0.548 |
-| ns | 2940 |  | 115 | src/host/usbh.h: tuh_itf_info_t and tuh_bus_info_t | 2.8 |  | 0.535 |
-| walker |  | 2946 | 39 | README.rst section #0 |  |  | 0.535 |
-| walker |  | 3050 | 104 | c names src/osal/osal.h |  |  | 0.535 |
-| walker |  | 3055 | 5 | c doc src/osal/osal.h:39 |  |  | 0.535 |
-| ns | 3110 |  | 170 | Runtime configure IDs for tud_configure() / tuh_configure() | 2.9 |  | 0.522 |
-| walker |  | 3158 | 103 | python decl .github/workflows/ci_set_matrix.py:5 |  |  | 0.522 |
-| ns | 3235 |  | 125 | src/tusb_option.h: stack version macros | 3.1 |  | 0.517 |
-| ns | 3391 |  | 156 | src/tusb_option.h: complete section map (headings only) | 3.2 |  | 0.505 |
-| walker |  | 3392 | 234 | c names src/tusb.h |  |  | 0.508 |
-| walker |  | 3402 | 10 | c decl src/tusb.h:172 |  |  | 0.508 |
-| walker |  | 3414 | 12 | c decl src/tusb.h:177 |  |  | 0.508 |
-| walker |  | 3432 | 18 | c decl src/tusb.h:144 |  |  | 0.509 |
-| walker |  | 3441 | 9 | c doc src/tusb.h:164 |  |  | 0.511 |
-| walker |  | 3454 | 13 | c doc src/tusb.h:170 |  |  | 0.513 |
-| walker |  | 3468 | 14 | c doc src/tusb.h:144 |  |  | 0.515 |
-| ns | 3486 |  | 95 | src/tusb_option.h: how tusb_config.h is pulled in | 3.3 |  | 0.508 |
-| walker |  | 3575 | 107 | README headline in hw/mcu/dialog/README.md |  |  | 0.508 |
-| walker |  | 3650 | 75 | c names lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.508 |
-| walker |  | 3660 | 10 | c decl lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.508 |
-| walker |  | 3673 | 13 | c decl lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.508 |
-| walker |  | 3701 | 28 | c decl lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:399 |  |  | 0.508 |
-| ns | 3818 |  | 332 | src/tusb_option.h: every device class-driver enable macro with its default | 3.4 |  | 0.493 |
-| walker |  | 3900 | 199 | c names src/osal/osal_rtx4.h |  |  | 0.493 |
-| walker |  | 3911 | 11 | c decl src/osal/osal_rtx4.h:67 |  |  | 0.493 |
-| walker |  | 3921 | 10 | c body src/osal/osal_rtx4.h:49 |  |  | 0.493 |
-| walker |  | 3931 | 10 | c body src/osal/osal_rtx4.h:70 |  |  | 0.493 |
-| walker |  | 3948 | 17 | c body src/osal/osal_rtx4.h:74 |  |  | 0.493 |
-| walker |  | 3982 | 34 | listing of 'examples/dual' |  |  | 0.493 |
-| walker |  | 4006 | 24 | listing of 'examples/dual/host_hid_to_device_cdc' |  |  | 0.493 |
-| walker |  | 4022 | 16 | listing of 'examples/dual/host_hid_to_device_cdc/src' |  |  | 0.493 |
-| walker |  | 4046 | 24 | listing of 'examples/dual/host_info_to_device_cdc' |  |  | 0.493 |
-| walker |  | 4068 | 22 | listing of 'examples/dual/host_info_to_device_cdc/src' |  |  | 0.493 |
-| walker |  | 4096 | 28 | listing of 'examples/dual/dynamic_switch' |  |  | 0.493 |
-| walker |  | 4118 | 22 | listing of 'examples/dual/dynamic_switch/src' |  |  | 0.493 |
-| ns | 4148 |  | 330 | src/tusb_option.h: every host class-driver enable macro, with elided VID/PID tables | 3.5 |  | 0.477 |
-| walker |  | 4331 | 213 | c names src/host/usbh_pvt.h |  |  | 0.477 |
-| walker |  | 4349 | 18 | c doc src/host/usbh_pvt.h:63 |  |  | 0.477 |
-| ns | 4497 |  | 349 | src/tusb_option.h: OS selector and roothub mode/speed constants | 3.6 |  | 0.465 |
-| walker |  | 4560 | 211 | c names src/osal/osal_mynewt.h |  |  | 0.465 |
-| walker |  | 4571 | 11 | c decl src/osal/osal_mynewt.h:52 |  |  | 0.465 |
-| walker |  | 4580 | 9 | c body src/osal/osal_mynewt.h:55 |  |  | 0.465 |
-| walker |  | 4596 | 16 | c body src/osal/osal_mynewt.h:43 |  |  | 0.465 |
-| walker |  | 4615 | 19 | c body src/osal/osal_mynewt.h:39 |  |  | 0.465 |
-| ns | 4693 |  | 196 | src/tusb_option.h: common (CFG_TUSB_*) option defaults | 3.7 | 3.2 | 0.458 |
-| walker |  | 4826 | 211 | c names src/osal/osal_rtthread.h |  |  | 0.458 |
-| walker |  | 4837 | 11 | c decl src/osal/osal_rtthread.h:54 |  |  | 0.458 |
-| walker |  | 4848 | 11 | c body src/osal/osal_rtthread.h:57 |  |  | 0.458 |
-| walker |  | 4860 | 12 | c body src/osal/osal_rtthread.h:41 |  |  | 0.458 |
-| ns | 4865 |  | 172 | src/tusb_option.h: device-side sizing and behaviour defaults | 3.8 | 3.2 | 0.452 |
-| walker |  | 4882 | 22 | c doc src/osal/osal_rtthread.h:41 |  |  | 0.452 |
-| walker |  | 4918 | 36 | listing of 'test/hil' |  |  | 0.453 |
-| ns | 4922 |  | 57 | src/tusb_option.h: host-side sizing defaults | 3.9 | 3.2 | 0.450 |
-| ns | 5032 |  | 110 | src/tusb_option.h: per-controller (USBIP) configuration sub-sections | 3.10 |  | 0.446 |
-| ns | 5126 |  | 94 | src/tusb_option.h: TypeC enable and compile-time configuration validation | 3.11 |  | 0.441 |
-| walker |  | 5183 | 265 | c names lib/embedded-cli/embedded_cli.h |  |  | 0.441 |
-| walker |  | 5201 | 18 | c decl lib/embedded-cli/embedded_cli.h:58 |  |  | 0.441 |
-| walker |  | 5227 | 26 | c decl lib/embedded-cli/embedded_cli.h:28 |  |  | 0.441 |
-| walker |  | 5458 | 231 | c names src/osal/osal_freertos.h |  |  | 0.441 |
-| walker |  | 5463 | 5 | c decl src/osal/osal_freertos.h:51 |  |  | 0.441 |
-| walker |  | 5470 | 7 | c decl src/osal/osal_freertos.h:47 |  |  | 0.441 |
-| ns | 5479 |  | 353 | src/device/usbd_pvt.h: the device class-driver vtable | 4.1 |  | 0.432 |
-| walker |  | 5483 | 13 | c decl src/osal/osal_freertos.h:44 |  |  | 0.432 |
-| walker |  | 5545 | 62 | c decl src/osal/osal_freertos.h:79 |  |  | 0.432 |
-| walker |  | 5654 | 109 | c decl src/osal/osal_freertos.h:58 |  |  | 0.432 |
-| ns | 5788 |  | 309 | src/host/usbh_pvt.h: the host class-driver vtable and USBH hooks | 4.2 |  | 0.425 |
-| walker |  | 5868 | 214 | c names src/osal/osal_pico.h |  |  | 0.425 |
-| walker |  | 5878 | 10 | c body src/osal/osal_pico.h:42 |  |  | 0.425 |
-| walker |  | 5888 | 10 | c body src/osal/osal_pico.h:56 |  |  | 0.425 |
-| walker |  | 5902 | 14 | c body src/osal/osal_pico.h:46 |  |  | 0.425 |
-| walker |  | 5924 | 22 | c doc src/osal/osal_pico.h:42 |  |  | 0.425 |
-| ns | 6164 |  | 376 | src/device/dcd.h: complete device-controller porting contract (names only) | 4.3 |  | 0.410 |
-| walker |  | 6168 | 244 | c names src/osal/osal_none.h |  |  | 0.410 |
-| walker |  | 6177 | 9 | c decl src/osal/osal_none.h:81 |  |  | 0.410 |
-| walker |  | 6199 | 22 | c decl src/osal/osal_none.h:44 |  |  | 0.410 |
-| walker |  | 6226 | 27 | c decl src/osal/osal_none.h:50 |  |  | 0.410 |
-| walker |  | 6236 | 10 | c body src/osal/osal_none.h:53 |  |  | 0.410 |
-| walker |  | 6294 | 58 | plaintext config docs/requirements.txt |  |  | 0.410 |
-| ns | 6463 |  | 299 | src/host/hcd.h: complete host-controller porting contract (names only) | 4.4 |  | 0.399 |
-| walker |  | 6573 | 279 | c names src/common/tusb_types.h |  |  | 0.399 |
-| walker |  | 6600 | 27 | c decl src/common/tusb_types.h:102 |  |  | 0.399 |
-| walker |  | 6637 | 37 | c decl src/common/tusb_types.h:39 |  |  | 0.399 |
-| walker |  | 6674 | 37 | c decl src/common/tusb_types.h:57 |  |  | 0.399 |
-| walker |  | 6712 | 38 | c decl src/common/tusb_types.h:107 |  |  | 0.399 |
-| walker |  | 6756 | 44 | c decl src/common/tusb_types.h:79 |  |  | 0.399 |
-| walker |  | 6819 | 63 | c decl src/common/tusb_types.h:95 |  |  | 0.399 |
-| ns | 6880 |  | 417 | src/osal/osal.h: the OSAL porting contract | 4.5 |  | 0.389 |
-| walker |  | 6885 | 66 | c decl src/common/tusb_types.h:86 |  |  | 0.389 |
-| walker |  | 6967 | 82 | c decl src/common/tusb_types.h:50 |  |  | 0.389 |
-| ns | 7023 |  | 143 | hw/bsp/board_api.h: complete board porting API (names only) | 4.6 |  | 0.383 |
-| walker |  | 7049 | 82 | c decl src/common/tusb_types.h:68 |  |  | 0.383 |
-| walker |  | 7133 | 84 | c decl src/common/tusb_types.h:43 |  |  | 0.383 |
-| walker |  | 7217 | 84 | c decl src/common/tusb_types.h:61 |  |  | 0.383 |
-| ns | 7285 |  | 262 | Endpoint API a class driver is allowed to call | 4.7 |  | 0.375 |
-| walker |  | 7303 | 86 | c decl src/common/tusb_types.h:112 |  |  | 0.375 |
-| walker |  | 7537 | 234 | c names src/host/hcd.h |  |  | 0.379 |
-| walker |  | 7543 | 6 | c doc src/host/hcd.h:122 |  |  | 0.379 |
-| walker |  | 7550 | 7 | c doc src/host/hcd.h:125 |  |  | 0.379 |
-| walker |  | 7558 | 8 | c doc src/host/hcd.h:119 |  |  | 0.379 |
-| walker |  | 7567 | 9 | c doc src/host/hcd.h:116 |  |  | 0.379 |
-| ns | 7602 |  | 317 | Complete file inventory of every USB class driver | 5.1 |  | 0.359 |
-| walker |  | 7632 | 65 | c decl src/host/hcd.h:56 |  |  | 0.359 |
-| walker |  | 7840 | 208 | c names src/osal/osal_threadx.h |  |  | 0.359 |
-| walker |  | 7850 | 10 | c decl src/osal/osal_threadx.h:74 |  |  | 0.359 |
-| ns | 7860 |  | 258 | src/device/usbd.c: the built-in device class-driver table | 5.2 |  | 0.355 |
-| walker |  | 7870 | 20 | c decl src/osal/osal_threadx.h:79 |  |  | 0.355 |
-| walker |  | 7880 | 10 | c body src/osal/osal_threadx.h:82 |  |  | 0.355 |
-| walker |  | 7896 | 16 | c body src/osal/osal_threadx.h:64 |  |  | 0.355 |
-| ns | 7983 |  | 123 | src/host/usbh.c: the built-in host class-driver table | 5.3 |  | 0.352 |
-| walker |  | 8169 | 273 | c names src/host/hub.h |  |  | 0.352 |
-| walker |  | 8187 | 18 | c decl src/host/hub.h:172 |  |  | 0.352 |
-| walker |  | 8205 | 18 | c decl src/host/hub.h:176 |  |  | 0.352 |
-| walker |  | 8223 | 18 | c decl src/host/hub.h:181 |  |  | 0.352 |
-| walker |  | 8255 | 32 | c decl src/host/hub.h:61 |  |  | 0.352 |
-| walker |  | 8293 | 38 | c decl src/host/hub.h:90 |  |  | 0.352 |
-| ns | 8321 |  | 338 | src/device/usbd.h: complete roster of descriptor template macros | 5.4 |  | 0.345 |
-| walker |  | 8332 | 39 | c decl src/host/hub.h:85 |  |  | 0.345 |
-| walker |  | 8396 | 64 | c decl src/host/hub.h:96 |  |  | 0.345 |
-| walker |  | 8485 | 89 | c decl src/host/hub.h:128 |  |  | 0.345 |
-| ns | 8544 |  | 223 | src/common/tusb_types.h: inventory of named USB protocol enums | 6.1 |  | 0.341 |
-| walker |  | 8630 | 145 | c decl src/host/hub.h:102 |  |  | 0.341 |
-| ns | 8753 |  | 209 | src/common/tusb_types.h: packed USB descriptor structs and the setup packet | 6.2 |  | 0.337 |
-| walker |  | 8874 | 244 | c names src/osal/osal_zephyr.h |  |  | 0.337 |
-| walker |  | 8885 | 11 | c decl src/osal/osal_zephyr.h:50 |  |  | 0.337 |
-| walker |  | 8906 | 21 | c decl src/osal/osal_zephyr.h:45 |  |  | 0.337 |
-| walker |  | 8916 | 10 | c body src/osal/osal_zephyr.h:53 |  |  | 0.337 |
-| walker |  | 8927 | 11 | c body src/osal/osal_zephyr.h:34 |  |  | 0.337 |
-| walker |  | 8940 | 13 | c body src/osal/osal_zephyr.h:38 |  |  | 0.337 |
-| ns | 9008 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.331 |
-| walker |  | 9162 | 222 | c names src/device/dcd.h |  |  | 0.334 |
-| walker |  | 9168 | 6 | c doc src/device/dcd.h:120 |  |  | 0.334 |
-| walker |  | 9175 | 7 | c doc src/device/dcd.h:123 |  |  | 0.334 |
-| walker |  | 9182 | 7 | c doc src/device/dcd.h:126 |  |  | 0.334 |
-| walker |  | 9191 | 9 | c doc src/device/dcd.h:114 |  |  | 0.334 |
-| ns | 9196 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.330 |
-| walker |  | 9202 | 11 | c doc src/device/dcd.h:117 |  |  | 0.330 |
-| walker |  | 9353 | 151 | c decl src/host/usbh_pvt.h:47 |  |  | 0.340 |
-| walker |  | 9374 | 21 | c doc src/host/usbh_pvt.h:47 |  |  | 0.340 |
-| walker |  | 9391 | 17 | c body src/osal/osal_rtx4.h:78 |  |  | 0.340 |
-| ns | 9543 |  | 347 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.330 |
-| walker |  | 9622 | 231 | c names src/device/usbd_pvt.h |  |  | 0.330 |
-| walker |  | 9647 | 25 | c decl src/device/usbd_pvt.h:43 |  |  | 0.330 |
-| walker |  | 9656 | 9 | c doc src/device/usbd_pvt.h:83 |  |  | 0.330 |
-| ns | 9679 |  | 136 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.336 |
-| ns | 9686 |  | 7 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.338 |
-| walker |  | 9814 | 158 | c decl lib/embedded-cli/embedded_cli.h:67 |  |  | 0.338 |
-| ns | 9884 |  | 198 | Maintenance tooling and documentation sources | 7.5 |  | 0.367 |
+| walker |  | 1013 | 13 | README.rst section #1 |  |  | 0.802 |
+| walker |  | 1052 | 39 | README.rst section #0 |  |  | 0.802 |
+| walker |  | 1070 | 18 | listing of '.github' |  |  | 0.802 |
+| walker |  | 1092 | 22 | listing of '.idea' |  |  | 0.802 |
+| walker |  | 1162 | 70 | listing of '.github/workflows' |  |  | 0.802 |
+| walker |  | 1186 | 24 | listing of 'hw/mcu/dialog/da1469x' |  |  | 0.802 |
+| walker |  | 1189 | 3 | listing of 'hw/mcu/dialog/da1469x/SDK_10.0.8.105' |  |  | 0.802 |
+| walker |  | 1192 | 3 | listing of 'hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk' |  |  | 0.802 |
+| walker |  | 1199 | 7 | listing of 'hw/mcu/dialog/da1469x/include' |  |  | 0.802 |
+| walker |  | 1204 | 5 | listing of 'hw/mcu/dialog/da1469x/include/hal' |  |  | 0.802 |
+| walker |  | 1212 | 8 | listing of 'hw/mcu/dialog/da1469x/SDK_10.0.8.105/sdk/bsp' |  |  | 0.802 |
+| ns | 1237 |  | 227 | README host-stack and Power-Delivery capability lists | 1.8 |  | 0.749 |
+| walker |  | 1246 | 34 | python names .github/workflows/ci_set_matrix.py |  |  | 0.749 |
+| walker |  | 1280 | 34 | listing of 'examples' |  |  | 0.749 |
+| ns | 1333 |  | 96 | README supported-CPU matrix: heading, elided table body, legend | 1.9 |  | 0.715 |
+| walker |  | 1350 | 70 | README headline in lib/SEGGER_RTT/README.md |  |  | 0.715 |
+| walker |  | 1382 | 32 | listing of 'hw/mcu/dialog/da1469x/src' |  |  | 0.715 |
+| walker |  | 1403 | 21 | listing of 'hw/mcu/dialog/da1469x/include/mcu' |  |  | 0.715 |
+| walker |  | 1462 | 59 | c names src/common/tusb_debug.h |  |  | 0.715 |
+| walker |  | 1546 | 84 | listing of 'tools' |  |  | 0.717 |
+| ns | 1579 |  | 246 | src/tusb.h: the stack-wide entry points | 2.1 |  | 0.678 |
+| walker |  | 1582 | 36 | listing of 'hw/mcu/sony/cxd56/mkspk' |  |  | 0.678 |
+| walker |  | 1651 | 69 | c names lib/networking/dnserver.h |  |  | 0.678 |
+| ns | 1791 |  | 212 | src/device/usbd.h: complete roster of the tud_* application API (names only) | 2.2 |  | 0.641 |
+| walker |  | 1890 | 239 | README.rst section #3 |  |  | 0.641 |
+| walker |  | 1908 | 18 | listing of 'test/unit-test' |  |  | 0.641 |
+| walker |  | 1925 | 17 | listing of 'test/unit-test/test' |  |  | 0.641 |
+| ns | 1952 |  | 161 | src/device/usbd.h: complete roster of tud_*_cb application callbacks | 2.3 |  | 0.619 |
+| ns | 2132 |  | 180 | src/host/usbh.h: host lifecycle API + application callback roster | 2.4 |  | 0.595 |
+| walker |  | 2223 | 298 | README.rst section #2 |  |  | 0.717 |
+| walker |  | 2305 | 82 | c names lib/networking/dhserver.h |  |  | 0.717 |
+| ns | 2318 |  | 186 | src/host/usbh.h: per-device query API and endpoint/transfer API rosters | 2.5 |  | 0.690 |
+| walker |  | 2340 | 35 | c decl lib/networking/dhserver.h:42 |  |  | 0.690 |
+| walker |  | 2405 | 65 | c decl lib/networking/dhserver.h:49 |  |  | 0.690 |
+| walker |  | 2452 | 47 | README headline in hw/mcu/bridgetek/ft9xx/Readme.md |  |  | 0.690 |
+| walker |  | 2556 | 104 | c names src/osal/osal.h |  |  | 0.690 |
+| ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.662 |
+| walker |  | 2561 | 5 | c doc src/osal/osal.h:39 |  |  | 0.662 |
+| walker |  | 2664 | 103 | python decl .github/workflows/ci_set_matrix.py:5 |  |  | 0.662 |
+| ns | 2825 |  | 268 | src/host/usbh.h: the tuh_xfer_t transfer descriptor | 2.7 |  | 0.634 |
+| walker |  | 2898 | 234 | c names src/tusb.h |  |  | 0.637 |
+| walker |  | 2908 | 10 | c decl src/tusb.h:172 |  |  | 0.637 |
+| walker |  | 2920 | 12 | c decl src/tusb.h:177 |  |  | 0.637 |
+| walker |  | 2938 | 18 | c decl src/tusb.h:144 |  |  | 0.639 |
+| ns | 2940 |  | 115 | src/host/usbh.h: tuh_itf_info_t and tuh_bus_info_t | 2.8 |  | 0.624 |
+| walker |  | 2947 | 9 | c doc src/tusb.h:164 |  |  | 0.626 |
+| walker |  | 2960 | 13 | c doc src/tusb.h:170 |  |  | 0.628 |
+| walker |  | 2974 | 14 | c doc src/tusb.h:144 |  |  | 0.631 |
+| walker |  | 3081 | 107 | README headline in hw/mcu/dialog/README.md |  |  | 0.631 |
+| ns | 3110 |  | 170 | Runtime configure IDs for tud_configure() / tuh_configure() | 2.9 |  | 0.616 |
+| walker |  | 3156 | 75 | c names lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.616 |
+| walker |  | 3166 | 10 | c decl lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.616 |
+| walker |  | 3179 | 13 | c decl lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.616 |
+| walker |  | 3207 | 28 | c decl lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:399 |  |  | 0.616 |
+| ns | 3235 |  | 125 | src/tusb_option.h: stack version macros | 3.1 |  | 0.609 |
+| ns | 3391 |  | 156 | src/tusb_option.h: complete section map (headings only) | 3.2 |  | 0.595 |
+| walker |  | 3406 | 199 | c names src/osal/osal_rtx4.h |  |  | 0.595 |
+| walker |  | 3417 | 11 | c decl src/osal/osal_rtx4.h:67 |  |  | 0.595 |
+| walker |  | 3427 | 10 | c body src/osal/osal_rtx4.h:49 |  |  | 0.595 |
+| walker |  | 3437 | 10 | c body src/osal/osal_rtx4.h:70 |  |  | 0.595 |
+| walker |  | 3454 | 17 | c body src/osal/osal_rtx4.h:74 |  |  | 0.595 |
+| ns | 3486 |  | 95 | src/tusb_option.h: how tusb_config.h is pulled in | 3.3 |  | 0.586 |
+| walker |  | 3488 | 34 | listing of 'examples/dual' |  |  | 0.586 |
+| walker |  | 3512 | 24 | listing of 'examples/dual/host_hid_to_device_cdc' |  |  | 0.586 |
+| walker |  | 3528 | 16 | listing of 'examples/dual/host_hid_to_device_cdc/src' |  |  | 0.586 |
+| walker |  | 3552 | 24 | listing of 'examples/dual/host_info_to_device_cdc' |  |  | 0.586 |
+| walker |  | 3574 | 22 | listing of 'examples/dual/host_info_to_device_cdc/src' |  |  | 0.586 |
+| walker |  | 3602 | 28 | listing of 'examples/dual/dynamic_switch' |  |  | 0.586 |
+| walker |  | 3624 | 22 | listing of 'examples/dual/dynamic_switch/src' |  |  | 0.586 |
+| ns | 3818 |  | 332 | src/tusb_option.h: every device class-driver enable macro with its default | 3.4 |  | 0.569 |
+| walker |  | 3837 | 213 | c names src/host/usbh_pvt.h |  |  | 0.569 |
+| walker |  | 3855 | 18 | c doc src/host/usbh_pvt.h:63 |  |  | 0.569 |
+| walker |  | 4066 | 211 | c names src/osal/osal_mynewt.h |  |  | 0.569 |
+| walker |  | 4077 | 11 | c decl src/osal/osal_mynewt.h:52 |  |  | 0.569 |
+| walker |  | 4086 | 9 | c body src/osal/osal_mynewt.h:55 |  |  | 0.569 |
+| walker |  | 4102 | 16 | c body src/osal/osal_mynewt.h:43 |  |  | 0.569 |
+| walker |  | 4121 | 19 | c body src/osal/osal_mynewt.h:39 |  |  | 0.569 |
+| ns | 4148 |  | 330 | src/tusb_option.h: every host class-driver enable macro, with elided VID/PID tables | 3.5 |  | 0.551 |
+| walker |  | 4332 | 211 | c names src/osal/osal_rtthread.h |  |  | 0.551 |
+| walker |  | 4343 | 11 | c decl src/osal/osal_rtthread.h:54 |  |  | 0.551 |
+| walker |  | 4354 | 11 | c body src/osal/osal_rtthread.h:57 |  |  | 0.551 |
+| walker |  | 4366 | 12 | c body src/osal/osal_rtthread.h:41 |  |  | 0.551 |
+| walker |  | 4388 | 22 | c doc src/osal/osal_rtthread.h:41 |  |  | 0.551 |
+| walker |  | 4424 | 36 | listing of 'test/hil' |  |  | 0.551 |
+| ns | 4497 |  | 349 | src/tusb_option.h: OS selector and roothub mode/speed constants | 3.6 |  | 0.538 |
+| walker |  | 4689 | 265 | c names lib/embedded-cli/embedded_cli.h |  |  | 0.538 |
+| ns | 4693 |  | 196 | src/tusb_option.h: common (CFG_TUSB_*) option defaults | 3.7 | 3.2 | 0.529 |
+| walker |  | 4707 | 18 | c decl lib/embedded-cli/embedded_cli.h:58 |  |  | 0.529 |
+| walker |  | 4733 | 26 | c decl lib/embedded-cli/embedded_cli.h:28 |  |  | 0.529 |
+| ns | 4865 |  | 172 | src/tusb_option.h: device-side sizing and behaviour defaults | 3.8 | 3.2 | 0.523 |
+| ns | 4922 |  | 57 | src/tusb_option.h: host-side sizing defaults | 3.9 | 3.2 | 0.520 |
+| walker |  | 4964 | 231 | c names src/osal/osal_freertos.h |  |  | 0.520 |
+| walker |  | 4969 | 5 | c decl src/osal/osal_freertos.h:51 |  |  | 0.520 |
+| walker |  | 4976 | 7 | c decl src/osal/osal_freertos.h:47 |  |  | 0.520 |
+| walker |  | 4989 | 13 | c decl src/osal/osal_freertos.h:44 |  |  | 0.520 |
+| ns | 5032 |  | 110 | src/tusb_option.h: per-controller (USBIP) configuration sub-sections | 3.10 |  | 0.514 |
+| walker |  | 5051 | 62 | c decl src/osal/osal_freertos.h:79 |  |  | 0.514 |
+| ns | 5126 |  | 94 | src/tusb_option.h: TypeC enable and compile-time configuration validation | 3.11 |  | 0.509 |
+| walker |  | 5160 | 109 | c decl src/osal/osal_freertos.h:58 |  |  | 0.509 |
+| walker |  | 5374 | 214 | c names src/osal/osal_pico.h |  |  | 0.509 |
+| walker |  | 5384 | 10 | c body src/osal/osal_pico.h:42 |  |  | 0.509 |
+| walker |  | 5394 | 10 | c body src/osal/osal_pico.h:56 |  |  | 0.509 |
+| walker |  | 5408 | 14 | c body src/osal/osal_pico.h:46 |  |  | 0.509 |
+| walker |  | 5430 | 22 | c doc src/osal/osal_pico.h:42 |  |  | 0.509 |
+| ns | 5479 |  | 353 | src/device/usbd_pvt.h: the device class-driver vtable | 4.1 |  | 0.498 |
+| walker |  | 5674 | 244 | c names src/osal/osal_none.h |  |  | 0.498 |
+| walker |  | 5683 | 9 | c decl src/osal/osal_none.h:81 |  |  | 0.498 |
+| walker |  | 5705 | 22 | c decl src/osal/osal_none.h:44 |  |  | 0.498 |
+| walker |  | 5732 | 27 | c decl src/osal/osal_none.h:50 |  |  | 0.498 |
+| walker |  | 5742 | 10 | c body src/osal/osal_none.h:53 |  |  | 0.498 |
+| ns | 5788 |  | 309 | src/host/usbh_pvt.h: the host class-driver vtable and USBH hooks | 4.2 |  | 0.491 |
+| walker |  | 5800 | 58 | plaintext config docs/requirements.txt |  |  | 0.491 |
+| walker |  | 6079 | 279 | c names src/common/tusb_types.h |  |  | 0.491 |
+| walker |  | 6106 | 27 | c decl src/common/tusb_types.h:102 |  |  | 0.491 |
+| walker |  | 6143 | 37 | c decl src/common/tusb_types.h:39 |  |  | 0.491 |
+| ns | 6164 |  | 376 | src/device/dcd.h: complete device-controller porting contract (names only) | 4.3 |  | 0.473 |
+| walker |  | 6180 | 37 | c decl src/common/tusb_types.h:57 |  |  | 0.473 |
+| walker |  | 6218 | 38 | c decl src/common/tusb_types.h:107 |  |  | 0.473 |
+| walker |  | 6262 | 44 | c decl src/common/tusb_types.h:79 |  |  | 0.473 |
+| walker |  | 6325 | 63 | c decl src/common/tusb_types.h:95 |  |  | 0.473 |
+| walker |  | 6391 | 66 | c decl src/common/tusb_types.h:86 |  |  | 0.473 |
+| ns | 6463 |  | 299 | src/host/hcd.h: complete host-controller porting contract (names only) | 4.4 |  | 0.460 |
+| walker |  | 6473 | 82 | c decl src/common/tusb_types.h:50 |  |  | 0.460 |
+| walker |  | 6555 | 82 | c decl src/common/tusb_types.h:68 |  |  | 0.460 |
+| walker |  | 6639 | 84 | c decl src/common/tusb_types.h:43 |  |  | 0.460 |
+| walker |  | 6723 | 84 | c decl src/common/tusb_types.h:61 |  |  | 0.460 |
+| walker |  | 6809 | 86 | c decl src/common/tusb_types.h:112 |  |  | 0.460 |
+| ns | 6880 |  | 417 | src/osal/osal.h: the OSAL porting contract | 4.5 |  | 0.448 |
+| ns | 7023 |  | 143 | hw/bsp/board_api.h: complete board porting API (names only) | 4.6 |  | 0.442 |
+| walker |  | 7043 | 234 | c names src/host/hcd.h |  |  | 0.446 |
+| walker |  | 7049 | 6 | c doc src/host/hcd.h:122 |  |  | 0.446 |
+| walker |  | 7056 | 7 | c doc src/host/hcd.h:125 |  |  | 0.446 |
+| walker |  | 7064 | 8 | c doc src/host/hcd.h:119 |  |  | 0.446 |
+| walker |  | 7073 | 9 | c doc src/host/hcd.h:116 |  |  | 0.446 |
+| walker |  | 7138 | 65 | c decl src/host/hcd.h:56 |  |  | 0.446 |
+| ns | 7285 |  | 262 | Endpoint API a class driver is allowed to call | 4.7 |  | 0.437 |
+| walker |  | 7346 | 208 | c names src/osal/osal_threadx.h |  |  | 0.437 |
+| walker |  | 7356 | 10 | c decl src/osal/osal_threadx.h:74 |  |  | 0.437 |
+| walker |  | 7376 | 20 | c decl src/osal/osal_threadx.h:79 |  |  | 0.437 |
+| walker |  | 7386 | 10 | c body src/osal/osal_threadx.h:82 |  |  | 0.437 |
+| walker |  | 7402 | 16 | c body src/osal/osal_threadx.h:64 |  |  | 0.437 |
+| ns | 7602 |  | 317 | Complete file inventory of every USB class driver | 5.1 |  | 0.414 |
+| walker |  | 7675 | 273 | c names src/host/hub.h |  |  | 0.414 |
+| walker |  | 7693 | 18 | c decl src/host/hub.h:172 |  |  | 0.414 |
+| walker |  | 7711 | 18 | c decl src/host/hub.h:176 |  |  | 0.414 |
+| walker |  | 7729 | 18 | c decl src/host/hub.h:181 |  |  | 0.414 |
+| walker |  | 7761 | 32 | c decl src/host/hub.h:61 |  |  | 0.414 |
+| walker |  | 7799 | 38 | c decl src/host/hub.h:90 |  |  | 0.414 |
+| walker |  | 7838 | 39 | c decl src/host/hub.h:85 |  |  | 0.414 |
+| ns | 7860 |  | 258 | src/device/usbd.c: the built-in device class-driver table | 5.2 |  | 0.409 |
+| walker |  | 7902 | 64 | c decl src/host/hub.h:96 |  |  | 0.409 |
+| ns | 7983 |  | 123 | src/host/usbh.c: the built-in host class-driver table | 5.3 |  | 0.406 |
+| walker |  | 7991 | 89 | c decl src/host/hub.h:128 |  |  | 0.406 |
+| walker |  | 8136 | 145 | c decl src/host/hub.h:102 |  |  | 0.406 |
+| ns | 8321 |  | 338 | src/device/usbd.h: complete roster of descriptor template macros | 5.4 |  | 0.398 |
+| walker |  | 8380 | 244 | c names src/osal/osal_zephyr.h |  |  | 0.398 |
+| walker |  | 8391 | 11 | c decl src/osal/osal_zephyr.h:50 |  |  | 0.398 |
+| walker |  | 8412 | 21 | c decl src/osal/osal_zephyr.h:45 |  |  | 0.398 |
+| walker |  | 8422 | 10 | c body src/osal/osal_zephyr.h:53 |  |  | 0.398 |
+| walker |  | 8433 | 11 | c body src/osal/osal_zephyr.h:34 |  |  | 0.398 |
+| walker |  | 8446 | 13 | c body src/osal/osal_zephyr.h:38 |  |  | 0.398 |
+| ns | 8544 |  | 223 | src/common/tusb_types.h: inventory of named USB protocol enums | 6.1 |  | 0.393 |
+| walker |  | 8668 | 222 | c names src/device/dcd.h |  |  | 0.396 |
+| walker |  | 8674 | 6 | c doc src/device/dcd.h:120 |  |  | 0.396 |
+| walker |  | 8681 | 7 | c doc src/device/dcd.h:123 |  |  | 0.396 |
+| walker |  | 8688 | 7 | c doc src/device/dcd.h:126 |  |  | 0.396 |
+| walker |  | 8697 | 9 | c doc src/device/dcd.h:114 |  |  | 0.396 |
+| walker |  | 8708 | 11 | c doc src/device/dcd.h:117 |  |  | 0.396 |
+| ns | 8753 |  | 209 | src/common/tusb_types.h: packed USB descriptor structs and the setup packet | 6.2 |  | 0.391 |
+| walker |  | 8859 | 151 | c decl src/host/usbh_pvt.h:47 |  |  | 0.402 |
+| walker |  | 8880 | 21 | c doc src/host/usbh_pvt.h:47 |  |  | 0.402 |
+| walker |  | 8897 | 17 | c body src/osal/osal_rtx4.h:78 |  |  | 0.402 |
+| ns | 9008 |  | 255 | src/common/tusb_fifo.h: the tu_fifo_t API | 6.3 |  | 0.395 |
+| walker |  | 9128 | 231 | c names src/device/usbd_pvt.h |  |  | 0.395 |
+| walker |  | 9153 | 25 | c decl src/device/usbd_pvt.h:43 |  |  | 0.395 |
+| walker |  | 9162 | 9 | c doc src/device/usbd_pvt.h:83 |  |  | 0.395 |
+| ns | 9196 |  | 188 | src/CMakeLists.txt: how the stack is added to a firmware build | 7.1 |  | 0.391 |
+| walker |  | 9320 | 158 | c decl lib/embedded-cli/embedded_cli.h:67 |  |  | 0.391 |
+| ns | 9543 |  | 347 | Example inventory: examples/ and its device, host and dual application sets | 7.2 |  | 0.379 |
+| walker |  | 9561 | 241 | c names src/common/tusb_private.h |  |  | 0.379 |
+| walker |  | 9580 | 19 | c decl src/common/tusb_private.h:84 |  |  | 0.379 |
+| walker |  | 9590 | 10 | c doc src/common/tusb_private.h:88 |  |  | 0.379 |
+| walker |  | 9600 | 10 | c doc src/common/tusb_private.h:91 |  |  | 0.379 |
+| walker |  | 9618 | 18 | c doc src/common/tusb_private.h:84 |  |  | 0.379 |
+| walker |  | 9637 | 19 | c doc src/common/tusb_private.h:50 |  |  | 0.379 |
+| walker |  | 9656 | 19 | c doc src/osal/osal_none.h:50 |  |  | 0.379 |
+| walker |  | 9675 | 19 | c doc src/osal/osal_threadx.h:79 |  |  | 0.379 |
+| ns | 9679 |  | 136 | Test inventory: unit, fuzz and hardware-in-the-loop | 7.3 |  | 0.385 |
+| ns | 9686 |  | 7 | hw/ split: board-support packages vs vendor MCU SDKs | 7.4 |  | 0.387 |
+| walker |  | 9840 | 165 | c decl src/host/hub.h:47 |  |  | 0.387 |
+| walker |  | 9855 | 15 | declaration surface of docs/info/contributors.rst |  |  | 0.387 |
+| ns | 9884 |  | 198 | Maintenance tooling and documentation sources | 7.5 |  | 0.418 |

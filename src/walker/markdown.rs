@@ -182,7 +182,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
         for (idx, section) in rst_body_sections(&source).into_iter().enumerate() {
             let value = rst_section_value(&file, &section, ctx);
-            let reference_shaped = section.reference_shaped;
+            let reference = section.is_reference_usage;
             if let Some(content) =
                 single_file_lines_content(&file, &source, FileLines::new(section.rows))
             {
@@ -190,7 +190,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: MarkdownKey::Section {
                         file: file.clone(),
                         section_index: idx,
-                        keeps_default_concavity: reference_shaped,
+                        keeps_default_concavity: reference,
                     }
                     .into(),
                     predecessor: headline_emitted.clone(),
@@ -879,20 +879,13 @@ const RST_MAX_SECTION_BYTES: usize = 1800;
 
 /// One RST README body section: the heading row + body rows (directive
 /// blocks already stripped), 1-based, plus its post-title index and
-/// whether its title is a canonical-usage marker.
+/// whether its title is in the usage/reference vocabulary.
 struct RstSection {
     rows: Vec<usize>,
     /// Position among body sections (0-based), used for index decay —
     /// the title section is excluded so the first body section is 0.
     index: usize,
-    is_canonical_usage: bool,
-    /// Title matches the shared reference/usage vocabulary
-    /// ([`is_reference_usage_title_core`]).
     is_reference_usage: bool,
-    /// Kept rows are catalog-dominant (same shape test as the .md
-    /// reference-shaped flag, underline rows excluded) — carried into
-    /// the `Section` key for the default concavity.
-    reference_shaped: bool,
 }
 
 /// A scanned RST heading: the 1-based row of the title text and the
@@ -904,7 +897,6 @@ struct RstHeading {
     start_row: usize,
     title_row: usize,
     underline_row: usize,
-    is_canonical_usage: bool,
 }
 
 /// Line-scan all setext/overline RST headings (same detection as
@@ -925,7 +917,6 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
                 start_row: i + 1,
                 title_row: i + 2,
                 underline_row: i + 3,
-                is_canonical_usage: is_rst_canonical_usage_title(src_lines[i + 1]),
             });
             i += 3;
             continue;
@@ -940,7 +931,6 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
                 start_row: i + 1,
                 title_row: i + 1,
                 underline_row: i + 2,
-                is_canonical_usage: is_rst_canonical_usage_title(title),
             });
             i += 2;
             continue;
@@ -973,26 +963,15 @@ fn rst_body_sections(source: &str) -> Vec<RstSection> {
         if rows.is_empty() {
             continue;
         }
-        let title = src_lines.get(heading.title_row - 1).copied().unwrap_or("");
-        let reference_shaped = rst_rows_are_reference_shaped(&src_lines, &rows);
+        let title = title_core(src_lines.get(heading.title_row - 1).copied().unwrap_or(""));
         out.push(RstSection {
             rows,
             index: body_idx,
-            is_canonical_usage: heading.is_canonical_usage,
-            is_reference_usage: is_reference_usage_title_core(&rst_title_core(title)),
-            reference_shaped,
+            is_reference_usage: is_canonical_usage_title_core(&title)
+                || is_reference_usage_title_core(&title),
         });
     }
     out
-}
-
-/// RST analog of [`range_is_reference_shaped`] over an already-filtered
-/// row list (directive blocks stripped). Heading underline rows are
-/// pure punctuation and excluded from the dominance fraction — an RST
-/// section carries two heading rows where .md carries one.
-fn rst_rows_are_reference_shaped(src_lines: &[&str], rows: &[usize]) -> bool {
-    let lines = rows.iter().filter_map(|&r| src_lines.get(r - 1).copied());
-    lines_are_reference_shaped(lines.filter(|l| !is_rst_underline(l.trim(), 2)))
 }
 
 /// Rows (1-based) of one RST section: heading + body, skipping
@@ -1084,11 +1063,8 @@ fn is_rst_content_directive(trimmed: &str) -> bool {
     )
 }
 
-/// True iff an RST heading title is a canonical usage/example marker —
-/// the RST analog of [`is_canonical_usage_h2_title`].
-/// Lowercased leading alphanumeric/whitespace run of an RST heading
-/// title — the string-level analog of `h2_title_core`.
-fn rst_title_core(title: &str) -> String {
+/// Lowercased leading alphanumeric/whitespace run of a heading title.
+fn title_core(title: &str) -> String {
     let core: String = title
         .trim()
         .to_ascii_lowercase()
@@ -1098,60 +1074,18 @@ fn rst_title_core(title: &str) -> String {
     core.trim().to_string()
 }
 
-fn is_rst_canonical_usage_title(title: &str) -> bool {
-    matches!(
-        rst_title_core(title).as_str(),
-        "usage"
-            | "sample usage"
-            | "basic usage"
-            | "example"
-            | "examples"
-            | "a definitive example"
-            | "definitive example"
-            | "usage example"
-            | "usage examples"
-            | "quick start"
-            | "quickstart"
-            | "getting started"
-            | "demo"
-    )
-}
-
-/// Boost for a canonical-usage or catalog-shaped RST section.
-const CANONICAL_USAGE_SECTION_FACTOR: f64 = 2.2;
-
-/// Down-weight for non-canonical, non-reference RST body sections.
-/// The reliable wins are the canonical example/demo section and
-/// reference catalogs (see below); remaining body sections (install /
-/// contribute / contact prose) are supplementary and, on code-centric
-/// repos, otherwise displace higher-value NS code surface — a blanket
-/// 1.0 promoted beets' prose sections over its python surface.
-const RST_NON_USAGE_SECTION_FACTOR: f64 = 0.5;
-
-/// Value for an RST README body section — parity with the .md
-/// [`readme_section_value`]: the same base signal mix and index decay,
-/// the canonical-usage boost when the heading is an example/usage
-/// marker, and the modest reference boost for reference-vocabulary
-/// titles (`Key Features`) or catalog-shaped bodies (tinyusb's device/
-/// host class-support lists — the NS's top README tier there; they
-/// also ride the flat reference concavity via the key flag). RST has
-/// no synthetic-intro wrap, so the first body section is index 0
-/// directly. Plain prose keeps the non-usage damp.
+/// Value for an RST README body section — the .md
+/// [`readme_section_value`] computed from the RST section's index and
+/// title class. RST has no synthetic-intro wrap, so the first body
+/// section is index 0 directly.
 fn rst_section_value(file: &Path, section: &RstSection, ctx: &WalkCtx) -> f64 {
-    let base = mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx));
-    let decay = index_decay(section.index, 0.15, 0.7);
-    let usage = if section.is_canonical_usage || section.reference_shaped {
-        // Catalog-shaped bodies take the full canonical factor: the
-        // class-support matrix is the RST README's highest-yield
-        // follow-up (tinyusb NS tier 1), and at the reference factor
-        // its largest section still missed the schedule frontier.
-        CANONICAL_USAGE_SECTION_FACTOR
-    } else if section.is_reference_usage {
-        REFERENCE_USAGE_SECTION_FACTOR
-    } else {
-        RST_NON_USAGE_SECTION_FACTOR
-    };
-    base * decay * usage
+    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
+        * index_decay(section.index, 0.15, 0.7)
+        * if section.is_reference_usage {
+            REFERENCE_USAGE_SECTION_FACTOR
+        } else {
+            1.0
+        }
 }
 
 // --- headline spec + span construction ---
@@ -1771,53 +1705,6 @@ enum SectionKind {
     /// The section body directly behind a carved lede — the rest of
     /// what the unsplit section would have delivered.
     LedeBody,
-}
-
-/// Minimum fraction of a range's non-blank out-of-fence rows that must
-/// be catalog rows (list / table) for [`range_is_reference_shaped`].
-const REFERENCE_SHAPED_MIN_FRACTION: f64 = 0.6;
-
-/// Minimum count of catalog rows — keeps two-line stubs from earning
-/// the flatter concavity.
-const REFERENCE_SHAPED_MIN_CATALOG_ROWS: usize = 3;
-
-/// Source-byte bounds for a reference-shaped range. Below the floor the
-/// flattened concavity just pulls micro-sections into the orientation
-/// window (mkcert's 20-50-token stubs); above the cap the range is a
-/// mega-catalog (sqlite-vec's 900-token install-matrix table) whose
-/// early purchase evicts NS-ranked content wholesale.
-const REFERENCE_SHAPED_MIN_BYTES: usize = 400;
-const REFERENCE_SHAPED_MAX_BYTES: usize = 1600;
-
-/// Shape test shared by the .md row-range and RST row-list callers —
-/// see [`range_is_reference_shaped`] for the semantics.
-fn lines_are_reference_shaped<'a>(lines: impl Iterator<Item = &'a str>) -> bool {
-    let mut in_fence = false;
-    let mut prose_or_catalog = 0usize;
-    let mut catalog = 0usize;
-    let mut bytes = 0usize;
-    for line in lines {
-        bytes += line.len() + 1;
-        let t = line.trim_start();
-        if t.is_empty() {
-            continue;
-        }
-        if t.starts_with("```") || t.starts_with("~~~") {
-            in_fence = !in_fence;
-            continue;
-        }
-        if in_fence {
-            continue;
-        }
-        prose_or_catalog += 1;
-        if is_catalog_line(line) {
-            catalog += 1;
-        }
-    }
-    (REFERENCE_SHAPED_MIN_BYTES..=REFERENCE_SHAPED_MAX_BYTES).contains(&bytes)
-        && catalog >= REFERENCE_SHAPED_MIN_CATALOG_ROWS
-        && prose_or_catalog > 0
-        && catalog as f64 / prose_or_catalog as f64 >= REFERENCE_SHAPED_MIN_FRACTION
 }
 
 /// A list item, numbered item, or table row — the catalog subset of
@@ -2530,11 +2417,14 @@ fn is_canonical_usage_h2(h2_section: Node<'_>, source: &str) -> bool {
 }
 
 fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
-    let Some(core) = h2_title_core(h2_section, source) else {
-        return false;
-    };
+    h2_title_core(h2_section, source).is_some_and(|core| is_canonical_usage_title_core(&core))
+}
+
+/// Vocabulary half of [`is_canonical_usage_h2_title`], shared with the
+/// RST heading path.
+fn is_canonical_usage_title_core(core: &str) -> bool {
     matches!(
-        core.as_str(),
+        core,
         "usage"
             | "sample usage"
             | "basic usage"
@@ -2560,10 +2450,7 @@ fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
 /// the call sites; a too-broad list would over-promote trivial
 /// sections. README-only (gated at the call sites).
 fn is_reference_usage_title(section: Node<'_>, source: &str) -> bool {
-    let Some(core) = h2_title_core(section, source) else {
-        return false;
-    };
-    is_reference_usage_title_core(&core)
+    h2_title_core(section, source).is_some_and(|core| is_reference_usage_title_core(&core))
 }
 
 /// Vocabulary half of [`is_reference_usage_title`], shared with the
@@ -2712,20 +2599,12 @@ fn section_is_code_dominant(section: Node<'_>, _source: &str) -> bool {
     (code_bytes as f64 / body_bytes as f64) >= CANONICAL_USAGE_CODE_MIN_FRACTION
 }
 
-/// Plain-text core of an H2's title (lowercased, alphanumeric +
-/// whitespace prefix only). Returns `None` when no `inline` child is
-/// found. Used by [`is_canonical_usage_h2_title`].
+/// [`title_core`] of a section's heading. `None` when no `inline`
+/// child is found.
 fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
     let heading = first_heading_child(h2_section)?;
     let inline = first_child_of_kind(heading, "inline", false)?;
-    let text = source[inline.start_byte()..inline.end_byte()]
-        .trim()
-        .to_ascii_lowercase();
-    let core: String = text
-        .chars()
-        .take_while(|c| c.is_ascii_alphanumeric() || c.is_ascii_whitespace())
-        .collect();
-    Some(core.trim().to_string())
+    Some(title_core(&source[inline.start_byte()..inline.end_byte()]))
 }
 
 /// True iff the source-row range `[start, end]` of `section` has any
