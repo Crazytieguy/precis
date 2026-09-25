@@ -7,7 +7,7 @@
 //! The TOC is analogous to the Rust walker's `PubItemNames` or the C
 //! walker's `DeclNames`: it tells the agent every entity that exists in
 //! the schema without delivering any of their bodies. The `Decl` bodies
-//! then mirror the TypeScript walker's `Export` pattern — each top-level
+//! then mirror the code engine's roster → `Decl` ladder — each top-level
 //! declaration's body schedules independently, predecessor = the `Toc`,
 //! so the agent gets a catalog surface first and the concrete model /
 //! enum fields as budget allows.
