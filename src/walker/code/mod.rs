@@ -252,16 +252,17 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .iter()
         .map(|(path, language)| (path.as_path(), (language.grammar)(path)))
         .collect();
-    let parsed = ctx.parse_trees(&grammars);
     let mut out = Vec::new();
-    for ((path, language), parsed) in files.into_iter().zip(parsed) {
-        let Some((source, tree)) = parsed else {
-            continue;
+    ctx.parse_each(&grammars, |index, source, tree| {
+        let (path, language) = &files[index];
+        let file = SourceFile {
+            path: path.clone(),
+            source,
+            tree,
         };
-        let file = SourceFile { path, source, tree };
         let model = (language.extract)(&file, ctx);
         out.extend(emit::emit_file(language, &file, model, ctx));
-    }
+    });
     out
 }
 

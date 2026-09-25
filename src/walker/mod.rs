@@ -12,7 +12,6 @@ use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
-use std::sync::atomic::{AtomicUsize, Ordering};
 
 use tree_sitter::{Language, Node, Tree};
 
@@ -216,45 +215,42 @@ impl WalkCtx {
         Some((source, tree))
     }
 
-    /// [`Self::parse_tree`] for each of `files`, across threads, in order.
-    pub fn parse_trees(&self, files: &[(&Path, Language)]) -> Vec<Option<(Arc<Source>, Tree)>> {
-        let sources: Vec<Option<Arc<Source>>> = files
-            .iter()
-            .map(|(path, _)| gated_read_source(path, self, PARSE_BYTE_CAP))
-            .collect();
-        let next = AtomicUsize::new(0);
-        let parse_pending = || {
-            let mut trees = Vec::new();
-            loop {
-                let index = next.fetch_add(1, Ordering::Relaxed);
-                let (Some((_, language)), Some(source)) = (files.get(index), sources.get(index))
-                else {
-                    return trees;
-                };
-                if let Some(source) = source
-                    && let Some(tree) = parser_for(language).parse(source.as_bytes(), None)
-                {
-                    trees.push((index, tree));
+    /// [`Self::parse_tree`] for each of `files`, handing each parse to
+    /// `visit` with its index. Files parse one per core at a time, and a
+    /// group's trees are visited and dropped before the next group
+    /// starts, so memory holds a few trees rather than a directory's.
+    pub fn parse_each(
+        &self,
+        files: &[(&Path, Language)],
+        mut visit: impl FnMut(usize, Arc<Source>, Tree),
+    ) {
+        let group_size = std::thread::available_parallelism().map_or(1, usize::from);
+        for (group_index, group) in files.chunks(group_size).enumerate() {
+            let sources: Vec<Option<Arc<Source>>> = group
+                .iter()
+                .map(|(path, _)| gated_read_source(path, self, PARSE_BYTE_CAP))
+                .collect();
+            let trees: Vec<Option<Tree>> = std::thread::scope(|scope| {
+                let handles: Vec<_> = group
+                    .iter()
+                    .zip(&sources)
+                    .map(|((_, language), source)| {
+                        scope.spawn(move || {
+                            parser_for(language).parse(source.as_ref()?.as_bytes(), None)
+                        })
+                    })
+                    .collect();
+                handles
+                    .into_iter()
+                    .map(|handle| handle.join().expect("parse worker panicked"))
+                    .collect()
+            });
+            for (offset, (source, tree)) in sources.into_iter().zip(trees).enumerate() {
+                if let (Some(source), Some(tree)) = (source, tree) {
+                    visit(group_index * group_size + offset, source, tree);
                 }
             }
-        };
-        let workers = std::thread::available_parallelism()
-            .map_or(1, usize::from)
-            .min(files.len());
-        let mut parsed: Vec<Option<Tree>> = files.iter().map(|_| None).collect();
-        std::thread::scope(|scope| {
-            let handles: Vec<_> = (0..workers).map(|_| scope.spawn(parse_pending)).collect();
-            for handle in handles {
-                for (index, tree) in handle.join().expect("parse worker panicked") {
-                    parsed[index] = Some(tree);
-                }
-            }
-        });
-        sources
-            .into_iter()
-            .zip(parsed)
-            .map(|(source, tree)| Some((source?, tree?)))
-            .collect()
+        }
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
