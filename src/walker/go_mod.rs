@@ -63,7 +63,7 @@ fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchConte
         // can't shadow identity keywords; go.mod allows directives in
         // any order, so module/go/toolchain are collected wherever
         // they appear at top level.
-        if trimmed.ends_with('(') && !trimmed.starts_with("//") {
+        if gomod_block_start(trimmed).is_some() {
             in_block = true;
             continue;
         }
@@ -300,6 +300,13 @@ replace github.com/x/y => github.com/forked/y v2.0.0
             !lines.contains(&11),
             "replace excluded from identity (not an identity directive)"
         );
+    }
+
+    /// A trailing comment ending in `(` does not open a block.
+    #[test]
+    fn go_mod_identity_ignores_a_paren_in_a_trailing_comment() {
+        let src = "module example.com/foo\n\nrequire example.com/x v1.0.0 // pinned (\n\ngo 1.22\n";
+        assert_eq!(gomod_identity_lines(src), vec![1, 5]);
     }
 
     #[test]
