@@ -114,36 +114,36 @@ Score(3000)=0.716 I=0.917 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 5148 |  | 106 | Runtime capability flags exported by core/constants.ts | 3.2 |  | 0.634 |
 | walker |  | 5165 | 48 | ts names source/utils/normalize.ts |  |  | 0.634 |
 | walker |  | 5187 | 22 | ts decl source/utils/normalize.ts:5 |  |  | 0.635 |
-| walker |  | 5235 | 48 | ts decl source/utils/timeout.ts:9 |  |  | 0.635 |
-| walker |  | 5283 | 48 | readme.md section #3 |  |  | 0.635 |
-| walker |  | 5331 | 48 | readme.md section #28 |  |  | 0.635 |
+| walker |  | 5232 | 45 | readme.md section #32 |  |  | 0.635 |
+| walker |  | 5280 | 48 | ts decl source/utils/timeout.ts:9 |  |  | 0.635 |
+| walker |  | 5328 | 48 | readme.md section #3 |  |  | 0.635 |
 | ns | 5339 |  | 191 | Every exported symbol of `source/utils/` (merge, normalize, options) | 3.3 |  | 0.624 |
-| walker |  | 5380 | 49 | readme.md section #14 |  |  | 0.624 |
-| walker |  | 5431 | 51 | readme.md section #27 |  |  | 0.624 |
-| walker |  | 5513 | 82 | json config tsconfig.json |  |  | 0.624 |
+| walker |  | 5376 | 48 | readme.md section #28 |  |  | 0.624 |
+| walker |  | 5425 | 49 | readme.md section #14 |  |  | 0.624 |
+| walker |  | 5476 | 51 | readme.md section #27 |  |  | 0.624 |
+| walker |  | 5558 | 82 | json config tsconfig.json |  |  | 0.624 |
 | ns | 5633 |  | 294 | Every exported symbol of `source/utils/` (timeout, delay, body, guards, misc) | 3.4 | 3.3 | 0.627 |
 | ns | 5813 |  | 180 | Every readme option anchor (`##### <option>`) and hook anchor | 3.5 |  | 0.615 |
-| walker |  | 5925 | 412 | ts decl source/types/ResponsePromise.ts:6 |  |  | 0.630 |
+| walker |  | 5970 | 412 | ts decl source/types/ResponsePromise.ts:6 |  |  | 0.630 |
 | ns | 6049 |  | 236 | `test/helpers/`: every exported test helper | 3.6 |  | 0.618 |
-| walker |  | 6347 | 422 | ts decl source/types/options.ts:312 |  |  | 0.626 |
-| ns | 6360 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.613 |
-| walker |  | 6374 | 27 | ts doc source/types/options.ts:312 |  |  | 0.613 |
-| walker |  | 6415 | 41 | ts body source/errors/TimeoutError.ts:6 |  |  | 0.619 |
-| ns | 6456 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.617 |
-| walker |  | 6461 | 46 | ts names test/main.ts |  |  | 0.617 |
-| walker |  | 6524 | 63 | readme.md section #37 |  |  | 0.617 |
-| walker |  | 6610 | 86 | ts names source/types/common.ts |  |  | 0.617 |
-| walker |  | 6631 | 21 | ts decl source/types/common.ts:6 |  |  | 0.617 |
-| walker |  | 6743 | 112 | json config tsconfig.dist.json |  |  | 0.618 |
-| ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.628 |
-| walker |  | 6832 | 89 | ts names source/utils/body.ts |  |  | 0.634 |
-| walker |  | 6909 | 77 | readme.md section #31 |  |  | 0.634 |
+| ns | 6360 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.606 |
+| walker |  | 6392 | 422 | ts decl source/types/options.ts:312 |  |  | 0.613 |
+| walker |  | 6419 | 27 | ts doc source/types/options.ts:312 |  |  | 0.613 |
+| ns | 6456 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.611 |
+| walker |  | 6460 | 41 | ts body source/errors/TimeoutError.ts:6 |  |  | 0.617 |
+| walker |  | 6506 | 46 | ts names test/main.ts |  |  | 0.617 |
+| walker |  | 6569 | 63 | readme.md section #37 |  |  | 0.617 |
+| walker |  | 6655 | 86 | ts names source/types/common.ts |  |  | 0.617 |
+| walker |  | 6676 | 21 | ts decl source/types/common.ts:6 |  |  | 0.617 |
+| ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.627 |
+| walker |  | 6788 | 112 | json config tsconfig.dist.json |  |  | 0.628 |
+| walker |  | 6877 | 89 | ts names source/utils/body.ts |  |  | 0.634 |
+| walker |  | 6954 | 77 | readme.md section #31 |  |  | 0.634 |
 | ns | 6965 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.624 |
-| walker |  | 6988 | 79 | readme.md section #23 |  |  | 0.624 |
+| walker |  | 7033 | 79 | readme.md section #23 |  |  | 0.624 |
 | ns | 7168 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.616 |
-| walker |  | 7207 | 219 | readme.md section #46 |  |  | 0.618 |
-| walker |  | 7463 | 256 | readme.md section #47 |  |  | 0.619 |
-| walker |  | 7508 | 45 | readme.md section #32 |  |  | 0.619 |
+| walker |  | 7252 | 219 | readme.md section #46 |  |  | 0.618 |
+| walker |  | 7508 | 256 | readme.md section #47 |  |  | 0.619 |
 | ns | 7600 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.604 |
 | walker |  | 7627 | 119 | ts names source/utils/merge.ts |  |  | 0.609 |
 | walker |  | 7721 | 94 | ts decl source/utils/merge.ts:38 |  |  | 0.611 |
@@ -173,5 +173,5 @@ Score(3000)=0.716 I=0.917 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 9585 | 124 | ts decl source/core/constants.ts:237 |  |  | 0.632 |
 | ns | 9694 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.640 |
 | walker |  | 9714 | 129 | ts decl source/core/constants.ts:265 |  |  | 0.642 |
-| walker |  | 9870 | 156 | readme.md section #17 |  |  | 0.642 |
+| walker |  | 9857 | 143 | readme.md section #43 |  |  | 0.642 |
 | ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.633 |

@@ -1,4 +1,4 @@
-Score(3000)=0.534 I=0.810 C=0.353 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.539/0.659/0.635/0.534/0.721/0.695/0.684
+Score(3000)=0.534 I=0.810 C=0.353 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.539/0.659/0.635/0.534/0.721/0.695/0.699
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -94,111 +94,111 @@ Score(3000)=0.534 I=0.810 C=0.353 ns_rows≤3K=20/56 grid(1000/1442/2080/3000/43
 | walker |  | 4988 | 229 | c names krep.c #1 |  |  | 0.670 |
 | walker |  | 4997 | 9 | c doc krep.c:93 |  |  | 0.670 |
 | walker |  | 5026 | 29 | README.md section #14 |  |  | 0.672 |
-| walker |  | 5036 | 10 | c doc krep.h:104 |  |  | 0.676 |
-| walker |  | 5046 | 10 | c doc krep.h:183 |  |  | 0.676 |
+| walker |  | 5066 | 40 | README.md section #6 |  |  | 0.672 |
+| walker |  | 5076 | 10 | c doc krep.h:104 |  |  | 0.676 |
+| walker |  | 5111 | 35 | README.md section #17 |  |  | 0.676 |
+| walker |  | 5121 | 10 | c doc krep.h:183 |  |  | 0.676 |
 | ns | 5124 |  | 192 | krep.c definition roster, lines 1999-3442: public API bodies, skip filters, gitignore | 4.4 |  | 0.660 |
-| walker |  | 5228 | 182 | c names krep.h #4 |  |  | 0.669 |
-| walker |  | 5247 | 19 | c decl krep.h:218 |  |  | 0.674 |
-| walker |  | 5266 | 19 | c decl krep.h:214 |  |  | 0.679 |
-| walker |  | 5285 | 19 | c decl krep.h:226 |  |  | 0.686 |
-| walker |  | 5309 | 24 | c decl krep.h:222 |  |  | 0.695 |
-| ns | 5363 |  | 239 | krep.c definition roster, lines 3451-5108: main, thread pool, and the guarded SIMD kernels | 4.5 |  | 0.677 |
-| walker |  | 5529 | 220 | c names krep.c #2 |  |  | 0.680 |
-| walker |  | 5534 | 5 | c decl krep.c:139 |  |  | 0.680 |
-| walker |  | 5539 | 5 | c decl krep.c:175 |  |  | 0.680 |
-| walker |  | 5544 | 5 | c decl krep.c:244 |  |  | 0.680 |
-| ns | 5546 |  | 183 | search_file internal section map, all eleven banners inside lines 2274-3070 | 4.6 |  | 0.669 |
-| walker |  | 5549 | 5 | c decl krep.c:256 |  |  | 0.669 |
-| walker |  | 5554 | 5 | c decl krep.c:128 |  |  | 0.669 |
-| walker |  | 5567 | 13 | c doc aho_corasick.c:299 |  |  | 0.669 |
-| walker |  | 5577 | 10 | c doc krep.c:139 |  |  | 0.669 |
+| walker |  | 5303 | 182 | c names krep.h #4 |  |  | 0.669 |
+| walker |  | 5322 | 19 | c decl krep.h:218 |  |  | 0.674 |
+| walker |  | 5341 | 19 | c decl krep.h:214 |  |  | 0.679 |
+| walker |  | 5360 | 19 | c decl krep.h:226 |  |  | 0.686 |
+| ns | 5363 |  | 239 | krep.c definition roster, lines 3451-5108: main, thread pool, and the guarded SIMD kernels | 4.5 |  | 0.667 |
+| walker |  | 5384 | 24 | c decl krep.h:222 |  |  | 0.677 |
+| ns | 5546 |  | 183 | search_file internal section map, all eleven banners inside lines 2274-3070 | 4.6 |  | 0.665 |
+| walker |  | 5604 | 220 | c names krep.c #2 |  |  | 0.669 |
+| walker |  | 5609 | 5 | c decl krep.c:139 |  |  | 0.669 |
+| walker |  | 5614 | 5 | c decl krep.c:175 |  |  | 0.669 |
+| walker |  | 5619 | 5 | c decl krep.c:244 |  |  | 0.669 |
+| walker |  | 5624 | 5 | c decl krep.c:256 |  |  | 0.669 |
+| walker |  | 5629 | 5 | c decl krep.c:128 |  |  | 0.669 |
 | ns | 5668 |  | 122 | print_matching_items internal section map: the -o and full-line output modes | 4.7 |  | 0.661 |
-| walker |  | 5789 | 212 | c names krep.c #3 |  |  | 0.677 |
-| walker |  | 5794 | 5 | c decl krep.c:363 |  |  | 0.677 |
-| walker |  | 5799 | 5 | c decl krep.c:401 |  |  | 0.677 |
-| walker |  | 5804 | 5 | c decl krep.c:461 |  |  | 0.677 |
-| walker |  | 5809 | 5 | c decl krep.c:420 |  |  | 0.677 |
-| walker |  | 5814 | 5 | c decl krep.c:438 |  |  | 0.677 |
-| walker |  | 5820 | 6 | c decl krep.c:1084 |  |  | 0.677 |
-| ns | 5822 |  | 154 | aho_corasick.c: complete definition roster | 4.8 |  | 0.682 |
-| walker |  | 5857 | 37 | c decl krep.c:329 |  |  | 0.682 |
-| walker |  | 5865 | 8 | c doc krep.h:231 |  |  | 0.682 |
-| walker |  | 5879 | 14 | c doc aho_corasick.c:111 |  |  | 0.682 |
-| walker |  | 5919 | 40 | README.md section #6 |  |  | 0.682 |
+| walker |  | 5684 | 55 | README.md section #4 |  |  | 0.661 |
+| walker |  | 5697 | 13 | c doc aho_corasick.c:299 |  |  | 0.661 |
+| walker |  | 5754 | 57 | README.md section #7 |  |  | 0.661 |
+| walker |  | 5764 | 10 | c doc krep.c:139 |  |  | 0.661 |
+| ns | 5822 |  | 154 | aho_corasick.c: complete definition roster | 4.8 |  | 0.667 |
+| walker |  | 5976 | 212 | c names krep.c #3 |  |  | 0.682 |
+| walker |  | 5981 | 5 | c decl krep.c:363 |  |  | 0.682 |
+| walker |  | 5986 | 5 | c decl krep.c:401 |  |  | 0.682 |
+| walker |  | 5991 | 5 | c decl krep.c:461 |  |  | 0.682 |
+| walker |  | 5996 | 5 | c decl krep.c:420 |  |  | 0.682 |
+| walker |  | 6001 | 5 | c decl krep.c:438 |  |  | 0.682 |
+| walker |  | 6007 | 6 | c decl krep.c:1084 |  |  | 0.682 |
 | ns | 6014 |  | 192 | aho_corasick.c trie data model: ac_node_t and struct ac_trie | 4.9 |  | 0.681 |
-| walker |  | 6078 | 159 | c names krep.h #5 |  |  | 0.695 |
-| walker |  | 6083 | 5 | c decl krep.h:298 |  |  | 0.695 |
-| walker |  | 6088 | 5 | c decl krep.h:312 |  |  | 0.695 |
-| walker |  | 6102 | 14 | c doc aho_corasick.c:274 |  |  | 0.695 |
-| walker |  | 6137 | 35 | README.md section #17 |  |  | 0.695 |
-| walker |  | 6151 | 14 | c doc aho_corasick.c:296 |  |  | 0.695 |
-| walker |  | 6206 | 55 | README.md section #4 |  |  | 0.695 |
-| walker |  | 6263 | 57 | README.md section #7 |  |  | 0.695 |
+| walker |  | 6044 | 37 | c decl krep.c:329 |  |  | 0.681 |
+| walker |  | 6052 | 8 | c doc krep.h:231 |  |  | 0.681 |
+| walker |  | 6066 | 14 | c doc aho_corasick.c:111 |  |  | 0.681 |
+| walker |  | 6225 | 159 | c names krep.h #5 |  |  | 0.695 |
+| walker |  | 6230 | 5 | c decl krep.h:298 |  |  | 0.695 |
+| walker |  | 6235 | 5 | c decl krep.h:312 |  |  | 0.695 |
+| walker |  | 6249 | 14 | c doc aho_corasick.c:274 |  |  | 0.695 |
 | ns | 6272 |  | 258 | test/test_krep.c: complete roster of test functions, helpers and main | 4.10 |  | 0.676 |
+| walker |  | 6318 | 69 | README.md section #16 |  |  | 0.676 |
+| walker |  | 6332 | 14 | c doc aho_corasick.c:296 |  |  | 0.676 |
 | ns | 6497 |  | 225 | test/test_regex.c and test/test_multiple_patterns.c rosters | 4.11 |  | 0.661 |
-| walker |  | 6560 | 297 | README.md section #9 |  |  | 0.672 |
-| ns | 6608 |  | 111 | test/test_directory.c roster: the separate recursive-search integration binary | 4.12 |  | 0.665 |
-| walker |  | 6800 | 240 | c names krep.c #4 |  |  | 0.679 |
-| walker |  | 6806 | 6 | c decl krep.c:1125 |  |  | 0.679 |
-| walker |  | 6812 | 6 | c decl krep.c:1137 |  |  | 0.679 |
-| walker |  | 6818 | 6 | c decl krep.c:1198 |  |  | 0.679 |
-| walker |  | 6824 | 6 | c decl krep.c:1213 |  |  | 0.679 |
-| walker |  | 6830 | 6 | c decl krep.c:1771 |  |  | 0.679 |
-| walker |  | 6836 | 6 | c decl krep.c:1585 |  |  | 0.679 |
-| ns | 6841 |  | 233 | test/test_compat.h: the TESTING wrapper roster and its guards | 4.13 |  | 0.667 |
-| walker |  | 6842 | 6 | c decl krep.c:1873 |  |  | 0.667 |
-| walker |  | 6883 | 41 | c decl krep.c:1389 |  |  | 0.667 |
-| walker |  | 6933 | 50 | c decl krep.c:1259 |  |  | 0.667 |
+| ns | 6608 |  | 111 | test/test_directory.c roster: the separate recursive-search integration binary | 4.12 |  | 0.654 |
+| walker |  | 6629 | 297 | README.md section #9 |  |  | 0.665 |
+| ns | 6841 |  | 233 | test/test_compat.h: the TESTING wrapper roster and its guards | 4.13 |  | 0.653 |
+| walker |  | 6869 | 240 | c names krep.c #4 |  |  | 0.667 |
+| walker |  | 6875 | 6 | c decl krep.c:1125 |  |  | 0.667 |
+| walker |  | 6881 | 6 | c decl krep.c:1137 |  |  | 0.667 |
+| walker |  | 6887 | 6 | c decl krep.c:1198 |  |  | 0.667 |
+| walker |  | 6893 | 6 | c decl krep.c:1213 |  |  | 0.667 |
+| walker |  | 6899 | 6 | c decl krep.c:1771 |  |  | 0.667 |
+| walker |  | 6905 | 6 | c decl krep.c:1585 |  |  | 0.667 |
+| walker |  | 6911 | 6 | c decl krep.c:1873 |  |  | 0.667 |
+| walker |  | 6952 | 41 | c decl krep.c:1389 |  |  | 0.667 |
 | ns | 6972 |  | 131 | test/test_krep.h: shared test helper declarations | 4.14 |  | 0.659 |
-| walker |  | 6983 | 50 | c decl krep.c:1628 |  |  | 0.659 |
+| walker |  | 7002 | 50 | c decl krep.c:1259 |  |  | 0.659 |
+| walker |  | 7052 | 50 | c decl krep.c:1628 |  |  | 0.659 |
 | ns | 7080 |  | 108 | Makefile compiler configuration: CC, CFLAGS, LDFLAGS, PREFIX | 5.1 |  | 0.653 |
-| walker |  | 7273 | 290 | README.md section #11 |  |  | 0.653 |
-| walker |  | 7286 | 13 | c doc krep.h:65 |  |  | 0.653 |
-| walker |  | 7307 | 21 | c doc aho_corasick.c:293 |  |  | 0.653 |
-| ns | 7316 |  | 236 | .github/workflows/ci.yml in full | 5.2 |  | 0.636 |
-| walker |  | 7376 | 69 | README.md section #16 |  |  | 0.636 |
-| walker |  | 7398 | 22 | c doc aho_corasick.c:287 |  |  | 0.636 |
-| ns | 7580 |  | 264 | Makefile architecture detection: which SIMD flags each arch gets | 5.3 |  | 0.624 |
-| walker |  | 7679 | 281 | c names krep.c #5 |  |  | 0.637 |
-| walker |  | 7685 | 6 | c decl krep.c:1919 |  |  | 0.637 |
-| walker |  | 7691 | 6 | c decl krep.c:1964 |  |  | 0.637 |
-| walker |  | 7697 | 6 | c decl krep.c:1999 |  |  | 0.637 |
-| walker |  | 7703 | 6 | c decl krep.c:2274 |  |  | 0.637 |
-| walker |  | 7709 | 6 | c decl krep.c:2252 |  |  | 0.637 |
-| walker |  | 7715 | 6 | c decl krep.c:2265 |  |  | 0.637 |
-| walker |  | 7721 | 6 | c decl krep.c:3071 |  |  | 0.637 |
-| walker |  | 7727 | 6 | c decl krep.c:3090 |  |  | 0.637 |
-| walker |  | 7733 | 6 | c decl krep.c:3122 |  |  | 0.637 |
-| walker |  | 7739 | 6 | c decl krep.c:3163 |  |  | 0.637 |
-| walker |  | 7745 | 6 | c decl krep.c:3180 |  |  | 0.637 |
-| walker |  | 7779 | 34 | c decl krep.c:3146 |  |  | 0.637 |
-| walker |  | 7836 | 57 | c decl krep.c:3154 |  |  | 0.638 |
-| ns | 7883 |  | 303 | Makefile compile/link rules and the parallel -DTESTING build | 5.4 |  | 0.627 |
-| walker |  | 7991 | 155 | README.md section #13 |  |  | 0.645 |
-| walker |  | 8010 | 19 | c body krep.h:298 |  |  | 0.645 |
-| ns | 8052 |  | 169 | Makefile run targets: test, test-directory, ci, bench-rg, all-tests | 5.5 |  | 0.635 |
-| ns | 8209 |  | 157 | .github/workflows/release.yml: tag trigger and release artifacts | 5.6 |  | 0.623 |
-| walker |  | 8246 | 236 | plaintext config .github/workflows/ci.yml |  |  | 0.652 |
-| walker |  | 8335 | 89 | README.md section #18 |  |  | 0.664 |
-| ns | 8462 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.666 |
-| walker |  | 8638 | 303 | c names krep.c #6 |  |  | 0.682 |
-| walker |  | 8644 | 6 | c decl krep.c:3442 |  |  | 0.682 |
-| walker |  | 8650 | 6 | c decl krep.c:4104 |  |  | 0.682 |
-| walker |  | 8656 | 6 | c decl krep.c:4209 |  |  | 0.682 |
-| walker |  | 8662 | 6 | c decl krep.c:4313 |  |  | 0.682 |
-| walker |  | 8668 | 6 | c decl krep.c:4332 |  |  | 0.682 |
-| walker |  | 8674 | 6 | c decl krep.c:3240 |  |  | 0.682 |
-| walker |  | 8680 | 6 | c decl krep.c:3272 |  |  | 0.682 |
-| walker |  | 8686 | 6 | c decl krep.c:3297 |  |  | 0.682 |
-| walker |  | 8692 | 6 | c decl krep.c:4046 |  |  | 0.682 |
-| ns | 8696 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.680 |
-| walker |  | 8698 | 6 | c decl krep.c:4251 |  |  | 0.680 |
-| walker |  | 8739 | 41 | c decl krep.c:3891 |  |  | 0.680 |
-| walker |  | 8780 | 41 | c decl krep.c:4371 |  |  | 0.680 |
-| walker |  | 8804 | 24 | c decl krep.c:3310 |  |  | 0.680 |
-| walker |  | 8896 | 92 | README.md section #15 |  |  | 0.692 |
-| ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.684 |
-| walker |  | 9021 | 125 | README.md section #5 |  |  | 0.699 |
+| walker |  | 7141 | 89 | README.md section #18 |  |  | 0.666 |
+| ns | 7316 |  | 236 | .github/workflows/ci.yml in full | 5.2 |  | 0.649 |
+| walker |  | 7431 | 290 | README.md section #11 |  |  | 0.649 |
+| walker |  | 7523 | 92 | README.md section #15 |  |  | 0.664 |
+| ns | 7580 |  | 264 | Makefile architecture detection: which SIMD flags each arch gets | 5.3 |  | 0.650 |
+| walker |  | 7648 | 125 | README.md section #5 |  |  | 0.668 |
+| walker |  | 7661 | 13 | c doc krep.h:65 |  |  | 0.668 |
+| walker |  | 7682 | 21 | c doc aho_corasick.c:293 |  |  | 0.668 |
+| walker |  | 7704 | 22 | c doc aho_corasick.c:287 |  |  | 0.668 |
+| ns | 7883 |  | 303 | Makefile compile/link rules and the parallel -DTESTING build | 5.4 |  | 0.657 |
+| walker |  | 7985 | 281 | c names krep.c #5 |  |  | 0.670 |
+| walker |  | 7991 | 6 | c decl krep.c:1919 |  |  | 0.670 |
+| walker |  | 7997 | 6 | c decl krep.c:1964 |  |  | 0.670 |
+| walker |  | 8003 | 6 | c decl krep.c:1999 |  |  | 0.670 |
+| walker |  | 8009 | 6 | c decl krep.c:2274 |  |  | 0.670 |
+| walker |  | 8015 | 6 | c decl krep.c:2252 |  |  | 0.670 |
+| walker |  | 8021 | 6 | c decl krep.c:2265 |  |  | 0.670 |
+| walker |  | 8027 | 6 | c decl krep.c:3071 |  |  | 0.670 |
+| walker |  | 8033 | 6 | c decl krep.c:3090 |  |  | 0.670 |
+| walker |  | 8039 | 6 | c decl krep.c:3122 |  |  | 0.670 |
+| walker |  | 8045 | 6 | c decl krep.c:3163 |  |  | 0.670 |
+| walker |  | 8051 | 6 | c decl krep.c:3180 |  |  | 0.670 |
+| ns | 8052 |  | 169 | Makefile run targets: test, test-directory, ci, bench-rg, all-tests | 5.5 |  | 0.659 |
+| walker |  | 8085 | 34 | c decl krep.c:3146 |  |  | 0.660 |
+| walker |  | 8142 | 57 | c decl krep.c:3154 |  |  | 0.660 |
+| ns | 8209 |  | 157 | .github/workflows/release.yml: tag trigger and release artifacts | 5.6 |  | 0.648 |
+| walker |  | 8297 | 155 | README.md section #13 |  |  | 0.664 |
+| walker |  | 8316 | 19 | c body krep.h:298 |  |  | 0.664 |
+| ns | 8462 |  | 253 | krep.c constants: VERSION and every performance tunable | 6.1 |  | 0.667 |
+| walker |  | 8552 | 236 | plaintext config .github/workflows/ci.yml |  |  | 0.695 |
+| ns | 8696 |  | 234 | krep.c global option state and the lower_table constructor | 6.2 |  | 0.692 |
+| walker |  | 8855 | 303 | c names krep.c #6 |  |  | 0.707 |
+| walker |  | 8861 | 6 | c decl krep.c:3442 |  |  | 0.707 |
+| walker |  | 8867 | 6 | c decl krep.c:4104 |  |  | 0.707 |
+| walker |  | 8873 | 6 | c decl krep.c:4209 |  |  | 0.707 |
+| walker |  | 8879 | 6 | c decl krep.c:4313 |  |  | 0.707 |
+| walker |  | 8885 | 6 | c decl krep.c:4332 |  |  | 0.707 |
+| walker |  | 8891 | 6 | c decl krep.c:3240 |  |  | 0.707 |
+| walker |  | 8897 | 6 | c decl krep.c:3272 |  |  | 0.707 |
+| walker |  | 8903 | 6 | c decl krep.c:3297 |  |  | 0.707 |
+| walker |  | 8909 | 6 | c decl krep.c:4046 |  |  | 0.707 |
+| walker |  | 8915 | 6 | c decl krep.c:4251 |  |  | 0.707 |
+| walker |  | 8956 | 41 | c decl krep.c:3891 |  |  | 0.707 |
+| ns | 8966 |  | 270 | main: the getopt_long table and short-option string | 6.3 |  | 0.699 |
+| walker |  | 8997 | 41 | c decl krep.c:4371 |  |  | 0.699 |
+| walker |  | 9021 | 24 | c decl krep.c:3310 |  |  | 0.699 |
 | walker |  | 9044 | 23 | c doc krep.h:49 |  |  | 0.703 |
 | walker |  | 9072 | 28 | c body aho_corasick.c:287 |  |  | 0.703 |
 | walker |  | 9081 | 9 | c doc aho_corasick.c:34 |  |  | 0.703 |

@@ -217,5 +217,4 @@ Score(3000)=0.447 I=0.790 C=0.253 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 9628 | 12 | rust body src/ui/tree_overview.rs:63 |  |  | 0.546 |
 | walker |  | 9907 | 279 | rust decl src/ui/app.rs:53 |  |  | 0.546 |
 | walker |  | 9954 | 47 | rust body src/tree.rs:52 |  |  | 0.547 |
-| walker |  | 9980 | 26 | rust body src/parse/any.rs:14 |  |  | 0.547 |
 | ns | 9997 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.555 |

@@ -1,4 +1,4 @@
-Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.652/0.686/0.610/0.629/0.595/0.569
+Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.652/0.686/0.610/0.629/0.595/0.561
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -162,42 +162,42 @@ Score(3000)=0.610 I=0.861 C=0.432 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 6766 | 201 | python body peepdb/core.py:101 |  |  | 0.598 |
 | walker |  | 6865 | 99 | docs/README.md section #8 |  |  | 0.598 |
 | ns | 6899 |  | 317 | SQLiteDatabase connect and fetch_data — file-path handling and print-based logging | 4.8 | 4.1 | 0.585 |
-| walker |  | 6929 | 64 | docs/usage.md section #4 |  |  | 0.585 |
-| walker |  | 6993 | 64 | docs/usage.md section #5 |  |  | 0.585 |
-| walker |  | 7022 | 29 | python body peepdb/cli.py:113 |  |  | 0.587 |
-| walker |  | 7144 | 122 | docs/README.md section #5 |  |  | 0.587 |
+| walker |  | 6938 | 73 | README.md section #20 |  |  | 0.585 |
+| walker |  | 7002 | 64 | docs/usage.md section #4 |  |  | 0.585 |
+| walker |  | 7066 | 64 | docs/usage.md section #5 |  |  | 0.585 |
+| walker |  | 7095 | 29 | python body peepdb/cli.py:113 |  |  | 0.587 |
 | ns | 7201 |  | 302 | The non-LIMIT/OFFSET pagination variants (MSSQL, Oracle, MongoDB, Firebase) | 4.9 | 4.1 | 0.574 |
-| walker |  | 7211 | 67 | docs/installation.md section #2 |  |  | 0.574 |
+| walker |  | 7217 | 122 | docs/README.md section #5 |  |  | 0.574 |
+| walker |  | 7284 | 67 | docs/installation.md section #2 |  |  | 0.574 |
 | ns | 7310 |  | 109 | Where credentials live: config paths and KeySecurity modes | 5.1 | 1.9 | 0.579 |
-| walker |  | 7458 | 247 | python body peepdb/core.py:118 |  |  | 0.608 |
-| ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.600 |
-| walker |  | 7506 | 48 | python body peepdb/db/mongodb.py:32 |  |  | 0.600 |
+| walker |  | 7361 | 77 | README.md section #11 |  |  | 0.579 |
+| ns | 7495 |  | 185 | get_key_security_config / get_key / encrypt / decrypt bodies | 5.2 | 1.9 | 0.571 |
+| walker |  | 7608 | 247 | python body peepdb/core.py:118 |  |  | 0.600 |
+| walker |  | 7656 | 48 | python body peepdb/db/mongodb.py:32 |  |  | 0.600 |
 | ns | 7742 |  | 247 | The two key sources: PBKDF2 derivation and keyring fetch-or-create | 5.3 | 1.9 | 0.595 |
 | ns | 7987 |  | 245 | save_connection: the on-disk record shape and what is encrypted | 5.4 | 1.9 | 0.583 |
 | ns | 8167 |  | 180 | get_connection: the tuple contract and InvalidPassword | 5.5 | 1.9 | 0.574 |
 | ns | 8309 |  | 142 | add_key_security: first-run choice between keyring and password | 5.6 | 1.9 | 0.569 |
-| walker |  | 8373 | 867 | plaintext config requirements.txt |  |  | 0.569 |
 | ns | 8403 |  | 94 | list/remove/remove_all_connections — the distinctive lines only | 5.7 | 1.9 | 0.564 |
-| walker |  | 8454 | 81 | python body peepdb/db/firebase.py:30 |  |  | 0.570 |
-| walker |  | 8559 | 105 | python body peepdb/config.py:60 |  |  | 0.578 |
-| walker |  | 8647 | 88 | docs/index.md section #2 |  |  | 0.578 |
-| walker |  | 8693 | 46 | docs/README.md section #9 |  |  | 0.578 |
+| walker |  | 8523 | 867 | plaintext config requirements.txt |  |  | 0.564 |
+| walker |  | 8604 | 81 | python body peepdb/db/firebase.py:30 |  |  | 0.570 |
+| walker |  | 8709 | 105 | python body peepdb/config.py:60 |  |  | 0.578 |
 | ns | 8760 |  | 357 | Every test (and fixture) name in peepdb/tests, across all six modules | 6.1 | 1.11 | 0.565 |
-| walker |  | 8789 | 96 | docs/usage.md section #3 |  |  | 0.565 |
-| walker |  | 8830 | 41 | python doc peepdb/cli.py:86 |  |  | 0.566 |
-| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.562 |
-| walker |  | 8933 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.569 |
-| walker |  | 9033 | 100 | docs/usage.md section #1 |  |  | 0.569 |
-| walker |  | 9047 | 14 | python body peepdb/db/base.py:33 |  |  | 0.573 |
-| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.567 |
-| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.565 |
-| walker |  | 9270 | 223 | docs/README.md section #3 |  |  | 0.565 |
-| walker |  | 9378 | 108 | python body peepdb/config.py:49 |  |  | 0.573 |
-| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.568 |
-| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.570 |
+| walker |  | 8797 | 88 | docs/index.md section #2 |  |  | 0.565 |
+| walker |  | 8843 | 46 | docs/README.md section #9 |  |  | 0.565 |
+| ns | 8866 |  | 106 | How the suite is run: CONTRIBUTING instructions and the CI invocation | 6.2 |  | 0.561 |
+| walker |  | 8950 | 107 | README.md section #16 |  |  | 0.561 |
+| walker |  | 9046 | 96 | docs/usage.md section #3 |  |  | 0.561 |
+| ns | 9081 |  | 215 | A representative test body: patching style and asserted output strings | 6.3 | 6.1 | 0.555 |
+| walker |  | 9087 | 41 | python doc peepdb/cli.py:86 |  |  | 0.556 |
+| ns | 9171 |  | 90 | `peepdb --help` summary lines from the cli group docstring | 7.1 | 1.6 | 0.554 |
+| walker |  | 9190 | 103 | python body peepdb/db/mssql.py:35 |  |  | 0.561 |
+| walker |  | 9290 | 100 | docs/usage.md section #1 |  |  | 0.561 |
+| walker |  | 9304 | 14 | python body peepdb/db/base.py:33 |  |  | 0.565 |
+| ns | 9427 |  | 256 | The two disagreeing dependency lists (setup.py vs project.toml) | 7.2 |  | 0.561 |
+| walker |  | 9527 | 223 | docs/README.md section #3 |  |  | 0.561 |
+| ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.563 |
+| walker |  | 9635 | 108 | python body peepdb/config.py:49 |  |  | 0.570 |
 | ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.563 |
-| walker |  | 9805 | 427 | python body peepdb/core.py:27 |  |  | 0.592 |
-| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.591 |
-| walker |  | 9919 | 114 | docs/usage.md section #6 |  |  | 0.591 |
-| walker |  | 9962 | 43 | python doc peepdb/cli.py:113 |  |  | 0.592 |
-| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.589 |
+| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.563 |
+| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.561 |

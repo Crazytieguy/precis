@@ -121,13 +121,14 @@ Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | ns | 8856 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.604 |
 | walker |  | 8946 | 263 | go body cert.go:176 |  |  | 0.628 |
 | walker |  | 9022 | 76 | README.md section #5 |  |  | 0.629 |
+| walker |  | 9077 | 55 | README.md section #16 |  |  | 0.629 |
 | ns | 9088 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.637 |
 | ns | 9331 |  | 243 | installNSS(): the certutil invocation and its failure advice | 5.3 | 1.9 | 0.642 |
-| walker |  | 9415 | 393 | go body main.go:267 |  |  | 0.645 |
-| ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.648 |
+| ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.646 |
+| walker |  | 9470 | 393 | go body main.go:267 |  |  | 0.648 |
 | ns | 9610 |  | 142 | forEachNSSProfile(): how Firefox/Chromium profiles are discovered and which DB format is used | 5.5 | 1.9 | 0.653 |
-| walker |  | 9711 | 296 | go body truststore_java.go:31 |  |  | 0.677 |
+| walker |  | 9766 | 296 | go body truststore_java.go:31 |  |  | 0.677 |
 | ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.680 |
-| walker |  | 9918 | 207 | README.md section #12 |  |  | 0.695 |
-| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.698 |
+| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.683 |
+| walker |  | 9973 | 207 | README.md section #12 |  |  | 0.698 |
 | ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.699 |

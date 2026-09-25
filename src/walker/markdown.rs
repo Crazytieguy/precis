@@ -68,15 +68,12 @@ const MAX_OUTLINE_HEADINGS: usize = 30;
 /// Source-byte cap on the outline's heading content (~400 tokens).
 const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
-/// Minimum H2 source bytes to split into H3/bullet sub-sections.
+/// Minimum H2 source bytes to split into H3 sub-sections.
 const H2_SPLIT_BYTES: usize = 600;
 
-/// Multiplier on the three value signals for `H3Child` ranges —
-/// compensates for smaller marginal cost.
-const SUB_SECTION_SIGNAL_SCALE: f64 = 0.45;
-
-/// Multiplier for `BodyBlock` (paragraph / list item) ranges.
-const BODY_BLOCK_SIGNAL_SCALE: f64 = 0.60;
+/// Value multiplier for split children (`H3Child` / `BodyBlock`
+/// ranges) — compensates for their smaller marginal cost.
+const CHILD_SIGNAL_SCALE: f64 = 0.60;
 
 /// Minimum source bytes before a section is split into body blocks.
 /// Lower than `H2_SPLIT_BYTES` since it can apply after H2 splitting.
@@ -113,7 +110,7 @@ const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 const LEDE_TARGET_TOKENS: usize = 140;
 
 /// Tail-chunk value factor relative to the parent section. Above the
-/// generic `BODY_BLOCK_SIGNAL_SCALE`: a tail is the direct
+/// generic `CHILD_SIGNAL_SCALE`: a tail is the direct
 /// continuation of content whose head just won purchase, and the NS
 /// ranks the continuation right behind it — pricing tails as fan-out
 /// noise strands them past the window their head opened. (Tails still
@@ -460,16 +457,11 @@ fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
     }
     // A reference-vocabulary README H3 (`### Colors`, `### Modifiers`)
     // is a top-rank catalog row in its own right, not H3 fan-out noise —
-    // it skips the sub-section scale.
-    let sub_scale = if range.is_reference_usage_section {
-        1.0
-    } else {
-        SUB_SECTION_SIGNAL_SCALE
-    };
+    // it skips the child scale.
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child => parent * sub_scale,
-        SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
+        SectionKind::H3Child if range.is_reference_usage_section => parent,
+        SectionKind::H3Child | SectionKind::BodyBlock => parent * CHILD_SIGNAL_SCALE,
         SectionKind::OversizeTail => parent * OVERSIZE_TAIL_FACTOR,
         SectionKind::LedeBody => parent,
     }

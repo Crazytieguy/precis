@@ -190,55 +190,55 @@ Score(3000)=0.698 I=0.857 C=0.569 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 7304 | 16 | ts decl packages/d2ts/src/operators/iterate.ts:46 |  |  | 0.600 |
 | walker |  | 7331 | 27 | ts decl packages/d2ts/src/operators/iterate.ts:80 |  |  | 0.600 |
 | walker |  | 7358 | 27 | ts decl packages/d2ts/src/operators/iterate.ts:225 |  |  | 0.600 |
+| walker |  | 7388 | 30 | README.md section #3 |  |  | 0.600 |
 | ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.605 |
-| walker |  | 7469 | 111 | ts names packages/d2mini/src/types.ts |  |  | 0.605 |
-| walker |  | 7490 | 21 | ts decl packages/d2mini/src/types.ts:83 |  |  | 0.605 |
-| walker |  | 7513 | 23 | ts decl packages/d2mini/src/types.ts:6 |  |  | 0.605 |
-| walker |  | 7538 | 25 | ts decl packages/d2mini/src/types.ts:11 |  |  | 0.605 |
-| walker |  | 7576 | 38 | ts decl packages/d2mini/src/types.ts:16 |  |  | 0.605 |
+| walker |  | 7499 | 111 | ts names packages/d2mini/src/types.ts |  |  | 0.605 |
+| walker |  | 7520 | 21 | ts decl packages/d2mini/src/types.ts:83 |  |  | 0.605 |
+| walker |  | 7543 | 23 | ts decl packages/d2mini/src/types.ts:6 |  |  | 0.605 |
+| walker |  | 7568 | 25 | ts decl packages/d2mini/src/types.ts:11 |  |  | 0.605 |
+| walker |  | 7606 | 38 | ts decl packages/d2mini/src/types.ts:16 |  |  | 0.605 |
 | ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.598 |
-| walker |  | 7655 | 79 | ts decl packages/d2mini/src/types.ts:21 |  |  | 0.598 |
-| walker |  | 7763 | 108 | ts decl packages/d2ql/src/schema.ts:105 |  |  | 0.598 |
-| walker |  | 7779 | 16 | ts names packages/d2mini/src/indexes.ts |  |  | 0.598 |
-| walker |  | 7833 | 54 | listing of 'packages/d2ql/tests/query-builder' |  |  | 0.598 |
+| walker |  | 7685 | 79 | ts decl packages/d2mini/src/types.ts:21 |  |  | 0.598 |
+| walker |  | 7793 | 108 | ts decl packages/d2ql/src/schema.ts:105 |  |  | 0.598 |
+| walker |  | 7809 | 16 | ts names packages/d2mini/src/indexes.ts |  |  | 0.598 |
 | ns | 7842 |  | 220 | D2QL identity and README section map | 6.1 |  | 0.593 |
-| walker |  | 7914 | 81 | ts names packages/d2mini/src/operators/keying.ts |  |  | 0.593 |
-| walker |  | 7947 | 33 | ts decl packages/d2mini/src/operators/keying.ts:13 |  |  | 0.593 |
-| walker |  | 7987 | 40 | ts decl packages/d2mini/src/operators/keying.ts:30 |  |  | 0.593 |
-| walker |  | 8068 | 81 | ts names packages/d2ts/src/operators/keying.ts |  |  | 0.596 |
-| ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.588 |
-| walker |  | 8101 | 33 | ts decl packages/d2ts/src/operators/keying.ts:13 |  |  | 0.588 |
-| walker |  | 8141 | 40 | ts decl packages/d2ts/src/operators/keying.ts:30 |  |  | 0.588 |
-| walker |  | 8219 | 78 | ts decl packages/d2mini/src/operators/filterBy.ts:14 |  |  | 0.588 |
-| walker |  | 8297 | 78 | ts decl packages/d2ts/src/operators/filterBy.ts:14 |  |  | 0.588 |
-| walker |  | 8315 | 18 | ts names packages/d2ts-benchmark/src/graph.ts |  |  | 0.588 |
-| walker |  | 8345 | 30 | packages/d2ql/README.md section #4 |  |  | 0.588 |
-| walker |  | 8429 | 84 | ts names packages/d2mini/src/operators/orderBy.ts |  |  | 0.588 |
+| walker |  | 7863 | 54 | listing of 'packages/d2ql/tests/query-builder' |  |  | 0.593 |
+| walker |  | 7944 | 81 | ts names packages/d2mini/src/operators/keying.ts |  |  | 0.593 |
+| walker |  | 7977 | 33 | ts decl packages/d2mini/src/operators/keying.ts:13 |  |  | 0.593 |
+| walker |  | 8017 | 40 | ts decl packages/d2mini/src/operators/keying.ts:30 |  |  | 0.593 |
+| ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.585 |
+| walker |  | 8098 | 81 | ts names packages/d2ts/src/operators/keying.ts |  |  | 0.588 |
+| walker |  | 8131 | 33 | ts decl packages/d2ts/src/operators/keying.ts:13 |  |  | 0.588 |
+| walker |  | 8171 | 40 | ts decl packages/d2ts/src/operators/keying.ts:30 |  |  | 0.588 |
+| walker |  | 8249 | 78 | ts decl packages/d2mini/src/operators/filterBy.ts:14 |  |  | 0.588 |
+| walker |  | 8327 | 78 | ts decl packages/d2ts/src/operators/filterBy.ts:14 |  |  | 0.588 |
+| walker |  | 8345 | 18 | ts names packages/d2ts-benchmark/src/graph.ts |  |  | 0.588 |
+| walker |  | 8375 | 30 | packages/d2ql/README.md section #4 |  |  | 0.588 |
 | ns | 8442 |  | 358 | schema.ts — the Query interface family | 6.3 |  | 0.576 |
-| walker |  | 8471 | 42 | ts decl packages/d2mini/src/operators/orderBy.ts:9 |  |  | 0.576 |
-| walker |  | 8530 | 59 | ts decl packages/d2mini/src/operators/orderBy.ts:23 |  |  | 0.576 |
-| walker |  | 8541 | 11 | ts body packages/d2mini/src/d2.ts:147 |  |  | 0.576 |
-| walker |  | 8571 | 30 | README.md section #17 |  |  | 0.576 |
+| walker |  | 8459 | 84 | ts names packages/d2mini/src/operators/orderBy.ts |  |  | 0.576 |
+| walker |  | 8501 | 42 | ts decl packages/d2mini/src/operators/orderBy.ts:9 |  |  | 0.576 |
+| walker |  | 8560 | 59 | ts decl packages/d2mini/src/operators/orderBy.ts:23 |  |  | 0.576 |
+| walker |  | 8571 | 11 | ts body packages/d2mini/src/d2.ts:147 |  |  | 0.576 |
+| walker |  | 8601 | 30 | README.md section #17 |  |  | 0.576 |
 | ns | 8604 |  | 162 | schema.ts — the Comparator and LogicalOperator vocabularies | 6.4 | 6.3 | 0.578 |
-| walker |  | 8702 | 131 | ts decl packages/d2mini/src/d2.ts:10 |  |  | 0.578 |
+| walker |  | 8732 | 131 | ts decl packages/d2mini/src/d2.ts:10 |  |  | 0.578 |
 | ns | 8735 |  | 131 | compileQuery — the package's single entry point | 6.5 |  | 0.575 |
-| walker |  | 8787 | 85 | ts decl packages/d2mini/src/operators/reduce.ts:106 |  |  | 0.575 |
-| walker |  | 8872 | 85 | ts decl packages/d2ts/src/operators/reduce.ts:127 |  |  | 0.575 |
-| walker |  | 8903 | 31 | README.md section #9 |  |  | 0.575 |
+| walker |  | 8817 | 85 | ts decl packages/d2mini/src/operators/reduce.ts:106 |  |  | 0.575 |
+| walker |  | 8902 | 85 | ts decl packages/d2ts/src/operators/reduce.ts:127 |  |  | 0.575 |
+| walker |  | 8933 | 31 | README.md section #9 |  |  | 0.575 |
 | ns | 8978 |  | 243 | query-builder.ts — the fluent builder's complete method set | 6.6 |  | 0.566 |
-| walker |  | 8990 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:76 |  |  | 0.566 |
+| walker |  | 9020 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:76 |  |  | 0.566 |
 | ns | 9076 |  | 98 | d2mini README — how it differs from d2ts | 7.1 |  | 0.567 |
-| walker |  | 9077 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:199 |  |  | 0.567 |
-| walker |  | 9164 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:76 |  |  | 0.567 |
+| walker |  | 9107 | 87 | ts decl packages/d2mini/src/operators/orderBy.ts:199 |  |  | 0.567 |
 | ns | 9165 |  | 89 | d2mini/src/d2.ts — the versionless D2 constructor | 7.2 | 7.1 | 0.564 |
-| walker |  | 9251 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:140 |  |  | 0.564 |
-| walker |  | 9390 | 139 | listing of 'packages/d2mini/tests/operators' |  |  | 0.564 |
+| walker |  | 9194 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:76 |  |  | 0.564 |
+| walker |  | 9281 | 87 | ts decl packages/d2ts/src/operators/orderBy.ts:140 |  |  | 0.564 |
 | ns | 9401 |  | 236 | README: using the SQLite backend | 8.1 | 1.10 | 0.559 |
-| walker |  | 9439 | 49 | ts decl packages/d2mini/src/operators/count.ts:10 |  |  | 0.559 |
-| walker |  | 9452 | 13 | ts body packages/d2ts/src/d2.ts:167 |  |  | 0.559 |
+| walker |  | 9420 | 139 | listing of 'packages/d2mini/tests/operators' |  |  | 0.559 |
+| walker |  | 9469 | 49 | ts decl packages/d2mini/src/operators/count.ts:10 |  |  | 0.559 |
+| walker |  | 9482 | 13 | ts body packages/d2ts/src/d2.ts:167 |  |  | 0.559 |
 | ns | 9529 |  | 128 | sqlite/database.ts — the SQLiteDb driver interface | 8.2 | 8.1 | 0.554 |
 | ns | 9683 |  | 154 | withSQLite, SQLIndex and the Electric bridge exports | 8.3 | 8.2 | 0.551 |
-| walker |  | 9802 | 350 | ts decl eslint.base.mjs:6 #1 |  |  | 0.551 |
 | ns | 9827 |  | 144 | README: what each example demonstrates | 9.1 | 1.10 | 0.548 |
+| walker |  | 9832 | 350 | ts decl eslint.base.mjs:6 #1 |  |  | 0.548 |
 | ns | 9977 |  | 150 | examples/electric — what the demo app does | 9.2 | 2.13 | 0.545 |
-| walker |  | 9985 | 183 | README.md section #1 |  |  | 0.545 |
