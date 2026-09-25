@@ -1032,11 +1032,8 @@ struct SectionRange {
     start: usize,
     end: usize,
     h2_index: usize,
-    /// README-only: this range's section is a code-dominant canonical usage demo
-    /// ([`is_canonical_usage_h2`]), or is titled in the reference/usage
-    /// vocabulary ([`is_reference_usage_title`]) with a compact,
-    /// structured body. Earns [`REFERENCE_USAGE_SECTION_FACTOR`] and
-    /// the default concavity.
+    /// README-only: [`is_reference_usage_section`]. Earns
+    /// [`REFERENCE_USAGE_SECTION_FACTOR`] and the default concavity.
     is_reference_usage_section: bool,
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
@@ -1111,17 +1108,7 @@ fn logical_sections(
                 );
             }
             TopLevelEntry::Section { node, start, end } => {
-                // README H2 that is either a code-dominant canonical
-                // usage demo, or titled in the reference/usage
-                // vocabulary with a non-trivial but compact body (so
-                // stub H2s and large prose/demo blobs are excluded) AND
-                // structural reference content (list / table / code),
-                // so a prose-only intro under a reference title is
-                // skipped.
-                let reference_h2 = readme
-                    && (is_canonical_usage_h2(*node, source)
-                        || (is_reference_usage_title(*node, source)
-                            && reference_usage_body_ok(section_body(*node, None, source))));
+                let reference_h2 = readme && is_reference_usage_section(*node, source);
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
@@ -1456,29 +1443,25 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
         .collect()
 }
 
-fn is_code_block(kind: &str) -> bool {
-    matches!(kind, "fenced_code_block" | "indented_code_block")
+/// README sections worth [`REFERENCE_USAGE_SECTION_FACTOR`]: a usage
+/// demo (a usage title over a body that is nearly all code) or a
+/// reference section (an options / configuration / API title over a
+/// compact body that lists, tabulates or shows code). The same titles
+/// over prose are introductions, and over a long body a tutorial the
+/// index decay keeps back.
+fn is_reference_usage_section(section: Node, source: &str) -> bool {
+    let Some(inline) =
+        first_heading_child(section).and_then(|heading| first_child_of_kind(heading, "inline"))
+    else {
+        return false;
+    };
+    let title = title_core(&source[inline.start_byte()..inline.end_byte()]);
+    let body = section_body(section, None, source);
+    (is_canonical_usage_title_core(&title) && is_code_dominant(section, body))
+        || (is_reference_usage_title_core(&title) && reference_usage_body_ok(body))
 }
 
-/// README H2 sections worth a canonical-usage boost: title is one of
-/// the canonical-demo markers (`## Usage` / `## Sample usage` /
-/// `## Example(s)` / `## Quick start` / `## Getting started` /
-/// `## Basic usage` / `## Demo`), AND the body is dominated by code
-/// blocks. The body-shape gate matters: a bullet-list-of-links
-/// `### Examples` (superstruct) shares the title pattern but isn't a
-/// canonical demo — boosting it displaces NS-anchored content for no
-/// gain. Gated on the READMEs-only call site, so unrelated `## Usage`
-/// headings inside a changelog or docs page don't trigger.
-fn is_canonical_usage_h2(h2_section: Node<'_>, source: &str) -> bool {
-    is_canonical_usage_h2_title(h2_section, source) && section_is_code_dominant(h2_section, source)
-}
-
-fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
-    h2_title_core(h2_section, source).is_some_and(|core| is_canonical_usage_title_core(&core))
-}
-
-/// Vocabulary half of [`is_canonical_usage_h2_title`], shared with the
-/// RST heading path.
+/// Usage-demo titles; shared with the RST heading path.
 fn is_canonical_usage_title_core(core: &str) -> bool {
     matches!(
         core,
@@ -1496,30 +1479,11 @@ fn is_canonical_usage_title_core(core: &str) -> bool {
     )
 }
 
-/// README reference/usage sections worth the modest
-/// [`REFERENCE_USAGE_SECTION_FACTOR`]: title (taken from the section's
-/// own first heading) matches a tight reference/usage
-/// vocabulary. Unlike [`is_canonical_usage_h2`] this is NOT gated on
-/// code dominance — the point is to lift prose/list/table reference
-/// sections (option tables, color/modifier lists, environment-variable
-/// docs) above the README index decay so they clear the early budget.
-/// The vocabulary is kept tight and the body-bytes gate is enforced at
-/// the call sites; a too-broad list would over-promote trivial
-/// sections. README-only (gated at the call sites).
-fn is_reference_usage_title(section: Node<'_>, source: &str) -> bool {
-    h2_title_core(section, source).is_some_and(|core| is_reference_usage_title_core(&core))
-}
-
-/// Vocabulary half of [`is_reference_usage_title`], shared with the
-/// RST heading path (which has no tree-sitter node to extract from).
+/// Reference titles; shared with the RST heading path. Bare "usage" is
+/// a usage-demo title only: over prose it is a walkthrough.
 fn is_reference_usage_title_core(core: &str) -> bool {
     matches!(
         core,
-        // Bare "usage" is deliberately excluded: code-dominant usage
-        // demos are already handled by the canonical path, and a
-        // prose/demo `## Usage` blob (json-server) only displaces source
-        // NS when promoted. The *specific* usage titles below name
-        // genuine CLI/API reference sections.
         "command line usage"
             | "command-line usage"
             | "cli usage"
@@ -1533,26 +1497,17 @@ fn is_reference_usage_title_core(core: &str) -> bool {
             | "config"
             | "api"
             | "api usage"
-            | "colors"
-            | "modifiers"
-            | "styles"
-            | "background colors"
             | "environment variables"
-            | "formatters"
-            | "default preset"
     )
 }
 
-/// Upper bound (source bytes, heading excluded) on a reference/usage
-/// section's body for it to earn [`REFERENCE_USAGE_SECTION_FACTOR`].
-/// Reference tables/lists (option tables, color/modifier lists,
-/// feature bullets) are compact — krep's `## Command Line Options`
-/// (~1.2 KB) and chalk's `## 256 and Truecolor` (~1.3 KB) clear it. The
-/// cap excludes large `## Usage` prose/demo blobs (debug ~2.1 KB,
-/// superstruct `### Usage` ~2.3 KB) that the README index decay
-/// correctly keeps off the early budget — promoting them displaces
-/// NS-anchored source content for no gain.
+/// Upper bound (source bytes, heading excluded) on a reference
+/// section's body.
 const REFERENCE_USAGE_MAX_BODY_BYTES: usize = 1500;
+
+/// Share of a usage demo's body (heading excluded) that must be code
+/// blocks.
+const CANONICAL_USAGE_CODE_MIN_FRACTION: f64 = 0.85;
 
 /// Source text of `section` after its heading, up to the start of
 /// `until` (a child the body stops at, e.g. an H1's first H2) or the
@@ -1565,65 +1520,31 @@ fn section_body<'a>(section: Node, until: Option<Node>, source: &'a str) -> &'a 
     &source[heading.end_byte().min(end)..end]
 }
 
-/// The body gate of the reference/usage class: non-empty, at most
-/// [`REFERENCE_USAGE_MAX_BODY_BYTES`], and holding structural reference
-/// content (see [`is_reference_structure_line`]).
+/// Non-empty, at most [`REFERENCE_USAGE_MAX_BODY_BYTES`], and holding a
+/// list item, table row or code fence.
 fn reference_usage_body_ok(body: &str) -> bool {
+    let is_structure_line = |line: &str| {
+        let t = line.trim_start();
+        t.starts_with(['-', '*', '+']) && t[1..].starts_with(' ')
+            || t.starts_with('|')
+            || t.starts_with("```")
+            || t.starts_with("~~~")
+            || t.split_once(". ")
+                .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
+    };
     !body.trim().is_empty()
         && body.len() <= REFERENCE_USAGE_MAX_BODY_BYTES
-        && body.lines().any(is_reference_structure_line)
+        && body.lines().any(is_structure_line)
 }
 
-/// True iff `line` is structural reference content: a bullet / numbered
-/// list item, a table row, or a code-fence line. Reference sections
-/// worth the boost catalog options / colors / flags as lists or tables
-/// (or hold a config code block); a section whose body is only prose —
-/// e.g. enclosed's `### Configuration`, a one-line pointer to external
-/// docs — is an intro, not a reference, and is correctly skipped.
-fn is_reference_structure_line(line: &str) -> bool {
-    let t = line.trim_start();
-    t.starts_with("- ")
-        || t.starts_with("* ")
-        || t.starts_with("+ ")
-        || t.starts_with('|')
-        || t.starts_with("```")
-        || t.starts_with("~~~")
-        || t.split_once(". ")
-            .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
-}
-
-/// True iff `section`'s direct children include at least one
-/// `fenced_code_block` whose source bytes are at least
-/// [`CANONICAL_USAGE_CODE_MIN_FRACTION`] of the section's total body
-/// bytes (the heading is excluded from the denominator since titles
-/// are tiny and would otherwise tilt every section toward "code
-/// dominant"). The fraction threshold is conservative — well above
-/// what a "few code snippets among prose" tutorial section can clear,
-/// but below the typical "headline + one code fence + a paragraph"
-/// canonical-demo shape (sqlite-vec's `## Sample usage` is ~75 % code
-/// by source bytes).
-const CANONICAL_USAGE_CODE_MIN_FRACTION: f64 = 0.85;
-
-fn section_is_code_dominant(section: Node<'_>, source: &str) -> bool {
-    let body_bytes = section_body(section, None, source).len();
-    if body_bytes == 0 {
-        return false;
-    }
-    let mut cur = section.walk();
+fn is_code_dominant(section: Node, body: &str) -> bool {
+    let mut cursor = section.walk();
     let code_bytes: usize = section
-        .children(&mut cur)
-        .filter(|c| is_code_block(c.kind()))
+        .children(&mut cursor)
+        .filter(|c| matches!(c.kind(), "fenced_code_block" | "indented_code_block"))
         .map(|c| c.end_byte() - c.start_byte())
         .sum();
-    (code_bytes as f64 / body_bytes as f64) >= CANONICAL_USAGE_CODE_MIN_FRACTION
-}
-
-/// [`title_core`] of a section's heading. `None` when no `inline`
-/// child is found.
-fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
-    let heading = first_heading_child(h2_section)?;
-    let inline = first_child_of_kind(heading, "inline")?;
-    Some(title_core(&source[inline.start_byte()..inline.end_byte()]))
+    !body.is_empty() && code_bytes as f64 / body.len() as f64 >= CANONICAL_USAGE_CODE_MIN_FRACTION
 }
 
 /// 1-based level of an `atx_heading` / `setext_heading` (`# → 1`,
@@ -2426,7 +2347,7 @@ mod tests {
                 true,
             ),
             // Reference title but prose-only body (no list/table/code)
-            // → NOT flagged (enclosed's pointer shape).
+            // → NOT flagged.
             (
                 "## Configuration",
                 "See the configuration docs for details.\n",

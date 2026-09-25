@@ -43,37 +43,9 @@ README.md
   178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
   179→for the complete list.
   181→## Formatters
-  182→
-  183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
-  184→Below are the officially supported formatters:
-  185→
-  186→| Formatter | Representation |
-  187→|-----------|----------------|
-  188→| `%O`      | Pretty-print an Object on multiple lines. |
-  189→| `%o`      | Pretty-print an Object all on a single line. |
-  190→| `%s`      | String. |
-  191→| `%d`      | Number (both integer and float). |
-  192→| `%j`      | JSON. Replaced with the string '[Circular]' if the argument contains circular references. |
-  193→| `%%`      | Single percent sign ('%'). This does not consume an argument. |
-  194→
-  195→
+  …
   196→### Custom formatters
-  197→
-  198→You can add custom formatters by extending the `debug.formatters` object.
-  199→For example, if you wanted to add support for rendering a Buffer as hex with
-  200→`%h`, you could do something like:
-  201→
-  202→```js
-  203→const createDebug = require('debug')
-  204→createDebug.formatters.h = (v) => {
-  205→  return v.toString('hex')
-  206→}
-  207→
-  208→// …elsewhere
-  209→const debug = createDebug('foo')
-  210→debug('this is hex: %h', new Buffer('hello world'))
-  211→//   foo this is hex: 68656c6c6f20776f726c6421 +0ms
-  212→```
+  …
   215→## Browser Support
   …
   248→## Output streams
@@ -162,8 +134,37 @@ src/
     19→		}
     20→	};
     21→})();
-    …
+    23→/**
+    24→ * Colors.
+    25→ */
     27→exports.colors = [
+    28→	'#0000CC',
+    29→	'#0000FF',
+    30→	'#0033CC',
+    31→	'#0033FF',
+    32→	'#0066CC',
+    33→	'#0066FF',
+    34→	'#0099CC',
+    35→	'#0099FF',
+    36→	'#00CC00',
+    37→	'#00CC33',
+    38→	'#00CC66',
+    39→	'#00CC99',
+    40→	'#00CCCC',
+    41→	'#00CCFF',
+    42→	'#3300CC',
+    43→	'#3300FF',
+    44→	'#3333CC',
+    45→	'#3333FF',
+    46→	'#3366CC',
+    47→	'#3366FF',
+    48→	'#3399CC',
+    49→	'#3399FF',
+    50→	'#33CC00',
+    51→	'#33CC33',
+    52→	'#33CC66',
+    …
+    104→];
     …
     115→function useColors() {
     …
