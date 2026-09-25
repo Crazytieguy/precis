@@ -1,4 +1,4 @@
-Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.772/0.765/0.638/0.577/0.539/0.532/0.564
+Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.772/0.765/0.638/0.577/0.539/0.532/0.565
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -99,168 +99,167 @@ Score(3000)=0.577 I=0.849 C=0.392 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 2823 | 13 | rust decl src/export/markup.rs:108 |  |  | 0.628 |
 | ns | 2839 |  | 262 | src/options.rs: impl Default for Options -- the concrete default values | 3.3 | 3.1 | 0.596 |
 | walker |  | 2840 | 17 | rust decl src/export/markup.rs:10 |  |  | 0.596 |
-| walker |  | 2921 | 81 | man-page NAME + DESCRIPTION in doc/hyperfine.1 |  |  | 0.596 |
-| walker |  | 2987 | 66 | rust names src/parameter/mod.rs |  |  | 0.596 |
+| walker |  | 2906 | 66 | rust names src/parameter/mod.rs |  |  | 0.596 |
+| walker |  | 2938 | 32 | rust decl src/parameter/mod.rs:7 |  |  | 0.597 |
+| walker |  | 2972 | 34 | rust decl src/parameter/mod.rs:13 |  |  | 0.597 |
 | ns | 2991 |  | 152 | src/options.rs: DEFAULT_SHELL per platform, the Shell enum and its parser | 3.4 |  | 0.577 |
-| walker |  | 3019 | 32 | rust decl src/parameter/mod.rs:7 |  |  | 0.577 |
-| walker |  | 3053 | 34 | rust decl src/parameter/mod.rs:13 |  |  | 0.577 |
 | ns | 3094 |  | 103 | src/options.rs: ExecutorKind (Raw / Shell / Mock) and its default | 3.5 | 3.4 | 0.564 |
-| walker |  | 3301 | 248 | [dependencies] in Cargo.toml |  |  | 0.564 |
+| walker |  | 3220 | 248 | [dependencies] in Cargo.toml |  |  | 0.564 |
+| walker |  | 3288 | 68 | rust names src/util/number.rs |  |  | 0.564 |
+| walker |  | 3307 | 19 | rust decl src/util/number.rs:30 |  |  | 0.564 |
 | ns | 3318 |  | 224 | src/options.rs: OutputStyleOption and SortOrder vocabularies | 3.6 |  | 0.539 |
-| walker |  | 3369 | 68 | rust names src/util/number.rs |  |  | 0.539 |
-| walker |  | 3388 | 19 | rust decl src/util/number.rs:30 |  |  | 0.539 |
-| walker |  | 3408 | 20 | rust decl src/util/number.rs:24 |  |  | 0.539 |
-| walker |  | 3438 | 30 | rust decl src/util/number.rs:15 |  |  | 0.539 |
-| walker |  | 3479 | 41 | rust decl src/util/number.rs:36 |  |  | 0.539 |
-| walker |  | 3530 | 51 | rust decl src/util/number.rs:8 |  |  | 0.540 |
+| walker |  | 3327 | 20 | rust decl src/util/number.rs:24 |  |  | 0.539 |
+| walker |  | 3357 | 30 | rust decl src/util/number.rs:15 |  |  | 0.539 |
+| walker |  | 3398 | 41 | rust decl src/util/number.rs:36 |  |  | 0.539 |
+| walker |  | 3449 | 51 | rust decl src/util/number.rs:8 |  |  | 0.540 |
 | ns | 3560 |  | 242 | src/options.rs: CommandInputPolicy and CommandOutputPolicy | 3.7 |  | 0.517 |
-| walker |  | 3769 | 239 | rust names src/options.rs |  |  | 0.522 |
-| walker |  | 3776 | 7 | rust decl src/options.rs:19 |  |  | 0.523 |
-| walker |  | 3786 | 10 | rust decl src/options.rs:16 |  |  | 0.524 |
-| ns | 3800 |  | 240 | src/options.rs: CmdFailureAction and RunBounds (default min = 10) | 3.8 |  | 0.506 |
-| walker |  | 3802 | 16 | rust decl src/options.rs:32 |  |  | 0.506 |
-| walker |  | 3818 | 16 | rust decl src/options.rs:251 |  |  | 0.507 |
-| walker |  | 3836 | 18 | rust decl src/options.rs:116 |  |  | 0.507 |
-| walker |  | 3854 | 18 | rust decl src/options.rs:191 |  |  | 0.510 |
-| walker |  | 3883 | 29 | rust decl src/options.rs:132 |  |  | 0.510 |
-| walker |  | 3913 | 30 | rust decl src/options.rs:38 |  |  | 0.510 |
-| walker |  | 3946 | 33 | rust decl src/options.rs:164 |  |  | 0.510 |
-| walker |  | 3983 | 37 | rust decl src/options.rs:101 |  |  | 0.512 |
-| walker |  | 4022 | 39 | rust decl src/options.rs:184 |  |  | 0.525 |
-| walker |  | 4075 | 53 | rust decl src/options.rs:47 |  |  | 0.525 |
-| walker |  | 4130 | 55 | rust decl src/options.rs:108 |  |  | 0.532 |
-| ns | 4189 |  | 389 | src/error.rs: the complete OptionsError variant set with messages | 3.10 |  | 0.514 |
-| walker |  | 4193 | 63 | rust decl src/options.rs:275 |  |  | 0.514 |
-| walker |  | 4257 | 64 | rust decl src/options.rs:23 |  |  | 0.531 |
-| walker |  | 4326 | 69 | rust decl src/options.rs:122 |  |  | 0.539 |
-| ns | 4407 |  | 218 | src/error.rs: the complete ParameterScanError variant set | 3.11 | 3.10 | 0.526 |
-| walker |  | 4422 | 96 | rust decl src/options.rs:70 |  |  | 0.547 |
-| walker |  | 4461 | 39 | README.md section #11 |  |  | 0.547 |
-| walker |  | 4589 | 128 | rust decl src/options.rs:148 |  |  | 0.581 |
-| walker |  | 4611 | 22 | rust body src/cli.rs:8 |  |  | 0.581 |
+| walker |  | 3688 | 239 | rust names src/options.rs |  |  | 0.522 |
+| walker |  | 3695 | 7 | rust decl src/options.rs:19 |  |  | 0.523 |
+| walker |  | 3705 | 10 | rust decl src/options.rs:16 |  |  | 0.524 |
+| walker |  | 3721 | 16 | rust decl src/options.rs:32 |  |  | 0.524 |
+| walker |  | 3737 | 16 | rust decl src/options.rs:251 |  |  | 0.525 |
+| walker |  | 3755 | 18 | rust decl src/options.rs:116 |  |  | 0.525 |
+| walker |  | 3773 | 18 | rust decl src/options.rs:191 |  |  | 0.527 |
+| ns | 3800 |  | 240 | src/options.rs: CmdFailureAction and RunBounds (default min = 10) | 3.8 |  | 0.510 |
+| walker |  | 3802 | 29 | rust decl src/options.rs:132 |  |  | 0.510 |
+| walker |  | 3832 | 30 | rust decl src/options.rs:38 |  |  | 0.510 |
+| walker |  | 3865 | 33 | rust decl src/options.rs:164 |  |  | 0.510 |
+| walker |  | 3902 | 37 | rust decl src/options.rs:101 |  |  | 0.512 |
+| walker |  | 3941 | 39 | rust decl src/options.rs:184 |  |  | 0.525 |
+| walker |  | 3994 | 53 | rust decl src/options.rs:47 |  |  | 0.525 |
+| walker |  | 4049 | 55 | rust decl src/options.rs:108 |  |  | 0.532 |
+| walker |  | 4112 | 63 | rust decl src/options.rs:275 |  |  | 0.532 |
+| walker |  | 4176 | 64 | rust decl src/options.rs:23 |  |  | 0.550 |
+| ns | 4189 |  | 389 | src/error.rs: the complete OptionsError variant set with messages | 3.10 |  | 0.531 |
+| walker |  | 4245 | 69 | rust decl src/options.rs:122 |  |  | 0.539 |
+| walker |  | 4341 | 96 | rust decl src/options.rs:70 |  |  | 0.560 |
+| walker |  | 4380 | 39 | README.md section #11 |  |  | 0.560 |
+| ns | 4407 |  | 218 | src/error.rs: the complete ParameterScanError variant set | 3.11 | 3.10 | 0.547 |
+| walker |  | 4508 | 128 | rust decl src/options.rs:148 |  |  | 0.581 |
+| walker |  | 4530 | 22 | rust body src/cli.rs:8 |  |  | 0.581 |
+| walker |  | 4603 | 73 | rust decl src/benchmark/scheduler.rs:20 |  |  | 0.582 |
 | ns | 4627 |  | 220 | src/benchmark/executor.rs: the Executor trait | 4.1 |  | 0.567 |
-| walker |  | 4684 | 73 | rust decl src/benchmark/scheduler.rs:20 |  |  | 0.567 |
+| walker |  | 4676 | 73 | rust decl src/export/markdown.rs:8 |  |  | 0.567 |
+| walker |  | 4749 | 73 | rust decl src/export/orgmode.rs:7 |  |  | 0.567 |
 | ns | 4752 |  | 125 | The three Executor implementations and their state | 4.2 | 4.1 | 0.558 |
-| walker |  | 4757 | 73 | rust decl src/export/markdown.rs:8 |  |  | 0.558 |
-| walker |  | 4830 | 73 | rust decl src/export/orgmode.rs:7 |  |  | 0.558 |
+| walker |  | 4827 | 78 | rust names src/output/format.rs |  |  | 0.558 |
 | ns | 4904 |  | 152 | BenchmarkIteration and the $HYPERFINE_ITERATION values | 4.3 |  | 0.547 |
-| walker |  | 4908 | 78 | rust names src/output/format.rs |  |  | 0.547 |
-| walker |  | 4988 | 80 | rust names src/timer/unix_timer.rs |  |  | 0.547 |
-| walker |  | 5003 | 15 | rust decl src/timer/unix_timer.rs:18 |  |  | 0.547 |
-| walker |  | 5045 | 42 | rust decl src/timer/unix_timer.rs:22 |  |  | 0.547 |
+| walker |  | 4907 | 80 | rust names src/timer/unix_timer.rs |  |  | 0.547 |
+| walker |  | 4922 | 15 | rust decl src/timer/unix_timer.rs:18 |  |  | 0.547 |
+| walker |  | 4964 | 42 | rust decl src/timer/unix_timer.rs:22 |  |  | 0.547 |
+| walker |  | 5036 | 72 | rust decl src/timer/unix_timer.rs:9 |  |  | 0.547 |
 | ns | 5072 |  | 168 | The shared command runner: stdio wiring and injected environment variables | 4.4 | 4.3 | 0.538 |
-| walker |  | 5117 | 72 | rust decl src/timer/unix_timer.rs:9 |  |  | 0.538 |
-| walker |  | 5266 | 149 | rust decl src/options.rs:83 |  |  | 0.571 |
-| walker |  | 5280 | 14 | rust doc src/util/min_max.rs:2 |  |  | 0.571 |
+| walker |  | 5185 | 149 | rust decl src/options.rs:83 |  |  | 0.571 |
+| walker |  | 5199 | 14 | rust doc src/util/min_max.rs:2 |  |  | 0.571 |
 | ns | 5284 |  | 212 | Non-zero exit handling and the failure message users actually see | 4.5 | 4.4 | 0.561 |
-| walker |  | 5367 | 87 | rust names src/timer/windows_timer.rs |  |  | 0.561 |
-| walker |  | 5380 | 13 | rust decl src/timer/windows_timer.rs:49 |  |  | 0.561 |
-| walker |  | 5397 | 17 | rust decl src/timer/windows_timer.rs:124 |  |  | 0.561 |
-| walker |  | 5447 | 50 | rust decl src/timer/windows_timer.rs:53 |  |  | 0.561 |
+| walker |  | 5286 | 87 | rust names src/timer/windows_timer.rs |  |  | 0.561 |
+| walker |  | 5299 | 13 | rust decl src/timer/windows_timer.rs:49 |  |  | 0.561 |
+| walker |  | 5316 | 17 | rust decl src/timer/windows_timer.rs:124 |  |  | 0.561 |
+| walker |  | 5366 | 50 | rust decl src/timer/windows_timer.rs:53 |  |  | 0.561 |
+| walker |  | 5410 | 44 | rust decl src/benchmark/scheduler.rs:21 |  |  | 0.561 |
+| walker |  | 5424 | 14 | rust body src/error.rs:25 |  |  | 0.561 |
+| walker |  | 5438 | 14 | rust body src/error.rs:31 |  |  | 0.561 |
 | ns | 5481 |  | 197 | Shell-spawning calibration: 50 probe runs, and where the overhead is subtracted | 4.6 | 4.2 | 0.553 |
-| walker |  | 5491 | 44 | rust decl src/benchmark/scheduler.rs:21 |  |  | 0.553 |
-| walker |  | 5505 | 14 | rust body src/error.rs:25 |  |  | 0.553 |
-| walker |  | 5519 | 14 | rust body src/error.rs:31 |  |  | 0.553 |
-| walker |  | 5616 | 97 | rust names src/benchmark/mod.rs |  |  | 0.553 |
-| walker |  | 5650 | 34 | rust decl src/benchmark/mod.rs:41 |  |  | 0.553 |
-| ns | 5679 |  | 198 | src/benchmark/scheduler.rs: Scheduler state and executor selection | 4.7 |  | 0.549 |
-| walker |  | 5698 | 48 | rust decl src/benchmark/mod.rs:34 |  |  | 0.549 |
-| walker |  | 5711 | 13 | rust doc src/benchmark/mod.rs:32 |  |  | 0.550 |
-| walker |  | 5738 | 27 | rust decl src/export/json.rs:11 |  |  | 0.550 |
-| walker |  | 5754 | 16 | rust doc src/util/min_max.rs:10 |  |  | 0.550 |
+| walker |  | 5535 | 97 | rust names src/benchmark/mod.rs |  |  | 0.553 |
+| walker |  | 5569 | 34 | rust decl src/benchmark/mod.rs:41 |  |  | 0.553 |
+| walker |  | 5617 | 48 | rust decl src/benchmark/mod.rs:34 |  |  | 0.553 |
+| walker |  | 5630 | 13 | rust doc src/benchmark/mod.rs:32 |  |  | 0.553 |
+| walker |  | 5657 | 27 | rust decl src/export/json.rs:11 |  |  | 0.553 |
+| walker |  | 5673 | 16 | rust doc src/util/min_max.rs:10 |  |  | 0.553 |
+| ns | 5679 |  | 198 | src/benchmark/scheduler.rs: Scheduler state and executor selection | 4.7 |  | 0.550 |
+| walker |  | 5853 | 180 | rust decl src/command.rs:33 |  |  | 0.550 |
+| walker |  | 5908 | 55 | rust decl src/command.rs:42 |  |  | 0.550 |
 | ns | 5933 |  | 254 | run_benchmarks(): reference command first, calibrate once, export after each benchmark | 4.8 | 4.7 | 0.537 |
-| walker |  | 5934 | 180 | rust decl src/command.rs:33 |  |  | 0.537 |
-| walker |  | 5989 | 55 | rust decl src/command.rs:42 |  |  | 0.537 |
-| walker |  | 6042 | 53 | rust decl src/export/markup.rs:109 |  |  | 0.537 |
-| walker |  | 6149 | 107 | rust names src/parameter/range_step.rs |  |  | 0.537 |
-| walker |  | 6183 | 34 | rust decl src/parameter/range_step.rs:40 |  |  | 0.538 |
-| ns | 6208 |  | 275 | src/benchmark/mod.rs: Benchmark struct, MIN_EXECUTION_TIME, and the complete method roster | 4.10 |  | 0.531 |
-| walker |  | 6221 | 38 | rust decl src/parameter/range_step.rs:33 |  |  | 0.532 |
-| walker |  | 6281 | 60 | rust decl src/parameter/range_step.rs:62 |  |  | 0.532 |
-| walker |  | 6380 | 99 | rust decl src/parameter/range_step.rs:7 |  |  | 0.532 |
+| walker |  | 5961 | 53 | rust decl src/export/markup.rs:109 |  |  | 0.537 |
+| walker |  | 6068 | 107 | rust names src/parameter/range_step.rs |  |  | 0.537 |
+| walker |  | 6102 | 34 | rust decl src/parameter/range_step.rs:40 |  |  | 0.538 |
+| walker |  | 6140 | 38 | rust decl src/parameter/range_step.rs:33 |  |  | 0.538 |
+| walker |  | 6200 | 60 | rust decl src/parameter/range_step.rs:62 |  |  | 0.538 |
+| ns | 6208 |  | 275 | src/benchmark/mod.rs: Benchmark struct, MIN_EXECUTION_TIME, and the complete method roster | 4.10 |  | 0.532 |
+| walker |  | 6299 | 99 | rust decl src/parameter/range_step.rs:7 |  |  | 0.532 |
+| walker |  | 6353 | 54 | rust decl src/benchmark/mod.rs:42 |  |  | 0.532 |
 | ns | 6418 |  | 210 | How the number of runs is decided | 4.11 | 4.10 | 0.521 |
-| walker |  | 6434 | 54 | rust decl src/benchmark/mod.rs:42 |  |  | 0.521 |
-| walker |  | 6537 | 103 | rust decl src/parameter/range_step.rs:19 |  |  | 0.521 |
-| walker |  | 6592 | 55 | rust decl src/export/csv.rs:16 |  |  | 0.521 |
+| walker |  | 6456 | 103 | rust decl src/parameter/range_step.rs:19 |  |  | 0.521 |
+| walker |  | 6511 | 55 | rust decl src/export/csv.rs:16 |  |  | 0.521 |
+| walker |  | 6566 | 55 | rust decl src/export/json.rs:20 |  |  | 0.521 |
+| walker |  | 6584 | 18 | rust doc src/output/format.rs:11 |  |  | 0.521 |
+| walker |  | 6602 | 18 | rust doc src/output/format.rs:18 |  |  | 0.521 |
 | ns | 6626 |  | 208 | The three warning triggers inside Benchmark::run | 4.12 | 4.10 | 0.514 |
-| walker |  | 6647 | 55 | rust decl src/export/json.rs:20 |  |  | 0.514 |
-| walker |  | 6665 | 18 | rust doc src/output/format.rs:11 |  |  | 0.514 |
-| walker |  | 6683 | 18 | rust doc src/output/format.rs:18 |  |  | 0.514 |
+| walker |  | 6716 | 114 | rust names src/output/progress_bar.rs |  |  | 0.514 |
+| walker |  | 6723 | 7 | rust decl src/output/progress_bar.rs:9 |  |  | 0.514 |
+| walker |  | 6733 | 10 | rust decl src/output/progress_bar.rs:6 |  |  | 0.514 |
+| walker |  | 6744 | 11 | rust doc src/output/progress_bar.rs:13 |  |  | 0.514 |
 | ns | 6779 |  | 153 | src/outlier_detection.rs: the modified Z-score method and its threshold | 4.13 | 4.12 | 0.511 |
-| walker |  | 6797 | 114 | rust names src/output/progress_bar.rs |  |  | 0.511 |
-| walker |  | 6804 | 7 | rust decl src/output/progress_bar.rs:9 |  |  | 0.511 |
-| walker |  | 6814 | 10 | rust decl src/output/progress_bar.rs:6 |  |  | 0.511 |
-| walker |  | 6825 | 11 | rust doc src/output/progress_bar.rs:13 |  |  | 0.511 |
-| walker |  | 6941 | 116 | rust names src/timer/mod.rs |  |  | 0.511 |
-| walker |  | 7028 | 87 | rust decl src/timer/mod.rs:41 |  |  | 0.511 |
-| walker |  | 7043 | 15 | rust doc src/timer/mod.rs:41 |  |  | 0.511 |
-| walker |  | 7058 | 15 | rust doc src/timer/mod.rs:83 |  |  | 0.511 |
+| walker |  | 6860 | 116 | rust names src/timer/mod.rs |  |  | 0.511 |
+| walker |  | 6947 | 87 | rust decl src/timer/mod.rs:41 |  |  | 0.511 |
+| walker |  | 6962 | 15 | rust doc src/timer/mod.rs:41 |  |  | 0.511 |
+| walker |  | 6977 | 15 | rust doc src/timer/mod.rs:83 |  |  | 0.511 |
 | ns | 7075 |  | 296 | src/benchmark/benchmark_result.rs: the complete BenchmarkResult field set (= the JSON export schema) | 5.1 |  | 0.501 |
-| walker |  | 7197 | 139 | rust names src/export/mod.rs |  |  | 0.501 |
+| walker |  | 7116 | 139 | rust names src/export/mod.rs |  |  | 0.501 |
+| walker |  | 7135 | 19 | rust decl src/export/mod.rs:56 |  |  | 0.501 |
+| walker |  | 7173 | 38 | rust decl src/export/mod.rs:67 |  |  | 0.502 |
+| walker |  | 7188 | 15 | rust decl src/export/mod.rs:46 |  |  | 0.502 |
+| walker |  | 7201 | 13 | rust doc src/export/mod.rs:67 |  |  | 0.502 |
 | ns | 7215 |  | 140 | src/benchmark/timing_result.rs: TimingResult in full | 5.2 | 5.1 | 0.495 |
-| walker |  | 7216 | 19 | rust decl src/export/mod.rs:56 |  |  | 0.495 |
-| walker |  | 7254 | 38 | rust decl src/export/mod.rs:67 |  |  | 0.495 |
-| walker |  | 7269 | 15 | rust decl src/export/mod.rs:46 |  |  | 0.495 |
-| walker |  | 7282 | 13 | rust doc src/export/mod.rs:67 |  |  | 0.495 |
-| walker |  | 7361 | 79 | rust decl src/export/mod.rs:73 |  |  | 0.495 |
+| walker |  | 7280 | 79 | rust decl src/export/mod.rs:73 |  |  | 0.495 |
+| walker |  | 7324 | 44 | rust decl src/export/mod.rs:76 |  |  | 0.495 |
+| walker |  | 7350 | 26 | rust decl src/export/mod.rs:61 |  |  | 0.495 |
 | ns | 7378 |  | 163 | src/benchmark/relative_speed.rs: annotated result type and the complete public function set | 5.3 |  | 0.489 |
-| walker |  | 7405 | 44 | rust decl src/export/mod.rs:76 |  |  | 0.489 |
-| walker |  | 7431 | 26 | rust decl src/export/mod.rs:61 |  |  | 0.489 |
-| ns | 7536 |  | 158 | src/export/mod.rs: the ExportType enum -- the five output formats | 5.4 |  | 0.482 |
-| walker |  | 7550 | 119 | rust names src/benchmark/relative_speed.rs |  |  | 0.485 |
-| walker |  | 7589 | 39 | rust decl src/benchmark/relative_speed.rs:112 |  |  | 0.485 |
-| walker |  | 7629 | 40 | rust decl src/benchmark/relative_speed.rs:98 |  |  | 0.485 |
-| walker |  | 7683 | 54 | rust decl src/benchmark/relative_speed.rs:86 |  |  | 0.485 |
-| ns | 7698 |  | 162 | src/export/mod.rs: the Exporter trait and ExportManager | 5.5 | 5.4 | 0.484 |
-| walker |  | 7766 | 83 | rust decl src/benchmark/relative_speed.rs:6 |  |  | 0.498 |
+| walker |  | 7469 | 119 | rust names src/benchmark/relative_speed.rs |  |  | 0.493 |
+| walker |  | 7508 | 39 | rust decl src/benchmark/relative_speed.rs:112 |  |  | 0.493 |
+| ns | 7536 |  | 158 | src/export/mod.rs: the ExportType enum -- the five output formats | 5.4 |  | 0.485 |
+| walker |  | 7548 | 40 | rust decl src/benchmark/relative_speed.rs:98 |  |  | 0.485 |
+| walker |  | 7602 | 54 | rust decl src/benchmark/relative_speed.rs:86 |  |  | 0.485 |
+| walker |  | 7685 | 83 | rust decl src/benchmark/relative_speed.rs:6 |  |  | 0.500 |
+| ns | 7698 |  | 162 | src/export/mod.rs: the Exporter trait and ExportManager | 5.5 | 5.4 | 0.498 |
+| walker |  | 7810 | 125 | rust decl src/export/asciidoc.rs:7 |  |  | 0.498 |
+| walker |  | 7819 | 9 | rust body src/export/asciidoc.rs:30 |  |  | 0.498 |
 | ns | 7835 |  | 137 | Flag-to-exporter wiring and the '-' means stdout convention | 5.6 | 5.5 | 0.494 |
-| walker |  | 7891 | 125 | rust decl src/export/asciidoc.rs:7 |  |  | 0.494 |
-| walker |  | 7900 | 9 | rust body src/export/asciidoc.rs:30 |  |  | 0.494 |
-| walker |  | 7954 | 54 | README.md section #14 |  |  | 0.494 |
+| walker |  | 7873 | 54 | README.md section #14 |  |  | 0.494 |
 | ns | 8051 |  | 216 | src/export/markup.rs: the shared table shape and the blanket Exporter impl | 5.7 | 5.5 | 0.489 |
-| walker |  | 8199 | 245 | rust decl src/error.rs:6 |  |  | 0.510 |
-| ns | 8267 |  | 216 | The five exporter types, and the CSV column set | 5.8 | 5.4 | 0.507 |
-| walker |  | 8326 | 127 | rust decl src/benchmark/timing_result.rs:4 |  |  | 0.523 |
-| walker |  | 8338 | 12 | rust doc src/benchmark/timing_result.rs:4 |  |  | 0.523 |
-| walker |  | 8466 | 128 | rust decl src/export/mod.rs:27 |  |  | 0.538 |
-| walker |  | 8487 | 21 | rust body src/util/randomized_environment_offset.rs:6 |  |  | 0.538 |
+| walker |  | 8118 | 245 | rust decl src/error.rs:6 |  |  | 0.510 |
+| walker |  | 8245 | 127 | rust decl src/benchmark/timing_result.rs:4 |  |  | 0.526 |
+| walker |  | 8257 | 12 | rust doc src/benchmark/timing_result.rs:4 |  |  | 0.526 |
+| ns | 8267 |  | 216 | The five exporter types, and the CSV column set | 5.8 | 5.4 | 0.523 |
+| walker |  | 8385 | 128 | rust decl src/export/mod.rs:27 |  |  | 0.538 |
+| walker |  | 8406 | 21 | rust body src/util/randomized_environment_offset.rs:6 |  |  | 0.538 |
 | ns | 8524 |  | 257 | src/output/format.rs: automatic time-unit selection, and the Unit type | 5.9 |  | 0.534 |
-| walker |  | 8656 | 169 | rust names src/benchmark/executor.rs |  |  | 0.536 |
-| ns | 8661 |  | 137 | src/output/warnings.rs: the complete Warnings set | 5.10 | 4.12 | 0.543 |
-| walker |  | 8670 | 14 | rust decl src/benchmark/executor.rs:122 |  |  | 0.544 |
-| walker |  | 8691 | 21 | rust decl src/benchmark/executor.rs:302 |  |  | 0.547 |
-| walker |  | 8712 | 21 | rust decl src/benchmark/executor.rs:307 |  |  | 0.547 |
-| walker |  | 8734 | 22 | rust decl src/benchmark/executor.rs:126 |  |  | 0.547 |
-| walker |  | 8758 | 24 | rust decl src/benchmark/executor.rs:25 |  |  | 0.548 |
-| walker |  | 8786 | 28 | rust decl src/benchmark/executor.rs:175 |  |  | 0.548 |
-| walker |  | 8817 | 31 | rust decl src/benchmark/executor.rs:19 |  |  | 0.550 |
-| walker |  | 8857 | 40 | rust decl src/benchmark/executor.rs:169 |  |  | 0.558 |
+| walker |  | 8575 | 169 | rust names src/benchmark/executor.rs |  |  | 0.536 |
+| walker |  | 8589 | 14 | rust decl src/benchmark/executor.rs:122 |  |  | 0.537 |
+| walker |  | 8610 | 21 | rust decl src/benchmark/executor.rs:302 |  |  | 0.540 |
+| walker |  | 8631 | 21 | rust decl src/benchmark/executor.rs:307 |  |  | 0.540 |
+| walker |  | 8653 | 22 | rust decl src/benchmark/executor.rs:126 |  |  | 0.540 |
+| ns | 8661 |  | 137 | src/output/warnings.rs: the complete Warnings set | 5.10 | 4.12 | 0.547 |
+| walker |  | 8677 | 24 | rust decl src/benchmark/executor.rs:25 |  |  | 0.548 |
+| walker |  | 8705 | 28 | rust decl src/benchmark/executor.rs:175 |  |  | 0.548 |
+| walker |  | 8736 | 31 | rust decl src/benchmark/executor.rs:19 |  |  | 0.550 |
+| walker |  | 8776 | 40 | rust decl src/benchmark/executor.rs:169 |  |  | 0.558 |
+| walker |  | 8827 | 51 | rust decl src/benchmark/executor.rs:132 |  |  | 0.558 |
 | ns | 8869 |  | 208 | src/command.rs: the Command type and its complete method roster | 6.1 |  | 0.564 |
-| walker |  | 8908 | 51 | rust decl src/benchmark/executor.rs:132 |  |  | 0.564 |
-| walker |  | 8959 | 51 | rust decl src/benchmark/executor.rs:185 |  |  | 0.564 |
-| walker |  | 9011 | 52 | rust decl src/benchmark/executor.rs:35 |  |  | 0.565 |
+| walker |  | 8878 | 51 | rust decl src/benchmark/executor.rs:185 |  |  | 0.564 |
+| walker |  | 8930 | 52 | rust decl src/benchmark/executor.rs:35 |  |  | 0.565 |
+| walker |  | 8983 | 53 | rust decl src/benchmark/executor.rs:322 |  |  | 0.565 |
 | ns | 9015 |  | 146 | How {param} placeholders are substituted, and why naively | 6.2 | 6.1 | 0.562 |
-| walker |  | 9064 | 53 | rust decl src/benchmark/executor.rs:322 |  |  | 0.562 |
-| walker |  | 9104 | 40 | rust decl src/export/tests.rs:9 |  |  | 0.562 |
-| walker |  | 9116 | 12 | rust body src/export/asciidoc.rs:34 |  |  | 0.562 |
-| walker |  | 9128 | 12 | rust body src/export/markdown.rs:26 |  |  | 0.562 |
-| walker |  | 9140 | 12 | rust body src/export/orgmode.rs:20 |  |  | 0.562 |
-| ns | 9202 |  | 187 | src/command.rs: Commands and its complete method roster, with the three construction modes | 6.3 |  | 0.559 |
-| walker |  | 9214 | 74 | rust decl src/benchmark/executor.rs:37 |  |  | 0.564 |
-| walker |  | 9288 | 74 | rust decl src/benchmark/executor.rs:133 |  |  | 0.564 |
-| walker |  | 9362 | 74 | rust decl src/benchmark/executor.rs:186 |  |  | 0.564 |
-| ns | 9431 |  | 229 | src/parameter/: ParameterValue, RangeStep and its 100_000 cap, tokenize() | 6.4 |  | 0.570 |
-| walker |  | 9439 | 77 | rust decl src/benchmark/executor.rs:323 |  |  | 0.570 |
-| walker |  | 9454 | 15 | rust doc src/cli.rs:18 |  |  | 0.571 |
-| ns | 9581 |  | 150 | build.rs: shell completions generated from the same clap command | 7.1 | 2.1 | 0.567 |
-| walker |  | 9610 | 156 | rust decl src/export/markup.rs:15 |  |  | 0.571 |
-| walker |  | 9619 | 9 | rust body src/export/markup.rs:87 |  |  | 0.571 |
-| walker |  | 9629 | 10 | rust doc src/util/units.rs:18 |  |  | 0.571 |
-| walker |  | 9656 | 27 | rust body src/output/format.rs:5 |  |  | 0.571 |
-| walker |  | 9675 | 19 | rust doc src/benchmark/relative_speed.rs:112 |  |  | 0.571 |
-| walker |  | 9748 | 73 | rust body src/main.rs:53 |  |  | 0.581 |
+| walker |  | 9023 | 40 | rust decl src/export/tests.rs:9 |  |  | 0.562 |
+| walker |  | 9035 | 12 | rust body src/export/asciidoc.rs:34 |  |  | 0.562 |
+| walker |  | 9047 | 12 | rust body src/export/markdown.rs:26 |  |  | 0.562 |
+| walker |  | 9059 | 12 | rust body src/export/orgmode.rs:20 |  |  | 0.562 |
+| walker |  | 9133 | 74 | rust decl src/benchmark/executor.rs:37 |  |  | 0.567 |
+| ns | 9202 |  | 187 | src/command.rs: Commands and its complete method roster, with the three construction modes | 6.3 |  | 0.564 |
+| walker |  | 9207 | 74 | rust decl src/benchmark/executor.rs:133 |  |  | 0.564 |
+| walker |  | 9281 | 74 | rust decl src/benchmark/executor.rs:186 |  |  | 0.564 |
+| walker |  | 9358 | 77 | rust decl src/benchmark/executor.rs:323 |  |  | 0.564 |
+| walker |  | 9373 | 15 | rust doc src/cli.rs:18 |  |  | 0.565 |
+| ns | 9431 |  | 229 | src/parameter/: ParameterValue, RangeStep and its 100_000 cap, tokenize() | 6.4 |  | 0.571 |
+| walker |  | 9529 | 156 | rust decl src/export/markup.rs:15 |  |  | 0.576 |
+| walker |  | 9538 | 9 | rust body src/export/markup.rs:87 |  |  | 0.576 |
+| walker |  | 9548 | 10 | rust doc src/util/units.rs:18 |  |  | 0.576 |
+| walker |  | 9575 | 27 | rust body src/output/format.rs:5 |  |  | 0.576 |
+| ns | 9581 |  | 150 | build.rs: shell completions generated from the same clap command | 7.1 | 2.1 | 0.571 |
+| walker |  | 9594 | 19 | rust doc src/benchmark/relative_speed.rs:112 |  |  | 0.571 |
+| walker |  | 9667 | 73 | rust body src/main.rs:53 |  |  | 0.581 |
+| walker |  | 9720 | 53 | rust decl src/benchmark/relative_speed.rs:27 |  |  | 0.581 |
+| walker |  | 9736 | 16 | rust body src/benchmark/scheduler.rs:156 |  |  | 0.581 |
 | ns | 9790 |  | 209 | .github/workflows/CICD.yml: the complete job set and the commands each runs | 7.2 |  | 0.575 |
-| walker |  | 9801 | 53 | rust decl src/benchmark/relative_speed.rs:27 |  |  | 0.575 |
-| walker |  | 9817 | 16 | rust body src/benchmark/scheduler.rs:156 |  |  | 0.575 |
-| walker |  | 9880 | 63 | rust doc src/outlier_detection.rs:13 |  |  | 0.580 |
+| walker |  | 9799 | 63 | rust doc src/outlier_detection.rs:13 |  |  | 0.580 |
 | ns | 9982 |  | 192 | tests/: the shared harness helpers and the debug-mode test idiom | 7.3 |  | 0.573 |

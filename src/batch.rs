@@ -182,10 +182,6 @@ pub enum JsonKey {
 pub enum PlaintextKey {
     /// Whole-file render, or a head slice of a longer file.
     Whole { file: PathBuf },
-    /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
-    /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
-    /// (or autotools `*.1.in`) manual.
-    ManLede { file: PathBuf },
     /// Indentation-zero declaration surface of a source-like text file
     /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
     /// Vue, CSS, reST, …). The language-agnostic fallback.
@@ -460,12 +456,6 @@ impl InnerKey for JsonKey {
 }
 
 impl InnerKey for PlaintextKey {
-    /// A man-page NAME/DESCRIPTION lede is orientation; a verbatim
-    /// plaintext config dump is not.
-    fn is_orientation(&self) -> bool {
-        matches!(self, PlaintextKey::ManLede { .. })
-    }
-
     /// The language-agnostic declaration surface is how an unparsed
     /// source language (Ruby, Swift, C++, …) presents its roster.
     fn is_dominant_file_surface(&self) -> bool {
@@ -476,12 +466,6 @@ impl InnerKey for PlaintextKey {
         match self {
             PlaintextKey::Whole { file } => {
                 format!("plaintext config {}", display_path(file, root))
-            }
-            PlaintextKey::ManLede { file } => {
-                format!(
-                    "man-page NAME + DESCRIPTION in {}",
-                    display_path(file, root)
-                )
             }
             PlaintextKey::DeclSurface { file } => {
                 format!("declaration surface of {}", display_path(file, root))

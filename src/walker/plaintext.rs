@@ -3,8 +3,8 @@
 //!
 //! 1. **Named plaintext files** ([`classify_plaintext`]): license and
 //!    ignore files, compact toolchain/build/package manifests, selected
-//!    build scripts, requirement lists, version/TODO stamps, man-page
-//!    ledes, `Makefile`/`Dockerfile`/dotenv skeletons. These get
+//!    build scripts, requirement lists, version/TODO stamps,
+//!    `Makefile`/`Dockerfile`/dotenv heads. These get
 //!    class-specific treatment and a per-class value preset.
 //! 2. **Every other source-like text file** ([`Class::SourceText`]):
 //!    the language-agnostic fallback for the ~90% of file formats no
@@ -708,12 +708,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
         let file = dir.join(&name);
-        if is_man_page_name(&name) {
-            if let Some(batch) = man_page_batch(&file, ctx) {
-                out.push(batch);
-            }
-            continue;
-        }
         // A named class whose location gate rejects it (a nested
         // `Makefile`, a `.sh` outside a build-script location) falls
         // through to the fallback rather than out of the output.
@@ -946,102 +940,6 @@ fn head_lines(line_count: usize, head_line_cap: usize) -> FileLines {
     FileLines::new(full).with_ellipses(dedup_sorted(ellipses))
 }
 
-// --- man pages ----------------------------------------------------------
-
-/// Lines scanned for the man-page `NAME` / `DESCRIPTION` sections — both
-/// live near the top of any troff page, so a bounded scan suffices.
-const MAN_SCAN_LINES: usize = 150;
-/// Content lines taken from the `DESCRIPTION` section (the lede), beyond
-/// the heading itself.
-const MAN_DESC_LEDE_LINES: usize = 5;
-
-/// True for a troff man-page filename: `<base>.<1-9>` optionally with an
-/// autotools `.in` suffix (`htop.1`, `foo.5`, `htop.1.in`).
-fn is_man_page_name(name: &str) -> bool {
-    let stem = name.strip_suffix(".in").unwrap_or(name);
-    match stem.rsplit_once('.') {
-        Some((base, section)) => {
-            !base.is_empty()
-                && section.len() == 1
-                && section.chars().all(|c| ('1'..='9').contains(&c))
-        }
-        None => false,
-    }
-}
-
-fn man_page_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
-    let source = ctx.read_source(file)?;
-    let lines = man_lede_lines(&source);
-    if lines.is_empty() {
-        return None;
-    }
-    let content = single_file_lines_content(file, &source, FileLines::new(lines))?;
-    Some(Batch {
-        key: PlaintextKey::ManLede {
-            file: file.to_path_buf(),
-        }
-        .into(),
-        predecessor: None,
-        content,
-        // NAME + DESCRIPTION lede is the canonical "what is this tool"
-        // answer — high catastrophic-omission and zero-tool-call value,
-        // like a README headline, for any CLI shipping a man page.
-        value: mix_signals(0.65, 0.45, 0.7, path_depth_factor(file, ctx)),
-    })
-}
-
-/// 1-based line numbers of the `NAME` section (heading + body to the next
-/// `.SH`) and the `DESCRIPTION` lede (heading + first
-/// [`MAN_DESC_LEDE_LINES`] content rows). Empty if no `NAME` section.
-fn man_lede_lines(source: &str) -> Vec<usize> {
-    let lines: Vec<&str> = source.lines().take(MAN_SCAN_LINES).collect();
-    let mut out = Vec::new();
-    let mut saw_name = false;
-    let mut i = 0;
-    while i < lines.len() {
-        if is_man_section_heading(lines[i], "NAME") {
-            saw_name = true;
-            out.push(i + 1);
-            let mut j = i + 1;
-            while j < lines.len() && !is_sh_directive(lines[j]) {
-                if !lines[j].trim().is_empty() {
-                    out.push(j + 1);
-                }
-                j += 1;
-            }
-        } else if is_man_section_heading(lines[i], "DESCRIPTION") {
-            out.push(i + 1);
-            let mut j = i + 1;
-            let mut taken = 0;
-            while j < lines.len() && taken < MAN_DESC_LEDE_LINES && !is_sh_directive(lines[j]) {
-                out.push(j + 1);
-                taken += 1;
-                j += 1;
-            }
-        }
-        i += 1;
-    }
-    out.sort_unstable();
-    out.dedup();
-    if saw_name { out } else { Vec::new() }
-}
-
-fn is_sh_directive(line: &str) -> bool {
-    line.trim_start().starts_with(".SH")
-}
-
-/// True iff `line` is a `.SH NAME` / `.SH "DESCRIPTION"` section heading
-/// for `name` (quoting and case tolerated).
-fn is_man_section_heading(line: &str, name: &str) -> bool {
-    let Some(rest) = line.trim_start().strip_prefix(".SH") else {
-        return false;
-    };
-    rest.trim()
-        .trim_matches('"')
-        .trim()
-        .eq_ignore_ascii_case(name)
-}
-
 #[cfg(test)]
 mod tests {
     use crate::scheduler::Scheduler;
@@ -1197,26 +1095,6 @@ mod tests {
         // One very long line: a minified bundle, not hand-wrapped text.
         assert!(is_machine_generated_text(&"x".repeat(4096)));
         assert!(!is_machine_generated_text("class Foo {\n  int x;\n}\n"));
-    }
-
-    #[test]
-    fn plaintext_man_page_name_and_lede() {
-        assert!(is_man_page_name("htop.1"));
-        assert!(is_man_page_name("htop.1.in"));
-        assert!(is_man_page_name("foo.5"));
-        assert!(!is_man_page_name("foo.h"));
-        assert!(!is_man_page_name("foo.cpp"));
-        assert!(!is_man_page_name("README.md"));
-        assert!(!is_man_page_name("1"));
-
-        let src = ".TH FOO 1\n.SH \"NAME\"\nfoo \\- does things\n.SH \"SYNOPSIS\"\n\
-                   .B foo\n.SH \"DESCRIPTION\"\n.B foo\nis a thing.\n.LP\nMore.\n";
-        let lines = man_lede_lines(src);
-        // NAME heading (2) + body (3); DESCRIPTION heading (6) + lede (7..).
-        assert!(lines.contains(&2) && lines.contains(&3), "NAME: {lines:?}");
-        assert!(lines.contains(&6) && lines.contains(&7), "DESC: {lines:?}");
-        // A page with no NAME section yields nothing.
-        assert!(man_lede_lines(".TH FOO 1\n.SH SYNOPSIS\n.B foo\n").is_empty());
     }
 
     #[test]

@@ -66,17 +66,6 @@ doc/
   execution-order.svg
   histogram.png
   hyperfine.1
-    …
-    2→.SH NAME
-    3→hyperfine \- command\-line benchmarking tool
-    …
-    57→.SH DESCRIPTION
-    58→A command\-line benchmarking tool which includes:
-    59→.LP
-    60→.RS
-    61→* Statistical analysis across multiple runs
-    62→.RE
-    …
   whisker.png
 scripts/
   README.md
@@ -291,11 +280,15 @@ src/
       …
       4→pub mod range_step;
       5→pub mod tokenize;
-      …
+      7→#[derive(Debug, Clone, PartialEq, Eq)]
       8→pub enum ParameterValue {
-      …
+      9→    Text(String),
+      10→    Numeric(Number),
+      11→}
       13→impl Display for ParameterValue {
+      14→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
       …
+      21→}
       23→pub type ParameterNameAndValue<'a> = (&'a str, ParameterValue);
     range_step.rs
     tokenize.rs
