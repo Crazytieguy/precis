@@ -135,50 +135,66 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         return;
     };
     let pairs = top_level_pairs(&tree, &source);
-    let mut sections = Vec::new();
-    let mut collect = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
-        if let Some(content) = section_content(file, &source, &pairs, name_match) {
-            sections.push((key, content, value));
-        }
+    // The primary workspace member prices like the root manifest for the
+    // sections that say what the package is and how it ships; appendix
+    // metadata keeps ordinary path-depth pricing.
+    let primary = ctx.is_primary_js_workspace_member(file);
+    let depth = if primary {
+        1.0
+    } else {
+        path_depth_factor(file, ctx)
     };
+    let identity_scale = if ctx.is_js_workspace_member(file) && !primary {
+        WORKSPACE_MEMBER_IDENTITY_FACTOR
+    } else {
+        1.0
+    };
+    let describes_repository = primary || file.parent() == Some(ctx.root());
+    let operational = manifest_operational_value(depth);
     let f = file.to_path_buf();
-    collect(
-        JsonKey::Identity { file: f.clone() },
-        identity_value(file, ctx),
-        is_identity_key,
-    );
-    collect(
-        JsonKey::Entry { file: f.clone() },
-        manifest_operational_value(manifest_depth_factor(file, ctx))
-            * secondary_package_json_factor(file),
-        is_entry_key,
-    );
-    collect(
-        JsonKey::Runtime { file: f.clone() },
-        manifest_operational_value(manifest_depth_factor(file, ctx))
-            * secondary_package_json_factor(file),
-        is_runtime_key,
-    );
-    collect(
-        JsonKey::Scripts { file: f.clone() },
-        manifest_operational_value(manifest_depth_factor(file, ctx))
-            * secondary_package_json_factor(file),
-        is_scripts_key,
-    );
-    collect(
-        JsonKey::Dependencies { file: f.clone() },
-        dependencies_value(file, ctx),
-        is_runtime_dependencies_key,
-    );
-    collect(
-        JsonKey::IdentityMeta { file: f.clone() },
-        manifest_appendix_value(path_depth_factor(file, ctx)) * secondary_package_json_factor(file),
-        is_identity_meta_key,
-    );
+    let section_kinds = [
+        (
+            JsonKey::Identity { file: f.clone() },
+            manifest_identity_value(identity_scale, depth),
+            is_identity_key as fn(&str) -> bool,
+        ),
+        (
+            JsonKey::Entry { file: f.clone() },
+            operational,
+            is_entry_key,
+        ),
+        (
+            JsonKey::Runtime { file: f.clone() },
+            operational,
+            is_runtime_key,
+        ),
+        (
+            JsonKey::Scripts { file: f.clone() },
+            operational,
+            is_scripts_key,
+        ),
+        (
+            JsonKey::Dependencies { file: f.clone() },
+            dependency_roster_value(describes_repository, depth),
+            is_runtime_dependencies_key,
+        ),
+        (
+            JsonKey::IdentityMeta { file: f },
+            manifest_appendix_value(path_depth_factor(file, ctx)),
+            is_identity_meta_key,
+        ),
+    ];
+    let secondary = secondary_package_json_factor(file);
+    let sections: Vec<_> = section_kinds
+        .into_iter()
+        .filter_map(|(key, value, name_match)| {
+            section_content(file, &source, &pairs, name_match)
+                .map(|content| (key, content, value * secondary))
+        })
+        .collect();
     let overlap_chain = package_sections_share_lines(&pairs);
-    // The collect() calls above push Identity first, so it can only be
-    // the head of `sections` — the emission/chain order below relies
-    // on that ordering.
+    // Identity is first in `section_kinds`, so it can only be the head of
+    // `sections` — the emission/chain order below relies on that ordering.
     let identity = sections
         .first()
         .filter(|(key, _, _)| matches!(key, JsonKey::Identity { .. }))
@@ -343,41 +359,6 @@ fn secondary_package_json_factor(file: &Path) -> f64 {
         return SECONDARY_PACKAGE_JSON_FACTOR;
     }
     1.0
-}
-
-fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let scale = if ctx.is_js_workspace_member(file) && !ctx.is_primary_js_workspace_member(file) {
-        WORKSPACE_MEMBER_IDENTITY_FACTOR
-    } else {
-        1.0
-    };
-    manifest_identity_value(scale, manifest_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
-}
-
-fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    dependency_roster_value(
-        describes_repository(file, ctx),
-        manifest_depth_factor(file, ctx),
-    ) * secondary_package_json_factor(file)
-}
-
-/// True iff this manifest describes the repository itself — the root
-/// `package.json`, or the one publishable workspace member whose name
-/// matches the repo.
-fn describes_repository(file: &Path, ctx: &WalkCtx) -> bool {
-    file.parent() == Some(ctx.root()) || ctx.is_primary_js_workspace_member(file)
-}
-
-/// Primary publishable members rank like root manifests for the operational
-/// surfaces that establish what the package is and how it ships. Appendix
-/// metadata and runtime constraints retain ordinary path-depth pricing.
-fn manifest_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if ctx.is_primary_js_workspace_member(file) {
-        1.0
-    } else {
-        path_depth_factor(file, ctx)
-    }
 }
 
 // --- parser + AST helpers ---
