@@ -163,13 +163,7 @@ source/
     Ky.ts
       …
       33→export class Ky {
-      34→	static create(input: Input, options: Options): ResponsePromise {
       …
-      189→	public request: Request;
-      …
-      200→	constructor(input: Input, options: Options = {}) {
-      …
-      524→}
     constants.ts
   errors/
     ForceRetryError.ts
@@ -204,6 +198,9 @@ source/
       4→	public request: KyRequest;
       5→
       6→	constructor(request: Request) {
+      7→		super(`Request timed out: ${request.method} ${request.url}`);
+      8→		this.name = 'TimeoutError';
+      9→		this.request = request;
       …
       11→}
   index.ts

@@ -271,29 +271,6 @@ rich/
   _stack.py
   _timer.py
   _unicode_data/
-    __init__.py
-    _versions.py
-    unicode10-0-0.py
-    unicode11-0-0.py
-    unicode12-0-0.py
-    unicode12-1-0.py
-    unicode13-0-0.py
-    unicode14-0-0.py
-    unicode15-0-0.py
-    unicode15-1-0.py
-    unicode16-0-0.py
-    unicode17-0-0.py
-    unicode4-1-0.py
-    unicode5-0-0.py
-    unicode5-1-0.py
-    unicode5-2-0.py
-    unicode6-0-0.py
-    unicode6-1-0.py
-    unicode6-2-0.py
-    unicode6-3-0.py
-    unicode7-0-0.py
-    unicode8-0-0.py
-    unicode9-0-0.py
   _win32_console.py
   _windows.py
     …
@@ -366,6 +343,7 @@ rich/
     54→    def from_data(
     …
     101→    def __rich__(self) -> Text:
+    102→        return self.text
     …
   jupyter.py
   layout.py
@@ -418,6 +396,11 @@ rich/
     26→    renderable: "RenderableType"
     27→
     28→    def __init__(
+    29→        self,
+    30→        *renderables: "RenderableType",
+    31→        style: Optional[StyleType] = None,
+    32→        application_mode: bool = False,
+    33→    ) -> None:
     …
     40→    def __rich_console__(
     41→        self, console: "Console", options: "ConsoleOptions"

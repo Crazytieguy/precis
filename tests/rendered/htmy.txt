@@ -66,8 +66,7 @@ README.md
   330→## Framework integrations
   …
   337→## External examples
-  338→
-  339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
+  …
   341→## Why
   …
   353→## Dependencies
@@ -201,6 +200,9 @@ htmy/
     29→        errors: Container[type[Exception]] | None = None,
     30→    ) -> None:
     …
+    41→        self._children = children
+    42→        self._errors = errors
+    43→        self._fallback: Component = fallback
     45→    async def htmy(self, context: Context) -> Component:
     …
     56→    def _fallback_component(self, error: Exception) -> ComponentType:
@@ -238,6 +240,14 @@ htmy/
       101→    )
       102→
       103→    def __init__(
+      104→        self,
+      105→        path_or_text: Text | str | Path,
+      106→        text_resolver: TextResolver | None = None,
+      107→        *,
+      108→        converter: Callable[[str], Component] | None = None,
+      109→        renderer: MarkdownRenderFunction | None = None,
+      110→        text_processor: TextProcessor | None = None,
+      111→    ) -> None:
       …
       131→    def _render_text(self, text: str, context: Context) -> Component:
       …

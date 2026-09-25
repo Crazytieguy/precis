@@ -60,13 +60,13 @@ Score(3000)=0.619 I=0.781 C=0.491 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | ns | 3042 |  | 155 | `chainable()` — the `.optional()/.and()/.or()/.select()` methods every pattern carries | 2.7 |  | 0.620 |
 | walker |  | 3075 | 36 | Code::CodeKey { rung: ModuleDoc, file: src/internals/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
 | walker |  | 3085 | 10 | Code::CodeKey { rung: Names, file: src/types/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
-| walker |  | 3089 | 4 | Fs::DirListing { dir: examples/gif-fetcher/public } |  |  | 0.625 |
-| walker |  | 3097 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.634 |
-| walker |  | 3221 | 124 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.636 |
-| walker |  | 3231 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.645 |
-| ns | 3269 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.628 |
-| walker |  | 3379 | 148 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.630 |
-| walker |  | 3454 | 75 | Code::CodeKey { rung: Body, file: src/errors.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.631 |
+| walker |  | 3160 | 75 | Code::CodeKey { rung: Body, file: src/errors.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.622 |
+| walker |  | 3164 | 4 | Fs::DirListing { dir: examples/gif-fetcher/public } |  |  | 0.626 |
+| walker |  | 3172 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.636 |
+| ns | 3269 |  | 227 | The eight wildcard pattern type aliases in src/types/Pattern.ts | 2.8 |  | 0.620 |
+| walker |  | 3296 | 124 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.621 |
+| walker |  | 3306 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.630 |
+| walker |  | 3454 | 148 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.631 |
 | ns | 3536 |  | 267 | `stringChainable` — all seven `P.string.*` refinement methods | 2.9 |  | 0.612 |
 | walker |  | 3605 | 151 | Code::CodeKey { rung: Doc, file: src/is-matching.ts, decl: 2, sub: 0, line: 48 } |  |  | 0.616 |
 | walker |  | 3698 | 93 | Json::Whole { file: jsr.json } |  |  | 0.616 |

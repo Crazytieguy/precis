@@ -251,6 +251,8 @@ src/
     157→    return container.inspect(cb)
     …
     160→  getService (serviceId, cb) {
+    161→    const service = this.dockerCon.getService(serviceId)
+    162→    return service.inspect(cb)
     …
     165→  getImage (imageId, cb) {
     166→    const image = this.dockerCon.getImage(imageId)
@@ -298,6 +300,9 @@ src/
     107→  clearWidgets () {
     …
     114→  setWidgetsRepo () {
+    115→    for (let widgetObject of this.widgetsRepository.values()) {
+    116→      widgetObject.setWidgetsRepo(this.widgetsRepository)
+    117→    }
     …
     120→  setWidgetsUtils () {
     121→    for (let widgetObject of this.widgetsRepository.values()) {

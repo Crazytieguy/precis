@@ -129,6 +129,7 @@ src/
     92→    where
     93→        E: Into<Error>,
     94→    {
+    95→        error.into()
     …
     97→}
     99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -185,6 +186,7 @@ src/
     278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
     279→trait StdError: Debug + Display {
     280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+    281→        None
     …
     283→}
     285→#[doc(no_inline)]

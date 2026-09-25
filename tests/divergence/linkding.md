@@ -179,72 +179,74 @@ Score(3000)=0.668 I=0.837 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 6328 |  | 272 | views/contexts.py class roster (complete) | 3.7 |  | 0.465 |
 | walker |  | 6426 | 101 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0018_bookmark_favicon_file.py, decl: 1, sub: 0, line: 6 } |  |  | 0.465 |
 | walker |  | 6531 | 105 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0009_bookmark_web_archive_snapshot_url.py, decl: 1, sub: 0, line: 6 } |  |  | 0.465 |
+| walker |  | 6566 | 35 | Code::CodeKey { rung: Body, file: bookmarks/validators.py, decl: 2, sub: 0, line: 11 } |  |  | 0.465 |
 | ns | 6570 |  | 242 | views/settings.py + views/tags.py + views/bundles.py function rosters (complete) | 3.8 |  | 0.454 |
-| walker |  | 6642 | 111 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0046_add_url_normalized_field.py, decl: 1, sub: 0, line: 6 } |  |  | 0.454 |
-| walker |  | 6677 | 35 | Code::CodeKey { rung: Names, file: bookmarks/templatetags/bookmarks.py, decl: 0, sub: 0, line: 0 } |  |  | 0.454 |
-| walker |  | 6710 | 33 | Code::CodeKey { rung: Decl, file: bookmarks/templatetags/bookmarks.py, decl: 2, sub: 0, line: 9 } |  |  | 0.454 |
+| walker |  | 6677 | 111 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0046_add_url_normalized_field.py, decl: 1, sub: 0, line: 6 } |  |  | 0.454 |
+| walker |  | 6712 | 35 | Code::CodeKey { rung: Names, file: bookmarks/templatetags/bookmarks.py, decl: 0, sub: 0, line: 0 } |  |  | 0.454 |
 | ns | 6741 |  | 171 | views/access.py — the complete authorization helper set | 3.9 |  | 0.451 |
-| walker |  | 6757 | 47 | Plaintext::DeclSurface { file: pytest.ini } |  |  | 0.454 |
-| walker |  | 6825 | 68 | Code::CodeKey { rung: Decl, file: bookmarks/management/commands/full_backup.py, decl: 1, sub: 0, line: 9 } |  |  | 0.454 |
-| walker |  | 6861 | 36 | Code::CodeKey { rung: Names, file: bookmarks/views/auth.py, decl: 0, sub: 0, line: 0 } |  |  | 0.454 |
-| walker |  | 6889 | 28 | Code::CodeKey { rung: Decl, file: bookmarks/views/auth.py, decl: 5, sub: 0, line: 36 } |  |  | 0.454 |
-| walker |  | 6935 | 46 | Code::CodeKey { rung: Decl, file: bookmarks/views/auth.py, decl: 1, sub: 0, line: 7 } |  |  | 0.454 |
+| walker |  | 6745 | 33 | Code::CodeKey { rung: Decl, file: bookmarks/templatetags/bookmarks.py, decl: 2, sub: 0, line: 9 } |  |  | 0.451 |
+| walker |  | 6792 | 47 | Plaintext::DeclSurface { file: pytest.ini } |  |  | 0.454 |
+| walker |  | 6828 | 36 | Code::CodeKey { rung: Body, file: bookmarks/apps.py, decl: 2, sub: 0, line: 7 } |  |  | 0.454 |
+| walker |  | 6896 | 68 | Code::CodeKey { rung: Decl, file: bookmarks/management/commands/full_backup.py, decl: 1, sub: 0, line: 9 } |  |  | 0.454 |
+| walker |  | 6932 | 36 | Code::CodeKey { rung: Names, file: bookmarks/views/auth.py, decl: 0, sub: 0, line: 0 } |  |  | 0.454 |
+| walker |  | 6960 | 28 | Code::CodeKey { rung: Decl, file: bookmarks/views/auth.py, decl: 5, sub: 0, line: 36 } |  |  | 0.454 |
+| walker |  | 7006 | 46 | Code::CodeKey { rung: Decl, file: bookmarks/views/auth.py, decl: 1, sub: 0, line: 7 } |  |  | 0.454 |
 | ns | 7007 |  | 266 | Remaining view modules: turbo, assets, auth, root, health, manifest, opensearch, custom_css, toasts, reload | 3.10 |  | 0.450 |
 | ns | 7095 |  | 88 | forms.py class roster (complete) | 3.11 |  | 0.446 |
-| walker |  | 7295 | 360 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.473 |
-| ns | 7309 |  | 214 | Request-scoped plumbing: typed HttpRequest + LinkdingMiddleware | 3.12 |  | 0.468 |
-| ns | 7329 |  | 20 | bookmarks/templatetags/ listing (complete) | 3.13 |  | 0.472 |
-| walker |  | 7357 | 62 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.472 |
-| walker |  | 7395 | 38 | Code::CodeKey { rung: Names, file: bookmarks/settings/prod.py, decl: 0, sub: 0, line: 0 } |  |  | 0.472 |
-| walker |  | 7468 | 73 | Fs::DirListing { dir: docs/src/content/docs } |  |  | 0.502 |
+| ns | 7309 |  | 214 | Request-scoped plumbing: typed HttpRequest + LinkdingMiddleware | 3.12 |  | 0.442 |
+| ns | 7329 |  | 20 | bookmarks/templatetags/ listing (complete) | 3.13 |  | 0.446 |
+| walker |  | 7366 | 360 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.472 |
+| walker |  | 7428 | 62 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.472 |
+| walker |  | 7466 | 38 | Code::CodeKey { rung: Names, file: bookmarks/settings/prod.py, decl: 0, sub: 0, line: 0 } |  |  | 0.472 |
+| walker |  | 7539 | 73 | Fs::DirListing { dir: docs/src/content/docs } |  |  | 0.502 |
 | ns | 7563 |  | 234 | api/routes.py — viewsets and router registrations (complete) | 4.1 |  | 0.492 |
-| walker |  | 7596 | 128 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0005_auto_20210103_1212.py, decl: 1, sub: 0, line: 8 } |  |  | 0.492 |
-| walker |  | 7639 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0007_userprofile.py, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
-| walker |  | 7644 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0007_userprofile.py, decl: 2, sub: 0, line: 20 } |  |  | 0.492 |
-| walker |  | 7687 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0014_alter_bookmark_unread.py, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
-| walker |  | 7692 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0014_alter_bookmark_unread.py, decl: 2, sub: 0, line: 11 } |  |  | 0.492 |
+| walker |  | 7667 | 128 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0005_auto_20210103_1212.py, decl: 1, sub: 0, line: 8 } |  |  | 0.492 |
+| walker |  | 7710 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0007_userprofile.py, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
+| walker |  | 7715 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0007_userprofile.py, decl: 2, sub: 0, line: 20 } |  |  | 0.492 |
+| walker |  | 7758 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0014_alter_bookmark_unread.py, decl: 0, sub: 0, line: 0 } |  |  | 0.492 |
+| walker |  | 7763 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0014_alter_bookmark_unread.py, decl: 2, sub: 0, line: 11 } |  |  | 0.492 |
 | ns | 7779 |  | 216 | BookmarkViewSet — every custom action and override | 4.2 | 4.1 | 0.486 |
-| walker |  | 7802 | 110 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0014_alter_bookmark_unread.py, decl: 3, sub: 0, line: 15 } |  |  | 0.486 |
-| walker |  | 7845 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0041_merge_metadata.py, decl: 0, sub: 0, line: 0 } |  |  | 0.486 |
-| walker |  | 7850 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0041_merge_metadata.py, decl: 2, sub: 0, line: 24 } |  |  | 0.486 |
-| walker |  | 7914 | 64 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0041_merge_metadata.py, decl: 3, sub: 0, line: 28 } |  |  | 0.486 |
+| walker |  | 7873 | 110 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0014_alter_bookmark_unread.py, decl: 3, sub: 0, line: 15 } |  |  | 0.486 |
+| walker |  | 7916 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0041_merge_metadata.py, decl: 0, sub: 0, line: 0 } |  |  | 0.486 |
+| walker |  | 7921 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0041_merge_metadata.py, decl: 2, sub: 0, line: 24 } |  |  | 0.486 |
 | ns | 7928 |  | 149 | Asset, user and bundle viewset actions | 4.3 | 4.1 | 0.482 |
-| walker |  | 7957 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0044_bookmark_latest_snapshot.py, decl: 0, sub: 0, line: 0 } |  |  | 0.482 |
-| walker |  | 7962 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0044_bookmark_latest_snapshot.py, decl: 2, sub: 0, line: 23 } |  |  | 0.482 |
-| walker |  | 8005 | 43 | Code::CodeKey { rung: Names, file: bookmarks/views/custom_css.py, decl: 0, sub: 0, line: 0 } |  |  | 0.483 |
-| ns | 8017 |  | 89 | api/serializers.py class roster (complete) | 4.4 |  | 0.480 |
+| walker |  | 7985 | 64 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0041_merge_metadata.py, decl: 3, sub: 0, line: 28 } |  |  | 0.482 |
+| ns | 8017 |  | 89 | api/serializers.py class roster (complete) | 4.4 |  | 0.479 |
+| walker |  | 8028 | 43 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0044_bookmark_latest_snapshot.py, decl: 0, sub: 0, line: 0 } |  |  | 0.479 |
+| walker |  | 8033 | 5 | Code::CodeKey { rung: Body, file: bookmarks/migrations/0044_bookmark_latest_snapshot.py, decl: 2, sub: 0, line: 23 } |  |  | 0.479 |
+| walker |  | 8076 | 43 | Code::CodeKey { rung: Names, file: bookmarks/views/custom_css.py, decl: 0, sub: 0, line: 0 } |  |  | 0.480 |
 | ns | 8136 |  | 119 | API token authentication + docs/api.md section map | 4.5 |  | 0.478 |
-| walker |  | 8148 | 143 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0011_userprofile_web_archive_integration.py, decl: 1, sub: 0, line: 6 } |  |  | 0.478 |
-| walker |  | 8291 | 143 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0020_userprofile_tag_search.py, decl: 1, sub: 0, line: 6 } |  |  | 0.478 |
+| walker |  | 8219 | 143 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0011_userprofile_web_archive_integration.py, decl: 1, sub: 0, line: 6 } |  |  | 0.478 |
+| walker |  | 8362 | 143 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0020_userprofile_tag_search.py, decl: 1, sub: 0, line: 6 } |  |  | 0.478 |
 | ns | 8365 |  | 229 | services/bookmarks.py function roster (complete) | 5.1 |  | 0.471 |
-| walker |  | 8436 | 145 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0010_userprofile_bookmark_link_target.py, decl: 1, sub: 0, line: 6 } |  |  | 0.471 |
-| walker |  | 8481 | 45 | Code::CodeKey { rung: Names, file: bookmarks/services/parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
+| walker |  | 8507 | 145 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0010_userprofile_bookmark_link_target.py, decl: 1, sub: 0, line: 6 } |  |  | 0.471 |
+| walker |  | 8552 | 45 | Code::CodeKey { rung: Names, file: bookmarks/services/parser.py, decl: 0, sub: 0, line: 0 } |  |  | 0.471 |
 | ns | 8566 |  | 201 | queries.py function roster (complete) | 5.2 |  | 0.465 |
-| walker |  | 8582 | 101 | Code::CodeKey { rung: Decl, file: bookmarks/services/parser.py, decl: 1, sub: 0, line: 8 } |  |  | 0.465 |
-| walker |  | 8627 | 45 | Code::CodeKey { rung: Names, file: bookmarks/views/assets.py, decl: 0, sub: 0, line: 0 } |  |  | 0.469 |
-| walker |  | 8773 | 146 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0035_userprofile_tag_grouping.py, decl: 1, sub: 0, line: 6 } |  |  | 0.469 |
+| walker |  | 8653 | 101 | Code::CodeKey { rung: Decl, file: bookmarks/services/parser.py, decl: 1, sub: 0, line: 8 } |  |  | 0.465 |
+| walker |  | 8698 | 45 | Code::CodeKey { rung: Names, file: bookmarks/views/assets.py, decl: 0, sub: 0, line: 0 } |  |  | 0.469 |
 | ns | 8816 |  | 250 | services/search_query_parser.py symbol roster (complete) | 5.3 |  | 0.462 |
-| walker |  | 8922 | 149 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0004_auto_20200926_1028.py, decl: 1, sub: 0, line: 6 } |  |  | 0.462 |
-| walker |  | 8969 | 47 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0053_migrate_api_tokens.py, decl: 0, sub: 0, line: 0 } |  |  | 0.462 |
-| walker |  | 9052 | 83 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0053_migrate_api_tokens.py, decl: 3, sub: 0, line: 23 } |  |  | 0.462 |
+| walker |  | 8844 | 146 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0035_userprofile_tag_grouping.py, decl: 1, sub: 0, line: 6 } |  |  | 0.462 |
+| walker |  | 8993 | 149 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0004_auto_20200926_1028.py, decl: 1, sub: 0, line: 6 } |  |  | 0.462 |
+| walker |  | 9040 | 47 | Code::CodeKey { rung: Names, file: bookmarks/migrations/0053_migrate_api_tokens.py, decl: 0, sub: 0, line: 0 } |  |  | 0.462 |
+| walker |  | 9123 | 83 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0053_migrate_api_tokens.py, decl: 3, sub: 0, line: 23 } |  |  | 0.462 |
 | ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.453 |
-| walker |  | 9204 | 152 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0034_bookmark_preview_image_file_and_more.py, decl: 1, sub: 0, line: 6 } |  |  | 0.453 |
-| walker |  | 9255 | 51 | Code::CodeKey { rung: Doc, file: bookmarks/validators.py, decl: 1, sub: 0, line: 5 } |  |  | 0.453 |
-| walker |  | 9411 | 156 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0038_globalsettings_guest_profile_user.py, decl: 1, sub: 0, line: 8 } |  |  | 0.453 |
+| walker |  | 9275 | 152 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0034_bookmark_preview_image_file_and_more.py, decl: 1, sub: 0, line: 6 } |  |  | 0.453 |
+| walker |  | 9326 | 51 | Code::CodeKey { rung: Doc, file: bookmarks/validators.py, decl: 1, sub: 0, line: 5 } |  |  | 0.453 |
 | ns | 9438 |  | 269 | settings/base.py — deployment, auth and database LD_* options | 6.1 |  | 0.448 |
-| walker |  | 9505 | 94 | Code::CodeKey { rung: Names, file: bookmarks/widgets.py, decl: 0, sub: 0, line: 0 } |  |  | 0.448 |
-| walker |  | 9517 | 12 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 1, sub: 0, line: 7 } |  |  | 0.448 |
-| walker |  | 9531 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 2, sub: 0, line: 11 } |  |  | 0.448 |
-| walker |  | 9545 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 4, sub: 0, line: 19 } |  |  | 0.448 |
-| walker |  | 9559 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 6, sub: 0, line: 27 } |  |  | 0.448 |
-| walker |  | 9573 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 8, sub: 0, line: 35 } |  |  | 0.448 |
-| walker |  | 9608 | 35 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 10, sub: 0, line: 43 } |  |  | 0.448 |
-| walker |  | 9643 | 35 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 13, sub: 0, line: 63 } |  |  | 0.448 |
-| walker |  | 9738 | 95 | Code::CodeKey { rung: Names, file: bookmarks/feeds.py, decl: 0, sub: 0, line: 0 } |  |  | 0.448 |
-| walker |  | 9780 | 42 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 1, sub: 0, line: 14 } |  |  | 0.448 |
+| walker |  | 9482 | 156 | Code::CodeKey { rung: Decl, file: bookmarks/migrations/0038_globalsettings_guest_profile_user.py, decl: 1, sub: 0, line: 8 } |  |  | 0.448 |
+| walker |  | 9576 | 94 | Code::CodeKey { rung: Names, file: bookmarks/widgets.py, decl: 0, sub: 0, line: 0 } |  |  | 0.448 |
+| walker |  | 9588 | 12 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 1, sub: 0, line: 7 } |  |  | 0.448 |
+| walker |  | 9602 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 2, sub: 0, line: 11 } |  |  | 0.448 |
+| walker |  | 9616 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 4, sub: 0, line: 19 } |  |  | 0.448 |
+| walker |  | 9630 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 6, sub: 0, line: 27 } |  |  | 0.448 |
+| walker |  | 9644 | 14 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 8, sub: 0, line: 35 } |  |  | 0.448 |
+| walker |  | 9679 | 35 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 10, sub: 0, line: 43 } |  |  | 0.448 |
+| walker |  | 9714 | 35 | Code::CodeKey { rung: Decl, file: bookmarks/widgets.py, decl: 13, sub: 0, line: 63 } |  |  | 0.448 |
+| walker |  | 9723 | 9 | Code::CodeKey { rung: Body, file: bookmarks/widgets.py, decl: 14, sub: 0, line: 64 } |  |  | 0.448 |
 | ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.442 |
-| walker |  | 9845 | 65 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 12, sub: 0, line: 73 } |  |  | 0.442 |
+| walker |  | 9818 | 95 | Code::CodeKey { rung: Names, file: bookmarks/feeds.py, decl: 0, sub: 0, line: 0 } |  |  | 0.442 |
+| walker |  | 9860 | 42 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 1, sub: 0, line: 14 } |  |  | 0.442 |
 | ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.455 |
-| walker |  | 9911 | 66 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 15, sub: 0, line: 84 } |  |  | 0.455 |
-| walker |  | 9977 | 66 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 18, sub: 0, line: 97 } |  |  | 0.455 |
+| walker |  | 9925 | 65 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 12, sub: 0, line: 73 } |  |  | 0.455 |
 | ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.467 |
+| walker |  | 9991 | 66 | Code::CodeKey { rung: Decl, file: bookmarks/feeds.py, decl: 15, sub: 0, line: 84 } |  |  | 0.467 |

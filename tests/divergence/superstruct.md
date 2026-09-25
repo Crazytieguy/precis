@@ -1,4 +1,4 @@
-Score(3000)=0.482 I=0.781 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.499/0.564/0.482/0.428/0.622/0.640
+Score(3000)=0.482 I=0.781 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.499/0.564/0.482/0.428/0.622/0.643
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -186,31 +186,31 @@ Score(3000)=0.482 I=0.781 C=0.297 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 8199 |  | 114 | coerce() and trimmed() bodies | 6.4 | 2.5 | 0.632 |
 | walker |  | 8203 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 2, sub: 0, line: 22 } |  |  | 0.632 |
 | walker |  | 8275 | 72 | Code::CodeKey { rung: Decl, file: src/struct.ts, decl: 7, sub: 0, line: 107 } |  |  | 0.632 |
-| walker |  | 8321 | 46 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.632 |
-| walker |  | 8349 | 28 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 5, sub: 0, line: 83 } |  |  | 0.632 |
-| walker |  | 8382 | 33 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 3, sub: 0, line: 67 } |  |  | 0.632 |
-| walker |  | 8415 | 33 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 4, sub: 0, line: 75 } |  |  | 0.632 |
+| walker |  | 8303 | 28 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 5, sub: 0, line: 83 } |  |  | 0.632 |
+| walker |  | 8336 | 33 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 3, sub: 0, line: 67 } |  |  | 0.632 |
+| walker |  | 8369 | 33 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 4, sub: 0, line: 75 } |  |  | 0.632 |
+| walker |  | 8415 | 46 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 12, sub: 0, line: 185 } |  |  | 0.632 |
 | ns | 8458 |  | 259 | npm scripts | 7.1 | 1.1 | 0.637 |
 | walker |  | 8484 | 69 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 1, sub: 0, line: 10 } |  |  | 0.651 |
-| walker |  | 8581 | 97 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.653 |
-| ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.649 |
-| walker |  | 8757 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.649 |
-| ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.647 |
-| walker |  | 8952 | 195 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.647 |
-| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.640 |
-| walker |  | 9087 | 135 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.640 |
-| ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.630 |
-| walker |  | 9344 | 257 | Markdown::Section { file: License.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.630 |
-| ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.624 |
-| walker |  | 9413 | 69 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 6, sub: 0, line: 93 } |  |  | 0.627 |
+| walker |  | 8553 | 69 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 6, sub: 0, line: 93 } |  |  | 0.652 |
+| ns | 8629 |  | 171 | Changelog: recent release headings and the file's extent | 7.2 |  | 0.648 |
+| walker |  | 8650 | 97 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 13, sub: 0, line: 221 } |  |  | 0.652 |
+| ns | 8778 |  | 149 | The 2.0.0 release notes: breaking changes and fixes | 7.3 | 7.2 | 0.650 |
+| walker |  | 8826 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.650 |
+| ns | 8957 |  | 179 | TypeScript compiler configuration | 7.4 |  | 0.643 |
+| walker |  | 9021 | 195 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.643 |
+| walker |  | 9156 | 135 | Markdown::Section { file: Readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.643 |
+| ns | 9207 |  | 250 | Rollup build and JSR publish config | 7.5 |  | 0.633 |
+| ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.627 |
+| walker |  | 9413 | 257 | Markdown::Section { file: License.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.627 |
 | walker |  | 9476 | 63 | Markdown::Section { file: docs/reference/coercions.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.627 |
 | ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.632 |
 | walker |  | 9555 | 79 | Markdown::HeadingsOutline { file: docs/reference/utilities.md } |  |  | 0.632 |
 | walker |  | 9585 | 30 | Markdown::Section { file: docs/reference/utilities.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.632 |
 | ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.630 |
-| walker |  | 9710 | 125 | Markdown::Section { file: docs/summary.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.630 |
 | ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.625 |
-| walker |  | 9792 | 82 | Markdown::HeadingsOutline { file: docs/reference/refinements.md } |  |  | 0.626 |
-| walker |  | 9845 | 53 | Markdown::Section { file: docs/reference/refinements.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.626 |
-| ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.623 |
-| walker |  | 9922 | 77 | Code::CodeKey { rung: Doc, file: src/structs/coercions.ts, decl: 3, sub: 0, line: 79 } |  |  | 0.623 |
+| walker |  | 9720 | 135 | Code::CodeKey { rung: Doc, file: src/struct.ts, decl: 7, sub: 0, line: 107 } |  |  | 0.632 |
+| walker |  | 9845 | 125 | Markdown::Section { file: docs/summary.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.632 |
+| ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.630 |
+| walker |  | 9927 | 82 | Markdown::HeadingsOutline { file: docs/reference/refinements.md } |  |  | 0.631 |
+| walker |  | 9980 | 53 | Markdown::Section { file: docs/reference/refinements.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.631 |

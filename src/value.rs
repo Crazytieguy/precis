@@ -162,10 +162,6 @@ pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
 /// API, on its `Decl`, `Doc` and `Body` batches.
 pub const CODE_PRIVATE_FACTOR: f64 = 0.65;
 
-/// Code-engine factor for a container's member (method, trait/impl fn),
-/// on its `Decl`, `Doc` and `Body` batches.
-pub const CODE_MEMBER_FACTOR: f64 = 0.8;
-
 /// Code-engine factor on every batch of a language's entry file
 /// (`lib.rs`, `__init__.py`, …), on top of pinning its depth to 1.
 pub const CODE_ENTRYPOINT_FACTOR: f64 = 1.25;

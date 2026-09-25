@@ -66,7 +66,7 @@ experiments/
     13→    @abstractmethod
     14→    def get_lr(self) -> list[float]:
     15→        """Returns the current learning rate for each parameter group."""
-    …
+    16→        raise NotImplementedError
     18→    @abstractmethod
     19→    def reinitialize(self, **kwargs) -> None:
     20→        """Reinitializes the learning rate scheduler."""
@@ -88,13 +88,15 @@ experiments/
     11→    higher_is_better: Optional[bool] = True
     12→
     13→    def __init__(self, **kwargs):
-    …
+    14→        super().__init__()
+    15→        self._acc = torchmetrics.Accuracy(**kwargs)
     17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
     …
     22→    def compute(self):
     23→        return self._acc.compute()
     25→    def reset(self, *args, **kwargs):
-    …
+    26→        super().reset(*args, **kwargs)
+    27→        self._acc.reset()
   parity_xlstm01.yaml
   parity_xlstm10.yaml
   parity_xlstm11.yaml
@@ -220,11 +222,6 @@ xlstm/
           lstm.py
           slstm.py
     xlstm_block.py
-      …
-      17→class xLSTMBlockConfig:
-      …
-      43→class xLSTMBlock(nn.Module):
-      …
   components/
     __init__.py (empty)
     conv.py
@@ -256,6 +253,8 @@ xlstm/
     77→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …
     97→    def _get_weight_decay_optim_groups_for_modules(
+    98→        self, modules: list["WeightDecayOptimGroupMixin"], **kwargs
+    99→    ) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …
   xlstm_block_stack.py
     …
@@ -306,8 +305,6 @@ xlstm/
     49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
     …
     56→    def step(
-    57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
-    58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     …
     65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
     …

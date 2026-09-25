@@ -64,20 +64,6 @@ docs/
   zh-CN/
     不再推荐使用的功能.md
     可变参数的选项.md
-      1→# 可变参数的选项
-      …
-      26→## 解析中的歧义
-      …
-      73→### 方案一：让`--`成为语法的一部分
-      …
-      98→### 方案二：把选项放在最后
-      …
-      120→### 方案三：使用选项替代命令参数
-      …
-      142→## 合并短选项和带有参数的选项
-      …
-      183→### 将短选项视作 boolean 类型选项合并
-      …
     术语表.md
 eslint.config.js
 esm.mjs
@@ -165,6 +151,11 @@ lib/
     …
     13→  constructor(name, description) {
     …
+    42→  /**
+    43→   * Return argument name.
+    44→   *
+    45→   * @return {string}
+    46→   */
     48→  name() {
     49→    return this._name;
     …
@@ -179,22 +170,26 @@ lib/
     …
     98→  choices(values) {
     …
+    114→  /**
+    115→   * Make argument required.
+    116→   *
+    117→   * @returns {Argument}
+    118→   */
     119→  argRequired() {
     120→    this.required = true;
     121→    return this;
     …
+    124→  /**
+    125→   * Make argument optional.
+    126→   *
+    127→   * @returns {Argument}
+    128→   */
     129→  argOptional() {
     130→    this.required = false;
     131→    return this;
     …
     133→}
-    135→/**
-    136→ * Takes an argument and returns its human readable equivalent for help usage.
-    137→ *
-    138→ * @param {Argument} arg
-    139→ * @return {string}
-    140→ * @private
-    141→ */
+    …
     143→function humanReadableArgName(arg) {
     …
     149→exports.Argument = Argument;
@@ -224,7 +219,10 @@ lib/
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
-    …
+    26→  /**
+    27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    29→   */
     30→  constructor(message) {
     …
     36→}
@@ -256,8 +254,6 @@ lib/
     100→  implies(impliedOptionValues) {
     …
     120→  env(name) {
-    121→    this.envVar = name;
-    122→    return this;
     …
     132→  argParser(fn) {
     …
@@ -272,10 +268,21 @@ lib/
     …
     181→  choices(values) {
     …
+    197→  /**
+    198→   * Return option name.
+    199→   *
+    200→   * @return {string}
+    201→   */
     203→  name() {
     …
     217→  attributeName() {
     …
+    224→  /**
+    225→   * Set the help group heading.
+    226→   *
+    227→   * @param {string} heading
+    228→   * @return {Option}
+    229→   */
     230→  helpGroup(heading) {
     …
     243→  is(arg) {
@@ -299,13 +306,6 @@ lib/
     380→exports.DualOptions = DualOptions;
   suggestSimilar.js
     …
-    48→/**
-    49→ * Find close matches, restricted to same number of edits.
-    50→ *
-    51→ * @param {string} word
-    52→ * @param {string[]} candidates
-    53→ * @returns {string}
-    54→ */
     56→function suggestSimilar(word, candidates) {
     …
     101→exports.suggestSimilar = suggestSimilar;

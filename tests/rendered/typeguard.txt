@@ -131,7 +131,13 @@ src/
       50→    ALL_ITEMS = auto()
       51→
       52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
-      …
+      53→        if self is CollectionCheckStrategy.FIRST_ITEM:
+      54→            try:
+      55→                return [next(iter(collection))]
+      56→            except StopIteration:
+      57→                return ()
+      58→        else:
+      59→            return collection
       62→@dataclass
       63→class TypeCheckConfiguration:
       …
@@ -143,22 +149,6 @@ src/
       103→    debug_instrumentation: bool = False
       106→global_config = TypeCheckConfiguration()
     _decorators.py
-      …
-      19→T_CallableOrType = TypeVar("T_CallableOrType", bound=Callable[..., Any])
-      …
-      32→def make_cell(value: object) -> _Cell:
-      …
-      36→def find_target_function(
-      …
-      56→def instrument(f: T_CallableOrType) -> FunctionType | str:
-      …
-      137→def typechecked(
-      …
-      147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
-      148→
-      149→
-      150→def typechecked(
-      …
     _exceptions.py
       …
       5→class TypeHintWarning(UserWarning):
@@ -173,7 +163,7 @@ src/
       19→class InstrumentationWarning(UserWarning):
       20→    """Emitted when there's a problem with instrumenting a function for type checks."""
       22→    def __init__(self, message: str):
-      …
+      23→        super().__init__(message)
       26→class TypeCheckError(Exception):
       27→    """
       28→    Raised by typeguard's type checkers when a type mismatch is detected.
@@ -181,7 +171,7 @@ src/
       31→    def __init__(self, message: str):
       …
       35→    def append_path_element(self, element: str) -> None:
-      …
+      36→        self._path.append(element)
       38→    def __str__(self) -> str:
       …
     _functions.py
@@ -234,7 +224,7 @@ src/
       170→        exc_val: BaseException,
       171→        exc_tb: TracebackType,
       172→    ) -> None:
-      …
+      173→        self.uninstall()
       175→    def uninstall(self) -> None:
       176→        """Uninstall the import hook."""
       …
@@ -258,7 +248,10 @@ src/
       42→        self_type: type | None = None,
       43→        config: TypeCheckConfiguration = global_config,
       44→    ):
-      …
+      45→        self.globals = globals
+      46→        self.locals = locals
+      47→        self.self_type = self_type
+      48→        self.config = config
     _pytest_plugin.py
       …
       16→def pytest_addoption(parser: Parser) -> None:

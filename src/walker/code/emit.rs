@@ -20,8 +20,7 @@ use super::{Language, SourceFile};
 use crate::batch::{Batch, BatchKey, CodeKey, Rung};
 use crate::content::{BatchContent, Render, Span};
 use crate::value::{
-    CODE_ENTRYPOINT_FACTOR, CODE_MEMBER_FACTOR, CODE_PRIVATE_FACTOR, code_rung_value,
-    roster_mass_factor,
+    CODE_ENTRYPOINT_FACTOR, CODE_PRIVATE_FACTOR, code_rung_value, roster_mass_factor,
 };
 use crate::walker::{WalkCtx, file_depth_factor};
 
@@ -97,10 +96,10 @@ impl Emitter<'_> {
         let mut index = 0;
         for decl in &model.decls {
             index += 1;
-            let container = self.decl(decl, index, false, None);
+            let container = self.decl(decl, index, None);
             for member in &decl.members {
                 index += 1;
-                self.decl(member, index, true, container.as_ref());
+                self.decl(member, index, container.as_ref());
             }
         }
     }
@@ -112,16 +111,12 @@ impl Emitter<'_> {
         &mut self,
         decl: &DeclInfo,
         index: u32,
-        member: bool,
         container: Option<&CodeKey>,
     ) -> Option<CodeKey> {
         let parent = self.ledger.owner(decl.name_rows[0]).or(container).cloned();
         let mut value = self.file_prior;
         if decl.visibility == Visibility::Private {
             value *= CODE_PRIVATE_FACTOR;
-        }
-        if member {
-            value *= CODE_MEMBER_FACTOR;
         }
         let path = self.file.path.clone();
         let key = |rung| CodeKey {

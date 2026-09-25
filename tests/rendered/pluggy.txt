@@ -242,8 +242,19 @@ src/
       67→    def force_result(self, result: ResultType) -> None:
       …
       80→    def force_exception(self, exception: BaseException) -> None:
+      81→        """Force the result to fail with ``exception``.
+      82→
+      83→        This overrides any previous result or exception.
+      84→
+      85→        .. versionadded:: 1.1.0
+      86→        """
       …
       91→    def get_result(self) -> ResultType:
+      92→        """Get the result(s) for this hook call.
+      93→
+      94→        If the hook was marked as a ``firstresult`` only a single value
+      95→        will be returned, otherwise a list of results.
+      96→        """
       …
       107→_Result = Result
     _tracing.py
@@ -267,11 +278,12 @@ src/
       …
       59→class TagTracerSub:
       60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
-      …
+      61→        self.root = root
+      62→        self.tags = tags
       64→    def __call__(self, *args: object) -> None:
       65→        self.root._processmessage(self.tags, args)
       67→    def get(self, name: str) -> TagTracerSub:
-      …
+      68→        return self.__class__(self.root, self.tags + (name,))
     _warnings.py
       …
       4→class PluggyWarning(UserWarning):

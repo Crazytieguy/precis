@@ -144,6 +144,9 @@ src/
     553→    #[inline]
     554→    pub fn to_level_filter(&self) -> LevelFilter {
     …
+    558→    /// Returns the string representation of the `Level`.
+    559→    ///
+    560→    /// This returns the same string as the `fmt::Display` implementation.
     561→    pub fn as_str(&self) -> &'static str {
     …
     579→    pub fn iter() -> impl Iterator<Item = Self> {
@@ -198,6 +201,9 @@ src/
     706→    #[inline]
     707→    pub fn to_level(&self) -> Option<Level> {
     …
+    711→    /// Returns the string representation of the `LevelFilter`.
+    712→    ///
+    713→    /// This returns the same string as the `fmt::Display` implementation.
     714→    pub fn as_str(&self) -> &'static str {
     …
     732→    pub fn iter() -> impl Iterator<Item = Self> {

@@ -113,72 +113,71 @@ Score(3000)=0.644 I=0.848 C=0.489 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 5380 | 72 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 2, sub: 0, line: 83 } |  |  | 0.528 |
 | ns | 5405 |  | 167 | Plugin descriptions: preset-default steps 27-34 | 3.4 |  | 0.522 |
 | walker |  | 5454 | 74 | Code::CodeKey { rung: Doc, file: lib/parser.js, decl: 4, sub: 0, line: 80 } |  |  | 0.522 |
-| walker |  | 5583 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.522 |
+| walker |  | 5529 | 75 | Code::CodeKey { rung: Doc, file: lib/parser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.522 |
+| walker |  | 5658 | 129 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.522 |
 | ns | 5778 |  | 373 | Plugin descriptions: opt-in plugins with optional params | 3.5 |  | 0.510 |
-| walker |  | 5799 | 216 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.510 |
+| walker |  | 5874 | 216 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.510 |
 | ns | 5895 |  | 117 | Plugin descriptions: plugins requiring params | 3.6 |  | 0.507 |
-| walker |  | 6022 | 223 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.507 |
-| walker |  | 6098 | 76 | Code::CodeKey { rung: Doc, file: lib/stringifier.js, decl: 1, sub: 0, line: 66 } |  |  | 0.507 |
+| walker |  | 6097 | 223 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.507 |
 | ns | 6127 |  | 232 | Config and Output type bodies | 4.1 |  | 0.496 |
-| walker |  | 6180 | 82 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 3, sub: 0, line: 42 } |  |  | 0.496 |
+| walker |  | 6173 | 76 | Code::CodeKey { rung: Doc, file: lib/stringifier.js, decl: 1, sub: 0, line: 66 } |  |  | 0.496 |
+| walker |  | 6255 | 82 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 3, sub: 0, line: 42 } |  |  | 0.496 |
 | ns | 6440 |  | 313 | Xast node type bodies | 4.2 |  | 0.520 |
 | ns | 6652 |  | 212 | Visitor keys, VisitorNode, PluginInfo and Plugin bodies | 4.3 |  | 0.510 |
-| walker |  | 6680 | 500 | Code::CodeKey { rung: Decl, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.511 |
+| walker |  | 6755 | 500 | Code::CodeKey { rung: Decl, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.511 |
 | ns | 6809 |  | 157 | coa.js top-level function roster | 5.1 |  | 0.505 |
 | ns | 6933 |  | 124 | CLI program metadata and positional argument | 5.2 |  | 0.501 |
-| walker |  | 6959 | 279 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.538 |
-| walker |  | 6971 | 12 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 37, sub: 0, line: 357 } |  |  | 0.538 |
-| walker |  | 6993 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 31, sub: 0, line: 300 } |  |  | 0.538 |
-| walker |  | 7016 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 24, sub: 0, line: 263 } |  |  | 0.539 |
-| walker |  | 7039 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 34, sub: 0, line: 329 } |  |  | 0.539 |
-| walker |  | 7069 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 27, sub: 0, line: 276 } |  |  | 0.539 |
-| walker |  | 7099 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 29, sub: 0, line: 289 } |  |  | 0.539 |
-| walker |  | 7130 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 30, sub: 0, line: 294 } |  |  | 0.539 |
-| walker |  | 7170 | 40 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 25, sub: 0, line: 268 } |  |  | 0.541 |
-| walker |  | 7212 | 42 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 28, sub: 0, line: 282 } |  |  | 0.541 |
-| ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.530 |
-| walker |  | 7259 | 47 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 22, sub: 0, line: 248 } |  |  | 0.531 |
-| walker |  | 7308 | 49 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 21, sub: 0, line: 243 } |  |  | 0.535 |
-| walker |  | 7403 | 95 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 23, sub: 0, line: 253 } |  |  | 0.551 |
+| walker |  | 7034 | 279 | Code::CodeKey { rung: Names, file: lib/types.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.538 |
+| walker |  | 7046 | 12 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 37, sub: 0, line: 357 } |  |  | 0.538 |
+| walker |  | 7068 | 22 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 31, sub: 0, line: 300 } |  |  | 0.538 |
+| walker |  | 7091 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 24, sub: 0, line: 263 } |  |  | 0.539 |
+| walker |  | 7114 | 23 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 34, sub: 0, line: 329 } |  |  | 0.539 |
+| walker |  | 7144 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 27, sub: 0, line: 276 } |  |  | 0.539 |
+| walker |  | 7174 | 30 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 29, sub: 0, line: 289 } |  |  | 0.539 |
+| walker |  | 7205 | 31 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 30, sub: 0, line: 294 } |  |  | 0.539 |
+| ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.529 |
+| walker |  | 7245 | 40 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 25, sub: 0, line: 268 } |  |  | 0.530 |
+| walker |  | 7287 | 42 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 28, sub: 0, line: 282 } |  |  | 0.530 |
+| walker |  | 7334 | 47 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 22, sub: 0, line: 248 } |  |  | 0.531 |
+| walker |  | 7383 | 49 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 21, sub: 0, line: 243 } |  |  | 0.535 |
+| walker |  | 7478 | 95 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 23, sub: 0, line: 253 } |  |  | 0.551 |
 | ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.539 |
-| walker |  | 7581 | 178 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 33, sub: 0, line: 307 } |  |  | 0.539 |
+| walker |  | 7656 | 178 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 33, sub: 0, line: 307 } |  |  | 0.539 |
 | ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.534 |
 | ns | 7790 |  | 115 | parseSvg and the sax configuration | 6.1 |  | 0.530 |
-| walker |  | 7801 | 220 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 36, sub: 0, line: 336 } |  |  | 0.554 |
+| walker |  | 7876 | 220 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 36, sub: 0, line: 336 } |  |  | 0.554 |
 | ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.550 |
 | ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.552 |
-| walker |  | 8093 | 292 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 20, sub: 0, line: 214 } |  |  | 0.552 |
-| walker |  | 8145 | 52 | Code::CodeKey { rung: Doc, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.552 |
+| walker |  | 8168 | 292 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 20, sub: 0, line: 214 } |  |  | 0.552 |
 | ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.547 |
-| walker |  | 8195 | 50 | Code::CodeKey { rung: Body, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.547 |
-| walker |  | 8297 | 102 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 1, sub: 0, line: 22 } |  |  | 0.547 |
+| walker |  | 8220 | 52 | Code::CodeKey { rung: Doc, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.547 |
+| walker |  | 8270 | 50 | Code::CodeKey { rung: Body, file: lib/svgo/coa.js, decl: 1, sub: 0, line: 19 } |  |  | 0.547 |
 | ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.548 |
-| walker |  | 8397 | 100 | Code::CodeKey { rung: Body, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.548 |
+| walker |  | 8372 | 102 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 1, sub: 0, line: 22 } |  |  | 0.548 |
+| walker |  | 8472 | 100 | Code::CodeKey { rung: Body, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.548 |
 | ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.545 |
-| walker |  | 8502 | 105 | Code::CodeKey { rung: Doc, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.555 |
-| walker |  | 8620 | 118 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.555 |
+| walker |  | 8577 | 105 | Code::CodeKey { rung: Doc, file: lib/builtin.js, decl: 1, sub: 0, line: 62 } |  |  | 0.555 |
+| walker |  | 8695 | 118 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.555 |
 | ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.549 |
-| walker |  | 8729 | 109 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 2, sub: 0, line: 32 } |  |  | 0.549 |
-| walker |  | 8786 | 57 | Code::CodeKey { rung: Doc, file: lib/util/visit.js, decl: 2, sub: 0, line: 8 } |  |  | 0.549 |
-| walker |  | 8898 | 112 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 1, sub: 0, line: 44 } |  |  | 0.549 |
-| walker |  | 8901 | 3 | Fs::DirListing { dir: test/fixtures/config-loader/one } |  |  | 0.549 |
+| walker |  | 8804 | 109 | Code::CodeKey { rung: Doc, file: lib/xast.js, decl: 2, sub: 0, line: 32 } |  |  | 0.549 |
+| walker |  | 8861 | 57 | Code::CodeKey { rung: Doc, file: lib/util/visit.js, decl: 2, sub: 0, line: 8 } |  |  | 0.549 |
 | ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.545 |
-| walker |  | 8911 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.545 |
+| walker |  | 8973 | 112 | Code::CodeKey { rung: Doc, file: lib/svgo-node.js, decl: 1, sub: 0, line: 44 } |  |  | 0.545 |
+| walker |  | 8976 | 3 | Fs::DirListing { dir: test/fixtures/config-loader/one } |  |  | 0.545 |
+| walker |  | 8986 | 10 | Fs::DirListing { dir: test/svg2js } |  |  | 0.545 |
 | ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.542 |
 | ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.542 |
 | ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.547 |
 | ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.556 |
-| walker |  | 9413 | 502 | Json::IdentityMeta { file: package.json } |  |  | 0.557 |
-| walker |  | 9445 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/cleanupListOfValues.mdx } |  |  | 0.557 |
-| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.555 |
-| walker |  | 9477 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/convertEllipseToCircle.mdx } |  |  | 0.555 |
+| ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.554 |
+| walker |  | 9488 | 502 | Json::IdentityMeta { file: package.json } |  |  | 0.555 |
+| walker |  | 9520 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/cleanupListOfValues.mdx } |  |  | 0.555 |
+| walker |  | 9552 | 32 | Plaintext::DeclSurface { file: docs/04-plugins/convertEllipseToCircle.mdx } |  |  | 0.555 |
 | ns | 9584 |  | 132 | docs/ and remaining leaf directory listings | 7.4 |  | 0.563 |
-| walker |  | 9597 | 120 | Code::CodeKey { rung: Doc, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.563 |
-| walker |  | 9630 | 33 | Plaintext::DeclSurface { file: docs/04-plugins/convertOneStopGradients.mdx } |  |  | 0.563 |
+| walker |  | 9672 | 120 | Code::CodeKey { rung: Doc, file: lib/style.js, decl: 1, sub: 0, line: 195 } |  |  | 0.563 |
+| walker |  | 9705 | 33 | Plaintext::DeclSurface { file: docs/04-plugins/convertOneStopGradients.mdx } |  |  | 0.563 |
 | ns | 9719 |  | 135 | Migration guide outlines | 7.5 |  | 0.559 |
-| walker |  | 9795 | 165 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.582 |
-| ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.578 |
-| walker |  | 9870 | 75 | Code::CodeKey { rung: Doc, file: lib/parser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.578 |
-| walker |  | 9946 | 76 | Code::CodeKey { rung: Doc, file: lib/util/map-nodes-to-parents.js, decl: 1, sub: 0, line: 9 } |  |  | 0.578 |
-| walker |  | 9959 | 13 | Fs::DirListing { dir: test/cli } |  |  | 0.578 |
+| ns | 9843 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.556 |
+| walker |  | 9870 | 165 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.578 |
 | ns | 9968 |  | 125 | Runtime dependencies | 7.7 |  | 0.582 |
+| walker |  | 9989 | 119 | Code::CodeKey { rung: Body, file: lib/parser.js, decl: 2, sub: 0, line: 12 } |  |  | 0.582 |

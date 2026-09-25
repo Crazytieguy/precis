@@ -1,4 +1,4 @@
-Score(3000)=0.726 I=0.914 C=0.577 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.630/0.689/0.726/0.628/0.597/0.589
+Score(3000)=0.726 I=0.914 C=0.577 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.630/0.689/0.726/0.628/0.587/0.589
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -69,129 +69,134 @@ Score(3000)=0.726 I=0.914 C=0.577 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 3257 | 26 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 8, sub: 0, line: 309 } |  |  | 0.709 |
 | walker |  | 3283 | 26 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 10, sub: 0, line: 370 } |  |  | 0.709 |
 | walker |  | 3328 | 45 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 9, sub: 0, line: 334 } |  |  | 0.709 |
-| ns | 3407 |  | 353 | `models.py` module map: constants, all five classes, `Request` fields | 3.1 |  | 0.678 |
-| walker |  | 3597 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.696 |
-| walker |  | 3615 | 18 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 6, sub: 0, line: 154 } |  |  | 0.696 |
-| walker |  | 3635 | 20 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 5, sub: 0, line: 134 } |  |  | 0.697 |
-| walker |  | 3708 | 73 | Code::CodeKey { rung: Names, file: src/requests/structures.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
-| ns | 3728 |  | 321 | `PreparedRequest`: attributes + every `prepare_*` step | 3.2 | 3.1 | 0.674 |
-| walker |  | 3910 | 202 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.674 |
-| walker |  | 3917 | 7 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 20, sub: 0, line: 126 } |  |  | 0.674 |
-| walker |  | 3926 | 9 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 19, sub: 0, line: 123 } |  |  | 0.674 |
-| walker |  | 3934 | 8 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.674 |
+| walker |  | 3346 | 18 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 6, sub: 0, line: 154 } |  |  | 0.709 |
+| walker |  | 3366 | 20 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 5, sub: 0, line: 134 } |  |  | 0.710 |
+| ns | 3407 |  | 353 | `models.py` module map: constants, all five classes, `Request` fields | 3.1 |  | 0.679 |
+| walker |  | 3501 | 135 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.679 |
+| walker |  | 3520 | 19 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.680 |
+| ns | 3728 |  | 321 | `PreparedRequest`: attributes + every `prepare_*` step | 3.2 | 3.1 | 0.657 |
+| walker |  | 3789 | 269 | Code::CodeKey { rung: Names, file: src/requests/__init__.py, decl: 0, sub: 1, line: 0 } |  |  | 0.675 |
+| walker |  | 3828 | 39 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 10, sub: 0, line: 370 } |  |  | 0.675 |
+| walker |  | 3901 | 73 | Code::CodeKey { rung: Names, file: src/requests/structures.py, decl: 0, sub: 0, line: 0 } |  |  | 0.675 |
 | ns | 4031 |  | 303 | `Response` attribute set: typed fields + `__attrs__` | 3.3 | 3.1 | 0.644 |
-| walker |  | 4144 | 210 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 3, sub: 0, line: 20 } |  |  | 0.645 |
-| walker |  | 4198 | 54 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 4, sub: 0, line: 49 } |  |  | 0.645 |
-| walker |  | 4214 | 16 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 10, sub: 0, line: 76 } |  |  | 0.645 |
+| walker |  | 4103 | 202 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.645 |
+| walker |  | 4110 | 7 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 20, sub: 0, line: 126 } |  |  | 0.645 |
+| walker |  | 4119 | 9 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 19, sub: 0, line: 123 } |  |  | 0.645 |
+| walker |  | 4127 | 8 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 14, sub: 0, line: 96 } |  |  | 0.645 |
+| walker |  | 4140 | 13 | Code::CodeKey { rung: Body, file: src/requests/structures.py, decl: 16, sub: 0, line: 105 } |  |  | 0.645 |
+| walker |  | 4153 | 13 | Code::CodeKey { rung: Body, file: src/requests/structures.py, decl: 21, sub: 0, line: 129 } |  |  | 0.645 |
 | ns | 4313 |  | 282 | `Response`: `__init__`, dunders and every `@property` | 3.4 | 3.3 | 0.628 |
-| walker |  | 4349 | 135 | Code::CodeKey { rung: Decl, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.629 |
-| walker |  | 4368 | 19 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 7, sub: 0, line: 186 } |  |  | 0.629 |
+| walker |  | 4363 | 210 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 3, sub: 0, line: 20 } |  |  | 0.629 |
+| walker |  | 4417 | 54 | Code::CodeKey { rung: Decl, file: src/requests/structures.py, decl: 4, sub: 0, line: 49 } |  |  | 0.629 |
+| walker |  | 4433 | 16 | Code::CodeKey { rung: Doc, file: src/requests/structures.py, decl: 10, sub: 0, line: 76 } |  |  | 0.629 |
 | ns | 4465 |  | 152 | `Response`: the remaining members (`iter_content` … `close`) | 3.5 | 3.4 | 0.620 |
-| walker |  | 4478 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.620 |
-| walker |  | 4567 | 89 | Code::CodeKey { rung: Names, file: src/requests/adapters.py, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
-| walker |  | 4607 | 40 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.620 |
-| walker |  | 4616 | 9 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.620 |
-| walker |  | 4623 | 7 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 7, sub: 0, line: 125 } |  |  | 0.620 |
-| walker |  | 4633 | 10 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.620 |
-| walker |  | 4644 | 11 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.620 |
-| ns | 4680 |  | 215 | `adapters.py`: pool defaults + the `BaseAdapter` contract | 3.6 |  | 0.614 |
-| walker |  | 4741 | 97 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 8, sub: 0, line: 128 } |  |  | 0.636 |
-| walker |  | 4811 | 70 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 5, sub: 0, line: 85 } |  |  | 0.636 |
-| walker |  | 4933 | 122 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 2, sub: 0, line: 99 } |  |  | 0.636 |
-| walker |  | 4990 | 57 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 2, sub: 0, line: 108 } |  |  | 0.636 |
+| walker |  | 4543 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.620 |
+| walker |  | 4632 | 89 | Code::CodeKey { rung: Names, file: src/requests/adapters.py, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
+| walker |  | 4672 | 40 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.620 |
+| walker |  | 4679 | 7 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 7, sub: 0, line: 125 } |  |  | 0.620 |
+| ns | 4680 |  | 215 | `adapters.py`: pool defaults + the `BaseAdapter` contract | 3.6 |  | 0.610 |
+| walker |  | 4688 | 9 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 6, sub: 0, line: 122 } |  |  | 0.612 |
+| walker |  | 4698 | 10 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.612 |
+| walker |  | 4709 | 11 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 9, sub: 0, line: 153 } |  |  | 0.614 |
+| walker |  | 4806 | 97 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 8, sub: 0, line: 128 } |  |  | 0.636 |
+| walker |  | 4816 | 10 | Code::CodeKey { rung: Body, file: src/requests/adapters.py, decl: 8, sub: 0, line: 128 } |  |  | 0.636 |
+| walker |  | 4886 | 70 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 5, sub: 0, line: 85 } |  |  | 0.636 |
+| walker |  | 5008 | 122 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 2, sub: 0, line: 99 } |  |  | 0.636 |
 | ns | 5044 |  | 364 | `HTTPAdapter`: constructor knobs + complete method roster | 3.7 | 3.6 | 0.613 |
-| walker |  | 5166 | 176 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 5064 | 56 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 8, sub: 0, line: 309 } |  |  | 0.613 |
+| walker |  | 5121 | 57 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 2, sub: 0, line: 108 } |  |  | 0.613 |
+| walker |  | 5297 | 176 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.613 |
+| walker |  | 5306 | 9 | Code::CodeKey { rung: Body, file: src/requests/structures.py, decl: 9, sub: 0, line: 73 } |  |  | 0.613 |
 | ns | 5313 |  | 269 | `SessionRedirectMixin` + session-module merge helpers | 3.8 |  | 0.627 |
 | ns | 5549 |  | 236 | `cookies.py` module map: classes + free functions | 3.9 |  | 0.617 |
-| walker |  | 5676 | 510 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.617 |
-| walker |  | 5743 | 67 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 1, sub: 0, line: 76 } |  |  | 0.617 |
-| walker |  | 5752 | 9 | Code::CodeKey { rung: Body, file: src/requests/structures.py, decl: 9, sub: 0, line: 73 } |  |  | 0.617 |
-| walker |  | 5758 | 6 | Fs::DirListing { dir: tests/certs/valid } |  |  | 0.617 |
+| walker |  | 5816 | 510 | Code::CodeKey { rung: Body, file: src/requests/__init__.py, decl: 1, sub: 0, line: 60 } |  |  | 0.617 |
 | ns | 5857 |  | 308 | `auth.py`: every auth handler and its methods | 3.10 |  | 0.603 |
-| walker |  | 6164 | 406 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 10, sub: 0, line: 158 } |  |  | 0.614 |
-| walker |  | 6195 | 31 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 22, sub: 0, line: 565 } |  |  | 0.614 |
-| walker |  | 6229 | 34 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 20, sub: 0, line: 512 } |  |  | 0.597 |
-| ns | 6229 |  | 372 | `_types.py`: public type-alias roster | 4.1 |  | 0.597 |
-| walker |  | 6268 | 39 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 16, sub: 0, line: 307 } |  |  | 0.597 |
-| walker |  | 6316 | 48 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 18, sub: 0, line: 403 } |  |  | 0.597 |
-| walker |  | 6375 | 59 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 14, sub: 0, line: 239 } |  |  | 0.597 |
-| walker |  | 6447 | 72 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 19, sub: 0, line: 455 } |  |  | 0.597 |
-| walker |  | 6523 | 76 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 11, sub: 0, line: 201 } |  |  | 0.609 |
-| ns | 6540 |  | 311 | `_types.py`: the `Unpack` kwargs TypedDicts | 4.2 | 4.1 | 0.594 |
-| walker |  | 6620 | 97 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 25, sub: 0, line: 634 } |  |  | 0.613 |
-| ns | 6739 |  | 199 | Environment-driven settings: the `merge_environment_settings` core | 4.3 | 2.6 | 0.604 |
-| walker |  | 6746 | 126 | Code::CodeKey { rung: Names, file: src/requests/auth.py, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 6768 | 22 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 4, sub: 0, line: 78 } |  |  | 0.609 |
-| walker |  | 6790 | 22 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 13, sub: 0, line: 116 } |  |  | 0.610 |
-| walker |  | 6803 | 13 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 4, sub: 0, line: 78 } |  |  | 0.610 |
-| walker |  | 6818 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 13, sub: 0, line: 116 } |  |  | 0.610 |
-| ns | 6846 |  | 107 | `utils.py` module-level constants | 5.1 |  | 0.607 |
-| walker |  | 6985 | 167 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 6, sub: 0, line: 85 } |  |  | 0.611 |
-| walker |  | 6992 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 7, sub: 0, line: 91 } |  |  | 0.611 |
-| ns | 6994 |  | 148 | `utils.py` function roster 1/3: proxies shim, lengths, netrc, encoders | 5.2 |  | 0.604 |
-| walker |  | 6999 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 8, sub: 0, line: 93 } |  |  | 0.604 |
-| walker |  | 7014 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 6, sub: 0, line: 85 } |  |  | 0.604 |
-| walker |  | 7026 | 12 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 3, sub: 0, line: 34 } |  |  | 0.604 |
-| ns | 7161 |  | 167 | `utils.py` function roster 2/3: cookies, encoding detection, URI quoting, CIDR | 5.3 | 5.2 | 0.596 |
+| walker |  | 5883 | 67 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 1, sub: 0, line: 76 } |  |  | 0.603 |
+| walker |  | 5889 | 6 | Fs::DirListing { dir: tests/certs/valid } |  |  | 0.603 |
+| ns | 6229 |  | 372 | `_types.py`: public type-alias roster | 4.1 |  | 0.587 |
+| walker |  | 6295 | 406 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 10, sub: 0, line: 158 } |  |  | 0.597 |
+| walker |  | 6326 | 31 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 22, sub: 0, line: 565 } |  |  | 0.597 |
+| walker |  | 6360 | 34 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 20, sub: 0, line: 512 } |  |  | 0.597 |
+| walker |  | 6399 | 39 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 16, sub: 0, line: 307 } |  |  | 0.597 |
+| walker |  | 6447 | 48 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 18, sub: 0, line: 403 } |  |  | 0.597 |
+| walker |  | 6506 | 59 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 14, sub: 0, line: 239 } |  |  | 0.597 |
+| ns | 6540 |  | 311 | `_types.py`: the `Unpack` kwargs TypedDicts | 4.2 | 4.1 | 0.583 |
+| walker |  | 6578 | 72 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 19, sub: 0, line: 455 } |  |  | 0.583 |
+| walker |  | 6654 | 76 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 11, sub: 0, line: 201 } |  |  | 0.594 |
+| ns | 6739 |  | 199 | Environment-driven settings: the `merge_environment_settings` core | 4.3 | 2.6 | 0.585 |
+| walker |  | 6751 | 97 | Code::CodeKey { rung: Decl, file: src/requests/adapters.py, decl: 25, sub: 0, line: 634 } |  |  | 0.604 |
+| walker |  | 6804 | 53 | Code::CodeKey { rung: Doc, file: src/requests/adapters.py, decl: 21, sub: 0, line: 555 } |  |  | 0.604 |
+| ns | 6846 |  | 107 | `utils.py` module-level constants | 5.1 |  | 0.600 |
+| walker |  | 6930 | 126 | Code::CodeKey { rung: Names, file: src/requests/auth.py, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
+| walker |  | 6952 | 22 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 4, sub: 0, line: 78 } |  |  | 0.606 |
+| walker |  | 6974 | 22 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 13, sub: 0, line: 116 } |  |  | 0.607 |
+| walker |  | 6987 | 13 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 4, sub: 0, line: 78 } |  |  | 0.607 |
+| ns | 6994 |  | 148 | `utils.py` function roster 1/3: proxies shim, lengths, netrc, encoders | 5.2 |  | 0.600 |
+| walker |  | 7001 | 14 | Code::CodeKey { rung: Body, file: src/requests/auth.py, decl: 5, sub: 0, line: 81 } |  |  | 0.600 |
+| walker |  | 7016 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 13, sub: 0, line: 116 } |  |  | 0.600 |
+| ns | 7161 |  | 167 | `utils.py` function roster 2/3: cookies, encoding detection, URI quoting, CIDR | 5.3 | 5.2 | 0.592 |
+| walker |  | 7183 | 167 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 6, sub: 0, line: 85 } |  |  | 0.596 |
+| walker |  | 7190 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 7, sub: 0, line: 91 } |  |  | 0.596 |
+| walker |  | 7197 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 8, sub: 0, line: 93 } |  |  | 0.596 |
+| walker |  | 7212 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 6, sub: 0, line: 85 } |  |  | 0.596 |
+| walker |  | 7224 | 12 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 3, sub: 0, line: 34 } |  |  | 0.596 |
 | ns | 7341 |  | 180 | `utils.py` function roster 3/3: proxy resolution, default headers, header validation | 5.4 | 5.3 | 0.589 |
-| walker |  | 7354 | 328 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 15, sub: 0, line: 124 } |  |  | 0.603 |
-| walker |  | 7361 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 16, sub: 0, line: 136 } |  |  | 0.603 |
-| walker |  | 7368 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 17, sub: 0, line: 138 } |  |  | 0.603 |
-| walker |  | 7383 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 15, sub: 0, line: 124 } |  |  | 0.603 |
-| walker |  | 7398 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 21, sub: 0, line: 268 } |  |  | 0.603 |
-| walker |  | 7420 | 22 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 20, sub: 0, line: 157 } |  |  | 0.603 |
+| walker |  | 7552 | 328 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 15, sub: 0, line: 124 } |  |  | 0.603 |
+| walker |  | 7559 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 16, sub: 0, line: 136 } |  |  | 0.603 |
+| walker |  | 7566 | 7 | Code::CodeKey { rung: Decl, file: src/requests/auth.py, decl: 17, sub: 0, line: 138 } |  |  | 0.603 |
+| walker |  | 7581 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 15, sub: 0, line: 124 } |  |  | 0.603 |
+| walker |  | 7596 | 15 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 21, sub: 0, line: 268 } |  |  | 0.603 |
 | ns | 7602 |  | 261 | `structures.py`: `CaseInsensitiveDict` and `LookupDict` in full shape | 5.5 |  | 0.611 |
+| walker |  | 7618 | 22 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 20, sub: 0, line: 157 } |  |  | 0.611 |
+| walker |  | 7663 | 45 | Code::CodeKey { rung: Doc, file: src/requests/auth.py, decl: 22, sub: 0, line: 273 } |  |  | 0.611 |
 | ns | 7712 |  | 110 | `status_codes.py`: how `requests.codes` is built | 5.6 |  | 0.607 |
 | ns | 7954 |  | 242 | The five small modules: hooks, `_internal_utils`, compat, certs, packages | 5.7 |  | 0.599 |
-| walker |  | 8010 | 590 | Toml::Config { file: pyproject.toml } |  |  | 0.608 |
-| walker |  | 8049 | 39 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 10, sub: 0, line: 370 } |  |  | 0.608 |
-| ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.601 |
-| walker |  | 8183 | 134 | Code::CodeKey { rung: Names, file: src/requests/api.py, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
-| walker |  | 8218 | 35 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 1, sub: 0, line: 24 } |  |  | 0.611 |
-| walker |  | 8258 | 40 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 2, sub: 0, line: 74 } |  |  | 0.611 |
-| walker |  | 8298 | 40 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 6, sub: 0, line: 137 } |  |  | 0.611 |
-| walker |  | 8338 | 40 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 7, sub: 0, line: 154 } |  |  | 0.611 |
-| walker |  | 8402 | 64 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 5, sub: 0, line: 117 } |  |  | 0.611 |
-| walker |  | 8417 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 3, sub: 0, line: 90 } |  |  | 0.611 |
-| walker |  | 8432 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 8, sub: 0, line: 171 } |  |  | 0.611 |
-| walker |  | 8450 | 18 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 2, sub: 0, line: 74 } |  |  | 0.611 |
+| ns | 8131 |  | 177 | `help.py`: the bug-report payload | 5.8 |  | 0.592 |
+| walker |  | 8253 | 590 | Toml::Config { file: pyproject.toml } |  |  | 0.601 |
+| walker |  | 8262 | 9 | Code::CodeKey { rung: Body, file: src/requests/structures.py, decl: 13, sub: 0, line: 92 } |  |  | 0.601 |
+| walker |  | 8396 | 134 | Code::CodeKey { rung: Names, file: src/requests/api.py, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 8431 | 35 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 1, sub: 0, line: 24 } |  |  | 0.611 |
 | ns | 8464 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.598 |
-| walker |  | 8697 | 247 | Code::CodeKey { rung: Names, file: src/requests/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
-| walker |  | 8705 | 8 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 14, sub: 0, line: 370 } |  |  | 0.605 |
-| walker |  | 8715 | 10 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 12, sub: 0, line: 328 } |  |  | 0.605 |
-| walker |  | 8743 | 28 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 6, sub: 0, line: 91 } |  |  | 0.608 |
-| ns | 8753 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.597 |
-| walker |  | 8776 | 33 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 9, sub: 0, line: 231 } |  |  | 0.597 |
-| walker |  | 8813 | 37 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 7, sub: 0, line: 149 } |  |  | 0.597 |
-| walker |  | 8850 | 37 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 13, sub: 0, line: 341 } |  |  | 0.597 |
-| walker |  | 8863 | 13 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 7, sub: 0, line: 149 } |  |  | 0.597 |
-| walker |  | 8880 | 17 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 10, sub: 0, line: 283 } |  |  | 0.597 |
-| walker |  | 8897 | 17 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 12, sub: 0, line: 328 } |  |  | 0.597 |
-| walker |  | 8916 | 19 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 9, sub: 0, line: 231 } |  |  | 0.597 |
-| ns | 8955 |  | 202 | `HTTPAdapter.send`: the remaining `except` arms and the return | 6.3 | 6.2 | 0.589 |
-| walker |  | 8975 | 59 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 11, sub: 0, line: 290 } |  |  | 0.589 |
+| walker |  | 8471 | 40 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 2, sub: 0, line: 74 } |  |  | 0.598 |
+| walker |  | 8511 | 40 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 6, sub: 0, line: 137 } |  |  | 0.598 |
+| walker |  | 8551 | 40 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 7, sub: 0, line: 154 } |  |  | 0.598 |
+| walker |  | 8615 | 64 | Code::CodeKey { rung: Decl, file: src/requests/api.py, decl: 5, sub: 0, line: 117 } |  |  | 0.598 |
+| walker |  | 8630 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 3, sub: 0, line: 90 } |  |  | 0.598 |
+| walker |  | 8645 | 15 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 8, sub: 0, line: 171 } |  |  | 0.598 |
+| walker |  | 8663 | 18 | Code::CodeKey { rung: Body, file: src/requests/api.py, decl: 2, sub: 0, line: 74 } |  |  | 0.598 |
+| ns | 8753 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.587 |
+| walker |  | 8910 | 247 | Code::CodeKey { rung: Names, file: src/requests/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.593 |
+| walker |  | 8918 | 8 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 14, sub: 0, line: 370 } |  |  | 0.593 |
+| walker |  | 8928 | 10 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 12, sub: 0, line: 328 } |  |  | 0.593 |
+| ns | 8955 |  | 202 | `HTTPAdapter.send`: the remaining `except` arms and the return | 6.3 | 6.2 | 0.586 |
+| walker |  | 8956 | 28 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 6, sub: 0, line: 91 } |  |  | 0.589 |
+| walker |  | 8989 | 33 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 9, sub: 0, line: 231 } |  |  | 0.589 |
+| walker |  | 9026 | 37 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 7, sub: 0, line: 149 } |  |  | 0.589 |
 | ns | 9043 |  | 88 | Makefile: the remaining targets (coverage, publish, docs) | 7.1 | 1.8 | 0.594 |
-| walker |  | 9132 | 157 | Code::CodeKey { rung: Names, file: src/requests/compat.py, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
-| walker |  | 9144 | 12 | Code::CodeKey { rung: Doc, file: src/requests/compat.py, decl: 1, sub: 0, line: 37 } |  |  | 0.596 |
-| walker |  | 9290 | 146 | Code::CodeKey { rung: Names, file: src/requests/models.py, decl: 0, sub: 0, line: 0 } |  |  | 0.600 |
-| ns | 9326 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.607 |
-| walker |  | 9349 | 59 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 13, sub: 0, line: 255 } |  |  | 0.607 |
-| walker |  | 9385 | 36 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 14, sub: 0, line: 258 } |  |  | 0.607 |
-| walker |  | 9459 | 74 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 1, sub: 0, line: 96 } |  |  | 0.612 |
-| ns | 9481 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.607 |
-| ns | 9576 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.603 |
-| walker |  | 9583 | 124 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 5, sub: 0, line: 109 } |  |  | 0.603 |
-| walker |  | 9589 | 6 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 6, sub: 0, line: 112 } |  |  | 0.603 |
-| walker |  | 9604 | 15 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 8, sub: 0, line: 137 } |  |  | 0.603 |
-| walker |  | 9621 | 17 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 7, sub: 0, line: 133 } |  |  | 0.603 |
-| walker |  | 9638 | 17 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 10, sub: 0, line: 147 } |  |  | 0.603 |
-| walker |  | 9650 | 12 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 14, sub: 0, line: 258 } |  |  | 0.603 |
-| walker |  | 9663 | 13 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 6, sub: 0, line: 112 } |  |  | 0.603 |
+| walker |  | 9063 | 37 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 13, sub: 0, line: 341 } |  |  | 0.594 |
+| walker |  | 9076 | 13 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 7, sub: 0, line: 149 } |  |  | 0.594 |
+| walker |  | 9093 | 17 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 10, sub: 0, line: 283 } |  |  | 0.594 |
+| walker |  | 9110 | 17 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 12, sub: 0, line: 328 } |  |  | 0.594 |
+| walker |  | 9129 | 19 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 9, sub: 0, line: 231 } |  |  | 0.594 |
+| walker |  | 9188 | 59 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 11, sub: 0, line: 290 } |  |  | 0.594 |
+| ns | 9326 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.601 |
+| walker |  | 9345 | 157 | Code::CodeKey { rung: Names, file: src/requests/compat.py, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
+| walker |  | 9357 | 12 | Code::CodeKey { rung: Doc, file: src/requests/compat.py, decl: 1, sub: 0, line: 37 } |  |  | 0.603 |
+| ns | 9481 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.598 |
+| walker |  | 9503 | 146 | Code::CodeKey { rung: Names, file: src/requests/models.py, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
+| walker |  | 9562 | 59 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 13, sub: 0, line: 255 } |  |  | 0.602 |
+| ns | 9576 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.598 |
+| walker |  | 9598 | 36 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 14, sub: 0, line: 258 } |  |  | 0.598 |
+| walker |  | 9610 | 12 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 14, sub: 0, line: 258 } |  |  | 0.598 |
+| walker |  | 9684 | 74 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 1, sub: 0, line: 96 } |  |  | 0.603 |
 | ns | 9758 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.597 |
-| walker |  | 9831 | 168 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 16, sub: 0, line: 283 } |  |  | 0.613 |
-| walker |  | 9855 | 24 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 19, sub: 0, line: 358 } |  |  | 0.613 |
-| walker |  | 9896 | 41 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 11, sub: 0, line: 151 } |  |  | 0.613 |
-| ns | 9915 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.606 |
-| walker |  | 9939 | 43 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 12, sub: 0, line: 183 } |  |  | 0.606 |
-| ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.605 |
-| walker |  | 9985 | 46 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 9, sub: 0, line: 141 } |  |  | 0.605 |
+| walker |  | 9808 | 124 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 5, sub: 0, line: 109 } |  |  | 0.597 |
+| walker |  | 9814 | 6 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 6, sub: 0, line: 112 } |  |  | 0.597 |
+| walker |  | 9829 | 15 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 8, sub: 0, line: 137 } |  |  | 0.597 |
+| walker |  | 9846 | 17 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 7, sub: 0, line: 133 } |  |  | 0.597 |
+| walker |  | 9863 | 17 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 10, sub: 0, line: 147 } |  |  | 0.597 |
+| walker |  | 9876 | 13 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 6, sub: 0, line: 112 } |  |  | 0.597 |
+| ns | 9915 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.591 |
+| walker |  | 9917 | 41 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 11, sub: 0, line: 151 } |  |  | 0.591 |
+| walker |  | 9960 | 43 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 12, sub: 0, line: 183 } |  |  | 0.591 |
+| ns | 9963 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.590 |

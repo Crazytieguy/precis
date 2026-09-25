@@ -68,9 +68,7 @@ readme.md
   847→## FAQ
   …
   1066→## Maintainers
-  1067→
-  1068→- [Sindre Sorhus](https://github.com/sindresorhus)
-  1069→- [Richie Bendall](https://github.com/Richienb)
+  …
   1071→## Related
   …
 source/
@@ -230,24 +228,6 @@ source/
     985→export {TimeoutError} from 'p-timeout';
   lower-bound.ts
   options.ts
-    …
-    27→export type Options<QueueType extends Queue<RunFunction, QueueOptions>, QueueOptions extends QueueAddOptions> = {
-    …
-    97→export type QueueAddOptions = {
-    98→	/**
-    99→	Priority of operation. Operations with greater priority will be scheduled first.
-    100→
-    101→	@default 0
-    102→	*/
-    103→	readonly priority?: number;
-    104→
-    105→	/**
-    106→	Unique identifier for the promise function, used to update its priority before execution. If not specified, it is auto-assigned an incrementing BigInt starting from `1n`.
-    107→	*/
-    108→	id?: string;
-    109→} & TaskOptions & TimeoutOptions;
-    111→export type TaskOptions = {
-    …
   priority-queue.ts
     …
     7→export type PriorityQueueOptions = {
