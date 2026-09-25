@@ -691,11 +691,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
         let file = dir.join(&name);
-        // A named class whose location gate rejects it (a nested
-        // `Makefile`, a `.sh` outside a build-script location) falls
-        // through to the fallback rather than out of the output.
+        // A `.sh` outside a build-script location falls through to the
+        // fallback rather than out of the output.
         let named = classify_plaintext(&name).filter(|class| match class {
-            Class::BuildEntrypoint => dir == ctx.root(),
             Class::BuildScript => is_build_script_location(&file, dir, ctx),
             _ => true,
         });
@@ -806,9 +804,9 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 /// NS authors buy in the first screenful — ahead of most of the source
 /// it builds — while the class's own preset prices it as one config
 /// file among many and it loses the `value/cost^k` race to source.
-/// The build-entrypoint class already renders only root files of at
-/// most [`BUILD_ENTRYPOINT_LINE_CAP`] lines; a nested `scripts/build.sh`
-/// is one component's build step rather than the project's.
+/// The build-entrypoint class already renders only files of at most
+/// [`BUILD_ENTRYPOINT_LINE_CAP`] lines; a nested one is one
+/// component's build step rather than the project's.
 ///
 /// Narrow on purpose: deploy / CI / linter config describes the
 /// contributor's toolchain rather than the project, and the sibling
@@ -818,12 +816,13 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         .file_name()
         .and_then(|name| name.to_str())
         .unwrap_or_default();
-    let promoted = match class {
-        Class::BuildEntrypoint => matches!(name, "Makefile" | "Taskfile.yaml" | "Taskfile.yml"),
-        Class::BuildScript => name == "build.sh" && ctx.depth_from_root(file) == 1,
-        _ => false,
-    };
-    if promoted {
+    if matches!(class, Class::BuildEntrypoint | Class::BuildScript)
+        && matches!(
+            name,
+            "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "build.sh"
+        )
+        && ctx.depth_from_root(file) == 1
+    {
         SMALL_BUILD_FILE_PROMOTION
     } else {
         1.0
