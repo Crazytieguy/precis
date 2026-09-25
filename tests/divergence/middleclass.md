@@ -1,4 +1,4 @@
-Score(3000)=0.796 I=0.876 C=0.724 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.620/0.751/0.785/0.796/0.759/0.640/0.604
+Score(3000)=0.844 I=0.893 C=0.798 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.620/0.751/0.794/0.844/0.731/0.616/0.572
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -40,46 +40,43 @@ Score(3000)=0.796 I=0.876 C=0.724 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 1745 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.773 |
 | walker |  | 1759 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.773 |
 | walker |  | 1773 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.773 |
-| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.749 |
-| walker |  | 2004 | 231 | Markdown::Section { file: UPDATING.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.754 |
-| walker |  | 2089 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.793 |
-| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.765 |
-| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.766 |
-| walker |  | 2202 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.770 |
-| walker |  | 2360 | 158 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 7, sub: 0, line: 109 } |  |  | 0.775 |
-| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.774 |
-| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.775 |
-| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.757 |
-| walker |  | 2582 | 222 | Markdown::Section { file: UPDATING.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.763 |
-| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.753 |
-| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.729 |
-| walker |  | 2805 | 223 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 14, sub: 0, line: 151 } |  |  | 0.786 |
-| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.789 |
-| walker |  | 3031 | 226 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 1, sub: 0, line: 31 } |  |  | 0.798 |
-| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.799 |
-| ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.804 |
-| walker |  | 3426 | 395 | Markdown::Section { file: UPDATING.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.805 |
-| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.781 |
-| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.761 |
-| walker |  | 3717 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.813 |
-| walker |  | 3853 | 136 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.831 |
-| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.793 |
-| ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.756 |
-| walker |  | 4232 | 379 | Plaintext::Whole { file: .travis.yml } |  |  | 0.759 |
-| ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.741 |
-| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.719 |
-| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.699 |
-| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.686 |
-| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.677 |
-| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.658 |
-| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.640 |
-| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.623 |
-| ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.629 |
-| ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.619 |
-| ns | 7263 |  | 239 | Current rockspec in full (middleclass-4.1.1-0) | 6.3 |  | 0.606 |
-| ns | 7409 |  | 146 | .travis.yml Lua version matrix and test script | 6.4 |  | 0.613 |
-| ns | 7494 |  | 85 | Version line of each of the five older rockspecs | 6.5 |  | 0.610 |
-| ns | 7644 |  | 150 | performance/time.lua in full plus run.lua's harness header | 6.6 |  | 0.602 |
-| ns | 7734 |  | 90 | The six operations benchmarked by performance/run.lua | 6.7 | 6.6 | 0.595 |
-| ns | 7952 |  | 218 | .travis.yml remainder: toolchain install, coverage upload, branch and mail rules | 6.8 | 6.4 | 0.605 |
-| ns | 7970 |  | 18 | MIT license copyright line | 6.9 |  | 0.604 |
+| walker |  | 1858 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.813 |
+| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.788 |
+| walker |  | 1971 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.792 |
+| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.764 |
+| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.765 |
+| walker |  | 2129 | 158 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 7, sub: 0, line: 109 } |  |  | 0.770 |
+| walker |  | 2352 | 223 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 14, sub: 0, line: 151 } |  |  | 0.838 |
+| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.799 |
+| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.798 |
+| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.780 |
+| walker |  | 2578 | 226 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 1, sub: 0, line: 31 } |  |  | 0.789 |
+| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.779 |
+| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.754 |
+| walker |  | 2869 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.825 |
+| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.826 |
+| walker |  | 3005 | 136 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.849 |
+| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.847 |
+| ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.847 |
+| walker |  | 3384 | 379 | Plaintext::Whole { file: .travis.yml } |  |  | 0.851 |
+| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.826 |
+| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.804 |
+| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.767 |
+| ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.731 |
+| ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.713 |
+| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.692 |
+| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.673 |
+| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.661 |
+| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.651 |
+| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.633 |
+| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.616 |
+| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.599 |
+| ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.592 |
+| ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.583 |
+| ns | 7263 |  | 239 | Current rockspec in full (middleclass-4.1.1-0) | 6.3 |  | 0.571 |
+| ns | 7409 |  | 146 | .travis.yml Lua version matrix and test script | 6.4 |  | 0.578 |
+| ns | 7494 |  | 85 | Version line of each of the five older rockspecs | 6.5 |  | 0.575 |
+| ns | 7644 |  | 150 | performance/time.lua in full plus run.lua's harness header | 6.6 |  | 0.568 |
+| ns | 7734 |  | 90 | The six operations benchmarked by performance/run.lua | 6.7 | 6.6 | 0.562 |
+| ns | 7952 |  | 218 | .travis.yml remainder: toolchain install, coverage upload, branch and mail rules | 6.8 | 6.4 | 0.573 |
+| ns | 7970 |  | 18 | MIT license copyright line | 6.9 |  | 0.572 |

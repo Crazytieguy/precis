@@ -1,4 +1,4 @@
-Score(3000)=0.788 I=0.936 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.783/0.788/0.804/0.656/0.663
+Score(3000)=0.788 I=0.936 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.768/0.783/0.788/0.804/0.655/0.662
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -60,36 +60,32 @@ Score(3000)=0.788 I=0.936 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.696 |
 | ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.674 |
 | walker |  | 4461 | 898 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.810 |
-| walker |  | 4480 | 19 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.810 |
-| walker |  | 4496 | 16 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.810 |
-| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.788 |
-| walker |  | 4570 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.789 |
-| walker |  | 4598 | 28 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.789 |
-| walker |  | 4708 | 110 | Markdown::Section { file: .github/PULL_REQUEST_TEMPLATE.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.790 |
+| walker |  | 4535 | 74 | Plaintext::Whole { file: .gitignore } |  |  | 0.811 |
+| ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.789 |
+| walker |  | 4700 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.790 |
 | ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.770 |
-| walker |  | 4873 | 165 | Plaintext::Whole { file: .editorconfig } |  |  | 0.771 |
-| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.753 |
-| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.735 |
-| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.720 |
-| walker |  | 5373 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.724 |
+| ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.752 |
+| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.734 |
+| walker |  | 5200 | 500 | Plaintext::Whole { file: .eslintrc } |  |  | 0.738 |
+| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.723 |
 | ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.703 |
-| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.687 |
-| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.676 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.656 |
+| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.686 |
+| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.675 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.655 |
 | ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.642 |
 | ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.625 |
 | ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.616 |
-| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.623 |
-| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.627 |
+| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.622 |
+| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.626 |
 | ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.635 |
 | ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.644 |
-| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.654 |
+| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.653 |
 | ns | 7943 |  | 31 | README License line | 7.6 |  | 0.654 |
-| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.643 |
-| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.653 |
-| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.663 |
+| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.642 |
+| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.652 |
+| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.662 |
 | ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.664 |
-| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.659 |
-| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.662 |
-| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.659 |
-| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.659 |
+| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.658 |
+| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.661 |
+| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.658 |
+| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.649 |

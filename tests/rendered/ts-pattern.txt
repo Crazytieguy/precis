@@ -106,8 +106,7 @@ docs/
     …
   v4-to-v5-migration-guide.md
     1→# TS-Pattern v4 to v5 Migration Guide
-    2→
-    3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+    …
     5→# Breaking changes
     6→
     7→## TypeScript v5
@@ -243,6 +242,10 @@ src/
     100→export type unstable_Matcher<
     …
     116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+    …
+    131→export type narrow<input, pattern> = ExtractPreciseValue<
+    …
+    187→export function optional<
     …
   types/
     BuildMany.ts

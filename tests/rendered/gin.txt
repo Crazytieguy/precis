@@ -158,8 +158,6 @@ doc.go
   …
 docs/
   doc.md
-    1→# Gin Quick Start
-    …
 errors.go
 errors_test.go
 examples/
@@ -275,6 +273,8 @@ logger.go
   202→func ForceConsoleColor() {
   …
   207→func ErrorLogger() HandlerFunc {
+  …
+  212→func ErrorLoggerT(typ ErrorType) HandlerFunc {
   …
 logger_test.go
 middleware_test.go

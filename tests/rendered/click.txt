@@ -105,10 +105,6 @@ docs/
   prompts.md
   quickstart.md
   setuptools.md
-    …
-    5→# Setuptools Integration
-    6→
-    7→Moved to {doc}`entry-points`.
   shell-completion.md
   standalone-apps.md
   support-multiple-versions.md
@@ -300,6 +296,8 @@ src/
       261→class CliRunner:
       …
       283→    def __init__(
+      284→        self,
+      285→        charset: str = "utf-8",
       …
       295→    def get_default_prog_name(self, cli: Command) -> str:
       …

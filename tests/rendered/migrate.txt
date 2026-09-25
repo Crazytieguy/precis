@@ -16,9 +16,7 @@ Dockerfile.github-actions
 FAQ.md
 GETTING_STARTED.md
   1→# Getting started
-  2→Before you start, you should understand the concept of forward/up and reverse/down database migrations.
-  3→
-  4→Configure a database for your application. Make sure that your database driver is supported [here](README.md#databases).
+  …
   6→## Create migrations
   …
   22→## Run migrations
@@ -254,6 +252,14 @@ database/
     snowflake.go
   spanner/
     README.md
+      1→# Google Cloud Spanner
+      2→
+      3→## Usage
+      …
+      33→## DDL with comments
+      …
+      38→## Multiple statements
+      …
     examples/
     spanner.go
     spanner_test.go

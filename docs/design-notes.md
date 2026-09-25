@@ -62,8 +62,12 @@ the same text or imports `@AGENTS.md`), and text files under
 listing rows, but their prose bodies are never scheduled and their
 structural batches carry a 0.1× discount. An NS that ranks their content
 as primary is an NS-author error, not a reason to un-suppress.
-Peripheral admin markdown (`is_peripheral_doc`) gets the same body
-suppression because the schedule never bought those bodies anyway.
+
+More generally, the root README is the only markdown document whose
+prose is scheduled; every other document contributes its headings
+outline. Pricing other docs' sections at any tier measured flat to
+negative on the grid (2026-09-25): the schedule bought the wrong pages
+(translations, migration guides) and never reached the ones NS ranks.
 
 ## Gitignored content doesn't belong in precis output either
 

@@ -56,10 +56,7 @@ README.zh-CN.md
   7→# Soluna
   …
   19→## 文档
-  20→
-  21→- [API 参考](./docs)
-  22→- [示例](./test)
-  23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
+  …
   25→## 预编译二进制文件
   …
   30→## 从源码构建
@@ -67,11 +64,9 @@ README.zh-CN.md
   35→### 在你的项目的 Actions 中集成
   …
   55→## 使用 Soluna 制作的项目
-  56→
-  57→- [Deep Future](https://github.com/cloudwu/deepfuture), 一款桌游 Deep Future 的数字版。
+  …
   59→## 许可证
-  60→
-  61→Soluna 使用 MIT 许可证。详情见 [LICENSE](./LICENSE)。
+  …
 asset/
   avatar.png
   lua-logo.png
@@ -147,9 +142,15 @@ docs/
   font.lua
     …
     10→---
-    …
+    11→--- Imports a TrueType font
+    12→---
+    13→---@param data string Raw TTF font data
     14→function font.import(data) end
-    …
+    16→---
+    17→--- Gets font ID by name
+    18→---
+    19→---@param name string Font name (empty string for last imported font)
+    20→---@return integer? fontid Font ID, or nil if font not found
     21→function font.name(name) end
     23→---
     24→--- Gets the font system C object
@@ -329,6 +330,12 @@ src/
     settings.lua
     start.lua
   sprite_submit.h
+    …
+    9→static inline int32_t
+    10→to_fixpoint_(float v) {
+    …
+    15→static inline void
+    …
   spritemgr.c
   spritemgr.h
     …
@@ -403,10 +410,6 @@ web/
       _index.md
     examples/
     playframe.md
-      1→---
-      2→title: "Playframe"
-      3→type: "playframe"
-      4→---
   layouts/
     _default/
       baseof.html

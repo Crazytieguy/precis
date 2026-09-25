@@ -65,6 +65,8 @@ Readme.md
   155→- **They don't throw errors.** Many don't actually throw the errors, forcing you to wrap everywhere. Although helpful in the days of callbacks, not using `throw` in modern JavaScript makes code much more complex.
   156→
   157→- **They're tightly coupled to other concerns.** Many validators are tightly coupled to Express or other frameworks, which results in one-off, confusing code that isn't reusable across your code base.
+  159→- **They use JSON Schema.** Don't get me wrong, JSON Schema _can_ be useful. But it's kind of like HATEOAS—it's usually way more complexity than you need and you aren't using any of its benefits. (Sorry, I said it.)
+  160→
   …
   167→### Principles
   …
@@ -156,8 +158,7 @@ docs/
     types.md
     typescript.md
       1→# TypeScript
-      2→
-      3→Superstruct is designed with TypeScript in mind, so that you don't need to duplicate type definitions.
+      …
       5→## Utilities
       6→
       7→### `Describe`
@@ -169,8 +170,7 @@ docs/
     faq.md
     links.md
       1→# Resources
-      2→
-      3→A few resources that are helpful for building with Superstruct.
+      …
       5→## Libraries
       …
   summary.md

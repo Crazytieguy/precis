@@ -12,13 +12,13 @@
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
 //!   cover, when there are 2..=[`MAX_OUTLINE_HEADINGS`] of them.
 //!   Predecessor: the headline.
-//! - `Section`s — one per top-level H2 (an H1-only document unwraps to
-//!   an intro plus its H2s); an oversize section splits into a head
-//!   chunk plus chained `OversizeTail` chunks. Predecessor: the
-//!   outline, else the headline.
+//! - `Section`s (the root README) — one per top-level H2 (an H1-only
+//!   document unwraps to an intro plus its H2s); an oversize section
+//!   splits into a head chunk plus chained `OversizeTail` chunks.
+//!   Predecessor: the outline, else the headline.
 //!
-//! Peripheral and auto-injected docs emit only their structural
-//! batches.
+//! Every other document emits only its outline: the listing already
+//! names it, and the outline says what it covers.
 
 use std::collections::BTreeSet;
 use std::path::Path;
@@ -29,7 +29,7 @@ use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::BatchContent;
 use crate::render::Source;
 use crate::tokenizer;
-use crate::value::{is_peripheral_doc, mix_signals};
+use crate::value::mix_signals;
 
 use super::{
     WalkCtx, budget_chunk_ranges, first_child_of_kind, fs::files_with_extension,
@@ -108,14 +108,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone().into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(
-                    &file,
-                    ctx,
-                    NavDensity {
-                        sibling_md_count,
-                        root_readme: true,
-                    },
-                ),
+                value: readme_headline_value(&file, ctx),
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
@@ -146,18 +139,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         {
             continue;
         }
-        // Auto-injected agent docs (AGENTS.md / CLAUDE.md / skill
-        // files) are loaded into the model's context by the harness,
-        // so emitting their bodies is pure waste; peripheral admin docs
-        // (changelogs, contributing guides, …) are appendix material
-        // whose bodies an orientation summary never reaches. Skip the
-        // prose-body batches (Prelude + Section); the structural batches
-        // (HeadingsOutline + ReadmeHeadline) still emit so the file's
-        // shape stays discoverable at large budgets, riding the value
-        // discount applied via `non_essential_factor`.
-        let suppress_body =
-            crate::value::is_auto_injected_doc_file(&file, ctx.root()) || is_peripheral_doc(&file);
-
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
             continue;
         };
@@ -165,10 +146,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let headline = readme_headline_rows(root_readme, &tree, &source);
         let outline_rows = outline_rows(&tree, &source, headline.as_ref());
         let outline_emits = !outline_rows.is_empty();
-        let nav = NavDensity {
-            sibling_md_count,
-            root_readme,
-        };
 
         let mut headline_emitted: Option<BatchKey> = None;
         if let Some(spec) = &headline
@@ -179,20 +156,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone().into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx, nav),
+                value: readme_headline_value(&file, ctx),
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
-        if let Some(spec) = &headline
-            && !suppress_body
-        {
+        if let Some(spec) = &headline {
             let rows = prelude_remainder_rows(&tree, &source, spec);
             if let Some(content) = single_file_lines_content(&file, &source, rows) {
                 out.push(Batch {
                     key: MarkdownKey::Prelude { file: file.clone() }.into(),
                     predecessor: headline_emitted.clone(),
                     content,
-                    value: prelude_value(&file, ctx, nav),
+                    value: readme_section_base_value(&file, ctx),
                 });
             }
         }
@@ -203,21 +178,20 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone().into(),
                 predecessor: headline_emitted.clone(),
                 content,
-                value: headings_outline_value(&file, ctx, nav),
+                value: headings_outline_value(&file, ctx, root_readme, sibling_md_count),
             });
             outline_emitted = Some(BatchKey::Markdown(key));
         }
 
-        let section_predecessor = outline_emitted.or(headline_emitted);
-
-        if suppress_body {
+        if !root_readme {
             continue;
         }
+        let section_predecessor = outline_emitted.or(headline_emitted);
         push_sections(
             &mut out,
             &file,
             &source,
-            &logical_sections(root_readme, &tree, &source, outline_emits),
+            &logical_sections(&tree, &source, outline_emits),
             headline.as_ref(),
             section_predecessor,
             ctx,
@@ -226,7 +200,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     out
 }
 
-/// Emit one `Section` batch per range. Each gates on
+/// Emit one root README `Section` batch per range. Each gates on
 /// `section_predecessor`, except oversize tails, which deliver in source
 /// order behind the chunk before them.
 fn push_sections(
@@ -238,8 +212,7 @@ fn push_sections(
     section_predecessor: Option<BatchKey>,
     ctx: &WalkCtx,
 ) {
-    let root_readme = is_root_readme(file, ctx);
-    let base = section_base_value(root_readme, file, ctx);
+    let base = readme_section_base_value(file, ctx);
     let mut prev_section_key: Option<BatchKey> = None;
     for (idx, range) in ranges.iter().enumerate() {
         if let Some(content) = build_section_content(file, source, range, headline) {
@@ -262,7 +235,7 @@ fn push_sections(
                 key: key.into(),
                 predecessor,
                 content,
-                value: section_value(base, root_readme, range),
+                value: section_value(base, range),
             });
         }
     }
@@ -270,45 +243,29 @@ fn push_sections(
 
 // --- value ---
 
-fn readme_headline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx)) * nav.factor()
+fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
 
-/// `Prelude` prices as the README's index-0 section: it is the top of
-/// the README body, just above the first heading rather than below it.
-fn prelude_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    section_base_value(nav.root_readme, file, ctx) * nav.factor()
-}
-
-fn headings_outline_value(file: &Path, ctx: &WalkCtx, nav: NavDensity) -> f64 {
-    mix_signals(0.7, 0.55, 0.4, path_depth_factor(file, ctx)) * nav.factor()
-}
-
-/// How crowded the directory is that a markdown file's navigation
-/// batches (`HeadingsOutline` / `ReadmeHeadline` / `Prelude`) sit in,
-/// plus whether this file is the repo's root README.
-#[derive(Clone, Copy)]
-struct NavDensity {
-    sibling_md_count: usize,
+/// Saturated in a directory with many .md siblings — the listing
+/// already names them.
+///
+/// The root README is exempt, and not cosmetically: its outline is the
+/// hard predecessor of every root README section, so damping it delays
+/// the whole README body, which is the largest credited early-budget
+/// purchase on repos that have one.
+fn headings_outline_value(
+    file: &Path,
+    ctx: &WalkCtx,
     root_readme: bool,
-}
-
-impl NavDensity {
-    /// Saturate a file's navigation value in dirs with many .md siblings
-    /// — the dir listing already names them.
-    ///
-    /// The root README is exempt, and not cosmetically: its outline is the
-    /// hard predecessor of every root README section, so damping it
-    /// delays the whole README body, which is the largest credited
-    /// early-budget purchase on repos that have one. A README deeper in
-    /// the tree carries no such stream and is just one more page in a
-    /// docs directory the listing already enumerated.
-    fn factor(self) -> f64 {
-        if self.root_readme || self.sibling_md_count <= DENSE_MD_SIBLINGS {
-            return 1.0;
-        }
-        ((DENSE_MD_SIBLINGS as f64) / (self.sibling_md_count as f64)).sqrt()
-    }
+    sibling_md_count: usize,
+) -> f64 {
+    let density = if root_readme || sibling_md_count <= DENSE_MD_SIBLINGS {
+        1.0
+    } else {
+        ((DENSE_MD_SIBLINGS as f64) / (sibling_md_count as f64)).sqrt()
+    };
+    mix_signals(0.7, 0.55, 0.4, path_depth_factor(file, ctx)) * density
 }
 
 /// Markdown-file count above which a directory reads as a docs
@@ -328,22 +285,16 @@ fn readme_index_decay(range: &SectionRange) -> f64 {
     (range.h2_index as f64 + 1.0).powf(-0.15).max(0.7)
 }
 
-/// Value of a section of `file` before its range's own factors: the
-/// root README's section tier, or the heading-slab tier for any other
-/// doc.
-fn section_base_value(root_readme: bool, file: &Path, ctx: &WalkCtx) -> f64 {
-    if root_readme {
-        return 1181.0 * path_depth_factor(file, ctx);
-    }
-    mix_signals(0.3, 0.5, 0.5, path_depth_factor(file, ctx))
+/// Value of a root README section before its range's own factors, and
+/// of the `Prelude`, which is the top of the README body just above the
+/// first heading.
+fn readme_section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    1181.0 * path_depth_factor(file, ctx)
 }
 
-/// Per-section value from the file's [`section_base_value`].
-fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
-    let mut value = base;
-    if readme {
-        value *= readme_index_decay(range);
-    }
+/// Per-section value from the file's [`readme_section_base_value`].
+fn section_value(base: f64, range: &SectionRange) -> f64 {
+    let mut value = base * readme_index_decay(range);
     if range.is_reference_usage_section {
         value *= REFERENCE_USAGE_SECTION_FACTOR;
     }
@@ -969,12 +920,7 @@ impl SectionRange {
 
 /// Section ranges for batching: one per top-level entry — or, for a
 /// headingless file, one for its whole text — head-split when oversize.
-fn logical_sections(
-    root_readme: bool,
-    tree: &Tree,
-    source: &str,
-    outline_emits: bool,
-) -> Vec<SectionRange> {
+fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<SectionRange> {
     let src_lines: Vec<&str> = source.lines().collect();
     let entries = top_level_entries(tree.root_node(), source);
     let mut out = Vec::with_capacity(entries.len());
@@ -1017,7 +963,7 @@ fn logical_sections(
                 );
             }
             TopLevelEntry::Section { node, start, end } => {
-                let reference_h2 = root_readme && is_reference_usage_section(*node, source);
+                let reference_h2 = is_reference_usage_section(*node, source);
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
@@ -2204,7 +2150,7 @@ mod tests {
     fn sections(file: &str, source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
         let outline_emits = !outline_rows_of(file, source).is_empty();
-        logical_sections(is_readme(Path::new(file)), &tree, source, outline_emits)
+        logical_sections(&tree, source, outline_emits)
     }
 
     #[test]
@@ -2280,58 +2226,39 @@ mod tests {
         assert_eq!(readme_index_decay(&ranges[0]), 1.0);
     }
 
-    /// AGENTS.md / CLAUDE.md / skill bodies are already loaded into
-    /// the model's context by the harness, so emitting their per-H2
-    /// `Section` batches is pure waste. The walker must skip
-    /// `MarkdownKey::Section` for these files while still emitting structural batches
-    /// (`HeadingsOutline`, `ReadmeHeadline`) so file shape stays
-    /// discoverable at large budgets.
+    /// Only the root README renders its body; any other document
+    /// renders its outline alone.
     #[test]
-    fn markdown_walker_suppresses_body_for_auto_injected_docs() {
+    fn markdown_walker_emits_sections_for_the_root_readme_only() {
         use std::fs;
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        let body = "# Project AGENTS\n\n\
+        let body = "# Project\n\n\
                     Top-level instructions go here.\n\n\
                     ## Setup\n\nrun `cargo build`.\n\n\
                     ## Conventions\n\nuse rustfmt.\n";
-        fs::write(root.join("AGENTS.md"), body).unwrap();
+        fs::write(root.join("README.md"), body).unwrap();
         fs::write(root.join("notes.md"), body).unwrap();
         let ctx = WalkCtx::new(root.to_path_buf());
         let batches = expand_in_dir(root, &ctx);
 
-        let agents_md = root.join("AGENTS.md");
-        let notes_md = root.join("notes.md");
-        let agents_keys: Vec<_> = batches
-            .iter()
-            .filter_map(|b| match &b.key {
-                BatchKey::Markdown(k) => match k {
-                    MarkdownKey::Section { file, .. } if file == &agents_md => Some("section"),
-                    MarkdownKey::HeadingsOutline { file } if file == &agents_md => Some("outline"),
-                    MarkdownKey::ReadmeHeadline { file } if file == &agents_md => Some("headline"),
+        let kinds_for = |name: &str| -> Vec<&str> {
+            let path = root.join(name);
+            batches
+                .iter()
+                .filter_map(|b| match &b.key {
+                    BatchKey::Markdown(MarkdownKey::Section { file, .. }) if *file == path => {
+                        Some("section")
+                    }
+                    BatchKey::Markdown(MarkdownKey::HeadingsOutline { file }) if *file == path => {
+                        Some("outline")
+                    }
                     _ => None,
-                },
-                _ => None,
-            })
-            .collect();
-        assert!(
-            !agents_keys.contains(&"section"),
-            "AGENTS.md must not emit Section batches; got {agents_keys:?}",
-        );
-
-        // The companion notes.md (same content, normal filename) must
-        // still produce Section batches — the suppression is targeted,
-        // not blanket.
-        let notes_has_section = batches.iter().any(|b| {
-            matches!(
-                &b.key,
-                BatchKey::Markdown(MarkdownKey::Section { file, .. }) if file == &notes_md
-            )
-        });
-        assert!(
-            notes_has_section,
-            "control file notes.md should still emit Section batches",
-        );
+                })
+                .collect()
+        };
+        assert!(kinds_for("README.md").contains(&"section"));
+        assert_eq!(kinds_for("notes.md"), ["outline"]);
     }
 
     /// A license text emits nothing, but documentation of a product's own

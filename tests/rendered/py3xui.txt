@@ -45,8 +45,15 @@ README.md
   46→On creation, the Api won't connect to the 3x-ui app, so you can spawn new instances without spending resources. But after creating an instance, you'll need to call the `login` method to authenticate the user and save the cookie for future requests.
   48→### Installation
   49→```bash
-  …
+  50→pip install py3xui
+  51→```
+  52→
   53→### Create a new instance of the API
+  54→It's recommended to use an environment variable to store the API credentials:
+  55→```python
+  56→import os
+  57→
+  58→os.environ["XUI_HOST"] = "http://your-3x-ui-host.com:2053"
   …
   89→### Using TLS and custom certificates
   …
@@ -228,10 +235,7 @@ py3xui/
     README.md
       …
       3→# client.client
-      4→
-      5→This module contains the Client class which represents a client in the XUI API.
-      6→
-      7→<a id="client.client.ClientFields"></a>
+      …
       9→## ClientFields Objects
       …
       19→## Client Objects
@@ -286,10 +290,7 @@ py3xui/
     README.md
       …
       3→# server.server
-      4→
-      5→This module contains the Server class which represents server information in XUI API.
-      6→
-      7→<a id="server.server.ServerFields"></a>
+      …
       9→## ServerFields Objects
       …
       19→## MemoryInfo Objects

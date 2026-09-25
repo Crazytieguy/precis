@@ -37,13 +37,6 @@ Readme.md
   964→```
   …
 Readme_zh-CN.md
-  …
-  59→## 安装
-  60→
-  61→```sh
-  62→npm install commander
-  63→```
-  …
 SECURITY.md
 docs/
   deprecated.md
@@ -83,6 +76,10 @@ docs/
       98→### 方案二：把选项放在最后
       …
       120→### 方案三：使用选项替代命令参数
+      …
+      142→## 合并短选项和带有参数的选项
+      …
+      183→### 将短选项视作 boolean 类型选项合并
       …
     术语表.md
 eslint.config.js
@@ -227,6 +224,9 @@ lib/
     149→exports.Argument = Argument;
     150→exports.humanReadableArgName = humanReadableArgName;
   command.js
+    …
+    13→class Command extends EventEmitter {
+    …
   error.js
   help.js
     …

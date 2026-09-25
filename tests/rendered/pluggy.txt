@@ -10,9 +10,6 @@
 .pre-commit-config.yaml
 .readthedocs.yml
 AGENTS.md
-  1→# AGENTS.md
-  2→
-  3→See @CLAUDE.md for AI coding agent instructions.
 CHANGELOG.rst
 CLAUDE.md
 LICENSE
@@ -141,8 +138,6 @@ docs/
 downstream/
   .gitignore
   README.md
-    1→This directory contains scripts for testing some downstream projects
-    2→against your current pluggy worktree.
   conda.sh
   datasette.sh
   devpi.sh
@@ -264,6 +259,13 @@ src/
       293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
       …
       359→class HookRelay:
+      …
+      374→_HookRelay = HookRelay
+      375→
+      376→
+      377→_CallHistory: TypeAlias = list[
+      …
+      382→class HookCaller:
       …
     _manager.py
     _result.py

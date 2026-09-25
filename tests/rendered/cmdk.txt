@@ -17,11 +17,9 @@ ARCHITECTURE.md
   60→## Example
   …
   92→## Performance
-  93→
   …
   96→## Groups
-  97→
-  98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
+  …
 LICENSE.md
 README.md
   …
@@ -78,6 +76,10 @@ README.md
   436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
   437→
   438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
+  440→**Unstyled?** Yes, use the listed CSS selectors.
+  441→
+  442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
+  443→
   …
   456→## History
   457→
@@ -300,5 +302,8 @@ website/
     index.tsx
   public/
   styles/
+    cmdk/
+    globals.scss
+    index.module.scss
   tsconfig.json
   vercel.json

@@ -66,6 +66,10 @@ cmd/
   auth.go
     …
     17→var authCmd = &cobra.Command{
+    18→	Use:   "auth",
+    19→	Short: "Manage authentication credentials for AI providers",
+    20→	Long: `Manage authentication credentials for AI providers.
+    21→
     …
     37→var authLoginCmd = &cobra.Command{
     …
@@ -81,7 +85,8 @@ cmd/
     85→
     86→Example:
     87→  mcphost auth status`,
-    …
+    88→	RunE: runAuthStatus,
+    89→}
     91→func init() {
     …
     97→func runAuthLogin(cmd *cobra.Command, args []string) error {
@@ -180,11 +185,11 @@ contribute/
     demo.yml
   contribute.md
     1→# Contribute README
-    2→Thanks for your contribution, you can follow these step to run this repo and debug it.
+    …
     3→## Run demo
     …
     30→## Contribute your code
-    31→just write your code and push it.
+    …
 examples/
   hooks/
   scripts/
@@ -319,8 +324,7 @@ main.go
 sdk/
   README.md
     1→# MCPHost SDK
-    2→
-    3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
+    …
     5→## Installation
     …
     11→## Basic Usage
@@ -344,8 +348,7 @@ sdk/
     136→## Environment Variables
     …
     146→## License
-    147→
-    148→Same as MCPHost CLI
+    …
   examples/
     basic/
     scripting/

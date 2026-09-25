@@ -198,16 +198,17 @@ Score(3000)=0.535 I=0.809 C=0.354 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | ns | 9048 |  | 158 | GetTheme — accepted theme names and auto-detection | 6.7 | 6.6 | 0.545 |
 | walker |  | 9146 | 153 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/analyze.go, decl: 2, sub: 0, line: 70 } |  |  | 0.545 |
 | ns | 9218 |  | 170 | Type roster of the cli package (names only) | 7.1 |  | 0.543 |
+| walker |  | 9257 | 111 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar_sidebar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.543 |
+| walker |  | 9276 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/calendar_sidebar.go, decl: 2, sub: 0, line: 15 } |  |  | 0.543 |
 | ns | 9373 |  | 155 | AnalysisStats — everything `tock analyze` computes | 7.2 | 7.1 | 0.549 |
-| walker |  | 9412 | 266 | Markdown::Section { file: docs/commands.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.549 |
-| ns | 9519 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.541 |
-| walker |  | 9523 | 111 | Code::CodeKey { rung: Names, file: internal/adapters/cli/calendar_sidebar.go, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
-| walker |  | 9542 | 19 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/calendar_sidebar.go, decl: 2, sub: 0, line: 15 } |  |  | 0.541 |
-| walker |  | 9752 | 210 | Code::CodeKey { rung: Names, file: internal/adapters/cli/list_gui.go, decl: 0, sub: 0, line: 0 } |  |  | 0.542 |
+| walker |  | 9486 | 210 | Code::CodeKey { rung: Names, file: internal/adapters/cli/list_gui.go, decl: 0, sub: 0, line: 0 } |  |  | 0.550 |
+| walker |  | 9493 | 7 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 9, sub: 0, line: 200 } |  |  | 0.550 |
+| ns | 9519 |  | 146 | Calendar TUI key bindings (complete case list) | 7.3 |  | 0.542 |
+| walker |  | 9591 | 98 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/list_gui.go, decl: 2, sub: 0, line: 45 } |  |  | 0.542 |
+| walker |  | 9666 | 75 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 5, sub: 0, line: 101 } |  |  | 0.542 |
+| walker |  | 9754 | 88 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 3, sub: 0, line: 57 } |  |  | 0.542 |
 | ns | 9756 |  | 237 | Direct dependency set | 8.1 |  | 0.549 |
-| walker |  | 9759 | 7 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 9, sub: 0, line: 200 } |  |  | 0.549 |
+| walker |  | 9785 | 31 | Code::CodeKey { rung: Body, file: internal/config/config.go, decl: 10, sub: 0, line: 68 } |  |  | 0.549 |
 | ns | 9807 |  | 51 | Peripheral directory listings (docs, demo, assets, .github) | 8.2 |  | 0.554 |
-| walker |  | 9857 | 98 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/list_gui.go, decl: 2, sub: 0, line: 45 } |  |  | 0.554 |
-| walker |  | 9932 | 75 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 5, sub: 0, line: 101 } |  |  | 0.554 |
 | ns | 9963 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.550 |
-| walker |  | 9997 | 65 | Code::CodeKey { rung: Body, file: internal/adapters/cli/list_gui.go, decl: 3, sub: 0, line: 57 } |  |  | 0.550 |
+| walker |  | 9994 | 209 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.552 |

@@ -1,5 +1,22 @@
 .travis.yml
 CHANGELOG.md
+  1→middleclass changelog
+  2→====================
+  3→
+  4→# Version 4.1.1
+  …
+  12→# Version 4.1.0
+  …
+  17→# Version 4.0.0
+  …
+  25→# Version 3.2.0
+  …
+  29→# Version 3.1.0
+  …
+  33→# Version 3.0.1
+  …
+  37→# Version 3.0
+  …
 MIT-LICENSE.txt
 README.md
   1→middleclass
@@ -78,43 +95,9 @@ README.md
 UPDATING.md
   1→Updating from 3.x to 4.x
   2→========================
-  3→
-  4→In middleclass 4.0 there is no global `Object` class any more. Classes created with `class(<name>)` don't have a superclass any more.
-  5→If you need a global `Object` class, you must create it explicitly and then use it when creating new classes:
-  6→
-  7→```lua
-  8→local Object = class('Object')
-  9→
-  10→...
-  11→
-  12→local MyClass = class('MyClass', Object)
-  13→```
-  14→
-  15→If you are using a library which depends on the internal implementation of middleclass they might not work with middleclass 4.0. You might need to update those other libraries.
-  16→
-  17→Middleclass 4.0 comes with support for `__index` metamethod support. If your library manipulated the classes' `__instanceDict` internal attribute, you might do the same thing now using `__index` instead.
-  19→Also note that the class method `:implements` has been removed.
-  20→
+  …
   21→Updating from 2.x to 3.x
   22→========================
-  23→
-  24→Middleclass used to expose several global variables on the main scope. It does not do that anymore.
-  25→
-  26→`class` is now returned by `require 'middleclass'`, and it is not set globally. So you can do this:
-  27→
-  28→```lua
-  29→local class = require 'middleclass'
-  30→local MyClass = class('MyClass') -- works as before
-  31→```
-  32→
-  33→`Object` is not a global variable any more. But you can get it from `class.Object`
-  34→
-  35→```lua
-  36→local class = require 'middleclass'
-  37→local Object = class.Object
-  38→
-  39→print(Object) -- prints 'class Object'
-  40→```
   …
 middleclass.lua
   1→local middleclass = {
@@ -141,6 +124,11 @@ middleclass.lua
   47→
   48→      if value ~= nil then
   49→        return value
+  50→      else
+  51→        return f[name]
+  52→      end
+  53→    end
+  54→  end
   …
   57→local function _propagateInstanceMethod(aClass, name, f)
   58→  f = name == "__index" and _createIndexWrapper(aClass, f) or f
@@ -165,6 +153,31 @@ middleclass.lua
   79→local function _call(self, ...) return self:new(...) end
   80→
   81→local function _createClass(name, super)
+  82→  local dict = {}
+  83→  dict.__index = dict
+  84→
+  85→  local aClass = { name = name, super = super, static = {},
+  86→                   __instanceDict = dict, __declaredMethods = {},
+  87→                   subclasses = setmetatable({}, {__mode='k'})  }
+  88→
+  89→  if super then
+  90→    setmetatable(aClass.static, {
+  91→      __index = function(_,k)
+  92→        local result = rawget(dict,k)
+  93→        if result == nil then
+  94→          return super.static[k]
+  95→        end
+  96→        return result
+  97→      end
+  98→    })
+  99→  else
+  100→    setmetatable(aClass.static, { __index = function(_,k) return rawget(dict,k) end })
+  101→  end
+  102→
+  103→  setmetatable(aClass, { __index = aClass.static, __tostring = _tostring,
+  104→                         __call = _call, __newindex = _declareInstanceMethod })
+  105→
+  106→  return aClass
   …
   109→local function _includeMixin(aClass, mixin)
   110→  assert(type(mixin) == 'table', "mixin must be a table")

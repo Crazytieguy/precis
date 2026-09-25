@@ -7,14 +7,7 @@
 .gitignore
 ARCHITECTURE.md
   1→# `sqlite-vec` Architecture
-  2→
-  3→Internal documentation for how `sqlite-vec` works under-the-hood. Not meant for
-  4→users of the `sqlite-vec` project, consult
-  5→[the official `sqlite-vec` documentation](https://alexgarcia.xyz/sqlite-vec) for
-  6→how-to-guides. Rather, this is for people interested in how `sqlite-vec` works
-  7→and some guidelines to any future contributors.
-  8→
-  9→Very much a WIP.
+  …
   11→## `vec0`
   12→
   13→### Shadow Tables
@@ -155,6 +148,9 @@ bindings/
     Cargo.toml.tmpl
     Makefile
     build.rs
+      1→fn main() {
+      2→    cc::Build::new().file("sqlite-vec.c").define("SQLITE_CORE", None).compile("sqlite_vec0");
+      …
     src/
       lib.rs
 examples/
@@ -192,6 +188,8 @@ site/
   build-ref.mjs
   compiling.md
   features/
+    knn.md
+    vec0.md
   getting-started/
     installation.md
     introduction.md
@@ -247,11 +245,14 @@ tests/
   build.rs
   conftest.py
   correctness/
+    build.py
+    …
   fuzz/
     .gitignore
     Makefile
     README.md
     corpus/
+      vec0-create/
     exec.c
     exec.dict
     json.c
@@ -303,4 +304,10 @@ tmp-static.py
   33→
   34→    db.execute(
   35→        "insert into temp.vec_static_blobs(name, data) select ?, vec_static_blob_from_raw(?, ?, ?, ?)",
+  36→        [name, ptr, element_type, dimensions, nvectors],
+  37→    )
+  38→
+  39→    db.execute(
+  40→        f'create virtual table "{name_escaped}" using vec_static_blob_entries({name_escaped})'
+  41→    )
   …

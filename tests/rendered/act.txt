@@ -31,8 +31,7 @@ CLAUDE.md
 CONTRIBUTING.md
 IMAGES.md
   1→# List of Docker images for `act`
-  2→
-  3→**Warning:** Below badges with size for each image are displaying size of **compressed image size in registry. After pulling the image, size can be drastically different due to Docker uncompressing the image layers.**
+  …
   5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
   …
   27→## Images based on [`actions/virtual-environments`][gh/actions/virtual-environments]
@@ -235,7 +234,10 @@ pkg/
     testdata/
       Dockerfile
         1→FROM scratch
-        …
+        2→ENV PATH="/this/path/does/not/exists/anywhere:/this/either"
+        3→ENV SOME_RANDOM_VAR=""
+        4→ENV ANOTHER_ONE="BUT_I_HAVE_VALUE"
+        5→ENV CONFLICT_VAR="I_EXIST_ONLY_HERE"
       docker-pull-options/
         config.json
       scratch/

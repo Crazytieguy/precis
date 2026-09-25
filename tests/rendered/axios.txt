@@ -28,13 +28,11 @@ COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
   1→# Contributors
-  2→
-  3→Thank you to all the wonderful people who have contributed to axios!
+  …
   5→## Core Team
   …
   11→## Notable Contributors
-  12→
-  13→<!-- Add contributors here in alphabetical order by GitHub username -->
+  …
   15→## How to Contribute
   …
 ECOSYSTEM.md
@@ -223,6 +221,7 @@ index.d.cts
   187→    url: string,
   188→    config?: axios.AxiosRequestConfig<D>
   189→  ): Promise<R>;
+  190→  options<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
   229→}
   231→declare enum HttpStatusCode {

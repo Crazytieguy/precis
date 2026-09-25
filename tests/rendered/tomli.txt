@@ -217,6 +217,11 @@ src/
       11→TYPE_CHECKING = False
       …
       17→_TIME_RE_STR: Final = r"""
+      18→([01][0-9]|2[0-3])             # hours
+      19→:([0-5][0-9])                  # minutes
+      20→(?:
+      21→    :([0-5][0-9])              # optional seconds
+      22→    (?:\.([0-9]{1,6})[0-9]*)?  # optional fractions of a second
       …
       26→RE_NUMBER: Final = re.compile(
       …
@@ -224,6 +229,13 @@ src/
       46→RE_DATETIME: Final = re.compile(
       …
       59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+      …
+      98→@lru_cache(maxsize=None)
+      99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+      …
+      109→def match_to_localtime(match: re.Match[str]) -> time:
+      …
+      116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
       …
     _types.py
       …
@@ -242,16 +254,7 @@ tests/
   test_misc.py
 tomllib.md
   1→# `tomllib` – Tomli in the standard library
-  2→
-  3→Tomli was added to the Python standard library in Python 3.11.
-  4→
-  5→Relevant links:
-  6→
-  7→- Python Issue Tracker: https://bugs.python.org/issue40059
-  8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
-  9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
-  10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
-  11→- CPython pull request: https://github.com/python/cpython/pull/31498
+  …
   13→## Converting Tomli to tomllib
   14→
   15→### Sync status
