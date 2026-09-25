@@ -777,19 +777,26 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
     let mut body = Vec::new();
     let mut members = Vec::new();
     let mut last_row = open_row;
+    let mut comment_start = None;
     // A method's decorators are its preceding siblings, not its children.
     let mut first_decorator: Option<Node> = None;
     let mut cursor = block.walk();
     for child in block.named_children(&mut cursor) {
         let child_span = Span::of(file, child);
         match child.kind() {
-            "comment" => continue,
+            "comment" => {
+                if child_span.start > last_row && first_decorator.is_none() {
+                    comment_start.get_or_insert(child_span.start);
+                }
+                continue;
+            }
             "decorator" => {
                 first_decorator.get_or_insert(child);
                 continue;
             }
             _ => {}
         }
+        let leading_comment = comment_start.take();
         let anchor = first_decorator.take().unwrap_or(child);
         let span = Span {
             start: anchor.start_position().row + 1,
@@ -815,9 +822,10 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
                 body.push(Item::new(member.name_rows.iter().copied()));
                 members.push(member);
             } else {
-                let comments = file.comment_rows_above(anchor, last_row);
-                let own = span.start.max(last_row + 1)..=span.end;
-                body.push(Item::new(comments.into_iter().chain(own)));
+                let start = leading_comment.unwrap_or(span.start).max(last_row + 1);
+                if start <= span.end {
+                    body.push(Item::new(start..=span.end));
+                }
             }
         }
         last_row = last_row.max(span.end);
@@ -1001,6 +1009,24 @@ export class Queue<T>
                 "  Callable name [24] head [24] doc [] body []",
                 "  Callable name [26] head [26] doc [] body [[27]]",
             ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_field_keeps_its_doc_across_a_blank_row() {
+        let model = extract_source(
+            "src/options.ts",
+            "\
+export class Options {
+  /** Maximum time to wait, in milliseconds. */
+
+  timeout = 1000;
+}
+",
+        );
+        assert_eq!(
+            describe(&model),
+            ["Whole name [1] head [1, 5] doc [] body [[2, 3, 4]]"]
         );
     }
 
