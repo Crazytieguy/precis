@@ -87,9 +87,14 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
     let head_value = dir_listing_value(&dir, &children, ctx);
     let mut groups = Vec::new();
     loop {
+        let entries = children
+            .keys()
+            .filter(|name| !is_sidecar(name, &children))
+            .map(PathBuf::from)
+            .collect();
         groups.push(FsGroup {
             parent: dir.clone(),
-            entries: FsEntries::Listed(children.keys().map(PathBuf::from).collect()),
+            entries: FsEntries::Listed(entries),
         });
         let Some((name, EntryKind::Directory)) = children.iter().next() else {
             break;
@@ -110,6 +115,16 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
         key: FsKey::DirListing { dir }.into(),
         predecessor: None,
         content: BatchContent::Fs { groups },
+    })
+}
+
+/// A game engine's per-asset metadata file (`player.png.meta`,
+/// `player.png.import`) beside the asset it describes. A listing leaves
+/// it out, and its `…` row marks the gap.
+fn is_sidecar(name: &str, siblings: &BTreeMap<String, EntryKind>) -> bool {
+    [".meta", ".import", ".uid"].iter().any(|suffix| {
+        name.strip_suffix(suffix)
+            .is_some_and(|asset| siblings.contains_key(asset))
     })
 }
 
@@ -449,6 +464,31 @@ fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
 mod tests {
     use super::*;
     use crate::batch::BatchKey;
+
+    #[test]
+    fn fs_listing_leaves_out_asset_sidecars() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        for name in [
+            "boat.png",
+            "boat.png.meta",
+            "orphan.meta",
+            "scene.tscn.import",
+        ] {
+            std::fs::write(root.join(name), "").unwrap();
+        }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let BatchContent::Fs { groups } = &seed(&ctx)[0].content else {
+            panic!("a listing is Fs content");
+        };
+        let FsEntries::Listed(entries) = &groups[0].entries else {
+            panic!("a listing names its entries");
+        };
+        let expected: Vec<PathBuf> = ["boat.png", "orphan.meta", "scene.tscn.import"]
+            .map(PathBuf::from)
+            .into();
+        assert_eq!(entries, &expected);
+    }
 
     #[test]
     fn fs_owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
