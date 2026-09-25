@@ -915,7 +915,7 @@ fn doc_items(file: &SourceFile, node: Node, module_doc_rows: &HashSet<usize>) ->
             && file.text(comment).starts_with("/**")
             && span.end < next_start
             && next_start - span.end <= 2
-            && starts_its_row(file, comment)
+            && file.starts_own_row(comment)
             && !module_doc_rows.contains(&span.start);
         if !is_attached_jsdoc {
             break;
@@ -929,13 +929,6 @@ fn doc_items(file: &SourceFile, node: Node, module_doc_rows: &HashSet<usize>) ->
         .rev()
         .flat_map(|comment| jsdoc_paragraphs(file, comment))
         .collect()
-}
-
-fn starts_its_row(file: &SourceFile, node: Node) -> bool {
-    let position = node.start_position();
-    file.line(position.row + 1)
-        .get(..position.column)
-        .is_some_and(|before| before.trim().is_empty())
 }
 
 /// A JSDoc block split after each bare ` *` separator row.

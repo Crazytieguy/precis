@@ -112,6 +112,38 @@ impl SourceFile {
         node.start_position().row + 1..=node_end_row_trimmed(node, &self.source) + 1
     }
 
+    /// Whether `node` is the first token on its row.
+    pub(crate) fn starts_own_row(&self, node: Node) -> bool {
+        let position = node.start_position();
+        self.line(position.row + 1)
+            .get(..position.column)
+            .is_some_and(|before| before.trim().is_empty())
+    }
+
+    /// Rows of the comments directly above `node`: a run of `comment`
+    /// siblings, each on its own rows and ending at most one row above
+    /// the next, stopping at the first one that starts at or before
+    /// `after_row`.
+    pub(crate) fn comment_rows_above(&self, node: Node, after_row: usize) -> Vec<usize> {
+        let mut rows = Vec::new();
+        let mut next_start = node.start_position().row;
+        let mut previous = node.prev_sibling();
+        while let Some(comment) = previous {
+            if comment.kind() != "comment"
+                || next_start.saturating_sub(comment.end_position().row) > 1
+                || !self.starts_own_row(comment)
+                || comment.start_position().row < after_row
+            {
+                break;
+            }
+            rows.extend(self.node_rows(comment));
+            next_start = comment.start_position().row;
+            previous = comment.prev_sibling();
+        }
+        rows.sort_unstable();
+        rows
+    }
+
     /// One [`Item`] per node of `nodes` (statements, fields, specs), in
     /// order, keeping only rows past `after_row`. A comment joins the
     /// item after it (a leading comment), or the item before it when it

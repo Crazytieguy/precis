@@ -22,7 +22,7 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
-use crate::walker::{WalkCtx, collect_doc_comments_above_filtered};
+use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
     extensions: &["c", "h"],
@@ -81,7 +81,7 @@ fn decl_info(
     file: &SourceFile,
     in_header: bool,
     guard_name: Option<&str>,
-    banner_end_row: Option<usize>,
+    banner_end_row: usize,
 ) -> Option<DeclInfo> {
     let source = &*file.source;
     let shape = match node.kind() {
@@ -109,10 +109,7 @@ fn decl_info(
         Shape::Callable => callable_parts(node, file),
         Shape::Whole => whole_parts(node, file),
     };
-    let doc_rows = collect_doc_comments_above_filtered(node, source, banner_end_row, |prev, _| {
-        prev.kind() == "comment"
-    })
-    .full;
+    let doc_rows = file.comment_rows_above(node, banner_end_row);
     Some(DeclInfo {
         name_rows,
         head,
@@ -367,10 +364,10 @@ fn strip_comment_markers(line: &str) -> &str {
     body.trim_matches(|c: char| c == '*' || c == '/' || c.is_whitespace())
 }
 
-/// 0-based last row of the file's leading run of comments, up to the
-/// first other node. A comment sharing its last row with that node stays
-/// out.
-fn banner_end_row(root: Node, file: &SourceFile) -> Option<usize> {
+/// Last row of the file's leading run of comments, up to the first other
+/// node, or 0 without one. A comment sharing its last row with that node
+/// stays out.
+fn banner_end_row(root: Node, file: &SourceFile) -> usize {
     let mut cursor = root.walk();
     let mut comments = Vec::new();
     for child in root.children(&mut cursor) {
@@ -381,7 +378,7 @@ fn banner_end_row(root: Node, file: &SourceFile) -> Option<usize> {
         }
         comments.push(rows);
     }
-    Some(*comments.last()?.end() - 1)
+    comments.last().map_or(0, |comment| *comment.end())
 }
 
 // --- effective top level --------------------------------------------------

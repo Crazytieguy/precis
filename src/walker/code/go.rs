@@ -8,7 +8,7 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
-use crate::walker::{WalkCtx, collect_doc_comments_above};
+use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
     extensions: &["go"],
@@ -62,7 +62,7 @@ fn package_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
 }
 
 fn doc_items(node: Node, file: &SourceFile) -> Vec<Item> {
-    file.paragraphs(collect_doc_comments_above(node, &file.source).full)
+    file.paragraphs(file.comment_rows_above(node, 0))
 }
 
 /// A declaration whose head is every row of `node` outside the span of

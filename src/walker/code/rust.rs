@@ -130,7 +130,7 @@ impl Leading {
                     }
                 }
                 "line_comment" | "block_comment" => {
-                    if !starts_own_line(sibling, file) {
+                    if !file.starts_own_row(sibling) {
                         break;
                     }
                     if sibling.child_by_field_name("inner").is_some() {
@@ -162,11 +162,6 @@ fn compact_attribute(attribute_item: Node, file: &SourceFile) -> String {
                 .collect()
         })
         .unwrap_or_default()
-}
-
-fn starts_own_line(node: Node, file: &SourceFile) -> bool {
-    let line = file.line(node.start_position().row + 1);
-    line.len() - line.trim_start().len() == node.start_position().column
 }
 
 /// `pub`, `pub(crate)`, …: the item's visibility modifier, if any.
@@ -409,7 +404,7 @@ fn list_entries(list: Node, file: &SourceFile, admit: impl Fn(Node) -> bool) -> 
     for child in list.named_children(&mut cursor) {
         match child.kind() {
             "line_comment" | "block_comment" | "attribute_item" => {
-                if starts_own_line(child, file) {
+                if file.starts_own_row(child) {
                     pending.extend(file.node_rows(child));
                 }
             }

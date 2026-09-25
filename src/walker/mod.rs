@@ -605,15 +605,6 @@ pub(crate) fn build_file_spans(path: &Path, source: &Source, lines: FileLines) -
 
 // --- shared tree-sitter span helpers ---
 
-/// Append every 1-based row covered by `node` (trailing-newline aware).
-pub(crate) fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
-    push_rows(
-        out,
-        node.start_position().row,
-        node_end_row_trimmed(node, source),
-    );
-}
-
 /// 0-based final row covered by `node`, ignoring trailing whitespace.
 /// Trimming all whitespace (not just newlines) matters for grammars
 /// whose block nodes swallow the next sibling's leading indentation
@@ -623,65 +614,6 @@ pub(crate) fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
 pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
     let text = &source[node.start_byte()..node.end_byte()];
     node.start_position().row + text.trim_end().split('\n').count().max(1) - 1
-}
-
-/// Consecutive doc-comment siblings touching `node`. End-of-line
-/// comments on a previous sibling's line are skipped (they would
-/// trip non-ancestor overlap). `attribute_item` siblings are skipped
-/// without breaking the chain — no-op outside Rust grammars.
-pub(crate) fn collect_doc_comments_above(node: Node, source: &str) -> FileLines {
-    collect_doc_comments_above_filtered(node, source, None, |prev, _| prev.kind() == "comment")
-}
-
-/// [`collect_doc_comments_above`] with an `is_doc_comment` predicate
-/// (default: any `comment` node) and a lower row boundary.
-pub(crate) fn collect_doc_comments_above_filtered<F>(
-    node: Node,
-    source: &str,
-    boundary_row: Option<usize>,
-    is_doc_comment: F,
-) -> FileLines
-where
-    F: Fn(Node, &str) -> bool,
-{
-    let mut out = Vec::new();
-    let mut cur = node.prev_sibling();
-    let mut next_start = node.start_position().row;
-    while let Some(prev) = cur {
-        if prev.kind() == "attribute_item" {
-            next_start = prev.start_position().row;
-            cur = prev.prev_sibling();
-            continue;
-        }
-        if !is_doc_comment(prev, source)
-            || next_start.saturating_sub(prev.end_position().row) > 1
-            || !comment_starts_at_line_start(prev, source)
-            || boundary_row.is_some_and(|b| prev.start_position().row <= b)
-        {
-            break;
-        }
-        extend_span(&mut out, prev, source);
-        next_start = prev.start_position().row;
-        cur = prev.prev_sibling();
-    }
-    FileLines::new(dedup_sorted(out))
-}
-
-/// True iff `node` is the first non-whitespace token on its source line
-/// (i.e., a standalone full-line comment rather than an end-of-line
-/// trailer after some other token).
-pub(crate) fn comment_starts_at_line_start(node: Node, source: &str) -> bool {
-    let start = node.start_byte();
-    let line_start = source[..start].rfind('\n').map_or(0, |n| n + 1);
-    source[line_start..start].trim().is_empty()
-}
-
-/// Push 1-based line numbers `start_row+1 ..= end_row+1` onto `out`.
-/// Inputs are 0-based tree-sitter row indices.
-pub(crate) fn push_rows(out: &mut Vec<usize>, start_row: usize, end_row: usize) {
-    for row in start_row..=end_row {
-        out.push(row + 1);
-    }
 }
 
 pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {

@@ -14,7 +14,7 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
-use crate::walker::{WalkCtx, collect_doc_comments_above};
+use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
     extensions: &["lua"],
@@ -147,7 +147,7 @@ fn decl_info(node: Node, file: &SourceFile) -> DeclInfo {
     DeclInfo {
         name_rows: vec![start],
         head: (start..=head_end).collect(),
-        doc: file.paragraphs(collect_doc_comments_above(node, &file.source).full),
+        doc: file.paragraphs(file.comment_rows_above(node, 0)),
         body,
         shape: Shape::Callable,
         members: Vec::new(),
