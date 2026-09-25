@@ -886,9 +886,9 @@ fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
     had_any
 }
 
-/// Paragraph is decorative iff every non-skippable inline child is
-/// decorative AND there's at least one. Plain-text paragraphs (no
-/// named inline children) return `false`.
+/// Paragraph is decorative iff every named inline child is decorative
+/// or skippable, at least one is decorative, and no plain text sits
+/// between or around them. Plain-text paragraphs return `false`.
 fn is_decorative_paragraph(para: Node, source: &str) -> bool {
     let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
         return false;
@@ -898,7 +898,21 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
         return false;
     };
     let root = tree.root_node();
-    inline_root_is_all_decorative(root, inline_text)
+    let mut cur = root.walk();
+    let mut any_decorative = false;
+    let mut cursor = 0;
+    for node in root.children(&mut cur).filter(|c| c.is_named()) {
+        if is_decorative_inline(node, inline_text) {
+            any_decorative = true;
+        } else if !is_skippable_inline(node, inline_text) {
+            return false;
+        }
+        if !inline_text[cursor..node.start_byte()].trim().is_empty() {
+            return false;
+        }
+        cursor = node.end_byte();
+    }
+    any_decorative && inline_text[cursor..].trim().is_empty()
 }
 
 fn is_decorative_block(block: Node, source: &str) -> bool {
@@ -910,36 +924,6 @@ fn is_decorative_block(block: Node, source: &str) -> bool {
         "block_quote" => is_admin_block_quote(block, source),
         _ => false,
     }
-}
-
-/// True iff every fragment (named + plain-text gaps) is decorative or
-/// whitespace, and at least one fragment exists.
-fn inline_root_is_all_decorative(root: Node, inline_text: &str) -> bool {
-    let mut cur = root.walk();
-    let named: Vec<Node> = root.children(&mut cur).filter(|c| c.is_named()).collect();
-    let mut any_decorative = false;
-    for node in &named {
-        if is_decorative_inline(*node, inline_text) {
-            any_decorative = true;
-        } else if !is_skippable_inline(*node, inline_text) {
-            return false;
-        }
-    }
-    let mut cursor = 0;
-    for node in &named {
-        if !inline_text[cursor..node.start_byte()].trim().is_empty() {
-            return false;
-        }
-        cursor = node.end_byte();
-    }
-    any_decorative && inline_text[cursor..].trim().is_empty()
-}
-
-fn named_decorative_candidates<'a>(root: Node<'a>, inline_text: &str) -> Vec<Node<'a>> {
-    let mut cur = root.walk();
-    root.children(&mut cur)
-        .filter(|c| c.is_named() && !is_skippable_inline(*c, inline_text))
-        .collect()
 }
 
 /// An `html_block` is decorative iff its source text contains nothing
@@ -982,7 +966,12 @@ fn is_nav_link_paragraph(para: Node, source: &str) -> bool {
     let Some(tree) = parse_inline(inline_text) else {
         return false;
     };
-    let named = named_decorative_candidates(tree.root_node(), inline_text);
+    let root = tree.root_node();
+    let mut cur = root.walk();
+    let named: Vec<Node> = root
+        .children(&mut cur)
+        .filter(|c| c.is_named() && !is_skippable_inline(*c, inline_text))
+        .collect();
     let mut cursor = 0usize;
     for n in &named {
         if !matches!(
@@ -1094,18 +1083,6 @@ impl SectionRange {
             is_lede_body: false,
         }
     }
-}
-
-/// A list item, numbered item, or table row — the catalog subset of
-/// [`is_reference_structure_line`] (fences excluded).
-fn is_catalog_line(line: &str) -> bool {
-    let t = line.trim_start();
-    t.starts_with("- ")
-        || t.starts_with("* ")
-        || t.starts_with("+ ")
-        || t.starts_with('|')
-        || t.split_once(". ")
-            .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
 /// Section ranges for batching: one per top-level entry — or, for a
@@ -1632,7 +1609,14 @@ fn reference_usage_body_ok(body: &str) -> bool {
 /// docs — is an intro, not a reference, and is correctly skipped.
 fn is_reference_structure_line(line: &str) -> bool {
     let t = line.trim_start();
-    is_catalog_line(line) || t.starts_with("```") || t.starts_with("~~~")
+    t.starts_with("- ")
+        || t.starts_with("* ")
+        || t.starts_with("+ ")
+        || t.starts_with('|')
+        || t.starts_with("```")
+        || t.starts_with("~~~")
+        || t.split_once(". ")
+            .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
 /// True iff `section`'s direct children include at least one
