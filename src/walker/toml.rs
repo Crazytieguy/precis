@@ -14,10 +14,6 @@
 //! - `Dependencies { file }` — Cargo `[dependencies]` /
 //!   `[workspace.dependencies]`, `[tool.poetry.dependencies]`, and the PEP
 //!   621 dependency arrays under `[project]`
-//! - `DevelopmentDependencies { file }` — Cargo `[dev-dependencies]`,
-//!   `[build-dependencies]`, target-conditional dependency tables, and PEP
-//!   735 `[dependency-groups]`; predecessor: `Dependencies` on the same
-//!   file when that manifest has a runtime roster
 //! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
 //!   with adjacent small tables packed into compact families; predecessor:
 //!   `Identity` on the same file when it has one
@@ -129,12 +125,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: features_value(&file, ctx),
             });
         }
-        let mut runtime_dependencies = None;
         if let Some(content) =
             build_dependencies_content(&file, &source, &pairs, &sections, python_project_manifest)
         {
-            let key: BatchKey = TomlKey::Dependencies { file: file.clone() }.into();
-            runtime_dependencies = Some(key.clone());
             let tier = if is_cargo_manifest(&file) {
                 cargo_dependencies_value(&file, ctx)
             } else {
@@ -143,32 +136,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             let value =
                 tier * dependency_table_mass_factor(lines_content_tokens(&source, &content));
             out.push(Batch {
-                key,
+                key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,
                 content,
                 value,
-            });
-        }
-        if let Some(content) = build_development_dependencies_content(
-            &file,
-            &source,
-            &sections,
-            python_project_manifest,
-        ) {
-            out.push(Batch {
-                key: TomlKey::DevelopmentDependencies { file: file.clone() }.into(),
-                // Tooling, test and build rosters gate behind the runtime
-                // roster of the same manifest: a manifest that shows its
-                // test harness while withholding what the package is built
-                // on reads as a package with no runtime dependencies.
-                // Pricing cannot supply that ordering — under per-token
-                // ranking a short enough dev block outranks any
-                // priced-higher longer runtime block. A manifest that
-                // genuinely declares no runtime dependencies emits no
-                // Dependencies batch and keeps its dev roster ungated.
-                predecessor: runtime_dependencies,
-                content,
-                value: development_dependencies_value(&file, ctx),
             });
         }
         // The config appendix of a manifest gates behind that manifest's
@@ -235,38 +206,6 @@ fn build_dependencies_content(
     }
     if python_project_manifest {
         line_numbers.extend(pep621_dependency_array_rows(pairs));
-    }
-    if line_numbers.is_empty() {
-        return None;
-    }
-    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
-}
-
-/// Dependency classes that describe tests, build-time tooling, or a
-/// platform-specific edge — Cargo's dev/build/target tables and PEP 735's
-/// `[dependency-groups]`. They are useful context, but should not make the
-/// ordinary runtime dependency roster unaffordable.
-fn build_development_dependencies_content(
-    file: &Path,
-    source: &Source,
-    sections: &[Section],
-    python_project_manifest: bool,
-) -> Option<crate::content::BatchContent> {
-    if !python_project_manifest && !is_cargo_manifest(file) {
-        return None;
-    }
-    let is_development = |name: &str| {
-        if python_project_manifest {
-            is_dependency_group_section(name)
-        } else {
-            is_cargo_development_dependency_section(name)
-        }
-    };
-    let mut line_numbers = Vec::new();
-    for (name, start, end) in sections {
-        if is_development(name) {
-            line_numbers.extend(*start..=*end);
-        }
     }
     if line_numbers.is_empty() {
         return None;
@@ -794,20 +733,6 @@ fn cargo_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
         zero_tool_call,
         path_depth_factor(file, ctx),
     )
-}
-
-fn development_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let (catastrophic, follow_up, zero_tool_call) = if file.parent() == Some(ctx.root()) {
-        (0.4, 0.7, 0.4)
-    } else {
-        (0.32, 0.58, 0.32)
-    };
-    mix_signals(
-        catastrophic,
-        follow_up,
-        zero_tool_call,
-        path_depth_factor(file, ctx),
-    ) * crate::value::DEV_DEPENDENCY_ROSTER_SCALE
 }
 
 fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -1374,50 +1299,6 @@ pytest = "*"
         }
         for name in ["profile.release", "bin", "example", "test", "bench"] {
             assert!(!is_dependency_section(name), "config/target only: {name}");
-        }
-    }
-
-    /// Dev/build/target rosters must never be purchasable before the runtime
-    /// roster of the same manifest — otherwise a manifest can render its
-    /// tooling alone and read as having no runtime dependencies. A manifest
-    /// without a runtime roster has nothing to gate behind.
-    #[test]
-    fn walker_toml_development_dependencies_gate_behind_runtime_dependencies() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        fs::write(
-            root.join("Cargo.toml"),
-            "[package]\nname='demo'\nversion='0.1.0'\n\
-             [dependencies]\nserde='1'\n[dev-dependencies]\nproptest='1'\n",
-        )
-        .unwrap();
-        fs::create_dir(root.join("leaf")).unwrap();
-        fs::write(
-            root.join("leaf/Cargo.toml"),
-            "[package]\nname='leaf'\nversion='0.1.0'\n[dev-dependencies]\nproptest='1'\n",
-        )
-        .unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        for (rel, expected) in [
-            (
-                "Cargo.toml",
-                Some(BatchKey::Toml(TomlKey::Dependencies {
-                    file: root.join("Cargo.toml"),
-                })),
-            ),
-            ("leaf/Cargo.toml", None),
-        ] {
-            let manifest = root.join(rel);
-            let batches = expand_in_dir(manifest.parent().unwrap(), &ctx);
-            let dev = batches
-                .iter()
-                .find(|b| {
-                    matches!(&b.key, BatchKey::Toml(TomlKey::DevelopmentDependencies { file })
-                        if *file == manifest)
-                })
-                .expect("development dependencies batch");
-            assert_eq!(dev.predecessor, expected, "{rel}");
         }
     }
 

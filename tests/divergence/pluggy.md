@@ -133,51 +133,50 @@ Score(3000)=0.644 I=0.777 C=0.534 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 7039 | 28 | python decl src/pluggy/_manager.py:512 |  |  | 0.547 |
 | walker |  | 7070 | 31 | python decl src/pluggy/_manager.py:450 |  |  | 0.547 |
 | walker |  | 7082 | 12 | python doc src/pluggy/_result.py:42 |  |  | 0.547 |
-| walker |  | 7120 | 38 | dev/build/target dependencies in pyproject.toml |  |  | 0.547 |
+| walker |  | 7166 | 84 | declaration surface of downstream/tox.sh |  |  | 0.547 |
 | ns | 7193 |  | 200 | Complete attribute sets of `HookImpl` and `HookSpec` (`__slots__`) | 3.13 |  | 0.561 |
-| walker |  | 7204 | 84 | declaration surface of downstream/tox.sh |  |  | 0.561 |
-| walker |  | 7291 | 87 | declaration surface of downstream/conda.sh |  |  | 0.561 |
-| walker |  | 7303 | 12 | python doc src/pluggy/_result.py:56 |  |  | 0.561 |
-| walker |  | 7393 | 90 | declaration surface of docs/api_reference.rst |  |  | 0.561 |
-| walker |  | 7484 | 91 | declaration surface of downstream/pytest.sh |  |  | 0.561 |
+| walker |  | 7253 | 87 | declaration surface of downstream/conda.sh |  |  | 0.561 |
+| walker |  | 7265 | 12 | python doc src/pluggy/_result.py:56 |  |  | 0.561 |
+| walker |  | 7355 | 90 | declaration surface of docs/api_reference.rst |  |  | 0.561 |
+| walker |  | 7446 | 91 | declaration surface of downstream/pytest.sh |  |  | 0.561 |
 | ns | 7503 |  | 310 | `load_setuptools_entrypoints`: how third-party plugins are discovered | 3.14 | 2.1 | 0.547 |
-| walker |  | 7577 | 93 | declaration surface of downstream/datasette.sh |  |  | 0.547 |
+| walker |  | 7539 | 93 | declaration surface of downstream/datasette.sh |  |  | 0.547 |
 | ns | 7697 |  | 194 | Blocking semantics: `set_blocked`, `is_blocked`, `unblock` | 3.15 | 2.1 | 0.539 |
-| walker |  | 7766 | 189 | python doc src/pluggy/_warnings.py:10 |  |  | 0.545 |
-| walker |  | 7861 | 95 | declaration surface of downstream/hatch.sh |  |  | 0.545 |
-| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.539 |
-| walker |  | 7960 | 99 | declaration surface of changelog/_template.rst |  |  | 0.539 |
-| walker |  | 7971 | 11 | listing of 'docs/examples/eggsample-spam' |  |  | 0.544 |
-| walker |  | 8079 | 108 | declaration surface of downstream/devpi.sh |  |  | 0.544 |
-| walker |  | 8106 | 27 | python names testing/test_result.py |  |  | 0.544 |
-| walker |  | 8244 | 138 | declaration surface of downstream/python-lsp-server.sh |  |  | 0.544 |
-| ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.530 |
-| walker |  | 8374 | 130 | README.rst section #1 |  |  | 0.530 |
-| walker |  | 8409 | 35 | python names testing/conftest.py |  |  | 0.530 |
-| walker |  | 8417 | 8 | python decl testing/conftest.py:23 |  |  | 0.530 |
-| walker |  | 8449 | 32 | python doc src/pluggy/_result.py:24 |  |  | 0.534 |
-| walker |  | 8498 | 49 | python body src/pluggy/_tracing.py:17 |  |  | 0.534 |
+| walker |  | 7728 | 189 | python doc src/pluggy/_warnings.py:10 |  |  | 0.545 |
+| walker |  | 7823 | 95 | declaration surface of downstream/hatch.sh |  |  | 0.545 |
+| walker |  | 7922 | 99 | declaration surface of changelog/_template.rst |  |  | 0.545 |
+| ns | 7929 |  | 232 | `docs/api_reference.rst`: exactly which types are publicly documented | 4.1 |  | 0.538 |
+| walker |  | 7933 | 11 | listing of 'docs/examples/eggsample-spam' |  |  | 0.544 |
+| walker |  | 8041 | 108 | declaration surface of downstream/devpi.sh |  |  | 0.544 |
+| walker |  | 8068 | 27 | python names testing/test_result.py |  |  | 0.544 |
+| walker |  | 8206 | 138 | declaration surface of downstream/python-lsp-server.sh |  |  | 0.544 |
+| ns | 8259 |  | 330 | `docs/examples/toy-example.py`: the canonical end-to-end usage | 4.2 |  | 0.529 |
+| walker |  | 8336 | 130 | README.rst section #1 |  |  | 0.529 |
+| walker |  | 8371 | 35 | python names testing/conftest.py |  |  | 0.529 |
+| walker |  | 8379 | 8 | python decl testing/conftest.py:23 |  |  | 0.529 |
+| walker |  | 8411 | 32 | python doc src/pluggy/_result.py:24 |  |  | 0.534 |
+| walker |  | 8460 | 49 | python body src/pluggy/_tracing.py:17 |  |  | 0.534 |
+| walker |  | 8516 | 56 | python doc src/pluggy/_callers.py:82 |  |  | 0.534 |
 | ns | 8540 |  | 281 | The eggsample host program: wiring a PluginManager and calling a hook | 4.3 |  | 0.524 |
-| walker |  | 8554 | 56 | python doc src/pluggy/_callers.py:82 |  |  | 0.524 |
-| walker |  | 8600 | 46 | python decl testing/conftest.py:7 |  |  | 0.524 |
-| walker |  | 8613 | 13 | python body src/pluggy/_manager.py:425 |  |  | 0.524 |
+| walker |  | 8562 | 46 | python decl testing/conftest.py:7 |  |  | 0.524 |
+| walker |  | 8575 | 13 | python body src/pluggy/_manager.py:425 |  |  | 0.524 |
 | ns | 8760 |  | 220 | `eggsample/hookspecs.py` in full: what a real hookspec module looks like | 4.4 |  | 0.515 |
-| walker |  | 8956 | 343 | python names docs/conf.py |  |  | 0.515 |
-| walker |  | 8984 | 28 | python decl docs/conf.py:54 |  |  | 0.515 |
-| walker |  | 8991 | 7 | python body docs/conf.py:130 |  |  | 0.515 |
-| walker |  | 9059 | 68 | python decl docs/conf.py:9 |  |  | 0.515 |
+| walker |  | 8918 | 343 | python names docs/conf.py |  |  | 0.515 |
+| walker |  | 8946 | 28 | python decl docs/conf.py:54 |  |  | 0.515 |
+| walker |  | 8953 | 7 | python body docs/conf.py:130 |  |  | 0.515 |
+| walker |  | 9021 | 68 | python decl docs/conf.py:9 |  |  | 0.515 |
 | ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.504 |
-| walker |  | 9140 | 81 | python decl docs/conf.py:83 |  |  | 0.504 |
+| walker |  | 9102 | 81 | python decl docs/conf.py:83 |  |  | 0.504 |
+| walker |  | 9236 | 134 | python decl docs/conf.py:96 |  |  | 0.504 |
 | ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.500 |
-| walker |  | 9274 | 134 | python decl docs/conf.py:96 |  |  | 0.500 |
-| walker |  | 9418 | 144 | python decl docs/conf.py:41 |  |  | 0.500 |
+| walker |  | 9380 | 144 | python decl docs/conf.py:41 |  |  | 0.500 |
 | ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.494 |
-| walker |  | 9576 | 158 | python decl docs/conf.py:66 |  |  | 0.494 |
-| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.499 |
-| walker |  | 9812 | 236 | declaration surface of changelog/README.rst |  |  | 0.499 |
-| walker |  | 9821 | 9 | python body testing/conftest.py:23 |  |  | 0.500 |
-| ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.495 |
-| walker |  | 9880 | 59 | python names testing/test_warnings.py |  |  | 0.495 |
-| walker |  | 9894 | 14 | python doc src/pluggy/_manager.py:300 |  |  | 0.495 |
-| ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.493 |
-| ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.496 |
+| walker |  | 9538 | 158 | python decl docs/conf.py:66 |  |  | 0.494 |
+| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.494 |
+| walker |  | 9774 | 236 | declaration surface of changelog/README.rst |  |  | 0.494 |
+| walker |  | 9783 | 9 | python body testing/conftest.py:23 |  |  | 0.495 |
+| ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.491 |
+| walker |  | 9842 | 59 | python names testing/test_warnings.py |  |  | 0.491 |
+| walker |  | 9856 | 14 | python doc src/pluggy/_manager.py:300 |  |  | 0.491 |
+| ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.488 |
+| ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.491 |
