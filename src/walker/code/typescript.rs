@@ -781,26 +781,19 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
     let mut body = Vec::new();
     let mut members = Vec::new();
     let mut last_row = open_row;
-    let mut comment_start = None;
     // A method's decorators are its preceding siblings, not its children.
     let mut first_decorator: Option<Node> = None;
     let mut cursor = block.walk();
     for child in block.named_children(&mut cursor) {
         let child_span = Span::of(file, child);
         match child.kind() {
-            "comment" => {
-                if child_span.start > last_row && first_decorator.is_none() {
-                    comment_start.get_or_insert(child_span.start);
-                }
-                continue;
-            }
+            "comment" => continue,
             "decorator" => {
                 first_decorator.get_or_insert(child);
                 continue;
             }
             _ => {}
         }
-        let leading_comment = comment_start.take();
         let anchor = first_decorator.take().unwrap_or(child);
         let span = Span {
             start: anchor.start_position().row + 1,
@@ -826,10 +819,9 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
                 body.push(Item::new(member.name_rows.iter().copied()));
                 members.push(member);
             } else {
-                let start = leading_comment.unwrap_or(span.start).max(last_row + 1);
-                if start <= span.end {
-                    body.push(Item::new(start..=span.end));
-                }
+                let comments = file.comment_rows_above(anchor, last_row);
+                let own = span.start.max(last_row + 1)..=span.end;
+                body.push(Item::new(comments.into_iter().chain(own)));
             }
         }
         last_row = last_row.max(span.end);
