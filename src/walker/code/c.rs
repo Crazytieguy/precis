@@ -21,14 +21,14 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile};
+use super::{Language, SourceFile, is_named_after};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
     extensions: &["c", "h"],
     grammar: |_| tree_sitter_c::LANGUAGE.into(),
     extract,
-    is_entrypoint: None,
+    is_entrypoint: Some(is_entrypoint),
     file_weight: Some(file_weight),
 };
 
@@ -62,6 +62,12 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         reexports: Vec::new(),
         decls,
     }
+}
+
+/// A header within one directory of the root named after the repository
+/// (`sds.h`, `src/jq.h`): the library's public interface.
+fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
+    is_header(path) && ctx.depth_from_root(path) <= 2 && is_named_after(path, ctx.root())
 }
 
 fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
@@ -807,5 +813,17 @@ int next;
             file_weight(Path::new("/repo/sds.c"), &ctx),
             IMPLEMENTATION_FILE_WEIGHT
         );
+    }
+
+    #[test]
+    fn c_entrypoint_is_the_header_named_after_the_repository() {
+        let ctx = WalkCtx::new("/work/sqlite-vec".into());
+        let entrypoint =
+            |relative: &str| is_entrypoint(&Path::new("/work/sqlite-vec").join(relative), &ctx);
+        assert!(entrypoint("sqlite_vec.h"));
+        assert!(entrypoint("src/SQLITE-VEC.h"));
+        assert!(!entrypoint("sqlite-vec.c"));
+        assert!(!entrypoint("include/deep/sqlite-vec.h"));
+        assert!(!entrypoint("src/util.h"));
     }
 }

@@ -23,7 +23,7 @@ use std::path::{Path, PathBuf};
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile};
+use super::{Language, SourceFile, is_named_after};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -106,7 +106,8 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 
 /// `index` / `main` / `mod` / `esm` sources within one directory of
 /// their package root (the nearest `package.json` directory, else the
-/// walk root): `index.ts`, `src/index.ts`, `lib/main.js`.
+/// walk root): `index.ts`, `src/index.ts`, `lib/main.js`; and, outside
+/// `bin/`, the source named after that package (`lib/express.js`).
 fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     let Some((stem, extension)) = path
         .file_name()
@@ -115,17 +116,20 @@ fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     else {
         return false;
     };
-    let named_entrypoint = ENTRYPOINT_STEMS.contains(&stem)
-        && LANGUAGE
-            .extensions
-            .iter()
-            .any(|candidate| extension.eq_ignore_ascii_case(candidate));
-    let Some(dir) = path.parent().filter(|_| named_entrypoint) else {
+    let is_source = LANGUAGE
+        .extensions
+        .iter()
+        .any(|candidate| extension.eq_ignore_ascii_case(candidate));
+    let Some(dir) = path.parent().filter(|_| is_source) else {
         return false;
     };
     let package_dir = ctx.code.typescript.package_dir(dir, ctx.root());
-    path.strip_prefix(package_dir)
-        .is_ok_and(|relative| relative.components().count() <= 2)
+    let Ok(relative) = path.strip_prefix(&package_dir) else {
+        return false;
+    };
+    relative.components().count() <= 2
+        && (ENTRYPOINT_STEMS.contains(&stem)
+            || (is_named_after(path, &package_dir) && !relative.starts_with("bin")))
 }
 
 /// Tooling config (`vite.config.ts`, `.eslintrc.js`) is not the
@@ -1406,6 +1410,8 @@ export const c = 3;
             ("packages/core/package.json", "{}"),
             ("packages/core/src/main.js", ""),
             ("packages/core/src/lib/mod.ts", ""),
+            ("packages/core/src/core.ts", ""),
+            ("packages/core/bin/core.js", ""),
             ("index.d.ts", ""),
             ("src/app.ts", ""),
         ];
@@ -1423,7 +1429,12 @@ export const c = 3;
             .collect();
         assert_eq!(
             entrypoints,
-            ["index.ts", "src/index.ts", "packages/core/src/main.js"]
+            [
+                "index.ts",
+                "src/index.ts",
+                "packages/core/src/main.js",
+                "packages/core/src/core.ts"
+            ]
         );
     }
 

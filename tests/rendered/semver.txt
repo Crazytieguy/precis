@@ -159,6 +159,19 @@ classes/
     90→    return this.version
     …
     93→  compare (other) {
+    94→    debug('SemVer.compare', this.version, this.options, other)
+    95→    if (!(other instanceof SemVer)) {
+    96→      if (typeof other === 'string' && other === this.version) {
+    97→        return 0
+    98→      }
+    99→      other = new SemVer(other, this.options)
+    100→    }
+    101→
+    102→    if (other.version === this.version) {
+    103→      return 0
+    104→    }
+    105→
+    106→    return this.compareMain(other) || this.comparePre(other)
     …
     109→  compareMain (other) {
     …
@@ -175,7 +188,6 @@ functions/
     …
     4→const clean = (version, options) => {
     5→  const s = parse(version.trim().replace(/^[=v]+/, ''), options)
-    6→  return s ? s.version : null
     …
     8→module.exports = clean
   cmp.js
@@ -201,12 +213,6 @@ functions/
   satisfies.js
   sort.js
   valid.js
-    …
-    4→const valid = (version, options) => {
-    5→  const v = parse(version, options)
-    6→  return v ? v.version : null
-    …
-    8→module.exports = valid
 index.js
   …
   45→module.exports = {
@@ -291,15 +297,6 @@ internal/
     …
     17→module.exports = parseOptions
   re.js
-    …
-    9→exports = module.exports = {}
-    …
-    12→const re = exports.re = []
-    13→const safeRe = exports.safeRe = []
-    14→const src = exports.src = []
-    15→const safeSrc = exports.safeSrc = []
-    16→const t = exports.t = {}
-    …
 map.js
   …
   3→module.exports = testFile => testFile.replace(/test\//, '')

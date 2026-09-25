@@ -172,8 +172,7 @@ packages/
         ru.json
         tr.json
         vi.json
-        zh-CN.json
-        zh-TW.json
+        …
       modules/
         auth/
           auth.models.ts
@@ -243,15 +242,6 @@ packages/
       modules/
         app/
           auth/
-            auth.errors.ts
-            auth.middleware.test.ts
-            auth.middleware.ts
-            auth.models.test.ts
-            auth.models.ts
-            auth.routes.ts
-            auth.services.ts
-            e2e/
-              login.e2e.test.ts
           config/
             config.models.ts
             config.routes.ts
@@ -286,11 +276,6 @@ packages/
             validation.ts
         storage/
           factories/
-            cloudflare-kv.storage.models.test.ts
-            cloudflare-kv.storage.models.ts
-            cloudflare-kv.storage.ts
-            fs-lite.storage.ts
-            memory.storage.ts
           storage.models.ts
           storage.types.ts
         tasks/
@@ -311,6 +296,19 @@ packages/
     package.json
     src/
       cli.ts
+        …
+        6→const main = defineCommand({
+        7→  meta: {
+        8→    name: 'enclosed',
+        9→    description: 'Create and view private and secure notes',
+        10→  },
+        11→  subCommands: {
+        12→    create: createNoteCommand,
+        13→    view: viewNoteCommand,
+        14→    config: configCommand,
+        15→  },
+        16→});
+        …
       config/
         config.command.ts
         config.constants.ts
@@ -389,9 +387,6 @@ packages/
         i18n.data.ts
       how-it-works.md
       index.md
-        …
-        5→# Enclosed
-        …
       integrations/
         cli.md
         npm-package.md

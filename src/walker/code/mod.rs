@@ -201,6 +201,22 @@ impl SourceFile {
     }
 }
 
+/// Whether `path`'s stem is `dir`'s name, ignoring case and reading `-`
+/// as `_`: the file a project names after itself (`lib/express.js` in
+/// `express`, `sds.h` in `sds`), conventionally its front door.
+fn is_named_after(path: &Path, dir: &Path) -> bool {
+    let normalized = |name: &std::ffi::OsStr| {
+        name.to_str()
+            .map(|name| name.to_ascii_lowercase().replace('-', "_"))
+    };
+    match (path.file_stem(), dir.file_name()) {
+        (Some(stem), Some(dir_name)) => {
+            normalized(stem).is_some_and(|stem| Some(stem) == normalized(dir_name))
+        }
+        _ => false,
+    }
+}
+
 /// Batches for every source file in `dir`. Called by `FsWalker` once per
 /// scheduled directory listing.
 pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {

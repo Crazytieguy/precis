@@ -181,12 +181,72 @@ src/
   compile.c
   compile.h
   exec_stack.h
-    …
-    40→struct determine_alignment {
-    …
   execute.c
   inject_errors.c
   jq.h
+    …
+    11→enum {
+    12→  JQ_DEBUG_TRACE = 1,
+    13→  JQ_DEBUG_TRACE_DETAIL = 2,
+    14→  JQ_DEBUG_TRACE_ALL = JQ_DEBUG_TRACE | JQ_DEBUG_TRACE_DETAIL,
+    15→};
+    17→typedef struct jq_state jq_state;
+    18→typedef void (*jq_msg_cb)(void *, jv);
+    19→
+    20→jq_state *jq_init(void);
+    21→void jq_set_error_cb(jq_state *, jq_msg_cb, void *);
+    22→void jq_get_error_cb(jq_state *, jq_msg_cb *, void **);
+    23→void jq_set_nomem_handler(jq_state *, void (*)(void *), void *);
+    24→jv jq_format_error(jv msg);
+    25→void jq_report_error(jq_state *, jv);
+    26→int jq_compile(jq_state *, const char*);
+    27→int jq_compile_args(jq_state *, const char*, jv);
+    28→void jq_dump_disassembly(jq_state *, int);
+    29→void jq_start(jq_state *, jv value, int);
+    30→jv jq_next(jq_state *);
+    31→void jq_teardown(jq_state **);
+    32→
+    33→void jq_halt(jq_state *, jv, jv);
+    34→int jq_halted(jq_state *);
+    35→jv jq_get_exit_code(jq_state *);
+    36→jv jq_get_error_message(jq_state *);
+    37→
+    38→typedef jv (*jq_input_cb)(jq_state *, void *);
+    39→void jq_set_input_cb(jq_state *, jq_input_cb, void *);
+    40→void jq_get_input_cb(jq_state *, jq_input_cb *, void **);
+    41→void jq_set_debug_cb(jq_state *, jq_msg_cb, void *);
+    42→void jq_get_debug_cb(jq_state *, jq_msg_cb *, void **);
+    43→void jq_set_stderr_cb(jq_state *, jq_msg_cb, void *);
+    44→void jq_get_stderr_cb(jq_state *, jq_msg_cb *, void **);
+    46→void jq_set_attrs(jq_state *, jv);
+    47→jv jq_get_attrs(jq_state *);
+    48→jv jq_get_jq_origin(jq_state *);
+    49→jv jq_get_prog_origin(jq_state *);
+    50→jv jq_get_lib_dirs(jq_state *);
+    51→void jq_set_attr(jq_state *, jv, jv);
+    52→jv jq_get_attr(jq_state *, jv);
+    54→/*
+    55→ * We use char * instead of jf for filenames here because filenames
+    56→ * should be in the process' locale's codeset, which may not be UTF-8,
+    57→ * whereas jv string values must be in UTF-8.  This way the caller
+    58→ * doesn't have to perform any codeset conversions.
+    59→ */
+    60→typedef struct jq_util_input_state jq_util_input_state;
+    61→typedef void (*jq_util_msg_cb)(void *, const char *);
+    62→
+    63→jq_util_input_state *jq_util_input_init(jq_util_msg_cb, void *);
+    64→void jq_util_input_set_parser(jq_util_input_state *, jv_parser *, int);
+    65→void jq_util_input_free(jq_util_input_state **);
+    66→void jq_util_input_add_input(jq_util_input_state *, const char *);
+    67→int jq_util_input_errors(jq_util_input_state *);
+    68→jv jq_util_input_next_input(jq_util_input_state *);
+    69→jv jq_util_input_next_input_cb(jq_state *, void *);
+    70→jv jq_util_input_get_position(jq_state*);
+    71→jv jq_util_input_get_current_filename(jq_state*);
+    72→jv jq_util_input_get_current_line(jq_state*);
+    73→
+    74→int jq_set_colors(const char *);
+    …
   jq_parser.h
   jq_test.c
   jv.c
@@ -219,29 +279,17 @@ src/
   parser.c
   parser.h
     …
-    44→#if YYDEBUG
     45→extern int yydebug;
-    46→#endif
     …
     51→struct lexer_param;
     52→
     53→#define YYLTYPE location
     54→#define YYLLOC_DEFAULT(Loc, Rhs, N)             \
-    55→  do {                                          \
-    56→    if (N) {                                    \
-    57→      (Loc).start = YYRHSLOC(Rhs, 1).start;     \
-    58→      (Loc).end = YYRHSLOC(Rhs, N).end;         \
-    59→    } else {                                    \
-    60→      (Loc).start = YYRHSLOC(Rhs, 0).end;       \
-    61→      (Loc).end = YYRHSLOC(Rhs, 0).end;         \
-    62→    }                                           \
-    63→  } while (0)
     …
     70→  enum yytokentype
     …
     123→  typedef enum yytokentype yytoken_kind_t;
-    124→#endif
-    125→/* Token kinds.  */
+    …
     126→#define YYEMPTY -2
     127→#define YYEOF 0
     128→#define YYerror 256
@@ -254,74 +302,6 @@ src/
     135→#define FORMAT 263
     136→#define REC 264
     137→#define SETMOD 265
-    138→#define EQ 266
-    139→#define NEQ 267
-    140→#define DEFINEDOR 268
-    141→#define AS 269
-    142→#define DEF 270
-    143→#define MODULE 271
-    144→#define IMPORT 272
-    145→#define INCLUDE 273
-    146→#define IF 274
-    147→#define THEN 275
-    148→#define ELSE 276
-    149→#define ELSE_IF 277
-    150→#define REDUCE 278
-    151→#define FOREACH 279
-    152→#define END 280
-    153→#define AND 281
-    154→#define OR 282
-    155→#define TRY 283
-    156→#define CATCH 284
-    157→#define LABEL 285
-    158→#define BREAK 286
-    159→#define LOC 287
-    160→#define SETPIPE 288
-    161→#define SETPLUS 289
-    162→#define SETMINUS 290
-    163→#define SETMULT 291
-    164→#define SETDIV 292
-    165→#define SETDEFINEDOR 293
-    166→#define LESSEQ 294
-    167→#define GREATEREQ 295
-    168→#define ALTERNATION 296
-    169→#define QQSTRING_START 297
-    170→#define QQSTRING_TEXT 298
-    171→#define QQSTRING_INTERP_START 299
-    172→#define QQSTRING_INTERP_END 300
-    173→#define QQSTRING_END 301
-    174→#define FUNCDEF 302
-    175→#define NONOPT 303
-    …
-    178→#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-    179→union YYSTYPE
-    180→{
-    181→#line 32 "src/parser.y"
-    182→
-    183→  jv literal;
-    184→  block blk;
-    185→
-    186→#line 187 "src/parser.h"
-    187→
-    188→};
-    189→typedef union YYSTYPE YYSTYPE;
-    190→# define YYSTYPE_IS_TRIVIAL 1
-    191→# define YYSTYPE_IS_DECLARED 1
-    192→#endif
-    …
-    195→#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-    196→typedef struct YYLTYPE YYLTYPE;
-    197→struct YYLTYPE
-    198→{
-    199→  int first_line;
-    200→  int first_column;
-    201→  int last_line;
-    202→  int last_column;
-    203→};
-    204→# define YYLTYPE_IS_DECLARED 1
-    205→# define YYLTYPE_IS_TRIVIAL 1
-    206→#endif
-    211→int yyparse (block* answer, int* errors, struct locfile* locations, struct lexer_param* lexer_param_ptr);
     …
   parser.y
   util.c

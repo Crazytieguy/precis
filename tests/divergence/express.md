@@ -1,4 +1,4 @@
-Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.607/0.608/0.566/0.513/0.490/0.408/0.488
+Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.604/0.696/0.566/0.513/0.490/0.408/0.509
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,16 +22,16 @@ Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 886 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.685 |
 | ns | 962 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.603 |
 | walker |  | 973 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.603 |
-| walker |  | 1149 | 176 | Json::Scripts { file: package.json } |  |  | 0.690 |
-| walker |  | 1164 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.691 |
-| ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.604 |
-| ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.548 |
-| walker |  | 1540 | 376 | Fs::DirListing { dir: test } |  |  | 0.555 |
-| walker |  | 1552 | 12 | Fs::DirListing { dir: test/support } |  |  | 0.555 |
-| walker |  | 1638 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.556 |
-| ns | 1663 |  | 198 | lib/view.js and lib/utils.js symbol rosters | 2.5 |  | 0.522 |
-| walker |  | 1771 | 133 | Code::CodeKey { rung: Names, file: lib/express.js, decl: 0, sub: 0, line: 0 } |  |  | 0.600 |
-| walker |  | 1813 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.600 |
+| walker |  | 1106 | 133 | Code::CodeKey { rung: Names, file: lib/express.js, decl: 0, sub: 0, line: 0 } |  |  | 0.693 |
+| walker |  | 1148 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.693 |
+| ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.605 |
+| walker |  | 1324 | 176 | Json::Scripts { file: package.json } |  |  | 0.678 |
+| walker |  | 1339 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.695 |
+| ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.631 |
+| ns | 1663 |  | 198 | lib/view.js and lib/utils.js symbol rosters | 2.5 |  | 0.592 |
+| walker |  | 1715 | 376 | Fs::DirListing { dir: test } |  |  | 0.599 |
+| walker |  | 1727 | 12 | Fs::DirListing { dir: test/support } |  |  | 0.599 |
+| walker |  | 1813 | 86 | Fs::DirListing { dir: test/acceptance } |  |  | 0.600 |
 | ns | 1896 |  | 233 | createApplication() body | 2.6 |  | 0.557 |
 | walker |  | 1932 | 119 | Code::CodeKey { rung: Names, file: lib/request.js, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
 | walker |  | 1945 | 13 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 5, sub: 0, line: 185 } |  |  | 0.566 |
@@ -115,36 +115,36 @@ Score(3000)=0.513 I=0.806 C=0.326 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 6684 |  | 86 | test/acceptance/ listing | 5.2 |  | 0.488 |
 | walker |  | 6738 | 212 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 9, sub: 0, line: 433 } |  |  | 0.488 |
 | ns | 6785 |  | 101 | examples/ listing | 5.3 |  | 0.504 |
-| walker |  | 6833 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 5, sub: 0, line: 190 } |  |  | 0.504 |
-| walker |  | 6928 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 15, sub: 0, line: 494 } |  |  | 0.504 |
-| ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.499 |
-| walker |  | 7059 | 131 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.499 |
-| walker |  | 7183 | 124 | Markdown::Section { file: Readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.499 |
-| ns | 7299 |  | 258 | examples/README.md — annotated example index (second half) | 5.5 | 5.4 | 0.494 |
-| ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.487 |
-| walker |  | 7458 | 275 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 15, sub: 0, line: 742 } |  |  | 0.488 |
-| ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.485 |
-| walker |  | 7577 | 119 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 8, sub: 0, line: 322 } |  |  | 0.485 |
-| ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.480 |
-| walker |  | 7698 | 121 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.480 |
-| walker |  | 7822 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 10, sub: 0, line: 399 } |  |  | 0.480 |
-| ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.474 |
-| walker |  | 7946 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.474 |
-| walker |  | 8075 | 129 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 1, sub: 0, line: 52 } |  |  | 0.474 |
-| ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.491 |
-| walker |  | 8216 | 141 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 9, sub: 0, line: 351 } |  |  | 0.504 |
-| ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.498 |
-| walker |  | 8362 | 146 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.498 |
-| walker |  | 8400 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 6, sub: 0, line: 214 } |  |  | 0.498 |
-| ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.494 |
-| walker |  | 8559 | 159 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 16, sub: 0, line: 522 } |  |  | 0.494 |
-| walker |  | 8801 | 242 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.494 |
-| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.488 |
-| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.488 |
-| ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.483 |
-| walker |  | 9302 | 501 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.496 |
-| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.507 |
-| walker |  | 9519 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.527 |
+| walker |  | 6955 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.530 |
+| ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.524 |
+| walker |  | 7050 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 5, sub: 0, line: 190 } |  |  | 0.524 |
+| walker |  | 7145 | 95 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 15, sub: 0, line: 494 } |  |  | 0.524 |
+| walker |  | 7276 | 131 | Markdown::Section { file: Readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.524 |
+| ns | 7299 |  | 258 | examples/README.md — annotated example index (second half) | 5.5 | 5.4 | 0.519 |
+| ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.511 |
+| walker |  | 7400 | 124 | Markdown::Section { file: Readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.511 |
+| ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.508 |
+| ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.502 |
+| walker |  | 7675 | 275 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 15, sub: 0, line: 742 } |  |  | 0.503 |
+| walker |  | 7794 | 119 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 8, sub: 0, line: 322 } |  |  | 0.503 |
+| ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.498 |
+| walker |  | 7915 | 121 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.498 |
+| walker |  | 8039 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 10, sub: 0, line: 399 } |  |  | 0.498 |
+| ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.514 |
+| walker |  | 8163 | 124 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.514 |
+| walker |  | 8292 | 129 | Code::CodeKey { rung: Doc, file: lib/view.js, decl: 1, sub: 0, line: 52 } |  |  | 0.514 |
+| ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.507 |
+| walker |  | 8433 | 141 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 9, sub: 0, line: 351 } |  |  | 0.520 |
+| ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.516 |
+| walker |  | 8579 | 146 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.516 |
+| walker |  | 8617 | 38 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 6, sub: 0, line: 214 } |  |  | 0.516 |
+| walker |  | 8776 | 159 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 16, sub: 0, line: 522 } |  |  | 0.516 |
+| ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.510 |
+| ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.509 |
+| walker |  | 9018 | 242 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.509 |
+| ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.504 |
+| ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.514 |
+| walker |  | 9519 | 501 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.527 |
 | ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.535 |
 | walker |  | 9742 | 223 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 17, sub: 0, line: 598 } |  |  | 0.535 |
 | ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.531 |

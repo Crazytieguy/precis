@@ -1,4 +1,4 @@
-Score(3000)=0.726 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.758/0.786/0.726/0.637/0.610/0.541
+Score(3000)=0.726 I=0.917 C=0.575 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.758/0.798/0.726/0.637/0.611/0.538
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -27,157 +27,157 @@ Score(3000)=0.726 I=0.917 C=0.574 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 770 | 180 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.724 |
 | walker |  | 795 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
 | walker |  | 822 | 27 | Fs::DirListing { dir: test/internal } |  |  | 0.724 |
+| walker |  | 844 | 22 | Code::CodeKey { rung: Names, file: classes/semver.js, decl: 0, sub: 0, line: 0 } |  |  | 0.724 |
 | ns | 909 |  | 197 | index.js aggregate export object, remainder (satisfies..rcompareIdentifiers) | 1.8 | 1.7 | 0.658 |
-| walker |  | 1107 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.661 |
-| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.639 |
-| walker |  | 1244 | 137 | Json::Entry { file: package.json } |  |  | 0.757 |
-| walker |  | 1388 | 144 | Json::Scripts { file: package.json } |  |  | 0.757 |
-| walker |  | 1400 | 12 | Code::CodeKey { rung: Names, file: classes/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
-| walker |  | 1442 | 42 | Code::CodeKey { rung: Decl, file: classes/index.js, decl: 1, sub: 0, line: 3 } |  |  | 0.758 |
-| walker |  | 1454 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
+| walker |  | 950 | 106 | Code::CodeKey { rung: Decl, file: classes/semver.js, decl: 1, sub: 0, line: 9 } |  |  | 0.659 |
+| walker |  | 959 | 9 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 4, sub: 0, line: 89 } |  |  | 0.659 |
+| ns | 1230 |  | 321 | README section map: every heading, no bodies | 1.9 |  | 0.638 |
+| walker |  | 1244 | 285 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.641 |
+| walker |  | 1381 | 137 | Json::Entry { file: package.json } |  |  | 0.758 |
 | ns | 1491 |  | 261 | range.bnf: the complete formal grammar of range syntax | 1.10 |  | 0.718 |
-| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.664 |
-| walker |  | 1834 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.836 |
-| walker |  | 1848 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
-| walker |  | 1851 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.836 |
-| ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.786 |
-| walker |  | 1956 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.786 |
-| walker |  | 1977 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.786 |
-| walker |  | 1981 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.786 |
-| walker |  | 1985 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.786 |
-| walker |  | 2041 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.786 |
-| walker |  | 2062 | 21 | Code::CodeKey { rung: Names, file: internal/debug.js, decl: 0, sub: 0, line: 0 } |  |  | 0.786 |
-| walker |  | 2135 | 73 | Code::CodeKey { rung: Decl, file: internal/debug.js, decl: 1, sub: 0, line: 3 } |  |  | 0.787 |
-| walker |  | 2157 | 22 | Code::CodeKey { rung: Names, file: classes/comparator.js, decl: 0, sub: 0, line: 0 } |  |  | 0.787 |
-| ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.734 |
-| walker |  | 2235 | 78 | Code::CodeKey { rung: Decl, file: classes/comparator.js, decl: 1, sub: 0, line: 5 } |  |  | 0.741 |
-| walker |  | 2243 | 8 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 2, sub: 0, line: 6 } |  |  | 0.742 |
-| walker |  | 2252 | 9 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 5, sub: 0, line: 57 } |  |  | 0.743 |
-| walker |  | 2274 | 22 | Code::CodeKey { rung: Names, file: classes/range.js, decl: 0, sub: 0, line: 0 } |  |  | 0.744 |
-| walker |  | 2362 | 88 | Code::CodeKey { rung: Decl, file: classes/range.js, decl: 1, sub: 0, line: 6 } |  |  | 0.750 |
-| walker |  | 2371 | 9 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 4, sub: 0, line: 92 } |  |  | 0.751 |
-| walker |  | 2380 | 9 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 5, sub: 0, line: 96 } |  |  | 0.752 |
-| walker |  | 2402 | 22 | Code::CodeKey { rung: Names, file: classes/semver.js, decl: 0, sub: 0, line: 0 } |  |  | 0.752 |
-| walker |  | 2508 | 106 | Code::CodeKey { rung: Decl, file: classes/semver.js, decl: 1, sub: 0, line: 9 } |  |  | 0.761 |
-| walker |  | 2517 | 9 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 4, sub: 0, line: 89 } |  |  | 0.762 |
-| ns | 2537 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.714 |
-| walker |  | 2601 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.715 |
-| ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.715 |
-| walker |  | 2606 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.715 |
-| walker |  | 2630 | 24 | Code::CodeKey { rung: Names, file: internal/lrucache.js, decl: 0, sub: 0, line: 0 } |  |  | 0.715 |
-| walker |  | 2681 | 51 | Code::CodeKey { rung: Decl, file: internal/lrucache.js, decl: 1, sub: 0, line: 3 } |  |  | 0.716 |
-| walker |  | 2692 | 11 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 4, sub: 0, line: 21 } |  |  | 0.716 |
-| walker |  | 2715 | 23 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 2, sub: 0, line: 4 } |  |  | 0.716 |
-| walker |  | 2740 | 25 | Code::CodeKey { rung: Names, file: internal/parse-options.js, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
-| walker |  | 2767 | 27 | Code::CodeKey { rung: Names, file: functions/clean.js, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
-| walker |  | 2803 | 36 | Code::CodeKey { rung: Body, file: functions/clean.js, decl: 1, sub: 0, line: 4 } |  |  | 0.716 |
-| walker |  | 2830 | 27 | Code::CodeKey { rung: Names, file: functions/valid.js, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
-| walker |  | 2856 | 26 | Code::CodeKey { rung: Body, file: functions/valid.js, decl: 1, sub: 0, line: 4 } |  |  | 0.716 |
-| ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.724 |
-| walker |  | 2921 | 65 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 3, sub: 0, line: 81 } |  |  | 0.725 |
-| walker |  | 3047 | 126 | Code::CodeKey { rung: Names, file: internal/re.js, decl: 0, sub: 0, line: 0 } |  |  | 0.726 |
-| ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.708 |
-| walker |  | 3075 | 28 | Code::CodeKey { rung: Names, file: functions/compare.js, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
-| walker |  | 3093 | 18 | Code::CodeKey { rung: Decl, file: functions/compare.js, decl: 1, sub: 0, line: 4 } |  |  | 0.708 |
-| walker |  | 3122 | 29 | Code::CodeKey { rung: Names, file: functions/coerce.js, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
-| walker |  | 3151 | 29 | Code::CodeKey { rung: Names, file: functions/diff.js, decl: 0, sub: 0, line: 0 } |  |  | 0.708 |
+| walker |  | 1525 | 144 | Json::Scripts { file: package.json } |  |  | 0.718 |
+| walker |  | 1537 | 12 | Code::CodeKey { rung: Names, file: classes/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.718 |
+| walker |  | 1579 | 42 | Code::CodeKey { rung: Decl, file: classes/index.js, decl: 1, sub: 0, line: 3 } |  |  | 0.719 |
+| walker |  | 1591 | 12 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.720 |
+| ns | 1744 |  | 253 | SemVer class: requires + complete method roster | 2.1 |  | 0.677 |
+| ns | 1950 |  | 206 | Comparator class: ANY sentinel, complete method roster, requires | 2.2 |  | 0.637 |
+| walker |  | 1971 | 380 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 45 } |  |  | 0.797 |
+| walker |  | 2036 | 65 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 3, sub: 0, line: 81 } |  |  | 0.798 |
+| walker |  | 2050 | 14 | Code::CodeKey { rung: Names, file: preload.js, decl: 0, sub: 0, line: 0 } |  |  | 0.798 |
+| walker |  | 2053 | 3 | Fs::DirListing { dir: tap-snapshots/test } |  |  | 0.798 |
+| walker |  | 2158 | 105 | Fs::DirListing { dir: test/functions } |  |  | 0.798 |
+| walker |  | 2179 | 21 | Code::CodeKey { rung: Names, file: map.js, decl: 0, sub: 0, line: 0 } |  |  | 0.798 |
+| walker |  | 2183 | 4 | Fs::DirListing { dir: .github/matchers } |  |  | 0.798 |
+| walker |  | 2187 | 4 | Fs::DirListing { dir: test/integration } |  |  | 0.798 |
+| ns | 2216 |  | 266 | Range class: complete method roster + hoisted require block and LRU cache | 2.3 |  | 0.745 |
+| walker |  | 2243 | 56 | Fs::DirListing { dir: test/ranges } |  |  | 0.745 |
+| walker |  | 2264 | 21 | Code::CodeKey { rung: Names, file: internal/debug.js, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
+| walker |  | 2337 | 73 | Code::CodeKey { rung: Decl, file: internal/debug.js, decl: 1, sub: 0, line: 3 } |  |  | 0.745 |
+| walker |  | 2359 | 22 | Code::CodeKey { rung: Names, file: classes/comparator.js, decl: 0, sub: 0, line: 0 } |  |  | 0.746 |
+| walker |  | 2437 | 78 | Code::CodeKey { rung: Decl, file: classes/comparator.js, decl: 1, sub: 0, line: 5 } |  |  | 0.753 |
+| walker |  | 2445 | 8 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 2, sub: 0, line: 6 } |  |  | 0.754 |
+| walker |  | 2454 | 9 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 5, sub: 0, line: 57 } |  |  | 0.755 |
+| walker |  | 2476 | 22 | Code::CodeKey { rung: Names, file: classes/range.js, decl: 0, sub: 0, line: 0 } |  |  | 0.755 |
+| ns | 2537 |  | 321 | range.js: complete roster of module-level range-desugaring helpers | 2.4 |  | 0.707 |
+| walker |  | 2564 | 88 | Code::CodeKey { rung: Decl, file: classes/range.js, decl: 1, sub: 0, line: 6 } |  |  | 0.713 |
+| walker |  | 2573 | 9 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 4, sub: 0, line: 92 } |  |  | 0.714 |
+| walker |  | 2582 | 9 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 5, sub: 0, line: 96 } |  |  | 0.714 |
+| ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.714 |
+| walker |  | 2666 | 84 | Fs::DirListing { dir: test/fixtures } |  |  | 0.716 |
+| walker |  | 2671 | 5 | Fs::DirListing { dir: test/bin } |  |  | 0.716 |
+| walker |  | 2695 | 24 | Code::CodeKey { rung: Names, file: internal/lrucache.js, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
+| walker |  | 2746 | 51 | Code::CodeKey { rung: Decl, file: internal/lrucache.js, decl: 1, sub: 0, line: 3 } |  |  | 0.717 |
+| walker |  | 2757 | 11 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 4, sub: 0, line: 21 } |  |  | 0.717 |
+| walker |  | 2780 | 23 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 2, sub: 0, line: 4 } |  |  | 0.717 |
+| walker |  | 2805 | 25 | Code::CodeKey { rung: Names, file: internal/parse-options.js, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
+| ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.725 |
+| walker |  | 2949 | 144 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 5, sub: 0, line: 93 } |  |  | 0.726 |
+| walker |  | 2976 | 27 | Code::CodeKey { rung: Names, file: functions/clean.js, decl: 0, sub: 0, line: 0 } |  |  | 0.726 |
+| walker |  | 3012 | 36 | Code::CodeKey { rung: Body, file: functions/clean.js, decl: 1, sub: 0, line: 4 } |  |  | 0.726 |
+| walker |  | 3039 | 27 | Code::CodeKey { rung: Names, file: functions/valid.js, decl: 0, sub: 0, line: 0 } |  |  | 0.726 |
+| walker |  | 3065 | 26 | Code::CodeKey { rung: Body, file: functions/valid.js, decl: 1, sub: 0, line: 4 } |  |  | 0.709 |
+| ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.709 |
 | ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.700 |
-| walker |  | 3180 | 29 | Code::CodeKey { rung: Names, file: functions/prerelease.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
-| walker |  | 3216 | 36 | Code::CodeKey { rung: Body, file: functions/prerelease.js, decl: 1, sub: 0, line: 4 } |  |  | 0.700 |
-| walker |  | 3245 | 29 | Code::CodeKey { rung: Names, file: functions/satisfies.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
-| walker |  | 3300 | 55 | Code::CodeKey { rung: Body, file: functions/satisfies.js, decl: 1, sub: 0, line: 4 } |  |  | 0.700 |
-| walker |  | 3329 | 29 | Code::CodeKey { rung: Names, file: ranges/min-version.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
-| ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.685 |
-| walker |  | 3358 | 29 | Code::CodeKey { rung: Names, file: ranges/valid.js, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
-| ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.677 |
-| ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.665 |
-| ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.651 |
+| walker |  | 3191 | 126 | Code::CodeKey { rung: Names, file: internal/re.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
+| walker |  | 3219 | 28 | Code::CodeKey { rung: Names, file: functions/compare.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
+| walker |  | 3237 | 18 | Code::CodeKey { rung: Decl, file: functions/compare.js, decl: 1, sub: 0, line: 4 } |  |  | 0.700 |
+| walker |  | 3266 | 29 | Code::CodeKey { rung: Names, file: functions/coerce.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
+| walker |  | 3295 | 29 | Code::CodeKey { rung: Names, file: functions/diff.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
+| walker |  | 3324 | 29 | Code::CodeKey { rung: Names, file: functions/prerelease.js, decl: 0, sub: 0, line: 0 } |  |  | 0.700 |
+| ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.686 |
+| walker |  | 3360 | 36 | Code::CodeKey { rung: Body, file: functions/prerelease.js, decl: 1, sub: 0, line: 4 } |  |  | 0.686 |
+| walker |  | 3389 | 29 | Code::CodeKey { rung: Names, file: functions/satisfies.js, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
+| walker |  | 3444 | 55 | Code::CodeKey { rung: Body, file: functions/satisfies.js, decl: 1, sub: 0, line: 4 } |  |  | 0.686 |
+| ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.678 |
+| walker |  | 3473 | 29 | Code::CodeKey { rung: Names, file: ranges/min-version.js, decl: 0, sub: 0, line: 0 } |  |  | 0.678 |
+| walker |  | 3502 | 29 | Code::CodeKey { rung: Names, file: ranges/valid.js, decl: 0, sub: 0, line: 0 } |  |  | 0.678 |
+| ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.666 |
+| ns | 3849 |  | 238 | README: the `inc` contract and the eight release types | 3.7 |  | 0.652 |
 | ns | 4177 |  | 328 | README: caret ranges (the left-most non-zero rule) and its desugaring table | 3.8 |  | 0.637 |
-| walker |  | 4225 | 867 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.637 |
-| ns | 4467 |  | 290 | README: tilde ranges and their desugaring table | 3.9 |  | 0.628 |
-| ns | 4731 |  | 264 | README: X-ranges and bare partial versions | 3.10 |  | 0.617 |
-| walker |  | 4788 | 563 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.617 |
-| walker |  | 4818 | 30 | Code::CodeKey { rung: Names, file: ranges/subset.js, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| walker |  | 4848 | 30 | Code::CodeKey { rung: Names, file: ranges/to-comparators.js, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| walker |  | 4883 | 35 | Code::CodeKey { rung: Decl, file: ranges/to-comparators.js, decl: 1, sub: 0, line: 6 } |  |  | 0.617 |
-| ns | 4922 |  | 191 | README: hyphen ranges | 3.11 |  | 0.608 |
-| walker |  | 4991 | 108 | Code::CodeKey { rung: Names, file: internal/constants.js, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
-| walker |  | 5010 | 19 | Code::CodeKey { rung: Decl, file: internal/constants.js, decl: 3, sub: 0, line: 8 } |  |  | 0.608 |
-| walker |  | 5074 | 64 | Code::CodeKey { rung: Decl, file: internal/constants.js, decl: 6, sub: 0, line: 18 } |  |  | 0.609 |
+| walker |  | 4369 | 867 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.637 |
+| ns | 4467 |  | 290 | README: tilde ranges and their desugaring table | 3.9 |  | 0.629 |
+| ns | 4731 |  | 264 | README: X-ranges and bare partial versions | 3.10 |  | 0.618 |
+| ns | 4922 |  | 191 | README: hyphen ranges | 3.11 |  | 0.609 |
+| walker |  | 4932 | 563 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.609 |
+| walker |  | 4962 | 30 | Code::CodeKey { rung: Names, file: ranges/subset.js, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 4992 | 30 | Code::CodeKey { rung: Names, file: ranges/to-comparators.js, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 5027 | 35 | Code::CodeKey { rung: Decl, file: ranges/to-comparators.js, decl: 1, sub: 0, line: 6 } |  |  | 0.609 |
 | ns | 5101 |  | 179 | README: ranges can be non-contiguous (the gtr/ltr/satisfies gotcha) | 3.12 |  | 0.602 |
-| walker |  | 5162 | 88 | Code::CodeKey { rung: Decl, file: internal/constants.js, decl: 7, sub: 0, line: 28 } |  |  | 0.603 |
-| walker |  | 5234 | 72 | Code::CodeKey { rung: Body, file: internal/parse-options.js, decl: 1, sub: 0, line: 6 } |  |  | 0.604 |
+| walker |  | 5135 | 108 | Code::CodeKey { rung: Names, file: internal/constants.js, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
+| walker |  | 5154 | 19 | Code::CodeKey { rung: Decl, file: internal/constants.js, decl: 3, sub: 0, line: 8 } |  |  | 0.602 |
+| walker |  | 5218 | 64 | Code::CodeKey { rung: Decl, file: internal/constants.js, decl: 6, sub: 0, line: 18 } |  |  | 0.603 |
+| walker |  | 5306 | 88 | Code::CodeKey { rung: Decl, file: internal/constants.js, decl: 7, sub: 0, line: 28 } |  |  | 0.604 |
 | ns | 5314 |  | 213 | README: coercion limits | 3.13 |  | 0.596 |
-| walker |  | 5404 | 170 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 8, sub: 0, line: 193 } |  |  | 0.597 |
-| walker |  | 5435 | 31 | Code::CodeKey { rung: Names, file: functions/cmp.js, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 5466 | 31 | Code::CodeKey { rung: Names, file: functions/compare-build.js, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 5518 | 52 | Code::CodeKey { rung: Body, file: functions/compare-build.js, decl: 1, sub: 0, line: 4 } |  |  | 0.597 |
-| walker |  | 5549 | 31 | Code::CodeKey { rung: Names, file: ranges/intersects.js, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 5594 | 45 | Code::CodeKey { rung: Body, file: ranges/intersects.js, decl: 1, sub: 0, line: 4 } |  |  | 0.597 |
-| walker |  | 5625 | 31 | Code::CodeKey { rung: Names, file: ranges/outside.js, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 5657 | 32 | Code::CodeKey { rung: Names, file: functions/parse.js, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| ns | 5694 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.598 |
-| walker |  | 5763 | 106 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.610 |
-| walker |  | 5796 | 33 | Code::CodeKey { rung: Names, file: functions/compare-loose.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 5829 | 33 | Code::CodeKey { rung: Names, file: functions/major.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 5862 | 33 | Code::CodeKey { rung: Names, file: functions/minor.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 5895 | 33 | Code::CodeKey { rung: Names, file: functions/patch.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| ns | 5956 |  | 262 | internal/parse-options.js and internal/debug.js (whole files) | 4.2 |  | 0.610 |
-| walker |  | 5974 | 79 | Code::CodeKey { rung: Body, file: ranges/valid.js, decl: 1, sub: 0, line: 4 } |  |  | 0.610 |
-| walker |  | 6008 | 34 | Code::CodeKey { rung: Names, file: functions/inc.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6043 | 35 | Code::CodeKey { rung: Names, file: functions/rcompare.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6078 | 35 | Code::CodeKey { rung: Names, file: ranges/max-satisfying.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6113 | 35 | Code::CodeKey { rung: Names, file: ranges/min-satisfying.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6150 | 37 | Code::CodeKey { rung: Names, file: functions/eq.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6187 | 37 | Code::CodeKey { rung: Names, file: functions/gt.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6224 | 37 | Code::CodeKey { rung: Names, file: functions/lt.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| walker |  | 6261 | 37 | Code::CodeKey { rung: Names, file: functions/neq.js, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
-| ns | 6262 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.590 |
-| walker |  | 6298 | 37 | Code::CodeKey { rung: Names, file: ranges/gtr.js, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
-| walker |  | 6335 | 37 | Code::CodeKey { rung: Names, file: ranges/ltr.js, decl: 0, sub: 0, line: 0 } |  |  | 0.590 |
-| walker |  | 6343 | 8 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.590 |
-| ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.594 |
-| walker |  | 6382 | 39 | Code::CodeKey { rung: Names, file: functions/gte.js, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 6421 | 39 | Code::CodeKey { rung: Names, file: functions/lte.js, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 6461 | 40 | Code::CodeKey { rung: Names, file: functions/sort.js, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 6481 | 20 | Code::CodeKey { rung: Names, file: ranges/simplify.js, decl: 0, sub: 0, line: 0 } |  |  | 0.594 |
-| walker |  | 6577 | 96 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 3, sub: 0, line: 9 } |  |  | 0.595 |
-| ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.586 |
-| walker |  | 6674 | 97 | Code::CodeKey { rung: Body, file: functions/parse.js, decl: 1, sub: 0, line: 4 } |  |  | 0.586 |
-| walker |  | 6716 | 42 | Code::CodeKey { rung: Names, file: functions/rsort.js, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
+| walker |  | 5378 | 72 | Code::CodeKey { rung: Body, file: internal/parse-options.js, decl: 1, sub: 0, line: 6 } |  |  | 0.597 |
+| walker |  | 5548 | 170 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 8, sub: 0, line: 193 } |  |  | 0.598 |
+| walker |  | 5579 | 31 | Code::CodeKey { rung: Names, file: functions/cmp.js, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
+| walker |  | 5610 | 31 | Code::CodeKey { rung: Names, file: functions/compare-build.js, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
+| walker |  | 5662 | 52 | Code::CodeKey { rung: Body, file: functions/compare-build.js, decl: 1, sub: 0, line: 4 } |  |  | 0.598 |
+| walker |  | 5693 | 31 | Code::CodeKey { rung: Names, file: ranges/intersects.js, decl: 0, sub: 0, line: 0 } |  |  | 0.598 |
+| ns | 5694 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.599 |
+| walker |  | 5738 | 45 | Code::CodeKey { rung: Body, file: ranges/intersects.js, decl: 1, sub: 0, line: 4 } |  |  | 0.599 |
+| walker |  | 5769 | 31 | Code::CodeKey { rung: Names, file: ranges/outside.js, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
+| walker |  | 5801 | 32 | Code::CodeKey { rung: Names, file: functions/parse.js, decl: 0, sub: 0, line: 0 } |  |  | 0.599 |
+| walker |  | 5907 | 106 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.611 |
+| walker |  | 5940 | 33 | Code::CodeKey { rung: Names, file: functions/compare-loose.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| ns | 5956 |  | 262 | internal/parse-options.js and internal/debug.js (whole files) | 4.2 |  | 0.611 |
+| walker |  | 5973 | 33 | Code::CodeKey { rung: Names, file: functions/major.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 6006 | 33 | Code::CodeKey { rung: Names, file: functions/minor.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 6039 | 33 | Code::CodeKey { rung: Names, file: functions/patch.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 6118 | 79 | Code::CodeKey { rung: Body, file: ranges/valid.js, decl: 1, sub: 0, line: 4 } |  |  | 0.611 |
+| walker |  | 6152 | 34 | Code::CodeKey { rung: Names, file: functions/inc.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 6187 | 35 | Code::CodeKey { rung: Names, file: functions/rcompare.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 6222 | 35 | Code::CodeKey { rung: Names, file: ranges/max-satisfying.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| walker |  | 6257 | 35 | Code::CodeKey { rung: Names, file: ranges/min-satisfying.js, decl: 0, sub: 0, line: 0 } |  |  | 0.611 |
+| ns | 6262 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.591 |
+| walker |  | 6294 | 37 | Code::CodeKey { rung: Names, file: functions/eq.js, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
+| walker |  | 6331 | 37 | Code::CodeKey { rung: Names, file: functions/gt.js, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
+| ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.595 |
+| walker |  | 6368 | 37 | Code::CodeKey { rung: Names, file: functions/lt.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 6405 | 37 | Code::CodeKey { rung: Names, file: functions/neq.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 6442 | 37 | Code::CodeKey { rung: Names, file: ranges/gtr.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 6479 | 37 | Code::CodeKey { rung: Names, file: ranges/ltr.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 6487 | 8 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.595 |
+| walker |  | 6526 | 39 | Code::CodeKey { rung: Names, file: functions/gte.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| walker |  | 6565 | 39 | Code::CodeKey { rung: Names, file: functions/lte.js, decl: 0, sub: 0, line: 0 } |  |  | 0.595 |
+| ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.585 |
+| walker |  | 6605 | 40 | Code::CodeKey { rung: Names, file: functions/sort.js, decl: 0, sub: 0, line: 0 } |  |  | 0.585 |
+| walker |  | 6625 | 20 | Code::CodeKey { rung: Names, file: ranges/simplify.js, decl: 0, sub: 0, line: 0 } |  |  | 0.585 |
+| walker |  | 6721 | 96 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 3, sub: 0, line: 9 } |  |  | 0.587 |
 | ns | 6761 |  | 168 | internal/re.js: the ReDoS-safe regex construction | 4.6 |  | 0.580 |
-| walker |  | 6791 | 75 | Code::CodeKey { rung: Names, file: internal/identifiers.js, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
-| walker |  | 6976 | 185 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 3, sub: 0, line: 73 } |  |  | 0.583 |
-| walker |  | 6987 | 11 | Fs::DirListing { dir: .github/actions } |  |  | 0.583 |
-| walker |  | 6991 | 4 | Fs::DirListing { dir: .github/actions/create-check } |  |  | 0.583 |
-| walker |  | 6995 | 4 | Fs::DirListing { dir: .github/actions/install-latest-npm } |  |  | 0.583 |
-| walker |  | 7131 | 136 | Code::CodeKey { rung: Body, file: functions/inc.js, decl: 1, sub: 0, line: 5 } |  |  | 0.583 |
-| walker |  | 7275 | 144 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 5, sub: 0, line: 93 } |  |  | 0.584 |
-| walker |  | 7425 | 150 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 6, sub: 0, line: 61 } |  |  | 0.584 |
-| walker |  | 7433 | 8 | Fs::DirListing { dir: tap-snapshots/test/bin } |  |  | 0.584 |
+| walker |  | 6818 | 97 | Code::CodeKey { rung: Body, file: functions/parse.js, decl: 1, sub: 0, line: 4 } |  |  | 0.580 |
+| walker |  | 6860 | 42 | Code::CodeKey { rung: Names, file: functions/rsort.js, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
+| walker |  | 6935 | 75 | Code::CodeKey { rung: Names, file: internal/identifiers.js, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
+| walker |  | 7120 | 185 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 3, sub: 0, line: 73 } |  |  | 0.584 |
+| walker |  | 7131 | 11 | Fs::DirListing { dir: .github/actions } |  |  | 0.584 |
+| walker |  | 7135 | 4 | Fs::DirListing { dir: .github/actions/create-check } |  |  | 0.584 |
+| walker |  | 7139 | 4 | Fs::DirListing { dir: .github/actions/install-latest-npm } |  |  | 0.584 |
+| walker |  | 7275 | 136 | Code::CodeKey { rung: Body, file: functions/inc.js, decl: 1, sub: 0, line: 5 } |  |  | 0.584 |
 | ns | 7436 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.559 |
-| walker |  | 7630 | 197 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 7, sub: 0, line: 170 } |  |  | 0.560 |
+| walker |  | 7500 | 225 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 8, sub: 0, line: 168 } |  |  | 0.559 |
+| walker |  | 7650 | 150 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 6, sub: 0, line: 61 } |  |  | 0.560 |
+| walker |  | 7658 | 8 | Fs::DirListing { dir: tap-snapshots/test/bin } |  |  | 0.560 |
 | ns | 7755 |  | 319 | bin/semver.js: complete option-flag roster | 5.1 |  | 0.542 |
-| walker |  | 7828 | 198 | Code::CodeKey { rung: Body, file: internal/identifiers.js, decl: 1, sub: 0, line: 4 } |  |  | 0.567 |
-| ns | 7931 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.561 |
-| walker |  | 7961 | 133 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 5, sub: 0, line: 25 } |  |  | 0.562 |
-| walker |  | 8160 | 199 | Code::CodeKey { rung: Body, file: ranges/max-satisfying.js, decl: 1, sub: 0, line: 6 } |  |  | 0.562 |
+| walker |  | 7855 | 197 | Code::CodeKey { rung: Body, file: classes/range.js, decl: 7, sub: 0, line: 170 } |  |  | 0.543 |
+| ns | 7931 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.537 |
+| walker |  | 8053 | 198 | Code::CodeKey { rung: Body, file: internal/identifiers.js, decl: 1, sub: 0, line: 4 } |  |  | 0.561 |
+| walker |  | 8186 | 133 | Code::CodeKey { rung: Body, file: internal/lrucache.js, decl: 5, sub: 0, line: 25 } |  |  | 0.562 |
 | ns | 8268 |  | 337 | bin/semver.js: the main() output pipeline | 5.3 |  | 0.550 |
-| walker |  | 8359 | 199 | Code::CodeKey { rung: Body, file: ranges/min-satisfying.js, decl: 1, sub: 0, line: 5 } |  |  | 0.550 |
+| walker |  | 8385 | 199 | Code::CodeKey { rung: Body, file: ranges/max-satisfying.js, decl: 1, sub: 0, line: 6 } |  |  | 0.550 |
 | ns | 8414 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.540 |
-| walker |  | 8572 | 213 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.556 |
-| ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.546 |
-| walker |  | 8867 | 295 | Code::CodeKey { rung: Body, file: ranges/subset.js, decl: 1, sub: 0, line: 45 } |  |  | 0.546 |
-| ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.541 |
-| walker |  | 9129 | 262 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.541 |
-| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.534 |
-| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.548 |
-| walker |  | 9340 | 211 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 4, sub: 0, line: 36 } |  |  | 0.548 |
+| walker |  | 8584 | 199 | Code::CodeKey { rung: Body, file: ranges/min-satisfying.js, decl: 1, sub: 0, line: 5 } |  |  | 0.540 |
+| ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.531 |
+| walker |  | 8810 | 226 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 6, sub: 0, line: 109 } |  |  | 0.531 |
+| ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.527 |
+| walker |  | 9023 | 213 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.542 |
+| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.535 |
+| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.549 |
+| walker |  | 9318 | 295 | Code::CodeKey { rung: Body, file: ranges/subset.js, decl: 1, sub: 0, line: 45 } |  |  | 0.549 |
 | ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.545 |
-| walker |  | 9565 | 225 | Code::CodeKey { rung: Body, file: classes/semver.js, decl: 8, sub: 0, line: 168 } |  |  | 0.545 |
+| walker |  | 9580 | 262 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.545 |
 | ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.545 |
 | ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.556 |
-| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.555 |
-| walker |  | 9949 | 384 | Code::CodeKey { rung: Body, file: functions/cmp.js, decl: 1, sub: 0, line: 10 } |  |  | 0.577 |
-| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.572 |
-| walker |  | 9978 | 29 | Code::CodeKey { rung: Body, file: ranges/simplify.js, decl: 1, sub: 0, line: 8 } |  |  | 0.572 |
+| walker |  | 9791 | 211 | Code::CodeKey { rung: Body, file: classes/comparator.js, decl: 4, sub: 0, line: 36 } |  |  | 0.557 |
+| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.556 |
+| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.551 |
+| walker |  | 9993 | 202 | Code::CodeKey { rung: Body, file: functions/cmp.js, decl: 1, sub: 0, line: 10 } |  |  | 0.553 |
