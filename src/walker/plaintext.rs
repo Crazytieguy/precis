@@ -36,7 +36,6 @@
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
-use crate::value::mix_signals;
 
 use super::{
     FileLines, WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content,
@@ -780,18 +779,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 /// rosters sit mid, contributor tooling and unclassified prose / flat
 /// config low, and license text at the floor.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
-    let (cat, fu, ztu) = match class {
-        Class::License => (0.05, 0.10, 0.10),
+    let tier = match class {
+        Class::License => 108.0,
         Class::BuildEntrypoint
         | Class::BuildScript
         | Class::DotenvSample
         | Class::Version
-        | Class::SourceText => (0.60, 0.50, 0.55),
-        Class::ProjectNotes => (0.40, 0.50, 0.40),
-        Class::Tooling | Class::SourceProse => (0.30, 0.35, 0.30),
+        | Class::SourceText => 905.0,
+        Class::ProjectNotes => 660.0,
+        Class::Tooling | Class::SourceProse => 488.0,
     };
-    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
-        * small_build_file_factor(class, file, ctx)
+    tier * path_depth_factor(file, ctx) * small_build_file_factor(class, file, ctx)
 }
 
 /// Mild promotion for a root `Makefile` / `Taskfile` / `build.sh`. A

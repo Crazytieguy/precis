@@ -70,9 +70,9 @@ pub fn dependency_table_mass_factor(tokens: usize) -> f64 {
 /// member). A sub-package's roster is scaffolding around that.
 pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
     if describes_repository {
-        mix_signals(0.75, 0.6, 0.5, depth)
+        1068.0 * depth
     } else {
-        mix_signals(0.4, 0.7, 0.4, depth)
+        716.0 * depth
     }
 }
 
@@ -80,21 +80,21 @@ pub fn dependency_roster_value(describes_repository: bool, depth: f64) -> f64 {
 /// scaled by how much of the project's identity the manifest carries — a
 /// workspace member inherits most of it from the root.
 pub fn manifest_identity_value(scale: f64, depth: f64) -> f64 {
-    mix_signals(scale, 0.7 * scale, 0.85 * scale, depth)
+    1451.0 * scale * depth
 }
 
 /// Value of the sections of a manifest that say how the package runs and
 /// ships: entrypoints, console scripts, feature flags, runtime
 /// constraints. Shared by every manifest format.
 pub fn manifest_operational_value(depth: f64) -> f64 {
-    mix_signals(0.55, 0.55, 0.45, depth)
+    839.0 * depth
 }
 
 /// Value of a manifest's appendix: author and URL metadata and every
 /// table no other section owns (build systems, profiles, lints, tool
 /// config). Shared by every manifest format.
 pub fn manifest_appendix_value(depth: f64) -> f64 {
-    mix_signals(0.45, 0.6, 0.45, depth)
+    753.0 * depth
 }
 
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this

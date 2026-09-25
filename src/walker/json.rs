@@ -21,7 +21,7 @@ use crate::content::BatchContent;
 use crate::render::Source;
 use crate::value::{
     dependency_roster_value, dependency_table_mass_factor, manifest_appendix_value,
-    manifest_identity_value, manifest_operational_value, mix_signals,
+    manifest_identity_value, manifest_operational_value,
 };
 
 use super::workspace::{
@@ -401,9 +401,9 @@ fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
         // These explicitly admitted sidecars are otherwise the only copy of
         // workspace topology or non-JSON data/config. Their strict size cap
         // keeps this identity-like admission value away from generated data.
-        mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
+        1451.0 * path_depth_factor(file, ctx)
     } else {
-        mix_signals(0.3, 0.55, 0.45, path_depth_factor(file, ctx))
+        589.0 * path_depth_factor(file, ctx)
     }
 }
 

@@ -32,7 +32,6 @@ use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PrismaKey};
 use crate::render::Source;
-use crate::value::mix_signals;
 
 use super::{FileLines, WalkCtx, fs::files_with_extension, single_file_lines_content};
 
@@ -275,7 +274,7 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
 }
 
 fn toc_value(depth: f64) -> f64 {
-    mix_signals(1.0, 0.7, 0.85, depth)
+    1451.0 * depth
 }
 
 /// Per-decl body value. Below the TOC cat (so the catalog surface
@@ -288,7 +287,7 @@ fn decl_value(field_rows: usize, depth: f64) -> f64 {
     let size = (field_rows as f64 / FULL_VALUE_FIELD_ROWS)
         .powf(crate::value::DEFAULT_CONCAVITY_EXPONENT)
         .min(1.0);
-    mix_signals(0.85, 0.75, 0.7, depth) * size
+    1270.0 * depth * size
 }
 
 #[cfg(test)]
