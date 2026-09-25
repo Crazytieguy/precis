@@ -1258,11 +1258,12 @@ pub(crate) fn collect_blank_line_groups(body: Node, source: &str) -> Vec<(usize,
     if body_end <= body_start + 1 {
         return Vec::new();
     }
-    let src_lines: Vec<&str> = source.lines().collect();
+    // The body's own text spans all the rows it needs; splitting the whole
+    // file per struct is quadratic in the file's struct count.
+    let body_rows = (body_start..body_end).zip(source[body.byte_range()].lines());
     let mut groups: Vec<(usize, Vec<usize>)> = Vec::new();
     let mut current: Vec<usize> = Vec::new();
-    for row in (body_start + 1)..body_end {
-        let line = src_lines.get(row).copied().unwrap_or("");
+    for (row, line) in body_rows.skip(1) {
         if line.trim().is_empty() {
             if !current.is_empty() {
                 let start = *current.first().unwrap();
