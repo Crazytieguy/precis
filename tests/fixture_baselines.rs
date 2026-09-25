@@ -82,8 +82,8 @@ fn check_validation_fixture(name: &str, rev: &str) {
         &fixture_dir,
     )
     .unwrap_or_else(|e| panic!("load_ns_checked({fixture}): {e}"));
-    let scores = divergence::score(&ns, &schedule, &fixture_dir)
-        .unwrap_or_else(|e| panic!("score({fixture}): {e}"));
+    let (_, scores) = divergence::generate_divergence_report(&ns, &schedule, &fixture_dir)
+        .unwrap_or_else(|e| panic!("generate_divergence_report({fixture}): {e}"));
     assert_scores_sane(&fixture, &scores);
     compare_or_update(
         &repo_path(&format!("tests/validation/{fixture}.md")),
@@ -111,18 +111,12 @@ fn run_fixture(name: &str, rev: &str) -> (String, PathBuf, Schedule) {
     (fixture, fixture_dir, schedule)
 }
 
-/// A zero primary score with no reached/partial rows has historically
-/// meant an infrastructure failure (fixture-path canonicalization), not
-/// a bad walker — refuse to bake it into a baseline. `ALLOW_ZERO_SCORE=1`
-/// overrides for a genuinely degenerate fixture.
+/// Every fixture scores above zero; zero means the NS and walker atoms
+/// never matched, which has been a path bug, not a bad walker.
 fn assert_scores_sane(fixture: &str, scores: &divergence::Scores) {
-    if std::env::var_os("ALLOW_ZERO_SCORE").is_some() || !scores.is_degenerate() {
-        return;
-    }
-    panic!(
-        "{fixture}: degenerate divergence scores `{}` — \
-         likely a path or canonicalization bug rather than a real score; \
-         set ALLOW_ZERO_SCORE=1 to accept it as a baseline",
+    assert!(
+        scores.primary().score > 0.0,
+        "{fixture}: `{}` — likely a path or canonicalization bug, not a real score",
         scores.headline()
     );
 }
