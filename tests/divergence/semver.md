@@ -140,11 +140,10 @@ Score(3000)=0.689 I=0.906 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | walker |  | 9382 | 316 | README.md section #19 |  |  | 0.558 |
 | walker |  | 9394 | 12 | ts names classes/index.js |  |  | 0.558 |
 | ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.555 |
-| walker |  | 9476 | 82 | package dev/peer dependencies in package.json |  |  | 0.555 |
-| walker |  | 9595 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.555 |
-| walker |  | 9595 | 0 | CONTRIBUTING.md section #0 |  |  | 0.555 |
+| walker |  | 9513 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.555 |
+| walker |  | 9513 | 0 | CONTRIBUTING.md section #0 |  |  | 0.555 |
+| walker |  | 9537 | 24 | json config .release-please-manifest.json |  |  | 0.555 |
 | ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.555 |
-| walker |  | 9619 | 24 | json config .release-please-manifest.json |  |  | 0.555 |
 | ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.565 |
 | ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.565 |
 | ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.560 |

@@ -116,12 +116,12 @@ fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<Batc
 }
 
 /// Emit independently purchasable `package.json` surfaces. On ordinary
-/// multi-line manifests every section hangs directly off Identity — except
-/// dev dependencies, which hang off runtime dependencies — so appendix
-/// metadata cannot gate entrypoints, scripts, or runtime dependencies. Compact
-/// manifests whose sections share a physical line retain a local chain because
-/// the scheduler only permits line overlap along predecessor ancestry; that
-/// chain visits Dependencies before DevDependencies too.
+/// multi-line manifests every section hangs directly off Identity, so
+/// appendix metadata cannot gate entrypoints, scripts, or dependencies.
+/// Compact manifests whose sections share a physical line retain a local
+/// chain because the scheduler only permits line overlap along predecessor
+/// ancestry. The `devDependencies` / `peerDependencies` rosters are left
+/// for an explicit read.
 fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
     let Some((source, tree)) = parse_json(ctx, file) else {
         return;
@@ -182,16 +182,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         is_identity_meta_key,
         false,
     );
-    let carries_peer_dependencies = pairs
-        .iter()
-        .any(|(name, _, _, _)| is_peer_dependencies_key(name));
-    collect(
-        JsonKey::DevDependencies { file: f },
-        dev_dependencies_value(file, ctx, carries_peer_dependencies) * scripts_deps_factor,
-        is_dev_dependencies_key,
-        true,
-    );
-
     let overlap_chain = package_sections_share_lines(&pairs);
     // The collect() calls above push Identity first, so it can only be
     // the head of `sections` — the emission/chain order below relies
@@ -200,16 +190,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         .first()
         .filter(|(key, _, _)| matches!(key, JsonKey::Identity { .. }))
         .map(|(key, _, _)| BatchKey::Json(key.clone()));
-    // Dev/tooling dependencies gate behind runtime dependencies rather
-    // than off Identity: a manifest that shows its test runner and
-    // linter while withholding what the package is actually built on
-    // reads as a package with no runtime dependencies. Ordering is a
-    // guarantee; pricing alone cannot supply one, because a short
-    // enough dev block outranks any priced-higher longer block.
-    let runtime_dependencies = sections
-        .iter()
-        .find(|(key, _, _)| matches!(key, JsonKey::Dependencies { .. }))
-        .map(|(key, _, _)| BatchKey::Json(key.clone()));
     let mut previous = None;
     for (key, content, value) in sections {
         let emitted = BatchKey::Json(key.clone());
@@ -217,8 +197,6 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
             None
         } else if overlap_chain {
             previous.clone()
-        } else if matches!(key, JsonKey::DevDependencies { .. }) {
-            runtime_dependencies.clone().or_else(|| identity.clone())
         } else {
             identity.clone()
         };
@@ -392,22 +370,6 @@ fn is_runtime_dependencies_key(k: &str) -> bool {
     )
 }
 
-fn is_dev_dependencies_key(k: &str) -> bool {
-    matches!(
-        k,
-        "devDependencies" | "peerDependencies" | "peerDependenciesMeta"
-    )
-}
-
-/// The consumer-facing half of [`is_dev_dependencies_key`]'s span.
-/// `peerDependenciesMeta` alone does not qualify: it carries optionality
-/// flags for peers declared elsewhere, not a version contract, so a
-/// manifest with only the Meta table is still a pure contributor-
-/// toolchain roster for demotion purposes.
-fn is_peer_dependencies_key(k: &str) -> bool {
-    k == "peerDependencies"
-}
-
 fn is_package_section_key(k: &str) -> bool {
     is_identity_key(k)
         || is_identity_meta_key(k)
@@ -415,7 +377,6 @@ fn is_package_section_key(k: &str) -> bool {
         || is_runtime_key(k)
         || is_scripts_key(k)
         || is_runtime_dependencies_key(k)
-        || is_dev_dependencies_key(k)
 }
 
 /// Whether two emitted section classes claim the same physical source line.
@@ -532,22 +493,6 @@ fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
 /// matches the repo.
 fn describes_repository(file: &Path, ctx: &WalkCtx) -> bool {
     file.parent() == Some(ctx.root()) || ctx.is_primary_js_workspace_member(file)
-}
-
-/// The [`JsonKey::DevDependencies`] batch covers `devDependencies`
-/// alongside `peerDependencies` / `peerDependenciesMeta`, but only the
-/// first is contributor toolchain. A peer roster is the package's
-/// compatibility contract with its consumers, so a batch carrying peer
-/// lines keeps full value and only a peer-free dev roster is demoted.
-fn dev_dependencies_value(file: &Path, ctx: &WalkCtx, carries_peer: bool) -> f64 {
-    let scale = if carries_peer {
-        1.0
-    } else {
-        crate::value::DEV_DEPENDENCY_ROSTER_SCALE
-    };
-    mix_signals(0.24, 0.48, 0.24, manifest_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
-        * scale
 }
 
 /// Primary publishable members rank like root manifests for the operational
@@ -955,7 +900,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_json_dependency_classes_are_disjoint() {
+    fn walker_json_dependency_keys_exclude_dev_and_peer_rosters() {
         for key in [
             "dependencies",
             "optionalDependencies",
@@ -965,75 +910,14 @@ mod tests {
             "resolutions",
         ] {
             assert!(is_runtime_dependencies_key(key), "runtime key: {key}");
-            assert!(!is_dev_dependencies_key(key), "not a dev key: {key}");
         }
         for key in [
             "devDependencies",
             "peerDependencies",
             "peerDependenciesMeta",
         ] {
-            assert!(is_dev_dependencies_key(key), "dev/peer key: {key}");
-            assert!(!is_runtime_dependencies_key(key), "not runtime: {key}");
+            assert!(!is_package_section_key(key), "not emitted: {key}");
         }
-    }
-
-    /// Dev dependencies must never be purchasable before the runtime
-    /// dependencies of the same manifest — otherwise a manifest can
-    /// render its tooling alone and read as having no runtime deps.
-    #[test]
-    fn walker_json_dev_dependencies_gate_behind_runtime_dependencies() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        write_pkg(
-            root,
-            "{\n  \"name\": \"demo\",\n  \"dependencies\": {\n    \"redis\": \"^4\"\n  },\n  \"devDependencies\": {\n    \"vitest\": \"^1\"\n  }\n}\n",
-        );
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        let dependencies = BatchKey::Json(JsonKey::Dependencies {
-            file: root.join("package.json"),
-        });
-        let dev = batches
-            .iter()
-            .find(|b| matches!(b.key, BatchKey::Json(JsonKey::DevDependencies { .. })))
-            .expect("dev dependencies batch");
-        assert_eq!(dev.predecessor.as_ref(), Some(&dependencies));
-    }
-
-    /// `peerDependencies` is a consumer-facing compatibility contract,
-    /// not contributor toolchain — a batch that carries peer lines keeps
-    /// full value even though it also carries the dev roster.
-    #[test]
-    fn walker_json_peer_dependencies_are_not_demoted_with_dev_dependencies() {
-        let dev_only =
-            "{\n  \"name\": \"demo\",\n  \"devDependencies\": {\n    \"vitest\": \"^1\"\n  }\n}\n";
-        let mixed = "{\n  \"name\": \"demo\",\n  \"devDependencies\": {\n    \"vitest\": \"^1\"\n  },\n  \"peerDependencies\": {\n    \"react\": \">=18\"\n  }\n}\n";
-
-        let value_of = |manifest: &str| {
-            let dir = tempfile::tempdir().unwrap();
-            let root = dir.path();
-            write_pkg(root, manifest);
-            let ctx = WalkCtx::new(root.to_path_buf());
-            expand_in_dir(root, &ctx)
-                .iter()
-                .find(|b| matches!(b.key, BatchKey::Json(JsonKey::DevDependencies { .. })))
-                .expect("dev dependencies batch")
-                .value
-        };
-
-        let demoted = value_of(dev_only);
-        let full = value_of(mixed);
-        assert!(demoted > 0.0);
-        assert!(
-            full > demoted,
-            "peer-bearing batch must not take the dev-roster demotion: {full} vs {demoted}"
-        );
-        let ratio = demoted / full;
-        assert!(
-            (ratio - crate::value::DEV_DEPENDENCY_ROSTER_SCALE).abs() < 1e-9,
-            "dev-only batch should carry exactly the roster scale, got {ratio}"
-        );
     }
 
     #[test]

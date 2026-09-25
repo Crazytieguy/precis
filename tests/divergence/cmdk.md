@@ -1,4 +1,4 @@
-Score(3000)=0.577 I=0.808 C=0.413 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.394/0.309/0.277/0.577/0.811/0.736/0.650
+Score(3000)=0.577 I=0.808 C=0.413 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.394/0.309/0.277/0.577/0.811/0.734/0.648
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -79,73 +79,75 @@ Score(3000)=0.577 I=0.808 C=0.413 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 4438 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.820 |
 | walker |  | 4498 | 60 | listing of 'test/pages' |  |  | 0.821 |
 | walker |  | 4520 | 22 | ts names test/pages/index.tsx |  |  | 0.821 |
-| walker |  | 4611 | 91 | package dev/peer dependencies in cmdk/package.json |  |  | 0.823 |
-| ns | 4659 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.826 |
-| walker |  | 4679 | 68 | ARCHITECTURE.md section #3 |  |  | 0.826 |
-| walker |  | 4731 | 52 | README.md section #4 |  |  | 0.826 |
-| walker |  | 4783 | 52 | README.md section #5 |  |  | 0.826 |
-| walker |  | 4823 | 40 | README.md section #34 |  |  | 0.826 |
-| walker |  | 4838 | 15 | ts doc cmdk/src/index.tsx:1004 |  |  | 0.827 |
-| ns | 4873 |  | 214 | Roster of Command's internal functions | 3.4 |  | 0.810 |
-| walker |  | 4979 | 141 | README.md section #37 |  |  | 0.846 |
-| ns | 5086 |  | 213 | Store: subscribe/snapshot and the 'search' setState branch | 3.5 |  | 0.822 |
-| walker |  | 5130 | 151 | README.md section #36 |  |  | 0.822 |
-| walker |  | 5193 | 63 | README.md section #10 |  |  | 0.822 |
-| walker |  | 5256 | 63 | README.md section #17 |  |  | 0.822 |
-| ns | 5300 |  | 214 | Root keydown handler: IME guard, vim down bindings, ArrowDown | 3.6 | 3.4 | 0.795 |
-| walker |  | 5498 | 242 | json config tsconfig.json |  |  | 0.795 |
-| walker |  | 5564 | 66 | README.md section #26 |  |  | 0.795 |
-| walker |  | 5635 | 71 | README.md section #20 |  |  | 0.795 |
-| ns | 5678 |  | 378 | score() and sort(): per-group maximum score and the ordering rules | 4.1 | 3.4 | 0.759 |
-| walker |  | 5708 | 73 | README.md section #27 |  |  | 0.759 |
-| walker |  | 5785 | 77 | README.md section #18 |  |  | 0.759 |
-| ns | 6027 |  | 349 | sort(): the DOM re-append loop | 4.2 | 4.1 | 0.733 |
-| walker |  | 6224 | 439 | ARCHITECTURE.md section #0 |  |  | 0.736 |
-| walker |  | 6306 | 82 | README.md section #15 |  |  | 0.736 |
-| walker |  | 6319 | 13 | listing of 'website/styles' |  |  | 0.736 |
-| walker |  | 6345 | 26 | ts doc cmdk/src/index.tsx:882 |  |  | 0.737 |
-| walker |  | 6417 | 72 | ts names website/components/index.ts |  |  | 0.737 |
-| ns | 6432 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.707 |
-| walker |  | 6509 | 92 | README.md section #32 |  |  | 0.707 |
-| walker |  | 6536 | 27 | ts doc cmdk/src/index.tsx:899 |  |  | 0.708 |
-| walker |  | 6640 | 104 | README.md section #7 |  |  | 0.708 |
-| ns | 6702 |  | 270 | Item: value inference, render gate, select handlers | 4.4 | 2.6 | 0.692 |
-| walker |  | 6745 | 105 | README.md section #14 |  |  | 0.692 |
-| walker |  | 6834 | 89 | README.md section #25 |  |  | 0.692 |
-| ns | 6880 |  | 178 | Item: rendered element and its attributes | 4.5 | 4.4 | 0.680 |
-| walker |  | 6928 | 94 | README.md section #13 |  |  | 0.680 |
-| walker |  | 7046 | 118 | README.md section #16 |  |  | 0.680 |
-| walker |  | 7056 | 10 | listing of 'website/components/code' |  |  | 0.680 |
-| walker |  | 7066 | 10 | listing of 'website/components/icons' |  |  | 0.680 |
-| walker |  | 7096 | 30 | ts doc cmdk/src/index.tsx:909 |  |  | 0.681 |
-| ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.668 |
-| walker |  | 7222 | 126 | README.md section #6 |  |  | 0.668 |
-| ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.657 |
-| walker |  | 7353 | 131 | README.md section #9 |  |  | 0.657 |
-| walker |  | 7488 | 135 | README.md section #8 |  |  | 0.657 |
-| walker |  | 7525 | 37 | ts doc cmdk/src/index.tsx:729 |  |  | 0.660 |
-| ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.649 |
-| walker |  | 7681 | 156 | README.md section #12 |  |  | 0.649 |
-| ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.652 |
-| walker |  | 7837 | 156 | README.md section #11 |  |  | 0.652 |
-| ns | 8098 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.639 |
-| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.637 |
-| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.642 |
-| walker |  | 8270 | 433 | README.md section #35 |  |  | 0.671 |
-| walker |  | 8308 | 38 | ts doc cmdk/src/index.tsx:787 |  |  | 0.675 |
-| ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.669 |
-| walker |  | 8510 | 202 | ts names website/pages/index.tsx |  |  | 0.669 |
-| walker |  | 8532 | 22 | ts decl website/pages/index.tsx:20 |  |  | 0.669 |
-| ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.662 |
-| ns | 8740 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.657 |
-| ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.650 |
-| walker |  | 9173 | 641 | README.md section #2 |  |  | 0.650 |
-| ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.642 |
-| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.630 |
-| walker |  | 9483 | 310 | LICENSE.md section #0 |  |  | 0.630 |
-| walker |  | 9662 | 179 | README.md section #33 |  |  | 0.630 |
-| walker |  | 9681 | 19 | listing of 'website/styles/cmdk' |  |  | 0.631 |
-| ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.618 |
-| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.610 |
-| walker |  | 9981 | 300 | ARCHITECTURE.md section #2 |  |  | 0.610 |
-| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.617 |
+| walker |  | 4588 | 68 | ARCHITECTURE.md section #3 |  |  | 0.821 |
+| walker |  | 4640 | 52 | README.md section #4 |  |  | 0.821 |
+| ns | 4659 |  | 221 | DOM selector constants + the three React contexts | 3.3 |  | 0.824 |
+| walker |  | 4692 | 52 | README.md section #5 |  |  | 0.824 |
+| walker |  | 4732 | 40 | README.md section #34 |  |  | 0.824 |
+| walker |  | 4747 | 15 | ts doc cmdk/src/index.tsx:1004 |  |  | 0.824 |
+| ns | 4873 |  | 214 | Roster of Command's internal functions | 3.4 |  | 0.808 |
+| walker |  | 4888 | 141 | README.md section #37 |  |  | 0.844 |
+| walker |  | 5039 | 151 | README.md section #36 |  |  | 0.844 |
+| ns | 5086 |  | 213 | Store: subscribe/snapshot and the 'search' setState branch | 3.5 |  | 0.819 |
+| walker |  | 5102 | 63 | README.md section #10 |  |  | 0.819 |
+| walker |  | 5165 | 63 | README.md section #17 |  |  | 0.819 |
+| ns | 5300 |  | 214 | Root keydown handler: IME guard, vim down bindings, ArrowDown | 3.6 | 3.4 | 0.793 |
+| walker |  | 5407 | 242 | json config tsconfig.json |  |  | 0.793 |
+| walker |  | 5473 | 66 | README.md section #26 |  |  | 0.793 |
+| walker |  | 5544 | 71 | README.md section #20 |  |  | 0.793 |
+| walker |  | 5617 | 73 | README.md section #27 |  |  | 0.793 |
+| ns | 5678 |  | 378 | score() and sort(): per-group maximum score and the ordering rules | 4.1 | 3.4 | 0.757 |
+| walker |  | 5694 | 77 | README.md section #18 |  |  | 0.757 |
+| ns | 6027 |  | 349 | sort(): the DOM re-append loop | 4.2 | 4.1 | 0.731 |
+| walker |  | 6133 | 439 | ARCHITECTURE.md section #0 |  |  | 0.734 |
+| walker |  | 6215 | 82 | README.md section #15 |  |  | 0.734 |
+| walker |  | 6228 | 13 | listing of 'website/styles' |  |  | 0.734 |
+| walker |  | 6254 | 26 | ts doc cmdk/src/index.tsx:882 |  |  | 0.735 |
+| walker |  | 6326 | 72 | ts names website/components/index.ts |  |  | 0.735 |
+| walker |  | 6418 | 92 | README.md section #32 |  |  | 0.735 |
+| ns | 6432 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.705 |
+| walker |  | 6445 | 27 | ts doc cmdk/src/index.tsx:899 |  |  | 0.706 |
+| walker |  | 6549 | 104 | README.md section #7 |  |  | 0.706 |
+| walker |  | 6654 | 105 | README.md section #14 |  |  | 0.706 |
+| ns | 6702 |  | 270 | Item: value inference, render gate, select handlers | 4.4 | 2.6 | 0.689 |
+| walker |  | 6743 | 89 | README.md section #25 |  |  | 0.689 |
+| walker |  | 6837 | 94 | README.md section #13 |  |  | 0.689 |
+| ns | 6880 |  | 178 | Item: rendered element and its attributes | 4.5 | 4.4 | 0.678 |
+| walker |  | 6955 | 118 | README.md section #16 |  |  | 0.678 |
+| walker |  | 6965 | 10 | listing of 'website/components/code' |  |  | 0.678 |
+| walker |  | 6975 | 10 | listing of 'website/components/icons' |  |  | 0.678 |
+| walker |  | 7005 | 30 | ts doc cmdk/src/index.tsx:909 |  |  | 0.679 |
+| walker |  | 7131 | 126 | README.md section #6 |  |  | 0.679 |
+| ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.666 |
+| walker |  | 7262 | 131 | README.md section #9 |  |  | 0.666 |
+| ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.655 |
+| walker |  | 7397 | 135 | README.md section #8 |  |  | 0.655 |
+| walker |  | 7434 | 37 | ts doc cmdk/src/index.tsx:729 |  |  | 0.658 |
+| walker |  | 7590 | 156 | README.md section #12 |  |  | 0.658 |
+| ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.647 |
+| walker |  | 7746 | 156 | README.md section #11 |  |  | 0.647 |
+| ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.651 |
+| ns | 8098 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.637 |
+| walker |  | 8179 | 433 | README.md section #35 |  |  | 0.667 |
+| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.665 |
+| walker |  | 8217 | 38 | ts doc cmdk/src/index.tsx:787 |  |  | 0.669 |
+| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.673 |
+| walker |  | 8419 | 202 | ts names website/pages/index.tsx |  |  | 0.673 |
+| ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.667 |
+| walker |  | 8441 | 22 | ts decl website/pages/index.tsx:20 |  |  | 0.667 |
+| ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.661 |
+| ns | 8740 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.655 |
+| ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.648 |
+| walker |  | 9082 | 641 | README.md section #2 |  |  | 0.648 |
+| ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.641 |
+| walker |  | 9392 | 310 | LICENSE.md section #0 |  |  | 0.641 |
+| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.629 |
+| walker |  | 9571 | 179 | README.md section #33 |  |  | 0.629 |
+| walker |  | 9590 | 19 | listing of 'website/styles/cmdk' |  |  | 0.629 |
+| ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.617 |
+| walker |  | 9890 | 300 | ARCHITECTURE.md section #2 |  |  | 0.617 |
+| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.608 |
+| walker |  | 9938 | 48 | ts doc cmdk/src/index.tsx:774 |  |  | 0.614 |
+| walker |  | 9982 | 44 | listing of 'website/public' |  |  | 0.614 |
+| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.620 |
+| walker |  | 9997 | 15 | ts names website/components/cmdk/linear.tsx |  |  | 0.620 |

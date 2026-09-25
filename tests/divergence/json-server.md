@@ -58,9 +58,9 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 2003 | 30 | README.md section #18 |  |  | 0.466 |
 | ns | 2006 |  | 104 | Dependent deletes and static file serving | 2.8 |  | 0.457 |
 | walker |  | 2014 | 11 | README.md section #9 |  |  | 0.457 |
+| walker |  | 2037 | 23 | ts body src/service.ts:13 |  |  | 0.457 |
 | ns | 2171 |  | 165 | v0 to v1 migration notes (README 256-263) | 2.9 |  | 0.447 |
-| walker |  | 2176 | 162 | package scripts in package.json |  |  | 0.488 |
-| walker |  | 2199 | 23 | ts body src/service.ts:13 |  |  | 0.488 |
+| walker |  | 2199 | 162 | package scripts in package.json |  |  | 0.488 |
 | walker |  | 2216 | 17 | ts body src/service.ts:186 |  |  | 0.488 |
 | walker |  | 2233 | 17 | ts body src/service.ts:190 |  |  | 0.488 |
 | walker |  | 2343 | 110 | ts decl src/adapters/observer.ts:4 |  |  | 0.489 |
@@ -144,10 +144,9 @@ Score(3000)=0.481 I=0.435 C=0.531 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.713 |
 | walker |  | 9254 | 327 | ts body src/app.ts:94 #2 |  |  | 0.743 |
 | walker |  | 9285 | 31 | json config .oxfmtrc.json |  |  | 0.743 |
+| walker |  | 9336 | 51 | plaintext config .gitignore |  |  | 0.743 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.734 |
-| walker |  | 9443 | 158 | package dev/peer dependencies in package.json |  |  | 0.734 |
-| walker |  | 9494 | 51 | plaintext config .gitignore |  |  | 0.735 |
-| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.732 |
-| walker |  | 9803 | 309 | plaintext config LICENSE |  |  | 0.732 |
-| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.723 |
-| walker |  | 9972 | 169 | json config fixtures/db.json |  |  | 0.738 |
+| walker |  | 9645 | 309 | plaintext config LICENSE |  |  | 0.734 |
+| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.722 |
+| walker |  | 9814 | 169 | json config fixtures/db.json |  |  | 0.737 |
+| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.728 |

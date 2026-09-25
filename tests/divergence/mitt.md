@@ -1,4 +1,4 @@
-Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.665/0.774/0.862/0.710/0.718
+Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.788/0.830/0.665/0.774/0.862/0.712/0.698
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -86,23 +86,22 @@ Score(3000)=0.774 I=0.913 C=0.656 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 5577 | 309 | plaintext config LICENSE |  |  | 0.759 |
 | ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.742 |
 | ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.730 |
-| walker |  | 5945 | 368 | package dev/peer dependencies in package.json |  |  | 0.732 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.710 |
-| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.695 |
-| walker |  | 6445 | 500 | plaintext config .eslintrc |  |  | 0.699 |
-| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.681 |
-| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.671 |
-| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.676 |
-| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.679 |
-| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.684 |
-| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.688 |
-| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.694 |
-| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.695 |
-| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.703 |
-| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.710 |
-| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.718 |
-| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.718 |
-| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.721 |
-| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.723 |
-| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.720 |
-| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.719 |
+| walker |  | 6077 | 500 | plaintext config .eslintrc |  |  | 0.734 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.712 |
+| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.697 |
+| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.679 |
+| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.669 |
+| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.675 |
+| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.678 |
+| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.682 |
+| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.687 |
+| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.692 |
+| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.693 |
+| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.681 |
+| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.689 |
+| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.698 |
+| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.698 |
+| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.702 |
+| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.704 |
+| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.701 |
+| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.700 |

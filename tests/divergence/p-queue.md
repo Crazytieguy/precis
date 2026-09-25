@@ -39,14 +39,14 @@ Score(3000)=0.709 I=0.830 C=0.605 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 1436 |  | 161 | Readme Usage: the canonical concurrency-1 example | 2.2 |  | 0.663 |
 | walker |  | 1439 | 42 | ts decl source/index.ts:585 |  |  | 0.663 |
 | walker |  | 1450 | 11 | ts body source/index.ts:382 |  |  | 0.663 |
-| walker |  | 1564 | 114 | ts decl source/queue.ts:3 |  |  | 0.724 |
-| ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.698 |
-| walker |  | 1668 | 104 | package scripts in package.json |  |  | 0.698 |
-| walker |  | 1680 | 12 | ts body source/index.ts:609 |  |  | 0.698 |
-| walker |  | 1701 | 21 | ts doc source/index.ts:616 |  |  | 0.699 |
-| walker |  | 1722 | 21 | ts body source/index.ts:585 |  |  | 0.699 |
-| walker |  | 1745 | 23 | ts doc source/index.ts:609 |  |  | 0.700 |
-| walker |  | 1777 | 32 | ts doc source/index.ts:443 |  |  | 0.714 |
+| walker |  | 1462 | 12 | ts body source/index.ts:609 |  |  | 0.663 |
+| walker |  | 1483 | 21 | ts doc source/index.ts:616 |  |  | 0.664 |
+| walker |  | 1504 | 21 | ts body source/index.ts:585 |  |  | 0.664 |
+| walker |  | 1527 | 23 | ts doc source/index.ts:609 |  |  | 0.665 |
+| walker |  | 1559 | 32 | ts doc source/index.ts:443 |  |  | 0.666 |
+| ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.658 |
+| walker |  | 1673 | 114 | ts decl source/queue.ts:3 |  |  | 0.713 |
+| walker |  | 1777 | 104 | package scripts in package.json |  |  | 0.714 |
 | ns | 1792 |  | 172 | Readme .add() semantics and its two warnings | 2.4 |  | 0.689 |
 | ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.672 |
 | walker |  | 1907 | 130 | ts decl source/options.ts:97 |  |  | 0.672 |

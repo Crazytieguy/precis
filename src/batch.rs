@@ -167,9 +167,6 @@ pub enum JsonKey {
     /// Runtime `package.json` dependency blocks (`dependencies`, optional /
     /// bundled dependencies, overrides, and resolutions).
     Dependencies { file: PathBuf },
-    /// Development and consumer-contract dependency blocks
-    /// (`devDependencies`, `peerDependencies`, `peerDependenciesMeta`).
-    DevDependencies { file: PathBuf },
     /// Whole-file render of a small JSON config. Skipped for
     /// `package.json` and for large/generated files.
     Whole { file: PathBuf },
@@ -439,9 +436,6 @@ impl InnerKey for JsonKey {
             JsonKey::Scripts { file } => describe_in("package scripts", file, root),
             JsonKey::Dependencies { file } => {
                 describe_in("package runtime dependencies", file, root)
-            }
-            JsonKey::DevDependencies { file } => {
-                describe_in("package dev/peer dependencies", file, root)
             }
             JsonKey::Whole { file } => format!("json config {}", display_path(file, root)),
         }

@@ -1,4 +1,4 @@
-Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.581/0.770/0.764/0.798/0.726/0.655
+Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.637/0.581/0.770/0.764/0.798/0.725/0.655
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -97,64 +97,64 @@ Score(3000)=0.764 I=0.898 C=0.650 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 5085 | 41 | ts body src/use-prevent-scroll.ts:29 |  |  | 0.805 |
 | ns | 5125 |  | 218 | use-controllable-state.ts — the controlled/uncontrolled prop machinery | 3.13 |  | 0.793 |
 | ns | 5319 |  | 194 | useScaleBackground and use-composed-refs — the two smallest modules | 3.14 |  | 0.785 |
-| walker |  | 5387 | 302 | package dev/peer dependencies in package.json |  |  | 0.786 |
-| ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.768 |
-| walker |  | 5714 | 327 | ts decl src/context.ts:37 |  |  | 0.769 |
-| walker |  | 5727 | 13 | ts names test/tests/constants.ts |  |  | 0.769 |
-| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.752 |
-| walker |  | 5785 | 58 | ts doc src/use-prevent-scroll.ts:68 |  |  | 0.752 |
-| walker |  | 5844 | 59 | ts body src/context.ts:69 |  |  | 0.763 |
-| ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.753 |
-| walker |  | 5906 | 62 | ts body src/use-prevent-scroll.ts:294 |  |  | 0.753 |
-| ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.741 |
-| walker |  | 6153 | 247 | LICENSE.md section #0 |  |  | 0.741 |
-| ns | 6214 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.726 |
-| walker |  | 6230 | 77 | ts body src/helpers.ts:94 |  |  | 0.726 |
-| walker |  | 6315 | 85 | ts body src/helpers.ts:59 |  |  | 0.726 |
-| walker |  | 6407 | 92 | ts body src/use-prevent-scroll.ts:34 |  |  | 0.726 |
-| walker |  | 6421 | 14 | ts names test/src/app/page.tsx |  |  | 0.726 |
-| walker |  | 6497 | 76 | README headline in test/README.md |  |  | 0.726 |
-| walker |  | 6520 | 23 | headings outline in test/README.md |  |  | 0.726 |
-| walker |  | 6551 | 31 | ts names test/tests/helpers.ts |  |  | 0.726 |
-| ns | 6564 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.701 |
-| walker |  | 6638 | 87 | ts body src/helpers.ts:108 |  |  | 0.701 |
-| walker |  | 6785 | 147 | ts doc src/use-position-fixed.ts:15 |  |  | 0.714 |
-| ns | 6813 |  | 249 | shouldDrag: the scrollable-ancestor climb | 4.7 | 4.6 | 0.697 |
-| ns | 7042 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.685 |
-| walker |  | 7065 | 280 | declaration surface of src/style.css |  |  | 0.685 |
+| walker |  | 5412 | 327 | ts decl src/context.ts:37 |  |  | 0.786 |
+| walker |  | 5425 | 13 | ts names test/tests/constants.ts |  |  | 0.786 |
+| walker |  | 5483 | 58 | ts doc src/use-prevent-scroll.ts:68 |  |  | 0.786 |
+| walker |  | 5542 | 59 | ts body src/context.ts:69 |  |  | 0.780 |
+| ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.780 |
+| walker |  | 5604 | 62 | ts body src/use-prevent-scroll.ts:294 |  |  | 0.780 |
+| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.762 |
+| walker |  | 5851 | 247 | LICENSE.md section #0 |  |  | 0.762 |
+| ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.752 |
+| walker |  | 5928 | 77 | ts body src/helpers.ts:94 |  |  | 0.752 |
+| ns | 6004 |  | 137 | Scroll-lock and body-position wiring, including the isDisabled predicate | 4.4 |  | 0.740 |
+| walker |  | 6013 | 85 | ts body src/helpers.ts:59 |  |  | 0.740 |
+| walker |  | 6105 | 92 | ts body src/use-prevent-scroll.ts:34 |  |  | 0.740 |
+| walker |  | 6119 | 14 | ts names test/src/app/page.tsx |  |  | 0.740 |
+| walker |  | 6195 | 76 | README headline in test/README.md |  |  | 0.740 |
+| ns | 6214 |  | 210 | shouldDrag: the early-out guards | 4.5 | 4.1 | 0.725 |
+| walker |  | 6218 | 23 | headings outline in test/README.md |  |  | 0.725 |
+| walker |  | 6249 | 31 | ts names test/tests/helpers.ts |  |  | 0.725 |
+| walker |  | 6336 | 87 | ts body src/helpers.ts:108 |  |  | 0.725 |
+| walker |  | 6483 | 147 | ts doc src/use-position-fixed.ts:15 |  |  | 0.739 |
+| ns | 6564 |  | 350 | shouldDrag: direction, open-animation window and scroll-lock timeout | 4.6 | 4.5 | 0.713 |
+| walker |  | 6763 | 280 | declaration surface of src/style.css |  |  | 0.713 |
+| ns | 6813 |  | 249 | shouldDrag: the scrollable-ancestor climb | 4.7 | 4.6 | 0.696 |
+| ns | 7042 |  | 229 | onRelease: teardown and velocity computation | 4.8 | 4.1 | 0.684 |
+| walker |  | 7058 | 295 | ts body src/index.tsx:1098 |  |  | 0.686 |
+| walker |  | 7128 | 70 | ts body src/browser.ts:22 |  |  | 0.686 |
 | ns | 7355 |  | 313 | onRelease: the close-vs-snap-back decision ladder | 4.9 | 4.8 | 0.669 |
-| walker |  | 7360 | 295 | ts body src/index.tsx:1098 |  |  | 0.670 |
-| walker |  | 7430 | 70 | ts body src/browser.ts:22 |  |  | 0.670 |
-| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.660 |
-| walker |  | 7747 | 317 | ts body src/index.tsx:803 |  |  | 0.665 |
-| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.656 |
-| walker |  | 7830 | 83 | ts body src/browser.ts:1 |  |  | 0.656 |
-| ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.662 |
-| walker |  | 7946 | 116 | ts body src/helpers.ts:9 |  |  | 0.662 |
-| walker |  | 8005 | 59 | ts decl test/tests/helpers.ts:11 |  |  | 0.662 |
-| ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.658 |
-| walker |  | 8262 | 257 | ts body src/use-controllable-state.ts:39 |  |  | 0.658 |
+| walker |  | 7445 | 317 | ts body src/index.tsx:803 |  |  | 0.670 |
+| walker |  | 7528 | 83 | ts body src/browser.ts:1 |  |  | 0.670 |
+| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.664 |
+| walker |  | 7644 | 116 | ts body src/helpers.ts:9 |  |  | 0.664 |
+| walker |  | 7703 | 59 | ts decl test/tests/helpers.ts:11 |  |  | 0.664 |
+| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.655 |
+| ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.661 |
+| walker |  | 7960 | 257 | ts body src/use-controllable-state.ts:39 |  |  | 0.661 |
+| walker |  | 7997 | 37 | ts names test/src/app/layout.tsx |  |  | 0.661 |
+| walker |  | 8026 | 29 | ts decl test/src/app/layout.tsx:7 |  |  | 0.661 |
+| ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.657 |
+| walker |  | 8213 | 187 | ts body src/use-prevent-scroll.ts:68 |  |  | 0.657 |
 | ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.652 |
-| walker |  | 8299 | 37 | ts names test/src/app/layout.tsx |  |  | 0.652 |
-| walker |  | 8328 | 29 | ts decl test/src/app/layout.tsx:7 |  |  | 0.652 |
-| ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.647 |
+| ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.646 |
 | ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.655 |
-| walker |  | 8515 | 187 | ts body src/use-prevent-scroll.ts:68 |  |  | 0.655 |
+| walker |  | 8524 | 311 | YAML config at .github/workflows/playwright.yml |  |  | 0.655 |
 | ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.660 |
 | ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.664 |
-| walker |  | 8826 | 311 | YAML config at .github/workflows/playwright.yml |  |  | 0.665 |
+| walker |  | 8670 | 146 | ts body src/helpers.ts:42 |  |  | 0.664 |
+| walker |  | 8827 | 157 | test/README.md section #0 |  |  | 0.664 |
+| walker |  | 8867 | 40 | package identity in test/package.json |  |  | 0.664 |
 | ns | 8915 |  | 293 | Spec-suite to demo-route map for every Playwright file | 6.4 |  | 0.655 |
-| walker |  | 8972 | 146 | ts body src/helpers.ts:42 |  |  | 0.655 |
+| walker |  | 8930 | 63 | package scripts in test/package.json |  |  | 0.655 |
 | ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.646 |
-| walker |  | 9129 | 157 | test/README.md section #0 |  |  | 0.646 |
-| walker |  | 9169 | 40 | package identity in test/package.json |  |  | 0.646 |
 | ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.643 |
-| walker |  | 9232 | 63 | package scripts in test/package.json |  |  | 0.643 |
-| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.649 |
-| ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.652 |
-| ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.657 |
-| ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.660 |
-| ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.660 |
-| walker |  | 9897 | 665 | ts body src/use-scale-background.ts:8 |  |  | 0.664 |
-| ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.668 |
-| ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.665 |
+| ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.648 |
+| ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.645 |
+| walker |  | 9595 | 665 | ts body src/use-scale-background.ts:8 |  |  | 0.648 |
+| ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.653 |
+| ns | 9749 |  | 105 | Root tsconfig.json — compiler settings for the shipped library | 7.4 |  | 0.656 |
+| ns | 9753 |  | 4 | Listing of .github/workflows | 7.5 |  | 0.657 |
+| walker |  | 9769 | 174 | ts body src/helpers.ts:23 |  |  | 0.657 |
+| ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.661 |
+| ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.657 |
