@@ -700,16 +700,16 @@ pub(in crate::walker) fn is_machine_generated_text(source: &str) -> bool {
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let entries = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
-    for (name, kind) in entries {
+    for (name, kind) in entries.iter() {
         if !matches!(kind, crate::fs_util::EntryKind::File) {
             continue;
         }
-        let file = dir.join(&name);
+        let file = dir.join(name);
         // A `.sh` outside a build-script location falls through to the
         // fallback rather than out of the output.
         let is_workflow = dir.strip_prefix(ctx.root()) == Ok(Path::new(".github/workflows"))
             && (name.ends_with(".yml") || name.ends_with(".yaml"));
-        let named = classify_plaintext(&name)
+        let named = classify_plaintext(name)
             .or(is_workflow.then_some(Class::Tooling))
             .filter(|class| match class {
                 Class::BuildScript => is_build_script_location(dir, ctx),
@@ -720,7 +720,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let owned_by_markdown = dir == ctx.root() && super::markdown::is_readme_rst(&file);
         let Some(class) = named.or_else(|| {
             (!owned_by_markdown)
-                .then(|| classify_source_text(&name))
+                .then(|| classify_source_text(name))
                 .flatten()
         }) else {
             continue;

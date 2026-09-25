@@ -78,6 +78,9 @@ pub struct DirFilter {
     /// `None` when gitignore rules don't apply to this root — see
     /// [`DirFilter::new`].
     repo: Option<RepoIgnores>,
+    /// Memo for [`list_dir`]: every walker and every scheduler cost
+    /// probe lists the same directories again.
+    listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
 }
 
 impl std::fmt::Debug for DirFilter {
@@ -179,6 +182,7 @@ impl DirFilter {
             root: root.to_path_buf(),
             canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
             repo: None,
+            listings: RefCell::new(HashMap::new()),
         }
     }
 
@@ -468,7 +472,19 @@ fn entry_kind(is_dir: bool) -> EntryKind {
 /// per-walker cycle check would be needed if traversal only ever
 /// descends through real directories — which this makes true by
 /// construction.
-pub fn list_dir(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> {
+pub fn list_dir(path: &Path, filter: &DirFilter) -> Rc<BTreeMap<String, EntryKind>> {
+    if let Some(listing) = filter.listings.borrow().get(path) {
+        return Rc::clone(listing);
+    }
+    let listing = Rc::new(read_listing(path, filter));
+    filter
+        .listings
+        .borrow_mut()
+        .insert(path.to_path_buf(), Rc::clone(&listing));
+    listing
+}
+
+fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> {
     if filter.is_linked_subdirectory(path) {
         return BTreeMap::new();
     }
@@ -511,7 +527,7 @@ mod tests {
     /// excludes file, so expectations can't change with whoever runs
     /// `cargo t`.
     fn names_in(dir: &Path, filter: &DirFilter) -> Vec<String> {
-        list_dir(dir, filter).into_keys().collect()
+        list_dir(dir, filter).keys().cloned().collect()
     }
 
     /// Root-relative paths the listing walk admits, in the walk's own
@@ -520,8 +536,8 @@ mod tests {
         let mut out = BTreeSet::new();
         let mut stack = vec![root.to_path_buf()];
         while let Some(dir) = stack.pop() {
-            for (name, kind) in list_dir(&dir, filter) {
-                let child = dir.join(&name);
+            for (name, kind) in list_dir(&dir, filter).iter() {
+                let child = dir.join(name);
                 out.insert(
                     child
                         .strip_prefix(root)

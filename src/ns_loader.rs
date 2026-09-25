@@ -117,7 +117,7 @@ fn resolve_fs_group(group: &FsGroup, fixture_root: &Path, filter: &DirFilter) ->
                     parent_abs.display()
                 );
             }
-            FsEntries::Listed(listed.into_keys().map(PathBuf::from).collect())
+            FsEntries::Listed(listed.keys().map(PathBuf::from).collect())
         }
         FsEntries::Listed(paths) => {
             let probed = list_dir(&parent_abs, filter);

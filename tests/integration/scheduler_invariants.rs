@@ -199,7 +199,7 @@ impl Walker for RootListing {
                     // Bare names, matching what `walker::fs` emits.
                     entries: FsEntries::Listed(
                         precis::fs_util::list_dir(&dir, ctx.dir_filter())
-                            .into_keys()
+                            .keys()
                             .map(PathBuf::from)
                             .collect(),
                     ),

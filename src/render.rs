@@ -176,12 +176,8 @@ pub struct RenderedTree {
     source_cache: SourceCache,
     /// Memo for "is this file empty on disk" — one `stat` per
     /// file, asked once per render and once per scheduler cost probe.
-    /// Directories go through [`Self::dir_entry_counts`], which answers
-    /// the same question and more.
+    /// Directories answer from their listing instead.
     file_empty: RefCell<HashMap<PathBuf, bool>>,
-    /// Memo for "how many entries does this directory show" — the
-    /// denominator behind [`Self::listing_partial`].
-    dir_entry_counts: RefCell<HashMap<PathBuf, usize>>,
     /// Same ignore rules discovery walks under: a directory holding only
     /// ignored entries has nothing any budget could show, so it is marked
     /// empty rather than read as unexpanded.
@@ -212,7 +208,6 @@ impl RenderedTree {
             nodes,
             source_cache,
             file_empty: RefCell::new(HashMap::new()),
-            dir_entry_counts: RefCell::new(HashMap::new()),
             dir_filter,
         }
     }
@@ -295,8 +290,6 @@ impl RenderedTree {
     /// linked directory lists nothing because it is never listed through,
     /// not because it is empty.
     fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
-        // Directories answer from the entry-count memo — a second bool
-        // memo over the same key would be `count == 0` restated.
         if matches!(kind, EntryKind::Directory) {
             return self.dir_entry_count(path) == 0
                 && !self.dir_filter.is_linked_subdirectory(path);
@@ -315,14 +308,7 @@ impl RenderedTree {
     /// set a listing batch draws from, so it is the denominator for
     /// "is this listing complete".
     fn dir_entry_count(&self, dir: &Path) -> usize {
-        if let Some(&known) = self.dir_entry_counts.borrow().get(dir) {
-            return known;
-        }
-        let count = list_dir(dir, &self.dir_filter).len();
-        self.dir_entry_counts
-            .borrow_mut()
-            .insert(dir.to_path_buf(), count);
-        count
+        list_dir(dir, &self.dir_filter).len()
     }
 
     fn visit_fs_atom_costs<F, T>(&self, groups: &[FsGroup], tokens: &T, visit: &mut F)

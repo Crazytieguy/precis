@@ -14,7 +14,7 @@ const GOMOD_WHOLE_LINE_CAP: usize = 72;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
-    for (name, kind) in list_dir(dir, ctx.dir_filter()) {
+    for (name, kind) in list_dir(dir, ctx.dir_filter()).iter() {
         if !matches!(kind, crate::fs_util::EntryKind::File) {
             continue;
         }

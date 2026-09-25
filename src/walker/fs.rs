@@ -29,9 +29,9 @@ pub fn seed(ctx: &WalkCtx) -> Vec<Batch> {
 pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let children = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
-    for (name, kind) in children {
+    for (name, kind) in children.iter() {
         if matches!(kind, EntryKind::Directory)
-            && let child = dir.join(&name)
+            && let child = dir.join(name)
             && should_recurse_dir(&child, ctx.root())
             && let Some(batch) = dir_listing_batch(child, ctx)
         {
@@ -139,7 +139,7 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
         return None;
     }
     let value = dir_listing_value(&dir, &children, ctx);
-    let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
+    let paths: Vec<PathBuf> = children.keys().map(PathBuf::from).collect();
     Some(Batch {
         key: FsKey::DirListing { dir: dir.clone() }.into(),
         predecessor: None,
@@ -291,15 +291,11 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if !is_source_inventory_dir(parent, ctx) {
         return false;
     }
-    ctx.fs_state.child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
-}
-
-/// Count of immediate subdirectories of `dir`.
-fn child_dir_count_uncached(dir: &Path, filter: &DirFilter) -> usize {
-    list_dir(dir, filter)
+    list_dir(parent, ctx.dir_filter())
         .values()
         .filter(|kind| matches!(kind, EntryKind::Directory))
         .count()
+        >= CATALOG_PARENT_MIN_CHILD_DIRS
 }
 
 pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
@@ -429,8 +425,6 @@ fn module_sibling_child_dir_count(
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     source_inventory_counts: RefCell<HashMap<PathBuf, usize>>,
-    child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
-    entry_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
 impl FsState {
@@ -445,35 +439,6 @@ impl FsState {
         }
         let count = source_inventory_count_uncached(self, dir, target, filter);
         self.source_inventory_counts
-            .borrow_mut()
-            .insert(dir.to_path_buf(), count);
-        count
-    }
-
-    /// Count of immediate subdirectories of `dir`, cached per parent.
-    /// `parent_is_high_fanout_catalog` queries the same parent once per
-    /// child, so without this each child re-`read_dir`s the parent (O(N²)).
-    pub(in crate::walker) fn child_dir_count(&self, dir: &Path, filter: &DirFilter) -> usize {
-        if let Some(count) = self.child_dir_counts.borrow().get(dir).copied() {
-            return count;
-        }
-        let count = child_dir_count_uncached(dir, filter);
-        self.child_dir_counts
-            .borrow_mut()
-            .insert(dir.to_path_buf(), count);
-        count
-    }
-
-    /// Total listed entries in `dir`, cached — the size of the listing
-    /// the scheduler would have to buy. Cached for the same reason as
-    /// [`FsState::child_dir_count`]: the catalog test asks about the
-    /// same parent once per child.
-    pub(in crate::walker) fn entry_count(&self, dir: &Path, filter: &DirFilter) -> usize {
-        if let Some(count) = self.entry_counts.borrow().get(dir).copied() {
-            return count;
-        }
-        let count = list_dir(dir, filter).len();
-        self.entry_counts
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
         count
@@ -502,8 +467,7 @@ fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
                 // The repo's own `src/` promotes everything beneath it;
                 // a module's `src/` promotes only its catalogs.
                 owner == root
-                    || (ctx.fs_state.entry_count(dir, ctx.dir_filter())
-                        >= MODULE_SOURCE_ROOT_MIN_ENTRIES
+                    || (list_dir(dir, ctx.dir_filter()).len() >= MODULE_SOURCE_ROOT_MIN_ENTRIES
                         && is_package_root_dir(owner, ctx.dir_filter()))
             })
         {
