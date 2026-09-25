@@ -181,14 +181,11 @@ fn decls(source: &str) -> Vec<Decl> {
             let open_line = i + 1;
             // Brace-depth scan to the matching close brace. Prisma blocks
             // open with `{` on the keyword line; nested `{ }` (e.g. in
-            // `@default`) stay balanced within a line, and braces in a
-            // `//` comment don't count.
+            // `@default`) stay balanced within a line.
             let mut depth = 0i32;
             let mut close_line = open_line;
             for (j, line) in lines.iter().enumerate().skip(i) {
-                let line = line.split("//").next().unwrap_or_default();
-                depth += line.matches('{').count() as i32;
-                depth -= line.matches('}').count() as i32;
+                depth += brace_delta(line);
                 if depth <= 0 {
                     close_line = j + 1;
                     break;
@@ -205,6 +202,27 @@ fn decls(source: &str) -> Vec<Decl> {
         }
     }
     out
+}
+
+/// Net `{` minus `}` on `line`, ignoring braces inside string literals
+/// and after a `//` comment.
+fn brace_delta(line: &str) -> i32 {
+    let mut delta = 0;
+    let mut in_string = false;
+    let mut chars = line.chars().peekable();
+    while let Some(c) = chars.next() {
+        match c {
+            '\\' if in_string => {
+                chars.next();
+            }
+            '"' => in_string = !in_string,
+            '/' if !in_string && chars.peek() == Some(&'/') => break,
+            '{' if !in_string => delta += 1,
+            '}' if !in_string => delta -= 1,
+            _ => {}
+        }
+    }
+    delta
 }
 
 /// `Some(kind)` if `line` opens a top-level Prisma declaration. Top-level
@@ -374,6 +392,22 @@ model B {
   name String
 }
 ";
+        let closers: Vec<usize> = decls(src).iter().map(|d| d.close_line).collect();
+        assert_eq!(closers, vec![4, 9]);
+    }
+
+    #[test]
+    fn prisma_decls_ignore_comment_markers_and_braces_in_strings() {
+        let src = r#"model A {
+  config Json @default("{\"url\":\"https://example.com\"}")
+  name String
+}
+
+model B {
+  label String @default("}")
+  name String
+}
+"#;
         let closers: Vec<usize> = decls(src).iter().map(|d| d.close_line).collect();
         assert_eq!(closers, vec![4, 9]);
     }
