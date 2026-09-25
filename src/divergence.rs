@@ -53,7 +53,7 @@ use crate::render::{RenderedTree, SourceCache};
 
 /// Geometric on `[1000, 9000]` (ratio ⁶√9), symmetric around 3000 on the
 /// log scale.
-pub const BUDGETS: [usize; 7] = [1000, 1442, 2080, 3000, 4327, 6240, 9000];
+const BUDGETS: [usize; 7] = [1000, 1442, 2080, 3000, 4327, 6240, 9000];
 
 const PRIMARY_BUDGET_INDEX: usize = 3;
 
@@ -68,10 +68,10 @@ pub struct BudgetScore {
 #[derive(Debug, Clone)]
 pub struct Scores {
     /// `Score(B)` for each of [`BUDGETS`].
-    pub grid: [BudgetScore; BUDGETS.len()],
-    pub total_ns_rows: usize,
+    grid: [BudgetScore; BUDGETS.len()],
+    total_ns_rows: usize,
     /// NS rows with `exp_t ≤ 3000`.
-    pub primary_ns_rows: usize,
+    primary_ns_rows: usize,
 }
 
 impl Scores {

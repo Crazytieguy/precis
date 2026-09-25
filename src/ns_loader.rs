@@ -1,9 +1,6 @@
-//! North Star loading + resolution. Parses NS TOML, verifies the
-//! revision-pin invariant, and expands `FsEntries::All` into a concrete
-//! listing via [`crate::fs_util`].
-//!
-//! Separated from [`crate::north_star`] (types-only) so the schema
-//! surface the NS author reads stays a clean public interface.
+//! North Star loading and resolution against a fixture. Kept apart from
+//! [`crate::north_star`] so the schema file the NS author reads holds
+//! only types.
 
 use std::path::{Path, PathBuf};
 
@@ -14,10 +11,8 @@ use crate::fs_util::{DirFilter, list_dir};
 use crate::north_star::NorthStar;
 
 /// Load the NS TOML at `ns_path` and verify its `revision_pin` matches
-/// the pin file inside the fixture directory (`<fixture_root>/.precis-pin`).
-/// Fails loudly on mismatch — this is the only thing tying a frozen NS
-/// to its authored fixture revision after the old review-staleness
-/// pipeline was retired.
+/// `<fixture_root>/.precis-pin`, the only thing tying a frozen NS to the
+/// fixture revision it was authored against.
 pub fn load_ns_checked(ns_path: &Path, fixture_root: &Path) -> Result<NorthStar> {
     let ns = load_ns(ns_path)?;
     let pin_path = fixture_root.join(crate::fs_util::PRECIS_PIN_FILE);
