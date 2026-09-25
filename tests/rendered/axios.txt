@@ -27,14 +27,6 @@ CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
-  1→# Contributors
-  …
-  5→## Core Team
-  …
-  11→## Notable Contributors
-  …
-  15→## How to Contribute
-  …
 ECOSYSTEM.md
 LICENSE
 MIGRATION_GUIDE.md
@@ -223,6 +215,12 @@ index.d.cts
   189→  ): Promise<R>;
   190→  options<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
+  194→  post<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  199→  put<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
+  204→  patch<T = any, R = axios.AxiosResponse<T>, D = any>(
+  …
   229→}
   231→declare enum HttpStatusCode {
   …
@@ -259,10 +257,6 @@ index.js
 lib/
   adapters/
     README.md
-      1→# axios // adapters
-      …
-      5→## Example
-      …
     adapters.js
     fetch.js
     http.js

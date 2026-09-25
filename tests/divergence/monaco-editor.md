@@ -1,4 +1,4 @@
-Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.695/0.782/0.712/0.640/0.564/0.502
+Score(3000)=0.714 I=0.807 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.695/0.782/0.714/0.639/0.563/0.503
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -94,186 +94,183 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | ns | 2149 |  | 84 | rust/register.ts registerLanguage call | 2.7 | 2.6 | 0.769 |
 | walker |  | 2155 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.769 |
 | walker |  | 2192 | 37 | Fs::DirListing { dir: monaco-lsp-client/src/adapters } |  |  | 0.770 |
-| walker |  | 2228 | 36 | Markdown::HeadingsOutline { file: MAINTAINING.md } |  |  | 0.770 |
-| walker |  | 2239 | 11 | Json::Entry { file: samples/electron-esm-webpack/package.json } |  |  | 0.770 |
-| walker |  | 2321 | 82 | Fs::DirListing { dir: samples/legacy } |  |  | 0.770 |
-| walker |  | 2325 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-editor } |  |  | 0.770 |
-| walker |  | 2329 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-localized } |  |  | 0.770 |
-| walker |  | 2333 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-monarch } |  |  | 0.770 |
-| walker |  | 2337 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-requirejs } |  |  | 0.770 |
-| walker |  | 2341 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shadow-dom } |  |  | 0.770 |
-| walker |  | 2345 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shared-model } |  |  | 0.770 |
-| walker |  | 2349 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-trusted-types } |  |  | 0.770 |
-| walker |  | 2357 | 8 | Fs::DirListing { dir: samples/legacy/browser-amd-iframe } |  |  | 0.770 |
-| walker |  | 2369 | 12 | Fs::DirListing { dir: samples/legacy/browser-amd-diff-editor } |  |  | 0.770 |
-| walker |  | 2386 | 17 | Fs::DirListing { dir: samples/legacy/electron-amd } |  |  | 0.770 |
-| walker |  | 2403 | 17 | Fs::DirListing { dir: samples/legacy/electron-amd-nodeIntegration } |  |  | 0.770 |
-| walker |  | 2419 | 16 | Json::Identity { file: samples/legacy/electron-amd/package.json } |  |  | 0.770 |
+| walker |  | 2203 | 11 | Json::Entry { file: samples/electron-esm-webpack/package.json } |  |  | 0.770 |
+| walker |  | 2285 | 82 | Fs::DirListing { dir: samples/legacy } |  |  | 0.770 |
+| walker |  | 2289 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-editor } |  |  | 0.770 |
+| walker |  | 2293 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-localized } |  |  | 0.770 |
+| walker |  | 2297 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-monarch } |  |  | 0.770 |
+| walker |  | 2301 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-requirejs } |  |  | 0.770 |
+| walker |  | 2305 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shadow-dom } |  |  | 0.770 |
+| walker |  | 2309 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shared-model } |  |  | 0.770 |
+| walker |  | 2313 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-trusted-types } |  |  | 0.770 |
+| walker |  | 2321 | 8 | Fs::DirListing { dir: samples/legacy/browser-amd-iframe } |  |  | 0.770 |
+| walker |  | 2333 | 12 | Fs::DirListing { dir: samples/legacy/browser-amd-diff-editor } |  |  | 0.770 |
+| walker |  | 2350 | 17 | Fs::DirListing { dir: samples/legacy/electron-amd } |  |  | 0.770 |
+| walker |  | 2367 | 17 | Fs::DirListing { dir: samples/legacy/electron-amd-nodeIntegration } |  |  | 0.770 |
+| walker |  | 2383 | 16 | Json::Identity { file: samples/legacy/electron-amd/package.json } |  |  | 0.770 |
+| walker |  | 2402 | 19 | Json::Identity { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.770 |
+| walker |  | 2429 | 27 | Json::Entry { file: monaco-lsp-client/package.json } |  |  | 0.770 |
 | ns | 2431 |  | 282 | _.contribution.ts: ILang/ILangImpl and registerLanguage() | 2.8 |  | 0.734 |
-| walker |  | 2438 | 19 | Json::Identity { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.734 |
-| walker |  | 2465 | 27 | Json::Entry { file: monaco-lsp-client/package.json } |  |  | 0.734 |
-| walker |  | 2493 | 28 | Json::Entry { file: webpack-plugin/package.json } |  |  | 0.734 |
-| walker |  | 2544 | 51 | Markdown::HeadingsOutline { file: samples/README.md } |  |  | 0.734 |
+| walker |  | 2457 | 28 | Json::Entry { file: webpack-plugin/package.json } |  |  | 0.734 |
+| walker |  | 2496 | 39 | Json::Scripts { file: samples/package.json } |  |  | 0.734 |
 | ns | 2570 |  | 139 | _.contribution.ts: LazyLanguageLoader and loadLanguage() | 2.9 |  | 0.718 |
-| walker |  | 2583 | 39 | Json::Scripts { file: samples/package.json } |  |  | 0.718 |
-| walker |  | 2644 | 61 | Markdown::HeadingsOutline { file: webpack-plugin/README.md } |  |  | 0.718 |
-| ns | 2659 |  | 89 | Grammar file shape: rust.ts conf + language exports | 2.10 |  | 0.707 |
-| walker |  | 2790 | 146 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.747 |
+| walker |  | 2642 | 146 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.757 |
+| ns | 2659 |  | 89 | Grammar file shape: rust.ts conf + language exports | 2.10 |  | 0.747 |
+| walker |  | 2686 | 44 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.747 |
+| walker |  | 2716 | 30 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.747 |
+| walker |  | 2729 | 13 | Json::Entry { file: samples/legacy/electron-amd/package.json } |  |  | 0.747 |
+| walker |  | 2742 | 13 | Json::Entry { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.747 |
+| walker |  | 2785 | 43 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.747 |
 | ns | 2799 |  | 140 | Tokenization test harness: testRunner.ts types + testTokenization(), and a test file head | 2.11 |  | 0.730 |
-| walker |  | 2834 | 44 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.730 |
 | ns | 2841 |  | 42 | src/languages/definitions/register.all.ts head, elided middle, tail | 2.12 |  | 0.724 |
-| walker |  | 2864 | 30 | Markdown::Section { file: README.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.724 |
-| walker |  | 2877 | 13 | Json::Entry { file: samples/legacy/electron-amd/package.json } |  |  | 0.724 |
-| walker |  | 2890 | 13 | Json::Entry { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.724 |
-| walker |  | 2933 | 43 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.724 |
-| ns | 2976 |  | 135 | src/deprecated/: the legacy import paths, all one-line re-exports | 2.13 |  | 0.711 |
-| walker |  | 2993 | 60 | Fs::DirListing { dir: website } |  |  | 0.712 |
-| walker |  | 3073 | 80 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.712 |
-| walker |  | 3096 | 23 | Fs::DirListing { dir: scripts/ci } |  |  | 0.712 |
-| walker |  | 3131 | 35 | Fs::DirListing { dir: src/languages/features/typescript/lib } |  |  | 0.714 |
-| walker |  | 3157 | 26 | Fs::DirListing { dir: website/src } |  |  | 0.715 |
-| walker |  | 3169 | 12 | Fs::DirListing { dir: website/src/runner } |  |  | 0.715 |
-| walker |  | 3252 | 83 | Markdown::HeadingsOutline { file: docs/integrate-esm.md } |  |  | 0.715 |
+| walker |  | 2845 | 60 | Fs::DirListing { dir: website } |  |  | 0.725 |
+| walker |  | 2925 | 80 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.725 |
+| walker |  | 2948 | 23 | Fs::DirListing { dir: scripts/ci } |  |  | 0.725 |
+| ns | 2976 |  | 135 | src/deprecated/: the legacy import paths, all one-line re-exports | 2.13 |  | 0.712 |
+| walker |  | 2983 | 35 | Fs::DirListing { dir: src/languages/features/typescript/lib } |  |  | 0.714 |
+| walker |  | 3009 | 26 | Fs::DirListing { dir: website/src } |  |  | 0.715 |
+| walker |  | 3021 | 12 | Fs::DirListing { dir: website/src/runner } |  |  | 0.715 |
+| walker |  | 3301 | 280 | Code::CodeKey { rung: Names, file: monaco-lsp-client/generator/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.715 |
+| walker |  | 3312 | 11 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 9, sub: 0, line: 82 } |  |  | 0.715 |
+| walker |  | 3330 | 18 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 32, sub: 0, line: 259 } |  |  | 0.715 |
 | ns | 3345 |  | 369 | package.json scripts — build, test and dev commands (packaging variants elided) | 3.1 |  | 0.694 |
-| ns | 3477 |  | 132 | CONTRIBUTING: the ordered editor-test command sequence | 3.2 |  | 0.683 |
-| walker |  | 3532 | 280 | Code::CodeKey { rung: Names, file: monaco-lsp-client/generator/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.683 |
-| ns | 3541 |  | 64 | test/ listing plus the full smoke-test directory | 3.3 |  | 0.669 |
-| walker |  | 3543 | 11 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 9, sub: 0, line: 82 } |  |  | 0.669 |
-| walker |  | 3561 | 18 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 32, sub: 0, line: 259 } |  |  | 0.669 |
-| walker |  | 3582 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 21, sub: 0, line: 197 } |  |  | 0.669 |
-| walker |  | 3603 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 22, sub: 0, line: 202 } |  |  | 0.669 |
-| walker |  | 3624 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 24, sub: 0, line: 213 } |  |  | 0.669 |
-| walker |  | 3645 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 25, sub: 0, line: 218 } |  |  | 0.669 |
-| walker |  | 3666 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 26, sub: 0, line: 223 } |  |  | 0.669 |
-| walker |  | 3688 | 22 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 27, sub: 0, line: 228 } |  |  | 0.669 |
-| ns | 3692 |  | 151 | Listings of the five src/languages/features dirs — the uniform rich-service file set | 4.1 |  | 0.683 |
-| walker |  | 3710 | 22 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 29, sub: 0, line: 241 } |  |  | 0.683 |
-| walker |  | 3732 | 22 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 30, sub: 0, line: 246 } |  |  | 0.683 |
-| walker |  | 3756 | 24 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 31, sub: 0, line: 251 } |  |  | 0.683 |
-| walker |  | 3785 | 29 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 23, sub: 0, line: 207 } |  |  | 0.683 |
-| walker |  | 3816 | 31 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 16, sub: 0, line: 154 } |  |  | 0.683 |
-| walker |  | 3863 | 47 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 28, sub: 0, line: 233 } |  |  | 0.683 |
-| walker |  | 3918 | 55 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 17, sub: 0, line: 159 } |  |  | 0.683 |
+| walker |  | 3351 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 21, sub: 0, line: 197 } |  |  | 0.694 |
+| walker |  | 3372 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 22, sub: 0, line: 202 } |  |  | 0.694 |
+| walker |  | 3393 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 24, sub: 0, line: 213 } |  |  | 0.694 |
+| walker |  | 3414 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 25, sub: 0, line: 218 } |  |  | 0.694 |
+| walker |  | 3435 | 21 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 26, sub: 0, line: 223 } |  |  | 0.694 |
+| walker |  | 3457 | 22 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 27, sub: 0, line: 228 } |  |  | 0.694 |
+| ns | 3477 |  | 132 | CONTRIBUTING: the ordered editor-test command sequence | 3.2 |  | 0.682 |
+| walker |  | 3479 | 22 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 29, sub: 0, line: 241 } |  |  | 0.682 |
+| walker |  | 3501 | 22 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 30, sub: 0, line: 246 } |  |  | 0.682 |
+| walker |  | 3525 | 24 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 31, sub: 0, line: 251 } |  |  | 0.682 |
+| ns | 3541 |  | 64 | test/ listing plus the full smoke-test directory | 3.3 |  | 0.668 |
+| walker |  | 3554 | 29 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 23, sub: 0, line: 207 } |  |  | 0.668 |
+| walker |  | 3585 | 31 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 16, sub: 0, line: 154 } |  |  | 0.668 |
+| walker |  | 3632 | 47 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 28, sub: 0, line: 233 } |  |  | 0.668 |
+| walker |  | 3687 | 55 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 17, sub: 0, line: 159 } |  |  | 0.668 |
+| ns | 3692 |  | 151 | Listings of the five src/languages/features dirs — the uniform rich-service file set | 4.1 |  | 0.682 |
+| walker |  | 3744 | 57 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 15, sub: 0, line: 145 } |  |  | 0.682 |
+| walker |  | 3804 | 60 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 8, sub: 0, line: 73 } |  |  | 0.682 |
+| walker |  | 3868 | 64 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 13, sub: 0, line: 124 } |  |  | 0.682 |
+| walker |  | 3942 | 74 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 12, sub: 0, line: 113 } |  |  | 0.682 |
 | ns | 3952 |  | 260 | css/register.ts — every top-level export (names only) | 4.2 |  | 0.666 |
-| walker |  | 3975 | 57 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 15, sub: 0, line: 145 } |  |  | 0.666 |
-| walker |  | 4035 | 60 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 8, sub: 0, line: 73 } |  |  | 0.666 |
-| walker |  | 4099 | 64 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 13, sub: 0, line: 124 } |  |  | 0.666 |
-| walker |  | 4173 | 74 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 12, sub: 0, line: 113 } |  |  | 0.666 |
-| ns | 4237 |  | 285 | css: the default ModeConfiguration toggles, the three defaults objects, and the lazy onLanguage hookup | 4.3 | 4.2 | 0.640 |
-| walker |  | 4250 | 77 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 14, sub: 0, line: 134 } |  |  | 0.640 |
-| walker |  | 4329 | 79 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.640 |
-| walker |  | 4416 | 87 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 11, sub: 0, line: 101 } |  |  | 0.640 |
+| walker |  | 4019 | 77 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 14, sub: 0, line: 134 } |  |  | 0.666 |
+| walker |  | 4098 | 79 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.666 |
+| walker |  | 4185 | 87 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 11, sub: 0, line: 101 } |  |  | 0.666 |
+| ns | 4237 |  | 285 | css: the default ModeConfiguration toggles, the three defaults objects, and the lazy onLanguage hookup | 4.3 | 4.2 | 0.639 |
+| walker |  | 4286 | 101 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 19, sub: 0, line: 170 } |  |  | 0.639 |
+| walker |  | 4398 | 112 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 20, sub: 0, line: 183 } |  |  | 0.639 |
 | ns | 4496 |  | 259 | json/register.ts — every top-level export (names only) | 4.4 |  | 0.624 |
-| walker |  | 4517 | 101 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 19, sub: 0, line: 170 } |  |  | 0.624 |
-| walker |  | 4629 | 112 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 20, sub: 0, line: 183 } |  |  | 0.624 |
-| walker |  | 4743 | 114 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 10, sub: 0, line: 86 } |  |  | 0.624 |
-| walker |  | 4765 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 4, sub: 0, line: 41 } |  |  | 0.605 |
-| ns | 4765 |  | 269 | json defaults: diagnostic option values, mode toggles, jsonDefaults, the worker interface | 4.5 | 4.4 | 0.605 |
-| walker |  | 4787 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 8, sub: 0, line: 73 } |  |  | 0.605 |
-| walker |  | 4809 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 32, sub: 0, line: 259 } |  |  | 0.605 |
-| walker |  | 4832 | 23 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 5, sub: 0, line: 48 } |  |  | 0.605 |
-| walker |  | 4857 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.605 |
-| walker |  | 4882 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.605 |
-| walker |  | 4907 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 7, sub: 0, line: 64 } |  |  | 0.605 |
-| walker |  | 4932 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 33, sub: 0, line: 628 } |  |  | 0.605 |
-| walker |  | 4958 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 3, sub: 0, line: 26 } |  |  | 0.605 |
-| walker |  | 4984 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 6, sub: 0, line: 57 } |  |  | 0.605 |
-| walker |  | 5014 | 30 | Json::Scripts { file: samples/browser-esm-esbuild/package.json } |  |  | 0.605 |
+| walker |  | 4512 | 114 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/generator/index.ts, decl: 10, sub: 0, line: 86 } |  |  | 0.624 |
+| walker |  | 4534 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 4, sub: 0, line: 41 } |  |  | 0.624 |
+| walker |  | 4556 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 8, sub: 0, line: 73 } |  |  | 0.624 |
+| walker |  | 4578 | 22 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 32, sub: 0, line: 259 } |  |  | 0.624 |
+| walker |  | 4601 | 23 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 5, sub: 0, line: 48 } |  |  | 0.624 |
+| walker |  | 4626 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.624 |
+| walker |  | 4651 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.624 |
+| walker |  | 4676 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 7, sub: 0, line: 64 } |  |  | 0.624 |
+| walker |  | 4701 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 33, sub: 0, line: 628 } |  |  | 0.624 |
+| walker |  | 4727 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 3, sub: 0, line: 26 } |  |  | 0.624 |
+| walker |  | 4753 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 6, sub: 0, line: 57 } |  |  | 0.624 |
+| ns | 4765 |  | 269 | json defaults: diagnostic option values, mode toggles, jsonDefaults, the worker interface | 4.5 | 4.4 | 0.604 |
+| walker |  | 4783 | 30 | Json::Scripts { file: samples/browser-esm-esbuild/package.json } |  |  | 0.604 |
+| walker |  | 4814 | 31 | Json::Scripts { file: samples/browser-esm-parcel/package.json } |  |  | 0.604 |
+| walker |  | 4825 | 11 | Json::Dependencies { file: samples/browser-esm-vite/package.json } |  |  | 0.604 |
+| walker |  | 4836 | 11 | Json::Dependencies { file: samples/browser-esm-vite-react/package.json } |  |  | 0.604 |
+| walker |  | 4847 | 11 | Json::Dependencies { file: samples/browser-esm-webpack-typescript-react/package.json } |  |  | 0.604 |
+| walker |  | 4916 | 69 | Json::Scripts { file: webpack-plugin/package.json } |  |  | 0.604 |
+| walker |  | 4970 | 54 | Code::CodeKey { rung: Names, file: samples/electron-esm-webpack/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
+| walker |  | 5024 | 54 | Code::CodeKey { rung: Names, file: samples/legacy/electron-amd/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
 | ns | 5027 |  | 262 | html/register.ts — export names plus the registerHTMLLanguageService factory | 4.6 |  | 0.591 |
-| walker |  | 5045 | 31 | Json::Scripts { file: samples/browser-esm-parcel/package.json } |  |  | 0.591 |
-| walker |  | 5056 | 11 | Json::Dependencies { file: samples/browser-esm-vite/package.json } |  |  | 0.591 |
-| walker |  | 5067 | 11 | Json::Dependencies { file: samples/browser-esm-vite-react/package.json } |  |  | 0.591 |
-| walker |  | 5078 | 11 | Json::Dependencies { file: samples/browser-esm-webpack-typescript-react/package.json } |  |  | 0.591 |
-| walker |  | 5147 | 69 | Json::Scripts { file: webpack-plugin/package.json } |  |  | 0.591 |
-| walker |  | 5201 | 54 | Code::CodeKey { rung: Names, file: samples/electron-esm-webpack/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
-| walker |  | 5255 | 54 | Code::CodeKey { rung: Names, file: samples/legacy/electron-amd/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
-| walker |  | 5309 | 54 | Code::CodeKey { rung: Names, file: samples/legacy/electron-amd-nodeIntegration/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
-| ns | 5311 |  | 284 | html: the three pre-registered services and their per-language toggles | 4.7 | 4.6 | 0.576 |
-| walker |  | 5477 | 168 | Json::Entry { file: package.json } |  |  | 0.577 |
-| walker |  | 5515 | 38 | Json::Scripts { file: samples/browser-esm-webpack/package.json } |  |  | 0.577 |
-| walker |  | 5553 | 38 | Json::Scripts { file: samples/browser-esm-webpack-monaco-plugin/package.json } |  |  | 0.577 |
-| ns | 5556 |  | 245 | typescript/register.ts — every top-level export (names only) | 4.8 |  | 0.566 |
-| walker |  | 5612 | 59 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.566 |
-| walker |  | 5656 | 44 | Code::CodeKey { rung: Names, file: webpack-plugin/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
-| walker |  | 5702 | 46 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 2, sub: 0, line: 159 } |  |  | 0.566 |
-| walker |  | 5732 | 30 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.568 |
+| walker |  | 5078 | 54 | Code::CodeKey { rung: Names, file: samples/legacy/electron-amd-nodeIntegration/main.js, decl: 0, sub: 0, line: 0 } |  |  | 0.591 |
+| walker |  | 5246 | 168 | Json::Entry { file: package.json } |  |  | 0.591 |
+| walker |  | 5284 | 38 | Json::Scripts { file: samples/browser-esm-webpack/package.json } |  |  | 0.591 |
+| ns | 5311 |  | 284 | html: the three pre-registered services and their per-language toggles | 4.7 | 4.6 | 0.577 |
+| walker |  | 5322 | 38 | Json::Scripts { file: samples/browser-esm-webpack-monaco-plugin/package.json } |  |  | 0.577 |
+| walker |  | 5381 | 59 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.577 |
+| walker |  | 5425 | 44 | Code::CodeKey { rung: Names, file: webpack-plugin/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.577 |
+| walker |  | 5471 | 46 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 2, sub: 0, line: 159 } |  |  | 0.577 |
+| walker |  | 5501 | 30 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.578 |
+| ns | 5556 |  | 245 | typescript/register.ts — every top-level export (names only) | 4.8 |  | 0.567 |
+| walker |  | 5583 | 82 | Json::Scripts { file: monaco-lsp-client/package.json } |  |  | 0.567 |
+| walker |  | 5586 | 3 | Fs::DirListing { dir: website/index } |  |  | 0.567 |
+| walker |  | 5632 | 46 | Fs::DirListing { dir: website/src/website } |  |  | 0.567 |
+| walker |  | 5647 | 15 | Fs::DirListing { dir: website/src/website/data } |  |  | 0.567 |
+| walker |  | 5674 | 27 | Fs::DirListing { dir: website/src/website/pages } |  |  | 0.567 |
+| walker |  | 5708 | 34 | Fs::DirListing { dir: website/src/website/data/playground-samples } |  |  | 0.567 |
+| walker |  | 5727 | 19 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence } |  |  | 0.567 |
+| walker |  | 5748 | 21 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor } |  |  | 0.567 |
+| walker |  | 5779 | 31 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor } |  |  | 0.567 |
 | ns | 5791 |  | 235 | LanguageServiceDefaults (typescript) — all members | 4.9 |  | 0.557 |
-| walker |  | 5814 | 82 | Json::Scripts { file: monaco-lsp-client/package.json } |  |  | 0.557 |
-| walker |  | 5817 | 3 | Fs::DirListing { dir: website/index } |  |  | 0.557 |
-| walker |  | 5863 | 46 | Fs::DirListing { dir: website/src/website } |  |  | 0.557 |
-| walker |  | 5878 | 15 | Fs::DirListing { dir: website/src/website/data } |  |  | 0.557 |
-| walker |  | 5905 | 27 | Fs::DirListing { dir: website/src/website/pages } |  |  | 0.557 |
-| walker |  | 5939 | 34 | Fs::DirListing { dir: website/src/website/data/playground-samples } |  |  | 0.557 |
-| walker |  | 5958 | 19 | Fs::DirListing { dir: website/src/website/data/playground-samples/customizing-the-appearence } |  |  | 0.557 |
-| walker |  | 5979 | 21 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-diffeditor } |  |  | 0.557 |
-| walker |  | 6010 | 31 | Fs::DirListing { dir: website/src/website/data/playground-samples/creating-the-editor } |  |  | 0.557 |
-| ns | 6027 |  | 236 | TypeScriptWorker — all 21 proxy methods (names only) | 4.10 | 4.8 | 0.547 |
-| walker |  | 6050 | 40 | Fs::DirListing { dir: website/src/website/components } |  |  | 0.547 |
-| walker |  | 6092 | 42 | Fs::DirListing { dir: website/src/website/utils } |  |  | 0.547 |
-| walker |  | 6143 | 51 | Fs::DirListing { dir: test/smoke } |  |  | 0.564 |
-| walker |  | 6247 | 104 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.564 |
-| walker |  | 6281 | 34 | Json::Dependencies { file: webpack-plugin/package.json } |  |  | 0.564 |
+| walker |  | 5819 | 40 | Fs::DirListing { dir: website/src/website/components } |  |  | 0.557 |
+| walker |  | 5861 | 42 | Fs::DirListing { dir: website/src/website/utils } |  |  | 0.557 |
+| walker |  | 5912 | 51 | Fs::DirListing { dir: test/smoke } |  |  | 0.574 |
+| walker |  | 6016 | 104 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.574 |
+| ns | 6027 |  | 236 | TypeScriptWorker — all 21 proxy methods (names only) | 4.10 | 4.8 | 0.563 |
+| walker |  | 6050 | 34 | Json::Dependencies { file: webpack-plugin/package.json } |  |  | 0.563 |
+| walker |  | 6104 | 54 | Json::Scripts { file: samples/browser-esm-vite/package.json } |  |  | 0.563 |
+| walker |  | 6140 | 36 | Json::Dependencies { file: samples/package.json } |  |  | 0.563 |
+| walker |  | 6220 | 80 | Fs::DirListing { dir: test/manual } |  |  | 0.563 |
+| walker |  | 6296 | 76 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.563 |
 | ns | 6318 |  | 291 | typescript/javascript defaults and their divergence | 4.11 | 4.8 | 0.550 |
-| walker |  | 6335 | 54 | Json::Scripts { file: samples/browser-esm-vite/package.json } |  |  | 0.550 |
-| walker |  | 6371 | 36 | Json::Dependencies { file: samples/package.json } |  |  | 0.550 |
-| walker |  | 6451 | 80 | Fs::DirListing { dir: test/manual } |  |  | 0.550 |
-| walker |  | 6527 | 76 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.550 |
+| walker |  | 6352 | 56 | Json::Scripts { file: samples/browser-esm-webpack-small/package.json } |  |  | 0.550 |
+| walker |  | 6386 | 34 | Json::Scripts { file: samples/legacy/electron-amd/package.json } |  |  | 0.550 |
+| walker |  | 6420 | 34 | Json::Scripts { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.550 |
 | ns | 6547 |  | 229 | The four *Mode.ts entry points and the tsMode re-export tail | 5.1 |  | 0.545 |
-| walker |  | 6583 | 56 | Json::Scripts { file: samples/browser-esm-webpack-small/package.json } |  |  | 0.545 |
-| walker |  | 6617 | 34 | Json::Scripts { file: samples/legacy/electron-amd/package.json } |  |  | 0.545 |
-| walker |  | 6651 | 34 | Json::Scripts { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.545 |
 | ns | 6761 |  | 214 | cssMode.setupMode — WorkerManager, the worker accessor, and ModeConfiguration-gated provider registration | 5.2 | 5.1 | 0.535 |
+| walker |  | 7041 | 621 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.536 |
+| walker |  | 7100 | 59 | Json::Scripts { file: samples/electron-esm-webpack/package.json } |  |  | 0.536 |
 | ns | 7114 |  | 353 | common/lspLanguageFeatures.ts — the shared provider adapters and LSP conversion helpers | 5.3 |  | 0.527 |
-| walker |  | 7272 | 621 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.527 |
-| walker |  | 7331 | 59 | Json::Scripts { file: samples/electron-esm-webpack/package.json } |  |  | 0.527 |
-| walker |  | 7378 | 47 | Code::CodeKey { rung: Names, file: samples/browser-esm-vite/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
-| walker |  | 7391 | 13 | Code::CodeKey { rung: Decl, file: samples/browser-esm-vite/main.ts, decl: 1, sub: 0, line: 18 } |  |  | 0.527 |
+| walker |  | 7147 | 47 | Code::CodeKey { rung: Names, file: samples/browser-esm-vite/main.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
+| walker |  | 7160 | 13 | Code::CodeKey { rung: Decl, file: samples/browser-esm-vite/main.ts, decl: 1, sub: 0, line: 18 } |  |  | 0.527 |
+| walker |  | 7192 | 32 | Code::CodeKey { rung: Decl, file: samples/browser-esm-vite/main.ts, decl: 2, sub: 0, line: 21 } |  |  | 0.527 |
+| walker |  | 7255 | 63 | Json::Scripts { file: samples/browser-esm-webpack-typescript/package.json } |  |  | 0.527 |
+| walker |  | 7368 | 113 | Code::CodeKey { rung: Body, file: samples/legacy/electron-amd/main.js, decl: 4, sub: 0, line: 7 } |  |  | 0.527 |
 | ns | 7421 |  | 307 | Web-worker plumbing: MonacoEnvironment hooks, createWebWorker, IWebWorkerOptions fields, worker entry points | 5.4 |  | 0.517 |
-| walker |  | 7423 | 32 | Code::CodeKey { rung: Decl, file: samples/browser-esm-vite/main.ts, decl: 2, sub: 0, line: 21 } |  |  | 0.517 |
-| walker |  | 7486 | 63 | Json::Scripts { file: samples/browser-esm-webpack-typescript/package.json } |  |  | 0.517 |
+| walker |  | 7483 | 115 | Code::CodeKey { rung: Body, file: samples/electron-esm-webpack/main.js, decl: 4, sub: 0, line: 7 } |  |  | 0.517 |
+| walker |  | 7550 | 67 | Fs::DirListing { dir: website/src/website/pages/playground } |  |  | 0.517 |
 | ns | 7576 |  | 155 | WorkerManager lifecycle and the CSSWorker entry points | 5.5 |  | 0.513 |
-| walker |  | 7599 | 113 | Code::CodeKey { rung: Body, file: samples/legacy/electron-amd/main.js, decl: 4, sub: 0, line: 7 } |  |  | 0.513 |
-| walker |  | 7714 | 115 | Code::CodeKey { rung: Body, file: samples/electron-esm-webpack/main.js, decl: 4, sub: 0, line: 7 } |  |  | 0.513 |
-| walker |  | 7781 | 67 | Fs::DirListing { dir: website/src/website/pages/playground } |  |  | 0.513 |
+| walker |  | 7616 | 66 | Json::Scripts { file: samples/browser-esm-webpack-typescript-react/package.json } |  |  | 0.513 |
+| walker |  | 7691 | 75 | Fs::DirListing { dir: website/src/website/data/playground-samples/extending-language-services } |  |  | 0.513 |
 | ns | 7830 |  | 254 | typescript/languageFeatures.ts — the TypeScript-specific adapter roster | 5.6 |  | 0.507 |
-| walker |  | 7847 | 66 | Json::Scripts { file: samples/browser-esm-webpack-typescript-react/package.json } |  |  | 0.507 |
+| walker |  | 7843 | 152 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.507 |
+| walker |  | 7871 | 28 | Code::CodeKey { rung: Names, file: monaco-lsp-client/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.507 |
 | ns | 7909 |  | 79 | monaco-lsp-client package: complete tree listing | 6.1 |  | 0.516 |
-| walker |  | 7922 | 75 | Fs::DirListing { dir: website/src/website/data/playground-samples/extending-language-services } |  |  | 0.516 |
-| walker |  | 8074 | 152 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.516 |
-| walker |  | 8102 | 28 | Code::CodeKey { rung: Names, file: monaco-lsp-client/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
-| ns | 8116 |  | 207 | MonacoLspClient wiring + index exports | 6.2 | 6.1 | 0.511 |
-| ns | 8165 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.517 |
-| walker |  | 8176 | 74 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor } |  |  | 0.517 |
-| walker |  | 8350 | 174 | Fs::DirListing { dir: monaco-lsp-client/src/adapters/languageFeatures } |  |  | 0.517 |
-| walker |  | 8437 | 87 | Json::Scripts { file: samples/browser-esm-vite-react/package.json } |  |  | 0.517 |
+| walker |  | 7945 | 74 | Fs::DirListing { dir: website/src/website/data/playground-samples/interacting-with-the-editor } |  |  | 0.516 |
+| ns | 8116 |  | 207 | MonacoLspClient wiring + index exports | 6.2 | 6.1 | 0.510 |
+| walker |  | 8119 | 174 | Fs::DirListing { dir: monaco-lsp-client/src/adapters/languageFeatures } |  |  | 0.510 |
+| ns | 8165 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.516 |
+| walker |  | 8206 | 87 | Json::Scripts { file: samples/browser-esm-vite-react/package.json } |  |  | 0.516 |
+| walker |  | 8361 | 155 | Code::CodeKey { rung: Body, file: samples/legacy/electron-amd-nodeIntegration/main.js, decl: 4, sub: 0, line: 7 } |  |  | 0.516 |
 | ns | 8449 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.521 |
-| walker |  | 8592 | 155 | Code::CodeKey { rung: Body, file: samples/legacy/electron-amd-nodeIntegration/main.js, decl: 4, sub: 0, line: 7 } |  |  | 0.521 |
-| ns | 8613 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.512 |
-| walker |  | 8747 | 155 | Code::CodeKey { rung: Body, file: webpack-plugin/src/index.ts, decl: 3, sub: 0, line: 162 } |  |  | 0.512 |
-| walker |  | 8751 | 4 | Fs::DirListing { dir: test/smoke/amd } |  |  | 0.512 |
-| walker |  | 8759 | 8 | Fs::DirListing { dir: website/static } |  |  | 0.512 |
+| walker |  | 8516 | 155 | Code::CodeKey { rung: Body, file: webpack-plugin/src/index.ts, decl: 3, sub: 0, line: 162 } |  |  | 0.521 |
+| walker |  | 8520 | 4 | Fs::DirListing { dir: test/smoke/amd } |  |  | 0.521 |
+| walker |  | 8528 | 8 | Fs::DirListing { dir: website/static } |  |  | 0.521 |
+| walker |  | 8609 | 81 | Json::Dependencies { file: monaco-lsp-client/package.json } |  |  | 0.521 |
+| ns | 8613 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.511 |
+| walker |  | 8629 | 20 | Code::CodeKey { rung: Names, file: src/editor.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 8638 | 9 | Fs::DirListing { dir: website/scripts } |  |  | 0.512 |
+| walker |  | 8673 | 35 | Code::CodeKey { rung: Names, file: monaco-lsp-client/src/utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 8685 | 12 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.512 |
+| walker |  | 8736 | 51 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.512 |
+| walker |  | 8746 | 10 | Code::CodeKey { rung: Body, file: monaco-lsp-client/src/utils.ts, decl: 4, sub: 0, line: 12 } |  |  | 0.512 |
 | ns | 8762 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.508 |
-| walker |  | 8840 | 81 | Json::Dependencies { file: monaco-lsp-client/package.json } |  |  | 0.508 |
-| walker |  | 8860 | 20 | Code::CodeKey { rung: Names, file: src/editor.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
-| walker |  | 8869 | 9 | Fs::DirListing { dir: website/scripts } |  |  | 0.509 |
-| walker |  | 8904 | 35 | Code::CodeKey { rung: Names, file: monaco-lsp-client/src/utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
-| walker |  | 8916 | 12 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.509 |
-| walker |  | 8967 | 51 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 2, sub: 0, line: 5 } |  |  | 0.509 |
-| walker |  | 8977 | 10 | Code::CodeKey { rung: Body, file: monaco-lsp-client/src/utils.ts, decl: 4, sub: 0, line: 12 } |  |  | 0.509 |
-| ns | 9000 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.502 |
-| walker |  | 9040 | 63 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 5, sub: 0, line: 24 } |  |  | 0.502 |
+| walker |  | 8809 | 63 | Code::CodeKey { rung: Decl, file: monaco-lsp-client/src/utils.ts, decl: 5, sub: 0, line: 24 } |  |  | 0.508 |
+| ns | 9000 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.501 |
 | ns | 9166 |  | 166 | package.json distribution fields: typings, main, module, exports | 8.1 |  | 0.507 |
 | ns | 9420 |  | 254 | README Installing + CHANGELOG head (0.55.x breaking changes) | 8.2 |  | 0.504 |
-| ns | 9524 |  | 104 | samples/ listing — every integration sample directory | 8.3 |  | 0.511 |
-| ns | 9562 |  | 38 | docs/ listing | 8.4 |  | 0.514 |
-| ns | 9645 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.516 |
-| walker |  | 9687 | 647 | Json::Scripts { file: package.json } |  |  | 0.532 |
-| walker |  | 9711 | 24 | Code::CodeKey { rung: Names, file: src/languages/register.all.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
-| walker |  | 9735 | 24 | Code::CodeKey { rung: Names, file: webpack-plugin/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.534 |
-| walker |  | 9754 | 19 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/types.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.534 |
-| ns | 9771 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.544 |
-| walker |  | 9789 | 35 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/types.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.544 |
-| walker |  | 9799 | 10 | Fs::DirListing { dir: website/typedoc } |  |  | 0.544 |
-| walker |  | 9812 | 13 | Code::CodeKey { rung: Names, file: webpack-plugin/src/loader-utils.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.544 |
-| walker |  | 9862 | 50 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/loader-utils.d.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.544 |
-| walker |  | 9997 | 135 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.544 |
+| walker |  | 9456 | 647 | Json::Scripts { file: package.json } |  |  | 0.520 |
+| walker |  | 9480 | 24 | Code::CodeKey { rung: Names, file: src/languages/register.all.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
+| walker |  | 9504 | 24 | Code::CodeKey { rung: Names, file: webpack-plugin/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
+| walker |  | 9523 | 19 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/types.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.522 |
+| ns | 9524 |  | 104 | samples/ listing — every integration sample directory | 8.3 |  | 0.529 |
+| walker |  | 9558 | 35 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/types.ts, decl: 2, sub: 0, line: 6 } |  |  | 0.529 |
+| ns | 9562 |  | 38 | docs/ listing | 8.4 |  | 0.531 |
+| walker |  | 9568 | 10 | Fs::DirListing { dir: website/typedoc } |  |  | 0.531 |
+| walker |  | 9581 | 13 | Code::CodeKey { rung: Names, file: webpack-plugin/src/loader-utils.d.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
+| walker |  | 9631 | 50 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/loader-utils.d.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.531 |
+| ns | 9645 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.529 |
+| ns | 9771 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.540 |
+| walker |  | 9867 | 236 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.542 |
+| walker |  | 9979 | 112 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.543 |

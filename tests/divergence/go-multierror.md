@@ -1,4 +1,4 @@
-Score(3000)=0.552 I=0.564 C=0.540 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.438/0.427/0.478/0.552/0.757/0.894/0.813
+Score(3000)=0.552 I=0.564 C=0.540 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.438/0.427/0.478/0.552/0.757/0.895/0.818
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -101,56 +101,55 @@ Score(3000)=0.552 I=0.564 C=0.540 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 5520 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.841 |
 | ns | 5825 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.819 |
 | walker |  | 5886 | 553 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.883 |
-| walker |  | 5942 | 56 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.883 |
-| ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.875 |
-| walker |  | 6096 | 154 | Code::CodeKey { rung: Body, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.892 |
-| walker |  | 6130 | 34 | Markdown::HeadingsOutline { file: .github/pull_request_template.md } |  |  | 0.893 |
-| ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.868 |
-| walker |  | 6296 | 166 | Code::CodeKey { rung: Names, file: multierror_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.871 |
-| walker |  | 6307 | 11 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.871 |
-| walker |  | 6322 | 15 | Code::CodeKey { rung: Doc, file: multierror_test.go, decl: 9, sub: 0, line: 209 } |  |  | 0.871 |
-| walker |  | 6356 | 34 | Code::CodeKey { rung: Names, file: flatten_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.872 |
-| walker |  | 6411 | 55 | Code::CodeKey { rung: Body, file: flatten_test.go, decl: 2, sub: 0, line: 43 } |  |  | 0.872 |
-| walker |  | 6428 | 17 | Code::CodeKey { rung: Names, file: group_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.873 |
-| walker |  | 6462 | 34 | Code::CodeKey { rung: Names, file: sort_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.875 |
-| walker |  | 6516 | 54 | Code::CodeKey { rung: Names, file: prefix_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.878 |
-| walker |  | 6566 | 50 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 2, sub: 0, line: 22 } |  |  | 0.878 |
-| walker |  | 6653 | 87 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 3, sub: 0, line: 30 } |  |  | 0.878 |
-| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.850 |
-| walker |  | 6765 | 112 | Code::CodeKey { rung: Names, file: append_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.860 |
-| walker |  | 6824 | 59 | Code::CodeKey { rung: Body, file: append_test.go, decl: 2, sub: 0, line: 45 } |  |  | 0.860 |
+| ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.874 |
+| walker |  | 6040 | 154 | Code::CodeKey { rung: Body, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.892 |
+| walker |  | 6206 | 166 | Code::CodeKey { rung: Names, file: multierror_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.895 |
+| walker |  | 6217 | 11 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.895 |
+| walker |  | 6232 | 15 | Code::CodeKey { rung: Doc, file: multierror_test.go, decl: 9, sub: 0, line: 209 } |  |  | 0.895 |
+| ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.870 |
+| walker |  | 6266 | 34 | Code::CodeKey { rung: Names, file: flatten_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.872 |
+| walker |  | 6321 | 55 | Code::CodeKey { rung: Body, file: flatten_test.go, decl: 2, sub: 0, line: 43 } |  |  | 0.872 |
+| walker |  | 6338 | 17 | Code::CodeKey { rung: Names, file: group_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.872 |
+| walker |  | 6372 | 34 | Code::CodeKey { rung: Names, file: sort_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.874 |
+| walker |  | 6426 | 54 | Code::CodeKey { rung: Names, file: prefix_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.878 |
+| walker |  | 6476 | 50 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 2, sub: 0, line: 22 } |  |  | 0.878 |
+| walker |  | 6563 | 87 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 3, sub: 0, line: 30 } |  |  | 0.878 |
+| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.849 |
+| walker |  | 6675 | 112 | Code::CodeKey { rung: Names, file: append_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.859 |
+| walker |  | 6734 | 59 | Code::CodeKey { rung: Body, file: append_test.go, decl: 2, sub: 0, line: 45 } |  |  | 0.859 |
+| walker |  | 6797 | 63 | Code::CodeKey { rung: Body, file: append_test.go, decl: 5, sub: 0, line: 71 } |  |  | 0.859 |
 | ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.846 |
-| walker |  | 6887 | 63 | Code::CodeKey { rung: Body, file: append_test.go, decl: 5, sub: 0, line: 71 } |  |  | 0.846 |
-| walker |  | 6953 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 4, sub: 0, line: 62 } |  |  | 0.846 |
-| walker |  | 7019 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 6, sub: 0, line: 79 } |  |  | 0.846 |
-| walker |  | 7057 | 38 | Code::CodeKey { rung: Names, file: format_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.851 |
-| walker |  | 7148 | 91 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.851 |
-| walker |  | 7215 | 67 | Code::CodeKey { rung: Body, file: append_test.go, decl: 3, sub: 0, line: 53 } |  |  | 0.851 |
+| walker |  | 6863 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 4, sub: 0, line: 62 } |  |  | 0.846 |
+| walker |  | 6929 | 66 | Code::CodeKey { rung: Body, file: append_test.go, decl: 6, sub: 0, line: 79 } |  |  | 0.846 |
+| walker |  | 6967 | 38 | Code::CodeKey { rung: Names, file: format_test.go, decl: 0, sub: 0, line: 0 } |  |  | 0.850 |
+| walker |  | 7058 | 91 | Code::CodeKey { rung: Body, file: prefix_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.850 |
+| walker |  | 7125 | 67 | Code::CodeKey { rung: Body, file: append_test.go, decl: 3, sub: 0, line: 53 } |  |  | 0.850 |
+| walker |  | 7230 | 105 | Code::CodeKey { rung: Body, file: format_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.850 |
 | ns | 7254 |  | 417 | append_test.go: the nil / typed-nil / flattening cases in full | 4.6 | 4.1 | 0.822 |
-| walker |  | 7320 | 105 | Code::CodeKey { rung: Body, file: format_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.822 |
+| walker |  | 7353 | 123 | Code::CodeKey { rung: Body, file: format_test.go, decl: 2, sub: 0, line: 27 } |  |  | 0.822 |
 | ns | 7361 |  | 107 | Test file preambles: package clause and imports | 4.7 |  | 0.811 |
-| ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.812 |
-| walker |  | 7443 | 123 | Code::CodeKey { rung: Body, file: format_test.go, decl: 2, sub: 0, line: 27 } |  |  | 0.812 |
+| ns | 7387 |  | 26 | Complete `.github/` tree listing | 5.1 |  | 0.811 |
 | ns | 7461 |  | 74 | Makefile: every target plus the TEST variable | 5.2 |  | 0.813 |
-| walker |  | 7570 | 127 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 2, sub: 0, line: 17 } |  |  | 0.813 |
-| walker |  | 7699 | 129 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 3, sub: 0, line: 33 } |  |  | 0.821 |
+| walker |  | 7480 | 127 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 2, sub: 0, line: 17 } |  |  | 0.813 |
+| walker |  | 7609 | 129 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 3, sub: 0, line: 33 } |  |  | 0.820 |
 | ns | 7710 |  | 249 | Makefile recipes for test, testrace, updatedeps and generate | 5.3 | 5.2 | 0.822 |
-| walker |  | 7834 | 135 | Code::CodeKey { rung: Body, file: sort_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.822 |
-| walker |  | 8025 | 191 | Code::CodeKey { rung: Body, file: sort_test.go, decl: 2, sub: 0, line: 32 } |  |  | 0.822 |
+| walker |  | 7744 | 135 | Code::CodeKey { rung: Body, file: sort_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.822 |
+| walker |  | 7935 | 191 | Code::CodeKey { rung: Body, file: sort_test.go, decl: 2, sub: 0, line: 32 } |  |  | 0.822 |
 | ns | 8035 |  | 325 | Main CI workflow skeleton: triggers, permissions, all four jobs, the Go matrix | 5.4 |  | 0.800 |
-| walker |  | 8158 | 133 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 4, sub: 0, line: 51 } |  |  | 0.800 |
-| walker |  | 8396 | 238 | Code::CodeKey { rung: Body, file: flatten_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.815 |
+| walker |  | 8068 | 133 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 4, sub: 0, line: 51 } |  |  | 0.800 |
+| walker |  | 8306 | 238 | Code::CodeKey { rung: Body, file: flatten_test.go, decl: 1, sub: 0, line: 13 } |  |  | 0.815 |
+| walker |  | 8454 | 148 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 5, sub: 0, line: 65 } |  |  | 0.815 |
 | ns | 8467 |  | 432 | CI steps: the `go fmt` gate and the golangci-lint job | 5.5 | 5.4 | 0.799 |
-| walker |  | 8544 | 148 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 5, sub: 0, line: 65 } |  |  | 0.799 |
 | ns | 8852 |  | 385 | CI: how the linux test job actually runs the suite | 5.6 | 5.4 | 0.785 |
-| walker |  | 8956 | 412 | Code::CodeKey { rung: Body, file: group_test.go, decl: 1, sub: 0, line: 12 } |  |  | 0.812 |
+| walker |  | 8866 | 412 | Code::CodeKey { rung: Body, file: group_test.go, decl: 1, sub: 0, line: 12 } |  |  | 0.812 |
 | ns | 9035 |  | 183 | CI: what the windows job does differently | 5.7 | 5.4 | 0.804 |
-| ns | 9237 |  | 202 | actionlint workflow, in full | 5.8 |  | 0.794 |
-| walker |  | 9300 | 344 | Code::CodeKey { rung: Body, file: append_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.821 |
+| walker |  | 9210 | 344 | Code::CodeKey { rung: Body, file: append_test.go, decl: 1, sub: 0, line: 11 } |  |  | 0.832 |
+| ns | 9237 |  | 202 | actionlint workflow, in full | 5.8 |  | 0.821 |
 | ns | 9388 |  | 151 | Dependabot configuration | 5.9 |  | 0.812 |
-| ns | 9477 |  | 89 | CHANGELOG skeleton, CODEOWNERS, and the pinned Go toolchain file | 5.10 |  | 0.809 |
-| walker |  | 9656 | 356 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 6, sub: 0, line: 82 } |  |  | 0.810 |
-| ns | 9744 |  | 267 | README badge block and the older-Go compile-error hint | 5.11 | 1.1 | 0.804 |
-| ns | 9803 |  | 59 | PR template section headings | 5.12 |  | 0.803 |
-| ns | 9840 |  | 37 | LICENSE identification lines | 5.13 |  | 0.802 |
-| walker |  | 9987 | 331 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 7, sub: 0, line: 118 } |  |  | 0.804 |
+| ns | 9477 |  | 89 | CHANGELOG skeleton, CODEOWNERS, and the pinned Go toolchain file | 5.10 |  | 0.805 |
+| walker |  | 9566 | 356 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 6, sub: 0, line: 82 } |  |  | 0.806 |
+| ns | 9744 |  | 267 | README badge block and the older-Go compile-error hint | 5.11 | 1.1 | 0.801 |
+| ns | 9803 |  | 59 | PR template section headings | 5.12 |  | 0.798 |
+| ns | 9840 |  | 37 | LICENSE identification lines | 5.13 |  | 0.797 |
+| walker |  | 9936 | 370 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 7, sub: 0, line: 118 } |  |  | 0.799 |
+| walker |  | 9994 | 58 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 8, sub: 0, line: 157 } |  |  | 0.801 |

@@ -70,10 +70,25 @@ cmd/
     19→	Short: "Manage authentication credentials for AI providers",
     20→	Long: `Manage authentication credentials for AI providers.
     21→
+    22→This command allows you to securely authenticate and manage credentials for various AI providers
+    23→using OAuth flows. Stored credentials take precedence over environment variables.
+    24→
+    25→Available providers:
+    26→  - anthropic: Anthropic Claude API (OAuth)
+    27→
+    28→Examples:
+    29→  mcphost auth login anthropic
+    30→  mcphost auth logout anthropic
+    31→  mcphost auth status`,
+    32→}
     …
     37→var authLoginCmd = &cobra.Command{
     …
     58→var authLogoutCmd = &cobra.Command{
+    59→	Use:   "logout [provider]",
+    60→	Short: "Remove stored authentication credentials for a provider",
+    61→	Long: `Remove stored authentication credentials for an AI provider.
+    62→
     …
     78→var authStatusCmd = &cobra.Command{
     79→	Use:   "status",
@@ -184,12 +199,6 @@ contribute/
     demo.json
     demo.yml
   contribute.md
-    1→# Contribute README
-    …
-    3→## Run demo
-    …
-    30→## Contribute your code
-    …
 examples/
   hooks/
   scripts/
@@ -323,32 +332,6 @@ main.go
   26→}
 sdk/
   README.md
-    1→# MCPHost SDK
-    …
-    5→## Installation
-    …
-    11→## Basic Usage
-    …
-    44→## Configuration
-    …
-    52→### Options
-    …
-    67→## Advanced Usage
-    68→
-    69→### With Tool Callbacks
-    …
-    93→### Session Management
-    …
-    115→## API Reference
-    116→
-    117→### Types
-    …
-    124→### Methods
-    …
-    136→## Environment Variables
-    …
-    146→## License
-    …
   examples/
     basic/
     scripting/

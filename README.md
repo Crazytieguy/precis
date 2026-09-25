@@ -187,7 +187,7 @@ When the path is a git repository, `precis` honours `.gitignore` (including nest
 ## Supported languages
 
 - **Parsed source** — Rust, TypeScript / JavaScript (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`), Python, Go, C (`.c`, `.h`) and Lua: module docs, declaration names and signatures, then doc comments and bodies as the budget allows.
-- **Docs** — Markdown and the root `README.rst`: the README's lede, heading outlines and section bodies.
+- **README** — the root `README.md` or `README.rst`: its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
 - **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
 - **Build and ops files** — Makefile, Taskfile, Dockerfile, compose files, CI workflows, build scripts, dotenv samples, license.
 - **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short.

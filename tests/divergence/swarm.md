@@ -157,9 +157,6 @@ Score(3000)=0.746 I=0.917 C=0.607 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.714 |
 | walker |  | 9783 | 482 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 5, sub: 0, line: 89 } |  |  | 0.750 |
 | walker |  | 9838 | 55 | Fs::DirListing { dir: examples/customer_service/logs } |  |  | 0.750 |
-| walker |  | 9866 | 28 | Markdown::HeadingsOutline { file: examples/personal_shopper/README.md } |  |  | 0.750 |
 | ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.740 |
-| walker |  | 9894 | 28 | Markdown::HeadingsOutline { file: examples/support_bot/README.md } |  |  | 0.741 |
 | ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.741 |
-| walker |  | 9923 | 29 | Markdown::HeadingsOutline { file: examples/weather_agent/README.md } |  |  | 0.741 |
-| walker |  | 9989 | 66 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.745 |
+| walker |  | 9983 | 145 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 7, sub: 0, line: 231 } |  |  | 0.750 |

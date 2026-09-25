@@ -1,24 +1,21 @@
-//! Markdown walker. Uses `tree-sitter-md`'s block grammar for heading and
-//! section detection; the root `README.rst` is line-scanned into the same
-//! shapes (see [`rst_readme`]).
+//! README walker: the root `README.md`, parsed with `tree-sitter-md`'s
+//! block grammar, and the root `README.rst`, line-scanned into the same
+//! shapes (see [`rst_readme`]). Every other document is left to the
+//! listing, which names it.
 //!
-//! Per file, in document order:
-//! - `ReadmeHeadline` (READMEs) — the first heading plus the lede: the
-//!   first substantive block before it and the blocks under it through
-//!   the first paragraph, stepping over chrome (badges, logos, nav
-//!   rows).
-//! - `Prelude` (READMEs) — the rest of the text above the first
-//!   heading, chrome excluded. Predecessor: the headline.
+//! In document order:
+//! - `ReadmeHeadline` — the first heading plus the lede: the first
+//!   substantive block before it and the blocks under it through the
+//!   first paragraph, stepping over chrome (badges, logos, nav rows).
+//! - `Prelude` — the rest of the text above the first heading, chrome
+//!   excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
 //!   cover, when there are 2..=[`MAX_OUTLINE_HEADINGS`] of them.
 //!   Predecessor: the headline.
-//! - `Section`s (the root README) — one per top-level H2 (an H1-only
-//!   document unwraps to an intro plus its H2s); an oversize section
-//!   splits into a head chunk plus chained `OversizeTail` chunks.
-//!   Predecessor: the outline, else the headline.
-//!
-//! Every other document emits only its outline: the listing already
-//! names it, and the outline says what it covers.
+//! - `Section`s — one per top-level H2 (an H1-only document unwraps to
+//!   an intro plus its H2s); an oversize section splits into a head
+//!   chunk plus chained `OversizeTail` chunks. Predecessor: the
+//!   outline, else the headline.
 
 use std::collections::BTreeSet;
 use std::path::Path;
@@ -29,11 +26,10 @@ use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::BatchContent;
 use crate::render::Source;
 use crate::tokenizer;
-use crate::value::mix_signals;
 
 use super::{
     WalkCtx, budget_chunk_ranges, first_child_of_kind, fs::files_with_extension,
-    node_end_row_trimmed, path_depth_factor, single_file_lines_content,
+    node_end_row_trimmed, single_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -79,21 +75,13 @@ const HEADLINE_BLOCK_BYTE_GATE: usize = 16 * 1024;
 const PRELUDE_MAX_BYTES: usize = 2_500;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
-    let md_files = files_with_extension(dir, "md", ctx);
-    let sibling_md_count = md_files.len();
     let mut out = Vec::new();
-
-    // RST README: emit a ReadmeHeadline batch plus `Section` batches
-    // (see [`rst_readme`]) — parity with the .md path. No tree-sitter
-    // parse — line-scan headings via `is_rst_underline`, dropping
-    // `.. directive::` blocks. Skip nested README.rst — the root-level
-    // file is the only anchor.
-    let rst_files = if dir == ctx.root() {
-        super::fs::files_with_extension(dir, "rst", ctx)
-    } else {
-        Vec::new()
-    };
-    for file in rst_files {
+    if dir != ctx.root() {
+        return out;
+    }
+    // RST README: line-scanned headings via `is_rst_underline`, dropping
+    // `.. directive::` blocks — no tree-sitter parse.
+    for file in files_with_extension(dir, "rst", ctx) {
         if !is_readme_rst(&file) {
             continue;
         }
@@ -108,42 +96,22 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone().into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx),
+                value: README_HEADLINE_VALUE,
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
-        push_sections(
-            &mut out,
-            &file,
-            &source,
-            &ranges,
-            None,
-            headline_emitted,
-            ctx,
-        );
+        push_sections(&mut out, &file, &source, &ranges, None, headline_emitted);
     }
 
-    if md_files.is_empty() {
-        return out;
-    }
-    ctx.parse_trees(
-        md_files
-            .iter()
-            .map(|file| (file.as_path(), tree_sitter_md::LANGUAGE.into())),
-    );
-    for file in md_files {
-        if file
-            .file_name()
-            .and_then(|name| name.to_str())
-            .is_some_and(super::plaintext::is_license_file_name)
-        {
+    // A markdown file precis was pointed at directly reads as its README.
+    for file in files_with_extension(dir, "md", ctx) {
+        if !is_readme(&file) && !ctx.dir_filter().names_one_file() {
             continue;
         }
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
             continue;
         };
-        let root_readme = is_root_readme(&file, ctx);
-        let headline = readme_headline_rows(root_readme, &tree, &source);
+        let headline = headline_rows(&tree, &source);
         let outline_rows = outline_rows(&tree, &source, headline.as_ref());
         let outline_emits = !outline_rows.is_empty();
 
@@ -156,7 +124,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone().into(),
                 predecessor: None,
                 content,
-                value: readme_headline_value(&file, ctx),
+                value: README_HEADLINE_VALUE,
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
@@ -167,7 +135,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                     key: MarkdownKey::Prelude { file: file.clone() }.into(),
                     predecessor: headline_emitted.clone(),
                     content,
-                    value: readme_section_base_value(&file, ctx),
+                    value: README_SECTION_VALUE,
                 });
             }
         }
@@ -178,29 +146,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 key: key.clone().into(),
                 predecessor: headline_emitted.clone(),
                 content,
-                value: headings_outline_value(&file, ctx, root_readme, sibling_md_count),
+                value: HEADINGS_OUTLINE_VALUE,
             });
             outline_emitted = Some(BatchKey::Markdown(key));
         }
 
-        if !root_readme {
-            continue;
-        }
-        let section_predecessor = outline_emitted.or(headline_emitted);
         push_sections(
             &mut out,
             &file,
             &source,
             &logical_sections(&tree, &source, outline_emits),
             headline.as_ref(),
-            section_predecessor,
-            ctx,
+            outline_emitted.or(headline_emitted),
         );
     }
     out
 }
 
-/// Emit one root README `Section` batch per range. Each gates on
+/// Emit one `Section` batch per range. Each gates on
 /// `section_predecessor`, except oversize tails, which deliver in source
 /// order behind the chunk before them.
 fn push_sections(
@@ -210,9 +173,7 @@ fn push_sections(
     ranges: &[SectionRange],
     headline: Option<&BTreeSet<usize>>,
     section_predecessor: Option<BatchKey>,
-    ctx: &WalkCtx,
 ) {
-    let base = readme_section_base_value(file, ctx);
     let mut prev_section_key: Option<BatchKey> = None;
     for (idx, range) in ranges.iter().enumerate() {
         if let Some(content) = build_section_content(file, source, range, headline) {
@@ -235,7 +196,7 @@ fn push_sections(
                 key: key.into(),
                 predecessor,
                 content,
-                value: section_value(base, range),
+                value: section_value(range),
             });
         }
     }
@@ -243,36 +204,14 @@ fn push_sections(
 
 // --- value ---
 
-fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
-}
+const README_HEADLINE_VALUE: f64 = 1308.0;
 
-/// Saturated in a directory with many .md siblings — the listing
-/// already names them.
-///
-/// The root README is exempt, and not cosmetically: its outline is the
-/// hard predecessor of every root README section, so damping it delays
-/// the whole README body, which is the largest credited early-budget
-/// purchase on repos that have one.
-fn headings_outline_value(
-    file: &Path,
-    ctx: &WalkCtx,
-    root_readme: bool,
-    sibling_md_count: usize,
-) -> f64 {
-    let density = if root_readme || sibling_md_count <= DENSE_MD_SIBLINGS {
-        1.0
-    } else {
-        ((DENSE_MD_SIBLINGS as f64) / (sibling_md_count as f64)).sqrt()
-    };
-    mix_signals(0.7, 0.55, 0.4, path_depth_factor(file, ctx)) * density
-}
+const HEADINGS_OUTLINE_VALUE: f64 = 974.0;
 
-/// Markdown-file count above which a directory reads as a docs
-/// directory rather than as a couple of loose notes, so its listing
-/// stands in for the individual pages' navigation batches. Swept; see
-/// `git show 74aef411`.
-const DENSE_MD_SIBLINGS: usize = 3;
+/// Value of a section before its range's own factors, and of the
+/// `Prelude`, which is the top of the README body just above the first
+/// heading.
+const README_SECTION_VALUE: f64 = 1181.0;
 
 /// Boost for README usage/reference sections (see
 /// [`SectionRange::is_reference_usage_section`]) so they clear the
@@ -285,16 +224,8 @@ fn readme_index_decay(range: &SectionRange) -> f64 {
     (range.h2_index as f64 + 1.0).powf(-0.15).max(0.7)
 }
 
-/// Value of a root README section before its range's own factors, and
-/// of the `Prelude`, which is the top of the README body just above the
-/// first heading.
-fn readme_section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    1181.0 * path_depth_factor(file, ctx)
-}
-
-/// Per-section value from the file's [`readme_section_base_value`].
-fn section_value(base: f64, range: &SectionRange) -> f64 {
-    let mut value = base * readme_index_decay(range);
+fn section_value(range: &SectionRange) -> f64 {
+    let mut value = README_SECTION_VALUE * readme_index_decay(range);
     if range.is_reference_usage_section {
         value *= REFERENCE_USAGE_SECTION_FACTOR;
     }
@@ -332,10 +263,6 @@ fn build_outline_content(
 ) -> Option<BatchContent> {
     let full = rows.iter().flat_map(|&(start, end)| start..=end).collect();
     single_file_lines_content(file, source, full)
-}
-
-fn readme_headline_rows(root_readme: bool, tree: &Tree, source: &str) -> Option<BTreeSet<usize>> {
-    root_readme.then(|| headline_rows(tree, source)).flatten()
 }
 
 /// Heading row ranges for `HeadingsOutline` — levels 1–3, with any
@@ -404,17 +331,10 @@ fn build_section_content(
     single_file_lines_content(file, source, lines)
 }
 
-/// The repository's README. A README below the root is one more page in
-/// a directory the listing already names, and prices as an ordinary doc.
-fn is_root_readme(file: &Path, ctx: &WalkCtx) -> bool {
-    is_readme(file) && file.parent() == Some(ctx.root())
-}
-
 fn is_readme(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
-        || is_readme_rst(file)
 }
 
 /// Root `README.rst` is the one `.rst` this walker owns; the plaintext
@@ -2063,9 +1983,9 @@ mod tests {
 
     // --- HeadingsOutline tests ---
 
-    fn outline_rows_of(file: &str, source: &str) -> Vec<(usize, usize)> {
+    fn outline_rows_of(source: &str) -> Vec<(usize, usize)> {
         let tree = parse(source);
-        let headline = readme_headline_rows(is_readme(Path::new(file)), &tree, source);
+        let headline = headline_rows(&tree, source);
         outline_rows(&tree, source, headline.as_ref())
     }
 
@@ -2092,7 +2012,7 @@ mod tests {
                    ## License\n\
                    \n\
                    prose\n";
-        let rows = outline_rows_of("README.md", src);
+        let rows = outline_rows_of(src);
         let starts: Vec<usize> = rows.iter().map(|(s, _)| *s).collect();
         assert_eq!(
             starts,
@@ -2118,7 +2038,7 @@ mod tests {
                    --------------\n\
                    \n\
                    body\n";
-        let rows = outline_rows_of("README.md", src);
+        let rows = outline_rows_of(src);
         assert_eq!(
             rows,
             vec![(5, 6), (10, 11)],
@@ -2138,7 +2058,7 @@ mod tests {
                    #### Subsubsection B\n\
                    \n\
                    body B\n";
-        let rows = outline_rows_of("docs/page.md", src);
+        let rows = outline_rows_of(src);
         assert!(
             rows.is_empty(),
             "outline must not include H4+; got {rows:?}"
@@ -2147,9 +2067,9 @@ mod tests {
 
     // --- logical_sections tests ---
 
-    fn sections(file: &str, source: &str) -> Vec<SectionRange> {
+    fn sections(source: &str) -> Vec<SectionRange> {
         let tree = parse(source);
-        let outline_emits = !outline_rows_of(file, source).is_empty();
+        let outline_emits = !outline_rows_of(source).is_empty();
         logical_sections(&tree, source, outline_emits)
     }
 
@@ -2187,7 +2107,7 @@ mod tests {
         ];
         for (title, body, expect) in cases {
             let src = format!("# Project\n\nTagline.\n\n{title}\n\n{body}");
-            let ranges = sections("README.md", &src);
+            let ranges = sections(&src);
             let any_flagged = ranges.iter().any(|r| r.is_reference_usage_section);
             assert_eq!(
                 any_flagged, *expect,
@@ -2203,7 +2123,7 @@ mod tests {
     #[test]
     fn markdown_readme_index_decay_skips_synthetic_intro() {
         let src = "# Title\n\nTagline.\n\n## Install\n\nbody\n\n## Use\n\nbody\n";
-        let ranges = sections("README.md", src);
+        let ranges = sections(src);
         // Three ranges: synthetic intro, ## Install, ## Use.
         let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
         assert_eq!(indices, vec![0, 0, 1], "got {ranges:?}");
@@ -2220,16 +2140,16 @@ mod tests {
     #[test]
     fn markdown_readme_index_decay_no_synthetic_intro() {
         let src = "## Install\n\nbody\n\n## Use\n\nbody\n";
-        let ranges = sections("README.md", src);
+        let ranges = sections(src);
         let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
         assert_eq!(indices, vec![0, 1]);
         assert_eq!(readme_index_decay(&ranges[0]), 1.0);
     }
 
-    /// Only the root README renders its body; any other document
-    /// renders its outline alone.
+    /// Only the root README is read; every other document, a nested
+    /// README included, is left to the listing.
     #[test]
-    fn markdown_walker_emits_sections_for_the_root_readme_only() {
+    fn markdown_walker_reads_only_the_root_readme() {
         use std::fs;
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
@@ -2237,166 +2157,26 @@ mod tests {
                     Top-level instructions go here.\n\n\
                     ## Setup\n\nrun `cargo build`.\n\n\
                     ## Conventions\n\nuse rustfmt.\n";
-        fs::write(root.join("README.md"), body).unwrap();
-        fs::write(root.join("notes.md"), body).unwrap();
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-
-        let kinds_for = |name: &str| -> Vec<&str> {
-            let path = root.join(name);
-            batches
-                .iter()
-                .filter_map(|b| match &b.key {
-                    BatchKey::Markdown(MarkdownKey::Section { file, .. }) if *file == path => {
-                        Some("section")
-                    }
-                    BatchKey::Markdown(MarkdownKey::HeadingsOutline { file }) if *file == path => {
-                        Some("outline")
-                    }
-                    _ => None,
-                })
-                .collect()
-        };
-        assert!(kinds_for("README.md").contains(&"section"));
-        assert_eq!(kinds_for("notes.md"), ["outline"]);
-    }
-
-    /// A license text emits nothing, but documentation of a product's own
-    /// licensing is ordinary prose and keeps its batches.
-    #[test]
-    fn markdown_walker_skips_license_text_but_not_licensing_docs() {
-        use std::fs;
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let body = "# Licensing\n\n## Activation\n\nKeys are validated online.\n";
-        fs::write(root.join("LICENSE.md"), body).unwrap();
-        fs::write(root.join("license-server.md"), body).unwrap();
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        let emits_for = |name: &str| {
-            let path = root.join(name);
-            batches.iter().any(|b| {
-                matches!(
-                    &b.key,
-                    BatchKey::Markdown(
-                        MarkdownKey::ReadmeHeadline { file }
-                            | MarkdownKey::Prelude { file }
-                            | MarkdownKey::HeadingsOutline { file }
-                            | MarkdownKey::Section { file, .. }
-                    ) if *file == path
-                )
-            })
-        };
-        assert!(!emits_for("LICENSE.md"));
-        assert!(emits_for("license-server.md"));
-    }
-
-    /// The root README's `HeadingsOutline` is the hard predecessor of
-    /// every section in that file, so the dense-siblings damp must never
-    /// reach it however crowded the root directory is — damping it would
-    /// delay the whole README body, the largest credited early-budget
-    /// purchase on repos that have one. A README at depth carries no such
-    /// stream and does take the damp.
-    #[test]
-    fn markdown_dense_siblings_never_damp_the_root_readme() {
-        use std::fs;
-
-        let body = "# Project\n\nA tagline paragraph about the project.\n\n\
-                    Some further prelude prose worth a batch.\n\n\
-                    ## Install\n\nrun it.\n\n\
-                    ## Use\n\nuse it.\n\n\
-                    ## Configure\n\nconfigure it.\n";
-        let crowd = ["a.md", "b.md", "c.md", "d.md", "e.md", "f.md", "g.md"];
-
-        // Two roots differing only in how many .md siblings sit beside
-        // the README — sparse (under the threshold) and crowded.
-        let build = |extra: &[&str]| {
-            let dir = tempfile::tempdir().unwrap();
-            let root = dir.path().to_path_buf();
-            fs::write(root.join("README.md"), body).unwrap();
-            let docs = root.join("docs");
-            fs::create_dir(&docs).unwrap();
-            fs::write(docs.join("README.md"), body).unwrap();
-            for n in extra {
-                fs::write(root.join(n), body).unwrap();
-                fs::write(docs.join(n), body).unwrap();
-            }
-            let ctx = WalkCtx::new(root.clone());
-            let batches: Vec<_> = expand_in_dir(&root, &ctx)
-                .into_iter()
-                .chain(expand_in_dir(&docs, &ctx))
-                .collect();
-            // `dir` owns the temp tree; keep it alive past the walk.
-            (dir, root, batches)
-        };
-        let (_sparse_guard, sparse_root, sparse) = build(&[]);
-        let (_dense_guard, dense_root, dense) = build(&crowd);
-
-        // Every nav batch either walk emitted for `file`, keyed by kind.
-        // Gathered rather than looked up by key so the assertions cover
-        // whichever of the three this README shape produces.
-        let nav_values = |batches: &[Batch], file: &Path| {
-            let mut found: Vec<(&'static str, f64)> = batches
-                .iter()
-                .filter_map(|b| {
-                    let kind = match &b.key {
-                        BatchKey::Markdown(MarkdownKey::HeadingsOutline { file: f })
-                            if f == file =>
-                        {
-                            "outline"
-                        }
-                        BatchKey::Markdown(MarkdownKey::ReadmeHeadline { file: f })
-                            if f == file =>
-                        {
-                            "headline"
-                        }
-                        BatchKey::Markdown(MarkdownKey::Prelude { file: f }) if f == file => {
-                            "prelude"
-                        }
-                        _ => return None,
-                    };
-                    Some((kind, b.value))
-                })
-                .collect();
-            found.sort_by_key(|(kind, _)| *kind);
-            found
-        };
-
-        let sparse_root_nav = nav_values(&sparse, &sparse_root.join("README.md"));
-        let dense_root_nav = nav_values(&dense, &dense_root.join("README.md"));
-        assert!(
-            sparse_root_nav.iter().any(|(k, _)| *k == "outline"),
-            "test shape must emit a root README outline to pin",
-        );
-        assert_eq!(
-            sparse_root_nav,
-            dense_root_nav,
-            "root README nav must price identically however many .md siblings the root \
-             holds (1 vs {})",
-            1 + crowd.len(),
-        );
-
-        // The damp is real, not vacuous: the same batches on a nested
-        // README do move once its directory is crowded.
-        let sparse_docs_nav = nav_values(&sparse, &sparse_root.join("docs/README.md"));
-        let dense_docs_nav = nav_values(&dense, &dense_root.join("docs/README.md"));
-        assert_eq!(
-            sparse_docs_nav
-                .iter()
-                .map(|(kind, _)| *kind)
-                .collect::<Vec<_>>(),
-            ["outline"],
-            "a nested README is an ordinary doc: no headline or prelude",
-        );
-        assert_eq!(sparse_docs_nav.len(), dense_docs_nav.len());
-        for ((kind, sparse_value), (_, dense_value)) in sparse_docs_nav.iter().zip(&dense_docs_nav)
-        {
-            assert!(
-                dense_value < sparse_value,
-                "nested README {kind} must take the dense-siblings damp \
-                 ({sparse_value} sparse vs {dense_value} crowded)",
-            );
+        fs::create_dir(root.join("docs")).unwrap();
+        for name in ["README.md", "notes.md", "docs/README.md"] {
+            fs::write(root.join(name), body).unwrap();
         }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let root_batches = expand_in_dir(root, &ctx);
+        assert!(root_batches.iter().any(|b| matches!(
+            &b.key,
+            BatchKey::Markdown(MarkdownKey::Section { file, .. }) if *file == root.join("README.md")
+        )));
+        assert!(root_batches.iter().all(|b| matches!(
+            &b.key,
+            BatchKey::Markdown(
+                MarkdownKey::ReadmeHeadline { file }
+                    | MarkdownKey::Prelude { file }
+                    | MarkdownKey::HeadingsOutline { file }
+                    | MarkdownKey::Section { file, .. }
+            ) if *file == root.join("README.md")
+        )));
+        assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());
     }
 
     /// Overline-form headings must not leak their overline punctuation row

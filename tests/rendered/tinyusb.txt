@@ -246,7 +246,12 @@ examples/
       README.md
       only.txt
       skip.txt
-      …
+      src/
+        CMakeLists.txt
+        ffconf.h
+        main.c
+        msc_app.c
+        …
   typec/
   west.yml
 hw/
@@ -299,11 +304,6 @@ lib/
       SEGGER_RTT_Conf.h
     LICENSE.md
     README.md
-      1→RTT
-      2→===
-      …
-      9→## Included files
-      …
     RTT/
       SEGGER_RTT.c
       SEGGER_RTT.h

@@ -107,18 +107,10 @@ docs/
   guide/
     collections.md
     command_palette.md
-      1→## Overview
-      …
-      9→### Using the command palette
-      …
     configuration.md
     environments.md
     external_tools.md
     help_system.md
-      1→## Overview
-      …
-      5→### Getting help for the focused widget
-      …
     importing.md
     index.md
     keymap.md
@@ -131,16 +123,6 @@ docs/
   overrides/
     home.html
   roadmap.md
-    1→## About this document
-    …
-    47→## Next planned features 🚀
-    …
-    57→## Longer Term 🔮
-    …
-    89→## Completed ✓
-    …
-    117→## Legend
-    …
   stylesheets/
     extra.css
 mkdocs.yml
@@ -273,6 +255,14 @@ src/
       1→GENERAL_ERROR = 1
     files.py
     help_data.py
+      …
+      4→@dataclass
+      5→class HelpData:
+      6→    """Data relating to the widget to be displayed in the HelpScreen"""
+      8→    title: str = field(default="")
+      9→    """Title of the widget"""
+      10→    description: str = field(default="")
+      11→    """Markdown description to be displayed in the HelpScreen"""
     help_screen.py
     highlight_url.py (empty)
     highlighters.py
@@ -296,6 +286,8 @@ src/
     user_host.py
     variables.py
     version.py
+      …
+      3→VERSION = version("posting")
     widgets/
       __init__.py (empty)
       center_middle.py
@@ -347,6 +339,8 @@ tests/
   sample-collections/
   sample-configs/
   sample-envs/
+    sample_base.env
+    …
   sample-importable-collections/
   sample-themes/
   test_curl_export.py

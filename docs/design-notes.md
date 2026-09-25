@@ -63,11 +63,12 @@ listing rows, but their prose bodies are never scheduled and their
 structural batches carry a 0.1× discount. An NS that ranks their content
 as primary is an NS-author error, not a reason to un-suppress.
 
-More generally, the root README is the only markdown document whose
-prose is scheduled; every other document contributes its headings
-outline. Pricing other docs' sections at any tier measured flat to
-negative on the grid (2026-09-25): the schedule bought the wrong pages
-(translations, migration guides) and never reached the ones NS ranks.
+More generally, the root README is the only document the markdown
+walker reads (a single named file reads as one); every other `.md` is a
+listing row. Pricing other docs' sections, then their outlines, at any
+tier measured flat to negative on the grid (2026-09-25): the schedule
+bought the wrong pages (translations, migration guides, nested package
+READMEs) and never reached the ones NS ranks.
 
 ## Gitignored content doesn't belong in precis output either
 

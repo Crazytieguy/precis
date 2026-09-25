@@ -30,12 +30,6 @@
 CLAUDE.md
 CONTRIBUTING.md
 IMAGES.md
-  1→# List of Docker images for `act`
-  …
-  5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
-  …
-  27→## Images based on [`actions/virtual-environments`][gh/actions/virtual-environments]
-  …
 LICENSE
 Makefile
   …
@@ -124,6 +118,15 @@ cmd/
   input.go
   list.go
   notices.go
+    …
+    17→type Notice struct {
+    …
+    22→func displayNotices(input *Input) {
+    …
+    55→var noticesLoaded = make(chan []Notice)
+    56→
+    57→func loadVersionNotices(version string) {
+    …
   platforms.go
   root.go
   root_test.go
@@ -264,6 +267,7 @@ pkg/
         1→World!
       for-hashing-3/
         data.txt
+          1→Knock knock!
         nested/
           nested-data.txt
   filecollector/

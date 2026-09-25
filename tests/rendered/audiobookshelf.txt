@@ -261,16 +261,6 @@ docker-compose.yml
 docker-template.xml
 docs/
   README.md
-    1→# OpenAPI specification
-    …
-    9→### Bundling the spec
-    …
-    15→### Linting the spec
-    …
-    21→### Generating documentation
-    …
-    25→### Putting it all together
-    …
   controllers/
     AuthorController.yaml
     EmailController.yaml
@@ -395,6 +385,14 @@ server/
       index.js
     fluentFfmpeg/
     fsExtra/
+      LICENSE
+      copy/
+      empty/
+      ensure/
+      fs/
+      index.js
+      mkdirs/
+      …
     fusejs/
       index.js
     imageType/
@@ -419,11 +417,18 @@ server/
         LICENSE
         index.js
       ecdsa-sig-formatter/
+        LICENSE
+        index.js
+        param-bytes-for-alg.js
       index.js
     jws/
       LICENSE
       index.js
       lib/
+        data-stream.js
+        sign-stream.js
+        tostring.js
+        verify-stream.js
     libarchive/
       LICENSE
       archive.js

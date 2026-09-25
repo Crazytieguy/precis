@@ -15,26 +15,8 @@ Dockerfile.circleci
 Dockerfile.github-actions
 FAQ.md
 GETTING_STARTED.md
-  1→# Getting started
-  …
-  6→## Create migrations
-  …
-  22→## Run migrations
-  …
-  37→## Forcing your database version
-  …
-  47→## Further reading:
-  …
 LICENSE
 MIGRATIONS.md
-  1→# Migrations
-  2→
-  3→## Migration Filename Format
-  …
-  56→## Migration Content Format
-  …
-  67→## Reversibility of Migrations
-  …
 Makefile
   …
   114→.PHONY: build build-docker build-cli clean test-short test test-with-flags html-coverage \
@@ -112,21 +94,11 @@ cmd/
 database/
   cassandra/
     README.md
-      1→# Cassandra / ScyllaDB
-      …
-      16→## Usage
-      …
-      40→## Upgrading from v1
-      …
     cassandra.go
     cassandra_test.go
     examples/
   clickhouse/
     README.md
-      1→# ClickHouse
-      …
-      17→## Notes
-      …
     clickhouse.go
     clickhouse_test.go
     examples/
@@ -153,10 +125,6 @@ database/
     firebird_test.go
   mongodb/
     README.md
-      1→# MongoDB
-      …
-      8→# Usage
-      …
     examples/
     mongodb.go
     mongodb_test.go
@@ -167,42 +135,18 @@ database/
     parse_test.go
   mysql/
     README.md
-      1→# MySQL
-      …
-      21→## Use with existing client
-      …
-      50→## Upgrading from v1
-      …
     examples/
     mysql.go
     mysql_test.go
   neo4j/
     README.md
-      1→# neo4j
-      …
-      18→## Supported versions
-      …
     TUTORIAL.md
-      1→## Create migrations
-      …
-      24→## Run migrations
-      …
-      45→## Database transactions
-      …
-      75→## Optional: Run migrations within your Go app
-      …
     examples/
     neo4j.go
     neo4j_test.go
   parse_test.go
   pgx/
     README.md
-      1→# pgx
-      …
-      30→## Upgrading from v1
-      …
-      38→## Multi-statement mode
-      …
     examples/
     pgx.go
     pgx_test.go
@@ -212,12 +156,6 @@ database/
       pgx_test.go
   postgres/
     README.md
-      1→# postgres
-      …
-      26→## Upgrading from v1
-      …
-      34→## Multi-statement mode
-      …
     TUTORIAL.md
     examples/
     postgres.go
@@ -234,10 +172,6 @@ database/
     redshift_test.go
   rqlite/
     README.md
-      1→# rqlite
-      …
-      16→## Notes
-      …
     examples/
     rqlite.go
     rqlite_test.go
@@ -245,21 +179,9 @@ database/
     README.md (empty)
   snowflake/
     README.md
-      1→# Snowflake
-      …
-      11→## Status
-      …
     snowflake.go
   spanner/
     README.md
-      1→# Google Cloud Spanner
-      2→
-      3→## Usage
-      …
-      33→## DDL with comments
-      …
-      38→## Multiple statements
-      …
     examples/
     spanner.go
     spanner_test.go
@@ -270,32 +192,16 @@ database/
     sqlcipher_test.go
   sqlite/
     README.md
-      1→# sqlite
-      …
-      14→## Notes
-      …
     examples/
     sqlite.go
     sqlite_test.go
   sqlite3/
     README.md
-      1→# sqlite3
-      …
-      14→## Notes
-      …
     examples/
     sqlite3.go
     sqlite3_test.go
   sqlserver/
     README.md
-      1→# Microsoft SQL Server
-      …
-      23→## Driver Support
-      24→
-      25→### Which go-mssqldb driver to us?
-      …
-      30→### Official Support by migrate
-      …
     examples/
     sqlserver.go
     sqlserver_test.go
@@ -377,6 +283,45 @@ migrate.go
   …
 migrate_test.go
 migration.go
+  …
+  11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every
+  12→// pre-read migration (see DefaultPrefetchMigrations).
+  13→var DefaultBufferSize = uint(100000)
+  …
+  18→type Migration struct {
+  19→	// Identifier can be any string to help identifying
+  20→	// the migration in the source.
+  21→	Identifier string
+  22→
+  23→	// Version is the version of this migration.
+  24→	Version uint
+  25→
+  26→	// TargetVersion is the migration version after this migration
+  27→	// has been applied to the database.
+  28→	// Can be -1, implying that this is a NilVersion.
+  29→	TargetVersion int
+  30→
+  31→	// Body holds an io.ReadCloser to the source.
+  32→	Body io.ReadCloser
+  33→
+  34→	// BufferedBody holds an buffered io.Reader to the underlying Body.
+  35→	BufferedBody io.Reader
+  36→
+  …
+  77→func NewMigration(body io.ReadCloser, identifier string,
+  78→	version uint, targetVersion int) (*Migration, error) {
+  …
+  106→// String implements string.Stringer and is used in tests.
+  107→func (m *Migration) String() string {
+  108→	return fmt.Sprintf("%v [%v=>%v]", m.Identifier, m.Version, m.TargetVersion)
+  …
+  111→// LogString returns a string describing this migration to humans.
+  112→func (m *Migration) LogString() string {
+  …
+  120→// Buffer buffers Body up to BufferSize.
+  121→// Calling this function blocks. Call with goroutine.
+  122→func (m *Migration) Buffer() (berr error) {
+  …
 migration_test.go
 source/
   aws_s3/
@@ -409,10 +354,6 @@ source/
   github_ee/
     .gitignore
     README.md
-      1→# github ee
-      2→
-      3→## GitHub Enterprise Edition
-      …
     github_ee.go
     github_ee_test.go
   gitlab/
@@ -430,25 +371,21 @@ source/
       bindata.go
   godoc_vfs/
     vfs.go
+      1→// Package godoc_vfs contains a driver that reads migrations from a virtual file
+      2→// system.
+      3→//
+      4→// Implementations of the filesystem interface that read from zip files and
+      5→// maps, as well as the definition of the filesystem interface can be found in
+      6→// the golang.org/x/tools/godoc/vfs package.
+      …
     vfs_example_test.go
     vfs_test.go
   google_cloud_storage/
     README.md
-      1→# Google Cloud Storage
-      2→
-      3→
-      4→## Import
-      …
-      12→## Connection String
-      …
     storage.go
     storage_test.go
   httpfs/
     README.md
-      1→# httpfs
-      2→
-      3→## Usage
-      …
     driver.go
     driver_test.go
     partial_driver.go
@@ -460,6 +397,17 @@ source/
       no-migrations/
         some-file (empty)
       sql/
+        1_foobar.down.sql
+        1_foobar.up.sql
+        3_foobar.up.sql
+        4_foobar.down.sql
+        4_foobar.up.sql
+        5_foobar.down.sql
+        7_foobar.down.sql
+        7_foobar.up.sql
+        other-files-are-ignored (empty)
+        subdirs-are-ignored/
+          some-file (empty)
   iofs/
     README.md
     doc.go

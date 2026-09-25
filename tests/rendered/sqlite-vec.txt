@@ -6,14 +6,6 @@
     test.yaml
 .gitignore
 ARCHITECTURE.md
-  1→# `sqlite-vec` Architecture
-  …
-  11→## `vec0`
-  12→
-  13→### Shadow Tables
-  …
-  49→### idxStr
-  …
 LICENSE-APACHE
 LICENSE-MIT
 Makefile
@@ -128,10 +120,13 @@ benchmarks/
     Cargo.lock
     Cargo.toml
     benches/
+      my_benchmark.rs
     build.rs
     src/
       lib.rs
   profiling/
+    build-from-npy.sql
+    query-k.sql
   self-params/
     build.py
     knn.py
@@ -147,6 +142,9 @@ bindings/
     Cargo.lock
     Cargo.toml.tmpl
     Makefile
+      1→VERSION=$(shell cat ../../VERSION)
+      2→
+      …
     build.rs
       1→fn main() {
       2→    cc::Build::new().file("sqlite-vec.c").define("SQLITE_CORE", None).compile("sqlite_vec0");
@@ -246,7 +244,7 @@ tests/
   conftest.py
   correctness/
     build.py
-    …
+    test-correctness.py
   fuzz/
     .gitignore
     Makefile

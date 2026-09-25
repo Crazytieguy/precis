@@ -87,26 +87,10 @@ docs/
   .gitignore
   API.md
   README.md
-    1→# Neco Documentation
-    2→
-    3→## [API.md](API.md)
-    …
   TECHNICAL.md
   assets/
     API_foot.md
     API_head.md
-      1→# Neco C API
-      …
-      12→## Table of contents
-      …
-      34→## Programming notes
-      35→
-      36→### neco_main
-      …
-      57→### Neco errors
-      …
-      99→### Deadlines and cancelation
-      …
     logo-dark.png
     logo-light.png
   tools/
@@ -230,12 +214,18 @@ neco.h
   155→int neco_cond_wait(neco_cond *cond, neco_mutex *mutex);
   156→int neco_cond_wait_dl(neco_cond *cond, neco_mutex *mutex, int64_t deadline);
   …
+  168→// wrappers for various posix operations.
   169→ssize_t neco_read(int fd, void *data, size_t nbytes);
   170→ssize_t neco_read_dl(int fd, void *data, size_t nbytes, int64_t deadline);
   171→ssize_t neco_write(int fd, const void *data, size_t nbytes);
   172→ssize_t neco_write_dl(int fd, const void *data, size_t nbytes, int64_t deadline);
   173→int neco_accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
   174→int neco_accept_dl(int sockfd, struct sockaddr *addr, socklen_t *addrlen, int64_t deadline);
+  175→int neco_connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
+  176→int neco_connect_dl(int sockfd, const struct sockaddr *addr, socklen_t addrlen, int64_t deadline);
+  177→int neco_getaddrinfo(const char *node, const char *service,
+  …
+  179→int neco_getaddrinfo_dl(const char *node, const char *service,
   …
 tests/
   README.md

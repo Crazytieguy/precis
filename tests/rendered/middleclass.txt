@@ -1,22 +1,21 @@
 .travis.yml
-CHANGELOG.md
-  1→middleclass changelog
-  2→====================
+  1→language: python
+  2→sudo: false
   3→
-  4→# Version 4.1.1
+  4→env:
+  5→  - LUA="lua=5.1"
+  6→  - LUA="lua=5.2"
+  7→  - LUA="lua=5.3"
+  8→  - LUA="luajit=2.0"
+  9→  - LUA="luajit=2.1"
+  10→
+  11→before_install:
+  12→  - pip install hererocks
+  13→  - hererocks lua_install -r^ --$LUA
+  14→  - export PATH=$PATH:$PWD/lua_install/bin # Add directory with all installed binaries to PATH
+  15→
   …
-  12→# Version 4.1.0
-  …
-  17→# Version 4.0.0
-  …
-  25→# Version 3.2.0
-  …
-  29→# Version 3.1.0
-  …
-  33→# Version 3.0.1
-  …
-  37→# Version 3.0
-  …
+CHANGELOG.md
 MIT-LICENSE.txt
 README.md
   1→middleclass
@@ -93,12 +92,6 @@ README.md
   77→
   78→Middleclass is distributed under the MIT license.
 UPDATING.md
-  1→Updating from 3.x to 4.x
-  2→========================
-  …
-  21→Updating from 2.x to 3.x
-  22→========================
-  …
 middleclass.lua
   1→local middleclass = {
   2→  _VERSION     = 'middleclass v4.1.1',

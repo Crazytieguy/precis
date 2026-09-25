@@ -94,6 +94,8 @@ eslint.base.mjs
   26→      'no-dupe-class-members': 'off',
   27→      'no-redeclare': 'off',
   28→      // Enable the TypeScript rule
+  29→      '@typescript-eslint/no-unused-vars': ['error', {
+  30→        argsIgnorePattern: '^_',
   …
 examples/
   basic.ts
@@ -139,10 +141,6 @@ packages/
   d2mini/
     CHANGELOG.md
     README.md
-      1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
-      …
-      7→### Basic Usage
-      …
     eslint.config.mjs
     package.json
     src/

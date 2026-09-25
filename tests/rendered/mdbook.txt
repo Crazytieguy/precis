@@ -53,6 +53,8 @@ Cargo.toml
   133→search = ["mdbook-html/search"]
   134→
   135→[[bin]]
+  136→doc = false
+  137→name = "mdbook"
   …
 LICENSE
 README.md
@@ -80,10 +82,6 @@ crates/
   mdbook-core/
     Cargo.toml
     README.md
-      1→# mdbook-core
-      …
-      11→## License
-      …
     src/
       book/
         tests.rs
@@ -113,10 +111,6 @@ crates/
       31→[features]
       32→search = ["mdbook-html/search"]
     README.md
-      1→# mdbook-driver
-      …
-      11→## License
-      …
     src/
       builtin_preprocessors/
         cmd.rs
@@ -146,10 +140,6 @@ crates/
       36→[features]
       37→search = ["dep:elasticlunr-rs"]
     README.md
-      1→# mdbook-html
-      …
-      11→## License
-      …
     front-end/
       css/
         ayu-highlight.css
@@ -233,10 +223,6 @@ crates/
   mdbook-markdown/
     Cargo.toml
     README.md
-      1→# mdbook-markdown
-      …
-      11→## License
-      …
     src/
       lib.rs
         1→//! Markdown processing used in mdBook.
@@ -249,10 +235,6 @@ crates/
   mdbook-preprocessor/
     Cargo.toml
     README.md
-      1→# mdbook-preprocessor
-      …
-      11→## License
-      …
     src/
       lib.rs
         1→//! Library to assist implementing an mdbook preprocessor.
@@ -265,10 +247,6 @@ crates/
   mdbook-renderer/
     Cargo.toml
     README.md
-      1→# mdbook-renderer
-      …
-      11→## License
-      …
     src/
       lib.rs
         1→//! Library to assist implementing an mdbook renderer.
@@ -278,13 +256,25 @@ crates/
         5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
         6→//! for more information on how to implement a renderer.
         …
+        17→pub use mdbook_core::MDBOOK_VERSION;
+        18→pub use mdbook_core::book;
+        19→pub use mdbook_core::config;
+        20→pub use mdbook_core::errors;
+        …
+        28→pub trait Renderer {
+        …
+        30→    fn name(&self) -> &str;
+        …
+        34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+        35→}
+        …
+        40→pub struct RenderContext {
+        …
+        63→impl RenderContext {
+        …
   mdbook-summary/
     Cargo.toml
     README.md
-      1→# mdbook-summary
-      …
-      11→## License
-      …
     src/
       lib.rs
         1→//! Summary parser for mdBook.
@@ -346,19 +336,7 @@ guide/
   src/
     404.md
     README.md
-      1→# Introduction
-      …
-      46→## Contributing
-      …
-      55→## License
-      …
     SUMMARY.md
-      1→# Summary
-      …
-      5→# User guide
-      …
-      11→# Reference guide
-      …
     cli/
       README.md
       arg-watcher.md
@@ -375,6 +353,11 @@ guide/
       backends.md
       mdbook-wordcount/
         Cargo.toml
+          1→[package]
+          2→name = "mdbook-wordcount"
+          3→version = "0.1.0"
+          4→authors = ["Michael Bryan <michaelfbryan@gmail.com>"]
+          …
         src/
           main.rs
       preprocessors.md

@@ -43,6 +43,9 @@ ColumnsPanel.c
 ColumnsPanel.h
 CommandLine.c
 CommandLine.h
+  …
+  11→typedef enum {
+  …
 CommandScreen.c
 CommandScreen.h
 DateTimeMeter.c
@@ -208,7 +211,14 @@ RowField.h
   39→   ELAPSED = 54,
   40→   SCHEDULERPOLICY = 55,
   41→   PROC_COMM = 124,
-  …
+  42→   PROC_EXE = 125,
+  43→   CWD = 126,
+  44→
+  45→   /* Platform specific fields, defined in ${platform}/ProcessField.h */
+  46→   PLATFORM_PROCESS_FIELDS
+  47→
+  48→   /* Do not add new fields after this entry (dynamic entries follow) */
+  49→   LAST_RESERVED_FIELD
   50→} ReservedFields;
   52→/* Follow ReservedField entries with dynamic fields defined at runtime */
   53→#define ROW_DYNAMIC_FIELDS LAST_RESERVED_FIELD
@@ -278,15 +288,6 @@ docs/
     screenshot.png
   styleguide.md
   understanding-htop-versions.md
-    1→Understanding htop versions
-    2→===========================
-    3→
-    4→Release versions
-    5→------------------
-    …
-    14→Development versions
-    15→----------------------
-    …
 dragonflybsd/
   DragonFlyBSDMachine.c
   DragonFlyBSDMachine.h
@@ -382,15 +383,6 @@ netbsd/
   Platform.h
   ProcessField.h
   README.md
-    1→NetBSD support in htop(1)
-    2→===
-    …
-    9→Notes on NetBSD curses
-    10→---
-    …
-    32→What needs improvement
-    33→---
-    …
 openbsd/
   OpenBSDMachine.c
   OpenBSDMachine.h

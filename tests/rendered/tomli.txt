@@ -222,11 +222,13 @@ src/
       20→(?:
       21→    :([0-5][0-9])              # optional seconds
       22→    (?:\.([0-9]{1,6})[0-9]*)?  # optional fractions of a second
-      …
+      23→)?
+      24→"""
       26→RE_NUMBER: Final = re.compile(
       …
       45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
       46→RE_DATETIME: Final = re.compile(
+      47→    rf"""
       …
       59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
       …
@@ -253,11 +255,3 @@ tests/
   test_error.py
   test_misc.py
 tomllib.md
-  1→# `tomllib` – Tomli in the standard library
-  …
-  13→## Converting Tomli to tomllib
-  14→
-  15→### Sync status
-  …
-  20→### Steps to convert
-  …

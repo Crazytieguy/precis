@@ -8,18 +8,6 @@
 .prettierignore
 .prettierrc.js
 ARCHITECTURE.md
-  1→# Architecture
-  …
-  46→## Approach
-  …
-  50→### Discarded approach
-  …
-  60→## Example
-  …
-  92→## Performance
-  …
-  96→## Groups
-  …
 LICENSE.md
 README.md
   …
@@ -80,6 +68,10 @@ README.md
   441→
   442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
   443→
+  444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
+  445→
+  446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
+  447→
   …
   456→## History
   457→

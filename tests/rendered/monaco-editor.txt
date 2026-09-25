@@ -26,12 +26,6 @@ CHANGELOG.md
 CONTRIBUTING.md
 LICENSE.txt
 MAINTAINING.md
-  1→# Maintaining
-  …
-  9→## Publishing a stable build monaco-editor build
-  …
-  50→## Updating TypeScript
-  …
 README.md
   1→# Monaco Editor
   …
@@ -39,7 +33,9 @@ README.md
   10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
   12→## Try it out
   13→
-  …
+  14→Try out the editor and see various examples [in our interactive playground](https://microsoft.github.io/monaco-editor/playground.html).
+  15→
+  16→The playground is the best way to learn about how to use the editor, which features is supports, to try out different versions and to create minimal reproducible examples for bug reports.
   18→## Installing
   …
   31→## Localization
@@ -121,16 +117,6 @@ package.json
   …
 samples/
   README.md
-    1→# Monaco Editor Samples
-    …
-    5→## Running
-    …
-    17→## Loading variations
-    …
-    26→## Other examples & techniques
-    …
-    34→## License
-    …
   browser-esm-esbuild/
     .gitignore
     build.js
@@ -312,6 +298,9 @@ samples/
     …
 scripts/
   ci/
+    build-monaco-editor-core-pkg.ts
+    build-monaco-editor-pkg.ts
+    env.ts
   lib/
     index.ts
 src/
@@ -518,6 +507,12 @@ src/
       typescript/
         languageFeatures.ts
         lib/
+          editor.worker.d.ts
+          lib.index.ts
+          lib.ts
+          typescriptServices.d.ts
+          typescriptServices.js
+          typescriptServicesMetadata.ts
         register.ts
         ts.worker.ts
         tsMode.ts
@@ -535,18 +530,6 @@ webpack-plugin/
   .npmignore
   LICENSE
   README.md
-    1→# Monaco Editor Webpack Loader Plugin
-    …
-    5→## Installing
-    …
-    11→## Using
-    …
-    63→## Options
-    …
-    90→## Version Matrix
-    …
-    104→## Contributing
-    …
   package-lock.json
   package.json
     …
@@ -575,6 +558,10 @@ website/
   package.json
   scripts/
   src/
+    monaco-loader.ts
+    runner/
+    shared.ts
+    …
   static/
   tsconfig.json
   tslint.json

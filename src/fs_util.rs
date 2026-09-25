@@ -205,6 +205,11 @@ impl DirFilter {
         &self.root
     }
 
+    /// True for a [`Self::single_file`] walk.
+    pub fn names_one_file(&self) -> bool {
+        self.only_file.is_some()
+    }
+
     /// True when `dir` is a symbolic link rather than a real directory,
     /// and so must not be listed *through*.
     ///
