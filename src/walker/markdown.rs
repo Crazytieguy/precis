@@ -2171,37 +2171,23 @@ fn logical_sections(
                         );
                     }
                 } else {
-                    let did_fence_split = root_readme
-                        && usage_h2
-                        && bytes >= H2_SPLIT_BYTES
-                        && push_canonical_usage_fence_split(
-                            &mut out,
-                            *node,
-                            *start,
-                            *end,
-                            parent_idx,
+                    push_whole_or_head_split(
+                        &mut out,
+                        &src_lines,
+                        SectionRange {
+                            start: *start,
+                            end: *end,
+                            kind: SectionKind::Whole,
+                            parent_index: parent_idx,
                             synthetic_intro_present,
-                            source,
-                        );
-                    if !did_fence_split {
-                        push_whole_or_head_split(
-                            &mut out,
-                            &src_lines,
-                            SectionRange {
-                                start: *start,
-                                end: *end,
-                                kind: SectionKind::Whole,
-                                parent_index: parent_idx,
-                                synthetic_intro_present,
-                                parent_is_canonical_usage_h2: usage_h2,
-                                is_canonical_operational_section: false,
-                                is_reference_usage_section: reference_h2,
-                                reference_shaped: false,
-                                chained_to_previous: false,
-                            },
-                            root_readme,
-                        );
-                    }
+                            parent_is_canonical_usage_h2: usage_h2,
+                            is_canonical_operational_section: false,
+                            is_reference_usage_section: reference_h2,
+                            reference_shaped: false,
+                            chained_to_previous: false,
+                        },
+                        root_readme,
+                    );
                 }
             }
         }
@@ -2232,67 +2218,6 @@ fn logical_sections(
         }
     }
     out
-}
-
-/// Split a large canonical-usage H2 (no H3 children, no list-only
-/// body) at the end of its first code fence: the heading + prelude +
-/// first fence is the canonical snippet — buyable separately from the
-/// demo blob that follows. The snippet keeps the canonical-usage boost
-/// as a `Whole`; the remainder is a `BodyBlock` (demo-blob tier).
-/// Returns false (no ranges pushed) when there's no direct fence or
-/// the remainder lacks substantive content.
-fn push_canonical_usage_fence_split(
-    out: &mut Vec<SectionRange>,
-    h2_section: Node<'_>,
-    start: usize,
-    end: usize,
-    parent_idx: usize,
-    synthetic_intro_present: bool,
-    source: &str,
-) -> bool {
-    let mut cur = h2_section.walk();
-    let Some(first_fence) = h2_section
-        .children(&mut cur)
-        .find(|c| is_code_block(c.kind()))
-    else {
-        return false;
-    };
-    let (_, fence_end) = node_row_range(first_fence, source);
-    if fence_end >= end {
-        return false;
-    }
-    let src_lines: Vec<&str> = source.lines().collect();
-    let rest_start = fence_end + 1;
-    let rest_has_content =
-        (rest_start..=end).any(|r| src_lines.get(r - 1).is_some_and(|l| !l.trim().is_empty()));
-    if !rest_has_content {
-        return false;
-    }
-    out.push(SectionRange {
-        start,
-        end: fence_end,
-        kind: SectionKind::Whole,
-        parent_index: parent_idx,
-        synthetic_intro_present,
-        parent_is_canonical_usage_h2: true,
-        is_canonical_operational_section: false,
-        is_reference_usage_section: false,
-        reference_shaped: false,
-        chained_to_previous: false,
-    });
-    out.push(SectionRange {
-        start: rest_start,
-        end,
-        kind: SectionKind::BodyBlock,
-        parent_index: parent_idx,
-        synthetic_intro_present,
-        parent_is_canonical_usage_h2: false,
-        is_canonical_operational_section: false,
-        is_reference_usage_section: false,
-        reference_shaped: false,
-        chained_to_previous: false,
-    });
-    true
 }
 
 /// Contiguous chunk bounds for the oversize head-split: cover
