@@ -103,57 +103,60 @@ Score(3000)=0.482 I=0.809 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | walker |  | 5777 | 16 | c doc src/procedures.c:146 |  |  | 0.719 |
 | ns | 5794 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.724 |
 | walker |  | 5795 | 18 | c doc src/procedures.c:177 |  |  | 0.724 |
+| walker |  | 5814 | 19 | c doc src/procedures.c:130 |  |  | 0.724 |
 | ns | 5991 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.730 |
 | ns | 6129 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.730 |
 | ns | 6325 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.735 |
 | ns | 6410 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.734 |
-| walker |  | 6485 | 690 | plaintext config extract_registries.sh |  |  | 0.734 |
 | ns | 6499 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.727 |
-| walker |  | 6654 | 169 | README.md section #2 |  |  | 0.727 |
+| walker |  | 6504 | 690 | plaintext config extract_registries.sh |  |  | 0.727 |
+| walker |  | 6673 | 169 | README.md section #2 |  |  | 0.727 |
 | ns | 6755 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.713 |
-| walker |  | 7013 | 359 | README.md section #3 |  |  | 0.713 |
+| walker |  | 7032 | 359 | README.md section #3 |  |  | 0.713 |
 | ns | 7081 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.692 |
-| walker |  | 7247 | 234 | c names src/packets.c |  |  | 0.692 |
-| walker |  | 7258 | 11 | c doc src/packets.c:49 |  |  | 0.692 |
-| walker |  | 7269 | 11 | c doc src/packets.c:66 |  |  | 0.692 |
-| walker |  | 7280 | 11 | c doc src/packets.c:85 |  |  | 0.692 |
-| walker |  | 7291 | 11 | c doc src/packets.c:183 |  |  | 0.692 |
-| walker |  | 7303 | 12 | c doc src/packets.c:190 |  |  | 0.692 |
-| walker |  | 7330 | 27 | c doc src/worldgen.c:160 |  |  | 0.692 |
-| walker |  | 7343 | 13 | c doc src/packets.c:137 |  |  | 0.692 |
+| walker |  | 7266 | 234 | c names src/packets.c |  |  | 0.692 |
+| walker |  | 7277 | 11 | c doc src/packets.c:49 |  |  | 0.692 |
+| walker |  | 7288 | 11 | c doc src/packets.c:66 |  |  | 0.692 |
+| walker |  | 7299 | 11 | c doc src/packets.c:85 |  |  | 0.692 |
+| walker |  | 7310 | 11 | c doc src/packets.c:183 |  |  | 0.692 |
+| walker |  | 7322 | 12 | c doc src/packets.c:190 |  |  | 0.692 |
+| walker |  | 7349 | 27 | c doc src/worldgen.c:160 |  |  | 0.692 |
 | ns | 7350 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.678 |
-| walker |  | 7362 | 19 | c doc src/procedures.c:130 |  |  | 0.678 |
+| walker |  | 7362 | 13 | c doc src/packets.c:137 |  |  | 0.678 |
 | walker |  | 7575 | 213 | c names src/procedures.c #1 |  |  | 0.679 |
+| walker |  | 7590 | 15 | c doc src/procedures.c:495 |  |  | 0.679 |
+| walker |  | 7607 | 17 | c doc src/procedures.c:321 |  |  | 0.679 |
 | ns | 7692 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.661 |
-| walker |  | 7803 | 228 | c names src/globals.c |  |  | 0.672 |
-| walker |  | 7997 | 194 | c names include/packets.h #2 |  |  | 0.691 |
+| walker |  | 7835 | 228 | c names src/globals.c |  |  | 0.672 |
+| walker |  | 8029 | 194 | c names include/packets.h #2 |  |  | 0.691 |
 | ns | 8048 |  | 356 | main.c — the single-threaded accept and tick round-robin loop | 5.6 |  | 0.671 |
-| walker |  | 8257 | 260 | c decl include/globals.h:200 #1 |  |  | 0.697 |
-| walker |  | 8291 | 34 | c doc src/tools.c:42 |  |  | 0.697 |
+| walker |  | 8289 | 260 | c decl include/globals.h:200 #1 |  |  | 0.697 |
+| walker |  | 8323 | 34 | c doc src/tools.c:42 |  |  | 0.697 |
 | ns | 8329 |  | 281 | main.c — the ESP32 entry points: FreeRTOS task, WiFi event handler, app_main | 5.7 |  | 0.681 |
-| walker |  | 8483 | 192 | c names include/procedures.h #3 |  |  | 0.699 |
-| walker |  | 8496 | 13 | c doc src/packets.c:151 |  |  | 0.699 |
-| walker |  | 8511 | 15 | c doc src/procedures.c:495 |  |  | 0.699 |
+| walker |  | 8515 | 192 | c names include/procedures.h #3 |  |  | 0.699 |
+| walker |  | 8528 | 13 | c doc src/packets.c:151 |  |  | 0.699 |
 | ns | 8553 |  | 224 | procedures.c — definition locations, part 1 (state, players, slots, block changes) | 6.1 |  | 0.705 |
-| walker |  | 8731 | 220 | c names include/packets.h #3 |  |  | 0.720 |
+| walker |  | 8748 | 220 | c names include/packets.h #3 |  |  | 0.720 |
 | ns | 8770 |  | 217 | procedures.c — definition locations, part 2 (mining, predicates, armour, eating, fluids) | 6.2 |  | 0.709 |
 | ns | 8902 |  | 132 | procedures.c — definition locations, part 3 (actions, mobs, tick, entity data) | 6.3 |  | 0.702 |
-| walker |  | 8929 | 198 | README.md section #6 |  |  | 0.703 |
-| walker |  | 9035 | 106 | declaration surface of src/CMakeLists.txt |  |  | 0.718 |
+| walker |  | 8946 | 198 | README.md section #6 |  |  | 0.703 |
+| walker |  | 9052 | 106 | declaration surface of src/CMakeLists.txt |  |  | 0.718 |
 | ns | 9117 |  | 215 | worldgen.c — every definition, including the five private generator stages | 6.4 |  | 0.712 |
-| walker |  | 9249 | 214 | c names src/procedures.c #2 |  |  | 0.720 |
-| walker |  | 9262 | 13 | c doc src/packets.c:166 |  |  | 0.720 |
+| walker |  | 9266 | 214 | c names src/procedures.c #2 |  |  | 0.720 |
+| walker |  | 9280 | 14 | c doc src/procedures.c:789 |  |  | 0.720 |
+| walker |  | 9294 | 14 | c doc src/procedures.c:858 |  |  | 0.720 |
 | ns | 9304 |  | 187 | serialize.c — the world file path and all five persistence entry points | 6.5 |  | 0.712 |
-| walker |  | 9314 | 52 | c doc src/worldgen.c:126 |  |  | 0.712 |
-| walker |  | 9373 | 59 | c body src/structures.c:9 |  |  | 0.712 |
+| walker |  | 9307 | 13 | c doc src/packets.c:166 |  |  | 0.712 |
+| walker |  | 9359 | 52 | c doc src/worldgen.c:126 |  |  | 0.712 |
+| walker |  | 9418 | 59 | c body src/structures.c:9 |  |  | 0.712 |
 | ns | 9485 |  | 181 | packets.c — the chat command surface (!msg and !help) | 6.6 |  | 0.705 |
-| walker |  | 9648 | 275 | README.md section #5 |  |  | 0.705 |
-| walker |  | 9709 | 61 | c body src/varnum.c:34 |  |  | 0.705 |
-| walker |  | 9722 | 13 | c doc src/packets.c:245 |  |  | 0.705 |
-| walker |  | 9736 | 14 | c doc src/procedures.c:789 |  |  | 0.705 |
+| walker |  | 9693 | 275 | README.md section #5 |  |  | 0.705 |
 | ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.697 |
+| walker |  | 9754 | 61 | c body src/varnum.c:34 |  |  | 0.697 |
+| walker |  | 9767 | 13 | c doc src/packets.c:245 |  |  | 0.697 |
 | ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.699 |
+| walker |  | 9784 | 17 | c doc src/procedures.c:775 |  |  | 0.699 |
 | ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.701 |
-| walker |  | 9930 | 194 | c names include/packets.h #4 |  |  | 0.709 |
-| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.706 |
-| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.705 |
+| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.698 |
+| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.697 |
+| walker |  | 9978 | 194 | c names include/packets.h #4 |  |  | 0.705 |

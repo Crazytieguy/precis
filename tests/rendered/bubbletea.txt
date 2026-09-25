@@ -213,6 +213,7 @@ tea.go
   279→func (v *View) SetContent(s string) {
   280→	v.Content = s
   …
+  283→// MouseMode represents the mouse mode of a view.
   284→type MouseMode int
   286→const (
   287→	// MouseModeNone disables mouse events.
@@ -235,7 +236,7 @@ tea.go
   304→	// supported by the terminal it will fall back to normal mode (X10).
   305→	MouseModeAllMotion
   306→)
-  …
+  308→// ProgressBarState represents the state of the progress bar.
   309→type ProgressBarState int
   311→// Progress bar states.
   312→const (

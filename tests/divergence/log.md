@@ -241,12 +241,13 @@ Score(3000)=0.577 I=0.790 C=0.422 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 9057 | 68 | rust decl src/kv/value.rs:1112 |  |  | 0.526 |
 | ns | 9121 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.516 |
 | ns | 9297 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.510 |
-| walker |  | 9400 | 343 | rust decl src/macros.rs:390 |  |  | 0.517 |
-| ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.514 |
-| walker |  | 9607 | 207 | rust names src/kv/mod.rs |  |  | 0.529 |
-| ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.529 |
-| ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.527 |
-| ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.524 |
-| ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.520 |
-| ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.518 |
-| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.515 |
+| walker |  | 9303 | 246 | rust module doc src/lib.rs |  |  | 0.528 |
+| ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.525 |
+| ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.519 |
+| walker |  | 9646 | 343 | rust decl src/macros.rs:390 |  |  | 0.526 |
+| ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.523 |
+| ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.521 |
+| ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.517 |
+| walker |  | 9853 | 207 | rust names src/kv/mod.rs |  |  | 0.537 |
+| ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.536 |
+| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.533 |

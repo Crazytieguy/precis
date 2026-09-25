@@ -124,6 +124,8 @@ xxhash.go
   53→func (d *Digest) Reset() {
   54→	d.ResetWithSeed(0)
   …
+  57→// ResetWithSeed clears the Digest's state so that it can be reused.
+  58→// It uses the given seed to initialize the state.
   59→func (d *Digest) ResetWithSeed(seed uint64) {
   …
   68→// Size always returns 8 bytes.
@@ -213,8 +215,6 @@ xxhash_unsafe.go
   49→	// savings of 6 in the inliner's cost model.
   50→	return len(s), nil
   …
-  53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-  54→// of the first two words is the same as the layout of a string.
   55→type sliceHeader struct {
   56→	s   string
   57→	cap int

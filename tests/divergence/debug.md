@@ -1,4 +1,4 @@
-Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.714/0.614/0.616/0.582/0.628/0.589/0.604
+Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.727/0.623/0.616/0.582/0.628/0.589/0.565
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,30 +16,30 @@ Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 300 | 14 | ts names karma.conf.js |  |  | 0.800 |
 | ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.759 |
 | walker |  | 368 | 68 | package entrypoints in package.json |  |  | 0.830 |
-| ns | 436 |  | 108 | package.json `scripts` — every build/test/lint entry point | 1.5 |  | 0.744 |
-| walker |  | 474 | 106 | package scripts in package.json |  |  | 0.853 |
-| ns | 616 |  | 180 | README section map — every `##` heading | 1.6 |  | 0.689 |
-| walker |  | 637 | 163 | ts names src/browser.js |  |  | 0.695 |
-| walker |  | 735 | 98 | ts decl src/browser.js:12 |  |  | 0.696 |
-| ns | 765 |  | 149 | src/common.js — `setup(env)` and the complete `createDebug.*` public API attachment block | 2.1 |  | 0.610 |
-| ns | 906 |  | 141 | src/common.js — module-level state: `names`, `skips`, `formatters` | 2.2 |  | 0.555 |
-| walker |  | 926 | 191 | headings outline in README.md |  |  | 0.714 |
-| walker |  | 951 | 25 | README.md section #1 |  |  | 0.714 |
-| ns | 1061 |  | 155 | src/common.js — roster of every function definition plus the module tail | 2.3 |  | 0.659 |
-| walker |  | 1154 | 203 | ts names src/node.js |  |  | 0.664 |
-| walker |  | 1179 | 25 | ts decl src/node.js:124 |  |  | 0.664 |
-| walker |  | 1226 | 47 | ts decl src/node.js:18 |  |  | 0.665 |
-| ns | 1229 |  | 168 | src/node.js — the node adapter's export contract | 2.4 |  | 0.627 |
-| walker |  | 1235 | 9 | ts body src/node.js:220 |  |  | 0.627 |
-| walker |  | 1250 | 15 | ts doc src/node.js:27 |  |  | 0.627 |
-| ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.614 |
-| walker |  | 1511 | 261 | README.md section #9 |  |  | 0.619 |
-| ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.614 |
-| walker |  | 1534 | 23 | ts body src/node.js:193 |  |  | 0.614 |
-| walker |  | 1570 | 36 | ts doc src/browser.js:149 |  |  | 0.614 |
-| walker |  | 1613 | 43 | README.md section #17 |  |  | 0.614 |
-| ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.617 |
-| walker |  | 1651 | 38 | ts doc src/common.js:7 |  |  | 0.625 |
+| walker |  | 406 | 38 | ts doc src/common.js:7 |  |  | 0.833 |
+| ns | 436 |  | 108 | package.json `scripts` — every build/test/lint entry point | 1.5 |  | 0.747 |
+| walker |  | 512 | 106 | package scripts in package.json |  |  | 0.856 |
+| ns | 616 |  | 180 | README section map — every `##` heading | 1.6 |  | 0.692 |
+| walker |  | 675 | 163 | ts names src/browser.js |  |  | 0.698 |
+| ns | 765 |  | 149 | src/common.js — `setup(env)` and the complete `createDebug.*` public API attachment block | 2.1 |  | 0.625 |
+| walker |  | 773 | 98 | ts decl src/browser.js:12 |  |  | 0.626 |
+| ns | 906 |  | 141 | src/common.js — module-level state: `names`, `skips`, `formatters` | 2.2 |  | 0.569 |
+| walker |  | 964 | 191 | headings outline in README.md |  |  | 0.727 |
+| walker |  | 989 | 25 | README.md section #1 |  |  | 0.727 |
+| ns | 1061 |  | 155 | src/common.js — roster of every function definition plus the module tail | 2.3 |  | 0.670 |
+| walker |  | 1192 | 203 | ts names src/node.js |  |  | 0.676 |
+| walker |  | 1217 | 25 | ts decl src/node.js:124 |  |  | 0.676 |
+| ns | 1229 |  | 168 | src/node.js — the node adapter's export contract | 2.4 |  | 0.625 |
+| walker |  | 1264 | 47 | ts decl src/node.js:18 |  |  | 0.637 |
+| walker |  | 1273 | 9 | ts body src/node.js:220 |  |  | 0.637 |
+| walker |  | 1288 | 15 | ts doc src/node.js:27 |  |  | 0.637 |
+| ns | 1343 |  | 114 | src/browser.js — the browser adapter's export contract | 2.5 |  | 0.623 |
+| ns | 1517 |  | 174 | src/node.js — roster of every function, export and formatter | 2.6 |  | 0.618 |
+| walker |  | 1549 | 261 | README.md section #9 |  |  | 0.622 |
+| walker |  | 1572 | 23 | ts body src/node.js:193 |  |  | 0.622 |
+| walker |  | 1608 | 36 | ts doc src/browser.js:149 |  |  | 0.622 |
+| ns | 1644 |  | 127 | src/browser.js — roster of every function, export and formatter | 2.7 |  | 0.625 |
+| walker |  | 1651 | 43 | README.md section #17 |  |  | 0.625 |
 | ns | 1802 |  | 158 | README: the complete `DEBUG_*` environment variable table | 3.1 |  | 0.641 |
 | walker |  | 1830 | 179 | package identity metadata in package.json |  |  | 0.641 |
 | walker |  | 1874 | 44 | ts doc src/browser.js:200 |  |  | 0.641 |
@@ -107,16 +107,16 @@ Score(3000)=0.582 I=0.778 C=0.436 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 7647 |  | 76 | src/common.js: adapter-property spread and `createDebug`'s closure state | 5.9 | 2.1 | 0.558 |
 | walker |  | 7669 | 73 | ts body src/node.js:231 |  |  | 0.558 |
 | walker |  | 7778 | 109 | ts body src/browser.js:247 |  |  | 0.559 |
-| walker |  | 7867 | 89 | ts body src/node.js:203 |  |  | 0.559 |
-| ns | 7942 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.548 |
-| walker |  | 8028 | 161 | ts body src/browser.js:219 |  |  | 0.549 |
-| ns | 8206 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.544 |
-| ns | 8528 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.535 |
-| walker |  | 8665 | 637 | ts body karma.conf.js:1 |  |  | 0.575 |
-| ns | 8861 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.562 |
-| walker |  | 8934 | 269 | ts body src/common.js:7 |  |  | 0.604 |
-| ns | 9045 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.609 |
-| ns | 9397 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.619 |
-| ns | 9541 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.613 |
-| ns | 9722 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.605 |
-| ns | 9932 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.596 |
+| ns | 7942 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.547 |
+| walker |  | 8047 | 269 | ts body src/common.js:7 |  |  | 0.592 |
+| walker |  | 8136 | 89 | ts body src/node.js:203 |  |  | 0.592 |
+| ns | 8206 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.587 |
+| walker |  | 8297 | 161 | ts body src/browser.js:219 |  |  | 0.588 |
+| ns | 8528 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.578 |
+| ns | 8861 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.565 |
+| ns | 9045 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.571 |
+| ns | 9397 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.583 |
+| walker |  | 9520 | 1223 | ts body src/common.js:7 #1 |  |  | 0.675 |
+| ns | 9541 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.667 |
+| ns | 9722 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.660 |
+| ns | 9932 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.649 |

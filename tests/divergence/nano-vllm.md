@@ -1,4 +1,4 @@
-Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.587/0.491/0.494/0.575/0.609/0.605
+Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.672/0.587/0.491/0.494/0.575/0.609/0.603
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -154,87 +154,86 @@ Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 5108 | 8 | python decl nanovllm/engine/sequence.py:57 |  |  | 0.640 |
 | walker |  | 5116 | 8 | python decl nanovllm/engine/sequence.py:61 |  |  | 0.643 |
 | ns | 5163 |  | 104 | LLMEngine.exit and add_request | 3.10 | 2.3 | 0.635 |
-| walker |  | 5254 | 138 | python decl nanovllm/models/qwen3.py:16 |  |  | 0.635 |
-| walker |  | 5283 | 29 | python body nanovllm/layers/activation.py:11 |  |  | 0.635 |
-| walker |  | 5339 | 56 | python body nanovllm/utils/context.py:21 |  |  | 0.635 |
+| walker |  | 5169 | 53 | python body nanovllm/engine/model_runner.py:61 |  |  | 0.635 |
+| walker |  | 5307 | 138 | python decl nanovllm/models/qwen3.py:16 |  |  | 0.635 |
+| walker |  | 5336 | 29 | python body nanovllm/layers/activation.py:11 |  |  | 0.635 |
 | ns | 5345 |  | 182 | BlockManager.__init__ and compute_hash | 3.11 | 2.5 | 0.625 |
-| walker |  | 5359 | 20 | python body nanovllm/engine/block_manager.py:16 |  |  | 0.625 |
-| walker |  | 5638 | 279 | python body example.py:6 |  |  | 0.625 |
-| walker |  | 5660 | 22 | python body nanovllm/layers/embed_head.py:47 |  |  | 0.625 |
+| walker |  | 5392 | 56 | python body nanovllm/utils/context.py:21 |  |  | 0.625 |
+| walker |  | 5412 | 20 | python body nanovllm/engine/block_manager.py:16 |  |  | 0.625 |
 | ns | 5686 |  | 341 | BlockManager.can_allocate and allocate — the prefix-cache hit path | 3.12 | 2.5 | 0.605 |
-| walker |  | 5813 | 153 | README.md section #4 |  |  | 0.630 |
-| walker |  | 5849 | 36 | python body nanovllm/engine/scheduler.py:60 |  |  | 0.631 |
-| walker |  | 5888 | 39 | python body nanovllm/engine/llm_engine.py:36 |  |  | 0.635 |
+| walker |  | 5691 | 279 | python body example.py:6 |  |  | 0.605 |
+| walker |  | 5713 | 22 | python body nanovllm/layers/embed_head.py:47 |  |  | 0.605 |
+| walker |  | 5866 | 153 | README.md section #4 |  |  | 0.630 |
+| walker |  | 5902 | 36 | python body nanovllm/engine/scheduler.py:60 |  |  | 0.631 |
+| walker |  | 5959 | 57 | python body nanovllm/engine/model_runner.py:85 |  |  | 0.631 |
+| walker |  | 5998 | 39 | python body nanovllm/engine/llm_engine.py:36 |  |  | 0.635 |
 | ns | 6057 |  | 371 | BlockManager.deallocate, can_append and may_append | 3.13 | 2.5 | 0.615 |
 | ns | 6182 |  | 125 | Block class body | 3.14 | 2.5 | 0.609 |
-| walker |  | 6254 | 366 | python body bench.py:8 |  |  | 0.609 |
-| walker |  | 6294 | 40 | python body nanovllm/layers/rotary_embedding.py:51 |  |  | 0.609 |
-| walker |  | 6317 | 23 | python body nanovllm/engine/block_manager.py:93 |  |  | 0.609 |
-| walker |  | 6325 | 8 | python body nanovllm/engine/sequence.py:31 |  |  | 0.609 |
-| ns | 6344 |  | 162 | Sequence block arithmetic and append_token | 3.15 | 2.6 | 0.599 |
-| walker |  | 6378 | 53 | python body nanovllm/engine/model_runner.py:61 |  |  | 0.599 |
+| ns | 6344 |  | 162 | Sequence block arithmetic and append_token | 3.15 | 2.6 | 0.598 |
+| walker |  | 6364 | 366 | python body bench.py:8 |  |  | 0.598 |
+| walker |  | 6404 | 40 | python body nanovllm/layers/rotary_embedding.py:51 |  |  | 0.598 |
+| walker |  | 6427 | 23 | python body nanovllm/engine/block_manager.py:93 |  |  | 0.598 |
+| walker |  | 6435 | 8 | python body nanovllm/engine/sequence.py:31 |  |  | 0.599 |
 | ns | 6469 |  | 125 | Sequence.__getstate__ / __setstate__ — the TP pickling contract | 3.16 | 2.6 | 0.593 |
-| walker |  | 6484 | 106 | python body nanovllm/config.py:20 |  |  | 0.606 |
-| walker |  | 6706 | 222 | README.md section #5 |  |  | 0.606 |
-| walker |  | 6751 | 45 | python body nanovllm/engine/llm_engine.py:42 |  |  | 0.615 |
-| walker |  | 6784 | 33 | python body nanovllm/layers/layernorm.py:7 |  |  | 0.615 |
-| walker |  | 6793 | 9 | python body nanovllm/engine/sequence.py:34 |  |  | 0.615 |
-| walker |  | 6866 | 73 | python body nanovllm/layers/attention.py:45 |  |  | 0.615 |
+| walker |  | 6541 | 106 | python body nanovllm/config.py:20 |  |  | 0.606 |
+| walker |  | 6604 | 63 | python body nanovllm/engine/model_runner.py:182 |  |  | 0.606 |
+| walker |  | 6826 | 222 | README.md section #5 |  |  | 0.606 |
+| walker |  | 6871 | 45 | python body nanovllm/engine/llm_engine.py:42 |  |  | 0.615 |
 | ns | 6881 |  | 412 | ModelRunner.run and run_model — the per-step dispatch | 4.1 | 2.7 | 0.601 |
-| walker |  | 6945 | 79 | python body nanovllm/layers/sampler.py:10 |  |  | 0.601 |
-| walker |  | 7002 | 57 | python body nanovllm/engine/model_runner.py:85 |  |  | 0.601 |
-| walker |  | 7033 | 31 | python body nanovllm/engine/block_manager.py:20 |  |  | 0.605 |
-| walker |  | 7041 | 8 | python body nanovllm/layers/linear.py:33 |  |  | 0.605 |
-| walker |  | 7053 | 12 | python body nanovllm/engine/sequence.py:49 |  |  | 0.605 |
-| walker |  | 7280 | 227 | python body nanovllm/utils/loader.py:12 |  |  | 0.605 |
+| walker |  | 6904 | 33 | python body nanovllm/layers/layernorm.py:7 |  |  | 0.601 |
+| walker |  | 6913 | 9 | python body nanovllm/engine/sequence.py:34 |  |  | 0.601 |
+| walker |  | 6986 | 73 | python body nanovllm/layers/attention.py:45 |  |  | 0.601 |
+| walker |  | 7065 | 79 | python body nanovllm/layers/sampler.py:10 |  |  | 0.601 |
+| walker |  | 7096 | 31 | python body nanovllm/engine/block_manager.py:20 |  |  | 0.605 |
+| walker |  | 7104 | 8 | python body nanovllm/layers/linear.py:33 |  |  | 0.605 |
+| walker |  | 7191 | 87 | python body nanovllm/engine/model_runner.py:120 |  |  | 0.605 |
+| walker |  | 7203 | 12 | python body nanovllm/engine/sequence.py:49 |  |  | 0.605 |
 | ns | 7295 |  | 414 | ModelRunner.__init__ — distributed init and startup order | 4.2 | 2.7 | 0.587 |
-| walker |  | 7322 | 42 | python body nanovllm/layers/layernorm.py:42 |  |  | 0.587 |
-| walker |  | 7402 | 80 | python body nanovllm/layers/rotary_embedding.py:6 |  |  | 0.587 |
-| walker |  | 7562 | 160 | python body nanovllm/layers/attention.py:10 |  |  | 0.587 |
-| walker |  | 7625 | 63 | python body nanovllm/engine/model_runner.py:182 |  |  | 0.587 |
-| walker |  | 7635 | 10 | python body nanovllm/layers/linear.py:47 |  |  | 0.587 |
+| walker |  | 7430 | 227 | python body nanovllm/utils/loader.py:12 |  |  | 0.587 |
+| walker |  | 7472 | 42 | python body nanovllm/layers/layernorm.py:42 |  |  | 0.587 |
+| walker |  | 7552 | 80 | python body nanovllm/layers/rotary_embedding.py:6 |  |  | 0.587 |
 | ns | 7645 |  | 350 | ModelRunner.allocate_kv_cache — sizing the paged cache | 4.3 | 2.7 | 0.577 |
-| walker |  | 7728 | 93 | python body nanovllm/engine/scheduler.py:65 |  |  | 0.586 |
-| walker |  | 7741 | 13 | python body nanovllm/engine/sequence.py:37 |  |  | 0.586 |
-| walker |  | 7812 | 71 | python body nanovllm/layers/embed_head.py:27 |  |  | 0.586 |
-| walker |  | 7855 | 43 | python body nanovllm/engine/block_manager.py:10 |  |  | 0.594 |
-| walker |  | 7868 | 13 | python body nanovllm/engine/sequence.py:41 |  |  | 0.594 |
-| walker |  | 7889 | 21 | python body nanovllm/layers/linear.py:7 |  |  | 0.594 |
-| walker |  | 8050 | 161 | python body nanovllm/layers/attention.py:33 |  |  | 0.594 |
-| ns | 8059 |  | 414 | ModelRunner.prepare_prefill — varlen batching and slot mapping | 4.4 | 2.7 | 0.581 |
-| walker |  | 8061 | 11 | python body nanovllm/models/qwen3.py:204 |  |  | 0.581 |
-| walker |  | 8074 | 13 | python body nanovllm/engine/sequence.py:45 |  |  | 0.581 |
-| walker |  | 8177 | 103 | python body nanovllm/engine/scheduler.py:10 |  |  | 0.592 |
-| walker |  | 8188 | 11 | python body nanovllm/models/qwen3.py:211 |  |  | 0.592 |
-| walker |  | 8201 | 13 | python body nanovllm/engine/sequence.py:53 |  |  | 0.594 |
-| ns | 8235 |  | 176 | ModelRunner.prepare_decode — one token per sequence | 4.5 | 2.7 | 0.587 |
-| walker |  | 8319 | 118 | python body nanovllm/engine/llm_engine.py:48 |  |  | 0.597 |
-| walker |  | 8406 | 87 | python body nanovllm/engine/model_runner.py:120 |  |  | 0.597 |
-| walker |  | 8420 | 14 | python body nanovllm/layers/linear.py:50 |  |  | 0.597 |
-| walker |  | 8499 | 79 | python body nanovllm/layers/rotary_embedding.py:37 |  |  | 0.597 |
-| walker |  | 8513 | 14 | python body nanovllm/layers/linear.py:72 |  |  | 0.597 |
-| ns | 8552 |  | 317 | ModelRunner.capture_cudagraph — the graph ladder | 4.6 | 2.7 | 0.586 |
-| walker |  | 8595 | 82 | python body nanovllm/layers/layernorm.py:16 |  |  | 0.586 |
-| walker |  | 8659 | 64 | python body nanovllm/engine/block_manager.py:35 |  |  | 0.590 |
-| ns | 8701 |  | 149 | Complete method roster for layers/linear.py | 5.1 | 2.8 | 0.597 |
-| walker |  | 8774 | 115 | python body nanovllm/layers/embed_head.py:34 |  |  | 0.597 |
-| ns | 8810 |  | 109 | Complete method roster for models/qwen3.py | 5.2 | 2.9 | 0.603 |
-| walker |  | 8865 | 91 | python body nanovllm/engine/model_runner.py:68 |  |  | 0.603 |
-| walker |  | 8880 | 15 | python body nanovllm/layers/linear.py:39 |  |  | 0.603 |
-| walker |  | 8901 | 21 | python body nanovllm/engine/sequence.py:57 |  |  | 0.605 |
-| walker |  | 9000 | 99 | python body nanovllm/engine/model_runner.py:50 |  |  | 0.605 |
-| walker |  | 9102 | 102 | python body nanovllm/layers/layernorm.py:28 |  |  | 0.605 |
-| walker |  | 9123 | 21 | python body nanovllm/engine/sequence.py:61 |  |  | 0.607 |
-| ns | 9141 |  | 331 | Attention.forward — paged KV write and flash-attn dispatch | 5.3 | 2.8 | 0.598 |
-| walker |  | 9209 | 86 | python body nanovllm/engine/block_manager.py:84 |  |  | 0.602 |
-| walker |  | 9369 | 160 | python body nanovllm/layers/embed_head.py:11 |  |  | 0.602 |
-| ns | 9387 |  | 246 | Qwen3Attention.forward — QKV split, q/k norm, RoPE | 5.4 | 5.2 | 0.595 |
-| walker |  | 9473 | 104 | python body nanovllm/engine/model_runner.py:76 |  |  | 0.595 |
-| walker |  | 9561 | 88 | python body nanovllm/engine/block_manager.py:28 |  |  | 0.604 |
-| ns | 9575 |  | 188 | store_kvcache and its Triton kernel boundary | 5.5 | 2.8 | 0.608 |
-| ns | 9684 |  | 109 | Sampler.forward — the exponential-noise argmax trick | 5.6 | 2.8 | 0.611 |
-| walker |  | 9804 | 243 | python body nanovllm/engine/llm_engine.py:17 |  |  | 0.628 |
-| walker |  | 9832 | 28 | python body nanovllm/layers/linear.py:78 |  |  | 0.628 |
-| ns | 9865 |  | 181 | ParallelLMHead.forward — last-token selection and logit gather | 5.7 | 2.8 | 0.623 |
-| ns | 9974 |  | 109 | README benchmark pointer and throughput table | 6.1 |  | 0.625 |
-| walker |  | 9997 | 165 | python body nanovllm/layers/embed_head.py:56 |  |  | 0.635 |
+| walker |  | 7712 | 160 | python body nanovllm/layers/attention.py:10 |  |  | 0.577 |
+| walker |  | 7722 | 10 | python body nanovllm/layers/linear.py:47 |  |  | 0.577 |
+| walker |  | 7815 | 93 | python body nanovllm/engine/scheduler.py:65 |  |  | 0.586 |
+| walker |  | 7906 | 91 | python body nanovllm/engine/model_runner.py:68 |  |  | 0.586 |
+| walker |  | 7919 | 13 | python body nanovllm/engine/sequence.py:37 |  |  | 0.586 |
+| walker |  | 7990 | 71 | python body nanovllm/layers/embed_head.py:27 |  |  | 0.586 |
+| walker |  | 8033 | 43 | python body nanovllm/engine/block_manager.py:10 |  |  | 0.594 |
+| walker |  | 8046 | 13 | python body nanovllm/engine/sequence.py:41 |  |  | 0.594 |
+| ns | 8059 |  | 414 | ModelRunner.prepare_prefill — varlen batching and slot mapping | 4.4 | 2.7 | 0.580 |
+| walker |  | 8067 | 21 | python body nanovllm/layers/linear.py:7 |  |  | 0.580 |
+| walker |  | 8228 | 161 | python body nanovllm/layers/attention.py:33 |  |  | 0.581 |
+| ns | 8235 |  | 176 | ModelRunner.prepare_decode — one token per sequence | 4.5 | 2.7 | 0.574 |
+| walker |  | 8327 | 99 | python body nanovllm/engine/model_runner.py:50 |  |  | 0.574 |
+| walker |  | 8338 | 11 | python body nanovllm/models/qwen3.py:204 |  |  | 0.574 |
+| walker |  | 8351 | 13 | python body nanovllm/engine/sequence.py:45 |  |  | 0.574 |
+| walker |  | 8454 | 103 | python body nanovllm/engine/scheduler.py:10 |  |  | 0.585 |
+| walker |  | 8465 | 11 | python body nanovllm/models/qwen3.py:211 |  |  | 0.585 |
+| walker |  | 8478 | 13 | python body nanovllm/engine/sequence.py:53 |  |  | 0.587 |
+| ns | 8552 |  | 317 | ModelRunner.capture_cudagraph — the graph ladder | 4.6 | 2.7 | 0.576 |
+| walker |  | 8596 | 118 | python body nanovllm/engine/llm_engine.py:48 |  |  | 0.586 |
+| walker |  | 8610 | 14 | python body nanovllm/layers/linear.py:50 |  |  | 0.586 |
+| ns | 8701 |  | 149 | Complete method roster for layers/linear.py | 5.1 | 2.8 | 0.594 |
+| walker |  | 8714 | 104 | python body nanovllm/engine/model_runner.py:76 |  |  | 0.594 |
+| walker |  | 8793 | 79 | python body nanovllm/layers/rotary_embedding.py:37 |  |  | 0.594 |
+| walker |  | 8807 | 14 | python body nanovllm/layers/linear.py:72 |  |  | 0.594 |
+| ns | 8810 |  | 109 | Complete method roster for models/qwen3.py | 5.2 | 2.9 | 0.599 |
+| walker |  | 8889 | 82 | python body nanovllm/layers/layernorm.py:16 |  |  | 0.599 |
+| walker |  | 8953 | 64 | python body nanovllm/engine/block_manager.py:35 |  |  | 0.603 |
+| walker |  | 9068 | 115 | python body nanovllm/layers/embed_head.py:34 |  |  | 0.603 |
+| ns | 9141 |  | 331 | Attention.forward — paged KV write and flash-attn dispatch | 5.3 | 2.8 | 0.595 |
+| walker |  | 9179 | 111 | python body nanovllm/engine/model_runner.py:208 |  |  | 0.598 |
+| walker |  | 9194 | 15 | python body nanovllm/layers/linear.py:39 |  |  | 0.598 |
+| walker |  | 9215 | 21 | python body nanovllm/engine/sequence.py:57 |  |  | 0.600 |
+| walker |  | 9339 | 124 | python body nanovllm/engine/model_runner.py:91 |  |  | 0.600 |
+| ns | 9387 |  | 246 | Qwen3Attention.forward — QKV split, q/k norm, RoPE | 5.4 | 5.2 | 0.593 |
+| walker |  | 9441 | 102 | python body nanovllm/layers/layernorm.py:28 |  |  | 0.593 |
+| walker |  | 9462 | 21 | python body nanovllm/engine/sequence.py:61 |  |  | 0.595 |
+| walker |  | 9548 | 86 | python body nanovllm/engine/block_manager.py:84 |  |  | 0.598 |
+| ns | 9575 |  | 188 | store_kvcache and its Triton kernel boundary | 5.5 | 2.8 | 0.602 |
+| ns | 9684 |  | 109 | Sampler.forward — the exponential-noise argmax trick | 5.6 | 2.8 | 0.605 |
+| walker |  | 9708 | 160 | python body nanovllm/layers/embed_head.py:11 |  |  | 0.605 |
+| walker |  | 9796 | 88 | python body nanovllm/engine/block_manager.py:28 |  |  | 0.614 |
+| ns | 9865 |  | 181 | ParallelLMHead.forward — last-token selection and logit gather | 5.7 | 2.8 | 0.609 |
+| ns | 9974 |  | 109 | README benchmark pointer and throughput table | 6.1 |  | 0.611 |

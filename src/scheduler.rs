@@ -596,16 +596,9 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// Ratio premium for `id` when it draws only on the dominant source
-    /// file. Surface batches only ([`WalkerKey::is_dominant_file_surface`]):
-    /// the spine file's roster is what the scheduler under-buys, while
-    /// its docs and bodies already rank locally once the train is open,
-    /// and boosting those front-loads one file's depth over the rest of
-    /// the repository's orientation.
+    /// file.
     fn dominant_file_boost(&self, id: BatchId) -> f64 {
-        if self.dominant_file_entered
-            && self.dominant_file_batches.contains(&id)
-            && self.entries[id.index()].key.is_dominant_file_surface()
-        {
+        if self.dominant_file_entered && self.dominant_file_batches.contains(&id) {
             DOMINANT_FILE_RATIO_BOOST
         } else {
             1.0

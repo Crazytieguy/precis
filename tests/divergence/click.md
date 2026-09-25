@@ -133,72 +133,73 @@ Score(3000)=0.668 I=0.849 C=0.526 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | walker |  | 6127 | 38 | python decl src/click/core.py:119 |  |  | 0.545 |
 | walker |  | 6207 | 80 | python decl src/click/core.py:1988 |  |  | 0.546 |
 | ns | 6209 |  | 97 | How tests are run: pytest configuration | 5.2 |  | 0.541 |
-| walker |  | 6235 | 28 | python decl src/click/core.py:57 |  |  | 0.541 |
-| walker |  | 6268 | 33 | python decl src/click/core.py:76 |  |  | 0.541 |
+| walker |  | 6222 | 15 | python doc src/click/core.py:100 |  |  | 0.541 |
+| walker |  | 6250 | 28 | python decl src/click/core.py:57 |  |  | 0.541 |
 | ns | 6270 |  | 61 | The pytest fixture every test uses | 5.3 |  | 0.537 |
-| walker |  | 6329 | 61 | python decl src/click/core.py:2004 |  |  | 0.537 |
+| walker |  | 6283 | 33 | python decl src/click/core.py:76 |  |  | 0.537 |
+| walker |  | 6344 | 61 | python decl src/click/core.py:2004 |  |  | 0.537 |
 | ns | 6452 |  | 182 | CliRunner.invoke: running a CLI in a test | 5.4 |  | 0.530 |
-| walker |  | 6465 | 136 | python decl src/click/core.py:146 |  |  | 0.543 |
-| walker |  | 6509 | 44 | python decl src/click/core.py:1516 |  |  | 0.543 |
+| walker |  | 6480 | 136 | python decl src/click/core.py:146 |  |  | 0.543 |
+| walker |  | 6524 | 44 | python decl src/click/core.py:1516 |  |  | 0.543 |
 | ns | 6581 |  | 129 | tox environments: the developer command surface | 5.5 |  | 0.537 |
-| walker |  | 6666 | 157 | python decl src/click/core.py:3399 |  |  | 0.540 |
-| walker |  | 6675 | 9 | python decl src/click/core.py:3430 |  |  | 0.540 |
-| walker |  | 6734 | 59 | python decl src/click/core.py:3409 |  |  | 0.542 |
-| walker |  | 6772 | 38 | python decl src/click/core.py:3450 |  |  | 0.542 |
+| walker |  | 6681 | 157 | python decl src/click/core.py:3399 |  |  | 0.540 |
+| walker |  | 6690 | 9 | python decl src/click/core.py:3430 |  |  | 0.540 |
+| walker |  | 6749 | 59 | python decl src/click/core.py:3409 |  |  | 0.542 |
+| walker |  | 6787 | 38 | python decl src/click/core.py:3450 |  |  | 0.542 |
 | ns | 6818 |  | 237 | Lint and type-check configuration | 5.6 |  | 0.531 |
 | ns | 6868 |  | 50 | CI and repository automation listing | 5.7 |  | 0.532 |
 | ns | 6927 |  | 59 | The exact command CI runs | 5.8 |  | 0.531 |
-| walker |  | 7058 | 286 | python decl src/click/core.py:2671 |  |  | 0.551 |
-| walker |  | 7094 | 36 | python decl src/click/core.py:3319 |  |  | 0.551 |
-| walker |  | 7134 | 40 | python decl src/click/core.py:2935 |  |  | 0.551 |
-| walker |  | 7172 | 38 | python decl src/click/core.py:2974 |  |  | 0.551 |
-| walker |  | 7199 | 27 | python body src/click/formatting.py:24 |  |  | 0.551 |
+| walker |  | 7073 | 286 | python decl src/click/core.py:2671 |  |  | 0.551 |
+| walker |  | 7109 | 36 | python decl src/click/core.py:3319 |  |  | 0.551 |
+| walker |  | 7149 | 40 | python decl src/click/core.py:2935 |  |  | 0.551 |
+| walker |  | 7187 | 38 | python decl src/click/core.py:2974 |  |  | 0.551 |
+| walker |  | 7214 | 27 | python body src/click/formatting.py:24 |  |  | 0.551 |
 | ns | 7226 |  | 299 | types.py class roster: the ParamType hierarchy | 6.1 |  | 0.544 |
-| walker |  | 7248 | 49 | python decl src/click/parser.py:51 |  |  | 0.544 |
-| walker |  | 7297 | 49 | python decl src/click/parser.py:127 |  |  | 0.544 |
-| walker |  | 7305 | 8 | python decl src/click/parser.py:165 |  |  | 0.544 |
+| walker |  | 7263 | 49 | python decl src/click/parser.py:51 |  |  | 0.544 |
 | ns | 7306 |  | 80 | The exported type singletons | 6.2 |  | 0.542 |
+| walker |  | 7312 | 49 | python decl src/click/parser.py:127 |  |  | 0.542 |
+| walker |  | 7320 | 8 | python decl src/click/parser.py:165 |  |  | 0.542 |
 | ns | 7442 |  | 136 | ParamType: the interface a custom type implements | 6.3 |  | 0.536 |
-| walker |  | 7482 | 177 | python names src/click/_termui_impl.py |  |  | 0.537 |
-| walker |  | 7492 | 10 | python decl src/click/_termui_impl.py:417 |  |  | 0.537 |
-| walker |  | 7539 | 47 | python decl src/click/_termui_impl.py:375 |  |  | 0.537 |
-| walker |  | 7575 | 36 | python decl src/click/_termui_impl.py:386 |  |  | 0.537 |
-| walker |  | 7701 | 126 | python decl src/click/_termui_impl.py:608 |  |  | 0.537 |
+| walker |  | 7497 | 177 | python names src/click/_termui_impl.py |  |  | 0.537 |
+| walker |  | 7507 | 10 | python decl src/click/_termui_impl.py:417 |  |  | 0.537 |
+| walker |  | 7554 | 47 | python decl src/click/_termui_impl.py:375 |  |  | 0.537 |
+| walker |  | 7590 | 36 | python decl src/click/_termui_impl.py:386 |  |  | 0.537 |
 | ns | 7707 |  | 265 | Exception hierarchy with exit codes | 6.4 |  | 0.538 |
-| walker |  | 7711 | 10 | python decl src/click/_termui_impl.py:668 |  |  | 0.538 |
-| walker |  | 7721 | 10 | python decl src/click/_termui_impl.py:673 |  |  | 0.538 |
-| walker |  | 7793 | 72 | python decl src/click/_termui_impl.py:609 |  |  | 0.538 |
-| walker |  | 7840 | 47 | python decl src/click/_termui_impl.py:597 |  |  | 0.538 |
+| walker |  | 7716 | 126 | python decl src/click/_termui_impl.py:608 |  |  | 0.538 |
+| walker |  | 7726 | 10 | python decl src/click/_termui_impl.py:668 |  |  | 0.538 |
+| walker |  | 7736 | 10 | python decl src/click/_termui_impl.py:673 |  |  | 0.538 |
+| walker |  | 7808 | 72 | python decl src/click/_termui_impl.py:609 |  |  | 0.538 |
+| walker |  | 7855 | 47 | python decl src/click/_termui_impl.py:597 |  |  | 0.538 |
 | ns | 7912 |  | 205 | decorators.py roster: every decorator and its overloads | 7.1 |  | 0.529 |
-| walker |  | 7929 | 89 | python decl src/click/exceptions.py:162 |  |  | 0.529 |
+| walker |  | 7944 | 89 | python decl src/click/exceptions.py:162 |  |  | 0.529 |
 | ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.523 |
 | ns | 8347 |  | 204 | style and secho: colours and text attributes | 8.1 |  | 0.517 |
-| walker |  | 8436 | 507 | python names src/click/termui.py |  |  | 0.518 |
-| walker |  | 8462 | 26 | python decl src/click/termui.py:301 |  |  | 0.518 |
-| walker |  | 8513 | 51 | python decl src/click/termui.py:320 |  |  | 0.518 |
-| walker |  | 8524 | 11 | python body src/click/termui.py:705 |  |  | 0.518 |
+| walker |  | 8451 | 507 | python names src/click/termui.py |  |  | 0.518 |
+| walker |  | 8477 | 26 | python decl src/click/termui.py:301 |  |  | 0.518 |
+| walker |  | 8528 | 51 | python decl src/click/termui.py:320 |  |  | 0.518 |
+| walker |  | 8539 | 11 | python body src/click/termui.py:705 |  |  | 0.518 |
 | ns | 8590 |  | 243 | prompt and confirm signatures | 8.2 |  | 0.510 |
-| walker |  | 8600 | 76 | python decl src/click/termui.py:242 |  |  | 0.514 |
-| walker |  | 8685 | 85 | python decl src/click/termui.py:761 |  |  | 0.514 |
-| walker |  | 8771 | 86 | python decl src/click/termui.py:717 |  |  | 0.514 |
+| walker |  | 8615 | 76 | python decl src/click/termui.py:242 |  |  | 0.514 |
+| walker |  | 8700 | 85 | python decl src/click/termui.py:761 |  |  | 0.514 |
+| walker |  | 8786 | 86 | python decl src/click/termui.py:717 |  |  | 0.514 |
 | ns | 8798 |  | 208 | termui.py roster: the remaining terminal functions | 8.3 |  | 0.525 |
-| walker |  | 8857 | 86 | python decl src/click/termui.py:751 |  |  | 0.525 |
-| walker |  | 8958 | 101 | python decl src/click/termui.py:771 |  |  | 0.525 |
+| walker |  | 8872 | 86 | python decl src/click/termui.py:751 |  |  | 0.525 |
 | ns | 8963 |  | 165 | utils.py roster: echo, streams, files and app directories | 8.4 |  | 0.520 |
-| walker |  | 9067 | 109 | python decl src/click/termui.py:782 |  |  | 0.520 |
+| walker |  | 8973 | 101 | python decl src/click/termui.py:771 |  |  | 0.520 |
+| walker |  | 9082 | 109 | python decl src/click/termui.py:782 |  |  | 0.520 |
 | ns | 9159 |  | 196 | shell_completion.py roster: per-shell backends | 9.1 |  | 0.513 |
-| walker |  | 9216 | 149 | python decl src/click/termui.py:129 |  |  | 0.530 |
+| walker |  | 9231 | 149 | python decl src/click/termui.py:129 |  |  | 0.530 |
 | ns | 9340 |  | 181 | formatting.py: HelpFormatter and text wrapping | 9.2 |  | 0.525 |
-| walker |  | 9529 | 313 | python names src/click/shell_completion.py |  |  | 0.541 |
+| walker |  | 9544 | 313 | python names src/click/shell_completion.py |  |  | 0.541 |
 | ns | 9555 |  | 215 | parser.py: the private option parser | 9.3 |  | 0.537 |
-| walker |  | 9558 | 29 | python decl src/click/shell_completion.py:449 |  |  | 0.537 |
-| walker |  | 9617 | 59 | python decl src/click/shell_completion.py:57 |  |  | 0.537 |
-| walker |  | 9680 | 63 | python decl src/click/shell_completion.py:19 |  |  | 0.537 |
-| walker |  | 9748 | 68 | python decl src/click/shell_completion.py:403 |  |  | 0.536 |
+| walker |  | 9573 | 29 | python decl src/click/shell_completion.py:449 |  |  | 0.537 |
+| walker |  | 9632 | 59 | python decl src/click/shell_completion.py:57 |  |  | 0.537 |
+| walker |  | 9695 | 63 | python decl src/click/shell_completion.py:19 |  |  | 0.537 |
 | ns | 9748 |  | 193 | globals.py and the UNSET sentinel | 9.4 |  | 0.536 |
-| walker |  | 9817 | 69 | python decl src/click/shell_completion.py:367 |  |  | 0.536 |
+| walker |  | 9763 | 68 | python decl src/click/shell_completion.py:403 |  |  | 0.536 |
+| walker |  | 9832 | 69 | python decl src/click/shell_completion.py:367 |  |  | 0.536 |
 | ns | 9861 |  | 113 | _termui_impl.py roster: ProgressBar, pagers, Editor | 9.5 |  | 0.541 |
-| walker |  | 9911 | 94 | python decl src/click/shell_completion.py:308 |  |  | 0.541 |
-| walker |  | 9917 | 6 | python decl src/click/shell_completion.py:314 |  |  | 0.541 |
-| walker |  | 9949 | 32 | python decl src/click/shell_completion.py:634 |  |  | 0.541 |
+| walker |  | 9926 | 94 | python decl src/click/shell_completion.py:308 |  |  | 0.541 |
+| walker |  | 9932 | 6 | python decl src/click/shell_completion.py:314 |  |  | 0.541 |
 | ns | 9959 |  | 98 | Changelog head: the unreleased 8.4.0 section | 10.1 |  | 0.537 |
+| walker |  | 9964 | 32 | python decl src/click/shell_completion.py:634 |  |  | 0.537 |

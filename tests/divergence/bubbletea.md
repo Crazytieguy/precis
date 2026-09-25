@@ -1,4 +1,4 @@
-Score(3000)=0.466 I=0.666 C=0.326 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.339/0.308/0.350/0.466/0.400/0.464/0.540
+Score(3000)=0.466 I=0.667 C=0.326 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.339/0.308/0.469/0.466/0.401/0.468/0.543
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -59,165 +59,170 @@ Score(3000)=0.466 I=0.666 C=0.326 ns_rows≤3K=18/50 grid(1000/1442/2080/3000/43
 | walker |  | 1689 | 300 | go names tea.go |  |  | 0.299 |
 | walker |  | 1700 | 11 | go decl tea.go:312 |  |  | 0.299 |
 | walker |  | 1707 | 7 | go doc tea.go:312 |  |  | 0.299 |
-| ns | 1810 |  | 145 | Every exported `*Program` method (complete roster) | 2.2 | 1.4 | 0.289 |
-| walker |  | 1822 | 115 | go decl tea.go:336 |  |  | 0.289 |
-| walker |  | 1831 | 9 | go body tea.go:279 |  |  | 0.290 |
-| walker |  | 1993 | 162 | go decl tea.go:53 |  |  | 0.365 |
-| ns | 2001 |  | 191 | Every `ProgramOption` constructor (complete roster) | 2.3 |  | 0.350 |
-| ns | 2130 |  | 129 | Build/test/lint entry points (`Taskfile.yaml`) | 2.4 |  | 0.368 |
-| walker |  | 2247 | 254 | go decl tea.go:286 |  |  | 0.371 |
-| walker |  | 2395 | 148 | go module doc tea.go |  |  | 0.561 |
-| walker |  | 2407 | 12 | go doc paste.go:10 |  |  | 0.561 |
-| walker |  | 2419 | 12 | go doc termcap.go:46 |  |  | 0.561 |
-| walker |  | 2431 | 12 | go doc xterm.go:9 |  |  | 0.561 |
+| walker |  | 1716 | 9 | go body tea.go:279 |  |  | 0.300 |
+| walker |  | 1731 | 15 | go doc tea.go:284 |  |  | 0.300 |
+| ns | 1810 |  | 145 | Every exported `*Program` method (complete roster) | 2.2 | 1.4 | 0.290 |
+| walker |  | 1846 | 115 | go decl tea.go:336 |  |  | 0.290 |
+| walker |  | 1994 | 148 | go module doc tea.go |  |  | 0.489 |
+| ns | 2001 |  | 191 | Every `ProgramOption` constructor (complete roster) | 2.3 |  | 0.469 |
+| ns | 2130 |  | 129 | Build/test/lint entry points (`Taskfile.yaml`) | 2.4 |  | 0.496 |
+| walker |  | 2156 | 162 | go decl tea.go:53 |  |  | 0.559 |
+| walker |  | 2410 | 254 | go decl tea.go:286 |  |  | 0.561 |
+| walker |  | 2422 | 12 | go doc paste.go:10 |  |  | 0.561 |
+| walker |  | 2434 | 12 | go doc termcap.go:46 |  |  | 0.561 |
 | ns | 2436 |  | 306 | Event-loop dispatch table: every internally-handled message type | 2.5 |  | 0.519 |
+| walker |  | 2446 | 12 | go doc xterm.go:9 |  |  | 0.519 |
+| walker |  | 2460 | 14 | go doc tea.go:309 |  |  | 0.519 |
 | ns | 2682 |  | 246 | Event-loop skeleton: translate → filter → dispatch → update → render | 2.6 | 2.5 | 0.489 |
-| walker |  | 2792 | 361 | go decl tea.go:241 |  |  | 0.489 |
-| walker |  | 2836 | 44 | go module identity in tutorials/go.mod |  |  | 0.489 |
-| walker |  | 2850 | 14 | go body environ.go:24 |  |  | 0.489 |
-| walker |  | 2864 | 14 | go body environ.go:32 |  |  | 0.489 |
+| walker |  | 2821 | 361 | go decl tea.go:241 |  |  | 0.489 |
+| walker |  | 2865 | 44 | go module identity in tutorials/go.mod |  |  | 0.489 |
+| walker |  | 2879 | 14 | go body environ.go:24 |  |  | 0.489 |
+| walker |  | 2893 | 14 | go body environ.go:32 |  |  | 0.489 |
 | ns | 2901 |  | 219 | Program control messages: suspend, resume, interrupt | 2.7 | 1.9 | 0.466 |
 | ns | 3100 |  | 199 | `Run()`: how input and the TTY are acquired | 2.8 |  | 0.450 |
-| walker |  | 3144 | 280 | go names tea.go #1 |  |  | 0.456 |
-| walker |  | 3171 | 27 | go decl tea.go:395 |  |  | 0.456 |
-| ns | 3288 |  | 188 | `Run()`: renderer choice, colour profile, first three messages | 2.9 | 2.8 | 0.443 |
-| walker |  | 3319 | 148 | go decl tea.go:357 |  |  | 0.444 |
-| walker |  | 3416 | 97 | go names cursor.go |  |  | 0.444 |
-| walker |  | 3427 | 11 | go decl cursor.go:15 |  |  | 0.445 |
-| walker |  | 3441 | 14 | go decl cursor.go:7 |  |  | 0.445 |
-| walker |  | 3447 | 6 | go doc cursor.go:15 |  |  | 0.445 |
-| walker |  | 3457 | 10 | go body cursor.go:26 |  |  | 0.445 |
+| walker |  | 3173 | 280 | go names tea.go #1 |  |  | 0.457 |
+| walker |  | 3200 | 27 | go decl tea.go:395 |  |  | 0.457 |
+| ns | 3288 |  | 188 | `Run()`: renderer choice, colour profile, first three messages | 2.9 | 2.8 | 0.444 |
+| walker |  | 3348 | 148 | go decl tea.go:357 |  |  | 0.444 |
+| walker |  | 3445 | 97 | go names cursor.go |  |  | 0.445 |
+| walker |  | 3456 | 11 | go decl cursor.go:15 |  |  | 0.445 |
+| walker |  | 3470 | 14 | go decl cursor.go:7 |  |  | 0.445 |
 | ns | 3474 |  | 186 | `Run()`: model init, event loop, graceful shutdown | 2.10 | 2.9 | 0.430 |
-| walker |  | 3556 | 99 | go names renderer.go |  |  | 0.430 |
-| walker |  | 3569 | 13 | go decl renderer.go:59 |  |  | 0.430 |
-| walker |  | 3580 | 11 | go doc cursor.go:12 |  |  | 0.430 |
-| walker |  | 3596 | 16 | go body logging.go:23 |  |  | 0.430 |
-| ns | 3693 |  | 219 | Debug hooks: `TEA_TRACE`, `TEA_DEBUG`, panic recovery | 2.11 |  | 0.421 |
-| walker |  | 3812 | 216 | go names cursed_renderer.go |  |  | 0.422 |
-| walker |  | 3884 | 72 | listing of 'testdata/TestViewModel' |  |  | 0.422 |
+| walker |  | 3476 | 6 | go doc cursor.go:15 |  |  | 0.430 |
+| walker |  | 3486 | 10 | go body cursor.go:26 |  |  | 0.430 |
+| walker |  | 3585 | 99 | go names renderer.go |  |  | 0.430 |
+| walker |  | 3598 | 13 | go decl renderer.go:59 |  |  | 0.430 |
+| walker |  | 3609 | 11 | go doc cursor.go:12 |  |  | 0.430 |
+| walker |  | 3625 | 16 | go body logging.go:23 |  |  | 0.430 |
+| ns | 3693 |  | 219 | Debug hooks: `TEA_TRACE`, `TEA_DEBUG`, panic recovery | 2.11 |  | 0.422 |
+| walker |  | 3841 | 216 | go names cursed_renderer.go |  |  | 0.422 |
+| walker |  | 3913 | 72 | listing of 'testdata/TestViewModel' |  |  | 0.422 |
 | ns | 3916 |  | 223 | Frame pacing: the render ticker and the FPS bounds | 2.12 |  | 0.408 |
-| walker |  | 4004 | 120 | go names keyboard.go |  |  | 0.409 |
-| walker |  | 4015 | 11 | go body keyboard.go:33 |  |  | 0.409 |
-| walker |  | 4033 | 18 | go body keyboard.go:39 |  |  | 0.409 |
-| walker |  | 4051 | 18 | go body keyboard.go:45 |  |  | 0.409 |
-| walker |  | 4069 | 18 | go body keyboard.go:57 |  |  | 0.409 |
-| walker |  | 4090 | 21 | go doc logging.go:35 |  |  | 0.409 |
-| ns | 4118 |  | 202 | Input event message types: keys, mouse, paste, focus (complete) | 3.1 |  | 0.400 |
-| walker |  | 4332 | 242 | go names tea.go #2 |  |  | 0.411 |
-| walker |  | 4371 | 39 | go decl renderer.go:10 |  |  | 0.416 |
-| ns | 4380 |  | 262 | Terminal report message types: colour, clipboard, size, capability (complete) | 3.2 |  | 0.421 |
-| walker |  | 4516 | 145 | go names commands.go |  |  | 0.424 |
-| walker |  | 4525 | 9 | go body commands.go:173 |  |  | 0.424 |
-| walker |  | 4540 | 15 | go body commands.go:15 |  |  | 0.424 |
-| ns | 4550 |  | 170 | Command constructors, part 1: lifecycle, batching, timing, output | 3.3 | 2.7 | 0.433 |
-| walker |  | 4555 | 15 | go body commands.go:25 |  |  | 0.433 |
-| walker |  | 4579 | 24 | go doc focus.go:9 |  |  | 0.433 |
-| ns | 4696 |  | 146 | Command constructors, part 2: terminal queries and clipboard | 3.4 | 3.3 | 0.429 |
-| walker |  | 4728 | 149 | go names clipboard.go |  |  | 0.441 |
-| walker |  | 4749 | 21 | go decl clipboard.go:5 |  |  | 0.445 |
-| walker |  | 4757 | 8 | go body clipboard.go:15 |  |  | 0.445 |
-| walker |  | 4765 | 8 | go body clipboard.go:20 |  |  | 0.445 |
-| walker |  | 4774 | 9 | go body clipboard.go:42 |  |  | 0.445 |
-| walker |  | 4784 | 10 | go body clipboard.go:68 |  |  | 0.445 |
-| walker |  | 4936 | 152 | go names mod.go |  |  | 0.446 |
-| walker |  | 4947 | 11 | go doc mod.go:6 |  |  | 0.447 |
-| walker |  | 5033 | 86 | go decl mod.go:9 |  |  | 0.447 |
+| walker |  | 4033 | 120 | go names keyboard.go |  |  | 0.410 |
+| walker |  | 4044 | 11 | go body keyboard.go:33 |  |  | 0.410 |
+| walker |  | 4062 | 18 | go body keyboard.go:39 |  |  | 0.410 |
+| walker |  | 4080 | 18 | go body keyboard.go:45 |  |  | 0.410 |
+| walker |  | 4098 | 18 | go body keyboard.go:57 |  |  | 0.410 |
+| ns | 4118 |  | 202 | Input event message types: keys, mouse, paste, focus (complete) | 3.1 |  | 0.401 |
+| walker |  | 4119 | 21 | go doc logging.go:35 |  |  | 0.401 |
+| walker |  | 4127 | 8 | go body tea.go:555 |  |  | 0.401 |
+| walker |  | 4369 | 242 | go names tea.go #2 |  |  | 0.412 |
+| ns | 4380 |  | 262 | Terminal report message types: colour, clipboard, size, capability (complete) | 3.2 |  | 0.417 |
+| walker |  | 4408 | 39 | go decl renderer.go:10 |  |  | 0.421 |
+| ns | 4550 |  | 170 | Command constructors, part 1: lifecycle, batching, timing, output | 3.3 | 2.7 | 0.417 |
+| walker |  | 4553 | 145 | go names commands.go |  |  | 0.434 |
+| walker |  | 4562 | 9 | go body commands.go:173 |  |  | 0.434 |
+| walker |  | 4577 | 15 | go body commands.go:15 |  |  | 0.434 |
+| walker |  | 4592 | 15 | go body commands.go:25 |  |  | 0.434 |
+| walker |  | 4616 | 24 | go doc focus.go:9 |  |  | 0.434 |
+| ns | 4696 |  | 146 | Command constructors, part 2: terminal queries and clipboard | 3.4 | 3.3 | 0.430 |
+| walker |  | 4765 | 149 | go names clipboard.go |  |  | 0.441 |
+| walker |  | 4786 | 21 | go decl clipboard.go:5 |  |  | 0.446 |
+| walker |  | 4794 | 8 | go body clipboard.go:15 |  |  | 0.446 |
+| walker |  | 4802 | 8 | go body clipboard.go:20 |  |  | 0.446 |
+| walker |  | 4811 | 9 | go body clipboard.go:42 |  |  | 0.446 |
+| walker |  | 4821 | 10 | go body clipboard.go:68 |  |  | 0.446 |
+| walker |  | 4973 | 152 | go names mod.go |  |  | 0.447 |
+| walker |  | 4984 | 11 | go doc mod.go:6 |  |  | 0.447 |
 | ns | 5037 |  | 341 | `input.go`: the ultraviolet-event → `tea.Msg` translation table | 3.5 |  | 0.429 |
-| walker |  | 5039 | 6 | go doc mod.go:9 |  |  | 0.429 |
-| walker |  | 5046 | 7 | go body signals_windows.go:8 |  |  | 0.429 |
-| walker |  | 5063 | 17 | go doc xterm.go:4 |  |  | 0.429 |
-| walker |  | 5089 | 26 | go doc focus.go:5 |  |  | 0.429 |
-| ns | 5113 |  | 76 | `Key` struct fields | 3.6 |  | 0.424 |
-| walker |  | 5249 | 160 | go names tty.go |  |  | 0.424 |
-| walker |  | 5268 | 19 | go doc tty.go:130 |  |  | 0.424 |
-| ns | 5293 |  | 180 | Key message methods: `String`, `Keystroke`, `Key` | 3.7 | 3.6 | 0.419 |
-| walker |  | 5294 | 26 | go body raw.go:33 |  |  | 0.419 |
-| walker |  | 5320 | 26 | go body termcap.go:30 |  |  | 0.419 |
-| walker |  | 5333 | 13 | go doc cursor.go:4 |  |  | 0.419 |
-| walker |  | 5563 | 230 | go names color.go |  |  | 0.442 |
-| walker |  | 5572 | 9 | go body color.go:13 |  |  | 0.442 |
-| walker |  | 5581 | 9 | go body color.go:21 |  |  | 0.442 |
-| walker |  | 5590 | 9 | go body color.go:29 |  |  | 0.442 |
-| walker |  | 5602 | 12 | go doc color.go:39 |  |  | 0.442 |
-| walker |  | 5614 | 12 | go doc color.go:70 |  |  | 0.425 |
+| walker |  | 5070 | 86 | go decl mod.go:9 |  |  | 0.429 |
+| walker |  | 5076 | 6 | go doc mod.go:9 |  |  | 0.430 |
+| walker |  | 5083 | 7 | go body signals_windows.go:8 |  |  | 0.430 |
+| walker |  | 5100 | 17 | go doc xterm.go:4 |  |  | 0.430 |
+| ns | 5113 |  | 76 | `Key` struct fields | 3.6 |  | 0.425 |
+| walker |  | 5126 | 26 | go doc focus.go:5 |  |  | 0.425 |
+| walker |  | 5286 | 160 | go names tty.go |  |  | 0.425 |
+| ns | 5293 |  | 180 | Key message methods: `String`, `Keystroke`, `Key` | 3.7 | 3.6 | 0.420 |
+| walker |  | 5305 | 19 | go doc tty.go:130 |  |  | 0.420 |
+| walker |  | 5331 | 26 | go body raw.go:33 |  |  | 0.420 |
+| walker |  | 5357 | 26 | go body termcap.go:30 |  |  | 0.420 |
+| walker |  | 5370 | 13 | go doc cursor.go:4 |  |  | 0.420 |
+| walker |  | 5600 | 230 | go names color.go |  |  | 0.443 |
+| walker |  | 5609 | 9 | go body color.go:13 |  |  | 0.443 |
 | ns | 5614 |  | 321 | `key.go` key-code catalog: group headings plus the C0/G0 names | 3.8 |  | 0.425 |
-| walker |  | 5626 | 12 | go doc color.go:84 |  |  | 0.425 |
-| ns | 5797 |  | 183 | Modifier keys: the complete `KeyMod` constant set | 3.9 |  | 0.438 |
-| walker |  | 5832 | 206 | go names options.go |  |  | 0.464 |
-| walker |  | 5856 | 24 | go doc options.go:84 |  |  | 0.464 |
-| walker |  | 5883 | 27 | go body options.go:30 |  |  | 0.464 |
-| walker |  | 5910 | 27 | go body options.go:58 |  |  | 0.464 |
-| walker |  | 5937 | 27 | go body options.go:133 |  |  | 0.464 |
-| walker |  | 5966 | 29 | go doc logging.go:29 |  |  | 0.464 |
-| walker |  | 5995 | 29 | go doc paste.go:20 |  |  | 0.464 |
-| walker |  | 6004 | 9 | go doc cursed_renderer.go:75 |  |  | 0.464 |
-| walker |  | 6013 | 9 | go doc cursed_renderer.go:143 |  |  | 0.464 |
-| walker |  | 6022 | 9 | go doc cursed_renderer.go:257 |  |  | 0.464 |
-| ns | 6023 |  | 226 | `Mouse` struct and the complete mouse-button constant set | 3.10 | 3.1 | 0.454 |
-| walker |  | 6031 | 9 | go doc cursed_renderer.go:579 |  |  | 0.454 |
-| walker |  | 6062 | 31 | go doc raw.go:5 |  |  | 0.454 |
-| walker |  | 6077 | 15 | go doc clipboard.go:20 |  |  | 0.454 |
-| walker |  | 6109 | 32 | go doc commands.go:25 |  |  | 0.454 |
-| ns | 6200 |  | 177 | `MouseMode` enum: none / cell-motion / all-motion | 3.11 | 1.7 | 0.464 |
-| walker |  | 6307 | 198 | go names exec.go |  |  | 0.470 |
-| walker |  | 6350 | 43 | go decl exec.go:60 |  |  | 0.470 |
-| walker |  | 6372 | 22 | go decl exec.go:10 |  |  | 0.470 |
-| ns | 6378 |  | 178 | Cursor value types: `Cursor`, `NewCursor`, `CursorShape` | 3.12 | 1.7 | 0.479 |
-| walker |  | 6386 | 14 | go body exec.go:50 |  |  | 0.479 |
-| walker |  | 6412 | 26 | go doc exec.go:60 |  |  | 0.479 |
-| ns | 6566 |  | 188 | Keyboard enhancements: request fields and response predicates | 3.13 | 3.2 | 0.486 |
-| walker |  | 6682 | 270 | go names nil_renderer.go |  |  | 0.486 |
-| walker |  | 6689 | 7 | go doc nil_renderer.go:15 |  |  | 0.486 |
-| walker |  | 6696 | 7 | go doc nil_renderer.go:24 |  |  | 0.486 |
-| walker |  | 6703 | 7 | go body nil_renderer.go:51 |  |  | 0.486 |
-| walker |  | 6711 | 8 | go doc nil_renderer.go:18 |  |  | 0.486 |
-| walker |  | 6732 | 21 | go body keyboard.go:51 |  |  | 0.486 |
-| ns | 6759 |  | 193 | `Batch` vs `Sequence` semantics and where they execute | 3.14 | 3.3 | 0.485 |
-| walker |  | 6797 | 65 | README headline in tutorials/basics/README.md |  |  | 0.485 |
-| walker |  | 6955 | 158 | go names tea.go #3 |  |  | 0.496 |
-| ns | 6959 |  | 200 | `Exec` / `ExecProcess` and the `ExecCommand` interface | 3.15 | 3.3 | 0.495 |
-| walker |  | 7027 | 72 | README headline in tutorials/commands/README.md |  |  | 0.495 |
-| walker |  | 7040 | 13 | go body color.go:39 |  |  | 0.495 |
-| ns | 7111 |  | 152 | Logging to a file: `LogToFile` / `LogToFileWith` | 3.16 |  | 0.496 |
-| walker |  | 7272 | 232 | go decl keyboard.go:9 |  |  | 0.498 |
-| walker |  | 7280 | 8 | go doc nil_renderer.go:21 |  |  | 0.498 |
-| ns | 7328 |  | 217 | The `renderer` interface: complete method set, and its two implementations | 4.1 |  | 0.491 |
-| ns | 7681 |  | 353 | `cursedRenderer`: every function in the 860-line renderer | 4.2 | 4.1 | 0.484 |
-| walker |  | 7682 | 402 | go names mouse.go |  |  | 0.504 |
-| walker |  | 7693 | 11 | go decl mouse.go:29 |  |  | 0.506 |
-| walker |  | 7726 | 33 | go decl mouse.go:71 |  |  | 0.511 |
-| walker |  | 7766 | 40 | go decl mouse.go:46 |  |  | 0.514 |
-| walker |  | 7774 | 8 | go body mouse.go:93 |  |  | 0.514 |
-| walker |  | 7782 | 8 | go body mouse.go:108 |  |  | 0.514 |
-| walker |  | 7790 | 8 | go body mouse.go:123 |  |  | 0.514 |
-| walker |  | 7798 | 8 | go body mouse.go:142 |  |  | 0.514 |
-| walker |  | 7808 | 10 | go body mouse.go:86 |  |  | 0.514 |
-| walker |  | 7836 | 28 | go body options.go:22 |  |  | 0.514 |
-| walker |  | 7867 | 31 | go doc paste.go:5 |  |  | 0.514 |
-| walker |  | 7883 | 16 | go doc cursor.go:7 |  |  | 0.514 |
-| walker |  | 7897 | 14 | go doc tty_unix.go:40 |  |  | 0.514 |
-| walker |  | 7945 | 48 | go doc environ.go:24 |  |  | 0.514 |
-| walker |  | 7991 | 46 | go body renderer.go:70 |  |  | 0.514 |
-| walker |  | 8038 | 47 | go body renderer.go:86 |  |  | 0.514 |
-| ns | 8039 |  | 358 | `View` fields → ANSI sequences, in `cursedRenderer.start` | 4.3 | 4.2 | 0.503 |
-| ns | 8420 |  | 381 | Platform matrix: build tags and per-OS terminal functions | 4.4 |  | 0.500 |
-| walker |  | 8554 | 516 | go decl tea.go:84 |  |  | 0.501 |
-| walker |  | 8586 | 32 | go body exec.go:22 |  |  | 0.501 |
-| ns | 8618 |  | 198 | `tty.go`: terminal acquisition, input loop, resize detection | 4.5 |  | 0.503 |
-| walker |  | 8836 | 250 | listing of 'examples' |  |  | 0.508 |
-| walker |  | 8846 | 10 | go doc cursed_renderer.go:249 |  |  | 0.508 |
-| walker |  | 8856 | 10 | go body mouse.go:101 |  |  | 0.508 |
-| walker |  | 8869 | 13 | go body color.go:70 |  |  | 0.508 |
-| ns | 8882 |  | 264 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.540 |
-| walker |  | 8885 | 16 | go doc tty.go:41 |  |  | 0.540 |
-| walker |  | 8901 | 16 | go doc tty.go:56 |  |  | 0.540 |
-| ns | 9062 |  | 180 | `UPGRADE_GUIDE_V2.md`: complete section map | 5.2 |  | 0.533 |
-| ns | 9347 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.529 |
-| walker |  | 9493 | 592 | go decl tea.go:426 |  |  | 0.529 |
-| ns | 9516 |  | 169 | README section map | 5.4 |  | 0.523 |
-| walker |  | 9531 | 38 | go doc commands.go:21 |  |  | 0.523 |
-| walker |  | 9854 | 323 | go names cursed_renderer.go #1 |  |  | 0.540 |
-| walker |  | 9872 | 18 | go doc input.go:8 |  |  | 0.541 |
-| ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.530 |
-| walker |  | 9900 | 28 | go body options.go:98 |  |  | 0.530 |
-| ns | 9917 |  | 41 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.533 |
+| walker |  | 5618 | 9 | go body color.go:21 |  |  | 0.425 |
+| walker |  | 5627 | 9 | go body color.go:29 |  |  | 0.425 |
+| walker |  | 5639 | 12 | go doc color.go:39 |  |  | 0.425 |
+| walker |  | 5651 | 12 | go doc color.go:70 |  |  | 0.425 |
+| walker |  | 5663 | 12 | go doc color.go:84 |  |  | 0.425 |
+| ns | 5797 |  | 183 | Modifier keys: the complete `KeyMod` constant set | 3.9 |  | 0.439 |
+| walker |  | 5869 | 206 | go names options.go |  |  | 0.465 |
+| walker |  | 5893 | 24 | go doc options.go:84 |  |  | 0.465 |
+| walker |  | 5920 | 27 | go body options.go:30 |  |  | 0.465 |
+| walker |  | 5947 | 27 | go body options.go:58 |  |  | 0.465 |
+| walker |  | 5974 | 27 | go body options.go:133 |  |  | 0.465 |
+| walker |  | 6003 | 29 | go doc logging.go:29 |  |  | 0.465 |
+| ns | 6023 |  | 226 | `Mouse` struct and the complete mouse-button constant set | 3.10 | 3.1 | 0.455 |
+| walker |  | 6032 | 29 | go doc paste.go:20 |  |  | 0.455 |
+| walker |  | 6040 | 8 | go body tea.go:564 |  |  | 0.455 |
+| walker |  | 6049 | 9 | go doc cursed_renderer.go:75 |  |  | 0.455 |
+| walker |  | 6058 | 9 | go doc cursed_renderer.go:143 |  |  | 0.455 |
+| walker |  | 6067 | 9 | go doc cursed_renderer.go:257 |  |  | 0.455 |
+| walker |  | 6076 | 9 | go doc cursed_renderer.go:579 |  |  | 0.455 |
+| walker |  | 6107 | 31 | go doc raw.go:5 |  |  | 0.455 |
+| walker |  | 6122 | 15 | go doc clipboard.go:20 |  |  | 0.455 |
+| walker |  | 6154 | 32 | go doc commands.go:25 |  |  | 0.456 |
+| ns | 6200 |  | 177 | `MouseMode` enum: none / cell-motion / all-motion | 3.11 | 1.7 | 0.468 |
+| walker |  | 6352 | 198 | go names exec.go |  |  | 0.474 |
+| ns | 6378 |  | 178 | Cursor value types: `Cursor`, `NewCursor`, `CursorShape` | 3.12 | 1.7 | 0.483 |
+| walker |  | 6395 | 43 | go decl exec.go:60 |  |  | 0.483 |
+| walker |  | 6417 | 22 | go decl exec.go:10 |  |  | 0.483 |
+| walker |  | 6431 | 14 | go body exec.go:50 |  |  | 0.483 |
+| walker |  | 6457 | 26 | go doc exec.go:60 |  |  | 0.483 |
+| ns | 6566 |  | 188 | Keyboard enhancements: request fields and response predicates | 3.13 | 3.2 | 0.490 |
+| walker |  | 6727 | 270 | go names nil_renderer.go |  |  | 0.490 |
+| walker |  | 6734 | 7 | go doc nil_renderer.go:15 |  |  | 0.490 |
+| walker |  | 6741 | 7 | go doc nil_renderer.go:24 |  |  | 0.490 |
+| walker |  | 6748 | 7 | go body nil_renderer.go:51 |  |  | 0.490 |
+| walker |  | 6756 | 8 | go doc nil_renderer.go:18 |  |  | 0.490 |
+| ns | 6759 |  | 193 | `Batch` vs `Sequence` semantics and where they execute | 3.14 | 3.3 | 0.488 |
+| walker |  | 6777 | 21 | go body keyboard.go:51 |  |  | 0.488 |
+| walker |  | 6842 | 65 | README headline in tutorials/basics/README.md |  |  | 0.488 |
+| ns | 6959 |  | 200 | `Exec` / `ExecProcess` and the `ExecCommand` interface | 3.15 | 3.3 | 0.487 |
+| walker |  | 7000 | 158 | go names tea.go #3 |  |  | 0.499 |
+| walker |  | 7072 | 72 | README headline in tutorials/commands/README.md |  |  | 0.499 |
+| walker |  | 7085 | 13 | go body color.go:39 |  |  | 0.499 |
+| ns | 7111 |  | 152 | Logging to a file: `LogToFile` / `LogToFileWith` | 3.16 |  | 0.499 |
+| walker |  | 7317 | 232 | go decl keyboard.go:9 |  |  | 0.502 |
+| walker |  | 7325 | 8 | go doc nil_renderer.go:21 |  |  | 0.502 |
+| ns | 7328 |  | 217 | The `renderer` interface: complete method set, and its two implementations | 4.1 |  | 0.495 |
+| walker |  | 7333 | 8 | go body tea.go:590 |  |  | 0.495 |
+| ns | 7681 |  | 353 | `cursedRenderer`: every function in the 860-line renderer | 4.2 | 4.1 | 0.488 |
+| walker |  | 7735 | 402 | go names mouse.go |  |  | 0.508 |
+| walker |  | 7746 | 11 | go decl mouse.go:29 |  |  | 0.510 |
+| walker |  | 7779 | 33 | go decl mouse.go:71 |  |  | 0.515 |
+| walker |  | 7819 | 40 | go decl mouse.go:46 |  |  | 0.518 |
+| walker |  | 7827 | 8 | go body mouse.go:93 |  |  | 0.518 |
+| walker |  | 7835 | 8 | go body mouse.go:108 |  |  | 0.518 |
+| walker |  | 7843 | 8 | go body mouse.go:123 |  |  | 0.518 |
+| walker |  | 7851 | 8 | go body mouse.go:142 |  |  | 0.518 |
+| walker |  | 7861 | 10 | go body mouse.go:86 |  |  | 0.518 |
+| walker |  | 7889 | 28 | go body options.go:22 |  |  | 0.518 |
+| walker |  | 7920 | 31 | go doc paste.go:5 |  |  | 0.518 |
+| walker |  | 7936 | 16 | go doc cursor.go:7 |  |  | 0.518 |
+| walker |  | 7950 | 14 | go doc tty_unix.go:40 |  |  | 0.518 |
+| walker |  | 7998 | 48 | go doc environ.go:24 |  |  | 0.518 |
+| ns | 8039 |  | 358 | `View` fields → ANSI sequences, in `cursedRenderer.start` | 4.3 | 4.2 | 0.507 |
+| walker |  | 8044 | 46 | go body renderer.go:70 |  |  | 0.507 |
+| walker |  | 8091 | 47 | go body renderer.go:86 |  |  | 0.507 |
+| ns | 8420 |  | 381 | Platform matrix: build tags and per-OS terminal functions | 4.4 |  | 0.503 |
+| walker |  | 8607 | 516 | go decl tea.go:84 |  |  | 0.505 |
+| ns | 8618 |  | 198 | `tty.go`: terminal acquisition, input loop, resize detection | 4.5 |  | 0.507 |
+| walker |  | 8639 | 32 | go body exec.go:22 |  |  | 0.507 |
+| ns | 8882 |  | 264 | `examples/` and `tutorials/` directory listings | 5.1 |  | 0.480 |
+| walker |  | 8889 | 250 | listing of 'examples' |  |  | 0.543 |
+| walker |  | 8899 | 10 | go doc cursed_renderer.go:249 |  |  | 0.543 |
+| walker |  | 8909 | 10 | go body mouse.go:101 |  |  | 0.543 |
+| walker |  | 8922 | 13 | go body color.go:70 |  |  | 0.543 |
+| walker |  | 8938 | 16 | go doc tty.go:41 |  |  | 0.543 |
+| walker |  | 8954 | 16 | go doc tty.go:56 |  |  | 0.543 |
+| ns | 9062 |  | 180 | `UPGRADE_GUIDE_V2.md`: complete section map | 5.2 |  | 0.536 |
+| ns | 9347 |  | 285 | The v1→v2 migration checklist | 5.3 | 5.2 | 0.532 |
+| ns | 9516 |  | 169 | README section map | 5.4 |  | 0.526 |
+| walker |  | 9546 | 592 | go decl tea.go:426 |  |  | 0.526 |
+| walker |  | 9584 | 38 | go doc commands.go:21 |  |  | 0.526 |
+| ns | 9876 |  | 360 | Test suite: every test function, and the golden-file fixtures | 5.5 |  | 0.516 |
+| walker |  | 9907 | 323 | go names cursed_renderer.go #1 |  |  | 0.533 |
+| ns | 9917 |  | 41 | CI workflow inventory and golden-test fixture directories | 5.6 |  | 0.536 |
+| walker |  | 9925 | 18 | go doc input.go:8 |  |  | 0.536 |
+| walker |  | 9953 | 28 | go body options.go:98 |  |  | 0.536 |

@@ -214,6 +214,10 @@ src/
     1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
     1129→
     1130→export function Portal(props: PortalProps) {
+    1131→  const context = useDrawerContext();
+    1132→  const { container = context.container, ...portalProps } = props;
+    1133→
+    1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
     …
     1137→export const Drawer = {
     1138→  Root,
@@ -269,25 +273,6 @@ test/
   public/
   src/
     app/
-      controlled/
-      default-open/
-      different-directions/
-      globals.css
-      initial-snap/
-      layout.tsx
-      nested-drawers/
-      non-dismissible/
-      open-another-drawer/
-      page.tsx
-      parent-container/
-      scrollable-page/
-      scrollable-with-inputs/
-      with-handle/
-      with-modal-false/
-      with-redirect/
-      with-scaled-background/
-      with-snap-points/
-      without-scaled-background/
   tailwind.config.ts
   tests/
   tsconfig.json

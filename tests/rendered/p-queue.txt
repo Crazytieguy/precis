@@ -173,12 +173,16 @@ source/
     586→		functions: ReadonlyArray<Task<TaskResultsType>>,
     587→		options?: Partial<EnqueueOptionsType>,
     588→	): Promise<TaskResultsType[]> {
+    589→		return Promise.all(functions.map(async function_ => this.add(function_, options)));
     …
     595→	start(): this {
     …
     609→	pause(): void {
     610→		this.#isPaused = true;
     …
+    613→	/**
+    614→	Clear the queue.
+    615→	*/
     616→	clear(): void {
     …
     652→	async onEmpty(): Promise<void> {
@@ -204,8 +208,10 @@ source/
     803→		return this.#pending;
     …
     809→	get isPaused(): boolean {
+    810→		return this.#isPaused;
     …
     888→	get isRateLimited(): boolean {
+    889→		return this.#rateLimitedInInterval;
     …
     918→	get isSaturated(): boolean {
     …

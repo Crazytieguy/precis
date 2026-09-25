@@ -1,4 +1,4 @@
-Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.600/0.479/0.491/0.456/0.559/0.632
+Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.597/0.479/0.491/0.456/0.559/0.632
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,15 +37,15 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 1049 | 35 | Readme.md section #2 |  |  | 0.684 |
 | ns | 1213 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.607 |
 | walker |  | 1286 | 237 | listing of 'examples' |  |  | 0.614 |
-| walker |  | 1299 | 13 | ts names typings/esm.d.mts |  |  | 0.614 |
 | ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.597 |
-| walker |  | 1316 | 17 | ts doc lib/error.js:4 |  |  | 0.597 |
-| walker |  | 1419 | 103 | ts decl lib/argument.js:3 |  |  | 0.600 |
-| walker |  | 1437 | 18 | ts doc lib/error.js:25 |  |  | 0.600 |
-| ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.565 |
-| walker |  | 1447 | 10 | ts body lib/argument.js:48 |  |  | 0.565 |
-| walker |  | 1489 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.565 |
-| walker |  | 1523 | 34 | ts doc lib/command.js:2752 |  |  | 0.565 |
+| walker |  | 1320 | 34 | ts doc lib/command.js:2752 |  |  | 0.597 |
+| walker |  | 1333 | 13 | ts names typings/esm.d.mts |  |  | 0.597 |
+| walker |  | 1350 | 17 | ts doc lib/error.js:4 |  |  | 0.597 |
+| ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.563 |
+| walker |  | 1453 | 103 | ts decl lib/argument.js:3 |  |  | 0.565 |
+| walker |  | 1471 | 18 | ts doc lib/error.js:25 |  |  | 0.565 |
+| walker |  | 1481 | 10 | ts body lib/argument.js:48 |  |  | 0.565 |
+| walker |  | 1523 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.565 |
 | ns | 1524 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.550 |
 | ns | 1657 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.525 |
 | walker |  | 1672 | 149 | package identity metadata in package.json |  |  | 0.530 |
@@ -112,66 +112,70 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 5535 | 12 | ts body lib/command.js:316 |  |  | 0.543 |
 | walker |  | 5550 | 15 | ts body lib/command.js:203 |  |  | 0.543 |
 | walker |  | 5574 | 24 | ts body lib/command.js:273 |  |  | 0.543 |
-| walker |  | 5593 | 19 | ts body lib/option.js:256 |  |  | 0.543 |
+| walker |  | 5607 | 33 | ts doc lib/command.js:121 |  |  | 0.543 |
 | ns | 5609 |  | 131 | typings: the OutputConfiguration shape | 3.12 |  | 0.537 |
-| walker |  | 5637 | 44 | ts doc lib/error.js:30 |  |  | 0.537 |
-| walker |  | 5661 | 24 | ts body lib/help.js:300 |  |  | 0.537 |
-| walker |  | 5681 | 20 | ts body lib/option.js:65 |  |  | 0.537 |
+| walker |  | 5626 | 19 | ts body lib/option.js:256 |  |  | 0.537 |
+| walker |  | 5670 | 44 | ts doc lib/error.js:30 |  |  | 0.537 |
+| walker |  | 5712 | 42 | ts doc lib/command.js:20 |  |  | 0.537 |
+| walker |  | 5736 | 24 | ts body lib/help.js:300 |  |  | 0.537 |
 | ns | 5748 |  | 139 | typings: ErrorOptions, ParseOptions, HelpContext, AddHelpTextContext bodies | 3.13 | 3.3 | 0.531 |
+| walker |  | 5756 | 20 | ts body lib/option.js:65 |  |  | 0.531 |
 | ns | 5869 |  | 121 | typings: OptionValueSource members, CommandOptions, ExecutableCommandOptions, ParseOptionsResult | 3.14 | 3.3 | 0.526 |
-| walker |  | 5970 | 289 | ts decl lib/help.js:12 #1 |  |  | 0.559 |
-| walker |  | 5978 | 8 | ts body lib/help.js:545 |  |  | 0.559 |
-| walker |  | 5986 | 8 | ts body lib/help.js:575 |  |  | 0.559 |
-| walker |  | 5994 | 8 | ts body lib/help.js:597 |  |  | 0.559 |
-| walker |  | 6002 | 8 | ts body lib/help.js:600 |  |  | 0.559 |
-| walker |  | 6257 | 255 | ts decl lib/command.js:13 #1 |  |  | 0.586 |
-| walker |  | 6269 | 12 | ts body lib/command.js:585 |  |  | 0.586 |
-| walker |  | 6324 | 55 | ts body lib/argument.js:143 |  |  | 0.586 |
-| walker |  | 6332 | 8 | ts body lib/help.js:603 |  |  | 0.586 |
-| walker |  | 6537 | 205 | Readme.md section #6 |  |  | 0.586 |
+| walker |  | 6045 | 289 | ts decl lib/help.js:12 #1 |  |  | 0.559 |
+| walker |  | 6053 | 8 | ts body lib/help.js:545 |  |  | 0.559 |
+| walker |  | 6061 | 8 | ts body lib/help.js:575 |  |  | 0.559 |
+| walker |  | 6069 | 8 | ts body lib/help.js:597 |  |  | 0.559 |
+| walker |  | 6077 | 8 | ts body lib/help.js:600 |  |  | 0.559 |
+| walker |  | 6332 | 255 | ts decl lib/command.js:13 #1 |  |  | 0.586 |
+| walker |  | 6344 | 12 | ts body lib/command.js:585 |  |  | 0.586 |
+| walker |  | 6365 | 21 | ts body lib/command.js:788 |  |  | 0.586 |
+| walker |  | 6420 | 55 | ts body lib/argument.js:143 |  |  | 0.586 |
+| walker |  | 6428 | 8 | ts body lib/help.js:603 |  |  | 0.586 |
+| walker |  | 6633 | 205 | Readme.md section #6 |  |  | 0.586 |
 | ns | 6682 |  | 813 | tests/ listing (complete, 113 entries) | 3.15 |  | 0.636 |
-| walker |  | 6743 | 206 | Readme.md section #7 |  |  | 0.636 |
 | ns | 6810 |  | 128 | tests/fixtures/, tests/fixtures-extensions/ and their subdirectories (complete) | 3.16 |  | 0.644 |
+| walker |  | 6839 | 206 | Readme.md section #7 |  |  | 0.644 |
 | ns | 6840 |  | 30 | .github/ and .github/workflows/ listings | 3.17 |  | 0.646 |
+| walker |  | 6862 | 23 | ts body lib/command.js:837 |  |  | 0.646 |
 | ns | 6900 |  | 60 | Help's five data properties | 4.1 |  | 0.643 |
-| walker |  | 6938 | 195 | Readme.md section #15 |  |  | 0.644 |
+| walker |  | 7057 | 195 | Readme.md section #15 |  |  | 0.644 |
 | ns | 7143 |  | 243 | parseOptions()'s documented contract | 4.2 |  | 0.636 |
-| walker |  | 7200 | 262 | Readme.md section #16 |  |  | 0.636 |
-| walker |  | 7220 | 20 | ts body lib/option.js:230 |  |  | 0.636 |
+| walker |  | 7319 | 262 | Readme.md section #16 |  |  | 0.636 |
+| walker |  | 7339 | 20 | ts body lib/option.js:230 |  |  | 0.636 |
 | ns | 7538 |  | 395 | Option's complete field set (constructor body) | 4.3 |  | 0.623 |
-| walker |  | 7608 | 388 | ts names typings/index.d.ts |  |  | 0.647 |
-| walker |  | 7623 | 15 | ts decl typings/index.d.ts:31 |  |  | 0.647 |
-| walker |  | 7638 | 15 | ts decl typings/index.d.ts:1100 |  |  | 0.647 |
-| walker |  | 7659 | 21 | ts decl typings/index.d.ts:342 |  |  | 0.647 |
-| walker |  | 7682 | 23 | ts decl typings/index.d.ts:12 |  |  | 0.647 |
-| walker |  | 7706 | 24 | ts decl typings/index.d.ts:1104 |  |  | 0.647 |
-| walker |  | 7735 | 29 | ts decl typings/index.d.ts:345 |  |  | 0.648 |
-| walker |  | 7771 | 36 | ts decl typings/index.d.ts:370 |  |  | 0.650 |
-| walker |  | 7809 | 38 | ts decl typings/index.d.ts:349 |  |  | 0.652 |
-| walker |  | 7862 | 53 | ts decl typings/index.d.ts:1094 |  |  | 0.657 |
-| ns | 7892 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.645 |
-| walker |  | 7924 | 62 | ts decl typings/index.d.ts:16 |  |  | 0.645 |
-| walker |  | 7987 | 63 | ts decl typings/index.d.ts:40 |  |  | 0.651 |
-| ns | 8051 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.646 |
-| walker |  | 8118 | 131 | ts decl typings/index.d.ts:354 |  |  | 0.655 |
-| walker |  | 8139 | 21 | ts body lib/command.js:788 |  |  | 0.655 |
-| walker |  | 8147 | 8 | ts body lib/help.js:606 |  |  | 0.655 |
+| walker |  | 7727 | 388 | ts names typings/index.d.ts |  |  | 0.647 |
+| walker |  | 7742 | 15 | ts decl typings/index.d.ts:31 |  |  | 0.647 |
+| walker |  | 7757 | 15 | ts decl typings/index.d.ts:1100 |  |  | 0.647 |
+| walker |  | 7778 | 21 | ts decl typings/index.d.ts:342 |  |  | 0.647 |
+| walker |  | 7801 | 23 | ts decl typings/index.d.ts:12 |  |  | 0.647 |
+| walker |  | 7825 | 24 | ts decl typings/index.d.ts:1104 |  |  | 0.647 |
+| walker |  | 7854 | 29 | ts decl typings/index.d.ts:345 |  |  | 0.648 |
+| walker |  | 7890 | 36 | ts decl typings/index.d.ts:370 |  |  | 0.650 |
+| ns | 7892 |  | 354 | Command instance state 1/4 — commands, options, args and option values | 4.4 |  | 0.638 |
+| walker |  | 7928 | 38 | ts decl typings/index.d.ts:349 |  |  | 0.640 |
+| walker |  | 7981 | 53 | ts decl typings/index.d.ts:1094 |  |  | 0.645 |
+| walker |  | 8043 | 62 | ts decl typings/index.d.ts:16 |  |  | 0.645 |
+| ns | 8051 |  | 159 | Command instance state 2/4 — behaviour flags, descriptions, hooks, saved state | 4.5 | 4.4 | 0.640 |
+| walker |  | 8106 | 63 | ts decl typings/index.d.ts:40 |  |  | 0.646 |
+| walker |  | 8237 | 131 | ts decl typings/index.d.ts:354 |  |  | 0.655 |
+| walker |  | 8245 | 8 | ts body lib/help.js:606 |  |  | 0.655 |
 | ns | 8270 |  | 219 | Command instance state 3/4 — the default _outputConfiguration | 4.6 | 4.5 | 0.649 |
-| walker |  | 8338 | 191 | Readme.md section #30 |  |  | 0.649 |
+| walker |  | 8436 | 191 | Readme.md section #30 |  |  | 0.649 |
 | ns | 8482 |  | 212 | Command instance state 4/4 — help option/command and group headings | 4.7 | 4.6 | 0.644 |
-| walker |  | 8571 | 233 | Readme.md section #31 |  |  | 0.644 |
+| walker |  | 8669 | 233 | Readme.md section #31 |  |  | 0.644 |
 | ns | 8764 |  | 282 | Argument's constructor — the `<req>` / `[opt]` / `name...` grammar | 4.8 |  | 0.632 |
-| walker |  | 8781 | 210 | docs/help-in-depth.md section #0 |  |  | 0.632 |
-| walker |  | 8842 | 61 | ts doc lib/argument.js:143 |  |  | 0.632 |
-| walker |  | 9060 | 218 | Readme.md section #23 |  |  | 0.633 |
-| ns | 9094 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.624 |
+| walker |  | 8879 | 210 | docs/help-in-depth.md section #0 |  |  | 0.632 |
+| walker |  | 8903 | 24 | ts body lib/command.js:826 |  |  | 0.632 |
+| walker |  | 8964 | 61 | ts doc lib/argument.js:143 |  |  | 0.632 |
+| ns | 9094 |  | 330 | splitOptionFlags — the flag-string grammar and its error messages | 4.9 | 2.13 | 0.623 |
+| walker |  | 9182 | 218 | Readme.md section #23 |  |  | 0.624 |
 | ns | 9210 |  | 116 | useColor() — the colour environment-variable contract | 4.10 |  | 0.620 |
-| walker |  | 9360 | 300 | Readme.md section #24 |  |  | 0.620 |
-| walker |  | 9417 | 57 | ts body lib/error.js:30 |  |  | 0.624 |
-| ns | 9471 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.628 |
-| walker |  | 9612 | 195 | ts decl typings/index.d.ts:48 |  |  | 0.628 |
+| ns | 9471 |  | 261 | package.json scripts — how to test, lint, format and type-check | 5.1 | 1.4 | 0.624 |
+| walker |  | 9482 | 300 | Readme.md section #24 |  |  | 0.624 |
+| walker |  | 9539 | 57 | ts body lib/error.js:30 |  |  | 0.628 |
 | ns | 9673 |  | 202 | CONTRIBUTING.md — PR rules and the surfaces a change must update | 5.2 |  | 0.622 |
-| walker |  | 9835 | 223 | docs/options-in-depth.md section #0 |  |  | 0.622 |
+| walker |  | 9734 | 195 | ts decl typings/index.d.ts:48 |  |  | 0.622 |
 | ns | 9848 |  | 175 | package.json exports map | 5.3 | 1.4 | 0.626 |
-| walker |  | 9856 | 21 | ts doc lib/option.js:165 |  |  | 0.626 |
 | ns | 9940 |  | 92 | jest.config.js | 5.4 |  | 0.623 |
+| walker |  | 9957 | 223 | docs/options-in-depth.md section #0 |  |  | 0.623 |
+| walker |  | 9978 | 21 | ts doc lib/option.js:165 |  |  | 0.623 |

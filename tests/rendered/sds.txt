@@ -139,9 +139,12 @@ sds.c
   160→sds sdsdup(const sds s) {
   161→    return sdsnewlen(s, sdslen(s));
   …
+  164→/* Free an sds string. No operation is performed if 's' is NULL. */
   165→void sdsfree(sds s) {
   …
   184→void sdsupdatelen(sds s) {
+  185→    size_t reallen = strlen(s);
+  186→    sdssetlen(s, reallen);
   …
   193→void sdsclear(sds s) {
   …
@@ -167,6 +170,7 @@ sds.c
   427→sds sdscpylen(sds s, const char *t, size_t len) {
   …
   440→sds sdscpy(sds s, const char *t) {
+  441→    return sdscpylen(s, t, strlen(t));
   …
   450→#define SDS_LLSTR_SIZE 21
   451→int sdsll2str(char *s, long long value) {

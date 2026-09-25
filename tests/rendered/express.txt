@@ -235,6 +235,13 @@ lib/
     …
     629→res.append = function append(field, val) {
     …
+    688→/**
+    689→ * Get value for header `field`.
+    690→ *
+    691→ * @param {String} field
+    692→ * @return {String}
+    693→ * @public
+    694→ */
     696→res.get = function(field){
     697→  return this.getHeader(field);
     …

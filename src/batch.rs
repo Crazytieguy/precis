@@ -70,9 +70,6 @@ macro_rules! impl_batchkey {
             fn is_depth_follow_up(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_depth_follow_up(k),)* }
             }
-            fn is_dominant_file_surface(&self) -> bool {
-                match self { $(BatchKey::$variant(k) => InnerKey::is_dominant_file_surface(k),)* }
-            }
         }
     };
 }
@@ -100,10 +97,6 @@ trait InnerKey {
     /// of an already-delivered surface. Drives the scheduler's
     /// breadth-pressure penalty; surfaces never qualify.
     fn is_depth_follow_up(&self) -> bool {
-        false
-    }
-    /// See [`WalkerKey::is_dominant_file_surface`].
-    fn is_dominant_file_surface(&self) -> bool {
         false
     }
 }
@@ -293,16 +286,6 @@ pub trait WalkerKey:
     fn is_depth_follow_up(&self) -> bool {
         false
     }
-
-    /// True for the batch classes that earn the scheduler's
-    /// dominant-source-file premium: declaration/name rosters and
-    /// catalogs, public-surface item heads, and the imports-level
-    /// top-of-file surface. Opt-in per walker, defaulting false —
-    /// bodies, tails, doc prose, and member/field groups are the depth
-    /// the premium is meant to *reach*, not the depth it front-loads.
-    fn is_dominant_file_surface(&self) -> bool {
-        false
-    }
 }
 
 impl InnerKey for FsKey {
@@ -389,12 +372,6 @@ impl InnerKey for JsonKey {
 }
 
 impl InnerKey for PlaintextKey {
-    /// The language-agnostic declaration surface is how an unparsed
-    /// source language (Ruby, Swift, C++, …) presents its roster.
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(self, PlaintextKey::DeclSurface { .. })
-    }
-
     fn describe(&self, root: &Path) -> String {
         match self {
             PlaintextKey::Whole { file } => {
@@ -441,10 +418,6 @@ impl InnerKey for GoModKey {
 impl InnerKey for CodeKey {
     fn is_depth_follow_up(&self) -> bool {
         matches!(self.rung, Rung::Doc | Rung::Body)
-    }
-
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(self.rung, Rung::Names | Rung::Decl)
     }
 
     /// `"<lang> <rung> <path>[:<line>][ #<sub>]"`, e.g. `go decl pkg/a.go:42`

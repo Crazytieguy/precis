@@ -208,11 +208,23 @@ source/
     300→Basic modifier names.
     301→*/
     302→export const modifiers: readonly Modifiers[];
-    …
+    304→/**
+    305→@deprecated Use `foregroundColorNames` instead.
+    306→
+    307→Basic foreground color names.
+    308→*/
     309→export const foregroundColors: readonly ForegroundColor[];
-    …
+    311→/**
+    312→@deprecated Use `backgroundColorNames` instead.
+    313→
+    314→Basic background color names.
+    315→*/
     316→export const backgroundColors: readonly BackgroundColor[];
-    …
+    318→/**
+    319→@deprecated Use `colorNames` instead.
+    320→
+    321→Basic color names. The combination of foreground and background color names.
+    322→*/
     323→export const colors: readonly Color[];
     324→
     325→export default chalk;

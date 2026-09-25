@@ -250,7 +250,9 @@ swarm/
     23→__CTX_VARS_NAME__ = "context_variables"
     26→class Swarm:
     27→    def __init__(self, client=None):
-    …
+    28→        if not client:
+    29→            client = OpenAI()
+    30→        self.client = client
     32→    def get_chat_completion(
     33→        self,
     34→        agent: Agent,

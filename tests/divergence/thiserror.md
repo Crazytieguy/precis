@@ -149,44 +149,44 @@ Score(3000)=0.508 I=0.832 C=0.310 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | ns | 7121 |  | 211 | impl/src/scan_expr.rs: the Input/Action alphabet of the expression scanner | 3.21 |  | 0.555 |
 | walker |  | 7263 | 213 | rust names impl/src/expand.rs |  |  | 0.571 |
 | walker |  | 7307 | 44 | rust decl impl/src/expand.rs:536 |  |  | 0.571 |
-| walker |  | 7368 | 61 | rust decl impl/src/prop.rs:25 |  |  | 0.575 |
+| walker |  | 7322 | 15 | rust body impl/src/expand.rs:565 |  |  | 0.571 |
+| walker |  | 7383 | 61 | rust decl impl/src/prop.rs:25 |  |  | 0.575 |
 | ns | 7477 |  | 356 | expand.rs: the gate line for every conditionally generated impl | 3.22 | 3.1 | 0.564 |
 | ns | 7637 |  | 160 | src/private.rs: the complete generated-code support surface | 4.1 |  | 0.557 |
-| walker |  | 7641 | 273 | rust module doc src/lib.rs #2 |  |  | 0.557 |
-| walker |  | 7655 | 14 | rust body build/probe.rs:27 |  |  | 0.557 |
-| walker |  | 7671 | 16 | rust names tests/test_lints.rs |  |  | 0.557 |
-| walker |  | 7686 | 15 | rust body impl/src/expand.rs:565 |  |  | 0.557 |
-| walker |  | 7733 | 47 | rust body impl/src/lib.rs:49 |  |  | 0.557 |
-| walker |  | 7827 | 94 | rust decl impl/src/prop.rs:6 |  |  | 0.564 |
-| ns | 7852 |  | 215 | src/aserror.rs: AsDynError and its five blanket/dyn impls | 4.2 |  | 0.557 |
-| walker |  | 7921 | 94 | rust decl impl/src/prop.rs:53 |  |  | 0.564 |
-| ns | 8094 |  | 242 | src/display.rs: AsDisplay and the std-only Path/PathBuf specializations | 4.3 |  | 0.555 |
-| walker |  | 8204 | 283 | rust names impl/src/scan_expr.rs #1 |  |  | 0.555 |
-| walker |  | 8225 | 21 | rust decl impl/src/scan_expr.rs:136 |  |  | 0.555 |
-| walker |  | 8257 | 32 | rust decl impl/src/scan_expr.rs:119 |  |  | 0.555 |
-| walker |  | 8289 | 32 | rust decl impl/src/scan_expr.rs:187 |  |  | 0.555 |
-| walker |  | 8323 | 34 | rust decl impl/src/scan_expr.rs:130 |  |  | 0.555 |
-| walker |  | 8369 | 46 | rust decl impl/src/scan_expr.rs:181 |  |  | 0.555 |
-| ns | 8376 |  | 282 | src/provide.rs (ThiserrorProvide) and src/var.rs (Var) end to end | 4.4 |  | 0.545 |
-| walker |  | 8416 | 47 | rust decl impl/src/scan_expr.rs:175 |  |  | 0.545 |
-| walker |  | 8464 | 48 | rust decl impl/src/scan_expr.rs:124 |  |  | 0.545 |
-| ns | 8489 |  | 113 | impl/src/lib.rs: the version-stamped `private` path token | 4.5 |  | 0.550 |
-| walker |  | 8530 | 66 | rust decl impl/src/scan_expr.rs:141 |  |  | 0.550 |
-| walker |  | 8622 | 92 | rust decl impl/src/scan_expr.rs:166 |  |  | 0.550 |
-| ns | 8738 |  | 249 | build.rs: the generated __private module and the cfg declarations | 4.6 |  | 0.544 |
-| walker |  | 8927 | 305 | README.md section #7 |  |  | 0.551 |
+| walker |  | 7656 | 273 | rust module doc src/lib.rs #2 |  |  | 0.557 |
+| walker |  | 7670 | 14 | rust body build/probe.rs:27 |  |  | 0.557 |
+| walker |  | 7767 | 97 | rust body impl/src/expand.rs:12 |  |  | 0.565 |
+| walker |  | 7783 | 16 | rust names tests/test_lints.rs |  |  | 0.565 |
+| walker |  | 7815 | 32 | rust body impl/src/expand.rs:569 |  |  | 0.565 |
+| ns | 7852 |  | 215 | src/aserror.rs: AsDynError and its five blanket/dyn impls | 4.2 |  | 0.558 |
+| walker |  | 7862 | 47 | rust body impl/src/lib.rs:49 |  |  | 0.559 |
+| walker |  | 7956 | 94 | rust decl impl/src/prop.rs:6 |  |  | 0.565 |
+| walker |  | 8050 | 94 | rust decl impl/src/prop.rs:53 |  |  | 0.572 |
+| ns | 8094 |  | 242 | src/display.rs: AsDisplay and the std-only Path/PathBuf specializations | 4.3 |  | 0.563 |
+| walker |  | 8333 | 283 | rust names impl/src/scan_expr.rs #1 |  |  | 0.563 |
+| walker |  | 8354 | 21 | rust decl impl/src/scan_expr.rs:136 |  |  | 0.563 |
+| ns | 8376 |  | 282 | src/provide.rs (ThiserrorProvide) and src/var.rs (Var) end to end | 4.4 |  | 0.553 |
+| walker |  | 8386 | 32 | rust decl impl/src/scan_expr.rs:119 |  |  | 0.553 |
+| walker |  | 8418 | 32 | rust decl impl/src/scan_expr.rs:187 |  |  | 0.553 |
+| walker |  | 8452 | 34 | rust decl impl/src/scan_expr.rs:130 |  |  | 0.553 |
+| ns | 8489 |  | 113 | impl/src/lib.rs: the version-stamped `private` path token | 4.5 |  | 0.558 |
+| walker |  | 8498 | 46 | rust decl impl/src/scan_expr.rs:181 |  |  | 0.558 |
+| walker |  | 8545 | 47 | rust decl impl/src/scan_expr.rs:175 |  |  | 0.558 |
+| walker |  | 8593 | 48 | rust decl impl/src/scan_expr.rs:124 |  |  | 0.558 |
+| walker |  | 8659 | 66 | rust decl impl/src/scan_expr.rs:141 |  |  | 0.558 |
+| ns | 8738 |  | 249 | build.rs: the generated __private module and the cfg declarations | 4.6 |  | 0.551 |
+| walker |  | 8751 | 92 | rust decl impl/src/scan_expr.rs:166 |  |  | 0.551 |
 | ns | 8946 |  | 208 | build.rs: rustc capability decisions, function roster, and the probe file | 4.7 |  | 0.546 |
-| walker |  | 9032 | 105 | rust decl impl/src/scan_expr.rs:95 |  |  | 0.546 |
 | ns | 9043 |  | 97 | Complete tests/, tests/no-std/ and .github/ listings | 5.1 |  | 0.557 |
-| ns | 9131 |  | 88 | tests/compiletest.rs: the trybuild UI harness in full | 5.2 |  | 0.554 |
-| ns | 9262 |  | 131 | tests/no-std/test.rs: the no_std smoke test's error types | 5.3 |  | 0.548 |
-| walker |  | 9265 | 233 | rust module doc src/lib.rs #3 |  |  | 0.548 |
-| walker |  | 9289 | 24 | rust names tests/test_backtrace.rs |  |  | 0.548 |
-| walker |  | 9308 | 19 | rust decl tests/test_backtrace.rs:6 |  |  | 0.548 |
-| walker |  | 9332 | 24 | rust names tests/test_display.rs |  |  | 0.548 |
-| ns | 9389 |  | 127 | Cargo.toml: std-feature rationale and dev-dependencies | 5.4 |  | 0.546 |
-| walker |  | 9474 | 142 | rust decl impl/src/scan_expr.rs:6 |  |  | 0.568 |
-| ns | 9515 |  | 126 | impl/Cargo.toml: the proc-macro crate's manifest | 5.5 |  | 0.572 |
-| ns | 9689 |  | 174 | CI job roster and the pinned toolchain components | 5.6 |  | 0.566 |
-| walker |  | 9939 | 465 | README.md section #4 |  |  | 0.602 |
-| walker |  | 9971 | 32 | rust body impl/src/generics.rs:19 |  |  | 0.602 |
+| walker |  | 9056 | 305 | README.md section #7 |  |  | 0.564 |
+| ns | 9131 |  | 88 | tests/compiletest.rs: the trybuild UI harness in full | 5.2 |  | 0.561 |
+| walker |  | 9161 | 105 | rust decl impl/src/scan_expr.rs:95 |  |  | 0.561 |
+| ns | 9262 |  | 131 | tests/no-std/test.rs: the no_std smoke test's error types | 5.3 |  | 0.555 |
+| ns | 9389 |  | 127 | Cargo.toml: std-feature rationale and dev-dependencies | 5.4 |  | 0.553 |
+| walker |  | 9394 | 233 | rust module doc src/lib.rs #3 |  |  | 0.553 |
+| walker |  | 9418 | 24 | rust names tests/test_backtrace.rs |  |  | 0.553 |
+| walker |  | 9437 | 19 | rust decl tests/test_backtrace.rs:6 |  |  | 0.553 |
+| walker |  | 9461 | 24 | rust names tests/test_display.rs |  |  | 0.553 |
+| ns | 9515 |  | 126 | impl/Cargo.toml: the proc-macro crate's manifest | 5.5 |  | 0.558 |
+| walker |  | 9603 | 142 | rust decl impl/src/scan_expr.rs:6 |  |  | 0.579 |
+| ns | 9689 |  | 174 | CI job roster and the pinned toolchain components | 5.6 |  | 0.572 |

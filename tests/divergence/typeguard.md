@@ -135,40 +135,41 @@ Score(3000)=0.688 I=0.900 C=0.526 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 6636 | 88 | python decl src/typeguard/_functions.py:28 |  |  | 0.504 |
 | walker |  | 6761 | 125 | python decl src/typeguard/_functions.py:50 |  |  | 0.525 |
 | walker |  | 6837 | 76 | python decl src/typeguard/_importhook.py:56 |  |  | 0.525 |
-| walker |  | 6846 | 9 | python body src/typeguard/_exceptions.py:22 |  |  | 0.526 |
+| walker |  | 6842 | 5 | python body src/typeguard/_transformer.py:306 |  |  | 0.525 |
+| walker |  | 6851 | 9 | python body src/typeguard/_exceptions.py:22 |  |  | 0.526 |
 | ns | 6981 |  | 508 | origin_type_checkers: the annotation-to-checker dispatch table | 4.2 |  | 0.506 |
 | ns | 7158 |  | 177 | check_type_internal(): signature and contract | 4.3 | 4.1 | 0.499 |
-| walker |  | 7262 | 416 | python decl src/typeguard/_transformer.py:488 |  |  | 0.500 |
-| walker |  | 7269 | 7 | python decl src/typeguard/_transformer.py:577 |  |  | 0.500 |
-| walker |  | 7298 | 29 | python decl src/typeguard/_transformer.py:913 |  |  | 0.500 |
-| walker |  | 7307 | 9 | python decl src/typeguard/_transformer.py:574 |  |  | 0.500 |
-| walker |  | 7339 | 32 | python decl src/typeguard/_transformer.py:650 |  |  | 0.500 |
-| walker |  | 7375 | 36 | python decl src/typeguard/_transformer.py:489 |  |  | 0.500 |
-| walker |  | 7418 | 43 | python decl src/typeguard/_transformer.py:516 |  |  | 0.500 |
-| walker |  | 7438 | 20 | python body src/typeguard/_decorators.py:32 |  |  | 0.500 |
-| walker |  | 7447 | 9 | python body src/typeguard/_exceptions.py:35 |  |  | 0.501 |
+| walker |  | 7267 | 416 | python decl src/typeguard/_transformer.py:488 |  |  | 0.500 |
+| walker |  | 7274 | 7 | python decl src/typeguard/_transformer.py:577 |  |  | 0.500 |
+| walker |  | 7303 | 29 | python decl src/typeguard/_transformer.py:913 |  |  | 0.500 |
+| walker |  | 7312 | 9 | python decl src/typeguard/_transformer.py:574 |  |  | 0.500 |
+| walker |  | 7344 | 32 | python decl src/typeguard/_transformer.py:650 |  |  | 0.500 |
+| walker |  | 7380 | 36 | python decl src/typeguard/_transformer.py:489 |  |  | 0.500 |
+| walker |  | 7423 | 43 | python decl src/typeguard/_transformer.py:516 |  |  | 0.500 |
+| walker |  | 7443 | 20 | python body src/typeguard/_decorators.py:32 |  |  | 0.500 |
+| walker |  | 7452 | 9 | python body src/typeguard/_exceptions.py:35 |  |  | 0.501 |
 | ns | 7525 |  | 367 | builtin_checker_lookup(): the structural fallback chain | 4.4 | 4.1 | 0.489 |
 | ns | 7601 |  | 76 | Roster of the runtime helpers instrumented code calls | 5.1 |  | 0.495 |
-| walker |  | 7668 | 221 | python decl src/typeguard/_transformer.py:117 |  |  | 0.495 |
-| walker |  | 7687 | 19 | python doc src/typeguard/_exceptions.py:19 |  |  | 0.497 |
+| walker |  | 7673 | 221 | python decl src/typeguard/_transformer.py:117 |  |  | 0.495 |
+| walker |  | 7692 | 19 | python doc src/typeguard/_exceptions.py:19 |  |  | 0.497 |
 | ns | 7732 |  | 131 | Roster of _decorators.py module-level functions | 5.2 |  | 0.498 |
-| walker |  | 7743 | 56 | python body src/typeguard/_utils.py:154 |  |  | 0.498 |
+| walker |  | 7748 | 56 | python body src/typeguard/_utils.py:154 |  |  | 0.498 |
 | ns | 7878 |  | 146 | Roster of _importhook.py symbols | 5.3 |  | 0.507 |
-| walker |  | 7950 | 207 | python decl src/typeguard/_transformer.py:117 #1 |  |  | 0.507 |
-| walker |  | 8023 | 73 | python doc src/typeguard/_utils.py:127 |  |  | 0.507 |
-| walker |  | 8043 | 20 | python doc src/typeguard/_exceptions.py:12 |  |  | 0.509 |
-| walker |  | 8084 | 41 | python body src/typeguard/_memo.py:37 |  |  | 0.518 |
+| walker |  | 7955 | 207 | python decl src/typeguard/_transformer.py:117 #1 |  |  | 0.507 |
+| walker |  | 8028 | 73 | python doc src/typeguard/_utils.py:127 |  |  | 0.507 |
+| walker |  | 8048 | 20 | python doc src/typeguard/_exceptions.py:12 |  |  | 0.509 |
+| walker |  | 8089 | 41 | python body src/typeguard/_memo.py:37 |  |  | 0.518 |
 | ns | 8165 |  | 287 | instrument(): the refusal reasons and the recompile pipeline | 5.4 | 5.2 | 0.509 |
 | ns | 8324 |  | 159 | TypeguardFinder.should_instrument(): the module-selection rule | 5.5 | 5.3 | 0.502 |
 | ns | 8556 |  | 232 | Roster of _utils.py helpers, including the version-gated evaluate_forwardref | 5.6 |  | 0.499 |
-| walker |  | 8578 | 494 | python decl src/typeguard/_checkers.py:99 |  |  | 0.499 |
-| walker |  | 8585 | 7 | python body src/typeguard/_importhook.py:167 |  |  | 0.499 |
+| walker |  | 8583 | 494 | python decl src/typeguard/_checkers.py:99 |  |  | 0.499 |
+| walker |  | 8590 | 7 | python body src/typeguard/_importhook.py:167 |  |  | 0.499 |
 | ns | 8731 |  | 175 | _transformer.py top-level structure: constants and the four visitor classes | 6.1 |  | 0.508 |
 | ns | 8963 |  | 232 | Complete method roster of TypeguardTransformer | 6.2 |  | 0.520 |
-| walker |  | 9101 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.559 |
-| walker |  | 9120 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.560 |
-| walker |  | 9222 | 102 | declaration surface of docs/api.rst |  |  | 0.560 |
-| walker |  | 9335 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.560 |
+| walker |  | 9106 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.559 |
+| walker |  | 9125 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.560 |
+| walker |  | 9227 | 102 | declaration surface of docs/api.rst |  |  | 0.560 |
+| walker |  | 9340 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.560 |
 | ns | 9434 |  | 471 | Docstrings of the TypeguardTransformer visit_ handlers | 6.3 | 6.2 | 0.546 |
 | ns | 9624 |  | 190 | pyproject.toml: package identity, runtime requirements, pytest entry point | 7.1 |  | 0.548 |
 | ns | 9825 |  | 201 | pyproject.toml: dependency groups and pytest configuration | 7.2 |  | 0.541 |

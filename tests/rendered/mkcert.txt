@@ -45,10 +45,21 @@ cert.go
   148→func (m *mkcert) printHosts(hosts []string) {
   …
   166→func (m *mkcert) generateKey(rootCA bool) (crypto.PrivateKey, error) {
+  167→	if m.ecdsa {
+  168→		return ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+  169→	}
+  170→	if rootCA {
+  171→		return rsa.GenerateKey(rand.Reader, 3072)
+  172→	}
+  173→	return rsa.GenerateKey(rand.Reader, 2048)
   …
   176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
   …
   202→func randomSerialNumber() *big.Int {
+  203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
+  204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
+  205→	fatalIfErr(err, "failed to generate serial number")
+  206→	return serialNumber
   …
   209→func (m *mkcert) makeCertFromCSR() {
   …

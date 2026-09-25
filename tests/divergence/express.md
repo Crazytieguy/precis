@@ -55,104 +55,97 @@ Score(3000)=0.624 I=0.848 C=0.459 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.659 |
 | walker |  | 2828 | 376 | listing of 'test' |  |  | 0.666 |
 | walker |  | 2840 | 12 | listing of 'test/support' |  |  | 0.666 |
-| walker |  | 2858 | 18 | ts doc lib/application.js:40 |  |  | 0.666 |
-| walker |  | 2897 | 39 | ts doc lib/utils.js:29 |  |  | 0.666 |
+| walker |  | 2897 | 57 | ts doc lib/response.js:696 |  |  | 0.666 |
+| walker |  | 2915 | 18 | ts doc lib/application.js:40 |  |  | 0.666 |
+| walker |  | 2954 | 39 | ts doc lib/utils.js:29 |  |  | 0.666 |
 | ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.624 |
 | ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.599 |
-| walker |  | 3357 | 460 | package runtime dependencies in package.json |  |  | 0.574 |
-| ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.574 |
-| walker |  | 3383 | 26 | ts body lib/request.js:140 |  |  | 0.574 |
-| walker |  | 3425 | 42 | ts doc lib/express.js:36 |  |  | 0.574 |
-| walker |  | 3470 | 45 | ts body lib/utils.js:61 |  |  | 0.574 |
-| walker |  | 3518 | 48 | ts doc lib/view.js:104 |  |  | 0.574 |
+| ns | 3357 |  | 217 | compileQueryParser — accepted values of `query parser` | 3.5 |  | 0.572 |
+| walker |  | 3414 | 460 | package runtime dependencies in package.json |  |  | 0.574 |
+| walker |  | 3440 | 26 | ts body lib/request.js:140 |  |  | 0.574 |
+| walker |  | 3482 | 42 | ts doc lib/express.js:36 |  |  | 0.574 |
+| walker |  | 3527 | 45 | ts body lib/utils.js:61 |  |  | 0.574 |
 | ns | 3556 |  | 199 | compileTrust — accepted values of `trust proxy` | 3.6 |  | 0.556 |
-| walker |  | 3576 | 58 | ts doc lib/view.js:133 |  |  | 0.556 |
-| walker |  | 3636 | 60 | ts doc lib/view.js:169 |  |  | 0.556 |
+| walker |  | 3575 | 48 | ts doc lib/view.js:104 |  |  | 0.556 |
+| walker |  | 3634 | 59 | ts body lib/response.js:321 |  |  | 0.556 |
 | ns | 3688 |  | 132 | req.ip / req.ips — the consumers of `trust proxy fn` | 3.7 | 2.4 | 0.544 |
-| walker |  | 3699 | 63 | ts doc lib/utils.js:162 |  |  | 0.544 |
-| walker |  | 3785 | 86 | listing of 'test/acceptance' |  |  | 0.545 |
-| walker |  | 3812 | 27 | ts doc lib/application.js:90 |  |  | 0.545 |
+| walker |  | 3692 | 58 | ts doc lib/view.js:133 |  |  | 0.544 |
+| walker |  | 3752 | 60 | ts doc lib/view.js:169 |  |  | 0.544 |
+| walker |  | 3815 | 63 | ts doc lib/utils.js:162 |  |  | 0.544 |
+| walker |  | 3901 | 86 | listing of 'test/acceptance' |  |  | 0.545 |
+| walker |  | 3961 | 60 | ts body lib/response.js:604 |  |  | 0.545 |
 | ns | 3981 |  | 293 | Settings read-sites scattered outside defaultConfiguration | 3.8 |  | 0.527 |
+| walker |  | 3988 | 27 | ts doc lib/application.js:90 |  |  | 0.527 |
 | ns | 4101 |  | 120 | app.init() — per-app state and the lazy base router | 3.9 |  | 0.516 |
-| walker |  | 4150 | 338 | package identity metadata in package.json |  |  | 0.532 |
-| walker |  | 4188 | 38 | ts body lib/request.js:214 |  |  | 0.532 |
-| walker |  | 4245 | 57 | ts doc lib/response.js:696 |  |  | 0.532 |
-| walker |  | 4309 | 64 | ts doc lib/utils.js:130 |  |  | 0.532 |
+| walker |  | 4326 | 338 | package identity metadata in package.json |  |  | 0.532 |
 | ns | 4332 |  | 231 | Sub-app mounting: the 'mount' event and setting inheritance | 3.10 |  | 0.519 |
-| walker |  | 4440 | 131 | Readme.md section #4 |  |  | 0.519 |
+| walker |  | 4364 | 38 | ts body lib/request.js:214 |  |  | 0.519 |
+| walker |  | 4428 | 64 | ts doc lib/utils.js:130 |  |  | 0.519 |
 | ns | 4478 |  | 146 | JSDoc for app.set() | 3.11 |  | 0.509 |
-| walker |  | 4564 | 124 | Readme.md section #6 |  |  | 0.509 |
-| walker |  | 4595 | 31 | ts body lib/application.js:399 |  |  | 0.509 |
-| walker |  | 4724 | 129 | ts doc lib/view.js:52 |  |  | 0.509 |
+| walker |  | 4559 | 131 | Readme.md section #4 |  |  | 0.509 |
+| walker |  | 4625 | 66 | ts doc lib/response.js:604 |  |  | 0.509 |
 | ns | 4735 |  | 257 | app.handle() — the per-request dispatch entry point | 4.1 | 2.8 | 0.492 |
-| walker |  | 4783 | 59 | ts body lib/response.js:321 |  |  | 0.492 |
-| walker |  | 4848 | 65 | ts doc lib/utils.js:61 |  |  | 0.492 |
-| walker |  | 4994 | 146 | Readme.md section #7 |  |  | 0.492 |
+| walker |  | 4749 | 124 | Readme.md section #6 |  |  | 0.492 |
+| walker |  | 4780 | 31 | ts body lib/application.js:399 |  |  | 0.492 |
+| walker |  | 4909 | 129 | ts doc lib/view.js:52 |  |  | 0.492 |
+| walker |  | 4974 | 65 | ts doc lib/utils.js:61 |  |  | 0.492 |
 | ns | 5006 |  | 271 | app.use() — argument/path disambiguation | 4.2 | 2.8 | 0.476 |
-| walker |  | 5236 | 242 | Readme.md section #2 |  |  | 0.476 |
+| walker |  | 5120 | 146 | Readme.md section #7 |  |  | 0.476 |
+| walker |  | 5192 | 72 | ts doc lib/response.js:709 |  |  | 0.476 |
 | ns | 5275 |  | 269 | app.use() — the sub-app mounting branch | 4.3 | 4.2 | 0.463 |
-| walker |  | 5296 | 60 | ts body lib/response.js:604 |  |  | 0.463 |
-| walker |  | 5359 | 63 | ts doc lib/request.js:140 |  |  | 0.463 |
-| walker |  | 5424 | 65 | ts doc lib/utils.js:75 |  |  | 0.463 |
+| walker |  | 5434 | 242 | Readme.md section #2 |  |  | 0.463 |
+| walker |  | 5497 | 63 | ts doc lib/request.js:140 |  |  | 0.463 |
+| walker |  | 5562 | 65 | ts doc lib/utils.js:75 |  |  | 0.463 |
 | ns | 5590 |  | 315 | res.send() body-type dispatch | 4.4 | 2.9 | 0.447 |
-| walker |  | 5641 | 217 | ts body lib/express.js:36 |  |  | 0.483 |
-| walker |  | 5707 | 66 | ts doc lib/response.js:604 |  |  | 0.483 |
-| ns | 5771 |  | 181 | View.prototype.lookup() — view file resolution | 4.5 | 2.5 | 0.473 |
-| walker |  | 5952 | 245 | Readme.md section #5 |  |  | 0.473 |
-| walker |  | 6165 | 213 | Readme.md section #8 |  |  | 0.473 |
+| walker |  | 5641 | 79 | ts body lib/response.js:709 |  |  | 0.447 |
+| ns | 5771 |  | 181 | View.prototype.lookup() — view file resolution | 4.5 | 2.5 | 0.439 |
+| walker |  | 5858 | 217 | ts body lib/express.js:36 |  |  | 0.473 |
+| walker |  | 6103 | 245 | Readme.md section #5 |  |  | 0.473 |
 | ns | 6222 |  | 451 | res.send() response finalization | 4.6 | 4.4 | 0.454 |
-| walker |  | 6334 | 169 | ts body lib/view.js:169 |  |  | 0.454 |
-| walker |  | 6403 | 69 | ts doc lib/utils.js:194 |  |  | 0.454 |
-| walker |  | 6460 | 57 | ts doc lib/application.js:451 |  |  | 0.454 |
-| walker |  | 6540 | 80 | ts doc lib/request.js:185 |  |  | 0.454 |
+| walker |  | 6316 | 213 | Readme.md section #8 |  |  | 0.454 |
+| walker |  | 6485 | 169 | ts body lib/view.js:169 |  |  | 0.454 |
+| walker |  | 6554 | 69 | ts doc lib/utils.js:194 |  |  | 0.454 |
 | ns | 6598 |  | 376 | test/ listing — every spec file | 5.1 |  | 0.514 |
-| walker |  | 6611 | 71 | ts doc lib/utils.js:249 |  |  | 0.514 |
-| walker |  | 6683 | 72 | ts doc lib/response.js:709 |  |  | 0.514 |
+| walker |  | 6611 | 57 | ts doc lib/application.js:451 |  |  | 0.514 |
 | ns | 6684 |  | 86 | test/acceptance/ listing | 5.2 |  | 0.526 |
-| walker |  | 6740 | 57 | ts doc lib/application.js:463 |  |  | 0.526 |
+| walker |  | 6697 | 86 | ts doc lib/response.js:875 |  |  | 0.526 |
+| walker |  | 6777 | 80 | ts doc lib/request.js:185 |  |  | 0.526 |
 | ns | 6785 |  | 101 | examples/ listing | 5.3 |  | 0.542 |
-| walker |  | 6916 | 176 | ts body lib/view.js:104 |  |  | 0.561 |
-| walker |  | 6988 | 72 | ts doc lib/utils.js:40 |  |  | 0.561 |
-| ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.555 |
+| walker |  | 6848 | 71 | ts doc lib/utils.js:249 |  |  | 0.542 |
+| walker |  | 6905 | 57 | ts doc lib/application.js:463 |  |  | 0.542 |
+| walker |  | 6997 | 92 | ts doc lib/response.js:232 |  |  | 0.542 |
+| ns | 7041 |  | 256 | examples/README.md — annotated example index (first half) | 5.4 |  | 0.536 |
+| walker |  | 7173 | 176 | ts body lib/view.js:104 |  |  | 0.555 |
+| walker |  | 7245 | 72 | ts doc lib/utils.js:40 |  |  | 0.555 |
 | ns | 7299 |  | 258 | examples/README.md — annotated example index (second half) | 5.5 | 5.4 | 0.550 |
-| walker |  | 7316 | 328 | Readme.md section #9 |  |  | 0.550 |
 | ns | 7390 |  | 91 | test/support/ and test/fixtures/ listings | 5.6 |  | 0.542 |
-| walker |  | 7499 | 183 | Readme.md section #10 |  |  | 0.542 |
 | ns | 7542 |  | 152 | Test harness: env preamble, assertion helpers, template engine | 5.7 |  | 0.538 |
-| walker |  | 7578 | 79 | ts body lib/response.js:709 |  |  | 0.538 |
+| walker |  | 7573 | 328 | Readme.md section #9 |  |  | 0.538 |
 | ns | 7673 |  | 131 | A complete example app: examples/hello-world/index.js | 5.8 |  | 0.532 |
+| walker |  | 7756 | 183 | Readme.md section #10 |  |  | 0.532 |
 | ns | 7834 |  | 161 | Test-writing idiom: head of test/app.js | 5.9 |  | 0.527 |
-| walker |  | 7918 | 340 | Readme.md section #13 |  |  | 0.527 |
+| walker |  | 7855 | 99 | ts doc lib/response.js:260 |  |  | 0.527 |
 | ns | 8120 |  | 286 | Runtime dependencies (all 28) | 6.1 |  | 0.541 |
-| walker |  | 8272 | 354 | Readme.md section #11 |  |  | 0.541 |
-| walker |  | 8343 | 71 | ts doc lib/application.js:59 |  |  | 0.541 |
+| walker |  | 8195 | 340 | Readme.md section #13 |  |  | 0.541 |
 | ns | 8346 |  | 226 | ci.yml — jobs and the OS/Node matrix | 6.2 |  | 0.535 |
-| walker |  | 8415 | 72 | ts doc lib/utils.js:51 |  |  | 0.535 |
-| walker |  | 8527 | 112 | ts body lib/request.js:269 |  |  | 0.535 |
 | ns | 8533 |  | 187 | .eslintrc.yml — the complete lint rule set | 6.3 |  | 0.530 |
-| walker |  | 8613 | 86 | ts doc lib/response.js:875 |  |  | 0.530 |
-| walker |  | 8686 | 73 | ts doc lib/utils.js:225 |  |  | 0.530 |
+| walker |  | 8549 | 354 | Readme.md section #11 |  |  | 0.530 |
+| walker |  | 8620 | 71 | ts doc lib/application.js:59 |  |  | 0.530 |
+| walker |  | 8692 | 72 | ts doc lib/utils.js:51 |  |  | 0.530 |
+| walker |  | 8804 | 112 | ts body lib/request.js:269 |  |  | 0.530 |
 | ns | 8807 |  | 274 | Dev dependencies (all 16) | 6.4 |  | 0.524 |
 | ns | 8888 |  | 81 | package.json remainder: author, published files | 6.5 |  | 0.529 |
-| walker |  | 8930 | 244 | ts body lib/view.js:133 |  |  | 0.529 |
-| walker |  | 9011 | 81 | ts doc lib/application.js:152 |  |  | 0.529 |
-| walker |  | 9103 | 92 | ts doc lib/response.js:232 |  |  | 0.529 |
+| walker |  | 8918 | 114 | ts doc lib/response.js:125 |  |  | 0.529 |
+| walker |  | 8991 | 73 | ts doc lib/utils.js:225 |  |  | 0.529 |
 | ns | 9121 |  | 233 | res.sendFile() option bag (JSDoc) | 7.1 |  | 0.524 |
-| walker |  | 9176 | 73 | ts body lib/utils.js:249 |  |  | 0.524 |
-| walker |  | 9264 | 88 | ts doc lib/application.js:256 |  |  | 0.524 |
-| walker |  | 9363 | 99 | ts doc lib/response.js:260 |  |  | 0.524 |
+| walker |  | 9235 | 244 | ts body lib/view.js:133 |  |  | 0.524 |
+| walker |  | 9316 | 81 | ts doc lib/application.js:152 |  |  | 0.524 |
 | ns | 9391 |  | 270 | res.cookie() option bag (JSDoc) | 7.2 |  | 0.517 |
-| walker |  | 9450 | 87 | ts body lib/application.js:494 |  |  | 0.520 |
-| walker |  | 9529 | 79 | listing of 'test/fixtures' |  |  | 0.537 |
-| walker |  | 9533 | 4 | listing of 'test/fixtures/pets' |  |  | 0.537 |
-| walker |  | 9538 | 5 | listing of 'test/fixtures/local_layout' |  |  | 0.537 |
-| walker |  | 9545 | 7 | listing of 'test/fixtures/blog' |  |  | 0.537 |
-| walker |  | 9552 | 7 | listing of 'test/fixtures/snow ☃' |  |  | 0.537 |
-| walker |  | 9557 | 5 | listing of 'test/fixtures/blog/post' |  |  | 0.537 |
-| walker |  | 9566 | 9 | listing of 'test/fixtures/users' |  |  | 0.537 |
-| walker |  | 9576 | 10 | listing of 'test/fixtures/default_layout' |  |  | 0.537 |
-| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.530 |
-| walker |  | 9680 | 104 | ts body lib/utils.js:225 |  |  | 0.530 |
-| walker |  | 9775 | 95 | ts doc lib/application.js:190 |  |  | 0.530 |
-| walker |  | 9889 | 114 | ts doc lib/response.js:125 |  |  | 0.530 |
-| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.527 |
+| walker |  | 9435 | 119 | ts body lib/response.js:629 |  |  | 0.517 |
+| walker |  | 9508 | 73 | ts body lib/utils.js:249 |  |  | 0.517 |
+| walker |  | 9596 | 88 | ts doc lib/application.js:256 |  |  | 0.517 |
+| ns | 9673 |  | 282 | res.status() and res.render() contracts (JSDoc) | 7.3 |  | 0.511 |
+| walker |  | 9728 | 132 | ts doc lib/response.js:321 |  |  | 0.511 |
+| walker |  | 9815 | 87 | ts body lib/application.js:494 |  |  | 0.514 |
+| walker |  | 9949 | 134 | ts doc lib/response.js:812 |  |  | 0.514 |
+| ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.510 |

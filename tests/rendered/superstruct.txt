@@ -275,6 +275,7 @@ src/
     types.ts
       …
       19→export function any(): Struct<any, null> {
+      20→  return define('any', () => true)
       …
       31→export function array<T extends Struct<any>>(Element: T): Struct<Infer<T>[], T>
       32→export function array(): Struct<unknown[], undefined>

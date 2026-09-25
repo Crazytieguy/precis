@@ -1,4 +1,4 @@
-Score(3000)=0.630 I=0.871 C=0.456 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.661/0.663/0.639/0.630/0.638/0.562/0.521
+Score(3000)=0.634 I=0.872 C=0.460 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.661/0.663/0.643/0.634/0.656/0.574/0.529
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,91 +38,96 @@ Score(3000)=0.630 I=0.871 C=0.456 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 1429 | 42 | ts decl source/index.ts:585 |  |  | 0.717 |
 | ns | 1436 |  | 161 | Readme Usage: the canonical concurrency-1 example | 2.2 |  | 0.663 |
 | walker |  | 1440 | 11 | ts body source/index.ts:382 |  |  | 0.663 |
-| walker |  | 1544 | 104 | package scripts in package.json |  |  | 0.664 |
-| ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.642 |
-| walker |  | 1658 | 114 | ts decl source/queue.ts:3 |  |  | 0.698 |
-| walker |  | 1670 | 12 | ts body source/index.ts:609 |  |  | 0.698 |
+| walker |  | 1452 | 12 | ts body source/index.ts:609 |  |  | 0.663 |
+| walker |  | 1556 | 104 | package scripts in package.json |  |  | 0.664 |
+| walker |  | 1577 | 21 | ts doc source/index.ts:616 |  |  | 0.665 |
+| ns | 1620 |  | 184 | Full signatures and doc comments for .add() and .addAll() | 2.3 | 2.1 | 0.643 |
+| walker |  | 1691 | 114 | ts decl source/queue.ts:3 |  |  | 0.699 |
 | ns | 1792 |  | 172 | Readme .add() semantics and its two warnings | 2.4 |  | 0.674 |
-| walker |  | 1800 | 130 | ts decl source/options.ts:97 |  |  | 0.675 |
-| ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.647 |
-| walker |  | 1934 | 134 | ts decl source/priority-queue.ts:11 |  |  | 0.648 |
-| ns | 2002 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.639 |
-| walker |  | 2093 | 159 | ts decl source/index.ts:16 #2 |  |  | 0.713 |
-| walker |  | 2145 | 52 | ts decl source/index.ts:952 |  |  | 0.713 |
-| walker |  | 2160 | 15 | ts body source/priority-queue.ts:115 |  |  | 0.713 |
-| walker |  | 2170 | 10 | ts body source/index.ts:802 |  |  | 0.713 |
-| walker |  | 2217 | 47 | readme.md section #27 |  |  | 0.713 |
-| ns | 2249 |  | 247 | Doc comments distinguishing .onEmpty(), .onIdle() and .onPendingZero() | 2.7 | 2.1 | 0.673 |
-| ns | 2456 |  | 207 | Doc comments for .onSizeLessThan(), .onRateLimit() and .onRateLimitCleared() | 2.8 | 2.1 | 0.643 |
-| ns | 2579 |  | 123 | .onError() contract, with its example elided | 2.9 | 2.1 | 0.629 |
-| walker |  | 2601 | 384 | readme.md section #0 |  |  | 0.667 |
-| walker |  | 2612 | 11 | ts body source/index.ts:785 |  |  | 0.667 |
-| walker |  | 2652 | 40 | ts names source/lower-bound.ts |  |  | 0.667 |
-| ns | 2743 |  | 164 | Doc comments for the .size, .sizeBy(), .pending and .isPaused introspection members | 2.10 | 2.1 | 0.639 |
-| walker |  | 2891 | 239 | package identity metadata in package.json |  |  | 0.659 |
-| ns | 2972 |  | 229 | .isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape | 2.11 | 2.1 | 0.630 |
-| walker |  | 3020 | 129 | readme.md section #1 |  |  | 0.630 |
-| walker |  | 3031 | 11 | ts body source/index.ts:809 |  |  | 0.630 |
-| ns | 3044 |  | 72 | .setPriority(id, priority) signature and contract | 2.12 | 2.1 | 0.622 |
-| ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.602 |
-| walker |  | 3428 | 397 | ts decl source/options.ts:111 |  |  | 0.606 |
-| walker |  | 3441 | 13 | ts body source/index.ts:888 |  |  | 0.606 |
-| walker |  | 3522 | 81 | json config tsconfig.json |  |  | 0.607 |
-| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.585 |
-| walker |  | 3725 | 203 | readme.md section #2 |  |  | 0.631 |
-| ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.621 |
-| walker |  | 4014 | 289 | ts decl source/options.ts:27 |  |  | 0.644 |
-| ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.648 |
-| walker |  | 4035 | 21 | ts doc source/index.ts:616 |  |  | 0.651 |
-| walker |  | 4056 | 21 | ts body source/index.ts:585 |  |  | 0.651 |
-| ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.638 |
-| walker |  | 4281 | 225 | readme.md section #13 |  |  | 0.638 |
-| ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.618 |
-| walker |  | 4607 | 326 | readme.md section #14 |  |  | 0.618 |
-| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.606 |
-| walker |  | 4774 | 167 | readme.md section #28 |  |  | 0.606 |
-| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.598 |
-| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.579 |
-| walker |  | 5273 | 499 | ts decl source/options.ts:27 #1 |  |  | 0.623 |
-| ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.603 |
-| walker |  | 5380 | 107 | ts body source/priority-queue.ts:102 |  |  | 0.603 |
-| walker |  | 5403 | 23 | ts doc source/index.ts:609 |  |  | 0.607 |
-| ns | 5589 |  | 257 | #tryToStartAnother: the admission decision and task dispatch | 4.3 | 4.1 | 0.584 |
-| walker |  | 5603 | 200 | readme.md section #21 |  |  | 0.585 |
-| ns | 5749 |  | 160 | add(): option normalization and automatic id assignment | 4.4 | 2.3 | 0.574 |
-| walker |  | 5822 | 219 | readme.md section #22 |  |  | 0.576 |
-| walker |  | 5846 | 24 | ts doc source/index.ts:809 |  |  | 0.579 |
-| ns | 5900 |  | 151 | add(): the run() prologue — pending accounting and runningTasks tracking | 4.5 | 4.4 | 0.568 |
-| walker |  | 6113 | 267 | readme.md section #20 |  |  | 0.570 |
-| walker |  | 6141 | 28 | ts doc source/index.ts:802 |  |  | 0.574 |
-| ns | 6158 |  | 258 | add(): invoking the task, wrapping it in p-timeout, and racing the abort signal | 4.6 | 4.5 | 0.559 |
-| walker |  | 6171 | 30 | ts doc source/index.ts:888 |  |  | 0.562 |
-| walker |  | 6315 | 144 | ts body source/priority-queue.ts:50 |  |  | 0.562 |
-| walker |  | 6346 | 31 | ts doc source/index.ts:785 |  |  | 0.568 |
-| ns | 6456 |  | 298 | add(): settlement, completed/error events, and the finally block that defers #next | 4.7 | 4.1 | 0.548 |
-| ns | 6741 |  | 285 | add(): enqueueing and the queued-task abort path | 4.8 | 4.4 | 0.532 |
-| walker |  | 6832 | 486 | readme.md section #3 |  |  | 0.532 |
-| ns | 6963 |  | 222 | #isIntervalPausedAt: the strict sliding-window branch | 4.9 | 4.1 | 0.522 |
-| walker |  | 7307 | 475 | readme.md section #4 |  |  | 0.522 |
-| ns | 7319 |  | 356 | #isIntervalPausedAt: the default fixed-window branch | 4.10 | 4.9 | 0.508 |
-| ns | 7536 |  | 217 | PriorityQueue: header, options type, class declaration and the head-cursor invariant | 5.1 |  | 0.502 |
-| ns | 7608 |  | 72 | Name-only roster of every PriorityQueue member (complete) | 5.2 |  | 0.507 |
-| walker |  | 7756 | 449 | readme.md section #5 |  |  | 0.521 |
-| ns | 7940 |  | 332 | PriorityQueue.enqueue: the priority insertion algorithm | 5.3 | 5.2 | 0.509 |
-| walker |  | 8255 | 499 | readme.md section #6 |  |  | 0.509 |
-| ns | 8283 |  | 343 | PriorityQueue.dequeue, size and #compact: the consumed-prefix machinery | 5.4 | 5.2 | 0.495 |
-| ns | 8363 |  | 80 | source/lower-bound.ts: provenance and signature | 5.5 |  | 0.494 |
-| ns | 8600 |  | 237 | Readme: the Custom QueueClass section with a complete worked implementation | 6.1 |  | 0.516 |
-| walker |  | 8662 | 407 | readme.md section #7 |  |  | 0.516 |
-| ns | 8751 |  | 151 | Readme FAQ: how to cancel or remove a queued task | 6.2 | 3.8 | 0.513 |
-| ns | 8934 |  | 183 | Readme FAQ: backpressure, and how concurrency relates to intervalCap | 6.3 | 3.8 | 0.521 |
-| ns | 9040 |  | 106 | package.json scripts: how to build, test and benchmark | 7.1 |  | 0.525 |
-| walker |  | 9157 | 495 | readme.md section #8 |  |  | 0.525 |
-| ns | 9216 |  | 176 | Test titles in test/debug.ts (all 11) | 7.2 |  | 0.520 |
-| ns | 9396 |  | 180 | Test titles in test/priority-queue.ts (all 8) | 7.3 |  | 0.517 |
-| walker |  | 9620 | 463 | readme.md section #9 |  |  | 0.517 |
-| ns | 9680 |  | 284 | Test titles in test/rate-limit.ts (all 9) and test/validation.ts (all 7) | 7.4 |  | 0.511 |
-| ns | 9691 |  | 11 | CI workflow and the remaining .github files | 7.5 |  | 0.513 |
-| ns | 9836 |  | 145 | The CI job definition itself | 7.6 | 7.5 | 0.506 |
-| ns | 9907 |  | 71 | bench.ts: the five benchmark cases | 7.7 |  | 0.505 |
-| ns | 9988 |  | 81 | tsconfig.json: the whole build configuration | 7.8 |  | 0.510 |
+| walker |  | 1821 | 130 | ts decl source/options.ts:97 |  |  | 0.675 |
+| ns | 1897 |  | 105 | Doc comments for the lifecycle controls: .start(), .pause(), .clear() | 2.5 | 2.1 | 0.652 |
+| walker |  | 1955 | 134 | ts decl source/priority-queue.ts:11 |  |  | 0.652 |
+| walker |  | 1976 | 21 | ts body source/index.ts:585 |  |  | 0.652 |
+| ns | 2002 |  | 105 | Readme warning: .clear() leaves queued .add() promises unsettled | 2.6 |  | 0.643 |
+| walker |  | 2135 | 159 | ts decl source/index.ts:16 #2 |  |  | 0.716 |
+| walker |  | 2187 | 52 | ts decl source/index.ts:952 |  |  | 0.717 |
+| walker |  | 2197 | 10 | ts body source/index.ts:802 |  |  | 0.717 |
+| walker |  | 2208 | 11 | ts body source/index.ts:785 |  |  | 0.717 |
+| walker |  | 2223 | 15 | ts body source/priority-queue.ts:115 |  |  | 0.717 |
+| walker |  | 2234 | 11 | ts body source/index.ts:809 |  |  | 0.717 |
+| ns | 2249 |  | 247 | Doc comments distinguishing .onEmpty(), .onIdle() and .onPendingZero() | 2.7 | 2.1 | 0.677 |
+| walker |  | 2281 | 47 | readme.md section #27 |  |  | 0.677 |
+| ns | 2456 |  | 207 | Doc comments for .onSizeLessThan(), .onRateLimit() and .onRateLimitCleared() | 2.8 | 2.1 | 0.647 |
+| ns | 2579 |  | 123 | .onError() contract, with its example elided | 2.9 | 2.1 | 0.633 |
+| walker |  | 2665 | 384 | readme.md section #0 |  |  | 0.670 |
+| walker |  | 2678 | 13 | ts body source/index.ts:888 |  |  | 0.670 |
+| walker |  | 2718 | 40 | ts names source/lower-bound.ts |  |  | 0.670 |
+| ns | 2743 |  | 164 | Doc comments for the .size, .sizeBy(), .pending and .isPaused introspection members | 2.10 | 2.1 | 0.642 |
+| walker |  | 2957 | 239 | package identity metadata in package.json |  |  | 0.663 |
+| ns | 2972 |  | 229 | .isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape | 2.11 | 2.1 | 0.634 |
+| ns | 3044 |  | 72 | .setPriority(id, priority) signature and contract | 2.12 | 2.1 | 0.625 |
+| walker |  | 3086 | 129 | readme.md section #1 |  |  | 0.625 |
+| ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.605 |
+| walker |  | 3483 | 397 | ts decl source/options.ts:111 |  |  | 0.609 |
+| walker |  | 3506 | 23 | ts doc source/index.ts:609 |  |  | 0.614 |
+| walker |  | 3530 | 24 | ts doc source/index.ts:809 |  |  | 0.619 |
+| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.597 |
+| walker |  | 3611 | 81 | json config tsconfig.json |  |  | 0.597 |
+| walker |  | 3814 | 203 | readme.md section #2 |  |  | 0.642 |
+| ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.633 |
+| ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.637 |
+| walker |  | 4103 | 289 | ts decl source/options.ts:27 |  |  | 0.659 |
+| walker |  | 4131 | 28 | ts doc source/index.ts:802 |  |  | 0.665 |
+| ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.651 |
+| walker |  | 4161 | 30 | ts doc source/index.ts:888 |  |  | 0.656 |
+| walker |  | 4386 | 225 | readme.md section #13 |  |  | 0.656 |
+| ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.636 |
+| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.624 |
+| walker |  | 4712 | 326 | readme.md section #14 |  |  | 0.624 |
+| walker |  | 4743 | 31 | ts doc source/index.ts:785 |  |  | 0.631 |
+| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.623 |
+| walker |  | 4910 | 167 | readme.md section #28 |  |  | 0.623 |
+| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.603 |
+| ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.583 |
+| walker |  | 5409 | 499 | ts decl source/options.ts:27 #1 |  |  | 0.625 |
+| walker |  | 5516 | 107 | ts body source/priority-queue.ts:102 |  |  | 0.625 |
+| ns | 5589 |  | 257 | #tryToStartAnother: the admission decision and task dispatch | 4.3 | 4.1 | 0.602 |
+| walker |  | 5716 | 200 | readme.md section #21 |  |  | 0.603 |
+| ns | 5749 |  | 160 | add(): option normalization and automatic id assignment | 4.4 | 2.3 | 0.592 |
+| ns | 5900 |  | 151 | add(): the run() prologue — pending accounting and runningTasks tracking | 4.5 | 4.4 | 0.580 |
+| walker |  | 5935 | 219 | readme.md section #22 |  |  | 0.582 |
+| walker |  | 5967 | 32 | ts doc source/index.ts:443 |  |  | 0.588 |
+| walker |  | 6000 | 33 | ts doc source/index.ts:718 |  |  | 0.590 |
+| walker |  | 6032 | 32 | ts body source/index.ts:794 |  |  | 0.590 |
+| ns | 6158 |  | 258 | add(): invoking the task, wrapping it in p-timeout, and racing the abort signal | 4.6 | 4.5 | 0.574 |
+| walker |  | 6299 | 267 | readme.md section #20 |  |  | 0.576 |
+| walker |  | 6334 | 35 | ts doc source/index.ts:707 |  |  | 0.580 |
+| ns | 6456 |  | 298 | add(): settlement, completed/error events, and the finally block that defers #next | 4.7 | 4.1 | 0.559 |
+| walker |  | 6478 | 144 | ts body source/priority-queue.ts:50 |  |  | 0.559 |
+| walker |  | 6515 | 37 | ts body source/index.ts:952 |  |  | 0.559 |
+| ns | 6741 |  | 285 | add(): enqueueing and the queued-task abort path | 4.8 | 4.4 | 0.543 |
+| ns | 6963 |  | 222 | #isIntervalPausedAt: the strict sliding-window branch | 4.9 | 4.1 | 0.533 |
+| walker |  | 7001 | 486 | readme.md section #3 |  |  | 0.533 |
+| ns | 7319 |  | 356 | #isIntervalPausedAt: the default fixed-window branch | 4.10 | 4.9 | 0.518 |
+| walker |  | 7476 | 475 | readme.md section #4 |  |  | 0.518 |
+| ns | 7536 |  | 217 | PriorityQueue: header, options type, class declaration and the head-cursor invariant | 5.1 |  | 0.512 |
+| ns | 7608 |  | 72 | Name-only roster of every PriorityQueue member (complete) | 5.2 |  | 0.517 |
+| walker |  | 7925 | 449 | readme.md section #5 |  |  | 0.531 |
+| ns | 7940 |  | 332 | PriorityQueue.enqueue: the priority insertion algorithm | 5.3 | 5.2 | 0.518 |
+| ns | 8283 |  | 343 | PriorityQueue.dequeue, size and #compact: the consumed-prefix machinery | 5.4 | 5.2 | 0.504 |
+| ns | 8363 |  | 80 | source/lower-bound.ts: provenance and signature | 5.5 |  | 0.503 |
+| walker |  | 8424 | 499 | readme.md section #6 |  |  | 0.503 |
+| ns | 8600 |  | 237 | Readme: the Custom QueueClass section with a complete worked implementation | 6.1 |  | 0.524 |
+| ns | 8751 |  | 151 | Readme FAQ: how to cancel or remove a queued task | 6.2 | 3.8 | 0.522 |
+| walker |  | 8831 | 407 | readme.md section #7 |  |  | 0.522 |
+| ns | 8934 |  | 183 | Readme FAQ: backpressure, and how concurrency relates to intervalCap | 6.3 | 3.8 | 0.529 |
+| ns | 9040 |  | 106 | package.json scripts: how to build, test and benchmark | 7.1 |  | 0.533 |
+| ns | 9216 |  | 176 | Test titles in test/debug.ts (all 11) | 7.2 |  | 0.529 |
+| walker |  | 9326 | 495 | readme.md section #8 |  |  | 0.529 |
+| ns | 9396 |  | 180 | Test titles in test/priority-queue.ts (all 8) | 7.3 |  | 0.525 |
+| ns | 9680 |  | 284 | Test titles in test/rate-limit.ts (all 9) and test/validation.ts (all 7) | 7.4 |  | 0.519 |
+| ns | 9691 |  | 11 | CI workflow and the remaining .github files | 7.5 |  | 0.521 |
+| walker |  | 9789 | 463 | readme.md section #9 |  |  | 0.521 |
+| ns | 9836 |  | 145 | The CI job definition itself | 7.6 | 7.5 | 0.514 |
+| ns | 9907 |  | 71 | bench.ts: the five benchmark cases | 7.7 |  | 0.513 |
+| ns | 9988 |  | 81 | tsconfig.json: the whole build configuration | 7.8 |  | 0.518 |
