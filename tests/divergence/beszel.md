@@ -139,150 +139,150 @@ Score(3000)=0.642 I=0.801 C=0.514 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | walker |  | 3384 | 6 | Fs::DirListing { dir: internal/site/src/locales/zh-CN } |  |  | 0.640 |
 | walker |  | 3390 | 6 | Fs::DirListing { dir: internal/site/src/locales/zh-HK } |  |  | 0.640 |
 | ns | 3497 |  | 338 | Wire protocol: the remaining request/response payload types | 2.8 |  | 0.605 |
-| walker |  | 3561 | 171 | Code::CodeKey { rung: Names, file: internal/site/src/main.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
-| walker |  | 3677 | 116 | Fs::DirListing { dir: internal/site/src/components } |  |  | 0.607 |
-| walker |  | 3689 | 12 | Fs::DirListing { dir: internal/site/src/components/alerts } |  |  | 0.607 |
-| walker |  | 3702 | 13 | Fs::DirListing { dir: internal/site/src/components/containers-table } |  |  | 0.607 |
-| walker |  | 3715 | 13 | Fs::DirListing { dir: internal/site/src/components/systems-table } |  |  | 0.607 |
-| walker |  | 3730 | 15 | Fs::DirListing { dir: internal/site/src/components/systemd-table } |  |  | 0.607 |
-| walker |  | 3753 | 23 | Fs::DirListing { dir: internal/site/src/components/charts } |  |  | 0.607 |
-| walker |  | 3778 | 25 | Fs::DirListing { dir: internal/site/src/components/login } |  |  | 0.608 |
-| walker |  | 3804 | 26 | Fs::DirListing { dir: internal/site/src/components/routes } |  |  | 0.608 |
-| walker |  | 3863 | 59 | Fs::DirListing { dir: internal/site/src/components/routes/system } |  |  | 0.609 |
-| ns | 3888 |  | 391 | Hub entry point: getBaseApp wiring PocketBase | 3.1 |  | 0.578 |
-| walker |  | 3918 | 55 | Fs::DirListing { dir: internal/site/src/components/routes/settings } |  |  | 0.579 |
-| walker |  | 4031 | 113 | Code::CodeKey { rung: Body, file: internal/site/src/main.tsx, decl: 9, sub: 0, line: 122 } |  |  | 0.579 |
-| walker |  | 4118 | 87 | Plaintext::DeclSurface { file: agent/lhm/beszel_lhm.cs } |  |  | 0.579 |
-| walker |  | 4123 | 5 | Fs::DirListing { dir: agent/tools } |  |  | 0.579 |
-| walker |  | 4172 | 49 | Fs::DirListing { dir: internal/site/src/components/routes/system/charts } |  |  | 0.579 |
-| ns | 4216 |  | 328 | Hub struct and NewHub: the hub's subcomponents | 3.2 |  | 0.554 |
-| walker |  | 4239 | 67 | Code::CodeKey { rung: Names, file: agent/smart_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
-| walker |  | 4246 | 7 | Code::CodeKey { rung: Decl, file: agent/smart_windows.go, decl: 2, sub: 0, line: 16 } |  |  | 0.554 |
-| walker |  | 4262 | 16 | Code::CodeKey { rung: Doc, file: agent/smart_windows.go, decl: 1, sub: 0, line: 14 } |  |  | 0.554 |
+| walker |  | 3584 | 194 | Code::CodeKey { rung: Names, file: internal/site/src/main.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.605 |
+| walker |  | 3647 | 63 | Code::CodeKey { rung: Decl, file: internal/site/src/main.tsx, decl: 10, sub: 0, line: 137 } |  |  | 0.605 |
+| walker |  | 3763 | 116 | Fs::DirListing { dir: internal/site/src/components } |  |  | 0.607 |
+| walker |  | 3775 | 12 | Fs::DirListing { dir: internal/site/src/components/alerts } |  |  | 0.607 |
+| walker |  | 3788 | 13 | Fs::DirListing { dir: internal/site/src/components/containers-table } |  |  | 0.607 |
+| walker |  | 3801 | 13 | Fs::DirListing { dir: internal/site/src/components/systems-table } |  |  | 0.607 |
+| walker |  | 3816 | 15 | Fs::DirListing { dir: internal/site/src/components/systemd-table } |  |  | 0.607 |
+| walker |  | 3839 | 23 | Fs::DirListing { dir: internal/site/src/components/charts } |  |  | 0.607 |
+| walker |  | 3864 | 25 | Fs::DirListing { dir: internal/site/src/components/login } |  |  | 0.608 |
+| ns | 3888 |  | 391 | Hub entry point: getBaseApp wiring PocketBase | 3.1 |  | 0.577 |
+| walker |  | 3890 | 26 | Fs::DirListing { dir: internal/site/src/components/routes } |  |  | 0.577 |
+| walker |  | 3949 | 59 | Fs::DirListing { dir: internal/site/src/components/routes/system } |  |  | 0.578 |
+| walker |  | 4004 | 55 | Fs::DirListing { dir: internal/site/src/components/routes/settings } |  |  | 0.579 |
+| walker |  | 4117 | 113 | Code::CodeKey { rung: Body, file: internal/site/src/main.tsx, decl: 9, sub: 0, line: 122 } |  |  | 0.579 |
+| walker |  | 4204 | 87 | Plaintext::DeclSurface { file: agent/lhm/beszel_lhm.cs } |  |  | 0.579 |
+| walker |  | 4209 | 5 | Fs::DirListing { dir: agent/tools } |  |  | 0.579 |
+| ns | 4216 |  | 328 | Hub struct and NewHub: the hub's subcomponents | 3.2 |  | 0.553 |
+| walker |  | 4258 | 49 | Fs::DirListing { dir: internal/site/src/components/routes/system/charts } |  |  | 0.554 |
+| walker |  | 4325 | 67 | Code::CodeKey { rung: Names, file: agent/smart_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
+| walker |  | 4332 | 7 | Code::CodeKey { rung: Decl, file: agent/smart_windows.go, decl: 2, sub: 0, line: 16 } |  |  | 0.554 |
+| walker |  | 4348 | 16 | Code::CodeKey { rung: Doc, file: agent/smart_windows.go, decl: 1, sub: 0, line: 14 } |  |  | 0.554 |
 | ns | 4580 |  | 364 | Agent struct: every subsystem in one commented field list | 3.3 |  | 0.530 |
-| walker |  | 4677 | 415 | GoMod::File { file: go.mod } |  |  | 0.532 |
-| walker |  | 4724 | 47 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_unsupported.go, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
-| walker |  | 4737 | 13 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml_unsupported.go, decl: 1, sub: 0, line: 7 } |  |  | 0.532 |
-| walker |  | 4753 | 16 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_unsupported.go, decl: 2, sub: 0, line: 11 } |  |  | 0.532 |
-| walker |  | 4803 | 50 | Code::CodeKey { rung: Names, file: agent/battery/battery.go, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
-| walker |  | 4812 | 9 | Code::CodeKey { rung: Decl, file: agent/battery/battery.go, decl: 1, sub: 0, line: 4 } |  |  | 0.532 |
+| walker |  | 4763 | 415 | GoMod::File { file: go.mod } |  |  | 0.532 |
+| walker |  | 4810 | 47 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_unsupported.go, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
+| walker |  | 4823 | 13 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml_unsupported.go, decl: 1, sub: 0, line: 7 } |  |  | 0.532 |
+| walker |  | 4839 | 16 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_unsupported.go, decl: 2, sub: 0, line: 11 } |  |  | 0.512 |
 | ns | 4839 |  | 259 | Agent main(): startup sequence | 3.4 |  | 0.512 |
+| walker |  | 4889 | 50 | Code::CodeKey { rung: Names, file: agent/battery/battery.go, decl: 0, sub: 0, line: 0 } |  |  | 0.512 |
+| walker |  | 4898 | 9 | Code::CodeKey { rung: Decl, file: agent/battery/battery.go, decl: 1, sub: 0, line: 4 } |  |  | 0.512 |
 | ns | 5088 |  | 249 | Agent handler registry: action -> handler wiring | 3.5 |  | 0.499 |
-| walker |  | 5195 | 383 | Code::CodeKey { rung: Names, file: agent/connection_manager.go, decl: 0, sub: 0, line: 0 } |  |  | 0.499 |
-| walker |  | 5204 | 9 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 5, sub: 0, line: 47 } |  |  | 0.499 |
-| walker |  | 5215 | 11 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 4, sub: 0, line: 40 } |  |  | 0.499 |
-| walker |  | 5221 | 6 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 4, sub: 0, line: 40 } |  |  | 0.499 |
-| walker |  | 5227 | 6 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 5, sub: 0, line: 47 } |  |  | 0.494 |
 | ns | 5227 |  | 139 | Hub cron jobs | 3.6 |  | 0.494 |
-| walker |  | 5240 | 13 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 3, sub: 0, line: 37 } |  |  | 0.494 |
-| walker |  | 5256 | 16 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 2, sub: 0, line: 34 } |  |  | 0.494 |
-| walker |  | 5272 | 16 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 7, sub: 0, line: 57 } |  |  | 0.494 |
-| walker |  | 5288 | 16 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 9, sub: 0, line: 75 } |  |  | 0.494 |
-| walker |  | 5305 | 17 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 12, sub: 0, line: 149 } |  |  | 0.494 |
-| walker |  | 5322 | 17 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 17, sub: 0, line: 256 } |  |  | 0.494 |
-| walker |  | 5340 | 18 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 8, sub: 0, line: 66 } |  |  | 0.494 |
-| walker |  | 5359 | 19 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 16, sub: 0, line: 249 } |  |  | 0.494 |
-| walker |  | 5379 | 20 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 15, sub: 0, line: 229 } |  |  | 0.494 |
-| walker |  | 5514 | 135 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 1, sub: 0, line: 22 } |  |  | 0.494 |
-| walker |  | 5548 | 34 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 10, sub: 0, line: 83 } |  |  | 0.494 |
-| walker |  | 5584 | 36 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 13, sub: 0, line: 168 } |  |  | 0.494 |
-| walker |  | 5620 | 36 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 14, sub: 0, line: 203 } |  |  | 0.494 |
-| walker |  | 5670 | 50 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 1, sub: 0, line: 22 } |  |  | 0.494 |
+| walker |  | 5281 | 383 | Code::CodeKey { rung: Names, file: agent/connection_manager.go, decl: 0, sub: 0, line: 0 } |  |  | 0.494 |
+| walker |  | 5290 | 9 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 5, sub: 0, line: 47 } |  |  | 0.494 |
+| walker |  | 5301 | 11 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 4, sub: 0, line: 40 } |  |  | 0.494 |
+| walker |  | 5307 | 6 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 4, sub: 0, line: 40 } |  |  | 0.494 |
+| walker |  | 5313 | 6 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 5, sub: 0, line: 47 } |  |  | 0.494 |
+| walker |  | 5326 | 13 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 3, sub: 0, line: 37 } |  |  | 0.494 |
+| walker |  | 5342 | 16 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 2, sub: 0, line: 34 } |  |  | 0.494 |
+| walker |  | 5358 | 16 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 7, sub: 0, line: 57 } |  |  | 0.494 |
+| walker |  | 5374 | 16 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 9, sub: 0, line: 75 } |  |  | 0.494 |
+| walker |  | 5391 | 17 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 12, sub: 0, line: 149 } |  |  | 0.494 |
+| walker |  | 5408 | 17 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 17, sub: 0, line: 256 } |  |  | 0.494 |
+| walker |  | 5426 | 18 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 8, sub: 0, line: 66 } |  |  | 0.494 |
+| walker |  | 5445 | 19 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 16, sub: 0, line: 249 } |  |  | 0.494 |
+| walker |  | 5465 | 20 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 15, sub: 0, line: 229 } |  |  | 0.494 |
+| walker |  | 5600 | 135 | Code::CodeKey { rung: Decl, file: agent/connection_manager.go, decl: 1, sub: 0, line: 22 } |  |  | 0.494 |
+| walker |  | 5634 | 34 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 10, sub: 0, line: 83 } |  |  | 0.494 |
+| walker |  | 5670 | 36 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 13, sub: 0, line: 168 } |  |  | 0.494 |
+| walker |  | 5706 | 36 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 14, sub: 0, line: 203 } |  |  | 0.494 |
 | ns | 5707 |  | 480 | system.Stats: the complete metric field roster | 4.1 |  | 0.470 |
-| walker |  | 5723 | 53 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 18, sub: 0, line: 264 } |  |  | 0.470 |
-| walker |  | 5920 | 197 | Code::CodeKey { rung: Names, file: agent/update.go, decl: 0, sub: 0, line: 0 } |  |  | 0.470 |
-| walker |  | 5932 | 12 | Code::CodeKey { rung: Decl, file: agent/update.go, decl: 1, sub: 0, line: 13 } |  |  | 0.470 |
-| walker |  | 5949 | 17 | Code::CodeKey { rung: Doc, file: agent/update.go, decl: 1, sub: 0, line: 13 } |  |  | 0.470 |
-| walker |  | 5988 | 39 | Code::CodeKey { rung: Doc, file: agent/update.go, decl: 11, sub: 0, line: 79 } |  |  | 0.470 |
+| walker |  | 5756 | 50 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 1, sub: 0, line: 22 } |  |  | 0.470 |
+| walker |  | 5809 | 53 | Code::CodeKey { rung: Doc, file: agent/connection_manager.go, decl: 18, sub: 0, line: 264 } |  |  | 0.470 |
 | ns | 5997 |  | 290 | system.Info: the dashboard-row struct | 4.2 |  | 0.456 |
-| walker |  | 6006 | 18 | Code::CodeKey { rung: Names, file: agent/sensors_default.go, decl: 0, sub: 0, line: 0 } |  |  | 0.456 |
-| walker |  | 6010 | 4 | Fs::DirListing { dir: agent/tools/fetchsmartctl } |  |  | 0.456 |
-| walker |  | 6160 | 150 | Fs::DirListing { dir: internal/site/src/components/ui } |  |  | 0.456 |
+| walker |  | 6006 | 197 | Code::CodeKey { rung: Names, file: agent/update.go, decl: 0, sub: 0, line: 0 } |  |  | 0.456 |
+| walker |  | 6018 | 12 | Code::CodeKey { rung: Decl, file: agent/update.go, decl: 1, sub: 0, line: 13 } |  |  | 0.456 |
+| walker |  | 6035 | 17 | Code::CodeKey { rung: Doc, file: agent/update.go, decl: 1, sub: 0, line: 13 } |  |  | 0.456 |
+| walker |  | 6074 | 39 | Code::CodeKey { rung: Doc, file: agent/update.go, decl: 11, sub: 0, line: 79 } |  |  | 0.456 |
+| walker |  | 6092 | 18 | Code::CodeKey { rung: Names, file: agent/sensors_default.go, decl: 0, sub: 0, line: 0 } |  |  | 0.456 |
+| walker |  | 6096 | 4 | Fs::DirListing { dir: agent/tools/fetchsmartctl } |  |  | 0.456 |
+| walker |  | 6246 | 150 | Fs::DirListing { dir: internal/site/src/components/ui } |  |  | 0.456 |
 | ns | 6278 |  | 281 | system.Details and CombinedData: the top-level agent payload | 4.3 |  | 0.445 |
-| walker |  | 6381 | 221 | Code::CodeKey { rung: Names, file: agent/gpu_darwin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.445 |
-| walker |  | 6401 | 20 | Code::CodeKey { rung: Decl, file: agent/gpu_darwin.go, decl: 7, sub: 0, line: 163 } |  |  | 0.445 |
-| walker |  | 6480 | 79 | Code::CodeKey { rung: Decl, file: agent/gpu_darwin.go, decl: 1, sub: 0, line: 20 } |  |  | 0.445 |
+| walker |  | 6467 | 221 | Code::CodeKey { rung: Names, file: agent/gpu_darwin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.445 |
+| walker |  | 6487 | 20 | Code::CodeKey { rung: Decl, file: agent/gpu_darwin.go, decl: 7, sub: 0, line: 163 } |  |  | 0.445 |
 | ns | 6528 |  | 250 | PocketBase collections: the complete database schema roster | 4.4 |  | 0.437 |
-| walker |  | 6583 | 103 | Code::CodeKey { rung: Decl, file: agent/gpu_darwin.go, decl: 8, sub: 0, line: 167 } |  |  | 0.437 |
-| walker |  | 6605 | 22 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 10, sub: 0, line: 223 } |  |  | 0.437 |
-| walker |  | 6629 | 24 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 4, sub: 0, line: 59 } |  |  | 0.437 |
-| walker |  | 6678 | 49 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 6, sub: 0, line: 138 } |  |  | 0.437 |
-| walker |  | 6731 | 53 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 3, sub: 0, line: 33 } |  |  | 0.437 |
+| walker |  | 6566 | 79 | Code::CodeKey { rung: Decl, file: agent/gpu_darwin.go, decl: 1, sub: 0, line: 20 } |  |  | 0.437 |
+| walker |  | 6669 | 103 | Code::CodeKey { rung: Decl, file: agent/gpu_darwin.go, decl: 8, sub: 0, line: 167 } |  |  | 0.437 |
+| walker |  | 6691 | 22 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 10, sub: 0, line: 223 } |  |  | 0.437 |
+| walker |  | 6715 | 24 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 4, sub: 0, line: 59 } |  |  | 0.437 |
 | ns | 6733 |  | 205 | config.yml: the hub's declarative systems file | 4.5 |  | 0.429 |
-| walker |  | 6817 | 86 | Code::CodeKey { rung: Body, file: agent/update.go, decl: 5, sub: 0, line: 30 } |  |  | 0.429 |
+| walker |  | 6764 | 49 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 6, sub: 0, line: 138 } |  |  | 0.429 |
+| walker |  | 6817 | 53 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin.go, decl: 3, sub: 0, line: 33 } |  |  | 0.429 |
 | ns | 6855 |  | 122 | system.Os and ConnectionType enums | 4.6 |  | 0.423 |
-| walker |  | 6891 | 74 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_linux.go, decl: 0, sub: 0, line: 0 } |  |  | 0.423 |
-| walker |  | 6906 | 15 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_linux.go, decl: 2, sub: 0, line: 18 } |  |  | 0.423 |
-| walker |  | 6931 | 25 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_linux.go, decl: 1, sub: 0, line: 14 } |  |  | 0.423 |
-| walker |  | 6957 | 26 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_linux.go, decl: 3, sub: 0, line: 22 } |  |  | 0.423 |
-| walker |  | 7031 | 74 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.423 |
-| walker |  | 7038 | 7 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 4, sub: 0, line: 23 } |  |  | 0.423 |
-| walker |  | 7048 | 10 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 2, sub: 0, line: 14 } |  |  | 0.423 |
-| walker |  | 7071 | 23 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 1, sub: 0, line: 9 } |  |  | 0.423 |
-| walker |  | 7099 | 28 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 3, sub: 0, line: 18 } |  |  | 0.423 |
-| walker |  | 7107 | 8 | Fs::DirListing { dir: .github/DISCUSSION_TEMPLATE } |  |  | 0.423 |
-| walker |  | 7115 | 8 | Fs::DirListing { dir: internal/tests } |  |  | 0.423 |
+| walker |  | 6903 | 86 | Code::CodeKey { rung: Body, file: agent/update.go, decl: 5, sub: 0, line: 30 } |  |  | 0.423 |
+| walker |  | 6977 | 74 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_linux.go, decl: 0, sub: 0, line: 0 } |  |  | 0.423 |
+| walker |  | 6992 | 15 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_linux.go, decl: 2, sub: 0, line: 18 } |  |  | 0.423 |
+| walker |  | 7017 | 25 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_linux.go, decl: 1, sub: 0, line: 14 } |  |  | 0.423 |
+| walker |  | 7043 | 26 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_linux.go, decl: 3, sub: 0, line: 22 } |  |  | 0.423 |
+| walker |  | 7117 | 74 | Code::CodeKey { rung: Names, file: agent/gpu_nvml_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.423 |
+| walker |  | 7124 | 7 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 4, sub: 0, line: 23 } |  |  | 0.423 |
+| walker |  | 7134 | 10 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 2, sub: 0, line: 14 } |  |  | 0.423 |
+| walker |  | 7157 | 23 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 1, sub: 0, line: 9 } |  |  | 0.423 |
+| walker |  | 7185 | 28 | Code::CodeKey { rung: Body, file: agent/gpu_nvml_windows.go, decl: 3, sub: 0, line: 18 } |  |  | 0.423 |
+| walker |  | 7193 | 8 | Fs::DirListing { dir: .github/DISCUSSION_TEMPLATE } |  |  | 0.423 |
+| walker |  | 7201 | 8 | Fs::DirListing { dir: internal/tests } |  |  | 0.423 |
 | ns | 7235 |  | 380 | Entity type rosters: container, systemd, smart | 4.7 |  | 0.409 |
 | ns | 7318 |  | 83 | Protocol compatibility floors in beszel.go | 4.8 | 1.4 | 0.412 |
-| walker |  | 7489 | 374 | Code::CodeKey { rung: Names, file: agent/handlers.go, decl: 0, sub: 0, line: 0 } |  |  | 0.413 |
-| walker |  | 7510 | 21 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 4, sub: 0, line: 38 } |  |  | 0.413 |
-| walker |  | 7532 | 22 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 3, sub: 0, line: 33 } |  |  | 0.413 |
-| walker |  | 7568 | 36 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 2, sub: 0, line: 27 } |  |  | 0.413 |
-| walker |  | 7580 | 12 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 11, sub: 0, line: 105 } |  |  | 0.413 |
-| walker |  | 7593 | 13 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 9, sub: 0, line: 91 } |  |  | 0.413 |
-| ns | 7594 |  | 276 | Agent environment variables: hub connection, auth, listener, data dir | 5.1 |  | 0.409 |
-| walker |  | 7607 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 4, sub: 0, line: 38 } |  |  | 0.410 |
-| walker |  | 7621 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 7, sub: 0, line: 64 } |  |  | 0.410 |
-| walker |  | 7635 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 13, sub: 0, line: 115 } |  |  | 0.410 |
-| walker |  | 7649 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 15, sub: 0, line: 140 } |  |  | 0.410 |
-| walker |  | 7663 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 17, sub: 0, line: 165 } |  |  | 0.410 |
-| walker |  | 7678 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 5, sub: 0, line: 43 } |  |  | 0.411 |
-| walker |  | 7693 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 6, sub: 0, line: 59 } |  |  | 0.411 |
-| walker |  | 7708 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 8, sub: 0, line: 82 } |  |  | 0.411 |
-| walker |  | 7807 | 99 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 1, sub: 0, line: 16 } |  |  | 0.411 |
-| walker |  | 7820 | 13 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 1, sub: 0, line: 16 } |  |  | 0.411 |
-| walker |  | 7835 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 2, sub: 0, line: 27 } |  |  | 0.411 |
-| walker |  | 7853 | 18 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 3, sub: 0, line: 33 } |  |  | 0.411 |
-| walker |  | 7871 | 18 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 19, sub: 0, line: 184 } |  |  | 0.411 |
-| walker |  | 8007 | 136 | Code::CodeKey { rung: Names, file: agent/fingerprint.go, decl: 0, sub: 0, line: 0 } |  |  | 0.411 |
-| walker |  | 8022 | 15 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 6, sub: 0, line: 75 } |  |  | 0.411 |
-| walker |  | 8038 | 16 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 5, sub: 0, line: 62 } |  |  | 0.411 |
-| walker |  | 8059 | 21 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 2, sub: 0, line: 18 } |  |  | 0.411 |
-| walker |  | 8086 | 27 | Code::CodeKey { rung: Body, file: agent/fingerprint.go, decl: 6, sub: 0, line: 75 } |  |  | 0.411 |
-| walker |  | 8121 | 35 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 7, sub: 0, line: 81 } |  |  | 0.411 |
+| walker |  | 7575 | 374 | Code::CodeKey { rung: Names, file: agent/handlers.go, decl: 0, sub: 0, line: 0 } |  |  | 0.413 |
+| ns | 7594 |  | 276 | Agent environment variables: hub connection, auth, listener, data dir | 5.1 |  | 0.408 |
+| walker |  | 7596 | 21 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 4, sub: 0, line: 38 } |  |  | 0.409 |
+| walker |  | 7618 | 22 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 3, sub: 0, line: 33 } |  |  | 0.409 |
+| walker |  | 7654 | 36 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 2, sub: 0, line: 27 } |  |  | 0.409 |
+| walker |  | 7666 | 12 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 11, sub: 0, line: 105 } |  |  | 0.409 |
+| walker |  | 7679 | 13 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 9, sub: 0, line: 91 } |  |  | 0.409 |
+| walker |  | 7693 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 4, sub: 0, line: 38 } |  |  | 0.410 |
+| walker |  | 7707 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 7, sub: 0, line: 64 } |  |  | 0.410 |
+| walker |  | 7721 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 13, sub: 0, line: 115 } |  |  | 0.410 |
+| walker |  | 7735 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 15, sub: 0, line: 140 } |  |  | 0.410 |
+| walker |  | 7749 | 14 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 17, sub: 0, line: 165 } |  |  | 0.410 |
+| walker |  | 7764 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 5, sub: 0, line: 43 } |  |  | 0.411 |
+| walker |  | 7779 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 6, sub: 0, line: 59 } |  |  | 0.411 |
+| walker |  | 7794 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 8, sub: 0, line: 82 } |  |  | 0.411 |
+| walker |  | 7893 | 99 | Code::CodeKey { rung: Decl, file: agent/handlers.go, decl: 1, sub: 0, line: 16 } |  |  | 0.411 |
+| walker |  | 7906 | 13 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 1, sub: 0, line: 16 } |  |  | 0.411 |
+| walker |  | 7921 | 15 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 2, sub: 0, line: 27 } |  |  | 0.411 |
+| walker |  | 7939 | 18 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 3, sub: 0, line: 33 } |  |  | 0.411 |
+| walker |  | 7957 | 18 | Code::CodeKey { rung: Doc, file: agent/handlers.go, decl: 19, sub: 0, line: 184 } |  |  | 0.411 |
+| walker |  | 8093 | 136 | Code::CodeKey { rung: Names, file: agent/fingerprint.go, decl: 0, sub: 0, line: 0 } |  |  | 0.411 |
+| walker |  | 8108 | 15 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 6, sub: 0, line: 75 } |  |  | 0.411 |
+| walker |  | 8124 | 16 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 5, sub: 0, line: 62 } |  |  | 0.411 |
+| walker |  | 8145 | 21 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 2, sub: 0, line: 18 } |  |  | 0.411 |
 | ns | 8149 |  | 555 | Agent environment variables: collector tuning (completes the agent env surface) | 5.2 |  | 0.403 |
-| walker |  | 8176 | 55 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 4, sub: 0, line: 43 } |  |  | 0.403 |
-| walker |  | 8215 | 39 | Code::CodeKey { rung: Names, file: agent/gpu_darwin_unsupported.go, decl: 0, sub: 0, line: 0 } |  |  | 0.403 |
-| walker |  | 8244 | 29 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin_unsupported.go, decl: 2, sub: 0, line: 9 } |  |  | 0.403 |
-| walker |  | 8276 | 32 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin_unsupported.go, decl: 1, sub: 0, line: 6 } |  |  | 0.403 |
+| walker |  | 8172 | 27 | Code::CodeKey { rung: Body, file: agent/fingerprint.go, decl: 6, sub: 0, line: 75 } |  |  | 0.403 |
+| walker |  | 8207 | 35 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 7, sub: 0, line: 81 } |  |  | 0.403 |
+| walker |  | 8262 | 55 | Code::CodeKey { rung: Doc, file: agent/fingerprint.go, decl: 4, sub: 0, line: 43 } |  |  | 0.403 |
+| walker |  | 8301 | 39 | Code::CodeKey { rung: Names, file: agent/gpu_darwin_unsupported.go, decl: 0, sub: 0, line: 0 } |  |  | 0.403 |
+| walker |  | 8330 | 29 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin_unsupported.go, decl: 2, sub: 0, line: 9 } |  |  | 0.403 |
+| walker |  | 8362 | 32 | Code::CodeKey { rung: Doc, file: agent/gpu_darwin_unsupported.go, decl: 1, sub: 0, line: 6 } |  |  | 0.403 |
 | ns | 8434 |  | 285 | Hub environment variables (complete) | 5.3 |  | 0.399 |
-| walker |  | 8712 | 436 | Code::CodeKey { rung: Names, file: agent/gpu_nvml.go, decl: 0, sub: 0, line: 0 } |  |  | 0.399 |
-| walker |  | 8721 | 9 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 1, sub: 0, line: 17 } |  |  | 0.399 |
-| walker |  | 8730 | 9 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 8, sub: 0, line: 54 } |  |  | 0.399 |
-| walker |  | 8752 | 22 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 6, sub: 0, line: 39 } |  |  | 0.399 |
-| walker |  | 8784 | 32 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 4, sub: 0, line: 25 } |  |  | 0.399 |
 | ns | 8790 |  | 356 | Both docker-compose samples (complete files) | 5.4 |  | 0.390 |
-| walker |  | 8835 | 51 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 5, sub: 0, line: 31 } |  |  | 0.390 |
-| walker |  | 8888 | 53 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 9, sub: 0, line: 68 } |  |  | 0.390 |
-| walker |  | 8898 | 10 | Code::CodeKey { rung: Doc, file: agent/gpu_nvml.go, decl: 8, sub: 0, line: 54 } |  |  | 0.390 |
-| walker |  | 8909 | 11 | Code::CodeKey { rung: Doc, file: agent/gpu_nvml.go, decl: 1, sub: 0, line: 17 } |  |  | 0.390 |
-| walker |  | 8979 | 70 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 7, sub: 0, line: 44 } |  |  | 0.390 |
+| walker |  | 8798 | 436 | Code::CodeKey { rung: Names, file: agent/gpu_nvml.go, decl: 0, sub: 0, line: 0 } |  |  | 0.390 |
+| walker |  | 8807 | 9 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 1, sub: 0, line: 17 } |  |  | 0.390 |
+| walker |  | 8816 | 9 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 8, sub: 0, line: 54 } |  |  | 0.390 |
+| walker |  | 8838 | 22 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 6, sub: 0, line: 39 } |  |  | 0.390 |
+| walker |  | 8870 | 32 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 4, sub: 0, line: 25 } |  |  | 0.390 |
+| walker |  | 8921 | 51 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 5, sub: 0, line: 31 } |  |  | 0.390 |
+| walker |  | 8974 | 53 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 9, sub: 0, line: 68 } |  |  | 0.390 |
+| walker |  | 8984 | 10 | Code::CodeKey { rung: Doc, file: agent/gpu_nvml.go, decl: 8, sub: 0, line: 54 } |  |  | 0.390 |
+| walker |  | 8995 | 11 | Code::CodeKey { rung: Doc, file: agent/gpu_nvml.go, decl: 1, sub: 0, line: 17 } |  |  | 0.390 |
+| walker |  | 9065 | 70 | Code::CodeKey { rung: Decl, file: agent/gpu_nvml.go, decl: 7, sub: 0, line: 44 } |  |  | 0.390 |
 | ns | 9087 |  | 297 | go.mod: module path, Go version, direct dependency roster | 5.5 |  | 0.412 |
-| walker |  | 9098 | 119 | Code::CodeKey { rung: Names, file: agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.412 |
-| walker |  | 9115 | 17 | Code::CodeKey { rung: Doc, file: agent/agent.go, decl: 5, sub: 0, line: 218 } |  |  | 0.412 |
-| walker |  | 9138 | 23 | Code::CodeKey { rung: Body, file: agent/agent.go, decl: 5, sub: 0, line: 218 } |  |  | 0.412 |
-| walker |  | 9162 | 24 | Code::CodeKey { rung: Body, file: agent/agent.go, decl: 6, sub: 0, line: 223 } |  |  | 0.412 |
 | ns | 9179 |  | 92 | supplemental/ tree and .github/workflows listings (complete) | 5.6 |  | 0.417 |
-| walker |  | 9205 | 43 | Code::CodeKey { rung: Doc, file: agent/agent.go, decl: 3, sub: 0, line: 55 } |  |  | 0.417 |
+| walker |  | 9184 | 119 | Code::CodeKey { rung: Names, file: agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.417 |
+| walker |  | 9201 | 17 | Code::CodeKey { rung: Doc, file: agent/agent.go, decl: 5, sub: 0, line: 218 } |  |  | 0.417 |
+| walker |  | 9224 | 23 | Code::CodeKey { rung: Body, file: agent/agent.go, decl: 5, sub: 0, line: 218 } |  |  | 0.417 |
+| walker |  | 9248 | 24 | Code::CodeKey { rung: Body, file: agent/agent.go, decl: 6, sub: 0, line: 223 } |  |  | 0.417 |
+| walker |  | 9291 | 43 | Code::CodeKey { rung: Doc, file: agent/agent.go, decl: 3, sub: 0, line: 55 } |  |  | 0.417 |
 | ns | 9295 |  | 116 | internal/site/src/components listing (complete) | 6.1 |  | 0.434 |
-| walker |  | 9417 | 212 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 0, line: 24 } |  |  | 0.441 |
-| ns | 9435 |  | 140 | Frontend route components (complete listings) | 6.2 |  | 0.458 |
+| ns | 9435 |  | 140 | Frontend route components (complete listings) | 6.2 |  | 0.452 |
+| walker |  | 9503 | 212 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 0, line: 24 } |  |  | 0.458 |
 | ns | 9585 |  | 150 | Frontend chart, table, login and ui-primitive listings (complete) | 6.3 |  | 0.473 |
-| walker |  | 9615 | 198 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 1, line: 24 } |  |  | 0.484 |
+| walker |  | 9701 | 198 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 1, line: 24 } |  |  | 0.481 |
 | ns | 9701 |  | 116 | Frontend route table (router.tsx) | 6.4 |  | 0.481 |
-| walker |  | 9734 | 119 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 2, line: 24 } |  |  | 0.493 |
-| ns | 9755 |  | 54 | internal/site/src/lib listing (complete) | 6.5 |  | 0.499 |
+| ns | 9755 |  | 54 | internal/site/src/lib listing (complete) | 6.5 |  | 0.487 |
+| walker |  | 9820 | 119 | Code::CodeKey { rung: Decl, file: agent/agent.go, decl: 2, sub: 2, line: 24 } |  |  | 0.499 |
 | ns | 9885 |  | 130 | agent/ test files and the shared test harness (completes agent/) | 7.1 |  | 0.510 |
-| walker |  | 9913 | 179 | Code::CodeKey { rung: Names, file: agent/cpu.go, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
-| walker |  | 9976 | 63 | Code::CodeKey { rung: Decl, file: agent/cpu.go, decl: 4, sub: 0, line: 26 } |  |  | 0.510 |
-| walker |  | 9989 | 13 | Code::CodeKey { rung: Doc, file: agent/cpu.go, decl: 4, sub: 0, line: 26 } |  |  | 0.510 |
+| walker |  | 9999 | 179 | Code::CodeKey { rung: Names, file: agent/cpu.go, decl: 0, sub: 0, line: 0 } |  |  | 0.510 |
+| walker |  | 9999 | 0 | Code::CodeKey { rung: Decl, file: agent/cpu.go, decl: 4, sub: 0, line: 26 } |  |  | 0.510 |

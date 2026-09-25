@@ -178,7 +178,12 @@ must not undo:
   front-door file weights on top measured flat or negative (2026-09-25).
   A program's `main`, and the file's other functions when `main` has at
   most two top-level statements, are `Whole` declarations, so their
-  bodies price at the `Decl` tier.
+  bodies price at the `Decl` tier. A TS/JS entry script that exports
+  nothing declares its top-level control-flow statements the same way
+  (`if (…) module.exports = require(…)`, a bootstrap promise chain).
+  Emitting them as the file's `ModuleDoc` instead measured better at
+  small budgets but worse at 3000: every sample app's entry script then
+  outranked library code (2026-09-25).
 - **Python's central modules are found through package `__init__`
   imports.** A module an enclosing `__init__.py` imports names from gets
   a ×1.2 file weight. Signals that rank every batch of a big module

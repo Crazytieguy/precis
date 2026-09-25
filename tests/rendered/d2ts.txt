@@ -95,7 +95,6 @@ eslint.base.mjs
   27→      'no-redeclare': 'off',
   28→      // Enable the TypeScript rule
   29→      '@typescript-eslint/no-unused-vars': ['error', {
-  30→        argsIgnorePattern: '^_',
   …
 examples/
   basic.ts
@@ -360,6 +359,7 @@ packages/
         500→  run({ initialSize: 90000, incrementalRuns: 1000 }),
         501→]
         …
+        504→generateGraph(results)
     tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml

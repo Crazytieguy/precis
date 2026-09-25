@@ -1,4 +1,4 @@
-Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.544/0.775/0.768/0.685/0.642
+Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.732/0.683/0.544/0.775/0.768/0.685/0.651
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -268,68 +268,59 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.648 |
 | walker |  | 7302 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.677 |
 | walker |  | 7346 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.677 |
-| walker |  | 7591 | 245 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.688 |
-| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.673 |
-| walker |  | 7755 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.685 |
-| walker |  | 7793 | 38 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib } |  |  | 0.685 |
-| walker |  | 7796 | 3 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal } |  |  | 0.685 |
-| walker |  | 7814 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams } |  |  | 0.685 |
-| walker |  | 7858 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.685 |
-| walker |  | 7902 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.685 |
-| walker |  | 7946 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.685 |
-| ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.673 |
-| walker |  | 7990 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.673 |
-| walker |  | 8034 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.673 |
-| walker |  | 8078 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.673 |
-| walker |  | 8122 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.673 |
-| walker |  | 8166 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.673 |
-| walker |  | 8210 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.673 |
-| walker |  | 8254 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.673 |
-| walker |  | 8298 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.673 |
-| ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.661 |
-| walker |  | 8342 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.661 |
-| walker |  | 8386 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.661 |
-| walker |  | 8430 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.661 |
-| walker |  | 8474 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.661 |
-| walker |  | 8518 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.661 |
-| walker |  | 8562 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.661 |
-| walker |  | 8606 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.650 |
-| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.650 |
-| walker |  | 8650 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.650 |
-| walker |  | 8694 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.650 |
-| walker |  | 8738 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.650 |
-| walker |  | 8782 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.650 |
-| walker |  | 8826 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.650 |
-| ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.642 |
-| walker |  | 8870 | 44 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.642 |
-| walker |  | 8914 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyCreatedModal.vue } |  |  | 0.642 |
-| walker |  | 8958 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyModal.vue } |  |  | 0.642 |
-| walker |  | 9002 | 44 | Plaintext::DeclSurface { file: client/components/modals/AudioFileDataModal.vue } |  |  | 0.642 |
-| ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.636 |
-| walker |  | 9046 | 44 | Plaintext::DeclSurface { file: client/components/modals/BackupScheduleModal.vue } |  |  | 0.636 |
-| walker |  | 9090 | 44 | Plaintext::DeclSurface { file: client/components/modals/BatchQuickMatchModel.vue } |  |  | 0.636 |
-| walker |  | 9134 | 44 | Plaintext::DeclSurface { file: client/components/modals/BookmarksModal.vue } |  |  | 0.636 |
-| walker |  | 9178 | 44 | Plaintext::DeclSurface { file: client/components/modals/Dialog.vue } |  |  | 0.636 |
-| walker |  | 9222 | 44 | Plaintext::DeclSurface { file: client/components/modals/EditSeriesInputInnerModal.vue } |  |  | 0.636 |
-| walker |  | 9266 | 44 | Plaintext::DeclSurface { file: client/components/modals/ListeningSessionModal.vue } |  |  | 0.636 |
-| ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.650 |
-| walker |  | 9310 | 44 | Plaintext::DeclSurface { file: client/components/modals/Modal.vue } |  |  | 0.650 |
-| walker |  | 9354 | 44 | Plaintext::DeclSurface { file: client/components/modals/PlayerSettingsModal.vue } |  |  | 0.650 |
-| walker |  | 9398 | 44 | Plaintext::DeclSurface { file: client/components/modals/RawCoverPreviewModal.vue } |  |  | 0.650 |
-| walker |  | 9442 | 44 | Plaintext::DeclSurface { file: client/components/modals/ShareModal.vue } |  |  | 0.650 |
-| walker |  | 9486 | 44 | Plaintext::DeclSurface { file: client/components/modals/SleepTimerModal.vue } |  |  | 0.650 |
-| walker |  | 9530 | 44 | Plaintext::DeclSurface { file: client/components/modals/UploadImageModal.vue } |  |  | 0.650 |
-| ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.644 |
-| walker |  | 9574 | 44 | Plaintext::DeclSurface { file: client/components/player/PlayerPlaybackControls.vue } |  |  | 0.644 |
-| walker |  | 9618 | 44 | Plaintext::DeclSurface { file: client/components/player/PlayerTrackBar.vue } |  |  | 0.644 |
-| walker |  | 9662 | 44 | Plaintext::DeclSurface { file: client/components/prompt/Dialog.vue } |  |  | 0.644 |
-| walker |  | 9706 | 44 | Plaintext::DeclSurface { file: client/components/stats/DailyListeningChart.vue } |  |  | 0.644 |
-| walker |  | 9750 | 44 | Plaintext::DeclSurface { file: client/components/stats/Heatmap.vue } |  |  | 0.644 |
-| ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.641 |
-| walker |  | 9794 | 44 | Plaintext::DeclSurface { file: client/components/stats/PreviewIcons.vue } |  |  | 0.641 |
-| walker |  | 9838 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReview.vue } |  |  | 0.641 |
-| walker |  | 9882 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReviewBanner.vue } |  |  | 0.641 |
-| ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.642 |
-| walker |  | 9926 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReviewServer.vue } |  |  | 0.642 |
-| walker |  | 9970 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReviewShort.vue } |  |  | 0.642 |
-| walker |  | 10000 | 30 | Plaintext::DeclSurface { file: client/components/tables/AudioTracksTableRow.vue } |  |  | 0.642 |
+| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.663 |
+| walker |  | 7727 | 381 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.682 |
+| walker |  | 7891 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.694 |
+| ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.682 |
+| walker |  | 8197 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 6, sub: 0, line: 22 } |  |  | 0.682 |
+| walker |  | 8235 | 38 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib } |  |  | 0.682 |
+| walker |  | 8238 | 3 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal } |  |  | 0.682 |
+| walker |  | 8256 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams } |  |  | 0.682 |
+| walker |  | 8300 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.682 |
+| ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.670 |
+| walker |  | 8344 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.670 |
+| walker |  | 8388 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.670 |
+| walker |  | 8432 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.670 |
+| walker |  | 8476 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.670 |
+| walker |  | 8520 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.670 |
+| walker |  | 8564 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.670 |
+| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.660 |
+| walker |  | 8608 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.660 |
+| walker |  | 8652 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.660 |
+| walker |  | 8696 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.660 |
+| walker |  | 8740 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.660 |
+| walker |  | 8784 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.660 |
+| walker |  | 8828 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.660 |
+| ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.651 |
+| walker |  | 8872 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.651 |
+| walker |  | 8916 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.651 |
+| walker |  | 8960 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.651 |
+| walker |  | 9004 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.651 |
+| ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.645 |
+| walker |  | 9048 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.645 |
+| walker |  | 9092 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.645 |
+| walker |  | 9136 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.645 |
+| walker |  | 9180 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.645 |
+| walker |  | 9224 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.645 |
+| walker |  | 9268 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.645 |
+| ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.658 |
+| walker |  | 9312 | 44 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.658 |
+| walker |  | 9356 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyCreatedModal.vue } |  |  | 0.658 |
+| walker |  | 9400 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyModal.vue } |  |  | 0.658 |
+| walker |  | 9444 | 44 | Plaintext::DeclSurface { file: client/components/modals/AudioFileDataModal.vue } |  |  | 0.658 |
+| walker |  | 9488 | 44 | Plaintext::DeclSurface { file: client/components/modals/BackupScheduleModal.vue } |  |  | 0.658 |
+| walker |  | 9532 | 44 | Plaintext::DeclSurface { file: client/components/modals/BatchQuickMatchModel.vue } |  |  | 0.658 |
+| ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.652 |
+| walker |  | 9576 | 44 | Plaintext::DeclSurface { file: client/components/modals/BookmarksModal.vue } |  |  | 0.652 |
+| walker |  | 9620 | 44 | Plaintext::DeclSurface { file: client/components/modals/Dialog.vue } |  |  | 0.652 |
+| walker |  | 9664 | 44 | Plaintext::DeclSurface { file: client/components/modals/EditSeriesInputInnerModal.vue } |  |  | 0.652 |
+| walker |  | 9708 | 44 | Plaintext::DeclSurface { file: client/components/modals/ListeningSessionModal.vue } |  |  | 0.652 |
+| walker |  | 9752 | 44 | Plaintext::DeclSurface { file: client/components/modals/Modal.vue } |  |  | 0.652 |
+| ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.650 |
+| walker |  | 9796 | 44 | Plaintext::DeclSurface { file: client/components/modals/PlayerSettingsModal.vue } |  |  | 0.650 |
+| walker |  | 9840 | 44 | Plaintext::DeclSurface { file: client/components/modals/RawCoverPreviewModal.vue } |  |  | 0.650 |
+| walker |  | 9884 | 44 | Plaintext::DeclSurface { file: client/components/modals/ShareModal.vue } |  |  | 0.650 |
+| ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.650 |
+| walker |  | 9928 | 44 | Plaintext::DeclSurface { file: client/components/modals/SleepTimerModal.vue } |  |  | 0.650 |
+| walker |  | 9972 | 44 | Plaintext::DeclSurface { file: client/components/modals/UploadImageModal.vue } |  |  | 0.650 |
+| walker |  | 9995 | 23 | Plaintext::DeclSurface { file: client/components/player/PlayerPlaybackControls.vue } |  |  | 0.650 |

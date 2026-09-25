@@ -2,7 +2,6 @@
   devcontainer.json
 .github/
   ISSUE_TEMPLATE/
-    bug_report.yaml
   PULL_REQUEST_TEMPLATE.md
   mergify.yml
   workflows/
@@ -143,42 +142,41 @@ hooks/
   services.hook.js
     …
     5→class hook extends baseHook {
-    6→  init () {
     …
-    46→  setupSwitchFocus () {
-    …
-    61→  notifyOnServiceInfo () {
-    …
-    72→  getFreshData (cb) {
-    …
-    86→  getSelectedItem () {
-    87→    if (!this.widgetsRepo.has('servicesList')) {
-    88→      return null
-    89→    }
-    90→
-    91→    return this.widgetsRepo.get('servicesList').getSelectedService()
-    …
-    93→}
-    95→module.exports = hook
   shell.hook.js
 index.js
   …
-  17→const cliOptions = cli.cliParse()
+  5→EventEmitter.defaultMaxListeners = 50
   …
+  17→const cliOptions = cli.cliParse()
+  18→if (cliOptions.help) {
+  19→  cli.showUsage()
+  20→  process.exit(0)
+  21→}
+  23→if (cliOptions.version) {
+  24→  cli.showVersion()
+  25→  process.exit(0)
+  26→}
+  28→if (semver.lt(process.version, nodeVersion.minimum)) {
+  29→  cli.showUsage()
+  30→  console.log(chalk.red('unsupported node version, please use a version equal or greater than ' + nodeVersion.minimum))
+  31→  process.exit(0)
+  32→}
+  34→initDockerConnection()
+  35→  .then(initScreens)
+  36→  .then(function (screen) {
+  37→    process.on('uncaughtException', (err) => {
+  38→      // Make sure the screen is cleared
+  39→      screen.teardown()
+  40→      exitError(err)
+  41→    })
+  42→  })
+  43→  .catch((err) => {
+  44→    return exitError(err)
+  45→  })
   47→function initDockerConnection () {
   …
   72→function initScreens (utils) {
-  73→  return new Promise((resolve, reject) => {
-  74→    let screen
-  75→    try {
-  76→      screen = new Screen(utils)
-  77→      screen.init()
-  78→    } catch (err) {
-  79→      return reject(err)
-  80→    }
-  81→
-  82→    return resolve(screen)
-  83→  })
   …
   86→function exitError (err) {
   …
@@ -336,9 +334,6 @@ src/
     114→  setWidgetsRepo () {
     …
     120→  setWidgetsUtils () {
-    121→    for (let widgetObject of this.widgetsRepository.values()) {
-    122→      widgetObject.setUtilsRepo(this.utils)
-    123→    }
     …
     126→  setWidgetsInit () {
     127→    for (let widgetObject of this.widgetsRepository.values()) {

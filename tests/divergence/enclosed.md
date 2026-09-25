@@ -1,4 +1,4 @@
-Score(3000)=0.596 I=0.838 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.565/0.498/0.598/0.596/0.596/0.620/0.621
+Score(3000)=0.594 I=0.833 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.565/0.498/0.598/0.594/0.548/0.620/0.622
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -91,128 +91,126 @@ Score(3000)=0.596 I=0.838 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1947 | 174 | Code::CodeKey { rung: Names, file: packages/lib/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
 | walker |  | 1999 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.597 |
 | walker |  | 2022 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.597 |
-| walker |  | 2047 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.598 |
+| walker |  | 2032 | 10 | Code::CodeKey { rung: Names, file: packages/app-client/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
+| walker |  | 2057 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.598 |
 | ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.579 |
-| walker |  | 2245 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.579 |
-| walker |  | 2351 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.631 |
-| walker |  | 2372 | 21 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.631 |
+| walker |  | 2255 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.579 |
+| walker |  | 2361 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.631 |
+| walker |  | 2382 | 21 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.631 |
 | ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.598 |
 | ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.554 |
-| walker |  | 2711 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.613 |
-| walker |  | 2750 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.614 |
-| walker |  | 2764 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.614 |
-| walker |  | 2778 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.615 |
-| walker |  | 2822 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.615 |
-| walker |  | 2836 | 14 | Code::CodeKey { rung: Names, file: packages/cli/src/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
-| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.594 |
-| walker |  | 2929 | 93 | Code::CodeKey { rung: Decl, file: packages/cli/src/cli.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.594 |
-| walker |  | 2965 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.596 |
-| walker |  | 3052 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.597 |
-| ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.572 |
-| walker |  | 3090 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.573 |
-| walker |  | 3132 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.574 |
-| walker |  | 3140 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.575 |
-| walker |  | 3203 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.577 |
-| walker |  | 3222 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.577 |
-| walker |  | 3270 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.578 |
-| walker |  | 3322 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.579 |
-| ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.551 |
-| ns | 3584 |  | 194 | Payload vocabulary: the algorithm and compression constants | 2.9 |  | 0.541 |
+| walker |  | 2721 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.613 |
+| walker |  | 2743 | 22 | Code::CodeKey { rung: Names, file: packages/cli/src/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.613 |
+| walker |  | 2834 | 91 | Code::CodeKey { rung: Decl, file: packages/cli/src/cli.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.614 |
+| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.593 |
+| walker |  | 2873 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.594 |
+| walker |  | 2887 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.594 |
+| walker |  | 2901 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.594 |
+| ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.569 |
+| walker |  | 3224 | 323 | Code::CodeKey { rung: Decl, file: packages/app-client/src/index.tsx, decl: 1, sub: 0, line: 14 } |  |  | 0.569 |
+| walker |  | 3268 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.569 |
+| walker |  | 3304 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.570 |
+| ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.542 |
+| walker |  | 3391 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.544 |
+| walker |  | 3429 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.544 |
+| walker |  | 3471 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.546 |
+| walker |  | 3479 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.546 |
+| walker |  | 3542 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.548 |
+| walker |  | 3561 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.549 |
+| ns | 3584 |  | 194 | Payload vocabulary: the algorithm and compression constants | 2.9 |  | 0.539 |
+| walker |  | 3609 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.540 |
+| walker |  | 3661 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.541 |
 | ns | 3780 |  | 196 | Complete file roster of packages/crypto | 2.10 |  | 0.580 |
-| walker |  | 3841 | 519 | Plaintext::Whole { file: Dockerfile } |  |  | 0.580 |
-| walker |  | 3901 | 60 | Json::Whole { file: renovate.json } |  |  | 0.580 |
-| ns | 4036 |  | 256 | @enclosed/crypto entry points: the eight exported names and the web/node swap | 2.11 |  | 0.562 |
-| walker |  | 4064 | 163 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.588 |
-| walker |  | 4310 | 246 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.614 |
-| ns | 4311 |  | 275 | Key derivation parameters: generateBaseKey and deriveMasterKey (web implementation) | 2.12 | 2.11 | 0.596 |
-| walker |  | 4471 | 161 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.635 |
-| walker |  | 4486 | 15 | Plaintext::DeclSurface { file: packages/docs/src/public/robots.txt } |  |  | 0.635 |
-| ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.624 |
-| walker |  | 4575 | 89 | Plaintext::DeclSurface { file: packages/docs/src/components/credential-inputs.vue } |  |  | 0.624 |
-| walker |  | 4643 | 68 | Json::Identity { file: packages/deploy-cloudflare/package.json } |  |  | 0.624 |
-| walker |  | 4660 | 17 | Json::Runtime { file: packages/deploy-cloudflare/package.json } |  |  | 0.615 |
-| ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.615 |
-| walker |  | 4689 | 29 | Json::Scripts { file: packages/deploy-cloudflare/package.json } |  |  | 0.615 |
-| walker |  | 4783 | 94 | Plaintext::DeclSurface { file: packages/docs/src/components/toggle.vue } |  |  | 0.615 |
-| walker |  | 4797 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.615 |
-| walker |  | 4807 | 10 | Code::CodeKey { rung: Names, file: packages/app-server/src/index.cloudflare.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
+| ns | 4036 |  | 256 | @enclosed/crypto entry points: the eight exported names and the web/node swap | 2.11 |  | 0.561 |
+| walker |  | 4180 | 519 | Plaintext::Whole { file: Dockerfile } |  |  | 0.562 |
+| walker |  | 4240 | 60 | Json::Whole { file: renovate.json } |  |  | 0.562 |
+| ns | 4311 |  | 275 | Key derivation parameters: generateBaseKey and deriveMasterKey (web implementation) | 2.12 | 2.11 | 0.545 |
+| walker |  | 4403 | 163 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.570 |
+| ns | 4520 |  | 209 | AES-256-GCM: the `iv:payload` ciphertext string format | 2.13 | 2.11 | 0.561 |
+| walker |  | 4649 | 246 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.586 |
+| ns | 4660 |  | 140 | The complete HTTP endpoint set of the server, one span per route registration | 3.1 |  | 0.577 |
+| walker |  | 4810 | 161 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.615 |
+| walker |  | 4825 | 15 | Plaintext::DeclSurface { file: packages/docs/src/public/robots.txt } |  |  | 0.615 |
 | ns | 4877 |  | 217 | app-server file roster, part 1: package root, entry points, and the modules/app subtree | 3.2 |  | 0.646 |
-| walker |  | 4884 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.646 |
-| walker |  | 4935 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.646 |
+| walker |  | 4914 | 89 | Plaintext::DeclSurface { file: packages/docs/src/components/credential-inputs.vue } |  |  | 0.646 |
+| walker |  | 4982 | 68 | Json::Identity { file: packages/deploy-cloudflare/package.json } |  |  | 0.646 |
+| walker |  | 4999 | 17 | Json::Runtime { file: packages/deploy-cloudflare/package.json } |  |  | 0.646 |
+| walker |  | 5028 | 29 | Json::Scripts { file: packages/deploy-cloudflare/package.json } |  |  | 0.646 |
+| walker |  | 5122 | 94 | Plaintext::DeclSurface { file: packages/docs/src/components/toggle.vue } |  |  | 0.646 |
 | ns | 5133 |  | 256 | app-server file roster, part 2: notes, storage, tasks and shared modules | 3.3 |  | 0.673 |
-| walker |  | 5135 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.673 |
-| walker |  | 5212 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.673 |
-| walker |  | 5263 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.673 |
-| walker |  | 5340 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.673 |
-| walker |  | 5354 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.673 |
+| walker |  | 5136 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.673 |
+| walker |  | 5146 | 10 | Code::CodeKey { rung: Names, file: packages/app-server/src/index.cloudflare.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.673 |
+| walker |  | 5223 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.673 |
+| walker |  | 5274 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.673 |
 | ns | 5361 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.655 |
-| walker |  | 5371 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.655 |
-| walker |  | 5458 | 87 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.655 |
-| walker |  | 5489 | 31 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.655 |
-| walker |  | 5568 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.655 |
-| walker |  | 5619 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.655 |
-| walker |  | 5652 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.655 |
-| walker |  | 5801 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.655 |
-| ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.632 |
-| walker |  | 5880 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.632 |
-| walker |  | 5931 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.632 |
-| walker |  | 6055 | 124 | Json::Entry { file: packages/lib/package.json } |  |  | 0.632 |
+| walker |  | 5474 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.655 |
+| walker |  | 5551 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.655 |
+| walker |  | 5602 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.655 |
+| walker |  | 5679 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.655 |
+| walker |  | 5693 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.655 |
+| walker |  | 5710 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.655 |
+| walker |  | 5797 | 87 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.655 |
+| walker |  | 5828 | 31 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.655 |
+| ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.633 |
+| walker |  | 5907 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.633 |
+| walker |  | 5958 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.633 |
+| walker |  | 5991 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.633 |
 | ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.620 |
-| walker |  | 6204 | 149 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.620 |
+| walker |  | 6140 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.620 |
+| walker |  | 6219 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.620 |
+| walker |  | 6270 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.620 |
 | ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.606 |
-| walker |  | 6284 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.606 |
-| walker |  | 6335 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.606 |
-| walker |  | 6419 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.606 |
+| walker |  | 6394 | 124 | Json::Entry { file: packages/lib/package.json } |  |  | 0.606 |
 | ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.599 |
-| walker |  | 6570 | 151 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.599 |
+| walker |  | 6543 | 149 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.599 |
+| walker |  | 6623 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.599 |
+| walker |  | 6674 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.599 |
+| walker |  | 6758 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.599 |
 | ns | 6772 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.587 |
-| walker |  | 6851 | 281 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.588 |
-| walker |  | 6886 | 35 | Plaintext::DeclSurface { file: packages/app-client/public/robots.txt } |  |  | 0.588 |
-| walker |  | 6918 | 32 | Code::CodeKey { rung: Names, file: packages/crypto/src/api-definition.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.588 |
+| walker |  | 6909 | 151 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.587 |
 | ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.581 |
-| walker |  | 7069 | 151 | Code::CodeKey { rung: Decl, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.581 |
-| walker |  | 7181 | 112 | Json::Dependencies { file: packages/lib/package.json } |  |  | 0.581 |
-| ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.575 |
-| walker |  | 7223 | 42 | Plaintext::DeclSurface { file: packages/app-client/public/humans.txt } |  |  | 0.575 |
+| ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.574 |
+| walker |  | 7190 | 281 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.575 |
+| walker |  | 7225 | 35 | Plaintext::DeclSurface { file: packages/app-client/public/robots.txt } |  |  | 0.575 |
+| walker |  | 7257 | 32 | Code::CodeKey { rung: Names, file: packages/crypto/src/api-definition.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.575 |
 | ns | 7406 |  | 220 | The two server entry points: node bootstrap and Cloudflare worker | 3.12 | 3.4 | 0.565 |
-| ns | 7575 |  | 169 | cli.ts: the three subcommands and the citty entry point | 4.1 |  | 0.564 |
-| walker |  | 7600 | 377 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.564 |
-| walker |  | 7642 | 42 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.564 |
-| walker |  | 7676 | 34 | Code::CodeKey { rung: Decl, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.564 |
-| walker |  | 7693 | 17 | Code::CodeKey { rung: Names, file: packages/app-client/src/routes.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.564 |
-| walker |  | 7704 | 11 | Code::CodeKey { rung: Names, file: packages/cli/src/config/config.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.564 |
-| ns | 7705 |  | 130 | Complete file roster of packages/cli | 4.2 |  | 0.580 |
-| walker |  | 7741 | 37 | Code::CodeKey { rung: Decl, file: packages/cli/src/config/config.usecases.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.580 |
-| walker |  | 7752 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/configuration.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
-| walker |  | 7799 | 47 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/configuration.data.ts, decl: 1, sub: 0, line: 55 } |  |  | 0.580 |
-| walker |  | 7810 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/i18n.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
-| walker |  | 7877 | 67 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/i18n.data.ts, decl: 1, sub: 0, line: 59 } |  |  | 0.580 |
-| walker |  | 7901 | 24 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
-| ns | 7969 |  | 264 | `enclosed create`: every flag, its description and its short alias | 4.3 | 4.1 | 0.571 |
-| ns | 8227 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.561 |
-| walker |  | 8251 | 350 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.usecases.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.577 |
-| ns | 8502 |  | 275 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.605 |
-| walker |  | 8715 | 464 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.617 |
-| ns | 8731 |  | 229 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.633 |
-| walker |  | 8806 | 91 | Code::CodeKey { rung: Body, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.633 |
-| walker |  | 8831 | 25 | Code::CodeKey { rung: Names, file: packages/lib/src/api/api.client.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
-| walker |  | 8921 | 90 | Code::CodeKey { rung: Decl, file: packages/lib/src/api/api.client.ts, decl: 1, sub: 0, line: 20 } |  |  | 0.633 |
-| walker |  | 8959 | 38 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
-| ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.621 |
-| walker |  | 8981 | 22 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 2, sub: 0, line: 12 } |  |  | 0.621 |
-| walker |  | 9030 | 49 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.621 |
-| walker |  | 9121 | 91 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 3, sub: 0, line: 17 } |  |  | 0.621 |
-| ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.617 |
-| walker |  | 9263 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.617 |
-| walker |  | 9276 | 13 | Code::CodeKey { rung: Names, file: packages/app-client/src/locales/locales.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.625 |
-| ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.628 |
-| walker |  | 9601 | 325 | Code::CodeKey { rung: Decl, file: packages/app-client/src/locales/locales.ts, decl: 1, sub: 0, line: 2 } |  |  | 0.628 |
-| walker |  | 9642 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
-| walker |  | 9754 | 112 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.633 |
+| walker |  | 7408 | 151 | Code::CodeKey { rung: Decl, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.565 |
+| walker |  | 7520 | 112 | Json::Dependencies { file: packages/lib/package.json } |  |  | 0.565 |
+| walker |  | 7562 | 42 | Plaintext::DeclSurface { file: packages/app-client/public/humans.txt } |  |  | 0.565 |
+| ns | 7575 |  | 169 | cli.ts: the three subcommands and the citty entry point | 4.1 |  | 0.565 |
+| ns | 7705 |  | 130 | Complete file roster of packages/cli | 4.2 |  | 0.581 |
+| walker |  | 7939 | 377 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.581 |
+| ns | 7969 |  | 264 | `enclosed create`: every flag, its description and its short alias | 4.3 | 4.1 | 0.572 |
+| walker |  | 7981 | 42 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8015 | 34 | Code::CodeKey { rung: Decl, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.572 |
+| walker |  | 8032 | 17 | Code::CodeKey { rung: Names, file: packages/app-client/src/routes.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8043 | 11 | Code::CodeKey { rung: Names, file: packages/cli/src/config/config.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8080 | 37 | Code::CodeKey { rung: Decl, file: packages/cli/src/config/config.usecases.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.572 |
+| walker |  | 8091 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/configuration.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8138 | 47 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/configuration.data.ts, decl: 1, sub: 0, line: 55 } |  |  | 0.572 |
+| walker |  | 8149 | 11 | Code::CodeKey { rung: Names, file: packages/docs/src/data/i18n.data.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 8216 | 67 | Code::CodeKey { rung: Decl, file: packages/docs/src/data/i18n.data.ts, decl: 1, sub: 0, line: 59 } |  |  | 0.572 |
+| ns | 8227 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.562 |
+| walker |  | 8240 | 24 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.562 |
+| ns | 8502 |  | 275 | app-client file roster, part 1: package root, entry files and the feature modules | 5.1 |  | 0.591 |
+| walker |  | 8590 | 350 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.usecases.ts, decl: 1, sub: 0, line: 12 } |  |  | 0.606 |
+| ns | 8731 |  | 229 | app-client file roster, part 2: shared layer, UI component library, locales and e2e tests | 5.2 |  | 0.623 |
+| ns | 8974 |  | 243 | Client route table: the four routes and the components behind them | 5.3 |  | 0.612 |
+| walker |  | 9054 | 464 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.622 |
+| walker |  | 9145 | 91 | Code::CodeKey { rung: Body, file: packages/crypto/src/api-definition.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.622 |
+| walker |  | 9170 | 25 | Code::CodeKey { rung: Names, file: packages/lib/src/api/api.client.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| ns | 9210 |  | 236 | Client runtime configuration: the nine build-time config fields and their VITE_ variables | 5.4 |  | 0.618 |
+| walker |  | 9260 | 90 | Code::CodeKey { rung: Decl, file: packages/lib/src/api/api.client.ts, decl: 1, sub: 0, line: 20 } |  |  | 0.618 |
+| walker |  | 9298 | 38 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
+| walker |  | 9320 | 22 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 2, sub: 0, line: 12 } |  |  | 0.618 |
+| ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.626 |
+| walker |  | 9369 | 49 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.626 |
+| walker |  | 9460 | 91 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 3, sub: 0, line: 17 } |  |  | 0.626 |
+| ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.629 |
+| walker |  | 9602 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.629 |
+| walker |  | 9615 | 13 | Code::CodeKey { rung: Names, file: packages/app-client/src/locales/locales.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
 | ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.633 |
-| walker |  | 9868 | 114 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.633 |
-| walker |  | 9909 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.services.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
 | ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.643 |
-| walker |  | 9959 | 50 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.services.ts, decl: 2, sub: 0, line: 39 } |  |  | 0.643 |
-| walker |  | 9993 | 34 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.services.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.643 |
+| walker |  | 9940 | 325 | Code::CodeKey { rung: Decl, file: packages/app-client/src/locales/locales.ts, decl: 1, sub: 0, line: 2 } |  |  | 0.643 |
+| walker |  | 9981 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.643 |
+| walker |  | 9995 | 14 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.643 |

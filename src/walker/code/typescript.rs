@@ -5,8 +5,9 @@
 //! names, and CommonJS `module.exports` / `exports.x` targets. Every
 //! top-level declaration of a `.d.ts` file is API (ambient declarations
 //! are implicitly exported), and so is every top-level declaration of an
-//! entrypoint that exports nothing (an application's startup file);
-//! other unexported declarations are hidden.
+//! entrypoint that exports nothing (an application's startup file), whose
+//! top-level control flow statements are declarations too; other
+//! unexported declarations are hidden.
 //! `export … from` and the statements that export a name without
 //! declaring it are re-exports, listed on the roster.
 //!
@@ -95,6 +96,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             {
                 value
             }
+            TopLevel::Skip if lists_unexported && is_script_statement(statement) => statement,
             TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
         let mut decl = declaration(file, statement, node);
@@ -361,6 +363,19 @@ impl<'source> ExportScan<'source> {
             }
         }
         self.public_names.extend(callees);
+    }
+}
+
+/// A top-level statement that runs rather than declares: an entry
+/// script's control flow (`if (…) …`, `main().catch(…)`), not a
+/// directive (`'use strict'`) or an import.
+fn is_script_statement(statement: Node) -> bool {
+    match statement.kind() {
+        "import_statement" | "export_statement" | "empty_statement" => false,
+        "expression_statement" => statement
+            .named_child(0)
+            .is_some_and(|expression| expression.kind() != "string"),
+        kind => kind.ends_with("_statement"),
     }
 }
 
@@ -1138,9 +1153,14 @@ export { local, type Shape };
         assert_eq!(listed("src/index.ts"), 1);
         let application = extract_source(
             "src/main.ts",
-            "import { mount } from 'ui';\nfunction App() {}\nfunction start() {\n  mount(App);\n}\nstart();\n",
+            "'use strict';\nimport { mount } from 'ui';\nfunction App() {}\nfunction start() {\n  mount(App);\n}\nif (ready) {\n  start();\n}\n",
         );
-        assert_eq!(application.decls.len(), 2);
+        let heads: Vec<_> = application
+            .decls
+            .iter()
+            .map(|decl| decl.head.clone())
+            .collect();
+        assert_eq!(heads, [vec![3], vec![4], vec![7, 8, 9]]);
         let script = extract_source(
             "scripts/build.js",
             "const fs = require('fs');\nfunction main() {}\nmain();\n",
