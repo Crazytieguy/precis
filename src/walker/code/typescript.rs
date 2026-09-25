@@ -23,7 +23,6 @@ use tree_sitter::Node;
 use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::WalkCtx;
-use crate::walker::fs::is_source_dir;
 
 pub(super) const EXTENSIONS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
 
@@ -147,23 +146,16 @@ pub(super) fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
 }
 
 /// Tooling config (`vite.config.ts`, `.eslintrc.js`) is not the
-/// project's code, and JavaScript outside a source directory is a
-/// script, demo or helper beside the source rather than the source.
-pub(super) fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
+/// project's code.
+pub(super) fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
     if is_config_file(path) {
         CONFIG_FILE_WEIGHT
-    } else if is_javascript(path) && !is_in_source_tree(path, ctx.root()) {
-        SECONDARY_JAVASCRIPT_WEIGHT
-    } else if !ctx.code.typescript.is_public_surface(path, ctx) {
-        OFF_SURFACE_WEIGHT
     } else {
         1.0
     }
 }
 
 const CONFIG_FILE_WEIGHT: f64 = 0.001;
-const SECONDARY_JAVASCRIPT_WEIGHT: f64 = 0.05;
-const OFF_SURFACE_WEIGHT: f64 = 0.5;
 
 fn is_config_file(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
@@ -173,59 +165,13 @@ fn is_config_file(path: &Path) -> bool {
     name.starts_with('.') || name.contains(".config.") || stem.ends_with("rc")
 }
 
-fn is_javascript(path: &Path) -> bool {
-    path.extension()
-        .and_then(|extension| extension.to_str())
-        .is_some_and(|extension| {
-            ["js", "mjs", "cjs", "jsx"]
-                .iter()
-                .any(|candidate| extension.eq_ignore_ascii_case(candidate))
-        })
-}
-
-/// At the walk root, or under a `src` / `lib` / `source` directory.
-fn is_in_source_tree(path: &Path, root: &Path) -> bool {
-    let Ok(relative) = path.strip_prefix(root) else {
-        return false;
-    };
-    relative.components().count() == 1
-        || relative.parent().is_some_and(|dir| {
-            dir.iter()
-                .any(|component| is_source_dir(Path::new(component)))
-        })
-}
-
 #[derive(Default)]
 pub(crate) struct RunState {
     /// Nearest enclosing package directory of each directory asked about.
     package_dirs: RefCell<HashMap<PathBuf, PathBuf>>,
-    /// Per package directory, the files its entry files expose.
-    surfaces: RefCell<HashMap<PathBuf, HashSet<PathBuf>>>,
 }
 
 impl RunState {
-    /// True when `path` is an entry file of its package, is reached from
-    /// one through relative `export … from` or `require('./…')`
-    /// specifiers (a `.d.ts` counts as its runtime twin), or its package
-    /// has no entry file.
-    fn is_public_surface(&self, path: &Path, ctx: &WalkCtx) -> bool {
-        let Some(dir) = path.parent() else {
-            return true;
-        };
-        let package_dir = self.package_dir(dir, ctx.root());
-        if !self.surfaces.borrow().contains_key(&package_dir) {
-            let surface = package_surface(&package_dir, ctx);
-            self.surfaces
-                .borrow_mut()
-                .insert(package_dir.clone(), surface);
-        }
-        let surfaces = self.surfaces.borrow();
-        let surface = &surfaces[&package_dir];
-        surface.is_empty()
-            || surface.contains(path)
-            || declaration_twins(path).any(|twin| surface.contains(&twin))
-    }
-
     /// The nearest directory at or above `dir` holding a `package.json`,
     /// stopping at `root`; `root` when there is none.
     fn package_dir(&self, dir: &Path, root: &Path) -> PathBuf {
@@ -247,130 +193,6 @@ impl RunState {
             .insert(dir.to_path_buf(), package_dir.clone());
         package_dir
     }
-}
-
-/// `x.js`, `x.ts`, … for a declaration file `x.d.ts`.
-fn declaration_twins(path: &Path) -> impl Iterator<Item = PathBuf> {
-    let stem = is_declaration_file(path).then(|| path.with_extension("").with_extension(""));
-    EXTENSIONS
-        .iter()
-        .filter_map(move |extension| Some(append_extension(stem.as_ref()?, extension)))
-}
-
-/// `base` with `.extension` appended: `Path::with_extension` would
-/// replace the `.service` of `foo.service`.
-fn append_extension(base: &Path, extension: &str) -> PathBuf {
-    let mut path = base.as_os_str().to_owned();
-    path.push(".");
-    path.push(extension);
-    PathBuf::from(path)
-}
-
-fn package_surface(package_dir: &Path, ctx: &WalkCtx) -> HashSet<PathBuf> {
-    let child_dirs = std::fs::read_dir(package_dir)
-        .into_iter()
-        .flatten()
-        .flatten()
-        .map(|entry| entry.path())
-        .filter(|path| path.is_dir() && !ctx.dir_filter().excludes(path, true));
-    let mut pending: Vec<PathBuf> = std::iter::once(package_dir.to_path_buf())
-        .chain(child_dirs)
-        .flat_map(|dir| std::fs::read_dir(dir).into_iter().flatten().flatten())
-        .map(|entry| entry.path())
-        .filter(|path| path.is_file() && is_entrypoint(path, ctx))
-        .collect();
-    let mut surface = HashSet::new();
-    while let Some(file) = pending.pop() {
-        if !surface.insert(file.clone()) {
-            continue;
-        }
-        let Some((source, tree)) = ctx.parse_tree(&file, &grammar(&file)) else {
-            continue;
-        };
-        let root = tree.root_node();
-        let mut cursor = root.walk();
-        for statement in root.children(&mut cursor) {
-            for specifier in module_specifiers(statement, &source) {
-                pending.extend(resolve_relative_module(&file, specifier));
-            }
-        }
-    }
-    surface
-}
-
-/// `x` of `export … from 'x'`, and of every `require('x')` inside a
-/// statement.
-fn module_specifiers<'source>(statement: Node, source: &'source str) -> Vec<&'source str> {
-    let unquote = |node: Node| source[node.byte_range()].trim_matches(['\'', '"', '`']);
-    let mut specifiers: Vec<&str> = statement
-        .child_by_field_name("source")
-        .filter(|_| statement.kind() == "export_statement")
-        .map(unquote)
-        .into_iter()
-        .collect();
-    let mut stack = vec![statement];
-    while let Some(node) = stack.pop() {
-        if node.kind() == "call_expression"
-            && node
-                .child_by_field_name("function")
-                .is_some_and(|callee| &source[callee.byte_range()] == "require")
-            && let Some(argument) = node
-                .child_by_field_name("arguments")
-                .and_then(|arguments| arguments.named_child(0))
-                .filter(|argument| argument.kind() == "string")
-        {
-            specifiers.push(unquote(argument));
-        }
-        let mut cursor = node.walk();
-        stack.extend(node.named_children(&mut cursor));
-    }
-    specifiers
-}
-
-/// The TS/JS file a relative specifier names: the path itself, with its
-/// extension swapped for or set to a TS/JS one, or as a directory's
-/// `index`.
-fn resolve_relative_module(from: &Path, specifier: &str) -> Option<PathBuf> {
-    if !specifier.starts_with('.') {
-        return None;
-    }
-    let mut base = from.parent()?.to_path_buf();
-    for component in Path::new(specifier).components() {
-        match component {
-            std::path::Component::ParentDir => {
-                base.pop();
-            }
-            std::path::Component::Normal(part) => base.push(part),
-            _ => {}
-        }
-    }
-    let stem = if has_source_extension(&base) {
-        base.with_extension("")
-    } else {
-        base.clone()
-    };
-    let candidates = std::iter::once(base.clone())
-        .chain(
-            EXTENSIONS
-                .iter()
-                .map(|extension| append_extension(&stem, extension)),
-        )
-        .chain(
-            EXTENSIONS
-                .iter()
-                .map(|extension| base.join("index").with_extension(extension)),
-        );
-    candidates
-        .into_iter()
-        .find(|candidate| candidate.is_file() && has_source_extension(candidate))
-}
-
-fn has_source_extension(path: &Path) -> bool {
-    path.extension().is_some_and(|own| {
-        EXTENSIONS
-            .iter()
-            .any(|extension| own.eq_ignore_ascii_case(extension))
-    })
 }
 
 fn is_declaration_file(path: &Path) -> bool {
@@ -1789,23 +1611,11 @@ export const c = 3;
     }
 
     #[test]
-    fn code_typescript_config_and_javascript_beside_the_source_weigh_less() {
+    fn code_typescript_config_weighs_less() {
         let ctx = WalkCtx::new(PathBuf::from("/repo"));
         let weight = |relative: &str| file_weight(&Path::new("/repo").join(relative), &ctx);
-        for primary in [
-            "index.js",
-            "lib/router.js",
-            "packages/a/src/x.mjs",
-            "server/app.ts",
-        ] {
+        for primary in ["index.js", "lib/router.js", "server/app.ts"] {
             assert_eq!(weight(primary), 1.0, "{primary}");
-        }
-        for secondary in ["server/app.js", "client/store/index.js"] {
-            assert_eq!(
-                weight(secondary),
-                SECONDARY_JAVASCRIPT_WEIGHT,
-                "{secondary}"
-            );
         }
         for config in [
             ".eslintrc.js",
@@ -1815,49 +1625,5 @@ export const c = 3;
         ] {
             assert_eq!(weight(config), CONFIG_FILE_WEIGHT, "{config}");
         }
-    }
-
-    #[test]
-    fn code_typescript_files_off_the_entry_files_reach_weigh_half() {
-        let files = [
-            ("package.json", "{}"),
-            (
-                "src/index.ts",
-                "export * from './api.js';\nexport {x} from './lib';\n\
-                 export * from './foo.service';\nexport * from './bar.model.js';\n",
-            ),
-            (
-                "src/api.ts",
-                "export const api = require('../helpers/util');\n",
-            ),
-            ("src/api.d.ts", ""),
-            ("src/foo.service.ts", ""),
-            ("src/foo.ts", ""),
-            ("src/bar.model.ts", ""),
-            ("src/bar.model.d.ts", ""),
-            ("src/lib/index.ts", ""),
-            ("helpers/util.js", ""),
-            ("src/internal.ts", ""),
-            ("packages/solo/package.json", "{}"),
-            ("packages/solo/deep/x.ts", ""),
-        ];
-        let dir = tempfile::tempdir().unwrap();
-        for (relative, content) in files {
-            let path = dir.path().join(relative);
-            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
-            std::fs::write(path, content).unwrap();
-        }
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let off_surface: Vec<&str> = files
-            .iter()
-            .map(|(relative, _)| *relative)
-            .filter(|relative| relative.ends_with("ts") || relative.ends_with("js"))
-            .filter(|relative| {
-                !ctx.code
-                    .typescript
-                    .is_public_surface(&dir.path().join(relative), &ctx)
-            })
-            .collect();
-        assert_eq!(off_surface, ["src/foo.ts", "src/internal.ts"]);
     }
 }

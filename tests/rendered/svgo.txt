@@ -256,6 +256,10 @@ package.json
   …
 plugins/
   _collections.js
+    1→/**
+    2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/intro.html#Definitions.
+    3→ */
+    …
   _path.js
   _transforms.js
   addAttributesToSVGElement.js
@@ -288,6 +292,11 @@ plugins/
   removeDeprecatedAttrs.js
   removeDesc.js
   removeDimensions.js
+    1→export const name = 'removeDimensions';
+    2→export const description =
+    …
+    17→export const fn = () => {
+    …
   removeDoctype.js
   removeEditorsNSData.js
   removeElementsByAttr.js

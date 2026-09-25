@@ -1,4 +1,4 @@
-Score(3000)=0.690 I=0.900 C=0.530 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.846/0.793/0.768/0.690/0.789/0.810/0.675
+Score(3000)=0.690 I=0.900 C=0.530 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.846/0.793/0.768/0.690/0.789/0.810/0.678
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -103,28 +103,30 @@ Score(3000)=0.690 I=0.900 C=0.530 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 6799 | 296 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.762 |
 | ns | 6880 |  | 178 | Item: rendered element and its attributes | 4.5 | 4.4 | 0.749 |
 | walker |  | 7043 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: true } |  |  | 0.749 |
-| walker |  | 7062 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.749 |
-| walker |  | 7106 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.749 |
+| walker |  | 7069 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.749 |
 | ns | 7137 |  | 257 | Group: render gate and heading/items markup | 4.6 | 2.6 | 0.734 |
+| walker |  | 7197 | 128 | Code::CodeKey { rung: Body, file: cmdk/src/command-score.ts, decl: 1, sub: 0, line: 155 } |  |  | 0.734 |
+| walker |  | 7216 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.734 |
+| walker |  | 7260 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.734 |
 | ns | 7329 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.722 |
 | ns | 7595 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.710 |
-| walker |  | 7630 | 524 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.710 |
+| walker |  | 7784 | 524 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.710 |
 | ns | 7795 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.715 |
-| walker |  | 8056 | 426 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.715 |
 | ns | 8098 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.700 |
-| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.698 |
-| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.702 |
-| ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.695 |
-| walker |  | 8530 | 474 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.695 |
-| ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.688 |
-| walker |  | 8679 | 149 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.688 |
-| ns | 8740 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.683 |
-| walker |  | 8921 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.683 |
-| ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.675 |
-| walker |  | 9165 | 244 | Markdown::Section { file: ARCHITECTURE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.684 |
-| ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.676 |
-| walker |  | 9375 | 210 | Markdown::Section { file: ARCHITECTURE.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.679 |
-| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.667 |
-| ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.654 |
-| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.645 |
-| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.651 |
+| ns | 8194 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.701 |
+| walker |  | 8210 | 426 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.701 |
+| ns | 8254 |  | 60 | Test fixture pages listing | 6.1 |  | 0.704 |
+| ns | 8432 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.698 |
+| ns | 8577 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.691 |
+| walker |  | 8684 | 474 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.691 |
+| ns | 8740 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.686 |
+| walker |  | 8833 | 149 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.686 |
+| ns | 8957 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.678 |
+| walker |  | 9075 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.678 |
+| ns | 9217 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.670 |
+| walker |  | 9319 | 244 | Markdown::Section { file: ARCHITECTURE.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.679 |
+| ns | 9473 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.666 |
+| walker |  | 9529 | 210 | Markdown::Section { file: ARCHITECTURE.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.669 |
+| ns | 9749 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.656 |
+| ns | 9914 |  | 165 | CI workflow | 6.9 |  | 0.647 |
+| ns | 9987 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.653 |

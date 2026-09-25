@@ -48,10 +48,6 @@ README.md
   56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
   57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
   …
-  87→## Want to become a TypeScript Expert?
-  88→
-  89→Check out 👉 [Type-Level TypeScript](https://type-level-typescript.com/), an online course teaching you how to unleash the full potential of TypeScript's Turing-complete type system. You already know how to code, and types are simply another programming language to master. This course **bridges the gap**, helping you apply your **existing programming knowledge** to **TypeScript's type system**, so you never again struggle with type errors or feel unable to type complex generic code correctly!
-  …
 benchmarks/
   always-last-digit.ts
   nested-objects.ts
@@ -115,7 +111,6 @@ examples/
   gif-fetcher/
     package.json
     public/
-      index.html
     src/
       App.tsx
       constants.ts
@@ -133,36 +128,7 @@ package.json
   3→  "version": "5.9.0",
   4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
   5→  "type": "module",
-  6→  "sideEffects": false,
-  7→  "source": "src/index.ts",
-  8→  "exports": {
-  9→    ".": {
-  10→      "require": {
-  11→        "types": "./dist/index.d.cts",
-  12→        "default": "./dist/index.cjs"
-  13→      },
-  14→      "import": {
-  15→        "types": "./dist/index.d.ts",
-  16→        "default": "./dist/index.js"
-  17→      },
-  18→      "types": "./dist/index.d.ts",
-  19→      "default": "./dist/index.js"
-  20→    },
-  21→    "./types": {
-  22→      "require": {
-  23→        "types": "./dist/types/index.d.cts"
-  24→      },
-  25→      "import": {
-  26→        "types": "./dist/types/index.d.ts"
-  27→      },
-  28→      "types": "./dist/types/index.d.ts"
-  29→    },
-  30→    "./package.json": "./package.json"
-  31→  },
-  32→  "types": "dist/index.d.ts",
-  33→  "main": "dist/index.cjs",
-  34→  "module": "dist/index.js",
-  35→  "unpkg": "dist/index.umd.js",
+  …
   36→  "scripts": {
   37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
   38→    "dev": "microbundle watch",
@@ -177,10 +143,7 @@ package.json
   47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
   48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
   49→  },
-  50→  "files": [
-  51→    "dist/**/*",
-  52→    "package.json"
-  53→  ],
+  …
   54→  "repository": {
   55→    "type": "git",
   56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
@@ -206,14 +169,6 @@ scripts/
   generate-cts.sh
 src/
   errors.ts
-    1→/**
-    2→ * Error when the given input value does not match any included pattern
-    3→ * and .exhaustive() was specified
-    4→ */
-    5→export class NonExhaustiveError extends Error {
-    6→  constructor(public input: unknown) {
-    …
-    15→}
   index.ts
     …
     3→export { match } from './match';
@@ -229,6 +184,21 @@ src/
       5→ */
       …
     symbols.ts
+      1→/**
+      2→ * Symbols used internally within ts-pattern to construct and discriminate
+      3→ * Guard, Not, and Select, and AnonymousSelect patterns
+      4→ *
+      5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+      6→ * user defined patterns, and eliminate the risk of property
+      7→ * overlap between ts-pattern internals and user defined patterns.
+      8→ *
+      9→ * These symbols have to be visible to tsc for type inference to work, but
+      10→ * users should not import them
+      11→ * @module
+      12→ * @private
+      13→ * @internal
+      14→ */
+      …
   is-matching.ts
   match.ts
   patterns.ts
@@ -238,6 +208,48 @@ src/
     4→ *
     5→ * @module
     6→ */
+    …
+    48→export type {
+    49→  /**
+    50→   * `Pattern<T>` is the type of all patterns
+    51→   * that can match a value of type `T`.
+    52→   */
+    53→  Pattern,
+    54→
+    55→  /**
+    56→   * `unstable_Fn` can be used to created a
+    57→   * a Matchable instance – a custom type that
+    58→   * can be used as a pattern.
+    59→   *
+    60→   * @experimental This feature is unstable.
+    61→   */
+    62→  Fn as unstable_Fn,
+    63→};
+    64→
+    65→export { matcher };
+    …
+    81→export type unstable_Matchable<
+    82→  narrowedOrFn,
+    83→  input = unknown,
+    84→  pattern = never
+    85→> = CustomP<input, pattern, narrowedOrFn>;
+    …
+    100→export type unstable_Matcher<
+    101→  narrowedOrFn,
+    102→  input = unknown,
+    103→  pattern = never
+    104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
+    …
+    116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+    …
+    131→export type narrow<input, pattern> = ExtractPreciseValue<
+    132→  input,
+    133→  InvertPattern<pattern, input>
+    134→>;
+    …
+    187→export function optional<
+    …
+    241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
     …
   types/
     BuildMany.ts
@@ -297,8 +309,6 @@ tests/
   type-error.test.ts
   type-is-matching.test.ts
   types-catalog/
-    definition.ts
-    utils.ts
   types.test.ts
   unions.test.ts
   variadic-tuples.test.ts

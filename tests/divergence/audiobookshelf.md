@@ -238,111 +238,97 @@ Score(3000)=0.775 I=0.874 C=0.688 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | ns | 5512 |  | 353 | API routes: users, collections, playlists | 3.5 | 3.2 | 0.710 |
 | walker |  | 5724 | 345 | Json::Dependencies { file: package.json } |  |  | 0.733 |
 | walker |  | 5758 | 34 | Fs::DirListing { dir: server/libs/archiver/compress-commons/archivers/zip } |  |  | 0.733 |
+| walker |  | 5806 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.733 |
 | ns | 5890 |  | 378 | API routes: /me, backups, filesystem | 3.6 | 3.2 | 0.716 |
-| walker |  | 5905 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.716 |
-| walker |  | 5910 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.716 |
-| walker |  | 5915 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.716 |
-| walker |  | 5920 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.716 |
-| walker |  | 5926 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.716 |
-| walker |  | 5934 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.716 |
-| walker |  | 5946 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.716 |
-| walker |  | 5958 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.716 |
-| walker |  | 5973 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.716 |
-| walker |  | 5989 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.716 |
-| walker |  | 6006 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.716 |
-| walker |  | 6041 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.716 |
-| walker |  | 6051 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.716 |
-| walker |  | 6088 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.716 |
-| walker |  | 6120 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.705 |
+| walker |  | 6090 | 284 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 1, sub: 0, line: 5 } |  |  | 0.716 |
 | ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.705 |
-| walker |  | 6175 | 55 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream } |  |  | 0.705 |
-| walker |  | 6179 | 4 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/stream } |  |  | 0.705 |
-| walker |  | 6186 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/internal } |  |  | 0.705 |
-| walker |  | 6204 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/ours } |  |  | 0.705 |
-| walker |  | 6358 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.708 |
-| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.693 |
-| walker |  | 6677 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.700 |
-| walker |  | 6677 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.700 |
-| walker |  | 6711 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.700 |
-| walker |  | 6739 | 28 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.700 |
-| walker |  | 6783 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.700 |
-| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.686 |
-| walker |  | 6857 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.686 |
-| ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.678 |
-| ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.674 |
-| walker |  | 7229 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.704 |
-| walker |  | 7267 | 38 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib } |  |  | 0.704 |
-| walker |  | 7270 | 3 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal } |  |  | 0.704 |
-| walker |  | 7288 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams } |  |  | 0.704 |
-| ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.698 |
-| walker |  | 7332 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.698 |
-| walker |  | 7376 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.698 |
-| walker |  | 7420 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.698 |
-| walker |  | 7464 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.698 |
-| walker |  | 7508 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.698 |
-| walker |  | 7552 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.698 |
-| walker |  | 7596 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.698 |
-| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.683 |
-| walker |  | 7640 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.683 |
-| walker |  | 7684 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.683 |
-| walker |  | 7728 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.683 |
-| walker |  | 7772 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.683 |
-| walker |  | 7816 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.683 |
-| walker |  | 7860 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.683 |
-| walker |  | 7904 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.683 |
-| walker |  | 7948 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.683 |
-| ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.671 |
-| walker |  | 7992 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.671 |
-| walker |  | 8036 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.671 |
-| walker |  | 8080 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.671 |
-| walker |  | 8124 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.671 |
-| walker |  | 8168 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.671 |
-| walker |  | 8212 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.671 |
-| walker |  | 8256 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.671 |
-| walker |  | 8300 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.671 |
+| walker |  | 6237 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.705 |
+| walker |  | 6242 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.705 |
+| walker |  | 6247 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.705 |
+| walker |  | 6252 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.705 |
+| walker |  | 6258 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.705 |
+| walker |  | 6266 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.705 |
+| walker |  | 6278 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.705 |
+| walker |  | 6290 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.705 |
+| walker |  | 6305 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.705 |
+| walker |  | 6321 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.705 |
+| walker |  | 6338 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.705 |
+| walker |  | 6373 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.705 |
+| walker |  | 6383 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.705 |
+| walker |  | 6420 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.705 |
+| walker |  | 6452 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.705 |
+| ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.691 |
+| walker |  | 6507 | 55 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream } |  |  | 0.691 |
+| walker |  | 6511 | 4 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/stream } |  |  | 0.691 |
+| walker |  | 6518 | 7 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/internal } |  |  | 0.691 |
+| walker |  | 6536 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/readableStream/ours } |  |  | 0.691 |
+| walker |  | 6690 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.693 |
+| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.679 |
+| walker |  | 6935 | 245 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 0, line: 34 } |  |  | 0.679 |
+| ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.671 |
+| ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.667 |
+| walker |  | 7159 | 224 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 1, line: 34 } |  |  | 0.667 |
+| ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.662 |
+| walker |  | 7478 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.668 |
+| walker |  | 7478 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.668 |
+| walker |  | 7512 | 34 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.668 |
+| walker |  | 7540 | 28 | Markdown::Section { file: readme.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.668 |
+| walker |  | 7584 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.668 |
+| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.654 |
+| walker |  | 7658 | 74 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.654 |
+| ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.643 |
+| walker |  | 8030 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.671 |
+| walker |  | 8068 | 38 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib } |  |  | 0.671 |
+| walker |  | 8071 | 3 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal } |  |  | 0.671 |
+| walker |  | 8089 | 18 | Fs::DirListing { dir: server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams } |  |  | 0.671 |
+| walker |  | 8133 | 44 | Plaintext::DeclSurface { file: client/components/app/BookShelfCategorized.vue } |  |  | 0.671 |
+| walker |  | 8177 | 44 | Plaintext::DeclSurface { file: client/components/app/ConfigSideNav.vue } |  |  | 0.671 |
+| walker |  | 8221 | 44 | Plaintext::DeclSurface { file: client/components/cards/AuthorCard.vue } |  |  | 0.671 |
+| walker |  | 8265 | 44 | Plaintext::DeclSurface { file: client/components/cards/BookMatchCard.vue } |  |  | 0.671 |
+| walker |  | 8309 | 44 | Plaintext::DeclSurface { file: client/components/cards/GroupCard.vue } |  |  | 0.671 |
 | ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.660 |
-| walker |  | 8344 | 44 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.660 |
-| walker |  | 8388 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyCreatedModal.vue } |  |  | 0.660 |
-| walker |  | 8432 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyModal.vue } |  |  | 0.660 |
-| walker |  | 8476 | 44 | Plaintext::DeclSurface { file: client/components/modals/AudioFileDataModal.vue } |  |  | 0.660 |
-| walker |  | 8520 | 44 | Plaintext::DeclSurface { file: client/components/modals/BackupScheduleModal.vue } |  |  | 0.660 |
-| walker |  | 8564 | 44 | Plaintext::DeclSurface { file: client/components/modals/BatchQuickMatchModel.vue } |  |  | 0.660 |
+| walker |  | 8353 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyCollectionCard.vue } |  |  | 0.660 |
+| walker |  | 8397 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazyPlaylistCard.vue } |  |  | 0.660 |
+| walker |  | 8441 | 44 | Plaintext::DeclSurface { file: client/components/cards/LazySeriesCard.vue } |  |  | 0.660 |
+| walker |  | 8485 | 44 | Plaintext::DeclSurface { file: client/components/cards/NarratorCard.vue } |  |  | 0.660 |
+| walker |  | 8529 | 44 | Plaintext::DeclSurface { file: client/components/cards/NotificationCard.vue } |  |  | 0.660 |
+| walker |  | 8573 | 44 | Plaintext::DeclSurface { file: client/components/cards/PodcastFeedSummaryCard.vue } |  |  | 0.660 |
 | ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.649 |
-| walker |  | 8608 | 44 | Plaintext::DeclSurface { file: client/components/modals/BookmarksModal.vue } |  |  | 0.649 |
-| walker |  | 8652 | 44 | Plaintext::DeclSurface { file: client/components/modals/Dialog.vue } |  |  | 0.649 |
-| walker |  | 8696 | 44 | Plaintext::DeclSurface { file: client/components/modals/EditSeriesInputInnerModal.vue } |  |  | 0.649 |
-| walker |  | 8740 | 44 | Plaintext::DeclSurface { file: client/components/modals/ListeningSessionModal.vue } |  |  | 0.649 |
-| walker |  | 8784 | 44 | Plaintext::DeclSurface { file: client/components/modals/Modal.vue } |  |  | 0.649 |
-| walker |  | 8828 | 44 | Plaintext::DeclSurface { file: client/components/modals/PlayerSettingsModal.vue } |  |  | 0.649 |
+| walker |  | 8617 | 44 | Plaintext::DeclSurface { file: client/components/content/LibraryItemDetails.vue } |  |  | 0.649 |
+| walker |  | 8661 | 44 | Plaintext::DeclSurface { file: client/components/controls/FilterSelect.vue } |  |  | 0.649 |
+| walker |  | 8705 | 44 | Plaintext::DeclSurface { file: client/components/controls/PlaybackSpeedControl.vue } |  |  | 0.649 |
+| walker |  | 8749 | 44 | Plaintext::DeclSurface { file: client/components/controls/SortSelect.vue } |  |  | 0.649 |
+| walker |  | 8793 | 44 | Plaintext::DeclSurface { file: client/components/controls/VolumeControl.vue } |  |  | 0.649 |
+| walker |  | 8837 | 44 | Plaintext::DeclSurface { file: client/components/covers/AuthorImage.vue } |  |  | 0.649 |
 | ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.640 |
-| walker |  | 8872 | 44 | Plaintext::DeclSurface { file: client/components/modals/RawCoverPreviewModal.vue } |  |  | 0.640 |
-| walker |  | 8916 | 44 | Plaintext::DeclSurface { file: client/components/modals/ShareModal.vue } |  |  | 0.640 |
-| walker |  | 8960 | 44 | Plaintext::DeclSurface { file: client/components/modals/SleepTimerModal.vue } |  |  | 0.640 |
-| walker |  | 9004 | 44 | Plaintext::DeclSurface { file: client/components/modals/UploadImageModal.vue } |  |  | 0.640 |
+| walker |  | 8881 | 44 | Plaintext::DeclSurface { file: client/components/covers/BookCover.vue } |  |  | 0.640 |
+| walker |  | 8925 | 44 | Plaintext::DeclSurface { file: client/components/covers/CollectionCover.vue } |  |  | 0.640 |
+| walker |  | 8969 | 44 | Plaintext::DeclSurface { file: client/components/covers/GroupCover.vue } |  |  | 0.640 |
+| walker |  | 9013 | 44 | Plaintext::DeclSurface { file: client/components/covers/PlaylistCover.vue } |  |  | 0.640 |
 | ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.635 |
-| walker |  | 9048 | 44 | Plaintext::DeclSurface { file: client/components/player/PlayerPlaybackControls.vue } |  |  | 0.635 |
-| walker |  | 9092 | 44 | Plaintext::DeclSurface { file: client/components/player/PlayerTrackBar.vue } |  |  | 0.635 |
-| walker |  | 9136 | 44 | Plaintext::DeclSurface { file: client/components/prompt/Dialog.vue } |  |  | 0.635 |
-| walker |  | 9180 | 44 | Plaintext::DeclSurface { file: client/components/stats/DailyListeningChart.vue } |  |  | 0.635 |
-| walker |  | 9224 | 44 | Plaintext::DeclSurface { file: client/components/stats/Heatmap.vue } |  |  | 0.635 |
-| walker |  | 9268 | 44 | Plaintext::DeclSurface { file: client/components/stats/PreviewIcons.vue } |  |  | 0.635 |
+| walker |  | 9057 | 44 | Plaintext::DeclSurface { file: client/components/covers/PreviewCover.vue } |  |  | 0.635 |
+| walker |  | 9101 | 44 | Plaintext::DeclSurface { file: client/components/modals/AccountModal.vue } |  |  | 0.635 |
+| walker |  | 9145 | 44 | Plaintext::DeclSurface { file: client/components/modals/AddCustomMetadataProviderModal.vue } |  |  | 0.635 |
+| walker |  | 9189 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyCreatedModal.vue } |  |  | 0.635 |
+| walker |  | 9233 | 44 | Plaintext::DeclSurface { file: client/components/modals/ApiKeyModal.vue } |  |  | 0.635 |
+| walker |  | 9277 | 44 | Plaintext::DeclSurface { file: client/components/modals/AudioFileDataModal.vue } |  |  | 0.635 |
 | ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.648 |
-| walker |  | 9312 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReview.vue } |  |  | 0.648 |
-| walker |  | 9356 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReviewBanner.vue } |  |  | 0.648 |
-| walker |  | 9400 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReviewServer.vue } |  |  | 0.648 |
-| walker |  | 9444 | 44 | Plaintext::DeclSurface { file: client/components/stats/YearInReviewShort.vue } |  |  | 0.648 |
-| walker |  | 9488 | 44 | Plaintext::DeclSurface { file: client/components/tables/AudioTracksTableRow.vue } |  |  | 0.648 |
-| walker |  | 9532 | 44 | Plaintext::DeclSurface { file: client/components/tables/ChaptersTable.vue } |  |  | 0.648 |
+| walker |  | 9321 | 44 | Plaintext::DeclSurface { file: client/components/modals/BackupScheduleModal.vue } |  |  | 0.648 |
+| walker |  | 9365 | 44 | Plaintext::DeclSurface { file: client/components/modals/BatchQuickMatchModel.vue } |  |  | 0.648 |
+| walker |  | 9409 | 44 | Plaintext::DeclSurface { file: client/components/modals/BookmarksModal.vue } |  |  | 0.648 |
+| walker |  | 9453 | 44 | Plaintext::DeclSurface { file: client/components/modals/Dialog.vue } |  |  | 0.648 |
+| walker |  | 9497 | 44 | Plaintext::DeclSurface { file: client/components/modals/EditSeriesInputInnerModal.vue } |  |  | 0.648 |
+| walker |  | 9541 | 44 | Plaintext::DeclSurface { file: client/components/modals/ListeningSessionModal.vue } |  |  | 0.648 |
 | ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.642 |
-| walker |  | 9576 | 44 | Plaintext::DeclSurface { file: client/components/tables/EbookFilesTable.vue } |  |  | 0.642 |
-| walker |  | 9620 | 44 | Plaintext::DeclSurface { file: client/components/tables/EbookFilesTableRow.vue } |  |  | 0.642 |
-| walker |  | 9664 | 44 | Plaintext::DeclSurface { file: client/components/tables/LibraryFilesTable.vue } |  |  | 0.642 |
-| walker |  | 9708 | 44 | Plaintext::DeclSurface { file: client/components/tables/LibraryFilesTableRow.vue } |  |  | 0.642 |
-| walker |  | 9752 | 44 | Plaintext::DeclSurface { file: client/components/tables/TracksTable.vue } |  |  | 0.642 |
+| walker |  | 9585 | 44 | Plaintext::DeclSurface { file: client/components/modals/Modal.vue } |  |  | 0.642 |
+| walker |  | 9629 | 44 | Plaintext::DeclSurface { file: client/components/modals/PlayerSettingsModal.vue } |  |  | 0.642 |
+| walker |  | 9673 | 44 | Plaintext::DeclSurface { file: client/components/modals/RawCoverPreviewModal.vue } |  |  | 0.642 |
+| walker |  | 9717 | 44 | Plaintext::DeclSurface { file: client/components/modals/ShareModal.vue } |  |  | 0.642 |
+| walker |  | 9761 | 44 | Plaintext::DeclSurface { file: client/components/modals/SleepTimerModal.vue } |  |  | 0.642 |
 | ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.639 |
-| walker |  | 9796 | 44 | Plaintext::DeclSurface { file: client/components/tables/UploadedFilesTable.vue } |  |  | 0.639 |
-| walker |  | 9840 | 44 | Plaintext::DeclSurface { file: client/components/ui/Btn.vue } |  |  | 0.639 |
-| walker |  | 9884 | 44 | Plaintext::DeclSurface { file: client/components/ui/Checkbox.vue } |  |  | 0.639 |
+| walker |  | 9805 | 44 | Plaintext::DeclSurface { file: client/components/modals/UploadImageModal.vue } |  |  | 0.639 |
+| walker |  | 9849 | 44 | Plaintext::DeclSurface { file: client/components/player/PlayerPlaybackControls.vue } |  |  | 0.639 |
+| walker |  | 9893 | 44 | Plaintext::DeclSurface { file: client/components/player/PlayerTrackBar.vue } |  |  | 0.639 |
 | ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.640 |
-| walker |  | 9928 | 44 | Plaintext::DeclSurface { file: client/components/ui/ContextMenuDropdown.vue } |  |  | 0.640 |
-| walker |  | 9972 | 44 | Plaintext::DeclSurface { file: client/components/ui/Dropdown.vue } |  |  | 0.640 |
+| walker |  | 9937 | 44 | Plaintext::DeclSurface { file: client/components/prompt/Dialog.vue } |  |  | 0.640 |
+| walker |  | 9981 | 44 | Plaintext::DeclSurface { file: client/components/stats/DailyListeningChart.vue } |  |  | 0.640 |

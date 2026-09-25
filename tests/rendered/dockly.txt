@@ -106,8 +106,64 @@ docs/
       index.js
 hooks/
   containers.hook.js
+    …
+    5→class hook extends baseHook {
+    6→  init () {
+    …
+    55→  setupSwitchFocus () {
+    …
+    70→  notifyOnContainerInfo () {
+    …
+    81→  notifyOnContainerUtilization () {
+    …
+    94→  getFreshData (cb) {
+    …
+    108→  restartContainer () {
+    …
+    138→  stopContainer () {
+    …
+    168→  getSelectedItem () {
+    169→    if (!this.widgetsRepo.has('containerList')) {
+    170→      return null
+    171→    }
+    172→
+    173→    return this.widgetsRepo.get('containerList').getSelectedContainer()
+    …
+    175→}
+    177→module.exports = hook
   images.hook.js
+    …
+    5→class hook extends baseHook {
+    6→  init () {
+    …
+    27→  getSelectedItem () {
+    28→    if (!this.widgetsRepo.has('imageList')) {
+    29→      return null
+    30→    }
+    31→
+    32→    return this.widgetsRepo.get('imageList').getSelectedImage()
+    …
+    35→  notifyOnImageUpdate () {
+    …
+    65→  removeImage () {
+    …
+    95→}
+    97→module.exports = hook
   services.hook.js
+    …
+    5→class hook extends baseHook {
+    6→  init () {
+    …
+    46→  setupSwitchFocus () {
+    …
+    61→  notifyOnServiceInfo () {
+    …
+    72→  getFreshData (cb) {
+    …
+    86→  getSelectedItem () {
+    …
+    93→}
+    95→module.exports = hook
   shell.hook.js
 index.js
   …
@@ -121,12 +177,6 @@ index.js
   …
 lib/
   modes.js
-    …
-    3→module.exports = {
-    4→  container: 'containers',
-    5→  service: 'services',
-    6→  image: 'images'
-    7→}
   node.version.js
     1→module.exports = {
     2→  minimum: '7.6.0'
@@ -178,27 +228,21 @@ package.json
   …
 src/
   assetsLoader.js
+    …
+    10→class assetsLoader {
+    11→  static load () {
+    12→    const assets = this.resolveAssetFiles()
+    13→    return assets
+    …
+    16→  static resolveAssetFiles () {
+    …
+    39→  static formatAsset (assetPath) {
+    40→    return path.basename(assetPath).split('.')[0]
+    …
+    42→}
+    44→module.exports = assetsLoader
   baseWidget.js
   cli.js
-    …
-    8→function Cli () {
-    …
-    59→Cli.prototype.showVersion = function () {
-    60→  const author = pkg.author.name + '<' + pkg.author.email + '>'
-    61→  console.log(pkg.name + ' ' + pkg.version + ' by ' + author)
-    62→  console.log(pkg.description)
-    63→  console.log()
-    …
-    66→Cli.prototype.showUsage = function () {
-    …
-    89→/**
-    90→ * @method cliParse
-    91→ * @return {object} [description]
-    92→ */
-    93→Cli.prototype.cliParse = function () {
-    94→  return commandLineArgs(this.cliOpts)
-    …
-    97→module.exports = new Cli()
   dockerUtil.js
     …
     5→class Util {
@@ -255,6 +299,17 @@ src/
     231→}
     233→module.exports = Util
   enum.js
+    1→module.exports = {
+    2→  ContainerState: {
+    3→    created: 'created',
+    4→    restarting: 'restarting',
+    5→    running: 'running',
+    6→    removing: 'removing',
+    7→    paused: 'paused',
+    8→    exited: 'exited',
+    9→    dead: 'dead'
+    10→  }
+    11→}
   grid.config.js
   screen.js
     …
@@ -274,9 +329,6 @@ src/
     107→  clearWidgets () {
     …
     114→  setWidgetsRepo () {
-    115→    for (let widgetObject of this.widgetsRepository.values()) {
-    116→      widgetObject.setWidgetsRepo(this.widgetsRepository)
-    117→    }
     …
     120→  setWidgetsUtils () {
     121→    for (let widgetObject of this.widgetsRepository.values()) {

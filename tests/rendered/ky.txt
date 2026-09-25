@@ -161,36 +161,33 @@ readme.md
 source/
   core/
     Ky.ts
+      …
+      33→export class Ky {
+      34→	static create(input: Input, options: Options): ResponsePromise {
+      …
+      189→	public request: Request;
+      …
+      200→	constructor(input: Input, options: Options = {}) {
+      …
+      524→}
     constants.ts
   errors/
     ForceRetryError.ts
-      …
-      4→/**
-      5→Internal error used to signal a forced retry from afterResponse hooks.
-      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
-      7→*/
-      8→export class ForceRetryError extends Error {
-      9→	override name = 'ForceRetryError' as const;
-      10→	customDelay: number | undefined;
-      11→	code: string | undefined;
-      12→	customRequest: Request | undefined;
-      13→
-      14→	constructor(options?: ForceRetryOptions) {
-      …
-      30→}
     HTTPError.ts
     NonError.ts
+      1→/**
+      2→Wrapper for non-Error values that were thrown.
+      3→
+      4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
+      5→*/
+      6→export class NonError extends Error {
+      7→	override name = 'NonError';
+      8→	readonly value: unknown;
+      9→
+      10→	constructor(value: unknown) {
+      …
+      28→}
     TimeoutError.ts
-      …
-      3→export class TimeoutError extends Error {
-      4→	public request: KyRequest;
-      5→
-      6→	constructor(request: Request) {
-      7→		super(`Request timed out: ${request.method} ${request.url}`);
-      8→		this.name = 'TimeoutError';
-      9→		this.request = request;
-      …
-      11→}
   index.ts
     …
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
@@ -267,13 +264,7 @@ source/
       …
     options.ts
     request.ts
-      1→export type KyRequest<T = unknown> = {
-      2→	json: <J = T>() => Promise<J>;
-      3→} & Request;
     response.ts
-      1→export type KyResponse<T = unknown> = {
-      2→	json: <J = T >() => Promise<J>;
-      3→} & Response;
     retry.ts
       …
       3→export type ShouldRetryState = {
@@ -292,11 +283,33 @@ source/
   utils/
     body.ts
     delay.ts
+      …
+      5→export type DelayOptions = {
+      6→	signal?: InternalOptions['signal'];
+      7→};
+      9→export default async function delay(
+      10→	ms: number,
+      11→	{signal}: DelayOptions,
+      12→): Promise<void> {
+      …
     is.ts
     merge.ts
     normalize.ts
     options.ts
     timeout.ts
+      …
+      3→export type TimeoutOptions = {
+      4→	timeout: number;
+      5→	fetch: typeof fetch;
+      6→};
+      …
+      9→export default async function timeout(
+      10→	request: Request,
+      11→	init: RequestInit,
+      12→	abortController: AbortController | undefined,
+      13→	options: TimeoutOptions,
+      14→): Promise<Response> {
+      …
     type-guards.ts
     types.ts
 test/

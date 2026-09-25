@@ -50,62 +50,6 @@ README.md
   24→semver.valid(semver.coerce('v2')) // '2.0.0'
   25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
   26→```
-  28→You can also just load the module for the function that you care about if
-  29→you'd like to minimize your footprint.
-  30→
-  31→```js
-  32→// load the whole API at once in a single object
-  33→const semver = require('semver')
-  34→
-  35→// or just load the bits you need
-  36→// all of them listed here, just pick and choose what you want
-  37→
-  38→// classes
-  39→const SemVer = require('semver/classes/semver')
-  40→const Comparator = require('semver/classes/comparator')
-  41→const Range = require('semver/classes/range')
-  42→
-  43→// functions for working with versions
-  44→const semverParse = require('semver/functions/parse')
-  45→const semverValid = require('semver/functions/valid')
-  46→const semverClean = require('semver/functions/clean')
-  47→const semverInc = require('semver/functions/inc')
-  48→const semverDiff = require('semver/functions/diff')
-  49→const semverMajor = require('semver/functions/major')
-  50→const semverMinor = require('semver/functions/minor')
-  51→const semverPatch = require('semver/functions/patch')
-  52→const semverPrerelease = require('semver/functions/prerelease')
-  53→const semverCompare = require('semver/functions/compare')
-  54→const semverRcompare = require('semver/functions/rcompare')
-  55→const semverCompareLoose = require('semver/functions/compare-loose')
-  56→const semverCompareBuild = require('semver/functions/compare-build')
-  57→const semverSort = require('semver/functions/sort')
-  58→const semverRsort = require('semver/functions/rsort')
-  59→
-  60→// low-level comparators between versions
-  61→const semverGt = require('semver/functions/gt')
-  62→const semverLt = require('semver/functions/lt')
-  63→const semverEq = require('semver/functions/eq')
-  64→const semverNeq = require('semver/functions/neq')
-  65→const semverGte = require('semver/functions/gte')
-  66→const semverLte = require('semver/functions/lte')
-  67→const semverCmp = require('semver/functions/cmp')
-  68→const semverCoerce = require('semver/functions/coerce')
-  69→
-  70→// working with ranges
-  71→const semverSatisfies = require('semver/functions/satisfies')
-  72→const semverMaxSatisfying = require('semver/ranges/max-satisfying')
-  73→const semverMinSatisfying = require('semver/ranges/min-satisfying')
-  74→const semverToComparators = require('semver/ranges/to-comparators')
-  75→const semverMinVersion = require('semver/ranges/min-version')
-  76→const semverValidRange = require('semver/ranges/valid')
-  77→const semverOutside = require('semver/ranges/outside')
-  78→const semverGtr = require('semver/ranges/gtr')
-  79→const semverLtr = require('semver/ranges/ltr')
-  80→const semverIntersects = require('semver/ranges/intersects')
-  81→const semverSimplifyRange = require('semver/ranges/simplify')
-  82→const semverRangeSubset = require('semver/ranges/subset')
-  83→```
   …
   139→## Versions
   …
@@ -151,9 +95,81 @@ bin/
   semver.js
 classes/
   comparator.js
+    …
+    5→class Comparator {
+    6→  static get ANY () {
+    7→    return ANY
+    …
+    10→  constructor (comp, options) {
+    …
+    36→  parse (comp) {
+    …
+    57→  toString () {
+    58→    return this.value
+    …
+    61→  test (version) {
+    …
+    79→  intersects (comp, options) {
+    …
+    134→}
+    136→module.exports = Comparator
+    …
   index.js
+    …
+    3→module.exports = {
+    4→  SemVer: require('./semver.js'),
+    5→  Range: require('./range.js'),
+    6→  Comparator: require('./comparator.js'),
+    7→}
   range.js
+    …
+    6→class Range {
+    7→  constructor (range, options) {
+    …
+    73→  get range () {
+    …
+    92→  format () {
+    93→    return this.range
+    …
+    96→  toString () {
+    97→    return this.range
+    …
+    100→  parseRange (range) {
+    …
+    170→  intersects (range, options) {
+    …
+    193→  test (version) {
+    …
+    213→}
+    215→module.exports = Range
+    …
   semver.js
+    …
+    9→class SemVer {
+    10→  constructor (version, options) {
+    …
+    81→  format () {
+    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
+    83→    if (this.prerelease.length) {
+    84→      this.version += `-${this.prerelease.join('.')}`
+    85→    }
+    86→    return this.version
+    …
+    89→  toString () {
+    90→    return this.version
+    …
+    93→  compare (other) {
+    …
+    109→  compareMain (other) {
+    …
+    135→  comparePre (other) {
+    …
+    168→  compareBuild (other) {
+    …
+    194→  inc (release, identifier, identifierBase) {
+    …
+    331→}
+    333→module.exports = SemVer
 functions/
   clean.js
   cmp.js
@@ -231,11 +247,22 @@ index.js
 internal/
   constants.js
   debug.js
+    …
+    3→const debug = (
+    4→  typeof process === 'object' &&
+    5→  process.env &&
+    6→  process.env.NODE_DEBUG &&
+    7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+    8→) ? (...args) => console.error('SEMVER', ...args)
+    9→  : () => {}
+    11→module.exports = debug
   identifiers.js
   lrucache.js
   parse-options.js
   re.js
 map.js
+  …
+  3→module.exports = testFile => testFile.replace(/test\//, '')
 package.json
   …
   2→  "name": "semver",
@@ -279,6 +306,8 @@ package.json
   52→  "author": "GitHub Inc.",
   …
 preload.js
+  …
+  4→module.exports = require('./index.js')
 range.bnf
 ranges/
   gtr.js
