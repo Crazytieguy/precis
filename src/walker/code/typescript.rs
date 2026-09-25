@@ -769,9 +769,9 @@ fn whole(file: &SourceFile, span: Span, name_rows: Vec<usize>, block: Option<Nod
 /// A class as a container: the header and closing row as head, each
 /// visible field (with its comments) as a body item, and each visible
 /// method or arrow-function field as a member listed by its name row.
-fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) -> DeclInfo {
+fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Node>) -> DeclInfo {
     let Some(block) = block else {
-        return whole(file, span, vec![name_row], None);
+        return whole(file, span, vec![class_name_row], None);
     };
     let open_row = block.start_position().row + 1;
     let mut body = Vec::new();
@@ -808,7 +808,7 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
                 .child_by_field_name("value")
                 .and_then(wrapped_function_block);
             if is_member || function_block.is_some() {
-                let member_name_row = name_row_of_member(child).unwrap_or(span.start);
+                let member_name_row = name_row(child).unwrap_or(span.start);
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
                 let mut member = callable(file, span, member_name_row, block);
                 member.doc = doc_items(file, anchor);
@@ -827,19 +827,13 @@ fn class(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>) ->
         head.push(span.end);
     }
     DeclInfo {
-        name_rows: vec![name_row],
+        name_rows: vec![class_name_row],
         head,
         doc: Vec::new(),
         body,
         shape: Shape::Whole,
         members,
     }
-}
-
-fn name_row_of_member(member: Node) -> Option<usize> {
-    member
-        .child_by_field_name("name")
-        .map(|name| name.start_position().row + 1)
 }
 
 /// `#name`, `private` and `protected` members: not part of the class's
