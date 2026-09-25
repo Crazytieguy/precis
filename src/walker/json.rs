@@ -175,12 +175,10 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
             is_identity_meta_key,
         ),
     ];
-    let secondary = secondary_package_json_factor(file);
     let sections: Vec<_> = section_kinds
         .into_iter()
         .filter_map(|(key, value, name_match)| {
-            section_content(file, &source, &pairs, name_match)
-                .map(|content| (key, content, value * secondary))
+            section_content(file, &source, &pairs, name_match).map(|content| (key, content, value))
         })
         .collect();
     let overlap_chain = package_sections_share_lines(&pairs);
@@ -333,23 +331,6 @@ fn package_sections_share_lines(pairs: &[(String, usize, usize)]) -> bool {
             .iter()
             .any(|(_, other_start, other_end)| start <= other_end && other_start <= end)
     })
-}
-
-// --- value ---
-
-/// Damp `package.json` when a non-JS root manifest (pyproject.toml or
-/// Cargo.toml) sits in the same dir — the JS package is almost
-/// certainly a docs/tooling site, not the primary surface.
-const SECONDARY_PACKAGE_JSON_FACTOR: f64 = 0.05;
-
-fn secondary_package_json_factor(file: &Path) -> f64 {
-    let Some(parent) = file.parent() else {
-        return 1.0;
-    };
-    if parent.join("pyproject.toml").is_file() || parent.join("Cargo.toml").is_file() {
-        return SECONDARY_PACKAGE_JSON_FACTOR;
-    }
-    1.0
 }
 
 // --- AST helpers ---

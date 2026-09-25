@@ -215,12 +215,7 @@ crates/
           …
       lib.rs
         1→//! mdBook HTML renderer.
-        3→mod html;
-        4→mod html_handlebars;
-        5→pub mod theme;
-        6→pub(crate) mod utils;
-        7→
-        8→pub use html_handlebars::HtmlHandlebars;
+        …
       theme/
         fonts.rs
         mod.rs
@@ -321,8 +316,6 @@ examples/
     book.toml
     mdbook-remove-emphasis/
     src/
-      SUMMARY.md
-      chapter_1.md
     test.rs
 guide/
   book.toml
@@ -331,12 +324,6 @@ guide/
     404.md
     README.md
     SUMMARY.md
-      1→# Summary
-      …
-      5→# User guide
-      …
-      11→# Reference guide
-      …
     cli/
       README.md
       arg-watcher.md
@@ -384,6 +371,16 @@ guide/
     misc/
       contributors.md
 package.json
+  …
+  2→  "dependencies": {
+  3→    "browser-ui-test": "0.23.3",
+  4→    "eslint": "^9.34.0"
+  5→  },
+  6→  "scripts": {
+  7→    "lint": "eslint --no-warn-ignored crates/mdbook-html/front-end/*js crates/mdbook-html/front-end/**/*js crates/mdbook-html/front-end/**/*js.hbs",
+  8→    "lint-fix": "eslint --fix crates/mdbook-html/front-end/*js crates/mdbook-html/front-end/**/*js"
+  9→  }
+  …
 rustfmt.toml
 src/
   cmd/
