@@ -148,7 +148,6 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
     let head_end = colon_row(inner).max(name_row);
     let head: Vec<usize> = (unit.start_position().row + 1..=head_end).collect();
     let mut statements = suite_statements(inner);
-    let mut after_row = head_end;
     let mut doc = Vec::new();
     if let Some(index) = statements
         .iter()
@@ -156,12 +155,11 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
         .filter(|&index| is_docstring(statements[index]))
     {
         let docstring_rows = file.node_rows(statements.remove(index));
-        after_row = after_row.max(*docstring_rows.end());
         doc = file.paragraphs(docstring_rows.filter(|&row| row > head_end));
     }
     let (body, members) = match shape {
-        Shape::Callable => (file.node_items(statements, after_row), Vec::new()),
-        Shape::Whole => class_body(file, &statements, after_row),
+        Shape::Callable => (file.node_items(statements, head_end), Vec::new()),
+        Shape::Whole => class_body(file, &statements, head_end),
     };
     Some(DeclInfo {
         name_rows: vec![name_row],
@@ -333,6 +331,24 @@ def greet(
         assert_eq!(rows(&decl.doc), vec![vec![6], vec![8, 9]]);
         assert_eq!(rows(&decl.body), vec![vec![10, 11], vec![12], vec![13]]);
         assert!(decl.members.is_empty());
+    }
+
+    #[test]
+    fn code_python_comment_above_docstring_joins_first_statement() {
+        let model = extract_source(
+            "m.py",
+            "\
+def run():
+    # pylint: disable=broad-except
+    \"\"\"Run it.\"\"\"
+    go()
+",
+        );
+        let [decl] = model.decls.as_slice() else {
+            panic!("one decl: {:?}", model.decls);
+        };
+        assert_eq!(rows(&decl.doc), vec![vec![3]]);
+        assert_eq!(rows(&decl.body), vec![vec![2, 4]]);
     }
 
     #[test]
