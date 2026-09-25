@@ -31,7 +31,6 @@ pub mod json;
 pub mod markdown;
 pub mod plaintext;
 pub mod prisma;
-pub mod sql;
 pub mod toml;
 mod workspace;
 pub mod yaml;
@@ -110,7 +109,6 @@ impl Walker for FsWalker {
         out.extend(go_mod::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
         out.extend(yaml::expand_in_dir(dir, ctx));
-        out.extend(sql::expand_in_dir(dir, ctx));
         out
     }
 }
@@ -134,8 +132,6 @@ pub struct WalkCtx {
     /// Files hyperlinked from the root README — exempts them from the
     /// `examples/`-style non-essential demotion.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
-    /// Nested SQL files named exactly by a root README/build file.
-    sql_cited_paths: OnceCell<HashSet<PathBuf>>,
     /// The tree's hand-authored essential source, walked once.
     essential_source: OnceCell<EssentialSource>,
     /// The one source file that carries a dominant share of the tree's
@@ -159,7 +155,6 @@ impl WalkCtx {
             json_state: json::JsonState::default(),
             code: code::CodeState::default(),
             readme_cited_paths: OnceCell::new(),
-            sql_cited_paths: OnceCell::new(),
             essential_source: OnceCell::new(),
             dominant_source_file: OnceCell::new(),
         }
@@ -236,16 +231,6 @@ impl WalkCtx {
         cited
             .iter()
             .any(|cited_path| cited_path.starts_with(&canonical))
-    }
-
-    /// True iff a nested SQL path is named exactly by a root README or
-    /// build file. Root SQL files are admitted directly by the SQL walker.
-    pub(in crate::walker) fn is_sql_cited(&self, path: &Path) -> bool {
-        let cited = self
-            .sql_cited_paths
-            .get_or_init(|| sql::collect_root_cited_sql_paths(&self.root, self));
-        let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
-        cited.contains(&canonical)
     }
 
     /// The single source file the repository is *about*, when one
