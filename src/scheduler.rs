@@ -4,12 +4,8 @@
 //! content + scalar value). The scheduler absorbs each into a single
 //! pool, gates eligibility on whether the batch's predecessor (if any)
 //! is already scheduled, and ranks eligible batches by
-//! `value / cost^k`. Each iteration narrows the eligible set to a
-//! top-K contender pool by *approximate* cost ([`CONTENDER_POOL_K`]),
-//! then picks the best contender by exact cost — a batch whose approx
-//! ranking falls outside the pool can be picked a round late, which is
-//! an accepted approximation. Under prefix-monotone scheduling (see
-//! `docs/design-notes.md`), if the top-ranked exact doesn't fit the
+//! `value / cost^k`. Under prefix-monotone scheduling (see
+//! `docs/design-notes.md`), if the top-ranked batch doesn't fit the
 //! scheduler stops, no fallback to smaller batches — with one
 //! exception at round 0, where stopping means returning nothing at all
 //! (`Scheduler::schedule_partial_seed`).
@@ -25,11 +21,6 @@ use crate::fs_util::{DirFilter, EntryKind, list_dir};
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
-
-/// `best_exact` narrows the eligible set to the top-K by approx score
-/// before exact tokenization. Corpus boundary is K=66 (htop); 2× margin
-/// for off-corpus inputs.
-const CONTENDER_POOL_K: usize = 128;
 
 /// A single scheduled batch, captured in order for snapshots and the
 /// divergence metric.
@@ -70,8 +61,6 @@ pub struct Scheduler<W: Walker> {
     scheduled_log: Vec<(BatchId, Cost)>,
     /// Cached exact marginal cost per emitted batch.
     cost_cache: HashMap<BatchId, Cost>,
-    /// Cached approx token count per emitted batch (for approx ranking).
-    approx_cost_cache: HashMap<BatchId, usize>,
     /// File → span batches touching it. Applying a batch to a file can
     /// change the synthesized `…` marker delta of every other batch
     /// touching that file, so their cached costs are dropped when one
@@ -171,7 +160,6 @@ impl<W: Walker> Scheduler<W> {
             waiting: HashMap::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
-            approx_cost_cache: HashMap::new(),
             batches_by_path: HashMap::new(),
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
@@ -207,7 +195,7 @@ impl<W: Walker> Scheduler<W> {
         // Prefix-monotone scheduling — stop on the first top-ranked
         // batch that doesn't fit (no fallback to smaller batches),
         // except at round 0 where stopping yields nothing at all.
-        while let Some((id, cost)) = self.best_exact() {
+        while let Some((id, cost)) = self.top_ranked() {
             if !self.fits(cost) {
                 self.schedule_partial_seed(id);
                 break;
@@ -332,16 +320,10 @@ impl<W: Walker> Scheduler<W> {
     // ---- exact pool ----
 
     /// Top-ranked eligible batch + its cost.
-    fn best_exact(&mut self) -> Option<(BatchId, Cost)> {
+    fn top_ranked(&mut self) -> Option<(BatchId, Cost)> {
         let eligible: Vec<BatchId> = self.eligible.iter().copied().collect();
-        if eligible.is_empty() {
-            return None;
-        }
-
-        let pool = self.select_contender_pool(&eligible);
-
         let mut best: Option<(f64, BatchId, Cost)> = None;
-        for &id in &pool {
+        for id in eligible {
             if !self.cost_cache.contains_key(&id) {
                 let content = &self.entries[id.index()].content;
                 let c = self.tree.marginal_cost(content);
@@ -365,45 +347,6 @@ impl<W: Walker> Scheduler<W> {
             }
         }
         best.map(|(_, id, cost)| (id, cost))
-    }
-
-    /// Narrow `eligible` to the top-K contender pool by approx score
-    /// for the exact pass to rerank. Skips the approx pass when the
-    /// eligible set already fits in the pool.
-    fn select_contender_pool(&mut self, eligible: &[BatchId]) -> Vec<BatchId> {
-        if eligible.len() <= CONTENDER_POOL_K {
-            return eligible.to_vec();
-        }
-
-        for &id in eligible {
-            if !self.approx_cost_cache.contains_key(&id) {
-                let content = &self.entries[id.index()].content;
-                let tokens = self.tree.marginal_cost_approx(content).tokens;
-                self.approx_cost_cache.insert(id, tokens);
-            }
-        }
-
-        let mut candidates: Vec<(f64, BatchId)> = Vec::with_capacity(eligible.len());
-        for &id in eligible {
-            let pressure = self.train_pressure(id) * self.dominant_file_boost(id);
-            let approx_tokens = self.approx_cost_cache[&id];
-            let entry = &self.entries[id.index()];
-            let ratio =
-                score_ratio(entry.value, approx_tokens, entry.key.concavity_exponent()) * pressure;
-            candidates.push((ratio, id));
-        }
-
-        let k = CONTENDER_POOL_K.min(candidates.len()).max(1);
-        let pivot = candidates.len() - k;
-        // Partition so positions [pivot, len) hold the k largest
-        // (in arbitrary order — the exact pass re-ranks).
-        let entries = &self.entries;
-        candidates.select_nth_unstable_by(pivot, |a, b| {
-            a.0.partial_cmp(&b.0)
-                .unwrap_or(std::cmp::Ordering::Equal)
-                .then_with(|| entries[b.1.index()].key.cmp(&entries[a.1.index()].key))
-        });
-        candidates[pivot..].iter().map(|(_, id)| *id).collect()
     }
 
     fn fits(&self, cost: Cost) -> bool {
@@ -569,7 +512,6 @@ impl<W: Walker> Scheduler<W> {
                 if let Some(ids) = self.batches_by_path.get(&span.path) {
                     for other in ids {
                         self.cost_cache.remove(other);
-                        self.approx_cost_cache.remove(other);
                     }
                 }
                 // Prune the now-scheduled id from this path's list so

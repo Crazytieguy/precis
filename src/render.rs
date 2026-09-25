@@ -216,7 +216,8 @@ impl RenderedTree {
         total
     }
 
-    /// Marginal cost with tokens approximated as `bytes / k`.
+    /// Marginal cost with tokens approximated as `bytes / k`, for
+    /// estimates made before the tokenizer is built.
     pub fn marginal_cost_approx(&self, content: &BatchContent) -> Cost {
         let mut total = Cost::default();
         self.visit_atom_costs(content, tokenizer::approx_count, |c| total = total + c);
