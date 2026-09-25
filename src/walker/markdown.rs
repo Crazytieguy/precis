@@ -133,7 +133,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &file,
             &source,
             &ranges,
-            Some(&headline),
+            None,
             headline_emitted,
             ctx,
         );
@@ -484,7 +484,7 @@ fn build_section_content(
 
     // A README section starts past the last row `ReadmeHeadline`
     // covers — else those rows' marginal cost goes to 0 and
-    // `ratio(value, 0) = ∞`. (`headline` is `Some` only for READMEs.)
+    // `ratio(value, 0) = ∞`. (`headline` is `Some` only for README.md.)
     // Rows the headline stepped *over* are dropped with them: admitting
     // that chrome measured −0.0033 corpus mean.
     let effective_start = match headline.and_then(|spec| spec.covered_rows.iter().next_back()) {
@@ -613,9 +613,12 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
             .map_or(src_lines.len(), |next| next.start_row - 1)
     };
     let intro = rst_content_rows(&src_lines, intro_start, intro_end);
+    // `lede_section` is 0 for the intro, else the heading index.
+    let mut lede_section = None;
     if let Some(lede) = rst_lede(&src_lines, &intro) {
         covered_rows.extend(&intro[lede]);
-    } else if let Some((rows, lede)) = headings.iter().enumerate().skip(1).find_map(|(i, h)| {
+        lede_section = Some(0);
+    } else if let Some((i, rows, lede)) = headings.iter().enumerate().skip(1).find_map(|(i, h)| {
         let title = title_core(src_lines[h.title_row - 1]);
         if !matches!(
             title.as_str(),
@@ -624,16 +627,32 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
             return None;
         }
         let rows = rst_content_rows(&src_lines, h.title_row, section_end(i));
-        rst_lede(&src_lines, &rows).map(|lede| (rows, lede))
+        rst_lede(&src_lines, &rows).map(|lede| (i, rows, lede))
     }) {
         covered_rows.extend(&rows[lede]);
+        lede_section = Some(i);
     }
+    // The section holding the lede starts past it, dropping the rows the
+    // headline stepped over; every other section stays whole.
+    let lede_end = covered_rows.last().copied().unwrap_or(0);
+    let start_for = |section: usize, start: usize| {
+        if lede_section == Some(section) {
+            lede_end + 1
+        } else {
+            start
+        }
+    };
     let mut ranges = Vec::new();
+    let intro_start = start_for(0, intro_start);
     if intro_start <= intro_end {
         let intro = SectionRange::new(intro_start, intro_end, 0);
         push_whole_or_head_split(&mut ranges, &src_lines, intro);
     }
     for (i, heading) in headings.iter().enumerate().skip(1) {
+        let (start, end) = (start_for(i, heading.title_row), section_end(i));
+        if start > end {
+            continue;
+        }
         let title = title_core(src_lines[heading.title_row - 1]);
         push_whole_or_head_split(
             &mut ranges,
@@ -641,7 +660,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
             SectionRange {
                 is_reference_usage_section: is_canonical_usage_title_core(&title)
                     || is_reference_usage_title_core(&title),
-                ..SectionRange::new(heading.title_row, section_end(i), i - 1)
+                ..SectionRange::new(start, end, i - 1)
             },
         );
     }
@@ -2700,6 +2719,50 @@ Details prose paragraph one.
                 );
             }
         }
+    }
+
+    /// When the RST lede comes from a later `Overview`, the sections
+    /// between the title and it stay whole; only the Overview section
+    /// starts past the lede.
+    #[test]
+    fn walker_markdown_rst_fallback_lede_keeps_preceding_sections() {
+        let src = "\
+Title
+=====
+
+Installation
+------------
+
+Run pip install the package now.
+
+Overview
+--------
+
+Overview prose paragraph one here.
+
+Overview trailing details stay here.
+";
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("README.rst"), src).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let mut headline_spans = Vec::new();
+        let mut section_spans = Vec::new();
+        for batch in expand_in_dir(root, &ctx) {
+            let BatchContent::Lines { spans } = batch.content else {
+                continue;
+            };
+            let rows = spans.iter().map(|span| (span.start, span.end));
+            match batch.key {
+                BatchKey::Markdown(MarkdownKey::ReadmeHeadline { .. }) => {
+                    headline_spans.extend(rows);
+                }
+                BatchKey::Markdown(MarkdownKey::Section { .. }) => section_spans.extend(rows),
+                _ => {}
+            }
+        }
+        assert_eq!(headline_spans, vec![(1, 2), (12, 12)]);
+        assert_eq!(section_spans, vec![(4, 7), (14, 14)]);
     }
 
     /// A non-ASCII tagline whose UTF-8 byte length exceeds the tagline

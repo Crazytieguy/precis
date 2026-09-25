@@ -61,6 +61,7 @@ LICENSE
 README.rst
   1→TinyUSB
   2→=======
+  4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
   …
   31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
   32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
@@ -351,7 +352,7 @@ src/
   tusb.h
     …
     144→#if CFG_TUH_ENABLED || CFG_TUD_ENABLED
-    146→// Internal helper for backward compatible with tusb_init(void)
+    …
     147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
     …
     159→#define _tusb_init_arg1(_rhport)             _tusb_init_arg0()
