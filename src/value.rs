@@ -203,6 +203,43 @@ pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f
     }
 }
 
+/// Base value of each code-engine rung (`walker::code`), before the file
+/// prior, the declaration factors and the chunk share. Starting values
+/// are the medians of the pre-engine walkers' effective values per rung,
+/// not tuned. `Names` sits above `Decl` so a file's roster ranks ahead of
+/// its individual declarations.
+pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
+    use crate::batch::Rung;
+    match rung {
+        Rung::ModuleDoc => 1180.0,
+        Rung::Names => 1150.0,
+        Rung::Decl => 1130.0,
+        Rung::Doc => 610.0,
+        Rung::Body => 600.0,
+    }
+}
+
+/// Code-engine factor for a declaration outside its language's public
+/// API, on its `Decl`, `Doc` and `Body` batches.
+pub const CODE_PRIVATE_FACTOR: f64 = 0.65;
+
+/// Code-engine factor for a container's member (method, trait/impl fn),
+/// on its `Decl`, `Doc` and `Body` batches.
+pub const CODE_MEMBER_FACTOR: f64 = 0.8;
+
+/// Code-engine factor on every batch of a language's entry file
+/// (`lib.rs`, `__init__.py`, …), on top of pinning its depth to 1.
+pub const CODE_ENTRYPOINT_FACTOR: f64 = 1.25;
+
+/// Per-index decay of a chunked code part: chunk `i` is worth
+/// `CODE_CHUNK_TAIL_DECAY^i` times its cost share of the unsplit part.
+pub const CODE_CHUNK_TAIL_DECAY: f64 = 0.85;
+
+/// Premium on the first chunk of a split `Names` roster, bounded so it
+/// never prices above the unsplit roster: each file's roster head ranks
+/// ahead of every file's roster tail.
+pub const CODE_NAMES_HEAD_PREMIUM: f64 = 1.3;
+
 /// Down-weight a batch by filesystem depth — depth 0/1 unpenalized.
 pub fn depth_factor(depth: usize) -> f64 {
     1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.35)

@@ -10,7 +10,7 @@ use std::ops::Range;
 
 use super::SourceFile;
 use super::model::Item;
-use crate::value::DEFAULT_CONCAVITY_EXPONENT;
+use crate::value::{CODE_CHUNK_TAIL_DECAY, CODE_NAMES_HEAD_PREMIUM, DEFAULT_CONCAVITY_EXPONENT};
 use crate::walker::budget_chunk_ranges;
 
 /// A part costing more tokens than this is split.
@@ -19,9 +19,6 @@ pub(super) const SPLIT_AT: usize = 300;
 pub(super) const TARGET: usize = 150;
 /// A final chunk cheaper than this folds into the one before it.
 pub(super) const MIN_TAIL: usize = 75;
-/// Per-chunk-index value decay: chunk `i` is worth `TAIL_DECAY^i` of its
-/// cost share.
-pub(super) const TAIL_DECAY: f64 = 0.85;
 
 /// Token cost of one item's rows.
 pub(super) fn item_cost(item: &Item, file: &SourceFile) -> usize {
@@ -55,16 +52,32 @@ pub(super) fn chunk_ranges(item_costs: &[usize]) -> Vec<Range<usize>> {
     )
 }
 
-/// Value multiplier for chunk `index`, costing `chunk_cost` of the part's
-/// `part_cost`: `share^k × TAIL_DECAY^index` with `k` the default concavity
-/// exponent, so each chunk ranks like the unsplit part times the decay.
-pub(super) fn chunk_value_factor(chunk_cost: usize, part_cost: usize, index: usize) -> f64 {
+/// Value multiplier for chunk `index` of `chunk_count`, costing
+/// `chunk_cost` of the part's `part_cost`: `share^k × decay^index` with
+/// `k` the default concavity exponent, so each chunk ranks like the
+/// unsplit part times the decay. A split roster's head (`head_premium`)
+/// takes [`CODE_NAMES_HEAD_PREMIUM`], bounded by the unsplit part's value.
+pub(super) fn chunk_value_factor(
+    chunk_cost: usize,
+    part_cost: usize,
+    index: usize,
+    chunk_count: usize,
+    head_premium: bool,
+) -> f64 {
+    if chunk_count <= 1 {
+        return 1.0;
+    }
     let share = if part_cost == 0 {
-        1.0
+        1.0 / chunk_count as f64
     } else {
         chunk_cost as f64 / part_cost as f64
     };
-    share.powf(DEFAULT_CONCAVITY_EXPONENT) * TAIL_DECAY.powi(index as i32)
+    let parity = share.powf(DEFAULT_CONCAVITY_EXPONENT) * CODE_CHUNK_TAIL_DECAY.powi(index as i32);
+    if head_premium && index == 0 {
+        (parity * CODE_NAMES_HEAD_PREMIUM).min(1.0)
+    } else {
+        parity
+    }
 }
 
 #[cfg(test)]
