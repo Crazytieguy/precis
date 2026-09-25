@@ -112,9 +112,9 @@ Score(3000)=0.517 I=0.569 C=0.470 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.853 |
 | walker |  | 6269 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.853 |
 | walker |  | 6444 | 175 | go doc multierror.go:71 |  |  | 0.868 |
-| walker |  | 6610 | 166 | go names multierror_test.go |  |  | 0.882 |
-| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.853 |
-| walker |  | 6787 | 177 | go doc multierror.go:99 |  |  | 0.866 |
+| walker |  | 6621 | 177 | go doc multierror.go:99 |  |  | 0.881 |
+| ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.852 |
+| walker |  | 6787 | 166 | go names multierror_test.go |  |  | 0.866 |
 | walker |  | 6798 | 11 | go body multierror_test.go:13 |  |  | 0.866 |
 | walker |  | 6813 | 15 | go doc multierror_test.go:209 |  |  | 0.866 |
 | ns | 6837 |  | 179 | Test-only helper `nestedError` and the `errors.As` target pattern | 4.5 | 4.1 | 0.852 |

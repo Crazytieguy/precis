@@ -177,15 +177,34 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 9295 | 125 | docs/summary.md section #0 |  |  | 0.607 |
 | ns | 9368 |  | 161 | CI matrix and dependency automation | 7.6 |  | 0.602 |
 | walker |  | 9377 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.603 |
-| walker |  | 9430 | 53 | docs/reference/refinements.md section #0 |  |  | 0.603 |
-| walker |  | 9507 | 77 | ts doc src/structs/coercions.ts:79 |  |  | 0.603 |
+| walker |  | 9400 | 23 | ts doc src/struct.ts:175 |  |  | 0.603 |
+| walker |  | 9423 | 23 | ts doc src/struct.ts:243 |  |  | 0.603 |
+| walker |  | 9448 | 25 | ts doc src/struct.ts:259 |  |  | 0.603 |
+| walker |  | 9472 | 24 | ts body src/struct.ts:175 |  |  | 0.603 |
+| walker |  | 9485 | 13 | ts body src/struct.ts:67 |  |  | 0.603 |
+| walker |  | 9498 | 13 | ts body src/struct.ts:75 |  |  | 0.603 |
+| walker |  | 9511 | 13 | ts body src/struct.ts:93 |  |  | 0.603 |
 | ns | 9521 |  | 153 | Remaining package.json keys: entry points and publish metadata | 7.7 | 1.1 | 0.608 |
-| walker |  | 9531 | 24 | ts doc src/structs/refinements.ts:93 |  |  | 0.609 |
-| walker |  | 9554 | 23 | ts doc src/struct.ts:175 |  |  | 0.609 |
+| walker |  | 9524 | 13 | ts body src/struct.ts:107 |  |  | 0.608 |
+| walker |  | 9550 | 26 | ts doc src/struct.ts:123 |  |  | 0.608 |
+| walker |  | 9577 | 27 | ts doc src/struct.ts:231 |  |  | 0.608 |
 | ns | 9599 |  | 78 | Formatting and docs-site configuration | 7.8 |  | 0.606 |
-| walker |  | 9664 | 110 | json config jsr.json |  |  | 0.608 |
-| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.604 |
-| ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.601 |
-| walker |  | 9870 | 206 | Readme.md section #8 |  |  | 0.601 |
-| walker |  | 9896 | 26 | package identity in examples/package.json |  |  | 0.601 |
-| walker |  | 9919 | 23 | ts doc src/struct.ts:243 |  |  | 0.601 |
+| walker |  | 9604 | 27 | ts doc src/struct.ts:237 |  |  | 0.606 |
+| walker |  | 9632 | 28 | ts doc src/struct.ts:253 |  |  | 0.606 |
+| walker |  | 9646 | 14 | ts body src/structs/types.ts:19 |  |  | 0.606 |
+| walker |  | 9660 | 14 | ts body src/structs/types.ts:258 |  |  | 0.606 |
+| walker |  | 9674 | 14 | ts body src/structs/types.ts:574 |  |  | 0.606 |
+| walker |  | 9703 | 29 | ts doc src/struct.ts:139 |  |  | 0.606 |
+| ns | 9718 |  | 119 | ESLint configuration head | 7.9 |  | 0.601 |
+| walker |  | 9733 | 30 | ts doc src/struct.ts:157 |  |  | 0.601 |
+| walker |  | 9752 | 19 | ts body src/structs/utilities.ts:71 |  |  | 0.602 |
+| walker |  | 9791 | 39 | ts doc src/struct.ts:266 |  |  | 0.602 |
+| walker |  | 9813 | 22 | ts doc src/structs/types.ts:19 |  |  | 0.602 |
+| walker |  | 9836 | 23 | ts doc src/structs/types.ts:60 |  |  | 0.602 |
+| ns | 9847 |  | 129 | Examples package manifest and run instructions | 7.10 |  | 0.600 |
+| walker |  | 9859 | 23 | ts doc src/structs/types.ts:70 |  |  | 0.600 |
+| walker |  | 9882 | 23 | ts doc src/structs/types.ts:131 |  |  | 0.601 |
+| walker |  | 9905 | 23 | ts doc src/structs/types.ts:159 |  |  | 0.601 |
+| walker |  | 9928 | 23 | ts doc src/structs/types.ts:258 |  |  | 0.601 |
+| walker |  | 9951 | 23 | ts doc src/structs/types.ts:278 |  |  | 0.601 |
+| walker |  | 9974 | 23 | ts doc src/structs/types.ts:442 |  |  | 0.602 |

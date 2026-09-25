@@ -24,10 +24,10 @@ Score(3000)=0.790 I=0.936 C=0.668 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 585 | 197 | ts decl src/index.ts:23 |  |  | 0.523 |
 | ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.479 |
 | walker |  | 772 | 187 | README headline in README.md |  |  | 0.757 |
-| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.714 |
-| walker |  | 916 | 144 | headings outline in README.md |  |  | 0.783 |
-| walker |  | 947 | 31 | README.md section #10 |  |  | 0.783 |
-| walker |  | 993 | 46 | ts doc src/index.ts:46 |  |  | 0.788 |
+| walker |  | 818 | 46 | ts doc src/index.ts:46 |  |  | 0.762 |
+| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.718 |
+| walker |  | 962 | 144 | headings outline in README.md |  |  | 0.788 |
+| walker |  | 993 | 31 | README.md section #10 |  |  | 0.788 |
 | ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.809 |
 | walker |  | 1108 | 115 | package identity metadata in package.json |  |  | 0.812 |
 | ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.818 |

@@ -143,6 +143,9 @@ lib/
     351→app.set = function set(setting, val) {
     …
     399→app.path = function path() {
+    400→  return this.parent
+    401→    ? this.parent.path() + this.mountpath
+    402→    : '';
     …
     420→app.enabled = function enabled(setting) {
     421→  return Boolean(this.set(setting));

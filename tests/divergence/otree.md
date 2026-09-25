@@ -161,27 +161,27 @@ Score(3000)=0.447 I=0.790 C=0.253 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 6622 | 22 | rust decl src/parse/syntax.rs:151 |  |  | 0.527 |
 | walker |  | 6648 | 26 | rust decl src/parse/syntax.rs:156 |  |  | 0.529 |
 | walker |  | 6686 | 38 | rust decl src/parse/syntax.rs:29 |  |  | 0.533 |
+| walker |  | 6696 | 10 | rust body src/tree.rs:94 |  |  | 0.533 |
 | ns | 6707 |  | 348 | generate_actions! — the complete Action vocabulary | 5.3 |  | 0.518 |
-| walker |  | 6713 | 27 | rust decl src/parse/syntax.rs:136 |  |  | 0.518 |
-| walker |  | 6762 | 49 | rust decl src/parse/syntax.rs:32 |  |  | 0.518 |
-| walker |  | 6880 | 118 | rust decl src/parse/syntax.rs:11 |  |  | 0.539 |
-| walker |  | 7016 | 136 | rust decl src/ui/filter.rs:40 |  |  | 0.540 |
-| walker |  | 7057 | 41 | rust decl src/parse/xml.rs:37 |  |  | 0.540 |
+| walker |  | 6708 | 12 | rust body src/tree.rs:98 |  |  | 0.518 |
+| walker |  | 6722 | 14 | rust body src/tree.rs:386 |  |  | 0.518 |
+| walker |  | 6749 | 27 | rust decl src/parse/syntax.rs:136 |  |  | 0.518 |
+| walker |  | 6798 | 49 | rust decl src/parse/syntax.rs:32 |  |  | 0.518 |
+| walker |  | 6815 | 17 | rust body src/tree.rs:390 |  |  | 0.518 |
+| walker |  | 6933 | 118 | rust decl src/parse/syntax.rs:11 |  |  | 0.539 |
+| walker |  | 7069 | 136 | rust decl src/ui/filter.rs:40 |  |  | 0.540 |
+| walker |  | 7079 | 10 | rust body src/ui/filter.rs:102 |  |  | 0.540 |
 | ns | 7113 |  | 406 | The complete colour schema — groups, per-group fields, and the Color type | 5.4 |  | 0.525 |
-| walker |  | 7199 | 142 | rust decl src/ui/popup.rs:26 |  |  | 0.526 |
-| walker |  | 7209 | 10 | rust body src/ui/popup.rs:87 |  |  | 0.526 |
-| ns | 7236 |  | 123 | The Types section — customisable type labels | 5.5 | 5.1 | 0.521 |
-| walker |  | 7352 | 143 | rust decl src/config/keys.rs:53 |  |  | 0.521 |
+| walker |  | 7120 | 41 | rust decl src/parse/xml.rs:37 |  |  | 0.525 |
+| ns | 7236 |  | 123 | The Types section — customisable type labels | 5.5 | 5.1 | 0.520 |
+| walker |  | 7262 | 142 | rust decl src/ui/popup.rs:26 |  |  | 0.521 |
+| walker |  | 7272 | 10 | rust body src/ui/popup.rs:87 |  |  | 0.521 |
+| walker |  | 7283 | 11 | rust body src/ui/popup.rs:35 |  |  | 0.521 |
 | ns | 7374 |  | 138 | Every method on Config (names only) | 5.6 | 5.1 | 0.520 |
-| walker |  | 7495 | 143 | rust decl src/ui/tree_overview.rs:19 |  |  | 0.520 |
+| walker |  | 7426 | 143 | rust decl src/config/keys.rs:53 |  |  | 0.520 |
+| walker |  | 7569 | 143 | rust decl src/ui/tree_overview.rs:19 |  |  | 0.520 |
 | ns | 7590 |  | 216 | The App control enums — Refresh, ElementInFocus, ScrollDirection | 6.1 |  | 0.511 |
-| walker |  | 7680 | 185 | rust names src/ui/mod.rs |  |  | 0.512 |
-| walker |  | 7690 | 10 | rust body src/tree.rs:94 |  |  | 0.512 |
-| walker |  | 7702 | 12 | rust body src/tree.rs:98 |  |  | 0.512 |
-| walker |  | 7716 | 14 | rust body src/tree.rs:386 |  |  | 0.512 |
-| walker |  | 7733 | 17 | rust body src/tree.rs:390 |  |  | 0.512 |
-| walker |  | 7743 | 10 | rust body src/ui/filter.rs:102 |  |  | 0.512 |
-| walker |  | 7754 | 11 | rust body src/ui/popup.rs:35 |  |  | 0.512 |
+| walker |  | 7754 | 185 | rust names src/ui/mod.rs |  |  | 0.512 |
 | walker |  | 7767 | 13 | rust body src/parse/json.rs:21 |  |  | 0.512 |
 | walker |  | 7781 | 14 | rust body src/parse/hcl.rs:23 |  |  | 0.512 |
 | walker |  | 7795 | 14 | rust body src/parse/xml.rs:32 |  |  | 0.512 |

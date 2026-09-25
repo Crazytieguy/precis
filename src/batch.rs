@@ -67,9 +67,6 @@ macro_rules! impl_batchkey {
             fn concavity_exponent(&self) -> f64 {
                 match self { $(BatchKey::$variant(k) => InnerKey::concavity_exponent(k),)* }
             }
-            fn is_orientation(&self) -> bool {
-                match self { $(BatchKey::$variant(k) => InnerKey::is_orientation(k),)* }
-            }
             fn is_depth_follow_up(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_depth_follow_up(k),)* }
             }
@@ -99,13 +96,9 @@ trait InnerKey {
     fn concavity_exponent(&self) -> f64 {
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
-    fn is_orientation(&self) -> bool {
-        false
-    }
     /// True for depth follow-up batches — doc/body/member refinements
     /// of an already-delivered surface. Drives the scheduler's
-    /// breadth-pressure penalty; surfaces and orientation never
-    /// qualify.
+    /// breadth-pressure penalty; surfaces never qualify.
     fn is_depth_follow_up(&self) -> bool {
         false
     }
@@ -294,15 +287,6 @@ pub trait WalkerKey:
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
 
-    /// True for orientation content (README/manifest surfaces). A train
-    /// rooted here counts as a scheduler redirect target by its
-    /// *unbought* members rather than by being unentered — orientation
-    /// chains are read a section at a time, so entering one does not
-    /// spend the breadth it still holds.
-    fn is_orientation(&self) -> bool {
-        false
-    }
-
     /// True for depth follow-up batches — doc/body/member refinements
     /// of an already-delivered surface. Drives the scheduler's
     /// breadth-pressure penalty.
@@ -334,9 +318,6 @@ impl InnerKey for FsKey {
 }
 
 impl InnerKey for MarkdownKey {
-    fn is_orientation(&self) -> bool {
-        true
-    }
     fn describe(&self, root: &Path) -> String {
         match self {
             MarkdownKey::ReadmeHeadline { file } => describe_in("README headline", file, root),
@@ -367,13 +348,6 @@ impl InnerKey for MarkdownKey {
 }
 
 impl InnerKey for TomlKey {
-    fn is_orientation(&self) -> bool {
-        !matches!(
-            self,
-            TomlKey::Config { .. } | TomlKey::PackageMetadata { .. }
-        )
-    }
-
     fn describe(&self, root: &Path) -> String {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),
@@ -397,12 +371,6 @@ impl InnerKey for JsonKey {
             JsonKey::Whole { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
-    }
-
-    /// Manifest sections (identity / entrypoints / scripts / deps) are
-    /// orientation; a verbatim `Whole` JSON config dump is not.
-    fn is_orientation(&self) -> bool {
-        !matches!(self, JsonKey::Whole { .. })
     }
 
     fn describe(&self, root: &Path) -> String {

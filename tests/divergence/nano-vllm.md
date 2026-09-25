@@ -104,13 +104,13 @@ Score(3000)=0.494 I=0.750 C=0.325 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 2839 | 44 | python decl nanovllm/layers/linear.py:56 |  |  | 0.494 |
 | walker |  | 2883 | 44 | python decl nanovllm/layers/linear.py:133 |  |  | 0.494 |
 | walker |  | 2928 | 45 | python decl nanovllm/layers/linear.py:78 |  |  | 0.494 |
+| walker |  | 2936 | 8 | python body nanovllm/layers/linear.py:33 |  |  | 0.494 |
 | ns | 3012 |  | 234 | Import blocks of qwen3.py and attention.py | 2.13 |  | 0.475 |
-| walker |  | 3112 | 184 | python decl nanovllm/config.py:6 |  |  | 0.513 |
-| walker |  | 3163 | 51 | python decl nanovllm/layers/layernorm.py:28 |  |  | 0.513 |
+| walker |  | 3120 | 184 | python decl nanovllm/config.py:6 |  |  | 0.513 |
+| walker |  | 3171 | 51 | python decl nanovllm/layers/layernorm.py:28 |  |  | 0.513 |
 | ns | 3203 |  | 191 | pyproject project metadata and dependency list | 2.14 |  | 0.537 |
-| walker |  | 3265 | 102 | python names nanovllm/utils/context.py |  |  | 0.542 |
-| walker |  | 3273 | 8 | python body nanovllm/utils/context.py:18 |  |  | 0.542 |
-| walker |  | 3281 | 8 | python body nanovllm/layers/linear.py:33 |  |  | 0.542 |
+| walker |  | 3273 | 102 | python names nanovllm/utils/context.py |  |  | 0.542 |
+| walker |  | 3281 | 8 | python body nanovllm/utils/context.py:18 |  |  | 0.542 |
 | walker |  | 3290 | 9 | python body nanovllm/engine/llm_engine.py:56 |  |  | 0.542 |
 | ns | 3324 |  | 121 | README installation and model-download commands | 2.15 |  | 0.534 |
 | walker |  | 3345 | 55 | python decl nanovllm/models/qwen3.py:145 |  |  | 0.534 |

@@ -98,36 +98,36 @@ Score(3000)=0.482 I=0.809 C=0.287 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | walker |  | 5486 | 194 | c names src/worldgen.c |  |  | 0.714 |
 | ns | 5587 |  | 172 | worldgen.h — the complete generation API and the shared chunk_section buffer | 4.5 |  | 0.718 |
 | walker |  | 5729 | 243 | c names src/procedures.c |  |  | 0.719 |
-| walker |  | 5745 | 16 | c doc src/procedures.c:54 |  |  | 0.719 |
-| walker |  | 5761 | 16 | c doc src/procedures.c:75 |  |  | 0.719 |
-| walker |  | 5777 | 16 | c doc src/procedures.c:146 |  |  | 0.719 |
+| walker |  | 5742 | 13 | c doc include/globals.h:106 |  |  | 0.719 |
+| walker |  | 5759 | 17 | c doc include/globals.h:38 |  |  | 0.719 |
+| walker |  | 5778 | 19 | c doc include/globals.h:56 |  |  | 0.719 |
 | ns | 5794 |  | 207 | tools.h — socket I/O and the byte-order writers | 4.6 |  | 0.724 |
-| walker |  | 5795 | 18 | c doc src/procedures.c:177 |  |  | 0.724 |
+| walker |  | 5805 | 27 | c doc include/globals.h:32 |  |  | 0.724 |
+| walker |  | 5832 | 27 | c doc include/globals.h:45 |  |  | 0.724 |
+| walker |  | 5859 | 27 | c doc include/globals.h:75 |  |  | 0.724 |
+| walker |  | 5890 | 31 | c doc include/globals.h:49 |  |  | 0.724 |
+| walker |  | 5923 | 33 | c doc include/globals.h:63 |  |  | 0.724 |
+| walker |  | 5960 | 37 | c doc include/globals.h:53 |  |  | 0.724 |
 | ns | 5991 |  | 197 | tools.h — the readers, string helpers and RNG | 4.7 |  | 0.730 |
+| walker |  | 5998 | 38 | c doc include/globals.h:23 |  |  | 0.730 |
+| walker |  | 6050 | 52 | c doc include/globals.h:103 |  |  | 0.730 |
+| walker |  | 6104 | 54 | c doc include/globals.h:71 |  |  | 0.730 |
+| walker |  | 6120 | 16 | c doc src/procedures.c:54 |  |  | 0.730 |
 | ns | 6129 |  | 138 | tools.h — the inline math helpers and the platform time shim | 4.8 |  | 0.730 |
+| walker |  | 6136 | 16 | c doc src/procedures.c:75 |  |  | 0.730 |
+| walker |  | 6152 | 16 | c doc src/procedures.c:146 |  |  | 0.730 |
+| walker |  | 6170 | 18 | c doc src/procedures.c:177 |  |  | 0.730 |
+| walker |  | 6189 | 19 | c doc src/procedures.c:130 |  |  | 0.730 |
 | ns | 6325 |  | 196 | serialize.h in full — persistence API and its compile-time no-op fallback | 4.9 |  | 0.735 |
 | ns | 6410 |  | 85 | crafting.h and structures.h in full — the two smallest module APIs | 4.10 |  | 0.734 |
-| walker |  | 6485 | 690 | plaintext config extract_registries.sh |  |  | 0.734 |
 | ns | 6499 |  | 89 | main.c — the project's own module include list | 5.1 |  | 0.727 |
-| walker |  | 6654 | 169 | README.md section #2 |  |  | 0.727 |
 | ns | 6755 |  | 256 | main.c — the maintainer's design note on the packet handlers, and handlePacket's signature | 5.2 |  | 0.713 |
-| walker |  | 7013 | 359 | README.md section #3 |  |  | 0.713 |
-| walker |  | 7026 | 13 | c doc include/globals.h:106 |  |  | 0.713 |
-| walker |  | 7043 | 17 | c doc include/globals.h:38 |  |  | 0.713 |
-| walker |  | 7062 | 19 | c doc include/globals.h:56 |  |  | 0.713 |
+| walker |  | 6879 | 690 | plaintext config extract_registries.sh |  |  | 0.713 |
+| walker |  | 6984 | 105 | c doc include/globals.h:93 |  |  | 0.713 |
 | ns | 7081 |  | 326 | main.c — packet 0x00 dispatch: handshake, status, login, configuration | 5.3 |  | 0.692 |
-| walker |  | 7089 | 27 | c doc include/globals.h:32 |  |  | 0.692 |
-| walker |  | 7116 | 27 | c doc include/globals.h:45 |  |  | 0.692 |
-| walker |  | 7143 | 27 | c doc include/globals.h:75 |  |  | 0.692 |
-| walker |  | 7174 | 31 | c doc include/globals.h:49 |  |  | 0.692 |
-| walker |  | 7207 | 33 | c doc include/globals.h:63 |  |  | 0.692 |
-| walker |  | 7244 | 37 | c doc include/globals.h:53 |  |  | 0.692 |
-| walker |  | 7282 | 38 | c doc include/globals.h:23 |  |  | 0.692 |
-| walker |  | 7334 | 52 | c doc include/globals.h:103 |  |  | 0.692 |
+| walker |  | 7153 | 169 | README.md section #2 |  |  | 0.692 |
 | ns | 7350 |  | 269 | main.c — dispatch table, packet ids 0x07 through 0x19 | 5.4 |  | 0.678 |
-| walker |  | 7388 | 54 | c doc include/globals.h:71 |  |  | 0.678 |
-| walker |  | 7407 | 19 | c doc src/procedures.c:130 |  |  | 0.678 |
-| walker |  | 7512 | 105 | c doc include/globals.h:93 |  |  | 0.678 |
+| walker |  | 7512 | 359 | README.md section #3 |  |  | 0.678 |
 | ns | 7692 |  | 342 | main.c — dispatch table, the movement case group and ids 0x28 through the default | 5.5 |  | 0.660 |
 | walker |  | 7746 | 234 | c names src/packets.c |  |  | 0.660 |
 | walker |  | 7757 | 11 | c doc src/packets.c:49 |  |  | 0.660 |

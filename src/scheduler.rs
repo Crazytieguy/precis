@@ -105,16 +105,12 @@ pub struct Scheduler<W: Walker> {
     /// chains materialize in emission order, so absorb-time resolution
     /// is complete for all but pathological cross-expansion chains).
     train_member_counts: HashMap<BatchId, usize>,
-    /// Trains still holding >= TRAIN_SUBSTANTIAL_MEMBERS unbought pool
+    /// Unentered trains holding >= TRAIN_SUBSTANTIAL_MEMBERS pool
     /// members — breadth pressure is pointless when there is nothing to
-    /// redirect the budget to. A non-orientation train counts until its
-    /// first non-zero-cost schedule (entering it commits the window to
-    /// it); an orientation chain counts as long as that many of its
-    /// members are still unbought, since a README whose section chain
-    /// is mostly unread is breadth to redirect to even once its
-    /// headline is paid. Maintained incrementally by
-    /// [`Self::refresh_redirect_target`] at every member-count and
-    /// schedule change.
+    /// redirect the budget to. A train counts until its first
+    /// non-zero-cost schedule (entering it commits the window to it).
+    /// Maintained incrementally by [`Self::refresh_redirect_target`] at
+    /// every member-count and schedule change.
     redirect_targets: HashSet<BatchId>,
     /// Dependents absorbed before their predecessor key materialized —
     /// their subtree counts sit under a pseudo-root until the missing
@@ -370,15 +366,8 @@ impl<W: Walker> Scheduler<W> {
     /// Recompute `root`'s membership in [`Self::redirect_targets`].
     fn refresh_redirect_target(&mut self, root: BatchId) {
         let members = self.train_member_counts.get(&root).copied().unwrap_or(0);
-        let scheduled = self.scheduled_per_root.get(&root).copied().unwrap_or(0);
-        let unbought = if self.entries[root.index()].key.is_orientation() {
-            members.saturating_sub(scheduled)
-        } else if scheduled == 0 {
-            members
-        } else {
-            0
-        };
-        if unbought >= TRAIN_SUBSTANTIAL_MEMBERS {
+        let entered = self.scheduled_per_root.contains_key(&root);
+        if !entered && members >= TRAIN_SUBSTANTIAL_MEMBERS {
             self.redirect_targets.insert(root);
         } else {
             self.redirect_targets.remove(&root);

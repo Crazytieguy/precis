@@ -1,4 +1,4 @@
-Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.837/0.764/0.674/0.629
+Score(3000)=0.838 I=0.911 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.838/0.764/0.674/0.629
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,25 +45,25 @@ Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | ns | 2335 |  | 207 | README: the supported root stores list and the TRUST_STORES subset note | 2.6 |  | 0.793 |
 | walker |  | 2348 | 17 | go doc cert.go:282 |  |  | 0.793 |
 | walker |  | 2367 | 19 | go body cert.go:366 |  |  | 0.793 |
-| walker |  | 2502 | 135 | headings outline in README.md |  |  | 0.832 |
-| ns | 2566 |  | 231 | The per-platform constant blocks of all three GOOS truststore files | 2.7 | 1.8 | 0.818 |
-| walker |  | 2712 | 210 | go decl truststore_nss.go:17 |  |  | 0.829 |
-| walker |  | 2753 | 41 | go doc truststore_java.go:110 |  |  | 0.829 |
-| walker |  | 2794 | 41 | go doc truststore_nss.go:120 |  |  | 0.829 |
-| ns | 2893 |  | 327 | NSS and Java constant blocks: the nssDBs / firefoxPaths search lists and the keytool state vars | 2.8 | 1.9 | 0.837 |
-| walker |  | 3062 | 268 | go decl truststore_darwin.go:27 |  |  | 0.837 |
+| walker |  | 2411 | 44 | go body main.go:364 |  |  | 0.793 |
+| walker |  | 2466 | 55 | go body main.go:336 |  |  | 0.793 |
+| walker |  | 2527 | 61 | go doc main.go:85 |  |  | 0.793 |
+| ns | 2566 |  | 231 | The per-platform constant blocks of all three GOOS truststore files | 2.7 | 1.8 | 0.781 |
+| walker |  | 2662 | 135 | headings outline in README.md |  |  | 0.818 |
+| walker |  | 2872 | 210 | go decl truststore_nss.go:17 |  |  | 0.830 |
+| ns | 2893 |  | 327 | NSS and Java constant blocks: the nssDBs / firefoxPaths search lists and the keytool state vars | 2.8 | 1.9 | 0.838 |
+| walker |  | 2913 | 41 | go doc truststore_java.go:110 |  |  | 0.838 |
+| walker |  | 2954 | 41 | go doc truststore_nss.go:120 |  |  | 0.838 |
+| walker |  | 3222 | 268 | go decl truststore_darwin.go:27 |  |  | 0.838 |
 | ns | 3259 |  | 366 | Linux platform detection: init() choosing the distro trust anchor directory and certutil install hint | 2.9 | 1.7 | 0.797 |
-| walker |  | 3284 | 222 | README.md section #0 |  |  | 0.797 |
-| walker |  | 3479 | 195 | README.md section #1 |  |  | 0.797 |
-| ns | 3644 |  | 385 | NSS detection: init() setting hasNSS, hasCertutil and certutilPath | 2.10 | 1.9 | 0.747 |
-| walker |  | 3849 | 370 | go names truststore_windows.go |  |  | 0.787 |
-| walker |  | 3858 | 9 | go decl truststore_windows.go:25 |  |  | 0.790 |
-| walker |  | 3867 | 9 | go decl truststore_windows.go:19 |  |  | 0.796 |
-| walker |  | 3911 | 44 | go body main.go:364 |  |  | 0.796 |
-| ns | 3943 |  | 299 | Java detection: init() resolving JAVA_HOME, keytool and the cacerts keystore | 2.11 | 1.9 | 0.761 |
-| walker |  | 3966 | 55 | go body main.go:336 |  |  | 0.762 |
-| walker |  | 4027 | 61 | go doc main.go:85 |  |  | 0.762 |
-| walker |  | 4120 | 93 | go body main.go:345 |  |  | 0.764 |
+| walker |  | 3315 | 93 | go body main.go:345 |  |  | 0.800 |
+| walker |  | 3537 | 222 | README.md section #0 |  |  | 0.800 |
+| ns | 3644 |  | 385 | NSS detection: init() setting hasNSS, hasCertutil and certutilPath | 2.10 | 1.9 | 0.750 |
+| walker |  | 3732 | 195 | README.md section #1 |  |  | 0.750 |
+| ns | 3943 |  | 299 | Java detection: init() resolving JAVA_HOME, keytool and the cacerts keystore | 2.11 | 1.9 | 0.717 |
+| walker |  | 4102 | 370 | go names truststore_windows.go |  |  | 0.755 |
+| walker |  | 4111 | 9 | go decl truststore_windows.go:25 |  |  | 0.758 |
+| walker |  | 4120 | 9 | go decl truststore_windows.go:19 |  |  | 0.764 |
 | walker |  | 4185 | 65 | go body truststore_windows.go:83 |  |  | 0.764 |
 | walker |  | 4253 | 68 | go body cert.go:202 |  |  | 0.764 |
 | walker |  | 4330 | 77 | go body truststore_darwin.go:105 |  |  | 0.764 |

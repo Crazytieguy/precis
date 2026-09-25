@@ -130,7 +130,9 @@ main.go
   78→	    Firefox). Autodetected by default.
   79→
   80→`
-  …
+  82→// Version can be set at link time to override debug.BuildInfo.Main.Version,
+  83→// which is "(devel)" when building from within the module. See
+  84→// golang.org/issue/29814 and golang.org/issue/29228.
   85→var Version string
   86→
   87→func main() {
@@ -162,6 +164,12 @@ main.go
   307→func (m *mkcert) uninstall() {
   …
   336→func (m *mkcert) checkPlatform() bool {
+  337→	if m.ignoreCheckFailure {
+  338→		return true
+  339→	}
+  340→
+  341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
+  342→	return err == nil
   …
   345→func storeEnabled(name string) bool {
   …
@@ -171,6 +179,9 @@ main.go
   361→	}
   …
   364→func fatalIfCmdErr(err error, cmd string, out []byte) {
+  365→	if err != nil {
+  366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
+  367→	}
   …
   370→func pathExists(path string) bool {
   371→	_, err := os.Stat(path)

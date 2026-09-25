@@ -1,4 +1,4 @@
-Score(3000)=0.673 I=0.853 C=0.531 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.222/0.236/0.367/0.673/0.679/0.665/0.633
+Score(3000)=0.673 I=0.853 C=0.531 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.222/0.239/0.367/0.673/0.679/0.665/0.633
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,13 +24,13 @@ Score(3000)=0.673 I=0.853 C=0.531 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 1002 | 65 | c decl sds.h:63 |  |  | 0.225 |
 | ns | 1047 |  | 197 | sds.h prototypes: creation, destruction, growth, concat, copy (218-229) | 2.1 |  | 0.206 |
 | walker |  | 1067 | 65 | c decl sds.h:69 |  |  | 0.211 |
-| ns | 1192 |  | 145 | All six `static inline` accessors in sds.h (signature lines only) | 2.2 |  | 0.202 |
-| walker |  | 1282 | 215 | c names sds.h #1 |  |  | 0.239 |
-| walker |  | 1302 | 20 | c doc sds.h:180 |  |  | 0.249 |
-| ns | 1324 |  | 132 | sds.h prototypes: the printf-family, incl. the __GNUC__ format attribute (230-238) | 2.3 | 2.1 | 0.236 |
-| ns | 1501 |  | 177 | sds.h prototypes: trim/range/inspect/tokenize (239-248) | 2.4 | 2.3 | 0.223 |
-| walker |  | 1541 | 239 | c names sds.c |  |  | 0.226 |
-| walker |  | 1582 | 41 | c doc sds.h:47 |  |  | 0.229 |
+| walker |  | 1108 | 41 | c doc sds.h:47 |  |  | 0.214 |
+| ns | 1192 |  | 145 | All six `static inline` accessors in sds.h (signature lines only) | 2.2 |  | 0.205 |
+| walker |  | 1323 | 215 | c names sds.h #1 |  |  | 0.242 |
+| ns | 1324 |  | 132 | sds.h prototypes: the printf-family, incl. the __GNUC__ format attribute (230-238) | 2.3 | 2.1 | 0.229 |
+| walker |  | 1343 | 20 | c doc sds.h:180 |  |  | 0.239 |
+| ns | 1501 |  | 177 | sds.h prototypes: trim/range/inspect/tokenize (239-248) | 2.4 | 2.3 | 0.226 |
+| walker |  | 1582 | 239 | c names sds.c |  |  | 0.229 |
 | walker |  | 1594 | 12 | c doc sds.c:160 |  |  | 0.229 |
 | walker |  | 1607 | 13 | c body sds.c:149 |  |  | 0.229 |
 | ns | 1621 |  | 120 | sds.h prototypes: repr/splitargs/mapchars/join (249-253) | 2.5 | 2.4 | 0.223 |
