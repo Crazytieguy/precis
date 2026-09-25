@@ -107,14 +107,14 @@ Score(3000)=0.569 I=0.775 C=0.418 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 7187 |  | 197 | src/common.js: `disable()` and `enabled()` bodies | 5.6 | 2.3 | 0.511 |
 | ns | 7436 |  | 249 | src/common.js: `selectColor()` and `extend()` bodies | 5.7 | 2.3 | 0.503 |
 | ns | 7571 |  | 135 | src/common.js: `coerce()` and the deprecated `destroy()` stub | 5.8 | 2.3 | 0.497 |
-| walker |  | 7599 | 481 | ts body src/browser.js:115 |  |  | 0.498 |
-| ns | 7647 |  | 76 | src/common.js: adapter-property spread and `createDebug`'s closure state | 5.9 | 2.1 | 0.494 |
-| ns | 7942 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.510 |
-| walker |  | 7949 | 350 | README.md section #20 |  |  | 0.510 |
-| ns | 8206 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.517 |
-| walker |  | 8351 | 402 | README.md section #11 |  |  | 0.533 |
-| ns | 8528 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.536 |
-| walker |  | 8861 | 510 | README.md section #4 |  |  | 0.566 |
+| walker |  | 7628 | 510 | README.md section #4 |  |  | 0.517 |
+| ns | 7647 |  | 76 | src/common.js: adapter-property spread and `createDebug`'s closure state | 5.9 | 2.1 | 0.513 |
+| ns | 7942 |  | 295 | src/node.js: `inspectOpts` derivation from `DEBUG_*` environment variables | 6.1 | 2.6 | 0.528 |
+| walker |  | 8109 | 481 | ts body src/browser.js:115 |  |  | 0.529 |
+| ns | 8206 |  | 264 | src/browser.js: `useColors()` — the inspector capability sniff | 6.2 | 2.7 | 0.535 |
+| walker |  | 8459 | 350 | README.md section #20 |  |  | 0.535 |
+| ns | 8528 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.538 |
+| walker |  | 8861 | 402 | README.md section #11 |  |  | 0.566 |
 | ns | 8861 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.566 |
 | ns | 9045 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.571 |
 | walker |  | 9338 | 477 | README.md section #14 |  |  | 0.601 |

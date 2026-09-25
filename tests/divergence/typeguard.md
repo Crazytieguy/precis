@@ -1,4 +1,4 @@
-Score(3000)=0.613 I=0.835 C=0.451 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.743/0.672/0.536/0.613/0.518/0.431/0.524
+Score(3000)=0.613 I=0.835 C=0.451 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.743/0.672/0.536/0.613/0.518/0.431/0.518
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -156,22 +156,22 @@ Score(3000)=0.613 I=0.835 C=0.451 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 7732 |  | 131 | Roster of _decorators.py module-level functions | 5.2 |  | 0.458 |
 | walker |  | 7734 | 73 | python doc src/typeguard/_utils.py:127 |  |  | 0.458 |
 | walker |  | 7754 | 20 | python doc src/typeguard/_exceptions.py:12 |  |  | 0.461 |
-| walker |  | 7795 | 41 | python body src/typeguard/_memo.py:37 |  |  | 0.470 |
-| ns | 7878 |  | 146 | Roster of _importhook.py symbols | 5.3 |  | 0.480 |
-| ns | 8165 |  | 287 | instrument(): the refusal reasons and the recompile pipeline | 5.4 | 5.2 | 0.471 |
-| walker |  | 8289 | 494 | python decl src/typeguard/_checkers.py:99 |  |  | 0.471 |
-| walker |  | 8296 | 7 | python body src/typeguard/_importhook.py:167 |  |  | 0.471 |
-| ns | 8324 |  | 159 | TypeguardFinder.should_instrument(): the module-selection rule | 5.5 | 5.3 | 0.465 |
-| ns | 8556 |  | 232 | Roster of _utils.py helpers, including the version-gated evaluate_forwardref | 5.6 |  | 0.462 |
-| ns | 8731 |  | 175 | _transformer.py top-level structure: constants and the four visitor classes | 6.1 |  | 0.472 |
-| walker |  | 8812 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.512 |
-| walker |  | 8831 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.513 |
-| walker |  | 8933 | 102 | declaration surface of docs/api.rst |  |  | 0.513 |
-| ns | 8963 |  | 232 | Complete method roster of TypeguardTransformer | 6.2 |  | 0.524 |
-| walker |  | 9046 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.524 |
-| ns | 9434 |  | 471 | Docstrings of the TypeguardTransformer visit_ handlers | 6.3 | 6.2 | 0.511 |
-| ns | 9624 |  | 190 | pyproject.toml: package identity, runtime requirements, pytest entry point | 7.1 |  | 0.514 |
-| ns | 9825 |  | 201 | pyproject.toml: dependency groups and pytest configuration | 7.2 |  | 0.507 |
-| ns | 9860 |  | 35 | GitHub workflows and repository meta files | 7.3 |  | 0.511 |
-| walker |  | 9898 | 852 | manifest config in pyproject.toml |  |  | 0.518 |
-| ns | 9916 |  | 56 | CI interpreter matrix | 7.4 |  | 0.517 |
+| ns | 7878 |  | 146 | Roster of _importhook.py symbols | 5.3 |  | 0.470 |
+| walker |  | 8038 | 284 | README.rst section #2 |  |  | 0.507 |
+| walker |  | 8079 | 41 | python body src/typeguard/_memo.py:37 |  |  | 0.516 |
+| ns | 8165 |  | 287 | instrument(): the refusal reasons and the recompile pipeline | 5.4 | 5.2 | 0.506 |
+| ns | 8324 |  | 159 | TypeguardFinder.should_instrument(): the module-selection rule | 5.5 | 5.3 | 0.500 |
+| ns | 8556 |  | 232 | Roster of _utils.py helpers, including the version-gated evaluate_forwardref | 5.6 |  | 0.496 |
+| walker |  | 8573 | 494 | python decl src/typeguard/_checkers.py:99 |  |  | 0.496 |
+| walker |  | 8580 | 7 | python body src/typeguard/_importhook.py:167 |  |  | 0.496 |
+| ns | 8731 |  | 175 | _transformer.py top-level structure: constants and the four visitor classes | 6.1 |  | 0.506 |
+| ns | 8963 |  | 232 | Complete method roster of TypeguardTransformer | 6.2 |  | 0.518 |
+| walker |  | 9096 | 516 | python decl src/typeguard/_checkers.py:1005 |  |  | 0.557 |
+| walker |  | 9115 | 19 | python body src/typeguard/_functions.py:291 |  |  | 0.557 |
+| walker |  | 9217 | 102 | declaration surface of docs/api.rst |  |  | 0.557 |
+| walker |  | 9330 | 113 | python decl src/typeguard/_transformer.py:117 #2 |  |  | 0.557 |
+| ns | 9434 |  | 471 | Docstrings of the TypeguardTransformer visit_ handlers | 6.3 | 6.2 | 0.543 |
+| ns | 9624 |  | 190 | pyproject.toml: package identity, runtime requirements, pytest entry point | 7.1 |  | 0.546 |
+| ns | 9825 |  | 201 | pyproject.toml: dependency groups and pytest configuration | 7.2 |  | 0.539 |
+| ns | 9860 |  | 35 | GitHub workflows and repository meta files | 7.3 |  | 0.543 |
+| ns | 9916 |  | 56 | CI interpreter matrix | 7.4 |  | 0.542 |

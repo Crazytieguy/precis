@@ -68,26 +68,26 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | ns | 3277 |  | 232 | Metadata and distance-constraint operator encodings | 2.11 | 2.10 | 0.415 |
 | walker |  | 3306 | 220 | plaintext config bindings/rust/Makefile |  |  | 0.415 |
 | walker |  | 3314 | 8 | listing of 'site/getting-started' |  |  | 0.416 |
-| walker |  | 3509 | 195 | README.md section #5 |  |  | 0.416 |
+| walker |  | 3585 | 271 | README.md section #2 |  |  | 0.416 |
 | ns | 3608 |  | 331 | struct vec0_vtab: field roster | 2.12 |  | 0.390 |
 | ns | 3720 |  | 112 | struct vec0_vtab: cached prepared statements | 2.13 | 2.12 | 0.381 |
-| walker |  | 3783 | 274 | README.md section #6 |  |  | 0.381 |
-| walker |  | 3788 | 5 | listing of 'tests/fuzz/corpus' |  |  | 0.381 |
-| walker |  | 3799 | 11 | ts names site/project.data.ts |  |  | 0.381 |
-| walker |  | 3810 | 11 | python names tests/conftest.py |  |  | 0.381 |
-| walker |  | 3818 | 8 | python decl tests/conftest.py:5 |  |  | 0.381 |
-| walker |  | 3828 | 10 | listing of 'site/features' |  |  | 0.381 |
-| walker |  | 3840 | 12 | rust names tests/build.rs |  |  | 0.381 |
-| walker |  | 3852 | 12 | c names tests/sqlite-vec-internal.h |  |  | 0.381 |
-| walker |  | 3863 | 11 | listing of 'tests/correctness' |  |  | 0.381 |
-| walker |  | 3869 | 6 | listing of 'benchmarks/micro/benches' |  |  | 0.381 |
-| walker |  | 3881 | 12 | listing of 'benchmarks/profiling' |  |  | 0.381 |
-| walker |  | 3913 | 32 | rust body bindings/rust/build.rs:1 |  |  | 0.381 |
-| walker |  | 3927 | 14 | python names tests/utils.py |  |  | 0.381 |
+| walker |  | 3780 | 195 | README.md section #5 |  |  | 0.381 |
 | ns | 3934 |  | 214 | Column definition structs and distance metrics | 2.14 |  | 0.363 |
 | ns | 4027 |  | 93 | Metadata column kinds | 2.15 |  | 0.358 |
+| walker |  | 4054 | 274 | README.md section #6 |  |  | 0.358 |
+| walker |  | 4059 | 5 | listing of 'tests/fuzz/corpus' |  |  | 0.358 |
+| walker |  | 4070 | 11 | ts names site/project.data.ts |  |  | 0.358 |
+| walker |  | 4081 | 11 | python names tests/conftest.py |  |  | 0.358 |
+| walker |  | 4089 | 8 | python decl tests/conftest.py:5 |  |  | 0.358 |
+| walker |  | 4099 | 10 | listing of 'site/features' |  |  | 0.358 |
+| walker |  | 4111 | 12 | rust names tests/build.rs |  |  | 0.358 |
+| walker |  | 4123 | 12 | c names tests/sqlite-vec-internal.h |  |  | 0.358 |
+| walker |  | 4134 | 11 | listing of 'tests/correctness' |  |  | 0.358 |
+| walker |  | 4140 | 6 | listing of 'benchmarks/micro/benches' |  |  | 0.358 |
+| walker |  | 4152 | 12 | listing of 'benchmarks/profiling' |  |  | 0.358 |
 | ns | 4157 |  | 130 | vec0 constructor parser: function roster | 2.16 |  | 0.352 |
-| walker |  | 4198 | 271 | README.md section #2 |  |  | 0.352 |
+| walker |  | 4184 | 32 | rust body bindings/rust/build.rs:1 |  |  | 0.352 |
+| walker |  | 4198 | 14 | python names tests/utils.py |  |  | 0.352 |
 | walker |  | 4211 | 13 | listing of 'tests/minimum' |  |  | 0.352 |
 | walker |  | 4226 | 15 | listing of 'tests/leak-fixtures' |  |  | 0.352 |
 | ns | 4439 |  | 282 | chunk_size table option: validation and default | 2.17 |  | 0.338 |
@@ -95,18 +95,18 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 4465 | 12 | c decl sqlite-vec.c:361 |  |  | 0.338 |
 | ns | 4542 |  | 103 | vec0 constructor and lifecycle functions (roster) | 2.18 |  | 0.334 |
 | walker |  | 4545 | 80 | c decl sqlite-vec.c:115 |  |  | 0.334 |
-| walker |  | 4555 | 10 | rust names benchmarks/micro/build.rs |  |  | 0.334 |
 | ns | 4736 |  | 194 | vec0 column dispatch helpers (roster) | 2.19 |  | 0.327 |
-| walker |  | 4769 | 214 | c names sqlite-vec.c #1 |  |  | 0.327 |
-| walker |  | 4781 | 12 | c decl sqlite-vec.c:463 |  |  | 0.327 |
-| walker |  | 4822 | 41 | [package] in tests/Cargo.toml |  |  | 0.327 |
-| walker |  | 4835 | 13 | ts names site/.vitepress/config.mts |  |  | 0.327 |
-| walker |  | 4859 | 24 | listing of 'tests/afbd' |  |  | 0.327 |
-| walker |  | 4866 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.327 |
-| walker |  | 4874 | 8 | listing of 'tests/fuzz/corpus/vec0-create' |  |  | 0.327 |
+| walker |  | 4883 | 338 | README.md section #7 |  |  | 0.327 |
+| walker |  | 4893 | 10 | rust names benchmarks/micro/build.rs |  |  | 0.327 |
 | ns | 4950 |  | 214 | vec0 storage helpers (roster) | 2.20 |  | 0.319 |
+| walker |  | 5107 | 214 | c names sqlite-vec.c #1 |  |  | 0.319 |
+| walker |  | 5119 | 12 | c decl sqlite-vec.c:463 |  |  | 0.319 |
+| walker |  | 5160 | 41 | [package] in tests/Cargo.toml |  |  | 0.319 |
+| walker |  | 5173 | 13 | ts names site/.vitepress/config.mts |  |  | 0.319 |
 | ns | 5186 |  | 236 | vec0 cursor and per-query-plan state | 2.21 | 2.6 | 0.310 |
-| walker |  | 5212 | 338 | README.md section #7 |  |  | 0.310 |
+| walker |  | 5197 | 24 | listing of 'tests/afbd' |  |  | 0.310 |
+| walker |  | 5204 | 7 | [dependencies] in tests/Cargo.toml |  |  | 0.310 |
+| walker |  | 5212 | 8 | listing of 'tests/fuzz/corpus/vec0-create' |  |  | 0.310 |
 | walker |  | 5279 | 67 | [package] in tests/pyproject.toml |  |  | 0.310 |
 | ns | 5304 |  | 118 | KNN primitives: bitmaps and merge (roster) | 2.22 |  | 0.305 |
 | walker |  | 5310 | 31 | listing of 'benchmarks/exhaustive-memory' |  |  | 0.305 |
@@ -164,9 +164,8 @@ Score(3000)=0.450 I=0.767 C=0.264 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 9527 | 42 | c decl sqlite-vec.c:598 |  |  | 0.388 |
 | walker |  | 9553 | 26 | c decl sqlite-vec.c:811 |  |  | 0.388 |
 | walker |  | 9580 | 27 | c decl sqlite-vec.c:687 |  |  | 0.388 |
-| walker |  | 9586 | 6 | plaintext config tests/.gitignore |  |  | 0.388 |
-| walker |  | 9592 | 6 | python body tests/test-knn-distance-constraints.py:46 |  |  | 0.388 |
 | ns | 9640 |  | 139 | Documentation site listings (complete) | 5.7 |  | 0.412 |
 | ns | 9840 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.406 |
-| walker |  | 9947 | 355 | plaintext config .github/workflows/site.yaml |  |  | 0.406 |
 | ns | 9953 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.403 |
+| walker |  | 9992 | 412 | ARCHITECTURE.md section #3 |  |  | 0.403 |
+| walker |  | 9998 | 6 | plaintext config tests/.gitignore |  |  | 0.403 |

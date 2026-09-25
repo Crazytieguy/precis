@@ -75,14 +75,6 @@ const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 /// here and lost both carriers.
 const LEDE_TARGET_TOKENS: usize = 140;
 
-/// Tail-chunk value factor relative to the parent section: a tail is the direct
-/// continuation of content whose head just won purchase, and the NS
-/// ranks the continuation right behind it — pricing tails as fan-out
-/// noise strands them past the window their head opened. (Tails still
-/// take the steeper index-≥1 `Section` concavity, and as orientation
-/// batches they are exempt from train breadth pressure.)
-const OVERSIZE_TAIL_FACTOR: f64 = 0.85;
-
 /// Minimum tokens that must remain after a cut — a smaller remainder
 /// folds into the current chunk instead of spawning a micro-tail.
 const OVERSIZE_CHUNK_MIN_TAIL_TOKENS: usize = 100;
@@ -275,8 +267,7 @@ fn push_sections(
             let key = MarkdownKey::Section {
                 file: file.to_path_buf(),
                 section_index: idx,
-                keeps_default_concavity: range.is_reference_usage_section
-                    || range.kind == SectionKind::LedeBody,
+                keeps_default_concavity: range.is_reference_usage_section || range.is_lede_body,
             };
             // Oversize tails deliver in source order: each chunk
             // gates on its predecessor chunk.
@@ -392,18 +383,14 @@ fn section_base_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 /// Per-section value from the file's [`section_base_value`].
 fn section_value(base: f64, readme: bool, range: &SectionRange) -> f64 {
-    let mut parent = base;
+    let mut value = base;
     if readme {
-        parent *= readme_index_decay(range);
+        value *= readme_index_decay(range);
     }
     if range.is_reference_usage_section {
-        parent *= REFERENCE_USAGE_SECTION_FACTOR;
+        value *= REFERENCE_USAGE_SECTION_FACTOR;
     }
-    match range.kind {
-        SectionKind::Whole => parent,
-        SectionKind::OversizeTail => parent * OVERSIZE_TAIL_FACTOR,
-        SectionKind::LedeBody => parent,
-    }
+    value
 }
 
 // --- parser ---
@@ -548,7 +535,7 @@ fn headingless_fallback_ranges(source: &str) -> Vec<SectionRange> {
     push_whole_or_head_split(
         &mut out,
         &src_lines,
-        SectionRange::new(start + 1, end + 1, SectionKind::Whole, 0),
+        SectionRange::new(start + 1, end + 1, 0),
     );
     out
 }
@@ -709,7 +696,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
     }
     let mut ranges = Vec::new();
     if intro_start <= intro_end {
-        let intro = SectionRange::new(intro_start, intro_end, SectionKind::Whole, 0);
+        let intro = SectionRange::new(intro_start, intro_end, 0);
         push_whole_or_head_split(&mut ranges, &src_lines, intro);
     }
     for (i, heading) in headings.iter().enumerate().skip(1) {
@@ -720,7 +707,7 @@ fn rst_readme(source: &str) -> (HeadlineSpec, Vec<SectionRange>) {
             SectionRange {
                 is_reference_usage_section: is_canonical_usage_title_core(&title)
                     || is_reference_usage_title_core(&title),
-                ..SectionRange::new(heading.title_row, section_end(i), SectionKind::Whole, i - 1)
+                ..SectionRange::new(heading.title_row, section_end(i), i - 1)
             },
         );
     }
@@ -1127,7 +1114,7 @@ fn strip_html_tags(s: &str) -> String {
 // --- tree-sitter-md helpers ---
 
 /// One scheduling unit for a markdown file: 1-based inclusive row range
-/// plus its kind and `h2_index`, the README index decay's input — the
+/// plus `h2_index`, the README index decay's input — the
 /// position of its parent H2 in the *un-split* top-level section list,
 /// counting the first real H2 as 0 (an H1-unwrap intro shares index 0
 /// with it).
@@ -1135,7 +1122,6 @@ fn strip_html_tags(s: &str) -> String {
 struct SectionRange {
     start: usize,
     end: usize,
-    kind: SectionKind,
     h2_index: usize,
     /// README-only: this range's section is a code-dominant canonical usage demo
     /// ([`is_canonical_usage_h2`]), or is titled in the reference/usage
@@ -1146,30 +1132,23 @@ struct SectionRange {
     /// Oversize tail chunks gate on the previous chunk so the section
     /// delivers as an in-order prefix.
     chained_to_previous: bool,
+    /// The section body directly behind a carved lede — the rest of what
+    /// the unsplit section would have delivered, so it keeps the index-0
+    /// concavity.
+    is_lede_body: bool,
 }
 
 impl SectionRange {
-    fn new(start: usize, end: usize, kind: SectionKind, h2_index: usize) -> Self {
+    fn new(start: usize, end: usize, h2_index: usize) -> Self {
         Self {
             start,
             end,
-            kind,
             h2_index,
             is_reference_usage_section: false,
             chained_to_previous: false,
+            is_lede_body: false,
         }
     }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum SectionKind {
-    /// Un-split H2 (or synthetic H1-unwrap intro).
-    Whole,
-    /// Predecessor-chained tail chunk of an oversize head-split.
-    OversizeTail,
-    /// The section body directly behind a carved lede — the rest of
-    /// what the unsplit section would have delivered.
-    LedeBody,
 }
 
 /// A list item, numbered item, or table row — the catalog subset of
@@ -1217,7 +1196,7 @@ fn logical_sections(
                 push_whole_or_head_split(
                     &mut out,
                     &src_lines,
-                    SectionRange::new(*start, *end, SectionKind::Whole, h2_idx),
+                    SectionRange::new(*start, *end, h2_idx),
                 );
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -1237,7 +1216,7 @@ fn logical_sections(
                     &src_lines,
                     SectionRange {
                         is_reference_usage_section: reference_h2,
-                        ..SectionRange::new(*start, *end, SectionKind::Whole, h2_idx)
+                        ..SectionRange::new(*start, *end, h2_idx)
                     },
                 );
             }
@@ -1466,15 +1445,12 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 
 /// Emit `head` as-is, or — when its row range exceeds
 /// [`OVERSIZE_SECTION_SPLIT_TOKENS`] and splits at natural boundaries —
-/// shrink `head` to the first chunk (keeping its kind and value flags;
-/// the head includes the section heading, so no outline is required
-/// to preserve it) and follow it with predecessor-chained
-/// `OversizeTail` chunks. Tails carry the head's boost flags so a
-/// boosted section's continuation is priced off the same base the head
-/// won its rank with ([`OVERSIZE_TAIL_FACTOR`]'s rationale); the other
-/// fields stay positional. When the head itself carves a lede
-/// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is a
-/// [`SectionKind::LedeBody`] rather than a tail.
+/// shrink `head` to the first chunk (keeping its value flags; the head
+/// includes the section heading, so no outline is required to preserve
+/// it) and follow it with predecessor-chained tail chunks priced like
+/// the head: a tail is the direct continuation of content whose head
+/// just won purchase. When the head itself carves a lede
+/// ([`LEDE_TARGET_TOKENS`]), the chunk behind it is the lede body.
 fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], head: SectionRange) {
     let (start, end) = (head.start, head.end);
     let tokens: usize = (start..=end).map(|r| row_tokens(src_lines, r)).sum();
@@ -1495,20 +1471,12 @@ fn push_whole_or_head_split(out: &mut Vec<SectionRange>, src_lines: &[&str], hea
                 end: chunk_end,
                 ..head
             });
-        } else if i == 1 && lede {
-            out.push(SectionRange {
-                start: chunk_start,
-                end: chunk_end,
-                kind: SectionKind::LedeBody,
-                chained_to_previous: true,
-                ..head
-            });
         } else {
             out.push(SectionRange {
                 start: chunk_start,
                 end: chunk_end,
-                kind: SectionKind::OversizeTail,
                 chained_to_previous: true,
+                is_lede_body: i == 1 && lede,
                 ..head
             });
         }

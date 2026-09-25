@@ -1,4 +1,4 @@
-Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.446/0.618/0.620/0.721/0.742/0.676/0.654
+Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.446/0.618/0.620/0.721/0.742/0.676/0.644
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -107,55 +107,55 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 4789 | 4 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.744 |
 | walker |  | 4793 | 4 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.744 |
 | walker |  | 4805 | 12 | python names examples/airline/main.py |  |  | 0.744 |
-| walker |  | 4816 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.744 |
-| walker |  | 4840 | 24 | python names tests/test_util.py |  |  | 0.744 |
 | ns | 4845 |  | 112 | `airline` example: complete directory tree | 4.5 |  | 0.731 |
-| walker |  | 4847 | 7 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.731 |
 | ns | 4907 |  | 62 | `support_bot` and `personal_shopper` listings (complete) | 4.6 |  | 0.737 |
-| ns | 4947 |  | 40 | The three `customer_service*` directories: what is actually there | 4.7 |  | 0.742 |
-| walker |  | 5086 | 239 | python body swarm/repl/repl.py:60 |  |  | 0.744 |
-| ns | 5149 |  | 202 | `weather_agent/agents.py`: a complete function-calling agent | 4.8 |  | 0.724 |
-| ns | 5335 |  | 186 | `basic/context_variables.py`: callable instructions + injected context | 4.9 |  | 0.705 |
-| walker |  | 5340 | 254 | python body swarm/repl/repl.py:37 |  |  | 0.705 |
-| ns | 5576 |  | 241 | `airline` agents: the five agents and their instruction sources | 4.10 |  | 0.686 |
-| walker |  | 5698 | 358 | README.md section #5 |  |  | 0.703 |
-| walker |  | 5710 | 12 | python names examples/customer_service_streaming/src/arg_parser.py |  |  | 0.703 |
-| walker |  | 5729 | 19 | listing of 'examples/airline/evals' |  |  | 0.713 |
-| ns | 5765 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.697 |
-| ns | 5958 |  | 193 | `airline` agents: per-agent tool lists (the handoff graph) | 4.12 | 4.10 | 0.678 |
-| ns | 6043 |  | 85 | `airline/configs/tools.py`: complete tool roster | 4.13 |  | 0.672 |
-| walker |  | 6170 | 441 | python body swarm/util.py:31 |  |  | 0.676 |
+| ns | 4947 |  | 40 | The three `customer_service*` directories: what is actually there | 4.7 |  | 0.741 |
+| ns | 5149 |  | 202 | `weather_agent/agents.py`: a complete function-calling agent | 4.8 |  | 0.721 |
+| walker |  | 5163 | 358 | README.md section #5 |  |  | 0.739 |
+| walker |  | 5174 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.739 |
+| walker |  | 5198 | 24 | python names tests/test_util.py |  |  | 0.739 |
+| walker |  | 5205 | 7 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.739 |
+| ns | 5335 |  | 186 | `basic/context_variables.py`: callable instructions + injected context | 4.9 |  | 0.720 |
+| walker |  | 5444 | 239 | python body swarm/repl/repl.py:60 |  |  | 0.723 |
+| ns | 5576 |  | 241 | `airline` agents: the five agents and their instruction sources | 4.10 |  | 0.703 |
+| ns | 5765 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.687 |
+| walker |  | 5883 | 439 | README.md section #6 |  |  | 0.701 |
+| ns | 5958 |  | 193 | `airline` agents: per-agent tool lists (the handoff graph) | 4.12 | 4.10 | 0.682 |
+| ns | 6043 |  | 85 | `airline/configs/tools.py`: complete tool roster | 4.13 |  | 0.676 |
+| walker |  | 6137 | 254 | python body swarm/repl/repl.py:37 |  |  | 0.676 |
+| walker |  | 6149 | 12 | python names examples/customer_service_streaming/src/arg_parser.py |  |  | 0.676 |
 | ns | 6286 |  | 243 | `run()` body: state setup and the completion half of the loop | 5.1 | 2.6 | 0.658 |
 | ns | 6479 |  | 193 | `run()` body: tool dispatch, agent switch, and the returned `Response` | 5.2 | 5.1 | 0.644 |
-| walker |  | 6512 | 342 | python body swarm/repl/repl.py:6 |  |  | 0.644 |
-| walker |  | 6520 | 8 | listing of 'examples/customer_service_streaming/configs/tools/query_docs' |  |  | 0.644 |
-| walker |  | 6528 | 8 | listing of 'examples/customer_service_streaming/configs/tools/send_email' |  |  | 0.644 |
-| walker |  | 6536 | 8 | listing of 'examples/customer_service_streaming/configs/tools/submit_ticket' |  |  | 0.644 |
-| walker |  | 6545 | 9 | python names examples/customer_service_streaming/src/swarm/conversation.py |  |  | 0.644 |
 | ns | 6572 |  | 93 | `run()` body: the `stream=True` delegation branch | 5.3 | 2.6 | 0.637 |
-| ns | 6783 |  | 211 | `handle_tool_calls` body: dispatch table and the missing-tool path | 5.4 | 2.8 | 0.624 |
-| walker |  | 6984 | 439 | README.md section #6 |  |  | 0.636 |
-| walker |  | 6997 | 13 | listing of 'examples/airline/evals/eval_cases' |  |  | 0.641 |
-| walker |  | 7012 | 15 | listing of 'examples/airline/evals/eval_results' |  |  | 0.647 |
-| walker |  | 7023 | 11 | python names examples/customer_service_streaming/src/runs/run.py |  |  | 0.647 |
-| ns | 7054 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.630 |
-| walker |  | 7198 | 175 | python body swarm/core.py:71 |  |  | 0.632 |
-| walker |  | 7210 | 12 | python names examples/customer_service_streaming/src/evals/eval_function.py |  |  | 0.632 |
-| walker |  | 7222 | 12 | python names examples/customer_service_streaming/src/swarm/swarm.py |  |  | 0.632 |
-| ns | 7265 |  | 211 | `get_chat_completion` body: instructions, tool schemas, context hiding | 5.6 | 2.8 | 0.621 |
-| ns | 7390 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.613 |
-| ns | 7565 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.622 |
-| walker |  | 7778 | 556 | README.md section #7 |  |  | 0.628 |
-| ns | 7894 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.643 |
-| ns | 8003 |  | 109 | `function_to_json` body: the emitted schema shape | 5.10 | 5.9 | 0.648 |
-| ns | 8173 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.651 |
-| walker |  | 8326 | 548 | README.md section #8 |  |  | 0.657 |
-| ns | 8412 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.667 |
-| ns | 8646 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.653 |
-| walker |  | 8849 | 523 | README.md section #9 |  |  | 0.663 |
-| ns | 8875 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.654 |
-| ns | 9032 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.649 |
-| walker |  | 9061 | 212 | README.md section #10 |  |  | 0.654 |
+| walker |  | 6705 | 556 | README.md section #7 |  |  | 0.643 |
+| ns | 6783 |  | 211 | `handle_tool_calls` body: dispatch table and the missing-tool path | 5.4 | 2.8 | 0.630 |
+| ns | 7054 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.614 |
+| walker |  | 7253 | 548 | README.md section #8 |  |  | 0.622 |
+| ns | 7265 |  | 211 | `get_chat_completion` body: instructions, tool schemas, context hiding | 5.6 | 2.8 | 0.611 |
+| ns | 7390 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.603 |
+| ns | 7565 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.594 |
+| walker |  | 7776 | 523 | README.md section #9 |  |  | 0.606 |
+| ns | 7894 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.588 |
+| walker |  | 7988 | 212 | README.md section #10 |  |  | 0.595 |
+| ns | 8003 |  | 109 | `function_to_json` body: the emitted schema shape | 5.10 | 5.9 | 0.588 |
+| walker |  | 8007 | 19 | listing of 'examples/airline/evals' |  |  | 0.596 |
+| ns | 8173 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.601 |
+| ns | 8412 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.613 |
+| walker |  | 8448 | 441 | python body swarm/util.py:31 |  |  | 0.658 |
+| ns | 8646 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.645 |
+| walker |  | 8790 | 342 | python body swarm/repl/repl.py:6 |  |  | 0.645 |
+| walker |  | 8798 | 8 | listing of 'examples/customer_service_streaming/configs/tools/query_docs' |  |  | 0.645 |
+| walker |  | 8806 | 8 | listing of 'examples/customer_service_streaming/configs/tools/send_email' |  |  | 0.645 |
+| walker |  | 8814 | 8 | listing of 'examples/customer_service_streaming/configs/tools/submit_ticket' |  |  | 0.645 |
+| walker |  | 8823 | 9 | python names examples/customer_service_streaming/src/swarm/conversation.py |  |  | 0.645 |
+| walker |  | 8836 | 13 | listing of 'examples/airline/evals/eval_cases' |  |  | 0.649 |
+| walker |  | 8851 | 15 | listing of 'examples/airline/evals/eval_results' |  |  | 0.653 |
+| walker |  | 8862 | 11 | python names examples/customer_service_streaming/src/runs/run.py |  |  | 0.653 |
+| ns | 8875 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.644 |
+| ns | 9032 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.639 |
+| walker |  | 9037 | 175 | python body swarm/core.py:71 |  |  | 0.654 |
+| walker |  | 9049 | 12 | python names examples/customer_service_streaming/src/evals/eval_function.py |  |  | 0.654 |
+| walker |  | 9061 | 12 | python names examples/customer_service_streaming/src/swarm/swarm.py |  |  | 0.654 |
 | walker |  | 9074 | 13 | python names examples/customer_service_streaming/src/swarm/assistants.py |  |  | 0.654 |
 | walker |  | 9125 | 51 | README headline in examples/weather_agent/README.md |  |  | 0.654 |
 | ns | 9134 |  | 102 | `tests/test_util.py`: both schema-conversion tests | 6.3 |  | 0.651 |

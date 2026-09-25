@@ -93,31 +93,31 @@ Score(3000)=0.416 I=0.754 C=0.230 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 5171 | 62 | python doc src/tomli/_re.py:59 |  |  | 0.522 |
 | walker |  | 5187 | 16 | python names scripts/use_setuptools.py |  |  | 0.522 |
 | walker |  | 5203 | 16 | python names tests/test_misc.py |  |  | 0.522 |
-| walker |  | 5273 | 70 | python body src/tomli/_re.py:98 |  |  | 0.522 |
 | ns | 5348 |  | 251 | Flags: the two flag constants, the state fields, and the complete method roster | 4.1 | 2.2 | 0.526 |
 | ns | 5472 |  | 124 | NestedDict: the parsed-document container and its two methods | 4.2 | 2.2 | 0.527 |
+| walker |  | 5544 | 341 | README.md section #8 |  |  | 0.527 |
+| walker |  | 5614 | 70 | python body src/tomli/_re.py:98 |  |  | 0.527 |
 | ns | 5733 |  | 261 | create_dict_rule(): the [table] statement | 4.3 | 2.1 | 0.515 |
 | ns | 6033 |  | 300 | create_list_rule(): the [[array of tables]] statement | 4.4 | 2.1 | 0.502 |
 | ns | 6511 |  | 478 | key_value_rule(): dotted keys, pending flags and immutability | 4.5 | 2.1 | 0.484 |
 | ns | 6690 |  | 179 | parse_key_part(): bare, literal and basic key forms | 4.6 | 2.1 | 0.477 |
 | ns | 6975 |  | 285 | parse_array(): array literals and trailing commas | 4.7 | 2.1 | 0.466 |
-| walker |  | 7083 | 1810 | manifest config in pyproject.toml |  |  | 0.492 |
-| walker |  | 7110 | 27 | python names benchmark/run.py |  |  | 0.492 |
-| walker |  | 7142 | 32 | python decl profiler/profiler_script.py:12 |  |  | 0.492 |
+| walker |  | 7424 | 1810 | manifest config in pyproject.toml |  |  | 0.492 |
+| walker |  | 7451 | 27 | python names benchmark/run.py |  |  | 0.492 |
 | ns | 7464 |  | 489 | parse_inline_table(): inline tables and their local flag scope | 4.8 | 2.1 | 0.476 |
-| walker |  | 7483 | 341 | README.md section #8 |  |  | 0.476 |
-| walker |  | 7491 | 8 | plaintext config scripts/requirements.txt |  |  | 0.476 |
-| walker |  | 7574 | 83 | python body src/tomli/_re.py:109 |  |  | 0.476 |
-| walker |  | 7583 | 9 | plaintext config profiler/requirements.txt |  |  | 0.476 |
-| walker |  | 7596 | 13 | python doc src/tomli/_parser.py:149 |  |  | 0.478 |
-| ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.473 |
-| ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.469 |
-| ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.461 |
+| ns | 7665 |  | 201 | parse_hex_char() and is_unicode_scalar_value(): escape validation | 4.9 | 2.1 | 0.470 |
+| ns | 7807 |  | 142 | parse_literal_str() and parse_one_line_basic_str(): the two short string entry points | 4.10 | 2.1 | 0.467 |
+| walker |  | 7967 | 516 | README.md section #5 |  |  | 0.467 |
+| walker |  | 7999 | 32 | python decl profiler/profiler_script.py:12 |  |  | 0.467 |
+| walker |  | 8007 | 8 | plaintext config scripts/requirements.txt |  |  | 0.467 |
+| ns | 8041 |  | 234 | make_safe_parse_float(): the parse_float contract | 4.11 | 2.1 | 0.459 |
+| walker |  | 8090 | 83 | python body src/tomli/_re.py:109 |  |  | 0.459 |
+| walker |  | 8099 | 9 | plaintext config profiler/requirements.txt |  |  | 0.459 |
+| walker |  | 8112 | 13 | python doc src/tomli/_parser.py:149 |  |  | 0.461 |
 | ns | 8133 |  | 92 | TOMLDecodeError.__init__ signature and the deprecated free-form form | 5.1 | 1.8 | 0.467 |
-| walker |  | 8177 | 581 | README.md section #9 |  |  | 0.467 |
 | ns | 8360 |  | 227 | TOMLDecodeError: line/column computation and message formatting | 5.2 | 5.1 | 0.459 |
 | ns | 8535 |  | 175 | Complete roster of src/tomli/_re.py: four regexes and four functions | 5.3 |  | 0.472 |
-| walker |  | 8693 | 516 | README.md section #5 |  |  | 0.472 |
+| walker |  | 8693 | 581 | README.md section #9 |  |  | 0.472 |
 | walker |  | 8707 | 14 | python doc src/tomli/_parser.py:220 |  |  | 0.474 |
 | walker |  | 8769 | 62 | python names fuzzer/fuzz.py |  |  | 0.474 |
 | ns | 8772 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.487 |

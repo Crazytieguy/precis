@@ -1,4 +1,4 @@
-Score(3000)=0.517 I=0.569 C=0.470 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.519/0.502/0.511/0.517/0.662/0.815/0.804
+Score(3000)=0.517 I=0.569 C=0.470 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.519/0.502/0.511/0.517/0.662/0.877/0.804
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -97,20 +97,20 @@ Score(3000)=0.517 I=0.569 C=0.470 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 5000 | 54 | go names prefix_test.go |  |  | 0.800 |
 | walker |  | 5118 | 118 | go doc multierror.go:53 |  |  | 0.816 |
 | ns | 5137 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.819 |
-| walker |  | 5158 | 40 | go body multierror.go:108 |  |  | 0.829 |
-| walker |  | 5214 | 56 | headings outline in CHANGELOG.md |  |  | 0.829 |
-| ns | 5311 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.829 |
-| ns | 5401 |  | 90 | sort.go bodies: Len/Swap/Less | 3.8 | 1.7 | 0.827 |
-| walker |  | 5416 | 202 | plaintext config .github/workflows/actionlint.yml |  |  | 0.828 |
-| ns | 5477 |  | 76 | Every import block in the package: stdlib only | 3.9 |  | 0.817 |
-| ns | 5520 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.813 |
-| walker |  | 5528 | 112 | go names append_test.go |  |  | 0.814 |
-| walker |  | 5682 | 154 | go body multierror.go:71 |  |  | 0.833 |
-| walker |  | 5716 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.833 |
-| ns | 5825 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.823 |
-| ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.815 |
-| ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.792 |
-| walker |  | 6269 | 553 | README.md section #7 |  |  | 0.853 |
+| ns | 5311 |  | 174 | group.go bodies: the struct's unexported fields, `Go`, and `Wait` | 3.7 | 1.6 | 0.819 |
+| ns | 5401 |  | 90 | sort.go bodies: Len/Swap/Less | 3.8 | 1.7 | 0.817 |
+| ns | 5477 |  | 76 | Every import block in the package: stdlib only | 3.9 |  | 0.806 |
+| ns | 5520 |  | 43 | Standard file header: copyright, SPDX tag, package clause | 3.10 |  | 0.802 |
+| walker |  | 5671 | 553 | README.md section #7 |  |  | 0.868 |
+| walker |  | 5711 | 40 | go body multierror.go:108 |  |  | 0.877 |
+| walker |  | 5767 | 56 | headings outline in CHANGELOG.md |  |  | 0.877 |
+| ns | 5825 |  | 305 | Complete roster of test functions across all seven `*_test.go` files | 4.1 |  | 0.858 |
+| walker |  | 5969 | 202 | plaintext config .github/workflows/actionlint.yml |  |  | 0.860 |
+| ns | 6011 |  | 186 | Every `t.Run` subtest name in multierror_test.go | 4.2 | 4.1 | 0.852 |
+| walker |  | 6081 | 112 | go names append_test.go |  |  | 0.859 |
+| walker |  | 6235 | 154 | go body multierror.go:71 |  |  | 0.877 |
+| ns | 6246 |  | 235 | The golden formatted output, as asserted in tests | 4.3 | 4.1 | 0.853 |
+| walker |  | 6269 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.853 |
 | walker |  | 6444 | 175 | go doc multierror.go:71 |  |  | 0.868 |
 | walker |  | 6610 | 166 | go names multierror_test.go |  |  | 0.882 |
 | ns | 6658 |  | 412 | group_test.go: the concurrency table and its assertion loop | 4.4 | 4.1 | 0.853 |

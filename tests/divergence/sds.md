@@ -1,4 +1,4 @@
-Score(3000)=0.673 I=0.853 C=0.531 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.222/0.236/0.367/0.673/0.679/0.665/0.634
+Score(3000)=0.673 I=0.853 C=0.531 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.222/0.236/0.367/0.673/0.679/0.665/0.633
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -134,24 +134,21 @@ Score(3000)=0.673 I=0.853 C=0.531 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 7822 | 140 | c doc sds.c:807 |  |  | 0.652 |
 | ns | 7880 |  | 164 | README: the camelCase warning and how heap checkers see SDS strings | 5.10 |  | 0.647 |
 | walker |  | 7957 | 135 | c body sds.c:380 |  |  | 0.647 |
-| walker |  | 8095 | 138 | c body sds.c:807 |  |  | 0.647 |
 | ns | 8197 |  | 317 | sdsrange() body — negative-index normalisation and clamping | 6.1 | 4.2 | 0.632 |
-| walker |  | 8244 | 149 | c doc sds.c:1092 |  |  | 0.632 |
+| walker |  | 8382 | 425 | README.md section #2 |  |  | 0.632 |
 | ns | 8383 |  | 186 | sdscatlen/sdscat/sdscatsds bodies — the append path | 6.2 | 4.1 | 0.637 |
-| walker |  | 8401 | 157 | c body sds.c:725 |  |  | 0.638 |
-| walker |  | 8578 | 177 | c doc sds.c:725 |  |  | 0.638 |
-| ns | 8591 |  | 208 | sdsRemoveFreeSpace() — contract and the shrink decision | 6.3 | 4.1 | 0.628 |
-| ns | 8763 |  | 172 | sdstrim() body — how both ends are walked and the survivor moved down | 6.4 | 4.2 | 0.634 |
-| walker |  | 8768 | 190 | c doc sds.c:756 |  |  | 0.634 |
-| walker |  | 8966 | 198 | c doc sds.c:184 |  |  | 0.634 |
-| ns | 9015 |  | 252 | sdssplitargs() doc comment — REPL-style parsing and its failure mode | 6.5 |  | 0.624 |
-| walker |  | 9175 | 209 | c doc sds.c:835 |  |  | 0.624 |
-| ns | 9256 |  | 241 | The small inspect/reset bodies: sdsupdatelen, sdsclear, sdsAllocSize, sdsAllocPtr | 6.6 | 4.1 | 0.629 |
-| ns | 9375 |  | 119 | The test entry points in sds.c: the SDS_TEST_MAIN guard, sdsTest() and main() | 7.1 | 4.2 | 0.622 |
-| walker |  | 9386 | 211 | c doc sds.c:89 |  |  | 0.637 |
-| ns | 9582 |  | 207 | testhelp.h: the complete test_cond / test_report macro pair | 7.2 |  | 0.642 |
-| walker |  | 9601 | 215 | c doc sds.c:591 |  |  | 0.642 |
+| ns | 8591 |  | 208 | sdsRemoveFreeSpace() — contract and the shrink decision | 6.3 | 4.1 | 0.627 |
+| ns | 8763 |  | 172 | sdstrim() body — how both ends are walked and the survivor moved down | 6.4 | 4.2 | 0.620 |
+| walker |  | 8800 | 418 | README.md section #3 |  |  | 0.633 |
+| ns | 9015 |  | 252 | sdssplitargs() doc comment — REPL-style parsing and its failure mode | 6.5 |  | 0.623 |
+| walker |  | 9208 | 408 | README.md section #4 |  |  | 0.625 |
+| ns | 9256 |  | 241 | The small inspect/reset bodies: sdsupdatelen, sdsclear, sdsAllocSize, sdsAllocPtr | 6.6 | 4.1 | 0.630 |
+| walker |  | 9346 | 138 | c body sds.c:807 |  |  | 0.630 |
+| ns | 9375 |  | 119 | The test entry points in sds.c: the SDS_TEST_MAIN guard, sdsTest() and main() | 7.1 | 4.2 | 0.624 |
+| walker |  | 9495 | 149 | c doc sds.c:1092 |  |  | 0.624 |
+| ns | 9582 |  | 207 | testhelp.h: the complete test_cond / test_report macro pair | 7.2 |  | 0.629 |
+| walker |  | 9652 | 157 | c body sds.c:725 |  |  | 0.642 |
 | ns | 9665 |  | 83 | A representative excerpt of the sdsTest() body | 7.3 |  | 0.638 |
 | ns | 9794 |  | 129 | The complete Changelog (v1.0 and v2.0) | 7.4 |  | 0.632 |
-| walker |  | 9816 | 215 | c doc sds.c:616 |  |  | 0.649 |
-| ns | 9921 |  | 127 | Authorship and licence: README credits, LICENSE header, .gitignore | 7.5 |  | 0.645 |
+| walker |  | 9829 | 177 | c doc sds.c:725 |  |  | 0.632 |
+| ns | 9921 |  | 127 | Authorship and licence: README credits, LICENSE header, .gitignore | 7.5 |  | 0.629 |

@@ -125,35 +125,34 @@ Score(3000)=0.717 I=0.918 C=0.560 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 6585 | 219 | readme.md section #34 |  |  | 0.626 |
 | ns | 6748 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.636 |
 | walker |  | 6841 | 256 | readme.md section #35 |  |  | 0.637 |
-| walker |  | 6960 | 119 | ts names source/utils/merge.ts |  |  | 0.643 |
-| ns | 6965 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.633 |
-| walker |  | 7054 | 94 | ts decl source/utils/merge.ts:38 |  |  | 0.634 |
-| walker |  | 7106 | 52 | ts doc source/types/options.ts:307 |  |  | 0.634 |
-| ns | 7168 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.625 |
-| walker |  | 7466 | 360 | readme.md section #2 |  |  | 0.639 |
-| ns | 7600 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.623 |
-| walker |  | 7812 | 346 | readme.md section #3 |  |  | 0.627 |
+| ns | 6965 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.627 |
+| walker |  | 7075 | 234 | readme.md section #36 |  |  | 0.631 |
+| ns | 7168 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.622 |
+| walker |  | 7194 | 119 | ts names source/utils/merge.ts |  |  | 0.628 |
+| walker |  | 7288 | 94 | ts decl source/utils/merge.ts:38 |  |  | 0.629 |
+| walker |  | 7340 | 52 | ts doc source/types/options.ts:307 |  |  | 0.629 |
+| ns | 7600 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.614 |
+| walker |  | 7700 | 360 | readme.md section #2 |  |  | 0.627 |
 | ns | 8012 |  | 412 | `#retry`: the recursive retry loop and the `beforeRetry` hook contract | 4.5 | 3.1 | 0.610 |
-| walker |  | 8046 | 234 | readme.md section #36 |  |  | 0.614 |
+| walker |  | 8046 | 346 | readme.md section #3 |  |  | 0.614 |
 | ns | 8221 |  | 209 | Constructor: input validation and `prefixUrl` joining | 4.6 | 2.5 | 0.607 |
 | ns | 8398 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.600 |
-| walker |  | 8432 | 386 | readme.md section #28 |  |  | 0.600 |
-| ns | 8553 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.594 |
-| ns | 8726 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.593 |
-| walker |  | 8755 | 323 | readme.md section #29 |  |  | 0.594 |
-| walker |  | 8930 | 175 | ts doc source/utils/type-guards.ts:49 |  |  | 0.594 |
+| walker |  | 8441 | 395 | readme.md section #4 |  |  | 0.601 |
+| ns | 8553 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.595 |
+| ns | 8726 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.594 |
+| walker |  | 8827 | 386 | readme.md section #28 |  |  | 0.594 |
 | ns | 9000 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.585 |
 | ns | 9125 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.589 |
-| walker |  | 9255 | 325 | ts names source/core/constants.ts |  |  | 0.599 |
-| walker |  | 9273 | 18 | ts decl source/core/constants.ts:148 |  |  | 0.600 |
-| ns | 9282 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.604 |
-| walker |  | 9301 | 28 | ts decl source/core/constants.ts:256 |  |  | 0.605 |
-| ns | 9370 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.604 |
-| walker |  | 9411 | 110 | ts decl source/core/constants.ts:46 |  |  | 0.613 |
-| ns | 9473 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.616 |
-| ns | 9500 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.619 |
-| walker |  | 9535 | 124 | ts decl source/core/constants.ts:237 |  |  | 0.634 |
-| walker |  | 9664 | 129 | ts decl source/core/constants.ts:265 |  |  | 0.636 |
-| ns | 9694 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.644 |
-| walker |  | 9812 | 148 | ts body source/errors/HTTPError.ts:10 |  |  | 0.653 |
-| ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.644 |
+| walker |  | 9150 | 323 | readme.md section #29 |  |  | 0.590 |
+| ns | 9282 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.593 |
+| walker |  | 9325 | 175 | ts doc source/utils/type-guards.ts:49 |  |  | 0.593 |
+| ns | 9370 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.592 |
+| ns | 9473 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.595 |
+| ns | 9500 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.599 |
+| walker |  | 9650 | 325 | ts names source/core/constants.ts |  |  | 0.608 |
+| walker |  | 9668 | 18 | ts decl source/core/constants.ts:148 |  |  | 0.610 |
+| ns | 9694 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.618 |
+| walker |  | 9696 | 28 | ts decl source/core/constants.ts:256 |  |  | 0.619 |
+| walker |  | 9806 | 110 | ts decl source/core/constants.ts:46 |  |  | 0.628 |
+| walker |  | 9930 | 124 | ts decl source/core/constants.ts:237 |  |  | 0.642 |
+| ns | 9962 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.633 |

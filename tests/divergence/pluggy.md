@@ -152,14 +152,13 @@ Score(3000)=0.659 I=0.781 C=0.555 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 8985 | 12 | python doc src/pluggy/_result.py:42 |  |  | 0.500 |
 | walker |  | 8997 | 12 | python doc src/pluggy/_result.py:56 |  |  | 0.500 |
 | ns | 9096 |  | 336 | Both sides of hook implementation: the host's own `lib.py` and the external plugin `eggsample_spam.py` | 4.5 |  | 0.489 |
-| walker |  | 9186 | 189 | python doc src/pluggy/_warnings.py:10 |  |  | 0.494 |
-| walker |  | 9197 | 11 | listing of 'docs/examples/eggsample-spam' |  |  | 0.499 |
-| walker |  | 9224 | 27 | python names testing/test_result.py |  |  | 0.499 |
-| ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.496 |
-| walker |  | 9460 | 236 | declaration surface of changelog/README.rst |  |  | 0.496 |
-| ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.487 |
-| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.488 |
-| walker |  | 9710 | 250 | declaration surface of docs/index.rst |  |  | 0.520 |
-| ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.515 |
-| ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.519 |
-| ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.522 |
+| ns | 9239 |  | 143 | Entry-point wiring in both example `setup.py` files | 4.6 |  | 0.485 |
+| ns | 9487 |  | 248 | `testing/conftest.py` in full: the two fixtures every test in the suite uses | 5.1 |  | 0.477 |
+| walker |  | 9538 | 541 | README.rst section #3 |  |  | 0.477 |
+| ns | 9646 |  | 159 | `pyproject.toml`: package identity, Python floor, dependency groups and the src layout | 5.2 |  | 0.478 |
+| walker |  | 9727 | 189 | python doc src/pluggy/_warnings.py:10 |  |  | 0.484 |
+| walker |  | 9738 | 11 | listing of 'docs/examples/eggsample-spam' |  |  | 0.488 |
+| walker |  | 9765 | 27 | python names testing/test_result.py |  |  | 0.488 |
+| ns | 9825 |  | 179 | `tox.ini`: the environment list and the embedded pytest configuration | 5.3 |  | 0.484 |
+| ns | 9915 |  | 90 | `[tool.towncrier]` config: how CHANGELOG.rst is produced | 5.4 |  | 0.488 |
+| ns | 9948 |  | 33 | Listings of `changelog/` and `scripts/` | 5.5 |  | 0.491 |

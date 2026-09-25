@@ -100,17 +100,17 @@ Score(3000)=0.666 I=0.885 C=0.500 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | ns | 6056 |  | 56 | `levelMapping`: numeric level → ansi-styles method name | 4.10 | 4.2 | 0.623 |
 | ns | 6255 |  | 199 | `getModelAnsi`: RGB/hex downsampling dispatch | 4.11 | 4.2 | 0.612 |
 | walker |  | 6314 | 402 | ts decl source/vendor/ansi-styles/index.d.ts:26 |  |  | 0.612 |
-| walker |  | 6429 | 115 | ts body source/index.js:24 |  |  | 0.621 |
-| ns | 6528 |  | 273 | Colour-model property generation for `rgb`/`hex`/`ansi256` and their `bg*` twins | 4.12 | 4.2 | 0.608 |
-| ns | 6593 |  | 65 | `source/utilities.js`: both exported helpers, signatures only | 4.13 |  | 0.608 |
-| walker |  | 6686 | 257 | ts decl source/vendor/ansi-styles/index.d.ts:135 |  |  | 0.608 |
-| ns | 6816 |  | 223 | supports-color: complete declaration roster and default export | 5.1 |  | 0.602 |
-| ns | 6960 |  | 144 | supports-color: the `--color` / `--no-color` flag block | 5.2 | 5.1 | 0.594 |
-| walker |  | 6996 | 310 | ts decl source/index.d.ts:32 #2 |  |  | 0.605 |
-| walker |  | 7012 | 16 | ts doc source/vendor/ansi-styles/index.d.ts:186 |  |  | 0.605 |
-| ns | 7095 |  | 135 | supports-color: `envForceColor` (`FORCE_COLOR` parsing) | 5.3 | 5.1 | 0.598 |
-| ns | 7185 |  | 90 | supports-color: `translateLevel` — the `ColorInfo` shape | 5.4 | 5.1 | 0.592 |
-| walker |  | 7260 | 248 | readme.md section #6 |  |  | 0.606 |
+| ns | 6528 |  | 273 | Colour-model property generation for `rgb`/`hex`/`ansi256` and their `bg*` twins | 4.12 | 4.2 | 0.599 |
+| walker |  | 6562 | 248 | readme.md section #6 |  |  | 0.614 |
+| ns | 6593 |  | 65 | `source/utilities.js`: both exported helpers, signatures only | 4.13 |  | 0.614 |
+| walker |  | 6677 | 115 | ts body source/index.js:24 |  |  | 0.623 |
+| ns | 6816 |  | 223 | supports-color: complete declaration roster and default export | 5.1 |  | 0.617 |
+| walker |  | 6934 | 257 | ts decl source/vendor/ansi-styles/index.d.ts:135 |  |  | 0.617 |
+| ns | 6960 |  | 144 | supports-color: the `--color` / `--no-color` flag block | 5.2 | 5.1 | 0.608 |
+| ns | 7095 |  | 135 | supports-color: `envForceColor` (`FORCE_COLOR` parsing) | 5.3 | 5.1 | 0.602 |
+| ns | 7185 |  | 90 | supports-color: `translateLevel` — the `ColorInfo` shape | 5.4 | 5.1 | 0.596 |
+| walker |  | 7244 | 310 | ts decl source/index.d.ts:32 #2 |  |  | 0.606 |
+| walker |  | 7260 | 16 | ts doc source/vendor/ansi-styles/index.d.ts:186 |  |  | 0.606 |
 | walker |  | 7403 | 143 | ts body source/index.js:132 |  |  | 0.626 |
 | ns | 7409 |  | 224 | `_supportsColor`: force-colour precedence and explicit `--color=` levels | 5.5 | 5.1 | 0.614 |
 | walker |  | 7518 | 115 | ts names source/vendor/supports-color/index.d.ts |  |  | 0.615 |

@@ -1,4 +1,4 @@
-Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.570/0.560/0.629/0.706
+Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.374/0.340/0.457/0.570/0.558/0.629/0.706
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -98,14 +98,14 @@ Score(3000)=0.570 I=0.561 C=0.580 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 3962 |  | 151 | app.ts local wiring: Eta view root and RESERVED_QUERY_KEYS | 3.12 |  | 0.576 |
 | walker |  | 4083 | 326 | README.md section #3 |  |  | 0.576 |
 | ns | 4185 |  | 223 | Static, CORS and body-parser middleware stack (app.ts 101-119) | 3.13 |  | 0.558 |
-| walker |  | 4235 | 152 | json config tsconfig.json |  |  | 0.560 |
-| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.540 |
-| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.529 |
-| walker |  | 4557 | 322 | ts body src/paginate.ts:11 |  |  | 0.531 |
-| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.536 |
-| walker |  | 4730 | 173 | ts body src/service.ts:202 |  |  | 0.538 |
-| ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.522 |
-| walker |  | 5037 | 307 | README.md section #4 |  |  | 0.522 |
+| walker |  | 4390 | 307 | README.md section #4 |  |  | 0.558 |
+| ns | 4405 |  | 220 | parseArgs option declarations: port, host, static | 3.14 | 3.1 | 0.538 |
+| ns | 4518 |  | 113 | parseArgs boolean flags including the deprecated -w/--watch | 3.15 | 3.14 | 0.527 |
+| walker |  | 4542 | 152 | json config tsconfig.json |  |  | 0.529 |
+| ns | 4638 |  | 120 | parseWhere: query string to nested where-tree | 4.1 | 3.1 | 0.534 |
+| walker |  | 4864 | 322 | ts body src/paginate.ts:11 |  |  | 0.536 |
+| ns | 4916 |  | 278 | splitKey: colon operators plus the v0.17 underscore fallback | 4.2 | 3.1 | 0.520 |
+| walker |  | 5037 | 173 | ts body src/service.ts:202 |  |  | 0.522 |
 | ns | 5142 |  | 226 | setPathOp and coerceValue: dot-prop writes and type coercion | 4.3 | 3.1 | 0.507 |
 | walker |  | 5274 | 237 | ts body src/service.ts:110 |  |  | 0.510 |
 | ns | 5398 |  | 256 | matchesWhere: top-level loop and the `or` combinator | 4.4 | 3.1 | 0.495 |

@@ -1,4 +1,4 @@
-Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.951/0.785/0.686/0.643/0.610/0.521
+Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.653/0.951/0.785/0.686/0.643/0.627/0.521
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -48,13 +48,13 @@ Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | ns | 2602 |  | 65 | classes/index.js barrel (whole file) | 2.5 |  | 0.676 |
 | ns | 2857 |  | 255 | README usage: canonical calls against the aggregate export | 3.1 |  | 0.686 |
 | walker |  | 2904 | 867 | README.md section #3 |  |  | 0.686 |
-| walker |  | 2908 | 4 | listing of '.github/matchers' |  |  | 0.686 |
-| walker |  | 2912 | 4 | listing of 'test/integration' |  |  | 0.686 |
 | ns | 3065 |  | 208 | README: the options object (`loose`, `includePrerelease`) | 3.2 |  | 0.670 |
 | ns | 3171 |  | 106 | README: what counts as a version | 3.3 |  | 0.661 |
 | ns | 3331 |  | 160 | README: comparators and the complete primitive operator set | 3.4 |  | 0.648 |
 | ns | 3445 |  | 114 | README: comparator sets intersect, `\|\|` unions them | 3.5 |  | 0.640 |
-| walker |  | 3475 | 563 | README.md section #4 |  |  | 0.640 |
+| walker |  | 3467 | 563 | README.md section #4 |  |  | 0.640 |
+| walker |  | 3471 | 4 | listing of '.github/matchers' |  |  | 0.640 |
+| walker |  | 3475 | 4 | listing of 'test/integration' |  |  | 0.640 |
 | walker |  | 3581 | 106 | README.md section #5 |  |  | 0.655 |
 | ns | 3611 |  | 166 | README: the prerelease-tag matching rule | 3.6 |  | 0.643 |
 | walker |  | 3665 | 84 | listing of 'test/fixtures' |  |  | 0.645 |
@@ -77,30 +77,30 @@ Score(3000)=0.686 I=0.898 C=0.524 ns_rows≤3K=16/48 grid(1000/1442/2080/3000/43
 | ns | 5314 |  | 213 | README: coercion limits | 3.13 |  | 0.656 |
 | walker |  | 5582 | 441 | README.md section #7 |  |  | 0.659 |
 | ns | 5694 |  | 380 | internal/constants.js (whole file): every tunable limit and flag | 4.1 |  | 0.631 |
-| walker |  | 5932 | 350 | json config release-please-config.json |  |  | 0.631 |
 | ns | 5956 |  | 262 | internal/parse-options.js and internal/debug.js (whole files) | 4.2 |  | 0.610 |
-| ns | 6262 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.591 |
-| ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.582 |
-| walker |  | 6403 | 471 | README.md section #8 |  |  | 0.598 |
-| ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.587 |
-| ns | 6761 |  | 168 | internal/re.js: the ReDoS-safe regex construction | 4.6 |  | 0.580 |
-| walker |  | 6872 | 469 | README.md section #9 |  |  | 0.584 |
-| walker |  | 7310 | 438 | README.md section #10 |  |  | 0.607 |
+| walker |  | 6053 | 471 | README.md section #8 |  |  | 0.627 |
+| ns | 6262 |  | 306 | internal/identifiers.js (whole file): the prerelease ordering rule | 4.3 |  | 0.607 |
+| ns | 6359 |  | 97 | internal/lrucache.js: class shape and the 1000-entry bound | 4.4 |  | 0.598 |
+| walker |  | 6522 | 469 | README.md section #9 |  |  | 0.601 |
+| ns | 6593 |  | 234 | internal/re.js: the four exported arrays and the createToken registrar | 4.5 |  | 0.590 |
+| ns | 6761 |  | 168 | internal/re.js: the ReDoS-safe regex construction | 4.6 |  | 0.584 |
+| walker |  | 6960 | 438 | README.md section #10 |  |  | 0.607 |
 | ns | 7436 |  | 675 | internal/re.js: complete roster of all 43 regex token names | 4.7 |  | 0.581 |
+| walker |  | 7480 | 520 | README.md section #16 |  |  | 0.581 |
 | ns | 7755 |  | 319 | bin/semver.js: complete option-flag roster | 5.1 |  | 0.563 |
-| walker |  | 7830 | 520 | README.md section #16 |  |  | 0.563 |
+| walker |  | 7830 | 350 | json config release-please-config.json |  |  | 0.563 |
 | ns | 7931 |  | 176 | bin/semver.js: usage line, the `-n` contract, and exit semantics | 5.2 |  | 0.556 |
 | ns | 8268 |  | 337 | bin/semver.js: the main() output pipeline | 5.3 |  | 0.544 |
 | ns | 8414 |  | 146 | SemVer.inc: complete roster of handled release types | 6.1 | 2.1 | 0.535 |
-| walker |  | 8605 | 775 | README.md section #21 |  |  | 0.535 |
+| walker |  | 8493 | 663 | README.md section #17 |  |  | 0.535 |
 | ns | 8644 |  | 230 | functions/cmp.js: the complete operator dispatch table | 6.2 |  | 0.525 |
 | ns | 8886 |  | 242 | functions/coerce.js: the right-to-left scanning rule | 6.3 |  | 0.521 |
-| walker |  | 9032 | 427 | plaintext config .github/workflows/codeql-analysis.yml |  |  | 0.521 |
-| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.513 |
-| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.529 |
-| ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.525 |
-| ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.526 |
-| walker |  | 9695 | 663 | README.md section #17 |  |  | 0.526 |
-| ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.538 |
-| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.537 |
-| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.532 |
+| walker |  | 9039 | 546 | README.md section #18 |  |  | 0.541 |
+| ns | 9133 |  | 247 | functions/diff.js: the prerelease-to-release special cases | 6.4 |  | 0.534 |
+| ns | 9250 |  | 117 | Complete listings of test/ and test/fixtures/ | 7.1 |  | 0.548 |
+| ns | 9400 |  | 150 | map.js + test/map.js: the enforced source-to-test mirror | 7.2 |  | 0.544 |
+| walker |  | 9569 | 530 | README.md section #19 |  |  | 0.544 |
+| ns | 9615 |  | 215 | package.json: npm scripts and tap configuration | 7.3 |  | 0.545 |
+| ns | 9722 |  | 107 | Complete listings of benchmarks/, .github/ and .github/workflows/ | 7.4 |  | 0.556 |
+| ns | 9812 |  | 90 | CONTRIBUTING.md: the rules that would silently fail a PR | 7.5 |  | 0.555 |
+| ns | 9951 |  | 139 | .eslintrc.local.js: the constraints on published source | 7.6 |  | 0.550 |

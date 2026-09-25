@@ -186,8 +186,7 @@ Score(3000)=0.508 I=0.832 C=0.310 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | walker |  | 9332 | 24 | rust names tests/test_display.rs |  |  | 0.548 |
 | ns | 9389 |  | 127 | Cargo.toml: std-feature rationale and dev-dependencies | 5.4 |  | 0.546 |
 | walker |  | 9474 | 142 | rust decl impl/src/scan_expr.rs:6 |  |  | 0.568 |
-| walker |  | 9506 | 32 | rust body impl/src/generics.rs:19 |  |  | 0.568 |
 | ns | 9515 |  | 126 | impl/Cargo.toml: the proc-macro crate's manifest | 5.5 |  | 0.572 |
-| walker |  | 9671 | 165 | rust decl impl/src/scan_expr.rs:63 |  |  | 0.572 |
 | ns | 9689 |  | 174 | CI job roster and the pinned toolchain components | 5.6 |  | 0.566 |
-| walker |  | 9917 | 246 | rust module doc src/lib.rs #4 |  |  | 0.566 |
+| walker |  | 9939 | 465 | README.md section #4 |  |  | 0.602 |
+| walker |  | 9971 | 32 | rust body impl/src/generics.rs:19 |  |  | 0.602 |

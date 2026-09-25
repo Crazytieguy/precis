@@ -59,10 +59,10 @@ Score(3000)=0.745 I=0.859 C=0.646 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.812 |
 | walker |  | 3322 | 269 | README.md section #1 |  |  | 0.860 |
 | ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.859 |
-| walker |  | 3458 | 136 | headings outline in CHANGELOG.md |  |  | 0.879 |
-| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.853 |
-| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.830 |
-| walker |  | 3853 | 395 | UPDATING.md section #2 |  |  | 0.831 |
+| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.834 |
+| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.812 |
+| walker |  | 3717 | 395 | UPDATING.md section #2 |  |  | 0.813 |
+| walker |  | 3853 | 136 | headings outline in CHANGELOG.md |  |  | 0.831 |
 | ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.793 |
 | walker |  | 4154 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.794 |
 | ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.756 |
