@@ -321,43 +321,42 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 8548 | 25 | ts decl packages/router/highlights.tsx:11 |  |  | 0.561 |
 | walker |  | 8620 | 72 | ts names packages/router/rss.tsx |  |  | 0.562 |
 | walker |  | 8647 | 27 | ts names apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts |  |  | 0.562 |
-| walker |  | 8690 | 43 | ts names apps/web/pages/search.tsx |  |  | 0.562 |
+| walker |  | 8675 | 28 | ts names apps/mobile/components/ui/Input.tsx |  |  | 0.562 |
+| walker |  | 8691 | 16 | ts decl apps/mobile/components/ui/Input.tsx:5 |  |  | 0.562 |
+| walker |  | 8708 | 17 | README.md section #7 |  |  | 0.562 |
 | ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.554 |
-| walker |  | 8718 | 28 | ts names apps/mobile/components/ui/Input.tsx |  |  | 0.554 |
-| walker |  | 8734 | 16 | ts decl apps/mobile/components/ui/Input.tsx:5 |  |  | 0.554 |
-| walker |  | 8751 | 17 | README.md section #7 |  |  | 0.554 |
-| walker |  | 8767 | 16 | README.md section #6 |  |  | 0.554 |
-| walker |  | 8784 | 17 | README.md section #9 |  |  | 0.555 |
-| walker |  | 8800 | 16 | README.md section #8 |  |  | 0.556 |
-| walker |  | 8816 | 16 | README.md section #10 |  |  | 0.557 |
-| walker |  | 8833 | 17 | README.md section #16 |  |  | 0.558 |
-| walker |  | 8878 | 45 | ts names apps/web/pages/dashboard.tsx |  |  | 0.558 |
-| walker |  | 8890 | 12 | ts body packages/lib/utils.ts:17 |  |  | 0.558 |
-| walker |  | 8919 | 29 | ts names apps/mobile/components/ui/Spinner.tsx |  |  | 0.558 |
-| walker |  | 8931 | 12 | ts decl apps/mobile/components/ui/Spinner.tsx:4 |  |  | 0.558 |
+| walker |  | 8724 | 16 | README.md section #6 |  |  | 0.554 |
+| walker |  | 8741 | 17 | README.md section #9 |  |  | 0.555 |
+| walker |  | 8757 | 16 | README.md section #8 |  |  | 0.556 |
+| walker |  | 8773 | 16 | README.md section #10 |  |  | 0.557 |
+| walker |  | 8790 | 17 | README.md section #16 |  |  | 0.558 |
+| walker |  | 8802 | 12 | ts body packages/lib/utils.ts:17 |  |  | 0.558 |
+| walker |  | 8831 | 29 | ts names apps/mobile/components/ui/Spinner.tsx |  |  | 0.558 |
+| walker |  | 8843 | 12 | ts decl apps/mobile/components/ui/Spinner.tsx:4 |  |  | 0.558 |
+| walker |  | 8872 | 29 | ts names apps/mobile/components/ui/TabBarBackground.tsx |  |  | 0.558 |
+| walker |  | 8946 | 74 | ts decl packages/filesystem/createFile.ts:6 |  |  | 0.558 |
 | ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.551 |
-| walker |  | 8960 | 29 | ts names apps/mobile/components/ui/TabBarBackground.tsx |  |  | 0.551 |
-| walker |  | 9034 | 74 | ts decl packages/filesystem/createFile.ts:6 |  |  | 0.551 |
-| walker |  | 9048 | 14 | ts names apps/web/pages/api/v2/dashboard/index.ts |  |  | 0.551 |
-| walker |  | 9095 | 47 | ts names apps/web/pages/login.tsx |  |  | 0.551 |
-| walker |  | 9122 | 27 | ts decl apps/web/pages/login.tsx:24 |  |  | 0.551 |
+| walker |  | 8960 | 14 | ts names apps/web/pages/api/v2/dashboard/index.ts |  |  | 0.551 |
+| walker |  | 9007 | 47 | ts names apps/web/pages/login.tsx |  |  | 0.551 |
+| walker |  | 9034 | 27 | ts decl apps/web/pages/login.tsx:24 |  |  | 0.551 |
+| walker |  | 9081 | 47 | ts names apps/web/pages/register.tsx |  |  | 0.551 |
+| walker |  | 9108 | 27 | ts decl apps/web/pages/register.tsx:29 |  |  | 0.551 |
+| walker |  | 9138 | 30 | ts names apps/mobile/components/ui/Button.tsx |  |  | 0.551 |
 | ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.550 |
-| walker |  | 9169 | 47 | ts names apps/web/pages/register.tsx |  |  | 0.550 |
-| walker |  | 9196 | 27 | ts decl apps/web/pages/register.tsx:29 |  |  | 0.550 |
-| walker |  | 9226 | 30 | ts names apps/mobile/components/ui/Button.tsx |  |  | 0.550 |
-| walker |  | 9256 | 30 | ts names apps/mobile/components/ui/IconSymbol.tsx |  |  | 0.550 |
-| walker |  | 9285 | 29 | ts decl apps/worker/lib/preservationScheme/handleArchivePreview.ts:17 |  |  | 0.550 |
+| walker |  | 9168 | 30 | ts names apps/mobile/components/ui/IconSymbol.tsx |  |  | 0.550 |
+| walker |  | 9197 | 29 | ts decl apps/worker/lib/preservationScheme/handleArchivePreview.ts:17 |  |  | 0.550 |
 | ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.544 |
 | ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.550 |
-| walker |  | 9562 | 277 | plaintext config Dockerfile |  |  | 0.550 |
-| walker |  | 9593 | 31 | ts names apps/mobile/components/ui/TabBarBackground.ios.tsx |  |  | 0.550 |
-| walker |  | 9624 | 31 | ts names apps/worker/lib/preservationScheme/pdfHandler.ts |  |  | 0.550 |
-| walker |  | 9646 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.555 |
+| walker |  | 9474 | 277 | plaintext config Dockerfile |  |  | 0.550 |
+| walker |  | 9505 | 31 | ts names apps/mobile/components/ui/TabBarBackground.ios.tsx |  |  | 0.550 |
+| walker |  | 9536 | 31 | ts names apps/worker/lib/preservationScheme/pdfHandler.ts |  |  | 0.550 |
+| walker |  | 9558 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.555 |
+| walker |  | 9609 | 51 | ts names apps/mobile/types/global.ts |  |  | 0.555 |
+| walker |  | 9660 | 51 | ts names apps/worker/lib/browser.ts |  |  | 0.555 |
 | ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.571 |
-| walker |  | 9697 | 51 | ts names apps/mobile/types/global.ts |  |  | 0.571 |
-| walker |  | 9748 | 51 | ts names apps/worker/lib/browser.ts |  |  | 0.571 |
-| walker |  | 9831 | 83 | ts decl packages/types/inputSelect.ts:7 |  |  | 0.571 |
-| walker |  | 9850 | 19 | README.md section #15 |  |  | 0.572 |
-| ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.583 |
-| walker |  | 9940 | 90 | ts names packages/router/config.tsx |  |  | 0.584 |
-| walker |  | 9970 | 30 | ts decl packages/router/config.tsx:44 |  |  | 0.584 |
+| walker |  | 9743 | 83 | ts decl packages/types/inputSelect.ts:7 |  |  | 0.571 |
+| walker |  | 9762 | 19 | README.md section #15 |  |  | 0.572 |
+| walker |  | 9852 | 90 | ts names packages/router/config.tsx |  |  | 0.574 |
+| walker |  | 9882 | 30 | ts decl packages/router/config.tsx:44 |  |  | 0.574 |
+| ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.584 |
+| walker |  | 9971 | 89 | ts decl packages/lib/isArchivalTag.ts:3 |  |  | 0.584 |

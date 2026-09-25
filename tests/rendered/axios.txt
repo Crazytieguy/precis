@@ -80,7 +80,13 @@ index.d.ts
   100→  | 'Authorization'
   101→  | 'Location';
   103→type ContentType =
-  …
+  104→  | AxiosHeaderValue
+  105→  | 'text/html'
+  106→  | 'text/plain'
+  107→  | 'multipart/form-data'
+  108→  | 'application/json'
+  109→  | 'application/x-www-form-urlencoded'
+  110→  | 'application/octet-stream';
   112→export type RawAxiosRequestHeaders = Partial<
   113→  RawAxiosHeaders & {
   114→    [Key in CommonRequestHeadersList]: AxiosHeaderValue;
@@ -147,12 +153,6 @@ lib/
       15→export default isXHRAdapterSupported &&
       …
   axios.js
-    …
-    28→function createInstance(defaultConfig) {
-    …
-    47→const axios = createInstance(defaults);
-    …
-    89→export default axios;
   cancel/
     CancelToken.js
       …

@@ -103,7 +103,12 @@ pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                 };
                 (node, visibility)
             }
-            TopLevel::Skip => continue,
+            TopLevel::Method { receiver, value }
+                if scan.public_names.contains(file.text(receiver)) =>
+            {
+                (value, Visibility::Public)
+            }
+            TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
         let parts = declaration_parts(file, statement, node, visibility);
         model.decls.push(DeclInfo {
@@ -239,6 +244,13 @@ enum TopLevel<'tree> {
     Exported(Node<'tree>),
     /// A declaration that is API only if something exports its name.
     Local(Node<'tree>),
+    /// A function assigned onto a local (`app.use = function …`,
+    /// `Router.prototype.route = …`): a method of that local's API when
+    /// the local is published.
+    Method {
+        receiver: Node<'tree>,
+        value: Node<'tree>,
+    },
     Skip,
 }
 
@@ -285,7 +297,8 @@ impl<'source> ExportScan<'source> {
                     Some(namespace) if namespace.kind() == "internal_module" => {
                         TopLevel::Local(namespace)
                     }
-                    _ => TopLevel::Skip,
+                    Some(assignment) => method_assignment(file, assignment),
+                    None => TopLevel::Skip,
                 }
             }
             "ambient_declaration" => TopLevel::Local(unwrap_ambient(statement)),
@@ -294,7 +307,21 @@ impl<'source> ExportScan<'source> {
             {
                 TopLevel::Skip
             }
-            kind if is_declaration_kind(kind) => TopLevel::Local(statement),
+            kind if is_declaration_kind(kind) => {
+                if let Some(declarator) = single_declarator(statement)
+                    && let Some(name) = declarator.child_by_field_name("name")
+                    && declarator
+                        .child_by_field_name("value")
+                        .is_some_and(|value| {
+                            value.kind() == "assignment_expression"
+                                && commonjs_assignment_value(file, value).is_some()
+                        })
+                {
+                    // `var app = exports = module.exports = {}`
+                    self.mark(file, name);
+                }
+                TopLevel::Local(statement)
+            }
             _ => TopLevel::Skip,
         }
     }
@@ -513,7 +540,13 @@ fn is_require_rooted(file: &SourceFile, node: Node) -> bool {
 /// X`, `exports.x = X`, `module.exports.x = X`, `exports['x'] = X`, and
 /// chains through a bare `exports` (`exports = module.exports = X`).
 fn commonjs_export_value<'tree>(file: &SourceFile, statement: Node<'tree>) -> Option<Node<'tree>> {
-    let mut expression = statement.named_child(0)?;
+    commonjs_assignment_value(file, statement.named_child(0)?)
+}
+
+fn commonjs_assignment_value<'tree>(
+    file: &SourceFile,
+    mut expression: Node<'tree>,
+) -> Option<Node<'tree>> {
     loop {
         if expression.kind() != "assignment_expression" {
             return None;
@@ -531,6 +564,37 @@ fn commonjs_export_value<'tree>(file: &SourceFile, statement: Node<'tree>) -> Op
             return None;
         }
         expression = right;
+    }
+}
+
+/// `R.name = <function>` or `R.prototype.name = <function>`, with `R` a
+/// plain name.
+fn method_assignment<'tree>(file: &SourceFile, assignment: Node<'tree>) -> TopLevel<'tree> {
+    let (Some(left), Some(value)) = (
+        assignment.child_by_field_name("left"),
+        assignment.child_by_field_name("right"),
+    ) else {
+        return TopLevel::Skip;
+    };
+    let is_function = is_function_kind(value.kind()) || wrapped_function_block(value).is_some();
+    if assignment.kind() != "assignment_expression"
+        || left.kind() != "member_expression"
+        || !is_function
+    {
+        return TopLevel::Skip;
+    }
+    let mut object = left.child_by_field_name("object");
+    if let Some(prototype) = object.filter(|object| {
+        object.kind() == "member_expression"
+            && object
+                .child_by_field_name("property")
+                .is_some_and(|property| file.text(property) == "prototype")
+    }) {
+        object = prototype.child_by_field_name("object");
+    }
+    match object {
+        Some(receiver) if receiver.kind() == "identifier" => TopLevel::Method { receiver, value },
+        _ => TopLevel::Skip,
     }
 }
 
@@ -1375,6 +1439,42 @@ exports.static = require('serve-static');
                 "Public Callable name [5] head [5] doc [] body []",
                 "Public Callable name [8] head [8] doc [] body [[9]]",
                 "Public Whole name [11] head [11] doc [] body []",
+            ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_functions_assigned_onto_a_published_local_are_its_methods() {
+        let model = extract_source(
+            "lib/application.js",
+            "\
+var app = exports = module.exports = {};
+app.use = function use(fn) {
+  return this;
+};
+function Router() {}
+Router.prototype.route = function route(path) {};
+var other = {};
+other.run = function run() {};
+app.name = 'app';
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Public Whole name [1] head [1] doc [] body []",
+                "Public Callable name [2] head [2] doc [] body [[3]]",
+            ]
+        );
+        let router = extract_source(
+            "lib/router.js",
+            "function Router() {}\nRouter.prototype.route = () => {};\nmodule.exports = Router;\n",
+        );
+        assert_eq!(
+            describe(&router),
+            [
+                "Public Callable name [1] head [1] doc [] body []",
+                "Public Callable name [2] head [2] doc [] body []",
             ]
         );
     }
