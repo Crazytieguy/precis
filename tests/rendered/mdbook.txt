@@ -103,9 +103,17 @@ crates/
         …
       utils/
         fs.rs
+          1→//! Filesystem utilities and helpers.
+          …
         html.rs
+          1→//! Utilities for dealing with HTML.
+          …
         mod.rs
+          1→//! Various helpers and utilities.
+          …
         toml_ext.rs
+          1→//! Helper for working with toml types.
+          …
   mdbook-driver/
     Cargo.toml
       …
@@ -115,7 +123,6 @@ crates/
       1→# mdbook-driver
       …
       7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
-      9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
       …
     src/
       builtin_preprocessors/
@@ -125,6 +132,8 @@ crates/
           take_lines.rs
         links.rs
         mod.rs
+          1→//! Built-in preprocessors.
+          …
       builtin_renderers/
         markdown_renderer.rs
         mod.rs
@@ -186,9 +195,13 @@ crates/
       html/
         admonitions.rs
         hide_lines.rs
+          1→//! Support for hiding code lines.
+          …
         mod.rs
         print.rs
         serialize.rs
+          1→//! Serializes the [`Node`] tree to an HTML string.
+          …
         tests.rs
         tokenizer.rs
         tree.rs
@@ -202,13 +215,19 @@ crates/
         mod.rs
         search.rs
         static_files.rs
+          1→//! Support for writing static files.
+          …
       lib.rs
         1→//! mdBook HTML renderer.
         …
       theme/
         fonts.rs
         mod.rs
+          1→//! Support for theme files.
+          …
         playground_editor.rs
+          1→//! Theme dependencies for the playground editor.
+          …
         searcher.rs
       utils.rs
         1→//! Utilities for processing HTML.
@@ -219,7 +238,6 @@ crates/
       1→# mdbook-markdown
       …
       7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
-      9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
       …
     src/
       lib.rs
@@ -289,6 +307,8 @@ crates/
       4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
     src/
       changelog.rs
+        1→//! Helper to generate a changelog for a new release.
+        …
       main.rs
         1→//! Helper for local development.
         …
@@ -332,11 +352,6 @@ guide/
       backends.md
       mdbook-wordcount/
         Cargo.toml
-          1→[package]
-          2→name = "mdbook-wordcount"
-          3→version = "0.1.0"
-          4→authors = ["Michael Bryan <michaelfbryan@gmail.com>"]
-          …
         src/
           main.rs
       preprocessors.md
