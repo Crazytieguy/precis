@@ -701,11 +701,25 @@ fn is_test_c_file_name(name: &str) -> bool {
 /// True iff `file`'s non-blank line count is within the whole-render
 /// size bound. Reads the file directly; `None`/unreadable → not small.
 fn header_is_small_by_size(file: &Path) -> bool {
-    let Ok(text) = std::fs::read_to_string(file) else {
+    use std::io::BufRead;
+    let Ok(file) = std::fs::File::open(file) else {
         return false;
     };
-    let non_blank = text.lines().filter(|l| !l.trim().is_empty()).count();
-    non_blank > 0 && non_blank <= WHOLE_HEADER_MAX_SRC_LINES
+    // Stops at the first line past the bound, so a vendored multi-megabyte
+    // header costs one buffer read rather than a whole-file read.
+    let mut non_blank = 0;
+    for line in std::io::BufReader::new(file).lines() {
+        let Ok(line) = line else {
+            return false;
+        };
+        if !line.trim().is_empty() {
+            non_blank += 1;
+            if non_blank > WHOLE_HEADER_MAX_SRC_LINES {
+                return false;
+            }
+        }
+    }
+    non_blank > 0
 }
 
 /// Parse `Makefile.am` at `root` for `include_HEADERS` /
