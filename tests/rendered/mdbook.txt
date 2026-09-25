@@ -53,8 +53,6 @@ Cargo.toml
   133→search = ["mdbook-html/search"]
   134→
   135→[[bin]]
-  136→doc = false
-  137→name = "mdbook"
   …
 LICENSE
 README.md
@@ -280,19 +278,6 @@ crates/
         5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
         6→//! for more information on how to implement a renderer.
         …
-        17→pub use mdbook_core::MDBOOK_VERSION;
-        18→pub use mdbook_core::book;
-        19→pub use mdbook_core::config;
-        20→pub use mdbook_core::errors;
-        …
-        28→pub trait Renderer {
-        …
-        30→    fn name(&self) -> &str;
-        …
-        40→pub struct RenderContext {
-        …
-        63→impl RenderContext {
-        …
   mdbook-summary/
     Cargo.toml
     README.md
@@ -340,7 +325,24 @@ guide/
       main.rs
         1→//! Preprocessor for the mdBook guide.
         3→fn main() {
-        …
+        4→    let mut args = std::env::args().skip(1);
+        5→    match args.next().as_deref() {
+        6→        Some("supports") => {
+        7→            // Supports all renderers.
+        8→            return;
+        9→        }
+        10→        Some(arg) => {
+        11→            eprintln!("unknown argument: {arg}");
+        12→            std::process::exit(1);
+        13→        }
+        14→        None => {}
+        15→    }
+        16→
+        17→    if let Err(e) = guide_helper::handle_preprocessing() {
+        18→        eprintln!("{e:?}");
+        19→        std::process::exit(1);
+        20→    }
+        21→}
   src/
     404.md
     README.md
@@ -373,11 +375,6 @@ guide/
       backends.md
       mdbook-wordcount/
         Cargo.toml
-          1→[package]
-          2→name = "mdbook-wordcount"
-          3→version = "0.1.0"
-          4→authors = ["Michael Bryan <michaelfbryan@gmail.com>"]
-          …
         src/
           main.rs
       preprocessors.md

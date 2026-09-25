@@ -6,7 +6,8 @@
 //!   file's module tree, whatever its visibility). Other `use` and
 //!   `extern crate` items are plumbing and not modeled; an inline
 //!   `mod name { … }` is left out with its contents.
-//! - **Declarations**: `fn` is `Callable`; `struct`, `enum`, `union`,
+//! - **Declarations**: `fn` is `Callable`, except the program flow of
+//!   `main.rs` (see `show_program_flow`); `struct`, `enum`, `union`,
 //!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait` and
 //!   `impl` are `Whole` containers whose members are their functions.
 //! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
@@ -19,7 +20,7 @@ use std::path::Path;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile};
+use super::{Language, SourceFile, show_program_flow};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -30,8 +31,10 @@ pub(super) const LANGUAGE: Language = Language {
     file_weight: None,
 };
 
-fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
+fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
+    let entrypoint = is_entrypoint(&file.path, ctx);
+    let mut functions = Vec::new();
     let mut model = FileModel {
         module_doc: module_doc(file, root),
         ..FileModel::default()
@@ -61,7 +64,15 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             }
             "impl_item" => model.decls.extend(impl_container(node, leading, file)),
             "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
-            "function_item" => model.decls.push(callable(node, leading, file)),
+            "function_item" => {
+                if entrypoint {
+                    let is_main = node
+                        .child_by_field_name("name")
+                        .is_some_and(|name| file.text(name) == "main");
+                    functions.push((model.decls.len(), *file.node_rows(node).end(), is_main));
+                }
+                model.decls.push(callable(node, leading, file));
+            }
             "macro_definition" => {
                 let body = macro_open_row(node, file).map(|open_row| (open_row, node));
                 let entries = list_entries(node, file, |child| child.kind() == "macro_rule");
@@ -81,6 +92,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             _ => {}
         }
     }
+    show_program_flow(&mut model.decls, &functions);
     model
 }
 
@@ -723,5 +735,36 @@ macro_rules! __private {
         assert!(is_entrypoint(Path::new("src/lib.rs"), &ctx));
         assert!(is_entrypoint(Path::new("src/main.rs"), &ctx));
         assert!(!is_entrypoint(Path::new("src/mod.rs"), &ctx));
+    }
+
+    #[test]
+    fn rust_extract_thin_main_shows_the_flow_it_delegates_to() {
+        let source = "\
+fn run() -> Result<()> {
+    parse()?;
+    Ok(())
+}
+
+fn main() {
+    if let Err(error) = run() {
+        exit(error);
+    }
+}
+";
+        let shapes = |file_name| {
+            let (_, model) = extract_source(file_name, source);
+            let decls = model.decls.iter();
+            decls
+                .map(|decl| (decl.shape, decl.head.clone()))
+                .collect::<Vec<_>>()
+        };
+        assert_eq!(
+            shapes("main.rs"),
+            [(Shape::Whole, vec![1, 4]), (Shape::Whole, vec![6, 10])]
+        );
+        assert_eq!(
+            shapes("run.rs"),
+            [(Shape::Callable, vec![1]), (Shape::Callable, vec![6])]
+        );
     }
 }

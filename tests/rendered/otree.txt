@@ -55,10 +55,7 @@ README.md
   52→## Roadmap
   …
   82→## Thanks
-  83→
-  84→I created this tool to better view those super deep YAML files of Kubernetes while [jnv](https://github.com/ynqa/jnv) only supports JSON.
-  85→
-  86→This is based on the amazing TUI framework [ratatui](https://github.com/ratatui-org/ratatui) and its tree widget [tui-tree-widget](https://github.com/EdJoPaTo/tui-rs-tree-widget.git).
+  …
 assets/
   screenshot.png
 build.rs
@@ -118,29 +115,8 @@ src/
     colors.rs
     keys.rs
     mod.rs
-      1→pub mod colors;
-      2→pub mod keys;
-      3→pub mod types;
-      …
     types.rs
   debug.rs
-    …
-    7→#[macro_export]
-    8→macro_rules! debug {
-    9→    ($($arg:tt)*) => {
-    10→        if let Err(_) = $crate::debug::write_logs(format!($($arg)*)) {
-    11→            // FIXME: How to handle err when writing logs failed?
-    12→            // We cannot write error to stderr since it is used for TUI.
-    13→        }
-    14→    };
-    15→}
-    17→static FILE: OnceLock<String> = OnceLock::new();
-    18→
-    19→pub fn set_file(file: String) {
-    20→    FILE.set(file).unwrap();
-    …
-    23→pub fn write_logs(mut msg: String) -> Result<()> {
-    …
   edit.rs
     …
     10→pub struct Edit {
@@ -202,64 +178,85 @@ src/
     9→mod ui;
     …
     27→fn run() -> Result<()> {
+    28→    let Some(args) = CommandArgs::parse()? else {
+    29→        return Ok(());
+    30→    };
+    31→
+    32→    let mut cfg = if args.ignore_config {
+    33→        Config::default()
+    34→    } else {
+    35→        Config::load(args.config.clone())?
+    36→    };
+    37→
+    38→    args.update_config(&mut cfg);
+    39→    cfg.parse().context("parse config")?;
+    40→
+    41→    let cfg = Rc::new(cfg);
+    42→
+    43→    if args.show_config {
+    44→        return cfg.show();
+    45→    }
+    46→
+    47→    if let Some(ref debug_file) = args.debug {
+    48→        debug::set_file(debug_file.clone());
+    49→    }
+    50→
+    51→    // The user can specify the content type manually, or we can determine it based on the
+    52→    // file extension.
+    53→    // If the content type cannot be determined here, use `ContentType::Any` as default, let
+    54→    // parser to detect it.
+    55→    let content_type = args.get_content_type();
+    57→    let max_data_size = args.max_data_size.unwrap_or(cfg.data.max_data_size) * 1024 * 1024;
+    58→    let mut fw = None;
+    59→    let data = match args.path.as_ref() {
+    60→        Some(path) => {
+    61→            let path = PathBuf::from(path);
+    62→            if args.live_reload {
+    63→                fw = Some(FileWatcher::new(
+    64→                    path.clone(),
+    65→                    cfg.clone(),
+    66→                    content_type,
+    67→                    max_data_size,
+    68→                ));
+    69→            }
+    70→            fs::read(path).context("read file")?
+    71→        }
+    72→        None => {
+    73→            let mut data = Vec::new();
+    74→            io::stdin().read_to_end(&mut data).context("read stdin")?;
+    75→            data
+    76→        }
+    77→    };
+    79→    if let Some(target_type) = args.to {
+    80→        if matches!(target_type, ContentType::Any) {
+    81→            bail!("target content type cannot be 'any' when using '--to' option");
+    82→        }
+    83→        let parser = content_type.new_parser();
+    84→        let target_parser = target_type.new_parser();
+    85→
+    86→        let value = parser.parse_root(Some(target_parser.as_ref()), &data)?;
+    87→        let tokens = target_parser.syntax_highlight("", &value);
+    88→        let text = SyntaxToken::pure_text(&tokens);
+    89→
+    90→        print!("{text}");
+    91→        return Ok(());
+    92→    }
+    93→
+    94→    if data.len() > max_data_size {
     …
+    109→}
     111→fn main() {
     112→    if let Err(err) = run() {
     113→        eprintln!("Error: {err:#}");
     114→        process::exit(1);
     115→    }
-    …
+    116→}
   parse/
     any.rs
     hcl.rs
     json.rs
     jsonl.rs
     mod.rs
-      1→mod any;
-      2→mod hcl;
-      3→mod json;
-      4→mod jsonl;
-      5→mod syntax;
-      6→mod toml;
-      7→mod xml;
-      8→mod yaml;
-      9→
-      10→pub use syntax::SyntaxToken;
-      …
-      17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
-      18→pub enum ContentType {
-      19→    Json,
-      20→    Yaml,
-      21→    Toml,
-      22→    Xml,
-      23→
-      24→    /// See: <https://github.com/hashicorp/hcl>
-      25→    Hcl,
-      26→
-      27→    /// Useful for some logs file: <https://jsonlines.org/>
-      28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
-      29→    // basically jsonl but every json object is prefixed with 0x1e
-      30→    Jsonl,
-      31→
-      32→    #[clap(skip)]
-      33→    Any,
-      34→}
-      36→pub trait Parser {
-      37→    fn extension(&self) -> &'static str;
-      38→
-      39→    fn allow_array_root(&self) -> bool;
-      40→
-      41→    fn parse(&self, data: &str) -> Result<Value>;
-      42→
-      43→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken>;
-      44→
-      45→    fn parse_root(&self, validator: Option<&dyn Parser>, data: &[u8]) -> Result<Value> {
-      …
-      64→}
-      66→impl ContentType {
-      67→    pub fn new_parser(self) -> Box<dyn Parser> {
-      …
-      78→}
     syntax.rs
     test_cases/
     toml.rs

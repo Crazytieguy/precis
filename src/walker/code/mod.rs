@@ -22,7 +22,7 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use self::model::{FileModel, Item};
+use self::model::{DeclInfo, FileModel, Item, Shape};
 use super::fs::files_with_any_extension;
 use super::{WalkCtx, node_end_row_trimmed};
 use crate::batch::Batch;
@@ -214,6 +214,27 @@ fn is_named_after(path: &Path, dir: &Path) -> bool {
             normalized(stem).is_some_and(|stem| Some(stem) == normalized(dir_name))
         }
         _ => false,
+    }
+}
+
+/// A top-level function of a program's entry file: its index in the
+/// file's `decls`, its closing row, and whether it is `main`.
+type ProgramFunction = (usize, usize, bool);
+
+/// A program's control flow is what its entry file is about: its
+/// `main`, and when `main` only delegates (at most two statements), the
+/// file's other functions. They render with their bodies, as `Whole`
+/// declarations closed by their last row.
+fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
+    let Some(&(main, _, _)) = functions.iter().find(|(_, _, is_main)| *is_main) else {
+        return;
+    };
+    let delegates = decls[main].body.len() <= 2;
+    for &(index, closing_row, is_main) in functions {
+        if is_main || delegates {
+            decls[index].shape = Shape::Whole;
+            decls[index].head.push(closing_row);
+        }
     }
 }
 

@@ -36,28 +36,6 @@ Cargo.toml
   29→thiserror = "2.0"
   30→anyhow = "1.0"
   31→
-  32→[target.'cfg(not(windows))'.dependencies]
-  33→libc = "0.2"
-  34→
-  35→[target.'cfg(windows)'.dependencies]
-  36→windows-sys = { version = "0.59", features = [
-  37→    "Win32_Foundation",
-  38→    "Win32_Security",
-  39→    "Win32_System_JobObjects",
-  40→    "Win32_System_LibraryLoader",
-  41→    "Win32_System_Threading",
-  42→] }
-  43→
-  44→[target.'cfg(all(windows, not(windows_process_extensions_main_thread_handle)))'.dependencies]
-  45→once_cell = "1.19"
-  46→
-  47→[target.'cfg(target_os="linux")'.dependencies]
-  48→nix = { version = "0.29", features = ["zerocopy"] }
-  49→
-  50→[dependencies.clap]
-  51→version = "4"
-  52→default-features = false
-  53→features = [
   …
 LICENSE-APACHE
 LICENSE-MIT
@@ -154,7 +132,28 @@ src/
     27→pub mod util;
     28→
     29→fn run() -> Result<()> {
-    …
+    30→    // Enabled ANSI colors on Windows 10
+    31→    #[cfg(windows)]
+    32→    colored::control::set_virtual_terminal(true).unwrap();
+    33→
+    34→    let cli_arguments = get_cli_arguments(env::args_os());
+    35→    let mut options = Options::from_cli_arguments(&cli_arguments)?;
+    36→    let commands = Commands::from_cli_arguments(&cli_arguments)?;
+    37→    let export_manager = ExportManager::from_cli_arguments(
+    38→        &cli_arguments,
+    39→        options.time_unit,
+    40→        options.sort_order_exports,
+    41→    )?;
+    42→
+    43→    options.validate_against_command_list(&commands)?;
+    44→
+    45→    let mut scheduler = Scheduler::new(&commands, &options, &export_manager);
+    46→    scheduler.run_benchmarks()?;
+    47→    scheduler.print_relative_speed_comparison();
+    48→    scheduler.final_export()?;
+    49→
+    50→    Ok(())
+    51→}
     53→fn main() {
     54→    match run() {
     55→        Ok(_) => {}
@@ -163,7 +162,7 @@ src/
     58→            std::process::exit(1);
     59→        }
     60→    }
-    …
+    61→}
   options.rs
     …
     16→#[cfg(not(windows))]

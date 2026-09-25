@@ -1,11 +1,13 @@
-//! Go extraction. Functions and methods are `Callable`; `type`, `const`
-//! and `var` declarations are `Whole`, and a grouped `( … )` declaration
-//! lists one roster row per spec. The module doc is the package comment.
+//! Go extraction. Functions and methods are `Callable`, except the
+//! program flow of `package main` (see `show_program_flow`); `type`,
+//! `const` and `var` declarations are `Whole`, and a grouped `( … )`
+//! declaration lists one roster row per spec. The module doc is the
+//! package comment.
 
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
-use super::{Language, SourceFile};
+use super::{Language, SourceFile, show_program_flow};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -19,12 +21,28 @@ pub(super) const LANGUAGE: Language = Language {
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let mut model = FileModel::default();
+    let mut is_program = false;
+    let mut functions = Vec::new();
     let mut cursor = root.walk();
     for child in root.named_children(&mut cursor) {
         let decl = match child.kind() {
             "package_clause" => {
                 model.module_doc = doc_items(child, file);
+                let mut inner = child.walk();
+                is_program = child
+                    .named_children(&mut inner)
+                    .any(|name| name.kind() == "package_identifier" && file.text(name) == "main");
                 continue;
+            }
+            "function_declaration" if is_program => {
+                let decl = callable(child, file);
+                if decl.is_some() {
+                    let is_main = child
+                        .child_by_field_name("name")
+                        .is_some_and(|name| file.text(name) == "main");
+                    functions.push((model.decls.len(), *file.node_rows(child).end(), is_main));
+                }
+                decl
             }
             "function_declaration" | "method_declaration" => callable(child, file),
             "type_declaration" | "const_declaration" | "var_declaration" => whole(child, file),
@@ -32,6 +50,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         };
         model.decls.extend(decl);
     }
+    show_program_flow(&mut model.decls, &functions);
     model
 }
 
@@ -249,5 +268,26 @@ func (c *config) load() {}
             (vec![3, 8], Shape::Whole)
         );
         assert_eq!(body_rows(config), [vec![4], vec![6, 7]]);
+    }
+
+    #[test]
+    fn go_program_main_renders_with_its_body() {
+        let model = extract_source(
+            "\
+package main
+
+func main() {
+\tflag.Parse()
+\tsetup()
+\tserve()
+}
+
+func setup() {}
+",
+        );
+        let shapes: Vec<Shape> = model.decls.iter().map(|decl| decl.shape).collect();
+        assert_eq!(shapes, [Shape::Whole, Shape::Callable]);
+        assert_eq!(model.decls[0].head, [3, 7]);
+        assert_eq!(body_rows(&model.decls[0]), [vec![4], vec![5], vec![6]]);
     }
 }

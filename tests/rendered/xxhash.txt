@@ -44,10 +44,6 @@ README.md
   45→## Benchmarks
   …
   66→## Projects using this package
-  67→
-  68→- [InfluxDB](https://github.com/influxdata/influxdb)
-  69→- [Prometheus](https://github.com/prometheus/prometheus)
-  70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
   …
 bench_test.go
 dynamic/
@@ -176,14 +172,6 @@ xxhash_other.go
   65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
   66→	n := len(b)
   67→	for len(b) >= 32 {
-  68→		v1 = round(v1, u64(b[0:8:len(b)]))
-  69→		v2 = round(v2, u64(b[8:16:len(b)]))
-  70→		v3 = round(v3, u64(b[16:24:len(b)]))
-  71→		v4 = round(v4, u64(b[24:32:len(b)]))
-  72→		b = b[32:len(b):len(b)]
-  73→	}
-  74→	d.v1, d.v2, d.v3, d.v4 = v1, v2, v3, v4
-  75→	return n - len(b)
   …
 xxhash_safe.go
   …
@@ -233,7 +221,27 @@ xxhsum/
   xxhsum.go
     …
     11→func main() {
-    …
+    12→	if contains(os.Args[1:], "-h") {
+    13→		fmt.Fprintf(os.Stderr, `Usage:
+    14→  %s [filenames]
+    15→If no filenames are provided or only - is given, input is read from stdin.
+    16→`, os.Args[0])
+    17→		os.Exit(1)
+    18→	}
+    19→	if len(os.Args) < 2 || len(os.Args) == 2 && os.Args[1] == "-" {
+    20→		printHash(os.Stdin, "-")
+    21→		return
+    22→	}
+    23→	for _, path := range os.Args[1:] {
+    24→		f, err := os.Open(path)
+    25→		if err != nil {
+    26→			fmt.Fprintln(os.Stderr, err)
+    27→			continue
+    28→		}
+    29→		printHash(f, path)
+    30→		f.Close()
+    31→	}
+    32→}
     34→func contains(ss []string, s string) bool {
     35→	for _, s1 := range ss {
     36→		if s1 == s {

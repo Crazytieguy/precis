@@ -184,6 +184,7 @@ sps/
       45→    Init(InitArgs),
       46→    Search(Search),
       47→    List(List),
+      48→    Info(Info),
       …
       56→impl Command {
       57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
@@ -197,7 +198,6 @@ sps/
       …
       23→async fn run_init_command(init_args: &InitArgs, verbose_level: u8) -> spResult<()> {
       …
-      56→#[tokio::main]
       57→async fn main() -> spResult<()> {
       …
       193→async fn check_and_run_auto_update(config: &Config, cache: Arc<Cache>) -> spResult<()> {

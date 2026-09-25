@@ -168,7 +168,8 @@ pub(crate) enum Shape {
     /// Function, method, arrow-function const, C function definition: the
     /// `Decl` is the signature; the body is a separate `Body` follow-up.
     Callable,
-    /// Type, struct, enum, interface, alias, typedef, constant, macro, and
-    /// every container: the `Decl` is head plus body.
+    /// Type, struct, enum, interface, alias, typedef, constant, macro,
+    /// every container, and a program's flow functions: the `Decl` is head
+    /// plus body.
     Whole,
 }
