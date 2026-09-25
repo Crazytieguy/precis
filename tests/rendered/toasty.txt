@@ -381,6 +381,11 @@ crates/
   toasty-driver-integration-suite-macros/
     Cargo.toml
     src/
+      driver_test.rs
+      lib.rs
+      parse.rs
+      test_registry.rs
+      test_variants.rs
   toasty-driver-mysql/
     Cargo.toml
     src/
@@ -405,11 +410,7 @@ crates/
         134→    conn: Conn,
         135→}
         137→impl Connection {
-        138→    pub fn new(conn: Conn) -> Self {
         …
-        142→    pub async fn create_table(&mut self, schema: &Schema, table: &Table) -> Result<()> {
-        …
-        182→}
         184→impl From<Conn> for Connection {
         185→    fn from(conn: Conn) -> Self {
         …
@@ -464,6 +465,9 @@ crates/
         …
       value.rs
   toasty-macros/
+    Cargo.toml
+    src/
+      lib.rs
   toasty-sql/
     CONTEXT.md
     Cargo.toml

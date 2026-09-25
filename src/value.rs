@@ -367,8 +367,7 @@ pub(crate) fn non_essential_factor_inner(
             ) || s.starts_with("test_")
                 || s.starts_with("tests_")
                 || s.starts_with("guide-helper")
-                || is_scaffold_template_dir_name(s)
-                || is_proc_macro_crate_dir_name(s))
+                || is_scaffold_template_dir_name(s))
                 && !is_declared_crate_module_dir(&prefix, root)
             {
                 return 0.2;
@@ -515,19 +514,6 @@ pub(crate) fn dir_role_name(lowercased_name: &str) -> &str {
 pub(crate) fn is_scaffold_template_dir_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     lower.starts_with("template-") || lower.starts_with("cra-template-")
-}
-
-/// Rust proc-macro helper-crate convention (`<name>-macros` etc.).
-/// Plain `macros`/`derive` excluded — those are usually real modules.
-fn is_proc_macro_crate_dir_name(s: &str) -> bool {
-    for suffix in ["-macros", "_macros", "-derive", "_derive"] {
-        if let Some(stem) = s.strip_suffix(suffix)
-            && !stem.is_empty()
-        {
-            return true;
-        }
-    }
-    false
 }
 
 /// Auto-injected agent-instruction files (CLAUDE.md / AGENTS.md /
