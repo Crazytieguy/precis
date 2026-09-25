@@ -7,7 +7,6 @@
 //!   row.
 //! - **Doc**: the docstring opening a `def` / `class` body.
 //! - **Visibility**: a leading `_` that isn't a `__dunder__` is `Private`.
-//!   Test files (`test_*.py`, `*_test.py`) are hidden entirely.
 //! - **Module doc**: an entry file's (`__init__.py`, `__main__.py`)
 //!   module docstring, and dunder assignments other than `__all__`.
 //!   Other modules' docstrings and leading `#` comments (shebangs, license
@@ -33,9 +32,6 @@ pub(super) fn grammar(_path: &Path) -> tree_sitter::Language {
 
 pub(super) fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();
-    if is_test_file(&file.path) {
-        return model;
-    }
     let is_package_init = file_name(&file.path) == Some("__init__.py");
     let root = file.tree.root_node();
     let mut cursor = root.walk();
@@ -98,10 +94,6 @@ pub(crate) struct RunState {}
 
 fn file_name(path: &Path) -> Option<&str> {
     path.file_name().and_then(|name| name.to_str())
-}
-
-fn is_test_file(path: &Path) -> bool {
-    file_name(path).is_some_and(|name| name.starts_with("test_") || name.ends_with("_test.py"))
 }
 
 fn is_dunder(name: &str) -> bool {
@@ -625,14 +617,6 @@ if TYPE_CHECKING:
             ]
         );
         assert!(model.decls.iter().all(|decl| decl.body.is_empty()));
-    }
-
-    #[test]
-    fn code_python_test_files_are_hidden() {
-        let source = "def test_it():\n    assert True\n";
-        assert!(extract_source("test_core.py", source).decls.is_empty());
-        assert!(extract_source("core_test.py", source).decls.is_empty());
-        assert_eq!(extract_source("core.py", source).decls.len(), 1);
     }
 
     #[test]

@@ -117,55 +117,56 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 5606 | 12 | python names examples/airline/main.py |  |  | 0.700 |
 | walker |  | 5701 | 95 | json config logs/session_20240425-135655.json |  |  | 0.700 |
 | walker |  | 5712 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.700 |
+| walker |  | 5736 | 24 | python names tests/test_util.py |  |  | 0.700 |
 | ns | 5765 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.684 |
-| walker |  | 5809 | 97 | json config logs/session_20240402-112456.json |  |  | 0.684 |
-| walker |  | 5906 | 97 | json config logs/session_20240425-135657.json |  |  | 0.684 |
+| walker |  | 5833 | 97 | json config logs/session_20240402-112456.json |  |  | 0.684 |
+| walker |  | 5930 | 97 | json config logs/session_20240425-135657.json |  |  | 0.684 |
 | ns | 5958 |  | 193 | `airline` agents: per-agent tool lists (the handoff graph) | 4.12 | 4.10 | 0.665 |
-| walker |  | 6005 | 99 | json config logs/session_20240425-140516.json |  |  | 0.665 |
+| walker |  | 6029 | 99 | json config logs/session_20240425-140516.json |  |  | 0.665 |
 | ns | 6043 |  | 85 | `airline/configs/tools.py`: complete tool roster | 4.13 |  | 0.659 |
-| walker |  | 6104 | 99 | json config logs/session_20240425-145907.json |  |  | 0.659 |
-| walker |  | 6203 | 99 | json config logs/session_20240425-211732.json |  |  | 0.659 |
+| walker |  | 6128 | 99 | json config logs/session_20240425-145907.json |  |  | 0.659 |
+| walker |  | 6227 | 99 | json config logs/session_20240425-211732.json |  |  | 0.659 |
 | ns | 6286 |  | 243 | `run()` body: state setup and the completion half of the loop | 5.1 | 2.6 | 0.642 |
-| walker |  | 6304 | 101 | json config logs/session_20240402-112443.json |  |  | 0.642 |
-| walker |  | 6405 | 101 | json config logs/session_20240402-112501.json |  |  | 0.642 |
+| walker |  | 6328 | 101 | json config logs/session_20240402-112443.json |  |  | 0.642 |
+| walker |  | 6429 | 101 | json config logs/session_20240402-112501.json |  |  | 0.642 |
 | ns | 6479 |  | 193 | `run()` body: tool dispatch, agent switch, and the returned `Response` | 5.2 | 5.1 | 0.628 |
-| walker |  | 6506 | 101 | json config logs/session_20240425-140502.json |  |  | 0.628 |
+| walker |  | 6530 | 101 | json config logs/session_20240425-140502.json |  |  | 0.628 |
 | ns | 6572 |  | 93 | `run()` body: the `stream=True` delegation branch | 5.3 | 2.6 | 0.621 |
-| walker |  | 6607 | 101 | json config logs/session_20240425-141509.json |  |  | 0.621 |
-| walker |  | 6708 | 101 | json config logs/session_20240425-211942.json |  |  | 0.621 |
-| walker |  | 6715 | 7 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.621 |
+| walker |  | 6631 | 101 | json config logs/session_20240425-141509.json |  |  | 0.621 |
+| walker |  | 6732 | 101 | json config logs/session_20240425-211942.json |  |  | 0.621 |
+| walker |  | 6739 | 7 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.621 |
 | ns | 6783 |  | 211 | `handle_tool_calls` body: dispatch table and the missing-tool path | 5.4 | 2.8 | 0.609 |
-| walker |  | 6817 | 102 | json config logs/session_20240402-113222.json |  |  | 0.609 |
-| walker |  | 6899 | 82 | README.md section #12 |  |  | 0.623 |
-| walker |  | 7002 | 103 | json config logs/session_20240425-135728.json |  |  | 0.623 |
+| walker |  | 6841 | 102 | json config logs/session_20240402-113222.json |  |  | 0.609 |
+| walker |  | 6923 | 82 | README.md section #12 |  |  | 0.623 |
+| walker |  | 7026 | 103 | json config logs/session_20240425-135728.json |  |  | 0.623 |
 | ns | 7054 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.607 |
-| walker |  | 7105 | 103 | json config logs/session_20240425-141709.json |  |  | 0.607 |
-| walker |  | 7208 | 103 | json config logs/session_20240425-145129.json |  |  | 0.607 |
+| walker |  | 7129 | 103 | json config logs/session_20240425-141709.json |  |  | 0.607 |
+| walker |  | 7232 | 103 | json config logs/session_20240425-145129.json |  |  | 0.607 |
 | ns | 7265 |  | 211 | `get_chat_completion` body: instructions, tool schemas, context hiding | 5.6 | 2.8 | 0.596 |
-| walker |  | 7311 | 103 | json config logs/session_20240425-145930.json |  |  | 0.596 |
+| walker |  | 7335 | 103 | json config logs/session_20240425-145930.json |  |  | 0.596 |
 | ns | 7390 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.589 |
-| walker |  | 7414 | 103 | json config logs/session_20240425-212431.json |  |  | 0.589 |
-| walker |  | 7519 | 105 | json config logs/session_20240425-212748.json |  |  | 0.589 |
+| walker |  | 7438 | 103 | json config logs/session_20240425-212431.json |  |  | 0.589 |
+| walker |  | 7543 | 105 | json config logs/session_20240425-212748.json |  |  | 0.589 |
 | ns | 7565 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.580 |
-| walker |  | 7624 | 105 | json config logs/session_20240425-213023.json |  |  | 0.580 |
+| walker |  | 7648 | 105 | json config logs/session_20240425-213023.json |  |  | 0.580 |
 | ns | 7894 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.563 |
 | ns | 8003 |  | 109 | `function_to_json` body: the emitted schema shape | 5.10 | 5.9 | 0.557 |
 | ns | 8173 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.563 |
-| walker |  | 8180 | 556 | README.md section #7 |  |  | 0.568 |
+| walker |  | 8204 | 556 | README.md section #7 |  |  | 0.568 |
 | ns | 8412 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.556 |
 | ns | 8646 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.545 |
-| walker |  | 8728 | 548 | README.md section #8 |  |  | 0.552 |
+| walker |  | 8752 | 548 | README.md section #8 |  |  | 0.552 |
 | ns | 8875 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.544 |
 | ns | 9032 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.540 |
 | ns | 9134 |  | 102 | `tests/test_util.py`: both schema-conversion tests | 6.3 |  | 0.537 |
-| walker |  | 9251 | 523 | README.md section #9 |  |  | 0.547 |
+| walker |  | 9275 | 523 | README.md section #9 |  |  | 0.547 |
 | ns | 9340 |  | 206 | `setup.cfg`: package metadata and the complete dependency list | 6.4 |  | 0.559 |
-| walker |  | 9463 | 212 | README.md section #10 |  |  | 0.564 |
+| walker |  | 9487 | 212 | README.md section #10 |  |  | 0.565 |
 | ns | 9515 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.573 |
-| walker |  | 9570 | 107 | json config logs/session_20240425-145324.json |  |  | 0.573 |
-| ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.586 |
-| walker |  | 9677 | 107 | json config logs/session_20240425-212341.json |  |  | 0.586 |
-| walker |  | 9788 | 111 | json config logs/session_20240425-140427.json |  |  | 0.586 |
+| walker |  | 9594 | 107 | json config logs/session_20240425-145324.json |  |  | 0.573 |
+| ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.587 |
+| walker |  | 9701 | 107 | json config logs/session_20240425-212341.json |  |  | 0.587 |
+| walker |  | 9812 | 111 | json config logs/session_20240425-140427.json |  |  | 0.587 |
 | ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.578 |
 | ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.580 |
-| walker |  | 9900 | 112 | json config logs/session_20240425-155814.json |  |  | 0.580 |
+| walker |  | 9924 | 112 | json config logs/session_20240425-155814.json |  |  | 0.580 |
