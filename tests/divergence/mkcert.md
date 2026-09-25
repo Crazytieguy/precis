@@ -1,4 +1,4 @@
-Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.837/0.767/0.674/0.604
+Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.630/0.645/0.837/0.767/0.674/0.628
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -93,41 +93,41 @@ Score(3000)=0.837 I=0.910 C=0.770 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | walker |  | 6120 | 150 | go body truststore_java.go:110 |  |  | 0.692 |
 | ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.674 |
 | walker |  | 6271 | 151 | go body truststore_windows.go:54 |  |  | 0.674 |
-| walker |  | 6469 | 198 | README.md section #13 |  |  | 0.674 |
-| walker |  | 6524 | 55 | README.md section #4 |  |  | 0.674 |
+| walker |  | 6326 | 55 | README.md section #4 |  |  | 0.674 |
+| walker |  | 6366 | 40 | README.md section #22 |  |  | 0.674 |
 | ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.657 |
-| walker |  | 6564 | 40 | README.md section #22 |  |  | 0.657 |
-| walker |  | 6954 | 390 | go body main.go:307 |  |  | 0.660 |
-| ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.642 |
-| walker |  | 7164 | 210 | go body truststore_windows.go:35 |  |  | 0.643 |
-| walker |  | 7207 | 43 | README.md section #17 |  |  | 0.643 |
+| walker |  | 6756 | 390 | go body main.go:307 |  |  | 0.660 |
+| walker |  | 6966 | 210 | go body truststore_windows.go:35 |  |  | 0.661 |
+| ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.643 |
+| walker |  | 7009 | 43 | README.md section #17 |  |  | 0.643 |
+| walker |  | 7222 | 213 | go body truststore_windows.go:91 |  |  | 0.643 |
 | ns | 7232 |  | 251 | makeCert(): signing, and the two write paths (PEM pair vs PKCS#12) with their file modes | 4.5 | 4.4 | 0.633 |
-| walker |  | 7420 | 213 | go body truststore_windows.go:91 |  |  | 0.633 |
-| ns | 7515 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.619 |
-| walker |  | 7637 | 217 | go body cert.go:148 |  |  | 0.620 |
-| ns | 7759 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.611 |
-| walker |  | 7854 | 217 | go body truststore_nss.go:131 |  |  | 0.612 |
-| walker |  | 7898 | 44 | README.md section #15 |  |  | 0.614 |
-| walker |  | 7943 | 45 | README.md section #24 |  |  | 0.614 |
-| walker |  | 7990 | 47 | README.md section #19 |  |  | 0.614 |
+| walker |  | 7439 | 217 | go body cert.go:148 |  |  | 0.633 |
+| ns | 7515 |  | 283 | newCA(): the root certificate template | 4.6 | 1.6 | 0.620 |
+| walker |  | 7656 | 217 | go body truststore_nss.go:131 |  |  | 0.620 |
+| walker |  | 7700 | 44 | README.md section #15 |  |  | 0.623 |
+| walker |  | 7745 | 45 | README.md section #24 |  |  | 0.623 |
+| ns | 7759 |  | 244 | newCA(): writing rootCA-key.pem at 0400 and rootCA.pem at 0644 | 4.7 | 4.6 | 0.614 |
+| walker |  | 7792 | 47 | README.md section #19 |  |  | 0.614 |
+| walker |  | 7839 | 47 | README.md section #21 |  |  | 0.614 |
+| walker |  | 7907 | 68 | README.md section #7 |  |  | 0.614 |
 | ns | 7999 |  | 240 | loadCA(): create-on-demand, PEM parsing, and keyless mode | 4.8 | 1.6 | 0.604 |
-| walker |  | 8037 | 47 | README.md section #21 |  |  | 0.604 |
-| walker |  | 8105 | 68 | README.md section #7 |  |  | 0.604 |
-| ns | 8212 |  | 213 | The identity strings: userAndHostname init, randomSerialNumber, caUniqueName | 4.9 | 1.6 | 0.611 |
-| walker |  | 8361 | 256 | go body truststore_nss.go:89 |  |  | 0.612 |
-| ns | 8476 |  | 264 | makeCertFromCSR(): the template fix-ups applied to a supplied CSR | 4.10 | 1.6 | 0.602 |
+| walker |  | 8163 | 256 | go body truststore_nss.go:89 |  |  | 0.605 |
+| ns | 8212 |  | 213 | The identity strings: userAndHostname init, randomSerialNumber, caUniqueName | 4.9 | 1.6 | 0.612 |
+| walker |  | 8421 | 258 | go body truststore_linux.go:77 |  |  | 0.612 |
+| ns | 8476 |  | 264 | makeCertFromCSR(): the template fix-ups applied to a supplied CSR | 4.10 | 1.6 | 0.603 |
 | ns | 8605 |  | 129 | printHosts(): the certificate name list and the second-level wildcard warning | 4.11 | 1.6 | 0.607 |
-| walker |  | 8619 | 258 | go body truststore_linux.go:77 |  |  | 0.607 |
-| ns | 8856 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.599 |
-| walker |  | 8881 | 262 | go body truststore_linux.go:55 |  |  | 0.604 |
-| ns | 9088 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.613 |
-| walker |  | 9144 | 263 | go body cert.go:176 |  |  | 0.637 |
-| walker |  | 9220 | 76 | README.md section #5 |  |  | 0.637 |
+| walker |  | 8683 | 262 | go body truststore_linux.go:55 |  |  | 0.608 |
+| ns | 8856 |  | 251 | The macOS and Linux system-store install commands | 5.1 | 1.7 | 0.604 |
+| walker |  | 8946 | 263 | go body cert.go:176 |  |  | 0.628 |
+| walker |  | 9022 | 76 | README.md section #5 |  |  | 0.629 |
+| ns | 9088 |  | 232 | The Windows root-store install and uninstall, via crypt32 | 5.2 | 1.8 | 0.637 |
 | ns | 9331 |  | 243 | installNSS(): the certutil invocation and its failure advice | 5.3 | 1.9 | 0.642 |
-| ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.646 |
-| ns | 9610 |  | 142 | forEachNSSProfile(): how Firefox/Chromium profiles are discovered and which DB format is used | 5.5 | 1.9 | 0.651 |
-| walker |  | 9613 | 393 | go body main.go:267 |  |  | 0.653 |
-| ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.657 |
-| walker |  | 9909 | 296 | go body truststore_java.go:31 |  |  | 0.680 |
-| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.683 |
-| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.684 |
+| walker |  | 9415 | 393 | go body main.go:267 |  |  | 0.645 |
+| ns | 9468 |  | 137 | installJava(): the keytool -importcert argument list | 5.4 | 1.9 | 0.648 |
+| ns | 9610 |  | 142 | forEachNSSProfile(): how Firefox/Chromium profiles are discovered and which DB format is used | 5.5 | 1.9 | 0.653 |
+| walker |  | 9711 | 296 | go body truststore_java.go:31 |  |  | 0.677 |
+| ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.680 |
+| walker |  | 9918 | 207 | README.md section #12 |  |  | 0.695 |
+| ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.698 |
+| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.699 |

@@ -416,15 +416,6 @@ fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64
 /// fence inside is the highest-value follow-up to the headline.
 const CANONICAL_USAGE_SECTION_FACTOR: f64 = 2.2;
 
-/// Structural operational sections are useful orientation, but less reliably
-/// the single canonical demo than an exact usage-title/code-dominant match.
-const STRUCTURAL_OPERATIONAL_SECTION_FACTOR: f64 = 2.1;
-
-/// Operational orientation must remain a single early-budget purchase. Larger
-/// reference sections can be valid, but promoting them displaces source/API
-/// surfaces before their README material is useful.
-const STRUCTURAL_OPERATIONAL_MAX_TOKENS: usize = 240;
-
 /// Modest parallel boost for README reference/usage sections whose
 /// title matches the broader vocabulary (see
 /// [`is_reference_usage_title`]) — applies REGARDLESS of code fraction,
@@ -435,9 +426,9 @@ const STRUCTURAL_OPERATIONAL_MAX_TOKENS: usize = 240;
 /// highest-value follow-up.
 const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
 
-/// Combined README section boost: the strongest applicable factor among the
-/// code-dominant canonical demo, the compact structural operational class,
-/// and the modest reference/usage title class. Factors never stack.
+/// Combined README section boost: the stronger of the code-dominant
+/// canonical demo and the modest reference/usage title class. Factors
+/// never stack.
 fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     // `OversizeTail` is the continuation of a boosted `Whole` head —
     // it inherits the boost so the tail prices at head * tail factor.
@@ -450,17 +441,12 @@ fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     } else {
         1.0
     };
-    let operational = if range.is_canonical_operational_section {
-        STRUCTURAL_OPERATIONAL_SECTION_FACTOR
-    } else {
-        1.0
-    };
     let reference = if range.is_reference_usage_section {
         REFERENCE_USAGE_SECTION_FACTOR
     } else {
         1.0
     };
-    canonical.max(reference).max(operational)
+    canonical.max(reference)
 }
 
 /// Index decay for README sections. (An adaptive steeper falloff for
@@ -687,7 +673,6 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
             parent_index: 0,
             synthetic_intro_present: false,
             parent_is_canonical_usage_h2: false,
-            is_canonical_operational_section: false,
             is_reference_usage_section: false,
             reference_shaped: false,
             chained_to_previous: false,
@@ -1798,11 +1783,6 @@ struct SectionRange {
     /// Parent H2 title matches a canonical-usage marker (see
     /// [`is_canonical_usage_h2_title`]). README-only.
     parent_is_canonical_usage_h2: bool,
-    /// This range independently has a canonical operational shape: a
-    /// flag-first option table, a fenced CLI synopsis, a compact "How ...
-    /// Works" section, or a structurally populated CLI-reference H2.
-    /// README-only.
-    is_canonical_operational_section: bool,
     /// This range's own (or parent H2's, for `Whole`/`Intro`) title
     /// matches the broader reference/usage vocabulary (see
     /// [`is_reference_usage_title`]) and the section has non-trivial
@@ -1914,169 +1894,6 @@ fn is_catalog_line(line: &str) -> bool {
             .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
-/// True when a range is dominated by a Markdown option table whose first
-/// column contains CLI flags. This is intentionally title-independent: many
-/// READMEs put the synopsis and option catalog under project-specific H3s.
-fn range_has_flag_option_table(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let last = end.min(src_lines.len());
-    if start > last {
-        return false;
-    }
-    let mut content_rows = 0usize;
-    let mut table_rows = 0usize;
-    let mut flag_rows = 0usize;
-    // Marker-matched fence state — see `fence_closes`.
-    let mut open_fence: Option<(char, usize)> = None;
-    for line in &src_lines[start - 1..last] {
-        let t = line.trim();
-        if t.is_empty() || t.starts_with('#') {
-            continue;
-        }
-        if let Some(open) = open_fence {
-            if fence_closes(t, open) {
-                open_fence = None;
-            }
-            continue;
-        }
-        if let Some(marker) = fence_marker(t) {
-            open_fence = Some(marker);
-            continue;
-        }
-        if is_markdown_rule_row(t) {
-            continue;
-        }
-        content_rows += 1;
-        if !t.contains('|') {
-            continue;
-        }
-        table_rows += 1;
-        let first_cell = t
-            .trim_matches('|')
-            .split('|')
-            .next()
-            .unwrap_or_default()
-            .trim();
-        if cell_starts_with_cli_flag(first_cell) {
-            flag_rows += 1;
-        }
-    }
-    flag_rows >= 3 && flag_rows * 5 >= table_rows * 3 && flag_rows * 2 >= content_rows
-}
-
-fn cell_starts_with_cli_flag(cell: &str) -> bool {
-    let bytes = cell.as_bytes();
-    bytes.iter().enumerate().any(|(idx, byte)| {
-        if *byte != b'-'
-            || idx
-                .checked_sub(1)
-                .is_some_and(|prev| bytes[prev].is_ascii_alphanumeric())
-        {
-            return false;
-        }
-        let mut next = idx + 1;
-        if bytes.get(next) == Some(&b'-') {
-            next += 1;
-        }
-        bytes.get(next).is_some_and(u8::is_ascii_alphanumeric)
-    })
-}
-
-/// True when a fenced block begins with a command synopsis rather than source
-/// code: an executable-like first token followed by flags or metavariables.
-fn range_has_cli_synopsis(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let last = end.min(src_lines.len());
-    if start > last {
-        return false;
-    }
-    // Marker-matched fence state — see `fence_closes`.
-    let mut open_fence: Option<(char, usize)> = None;
-    let mut awaiting_first_line = false;
-    for line in &src_lines[start - 1..last] {
-        let t = line.trim();
-        if let Some(open) = open_fence {
-            if fence_closes(t, open) {
-                open_fence = None;
-            } else if awaiting_first_line && !t.is_empty() {
-                if looks_like_cli_synopsis_line(t) {
-                    return true;
-                }
-                awaiting_first_line = false;
-            }
-            continue;
-        }
-        if let Some(marker) = fence_marker(t) {
-            open_fence = Some(marker);
-            awaiting_first_line = true;
-        }
-    }
-    false
-}
-
-fn looks_like_cli_synopsis_line(line: &str) -> bool {
-    let mut line = line.trim_start_matches(['$', '>']).trim_start();
-    if let Some(rest) = line
-        .strip_prefix("Usage:")
-        .or_else(|| line.strip_prefix("usage:"))
-    {
-        line = rest.trim_start();
-    }
-    let mut tokens = line.split_whitespace();
-    let Some(command) = tokens.next() else {
-        return false;
-    };
-    let command = command.trim_matches(|c: char| matches!(c, '`' | '"' | '\''));
-    if command.is_empty()
-        || !command
-            .chars()
-            .all(|c| c.is_ascii_alphanumeric() || matches!(c, '.' | '/' | '_' | '-' | '+'))
-        || matches!(
-            command,
-            "const"
-                | "let"
-                | "var"
-                | "function"
-                | "class"
-                | "def"
-                | "fn"
-                | "import"
-                | "from"
-                | "use"
-                | "pub"
-        )
-    {
-        return false;
-    }
-    let mut metavariables = 0usize;
-    let mut explicit_options = false;
-    for token in tokens {
-        let token = token.trim_matches(|c: char| matches!(c, '`' | ',' | ';'));
-        let lower = token.to_ascii_lowercase();
-        explicit_options |= lower.starts_with("[option")
-            || lower.starts_with("<option")
-            || lower.starts_with("[flag")
-            || lower.starts_with("<flag");
-        let core = token.trim_matches(|c: char| matches!(c, '[' | ']' | '<' | '>' | '.'));
-        if token.starts_with('[')
-            || token.starts_with('<')
-            || (core.len() > 1
-                && core
-                    .chars()
-                    .all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || c == '_'))
-        {
-            metavariables += 1;
-        }
-    }
-    explicit_options || metavariables >= 2
-}
-
-fn is_markdown_rule_row(t: &str) -> bool {
-    let stripped = t.trim_matches('|').trim();
-    !stripped.is_empty()
-        && stripped
-            .bytes()
-            .all(|b| matches!(b, b'-' | b':' | b' ' | b'\t' | b'|'))
-}
-
 /// Section ranges for batching. H2s that satisfy a split rule expand
 /// to an optional `Intro` plus per-child sub-ranges (bullet split,
 /// H3 split, or body-block split). Other top-level entries emit one
@@ -2100,8 +1917,6 @@ fn logical_sections(
     let readme = is_readme(file);
     let src_lines: Vec<&str> = source.lines().collect();
     let mut out = Vec::with_capacity(entries.len());
-    let mut mechanics_h2_parents = BTreeSet::new();
-    let mut cli_reference_h2_parents = BTreeSet::new();
     for (parent_idx, entry) in entries.iter().enumerate() {
         match entry {
             TopLevelEntry::SyntheticIntro { start, end } => {
@@ -2115,7 +1930,6 @@ fn logical_sections(
                         parent_index: parent_idx,
                         synthetic_intro_present,
                         parent_is_canonical_usage_h2: false,
-                        is_canonical_operational_section: false,
                         is_reference_usage_section: false,
                         reference_shaped: false,
                         chained_to_previous: false,
@@ -2137,21 +1951,12 @@ fn logical_sections(
                     && is_reference_usage_title(*node, source)
                     && reference_usage_body_ok(*node)
                     && reference_usage_has_structure(*node, source);
-                if root_readme && reference_h2 && is_cli_reference_title(*node, source) {
-                    cli_reference_h2_parents.insert(parent_idx);
-                }
 
                 let h3s = if structural_split_gate {
                     direct_h3_children(*node)
                 } else {
                     Vec::new()
                 };
-                if root_readme
-                    && is_mechanics_h2_title(*node, source)
-                    && compact_mechanics_body_ok(*node)
-                {
-                    mechanics_h2_parents.insert(parent_idx);
-                }
                 if h3s.len() >= 2 {
                     push_intro(
                         &mut out,
@@ -2181,7 +1986,6 @@ fn logical_sections(
                             parent_index: parent_idx,
                             synthetic_intro_present,
                             parent_is_canonical_usage_h2: usage_h2,
-                            is_canonical_operational_section: false,
                             is_reference_usage_section: reference_h2,
                             reference_shaped: false,
                             chained_to_previous: false,
@@ -2204,15 +2008,6 @@ fn logical_sections(
     // material.
     if root_readme {
         for range in &mut out {
-            let range_tokens: usize = (range.start..=range.end)
-                .map(|row| row_tokens(&src_lines, row))
-                .sum();
-            range.is_canonical_operational_section = range_tokens
-                <= STRUCTURAL_OPERATIONAL_MAX_TOKENS
-                && (range_has_flag_option_table(&src_lines, range.start, range.end)
-                    || range_has_cli_synopsis(&src_lines, range.start, range.end)
-                    || mechanics_h2_parents.contains(&range.parent_index)
-                    || cli_reference_h2_parents.contains(&range.parent_index));
             range.reference_shaped = range.is_reference_usage_section
                 && range_is_reference_shaped(&src_lines, range.start, range.end);
         }
@@ -2499,7 +2294,6 @@ fn push_whole_or_head_split(
                 parent_index: head.parent_index,
                 synthetic_intro_present: head.synthetic_intro_present,
                 parent_is_canonical_usage_h2: head.parent_is_canonical_usage_h2,
-                is_canonical_operational_section: head.is_canonical_operational_section,
                 is_reference_usage_section: head.is_reference_usage_section,
                 reference_shaped: false,
                 chained_to_previous: true,
@@ -2541,7 +2335,6 @@ fn push_intro<'a>(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
-        is_canonical_operational_section: false,
         is_reference_usage_section: reference_h2,
         reference_shaped: false,
         chained_to_previous: false,
@@ -2599,7 +2392,6 @@ fn push_h3_child(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
-        is_canonical_operational_section: false,
         is_reference_usage_section: reference_h3,
         reference_shaped: false,
         chained_to_previous: false,
@@ -2622,7 +2414,6 @@ fn push_body_block_ranges(
         parent_index: parent_idx,
         synthetic_intro_present,
         parent_is_canonical_usage_h2: false,
-        is_canonical_operational_section: false,
         is_reference_usage_section: false,
         reference_shaped: false,
         chained_to_previous: false,
@@ -2847,27 +2638,6 @@ fn is_canonical_usage_h2_title(h2_section: Node<'_>, source: &str) -> bool {
     )
 }
 
-/// Title half of the compact mechanics-section classifier. The call site also
-/// requires a mid-sized body below the reference-section byte cap, keeping
-/// both a generic stub and a large essay out of the early orientation tier.
-fn is_mechanics_h2_title(h2_section: Node<'_>, source: &str) -> bool {
-    let Some(core) = h2_title_core(h2_section, source) else {
-        return false;
-    };
-    let core = core.trim();
-    core == "how it works" || (core.starts_with("how ") && core.ends_with(" works"))
-}
-
-fn compact_mechanics_body_ok(section: Node<'_>) -> bool {
-    const MIN_BODY_BYTES: usize = 400;
-    let Some(heading) = first_heading_child(section) else {
-        return false;
-    };
-    let heading_bytes = heading.end_byte() - heading.start_byte();
-    let body_bytes = (section.end_byte() - section.start_byte()).saturating_sub(heading_bytes);
-    (MIN_BODY_BYTES..=REFERENCE_USAGE_MAX_BODY_BYTES).contains(&body_bytes)
-}
-
 /// README reference/usage sections worth the modest
 /// [`REFERENCE_USAGE_SECTION_FACTOR`]: title (H2 or H3, taken from the
 /// section's own first heading) matches a tight reference/usage
@@ -2883,23 +2653,6 @@ fn is_reference_usage_title(section: Node<'_>, source: &str) -> bool {
         return false;
     };
     is_reference_usage_title_core(&core)
-}
-
-fn is_cli_reference_title(section: Node<'_>, source: &str) -> bool {
-    let Some(core) = h2_title_core(section, source) else {
-        return false;
-    };
-    let core = core.trim();
-    matches!(
-        core,
-        "command line usage"
-            | "command-line usage"
-            | "cli usage"
-            | "command line options"
-            | "command-line options"
-            | "options"
-            | "flags"
-    )
 }
 
 /// Vocabulary half of [`is_reference_usage_title`], shared with the
@@ -4185,54 +3938,6 @@ mod tests {
                 "title={title:?} body={body:?} expected flag={expect}, got {any_flagged}; ranges={ranges:?}"
             );
         }
-    }
-
-    #[test]
-    fn markdown_structural_operational_sections_join_canonical_class() {
-        assert!(cell_starts_with_cli_flag("<code>--all</code>"));
-        assert!(!looks_like_cli_synopsis_line("npm install --save package"));
-        assert!(!looks_like_cli_synopsis_line("node app.js <input>"));
-        assert!(looks_like_cli_synopsis_line(
-            "project [OPTIONS] PATTERN [FILE...]"
-        ));
-
-        let table = "# Project\n\nTagline.\n\n## Reference\n\n\
-                     Flag | Meaning\n\
-                     ---|---\n\
-                     `-a`, `--all` | all values\n\
-                     `-q`, `--quiet` | quiet output\n\
-                     `--color` | color mode\n";
-        let ranges = sections("README.md", table);
-        assert!(ranges.iter().any(|r| r.is_canonical_operational_section));
-
-        let synopsis = "# Project\n\nTagline.\n\n## Invocation\n\n\
-                        ```text\nproject [OPTIONS] PATTERN [FILE...]\n```\n";
-        let ranges = sections("README.md", synopsis);
-        assert!(ranges.iter().any(|r| r.is_canonical_operational_section));
-
-        let source_code = "# Project\n\nTagline.\n\n## Internals\n\n\
-                           ```js\nconst value = call();\n```\n";
-        let ranges = sections("README.md", source_code);
-        assert!(ranges.iter().all(|r| !r.is_canonical_operational_section));
-
-        let mechanics = make_split_h2_source("# Project\n\nTagline.\n\n## How Project Works", 2, 3);
-        let ranges = sections("README.md", &mechanics);
-        let children: Vec<&SectionRange> = ranges
-            .iter()
-            .filter(|r| r.kind == SectionKind::H3Child)
-            .collect();
-        assert!(
-            children.len() >= 2,
-            "expected split mechanics children: {ranges:?}"
-        );
-        assert!(
-            children.iter().all(|r| r.is_canonical_operational_section),
-            "mechanics children must inherit the structural class: {ranges:?}",
-        );
-
-        let prose = "# Project\n\nTagline.\n\n## How Project Works\n\nOne plain paragraph.\n";
-        let ranges = sections("README.md", prose);
-        assert!(ranges.iter().all(|r| !r.is_canonical_operational_section));
     }
 
     /// `# Title` README's first real H2 must get readme-index decay
