@@ -1,4 +1,4 @@
-Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.622/0.547/0.673/0.646/0.585/0.590/0.640
+Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.622/0.547/0.673/0.646/0.585/0.590/0.650
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -223,106 +223,109 @@ Score(3000)=0.646 I=0.856 C=0.487 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 6650 | 12 | ts body packages/lib/utils.ts:17 |  |  | 0.573 |
 | walker |  | 6724 | 74 | ts decl packages/filesystem/createFile.ts:6 |  |  | 0.573 |
 | ns | 6726 |  | 184 | packages/router — export lines of the remaining ten hook modules | 4.7 | 4.6 | 0.576 |
-| ns | 6892 |  | 166 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.592 |
-| walker |  | 7001 | 277 | plaintext config Dockerfile |  |  | 0.592 |
-| walker |  | 7023 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.592 |
-| walker |  | 7106 | 83 | ts decl packages/types/inputSelect.ts:7 |  |  | 0.592 |
-| walker |  | 7125 | 19 | README.md section #15 |  |  | 0.594 |
-| ns | 7161 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.585 |
-| walker |  | 7215 | 90 | ts names packages/router/config.tsx |  |  | 0.587 |
-| walker |  | 7245 | 30 | ts decl packages/router/config.tsx:44 |  |  | 0.587 |
-| walker |  | 7334 | 89 | ts decl packages/lib/isArchivalTag.ts:3 |  |  | 0.587 |
-| ns | 7354 |  | 193 | archiveHandler's signature and its SSRF / skip-preservation guard | 5.3 |  | 0.579 |
-| walker |  | 7413 | 79 | listing of 'apps/web/lib/client' |  |  | 0.588 |
-| ns | 7607 |  | 253 | Every UI page route under apps/web/pages | 6.1 |  | 0.610 |
-| walker |  | 7668 | 255 | ts names packages/lib/schemaValidation.ts |  |  | 0.614 |
-| walker |  | 7681 | 13 | ts decl packages/lib/schemaValidation.ts:25 |  |  | 0.614 |
-| walker |  | 7695 | 14 | ts decl packages/lib/schemaValidation.ts:115 |  |  | 0.614 |
-| walker |  | 7710 | 15 | ts decl packages/lib/schemaValidation.ts:16 |  |  | 0.614 |
-| walker |  | 7737 | 27 | ts decl packages/lib/schemaValidation.ts:20 |  |  | 0.614 |
-| walker |  | 7766 | 29 | ts decl packages/lib/schemaValidation.ts:29 |  |  | 0.614 |
-| walker |  | 7820 | 54 | ts decl packages/lib/schemaValidation.ts:119 |  |  | 0.614 |
-| ns | 7965 |  | 358 | The flat components/ directory and the ui/ primitives | 6.2 |  | 0.590 |
-| walker |  | 8115 | 295 | README.md section #0 |  |  | 0.590 |
-| walker |  | 8137 | 22 | README.md section #1 |  |  | 0.591 |
-| walker |  | 8159 | 22 | README.md section #2 |  |  | 0.593 |
-| ns | 8246 |  | 281 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.578 |
-| walker |  | 8270 | 111 | ts names packages/router/collections.tsx |  |  | 0.579 |
-| walker |  | 8350 | 80 | ts decl packages/router/collections.tsx:180 |  |  | 0.579 |
-| walker |  | 8459 | 109 | ts decl packages/router/config.tsx:4 |  |  | 0.579 |
-| ns | 8473 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.585 |
-| walker |  | 8477 | 18 | ts body packages/router/config.tsx:44 |  |  | 0.585 |
-| walker |  | 8574 | 97 | listing of 'apps/web/lib/api' |  |  | 0.607 |
-| walker |  | 8587 | 13 | listing of 'apps/web/lib/api/archives' |  |  | 0.607 |
-| walker |  | 8604 | 17 | listing of 'apps/web/lib/api/preserved' |  |  | 0.607 |
-| walker |  | 8637 | 33 | listing of 'apps/web/lib/api/stripe' |  |  | 0.610 |
-| walker |  | 8673 | 36 | listing of 'apps/web/lib/api/controllers' |  |  | 0.624 |
-| walker |  | 8678 | 5 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.624 |
-| walker |  | 8683 | 5 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.624 |
-| walker |  | 8689 | 6 | listing of 'apps/web/lib/api/controllers/worker' |  |  | 0.624 |
-| walker |  | 8698 | 9 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.625 |
-| walker |  | 8702 | 4 | listing of 'apps/web/lib/api/controllers/public/links' |  |  | 0.625 |
-| walker |  | 8708 | 6 | listing of 'apps/web/lib/api/controllers/public/collections' |  |  | 0.625 |
-| ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.616 |
-| walker |  | 8714 | 6 | listing of 'apps/web/lib/api/controllers/public/users' |  |  | 0.617 |
-| walker |  | 8721 | 7 | listing of 'apps/web/lib/api/controllers/public/links/linkId' |  |  | 0.617 |
-| walker |  | 8735 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.617 |
-| walker |  | 8749 | 14 | listing of 'apps/web/lib/api/controllers/highlights' |  |  | 0.618 |
-| walker |  | 8763 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.619 |
-| walker |  | 8770 | 7 | listing of 'apps/web/lib/api/controllers/tokens/tokenId' |  |  | 0.620 |
-| walker |  | 8784 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.622 |
-| walker |  | 8801 | 17 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.624 |
-| walker |  | 8813 | 12 | listing of 'apps/web/lib/api/controllers/links/bulk' |  |  | 0.625 |
-| walker |  | 8833 | 20 | listing of 'apps/web/lib/api/controllers/dashboard' |  |  | 0.628 |
-| walker |  | 8860 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.631 |
-| walker |  | 8881 | 21 | listing of 'apps/web/lib/api/controllers/collections/collectionId' |  |  | 0.634 |
-| walker |  | 8902 | 21 | listing of 'apps/web/lib/api/controllers/tags/tagId' |  |  | 0.637 |
-| walker |  | 8926 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.643 |
-| walker |  | 8932 | 6 | listing of 'apps/web/lib/api/controllers/links/linkId/highlight' |  |  | 0.644 |
-| ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.636 |
-| walker |  | 8959 | 27 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.640 |
-| walker |  | 9112 | 153 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.641 |
-| walker |  | 9136 | 24 | README.md section #5 |  |  | 0.643 |
-| walker |  | 9159 | 23 | README.md section #4 |  |  | 0.645 |
-| ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.643 |
-| walker |  | 9184 | 25 | README.md section #13 |  |  | 0.646 |
-| walker |  | 9208 | 24 | README.md section #12 |  |  | 0.648 |
-| walker |  | 9327 | 119 | ts decl packages/lib/getPreservedFormatUrl.ts:3 |  |  | 0.648 |
+| walker |  | 6746 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.576 |
+| walker |  | 6829 | 83 | ts decl packages/types/inputSelect.ts:7 |  |  | 0.576 |
+| walker |  | 6848 | 19 | README.md section #15 |  |  | 0.579 |
+| ns | 6892 |  | 166 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.594 |
+| walker |  | 6938 | 90 | ts names packages/router/config.tsx |  |  | 0.597 |
+| walker |  | 6968 | 30 | ts decl packages/router/config.tsx:44 |  |  | 0.597 |
+| walker |  | 7057 | 89 | ts decl packages/lib/isArchivalTag.ts:3 |  |  | 0.597 |
+| walker |  | 7136 | 79 | listing of 'apps/web/lib/client' |  |  | 0.606 |
+| ns | 7161 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.596 |
+| ns | 7354 |  | 193 | archiveHandler's signature and its SSRF / skip-preservation guard | 5.3 |  | 0.588 |
+| walker |  | 7391 | 255 | ts names packages/lib/schemaValidation.ts |  |  | 0.593 |
+| walker |  | 7404 | 13 | ts decl packages/lib/schemaValidation.ts:25 |  |  | 0.593 |
+| walker |  | 7418 | 14 | ts decl packages/lib/schemaValidation.ts:115 |  |  | 0.593 |
+| walker |  | 7433 | 15 | ts decl packages/lib/schemaValidation.ts:16 |  |  | 0.593 |
+| walker |  | 7460 | 27 | ts decl packages/lib/schemaValidation.ts:20 |  |  | 0.593 |
+| walker |  | 7489 | 29 | ts decl packages/lib/schemaValidation.ts:29 |  |  | 0.593 |
+| walker |  | 7543 | 54 | ts decl packages/lib/schemaValidation.ts:119 |  |  | 0.593 |
+| ns | 7607 |  | 253 | Every UI page route under apps/web/pages | 6.1 |  | 0.614 |
+| walker |  | 7838 | 295 | README.md section #0 |  |  | 0.614 |
+| walker |  | 7860 | 22 | README.md section #1 |  |  | 0.616 |
+| walker |  | 7882 | 22 | README.md section #2 |  |  | 0.617 |
+| ns | 7965 |  | 358 | The flat components/ directory and the ui/ primitives | 6.2 |  | 0.593 |
+| walker |  | 7993 | 111 | ts names packages/router/collections.tsx |  |  | 0.594 |
+| walker |  | 8073 | 80 | ts decl packages/router/collections.tsx:180 |  |  | 0.594 |
+| walker |  | 8182 | 109 | ts decl packages/router/config.tsx:4 |  |  | 0.594 |
+| walker |  | 8200 | 18 | ts body packages/router/config.tsx:44 |  |  | 0.594 |
+| ns | 8246 |  | 281 | Modal, link-view, preservation and input-picker component subdirectories | 6.3 | 6.2 | 0.579 |
+| walker |  | 8297 | 97 | listing of 'apps/web/lib/api' |  |  | 0.602 |
+| walker |  | 8310 | 13 | listing of 'apps/web/lib/api/archives' |  |  | 0.602 |
+| walker |  | 8327 | 17 | listing of 'apps/web/lib/api/preserved' |  |  | 0.602 |
+| walker |  | 8360 | 33 | listing of 'apps/web/lib/api/stripe' |  |  | 0.605 |
+| walker |  | 8396 | 36 | listing of 'apps/web/lib/api/controllers' |  |  | 0.620 |
+| walker |  | 8401 | 5 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.620 |
+| walker |  | 8406 | 5 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.620 |
+| walker |  | 8412 | 6 | listing of 'apps/web/lib/api/controllers/worker' |  |  | 0.620 |
+| walker |  | 8421 | 9 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.621 |
+| walker |  | 8425 | 4 | listing of 'apps/web/lib/api/controllers/public/links' |  |  | 0.621 |
+| walker |  | 8431 | 6 | listing of 'apps/web/lib/api/controllers/public/collections' |  |  | 0.621 |
+| walker |  | 8437 | 6 | listing of 'apps/web/lib/api/controllers/public/users' |  |  | 0.622 |
+| walker |  | 8444 | 7 | listing of 'apps/web/lib/api/controllers/public/links/linkId' |  |  | 0.622 |
+| walker |  | 8458 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.622 |
+| walker |  | 8472 | 14 | listing of 'apps/web/lib/api/controllers/highlights' |  |  | 0.623 |
+| ns | 8473 |  | 227 | Web hooks, layouts, stores, ambient types, email templates, one-off migration scripts and the Playwright suite | 6.4 |  | 0.627 |
+| walker |  | 8486 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.629 |
+| walker |  | 8493 | 7 | listing of 'apps/web/lib/api/controllers/tokens/tokenId' |  |  | 0.629 |
+| walker |  | 8507 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.631 |
+| walker |  | 8524 | 17 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.633 |
+| walker |  | 8536 | 12 | listing of 'apps/web/lib/api/controllers/links/bulk' |  |  | 0.634 |
+| walker |  | 8556 | 20 | listing of 'apps/web/lib/api/controllers/dashboard' |  |  | 0.637 |
+| walker |  | 8583 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.641 |
+| walker |  | 8604 | 21 | listing of 'apps/web/lib/api/controllers/collections/collectionId' |  |  | 0.643 |
+| walker |  | 8625 | 21 | listing of 'apps/web/lib/api/controllers/tags/tagId' |  |  | 0.647 |
+| walker |  | 8649 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.652 |
+| walker |  | 8655 | 6 | listing of 'apps/web/lib/api/controllers/links/linkId/highlight' |  |  | 0.654 |
+| walker |  | 8682 | 27 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.658 |
+| ns | 8713 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.648 |
+| walker |  | 8835 | 153 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.649 |
+| walker |  | 8859 | 24 | README.md section #5 |  |  | 0.651 |
+| walker |  | 8882 | 23 | README.md section #4 |  |  | 0.653 |
+| walker |  | 8907 | 25 | README.md section #13 |  |  | 0.655 |
+| walker |  | 8931 | 24 | README.md section #12 |  |  | 0.658 |
+| ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.650 |
+| walker |  | 9050 | 119 | ts decl packages/lib/getPreservedFormatUrl.ts:3 |  |  | 0.650 |
+| ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.648 |
 | ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.648 |
-| ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.656 |
-| walker |  | 9637 | 310 | YAML config at docker-compose.yml |  |  | 0.669 |
-| ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.679 |
-| walker |  | 9706 | 69 | listing of 'apps/web/pages/api/v1' |  |  | 0.696 |
-| walker |  | 9710 | 4 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.696 |
-| walker |  | 9714 | 4 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.696 |
-| walker |  | 9718 | 4 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.696 |
-| walker |  | 9722 | 4 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.697 |
-| walker |  | 9726 | 4 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.697 |
-| walker |  | 9730 | 4 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.697 |
-| walker |  | 9734 | 4 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.697 |
-| walker |  | 9738 | 4 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.698 |
-| walker |  | 9744 | 6 | listing of 'apps/web/pages/api/v1/avatar' |  |  | 0.698 |
-| walker |  | 9753 | 9 | listing of 'apps/web/pages/api/v1/config' |  |  | 0.699 |
-| walker |  | 9762 | 9 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.699 |
-| walker |  | 9768 | 6 | listing of 'apps/web/pages/api/v1/public/links' |  |  | 0.700 |
-| walker |  | 9774 | 6 | listing of 'apps/web/pages/api/v1/public/users' |  |  | 0.700 |
-| walker |  | 9783 | 9 | listing of 'apps/web/pages/api/v1/worker' |  |  | 0.701 |
-| walker |  | 9793 | 10 | listing of 'apps/web/pages/api/v1/collections' |  |  | 0.701 |
-| walker |  | 9803 | 10 | listing of 'apps/web/pages/api/v1/highlights' |  |  | 0.702 |
-| walker |  | 9813 | 10 | listing of 'apps/web/pages/api/v1/rss' |  |  | 0.703 |
-| walker |  | 9823 | 10 | listing of 'apps/web/pages/api/v1/tokens' |  |  | 0.704 |
-| walker |  | 9835 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.706 |
-| walker |  | 9839 | 4 | listing of 'apps/web/pages/api/v1/links/archive' |  |  | 0.706 |
-| walker |  | 9852 | 13 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.708 |
-| walker |  | 9861 | 9 | listing of 'apps/web/pages/api/v1/users/[id]' |  |  | 0.710 |
-| walker |  | 9875 | 14 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.713 |
-| walker |  | 9885 | 10 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.716 |
-| walker |  | 9889 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/archive' |  |  | 0.717 |
-| ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.722 |
-| walker |  | 9893 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/highlights' |  |  | 0.724 |
-| walker |  | 9905 | 12 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.726 |
-| walker |  | 9909 | 4 | listing of 'apps/web/pages/api/v1/public/collections/links' |  |  | 0.727 |
-| walker |  | 9913 | 4 | listing of 'apps/web/pages/api/v1/public/collections/tags' |  |  | 0.728 |
-| walker |  | 9931 | 18 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.732 |
-| walker |  | 9950 | 19 | listing of 'apps/web/pages/api/v1/archives' |  |  | 0.735 |
-| walker |  | 9972 | 22 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.740 |
+| walker |  | 9360 | 310 | YAML config at docker-compose.yml |  |  | 0.663 |
+| walker |  | 9429 | 69 | listing of 'apps/web/pages/api/v1' |  |  | 0.681 |
+| walker |  | 9433 | 4 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.681 |
+| walker |  | 9437 | 4 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.681 |
+| walker |  | 9441 | 4 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.681 |
+| walker |  | 9445 | 4 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.682 |
+| walker |  | 9449 | 4 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.682 |
+| walker |  | 9453 | 4 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.682 |
+| walker |  | 9457 | 4 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.682 |
+| walker |  | 9461 | 4 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.683 |
+| walker |  | 9467 | 6 | listing of 'apps/web/pages/api/v1/avatar' |  |  | 0.683 |
+| ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.689 |
+| walker |  | 9476 | 9 | listing of 'apps/web/pages/api/v1/config' |  |  | 0.690 |
+| walker |  | 9485 | 9 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.691 |
+| walker |  | 9491 | 6 | listing of 'apps/web/pages/api/v1/public/links' |  |  | 0.691 |
+| walker |  | 9497 | 6 | listing of 'apps/web/pages/api/v1/public/users' |  |  | 0.692 |
+| walker |  | 9506 | 9 | listing of 'apps/web/pages/api/v1/worker' |  |  | 0.693 |
+| walker |  | 9516 | 10 | listing of 'apps/web/pages/api/v1/collections' |  |  | 0.693 |
+| walker |  | 9526 | 10 | listing of 'apps/web/pages/api/v1/highlights' |  |  | 0.693 |
+| walker |  | 9536 | 10 | listing of 'apps/web/pages/api/v1/rss' |  |  | 0.695 |
+| walker |  | 9546 | 10 | listing of 'apps/web/pages/api/v1/tokens' |  |  | 0.696 |
+| walker |  | 9558 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.697 |
+| walker |  | 9562 | 4 | listing of 'apps/web/pages/api/v1/links/archive' |  |  | 0.698 |
+| walker |  | 9575 | 13 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.700 |
+| walker |  | 9584 | 9 | listing of 'apps/web/pages/api/v1/users/[id]' |  |  | 0.702 |
+| walker |  | 9598 | 14 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.705 |
+| walker |  | 9608 | 10 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.708 |
+| walker |  | 9612 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/archive' |  |  | 0.709 |
+| walker |  | 9616 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/highlights' |  |  | 0.710 |
+| walker |  | 9628 | 12 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.713 |
+| walker |  | 9632 | 4 | listing of 'apps/web/pages/api/v1/public/collections/links' |  |  | 0.714 |
+| walker |  | 9636 | 4 | listing of 'apps/web/pages/api/v1/public/collections/tags' |  |  | 0.715 |
+| walker |  | 9654 | 18 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.719 |
+| walker |  | 9673 | 19 | listing of 'apps/web/pages/api/v1/archives' |  |  | 0.723 |
+| ns | 9689 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.730 |
+| walker |  | 9695 | 22 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.735 |
+| walker |  | 9743 | 48 | listing of 'apps/web/lib/api/controllers/migration' |  |  | 0.742 |
+| walker |  | 9765 | 22 | ts body packages/lib/utils.ts:13 |  |  | 0.742 |
+| walker |  | 9788 | 23 | ts body packages/lib/formatStats.ts:4 |  |  | 0.742 |
+| walker |  | 9817 | 29 | README.md section #3 |  |  | 0.745 |
+| ns | 9891 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.750 |

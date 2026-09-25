@@ -180,15 +180,9 @@ pub enum JsonKey {
 /// render-time displacement of richer walker batches.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
-    /// Whole-file render. Skipped when line count or rendered token
-    /// cost exceeds the walker's caps. For split classes (dotenv
-    /// samples, long Dockerfiles) this key carries the head slice
-    /// instead, with the rest under [`PlaintextKey::DotenvChunk`] or
-    /// [`PlaintextKey::Tail`].
+    /// Whole-file render, or a head slice of a longer file. For dotenv
+    /// samples the rest follows under [`PlaintextKey::DotenvChunk`].
     Whole { file: PathBuf },
-    /// Dockerfile build-mechanics rows complementary to the contract
-    /// lines carried by a head-shaped `Whole` batch.
-    Tail { file: PathBuf },
     /// Source-ordered chunk of a long dotenv sample's optional-settings
     /// tail. Chunks form a predecessor chain after [`PlaintextKey::Whole`]
     /// so later config groups cannot render before earlier ones.
@@ -487,9 +481,6 @@ impl InnerKey for PlaintextKey {
         match self {
             PlaintextKey::Whole { file } => {
                 format!("plaintext config {}", display_path(file, root))
-            }
-            PlaintextKey::Tail { file } => {
-                format!("plaintext config tail of {}", display_path(file, root))
             }
             PlaintextKey::DotenvChunk { file, chunk_index } => {
                 format!(
