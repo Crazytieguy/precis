@@ -118,7 +118,14 @@ impl SourceCache {
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct Cost {
     pub tokens: usize,
-    pub bytes: usize,
+    /// In [`char_units`].
+    pub chars: usize,
+}
+
+/// Length as JavaScript's `String.length` counts it (UTF-16 code units),
+/// which is the unit Claude Code caps hook output in.
+pub fn char_units(text: &str) -> usize {
+    text.encode_utf16().count()
 }
 
 /// A span tried to write a line owned by a non-ancestor batch.
@@ -272,8 +279,8 @@ impl RenderedTree {
         tokenizer::count(&self.render())
     }
 
-    pub fn total_bytes(&self) -> usize {
-        self.render().len()
+    pub fn total_chars(&self) -> usize {
+        char_units(&self.render())
     }
 
     // ---- internal ----
@@ -357,7 +364,7 @@ impl RenderedTree {
         let plain = format_entry_row(name, kind, indent_depth, false);
         Some(Cost {
             tokens: tokens(&marked).saturating_sub(tokens(&plain)),
-            bytes: marked.len().saturating_sub(plain.len()),
+            chars: char_units(&marked).saturating_sub(char_units(&plain)),
         })
     }
 
@@ -387,7 +394,7 @@ impl RenderedTree {
             // children, plus the change in its trailing partial-listing
             // marker.
             let mut d_tokens: isize = 0;
-            let mut d_bytes: isize = 0;
+            let mut d_chars: isize = 0;
             let listed_before = already_listed.map_or(0, |c| c.len());
             let mut new_rows = 0usize;
             for p in paths {
@@ -402,14 +409,14 @@ impl RenderedTree {
                 let row =
                     format_entry_row(name, kind, indent_depth, self.entry_elided(&child, kind));
                 d_tokens += tokens(&row) as isize;
-                d_bytes += row.len() as isize;
+                d_chars += char_units(&row) as isize;
                 new_rows += 1;
             }
             if new_rows > 0
                 && let Some(marker) = self.entry_marker_cost(parent, tokens)
             {
                 d_tokens -= marker.tokens as isize;
-                d_bytes -= marker.bytes as isize;
+                d_chars -= marker.chars as isize;
             }
             let shown = self.dir_entry_count(parent);
             let partial_delta = isize::from(listing_partial(listed_before + new_rows, shown))
@@ -417,11 +424,11 @@ impl RenderedTree {
             if partial_delta != 0 {
                 let row = format_marker_row(indent_depth);
                 d_tokens += partial_delta * tokens(&row) as isize;
-                d_bytes += partial_delta * row.len() as isize;
+                d_chars += partial_delta * char_units(&row) as isize;
             }
             visit(Cost {
                 tokens: d_tokens.max(0) as usize,
-                bytes: d_bytes.max(0) as usize,
+                chars: d_chars.max(0) as usize,
             });
         }
     }
@@ -456,7 +463,7 @@ impl RenderedTree {
             // the anchor set, so the delta is exact given the current
             // tree state.
             let mut d_tokens: isize = 0;
-            let mut d_bytes: isize = 0;
+            let mut d_chars: isize = 0;
             for span in &file_spans {
                 for line_num in span.start..=span.end {
                     debug_assert!(
@@ -472,7 +479,7 @@ impl RenderedTree {
                         let new_row =
                             format_line_row(line_num, &span.render, source_line, indent_depth);
                         d_tokens += tokens(&new_row) as isize;
-                        d_bytes += new_row.len() as isize;
+                        d_chars += char_units(&new_row) as isize;
                     }
                     if let Some(existing) = existing
                         && let Some(old) = existing.get(&line_num)
@@ -481,7 +488,7 @@ impl RenderedTree {
                         let old_row =
                             format_line_row(line_num, &old.render, source_line, indent_depth);
                         d_tokens -= tokens(&old_row) as isize;
-                        d_bytes -= old_row.len() as isize;
+                        d_chars -= char_units(&old_row) as isize;
                     }
                 }
             }
@@ -489,17 +496,17 @@ impl RenderedTree {
             if delta.gaps != 0 {
                 let marker_row = format_marker_row(indent_depth);
                 d_tokens += delta.gaps * tokens(&marker_row) as isize;
-                d_bytes += delta.gaps * marker_row.len() as isize;
+                d_chars += delta.gaps * char_units(&marker_row) as isize;
             }
             if delta.entry != 0
                 && let Some(marker) = self.entry_marker_cost(path, tokens)
             {
                 d_tokens += delta.entry * marker.tokens as isize;
-                d_bytes += delta.entry * marker.bytes as isize;
+                d_chars += delta.entry * marker.chars as isize;
             }
             visit(Cost {
                 tokens: d_tokens.max(0) as usize,
-                bytes: d_bytes.max(0) as usize,
+                chars: d_chars.max(0) as usize,
             });
         }
     }
@@ -644,7 +651,7 @@ impl std::ops::Add for Cost {
     fn add(self, other: Cost) -> Cost {
         Cost {
             tokens: self.tokens + other.tokens,
-            bytes: self.bytes + other.bytes,
+            chars: self.chars + other.chars,
         }
     }
 }
@@ -1081,7 +1088,7 @@ mod tests {
             let content = one_span(path.clone(), line, Render::Ellipsis);
             let cost = tree.marginal_cost(&content);
             assert_eq!(cost.tokens, 0, "ellipsis at {line} must cost nothing");
-            assert_eq!(cost.bytes, 0);
+            assert_eq!(cost.chars, 0);
             tree.apply(&content, BatchId::new(10 + line), |_| true);
         }
         assert_eq!(tree.render(), before);
@@ -1117,7 +1124,7 @@ mod tests {
         let exact = tree.marginal_cost(&overlap);
         let approx_tokens = tree.marginal_cost_approx(&overlap);
         assert_eq!(exact.tokens, 0);
-        assert_eq!(exact.bytes, 0);
+        assert_eq!(exact.chars, 0);
         assert_eq!(approx_tokens, 0);
     }
 
@@ -1132,7 +1139,7 @@ mod tests {
 
         let rendered = tree.render();
         assert_eq!(rendered, "name\\nwith\\ttabs.md\n");
-        assert_eq!(cost.bytes, rendered.len());
+        assert_eq!(cost.chars, char_units(&rendered));
         assert_eq!(cost.tokens, tokenizer::count(&rendered));
     }
 
@@ -1172,10 +1179,10 @@ mod tests {
         let fresh_exact = tree_fresh.marginal_cost(&full);
         let fresh_approx = tree_fresh.marginal_cost_approx(&full);
 
-        assert!(delta_exact.bytes > 0);
+        assert!(delta_exact.chars > 0);
         assert!(delta_exact.tokens > 0);
         assert!(delta_approx > 0);
-        assert!(delta_exact.bytes < fresh_exact.bytes);
+        assert!(delta_exact.chars < fresh_exact.chars);
         assert!(delta_approx < fresh_approx);
     }
 }

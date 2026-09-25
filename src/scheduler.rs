@@ -63,7 +63,7 @@ pub struct Scheduler<W: Walker> {
     ctx: WalkCtx,
     tree: RenderedTree,
     token_budget: usize,
-    byte_budget: Option<usize>,
+    char_budget: Option<usize>,
     consumed: Cost,
 
     /// Walker-emitted batches, indexed by [`BatchId`] (which is the position).
@@ -160,8 +160,8 @@ const BREADTH_MIN_TRAINS: usize = 2;
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
 
 impl<W: Walker> Scheduler<W> {
-    pub fn new(root: PathBuf, walker: W, token_budget: usize, byte_budget: Option<usize>) -> Self {
-        Self::with_source_cache(root, walker, token_budget, byte_budget, SourceCache::new())
+    pub fn new(root: PathBuf, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
+        Self::with_source_cache(root, walker, token_budget, char_budget, SourceCache::new())
     }
 
     /// Scheduler sharing an externally-owned `SourceCache` (tests).
@@ -169,7 +169,7 @@ impl<W: Walker> Scheduler<W> {
         root: PathBuf,
         walker: W,
         token_budget: usize,
-        byte_budget: Option<usize>,
+        char_budget: Option<usize>,
         source_cache: SourceCache,
     ) -> Self {
         let ctx = WalkCtx::with_cache(root.clone(), source_cache.clone());
@@ -179,7 +179,7 @@ impl<W: Walker> Scheduler<W> {
             ctx,
             tree,
             token_budget,
-            byte_budget,
+            char_budget,
             consumed: Cost::default(),
             entries: Vec::new(),
             key_to_id: HashMap::new(),
@@ -232,13 +232,13 @@ impl<W: Walker> Scheduler<W> {
                 total_tokens,
                 self.token_budget,
             );
-            if let Some(bb) = self.byte_budget {
-                let total_bytes = self.tree.total_bytes();
+            if let Some(cap) = self.char_budget {
+                let total_chars = self.tree.total_chars();
                 debug_assert!(
-                    total_bytes <= bb,
-                    "rendered output exceeds byte budget: {} > {}",
-                    total_bytes,
-                    bb,
+                    total_chars <= cap,
+                    "rendered output exceeds char budget: {} > {}",
+                    total_chars,
+                    cap,
                 );
             }
         }
@@ -493,8 +493,8 @@ impl<W: Walker> Scheduler<W> {
         if self.consumed.tokens + cost.tokens > self.token_budget {
             return false;
         }
-        if let Some(bb) = self.byte_budget
-            && self.consumed.bytes + cost.bytes > bb
+        if let Some(cap) = self.char_budget
+            && self.consumed.chars + cost.chars > cap
         {
             return false;
         }
@@ -535,7 +535,7 @@ impl<W: Walker> Scheduler<W> {
         self.dominant_file_entered |= self.dominant_file_batches.contains(&id);
         self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;
-        self.consumed.bytes += cost.bytes;
+        self.consumed.chars += cost.chars;
         entry_content
     }
 
@@ -625,7 +625,7 @@ impl<W: Walker> Scheduler<W> {
         );
         debug_assert!(
             self.fits(cost),
-            "scheduled batch exceeds token/byte budget; caller should have filtered it"
+            "scheduled batch exceeds token/char budget; caller should have filtered it"
         );
 
         let entry_content = self.apply_and_record(id, cost);

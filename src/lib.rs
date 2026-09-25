@@ -18,16 +18,16 @@ pub mod walker;
 pub use batch::{Batch, BatchKey, WalkerKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
 pub use fs_util::{DirFilter, EntryKind, list_dir};
-pub use render::{Cost, RenderedTree, SourceCache};
+pub use render::{Cost, RenderedTree, SourceCache, char_units};
 
 use scheduler::Scheduler;
 use walker::FsWalker;
 
 /// Render a precis summary of the directory at `path` under the given
 /// budgets.
-pub fn render(path: &Path, token_budget: usize, byte_budget: Option<usize>) -> Result<String> {
+pub fn render(path: &Path, token_budget: usize, char_budget: Option<usize>) -> Result<String> {
     let root = canonicalize_dir(path)?;
-    let scheduler = Scheduler::new(root, FsWalker, token_budget, byte_budget);
+    let scheduler = Scheduler::new(root, FsWalker, token_budget, char_budget);
     Ok(scheduler.run().render())
 }
 
