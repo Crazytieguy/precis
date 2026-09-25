@@ -188,11 +188,10 @@ fn validate_spans(
             blocking = true;
             continue;
         }
-        let source_lines: Vec<&str> = source.lines().collect();
-        if end > source_lines.len() {
+        if end > source.line_count() {
             violations.push(format!(
                 "span out of range at {path}: {start}..={end} (file has {} lines)",
-                source_lines.len()
+                source.line_count()
             ));
             blocking = true;
             continue;
@@ -222,7 +221,7 @@ fn validate_spans(
                 let mut flagged = false;
                 let mut elides_a_word = false;
                 for line in start..=end {
-                    let text = source_lines[line - 1];
+                    let text = source.line(line).unwrap_or_default();
                     let Some(m) = re.find(text).filter(|m| !m.as_str().is_empty()) else {
                         violations.push(format!(
                             "Truncated regex `{pattern}` produced no/empty match at {path}:{line}"

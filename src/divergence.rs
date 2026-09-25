@@ -196,7 +196,7 @@ fn graded_atoms(
                 let source = source_cache.get(&fixture_root.join(&path));
                 let source_line = source
                     .as_deref()
-                    .and_then(|s| s.lines().nth(line.saturating_sub(1)))
+                    .and_then(|s| s.line(line))
                     .unwrap_or("");
                 let bytes = match render {
                     Render::Full => source_line.len(),
