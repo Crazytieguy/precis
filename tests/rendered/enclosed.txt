@@ -37,60 +37,7 @@ README.md
   26→## Introduction
   27→
   28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
-  30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
-  31→
-  32→A live instance is available at [enclosed.cc](https://enclosed.cc).
-  33→
-  34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
-  36→## Features
   …
-  39→- **File Attachments**: Share files securely with your notes.
-  …
-  42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
-  43→- **i18n Support**: Available in multiple languages.
-  44→- **Authentication**: Optional email/password authentication to create notes.
-  45→- **Dark Mode**: A dark theme for late-night note sharing.
-  46→- **Responsive Design**: Works on all devices, from desktops to mobile phones.
-  …
-  52→## Self host
-  53→
-  54→### Try it with Docker
-  …
-  62→### To go further
-  …
-  71→### Configuration
-  …
-  75→## How It Works
-  …
-  93→## CLI
-  94→
-  95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
-  97→### Installation
-  …
-  110→### Create a note
-  …
-  123→### View a note
-  …
-  133→### Configure the enclosed instance to use
-  …
-  140→## Project Structure
-  …
-  150→## Contributing
-  …
-  155→## License
-  156→
-  157→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-  159→## Credits and Acknowledgements
-  …
-  168→### Stack
-  …
-  184→### Hosting
-  …
-  188→### Inspiration
-  …
-  194→## Contact Information
-  195→
-  196→Please use the issue tracker on GitHub for any questions or feedback.
 docker-compose.yml
   1→services:
   2→  enclosed:
@@ -136,9 +83,15 @@ packages/
     e2e-tests/
       create-and-view-note.e2e.test.ts
     eslint.config.js
+      …
+      3→export default antfu({
+      …
     index.html
     package.json
     playwright.config.ts
+      …
+      12→export default defineConfig({
+      …
     public/
       android-chrome-192x192.png
       android-chrome-512x512.png
@@ -167,6 +120,9 @@ packages/
         it.json
         locales.test.ts
         locales.ts
+          …
+          2→export const locales = [
+          …
         nl.json
         pl.json
         pt-BR.json
@@ -185,8 +141,13 @@ packages/
             login.page.tsx
         config/
           config.constants.ts
+            …
+            3→export const buildTimeConfig: Config = {
+            …
           config.provider.tsx
           config.types.ts
+            1→export type Config = {
+            …
         docs/
           docs.models.test.ts
           docs.models.ts
@@ -198,18 +159,6 @@ packages/
           i18n.models.ts
           i18n.provider.tsx
         notes/
-          components/
-            file-uploader.tsx
-            note-password-field.tsx
-          notes.constants.ts
-          notes.context.tsx
-          notes.models.test.ts
-          notes.models.ts
-          notes.services.ts
-          notes.usecases.ts
-          pages/
-            create-note.page.tsx
-            view-note.page.tsx
         shared/
           files/
             convert.ts
@@ -227,38 +176,43 @@ packages/
             copy.tsx
         theme/
           theme.store.ts
+            …
+            4→export function useThemeStore() {
+            …
         ui/
           components/
           layouts/
             app.layout.tsx
       routes.tsx
+        …
+        11→export function getRoutes(): RouteDefinition[] {
+        …
       scripts/
     tsconfig.json
     uno.config.ts
+      …
+      13→export default defineConfig({
+      …
     vite.config.ts
+      …
+      8→export default defineConfig({
+      …
   app-server/
     eslint.config.js
+      …
+      3→export default antfu({
+      …
     package.json
     src/
       index.cloudflare.ts
+        …
+        8→export default app;
       index.node.ts
       modules/
         app/
           auth/
           config/
-            config.models.ts
-            config.routes.ts
-            config.test-utils.ts
-            config.ts
-            config.types.ts
           middlewares/
-            config.middleware.ts
-            cors.middleware.ts
-            errors.middleware.ts
-            logger.middleware.ts
-            storage.middleware.ts
-            timeout.middleware.test.ts
-            timeout.middleware.ts
           server.ts
           server.types.ts
           users/
@@ -286,6 +240,8 @@ packages/
           tasks.models.test.ts
           tasks.models.ts
           tasks.types.ts
+            …
+            3→export type TaskDefinition = ReturnType<typeof defineTask>;
       reset.d.ts
       scripts/
     tsconfig.json
@@ -299,19 +255,50 @@ packages/
     bin/
       enclosed.mjs
     build.config.ts
+      …
+      3→export default defineBuildConfig({
+      4→  entries: [
+      5→    'src/cli',
+      6→  ],
+      7→  clean: true,
+      8→  rollup: {
+      9→    emitCJS: true,
+      10→  },
+      11→});
     eslint.config.js
+      …
+      3→export default antfu({
+      …
     package.json
     src/
       cli.ts
+        …
+        6→const main = defineCommand({
+        …
       config/
         config.command.ts
+          …
+          8→export const configCommand = defineCommand({
+          …
         config.constants.ts
+          …
+          3→export const configDefinition = {
+          …
         config.models.ts
         config.usecases.ts
+          …
+          3→export const {
+          …
       create-note/
         create-note.command.ts
+          …
+          13→export const createNoteCommand = defineCommand({
+          …
         create-note.usecases.test.ts
         create-note.usecases.ts
+          …
+          3→export async function getNoteContent({
+          …
       files/
         files.services.test.ts
         files.services.ts
@@ -320,6 +307,9 @@ packages/
         http.models.ts
       view-note/
         view-note.command.ts
+          …
+          7→export const viewNoteCommand = defineCommand({
+          …
         view-note.models.ts
     tsconfig.json
   crypto/
@@ -334,10 +324,21 @@ packages/
       22→## Credits and Acknowledgements
       …
     build.config.ts
+      …
+      3→export default defineBuildConfig({
+      …
     eslint.config.js
+      …
+      3→export default antfu({
+      …
     package.json
     src/
       api-definition.ts
+        …
+        4→export { createEnclosedCryptoApi };
+        5→
+        6→function createEnclosedCryptoApi({
+        …
       encryption-algorithms/
         encryption-algorithms.constants.ts
         encryption-algorithms.models.ts
@@ -372,6 +373,9 @@ packages/
       plausible.ts
       theme/
     eslint.config.js
+      …
+      3→export default antfu({
+      …
     package.json
     src/
       components/
@@ -379,7 +383,13 @@ packages/
         toggle.vue
       data/
         configuration.data.ts
+          …
+          55→export default {
+          …
         i18n.data.ts
+          …
+          59→export default {
+          …
       how-it-works.md
       index.md
       integrations/
@@ -395,14 +405,6 @@ packages/
         logo-dark.svg
         logo-light.svg
         logos/
-          logo-dark-bg.png
-          logo-dark-bg.svg
-          logo-dark.png
-          logo-dark.svg
-          logo-light-bg.png
-          logo-light-bg.svg
-          logo-light.png
-          logo-light.svg
         og-image.png
         robots.txt
       resources/
@@ -429,12 +431,24 @@ packages/
       37→## Credits and Acknowledgements
       …
     build.config.ts
+      …
+      3→export default defineBuildConfig({
+      …
     eslint.config.js
+      …
+      3→export default antfu({
+      …
     package.json
     src/
       api/
         api.client.ts
+          …
+          4→export { apiClient };
+          …
+          20→async function apiClient<T>({
+          …
         api.constants.ts
+          1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
         api.models.test.ts
         api.models.ts
       crypto/
@@ -458,13 +472,35 @@ packages/
       index.ts
         …
         10→export {
-        …
+        11→  createNote,
+        12→  createNoteUrl,
+        13→  createNoteUrlHashFragment,
+        14→  decryptNote,
+        15→  encryptionAlgorithms,
+        16→  encryptNote,
+        17→  fetchNote,
+        18→  filesToNoteAssets,
+        19→  fileToNoteAsset,
+        20→  isApiClientErrorWithCode,
+        21→  isApiClientErrorWithStatusCode,
+        22→  noteAssetsToFiles,
+        23→  noteAssetToFile,
+        24→  parseNoteUrl,
+        25→  parseNoteUrlHashFragment,
+        26→  serializationFormats,
+        27→  storeNote,
+        28→};
       notes/
         notes.models.test.ts
         notes.models.ts
         notes.services.ts
         notes.types.ts
         notes.usecases.ts
+          …
+          8→export { createNote };
+          …
+          12→async function createNote({
+          …
     tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml

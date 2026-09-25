@@ -16,23 +16,7 @@ package.json
   2→  "name": "vaul",
   3→  "version": "1.1.2",
   4→  "description": "Drawer component for React.",
-  5→  "main": "./dist/index.js",
-  6→  "module": "./dist/index.mjs",
-  7→  "types": "./dist/index.d.ts",
-  8→  "files": [
-  9→    "dist",
-  10→    "style.css"
-  11→  ],
-  12→  "exports": {
-  13→    "import": {
-  14→      "types": "./dist/index.d.mts",
-  15→      "default": "./dist/index.mjs"
-  16→    },
-  17→    "require": {
-  18→      "types": "./dist/index.d.ts",
-  19→      "default": "./dist/index.js"
-  20→    }
-  21→  },
+  …
   22→  "scripts": {
   23→    "type-check": "tsc --noEmit",
   24→    "build": "pnpm type-check && bunchee && pnpm copy-assets",
@@ -61,9 +45,70 @@ pnpm-workspace.yaml
   3→  - 'test'
 src/
   browser.ts
+    1→export function isMobileFirefox(): boolean | undefined {
+    …
+    10→export function isMac(): boolean | undefined {
+    11→  return testPlatform(/^Mac/);
+    …
+    14→export function isIPhone(): boolean | undefined {
+    15→  return testPlatform(/^iPhone/);
+    …
+    18→export function isSafari(): boolean | undefined {
+    19→  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    …
+    22→export function isIPad(): boolean | undefined {
+    …
+    30→export function isIOS(): boolean | undefined {
+    31→  return isIPhone() || isIPad();
+    …
+    34→export function testPlatform(re: RegExp): boolean | undefined {
+    …
   constants.ts
+    1→export const TRANSITIONS = {
+    2→  DURATION: 0.5,
+    3→  EASE: [0.32, 0.72, 0, 1],
+    4→};
+    6→export const VELOCITY_THRESHOLD = 0.4;
+    7→
+    8→export const CLOSE_THRESHOLD = 0.25;
+    9→
+    10→export const SCROLL_LOCK_TIMEOUT = 100;
+    11→
+    12→export const BORDER_RADIUS = 8;
+    13→
+    14→export const NESTED_DISPLACEMENT = 16;
+    15→
+    16→export const WINDOW_TOP_OFFSET = 26;
+    17→
+    18→export const DRAG_CLASS = 'vaul-dragging';
   context.ts
+    …
+    37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    …
+    69→export const useDrawerContext = () => {
+    …
   helpers.ts
+    …
+    9→export function isInView(el: HTMLElement): boolean {
+    …
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    …
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    …
+    59→export const isVertical = (direction: DrawerDirection) => {
+    …
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    …
+    90→export function dampenValue(v: number) {
+    91→  return 8 * (Math.log(v + 1) - 2);
+    …
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
+    …
+    105→/**
+    106→ * Receives functions as arguments and returns a new function that calls all.
+    107→ */
+    108→export function chain<T>(...fns: T[]) {
+    …
   index.tsx
     …
     27→export interface WithFadeFromProps {
@@ -102,79 +147,8 @@ src/
     62→   * When `true` the `body` doesn't get any styles assigned from Vaul
     63→   */
     64→  noBodyStyles?: boolean;
-    65→  onOpenChange?: (open: boolean) => void;
-    66→  shouldScaleBackground?: boolean;
-    67→  /**
-    68→   * When `false` we don't change body's background color when the drawer is open.
-    69→   * @default true
-    70→   */
-    71→  setBackgroundColorOnScale?: boolean;
-    72→  /**
-    73→   * Duration for which the drawer is not draggable after scrolling content inside of the drawer.
-    74→   * @default 500ms
-    75→   */
-    76→  scrollLockTimeout?: number;
-    77→  /**
-    78→   * When `true`, don't move the drawer upwards if there's space, but rather only change it's height so it's fully scrollable when the keyboard is open
-    79→   */
-    80→  fixed?: boolean;
-    81→  /**
-    82→   * When `true` only allows the drawer to be dragged by the `<Drawer.Handle />` component.
-    83→   * @default false
-    84→   */
-    85→  handleOnly?: boolean;
-    86→  /**
-    87→   * When `false` dragging, clicking outside, pressing esc, etc. will not close the drawer.
-    88→   * Use this in comination with the `open` prop, otherwise you won't be able to open/close the drawer.
-    89→   * @default true
-    90→   */
-    91→  dismissible?: boolean;
-    92→  onDrag?: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    93→  onRelease?: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
-    94→  /**
-    95→   * When `false` it allows to interact with elements outside of the drawer without closing it.
-    96→   * @default true
-    97→   */
-    98→  modal?: boolean;
-    99→  nested?: boolean;
-    100→  onClose?: () => void;
-    101→  /**
-    102→   * Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.
-    103→   * @default 'bottom'
-    104→   */
-    105→  direction?: 'top' | 'bottom' | 'left' | 'right';
-    106→  /**
-    107→   * Opened by default, skips initial enter animation. Still reacts to `open` state changes
-    108→   * @default false
-    109→   */
-    110→  defaultOpen?: boolean;
-    111→  /**
-    112→   * When set to `true` prevents scrolling on the document body on mount, and restores it on unmount.
-    113→   * @default false
-    114→   */
-    115→  disablePreventScroll?: boolean;
-    116→  /**
-    117→   * When `true` Vaul will reposition inputs rather than scroll then into view if the keyboard is in the way.
-    118→   * Setting it to `false` will fall back to the default browser behavior.
-    119→   * @default true when {@link snapPoints} is defined
-    120→   */
-    121→  repositionInputs?: boolean;
-    122→  /**
-    123→   * Disabled velocity based swiping for snap points.
-    124→   * This means that a snap point won't be skipped even if the velocity is high enough.
-    125→   * Useful if each snap point in a drawer is equally important.
-    126→   * @default false
-    127→   */
-    128→  snapToSequentialPoint?: boolean;
-    129→  container?: HTMLElement | null;
-    130→  /**
-    131→   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the drawer by the time the function was triggered.
-    132→   * Useful to revert any state changes for example.
-    133→   */
-    134→  onAnimationEnd?: (open: boolean) => void;
-    135→  preventScrollRestoration?: boolean;
-    136→  autoFocus?: boolean;
     …
+    137→} & (WithFadeFromProps | WithoutFadeFromProps);
     139→export function Root({
     140→  open: openProp,
     141→  onOpenChange,
@@ -222,6 +196,7 @@ src/
     991→};
     993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
     994→const DOUBLE_TAP_TIMEOUT = 120;
+    995→
     996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
     997→  { preventCycle = false, children, ...rest },
     998→  ref,
@@ -230,6 +205,7 @@ src/
     1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
     …
     1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
+    1129→
     1130→export function Portal(props: PortalProps) {
     …
     1137→export const Drawer = {
@@ -246,13 +222,54 @@ src/
     1148→};
   style.css
   types.ts
+    1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
+    2→export interface SnapPoint {
+    3→  fraction: number;
+    4→  height: number;
+    5→}
+    7→export type AnyFunction = (...args: any) => any;
   use-composed-refs.ts
+    …
+    23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
+    24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
+    …
+    31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+    …
+    36→export { composeRefs, useComposedRefs };
   use-controllable-state.ts
+    …
+    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+    …
   use-position-fixed.ts
     …
     15→export function usePositionFixed({
+    16→  isOpen,
+    17→  modal,
+    18→  nested,
+    19→  hasBeenOpened,
+    20→  preventScrollRestoration,
+    21→  noBodyStyles,
+    22→}: {
+    23→  isOpen: boolean;
+    24→  modal: boolean;
+    25→  nested: boolean;
+    26→  hasBeenOpened: boolean;
+    27→  preventScrollRestoration: boolean;
+    28→  noBodyStyles: boolean;
+    29→}) {
     …
   use-prevent-scroll.ts
+    …
+    8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+    …
+    29→export function isScrollable(node: Element): boolean {
+    …
+    34→export function getScrollParent(node: Element): Element {
+    …
+    68→export function usePreventScroll(options: PreventScrollOptions = {}) {
+    …
+    294→export function isInput(target: Element) {
+    …
   use-scale-background.ts
     …
     8→export function useScaleBackground() {

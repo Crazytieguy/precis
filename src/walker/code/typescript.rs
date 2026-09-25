@@ -1,5 +1,4 @@
-//! TypeScript / JavaScript extraction for the code engine. Not ported
-//! yet: `walker::typescript` still walks these files.
+//! TypeScript / JavaScript extraction for the code engine.
 //!
 //! A file's API is what it exports: ESM `export` declarations, the
 //! locals an `export { … }` clause, `export default X` or `export = X`
@@ -26,7 +25,7 @@ use super::SourceFile;
 use super::model::{DeclInfo, FileModel, Item, Shape, Visibility};
 use crate::walker::WalkCtx;
 
-pub(super) const PORTED: bool = false;
+pub(super) const PORTED: bool = true;
 pub(super) const EXTENSIONS: &[&str] = &["ts", "tsx", "mts", "cts", "js", "jsx", "mjs", "cjs"];
 
 const ENTRYPOINT_STEMS: &[&str] = &["index", "main", "mod", "esm"];

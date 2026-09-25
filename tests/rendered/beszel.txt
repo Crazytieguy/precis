@@ -17,86 +17,6 @@ LICENSE
 Makefile
 SECURITY.md
 agent/
-  agent.go
-  agent_cache.go
-  agent_cache_test.go
-  agent_test_helpers.go
-  battery/
-  client.go
-  client_test.go
-  connection_manager.go
-  connection_manager_test.go
-  cpu.go
-  data_dir.go
-  data_dir_test.go
-  deltatracker/
-    deltatracker.go
-    deltatracker_test.go
-  disk.go
-  disk_test.go
-  docker.go
-  docker_test.go
-  emmc_common.go
-  emmc_common_test.go
-  emmc_linux.go
-  emmc_linux_test.go
-  emmc_stub.go
-  fingerprint.go
-  fingerprint_test.go
-  gpu.go
-  gpu_amd_linux.go
-  gpu_amd_linux_test.go
-  gpu_amd_unsupported.go
-  gpu_darwin.go
-  gpu_darwin_test.go
-  gpu_darwin_unsupported.go
-  gpu_intel.go
-  gpu_nvml.go
-  gpu_nvml_linux.go
-  gpu_nvml_unsupported.go
-  gpu_nvml_windows.go
-  gpu_nvtop.go
-  gpu_test.go
-  handlers.go
-  handlers_test.go
-  health/
-    health.go
-    health_test.go
-  lhm/
-    beszel_lhm.cs
-    beszel_lhm.csproj
-  mdraid_linux.go
-  mdraid_linux_test.go
-  mdraid_stub.go
-  network.go
-  network_test.go
-  response.go
-  sensors.go
-  sensors_default.go
-  sensors_test.go
-  sensors_windows.go
-  server.go
-  server_test.go
-  smart.go
-  smart_nonwindows.go
-  smart_test.go
-  smart_windows.go
-  system.go
-  system_test.go
-  systemd.go
-  systemd_nonlinux.go
-  systemd_nonlinux_test.go
-  systemd_test.go
-  test-data/
-  tools/
-  update.go
-  utils/
-    utils.go
-    utils_test.go
-  zfs/
-    zfs_freebsd.go
-    zfs_linux.go
-    zfs_unsupported.go
 beszel.go
   1→// Package beszel provides core application constants and version information
   2→// which are used throughout the application.
@@ -231,13 +151,6 @@ internal/
       31→func getPublicAppInfo(hub *Hub) PublicAppInfo {
       …
     server_development.go
-      …
-      18→type responseModifier struct {
-      …
-      23→func (rm *responseModifier) RoundTrip(req *http.Request) (*http.Response, error) {
-      …
-      48→func (h *Hub) startServer(se *core.ServeEvent) error {
-      …
     server_production.go
       …
       18→func (h *Hub) startServer(se *core.ServeEvent) error {
@@ -316,6 +229,9 @@ internal/
       13→var DistDirFS, _ = fs.Sub(distDir, "dist")
     index.html
     lingui.config.ts
+      …
+      3→export default defineConfig({
+      …
     package-lock.json
     package.json
       …
@@ -333,11 +249,17 @@ internal/
     src/
       components/
         active-alerts.tsx
+          …
+          12→export const ActiveAlerts = () => {
+          …
         add-system.tsx
         alerts/
           alert-button.tsx
           alerts-sheet.tsx
         alerts-history-columns.tsx
+          …
+          10→export const alertsHistoryColumns: ColumnDef<AlertsHistoryRecord>[] = [
+          …
         charts/
           area-chart.tsx
           chart-time-select.tsx
@@ -348,23 +270,56 @@ internal/
           containers-table-columns.tsx
           containers-table.tsx
         copy-to-clipboard.tsx
+          …
+          7→export default function CopyToClipboard({ content }: { content: string }) {
+          …
         footer-repo-link.tsx
+          …
+          7→export function FooterRepoLink() {
+          …
         install-dropdowns.tsx
         lang-toggle.tsx
+          …
+          10→export function LangToggle() {
+          …
         login/
           auth-form.tsx
           forgot-pass-form.tsx
+            …
+            21→export default function ForgotPassword() {
+            …
           login.tsx
+            …
+            14→export default function () {
+            …
           otp-forms.tsx
         logo.tsx
+          …
+          5→export function Logo({ className }: { className?: string }) {
+          …
         mode-toggle.tsx
+          …
+          12→export function ModeToggle() {
+          …
         navbar.tsx
+          …
+          45→export default function Navbar() {
+          …
         router.tsx
         routes/
           containers.tsx
+            …
+            7→export default memo(() => {
+            …
           home.tsx
+            …
+            7→export default memo(() => {
+            …
           settings/
           smart.tsx
+            …
+            6→export default function Smart() {
+            …
           system/
             chart-card.tsx
             chart-data.ts
@@ -384,6 +339,9 @@ internal/
         systems-table/
           systems-table-columns.tsx
           systems-table.tsx
+            …
+            58→export default function SystemsTable() {
+            …
         theme-provider.tsx
         ui/
           alert-dialog.tsx
@@ -413,6 +371,9 @@ internal/
           textarea.tsx
           toast.tsx
           toaster.tsx
+            …
+            4→export function Toaster() {
+            …
           tooltip.tsx
           use-toast.ts
       index.css
@@ -422,20 +383,45 @@ internal/
         enums.ts
         i18n.ts
         languages.ts
+          1→export default [
+          …
         shiki.ts
+          …
+          10→export const highlighter = await createHighlighterCore({
+          …
         stores.ts
         systemsManager.ts
         time.ts (empty)
         use-intersection-observer.ts
+          …
+          72→export function useIntersectionObserver({
+          …
         utils.ts
       locales/
       main.tsx
+        …
+        29→const LoginPage = lazy(() => import("@/components/login/login.tsx"))
+        30→const Home = lazy(() => import("@/components/routes/home.tsx"))
+        31→const Containers = lazy(() => import("@/components/routes/containers.tsx"))
+        32→const Smart = lazy(() => import("@/components/routes/smart.tsx"))
+        33→const SystemDetail = lazy(() => import("@/components/routes/system.tsx"))
+        34→const CopyToClipboardDialog = lazy(() => import("@/components/copy-to-clipboard.tsx"))
+        35→
+        36→const App = memo(() => {
+        …
+        87→const Layout = () => {
+        …
+        122→const I18nApp = () => {
+        …
       types.d.ts
       vite-env.d.ts
     tsconfig.app.json
     tsconfig.json
     tsconfig.node.json
     vite.config.ts
+      …
+      7→export default defineConfig({
+      …
   tests/
   users/
     users.go

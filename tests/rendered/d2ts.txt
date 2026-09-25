@@ -73,16 +73,11 @@ README.md
   26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
   27→
   28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/TimelyDataflow/differential-dataflow) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
-  30→You can use D2TS to build data pipelines that can be executed incrementally, meaning you can process data as it comes in, and only recompute the parts that have changed. This could be as simple as remapping data, or as complex as performing a full join combining two datasources where one is a computed aggregate.
-  31→
-  32→D2TS can be used in conjunction with [ElectricSQL](https://electric-sql.com) to build data pipelines on top of [ShapeStreams](https://electric-sql.com/docs/api/clients/typescript#shapestream) that can be executed incrementally.
-  33→
-  34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
+  …
   36→## Table of Contents
   …
   51→## Key Features
   …
-  71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
   73→## Quick Start
   74→
   75→### Installation
@@ -118,14 +113,14 @@ eslint.base.mjs
   …
 examples/
   basic.ts
+    …
+    5→const graph = new D2({ initialFrontier: 0 })
+    …
+    9→const input = graph.newInput<number>()
+    …
+    13→const output = input.pipe(
+    …
   d2ql/
-    README.md
-    basic_select.ts
-    functions.ts
-    group_by.ts
-    joins.ts
-    kitchen_sink.ts
-    where_conditions.ts
   electric/
     CHANGELOG.md
     README.md
@@ -136,8 +131,27 @@ examples/
       index.ts
       types.ts
   fruit-processed.ts
+    …
+    4→type FruitOrder = {
+    …
+    11→const fruitOrders = new Store<string, FruitOrder>()
+    12→const fruitOrders2 = new Store<string, { name: string; quantity: number }>()
+    13→
+    14→const [{ materializedStatus, materializedProcessed }, _unsubscribe] =
+    …
+    67→function showStatus() {
+    …
+    73→function showProcessed() {
+    …
   includes.ts
   iterate.ts
+    …
+    15→const graph = new D2({ initialFrontier: new Antichain([v(0)]) })
+    16→
+    17→const input = graph.newInput<number>()
+    18→
+    19→const output = input
+    …
   join.ts
   min_max.ts
 package.json
@@ -151,12 +165,22 @@ packages/
       5→The API is almost identical to D2TS, but without the need to specify a version when sending data, or to send a frontier to mark the end of a version.
       …
     eslint.config.mjs
+      …
+      3→export default [
+      …
     package.json
     src/
       d2.ts
       graph.ts
       index.ts
+        1→export * from './d2.js'
+        2→export * from './multiset.js'
+        3→export * from './operators/index.js'
+        4→export * from './types.js'
       indexes.ts
+        …
+        9→export class Index<K, V> {
+        …
       multiset.ts
       operators/
         concat.ts
@@ -166,6 +190,9 @@ packages/
         distinct.ts
         filter.ts
         filterBy.ts
+          …
+          14→export function filterBy<
+          …
         groupBy.ts
         index.ts
         join.ts
@@ -174,6 +201,9 @@ packages/
         negate.ts
         orderBy.ts
         orderByBTree.ts
+          …
+          5→export function orderByWithFractionalIndexBTree<
+          …
         output.ts
         pipe.ts
         reduce.ts
@@ -183,12 +213,6 @@ packages/
       types.ts
       utils.ts
     tests/
-      graph.test.ts
-      indexes.test.ts
-      multiset.test.ts
-      operators/
-      test-utils.ts
-      utils.test.ts
     tsconfig.json
   d2ql/
     README.md
@@ -200,28 +224,61 @@ packages/
       7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
       …
     eslint.config.mjs
+      …
+      3→export default [
+      …
     package.json
     src/
       compiler.ts
+        …
+        16→export function compileQuery<T extends IStreamBuilder<unknown>>(
+        …
       evaluators.ts
+        …
+        14→export function evaluateConditionOnNestedRow(
+        …
+        126→export function evaluateSimpleConditionOnNestedRow(
+        …
       extractors.ts
       functions.ts
       group-by.ts
+        …
+        20→export function processGroupBy(
+        …
+        98→export function getAggregateFunction(
+        …
       index.ts
         1→/**
         2→ * D2QL is a SQL-like query language for D2TS.
         3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
         4→ */
-        …
+        6→export * from './schema.js'
+        7→export * from './types.js'
+        8→export { compileQuery } from './compiler.js'
       joins.ts
+        …
+        16→export function processJoinClause(
+        …
+        124→export function processJoinResults(
+        …
       key-by.ts
+        …
+        4→export function processKeyBy(
+        …
       order-by.ts
+        …
+        16→export function processOrderBy(
+        …
       query-builder/
         index.ts
+          1→export { queryBuilder, type ResultFromQueryBuilder } from './query-builder.js'
         query-builder.ts
       schema.json
       schema.ts
       select.ts
+        …
+        7→export function processSelect(
+        …
       store.ts
       types.ts
       utils.ts
@@ -236,6 +293,9 @@ packages/
       28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
       …
     eslint.config.mjs
+      …
+      3→export default [
+      …
     package.json
       …
       2→  "name": "@electric-sql/d2ts",
@@ -244,22 +304,6 @@ packages/
       5→  "description": "D2TS is a TypeScript implementation of Differential Dataflow.",
       …
       20→  "type": "module",
-      21→  "main": "dist/index.js",
-      22→  "types": "dist/index.d.ts",
-      23→  "exports": {
-      24→    ".": {
-      25→      "types": "./dist/index.d.ts",
-      26→      "default": "./dist/index.js"
-      27→    },
-      28→    "./sqlite": {
-      29→      "types": "./dist/sqlite/index.d.ts",
-      30→      "default": "./dist/sqlite/index.js"
-      31→    },
-      32→    "./electric": {
-      33→      "types": "./dist/electric/index.d.ts",
-      34→      "default": "./dist/electric/index.js"
-      35→    }
-      36→  },
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",
@@ -269,17 +313,6 @@ packages/
       …
     src/
       d2.ts
-        …
-        11→export type D2Options = {
-        …
-        15→export class D2 implements ID2 {
-        …
-        93→export class StreamBuilder<T> implements IStreamBuilder<T> {
-        …
-        97→  constructor(graph: ID2, writer: DifferenceStreamWriter<T>) {
-        …
-        166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-        …
       electric/
         index.ts
       graph.ts
@@ -306,26 +339,6 @@ packages/
           …
         groupBy.ts
         index.ts
-          1→export * from './pipe.js'
-          2→export * from './map.js'
-          3→export * from './filter.js'
-          4→export * from './negate.js'
-          5→export * from './concat.js'
-          6→export * from './debug.js'
-          7→export * from './output.js'
-          8→export * from './consolidate.js'
-          9→export * from './buffer.js'
-          10→export * from './join.js'
-          11→export * from './reduce.js'
-          12→export * from './count.js'
-          13→export * from './distinct.js'
-          14→export * from './iterate.js'
-          15→export * from './keying.js'
-          16→export * from './topK.js'
-          17→export * from './topKWithFractionalIndex.js'
-          18→export * from './orderBy.js'
-          19→export * from './filterBy.js'
-          20→export { groupBy, groupByOperators } from './groupBy.js'
         iterate.ts
         join.ts
         keying.ts
@@ -344,31 +357,54 @@ packages/
         index.ts
         operators/
         version-index.ts
+          …
+          60→export class SQLIndex<K, V> {
+          …
       types.ts
       utils.ts
       version-index.ts
     tests/
-      electric.test.ts
-      graph.test.ts
-      multiset.test.ts
-      operators/
-      operators-sqlite/
-      order.test.ts
-      utils.test.ts
-      version-index.test.ts
     tsconfig.json
     vitest.config.js
+      …
+      3→export default defineConfig({
+      …
   d2ts-benchmark/
     CHANGELOG.md
     package.json
     src/
       base.ts
+        …
+        4→export interface Benchmark<T> {
+        …
+        19→export interface SuiteOptions {
+        …
+        27→export class Suite {
+        …
       graph.ts
+        …
+        20→export function generateGraph(results: SizeResults[]) {
+        …
       index.ts
+        …
+        9→const generateData = (size: number) => {
+        …
+        25→function run({
+        26→  initialSize = 9000,
+        27→  incrementalRuns = 1000,
+        28→}: {
+        29→  initialSize: number
+        30→  incrementalRuns: number
+        31→}) {
+        …
+        496→const results = [
+        497→  run({ initialSize: 90, incrementalRuns: 1000 }),
+        498→  run({ initialSize: 900, incrementalRuns: 1000 }),
+        499→  run({ initialSize: 9000, incrementalRuns: 1000 }),
+        500→  run({ initialSize: 90000, incrementalRuns: 1000 }),
+        501→]
+        …
     tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml
-  1→packages:
-  2→  - 'packages/*'
-  3→  - 'examples/*'
 tsconfig.json

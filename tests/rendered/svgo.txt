@@ -1,10 +1,6 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
-    bug_report.md
-    config.yml
-    feature_request.md
-    plugin_request.md
   dependabot.yml
   workflows/
     ci.yml
@@ -26,8 +22,7 @@ README.md
   5→# SVGO…
   7→SVGO, short for **SVG O**ptimizer, is a Node.js library and command-line application for optimizing SVG files.
   9→## Why?
-  10→
-  11→SVG files, especially those exported from vector editors, usually contain a lot of redundant information. This includes editor metadata, comments, hidden elements, default or suboptimal values, and other stuff that can be safely removed or converted without impacting rendering.
+  …
   13→## Installation
   …
   28→## Command-line usage
@@ -35,10 +30,8 @@ README.md
   48→## Configuration
   …
   79→### Default preset
-  81→Instead of configuring SVGO from scratch, you can tweak the default preset to suit your needs by configuring or disabling the respective plugin.
   …
   108→### Custom plugins
-  110→You can also specify custom plugins:
   …
   134→## API usage
   135→
@@ -50,10 +43,7 @@ README.md
   169→## Donors
   …
   175→## License and Copyright
-  176→
-  177→This software is released under the terms of the [MIT license](https://github.com/svg/svgo/blob/main/LICENSE).
-  178→
-  179→Logo by [André Castillo](https://github.com/DerianAndre).
+  …
 bin/
   svgo.js
 cspell.jsonc
@@ -65,78 +55,45 @@ docs/
     index.mdx
   03-preset-default.mdx
   04-plugins/
-    addAttributesToSVGElement.mdx
-    addClassesToSVGElement.mdx
-    cleanupAttrs.mdx
-    cleanupEnableBackground.mdx
-    cleanupIds.mdx
-    cleanupListOfValues.mdx
-    cleanupNumericValues.mdx
-    collapseGroups.mdx
-    convertColors.mdx
-    convertEllipseToCircle.mdx
-    convertOneStopGradients.mdx
-    convertPathData.mdx
-    convertShapeToPath.mdx
-    convertStyleToAttrs.mdx
-    convertTransform.mdx
-    index.mdx
-    inlineStyles.mdx
-    mergePaths.mdx
-    mergeStyles.mdx
-    minifyStyles.mdx
-    moveElemsAttrsToGroup.mdx
-    moveGroupAttrsToElems.mdx
-    prefixIds.mdx
-    removeAttributesBySelector.mdx
-    removeAttrs.mdx
-    removeComments.mdx
-    removeDeprecatedAttrs.mdx
-    removeDesc.mdx
-    removeDimensions.mdx
-    removeDoctype.mdx
-    removeEditorsNSData.mdx
-    removeElementsByAttr.mdx
-    removeEmptyAttrs.mdx
-    removeEmptyContainers.mdx
-    removeEmptyText.mdx
-    removeHiddenElems.mdx
-    removeMetadata.mdx
-    removeNonInheritableGroupAttrs.mdx
-    removeOffCanvasPaths.mdx
-    removeRasterImages.mdx
-    removeScripts.mdx
-    removeStyleElement.mdx
-    removeTitle.mdx
-    removeUnknownsAndDefaults.mdx
-    removeUnusedNS.mdx
-    removeUselessDefs.mdx
-    removeUselessStrokeAndFill.mdx
-    removeViewBox.mdx
-    removeXMLNS.mdx
-    removeXMLProcInst.mdx
-    removeXlink.mdx
-    reusePaths.mdx
-    sortAttrs.mdx
-    sortDefsChildren.mdx
   05-plugins-api.mdx
   06-migrations/
     01-migration-from-v3-to-v4.mdx
     02-migration-from-v2-to-v3.mdx
     _category_.json
 eslint.config.mjs
+  …
+  5→export default [
+  …
 lib/
   builtin.js
     …
     62→export const builtinPlugins = Object.freeze([
     …
   parser.js
+    …
+    4→export class SvgoParserError extends Error {
+    …
+    12→  constructor(message, line, column, source, file) {
+    …
+    25→  toString() {
+    …
+    59→}
+    …
+    80→export const parseSvg = (data, from) => {
+    …
   parser.test.js
   path.js
+    1→/**
+    2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/paths.html#PathDataBNF.
+    3→ */
     …
     141→export const parsePathData = (string) => {
     …
     302→export const stringifyPathData = ({
+    303→  pathData,
+    304→  precision,
+    305→  disableSpaceAfterFlags,
+    306→}) => {
     …
   path.test.js
   stringifier.js
@@ -144,11 +101,44 @@ lib/
     66→export const stringifySvg = (data, userOptions = {}) => {
     …
   style.js
+    …
+    195→export const compareSpecificity = (a, b) => {
+    …
+    211→export const collectStylesheet = (root) => {
+    …
+    253→export const computeStyle = (stylesheet, node) => {
+    …
+    286→export const includesAttrSelector = (
+    287→  selector,
+    288→  name,
+    289→  value = null,
+    290→  traversed = false,
+    291→) => {
+    …
   style.test.js
   svgo/
     coa.js
+      …
+      19→export function checkIsDir(filePath) {
+      …
+      30→export default function makeProgram(program) {
+      …
     css-select-adapter.js
+      …
+      78→export function createAdapter(relativeNode, parents) {
+      …
     plugins.js
+      …
+      14→export const invokePlugins = (
+      15→  ast,
+      16→  info,
+      17→  plugins,
+      18→  overrides,
+      19→  globalOverrides,
+      20→) => {
+      …
+      40→export const createPreset = ({ name, plugins }) => {
+      …
     tools.js
   svgo-node.js
     …
@@ -177,30 +167,107 @@ lib/
   types.js
     1→export default {};
   types.ts
+    …
+    30→export type DefaultPlugins = {
+    …
+    67→export type PresetDefaultOverrides = {
+    68→  [Name in keyof DefaultPlugins]?: DefaultPlugins[Name] | false;
+    69→};
+    71→export type BuiltinsWithOptionalParams = DefaultPlugins & {
+    …
+    100→export type BuiltinsWithRequiredParams = {
+    101→  addAttributesToSVGElement: AddAttributesToSVGElementParams;
+    102→  addClassesToSVGElement: AddClassesToSVGElementParams;
+    103→  removeAttributesBySelector: RemoveAttributesBySelectorParams;
+    104→  removeAttrs: RemoveAttrsParams;
+    105→  removeElementsByAttr: RemoveElementsByAttrParams;
+    106→};
+    108→export type PluginsParams = BuiltinsWithOptionalParams &
+    109→  BuiltinsWithRequiredParams;
+    111→export type CustomPlugin<T = any> = {
+    112→  name: string;
+    113→  fn: Plugin<T>;
+    114→  params?: T;
+    115→};
+    117→export type PluginConfig =
+    …
+    133→export type BuiltinPlugin<Name extends string, Params> = {
+    134→  /** Name of the plugin, also known as the plugin ID. */
+    135→  name: Name;
+    136→  description?: string;
+    137→  fn: Plugin<Params>;
+    138→};
+    …
+    155→export type BuiltinPluginOrPreset<Name extends string, Params> = BuiltinPlugin<
+    156→  Name,
+    157→  Params
+    158→> &
+    159→  (PresetProperties<true> | Partial<PresetProperties<false>>);
+    161→export type XastDoctype = {
+    162→  type: 'doctype';
+    163→  name: string;
+    164→  data: {
+    165→    doctype: string;
+    166→  };
+    167→};
+    169→export type XastInstruction = {
+    170→  type: 'instruction';
+    171→  name: string;
+    172→  value: string;
+    173→};
+    175→export type XastComment = {
+    176→  type: 'comment';
+    177→  value: string;
+    178→};
+    180→export type XastCdata = {
+    181→  type: 'cdata';
+    182→  value: string;
+    183→};
+    185→export type XastText = {
+    186→  type: 'text';
+    187→  value: string;
+    188→};
+    190→export type XastElement = {
+    191→  type: 'element';
+    192→  name: string;
+    193→  attributes: Record<string, string>;
+    194→  children: XastChild[];
+    195→};
+    197→export type XastChild =
+    198→  | XastDoctype
+    199→  | XastInstruction
+    200→  | XastComment
+    201→  | XastCdata
+    202→  | XastText
+    203→  | XastElement;
+    205→export type XastRoot = {
+    206→  type: 'root';
+    207→  children: XastChild[];
+    208→};
+    210→export type XastParent = XastRoot | XastElement;
+    …
   util/
     map-nodes-to-parents.js
-      1→import { visit } from './visit.js';
       …
       9→export function mapNodesToParents(node) {
       …
     visit.js
+      1→export const visitSkip = Symbol();
+      …
+      8→export const visit = (node, visitor, parentNode) => {
+      …
   version.js
     …
     7→export const VERSION = '4.0.1';
   xast.js
     …
     22→export const querySelectorAll = (node, selector, parents) => {
-    23→  return selectAll(selector, node, createCssSelectOptions(node, parents));
     …
     32→export const querySelector = (node, selector, parents) => {
-    33→  return selectOne(selector, node, createCssSelectOptions(node, parents));
     …
     42→export const matches = (node, selector, parents) => {
-    43→  return is(node, selector, createCssSelectOptions(node, parents));
     …
     50→export const detachNodeFromParent = (node, parentNode) => {
-    51→  // avoid splice to not break for loops
-    52→  parentNode.children = parentNode.children.filter((child) => child !== node);
     …
   xast.test.js
 logo/
@@ -218,71 +285,33 @@ package.json
   6→  "license": "MIT",
   7→  "type": "module",
   …
-  53→  "bin": "./bin/svgo.js",
-  54→  "types": "./types/lib/svgo-node.d.ts",
-  55→  "exports": {
-  56→    ".": {
-  57→      "import": "./lib/svgo-node.js",
-  58→      "require": "./dist/svgo-node.cjs",
-  59→      "types": "./types/lib/svgo-node.d.ts"
-  60→    },
-  61→    "./browser": {
-  62→      "import": "./dist/svgo.browser.js",
-  63→      "types": "./types/lib/svgo.d.ts"
-  64→    }
-  65→  },
-  66→  "files": [
-  67→    "bin",
-  68→    "dist",
-  69→    "lib",
-  70→    "plugins",
-  71→    "types",
-  72→    "!**/*.test.js"
-  73→  ],
   74→  "engines": {
   75→    "node": ">=16"
   76→  },
-  77→  "scripts": {
-  78→    "build": "node scripts/sync-version.js && yarn build:bundles && yarn build:types",
-  79→    "build:bundles": "yarn clean:build && rollup -c",
-  80→    "build:types": "yarn clean:types && tsc && tsc -p tsconfig.build.json",
-  81→    "lint": "eslint . && prettier --check .",
-  82→    "lint:fix": "eslint --fix . && prettier --write .",
-  83→    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=4 --coverage",
-  84→    "test:bundles": "yarn build:bundles && node ./test/svgo.cjs && node ./test/browser.js",
-  85→    "test:types": "yarn build:types && tsc && tsd",
-  86→    "test:regression": "node ./test/regression/extract.js && node ./test/regression/optimize.js && cross-env NO_DIFF=1 node ./test/regression/compare.js",
-  87→    "qa": "yarn lint && yarn test:types && yarn test && yarn test:bundles && yarn test:regression",
-  88→    "clean": "yarn clean:build && yarn clean:types",
-  89→    "clean:build": "rimraf dist",
-  90→    "clean:types": "rimraf types",
-  91→    "spellcheck": "cspell -u .",
-  92→    "prepublishOnly": "yarn clean && yarn build"
-  93→  },
-  …
-  104→  "dependencies": {
-  105→    "commander": "^11.1.0",
-  106→    "css-select": "^5.1.0",
-  107→    "css-tree": "^3.0.1",
-  108→    "css-what": "^6.1.0",
-  109→    "csso": "^5.0.5",
-  110→    "picocolors": "^1.1.1",
-  111→    "sax": "^1.5.0"
-  112→  },
-  …
-  141→  "resolutions": {
-  142→    "sax@^1.5.0": "patch:sax@npm%3A1.5.0#./.yarn/patches/sax-npm-1.5.0-d40bca2226.patch"
-  143→  }
   …
 plugins/
   _collections.js
+    1→/**
+    2→ * @fileoverview Based on https://www.w3.org/TR/SVG11/intro.html#Definitions.
+    3→ */
+    …
   _path.js
   _transforms.js
   addAttributesToSVGElement.js
   addClassesToSVGElement.js
   applyTransforms.js
+    …
+    22→export const applyTransforms = (root, params) => {
+    …
   cleanupAttrs.js
   cleanupEnableBackground.js
+    …
+    4→export const name = 'cleanupEnableBackground';
+    5→export const description =
+    6→  'remove or cleanup enable-background attribute when possible';
+    …
+    23→export const fn = (root) => {
+    …
   cleanupIds.js
   cleanupListOfValues.js
   cleanupNumericValues.js
@@ -300,14 +329,31 @@ plugins/
   minifyStyles.js
   moveElemsAttrsToGroup.js
   moveGroupAttrsToElems.js
+    …
+    4→export const name = 'moveGroupAttrsToElems';
+    5→export const description =
+    6→  'moves some group attributes to the content elements';
+    …
+    28→export const fn = () => {
+    …
   prefixIds.js
   preset-default.js
+    …
+    37→const presetDefault = createPreset({
+    …
+    77→export default presetDefault;
   removeAttributesBySelector.js
   removeAttrs.js
   removeComments.js
   removeDeprecatedAttrs.js
   removeDesc.js
   removeDimensions.js
+    1→export const name = 'removeDimensions';
+    2→export const description =
+    3→  'removes width and height in presence of viewBox (opposite to removeViewBox)';
+    …
+    17→export const fn = () => {
+    …
   removeDoctype.js
   removeEditorsNSData.js
   removeElementsByAttr.js
@@ -318,6 +364,13 @@ plugins/
   removeMetadata.js
   removeNonInheritableGroupAttrs.js
   removeOffCanvasPaths.js
+    …
+    6→export const name = 'removeOffCanvasPaths';
+    7→export const description =
+    8→  'removes elements that are drawn outside of the viewBox';
+    …
+    17→export const fn = () => {
+    …
   removeRasterImages.js
   removeScripts.js
   removeStyleElement.js
@@ -331,9 +384,18 @@ plugins/
   removeXMLProcInst.js
   removeXlink.js
   reusePaths.js
+    …
+    4→export const name = 'reusePaths';
+    5→export const description =
+    …
+    18→export const fn = (root) => {
+    …
   sortAttrs.js
   sortDefsChildren.js
 rollup.config.js
+  …
+  35→export default [
+  …
 scripts/
   sync-version.js
 test/
@@ -342,26 +404,8 @@ test/
   coa/
   fixtures/
     config-loader/
-      cjs/
-      invalid-array.js
-      invalid-null.js
-      invalid-runtime.js
-      invalid-runtime.mjs
-      invalid-string.js
-      mjs/
-      module-not-found.js
-      one/
-      svgo.config.js
   plugins/
   regression/
-    compare.js
-    delta.js
-    extract.js
-    file-lists.js
-    lib.js
-    lists/
-    optimize.js
-    regression-io.js
   svg2js/
   svgo/
   svgo.cjs

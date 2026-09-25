@@ -64,8 +64,7 @@ package.json
   3→	"version": "5.6.2",
   4→	"description": "Terminal string styling done right",
   5→	"license": "MIT",
-  6→	"repository": "chalk/chalk",
-  7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
+  …
   8→	"type": "module",
   9→	"main": "./source/index.js",
   10→	"exports": "./source/index.js",
@@ -89,28 +88,6 @@ package.json
   28→		"source",
   29→		"!source/index.test-d.ts"
   30→	],
-  31→	"keywords": [
-  32→		"color",
-  33→		"colour",
-  34→		"colors",
-  35→		"terminal",
-  36→		"console",
-  37→		"cli",
-  38→		"string",
-  39→		"ansi",
-  40→		"style",
-  41→		"styles",
-  42→		"tty",
-  43→		"formatting",
-  44→		"rgb",
-  45→		"256",
-  46→		"shell",
-  47→		"xterm",
-  48→		"log",
-  49→		"logging",
-  50→		"command-line",
-  51→		"text"
-  52→	],
   …
   65→	"xo": {
   66→		"rules": {
@@ -183,13 +160,80 @@ readme.md
   …
 source/
   index.d.ts
+    …
+    12→export interface Options {
+    13→	/**
+    14→	Specify the color support for Chalk.
+    15→
+    16→	By default, color support is automatically detected based on the environment.
+    17→
+    18→	Levels:
+    19→	- `0` - All colors disabled.
+    20→	- `1` - Basic 16 colors support.
+    21→	- `2` - ANSI 256 colors support.
+    22→	- `3` - Truecolor 16 million colors support.
+    23→	*/
+    24→	readonly level?: ColorSupportLevel;
+    25→}
+    27→/**
+    28→Return a new Chalk instance.
+    29→*/
+    30→export const Chalk: new (options?: Options) => ChalkInstance; // eslint-disable-line @typescript-eslint/naming-convention
+    31→
+    32→export interface ChalkInstance {
+    …
+    242→declare const chalk: ChalkInstance;
+    243→
+    244→export const supportsColor: ColorInfo;
+    245→
+    246→export const chalkStderr: typeof chalk;
+    247→export const supportsColorStderr: typeof supportsColor;
+    248→
+    249→export {
+    250→	ModifierName, ForegroundColorName, BackgroundColorName, ColorName,
+    251→	modifierNames, foregroundColorNames, backgroundColorNames, colorNames,
+    252→// } from '#ansi-styles';
+    253→} from './vendor/ansi-styles/index.js';
+    254→
+    255→export {
+    256→	ColorInfo,
+    257→	ColorSupport,
+    258→	ColorSupportLevel,
+    259→// } from '#supports-color';
+    260→} from './vendor/supports-color/index.js';
+    …
+    263→/**
+    264→@deprecated Use `ModifierName` instead.
+    265→
+    266→Basic modifier names.
+    267→*/
+    268→export type Modifiers = ModifierName;
+    …
+    277→export type ForegroundColor = ForegroundColorName;
+    …
+    286→export type BackgroundColor = BackgroundColorName;
+    …
+    295→export type Color = ColorName;
+    297→/**
+    298→@deprecated Use `modifierNames` instead.
+    299→
+    300→Basic modifier names.
+    301→*/
+    302→export const modifiers: readonly Modifiers[];
+    304→/**
+    305→@deprecated Use `foregroundColorNames` instead.
+    306→
+    307→Basic foreground color names.
+    308→*/
+    309→export const foregroundColors: readonly ForegroundColor[];
+    …
+    316→export const backgroundColors: readonly BackgroundColor[];
+    …
+    323→export const colors: readonly Color[];
+    324→
+    325→export default chalk;
   index.js
-    1→import ansiStyles from '#ansi-styles';
-    2→import supportsColor from '#supports-color';
-    3→import { // eslint-disable-line import/order
-    4→	stringReplaceAll,
-    5→	stringEncaseCRLFWithFirstIndex,
-    6→} from './utilities.js';
+    …
     8→const {stdout: stdoutColor, stderr: stderrColor} = supportsColor;
     9→
     10→const GENERATOR = Symbol('GENERATOR');
@@ -211,49 +255,37 @@ source/
     36→		// eslint-disable-next-line no-constructor-return
     37→		return chalkFactory(options);
     …
+    39→}
     41→const chalkFactory = options => {
-    42→	const chalk = (...strings) => strings.join(' ');
-    43→	applyOptions(chalk, options);
-    44→
-    45→	Object.setPrototypeOf(chalk, createChalk.prototype);
-    46→
-    47→	return chalk;
     …
     50→function createChalk(options) {
     51→	return chalkFactory(options);
     …
-    54→Object.setPrototypeOf(createChalk.prototype, Function.prototype);
-    56→for (const [styleName, style] of Object.entries(ansiStyles)) {
-    57→	styles[styleName] = {
-    58→		get() {
-    59→			const builder = createBuilder(this, createStyler(style.open, style.close, this[STYLER]), this[IS_EMPTY]);
-    60→			Object.defineProperty(this, styleName, {value: builder});
-    61→			return builder;
-    62→		},
-    63→	};
-    64→}
-    66→styles.visible = {
-    67→	get() {
-    68→		const builder = createBuilder(this, this[STYLER], true);
-    69→		Object.defineProperty(this, 'visible', {value: builder});
-    70→		return builder;
-    71→	},
-    72→};
     74→const getModelAnsi = (model, level, type, ...arguments_) => {
     …
     94→const usedModels = ['rgb', 'hex', 'ansi256'];
     …
     119→const proto = Object.defineProperties(() => {}, {
-    …
+    120→	...styles,
+    121→	level: {
+    122→		enumerable: true,
+    123→		get() {
+    124→			return this[GENERATOR].level;
+    125→		},
+    126→		set(level) {
+    127→			this[GENERATOR].level = level;
+    128→		},
+    129→	},
+    130→});
     132→const createStyler = (open, close, parent) => {
     …
     152→const createBuilder = (self, _styler, _isEmpty) => {
     …
     168→const applyStyle = (self, string) => {
     …
-    202→Object.defineProperties(createChalk.prototype, styles);
     204→const chalk = createChalk();
     205→export const chalkStderr = createChalk({level: stderrColor ? stderrColor.level : 0});
+    206→
     207→export {
     208→	modifierNames,
     209→	foregroundColorNames,
@@ -266,43 +298,43 @@ source/
     216→	backgroundColorNames as backgroundColors,
     217→	colorNames as colors,
     218→} from './vendor/ansi-styles/index.js';
+    219→
     220→export {
     221→	stdoutColor as supportsColor,
     222→	stderrColor as supportsColorStderr,
     223→};
+    224→
     225→export default chalk;
   index.test-d.ts
   utilities.js
+    …
+    2→export function stringReplaceAll(string, substring, replacer) {
+    …
+    21→export function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
+    …
   vendor/
     ansi-styles/
       index.d.ts
       index.js
-        1→const ANSI_BACKGROUND_OFFSET = 10;
-        2→
-        3→const wrapAnsi16 = (offset = 0) => code => `\u001B[${code + offset}m`;
-        4→
-        5→const wrapAnsi256 = (offset = 0) => code => `\u001B[${38 + offset};5;${code}m`;
-        6→
-        7→const wrapAnsi16m = (offset = 0) => (red, green, blue) => `\u001B[${38 + offset};2;${red};${green};${blue}m`;
-        8→
-        9→const styles = {
-        …
-        68→export const modifierNames = Object.keys(styles.modifier);
-        69→export const foregroundColorNames = Object.keys(styles.color);
-        70→export const backgroundColorNames = Object.keys(styles.bgColor);
-        71→export const colorNames = [...foregroundColorNames, ...backgroundColorNames];
-        73→function assembleStyles() {
-        …
-        221→const ansiStyles = assembleStyles();
-        223→export default ansiStyles;
     supports-color/
       browser.d.ts
+        1→export {default} from './index.js';
       browser.js
+        …
+        29→const supportsColor = {
+        30→	stdout: colorSupport,
+        31→	stderr: colorSupport,
+        32→};
+        34→export default supportsColor;
       index.d.ts
       index.js
         …
         176→export function createSupportsColor(stream, options = {}) {
         …
+        185→const supportsColor = {
+        186→	stdout: createSupportsColor({isTTY: tty.isatty(1)}),
+        187→	stderr: createSupportsColor({isTTY: tty.isatty(2)}),
+        188→};
         190→export default supportsColor;
 test/
   _fixture.js

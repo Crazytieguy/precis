@@ -34,7 +34,6 @@ pub mod plaintext;
 pub mod prisma;
 pub mod sql;
 pub mod toml;
-pub mod typescript;
 mod workspace;
 pub mod yaml;
 
@@ -106,7 +105,6 @@ impl Walker for FsWalker {
         out.extend(fs::expand_subdirs(dir, ctx));
         out.extend(markdown::expand_in_dir(dir, ctx));
         out.extend(toml::expand_in_dir(dir, ctx));
-        out.extend(typescript::expand_in_dir(dir, ctx));
         out.extend(json::expand_in_dir(dir, ctx));
         out.extend(plaintext::expand_in_dir(dir, ctx));
         out.extend(prisma::expand_in_dir(dir, ctx));
@@ -132,12 +130,7 @@ pub struct WalkCtx {
     cargo_workspace: workspace::CargoWorkspace,
     fs_state: fs::FsState,
     json_state: json::JsonState,
-    typescript_state: typescript::TypescriptState,
     /// Run state of the code engine's language modules.
-    #[allow(
-        dead_code,
-        reason = "engine skeleton: no language module has run state yet"
-    )]
     code: code::CodeState,
     /// Files hyperlinked from the root README — exempts them from the
     /// `examples/`-style non-essential demotion.
@@ -165,7 +158,6 @@ impl WalkCtx {
             cargo_workspace: workspace::CargoWorkspace::default(),
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
-            typescript_state: typescript::TypescriptState::new(),
             code: code::CodeState::default(),
             readme_cited_paths: OnceCell::new(),
             sql_cited_paths: OnceCell::new(),
@@ -209,8 +201,7 @@ impl WalkCtx {
     /// the same as the root itself — which un-damps every depth-priced
     /// value. Callers handling possibly-out-of-root paths
     /// (canonicalized paths, workspace members) must check containment
-    /// first; `walker/typescript.rs` carries a workaround note at its
-    /// relative-depth call site.
+    /// first.
     pub fn depth_from_root(&self, path: &Path) -> usize {
         path.strip_prefix(&self.root)
             .map(|p| p.components().count())
@@ -261,8 +252,7 @@ impl WalkCtx {
     /// The single source file the repository is *about*, when one
     /// exists: a mass-dominant essential source file that independently
     /// carries at least [`DOMINANT_SOURCE_MASS_SHARE`] of the tree's source
-    /// bytes. The largest is the default, but a materially denser public
-    /// surface can replace it. Single-implementation-file libraries (a
+    /// bytes, the largest if several do. Single-implementation-file libraries (a
     /// one-file parser, a single amalgamated `.c`, a `core.py`) put the content
     /// an NS author wants in one place, and the scheduler's
     /// breadth-first instincts spend the marginal token elsewhere.
@@ -323,10 +313,6 @@ impl WalkCtx {
         &self.cargo_workspace
     }
 
-    pub(in crate::walker) fn typescript_state(&self) -> &typescript::TypescriptState {
-        &self.typescript_state
-    }
-
     pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
         &self.fs_state
     }
@@ -345,11 +331,6 @@ impl WalkCtx {
     pub fn is_primary_js_workspace_member(&self, file: &Path) -> bool {
         self.json_state
             .is_primary_workspace_member(file, &self.root)
-    }
-
-    /// `true` iff `file` is in the TS/JS public surface.
-    pub fn is_ts_public_surface(&self, file: &Path) -> bool {
-        self.typescript_state.is_in_public_surface(file, self)
     }
 }
 
@@ -454,8 +435,7 @@ fn enumerate_essential_source(root: &Path, filter: &DirFilter) -> EssentialSourc
 }
 
 /// Select a hand-authored source file that carries at least
-/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total. The largest qualifying file
-/// is the default; a materially denser public surface may replace it.
+/// [`DOMINANT_SOURCE_MASS_SHARE`] of the total, the largest if several do.
 /// Non-essential subtrees (tests, examples, vendored, tooling) are
 /// excluded from both the numerator and the denominator so a big test file can neither win nor
 /// dilute the share.
@@ -498,36 +478,11 @@ fn find_dominant_source_file(source: &EssentialSource) -> Option<PathBuf> {
     candidates.retain(|(_, len, language)| {
         *language == primary && *len as f64 / total as f64 >= DOMINANT_SOURCE_MASS_SHARE
     });
-    candidates.retain(|(path, _, _)| is_hand_authored(path));
-    let mut candidates: Vec<_> = candidates
+    candidates
         .into_iter()
-        .map(|(path, len, language)| {
-            let (surface_items, type_machinery) = dominant_surface_profile(&path, language);
-            (path, len, surface_items, type_machinery)
-        })
-        .collect();
-    candidates.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
-    let largest = candidates.first()?.clone();
-    let densest = candidates
-        .iter()
-        .filter(|(_, _, _, type_machinery)| *type_machinery == largest.3)
-        .max_by(
-            |(path_a, len_a, surface_a, _), (path_b, len_b, surface_b, _)| {
-                (*surface_a * *len_b)
-                    .cmp(&(*surface_b * *len_a))
-                    .then_with(|| len_a.cmp(len_b))
-                    .then_with(|| path_b.cmp(path_a))
-            },
-        )
-        .cloned()
-        .unwrap_or_else(|| largest.clone());
-    let density_clears_margin =
-        surface_density_clears_margin(densest.2, densest.1, largest.2, largest.1);
-    Some(if density_clears_margin {
-        densest.0
-    } else {
-        largest.0
-    })
+        .filter(|(path, _, _)| is_hand_authored(path))
+        .min_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)))
+        .map(|(path, _, _)| path)
 }
 
 /// Extension → language family, collapsing the families whose files sit
@@ -547,26 +502,6 @@ fn language_group(path: &Path) -> Option<&'static str> {
         "zig" => "zig",
         _ => return None,
     })
-}
-
-fn surface_density_clears_margin(
-    candidate_surface: u64,
-    candidate_bytes: u64,
-    baseline_surface: u64,
-    baseline_bytes: u64,
-) -> bool {
-    candidate_surface * baseline_bytes * 5 >= baseline_surface * candidate_bytes * 6
-}
-
-fn dominant_surface_profile(path: &Path, language: &str) -> (u64, bool) {
-    let Ok(source) = std::fs::read_to_string(path) else {
-        return (0, typescript::is_declaration_file(path));
-    };
-    match language {
-        "js" => typescript::dominant_surface_profile(path, &source)
-            .unwrap_or((0, typescript::is_declaration_file(path))),
-        _ => (0, false),
-    }
 }
 
 /// Line-shape check for "a person typed this": mean bytes per line over
@@ -827,19 +762,6 @@ pub(crate) fn gated_whole_file_content(
     whole_file_lines_content(file, &source)
 }
 
-/// Parse + collect spans for per-file walker batches. Caller-supplied
-/// parser closure handles language-specific parser dispatch.
-pub(crate) fn build_per_file_content(
-    file: &Path,
-    ctx: &WalkCtx,
-    parse: impl Fn(&WalkCtx, &Path) -> Option<(Arc<Source>, Arc<Tree>)>,
-    collect: impl Fn(&Tree, &str) -> FileLines,
-) -> Option<BatchContent> {
-    let (source, tree) = parse(ctx, file)?;
-    let lines = collect(&tree, &source);
-    single_file_lines_content(file, &source, lines)
-}
-
 /// `FileLines` → contiguous [`Span`] ranges. Blank source lines are
 /// dropped at span edges but **preserved when interior**: a gap between
 /// two kept rows that consists solely of blank source rows is bridged
@@ -958,29 +880,9 @@ pub(crate) fn body_part_value_factor(part_count: usize) -> f64 {
     }
 }
 
-/// Drop lines already claimed by earlier parts. Use this when a caller merges
-/// body parts from multiple independent sources; [`statement_block_parts`]
-/// already owns line-disjointness for one parsed statement block.
-pub(crate) fn disjoint_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
-    let mut seen = HashSet::new();
-    parts
-        .into_iter()
-        .filter_map(|part| {
-            let lines: Vec<usize> = part
-                .lines
-                .into_iter()
-                .filter(|line| seen.insert(*line))
-                .collect();
-            (!lines.is_empty()).then_some(BodyPart { lines })
-        })
-        .collect()
-}
-
 /// Body slices for a brace-delimited statement block, using top-level
 /// statements inside the block. Blank lines are filtered exactly like
-/// materialized spans. This is the line-disjointness owner for a single
-/// statement block; callers should only re-dedup when combining multiple
-/// independently collected part lists.
+/// materialized spans.
 pub(crate) fn statement_block_parts(
     body: Option<Node>,
     src_lines: &[&str],
@@ -1133,139 +1035,6 @@ mod tests {
 
     fn dominant_source_file_of(root: &Path) -> Option<PathBuf> {
         find_dominant_source_file(&enumerate_essential_source(root, &DirFilter::new(root)))
-    }
-
-    #[test]
-    fn walker_mod_dominant_file_prefers_public_surface_density() {
-        let tmp = tempfile::tempdir().unwrap();
-        let root = tmp.path();
-        std::fs::write(
-            root.join("machinery.js"),
-            "function hidden() {}\n".repeat(180),
-        )
-        .unwrap();
-        std::fs::write(
-            root.join("api.js"),
-            "export function visible() {}\n".repeat(120),
-        )
-        .unwrap();
-
-        let found = dominant_source_file_of(root);
-        assert_eq!(found.as_deref(), Some(root.join("api.js").as_path()));
-    }
-
-    #[test]
-    fn walker_mod_dominant_file_does_not_cross_type_machinery_boundary() {
-        let tmp = tempfile::tempdir().unwrap();
-        let root = tmp.path();
-        std::fs::write(
-            root.join("implementation.js"),
-            "const implementation = {};\n".to_string()
-                + &"implementation.run = function run() {};\n".repeat(20)
-                + &"// internal implementation detail\n".repeat(400)
-                + "module.exports = implementation;\n",
-        )
-        .unwrap();
-        std::fs::write(
-            root.join("types.ts"),
-            "export interface Shape { value: string }\n".repeat(100),
-        )
-        .unwrap();
-
-        let found = dominant_source_file_of(root);
-        assert_eq!(
-            found.as_deref(),
-            Some(root.join("implementation.js").as_path())
-        );
-    }
-
-    #[test]
-    fn walker_mod_surface_density_requires_one_fifth_margin() {
-        assert!(surface_density_clears_margin(12, 100, 10, 100));
-        assert!(!surface_density_clears_margin(11, 100, 10, 100));
-    }
-
-    #[test]
-    fn walker_mod_surface_profiles_count_only_module_syntax() {
-        let clean_js = r#"
-const app = {};
-app.run = function run() {};
-module.exports = app;
-"#;
-        let noisy_js = r#"
-const template = `export function inTemplate() {}`;
-/* export function inComment() {} */
-const state = {};
-state.phase = function phase() {};
-const app = {};
-app.run = function run() {};
-module.exports = app;
-"#;
-        let clean = typescript::dominant_surface_profile(Path::new("file.js"), clean_js);
-        let noisy = typescript::dominant_surface_profile(Path::new("file.js"), noisy_js);
-        assert_eq!(noisy, clean);
-    }
-
-    #[test]
-    fn walker_mod_type_only_barrels_classify_as_type_machinery() {
-        let barrels = [
-            "export type { Foo } from \"./foo\";\n",
-            "export { type Foo, type Bar } from \"./foo\";\n",
-            "type Foo = { value: string };\nexport { Foo };\n",
-            "import type { Base } from \"./base\";\nexport { Base };\n",
-            "import { type Base as B } from \"./base\";\nexport { B };\n",
-        ];
-        for src in barrels {
-            let (_, type_machinery) =
-                typescript::dominant_surface_profile(Path::new("types.ts"), src).unwrap();
-            assert!(type_machinery, "not classified as type machinery: {src}");
-        }
-        let runtime = [
-            "export { run } from \"./run\";\n",
-            "const run = () => {};\nexport { run };\n",
-            "export * from \"./everything\";\n",
-            "export default function run() {}\n",
-            "export type { Foo } from \"./foo\";\nexport { run } from \"./run\";\n",
-        ];
-        for src in runtime {
-            let (_, type_machinery) =
-                typescript::dominant_surface_profile(Path::new("index.ts"), src).unwrap();
-            assert!(!type_machinery, "misclassified as type machinery: {src}");
-        }
-    }
-
-    #[test]
-    fn walker_mod_receiver_methods_count_once_across_synthesis_threshold() {
-        // find_export_starts synthesizes receiver methods into its export
-        // list at 3+ methods; the surface profile must not inherit that
-        // discontinuity — each statement counts exactly once.
-        let make = |methods: usize| {
-            format!(
-                "const app = {{}};\n{}module.exports = app;\n",
-                "app.m = function m() {};\n"
-                    .repeat(methods)
-                    .split('\n')
-                    .filter(|l| !l.is_empty())
-                    .enumerate()
-                    .map(|(i, l)| l.replace("app.m", &format!("app.m{i}")))
-                    .collect::<Vec<_>>()
-                    .join("\n")
-                    + "\n"
-            )
-        };
-        for methods in [1, 2, 3, 4] {
-            let src = make(methods);
-            let (count, type_machinery) =
-                typescript::dominant_surface_profile(Path::new("app.js"), &src).unwrap();
-            assert_eq!(
-                count,
-                methods as u64 + 1,
-                "expected {} surface items (one per statement) at {} methods, got {count}",
-                methods + 1,
-                methods
-            );
-            assert!(!type_machinery);
-        }
     }
 
     /// The spine detector runs on whatever path a user points precis

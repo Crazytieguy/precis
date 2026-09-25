@@ -202,7 +202,7 @@ language.**
 - Walker dispatch is a closed-set enum. Resist adding extension points
   unless multiple languages actually want them.
 - Per-walker run state goes in named fields on `WalkCtx`
-  (`typescript_state`, `ctx.code.<lang>`, …), not a `TypeId` bag or
+  (`json_state`, `ctx.code.<lang>`, …), not a `TypeId` bag or
   thread-local.
 
 ## Output notation and the plugin cap

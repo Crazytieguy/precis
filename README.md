@@ -43,19 +43,6 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 .gitignore
 LICENSE
 README.md
-  …
-  9→# Mitt
-  10→
-  11→> Tiny 200b functional event emitter / pubsub.
-  12→
-  13→-   **Microscopic:** weighs less than 200 bytes gzipped
-  14→-   **Useful:** a wildcard `"*"` event type listens to all events
-  15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-  16→-   **Functional:** methods don't rely on `this`
-  17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
-  18→
-  19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-  …
 package.json
   …
   2→  "name": "mitt",
@@ -84,6 +71,22 @@ src/
     20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
     21→>;
     23→export interface Emitter<Events extends Record<EventType, unknown>> {
+    24→	all: EventHandlerMap<Events>;
+    25→
+    26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
+    27→	on(type: '*', handler: WildcardHandler<Events>): void;
+    28→
+    29→	off<Key extends keyof Events>(
+    30→		type: Key,
+    31→		handler?: Handler<Events[Key]>
+    32→	): void;
+    33→	off(type: '*', handler: WildcardHandler<Events>): void;
+    34→
+    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
+    36→	emit<Key extends keyof Events>(
+    37→		type: undefined extends Events[Key] ? Key : never
+    38→	): void;
+    39→}
     …
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>

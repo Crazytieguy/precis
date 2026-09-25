@@ -36,7 +36,6 @@ pub enum BatchKey {
     Fs(FsKey),
     Markdown(MarkdownKey),
     Toml(TomlKey),
-    Typescript(TsKey),
     Json(JsonKey),
     Plaintext(PlaintextKey),
     Prisma(PrismaKey),
@@ -87,7 +86,6 @@ impl_batchkey! {
     Fs => FsKey,
     Markdown => MarkdownKey,
     Toml => TomlKey,
-    Typescript => TsKey,
     Json => JsonKey,
     Plaintext => PlaintextKey,
     Prisma => PrismaKey,
@@ -147,119 +145,6 @@ pub enum MarkdownKey {
         section_index: usize,
         keeps_default_concavity: bool,
     },
-}
-
-/// TypeScript / TSX batches. "Public" = top-level with `export` (or
-/// `default` export). Body-less re-exports (`export { foo } from '…'`)
-/// fold into `Imports`.
-#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
-pub enum TsKey {
-    /// Module-level JSDoc lede. Entrypoint files only.
-    ModuleDocLede { file: PathBuf },
-    /// `import`, side-effect imports, and bare `export … from` re-exports.
-    Imports { file: PathBuf },
-    /// Chunked `Imports` for entrypoint files that are mostly re-export
-    /// walls; each chunk groups consecutive imports from the same source.
-    ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Surface listing of every top-level export's first line — one
-    /// unified catalog per file; catastrophic-omission hedge.
-    ExportNames { file: PathBuf },
-    /// Bare `export … from` statements sitting past a file's import
-    /// prologue — the trailing re-export block a module puts after its
-    /// implementation. `Imports` only claims the prologue, so without
-    /// this key the block is invisible. Priced as roster, not plumbing.
-    /// Predecessor: the file's `ExportNames` when it has one, so the two
-    /// halves of a split surface arrive in order; otherwise the module
-    /// gate, since a file can publish everything through the block and
-    /// declare nothing locally.
-    ReexportTail { file: PathBuf },
-    /// Top-level export's declaration (sig with body marker for fn).
-    Export { file: PathBuf, start_line: usize },
-    /// JSDoc above a single export. Predecessor: matching `Export`.
-    ExportDoc { file: PathBuf, start_line: usize },
-    /// One member of an exported JS class. Predecessor: matching class
-    /// `Export`.
-    ExportMember {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-        /// First line of the class member surface.
-        member_start_line: usize,
-    },
-    /// JSDoc above a single member of an exported declaration — the
-    /// comment rows only, never the member's signature row, which
-    /// already has an owner. Additive leaf: predecessor is whichever
-    /// batch renders that signature row (an `ExportTail` chunk, a
-    /// member-name catalog or chunk, an `ExportMember`, or the `Export`
-    /// surface), so the doc is the cheap continuation of a member
-    /// surface the budget has already bought.
-    ExportMemberDoc {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-        /// First line of the documented member's signature.
-        member_start_line: usize,
-    },
-    /// Whole member-name catalog of one big exported declaration
-    /// (interface / object-type alias / class above the per-member
-    /// split range). Predecessor: the matching `Export` header.
-    ExportMemberNames {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-    },
-    /// One source-order slice of a member-name catalog so large that
-    /// emitting it whole would exceed a plausible whole budget — a
-    /// machine-generated surface, never a hand-written one. Chained:
-    /// slice 0's predecessor is the `Export` header, slice k's is
-    /// slice k-1.
-    ExportMemberNamesChunk {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-        /// Zero-based source-order slice index.
-        chunk_index: usize,
-    },
-    /// Continuation chunk of one oversized exported class declaration.
-    /// Predecessor: the matching `Export` head or previous tail chunk.
-    ExportTail {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-        /// Zero-based tail index (the `Export` head is implicit chunk 0).
-        chunk_index: usize,
-    },
-    /// Body slice of an export with a `statement_block` body (outer
-    /// braces stripped). Predecessor: matching `Export`.
-    ExportBody {
-        file: PathBuf,
-        start_line: usize,
-        /// Disambiguates sibling body slices.
-        body_start_line: usize,
-    },
-    /// Key roster of a multi-line data literal a declaration binds —
-    /// one line per top-level element, the rest elided. Predecessor:
-    /// the declaration's own surface (`Export` / `ModuleItem`), and in
-    /// turn the predecessor of that declaration's body slices, so the
-    /// cheap "which keys exist" read always precedes the full literal.
-    LiteralRoster { file: PathBuf, start_line: usize },
-    /// Unified first-line catalog of a private-emitting entrypoint's
-    /// module items — one roster instead of a per-item train.
-    /// Predecessor of each `ModuleItem`.
-    ModuleItemNames { file: PathBuf },
-    /// Top-level non-exported decl — module-private classes, helpers.
-    ModuleItem { file: PathBuf, start_line: usize },
-    /// Body slice of a non-exported decl. Predecessor: matching
-    /// `ModuleItem`.
-    ModuleItemBody {
-        file: PathBuf,
-        start_line: usize,
-        body_start_line: usize,
-    },
-    /// One module-scope statement in a script the project runs directly —
-    /// the executable's own flow, which declares nothing and so has no
-    /// declaration batch. Same gate as `ModuleItem`.
-    ModuleStatements { file: PathBuf, start_line: usize },
 }
 
 /// JSON batches. `package.json` splits along the `Cargo.toml` ontology
@@ -535,142 +420,6 @@ impl InnerKey for MarkdownKey {
                 ..
             } if *section_index >= 1 && !keeps_default_concavity => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-}
-
-impl InnerKey for TsKey {
-    fn is_depth_follow_up(&self) -> bool {
-        matches!(
-            self,
-            TsKey::ExportBody { .. }
-                | TsKey::ExportMember { .. }
-                | TsKey::ExportTail { .. }
-                | TsKey::ModuleItemBody { .. }
-        )
-    }
-
-    fn is_dominant_file_surface(&self) -> bool {
-        matches!(
-            self,
-            TsKey::Imports { .. }
-                | TsKey::ImportChunk { .. }
-                | TsKey::ExportNames { .. }
-                | TsKey::ReexportTail { .. }
-                | TsKey::Export { .. }
-                | TsKey::ExportMemberNames { .. }
-                | TsKey::LiteralRoster { .. }
-                | TsKey::ExportMemberNamesChunk { .. }
-                | TsKey::ModuleItemNames { .. }
-                | TsKey::ModuleItem { .. }
-                | TsKey::ModuleStatements { .. }
-        )
-    }
-
-    /// `ExportNames` / `ReexportTail` / `ImportChunk` for TS/TSX impl
-    /// files use a mild `0.38` (flatter than per-decl, steeper than
-    /// coherent anchors). Declaration files and JS runtime exports keep
-    /// the default — flattening them demotes load-bearing anchors.
-    /// `ExportMember` uses `0.45` (per-decl tier).
-    fn concavity_exponent(&self) -> f64 {
-        match self {
-            TsKey::ExportNames { file, .. }
-            | TsKey::ReexportTail { file, .. }
-            | TsKey::ImportChunk { file, .. }
-                if crate::walker::typescript::is_ts_or_tsx_file(file)
-                    && !crate::walker::typescript::is_declaration_file(file) =>
-            {
-                0.38
-            }
-            TsKey::ExportMember { .. } => 0.45,
-            // Roster tier for the unified member catalog — measured:
-            // dropping it to the default leaves axios flat and costs
-            // commander -0.212 (2026-07-06).
-            TsKey::ExportMemberNames { .. }
-            | TsKey::ExportMemberNamesChunk { .. }
-            | TsKey::LiteralRoster { .. }
-            | TsKey::ModuleItemNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
-            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
-        }
-    }
-
-    fn describe(&self, root: &Path) -> String {
-        match self {
-            TsKey::ModuleDocLede { file } => describe_in("module-doc lede", file, root),
-            TsKey::Imports { file } => describe_in("imports", file, root),
-            TsKey::ImportChunk { file, chunk_index } => {
-                describe_chunked_surface("imports", file, *chunk_index, root)
-            }
-            TsKey::ExportNames { file } => describe_in("export names surface", file, root),
-            TsKey::ReexportTail { file } => describe_in("trailing re-export block", file, root),
-            TsKey::Export { file, start_line } => describe_at("export", file, *start_line, root),
-            TsKey::ExportDoc { file, start_line } => {
-                describe_at("export doc", file, *start_line, root)
-            }
-            TsKey::ExportMember {
-                file,
-                start_line,
-                member_start_line,
-            } => format!(
-                "export member at {}:{start_line} member {member_start_line}",
-                display_path(file, root)
-            ),
-            TsKey::ExportMemberDoc {
-                file,
-                start_line,
-                member_start_line,
-            } => format!(
-                "export member doc at {}:{start_line} member {member_start_line}",
-                display_path(file, root)
-            ),
-            TsKey::ExportMemberNames { file, start_line } => format!(
-                "export member names at {}:{start_line}",
-                display_path(file, root)
-            ),
-            TsKey::ExportMemberNamesChunk {
-                file,
-                start_line,
-                chunk_index,
-            } => format!(
-                "export member names #{} at {}:{start_line}",
-                chunk_index + 1,
-                display_path(file, root)
-            ),
-            TsKey::ExportTail {
-                file,
-                start_line,
-                chunk_index,
-            } => format!(
-                "export tail #{} at {}:{start_line}",
-                chunk_index + 1,
-                display_path(file, root)
-            ),
-            TsKey::ExportBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body("export body", file, *start_line, *body_start_line, root),
-            TsKey::LiteralRoster { file, start_line } => {
-                describe_at("literal roster", file, *start_line, root)
-            }
-            TsKey::ModuleItemNames { file } => describe_in("module item names surface", file, root),
-            TsKey::ModuleItem { file, start_line } => {
-                describe_at("module item", file, *start_line, root)
-            }
-            TsKey::ModuleItemBody {
-                file,
-                start_line,
-                body_start_line,
-            } => describe_at_body(
-                "module item body",
-                file,
-                *start_line,
-                *body_start_line,
-                root,
-            ),
-            TsKey::ModuleStatements { file, start_line } => {
-                describe_at("module statements", file, *start_line, root)
-            }
         }
     }
 }

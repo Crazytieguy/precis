@@ -25,54 +25,6 @@ README.md
   …
   5→# ⌘K…
   7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
-  9→## Install
-  10→
-  11→```bash
-  12→pnpm install cmdk
-  13→```
-  15→## Use
-  …
-  82→## Parts and styling
-  83→
-  84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
-  86→### Command `[cmdk-root]`
-  …
-  153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
-  …
-  180→### Input `[cmdk-input]`
-  …
-  190→### List `[cmdk-list]`
-  …
-  212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
-  …
-  242→### Group `[cmdk-group]` `[hidden?]`
-  …
-  256→### Separator `[cmdk-separator]`
-  …
-  260→### Empty `[cmdk-empty]`
-  …
-  264→### Loading `[cmdk-loading]`
-  …
-  274→### `useCommandState(state => state.selectedField)`
-  …
-  285→## Examples
-  286→
-  287→Code snippets for common use cases.
-  289→### Nested items
-  …
-  338→### Show sub-items when searching
-  …
-  361→### Asynchronous results
-  …
-  397→### Use inside Popover
-  …
-  426→### Drop in stylesheets
-  …
-  430→## FAQ
-  …
-  456→## History
-  …
-  462→## Testing
   …
 cmdk/
   package.json
@@ -80,19 +32,7 @@ cmdk/
     2→  "name": "cmdk",
     3→  "version": "1.1.1",
     4→  "license": "MIT",
-    5→  "main": "./dist/index.js",
-    6→  "module": "./dist/index.mjs",
-    7→  "types": "./dist/index.d.ts",
-    8→  "files": [
-    9→    "dist"
-    10→  ],
-    11→  "exports": {
-    12→    ".": {
-    13→      "types": "./dist/index.d.ts",
-    14→      "import": "./dist/index.mjs",
-    15→      "require": "./dist/index.js"
-    16→    }
-    17→  },
+    …
     18→  "scripts": {
     19→    "prepublishOnly": "cp ../README.md . && pnpm build",
     20→    "postpublish": "rm README.md",
@@ -107,31 +47,39 @@ cmdk/
     32→    "@radix-ui/react-primitive": "^2.0.2"
     33→  },
     …
-    37→  "sideEffects": false,
-    …
   src/
     command-score.ts
+      …
+      155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+      …
     index.tsx
-      1→'use client'
-      2→
-      3→import * as RadixDialog from '@radix-ui/react-dialog'
-      4→import * as React from 'react'
-      5→import { commandScore } from './command-score'
-      6→import { Primitive } from '@radix-ui/react-primitive'
-      7→import { useId } from '@radix-ui/react-id'
-      8→import { composeRefs } from '@radix-ui/react-compose-refs'
+      …
       10→type Children = { children?: React.ReactNode }
       11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
       12→
       13→type LoadingProps = Children &
-      …
+      14→  DivProps & {
+      15→    /** Estimated progress of loading asynchronous options. */
+      16→    progress?: number
+      17→    /**
+      18→     * Accessible label for this loading progressbar. Not shown visibly.
+      19→     */
+      20→    label?: string
+      21→  }
       23→type EmptyProps = Children & DivProps & {}
       24→type SeparatorProps = DivProps & {
       25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
       26→  alwaysRender?: boolean
       27→}
       28→type DialogProps = RadixDialog.DialogProps &
-      …
+      29→  CommandProps & {
+      30→    /** Provide a className to the Dialog overlay. */
+      31→    overlayClassName?: string
+      32→    /** Provide a className to the Dialog content. */
+      33→    contentClassName?: string
+      34→    /** Provide a custom element the Dialog should portal into. */
+      35→    container?: HTMLElement
+      36→  }
       37→type ListProps = Children &
       38→  DivProps & {
       39→    /**
@@ -140,20 +88,69 @@ cmdk/
       42→    label?: string
       43→  }
       44→type ItemProps = Children &
-      …
+      45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+      46→    /** Whether this item is currently disabled. */
+      47→    disabled?: boolean
+      48→    /** Event handler for when this item is selected, either via click or keyboard selection. */
+      49→    onSelect?: (value: string) => void
+      50→    /**
+      51→     * A unique value for this item.
+      52→     * If no value is provided, it will be inferred from `children` or the rendered `textContent`. If your `textContent` changes between renders, you _must_ provide a stable, unique `value`.
+      53→     */
+      54→    value?: string
+      55→    /** Optional keywords to match against when filtering. */
+      56→    keywords?: string[]
+      57→    /** Whether this item is forcibly rendered regardless of filtering. */
+      58→    forceMount?: boolean
+      59→  }
       60→type GroupProps = Children &
-      …
+      61→  Omit<DivProps, 'heading' | 'value'> & {
+      62→    /** Optional heading to render for this group. */
+      63→    heading?: React.ReactNode
+      64→    /** If no heading is provided, you must provide a value that is unique for this group. */
+      65→    value?: string
+      66→    /** Whether this group is forcibly rendered regardless of filtering. */
+      67→    forceMount?: boolean
+      68→  }
       69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
-      …
+      70→  /**
+      71→   * Optional controlled state for the value of the search input.
+      72→   */
+      73→  value?: string
+      74→  /**
+      75→   * Event handler called when the search value changes.
+      76→   */
+      77→  onValueChange?: (search: string) => void
+      78→}
       79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
       80→type CommandProps = Children &
       …
       123→type Context = {
-      …
+      124→  value: (id: string, value: string, keywords?: string[]) => void
+      125→  item: (id: string, groupId: string) => () => void
+      126→  group: (id: string) => () => void
+      127→  filter: () => boolean
+      128→  label: string
+      129→  getDisablePointerSelection: () => boolean
+      130→  // Ids
+      131→  listId: string
+      132→  labelId: string
+      133→  inputId: string
+      134→  // Refs
+      135→  listInnerRef: React.RefObject<HTMLDivElement | null>
+      136→}
       137→type State = {
-      …
+      138→  search: string
+      139→  value: string
+      140→  selectedItemId?: string
+      141→  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
+      142→}
       143→type Store = {
-      …
+      144→  subscribe: (callback: () => void) => () => void
+      145→  snapshot: () => State
+      146→  setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
+      147→  emit: () => void
+      148→}
       149→type Group = {
       150→  id: string
       151→  forceMount?: boolean
@@ -176,83 +173,29 @@ cmdk/
       …
       664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
       …
-      725→/**
-      726→ * Group command menu items together with a heading.
-      727→ * Grouped items are always shown together.
-      728→ */
       729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
       …
       774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
       …
-      783→/**
-      784→ * Command menu input.
-      785→ * All props are forwarded to the underyling `input` element.
-      786→ */
       787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
       …
       833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
       …
-      879→/**
-      880→ * Renders the command menu in a Radix Dialog.
-      881→ */
       882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
       …
-      896→/**
-      897→ * Automatically renders when there are no results for the search query.
-      898→ */
       899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-      …
-      906→/**
-      907→ * You should conditionally render this with `progress` while loading asynchronous items.
-      908→ */
-      909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
-      …
-      930→const pkg = Object.assign(Command, {
-      …
-      941→export { useCmdk as useCommandState }
-      942→export { pkg as Command }
-      943→export { defaultFilter }
-      944→
-      945→export { Command as CommandRoot }
-      946→export { List as CommandList }
-      947→export { Item as CommandItem }
-      948→export { Input as CommandInput }
-      949→export { Group as CommandGroup }
-      950→export { Separator as CommandSeparator }
-      951→export { Dialog as CommandDialog }
-      952→export { Empty as CommandEmpty }
-      953→export { Loading as CommandLoading }
-      …
-      963→function findNextSibling(el: Element, selector: string) {
-      …
-      972→function findPreviousSibling(el: Element, selector: string) {
-      …
-      981→function useAsRef<T>(data: T) {
-      …
-      991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
-      992→
-      993→function useLazyRef<T>(fn: () => T) {
-      …
-      1003→/** Run a selector against the store state. */
-      1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-      …
-      1010→function useValue(
-      …
-      1046→const useScheduleLayoutEffect = () => {
-      …
-      1061→function renderChildren(children: React.ReactElement) {
-      …
-      1071→function SlottableWithNestedChildren(
-      1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
-      1073→  render: (child: React.ReactNode) => JSX.Element,
-      1074→) {
-      …
-      1081→const srOnlyStyles = {
       …
   tsup.config.ts
     …
     3→export default defineConfig({
-    …
+    4→  sourcemap: false,
+    5→  minify: true,
+    6→  dts: true,
+    7→  format: ['esm', 'cjs'],
+    8→  loader: {
+    9→    '.js': 'jsx',
+    10→  },
+    11→})
 package.json
   …
   2→  "name": "cmdk-root",
@@ -272,13 +215,11 @@ package.json
   …
 playwright.config.ts
   …
+  3→const config: PlaywrightTestConfig = {
+  …
   27→export default config
 pnpm-lock.yaml
 pnpm-workspace.yaml
-  1→packages:
-  2→  - 'website'
-  3→  - 'test'
-  4→  - 'cmdk'
 test/
   basic.test.ts
   dialog.test.ts
@@ -299,10 +240,6 @@ website/
   README.md
   components/
     cmdk/
-      framer.tsx
-      linear.tsx
-      raycast.tsx
-      vercel.tsx
     code/
     icons/
     index.ts
@@ -310,9 +247,6 @@ website/
   next.config.js
   package.json
   pages/
-    _app.tsx
-    _document.tsx
-    index.tsx
   public/
   styles/
   tsconfig.json

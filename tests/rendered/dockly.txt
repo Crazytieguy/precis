@@ -2,7 +2,6 @@
   devcontainer.json
 .github/
   ISSUE_TEMPLATE/
-    bug_report.yaml
   PULL_REQUEST_TEMPLATE.md
   mergify.yml
   workflows/
@@ -94,60 +93,56 @@ docs/
   src/
     assets/
     components/
-      Footer.js
-      Header.js
-      HeaderGeneric.js
-      Nav.js
-      Scroll.js
-      layout.js
     pages/
-      404.js
-      generic.js
-      index.js
 hooks/
   containers.hook.js
+    …
+    5→class hook extends baseHook {
+    …
+    177→module.exports = hook
   images.hook.js
+    …
+    5→class hook extends baseHook {
+    6→  init () {
+    …
+    27→  getSelectedItem () {
+    …
+    35→  notifyOnImageUpdate () {
+    …
+    65→  removeImage () {
+    …
+    95→}
+    97→module.exports = hook
   services.hook.js
+    …
+    5→class hook extends baseHook {
+    6→  init () {
+    …
+    46→  setupSwitchFocus () {
+    …
+    61→  notifyOnServiceInfo () {
+    …
+    72→  getFreshData (cb) {
+    …
+    86→  getSelectedItem () {
+    …
+    93→}
+    95→module.exports = hook
   shell.hook.js
+    …
+    8→class hook extends baseWidget() {
+    9→  init () {
+    …
+    23→  openShell () {
+    …
+    59→  emitActionStatus (title, message) {
+    …
+    66→}
+    68→module.exports = hook
 index.js
   …
-  2→'use strict'
-  3→
-  4→const { EventEmitter } = require('events')
-  5→EventEmitter.defaultMaxListeners = 50
-  …
-  10→const semver = require('semver')
-  11→const chalk = require('chalk')
-  12→const nodeVersion = require('./lib/node.version')
-  13→const Screen = require('./src/screen')
-  14→const DockerUtil = require('./src/dockerUtil')
-  15→const cli = require('./src/cli')
   17→const cliOptions = cli.cliParse()
-  18→if (cliOptions.help) {
-  19→  cli.showUsage()
-  20→  process.exit(0)
-  21→}
-  23→if (cliOptions.version) {
-  24→  cli.showVersion()
-  25→  process.exit(0)
-  26→}
-  28→if (semver.lt(process.version, nodeVersion.minimum)) {
-  29→  cli.showUsage()
-  30→  console.log(chalk.red('unsupported node version, please use a version equal or greater than ' + nodeVersion.minimum))
-  31→  process.exit(0)
-  32→}
-  34→initDockerConnection()
-  35→  .then(initScreens)
-  36→  .then(function (screen) {
-  37→    process.on('uncaughtException', (err) => {
-  38→      // Make sure the screen is cleared
-  39→      screen.teardown()
-  40→      exitError(err)
-  41→    })
-  42→  })
-  43→  .catch((err) => {
-  44→    return exitError(err)
-  45→  })
+  …
   47→function initDockerConnection () {
   …
   72→function initScreens (utils) {
@@ -156,7 +151,7 @@ index.js
   …
 lib/
   modes.js
-    1→'use strict'
+    …
     3→module.exports = {
     4→  container: 'containers',
     5→  service: 'services',
@@ -172,44 +167,12 @@ package.json
   2→  "name": "dockly",
   3→  "version": "0.0.0-development",
   4→  "description": "Immersive terminal interface for managing docker containers and services",
-  5→  "main": "index.js",
-  6→  "scripts": {
-  7→    "test": "npm run lint",
-  8→    "lint": "standard && npm run lint:lockfile",
-  9→    "lint:fix": "standard --fix",
-  10→    "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
-  11→    "debug": "node --inspect=0.0.0.0:9222 ./index.js "
-  12→  },
-  13→  "files": [
-  14→    "hooks",
-  15→    "lib",
-  16→    "src",
-  17→    "widgets",
-  18→    "index.js",
-  19→    "dockerRunScript.sh"
-  20→  ],
+  …
   21→  "engines": {
   22→    "node": ">=7.6.0"
   23→  },
-  24→  "bin": {
-  25→    "dockly": "./index.js"
-  26→  },
   …
   63→  "license": "MIT",
-  …
-  68→  "dependencies": {
-  69→    "blessed": "^0.1.81",
-  70→    "blessed-contrib": "^4.10.1",
-  71→    "chalk": "^4",
-  72→    "clipboardy": "^2.3.0",
-  73→    "command-line-args": "^5.2.1",
-  74→    "command-line-usage": "^5.0.5",
-  75→    "dockerode": "3.3.5",
-  76→    "figures": "^2.0.0",
-  77→    "glob": "^7.2.3",
-  78→    "lockfile-lint": "^4.12.0",
-  79→    "semver": "7.6.3"
-  80→  },
   …
 src/
   assetsLoader.js
@@ -221,6 +184,7 @@ src/
     …
     39→  static formatAsset (assetPath) {
     …
+    42→}
     44→module.exports = assetsLoader
   baseWidget.js
     …
@@ -229,108 +193,47 @@ src/
   cli.js
     …
     8→function Cli () {
-    9→  this.cliOpts = [
-    …
-    11→      name: 'socketPath',
-    …
-    17→      name: 'host',
-    …
-    23→      name: 'port',
-    …
-    29→      name: 'protocol',
-    …
-    35→      name: 'help',
-    …
-    41→      name: 'version',
-    …
-    47→      name: 'containerFilters',
-    …
-    52→      name: 'theme',
-    …
-    59→Cli.prototype.showVersion = function () {
-    60→  const author = pkg.author.name + '<' + pkg.author.email + '>'
-    61→  console.log(pkg.name + ' ' + pkg.version + ' by ' + author)
-    62→  console.log(pkg.description)
-    63→  console.log()
-    …
-    66→Cli.prototype.showUsage = function () {
-    …
-    89→/**
-    90→ * @method cliParse
-    91→ * @return {object} [description]
-    92→ */
-    93→Cli.prototype.cliParse = function () {
-    94→  return commandLineArgs(this.cliOpts)
     …
     97→module.exports = new Cli()
   dockerUtil.js
-    1→'use strict'
-    2→
-    3→const DockerLib = require('dockerode')
+    …
     5→class Util {
-    6→  constructor (config) {
-    …
-    33→  ping (cb) {
-    …
-    43→  listImages (cb) {
-    …
-    55→  systemDf (cb) {
-    …
-    65→  listContainers (cb) {
-    …
-    78→  listServices (cb) {
-    …
-    88→  stopAllContainers (cb) {
-    …
-    100→  removeAllContainers (cb) {
-    …
-    112→  removeAllImages (cb) {
-    …
-    124→  getInfo (cb) {
-    …
-    155→  getContainer (containerId, cb) {
-    …
-    160→  getService (serviceId, cb) {
     …
     233→module.exports = Util
   enum.js
     1→module.exports = {
-    …
+    2→  ContainerState: {
+    3→    created: 'created',
+    4→    restarting: 'restarting',
+    5→    running: 'running',
+    6→    removing: 'removing',
+    7→    paused: 'paused',
+    8→    exited: 'exited',
+    9→    dead: 'dead'
+    10→  }
+    11→}
   grid.config.js
+    1→const CONTAINERS_GRID_LAYOUT = {
+    …
+    16→const SERVICES_GRID_LAYOUT = {
+    …
+    29→const IMAGES_GRID_LAYOUT = {
+    …
+    39→module.exports = {
+    40→  CONTAINERS_GRID_LAYOUT,
+    41→  SERVICES_GRID_LAYOUT,
+    42→  IMAGES_GRID_LAYOUT
+    43→}
   screen.js
     …
     18→class screen {
     …
-    35→  initScreen () {
-    …
-    48→  init () {
-    …
-    71→  initHooks () {
-    …
-    79→  clearHooks () {
-    …
-    86→  initWidgets () {
-    …
-    107→  clearWidgets () {
-    …
-    114→  setWidgetsRepo () {
-    …
-    120→  setWidgetsUtils () {
-    …
-    132→  renderWidgets () {
-    …
-    138→  toggleMode () {
-    …
-    152→  registerEvents () {
-    …
-    180→  render () {
-    …
-    192→  teardown () {
-    193→    this.screen.destroy()
-    …
     197→module.exports = screen
   themes/
     styles.js
+      1→const darkStyle = {
+      …
+      28→const lightStyle = {
       …
       55→module.exports = {
       56→  darkStyle,
@@ -342,6 +245,14 @@ src/
       …
   widgetsTemplates/
     base.hook.template.js
+      …
+      6→class myWidget extends baseWidget(EventEmitter) {
+      7→  copyItemIdToClipboard () {
+      …
+      29→  getSelectedItem () {
+      …
+      32→}
+      34→module.exports = myWidget
     help.widget.template.js
       …
       5→class myWidget extends baseWidget() {
@@ -356,37 +267,175 @@ src/
       …
       8→class myWidget extends baseWidget(EventEmitter) {
       …
-      21→  init () {
-      …
-      88→  getWidget () {
-      …
-      107→  refreshList () {
-      …
-      127→  getLabel () {
-      …
       161→module.exports = myWidget
     logs.widget.template.js
+      …
+      7→class myWidget extends baseWidget() {
+      …
+      89→module.exports = myWidget
 widgets/
   actionStatus.widget.js
+    …
+    6→class myWidget extends baseWidget(EventEmitter) {
+    7→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {} }) {
+    …
+    18→  init () {
+    …
+    24→  renderWidget () {
+    25→    return null
+    …
+    28→  getWidget () {
+    …
+    51→  update (data) {
+    …
+    65→}
+    67→module.exports = myWidget
   actionsMenu.widget.js
+    …
+    5→class myWidget extends baseWidget() {
+    …
+    153→module.exports = myWidget
   containers/
     containerInfo.widget.js
+      …
+      5→class myWidget extends InfoWidget {
+      6→  getLabel () {
+      …
+      10→  getSelectedItemId () {
+      …
+      14→  getItemById (itemId, cb) {
+      …
+      17→}
+      19→module.exports = myWidget
     containerList.widget.js
+      …
+      10→class myWidget extends ListWidget {
+      …
+      187→module.exports = myWidget
     containerLogs.widget.js
+      …
+      5→class myWidget extends LogWidget {
+      6→  getLabel () {
+      …
+      10→  getList () {
+      …
+      13→}
+      15→module.exports = myWidget
     containerSortList.widget.js
+      …
+      4→class ContainerSortListWidget extends baseWidget() {
+      …
+      103→module.exports = ContainerSortListWidget
     containerStatus.widget.js
+      …
+      5→class myWidget extends baseWidget() {
+      …
+      86→module.exports = myWidget
     containerUtilization.widget.js
+      …
+      4→class myWidget extends baseWidget() {
+      …
+      94→module.exports = myWidget
     containerVsImages.widget.js
+      …
+      4→class myWidget extends baseWidget() {
+      …
+      62→module.exports = myWidget
   help.widget.js
+    …
+    5→class myWidget extends HelpWidget {
+    6→  getLabel () {
+    …
+    9→}
+    11→module.exports = myWidget
   images/
     imageInfo.widget.js
+      …
+      5→class myWidget extends InfoWidget {
+      6→  getLabel () {
+      …
+      10→  getSelectedItemId () {
+      …
+      14→  getItemById (itemId, cb) {
+      …
+      17→}
+      19→module.exports = myWidget
     imageList.widget.js
+      …
+      5→class myWidget extends ListWidget {
+      …
+      128→module.exports = myWidget
     imageUtilization.widget.js
+      …
+      5→class myWidget extends baseWidget() {
+      …
+      77→module.exports = myWidget
   searchInput.widget.js
+    …
+    9→class myWidget extends baseWidget(EventEmitter) {
+    10→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {} }) {
+    …
+    24→  getLabel () {
+    25→    return ''
+    …
+    28→  renderWidget () {
+    29→    return null
+    …
+    32→  captureText (key) {
+    …
+    55→  init () {
+    …
+    94→  getWidget () {
+    …
+    105→}
+    107→module.exports = myWidget
   services/
     servicesInfo.widget.js
+      …
+      5→class myWidget extends InfoWidget {
+      6→  getLabel () {
+      …
+      10→  getSelectedItemId () {
+      …
+      14→  getItemById (itemId, cb) {
+      …
+      17→}
+      19→module.exports = myWidget
     servicesList.widget.js
+      …
+      5→class myWidget extends ListWidget {
+      …
+      92→module.exports = myWidget
     servicesLogs.widget.js
+      …
+      5→class myWidget extends LogWidget {
+      6→  getLabel () {
+      …
+      10→  getList () {
+      …
+      13→}
+      15→module.exports = myWidget
     servicesStatus.widget.js
+      …
+      5→class myWidget extends baseWidget() {
+      …
+      85→module.exports = myWidget
     servicesVsImages.widget.js
+      …
+      4→class myWidget extends baseWidget() {
+      …
+      61→module.exports = myWidget
   toolbar.widget.js
+    …
+    7→class myWidget extends baseWidget(EventEmitter) {
+    8→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {}, mode }) {
+    …
+    21→  init () {
+    22→    return null
+    …
+    25→  getWidget () {
+    …
+    29→  createWidget () {
+    …
+    141→}
+    143→module.exports = myWidget

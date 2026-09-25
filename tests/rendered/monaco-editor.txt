@@ -5,12 +5,6 @@
   devcontainer.json
 .gitattributes
 .github/
-  ISSUE_TEMPLATE/
-  commands.json
-  publish-failure-issue-template.md
-  workflows/
-    ci.yml
-    website.yml
 .gitignore
 .husky/
   pre-commit
@@ -26,12 +20,6 @@ CHANGELOG.md
 CONTRIBUTING.md
 LICENSE.txt
 MAINTAINING.md
-  1→# Maintaining
-  …
-  9→## Publishing a stable build monaco-editor build
-  …
-  50→## Updating TypeScript
-  …
 README.md
   1→# Monaco Editor
   …
@@ -51,56 +39,107 @@ editor.code-workspace
 gulpfile.js
 monaco-lsp-client/
   README.md
-    1→# Monaco LSP Client
-    2→
-    3→Provides a Language Server Protocol (LSP) client for the Monaco Editor.
-    4→
-    5→This package is in alpha stage and might contain many bugs.
   generator/
     index.ts
+      …
+      7→class LineWriter {
+      …
+      73→interface MetaModel {
+      …
+      82→interface MetaData {
+      83→	version: string;
+      84→}
+      86→interface Request {
+      …
+      101→interface Notification {
+      …
+      113→interface Structure {
+      …
+      124→interface Property {
+      …
+      134→interface Enumeration {
+      …
+      145→interface EnumerationEntry {
+      …
+      154→interface EnumerationType {
+      155→	kind: 'base';
+      156→	name: 'string' | 'integer' | 'uinteger';
+      157→}
+      159→interface TypeAlias {
+      …
+      168→type MessageDirection = 'clientToServer' | 'serverToClient' | 'both';
+      169→
+      170→type Type =
+      …
+      183→interface BaseType {
+      …
+      197→interface ReferenceType {
+      198→	kind: 'reference';
+      199→	name: string;
+      200→}
+      202→interface ArrayType {
+      203→	kind: 'array';
+      204→	element: Type;
+      205→}
+      207→interface MapType {
+      208→	kind: 'map';
+      209→	key: Type;
+      210→	value: Type;
+      211→}
+      213→interface AndType {
+      214→	kind: 'and';
+      215→	items: Type[];
+      216→}
+      218→interface OrType {
+      219→	kind: 'or';
+      220→	items: Type[];
+      221→}
+      223→interface TupleType {
+      224→	kind: 'tuple';
+      225→	items: Type[];
+      226→}
+      228→interface StructureLiteralType {
+      229→	kind: 'literal';
+      230→	value: StructureLiteral;
+      231→}
+      233→interface StructureLiteral {
+      …
+      241→interface StringLiteralType {
+      242→	kind: 'stringLiteral';
+      243→	value: string;
+      244→}
+      246→interface IntegerLiteralType {
+      247→	kind: 'integerLiteral';
+      248→	value: number;
+      249→}
+      251→interface BooleanLiteralType {
+      252→	kind: 'booleanLiteral';
+      253→	value: boolean;
+      254→}
+      …
+      259→class LSPTypesGenerator {
+      …
+      628→	generate(): void {
+      …
+      681→}
+      …
   package-lock.json
   package.json
     …
     2→	"name": "@vscode/monaco-lsp-client",
     3→	"description": "description",
-    4→	"authors": "vscode",
+    …
     5→	"version": "0.1.0",
-    6→	"main": "out/index.js",
-    7→	"types": "out/index.d.ts",
     …
   rolldown.config.mjs
+    …
+    9→export default defineConfig({
+    …
   src/
     adapters/
-      ITextModelBridge.ts
-      LspCapabilitiesRegistry.ts
-      LspClient.ts
-      LspConnection.ts
-      TextDocumentSynchronizer.ts
-      languageFeatures/
-        LspCodeActionFeature.ts
-        LspCodeLensFeature.ts
-        LspCompletionFeature.ts
-        LspDeclarationFeature.ts
-        LspDefinitionFeature.ts
-        LspDiagnosticsFeature.ts
-        LspDocumentHighlightFeature.ts
-        LspDocumentLinkFeature.ts
-        LspDocumentSymbolFeature.ts
-        LspFoldingRangeFeature.ts
-        LspFormattingFeature.ts
-        LspHoverFeature.ts
-        LspImplementationFeature.ts
-        LspInlayHintsFeature.ts
-        LspOnTypeFormattingFeature.ts
-        LspRangeFormattingFeature.ts
-        LspReferencesFeature.ts
-        LspRenameFeature.ts
-        LspSelectionRangeFeature.ts
-        LspSemanticTokensFeature.ts
-        LspSignatureHelpFeature.ts
-        LspTypeDefinitionFeature.ts
-        common.ts
     index.ts
+      …
+      5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
     types.ts
     utils.ts
 package-lock.json
@@ -119,15 +158,7 @@ samples/
     1→# Monaco Editor Samples
     2→
     3→Standalone HTML samples showing how to integrate the Monaco Editor.
-    5→## Running
     …
-    17→## Loading variations
-    …
-    26→## Other examples & techniques
-    …
-    34→## License
-    35→
-    36→MIT
   browser-esm-esbuild/
     .gitignore
     build.js
@@ -153,6 +184,14 @@ samples/
     .gitignore
     index.html
     main.ts
+      …
+      18→const tm = monaco.editor.createModel(`class Test {}`, 'typescript',
+      19→	monaco.Uri.parse('file:///main.ts'));
+      21→const editor = monaco.editor.create(document.getElementById('root')!, {
+      22→	model: tm,
+      23→	language: 'typescript',
+      24→	theme: 'vs-dark',
+      25→});
     package-lock.json
     package.json
       …
@@ -161,6 +200,9 @@ samples/
     style.css
     tsconfig.json
     vite.config.ts
+      …
+      4→export default defineConfig({
+      …
   browser-esm-vite-react/
     .gitignore
     index.html
@@ -178,6 +220,10 @@ samples/
       vite-env.d.ts
     tsconfig.json
     vite.config.ts
+      …
+      5→export default defineConfig({
+      6→	plugins: [react()]
+      7→});
   browser-esm-webpack/
     .gitignore
     dist/
@@ -188,6 +234,9 @@ samples/
       2→	"name": "browser-esm-webpack",
       …
     webpack.config.js
+      …
+      3→module.exports = {
+      …
   browser-esm-webpack-monaco-plugin/
     .gitignore
     dist/
@@ -198,6 +247,9 @@ samples/
       2→	"name": "browser-esm-webpack-monaco-plugin",
       …
     webpack.config.js
+      …
+      4→module.exports = {
+      …
   browser-esm-webpack-small/
     .gitignore
     dist/
@@ -209,6 +261,9 @@ samples/
       2→	"name": "browser-esm-webpack-small",
       …
     webpack.config.js
+      …
+      4→module.exports = {
+      …
   browser-esm-webpack-typescript/
     .gitignore
     package.json
@@ -220,6 +275,9 @@ samples/
       index.ts
     tsconfig.json
     webpack.config.js
+      …
+      4→module.exports = {
+      …
   browser-esm-webpack-typescript-react/
     .gitignore
     package-lock.json
@@ -235,74 +293,37 @@ samples/
       index.tsx
     tsconfig.json
     webpack.config.js
+      …
+      7→module.exports = {
+      …
   electron-esm-webpack/
     .gitignore
     dist/
     index.js
     main.js
+      …
+      2→const app = electron.app;
+      3→const BrowserWindow = electron.BrowserWindow;
+      4→
+      5→let mainWindow;
+      6→
+      7→function createWindow() {
+      …
     package.json
       …
       2→	"name": "electron-esm-webpack",
-      3→	"main": "./main",
       …
     webpack.config.js
+      …
+      3→module.exports = {
+      …
   legacy/
-    README.md
-    browser-amd-diff-editor/
-      index.html
-      modified.txt
-      original.txt
-    browser-amd-editor/
-      index.html
-    browser-amd-iframe/
-      index.html
-      inner.html
-    browser-amd-localized/
-      index.html
-    browser-amd-monarch/
-      index.html
-    browser-amd-requirejs/
-      index.html
-    browser-amd-shadow-dom/
-      index.html
-    browser-amd-shared-model/
-      index.html
-    browser-amd-trusted-types/
-      index.html
-    electron-amd/
-      electron-index.html
-      index.html
-      main.js
-      package.json
-        …
-        2→	"name": "electron-amd",
-        …
-    electron-amd-nodeIntegration/
-      electron-index.html
-      index.html
-      main.js
-      package.json
-        …
-        2→	"name": "electron-amd-node-integration",
-        …
   nwjs-amd/
     index.html
   nwjs-amd-v2/
     index.html
   package-lock.json
   package.json
-    …
-    2→	"name": "monaco-editor-samples",
-    3→	"version": "0.0.1",
-    4→	"private": true,
-    5→	"description": "Samples for using the Monaco Editor",
-    6→	"main": "index.js",
-    7→	"scripts": {
-    8→		"simpleserver": "yaserver --root ./ --port 8888"
-    9→	},
-    10→	"author": "Microsoft Corporation",
-    11→	"license": "MIT",
-    …
 scripts/
   ci/
   lib/
@@ -328,6 +349,7 @@ src/
         monaco.contribution.ts
         ts.worker.ts
   editor.ts
+    1→export * from 'monaco-editor-core/esm/vs/editor/editor.api';
   features/
     anchorSelect/
     bracketMatching/
@@ -531,24 +553,13 @@ webpack-plugin/
   .npmignore
   LICENSE
   README.md
-    1→# Monaco Editor Webpack Loader Plugin
-    2→
-    3→A plugin to simplify loading the [Monaco Editor](https://github.com/microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
-    …
   package-lock.json
   package.json
-    …
-    2→	"name": "monaco-editor-webpack-plugin",
-    3→	"version": "7.1.1",
-    4→	"description": "A webpack plugin for the Monaco Editor",
-    5→	"main": "out/index.js",
-    6→	"typings": "./out/index.d.ts",
-    …
-    23→	"license": "MIT",
-    …
   src/
     index.ts
     loader-utils.d.ts
+      1→declare module 'loader-utils' {
+      …
     loaders/
       include.ts
     plugins/

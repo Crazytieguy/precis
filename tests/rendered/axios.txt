@@ -1,18 +1,4 @@
 .github/
-  CODEOWNERS
-  FUNDING.yml
-  ISSUE_TEMPLATE.md
-  PULL_REQUEST_TEMPLATE.md
-  copilot-instructions.md
-  dependabot.yml
-  workflows/
-    lockfile-lint.yml
-    moderator.yml
-    publish.yml
-    release-branch.yml
-    run-ci.yml
-    verify-build-reproducibility.yml
-    zizmor.yml
 .gitignore
 .husky/
   commit-msg
@@ -25,155 +11,92 @@ CHANGELOG.md
 CLAUDE.md
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
-  1→# Collaborator Guide
-  …
-  5→## Code of Conduct
-  …
-  9→## Triage Issues
-  …
-  16→## Answer Questions
-  …
-  20→## Submit PRs
-  …
-  44→## Security Disclosures
-  …
-  48→## What Collaborators Should Not Do
-  …
 CONTRIBUTING.md
 CONTRIBUTORS.md
-  1→# Contributors
-  2→
-  3→Thank you to all the wonderful people who have contributed to axios!
-  5→## Core Team
-  …
-  11→## Notable Contributors
-  12→
-  13→<!-- Add contributors here in alphabetical order by GitHub username -->
-  15→## How to Contribute
-  …
 ECOSYSTEM.md
-  1→# Ecosystem
-  2→
-  3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
-  5→## Libraries
-  6→
-  7→### General
-  …
-  23→### API clients
-  …
-  29→### Logging and debugging
-  …
-  35→### React and redux
-  …
-  43→### Unit testing
-  …
 LICENSE
 MIGRATION_GUIDE.md
 README.md
 SECURITY.md
 THREATMODEL.md
 docs/
-  .vitepress/
-  data/
-  es/
-    index.md
-    pages/
-      advanced/
-      getting-started/
-        examples/
-        features.md
-        first-steps.md
-        upgrade-guide.md
-      misc/
-        security.md
-        semver.md
-        sponsors.md
-  favicon.ico
-  fr/
-    index.md
-    pages/
-      advanced/
-      getting-started/
-        examples/
-        features.md
-        first-steps.md
-        upgrade-guide.md
-      misc/
-        security.md
-        semver.md
-        sponsors.md
-  index.md
-  package-lock.json
-  package.json
-  pages/
-    advanced/
-    getting-started/
-      examples/
-      features.md
-      first-steps.md
-      upgrade-guide.md
-    misc/
-      security.md
-      semver.md
-      sponsors.md
-  patches/
-  public/
-  scripts/
-  site.webmanifest
-  zh/
-    index.md
-    pages/
-      advanced/
-      getting-started/
-        examples/
-        features.md
-        first-steps.md
-        upgrade-guide.md
-      misc/
-        security.md
-        semver.md
-        sponsors.md
 eslint.config.js
+  …
+  4→export default [
+  …
 examples/
-  README.md
-  abort-controller/
-  all/
-  amd/
-  get/
-  improved-network-errors.md
-  network_enhanced.js
-  post/
-  postMultipartFormData/
-  server.js
-  transform-response/
-  upload/
 gulpfile.js
   …
+  12→const clear = gulp.task('clear', async function () {
+  13→  await fs.emptyDir('./dist/');
+  14→});
+  …
+  36→const packageJSON = gulp.task('package', async function () {
+  …
+  60→const env = gulp.task('env', async function () {
+  61→  var npm = JSON.parse(await fs.readFile('package.json'));
+  62→
+  63→  const envFilePath = './lib/env/data.js';
+  64→
+  65→  await fs.writeFile(
+  66→    envFilePath,
+  67→    Object.entries({
+  68→      VERSION: (argv.bump || npm.version).replace(/^v/, ''),
+  69→    })
+  70→      .map(([key, value]) => {
+  71→        return `export const ${key} = ${JSON.stringify(value)};`;
+  72→      })
+  73→      .join('\n')
+  74→  );
+  75→});
+  77→const version = gulp.series('env', 'package');
+  78→
   79→export { env, clear, version, packageJSON };
 index.d.cts
 index.d.ts
+  …
+  2→type StringLiteralsOrString<Literals extends string> = Literals | (string & {});
+  3→
+  4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
+  5→
+  6→export interface RawAxiosHeaders {
+  7→  [key: string]: AxiosHeaderValue;
+  8→}
+  10→type MethodsHeaders = Partial<
+  11→  {
+  12→    [Key in Method as Lowercase<Key>]: AxiosHeaders;
+  13→  } & { common: AxiosHeaders }
+  14→>;
+  16→type AxiosHeaderMatcher =
+  17→  | string
+  18→  | RegExp
+  19→  | ((this: AxiosHeaders, value: string, name: string) => boolean);
+  21→type AxiosHeaderParser = (this: AxiosHeaders, value: AxiosHeaderValue, header: string) => any;
+  22→
+  23→export class AxiosHeaders {
+  …
+  95→type CommonRequestHeadersList =
+  …
+  103→type ContentType =
+  …
+  112→export type RawAxiosRequestHeaders = Partial<
+  …
+  120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
+  121→
+  122→type CommonResponseHeadersList =
+  …
+  129→type CommonResponseHeaderKey = CommonResponseHeadersList | Lowercase<CommonResponseHeadersList>;
+  130→
+  131→type RawCommonResponseHeaders = {
+  132→  [Key in CommonResponseHeaderKey]: AxiosHeaderValue;
+  133→} & {
+  134→  'set-cookie': string[];
+  135→};
+  …
 index.js
-  1→import axios from './lib/axios.js';
   …
   6→const {
-  7→  Axios,
-  8→  AxiosError,
-  9→  CanceledError,
-  10→  isCancel,
-  11→  CancelToken,
-  12→  VERSION,
-  13→  all,
-  14→  Cancel,
-  15→  isAxiosError,
-  16→  spread,
-  17→  toFormData,
-  18→  AxiosHeaders,
-  19→  HttpStatusCode,
-  20→  formToJSON,
-  21→  getAdapter,
-  22→  mergeConfig,
-  23→  create,
-  24→} = axios;
+  …
   26→export {
   27→  axios as default,
   28→  create,
@@ -202,30 +125,50 @@ lib/
       3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
       …
     adapters.js
-      …
-      120→export default {
-      …
     fetch.js
     http.js
+      …
+      517→export default isHttpAdapterSupported &&
+      …
+      1312→export const __setProxy = setProxy;
     xhr.js
+      …
+      15→export default isXHRAdapterSupported &&
+      …
   axios.js
     …
     28→function createInstance(defaultConfig) {
+    …
+    47→const axios = createInstance(defaults);
     …
     89→export default axios;
   cancel/
     CancelToken.js
       …
+      12→class CancelToken {
+      …
       135→export default CancelToken;
     CanceledError.js
       …
+      5→class CanceledError extends AxiosError {
+      …
+      15→  constructor(message, config, request) {
+      …
+      20→}
       22→export default CanceledError;
     isCancel.js
+      …
+      3→export default function isCancel(value) {
+      …
   core/
     Axios.js
       …
+      22→class Axios {
+      …
       281→export default Axios;
     AxiosError.js
+      …
+      75→class AxiosError extends Error {
       …
       176→export default AxiosError;
     AxiosHeaders.js
@@ -235,27 +178,40 @@ lib/
       348→export default AxiosHeaders;
     InterceptorManager.js
       …
+      5→class InterceptorManager {
+      …
       72→export default InterceptorManager;
     README.md
-      1→# axios // core
-      2→
-      3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
-      5→- Dispatching requests
-      6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
-      7→- Managing interceptors
-      8→- Handling config
     buildFullPath.js
+      …
+      16→export default function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
+      …
     dispatchRequest.js
+      …
+      34→export default function dispatchRequest(config) {
+      …
     mergeConfig.js
+      …
+      17→export default function mergeConfig(config1, config2) {
+      …
     settle.js
+      …
+      14→export default function settle(resolve, reject, response) {
+      …
     transformData.js
+      …
+      15→export default function transformData(fns, response) {
+      …
   defaults/
     index.js
       …
-      23→function stringifySafely(rawValue, parser, encoder) {
+      38→const defaults = {
       …
       177→export default defaults;
     transitional.js
+      …
+      3→export default {
+      …
   env/
     README.md
       1→# axios // env
@@ -264,64 +220,129 @@ lib/
     classes/
       FormData.js
     data.js
+      1→export const VERSION = "1.16.1";
   helpers/
     AxiosTransformStream.js
+      …
+      8→class AxiosTransformStream extends stream.Transform {
       …
       156→export default AxiosTransformStream;
     AxiosURLSearchParams.js
       …
+      35→function AxiosURLSearchParams(params, options) {
+      …
       61→export default AxiosURLSearchParams;
     HttpStatusCode.js
+      1→const HttpStatusCode = {
       …
       77→export default HttpStatusCode;
     README.md
-      1→# axios // helpers
-      2→
-      3→The modules found in `helpers/` should be generic modules that are _not_ specific to the domain logic of axios. These modules could theoretically be published to npm on their own and consumed by other modules or apps. Some examples of generic modules are things like:
-      5→- Browser polyfills
-      6→- Managing cookies
-      7→- Parsing HTTP headers
     ZlibHeaderTransformStream.js
       …
+      5→class ZlibHeaderTransformStream extends stream.Transform {
+      6→  __transform(chunk, encoding, callback) {
+      …
+      11→  _transform(chunk, encoding, callback) {
+      …
+      27→}
       29→export default ZlibHeaderTransformStream;
     bind.js
+      …
+      10→export default function bind(fn, thisArg) {
+      …
     buildURL.js
+      …
+      14→export function encode(val) {
+      …
+      31→export default function buildURL(url, params, options) {
+      …
     callbackify.js
+      …
+      3→const callbackify = (fn, reducer) => {
       …
       18→export default callbackify;
     combineURLs.js
+      …
+      11→export default function combineURLs(baseURL, relativeURL) {
+      …
     composeSignals.js
+      …
+      5→const composeSignals = (signals, timeout) => {
       …
       57→export default composeSignals;
     cookies.js
+      …
+      4→export default platform.hasStandardBrowserEnv
+      …
     deprecatedMethod.js
+      …
+      15→export default function deprecatedMethod(method, instead, docs) {
+      …
     estimateDataURLDecodedBytes.js
+      …
+      10→export default function estimateDataURLDecodedBytes(url) {
+      …
     formDataToJSON.js
+      …
+      49→function formDataToJSON(formData) {
       …
       97→export default formDataToJSON;
     formDataToStream.js
       …
+      68→const formDataToStream = (form, headersHandler, options) => {
+      …
       119→export default formDataToStream;
     fromDataURI.js
+      …
+      21→export default function fromDataURI(uri, asBlob, options) {
+      …
     isAbsoluteURL.js
+      …
+      10→export default function isAbsoluteURL(url) {
+      …
     isAxiosError.js
+      …
+      12→export default function isAxiosError(payload) {
+      …
     isURLSameOrigin.js
+      …
+      3→export default platform.hasStandardBrowserEnv
+      …
     null.js
       …
       2→export default null;
     parseHeaders.js
+      …
+      41→export default (rawHeaders) => {
+      …
     parseProtocol.js
+      …
+      3→export default function parseProtocol(url) {
+      …
     progressEventReducer.js
     readBlob.js
       …
+      3→const readBlob = async function* (blob) {
+      …
       15→export default readBlob;
     resolveConfig.js
+      …
+      38→export default (config) => {
+      …
     sanitizeHeaderValue.js
     shouldBypassProxy.js
+      …
+      127→export default function shouldBypassProxy(location) {
+      …
     speedometer.js
+      …
+      9→function speedometer(samplesCount, min) {
       …
       55→export default speedometer;
     spread.js
+      …
+      24→export default function spread(callback) {
+      …
     throttle.js
       …
       7→function throttle(fn, freq) {
@@ -329,15 +350,15 @@ lib/
       44→export default throttle;
     toFormData.js
       …
+      89→function toFormData(obj, formData, options) {
+      …
       249→export default toFormData;
     toURLEncodedForm.js
+      …
+      7→export default function toURLEncodedForm(data, options) {
+      …
     trackStream.js
     validator.js
-      …
-      109→export default {
-      110→  assertOptions,
-      111→  validators,
-      112→};
   platform/
     browser/
       classes/
@@ -347,14 +368,7 @@ lib/
       index.js
         …
         5→export default {
-        6→  isBrowser: true,
-        7→  classes: {
-        8→    URLSearchParams,
-        9→    FormData,
-        10→    Blob,
-        11→  },
-        12→  protocols: ['http', 'https', 'file', 'blob', 'url', 'data'],
-        13→};
+        …
     common/
       utils.js
     index.js
@@ -366,27 +380,13 @@ lib/
     node/
       classes/
         FormData.js
+          …
+          3→export default FormData;
         URLSearchParams.js
+          …
+          4→export default url.URLSearchParams;
       index.js
-        …
-        5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
-        7→const DIGIT = '0123456789';
-        …
-        27→export default {
-        28→  isNode: true,
-        29→  classes: {
-        30→    URLSearchParams,
-        31→    FormData,
-        32→    Blob: (typeof Blob !== 'undefined' && Blob) || null,
-        33→  },
-        34→  ALPHABET,
-        35→  generateString,
-        36→  protocols: ['http', 'https', 'file', 'data'],
-        37→};
   utils.js
-    …
-    872→export default {
-    …
 package-lock.json
 package.json
   …
@@ -406,10 +406,32 @@ package.json
   128→  },
   …
 rollup.config.js
+  …
+  78→export default async () => {
+  …
 sandbox/
   client.html
   client.js
+    …
+    3→const URL = 'http://127.0.0.1:3000/api';
+    4→const BODY = {
+    …
+    9→function handleSuccess(data) {
+    …
+    12→function handleFailure(data) {
+    …
   server.js
+    …
+    5→let server;
+    …
+    14→function pipeFileToResponse(res, file, type) {
+    …
+    33→function handleApiRequest(req, res) {
+    …
+    75→function requestHandler(req, res) {
+    …
+    111→const PORT = 3000;
+    …
 scripts/
   axios-build-instance.js
 tests/
@@ -417,67 +439,17 @@ tests/
   browser/
   module/
     cjs/
-      package-lock.json
-      package.json
-      tests/
-        fixture-cleanup.module.test.cjs
-        helpers/
-          cjs-typing.ts
-          fixture.cjs
-          run-command.cjs
-          ts-require-default.ts
-          ts-require.ts
-        ts-require-default.module.test.cjs
-        ts-require.module.test.cjs
-        typings.module.test.cjs
     esm/
-      package-lock.json
-      package.json
-      tests/
-        fixture-cleanup.module.test.js
-        helpers/
-          esm-functions.ts
-          esm-index.ts
-          fixture.js
-          run-command.js
-        ts.module.test.js
-        typings.module.test.js
-      vitest.config.js
   setup/
   smoke/
-    bun/
-      bun.lock
-      package.json
-      tests/
-    cjs/
-      package-lock.json
-      package.json
-      tests/
-    deno/
-      deno.json
-      deno.lock
-      tests/
-        cancel.smoke.test.ts
-        error.smoke.test.ts
-        fetch.smoke.test.ts
-        headers.smoke.test.ts
-        import.smoke.test.ts
-    esm/
-      package-lock.json
-      package.json
-      tests/
-      vitest.config.js
   unit/
 tsconfig.json
-  1→{
-  2→  "compilerOptions": {
-  3→    "module": "node16",
-  4→    "lib": ["dom", "es2015"],
-  5→    "types": [],
-  6→    "strict": true,
-  7→    "noEmit": true
-  8→  }
-  9→}
 tslint.json
 vitest.config.js
+  …
+  4→export default defineConfig({
+  …
 webpack.config.js
+  1→var config = {};
+  …
+  26→module.exports = config;

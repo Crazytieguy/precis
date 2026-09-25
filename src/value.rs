@@ -116,8 +116,7 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
     }
 }
 
-/// Concavity exponent shared by the catalog-roster batch keys (TS
-/// `ExportMemberNames*` / `ModuleItemNames`) and the head-parity allocation in
+/// Concavity exponent shared by the catalog-roster batch keys and the head-parity allocation in
 /// [`conserved_catalog_chunk_factors`] — the allocation is only
 /// ratio-neutral if it uses the exponent the scheduler ranks with.
 ///

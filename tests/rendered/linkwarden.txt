@@ -34,41 +34,10 @@ README.md
   29→
   30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
   …
-  41→## Features
-  …
-  59→- 🔑 API keys
-  60→- ✅ Bulk actions
-  61→- 👥 User administration
-  …
-  68→## Get Our Official Mobile App
-  …
-  87→## Like what we're doing? Give us a Star ⭐
-  88→
-  89→![Star Us](https://raw.githubusercontent.com/linkwarden/linkwarden/main/assets/star_repo.gif)
-  91→## We're building our Community 🌐
-  …
-  101→## Suggestions
-  …
-  105→## Roadmap
-  …
-  109→## Community Projects
-  …
-  119→## Development
-  …
-  123→# Translations
-  …
-  132→## Security
-  …
-  136→## Support <3
-  …
-  148→## Thanks to All the Contributors 💪
-  …
 apps/
   mobile/
     .easignore
     .env.sample
-      1→LINKWARDEN_URL=
-      2→EXPO_PUBLIC_SHOW_LOGS=
     .gitignore
     app/
       (tabs)/
@@ -93,8 +62,17 @@ apps/
           _layout.tsx
           index.tsx
       +not-found.tsx
+        …
+        4→export default function NotFoundScreen() {
+        …
       _layout.tsx
+        …
+        51→export default Sentry.wrap(function RootLayout() {
+        …
       incoming.tsx
+        …
+        20→export default function IncomingScreen() {
+        …
       index.tsx
         …
         12→export default function HomeScreen() {
@@ -102,6 +80,9 @@ apps/
       links/
         [id].tsx
       login.tsx
+        …
+        17→export default function HomeScreen() {
+        …
     app.json
     assets/
       fonts/
@@ -113,39 +94,29 @@ apps/
         maskable_logo.png
         splash-icon.png
     babel.config.js
+      1→module.exports = function (api) {
+      …
     components/
-      ActionSheets/
-        AddLinkSheet.tsx
-        EditLinkSheet.tsx
-        NewCollectionSheet.tsx
-        Sheets.tsx
-        SupportSheet.tsx
-      CollectionListing.tsx
-      DashboardItem.tsx
-      DashboardSection.tsx
-      ElementNotSupported.tsx
-      Formats/
-        ImageFormat.tsx
-        PdfFormat.tsx
-        ReadableFormat.tsx
-        WebpageFormat.tsx
-      HapticTab.tsx
-      LinkListing.tsx
-      Links.tsx
-      TagListing.tsx
-      ui/
     eas.json
     lib/
       cache.ts
       colors.ts
       queryClient.ts
       queryPersister.ts
+        …
+        6→export const mmkvPersister: Persister = {
+        …
       theme.ts
     metro.config.js
+      …
+      18→module.exports = withNativeWind(config, { input: "./styles/global.css" });
     nativewind-env.d.ts
     package.json
     plugins/
       with-daynight-transparent-nav.js
+        …
+        38→module.exports = function withDayNightTransparentNav(config) {
+        …
     store/
       auth.ts
       data.ts
@@ -153,6 +124,9 @@ apps/
     styles/
       global.css
     tailwind.config.js
+      …
+      13→module.exports = {
+      …
     tsconfig.json
     types/
       global.ts
@@ -161,28 +135,24 @@ apps/
     components/
     components.json
     e2e/
-      .env.example
-      data/
-      fixtures/
-      index.ts
-      tests/
-        global/
-        public/
     hooks/
-      useArchivalTags.ts
-      useCollectivePermissions.ts
-      useDetectPageBottom.tsx
-      useInitialData.tsx
-      useMediaQuery.tsx
-      useOnScreen.tsx
-      usePermissions.tsx
-      useSort.tsx
-      useWindowDimensions.tsx
     layouts/
       AdminLayout.tsx
+        …
+        12→export default function AdminLayout({ children }: Props) {
+        …
       AuthRedirect.tsx
+        …
+        15→export default function AuthRedirect({ children }: Props) {
+        …
       MainLayout.tsx
+        …
+        13→export default function MainLayout({ children }: Props) {
+        …
       SettingsLayout.tsx
+        …
+        12→export default function SettingsLayout({ children }: Props) {
+        …
     lib/
       api/
       client/
@@ -192,11 +162,20 @@ apps/
         isValidUrl.ts
       utils.ts
     next-i18next.config.js
+      …
+      2→module.exports = {
+      …
     next.config.js
+      …
+      5→const nextConfig = {
+      …
+      31→module.exports = nextConfig;
     package.json
     pages/
     playwright.config.ts
     postcss.config.js
+      1→module.exports = {
+      …
     public/
     scripts/
     store/
@@ -205,6 +184,9 @@ apps/
     styles/
       globals.css
     tailwind.config.js
+      …
+      5→module.exports = {
+      …
     templates/
       acceptInvitation.html
       passwordReset.html
@@ -213,32 +195,47 @@ apps/
     tsconfig.json
     types/
       himalaya.d.ts
+        1→declare module "himalaya" {
+        …
       next-auth.d.ts
   worker/
     index.ts
+      …
+      3→function launch() {
+      …
     lib/
-      archiveHandler.ts
-      autoTagLink.ts
-      browser.ts
-      countUnprocessedBillableLinks.ts
-      fetchHeaders.ts
-      getLinkBatch.ts
-      getLinkBatchFairly.ts
-      preservationScheme/
-      prompts.ts
-      protectPageRequests.ts
     package.json
     templates/
       trialEnded.html
     tsconfig.json
     worker.ts
+      …
+      8→const workerIntervalInSeconds =
+      …
+      11→async function init() {
+      …
     workers/
       autoTagPreservedLinks.ts
       linkIndexing.ts
+        …
+        63→export async function startIndexing(interval = 10) {
+        …
       linkProcessing.ts
+        …
+        11→export async function linkProcessing(interval = 10) {
+        …
       migrationWorker.ts
+        …
+        4→export async function migrationWorker() {
+        …
       rssPolling.ts
+        …
+        11→export async function startRSSPolling() {
+        …
       trialEndEmailWorker.ts
+        …
+        21→export async function trialEndEmailWorker() {
+        …
 assets/
   app_store.png
   google_play.png
@@ -260,57 +257,72 @@ package.json
   8→    "packages/*"
   9→  ],
   …
-  32→  "dependencies": {
-  33→    "concurrently": "^9.1.2",
-  34→    "patch-package": "^8.0.0"
-  35→  },
-  36→  "resolutions": {
-  37→    "react": "19.1.0",
-  38→    "react-dom": "19.1.0",
-  39→    "react-native-mmkv": "4.1.2",
-  40→    "react-native-nitro-modules": "0.34.1"
-  41→  }
-  …
 packages/
   filesystem/
     createFile.ts
+      …
+      6→export async function createFile({
+      …
     createFolder.ts
+      …
+      5→export function createFolder({ filePath }: { filePath: string }) {
+      …
     fileExists.ts
+      …
+      6→export async function fileExists(filePath: string): Promise<boolean> {
+      …
     index.ts
+      1→export * from "./moveFile";
+      2→export * from "./removeFile";
+      3→export * from "./s3Client";
+      4→export * from "./readFile";
+      5→export * from "./fileExists";
+      6→export * from "./createFile";
+      7→export * from "./createFolder";
+      8→export * from "./manageFiles";
+      9→export * from "./removeFolder";
     manageFiles.ts
     moveFile.ts
+      …
+      6→export async function moveFile(from: string, to: string) {
+      …
     package.json
     readFile.ts
+      …
+      19→export async function readFile(filePath: string) {
+      …
     removeFile.ts
+      …
+      6→export async function removeFile({ filePath }: { filePath: string }) {
+      …
     removeFolder.ts
+      …
+      40→export async function removeFolder({ filePath }: { filePath: string }) {
+      …
     s3Client.ts
+      …
+      3→const s3Client: S3 | undefined =
+      …
+      19→export default s3Client;
   lib/
-    constants.ts
-    formatStats.ts
-    generatePreview.ts
-    getFormatBasedOnPreference.ts
-    getFormatFromContentType.ts
-    getLinkTypeFromFormat.ts
-    getOriginalFormat.ts
-    getPreservedFormatUrl.ts
-    isArchivalTag.ts
-    meilisearchClient.ts
-    package.json
-    rssHandler.ts
-    safeFetch.ts
-    schemaValidation.ts
-    ssrf.test.ts
-    ssrf.ts
-    transporter.ts
-    utils.ts
-    verifyCapacity.ts
   prisma/
     client/
       index.d.ts
+        1→export * from "../../../node_modules/.prisma/client/index.d";
       index.js
+        1→export * from "@prisma/client";
     index.ts
       …
+      3→const globalForPrisma = global as unknown as { prisma: PrismaClient };
+      4→
       5→export const prisma =
+      6→  globalForPrisma.prisma ||
+      7→  new PrismaClient({
+      8→    log:
+      9→      process.env.DEBUG === "true"
+      10→        ? ["query", "info", "warn", "error"]
+      11→        : ["warn", "error"],
+      12→  });
       …
     migrations/
     package.json
@@ -322,28 +334,6 @@ packages/
       10→model Account {
       …
       28→model User {
-      29→  id                      Int                   @id @default(autoincrement())
-      30→  name                    String?
-      31→  username                String?               @unique
-      32→  email                   String?               @unique
-      33→  emailVerified           DateTime?
-      34→  unverifiedNewEmail      String?
-      35→  image                   String?
-      36→  password                String?
-      37→  locale                  String                @default("en")
-      38→  parentSubscription      Subscription?         @relation("ChildUsers", fields: [parentSubscriptionId], references: [id])
-      39→  parentSubscriptionId    Int?
-      40→  accounts                Account[]
-      41→  collections             Collection[]
-      42→  tags                    Tag[]
-      43→  pinnedLinks             Link[]                @relation("PinnedLinks")
-      44→  createdLinks            Link[]                @relation("CreatedLinks")
-      45→  createdCollections      Collection[]          @relation("CreatedCollections")
-      46→  highlights              Highlight[]
-      47→  collectionsJoined       UsersAndCollections[]
-      48→  collectionOrder         Int[]                 @default([])
-      49→  whitelistedUsers        WhitelistedUser[]
-      50→  accessTokens            AccessToken[]
       …
       77→enum Theme {
       78→  dark
@@ -420,11 +410,7 @@ packages/
       275→model DashboardSection {
       …
       289→enum DashboardSectionType {
-      290→  STATS
-      291→  RECENT_LINKS
-      292→  PINNED_LINKS
-      293→  COLLECTION
-      294→}
+      …
       296→model AppMigration {
       …
       304→enum AppMigrationStatus {
@@ -441,7 +427,15 @@ packages/
     links.tsx
     package.json
     publicLinks.tsx
+      …
+      9→const usePublicLinks = (params: LinkRequestQuery = {}) => {
+      …
+      83→export { usePublicLinks };
     publicTags.tsx
+      …
+      7→const usePublicTags = (): UseQueryResult<TagIncludingCount[]> => {
+      …
+      26→export { usePublicTags };
     rss.tsx
     tags.tsx
     tokens.tsx
@@ -457,5 +451,13 @@ patches/
 vitest.config.mts
   …
   4→export default defineConfig({
-  …
+  5→  resolve: {
+  6→    alias: {
+  7→      "@": path.resolve(process.cwd(), "apps/web"),
+  8→    },
+  9→  },
+  10→  test: {
+  11→    exclude: ["**/node_modules/**", "**/dist/**", "**/e2e/**"],
+  12→  },
+  13→});
 yarn.lock

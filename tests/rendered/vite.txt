@@ -42,13 +42,7 @@ README.md
   33→- 🔑 Fully Typed APIs
   34→
   35→Vite (French word for "quick", pronounced [`/viːt/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
-  37→- A dev server that provides [rich feature enhancements](https://vite.dev/guide/features) over [native ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), for example extremely fast [Hot Module Replacement (HMR)](https://vite.dev/guide/features#hot-module-replacement).
-  38→
-  39→- A build command that bundles your code with [Rolldown](https://rolldown.rs), pre-configured to output highly optimized static assets for production.
-  40→
-  41→In addition, Vite is highly extensible via its [Plugin API](https://vite.dev/guide/api-plugin.html) and [JavaScript API](https://vite.dev/guide/api-javascript.html) with full typing support.
-  42→
-  43→[Read the Docs to Learn More](https://vite.dev).
+  …
   45→## Packages
   …
   53→## Contribution
@@ -61,20 +55,7 @@ README.md
   …
 docs/
   .vitepress/
-    buildEnd.config.ts
-    config.ts
-    inlined-scripts/
-    theme/
-      components/
-      composables/
-      index.ts
-      landing/
-      live/
-      styles.css
   _data/
-    acknowledgements.data.ts
-    blog.data.ts
-    team.js
   acknowledgements.md
   blog/
   blog.md
@@ -91,6 +72,9 @@ docs/
   team.md
   tsconfig.json
 eslint.config.js
+  …
+  16→export default defineConfig(
+  …
 netlify.toml
 package.json
 packages/
@@ -98,11 +82,6 @@ packages/
     CHANGELOG.md
     LICENSE
     README.md
-      1→# create-vite <a href="https://npmjs.com/package/create-vite"><img src="https://img.shields.io/npm/v/create-vite" alt="npm package"></a>
-      3→## Scaffolding Your First Vite Project
-      …
-      82→## Community Templates
-      …
     __tests__/
     index.js
     package.json
@@ -111,79 +90,18 @@ packages/
     template-lit/
     template-lit-ts/
     template-preact/
-      _gitignore
-      index.html
-      package.json
-      public/
-      src/
-        app.css
-        app.jsx
-        assets/
-        index.css
-        main.jsx
-      vite.config.js
     template-preact-ts/
     template-qwik/
-      README.md
-      _gitignore
-      index.html
-      package.json
-      public/
-      src/
-        app.css
-        app.jsx
-        assets/
-        index.css
-        main.jsx
-      vite.config.js
     template-qwik-ts/
     template-react/
-      README.md
-      _gitignore
-      eslint.config.js
-      index.html
-      package.json
-      public/
-      src/
-        App.css
-        App.jsx
-        assets/
-        index.css
-        main.jsx
-      vite.config.js
     template-react-ts/
     template-solid/
-      README.md
-      _gitignore
-      index.html
-      package.json
-      public/
-      src/
-        App.css
-        App.jsx
-        assets/
-        index.css
-        index.jsx
-      vite.config.js
     template-solid-ts/
     template-svelte/
     template-svelte-ts/
     template-vanilla/
     template-vanilla-ts/
     template-vue/
-      .vscode/
-      README.md
-      _gitignore
-      index.html
-      package.json
-      public/
-      src/
-        App.vue
-        assets/
-        components/
-        main.js
-        style.css
-      vite.config.js
     template-vue-ts/
     tsconfig.json
     tsdown.config.ts
@@ -191,9 +109,6 @@ packages/
     CHANGELOG.md
     LICENSE
     README.md
-      1→# @vitejs/plugin-legacy…
-      3→Vite's minimum browser support target is [native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import), and [`import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta). This plugin provides support for legacy browsers that do not support those features when building for production.
-      …
     package.json
     src/
       __tests__/
@@ -201,11 +116,111 @@ packages/
         readme.spec.ts
         snippets.spec.ts
       index.ts
+        …
+        32→let babel: Promise<typeof import('@babel/core')> | undefined
+        33→async function loadBabel() {
+        …
+        39→const { loadConfig: browserslistLoadConfig } = browserslist
+        …
+        43→function toOutputFilePathInHtml(
+        44→  filename: string,
+        45→  type: 'asset' | 'public',
+        46→  hostId: string,
+        47→  hostType: 'js' | 'css' | 'html',
+        48→  config: ResolvedConfig,
+        49→  toRelative: (filename: string, importer: string) => string,
+        50→): string {
+        …
+        80→function getBaseInHTML(urlRelativePath: string, config: ResolvedConfig) {
+        …
+        90→function joinUrlSegments(a: string, b: string): string {
+        …
+        103→function toAssetPathFromHtml(
+        104→  filename: string,
+        105→  htmlPath: string,
+        106→  config: ResolvedConfig,
+        107→): string {
+        …
+        121→const legacyEnvVarMarker = `__VITE_IS_LEGACY__`
+        122→const modernEnvVarMarker = `__VITE_IS_MODERN__`
+        123→
+        124→const _require = createRequire(import.meta.url)
+        125→
+        126→const nonLeadingHashInFileNameRE = /[^/]+\[hash(?::\d+)?\]/
+        127→const prefixedHashInFileNameRE = /\W?\[hash(?::\d+)?\]/
+        128→export const modulePreloadLinkRE: RegExp =
+        129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
+        …
+        132→const modernTargetsEsbuild = [
+        133→  'es2020',
+        134→  'edge105',
+        135→  'firefox106',
+        136→  'chrome105',
+        137→  'safari16.4',
+        138→  'ios16.4',
+        139→]
+        …
+        143→const modernTargetsBabel =
+        144→  'edge>=105, firefox>=106, chrome>=105, safari>=16.4, chromeAndroid>=105, iOS>=16.4'
+        146→const outputOptionsForLegacyChunks =
+        147→  new WeakSet<Rollup.NormalizedOutputOptions>()
+        149→function viteLegacyPlugin(options: Options = {}): Plugin[] {
+        …
+        794→export async function detectPolyfills(
+        795→  code: string,
+        796→  targets: any,
+        797→  assumptions: Record<string, boolean>,
+        798→  list: Set<string>,
+        799→): Promise<void> {
+        …
+        840→async function buildPolyfillChunk(
+        …
+        938→const polyfillId = '\0vite/legacy-polyfills'
+        939→
+        940→function polyfillsPlugin(
+        941→  imports: Set<string>,
+        942→  excludeSystemJS?: boolean,
+        943→): Plugin {
+        …
+        962→function prependModenChunkLegacyGuardPlugin(): Plugin {
+        …
+        987→function isLegacyChunk(chunk: Rollup.RenderedChunk) {
+        …
+        991→function isLegacyBundle(bundle: Rollup.OutputBundle) {
+        …
+        999→function recordAndRemovePolyfillBabelPlugin(
+        1000→  polyfills: Set<string>,
+        1001→): BabelPlugin {
+        …
+        1015→function replaceLegacyEnvBabelPlugin(): BabelPlugin {
+        …
+        1028→function replaceModernEnvBabelPlugin(): BabelPlugin {
+        …
+        1041→function wrapIIFEBabelPlugin(): BabelPlugin {
+        …
+        1057→export const cspHashes: string[] = [
+        1058→  safari10NoModuleFix,
+        1059→  systemJSInlineCode,
+        1060→  detectModernBrowserCode,
+        1061→  dynamicFallbackInlineCode,
+        1062→].map((i) => crypto.hash('sha256', i, 'base64'))
+        1064→export type { Options }
+        1065→
+        1066→export default viteLegacyPlugin
+        …
+        1069→function viteLegacyPluginCjs(this: unknown, options: Options): Plugin[] {
+        …
+        1078→export { viteLegacyPluginCjs as 'module.exports' }
       shims.d.ts
       snippets.ts
       types.ts
+        1→export interface Options {
+        …
     tsconfig.json
     tsdown.config.ts
+      …
+      3→export default defineConfig({
+      …
   vite/
     CHANGELOG.md
     LICENSE.md
@@ -216,9 +231,15 @@ packages/
     client.d.ts
     misc/
       false.d.ts
+        1→declare const result: boolean
+        2→export default result
       false.js
+        1→export default false
       true.d.ts
+        1→declare const result: boolean
+        2→export default result
       true.js
+        1→export default true
     package.json
       …
       2→  "name": "vite",
@@ -240,8 +261,22 @@ packages/
       84→  },
       …
     rolldown.config.ts
+      …
+      161→export default defineConfig([
+      162→  envConfig,
+      163→  clientConfig,
+      164→  nodeConfig,
+      165→  moduleRunnerConfig,
+      166→])
+      …
     rolldown.dts.config.ts
+      …
+      35→export default defineConfig({
+      …
     rollupLicensePlugin.ts
+      …
+      7→export default function licensePlugin(
+      …
     scripts/
     src/
       client/
@@ -260,6 +295,9 @@ packages/
         importMetaResolver.ts
         index.ts
         runner.ts
+          …
+          38→export class ModuleRunner {
+          …
         sourcemap/
           decoder.ts
           index.ts
@@ -270,15 +308,16 @@ packages/
       node/
         __tests__/
         __tests_dts__/
-          config.ts
-          plugin.ts
-          tsconfig.json
-          typeOptions.ts
-          utils.ts
         assetSource.ts
+          …
+          111→export function getNodeAssetAttributes(
+          …
         baseEnvironment.ts
         build.ts
         cli.ts
+          …
+          68→export const stopProfiler = (
+          …
         config.ts
         constants.ts
         deprecations.ts
@@ -288,43 +327,10 @@ packages/
         http.ts
         idResolver.ts
         index.ts
-          1→import type * as Rolldown from 'rolldown'
-          …
-          6→import type * as Rollup from '#types/internal/rollupTypeCompat'
-          8→export type { Rollup, Rolldown }
-          9→export { esmExternalRequirePlugin } from 'rolldown/plugins'
-          …
-          24→/** @deprecated - use `parse` instead */
-          25→export const parseAst: typeof _parseAst = _parseAst
-          26→/** @deprecated - use `parseAsync` instead */
-          27→export const parseAstAsync: typeof _parseAstAsync = _parseAstAsync
-          29→export {
-          30→  defineConfig,
-          31→  loadConfigFromFile,
-          32→  resolveConfig,
-          33→  sortUserPlugins,
-          34→} from './config'
-          35→export { perEnvironmentPlugin } from './plugin'
-          36→export { perEnvironmentState } from './environment'
-          37→export { createServer } from './server'
-          38→export { preview } from './preview'
-          39→export { build, createBuilder } from './build'
-          41→export { optimizeDeps } from './optimizer'
-          …
-          87→export const esbuildVersion = '0.25.0'
-          …
-          283→export type * as HttpProxy from 'http-proxy-3'
-          …
         internalIndex.ts
         logger.ts
         nodeResolve.ts
         optimizer/
-          index.ts
-          optimizer.ts
-          pluginConverter.ts
-          resolve.ts
-          rolldownDepPlugin.ts
-          scan.ts
         packages.ts
         plugin.ts
         plugins/
@@ -362,63 +368,12 @@ packages/
         server/
         shortcuts.ts
         ssr/
-          __tests__/
-          fetchModule.ts
-          index.ts
-            …
-            4→export type SSRTarget = 'node' | 'webworker'
-            5→
-            6→export type SsrDepOptimizationConfig = DepOptimizationConfig
-            7→
-            8→export interface SSROptions {
-            …
-            51→export interface ResolvedSSROptions extends SSROptions {
-            52→  target: SSRTarget
-            53→  optimizeDeps: SsrDepOptimizationConfig
-            54→}
-            …
-            63→export const ssrConfigDefaults: Readonly<Partial<SSROptions>> =
-            64→  _ssrConfigDefaults
-            66→export function resolveSSROptions(
-            67→  ssr: SSROptions | undefined,
-            68→  preserveSymlinks: boolean,
-            69→): ResolvedSSROptions {
-            …
-          runnerImport.ts
-          runtime/
-          ssrManifestPlugin.ts
-          ssrModuleLoader.ts
-          ssrStacktrace.ts
-          ssrTransform.ts
         tsconfig.json
         typeUtils.ts
         utils.ts
         watch.ts
       shared/
-        __tests__/
-        builtin.ts
-        constants.ts
-        forwardConsole.ts
-        hmr.ts
-        hmrHandler.ts
-        invokeMethods.ts
-        moduleRunnerTransport.ts
-        ssrTransform.ts
-        tsconfig.json
-        utils.ts
       types/
-        alias.d.ts
-        anymatch.d.ts
-        chokidar.d.ts
-        commonjs.d.ts
-        connect.d.ts
-        dynamicImportVars.d.ts
-        package.json
-          …
-          3→  "version": "0.0.0"
-          …
-        shims.d.ts
-        ws.d.ts
     tsconfig.base.json
     tsconfig.check.json
     tsconfig.json

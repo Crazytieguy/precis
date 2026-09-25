@@ -53,42 +53,13 @@ README.md
   …
   116→[Become a sponsor and have your company logo here](https://github.com/users/typicode/sponsorship)
   118→## Query Capabilities
-  119→
-  120→JSON Server supports advanced querying out of the box:
-  121→
-  122→```http
-  123→GET /posts?views:gt=100                  # Filter by condition
-  124→GET /posts?_sort=-views                  # Sort by field (descending)
-  125→GET /posts?_page=1&_per_page=10          # Pagination
-  126→GET /posts?_embed=comments               # Include relations
-  127→GET /posts?_where={"or":[...]}           # Complex queries
-  128→```
-  129→
-  130→See detailed documentation below for each feature.
+  …
   132→## Routes
   133→
   134→### Array Resources
-  135→
-  136→For array resources like `posts` and `comments`:
-  137→
-  138→```http
-  139→GET    /posts
-  140→GET    /posts/:id
-  141→POST   /posts
-  142→PUT    /posts/:id
-  143→PATCH  /posts/:id
-  144→DELETE /posts/:id
-  145→```
-  146→
+  …
   147→### Object Resources
-  148→
-  149→For singular object resources like `profile`:
-  150→
-  151→```http
-  152→GET   /profile
-  153→PUT   /profile
-  154→PATCH /profile
-  155→```
+  …
   157→## Query params
   158→
   159→### Conditions
@@ -97,19 +68,9 @@ README.md
   186→### Sort
   …
   194→### Pagination
-  196→```http
-  197→GET /posts?_page=1&_per_page=25
-  198→```
   …
-  216→**Notes:**
-  217→- `_per_page` defaults to `10` if not specified
-  218→- Invalid `_page` or `_per_page` values are automatically normalized to valid ranges
   220→### Embed
-  221→
-  222→```http
-  223→GET /posts?_embed=comments
-  224→GET /comments?_embed=post
-  225→```
+  …
   227→### Complex filter with `_where`
   …
   235→## Delete dependents
@@ -118,75 +79,20 @@ README.md
   238→DELETE /posts/1?_dependent=comments
   239→```
   241→## Static Files
-  242→
-  243→JSON Server automatically serves files from the `./public` directory.
-  244→
-  245→To serve additional static directories:
-  246→
-  247→```bash
-  248→json-server db.json -s ./static
-  249→json-server db.json -s ./static -s ./node_modules
-  250→```
-  251→
-  252→Static files are served with standard MIME types and can include HTML, CSS, JavaScript, images, and other assets.
+  …
   254→## Migration Notes (v0 → v1)
   …
 fixtures/
   db.json
   db.json5
-    1→{
-    2→  posts: [
-    3→    {
-    4→      id: "1",
-    5→      title: "a title",
-    6→    },
-    7→    {
-    8→      id: "2",
-    9→      title: "another title",
-    10→    },
-    11→  ],
-    12→  comments: [
-    13→    {
-    14→      id: "1",
-    15→      text: "a comment about post 1",
-    16→      postId: "1",
-    17→    },
-    18→    {
-    19→      id: "2",
-    20→      text: "another comment about post 1",
-    21→      postId: "1",
-    22→    },
-    23→  ],
-    24→  profile: {
-    25→    name: "typicode",
-    26→  },
-    27→}
 package.json
   …
   2→  "name": "json-server",
   3→  "version": "1.0.0-beta.15",
   4→  "description": "",
-  5→  "keywords": [
-  6→    "JSON",
-  7→    "server",
-  8→    "fake",
-  9→    "REST",
-  10→    "API",
-  11→    "prototyping",
-  12→    "mock",
-  13→    "mocking",
-  14→    "test",
-  15→    "testing",
-  16→    "rest",
-  17→    "data",
-  18→    "dummy"
-  19→  ],
+  …
   20→  "license": "MIT",
-  21→  "author": "typicode <typicode@gmail.com>",
-  22→  "repository": {
-  23→    "type": "git",
-  24→    "url": "git+https://github.com/typicode/json-server.git"
-  25→  },
+  …
   26→  "bin": {
   27→    "json-server": "lib/bin.js"
   28→  },
@@ -235,10 +141,44 @@ src/
   adapters/
     normalized-adapter.test.ts
     normalized-adapter.ts
+      …
+      6→export const DEFAULT_SCHEMA_PATH = './node_modules/json-server/schema.json'
+      7→export type RawData = Record<string, Item[] | Item | string | undefined> & {
+      8→  $schema?: string
+      9→}
+      11→export class NormalizedAdapter implements Adapter<Data> {
+      …
+      14→  constructor(adapter: Adapter<RawData>) {
+      15→    this.#adapter = adapter
+      …
+      18→  async read(): Promise<Data | null> {
+      …
+      44→  async write(data: Data): Promise<void> {
+      …
+      47→}
     observer.ts
       …
       4→export class Observer<T> {
       …
+      7→  onReadStart = function () {
+      8→    return
+      …
+      10→  onReadEnd: (data: T | null) => void = function () {
+      11→    return
+      …
+      13→  onWriteStart = function () {
+      14→    return
+      …
+      16→  onWriteEnd = function () {
+      17→    return
+      …
+      20→  constructor(adapter: Adapter<T>) {
+      …
+      24→  async read() {
+      …
+      31→  async write(arg: T) {
+      …
+      36→}
   app.test.ts
   app.ts
     …
@@ -250,6 +190,32 @@ src/
     94→export function createApp(db: Low<Data>, options: AppOptions = {}) {
     …
   bin.ts
+    …
+    21→function help() {
+    …
+    34→function args(): {
+    35→  file: string;
+    36→  port: number;
+    37→  host: string;
+    38→  static: string[];
+    39→} {
+    …
+    115→const { file, port, host, static: staticArr } = args();
+    …
+    128→let adapter: Adapter<RawData>;
+    …
+    137→const observer = new Observer(new NormalizedAdapter(adapter));
+    138→
+    139→const db = new Low<Data>(observer, {});
+    …
+    143→const app = createApp(db, { logger: false, static: staticArr });
+    144→
+    145→function logRoutes(data: Data) {
+    …
+    158→const kaomojis = ["♡⸜(˶˃ ᵕ ˂˶)⸝♡", "♡( ◡‿◡ )", "( ˶ˆ ᗜ ˆ˵ )", "(˶ᵔ ᵕ ᵔ˶)"];
+    159→
+    160→function randomItem(items: string[]): string {
+    …
   matches-where.test.ts
   matches-where.ts
     …
@@ -274,12 +240,59 @@ src/
     58→export function parseWhere(query: string): JsonObject {
     …
   random-id.ts
-    1→import { randomBytes } from 'node:crypto'
+    …
     3→export function randomId(): string {
     4→  return randomBytes(8).toString('base64url')
     …
   service.test.ts
   service.ts
+    …
+    9→export type Item = Record<string, unknown>
+    10→
+    11→export type Data = Record<string, Item[] | Item>
+    12→
+    13→export function isItem(obj: unknown): obj is Item {
+    14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
+    …
+    17→export type PaginatedItems = PaginationResult<Item>
+    …
+    81→export class Service {
+    …
+    84→  constructor(db: Low<Data>) {
+    85→    this.#db = db
+    …
+    92→  has(name: string): boolean {
+    …
+    96→  findById(name: string, id: string, query: { _embed?: string[] | string }): Item | undefined {
+    …
+    110→  find(
+    111→    name: string,
+    112→    opts: {
+    113→      where: JsonObject
+    114→      sort?: string
+    115→      page?: number
+    116→      perPage?: number
+    117→      embed?: string | string[]
+    118→    },
+    119→  ): Item[] | PaginatedItems | Item | undefined {
+    …
+    145→  async create(name: string, data: Omit<Item, 'id'> = {}): Promise<Item | undefined> {
+    …
+    186→  async update(name: string, body: Item = {}): Promise<Item | undefined> {
+    …
+    190→  async patch(name: string, body: Item = {}): Promise<Item | undefined> {
+    …
+    194→  async updateById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
+    …
+    198→  async patchById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
+    …
+    202→  async destroyById(
+    203→    name: string,
+    204→    id: string,
+    205→    dependent?: string | string[],
+    206→  ): Promise<Item | undefined> {
+    …
+    222→}
   where-operators.ts
     1→export const WHERE_OPERATORS = [
     2→  'lt',
@@ -299,19 +312,5 @@ src/
     17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
     …
 tsconfig.json
-  1→{
-  2→  "exclude": ["src/**/*.test.ts"],
-  3→  "compilerOptions": {
-  4→    "outDir": "./lib",
-  5→    "target": "esnext",
-  6→    "module": "nodenext",
-  7→    "skipLibCheck": true,
-  8→    "strict": true,
-  9→    "allowImportingTsExtensions": true,
-  10→    "rewriteRelativeImportExtensions": true,
-  11→    "erasableSyntaxOnly": true,
-  12→    "verbatimModuleSyntax": true
-  13→  }
-  14→}
 views/
   index.html
