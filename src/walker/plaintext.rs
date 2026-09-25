@@ -39,7 +39,7 @@ use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::list_dir, gated_read_source, gated_whole_file_content,
+    FileLines, WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content,
     path_depth_factor, single_file_lines_content,
 };
 
@@ -741,9 +741,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
             continue;
         }
-        // Head-sampled, not gated: a file one line over the cap used
-        // to render as nothing at all, which is strictly worse than
-        // the same file's first `PLAINTEXT_LINE_CAP` lines.
         let content = match class {
             Class::DotenvSample => {
                 head_sampled_content(&file, ctx, DOTENV_BYTE_GATE, DOTENV_MANDATORY_HEAD_LINES)
@@ -843,47 +840,25 @@ fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
 }
 
 /// Whole file when it fits `head_line_cap`, else the head rows with a
-/// trailing ellipsis. Shared by the requirements and dotenv-sample
-/// classes, whose long-file tails are low-value but whose heads carry
-/// the roster the file exists for.
+/// trailing ellipsis — a file one line over the cap renders its head
+/// rather than nothing.
 fn head_sampled_content(
     file: &Path,
     ctx: &WalkCtx,
     byte_gate: usize,
     head_line_cap: usize,
 ) -> Option<crate::content::BatchContent> {
-    let byte_len = std::fs::metadata(file)
-        .map(|m| m.len() as usize)
-        .unwrap_or(usize::MAX);
-    if byte_len > byte_gate {
-        return None;
-    }
-    let source = ctx.read_source(file)?;
+    let source = gated_read_source(file, ctx, byte_gate)?;
     let line_count = source.lines().count();
     if line_count == 0 {
         return None;
     }
-    if line_count <= head_line_cap {
-        return single_file_lines_content(
-            file,
-            &source,
-            FileLines::new((1..=line_count).collect()),
-        );
-    }
-    single_file_lines_content(file, &source, head_lines(line_count, head_line_cap))
-}
-
-fn head_lines(line_count: usize, head_line_cap: usize) -> FileLines {
-    let full: Vec<usize> = (1..=head_line_cap.min(line_count)).collect();
-    let mut ellipses = Vec::new();
-    let mut boundaries = full.clone();
-    boundaries.push(line_count + 1);
-    for pair in boundaries.windows(2) {
-        if pair[1] > pair[0] + 1 {
-            ellipses.push(pair[0] + 1);
-        }
-    }
-    FileLines::new(full).with_ellipses(dedup_sorted(ellipses))
+    let lines = if line_count <= head_line_cap {
+        FileLines::new((1..=line_count).collect())
+    } else {
+        FileLines::new((1..=head_line_cap).collect()).with_ellipses(vec![head_line_cap + 1])
+    };
+    single_file_lines_content(file, &source, lines)
 }
 
 #[cfg(test)]
