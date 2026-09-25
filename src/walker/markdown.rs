@@ -592,11 +592,6 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     ) * scale
 }
 
-fn dev_workflow_section_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
-    mix_signals(1.15, 1.0, 0.85, path_depth_factor(file, ctx))
-        * index_decay(parent_index, 0.2, 0.75)
-}
-
 /// Per-section value. Child ranges scale the parent's value so they
 /// don't over-rank once cost drops. `Intro` keeps full weight.
 fn section_value(
@@ -620,9 +615,7 @@ fn section_signal_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64
             * readme_index_decay(range)
             * roster_mass_factor(range.roster_entries);
     }
-    let parent = if range.dev_workflow_section {
-        dev_workflow_section_value(file, range.parent_index, ctx)
-    } else if is_readme(file) {
+    let parent = if is_readme(file) {
         readme_section_value(file, range, ctx)
     } else {
         heading_slab_value(file, range.parent_index, ctx)
@@ -882,7 +875,6 @@ fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
             is_canonical_operational_section: false,
             is_reference_usage_section: false,
             reference_shaped: false,
-            dev_workflow_section: false,
             roster_entries: 0,
             chained_to_previous: false,
         },
@@ -1131,9 +1123,7 @@ const RST_MAX_SECTION_BYTES: usize = 1800;
 
 /// One RST README body section: the heading row + body rows (directive
 /// blocks already stripped), 1-based, plus its post-title index and
-/// whether its title is a canonical-usage marker. RST stays out of the
-/// Markdown-only deferred prose tier for now: the line scanner does not have
-/// the same README/dev-workflow calibration that stamps Markdown sections.
+/// whether its title is a canonical-usage marker.
 struct RstSection {
     rows: Vec<usize>,
     /// Position among body sections (0-based), used for index decay —
@@ -2015,10 +2005,6 @@ struct SectionRange {
     /// `Section` key so the scheduler prices the range at the default
     /// concavity instead of the steeper prose exponent.
     reference_shaped: bool,
-    /// Dev-workflow doc section whose body carries repo-ops mechanics
-    /// (commands, setup/test/debug steps, env vars, or concrete repo
-    /// paths). Valued above peripheral-doc prose.
-    dev_workflow_section: bool,
     /// Non-zero for a link-index roster chunk: the count of intra-doc
     /// link entries this chunk catalogs. Valued as a names surface
     /// (cat lift + [`roster_mass_factor`]) instead of section prose.
@@ -2277,215 +2263,12 @@ fn looks_like_cli_synopsis_line(line: &str) -> bool {
     explicit_options || metavariables >= 2
 }
 
-fn is_dev_workflow_doc(file: &Path) -> bool {
-    file.file_stem().and_then(|s| s.to_str()).is_some_and(|s| {
-        matches!(
-            s.to_ascii_uppercase().as_str(),
-            "CONTRIBUTING" | "DEVELOPING" | "DEVELOPMENT" | "HACKING"
-        )
-    })
-}
-
-const DEV_WORKFLOW_MIN_SIGNALS: usize = 2;
-const DEV_WORKFLOW_MAX_BYTES: usize = 2200;
-
-fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let last = end.min(src_lines.len());
-    if start > last {
-        return false;
-    }
-    let mut bytes = 0usize;
-    let mut signals = 0usize;
-    let mut fence_has_signal = false;
-    let mut in_fence = false;
-    for line in &src_lines[start - 1..last] {
-        bytes += line.len() + 1;
-        let t = line.trim_start();
-        if t.is_empty() {
-            continue;
-        }
-        if t.starts_with("```") || t.starts_with("~~~") {
-            if in_fence && fence_has_signal {
-                signals += 1;
-            }
-            in_fence = !in_fence;
-            fence_has_signal = false;
-            continue;
-        }
-        if in_fence {
-            if line_has_density_signal(t, true) {
-                fence_has_signal = true;
-            }
-            continue;
-        }
-        if line_has_density_signal(t, false) {
-            signals += 1;
-        }
-    }
-    if in_fence && fence_has_signal {
-        signals += 1;
-    }
-    bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
-}
-
-fn line_has_density_signal(t: &str, in_fence: bool) -> bool {
-    if in_fence {
-        return is_dev_command_line(t)
-            || is_dev_config_line(t)
-            || is_dev_config_snippet_line(t)
-            || is_repo_path_line(t);
-    }
-    is_dev_command_line(t)
-        || is_dev_config_line(t)
-        || is_repo_path_line(t)
-        || (is_numbered_step_line(t) && contains_dev_action(t))
-}
-
 fn is_markdown_rule_row(t: &str) -> bool {
     let stripped = t.trim_matches('|').trim();
     !stripped.is_empty()
         && stripped
             .bytes()
             .all(|b| matches!(b, b'-' | b':' | b' ' | b'\t' | b'|'))
-}
-
-fn is_config_key_token(token: &str) -> bool {
-    matches!(
-        token,
-        "bin"
-            | "browser"
-            | "dependencies"
-            | "devDependencies"
-            | "exports"
-            | "files"
-            | "main"
-            | "module"
-            | "scripts"
-            | "types"
-    ) || token.ends_with(".json")
-        || token.ends_with(".toml")
-        || token.ends_with(".yaml")
-        || token.ends_with(".yml")
-        || token.contains("config")
-}
-
-fn is_dev_config_snippet_line(t: &str) -> bool {
-    let Some((key, _)) = t.split_once([':', '=']) else {
-        return false;
-    };
-    let key = key
-        .trim()
-        .trim_matches(|c: char| matches!(c, '"' | '\'' | '`' | '{' | '[' | ',' | ' ' | '\t'));
-    matches!(
-        key,
-        "compilerOptions"
-            | "dependencies"
-            | "devDependencies"
-            | "extends"
-            | "module"
-            | "options"
-            | "parser"
-            | "plugins"
-            | "presets"
-            | "rules"
-            | "scripts"
-    ) || is_config_key_token(key)
-}
-
-fn is_dev_command_line(t: &str) -> bool {
-    const DEV_COMMAND_TOKENS: &[&str] = &[
-        "npm",
-        "pnpm",
-        "yarn",
-        "cargo",
-        "rustup",
-        "go",
-        "make",
-        "git",
-        "pip",
-        "pip3",
-        "python",
-        "python3",
-        "pytest",
-        "poetry",
-        "uv",
-        "docker",
-        "docker-compose",
-        "gradle",
-        "mvn",
-    ];
-    let Some(token) = first_command_token(t) else {
-        return false;
-    };
-    token.starts_with("./") || DEV_COMMAND_TOKENS.contains(&token)
-}
-
-fn first_command_token(t: &str) -> Option<&str> {
-    let mut code = t.trim_start();
-    while let Some(rest) = code.strip_prefix('`') {
-        code = rest.trim_start();
-    }
-    if let Some(rest) = code.strip_prefix("$ ") {
-        code = rest.trim_start();
-    } else if let Some(rest) = code.strip_prefix("> ") {
-        code = rest.trim_start();
-    }
-    code.split_whitespace()
-        .next()
-        .map(|token| token.trim_end_matches('`'))
-}
-
-fn is_dev_config_line(t: &str) -> bool {
-    t.contains("package.json")
-        || t.contains("pyproject.toml")
-        || t.contains("setup.py")
-        || t.contains("requirements.txt")
-        || t.contains("Makefile")
-        || t.contains("Dockerfile")
-        || t.contains("pnpm-workspace")
-        || t.contains("vitest")
-        || t.contains("playwright")
-        || t.split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
-            .any(is_env_var_token)
-}
-
-fn is_repo_path_line(t: &str) -> bool {
-    t.contains("src/")
-        || t.contains("packages/")
-        || t.contains("crates/")
-        || t.contains("tests/")
-        || t.contains(".github/")
-        || t.contains(".ts")
-        || t.contains(".js")
-        || t.contains(".rs")
-        || t.contains(".py")
-        || t.contains(".json")
-}
-
-fn is_numbered_step_line(t: &str) -> bool {
-    t.split_once(". ")
-        .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
-}
-
-fn contains_dev_action(t: &str) -> bool {
-    let lower = t.to_ascii_lowercase();
-    lower.contains("run ")
-        || lower.contains("test")
-        || lower.contains("build")
-        || lower.contains("debug")
-        || lower.contains("install")
-        || lower.contains("clone")
-        || lower.contains("create")
-        || lower.contains("edit")
-        || lower.contains("update")
-}
-
-fn is_env_var_token(token: &str) -> bool {
-    token.len() >= 5
-        && token.contains('_')
-        && token
-            .bytes()
-            .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b == b'_')
 }
 
 /// Section ranges for batching. H2s that satisfy a split rule expand
@@ -2544,7 +2327,6 @@ fn logical_sections(
                         is_canonical_operational_section: false,
                         is_reference_usage_section: false,
                         reference_shaped: false,
-                        dev_workflow_section: false,
                         roster_entries: 0,
                         chained_to_previous: false,
                     },
@@ -2662,7 +2444,6 @@ fn logical_sections(
                                 is_canonical_operational_section: false,
                                 is_reference_usage_section: reference_h2,
                                 reference_shaped: false,
-                                dev_workflow_section: false,
                                 roster_entries: 0,
                                 chained_to_previous: false,
                             },
@@ -2699,13 +2480,6 @@ fn logical_sections(
                     || cli_reference_h2_parents.contains(&range.parent_index));
             range.reference_shaped = range.is_reference_usage_section
                 && range_is_reference_shaped(&src_lines, range.start, range.end);
-        }
-    }
-    if is_dev_workflow_doc(file) {
-        for range in &mut out {
-            range.dev_workflow_section =
-                range_has_dev_workflow_signal(&src_lines, range.start, range.end);
-            range.reference_shaped |= range.dev_workflow_section;
         }
     }
     out
@@ -2825,7 +2599,6 @@ fn push_link_index_chunks(
             is_canonical_operational_section: false,
             is_reference_usage_section: false,
             reference_shaped: true,
-            dev_workflow_section: false,
             roster_entries: entries,
             chained_to_previous: i > 0,
         });
@@ -2877,7 +2650,6 @@ fn push_canonical_usage_fence_split(
         is_canonical_operational_section: false,
         is_reference_usage_section: false,
         reference_shaped: false,
-        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2891,7 +2663,6 @@ fn push_canonical_usage_fence_split(
         is_canonical_operational_section: false,
         is_reference_usage_section: false,
         reference_shaped: false,
-        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -3175,7 +2946,6 @@ fn push_whole_or_head_split(
                 is_canonical_operational_section: head.is_canonical_operational_section,
                 is_reference_usage_section: head.is_reference_usage_section,
                 reference_shaped: false,
-                dev_workflow_section: false,
                 roster_entries: 0,
                 chained_to_previous: true,
             });
@@ -3223,7 +2993,6 @@ fn push_intro<'a>(
         is_canonical_operational_section: false,
         is_reference_usage_section: reference_h2,
         reference_shaped: false,
-        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -3306,7 +3075,6 @@ fn push_h3_child(
         is_canonical_operational_section: false,
         is_reference_usage_section: reference_h3,
         reference_shaped: false,
-        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -3331,7 +3099,6 @@ fn push_body_block_ranges(
         is_canonical_operational_section: false,
         is_reference_usage_section: false,
         reference_shaped: false,
-        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     }));
@@ -4531,43 +4298,6 @@ mod tests {
         }
     }
 
-    #[test]
-    fn markdown_dev_command_line_uses_first_token() {
-        for line in [
-            "npm test",
-            "`$ pnpm install`",
-            "> cargo test",
-            "python3 -m pytest",
-            "uv sync",
-            "docker-compose up",
-            "./scripts/check",
-        ] {
-            assert!(is_dev_command_line(line), "{line}");
-        }
-
-        for line in [
-            "Install with npm after cloning.",
-            "The `cargo test` command is useful.",
-            "Run this in your shell.",
-        ] {
-            assert!(!is_dev_command_line(line), "{line}");
-        }
-    }
-
-    #[test]
-    fn markdown_dev_signal_lines_cover_python_configs() {
-        for line in [
-            "pyproject.toml",
-            "setup.py",
-            "requirements.txt",
-            "Makefile",
-            "Dockerfile",
-        ] {
-            assert!(is_dev_config_line(line), "{line}");
-        }
-        assert!(is_repo_path_line("src/package/module.py"));
-    }
-
     // Nested H1→H2 immediately. Headline must NOT pull the H2 body into
     // itself; only the H1 heading row is covered (exact set, not just membership).
     #[test]
@@ -5016,35 +4746,6 @@ mod tests {
         assert_eq!(rosters[1].roster_entries, 20);
         assert!(rosters[1].chained_to_previous);
         assert!(rosters.iter().all(|r| r.reference_shaped));
-    }
-
-    #[test]
-    fn markdown_density_signals_ignore_bare_fence_delimiters() {
-        let src = [
-            "```",
-            "plain text",
-            "```",
-            "~~~",
-            "more prose",
-            "~~~",
-            "```",
-            "npm test",
-            "```",
-            "```",
-            "cargo build",
-            "```",
-        ];
-        // Prose fences contribute nothing; only the command fences do,
-        // and one alone is below the dev-workflow signal minimum.
-        assert!(!range_has_dev_workflow_signal(&src, 1, 6));
-        assert!(!range_has_dev_workflow_signal(&src, 1, 9));
-        assert!(range_has_dev_workflow_signal(&src, 1, 12));
-    }
-
-    #[test]
-    fn markdown_in_fence_config_snippet_is_a_density_signal() {
-        assert!(line_has_density_signal("\"plugins\": [\"svgo\"]", true));
-        assert!(!line_has_density_signal("\"plugins\": [\"svgo\"]", false));
     }
 
     #[test]
