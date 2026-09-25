@@ -104,7 +104,7 @@
 //!   and the grid-aligned snapshot agree by construction.
 
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result};
 
@@ -113,7 +113,7 @@ use crate::content::{BatchContent, FsEntries, Render, explode_spans, with_trunca
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
-use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
+use crate::{Schedule, ScheduledBatch};
 
 mod render;
 use render::format_report;
@@ -228,6 +228,14 @@ pub fn generate_divergence_report(
 }
 
 // ---- graded atoms ------------------------------------------------------
+
+/// Identity of one unit of credited content; paired with a per-render
+/// byte footprint in [`GradedAtom`].
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub(super) enum Atom {
+    Line { path: PathBuf, line: usize },
+    Fs { parent: PathBuf, entry: String },
+}
 
 /// One content atom with byte footprint for credit accounting (not
 /// render-cost). `bytes ≥ 1` for any present atom; 0 means "walker
@@ -555,12 +563,13 @@ mod tests {
     use std::collections::HashMap;
     use std::path::PathBuf;
 
+    use crate::ScheduledBatch;
     use crate::content::BatchContent;
     use crate::north_star::NorthStar;
-    use crate::schedule_types::{Atom, ScheduledBatch};
 
     use super::{
-        BUDGETS, BuildCtx, GradedAtom, NsRow, WalkerRow, WalkerSnapshots, compute_score_at_running,
+        Atom, BUDGETS, BuildCtx, GradedAtom, NsRow, WalkerRow, WalkerSnapshots,
+        compute_score_at_running,
     };
 
     fn line_atom(path: &str, line: usize, bytes: usize) -> GradedAtom {
@@ -575,8 +584,6 @@ mod tests {
 
     fn scheduled_batch(cum_tokens: usize) -> ScheduledBatch {
         ScheduledBatch {
-            position: 0,
-            key: String::new(),
             descriptor: String::new(),
             cost_tokens: 0,
             cum_tokens,

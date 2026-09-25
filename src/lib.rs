@@ -10,7 +10,6 @@ pub mod north_star;
 pub mod ns_loader;
 pub mod ns_simulate;
 pub mod render;
-pub mod schedule_types;
 pub mod scheduler;
 #[cfg(feature = "timing")]
 pub mod timing;
@@ -43,7 +42,6 @@ pub use batch::{Batch, BatchKey, WalkerKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
 pub use fs_util::{DirFilter, EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache};
-pub use schedule_types::{Atom, CandidateBatch, Schedule, ScheduledBatch};
 
 use scheduler::Scheduler;
 use walker::FsWalker;
@@ -91,6 +89,21 @@ pub fn render_with_schedule(
     Ok(tree.render())
 }
 
+/// Complete walker schedule from one [`render_schedule`] run, in
+/// scheduling order.
+pub struct Schedule {
+    /// Canonical fixture root; batch content paths are absolute under it.
+    pub root: std::path::PathBuf,
+    pub batches: Vec<ScheduledBatch>,
+}
+
+pub struct ScheduledBatch {
+    pub descriptor: String,
+    pub cost_tokens: usize,
+    pub cum_tokens: usize,
+    pub content: BatchContent,
+}
+
 /// Run the walker at `budget` and return a [`Schedule`] — input for
 /// regression snapshots and the divergence metric.
 pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Schedule> {
@@ -99,48 +112,18 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .ok_or_else(|| anyhow!("no path provided"))?
         .as_ref();
     let root = canonicalize_dir(path)?;
-    let fixture = root
-        .file_name()
-        .and_then(|n| n.to_str())
-        .unwrap_or("")
-        .to_string();
-
-    let scheduler = Scheduler::new(root.clone(), FsWalker, budget, None);
-    let report = scheduler.run_with_report();
-
-    let cumulative_tokens = report.scheduled.last().map(|b| b.cum_tokens).unwrap_or(0);
+    let report = Scheduler::new(root.clone(), FsWalker, budget, None).run_with_report();
     let batches = report
         .scheduled
         .into_iter()
-        .enumerate()
-        .map(|(i, b)| ScheduledBatch {
-            position: i + 1,
-            key: format!("{:?}", b.key),
+        .map(|b| ScheduledBatch {
             descriptor: WalkerKey::describe(&b.key, &root),
             cost_tokens: b.cost.tokens,
             cum_tokens: b.cum_tokens,
             content: b.content,
         })
-        .collect::<Vec<_>>();
-    let candidates = report
-        .candidates
-        .into_iter()
-        .map(|b| CandidateBatch {
-            key: format!("{:?}", b.key),
-            predecessor: b.predecessor.as_ref().map(|p| format!("{p:?}")),
-            descriptor: WalkerKey::describe(&b.key, &root),
-            content: b.content,
-        })
         .collect();
-    Ok(Schedule {
-        fixture,
-        budget,
-        cumulative_tokens,
-        batch_count: batches.len(),
-        batches,
-        candidates,
-        root,
-    })
+    Ok(Schedule { root, batches })
 }
 
 fn canonicalize_dir(path: &Path) -> Result<std::path::PathBuf> {

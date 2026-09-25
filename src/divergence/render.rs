@@ -96,11 +96,11 @@ fn escape_cell(s: &str) -> String {
 mod tests {
     use std::path::PathBuf;
 
+    use crate::ScheduledBatch;
     use crate::content::BatchContent;
     use crate::north_star::{NorthStar, NsBatch};
-    use crate::schedule_types::{Atom, ScheduledBatch};
 
-    use super::super::{BuildCtx, GradedAtom, NsRow, WalkerRow};
+    use super::super::{Atom, BuildCtx, GradedAtom, NsRow, WalkerRow};
     use super::format_schedule_table;
 
     fn line_atom(line: usize) -> GradedAtom {
@@ -135,8 +135,6 @@ mod tests {
         // Walker delivers nothing the NS wants — Score(100) ends up 0.
         // What matters: both rows at cum=100 print the *same* Score.
         let walker_batch = ScheduledBatch {
-            position: 1,
-            key: String::new(),
             descriptor: "walker at 100".into(),
             cost_tokens: 100,
             cum_tokens: 100,

@@ -65,8 +65,8 @@ open questions that aren't visible from reading `src/`.
   and their source under `tests/fixtures/`; a parallel directory tree
   would not strengthen the convention, since both surfaces are equally
   readable to anyone disregarding the skill.
-- **Validation debugging surface is intentionally thin.** No schedule
-  TOML, rendered snapshot, or per-row diff for held-out fixtures. The
+- **Validation debugging surface is intentionally thin.** No rendered
+  snapshot or per-row diff for held-out fixtures. The
   acceptable responses to a validation move are: improve the walker
   generally against the *training* reports and re-run, or accept the
   move as a real generalization signal. Adding diagnostic artifacts
@@ -236,10 +236,6 @@ language.**
   would demote to `…` in the render — invisible to `Score`, which
   atomizes schedule content. Head/tail splits (e.g. the Dockerfile
   split) ship their tail full-lines-only for this reason.
-- **`Schedule.candidates` is `#[serde(skip)]`.** Code that loads a
-  schedule from TOML and wants candidate-derived signals would silently
-  see an empty pool; persist enough metadata or fail loudly at the call
-  site.
 - **Per-row Score column can't decompose I × C**, and small walker
   tweaks cascade decimal noise through every later row. Revisit if
   iteration shows the single column loses signal.

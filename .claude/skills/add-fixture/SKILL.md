@@ -28,7 +28,7 @@ Fixtures land in one of two tiers, registered by different macros in
   `tests/divergence/<name>.md`. Most fixtures are training.
 - **Validation** (`per_validation_fixture_tests!`) — held out from
   calibration. Only the `Score(3000)=…` headline is committed, to
-  `tests/validation/<name>.md`; no schedule TOML, no rendered
+  `tests/validation/<name>.md`; no rendered
   snapshot, no per-row diff. Used to detect overfitting to the
   training set; `iterate-divergence` is forbidden from opening them.
 
@@ -89,7 +89,7 @@ Edit `tests/fixture_baselines.rs`. Choose the tier:
 
 - Training: `per_fixture_tests!(<name>);` — alongside the existing
   training fixtures. Generates `fixture_baselines_<name>` covering
-  schedule TOML, divergence report, and rendered snapshot in one
+  divergence report and rendered snapshot in one
   walker pass.
 - Validation: `per_validation_fixture_tests!(<name>);` — alongside
   the validation block. Generates `fixture_baselines_validation_<name>`
@@ -106,7 +106,6 @@ UPDATE_BASELINES=1 cargo t
 
 Training fixtures produce:
 
-- `tests/snapshots/schedule/<name>.toml`
 - `tests/divergence/<name>.md` (only when an NS exists for the fixture)
 - `tests/snapshots/rendered/<name>.snap`
 

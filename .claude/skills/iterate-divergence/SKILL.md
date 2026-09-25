@@ -88,9 +88,9 @@ Watch for things that look broken even when Score is OK: 0-cost
 walker batches that should be dropped, descriptors that look wrong,
 etc. Often higher-priority than score-tuning.
 
-For NS justifications or the concrete content of an interesting
-row, grep into `tests/north-stars/` or `tests/snapshots/schedule/`.
-Avoid reading whole schedule TOMLs — they're large.
+For NS justifications and content, grep `tests/north-stars/<fixture>.toml`
+for the row's `id`. To see what the walker rendered by a row, run
+`cargo run --release -- tests/fixtures/<fixture> --token-budget <walker_cum>`.
 
 The change has to apply wherever the relevant condition holds, not
 just on the fixture(s) where you spotted it. Fixtures sample the

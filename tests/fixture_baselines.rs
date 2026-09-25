@@ -1,13 +1,9 @@
-//! Regression baselines: schedule TOML + rendered snapshot + divergence
-//! report. One artifact per fixture; the scheduler's prefix-monotonicity
-//! (see `docs/design-notes.md`) means sub-budget behavior is a prefix of
-//! the T_max schedule, so per-budget snapshots are redundant.
+//! Regression baselines: rendered snapshot + divergence report. One
+//! artifact per fixture; the scheduler's prefix-monotonicity (see
+//! `docs/design-notes.md`) means sub-budget behavior is a prefix of the
+//! T_max schedule, so per-budget snapshots are redundant.
 //!
-//! Four artifact classes, all regeneratable via `UPDATE_BASELINES=1`:
-//!
-//! - **Schedule TOML** — `tests/snapshots/schedule/<fixture>.toml`,
-//!   produced by `render_schedule` at `SCHEDULE_BUDGET` (the cap). Byte-
-//!   equal comparison to on-disk file.
+//! Three artifact classes, all regeneratable via `UPDATE_BASELINES=1`:
 //!
 //! - **Rendered snapshot** — `tests/snapshots/rendered/<fixture>.snap`
 //!   via insta at `RENDERED_BUDGET` (user-facing default), a human-
@@ -23,14 +19,14 @@
 //!
 //! - **Validation score** — `tests/validation/<fixture>.md`, one per
 //!   validation fixture. Contains *only* the `Score(3000)=…` headline
-//!   line; no schedule TOML, no rendered snapshot, no per-row diff.
+//!   line; no rendered snapshot, no per-row diff.
 //!   Validation fixtures are sampled from the GitHub language
 //!   distribution and held out: they exist to catch regressions on
 //!   real-world codebases the calibration loop has never seen. Walker /
 //!   value iteration must not target them — read the `iterate-divergence`
 //!   skill for the discipline.
 //!
-//! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all four artifact
+//! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all three artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).
 //! A successful regen run *is* a passing test run — the on-disk baselines
 //! and the freshly-computed `actual` are byte-identical when it returns,
@@ -44,12 +40,11 @@ use precis::{
     Schedule, divergence, ns_loader::load_ns_checked, render_schedule, render_with_schedule,
 };
 
-/// Walker budget for the canonical schedule snapshot. Matches the NS cap.
+/// Walker budget for the scored schedule. Matches the NS cap.
 const SCHEDULE_BUDGET: usize = 10_000;
 /// User-facing "default precis budget" for the rendered eyeball snapshot.
 const RENDERED_BUDGET: usize = 3_000;
 
-const SCHEDULE_DIR: &str = "tests/snapshots/schedule";
 const DIVERGENCE_DIR: &str = "tests/divergence";
 const VALIDATION_DIR: &str = "tests/validation";
 const NS_DIR: &str = "tests/north-stars";
@@ -201,12 +196,6 @@ fn fixture_path(fixture: &str) -> PathBuf {
     manifest_dir().join("tests/fixtures").join(fixture)
 }
 
-fn schedule_path(fixture: &str) -> PathBuf {
-    manifest_dir()
-        .join(SCHEDULE_DIR)
-        .join(format!("{fixture}.toml"))
-}
-
 fn divergence_path(fixture: &str) -> PathBuf {
     manifest_dir()
         .join(DIVERGENCE_DIR)
@@ -244,20 +233,8 @@ fn check_fixture_baselines(fixture: &str) {
 
     let schedule = render_schedule(&[&fixture_dir], SCHEDULE_BUDGET)
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
-    check_schedule_toml(fixture, &schedule);
     check_rendered(fixture, &fixture_dir, &schedule);
     check_divergence(fixture, &fixture_dir, &schedule);
-}
-
-fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
-    let serialized = schedule
-        .to_toml_normalized()
-        .unwrap_or_else(|e| panic!("serializing schedule({fixture}): {e}"));
-    compare_or_update(
-        "schedule TOML",
-        &schedule_path(fixture),
-        serialized.as_bytes(),
-    );
 }
 
 fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
