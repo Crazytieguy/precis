@@ -35,11 +35,6 @@ use crate::render::Source;
 
 use super::{FileLines, WalkCtx, fs::files_with_extension, single_file_lines_content};
 
-/// Cap on TOC entries — budget hedge. Also caps the per-decl body
-/// batches emitted (a schema with more top-level decls than this is
-/// treated as too large to body-expand within budget).
-const MAX_TOC_ENTRIES: usize = 80;
-
 /// Field count at which a declaration body earns full base value. Wider
 /// models (User/Link/Collection) carry the schema's load-bearing
 /// relations and field semantics the NS wants. Scaling value by body
@@ -114,7 +109,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         };
         let decls = decls(&source);
-        if decls.is_empty() || decls.len() > MAX_TOC_ENTRIES {
+        if decls.is_empty() {
             continue;
         }
         let toc_line_nums: Vec<usize> = decls.iter().map(|d| d.open_line).collect();
@@ -234,10 +229,12 @@ fn decls(source: &str) -> Vec<Decl> {
             let open_line = i + 1;
             // Brace-depth scan to the matching close brace. Prisma blocks
             // open with `{` on the keyword line; nested `{ }` (e.g. in
-            // `@default`) stay balanced within a line.
+            // `@default`) stay balanced within a line, and braces in a
+            // `//` comment don't count.
             let mut depth = 0i32;
             let mut close_line = open_line;
             for (j, line) in lines.iter().enumerate().skip(i) {
+                let line = line.split("//").next().unwrap_or_default();
                 depth += line.matches('{').count() as i32;
                 depth -= line.matches('}').count() as i32;
                 if depth <= 0 {
@@ -441,6 +438,40 @@ model Real {
             .find(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })))
             .expect("toc batch");
         assert!((toc.value - toc_value(pinned)).abs() < 1e-9);
+    }
+
+    #[test]
+    fn prisma_decls_ignore_braces_in_comments() {
+        let src = "\
+model A {
+  id Int @id // TODO: handle { edge
+  name String
+}
+
+model B {
+  id Int @id // closes early }
+  name String
+}
+";
+        let closers: Vec<usize> = decls(src).iter().map(|d| d.close_line).collect();
+        assert_eq!(closers, vec![4, 9]);
+    }
+
+    /// A schema with many declarations still gets its table of contents
+    /// — that is where a catalog matters most.
+    #[test]
+    fn prisma_large_schema_keeps_its_toc() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let schema: String = (0..120)
+            .map(|i| format!("model M{i} {{\n  id Int @id\n}}\n\n"))
+            .collect();
+        std::fs::write(root.join("schema.prisma"), schema).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let has_toc = expand_in_dir(root, &ctx)
+            .iter()
+            .any(|b| matches!(b.key, BatchKey::Prisma(PrismaKey::Toc { .. })));
+        assert!(has_toc);
     }
 
     #[test]
