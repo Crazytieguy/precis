@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.865 C=0.720 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.566/0.751/0.719/0.789/0.756/0.640/0.606
+Score(3000)=0.735 I=0.831 C=0.651 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.566/0.751/0.719/0.735/0.756/0.640/0.606
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -42,29 +42,30 @@ Score(3000)=0.789 I=0.865 C=0.720 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.700 |
 | walker |  | 1820 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.742 |
 | ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.719 |
-| walker |  | 2089 | 269 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.793 |
-| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.765 |
-| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.766 |
-| walker |  | 2202 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.770 |
-| walker |  | 2360 | 158 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 7, sub: 0, line: 109 } |  |  | 0.775 |
-| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.774 |
-| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.775 |
-| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.757 |
-| walker |  | 2582 | 222 | Markdown::Section { file: UPDATING.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.763 |
-| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.753 |
-| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.729 |
-| walker |  | 2805 | 223 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 14, sub: 0, line: 151 } |  |  | 0.786 |
-| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.789 |
-| walker |  | 3031 | 226 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 1, sub: 0, line: 31 } |  |  | 0.798 |
-| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.799 |
+| walker |  | 1960 | 140 | Plaintext::DeclSurface { file: MIT-LICENSE.txt } |  |  | 0.719 |
+| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.694 |
+| walker |  | 2121 | 161 | Plaintext::Whole { file: MIT-LICENSE.txt } |  |  | 0.694 |
+| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.696 |
+| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.701 |
+| walker |  | 2390 | 269 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.766 |
+| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.761 |
+| walker |  | 2503 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.768 |
+| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.750 |
+| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.741 |
+| walker |  | 2661 | 158 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 7, sub: 0, line: 109 } |  |  | 0.747 |
+| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.724 |
+| walker |  | 2883 | 222 | Markdown::Section { file: UPDATING.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.730 |
+| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.735 |
+| walker |  | 3106 | 223 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 14, sub: 0, line: 151 } |  |  | 0.789 |
+| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.791 |
+| walker |  | 3332 | 226 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 1, sub: 0, line: 31 } |  |  | 0.800 |
 | ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.804 |
-| walker |  | 3426 | 395 | Markdown::Section { file: UPDATING.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.805 |
-| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.781 |
-| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.761 |
-| walker |  | 3717 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.813 |
-| walker |  | 3853 | 136 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.831 |
-| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.793 |
-| walker |  | 4154 | 301 | Plaintext::Whole { file: MIT-LICENSE.txt } |  |  | 0.794 |
+| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.780 |
+| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.760 |
+| walker |  | 3727 | 395 | Markdown::Section { file: UPDATING.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.761 |
+| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.726 |
+| walker |  | 4018 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.776 |
+| walker |  | 4154 | 136 | Markdown::HeadingsOutline { file: CHANGELOG.md } |  |  | 0.794 |
 | ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.756 |
 | ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.738 |
 | ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.716 |

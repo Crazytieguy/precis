@@ -395,21 +395,9 @@ fn classify_source_text(name: &str) -> Option<Class> {
     {
         return Some(Class::SourceText);
     }
-    if !SOURCE_TEXT_FLAT_EXTENSIONS.contains(&ext) {
-        return None;
-    }
-    // A legal text under a spelling `classify_plaintext`'s exhaustive
-    // list misses (`MIT-LICENSE.txt`, `LICENSE-THIRD-PARTY.txt`) is
-    // still a license and must be priced as one — at fallback pricing
-    // its head slice displaces real code (middleclass −0.008).
-    // `*-header` is the one common non-license `license` name: the
-    // boilerplate a project prepends to its own sources.
-    if (stem.contains("license") || stem.contains("licence") || stem == "copying")
-        && !stem.contains("header")
-    {
-        return Some(Class::License);
-    }
-    Some(Class::SourceProse)
+    SOURCE_TEXT_FLAT_EXTENSIONS
+        .contains(&ext)
+        .then_some(Class::SourceProse)
 }
 
 /// Line classes inside a declaration surface. The three get separate
@@ -970,19 +958,6 @@ mod tests {
         assert_eq!(classify_source_text("pnpm-lock.yaml"), None);
         assert_eq!(classify_source_text("secrets.sh"), None);
         assert_eq!(classify_source_text("credentials.txt"), None);
-        // Legal texts are licenses, not prose — value-floored.
-        assert_eq!(
-            classify_source_text("MIT-LICENSE.txt"),
-            Some(Class::License)
-        );
-        assert_eq!(
-            classify_source_text("LICENSE-THIRD-PARTY.txt"),
-            Some(Class::License)
-        );
-        assert_eq!(
-            classify_source_text("license-header.txt"),
-            Some(Class::SourceProse)
-        );
         // `.md`/`.rst` legal texts stay with the markdown walker.
         assert_eq!(classify_source_text("LICENSE.md"), None);
         // Formats an owning walker already claims stay with it.

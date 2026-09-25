@@ -1,6 +1,26 @@
 .travis.yml
 CHANGELOG.md
 MIT-LICENSE.txt
+  1→Copyright (c) 2011 Enrique García Cota
+  2→
+  3→Permission is hereby granted, free of charge, to any person obtaining a
+  4→copy of this software and associated documentation files (the
+  5→"Software"), to deal in the Software without restriction, including
+  6→without limitation the rights to use, copy, modify, merge, publish,
+  7→distribute, sublicense, and/or sell copies of the Software, and to
+  8→permit persons to whom the Software is furnished to do so, subject to
+  9→the following conditions:
+  10→
+  11→The above copyright notice and this permission notice shall be included
+  12→in all copies or substantial portions of the Software.
+  13→
+  14→THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  15→OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  16→MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  17→IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  18→CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  19→TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  20→SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 README.md
   1→middleclass
   2→===========
@@ -186,22 +206,6 @@ middleclass.lua
   148→      return instance
   …
   151→    subclass = function(self, name)
-  152→      assert(type(self) == 'table', "Make sure that you are using 'Class:subclass' instead of 'Class.subclass'")
-  153→      assert(type(name) == "string", "You must provide a name(string) for your class")
-  154→
-  155→      local subclass = _createClass(name, self)
-  156→
-  157→      for methodName, f in pairs(self.__instanceDict) do
-  158→        if not (methodName == "__index" and type(f) == "table") then
-  159→          _propagateInstanceMethod(subclass, methodName, f)
-  160→        end
-  161→      end
-  162→      subclass.initialize = function(instance, ...) return self.initialize(instance, ...) end
-  163→
-  164→      self.subclasses[subclass] = true
-  165→      self:subclassed(subclass)
-  166→
-  167→      return subclass
   …
   170→    subclassed = function(self, other) end,
   171→
