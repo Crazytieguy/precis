@@ -8,7 +8,7 @@ use crate::batch::{Batch, BatchKey, GoModKey};
 use crate::content::BatchContent;
 use crate::value::mix_signals;
 
-use super::{FileLines, WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
+use super::{WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
 
 const WHOLE_LINE_CAP: usize = 72;
 
@@ -81,7 +81,7 @@ fn build_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     if lines.is_empty() {
         return None;
     }
-    single_file_lines_content(file, &source, FileLines::new(lines))
+    single_file_lines_content(file, &source, lines)
 }
 
 /// `GoMod` content — whole for compact module files; sampled for large
@@ -93,17 +93,13 @@ fn build_file_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
         return None;
     }
     if total_lines <= WHOLE_LINE_CAP {
-        return single_file_lines_content(
-            file,
-            &source,
-            FileLines::new((1..=total_lines).collect()),
-        );
+        return single_file_lines_content(file, &source, (1..=total_lines).collect());
     }
 
     single_file_lines_content(file, &source, bounded_lines(&source))
 }
 
-fn bounded_lines(source: &str) -> FileLines {
+fn bounded_lines(source: &str) -> Vec<usize> {
     let src_lines: Vec<&str> = source.lines().collect();
     let mut full = Vec::new();
     let mut i = 0;
@@ -138,39 +134,7 @@ fn bounded_lines(source: &str) -> FileLines {
         }
         i += 1;
     }
-    full.sort_unstable();
-    full.dedup();
-    let ellipses = ellipses_for_gaps(&full, &src_lines);
-    FileLines::new(full).with_ellipses(ellipses)
-}
-
-fn ellipses_for_gaps(full: &[usize], src_lines: &[&str]) -> Vec<usize> {
-    if full.is_empty() {
-        return Vec::new();
-    }
-    let mut boundaries = full.to_vec();
-    boundaries.push(src_lines.len() + 1);
-    let mut ellipses = Vec::new();
-    for pair in boundaries.windows(2) {
-        let omitted_start = pair[0] + 1;
-        let omitted_end = pair[1].saturating_sub(1);
-        if omitted_start > omitted_end {
-            continue;
-        }
-        let has_substantive_omission = (omitted_start..=omitted_end).any(|line_no| {
-            src_lines
-                .get(line_no - 1)
-                .is_some_and(|line| is_substantive_line(line.trim()))
-        });
-        if has_substantive_omission {
-            ellipses.push(omitted_start);
-        }
-    }
-    ellipses
-}
-
-fn is_substantive_line(trimmed: &str) -> bool {
-    !trimmed.is_empty() && !trimmed.starts_with("//") && trimmed != ")"
+    full
 }
 
 fn block_start(trimmed: &str) -> Option<&str> {
@@ -370,10 +334,6 @@ require (
         assert!(
             !rendered.contains(&(first_indirect_line, Render::Full)),
             "indirect require must not render in full"
-        );
-        assert!(
-            rendered.contains(&(first_indirect_line, Render::Ellipsis)),
-            "indirect require tail should be represented by one ellipsis"
         );
     }
 }

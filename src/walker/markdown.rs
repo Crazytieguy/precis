@@ -32,7 +32,7 @@ use crate::tokenizer;
 use crate::value::{is_peripheral_doc, mix_signals};
 
 use super::{
-    FileLines, WalkCtx, budget_chunk_ranges, first_child_of_kind, fs::files_with_extension,
+    WalkCtx, budget_chunk_ranges, first_child_of_kind, fs::files_with_extension,
     node_end_row_trimmed, path_depth_factor, single_file_lines_content,
 };
 
@@ -188,7 +188,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             && !suppress_body
         {
             let rows = prelude_remainder_rows(&tree, &source, spec);
-            if let Some(content) = single_file_lines_content(&file, &source, FileLines::new(rows)) {
+            if let Some(content) = single_file_lines_content(&file, &source, rows) {
                 out.push(Batch {
                     key: MarkdownKey::Prelude { file: file.clone() }.into(),
                     predecessor: headline_emitted.clone(),
@@ -388,24 +388,8 @@ fn build_outline_content(
     source: &Source,
     rows: &[(usize, usize)],
 ) -> Option<BatchContent> {
-    let mut full = Vec::new();
-    let mut ellipses = Vec::new();
-    for (start, end) in rows {
-        for r in *start..=*end {
-            full.push(r);
-        }
-        // `end + 1` is either a row of this heading's own section (a
-        // later `Section` batch gates on the outline, so its `full` is a
-        // descendant upgrade) or the next heading's row, which the
-        // outline renders itself and so drops the marker. Fragile seam:
-        // the outline is a DESCENDANT of `ReadmeHeadline`, and a
-        // descendant `…` on an ancestor-rendered row silently demotes
-        // the paid row. Unreachable only because [`headline_spec`]
-        // covers the first heading and blocks before the next one, and
-        // that heading is dropped from `rows`.
-        ellipses.push(end + 1);
-    }
-    single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
+    let full = rows.iter().flat_map(|&(start, end)| start..=end).collect();
+    single_file_lines_content(file, source, full)
 }
 
 fn readme_headline_spec(file: &Path, tree: &Tree, source: &str) -> Option<HeadlineSpec> {
@@ -479,7 +463,7 @@ fn build_section_content(
     }
 
     let lines: Vec<usize> = (effective_start..=end).collect();
-    single_file_lines_content(file, source, FileLines::new(lines))
+    single_file_lines_content(file, source, lines)
 }
 
 fn is_readme(file: &Path) -> bool {
@@ -761,7 +745,7 @@ fn build_headline_spans(file: &Path, source: &Source, spec: &HeadlineSpec) -> Ve
         .collect();
     // Full rows go through `build_file_spans` (blank-filter + merge);
     // splice the truncated-row spans in afterwards.
-    let mut spans = super::build_file_spans(file, source, FileLines::new(full_rows));
+    let mut spans = super::build_file_spans(file, source, full_rows);
     spans.extend(spec.truncated_rows.iter().map(|&row| Span {
         path: file.to_path_buf(),
         start: row,

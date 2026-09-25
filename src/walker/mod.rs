@@ -453,28 +453,6 @@ fn language_group(path: &Path) -> Option<&'static str> {
     })
 }
 
-/// Lines a collector wants to render for one file: `full` = emit
-/// verbatim; `ellipses` = emit a walker `…` marker (overrideable by
-/// descendant batches).
-#[derive(Default, Debug, Clone)]
-pub(crate) struct FileLines {
-    pub full: Vec<usize>,
-    pub ellipses: Vec<usize>,
-}
-
-impl FileLines {
-    pub fn new(full: Vec<usize>) -> Self {
-        Self {
-            full,
-            ellipses: Vec::new(),
-        }
-    }
-    pub fn with_ellipses(mut self, ellipses: Vec<usize>) -> Self {
-        self.ellipses = ellipses;
-        self
-    }
-}
-
 /// Path-relative location prior: depth penalty × non-essential-dir
 /// discount. Use [`file_depth_factor`] to add entrypoint pinning.
 pub(crate) fn path_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -490,14 +468,14 @@ pub(crate) fn file_depth_factor(file: &Path, ctx: &WalkCtx, is_entrypoint: bool)
     crate::value::depth_factor(pinned_depth) * ctx.non_essential_factor(file)
 }
 
-/// `BatchContent::Lines` from a single file's `FileLines`. `None` if
-/// the resulting span set is empty.
+/// `BatchContent::Lines` rendering `rows` of one file in full. `None`
+/// if the resulting span set is empty.
 pub(crate) fn single_file_lines_content(
     path: &Path,
     source: &Source,
-    lines: FileLines,
+    rows: Vec<usize>,
 ) -> Option<BatchContent> {
-    let spans = build_file_spans(path, source, lines);
+    let spans = build_file_spans(path, source, rows);
     if spans.is_empty() {
         return None;
     }
@@ -507,8 +485,7 @@ pub(crate) fn single_file_lines_content(
 /// `BatchContent::Lines` covering every line of `source`. `None` when
 /// the file is empty (all-blank files fall out via empty spans).
 pub(crate) fn whole_file_lines_content(file: &Path, source: &Source) -> Option<BatchContent> {
-    let lines: Vec<usize> = (1..=source.line_count()).collect();
-    single_file_lines_content(file, source, FileLines::new(lines))
+    single_file_lines_content(file, source, (1..=source.line_count()).collect())
 }
 
 /// Cached read behind an FS-metadata byte pre-flight — skips the read
@@ -545,18 +522,16 @@ pub(crate) fn gated_whole_file_content(
     whole_file_lines_content(file, &source)
 }
 
-/// `FileLines` → contiguous [`Span`] ranges. Blank source lines are
-/// dropped at span edges but **preserved when interior**: a gap between
-/// two kept rows that consists solely of blank source rows is bridged
-/// into one span, so the emitted region mirrors the source's shape (NS
-/// spans are contiguous ranges that include interior blanks). Leading/
-/// trailing blanks never render — `full` holds only non-blank rows, so
-/// every span starts and ends on content. Ellipses superseded by `Full`
-/// coverage are dropped.
-pub(crate) fn build_file_spans(path: &Path, source: &Source, lines: FileLines) -> Vec<Span> {
+/// Rows (any order, duplicates allowed) → contiguous full-line [`Span`]
+/// ranges. Blank source lines are dropped at span edges but **preserved
+/// when interior**: a gap between two kept rows that consists solely of
+/// blank source rows is bridged into one span, so the emitted region
+/// mirrors the source's shape (NS spans are contiguous ranges that
+/// include interior blanks). Walkers emit no `…` rows of their own; the
+/// renderer marks every elided non-blank gap.
+pub(crate) fn build_file_spans(path: &Path, source: &Source, rows: Vec<usize>) -> Vec<Span> {
     let blank = |n: usize| source.line(n).is_some_and(|t| t.trim().is_empty());
-    let full: BTreeSet<usize> = lines
-        .full
+    let full: BTreeSet<usize> = rows
         .into_iter()
         .filter(|&n| source.line(n).is_some_and(|t| !t.trim().is_empty()))
         .collect();
@@ -581,20 +556,6 @@ pub(crate) fn build_file_spans(path: &Path, source: &Source, lines: FileLines) -
             render: Render::Full,
         });
         i += 1;
-    }
-    let covered = |n: usize| spans.iter().any(|s| s.start <= n && n <= s.end);
-    let ellipses: BTreeSet<usize> = lines
-        .ellipses
-        .into_iter()
-        .filter(|&n| source.line(n).is_some() && !covered(n))
-        .collect();
-    for n in ellipses {
-        spans.push(Span {
-            path: path.to_path_buf(),
-            start: n,
-            end: n,
-            render: Render::Ellipsis,
-        });
     }
     spans
 }
@@ -622,8 +583,8 @@ pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
 mod tests {
     use super::*;
 
-    fn span_shapes(source: &str, lines: FileLines) -> Vec<(usize, usize, Render)> {
-        build_file_spans(Path::new("f.txt"), &Source::new(source.into()), lines)
+    fn span_shapes(source: &str, rows: Vec<usize>) -> Vec<(usize, usize, Render)> {
+        build_file_spans(Path::new("f.txt"), &Source::new(source.into()), rows)
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
@@ -730,7 +691,7 @@ mod tests {
         // Rows 2 and 4 are blank; collecting 1/3/5 must yield one span
         // covering the whole region, blanks included.
         let source = "a\n\nb\n\nc\n";
-        let shapes = span_shapes(source, FileLines::new(vec![1, 3, 5]));
+        let shapes = span_shapes(source, vec![1, 3, 5]);
         assert_eq!(shapes, vec![(1, 5, Render::Full)]);
     }
 
@@ -739,17 +700,7 @@ mod tests {
         // Blank rows at the edges of the collected set never render, and
         // a gap containing an uncollected *content* row is not bridged.
         let source = "\na\nskipped\nb\n\n";
-        let shapes = span_shapes(source, FileLines::new(vec![1, 2, 4, 5]));
+        let shapes = span_shapes(source, vec![1, 2, 4, 5]);
         assert_eq!(shapes, vec![(2, 2, Render::Full), (4, 4, Render::Full)]);
-    }
-
-    #[test]
-    fn walker_mod_build_file_spans_drops_ellipsis_covered_by_bridge() {
-        // The ellipsis at blank row 2 is superseded by the bridged Full
-        // span; the one past the region survives.
-        let source = "a\n\nb\nc\n";
-        let lines = FileLines::new(vec![1, 3]).with_ellipses(vec![2, 4]);
-        let shapes = span_shapes(source, lines);
-        assert_eq!(shapes, vec![(1, 3, Render::Full), (4, 4, Render::Ellipsis)]);
     }
 }

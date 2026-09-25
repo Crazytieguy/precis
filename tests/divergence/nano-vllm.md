@@ -18,7 +18,7 @@ Score(3000)=0.707 I=0.862 C=0.580 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 258 | 31 | Fs::DirListing { dir: nanovllm/layers } |  |  | 0.664 |
 | walker |  | 280 | 22 | Toml::PackageMetadata { file: pyproject.toml } |  |  | 0.665 |
 | ns | 302 |  | 77 | README Key Features bullets | 1.6 |  | 0.618 |
-| walker |  | 336 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.818 |
+| walker |  | 336 | 56 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.817 |
 | walker |  | 413 | 77 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.893 |
 | ns | 450 |  | 148 | README Quick Start usage snippet | 1.7 |  | 0.779 |
 | walker |  | 488 | 75 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.782 |

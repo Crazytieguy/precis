@@ -28,8 +28,8 @@ use super::workspace::{
     member_named_after_root,
 };
 use super::{
-    FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_any_extension,
-    gated_whole_file_content, path_depth_factor, single_file_lines_content,
+    WalkCtx, first_child_of_kind, fs::files_with_any_extension, gated_whole_file_content,
+    path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
@@ -225,7 +225,7 @@ fn section_content(
     if lines.is_empty() {
         return None;
     }
-    single_file_lines_content(file, source, FileLines::new(dedup_sorted(lines)))
+    single_file_lines_content(file, source, lines)
 }
 
 // --- file-name predicates ---

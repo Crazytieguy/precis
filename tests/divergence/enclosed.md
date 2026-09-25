@@ -1,4 +1,4 @@
-Score(3000)=0.515 I=0.791 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.530/0.425/0.569/0.515/0.527/0.590/0.571
+Score(3000)=0.515 I=0.790 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.530/0.425/0.569/0.515/0.527/0.590/0.571
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -101,13 +101,13 @@ Score(3000)=0.515 I=0.791 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 2267 | 35 | Plaintext::Whole { file: packages/app-client/.env.example } |  |  | 0.554 |
 | walker |  | 2292 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.555 |
 | ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.525 |
-| walker |  | 2490 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.526 |
+| walker |  | 2490 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.525 |
 | walker |  | 2596 | 106 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.574 |
 | walker |  | 2617 | 21 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.574 |
 | walker |  | 2656 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.575 |
 | ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.533 |
 | walker |  | 2670 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.533 |
-| walker |  | 2684 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.534 |
+| walker |  | 2684 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.533 |
 | ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.515 |
 | walker |  | 3023 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.573 |
 | walker |  | 3056 | 33 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.573 |
@@ -120,13 +120,13 @@ Score(3000)=0.515 I=0.791 C=0.336 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.524 |
 | walker |  | 3407 | 155 | Json::IdentityMeta { file: package.json } |  |  | 0.524 |
 | walker |  | 3449 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.525 |
-| walker |  | 3457 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.526 |
-| walker |  | 3500 | 43 | Markdown::HeadingsOutline { file: packages/docs/src/index.md } |  |  | 0.526 |
-| walker |  | 3563 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.528 |
+| walker |  | 3457 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.525 |
+| walker |  | 3500 | 43 | Markdown::HeadingsOutline { file: packages/docs/src/index.md } |  |  | 0.525 |
+| walker |  | 3563 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.527 |
 | walker |  | 3582 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.528 |
 | ns | 3584 |  | 194 | Payload vocabulary: the algorithm and compression constants | 2.9 |  | 0.519 |
-| walker |  | 3630 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.520 |
-| walker |  | 3745 | 115 | Markdown::Section { file: packages/lib/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.520 |
+| walker |  | 3630 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.519 |
+| walker |  | 3745 | 115 | Markdown::Section { file: packages/lib/README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.519 |
 | ns | 3780 |  | 196 | Complete file roster of packages/crypto | 2.10 |  | 0.561 |
 | walker |  | 3797 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.562 |
 | walker |  | 3834 | 37 | Markdown::HeadingsOutline { file: packages/docs/src/resources/i18n.md } |  |  | 0.562 |

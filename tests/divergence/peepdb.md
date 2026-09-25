@@ -1,4 +1,4 @@
-Score(3000)=0.626 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.593/0.595/0.681/0.626/0.627/0.599/0.567
+Score(3000)=0.625 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.592/0.595/0.681/0.625/0.627/0.599/0.567
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,17 +26,17 @@ Score(3000)=0.626 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 838 | 193 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.622 |
 | walker |  | 873 | 35 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.622 |
 | walker |  | 901 | 28 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.622 |
-| ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.593 |
-| walker |  | 931 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.593 |
+| ns | 908 |  | 77 | Entry points: console script, __main__.py, exceptions.py in full | 1.10 |  | 0.592 |
+| walker |  | 931 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.592 |
 | walker |  | 1027 | 96 | Markdown::ReadmeHeadline { file: docs/README.md } |  |  | 0.591 |
 | ns | 1027 |  | 119 | Complete listings of peepdb/tests, docs, images, .github/workflows | 1.11 |  | 0.591 |
 | walker |  | 1062 | 35 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.591 |
 | walker |  | 1108 | 46 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.591 |
 | walker |  | 1162 | 54 | Markdown::HeadingsOutline { file: docs/installation.md } |  |  | 0.591 |
 | ns | 1209 |  | 182 | README section-heading map (every H2 and H3 after the feature list) | 1.12 | 1.1 | 0.628 |
-| walker |  | 1289 | 127 | Toml::Config { file: project.toml } |  |  | 0.629 |
-| walker |  | 1345 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.629 |
-| walker |  | 1401 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.629 |
+| walker |  | 1289 | 127 | Toml::Config { file: project.toml } |  |  | 0.628 |
+| walker |  | 1345 | 56 | Markdown::HeadingsOutline { file: docs/index.md } |  |  | 0.628 |
+| walker |  | 1401 | 56 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.628 |
 | ns | 1441 |  | 232 | `peepdb save` full option decorator block (cli.py 53-64) | 2.1 | 1.6 | 0.595 |
 | walker |  | 1443 | 42 | Fs::DirListing { dir: peepdb/tests } |  |  | 0.660 |
 | walker |  | 1569 | 126 | Plaintext::DeclSurface { file: docs/Gemfile } |  |  | 0.660 |
@@ -53,25 +53,25 @@ Score(3000)=0.626 I=0.836 C=0.468 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 2059 | 11 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 1, sub: 0, line: 16 } |  |  | 0.679 |
 | walker |  | 2076 | 17 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 3, sub: 0, line: 25 } |  |  | 0.681 |
 | walker |  | 2107 | 31 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 7, sub: 0, line: 113 } |  |  | 0.690 |
-| walker |  | 2148 | 41 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 6, sub: 0, line: 97 } |  |  | 0.712 |
-| walker |  | 2155 | 7 | Code::CodeKey { rung: Body, file: peepdb/cli.py, decl: 9, sub: 0, line: 181 } |  |  | 0.712 |
+| walker |  | 2148 | 41 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 6, sub: 0, line: 97 } |  |  | 0.711 |
+| walker |  | 2155 | 7 | Code::CodeKey { rung: Body, file: peepdb/cli.py, decl: 9, sub: 0, line: 181 } |  |  | 0.711 |
 | walker |  | 2163 | 8 | Code::CodeKey { rung: Body, file: peepdb/cli.py, decl: 5, sub: 0, line: 86 } |  |  | 0.712 |
 | ns | 2207 |  | 285 | `view` dispatch into peep_db + output rendering (cli.py 156-178) | 2.5 | 2.4 | 0.662 |
-| walker |  | 2305 | 142 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 8, sub: 0, line: 126 } |  |  | 0.688 |
+| walker |  | 2305 | 142 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 8, sub: 0, line: 126 } |  |  | 0.687 |
 | ns | 2425 |  | 218 | `save` docstring and body (cli.py 66-83) | 2.6 | 1.6 | 0.653 |
 | ns | 2515 |  | 90 | Bodies of `list`, `remove` and `remove-all` (cli.py) | 2.7 | 1.6 | 0.636 |
 | walker |  | 2537 | 232 | Code::CodeKey { rung: Decl, file: peepdb/cli.py, decl: 4, sub: 0, line: 53 } |  |  | 0.677 |
 | walker |  | 2578 | 41 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 5, sub: 0, line: 86 } |  |  | 0.677 |
 | walker |  | 2623 | 45 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 7, sub: 0, line: 113 } |  |  | 0.677 |
-| walker |  | 2670 | 47 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 6, sub: 0, line: 97 } |  |  | 0.678 |
-| walker |  | 2722 | 52 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 8, sub: 0, line: 126 } |  |  | 0.681 |
-| ns | 2746 |  | 231 | BaseDatabase: class line + the four abstract methods + context manager | 3.1 |  | 0.642 |
+| walker |  | 2670 | 47 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 6, sub: 0, line: 97 } |  |  | 0.677 |
+| walker |  | 2722 | 52 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 8, sub: 0, line: 126 } |  |  | 0.680 |
+| ns | 2746 |  | 231 | BaseDatabase: class line + the four abstract methods + context manager | 3.1 |  | 0.641 |
 | walker |  | 2788 | 66 | Code::CodeKey { rung: Doc, file: peepdb/cli.py, decl: 4, sub: 0, line: 53 } |  |  | 0.646 |
-| ns | 2913 |  | 167 | BaseDatabase.__init__ and base.py imports | 3.2 | 3.1 | 0.626 |
+| ns | 2913 |  | 167 | BaseDatabase.__init__ and base.py imports | 3.2 | 3.1 | 0.625 |
 | ns | 3026 |  | 113 | core.peep_db full signature (core.py 56-66) | 3.3 | 1.5 | 0.611 |
-| walker |  | 3060 | 272 | Code::CodeKey { rung: Names, file: peepdb/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
-| walker |  | 3078 | 18 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 8, sub: 0, line: 29 } |  |  | 0.654 |
-| walker |  | 3098 | 20 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 9, sub: 0, line: 41 } |  |  | 0.654 |
+| walker |  | 3060 | 272 | Code::CodeKey { rung: Names, file: peepdb/config.py, decl: 0, sub: 0, line: 0 } |  |  | 0.653 |
+| walker |  | 3078 | 18 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 8, sub: 0, line: 29 } |  |  | 0.653 |
+| walker |  | 3098 | 20 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 9, sub: 0, line: 41 } |  |  | 0.653 |
 | walker |  | 3128 | 30 | Code::CodeKey { rung: Decl, file: peepdb/config.py, decl: 1, sub: 0, line: 15 } |  |  | 0.654 |
 | walker |  | 3143 | 15 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 12, sub: 0, line: 70 } |  |  | 0.654 |
 | walker |  | 3158 | 15 | Code::CodeKey { rung: Body, file: peepdb/config.py, decl: 13, sub: 0, line: 73 } |  |  | 0.654 |

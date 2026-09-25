@@ -1,4 +1,4 @@
-Score(3000)=0.643 I=0.797 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.750/0.771/0.693/0.643/0.524/0.532/0.456
+Score(3000)=0.643 I=0.796 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.749/0.771/0.693/0.643/0.524/0.532/0.456
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,19 +26,19 @@ Score(3000)=0.643 I=0.797 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 459 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.789 |
 | walker |  | 515 | 56 | Markdown::ReadmeHeadline { file: docs/README.md } |  |  | 0.789 |
 | ns | 517 |  | 183 | README: build-from-source dependencies and the exact command sequence | 1.5 |  | 0.631 |
-| walker |  | 587 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.633 |
-| ns | 607 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.595 |
-| walker |  | 630 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.601 |
-| walker |  | 634 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.601 |
-| walker |  | 638 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.601 |
-| walker |  | 642 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.601 |
-| walker |  | 646 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.601 |
-| walker |  | 650 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.601 |
-| walker |  | 654 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.601 |
-| walker |  | 658 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.601 |
+| walker |  | 587 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.632 |
+| ns | 607 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.594 |
+| walker |  | 630 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.600 |
+| walker |  | 634 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.600 |
+| walker |  | 638 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.600 |
+| walker |  | 642 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.600 |
+| walker |  | 646 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.600 |
+| walker |  | 650 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.600 |
+| walker |  | 654 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.600 |
+| walker |  | 658 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.600 |
 | ns | 840 |  | 233 | src/ listing (complete) - the flat core | 1.7 |  | 0.449 |
-| walker |  | 891 | 233 | Fs::DirListing { dir: src } |  |  | 0.750 |
-| walker |  | 943 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.750 |
+| walker |  | 891 | 233 | Fs::DirListing { dir: src } |  |  | 0.749 |
+| walker |  | 943 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.749 |
 | ns | 1005 |  | 165 | tests/ listing (complete) | 1.8 |  | 0.652 |
 | walker |  | 1108 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
 | ns | 1113 |  | 108 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.805 |
@@ -46,8 +46,8 @@ Score(3000)=0.643 I=0.797 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 1206 | 98 | Fs::DirListing { dir: sig } |  |  | 0.808 |
 | walker |  | 1373 | 167 | Fs::DirListing { dir: vendor/decNumber } |  |  | 0.808 |
 | ns | 1385 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.771 |
-| ns | 1503 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.751 |
-| walker |  | 1719 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.751 |
+| ns | 1503 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.750 |
+| walker |  | 1719 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.750 |
 | ns | 1749 |  | 246 | jq.h: input/debug/stderr callbacks and the attribute store | 2.3 |  | 0.720 |
 | walker |  | 1802 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.720 |
 | walker |  | 1817 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.720 |
@@ -76,13 +76,13 @@ Score(3000)=0.643 I=0.797 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | ns | 3210 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.603 |
 | walker |  | 3359 | 183 | Code::CodeKey { rung: Names, file: src/bytecode.h, decl: 0, sub: 0, line: 0 } |  |  | 0.603 |
 | walker |  | 3396 | 37 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 6, sub: 0, line: 59 } |  |  | 0.603 |
-| ns | 3433 |  | 223 | main.c: the undocumented flags (--debug-dump-disasm, --debug-trace, --run-tests) | 3.5 |  | 0.590 |
-| walker |  | 3473 | 77 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 2, sub: 0, line: 32 } |  |  | 0.590 |
-| walker |  | 3596 | 123 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 5, sub: 0, line: 48 } |  |  | 0.590 |
-| ns | 3673 |  | 240 | Makefile.am: the TESTS list and test environment | 3.6 |  | 0.572 |
-| walker |  | 3733 | 137 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 8, sub: 0, line: 72 } |  |  | 0.572 |
-| walker |  | 3877 | 144 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 1, sub: 0, line: 20 } |  |  | 0.572 |
-| walker |  | 3909 | 32 | Code::CodeKey { rung: Names, file: src/jv_private.h, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| ns | 3433 |  | 223 | main.c: the undocumented flags (--debug-dump-disasm, --debug-trace, --run-tests) | 3.5 |  | 0.589 |
+| walker |  | 3473 | 77 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 2, sub: 0, line: 32 } |  |  | 0.589 |
+| walker |  | 3596 | 123 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 5, sub: 0, line: 48 } |  |  | 0.589 |
+| ns | 3673 |  | 240 | Makefile.am: the TESTS list and test environment | 3.6 |  | 0.571 |
+| walker |  | 3733 | 137 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 8, sub: 0, line: 72 } |  |  | 0.571 |
+| walker |  | 3877 | 144 | Code::CodeKey { rung: Decl, file: src/bytecode.h, decl: 1, sub: 0, line: 20 } |  |  | 0.571 |
+| walker |  | 3909 | 32 | Code::CodeKey { rung: Names, file: src/jv_private.h, decl: 0, sub: 0, line: 0 } |  |  | 0.571 |
 | ns | 3911 |  | 238 | tests/setup + tests/jqtest: how one test driver actually runs | 3.7 |  | 0.558 |
 | ns | 4024 |  | 113 | tests/jq.test: the three-line test format, with the first cases | 3.8 |  | 0.545 |
 | walker |  | 4042 | 133 | Code::CodeKey { rung: Names, file: src/jv_alloc.h, decl: 0, sub: 0, line: 0 } |  |  | 0.545 |
@@ -95,16 +95,16 @@ Score(3000)=0.643 I=0.797 C=0.519 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 4654 | 86 | Code::CodeKey { rung: Names, file: src/util.h, decl: 0, sub: 0, line: 0 } |  |  | 0.514 |
 | walker |  | 4669 | 15 | Code::CodeKey { rung: Decl, file: src/util.h, decl: 4, sub: 0, line: 44 } |  |  | 0.514 |
 | walker |  | 4687 | 18 | Code::CodeKey { rung: Decl, file: src/util.h, decl: 5, sub: 0, line: 62 } |  |  | 0.514 |
-| ns | 4813 |  | 402 | jv.h: comparison, invalid-with-message, constructors, numbers, arrays | 4.3 |  | 0.491 |
+| ns | 4813 |  | 402 | jv.h: comparison, invalid-with-message, constructors, numbers, arrays | 4.3 |  | 0.490 |
 | walker |  | 4907 | 220 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.517 |
 | walker |  | 4959 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.522 |
 | ns | 5142 |  | 329 | jv.h: the string API | 4.4 |  | 0.509 |
 | walker |  | 5176 | 217 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.533 |
-| ns | 5353 |  | 211 | jv.h: the object API and its iterator protocol | 4.5 |  | 0.524 |
+| ns | 5353 |  | 211 | jv.h: the object API and its iterator protocol | 4.5 |  | 0.523 |
 | walker |  | 5379 | 203 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.545 |
 | walker |  | 5511 | 132 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.567 |
-| ns | 5549 |  | 196 | jv.h: path access, keys, ordering, sort/group/unique | 4.6 |  | 0.559 |
-| walker |  | 5598 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.559 |
+| ns | 5549 |  | 196 | jv.h: path access, keys, ordering, sort/group/unique | 4.6 |  | 0.558 |
+| walker |  | 5598 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.558 |
 | ns | 5811 |  | 262 | jv.h: parsing - flags, one-shot parsers, streaming jv_parser, jv_load_file | 4.7 |  | 0.545 |
 | ns | 6129 |  | 318 | jv.h: print flags and the dump/show functions | 4.8 |  | 0.532 |
 | walker |  | 6265 | 667 | Plaintext::Whole { file: compile-ios.sh } |  |  | 0.532 |

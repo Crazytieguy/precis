@@ -307,12 +307,6 @@ must not undo:
   gap. Deliberately unchanged: aligning atomization with rendered
   deltas would re-price every frozen NS mid-calibration. Revisit as a
   deliberate metric revision at the next NS re-freeze.
-- **Split batches: a descendant must not emit Ellipsis records on lines
-  its ancestor renders as content.** `RenderedTree::apply_spans`
-  replaces ancestor-owned records unconditionally, so the paid-for row
-  would demote to `…` in the render — invisible to `Score`, which
-  atomizes schedule content. Head/tail splits (e.g. the Prisma
-  wide model split) ship their tail full-lines-only for this reason.
 - **Per-row Score column can't decompose I × C**, and small walker
   tweaks cascade decimal noise through every later row. Revisit if
   iteration shows the single column loses signal.

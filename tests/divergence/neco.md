@@ -1,4 +1,4 @@
-Score(3000)=0.787 I=0.888 C=0.697 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.681/0.765/0.764/0.787/0.779/0.764/0.630
+Score(3000)=0.786 I=0.888 C=0.696 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.680/0.765/0.764/0.786/0.779/0.764/0.630
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -21,13 +21,13 @@ Score(3000)=0.787 I=0.888 C=0.697 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | ns | 595 |  | 132 | Running the tests, and where the examples live | 1.7 |  | 0.499 |
 | walker |  | 764 | 427 | Markdown::ReadmeHeadline { file: README.md } |  |  | 0.746 |
 | ns | 864 |  | 269 | Complete roster of neco.h's API groups | 1.8 |  | 0.678 |
-| walker |  | 997 | 233 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.681 |
-| walker |  | 1041 | 44 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: true } |  |  | 0.681 |
-| walker |  | 1060 | 19 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.682 |
-| ns | 1080 |  | 216 | Basic operations: every coroutine-lifecycle signature | 1.9 |  | 0.639 |
-| walker |  | 1123 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.739 |
-| walker |  | 1194 | 71 | Markdown::HeadingsOutline { file: docs/assets/API_head.md } |  |  | 0.739 |
-| ns | 1342 |  | 262 | Neco error codes, part 1 | 1.10 |  | 0.700 |
+| walker |  | 997 | 233 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.680 |
+| walker |  | 1041 | 44 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: true } |  |  | 0.680 |
+| walker |  | 1060 | 19 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.680 |
+| ns | 1080 |  | 216 | Basic operations: every coroutine-lifecycle signature | 1.9 |  | 0.637 |
+| walker |  | 1123 | 63 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.738 |
+| walker |  | 1194 | 71 | Markdown::HeadingsOutline { file: docs/assets/API_head.md } |  |  | 0.738 |
+| ns | 1342 |  | 262 | Neco error codes, part 1 | 1.10 |  | 0.699 |
 | walker |  | 1412 | 218 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 0, line: 0 } |  |  | 0.765 |
 | walker |  | 1486 | 74 | Code::CodeKey { rung: Doc, file: neco.h, decl: 1, sub: 0, line: 35 } |  |  | 0.765 |
 | ns | 1606 |  | 264 | Neco error codes, part 2, and the error functions | 1.11 | 1.10 | 0.731 |
@@ -43,25 +43,25 @@ Score(3000)=0.787 I=0.888 C=0.697 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 2534 | 224 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 4, line: 0 } |  |  | 0.764 |
 | ns | 2556 |  | 179 | Mutexes: type, static initializer, and all eight operations | 2.4 |  | 0.770 |
 | ns | 2704 |  | 148 | WaitGroups: type, initializer and five operations | 2.5 |  | 0.758 |
-| walker |  | 2757 | 223 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 5, line: 0 } |  |  | 0.780 |
+| walker |  | 2757 | 223 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 5, line: 0 } |  |  | 0.779 |
 | walker |  | 2808 | 51 | Code::CodeKey { rung: Doc, file: neco.h, decl: 60, sub: 0, line: 149 } |  |  | 0.781 |
 | ns | 2846 |  | 142 | Condition variables: type, initializer and five operations | 2.6 |  | 0.785 |
-| walker |  | 2990 | 182 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 6, line: 0 } |  |  | 0.787 |
+| walker |  | 2990 | 182 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 6, line: 0 } |  |  | 0.786 |
 | walker |  | 3002 | 12 | Code::CodeKey { rung: Doc, file: neco.h, decl: 67, sub: 0, line: 169 } |  |  | 0.787 |
 | ns | 3154 |  | 308 | Posix wrappers: the non-blocking fd operations | 2.7 |  | 0.773 |
-| walker |  | 3214 | 212 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 7, line: 0 } |  |  | 0.787 |
+| walker |  | 3214 | 212 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 7, line: 0 } |  |  | 0.786 |
 | walker |  | 3231 | 17 | Code::CodeKey { rung: Decl, file: neco.h, decl: 75, sub: 0, line: 177 } |  |  | 0.791 |
 | walker |  | 3255 | 24 | Code::CodeKey { rung: Decl, file: neco.h, decl: 76, sub: 0, line: 179 } |  |  | 0.796 |
-| walker |  | 3270 | 15 | Code::CodeKey { rung: Doc, file: neco.h, decl: 78, sub: 0, line: 191 } |  |  | 0.797 |
+| walker |  | 3270 | 15 | Code::CodeKey { rung: Doc, file: neco.h, decl: 78, sub: 0, line: 191 } |  |  | 0.796 |
 | walker |  | 3286 | 16 | Code::CodeKey { rung: Doc, file: neco.h, decl: 77, sub: 0, line: 188 } |  |  | 0.797 |
 | ns | 3304 |  | 150 | File descriptor helpers: neco_setnonblock and neco_wait | 2.8 |  | 0.790 |
 | ns | 3394 |  | 90 | Networking utilities: neco_serve and neco_dial | 2.9 |  | 0.785 |
 | walker |  | 3522 | 236 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 8, line: 0 } |  |  | 0.796 |
-| walker |  | 3538 | 16 | Code::CodeKey { rung: Decl, file: neco.h, decl: 94, sub: 0, line: 231 } |  |  | 0.797 |
+| walker |  | 3538 | 16 | Code::CodeKey { rung: Decl, file: neco.h, decl: 94, sub: 0, line: 231 } |  |  | 0.796 |
 | ns | 3602 |  | 208 | Cancelation: neco_cancel, the type/state constants, cleanup macros | 2.10 |  | 0.801 |
 | walker |  | 3745 | 207 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 9, line: 0 } |  |  | 0.804 |
 | ns | 3861 |  | 259 | Streams and buffered I/O: the name of every entry point | 2.11 |  | 0.771 |
-| walker |  | 3972 | 227 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 10, line: 0 } |  |  | 0.778 |
+| walker |  | 3972 | 227 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 10, line: 0 } |  |  | 0.777 |
 | ns | 3986 |  | 125 | Random number generator: CSPRNG/PRNG attributes and three functions | 2.12 |  | 0.780 |
 | ns | 4062 |  | 76 | Signals: watch, wait, unwatch | 2.13 |  | 0.777 |
 | ns | 4105 |  | 43 | Background worker: neco_work | 2.14 |  | 0.775 |
@@ -70,19 +70,19 @@ Score(3000)=0.787 I=0.888 C=0.697 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 4363 | 228 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 11, line: 0 } |  |  | 0.806 |
 | ns | 4419 |  | 83 | Global environment: allocator and process-wide defaults | 2.16 |  | 0.807 |
 | walker |  | 4556 | 193 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 12, line: 0 } |  |  | 0.825 |
-| ns | 4667 |  | 248 | The neco_main macro, expanded | 2.17 |  | 0.803 |
-| walker |  | 4774 | 218 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 13, line: 0 } |  |  | 0.824 |
+| ns | 4667 |  | 248 | The neco_main macro, expanded | 2.17 |  | 0.802 |
+| walker |  | 4774 | 218 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 13, line: 0 } |  |  | 0.823 |
 | ns | 4775 |  | 108 | neco.h tail: private entry points and the EAI_SYSTEM shim | 2.18 |  | 0.810 |
-| ns | 4968 |  | 193 | Deadlines and cancelation, the governing rules | 3.1 |  | 0.796 |
-| walker |  | 4973 | 199 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 14, line: 0 } |  |  | 0.804 |
+| ns | 4968 |  | 193 | Deadlines and cancelation, the governing rules | 3.1 |  | 0.795 |
+| walker |  | 4973 | 199 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 14, line: 0 } |  |  | 0.803 |
 | walker |  | 5164 | 191 | Code::CodeKey { rung: Names, file: neco.h, decl: 0, sub: 15, line: 0 } |  |  | 0.821 |
 | ns | 5259 |  | 291 | Error semantics: which errors panic, which leak errno, and lasterr | 3.2 |  | 0.801 |
-| walker |  | 5380 | 216 | Code::CodeKey { rung: Decl, file: neco.h, decl: 162, sub: 0, line: 427 } |  |  | 0.823 |
+| walker |  | 5380 | 216 | Code::CodeKey { rung: Decl, file: neco.h, decl: 162, sub: 0, line: 427 } |  |  | 0.822 |
 | ns | 5493 |  | 234 | Async cancelation, and turning cancelation off | 3.3 |  | 0.808 |
 | walker |  | 5507 | 127 | Code::CodeKey { rung: Doc, file: neco.h, decl: 53, sub: 0, line: 135 } |  |  | 0.809 |
 | walker |  | 5539 | 32 | Markdown::Section { file: docs/assets/API_foot.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.809 |
 | walker |  | 5669 | 130 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.809 |
-| ns | 5725 |  | 232 | Platform notes: what does not work on Windows and WebAssembly | 3.4 |  | 0.792 |
+| ns | 5725 |  | 232 | Platform notes: what does not work on Windows and WebAssembly | 3.4 |  | 0.791 |
 | walker |  | 5780 | 111 | Markdown::Section { file: docs/README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.793 |
 | walker |  | 5905 | 125 | Markdown::Section { file: docs/API.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.793 |
 | walker |  | 6081 | 176 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.793 |
@@ -109,22 +109,22 @@ Score(3000)=0.787 I=0.888 C=0.697 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | ns | 7292 |  | 285 | struct coroutine: identity, stack, arguments, scheduling flags | 4.4 |  | 0.699 |
 | walker |  | 7311 | 105 | Code::CodeKey { rung: Decl, file: neco.c, decl: 3, sub: 0, line: 179 } |  |  | 0.699 |
 | walker |  | 7514 | 203 | Code::CodeKey { rung: Decl, file: neco.c, decl: 13, sub: 0, line: 1124 } |  |  | 0.699 |
-| ns | 7585 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.686 |
+| ns | 7585 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.685 |
 | ns | 7769 |  | 184 | Where the event queue backend is chosen | 4.6 |  | 0.676 |
 | walker |  | 7775 | 261 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 1, line: 0 } |  |  | 0.676 |
 | walker |  | 7790 | 15 | Code::CodeKey { rung: Decl, file: neco.c, decl: 28, sub: 0, line: 1251 } |  |  | 0.676 |
 | walker |  | 7811 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 27, sub: 0, line: 1204 } |  |  | 0.676 |
 | walker |  | 7869 | 58 | Code::CodeKey { rung: Decl, file: neco.c, decl: 22, sub: 0, line: 1155 } |  |  | 0.676 |
 | walker |  | 7880 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 29, sub: 0, line: 1282 } |  |  | 0.676 |
-| ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.668 |
-| walker |  | 8152 | 272 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 2, line: 0 } |  |  | 0.668 |
-| walker |  | 8171 | 19 | Code::CodeKey { rung: Decl, file: neco.c, decl: 36, sub: 0, line: 1348 } |  |  | 0.668 |
-| walker |  | 8195 | 24 | Code::CodeKey { rung: Decl, file: neco.c, decl: 35, sub: 0, line: 1344 } |  |  | 0.668 |
-| walker |  | 8221 | 26 | Code::CodeKey { rung: Decl, file: neco.c, decl: 39, sub: 0, line: 1814 } |  |  | 0.668 |
-| walker |  | 8250 | 29 | Code::CodeKey { rung: Decl, file: neco.c, decl: 43, sub: 0, line: 1875 } |  |  | 0.668 |
-| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.656 |
-| walker |  | 8280 | 30 | Code::CodeKey { rung: Decl, file: neco.c, decl: 44, sub: 0, line: 1880 } |  |  | 0.656 |
-| walker |  | 8291 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 30, sub: 0, line: 1293 } |  |  | 0.656 |
+| ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.667 |
+| walker |  | 8152 | 272 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 2, line: 0 } |  |  | 0.667 |
+| walker |  | 8171 | 19 | Code::CodeKey { rung: Decl, file: neco.c, decl: 36, sub: 0, line: 1348 } |  |  | 0.667 |
+| walker |  | 8195 | 24 | Code::CodeKey { rung: Decl, file: neco.c, decl: 35, sub: 0, line: 1344 } |  |  | 0.667 |
+| walker |  | 8221 | 26 | Code::CodeKey { rung: Decl, file: neco.c, decl: 39, sub: 0, line: 1814 } |  |  | 0.667 |
+| walker |  | 8250 | 29 | Code::CodeKey { rung: Decl, file: neco.c, decl: 43, sub: 0, line: 1875 } |  |  | 0.667 |
+| ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.655 |
+| walker |  | 8280 | 30 | Code::CodeKey { rung: Decl, file: neco.c, decl: 44, sub: 0, line: 1880 } |  |  | 0.655 |
+| walker |  | 8291 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 30, sub: 0, line: 1293 } |  |  | 0.655 |
 | ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.651 |
 | walker |  | 8390 | 99 | Code::CodeKey { rung: Decl, file: neco.c, decl: 37, sub: 0, line: 1364 } |  |  | 0.651 |
 | walker |  | 8511 | 121 | Code::CodeKey { rung: Decl, file: neco.c, decl: 34, sub: 0, line: 1330 } |  |  | 0.651 |
@@ -136,10 +136,10 @@ Score(3000)=0.787 I=0.888 C=0.697 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.630 |
 | walker |  | 8990 | 223 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 3, line: 0 } |  |  | 0.630 |
 | walker |  | 9018 | 28 | Code::CodeKey { rung: Decl, file: neco.c, decl: 47, sub: 0, line: 1899 } |  |  | 0.630 |
-| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.616 |
-| walker |  | 9259 | 241 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 4, line: 0 } |  |  | 0.616 |
-| walker |  | 9276 | 17 | Code::CodeKey { rung: Doc, file: neco.c, decl: 65, sub: 0, line: 1944 } |  |  | 0.616 |
-| ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.606 |
+| ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.615 |
+| walker |  | 9259 | 241 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 4, line: 0 } |  |  | 0.615 |
+| walker |  | 9276 | 17 | Code::CodeKey { rung: Doc, file: neco.c, decl: 65, sub: 0, line: 1944 } |  |  | 0.615 |
+| ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.605 |
 | ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.599 |
 | walker |  | 9605 | 329 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 5, line: 0 } |  |  | 0.599 |
 | ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.596 |

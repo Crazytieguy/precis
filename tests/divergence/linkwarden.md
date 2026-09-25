@@ -1,4 +1,4 @@
-Score(3000)=0.734 I=0.891 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.633/0.712/0.686/0.734/0.623/0.768/0.830
+Score(3000)=0.734 I=0.891 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.633/0.712/0.686/0.734/0.623/0.768/0.829
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -268,7 +268,7 @@ Score(3000)=0.734 I=0.891 C=0.604 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 8778 | 46 | Json::Identity { file: apps/mobile/package.json } |  |  | 0.827 |
 | walker |  | 8790 | 12 | Json::Entry { file: apps/mobile/package.json } |  |  | 0.827 |
 | walker |  | 8885 | 95 | Json::Scripts { file: apps/mobile/package.json } |  |  | 0.827 |
-| ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.830 |
+| ns | 8948 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.829 |
 | ns | 9162 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.824 |
 | ns | 9341 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.815 |
 | ns | 9473 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.818 |

@@ -32,10 +32,7 @@ use crate::value::{
 };
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
-use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
-    single_file_lines_content,
-};
+use super::{WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content};
 
 type Section = (String, usize, usize);
 
@@ -154,7 +151,7 @@ fn rows_content(
     if rows.is_empty() {
         return None;
     }
-    single_file_lines_content(file, source, FileLines::new(dedup_sorted(rows)))
+    single_file_lines_content(file, source, rows)
 }
 
 /// The identity-table residue, minus the dependency arrays the dependency
@@ -554,6 +551,7 @@ fn parse_manifest(path: &Path) -> Option<toml::Value> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::walker::dedup_sorted;
     use std::fs;
 
     fn fixture_path(rel: &str) -> PathBuf {

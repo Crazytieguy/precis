@@ -33,7 +33,7 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, PrismaKey};
 use crate::render::Source;
 
-use super::{FileLines, WalkCtx, fs::files_with_extension, single_file_lines_content};
+use super::{WalkCtx, fs::files_with_extension, single_file_lines_content};
 
 /// Field count at which a declaration body earns full base value. Wider
 /// models (User/Link/Collection) carry the schema's load-bearing
@@ -113,9 +113,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let toc_line_nums: Vec<usize> = decls.iter().map(|d| d.open_line).collect();
-        let Some(content) =
-            single_file_lines_content(&file, &source, FileLines::new(toc_line_nums))
-        else {
+        let Some(content) = single_file_lines_content(&file, &source, toc_line_nums) else {
             continue;
         };
         // Multi-file Prisma layouts and generated copies ship
@@ -215,7 +213,7 @@ fn block_content(
     end_line: usize,
 ) -> Option<crate::content::BatchContent> {
     let rows: Vec<usize> = (start_line..=end_line).collect();
-    single_file_lines_content(file, source, FileLines::new(rows))
+    single_file_lines_content(file, source, rows)
 }
 
 /// Top-level Prisma declarations with their brace-block row ranges,

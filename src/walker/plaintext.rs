@@ -39,8 +39,8 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 
 use super::{
-    FileLines, WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content,
-    path_depth_factor, single_file_lines_content,
+    WalkCtx, fs::list_dir, gated_read_source, gated_whole_file_content, path_depth_factor,
+    single_file_lines_content,
 };
 
 /// Line cap on a `Whole` plaintext batch.
@@ -665,7 +665,7 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
     }
     let selected = declaration_surface(&source);
     let surface_rows = selected.len();
-    let Some(content) = single_file_lines_content(file, &source, FileLines::new(selected)) else {
+    let Some(content) = single_file_lines_content(file, &source, selected) else {
         return;
     };
     let surface_key: BatchKey = PlaintextKey::DeclSurface {
@@ -854,9 +854,8 @@ fn is_build_script_location(dir: &Path, ctx: &WalkCtx) -> bool {
     dir == ctx.root() || dir.file_name().is_some_and(|name| name == "scripts")
 }
 
-/// Whole file when it fits `head_line_cap`, else the head rows with a
-/// trailing ellipsis — a file one line over the cap renders its head
-/// rather than nothing.
+/// The first `head_line_cap` rows — the whole file when it fits, so a
+/// file one line over the cap renders its head rather than nothing.
 fn head_sampled_content(
     file: &Path,
     ctx: &WalkCtx,
@@ -864,16 +863,8 @@ fn head_sampled_content(
     head_line_cap: usize,
 ) -> Option<crate::content::BatchContent> {
     let source = gated_read_source(file, ctx, byte_gate)?;
-    let line_count = source.lines().count();
-    if line_count == 0 {
-        return None;
-    }
-    let lines = if line_count <= head_line_cap {
-        FileLines::new((1..=line_count).collect())
-    } else {
-        FileLines::new((1..=head_line_cap).collect()).with_ellipses(vec![head_line_cap + 1])
-    };
-    single_file_lines_content(file, &source, lines)
+    let rows = (1..=source.line_count().min(head_line_cap)).collect();
+    single_file_lines_content(file, &source, rows)
 }
 
 #[cfg(test)]

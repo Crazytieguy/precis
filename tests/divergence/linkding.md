@@ -1,4 +1,4 @@
-Score(3000)=0.667 I=0.836 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.819/0.829/0.775/0.667/0.633/0.546/0.461
+Score(3000)=0.667 I=0.836 C=0.532 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.819/0.829/0.775/0.667/0.633/0.546/0.461
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,14 +46,14 @@ Score(3000)=0.667 I=0.836 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 1461 | 5 | Fs::DirListing { dir: bookmarks/static/vendor } |  |  | 0.831 |
 | walker |  | 1558 | 97 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.831 |
 | walker |  | 1593 | 35 | Fs::DirListing { dir: docs } |  |  | 0.832 |
-| ns | 1602 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.802 |
+| ns | 1602 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.801 |
 | walker |  | 1653 | 60 | Fs::DirListing { dir: bookmarks/frontend/components } |  |  | 0.803 |
 | walker |  | 1670 | 17 | Fs::DirListing { dir: docs/src } |  |  | 0.803 |
 | walker |  | 1677 | 7 | Fs::DirListing { dir: docs/src/content } |  |  | 0.803 |
 | ns | 1710 |  | 108 | docs/ site and its content pages (complete) | 1.14 |  | 0.757 |
 | walker |  | 1746 | 69 | Fs::DirListing { dir: bookmarks/templates/bookmarks } |  |  | 0.757 |
 | walker |  | 1763 | 17 | Fs::DirListing { dir: bookmarks/templates/bookmarks/details } |  |  | 0.757 |
-| ns | 1885 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.725 |
+| ns | 1885 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.724 |
 | walker |  | 1961 | 198 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.775 |
 | walker |  | 2088 | 127 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.775 |
 | walker |  | 2138 | 50 | Fs::DirListing { dir: scripts } |  |  | 0.776 |
@@ -61,10 +61,10 @@ Score(3000)=0.667 I=0.836 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 2296 |  | 411 | Bookmark model fields (complete) | 2.2 | 2.1 | 0.727 |
 | walker |  | 2389 | 164 | Plaintext::Whole { file: .env.sample } |  |  | 0.727 |
 | walker |  | 2400 | 11 | Code::CodeKey { rung: Names, file: manage.py, decl: 0, sub: 0, line: 0 } |  |  | 0.727 |
-| ns | 2439 |  | 143 | UserProfile field roster (names + types) | 2.3 | 2.1 | 0.700 |
+| ns | 2439 |  | 143 | UserProfile field roster (names + types) | 2.3 | 2.1 | 0.699 |
 | ns | 2823 |  | 384 | UserProfile feature toggles (complete tail of the model) | 2.4 | 2.3 | 0.667 |
 | walker |  | 3014 | 614 | Fs::DirListing { dir: bookmarks/migrations } |  |  | 0.667 |
-| ns | 3026 |  | 203 | BookmarkSearch — the search/filter parameter vocabulary | 2.5 | 2.1 | 0.640 |
+| ns | 3026 |  | 203 | BookmarkSearch — the search/filter parameter vocabulary | 2.5 | 2.1 | 0.639 |
 | walker |  | 3061 | 47 | Plaintext::DeclSurface { file: pytest.ini } |  |  | 0.644 |
 | ns | 3271 |  | 245 | Bookmark methods: resolved_title, tag_names, save, query_existing | 2.6 | 2.2 | 0.621 |
 | walker |  | 3421 | 360 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.659 |
@@ -124,10 +124,10 @@ Score(3000)=0.667 I=0.836 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 5949 | 327 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 16, sub: 0, line: 215 } |  |  | 0.561 |
 | walker |  | 5968 | 19 | Code::CodeKey { rung: Body, file: bookmarks/forms.py, decl: 17, sub: 0, line: 244 } |  |  | 0.561 |
 | ns | 6056 |  | 261 | views/bookmarks.py function roster (complete) | 3.6 |  | 0.546 |
-| ns | 6328 |  | 272 | views/contexts.py class roster (complete) | 3.7 |  | 0.533 |
-| walker |  | 6354 | 386 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 1, sub: 0, line: 31 } |  |  | 0.533 |
-| walker |  | 6362 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 3, sub: 0, line: 79 } |  |  | 0.533 |
-| walker |  | 6370 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 4, sub: 0, line: 85 } |  |  | 0.533 |
+| ns | 6328 |  | 272 | views/contexts.py class roster (complete) | 3.7 |  | 0.532 |
+| walker |  | 6354 | 386 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 1, sub: 0, line: 31 } |  |  | 0.532 |
+| walker |  | 6362 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 3, sub: 0, line: 79 } |  |  | 0.532 |
+| walker |  | 6370 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 4, sub: 0, line: 85 } |  |  | 0.532 |
 | ns | 6570 |  | 242 | views/settings.py + views/tags.py + views/bundles.py function rosters (complete) | 3.8 |  | 0.521 |
 | ns | 6741 |  | 171 | views/access.py — the complete authorization helper set | 3.9 |  | 0.517 |
 | walker |  | 6756 | 386 | Code::CodeKey { rung: Decl, file: bookmarks/forms.py, decl: 18, sub: 0, line: 248 } |  |  | 0.517 |
@@ -163,9 +163,9 @@ Score(3000)=0.667 I=0.836 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 8915 | 295 | Toml::Config { file: pyproject.toml } |  |  | 0.461 |
 | walker |  | 8972 | 57 | Code::CodeKey { rung: Names, file: bookmarks/middlewares.py, decl: 0, sub: 0, line: 0 } |  |  | 0.461 |
 | walker |  | 8985 | 13 | Code::CodeKey { rung: Decl, file: bookmarks/middlewares.py, decl: 1, sub: 0, line: 7 } |  |  | 0.461 |
-| walker |  | 9014 | 29 | Code::CodeKey { rung: Decl, file: bookmarks/middlewares.py, decl: 4, sub: 0, line: 17 } |  |  | 0.462 |
-| walker |  | 9024 | 10 | Code::CodeKey { rung: Body, file: bookmarks/middlewares.py, decl: 5, sub: 0, line: 18 } |  |  | 0.462 |
-| ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.453 |
+| walker |  | 9014 | 29 | Code::CodeKey { rung: Decl, file: bookmarks/middlewares.py, decl: 4, sub: 0, line: 17 } |  |  | 0.461 |
+| walker |  | 9024 | 10 | Code::CodeKey { rung: Body, file: bookmarks/middlewares.py, decl: 5, sub: 0, line: 18 } |  |  | 0.461 |
+| ns | 9169 |  | 353 | services/tasks.py function roster (complete) | 5.4 |  | 0.452 |
 | walker |  | 9290 | 266 | Code::CodeKey { rung: Names, file: bookmarks/models.py, decl: 0, sub: 0, line: 0 } |  |  | 0.475 |
 | walker |  | 9303 | 13 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 14, sub: 0, line: 116 } |  |  | 0.475 |
 | walker |  | 9316 | 13 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 34, sub: 0, line: 472 } |  |  | 0.476 |
@@ -177,9 +177,9 @@ Score(3000)=0.667 I=0.836 C=0.533 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 9465 | 7 | Code::CodeKey { rung: Body, file: bookmarks/models.py, decl: 3, sub: 0, line: 26 } |  |  | 0.474 |
 | walker |  | 9594 | 129 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 37, sub: 0, line: 490 } |  |  | 0.476 |
 | walker |  | 9602 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 39, sub: 0, line: 508 } |  |  | 0.476 |
-| walker |  | 9744 | 142 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 41, sub: 0, line: 516 } |  |  | 0.480 |
-| walker |  | 9752 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 43, sub: 0, line: 531 } |  |  | 0.480 |
-| walker |  | 9776 | 24 | Code::CodeKey { rung: Doc, file: bookmarks/models.py, decl: 37, sub: 0, line: 490 } |  |  | 0.480 |
+| walker |  | 9744 | 142 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 41, sub: 0, line: 516 } |  |  | 0.479 |
+| walker |  | 9752 | 8 | Code::CodeKey { rung: Decl, file: bookmarks/models.py, decl: 43, sub: 0, line: 531 } |  |  | 0.479 |
+| walker |  | 9776 | 24 | Code::CodeKey { rung: Doc, file: bookmarks/models.py, decl: 37, sub: 0, line: 490 } |  |  | 0.479 |
 | ns | 9790 |  | 352 | settings/base.py — favicon, preview, snapshot and singlefile LD_* options | 6.2 |  | 0.473 |
 | ns | 9898 |  | 108 | Operational surfaces: docker/, scripts/ and management commands (complete listings) | 6.3 |  | 0.485 |
 | ns | 9985 |  | 87 | bookmarks/frontend/ component and utility listings (complete) | 7.1 |  | 0.496 |

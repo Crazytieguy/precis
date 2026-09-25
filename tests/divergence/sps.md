@@ -46,10 +46,10 @@ Score(3000)=0.674 I=0.808 C=0.563 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 915 | 34 | Fs::DirListing { dir: sps-core/src/build/compile } |  |  | 0.925 |
 | ns | 965 |  | 180 | sps-core leaf directories: bottle, cask, cask artifacts, compilers | 1.10 |  | 0.911 |
 | walker |  | 1039 | 124 | Code::CodeKey { rung: Names, file: sps-common/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.911 |
-| walker |  | 1135 | 96 | Code::CodeKey { rung: Names, file: sps-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.912 |
-| walker |  | 1252 | 117 | Toml::Config { file: Cargo.toml } |  |  | 0.912 |
-| ns | 1286 |  | 321 | README usage: every documented sps subcommand | 1.11 | 1.4 | 0.802 |
-| walker |  | 1342 | 90 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.802 |
+| walker |  | 1135 | 96 | Code::CodeKey { rung: Names, file: sps-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.911 |
+| walker |  | 1252 | 117 | Toml::Config { file: Cargo.toml } |  |  | 0.911 |
+| ns | 1286 |  | 321 | README usage: every documented sps subcommand | 1.11 | 1.4 | 0.801 |
+| walker |  | 1342 | 90 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.801 |
 | walker |  | 1433 | 91 | Code::CodeKey { rung: Names, file: sps/src/main.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.802 |
 | walker |  | 1443 | 10 | Code::CodeKey { rung: Decl, file: sps/src/main.rs, decl: 2, sub: 0, line: 56 } |  |  | 0.802 |
 | ns | 1444 |  | 158 | README current status and roadmap | 1.12 | 1.4 | 0.777 |
@@ -60,7 +60,7 @@ Score(3000)=0.674 I=0.808 C=0.563 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 2095 | 572 | Toml::Dependencies { file: Cargo.toml } |  |  | 0.725 |
 | ns | 2098 |  | 225 | sps-core uninstall, upgrade and utils public names | 1.16 |  | 0.692 |
 | walker |  | 2199 | 104 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.716 |
-| ns | 2340 |  | 242 | clap CliArgs and the complete Command enum | 2.1 |  | 0.682 |
+| ns | 2340 |  | 242 | clap CliArgs and the complete Command enum | 2.1 |  | 0.681 |
 | walker |  | 2483 | 284 | Code::CodeKey { rung: Names, file: sps-net/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |
 | walker |  | 2507 | 24 | Code::CodeKey { rung: Names, file: sps/src/pipeline.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.705 |
 | walker |  | 2588 | 81 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.705 |
@@ -160,8 +160,8 @@ Score(3000)=0.674 I=0.808 C=0.563 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 7819 | 75 | Code::CodeKey { rung: Decl, file: sps-net/src/oci.rs, decl: 15, sub: 0, line: 114 } |  |  | 0.536 |
 | ns | 7828 |  | 232 | Resolver outputs: install strategy, resolution status, resolved graph | 4.8 |  | 0.526 |
 | walker |  | 7910 | 91 | Code::CodeKey { rung: Decl, file: sps-net/src/oci.rs, decl: 10, sub: 0, line: 43 } |  |  | 0.526 |
-| ns | 7957 |  | 129 | InstalledArtifact: the eight kinds an install records | 4.9 |  | 0.522 |
-| walker |  | 8015 | 105 | Code::CodeKey { rung: Decl, file: sps-net/src/oci.rs, decl: 11, sub: 0, line: 53 } |  |  | 0.522 |
+| ns | 7957 |  | 129 | InstalledArtifact: the eight kinds an install records | 4.9 |  | 0.521 |
+| walker |  | 8015 | 105 | Code::CodeKey { rung: Decl, file: sps-net/src/oci.rs, decl: 11, sub: 0, line: 53 } |  |  | 0.521 |
 | walker |  | 8036 | 21 | Code::CodeKey { rung: Names, file: sps/src/cli/list.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
 | walker |  | 8068 | 32 | Code::CodeKey { rung: Decl, file: sps/src/cli/list.rs, decl: 2, sub: 0, line: 28 } |  |  | 0.522 |
 | walker |  | 8188 | 120 | Code::CodeKey { rung: Decl, file: sps/src/cli/list.rs, decl: 1, sub: 0, line: 15 } |  |  | 0.526 |
@@ -213,4 +213,4 @@ Score(3000)=0.674 I=0.808 C=0.563 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | walker |  | 9768 | 20 | Code::CodeKey { rung: Decl, file: sps/src/cli/install.rs, decl: 3, sub: 0, line: 44 } |  |  | 0.514 |
 | ns | 9772 |  | 71 | BuildEnvironment: the sanitized superenv-style build environment | 7.2 |  | 0.512 |
 | ns | 9816 |  | 44 | Remaining directories: crate roots and .github | 8.1 |  | 0.517 |
-| ns | 9978 |  | 162 | Contributor workflow: the exact check, format, lint and test commands | 8.2 |  | 0.514 |
+| ns | 9978 |  | 162 | Contributor workflow: the exact check, format, lint and test commands | 8.2 |  | 0.513 |
