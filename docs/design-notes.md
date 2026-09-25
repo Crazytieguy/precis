@@ -277,7 +277,12 @@ must not undo:
   rosters no longer win on size alone, and a long public roster is
   not capped below its short peers (+0.006 at 3000 over the capped
   `roster_mass_factor`). Per-language pricing enters only through
-  `is_entrypoint`, `file_weight` and what `extract` hides.
+  `is_entrypoint` (a depth pin, no extra factor), `file_weight` and
+  what `extract` hides. Once rosters were priced per entry, an
+  entry-file factor, a private-declaration factor, a member factor, a
+  roster head premium and a chunk tail decay each measured neutral or
+  negative on the grid and were removed (2026-09-25); re-adding one
+  needs a fresh measurement.
 
 ## Open items
 
