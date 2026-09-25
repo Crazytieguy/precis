@@ -80,6 +80,7 @@ impl Ledger {
     }
 
     /// Rows dropped as non-ancestor overlaps so far.
+    #[cfg(debug_assertions)]
     pub(super) fn dropped_rows(&self) -> usize {
         self.dropped_rows
     }
