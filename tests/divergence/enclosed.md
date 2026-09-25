@@ -113,13 +113,13 @@ Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 3234 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.569 |
 | walker |  | 3278 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.569 |
 | walker |  | 3314 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.571 |
+| walker |  | 3352 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.571 |
 | ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.543 |
-| walker |  | 3401 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.544 |
-| walker |  | 3439 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.545 |
-| walker |  | 3481 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.547 |
-| walker |  | 3489 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.547 |
-| walker |  | 3552 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.549 |
-| walker |  | 3571 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.549 |
+| walker |  | 3394 | 42 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth } |  |  | 0.545 |
+| walker |  | 3402 | 8 | Fs::DirListing { dir: packages/app-server/src/modules/app/auth/e2e } |  |  | 0.545 |
+| walker |  | 3465 | 63 | Fs::DirListing { dir: packages/app-server/src/modules/notes } |  |  | 0.547 |
+| walker |  | 3484 | 19 | Fs::DirListing { dir: packages/app-server/src/modules/notes/tasks } |  |  | 0.548 |
+| walker |  | 3571 | 87 | Fs::DirListing { dir: packages/app-client/src/locales } |  |  | 0.549 |
 | ns | 3584 |  | 194 | Payload vocabulary: the algorithm and compression constants | 2.9 |  | 0.540 |
 | walker |  | 3619 | 48 | Fs::DirListing { dir: packages/app-client/src/modules/ui/components } |  |  | 0.541 |
 | walker |  | 3671 | 52 | Fs::DirListing { dir: packages/app-server/src/modules/notes/e2e } |  |  | 0.542 |
@@ -209,10 +209,12 @@ Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 9334 |  | 124 | Complete .github listing: every CI/CD workflow and issue template | 6.1 |  | 0.631 |
 | walker |  | 9371 | 91 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.types.ts, decl: 3, sub: 0, line: 17 } |  |  | 0.631 |
 | walker |  | 9513 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.631 |
-| walker |  | 9526 | 13 | Code::CodeKey { rung: Names, file: packages/app-client/src/locales/locales.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.631 |
+| walker |  | 9554 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.631 |
 | ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.634 |
-| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.637 |
-| walker |  | 9851 | 325 | Code::CodeKey { rung: Decl, file: packages/app-client/src/locales/locales.ts, decl: 1, sub: 0, line: 2 } |  |  | 0.637 |
-| walker |  | 9892 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.637 |
-| ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.647 |
-| walker |  | 9998 | 106 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.649 |
+| walker |  | 9666 | 112 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.636 |
+| ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.639 |
+| walker |  | 9780 | 114 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.639 |
+| walker |  | 9821 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.services.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
+| walker |  | 9871 | 50 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.services.ts, decl: 2, sub: 0, line: 39 } |  |  | 0.639 |
+| ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.649 |
+| walker |  | 9997 | 126 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.services.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.649 |

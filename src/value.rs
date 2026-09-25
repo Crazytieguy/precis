@@ -151,6 +151,11 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "ci"
                 | "scripts"
                 | "tools"
+                | "archived"
+                | "locales"
+                | "locale"
+                | "l10n"
+                | "translations"
         ) || s.starts_with("test_")
             || s.starts_with("tests_")
             || is_scaffold_template_dir_name(s)
@@ -335,6 +340,12 @@ mod tests {
                 "src/node/__tests__/serve.ts src/node/__tests__/__snapshots__/x.snap",
             ),
             (1.0, "src/__internal__/queue.ts src/pkg/__pycache__/x.pyc"),
+            // Archived and translated copies, at any depth.
+            (
+                0.2,
+                "_archived/guestbook/app.yaml samples/archived/x.cs \
+                 apps/web/public/locales/en/common.json lessons/1/translations/README.es.md",
+            ),
         ];
         let root = Path::new("/repo");
         for (expected, paths) in cases {
