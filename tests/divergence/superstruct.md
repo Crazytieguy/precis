@@ -1,4 +1,4 @@
-Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.640/0.498/0.571/0.516/0.578/0.611/0.610
+Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.639/0.498/0.571/0.516/0.578/0.611/0.610
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -10,34 +10,34 @@ Score(3000)=0.516 I=0.767 C=0.347 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | walker |  | 131 | 8 | Fs::DirListing { dir: docs/resources } |  |  | 0.000 |
 | ns | 134 |  | 65 | Complete root directory listing | 1.2 |  | 0.616 |
 | walker |  | 135 | 4 | Fs::DirListing { dir: .vscode } |  |  | 0.616 |
+| walker |  | 143 | 8 | Fs::DirListing { dir: .github } |  |  | 0.616 |
+| walker |  | 147 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.616 |
 | ns | 171 |  | 37 | Complete src/ and src/structs/ listings | 1.3 |  | 0.613 |
-| walker |  | 190 | 55 | Fs::DirListing { dir: examples } |  |  | 0.617 |
-| walker |  | 198 | 8 | Fs::DirListing { dir: .github } |  |  | 0.617 |
-| walker |  | 202 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.617 |
-| ns | 250 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.556 |
-| walker |  | 281 | 79 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
-| walker |  | 363 | 82 | Json::Identity { file: package.json } |  |  | 0.965 |
-| walker |  | 392 | 29 | Fs::DirListing { dir: docs/images } |  |  | 0.966 |
+| walker |  | 226 | 79 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.640 |
+| ns | 250 |  | 79 | src/index.ts - the entire public barrel | 1.4 |  | 0.636 |
+| walker |  | 308 | 82 | Json::Identity { file: package.json } |  |  | 0.962 |
+| walker |  | 337 | 29 | Fs::DirListing { dir: docs/images } |  |  | 0.964 |
+| walker |  | 368 | 31 | Fs::DirListing { dir: docs/reference } |  |  | 0.966 |
+| walker |  | 395 | 27 | Code::CodeKey { rung: Names, file: src/error.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.966 |
 | ns | 416 |  | 166 | Readme lede: what Superstruct is and why it exists | 1.5 |  | 0.937 |
-| walker |  | 423 | 31 | Fs::DirListing { dir: docs/reference } |  |  | 0.939 |
-| walker |  | 450 | 27 | Code::CodeKey { rung: Names, file: src/error.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.939 |
-| walker |  | 484 | 34 | Json::Runtime { file: package.json } |  |  | 0.940 |
-| walker |  | 535 | 51 | Fs::DirListing { dir: docs/guides } |  |  | 0.942 |
-| walker |  | 565 | 30 | Markdown::HeadingsOutline { file: docs/summary.md } |  |  | 0.942 |
-| walker |  | 583 | 18 | Markdown::HeadingsOutline { file: docs/resources/links.md } |  |  | 0.942 |
-| walker |  | 611 | 28 | Fs::DirListing { dir: test } |  |  | 0.943 |
-| ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.780 |
-| walker |  | 808 | 197 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.787 |
-| ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.712 |
-| walker |  | 862 | 54 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.713 |
-| walker |  | 928 | 66 | Markdown::Prelude { file: Readme.md } |  |  | 0.729 |
-| walker |  | 947 | 19 | Markdown::Section { file: Readme.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.729 |
-| ns | 971 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.640 |
-| walker |  | 1023 | 76 | Json::Entry { file: package.json } |  |  | 0.641 |
-| ns | 1066 |  | 95 | src/struct.ts symbol roster: methods and top-level helpers | 2.1 |  | 0.598 |
-| walker |  | 1104 | 81 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.602 |
-| walker |  | 1235 | 131 | Markdown::ReadmeHeadline { file: docs/readme.md } |  |  | 0.602 |
-| walker |  | 1301 | 66 | Markdown::Prelude { file: docs/readme.md } |  |  | 0.602 |
+| walker |  | 429 | 34 | Json::Runtime { file: package.json } |  |  | 0.937 |
+| walker |  | 480 | 51 | Fs::DirListing { dir: docs/guides } |  |  | 0.940 |
+| walker |  | 510 | 30 | Markdown::HeadingsOutline { file: docs/summary.md } |  |  | 0.940 |
+| walker |  | 528 | 18 | Markdown::HeadingsOutline { file: docs/resources/links.md } |  |  | 0.940 |
+| walker |  | 556 | 28 | Fs::DirListing { dir: test } |  |  | 0.941 |
+| ns | 638 |  | 222 | The Struct class: doc comment and its six fields | 1.6 |  | 0.778 |
+| walker |  | 753 | 197 | Markdown::ReadmeHeadline { file: Readme.md } |  |  | 0.785 |
+| walker |  | 807 | 54 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.786 |
+| ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.711 |
+| walker |  | 873 | 66 | Markdown::Prelude { file: Readme.md } |  |  | 0.728 |
+| walker |  | 892 | 19 | Markdown::Section { file: Readme.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.728 |
+| walker |  | 968 | 76 | Json::Entry { file: package.json } |  |  | 0.728 |
+| ns | 971 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.639 |
+| walker |  | 1049 | 81 | Code::CodeKey { rung: Decl, file: src/error.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.643 |
+| ns | 1066 |  | 95 | src/struct.ts symbol roster: methods and top-level helpers | 2.1 |  | 0.600 |
+| walker |  | 1180 | 131 | Markdown::ReadmeHeadline { file: docs/readme.md } |  |  | 0.600 |
+| walker |  | 1246 | 66 | Markdown::Prelude { file: docs/readme.md } |  |  | 0.600 |
+| walker |  | 1301 | 55 | Fs::DirListing { dir: examples } |  |  | 0.602 |
 | ns | 1318 |  | 252 | Complete roster of the 25 type structs | 2.2 |  | 0.521 |
 | walker |  | 1359 | 58 | Code::CodeKey { rung: Names, file: src/structs/coercions.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.523 |
 | walker |  | 1406 | 47 | Code::CodeKey { rung: Decl, file: src/structs/coercions.ts, decl: 1, sub: 0, line: 16 } |  |  | 0.523 |

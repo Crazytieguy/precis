@@ -190,14 +190,6 @@ pub fn depth_factor(depth: usize) -> f64 {
 /// test (`*.test.ts`, `*_test.go`). Matched component-wise relative to
 /// `root` so the harness's outer `tests/fixtures/` doesn't poison.
 pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f64 {
-    non_essential_factor_inner(path, root, false)
-}
-
-pub(crate) fn non_essential_factor_inner(
-    path: &std::path::Path,
-    root: &std::path::Path,
-    skip_dir_classifier: bool,
-) -> f64 {
     let target = path.strip_prefix(root).unwrap_or(path);
     // Auto-injected docs are already in the model's context. Checked
     // first so SKILL.md / rules.mdc get the stronger 0.1 tier rather
@@ -255,59 +247,55 @@ pub(crate) fn non_essential_factor_inner(
             return 0.2;
         }
     }
-    // Peripheral admin / release markdown (anywhere in the tree). NS authors universally treat these as "appendix"
-    // content; the walker should not let CHANGELOG, CONTRIBUTING, etc.
-    // crowd the primary-source schedule. (A README-promotion exemption
-    // for root-level upgrade guides was measured dead on the
-    // post-refreeze keys and removed 2026-07-06.)
+    // Peripheral admin / release markdown (anywhere in the tree). NS
+    // authors treat these as "appendix" content; the walker should not
+    // let CHANGELOG, CONTRIBUTING, etc. crowd the primary-source schedule.
     if is_peripheral_doc(target) {
         return 0.2;
     }
-    if !skip_dir_classifier {
-        let mut prefix = root.to_path_buf();
-        for component in target.components() {
-            prefix.push(component);
-            let Some(raw) = component.as_os_str().to_str() else {
-                continue;
-            };
-            // Case-insensitive: `Tests/`, `Scripts/`, `Examples/` are
-            // the spelling in Swift, C#, Objective-C and Java trees,
-            // and a role classifier that only knows the lowercase
-            // spelling gives those ecosystems' test suites the same
-            // weight as their library source.
-            let lowered = raw.to_ascii_lowercase();
-            let s = dir_role_name(&lowered);
-            if (matches!(
-                s,
-                "tests"
-                    | "test"
-                    | "testing"
-                    | "examples"
-                    | "benches"
-                    | "benchmark"
-                    | "benchmarks"
-                    | "fixtures"
-                    | "rfcs"
-                    | "xtask"
-                    | "ci"
-                    | "website"
-                    | "demo"
-                    | "playground"
-                    | "storybook"
-                    | "fuzz"
-                    | "fuzzer"
-                    | "profiler"
-                    | "scripts"
-                    | "tools"
-                    | "e2e"
-            ) || s.starts_with("test_")
-                || s.starts_with("tests_")
-                || s.starts_with("guide-helper")
-                || is_scaffold_template_dir_name(s))
-                && !is_declared_crate_module_dir(&prefix, root)
-            {
-                return 0.2;
-            }
+    let mut prefix = root.to_path_buf();
+    for component in target.components() {
+        prefix.push(component);
+        let Some(raw) = component.as_os_str().to_str() else {
+            continue;
+        };
+        // Case-insensitive: `Tests/`, `Scripts/`, `Examples/` are
+        // the spelling in Swift, C#, Objective-C and Java trees,
+        // and a role classifier that only knows the lowercase
+        // spelling gives those ecosystems' test suites the same
+        // weight as their library source.
+        let lowered = raw.to_ascii_lowercase();
+        let s = dir_role_name(&lowered);
+        if (matches!(
+            s,
+            "tests"
+                | "test"
+                | "testing"
+                | "examples"
+                | "benches"
+                | "benchmark"
+                | "benchmarks"
+                | "fixtures"
+                | "rfcs"
+                | "xtask"
+                | "ci"
+                | "website"
+                | "demo"
+                | "playground"
+                | "storybook"
+                | "fuzz"
+                | "fuzzer"
+                | "profiler"
+                | "scripts"
+                | "tools"
+                | "e2e"
+        ) || s.starts_with("test_")
+            || s.starts_with("tests_")
+            || s.starts_with("guide-helper")
+            || is_scaffold_template_dir_name(s))
+            && !is_declared_crate_module_dir(&prefix, root)
+        {
+            return 0.2;
         }
     }
     // Python under a `docs/` subtree is Sphinx config / site builders /

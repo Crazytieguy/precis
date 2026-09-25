@@ -410,7 +410,11 @@ crates/
         134→    conn: Conn,
         135→}
         137→impl Connection {
+        138→    pub fn new(conn: Conn) -> Self {
         …
+        142→    pub async fn create_table(&mut self, schema: &Schema, table: &Table) -> Result<()> {
+        …
+        182→}
         184→impl From<Conn> for Connection {
         185→    fn from(conn: Conn) -> Self {
         …
@@ -536,17 +540,6 @@ docs/
 examples/
   composite-key/
   hello-toasty/
-    Cargo.toml
-    src/
-      main.rs
-        …
-        2→struct User {
-        …
-        19→struct Todo {
-        …
-        33→#[tokio::main]
-        34→async fn main() -> toasty::Result<()> {
-        …
   todo-with-cli/
   user-has-one-profile/
 rust-toolchain.toml

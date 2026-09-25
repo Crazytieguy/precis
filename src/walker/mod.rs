@@ -123,8 +123,7 @@ pub struct WalkCtx {
     json_state: json::JsonState,
     /// Run state of the code engine's language modules.
     code: code::CodeState,
-    /// Files hyperlinked from the root README — exempts them from the
-    /// `examples/`-style non-essential demotion.
+    /// Source files hyperlinked from the root README.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
     /// The tree's essential source, walked once.
     essential_source: OnceCell<EssentialSource>,
@@ -196,16 +195,9 @@ impl WalkCtx {
             .unwrap_or(0)
     }
 
-    /// Non-essential discount, scoped to this run's root. README-cited
-    /// files skip the `examples/`-style classifier — other discount
-    /// classes still apply.
+    /// Non-essential discount, scoped to this run's root.
     pub fn non_essential_factor(&self, path: &Path) -> f64 {
-        let base = crate::value::non_essential_factor(path, &self.root);
-        if base < 1.0 && self.is_readme_cited(path) {
-            crate::value::non_essential_factor_inner(path, &self.root, true)
-        } else {
-            base
-        }
+        crate::value::non_essential_factor(path, &self.root)
     }
 
     /// True iff `path` is README-cited, or a directory containing a

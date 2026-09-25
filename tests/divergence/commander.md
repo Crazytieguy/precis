@@ -1,4 +1,4 @@
-Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.597/0.479/0.491/0.456/0.544/0.644
+Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.684/0.593/0.479/0.491/0.456/0.544/0.644
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,16 +35,16 @@ Score(3000)=0.491 I=0.767 C=0.314 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 991 | 16 | Code::CodeKey { rung: Decl, file: lib/error.js, decl: 3, sub: 0, line: 25 } |  |  | 0.684 |
 | walker |  | 1014 | 23 | Code::CodeKey { rung: Decl, file: lib/error.js, decl: 1, sub: 0, line: 4 } |  |  | 0.684 |
 | walker |  | 1049 | 35 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.684 |
+| walker |  | 1083 | 34 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 101, sub: 0, line: 2752 } |  |  | 0.684 |
+| walker |  | 1096 | 13 | Code::CodeKey { rung: Names, file: typings/esm.d.mts, decl: 0, sub: 0, line: 0 } |  |  | 0.684 |
+| walker |  | 1113 | 17 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 1, sub: 0, line: 4 } |  |  | 0.684 |
 | ns | 1213 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.607 |
-| walker |  | 1286 | 237 | Fs::DirListing { dir: examples } |  |  | 0.614 |
-| ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.597 |
-| walker |  | 1320 | 34 | Code::CodeKey { rung: Doc, file: lib/command.js, decl: 101, sub: 0, line: 2752 } |  |  | 0.597 |
-| walker |  | 1333 | 13 | Code::CodeKey { rung: Names, file: typings/esm.d.mts, decl: 0, sub: 0, line: 0 } |  |  | 0.597 |
-| walker |  | 1350 | 17 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 1, sub: 0, line: 4 } |  |  | 0.597 |
-| ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.563 |
-| walker |  | 1453 | 103 | Code::CodeKey { rung: Decl, file: lib/argument.js, decl: 1, sub: 0, line: 3 } |  |  | 0.565 |
-| walker |  | 1471 | 18 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 3, sub: 0, line: 25 } |  |  | 0.565 |
-| walker |  | 1481 | 10 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 3, sub: 0, line: 48 } |  |  | 0.565 |
+| walker |  | 1216 | 103 | Code::CodeKey { rung: Decl, file: lib/argument.js, decl: 1, sub: 0, line: 3 } |  |  | 0.610 |
+| walker |  | 1234 | 18 | Code::CodeKey { rung: Doc, file: lib/error.js, decl: 3, sub: 0, line: 25 } |  |  | 0.610 |
+| walker |  | 1244 | 10 | Code::CodeKey { rung: Body, file: lib/argument.js, decl: 3, sub: 0, line: 48 } |  |  | 0.610 |
+| ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.593 |
+| ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.559 |
+| walker |  | 1481 | 237 | Fs::DirListing { dir: examples } |  |  | 0.565 |
 | walker |  | 1523 | 42 | Markdown::HeadingsOutline { file: docs/help-in-depth.md } |  |  | 0.565 |
 | ns | 1524 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.550 |
 | ns | 1657 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.525 |
