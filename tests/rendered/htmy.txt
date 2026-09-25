@@ -119,6 +119,10 @@ examples/
     app.py
     post.md
   snippet-slots-fastapi/
+    app.py
+    centered.html
+    layout.html
+    requirements.txt
 htmy/
   __init__.py
     1→__version__ = "0.10.2"
@@ -235,8 +239,6 @@ htmy/
     …
     259→    def format_name(self, name: str) -> str:
     …
-    268→    def format_value(self, value: Any) -> str:
-    …
   error_boundary.py
   etree.py
   function_component.py
@@ -325,6 +327,9 @@ tests/
   __init__.py (empty)
   conftest.py
   data/
+    blog-post.md
+    hello-world-snippet.html
+    locale/
   renderer/
     test_default_renderer.py
     test_renderer_comparison.py

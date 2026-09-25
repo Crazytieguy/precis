@@ -1,6 +1,9 @@
 .github/
   FUNDING.yml
   PULL_REQUEST_TEMPLATE/
+    config.yml
+    new_helper.md
+    other.md (empty)
   dependabot.yml
   workflows/
     doc.yml
@@ -142,6 +145,8 @@ docs/
       tuple.md
       type.md
     experimental/
+      _category_.json
+      simd.md
     getting-started.md
     glossary.md
     iter/
@@ -156,7 +161,11 @@ docs/
       tuple.md
       type.md
     mutable/
+      _category_.json
+      slice.md
     parallel/
+      _category_.json
+      slice.md
   docusaurus.config.ts
   package-lock.json
   package.json
@@ -173,6 +182,7 @@ docs/
   sidebars.ts
   src/
     clientModules/
+      posthog-events.ts
     css/
     pages/
       community.module.css
@@ -182,6 +192,9 @@ docs/
     prism-include-languages.js
     theme/
       CodeBlock/
+        Buttons/
+          CopyButton/
+            index.tsx
       ColorModeToggle/
         index.tsx
       DocSidebar/
@@ -190,6 +203,26 @@ docs/
         index.tsx
       prism-include-languages.js
   static/
+    .nojekyll (empty)
+    img/
+      README.md
+      backpacks.svg
+      compass.svg
+      cover.png
+      favicon.ico
+      functional-gopher.png
+      go-community.png
+      icon.png
+      logo-full.png
+      logo-full.xcf
+      logo.png
+      oxygen-tube.svg
+      social-preview-small.png
+      social-preview.png
+      social-preview.xcf
+      sponsors/
+    llms.txt
+    robots.txt
   tsconfig.json
 errors.go
 errors_test.go
@@ -337,25 +370,10 @@ type_manipulation.go
   7→func IsNil(x any) bool {
   …
   22→func IsNotNil(x any) bool {
-  23→	return !IsNil(x)
   …
   28→func ToPtr[T any](x T) *T {
-  29→	return &x
   …
   34→func Nil[T any]() *T {
-  35→	return nil
-  …
-  41→func EmptyableToPtr[T any](x T) *T {
-  …
-  53→func FromPtr[T any](x *T) T {
-  …
-  63→func FromPtrOr[T any](x *T, fallback T) T {
-  …
-  73→func ToSlicePtr[T any](collection []T) []*T {
-  …
-  85→func FromSlicePtr[T any](collection []*T) []T {
-  …
-  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
   …
 type_manipulation_test.go
 types.go

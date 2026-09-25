@@ -248,25 +248,22 @@ fn has_module_sibling_file(dir: &Path) -> bool {
 
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
-    source_inventory_counts: RefCell<HashMap<PathBuf, usize>>,
+    holds_source: RefCell<HashMap<PathBuf, bool>>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
 impl FsState {
-    pub(in crate::walker) fn source_inventory_count(
-        &self,
-        dir: &Path,
-        target: usize,
-        filter: &DirFilter,
-    ) -> usize {
-        if let Some(count) = self.source_inventory_counts.borrow().get(dir).copied() {
-            return count;
+    /// Whether `dir` holds a source file at any depth, cached per
+    /// directory.
+    pub(in crate::walker) fn holds_source(&self, dir: &Path, filter: &DirFilter) -> bool {
+        if let Some(&holds) = self.holds_source.borrow().get(dir) {
+            return holds;
         }
-        let count = source_inventory_count_uncached(self, dir, target, filter);
-        self.source_inventory_counts
+        let holds = holds_source_uncached(self, dir, filter);
+        self.holds_source
             .borrow_mut()
-            .insert(dir.to_path_buf(), count);
-        count
+            .insert(dir.to_path_buf(), holds);
+        holds
     }
 
     /// Count of immediate subdirectories of `dir`, cached per parent:
@@ -288,10 +285,7 @@ impl FsState {
 }
 
 fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
-    const MIN_SOURCE_FILES: usize = 3;
-    ctx.fs_state
-        .source_inventory_count(dir, MIN_SOURCE_FILES, ctx.dir_filter())
-        >= MIN_SOURCE_FILES
+    ctx.fs_state.holds_source(dir, ctx.dir_filter())
 }
 
 /// True when `dir` lies under the repository's own top-level
@@ -309,38 +303,25 @@ fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     components.next().is_some() && (is_source_dir(&top) || is_go_pkg_wrapper(&top))
 }
 
-fn source_inventory_count_uncached(
-    state: &FsState,
-    dir: &Path,
-    target: usize,
-    filter: &DirFilter,
-) -> usize {
+fn holds_source_uncached(state: &FsState, dir: &Path, filter: &DirFilter) -> bool {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
-        return 0;
+        return false;
     };
-    let mut count = 0;
-    for entry in read_dir.flatten() {
+    read_dir.flatten().any(|entry| {
         let Ok(file_type) = entry.file_type() else {
-            continue;
+            return false;
         };
         let path = entry.path();
         if filter.excludes(&path, file_type.is_dir()) {
-            continue;
+            return false;
         }
         if file_type.is_dir() {
-            let name = entry.file_name();
-            if !crate::fs_util::should_skip_dir(&name.to_string_lossy()) {
-                let child_count = state.source_inventory_count(&path, target, filter);
-                count += child_count.min(target.saturating_sub(count));
-            }
-        } else if file_type.is_file() && is_source_inventory_file(&path) {
-            count += 1;
+            !crate::fs_util::should_skip_dir(&entry.file_name().to_string_lossy())
+                && state.holds_source(&path, filter)
+        } else {
+            file_type.is_file() && is_source_inventory_file(&path)
         }
-        if count >= target {
-            break;
-        }
-    }
-    count.min(target)
+    })
 }
 
 /// A directory is a source directory because of what its files *are*,

@@ -320,8 +320,6 @@ src/
       133→
       134→    def get_redirect_target(self, resp: Response) -> str | None:
       …
-      154→    def should_strip_auth(self, old_url: str, new_url: str) -> bool:
-      …
       395→class Session(SessionRedirectMixin):
       …
       908→def session() -> Session:
@@ -334,7 +332,14 @@ tests/
   certs/
     README.md
     expired/
+      Makefile
+      README.md
+      ca/
+      server/
     mtls/
+      Makefile
+      README.md
+      client/
     valid/
   compat.py
   conftest.py

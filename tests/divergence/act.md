@@ -8,18 +8,18 @@ Score(3000)=0.583 I=0.870 C=0.391 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 159 | 32 | GoMod::Identity { file: go.mod } |  |  | 0.000 |
 | ns | 176 |  | 41 | pkg/: complete package list | 1.3 |  | 0.000 |
 | walker |  | 200 | 41 | Fs::DirListing { dir: pkg } |  |  | 0.421 |
-| walker |  | 216 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.421 |
+| walker |  | 209 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.421 |
+| walker |  | 222 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.333 |
 | ns | 222 |  | 46 | cmd/: complete file list | 1.4 |  | 0.333 |
-| walker |  | 225 | 9 | Fs::DirListing { dir: pkg/gh } |  |  | 0.333 |
-| walker |  | 247 | 22 | Fs::DirListing { dir: pkg/exprparser } |  |  | 0.333 |
-| walker |  | 271 | 24 | Fs::DirListing { dir: pkg/artifacts } |  |  | 0.333 |
-| walker |  | 296 | 25 | Fs::DirListing { dir: pkg/artifactcache } |  |  | 0.335 |
-| walker |  | 299 | 3 | Fs::DirListing { dir: pkg/artifactcache/testdata } |  |  | 0.335 |
-| walker |  | 312 | 13 | Fs::DirListing { dir: pkg/filecollector } |  |  | 0.335 |
-| walker |  | 316 | 4 | Fs::DirListing { dir: pkg/artifactcache/testdata/example } |  |  | 0.335 |
-| walker |  | 349 | 33 | Fs::DirListing { dir: pkg/lookpath } |  |  | 0.432 |
-| ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.432 |
-| walker |  | 368 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.434 |
+| walker |  | 238 | 16 | Fs::DirListing { dir: pkg/workflowpattern } |  |  | 0.333 |
+| walker |  | 257 | 19 | Fs::DirListing { dir: pkg/schema } |  |  | 0.333 |
+| walker |  | 279 | 22 | Fs::DirListing { dir: pkg/exprparser } |  |  | 0.333 |
+| walker |  | 303 | 24 | Fs::DirListing { dir: pkg/artifacts } |  |  | 0.334 |
+| walker |  | 328 | 25 | Fs::DirListing { dir: pkg/artifactcache } |  |  | 0.336 |
+| walker |  | 331 | 3 | Fs::DirListing { dir: pkg/artifactcache/testdata } |  |  | 0.336 |
+| walker |  | 335 | 4 | Fs::DirListing { dir: pkg/artifactcache/testdata/example } |  |  | 0.336 |
+| ns | 349 |  | 127 | Repository root: complete entry list | 1.5 |  | 0.433 |
+| walker |  | 368 | 33 | Fs::DirListing { dir: pkg/lookpath } |  |  | 0.434 |
 | ns | 405 |  | 56 | pkg/model/: complete file list | 1.6 |  | 0.393 |
 | walker |  | 414 | 46 | Fs::DirListing { dir: cmd } |  |  | 0.495 |
 | walker |  | 433 | 19 | Fs::DirListing { dir: cmd/testdata } |  |  | 0.495 |

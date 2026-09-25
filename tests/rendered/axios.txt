@@ -35,6 +35,10 @@ SECURITY.md
 THREATMODEL.md
 docs/
   .vitepress/
+    config.mts
+    theme/
+      index.ts
+      style.css
   data/
   es/
     index.md
@@ -42,6 +46,8 @@ docs/
       advanced/
       getting-started/
         examples/
+          commonjs.md
+          typescript.md
         features.md
         first-steps.md
         upgrade-guide.md
@@ -56,6 +62,8 @@ docs/
       advanced/
       getting-started/
         examples/
+          commonjs.md
+          typescript.md
         features.md
         first-steps.md
         upgrade-guide.md
@@ -70,6 +78,8 @@ docs/
     advanced/
     getting-started/
       examples/
+        commonjs.md
+        typescript.md
       features.md
       first-steps.md
       upgrade-guide.md
@@ -80,6 +90,8 @@ docs/
   patches/
   public/
   scripts/
+    process-sponsors.js
+    utils.js
   site.webmanifest
   zh/
     index.md
@@ -87,6 +99,8 @@ docs/
       advanced/
       getting-started/
         examples/
+          commonjs.md
+          typescript.md
         features.md
         first-steps.md
         upgrade-guide.md
@@ -98,16 +112,26 @@ eslint.config.js
 examples/
   README.md
   abort-controller/
+    index.html
+    server.js
   all/
   amd/
   get/
+    index.html
+    server.js
   improved-network-errors.md
   network_enhanced.js
   post/
+    index.html
+    server.js
   postMultipartFormData/
+    index.html
+    server.js
   server.js
   transform-response/
   upload/
+    index.html
+    server.js
 gulpfile.js
 index.d.cts
   1→type MethodsHeaders = Partial<
@@ -199,17 +223,10 @@ index.d.cts
   173→  };
   174→  getUri(config?: axios.AxiosRequestConfig): string;
   175→  request<T = any, R = axios.AxiosResponse<T>, D = any>(
-  176→    config: axios.AxiosRequestConfig<D>
-  177→  ): Promise<R>;
+  …
   178→  get<T = any, R = axios.AxiosResponse<T>, D = any>(
-  179→    url: string,
-  180→    config?: axios.AxiosRequestConfig<D>
-  181→  ): Promise<R>;
+  …
   182→  delete<T = any, R = axios.AxiosResponse<T>, D = any>(
-  183→    url: string,
-  184→    config?: axios.AxiosRequestConfig<D>
-  185→  ): Promise<R>;
-  186→  head<T = any, R = axios.AxiosResponse<T>, D = any>(
   …
   229→}
   231→declare enum HttpStatusCode {
@@ -405,6 +422,8 @@ tests/
         typings.module.test.js
       vitest.config.js
   setup/
+    browser.setup.js
+    server.js
   smoke/
     bun/
       bun.lock

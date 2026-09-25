@@ -4,6 +4,9 @@
 .editorconfig
 .github/
   ISSUE_TEMPLATE/
+    bug-report.md
+    config.yml
+    feature-request.md
   pull_request_template.md
   workflows/
     lock.yaml
@@ -168,6 +171,8 @@ examples/
       views.py
     pyproject.toml
     tests/
+      conftest.py
+      test_js_example.py
   tutorial/
     .gitignore
     LICENSE.txt
@@ -265,8 +270,6 @@ src/
       21→        name: str,
       22→        import_name: str,
       23→        static_folder: str | os.PathLike[str] | None = None,
-      24→        static_url_path: str | None = None,
-      25→        template_folder: str | os.PathLike[str] | None = None,
       …
       55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
       …
@@ -368,6 +371,8 @@ tests/
       message.txt
       multiapp.py
     helloworld/
+      hello.py
+      wsgi.py
     subdomaintestmodule/
       __init__.py
       static/

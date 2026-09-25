@@ -266,7 +266,6 @@ crates/
         30→    fn name(&self) -> &str;
         …
         34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
-        35→}
         …
         40→pub struct RenderContext {
         …
@@ -300,6 +299,9 @@ examples/
     .gitignore
     book.toml
     mdbook-remove-emphasis/
+      Cargo.toml
+      src/
+        main.rs
     src/
       SUMMARY.md
       chapter_1.md

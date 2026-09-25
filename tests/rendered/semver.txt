@@ -108,8 +108,6 @@ README.md
   85→As a command-line utility:
   86→
   87→```
-  88→$ semver -h
-  89→
   …
   139→## Versions
   …
@@ -325,8 +323,10 @@ release-please-config.json
 tap-snapshots/
   test/
     bin/
+      semver.js.test.cjs
 test/
   bin/
+    semver.js
   classes/
     comparator.js
     index.js
@@ -360,6 +360,7 @@ test/
     valid.js
   index.js
   integration/
+    whitespace.js
   internal/
     constants.js
     debug.js

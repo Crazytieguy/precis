@@ -2,6 +2,8 @@
 .github/
   FUNDING.yml
   ISSUE_TEMPLATE/
+    config.yml
+    py3xui-issue-template.md
   pull_request_template.md
   workflows/
     checks.yml
@@ -287,8 +289,6 @@ py3xui/
     server.py
       …
       7→class ServerFields:
-      …
-      43→class MemoryInfo(BaseModel):
       …
   utils/
     README.md

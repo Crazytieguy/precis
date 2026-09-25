@@ -6,7 +6,12 @@
 .clang-format
 .claude/
   commands/
+    build-doc.md
   skills/
+    code-size/
+      SKILL.md
+    hil/
+      SKILL.md
 .codespellrc
 .gitattributes
 .github/
@@ -180,6 +185,14 @@ examples/
     CMakeLists.txt
     CMakePresets.json
     bare_api/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      skip.txt
+      src/
+        main.c
+        tusb_config.h
     cdc_msc_hid/
       CMakeLists.txt
       CMakePresets.json
@@ -200,14 +213,16 @@ examples/
       only.txt
       skip.txt
       src/
-        CMakeLists.txt
-        app.h
-        cdc_app.c
-        hid_app.c
-        main.c
-        msc_app.c
-        tusb_config.h
     device_info/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      skip.txt
+      src/
+        CMakeLists.txt
+        main.c
+        tusb_config.h
     hid_controller/
       CMakeLists.txt
       CMakePresets.json
@@ -220,50 +235,32 @@ examples/
         main.c
         tusb_config.h
     midi_rx/
+      CMakeLists.txt
+      CMakePresets.json
+      Makefile
+      only.txt
+      skip.txt
+      src/
+        main.c
+        tusb_config.h
     msc_file_explorer/
       CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      README.md
-      only.txt
-      skip.txt
-      src/
-        ffconf.h
-        main.c
-        msc_app.c
-        msc_app.h
-        tusb_config.h
+      …
     msc_file_explorer_freertos/
+  typec/
+    CMakeLists.txt
+    CMakePresets.json
+    power_delivery/
       CMakeLists.txt
       CMakePresets.json
       Makefile
-      README.md
       only.txt
-      skip.txt
       src/
-        CMakeLists.txt
-        ffconf.h
         main.c
-        msc_app.c
-        msc_app.h
         tusb_config.h
-  typec/
   west.yml
 hw/
   bsp/
-    BoardPresets.json
-    ansi_escape.h
-    at32f402_405/
-    at32f403a_407/
-    at32f413/
-    at32f415/
-    at32f423/
-    at32f425/
-    at32f435_437/
-    at32f45x/
-    board.c
-    board_api.h
-    …
   mcu/
     bridgetek/
       ft9xx/
@@ -306,6 +303,8 @@ hw/
           mkspk.c
           mkspk.h
         tools/
+          flash_writer.py
+          xmodem.py
 lib/
   SEGGER_RTT/
     Config/
@@ -442,6 +441,7 @@ test/
         Makefile
         src/
           arch/
+            cc.h
           fuzz.cc
           lwipopts.h
           tusb_config.h
@@ -469,7 +469,12 @@ test/
     project.yml
     test/
       device/
+        msc/
+          test_msc_device.c
+        usbd/
+          test_usbd.c
       support/
+        tusb_config.h
       test_common_func.c
       test_fifo.c
 tools/

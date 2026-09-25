@@ -1,6 +1,8 @@
 .gitattributes
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
+    config.yml
   workflows/
     ci.yml
     eval-model.yml
@@ -95,8 +97,14 @@ pyproject.toml
 scripts/
   README.md
   evaluation/
+    agg-relative-score.py
+    configs/
+    evaluate.py
+    results/
   kernel-synth.py
   training/
+    configs/
+    train.py
 src/
   chronos/
     __about__.py
@@ -147,8 +155,6 @@ src/
       40→    pad_token_id: int
       41→    eos_token_id: int
       42→    use_eos_token: bool
-      43→    model_type: Literal["causal", "seq2seq"]
-      44→    num_samples: int
       …
       59→class ChronosTokenizer:
       …

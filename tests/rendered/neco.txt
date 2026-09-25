@@ -39,7 +39,7 @@ README.md
   44→
   45→It's a non-goal for Neco to provide a scalable multithreaded runtime, where the
   46→coroutine scheduler is shared among multiple cpu cores. Or to use other 
-  47→concurrency models like async/await.
+  …
   49→## Using
   50→
   51→Just drop the "neco.c" and "neco.h" files into your project. Most modern C compilers should work.
@@ -104,6 +104,10 @@ docs/
     README.md
     build-api.sh
     doxygen-md/
+      README.md
+      go.mod
+      go.sum
+      main.go
 examples/
   README.md
   channel-buffering.c

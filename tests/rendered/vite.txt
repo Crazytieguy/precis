@@ -62,9 +62,12 @@ docs/
     buildEnd.config.ts
     config.ts
     inlined-scripts/
+      banner.d.ts
+      banner.js
     theme/
       components/
       composables/
+        sponsor.ts
       index.ts
       landing/
       live/
@@ -84,6 +87,7 @@ docs/
   live.md
   package.json
   plugins/
+    index.md
   public/
   releases.md
   team.md
@@ -107,11 +111,20 @@ packages/
     LICENSE
     README.md
     __tests__/
+      cli.spec.ts
     index.js
     package.json
     src/
       index.ts
     template-lit/
+      _gitignore
+      index.html
+      package.json
+      public/
+      src/
+        assets/
+        index.css
+        my-element.js
     template-lit-ts/
     template-preact/
     template-preact-ts/
@@ -124,6 +137,15 @@ packages/
     template-svelte/
     template-svelte-ts/
     template-vanilla/
+      _gitignore
+      index.html
+      package.json
+      public/
+      src/
+        assets/
+        counter.js
+        main.js
+        style.css
     template-vanilla-ts/
     template-vue/
     template-vue-ts/
@@ -175,6 +197,8 @@ packages/
     rolldown.dts.config.ts
     rollupLicensePlugin.ts
     scripts/
+      benchCircularImport.ts
+      generateTarget.ts
     src/
       client/
         client.ts
@@ -183,6 +207,8 @@ packages/
         tsconfig.json
       module-runner/
         __tests_dts__/
+          importMeta.ts
+          tsconfig.json
         constants.ts
         createImportMeta.ts
         esmEvaluator.ts
@@ -350,9 +376,6 @@ playground/
     vite.config.js
   backend-integration/
   base-conflict/
-    __tests__/
-    index.html
-    …
   build-old/
   cli/
     __tests__/
@@ -464,17 +487,6 @@ playground/
   minify/
   module-graph/
   multiple-entrypoints/
-    __tests__/
-    deps.json
-    dynamic-a.js
-    dynamic-b.js
-    entrypoints/
-    index.html
-    index.js
-    package.json
-    reference.js
-    reference.scss
-    vite.config.js
   nested-deps/
   object-hooks/
   optimize-deps/
@@ -483,12 +495,6 @@ playground/
   package.json
   preload/
   preserve-symlinks/
-    __tests__/
-    index.html
-    module-a/
-    package.json
-    src/
-      main.js
   proxy-bypass/
     __tests__/
     index.html
@@ -522,11 +528,7 @@ playground/
     foo.json
     index.html
     index.js
-    package.json
-    plugin-dep-load.js
-    plugin-dep.js
-    vite.config-base.js
-    vite.config.js
+    …
   tsconfig-json/
   tsconfig-json-load-error/
   tsconfig.json

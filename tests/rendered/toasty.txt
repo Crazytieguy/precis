@@ -207,6 +207,7 @@ crates/
         update.rs
       stmt.rs
     tests/
+      generate_unique_id.rs
   toasty-cli/
     Cargo.toml
     src/
@@ -399,20 +400,11 @@ crates/
         expr_binary_op.rs
         expr_cast.rs
         expr_concat.rs
-        expr_concat_str.rs
-        expr_exists.rs
-        expr_func.rs
-        expr_in_list.rs
-        expr_in_subquery.rs
-        expr_is_null.rs
-        expr_key.rs
-        expr_like.rs
-        expr_list.rs
-        expr_map.rs
-        expr_not.rs
         …
       stmt.rs
     tests/
+      stmt_infer.rs
+      stmt_projection.rs
   toasty-driver-dynamodb/
     Cargo.toml
     src/
@@ -540,16 +532,27 @@ docs/
     query-constraints.md
 examples/
   composite-key/
+    Cargo.toml
+    src/
+      main.rs
   hello-toasty/
+    Cargo.toml
+    src/
+      main.rs
   todo-with-cli/
     .gitignore
     Cargo.toml
     Toasty.toml
     src/
       bin/
+        app.rs
+        cli.rs
       lib.rs
     toasty/
   user-has-one-profile/
+    Cargo.toml
+    src/
+      main.rs
 rust-toolchain.toml
 scripts/
   benchmark-comparison.sh

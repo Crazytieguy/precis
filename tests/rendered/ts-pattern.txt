@@ -1,6 +1,8 @@
 .github/
   FUNDING.yml
   ISSUE_TEMPLATE/
+    bug_report.md
+    feature_request.md
 .gitignore
 .prettierrc
 LICENSE
@@ -93,6 +95,9 @@ examples/
       styles.css
     tsconfig.json
   one-file-demo/
+    one-file-demo.ts
+    package.json
+    tsconfig.json
 jest.config.cjs
 jsr.json
 package-lock.json
@@ -204,7 +209,6 @@ src/
     116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
     …
     131→export type narrow<input, pattern> = ExtractPreciseValue<
-    132→  input,
     …
     187→export function optional<
     …
@@ -232,10 +236,6 @@ src/
     536→export function intersection<
     …
     572→export function union<
-    …
-    611→export function not<
-    …
-    637→export function when<input, predicate extends (value: input) => unknown>(
     …
   types/
     BuildMany.ts
@@ -296,6 +296,8 @@ tests/
   type-error.test.ts
   type-is-matching.test.ts
   types-catalog/
+    definition.ts
+    utils.ts
   types.test.ts
   unions.test.ts
   variadic-tuples.test.ts

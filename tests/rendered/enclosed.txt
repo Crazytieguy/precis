@@ -157,11 +157,6 @@ packages/
         15→  () => {
         16→    const initialColorMode = 'system';
         17→    const colorModeStorageKey = 'enclosed_color_mode';
-        18→    const localStorageManager = createLocalStorageManager(colorModeStorageKey);
-        19→
-        20→    return (
-        21→      <Router
-        22→        children={getRoutes()}
         …
       locales/
       modules/
@@ -221,6 +216,7 @@ packages/
             app.layout.tsx
       routes.tsx
       scripts/
+        get-missing-i18n-keys.script.ts
     tsconfig.json
     uno.config.ts
     vite.config.ts
@@ -269,6 +265,8 @@ packages/
           tasks.types.ts
       reset.d.ts
       scripts/
+        clear-outdated-cloudflare-kv-keys.script.ts
+        generate-config-table.script.ts
     tsconfig.json
     wrangler.toml
   cli/

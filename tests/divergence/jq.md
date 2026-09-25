@@ -20,45 +20,45 @@ Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 330 | 12 | Fs::DirListing { dir: .github } |  |  | 0.916 |
 | ns | 334 |  | 119 | Back-end landmarks: load_program, builtins_bind, and who owns the bytecode format | 1.4 |  | 0.785 |
 | walker |  | 365 | 35 | Fs::DirListing { dir: .github/workflows } |  |  | 0.788 |
-| walker |  | 377 | 12 | Fs::DirListing { dir: vendor } |  |  | 0.789 |
-| walker |  | 398 | 21 | Fs::DirListing { dir: docs/templates/shared } |  |  | 0.789 |
-| walker |  | 412 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.789 |
-| walker |  | 459 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.789 |
+| walker |  | 370 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.788 |
+| walker |  | 382 | 12 | Fs::DirListing { dir: vendor } |  |  | 0.789 |
+| walker |  | 403 | 21 | Fs::DirListing { dir: docs/templates/shared } |  |  | 0.789 |
+| walker |  | 417 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.789 |
+| walker |  | 464 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.789 |
 | ns | 517 |  | 183 | README: build-from-source dependencies and the exact command sequence | 1.5 |  | 0.631 |
-| walker |  | 531 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.632 |
-| walker |  | 574 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.638 |
-| walker |  | 578 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.638 |
-| walker |  | 582 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.638 |
-| walker |  | 586 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.638 |
-| walker |  | 590 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.638 |
-| walker |  | 594 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.638 |
-| walker |  | 598 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.638 |
-| walker |  | 602 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.638 |
+| walker |  | 536 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.632 |
+| walker |  | 579 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.638 |
+| walker |  | 583 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.638 |
+| walker |  | 587 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.638 |
+| walker |  | 591 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.638 |
+| walker |  | 595 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.638 |
+| walker |  | 599 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.638 |
+| walker |  | 603 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.638 |
+| walker |  | 607 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.600 |
 | ns | 607 |  | 90 | README: static build and released-tarball builds | 1.6 |  | 0.600 |
-| walker |  | 654 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.600 |
+| walker |  | 659 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.600 |
 | ns | 840 |  | 233 | src/ listing (complete) - the flat core | 1.7 |  | 0.449 |
-| walker |  | 887 | 233 | Fs::DirListing { dir: src } |  |  | 0.749 |
+| walker |  | 892 | 233 | Fs::DirListing { dir: src } |  |  | 0.749 |
 | ns | 1005 |  | 165 | tests/ listing (complete) | 1.8 |  | 0.652 |
-| walker |  | 1052 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
+| walker |  | 1057 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
 | ns | 1113 |  | 108 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.805 |
-| walker |  | 1135 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.805 |
+| walker |  | 1140 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.805 |
 | ns | 1160 |  | 47 | CI workflows and vendored dependencies (complete listings) | 1.10 |  | 0.808 |
-| walker |  | 1233 | 98 | Fs::DirListing { dir: sig } |  |  | 0.808 |
+| walker |  | 1238 | 98 | Fs::DirListing { dir: sig } |  |  | 0.808 |
 | ns | 1385 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.771 |
-| walker |  | 1409 | 176 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
-| walker |  | 1461 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.798 |
+| walker |  | 1414 | 176 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
+| walker |  | 1466 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.798 |
 | ns | 1503 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.784 |
-| walker |  | 1642 | 181 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.824 |
+| walker |  | 1647 | 181 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.824 |
 | ns | 1749 |  | 246 | jq.h: input/debug/stderr callbacks and the attribute store | 2.3 |  | 0.792 |
-| walker |  | 1798 | 156 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.822 |
-| walker |  | 1964 | 166 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.833 |
+| walker |  | 1803 | 156 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.822 |
+| walker |  | 1969 | 166 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.833 |
 | ns | 1979 |  | 230 | jq.h: jq_util_input_* file/stdin reader and jq_set_colors | 2.4 |  | 0.812 |
-| walker |  | 2062 | 98 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 4, line: 0 } |  |  | 0.839 |
+| walker |  | 2067 | 98 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 4, line: 0 } |  |  | 0.839 |
 | ns | 2202 |  | 223 | main.c usage(): synopsis and one-paragraph description | 3.1 |  | 0.818 |
-| walker |  | 2229 | 167 | Fs::DirListing { dir: vendor/decNumber } |  |  | 0.818 |
-| walker |  | 2575 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
-| walker |  | 2590 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.818 |
-| walker |  | 2595 | 5 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.818 |
+| walker |  | 2234 | 167 | Fs::DirListing { dir: vendor/decNumber } |  |  | 0.818 |
+| walker |  | 2580 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
+| walker |  | 2595 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.818 |
 | walker |  | 2600 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.818 |
 | ns | 2653 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.778 |
 | walker |  | 2858 | 258 | Code::CodeKey { rung: Names, file: src/parser.h, decl: 0, sub: 0, line: 0 } |  |  | 0.778 |

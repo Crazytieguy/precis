@@ -265,12 +265,6 @@ src/
       …
       75→class Header(BaseModel):
       …
-      81→class FormItem(BaseModel):
-      …
-      87→class QueryParam(BaseModel):
-      …
-      93→class Cookie(BaseModel):
-      …
     commands.py
     config.py
     exit_codes.py
@@ -347,6 +341,12 @@ tests/
   posting_snapshot_app.py
   resources/
   sample-collections/
+    echo-post-01.posting.yaml
+    echo.posting.yaml
+    get-random-user.posting.yaml
+    jsonplaceholder/
+    scripts/
+      my_script.py
   sample-configs/
   sample-envs/
   sample-importable-collections/

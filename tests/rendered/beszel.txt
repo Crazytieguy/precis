@@ -123,6 +123,8 @@ agent/
       sda.json
     system_info.json
   tools/
+    fetchsmartctl/
+      main.go
   update.go
   utils/
     utils.go
@@ -226,7 +228,6 @@ internal/
     heartbeat/
       heartbeat.go
         1→// Package heartbeat sends periodic outbound pings to an external monitoring
-        2→// endpoint (e.g. BetterStack, Uptime Kuma, Healthchecks.io) so operators can
         …
       heartbeat_test.go
     hub.go
@@ -328,6 +329,8 @@ internal/
     tsconfig.node.json
     vite.config.ts
   tests/
+    api.go
+    hub.go
   users/
     users.go
       1→// Package users handles user-related custom functionality.

@@ -103,6 +103,13 @@ VERSION
 benchmarks/
   README.md (empty)
   exhaustive-memory/
+    .gitignore
+    Makefile
+    README.md
+    bench.py
+    gist.suite
+    requirements.txt
+    sift.suite
   micro/
     .gitignore
     Cargo.lock
@@ -248,11 +255,6 @@ sqlite-vec.c
   69→typedef u_int16_t uint16_t;
   70→typedef u_int64_t uint64_t;
   …
-  76→typedef int8_t i8;
-  77→typedef uint8_t u8;
-  78→typedef int16_t i16;
-  79→typedef int32_t i32;
-  …
 sqlite-vec.h.tmpl
 test.sql
 tests/
@@ -262,6 +264,11 @@ tests/
   Cargo.toml
   __snapshots__/
   afbd/
+    .gitignore
+    .python-version
+    Makefile
+    README.md
+    test-afbd.py
   build.rs
   conftest.py
   correctness/

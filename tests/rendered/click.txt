@@ -4,6 +4,9 @@
 .editorconfig
 .github/
   ISSUE_TEMPLATE/
+    bug-report.md
+    config.yml
+    feature-request.md
   pull_request_template.md
   workflows/
     lock.yaml
@@ -249,7 +252,6 @@ src/
       163→        self,
       164→        message: str | None = None,
       165→        ctx: Context | None = None,
-      166→        param: Parameter | None = None,
       …
       173→    def format_message(self) -> str:
       …

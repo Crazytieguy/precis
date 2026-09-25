@@ -1,5 +1,7 @@
 .github/
   ISSUE_TEMPLATE/
+    bug-report.md
+    config.yml
   workflows/
     release.yml
     test.yml
@@ -71,8 +73,6 @@ cert.go
   209→func (m *mkcert) makeCertFromCSR() {
   …
   282→func (m *mkcert) loadCA() {
-  …
-  310→func (m *mkcert) newCA() {
   …
 go.mod
   1→module filippo.io/mkcert

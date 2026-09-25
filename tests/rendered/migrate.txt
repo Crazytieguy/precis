@@ -3,6 +3,8 @@
 .dockerignore
 .github/
   ISSUE_TEMPLATE/
+    bug_report.md
+    feature_request.md
   workflows/
     ci.yaml
 .gitignore
@@ -211,6 +213,8 @@ database/
     stub.go
     stub_test.go
   testing/
+    migrate_testing.go
+    testing.go
   util.go
   util_test.go
   yugabytedb/
@@ -308,9 +312,6 @@ migration.go
   37→	// BufferSize defaults to DefaultBufferSize
   38→	BufferSize uint
   39→
-  40→	// bufferWriter holds an io.WriteCloser and pipes to BufferBody.
-  41→	// It's an *Closer for flow control.
-  42→	bufferWriter io.WriteCloser
   …
   77→func NewMigration(body io.ReadCloser, identifier string,
   78→	version uint, targetVersion int) (*Migration, error) {
@@ -366,6 +367,8 @@ source/
   go_bindata/
     README.md
     examples/
+      migrations/
+        bindata.go
     go-bindata.go
     go-bindata_test.go
     testdata/
@@ -437,6 +440,7 @@ source/
     stub.go
     stub_test.go
   testing/
+    testing.go
 testing/
   docker.go
   testing.go

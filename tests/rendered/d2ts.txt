@@ -87,6 +87,9 @@ examples/
     CHANGELOG.md
     README.md
     db/
+      generate_data.js
+      load_data.js
+      migrations/
     docker-compose.yml
     package.json
     src/
@@ -237,7 +240,6 @@ packages/
       35→    }
       36→  },
       37→  "scripts": {
-      38→    "build": "tsc",
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",

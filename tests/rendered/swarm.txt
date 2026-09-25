@@ -24,14 +24,6 @@ README.md
   22→```
   24→## Usage
   25→
-  26→```python
-  27→from swarm import Swarm, Agent
-  28→
-  29→client = Swarm()
-  30→
-  31→def transfer_to_agent_b():
-  32→    return agent_b
-  33→
   …
   60→## Table of Contents
   …
@@ -118,9 +110,15 @@ examples/
     data/
       routines/
         baggage/
+          policies.py
         flight_modification/
+          policies.py
         prompts.py
     evals/
+      eval_cases/
+      eval_results/
+      eval_utils.py
+      function_evals.py
     main.py
   basic/
     README.md
@@ -143,8 +141,14 @@ examples/
       swarm_tasks.json
       tools/
         query_docs/
+          handler.py
+          tool.json
         send_email/
+          handler.py
+          tool.json
         submit_ticket/
+          handler.py
+          tool.json
     data/
     docker-compose.yaml
     logs/
@@ -154,7 +158,9 @@ examples/
       __init__.py (empty)
       arg_parser.py
       evals/
+        eval_function.py
       runs/
+        run.py
       swarm/
         assistants.py
         conversation.py
@@ -165,6 +171,7 @@ examples/
         swarm.py
         tool.py
       tasks/
+        task.py
       utils.py
       validator.py
     tests/

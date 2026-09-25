@@ -18,6 +18,8 @@
 .yarn/
   patches/
   plugins/
+    @yarnpkg/
+      plugin-interactive-tools.cjs
 .yarnrc.yml
 CONTRIBUTING.md
 LICENSE
@@ -301,15 +303,6 @@ plugins/
     49→    minifyStyles,
     50→    cleanupIds,
     51→    removeUselessDefs,
-    52→    cleanupNumericValues,
-    53→    convertColors,
-    54→    removeUnknownsAndDefaults,
-    55→    removeNonInheritableGroupAttrs,
-    56→    removeUselessStrokeAndFill,
-    57→    cleanupEnableBackground,
-    58→    removeHiddenElems,
-    59→    removeEmptyText,
-    60→    convertShapeToPath,
     …
     77→export default presetDefault;
   removeAttributesBySelector.js
@@ -355,18 +348,30 @@ scripts/
 test/
   browser.js
   cli/
+    cli.test.js
+    invalid.svg
+    single.svg
   coa/
+    _index.test.js
+    testFolderWithNoSvg/
+    testSvg/
+    testSvgDatauri/
+    testSvgRecursively/
   fixtures/
     config-loader/
       cjs/
+        svgo.config.cjs
       invalid-array.js
       invalid-null.js
       invalid-runtime.js
       invalid-runtime.mjs
       invalid-string.js
       mjs/
+        svgo.config.mjs
       module-not-found.js
       one/
+        two/
+          config.js
       svgo.config.js
   plugins/
   regression/
@@ -379,6 +384,8 @@ test/
     optimize.js
     regression-io.js
   svg2js/
+    _index.test.js
+    test.svg
   svgo/
   svgo.cjs
 test-d/

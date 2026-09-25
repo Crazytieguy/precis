@@ -5,6 +5,8 @@
 .github/
   FUNDING.yml
   ISSUE_TEMPLATE/
+    bug_report.md
+    feature_request.md
   dependabot.yml
   pull_request_template.md
   workflows/
@@ -337,8 +339,6 @@ rich/
       22→        tuple(
       23→            map(int, version.split(".")),
       24→        )
-      25→        for version in VERSIONS
-      26→    ]
       …
       28→VERSION_SET = frozenset(VERSIONS)
       29→

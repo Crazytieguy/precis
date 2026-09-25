@@ -205,7 +205,16 @@ contribute/
   contribute.md
 examples/
   hooks/
+    bash-validator.py
+    mcp-monitor.py
+    prompt-logger.sh
   scripts/
+    README.md
+    default-values-demo.sh
+    env-substitution-script.sh
+    example-script.sh
+    simple-script.sh
+    tls-test-script.sh
 go.mod
   1→module github.com/mark3labs/mcphost
   2→
@@ -338,17 +347,12 @@ sdk/
   README.md
   examples/
     basic/
+      main.go
     scripting/
+      main.go
   mcphost.go
   mcphost_test.go
   types.go
     …
     10→type Message = session.Message
-    …
-    14→type ToolCall = session.ToolCall
-    …
-    18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
-    19→	return msg.ConvertToSchemaMessage()
-    …
-    24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
     …

@@ -141,7 +141,10 @@ apps/
       index.ts
       tests/
         global/
+          setup.dashboard.ts
+          setup.public.ts
         public/
+          login.spec.ts
     hooks/
       useArchivalTags.ts
       useCollectivePermissions.ts
@@ -228,6 +231,10 @@ apps/
     postcss.config.js
     public/
     scripts/
+      migration/
+        migrateToV2.js
+        v2.6.1/
+          index.js
     store/
       links.ts
       localSettings.ts
@@ -360,7 +367,6 @@ packages/
       34→  unverifiedNewEmail      String?
       35→  image                   String?
       36→  password                String?
-      37→  locale                  String                @default("en")
       …
       77→enum Theme {
       78→  dark
