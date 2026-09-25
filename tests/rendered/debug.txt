@@ -1,23 +1,6 @@
 .editorconfig
 .gitignore
 .travis.yml
-  1→sudo: false
-  2→
-  3→language: node_js
-  4→
-  5→node_js:
-  6→  - "6"
-  7→  - "8"
-  8→  - "10"
-  9→  - "11"
-  10→
-  11→install:
-  12→  - npm install
-  13→
-  14→script:
-  15→  - npm run lint
-  16→  - npm test
-  17→  - npm run test:coverage
 LICENSE
 README.md
   1→# debug
@@ -134,8 +117,37 @@ src/
     19→		}
     20→	};
     21→})();
-    …
+    23→/**
+    24→ * Colors.
+    25→ */
     27→exports.colors = [
+    28→	'#0000CC',
+    29→	'#0000FF',
+    30→	'#0033CC',
+    31→	'#0033FF',
+    32→	'#0066CC',
+    33→	'#0066FF',
+    34→	'#0099CC',
+    35→	'#0099FF',
+    36→	'#00CC00',
+    37→	'#00CC33',
+    38→	'#00CC66',
+    39→	'#00CC99',
+    40→	'#00CCCC',
+    41→	'#00CCFF',
+    42→	'#3300CC',
+    43→	'#3300FF',
+    44→	'#3333CC',
+    45→	'#3333FF',
+    46→	'#3366CC',
+    47→	'#3366FF',
+    48→	'#3399CC',
+    49→	'#3399FF',
+    50→	'#33CC00',
+    51→	'#33CC33',
+    52→	'#33CC66',
+    …
+    104→];
     …
     115→function useColors() {
     …

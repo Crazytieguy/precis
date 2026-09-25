@@ -4,27 +4,6 @@
   security.md
   workflows/
     main.yml
-      1→name: CI
-      2→on:
-      3→  - push
-      4→  - pull_request
-      5→jobs:
-      6→  test:
-      7→    name: Node.js ${{ matrix.node-version }}
-      8→    runs-on: ubuntu-latest
-      9→    strategy:
-      10→      fail-fast: false
-      11→      matrix:
-      12→        node-version:
-      13→          - 24
-      14→          - 20
-      15→    steps:
-      16→      - uses: actions/checkout@v5
-      17→      - uses: actions/setup-node@v5
-      18→        with:
-      19→          node-version: ${{ matrix.node-version }}
-      20→      - run: npm install
-      21→      - run: npm test
 .gitignore
 .npmrc
 bench.ts
@@ -181,16 +160,31 @@ source/
     682→	async onIdle(): Promise<void> {
     …
     696→	async onPendingZero(): Promise<void> {
+    697→		if (this.#pending === 0) {
+    698→			return;
+    699→		}
+    700→
+    701→		await this.#onEvent('pendingZero');
     …
     704→	/**
     705→	@returns A promise that settles when the queue becomes rate-limited due to intervalCap.
     706→	*/
     707→	async onRateLimit(): Promise<void> {
+    708→		if (this.isRateLimited) {
+    709→			return;
+    710→		}
+    711→
+    712→		await this.#onEvent('rateLimit');
     …
     715→	/**
     716→	@returns A promise that settles when the queue is no longer rate-limited.
     717→	*/
     718→	async onRateLimitCleared(): Promise<void> {
+    719→		if (!this.isRateLimited) {
+    720→			return;
+    721→		}
+    722→
+    723→		await this.#onEvent('rateLimitCleared');
     …
     756→	onError(): Promise<never> {
     …
@@ -200,6 +194,11 @@ source/
     785→	get size(): number {
     786→		return this.#queue.size;
     …
+    789→	/**
+    790→	Size of the queue, filtered by the given options.
+    791→
+    792→	For example, this can be used to find the number of items remaining in the queue with a specific priority level.
+    793→	*/
     794→	sizeBy(options: Readonly<Partial<EnqueueOptionsType>>): number {
     795→		// eslint-disable-next-line unicorn/no-array-callback-reference
     796→		return this.#queue.filter(options).length;

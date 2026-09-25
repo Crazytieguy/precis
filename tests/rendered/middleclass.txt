@@ -1,40 +1,4 @@
 .travis.yml
-  1→language: python
-  2→sudo: false
-  3→
-  4→env:
-  5→  - LUA="lua=5.1"
-  6→  - LUA="lua=5.2"
-  7→  - LUA="lua=5.3"
-  8→  - LUA="luajit=2.0"
-  9→  - LUA="luajit=2.1"
-  10→
-  11→before_install:
-  12→  - pip install hererocks
-  13→  - hererocks lua_install -r^ --$LUA
-  14→  - export PATH=$PATH:$PWD/lua_install/bin # Add directory with all installed binaries to PATH
-  15→
-  16→install:
-  17→  - luarocks install luacheck
-  18→  - luarocks install busted
-  19→  - luarocks install luacov
-  20→  - luarocks install luacov-coveralls
-  21→
-  22→script:
-  23→  - luacheck --no-unused-args --std max+busted *.lua spec
-  24→  - busted --verbose --coverage
-  25→
-  26→after_success:
-  27→  - luacov-coveralls --exclude $TRAVIS_BUILD_DIR/lua_install
-  28→
-  29→branches:
-  30→  except:
-  31→    - gh-pages
-  32→
-  33→notifications:
-  34→  email:
-  35→    on_success: change
-  36→    on_failure: always
 CHANGELOG.md
 MIT-LICENSE.txt
 README.md
@@ -77,19 +41,40 @@ README.md
   41→See the [github wiki page](https://github.com/kikito/middleclass/wiki) for examples & documentation.
   42→
   43→You can read the `CHANGELOG.md` file to see what has changed on each version of this library.
-  …
+  45→If you need help updating to a new middleclass version, read `UPDATING.md`.
+  46→
   47→Installation
   48→============
-  …
+  49→
+  50→Just copy the middleclass.lua file wherever you want it (for example on a lib/ folder). Then write this in any Lua file where you want to use it:
+  51→
+  52→```lua
+  53→local class = require 'middleclass'
+  54→```
+  55→
   56→Specs
   57→=====
-  …
+  58→
+  59→This project uses [busted](http://olivinelabs.com/busted/) for its specs. If you want to run the specs, you will have to install it first. Then just execute the following:
+  60→
+  61→```bash
+  62→cd /folder/where/the/spec/folder/is
+  63→busted
+  64→```
+  65→
   66→Performance tests
   67→=================
-  …
+  68→
+  69→Middleclass also comes with a small performance test suite. Just run the following command:
+  70→
+  71→```bash
+  72→lua performance/run.lua
+  73→```
+  74→
   75→License
   76→=======
-  …
+  77→
+  78→Middleclass is distributed under the MIT license.
 UPDATING.md
   1→Updating from 3.x to 4.x
   2→========================

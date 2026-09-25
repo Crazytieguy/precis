@@ -3,23 +3,6 @@
   PULL_REQUEST_TEMPLATE.md
   workflows/
     main.yml
-      1→name: Vanilla C CI
-      2→
-      3→on:
-      4→  push:
-      5→    branches: [ "main" ]
-      6→  pull_request:
-      7→    branches: [ "main" ]
-      8→
-      9→jobs:
-      10→  build:
-      11→
-      12→    runs-on: ubuntu-latest
-      13→
-      14→    steps:
-      15→    - uses: actions/checkout@v3
-      16→    - name: test
-      17→      run: tests/run.sh
 .gitignore
 .package
 LICENSE
@@ -67,7 +50,20 @@ README.md
   57→## Example 1 (Start a coroutine)
   …
   77→## Example 2 (Use neco_main instead of main)
-  …
+  78→
+  79→Optionally, [`neco_main()`](docs/API.md#neco_main) can be used in place of the standard `main()`.
+  80→This is for when the entirety of your program is intended to be run from only coroutines.
+  81→It [adjusts the behavior](docs/API.md#neco_main) of the program slightly to make development and error checking easier.
+  82→
+  83→```c
+  84→#include <stdio.h>
+  85→#include "neco.h"
+  86→
+  87→int neco_main(int argc, char *argv[]) {
+  88→    printf("main coroutine started\n");
+  89→    return 0;
+  90→}
+  91→```
   93→## Example 3 (Multiple coroutines)
   …
   125→## Example 4 (Coroutine arguments)
@@ -134,6 +130,8 @@ docs/
     20→- [Mutexes](#mutexes)
     21→- [WaitGroups](#waitgroups)
     22→- [Condition variables](#condition-variables)
+    …
+    25→- [Networking utilities](#Networking-utilities)
     …
     27→- [Random number generator](#random-number-generator)
     28→- [Error handling](#error-handling)

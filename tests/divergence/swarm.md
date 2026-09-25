@@ -1,4 +1,4 @@
-Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.446/0.618/0.602/0.721/0.725/0.659/0.544
+Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.446/0.618/0.602/0.721/0.724/0.658/0.543
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -84,89 +84,88 @@ Score(3000)=0.721 I=0.834 C=0.623 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | ns | 3495 |  | 126 | Returning from `run()` and resuming a conversation | 3.11 |  | 0.685 |
 | walker |  | 3606 | 335 | README.md section #1 |  |  | 0.718 |
 | ns | 3670 |  | 175 | `Agent` definition and `instructions` semantics | 3.12 |  | 0.713 |
-| walker |  | 3692 | 86 | YAML config at .pre-commit-config.yaml |  |  | 0.714 |
-| ns | 3847 |  | 177 | Install, client construction, and the `run_demo_loop` util | 3.13 | 1.1 | 0.697 |
-| walker |  | 3894 | 202 | README.md section #2 |  |  | 0.719 |
-| walker |  | 3905 | 11 | listing of 'tests/test_runs' |  |  | 0.719 |
-| walker |  | 3980 | 75 | README.md section #11 |  |  | 0.719 |
-| walker |  | 3984 | 4 | listing of 'examples/customer_service_streaming/configs/assistants' |  |  | 0.719 |
-| walker |  | 3988 | 4 | listing of 'examples/customer_service_streaming/src/runs' |  |  | 0.719 |
-| walker |  | 3992 | 4 | listing of 'examples/customer_service_streaming/src/tasks' |  |  | 0.721 |
-| ns | 3992 |  | 145 | "Why Swarm" positioning and the evaluations stance | 3.14 |  | 0.721 |
-| walker |  | 3999 | 7 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.721 |
-| ns | 4066 |  | 74 | Listings for the three simple examples (complete) | 4.1 |  | 0.731 |
-| walker |  | 4182 | 183 | README.md section #3 |  |  | 0.736 |
-| ns | 4322 |  | 256 | Purpose line of all six example READMEs | 4.2 |  | 0.725 |
-| ns | 4445 |  | 123 | `basic/bare_minimum.py` in full | 4.3 |  | 0.706 |
-| walker |  | 4617 | 435 | README.md section #4 |  |  | 0.754 |
-| ns | 4733 |  | 288 | `triage_agent/agents.py`: three agents and their wiring | 4.4 |  | 0.724 |
-| walker |  | 4769 | 152 | README.md section #13 |  |  | 0.724 |
-| walker |  | 4774 | 5 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.724 |
-| ns | 4845 |  | 112 | `airline` example: complete directory tree | 4.5 |  | 0.708 |
-| ns | 4907 |  | 62 | `support_bot` and `personal_shopper` listings (complete) | 4.6 |  | 0.715 |
-| ns | 4947 |  | 40 | The three `customer_service*` directories: what is actually there | 4.7 |  | 0.720 |
-| walker |  | 5132 | 358 | README.md section #5 |  |  | 0.739 |
-| ns | 5149 |  | 202 | `weather_agent/agents.py`: a complete function-calling agent | 4.8 |  | 0.718 |
-| ns | 5335 |  | 186 | `basic/context_variables.py`: callable instructions + injected context | 4.9 |  | 0.700 |
-| walker |  | 5571 | 439 | README.md section #6 |  |  | 0.715 |
-| ns | 5576 |  | 241 | `airline` agents: the five agents and their instruction sources | 4.10 |  | 0.696 |
-| walker |  | 5582 | 11 | python names examples/customer_service_streaming/main.py |  |  | 0.696 |
-| walker |  | 5586 | 4 | listing of 'examples/airline/data/routines/baggage' |  |  | 0.698 |
-| walker |  | 5590 | 4 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.700 |
-| walker |  | 5594 | 4 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.700 |
-| walker |  | 5606 | 12 | python names examples/airline/main.py |  |  | 0.700 |
-| walker |  | 5701 | 95 | json config logs/session_20240425-135655.json |  |  | 0.700 |
-| walker |  | 5712 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.700 |
-| walker |  | 5736 | 24 | python names tests/test_util.py |  |  | 0.700 |
-| ns | 5765 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.684 |
-| walker |  | 5833 | 97 | json config logs/session_20240402-112456.json |  |  | 0.684 |
-| walker |  | 5930 | 97 | json config logs/session_20240425-135657.json |  |  | 0.684 |
-| ns | 5958 |  | 193 | `airline` agents: per-agent tool lists (the handoff graph) | 4.12 | 4.10 | 0.665 |
-| walker |  | 6029 | 99 | json config logs/session_20240425-140516.json |  |  | 0.665 |
-| ns | 6043 |  | 85 | `airline/configs/tools.py`: complete tool roster | 4.13 |  | 0.659 |
-| walker |  | 6128 | 99 | json config logs/session_20240425-145907.json |  |  | 0.659 |
-| walker |  | 6227 | 99 | json config logs/session_20240425-211732.json |  |  | 0.659 |
-| ns | 6286 |  | 243 | `run()` body: state setup and the completion half of the loop | 5.1 | 2.6 | 0.642 |
-| walker |  | 6328 | 101 | json config logs/session_20240402-112443.json |  |  | 0.642 |
-| walker |  | 6429 | 101 | json config logs/session_20240402-112501.json |  |  | 0.642 |
-| ns | 6479 |  | 193 | `run()` body: tool dispatch, agent switch, and the returned `Response` | 5.2 | 5.1 | 0.628 |
-| walker |  | 6530 | 101 | json config logs/session_20240425-140502.json |  |  | 0.628 |
-| ns | 6572 |  | 93 | `run()` body: the `stream=True` delegation branch | 5.3 | 2.6 | 0.621 |
-| walker |  | 6631 | 101 | json config logs/session_20240425-141509.json |  |  | 0.621 |
-| walker |  | 6732 | 101 | json config logs/session_20240425-211942.json |  |  | 0.621 |
-| walker |  | 6739 | 7 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.621 |
-| ns | 6783 |  | 211 | `handle_tool_calls` body: dispatch table and the missing-tool path | 5.4 | 2.8 | 0.609 |
-| walker |  | 6841 | 102 | json config logs/session_20240402-113222.json |  |  | 0.609 |
-| walker |  | 6923 | 82 | README.md section #12 |  |  | 0.623 |
-| walker |  | 7026 | 103 | json config logs/session_20240425-135728.json |  |  | 0.623 |
-| ns | 7054 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.607 |
-| walker |  | 7129 | 103 | json config logs/session_20240425-141709.json |  |  | 0.607 |
-| walker |  | 7232 | 103 | json config logs/session_20240425-145129.json |  |  | 0.607 |
+| walker |  | 3808 | 202 | README.md section #2 |  |  | 0.735 |
+| walker |  | 3819 | 11 | listing of 'tests/test_runs' |  |  | 0.735 |
+| ns | 3847 |  | 177 | Install, client construction, and the `run_demo_loop` util | 3.13 | 1.1 | 0.718 |
+| walker |  | 3894 | 75 | README.md section #11 |  |  | 0.718 |
+| walker |  | 3898 | 4 | listing of 'examples/customer_service_streaming/configs/assistants' |  |  | 0.718 |
+| walker |  | 3902 | 4 | listing of 'examples/customer_service_streaming/src/runs' |  |  | 0.718 |
+| walker |  | 3906 | 4 | listing of 'examples/customer_service_streaming/src/tasks' |  |  | 0.719 |
+| walker |  | 3913 | 7 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.719 |
+| ns | 3992 |  | 145 | "Why Swarm" positioning and the evaluations stance | 3.14 |  | 0.720 |
+| ns | 4066 |  | 74 | Listings for the three simple examples (complete) | 4.1 |  | 0.730 |
+| walker |  | 4096 | 183 | README.md section #3 |  |  | 0.735 |
+| ns | 4322 |  | 256 | Purpose line of all six example READMEs | 4.2 |  | 0.724 |
+| ns | 4445 |  | 123 | `basic/bare_minimum.py` in full | 4.3 |  | 0.705 |
+| walker |  | 4531 | 435 | README.md section #4 |  |  | 0.753 |
+| walker |  | 4683 | 152 | README.md section #13 |  |  | 0.753 |
+| walker |  | 4688 | 5 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.753 |
+| ns | 4733 |  | 288 | `triage_agent/agents.py`: three agents and their wiring | 4.4 |  | 0.723 |
+| ns | 4845 |  | 112 | `airline` example: complete directory tree | 4.5 |  | 0.707 |
+| ns | 4907 |  | 62 | `support_bot` and `personal_shopper` listings (complete) | 4.6 |  | 0.714 |
+| ns | 4947 |  | 40 | The three `customer_service*` directories: what is actually there | 4.7 |  | 0.719 |
+| walker |  | 5046 | 358 | README.md section #5 |  |  | 0.738 |
+| ns | 5149 |  | 202 | `weather_agent/agents.py`: a complete function-calling agent | 4.8 |  | 0.717 |
+| ns | 5335 |  | 186 | `basic/context_variables.py`: callable instructions + injected context | 4.9 |  | 0.699 |
+| walker |  | 5485 | 439 | README.md section #6 |  |  | 0.714 |
+| walker |  | 5496 | 11 | python names examples/customer_service_streaming/main.py |  |  | 0.714 |
+| walker |  | 5500 | 4 | listing of 'examples/airline/data/routines/baggage' |  |  | 0.716 |
+| walker |  | 5504 | 4 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.718 |
+| walker |  | 5508 | 4 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.718 |
+| walker |  | 5520 | 12 | python names examples/airline/main.py |  |  | 0.718 |
+| ns | 5576 |  | 241 | `airline` agents: the five agents and their instruction sources | 4.10 |  | 0.699 |
+| walker |  | 5615 | 95 | json config logs/session_20240425-135655.json |  |  | 0.699 |
+| walker |  | 5626 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.699 |
+| walker |  | 5650 | 24 | python names tests/test_util.py |  |  | 0.699 |
+| walker |  | 5747 | 97 | json config logs/session_20240402-112456.json |  |  | 0.699 |
+| ns | 5765 |  | 189 | `airline` agents: imports and the five transfer functions | 4.11 | 4.10 | 0.683 |
+| walker |  | 5844 | 97 | json config logs/session_20240425-135657.json |  |  | 0.683 |
+| walker |  | 5943 | 99 | json config logs/session_20240425-140516.json |  |  | 0.683 |
+| ns | 5958 |  | 193 | `airline` agents: per-agent tool lists (the handoff graph) | 4.12 | 4.10 | 0.664 |
+| walker |  | 6042 | 99 | json config logs/session_20240425-145907.json |  |  | 0.664 |
+| ns | 6043 |  | 85 | `airline/configs/tools.py`: complete tool roster | 4.13 |  | 0.658 |
+| walker |  | 6141 | 99 | json config logs/session_20240425-211732.json |  |  | 0.658 |
+| walker |  | 6242 | 101 | json config logs/session_20240402-112443.json |  |  | 0.658 |
+| ns | 6286 |  | 243 | `run()` body: state setup and the completion half of the loop | 5.1 | 2.6 | 0.641 |
+| walker |  | 6343 | 101 | json config logs/session_20240402-112501.json |  |  | 0.641 |
+| walker |  | 6444 | 101 | json config logs/session_20240425-140502.json |  |  | 0.641 |
+| ns | 6479 |  | 193 | `run()` body: tool dispatch, agent switch, and the returned `Response` | 5.2 | 5.1 | 0.627 |
+| walker |  | 6545 | 101 | json config logs/session_20240425-141509.json |  |  | 0.627 |
+| ns | 6572 |  | 93 | `run()` body: the `stream=True` delegation branch | 5.3 | 2.6 | 0.620 |
+| walker |  | 6646 | 101 | json config logs/session_20240425-211942.json |  |  | 0.620 |
+| walker |  | 6653 | 7 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.620 |
+| walker |  | 6755 | 102 | json config logs/session_20240402-113222.json |  |  | 0.620 |
+| ns | 6783 |  | 211 | `handle_tool_calls` body: dispatch table and the missing-tool path | 5.4 | 2.8 | 0.608 |
+| walker |  | 6837 | 82 | README.md section #12 |  |  | 0.622 |
+| walker |  | 6940 | 103 | json config logs/session_20240425-135728.json |  |  | 0.622 |
+| walker |  | 7043 | 103 | json config logs/session_20240425-141709.json |  |  | 0.622 |
+| ns | 7054 |  | 271 | `handle_tool_calls` body: context injection and `Result` merging | 5.5 | 5.4 | 0.606 |
+| walker |  | 7146 | 103 | json config logs/session_20240425-145129.json |  |  | 0.606 |
+| walker |  | 7249 | 103 | json config logs/session_20240425-145930.json |  |  | 0.606 |
 | ns | 7265 |  | 211 | `get_chat_completion` body: instructions, tool schemas, context hiding | 5.6 | 2.8 | 0.596 |
-| walker |  | 7335 | 103 | json config logs/session_20240425-145930.json |  |  | 0.596 |
-| ns | 7390 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.589 |
-| walker |  | 7438 | 103 | json config logs/session_20240425-212431.json |  |  | 0.589 |
-| walker |  | 7543 | 105 | json config logs/session_20240425-212748.json |  |  | 0.589 |
-| ns | 7565 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.580 |
-| walker |  | 7648 | 105 | json config logs/session_20240425-213023.json |  |  | 0.580 |
-| ns | 7894 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.563 |
-| ns | 8003 |  | 109 | `function_to_json` body: the emitted schema shape | 5.10 | 5.9 | 0.557 |
-| ns | 8173 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.563 |
-| walker |  | 8204 | 556 | README.md section #7 |  |  | 0.568 |
-| ns | 8412 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.556 |
-| ns | 8646 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.545 |
-| walker |  | 8752 | 548 | README.md section #8 |  |  | 0.552 |
-| ns | 8875 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.544 |
-| ns | 9032 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.540 |
-| ns | 9134 |  | 102 | `tests/test_util.py`: both schema-conversion tests | 6.3 |  | 0.537 |
-| walker |  | 9275 | 523 | README.md section #9 |  |  | 0.547 |
-| ns | 9340 |  | 206 | `setup.cfg`: package metadata and the complete dependency list | 6.4 |  | 0.559 |
-| walker |  | 9487 | 212 | README.md section #10 |  |  | 0.565 |
-| ns | 9515 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.573 |
-| walker |  | 9594 | 107 | json config logs/session_20240425-145324.json |  |  | 0.573 |
-| ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.587 |
-| walker |  | 9701 | 107 | json config logs/session_20240425-212341.json |  |  | 0.587 |
-| walker |  | 9812 | 111 | json config logs/session_20240425-140427.json |  |  | 0.587 |
-| ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.578 |
-| ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.580 |
-| walker |  | 9924 | 112 | json config logs/session_20240425-155814.json |  |  | 0.580 |
+| walker |  | 7352 | 103 | json config logs/session_20240425-212431.json |  |  | 0.596 |
+| ns | 7390 |  | 125 | `get_chat_completion` body: the Chat Completions request | 5.7 | 5.6 | 0.588 |
+| walker |  | 7457 | 105 | json config logs/session_20240425-212748.json |  |  | 0.588 |
+| walker |  | 7562 | 105 | json config logs/session_20240425-213023.json |  |  | 0.588 |
+| ns | 7565 |  | 175 | `handle_function_result` body: the return-value coercion rules | 5.8 | 2.8 | 0.579 |
+| ns | 7894 |  | 329 | `function_to_json` body: type map, signature inspection, `required` | 5.9 | 2.4 | 0.562 |
+| ns | 8003 |  | 109 | `function_to_json` body: the emitted schema shape | 5.10 | 5.9 | 0.556 |
+| walker |  | 8118 | 556 | README.md section #7 |  |  | 0.561 |
+| ns | 8173 |  | 170 | `swarm/util.py`: the streaming merge helpers | 5.11 | 2.4 | 0.567 |
+| ns | 8412 |  | 239 | `run_demo_loop` body: the reference conversation loop | 5.12 | 2.5 | 0.555 |
+| ns | 8646 |  | 234 | `run_and_stream` body: the streaming protocol, with elisions marked | 5.13 | 2.7 | 0.544 |
+| walker |  | 8666 | 548 | README.md section #8 |  |  | 0.551 |
+| ns | 8875 |  | 229 | `tests/test_core.py`: complete test roster and the shared fixture | 6.1 |  | 0.543 |
+| ns | 9032 |  | 157 | `tests/mock_client.py`: the fake OpenAI client | 6.2 |  | 0.539 |
+| ns | 9134 |  | 102 | `tests/test_util.py`: both schema-conversion tests | 6.3 |  | 0.536 |
+| walker |  | 9189 | 523 | README.md section #9 |  |  | 0.547 |
+| ns | 9340 |  | 206 | `setup.cfg`: package metadata and the complete dependency list | 6.4 |  | 0.558 |
+| walker |  | 9401 | 212 | README.md section #10 |  |  | 0.564 |
+| walker |  | 9508 | 107 | json config logs/session_20240425-145324.json |  |  | 0.564 |
+| ns | 9515 |  | 175 | Build backend and formatting toolchain | 6.5 |  | 0.561 |
+| walker |  | 9615 | 107 | json config logs/session_20240425-212341.json |  |  | 0.561 |
+| ns | 9649 |  | 134 | `customer_service_streaming/src` and `configs`: complete listings | 7.1 |  | 0.576 |
+| walker |  | 9726 | 111 | json config logs/session_20240425-140427.json |  |  | 0.576 |
+| walker |  | 9838 | 112 | json config logs/session_20240425-155814.json |  |  | 0.576 |
+| ns | 9869 |  | 220 | The legacy example's own `Swarm` class and its config knobs | 7.2 | 7.1 | 0.568 |
+| ns | 9894 |  | 25 | Remaining asset and log directories | 7.3 |  | 0.569 |

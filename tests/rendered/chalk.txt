@@ -5,32 +5,6 @@
   security.md
   workflows/
     main.yml
-      1→name: CI
-      2→on:
-      3→  - push
-      4→  - pull_request
-      5→jobs:
-      6→  test:
-      7→    name: Node.js ${{ matrix.node-version }}
-      8→    runs-on: ubuntu-latest
-      9→    strategy:
-      10→      fail-fast: false
-      11→      matrix:
-      12→        node-version:
-      13→          - 18
-      14→          - 16
-      15→          - 14
-      16→    steps:
-      17→      - uses: actions/checkout@v4
-      18→      - uses: actions/setup-node@v4
-      19→        with:
-      20→          node-version: ${{ matrix.node-version }}
-      21→      - run: npm install
-      22→      - run: npm test
-      23→      - uses: codecov/codecov-action@v2
-      24→        if: matrix.node-version == 16
-      25→        with:
-      26→          fail_ci_if_error: true
 .gitignore
 .npmrc
 benchmark.js
@@ -64,7 +38,8 @@ package.json
   3→	"version": "5.6.2",
   4→	"description": "Terminal string styling done right",
   5→	"license": "MIT",
-  …
+  6→	"repository": "chalk/chalk",
+  7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
   8→	"type": "module",
   9→	"main": "./source/index.js",
   10→	"exports": "./source/index.js",
@@ -88,6 +63,28 @@ package.json
   28→		"source",
   29→		"!source/index.test-d.ts"
   30→	],
+  31→	"keywords": [
+  32→		"color",
+  33→		"colour",
+  34→		"colors",
+  35→		"terminal",
+  36→		"console",
+  37→		"cli",
+  38→		"string",
+  39→		"ansi",
+  40→		"style",
+  41→		"styles",
+  42→		"tty",
+  43→		"formatting",
+  44→		"rgb",
+  45→		"256",
+  46→		"shell",
+  47→		"xterm",
+  48→		"log",
+  49→		"logging",
+  50→		"command-line",
+  51→		"text"
+  52→	],
   …
   65→	"xo": {
   66→		"rules": {
@@ -226,7 +223,11 @@ source/
     307→Basic foreground color names.
     308→*/
     309→export const foregroundColors: readonly ForegroundColor[];
-    …
+    311→/**
+    312→@deprecated Use `backgroundColorNames` instead.
+    313→
+    314→Basic background color names.
+    315→*/
     316→export const backgroundColors: readonly BackgroundColor[];
     …
     323→export const colors: readonly Color[];
@@ -331,6 +332,10 @@ source/
       browser.d.ts
         1→export {default} from './index.js';
       browser.js
+        …
+        29→const supportsColor = {
+        …
+        34→export default supportsColor;
       index.d.ts
       index.js
 test/

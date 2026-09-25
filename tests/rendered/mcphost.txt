@@ -1,23 +1,6 @@
 .github/
   workflows/
     ci.yml
-      1→name: go
-      2→on:
-      3→  push:
-      4→    branches:
-      5→      - main
-      6→  pull_request:
-      7→  workflow_dispatch:
-      8→
-      9→jobs:
-      10→  test:
-      11→    runs-on: ubuntu-latest
-      12→    steps:
-      13→    - uses: actions/checkout@v4
-      14→    - uses: actions/setup-go@v5
-      15→      with:
-      16→        go-version-file: 'go.mod'
-      17→    - run: go test ./... -race
     release.yml
 .gitignore
 .goreleaser.yaml
@@ -177,6 +160,25 @@ internal/
     viper_test.go
   hooks/
     config.go
+      …
+      14→type HookConfig struct {
+      15→	Hooks map[HookEvent][]HookMatcher `yaml:"hooks" json:"hooks"`
+      16→}
+      …
+      21→type HookMatcher struct {
+      …
+      30→type HookEntry struct {
+      31→	Type    string `yaml:"type" json:"type"`
+      32→	Command string `yaml:"command" json:"command"`
+      33→	Timeout int    `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+      34→}
+      …
+      41→func LoadHooksConfig(customPaths ...string) (*HookConfig, error) {
+      …
+      97→func getConfigDir() string {
+      …
+      113→func mergeHookConfigs(dst, src *HookConfig) {
+      …
     config_test.go
     events.go
     executor.go

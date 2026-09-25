@@ -3,29 +3,6 @@
   dependabot.yml
   workflows/
     ci.yml
-      1→name: CI
-      2→
-      3→on: [push, pull_request]
-      4→
-      5→jobs:
-      6→  build:
-      7→    strategy:
-      8→      fail-fast: false
-      9→      matrix:
-      10→        os:
-      11→          - ubuntu-latest
-      12→          - macos-latest
-      13→    runs-on: ${{ matrix.os }}
-      14→    permissions:
-      15→      contents: read
-      16→    steps:
-      17→      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
-      18→      - name: Build
-      19→        run: make -j
-      20→      - name: Run Unit Tests
-      21→        run: make test
-      22→      - name: Run Directory Integration Tests
-      23→        run: make test-directory
     release.yml
 .gitignore
 LICENSE
@@ -199,7 +176,23 @@ krep.h
   101→                                  match_result_t *result);
   …
   104→typedef struct
-  …
+  105→{
+  106→   int thread_id;
+  107→   const search_params_t *params; // Pointer to shared search parameters
+  108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
+  109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
+  110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
+  111→
+  112→   // Thread-specific results
+  113→   match_result_t *local_result; // For position tracking (default/-o)
+  114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
+  115→
+  116→   // Status flags
+  117→   bool error_flag; // Flag to indicate an error occurred in the thread
+  118→
+  119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
+  120→   // Current size approx 56 bytes. Adding sufficient padding.
+  121→   char padding[64]; 
   122→} thread_data_t;
   …
   125→typedef struct task

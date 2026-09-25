@@ -1,4 +1,4 @@
-Score(3000)=0.778 I=0.873 C=0.692 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.750/0.718/0.778/0.762/0.660/0.639
+Score(3000)=0.826 I=0.886 C=0.770 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.750/0.722/0.826/0.764/0.660/0.639
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,41 +41,41 @@ Score(3000)=0.778 I=0.873 C=0.692 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 1589 | 85 | lua body middleclass.lua:129 |  |  | 0.763 |
 | walker |  | 1702 | 113 | lua body middleclass.lua:57 |  |  | 0.767 |
 | ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.741 |
-| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.718 |
-| walker |  | 2081 | 379 | YAML config at .travis.yml |  |  | 0.722 |
-| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.696 |
-| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.698 |
-| walker |  | 2239 | 158 | lua body middleclass.lua:109 |  |  | 0.702 |
-| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.669 |
-| walker |  | 2462 | 223 | lua body middleclass.lua:151 |  |  | 0.737 |
-| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.740 |
-| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.723 |
-| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.714 |
-| walker |  | 2688 | 226 | lua body middleclass.lua:31 |  |  | 0.723 |
-| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.700 |
-| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.709 |
-| walker |  | 2979 | 291 | lua body middleclass.lua:81 |  |  | 0.778 |
-| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.781 |
-| walker |  | 3248 | 269 | README.md section #1 |  |  | 0.829 |
-| ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.831 |
-| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.807 |
-| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.786 |
-| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.750 |
-| walker |  | 4106 | 858 | UPDATING.md section #0 |  |  | 0.782 |
-| ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.744 |
-| walker |  | 4242 | 136 | headings outline in CHANGELOG.md |  |  | 0.761 |
-| walker |  | 4242 | 0 | CHANGELOG.md section #0 |  |  | 0.761 |
-| walker |  | 4275 | 33 | CHANGELOG.md section #4 |  |  | 0.761 |
-| walker |  | 4327 | 52 | CHANGELOG.md section #2 |  |  | 0.762 |
-| walker |  | 4360 | 33 | CHANGELOG.md section #6 |  |  | 0.743 |
-| ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.743 |
-| walker |  | 4400 | 40 | CHANGELOG.md section #5 |  |  | 0.743 |
-| walker |  | 4495 | 95 | CHANGELOG.md section #1 |  |  | 0.749 |
-| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.727 |
-| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.707 |
-| walker |  | 4796 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.707 |
-| walker |  | 4890 | 94 | CHANGELOG.md section #3 |  |  | 0.720 |
-| walker |  | 4975 | 85 | CHANGELOG.md section #8 |  |  | 0.720 |
+| walker |  | 1860 | 158 | lua body middleclass.lua:109 |  |  | 0.745 |
+| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.722 |
+| walker |  | 2083 | 223 | lua body middleclass.lua:151 |  |  | 0.797 |
+| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.768 |
+| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.770 |
+| walker |  | 2309 | 226 | lua body middleclass.lua:31 |  |  | 0.776 |
+| ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.740 |
+| ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.746 |
+| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.729 |
+| walker |  | 2600 | 291 | lua body middleclass.lua:81 |  |  | 0.763 |
+| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.763 |
+| ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.770 |
+| walker |  | 2869 | 269 | README.md section #1 |  |  | 0.825 |
+| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.826 |
+| ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.825 |
+| ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.827 |
+| ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.803 |
+| ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.782 |
+| walker |  | 3727 | 858 | UPDATING.md section #0 |  |  | 0.815 |
+| walker |  | 3863 | 136 | headings outline in CHANGELOG.md |  |  | 0.833 |
+| walker |  | 3863 | 0 | CHANGELOG.md section #0 |  |  | 0.833 |
+| walker |  | 3896 | 33 | CHANGELOG.md section #4 |  |  | 0.833 |
+| walker |  | 3948 | 52 | CHANGELOG.md section #2 |  |  | 0.834 |
+| walker |  | 3981 | 33 | CHANGELOG.md section #6 |  |  | 0.834 |
+| ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.796 |
+| walker |  | 4021 | 40 | CHANGELOG.md section #5 |  |  | 0.796 |
+| walker |  | 4116 | 95 | CHANGELOG.md section #1 |  |  | 0.802 |
+| ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.764 |
+| ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.746 |
+| walker |  | 4417 | 301 | plaintext config MIT-LICENSE.txt |  |  | 0.746 |
+| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.724 |
+| walker |  | 4511 | 94 | CHANGELOG.md section #3 |  |  | 0.736 |
+| walker |  | 4596 | 85 | CHANGELOG.md section #8 |  |  | 0.737 |
+| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.717 |
+| walker |  | 4975 | 379 | YAML config at .travis.yml |  |  | 0.720 |
 | ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.707 |
 | walker |  | 5149 | 174 | CHANGELOG.md section #7 |  |  | 0.708 |
 | ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.698 |

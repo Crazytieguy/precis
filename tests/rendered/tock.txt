@@ -3,40 +3,6 @@
   pull_request_template.md
   workflows/
     ci.yml
-      1→name: CI
-      2→
-      3→on:
-      4→  push:
-      5→    branches: [ master, main ]
-      6→  pull_request:
-      7→    branches: [ master, main ]
-      8→
-      9→jobs:
-      10→  lint:
-      11→    name: Linter
-      12→    runs-on: ubuntu-latest
-      13→    steps:
-      14→      - uses: actions/checkout@v6
-      15→      - name: Set up Go
-      16→        uses: actions/setup-go@v6
-      17→        with:
-      18→          go-version-file: "go.mod"
-      19→      - name: Run linter
-      20→        uses: golangci/golangci-lint-action@v9
-      21→        with:
-      22→          version: v2.6.2
-      23→
-      24→  test:
-      25→    name: Test
-      26→    runs-on: ubuntu-latest
-      27→    steps:
-      28→      - uses: actions/checkout@v6
-      29→      - name: Set up Go
-      30→        uses: actions/setup-go@v6
-      31→        with:
-      32→          go-version-file: "go.mod"
-      33→      - name: Run tests
-      34→        run: go test -v ./...
     release.yml
 .gitignore
 .golangci.yaml
@@ -81,6 +47,43 @@ demo/
   demo_script.sh
 docs/
   commands.md
+    1→# Commands Reference
+    …
+    23→## Core Commands
+    24→
+    25→### `start`
+    …
+    55→---
+    57→### `stop` (alias: `s`)
+    …
+    84→---
+    86→### `add`
+    …
+    116→---
+    118→### `remove` (alias: `rm`)
+    …
+    141→---
+    143→### `continue` (alias: `c`)
+    …
+    186→---
+    188→## Viewing & Reporting
+    189→
+    190→### `calendar`
+    …
+    215→---
+    217→### `list` (alias: `ls`)
+    …
+    238→---
+    240→### `current`
+    …
+    260→### `last` (alias: `lt`)
+    …
+    283→### `report`
+    …
+    307→### `analyze`
+    …
+    330→### `ical`
+    …
 go.mod
   1→module github.com/kriuchkov/tock
   2→
@@ -92,6 +95,17 @@ internal/
   adapters/
     cli/
       add.go
+        …
+        16→type addOptions struct {
+        …
+        26→func NewAddCmd() *cobra.Command {
+        …
+        64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
+        …
+        124→func resolveStartTime(startStr string, theme Theme) (string, error) {
+        …
+        163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
+        …
       analyze.go
         …
         20→func NewAnalyzeCmd() *cobra.Command {
@@ -109,7 +123,7 @@ internal/
         15→const (
         16→	defaultRecentActivitiesForContinuation = 10
         17→)
-        …
+        19→//nolint:funlen // Include all logic in one function
         20→func NewContinueCmd() *cobra.Command {
         …
       current.go
@@ -137,6 +151,15 @@ internal/
         …
       list_gui.go
       remove.go
+        …
+        22→func NewRemoveCmd() *cobra.Command {
+        …
+        95→func parseRemoveIndex(s string) (time.Time, int, error) {
+        …
+        116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
+        …
+        127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
+        …
       report.go
         …
         20→type reportOptions struct {

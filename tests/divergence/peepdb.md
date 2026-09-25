@@ -213,6 +213,13 @@ Score(3000)=0.631 I=0.875 C=0.456 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 9439 | 427 | python body peepdb/core.py:27 |  |  | 0.597 |
 | walker |  | 9474 | 35 | docs/index.md section #1 |  |  | 0.597 |
 | ns | 9564 |  | 137 | Build backend, Python floor, packaging includes | 7.3 | 1.1 | 0.598 |
+| walker |  | 9588 | 114 | docs/usage.md section #6 |  |  | 0.598 |
+| walker |  | 9631 | 43 | python doc peepdb/cli.py:113 |  |  | 0.599 |
 | ns | 9752 |  | 188 | CI: what triggers the workflows and on what Python versions | 7.4 |  | 0.591 |
-| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.590 |
-| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.588 |
+| walker |  | 9763 | 132 | README.md section #21 |  |  | 0.591 |
+| walker |  | 9779 | 16 | python names peepdb/tests/test_mongodb_uri.py |  |  | 0.591 |
+| walker |  | 9795 | 16 | python names peepdb/tests/test_sqlite.py |  |  | 0.591 |
+| walker |  | 9870 | 75 | docs/README.md section #6 |  |  | 0.591 |
+| ns | 9913 |  | 161 | The docs/ site: Jekyll theme config, and two stale-template markers | 7.5 | 1.11 | 0.591 |
+| ns | 9978 |  | 65 | CustomEncoder.default — the JSON serializer for Decimal and date | 7.6 | 1.6 | 0.589 |
+| walker |  | 9998 | 128 | docs/installation.md section #3 |  |  | 0.589 |

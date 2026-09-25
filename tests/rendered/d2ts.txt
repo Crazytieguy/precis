@@ -4,67 +4,6 @@
 .github/
   workflows/
     ci.yml
-      1→name: CI & Release
-      2→
-      3→on:
-      4→  pull_request:
-      5→    branches: [ main ]
-      6→  push:
-      7→    branches: [ main ]
-      8→
-      9→concurrency:
-      10→  group: ${{ github.workflow }}-${{ github.ref }}
-      11→  cancel-in-progress: true
-      12→
-      13→jobs:
-      14→  build-test-release:
-      15→    name: Build, Test & Release
-      16→    runs-on: ubuntu-latest
-      17→    permissions:
-      18→      contents: write # to create release (changesets/action)
-      19→      pull-requests: write # to create pull request (changesets/action)
-      20→    steps:
-      21→      - name: Checkout Repo
-      22→        uses: actions/checkout@v4
-      23→        with:
-      24→          fetch-depth: 0
-      25→
-      26→      - name: Setup Node.js
-      27→        uses: actions/setup-node@v4
-      28→        with:
-      29→          node-version: 20
-      30→
-      31→      - name: Setup pnpm
-      32→        uses: pnpm/action-setup@v3
-      33→        with:
-      34→          version: 8
-      35→          run_install: false
-      36→
-      37→      - name: Get pnpm store directory
-      38→        shell: bash
-      39→        run: |
-      40→          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      41→
-      42→      - name: Setup pnpm cache
-      43→        uses: actions/cache@v4
-      44→        with:
-      45→          path: ${{ env.STORE_PATH }}
-      46→          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-      47→          restore-keys: |
-      48→            ${{ runner.os }}-pnpm-store-
-      49→
-      50→      - name: Configure npm
-      51→        run: |
-      52→          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      53→          echo "@electric-sql:registry=https://registry.npmjs.org/" >> ~/.npmrc
-      54→        env:
-      55→          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      56→
-      57→      - name: Install dependencies
-      58→        run: pnpm install
-      59→        
-      60→      - name: Build packages
-      …
 .gitignore
 .prettierrc.cjs
 LICENSE
@@ -153,6 +92,15 @@ packages/
     package.json
     src/
       d2.ts
+        …
+        10→export class D2 implements ID2 {
+        …
+        73→export class StreamBuilder<T> implements IStreamBuilder<T> {
+        …
+        146→export class RootStreamBuilder<T> extends StreamBuilder<T> {
+        147→  sendData(collection: MultiSet<T> | MultiSetArray<T>): void {
+        …
+        150→}
       graph.ts
       index.ts
         1→export * from './d2.js'
@@ -161,10 +109,24 @@ packages/
         4→export * from './types.js'
       indexes.ts
       multiset.ts
+        …
+        8→export type MultiSetArray<T> = [T, number][]
+        9→export type KeyedData<T> = [key: string, value: T]
+        …
+        14→export class MultiSet<T> {
+        …
       operators/
         concat.ts
         consolidate.ts
         count.ts
+          …
+          9→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
+          10→  constructor(
+          …
+          25→}
+          …
+          30→export function count<
+          …
         debug.ts
           …
           12→export class DebugOperator<T> extends UnaryOperator<T> {
@@ -176,6 +138,9 @@ packages/
           35→}
           …
           42→export function debug<T>(
+          43→  name: string,
+          44→  indent: boolean = false,
+          45→): PipedOperator<T, T> {
           …
         distinct.ts
         filter.ts
@@ -202,6 +167,8 @@ packages/
           32→}
           …
           38→export function output<T>(
+          39→  fn: (data: MultiSet<T>) => void,
+          40→): PipedOperator<T, T> {
           …
         pipe.ts
         reduce.ts
@@ -285,6 +252,22 @@ packages/
       5→  "description": "D2TS is a TypeScript implementation of Differential Dataflow.",
       …
       20→  "type": "module",
+      21→  "main": "dist/index.js",
+      22→  "types": "dist/index.d.ts",
+      23→  "exports": {
+      24→    ".": {
+      25→      "types": "./dist/index.d.ts",
+      26→      "default": "./dist/index.js"
+      27→    },
+      28→    "./sqlite": {
+      29→      "types": "./dist/sqlite/index.d.ts",
+      30→      "default": "./dist/sqlite/index.js"
+      31→    },
+      32→    "./electric": {
+      33→      "types": "./dist/electric/index.d.ts",
+      34→      "default": "./dist/electric/index.js"
+      35→    }
+      36→  },
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",
@@ -305,17 +288,40 @@ packages/
         5→export * from './operators/index.js'
         6→export * from './types.js'
       multiset.ts
+        …
+        3→export type MultiSetArray<T> = [T, number][]
+        4→export type KeyedData<T> = [key: string, value: T]
+        …
+        9→export class MultiSet<T> {
+        …
       operators/
         base.ts
         buffer.ts
         concat.ts
         consolidate.ts
         count.ts
+          …
+          10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
+          11→  constructor(
+          …
+          27→}
+          …
+          32→export function count<
+          …
         debug.ts
           …
           18→export class DebugOperator<T> extends UnaryOperator<T> {
           …
+          22→  constructor(
+          …
+          35→  run(): void {
+          …
+          67→}
+          …
           74→export function debug<T>(
+          75→  name: string,
+          76→  indent: boolean = false,
+          77→): PipedOperator<T, T> {
           …
         distinct.ts
         filter.ts
@@ -342,6 +348,17 @@ packages/
           …
         topKWithFractionalIndex.ts
       order.ts
+        …
+        10→export function v(version: number | number[]): Version {
+        …
+        29→export class Version {
+        …
+        138→export class Antichain {
+        …
+        277→export class Frontier extends Antichain {
+        278→  constructor(...elements: Version[]) {
+        …
+        281→}
       sqlite/
         context.ts
         database.ts

@@ -15,34 +15,22 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
   workflows/
     compressed-size.yml
     main.yml
-      1→name: CI
-      2→
-      3→on:
-      4→  pull_request:
-      5→    branches:
-      6→      - "**"
-      7→  push:
-      8→    branches:
-      9→      - main
-      10→
-      11→jobs:
-      12→  build:
-      13→    runs-on: ubuntu-latest
-      14→    steps:
-      15→      - uses: actions/checkout@v2
-      16→      - uses: actions/setup-node@v2
-      17→        with:
-      18→          node-version: 14
-      19→      - name: npm install, build, and test
-      20→        run: |
-      21→          npm install
-      22→          npm run build --if-present
-      23→          npm test
-      24→        env:
-      25→          CI: true
 .gitignore
 LICENSE
 README.md
+  …
+  9→# Mitt
+  10→
+  11→> Tiny 200b functional event emitter / pubsub.
+  12→
+  13→-   **Microscopic:** weighs less than 200 bytes gzipped
+  14→-   **Useful:** a wildcard `"*"` event type listens to all events
+  15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+  16→-   **Functional:** methods don't rely on `this`
+  17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+  18→
+  19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+  …
 package.json
   …
   2→  "name": "mitt",

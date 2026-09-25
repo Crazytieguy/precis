@@ -3,24 +3,6 @@
   FUNDING.yml
   workflows/
     node.js.yml
-      1→name: Node.js CI
-      2→on: [push]
-      3→jobs:
-      4→  build:
-      5→    runs-on: ubuntu-latest
-      6→    steps:
-      7→      - uses: actions/checkout@v6
-      8→      - uses: pnpm/action-setup@v4
-      9→        with:
-      10→          version: 10
-      11→      - uses: actions/setup-node@v6
-      12→        with:
-      13→          node-version: "22.x"
-      14→          cache: "pnpm"
-      15→      - run: pnpm install
-      16→      - run: pnpm run lint
-      17→      - run: pnpm run typecheck
-      18→      - run: pnpm test
     publish.yml
 .gitignore
 .husky/
@@ -314,5 +296,19 @@ src/
     17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
     …
 tsconfig.json
+  1→{
+  2→  "exclude": ["src/**/*.test.ts"],
+  3→  "compilerOptions": {
+  4→    "outDir": "./lib",
+  5→    "target": "esnext",
+  6→    "module": "nodenext",
+  7→    "skipLibCheck": true,
+  8→    "strict": true,
+  9→    "allowImportingTsExtensions": true,
+  10→    "rewriteRelativeImportExtensions": true,
+  11→    "erasableSyntaxOnly": true,
+  12→    "verbatimModuleSyntax": true
+  13→  }
+  14→}
 views/
   index.html

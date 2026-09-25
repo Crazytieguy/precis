@@ -5,36 +5,6 @@
   security.md
   workflows/
     main.yml
-      1→name: CI
-      2→on:
-      3→  - push
-      4→  - pull_request
-      5→jobs:
-      6→  test:
-      7→    name: Node.js ${{ matrix.node-version }}
-      8→    runs-on: macos-latest
-      9→    strategy:
-      10→      fail-fast: false
-      11→      matrix:
-      12→        node-version:
-      13→          - latest
-      14→          - 24
-      15→          - 22
-      16→          - 20
-      17→    steps:
-      18→      - uses: actions/checkout@v5
-      19→      - uses: actions/setup-node@v5
-      20→        with:
-      21→          node-version: ${{ matrix.node-version }}
-      22→      - run: npm install
-      23→      - name: Install Playwright Browsers
-      24→        run: npx playwright install --with-deps
-      25→      - run: npm test
-      26→      # TODO: Enable again when https://github.com/istanbuljs/nyc/issues/1287 is fixed.
-      27→      # - uses: codecov/codecov-action@v1
-      28→      #   if: matrix.node-version == 24
-      29→      #   with:
-      30→      #     fail_ci_if_error: true
 .gitignore
 .npmrc
 license
@@ -262,6 +232,40 @@ source/
       …
     common.ts
     hooks.ts
+      …
+      5→export type BeforeRequestState = {
+      …
+      14→export type BeforeRequestHook = (
+      15→	request: KyRequest,
+      16→	options: NormalizedOptions,
+      17→	state: BeforeRequestState
+      18→) => Request | Response | void | Promise<Request | Response | void>;
+      20→export type BeforeRetryState = {
+      21→	request: KyRequest;
+      22→	options: NormalizedOptions;
+      23→	error: Error;
+      24→
+      25→	/**
+      26→	The number of retries attempted. Always `>= 1` since this hook is only called during retries, not on the initial request.
+      27→	*/
+      28→	retryCount: number;
+      29→};
+      30→export type BeforeRetryHook = (options: BeforeRetryState) => Request | Response | typeof stop | void | Promise<Request | Response | typeof stop | void>;
+      31→
+      32→export type AfterResponseState = {
+      …
+      41→export type AfterResponseHook = (
+      42→	request: KyRequest,
+      43→	options: NormalizedOptions,
+      44→	response: KyResponse,
+      45→	state: AfterResponseState
+      46→) => Response | RetryMarker | void | Promise<Response | RetryMarker | void>;
+      48→export type BeforeErrorState = {
+      …
+      57→export type BeforeErrorHook = (error: HTTPError, state: BeforeErrorState) => HTTPError | Promise<HTTPError>;
+      58→
+      59→export type Hooks = {
+      …
     ky.ts
       …
       5→export type KyInstance = {
