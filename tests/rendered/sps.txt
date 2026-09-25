@@ -55,7 +55,29 @@ LICENSE.md
 NOTICE.md
 README.md
   1→# sps
-  …
+  2→
+  3→> [!WARNING]
+  4→> I will scrap this project in favor of sps v2 some time in the future (when v2 is built and ready which might take a while). The reason is that I am planning to
+  5→> implement my own packaging system, my own version of atomic installs / updated complete with automatic snapshots and full, down to single package rollbacks +
+  6→> automatic cve checks and some other stuffs. After a lot of thinking and looking at Homebrew's architecture I've come to the conclusion that I do not like it (burn
+  7→> me for it ;). Defining my own build system will allow for a more performant and maintainable system in the long run. (Just a bit anxious about how to host packages
+  8→> / do all the repo stuff. Like really anxious but I'll figure it out)
+  9→>
+  10→> Another reason is that I made some choices on internal architecture in the beginning that I have come to see as suboptimal but can not easily refactor so this will
+  11→> allow me to go for the better option right from the get go (go for rx/tx for status propagation from the start, build the core fully async etc.)
+  12→>
+  13→> I have just made the repo for sps2 public. There is no repositories yet and core systems still do not work and need debugging. However it passes ci and the
+  14→> architecture is largely in place. I will have to create a automatic upstream tracking system, automatic builds and create build scripts for the most important
+  15→> tools too still + bootstrap the repositories.
+  16→>
+  17→> Never done that so if anyone has experience with that stuff help is appreciated. 
+  18→>
+  19→> For repo architecture I will probably go for a classic unix style repo format with cloudflare r2 and automatic replication to multiple regions. Well that is quite
+  20→> far out. Still it is coming along well, just built my first package with it. Found some small issues with install right after and am working on those now.
+  21→>
+  22→> https://github.com/alexykn/sps2 Take a look if you want!
+  23→
+  24→
   25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
   27→- **Formulae:** command‑line tools, libraries, and languages
   28→- **Casks:** desktop applications and related artifacts on macOS
@@ -100,13 +122,7 @@ README.md
   151→## 🤝 Contributing
   …
   164→## 📄 License
-  165→
-  166→  - **sps:** BSD‑3‑Clause - see [LICENSE.md](LICENSE.md)
-  167→  - Inspired by Homebrew BSD‑2‑Clause — see [NOTICE.md](NOTICE.md)
-  168→
-  169→-----
-  170→
-  171→> *Alpha software. No guarantees. Use responsibly.*
+  …
 rustfmt.toml
 sps/
   Cargo.toml
@@ -130,46 +146,6 @@ sps/
       …
       2→//! Defines the command-line argument structure using clap.
       …
-      10→pub mod info;
-      11→pub mod init;
-      12→pub mod install;
-      13→pub mod list;
-      14→pub mod reinstall;
-      15→pub mod search;
-      16→pub mod status;
-      17→pub mod uninstall;
-      18→pub mod update;
-      19→pub mod upgrade;
-      …
-      23→pub use crate::cli::init::InitArgs;
-      …
-      32→#[derive(Parser, Debug)]
-      33→#[command(author, version, about, long_about = None, name = "sps", bin_name = "sps")]
-      34→#[command(propagate_version = true)]
-      35→pub struct CliArgs {
-      36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-      37→    pub verbose: u8,
-      38→
-      39→    #[command(subcommand)]
-      40→    pub command: Command,
-      41→}
-      43→#[derive(Subcommand, Debug)]
-      44→pub enum Command {
-      45→    Init(InitArgs),
-      46→    Search(Search),
-      47→    List(List),
-      48→    Info(Info),
-      49→    Update(Update),
-      50→    Install(InstallArgs),
-      51→    Uninstall(Uninstall),
-      52→    Reinstall(ReinstallArgs),
-      53→    Upgrade(UpgradeArgs),
-      54→}
-      56→impl Command {
-      57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
-      …
-      71→}
-      …
     main.rs
       …
       17→mod cli;
@@ -187,9 +163,6 @@ sps/
       planner.rs
       runner.rs
     pipeline.rs
-      1→pub mod downloader;
-      2→pub mod planner;
-      3→pub mod runner;
 sps-common/
   Cargo.toml
   src/

@@ -825,7 +825,6 @@ fn is_decorative_block(block: Node, source: &str) -> bool {
         // `[label]: url` definitions render nothing on their own.
         "link_reference_definition" => true,
         "html_block" => is_decorative_html_block(block, source),
-        "block_quote" => is_admin_block_quote(block, source),
         _ => false,
     }
 }
@@ -838,25 +837,6 @@ fn is_decorative_html_block(block: Node, source: &str) -> bool {
     let raw = &source[block.start_byte()..block.end_byte()];
     let stripped = strip_html_tags(raw);
     stripped.trim().is_empty()
-}
-
-/// True when a `block_quote` is a GitHub-flavored admin callout
-/// (`> [!WARNING]`, `> [!NOTE]`, etc.). Short single-paragraph
-/// block_quotes (typically taglines — `> Ky is a tiny and elegant HTTP
-/// client...`) are NOT classified as admin and stay in the headline.
-fn is_admin_block_quote(block: Node, source: &str) -> bool {
-    let raw = &source[block.start_byte()..block.end_byte()];
-    for line in raw.lines().take(2) {
-        let trimmed = line.trim_start_matches('>').trim();
-        if let Some(rest) = trimmed.strip_prefix("[!")
-            && rest
-                .split_once(']')
-                .is_some_and(|(_, after)| after.trim().is_empty())
-        {
-            return true;
-        }
-    }
-    false
 }
 
 /// A navigation row: three or more links and nothing else but separator
