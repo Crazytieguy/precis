@@ -262,14 +262,6 @@ impl RenderedTree {
         out
     }
 
-    pub fn total_tokens(&self) -> usize {
-        tokenizer::count(&self.render())
-    }
-
-    pub fn total_chars(&self) -> usize {
-        char_units(&self.render())
-    }
-
     // ---- internal ----
 
     fn depth_from_root(&self, path: &Path) -> usize {

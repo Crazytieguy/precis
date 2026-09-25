@@ -48,20 +48,6 @@ impl WorkspaceMembership {
     }
 }
 
-/// Per-run Cargo workspace state: the member manifests.
-#[derive(Default)]
-pub(super) struct CargoWorkspace {
-    membership: WorkspaceMembership,
-}
-
-impl CargoWorkspace {
-    /// `true` iff `file` is a workspace-member `Cargo.toml`. Memoized.
-    pub(super) fn is_member(&self, file: &Path, root: &Path) -> bool {
-        self.membership
-            .is_member(file, || super::toml::collect_workspace_members(root))
-    }
-}
-
 /// Expand one workspace-member entry against `<root>`. Supports literal
 /// paths (`./crates/foo`, `examples/bar`) and trailing-`/*` globs
 /// (`crates/*`); mid-name globs are an honest no-op. Manifest existence

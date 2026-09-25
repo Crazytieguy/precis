@@ -216,22 +216,19 @@ impl<W: Walker> Scheduler<W> {
         }
 
         if cfg!(debug_assertions) {
-            let total_tokens = self.tree.total_tokens();
+            let rendered = self.tree.render();
+            let total_tokens = crate::tokenizer::count(&rendered);
             debug_assert!(
                 total_tokens <= self.token_budget,
-                "rendered output exceeds token budget: {} > {}",
-                total_tokens,
+                "rendered output exceeds token budget: {total_tokens} > {}",
                 self.token_budget,
             );
-            if let Some(cap) = self.char_budget {
-                let total_chars = self.tree.total_chars();
-                debug_assert!(
-                    total_chars <= cap,
-                    "rendered output exceeds char budget: {} > {}",
-                    total_chars,
-                    cap,
-                );
-            }
+            let total_chars = crate::render::char_units(&rendered);
+            debug_assert!(
+                self.char_budget.is_none_or(|cap| total_chars <= cap),
+                "rendered output exceeds char budget: {total_chars} > {:?}",
+                self.char_budget,
+            );
         }
 
         let entries = self.entries;

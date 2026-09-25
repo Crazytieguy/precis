@@ -44,12 +44,13 @@ use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result};
 
-use crate::Schedule;
 use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, explode_spans, with_truncate_regex};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
+use crate::scheduler::{ScheduledBatchRecord, Scheduler};
+use crate::walker::FsWalker;
 
 /// Geometric on `[1000, 9000]` (ratio ⁶√9), symmetric around 3000 on the
 /// log scale.
@@ -104,6 +105,40 @@ impl Scores {
             .collect();
         format!("grid({})={}", budgets.join("/"), scores.join("/"))
     }
+}
+
+/// Complete walker schedule from one [`render_schedule`] run, in
+/// scheduling order.
+pub struct Schedule {
+    /// Canonical fixture root; batch content paths are absolute under it.
+    pub root: PathBuf,
+    pub batches: Vec<ScheduledBatchRecord>,
+}
+
+/// Run the walker at `budget` and return a [`Schedule`] — input for
+/// regression snapshots and the divergence metric.
+pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
+    let filter = crate::walk_scope(path)?;
+    let root = filter.root().to_path_buf();
+    let report = Scheduler::with_filter(filter, FsWalker, budget, None).run_with_report();
+    Ok(Schedule {
+        root,
+        batches: report.scheduled,
+    })
+}
+
+/// Replay a [`Schedule`] against a fresh tree at `budget`. Under
+/// prefix-monotone scheduling this matches running the walker at the
+/// smaller budget.
+pub fn render_with_schedule(schedule: &Schedule, budget: usize) -> String {
+    let mut tree = RenderedTree::new(schedule.root.clone(), SourceCache::new());
+    for (i, batch) in schedule.batches.iter().enumerate() {
+        if batch.cum_tokens > budget {
+            break;
+        }
+        tree.apply(&batch.content, BatchId::new(i), |_| true);
+    }
+    tree.render()
 }
 
 /// Markdown report for one fixture plus the scores in its headline.
@@ -282,8 +317,8 @@ impl<'a> Graded<'a> {
                 state.fold_walker_row(&self.walker_rows[walker_index]);
                 pending_rows.push(format!(
                     "| walker |  | {cum} | {} | {} |  |  |",
-                    batch.cost_tokens,
-                    escape_cell(&batch.descriptor),
+                    batch.cost.tokens,
+                    escape_cell(&batch.key.describe(&self.schedule.root)),
                 ));
                 walker_index += 1;
             }
@@ -410,7 +445,8 @@ fn escape_cell(s: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ScheduledBatch;
+    use crate::batch::FsKey;
+    use crate::render::Cost;
 
     #[test]
     fn divergence_escape_cell_keeps_pipes_inside_the_cell() {
@@ -438,9 +474,15 @@ mod tests {
         };
         let schedule = Schedule {
             root: PathBuf::new(),
-            batches: vec![ScheduledBatch {
-                descriptor: "walker at 100".into(),
-                cost_tokens: 100,
+            batches: vec![ScheduledBatchRecord {
+                key: FsKey::DirListing {
+                    dir: PathBuf::from("walker at 100"),
+                }
+                .into(),
+                cost: Cost {
+                    tokens: 100,
+                    chars: 0,
+                },
                 cum_tokens: 100,
                 content: BatchContent::Lines { spans: vec![] },
             }],

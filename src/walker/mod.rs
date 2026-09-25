@@ -113,7 +113,7 @@ pub struct WalkCtx {
     source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
-    cargo_workspace: workspace::CargoWorkspace,
+    cargo_workspace: workspace::WorkspaceMembership,
     fs_state: fs::FsState,
     json_state: json::JsonState,
     /// Run state of the code engine's language modules.
@@ -151,7 +151,7 @@ impl WalkCtx {
             dir_filter: Rc::new(dir_filter),
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
-            cargo_workspace: workspace::CargoWorkspace::default(),
+            cargo_workspace: workspace::WorkspaceMembership::default(),
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             code: code::CodeState::default(),
@@ -283,7 +283,8 @@ impl WalkCtx {
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
     pub fn is_workspace_member(&self, file: &Path) -> bool {
-        self.cargo_workspace.is_member(file, &self.root)
+        self.cargo_workspace
+            .is_member(file, || toml::collect_workspace_members(&self.root))
     }
 
     /// `true` iff `file` is a JS/TS workspace-member `package.json`.

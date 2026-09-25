@@ -16,9 +16,8 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use precis::{
-    Schedule, divergence, ns_loader::load_ns_checked, render_schedule, render_with_schedule,
-};
+use precis::divergence::{self, Schedule, render_schedule, render_with_schedule};
+use precis::ns_loader::load_ns_checked;
 
 /// Walker budget for the scored schedule. Matches the NS cap.
 const SCHEDULE_BUDGET: usize = 10_000;
