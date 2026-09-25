@@ -10,8 +10,10 @@
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
 //!    [`Class::FlatText`]): the language-agnostic fallback for formats no
 //!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, CSS,
-//!    reST, …), rendered as its [`declaration_surface`] and, when short,
+//!    shell, …), rendered as its [`declaration_surface`] and, when short,
 //!    whole behind it. Without it those files show only as a filename.
+//!    Markup documents (reST, AsciiDoc, …) are not claimed: like
+//!    markdown beyond the root README, they are left to the listing.
 
 use std::path::Path;
 
@@ -108,7 +110,7 @@ pub(crate) enum Class {
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
     LanguageSource,
-    /// A prose or flat-config file with no owning walker. Same
+    /// A flat-config, script or plain-text file with no owning walker. Same
     /// extraction (a file with no nesting has every line at
     /// indentation zero, so the surface *is* its head slice), but a
     /// head slice claims much less than a declaration roster does and
@@ -232,7 +234,7 @@ const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
 /// (`gradlew.bat`, `mvnw.cmd`), 158 tokens of argument marshalling.
 /// Two shapes, one price:
 ///
-/// - prose, flat config, shell scripts and build glue are sequences
+/// - plain text, flat config, shell scripts and build glue are sequences
 ///   of statements, so every line sits at indentation zero and the
 ///   "surface" is just a head slice;
 /// - stylesheets do have declarations at indentation zero, but a
@@ -243,14 +245,7 @@ const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
 /// Claimed either way — a slice beats a bare filename — but priced
 /// near the floor, and never a source inventory.
 const SOURCE_TEXT_FLAT_EXTENSIONS: &[&str] = &[
-    "rst",
-    "adoc",
-    "asciidoc",
     "txt",
-    "text",
-    "tex",
-    "org",
-    "mdx",
     "ini",
     "cfg",
     "conf",
@@ -699,11 +694,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         }
         let file = dir.join(name);
         let named = classify_plaintext(name);
-        // Root `README.rst` belongs to the markdown walker and parsed
-        // languages to the code engine; a second slice of either would
-        // overlap their spans.
-        let owned_elsewhere = (dir == ctx.root() && super::markdown::is_readme_rst(&file))
-            || super::code::Language::from_path(&file).is_some();
+        // Parsed languages belong to the code engine; a second slice
+        // would overlap its spans.
+        let owned_elsewhere = super::code::Language::from_path(&file).is_some();
         let Some(class) = named.or_else(|| {
             (!owned_elsewhere)
                 .then(|| classify_source_text(name))
@@ -930,7 +923,7 @@ mod tests {
             classify_source_text("schema.proto"),
             Some(Class::LanguageSource)
         );
-        assert_eq!(classify_source_text("guide.rst"), Some(Class::FlatText));
+        assert_eq!(classify_source_text("guide.rst"), None);
         assert_eq!(classify_source_text("app.css"), Some(Class::FlatText));
         assert_eq!(classify_source_text("build.sh"), Some(Class::FlatText));
         // Derived artifacts and credentials never render.

@@ -82,7 +82,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     // RST README: line-scanned headings via `is_rst_underline`, dropping
     // `.. directive::` blocks — no tree-sitter parse.
     for file in files_with_extension(dir, "rst", ctx) {
-        if !is_readme_rst(&file) {
+        if !is_readme(&file) {
             continue;
         }
         let Some(source) = ctx.read_source(&file) else {
@@ -332,17 +332,9 @@ fn build_section_content(
 }
 
 fn is_readme(file: &Path) -> bool {
-    file.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
-}
-
-/// Root `README.rst` is the one `.rst` this walker owns; the plaintext
-/// fallback must skip it so the two never emit overlapping spans.
-pub(crate) fn is_readme_rst(file: &Path) -> bool {
-    file.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|n| n.eq_ignore_ascii_case("README.rst"))
+    file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+        n.eq_ignore_ascii_case("README.md") || n.eq_ignore_ascii_case("README.rst")
+    })
 }
 
 /// True for a real RST prose line — not a heading underline, badge row

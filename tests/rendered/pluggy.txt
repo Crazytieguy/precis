@@ -91,24 +91,8 @@ README.rst
 RELEASING.rst
 SECURITY.md
 TIDELIFT.rst
-  1→========
-  2→Tidelift
-  3→========
-  4→
-  5→pluggy is a member of `Tidelift`_. This document describes how the core team manages
-  6→Tidelift-related activities.
-  7→
-  8→What is it
-  9→==========
-  10→
-  11→Tidelift aims to make Open Source sustainable by offering subscriptions to companies which rely
-  …
-  26→* `@nicoddemus`_
-  27→* `@The-Compiler`_
-  …
 changelog/
   590.trivial.rst
-    1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
   README.rst
   _template.rst
 codecov.yml
@@ -239,7 +223,9 @@ src/
       31→_Namespace: TypeAlias = ModuleType | type
       32→_Plugin: TypeAlias = object
       33→_HookExec: TypeAlias = Callable[
-      …
+      34→    [str, Sequence["HookImpl"], Mapping[str, object], bool],
+      35→    object | list[object],
+      36→]
       37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
       38→
       39→
@@ -258,14 +244,32 @@ src/
       292→
       293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
       …
+      358→@final
       359→class HookRelay:
+      …
+      363→    __slots__ = ("__dict__",)
+      364→
+      365→    def __init__(self) -> None:
+      …
+      368→    if TYPE_CHECKING:
+      369→
       …
       374→_HookRelay = HookRelay
       375→
       376→
       377→_CallHistory: TypeAlias = list[
-      …
+      378→    tuple[Mapping[str, object], Callable[[Any], None] | None]
+      379→]
       382→class HookCaller:
+      …
+      590→_HookCaller = HookCaller
+      591→
+      592→
+      593→class _SubsetHookCaller(HookCaller):
+      …
+      639→class HookImpl:
+      …
+      697→class HookSpec:
       …
     _manager.py
     _result.py
