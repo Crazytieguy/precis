@@ -149,21 +149,28 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let sibling_md_count = md_files.len();
     let mut out = Vec::new();
 
-    // RST README: emit a ReadmeHeadline batch (title + first
-    // substantive paragraph) plus one `Section` batch per body section
-    // — parity with the .md path, which subdivides the README body. No
-    // tree-sitter parse — line-scan headings via `is_rst_underline`,
-    // dropping `.. directive::` blocks. Skip nested README.rst — the
-    // root-level file is the only anchor.
-    for file in super::fs::files_with_extension(dir, "rst", ctx) {
-        if !is_readme_rst(&file) || dir != ctx.root() {
+    // RST README: emit a ReadmeHeadline batch plus `Section` batches
+    // (see [`rst_readme`]) — parity with the .md path. No tree-sitter
+    // parse — line-scan headings via `is_rst_underline`, dropping
+    // `.. directive::` blocks. Skip nested README.rst — the root-level
+    // file is the only anchor.
+    let rst_files = if dir == ctx.root() {
+        super::fs::files_with_extension(dir, "rst", ctx)
+    } else {
+        Vec::new()
+    };
+    for file in rst_files {
+        if !is_readme_rst(&file) {
             continue;
         }
         let Some(source) = ctx.read_source(&file) else {
             continue;
         };
+        let (headline_rows, sections) = rst_readme(&source);
         let mut headline_emitted: Option<BatchKey> = None;
-        if let Some(content) = build_rst_readme_content(&file, &source) {
+        if let Some(content) =
+            single_file_lines_content(&file, &source, FileLines::new(headline_rows))
+        {
             let key = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(Batch {
                 key: key.clone().into(),
@@ -180,7 +187,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
-        for (idx, section) in rst_body_sections(&source).into_iter().enumerate() {
+        for (idx, section) in sections.into_iter().enumerate() {
             let value = rst_section_value(&file, &section, ctx);
             let reference = section.is_reference_usage;
             if let Some(content) =
@@ -681,109 +688,6 @@ pub(crate) fn is_readme_rst(file: &Path) -> bool {
         .is_some_and(|n| n.eq_ignore_ascii_case("README.rst"))
 }
 
-/// RST `ReadmeHeadline` content — title + first substantive paragraph,
-/// stopping at the next setext heading. Skips `.. directive::` blocks
-/// and their indented continuations.
-fn build_rst_readme_content(file: &Path, source: &Source) -> Option<BatchContent> {
-    let src_lines: Vec<&str> = source.lines().collect();
-    if src_lines.is_empty() {
-        return None;
-    }
-    let mut keep: Vec<usize> = Vec::new();
-    let mut i = 0;
-    let mut seen_title = false;
-    while i < src_lines.len() {
-        let line = src_lines[i];
-        let trimmed = line.trim_start();
-        if trimmed.starts_with("..") {
-            let directive_indent = line.len() - trimmed.len();
-            i += 1;
-            while i < src_lines.len() {
-                let next = src_lines[i];
-                if next.trim().is_empty() {
-                    i += 1;
-                    continue;
-                }
-                let next_indent = next.len() - next.trim_start().len();
-                if next_indent > directive_indent {
-                    i += 1;
-                } else {
-                    break;
-                }
-            }
-            continue;
-        }
-        // Setext-style heading detection: a non-blank line followed by
-        // an underline of `=`, `-`, `~`, `^`, `*`, `+`, or `#` whose
-        // width is at least the line's. The first such heading is the
-        // title; subsequent ones bound the headline.
-        if i + 1 < src_lines.len()
-            && let Some(prev) = src_lines.get(i).filter(|l| !l.trim().is_empty())
-            && is_rst_underline(src_lines[i + 1], prev.trim_end().chars().count())
-        {
-            if seen_title {
-                break;
-            }
-            keep.push(i + 1);
-            keep.push(i + 2);
-            seen_title = true;
-            i += 2;
-            continue;
-        }
-        // Overline form (title surrounded by underline rows). Detect:
-        // a punctuation row followed by a title row followed by the
-        // same punctuation row.
-        if i + 2 < src_lines.len()
-            && is_rst_underline(src_lines[i], 1)
-            && is_rst_underline(src_lines[i + 2], 1)
-            && src_lines[i].trim() == src_lines[i + 2].trim()
-            && !src_lines[i + 1].trim().is_empty()
-        {
-            if seen_title {
-                break;
-            }
-            keep.push(i + 1);
-            keep.push(i + 2);
-            keep.push(i + 3);
-            seen_title = true;
-            i += 3;
-            continue;
-        }
-        keep.push(i + 1);
-        i += 1;
-    }
-    // If only the title + badges/decoratives were captured (no lede prose —
-    // common when an admin section like `Sponsors` sits directly under the
-    // title), descend to the first intro/overview-class section and capture
-    // its first prose paragraph as the "what is this" lede.
-    let has_prose = keep
-        .iter()
-        .any(|&row| src_lines.get(row - 1).is_some_and(|l| is_rst_prose_line(l)));
-    if !has_prose {
-        for row in rst_intro_section_prose_rows(&src_lines) {
-            keep.push(row);
-        }
-        keep.sort_unstable();
-        keep.dedup();
-    }
-    while keep
-        .first()
-        .is_some_and(|&row| src_lines.get(row - 1).is_none_or(|l| l.trim().is_empty()))
-    {
-        keep.remove(0);
-    }
-    while keep
-        .last()
-        .is_some_and(|&row| src_lines.get(row - 1).is_none_or(|l| l.trim().is_empty()))
-    {
-        keep.pop();
-    }
-    if keep.is_empty() {
-        return None;
-    }
-    single_file_lines_content(file, source, FileLines::new(keep))
-}
-
 /// True for a real RST prose line — not a heading underline, badge row
 /// (`|Build Status| …`), or directive (`.. figure::`).
 fn is_rst_prose_line(line: &str) -> bool {
@@ -795,62 +699,6 @@ fn is_rst_prose_line(line: &str) -> bool {
         .filter(|w| w.chars().any(|c| c.is_alphabetic()))
         .count()
         >= 3
-}
-
-/// 1-based rows of the first prose paragraph under the first
-/// intro/overview-class RST section (`Overview` / `Introduction` /
-/// `About`), skipping its leading directives/figures. Empty if none.
-fn rst_intro_section_prose_rows(src_lines: &[&str]) -> Vec<usize> {
-    let headings = scan_rst_headings(src_lines);
-    for h in headings.iter().skip(1) {
-        let title = src_lines
-            .get(h.title_row - 1)
-            .map(|l| l.trim().to_ascii_lowercase())
-            .unwrap_or_default();
-        if !matches!(
-            title.as_str(),
-            "overview" | "introduction" | "about" | "summary"
-        ) {
-            continue;
-        }
-        let mut out = Vec::new();
-        let mut idx = h.underline_row; // 0-based index of the line after the underline
-        while idx < src_lines.len() {
-            let line = src_lines[idx];
-            let t = line.trim_start();
-            if t.is_empty() {
-                if !out.is_empty() {
-                    break;
-                }
-                idx += 1;
-                continue;
-            }
-            if t.starts_with("..") {
-                let indent = line.len() - t.len();
-                idx += 1;
-                while idx < src_lines.len() {
-                    let n = src_lines[idx];
-                    if n.trim().is_empty() || n.len() - n.trim_start().len() > indent {
-                        idx += 1;
-                    } else {
-                        break;
-                    }
-                }
-                continue;
-            }
-            if is_rst_underline(t, 1) {
-                break;
-            }
-            if is_rst_prose_line(line) {
-                out.push(idx + 1);
-            } else if !out.is_empty() {
-                break;
-            }
-            idx += 1;
-        }
-        return out;
-    }
-    Vec::new()
 }
 
 fn is_rst_underline(line: &str, min_width: usize) -> bool {
@@ -898,9 +746,8 @@ struct RstHeading {
     underline_row: usize,
 }
 
-/// Line-scan all setext/overline RST headings (same detection as
-/// [`build_rst_readme_content`]). The first heading is the document
-/// title; subsequent ones bound body sections.
+/// Line-scan all setext/overline RST headings. The first heading is the
+/// document title; subsequent ones bound body sections.
 fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     let mut headings = Vec::new();
     let mut i = 0;
@@ -939,107 +786,133 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     headings
 }
 
-/// RST README body sections — every heading after the title, capped at
-/// [`RST_MAX_BODY_SECTIONS`]. Each section spans its heading through the
-/// row before the next heading, with `.. directive::` blocks and
-/// leading/trailing blank rows stripped, then truncated to
+/// An RST README split into `ReadmeHeadline` rows and `Section`s. The
+/// headline is the title plus the first prose paragraph under it — or,
+/// when the title carries none, the first prose paragraph of an
+/// intro-titled section (`Overview`, `Introduction`, …). The rest of the
+/// text before the first body heading is section 0, and every later
+/// heading opens one section (at most [`RST_MAX_BODY_SECTIONS`]).
+/// Section rows skip non-content directive blocks and stop at
 /// [`RST_MAX_SECTION_BYTES`].
-fn rst_body_sections(source: &str) -> Vec<RstSection> {
+fn rst_readme(source: &str) -> (Vec<usize>, Vec<RstSection>) {
     let src_lines: Vec<&str> = source.lines().collect();
     let headings = scan_rst_headings(&src_lines);
-    // headings[0] is the document title (covered by the headline batch).
-    let mut out = Vec::new();
-    for (body_idx, heading) in headings.iter().skip(1).enumerate() {
-        if body_idx >= RST_MAX_BODY_SECTIONS {
-            break;
+    let intro_end = headings
+        .get(1)
+        .map_or(src_lines.len(), |next| next.start_row - 1);
+    let mut headline = Vec::new();
+    let mut intro_start = 1;
+    if let Some(title) = headings.first() {
+        headline.extend(title.start_row..=title.underline_row);
+        intro_start = title.underline_row + 1;
+    }
+    let intro = rst_content_rows(&src_lines, intro_start, intro_end);
+    let body: Vec<(usize, &RstHeading, Vec<usize>)> = headings
+        .iter()
+        .enumerate()
+        .skip(1)
+        .map(|(i, heading)| {
+            let end_row = headings
+                .get(i + 1)
+                .map_or(src_lines.len(), |next| next.start_row - 1);
+            (
+                i - 1,
+                heading,
+                rst_content_rows(&src_lines, heading.title_row, end_row),
+            )
+        })
+        .collect();
+    let mut sections = Vec::new();
+    if let Some(lede) = rst_lede(&src_lines, &intro) {
+        headline.extend(&intro[lede.clone()]);
+        let rest = cap_rst_rows(&src_lines, &intro[lede.end..]);
+        if !rest.is_empty() {
+            sections.push(RstSection {
+                rows: rest,
+                index: 0,
+                is_reference_usage: false,
+            });
         }
-        let start_row = heading.title_row; // 1-based
-        let end_row = headings
-            .get(body_idx + 2) // +1 to undo skip(1), +1 for the next heading
-            .map(|next| next.start_row - 1)
-            .unwrap_or(src_lines.len());
-        let rows = collect_rst_section_rows(&src_lines, start_row, end_row, heading.underline_row);
+    } else if let Some((rows, lede)) = body.iter().find_map(|(_, heading, rows)| {
+        let title = title_core(src_lines[heading.title_row - 1]);
+        matches!(
+            title.as_str(),
+            "overview" | "introduction" | "about" | "summary"
+        )
+        .then(|| rst_lede(&src_lines, rows).map(|lede| (rows, lede)))
+        .flatten()
+    }) {
+        headline.extend(&rows[lede]);
+    }
+    for (body_idx, heading, rows) in body.into_iter().take(RST_MAX_BODY_SECTIONS) {
+        let rows = cap_rst_rows(&src_lines, &rows);
         if rows.is_empty() {
             continue;
         }
-        let title = title_core(src_lines.get(heading.title_row - 1).copied().unwrap_or(""));
-        out.push(RstSection {
+        let title = title_core(src_lines[heading.title_row - 1]);
+        sections.push(RstSection {
             rows,
             index: body_idx,
             is_reference_usage: is_canonical_usage_title_core(&title)
                 || is_reference_usage_title_core(&title),
         });
     }
-    out
+    (headline, sections)
 }
 
-/// Rows (1-based) of one RST section: heading + body, skipping
-/// non-content `.. directive::` blocks (figure / image / raw / toctree
-/// / substitution / hyperlink-target comments) and their indented
-/// continuations, plus leading/trailing blanks, bounded by
-/// [`RST_MAX_SECTION_BYTES`]. Content directives (`code-block`,
-/// `literalinclude`, …) are kept — their indented body is the example
-/// the NS wants. The underline row is always kept so the heading
-/// renders.
-fn collect_rst_section_rows(
-    src_lines: &[&str],
-    start_row: usize,
-    end_row: usize,
-    underline_row: usize,
-) -> Vec<usize> {
+/// Index range in `rows` of the first prose paragraph: the first prose
+/// line and the source-contiguous rows after it.
+fn rst_lede(src_lines: &[&str], rows: &[usize]) -> Option<std::ops::Range<usize>> {
+    let start = rows
+        .iter()
+        .position(|&row| is_rst_prose_line(src_lines[row - 1]))?;
+    let len = rows[start..]
+        .iter()
+        .zip(rows[start]..)
+        .take_while(|(row, expected)| **row == *expected)
+        .count();
+    Some(start..start + len)
+}
+
+/// Non-blank rows (1-based) of `[start, end]`, skipping non-content
+/// `.. directive::` blocks (figure / image / raw / toctree /
+/// substitution / hyperlink-target comments) and their indented
+/// continuations. Content directives (`code-block`, `literalinclude`,
+/// …) are kept — their indented body is the example the NS wants.
+fn rst_content_rows(src_lines: &[&str], start: usize, end: usize) -> Vec<usize> {
     let mut rows = Vec::new();
-    let mut bytes = 0usize;
-    let mut i = start_row; // 1-based
-    while i <= end_row {
-        let Some(line) = src_lines.get(i - 1) else {
-            break;
-        };
+    let mut directive_indent: Option<usize> = None;
+    for row in start..=end.min(src_lines.len()) {
+        let line = src_lines[row - 1];
         let trimmed = line.trim_start();
-        // Skip non-content directive blocks (but never the underline
-        // row, whose `----` can't start with `..`). Content directives
-        // fall through and render their indented body.
-        if i != underline_row && trimmed.starts_with("..") && !is_rst_content_directive(trimmed) {
-            let directive_indent = line.len() - trimmed.len();
-            i += 1;
-            while i <= end_row {
-                let Some(next) = src_lines.get(i - 1) else {
-                    break;
-                };
-                if next.trim().is_empty() {
-                    i += 1;
-                    continue;
-                }
-                let next_indent = next.len() - next.trim_start().len();
-                if next_indent > directive_indent {
-                    i += 1;
-                } else {
-                    break;
-                }
-            }
+        if trimmed.is_empty() {
             continue;
         }
-        if bytes >= RST_MAX_SECTION_BYTES {
-            break;
+        let indent = line.len() - trimmed.len();
+        if directive_indent.is_some_and(|open| indent > open) {
+            continue;
         }
-        bytes += line.len();
-        rows.push(i);
-        i += 1;
-    }
-    // Drop leading/trailing blank rows so the marginal cost is body, not
-    // whitespace.
-    while rows
-        .first()
-        .is_some_and(|&r| src_lines.get(r - 1).is_none_or(|l| l.trim().is_empty()))
-    {
-        rows.remove(0);
-    }
-    while rows
-        .last()
-        .is_some_and(|&r| src_lines.get(r - 1).is_none_or(|l| l.trim().is_empty()))
-    {
-        rows.pop();
+        directive_indent = None;
+        if trimmed.starts_with("..") && !is_rst_content_directive(trimmed) {
+            directive_indent = Some(indent);
+            continue;
+        }
+        rows.push(row);
     }
     rows
+}
+
+/// Prefix of `rows` within [`RST_MAX_SECTION_BYTES`].
+fn cap_rst_rows(src_lines: &[&str], rows: &[usize]) -> Vec<usize> {
+    let mut bytes = 0usize;
+    rows.iter()
+        .copied()
+        .take_while(|&row| {
+            let fits = bytes < RST_MAX_SECTION_BYTES;
+            bytes += src_lines[row - 1].len();
+            fits
+        })
+        .collect()
 }
 
 /// True iff `trimmed` (a line already known to start with `..`) opens a
@@ -3892,7 +3765,7 @@ Details prose paragraph one.
         let headings = scan_rst_headings(&src_lines);
         // title + Overview + Details
         assert_eq!(headings.len(), 3);
-        let sections = rst_body_sections(src);
+        let sections = rst_readme(src).1;
         assert_eq!(sections.len(), 2, "Overview + Details");
         for section in &sections {
             let own_start = section.rows.first().copied();
