@@ -1,16 +1,12 @@
 //! `go.mod` / `go.work` batches: the module's identity directives, then
-//! the file itself (whole when small, otherwise without its indirect
-//! requires).
+//! the file's directives without comments or indirect requires.
 
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, GoModKey};
-use crate::content::BatchContent;
 use crate::value::mix_signals;
 
 use super::{WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
-
-const WHOLE_LINE_CAP: usize = 72;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
@@ -22,119 +18,76 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let path = dir.join(name);
-        let identity_emitted = if let Some(content) = build_identity_content(&path, ctx) {
+        let Some(source) = ctx.read_source(&path) else {
+            continue;
+        };
+        let (identity_rows, kept_rows) = scan(&source);
+        let identity = single_file_lines_content(&path, &source, identity_rows).map(|content| {
+            let key: BatchKey = GoModKey::Identity { file: path.clone() }.into();
             out.push(Batch {
-                key: GoModKey::Identity { file: path.clone() }.into(),
+                key: key.clone(),
                 predecessor: None,
                 content,
                 value: identity_value(&path, ctx),
             });
-            true
-        } else {
-            false
-        };
-        let Some(content) = build_file_content(&path, ctx) else {
-            continue;
-        };
-        // Only declare the identity batch as predecessor when it was
-        // actually emitted — otherwise the GoMod batch would orphan
-        // itself on a never-resolved predecessor key.
-        let predecessor =
-            identity_emitted.then(|| BatchKey::GoMod(GoModKey::Identity { file: path.clone() }));
-        out.push(Batch {
-            key: GoModKey::File { file: path.clone() }.into(),
-            predecessor,
-            content,
-            value: file_value(&path, ctx),
+            key
         });
+        if let Some(content) = single_file_lines_content(&path, &source, kept_rows) {
+            out.push(Batch {
+                key: GoModKey::File { file: path.clone() }.into(),
+                predecessor: identity,
+                content,
+                value: file_value(&path, ctx),
+            });
+        }
     }
     out
 }
 
-/// Identity slice of `go.mod` / `go.work` — `module`/`go`/`toolchain`
-/// directives only; block bodies are skipped.
-fn build_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
-    let source = ctx.read_source(file)?;
-    let mut lines = Vec::new();
-    let mut in_block = false;
-    for (i, raw) in source.lines().enumerate() {
-        let trimmed = raw.trim();
-        // Skip block bodies (`require ( … )`, etc.) so block entries
-        // can't shadow identity keywords; go.mod allows directives in
-        // any order, so module/go/toolchain are collected wherever
-        // they appear at top level.
-        if block_start(trimmed).is_some() {
-            in_block = true;
+/// `(identity rows, kept rows)`: the top-level `module` / `go` /
+/// `toolchain` directives, and every directive and block entry except
+/// comments and indirect requires (a block keeps its parentheses only
+/// when it keeps an entry).
+fn scan(source: &str) -> (Vec<usize>, Vec<usize>) {
+    let mut identity = Vec::new();
+    let mut kept = Vec::new();
+    let mut open_block: Option<(&str, usize)> = None;
+    let mut block_rows = Vec::new();
+    for (index, line) in source.lines().enumerate() {
+        let row = index + 1;
+        let trimmed = line.trim();
+        if let Some((keyword, open_row)) = open_block {
+            if trimmed == ")" {
+                if !block_rows.is_empty() {
+                    kept.push(open_row);
+                    kept.append(&mut block_rows);
+                    kept.push(row);
+                }
+                open_block = None;
+            } else if keep_block_entry(keyword, trimmed) {
+                block_rows.push(row);
+            }
             continue;
         }
-        if in_block {
-            if trimmed == ")" {
-                in_block = false;
-            }
+        if let Some(keyword) = block_start(trimmed) {
+            open_block = Some((keyword, row));
             continue;
         }
         let first = trimmed.split_whitespace().next().unwrap_or("");
         if matches!(first, "module" | "go" | "toolchain") {
-            lines.push(i + 1);
+            identity.push(row);
+        }
+        if keep_directive_line(first, trimmed) {
+            kept.push(row);
         }
     }
-    if lines.is_empty() {
-        return None;
+    if let Some((_, open_row)) = open_block
+        && !block_rows.is_empty()
+    {
+        kept.push(open_row);
+        kept.append(&mut block_rows);
     }
-    single_file_lines_content(file, &source, lines)
-}
-
-/// `GoMod` content — whole for compact module files; sampled for large
-/// generated dependency closures.
-fn build_file_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
-    let source = ctx.read_source(file)?;
-    let total_lines = source.lines().count();
-    if total_lines == 0 {
-        return None;
-    }
-    if total_lines <= WHOLE_LINE_CAP {
-        return single_file_lines_content(file, &source, (1..=total_lines).collect());
-    }
-
-    single_file_lines_content(file, &source, bounded_lines(&source))
-}
-
-fn bounded_lines(source: &str) -> Vec<usize> {
-    let src_lines: Vec<&str> = source.lines().collect();
-    let mut full = Vec::new();
-    let mut i = 0;
-    while i < src_lines.len() {
-        let line_no = i + 1;
-        let trimmed = src_lines[i].trim();
-        if let Some(block) = block_start(trimmed) {
-            let start_line = line_no;
-            let mut body = Vec::new();
-            i += 1;
-            while i < src_lines.len() && src_lines[i].trim() != ")" {
-                if keep_block_entry(block, src_lines[i].trim()) {
-                    body.push(i + 1);
-                }
-                i += 1;
-            }
-            let close_line = (i < src_lines.len() && src_lines[i].trim() == ")").then_some(i + 1);
-            if !body.is_empty() {
-                full.push(start_line);
-                full.extend(body);
-                if let Some(close_line) = close_line {
-                    full.push(close_line);
-                }
-            }
-            if close_line.is_some() {
-                i += 1;
-            }
-            continue;
-        }
-        if keep_directive_line(trimmed) {
-            full.push(line_no);
-        }
-        i += 1;
-    }
-    full
+    (identity, kept)
 }
 
 fn block_start(trimmed: &str) -> Option<&str> {
@@ -143,10 +96,7 @@ fn block_start(trimmed: &str) -> Option<&str> {
         .then_some(first)
 }
 
-fn keep_directive_line(trimmed: &str) -> bool {
-    let Some(first) = trimmed.split_whitespace().next() else {
-        return false;
-    };
+fn keep_directive_line(first: &str, trimmed: &str) -> bool {
     matches!(
         first,
         "module" | "go" | "toolchain" | "replace" | "exclude" | "retract" | "use"
@@ -161,9 +111,6 @@ fn keep_block_entry(block: &str, trimmed: &str) -> bool {
 }
 
 fn file_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Identity directives split into [`GoModKey::Identity`]; this
-    // batch reflects the residual require / replace / exclude /
-    // retract content.
     mix_signals(0.80, 0.60, 0.5, path_depth_factor(file, ctx))
 }
 
@@ -174,47 +121,9 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::content::Render;
-
-    fn gomod_lines(src: &str) -> Vec<usize> {
-        gomod_rendered_lines(src)
-            .into_iter()
-            .map(|(line, _)| line)
-            .collect()
-    }
-
-    fn gomod_rendered_lines(src: &str) -> Vec<(usize, Render)> {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("go.mod");
-        std::fs::write(&path, src).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_file_content(&path, &ctx).expect("emits content");
-        let BatchContent::Lines { spans } = content else {
-            panic!("expected Lines content");
-        };
-        spans
-            .iter()
-            .flat_map(|span| (span.start..=span.end).map(|line| (line, span.render.clone())))
-            .collect()
-    }
-
-    fn gomod_identity_lines(src: &str) -> Vec<usize> {
-        let dir = tempfile::tempdir().unwrap();
-        let path = dir.path().join("go.mod");
-        std::fs::write(&path, src).unwrap();
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let content = build_identity_content(&path, &ctx).expect("emits content");
-        let BatchContent::Lines { spans } = content else {
-            panic!("expected Lines content");
-        };
-        spans
-            .iter()
-            .flat_map(|span| span.start..=span.end)
-            .collect()
-    }
 
     #[test]
-    fn go_mod_keeps_indirect_requires_replace_and_retract() {
+    fn go_mod_keeps_direct_requires_replace_and_retract() {
         let src = "\
 module example.com/foo
 
@@ -229,14 +138,7 @@ replace github.com/x/y => github.com/forked/y v2.0.0
 
 retract v0.1.0
 ";
-        let lines = gomod_lines(src);
-        assert!(lines.contains(&1), "module clause kept");
-        assert!(lines.contains(&5), "require ( kept");
-        assert!(lines.contains(&6), "direct require kept");
-        assert!(lines.contains(&7), "indirect require kept");
-        assert!(lines.contains(&8), "require ) kept");
-        assert!(lines.contains(&10), "replace kept");
-        assert!(lines.contains(&12), "retract kept");
+        assert_eq!(scan(src).1, vec![1, 3, 5, 6, 8, 10, 12]);
     }
 
     #[test]
@@ -254,86 +156,26 @@ require (
 
 replace github.com/x/y => github.com/forked/y v2.0.0
 ";
-        let lines = gomod_identity_lines(src);
-        assert!(lines.contains(&1), "module clause kept");
-        assert!(lines.contains(&3), "go version kept");
-        assert!(lines.contains(&5), "toolchain kept");
-        assert!(!lines.contains(&7), "require ( excluded from identity");
-        assert!(!lines.contains(&8), "require body excluded from identity");
-        assert!(
-            !lines.contains(&11),
-            "replace excluded from identity (not an identity directive)"
-        );
+        assert_eq!(scan(src).0, vec![1, 3, 5]);
     }
 
     /// A trailing comment ending in `(` does not open a block.
     #[test]
     fn go_mod_identity_ignores_a_paren_in_a_trailing_comment() {
         let src = "module example.com/foo\n\nrequire example.com/x v1.0.0 // pinned (\n\ngo 1.22\n";
-        assert_eq!(gomod_identity_lines(src), vec![1, 5]);
+        assert_eq!(scan(src).0, vec![1, 5]);
     }
 
+    /// A block whose every entry is an indirect require drops its
+    /// parentheses too.
     #[test]
-    fn go_mod_identity_handles_minimal_module() {
-        let src = "module example.com/foo\n\ngo 1.22\n";
-        let lines = gomod_identity_lines(src);
-        assert!(lines.contains(&1));
-        assert!(lines.contains(&3));
-    }
-
-    #[test]
-    fn go_mod_emits_whole_file_when_no_indirect_lines_present() {
-        let src = "module example.com/foo\n\ngo 1.22\n";
-        let lines = gomod_lines(src);
-        assert!(!lines.is_empty());
-    }
-
-    #[test]
-    fn go_mod_over_cap_elides_indirect_require_tail() {
-        let mut src = String::from(
-            "\
-module example.com/foo
-
-go 1.22
-
-require (
-\tgithub.com/direct/a v1.0.0
-",
-        );
-        let first_indirect_line = src.lines().count() + 1;
+    fn go_mod_drops_a_block_of_only_indirect_requires() {
+        let mut src = String::from("module example.com/foo\n\nrequire (\n");
         for i in 0..65 {
             src.push_str(&format!("\tgithub.com/indirect/{i} v0.0.1 // indirect\n"));
         }
-        let close_line = src.lines().count() + 1;
-        src.push_str(")\n\n");
-        let replace_line = src.lines().count() + 1;
-        src.push_str("replace github.com/direct/a => ../a\n\n");
-        let exclude_line = src.lines().count() + 1;
-        src.push_str("exclude github.com/bad/module v1.0.0\n");
-
-        let rendered = gomod_rendered_lines(&src);
-        assert!(rendered.contains(&(1, Render::Full)), "module kept");
-        assert!(rendered.contains(&(3, Render::Full)), "go directive kept");
-        assert!(
-            rendered.contains(&(5, Render::Full)),
-            "require block opener kept"
-        );
-        assert!(rendered.contains(&(6, Render::Full)), "direct require kept");
-        assert!(
-            rendered.contains(&(close_line, Render::Full)),
-            "require block closer kept"
-        );
-        assert!(
-            rendered.contains(&(replace_line, Render::Full)),
-            "replace directive kept"
-        );
-        assert!(
-            rendered.contains(&(exclude_line, Render::Full)),
-            "exclude directive kept"
-        );
-        assert!(
-            !rendered.contains(&(first_indirect_line, Render::Full)),
-            "indirect require must not render in full"
-        );
+        src.push_str(")\n\nexclude github.com/bad/module v1.0.0\n");
+        let exclude_row = src.lines().count();
+        assert_eq!(scan(&src).1, vec![1, exclude_row]);
     }
 }

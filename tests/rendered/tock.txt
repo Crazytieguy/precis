@@ -51,7 +51,20 @@ README.md
   604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
   605→
   606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
+  608→## File Format
+  609→
+  610→Activities are stored in plaintext format (compatible with Bartib):
+  611→
+  612→```
+  613→  2025-12-10 09:00 - 2025-12-10 11:30 | Project Name | Task description
+  614→  2025-12-10 13:00 | Another Project | Ongoing task
+  615→```
+  616→
+  617→You can edit this file manually with any text editor.
   …
+  709→## Inspiration
+  710→
+  711→Tock is inspired by and compatible with [Bartib](https://github.com/nikolassv/bartib) - an excellent time tracking tool written in Rust by Nikolas Schmidt-Voigt. It's saved me countless hours and helped me stay organized, so I wanted to create a similar tool in Go with a clean architecture approach and an interactive terminal UI.
   713→## License
   714→
   715→GPL-3.0-or-later
@@ -63,6 +76,10 @@ assets/
 cmd/
   tock/
     main.go
+      …
+      7→func main() {
+      8→	cli.Execute()
+      …
 demo/
   demo_script.sh
 docs/
@@ -115,43 +132,70 @@ go.mod
   15→	github.com/stretchr/testify v1.11.1
   16→	gopkg.in/yaml.v3 v3.0.1
   17→)
-  18→
-  19→require (
-  20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-  21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
-  22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
-  23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
-  24→	github.com/charmbracelet/x/term v0.2.2 // indirect
-  25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
-  26→	github.com/clipperhouse/stringish v0.1.1 // indirect
-  27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
-  28→	github.com/davecgh/go-spew v1.1.1 // indirect
-  29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-  30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
-  31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
-  32→	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-  33→	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
-  34→	github.com/mattn/go-isatty v0.0.20 // indirect
-  35→	github.com/mattn/go-localereader v0.0.1 // indirect
-  36→	github.com/mattn/go-runewidth v0.0.19 // indirect
-  37→	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
-  38→	github.com/muesli/cancelreader v0.2.2 // indirect
-  39→	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
-  40→	github.com/pmezard/go-difflib v1.0.0 // indirect
-  41→	github.com/rivo/uniseg v0.4.7 // indirect
-  42→	github.com/sagikazarmark/locafero v0.11.0 // indirect
-  43→	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
-  44→	github.com/spf13/afero v1.15.0 // indirect
-  45→	github.com/spf13/cast v1.10.0 // indirect
-  46→	github.com/stretchr/objx v0.5.2 // indirect
-  47→	github.com/subosito/gotenv v1.6.0 // indirect
-  48→	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
-  49→	go.yaml.in/yaml/v3 v3.0.4 // indirect
-  50→	golang.org/x/sys v0.39.0 // indirect
-  51→	golang.org/x/text v0.32.0 // indirect
-  52→)
+  …
 go.sum
 install.sh
+  1→#!/bin/sh
+  2→set -e
+  3→
+  4→# Tock Installer Script
+  5→#
+  6→# Usage:
+  7→#   curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
+  8→#
+  9→# or with sudo if required:
+  10→#   curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sudo sh
+  11→
+  12→OWNER="kriuchkov"
+  13→REPO="tock"
+  14→BINARY="tock"
+  15→FORMAT="tar.gz"
+  16→BINDIR="/usr/local/bin"
+  17→
+  18→# Detect OS
+  19→OS=$(uname -s)
+  20→case "$OS" in
+  21→    Linux)
+  22→        OS_TYPE="Linux"
+  23→        ;;
+  24→    Darwin)
+  25→        OS_TYPE="Darwin"
+  26→        ;;
+  27→    *)
+  28→        echo "Unsupported OS: $OS"
+  29→        exit 1
+  30→        ;;
+  31→esac
+  32→
+  33→# Detect Architecture
+  34→ARCH=$(uname -m)
+  35→case "$ARCH" in
+  36→    x86_64)
+  37→        ARCH_TYPE="x86_64"
+  38→        ;;
+  39→    aarch64|arm64)
+  40→        ARCH_TYPE="arm64"
+  41→        ;;
+  42→    *)
+  43→        echo "Unsupported architecture: $ARCH"
+  44→        exit 1
+  45→        ;;
+  46→esac
+  47→
+  48→# Get latest release tag if not specified
+  49→if [ -z "$VERSION" ]; then
+  50→    LATEST_RELEASE_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
+  51→    VERSION=$(curl -s $LATEST_RELEASE_URL | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  52→fi
+  53→
+  54→if [ -z "$VERSION" ]; then
+  55→    echo "Could not fetch latest version."
+  56→    exit 1
+  57→fi
+  58→
+  59→# Ensure version doesn't have 'v' prefix for asset name construction if needed, 
+  60→# but usually tag has 'v'. Goreleaser config uses `{{ .ProjectName }}_{{ title .Os }}_{{ ... }}`.
+  …
 internal/
   adapters/
     cli/
@@ -188,6 +232,35 @@ internal/
         repository_test.go
   config/
     config.go
+      …
+      12→type Config struct {
+      …
+      25→type CalendarConfig struct {
+      …
+      33→type ExportConfig struct {
+      34→	ICal ICalConfig `mapstructure:"ical"`
+      35→}
+      37→type ICalConfig struct {
+      38→	FileName string `mapstructure:"file_name"`
+      39→}
+      41→type FileConfig struct {
+      42→	Path string `mapstructure:"path"`
+      43→}
+      45→type TimewarriorConfig struct {
+      46→	DataPath string `mapstructure:"data_path"`
+      47→}
+      49→type ThemeConfig struct {
+      …
+      60→type Option func(*viper.Viper)
+      61→
+      62→func WithConfigPath(path string) Option {
+      …
+      68→func WithConfigName(name string) Option {
+      …
+      74→func WithConfigFile(file string) Option {
+      …
+      80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
+      …
     config_test.go
   core/
     dto/

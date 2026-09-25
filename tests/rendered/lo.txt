@@ -221,9 +221,7 @@ exp/
       3→go 1.26.0
       4→
       5→require github.com/samber/lo v0.0.0
-      6→
-      7→require golang.org/x/text v0.22.0 // indirect
-      8→
+      …
       9→replace github.com/samber/lo => ../../
     go.sum
     intersect_avx512.go
@@ -248,26 +246,14 @@ go.mod
   1→module github.com/samber/lo
   2→
   3→go 1.18
-  4→
-  5→//
-  6→// Dev dependencies are excluded from releases. Please check CI.
-  7→//
-  8→
+  …
   9→require (
   10→	github.com/stretchr/testify v1.11.1
   11→	github.com/thoas/go-funk v0.9.3
   12→	go.uber.org/goleak v1.2.1
   13→	golang.org/x/text v0.22.0
   14→)
-  15→
-  16→require (
-  17→	github.com/davecgh/go-spew v1.1.1 // indirect
-  18→	github.com/kr/text v0.2.0 // indirect
-  19→	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
-  20→	github.com/pmezard/go-difflib v1.0.0 // indirect
-  21→	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
-  22→	gopkg.in/yaml.v3 v3.0.1 // indirect
-  23→)
+  …
 go.sum
 internal/
   constraints/
@@ -356,5 +342,33 @@ time_test.go
 tuples.go
 tuples_test.go
 type_manipulation.go
+  …
+  7→func IsNil(x any) bool {
+  …
+  22→func IsNotNil(x any) bool {
+  23→	return !IsNil(x)
+  …
+  28→func ToPtr[T any](x T) *T {
+  29→	return &x
+  …
+  34→func Nil[T any]() *T {
+  35→	return nil
+  …
+  41→func EmptyableToPtr[T any](x T) *T {
+  …
+  53→func FromPtr[T any](x *T) T {
+  …
+  63→func FromPtrOr[T any](x *T, fallback T) T {
+  …
+  73→func ToSlicePtr[T any](collection []T) []*T {
+  …
+  85→func FromSlicePtr[T any](collection []*T) []T {
+  …
+  99→func FromSlicePtrOr[T any](collection []*T, fallback T) []T {
+  …
+  115→func ToAnySlice[T any](collection []T) []any {
+  …
+  126→func FromAnySlice[T any](in []any) ([]T, bool) {
+  …
 type_manipulation_test.go
 types.go

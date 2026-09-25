@@ -109,11 +109,7 @@ go.mod
   7→	howett.net/plist v1.0.0
   8→	software.sslmate.com/src/go-pkcs12 v0.2.0
   9→)
-  10→
-  11→require (
-  12→	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
-  13→	golang.org/x/text v0.3.7 // indirect
-  14→)
+  …
 go.sum
 main.go
   …
@@ -271,4 +267,24 @@ truststore_darwin.go
 truststore_java.go
 truststore_linux.go
 truststore_nss.go
+  …
+  18→	hasNSS       bool
+  19→	hasCertutil  bool
+  20→	certutilPath string
+  21→	nssDBs       = []string{
+  …
+  26→	firefoxPaths = []string{
+  …
+  39→func init() {
+  …
+  73→func (m *mkcert) checkNSS() bool {
+  …
+  89→func (m *mkcert) installNSS() bool {
+  …
+  106→func (m *mkcert) uninstallNSS() {
+  …
+  120→func execCertutil(cmd *exec.Cmd) ([]byte, error) {
+  …
+  131→func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {
+  …
 truststore_windows.go

@@ -200,19 +200,6 @@ tea.go
   349→func NewProgressBar(state ProgressBarState, value int) *ProgressBar {
   …
   357→type Cursor struct {
-  358→	// Position is a [Position] that determines the cursor's position on the
-  359→	// screen relative to the top left corner of the frame.
-  360→	Position
-  361→
-  362→	// Color is a [color.Color] that determines the cursor's color.
-  363→	Color color.Color
-  364→
-  365→	// Shape is a [CursorShape] that determines the cursor's shape.
-  366→	Shape CursorShape
-  367→
-  368→	// Blink is a boolean that determines whether the cursor should blink.
-  369→	Blink bool
-  370→}
   …
   374→func NewCursor(x, y int) *Cursor {
   …
@@ -308,6 +295,9 @@ tutorials/
     3→go 1.24.2
     4→
     5→toolchain go1.24.10
+    6→
+    7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
     …
+    29→replace charm.land/bubbletea/v2 => ../
   go.sum
 xterm.go
