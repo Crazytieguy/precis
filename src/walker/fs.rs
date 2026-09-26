@@ -61,7 +61,8 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec
 /// Listing of `dir`, run on through every directory that holds only one
 /// subdirectory (`src/main/java/org/acme/`): such a listing names one
 /// path segment, so it is bought and keyed with the first listing below
-/// it that names more, at the lower of the two listings' values.
+/// it that names more, at the lower of the two listings' values. The run
+/// stops at a third-party directory, whose listing names its projects.
 fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
     let mut dir = dir;
     let mut children = list_dir(&dir, ctx.dir_filter());
@@ -78,6 +79,9 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
         let Some((name, EntryKind::Directory)) = children.iter().next() else {
             break;
         };
+        if crate::value::is_third_party_dir(&dir, ctx.root()) {
+            break;
+        }
         let only_child = dir.join(name);
         let grandchildren = list_dir(&only_child, ctx.dir_filter());
         if children.len() > 1 || grandchildren.is_empty() || !should_recurse_dir(&only_child, ctx) {
@@ -684,6 +688,14 @@ mod tests {
         assert!(!expands("vendor"));
         assert!(!expands("lib/third_party"));
         assert!(expands("source/vendor"));
+        let vendor_listing = dir_listing_batch(root.join("vendor"), &ctx).unwrap();
+        assert_eq!(
+            vendor_listing.key,
+            FsKey::DirListing {
+                dir: root.join("vendor")
+            }
+            .into()
+        );
     }
 
     #[test]
