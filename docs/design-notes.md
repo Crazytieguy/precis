@@ -194,10 +194,16 @@ parent's listing but is never expanded: a translated mirror
 (`pages.ar/` beside `pages/`), an unpacked upstream release
 (`prism-master/` with its own license), and each project under a
 third-party directory. Wide siblings that repeat an earlier sibling's
-entry names are deferred rather than cut, and declared workspace
-members are exempt, because a workspace's crates share a layout but not
-their code. These rules came from the robustness corpus; the grid was
-neutral or better for each once workspace members were exempt.
+entry names are deferred rather than cut. Declared workspace members
+are exempt from the shape deferral and the unpacked-release cut, and
+package modules (a directory with its own entry file) from the shape
+deferral, because a workspace's crates or a Django project's apps share
+a layout but not their code, and a listing gates discovery of the
+source under it. A
+single-child listing run stops at a third-party directory so that its
+key, not a vendored child's, is what expansion checks. These rules came
+from the robustness corpus; the grid was neutral or better for each
+once workspace members were exempt.
 
 ## Threads and resource bounds
 
