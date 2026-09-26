@@ -229,6 +229,24 @@ fn robustness_deeply_nested_sources_render() {
     }
 }
 
+/// A type stub declares its functions as `@overload` stubs with no
+/// implementation after them, and a generated SDK's stub holds thousands;
+/// deciding which stubs an implementation hides must stay linear in them.
+#[test]
+fn robustness_overload_only_stubs_render() {
+    let temp = tempfile::tempdir().unwrap();
+    let overloads: String = (0..20_000)
+        .map(|index| format!("@overload\ndef f(x: T{index}) -> int: ...\n"))
+        .collect();
+    write(
+        &temp.path().join("api.pyi"),
+        format!("from typing import overload\n\n{overloads}"),
+    );
+
+    let out = render_within(temp.path(), 3000, Duration::from_secs(20)).unwrap();
+    assert!(out.contains("→def f(x: T0) -> int: ..."), "{out}");
+}
+
 #[test]
 fn robustness_binary_files_render_only_their_rows() {
     let temp = tempfile::tempdir().unwrap();

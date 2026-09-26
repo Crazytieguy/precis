@@ -30,7 +30,7 @@
 //!   `__init__.py`'s `__all__` is left out when those imports already
 //!   re-export every name it lists, so the roster names each once.
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::path::Path;
 use std::sync::LazyLock;
 
@@ -78,6 +78,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut first_statement = true;
     let mut reexported_names: HashSet<&str> = HashSet::new();
     let mut all_statements = Vec::new();
+    let implemented_overloads = implemented_overloads(file, root.named_children(&mut root.walk()));
     for node in root.named_children(&mut root.walk()) {
         if node.kind() == "comment" {
             continue;
@@ -97,13 +98,16 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             | "class_definition"
             | "decorated_definition"
             | "if_statement"
-            | "try_statement" => model
-                .decls
-                .extend(definitions(file, node, 0).0.into_iter().map(|mut decl| {
-                    decl.name_rows
-                        .retain(|&row| !file.line(row).trim_start().starts_with('@'));
-                    decl
-                })),
+            | "try_statement" => model.decls.extend(
+                definitions(file, node, 0, &implemented_overloads)
+                    .0
+                    .into_iter()
+                    .map(|mut decl| {
+                        decl.name_rows
+                            .retain(|&row| !file.line(row).trim_start().starts_with('@'));
+                        decl
+                    }),
+            ),
             "import_from_statement" if is_package_init && imports_own_module(file, node, ctx) => {
                 let names = imported_names(file, node);
                 let public = names.is_empty() || names.iter().any(|name| !is_private(name));
@@ -305,8 +309,19 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
 /// Also the statements of those blocks that define nothing (fields,
 /// assignments), as [`Item`]s holding rows past `after_row`; a block
 /// defining nothing lists its opening row with its first statement.
-fn definitions(file: &SourceFile, statement: Node, after_row: usize) -> (Vec<DeclInfo>, Vec<Item>) {
+/// An `@overload` stub in `hidden` (the [`implemented_overloads`] among
+/// `statement` and its siblings) defines nothing: the implementation's
+/// signature stands for the function.
+fn definitions(
+    file: &SourceFile,
+    statement: Node,
+    after_row: usize,
+    hidden: &HashSet<usize>,
+) -> (Vec<DeclInfo>, Vec<Item>) {
     if !matches!(statement.kind(), "if_statement" | "try_statement") {
+        if hidden.contains(&statement.id()) {
+            return (Vec::new(), Vec::new());
+        }
         return (
             definition(file, statement).into_iter().collect(),
             Vec::new(),
@@ -317,8 +332,9 @@ fn definitions(file: &SourceFile, statement: Node, after_row: usize) -> (Vec<Dec
     for block in clause_blocks(statement) {
         let first = decls.len();
         let mut fields: Vec<Node> = Vec::new();
+        let hidden = implemented_overloads(file, block.named_children(&mut block.walk()));
         for node in block.named_children(&mut block.walk()) {
-            let (defined, nested_items) = definitions(file, node, after_row);
+            let (defined, nested_items) = definitions(file, node, after_row, &hidden);
             if defined.is_empty() {
                 if !is_definition_kind(node.kind()) {
                     fields.push(node);
@@ -371,8 +387,7 @@ fn clause_blocks(statement: Node) -> Vec<Node> {
     blocks
 }
 
-/// A `def` or `class`, possibly wrapped in `decorated_definition`;
-/// `None` for an `@overload` stub whose implementation follows it.
+/// A `def` or `class`, possibly wrapped in `decorated_definition`.
 fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
     let inner = defined(unit)?;
     let shape = match inner.kind() {
@@ -380,9 +395,6 @@ fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
         "class_definition" => Shape::Whole,
         _ => return None,
     };
-    if is_overload(file, unit) && has_implementation_after(file, unit) {
-        return None;
-    }
     let name_row = inner.start_position().row + 1;
     let head_end = colon_row(inner).max(name_row);
     let head: Vec<usize> = (unit.start_position().row + 1..=head_end).collect();
@@ -435,18 +447,28 @@ fn is_overload(file: &SourceFile, unit: Node) -> bool {
         })
 }
 
-/// Whether a later sibling defines the same name without `@overload`.
-fn has_implementation_after(file: &SourceFile, unit: Node) -> bool {
-    let name = |node: Node| {
-        defined(node)
+/// The ids of the `@overload` stubs among `siblings` that a later
+/// sibling of the same name without `@overload` implements.
+fn implemented_overloads<'tree>(
+    file: &SourceFile,
+    siblings: impl Iterator<Item = Node<'tree>>,
+) -> HashSet<usize> {
+    let mut pending: HashMap<&str, Vec<usize>> = HashMap::new();
+    let mut implemented = HashSet::new();
+    for sibling in siblings {
+        let Some(name) = defined(sibling)
             .and_then(|inner| inner.child_by_field_name("name"))
             .map(|name| file.text(name))
-    };
-    let Some(overloaded) = name(unit) else {
-        return false;
-    };
-    std::iter::successors(unit.next_named_sibling(), |node| node.next_named_sibling())
-        .any(|sibling| name(sibling) == Some(overloaded) && !is_overload(file, sibling))
+        else {
+            continue;
+        };
+        if is_overload(file, sibling) {
+            pending.entry(name).or_default().push(sibling.id());
+        } else if let Some(overloads) = pending.remove(name) {
+            implemented.extend(overloads);
+        }
+    }
+    implemented
 }
 
 /// Rows of the decorators above a definition that each fit on one row.
@@ -514,8 +536,9 @@ fn class_body(
     let mut body = Vec::new();
     let mut members = Vec::new();
     let mut run: Vec<Node> = Vec::new();
+    let hidden = implemented_overloads(file, statements.iter().copied());
     for node in statements {
-        let (defined, clause_items) = definitions(file, *node, after_row);
+        let (defined, clause_items) = definitions(file, *node, after_row, &hidden);
         if defined.is_empty() {
             if !is_definition_kind(node.kind()) {
                 run.push(*node);
