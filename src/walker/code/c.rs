@@ -12,8 +12,8 @@
 //! expression (an `#if` splitting a function body).
 //!
 //! - Function definitions are `Callable`, and so is a function-like
-//!   macro: its `#define NAME(args)` row is the head, each continuation
-//!   row a body item. Prototypes, typedefs, structs / unions / enums,
+//!   macro: its `#define NAME(args)` rows are the head, each later
+//!   continuation row a body item. Prototypes, typedefs, structs / unions / enums,
 //!   global variables, object-like macros and declaring macro
 //!   invocations are `Whole`, with one body [`Item`] per field or
 //!   enumerator.
@@ -189,11 +189,18 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
     let decl = match shape {
         Shape::Callable if node.kind() == "preproc_function_def" => {
             let first = *rows.start();
+            let signature_end = node
+                .child_by_field_name("parameters")
+                .map_or(first, |parameters| *file.node_rows(parameters).end());
             DeclInfo {
-                body: (first + 1..=*rows.end())
+                body: (signature_end + 1..=*rows.end())
                     .map(|row| Item::new([row]))
                     .collect(),
-                ..DeclInfo::new(vec![first], vec![first], Shape::Callable)
+                ..DeclInfo::new(
+                    vec![first],
+                    (first..=signature_end).collect(),
+                    Shape::Callable,
+                )
             }
         }
         Shape::Callable => {
@@ -1132,18 +1139,24 @@ int ch_close(void);
 #define HAVE_FEATURE
 #define MAX(a, b) \\
     ((a) > (b) ? (a) : (b))
+#define REGISTER(name, \\
+                 handler) \\
+    register_handler(name, \\
+                     handler)
 int util(void);
 #endif
 ";
         let model = model("util.h", source);
         assert_eq!(
             name_rows_of(&model),
-            vec![vec![4], vec![5], vec![6], vec![8]]
+            vec![vec![4], vec![5], vec![6], vec![8], vec![12]]
         );
         assert_eq!(model.decls[1].shape, Shape::Whole);
         assert_eq!(model.decls[2].shape, Shape::Callable);
         assert_eq!(model.decls[2].head, vec![6]);
         assert_eq!(rows(&model.decls[2].body), vec![vec![7]]);
+        assert_eq!(model.decls[3].head, vec![8, 9]);
+        assert_eq!(rows(&model.decls[3].body), vec![vec![10], vec![11]]);
     }
 
     #[test]
