@@ -16,7 +16,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
   - A source line longer than 500 characters is cut short with `…`.
   - A row like `src/main/java/` is a chain of directories that each hold only the next.
   - `(empty)` marks a zero-byte file, or a directory holding nothing precis lists. An entry with nothing under it wasn't expanded, or couldn't be read.
-  - `(submodule)` marks an empty directory the root `.gitmodules` names: a submodule that isn't checked out.
+  - `(submodule)` marks an empty directory the root `.gitmodules` names: usually a submodule that isn't checked out.
   - Symlinks that resolve outside the tree or onto an ignored entry, broken symlinks and special files such as FIFOs are omitted. A link to a file in its own directory (`CLAUDE.md -> AGENTS.md`) is listed, and its text shows only under the target.
 - Dotfiles such as `.github/` and `.gitignore` are listed. v0.1 hid every hidden entry.
 - `.gitignore` rules apply when the path is the root of a git repository. They are no longer inherited from an enclosing repository.
