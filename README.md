@@ -187,7 +187,7 @@ The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain te
 
 Given a single file, precis shows its structure first, then spends whatever budget is left on the file's text from the top, so a file that fits prints whole. A binary file prints only its name.
 
-When the path is the root of a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. In any tree, `target`, `node_modules`, `dist`, `build`, `.next` and `__pycache__` directories are listed but never expanded. `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are treated like any other file.
+When the path is the root of a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. In any tree, `target`, `node_modules`, `dist`, `build`, `.next` and `__pycache__` directories are listed but never expanded (except a `build` that holds Rust source files). `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are treated like any other file.
 
 ## Supported languages
 

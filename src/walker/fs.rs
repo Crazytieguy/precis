@@ -34,7 +34,7 @@ pub fn expand_listed<'k>(key: &'k FsKey, ctx: &WalkCtx) -> (Vec<Batch>, Option<&
         let child = dir.join(name);
         if matches!(kind, EntryKind::Directory)
             && head.as_ref().is_none_or(|head| head.contains(name) != tail)
-            && should_recurse_dir(&child, ctx.root())
+            && should_recurse_dir(&child)
         {
             out.extend(dir_listing_batches(child, ctx));
         }
@@ -81,10 +81,7 @@ fn dir_listing_batches(dir: PathBuf, ctx: &WalkCtx) -> Vec<Batch> {
         };
         let only_child = dir.join(name);
         let grandchildren = list_dir(&only_child, ctx.dir_filter());
-        if children.len() > 1
-            || grandchildren.is_empty()
-            || !should_recurse_dir(&only_child, ctx.root())
-        {
+        if children.len() > 1 || grandchildren.is_empty() || !should_recurse_dir(&only_child) {
             break;
         }
         dir = only_child;
@@ -438,10 +435,10 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
     crate::value::depth_factor(depth) * non_essential.max(0.5)
 }
 
-/// Path-aware exception to the name-only heavy-directory policy. A checked-in
-/// Rust module may legitimately be named `build/`; generated build output does
-/// not gain traversal merely by containing arbitrary artifacts.
-fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
+/// Heavy-directory names block traversal, except a `build/` that holds
+/// Rust source: a checked-in module may be named `build`, while Cargo's
+/// own output lives under `target/`, which the walk never enters.
+fn should_recurse_dir(dir: &Path) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
     };
@@ -449,17 +446,7 @@ fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
     if name != "build" {
         return !crate::fs_util::should_skip_dir(&name);
     }
-    is_owned_rust_build_dir(dir, traversal_root)
-}
-
-/// A `build/` directory is plausibly project-owned Rust source when it has an
-/// immediate Rust file and either lives below a conventional source tree or is
-/// explicitly paired with the package's `build.rs` script.
-fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
-    // Existence check only — stop at the first Rust file instead of
-    // collecting and sorting the whole listing (this runs for every
-    // `build/` dir the traversal touches).
-    let has_rust_file = std::fs::read_dir(dir).is_ok_and(|entries| {
+    std::fs::read_dir(dir).is_ok_and(|entries| {
         entries.flatten().any(|entry| {
             let path = entry.path();
             path.extension()
@@ -467,20 +454,7 @@ fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
                 .is_some_and(|ext| ext.eq_ignore_ascii_case("rs"))
                 && path.is_file()
         })
-    });
-    if !has_rust_file {
-        return false;
-    }
-    let Some(parent) = dir.parent() else {
-        return false;
-    };
-    if parent.join("build.rs").is_file() {
-        return true;
-    }
-    dir.ancestors()
-        .skip(1)
-        .take_while(|ancestor| ancestor.starts_with(traversal_root))
-        .any(is_source_dir)
+    })
 }
 
 #[cfg(test)]
@@ -556,7 +530,7 @@ mod tests {
     }
 
     #[test]
-    fn fs_owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
+    fn fs_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         let source_build = root.join("src/build");
@@ -585,10 +559,6 @@ mod tests {
             })
         };
         assert!(lists(&root.join("src"), &source_build));
-        assert!(!lists(root, &root_build));
-        assert!(!lists(root, &root.join("target")));
-
-        std::fs::write(root.join("build.rs"), "fn main() {}\n").unwrap();
         assert!(lists(root, &root_build));
         assert!(!lists(root, &root.join("target")));
     }
