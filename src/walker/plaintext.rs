@@ -410,7 +410,6 @@ const SOURCE_TEXT_IMPORT_PREFIXES: &[&str] = &[
     "import",
     "#import",
     "#include",
-    "#pragma",
     "using ",
     "require",
     "from ",
@@ -453,12 +452,13 @@ const SOURCE_TEXT_BOILERPLATE_MARKERS: &[&str] = &[
     "@ts-nocheck",
     "noqa",
     "type: ignore",
+    "// mark:",
 ];
 
 /// Classify one trimmed surface line, `in_block_comment` when it sits
 /// inside a comment opened on an earlier line. `None` drops it.
 fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<SurfaceLine> {
-    if is_block_closer(trimmed) || trimmed.starts_with("#!") {
+    if is_block_closer(trimmed) || trimmed.starts_with("#!") || is_compiler_directive(trimmed) {
         return None;
     }
     let lower = trimmed.to_ascii_lowercase();
@@ -480,6 +480,32 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
         return None;
     }
     Some(SurfaceLine::Comment)
+}
+
+/// A conditional-compilation or compiler-pragma line (`#if`, `#else`,
+/// `#pragma warning disable`): it says how the file builds, not what it
+/// declares, and shown without its `#endif` it reads as an open block.
+fn is_compiler_directive(trimmed: &str) -> bool {
+    let Some(rest) = trimmed.strip_prefix('#') else {
+        return false;
+    };
+    let word_end = rest
+        .find(|c: char| !c.is_ascii_alphabetic())
+        .unwrap_or(rest.len());
+    matches!(
+        &rest[..word_end],
+        "if" | "ifdef"
+            | "ifndef"
+            | "else"
+            | "elif"
+            | "elseif"
+            | "endif"
+            | "pragma"
+            | "error"
+            | "warning"
+            | "nullable"
+            | "line"
+    )
 }
 
 /// A line that only closes a block, or only opens one on the line after
@@ -1449,6 +1475,22 @@ mod tests {
 
         assert!(!is_comment_line("(*fn)(argument);"));
         assert!(block_comment_interiors(&["(* a", "b *)", "c"]) == [false, true, false]);
+    }
+
+    /// Conditional compilation, pragmas and editor section marks say how a
+    /// file builds or folds, not what it declares.
+    #[test]
+    fn plaintext_source_text_surface_skips_compiler_directives_and_section_marks() {
+        let swift = "#if canImport(Darwin)\nimport Darwin\n#elseif canImport(Glibc)\nimport Glibc\n#endif\n\n\
+                     // MARK: - Instant\n\n#pragma warning disable CA1815\npublic struct Instant {\n}\n";
+        let lines: Vec<&str> = swift.lines().collect();
+        let text: Vec<&str> = surface_of(swift).iter().map(|n| lines[n - 1]).collect();
+        assert_eq!(
+            text,
+            vec!["import Darwin", "import Glibc", "public struct Instant {"]
+        );
+        assert!(!is_compiler_directive("#include <stdio.h>"));
+        assert!(!is_compiler_directive("#define MAX 3"));
     }
 
     #[test]
