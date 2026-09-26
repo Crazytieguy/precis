@@ -650,9 +650,10 @@ fn boilerplate_banner_end(lines: &[&str], in_block_comment: &[bool]) -> usize {
 /// Openers of a documentation comment, as opposed to a plain one.
 const DOC_COMMENT_OPENERS: &[&str] = &["/**", "///", "//!", "/*!", "-- |", "{-|", "(**"];
 
-/// Block comment delimiters: the C family's, Haskell's, and the ML
-/// family's and Pascal's.
-const BLOCK_COMMENTS: &[(&str, &str)] = &[("/*", "*/"), ("{-", "-}"), ("(*", "*)")];
+/// Block comment delimiters: the C family's, Haskell's, the ML family's
+/// and Pascal's, and XML's.
+const BLOCK_COMMENTS: &[(&str, &str)] =
+    &[("/*", "*/"), ("{-", "-}"), ("(*", "*)"), ("<!--", "-->")];
 
 /// Per line, whether it sits inside a block comment opened on an earlier
 /// line — interior lines carry no comment marker of their own. Only a
@@ -1564,6 +1565,25 @@ mod tests {
         );
         assert!(!is_compiler_directive("#include <stdio.h>"));
         assert!(!is_compiler_directive("#define MAX 3"));
+    }
+
+    /// The interior of a multi-line `<!-- … -->` is comment, not a roster
+    /// of declarations ahead of the elements after it.
+    #[test]
+    fn plaintext_source_text_xml_comment_interior_is_comment() {
+        let xml = "<?xml version=\"1.0\"?>\n<!--\n  ~ one\n  ~ two\n  ~ three\n  ~ four\n-->\n\
+                   <project>\n  <groupId>org.example</groupId>\n  <artifactId>app</artifactId>\n\
+                   </project>\n";
+        let lines: Vec<&str> = xml.lines().collect();
+        let text: Vec<&str> = declaration_surface(xml, Class::Manifest, SOURCE_TEXT_DECL_LINES)
+            .iter()
+            .map(|n| lines[n - 1])
+            .collect();
+        assert!(text.contains(&"  <artifactId>app</artifactId>"), "{text:?}");
+        assert!(
+            text.iter().filter(|line| line.contains('~')).count() <= SOURCE_TEXT_COMMENT_LINES,
+            "{text:?}"
+        );
     }
 
     #[test]
