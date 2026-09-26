@@ -17,7 +17,7 @@ mod rust;
 mod typescript;
 
 use std::cmp::Reverse;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::ops::RangeInclusive;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -316,7 +316,6 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             mentions: language
                 .sibling_mentions
                 .map_or_else(HashSet::new, |mentions| mentions(&file)),
-            degree: 0,
         });
     });
     chain_rosters(&mut emitted);
@@ -336,8 +335,6 @@ struct EmittedFile {
     names: Vec<String>,
     /// See [`Language::sibling_mentions`].
     mentions: HashSet<String>,
-    /// Chained siblings it depends on or that depend on it.
-    degree: usize,
 }
 
 /// Gates each chained file's `Names` head chunk on the previous chained
@@ -348,23 +345,40 @@ struct EmittedFile {
 /// others are written against) or it depends on many (the one composing
 /// them); ties, and languages that don't say, fall back to size.
 fn chain_rosters(files: &mut [EmittedFile]) {
-    let mut chain: Vec<&mut EmittedFile> = files.iter_mut().filter(|file| file.chained).collect();
-    for dependent in 0..chain.len() {
-        for dependency in 0..chain.len() {
-            let depends = dependent != dependency
-                && chain[dependency].names.iter().any(|name| {
-                    chain[dependent].mentions.contains(name)
-                        && !chain[dependent].names.contains(name)
-                });
-            if depends {
-                chain[dependent].degree += 1;
-                chain[dependency].degree += 1;
+    let chain: Vec<&mut EmittedFile> = files.iter_mut().filter(|file| file.chained).collect();
+    let mut declarers: HashMap<&str, Vec<usize>> = HashMap::new();
+    for (index, file) in chain.iter().enumerate() {
+        for name in &file.names {
+            let files = declarers.entry(name.as_str()).or_default();
+            if files.last() != Some(&index) {
+                files.push(index);
             }
         }
     }
-    chain.sort_by_key(|file| (file.non_essential, Reverse((file.degree, file.bytes))));
+    let mut degrees = vec![0; chain.len()];
+    for (dependent, file) in chain.iter().enumerate() {
+        if file.mentions.is_empty() {
+            continue;
+        }
+        let own: HashSet<&str> = file.names.iter().map(String::as_str).collect();
+        let dependencies: HashSet<usize> = file
+            .mentions
+            .iter()
+            .filter(|name| !own.contains(name.as_str()))
+            .filter_map(|name| declarers.get(name.as_str()))
+            .flatten()
+            .copied()
+            .filter(|&dependency| dependency != dependent)
+            .collect();
+        degrees[dependent] += dependencies.len();
+        for dependency in dependencies {
+            degrees[dependency] += 1;
+        }
+    }
+    let mut ranked: Vec<(usize, &mut EmittedFile)> = degrees.into_iter().zip(chain).collect();
+    ranked.sort_by_key(|(degree, file)| (file.non_essential, Reverse((*degree, file.bytes))));
     let mut gate: Option<BatchKey> = None;
-    for file in chain {
+    for (_, file) in ranked {
         let Some(head) = file.batches.iter_mut().find(|batch| {
             matches!(&batch.key, BatchKey::Code(key) if key.rung == Rung::Names && key.sub == 0)
         }) else {
