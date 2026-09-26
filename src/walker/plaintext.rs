@@ -754,10 +754,12 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
         .any(|word| has_word(DECLARATION_KEYWORDS, word))
         || words.get(1) == Some(&"::")
         || (words.len() >= 2 && trimmed[head_end..].starts_with('('));
-    match (declares, has_same_line_body(trimmed)) {
-        (true, false) => DeclarationRank::Heading,
-        (true, true) => DeclarationRank::OneLiner,
-        (false, _) => DeclarationRank::Statement,
+    if !declares {
+        DeclarationRank::Statement
+    } else if has_same_line_body(trimmed) {
+        DeclarationRank::OneLiner
+    } else {
+        DeclarationRank::Heading
     }
 }
 
