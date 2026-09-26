@@ -1,5 +1,6 @@
 //! Prisma schema walker: a `Toc` batch of every top-level declaration's
-//! opening line (`model`, `enum`, `datasource`, `generator`), then one
+//! opening line (`model`, `type`, `view`, `enum`, `datasource`,
+//! `generator`), then one
 //! `Decl` batch per declaration body behind it — the code engine's
 //! roster → declaration ladder for an app's data model. The schema is
 //! line-scanned (top-level keywords start their line) and each body is
@@ -33,6 +34,7 @@ const MODEL_SPLIT_MIN_ROWS: usize = 32;
 /// Kind of a top-level Prisma declaration.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum DeclKind {
+    /// `model`, a MongoDB composite `type`, or a `view`.
     Model,
     Enum,
     /// `datasource` / `generator` block.
@@ -214,7 +216,7 @@ fn brace_delta(line: &str) -> i32 {
 /// keywords are not indented in Prisma; `starts_with` + a whitespace
 /// separator is sufficient (guards `models`/`enumerable`).
 fn decl_keyword(line: &str) -> Option<DeclKind> {
-    if line.starts_with("model ") {
+    if line.starts_with("model ") || line.starts_with("type ") || line.starts_with("view ") {
         Some(DeclKind::Model)
     } else if line.starts_with("enum ") {
         Some(DeclKind::Enum)
@@ -311,6 +313,9 @@ model Real {
         assert_eq!(decl_keyword("enumerable X {"), None);
         assert_eq!(decl_keyword("modeling.foo"), None);
         assert_eq!(decl_keyword("model User {"), Some(DeclKind::Model));
+        assert_eq!(decl_keyword("type Address {"), Some(DeclKind::Model));
+        assert_eq!(decl_keyword("view UserInfo {"), Some(DeclKind::Model));
+        assert_eq!(decl_keyword("types X {"), None);
         assert_eq!(decl_keyword("enum Theme {"), Some(DeclKind::Enum));
         assert_eq!(decl_keyword("datasource db {"), Some(DeclKind::Config));
         assert_eq!(decl_keyword("generator client {"), Some(DeclKind::Config));
