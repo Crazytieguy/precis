@@ -481,10 +481,11 @@ fn is_block_closer(trimmed: &str) -> bool {
             .find(|c: char| !c.is_ascii_lowercase())
             .unwrap_or(trimmed.len()),
     );
-    // `end`, `endmodule`, `endif()`, `end subroutine solve`.
+    // `end`, `end;`, `endmodule // cpu`, `endif(WIN32)`.
     let ends_by_keyword = keyword.starts_with("end")
-        && !rest.starts_with(|c: char| c.is_alphanumeric() || c == '_' || c == '.')
-        && !rest.contains('=');
+        && (matches!(rest, "" | ";" | ".")
+            || rest.starts_with('(')
+            || (rest.starts_with(' ') && is_comment_line(rest.trim_start())));
     ends_by_keyword
         || matches!(trimmed, "fi" | "done" | "esac" | "#endif" | "*/")
         || trimmed.chars().all(|c| "{}])>;,`".contains(c))
@@ -2061,12 +2062,15 @@ mod tests {
             "end",
             "endmodule",
             "endif(NOT WIN32)",
-            "end subroutine solve",
+            "endmodule // cpu",
+            "end;",
         ] {
             assert!(is_block_closer(closer), "{closer}");
         }
         for statement in [
             "endpoint = url",
+            "endpoint: https://example.com",
+            "end of the setup notes",
             "end_time = now()",
             "endTime();",
             "end.join",
