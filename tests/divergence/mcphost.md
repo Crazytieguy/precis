@@ -39,6 +39,7 @@ Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | ns | 648 |  | 114 | README feature list, second half | 1.8 |  | 0.784 |
 | ns | 781 |  | 133 | Complete listings for the config / agent / tools / models packages | 1.9 |  | 0.781 |
 | walker |  | 798 | 167 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.874 |
+| walker |  | 798 | 0 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.874 |
 | walker |  | 820 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.874 |
 | ns | 999 |  | 218 | Complete listings for the builtin / hooks / session / auth / tokens / ui packages | 1.10 |  | 0.877 |
 | walker |  | 1036 | 216 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.946 |
@@ -154,13 +155,15 @@ Score(3000)=0.809 I=0.940 C=0.697 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 8943 | 18 | Code::CodeKey { rung: Body, file: cmd/root.go, decl: 1, sub: 0, line: 131 } |  |  | 0.564 |
 | walker |  | 8980 | 37 | Code::CodeKey { rung: Doc, file: sdk/mcphost.go, decl: 8, sub: 0, line: 218 } |  |  | 0.564 |
 | ns | 9110 |  | 298 | Session file format: Session, Metadata, Message and ToolCall fields | 8.3 |  | 0.577 |
-| ns | 9404 |  | 294 | The public SDK surface: Options and every exported symbol | 8.4 |  | 0.587 |
-| walker |  | 9444 | 464 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.587 |
-| ns | 9606 |  | 202 | The complete slash-command table: names and descriptions | 8.5 |  | 0.580 |
-| walker |  | 9754 | 310 | Code::CodeKey { rung: Names, file: internal/agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
-| walker |  | 9814 | 60 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 12, sub: 0, line: 135 } |  |  | 0.589 |
-| ns | 9827 |  | 221 | ui.SetupCLI: the AgentInterface contract and CLISetupOptions | 8.6 |  | 0.581 |
-| walker |  | 9881 | 67 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 13, sub: 0, line: 144 } |  |  | 0.581 |
-| walker |  | 9957 | 76 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 11, sub: 0, line: 125 } |  |  | 0.581 |
-| ns | 9983 |  | 156 | Release packaging: the goreleaser build matrix | 9.1 |  | 0.574 |
-| walker |  | 9993 | 36 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 9, sub: 0, line: 67 } |  |  | 0.577 |
+| walker |  | 9290 | 310 | Code::CodeKey { rung: Names, file: internal/agent/agent.go, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
+| walker |  | 9350 | 60 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 12, sub: 0, line: 135 } |  |  | 0.586 |
+| ns | 9404 |  | 294 | The public SDK surface: Options and every exported symbol | 8.4 |  | 0.596 |
+| walker |  | 9417 | 67 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 13, sub: 0, line: 144 } |  |  | 0.596 |
+| walker |  | 9493 | 76 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 11, sub: 0, line: 125 } |  |  | 0.596 |
+| walker |  | 9596 | 103 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 9, sub: 0, line: 67 } |  |  | 0.608 |
+| ns | 9606 |  | 202 | The complete slash-command table: names and descriptions | 8.5 |  | 0.601 |
+| walker |  | 9760 | 164 | Code::CodeKey { rung: Decl, file: internal/agent/agent.go, decl: 1, sub: 0, line: 22 } |  |  | 0.601 |
+| ns | 9827 |  | 221 | ui.SetupCLI: the AgentInterface contract and CLISetupOptions | 8.6 |  | 0.593 |
+| walker |  | 9983 | 223 | Code::CodeKey { rung: Names, file: internal/session/manager.go, decl: 0, sub: 0, line: 0 } |  |  | 0.586 |
+| ns | 9983 |  | 156 | Release packaging: the goreleaser build matrix | 9.1 |  | 0.586 |
+| walker |  | 10000 | 17 | Code::CodeKey { rung: Decl, file: internal/session/manager.go, decl: 1, sub: 0, line: 15 } |  |  | 0.586 |
