@@ -4,7 +4,6 @@
 //! `o200k_base.tiktoken` is OpenAI's rank file, unmodified.
 
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::sync::OnceLock;
 
 use regex::Regex;
@@ -45,7 +44,7 @@ pub fn warm_up() {
 thread_local! {
     /// Per-thread memoization of `count(text)` — the scheduler
     /// tokenizes the same rendered line many times per pass.
-    static CACHE: RefCell<HashMap<String, usize>> = RefCell::new(HashMap::new());
+    static CACHE: RefCell<FxHashMap<String, usize>> = RefCell::default();
 }
 
 /// Token count under o200k_base (ordinary encoding).
