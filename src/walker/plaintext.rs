@@ -361,7 +361,7 @@ pub(in crate::walker) fn is_derived_artifact_name(lower: &str) -> bool {
 /// only in an all-caps name, so `license-api.md` or `license-server.md` —
 /// documentation of a product's own licensing — still renders. `*-header`
 /// is the boilerplate a project prepends to its sources, not a license.
-pub(crate) fn is_license_file_name(name: &str) -> bool {
+fn is_license_file_name(name: &str) -> bool {
     let stem = match name.rsplit_once('.') {
         None => name,
         Some((stem, ext)) if matches!(ext.to_ascii_lowercase().as_str(), "txt" | "md" | "rst") => {
@@ -1014,13 +1014,9 @@ fn index_rows_by_leading_identifier<'a>(lines: &[&'a str]) -> HashMap<&'a str, V
 
 fn leading_identifier(text: &str) -> &str {
     let end = text
-        .find(|c: char| !is_identifier_char(c))
+        .find(|c: char| !(c.is_alphanumeric() || c == '_'))
         .unwrap_or(text.len());
     &text[..end]
-}
-
-fn is_identifier_char(c: char) -> bool {
-    c.is_alphanumeric() || c == '_'
 }
 
 /// For a line that opens a multi-line string, the token that ends it and
@@ -1228,17 +1224,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         // With headroom over the generic cap: a Makefile's head is mostly
         // variable preamble, not its targets.
         let content = if is_recipe_file_name(name) {
-            recipe_roster_content(&file, ctx)
+            recipe_roster_content(&file, is_makefile_name(name), ctx)
         } else {
             gated_whole_file_content(&file, ctx, BUILD_BYTE_GATE, BUILD_LINE_CAP)
         };
+        let base_value = class_value(class, &file, ctx, 0);
         let (content, value) = match content {
             Some(content) => (
                 content,
-                class_value(class, &file, ctx, 0) * small_build_file_factor(name, &file, ctx),
+                base_value * small_build_file_factor(name, &file, ctx),
             ),
             None => match root_makefile_targets(&file, name, ctx) {
-                Some(content) => (content, class_value(class, &file, ctx, 0)),
+                Some(content) => (content, base_value),
                 None => {
                     if ctx.depth_from_root(&file) == 1 {
                         push_source_text_batches(&mut out, &file, ctx, class);
@@ -1517,15 +1514,15 @@ fn is_makefile_name(name: &str) -> bool {
 /// recipes](is_housekeeping_target) reduced to their headers: how the
 /// project is released, installed or cleaned says little about how to
 /// build, run and test it.
-fn recipe_roster_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+fn recipe_roster_content(
+    file: &Path,
+    is_makefile: bool,
+    ctx: &WalkCtx,
+) -> Option<crate::content::BatchContent> {
     let source = gated_read_source(file, ctx, BUILD_BYTE_GATE)?;
     if source.line_count() > BUILD_LINE_CAP {
         return None;
     }
-    let is_makefile = file
-        .file_name()
-        .and_then(|name| name.to_str())
-        .is_some_and(is_makefile_name);
     let mut rows = Vec::new();
     let mut keep_body = true;
     let mut continued = false;

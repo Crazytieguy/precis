@@ -184,7 +184,7 @@ fn readme_batches(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         &file,
         &source,
         &logical_sections(&tree, &source, outline_emits),
-        headline.as_ref(),
+        headline.as_ref().and_then(|spec| spec.last().copied()),
         &chrome_rows(tree.root_node(), &source),
         outline_emitted.or(headline_emitted),
     );
@@ -212,19 +212,19 @@ fn push_headline(
 }
 
 /// Emit one `Section` batch per range, less the `chrome` rows, each head
-/// preceded by its `CommandBlock` when it has one past the headline. A
-/// head gates on its command block, else on `section_predecessor`;
-/// oversize tails deliver in source order behind the chunk before them.
+/// preceded by its `CommandBlock` when it has one past the headline,
+/// whose last row is `headline_end`. A head gates on its command block,
+/// else on `section_predecessor`; oversize tails deliver in source order
+/// behind the chunk before them.
 fn push_sections(
     out: &mut Vec<Batch>,
     file: &Path,
     source: &Source,
     ranges: &[SectionRange],
-    headline: Option<&BTreeSet<usize>>,
+    headline_end: Option<usize>,
     chrome: &BTreeSet<usize>,
     section_predecessor: Option<BatchKey>,
 ) {
-    let headline_end = headline.and_then(|spec| spec.iter().next_back().copied());
     let mut chain_key = section_predecessor.clone();
     for (idx, range) in ranges.iter().enumerate() {
         if !range.chained_to_previous {
@@ -238,7 +238,7 @@ fn push_sections(
             out.push(batch);
         }
         if !range.command_only
-            && let Some(content) = build_section_content(file, source, range, headline, chrome)
+            && let Some(content) = build_section_content(file, source, range, headline_end, chrome)
         {
             let key = BatchKey::from(MarkdownKey::Section {
                 file: file.to_path_buf(),
@@ -375,7 +375,7 @@ fn build_section_content(
     file: &Path,
     source: &Source,
     range: &SectionRange,
-    headline: Option<&BTreeSet<usize>>,
+    headline_end: Option<usize>,
     chrome: &BTreeSet<usize>,
 ) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
@@ -385,10 +385,7 @@ fn build_section_content(
     // `ratio(value, 0) = ∞`. (The line-scanned path passes `None`: its
     // ranges already start past the headline.) Rows the headline
     // stepped *over* (chrome) are dropped with them.
-    let effective_start = match headline.and_then(|spec| spec.iter().next_back()) {
-        Some(max_row) => (max_row + 1).max(start),
-        None => start,
-    };
+    let effective_start = headline_end.map_or(start, |end| (end + 1).max(start));
     if effective_start > end {
         return None;
     }
@@ -565,12 +562,6 @@ fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
     let last = node_end_row_trimmed(node, source);
     for row in node.start_position().row..=last {
         out.insert(row + 1);
-    }
-}
-
-fn extend_headline_block_rows(rows: &mut BTreeSet<usize>, node: Node, source: &str) {
-    if node.end_byte() - node.start_byte() <= HEADLINE_BLOCK_BYTE_GATE {
-        rows.extend(block_text_rows(node, source));
     }
 }
 
@@ -1070,7 +1061,6 @@ fn fence_closes(trimmed: &str, open: (char, usize)) -> bool {
 /// Tags whose raw-HTML block (CommonMark type 1) runs verbatim to its
 /// closing tag.
 const RAW_HTML_VERBATIM_TAGS: [&str; 4] = ["script", "pre", "style", "textarea"];
-const RAW_HTML_VERBATIM_CLOSERS: [&str; 4] = ["</script>", "</pre>", "</style>", "</textarea>"];
 
 /// A raw-HTML block whose end condition is a closing token rather than
 /// a blank line — CommonMark block types 1–5. Types 6 and 7 do end at
@@ -1121,9 +1111,9 @@ impl RawHtmlBlock {
     fn closed_by(self, trimmed: &str) -> bool {
         let lowered = trimmed.to_ascii_lowercase();
         match self {
-            Self::Verbatim => RAW_HTML_VERBATIM_CLOSERS
+            Self::Verbatim => RAW_HTML_VERBATIM_TAGS
                 .iter()
-                .any(|closer| lowered.contains(closer)),
+                .any(|tag| lowered.contains(&format!("</{tag}>"))),
             Self::Token(end) => lowered.contains(end),
         }
     }
@@ -1580,7 +1570,9 @@ fn extend_lede(
         if is_chrome_block(block, source) {
             continue;
         }
-        extend_headline_block_rows(spec, block, source);
+        if block.byte_range().len() <= HEADLINE_BLOCK_BYTE_GATE {
+            spec.extend(block_text_rows(block, source));
+        }
         if extending {
             break;
         }

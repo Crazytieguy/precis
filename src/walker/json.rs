@@ -341,14 +341,11 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
 }
 
 fn unquote_string(node: Node, source: &str) -> String {
-    let raw = &source[node.start_byte()..node.end_byte()];
-    let trimmed = raw.trim();
-    let bytes = trimmed.as_bytes();
-    if bytes.len() >= 2 && bytes[0] == b'"' && bytes[bytes.len() - 1] == b'"' {
-        trimmed[1..trimmed.len() - 1].to_string()
-    } else {
-        trimmed.to_string()
-    }
+    let raw = source[node.byte_range()].trim();
+    raw.strip_prefix('"')
+        .and_then(|inner| inner.strip_suffix('"'))
+        .unwrap_or(raw)
+        .to_string()
 }
 
 // --- JS/TS workspace-member resolution ---
