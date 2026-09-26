@@ -122,8 +122,9 @@ fn is_python_project_manifest(file: &Path, sections: &[Section]) -> bool {
         || sections.iter().any(|section| section.name == "project")
 }
 
+/// A Cargo platform-specific table counts as the table it scopes:
+/// `target.'cfg(unix)'.dependencies.libc` is `dependencies.libc`.
 fn is_ordinary_dependency_section(name: &str) -> bool {
-    let name = untargeted_cargo_table(name);
     matches!(
         name,
         "dependencies"
@@ -132,24 +133,7 @@ fn is_ordinary_dependency_section(name: &str) -> bool {
             | "project.optional-dependencies"
     ) || name.starts_with("dependencies.")
         || name.starts_with("workspace.dependencies.")
-}
-
-/// A Cargo platform-specific dependency table read as the table it scopes:
-/// `target.'cfg(unix)'.dependencies.libc` is `dependencies.libc`. Any other
-/// name comes back unchanged.
-fn untargeted_cargo_table(name: &str) -> &str {
-    let Some(rest) = name.strip_prefix("target.") else {
-        return name;
-    };
-    rest.match_indices('.')
-        .map(|(dot, _)| &rest[dot + 1..])
-        .find(|tail| {
-            matches!(
-                tail.split('.').next(),
-                Some("dependencies" | "dev-dependencies" | "build-dependencies")
-            )
-        })
-        .unwrap_or(name)
+        || (name.starts_with("target.") && name.contains(".dependencies"))
 }
 
 /// Feature flags, Cargo's library and binary target declarations, and a
