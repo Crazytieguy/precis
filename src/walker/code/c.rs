@@ -14,7 +14,8 @@
 //!   unions / enums, global variables, macros and declaring macro
 //!   invocations are `Whole`, with one body [`Item`] per field or
 //!   enumerator.
-//! - A non-`inline` `static` in a header is hidden.
+//! - A non-`inline` `static` in a header is hidden, whatever the
+//!   spelling of `inline`.
 //! - A declaration's doc is the comment run directly above it.
 //!
 //! A header written in C++ ([`is_cpp_header`]) is left to the plaintext
@@ -146,10 +147,7 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
     // A header's `static inline` definition is the header-only accessor
     // idiom: part of the API. Any other `static` in a header is an
     // implementation leak.
-    if in_header
-        && has_storage_class(node, file, "static")
-        && !has_storage_class(node, file, "inline")
-    {
+    if in_header && is_static(node, file) && !is_inline(node, file) {
         return None;
     }
     let name_rows = name_rows(node);
@@ -586,10 +584,21 @@ fn is_define_of(define: Node, name: Node, file: &SourceFile) -> bool {
             .is_some_and(|defined| file.text(defined) == file.text(name))
 }
 
-fn has_storage_class(node: Node, file: &SourceFile, keyword: &str) -> bool {
+fn is_static(node: Node, file: &SourceFile) -> bool {
     let mut cursor = node.walk();
     node.children(&mut cursor).any(|child| {
-        child.kind() == "storage_class_specifier" && file.text(child).trim() == keyword
+        child.kind() == "storage_class_specifier" && file.text(child).trim() == "static"
+    })
+}
+
+/// `inline` in any spelling: the keyword, a compiler's own (`__inline__`,
+/// `__forceinline`), or a macro for one (`__always_inline`, `LIB_INLINE`),
+/// which the grammar reads as the type.
+fn is_inline(node: Node, file: &SourceFile) -> bool {
+    let mut cursor = node.walk();
+    node.children(&mut cursor).any(|child| {
+        matches!(child.kind(), "storage_class_specifier" | "type_identifier")
+            && file.text(child).to_ascii_lowercase().contains("inline")
     })
 }
 
@@ -770,6 +779,13 @@ static inline int sdslen(const char *s) { return 0; }
 static int helper(void) { return 0; }
 static const int table_size = 4;
 int api(void);
+static __inline__ int gnu_inline(int x) { return x; }
+static __forceinline int msvc_inline(int x) { return x; }
+static __always_inline void
+macro_inline(const volatile void *v)
+{
+	check(v);
+}
 ";
         let listed = |file_name| {
             model(file_name, source)
@@ -778,8 +794,8 @@ int api(void);
                 .map(|decl| decl.name_rows[0])
                 .collect::<Vec<_>>()
         };
-        assert_eq!(listed("sds.h"), vec![1, 4]);
-        assert_eq!(listed("sds.c"), vec![1, 2, 3, 4]);
+        assert_eq!(listed("sds.h"), vec![1, 4, 5, 6, 7]);
+        assert_eq!(listed("sds.c"), vec![1, 2, 3, 4, 5, 6, 7]);
     }
 
     #[test]
