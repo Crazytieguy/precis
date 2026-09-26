@@ -120,7 +120,7 @@ impl SourceFile {
 
     /// The rows of each comment directly above `node`, in source order: a
     /// run of `comment` siblings that `accept` admits, each on its own
-    /// rows and ending at most `max_gap` rows above the next.
+    /// rows and ending 1 to `max_gap` rows above the next.
     pub(crate) fn comments_above(
         &self,
         node: Node,
