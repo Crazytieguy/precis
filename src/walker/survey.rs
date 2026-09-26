@@ -175,6 +175,7 @@ pub(in crate::walker) fn language_group(path: &Path) -> Option<&'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::walker::plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS;
 
     fn dominant_source_file_of(root: &Path) -> Option<PathBuf> {
         let source = enumerate_essential_source(root, &DirFilter::new(root))?;
@@ -292,6 +293,10 @@ mod tests {
         let group = |ext: &str| language_group(&PathBuf::from(format!("x.{ext}")));
         for ext in crate::walker::code::parsed_extensions() {
             assert!(group(ext).is_some(), ".{ext} is parsed but has no family");
+            assert!(
+                !SOURCE_TEXT_LANGUAGE_EXTENSIONS.contains(&ext),
+                ".{ext} is claimed by both the code engine and the plaintext fallback"
+            );
         }
         assert_eq!(group("MTS"), group("js"));
         assert_eq!(group("cpp"), group("h"));
