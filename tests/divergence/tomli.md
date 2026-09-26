@@ -78,8 +78,7 @@ Score(3000)=0.496 I=0.807 C=0.304 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 3871 |  | 36 | tests/ and tests/data/ listings (complete) | 3.1 |  | 0.574 |
 | walker |  | 3930 | 176 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.568 |
 | ns | 3930 |  | 59 | tests/__init__.py: the tomli-as-tomllib alias | 3.2 |  | 0.568 |
-| walker |  | 4105 | 175 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
-| walker |  | 4117 | 12 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 7, sub: 0, line: 98 } |  |  | 0.569 |
+| walker |  | 4117 | 187 | Code::CodeKey { rung: Names, file: src/tomli/_re.py, decl: 0, sub: 0, line: 0 } |  |  | 0.569 |
 | ns | 4194 |  | 264 | Complete roster of test classes and test methods | 3.3 |  | 0.550 |
 | walker |  | 4221 | 104 | Code::CodeKey { rung: Decl, file: src/tomli/_re.py, decl: 2, sub: 0, line: 17 } |  |  | 0.550 |
 | ns | 4370 |  | 176 | tox core configuration: the interpreter matrix and default command | 3.4 |  | 0.540 |

@@ -234,6 +234,34 @@ src/chronos/
     149→        r"input_patch_embedding\.",
     150→        r"output_patch_embedding\.",
     151→    ]
+    152→    _keys_to_ignore_on_load_unexpected = [r"lm_head.weight"]  # type: ignore
+    153→    _tied_weights_keys = ["encoder.embed_tokens.weight", "decoder.embed_tokens.weight"]  # type: ignore
+    154→
+    155→    def __init__(self, config: T5Config):
+    …
+    215→    def _init_weights(self, module):
+    …
+    240→    def encode(
+    241→        self, context: torch.Tensor, mask: Optional[torch.Tensor] = None
+    242→    ) -> Tuple[torch.Tensor, Tuple[torch.Tensor, torch.Tensor], torch.Tensor, torch.Tensor]:
+    …
+    294→    def forward(
+    295→        self,
+    296→        context: torch.Tensor,
+    297→        mask: Optional[torch.Tensor] = None,
+    298→        target: Optional[torch.Tensor] = None,
+    299→        target_mask: Optional[torch.Tensor] = None,
+    300→    ) -> ChronosBoltOutput:
+    …
+    358→    def _init_decoder(self, config):
+    …
+    364→    def decode(
+    365→        self,
+    366→        input_embeds,
+    367→        attention_mask,
+    368→        hidden_states,
+    369→        output_attentions=False,
+    370→    ):
     …
     403→class ChronosBoltPipeline(BaseChronosPipeline):
     404→    forecast_type: ForecastType = ForecastType.QUANTILES
@@ -246,32 +274,6 @@ src/chronos/
     …
     415→    @property
     416→    def model_prediction_length(self) -> int:
-    …
-    419→    @property
-    420→    def quantiles(self) -> List[float]:
-    …
-    423→    @torch.no_grad()
-    424→    def embed(
-    425→        self, context: Union[torch.Tensor, List[torch.Tensor]]
-    426→    ) -> Tuple[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
-    …
-    463→    def predict(
-    464→        self,
-    465→        inputs: Union[torch.Tensor, List[torch.Tensor]],
-    466→        prediction_length: Optional[int] = None,
-    467→        limit_prediction_length: bool = False,
-    468→    ) -> torch.Tensor:
-    …
-    559→    def predict_quantiles(
-    560→        self,
-    561→        inputs: Union[torch.Tensor, List[torch.Tensor]],
-    562→        prediction_length: Optional[int] = None,
-    563→        quantile_levels: List[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
-    564→        **predict_kwargs,
-    565→    ) -> Tuple[torch.Tensor, torch.Tensor]:
-    …
-    609→    @classmethod
-    610→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
     …
   df_utils.py
   utils.py

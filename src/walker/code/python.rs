@@ -10,7 +10,11 @@
 //! - **Head and name rows**: a decorated definition's head starts at its
 //!   first decorator. Its name rows are the `def` / `class` row and,
 //!   when the signature spans rows, the row that closes it (`) -> T:`),
-//!   so a roster never lists an unclosed `def f(`.
+//!   so a roster never lists an unclosed `def f(`. A `def`'s also include
+//!   its outermost decorator when that fits on one row: it decides what
+//!   the name is bound to (`@property`, `@staticmethod`, `@x.setter`,
+//!   `@app.get("/")`, `@cli.command("search")`). A class's decorators
+//!   (`@dataclass`) stay in its head.
 //! - **Doc**: the docstring opening a `def` / `class` body, or else the
 //!   `#` comments directly above the definition.
 //! - **Module doc**: a dunder-named module's (`__init__.py`,
@@ -389,7 +393,11 @@ fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
         Shape::Callable => (file.node_items(statements, head_end), Vec::new()),
         Shape::Whole => class_body(file, &statements, head_end),
     };
-    let mut name_rows = vec![name_row];
+    let mut name_rows: Vec<usize> = match shape {
+        Shape::Callable => outer_decorator_row(file, unit).into_iter().collect(),
+        Shape::Whole => Vec::new(),
+    };
+    name_rows.push(name_row);
     if head_end > name_row {
         name_rows.push(head_end);
     }
@@ -442,6 +450,15 @@ fn implemented_overloads<'tree>(
         }
     }
     implemented
+}
+
+/// The row of a definition's outermost decorator, when it fits on one row.
+fn outer_decorator_row(file: &SourceFile, unit: Node) -> Option<usize> {
+    unit.named_children(&mut unit.walk())
+        .find(|child| child.kind() == "decorator")
+        .map(|decorator| file.node_rows(decorator))
+        .filter(|rows| rows.start() == rows.end())
+        .map(|rows| *rows.start())
 }
 
 /// 1-based row of the `:` that ends a `def` / `class` header.
@@ -701,7 +718,7 @@ def greet(
         assert_eq!(
             describe(&model),
             [
-                "Callable name [3, 5] head [1, 2, 3, 4, 5] doc [[6], [8, 9]] body [[10, 11], [12], [13]]"
+                "Callable name [1, 3, 5] head [1, 2, 3, 4, 5] doc [[6], [8, 9]] body [[10, 11], [12], [13]]"
             ]
         );
     }
@@ -775,8 +792,8 @@ class Config(Base):  # the config
         assert_eq!(
             describe(&model),
             [
-                "Whole name [2] head [1, 2] doc [[3]] body [[5, 6], [7], [11], [15], [18], [20], [21]]",
-                "  Callable name [11] head [10, 11] doc [[12]] body [[13]]",
+                "Whole name [2] head [1, 2] doc [[3]] body [[5, 6], [7], [10, 11], [15], [18], [20], [21]]",
+                "  Callable name [10, 11] head [10, 11] doc [[12]] body [[13]]",
                 "  Callable name [15] head [15] doc [] body [[16]]",
                 "  Callable name [18] head [18] doc [] body []",
             ]
@@ -814,11 +831,13 @@ class Basic:
     }
 
     #[test]
-    fn python_roster_lists_signature_closing_row_not_decorators() {
+    fn python_roster_lists_outer_decorator_and_signature_closing_row() {
         let model = extract_source(
             "props.py",
             "\
 class Params:
+    @staticmethod
+    def build(path): ...
     @property
     def port(self) -> int: ...
     @port.setter
@@ -833,16 +852,27 @@ class Wide(
     Base,
 ):
     pass
+@dataclass
+class Options:
+    pass
+@issues.command(\"search\")
+@click.option(
+    \"--limit\",
+)
+def search_issues(limit): ...
 ",
         );
         assert_eq!(
             describe(&model),
             [
-                "Whole name [1] head [1] doc [] body [[3], [5], [9, 11]]",
-                "  Callable name [3] head [2, 3] doc [] body []",
-                "  Callable name [5] head [4, 5] doc [] body []",
-                "  Callable name [9, 11] head [6, 7, 8, 9, 10, 11] doc [] body []",
-                "Whole name [12, 14] head [12, 13, 14] doc [] body [[15]]",
+                "Whole name [1] head [1] doc [] body [[2, 3], [4, 5], [6, 7], [11, 13]]",
+                "  Callable name [2, 3] head [2, 3] doc [] body []",
+                "  Callable name [4, 5] head [4, 5] doc [] body []",
+                "  Callable name [6, 7] head [6, 7] doc [] body []",
+                "  Callable name [11, 13] head [8, 9, 10, 11, 12, 13] doc [] body []",
+                "Whole name [14, 16] head [14, 15, 16] doc [] body [[17]]",
+                "Whole name [19] head [18, 19] doc [] body [[20]]",
+                "Callable name [21, 25] head [21, 22, 23, 24, 25] doc [] body []",
             ]
         );
     }
@@ -917,8 +947,8 @@ class Wikicode:
         assert_eq!(
             describe(&model),
             [
-                "Callable name [2] head [1, 2] doc [] body []",
-                "Callable name [4] head [3, 4] doc [] body []",
+                "Callable name [1, 2] head [1, 2] doc [] body []",
+                "Callable name [3, 4] head [3, 4] doc [] body []",
             ]
         );
     }
@@ -949,7 +979,7 @@ class Node:
         assert_eq!(
             describe(&model),
             [
-                "Callable name [5] head [4, 5] doc [[3]] body [[6]]",
+                "Callable name [4, 5] head [4, 5] doc [[3]] body [[6]]",
                 "Whole name [8] head [8] doc [] body [[9], [11], [15]]",
                 "  Callable name [11] head [11] doc [[10]] body [[12]]",
                 "  Callable name [15] head [15] doc [[16]] body []",

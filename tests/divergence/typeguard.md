@@ -111,9 +111,9 @@ Score(3000)=0.689 I=0.894 C=0.532 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | walker |  | 5904 | 139 | Code::CodeKey { rung: Names, file: src/typeguard/_importhook.py, decl: 0, sub: 0, line: 0 } |  |  | 0.495 |
 | walker |  | 5927 | 23 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 3, sub: 0, line: 45 } |  |  | 0.495 |
 | walker |  | 5964 | 37 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 17, sub: 0, line: 183 } |  |  | 0.497 |
-| walker |  | 6008 | 44 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 5, sub: 0, line: 55 } |  |  | 0.497 |
+| walker |  | 6014 | 50 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 5, sub: 0, line: 55 } |  |  | 0.497 |
 | ns | 6028 |  | 272 | features.rst: the checked and explicitly-unchecked lists | 3.2 | 3.1 | 0.485 |
-| walker |  | 6072 | 64 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 6, sub: 0, line: 56 } |  |  | 0.485 |
+| walker |  | 6072 | 58 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 6, sub: 0, line: 56 } |  |  | 0.485 |
 | walker |  | 6143 | 71 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 12, sub: 0, line: 156 } |  |  | 0.485 |
 | ns | 6172 |  | 144 | Complete section-heading roster of docs/userguide.rst | 3.3 |  | 0.479 |
 | walker |  | 6184 | 41 | Code::CodeKey { rung: Decl, file: src/typeguard/_importhook.py, decl: 15, sub: 0, line: 167 } |  |  | 0.479 |
@@ -143,9 +143,9 @@ Score(3000)=0.689 I=0.894 C=0.532 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 7730 |  | 131 | Roster of _decorators.py module-level functions | 5.2 |  | 0.522 |
 | walker |  | 7753 | 198 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 9, sub: 2, line: 117 } |  |  | 0.522 |
 | ns | 7876 |  | 146 | Roster of _importhook.py symbols | 5.3 |  | 0.530 |
-| walker |  | 7928 | 175 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 41, sub: 0, line: 488 } |  |  | 0.531 |
-| walker |  | 7953 | 25 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 42, sub: 0, line: 489 } |  |  | 0.531 |
-| walker |  | 7979 | 26 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 44, sub: 0, line: 516 } |  |  | 0.531 |
+| walker |  | 7937 | 184 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 41, sub: 0, line: 488 } |  |  | 0.531 |
+| walker |  | 7954 | 17 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 44, sub: 0, line: 516 } |  |  | 0.531 |
+| walker |  | 7979 | 25 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 42, sub: 0, line: 489 } |  |  | 0.531 |
 | ns | 8163 |  | 287 | instrument(): the refusal reasons and the recompile pipeline | 5.4 | 5.2 | 0.521 |
 | walker |  | 8239 | 260 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 41, sub: 1, line: 488 } |  |  | 0.522 |
 | walker |  | 8250 | 11 | Code::CodeKey { rung: Decl, file: src/typeguard/_transformer.py, decl: 53, sub: 0, line: 913 } |  |  | 0.522 |
