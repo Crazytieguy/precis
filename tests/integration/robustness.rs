@@ -229,11 +229,13 @@ fn robustness_deeply_nested_sources_render() {
     }
 }
 
-/// A type stub declares its functions as `@overload` stubs with no
-/// implementation after them, and a generated SDK's stub holds thousands;
-/// deciding which stubs an implementation hides must stay linear in them.
+/// Generated sources declare tens of thousands of siblings: a type stub
+/// `@overload` stubs with no implementation after them, a configuration
+/// header one feature gate per declaration. Relating each declaration to
+/// its siblings (the implementation an overload is hidden behind, the
+/// declaration a gate's directive joins) must stay linear in them.
 #[test]
-fn robustness_overload_only_stubs_render() {
+fn robustness_many_sibling_declarations_render() {
     let temp = tempfile::tempdir().unwrap();
     let overloads: String = (0..20_000)
         .map(|index| format!("@overload\ndef f(x: T{index}) -> int: ...\n"))
@@ -242,9 +244,18 @@ fn robustness_overload_only_stubs_render() {
         &temp.path().join("api.pyi"),
         format!("from typing import overload\n\n{overloads}"),
     );
+    let gates: String = (0..100_000)
+        .map(|index| format!("#ifdef HAVE_{index}\nint x{index};\n#endif\n"))
+        .collect();
+    write(&temp.path().join("config.h"), gates);
 
-    let out = render_within(temp.path(), 3000, Duration::from_secs(20)).unwrap();
-    assert!(out.contains("→def f(x: T0) -> int: ..."), "{out}");
+    for (name, first_row) in [
+        ("api.pyi", "→def f(x: T0) -> int: ..."),
+        ("config.h", "→#ifdef HAVE_0"),
+    ] {
+        let out = render_within(&temp.path().join(name), 3000, Duration::from_secs(20)).unwrap();
+        assert!(out.contains(first_row), "{out}");
+    }
 }
 
 #[test]

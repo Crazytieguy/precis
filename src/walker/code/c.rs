@@ -301,25 +301,31 @@ fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
             (rows.clone().min().unwrap_or(0), rows.max().unwrap_or(0))
         })
         .collect();
+    let mut by_first: Vec<(usize, usize)> = spans
+        .iter()
+        .enumerate()
+        .map(|(index, (first, _))| (*first, index))
+        .collect();
+    by_first.sort_unstable();
+    let starting_from = |row: usize| by_first.partition_point(|(first, _)| *first < row);
     for directive in directives {
         let row = *directive.rows.start();
-        let in_gate = || {
-            spans
-                .iter()
-                .enumerate()
-                .filter(|(_, (first, _))| directive.gate_rows.contains(first))
-        };
-        let next = in_gate()
-            .filter(|(_, (first, _))| *first > row)
-            .min_by_key(|(_, (first, _))| *first);
-        if let Some((index, _)) = next {
+        let (gate_start, gate_end) = (*directive.gate_rows.start(), *directive.gate_rows.end());
+        let in_gate = &by_first[starting_from(gate_start)..starting_from(gate_end + 1)];
+        let next = by_first[starting_from(gate_start.max(row + 1))..]
+            .first()
+            .filter(|(first, _)| *first <= gate_end);
+        if let Some(&(_, index)) = next {
             if !directive.in_header_guard {
                 decls[index].name_rows.extend(directive.rows.clone());
             }
             decls[index].head.extend(directive.rows.clone());
-        } else if let Some((index, _)) = in_gate()
-            .filter(|(_, (_, last))| *last < row)
-            .max_by_key(|(_, (_, last))| *last)
+        } else if let Some(index) = in_gate
+            .iter()
+            .map(|&(_, index)| (spans[index].1, index))
+            .filter(|(last, _)| *last < row)
+            .max()
+            .map(|(_, index)| index)
         {
             decls[index].head.extend(directive.rows.clone());
         }
