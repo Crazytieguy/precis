@@ -60,15 +60,21 @@ pub fn count(text: &str) -> usize {
     })
 }
 
-/// Rank-file lines are `<base64 token bytes> <rank>`.
+/// Rank-file lines are `<base64 token bytes> <rank>`. Scanned as bytes:
+/// `str::lines` and `str::parse` cost more than the decoding.
 fn load_ranks(rank_file: &str) -> FxHashMap<&'static [u8], u32> {
     let mut bytes = Vec::with_capacity(rank_file.len());
     let mut tokens = Vec::new();
-    for line in rank_file.lines() {
-        let (token, rank) = line.split_once(' ').expect("rank line");
+    for line in rank_file.as_bytes().split(|&byte| byte == b'\n') {
+        let Some(space) = line.iter().position(|&byte| byte == b' ') else {
+            continue;
+        };
         let start = bytes.len();
-        decode_base64(token, &mut bytes);
-        tokens.push((start..bytes.len(), rank.parse().expect("rank")));
+        decode_base64(&line[..space], &mut bytes);
+        let rank = line[space + 1..]
+            .iter()
+            .fold(0, |rank, digit| rank * 10 + u32::from(digit - b'0'));
+        tokens.push((start..bytes.len(), rank));
     }
     let bytes: &'static [u8] = bytes.leak();
     let mut ranks = FxHashMap::with_capacity_and_hasher(tokens.len(), Default::default());
@@ -78,10 +84,10 @@ fn load_ranks(rank_file: &str) -> FxHashMap<&'static [u8], u32> {
     ranks
 }
 
-fn decode_base64(text: &str, out: &mut Vec<u8>) {
+fn decode_base64(text: &[u8], out: &mut Vec<u8>) {
     let mut bits = 0u32;
     let mut bit_count = 0;
-    for symbol in text.bytes() {
+    for &symbol in text {
         let value = match symbol {
             b'A'..=b'Z' => symbol - b'A',
             b'a'..=b'z' => symbol - b'a' + 26,
