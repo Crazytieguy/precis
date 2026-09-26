@@ -594,24 +594,13 @@ fn block_text_rows(block: Node, source: &str) -> Vec<usize> {
     if block.kind() != "html_block" {
         return (first_row + 1..=last_row + 1).collect();
     }
-    let mut rows = Vec::new();
-    let mut in_tag = false;
-    let text = &source[block.start_byte()..block.end_byte()];
-    for (offset, line) in text.lines().enumerate().take(last_row - first_row + 1) {
-        let mut has_text = false;
-        for c in strip_html_entities(line).chars() {
-            match c {
-                '<' => in_tag = true,
-                '>' => in_tag = false,
-                c if !in_tag && c.is_alphanumeric() => has_text = true,
-                _ => {}
-            }
-        }
-        if has_text {
-            rows.push(first_row + offset + 1);
-        }
-    }
-    rows
+    strip_html_tags(&strip_html_entities(&source[block.byte_range()]))
+        .lines()
+        .take(last_row - first_row + 1)
+        .enumerate()
+        .filter(|(_, line)| line.chars().any(char::is_alphanumeric))
+        .map(|(offset, _)| first_row + offset + 1)
+        .collect()
 }
 
 fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
@@ -813,8 +802,9 @@ fn strip_block_for_length(raw: &str) -> String {
         .collect()
 }
 
-/// Remove `<…>` tags. A `<` not followed by a letter, `/`, `!` or `?`
-/// opens no tag in HTML (`a < b`), so it stays as text.
+/// Remove `<…>` tags, keeping the line breaks inside them so rows still
+/// line up. A `<` not followed by a letter, `/`, `!` or `?` opens no tag
+/// in HTML (`a < b`), so it stays as text.
 fn strip_html_tags(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     let mut chars = s.chars().peekable();
@@ -824,10 +814,11 @@ fn strip_html_tags(s: &str) -> String {
                 .peek()
                 .is_some_and(|next| next.is_ascii_alphabetic() || matches!(next, '/' | '!' | '?'))
         {
-            // Skip the tag through its closing '>', then drop the '>'.
             for inner in chars.by_ref() {
-                if inner == '>' {
-                    break;
+                match inner {
+                    '>' => break,
+                    '\n' => out.push('\n'),
+                    _ => {}
                 }
             }
         } else {
