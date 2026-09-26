@@ -40,7 +40,7 @@ use crate::render::{Source, visible_full_line};
 use crate::tokenizer;
 
 use super::{
-    WalkCtx, budget_chunk_ranges, first_child_of_kind, node_end_row_trimmed,
+    WalkCtx, budget_chunk_ranges, build_file_spans, first_child_of_kind, node_end_row_trimmed,
     single_file_lines_content,
 };
 
@@ -150,7 +150,7 @@ fn readme_batches(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .and_then(|spec| push_headline(&mut out, &file, &source, spec));
     if let Some(spec) = &headline {
         let rows = prelude_remainder_rows(&tree, &source, spec);
-        if let Some(content) = single_file_lines_content(&file, &source, rows) {
+        if let Some(content) = lines_content(&file, &source, rows) {
             out.push(Batch {
                 key: MarkdownKey::Prelude { file: file.clone() }.into(),
                 predecessor: headline_emitted.clone(),
@@ -198,7 +198,7 @@ fn push_headline(
     source: &Source,
     rows: &BTreeSet<usize>,
 ) -> Option<BatchKey> {
-    let content = single_file_lines_content(file, source, rows.iter().copied().collect())?;
+    let content = lines_content(file, source, rows.iter().copied().collect())?;
     let key = BatchKey::from(MarkdownKey::ReadmeHeadline {
         file: file.to_path_buf(),
     });
@@ -268,7 +268,7 @@ fn command_block_batch(
         }
         .into(),
         predecessor,
-        content: single_file_lines_content(
+        content: lines_content(
             file,
             source,
             (heading.0..=heading.1).chain(block.0..=block.1).collect(),
@@ -396,7 +396,7 @@ fn build_section_content(
     let lines: Vec<usize> = (effective_start..=end)
         .filter(|row| !chrome.contains(row))
         .collect();
-    single_file_lines_content(file, source, lines)
+    lines_content(file, source, lines)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -991,52 +991,26 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
     char_prefix.push(0);
     let mut legal_split = vec![false; item_count];
     let mut safe_split = vec![false; item_count];
-    let mut open_fence: Option<(char, usize)> = None;
-    let mut open_html: Option<RawHtmlBlock> = None;
+    let line = |row: usize| src_lines.get(row - 1).copied().unwrap_or("");
+    // A blank row is only a block boundary outside every verbatim block,
+    // so neither a fenced example nor a `<script>` body can be cut
+    // through the middle.
+    let mut block_last = vec![None; item_count];
+    for (first, last) in verbatim_blocks((start..=end).map(|row| (row, line(row)))) {
+        block_last[first - start..=last - start].fill(Some(last));
+    }
     for (index, row) in (start..=end).enumerate() {
         token_prefix.push(token_prefix[index] + row_tokens(src_lines, row));
-        let raw = src_lines.get(row - 1).copied().unwrap_or("");
-        let t = raw.trim_start();
-        char_prefix.push(char_prefix[index] + raw.chars().count() + 1);
-        // Marker-matched fence state (see `fence_closes`) and raw-HTML
-        // block state (see `RawHtmlBlock`): a blank row is only a block
-        // boundary outside both, so neither a fenced example nor a
-        // `<script>` body can be cut through the middle.
-        if let Some(open) = open_fence {
-            if fence_closes(t, open) {
-                open_fence = None;
-            }
-            if index + 1 < item_count {
-                safe_split[index + 1] = open_fence.is_none();
-            }
+        char_prefix.push(char_prefix[index] + line(row).chars().count() + 1);
+        if index + 1 == item_count {
             continue;
         }
-        if let Some(block) = open_html {
-            if block.closed_by(t) {
-                open_html = None;
-            }
-            if index + 1 < item_count {
-                safe_split[index + 1] = open_html.is_none();
-            }
+        if let Some(last) = block_last[index] {
+            safe_split[index + 1] = row == last;
             continue;
         }
-        if let Some(marker) = fence_marker(t) {
-            open_fence = Some(marker);
-            continue;
-        }
-        if let Some(block) = RawHtmlBlock::opened_by(t)
-            && !block.closed_by(t)
-        {
-            open_html = Some(block);
-            continue;
-        }
-        if index + 1 < item_count {
-            safe_split[index + 1] = true;
-        }
-        if !t.is_empty() {
-            continue;
-        }
-        if index + 1 < item_count {
+        safe_split[index + 1] = true;
+        if line(row).trim().is_empty() {
             legal_split[index + 1] = !next_nonblank_opens_fence(src_lines, row + 1, end);
         }
     }
@@ -1173,6 +1147,76 @@ impl RawHtmlBlock {
             Self::Token(end) => lowered.contains(end),
         }
     }
+}
+
+/// 1-based `(first, last)` rows of every multi-row fence (see
+/// [`fence_closes`]) and raw-HTML block (see [`RawHtmlBlock`]) that
+/// `lines` open, in order; one still open at the end runs to the last
+/// line.
+fn verbatim_blocks<'a>(lines: impl IntoIterator<Item = (usize, &'a str)>) -> Vec<(usize, usize)> {
+    enum Opener {
+        Fence((char, usize)),
+        Html(RawHtmlBlock),
+    }
+    let mut blocks = Vec::new();
+    let mut open: Option<(usize, Opener)> = None;
+    let mut last_row = 0;
+    for (row, line) in lines {
+        last_row = row;
+        let trimmed = line.trim_start();
+        match &open {
+            Some((first, opener)) => {
+                let closes = match opener {
+                    Opener::Fence(marker) => fence_closes(trimmed, *marker),
+                    Opener::Html(block) => block.closed_by(trimmed),
+                };
+                if closes {
+                    blocks.push((*first, row));
+                    open = None;
+                }
+            }
+            None => {
+                if let Some(marker) = fence_marker(trimmed) {
+                    open = Some((row, Opener::Fence(marker)));
+                } else if let Some(block) = RawHtmlBlock::opened_by(trimmed)
+                    && !block.closed_by(trimmed)
+                {
+                    open = Some((row, Opener::Html(block)));
+                }
+            }
+        }
+    }
+    if let Some((first, _)) = open {
+        blocks.push((first, last_row));
+    }
+    blocks
+}
+
+/// Line content over `rows` in which each verbatim block (see
+/// [`verbatim_blocks`]) opens with one unit of its first and last rows,
+/// so a terminal partial that stops inside a fence or `<pre>` still
+/// shows it closed.
+fn lines_content(file: &Path, source: &Source, mut rows: Vec<usize>) -> Option<BatchContent> {
+    rows.sort_unstable();
+    rows.dedup();
+    let mut blocks = verbatim_blocks(
+        rows.iter()
+            .map(|&row| (row, source.line(row).unwrap_or(""))),
+    )
+    .into_iter()
+    .peekable();
+    let mut units = Vec::with_capacity(rows.len());
+    for &row in &rows {
+        match blocks.peek() {
+            Some(&(first, last)) if row == first => units.push(vec![first, last]),
+            Some(&(_, last)) if row == last => {
+                blocks.next();
+            }
+            _ => units.push(vec![row]),
+        }
+    }
+    let spans = build_file_spans(file, source, rows);
+    (!spans.is_empty()).then_some(BatchContent::Lines { spans, units })
 }
 
 fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> bool {

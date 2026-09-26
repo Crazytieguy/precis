@@ -93,6 +93,11 @@ never reached the ones answer keys rank.
   tables of contents: lists whose items mostly open with an in-document
   link) is left out wherever it sits, section bodies included. Catalog
   READMEs lose their category contents list with it.
+- **A document batch cut short by the budget never leaves a fence or
+  `<pre>` open**: a verbatim block's opening and closing rows are one
+  unit, taken before its body. Taking the block whole instead cost the
+  grid .003 at 1000 tokens, because the partial then lost the head of
+  the example.
 - A repository that exhausts the pool before the budget gets one more
   round: the head of every listed file no batch touches
   (`plaintext::floor_batches`), ranked among themselves only, so it

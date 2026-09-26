@@ -705,3 +705,46 @@ fn robustness_non_utf8_names_never_alias_another_entry() {
     let out = render(&root, 100_000).unwrap();
     assert!(!out.contains(OUT_OF_ROOT_MARKER), "{out}");
 }
+
+/// A README section cut short by the budget ends before a verbatim block
+/// or after its closer, never between: an unclosed `<pre>` or fence
+/// swallows everything rendered after it.
+#[test]
+fn robustness_readme_partial_leaves_no_block_open() {
+    let temp = tempfile::tempdir().unwrap();
+    let prose = |words: usize| {
+        let text: Vec<&str> = ["alpha", "bravo", "charlie", "delta", "echo"]
+            .into_iter()
+            .cycle()
+            .take(words)
+            .collect();
+        text.chunks(12)
+            .map(|line| line.join(" "))
+            .collect::<Vec<_>>()
+            .join("\n")
+    };
+    let block = |opener: &str, closer: &str| {
+        format!(
+            "{}\n\n{opener}\n{}\n\n{}\n{closer}\n\n{}",
+            prose(150),
+            prose(60),
+            prose(60),
+            prose(300)
+        )
+    };
+    write(
+        &temp.path().join("README.md"),
+        format!(
+            "# Tool\n\nA tool.\n\n## Pre\n\n{}\n\n## Fence\n\n{}\n",
+            block("<pre>", "</pre>"),
+            block("```text", "```")
+        ),
+    );
+    for budget in (200..=1600).step_by(25) {
+        let out = render(temp.path(), budget).unwrap();
+        for (opener, closer) in [("→<pre>", "→</pre>"), ("→```text", "→```")] {
+            let rows = |marker: &str| out.lines().filter(|row| row.ends_with(marker)).count();
+            assert_eq!(rows(opener), rows(closer), "budget {budget}:\n{out}");
+        }
+    }
+}

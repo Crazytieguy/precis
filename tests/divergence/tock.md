@@ -184,4 +184,4 @@ Score(3000)=0.552 I=0.826 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 9944 | 40 | Code::CodeKey { rung: Doc, file: internal/timeutil/timeutil.go, decl: 4, sub: 0, line: 25 } |  |  | 0.531 |
 | ns | 9961 |  | 156 | Build, release and mock-generation entry points | 8.3 |  | 0.527 |
 | walker |  | 9982 | 38 | Code::CodeKey { rung: Names, file: internal/extra/extra.go, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
-| walker |  | 9995 | 13 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.527 |
+| walker |  | 9990 | 8 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.527 |

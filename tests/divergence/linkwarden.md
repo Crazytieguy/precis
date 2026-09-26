@@ -259,4 +259,4 @@ Score(3000)=0.741 I=0.896 C=0.612 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 9695 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.825 |
 | walker |  | 9863 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.843 |
 | ns | 9884 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.845 |
-| walker |  | 9998 | 135 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.845 |
+| walker |  | 9993 | 130 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.845 |
