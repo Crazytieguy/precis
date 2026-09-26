@@ -74,17 +74,6 @@ dynamic/
   .gitignore
   dynamic_test.go
   plugin.go
-    1→//go:build ignore
-    …
-    14→const (
-    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
-    16→	want = uint64(0x02a2e85470d6fd96)
-    17→)
-    19→func TestSum(t *testing.T) {
-    20→	got := xxhash.Sum64String(in)
-    …
-    26→func TestDigest(t *testing.T) {
-    …
 go.mod
   1→module github.com/cespare/xxhash/v2
   2→
@@ -152,6 +141,18 @@ xxhash.go
   …
   112→// Sum appends the current hash to b and returns the resulting slice.
   113→func (d *Digest) Sum(b []byte) []byte {
+  114→	s := d.Sum64()
+  115→	return append(
+  116→		b,
+  117→		byte(s>>56),
+  118→		byte(s>>48),
+  119→		byte(s>>40),
+  120→		byte(s>>32),
+  121→		byte(s>>24),
+  122→		byte(s>>16),
+  123→		byte(s>>8),
+  124→		byte(s),
+  125→	)
   …
   128→// Sum64 returns the current hash.
   129→func (d *Digest) Sum64() uint64 {
