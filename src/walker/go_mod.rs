@@ -114,17 +114,28 @@ fn strip_comment(line: &str) -> &str {
     line
 }
 
+/// The directives of go.mod and go.work.
+const DIRECTIVES: [&str; 11] = [
+    "module",
+    "go",
+    "toolchain",
+    "godebug",
+    "require",
+    "replace",
+    "exclude",
+    "retract",
+    "use",
+    "tool",
+    "ignore",
+];
+
 fn block_start(code: &str) -> Option<&str> {
     let (first, rest) = code.split_once(char::is_whitespace)?;
-    (rest.trim() == "(" && matches!(first, "require" | "replace" | "exclude" | "retract" | "use"))
-        .then_some(first)
+    (rest.trim() == "(" && DIRECTIVES.contains(&first)).then_some(first)
 }
 
 fn keep_directive_line(first: &str, trimmed: &str) -> bool {
-    matches!(
-        first,
-        "module" | "go" | "toolchain" | "replace" | "exclude" | "retract" | "use"
-    ) || (first == "require" && !trimmed.contains("// indirect"))
+    DIRECTIVES.contains(&first) && (first != "require" || !trimmed.contains("// indirect"))
 }
 
 fn keep_block_entry(block: &str, trimmed: &str) -> bool {
@@ -203,6 +214,25 @@ require ( // direct dependencies
 ) // end
 ";
         assert_eq!(scan(src).1, vec![1, 3, 4, 6]);
+    }
+
+    #[test]
+    fn go_mod_keeps_tool_godebug_and_ignore_directives() {
+        let src = "\
+module example.com/foo
+
+godebug default=go1.21
+
+tool (
+\tgithub.com/gogo/protobuf/protoc-gen-gogo
+\texample.com/foo/internal/gen
+)
+
+tool golang.org/x/tools/cmd/stringer
+
+ignore ./node_modules
+";
+        assert_eq!(scan(src).1, vec![1, 3, 5, 6, 7, 8, 10, 12]);
     }
 
     #[test]
