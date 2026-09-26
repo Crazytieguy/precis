@@ -77,9 +77,12 @@
 //! The language module decides which declarations to leave out of the
 //! model entirely (not in `decls`, not in a container's `members`, their
 //! name rows not in a container's `body`): test code, `#[doc(hidden)]`,
-//! unexported TS/JS and Go declarations, C non-`inline` `static` in a
-//! header, and members the language enforces as private to their
-//! container. Every declaration in the model is priced alike.
+//! unexported TS/JS and Go declarations, TS/JS `@internal` / `@ignore`
+//! ones, C non-`inline` `static` in a header, `@overload` stubs followed
+//! by their implementation, and members private to their container by
+//! the language or by convention (TS `_name`). Every declaration in the
+//! model is priced alike. Whole files (derived artifacts, minified or
+//! generated code) are skipped by the engine before they parse.
 //!
 //! # Ownership
 //!
@@ -114,14 +117,16 @@
 pub(crate) struct FileModel {
     /// File-level documentation, one [`Item`] per paragraph: crate / module
     /// doc comments, the package comment, the module docstring, and
-    /// language-specific identity blocks (Lua `_VERSION` table, Python
-    /// module dunders other than `__all__`).
+    /// language-specific identity blocks (Lua `_VERSION` table, a Python
+    /// dunder module's dunders other than `__all__`).
     pub module_doc: Vec<Item>,
     /// What the file exposes without declaring it here, one [`Item`] per
-    /// statement: `pub use`, `pub mod name;`, `export … from`,
-    /// `export * from`, `__init__.py` from-imports, `__all__`. Listed in the
-    /// file's `Names` roster alongside the declarations. Ordinary imports
-    /// are not modeled.
+    /// statement, as the language module decides: Rust `pub use` and module
+    /// declarations, TS/JS export clauses and `export … from`, an
+    /// `__init__.py`'s own-package from-imports and `__all__`, a Go
+    /// `//go:build` constraint, a Lua module's returned table. Listed in
+    /// the file's `Names` roster alongside the declarations. Ordinary
+    /// imports are not modeled.
     pub reexports: Vec<Item>,
     /// Admitted top-level declarations, in any order.
     pub decls: Vec<DeclInfo>,

@@ -17,8 +17,8 @@
 //!   global variables, object-like macros and declaring macro
 //!   invocations are `Whole`, with one body [`Item`] per field or
 //!   enumerator.
-//! - A non-`inline` `static` in a header is hidden, whatever the
-//!   spelling of `inline`.
+//! - A `static` in a header is hidden unless a specifier spells it
+//!   inline (`inline`, `__inline`, `SDS_INLINE`; not `noinline`).
 //! - A declaration's doc is the comment run directly above it, or above
 //!   the feature gate it opens.
 //!

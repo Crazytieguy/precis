@@ -18,9 +18,9 @@
 //!   inline `mod test` / `mod tests`, and `const _`. Outside `main.rs`,
 //!   a module that declares some unhidden visible item (a visibility
 //!   modifier, or `#[macro_export]` on a `macro_rules!`) hides its
-//!   private functions, macros and inherent-impl functions, and an
-//!   inherent impl with no admitted function; its private types,
-//!   constants and statics stay.
+//!   private functions, macros and inherent-impl items, and an
+//!   inherent impl with no admitted item; its private types, constants
+//!   and statics stay.
 
 use std::collections::HashSet;
 use std::path::Path;

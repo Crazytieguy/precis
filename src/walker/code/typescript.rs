@@ -18,7 +18,9 @@
 //! its arguments with, `X.extend({ … })`) are containers: methods (and
 //! function-valued fields or entries) are members, other fields and
 //! entries are body items, and `#name` / `private` / `protected` members
-//! are hidden. Interfaces, enums, array literals and namespaces are
+//! are hidden, as are `_name` members other than an object's data
+//! entries. A declaration whose doc says `@internal` or `@ignore` is
+//! hidden. Interfaces, enums, array literals and namespaces are
 //! `Whole` declarations whose entries are body items. Imports and
 //! `require` declarations are not modeled.
 
