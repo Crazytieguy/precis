@@ -28,7 +28,8 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{
-    Language, ProgramFunction, SourceFile, block_head, file_name, named_children, show_program_flow,
+    Language, ProgramFunction, SourceFile, block_head, file_name, is_leading_trivia,
+    named_children, show_program_flow,
 };
 use crate::walker::WalkCtx;
 
@@ -70,10 +71,7 @@ fn extract_items(
             has_visibility_rule(node) && !leading.hidden && is_visible(node, &leading, file)
         });
     for node in scope.named_children(&mut cursor) {
-        if matches!(
-            node.kind(),
-            "line_comment" | "block_comment" | "attribute_item"
-        ) {
+        if is_leading_trivia(node) {
             continue;
         }
         let leading = Leading::above(node, file);

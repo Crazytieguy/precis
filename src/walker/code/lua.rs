@@ -247,6 +247,7 @@ fn module_identity_rows(file: &SourceFile) -> Vec<usize> {
 
 #[cfg(test)]
 mod tests {
+    use super::super::test_support::rows;
     use super::*;
 
     fn extract_source(source: &str) -> FileModel {
@@ -294,12 +295,7 @@ local helper = 1
 return M
 ",
         );
-        let exports: Vec<Vec<usize>> = model
-            .reexports
-            .iter()
-            .map(|item| item.rows.clone())
-            .collect();
-        assert_eq!(exports, [vec![3], vec![5], vec![7]]);
+        assert_eq!(rows(&model.reexports), [vec![3], vec![5], vec![7]]);
         assert_eq!(name_rows(&model), [2, 4]);
 
         let returns_table = extract_source(
@@ -316,12 +312,7 @@ return {
 }
 ",
         );
-        let exports: Vec<Vec<usize>> = returns_table
-            .reexports
-            .iter()
-            .map(|item| item.rows.clone())
-            .collect();
-        assert_eq!(exports, [vec![4], vec![5], vec![10]]);
+        assert_eq!(rows(&returns_table.reexports), [vec![4], vec![5], vec![10]]);
         let stop = &returns_table.decls[1];
         assert_eq!(stop.head, [6]);
         assert_eq!(stop.body, [Item::new([7]), Item::new([8])]);
@@ -369,8 +360,7 @@ function M.version() return \"1.0\" end
         let foo = &model.decls[0];
         assert_eq!(foo.head, [2]);
         assert_eq!(foo.doc, [Item::new([1])]);
-        let body: Vec<_> = foo.body.iter().map(|item| item.rows.clone()).collect();
-        assert_eq!(body, [vec![3], vec![4, 5, 6, 7], vec![8]]);
+        assert_eq!(rows(&foo.body), [vec![3], vec![4, 5, 6, 7], vec![8]]);
         let one_line = &model.decls[1];
         assert_eq!(
             (one_line.head.as_slice(), one_line.body.len()),

@@ -341,14 +341,7 @@ mod tests {
     }
 
     fn decl(name_row: usize, head: Vec<usize>, shape: Shape) -> DeclInfo {
-        DeclInfo {
-            name_rows: vec![name_row],
-            head,
-            doc: Vec::new(),
-            body: Vec::new(),
-            shape,
-            members: Vec::new(),
-        }
+        DeclInfo::new(vec![name_row], head, shape)
     }
 
     /// A file of `lines` non-blank rows.
