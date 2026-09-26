@@ -251,6 +251,8 @@ lib/
     78→axios.AxiosHeaders = AxiosHeaders;
     79→
     80→axios.formToJSON = (thing) => formDataToJSON(utils.isHTMLForm(thing) ? new FormData(thing) : thing);
+    81→
+    82→axios.getAdapter = adapters.getAdapter;
     …
   cancel/
     CancelToken.js
@@ -263,8 +265,6 @@ lib/
       23→  constructor(instanceConfig) {
       …
       39→  async request(configOrUrl, config) {
-      …
-      82→  _request(configOrUrl, config) {
       …
       233→  getUri(config) {
       …

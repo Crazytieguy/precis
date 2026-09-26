@@ -664,7 +664,12 @@ fn method_assignment<'tree>(file: &SourceFile, assignment: Node<'tree>) -> TopLe
     ) else {
         return TopLevel::Skip;
     };
-    if assignment.kind() != "assignment_expression" || left.kind() != "member_expression" {
+    if assignment.kind() != "assignment_expression"
+        || left.kind() != "member_expression"
+        || left
+            .child_by_field_name("property")
+            .is_some_and(|property| file.text(property).starts_with('_'))
+    {
         return TopLevel::Skip;
     }
     let mut object = left.child_by_field_name("object");
@@ -1023,12 +1028,15 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
     }
 }
 
-/// `#name`, `private` and `protected` members: not part of the class's
-/// API.
+/// `#name`, `_name`, `private` and `protected` members: not part of the
+/// container's API.
 fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
     if member
         .child_by_field_name("name")
-        .is_some_and(|name| name.kind() == "private_property_identifier")
+        .or_else(|| member.child_by_field_name("key"))
+        .is_some_and(|name| {
+            name.kind() == "private_property_identifier" || file.text(name).starts_with('_')
+        })
     {
         return true;
     }
@@ -1256,6 +1264,39 @@ export class Queue<T>
                 "  Callable name [16] head [15, 16] doc [[14]] body [[17]]",
                 "  Callable name [24] head [24] doc [] body []",
                 "  Callable name [26] head [26] doc [] body [[27]]",
+            ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_underscore_members_are_private() {
+        let model = extract_source(
+            "lib/graph.js",
+            "\
+export class Graph {
+  _cache = {};
+  _update() {}
+  get() {}
+}
+export const store = {
+  _normalize: function (key) {},
+  load: function () {},
+};
+function Provider() {}
+Provider.prototype._execute = function () {};
+Provider.prototype.run = function () {};
+export { Provider };
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1, 5] doc [] body [[4]]",
+                "  Callable name [4] head [4] doc [] body []",
+                "Whole name [6] head [6, 9] doc [] body [[8]]",
+                "  Callable name [8] head [8] doc [] body []",
+                "Callable name [10] head [10] doc [] body []",
+                "Callable name [12] head [12] doc [] body []",
             ]
         );
     }
