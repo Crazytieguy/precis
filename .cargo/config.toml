@@ -3,4 +3,7 @@ lint = "clippy --all-targets -- -D warnings"
 t = "nextest run"
 
 [build]
+# Several agents often build at once from their own worktrees, each
+# recompiling only the precis crate; see .config/nextest.toml. For a solo
+# build, CARGO_BUILD_JOBS overrides this.
 jobs = 2
