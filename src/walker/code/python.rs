@@ -319,34 +319,19 @@ fn definitions(
     let mut decls = Vec::new();
     let mut items = Vec::new();
     for block in clause_blocks(statement) {
-        let first = decls.len();
-        let mut fields: Vec<Node> = Vec::new();
-        let hidden = implemented_overloads(file, block.named_children(&mut block.walk()));
-        for node in block.named_children(&mut block.walk()) {
-            let (defined, nested_items) = definitions(file, node, after_row, &hidden);
-            if defined.is_empty() {
-                if !is_definition_kind(node.kind()) {
-                    fields.push(node);
-                }
-                continue;
-            }
-            while fields.last().is_some_and(|field| field.kind() == "comment") {
-                fields.pop();
-            }
-            decls.extend(defined);
-            items.extend(nested_items);
-        }
-        let mut block_items = file.node_items(fields, after_row);
+        let statements: Vec<Node> = block.named_children(&mut block.walk()).collect();
+        let (mut block_decls, mut block_items) = suite(file, &statements, after_row);
         if let Some(clause) = block.parent() {
             let opening_row = clause.start_position().row + 1;
-            if let Some(decl) = decls.get_mut(first) {
+            if let Some(decl) = block_decls.first_mut() {
                 decl.head.insert(0, opening_row);
                 decl.name_rows.insert(0, opening_row);
             } else if let Some(item) = block_items.first_mut() {
                 item.rows.insert(0, opening_row);
             }
         }
-        items.extend(block_items);
+        decls.append(&mut block_decls);
+        items.append(&mut block_items);
     }
     let statement_row = statement.start_position().row + 1;
     if let Some(decl) = decls.first_mut()
@@ -496,64 +481,61 @@ fn suite_statements(inner: Node) -> Vec<Node> {
     statements
 }
 
-/// A class suite (after its docstring): methods, including those in an
-/// `if` / `try` block (see [`definitions`]), become members, listed in
-/// the body by their name rows, and the block's other statements are
-/// body items; every other statement (fields, blocks defining nothing)
-/// is a body [`Item`] with the comments directly above it. A nested class is flattened into the suite: its head is one
-/// item, its doc, fields and member name rows follow, and its methods
-/// become members, so it lists as a roster rather than as its whole
-/// source.
-/// Comments directly above a method or nested class are its doc when it
-/// has no docstring, and otherwise in no part.
+/// The definitions among `statements`, a suite (see [`definitions`]),
+/// and the items of those in `if` / `try` blocks and of the statements
+/// that define nothing, each [`Item`] holding rows past `after_row` with
+/// the comments directly above it. Comments directly above a definition
+/// are its doc when it has no docstring, and otherwise in no part.
+fn suite(file: &SourceFile, statements: &[Node], after_row: usize) -> (Vec<DeclInfo>, Vec<Item>) {
+    let hidden = implemented_overloads(file, statements.iter().copied());
+    let mut decls = Vec::new();
+    let mut items = Vec::new();
+    let mut fields: Vec<Node> = Vec::new();
+    for &node in statements {
+        let (defined, nested_items) = definitions(file, node, after_row, &hidden);
+        if defined.is_empty() {
+            if !is_definition_kind(node.kind()) {
+                fields.push(node);
+            }
+            continue;
+        }
+        while fields.last().is_some_and(|field| field.kind() == "comment") {
+            fields.pop();
+        }
+        decls.extend(defined);
+        items.extend(nested_items);
+    }
+    items.extend(file.node_items(fields, after_row));
+    (decls, items)
+}
+
+/// A class suite (after its docstring), its body [`Item`]s in source
+/// order: see [`suite`]. Methods become members, listed in the body by
+/// their name rows. A nested class is flattened into the suite: its head,
+/// doc, fields and member name rows are items, and its methods become
+/// members, so it lists as a roster rather than as its whole source.
 fn class_body(
     file: &SourceFile,
     statements: &[Node],
     after_row: usize,
 ) -> (Vec<Item>, Vec<DeclInfo>) {
-    let mut body = Vec::new();
+    let (defined, mut body) = suite(file, statements, after_row);
     let mut members = Vec::new();
-    let mut run: Vec<Node> = Vec::new();
-    let hidden = implemented_overloads(file, statements.iter().copied());
-    for node in statements {
-        let (defined, clause_items) = definitions(file, *node, after_row, &hidden);
-        if defined.is_empty() {
-            if !is_definition_kind(node.kind()) {
-                run.push(*node);
+    for member in defined {
+        match member.shape {
+            Shape::Callable => {
+                body.push(Item::new(member.name_rows.iter().copied()));
+                members.push(member);
             }
-            continue;
-        }
-        let last_statement_end = run
-            .iter()
-            .rfind(|pending| pending.kind() != "comment")
-            .map_or(0, |statement| *file.node_rows(*statement).end());
-        while run.last().is_some_and(|pending| {
-            pending.kind() == "comment" && *file.node_rows(*pending).start() > last_statement_end
-        }) {
-            run.pop();
-        }
-        body.extend(file.node_items(run.drain(..), after_row));
-        let first_new = body.len();
-        for member in defined {
-            match member.shape {
-                Shape::Callable => {
-                    body.push(Item::new(member.name_rows.iter().copied()));
-                    members.push(member);
-                }
-                Shape::Whole => {
-                    body.push(Item::new(member.head));
-                    body.extend(member.doc);
-                    body.extend(member.body);
-                    members.extend(member.members);
-                }
+            Shape::Whole => {
+                body.push(Item::new(member.head));
+                body.extend(member.doc);
+                body.extend(member.body);
+                members.extend(member.members);
             }
-        }
-        if matches!(node.kind(), "if_statement" | "try_statement") {
-            body.extend(clause_items);
-            body[first_new..].sort_by_key(|item| item.rows.first().copied());
         }
     }
-    body.extend(file.node_items(run, after_row));
+    body.sort_by_key(|item| item.rows.first().copied());
     (body, members)
 }
 
