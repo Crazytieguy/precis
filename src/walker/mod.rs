@@ -158,14 +158,10 @@ impl WalkCtx {
         &self.root
     }
 
-    pub fn dir_filter(&self) -> &DirFilter {
+    /// Shared with the renderer, so cost probes reuse this run's ignore
+    /// caches instead of rebuilding them per probe.
+    pub fn dir_filter(&self) -> &Rc<DirFilter> {
         &self.dir_filter
-    }
-
-    /// Shared handle for the renderer, so cost probes reuse this run's
-    /// ignore caches instead of rebuilding them per probe.
-    pub fn dir_filter_handle(&self) -> Rc<DirFilter> {
-        Rc::clone(&self.dir_filter)
     }
 
     pub fn source_cache(&self) -> &SourceCache {

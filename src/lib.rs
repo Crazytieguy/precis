@@ -18,13 +18,15 @@ pub mod walker;
 pub use render::char_units;
 
 use fs_util::DirFilter;
+use render::SourceCache;
 use scheduler::Scheduler;
-use walker::FsWalker;
+use walker::{FsWalker, WalkCtx};
 
 /// Render a precis summary of the directory or file at `path` under the
 /// given budgets (`char_budget` in [`char_units`]).
 pub fn render(path: &Path, token_budget: usize, char_budget: Option<usize>) -> Result<String> {
-    let scheduler = Scheduler::with_filter(walk_scope(path)?, FsWalker, token_budget, char_budget);
+    let ctx = WalkCtx::with_filter(walk_scope(path)?, SourceCache::new());
+    let scheduler = Scheduler::new(ctx, FsWalker, token_budget, char_budget);
     Ok(scheduler.run().render())
 }
 

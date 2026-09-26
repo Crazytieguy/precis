@@ -130,7 +130,12 @@ fn scheduler_invariants_override_via_predecessor_chain() {
         &stub_file("synthetic.rs"),
         "fn foo(a: i32, b: i32) -> Result<()> {\nfn bar(c: i32) -> Result<()> {\n",
     );
-    let scheduler = Scheduler::with_source_cache(stub_dir(), OverrideChain, 100_000, None, cache);
+    let scheduler = Scheduler::new(
+        WalkCtx::with_cache(stub_dir(), cache),
+        OverrideChain,
+        100_000,
+        None,
+    );
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(rendered.contains("synthetic.rs"), "rendered: {rendered}");
@@ -175,7 +180,7 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
         .map(|_| "very long line that will not fit at one token\n")
         .collect();
     preload(&cache, &stub_file("synthetic.rs"), &body);
-    let scheduler = Scheduler::with_source_cache(stub_dir(), OneEntry, 1, None, cache);
+    let scheduler = Scheduler::new(WalkCtx::with_cache(stub_dir(), cache), OneEntry, 1, None);
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(
@@ -210,9 +215,14 @@ fn scheduler_invariants_unaffordable_batch_spends_the_rest_on_its_head() {
         let cache = SourceCache::new();
         let body: String = (1..=40).map(|i| format!("let line_{i} = {i};\n")).collect();
         preload(&cache, &stub_file("big.rs"), &body);
-        Scheduler::with_source_cache(stub_dir(), ListingThenFile, budget, None, cache)
-            .run()
-            .render()
+        Scheduler::new(
+            WalkCtx::with_cache(stub_dir(), cache),
+            ListingThenFile,
+            budget,
+            None,
+        )
+        .run()
+        .render()
     };
     let whole = render_at(10_000);
     let budget = precis::tokenizer::count(&whole) / 2;
@@ -272,7 +282,7 @@ fn scheduler_invariants_unaffordable_seed_listing_degrades_to_a_marked_prefix() 
         std::fs::write(root.join(format!("entry_{i:03}.txt")), "x").unwrap();
     }
 
-    let scheduler = Scheduler::new(root.clone(), RootListing(root), BUDGET, None);
+    let scheduler = Scheduler::new(WalkCtx::new(root.clone()), RootListing(root), BUDGET, None);
     let rendered = scheduler.run().render();
     let listed = rendered.lines().filter(|l| l.contains("entry_")).count();
     assert!(listed > 0, "seed listing degraded to nothing: {rendered:?}");
@@ -328,8 +338,12 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
 
     let cache = SourceCache::new();
     preload(&cache, &stub_file("f.rs"), "x\n");
-    let scheduler =
-        Scheduler::with_source_cache(stub_dir(), OverlappingWalker, 10_000, None, cache);
+    let scheduler = Scheduler::new(
+        WalkCtx::with_cache(stub_dir(), cache),
+        OverlappingWalker,
+        10_000,
+        None,
+    );
     let _ = scheduler.run();
 }
 
@@ -393,7 +407,12 @@ fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
     }
 
     let cache = SourceCache::new();
-    let scheduler = Scheduler::with_source_cache(stub_dir(), OverlapWalker, 10_000, None, cache);
+    let scheduler = Scheduler::new(
+        WalkCtx::with_cache(stub_dir(), cache),
+        OverlapWalker,
+        10_000,
+        None,
+    );
     let _ = scheduler.run();
 }
 
@@ -440,7 +459,12 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
         &stub_file("synthetic.rs"),
         "fn foo() {}\n// doc line\n",
     );
-    let scheduler = Scheduler::with_source_cache(stub_dir(), DependentFirst, 100_000, None, cache);
+    let scheduler = Scheduler::new(
+        WalkCtx::with_cache(stub_dir(), cache),
+        DependentFirst,
+        100_000,
+        None,
+    );
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(rendered.contains("fn foo() {}"), "rendered: {rendered}");
@@ -495,8 +519,13 @@ fn scheduler_invariants_char_budget_prices_batches_in_chars() {
         let cache = SourceCache::new();
         preload(&cache, &stub_file("dense.rs"), DENSE);
         preload(&cache, &stub_file("wide.rs"), WIDE);
-        let report = Scheduler::with_source_cache(stub_dir(), TwoFiles, 1_000, char_budget, cache)
-            .run_with_report();
+        let report = Scheduler::new(
+            WalkCtx::with_cache(stub_dir(), cache),
+            TwoFiles,
+            1_000,
+            char_budget,
+        )
+        .run_with_report();
         match &report.scheduled[1].key {
             BatchKey::Code(key) => key.file.clone(),
             other => panic!("expected a code batch, got {other:?}"),

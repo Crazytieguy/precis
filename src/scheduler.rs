@@ -14,11 +14,11 @@
 use std::collections::BTreeMap;
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
+use std::rc::Rc;
 
 use crate::batch::{Batch, BatchId, BatchKey, CodeKey, Rung};
 use crate::content::BatchContent;
-use crate::fs_util::DirFilter;
-use crate::render::{Cost, RenderedTree, SourceCache};
+use crate::render::{Cost, RenderedTree};
 use crate::value::ratio_with_exponent;
 use crate::walker::{WalkCtx, Walker};
 
@@ -100,39 +100,11 @@ const BREADTH_PRESSURE_TOKEN_SCALE: f64 = 1000.0;
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
 
 impl<W: Walker> Scheduler<W> {
-    pub fn new(root: PathBuf, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
-        Self::with_source_cache(root, walker, token_budget, char_budget, SourceCache::new())
-    }
-
-    /// Scheduler sharing an externally-owned `SourceCache` (tests).
-    pub fn with_source_cache(
-        root: PathBuf,
-        walker: W,
-        token_budget: usize,
-        char_budget: Option<usize>,
-        source_cache: SourceCache,
-    ) -> Self {
-        let ctx = WalkCtx::with_cache(root, source_cache);
-        Self::with_ctx(ctx, walker, token_budget, char_budget)
-    }
-
-    /// Scheduler whose walk is scoped by `dir_filter` rather than by
-    /// the default filter for its root.
-    pub fn with_filter(
-        dir_filter: DirFilter,
-        walker: W,
-        token_budget: usize,
-        char_budget: Option<usize>,
-    ) -> Self {
-        let ctx = WalkCtx::with_filter(dir_filter, SourceCache::new());
-        Self::with_ctx(ctx, walker, token_budget, char_budget)
-    }
-
-    fn with_ctx(ctx: WalkCtx, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
+    pub fn new(ctx: WalkCtx, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
         let tree = RenderedTree::with_filter(
             ctx.root().to_path_buf(),
             ctx.source_cache().clone(),
-            ctx.dir_filter_handle(),
+            Rc::clone(ctx.dir_filter()),
         );
         Self {
             walker,

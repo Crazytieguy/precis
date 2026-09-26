@@ -51,7 +51,7 @@ use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache, visible_full_line};
 use crate::scheduler::{ScheduledBatchRecord, Scheduler};
-use crate::walker::FsWalker;
+use crate::walker::{FsWalker, WalkCtx};
 
 /// Geometric on `[1000, 9000]` (ratio ⁶√9), symmetric around 3000 on the
 /// log scale.
@@ -121,7 +121,8 @@ pub struct Schedule {
 pub fn render_schedule(path: &Path, budget: usize) -> Result<Schedule> {
     let filter = crate::walk_scope(path)?;
     let root = filter.root().to_path_buf();
-    let report = Scheduler::with_filter(filter, FsWalker, budget, None).run_with_report();
+    let ctx = WalkCtx::with_filter(filter, SourceCache::new());
+    let report = Scheduler::new(ctx, FsWalker, budget, None).run_with_report();
     Ok(Schedule {
         root,
         batches: report.scheduled,

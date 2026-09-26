@@ -1892,7 +1892,7 @@ mod tests {
         )
         .unwrap();
 
-        let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 200, None);
+        let scheduler = Scheduler::new(WalkCtx::new(dir.path().to_path_buf()), FsWalker, 200, None);
         let rendered = scheduler.run().render();
         assert!(rendered.contains("just two lines of prose"), "{rendered}");
         assert!(rendered.contains("second line here"), "{rendered}");

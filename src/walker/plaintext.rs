@@ -1428,7 +1428,7 @@ mod tests {
         .unwrap();
         std::fs::write(root.join(".tool-versions"), "rust 1.80.0\n").unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         let rendered = report.tree.render();
 
@@ -1522,7 +1522,7 @@ mod tests {
             "package demo;\n\npublic class Foo {\n    int x;\n}\n",
         )
         .unwrap();
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let rendered = scheduler.run().render();
         assert!(rendered.contains("5→}"), "{rendered}");
         assert!(!rendered.contains('…'), "{rendered}");
@@ -1542,7 +1542,7 @@ mod tests {
             .collect();
         std::fs::write(root.join(".tool-versions"), body).unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         assert_has_plaintext_whole(&report, ".tool-versions");
         let rendered = report.tree.render();
@@ -1567,7 +1567,7 @@ mod tests {
             .join("\n");
         std::fs::write(root.join(".gitignore"), body).unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         assert_no_plaintext_whole(&report, ".gitignore");
     }
