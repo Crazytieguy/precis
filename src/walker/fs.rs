@@ -185,19 +185,21 @@ const LISTING_VALUE: f64 = 1230.0;
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
     let module_source_dir = ctx.fs_state.is_module_source_dir(dir);
-    let source_dir = is_source_dir(dir) || is_go_pkg_wrapper(dir);
     let non_essential = ctx.non_essential_factor(dir);
-    let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
-    let under_root_source_ancestor = has_source_root_ancestor(dir, ctx);
     let source_inventory_dir = is_source_inventory_dir(dir, ctx);
-    // A partition under the repository's source root names part of the
-    // package's API wherever it sits, so it prices like depth 1.
-    let depth = if source_inventory_dir && under_root_source_ancestor {
+    // A package module, or a partition under the repository's source
+    // root, names part of the package's API wherever it sits, so it
+    // prices like depth 1. Supporting source (tests, examples, docs) is
+    // clamped at depth 2 so nested ones neither disappear nor act like
+    // entrypoints.
+    let depth = if source_inventory_dir && has_source_root_ancestor(dir, ctx)
+        || module_source_dir && non_essential >= 1.0
+    {
         file_depth_factor(dir, ctx, true)
-    } else if supporting_source_dir || source_inventory_dir {
-        inventory_depth_factor(dir, ctx, non_essential)
-    } else if module_source_dir {
-        file_depth_factor(dir, ctx, true)
+    } else if non_essential < 1.0
+        && (source_inventory_dir || module_source_dir || is_source_dir(dir))
+    {
+        crate::value::depth_factor(ctx.depth_from_root(dir).min(2)) * non_essential.max(0.5)
     } else {
         path_depth_factor(dir, ctx)
     };
@@ -272,7 +274,6 @@ const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
 /// inventory inside tests, examples or docs.
 fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     !is_source_dir(dir)
-        && !is_go_pkg_wrapper(dir)
         && !ctx.fs_state.is_module_source_dir(dir)
         && ctx.fs_state.holds_source(dir, ctx.dir_filter())
         && (ctx.non_essential_factor(dir) < 1.0 || has_source_root_ancestor(dir, ctx))
@@ -317,7 +318,7 @@ fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
         || ctx.is_js_workspace_member(&dir.join("package.json"))
 }
 
-pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
+const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
     "index.ts",
     "index.tsx",
     "index.js",
@@ -330,25 +331,15 @@ const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
 /// Case-insensitive, and `Sources/` counts: that is the spelling
 /// SwiftPM mandates, and the same for `Source/` in Objective-C and
 /// C# trees. A case-sensitive check leaves those repos with no
-/// recognised source root at all.
-pub(crate) fn is_source_dir(dir: &Path) -> bool {
+/// recognised source root at all. A `pkg/` beside a `go.mod` is Go's
+/// library source.
+fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
-        .is_some_and(|name| {
-            matches!(
-                name.to_ascii_lowercase().as_str(),
-                "src" | "lib" | "source" | "sources"
-            )
+        .is_some_and(|name| match name.to_ascii_lowercase().as_str() {
+            "src" | "lib" | "source" | "sources" => true,
+            _ => name == "pkg" && dir.with_file_name("go.mod").is_file(),
         })
-}
-
-/// `pkg/` directory next to a `go.mod` — the Go convention for
-/// primary library code. Equivalent to `lib/`/`src/` in JS/TS.
-fn is_go_pkg_wrapper(dir: &Path) -> bool {
-    dir.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|name| name == "pkg")
-        && dir.parent().is_some_and(|p| p.join("go.mod").is_file())
 }
 
 fn has_module_entrypoint(dir: &Path) -> bool {
@@ -462,7 +453,7 @@ fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
         return false;
     };
     let top = ctx.root().join(top);
-    components.next().is_some() && (is_source_dir(&top) || is_go_pkg_wrapper(&top))
+    components.next().is_some() && is_source_dir(&top)
 }
 
 fn holds_source_uncached(
@@ -509,13 +500,6 @@ fn is_source_inventory_file(path: &Path) -> bool {
         || path
             .extension()
             .is_some_and(|ext| ext.eq_ignore_ascii_case("md") || ext.eq_ignore_ascii_case("mdx"))
-}
-
-fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 {
-    // Clamp depth at 2 so nested examples/docs neither disappear nor
-    // act like entrypoints; floor non-essential at 0.5.
-    let depth = ctx.depth_from_root(dir).min(2);
-    crate::value::depth_factor(depth) * non_essential.max(0.5)
 }
 
 /// Heavy-directory names block traversal, except a `build/` that holds
