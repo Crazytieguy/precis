@@ -246,6 +246,12 @@ once workspace members were exempt.
   the main thread in walk order, so output is independent of thread
   timing only while a parse stays a pure function of the file.
   Tokenizing on workers costs about twice the CPU and doesn't pay.
+- **precis counts o200k tokens itself** (`src/tokenizer.rs`, OpenAI's
+  rank file vendored) rather than through tiktoken-rs, whose `CoreBPE`
+  took ~70 ms of CPU to build per run (a decoder map and a sorted token
+  list precis never reads), more than the whole walk of a small repo,
+  and whose backtracking pre-tokenizer made counting the main thread's
+  largest cost. Tests pin the counts to tiktoken-rs.
 - **The probe budget is per probe, not per run**, so a directory's
   inventory answer depends only on that directory; an answer the budget
   cut short is not cached. `hides_everything_in` is uncapped on purpose:
