@@ -96,8 +96,8 @@ pub(crate) fn parsed_extensions() -> impl Iterator<Item = &'static str> {
         .flat_map(|language| language.extensions.iter().copied())
 }
 
-/// How deeply the scopes an extraction descends into (C feature gates,
-/// their alternates and `extern "C"` blocks, Rust inline modules) may
+/// How deeply the scopes an extraction descends into (C feature gates
+/// and `extern "C"` blocks, Rust inline modules) may
 /// nest; deeper ones are not descended. Tree-sitter finds a node's parent
 /// and siblings by walking down from the root, so the work per descended
 /// node grows with its depth, and generated input can nest hundreds of

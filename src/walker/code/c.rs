@@ -56,12 +56,11 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let in_header = is_header(&file.path);
     let mut decls = Vec::new();
     let mut directives = Vec::new();
-    let mut visit = |node: Node| {
-        if node.kind().starts_with('#') {
-            directives.extend(gate_directive(node, file));
-        } else {
-            decls.extend(declaration(node, file, in_header));
+    let mut visit = |node: Node, enclosing: Option<GateBranch>| match enclosing {
+        Some(enclosing) if node.kind().starts_with('#') => {
+            directives.push(gate_directive(node, enclosing, file));
         }
+        _ => decls.extend(declaration(node, file, in_header)),
     };
     let top_level = header_guard(root, file).unwrap_or(root);
     visit_with_envelope_descent(top_level, file, &mut visit);
@@ -206,17 +205,24 @@ struct GateDirective {
     gate_rows: RangeInclusive<usize>,
 }
 
+/// A descended feature gate and the branch of it that holds a node: the
+/// gate itself (alternate 0) or its `alternate`th `#elif` / `#else`.
+#[derive(Clone, Copy)]
+struct GateBranch<'a> {
+    gate: Node<'a>,
+    branch: Node<'a>,
+    alternate: usize,
+}
+
+/// How many alternates of one gate are descended. C99 requires compilers
+/// to support 1023 case labels in one `switch`, the construct an `#elif`
+/// chain spells for the preprocessor.
+const MAX_GATE_ALTERNATES: usize = 1023;
+
 /// `token` is an `#if` / `#ifdef` / `#elif` / `#else` / `#endif` token
-/// of a feature gate.
-fn gate_directive(token: Node, file: &SourceFile) -> Option<GateDirective> {
-    let branch = token.parent()?;
-    let mut gate = branch;
-    while matches!(
-        gate.kind(),
-        "preproc_else" | "preproc_elif" | "preproc_elifdef"
-    ) {
-        gate = gate.parent()?;
-    }
+/// of the branch `enclosing` names.
+fn gate_directive(token: Node, enclosing: GateBranch, file: &SourceFile) -> GateDirective {
+    let GateBranch { gate, branch, .. } = enclosing;
     let start_row = token.start_position().row + 1;
     let end_row = if token.kind() == "#endif" {
         start_row
@@ -226,10 +232,10 @@ fn gate_directive(token: Node, file: &SourceFile) -> Option<GateDirective> {
             .or_else(|| branch.child_by_field_name("name"))
             .map_or(start_row, |condition| condition.end_position().row + 1)
     };
-    Some(GateDirective {
+    GateDirective {
         rows: start_row..=end_row,
         gate_rows: file.node_rows(gate),
-    })
+    }
 }
 
 /// Adds each feature gate directive to the head of the nearest
@@ -397,45 +403,61 @@ fn declarator_is_function(mut node: Node) -> bool {
 /// gate's children are visited, directive tokens (`#ifdef`, `#else`,
 /// `#endif`) included, plus the bodies of its `#else` / `#elif`
 /// alternates; nested gates descend (or stay opaque) on their own merits.
-/// An envelope, gate or alternate (which nests in the branch before it)
-/// counts as a scope, and one inside [`MAX_SCOPE_NESTING`] others stays
-/// opaque.
+/// An envelope or gate counts as a scope, and one inside
+/// [`MAX_SCOPE_NESTING`] others stays opaque; alternates past a gate's
+/// [`MAX_GATE_ALTERNATES`]th stay opaque too.
 fn visit_with_envelope_descent<'a>(
     top_level: Node<'a>,
     file: &SourceFile,
-    mut visit: impl FnMut(Node<'a>),
+    mut visit: impl FnMut(Node<'a>, Option<GateBranch<'a>>),
 ) {
     let mut gate_answers = HashMap::new();
-    // Each node with whether it is a branch of a descended gate, and the
-    // number of scopes around it.
-    let mut pending: Vec<(Node, bool, usize)> = top_level
+    // Each node with the gate branch it sits in, and the number of scopes
+    // around it.
+    let mut pending: Vec<(Node, Option<GateBranch>, usize)> = top_level
         .named_children(&mut top_level.walk())
-        .map(|node| (node, false, 0))
+        .map(|node| (node, None, 0))
         .collect();
     pending.reverse();
-    while let Some((node, in_gate, depth)) = pending.pop() {
-        let (children, in_gate): (Vec<Node>, _) = if depth >= MAX_SCOPE_NESTING {
-            visit(node);
+    while let Some((node, enclosing, depth)) = pending.pop() {
+        let (children, enclosing): (Vec<Node>, _) = if depth >= MAX_SCOPE_NESTING {
+            visit(node, enclosing);
             continue;
-        } else if in_gate && is_gate_alternate(node.kind()) {
-            (node.children(&mut node.walk()).collect(), true)
+        } else if let Some(GateBranch {
+            gate, alternate, ..
+        }) = enclosing.filter(|enclosing| {
+            is_gate_alternate(node.kind()) && enclosing.alternate < MAX_GATE_ALTERNATES
+        }) {
+            let branch = GateBranch {
+                gate,
+                branch: node,
+                alternate: alternate + 1,
+            };
+            (node.children(&mut node.walk()).collect(), Some(branch))
         } else if let Some(decl_list) = extern_c_declaration_list(node, file) {
-            (named_children(Some(decl_list)), false)
+            (named_children(Some(decl_list)), None)
         } else if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
             && !is_disabled_preproc_if(node, file)
             && feature_gate_is_declaration_only(node, file, &mut gate_answers) == Some(true)
         {
-            (node.children(&mut node.walk()).collect(), true)
+            let branch = GateBranch {
+                gate: node,
+                branch: node,
+                alternate: 0,
+            };
+            (node.children(&mut node.walk()).collect(), Some(branch))
         } else {
-            visit(node);
+            visit(node, enclosing);
             continue;
         };
-        pending.extend(
-            children
-                .into_iter()
-                .rev()
-                .map(|child| (child, in_gate, depth + 1)),
-        );
+        pending.extend(children.into_iter().rev().map(|child| {
+            let child_depth = if is_gate_alternate(child.kind()) {
+                depth
+            } else {
+                depth + 1
+            };
+            (child, enclosing, child_depth)
+        }));
     }
 }
 
@@ -733,6 +755,20 @@ int packed(void);
             name_rows_of(&model("krep.h", source)),
             vec![vec![2], vec![4], vec![19]]
         );
+    }
+
+    /// A target-selection chain is one gate however many alternates it
+    /// has, so its length is not nesting.
+    #[test]
+    fn c_feature_gate_alternates_do_not_count_as_nesting() {
+        let alternates = MAX_SCOPE_NESTING + 16;
+        let mut source =
+            String::from("#ifndef CHIP_H\n#define CHIP_H\n#if defined(CHIP0)\nint chip0;\n");
+        for index in 1..alternates {
+            source.push_str(&format!("#elif defined(CHIP{index})\nint chip{index};\n"));
+        }
+        source.push_str("#endif\n#endif\n");
+        assert_eq!(model("chip.h", &source).decls.len(), alternates);
     }
 
     #[test]
