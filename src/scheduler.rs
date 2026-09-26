@@ -92,8 +92,9 @@ pub struct Scheduler<W: Walker> {
     /// Code tokens scheduled per source file — drives the
     /// breadth-pressure ratio penalty.
     code_tokens_per_file: HashMap<PathBuf, usize>,
-    /// Whether a [root identity](Self::is_root_identity) batch has been
-    /// scheduled.
+    /// Every [root identity](Self::is_root_identity) batch absorbed.
+    root_identities: HashSet<BatchId>,
+    /// Whether a root identity batch has been scheduled.
     root_identity_read: bool,
 }
 
@@ -142,6 +143,7 @@ impl<W: Walker> Scheduler<W> {
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
             code_tokens_per_file: HashMap::new(),
+            root_identities: HashSet::new(),
             root_identity_read: false,
         }
     }
@@ -263,6 +265,9 @@ impl<W: Walker> Scheduler<W> {
         }
         self.entries.push(batch);
         self.ranked.push(None);
+        if self.is_root_identity(id) {
+            self.root_identities.insert(id);
+        }
     }
 
     // ---- exact pool ----
@@ -272,12 +277,11 @@ impl<W: Walker> Scheduler<W> {
         self.rerank_stale();
         let best = self.ranking.last()?.id;
         let picked = if !self.root_identity_read && self.is_listing_below_spine(best) {
-            self.ranking
+            self.root_identities
                 .iter()
-                .rev()
-                .map(|ranked| ranked.id)
-                .find(|&id| self.is_root_identity(id))
-                .unwrap_or(best)
+                .filter_map(|id| self.ranked[id.index()].as_ref())
+                .max()
+                .map_or(best, |ranked| ranked.id)
         } else {
             best
         };
@@ -452,7 +456,7 @@ impl<W: Walker> Scheduler<W> {
         );
 
         let entry_content = self.apply_and_record(id, cost);
-        if self.is_root_identity(id) {
+        if self.root_identities.contains(&id) {
             self.root_identity_read = true;
         }
         if let BatchKey::Code(key) = &self.entries[id.index()].key {
