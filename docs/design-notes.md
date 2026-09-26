@@ -370,6 +370,11 @@ rows for its names, and parses more.
   the main thread in walk order, so output is independent of thread
   timing only while a parse stays a pure function of the file.
   Tokenizing on workers costs about twice the CPU and doesn't pay.
+- **A parse has no deadline**: a timeout would make which files extract
+  depend on machine load. Inputs a grammar parses superlinearly are
+  refused before the parse by a count over the source instead, as
+  `python::has_costly_comment_runs` refuses long runs of `#` rows below
+  a statement, which tree-sitter-python's scanner rereads at every row.
 - **precis counts o200k tokens itself** (`src/tokenizer.rs`, OpenAI's
   rank file vendored) rather than through tiktoken-rs, whose `CoreBPE`
   took ~70 ms of CPU to build per run (a decoder map and a sorted token
