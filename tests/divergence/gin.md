@@ -35,9 +35,9 @@ Score(3000)=0.589 I=0.638 C=0.544 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | ns | 1434 |  | 198 | Core public type vocabulary: HandlerFunc, OptionFunc, HandlersChain, RouteInfo | 2.1 |  | 0.723 |
 | walker |  | 1541 | 373 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.723 |
 | ns | 1684 |  | 250 | Engine struct: complete exported configuration field roster | 2.2 |  | 0.655 |
-| walker |  | 1761 | 220 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.658 |
-| walker |  | 1801 | 40 | Code::CodeKey { rung: Decl, file: gin.go, decl: 5, sub: 0, line: 68 } |  |  | 0.666 |
-| walker |  | 1906 | 105 | Code::CodeKey { rung: Decl, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.666 |
+| walker |  | 1769 | 228 | Code::CodeKey { rung: Names, file: gin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.659 |
+| walker |  | 1809 | 40 | Code::CodeKey { rung: Decl, file: gin.go, decl: 5, sub: 0, line: 68 } |  |  | 0.666 |
+| walker |  | 1906 | 97 | Code::CodeKey { rung: Decl, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.666 |
 | walker |  | 1912 | 6 | Code::CodeKey { rung: Doc, file: gin.go, decl: 7, sub: 0, line: 79 } |  |  | 0.666 |
 | walker |  | 1923 | 11 | Code::CodeKey { rung: Doc, file: gin.go, decl: 6, sub: 0, line: 76 } |  |  | 0.669 |
 | walker |  | 1935 | 12 | Code::CodeKey { rung: Doc, file: gin.go, decl: 3, sub: 0, line: 57 } |  |  | 0.672 |
@@ -76,8 +76,8 @@ Score(3000)=0.589 I=0.638 C=0.544 ns_rows≤3K=15/45 grid(1000/1442/2080/3000/43
 | walker |  | 3565 | 19 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 8, sub: 0, line: 111 } |  |  | 0.600 |
 | walker |  | 3584 | 19 | Code::CodeKey { rung: Doc, file: routergroup.go, decl: 9, sub: 0, line: 116 } |  |  | 0.600 |
 | ns | 3637 |  | 148 | tree.go: Param / Params — the URL-parameter type and its accessors | 2.9 |  | 0.589 |
-| walker |  | 3783 | 199 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
-| walker |  | 3794 | 11 | Code::CodeKey { rung: Decl, file: context.go, decl: 1, sub: 0, line: 31 } |  |  | 0.589 |
+| walker |  | 3789 | 205 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
+| walker |  | 3794 | 5 | Code::CodeKey { rung: Decl, file: context.go, decl: 1, sub: 0, line: 31 } |  |  | 0.589 |
 | walker |  | 3809 | 15 | Code::CodeKey { rung: Doc, file: context.go, decl: 1, sub: 0, line: 31 } |  |  | 0.589 |
 | ns | 3816 |  | 179 | handleHTTPRequest: path resolution before the tree lookup | 2.10 | 2.7 | 0.574 |
 | walker |  | 4011 | 202 | Code::CodeKey { rung: Names, file: context.go, decl: 0, sub: 1, line: 0 } |  |  | 0.575 |

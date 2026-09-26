@@ -1,7 +1,8 @@
 //! Go extraction. Functions and methods are `Callable`, except the
 //! program flow of `package main` (see `show_program_flow`); `type`,
 //! `const` and `var` declarations are `Whole`, and a grouped `( … )`
-//! declaration lists one roster row per spec. The module doc is the
+//! declaration lists its opening row and one roster row per spec, so a
+//! spec never shows without its keyword. The module doc is the
 //! package comment. A `//go:build` constraint joins the roster as a
 //! re-export row, so a platform variant never lists its declarations
 //! without their condition. A file carrying the generated-code banner,
@@ -277,11 +278,16 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     let visible = |node: &Node| !api_only || declares_exported(*node, file);
     let (name_rows, entries) = match group {
         Some(group) => {
-            let name_rows = specs
+            let spec_rows: Vec<usize> = specs
                 .iter()
                 .filter(|spec| visible(spec))
                 .map(|spec| *file.node_rows(*spec).start())
                 .collect();
+            let name_rows = if spec_rows.is_empty() {
+                spec_rows
+            } else {
+                [vec![start], spec_rows].concat()
+            };
             (name_rows, Some(group))
         }
         None => {
@@ -418,7 +424,7 @@ var x, Y = 1, 2
 ",
         );
         let group = &model.decls[0];
-        assert_eq!(group.name_rows, [5, 6]);
+        assert_eq!(group.name_rows, [3, 5, 6]);
         assert_eq!(group.head, [3, 7]);
         assert_eq!(body_rows(group), [vec![4, 5], vec![6]]);
         let single = &model.decls[1];
@@ -478,7 +484,14 @@ func newConn() *conn { return nil }
             .collect();
         assert_eq!(
             roster,
-            [vec![7], vec![13], vec![18], vec![23], vec![31], vec![35]]
+            [
+                vec![7],
+                vec![13],
+                vec![18],
+                vec![22, 23],
+                vec![31],
+                vec![35]
+            ]
         );
         assert_eq!(body_rows(&model.decls[0]), [vec![8], vec![10]]);
         assert_eq!(body_rows(&model.decls[1]), [vec![14]]);

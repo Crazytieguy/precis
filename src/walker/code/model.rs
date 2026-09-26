@@ -45,12 +45,12 @@
 //!     order.
 //! - **`name_rows`**: the rows the file's roster lists for the declaration.
 //!   Usually the one row holding the declared name: the `def` / `fn` /
-//!   `class` row. Several rows when one row doesn't name it (one per spec
-//!   of a Go grouped declaration; a C anonymous `typedef struct {…} Name;`
-//!   lists its first and its `} Name;` rows) or leaves out what it is
-//!   (Python lists one-row decorators and a multi-row signature's closing
-//!   row). Must be non-empty and inside `head` for a `Callable`, inside
-//!   `head ∪ body` for a `Whole`.
+//!   `class` row. Several rows when one row doesn't name it (a Go grouped
+//!   declaration lists its `const (` row and one per spec; a C anonymous
+//!   `typedef struct {…} Name;` lists its first and its `} Name;` rows) or
+//!   leaves out what it is (Python lists one-row decorators and a multi-row
+//!   signature's closing row). Must be non-empty and inside `head` for a
+//!   `Callable`, inside `head ∪ body` for a `Whole`.
 //!
 //! The `Decl` batch renders `head` (plus `body` for `Whole`), `Doc` renders
 //! `doc`, `Body` renders a `Callable`'s `body`. An [`Item`] is the unit
