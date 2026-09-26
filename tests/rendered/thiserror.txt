@@ -96,8 +96,6 @@ README.md
   63→    - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
   64→
   65→  These shorthands can be used together with any additional format args, which
-  66→  may be arbitrary expressions. For example:
-  67→
   …
   211→## Comparison to anyhow
   212→
@@ -273,6 +271,9 @@ src/
     49→impl Sealed for Path {}
     50→#[cfg(feature = "std")]
     51→impl Sealed for PathBuf {}
+    …
+    58→#[cfg(not(feature = "std"))]
+    59→mod placeholder {
     …
   lib.rs
     …

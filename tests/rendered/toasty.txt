@@ -76,6 +76,12 @@ crates/
         3→pub mod result;
         4→pub mod slice;
         5→pub mod str;
+        6→
+        7→pub mod prelude {
+        8→    pub use crate::{
+        9→        assert_empty, assert_err, assert_none, assert_ok, assert_unique, num::NumUtil,
+        10→        slice::SliceUtil,
+        11→    };
         …
       num.rs
       option.rs
@@ -443,18 +449,6 @@ crates/
         24→pub struct PostgreSQL {
         …
         29→impl PostgreSQL {
-        …
-        80→impl Driver for PostgreSQL {
-        …
-        178→pub struct Connection {
-        …
-        183→impl Connection {
-        …
-        258→impl From<Client> for Connection {
-        …
-        265→}
-        …
-        268→impl toasty_core::driver::Connection for Connection {
         …
       statement_cache.rs
       type.rs

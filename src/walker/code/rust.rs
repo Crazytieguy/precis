@@ -4,14 +4,16 @@
 //!   [`Item`] per paragraph.
 //! - **Re-exports**: `pub use …;` and every `mod name;` declaration (the
 //!   file's module tree, whatever its visibility). Other `use` and
-//!   `extern crate` items are plumbing and not modeled; an inline
-//!   `mod name { … }` is left out with its contents.
+//!   `extern crate` items are plumbing and not modeled. An inline
+//!   `mod name {` row is a re-export too; the items in its body are
+//!   modeled like the file's own when it has a visibility modifier.
 //! - **Declarations**: `fn` is `Callable`, except the program flow of
 //!   `main.rs` (see `show_program_flow`); `struct`, `enum`, `union`,
 //!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait` and
 //!   `impl` are `Whole` containers whose members are their functions.
 //! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
-//!   items, and an inherent-impl function without a visibility modifier.
+//!   items, inline `mod test` / `mod tests`, and an inherent-impl
+//!   function without a visibility modifier.
 //!   An inherent impl with no admitted function is hidden.
 
 use std::collections::HashSet;
@@ -41,8 +43,21 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         module_doc: module_doc(file, root),
         ..FileModel::default()
     };
-    let mut cursor = root.walk();
-    for node in root.named_children(&mut cursor) {
+    extract_items(root, file, &mut model, is_program.then_some(&mut functions));
+    show_program_flow(&mut model.decls, &functions);
+    model
+}
+
+/// Models the items of the file or of an inline module's body. The
+/// program flow is collected from the file's top-level functions only.
+fn extract_items(
+    scope: Node,
+    file: &SourceFile,
+    model: &mut FileModel,
+    mut program_functions: Option<&mut Vec<ProgramFunction>>,
+) {
+    let mut cursor = scope.walk();
+    for node in scope.named_children(&mut cursor) {
         if matches!(
             node.kind(),
             "line_comment" | "block_comment" | "attribute_item"
@@ -54,20 +69,28 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             continue;
         }
         match node.kind() {
-            "use_declaration" | "mod_item" => {
-                let is_declaration_only = node.child_by_field_name("body").is_none();
-                if is_declaration_only
-                    && (node.kind() == "mod_item" || visibility_modifier(node, file) == Some("pub"))
+            "use_declaration" | "mod_item" => match node.child_by_field_name("body") {
+                None if node.kind() == "mod_item"
+                    || visibility_modifier(node, file) == Some("pub") =>
                 {
                     let mut rows = leading.attribute_rows;
                     rows.extend(file.node_rows(node));
                     model.reexports.push(Item::new(rows));
                 }
-            }
+                Some(body) if !is_test_module(node, file) => {
+                    let mut rows = leading.attribute_rows;
+                    rows.extend(node.start_position().row + 1..=body.start_position().row + 1);
+                    model.reexports.push(Item::new(rows));
+                    if visibility_modifier(node, file).is_some() {
+                        extract_items(body, file, model, None);
+                    }
+                }
+                _ => {}
+            },
             "impl_item" => model.decls.extend(impl_container(node, leading, file)),
             "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
             "function_item" => {
-                if is_program {
+                if let Some(functions) = program_functions.as_deref_mut() {
                     functions.push(ProgramFunction::new(model.decls.len(), node, file));
                 }
                 model.decls.push(callable(node, leading, file));
@@ -91,8 +114,13 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             _ => {}
         }
     }
-    show_program_flow(&mut model.decls, &functions);
-    model
+}
+
+/// A `mod test { … }` / `mod tests { … }`, test code whether or not it is
+/// gated by `#[cfg(test)]`.
+fn is_test_module(node: Node, file: &SourceFile) -> bool {
+    node.child_by_field_name("name")
+        .is_some_and(|name| matches!(file.text(name), "test" | "tests"))
 }
 
 fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
@@ -712,9 +740,6 @@ pub use crate::{
     a::A,
     b::B,
 };
-pub mod inline {
-    pub fn f() {}
-}
 extern crate alloc;
 ";
         let (_, model) = extract_source("lib.rs", source);
@@ -723,6 +748,42 @@ extern crate alloc;
             vec![vec![2], vec![4, 5], vec![6, 7, 8, 9]]
         );
         assert!(model.decls.is_empty());
+    }
+
+    #[test]
+    fn rust_extract_inline_module_items_are_modeled_like_top_level_ones() {
+        let source = "\
+#[cfg(feature = \"x\")]
+pub mod inner {
+    /// Inner API.
+    pub fn api() -> u32 { 1 }
+    pub(crate) mod nested {
+        pub struct Deep;
+    }
+    mod private {
+        pub fn helper() {}
+    }
+}
+pub fn outer() -> u32 { let a = 1; a }
+pub(crate) mod test {
+    pub fn fixture() {}
+}
+#[cfg(test)]
+mod checks {
+    fn check() {}
+}
+";
+        let (file, model) = extract_source("lib.rs", source);
+        assert_eq!(rows(&model.reexports), vec![vec![1, 2], vec![5], vec![8]]);
+        assert_eq!(
+            roster(&file, &model.decls),
+            vec![
+                "pub fn api() -> u32 { 1 }",
+                "pub struct Deep;",
+                "pub fn outer() -> u32 { let a = 1; a }",
+            ]
+        );
+        assert_eq!(rows(&model.decls[0].doc), vec![vec![3]]);
     }
 
     #[test]
