@@ -34,22 +34,25 @@ const IMPLEMENTATION_FILE_WEIGHT: f64 = 0.6;
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
-    let source = &*file.source;
     let in_header = is_header(&file.path);
     let mut decls = Vec::new();
     let mut directives = Vec::new();
-    walk_top_level(root, source, &mut |node| {
+    let mut visit = |node: Node| {
         if node.kind().starts_with('#') {
             directives.extend(gate_directive(node, file));
         } else {
             decls.extend(declaration(node, file, in_header));
         }
-    });
+    };
+    let top_level = header_guard(root, file).unwrap_or(root);
+    let mut cursor = top_level.walk();
+    for child in top_level.named_children(&mut cursor) {
+        visit_with_envelope_descent(child, file, &mut visit);
+    }
     attach_directives(&mut decls, &directives);
     FileModel {
-        module_doc: Vec::new(),
-        reexports: Vec::new(),
         decls,
+        ..FileModel::default()
     }
 }
 
@@ -74,7 +77,6 @@ fn is_header(path: &Path) -> bool {
 }
 
 fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInfo> {
-    let source = &*file.source;
     let shape = match node.kind() {
         "function_definition" => Shape::Callable,
         "declaration"
@@ -83,15 +85,15 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         | "union_specifier"
         | "enum_specifier"
         | "preproc_function_def" => Shape::Whole,
-        "preproc_def" if !is_header_guard_define(node, source) => Shape::Whole,
+        "preproc_def" if !is_header_guard_define(node, file) => Shape::Whole,
         _ => return None,
     };
     // A header's `static inline` definition is the header-only accessor
     // idiom: part of the API. Any other `static` in a header is an
     // implementation leak.
     if in_header
-        && has_storage_class(node, source, "static")
-        && !has_storage_class(node, source, "inline")
+        && has_storage_class(node, file, "static")
+        && !has_storage_class(node, file, "inline")
     {
         return None;
     }
@@ -115,7 +117,7 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
 /// of a multiline condition) and the rows of the whole gate.
 struct GateDirective {
     rows: RangeInclusive<usize>,
-    gate: RangeInclusive<usize>,
+    gate_rows: RangeInclusive<usize>,
 }
 
 /// `token` is an `#if` / `#ifdef` / `#elif` / `#else` / `#endif` token
@@ -140,7 +142,7 @@ fn gate_directive(token: Node, file: &SourceFile) -> Option<GateDirective> {
     };
     Some(GateDirective {
         rows: start_row..=end_row,
-        gate: file.node_rows(gate),
+        gate_rows: file.node_rows(gate),
     })
 }
 
@@ -166,7 +168,7 @@ fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
             spans
                 .iter()
                 .enumerate()
-                .filter(|(_, (first, _))| directive.gate.contains(first))
+                .filter(|(_, (first, _))| directive.gate_rows.contains(first))
         };
         let target = in_gate()
             .filter(|(_, (first, _))| *first > row)
@@ -293,44 +295,25 @@ fn declarator_is_function(node: Node) -> bool {
     }
 }
 
-/// Visit each "effective top-level" item: descends through the file's
-/// header guard, through `extern "C" { … }` linkage specs and through
-/// declaration-only `#if` / `#ifdef` blocks.
-fn walk_top_level<'a, F: FnMut(Node<'a>)>(root: Node<'a>, source: &str, visit: &mut F) {
-    let header_guard_body = header_guard_body_node(root, source);
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if Some(child) == header_guard_body {
-            descend_envelopes(child, source, visit);
-        } else {
-            visit_with_envelope_descent(child, source, visit);
-        }
-    }
-}
-
-fn descend_envelopes<'a, F: FnMut(Node<'a>)>(node: Node<'a>, source: &str, visit: &mut F) {
-    let mut cursor = node.walk();
-    for child in node.named_children(&mut cursor) {
-        visit_with_envelope_descent(child, source, visit);
-    }
-}
-
 /// Visit `node`, descending if it's an `extern "C" { … }` envelope (raw
 /// or `#ifdef __cplusplus`-wrapped) or a declaration-only feature gate.
 fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
-    source: &str,
+    file: &SourceFile,
     visit: &mut F,
 ) {
-    if let Some(decl_list) = extern_c_declaration_list(node, source) {
-        descend_envelopes(decl_list, source, visit);
+    if let Some(decl_list) = extern_c_declaration_list(node, file) {
+        let mut cursor = decl_list.walk();
+        for child in decl_list.named_children(&mut cursor) {
+            visit_with_envelope_descent(child, file, visit);
+        }
         return;
     }
     if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
-        && !is_disabled_preproc_if(node, source)
+        && !is_disabled_preproc_if(node, file)
         && feature_gate_is_declaration_only(node) == Some(true)
     {
-        descend_feature_gate_branches(node, source, visit);
+        descend_feature_gate_branches(node, file, visit);
         return;
     }
     visit(node);
@@ -342,24 +325,24 @@ fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
 /// opaque) on their own merits.
 fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
     node: Node<'a>,
-    source: &str,
+    file: &SourceFile,
     visit: &mut F,
 ) {
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
         match child.kind() {
             "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
-                descend_feature_gate_branches(child, source, visit);
+                descend_feature_gate_branches(child, file, visit);
             }
-            _ => visit_with_envelope_descent(child, source, visit),
+            _ => visit_with_envelope_descent(child, file, visit),
         }
     }
 }
 
 /// True for `#if 0` blocks: commented-out code, not a feature gate.
-fn is_disabled_preproc_if(node: Node, source: &str) -> bool {
+fn is_disabled_preproc_if(node: Node, file: &SourceFile) -> bool {
     node.child_by_field_name("condition")
-        .is_some_and(|condition| source[condition.byte_range()].trim() == "0")
+        .is_some_and(|condition| file.text(condition).trim() == "0")
 }
 
 /// For a `preproc_if*` / `preproc_else*` subtree: `None` when any branch
@@ -398,10 +381,10 @@ fn feature_gate_is_declaration_only(node: Node) -> Option<bool> {
 /// If `node` is an `extern "C" { … }` envelope (raw or
 /// `#ifdef __cplusplus`-wrapped), the inner `declaration_list`. Any other
 /// `#ifdef` around a linkage spec is a feature gate and stays opaque.
-fn extern_c_declaration_list<'a>(node: Node<'a>, source: &str) -> Option<Node<'a>> {
+fn extern_c_declaration_list<'a>(node: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
     let linkage = match node.kind() {
         "linkage_specification" => node,
-        "preproc_ifdef" => cplusplus_wrapped_linkage_specification(node, source)?,
+        "preproc_ifdef" => cplusplus_wrapped_linkage_specification(node, file)?,
         _ => return None,
     };
     let mut cursor = linkage.walk();
@@ -412,14 +395,17 @@ fn extern_c_declaration_list<'a>(node: Node<'a>, source: &str) -> Option<Node<'a
 
 /// If `ifdef` is `#ifdef __cplusplus` / linkage spec / `#endif`, the
 /// linkage spec.
-fn cplusplus_wrapped_linkage_specification<'a>(ifdef: Node<'a>, source: &str) -> Option<Node<'a>> {
+fn cplusplus_wrapped_linkage_specification<'a>(
+    ifdef: Node<'a>,
+    file: &SourceFile,
+) -> Option<Node<'a>> {
     let mut cursor = ifdef.walk();
     let mut children = ifdef.children(&mut cursor);
     if children.next()?.kind() != "#ifdef" {
         return None;
     }
     let name = children.next()?;
-    if name.kind() != "identifier" || &source[name.byte_range()] != "__cplusplus" {
+    if name.kind() != "identifier" || file.text(name) != "__cplusplus" {
         return None;
     }
     let mut found = None;
@@ -435,13 +421,13 @@ fn cplusplus_wrapped_linkage_specification<'a>(ifdef: Node<'a>, source: &str) ->
 
 /// The `#ifndef X` / `#define X` / `#endif` block wrapping the whole file
 /// (comments aside), whose children are the effective top level.
-fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> {
+fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
     let mut cursor = root.walk();
     let mut candidate = None;
     for child in root.children(&mut cursor) {
         match child.kind() {
             "comment" => {}
-            "preproc_ifdef" if candidate.is_none() && is_header_guard(child, source) => {
+            "preproc_ifdef" if candidate.is_none() && is_header_guard(child, file) => {
                 candidate = Some(child);
             }
             _ => return None,
@@ -452,7 +438,7 @@ fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> 
 
 /// True iff `ifdef` is `#ifndef X` whose first child (comments aside)
 /// is `#define X`.
-fn is_header_guard(ifdef: Node, source: &str) -> bool {
+fn is_header_guard(ifdef: Node, file: &SourceFile) -> bool {
     let Some(name) = ifdef.child_by_field_name("name") else {
         return false;
     };
@@ -467,24 +453,24 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
         define.kind() == "preproc_def"
             && define
                 .child_by_field_name("name")
-                .is_some_and(|defined| source[defined.byte_range()] == source[name.byte_range()])
+                .is_some_and(|defined| file.text(defined) == file.text(name))
     })
 }
 
 /// True iff `define` is the `#define X` of an `#ifndef X` header guard.
-fn is_header_guard_define(define: Node, source: &str) -> bool {
+fn is_header_guard_define(define: Node, file: &SourceFile) -> bool {
     define
         .parent()
-        .filter(|guard| is_header_guard(*guard, source))
+        .filter(|guard| is_header_guard(*guard, file))
         .and_then(|guard| guard.child_by_field_name("name"))
         .zip(define.child_by_field_name("name"))
-        .is_some_and(|(guard, defined)| source[guard.byte_range()] == source[defined.byte_range()])
+        .is_some_and(|(guard, defined)| file.text(guard) == file.text(defined))
 }
 
-fn has_storage_class(node: Node, source: &str, keyword: &str) -> bool {
+fn has_storage_class(node: Node, file: &SourceFile, keyword: &str) -> bool {
     let mut cursor = node.walk();
     node.children(&mut cursor).any(|child| {
-        child.kind() == "storage_class_specifier" && source[child.byte_range()].trim() == keyword
+        child.kind() == "storage_class_specifier" && file.text(child).trim() == keyword
     })
 }
 
