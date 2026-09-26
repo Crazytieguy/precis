@@ -154,28 +154,27 @@ fn robustness_binary_files_render_only_their_rows() {
     );
 }
 
+/// One byte that isn't UTF-8 (a Latin-1 name in a license header) must
+/// not hide a source file: it reads as U+FFFD and the file renders.
 #[test]
-fn robustness_non_utf8_text_renders_only_its_row() {
+fn robustness_non_utf8_text_renders_with_replacement_characters() {
     let temp = tempfile::tempdir().unwrap();
     write(
-        &temp.path().join("legacy.py"),
-        b"def caf\xe9():\n    return 1\n",
+        &temp.path().join("src/legacy.c"),
+        b"/* Copyright Jos\xe9 */\nint legacy_entry(int value) { return value; }\n",
     );
     write(
-        &temp.path().join("modern.py"),
-        "def café():\n    return 1\n",
+        &temp.path().join("src/modern.c"),
+        "/* Copyright Jos\u{e9} */\nint modern_entry(int value) { return value; }\n",
     );
 
     let out = render(temp.path(), 3000).unwrap();
-    assert!(
-        out.contains("legacy.py\nmodern.py\n  1→def café():"),
-        "{out}"
-    );
+    for shown in ["int legacy_entry(int value)", "int modern_entry(int value)"] {
+        assert!(out.contains(shown), "no `{shown}` in:\n{out}");
+    }
 
-    assert_eq!(
-        render(&temp.path().join("legacy.py"), 3000).unwrap(),
-        "legacy.py\n"
-    );
+    let out = render(&temp.path().join("src/legacy.c"), 3000).unwrap();
+    assert!(out.contains("Jos\u{FFFD}"), "{out}");
 }
 
 /// A file too large to parse is not parsed: in a directory only the

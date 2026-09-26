@@ -106,9 +106,11 @@ impl SourceCache {
     }
 
     /// Read `path`, caching. `None` unless it is a regular file of at
-    /// most [`MAX_SOURCE_BYTES`] of UTF-8 text, and not
+    /// most [`MAX_SOURCE_BYTES`] holding no NUL byte (binary), and not
     /// [refused](crate::walker::is_refused): nothing else is source, and a
-    /// FIFO or device named by a link could block or read forever.
+    /// FIFO or device named by a link could block or read forever. Bytes
+    /// that aren't UTF-8 (a Latin-1 name in a license header) read as
+    /// U+FFFD rather than hiding the whole file.
     pub fn get(&self, path: &Path) -> Option<Arc<Source>> {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
@@ -123,10 +125,10 @@ impl SourceCache {
             .take(MAX_SOURCE_BYTES as u64 + 1)
             .read_to_end(&mut bytes)
             .ok()?;
-        if bytes.len() > MAX_SOURCE_BYTES {
+        if bytes.len() > MAX_SOURCE_BYTES || bytes.contains(&0) {
             return None;
         }
-        let text = String::from_utf8(bytes).ok()?;
+        let text = String::from_utf8_lossy(&bytes);
         if crate::walker::is_refused(path, &text) {
             return None;
         }
