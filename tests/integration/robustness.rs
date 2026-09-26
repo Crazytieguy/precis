@@ -16,17 +16,21 @@ fn write(path: &Path, contents: impl AsRef<[u8]>) {
     std::fs::write(path, contents).unwrap();
 }
 
+fn render(path: &Path, token_budget: usize) -> anyhow::Result<String> {
+    render_within(path, token_budget, Duration::from_secs(60))
+}
+
 /// Renders on a worker, so a walk that never terminates fails as an
 /// assertion instead of wedging the suite.
-fn render(path: &Path, token_budget: usize) -> anyhow::Result<String> {
+fn render_within(path: &Path, token_budget: usize, limit: Duration) -> anyhow::Result<String> {
     let (sender, receiver) = mpsc::channel();
-    let path = path.to_path_buf();
+    let target = path.to_path_buf();
     std::thread::spawn(move || {
-        let _ = sender.send(precis::render(&path, token_budget, None));
+        let _ = sender.send(precis::render(&target, token_budget, None));
     });
     receiver
-        .recv_timeout(Duration::from_secs(60))
-        .expect("the walk must terminate")
+        .recv_timeout(limit)
+        .unwrap_or_else(|_| panic!("no render of {} within {limit:?}", path.display()))
 }
 
 #[cfg(unix)]
@@ -167,30 +171,36 @@ fn robustness_huge_files_render_at_most_their_head() {
     assert!(out.ends_with("…\n"), "{out}");
 }
 
+/// A long run without a break (an embedded base64 blob of zeros) costs
+/// the tokenizer time quadratic in its length, so nothing may price a
+/// source line past the prefix its row renders.
 #[test]
 fn robustness_long_lines_render_as_a_prefix() {
     let temp = tempfile::tempdir().unwrap();
-    let long_line = "x".repeat(20_000);
+    let blob = "A".repeat(200_000);
     write(
         &temp.path().join("data.py"),
-        format!("DATA = \"{long_line}\"\n\n\ndef load():\n    return DATA\n"),
+        format!("DATA = \"{blob}\"\n\n\ndef load():\n    return DATA\n"),
     );
     write(
         &temp.path().join("README.md"),
-        format!("# Demo\n\n{}\n", "word ".repeat(4_000)),
+        format!("# Demo\n\n![logo](data:image/png;base64,{blob})\n"),
+    );
+    write(
+        &temp.path().join("package.json"),
+        format!(
+            "{{\n  \"name\": \"demo\",\n  \"scripts\": {{\n    \"build\": \"{blob}\"\n  }}\n}}\n"
+        ),
     );
 
-    let out = render(temp.path(), 3000).unwrap();
+    let out = render_within(temp.path(), 3000, Duration::from_secs(10)).unwrap();
     assert!(out.contains("def load():"), "{out}");
-    for prefix in ["1→DATA = \"xxx", "3→word word"] {
+    for prefix in ["1→DATA = \"AAA", "3→![logo]"] {
         let row = out
             .lines()
             .find(|row| row.contains(prefix))
             .unwrap_or_else(|| panic!("no `{prefix}` row in:\n{out}"));
-        assert!(
-            row.ends_with('…') && row.len() < long_line.len() / 10,
-            "{row}"
-        );
+        assert!(row.ends_with('…') && row.len() < blob.len() / 10, "{row}");
     }
 }
 

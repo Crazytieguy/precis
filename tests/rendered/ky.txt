@@ -77,6 +77,10 @@ readme.md
   85→## API
   86→
   87→### ky(input, options?)
+  88→
+  89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
+  90→
+  91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if …
   …
   122→### ky.get(input, options?)
   123→### ky.post(input, options?)
@@ -261,21 +265,6 @@ source/
       44→	@returns A promise with `Body` methods added.
       45→	*/
       46→	put: <T>(url: Input, options?: Options) => ResponsePromise<T>;
-      48→	/**
-      49→	Fetch the given `url` using the option `{method: 'delete'}`.
-      50→
-      51→	@param url - `Request` object, `URL` object, or URL string.
-      52→	@returns A promise with `Body` methods added.
-      53→	*/
-      54→	delete: <T>(url: Input, options?: Options) => ResponsePromise<T>;
-      55→
-      56→	/**
-      57→	Fetch the given `url` using the option `{method: 'patch'}`.
-      58→
-      59→	@param url - `Request` object, `URL` object, or URL string.
-      60→	@returns A promise with `Body` methods added.
-      61→	*/
-      62→	patch: <T>(url: Input, options?: Options) => ResponsePromise<T>;
       …
       186→};
     options.ts

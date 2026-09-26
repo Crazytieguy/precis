@@ -27,7 +27,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::BatchContent;
 use crate::fs_util::{EntryKind, list_dir};
-use crate::render::Source;
+use crate::render::{Source, visible_full_line};
 use crate::tokenizer;
 
 use super::{
@@ -888,7 +888,7 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
 fn row_tokens(src_lines: &[&str], row: usize) -> usize {
     src_lines
         .get(row - 1)
-        .map(|l| tokenizer::count(&format!("{l}\n")))
+        .map(|l| tokenizer::count(&format!("{}\n", visible_full_line(l))))
         .unwrap_or(0)
 }
 

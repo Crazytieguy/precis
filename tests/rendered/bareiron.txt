@@ -22,7 +22,6 @@ README.md
   14→
   15→For microcontrollers, see the section on **compilation** below.
   17→## Compilation
-  18→Before compiling, you'll need to dump registry data from a vanilla Minecraft server. On Linux, this can be done automatically using the `extract_registries.sh` script. Otherwise, the manual process is as follows: create a folder called `notchian` here, and put a Minecraft server JAR in it. Then, follow [this guide](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Data_Generators) to dump all of the registries (use the _second_ command with the `--all` flag). Finally, run `build_reg…
   …
   28→## Configuration
   29→Configuring the server requires compiling it from its source code as described in the section above.
@@ -235,6 +234,12 @@ include/
   packets.h
     …
     5→int cs_handshake (int client_fd);
+    6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
+    7→int cs_clientInformation (int client_fd);
+    8→int cs_pluginMessage (int client_fd);
+    9→int cs_playerAction (int client_fd);
+    10→int cs_useItemOn (int client_fd);
+    11→int cs_useItem (int client_fd);
     …
   procedures.h
   serialize.h

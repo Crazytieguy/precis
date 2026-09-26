@@ -17,7 +17,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
-use crate::render::Source;
+use crate::render::{Source, visible_full_line};
 use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
 use super::code::chunk::chunk_ranges;
@@ -225,7 +225,7 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
         .map(|&(start, end)| {
             (start..=end)
                 .filter(|&row| charged_rows.insert(row))
-                .map(|row| crate::tokenizer::count(lines[row - 1]))
+                .map(|row| crate::tokenizer::count(visible_full_line(lines[row - 1])))
                 .sum()
         })
         .collect();

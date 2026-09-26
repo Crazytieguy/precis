@@ -10,6 +10,7 @@ use std::ops::Range;
 
 use super::SourceFile;
 use super::model::Item;
+use crate::render::visible_full_line;
 use crate::value::DEFAULT_CONCAVITY_EXPONENT;
 use crate::walker::budget_chunk_ranges;
 
@@ -24,7 +25,7 @@ const MIN_TAIL: usize = 75;
 pub(super) fn item_cost(item: &Item, file: &SourceFile) -> usize {
     item.rows
         .iter()
-        .map(|&row| crate::tokenizer::count(file.line(row)))
+        .map(|&row| crate::tokenizer::count(visible_full_line(file.line(row))))
         .sum()
 }
 
