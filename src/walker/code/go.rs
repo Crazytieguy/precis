@@ -9,8 +9,9 @@
 //! or excluded from every build by `//go:build ignore` (a generator or
 //! demo program), yields no declarations. Outside `package main`, what
 //! no importer can name (a lower-case declaration, spec, field or
-//! interface method, or a method on a lower-case type) is hidden, unless
-//! its file, or its struct, exports nothing.
+//! interface method, or a method on a lower-case type no exported
+//! function returns) is hidden, unless its file, or its struct, exports
+//! nothing.
 
 use std::collections::HashSet;
 use std::sync::LazyLock;
@@ -89,13 +90,14 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let exports_something = root
         .named_children(&mut root.walk())
         .any(|child| match child.kind() {
-            "function_declaration" | "method_declaration" => is_exported_callable(child, file),
+            "function_declaration" | "method_declaration" => is_exported_name(child, file),
             "type_declaration" | "const_declaration" | "var_declaration" => specs(child)
                 .0
                 .into_iter()
                 .any(|spec| declares_exported(spec, file)),
             _ => false,
         });
+    let handed_out = handed_out_types(root, file);
     let mut cursor = root.walk();
     for child in root.named_children(&mut cursor) {
         let decl = match child.kind() {
@@ -123,7 +125,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 decl
             }
             "function_declaration" | "method_declaration"
-                if !api_only || is_exported_callable(child, file) =>
+                if !api_only || is_reachable_callable(child, file, &handed_out) =>
             {
                 callable(child, file)
             }
@@ -158,19 +160,50 @@ fn is_exported(name: &str) -> bool {
     name.chars().next().is_some_and(char::is_uppercase)
 }
 
-/// A function is exported by its name; a method also needs an exported
-/// receiver type, or no importer can name it.
-fn is_exported_callable(node: Node, file: &SourceFile) -> bool {
-    let named = |node: Option<Node>| node.is_some_and(|name| is_exported(file.text(name)));
-    named(node.child_by_field_name("name"))
+/// Whether a function or method is exported by its name.
+fn is_exported_name(node: Node, file: &SourceFile) -> bool {
+    node.child_by_field_name("name")
+        .is_some_and(|name| is_exported(file.text(name)))
+}
+
+/// An exported function, or an exported method whose receiver type an
+/// importer can reach: an exported type, or one in `handed_out`.
+fn is_reachable_callable(node: Node, file: &SourceFile, handed_out: &[&str]) -> bool {
+    is_exported_name(node, file)
         && node.child_by_field_name("receiver").is_none_or(|receiver| {
             let mut cursor = receiver.walk();
             let parameter = receiver.named_children(&mut cursor).next();
-            named(
-                parameter
-                    .and_then(|parameter| base_type_name(parameter.child_by_field_name("type")?)),
-            )
+            parameter
+                .and_then(|parameter| base_type_name(parameter.child_by_field_name("type")?))
+                .is_some_and(|name| {
+                    let name = file.text(name);
+                    is_exported(name) || handed_out.contains(&name)
+                })
         })
+}
+
+/// The type names in the results of the file's exported functions and
+/// methods: an importer calls methods on what a constructor returns even
+/// when it cannot name the type.
+fn handed_out_types<'a>(root: Node, file: &'a SourceFile) -> Vec<&'a str> {
+    let mut names = Vec::new();
+    let mut cursor = root.walk();
+    for child in root.named_children(&mut cursor) {
+        if !matches!(child.kind(), "function_declaration" | "method_declaration")
+            || !is_exported_name(child, file)
+        {
+            continue;
+        }
+        let mut pending: Vec<Node> = child.child_by_field_name("result").into_iter().collect();
+        while let Some(node) = pending.pop() {
+            if node.kind() == "type_identifier" {
+                names.push(file.text(node));
+            }
+            let mut inner = node.walk();
+            pending.extend(node.named_children(&mut inner));
+        }
+    }
+    names
 }
 
 /// The type name under pointers, parentheses, type arguments and a
@@ -468,7 +501,8 @@ var x, Y = 1, 2
 
     /// Outside `package main`, a declaration, spec, field or interface
     /// method no importer can name is hidden, unless its file (or struct)
-    /// exports nothing.
+    /// exports nothing. An exported method on an unexported type stays
+    /// when an exported function returns that type.
     #[test]
     fn go_library_hides_unexported_declarations() {
         let model = extract_source(
@@ -510,6 +544,12 @@ func (s *Server) listen() {}
 func ListenAndServe() {}
 
 func newConn() *conn { return nil }
+
+type pool struct{}
+
+func (p *pool) Get() {}
+
+func NewPool() (*pool, error) { return nil, nil }
 ",
         );
         let roster: Vec<Vec<usize>> = model
@@ -525,7 +565,9 @@ func newConn() *conn { return nil }
                 vec![18],
                 vec![22, 23],
                 vec![31],
-                vec![35]
+                vec![35],
+                vec![41],
+                vec![43]
             ]
         );
         assert_eq!(body_rows(&model.decls[0]), [vec![8], vec![10]]);
