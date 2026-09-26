@@ -97,15 +97,13 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             | "class_definition"
             | "decorated_definition"
             | "if_statement"
-            | "try_statement" => {
-                model
-                    .decls
-                    .extend(definitions(file, node).into_iter().map(|mut decl| {
-                        decl.name_rows
-                            .retain(|&row| !file.line(row).trim_start().starts_with('@'));
-                        decl
-                    }))
-            }
+            | "try_statement" => model
+                .decls
+                .extend(definitions(file, node, 0).0.into_iter().map(|mut decl| {
+                    decl.name_rows
+                        .retain(|&row| !file.line(row).trim_start().starts_with('@'));
+                    decl
+                })),
             "import_from_statement" if is_package_init && imports_own_module(file, node, ctx) => {
                 let names = imported_names(file, node);
                 let public = names.is_empty() || names.iter().any(|name| !is_private(name));
@@ -301,21 +299,46 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
 /// name rows of the block's first definition, so the roster says under
 /// which condition it exists, and the statement's own `if …:` / `try:`
 /// row joins its first definition, so an `else:` never lists alone.
-fn definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
+/// Also the statements of those blocks that define nothing (fields,
+/// assignments), as [`Item`]s holding rows past `after_row`; a block
+/// defining nothing lists its opening row with its first statement.
+fn definitions(file: &SourceFile, statement: Node, after_row: usize) -> (Vec<DeclInfo>, Vec<Item>) {
     if !matches!(statement.kind(), "if_statement" | "try_statement") {
-        return definition(file, statement).into_iter().collect();
+        return (
+            definition(file, statement).into_iter().collect(),
+            Vec::new(),
+        );
     }
     let mut decls = Vec::new();
+    let mut items = Vec::new();
     for block in clause_blocks(statement) {
         let first = decls.len();
+        let mut fields: Vec<Node> = Vec::new();
         for node in block.named_children(&mut block.walk()) {
-            decls.extend(definitions(file, node));
+            let (defined, nested_items) = definitions(file, node, after_row);
+            if defined.is_empty() {
+                if !is_definition_kind(node.kind()) {
+                    fields.push(node);
+                }
+                continue;
+            }
+            while fields.last().is_some_and(|field| field.kind() == "comment") {
+                fields.pop();
+            }
+            decls.extend(defined);
+            items.extend(nested_items);
         }
-        if let (Some(decl), Some(clause)) = (decls.get_mut(first), block.parent()) {
+        let mut block_items = file.node_items(fields, after_row);
+        if let Some(clause) = block.parent() {
             let opening_row = clause.start_position().row + 1;
-            decl.head.insert(0, opening_row);
-            decl.name_rows.insert(0, opening_row);
+            if let Some(decl) = decls.get_mut(first) {
+                decl.head.insert(0, opening_row);
+                decl.name_rows.insert(0, opening_row);
+            } else if let Some(item) = block_items.first_mut() {
+                item.rows.insert(0, opening_row);
+            }
         }
+        items.extend(block_items);
     }
     let statement_row = statement.start_position().row + 1;
     if let Some(decl) = decls.first_mut()
@@ -324,7 +347,7 @@ fn definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
         decl.head.insert(0, statement_row);
         decl.name_rows.insert(0, statement_row);
     }
-    decls
+    (decls, items)
 }
 
 /// An `if` / `try` statement's blocks: its own (`if` consequence, `try`
@@ -473,9 +496,8 @@ fn suite_statements(inner: Node) -> Vec<Node> {
 /// A class suite (after its docstring): methods, including those in an
 /// `if` / `try` block (see [`definitions`]), become members, listed in
 /// the body by their name rows, and the block's other statements are
-/// body items (see [`clause_fields`]); every other statement (fields,
-/// blocks defining nothing) is a body [`Item`] with the comments directly
-/// above it. A nested class is flattened into the suite: its head is one
+/// body items; every other statement (fields, blocks defining nothing)
+/// is a body [`Item`] with the comments directly above it. A nested class is flattened into the suite: its head is one
 /// item, its doc, fields and member name rows follow, and its methods
 /// become members, so it lists as a roster rather than as its whole
 /// source.
@@ -490,7 +512,7 @@ fn class_body(
     let mut members = Vec::new();
     let mut run: Vec<Node> = Vec::new();
     for node in statements {
-        let defined = definitions(file, *node);
+        let (defined, clause_items) = definitions(file, *node, after_row);
         if defined.is_empty() {
             if !is_definition_kind(node.kind()) {
                 run.push(*node);
@@ -523,42 +545,12 @@ fn class_body(
             }
         }
         if matches!(node.kind(), "if_statement" | "try_statement") {
-            body.extend(clause_fields(file, *node, after_row));
+            body.extend(clause_items);
             body[first_new..].sort_by_key(|item| item.rows.first().copied());
         }
     }
     body.extend(file.node_items(run, after_row));
     (body, members)
-}
-
-/// The statements of an `if` / `try` statement's clauses that define
-/// nothing (fields, assignments), as body [`Item`]s. A clause defining
-/// nothing else lists its opening row (`else:`) with its first statement.
-fn clause_fields(file: &SourceFile, statement: Node, after_row: usize) -> Vec<Item> {
-    let mut items = Vec::new();
-    for block in clause_blocks(statement) {
-        let mut fields: Vec<Node> = Vec::new();
-        let mut defines = false;
-        for node in block.named_children(&mut block.walk()) {
-            if !definitions(file, node).is_empty() {
-                defines = true;
-                while fields.last().is_some_and(|field| field.kind() == "comment") {
-                    fields.pop();
-                }
-                if matches!(node.kind(), "if_statement" | "try_statement") {
-                    items.extend(clause_fields(file, node, after_row));
-                }
-            } else if !is_definition_kind(node.kind()) {
-                fields.push(node);
-            }
-        }
-        let mut block_items = file.node_items(fields, after_row);
-        if !defines && let (Some(first), Some(clause)) = (block_items.first_mut(), block.parent()) {
-            first.rows.insert(0, clause.start_position().row + 1);
-        }
-        items.extend(block_items);
-    }
-    items
 }
 
 fn is_definition_kind(kind: &str) -> bool {
