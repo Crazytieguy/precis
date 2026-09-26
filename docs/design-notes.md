@@ -73,7 +73,13 @@ titles stay out: including them cost 1000 −.0048 on the grid, mostly
 library `npm install x` blocks that answer keys rank late, while the
 build/test set is grid-neutral (3000 +.0005) and shows commands in 24
 of the 32 real-world repos whose README has a tagged build/test shell
-block, up from 3 (2026-09-25).
+block, up from 3 (2026-09-25). Rechecked on trunk 06ad3aa6: install
+titles cost 3000 −.0032 (go-multierror −.125), and `setup` alone
+1442 −.0011 while its two real-world hits were a dev-server block
+displacing a test command and a benchmark's config under Performance →
+Setup. Back matter emits no section text but keeps a command-titled
+subsection's block: a Contributing section's Testing is the dev
+workflow (grid ±.0003; elk and phoenix gain their test/build commands).
 A repository that exhausts the pool before the budget gets one more
 round: the head of every listed file no batch touches
 (`plaintext::floor_batches`), ranked among themselves only, so it never

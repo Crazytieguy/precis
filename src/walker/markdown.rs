@@ -227,7 +227,9 @@ fn push_sections(
                 value: README_SECTION_VALUE,
             });
         }
-        if let Some(content) = build_section_content(file, source, range, headline) {
+        if !range.command_only
+            && let Some(content) = build_section_content(file, source, range, headline)
+        {
             let key = BatchKey::from(MarkdownKey::Section {
                 file: file.to_path_buf(),
                 section_index: idx,
@@ -765,6 +767,8 @@ struct SectionRange {
     chained_to_previous: bool,
     /// The section's [`command_block`]; on its first chunk only.
     command_block: Option<CommandBlockRows>,
+    /// Back matter: only the command block emits.
+    command_only: bool,
 }
 
 /// 1-based `(first, last)` rows of a command section's heading and of its
@@ -784,6 +788,7 @@ impl SectionRange {
             is_reference_usage_section: false,
             chained_to_previous: false,
             command_block: None,
+            command_only: false,
         }
     }
 }
@@ -833,7 +838,14 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                 );
             }
             TopLevelEntry::Section { node, start, end } => {
+                let command_block = command_block(*node, None, source, &src_lines);
+                let command_only = SectionRange {
+                    command_block,
+                    command_only: true,
+                    ..SectionRange::new(*start, *end, h2_idx)
+                };
                 if is_appendix_title_core(&section_title_core(*node, source)) {
+                    out.extend(command_block.map(|_| command_only));
                     continue;
                 }
                 let reference_h2 = is_reference_usage_section(*node, source);
@@ -850,6 +862,7 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                         .trim()
                         .is_empty()
                 {
+                    out.extend(command_block.map(|_| command_only));
                     continue;
                 }
                 let end = first_appendix.map_or(*end, |first| first.start_position().row);
@@ -858,7 +871,7 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                     &src_lines,
                     SectionRange {
                         is_reference_usage_section: reference_h2,
-                        command_block: command_block(*node, None, source, &src_lines),
+                        command_block,
                         ..SectionRange::new(*start, end, h2_idx)
                     },
                 );
@@ -1253,8 +1266,9 @@ fn is_command_title_core(core: &str) -> bool {
 /// [`is_command_title_core`] in `section`, extended through the shell
 /// blocks after it before the next subsection, all
 /// within [`OVERSIZE_CHUNK_TARGET_TOKENS`]; paired with the innermost
-/// such heading (`command_heading` is the enclosing one). Back matter is
-/// skipped.
+/// such heading (`command_heading` is the enclosing one). Back matter's
+/// own blocks are skipped, not its command-titled subsections: a
+/// Contributing section's Testing is the project's dev workflow.
 fn command_block(
     section: Node,
     command_heading: Option<Node>,
@@ -1274,12 +1288,13 @@ fn command_block(
         }
     }
     let title = section_title_core(section, source);
-    if is_appendix_title_core(&title) {
-        return None;
-    }
-    let command_heading = first_heading_child(section)
-        .filter(|_| is_command_title_core(&title))
-        .or(command_heading);
+    let command_heading = if is_appendix_title_core(&title) {
+        None
+    } else {
+        first_heading_child(section)
+            .filter(|_| is_command_title_core(&title))
+            .or(command_heading)
+    };
     let rows = |node: Node| {
         (
             node.start_position().row + 1,
@@ -2420,7 +2435,8 @@ mod tests {
 
     /// A build/test/run section yields one `CommandBlock` per top-level
     /// section — its shell, untagged or indented blocks, never a code sample —
-    /// and the section holding it gates on it.
+    /// and the section holding it gates on it. Back matter yields only the
+    /// command block of a command-titled subsection.
     #[test]
     fn markdown_command_block_per_section() {
         use std::fs;
@@ -2432,7 +2448,9 @@ mod tests {
                     ```rust\nfn main() {}\n```\n\n\
                     ```sh\ncargo build\n```\n\n\
                     ### Running tests\n\n```\ncargo test\n```\n\n\
-                    ## Development\n\n```console\n$ make dev\n```\n";
+                    ## Development\n\n```console\n$ make dev\n```\n\n\
+                    ## Contributing\n\nPRs welcome.\n\n```sh\ngit checkout -b fix\n```\n\n\
+                    ### Testing\n\n```sh\nmake check\n```\n";
         fs::write(root.join("README.md"), body).unwrap();
         let batches = expand_in_dir(root, &WalkCtx::new(root.to_path_buf()));
         let command_rows: Vec<usize> = batches
@@ -2442,7 +2460,14 @@ mod tests {
                 _ => None,
             })
             .collect();
-        assert_eq!(command_rows, vec![19, 31]);
+        assert_eq!(command_rows, vec![19, 31, 45]);
+        assert!(!batches.iter().any(|b| matches!(
+            &b.key,
+            BatchKey::Markdown(MarkdownKey::Section {
+                section_index: 4,
+                ..
+            })
+        )));
         let building = batches
             .iter()
             .find(|b| {
