@@ -20,9 +20,11 @@
 //!   leading `#` comments (shebangs, license headers) are in no part, and
 //!   their dunder assignments are ordinary constants.
 //! - **Re-exports**: `__all__`, and in `__init__.py` every top-level
-//!   `from … import …` of the package's own modules: a relative import, or
-//!   one whose module path starts at the top-level package. Imports from
-//!   the standard library and third-party packages are in no part.
+//!   `from … import …` of the package's own modules (a relative import, or
+//!   one whose module path starts at a directory above the file) or that
+//!   explicitly re-exports a name (`import X as X`, or a name `__all__`
+//!   lists). Other imports from the standard library and third-party
+//!   packages are in no part.
 
 use std::collections::HashSet;
 use std::path::Path;
@@ -60,9 +62,12 @@ fn sibling_mentions(file: &SourceFile) -> HashSet<String> {
 
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();
-    let own_package = (file_stem(&file.path) == Some("__init__"))
-        .then(|| top_level_package(&file.path, ctx))
-        .flatten();
+    let is_package_init = file_stem(&file.path) == Some("__init__");
+    let exported_names = if is_package_init {
+        all_names(file)
+    } else {
+        Vec::new()
+    };
     let is_entry = is_entrypoint(&file.path, ctx);
     let root = file.tree.root_node();
     let mut cursor = root.walk();
@@ -89,7 +94,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                 model.decls.extend(conditional_definitions(file, node));
             }
             "import_from_statement"
-                if own_package.is_some_and(|package| imports_from(file, node, package)) =>
+                if is_package_init
+                    && (imports_own_module(file, node, ctx)
+                        || reexports_explicitly(file, node, &exported_names)) =>
             {
                 model.reexports.push(rows())
             }
@@ -155,25 +162,67 @@ fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
 
 const PUBLIC_API_MODULE_WEIGHT: f64 = 1.2;
 
-/// The name of the outermost package directory holding `init`: the
-/// highest directory above it in an unbroken chain of `__init__.py`s.
-fn top_level_package<'a>(init: &'a Path, ctx: &WalkCtx) -> Option<&'a str> {
-    let mut package = init.parent()?;
-    while let Some(parent) = package.parent().filter(|dir| dir.starts_with(ctx.root()))
-        && ctx.read_source(&parent.join("__init__.py")).is_some()
-    {
-        package = parent;
-    }
-    package.file_name()?.to_str()
-}
-
-/// Whether a `from … import …` names a module of `package`: a relative
-/// module path, or a dotted one whose first component is `package`.
-fn imports_from(file: &SourceFile, statement: Node, package: &str) -> bool {
+/// Whether a `from … import …` names a module of the file's own package:
+/// a relative module path, or a dotted one whose first component names a
+/// directory between the walk root and the file (namespace packages have
+/// no `__init__.py`).
+fn imports_own_module(file: &SourceFile, statement: Node, ctx: &WalkCtx) -> bool {
     let Some(module) = statement.child_by_field_name("module_name") else {
         return false;
     };
-    module.kind() == "relative_import" || file.text(module).split('.').next() == Some(package)
+    if module.kind() == "relative_import" {
+        return true;
+    }
+    let first_component = file.text(module).split('.').next();
+    file.path
+        .ancestors()
+        .skip(1)
+        .take_while(|dir| *dir != ctx.root() && dir.starts_with(ctx.root()))
+        .any(|dir| dir.file_name().and_then(|name| name.to_str()) == first_component)
+}
+
+/// Whether a `from … import …` re-exports a name on purpose: `X as X`, or
+/// a name `__all__` lists.
+fn reexports_explicitly(file: &SourceFile, statement: Node, exported_names: &[&str]) -> bool {
+    let mut cursor = statement.walk();
+    statement
+        .children_by_field_name("name", &mut cursor)
+        .any(|name| match name.kind() {
+            "aliased_import" => {
+                name.child_by_field_name("name")
+                    .map(|original| file.text(original))
+                    == name
+                        .child_by_field_name("alias")
+                        .map(|alias| file.text(alias))
+            }
+            _ => exported_names.contains(&file.text(name)),
+        })
+}
+
+/// The string contents of the module's top-level `__all__` assignments.
+fn all_names(file: &SourceFile) -> Vec<&str> {
+    let root = file.tree.root_node();
+    let mut cursor = root.walk();
+    let mut names = Vec::new();
+    for statement in root.named_children(&mut cursor) {
+        if statement.kind() == "expression_statement"
+            && matches!(assignment_target(file, statement), Some(("__all__", _)))
+        {
+            collect_string_contents(file, statement, &mut names);
+        }
+    }
+    names
+}
+
+fn collect_string_contents<'a>(file: &'a SourceFile, node: Node, names: &mut Vec<&'a str>) {
+    if node.kind() == "string_content" {
+        names.push(file.text(node));
+        return;
+    }
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        collect_string_contents(file, child, names);
+    }
 }
 
 fn file_stem(path: &Path) -> Option<&str> {
@@ -521,13 +570,9 @@ if sys.version_info >= (3, 8):
 
     #[test]
     fn code_python_package_init_reexports_only_its_own_modules() {
-        let (_, model) = super::super::test_support::extract_in(
-            &LANGUAGE,
-            &[
-                ("pkg/__init__.py", ""),
-                (
-                    "pkg/markdown/__init__.py",
-                    "\
+        let model = extract_source(
+            "src/pkg/markdown/__init__.py",
+            "\
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 from markupsafe import Markup
@@ -535,11 +580,23 @@ from pkg.markdown.config import Config
 from .props import Params
 from pkgextra import helper
 ",
-                ),
-            ],
-            "pkg/markdown/__init__.py",
         );
         assert_eq!(rows(&model.reexports), vec![vec![4], vec![5]]);
+    }
+
+    #[test]
+    fn code_python_package_init_reexports_explicitly_exported_imports() {
+        let model = extract_source(
+            "pkg/__init__.pyi",
+            "\
+from typing import Any
+from werkzeug.exceptions import abort as abort
+from markupsafe import Markup, escape
+from json import dumps as to_json
+__all__ = [\"escape\"]
+",
+        );
+        assert_eq!(rows(&model.reexports), vec![vec![2], vec![3], vec![5]]);
     }
 
     #[test]
