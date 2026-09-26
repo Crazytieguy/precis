@@ -534,8 +534,13 @@ impl RenderedTree {
                     );
                     let source_line = source.as_ref().and_then(|s| s.line(line_num)).unwrap_or("");
                     if !matches!(span.render, Render::Ellipsis) {
-                        let new_row =
-                            format_line_row(line_num, &span.render, source_line, indent_depth);
+                        let new_row = format_line_row(
+                            path,
+                            line_num,
+                            &span.render,
+                            source_line,
+                            indent_depth,
+                        );
                         d_tokens += tokenizer::count(&new_row) as isize;
                         d_chars += char_units(&new_row) as isize;
                     }
@@ -544,7 +549,7 @@ impl RenderedTree {
                         && !matches!(old.render, Render::Ellipsis)
                     {
                         let old_row =
-                            format_line_row(line_num, &old.render, source_line, indent_depth);
+                            format_line_row(path, line_num, &old.render, source_line, indent_depth);
                         d_tokens -= tokenizer::count(&old_row) as isize;
                         d_chars -= char_units(&old_row) as isize;
                     }
@@ -685,6 +690,7 @@ impl RenderedTree {
             GapWalkEvent::Anchor(number) => {
                 let source_line = source.as_ref().and_then(|s| s.line(number)).unwrap_or("");
                 out.push_str(&format_line_row(
+                    path,
                     number,
                     &content[&number].render,
                     source_line,
@@ -1008,8 +1014,9 @@ pub fn visible_full_line(source_line: &str) -> &str {
 /// `env(DB_PASSWORD)`), a phrase (`"Save password": "Tallenna salasana"`),
 /// a number or version (`"parse-passwd": "^1.0.0"`), a value spelling its
 /// own key (`ACCESS_TOKEN = "access_token"`), and anything unquoted — a
-/// variable, a call, a type — is code or documentation, and shows.
-fn redact_secrets(line: &str) -> std::borrow::Cow<'_, str> {
+/// variable, a call, a type — is code or documentation, and shows, as
+/// does every literal in a document (`export API_KEY='your-key'`).
+fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
     static URL_PASSWORD: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(r#"(://[^\s/:@"'`]*:)[^\s/@"'`{}$<>]+@"#).unwrap()
     });
@@ -1023,6 +1030,9 @@ fn redact_secrets(line: &str) -> std::borrow::Cow<'_, str> {
         .unwrap()
     });
     let line = URL_PASSWORD.replace_all(line, "${1}…@");
+    if in_document {
+        return line;
+    }
     let alphanumerics = |text: &str| -> String {
         text.chars()
             .filter(|c| c.is_alphanumeric())
@@ -1049,12 +1059,18 @@ fn redact_secrets(line: &str) -> std::borrow::Cow<'_, str> {
 /// Render one line: render spec + raw source text (empty string when
 /// unavailable — release tolerates, debug asserts).
 fn format_line_row(
+    path: &Path,
     number: usize,
     render: &Render,
     source_line: &str,
     indent_depth: usize,
 ) -> String {
-    let source_line = &*redact_secrets(source_line);
+    let extension = path.extension().and_then(|ext| ext.to_str());
+    let in_document = matches!(
+        extension.map(str::to_ascii_lowercase).as_deref(),
+        Some("md" | "mdx" | "rst" | "adoc")
+    );
+    let source_line = &*redact_secrets(source_line, in_document);
     let mut s = INDENT_UNIT.repeat(indent_depth);
     match render {
         Render::Ellipsis => {
@@ -1355,18 +1371,22 @@ mod tests {
                 r#""Save password": "Tallenna salasana""#,
             ),
         ] {
-            assert_eq!(redact_secrets(line), shown);
+            assert_eq!(redact_secrets(line, false), shown);
         }
+        assert_eq!(
+            redact_secrets("export API_KEY='your-key' # postgres://u:pw@db", true),
+            "export API_KEY='your-key' # postgres://u:…@db"
+        );
     }
 
     #[test]
     fn render_full_row_longer_than_the_cap_ends_in_ellipsis() {
         let long = "é".repeat(MAX_ROW_CHARS + 1);
-        let row = format_line_row(7, &Render::Full, &long, 0);
+        let row = format_line_row(Path::new("a.rs"), 7, &Render::Full, &long, 0);
         assert_eq!(row, format!("7→{}…\n", "é".repeat(MAX_ROW_CHARS)));
         let fits = &long[..long.len() - 'é'.len_utf8()];
         assert_eq!(
-            format_line_row(7, &Render::Full, fits, 0),
+            format_line_row(Path::new("a.rs"), 7, &Render::Full, fits, 0),
             format!("7→{fits}\n")
         );
     }

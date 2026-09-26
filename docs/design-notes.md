@@ -150,7 +150,9 @@ displaces a priced batch.
   where rows are formatted (`render::redact_secrets`), so it holds for
   every walker and the floor, and for costing as well as output. Only
   a quoted, space-free literal with a letter counts: an unquoted value
-  can't be told from a variable or a type by the line alone. Other
+  can't be told from a variable or a type by the line alone. Documents
+  (`.md`, `.mdx`, `.rst`, `.adoc`) keep their literals, which are
+  placeholders (`API_KEY='your-key'`). Other
   secrets in ordinarily named config are not detected.
 
 ## Cross-language vs language-specific concerns
