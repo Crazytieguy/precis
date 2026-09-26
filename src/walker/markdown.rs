@@ -2,8 +2,9 @@
 //! parsed with `tree-sitter-md`'s block grammar; reST and AsciiDoc (and an
 //! extensionless README without ATX headings) are line-scanned into the
 //! same shapes (see [`line_scanned_readme`]). A root Markdown build or
-//! contributing guide (`BUILDING.md`, `INSTALL.md`, `CONTRIBUTING.md`, …)
-//! yields one `CommandBlock` (see [`build_guide_command_blocks`]). Every
+//! contributing guide (`BUILDING.md`, `CONTRIBUTING.md`,
+//! `README.DEVELOPER`, …) yields one `CommandBlock` (see
+//! [`build_guide_command_blocks`]). Every
 //! other document is left to the listing, which names it.
 //!
 //! In document order:
@@ -400,7 +401,7 @@ enum ReadmeMarkup {
 }
 
 /// Stems of the root documents a README sends a builder or contributor
-/// to ("see BUILDING.md").
+/// to ("see BUILDING.md"); `README.<stem>` names one too.
 fn is_build_guide_stem(stem: &str) -> bool {
     #[rustfmt::skip]
     const STEMS: &[&str] = &[
@@ -424,6 +425,7 @@ fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 && name.split_once('.').is_some_and(|(stem, extension)| {
                     is_build_guide_stem(stem)
                         && matches!(extension.to_ascii_lowercase().as_str(), "md" | "markdown")
+                        || stem.eq_ignore_ascii_case("readme") && is_build_guide_stem(extension)
                 })
         })
         .filter_map(|(name, _)| {
@@ -1314,7 +1316,7 @@ fn is_appendix_title_core(core: &str) -> bool {
 #[rustfmt::skip]
 const COMMAND_TITLE_WORDS: &[&str] = &[
     "build", "building", "compile", "compiling", "compilation", "test", "tests", "testing",
-    "develop", "development", "run", "running",
+    "develop", "development", "developing", "run", "running",
 ];
 
 /// Which headings a command block sits under, and which code blocks
@@ -2704,6 +2706,11 @@ mod tests {
         )
         .unwrap();
         fs::write(
+            root.join("README.DEVELOPER"),
+            "# Developing\n\n```sh\nmake check\n```\n",
+        )
+        .unwrap();
+        fs::write(
             root.join("CONTRIBUTING.md"),
             "# How to contribute\n\n```\nSigned-off-by: A <a@b.c>\n```\n",
         )
@@ -2732,6 +2739,7 @@ mod tests {
                 ("BUILDING.md".to_string(), vec![(11, 15)]),
                 ("COMPILE.md".to_string(), vec![(1, 2), (9, 9)]),
                 ("INSTALL.md".to_string(), vec![(7, 11)]),
+                ("README.DEVELOPER".to_string(), vec![(1, 5)]),
             ]
         );
         assert!(expand_in_dir(&root.join("docs"), &ctx).is_empty());

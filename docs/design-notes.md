@@ -81,11 +81,14 @@ pages (translations, migration guides, nested package READMEs) and
 never reached the ones answer keys rank.
 
 - **Root build and contributing guides** (`BUILDING.md`, `INSTALL.md`,
-  `CONTRIBUTING.md`, …), the documents a README sends builders to,
-  yield one `CommandBlock` each and nothing else, taken only under a
-  command-titled heading: a guide's first block is as often a commit
-  template, a fork's clone or a package-manager install as a build
-  step. The grid barely sees guides, so they were judged on real-world
+  `CONTRIBUTING.md`, `README.DEVELOPER`, …), the documents a README
+  sends builders to, yield one `CommandBlock` each and nothing else,
+  taken only under a command-titled heading: a guide's first block is
+  as often a commit template, a fork's clone or a package-manager
+  install as a build step. Retried for guides whose stem is itself a
+  build word (`INSTALL.md` with no build heading) on 236 real
+  repositories: both guides it reached showed an install of the
+  published package. The grid barely sees guides, so they were judged on real-world
   output. `AGENTS.md` stays out: Claude Code loads it in place of a
   missing `CLAUDE.md`, and in all 26 repositories of the eval,
   robustness and breadth corpora that have both, one is a symlink to,
