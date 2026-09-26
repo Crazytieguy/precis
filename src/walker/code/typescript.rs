@@ -641,8 +641,15 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
 /// wrapped, `memo(forwardRef(() => { … }))`) is `Callable`; a class is a
 /// container, as is an object literal, bare or ending a call's
 /// arguments; an array literal lists its entries; anything else is all
-/// head.
+/// head. An assignment chain (`var X = exports.X = function …`) is shaped
+/// by its final value.
 fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node) -> DeclInfo {
+    let mut value = value;
+    while value.kind() == "assignment_expression"
+        && let Some(right) = value.child_by_field_name("right")
+    {
+        value = right;
+    }
     if is_class_kind(value.kind()) {
         return class(file, span, name_row, value.child_by_field_name("body"));
     }
@@ -1399,6 +1406,23 @@ app.name = 'app';
                 "{source}"
             );
         }
+    }
+
+    #[test]
+    fn code_typescript_assignment_chain_is_shaped_by_its_final_value() {
+        let model = extract_source(
+            "lib/stores/file.js",
+            "\
+var File = exports.File = function (options) {
+  this.type = 'file';
+  this.file = options.file;
+};
+",
+        );
+        assert_eq!(
+            describe(&model),
+            ["Callable name [1] head [1] doc [] body [[2], [3]]"]
+        );
     }
 
     #[test]
