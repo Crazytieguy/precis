@@ -18,12 +18,9 @@ const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 /// rather than something a reader is meant to read more of.
 const DOMINANT_SOURCE_MAX_FILE_BYTES: u64 = 400_000;
 
-/// The tree's essential source files, as one walk: byte mass per
-/// language family, plus the per-file candidate list.
-pub(super) struct EssentialSource {
-    per_language: HashMap<&'static str, u64>,
-    candidates: Vec<(PathBuf, u64, &'static str)>,
-}
+/// The tree's essential source files, as one walk: each file's path,
+/// byte length and language family.
+pub(super) type EssentialSource = Vec<(PathBuf, u64, &'static str)>;
 
 /// Walk `root` for its essential source. Non-essential subtrees (tests,
 /// examples, vendored, tooling) are not entered, since nothing under one
@@ -41,8 +38,7 @@ pub(super) fn enumerate_essential_source(
     root: &Path,
     filter: &DirFilter,
 ) -> Option<EssentialSource> {
-    let mut per_language: HashMap<&'static str, u64> = HashMap::new();
-    let mut candidates: Vec<(PathBuf, u64, &'static str)> = Vec::new();
+    let mut files = Vec::new();
     let mut entries_read = 0;
     // Breadth first: the answer doesn't depend on the order, and a tree
     // past the cap can reach it after opening far fewer directories.
@@ -81,15 +77,11 @@ pub(super) fn enumerate_essential_source(
                 let Ok(len) = entry.metadata().map(|m| m.len()) else {
                     continue;
                 };
-                *per_language.entry(language).or_default() += len;
-                candidates.push((path, len, language));
+                files.push((path, len, language));
             }
         }
     }
-    Some(EssentialSource {
-        per_language,
-        candidates,
-    })
+    Some(files)
 }
 
 /// Select a source file in the `primary` language that carries at least
@@ -106,12 +98,11 @@ pub(super) fn find_dominant_source_file(
     // The spine has to be written in the language the repository is
     // written in — a vendored JS bundle inside a Go tree is source mass
     // but it is not what the repo is about.
-    let total: u64 = source.per_language.values().sum();
+    let total: u64 = source.iter().map(|(_, len, _)| len).sum();
     if total == 0 {
         return None;
     }
     source
-        .candidates
         .iter()
         .filter(|(_, len, language)| {
             *language == primary
@@ -128,11 +119,11 @@ pub(super) fn find_dominant_source_file(
 /// The language with the most bytes, ranked over a sorted vector rather
 /// than the hash map's iteration order; `None` on a tie for the lead.
 pub(super) fn find_primary_language(source: &EssentialSource) -> Option<&'static str> {
-    let mut by_mass: Vec<(&'static str, u64)> = source
-        .per_language
-        .iter()
-        .map(|(&language, &bytes)| (language, bytes))
-        .collect();
+    let mut per_language: HashMap<&'static str, u64> = HashMap::new();
+    for &(_, len, language) in source {
+        *per_language.entry(language).or_default() += len;
+    }
+    let mut by_mass: Vec<(&'static str, u64)> = per_language.into_iter().collect();
     by_mass.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(b.0)));
     let (primary, primary_bytes) = *by_mass.first()?;
     let tied = by_mass
