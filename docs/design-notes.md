@@ -169,8 +169,9 @@ never reached the ones answer keys rank.
   without parsing (the C++-header probe, fallback-language and prose
   files) unbounded. Every read, whole, gated by a caller's byte limit
   (`get_within`) or a head, goes through the one reader
-  (`SourceCache::read`). The spine survey reads its candidates through
-  `read_source` too; the floor reads heads of listed files only.
+  (`SourceCache::read`). The spine survey and the vendored-directory probe (the
+  root `.gitattributes`) read through `read_source` too; the floor reads
+  heads of listed files only.
   Workspace membership
   canonicalizes member manifest paths without reading them, and the TS
   engine's nearest-`package.json` probe is a stat, which follows links
@@ -413,7 +414,8 @@ code (`lib/libc/** linguist-vendored`), unless a later line may
 un-vendor something under it (`lib/libc/src/** -linguist-vendored`,
 `=false`, `!`); a single-star pattern (`lib/*`) marks only entries, not
 a subtree, and is ignored. Only the run root's `.gitattributes` is read,
-matching the other root-relative rules. A declared vendored directory
+matching the other root-relative rules, and through `read_source`, so a
+link out of the tree or to a FIFO declares nothing. A declared vendored directory
 that is itself a third-party directory keeps its listing, which names
 its projects. A license of its own does not mark a directory as an
 embedded upstream: on the robustness corpus most such directories are
@@ -480,7 +482,8 @@ rows for its names, and parses more. In a large tree those sub-listings
 are many and cheap, and they outranked the root manifest and the root
 build file until the budget ran out, at every budget from the plugin's
 up. So until a root identity batch (a root manifest's identity block or
-head, or the head of a root build script such as `build.zig`) has been
+head, or the head of a root file named `build` with any extension, such
+as `build.zig` or `build.sh`) has been
 read, the best eligible one outranks any listing below the spine
 (`Scheduler::top_ranked`). The rule reads only the schedule, never the
 budget, so a smaller budget's output stays a subset of a larger one's.

@@ -352,9 +352,10 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// A batch that says what the repository is and how to build it: the
-    /// identity block or head of a root manifest, the head of a root
-    /// build script (`build.zig`, `build.gradle.kts`), or a root Makefile's
-    /// build and test rules. A `Dockerfile` or compose file is not one.
+    /// identity block or head of a root manifest, the head of a root file
+    /// named `build` with any extension (`build.zig`, `build.gradle.kts`,
+    /// `build.sh`), or a root Makefile's build and test rules. A
+    /// `Dockerfile` or compose file is not one.
     fn is_root_identity(&self, id: BatchId) -> bool {
         let (BatchKey::Toml(TomlKey::Identity { file })
         | BatchKey::Json(JsonKey::Identity { file })

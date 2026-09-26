@@ -151,7 +151,8 @@ impl SourceCache {
     /// is already cached or fits, else only its head. The head runs a few
     /// bytes past `head_bytes` so the line the cut falls in stays too long
     /// to select. A head is cached under `path` itself, where the renderer
-    /// reads it; no walker reads it as the whole file only because the
+    /// reads it. [`Self::get`] and [`Self::get_within`] would serve that
+    /// head as the whole file; no walker reads one only because the
     /// plaintext floor, its one caller, runs after every expansion is done.
     pub fn get_head(&self, path: &Path, head_bytes: usize) -> Option<Arc<Source>> {
         self.read(path, head_bytes, true)
