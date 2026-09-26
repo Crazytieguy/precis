@@ -9,6 +9,8 @@
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
+use std::ffi::{OsStr, OsString};
+use std::fs::FileType;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
@@ -95,6 +97,10 @@ pub struct DirFilter {
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
     /// Memo for [`lists_nothing`] on directories not listed in full.
     emptiness: RefCell<HashMap<PathBuf, bool>>,
+    /// Entries [`DirFilter::hides_everything_in`] read, until [`list_dir`]
+    /// lists them: a listing probes each directory it names, and that
+    /// directory's own listing usually follows.
+    probed_entries: RefCell<HashMap<PathBuf, RawEntries>>,
     /// Set for a single-file walk: the one entry under `root` the filter
     /// admits. See [`DirFilter::single_file`].
     only_file: Option<PathBuf>,
@@ -199,6 +205,7 @@ impl DirFilter {
             repo: None,
             listings: RefCell::new(HashMap::new()),
             emptiness: RefCell::new(HashMap::new()),
+            probed_entries: RefCell::new(HashMap::new()),
             only_file: None,
         }
     }
@@ -253,10 +260,10 @@ impl DirFilter {
     /// withholding it, and an empty directory is real repository
     /// structure — dropping its row would substitute one lie for another.
     ///
-    /// Answering costs one `read_dir`, and recurses only into a directory
-    /// that has no surviving file of its own, so the common case is a
-    /// single probe that stops at the first visible entry. Memoized per
-    /// run.
+    /// Answering costs one `read_dir`, whose entries the directory's own
+    /// listing reuses, and recurses only into a directory that has no
+    /// surviving file of its own, so the common case is a single probe
+    /// that stops at the first visible entry. Memoized per run.
     pub(crate) fn hides_everything_in(&self, dir: &Path) -> bool {
         let Some(repo) = &self.repo else {
             return false;
@@ -276,23 +283,25 @@ impl DirFilter {
         if self.is_linked_subdirectory(dir) {
             return false;
         }
-        let Ok(read_dir) = std::fs::read_dir(dir) else {
+        let Some(entries) = read_entries(dir) else {
             return false;
         };
+        self.probed_entries
+            .borrow_mut()
+            .insert(dir.to_path_buf(), Rc::clone(&entries));
         let mut occupied = false;
         let mut surviving_subdirs = Vec::new();
-        for entry in read_dir.flatten() {
+        for (name, file_type) in entries.iter() {
             occupied = true;
-            let name = entry.file_name();
             if is_internal_entry(&name.to_string_lossy()) {
                 continue;
             }
-            let Ok(file_type) = entry.file_type() else {
+            let Some(file_type) = file_type else {
                 continue;
             };
-            let path = entry.path();
+            let path = dir.join(name);
             // An entry the listing drops is not a surviving one.
-            let Some(kind) = resolved_kind(&path, &file_type, self) else {
+            let Some(kind) = resolved_kind(&path, file_type, self) else {
                 continue;
             };
             let is_dir = matches!(kind, EntryKind::Directory);
@@ -564,9 +573,9 @@ pub(crate) fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
     }
     let empty = filter.is_linked_subdirectory(path)
         || std::fs::read_dir(path).map_or(true, |entries| {
-            !entries
-                .flatten()
-                .any(|entry| listed_entry(path, &entry, filter).is_some())
+            !entries.flatten().any(|entry| {
+                listed_entry(path, &entry.file_name(), entry.file_type().ok(), filter).is_some()
+            })
         });
     filter
         .emptiness
@@ -579,27 +588,44 @@ fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
     if filter.is_linked_subdirectory(path) {
         return BTreeMap::new();
     }
-    let Ok(read_dir) = std::fs::read_dir(path) else {
+    let probed = filter.probed_entries.borrow_mut().remove(path);
+    let Some(entries) = probed.or_else(|| read_entries(path)) else {
         return BTreeMap::new();
     };
-    read_dir
-        .flatten()
-        .filter_map(|entry| listed_entry(path, &entry, filter))
+    entries
+        .iter()
+        .filter_map(|(name, file_type)| listed_entry(path, name, *file_type, filter))
         .collect()
 }
 
-/// The row `entry` of directory `path` lists as, if any.
+/// A directory's entries as `read_dir` yields them, with their types.
+type RawEntries = Rc<[(OsString, Option<FileType>)]>;
+
+/// `None` when `dir` can't be read.
+fn read_entries(dir: &Path) -> Option<RawEntries> {
+    let entries = std::fs::read_dir(dir).ok()?;
+    Some(
+        entries
+            .flatten()
+            .map(|entry| (entry.file_name(), entry.file_type().ok()))
+            .collect(),
+    )
+}
+
+/// The row entry `name` of directory `path`, of type `file_type`, lists
+/// as, if any.
 fn listed_entry(
     path: &Path,
-    entry: &std::fs::DirEntry,
+    name: &OsStr,
+    file_type: Option<FileType>,
     filter: &DirFilter,
 ) -> Option<(String, EntryKind)> {
-    let name = entry.file_name().into_string().ok()?;
+    let name = name.to_str()?.to_owned();
     if is_internal_entry(&name) {
         return None;
     }
     let child = path.join(&name);
-    let kind = resolved_kind(&child, &entry.file_type().ok()?, filter)?;
+    let kind = resolved_kind(&child, &file_type?, filter)?;
     let is_dir = matches!(kind, EntryKind::Directory);
     if filter.excludes(&child, is_dir) {
         return None;
