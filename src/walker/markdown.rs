@@ -1784,27 +1784,28 @@ fn is_chrome_block(block: Node, source: &str) -> bool {
         || is_table_of_contents(block, source)
 }
 
-/// A list whose items, at every depth, mostly (4 in 5) open with an
-/// in-document link, numbered or not (`* 2.3. [MacPorts](#macports-(macos))`,
+/// A list whose lines, at every depth, mostly (4 in 5) open an item with
+/// an in-document link, numbered or not (`* 2.3. [MacPorts](#macports-(macos))`,
 /// `3. [Quick start](#quick-start) — Fast Track`). A feature list that
-/// cites a section mid-item is not one.
+/// cites a section mid-item is not one, nor is a list whose linked items
+/// go on to paragraphs or code.
 fn is_table_of_contents(block: Node, source: &str) -> bool {
     if block.kind() != "list" {
         return false;
     }
-    let (mut items, mut links) = (0, 0);
+    let (mut lines, mut links) = (0, 0);
     for line in source[block.byte_range()].lines() {
         let line = line.trim_start();
+        if line.is_empty() {
+            continue;
+        }
+        lines += 1;
         let digits = line.len() - line.trim_start_matches(|c: char| c.is_ascii_digit()).len();
         let marker = match line[digits..].chars().next() {
             Some('-' | '*' | '+') if digits == 0 => 1,
             Some('.' | ')') if digits > 0 => digits + 1,
             _ => continue,
         };
-        if !line[marker..].starts_with(char::is_whitespace) {
-            continue;
-        }
-        items += 1;
         let item = line[marker..].trim_start_matches(|c: char| {
             c.is_ascii_digit() || c.is_whitespace() || matches!(c, '.' | '*' | '-' | '+' | ')')
         });
@@ -1816,7 +1817,7 @@ fn is_table_of_contents(block: Node, source: &str) -> bool {
             links += 1;
         }
     }
-    items > 0 && links * 5 >= items * 4
+    lines > 0 && links * 5 >= lines * 4
 }
 
 /// True iff `target` (a link destination past its opening `(`) reaches
@@ -1935,6 +1936,11 @@ mod tests {
         let features =
             "- **Fast** — see [benchmarks](#benchmarks)\n- **Tiny** — see [size](#size)\n";
         let half = "- [A](#a)\n- [Docs](https://docs.rs)\n";
+        let explained = concat!(
+            "- [Authentication](#authentication)\n\n",
+            "  Supply the token on every request:\n\n",
+            "  ```sh\n  widget --token \"$TOKEN\" fetch\n  ```\n",
+        );
         for (source, expected) in [
             (toc, true),
             (numbered, true),
@@ -1942,6 +1948,7 @@ mod tests {
             (mostly, true),
             (features, false),
             (half, false),
+            (explained, false),
         ] {
             let tree = parse(source);
             let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
