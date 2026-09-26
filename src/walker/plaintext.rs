@@ -1265,6 +1265,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     out
 }
 
+/// Whether `file` is a build file or a project manifest this walker
+/// renders ([`Class::Build`], [`Class::Manifest`]).
+pub(crate) fn is_build_or_manifest_file(file: &Path, ctx: &WalkCtx) -> bool {
+    let (Some(dir), Some(name)) = (file.parent(), file.file_name()) else {
+        return false;
+    };
+    matches!(
+        classify_file(dir, &name.to_string_lossy(), file, ctx),
+        Some(Class::Build | Class::Manifest)
+    )
+}
+
 /// The class of `file`, named `name` in `dir`, or `None` when this walker
 /// leaves it alone: a license text, a Gradle script below a package root
 /// (one module's manifest, left to the listing like any nested module

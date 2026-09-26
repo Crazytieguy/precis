@@ -14,7 +14,10 @@
 //! live here rather than in a batch's value: a code `Body` batch ranks
 //! lower the more of its file's code is scheduled (breadth pressure),
 //! and a batch drawn only from the tree's dominant source file ranks
-//! higher once that file has been entered. Under a char budget, `cost`
+//! higher once that file has been entered. Once the source spine's
+//! listings have spent half the budget, the root's identity (a root
+//! manifest or build file, a root README command block) outranks the
+//! listings below the spine. Under a char budget, `cost`
 //! is the larger of a batch's tokens and its chars converted at the two
 //! budgets' ratio (`ranking_cost`).
 
@@ -22,7 +25,10 @@ use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::PathBuf;
 use std::rc::Rc;
 
-use crate::batch::{Batch, BatchId, BatchKey, CodeKey, Rung};
+use crate::batch::{
+    Batch, BatchId, BatchKey, CodeKey, FsKey, GoModKey, JsonKey, MarkdownKey, PlaintextKey, Rung,
+    TomlKey,
+};
 use crate::content::BatchContent;
 use crate::render::{Cost, RenderedTree};
 use crate::value::ratio_with_exponent;
@@ -81,6 +87,9 @@ pub struct Scheduler<W: Walker> {
     /// Code tokens scheduled per source file — drives the
     /// breadth-pressure ratio penalty.
     code_tokens_per_file: HashMap<PathBuf, usize>,
+    /// Tokens scheduled on listings of the source spine's directories
+    /// and the directories below them.
+    spine_listing_tokens: usize,
 }
 
 /// Breadth-pressure scale: a `Body` batch of a source file that already
@@ -99,6 +108,16 @@ const BREADTH_PRESSURE_TOKEN_SCALE: f64 = 1000.0;
 /// escalates depth rather than pulling one file in front of the
 /// repository's orientation.
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
+
+/// Share of the token budget the source spine's listings may spend
+/// before the root's identity outranks the listings below the spine.
+const SPINE_LISTING_BUDGET_SHARE: f64 = 0.5;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SpineListing {
+    On,
+    Below,
+}
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(ctx: WalkCtx, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
@@ -125,6 +144,7 @@ impl<W: Walker> Scheduler<W> {
             dominant_file_batches: HashSet::new(),
             dominant_file_entered: false,
             code_tokens_per_file: HashMap::new(),
+            spine_listing_tokens: 0,
         }
     }
 
@@ -256,14 +276,8 @@ impl<W: Walker> Scheduler<W> {
                 let c = self.tree.marginal_cost(content);
                 self.cost_cache.insert(id, c);
             }
-            let pressure = self.breadth_pressure(id) * self.dominant_file_boost(id);
             let exact_cost = self.cost_cache[&id];
-            let entry = &self.entries[id.index()];
-            let ratio = ratio_with_exponent(
-                entry.value,
-                self.ranking_cost(exact_cost),
-                entry.key.concavity_exponent(),
-            ) * pressure;
+            let ratio = self.ranking_ratio(id);
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
                 ratio > *br
                     || (ratio == *br
@@ -273,7 +287,70 @@ impl<W: Walker> Scheduler<W> {
                 best = Some((ratio, id, exact_cost));
             }
         }
-        best.map(|(_, id, cost)| (id, cost))
+        let (_, best, cost) = best?;
+        if self.spine_listing_tokens as f64 >= self.token_budget as f64 * SPINE_LISTING_BUDGET_SHARE
+            && self.spine_listing(best) == Some(SpineListing::Below)
+            && let Some(identity) = self
+                .eligible
+                .iter()
+                .copied()
+                .filter(|&id| self.is_root_identity(id))
+                .max_by(|&a, &b| self.ranking_ratio(a).total_cmp(&self.ranking_ratio(b)))
+        {
+            return Some((identity, self.cost_cache[&identity]));
+        }
+        Some((best, cost))
+    }
+
+    /// `id`'s value per unit of cost, with the adjustments that depend on
+    /// what is already scheduled. Its cost must be cached.
+    fn ranking_ratio(&self, id: BatchId) -> f64 {
+        let entry = &self.entries[id.index()];
+        ratio_with_exponent(
+            entry.value,
+            self.ranking_cost(self.cost_cache[&id]),
+            entry.key.concavity_exponent(),
+        ) * (self.breadth_pressure(id) * self.dominant_file_boost(id))
+    }
+
+    /// Where `id` sits relative to the source spine, if it lists a
+    /// directory on the spine or below it.
+    fn spine_listing(&self, id: BatchId) -> Option<SpineListing> {
+        let BatchKey::Fs(FsKey::DirListing { dir } | FsKey::DirListingTail { dir }) =
+            &self.entries[id.index()].key
+        else {
+            return None;
+        };
+        if self.ctx.is_on_source_spine(dir) {
+            Some(SpineListing::On)
+        } else if dir
+            .ancestors()
+            .skip(1)
+            .any(|ancestor| self.ctx.is_on_source_spine(ancestor))
+        {
+            Some(SpineListing::Below)
+        } else {
+            None
+        }
+    }
+
+    /// A batch that says what the repository is and how to build it: the
+    /// identity block or head of a root manifest or build file, or a
+    /// command block of the root README.
+    fn is_root_identity(&self, id: BatchId) -> bool {
+        let (BatchKey::Toml(TomlKey::Identity { file })
+        | BatchKey::Json(JsonKey::Identity { file })
+        | BatchKey::GoMod(GoModKey::Identity { file })
+        | BatchKey::Markdown(MarkdownKey::CommandBlock { file, .. })
+        | BatchKey::Plaintext(
+            PlaintextKey::DeclSurface { file } | PlaintextKey::Whole { file },
+        )) = &self.entries[id.index()].key
+        else {
+            return false;
+        };
+        file.parent() == Some(self.ctx.root())
+            && (!matches!(self.entries[id.index()].key, BatchKey::Plaintext(_))
+                || crate::walker::is_build_or_manifest_file(file, &self.ctx))
     }
 
     /// Cost a batch ranks at, in tokens. Under a char budget, its chars
@@ -351,6 +428,9 @@ impl<W: Walker> Scheduler<W> {
         );
 
         let entry_content = self.apply_and_record(id, cost);
+        if self.spine_listing(id).is_some() {
+            self.spine_listing_tokens += cost.tokens;
+        }
         if let BatchKey::Code(key) = &self.entries[id.index()].key {
             *self
                 .code_tokens_per_file

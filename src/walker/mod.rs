@@ -32,7 +32,7 @@ mod survey;
 mod toml;
 mod workspace;
 
-pub(crate) use plaintext::is_credential_name;
+pub(crate) use plaintext::{is_build_or_manifest_file, is_credential_name};
 use survey::EssentialSource;
 pub(in crate::walker) use survey::language_group;
 
@@ -237,7 +237,7 @@ impl WalkCtx {
 
     /// Whether `dir`, below the root, holds more than half of the tree's
     /// essential source bytes. Never true past the survey's entry cap.
-    pub(in crate::walker) fn is_on_source_spine(&self, dir: &Path) -> bool {
+    pub(crate) fn is_on_source_spine(&self, dir: &Path) -> bool {
         self.source_spine
             .get_or_init(|| {
                 self.essential_source()

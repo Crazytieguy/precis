@@ -368,7 +368,17 @@ left no directory with a majority and unlisted the Python library.
 Past the survey's entry cap there is no spine. Opening a spine
 directory also opens its subdirectories' listings and its files at their
 plain values, so a repository whose spine was bare trades some peripheral
-rows for its names, and parses more.
+rows for its names, and parses more. In a large tree those sub-listings
+are many and cheap, and they outranked the root manifest, the root build
+file and the README's command blocks until the budget ran out. So once
+the spine's listings have spent half the budget, an eligible root
+identity batch outranks any listing below the spine
+(`Scheduler::top_ranked`). Two other ways to curb that cascade lost on
+the grid, because answer keys of smaller repositories want the spine's
+sub-listings early: pricing each sub-listing by its share of its
+parent's source (3000 −0.023), and a breadth pressure on them after
+1000 to 4000 spine tokens (3000 −0.004 to −0.007). Giving the root
+identity precedence from the first spine token cost 3000 −0.007.
 
 ## Threads and resource bounds
 
