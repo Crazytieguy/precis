@@ -125,7 +125,7 @@ pub enum JsonKey {
 }
 
 /// Batches for files no parser claims — named config/ops files and the
-/// language-agnostic declaration surface. See [`crate::walker::plaintext`].
+/// language-agnostic declaration surface. See `walker::plaintext`.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
     /// Whole-file render, or a head slice of a longer file. For a
@@ -267,7 +267,7 @@ impl BatchKey {
 /// the batch enters the pool but the walker never sees it.
 ///
 /// Walkers compute `value` directly: it's the scalar input to
-/// [`crate::value::ratio_with_exponent`], on a shared cross-walker
+/// `value::ratio_with_exponent`, on a shared cross-walker
 /// scale (calibration across walkers is a divergence-reports problem,
 /// not a code-level invariant).
 #[derive(Debug, Clone)]
