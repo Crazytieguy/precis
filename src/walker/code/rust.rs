@@ -294,7 +294,7 @@ impl Leading {
     }
 }
 
-/// `cfg(test)`, or `cfg(all(…))` with a bare `test` among its predicates.
+/// `cfg(test)`, or `cfg(all(…))` with a `test` among its predicates.
 fn is_test_cfg(compact_attribute: &str) -> bool {
     let Some(predicate) = compact_attribute
         .strip_prefix("cfg(")
@@ -302,27 +302,13 @@ fn is_test_cfg(compact_attribute: &str) -> bool {
     else {
         return false;
     };
-    let Some(arguments) = predicate
-        .strip_prefix("all(")
-        .and_then(|rest| rest.strip_suffix(')'))
-    else {
-        return predicate == "test";
-    };
-    let mut depth = 0;
-    let mut start = 0;
-    let mut has_test = false;
-    for (index, character) in arguments.char_indices().chain([(arguments.len(), ',')]) {
-        match character {
-            '(' => depth += 1,
-            ')' => depth -= 1,
-            ',' if depth == 0 => {
-                has_test |= &arguments[start..index] == "test";
-                start = index + 1;
-            }
-            _ => {}
-        }
-    }
-    has_test
+    predicate == "test"
+        || predicate.strip_prefix("all(").is_some_and(|arguments| {
+            arguments
+                .trim_end_matches(')')
+                .split(',')
+                .any(|argument| argument == "test")
+        })
 }
 
 /// An attribute item's contents between `#[` and `]`, whitespace removed:
