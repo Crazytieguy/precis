@@ -231,16 +231,16 @@ Score(3000)=0.623 I=0.778 C=0.498 ns_rows≤3K=17/44 grid(1000/1442/2080/3000/43
 | walker |  | 9239 | 18 | Code::CodeKey { rung: Doc, file: beetsplug/web/__init__.py, decl: 10, sub: 0, line: 241 } |  |  | 0.380 |
 | walker |  | 9257 | 18 | Code::CodeKey { rung: Doc, file: beetsplug/web/__init__.py, decl: 14, sub: 0, line: 268 } |  |  | 0.380 |
 | walker |  | 9327 | 70 | Code::CodeKey { rung: Names, file: beetsplug/tidal/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.380 |
-| walker |  | 9406 | 79 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 28, sub: 0, line: 494 } |  |  | 0.380 |
+| walker |  | 9406 | 79 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 34, sub: 0, line: 494 } |  |  | 0.380 |
 | ns | 9539 |  | 352 | beets.autotag exports, Recommendation, Proposal | 8.1 |  | 0.373 |
 | walker |  | 9592 | 186 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 2, sub: 0, line: 37 } |  |  | 0.373 |
 | ns | 9775 |  | 236 | autotag/hooks.py and distance.py symbol roster | 8.2 |  | 0.370 |
-| walker |  | 9805 | 213 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 2, sub: 1, line: 37 } |  |  | 0.370 |
-| walker |  | 9822 | 17 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 13, sub: 0, line: 142 } |  |  | 0.370 |
-| walker |  | 9848 | 26 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 12, sub: 0, line: 119 } |  |  | 0.370 |
-| walker |  | 9900 | 52 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 19, sub: 0, line: 295 } |  |  | 0.370 |
-| walker |  | 9953 | 53 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 18, sub: 0, line: 236 } |  |  | 0.370 |
-| walker |  | 9964 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/tidal/__init__.py, decl: 14, sub: 0, line: 161 } |  |  | 0.370 |
+| walker |  | 9827 | 235 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 2, sub: 1, line: 37 } |  |  | 0.370 |
+| walker |  | 9838 | 11 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 18, sub: 0, line: 221 } |  |  | 0.370 |
+| walker |  | 9850 | 12 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 19, sub: 0, line: 226 } |  |  | 0.370 |
+| walker |  | 9867 | 17 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 13, sub: 0, line: 142 } |  |  | 0.370 |
+| walker |  | 9893 | 26 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 12, sub: 0, line: 119 } |  |  | 0.370 |
+| walker |  | 9904 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/tidal/__init__.py, decl: 14, sub: 0, line: 161 } |  |  | 0.370 |
+| walker |  | 9915 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/tidal/__init__.py, decl: 15, sub: 0, line: 169 } |  |  | 0.370 |
 | ns | 9970 |  | 195 | beets/util/__init__.py: classes and the core path/file-operation helpers | 9.1 |  | 0.365 |
-| walker |  | 9975 | 11 | Code::CodeKey { rung: Doc, file: beetsplug/tidal/__init__.py, decl: 15, sub: 0, line: 169 } |  |  | 0.365 |
-| walker |  | 10000 | 25 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 2, sub: 2, line: 37 } |  |  | 0.365 |
+| walker |  | 9984 | 69 | Code::CodeKey { rung: Decl, file: beetsplug/tidal/__init__.py, decl: 2, sub: 2, line: 37 } |  |  | 0.365 |

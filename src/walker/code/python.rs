@@ -4,9 +4,7 @@
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
 //!   and `type X = …` aliases (`Whole`), plus the `def`s and `class`es
-//!   inside top-level `if` / `try` statements. An `@overload` stub whose
-//!   implementation follows it is hidden: the implementation's signature
-//!   stands for the function, so the roster doesn't repeat its name.
+//!   inside top-level `if` / `try` statements.
 //! - **Head and name rows**: a decorated definition's head starts at its
 //!   first decorator. Its name rows are the `def` / `class` row and,
 //!   when the signature spans rows, the row that closes it (`) -> T:`),
@@ -30,7 +28,7 @@
 //!   `__init__.py`'s `__all__` is left out when those imports already
 //!   re-export every name it lists, so the roster names each once.
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::path::Path;
 use std::sync::LazyLock;
 
@@ -78,7 +76,6 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut first_statement = true;
     let mut reexported_names: HashSet<&str> = HashSet::new();
     let mut all_statements = Vec::new();
-    let implemented_overloads = implemented_overloads(file, root.named_children(&mut root.walk()));
     for node in root.named_children(&mut root.walk()) {
         if node.kind() == "comment" {
             continue;
@@ -98,9 +95,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             | "class_definition"
             | "decorated_definition"
             | "if_statement"
-            | "try_statement" => model
-                .decls
-                .extend(definitions(file, node, 0, &implemented_overloads).0),
+            | "try_statement" => model.decls.extend(definitions(file, node, 0).0),
             "import_from_statement" if is_package_init && imports_own_module(file, node, ctx) => {
                 let names = imported_names(file, node);
                 let public = names.is_empty() || names.iter().any(|name| !is_private(name));
@@ -302,19 +297,8 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
 /// Also the statements of those blocks that define nothing (fields,
 /// assignments), as [`Item`]s holding rows past `after_row`; a block
 /// defining nothing lists its opening row with its first statement.
-/// An `@overload` stub in `hidden` (the [`implemented_overloads`] among
-/// `statement` and its siblings) defines nothing: the implementation's
-/// signature stands for the function.
-fn definitions(
-    file: &SourceFile,
-    statement: Node,
-    after_row: usize,
-    hidden: &HashSet<usize>,
-) -> (Vec<DeclInfo>, Vec<Item>) {
+fn definitions(file: &SourceFile, statement: Node, after_row: usize) -> (Vec<DeclInfo>, Vec<Item>) {
     if !matches!(statement.kind(), "if_statement" | "try_statement") {
-        if hidden.contains(&statement.id()) {
-            return (Vec::new(), Vec::new());
-        }
         return (
             definition(file, statement).into_iter().collect(),
             Vec::new(),
@@ -418,40 +402,6 @@ fn defined(unit: Node) -> Option<Node> {
     }
 }
 
-fn is_overload(file: &SourceFile, unit: Node) -> bool {
-    unit.named_children(&mut unit.walk())
-        .filter(|child| child.kind() == "decorator")
-        .filter_map(|decorator| decorator.named_child(0))
-        .any(|expression| {
-            let text = file.text(expression);
-            text == "overload" || text.ends_with(".overload")
-        })
-}
-
-/// The ids of the `@overload` stubs among `siblings` that a later
-/// sibling of the same name without `@overload` implements.
-fn implemented_overloads<'tree>(
-    file: &SourceFile,
-    siblings: impl Iterator<Item = Node<'tree>>,
-) -> HashSet<usize> {
-    let mut pending: HashMap<&str, Vec<usize>> = HashMap::new();
-    let mut implemented = HashSet::new();
-    for sibling in siblings {
-        let Some(name) = defined(sibling)
-            .and_then(|inner| inner.child_by_field_name("name"))
-            .map(|name| file.text(name))
-        else {
-            continue;
-        };
-        if is_overload(file, sibling) {
-            pending.entry(name).or_default().push(sibling.id());
-        } else if let Some(overloads) = pending.remove(name) {
-            implemented.extend(overloads);
-        }
-    }
-    implemented
-}
-
 /// The row of a definition's outermost decorator, when it fits on one row.
 fn outer_decorator_row(file: &SourceFile, unit: Node) -> Option<usize> {
     unit.named_children(&mut unit.walk())
@@ -504,12 +454,11 @@ fn suite_statements(inner: Node) -> Vec<Node> {
 /// the comments directly above it. Comments directly above a definition
 /// are its doc when it has no docstring, and otherwise in no part.
 fn suite(file: &SourceFile, statements: &[Node], after_row: usize) -> (Vec<DeclInfo>, Vec<Item>) {
-    let hidden = implemented_overloads(file, statements.iter().copied());
     let mut decls = Vec::new();
     let mut items = Vec::new();
     let mut fields: Vec<Node> = Vec::new();
     for &node in statements {
-        let (defined, nested_items) = definitions(file, node, after_row, &hidden);
+        let (defined, nested_items) = definitions(file, node, after_row);
         if defined.is_empty() {
             if !is_definition_kind(node.kind()) {
                 fields.push(node);
@@ -944,36 +893,19 @@ else:
     }
 
     #[test]
-    fn python_overload_stubs_before_their_implementation_are_hidden() {
-        let source = "\
-@overload
-def filter(x: int) -> list[int]: ...
-@typing.overload
-def filter(x: str) -> list[str]: ...
-def filter(x):
-    return [x]
-class Wikicode:
-    @overload
-    def ifilter(self, x: int) -> int: ...
-    def ifilter(self, x):
-        return x
-";
-        let model = extract_source("wikicode.py", source);
-        assert_eq!(
-            describe(&model),
-            [
-                "Callable name [5] head [5] doc [] body [[6]]",
-                "Whole name [7] head [7] doc [] body [[10]]",
-                "  Callable name [10] head [10] doc [] body [[11]]",
-            ]
-        );
+    fn python_type_stubs_are_extracted_like_modules() {
         assert!(
             Language::from_path(Path::new("stub.pyi"))
                 .is_some_and(|language| language.extensions == LANGUAGE.extensions)
         );
         let model = extract_source(
             "wikicode.pyi",
-            &source[..source.find("def filter(x):").unwrap()],
+            "\
+@overload
+def filter(x: int) -> list[int]: ...
+@typing.overload
+def filter(x: str) -> list[str]: ...
+",
         );
         assert_eq!(
             describe(&model),
