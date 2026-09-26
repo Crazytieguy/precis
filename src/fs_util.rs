@@ -23,6 +23,10 @@ pub const PRECIS_PIN_FILE: &str = ".precis-pin";
 /// worktree or submodule, hence not always a directory).
 const GIT_DIR: &str = ".git";
 
+/// Past the longest path a git pointer file can name (Linux `PATH_MAX`,
+/// 4096 bytes) plus its `gitdir: ` prefix.
+const GIT_POINTER_MAX_BYTES: u64 = 8 * 1024;
+
 const GITIGNORE_FILE: &str = ".gitignore";
 
 /// Directory entry kind. Internal to the walker + renderer; not part of
@@ -418,18 +422,35 @@ fn build_gitignore(base: &Path, file: &Path) -> Option<Gitignore> {
 /// worktree's own git dir has no `info/exclude`, the shared one does.
 fn git_common_dir(root: &Path) -> Option<PathBuf> {
     let dot_git = root.join(GIT_DIR);
-    let metadata = std::fs::metadata(&dot_git).ok()?;
-    if metadata.is_dir() {
+    if dot_git.is_dir() {
         return Some(dot_git);
     }
-    let pointer = std::fs::read_to_string(&dot_git).ok()?;
+    let pointer = read_git_pointer(&dot_git)?;
     let git_dir = resolve_relative_to(root, pointer.strip_prefix("gitdir:")?.trim());
     // A linked worktree's git dir names its shared parent in `commondir`;
     // a submodule's doesn't and is already the common dir.
-    let Ok(common) = std::fs::read_to_string(git_dir.join("commondir")) else {
+    let Some(common) = read_git_pointer(&git_dir.join("commondir")) else {
         return Some(git_dir);
     };
     Some(resolve_relative_to(&git_dir, common.trim()))
+}
+
+/// A one-line git metadata file (`.git` pointer, `commondir`), read only
+/// when it is a regular file and only as far as a path could reach, so a
+/// FIFO or device wearing the name can't block or stream forever.
+fn read_git_pointer(path: &Path) -> Option<String> {
+    use std::io::Read;
+
+    if !path.is_file() {
+        return None;
+    }
+    let mut text = String::new();
+    std::fs::File::open(path)
+        .ok()?
+        .take(GIT_POINTER_MAX_BYTES)
+        .read_to_string(&mut text)
+        .ok()?;
+    Some(text)
 }
 
 fn resolve_relative_to(base: &Path, target: &str) -> PathBuf {

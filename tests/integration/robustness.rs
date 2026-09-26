@@ -131,6 +131,33 @@ fn robustness_special_files_named_like_workspace_manifests_are_never_read() {
     }
 }
 
+/// Git's pointer files (`.git` in a linked worktree, `commondir` in its
+/// git dir) are read before any listing. A FIFO or a link to a device
+/// wearing either name reads as no repository, not a read that blocks or
+/// never ends.
+#[cfg(unix)]
+#[test]
+fn robustness_special_files_named_like_git_pointers_are_never_read() {
+    use std::os::unix::fs::symlink;
+
+    for case in ["fifo .git", "device .git", "fifo commondir"] {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        write(&root.join("main.py"), "def main():\n    return 1\n");
+        match case {
+            "fifo .git" => mkfifo(&root.join(".git")),
+            "device .git" => symlink("/dev/zero", root.join(".git")).unwrap(),
+            _ => {
+                write(&root.join(".git"), "gitdir: meta\n");
+                std::fs::create_dir(root.join("meta")).unwrap();
+                mkfifo(&root.join("meta/commondir"));
+            }
+        }
+        let out = render_within(root, 3000, Duration::from_secs(20)).unwrap();
+        assert!(out.contains("1→def main():"), "{case}: {out}");
+    }
+}
+
 #[test]
 fn robustness_binary_files_render_only_their_rows() {
     let temp = tempfile::tempdir().unwrap();
