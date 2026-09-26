@@ -441,12 +441,23 @@ impl<'source> ExportScan<'source> {
 }
 
 /// The type names `node`'s parameter lists, return types and
-/// `extends` / `implements` clauses mention, a class's member signatures
-/// included, outside function bodies.
+/// `extends` / `implements` clauses mention, a class's visible member
+/// signatures included, outside function bodies.
 fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut Vec<&'source str>) {
     let mut pending = vec![(node, false)];
     while let Some((node, in_signature)) = pending.pop() {
         if node.kind() == "statement_block" {
+            continue;
+        }
+        if node.kind() == "class_body" {
+            pending.extend(
+                node.named_children(&mut node.walk())
+                    .filter(|member| {
+                        !is_hidden_member(file, *member, false)
+                            && !is_internal(file, &doc_items(file, *member))
+                    })
+                    .map(|member| (member, in_signature)),
+            );
             continue;
         }
         if in_signature && node.kind() == "type_identifier" {
@@ -1503,7 +1514,14 @@ export class Server {
     const h: Hidden = load();
   }
   use(handler: Handler) {}
+  private lookup(entry: CacheEntry) {}
+  #hide(value: Secret) {}
+  /** @internal */
+  debug(state: DebugState) {}
 }
+interface CacheEntry { key: string }
+type Secret = string;
+type DebugState = string;
 ",
         );
         let name_rows: Vec<Vec<usize>> = model
