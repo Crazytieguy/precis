@@ -98,14 +98,27 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     headings
 }
 
-/// Line-scan AsciiDoc section titles (`= Title`, `== Section`, …) outside
-/// delimited blocks (`----` listings, `....` literals, `====` examples, …),
-/// whose lines are content even when they start with `= `.
+/// Line-scan AsciiDoc section titles (`= Title`, `== Section`, …, and the
+/// two-line form: a title underlined by `=`, `-`, `~`, `^` or `+` within
+/// one character of its width) outside delimited blocks (`----` listings,
+/// `....` literals, `====` examples, …), whose lines are content even when
+/// they start with `= `.
 fn scan_asciidoc_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     let mut open_delimiter: Option<&str> = None;
     let mut headings = Vec::new();
     for (i, line) in src_lines.iter().enumerate() {
         let trimmed = line.trim_end();
+        if open_delimiter.is_none()
+            && i > 0
+            && is_asciidoc_two_line_title(src_lines[i - 1].trim_end(), trimmed)
+        {
+            headings.push(RstHeading {
+                start_row: i,
+                title_row: i,
+                underline_row: i + 1,
+            });
+            continue;
+        }
         if is_asciidoc_block_delimiter(trimmed) {
             match open_delimiter {
                 None => open_delimiter = Some(trimmed),
@@ -127,6 +140,20 @@ fn scan_asciidoc_headings(src_lines: &[&str]) -> Vec<RstHeading> {
         }
     }
     headings
+}
+
+/// `title` over `underline` is a two-line section title: a title that is
+/// not a block title (`.Title`), attribute list (`[source]`) or delimiter,
+/// over a run of one underline character within one of its width.
+fn is_asciidoc_two_line_title(title: &str, underline: &str) -> bool {
+    let title_width = title.chars().count();
+    underline.chars().next().is_some_and(|first| {
+        matches!(first, '=' | '-' | '~' | '^' | '+')
+            && underline.chars().all(|c| c == first)
+            && underline.len().abs_diff(title_width) <= 1
+    }) && !title.starts_with(['.', '['])
+        && title.chars().any(char::is_alphanumeric)
+        && !is_asciidoc_block_delimiter(title)
 }
 
 /// A run of four or more of one AsciiDoc block-delimiter character alone
@@ -310,6 +337,31 @@ $ tool --sum
             .map(|heading| heading.title_row)
             .collect();
         assert_eq!(rows, vec![1, 3, 14]);
+    }
+
+    #[test]
+    fn line_scanned_asciidoc_two_line_titles_are_headings_not_delimiters() {
+        let src = "\
+Project
+=======
+
+.Run
+----
+make
+----
+
+Install
+-------
+
+== Usage
+
+run make
+";
+        let rows: Vec<usize> = scan_asciidoc_headings(&src.lines().collect::<Vec<_>>())
+            .iter()
+            .map(|heading| heading.title_row)
+            .collect();
+        assert_eq!(rows, vec![1, 9, 12]);
     }
 
     #[test]
