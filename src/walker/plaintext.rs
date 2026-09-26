@@ -836,7 +836,7 @@ const MEMBER_KEYWORDS: &str =
 
 /// First words of a line that is not part of a file's API: a private or
 /// file-local member, a test case, or a control-flow statement.
-const INTERNAL_LEADERS: &str = "private fileprivate defp static test begin rescue ensure else \
+const INTERNAL_LEADERS: &str = "private fileprivate internal defp static test begin rescue ensure else \
     elsif elif comptime if unless for foreach while until switch match when try catch finally do \
     return throw raise new await yield";
 
@@ -1915,6 +1915,7 @@ mod tests {
         for (line, rank) in [
             ("rescue LoadError", DeclarationRank::Internal),
             ("comptime {", DeclarationRank::Internal),
+            ("internal static class Xml", DeclarationRank::Internal),
             (
                 "fun noCache(): Boolean = noCache",
                 DeclarationRank::OneLiner,
