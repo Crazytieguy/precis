@@ -9,7 +9,7 @@ use std::rc::Rc;
 
 use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, Span, with_truncate_regex};
-use crate::fs_util::DirFilter;
+use crate::fs_util::{DirFilter, lists_file};
 use crate::north_star::{NorthStar, NsBatch};
 use crate::ns_loader::{path_escapes_root, resolve_content};
 use crate::render::{RenderedTree, SourceCache};
@@ -81,7 +81,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
         // regex) leaves the batch out of the simulation. Quality-only
         // violations keep it in, so its successors still find it.
         if let BatchContent::Lines { spans, .. } = &batch.content
-            && validate_spans(spans, fixture_root, &source_cache, &mut violations)
+            && validate_spans(spans, &filter, &source_cache, &mut violations)
         {
             left_out.insert(&batch.id);
             out.push(record(violations, 0, cumulative));
@@ -188,10 +188,11 @@ fn check_fs_entries<'a>(
 /// unrenderable.
 fn validate_spans(
     spans: &[Span],
-    fixture_root: &Path,
+    filter: &DirFilter,
     cache: &SourceCache,
     violations: &mut Vec<String>,
 ) -> bool {
+    let fixture_root = filter.root();
     let mut blocking = false;
     let mut seen_lines: HashSet<(&Path, usize)> = HashSet::new();
     for span in spans {
@@ -204,8 +205,20 @@ fn validate_spans(
             blocking = true;
             continue;
         }
-        let Some(source) = cache.get(&fixture_root.join(&span.path)) else {
-            violations.push(format!("span file missing: {path}"));
+        let absolute = fixture_root.join(&span.path);
+        if !lists_file(&absolute, filter) {
+            violations.push(if absolute.exists() {
+                format!(
+                    "span file {path} is not a file precis lists (ignored, internal, or not a regular file), so no walker can show it"
+                )
+            } else {
+                format!("span file missing: {path}")
+            });
+            blocking = true;
+            continue;
+        }
+        let Some(source) = cache.get(&absolute) else {
+            violations.push(format!("span file unreadable: {path}"));
             blocking = true;
             continue;
         };

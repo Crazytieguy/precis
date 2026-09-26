@@ -217,3 +217,19 @@ fn ns_simulate_reports_the_cap_once() {
         .count();
     assert_eq!(capped, 1, "{found:?}");
 }
+
+/// A span is held to the listing the walker reads through, so content no
+/// walker can show (the pin file, a directory) fails validation rather
+/// than validating clean and scoring zero forever.
+#[test]
+fn ns_simulate_detects_spans_on_files_precis_never_lists() {
+    for path in [precis::fs_util::PRECIS_PIN_FILE, "src"] {
+        let content = format!(
+            "kind = \"lines\"\nspans = [{{ path = \"{path}\", start = 1, end = 1, render = {FULL} }}]"
+        );
+        assert_flags(
+            &violations(&[batch("1", &content)])[0],
+            "is not a file precis lists",
+        );
+    }
+}
