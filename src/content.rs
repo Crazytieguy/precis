@@ -38,7 +38,10 @@ pub struct FsGroup {
 /// Children under an [`FsGroup`]'s parent.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "eval", derive(serde::Deserialize))]
-#[cfg_attr(feature = "eval", serde(rename_all = "lowercase"))]
+#[cfg_attr(
+    feature = "eval",
+    serde(rename_all = "lowercase", expecting = "\"all\" or an array of paths")
+)]
 pub enum FsEntries {
     /// Sentinel for "every immediate child" — `ns_loader` expands to
     /// `Listed`; walker output never carries `All`.
