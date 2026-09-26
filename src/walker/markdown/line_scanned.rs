@@ -277,7 +277,8 @@ fn rst_lede(src_lines: &[&str], rows: &[usize]) -> Option<std::ops::Range<usize>
 /// comments, hyperlink targets, substitution definitions and `image`,
 /// `figure`, `raw` and `contents` directives with their indented bodies,
 /// and lines of bare substitution references (`|build| |docs|`) with the
-/// grid-table borders around them.
+/// grid-table borders around them. Literal blocks (after `::` or a code
+/// directive) are examples, never chrome.
 pub(super) fn rst_chrome_rows(source: &str) -> BTreeSet<usize> {
     let src_lines: Vec<&str> = source.lines().collect();
     let is_reference_line = |index: Option<usize>| {
@@ -287,12 +288,17 @@ pub(super) fn rst_chrome_rows(source: &str) -> BTreeSet<usize> {
     };
     let mut rows = BTreeSet::new();
     let mut open_block_indent: Option<usize> = None;
+    let mut literal_block_indent: Option<usize> = None;
     for (i, line) in src_lines.iter().enumerate() {
         let trimmed = line.trim();
         if trimmed.is_empty() {
             continue;
         }
         let indent = line.len() - line.trim_start().len();
+        if literal_block_indent.is_some_and(|open| indent > open) {
+            continue;
+        }
+        literal_block_indent = None;
         if open_block_indent.is_some_and(|open| indent > open) {
             rows.insert(i + 1);
             continue;
@@ -317,6 +323,17 @@ pub(super) fn rst_chrome_rows(source: &str) -> BTreeSet<usize> {
                 && (is_reference_line(i.checked_sub(1)) || is_reference_line(Some(i + 1))))
         {
             rows.insert(i + 1);
+        } else if trimmed.ends_with("::")
+            || markup_body
+                .and_then(|body| body.split_once("::"))
+                .is_some_and(|(name, _)| {
+                    matches!(
+                        name,
+                        "code-block" | "code" | "sourcecode" | "parsed-literal"
+                    )
+                })
+        {
+            literal_block_indent = Some(indent);
         }
     }
     rows
@@ -568,5 +585,29 @@ Tool does the useful thing. See the `guide`_.
 ";
         let rows: Vec<usize> = rst_chrome_rows(src).into_iter().collect();
         assert_eq!(rows, vec![4, 5, 6, 8, 9, 10, 12, 19, 20, 28, 29]);
+    }
+
+    #[test]
+    fn line_scanned_rst_chrome_skips_literal_block_examples() {
+        let src = "\
+Usage
+=====
+
+.. code-block:: rst
+
+    .. image:: example.svg
+       :alt: Example
+
+    |Build Status| |Docs|
+
+Or as a literal block::
+
+    .. |ci| image:: https://ci.example/badge
+    |ci|
+
+.. image:: real.svg
+";
+        let rows: Vec<usize> = rst_chrome_rows(src).into_iter().collect();
+        assert_eq!(rows, vec![16]);
     }
 }
