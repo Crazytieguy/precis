@@ -115,6 +115,9 @@ impl SourceCache {
         if let Some(cached) = self.cached(path) {
             return Some(cached);
         }
+        if crate::walker::is_refused_by_name(path) {
+            return None;
+        }
         let metadata = std::fs::metadata(path).ok()?;
         if !metadata.is_file() || metadata.len() > MAX_SOURCE_BYTES as u64 {
             return None;
@@ -129,7 +132,7 @@ impl SourceCache {
             return None;
         }
         let text = String::from_utf8_lossy(&bytes);
-        if crate::walker::is_refused(path, &text) {
+        if crate::walker::holds_private_key(&text) {
             return None;
         }
         let source = Arc::new(Source::new(Arc::from(text)));

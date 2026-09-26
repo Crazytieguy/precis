@@ -412,11 +412,15 @@ pub(crate) fn single_file_lines_content(
 /// [`SourceCache`] applies it to everything it holds, so no walker can
 /// show such a file.
 pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
+    is_refused_by_name(path) || holds_private_key(text)
+}
+
+/// The half of [`is_refused`] that needs no read.
+pub(crate) fn is_refused_by_name(path: &Path) -> bool {
     plaintext::is_credential_name(path)
         || path
             .canonicalize()
             .is_ok_and(|target| plaintext::is_credential_name(&target))
-        || holds_private_key(text)
 }
 
 /// A PEM or PGP private-key block: an armor header naming a private key,
@@ -424,7 +428,7 @@ pub(crate) fn is_refused(path: &Path, text: &str) -> bool {
 /// characters, RFC 7468 and RFC 4880) long — then the closing armor. A
 /// header alone (a parser's constant, a documented placeholder) holds
 /// no key, whatever long token (a SHA-256 hex digest) follows it.
-fn holds_private_key(text: &str) -> bool {
+pub(crate) fn holds_private_key(text: &str) -> bool {
     text.split("-----BEGIN ").skip(1).any(|block| {
         let Some((block, _)) = block.split_once("-----END ") else {
             return false;
