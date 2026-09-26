@@ -415,7 +415,7 @@ var x, Y = 1, 2
     /// Outside `package main`, a declaration, spec or field no importer
     /// can name is hidden, unless its file exports nothing; an interface
     /// keeps its lower-case methods. An exported method on an unexported
-    /// type stays when an exported function returns that type.
+    /// type is hidden, even when an exported function returns that type.
     #[test]
     fn go_library_hides_unexported_declarations() {
         let model = extract_source(
