@@ -83,7 +83,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         };
         if is_skipped_json(name)
-            || (dir == ctx.root() && super::plaintext::is_unparsed_root_manifest_name(name))
+            || (dir == ctx.root() && super::plaintext::is_unparsed_manifest_name(name))
         {
             continue;
         }

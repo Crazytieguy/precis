@@ -105,8 +105,10 @@ code to a single language.**
 - A root manifest in any other format (Maven, Composer, Cabal, sbt,
   CMake, MSBuild, GitHub Actions, …) gets no walker of its own: the
   plaintext fallback renders its flat surface, which in these formats is
-  the identity block, at the build-file tier. Nested module manifests
-  are left to the listing, since they repeat the root's identity.
+  the identity block, at the build-file tier. Besides the root, only
+  `src/` and the directory named after the repository count as the
+  project's own; other nested module manifests are left to the listing,
+  since they repeat the root's identity.
 - Whether precis has a parser for a language must not decide which part
   of a repository wins. The plaintext fallback's declaration surface
   prices like a parsed declaration when its file is in the tree's

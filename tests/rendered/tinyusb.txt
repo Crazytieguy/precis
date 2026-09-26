@@ -200,12 +200,6 @@ examples/
       only.txt
       skip.txt
       src/
-        app.h
-        cdc_app.c
-        hid_app.c
-        main.c
-        msc_app.c
-        tusb_config.h
     cdc_msc_hid_freertos/
       CMakeLists.txt
       CMakePresets.json
@@ -235,24 +229,7 @@ examples/
         main.c
         tusb_config.h
     midi_rx/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      only.txt
-      skip.txt
-      src/
-        main.c
-        tusb_config.h
     msc_file_explorer/
-      CMakeLists.txt
-      CMakePresets.json
-      Makefile
-      README.md
-      only.txt
-      skip.txt
-      src/
-        ffconf.h
-        …
     msc_file_explorer_freertos/
   typec/
     CMakeLists.txt
@@ -338,6 +315,17 @@ repository.yml
 sonar-project.properties
 src/
   CMakeLists.txt
+    1→cmake_minimum_required(VERSION 3.20)
+    2→
+    3→# Get TinyUSB sources. Note: DCD and HCD drivers are not included
+    4→function(tinyusb_sources_get OUTPUT_VAR)
+    …
+    37→endfunction()
+    38→
+    39→# Add tinyusb to a existing target
+    40→function(tinyusb_target_add TARGET)
+    …
+    48→endfunction()
   class/
     audio/
     bth/

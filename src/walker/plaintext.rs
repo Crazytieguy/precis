@@ -7,8 +7,8 @@
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
 //!    placeholders and document the deploy-facing config keys.
-//!    At the root, the project's manifest in a format no walker parses
-//!    ([`is_unparsed_root_manifest_name`]) is claimed too.
+//!    At a package root, the project's manifest in a format no walker
+//!    parses ([`is_unparsed_manifest_name`]) is claimed too.
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
 //!    [`Class::FlatText`]): the language-agnostic fallback for formats no
 //!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, …),
@@ -119,8 +119,8 @@ pub(crate) enum Class {
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
-    /// A root manifest or build script in a format no walker parses
-    /// ([`is_unparsed_root_manifest_name`]), or a root build file too long
+    /// The project's manifest or build script in a format no walker parses
+    /// ([`is_unparsed_manifest_name`]), or a root build file too long
     /// to render whole. Rendered like [`Class::FlatText`], so its head
     /// fields (the project's name, version and description; a
     /// Dockerfile's base image) lead, and priced like a build file.
@@ -162,10 +162,10 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
 }
 
 /// A repository's own manifest or build script in a format no walker
-/// parses: its identity, dependencies and build entry points. Claimed at
-/// the root only, where it describes the project rather than one module
-/// of it.
-pub(crate) fn is_unparsed_root_manifest_name(name: &str) -> bool {
+/// parses: its identity, dependencies and build entry points. Claimed
+/// only at a [package root](is_package_root), where it describes the
+/// project rather than one module of it.
+pub(crate) fn is_unparsed_manifest_name(name: &str) -> bool {
     matches!(
         name,
         "pom.xml"
@@ -183,6 +183,15 @@ pub(crate) fn is_unparsed_root_manifest_name(name: &str) -> bool {
     ) || [".cabal", ".csproj", ".fsproj", ".nimble"]
         .iter()
         .any(|extension| name.ends_with(extension))
+}
+
+/// The root, or a first-level directory that holds the project itself:
+/// `src/`, or one named after the repository.
+fn is_package_root(dir: &Path, ctx: &WalkCtx) -> bool {
+    dir == ctx.root()
+        || (dir.parent() == Some(ctx.root())
+            && (dir.file_name() == Some("src".as_ref())
+                || dir.file_name() == ctx.root().file_name()))
 }
 
 /// True iff `lower` has the exact `docker-compose` / `compose` YAML stem,
@@ -1167,7 +1176,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         }
         let file = dir.join(name);
         let named = classify_plaintext(name).or_else(|| {
-            (dir == ctx.root() && is_unparsed_root_manifest_name(name)).then_some(Class::Manifest)
+            (is_package_root(dir, ctx) && is_unparsed_manifest_name(name))
+                .then_some(Class::Manifest)
         });
         // Parsed languages belong to the code engine, except a C++
         // header the C grammar can't parse; a second slice would overlap
@@ -2082,12 +2092,13 @@ mod tests {
 
     /// A root `pom.xml` leads with its coordinates, not the `<project
     /// xmlns=…>` opener or the blocks after them; a module's is left to
-    /// the listing.
+    /// the listing unless it is the project's `src/`.
     #[test]
     fn plaintext_root_manifest_surface_is_its_head_fields() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::create_dir(root.join("module")).unwrap();
+        std::fs::create_dir(root.join("src")).unwrap();
         let mut source = format!(
             "<?xml version=\"1.0\"?>\n<project xmlns=\"{}\">\n  <modelVersion>4.0.0</modelVersion>\n\
              \n  <groupId>org.example</groupId>\n  <artifactId>app</artifactId>\n\
@@ -2102,6 +2113,7 @@ mod tests {
         source.push_str("  </dependencies>\n</project>\n");
         std::fs::write(root.join("pom.xml"), &source).unwrap();
         std::fs::write(root.join("module/pom.xml"), &source).unwrap();
+        std::fs::write(root.join("src/pom.xml"), &source).unwrap();
 
         let ctx = WalkCtx::new(root.to_path_buf());
         let batches = expand_in_dir(root, &ctx);
@@ -2113,6 +2125,7 @@ mod tests {
         let closing = source.lines().count();
         assert_eq!(rows, [(1, 1), (3, 8), (closing - 1, closing)]);
         assert!(expand_in_dir(&root.join("module"), &ctx).is_empty());
+        assert_eq!(expand_in_dir(&root.join("src"), &ctx).len(), 1);
     }
 
     #[test]
