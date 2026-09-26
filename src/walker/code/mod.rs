@@ -525,9 +525,10 @@ mod tests {
 
     /// Real source holds shapes no hand-written case anticipates, so the
     /// training fixtures' parsed files must extract within the [`model`]
-    /// contract. Minified bundles are exempt: they put declarations and an
-    /// `export { … }` on one row, which rows cannot split, and the engine
-    /// drops the doubly claimed row from the later batch.
+    /// contract. Machine-generated files are exempt: a minified bundle puts
+    /// declarations and an `export { … }` on one row, which rows cannot
+    /// split, and the engine drops the doubly claimed row from the later
+    /// batch.
     #[test]
     fn code_mod_training_fixtures_extract_within_the_contract() {
         let fixtures = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");

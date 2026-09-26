@@ -151,7 +151,7 @@ fn robustness_huge_files_render_at_most_their_head() {
         .flat_map(|index| format!("int value_{index} = {index};\n").into_bytes())
         .collect();
     huge.extend_from_slice(b"\xff\xfe\n");
-    let huge_path = temp.path().join("generated.c");
+    let huge_path = temp.path().join("table.c");
     write(&huge_path, huge);
     write(
         &temp.path().join("small.c"),
@@ -160,14 +160,11 @@ fn robustness_huge_files_render_at_most_their_head() {
 
     let out = render(temp.path(), 50_000).unwrap();
     assert!(out.contains("small.c\n  1→int small(void)"), "{out}");
-    assert!(out.contains("generated.c\n  1→int value_0 = 0;\n"), "{out}");
+    assert!(out.contains("table.c\n  1→int value_0 = 0;\n"), "{out}");
     assert!(!out.contains("value_1000 "), "{out}");
 
     let out = render(&huge_path, 1000).unwrap();
-    assert!(
-        out.starts_with("generated.c\n  1→int value_0 = 0;\n"),
-        "{out}"
-    );
+    assert!(out.starts_with("table.c\n  1→int value_0 = 0;\n"), "{out}");
     assert!(out.ends_with("…\n"), "{out}");
 }
 
