@@ -75,7 +75,8 @@ pub struct Scheduler<W: Walker> {
     cost_cache: HashMap<BatchId, Cost>,
     /// Eligible batches by ratio, best on top. A batch whose ratio
     /// inputs change is pushed again with a new generation, and the
-    /// entries it leaves behind are dropped when they surface.
+    /// entries it leaves behind are dropped when they surface or when
+    /// they outnumber the live ones.
     ranking: BinaryHeap<RankedBatch>,
     /// Generation of each batch's live [`Self::ranking`] entry, by id.
     rank_generation: Vec<u32>,
@@ -286,6 +287,7 @@ impl<W: Walker> Scheduler<W> {
     /// Top-ranked eligible batch + its cost.
     fn top_ranked(&mut self) -> Option<(BatchId, Cost)> {
         self.rerank_stale();
+        self.drop_superseded_rankings();
         while let Some(top) = self.ranking.peek() {
             if self.eligible.contains(&top.id)
                 && top.generation == self.rank_generation[top.id.index()]
@@ -307,6 +309,18 @@ impl<W: Walker> Scheduler<W> {
             return Some((identity, self.cost_cache[&identity]));
         }
         Some((best, self.cost_cache[&best]))
+    }
+
+    /// Rebuilds the ranking from its live entries once superseded ones
+    /// outnumber them, so entries under a winning top can't pile up.
+    fn drop_superseded_rankings(&mut self) {
+        if self.ranking.len() <= 2 * self.eligible.len() {
+            return;
+        }
+        let (eligible, rank_generation) = (&self.eligible, &self.rank_generation);
+        self.ranking.retain(|ranked| {
+            eligible.contains(&ranked.id) && ranked.generation == rank_generation[ranked.id.index()]
+        });
     }
 
     /// Pushes every stale eligible batch into the ranking at its
