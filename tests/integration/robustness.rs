@@ -390,6 +390,44 @@ fn robustness_crlf_files_render_without_carriage_returns() {
     assert!(!out.contains('\r'), "{out:?}");
 }
 
+/// Quotes or lists nested a few hundred deep abort the process inside
+/// tree-sitter-md's scanner, past any `catch_unwind`, so these run the
+/// binary. The README parse stops before such a line; two hundred deep
+/// still parses. A README named directly renders on without its parse.
+#[test]
+fn robustness_deeply_nested_markdown_renders_its_head() {
+    let nested_list: String = (0..2000)
+        .map(|depth| format!("{}- item\n", "  ".repeat(depth)))
+        .collect();
+    let cases = [
+        (format!("{} deep\n", ">".repeat(300)), false),
+        (nested_list, false),
+        (format!("{} deep\n", ">".repeat(200)), true),
+    ];
+    for (nested, parsed) in cases {
+        let temp = tempfile::tempdir().unwrap();
+        let readme = temp.path().join("README.md");
+        write(
+            &readme,
+            format!("# Demo\n\nA demo project.\n\n## Notes\n\n{nested}"),
+        );
+        for target in [temp.path(), readme.as_path()] {
+            let output = std::process::Command::new(env!("CARGO_BIN_EXE_precis"))
+                .arg("--token-budget")
+                .arg("3000")
+                .arg(target)
+                .output()
+                .unwrap();
+            let out = String::from_utf8_lossy(&output.stdout);
+            assert!(output.status.success(), "{output:?}");
+            assert!(out.contains("3→A demo project.\n"), "{out}");
+            if target == temp.path() {
+                assert_eq!(out.contains(" deep\n"), parsed, "{out}");
+            }
+        }
+    }
+}
+
 #[test]
 fn robustness_deep_directory_chain_renders_as_one_row() {
     let temp = tempfile::tempdir().unwrap();

@@ -88,6 +88,13 @@ const HEADLINE_TAGLINE_MAX_CHARS: usize = 90;
 /// unsplittable early-budget lump.
 const PRELUDE_MAX_BYTES: usize = 2_500;
 
+/// Most nested quotes and list items a parsed line may open or continue
+/// (see [`container_depth_bound`]). tree-sitter-md's block scanner aborts
+/// the process on a C assert once more than 254 blocks are open, its
+/// serialized state outgrowing 1 KiB; over the robustness corpus's 113k
+/// markdown files the bound peaks at 125.
+const MAX_CONTAINER_DEPTH: usize = 200;
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     if dir != ctx.root() {
@@ -107,7 +114,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         return out;
     }
 
-    let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_md::LANGUAGE.into()) else {
+    let Some((source, tree)) = ctx.parse_tree_prefix(
+        &file,
+        &tree_sitter_md::LANGUAGE.into(),
+        parse_safe_prefix_len,
+    ) else {
         return out;
     };
     let headline = headline_rows(&tree, &source);
@@ -694,6 +705,47 @@ fn strip_html_tags(s: &str) -> String {
 }
 
 // --- tree-sitter-md helpers ---
+
+/// Byte length of `source` before its first line past
+/// [`MAX_CONTAINER_DEPTH`]; the parse stops there.
+fn parse_safe_prefix_len(source: &str) -> usize {
+    source
+        .split_inclusive('\n')
+        .take_while(|line| container_depth_bound(line) <= MAX_CONTAINER_DEPTH)
+        .map(str::len)
+        .sum()
+}
+
+/// Upper bound on the quotes and list items open on `line`. A block
+/// opens only on a line that continues every block around it, and each
+/// one takes a marker or at least two columns of the line's prefix.
+fn container_depth_bound(line: &str) -> usize {
+    let bytes = line.as_bytes();
+    let marker_ends_at = |index: usize| bytes.get(index).is_none_or(|b| b.is_ascii_whitespace());
+    let (mut markers, mut columns, mut index) = (0, 0, 0);
+    while let Some(&byte) = bytes.get(index) {
+        match byte {
+            b' ' => columns += 1,
+            b'\t' => columns += 4,
+            b'>' => markers += 1,
+            b'-' | b'*' | b'+' if marker_ends_at(index + 1) => markers += 1,
+            b'0'..=b'9' => {
+                let digits = bytes[index..]
+                    .iter()
+                    .take_while(|b| b.is_ascii_digit())
+                    .count();
+                index += digits;
+                if !matches!(bytes.get(index), Some(b'.' | b')')) || !marker_ends_at(index + 1) {
+                    break;
+                }
+                markers += 1;
+            }
+            _ => break,
+        }
+        index += 1;
+    }
+    markers + columns / 2
+}
 
 /// One scheduling unit for a markdown file: 1-based inclusive row range
 /// plus `h2_index`, the README index decay's input — the

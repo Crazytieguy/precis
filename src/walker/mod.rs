@@ -251,8 +251,20 @@ impl WalkCtx {
     /// parsed while its directory expands, and its batches carry
     /// everything they need from it.
     pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<Source>, Tree)> {
+        self.parse_tree_prefix(path, language, str::len)
+    }
+
+    /// [`Self::parse_tree`] over only the first `prefix_len(source)` bytes
+    /// of `path`, for a grammar that cannot survive some later input.
+    pub fn parse_tree_prefix(
+        &self,
+        path: &Path,
+        language: &Language,
+        prefix_len: impl FnOnce(&str) -> usize,
+    ) -> Option<(Arc<Source>, Tree)> {
         let source = self.read_for_parse(path)?;
-        let tree = parser_for(language).parse(source.as_bytes(), None)?;
+        let prefix = &source.as_bytes()[..prefix_len(&source)];
+        let tree = parser_for(language).parse(prefix, None)?;
         Some((source, tree))
     }
 
