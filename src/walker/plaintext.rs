@@ -1340,9 +1340,16 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
+/// Targets a reader runs first.
+const CANONICAL_MAKE_TARGETS: [&str; 7] =
+    ["all", "build", "test", "tests", "check", "install", "help"];
+
 /// A root Makefile too long to render whole still names what it can run:
 /// its `.PHONY` declarations, the author's own list of commands, each
-/// through its backslash-continued lines.
+/// through its backslash-continued lines, and the first rule head of each
+/// [`CANONICAL_MAKE_TARGETS`] target they don't name. A declaration of
+/// only variables or patterns (`.PHONY: $(PHONY)`) names nothing and is
+/// left out.
 fn root_makefile_phony_targets(
     file: &Path,
     name: &str,
@@ -1353,14 +1360,45 @@ fn root_makefile_phony_targets(
     }
     let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
     let mut rows = Vec::new();
-    let mut in_declaration = false;
+    let mut declaration = Vec::new();
+    let mut declaration_targets = Vec::new();
+    let mut declared = HashSet::new();
+    let mut canonical_heads: HashMap<&str, usize> = HashMap::new();
     for (index, line) in source.lines().enumerate() {
-        in_declaration |= line.starts_with(".PHONY");
-        if in_declaration {
-            rows.push(index + 1);
-            in_declaration = line.ends_with('\\');
+        if declaration.is_empty() && !line.starts_with(".PHONY") {
+            if let Some((target, rest)) = line.split_once(':')
+                && CANONICAL_MAKE_TARGETS.contains(&target.trim_end())
+                && !rest.starts_with('=')
+                && !rest.contains(":=")
+            {
+                canonical_heads
+                    .entry(target.trim_end())
+                    .or_insert(index + 1);
+            }
+            continue;
+        }
+        declaration.push(index + 1);
+        declaration_targets.extend(
+            line.strip_prefix(".PHONY:")
+                .unwrap_or(line)
+                .split_whitespace()
+                .filter(|target| *target != "\\" && !target.contains(['$', '%'])),
+        );
+        if !line.ends_with('\\') {
+            if !declaration_targets.is_empty() {
+                rows.append(&mut declaration);
+                declared.extend(declaration_targets.drain(..));
+            }
+            declaration.clear();
         }
     }
+    rows.extend(
+        canonical_heads
+            .into_iter()
+            .filter(|(target, _)| !declared.contains(target))
+            .map(|(_, row)| row),
+    );
+    rows.sort_unstable();
     single_file_lines_content(file, &source, rows)
 }
 
@@ -1899,8 +1937,9 @@ mod tests {
     /// The rows each build file renders at the root and one level down. A
     /// small Makefile renders whole anywhere; one too long, or too wide for
     /// the byte gate, renders at the root only its `.PHONY` declarations
-    /// (through their continuation lines), and a long root Dockerfile only
-    /// its head.
+    /// (through their continuation lines) that name a target and the rule
+    /// heads of canonical targets they don't name, and a long root
+    /// Dockerfile only its head.
     #[test]
     fn plaintext_build_file_rows() {
         let recipes = |prefix: &str| -> String {
@@ -1923,7 +1962,7 @@ mod tests {
             (
                 "Makefile",
                 format!("build: {}\n", "dependency ".repeat(BUILD_BYTE_GATE)),
-                vec![],
+                vec![(1, 1)],
                 vec![],
             ),
             (
@@ -1932,6 +1971,14 @@ mod tests {
                     "BUILD_DEPS = common-a common-b\n.PHONY: build test\n\nbuild: $(BUILD_DEPS)\n",
                 ),
                 vec![(2, 2)],
+                vec![],
+            ),
+            (
+                "Makefile",
+                recipes(
+                    ".PHONY: $(PHONY)\nall: vmlinux\nall: dtbs\nPHONY += help\nhelp:\n\t@echo\nbuild: FLAGS := -O2\n",
+                ),
+                vec![(2, 2), (5, 5)],
                 vec![],
             ),
             (
