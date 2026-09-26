@@ -15,6 +15,11 @@ README.md
   …
   29→## Minimal Installation
   …
+  43→```bash
+  44→git clone https://github.com/NX-AI/xlstm.git
+  45→cd xlstm
+  46→pip install -e .
+  47→```
   49→## Requirements
   …
   61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
@@ -69,13 +74,9 @@ experiments/
   main.py
     …
     21→dataset_registry: dict[str, Type[DataGen]] = {
-    22→    "form_language": FormLangDatasetGenerator
-    23→}
+    …
     25→torch_dtype_map: dict[str, torch.dtype] = {
-    26→    "float32": torch.float32,
-    27→    "bfloat16": torch.bfloat16,
-    28→    "float16": torch.float16,
-    29→}
+    …
     32→def load_dataset(name, kwargs):
     …
     37→def main(cfg: DictConfig):

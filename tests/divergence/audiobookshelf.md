@@ -239,56 +239,57 @@ Score(3000)=0.779 I=0.876 C=0.692 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | ns | 6120 |  | 230 | API routes: authors, series, playback sessions | 3.7 | 3.2 | 0.693 |
 | walker |  | 6299 | 319 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.701 |
 | walker |  | 6299 | 0 | Markdown::Section { file: readme.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.701 |
-| walker |  | 6323 | 24 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.701 |
-| walker |  | 6351 | 28 | Markdown::Section { file: readme.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.701 |
-| walker |  | 6415 | 64 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.701 |
+| walker |  | 6347 | 48 | Markdown::CommandBlock { file: readme.md, row: 428 } |  |  | 0.701 |
+| walker |  | 6371 | 24 | Markdown::Section { file: readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.701 |
+| walker |  | 6399 | 28 | Markdown::Section { file: readme.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.701 |
 | ns | 6454 |  | 334 | API routes: podcasts, notifications, emails | 3.8 | 3.2 | 0.686 |
-| walker |  | 6787 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.717 |
-| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.702 |
-| walker |  | 6978 | 191 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.702 |
+| walker |  | 6463 | 64 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.686 |
+| ns | 6822 |  | 368 | API routes: search, cache, tools, feeds, providers, share, stats, api-keys | 3.9 | 3.2 | 0.672 |
+| walker |  | 6835 | 372 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.702 |
 | ns | 6985 |  | 163 | API routes: misc (upload, settings, tags, genres, auth-settings) | 3.10 | 3.2 | 0.694 |
+| walker |  | 7026 | 191 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
 | ns | 7093 |  | 108 | Auth routes registered by Auth.initAuthRoutes | 3.11 |  | 0.690 |
-| walker |  | 7125 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.690 |
-| walker |  | 7130 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.690 |
-| walker |  | 7135 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.690 |
-| walker |  | 7140 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.690 |
-| walker |  | 7146 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.690 |
-| walker |  | 7154 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.690 |
-| walker |  | 7166 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.690 |
-| walker |  | 7178 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.690 |
-| walker |  | 7193 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.690 |
-| walker |  | 7209 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.690 |
-| walker |  | 7226 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.690 |
-| walker |  | 7261 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.690 |
-| walker |  | 7271 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.690 |
+| walker |  | 7173 | 147 | Fs::DirListing { dir: client/components/modals } |  |  | 0.690 |
+| walker |  | 7178 | 5 | Fs::DirListing { dir: client/components/modals/authors } |  |  | 0.690 |
+| walker |  | 7183 | 5 | Fs::DirListing { dir: client/components/modals/bookmarks } |  |  | 0.690 |
+| walker |  | 7188 | 5 | Fs::DirListing { dir: client/components/modals/changelog } |  |  | 0.690 |
+| walker |  | 7194 | 6 | Fs::DirListing { dir: client/components/modals/notification } |  |  | 0.690 |
+| walker |  | 7202 | 8 | Fs::DirListing { dir: client/components/modals/item } |  |  | 0.690 |
+| walker |  | 7214 | 12 | Fs::DirListing { dir: client/components/modals/player } |  |  | 0.690 |
+| walker |  | 7226 | 12 | Fs::DirListing { dir: client/components/modals/rssfeed } |  |  | 0.690 |
+| walker |  | 7241 | 15 | Fs::DirListing { dir: client/components/modals/emails } |  |  | 0.690 |
+| walker |  | 7257 | 16 | Fs::DirListing { dir: client/components/modals/collections } |  |  | 0.690 |
+| walker |  | 7274 | 17 | Fs::DirListing { dir: client/components/modals/playlists } |  |  | 0.690 |
 | ns | 7299 |  | 206 | PublicRouter and HlsRouter: the two non-/api routers in full | 3.12 |  | 0.685 |
-| walker |  | 7308 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.685 |
-| walker |  | 7340 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.685 |
-| walker |  | 7494 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.687 |
-| walker |  | 7596 | 102 | Json::ScriptsTail { file: client/package.json } |  |  | 0.696 |
-| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.681 |
-| walker |  | 7812 | 216 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.681 |
+| walker |  | 7309 | 35 | Fs::DirListing { dir: client/components/modals/podcast } |  |  | 0.685 |
+| walker |  | 7319 | 10 | Fs::DirListing { dir: client/components/modals/podcast/tabs } |  |  | 0.685 |
+| walker |  | 7356 | 37 | Fs::DirListing { dir: client/components/modals/libraries } |  |  | 0.685 |
+| walker |  | 7388 | 32 | Fs::DirListing { dir: client/components/modals/item/tabs } |  |  | 0.685 |
+| walker |  | 7542 | 154 | Fs::DirListing { dir: client/components/ui } |  |  | 0.687 |
+| ns | 7639 |  | 340 | Server.init(): the boot sequence, in order | 4.1 |  | 0.672 |
+| walker |  | 7644 | 102 | Json::ScriptsTail { file: client/package.json } |  |  | 0.681 |
+| walker |  | 7860 | 216 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 1, line: 0 } |  |  | 0.681 |
 | ns | 7969 |  | 330 | Database.js model accessor roster (complete) | 4.2 |  | 0.669 |
-| walker |  | 8011 | 199 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 2, line: 0 } |  |  | 0.669 |
-| walker |  | 8030 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.669 |
-| walker |  | 8052 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.669 |
-| walker |  | 8151 | 99 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.669 |
-| walker |  | 8195 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.669 |
+| walker |  | 8059 | 199 | Code::CodeKey { rung: Names, file: server/utils/index.js, decl: 0, sub: 2, line: 0 } |  |  | 0.669 |
+| walker |  | 8078 | 19 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 24, sub: 0, line: 301 } |  |  | 0.669 |
+| walker |  | 8100 | 22 | Code::CodeKey { rung: Decl, file: server/utils/index.js, decl: 22, sub: 0, line: 291 } |  |  | 0.669 |
+| walker |  | 8199 | 99 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.669 |
+| walker |  | 8243 | 44 | Fs::DirListing { dir: test/server/managers/migrations } |  |  | 0.669 |
 | ns | 8317 |  | 348 | ServerSettings: scanner, metadata, rate-limit and backup defaults | 4.3 |  | 0.658 |
-| walker |  | 8560 | 365 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.677 |
-| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.666 |
-| walker |  | 8724 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.677 |
+| ns | 8606 |  | 289 | ServerSettings: logger, bookshelf, podcast, sorting and misc defaults | 4.4 |  | 0.647 |
+| walker |  | 8608 | 365 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.666 |
+| walker |  | 8772 | 164 | Code::CodeKey { rung: Decl, file: index.js, decl: 1, sub: 0, line: 1 } |  |  | 0.677 |
 | ns | 8844 |  | 238 | ServerSettings: the auth / OpenID key names | 4.5 |  | 0.668 |
-| walker |  | 9030 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 5, sub: 0, line: 22 } |  |  | 0.668 |
 | ns | 9043 |  | 199 | SocketAuthority: emitter helpers + the complete inbound event list | 4.6 |  | 0.662 |
+| walker |  | 9078 | 306 | Code::CodeKey { rung: Decl, file: index.js, decl: 5, sub: 0, line: 22 } |  |  | 0.662 |
 | ns | 9295 |  | 252 | client/components/ui + widgets rosters (complete) | 5.1 |  | 0.674 |
-| walker |  | 9325 | 295 | Json::ScriptsTail { file: package.json } |  |  | 0.685 |
-| walker |  | 9346 | 21 | Code::CodeKey { rung: Names, file: server/Database.js, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
-| walker |  | 9366 | 20 | Code::CodeKey { rung: Names, file: server/Auth.js, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
+| walker |  | 9373 | 295 | Json::ScriptsTail { file: package.json } |  |  | 0.685 |
+| walker |  | 9394 | 21 | Code::CodeKey { rung: Names, file: server/Database.js, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
+| walker |  | 9414 | 20 | Code::CodeKey { rung: Names, file: server/Auth.js, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
 | ns | 9563 |  | 268 | nuxt.config.js: dev proxy, env and module wiring | 5.2 |  | 0.679 |
-| walker |  | 9603 | 237 | Code::CodeKey { rung: Decl, file: server/Auth.js, decl: 1, sub: 0, line: 18 } |  |  | 0.679 |
-| walker |  | 9623 | 20 | Code::CodeKey { rung: Names, file: server/Server.js, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
-| walker |  | 9759 | 136 | Code::CodeKey { rung: Decl, file: server/Server.js, decl: 1, sub: 0, line: 48 } |  |  | 0.679 |
+| walker |  | 9651 | 237 | Code::CodeKey { rung: Decl, file: server/Auth.js, decl: 1, sub: 0, line: 18 } |  |  | 0.679 |
+| walker |  | 9671 | 20 | Code::CodeKey { rung: Names, file: server/Server.js, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
 | ns | 9783 |  | 220 | package.json: the packaging and docker build targets | 6.1 | 1.8 | 0.680 |
+| walker |  | 9807 | 136 | Code::CodeKey { rung: Decl, file: server/Server.js, decl: 1, sub: 0, line: 48 } |  |  | 0.680 |
 | ns | 9905 |  | 122 | CI, dev-container, editor and packaging directory rosters | 6.2 |  | 0.681 |
-| walker |  | 9996 | 237 | Code::CodeKey { rung: Decl, file: server/Database.js, decl: 1, sub: 0, line: 13 } |  |  | 0.689 |
+| walker |  | 9993 | 186 | Code::CodeKey { rung: Decl, file: server/Database.js, decl: 1, sub: 0, line: 13 } |  |  | 0.685 |

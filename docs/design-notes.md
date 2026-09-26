@@ -96,8 +96,13 @@ never reached the ones answer keys rank.
   sell a `CommandBlock`**: their leading shell blocks, one per top-level
   section, behind the outline, with the section gated on it (the
   scheduler allows overlap only with ancestors). Install and setup
-  titles stay out: they buy library `npm install x` blocks, dev-server
-  commands and benchmark configs that answer keys rank late.
+  titles are a fallback, read only where the section has no
+  build/test/run block, and only for a block that works in the
+  checkout (clones the repository, runs `make` or a relative-path
+  script, or names a build/test/run step): their other blocks are
+  library `npm install x` lines, prerequisite installs, credential
+  exports and sample output. Taking every install/setup block cost
+  −0.0008 at 3000 and bought those on 236 real repositories.
 - **Back matter** (license, contributing, sponsors, …) emits no section
   text but keeps a command-titled subsection's block, since a
   Contributing section's Testing is the dev workflow. The outline keeps

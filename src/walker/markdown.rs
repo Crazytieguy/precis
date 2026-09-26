@@ -20,8 +20,9 @@
 //!   2..=[`MAX_OUTLINE_HEADINGS`] of them.
 //!   Predecessor: the headline.
 //! - `CommandBlock`s — per top-level section, the heading and leading
-//!   shell blocks of a build/test/run section inside it (see
-//!   [`command_block`]). Predecessor: the outline, else the headline.
+//!   shell blocks of a build/test/run section inside it, else of a
+//!   setup/install one (see [`first_command_block`]). Predecessor: the
+//!   outline, else the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s), chrome left out; an oversize section splits
 //!   into a head chunk plus tail chunks, each gated on the chunk before
@@ -433,7 +434,7 @@ fn build_guide_command_blocks(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 parse_safe_prefix_len,
             )?;
             let src_lines: Vec<&str> = source.lines().collect();
-            let rows = command_block(tree.root_node(), None, &source, &src_lines)?;
+            let rows = first_command_block(tree.root_node(), &source, &src_lines)?;
             command_block_batch(&file, &source, rows, None)
         })
         .collect()
@@ -895,7 +896,7 @@ fn logical_sections(tree: &Tree, source: &str, outline_emits: bool) -> Vec<Secti
                 );
             }
             TopLevelEntry::Section { node, start, end } => {
-                let command_block = command_block(*node, None, source, &src_lines);
+                let command_block = first_command_block(*node, source, &src_lines);
                 let command_only = SectionRange {
                     command_block,
                     command_only: true,
@@ -1316,15 +1317,41 @@ const COMMAND_TITLE_WORDS: &[&str] = &[
     "develop", "development", "run", "running",
 ];
 
-fn is_command_title_core(core: &str) -> bool {
-    core.split_whitespace()
-        .any(|word| COMMAND_TITLE_WORDS.contains(&word))
+/// Which headings a command block sits under, and which code blocks
+/// count as its commands.
+struct CommandSource {
+    title_words: &'static [&'static str],
+    is_command: fn(Node, &str) -> bool,
 }
 
-/// The first shell block (see [`is_shell_block`]), at any depth in lists
-/// and quotes, that sits under a heading titled by
-/// [`is_command_title_core`] in `section`, extended through the shell
-/// blocks after it before the next subsection, all
+const BUILD_COMMANDS: CommandSource = CommandSource {
+    title_words: COMMAND_TITLE_WORDS,
+    is_command: is_shell_block,
+};
+
+/// Setup and install titles, read only where no build/test/run heading
+/// holds a block, and only for a block that works in the checkout.
+const SETUP_COMMANDS: CommandSource = CommandSource {
+    title_words: &["setup", "install", "installation"],
+    is_command: is_checkout_command_block,
+};
+
+/// The command block of `section` under a build/test/run heading, else
+/// under a setup/install heading (see [`command_block`]).
+fn first_command_block(
+    section: Node,
+    source: &str,
+    src_lines: &[&str],
+) -> Option<CommandBlockRows> {
+    [BUILD_COMMANDS, SETUP_COMMANDS]
+        .iter()
+        .find_map(|commands| command_block(section, None, commands, source, src_lines))
+}
+
+/// The first code block that `commands` accepts, at any depth in lists
+/// and quotes, that sits under a heading with one of its title words in
+/// `section`, extended through such
+/// blocks after it before the next heading, all
 /// within [`OVERSIZE_CHUNK_TARGET_TOKENS`]; paired with the innermost
 /// such heading (`command_heading` is the enclosing one). Back matter's
 /// own blocks are skipped, not its command-titled subsections: a
@@ -1332,19 +1359,25 @@ fn is_command_title_core(core: &str) -> bool {
 fn command_block(
     section: Node,
     command_heading: Option<Node>,
+    commands: &CommandSource,
     source: &str,
     src_lines: &[&str],
 ) -> Option<CommandBlockRows> {
-    fn collect_shell_blocks<'a>(node: Node<'a>, source: &str, out: &mut Vec<Node<'a>>) {
+    fn collect_command_blocks<'a>(
+        node: Node<'a>,
+        is_command: fn(Node, &str) -> bool,
+        source: &str,
+        out: &mut Vec<Node<'a>>,
+    ) {
         if matches!(node.kind(), "fenced_code_block" | "indented_code_block") {
-            if is_shell_block(node, source) {
+            if is_command(node, source) {
                 out.push(node);
             }
             return;
         }
         let mut cursor = node.walk();
         for child in node.children(&mut cursor) {
-            collect_shell_blocks(child, source, out);
+            collect_command_blocks(child, is_command, source, out);
         }
     }
     let title = section_title_core(section, source);
@@ -1352,7 +1385,11 @@ fn command_block(
         None
     } else {
         first_heading_child(section)
-            .filter(|_| is_command_title_core(&title))
+            .filter(|_| {
+                title
+                    .split_whitespace()
+                    .any(|word| commands.title_words.contains(&word))
+            })
             .or(command_heading)
     };
     let rows = |node: Node| {
@@ -1379,7 +1416,7 @@ fn command_block(
             .collect();
         let mut blocks = Vec::new();
         for child in content {
-            collect_shell_blocks(child, source, &mut blocks);
+            collect_command_blocks(child, commands.is_command, source, &mut blocks);
         }
         let mut spans = blocks
             .into_iter()
@@ -1404,7 +1441,32 @@ fn command_block(
     }
     subsections
         .into_iter()
-        .find_map(|child| command_block(child, command_heading, source, src_lines))
+        .find_map(|child| command_block(child, command_heading, commands, source, src_lines))
+}
+
+/// A shell block that works in the checkout: it clones the repository,
+/// runs `make` or a script by relative path, or names a build, test or
+/// run step (`npm run dev`, `cargo test`). An install or setup section's
+/// other blocks install the published package or its prerequisites,
+/// export credentials, or show output.
+fn is_checkout_command_block(block: Node, source: &str) -> bool {
+    is_shell_block(block, source)
+        && source[block.byte_range()].lines().any(|line| {
+            let mut words = line
+                .trim()
+                .trim_start_matches(['$', '>'])
+                .split_whitespace();
+            let Some(first) = words.next() else {
+                return false;
+            };
+            let mut rest = words.peekable();
+            first == "make"
+                || (first == "git" && rest.peek() == Some(&"clone"))
+                || (first.contains('/')
+                    && !first.starts_with(['/', '~'])
+                    && !first.contains([':', '=']))
+                || rest.any(|word| COMMAND_TITLE_WORDS.contains(&word))
+        })
 }
 
 /// Fence languages of shell commands.
@@ -2651,6 +2713,31 @@ mod tests {
     /// section — its shell, untagged or indented blocks, never a code sample —
     /// and the section holding it gates on it. Back matter yields only the
     /// command block of a command-titled subsection.
+    /// Setup and install sections yield a command block only for a block
+    /// that works in the checkout, and only where no build/test/run
+    /// heading in the section holds one.
+    #[test]
+    fn markdown_setup_command_block_needs_a_checkout_command() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body = "# Tool\n\n\
+                    ## Installation\n\n```sh\npip install tool\n```\n\n\
+                    ## Setup\n\n```sh\nexport TOOL_KEY=secret\n```\n\n\
+                    ```sh\ngit clone https://example.com/tool\n```\n\n\
+                    ## Install from source\n\n```sh\n./configure\n```\n\n\
+                    ### Building\n\n```sh\nmake\n```\n";
+        fs::write(root.join("README.md"), body).unwrap();
+        let command_rows: Vec<usize> = expand_in_dir(root, &WalkCtx::new(root.to_path_buf()))
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Markdown(MarkdownKey::CommandBlock { row, .. }) => Some(*row),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(command_rows, vec![15, 27]);
+    }
+
     #[test]
     fn markdown_command_block_per_section() {
         use std::fs;
