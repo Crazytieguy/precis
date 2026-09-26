@@ -25,7 +25,7 @@ use crate::batch::{Batch, TomlKey};
 use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
-use super::{WalkCtx, fs::files_with_any_extension, path_depth_factor, single_file_lines_content};
+use super::{WalkCtx, file_depth_factor, fs::files_with_any_extension, single_file_lines_content};
 
 /// A `[table]` or `[[array-of-tables]]` header and its inclusive 1-based row
 /// span, which ends at its last entry: the comments above the next header
@@ -60,7 +60,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         } else {
             HashSet::new()
         };
-        let depth = path_depth_factor(&file, ctx);
+        let depth = file_depth_factor(&file, ctx, false);
         let identity_rows: Vec<usize> = section_rows(&sections, |n| {
             matches!(n, "package" | "workspace" | "workspace.package")
                 || (python_project_manifest && is_pyproject_identity_table(n))

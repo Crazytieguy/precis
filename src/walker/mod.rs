@@ -132,7 +132,7 @@ pub struct WalkCtx {
     parse_bytes_left: Cell<usize>,
     cargo_workspace: workspace::WorkspaceMembership,
     fs_state: fs::FsState,
-    json_state: json::JsonState,
+    pub(in crate::walker) json_state: json::JsonState,
     /// The tree's essential source, walked once; `None` past
     /// [`crate::fs_util::PROBE_ENTRY_CAP`].
     essential_source: OnceCell<Option<EssentialSource>>,
@@ -310,16 +310,6 @@ impl WalkCtx {
         self.cargo_workspace
             .is_member(file, || toml::collect_workspace_members(self))
     }
-
-    /// `true` iff `file` is a JS/TS workspace-member `package.json`.
-    pub fn is_js_workspace_member(&self, file: &Path) -> bool {
-        self.json_state.is_workspace_member(file, self)
-    }
-
-    /// `true` iff `file` is the unique primary JS/TS workspace member.
-    pub fn is_primary_js_workspace_member(&self, file: &Path) -> bool {
-        self.json_state.is_primary_workspace_member(file, self)
-    }
 }
 
 fn parser_for(language: &Language) -> tree_sitter::Parser {
@@ -411,14 +401,8 @@ pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> 
 }
 
 /// Path-relative location prior: depth penalty × non-essential-dir
-/// discount. Use [`file_depth_factor`] to add entrypoint pinning.
-pub(crate) fn path_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, false)
-}
-
-/// [`path_depth_factor`] with optional entrypoint pinning — when
-/// `is_entrypoint`, depth clamps to 1 so an `index.ts` at any depth
-/// ranks like depth 1. Non-essential discount still applies.
+/// discount. When `is_entrypoint`, depth clamps to 1 so an `index.ts` at
+/// any depth ranks like depth 1.
 pub(crate) fn file_depth_factor(file: &Path, ctx: &WalkCtx, is_entrypoint: bool) -> f64 {
     let depth = ctx.depth_from_root(file);
     let pinned_depth = if is_entrypoint { depth.min(1) } else { depth };

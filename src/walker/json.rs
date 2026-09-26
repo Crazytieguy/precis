@@ -22,7 +22,7 @@ use super::workspace::{
     member_named_after_root,
 };
 use super::{
-    WalkCtx, first_child_of_kind, fs::files_with_any_extension, path_depth_factor,
+    WalkCtx, file_depth_factor, first_child_of_kind, fs::files_with_any_extension,
     single_file_lines_content,
 };
 
@@ -82,13 +82,13 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     };
     let pairs = top_level_pairs(&tree, &source);
     // The primary workspace member prices like the root manifest.
-    let primary = ctx.is_primary_js_workspace_member(file);
+    let primary = ctx.json_state.is_primary_workspace_member(file, ctx);
     let depth = if primary {
         1.0
     } else {
-        path_depth_factor(file, ctx)
+        file_depth_factor(file, ctx, false)
     };
-    let identity_scale = if ctx.is_js_workspace_member(file) && !primary {
+    let identity_scale = if ctx.json_state.is_workspace_member(file, ctx) && !primary {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0

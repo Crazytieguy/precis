@@ -7,7 +7,7 @@ use crate::batch::{Batch, BatchKey, GoModKey};
 use crate::fs_util::list_dir;
 use crate::value::{dependency_roster_value, manifest_identity_value};
 
-use super::{WalkCtx, path_depth_factor, single_file_lines_content};
+use super::{WalkCtx, file_depth_factor, single_file_lines_content};
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
@@ -19,7 +19,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let path = dir.join(name);
-        let depth = path_depth_factor(&path, ctx);
+        let depth = file_depth_factor(&path, ctx, false);
         let Some(source) = ctx.read_source(&path) else {
             continue;
         };

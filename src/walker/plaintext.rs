@@ -26,7 +26,7 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::fs_util::list_dir;
 
-use super::{WalkCtx, gated_whole_file_content, path_depth_factor, single_file_lines_content};
+use super::{WalkCtx, file_depth_factor, gated_whole_file_content, single_file_lines_content};
 
 /// Line cap on a `Whole` plaintext batch.
 const PLAINTEXT_LINE_CAP: usize = 60;
@@ -1472,7 +1472,7 @@ pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
         let Some(content) = content else {
             continue;
         };
-        let value = path_depth_factor(&file, ctx);
+        let value = file_depth_factor(&file, ctx, false);
         out.push(Batch {
             key: PlaintextKey::Rest { file }.into(),
             predecessor: None,

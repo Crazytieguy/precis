@@ -16,7 +16,7 @@ use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::{DirFilter, EntryKind, PROBE_ENTRY_CAP, list_dir, lists_file};
 
-use super::{WalkCtx, file_depth_factor, path_depth_factor};
+use super::{WalkCtx, file_depth_factor};
 
 /// Seed: list the root directory.
 pub fn seed(ctx: &WalkCtx) -> Vec<Batch> {
@@ -205,7 +205,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     {
         crate::value::depth_factor(ctx.depth_from_root(dir).min(2)) * non_essential.max(0.5)
     } else {
-        path_depth_factor(dir, ctx)
+        file_depth_factor(dir, ctx, false)
     };
     // A top-level directory's listing is part of the repo map whatever
     // the directory holds; the non-essential discount is for its contents.
@@ -217,7 +217,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     // Without the roster factor a source inventory's ratio falls with its
     // length against tiny sibling listings.
     let fanout = if source_inventory_dir {
-        crate::value::roster_mass(children.len()).min(crate::value::ROSTER_MASS_FACTOR_CAP)
+        crate::value::roster_mass(children.len()).min(1.6)
     } else {
         1.0
     };
@@ -342,7 +342,9 @@ fn is_deferred_catalog_child(dir: &Path, ctx: &WalkCtx) -> bool {
 
 fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
     ctx.is_cargo_workspace_member(&dir.join("Cargo.toml"))
-        || ctx.is_js_workspace_member(&dir.join("package.json"))
+        || ctx
+            .json_state
+            .is_workspace_member(&dir.join("package.json"), ctx)
 }
 
 const MODULE_ENTRYPOINT_FILES: &[&str] = &[

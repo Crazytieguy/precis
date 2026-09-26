@@ -27,8 +27,6 @@ pub fn manifest_operational_value(depth: f64) -> f64 {
 /// Roster size at which [`roster_mass`] is neutral; rosters this small
 /// already rank acceptably without help.
 const ROSTER_MASS_BASELINE: f64 = 11.0;
-/// Cap on the listing roster-mass boost (reached around ~40 entries).
-pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 
 /// Ratio-neutralizing factor for "roster" batches — complete catalogs of
 /// N peer entries (directory listings, names surfaces, member catalogs)
@@ -37,8 +35,7 @@ pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 /// the complete catalogs NS authors anchor on. Scaling value by
 /// `(N / baseline)^k`, `k` = [`DEFAULT_CONCAVITY_EXPONENT`], pushes back
 /// against that. Boost-only (≥ 1): small rosters keep their existing
-/// rank rather than being demoted. [`ROSTER_MASS_FACTOR_CAP`] caps it
-/// for directory listings.
+/// rank rather than being demoted.
 pub fn roster_mass(entries: usize) -> f64 {
     (entries as f64 / ROSTER_MASS_BASELINE)
         .powf(DEFAULT_CONCAVITY_EXPONENT)
