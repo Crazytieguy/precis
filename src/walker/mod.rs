@@ -515,7 +515,12 @@ pub(crate) fn build_file_spans(path: &Path, source: &Source, rows: Vec<usize>) -
 /// batches each claiming it is a walker-contract overlap.
 pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
     let text = &source[node.start_byte()..node.end_byte()];
-    node.start_position().row + text.trim_end().split('\n').count().max(1) - 1
+    let newlines = text
+        .trim_end()
+        .bytes()
+        .filter(|&byte| byte == b'\n')
+        .count();
+    node.start_position().row + newlines
 }
 
 #[cfg(test)]
