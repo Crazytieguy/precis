@@ -144,6 +144,9 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         "expression_statement" if is_declaring_macro_invocation(node, file) => Shape::Whole,
         _ => return None,
     };
+    if is_flattened_parse_debris(node, file) {
+        return None;
+    }
     // A header's `static inline` definition is the header-only accessor
     // idiom: part of the API. Any other `static` in a header is an
     // implementation leak.
@@ -251,6 +254,27 @@ fn name_rows(node: Node) -> Vec<usize> {
     rows.sort_unstable();
     rows.dedup();
     rows
+}
+
+/// A leftover of a region tree-sitter could not parse and flattened
+/// onto the top level: the `#define X` after the orphaned name of an
+/// `#ifndef X` (a header guard whose block was dropped), or a declaration
+/// after an orphaned function declarator (a local of the broken body).
+fn is_flattened_parse_debris(node: Node, file: &SourceFile) -> bool {
+    let Some(previous) = node.prev_named_sibling() else {
+        return false;
+    };
+    match node.kind() {
+        "preproc_def" => {
+            previous.kind() == "identifier"
+                && node
+                    .parent()
+                    .is_some_and(|parent| !parent.kind().starts_with("preproc"))
+                && is_define_of(node, previous, file)
+        }
+        "declaration" => previous.kind() == "function_declarator",
+        _ => false,
+    }
 }
 
 /// A file-scope `NAME(args);` with an all-caps callee: a macro invocation
@@ -934,6 +958,44 @@ cleanup(state);
         );
         assert_eq!(rows(&model.decls[2].doc), vec![vec![3]]);
         assert_eq!(model.decls[2].shape, Shape::Whole);
+    }
+
+    #[test]
+    fn c_flattened_parse_debris_is_skipped() {
+        let source = "\
+#ifndef LIB_H
+#define LIB_H
+int api(void);
+#if defined(__SSE2__)
+#define LIB_SSE2
+#ifdef _MSC_VER
+#if _MSC_VER >= 1400
+static int cpuid3(void)
+{
+   int info[4];
+   __cpuid(info,1);
+   return info[3];
+}
+#else
+static int cpuid3(void)
+{
+   int res;
+   __asm {
+      mov  eax,1
+      cpuid
+      mov  res,edx
+   }
+   return res;
+}
+#endif
+#endif
+#endif
+#endif
+";
+        assert_eq!(
+            name_rows_of(&model("lib.h", source)),
+            vec![vec![3], vec![5]]
+        );
     }
 
     #[test]
