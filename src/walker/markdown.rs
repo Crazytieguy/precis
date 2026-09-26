@@ -604,18 +604,12 @@ fn block_text_rows(block: Node, source: &str) -> Vec<usize> {
 }
 
 fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
-    let mut cur = parent.walk();
-    let mut seen = false;
-    let mut out = Vec::new();
-    for child in parent.children(&mut cur) {
-        if seen {
-            out.push(child);
-        }
-        if child.id() == after.id() {
-            seen = true;
-        }
-    }
-    out
+    let mut cursor = parent.walk();
+    parent
+        .children(&mut cursor)
+        .skip_while(|child| child.id() != after.id())
+        .skip(1)
+        .collect()
 }
 
 // --- decorative classifiers ---
@@ -676,13 +670,6 @@ fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
     had_any
 }
 
-/// Paragraph is decorative iff its inline text is badge-only (see
-/// [`is_badge_only_inline_text`]). Plain-text paragraphs return `false`.
-fn is_decorative_paragraph(para: Node, source: &str) -> bool {
-    first_child_of_kind(para, "inline")
-        .is_some_and(|inline| is_badge_only_inline_text(&source[inline.byte_range()]))
-}
-
 /// True iff every named inline child of `inline_text` is decorative or
 /// skippable, at least one is decorative, and no plain text sits between
 /// or around them. Written as a table (a `|` on every line), the text may
@@ -716,27 +703,22 @@ fn is_badge_only_inline_text(inline_text: &str) -> bool {
     any_decorative && is_gap(&inline_text[cursor..])
 }
 
+/// A badge-only paragraph or table (see [`is_badge_only_inline_text`]),
+/// or an HTML block of nothing but tags (`<p align="center"><img …/></p>`).
 fn is_decorative_block(block: Node, source: &str) -> bool {
     match block.kind() {
-        "paragraph" => is_decorative_paragraph(block, source),
+        "paragraph" => first_child_of_kind(block, "inline")
+            .is_some_and(|inline| is_badge_only_inline_text(&source[inline.byte_range()])),
         "pipe_table" => is_badge_only_inline_text(&source[block.byte_range()]),
         // `[label]: url` definitions render nothing on their own; YAML /
         // TOML front matter is site metadata, not project description; a
         // `---` rule separates, it says nothing.
         "link_reference_definition" | "minus_metadata" | "plus_metadata" | "thematic_break" => true,
-        "html_block" => is_decorative_html_block(block, source),
+        "html_block" => strip_html_tags(&source[block.byte_range()])
+            .trim()
+            .is_empty(),
         _ => false,
     }
-}
-
-/// An `html_block` is decorative iff its source text contains nothing
-/// but tags + whitespace. Strips `<…>` runs and checks whether the
-/// remainder is blank. Catches `<p align="center"><img …/></p>` while
-/// preserving blocks that contain real prose.
-fn is_decorative_html_block(block: Node, source: &str) -> bool {
-    let raw = &source[block.start_byte()..block.end_byte()];
-    let stripped = strip_html_tags(raw);
-    stripped.trim().is_empty()
 }
 
 /// A navigation row: three or more links and nothing else but separator
@@ -1841,12 +1823,9 @@ fn headed_sections(node: Node<'_>) -> impl Iterator<Item = Node<'_>> {
 
 fn first_heading_child(section: Node) -> Option<Node> {
     let mut cursor = section.walk();
-    for child in section.children(&mut cursor) {
-        if matches!(child.kind(), "atx_heading" | "setext_heading") {
-            return Some(child);
-        }
-    }
-    None
+    section
+        .children(&mut cursor)
+        .find(|child| matches!(child.kind(), "atx_heading" | "setext_heading"))
 }
 
 #[cfg(test)]
