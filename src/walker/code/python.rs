@@ -144,19 +144,22 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 }
 
 /// A dunder module (`__init__.py`, `__main__.py`, `__version__.py`) of a
-/// top-level package: a package directory whose parent is none. A
-/// subpackage's `__init__.py` and a `__main__.py` outside any package
-/// are ordinary modules at their own depth.
+/// top-level package: a package directory whose parent is no package
+/// or is the walk root (a root `__init__.py` makes a checkout importable
+/// without turning its packages into subpackages). A subpackage's
+/// `__init__.py` and a `__main__.py` outside any package are ordinary
+/// modules at their own depth.
 fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
     let is_package = |dir: &Path| {
         ["__init__.py", "__init__.pyi"]
             .iter()
             .any(|init| lists_file(&dir.join(init), ctx.dir_filter()))
     };
+    let is_parent_package = |dir: &Path| dir != ctx.root() && is_package(dir);
     file_stem(path).is_some_and(is_dunder)
         && path
             .parent()
-            .is_some_and(|dir| is_package(dir) && !dir.parent().is_some_and(is_package))
+            .is_some_and(|dir| is_package(dir) && !dir.parent().is_some_and(is_parent_package))
 }
 
 /// A module a package `__init__.py` above it imports names from
@@ -1040,6 +1043,8 @@ _first = second = 0
             "src/pkg/sub/__init__.py",
             "stubs/__init__.pyi",
             "tools/android/__main__.py",
+            "__init__.py",
+            "lib/__init__.py",
         ] {
             let path = dir.path().join(file);
             std::fs::create_dir_all(path.parent().unwrap()).unwrap();
@@ -1051,6 +1056,8 @@ _first = second = 0
         assert!(entrypoint("src/pkg/__main__.py"));
         assert!(entrypoint("src/pkg/__version__.py"));
         assert!(entrypoint("stubs/__init__.pyi"));
+        assert!(entrypoint("lib/__init__.py"));
+        assert!(entrypoint("__init__.py"));
         assert!(!entrypoint("src/pkg/main.py"));
         assert!(!entrypoint("src/pkg/sub/__init__.py"));
         assert!(!entrypoint("tools/android/__main__.py"));
