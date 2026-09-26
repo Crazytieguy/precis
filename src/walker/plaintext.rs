@@ -431,7 +431,15 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
     let opens_module = trimmed
         .strip_prefix("open ")
         .is_some_and(|rest| rest.starts_with(char::is_uppercase));
+    // C++ `using Name = type;` declares an alias rather than importing.
+    let declares_alias = trimmed.strip_prefix("using ").is_some_and(|rest| {
+        rest.split_once('=').is_some_and(|(name, _)| {
+            let name = name.trim();
+            !name.is_empty() && name.chars().all(|c| c.is_alphanumeric() || c == '_')
+        })
+    });
     if !in_block_comment
+        && !declares_alias
         && (opens_module
             || SOURCE_TEXT_IMPORT_PREFIXES
                 .iter()
@@ -832,8 +840,7 @@ const TYPE_KEYWORDS: &str = "class interface trait object struct enum protocol e
     record union namespace defmodule defprotocol defimpl impl instance";
 
 /// Words that declare any other name after them.
-const MEMBER_KEYWORDS: &str =
-    "type typealias data newtype def fun func function fn sub defmacro proc val var let const";
+const MEMBER_KEYWORDS: &str = "type typealias using data newtype def fun func function fn sub defmacro proc val var let const";
 
 /// First words of a line that is not part of a file's API: a private or
 /// file-local member, a test case, or a control-flow statement.
@@ -1719,6 +1726,9 @@ mod tests {
             "require 'rack'",
             "require_relative 'x'",
             "import Foundation",
+            "using namespace std;",
+            "using std::string;",
+            "using var stream = Open();",
         ] {
             assert_eq!(classify_surface_line(line, false), None, "{line}");
         }
@@ -1726,6 +1736,7 @@ mod tests {
             "open class Table(name: String) {",
             "open func request()",
             "required init()",
+            "using Callback = std::function<void(int)>;",
             "Use the default profile.",
             "Important: run once.",
         ] {
@@ -2059,6 +2070,10 @@ mod tests {
                 "{compact_definition}"
             );
         }
+        assert_eq!(
+            declaration_rank("using Handle = unsigned long;", false),
+            DeclarationRank::OneLiner
+        );
         assert_eq!(
             declaration_rank("namespace App.Models;", false),
             DeclarationRank::Heading
