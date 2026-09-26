@@ -397,6 +397,12 @@ fn robustness_credential_files_render_only_their_rows() {
     for budget in [3000, 100_000] {
         let out = render(root, budget).unwrap();
         assert!(!out.contains(SECRET), "{out}");
+        assert!(
+            out.contains("url      = \"postgresql://admin:…@db/app\""),
+            "{out}"
+        );
+        let named = render(&root.join("schema.prisma"), budget).unwrap();
+        assert!(!named.contains(SECRET), "{named}");
         for shown in [
             "API_KEY=changeme",
             "def load_credentials():",

@@ -997,6 +997,18 @@ pub fn visible_full_line(source_line: &str) -> &str {
     }
 }
 
+/// `line` with the password of every URL that carries one
+/// (`postgresql://admin:PASSWORD@db/app`) shown as `…`: a connection
+/// string written inline is the one place a secret sits in files precis
+/// otherwise shows. A placeholder (`{}`, `${DB_PASSWORD}`, `<password>`)
+/// is code or documentation, and shows.
+fn redact_url_passwords(line: &str) -> std::borrow::Cow<'_, str> {
+    static URL_PASSWORD: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r#"(://[^\s/:@"'`]*:)[^\s/@"'`{}$<>]+@"#).unwrap()
+    });
+    URL_PASSWORD.replace_all(line, "${1}…@")
+}
+
 /// Render one line: render spec + raw source text (empty string when
 /// unavailable — release tolerates, debug asserts).
 fn format_line_row(
@@ -1005,6 +1017,7 @@ fn format_line_row(
     source_line: &str,
     indent_depth: usize,
 ) -> String {
+    let source_line = &*redact_url_passwords(source_line);
     let mut s = INDENT_UNIT.repeat(indent_depth);
     match render {
         Render::Ellipsis => {
@@ -1237,6 +1250,33 @@ mod tests {
                 "deep/pkg/core/\n  leaf/ (empty)\n  x.rs\n    1→fn x() {}\ntop.rs\n"
             );
             assert_eq!(charged, tokenizer::count(&out), "output:\n{out}");
+        }
+    }
+
+    #[test]
+    fn render_url_passwords_are_redacted_and_nothing_else() {
+        for (line, shown) in [
+            (
+                r#"url = "postgresql://admin:hunter2@db:5432/app""#,
+                r#"url = "postgresql://admin:…@db:5432/app""#,
+            ),
+            ("redis://:hunter2@cache/0", "redis://:…@cache/0"),
+            (
+                "http://localhost:8080/login@v2",
+                "http://localhost:8080/login@v2",
+            ),
+            ("git@github.com:org/repo.git", "git@github.com:org/repo.git"),
+            (
+                r#"url = env("DATABASE_URL")"#,
+                r#"url = env("DATABASE_URL")"#,
+            ),
+            ("mongodb://{}:{}@{}:{}/{}", "mongodb://{}:{}@{}:{}/{}"),
+            (
+                "postgres://app:${DB_PASSWORD}@db/app",
+                "postgres://app:${DB_PASSWORD}@db/app",
+            ),
+        ] {
+            assert_eq!(redact_url_passwords(line), shown);
         }
     }
 

@@ -116,15 +116,9 @@ fn push_decl_batches(
         .then(|| model_split_line(decl));
 
     let head_end = split_at.map_or(decl.close_line, |s| s - 1);
-    // A connection URL written inline carries the database password
-    // whenever it has one; `env("DATABASE_URL")` is the shown form.
-    let head_rows = (decl.open_line..=head_end)
-        .filter(|&row| {
-            decl.kind != DeclKind::Config
-                || !source.line(row).is_some_and(|line| line.contains("://"))
-        })
-        .collect();
-    let Some(head_content) = single_file_lines_content(file, source, head_rows) else {
+    let Some(head_content) =
+        single_file_lines_content(file, source, (decl.open_line..=head_end).collect())
+    else {
         return;
     };
     out.push(Batch {

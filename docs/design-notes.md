@@ -114,9 +114,11 @@ displaces a priced batch.
   handed, so a refused file lists by name only; no walker carries a
   check of its own. The name rule exempts samples (`*.example`,
   `*.sample`, `*.template`, `*.dist`), source code and documents, which
-  are about credentials rather than holding them. Prisma leaves a
-  datasource's inline connection URL out. Secrets in ordinarily named
-  config are not detected.
+  are about credentials rather than holding them. A URL's password
+  (`scheme://user:PASSWORD@host`) is redacted where rows are formatted
+  (`render::format_line_row`), so it holds for every walker and the
+  floor, and for costing as well as output. Other secrets in ordinarily
+  named config are not detected.
 
 ## Cross-language vs language-specific concerns
 
