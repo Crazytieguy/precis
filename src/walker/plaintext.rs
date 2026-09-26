@@ -120,9 +120,10 @@ pub(crate) enum Class {
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
     /// A root manifest or build script in a format no walker parses
-    /// ([`is_unparsed_root_manifest_name`]). Rendered like
-    /// [`Class::FlatText`], so its head fields (the project's name, version
-    /// and description) lead, and priced like a build file.
+    /// ([`is_unparsed_root_manifest_name`]), or a root build file too long
+    /// to render whole. Rendered like [`Class::FlatText`], so its head
+    /// fields (the project's name, version and description; a
+    /// Dockerfile's base image) lead, and priced like a build file.
     Manifest,
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
@@ -1217,7 +1218,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             ),
             None => match root_makefile_phony_targets(&file, name, ctx) {
                 Some(content) => (content, class_value(class, &file, ctx)),
-                None => continue,
+                None => {
+                    if class == Class::Build && ctx.depth_from_root(&file) == 1 {
+                        push_source_text_batches(&mut out, &file, ctx, Class::Manifest);
+                    }
+                    continue;
+                }
             },
         };
         out.push(Batch {
@@ -2046,6 +2052,32 @@ mod tests {
         };
         let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
         assert_eq!(rows, [(1, 2), (4, 6)]);
+    }
+
+    #[test]
+    fn plaintext_oversized_root_dockerfile_renders_its_head() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::create_dir(root.join("docker")).unwrap();
+        let mut source = String::from("FROM ubuntu:24.04\n");
+        for index in 0..BUILD_LINE_CAP {
+            source.push_str(&format!("RUN step-{index}\n"));
+        }
+        std::fs::write(root.join("Dockerfile"), &source).unwrap();
+        std::fs::write(root.join("docker/Dockerfile"), &source).unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        assert_eq!(batches.len(), 1);
+        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
+            panic!("expected a lines batch");
+        };
+        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
+        assert!(
+            matches!(rows[..], [(1, end)] if end < BUILD_LINE_CAP),
+            "{rows:?}"
+        );
+        assert!(expand_in_dir(&root.join("docker"), &ctx).is_empty());
     }
 
     /// A root `pom.xml` leads with its coordinates, not the `<project
