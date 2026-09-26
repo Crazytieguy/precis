@@ -7,8 +7,9 @@
 
 use std::{
     cell::RefCell,
-    collections::{BTreeMap, HashMap},
+    collections::{BTreeMap, HashMap, HashSet},
     path::{Path, PathBuf},
+    rc::Rc,
 };
 
 use crate::batch::{Batch, FsKey};
@@ -151,11 +152,12 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     };
     // A catalog parent's listing already names every child, so the
     // children's own listings are deferred, not dropped.
-    let catalog_child_factor = if parent_is_high_fanout_catalog(dir, ctx) {
-        CATALOG_CHILD_LISTING_SUPPRESSION
-    } else {
-        1.0
-    };
+    let catalog_child_factor =
+        if parent_is_high_fanout_catalog(dir, ctx) || repeats_sibling_shape(dir, ctx) {
+            CATALOG_CHILD_LISTING_SUPPRESSION
+        } else {
+            1.0
+        };
     LISTING_VALUE * depth * fanout * catalog_child_factor * media_roster_factor(children)
 }
 
@@ -235,6 +237,25 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     ctx.fs_state.child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
 }
 
+/// True when `dir` is one of many sibling directories and names exactly
+/// the entries an earlier sibling names (`keyboards/*/`, `charts/*/`):
+/// the first of each shape shows what the siblings hold. A declared
+/// workspace member is the project's own package, whatever its layout.
+fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
+    if dir == ctx.root()
+        || ctx.is_cargo_workspace_member(&dir.join("Cargo.toml"))
+        || ctx.is_js_workspace_member(&dir.join("package.json"))
+    {
+        return false;
+    }
+    let (Some(parent), Some(name)) = (dir.parent(), dir.file_name()) else {
+        return false;
+    };
+    ctx.fs_state
+        .shape_repeats(parent, ctx.dir_filter())
+        .contains(name.to_string_lossy().as_ref())
+}
+
 pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
     "index.ts",
     "index.tsx",
@@ -299,6 +320,7 @@ fn has_module_sibling_file(dir: &Path) -> bool {
 pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
+    shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
 }
 
 impl FsState {
@@ -343,6 +365,36 @@ impl FsState {
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
         count
+    }
+
+    /// Names of `parent`'s subdirectories whose entry names repeat an
+    /// earlier subdirectory's, when `parent` holds at least
+    /// [`CATALOG_PARENT_MIN_CHILD_DIRS`] of them.
+    fn shape_repeats(&self, parent: &Path, filter: &DirFilter) -> Rc<HashSet<String>> {
+        if let Some(repeats) = self.shape_repeats.borrow().get(parent) {
+            return Rc::clone(repeats);
+        }
+        let mut repeats = HashSet::new();
+        if self.child_dir_count(parent, filter) >= CATALOG_PARENT_MIN_CHILD_DIRS {
+            let mut shapes = HashSet::new();
+            let listing = list_dir(parent, filter);
+            let subdirs = listing
+                .iter()
+                .filter(|(_, kind)| matches!(kind, EntryKind::Directory));
+            for (name, _) in subdirs {
+                let entries = list_dir(&parent.join(name), filter);
+                if !entries.is_empty()
+                    && !shapes.insert(entries.keys().cloned().collect::<Vec<_>>())
+                {
+                    repeats.insert(name.clone());
+                }
+            }
+        }
+        let repeats = Rc::new(repeats);
+        self.shape_repeats
+            .borrow_mut()
+            .insert(parent.to_path_buf(), Rc::clone(&repeats));
+        repeats
     }
 }
 
@@ -571,6 +623,33 @@ mod tests {
         assert!(!should_recurse_dir(&root.join("pages.ar")));
         assert!(!should_recurse_dir(&root.join("pages.pt_BR")));
         assert!(should_recurse_dir(&root.join("glossary/node.js")));
+    }
+
+    #[test]
+    fn fs_wide_siblings_of_one_shape_defer_all_but_the_first() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let chart_names: Vec<String> = (0..CATALOG_PARENT_MIN_CHILD_DIRS)
+            .map(|index| format!("chart{index}"))
+            .collect();
+        for chart in &chart_names {
+            std::fs::create_dir_all(root.join("charts").join(chart)).unwrap();
+            for file in ["Chart.yaml", "values.yaml"] {
+                std::fs::write(root.join("charts").join(chart).join(file), "").unwrap();
+            }
+        }
+        std::fs::write(root.join("charts/chart9/NOTES.txt"), "").unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let value = |chart: &str| {
+            dir_listing_batch(root.join("charts").join(chart), &ctx)
+                .unwrap()
+                .value
+        };
+        assert_eq!(
+            value("chart1"),
+            value("chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
+        );
+        assert!(value("chart9") > value("chart1"));
     }
 
     #[test]

@@ -143,7 +143,6 @@ client/
     batch/
       index.vue
     collection/
-      _id.vue
     config/
       api-keys/
         index.vue
@@ -169,8 +168,7 @@ client/
         index.vue
     config.vue
     index.vue
-    item/_id/
-      index.vue
+    item/
     library/_library/
       bookshelf/
         _id.vue
@@ -187,11 +185,9 @@ client/
     login.vue
     oops.vue
     playlist/
-      _id.vue
     share/
       _slug.vue
     upload/
-      index.vue
   players/
     AudioTrack.js
     CastPlayer.js
@@ -361,8 +357,6 @@ server/
       LICENSE
       index.js
     bcryptjs/
-      LICENSE
-      index.js
     busboy/
       LICENSE
       index.js
@@ -371,24 +365,45 @@ server/
     commandLineArgs/
       index.js
     dateAndTime/
-      LICENSE
-      index.js
     expressFileupload/
     fastSort/
-      LICENSE
-      index.js
     fluentFfmpeg/
+      LICENSE
+      capabilities.js
+      ffprobe.js
+      index.d.ts
+      index.js
+      options/
+      presets/
+      processor.js
+      recipes.js
+      utils.js
     fsExtra/
       LICENSE
       copy/
+        copy-sync.js
+        copy.js
+        index.js
       empty/
         index.js
       ensure/
+        file.js
+        index.js
+        link.js
+        symlink-paths.js
+        symlink-type.js
+        symlink.js
       fs/
         index.js
       index.js
       mkdirs/
+        index.js
+        make-dir.js
+        utils.js
       move/
+        index.js
+        move-sync.js
+        move.js
       path-exists/
         index.js
       remove/
@@ -396,7 +411,6 @@ server/
         rimraf.js
       util/
     fusejs/
-      index.js
     imageType/
       LICENSE
       fileType.js
@@ -429,18 +443,13 @@ server/
       lib/
     libarchive/
     lodash.once/
-      LICENSE
-      index.js
     memorystore/
-      LICENSE
-      index.js
     nodeCron/
+      LICENSE
+      background-scheduled-task/
+      …
     nodeFfprobe/
-      LICENSE
-      index.js
     nodeStreamZip/
-      LICENSE
-      index.js
     passportLocal/
       LICENSE
       index.js
@@ -451,24 +460,14 @@ server/
       pify.js
       withOpenFile.js
     recursiveReaddirAsync/
-      LICENSE
-      index.js
     requestIp/
       LICENSE
       index.js
       isJs.js
     rss/
-      LICENSE
-      index.js
     sanitizeHtml/
-      LICENSE
-      index.js
     streamsearch/
-      LICENSE
-      index.js
     uaParser/
-      LICENSE
-      index.js
     umzug/
       LICENSE
       index.js
@@ -483,12 +482,8 @@ server/
       types.js
       umzug.js
     universalify/
-      LICENSE
-      index.js
     watcher/
     which/
-      LICENSE
-      index.js
     xml/
       LICENSE
       escapeForXML.js
