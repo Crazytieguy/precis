@@ -17,12 +17,14 @@ fn json_string(text: &str) -> String {
     format!("\"{}\"", text.replace('\\', "\\\\").replace('"', "\\\""))
 }
 
-/// A plugin script run as Claude Code runs it, outside any plugin root.
+/// A plugin script run as Claude Code runs it, outside any plugin root and
+/// without the caller's session environment file.
 fn hook(script: &str) -> Command {
     let mut command = Command::new("bash");
     command
         .arg(hook_script(script))
-        .env_remove("CLAUDE_PLUGIN_ROOT");
+        .env_remove("CLAUDE_PLUGIN_ROOT")
+        .env_remove("CLAUDE_ENV_FILE");
     command
 }
 
