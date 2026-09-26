@@ -14,7 +14,7 @@ use std::{
 
 use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
-use crate::fs_util::{DirFilter, EntryKind, PROBE_ENTRY_CAP, list_dir};
+use crate::fs_util::{DirFilter, EntryKind, PROBE_ENTRY_CAP, list_dir, lists_file};
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
@@ -52,15 +52,16 @@ pub fn expand_listed<'k>(key: &'k FsKey, ctx: &WalkCtx) -> (Vec<Batch>, Option<&
 pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec<PathBuf> {
     list_dir(dir, ctx.dir_filter())
         .iter()
-        .filter(|(name, kind)| {
-            matches!(kind, EntryKind::File)
-                && Path::new(name)
-                    .extension()
-                    .and_then(|actual| actual.to_str())
-                    .is_some_and(|actual| exts.iter().any(|ext| actual.eq_ignore_ascii_case(ext)))
-        })
+        .filter(|(name, kind)| matches!(kind, EntryKind::File) && has_extension_in(name, exts))
         .map(|(name, _)| dir.join(name))
         .collect()
+}
+
+fn has_extension_in(path: impl AsRef<Path>, exts: &[&str]) -> bool {
+    path.as_ref()
+        .extension()
+        .and_then(|actual| actual.to_str())
+        .is_some_and(|actual| exts.iter().any(|ext| actual.eq_ignore_ascii_case(ext)))
 }
 
 /// Listing of `dir`, run on through every directory that holds only one
@@ -229,7 +230,10 @@ fn media_roster_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
     let listed: Vec<&String> = listed_entries(children).collect();
     let media = listed
         .iter()
-        .filter(|name| matches!(children[name.as_str()], EntryKind::File) && is_media_file(name))
+        .filter(|name| {
+            matches!(children[name.as_str()], EntryKind::File)
+                && has_extension_in(name, MEDIA_EXTENSIONS)
+        })
         .count();
     if media < MEDIA_ROSTER_MIN_FILES {
         return 1.0;
@@ -241,17 +245,6 @@ const MEDIA_EXTENSIONS: &[&str] = &[
     "png", "jpg", "jpeg", "gif", "webp", "svg", "ico", "icns", "bmp", "tif", "tiff", "psd", "ttf",
     "otf", "woff", "woff2", "eot", "mp3", "ogg", "wav", "mp4", "webm", "mov",
 ];
-
-fn is_media_file(name: &str) -> bool {
-    Path::new(name)
-        .extension()
-        .and_then(|ext| ext.to_str())
-        .is_some_and(|ext| {
-            MEDIA_EXTENSIONS
-                .iter()
-                .any(|media| ext.eq_ignore_ascii_case(media))
-        })
-}
 
 /// Min child-directory count for a parent to count as a "catalog" whose
 /// per-child listings are redundant with its own listing.
@@ -286,7 +279,13 @@ fn is_deferred_catalog_child(dir: &Path, ctx: &WalkCtx) -> bool {
     let (Some(parent), Some(name)) = (dir.parent(), dir.file_name()) else {
         return false;
     };
-    if dir == ctx.root() || subdirectory_count(parent, ctx) < CATALOG_PARENT_MIN_CHILD_DIRS {
+    if dir == ctx.root()
+        || list_dir(parent, ctx.dir_filter())
+            .values()
+            .filter(|kind| matches!(kind, EntryKind::Directory))
+            .count()
+            < CATALOG_PARENT_MIN_CHILD_DIRS
+    {
         return false;
     }
     is_source_inventory_dir(parent, ctx)
@@ -296,13 +295,6 @@ fn is_deferred_catalog_child(dir: &Path, ctx: &WalkCtx) -> bool {
                 .fs_state
                 .shape_repeats(parent, ctx.dir_filter())
                 .contains(name.to_string_lossy().as_ref())
-}
-
-fn subdirectory_count(dir: &Path, ctx: &WalkCtx) -> usize {
-    list_dir(dir, ctx.dir_filter())
-        .values()
-        .filter(|kind| matches!(kind, EntryKind::Directory))
-        .count()
 }
 
 fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
@@ -340,22 +332,13 @@ fn is_source_dir(dir: &Path) -> bool {
 /// of the same stem (`foo.rs` next to `foo/`). The walk root's parent
 /// is outside the walk, so it is never listed.
 fn is_module_source_dir(dir: &Path, ctx: &WalkCtx) -> bool {
-    let lists_file = |dir: &Path, name: &str| {
-        list_dir(dir, ctx.dir_filter()).get(name) == Some(&EntryKind::File)
-    };
     MODULE_ENTRYPOINT_FILES
         .iter()
-        .any(|name| lists_file(dir, name))
+        .any(|name| lists_file(&dir.join(name), ctx.dir_filter()))
         || dir != ctx.root()
-            && dir.file_name().is_some()
-            && dir.parent().is_some_and(|parent| {
-                MODULE_SIBLING_EXTS.iter().any(|ext| {
-                    dir.with_extension(ext)
-                        .file_name()
-                        .and_then(|name| name.to_str())
-                        .is_some_and(|name| lists_file(parent, name))
-                })
-            })
+            && MODULE_SIBLING_EXTS
+                .iter()
+                .any(|ext| lists_file(&dir.with_extension(ext), ctx.dir_filter()))
 }
 
 #[derive(Default)]
@@ -472,10 +455,7 @@ fn holds_source_uncached(
 /// `.ts`. Markdown counts too: a docs directory is an inventory, and a
 /// listing of its pages often carries the orientation value.
 fn is_source_inventory_file(path: &Path) -> bool {
-    super::language_group(path).is_some()
-        || path
-            .extension()
-            .is_some_and(|ext| ext.eq_ignore_ascii_case("md") || ext.eq_ignore_ascii_case("mdx"))
+    super::language_group(path).is_some() || has_extension_in(path, &["md", "mdx"])
 }
 
 /// Heavy-directory names block traversal, except a `build/` that holds
@@ -496,12 +476,7 @@ fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     if name != "build" {
         return !crate::fs_util::should_skip_dir(&name);
     }
-    list_dir(dir, ctx.dir_filter()).iter().any(|(name, kind)| {
-        matches!(kind, EntryKind::File)
-            && Path::new(name)
-                .extension()
-                .is_some_and(|ext| ext.eq_ignore_ascii_case("rs"))
-    })
+    !files_with_any_extension(dir, &["rs"], ctx).is_empty()
 }
 
 /// A copy of another project as its release archive unpacks, named for
