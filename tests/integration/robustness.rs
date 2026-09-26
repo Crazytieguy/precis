@@ -289,7 +289,8 @@ fn robustness_huge_files_render_at_most_their_head() {
 
 /// Minified and bundled source is machine output: named as such
 /// (`.min.js`, `.bundle.js`) or not, the code engine leaves it to its
-/// listing row, as the plaintext fallback does.
+/// listing row, as the plaintext fallback does. A lock in a source
+/// file's name (`file-lock.ts`) names what it implements, not a lockfile.
 #[test]
 fn robustness_minified_sources_render_only_their_rows() {
     let temp = tempfile::tempdir().unwrap();
@@ -309,8 +310,14 @@ fn robustness_minified_sources_render_only_their_rows() {
         write(&temp.path().join(name), &minified);
     }
 
+    write(
+        &temp.path().join("file-lock.ts"),
+        "export function acquireLock(path: string): boolean {\n  return true;\n}\n",
+    );
+
     let out = render(temp.path(), 3000).unwrap();
     assert!(out.contains("export function main() {"), "{out}");
+    assert!(out.contains("export function acquireLock("), "{out}");
     for name in ["lib.min.js", "app.bundle.js", "widget.js"] {
         assert!(out.contains(&format!("  {name}\n")), "{out}");
     }

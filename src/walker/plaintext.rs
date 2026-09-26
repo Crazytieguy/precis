@@ -330,14 +330,20 @@ fn classify_source_text(name: &str) -> Option<Class> {
 
 /// A derived sibling of a hand-authored file, by its lowercased name:
 /// `app.min.js`, `bundle.chunk.css`, `pnpm-lock.yaml`, `main.js.map`.
+/// A lock stem marks a lockfile only in a data format, so `wake-lock.ts`
+/// and `spin-lock.c` are source.
 pub(in crate::walker) fn is_derived_artifact_name(lower: &str) -> bool {
     let Some((stem, ext)) = lower.rsplit_once('.') else {
         return false;
     };
     #[rustfmt::skip]
     const STEM_SUFFIXES: &[&str] =
-        &[".min", "-min", ".bundle", ".chunk", ".generated", "_generated", "-lock", ".lock"];
-    STEM_SUFFIXES.iter().any(|suffix| stem.ends_with(suffix)) || matches!(ext, "map" | "lock")
+        &[".min", "-min", ".bundle", ".chunk", ".generated", "_generated"];
+    let is_lockfile = (stem.ends_with("-lock") || stem.ends_with(".lock"))
+        && matches!(ext, "json" | "yaml" | "yml" | "hcl");
+    STEM_SUFFIXES.iter().any(|suffix| stem.ends_with(suffix))
+        || is_lockfile
+        || matches!(ext, "map" | "lock")
 }
 
 /// Whether `file` starts with `#!`: an extensionless script (`bin/deploy`,
@@ -1388,6 +1394,21 @@ mod tests {
 
     fn surface(source: &str) -> Vec<&str> {
         surface_text(source, Class::LanguageSource)
+    }
+
+    #[test]
+    fn plaintext_lock_stems_mark_only_data_format_lockfiles() {
+        for name in [
+            "package-lock.json",
+            "pnpm-lock.yaml",
+            ".terraform.lock.hcl",
+            "yarn.lock",
+        ] {
+            assert!(is_derived_artifact_name(name), "{name}");
+        }
+        for name in ["wake-lock.ts", "spin-lock.c", "run-lock.mjs"] {
+            assert!(!is_derived_artifact_name(name), "{name}");
+        }
     }
 
     #[test]
