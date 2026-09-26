@@ -23,7 +23,7 @@ use precis::ns_loader::load_ns_checked;
 /// Walker budget for the scored schedule: the NS cap.
 const SCHEDULE_BUDGET: usize = precis::ns_simulate::TOKEN_CAP;
 /// The CLI's default budget.
-const RENDERED_BUDGET: usize = 3_000;
+pub(crate) const RENDERED_BUDGET: usize = 3_000;
 
 macro_rules! fixtures {
     (

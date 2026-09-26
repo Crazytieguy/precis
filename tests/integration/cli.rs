@@ -75,3 +75,14 @@ fn cli_exits_cleanly_when_the_reader_closes_early() {
     assert!(output.status.success(), "{output:?}");
     assert!(output.stderr.is_empty(), "{output:?}");
 }
+
+/// The baselines render at the budget a bare `precis` run uses.
+#[test]
+fn cli_default_budget_is_the_baselines_budget() {
+    let help = String::from_utf8(precis(["--help"]).stdout).unwrap();
+    let default = format!(
+        "tokens [default: {}]",
+        crate::fixture_baselines::RENDERED_BUDGET
+    );
+    assert!(help.contains(&default), "{help}");
+}
