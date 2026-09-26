@@ -154,7 +154,16 @@ fn check_fs_entries<'a>(
         let FsEntries::Listed(paths) = &group.entries else {
             continue;
         };
-        for name in paths.iter().filter_map(|p| p.file_name()?.to_str()) {
+        for (path, name) in paths
+            .iter()
+            .filter_map(|path| Some((path, path.file_name()?.to_str()?)))
+        {
+            if path.components().count() > 1 {
+                violations.push(format!(
+                    "fs entry {path:?} under {} is a path, not a name: it lists and grades as {name:?} there (list it under its own parent)",
+                    group.parent.display()
+                ));
+            }
             let atom = (group.parent.clone(), name.to_string());
             if let Some(owner) = owners.get(&atom) {
                 violations.push(format!(
@@ -181,9 +190,9 @@ fn validate_spans(
     for span in spans {
         let path = span.path.display();
         let (start, end) = (span.start, span.end);
-        if path_escapes_root(&span.path) {
+        if path_escapes_root(fixture_root, &span.path) {
             violations.push(format!(
-                "span path {path} escapes the fixture root (span paths must be fixture-root-relative — no absolute paths or `..`)"
+                "span path {path} escapes the fixture root (span paths must be fixture-root-relative — no absolute paths, `..`, or links out of it)"
             ));
             blocking = true;
             continue;

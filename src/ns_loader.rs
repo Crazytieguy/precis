@@ -2,7 +2,7 @@
 //! [`crate::north_star`] so the schema file the NS author reads holds
 //! only types.
 
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
 
 use anyhow::{Context, Result, anyhow, bail};
 
@@ -42,14 +42,21 @@ pub fn load_ns(ns_path: &Path) -> Result<NorthStar> {
     Ok(ns)
 }
 
-/// Absolute or `..`-traversing — a path that can leave the fixture
-/// root when joined onto it. One predicate for span paths and fs-group
-/// parents so the two containment checks can't drift.
-pub(crate) fn path_escapes_root(path: &Path) -> bool {
-    path.is_absolute()
-        || path
-            .components()
-            .any(|c| matches!(c, std::path::Component::ParentDir))
+/// Absolute, `..`-traversing, or through a link that resolves outside
+/// `fixture_root` — a path that leaves the fixture root when joined onto
+/// it. One predicate for span paths and fs-group parents so the two
+/// containment checks can't drift.
+pub(crate) fn path_escapes_root(fixture_root: &Path, path: &Path) -> bool {
+    if path.is_absolute() || path.components().any(|c| c == Component::ParentDir) {
+        return true;
+    }
+    match (
+        fixture_root.canonicalize(),
+        fixture_root.join(path).canonicalize(),
+    ) {
+        (Ok(root), Ok(resolved)) => !resolved.starts_with(root),
+        _ => false,
+    }
 }
 
 /// Resolve an NS `BatchContent` against the fixture root. Input must be
@@ -57,7 +64,8 @@ pub(crate) fn path_escapes_root(path: &Path) -> bool {
 /// round-trip. Absolutizes span paths; expands `FsEntries::All` into a
 /// concrete `Listed(paths)` via [`list_dir`] (same utility the walker
 /// uses, so NS and walker see identical filesystem content); verifies
-/// each `Listed` child exists.
+/// each parent is a directory and each `Listed` entry's name one of its
+/// children.
 pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<BatchContent> {
     match content {
         BatchContent::Lines { spans, .. } => {
@@ -67,9 +75,9 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
                     // Same root-boundary invariant as fs parents: every
                     // resolve_content caller (divergence scoring included,
                     // not just validate-ns) rejects escaping spans.
-                    if path_escapes_root(&s.path) {
+                    if path_escapes_root(fixture_root, &s.path) {
                         bail!(
-                            "NS span path must be fixture-root-relative: {}",
+                            "NS span path must be fixture-root-relative and stay inside it: {}",
                             s.path.display()
                         );
                     }
@@ -103,24 +111,37 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
 fn resolve_fs_group(group: &FsGroup, fixture_root: &Path, filter: &DirFilter) -> Result<FsGroup> {
     // Fs parents must stay inside the fixture root, so a frozen NS with
     // an escaping parent fails divergence scoring loudly.
-    if path_escapes_root(&group.parent) {
+    if path_escapes_root(fixture_root, &group.parent) {
         bail!(
-            "NS fs group parent must be fixture-root-relative: {}",
+            "NS fs group parent must be fixture-root-relative and stay inside it: {}",
             group.parent.display()
         );
     }
     let parent_abs = fixture_root.join(&group.parent);
-    let entries = match &group.entries {
-        FsEntries::All => {
-            let listed = list_dir(&parent_abs, filter);
-            if listed.is_empty() && !parent_abs.exists() {
-                bail!(
-                    "NS fs group points to non-existent parent {}",
-                    parent_abs.display()
-                );
+    let metadata = std::fs::symlink_metadata(&parent_abs).with_context(|| {
+        format!(
+            "NS fs group points to non-existent parent {}",
+            parent_abs.display()
+        )
+    })?;
+    if !metadata.is_dir() {
+        bail!(
+            "NS fs group parent {} is a {}, not a directory",
+            parent_abs.display(),
+            if metadata.is_symlink() {
+                "link"
+            } else {
+                "file"
             }
-            FsEntries::Listed(listed.keys().map(PathBuf::from).collect())
-        }
+        );
+    }
+    let entries = match &group.entries {
+        FsEntries::All => FsEntries::Listed(
+            list_dir(&parent_abs, filter)
+                .keys()
+                .map(PathBuf::from)
+                .collect(),
+        ),
         FsEntries::Listed(paths) => {
             let probed = list_dir(&parent_abs, filter);
             for p in paths {
@@ -171,5 +192,42 @@ mod tests {
         assert!(resolve_content(&lines_content("../outside.rs"), root).is_err());
         assert!(resolve_content(&lines_content("/etc/passwd"), root).is_err());
         assert!(resolve_content(&lines_content("src/a/../b.rs"), root).is_err());
+    }
+
+    fn fs_content(parent: &str, entries: FsEntries) -> BatchContent {
+        BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: PathBuf::from(parent),
+                entries,
+            }],
+        }
+    }
+
+    fn resolve_error(content: &BatchContent, root: &Path) -> String {
+        format!("{:#}", resolve_content(content, root).unwrap_err())
+    }
+
+    /// A link out of the fixture escapes it as surely as `..` does; a
+    /// file or linked parent is rejected for what it is rather than
+    /// resolving to an empty listing.
+    #[test]
+    fn ns_loader_rejects_links_out_and_malformed_fs_groups() {
+        let outside = tempfile::tempdir().unwrap();
+        std::fs::write(outside.path().join("secret.txt"), "x\n").unwrap();
+        let fixture = tempfile::tempdir().unwrap();
+        let root = fixture.path();
+        std::fs::create_dir(root.join("src")).unwrap();
+        std::fs::write(root.join("src/lib.rs"), "fn f() {}\n").unwrap();
+        std::fs::write(root.join("README.md"), "# r\n").unwrap();
+        std::os::unix::fs::symlink(outside.path(), root.join("out")).unwrap();
+        std::os::unix::fs::symlink(root.join("src"), root.join("linked")).unwrap();
+
+        assert!(resolve_content(&lines_content("src/lib.rs"), root).is_ok());
+        assert!(resolve_content(&lines_content("out/secret.txt"), root).is_err());
+        let listed = |names: &[&str]| FsEntries::Listed(names.iter().map(PathBuf::from).collect());
+        assert!(resolve_content(&fs_content(".", listed(&["src"])), root).is_ok());
+        assert!(resolve_error(&fs_content("README.md", FsEntries::All), root).contains("a file"));
+        assert!(resolve_error(&fs_content("linked", FsEntries::All), root).contains("a link"));
+        assert!(resolve_error(&fs_content("out", FsEntries::All), root).contains("stay inside"));
     }
 }

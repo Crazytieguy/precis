@@ -102,6 +102,17 @@ fn ns_simulate_detects_overlapping_fs_entries_across_batches() {
     assert_flags(&found[1], "lists \"src\", already owned by 1");
 }
 
+/// The renderer and the grader read an entry by its last component, so a
+/// nested path lists that name under the group's parent.
+#[test]
+fn ns_simulate_detects_fs_entry_paths() {
+    let found = violations(&[batch(
+        "1",
+        "kind = \"fs\"\ngroups = [{ parent = \".\", entries = [\"nope/src\"] }]",
+    )]);
+    assert_flags(&found[0], "is a path, not a name");
+}
+
 #[test]
 fn ns_simulate_detects_multi_line_ellipsis() {
     assert_flags(
