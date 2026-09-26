@@ -9,9 +9,9 @@
 //!    placeholders and document the deploy-facing config keys.
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
 //!    [`Class::FlatText`]): the language-agnostic fallback for formats no
-//!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, CSS,
-//!    shell, …), rendered as its [`declaration_surface`] and, when short,
-//!    whole behind it. Without it those files show only as a filename.
+//!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, …),
+//!    rendered as its [`declaration_surface`] — a head slice for flat text
+//!    such as shell, CSS and config — and, when short, whole behind it. Without it those files show only as a filename.
 //!    Markup documents (reST, AsciiDoc, …) are not claimed: like
 //!    markdown beyond the root README, they are left to the listing.
 //!
@@ -339,9 +339,8 @@ const GENERATED_WRAPPER_SCRIPTS: &[&str] = &["gradlew", "mvnw"];
 /// rather than in its name.
 fn opens_with_shebang(file: &Path) -> bool {
     let mut head = [0; 2];
-    std::fs::File::open(file).is_ok_and(|mut opened| {
-        std::io::Read::read_exact(&mut opened, &mut head).is_ok() && &head == b"#!"
-    })
+    std::fs::File::open(file)
+        .is_ok_and(|mut opened| opened.read_exact(&mut head).is_ok() && &head == b"#!")
 }
 
 /// A license text (`LICENSE`, `COPYING.txt`, `MIT-LICENSE.txt`,
