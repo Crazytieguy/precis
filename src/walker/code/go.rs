@@ -101,7 +101,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 continue;
             }
             "package_clause" => {
-                model.module_doc = file.comment_paragraphs_above(child);
+                model.module_doc = doc_paragraphs(child, file);
                 let mut inner = child.walk();
                 is_program = child
                     .named_children(&mut inner)
@@ -193,6 +193,24 @@ fn declares_exported(node: Node, file: &SourceFile) -> bool {
     names.any(|name| is_exported(file.text(name)))
 }
 
+/// The comments directly above `node`, one [`Item`] per paragraph. A Go
+/// doc separates paragraphs with a bare `//` row, which stays with the
+/// paragraph above it.
+fn doc_paragraphs(node: Node, file: &SourceFile) -> Vec<Item> {
+    let mut items: Vec<Item> = Vec::new();
+    let mut after_break = true;
+    for row in file.comments_above(node, 1, |_| true).into_iter().flatten() {
+        let text = file.line(row).trim();
+        let is_break = text.is_empty() || text == "//";
+        match items.last_mut() {
+            Some(item) if is_break || !after_break => item.rows.push(row),
+            _ => items.push(Item::new([row])),
+        }
+        after_break = is_break;
+    }
+    items
+}
+
 /// A function or method: the head runs through the row opening its
 /// body, or is every row when the body has no statement.
 fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
@@ -222,7 +240,7 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     Some(DeclInfo {
         name_rows: vec![start],
         head: (start..=head_end).collect(),
-        doc: file.comment_paragraphs_above(node),
+        doc: doc_paragraphs(node, file),
         body,
         shape: Shape::Callable,
         members: Vec::new(),
@@ -314,7 +332,7 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     Some(DeclInfo {
         name_rows,
         head,
-        doc: file.comment_paragraphs_above(node),
+        doc: doc_paragraphs(node, file),
         body,
         shape: Shape::Whole,
         members: Vec::new(),
@@ -464,6 +482,27 @@ func newConn() *conn { return nil }
         assert_eq!(body_rows(&model.decls[3]), [vec![23]]);
         let internal = extract_source("package cmd\n\nvar rootCmd = 1\n\nfunc run() {}\n");
         assert_eq!(internal.decls.len(), 2);
+    }
+
+    /// A bare `//` row splits a doc, so its summary can show alone.
+    #[test]
+    fn go_doc_splits_into_paragraphs_at_bare_comment_rows() {
+        let model = extract_source(
+            "\
+// Package p does X.
+//
+// More about p.
+package p
+
+// Foo does X.
+//
+// Long second paragraph
+// continues here.
+func Foo() {}
+",
+        );
+        assert_eq!(model.module_doc, [Item::new([1, 2]), Item::new([3])]);
+        assert_eq!(model.decls[0].doc, [Item::new([6, 7]), Item::new([8, 9])]);
     }
 
     #[test]
