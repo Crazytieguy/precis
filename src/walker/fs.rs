@@ -488,29 +488,26 @@ fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
         return false;
     };
     let name = name.to_string_lossy();
-    if is_locale_mirror(dir, &name)
-        || is_unpacked_release(dir, &name) && !is_declared_workspace_member(dir, ctx)
+    if is_locale_mirror(dir, &name, ctx)
+        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
     {
         return false;
     }
     if name != "build" {
         return !crate::fs_util::should_skip_dir(&name);
     }
-    std::fs::read_dir(dir).is_ok_and(|entries| {
-        entries.flatten().any(|entry| {
-            let path = entry.path();
-            path.extension()
-                .and_then(|ext| ext.to_str())
+    list_dir(dir, ctx.dir_filter()).iter().any(|(name, kind)| {
+        matches!(kind, EntryKind::File)
+            && Path::new(name)
+                .extension()
                 .is_some_and(|ext| ext.eq_ignore_ascii_case("rs"))
-                && path.is_file()
-        })
     })
 }
 
 /// A copy of another project as its release archive unpacks, named for
 /// the branch or version it was cut from (`prism-master/`,
 /// `miniz-3.0.2/`) and carrying that project's license.
-fn is_unpacked_release(dir: &Path, name: &str) -> bool {
+fn is_unpacked_release(dir: &Path, name: &str, ctx: &WalkCtx) -> bool {
     let Some((_, suffix)) = name.rsplit_once('-') else {
         return false;
     };
@@ -522,29 +519,26 @@ fn is_unpacked_release(dir: &Path, name: &str) -> bool {
                 .chars()
                 .all(|c| c.is_ascii_alphanumeric() || c == '.');
     is_release_suffix
-        && std::fs::read_dir(dir).is_ok_and(|entries| {
-            entries.flatten().any(|entry| {
-                let name = entry.file_name().to_string_lossy().to_ascii_lowercase();
-                name.starts_with("license")
-                    || name.starts_with("licence")
-                    || name.starts_with("copying")
-            })
+        && list_dir(dir, ctx.dir_filter()).keys().any(|name| {
+            let name = name.to_ascii_lowercase();
+            name.starts_with("license")
+                || name.starts_with("licence")
+                || name.starts_with("copying")
         })
 }
 
 /// One of several translations named after the directory they mirror:
 /// `pages.ar/`, `pages.pt_BR/` beside `pages/`.
-fn is_locale_mirror(dir: &Path, name: &str) -> bool {
+fn is_locale_mirror(dir: &Path, name: &str, ctx: &WalkCtx) -> bool {
     let (Some(stem), Some(parent)) = (locale_mirror_stem(name), dir.parent()) else {
         return false;
     };
-    let mirrors = std::fs::read_dir(parent)
-        .into_iter()
-        .flatten()
-        .flatten()
-        .filter(|entry| entry.file_name().to_str().and_then(locale_mirror_stem) == Some(stem))
+    let siblings = list_dir(parent, ctx.dir_filter());
+    let mirrors = siblings
+        .keys()
+        .filter(|sibling| locale_mirror_stem(sibling) == Some(stem))
         .count();
-    mirrors >= 2 && parent.join(stem).is_dir()
+    mirrors >= 2 && siblings.get(stem) == Some(&EntryKind::Directory)
 }
 
 /// `pages` of `pages.ar`, `pages.pt_BR`, `pages.zh-Hant`.
@@ -770,5 +764,18 @@ mod tests {
         assert!(lists(&root.join("src"), &source_build));
         assert!(lists(root, &root_build));
         assert!(!lists(root, &root.join("target")));
+    }
+
+    #[test]
+    fn fs_build_dirs_holding_only_ignored_rust_stay_unlisted() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        std::fs::create_dir(root.join(".git")).unwrap();
+        std::fs::write(root.join(".gitignore"), "generated.rs\n").unwrap();
+        std::fs::create_dir(root.join("build")).unwrap();
+        std::fs::write(root.join("build/generated.rs"), "fn g() {}\n").unwrap();
+        std::fs::write(root.join("build/CMakeCache.txt"), "").unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(!should_recurse_dir(&root.join("build"), &ctx));
     }
 }
