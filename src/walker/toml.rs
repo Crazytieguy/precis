@@ -324,12 +324,19 @@ fn collect_sections(tree: &Tree, source: &str) -> Vec<Section> {
             ))
         })
         .collect();
-    let total_rows = source.lines().count();
+    let lines: Vec<&str> = source.lines().collect();
     headers
         .iter()
         .enumerate()
         .map(|(i, (name, row))| {
-            let end = headers.get(i + 1).map_or(total_rows, |(_, next)| *next);
+            let mut end = headers.get(i + 1).map_or(lines.len(), |(_, next)| *next);
+            // Comments above the next header introduce that table.
+            while end > row + 1 && {
+                let line = lines[end - 1].trim_start();
+                line.is_empty() || line.starts_with('#')
+            } {
+                end -= 1;
+            }
             Section {
                 name: name.clone(),
                 start: row + 1,
@@ -523,10 +530,12 @@ mod tests {
         assert_eq!(normalize_key_path("\"dependencies\""), "dependencies");
     }
 
+    /// A section runs to its last entry: the comments above the next
+    /// header introduce that table.
     #[test]
     fn toml_sections_include_array_of_tables() {
         let source = "[package]\nname = \"demo\"\nversion = \"1.0\"\n\n\
-                      [[bin]]\nname = \"demo-cli\"\n\n\
+                      [[bin]]\nname = \"demo-cli\"\n# Runtime crates.\n\
                       [dependencies]\nserde = \"1\"\n";
         let sections = collect_sections(&parse(source), source);
         assert_eq!(
@@ -535,12 +544,12 @@ mod tests {
                 Section {
                     name: "package".to_string(),
                     start: 1,
-                    end: 4
+                    end: 3
                 },
                 Section {
                     name: "bin".to_string(),
                     start: 5,
-                    end: 7
+                    end: 6
                 },
                 Section {
                     name: "dependencies".to_string(),
@@ -664,7 +673,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         let sections = collect_sections(&parse(source), source);
         assert_eq!(
             section_rows(&sections, is_ordinary_dependency_section),
-            vec![4, 5, 6, 7, 8, 9, 10, 11, 12],
+            vec![4, 5, 7, 8, 10, 11],
         );
     }
 
@@ -678,7 +687,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         let sections = collect_sections(&parse(source), source);
         assert_eq!(
             section_rows(&sections, |n| is_operational_section(n, false)),
-            vec![4, 5, 6, 7, 8, 9, 10, 11],
+            vec![4, 5, 7, 8, 9, 10],
         );
     }
 
@@ -690,7 +699,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         let sections = collect_sections(&parse(source), source);
         assert_eq!(
             section_rows(&sections, |n| is_operational_section(n, true)),
-            vec![4, 5, 6],
+            vec![4, 5],
         );
     }
 

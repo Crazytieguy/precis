@@ -254,19 +254,18 @@ Score(3000)=0.547 I=0.867 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | ns | 9175 |  | 141 | The SQLite driver as the reference `Driver` implementation | 6.7 |  | 0.656 |
 | ns | 9236 |  | 61 | toasty-cli tree: the migration subcommand files (complete) | 6.8 |  | 0.659 |
 | walker |  | 9404 | 628 | Plaintext::Whole { file: compose.yaml } |  |  | 0.659 |
-| walker |  | 9417 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 5, sub: 0, line: 64 } |  |  | 0.659 |
-| walker |  | 9429 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 6, sub: 0, line: 46 } |  |  | 0.659 |
+| walker |  | 9444 | 40 | Toml::Identity { file: crates/std-util/Cargo.toml } |  |  | 0.659 |
 | ns | 9452 |  | 216 | The workspace `tests/` crate and `benches/` (complete) | 7.1 |  | 0.668 |
-| walker |  | 9470 | 41 | Toml::Identity { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.668 |
-| walker |  | 9511 | 41 | Toml::Identity { file: crates/toasty-driver-postgresql/Cargo.toml } |  |  | 0.668 |
-| walker |  | 9553 | 42 | Toml::Identity { file: crates/toasty/Cargo.toml } |  |  | 0.668 |
-| walker |  | 9665 | 112 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/stmt/like.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
-| walker |  | 9678 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 5, sub: 0, line: 42 } |  |  | 0.668 |
-| walker |  | 9726 | 48 | Toml::Identity { file: crates/toasty-sql/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9457 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 5, sub: 0, line: 64 } |  |  | 0.668 |
+| walker |  | 9469 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 6, sub: 0, line: 46 } |  |  | 0.668 |
+| walker |  | 9510 | 41 | Toml::Identity { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9551 | 41 | Toml::Identity { file: crates/toasty-driver-postgresql/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9593 | 42 | Toml::Identity { file: crates/toasty/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9635 | 42 | Toml::Identity { file: crates/toasty-codegen/Cargo.toml } |  |  | 0.668 |
 | ns | 9735 |  | 283 | The driver integration suite and its test roster (complete) | 7.2 |  | 0.656 |
+| walker |  | 9747 | 112 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/stmt/like.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.656 |
+| walker |  | 9760 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 5, sub: 0, line: 42 } |  |  | 0.656 |
+| walker |  | 9808 | 48 | Toml::Identity { file: crates/toasty-sql/Cargo.toml } |  |  | 0.656 |
 | ns | 9858 |  | 123 | The `toasty` crate's complete feature-flag set | 7.3 |  | 0.652 |
-| walker |  | 9871 | 145 | Toml::Dependencies { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
-| walker |  | 9918 | 47 | Toml::Identity { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
-| walker |  | 9930 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 6, sub: 0, line: 85 } |  |  | 0.652 |
-| walker |  | 9979 | 49 | Toml::Identity { file: crates/toasty-core/Cargo.toml } |  |  | 0.652 |
-| walker |  | 9986 | 7 | Toml::Dependencies { file: crates/toasty-core/Cargo.toml } |  |  | 0.652 |
+| walker |  | 9953 | 145 | Toml::Dependencies { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
+| walker |  | 10000 | 47 | Toml::Identity { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
