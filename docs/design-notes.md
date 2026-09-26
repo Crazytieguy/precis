@@ -234,8 +234,7 @@ must not undo:
   twice the CPU on workers as on the main thread.
 - **The o200k table build (~55 ms) is fixed per run.** The scheduler
   starts it on a background thread and runs the essential-source scan
-  meanwhile, unless the seed listing's approximate cost already exceeds
-  the budget.
+  meanwhile.
 
 ## Resource bounds
 

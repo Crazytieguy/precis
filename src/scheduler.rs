@@ -166,17 +166,10 @@ impl<W: Walker> Scheduler<W> {
     /// Run the scheduler and return the tree plus the scheduled-batches log.
     pub fn run_with_report(mut self) -> RunReport {
         // The first cost probe needs the tokenizer; build it while the
-        // tree's one whole-walk scan runs. A seed that won't fit ends the
-        // run before any source batch needs that scan, so skip it then.
+        // tree's one whole-walk scan runs.
         crate::tokenizer::warm_up();
-        let seeds = self.walker.seed(&self.ctx);
-        let seed_cost = seeds.iter().fold(Cost::default(), |total, batch| {
-            total + self.tree.marginal_cost_approx(&batch.content)
-        });
-        if self.fits(seed_cost) {
-            self.ctx.dominant_source_file();
-        }
-        for batch in seeds {
+        self.ctx.dominant_source_file();
+        for batch in self.walker.seed(&self.ctx) {
             self.absorb(batch);
         }
 

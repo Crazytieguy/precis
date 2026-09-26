@@ -221,32 +221,11 @@ impl RenderedTree {
         }
     }
 
-    /// Marginal cost of applying `content` — exact tokens.
+    /// Marginal cost of applying `content`.
     pub fn marginal_cost(&self, content: &BatchContent) -> Cost {
-        let mut total = Cost::default();
-        self.visit_atom_costs(content, tokenizer::count, |c| total = total + c);
-        total
-    }
-
-    /// Marginal cost with tokens approximated as `bytes / k`, for
-    /// estimates made before the tokenizer is built.
-    pub fn marginal_cost_approx(&self, content: &BatchContent) -> Cost {
-        let mut total = Cost::default();
-        self.visit_atom_costs(content, tokenizer::approx_count, |c| total = total + c);
-        total
-    }
-
-    /// Marginal-cost visitor (per FS entry / per touched file) —
-    /// `tokens` chooses exact vs approx counting; everything else is
-    /// identical.
-    fn visit_atom_costs<F, T>(&self, content: &BatchContent, tokens: T, mut visit: F)
-    where
-        F: FnMut(Cost),
-        T: Fn(&str) -> usize,
-    {
         match content {
-            BatchContent::Fs { groups } => self.visit_fs_atom_costs(groups, &tokens, &mut visit),
-            BatchContent::Lines { spans } => self.visit_span_atom_costs(spans, &tokens, &mut visit),
+            BatchContent::Fs { groups } => self.fs_marginal_cost(groups),
+            BatchContent::Lines { spans } => self.spans_marginal_cost(spans),
         }
     }
 
@@ -331,11 +310,7 @@ impl RenderedTree {
         list_dir(dir, &self.dir_filter).len()
     }
 
-    fn visit_fs_atom_costs<F, T>(&self, groups: &[FsGroup], tokens: &T, visit: &mut F)
-    where
-        F: FnMut(Cost),
-        T: Fn(&str) -> usize,
-    {
+    fn fs_marginal_cost(&self, groups: &[FsGroup]) -> Cost {
         let mut added = Listings::new();
         for group in groups {
             let FsEntries::Listed(paths) = &group.entries else {
@@ -372,7 +347,7 @@ impl RenderedTree {
         let mut d_tokens: isize = 0;
         let mut d_chars: isize = 0;
         let mut charge = |row: &str, sign: isize| {
-            d_tokens += sign * tokens(row) as isize;
+            d_tokens += sign * tokenizer::count(row) as isize;
             d_chars += sign * char_units(row) as isize;
         };
         for (parent, names) in &added {
@@ -396,10 +371,10 @@ impl RenderedTree {
         for head in &rows_after {
             charge(&self.chain_row(head, &added), 1);
         }
-        visit(Cost {
+        Cost {
             tokens: d_tokens.max(0) as usize,
             chars: d_chars.max(0) as usize,
-        });
+        }
     }
 
     fn tree_children(&self, dir: &Path) -> Option<&BTreeMap<String, EntryKind>> {
@@ -489,11 +464,7 @@ impl RenderedTree {
         (names, tail)
     }
 
-    fn visit_span_atom_costs<F, T>(&self, spans: &[Span], tokens: &T, visit: &mut F)
-    where
-        F: FnMut(Cost),
-        T: Fn(&str) -> usize,
-    {
+    fn spans_marginal_cost(&self, spans: &[Span]) -> Cost {
         // Group by path — costs are accounted per file (row deltas +
         // synthesized-marker delta), so source/indent lookups and the
         // anchor sets are built once per file.
@@ -505,6 +476,7 @@ impl RenderedTree {
             by_path.entry(span.path.as_path()).or_default().push(span);
         }
 
+        let mut total = Cost::default();
         for (path, file_spans) in by_path {
             let source = self.source_cache.get(path);
             let indent_depth = path
@@ -536,7 +508,7 @@ impl RenderedTree {
                     if !matches!(span.render, Render::Ellipsis) {
                         let new_row =
                             format_line_row(line_num, &span.render, source_line, indent_depth);
-                        d_tokens += tokens(&new_row) as isize;
+                        d_tokens += tokenizer::count(&new_row) as isize;
                         d_chars += char_units(&new_row) as isize;
                     }
                     if let Some(existing) = existing
@@ -545,7 +517,7 @@ impl RenderedTree {
                     {
                         let old_row =
                             format_line_row(line_num, &old.render, source_line, indent_depth);
-                        d_tokens -= tokens(&old_row) as isize;
+                        d_tokens -= tokenizer::count(&old_row) as isize;
                         d_chars -= char_units(&old_row) as isize;
                     }
                 }
@@ -553,14 +525,16 @@ impl RenderedTree {
             let gap_delta = local_gap_marker_delta(existing, &file_spans, source.as_deref());
             if gap_delta != 0 {
                 let marker_row = format_marker_row(indent_depth);
-                d_tokens += gap_delta * tokens(&marker_row) as isize;
+                d_tokens += gap_delta * tokenizer::count(&marker_row) as isize;
                 d_chars += gap_delta * char_units(&marker_row) as isize;
             }
-            visit(Cost {
-                tokens: d_tokens.max(0) as usize,
-                chars: d_chars.max(0) as usize,
-            });
+            total = total
+                + Cost {
+                    tokens: d_tokens.max(0) as usize,
+                    chars: d_chars.max(0) as usize,
+                };
         }
+        total
     }
 
     fn apply_fs_group(&mut self, group: &FsGroup) {
@@ -1272,17 +1246,14 @@ mod tests {
     }
 
     #[test]
-    fn render_two_tier_already_listed_fs_zero_under_both_counters() {
+    fn render_already_listed_entries_cost_nothing() {
         let cache = SourceCache::new();
         let mut tree = RenderedTree::new(stub_dir(), cache);
         tree.apply(&listing(&["a.rs", "b.rs"]), BatchId::new(0), |_| true);
 
-        let overlap = listing(&["a.rs"]);
-        let exact = tree.marginal_cost(&overlap);
-        let approx_tokens = tree.marginal_cost_approx(&overlap).tokens;
-        assert_eq!(exact.tokens, 0);
-        assert_eq!(exact.chars, 0);
-        assert_eq!(approx_tokens, 0);
+        let overlap = tree.marginal_cost(&listing(&["a.rs"]));
+        assert_eq!(overlap.tokens, 0);
+        assert_eq!(overlap.chars, 0);
     }
 
     #[test]
@@ -1301,7 +1272,7 @@ mod tests {
     }
 
     #[test]
-    fn render_two_tier_span_refinement_is_delta_under_both_counters() {
+    fn render_span_refinement_costs_only_the_delta() {
         let cache = SourceCache::new();
         let path = PathBuf::from(format!("{STUB_DIR}/syn.rs"));
         cache.insert(
@@ -1324,7 +1295,6 @@ mod tests {
 
         let full = one_span(path.clone(), 1, Render::Full);
         let delta_exact = tree.marginal_cost(&full);
-        let delta_approx = tree.marginal_cost_approx(&full).tokens;
 
         let cache_fresh = SourceCache::new();
         cache_fresh.insert(
@@ -1334,12 +1304,9 @@ mod tests {
         let mut tree_fresh = RenderedTree::new(stub_dir(), cache_fresh);
         tree_fresh.apply(&listing(&["syn.rs"]), BatchId::new(0), |_| true);
         let fresh_exact = tree_fresh.marginal_cost(&full);
-        let fresh_approx = tree_fresh.marginal_cost_approx(&full).tokens;
 
         assert!(delta_exact.chars > 0);
         assert!(delta_exact.tokens > 0);
-        assert!(delta_approx > 0);
         assert!(delta_exact.chars < fresh_exact.chars);
-        assert!(delta_approx < fresh_approx);
     }
 }
