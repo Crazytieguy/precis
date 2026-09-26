@@ -510,26 +510,19 @@ pub(crate) fn build_file_spans(path: &Path, source: &Source, rows: Vec<usize>) -
         .filter(|&n| source.line(n).is_some_and(|t| !t.trim().is_empty()))
         .collect();
 
-    let mut spans = Vec::new();
-    // Merge runs of Full line numbers into single-range spans. An
-    // all-blank gap is an empty or bridgeable range, so one condition
+    let mut spans: Vec<Span> = Vec::new();
+    // An all-blank gap is an empty or bridgeable range, so one condition
     // covers both adjacency and interior-blank bridging.
-    let full_vec: Vec<usize> = full.iter().copied().collect();
-    let mut i = 0;
-    while i < full_vec.len() {
-        let start = full_vec[i];
-        let mut end = start;
-        while i + 1 < full_vec.len() && (end + 1..full_vec[i + 1]).all(blank) {
-            end = full_vec[i + 1];
-            i += 1;
+    for row in full {
+        match spans.last_mut() {
+            Some(last) if (last.end + 1..row).all(blank) => last.end = row,
+            _ => spans.push(Span {
+                path: path.to_path_buf(),
+                start: row,
+                end: row,
+                render: Render::Full,
+            }),
         }
-        spans.push(Span {
-            path: path.to_path_buf(),
-            start,
-            end,
-            render: Render::Full,
-        });
-        i += 1;
     }
     spans
 }
