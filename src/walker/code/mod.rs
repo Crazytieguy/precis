@@ -27,7 +27,7 @@ use tree_sitter::{Node, Tree};
 pub(in crate::walker) use self::c::is_cpp_header;
 use self::model::{DeclInfo, FileModel, Item, Shape};
 use super::plaintext::{has_minified_lines, is_derived_artifact_name};
-use super::{WalkCtx, node_end_row_trimmed};
+use super::{WalkCtx, node_end_row_trimmed, parse_each};
 use crate::batch::{Batch, BatchKey, Rung};
 use crate::fs_util::{EntryKind, list_dir};
 use crate::render::Source;
@@ -418,35 +418,45 @@ fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
     }
 }
 
-/// Batches for every source file in `dir`. Called by `FsWalker` once per
-/// scheduled directory listing. Derived artifacts (`app.min.js`,
-/// `main.bundle.js`, `api.generated.ts`) and files of lines too long to
-/// be hand-wrapped are left to their listing rows, as the plaintext
-/// fallback leaves them: extracting one renders machine output. A
-/// generator banner alone is not enough, since hand-written files carry
-/// one too (`__version__ = …  # DO NOT EDIT THIS LINE MANUALLY`).
+/// The language that extracts `path`, and its source read for the parse,
+/// or `None` when the file is left to its listing row. Derived artifacts
+/// (`app.min.js`, `main.bundle.js`, `api.generated.ts`) and files of lines
+/// too long to be hand-wrapped are left there, as the plaintext fallback
+/// leaves them: extracting one renders machine output. A generator banner
+/// alone is not enough, since hand-written files carry one too
+/// (`__version__ = …  # DO NOT EDIT THIS LINE MANUALLY`). Minified source
+/// is caught before it parses, since its tree is built only to be
+/// discarded.
+fn extracting_language(path: &Path, ctx: &WalkCtx) -> Option<(&'static Language, Arc<Source>)> {
+    let language = Language::from_path(path)?;
+    let name = path.file_name()?.to_string_lossy().to_ascii_lowercase();
+    if is_derived_artifact_name(&name) {
+        return None;
+    }
+    let source = ctx.read_for_parse(path)?;
+    (!has_minified_lines(&source)).then_some((language, source))
+}
+
+/// Batches for every source file in `dir`, as [`extracting_language`]
+/// selects them. Called by `FsWalker` once per scheduled directory
+/// listing.
 pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
-    let files: Vec<(PathBuf, &Language)> = list_dir(dir, ctx.dir_filter())
+    let files: Vec<(PathBuf, &Language, Arc<Source>)> = list_dir(dir, ctx.dir_filter())
         .iter()
-        .filter(|(name, kind)| {
-            **kind == EntryKind::File && !is_derived_artifact_name(&name.to_ascii_lowercase())
-        })
+        .filter(|(_, kind)| **kind == EntryKind::File)
         .filter_map(|(name, _)| {
             let path = dir.join(name);
-            let language = Language::from_path(&path)?;
-            Some((path, language))
+            let (language, source) = extracting_language(&path, ctx)?;
+            Some((path, language, source))
         })
         .collect();
-    let grammars: Vec<(&Path, tree_sitter::Language)> = files
+    let grammars: Vec<(Arc<Source>, tree_sitter::Language)> = files
         .iter()
-        .map(|(path, language)| (path.as_path(), (language.grammar)(path)))
+        .map(|(path, language, source)| (source.clone(), (language.grammar)(path)))
         .collect();
     let mut emitted = Vec::new();
-    ctx.parse_each(&grammars, |index, source, tree| {
-        if has_minified_lines(&source) {
-            return;
-        }
-        let (path, language) = &files[index];
+    parse_each(&grammars, |index, source, tree| {
+        let (path, language, _) = &files[index];
         let bytes = source.len();
         let file = SourceFile {
             path: path.clone(),
@@ -709,33 +719,27 @@ mod tests {
                 root.is_dir(),
                 "fixture `{name}` missing; run `cargo run --example clone_fixtures`"
             );
-            let mut files: Vec<(PathBuf, &Language)> = ignore::WalkBuilder::new(&root)
+            let ctx = WalkCtx::new(root.clone());
+            // The sweep reads every file, more than one run parses.
+            ctx.parse_bytes_left.set(usize::MAX);
+            let mut files: Vec<(PathBuf, &Language, Arc<Source>)> = ignore::WalkBuilder::new(&root)
                 .build()
                 .filter_map(Result::ok)
-                .filter(|entry| {
-                    entry.file_type().is_some_and(|kind| kind.is_file())
-                        && !is_derived_artifact_name(
-                            &entry.file_name().to_string_lossy().to_ascii_lowercase(),
-                        )
-                })
+                .filter(|entry| entry.file_type().is_some_and(|kind| kind.is_file()))
                 .filter_map(|entry| {
-                    let language = Language::from_path(entry.path())?;
-                    Some((entry.into_path(), language))
+                    let (language, source) = extracting_language(entry.path(), &ctx)?;
+                    Some((entry.into_path(), language, source))
                 })
                 .collect();
             files.sort_by(|left, right| left.0.cmp(&right.0));
             let stride = files.len().div_ceil(SWEEP_FILES_PER_FIXTURE).max(1);
             let files: Vec<_> = files.into_iter().step_by(stride).collect();
-            let grammars: Vec<(&Path, tree_sitter::Language)> = files
+            let grammars: Vec<(Arc<Source>, tree_sitter::Language)> = files
                 .iter()
-                .map(|(path, language)| (path.as_path(), (language.grammar)(path)))
+                .map(|(path, language, source)| (source.clone(), (language.grammar)(path)))
                 .collect();
-            let ctx = WalkCtx::new(root);
-            ctx.parse_each(&grammars, |index, source, tree| {
-                if has_minified_lines(&source) {
-                    return;
-                }
-                let (path, language) = &files[index];
+            parse_each(&grammars, |index, source, tree| {
+                let (path, language, _) = &files[index];
                 let file = SourceFile {
                     path: path.clone(),
                     source,

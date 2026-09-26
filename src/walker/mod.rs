@@ -254,81 +254,10 @@ impl WalkCtx {
         Some((source, tree))
     }
 
-    /// [`Self::parse_tree`] for each of `files`, handing each parse to
-    /// `visit` in index order. Files parse on one worker per core, and a
-    /// file starts parsing only while the sources of the parses not yet
-    /// visited total at most [`MAX_SOURCE_BYTES`] (or none are pending), so
-    /// the trees alive at once stay within what one capped file costs.
-    pub fn parse_each(
-        &self,
-        files: &[(&Path, Language)],
-        mut visit: impl FnMut(usize, Arc<Source>, Tree),
-    ) {
-        let sources: Vec<Option<Arc<Source>>> = files
-            .iter()
-            .map(|(path, _)| self.read_for_parse(path))
-            .collect();
-        let source_len = |index: usize| sources[index].as_ref().map_or(0, |source| source.len());
-        let workers = std::thread::available_parallelism()
-            .map_or(1, usize::from)
-            .min(files.len());
-        let (job_sender, job_receiver) = mpsc::channel::<usize>();
-        let job_receiver = Mutex::new(job_receiver);
-        let (parsed_sender, parsed_receiver) = mpsc::channel();
-        std::thread::scope(|scope| {
-            for _ in 0..workers {
-                let parsed_sender = parsed_sender.clone();
-                let (job_receiver, sources) = (&job_receiver, &sources);
-                scope.spawn(move || {
-                    while let Ok(index) = job_receiver.lock().expect("parse job queue").recv() {
-                        let parsed = std::panic::catch_unwind(AssertUnwindSafe(|| {
-                            let source = sources[index].as_ref()?;
-                            parser_for(&files[index].1).parse(source.as_bytes(), None)
-                        }));
-                        if parsed_sender.send((index, parsed)).is_err() {
-                            return;
-                        }
-                    }
-                });
-            }
-            drop(parsed_sender);
-            let mut next_job = 0;
-            let mut pending_bytes = 0;
-            let mut parsed_out_of_order = HashMap::new();
-            for (index, source) in sources.iter().enumerate() {
-                while next_job < files.len()
-                    && (pending_bytes == 0
-                        || pending_bytes + source_len(next_job) <= MAX_SOURCE_BYTES)
-                {
-                    pending_bytes += source_len(next_job);
-                    job_sender
-                        .send(next_job)
-                        .expect("parse workers outlive the jobs");
-                    next_job += 1;
-                }
-                let parsed = loop {
-                    if let Some(parsed) = parsed_out_of_order.remove(&index) {
-                        break parsed;
-                    }
-                    let (parsed_index, parsed) = parsed_receiver
-                        .recv()
-                        .expect("parse workers outlive the jobs");
-                    parsed_out_of_order.insert(parsed_index, parsed);
-                };
-                let tree = parsed.unwrap_or_else(|panic| std::panic::resume_unwind(panic));
-                if let (Some(source), Some(tree)) = (source, tree) {
-                    visit(index, source.clone(), tree);
-                }
-                pending_bytes -= source_len(index);
-            }
-            drop(job_sender);
-        });
-    }
-
     /// `path`'s source for a parse, charged to the run's
     /// [`RUN_PARSE_BYTE_CAP`]. A file that doesn't fit what is left is not
     /// read, so directories expanded later in the run parse less.
-    fn read_for_parse(&self, path: &Path) -> Option<Arc<Source>> {
+    pub(in crate::walker) fn read_for_parse(&self, path: &Path) -> Option<Arc<Source>> {
         let left = self.parse_bytes_left.get();
         let source = gated_read_source(path, self, left)?;
         self.parse_bytes_left.set(left.saturating_sub(source.len()));
@@ -358,6 +287,72 @@ fn parser_for(language: &Language) -> tree_sitter::Parser {
         .set_language(language)
         .expect("tree-sitter language load");
     parser
+}
+
+/// Parse each of `files`, whose sources were read with
+/// [`WalkCtx::read_for_parse`], handing each parse to `visit` in index
+/// order. Files parse on one worker per core, and a file starts parsing
+/// only while the sources of the parses not yet visited total at most
+/// [`MAX_SOURCE_BYTES`] (or none are pending), so the trees alive at once
+/// stay within what one capped file costs.
+pub(in crate::walker) fn parse_each(
+    files: &[(Arc<Source>, Language)],
+    mut visit: impl FnMut(usize, Arc<Source>, Tree),
+) {
+    let source_len = |index: usize| files[index].0.len();
+    let workers = std::thread::available_parallelism()
+        .map_or(1, usize::from)
+        .min(files.len());
+    let (job_sender, job_receiver) = mpsc::channel::<usize>();
+    let job_receiver = Mutex::new(job_receiver);
+    let (parsed_sender, parsed_receiver) = mpsc::channel();
+    std::thread::scope(|scope| {
+        for _ in 0..workers {
+            let parsed_sender = parsed_sender.clone();
+            let job_receiver = &job_receiver;
+            scope.spawn(move || {
+                while let Ok(index) = job_receiver.lock().expect("parse job queue").recv() {
+                    let parsed = std::panic::catch_unwind(AssertUnwindSafe(|| {
+                        let (source, language) = &files[index];
+                        parser_for(language).parse(source.as_bytes(), None)
+                    }));
+                    if parsed_sender.send((index, parsed)).is_err() {
+                        return;
+                    }
+                }
+            });
+        }
+        drop(parsed_sender);
+        let mut next_job = 0;
+        let mut pending_bytes = 0;
+        let mut parsed_out_of_order = HashMap::new();
+        for (index, (source, _)) in files.iter().enumerate() {
+            while next_job < files.len()
+                && (pending_bytes == 0 || pending_bytes + source_len(next_job) <= MAX_SOURCE_BYTES)
+            {
+                pending_bytes += source_len(next_job);
+                job_sender
+                    .send(next_job)
+                    .expect("parse workers outlive the jobs");
+                next_job += 1;
+            }
+            let parsed = loop {
+                if let Some(parsed) = parsed_out_of_order.remove(&index) {
+                    break parsed;
+                }
+                let (parsed_index, parsed) = parsed_receiver
+                    .recv()
+                    .expect("parse workers outlive the jobs");
+                parsed_out_of_order.insert(parsed_index, parsed);
+            };
+            let tree = parsed.unwrap_or_else(|panic| std::panic::resume_unwind(panic));
+            if let Some(tree) = tree {
+                visit(index, source.clone(), tree);
+            }
+            pending_bytes -= source_len(index);
+        }
+        drop(job_sender);
+    });
 }
 
 /// Most source bytes one run parses, over every file. Sources stay cached
@@ -554,14 +549,12 @@ mod tests {
         let ctx = WalkCtx::new(root.to_path_buf());
         ctx.parse_bytes_left
             .set(bytes[0].len() + bytes[2].len() + 1);
-        let language: Language = tree_sitter_rust::LANGUAGE.into();
-        let files: Vec<(&Path, Language)> = paths[..3]
+        let admitted: Vec<bool> = paths[..3]
             .iter()
-            .map(|path| (path.as_path(), language.clone()))
+            .map(|path| ctx.read_for_parse(path).is_some())
             .collect();
-        let mut visited = Vec::new();
-        ctx.parse_each(&files, |index, _, _| visited.push(index));
-        assert_eq!(visited, [0, 2]);
+        assert_eq!(admitted, [true, false, true]);
+        let language: Language = tree_sitter_rust::LANGUAGE.into();
         assert!(ctx.parse_tree(&paths[3], &language).is_none());
     }
 
