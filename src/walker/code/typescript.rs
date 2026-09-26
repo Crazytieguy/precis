@@ -1002,10 +1002,11 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
                 | "shorthand_property_identifier"
                 | "spread_element"
         );
-        if (is_member || is_field) && !is_hidden_member(file, child) {
-            let function_block = child
-                .child_by_field_name("value")
-                .and_then(wrapped_function_block);
+        let function_block = child
+            .child_by_field_name("value")
+            .and_then(wrapped_function_block);
+        let is_data_entry = child.kind() == "pair" && function_block.is_none();
+        if (is_member || is_field) && !is_hidden_member(file, child, is_data_entry) {
             if is_member || function_block.is_some() {
                 let member_name_row = name_row(child).unwrap_or(span.start);
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
@@ -1038,14 +1039,17 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
     }
 }
 
-/// `#name`, `_name`, `private` and `protected` members: not part of the
-/// container's API.
-fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
+/// `#name`, `private` and `protected` members, and `_name` members other
+/// than an object literal's data entries (`_id`, `__typename`, whose
+/// underscore is part of the data's shape): not part of the container's
+/// API.
+fn is_hidden_member(file: &SourceFile, member: Node, is_data_entry: bool) -> bool {
     if member
         .child_by_field_name("name")
         .or_else(|| member.child_by_field_name("key"))
         .is_some_and(|name| {
-            name.kind() == "private_property_identifier" || file.text(name).starts_with('_')
+            name.kind() == "private_property_identifier"
+                || (!is_data_entry && file.text(name).starts_with('_'))
         })
     {
         return true;
@@ -1298,6 +1302,7 @@ export class Graph {
   get() {}
 }
 export const store = {
+  _id: 1,
   _normalize: function (key) {},
   load: function () {},
 };
@@ -1312,11 +1317,29 @@ export { Provider };
             [
                 "Whole name [1] head [1, 5] doc [] body [[4]]",
                 "  Callable name [4] head [4] doc [] body []",
-                "Whole name [6] head [6, 9] doc [] body [[8]]",
-                "  Callable name [8] head [8] doc [] body []",
-                "Callable name [10] head [10] doc [] body []",
-                "Callable name [12] head [12] doc [] body []",
+                "Whole name [6] head [6, 10] doc [] body [[7], [9]]",
+                "  Callable name [9] head [9] doc [] body []",
+                "Callable name [11] head [11] doc [] body []",
+                "Callable name [13] head [13] doc [] body []",
             ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_underscore_data_entries_stay_public() {
+        let model = extract_source(
+            "src/schema.ts",
+            "\
+export const documentSchema = z.object({
+  _id: z.string(),
+  __typename: z.literal(\"Document\"),
+  title: z.string(),
+});
+",
+        );
+        assert_eq!(
+            describe(&model),
+            ["Whole name [1] head [1, 5] doc [] body [[2], [3], [4]]"]
         );
     }
 
