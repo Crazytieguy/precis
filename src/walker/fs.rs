@@ -417,14 +417,14 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
 /// Heavy-directory names block traversal, except a `build/` that holds
 /// Rust source: a checked-in module may be named `build`, while Cargo's
 /// own output lives under `target/`, which the walk never enters. A
-/// translated mirror is named, not listed: its entries repeat the names
-/// of the directory it translates.
+/// translated mirror or an unpacked upstream release is named, not
+/// listed: its entries repeat names kept elsewhere.
 fn should_recurse_dir(dir: &Path) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
     };
     let name = name.to_string_lossy();
-    if is_locale_mirror(dir, &name) {
+    if is_locale_mirror(dir, &name) || is_unpacked_release(dir, &name) {
         return false;
     }
     if name != "build" {
@@ -439,6 +439,31 @@ fn should_recurse_dir(dir: &Path) -> bool {
                 && path.is_file()
         })
     })
+}
+
+/// A copy of another project as its release archive unpacks, named for
+/// the branch or version it was cut from (`prism-master/`,
+/// `miniz-3.0.2/`) and carrying that project's license.
+fn is_unpacked_release(dir: &Path, name: &str) -> bool {
+    let Some((_, suffix)) = name.rsplit_once('-') else {
+        return false;
+    };
+    let version = suffix.strip_prefix('v').unwrap_or(suffix);
+    let is_release_suffix = matches!(suffix, "master" | "main")
+        || version.starts_with(|first: char| first.is_ascii_digit())
+            && version.contains('.')
+            && version
+                .chars()
+                .all(|c| c.is_ascii_alphanumeric() || c == '.');
+    is_release_suffix
+        && std::fs::read_dir(dir).is_ok_and(|entries| {
+            entries.flatten().any(|entry| {
+                let name = entry.file_name().to_string_lossy().to_ascii_lowercase();
+                name.starts_with("license")
+                    || name.starts_with("licence")
+                    || name.starts_with("copying")
+            })
+        })
 }
 
 /// One of several translations named after the directory they mirror:
@@ -546,6 +571,27 @@ mod tests {
         assert!(!should_recurse_dir(&root.join("pages.ar")));
         assert!(!should_recurse_dir(&root.join("pages.pt_BR")));
         assert!(should_recurse_dir(&root.join("glossary/node.js")));
+    }
+
+    #[test]
+    fn fs_unpacked_releases_are_named_not_listed() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        for (dir, license) in [
+            ("docs/prism-master", true),
+            ("third/miniz-3.0.2", true),
+            ("drivers/i2c-master", false),
+            ("packages/core-main", false),
+        ] {
+            std::fs::create_dir_all(root.join(dir)).unwrap();
+            if license {
+                std::fs::write(root.join(dir).join("LICENSE"), "").unwrap();
+            }
+        }
+        assert!(!should_recurse_dir(&root.join("docs/prism-master")));
+        assert!(!should_recurse_dir(&root.join("third/miniz-3.0.2")));
+        assert!(should_recurse_dir(&root.join("drivers/i2c-master")));
+        assert!(should_recurse_dir(&root.join("packages/core-main")));
     }
 
     #[test]
