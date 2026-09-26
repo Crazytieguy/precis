@@ -6,11 +6,12 @@
 //!   and `type X = …` aliases (`Whole`), plus the `def`s and `class`es
 //!   inside top-level `if` / `try` statements. An `@overload` stub whose
 //!   implementation follows it is hidden: the implementation's signature
-//!   stands for the function, so the roster doesn't repeat its name. A decorated definition's head
-//!   starts at its first decorator. Its name rows are its one-row
-//!   decorators (`@property` and `@overload` say what a `def` is), the
-//!   `def` / `class` row and, when the signature spans rows, the row that
-//!   closes it (`) -> T:`), so a roster never lists an unclosed `def f(`.
+//!   stands for the function, so the roster doesn't repeat its name.
+//! - **Head and name rows**: a decorated definition's head starts at its
+//!   first decorator. Its name rows are its one-row decorators
+//!   (`@property` and `@overload` say what a `def` is), the `def` /
+//!   `class` row and, when the signature spans rows, the row that closes
+//!   it (`) -> T:`), so a roster never lists an unclosed `def f(`.
 //! - **Doc**: the docstring opening a `def` / `class` body, or else the
 //!   `#` comments directly above the definition.
 //! - **Module doc**: an entry file's (a dunder-named module:
