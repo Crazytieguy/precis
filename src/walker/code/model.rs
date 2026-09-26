@@ -73,9 +73,9 @@
 //! The language module decides which declarations to leave out of the
 //! model entirely (not in `decls`, not in a container's `members`, their
 //! name rows not in a container's `body`): test code, `#[doc(hidden)]`,
-//! unexported TS/JS declarations, C non-`inline` `static` in a header, and
-//! members the language enforces as private to their container. Every
-//! declaration in the model is priced alike.
+//! unexported TS/JS and Go declarations, C non-`inline` `static` in a
+//! header, and members the language enforces as private to their
+//! container. Every declaration in the model is priced alike.
 //!
 //! # Ownership
 //!

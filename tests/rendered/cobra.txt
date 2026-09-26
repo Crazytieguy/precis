@@ -97,9 +97,7 @@ command.go
   33→const (
   34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
   35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
-  36→
-  37→	helpFlagName    = "help"
-  38→	helpCommandName = "help"
+  …
   39→)
   41→// FParseErrWhitelist configures Flag parse errors to be ignored
   42→type FParseErrWhitelist flag.ParseErrorsAllowlist
@@ -120,98 +118,6 @@ command.go
   62→	//       optional, they are enclosed in brackets ([ ]).
   63→	// Example: add [-F file | -D dir]... [-f format] profile
   64→	Use string
-  66→	// Aliases is an array of aliases that can be used instead of the first word in Use.
-  67→	Aliases []string
-  68→
-  69→	// SuggestFor is an array of command names for which this command will be suggested -
-  70→	// similar to aliases but only suggests.
-  71→	SuggestFor []string
-  72→
-  73→	// Short is the short description shown in the 'help' output.
-  74→	Short string
-  75→
-  76→	// The group id under which this subcommand is grouped in the 'help' output of its parent.
-  77→	GroupID string
-  78→
-  79→	// Long is the long message shown in the 'help <this-command>' output.
-  80→	Long string
-  82→	// Example is examples of how to use the command.
-  83→	Example string
-  84→
-  85→	// ValidArgs is list of all valid non-flag arguments that are accepted in shell completions
-  86→	ValidArgs []Completion
-  87→	// ValidArgsFunction is an optional function that provides valid non-flag arguments for shell completion.
-  88→	// It is a dynamic version of using ValidArgs.
-  89→	// Only one of ValidArgs and ValidArgsFunction can be used for a command.
-  90→	ValidArgsFunction CompletionFunc
-  91→
-  92→	// Expected arguments
-  93→	Args PositionalArgs
-  94→
-  95→	// ArgAliases is List of aliases for ValidArgs.
-  96→	// These are not suggested to the user in the shell completion,
-  97→	// but accepted if entered manually.
-  98→	ArgAliases []string
-  100→	// BashCompletionFunction is custom bash functions used by the legacy bash autocompletion generator.
-  101→	// For portability with other shells, it is recommended to instead use ValidArgsFunction
-  102→	BashCompletionFunction string
-  103→
-  104→	// Deprecated defines, if this command is deprecated and should print this string when used.
-  105→	Deprecated string
-  106→
-  107→	// Annotations are key/value pairs that can be used by applications to identify or
-  108→	// group commands or set special options.
-  109→	Annotations map[string]string
-  110→
-  111→	// Version defines the version for this command. If this value is non-empty and the command does not
-  112→	// define a "version" flag, a "version" boolean flag will be added to the command and, if specified,
-  113→	// will print content of the "Version" variable. A shorthand "v" flag will also be added if the
-  114→	// command does not define one.
-  115→	Version string
-  117→	// The *Run functions are executed in the following order:
-  118→	//   * PersistentPreRun()
-  119→	//   * PreRun()
-  120→	//   * Run()
-  121→	//   * PostRun()
-  122→	//   * PersistentPostRun()
-  123→	// All functions get the same args, the arguments after the command name.
-  124→	// The *PreRun and *PostRun functions will only be executed if the Run function of the current
-  125→	// command has been declared.
-  126→	//
-  127→	// PersistentPreRun: children of this command will inherit and execute.
-  128→	PersistentPreRun func(cmd *Command, args []string)
-  129→	// PersistentPreRunE: PersistentPreRun but returns an error.
-  130→	PersistentPreRunE func(cmd *Command, args []string) error
-  131→	// PreRun: children of this command will not inherit.
-  132→	PreRun func(cmd *Command, args []string)
-  133→	// PreRunE: PreRun but returns an error.
-  134→	PreRunE func(cmd *Command, args []string) error
-  135→	// Run: Typically the actual work function. Most commands will only implement this.
-  136→	Run func(cmd *Command, args []string)
-  137→	// RunE: Run but returns an error.
-  138→	RunE func(cmd *Command, args []string) error
-  139→	// PostRun: run after the Run command.
-  140→	PostRun func(cmd *Command, args []string)
-  141→	// PostRunE: PostRun but returns an error.
-  142→	PostRunE func(cmd *Command, args []string) error
-  143→	// PersistentPostRun: children of this command will inherit and execute after PostRun.
-  144→	PersistentPostRun func(cmd *Command, args []string)
-  145→	// PersistentPostRunE: PersistentPostRun but returns an error.
-  146→	PersistentPostRunE func(cmd *Command, args []string) error
-  147→
-  148→	// groups for subcommands
-  149→	commandgroups []*Group
-  151→	// args is actual args parsed from flags.
-  152→	args []string
-  153→	// flagErrorBuf contains all error messages from pflag.
-  154→	flagErrorBuf *bytes.Buffer
-  155→	// flags is full set of flags.
-  156→	flags *flag.FlagSet
-  157→	// pflags contains persistent flags.
-  158→	pflags *flag.FlagSet
-  159→	// lflags contains local flags.
-  160→	// This field does not represent internal state, it's used as a cache to optimise LocalFlags function call
-  161→	lflags *flag.FlagSet
   …
   260→}
   …
@@ -219,12 +125,131 @@ command.go
   270→	return c.ctx
   …
   275→func (c *Command) SetContext(ctx context.Context) {
+  276→	c.ctx = ctx
   …
   281→func (c *Command) SetArgs(a []string) {
+  282→	c.args = a
   …
   289→func (c *Command) SetOutput(output io.Writer) {
   …
   296→func (c *Command) SetOut(newOut io.Writer) {
+  …
+  302→func (c *Command) SetErr(newErr io.Writer) {
+  …
+  308→func (c *Command) SetIn(newIn io.Reader) {
+  …
+  312→// SetUsageFunc sets usage function. Usage can be defined by application.
+  313→func (c *Command) SetUsageFunc(f func(*Command) error) {
+  …
+  317→// SetUsageTemplate sets usage template. Can be defined by Application.
+  318→func (c *Command) SetUsageTemplate(s string) {
+  …
+  328→func (c *Command) SetFlagErrorFunc(f func(*Command, error) error) {
+  …
+  332→// SetHelpFunc sets help function. Can be defined by Application.
+  333→func (c *Command) SetHelpFunc(f func(*Command, []string)) {
+  …
+  337→// SetHelpCommand sets help command.
+  338→func (c *Command) SetHelpCommand(cmd *Command) {
+  …
+  342→// SetHelpCommandGroupID sets the group id of the help command.
+  343→func (c *Command) SetHelpCommandGroupID(groupID string) {
+  …
+  351→// SetCompletionCommandGroupID sets the group id of the completion command.
+  352→func (c *Command) SetCompletionCommandGroupID(groupID string) {
+  …
+  357→// SetHelpTemplate sets help template to be used. Application can use it to set custom template.
+  358→func (c *Command) SetHelpTemplate(s string) {
+  …
+  366→// SetVersionTemplate sets version template to be used. Application can use it to set custom template.
+  367→func (c *Command) SetVersionTemplate(s string) {
+  …
+  375→// SetErrPrefix sets error message prefix to be used. Application can use it to set custom prefix.
+  376→func (c *Command) SetErrPrefix(s string) {
+  …
+  382→func (c *Command) SetGlobalNormalizationFunc(n func(f *flag.FlagSet, name string) flag.NormalizedName) {
+  …
+  392→// OutOrStdout returns output to stdout.
+  393→func (c *Command) OutOrStdout() io.Writer {
+  …
+  397→// OutOrStderr returns output to stderr
+  398→func (c *Command) OutOrStderr() io.Writer {
+  …
+  402→// ErrOrStderr returns output to stderr
+  403→func (c *Command) ErrOrStderr() io.Writer {
+  …
+  407→// InOrStdin returns input to stdin
+  408→func (c *Command) InOrStdin() io.Reader {
+  …
+  444→func (c *Command) UsageFunc() (f func(*Command) error) {
+  …
+  478→func (c *Command) Usage() error {
+  …
+  484→func (c *Command) HelpFunc() func(*Command, []string) {
+  …
+  520→func (c *Command) Help() error {
+  …
+  525→// UsageString returns usage string.
+  526→func (c *Command) UsageString() string {
+  …
+  547→func (c *Command) FlagErrorFunc() (f func(*Command, error) error) {
+  …
+  562→// UsagePadding return padding for the usage.
+  563→func (c *Command) UsagePadding() int {
+  …
+  572→// CommandPathPadding return padding for the command path.
+  573→func (c *Command) CommandPathPadding() int {
+  …
+  582→// NamePadding returns padding for the name.
+  583→func (c *Command) NamePadding() int {
+  …
+  592→func (c *Command) UsageTemplate() string {
+  …
+  605→func (c *Command) HelpTemplate() string {
+  …
+  618→func (c *Command) VersionTemplate() string {
+  …
+  642→// ErrPrefix return error message prefix for the command
+  643→func (c *Command) ErrPrefix() string {
+  …
+  757→func (c *Command) Find(args []string) (*Command, []string, error) {
+  …
+  821→func (c *Command) Traverse(args []string) (*Command, []string, error) {
+  …
+  862→// SuggestionsFor provides suggestions for the typedName.
+  863→func (c *Command) SuggestionsFor(typedName string) []string {
+  …
+  883→// VisitParents visits all parents of the command and invokes fn on each parent.
+  884→func (c *Command) VisitParents(fn func(*Command)) {
+  …
+  891→// Root finds root command.
+  892→func (c *Command) Root() *Command {
+  …
+  901→func (c *Command) ArgsLenAtDash() int {
+  …
+  1062→func (c *Command) ExecuteContext(ctx context.Context) error {
+  …
+  1070→func (c *Command) Execute() error {
+  …
+  1078→func (c *Command) ExecuteContextC(ctx context.Context) (*Command, error) {
+  …
+  1083→// ExecuteC executes the command.
+  1084→func (c *Command) ExecuteC() (cmd *Command, err error) {
+  …
+  1172→func (c *Command) ValidateArgs(args []string) error {
+  …
+  1179→// ValidateRequiredFlags validates all required flags are present and returns an error otherwise
+  1180→func (c *Command) ValidateRequiredFlags() error {
+  …
+  1219→func (c *Command) InitDefaultHelpFlag() {
+  …
+  1238→func (c *Command) InitDefaultVersionFlag() {
+  …
+  1263→func (c *Command) InitDefaultHelpCmd() {
+  …
+  1317→func (c *Command) ResetCommands() {
+  …
+  1332→func (c *Command) Commands() []*Command {
   …
 command_notwin.go
 command_test.go

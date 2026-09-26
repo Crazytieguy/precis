@@ -5,7 +5,10 @@
 //! package comment. A `//go:build` constraint joins the roster as a
 //! re-export row, so a platform variant never lists its declarations
 //! without their condition. A file carrying the generated-code banner
-//! yields no declarations.
+//! yields no declarations. Outside `package main`, what no importer can
+//! name (a lower-case declaration, spec, field or interface method, or a
+//! method on a lower-case type) is hidden, unless its file, or its
+//! struct, exports nothing.
 
 use std::collections::HashSet;
 use std::sync::LazyLock;
@@ -79,7 +82,17 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         return model;
     }
     let mut is_program = false;
+    let mut api_only = false;
     let mut functions = Vec::new();
+    let exports_something = root
+        .named_children(&mut root.walk())
+        .any(|child| match child.kind() {
+            "function_declaration" | "method_declaration" => is_exported_callable(child, file),
+            "type_declaration" | "const_declaration" | "var_declaration" => {
+                whole(child, file, true).is_some()
+            }
+            _ => false,
+        });
     let mut cursor = root.walk();
     for child in root.named_children(&mut cursor) {
         let decl = match child.kind() {
@@ -93,6 +106,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 is_program = child
                     .named_children(&mut inner)
                     .any(|name| name.kind() == "package_identifier" && file.text(name) == "main");
+                api_only = !is_program && exports_something;
                 continue;
             }
             "function_declaration" if is_program => {
@@ -102,8 +116,14 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 }
                 decl
             }
-            "function_declaration" | "method_declaration" => callable(child, file),
-            "type_declaration" | "const_declaration" | "var_declaration" => whole(child, file),
+            "function_declaration" | "method_declaration"
+                if !api_only || is_exported_callable(child, file) =>
+            {
+                callable(child, file)
+            }
+            "type_declaration" | "const_declaration" | "var_declaration" => {
+                whole(child, file, api_only)
+            }
             _ => continue,
         };
         model.decls.extend(decl);
@@ -124,6 +144,53 @@ fn is_generated(root: Node, file: &SourceFile) -> bool {
             let text = file.text(comment).trim_end();
             text.starts_with("// Code generated ") && text.ends_with(" DO NOT EDIT.")
         })
+}
+
+/// Whether an identifier is visible outside its package: it starts with an
+/// upper-case letter.
+fn is_exported(name: &str) -> bool {
+    name.chars().next().is_some_and(char::is_uppercase)
+}
+
+/// A function is exported by its name; a method also needs an exported
+/// receiver type, or no importer can name it.
+fn is_exported_callable(node: Node, file: &SourceFile) -> bool {
+    let named = |node: Option<Node>| node.is_some_and(|name| is_exported(file.text(name)));
+    named(node.child_by_field_name("name"))
+        && node.child_by_field_name("receiver").is_none_or(|receiver| {
+            let mut cursor = receiver.walk();
+            let parameter = receiver.named_children(&mut cursor).next();
+            named(
+                parameter
+                    .and_then(|parameter| base_type_name(parameter.child_by_field_name("type")?)),
+            )
+        })
+}
+
+/// The type name under pointers, parentheses, type arguments and a
+/// package qualifier: `T` of `*pkg.T[K]`.
+fn base_type_name(node: Node) -> Option<Node> {
+    match node.kind() {
+        "type_identifier" => Some(node),
+        "qualified_type" => base_type_name(node.child_by_field_name("name")?),
+        "generic_type" => base_type_name(node.child_by_field_name("type")?),
+        "pointer_type" | "parenthesized_type" => base_type_name(node.named_child(0)?),
+        _ => None,
+    }
+}
+
+/// Whether a spec or struct field declares an exported name, or embeds
+/// an exported type.
+fn declares_exported(node: Node, file: &SourceFile) -> bool {
+    let mut cursor = node.walk();
+    let mut names = node.children_by_field_name("name", &mut cursor).peekable();
+    if names.peek().is_none() {
+        return node
+            .child_by_field_name("type")
+            .and_then(base_type_name)
+            .is_some_and(|name| is_exported(file.text(name)));
+    }
+    names.any(|name| is_exported(file.text(name)))
 }
 
 /// A function or method: the head runs through the row opening its
@@ -164,8 +231,10 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
 
 /// `type`, `const` or `var`: a grouped declaration's body is its specs;
 /// a single struct or interface type's body is its fields / methods. The
-/// head is every row outside the span of the body items.
-fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
+/// head is every row outside the span of the body items. With
+/// `api_only`, unexported specs, fields and interface methods are left
+/// out, and so is a declaration with nothing exported.
+fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     let rows = file.node_rows(node);
     let start = *rows.start();
     let mut specs = Vec::new();
@@ -183,15 +252,15 @@ fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
             _ => {}
         }
     }
-    let (name_rows, body) = match group {
+    let visible = |node: &Node| !api_only || declares_exported(*node, file);
+    let (name_rows, entries) = match group {
         Some(group) => {
-            let mut inner = group.walk();
-            let body = file.node_items(group.named_children(&mut inner), start);
             let name_rows = specs
                 .iter()
+                .filter(|spec| visible(spec))
                 .map(|spec| *file.node_rows(*spec).start())
                 .collect();
-            (name_rows, body)
+            (name_rows, Some(group))
         }
         None => {
             let field_list = specs
@@ -204,22 +273,44 @@ fn whole(node: Node, file: &SourceFile) -> Option<DeclInfo> {
                     "interface_type" => Some(ty),
                     _ => None,
                 });
-            let body = field_list.map_or_else(Vec::new, |list| {
-                let mut inner = list.walk();
-                file.node_items(list.named_children(&mut inner), start)
-            });
-            (vec![start], body)
+            let name_rows = if specs.first().is_some_and(visible) {
+                vec![start]
+            } else {
+                Vec::new()
+            };
+            (name_rows, field_list)
         }
     };
     if name_rows.is_empty() {
         return None;
     }
+    let entries: Vec<Node> = entries.map_or_else(Vec::new, |list| {
+        let mut inner = list.walk();
+        list.named_children(&mut inner).collect()
+    });
+    let mut body = file.node_items(entries.iter().copied(), start);
     let head = match (body.first(), body.last()) {
         (Some(first), Some(last)) => (start..first.rows[0])
             .chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())
             .collect(),
         _ => rows.collect(),
     };
+    let end_rows = |shown: bool| -> Vec<usize> {
+        entries
+            .iter()
+            .filter(|entry| {
+                is_spec(entry) || matches!(entry.kind(), "field_declaration" | "method_elem")
+            })
+            .filter(|entry| visible(entry) == shown)
+            .map(|entry| *file.node_rows(*entry).end())
+            .collect()
+    };
+    let (hidden, shown) = (end_rows(false), end_rows(true));
+    let hidden = if shown.is_empty() { Vec::new() } else { hidden };
+    body.retain(|item| {
+        let last = item.rows[item.rows.len() - 1];
+        !hidden.contains(&last) || shown.contains(&last)
+    });
     Some(DeclInfo {
         name_rows,
         head,
@@ -265,7 +356,7 @@ func (s *Server) Run(
 \treturn nil
 }
 
-func helper() int { return 1 }
+func Helper() int { return 1 }
 
 func Exported(
 \tx int,
@@ -298,7 +389,7 @@ package foo
 const (
 \t// A is a.
 \tA = iota
-\tb
+\tB
 )
 
 var x, Y = 1, 2
@@ -310,6 +401,69 @@ var x, Y = 1, 2
         assert_eq!(body_rows(group), [vec![4, 5], vec![6]]);
         let single = &model.decls[1];
         assert_eq!((single.head.as_slice(), single.body.len()), (&[9][..], 0));
+    }
+
+    /// Outside `package main`, a declaration, spec, field or interface
+    /// method no importer can name is hidden, unless its file (or struct)
+    /// exports nothing.
+    #[test]
+    fn go_library_hides_unexported_declarations() {
+        let model = extract_source(
+            "\
+package http
+
+type conn struct {
+\tserver *Server
+}
+
+type Server struct {
+\tAddr string
+\tmu   sync.Mutex
+\t*Logger
+}
+
+type Handler interface {
+\tServeHTTP(ResponseWriter, *Request)
+\tprivate()
+}
+
+type Digest struct {
+\tv1 uint64
+}
+
+var (
+\tErrClosed = errors.New(\"closed\")
+\terrShort  = errors.New(\"short\")
+)
+
+var _ Handler = (*Server)(nil)
+
+func (c *conn) Serve() {}
+
+func (s *Server) Close() error { return nil }
+
+func (s *Server) listen() {}
+
+func ListenAndServe() {}
+
+func newConn() *conn { return nil }
+",
+        );
+        let roster: Vec<Vec<usize>> = model
+            .decls
+            .iter()
+            .map(|decl| decl.name_rows.clone())
+            .collect();
+        assert_eq!(
+            roster,
+            [vec![7], vec![13], vec![18], vec![23], vec![31], vec![35]]
+        );
+        assert_eq!(body_rows(&model.decls[0]), [vec![8], vec![10]]);
+        assert_eq!(body_rows(&model.decls[1]), [vec![14]]);
+        assert_eq!(body_rows(&model.decls[2]), [vec![19]]);
+        assert_eq!(body_rows(&model.decls[3]), [vec![23]]);
+        let internal = extract_source("package cmd\n\nvar rootCmd = 1\n\nfunc run() {}\n");
+        assert_eq!(internal.decls.len(), 2);
     }
 
     #[test]

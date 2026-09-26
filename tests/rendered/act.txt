@@ -110,6 +110,17 @@ cmd/
   notices.go
   platforms.go
   root.go
+    …
+    37→type Flag struct {
+    38→	Name        string `json:"name"`
+    39→	Default     string `json:"default"`
+    40→	Type        string `json:"type"`
+    41→	Description string `json:"description"`
+    42→}
+    …
+    46→// Execute is the entry point to running the CLI
+    47→func Execute(ctx context.Context, version string) {
+    …
   root_test.go
   secrets.go
   testdata/
@@ -220,7 +231,7 @@ pkg/
         2→ENV PATH="/this/path/does/not/exists/anywhere:/this/either"
         3→ENV SOME_RANDOM_VAR=""
         4→ENV ANOTHER_ONE="BUT_I_HAVE_VALUE"
-        5→ENV CONFLICT_VAR="I_EXIST_ONLY_HERE"
+        …
       docker-pull-options/
         config.json
       scratch/
@@ -247,7 +258,6 @@ pkg/
         1→World!
       for-hashing-3/
         data.txt
-          1→Knock knock!
         nested/
           nested-data.txt
   filecollector/

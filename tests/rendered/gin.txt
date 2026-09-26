@@ -161,28 +161,6 @@ fs.go
 fs_test.go
 gin.go
   …
-  25→const (
-  26→	defaultMultipartMemory = 32 << 20 // 32 MB
-  27→	escapedColon           = "\\:"
-  28→	colon                  = ":"
-  29→	backslash              = "\\"
-  30→)
-  32→var (
-  33→	default404Body = []byte("404 page not found")
-  34→	default405Body = []byte("405 method not allowed")
-  35→)
-  37→var defaultPlatform string
-  38→
-  39→var defaultTrustedCIDRs = []*net.IPNet{
-  40→	{ // 0.0.0.0/0 (IPv4)
-  41→		IP:   net.IP{0x0, 0x0, 0x0, 0x0},
-  42→		Mask: net.IPMask{0x0, 0x0, 0x0, 0x0},
-  43→	},
-  44→	{ // ::/0 (IPv6)
-  45→		IP:   net.IP{0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0},
-  46→		Mask: net.IPMask{0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0},
-  47→	},
-  48→}
   50→// HandlerFunc defines the handler used by gin middleware as return value.
   51→type HandlerFunc func(*Context)
   53→// OptionFunc defines the function to change the default configuration
@@ -214,31 +192,6 @@ gin.go
   88→)
   …
   92→type Engine struct {
-  93→	RouterGroup
-  94→
-  95→	// routeTreesUpdated ensures that the initialization or update of the route trees
-  96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
-  97→	routeTreesUpdated sync.Once
-  98→
-  99→	// RedirectTrailingSlash enables automatic redirection if the current route can't be matched but a
-  100→	// handler for the path with (without) the trailing slash exists.
-  101→	// For example if /foo/ is requested but a route only exists for /foo, the
-  102→	// client is redirected to /foo with http status code 301 for GET requests
-  103→	// and 307 for all other request methods.
-  104→	RedirectTrailingSlash bool
-  106→	// RedirectFixedPath if enabled, the router tries to fix the current request path, if no
-  107→	// handle is registered for it.
-  108→	// First superfluous path elements like ../ or // are removed.
-  109→	// Afterwards the router does a case-insensitive lookup of the cleaned path.
-  110→	// If a handle can be found for this route, the router makes a redirection
-  111→	// to the corrected path with status code 301 for GET requests and 307 for
-  112→	// all other request methods.
-  113→	// For example /FOO and /..//Foo could be redirected to /foo.
-  114→	// RedirectTrailingSlash is independent of this option.
-  115→	RedirectFixedPath bool
-  …
-  189→}
-  191→var _ IRouter = (*Engine)(nil)
   …
   202→func New(opts ...OptionFunc) *Engine {
   …
@@ -247,19 +200,59 @@ gin.go
   …
   243→func (engine *Engine) Handler() http.Handler {
   …
-  252→func (engine *Engine) allocateContext(maxParams uint16) *Context {
-  …
   258→// Delims sets template left and right delims and returns an Engine instance.
   259→func (engine *Engine) Delims(left, right string) *Engine {
   …
   264→// SecureJsonPrefix sets the secureJSONPrefix used in Context.SecureJSON.
   265→func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
   …
+  270→// LoadHTMLGlob loads HTML files identified by glob pattern
+  271→// and associates the result with HTML renderer.
   272→func (engine *Engine) LoadHTMLGlob(pattern string) {
   …
+  286→// LoadHTMLFiles loads a slice of HTML files
+  287→// and associates the result with HTML renderer.
   288→func (engine *Engine) LoadHTMLFiles(files ...string) {
   …
   300→func (engine *Engine) LoadHTMLFS(fs http.FileSystem, patterns ...string) {
+  …
+  311→// SetHTMLTemplate associate a template with HTML renderer.
+  312→func (engine *Engine) SetHTMLTemplate(templ *template.Template) {
+  …
+  320→// SetFuncMap sets the FuncMap used for template.FuncMap.
+  321→func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
+  …
+  325→// NoRoute adds handlers for NoRoute. It returns a 404 code by default.
+  326→func (engine *Engine) NoRoute(handlers ...HandlerFunc) {
+  …
+  331→// NoMethod sets the handlers called when Engine.HandleMethodNotAllowed = true.
+  332→func (engine *Engine) NoMethod(handlers ...HandlerFunc) {
+  …
+  340→func (engine *Engine) Use(middleware ...HandlerFunc) IRoutes {
+  …
+  347→// With returns an Engine with the configuration set in the OptionFunc.
+  348→func (engine *Engine) With(opts ...OptionFunc) *Engine {
+  …
+  390→func (engine *Engine) Routes() (routes RoutesInfo) {
+  …
+  451→func (engine *Engine) SetTrustedProxies(trustedProxies []string) error {
+  …
+  540→func (engine *Engine) Run(addr ...string) (err error) {
+  …
+  561→func (engine *Engine) RunTLS(addr, certFile, keyFile string) (err error) {
+  …
+  581→func (engine *Engine) RunUnix(file string) (err error) {
+  …
+  607→func (engine *Engine) RunFd(fd int) (err error) {
+  …
+  630→func (engine *Engine) RunQUIC(addr, certFile, keyFile string) (err error) {
+  …
+  645→func (engine *Engine) RunListener(listener net.Listener) (err error) {
+  …
+  661→// ServeHTTP conforms to the http.Handler interface.
+  662→func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+  …
+  680→func (engine *Engine) HandleContext(c *Context) {
   …
 ginS/
   README.md
@@ -272,6 +265,24 @@ go.mod
   1→module github.com/gin-gonic/gin
   2→
   3→go 1.25.0
+  4→
+  5→require (
+  6→	github.com/bytedance/sonic v1.15.0
+  7→	github.com/gin-contrib/sse v1.1.0
+  8→	github.com/go-playground/validator/v10 v10.30.1
+  9→	github.com/goccy/go-json v0.10.6
+  10→	github.com/goccy/go-yaml v1.19.2
+  11→	github.com/json-iterator/go v1.1.12
+  12→	github.com/mattn/go-isatty v0.0.20
+  13→	github.com/modern-go/reflect2 v1.0.2
+  14→	github.com/pelletier/go-toml/v2 v2.2.4
+  15→	github.com/quic-go/quic-go v0.59.0
+  16→	github.com/stretchr/testify v1.11.1
+  17→	github.com/ugorji/go/codec v1.3.1
+  18→	go.mongodb.org/mongo-driver/v2 v2.5.0
+  19→	golang.org/x/net v0.52.0
+  20→	google.golang.org/protobuf v1.36.11
+  21→)
   …
 go.sum
 internal/
