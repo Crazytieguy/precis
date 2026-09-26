@@ -112,7 +112,7 @@ tsconfig.json
 
 The file tree shows everything that exists; the README's lede and headings say what the package is and how its docs are organized; and `package.json` identifies the package and its entry points. At larger budgets `src/index.ts` follows with its exported types and signatures. Line numbers make every entry a precise jump target for follow-up reads.
 
-A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. A directory with more than 120 entries may list only its first 40, subdirectories first, before that `…`. A source line longer than 500 characters is cut short with `…`. A row like `src/main/java/` is a chain of directories that each hold only the next. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
+A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. A directory other than the root with more than 120 entries may show only 40 of them, subdirectories picked before files, then that `…`. A source line longer than 500 characters is cut short with `…`. A row like `src/main/java/` is a chain of directories that each hold only the next. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
 
 ## Installation
 
@@ -195,6 +195,6 @@ When the path is the root of a git repository, `precis` honours `.gitignore` (in
 - **README** — the root README in Markdown, reStructuredText, AsciiDoc or plain text (`README.md`, `README.rst`, `README.adoc`, an extensionless `README`, …): its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
 - **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
 - **Build and ops files** — Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples, runtime version pins (`.nvmrc`, `.python-version`, `.tool-versions`) and `pnpm-workspace.yaml`.
-- **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Zig, Solidity, Verilog, Vue, Svelte, CSS and more: each file's top-level declaration lines, or the whole file when it is short. In a repository written mostly in one of these languages, its declaration lines rank like parsed declarations. Shell scripts, including extensionless ones that start with a shebang, show their opening lines.
+- **Every other source language** — Java, Kotlin, Swift, C++, C#, Ruby, PHP, Scala, Elixir, Zig, Solidity, Verilog, Vue, Svelte and more: each file's top-level declaration lines, or the whole file when it is short. In a repository written mostly in one of these languages, its declaration lines rank like parsed declarations. Shell scripts, including extensionless ones that start with a shebang, and stylesheets show their opening lines.
 
 Other files, such as CI workflows and other YAML, ignore lists, editor and lint config, licenses and XML, appear in the directory tree by name only.

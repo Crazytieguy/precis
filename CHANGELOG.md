@@ -13,7 +13,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
   - Output is a nested tree of directories and files with a 2-space indent.
   - Source lines are unpadded `N→` rows nested under their file.
   - A `…` row marks hidden source in a file, or hidden entries in a directory.
-  - A directory with more than 120 entries may list only its first 40, subdirectories first, before its `…` row.
+  - A directory other than the root with more than 120 entries may show only 40 of them, subdirectories picked before files, then its `…` row.
   - A source line longer than 500 characters is cut short with `…`.
   - A row like `src/main/java/` is a chain of directories that each hold only the next.
   - `(empty)` marks entries that are genuinely empty. An entry with nothing under it wasn't expanded.
@@ -27,7 +27,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
 
 - One code engine serves Rust, TypeScript/JavaScript, Python, Go, C and Lua. It shows module docs, then declaration names, signatures, doc comments and bodies as the budget allows.
 - Walkers for `package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`/`go.work`, Prisma schemas, READMEs in reST and AsciiDoc, and build and ops files (Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples).
-- Source files in other languages (Java, Kotlin, Swift, C++, C#, Ruby, PHP, Zig, Solidity, Vue, CSS, …) show their top-level declaration lines instead of plain text. In a repository written mostly in one of these languages, those lines rank like parsed declarations. Extensionless scripts that start with a shebang are read as scripts.
+- Source files in other languages (Java, Kotlin, Swift, C++, C#, Ruby, PHP, Zig, Solidity, Vue, …) show their top-level declaration lines instead of plain text. In a repository written mostly in one of these languages, those lines rank like parsed declarations. Extensionless scripts that start with a shebang are read as scripts.
 - A single file can still be passed as the path. precis shows its structure first, then spends whatever budget is left on the file's text from the top, so a file that fits prints whole.
 - Translations, archived subtrees, third-party code, and game-engine `.meta`/`.import`/`.uid` sidecars no longer crowd out a repository's own code.
 - The output at a smaller budget is always a subset of the output at a larger one.

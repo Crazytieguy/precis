@@ -21,7 +21,8 @@ const HOOK_WRAPPER: [&str; 3] = [
 const ABOUT: &str = "\
 Summarize a directory or file within a token budget.
 
-`N→` rows are source line N.
+`N→` rows are source line N. One ending in `…` is cut at 500
+characters.
 A `…` row marks hidden source in a file, or hidden entries in a
 directory. An entry with nothing under it wasn't expanded, unless
 marked `(empty)`. An `a/b/` row is a directory `a/` holding only

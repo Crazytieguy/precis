@@ -70,7 +70,8 @@ pub struct Span {
 ///
 /// - `Full`: emit the source line verbatim, with its line-number prefix.
 ///   Use this when the line is itself the content (a signature, a header,
-///   a one-liner). When in doubt, `Full` is the right choice.
+///   a one-liner). When in doubt, `Full` is the right choice. A line
+///   over 500 characters renders its first 500 and a trailing `…`.
 /// - `Truncated { pattern }`: emit only the regex match of `pattern`
 ///   against the source line, followed by a trailing `…`. The pattern
 ///   must match at least one character on every line the span covers.

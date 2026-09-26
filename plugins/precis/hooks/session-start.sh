@@ -62,6 +62,8 @@ fi
 # If both precis and jq are available, run precis and emit additionalContext
 if [ -x "$PRECIS_BIN" ] && [ -n "$JQ" ]; then
   HELP_OUTPUT=$("$PRECIS_BIN" --help 2>/dev/null) || HELP_OUTPUT=""
+  # With CLAUDE_PLUGIN_ROOT set, precis defaults --char-budget to what the
+  # hook cap leaves after this wrapper and --help (src/main.rs).
   PRECIS_OUTPUT=$("$PRECIS_BIN" . 2>/dev/null) || PRECIS_OUTPUT=""
 
   if [ -n "$PRECIS_OUTPUT" ]; then
