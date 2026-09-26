@@ -54,8 +54,10 @@ pub(super) fn split_oversize_items(items: &[Item], file: &SourceFile) -> (Vec<It
 }
 
 /// Consecutive ranges of item indices, one per chunk, never splitting an
-/// item: one range when the part costs at most [`SPLIT_AT`], otherwise cut
-/// at [`TARGET`] / [`MIN_TAIL`]. Empty for an empty part.
+/// item (items too large to keep whole are split beforehand by
+/// [`split_oversize_items`]): one range when the part costs at most
+/// [`SPLIT_AT`], otherwise cut at [`TARGET`] / [`MIN_TAIL`]. Empty for an
+/// empty part.
 pub(in crate::walker) fn chunk_ranges(item_costs: &[usize]) -> Vec<Range<usize>> {
     let mut prefix = Vec::with_capacity(item_costs.len() + 1);
     prefix.push(0);
