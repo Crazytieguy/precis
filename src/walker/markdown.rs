@@ -24,8 +24,9 @@
 //!   [`command_block`]). Predecessor: the outline, else the headline.
 //! - `Section`s — one per top-level H2 (an H1-only document unwraps to
 //!   an intro plus its H2s), chrome left out; an oversize section splits
-//!   into a head chunk plus chained `OversizeTail` chunks. Predecessor:
-//!   the section's command block, else the outline, else the headline.
+//!   into a head chunk plus tail chunks, each gated on the chunk before
+//!   it. Predecessor: the section's command block, else the outline,
+//!   else the headline.
 
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
@@ -377,8 +378,9 @@ fn build_section_content(
 
     // A README section starts past the last row `ReadmeHeadline`
     // covers — else those rows' marginal cost goes to 0 and
-    // `ratio(value, 0) = ∞`. (`headline` is `Some` only for README.md.)
-    // Rows the headline stepped *over* (chrome) are dropped with them.
+    // `ratio(value, 0) = ∞`. (The line-scanned path passes `None`: its
+    // ranges already start past the headline.) Rows the headline
+    // stepped *over* (chrome) are dropped with them.
     let effective_start = match headline.and_then(|spec| spec.iter().next_back()) {
         Some(max_row) => (max_row + 1).max(start),
         None => start,

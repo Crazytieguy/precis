@@ -78,9 +78,9 @@ impl_from_walker_keys! {
 pub enum MarkdownKey {
     /// README headline: first heading + first paragraph.
     ReadmeHeadline { file: PathBuf },
-    /// The rest of a README's pre-heading prelude — hero/logo block,
-    /// badges, and every lede block past the one the headline took.
-    /// Predecessor: `ReadmeHeadline`.
+    /// The rest of a README's pre-heading prelude: every lede block past
+    /// the one the headline took, chrome left out. Predecessor:
+    /// `ReadmeHeadline`.
     Prelude { file: PathBuf },
     /// Every H1/H2/H3 heading line the headline doesn't cover.
     /// Predecessor of every same-file `Section`.
@@ -145,8 +145,7 @@ pub enum PlaintextKey {
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PrismaKey {
     /// One line per top-level `model` / `enum` / `datasource` /
-    /// `generator` declaration in a `schema.prisma` — catastrophic-
-    /// omission hedge.
+    /// `generator` declaration in a `schema.prisma`.
     Toc { file: PathBuf },
     /// Full brace-block body of one top-level `model` / `enum` /
     /// `datasource` / `generator` declaration. Predecessor: the

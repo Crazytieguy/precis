@@ -228,7 +228,7 @@ fn decl_keyword(line: &str) -> Option<DeclKind> {
 }
 
 fn toc_value(depth: f64) -> f64 {
-    1451.0 * depth
+    crate::value::manifest_identity_value(1.0, depth)
 }
 
 /// Per-decl body value. Below the TOC cat (so the catalog surface
