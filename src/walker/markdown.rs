@@ -1746,24 +1746,54 @@ fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
         || is_table_of_contents(block, source)
 }
 
-/// A list whose every item is a bare in-document link (`- [Install](#install)`).
+/// A list whose items, at every depth, mostly (4 in 5) open with an
+/// in-document link, numbered or not (`* 2.3. [MacPorts](#macports-(macos))`,
+/// `3. [Quick start](#quick-start) — Fast Track`). A feature list that
+/// cites a section mid-item is not one.
 fn is_table_of_contents(block: Node, source: &str) -> bool {
-    block.kind() == "list"
-        && source[block.start_byte()..block.end_byte()]
-            .lines()
-            .filter(|line| !line.trim().is_empty())
-            .all(|line| {
-                line.trim()
-                    .trim_start_matches(|c: char| c.is_ascii_digit())
-                    .trim_start_matches(['-', '*', '+', '.', ')'])
-                    .trim_start()
-                    .strip_prefix('[')
-                    .and_then(|link| link.split_once("](#"))
-                    .is_some_and(|(text, target)| {
-                        !text.contains(']')
-                            && target.strip_suffix(')').is_some_and(|t| !t.contains(')'))
-                    })
-            })
+    if block.kind() != "list" {
+        return false;
+    }
+    let (mut items, mut links) = (0, 0);
+    for line in source[block.byte_range()].lines() {
+        let line = line.trim_start();
+        let digits = line.len() - line.trim_start_matches(|c: char| c.is_ascii_digit()).len();
+        let marker = match line[digits..].chars().next() {
+            Some('-' | '*' | '+') if digits == 0 => 1,
+            Some('.' | ')') if digits > 0 => digits + 1,
+            _ => continue,
+        };
+        if !line[marker..].starts_with(char::is_whitespace) {
+            continue;
+        }
+        items += 1;
+        let item = line[marker..].trim_start_matches(|c: char| {
+            c.is_ascii_digit() || c.is_whitespace() || matches!(c, '.' | '*' | '-' | '+' | ')')
+        });
+        if item
+            .strip_prefix('[')
+            .and_then(|link| link.split_once("](#"))
+            .is_some_and(|(text, target)| !text.contains(']') && closes_link(target))
+        {
+            links += 1;
+        }
+    }
+    items > 0 && links * 5 >= items * 4
+}
+
+/// True iff `target` (a link destination past its opening `(`) reaches
+/// the `)` that closes it, parentheses inside it balanced.
+fn closes_link(target: &str) -> bool {
+    let mut depth = 0usize;
+    for c in target.chars() {
+        match c {
+            '(' => depth += 1,
+            ')' if depth == 0 => return true,
+            ')' => depth -= 1,
+            _ => {}
+        }
+    }
+    false
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -1842,11 +1872,23 @@ mod tests {
     }
 
     #[test]
-    fn markdown_table_of_contents_is_bare_section_links_only() {
+    fn markdown_table_of_contents_is_mostly_leading_section_links() {
         let toc = "- [Install](#install)\n  - [From source](#from-source)\n1. [Usage](#usage)\n";
+        let numbered = "* 1. [Install](#install)\n  * 1.1. [MacPorts (macOS)](#macports-(macos))\n";
+        let annotated =
+            "1. [Overview](#overview)\n2. [Quick start](#quick-start) — **Fast Track**\n";
+        let mostly = "- [A](#a)\n- [B](#b)\n- [C](#c)\n- [D](#d)\n- [Docs](https://docs.rs)\n";
         let features =
             "- **Fast** — see [benchmarks](#benchmarks)\n- **Tiny** — see [size](#size)\n";
-        for (source, expected) in [(toc, true), (features, false)] {
+        let half = "- [A](#a)\n- [Docs](https://docs.rs)\n";
+        for (source, expected) in [
+            (toc, true),
+            (numbered, true),
+            (annotated, true),
+            (mostly, true),
+            (features, false),
+            (half, false),
+        ] {
             let tree = parse(source);
             let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
             assert_eq!(is_table_of_contents(block, source), expected, "{source}");
