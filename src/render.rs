@@ -378,29 +378,15 @@ impl RenderedTree {
     fn fs_marginal_cost(&self, groups: &[FsGroup]) -> Cost {
         let mut added = Listings::new();
         for group in groups {
-            let FsEntries::Listed(paths) = &group.entries else {
-                debug_assert!(
-                    false,
-                    "unresolved FsEntries reached cost path at {}",
-                    group.parent.display()
-                );
-                continue;
-            };
-            let parent = &group.parent;
-            let already_listed = self.tree_children(parent);
-            let probed = list_dir(parent, &self.dir_filter);
-            for p in paths {
-                let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
-                    continue;
-                };
-                if already_listed.is_some_and(|c| c.contains_key(name)) {
+            let already_listed = self.tree_children(&group.parent);
+            for (name, kind) in self.resolved_entries(group) {
+                if already_listed.is_some_and(|c| c.contains_key(&name)) {
                     continue;
                 }
-                let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
                 added
-                    .entry(parent.clone())
+                    .entry(group.parent.clone())
                     .or_default()
-                    .insert(name.to_string(), kind);
+                    .insert(name, kind);
             }
         }
         let none = Listings::new();
@@ -607,30 +593,34 @@ impl RenderedTree {
         total
     }
 
-    fn apply_fs_group(&mut self, group: &FsGroup) {
-        let parent = &group.parent;
+    /// The names `group` lists, each with its kind. Kind lookup only, for
+    /// names the batch already carries. The walk's own filter rather than a
+    /// bare one: it is what decided those names in the first place, its
+    /// caches make the probe nearly free, and a bare filter would have no
+    /// walk root to resolve a linked entry's kind against.
+    fn resolved_entries(&self, group: &FsGroup) -> Vec<(String, EntryKind)> {
         let FsEntries::Listed(paths) = &group.entries else {
             debug_assert!(
                 false,
-                "unresolved FsEntries reached apply path at {}",
-                parent.display()
+                "unresolved FsEntries reached the renderer at {}",
+                group.parent.display()
             );
-            return;
+            return Vec::new();
         };
-        // Kind lookup only, for names the batch already carries. The
-        // walk's own filter rather than a bare one: it is what decided
-        // those names in the first place, its caches make the probe
-        // nearly free, and a bare filter would have no walk root to
-        // resolve a linked entry's kind against.
-        let probed = list_dir(parent, &self.dir_filter);
-        let resolved: Vec<(String, EntryKind)> = paths
+        let probed = list_dir(&group.parent, &self.dir_filter);
+        paths
             .iter()
             .filter_map(|p| {
                 let name = p.file_name().and_then(|n| n.to_str())?.to_string();
                 let kind = probed.get(&name).copied().unwrap_or(EntryKind::File);
                 Some((name, kind))
             })
-            .collect();
+            .collect()
+    }
+
+    fn apply_fs_group(&mut self, group: &FsGroup) {
+        let parent = &group.parent;
+        let resolved = self.resolved_entries(group);
         for (name, kind) in &resolved {
             let child_path = parent.join(name);
             self.nodes.entry(child_path).or_insert_with(|| match kind {
