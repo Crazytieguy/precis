@@ -1,4 +1,4 @@
-Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.648/0.653/0.812/0.838/0.722/0.709/0.740
+Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.595/0.667/0.812/0.838/0.722/0.679/0.740
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -8,18 +8,18 @@ Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | walker |  | 88 | 8 | Fs::DirListing { dir: performance } |  |  | 0.000 |
 | ns | 98 |  | 33 | Repository root listing (complete) | 1.2 |  | 0.479 |
 | ns | 145 |  | 47 | README title and one-line pitch | 1.3 |  | 0.470 |
-| walker |  | 146 | 58 | Fs::DirListing { dir: spec } |  |  | 0.510 |
-| walker |  | 226 | 80 | Fs::DirListing { dir: rockspecs } |  |  | 0.561 |
-| ns | 248 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.468 |
-| walker |  | 291 | 65 | Code::CodeKey { rung: ModuleDoc, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
-| walker |  | 372 | 81 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.815 |
-| ns | 394 |  | 146 | Complete listings of spec/, performance/ and rockspecs/ | 1.5 |  | 0.849 |
-| ns | 442 |  | 48 | All README section headings | 1.6 |  | 0.849 |
-| ns | 572 |  | 130 | DefaultMixin member roster — every default instance and static method name | 2.1 |  | 0.688 |
-| walker |  | 688 | 316 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.705 |
-| ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.642 |
-| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.565 |
-| walker |  | 1032 | 344 | Code::CodeKey { rung: Names, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
+| walker |  | 168 | 80 | Fs::DirListing { dir: rockspecs } |  |  | 0.490 |
+| walker |  | 233 | 65 | Code::CodeKey { rung: ModuleDoc, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.919 |
+| ns | 248 |  | 103 | The public entry point: middleclass.class + callable-module metatable | 1.4 |  | 0.766 |
+| walker |  | 314 | 81 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.782 |
+| ns | 394 |  | 146 | Complete listings of spec/, performance/ and rockspecs/ | 1.5 |  | 0.636 |
+| ns | 442 |  | 48 | All README section headings | 1.6 |  | 0.666 |
+| ns | 572 |  | 130 | DefaultMixin member roster — every default instance and static method name | 2.1 |  | 0.540 |
+| walker |  | 658 | 344 | Code::CodeKey { rung: Names, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
+| ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.605 |
+| ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.533 |
+| walker |  | 974 | 316 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.547 |
+| walker |  | 1032 | 58 | Fs::DirListing { dir: spec } |  |  | 0.661 |
 | walker |  | 1057 | 25 | Code::CodeKey { rung: Names, file: performance/run.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
 | walker |  | 1066 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 1, sub: 0, line: 19 } |  |  | 0.661 |
 | ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.618 |
@@ -28,34 +28,34 @@ Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.591 |
 | ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.625 |
 | walker |  | 1356 | 269 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.634 |
-| walker |  | 1394 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.634 |
-| walker |  | 1408 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.634 |
-| walker |  | 1422 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.634 |
-| ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.653 |
-| walker |  | 1472 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 12, sub: 0, line: 139 } |  |  | 0.668 |
-| walker |  | 1522 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 16, sub: 0, line: 172 } |  |  | 0.688 |
-| ns | 1569 |  | 135 | README Specs and Performance tests sections — how to run everything | 3.3 |  | 0.701 |
-| walker |  | 1574 | 52 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 18, sub: 0, line: 186 } |  |  | 0.727 |
-| walker |  | 1633 | 59 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 13, sub: 0, line: 144 } |  |  | 0.759 |
-| walker |  | 1737 | 104 | Code::CodeKey { rung: Body, file: performance/time.lua, decl: 1, sub: 0, line: 1 } |  |  | 0.764 |
-| ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.764 |
-| walker |  | 1801 | 64 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 17, sub: 0, line: 178 } |  |  | 0.792 |
-| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.768 |
-| walker |  | 1881 | 80 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 3, sub: 0, line: 68 } |  |  | 0.770 |
-| walker |  | 1966 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.808 |
-| walker |  | 2079 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.812 |
-| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.784 |
-| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.779 |
-| walker |  | 2237 | 158 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 7, sub: 0, line: 109 } |  |  | 0.783 |
+| walker |  | 1406 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 12, sub: 0, line: 139 } |  |  | 0.650 |
+| ns | 1434 |  | 94 | README Quick Look, part 2: subclassing and calling the superclass initializer | 3.2 |  | 0.667 |
+| walker |  | 1456 | 50 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 16, sub: 0, line: 172 } |  |  | 0.687 |
+| walker |  | 1508 | 52 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 18, sub: 0, line: 186 } |  |  | 0.715 |
+| walker |  | 1567 | 59 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 13, sub: 0, line: 144 } |  |  | 0.749 |
+| ns | 1569 |  | 135 | README Specs and Performance tests sections — how to run everything | 3.3 |  | 0.759 |
+| walker |  | 1631 | 64 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 17, sub: 0, line: 178 } |  |  | 0.789 |
+| walker |  | 1711 | 80 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 3, sub: 0, line: 68 } |  |  | 0.790 |
+| ns | 1737 |  | 168 | README Documentation, Installation and License bodies | 3.4 |  | 0.793 |
+| walker |  | 1796 | 85 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 10, sub: 0, line: 129 } |  |  | 0.832 |
+| ns | 1864 |  | 127 | CHANGELOG version heading roster (all eight releases) | 3.5 |  | 0.807 |
+| walker |  | 1900 | 104 | Code::CodeKey { rung: Body, file: performance/time.lua, decl: 1, sub: 0, line: 1 } |  |  | 0.808 |
+| walker |  | 2013 | 113 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 2, sub: 0, line: 57 } |  |  | 0.812 |
+| ns | 2090 |  | 226 | CHANGELOG entries for the 4.x line | 3.6 |  | 0.783 |
+| ns | 2122 |  | 32 | UPDATING.md section headings | 3.7 |  | 0.778 |
+| walker |  | 2171 | 158 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 7, sub: 0, line: 109 } |  |  | 0.783 |
 | ns | 2371 |  | 249 | UPDATING 3.x to 4.x migration body | 3.8 | 3.7 | 0.746 |
-| walker |  | 2460 | 223 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 14, sub: 0, line: 151 } |  |  | 0.812 |
+| walker |  | 2394 | 223 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 14, sub: 0, line: 151 } |  |  | 0.812 |
 | ns | 2472 |  | 101 | Roster of every internal local function in middleclass.lua | 4.1 |  | 0.811 |
-| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.793 |
-| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.782 |
-| walker |  | 2686 | 226 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 1, sub: 0, line: 31 } |  |  | 0.791 |
+| ns | 2562 |  | 90 | _createClass: the shape of a class table | 4.2 | 4.1 | 0.792 |
+| walker |  | 2620 | 226 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 1, sub: 0, line: 31 } |  |  | 0.801 |
+| ns | 2629 |  | 67 | _createClass: the class metatable (__index/__tostring/__call/__newindex) | 4.3 | 4.1 | 0.791 |
 | ns | 2765 |  | 136 | _createClass: the static-inheritance metatable | 4.4 | 4.2 | 0.766 |
-| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.771 |
-| walker |  | 2977 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.838 |
+| walker |  | 2911 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.837 |
+| ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.838 |
+| walker |  | 2949 | 38 | Code::CodeKey { rung: Names, file: spec/metamethods_spec.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
+| walker |  | 2963 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 1, sub: 0, line: 3 } |  |  | 0.838 |
+| walker |  | 2977 | 14 | Code::CodeKey { rung: Body, file: spec/metamethods_spec.lua, decl: 2, sub: 0, line: 7 } |  |  | 0.838 |
 | ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.838 |
 | walker |  | 3214 | 237 | Plaintext::Rest { file: rockspecs/middleclass-3.0-0.rockspec } |  |  | 0.838 |
 | ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.839 |
@@ -70,15 +70,15 @@ Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.704 |
 | walker |  | 4401 | 239 | Plaintext::Rest { file: rockspecs/middleclass-4.1.1-0.rockspec } |  |  | 0.706 |
 | ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.685 |
-| walker |  | 4715 | 314 | Plaintext::Rest { file: spec/class_spec.lua } |  |  | 0.730 |
-| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.710 |
-| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.697 |
-| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.687 |
-| walker |  | 5497 | 782 | Plaintext::Rest { file: CHANGELOG.md } |  |  | 0.721 |
-| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.701 |
-| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.682 |
-| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.663 |
-| walker |  | 6401 | 904 | Plaintext::Rest { file: UPDATING.md } |  |  | 0.690 |
+| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.667 |
+| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.655 |
+| walker |  | 5183 | 782 | Plaintext::Rest { file: CHANGELOG.md } |  |  | 0.690 |
+| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.680 |
+| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.661 |
+| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.643 |
+| walker |  | 6087 | 904 | Plaintext::Rest { file: UPDATING.md } |  |  | 0.671 |
+| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.653 |
+| walker |  | 6401 | 314 | Plaintext::Rest { file: spec/class_spec.lua } |  |  | 0.690 |
 | ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.695 |
 | walker |  | 7018 | 617 | Plaintext::Rest { file: spec/mixins_spec.lua } |  |  | 0.721 |
 | ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.726 |

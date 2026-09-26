@@ -118,6 +118,9 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "testing"
                 | "examples"
                 | "benches"
+                | "bench"
+                | "spec"
+                | "specs"
                 | "benchmark"
                 | "benchmarks"
                 | "fixtures"
@@ -159,19 +162,27 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
     1.0
 }
 
-/// Filename carrying the co-located unit-test convention (`foo.test.js`,
-/// `foo.spec.ts`, `foo_test.go`, `test_foo.py`).
+/// Filename carrying a co-located unit-test convention (`foo.test.js`,
+/// `foo.spec.ts`, `foo_test.go`, `foo_spec.rb`, `test_foo.py`,
+/// `FooTest.java`, `FooTests.cs`, `FooSpec.scala`).
 fn is_colocated_test_filename(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
+    let stem = name.rsplit_once('.').map_or(name, |(stem, _)| stem);
+    let camel_case_suffix = ["Test", "Tests", "Spec", "Specs"].iter().any(|suffix| {
+        stem.strip_suffix(suffix).is_some_and(|subject| {
+            subject
+                .chars()
+                .last()
+                .is_some_and(|c| c.is_ascii_lowercase() || c.is_ascii_digit())
+        })
+    });
     lower.contains(".test.")
         || lower.contains(".test-d.")
         || lower.contains(".spec.")
-        || lower.ends_with("_test.go")
-        || lower.ends_with("_test.ts")
-        || lower.ends_with("_test.js")
-        || lower.ends_with("_test.tsx")
-        || lower.ends_with("_test.py")
+        || stem.to_ascii_lowercase().ends_with("_test")
+        || stem.to_ascii_lowercase().ends_with("_spec")
         || (lower.starts_with("test_") && lower.ends_with(".py"))
+        || camel_case_suffix
 }
 
 /// Checked-in dotenv sample/template filenames. These are config-key
@@ -317,6 +328,18 @@ mod tests {
                 "src/node/__tests__/serve.ts src/node/__tests__/__snapshots__/x.snap",
             ),
             (1.0, "src/__internal__/queue.ts src/pkg/__pycache__/x.pyc"),
+            // Test-file and test-tree conventions of languages the
+            // fallback renders.
+            (
+                0.2,
+                "db/table_test.cc src/aof_test.zig sinatra-contrib/spec/x.rb lib/cache_spec.rb \
+                 src/EmailValidatorTest.java src/PollyTests.cs src/FunctorSpec.scala \
+                 bench/Polly.Benchmarks/Program.cs",
+            ),
+            (
+                1.0,
+                "src/Latest.java src/Contest.kt src/Test.java lib/specification.rb src/Spec.hs",
+            ),
             // Archived, translated and third-party copies, at any depth.
             (
                 0.2,
