@@ -118,7 +118,7 @@ fn warn_empty_output(path: &Path, token_budget: usize, char_budget: Option<usize
         eprintln!("precis: nothing fit in {budgets}; raise it");
     } else {
         eprintln!(
-            "precis: nothing fit in {budgets}; raise it, or everything under {shown} is ignored"
+            "precis: nothing fit in {budgets}; raise it, or nothing under {shown} is listed (it is ignored, or links outside it)"
         );
     }
 }

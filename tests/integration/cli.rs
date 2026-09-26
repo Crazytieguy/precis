@@ -45,9 +45,20 @@ fn cli_explains_missing_paths_and_empty_output() {
     std::fs::write(project.join("main.rs"), "fn main() {}\n").unwrap();
     let starved_dir = empty_run_note(precis([OsStr::new("--budget=0"), project.as_os_str()]));
     assert!(
-        starved_dir.contains("nothing fit in --token-budget 0; raise it, or everything under"),
+        starved_dir.contains("nothing fit in --token-budget 0; raise it, or nothing under"),
         "{starved_dir}"
     );
+    #[cfg(unix)]
+    {
+        let outside = root.join("outside.txt");
+        std::fs::write(&outside, "kept out\n").unwrap();
+        let linked_out = root.join("linked-out");
+        std::fs::create_dir(&linked_out).unwrap();
+        std::os::unix::fs::symlink(&outside, linked_out.join("x.txt")).unwrap();
+        assert!(
+            empty_run_note(precis([&linked_out])).contains("(it is ignored, or links outside it)")
+        );
+    }
     let starved_file = empty_run_note(precis([
         OsStr::new("--char-budget=0"),
         project.join("main.rs").as_os_str(),
