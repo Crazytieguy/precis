@@ -190,7 +190,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
 
 /// A `scripts` block split in two: the `"scripts": {` row and the
 /// conventional entry points, then the other scripts through the closing
-/// brace. `None` when either half has no script.
+/// brace. `None` when either half has no script or the halves share a row.
 fn entry_point_scripts_split(
     file: &Path,
     source: &Source,
@@ -212,7 +212,10 @@ fn entry_point_scripts_split(
             rest.extend(start..=end);
         }
     }
-    if entry_points.len() == 1 || rest.len() == 1 {
+    if entry_points.len() == 1
+        || rest.len() == 1
+        || entry_points.iter().any(|row| rest.contains(row))
+    {
         return None;
     }
     Some((
@@ -533,7 +536,7 @@ mod tests {
 
     /// A `scripts` block with both entry-point and other scripts delivers
     /// its entry points first, the rest chained behind them; a block of
-    /// one kind stays one batch.
+    /// one kind, or with both kinds on one row, stays one batch.
     #[test]
     fn json_scripts_split_entry_points_from_the_rest() {
         let scripts_keys = |scripts: &str| {
@@ -556,6 +559,10 @@ mod tests {
         };
         assert_eq!(
             scripts_keys("    \"release\": \"x\",\n    \"bump\": \"y\"").len(),
+            1
+        );
+        assert_eq!(
+            scripts_keys("    \"build\": \"x\", \"release\": \"y\"").len(),
             1
         );
         let split = scripts_keys("    \"release\": \"x\",\n    \"build\": \"y\"");
