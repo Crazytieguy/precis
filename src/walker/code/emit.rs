@@ -77,10 +77,8 @@ impl Emitter<'_> {
         );
         roster.sort_by_key(|item| item.rows.first().copied());
         let reexport_rows: usize = model.reexports.iter().map(|item| item.rows.len()).sum();
-        let attribute_rows = model.reexport_attribute_rows.min(reexport_rows);
         let decl_rows: usize = model.decls.iter().map(|decl| decl.name_rows.len()).sum();
-        let entries =
-            decl_rows + attribute_rows + (reexport_rows - attribute_rows).min(MAX_REEXPORT_ENTRIES);
+        let entries = decl_rows + reexport_rows.min(MAX_REEXPORT_ENTRIES);
         let names_value = self.file_prior * (entries as f64).powf(DEFAULT_CONCAVITY_EXPONENT);
         self.part(self.key(Rung::Names, 0, 0), &roster, None, names_value);
 
