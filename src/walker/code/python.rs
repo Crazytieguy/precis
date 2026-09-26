@@ -24,9 +24,8 @@
 //!   their dunder assignments are ordinary constants.
 //! - **Re-exports**: `__all__`, and in `__init__.py` every top-level
 //!   `from … import …` of the package's own modules (a relative import, or
-//!   one whose module path starts at a directory above the file) or that
-//!   explicitly re-exports a name (`import X as X`, or a name `__all__`
-//!   lists), unless it imports only private names. Other imports from the
+//!   one whose module path starts at a directory above the file), unless
+//!   it imports only private names. Other imports from the
 //!   standard library and third-party packages are in no part. An
 //!   `__init__.py`'s `__all__` is left out when those imports already
 //!   re-export every name it lists, so the roster names each once.
@@ -107,11 +106,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                         decl
                     }))
             }
-            "import_from_statement"
-                if is_package_init
-                    && (imports_own_module(file, node, ctx)
-                        || reexports_explicitly(file, node, &exported_names)) =>
-            {
+            "import_from_statement" if is_package_init && imports_own_module(file, node, ctx) => {
                 let names = imported_names(file, node);
                 let public = names.is_empty() || names.iter().any(|name| !is_private(name));
                 if public {
@@ -220,23 +215,6 @@ fn imports_own_module(file: &SourceFile, statement: Node, ctx: &WalkCtx) -> bool
         .skip(1)
         .take_while(|dir| *dir != ctx.root() && dir.starts_with(ctx.root()))
         .any(|dir| file_name(dir) == first_component)
-}
-
-/// Whether a `from … import …` re-exports a name on purpose: `X as X`, or
-/// a name `__all__` lists.
-fn reexports_explicitly(file: &SourceFile, statement: Node, exported_names: &[&str]) -> bool {
-    statement
-        .children_by_field_name("name", &mut statement.walk())
-        .any(|name| match name.kind() {
-            "aliased_import" => {
-                name.child_by_field_name("name")
-                    .map(|original| file.text(original))
-                    == name
-                        .child_by_field_name("alias")
-                        .map(|alias| file.text(alias))
-            }
-            _ => exported_names.contains(&file.text(name)),
-        })
 }
 
 /// The names a `from … import …` binds: each alias, else the imported
@@ -660,21 +638,6 @@ from pkgextra import helper
 ",
         );
         assert_eq!(rows(&model.reexports), vec![vec![4], vec![5]]);
-    }
-
-    #[test]
-    fn python_package_init_reexports_explicitly_exported_imports() {
-        let model = extract_source(
-            "pkg/__init__.pyi",
-            "\
-from typing import Any
-from werkzeug.exceptions import abort as abort
-from markupsafe import Markup, escape
-from json import dumps as to_json
-__all__ = [\"escape\", \"helper\"]
-",
-        );
-        assert_eq!(rows(&model.reexports), vec![vec![2], vec![3], vec![5]]);
     }
 
     /// A name is listed once: `__all__` goes when the imports above it
