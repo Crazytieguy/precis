@@ -41,7 +41,8 @@ Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | ns | 1857 |  | 329 | Every top-level symbol in `_hooks.py` (complete roster) plus the two backward-compat aliases | 2.3 |  | 0.632 |
 | walker |  | 1860 | 25 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 4, sub: 0, line: 52 } |  |  | 0.635 |
 | walker |  | 1886 | 26 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 2, sub: 0, line: 37 } |  |  | 0.635 |
-| walker |  | 1979 | 93 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 6, sub: 0, line: 65 } |  |  | 0.644 |
+| walker |  | 1971 | 85 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 6, sub: 0, line: 65 } |  |  | 0.642 |
+| walker |  | 1979 | 8 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 8, sub: 0, line: 71 } |  |  | 0.644 |
 | ns | 2019 |  | 162 | Every method name on `HookCaller` (complete roster, names only) | 2.4 |  | 0.619 |
 | walker |  | 2149 | 170 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 11, sub: 0, line: 83 } |  |  | 0.627 |
 | walker |  | 2171 | 22 | Code::CodeKey { rung: Decl, file: src/pluggy/_manager.py, decl: 16, sub: 0, line: 201 } |  |  | 0.627 |
@@ -97,11 +98,14 @@ Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | walker |  | 5119 | 59 | Code::CodeKey { rung: Decl, file: src/pluggy/_hooks.py, decl: 24, sub: 0, line: 393 } |  |  | 0.600 |
 | walker |  | 5131 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 24, sub: 0, line: 393 } |  |  | 0.600 |
 | walker |  | 5143 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 45, sub: 0, line: 656 } |  |  | 0.600 |
-| walker |  | 5157 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 25, sub: 0, line: 420 } |  |  | 0.600 |
-| walker |  | 5171 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 26, sub: 0, line: 424 } |  |  | 0.600 |
-| walker |  | 5185 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 30, sub: 0, line: 453 } |  |  | 0.600 |
-| ns | 5521 |  | 443 | `_multicall` part 2: the teardown loop, exception routing and `firstresult` collapse | 3.7 | 3.6 | 0.568 |
-| walker |  | 5556 | 371 | Code::CodeKey { rung: Decl, file: src/pluggy/_hooks.py, decl: 38, sub: 0, line: 593 } |  |  | 0.568 |
+| walker |  | 5483 | 340 | Code::CodeKey { rung: Decl, file: src/pluggy/_hooks.py, decl: 38, sub: 0, line: 593 } |  |  | 0.600 |
+| walker |  | 5491 | 8 | Code::CodeKey { rung: Decl, file: src/pluggy/_hooks.py, decl: 41, sub: 0, line: 626 } |  |  | 0.600 |
+| walker |  | 5499 | 8 | Code::CodeKey { rung: Decl, file: src/pluggy/_hooks.py, decl: 42, sub: 0, line: 630 } |  |  | 0.600 |
+| walker |  | 5514 | 15 | Code::CodeKey { rung: Decl, file: src/pluggy/_hooks.py, decl: 40, sub: 0, line: 618 } |  |  | 0.600 |
+| ns | 5521 |  | 443 | `_multicall` part 2: the teardown loop, exception routing and `firstresult` collapse | 3.7 | 3.6 | 0.567 |
+| walker |  | 5528 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 25, sub: 0, line: 420 } |  |  | 0.567 |
+| walker |  | 5542 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 26, sub: 0, line: 424 } |  |  | 0.567 |
+| walker |  | 5556 | 14 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 30, sub: 0, line: 453 } |  |  | 0.568 |
 | walker |  | 5571 | 15 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 23, sub: 0, line: 382 } |  |  | 0.571 |
 | walker |  | 5586 | 15 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 29, sub: 0, line: 449 } |  |  | 0.571 |
 | walker |  | 5602 | 16 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 44, sub: 0, line: 638 } |  |  | 0.574 |
@@ -111,8 +115,11 @@ Score(3000)=0.640 I=0.785 C=0.521 ns_rows≤3K=16/43 grid(1000/1442/2080/3000/43
 | ns | 5677 |  | 156 | `PluginManager.register` docstring: naming, blocking and the duplicate-registration contract | 3.8 | 2.1 | 0.571 |
 | walker |  | 5700 | 30 | Code::CodeKey { rung: Doc, file: src/pluggy/_hooks.py, decl: 38, sub: 0, line: 593 } |  |  | 0.578 |
 | walker |  | 5785 | 85 | Code::CodeKey { rung: Names, file: src/pluggy/_result.py, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
-| ns | 5973 |  | 296 | `PluginManager.register` body: how hook implementations are discovered and attached | 3.9 | 3.8 | 0.565 |
-| walker |  | 5981 | 196 | Code::CodeKey { rung: Decl, file: src/pluggy/_result.py, decl: 4, sub: 0, line: 24 } |  |  | 0.581 |
+| walker |  | 5957 | 172 | Code::CodeKey { rung: Decl, file: src/pluggy/_result.py, decl: 4, sub: 0, line: 24 } |  |  | 0.591 |
+| walker |  | 5965 | 8 | Code::CodeKey { rung: Decl, file: src/pluggy/_result.py, decl: 6, sub: 0, line: 42 } |  |  | 0.592 |
+| walker |  | 5973 | 8 | Code::CodeKey { rung: Decl, file: src/pluggy/_result.py, decl: 7, sub: 0, line: 51 } |  |  | 0.579 |
+| ns | 5973 |  | 296 | `PluginManager.register` body: how hook implementations are discovered and attached | 3.9 | 3.8 | 0.579 |
+| walker |  | 5981 | 8 | Code::CodeKey { rung: Decl, file: src/pluggy/_result.py, decl: 8, sub: 0, line: 56 } |  |  | 0.581 |
 | walker |  | 6010 | 29 | Code::CodeKey { rung: Decl, file: src/pluggy/_result.py, decl: 5, sub: 0, line: 31 } |  |  | 0.581 |
 | walker |  | 6019 | 9 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 3, sub: 0, line: 20 } |  |  | 0.583 |
 | walker |  | 6031 | 12 | Code::CodeKey { rung: Doc, file: src/pluggy/_result.py, decl: 5, sub: 0, line: 31 } |  |  | 0.583 |

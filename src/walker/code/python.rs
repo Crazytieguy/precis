@@ -10,11 +10,7 @@
 //! - **Head and name rows**: a decorated definition's head starts at its
 //!   first decorator. Its name rows are the `def` / `class` row and,
 //!   when the signature spans rows, the row that closes it (`) -> T:`),
-//!   so a roster never lists an unclosed `def f(`; a member's also
-//!   include its one-row decorators (`@property` and `@overload` say
-//!   what a method is). The file's roster leaves decorators to the
-//!   declaration's head: at two rows per entry, a long module's roster
-//!   ran out before the classes at its end.
+//!   so a roster never lists an unclosed `def f(`.
 //! - **Doc**: the docstring opening a `def` / `class` body, or else the
 //!   `#` comments directly above the definition.
 //! - **Module doc**: a dunder-named module's (`__init__.py`,
@@ -98,16 +94,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             | "class_definition"
             | "decorated_definition"
             | "if_statement"
-            | "try_statement" => model.decls.extend(
-                definitions(file, node, 0, &implemented_overloads)
-                    .0
-                    .into_iter()
-                    .map(|mut decl| {
-                        decl.name_rows
-                            .retain(|&row| !file.line(row).trim_start().starts_with('@'));
-                        decl
-                    }),
-            ),
+            | "try_statement" => model
+                .decls
+                .extend(definitions(file, node, 0, &implemented_overloads).0),
             "import_from_statement" if is_package_init && imports_own_module(file, node, ctx) => {
                 let names = imported_names(file, node);
                 let public = names.is_empty() || names.iter().any(|name| !is_private(name));
@@ -415,8 +404,7 @@ fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
         Shape::Callable => (file.node_items(statements, head_end), Vec::new()),
         Shape::Whole => class_body(file, &statements, head_end),
     };
-    let mut name_rows = single_row_decorators(file, unit);
-    name_rows.push(name_row);
+    let mut name_rows = vec![name_row];
     if head_end > name_row {
         name_rows.push(head_end);
     }
@@ -469,16 +457,6 @@ fn implemented_overloads<'tree>(
         }
     }
     implemented
-}
-
-/// Rows of the decorators above a definition that each fit on one row.
-fn single_row_decorators(file: &SourceFile, unit: Node) -> Vec<usize> {
-    unit.named_children(&mut unit.walk())
-        .filter(|child| child.kind() == "decorator")
-        .map(|decorator| file.node_rows(decorator))
-        .filter(|rows| rows.start() == rows.end())
-        .map(|rows| *rows.start())
-        .collect()
 }
 
 /// 1-based row of the `:` that ends a `def` / `class` header.
@@ -815,8 +793,8 @@ class Config(Base):  # the config
         assert_eq!(
             describe(&model),
             [
-                "Whole name [2] head [1, 2] doc [[3]] body [[5, 6], [7], [10, 11], [15], [18], [20], [21]]",
-                "  Callable name [10, 11] head [10, 11] doc [[12]] body [[13]]",
+                "Whole name [2] head [1, 2] doc [[3]] body [[5, 6], [7], [11], [15], [18], [20], [21]]",
+                "  Callable name [11] head [10, 11] doc [[12]] body [[13]]",
                 "  Callable name [15] head [15] doc [] body [[16]]",
                 "  Callable name [18] head [18] doc [] body []",
             ]
@@ -854,7 +832,7 @@ class Basic:
     }
 
     #[test]
-    fn python_roster_lists_decorators_and_signature_closing_row() {
+    fn python_roster_lists_signature_closing_row_not_decorators() {
         let model = extract_source(
             "props.py",
             "\
@@ -878,9 +856,9 @@ class Wide(
         assert_eq!(
             describe(&model),
             [
-                "Whole name [1] head [1] doc [] body [[2, 3], [4, 5], [9, 11]]",
-                "  Callable name [2, 3] head [2, 3] doc [] body []",
-                "  Callable name [4, 5] head [4, 5] doc [] body []",
+                "Whole name [1] head [1] doc [] body [[3], [5], [9, 11]]",
+                "  Callable name [3] head [2, 3] doc [] body []",
+                "  Callable name [5] head [4, 5] doc [] body []",
                 "  Callable name [9, 11] head [6, 7, 8, 9, 10, 11] doc [] body []",
                 "Whole name [12, 14] head [12, 13, 14] doc [] body [[15]]",
             ]
