@@ -514,14 +514,16 @@ fn is_source_inventory_file(path: &Path) -> bool {
 /// Heavy-directory names block traversal, except a `build/` that holds
 /// Rust source: a checked-in module may be named `build`, while Cargo's
 /// own output lives under `target/`, which the walk never enters. A
-/// translated mirror or an unpacked upstream release is named, not
-/// listed: its entries repeat names kept elsewhere.
+/// translated mirror, an unpacked upstream release or a generated
+/// documentation site is named, not listed: its entries repeat names
+/// kept elsewhere.
 fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
     };
     let name = name.to_string_lossy();
     if is_locale_mirror(dir, &name, ctx)
+        || is_generated_doc_site(dir, ctx)
         || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
     {
         return false;
@@ -553,6 +555,22 @@ fn is_unpacked_release(dir: &Path, name: &str, ctx: &WalkCtx) -> bool {
                 || name.starts_with("licence")
                 || name.starts_with("copying")
         })
+}
+
+/// A documentation generator's HTML output: an `index.html` beside the
+/// generator's own support file (odoc, Dokka, Javadoc, Jazzy, Doxygen,
+/// Sphinx), with a page per declaration of source kept elsewhere.
+fn is_generated_doc_site(dir: &Path, ctx: &WalkCtx) -> bool {
+    #[rustfmt::skip]
+    const GENERATOR_FILES: &[&str] = &[
+        "odoc.css", "odoc.support", "navigation.html", "package-list", "element-list",
+        "docsets", "doxygen.css", "searchindex.js",
+    ];
+    let entries = list_dir(dir, ctx.dir_filter());
+    entries.contains_key("index.html")
+        && GENERATOR_FILES
+            .iter()
+            .any(|name| entries.contains_key(*name))
 }
 
 /// One of several translations named after the directory they mirror:
@@ -816,7 +834,7 @@ mod tests {
     }
 
     #[test]
-    fn fs_mirrors_releases_and_build_output_are_named_not_listed() {
+    fn fs_mirrors_releases_doc_sites_and_build_output_are_named_not_listed() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         for dir in [
@@ -835,6 +853,8 @@ mod tests {
             "build",
             "tools/build",
             "target",
+            "site/api",
+            "doxygen",
         ] {
             std::fs::create_dir_all(root.join(dir)).unwrap();
         }
@@ -852,6 +872,9 @@ mod tests {
             (".gitignore", "generated.rs\n"),
             ("tools/build/generated.rs", ""),
             ("tools/build/CMakeCache.txt", ""),
+            ("site/api/index.html", ""),
+            ("site/api/navigation.html", ""),
+            ("doxygen/doxygen.css", ""),
         ] {
             std::fs::write(root.join(file), text).unwrap();
         }
@@ -865,6 +888,7 @@ mod tests {
             "packages/ui-main",
             "src/build",
             "build",
+            "doxygen",
         ] {
             assert!(recurses(dir), "{dir}");
         }
@@ -875,6 +899,7 @@ mod tests {
             "third/miniz-3.0.2",
             "tools/build",
             "target",
+            "site/api",
         ] {
             assert!(!recurses(dir), "{dir}");
         }
