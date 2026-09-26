@@ -251,6 +251,9 @@ pkg/
     docker_auth.go
     docker_build.go
     docker_cli.go
+      …
+      10→//nolint:unparam,errcheck
+      …
     docker_cli_test.go
     docker_images.go
     docker_images_test.go
@@ -284,7 +287,6 @@ pkg/
       15→	Github    *model.GithubContext
       16→	Env       map[string]string
       17→	Job       *model.JobContext
-      18→	Jobs      *map[string]*model.WorkflowCallResult
       …
       28→}
       30→type Needs struct {

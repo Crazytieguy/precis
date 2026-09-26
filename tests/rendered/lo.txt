@@ -319,9 +319,15 @@ internal/
   xtime/
     README.md
     fake.go
+      1→//nolint:revive
+      …
     noCopy.go
     real.go
+      1→//nolint:revive
+      …
     time.go
+      1→//nolint:revive
+      …
 intersect.go
 intersect_test.go
 it/
@@ -372,8 +378,6 @@ slice.go
   12→func Filter[T any, Slice ~[]T](collection Slice, predicate func(item T, index int) bool) Slice {
   …
   27→func FilterErr[T any, Slice ~[]T](collection Slice, predicate func(item T, index int) (bool, error)) (Slice, error) {
-  …
-  45→func Map[T, R any](collection []T, transform func(item T, index int) R) []R {
   …
 slice_test.go
 string.go
