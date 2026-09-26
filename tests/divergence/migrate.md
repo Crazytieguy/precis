@@ -1,4 +1,4 @@
-Score(3000)=0.546 I=0.696 C=0.428 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.644/0.622/0.546/0.518/0.533/0.546
+Score(3000)=0.546 I=0.696 C=0.428 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.683/0.644/0.622/0.546/0.518/0.533/0.546
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -9,61 +9,61 @@ Score(3000)=0.546 I=0.696 C=0.428 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 182 | 6 | Fs::DirListing { dir: internal } |  |  | 0.538 |
 | walker |  | 193 | 11 | Fs::DirListing { dir: dktesting } |  |  | 0.538 |
 | walker |  | 205 | 12 | Fs::DirListing { dir: cli } |  |  | 0.538 |
-| walker |  | 214 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.538 |
 | ns | 244 |  | 100 | Core design premise: dumb drivers, migrate glues | 1.3 |  | 0.413 |
-| walker |  | 249 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.413 |
-| walker |  | 253 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.413 |
-| walker |  | 270 | 17 | Fs::DirListing { dir: cmd/migrate } |  |  | 0.413 |
-| walker |  | 277 | 7 | Fs::DirListing { dir: .github } |  |  | 0.413 |
-| walker |  | 281 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.413 |
 | ns | 323 |  | 79 | Root package doc comment (migrate.go) | 1.4 |  | 0.343 |
-| walker |  | 370 | 89 | Fs::DirListing { dir: source } |  |  | 0.357 |
-| walker |  | 379 | 9 | Fs::DirListing { dir: source/stub } |  |  | 0.357 |
-| walker |  | 392 | 13 | Fs::DirListing { dir: source/file } |  |  | 0.357 |
-| walker |  | 405 | 13 | Fs::DirListing { dir: source/google_cloud_storage } |  |  | 0.357 |
-| walker |  | 420 | 15 | Fs::DirListing { dir: source/aws_s3 } |  |  | 0.357 |
-| walker |  | 435 | 15 | Fs::DirListing { dir: source/pkger } |  |  | 0.357 |
-| ns | 448 |  | 125 | Complete root directory listing | 1.5 |  | 0.677 |
-| walker |  | 453 | 18 | Fs::DirListing { dir: source/godoc_vfs } |  |  | 0.677 |
-| walker |  | 473 | 20 | Fs::DirListing { dir: source/bitbucket } |  |  | 0.677 |
-| walker |  | 494 | 21 | Fs::DirListing { dir: source/github } |  |  | 0.677 |
-| walker |  | 516 | 22 | Fs::DirListing { dir: source/github_ee } |  |  | 0.677 |
-| walker |  | 539 | 23 | Fs::DirListing { dir: source/gitlab } |  |  | 0.677 |
-| walker |  | 563 | 24 | Fs::DirListing { dir: source/go_bindata } |  |  | 0.677 |
-| ns | 570 |  | 122 | Complete database/ listing — every database driver package | 1.6 |  | 0.521 |
-| walker |  | 591 | 28 | Fs::DirListing { dir: source/httpfs } |  |  | 0.521 |
-| walker |  | 619 | 28 | Fs::DirListing { dir: source/iofs } |  |  | 0.521 |
-| ns | 659 |  | 89 | Complete source/ listing — every source driver package | 1.7 |  | 0.569 |
-| walker |  | 691 | 72 | Code::CodeKey { rung: ModuleDoc, file: migrate.go, decl: 0, sub: 0, line: 0 } |  |  | 0.607 |
-| walker |  | 704 | 13 | Fs::DirListing { dir: testing } |  |  | 0.607 |
-| ns | 796 |  | 137 | Complete README section-heading roster | 1.8 |  | 0.567 |
-| walker |  | 826 | 122 | Fs::DirListing { dir: database } |  |  | 0.733 |
-| walker |  | 832 | 6 | Fs::DirListing { dir: database/crate } |  |  | 0.733 |
-| walker |  | 838 | 6 | Fs::DirListing { dir: database/shell } |  |  | 0.733 |
-| walker |  | 847 | 9 | Fs::DirListing { dir: database/multistmt } |  |  | 0.733 |
-| walker |  | 856 | 9 | Fs::DirListing { dir: database/snowflake } |  |  | 0.733 |
-| walker |  | 865 | 9 | Fs::DirListing { dir: database/stub } |  |  | 0.733 |
-| walker |  | 881 | 16 | Fs::DirListing { dir: database/mongodb } |  |  | 0.733 |
-| walker |  | 897 | 16 | Fs::DirListing { dir: database/mysql } |  |  | 0.733 |
-| walker |  | 913 | 16 | Fs::DirListing { dir: database/sqlite } |  |  | 0.733 |
-| ns | 917 |  | 121 | All four Migrate constructors (full signatures) | 2.1 |  | 0.719 |
-| walker |  | 931 | 18 | Fs::DirListing { dir: database/cassandra } |  |  | 0.719 |
-| walker |  | 949 | 18 | Fs::DirListing { dir: database/clickhouse } |  |  | 0.719 |
-| walker |  | 967 | 18 | Fs::DirListing { dir: database/firebird } |  |  | 0.719 |
-| walker |  | 985 | 18 | Fs::DirListing { dir: database/redshift } |  |  | 0.719 |
-| walker |  | 1003 | 18 | Fs::DirListing { dir: database/spanner } |  |  | 0.719 |
-| walker |  | 1021 | 18 | Fs::DirListing { dir: database/sqlcipher } |  |  | 0.719 |
-| walker |  | 1039 | 18 | Fs::DirListing { dir: database/sqlite3 } |  |  | 0.719 |
-| walker |  | 1057 | 18 | Fs::DirListing { dir: database/sqlserver } |  |  | 0.719 |
-| walker |  | 1077 | 20 | Fs::DirListing { dir: database/ql } |  |  | 0.719 |
-| walker |  | 1097 | 20 | Fs::DirListing { dir: database/rqlite } |  |  | 0.690 |
-| ns | 1097 |  | 180 | Complete exported *Migrate method set (full signatures) | 2.2 |  | 0.690 |
-| walker |  | 1119 | 22 | Fs::DirListing { dir: database/pgx } |  |  | 0.690 |
-| walker |  | 1141 | 22 | Fs::DirListing { dir: database/postgres } |  |  | 0.690 |
-| walker |  | 1165 | 24 | Fs::DirListing { dir: database/yugabytedb } |  |  | 0.690 |
-| walker |  | 1191 | 26 | Fs::DirListing { dir: database/cockroachdb } |  |  | 0.690 |
-| walker |  | 1217 | 26 | Fs::DirListing { dir: database/neo4j } |  |  | 0.690 |
-| walker |  | 1232 | 15 | Fs::DirListing { dir: database/pgx/v5 } |  |  | 0.690 |
+| walker |  | 327 | 122 | Fs::DirListing { dir: database } |  |  | 0.369 |
+| walker |  | 333 | 6 | Fs::DirListing { dir: database/crate } |  |  | 0.369 |
+| walker |  | 339 | 6 | Fs::DirListing { dir: database/shell } |  |  | 0.369 |
+| walker |  | 348 | 9 | Fs::DirListing { dir: database/multistmt } |  |  | 0.369 |
+| walker |  | 357 | 9 | Fs::DirListing { dir: database/snowflake } |  |  | 0.369 |
+| walker |  | 366 | 9 | Fs::DirListing { dir: database/stub } |  |  | 0.369 |
+| walker |  | 375 | 9 | Fs::DirListing { dir: internal/url } |  |  | 0.369 |
+| walker |  | 410 | 35 | GoMod::Identity { file: go.mod } |  |  | 0.369 |
+| walker |  | 414 | 4 | Fs::DirListing { dir: .circleci } |  |  | 0.369 |
+| walker |  | 430 | 16 | Fs::DirListing { dir: database/mongodb } |  |  | 0.369 |
+| walker |  | 446 | 16 | Fs::DirListing { dir: database/mysql } |  |  | 0.369 |
+| ns | 448 |  | 125 | Complete root directory listing | 1.5 |  | 0.700 |
+| walker |  | 462 | 16 | Fs::DirListing { dir: database/sqlite } |  |  | 0.700 |
+| walker |  | 479 | 17 | Fs::DirListing { dir: cmd/migrate } |  |  | 0.700 |
+| walker |  | 497 | 18 | Fs::DirListing { dir: database/cassandra } |  |  | 0.700 |
+| walker |  | 515 | 18 | Fs::DirListing { dir: database/clickhouse } |  |  | 0.700 |
+| walker |  | 533 | 18 | Fs::DirListing { dir: database/firebird } |  |  | 0.700 |
+| walker |  | 551 | 18 | Fs::DirListing { dir: database/redshift } |  |  | 0.700 |
+| walker |  | 569 | 18 | Fs::DirListing { dir: database/spanner } |  |  | 0.700 |
+| ns | 570 |  | 122 | Complete database/ listing — every database driver package | 1.6 |  | 0.721 |
+| walker |  | 587 | 18 | Fs::DirListing { dir: database/sqlcipher } |  |  | 0.721 |
+| walker |  | 605 | 18 | Fs::DirListing { dir: database/sqlite3 } |  |  | 0.721 |
+| walker |  | 623 | 18 | Fs::DirListing { dir: database/sqlserver } |  |  | 0.721 |
+| walker |  | 643 | 20 | Fs::DirListing { dir: database/ql } |  |  | 0.721 |
+| ns | 659 |  | 89 | Complete source/ listing — every source driver package | 1.7 |  | 0.632 |
+| walker |  | 663 | 20 | Fs::DirListing { dir: database/rqlite } |  |  | 0.632 |
+| walker |  | 670 | 7 | Fs::DirListing { dir: .github } |  |  | 0.632 |
+| walker |  | 674 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.632 |
+| walker |  | 696 | 22 | Fs::DirListing { dir: database/pgx } |  |  | 0.632 |
+| walker |  | 718 | 22 | Fs::DirListing { dir: database/postgres } |  |  | 0.632 |
+| walker |  | 742 | 24 | Fs::DirListing { dir: database/yugabytedb } |  |  | 0.632 |
+| walker |  | 768 | 26 | Fs::DirListing { dir: database/cockroachdb } |  |  | 0.632 |
+| walker |  | 794 | 26 | Fs::DirListing { dir: database/neo4j } |  |  | 0.632 |
+| ns | 796 |  | 137 | Complete README section-heading roster | 1.8 |  | 0.590 |
+| walker |  | 809 | 15 | Fs::DirListing { dir: database/pgx/v5 } |  |  | 0.590 |
+| walker |  | 898 | 89 | Fs::DirListing { dir: source } |  |  | 0.697 |
+| walker |  | 907 | 9 | Fs::DirListing { dir: source/stub } |  |  | 0.697 |
+| ns | 917 |  | 121 | All four Migrate constructors (full signatures) | 2.1 |  | 0.683 |
+| walker |  | 920 | 13 | Fs::DirListing { dir: source/file } |  |  | 0.683 |
+| walker |  | 933 | 13 | Fs::DirListing { dir: source/google_cloud_storage } |  |  | 0.683 |
+| walker |  | 948 | 15 | Fs::DirListing { dir: source/aws_s3 } |  |  | 0.683 |
+| walker |  | 963 | 15 | Fs::DirListing { dir: source/pkger } |  |  | 0.683 |
+| walker |  | 981 | 18 | Fs::DirListing { dir: source/godoc_vfs } |  |  | 0.683 |
+| walker |  | 1001 | 20 | Fs::DirListing { dir: source/bitbucket } |  |  | 0.683 |
+| walker |  | 1022 | 21 | Fs::DirListing { dir: source/github } |  |  | 0.683 |
+| walker |  | 1044 | 22 | Fs::DirListing { dir: source/github_ee } |  |  | 0.683 |
+| walker |  | 1067 | 23 | Fs::DirListing { dir: source/gitlab } |  |  | 0.683 |
+| walker |  | 1091 | 24 | Fs::DirListing { dir: source/go_bindata } |  |  | 0.683 |
+| ns | 1097 |  | 180 | Complete exported *Migrate method set (full signatures) | 2.2 |  | 0.655 |
+| walker |  | 1119 | 28 | Fs::DirListing { dir: source/httpfs } |  |  | 0.655 |
+| walker |  | 1147 | 28 | Fs::DirListing { dir: source/iofs } |  |  | 0.655 |
+| walker |  | 1219 | 72 | Code::CodeKey { rung: ModuleDoc, file: migrate.go, decl: 0, sub: 0, line: 0 } |  |  | 0.690 |
+| walker |  | 1232 | 13 | Fs::DirListing { dir: testing } |  |  | 0.690 |
 | walker |  | 1253 | 21 | Code::CodeKey { rung: ModuleDoc, file: database/multistmt/parse.go, decl: 0, sub: 0, line: 0 } |  |  | 0.690 |
 | walker |  | 1262 | 9 | Fs::DirListing { dir: database/testing } |  |  | 0.690 |
 | walker |  | 1272 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.690 |

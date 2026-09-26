@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.747/0.830/0.797/0.789/0.738/0.702/0.710
+Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.748/0.830/0.797/0.789/0.738/0.702/0.710
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -6,29 +6,29 @@ Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 91 |  | 91 | README lede: what Posting is | 1.1 |  | 0.000 |
 | walker |  | 139 | 91 | Markdown::ReadmeHeadline { file: README.md } |  |  | 1.000 |
 | ns | 139 |  | 48 | Repository root listing | 1.2 |  | 1.000 |
-| walker |  | 179 | 40 | Fs::DirListing { dir: docs } |  |  | 1.000 |
-| walker |  | 183 | 4 | Fs::DirListing { dir: docs/overrides } |  |  | 1.000 |
-| walker |  | 187 | 4 | Fs::DirListing { dir: docs/stylesheets } |  |  | 1.000 |
-| ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.771 |
-| walker |  | 262 | 75 | Toml::Identity { file: pyproject.toml } |  |  | 0.772 |
-| walker |  | 270 | 8 | Fs::DirListing { dir: .github } |  |  | 0.772 |
-| walker |  | 282 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.772 |
-| walker |  | 306 | 24 | Toml::Operational { file: pyproject.toml } |  |  | 0.774 |
-| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.685 |
-| ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.468 |
-| walker |  | 525 | 219 | Plaintext::Whole { file: Makefile } |  |  | 0.468 |
-| walker |  | 567 | 42 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.468 |
-| ns | 604 |  | 103 | Widget package and importer package listings | 1.6 |  | 0.403 |
-| walker |  | 623 | 56 | Fs::DirListing { dir: docs/guide } |  |  | 0.409 |
-| ns | 750 |  | 146 | Package identity, build backend and console-script entry point | 1.7 |  | 0.401 |
-| walker |  | 783 | 160 | Fs::DirListing { dir: src/posting } |  |  | 0.671 |
-| walker |  | 797 | 14 | Fs::DirListing { dir: src/posting/importing } |  |  | 0.674 |
-| walker |  | 813 | 16 | Code::CodeKey { rung: ModuleDoc, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.674 |
-| walker |  | 902 | 89 | Fs::DirListing { dir: src/posting/widgets } |  |  | 0.805 |
-| walker |  | 912 | 10 | Fs::DirListing { dir: src/posting/widgets/collection } |  |  | 0.805 |
-| ns | 936 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.739 |
-| walker |  | 942 | 30 | Fs::DirListing { dir: src/posting/widgets/response } |  |  | 0.740 |
-| walker |  | 1010 | 68 | Fs::DirListing { dir: src/posting/widgets/request } |  |  | 0.751 |
+| ns | 243 |  | 104 | README feature list, part 1: in-app capabilities | 1.3 |  | 0.768 |
+| walker |  | 299 | 160 | Fs::DirListing { dir: src/posting } |  |  | 0.810 |
+| walker |  | 313 | 14 | Fs::DirListing { dir: src/posting/importing } |  |  | 0.810 |
+| walker |  | 329 | 16 | Code::CodeKey { rung: ModuleDoc, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.810 |
+| ns | 343 |  | 100 | README feature list, part 2: interop and the command palette | 1.4 |  | 0.734 |
+| walker |  | 369 | 40 | Fs::DirListing { dir: docs } |  |  | 0.734 |
+| walker |  | 373 | 4 | Fs::DirListing { dir: docs/overrides } |  |  | 0.734 |
+| walker |  | 377 | 4 | Fs::DirListing { dir: docs/stylesheets } |  |  | 0.734 |
+| walker |  | 452 | 75 | Toml::Identity { file: pyproject.toml } |  |  | 0.734 |
+| walker |  | 460 | 8 | Fs::DirListing { dir: .github } |  |  | 0.734 |
+| walker |  | 472 | 12 | Fs::DirListing { dir: .github/workflows } |  |  | 0.734 |
+| walker |  | 496 | 24 | Toml::Operational { file: pyproject.toml } |  |  | 0.734 |
+| ns | 501 |  | 158 | `src/posting/` module roster | 1.5 |  | 0.818 |
+| ns | 604 |  | 103 | Widget package and importer package listings | 1.6 |  | 0.706 |
+| walker |  | 715 | 219 | Plaintext::Whole { file: Makefile } |  |  | 0.707 |
+| ns | 750 |  | 146 | Package identity, build backend and console-script entry point | 1.7 |  | 0.665 |
+| walker |  | 757 | 42 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.665 |
+| walker |  | 846 | 89 | Fs::DirListing { dir: src/posting/widgets } |  |  | 0.795 |
+| walker |  | 856 | 10 | Fs::DirListing { dir: src/posting/widgets/collection } |  |  | 0.795 |
+| walker |  | 886 | 30 | Fs::DirListing { dir: src/posting/widgets/response } |  |  | 0.797 |
+| ns | 936 |  | 186 | Runtime dependency pins | 1.8 | 1.7 | 0.731 |
+| walker |  | 954 | 68 | Fs::DirListing { dir: src/posting/widgets/request } |  |  | 0.741 |
+| walker |  | 1010 | 56 | Fs::DirListing { dir: docs/guide } |  |  | 0.751 |
 | ns | 1044 |  | 108 | UI sub-package listings: request, response, collection | 1.9 |  | 0.771 |
 | ns | 1140 |  | 96 | Documentation tree listing | 1.10 |  | 0.785 |
 | walker |  | 1212 | 202 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.891 |

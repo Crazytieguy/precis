@@ -1,4 +1,4 @@
-Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.458/0.643/0.691/0.608/0.556/0.591
+Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.712/0.643/0.691/0.608/0.556/0.591
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -12,35 +12,35 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 369 | 19 | Fs::DirListing { dir: docs } |  |  | 0.227 |
 | walker |  | 378 | 9 | Fs::DirListing { dir: docs/images } |  |  | 0.227 |
 | ns | 514 |  | 151 | Runtime dependencies, extras and build backend | 1.5 |  | 0.179 |
-| walker |  | 532 | 154 | Plaintext::Whole { file: Makefile } |  |  | 0.180 |
-| walker |  | 615 | 83 | Toml::Identity { file: pyproject.toml } |  |  | 0.313 |
-| walker |  | 623 | 8 | Fs::DirListing { dir: .faq } |  |  | 0.313 |
-| ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.265 |
-| walker |  | 696 | 73 | Fs::DirListing { dir: questions } |  |  | 0.265 |
-| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.259 |
-| walker |  | 777 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.259 |
-| walker |  | 867 | 90 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 56 } |  |  | 0.259 |
-| walker |  | 890 | 23 | Fs::DirListing { dir: .github } |  |  | 0.259 |
-| walker |  | 920 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.259 |
-| walker |  | 943 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.259 |
-| ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.527 |
-| walker |  | 953 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.527 |
-| walker |  | 1044 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.625 |
-| walker |  | 1066 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.634 |
-| walker |  | 1147 | 81 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.656 |
-| walker |  | 1190 | 43 | Fs::DirListing { dir: tools } |  |  | 0.657 |
-| ns | 1312 |  | 363 | rich/ package module roster (complete) | 1.9 |  | 0.468 |
-| walker |  | 1325 | 135 | Fs::DirListing { dir: docs/source } |  |  | 0.471 |
-| walker |  | 1335 | 10 | Fs::DirListing { dir: docs/source/appendix } |  |  | 0.471 |
-| walker |  | 1376 | 41 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.471 |
-| ns | 1424 |  | 112 | rich.* top-level function signatures: get_console, reconfigure, print | 2.1 |  | 0.457 |
-| walker |  | 1542 | 166 | Fs::DirListing { dir: examples } |  |  | 0.461 |
-| walker |  | 1585 | 43 | Markdown::Section { file: README.md, section_index: 16, keeps_default_concavity: false } |  |  | 0.461 |
-| ns | 1729 |  | 305 | rich.* top-level function signatures: print_json, inspect | 2.2 |  | 0.426 |
-| walker |  | 1948 | 363 | Fs::DirListing { dir: rich } |  |  | 0.673 |
-| walker |  | 1964 | 16 | Code::CodeKey { rung: ModuleDoc, file: rich/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
-| ns | 2019 |  | 290 | The console protocol: RichCast, ConsoleRenderable, RenderableType, RenderResult | 2.3 |  | 0.642 |
-| walker |  | 2164 | 200 | Fs::DirListing { dir: rich/_unicode_data } |  |  | 0.644 |
+| ns | 661 |  | 147 | README renderable gallery — all `<summary>` labels | 1.6 |  | 0.151 |
+| walker |  | 741 | 363 | Fs::DirListing { dir: rich } |  |  | 0.170 |
+| walker |  | 757 | 16 | Code::CodeKey { rung: ModuleDoc, file: rich/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.191 |
+| ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.197 |
+| walker |  | 911 | 154 | Plaintext::Whole { file: Makefile } |  |  | 0.198 |
+| ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.541 |
+| walker |  | 994 | 83 | Toml::Identity { file: pyproject.toml } |  |  | 0.595 |
+| walker |  | 1002 | 8 | Fs::DirListing { dir: .faq } |  |  | 0.596 |
+| walker |  | 1075 | 73 | Fs::DirListing { dir: questions } |  |  | 0.596 |
+| walker |  | 1156 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.596 |
+| walker |  | 1246 | 90 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 56 } |  |  | 0.596 |
+| walker |  | 1269 | 23 | Fs::DirListing { dir: .github } |  |  | 0.596 |
+| walker |  | 1299 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.596 |
+| ns | 1312 |  | 363 | rich/ package module roster (complete) | 1.9 |  | 0.658 |
+| walker |  | 1322 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.659 |
+| walker |  | 1332 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.659 |
+| walker |  | 1423 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.733 |
+| ns | 1424 |  | 112 | rich.* top-level function signatures: get_console, reconfigure, print | 2.1 |  | 0.712 |
+| walker |  | 1445 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.718 |
+| walker |  | 1645 | 200 | Fs::DirListing { dir: rich/_unicode_data } |  |  | 0.720 |
+| walker |  | 1726 | 81 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.735 |
+| ns | 1729 |  | 305 | rich.* top-level function signatures: print_json, inspect | 2.2 |  | 0.680 |
+| walker |  | 1769 | 43 | Fs::DirListing { dir: tools } |  |  | 0.682 |
+| walker |  | 1904 | 135 | Fs::DirListing { dir: docs/source } |  |  | 0.684 |
+| walker |  | 1914 | 10 | Fs::DirListing { dir: docs/source/appendix } |  |  | 0.684 |
+| walker |  | 1955 | 41 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.684 |
+| ns | 2019 |  | 290 | The console protocol: RichCast, ConsoleRenderable, RenderableType, RenderResult | 2.3 |  | 0.641 |
+| walker |  | 2121 | 166 | Fs::DirListing { dir: examples } |  |  | 0.644 |
+| walker |  | 2164 | 43 | Markdown::Section { file: README.md, section_index: 16, keeps_default_concavity: false } |  |  | 0.644 |
 | walker |  | 2231 | 67 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.644 |
 | walker |  | 2257 | 26 | Code::CodeKey { rung: Names, file: rich/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.644 |
 | ns | 2281 |  | 262 | console.py module-level symbol roster | 2.4 |  | 0.611 |
