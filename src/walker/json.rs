@@ -127,12 +127,9 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     // little; its entry-point scripts say how to build, test and run the
     // project, and ride at the identity's value.
     let private_root = ctx.depth_from_root(file) == 1
-        && pairs.iter().any(|(name, start, _)| {
-            name == "private"
-                && source
-                    .line(*start)
-                    .is_some_and(|line| line.contains("true"))
-        });
+        && first_child_of_kind(tree.root_node(), "object")
+            .and_then(|object| object_field_value(object, "private", &source))
+            .is_some_and(|value| value.kind() == "true");
     let overlap_chain = package_sections_share_lines(&pairs);
     let mut split_scripts = if overlap_chain {
         None
@@ -601,6 +598,28 @@ mod tests {
             identity
         );
         assert!(value_of(|key| matches!(key, JsonKey::ScriptsTail { .. })) < identity);
+    }
+
+    /// `private` is read from its value, not from whatever else shares
+    /// its row.
+    #[test]
+    fn json_private_false_beside_a_true_value_is_not_private() {
+        let dir = tempfile::tempdir().unwrap();
+        write_pkg(
+            dir.path(),
+            "{\"private\": false, \"x-internal\": true,\n  \"scripts\": {\n    \"release\": \"changeset publish\",\n    \"build\": \"tsc -b\",\n    \"test\": \"vitest\"\n  }\n}\n",
+        );
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(dir.path(), &ctx);
+        let scripts = batches
+            .iter()
+            .find(|batch| matches!(&batch.key, BatchKey::Json(JsonKey::Scripts { .. })))
+            .unwrap();
+        let tail = batches
+            .iter()
+            .find(|batch| matches!(&batch.key, BatchKey::Json(JsonKey::ScriptsTail { .. })))
+            .unwrap();
+        assert_eq!(scripts.value, tail.value);
     }
 
     #[cfg(unix)]
