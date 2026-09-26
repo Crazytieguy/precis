@@ -764,24 +764,15 @@ fn is_separator_gap(s: &str) -> bool {
 
 /// True iff the headline block reads as a "tagline" (a bold one-liner,
 /// a centered `<h1>`) — short enough that the next non-decorative block
-/// is plausibly the prose lede. Measured on stripped text, not rows: a
-/// single long sentence is the lede itself, not a tagline preceding one.
+/// is plausibly the prose lede. Measured in characters of text, less
+/// HTML tags and quote and emphasis markers, not rows: a single long
+/// sentence is the lede itself, not a tagline preceding one.
 fn is_short_substantive_block(block: Node, source: &str) -> bool {
-    let raw = &source[block.start_byte()..block.end_byte()];
-    let stripped = strip_block_for_length(raw);
-    stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS
-}
-
-/// Strip markdown / HTML markup from a block's raw source for the
-/// purposes of measuring its "content length". Removes `<...>` HTML
-/// tags, leading `>` block-quote markers, and common emphasis markup
-/// (`**`, `*`, `_`, `` ` ``) so a bolded tagline measures by its
-/// underlying prose rather than its punctuation.
-fn strip_block_for_length(raw: &str) -> String {
-    strip_html_tags(raw)
+    strip_html_tags(&source[block.byte_range()])
         .chars()
         .filter(|c| !matches!(c, '>' | '*' | '_' | '`'))
-        .collect()
+        .count()
+        <= HEADLINE_TAGLINE_MAX_CHARS
 }
 
 /// Remove `<…>` tags, keeping the line breaks inside them so rows still
@@ -2884,25 +2875,17 @@ mod tests {
         assert_eq!(title_core("Usage: CLI"), "usage");
     }
 
-    /// A non-ASCII tagline whose UTF-8 byte length exceeds the tagline
-    /// max but whose char count is under it must measure as short — length
-    /// is counted in chars, not bytes.
+    /// A tagline is short by its characters, not its bytes: 40 CJK
+    /// characters in bold (124 bytes) still extend to the prose lede.
     #[test]
-    fn markdown_strip_block_for_length_counts_chars_not_bytes() {
-        // 40 CJK chars = 120 bytes (> 90), but 40 chars (< 90). Wrapped in
-        // bold markup the stripper must remove.
-        let tagline: String = "字".repeat(40);
-        let raw = format!("**{tagline}**");
-        assert!(raw.len() > 90, "fixture must exceed byte threshold");
-        let stripped = strip_block_for_length(&raw);
-        assert_eq!(
-            stripped.chars().count(),
-            40,
-            "char count must ignore markup and multi-byte width"
+    fn markdown_tagline_length_counts_chars_not_bytes() {
+        let src = format!(
+            "# T\n\n**{}**\n\nT is a tool that does things.\n\n## Install\n",
+            "字".repeat(40)
         );
         assert!(
-            stripped.chars().count() <= HEADLINE_TAGLINE_MAX_CHARS,
-            "tagline is short by char count despite exceeding byte threshold"
+            covered(&src).contains(&5),
+            "prose lede must follow the tagline"
         );
     }
 }
