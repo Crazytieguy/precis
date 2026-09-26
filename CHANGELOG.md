@@ -20,7 +20,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
 - Dotfiles such as `.github/` and `.gitignore` are listed. v0.1 hid every hidden entry.
 - `.gitignore` rules apply when the path is the root of a git repository. They are no longer inherited from an enclosing repository.
 - YAML and other JSON/TOML files are no longer summarized by their top-level keys. Manifests, small root JSON configs, compose files and Taskfiles are covered instead. Other YAML files appear in the tree only.
-- Only the root README is summarized, in Markdown, reST, AsciiDoc or an extensionless `README`; a root Markdown build or contributing guide (`BUILDING.md`, `INSTALL.md`, `TESTING.md`, `CONTRIBUTING.md`, …) shows only its first build or test commands. Other documents appear in the tree by name; pass one as the path to summarize it.
+- Only the root README is summarized, in Markdown, reST, AsciiDoc or an extensionless `README`; a root Markdown build or contributing guide (`BUILDING.md`, `INSTALL.md`, `TESTING.md`, `CONTRIBUTING.md`, …) shows only the commands under its first build, test, run or development heading. Other documents appear in the tree by name; pass one as the path to summarize it.
 - Rust 1.88 or newer is required to build from source.
 
 ### Highlights

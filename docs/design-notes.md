@@ -20,7 +20,8 @@
 - **Output is a verbatim subset of the source.** No paraphrasing,
   summarization, or invented content under any circumstances. Allowed
   transforms (full lines, prefix+ellipsis truncation, bare-ellipsis
-  markers) are documented on `Render` in `src/content.rs`.
+  markers) are documented on `Render` in `src/content.rs`. Walkers emit
+  `Full` lines only; `Truncated` and `Ellipsis` serve the North Stars.
 
 ## North Star process
 
@@ -67,48 +68,35 @@ listing row, including the files the host harness already loads
 case: an NS that ranks their content as primary is an NS-author error.
 Pricing other docs' sections or outlines at any tier bought the wrong
 pages (translations, migration guides, nested package READMEs) and
-never reached the ones answer keys rank. The one exception is a root
-Markdown build guide (`BUILDING.md`, `INSTALL.md`, `TESTING.md`, …),
-the document a README sends builders to: it yields one `CommandBlock`
-at 0.75× a README section, nothing else. No fixture has one (grid
-byte-identical); on the robustness corpus guides with rows went 1 → 6
-of 18 in plugin mode and 1 → 9 at 8000 tokens. A root `CONTRIBUTING.md`
-is one too, but only a block under a command-titled heading counts:
-its first block is as often a commit template or a fork's clone as a
-build step (3000 −.0003, avg7 −.0003; contributing guides with rows
-1 → 21 of 141 in plugin mode, 2 → 26 at 8000, 2026-09-26). `AGENTS.md`
-stays out: in 18 of the corpora's 22 repos that have both, `CLAUDE.md`
-links or imports it, so the host already loads it.
-A README section titled for building, testing, running or development
-sells its leading shell blocks as a separate `CommandBlock` batch behind
-the outline, one per top-level section, and the section gates on it
-(the scheduler allows overlap only with ancestors). Install and setup
-titles stay out: including them cost 1000 −.0048 on the grid, mostly
-library `npm install x` blocks that answer keys rank late, while the
-build/test set is grid-neutral (3000 +.0005) and shows commands in 24
-of the 32 real-world repos whose README has a tagged build/test shell
-block, up from 3 (2026-09-25). Rechecked on trunk 06ad3aa6: install
-titles cost 3000 −.0032 (go-multierror −.125), and `setup` alone
-1442 −.0011 while its two real-world hits were a dev-server block
-displacing a test command and a benchmark's config under Performance →
-Setup. Back matter emits no section text but keeps a command-titled
-subsection's block: a Contributing section's Testing is the dev
-workflow (grid ±.0003; elk and phoenix gain their test/build commands).
-The outline keeps back-matter headings although their sections emit
-nothing: answer keys read it as the README's table of contents, `Star
-History` included. Dropping every back-matter heading cost 3000 −.0035
-and dropping only the promotional ones (sponsors, backers, donations,
-funding, star history) −.0006 (2026-09-25, trunk 06ad3aa6).
-README chrome (badges, logos, rules, link definitions, nav menus, and
-tables of contents: lists whose items mostly open with an in-document
-link) is left out wherever it sits, section bodies included: 3000
-+.0024, avg7 +.0021, against +.0016 for dropping only contents lists and
-+.0012 for dropping them only above the first H2 (2026-09-26, trunk
-0c240189). Catalog READMEs lose their category contents list with it.
-A repository that exhausts the pool before the budget gets one more
-round: the head of every listed file no batch touches
-(`plaintext::floor_batches`), ranked among themselves only, so it never
-displaces a priced batch.
+never reached the ones answer keys rank.
+
+- **Root build and contributing guides** (`BUILDING.md`, `INSTALL.md`,
+  `CONTRIBUTING.md`, …), the documents a README sends builders to,
+  yield one `CommandBlock` each and nothing else, taken only under a
+  command-titled heading: a guide's first block is as often a commit
+  template, a fork's clone or a package-manager install as a build
+  step. The grid barely sees guides, so they were judged on real-world
+  output. `AGENTS.md` stays out: where a repository has both, `CLAUDE.md`
+  usually links or imports it, so the host already loads it.
+- **Only sections titled for building, testing, running or development
+  sell a `CommandBlock`**: their leading shell blocks, one per top-level
+  section, behind the outline, with the section gated on it (the
+  scheduler allows overlap only with ancestors). Install and setup
+  titles stay out: they buy library `npm install x` blocks, dev-server
+  commands and benchmark configs that answer keys rank late.
+- **Back matter** (license, contributing, sponsors, …) emits no section
+  text but keeps a command-titled subsection's block, since a
+  Contributing section's Testing is the dev workflow. The outline keeps
+  back-matter headings: answer keys read it as the README's table of
+  contents, `Star History` included.
+- **Chrome** (badges, logos, rules, link definitions, nav menus, and
+  tables of contents: lists whose items mostly open with an in-document
+  link) is left out wherever it sits, section bodies included. Catalog
+  READMEs lose their category contents list with it.
+- A repository that exhausts the pool before the budget gets one more
+  round: the head of every listed file no batch touches
+  (`plaintext::floor_batches`), ranked among themselves only, so it
+  never displaces a priced batch.
 
 ## Gitignore and containment
 
@@ -232,7 +220,7 @@ must not undo:
 - A `CodeKey` is identified by `(rung, file, decl index, chunk)`, never
   by source line (a container and its first member can share a row), and
   row ownership is a ledger that drops a conflicting row, not an
-  assertion that fails the run. The engine emits no Ellipsis records.
+  assertion that fails the run.
 - **One value table:** `value::code_rung_value` per rung and one chunk
   exponent. `Names` sits well below `Decl`, or a roster in every file
   outranks entry-file declarations, docs and manifests. A roster is
@@ -320,7 +308,7 @@ once workspace members were exempt.
   cut short is not cached. `hides_everything_in` is uncapped on purpose:
   it only descends through directories with nothing visible, and a
   capped answer would list each of them as `(empty)`. A run-wide cap
-  was tried (2026-09-25): the rows it keeps expose the subtree to
+  was tried: the rows it keeps expose the subtree to
   listings and inventory probes, which doubled user time on 0.3M- and
   1.2M-entry trees of ignored build objects.
 
