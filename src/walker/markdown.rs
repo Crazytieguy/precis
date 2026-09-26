@@ -1370,12 +1370,13 @@ fn is_platform_title_core(core: &str) -> bool {
 
 /// The first code block that `commands` accepts, at any depth in lists
 /// and quotes, that sits under a heading with one of its title words in
-/// `section`, extended through such
-/// blocks after it before the next heading, all
-/// within [`OVERSIZE_CHUNK_TARGET_TOKENS`]; paired with the innermost
-/// such heading (`command_heading` is the enclosing one). Back matter's
-/// own blocks are skipped, not its command-titled subsections: a
-/// Contributing section's Testing is the project's dev workflow.
+/// `section`, extended through such blocks after it before the next
+/// heading, all within [`OVERSIZE_CHUNK_TARGET_TOKENS`]; paired with the
+/// innermost such heading (`command_heading` is the enclosing one).
+/// Back matter's own blocks are skipped, not its command-titled
+/// subsections: a Contributing section's Testing is the project's dev
+/// workflow. With `skip_platforms`, so are the own blocks of a section
+/// whose title names a platform.
 fn command_block(
     section: Node,
     command_heading: Option<Node>,
