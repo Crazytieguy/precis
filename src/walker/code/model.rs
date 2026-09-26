@@ -20,9 +20,10 @@
 //! `body`, plus `name_rows`:
 //!
 //! - **`doc`**: the doc comment rows directly above the declaration (no
-//!   blank row between them and the head), or a docstring inside it (the
-//!   Python first-statement string, whose rows are then not in `body`). One
-//!   [`Item`] per paragraph (per block for TS/JS JSDoc).
+//!   blank row between them and the head, or in TS/JS at most one), or a
+//!   docstring inside it (the Python first-statement string, whose rows
+//!   are then not in `body`). One [`Item`] per paragraph (per block for
+//!   TS/JS JSDoc).
 //! - **`head`** starts at the declaration's first row: its first leading
 //!   attribute / decorator / annotation / modifier row, never a doc
 //!   comment. Where it ends depends on [`Shape`]:

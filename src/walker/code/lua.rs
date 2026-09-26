@@ -14,6 +14,8 @@
 //! joins the roster as re-export rows; function-valued fields of the
 //! tables it hands out are `Callable` declarations instead.
 
+use std::collections::HashSet;
+
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item};
@@ -39,7 +41,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             collect_function_fields(table, &mut export_fields, 1);
         }
     }
-    let field_rows: Vec<usize> = export_fields
+    let field_rows: HashSet<usize> = export_fields
         .iter()
         .flat_map(|field| file.node_rows(*field))
         .collect();

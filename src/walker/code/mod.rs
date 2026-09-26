@@ -771,6 +771,14 @@ mod tests {
         assert_eq!(claimed("x.cpp"), None);
     }
 
+    #[test]
+    fn code_mod_no_two_languages_claim_one_extension() {
+        let mut seen = HashSet::new();
+        for extension in parsed_extensions() {
+            assert!(seen.insert(extension.to_ascii_lowercase()), "{extension}");
+        }
+    }
+
     /// A program's `main` renders with its body, chunked when long: the
     /// closing brace ends its last chunk, so an excerpt of its opening
     /// statements doesn't close the function early.

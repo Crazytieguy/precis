@@ -106,7 +106,8 @@ displaces a priced batch.
   decoding bytes that aren't UTF-8 as U+FFFD. The floor's head read
   (`plaintext::file_head`) sees only listed files. Workspace membership
   canonicalizes member manifest paths without reading them, and the TS
-  engine's nearest-`package.json` probe is a stat.
+  engine's nearest-`package.json` probe is a stat, which follows links
+  but reads nothing.
 - **Credential files never render, whichever walker reads them.**
   `walker::is_refused` — a credential file name (of the path or its link
   target), or a PEM/PGP private-key block with key material under its
