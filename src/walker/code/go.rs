@@ -60,7 +60,7 @@ fn declared_names(file: &SourceFile) -> Vec<String> {
 /// The file's top-level functions, methods and specs.
 fn top_level_declarations(root: Node) -> Vec<Node> {
     let mut declarations = Vec::new();
-    for child in named_children(Some(root)) {
+    for child in root.named_children(&mut root.walk()) {
         match child.kind() {
             "function_declaration" | "method_declaration" => declarations.push(child),
             "type_declaration" | "const_declaration" | "var_declaration" => {
@@ -319,9 +319,9 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
         let is_entry = |entry: &Node| {
             is_spec(entry) || matches!(entry.kind(), "field_declaration" | "method_elem")
         };
-        let shows_some = named_children(Some(list))
-            .iter()
-            .any(|entry| is_entry(entry) && visible(entry));
+        let shows_some = list
+            .named_children(&mut list.walk())
+            .any(|entry| is_entry(&entry) && visible(&entry));
         decl.body = file.admitted_items(list, start, |entry| {
             !is_entry(&entry) || !shows_some || visible(&entry)
         });

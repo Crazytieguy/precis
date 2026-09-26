@@ -392,8 +392,8 @@ fn whole(
     };
     let mut head = match body {
         Some((open_row, list)) => {
-            let last_content_row = named_children(Some(list))
-                .into_iter()
+            let last_content_row = list
+                .named_children(&mut list.walk())
                 .filter(|child| !matches!(child.kind(), "line_comment" | "block_comment"))
                 .map(|child| *file.node_rows(child).end())
                 .fold(open_row, usize::max);

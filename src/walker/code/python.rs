@@ -303,14 +303,14 @@ fn clause_blocks(statement: Node) -> Vec<Node> {
 /// `None` for an `@overload` stub whose implementation follows it.
 fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
     let inner = defined(unit)?;
-    if is_overload(file, unit) && has_implementation_after(file, unit) {
-        return None;
-    }
     let shape = match inner.kind() {
         "function_definition" => Shape::Callable,
         "class_definition" => Shape::Whole,
         _ => return None,
     };
+    if is_overload(file, unit) && has_implementation_after(file, unit) {
+        return None;
+    }
     let name_row = inner.start_position().row + 1;
     let head_end = colon_row(inner).max(name_row);
     let head: Vec<usize> = (unit.start_position().row + 1..=head_end).collect();

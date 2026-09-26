@@ -441,7 +441,7 @@ fn feature_gate_is_declaration_only(node: Node, file: &SourceFile) -> Option<boo
     let condition = node
         .child_by_field_name("condition")
         .or_else(|| node.child_by_field_name("name"));
-    for child in named_children(Some(node)) {
+    for child in node.named_children(&mut node.walk()) {
         if Some(child) == condition {
             continue;
         }

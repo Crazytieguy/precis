@@ -729,8 +729,8 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
                 None => file.whole(vec![name_row], rows, None),
             },
             None => {
-                let name_rows = named_children(Some(node))
-                    .into_iter()
+                let name_rows = node
+                    .named_children(&mut node.walk())
                     .filter_map(|declarator| declarator.child_by_field_name("name"))
                     .map(|name| name.start_position().row + 1)
                     .collect();
