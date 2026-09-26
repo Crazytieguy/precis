@@ -445,7 +445,7 @@ const GENERATOR_BANNER_ROWS: usize = 12;
 /// "1.0"  # DO NOT EDIT` is not a banner, nor is prose about generated
 /// things (`The auto-generated primary key …`) or a bare "do not edit" on
 /// a hand-written header.
-fn has_generator_banner(source: &str) -> bool {
+pub(in crate::walker) fn has_generator_banner(source: &str) -> bool {
     const COMMENT_OPENERS: &[&str] = &["//", "/*", "*", "#", "--", "\"\"\"", "'''"];
     const CLINIC_MARKER: &str = "[clinic start generated code]";
     #[rustfmt::skip]

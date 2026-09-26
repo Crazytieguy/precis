@@ -174,16 +174,16 @@ Score(3000)=0.496 I=0.807 C=0.304 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 9338 |  | 206 | tomllib.md: section map and the CPython sync procedure | 6.2 |  | 0.553 |
 | walker |  | 9362 | 109 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 30, sub: 0, line: 300 } |  |  | 0.554 |
 | walker |  | 9381 | 19 | Code::CodeKey { rung: Body, file: tests/burntsushi.py, decl: 4, sub: 0, line: 92 } |  |  | 0.554 |
-| walker |  | 9442 | 61 | Plaintext::DeclSurface { file: benchmark/requirements.txt } |  |  | 0.554 |
-| walker |  | 9467 | 25 | Plaintext::Whole { file: benchmark/requirements.txt } |  |  | 0.554 |
 | ns | 9472 |  | 134 | CHANGELOG.md: the two most recent releases | 6.3 |  | 0.548 |
-| walker |  | 9487 | 20 | Code::CodeKey { rung: Body, file: tests/test_misc.py, decl: 8, sub: 0, line: 133 } |  |  | 0.548 |
-| walker |  | 9573 | 86 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-date } |  |  | 0.548 |
+| walker |  | 9517 | 136 | Plaintext::DeclSurface { file: .bumpversion.cfg } |  |  | 0.548 |
+| walker |  | 9567 | 50 | Plaintext::Whole { file: .bumpversion.cfg } |  |  | 0.548 |
+| walker |  | 9628 | 61 | Plaintext::DeclSurface { file: benchmark/requirements.txt } |  |  | 0.548 |
 | ns | 9637 |  | 165 | CI workflow: the complete job list and test matrix | 6.4 |  | 0.544 |
-| walker |  | 9695 | 122 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 29, sub: 0, line: 283 } |  |  | 0.545 |
-| walker |  | 9791 | 96 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-datetime } |  |  | 0.545 |
-| ns | 9808 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.540 |
-| walker |  | 9823 | 32 | Code::CodeKey { rung: Doc, file: tests/burntsushi.py, decl: 2, sub: 0, line: 42 } |  |  | 0.544 |
-| walker |  | 9953 | 130 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 54, sub: 0, line: 764 } |  |  | 0.559 |
-| ns | 9993 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.553 |
-| walker |  | 9995 | 42 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/bool } |  |  | 0.553 |
+| walker |  | 9653 | 25 | Plaintext::Whole { file: benchmark/requirements.txt } |  |  | 0.544 |
+| walker |  | 9673 | 20 | Code::CodeKey { rung: Body, file: tests/test_misc.py, decl: 8, sub: 0, line: 133 } |  |  | 0.544 |
+| walker |  | 9759 | 86 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-date } |  |  | 0.544 |
+| ns | 9808 |  | 171 | pre-commit: the complete list of hook ids | 6.5 |  | 0.539 |
+| walker |  | 9881 | 122 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 29, sub: 0, line: 283 } |  |  | 0.540 |
+| walker |  | 9977 | 96 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-datetime } |  |  | 0.540 |
+| walker |  | 9987 | 10 | Code::CodeKey { rung: Doc, file: tests/burntsushi.py, decl: 2, sub: 0, line: 42 } |  |  | 0.541 |
+| ns | 9993 |  | 185 | Lint and version-bump configuration: .flake8 and .bumpversion.cfg | 6.6 |  | 0.538 |
