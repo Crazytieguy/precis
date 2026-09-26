@@ -358,6 +358,13 @@ Alternatives tried on the robustness and eval corpora and the grid:
   budget on names.
 - 2× to 5× opened the same directories; 1.5× opened fewer.
 
+The survey does not enter asset folders (`www/`, `static/`, `public/`,
+`assets/`) or weigh derived artifacts (`*.min.js`), so a bundled
+browser library does not become the spine, or the primary language, of
+a repository written in something else. Restricting the spine to the
+primary language was tried and dropped: in a mixed C/Python tree it
+left no directory with a majority and unlisted the Python library.
+
 Past the survey's entry cap there is no spine. Opening a spine
 directory also opens its subdirectories' listings and its files at their
 plain values, so a repository whose spine was bare trades some peripheral

@@ -10,6 +10,8 @@ use std::sync::Arc;
 use crate::fs_util::{DirFilter, PROBE_ENTRY_CAP};
 use crate::render::Source;
 
+use super::plaintext::is_derived_artifact_name;
+
 /// Minimum share of the tree's essential source bytes for the largest
 /// source file to count as the repository's spine.
 const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
@@ -19,6 +21,10 @@ const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 /// rather than something a reader is meant to read more of.
 const DOMINANT_SOURCE_MAX_FILE_BYTES: u64 = 400_000;
 
+/// Directories that hold what a web page loads (`www/`, `static/`),
+/// not the source it was built from.
+const ASSET_DIR_NAMES: &[&str] = &["www", "static", "public", "assets"];
+
 /// The tree's essential source files, as one walk: each file's path,
 /// byte length and language family.
 pub(super) type EssentialSource = Vec<(PathBuf, u64, &'static str)>;
@@ -26,8 +32,10 @@ pub(super) type EssentialSource = Vec<(PathBuf, u64, &'static str)>;
 /// Walk `root` for its essential source. Non-essential subtrees (tests,
 /// examples, vendored, tooling) are not entered, since nothing under one
 /// counts, so a large test corpus can neither dilute the mass nor spend
-/// the walk's budget. `None` once it has read [`PROBE_ENTRY_CAP`]
-/// entries.
+/// the walk's budget. Nor are asset folders, whose scripts are copies
+/// served to a browser, and a derived artifact (`app.min.js`) is not
+/// weighed: a bundled library can outweigh the code the repository is
+/// written in. `None` once it has read [`PROBE_ENTRY_CAP`] entries.
 ///
 /// Enumeration mirrors the walkers' own rules rather than inventing a
 /// second traversal policy: gitignore exclusion via `filter`, the
@@ -64,6 +72,7 @@ pub(super) fn enumerate_essential_source(
                 let name = entry.file_name();
                 let name = name.to_string_lossy();
                 if !crate::fs_util::should_skip_dir(&name)
+                    && !ASSET_DIR_NAMES.contains(&&*name)
                     && crate::value::non_essential_factor(&path, root) >= 1.0
                 {
                     queue.push_back(path);
@@ -72,7 +81,10 @@ pub(super) fn enumerate_essential_source(
                 let Some(language) = language_group(&path) else {
                     continue;
                 };
-                if crate::value::non_essential_factor(&path, root) < 1.0 {
+                if is_derived_artifact_name(
+                    &entry.file_name().to_string_lossy().to_ascii_lowercase(),
+                ) || crate::value::non_essential_factor(&path, root) < 1.0
+                {
                     continue;
                 }
                 let Ok(len) = entry.metadata().map(|m| m.len()) else {
@@ -299,6 +311,8 @@ mod tests {
             ("core/api.py", 30),
             ("core/engine/run.py", 60),
             ("side/tool.py", 20),
+            ("side/app.min.js", 1000),
+            ("inst/www/shared/jquery.js", 1000),
             ("tests/test_all.py", 1000),
         ] {
             let path = root.join(path);
@@ -309,6 +323,7 @@ mod tests {
         let on_spine = |dir: &str| ctx.is_on_source_spine(&root.join(dir));
         assert!(on_spine("core") && on_spine("core/engine"));
         assert!(!ctx.is_on_source_spine(root) && !on_spine("side") && !on_spine("tests"));
+        assert!(!on_spine("inst") && !on_spine("inst/www"));
     }
 
     #[test]
