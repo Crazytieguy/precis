@@ -85,6 +85,11 @@ displacing a test command and a benchmark's config under Performance →
 Setup. Back matter emits no section text but keeps a command-titled
 subsection's block: a Contributing section's Testing is the dev
 workflow (grid ±.0003; elk and phoenix gain their test/build commands).
+The outline keeps back-matter headings although their sections emit
+nothing: answer keys read it as the README's table of contents, `Star
+History` included. Dropping every back-matter heading cost 3000 −.0035
+and dropping only the promotional ones (sponsors, backers, donations,
+funding, star history) −.0006 (2026-09-25, trunk 06ad3aa6).
 A repository that exhausts the pool before the budget gets one more
 round: the head of every listed file no batch touches
 (`plaintext::floor_batches`), ranked among themselves only, so it never
