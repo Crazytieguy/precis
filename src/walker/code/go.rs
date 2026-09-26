@@ -7,7 +7,8 @@
 //! re-export row, so a platform variant never lists its declarations
 //! without their condition. A file carrying the generated-code banner,
 //! or excluded from every build by `//go:build ignore` (a generator or
-//! demo program), yields no declarations. Outside `package main`, what
+//! demo program), yields no declarations. A `Deprecated:` doc paragraph
+//! joins the head, like a directive. Outside `package main`, what
 //! no importer can name (a lower-case declaration, spec, field or
 //! interface method, or a method on a lower-case type no exported
 //! function returns) is hidden, unless its file, or its struct, exports
@@ -270,7 +271,7 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
         }
     });
     let mut decl = file.callable(vec![start], rows, statements, open_row);
-    let (doc, directives) = doc_and_directives(node, file);
+    let (doc, directives) = head_doc_and_directives(node, file);
     decl.head.extend(directives);
     Some(DeclInfo { doc, ..decl })
 }
@@ -333,9 +334,27 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
             !is_entry(&entry) || !shows_some || visible(&entry)
         });
     }
-    let (doc, directives) = doc_and_directives(node, file);
+    let (doc, directives) = head_doc_and_directives(node, file);
     decl.head.extend(directives);
     Some(DeclInfo { doc, ..decl })
+}
+
+/// [`doc_and_directives`] of a declaration, its `Deprecated:` paragraph
+/// moved to the directives: a notice that the declaration should not be
+/// used, which a doc cut to its summary would drop.
+fn head_doc_and_directives(node: Node, file: &SourceFile) -> (Vec<Item>, Vec<usize>) {
+    let (mut doc, mut directives) = doc_and_directives(node, file);
+    doc.retain(|paragraph| {
+        let deprecated = file
+            .line(paragraph.rows[0])
+            .trim()
+            .starts_with("// Deprecated: ");
+        if deprecated {
+            directives.extend(&paragraph.rows);
+        }
+        !deprecated
+    });
+    (doc, directives)
 }
 
 /// The specs of a `type`, `const` or `var` declaration, and the node
@@ -528,6 +547,13 @@ func Foo() {}
         assert_eq!(
             describe(&model),
             ["Callable name [10] head [10] doc [[6, 7], [8, 9]] body []"]
+        );
+        let deprecated = extract_source(
+            "package p\n\n// Old does X.\n//\n// Deprecated: Use New.\nfunc Old() {}\n",
+        );
+        assert_eq!(
+            describe(&deprecated),
+            ["Callable name [6] head [5, 6] doc [[3, 4]] body []"]
         );
     }
 
