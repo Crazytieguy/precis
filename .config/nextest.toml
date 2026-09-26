@@ -5,3 +5,16 @@ slow-timeout = { period = "60s", terminate-after = 2 }
 # per-run thread count multiplies across them and oversubscribes the host.
 # The suite passes in parallel, so raise this for a solo run if wanted.
 test-threads = 1
+
+# CI has no `tests/fixtures` (gitignored; `cargo run --example
+# clone_fixtures` fills it), so it leaves out the tests that read it.
+[profile.ci]
+test-threads = "num-cpus"
+default-filter = """
+not (
+    kind(test) & test(/^(fixture_baselines|ns_simulate|readme_example)::/)
+    | test(=plugin_hooks::plugin_hooks_session_start_context_fits_hook_cap)
+    | test(=walker::toml::tests::toml_workspace_members_mdbook_fixture)
+    | test(=walker::code::tests::code_mod_training_fixtures_extract_within_the_contract)
+)
+"""
