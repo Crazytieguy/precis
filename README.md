@@ -191,7 +191,7 @@ When the path is the root of a git repository, `precis` honours `.gitignore` (in
 
 ## Supported languages
 
-- **Parsed source** — Rust, TypeScript / JavaScript (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`), Python, Go, C (`.c`, `.h`) and Lua: module docs, declaration names and signatures, then doc comments and bodies as the budget allows.
+- **Parsed source** — Rust, TypeScript / JavaScript (`.ts`, `.tsx`, `.mts`, `.cts`, `.js`, `.jsx`, `.mjs`, `.cjs`), Python (`.py`, `.pyi`), Go, C (`.c`, and `.h` unless it declares C++) and Lua: module docs, declaration names and signatures, then doc comments and bodies as the budget allows.
 - **README** — the root README in Markdown, reStructuredText, AsciiDoc or plain text (`README.md`, `README.rst`, `README.adoc`, an extensionless `README`, …): its lede, heading outline and section bodies. Other documents appear in the directory tree; name one directly (`precis docs/guide.md`) to summarize it.
 - **Manifests** — `package.json`, `Cargo.toml`, `pyproject.toml` (and any TOML that declares a package), `go.mod` / `go.work` and Prisma schemas: identity, entry points, scripts and dependencies. Small root JSON configs render whole.
 - **Build and ops files** — Makefile, Taskfile, justfile, Dockerfile, compose files, dotenv samples, runtime version pins (`.nvmrc`, `.python-version`, `.tool-versions`) and `pnpm-workspace.yaml`.
