@@ -301,10 +301,10 @@ must not undo:
   non-essential files last: by path, or by content when the language
   says so (`FileModel::non_essential`: a Go file whose only exports are
   methods on unexported types; ranked by its sibling references, it
-  opened ahead of the package's API files). Values are untouched: every value-model fix
-  tried (a prior for sibling mentions, a steeper roster exponent, a
-  depth pin beside entry files) lifted code over README and manifest
-  batches and lost. Reference signals for C `#include`, Rust
+  opened ahead of the package's API files). Values are untouched: every
+  value-model fix tried (a prior for sibling mentions, a steeper roster
+  exponent, a depth pin beside entry files) lifted code over README and
+  manifest batches and lost. Reference signals for C `#include`, Rust
   `crate::`/`mod` and TS/JS relative imports ranked no better than size
   (C's most-included headers are utility headers) and were dropped.
 

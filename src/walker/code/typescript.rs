@@ -983,7 +983,8 @@ fn is_internal(file: &SourceFile, doc: &[Item]) -> bool {
 /// The comments directly above `node`: one item per block comment and
 /// per run of `//` rows. JSDoc is often separated from what it documents
 /// by one blank row (`/** … */`, blank, `function f`), so one blank row
-/// still attaches. A file's `@license` / `@fileoverview` header is not
+/// still attaches, and by tool directives (`// eslint-disable-next-line`),
+/// which are skipped. A file's `@license` / `@fileoverview` header is not
 /// the doc of the declaration under it.
 fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
     let is_line_comment = |row: usize| file.line(row).trim_start().starts_with("//");

@@ -11,10 +11,10 @@
 //! joins the head, like a directive. Outside `package main`, what
 //! no importer can name (a lower-case declaration, spec or field, or a
 //! method on a lower-case type) is hidden, unless its file exports
-//! nothing. A file whose only exports are such
-//! methods (an operator's `Evaluate`, an iterator's `Next`) lists those
-//! methods, not its private helpers, and is non-essential: interface
-//! plumbing, read after the files that hold the package's API. An exported struct with no exported
+//! nothing. A file whose only exports are such methods (an operator's
+//! `Evaluate`, an iterator's `Next`) lists those methods, not its private
+//! helpers, and is non-essential: interface plumbing, read after the
+//! files that hold the package's API. An exported struct with no exported
 //! field shows its opening and closing rows only. An interface shows
 //! every method, since a lower-case one seals it against outside
 //! implementations.
