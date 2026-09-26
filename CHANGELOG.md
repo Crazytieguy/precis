@@ -16,7 +16,7 @@ A rewrite of how precis decides what to show. The CLI and the plugin install the
   - A directory other than the root with more than 120 entries may show only 40 of them, subdirectories picked before files, then its `…` row.
   - A source line longer than 500 characters is cut short with `…`.
   - A row like `src/main/java/` is a chain of directories that each hold only the next.
-  - `(empty)` marks entries that are genuinely empty. An entry with nothing under it wasn't expanded.
+  - `(empty)` marks a zero-byte file, or a directory holding nothing precis lists. An entry with nothing under it wasn't expanded.
 - Dotfiles such as `.github/` and `.gitignore` are listed. v0.1 hid every hidden entry.
 - `.gitignore` rules apply when the path is the root of a git repository. They are no longer inherited from an enclosing repository.
 - YAML and other JSON/TOML files are no longer summarized by their top-level keys. Manifests, small root JSON configs, compose files and Taskfiles are covered instead. Other YAML files appear in the tree only.

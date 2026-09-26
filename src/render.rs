@@ -284,10 +284,10 @@ impl RenderedTree {
 
     // ---- internal ----
 
-    /// Whether `path` is known to hold nothing on disk: a directory with no
-    /// entries through the walk's ignore rules, or a zero-byte file. A
-    /// linked directory lists nothing because it is never listed through,
-    /// not because it is empty.
+    /// Whether `path` holds nothing any budget could show: a directory
+    /// [`list_dir`] lists nothing for, or a zero-byte file. A linked
+    /// directory lists nothing because it is never listed through, so it is
+    /// not marked.
     fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
         if matches!(kind, EntryKind::Directory) {
             return lists_nothing(path, &self.dir_filter)
@@ -915,8 +915,8 @@ fn format_marker_row(indent_depth: usize) -> String {
 
 /// One tree entry row: an entry, or a chain of directories that each
 /// hold only the next (`src/main/java/`). An entry with nothing rendered
-/// under it reads as unexpanded, so the rare entry that is empty on disk
-/// says so.
+/// under it reads as unexpanded, so the rare entry that holds nothing to
+/// show says so.
 fn format_entry_row(names: &[String], kind: EntryKind, indent_depth: usize, empty: bool) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
     push_escaped(&mut s, &names.join("/"), false);

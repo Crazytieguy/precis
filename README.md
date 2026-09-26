@@ -112,7 +112,7 @@ tsconfig.json
 
 The file tree shows everything that exists; the README's lede and headings say what the package is and how its docs are organized; and `package.json` identifies the package and its entry points. At larger budgets `src/index.ts` follows with its exported types and signatures. Line numbers make every entry a precise jump target for follow-up reads.
 
-A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. A directory other than the root with more than 120 entries may show only 40 of them, subdirectories picked before files, then that `…`. A source line longer than 500 characters is cut short with `…`. A row like `src/main/java/` is a chain of directories that each hold only the next. An entry with nothing under it wasn't expanded; the rare entry that is genuinely empty is marked `(empty)`.
+A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. A directory other than the root with more than 120 entries may show only 40 of them, subdirectories picked before files, then that `…`. A source line longer than 500 characters is cut short with `…`. A row like `src/main/java/` is a chain of directories that each hold only the next. An entry with nothing under it wasn't expanded, unless it is marked `(empty)`: a zero-byte file, or a directory holding nothing precis lists.
 
 ## Installation
 
