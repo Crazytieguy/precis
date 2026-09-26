@@ -228,7 +228,7 @@ fn is_scripts_section(name: &str) -> bool {
 /// whole table is the lede. A PEP 621 `[project]` table routinely declares
 /// four times its lede in metadata, and the Identity batch competes for its
 /// early slot on `value / cost^k` — carrying that metadata costs the lede the
-/// slot outright, so the residue is priced as manifest config instead.
+/// slot outright, so the residue is left to an explicit read.
 fn python_identity_non_lede_rows(source: &str, sections: &[Section]) -> HashSet<usize> {
     let lines: Vec<&str> = source.lines().collect();
     sections
@@ -455,18 +455,18 @@ mod tests {
         parser.parse(source, None).unwrap()
     }
 
-    /// `(identity lede rows, manifest-config residue rows)` for a source whose
-    /// only identity table spans 1..=`end`.
+    /// `(identity lede rows, residue rows outside the dependency arrays)` for a
+    /// source whose only identity table spans 1..=`end`.
     fn identity_partition(source: &str, end: usize) -> (Vec<usize>, Vec<usize>) {
         let sections = collect_sections(&parse(source), source);
         let residue = python_identity_non_lede_rows(source, &sections);
         let owned: HashSet<usize> =
             pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
-        let mut config_rows: Vec<usize> = residue.difference(&owned).copied().collect();
-        config_rows.sort();
+        let mut metadata_rows: Vec<usize> = residue.difference(&owned).copied().collect();
+        metadata_rows.sort();
         (
             (1..=end).filter(|row| !residue.contains(row)).collect(),
-            config_rows,
+            metadata_rows,
         )
     }
 
@@ -532,9 +532,9 @@ mod tests {
     }
 
     /// The lede keeps the single-line scalars that name and describe the
-    /// package; every other row of the table is manifest-config residue —
-    /// except the PEP 621 dependency arrays, which the dependency batch owns
-    /// and which no second batch may claim.
+    /// package; every other row of the table is residue left to an explicit
+    /// read — except the PEP 621 dependency arrays, which the dependency batch
+    /// owns and which no second batch may claim.
     #[test]
     fn toml_project_identity_splits_lede_from_metadata() {
         let source = r#"[project]
@@ -556,8 +556,8 @@ requires-python = ">=3.10"
         assert_eq!(residue, vec![3, 5, 6, 7, 8, 9]);
     }
 
-    /// A multi-line string value renders whole in the residue rather than as
-    /// a dangling opener in the lede.
+    /// A multi-line string value falls whole into the residue rather than
+    /// leaving a dangling opener in the lede.
     #[test]
     fn toml_multiline_description_stays_out_of_the_lede() {
         let source = "[project]\nname = \"demo\"\ndescription = \"\"\"\nA demo.\n\"\"\"\n";

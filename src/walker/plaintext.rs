@@ -3,7 +3,7 @@
 //!
 //! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
 //!    samples, version pins and the pnpm workspace, each rendered whole or as
-//!    a head slice at one of two value tiers.
+//!    a head slice and priced by class ([`class_value`]).
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
 //!    placeholders and document the deploy-facing config keys.
@@ -1241,7 +1241,9 @@ fn is_hidden(file: &Path, ctx: &WalkCtx) -> bool {
 /// `file`'s source as far as `head_bytes` reach into it: whole when a
 /// walker has already read it or it fits, else only its head. The head runs
 /// a few bytes past `head_bytes` so the line the cut falls in stays too long
-/// to select.
+/// to select. A head is cached under `file`'s own path, where the renderer
+/// reads it; no walker reads it as the whole file only because the floor
+/// runs once, after the pool has run dry and every expansion is done.
 fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source>> {
     if let Some(source) = ctx.source_cache().cached(file) {
         return Some(source);
@@ -1269,11 +1271,12 @@ fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source
     ctx.source_cache().cached(file)
 }
 
-/// Two tiers. The ops surface (how the project is built, deployed and
-/// versioned) and an unparsed language's declaration surface sit at the
-/// top, the latter below a parsed declaration unless it is in the
-/// repository's primary language ([`is_in_primary_language`]).
-/// Contributor tooling and unclassified prose / flat config sit low.
+/// The ops surface (how the project is built, deployed and versioned) and
+/// an unparsed language's declaration surface sit high, the latter at a
+/// parsed declaration's value when it is in the repository's primary
+/// language ([`is_in_primary_language`]); an unparsed manifest prices as a
+/// manifest's identity block. Contributor tooling and unclassified prose /
+/// flat config sit low.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     let tier = match class {
         Class::LanguageSource if is_in_primary_language(file, ctx) => {
