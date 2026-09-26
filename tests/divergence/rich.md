@@ -1,4 +1,4 @@
-Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.635/0.458/0.643/0.691/0.608/0.556/0.591
+Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.556/0.458/0.643/0.691/0.608/0.556/0.591
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,15 +19,15 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 696 | 73 | Fs::DirListing { dir: questions } |  |  | 0.265 |
 | ns | 758 |  | 97 | Compatibility + install + `python -m rich` | 1.7 |  | 0.259 |
 | walker |  | 777 | 81 | Markdown::Prelude { file: README.md } |  |  | 0.259 |
-| walker |  | 800 | 23 | Fs::DirListing { dir: .github } |  |  | 0.259 |
-| walker |  | 830 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.259 |
-| walker |  | 853 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.259 |
-| walker |  | 863 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.259 |
+| walker |  | 867 | 90 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 56 } |  |  | 0.259 |
+| walker |  | 890 | 23 | Fs::DirListing { dir: .github } |  |  | 0.259 |
+| walker |  | 920 | 30 | Fs::DirListing { dir: .github/workflows } |  |  | 0.259 |
+| walker |  | 943 | 23 | Fs::DirListing { dir: benchmarks } |  |  | 0.259 |
 | ns | 949 |  | 191 | Repository root listing (complete) | 1.8 |  | 0.527 |
-| walker |  | 954 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.625 |
-| walker |  | 976 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.634 |
-| walker |  | 1057 | 81 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.656 |
-| walker |  | 1147 | 90 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 56 } |  |  | 0.656 |
+| walker |  | 953 | 10 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.527 |
+| walker |  | 1044 | 91 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.625 |
+| walker |  | 1066 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.634 |
+| walker |  | 1147 | 81 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.656 |
 | walker |  | 1190 | 43 | Fs::DirListing { dir: tools } |  |  | 0.657 |
 | ns | 1312 |  | 363 | rich/ package module roster (complete) | 1.9 |  | 0.468 |
 | walker |  | 1325 | 135 | Fs::DirListing { dir: docs/source } |  |  | 0.471 |

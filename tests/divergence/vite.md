@@ -12,17 +12,17 @@ Score(3000)=0.503 I=0.862 C=0.294 ns_rows≤3K=18/55 grid(1000/1442/2080/3000/43
 | ns | 296 |  | 91 | Repository root listing (complete) | 1.5 |  | 0.898 |
 | walker |  | 331 | 42 | Json::Identity { file: package.json } |  |  | 0.901 |
 | walker |  | 364 | 33 | Fs::DirListing { dir: patches } |  |  | 0.901 |
-| walker |  | 400 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.901 |
-| walker |  | 430 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.901 |
-| walker |  | 453 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.902 |
-| ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.839 |
+| walker |  | 418 | 54 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 28 } |  |  | 0.901 |
+| walker |  | 454 | 36 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.901 |
+| ns | 466 |  | 170 | README: dev server vs. build command, and extensibility | 1.6 | 1.4 | 0.838 |
+| walker |  | 484 | 30 | Fs::DirListing { dir: packages/plugin-legacy } |  |  | 0.838 |
+| walker |  | 507 | 23 | Fs::DirListing { dir: packages/plugin-legacy/src } |  |  | 0.839 |
 | ns | 543 |  | 77 | packages/vite top-level listing | 1.7 |  | 0.697 |
-| walker |  | 595 | 142 | Json::Scripts { file: package.json } |  |  | 0.700 |
-| ns | 636 |  | 93 | Root package.json identity, engines, package manager | 1.8 |  | 0.670 |
-| walker |  | 718 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.672 |
-| walker |  | 722 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.672 |
-| walker |  | 727 | 5 | Fs::DirListing { dir: packages/create-vite/__tests__ } |  |  | 0.672 |
-| walker |  | 781 | 54 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 28 } |  |  | 0.672 |
+| ns | 636 |  | 93 | Root package.json identity, engines, package manager | 1.8 |  | 0.667 |
+| walker |  | 649 | 142 | Json::Scripts { file: package.json } |  |  | 0.670 |
+| walker |  | 772 | 123 | Fs::DirListing { dir: packages/create-vite } |  |  | 0.672 |
+| walker |  | 776 | 4 | Fs::DirListing { dir: packages/create-vite/src } |  |  | 0.672 |
+| walker |  | 781 | 5 | Fs::DirListing { dir: packages/create-vite/__tests__ } |  |  | 0.672 |
 | walker |  | 840 | 59 | Json::Runtime { file: package.json } |  |  | 0.711 |
 | ns | 859 |  | 223 | Root pnpm scripts: lint, typecheck and the test entry points | 1.9 |  | 0.657 |
 | walker |  | 917 | 77 | Fs::DirListing { dir: packages/vite } |  |  | 0.799 |

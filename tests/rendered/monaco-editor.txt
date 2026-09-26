@@ -24,6 +24,21 @@
   tasks.json
 CHANGELOG.md
 CONTRIBUTING.md
+  …
+  89→## Running the editor tests
+  90→
+  91→```bash
+  92→> npm run build-monaco-editor
+  93→> npm run test
+  94→> npm run compile --prefix webpack-plugin
+  95→
+  96→> npm run package-for-smoketest-webpack
+  97→> npm run package-for-smoketest-esbuild
+  98→> npm run package-for-smoketest-vite
+  99→> npm run package-for-smoketest-parcel --prefix test/smoke/parcel
+  100→> npm run smoketest-debug
+  101→```
+  …
 LICENSE.txt
 MAINTAINING.md
 README.md
@@ -33,9 +48,7 @@ README.md
   …
   12→## Try it out
   13→
-  14→Try out the editor and see various examples [in our interactive playground](https://microsoft.github.io/monaco-editor/playground.html).
-  15→
-  16→The playground is the best way to learn about how to use the editor, which features is supports, to try out different versions and to create minimal reproducible examples for bug reports.
+  …
   18→## Installing
   …
   31→## Localization
@@ -550,22 +563,3 @@ webpack-plugin/
     types.ts
   tsconfig.json
 website/
-  .gitignore
-  .prettierrc.json
-  index/
-  package-lock.json
-  package.json
-  scripts/
-    check-playground-samples-js.ts
-  src/
-  static/
-    monarch/
-      monarch-34px.png
-      monarch.css
-      monarch.js
-    monarch-static.html
-  tsconfig.json
-  tslint.json
-  typedoc/
-  vscode-web-editors.tgz
-  webpack.config.ts

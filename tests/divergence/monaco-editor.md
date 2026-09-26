@@ -1,4 +1,4 @@
-Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.643/0.694/0.782/0.712/0.640/0.580/0.528
+Score(3000)=0.713 I=0.804 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.643/0.694/0.782/0.713/0.640/0.580/0.528
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -97,39 +97,39 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 2239 | 20 | Fs::DirListing { dir: .github } |  |  | 0.769 |
 | walker |  | 2247 | 8 | Fs::DirListing { dir: .github/workflows } |  |  | 0.769 |
 | walker |  | 2258 | 11 | Json::Entry { file: samples/electron-esm-webpack/package.json } |  |  | 0.769 |
-| walker |  | 2295 | 37 | Fs::DirListing { dir: monaco-lsp-client/src/adapters } |  |  | 0.770 |
-| walker |  | 2322 | 27 | Json::Entry { file: monaco-lsp-client/package.json } |  |  | 0.770 |
-| walker |  | 2404 | 82 | Fs::DirListing { dir: samples/legacy } |  |  | 0.770 |
-| walker |  | 2408 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-editor } |  |  | 0.770 |
-| walker |  | 2412 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-localized } |  |  | 0.770 |
-| walker |  | 2416 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-monarch } |  |  | 0.770 |
-| walker |  | 2420 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-requirejs } |  |  | 0.770 |
-| walker |  | 2424 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shadow-dom } |  |  | 0.770 |
-| walker |  | 2428 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shared-model } |  |  | 0.770 |
-| ns | 2429 |  | 282 | _.contribution.ts: ILang/ILangImpl and registerLanguage() | 2.8 |  | 0.734 |
-| walker |  | 2432 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-trusted-types } |  |  | 0.734 |
-| walker |  | 2440 | 8 | Fs::DirListing { dir: samples/legacy/browser-amd-iframe } |  |  | 0.734 |
-| walker |  | 2452 | 12 | Fs::DirListing { dir: samples/legacy/browser-amd-diff-editor } |  |  | 0.734 |
-| walker |  | 2469 | 17 | Fs::DirListing { dir: samples/legacy/electron-amd } |  |  | 0.734 |
-| walker |  | 2485 | 16 | Json::Identity { file: samples/legacy/electron-amd/package.json } |  |  | 0.734 |
-| walker |  | 2513 | 28 | Json::Entry { file: webpack-plugin/package.json } |  |  | 0.734 |
-| walker |  | 2547 | 34 | Json::Dependencies { file: webpack-plugin/package.json } |  |  | 0.734 |
-| ns | 2568 |  | 139 | _.contribution.ts: LazyLanguageLoader and loadLanguage() | 2.9 |  | 0.718 |
-| walker |  | 2583 | 36 | Json::Dependencies { file: samples/package.json } |  |  | 0.718 |
-| walker |  | 2622 | 39 | Json::Scripts { file: samples/package.json } |  |  | 0.718 |
-| ns | 2657 |  | 89 | Grammar file shape: rust.ts conf + language exports | 2.10 |  | 0.708 |
-| walker |  | 2768 | 146 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.747 |
-| walker |  | 2781 | 13 | Json::Entry { file: samples/legacy/electron-amd/package.json } |  |  | 0.747 |
-| ns | 2797 |  | 140 | Tokenization test harness: testRunner.ts types + testTokenization(), and a test file head | 2.11 |  | 0.730 |
-| walker |  | 2824 | 43 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.730 |
-| ns | 2839 |  | 42 | src/languages/definitions/register.all.ts head, elided middle, tail | 2.12 |  | 0.724 |
-| walker |  | 2904 | 80 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.724 |
-| walker |  | 2964 | 60 | Fs::DirListing { dir: website } |  |  | 0.725 |
-| walker |  | 2972 | 8 | Fs::DirListing { dir: website/static } |  |  | 0.725 |
-| ns | 2974 |  | 135 | src/deprecated/: the legacy import paths, all one-line re-exports | 2.13 |  | 0.712 |
-| walker |  | 2981 | 9 | Fs::DirListing { dir: website/scripts } |  |  | 0.712 |
-| walker |  | 2996 | 15 | Fs::DirListing { dir: website/static/monarch } |  |  | 0.712 |
-| walker |  | 3145 | 149 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 91 } |  |  | 0.714 |
+| walker |  | 2407 | 149 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 91 } |  |  | 0.772 |
+| ns | 2429 |  | 282 | _.contribution.ts: ILang/ILangImpl and registerLanguage() | 2.8 |  | 0.735 |
+| walker |  | 2444 | 37 | Fs::DirListing { dir: monaco-lsp-client/src/adapters } |  |  | 0.736 |
+| walker |  | 2471 | 27 | Json::Entry { file: monaco-lsp-client/package.json } |  |  | 0.736 |
+| walker |  | 2553 | 82 | Fs::DirListing { dir: samples/legacy } |  |  | 0.736 |
+| walker |  | 2557 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-editor } |  |  | 0.736 |
+| walker |  | 2561 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-localized } |  |  | 0.736 |
+| walker |  | 2565 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-monarch } |  |  | 0.736 |
+| ns | 2568 |  | 139 | _.contribution.ts: LazyLanguageLoader and loadLanguage() | 2.9 |  | 0.720 |
+| walker |  | 2569 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-requirejs } |  |  | 0.720 |
+| walker |  | 2573 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shadow-dom } |  |  | 0.720 |
+| walker |  | 2577 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-shared-model } |  |  | 0.720 |
+| walker |  | 2581 | 4 | Fs::DirListing { dir: samples/legacy/browser-amd-trusted-types } |  |  | 0.720 |
+| walker |  | 2589 | 8 | Fs::DirListing { dir: samples/legacy/browser-amd-iframe } |  |  | 0.720 |
+| walker |  | 2601 | 12 | Fs::DirListing { dir: samples/legacy/browser-amd-diff-editor } |  |  | 0.720 |
+| walker |  | 2618 | 17 | Fs::DirListing { dir: samples/legacy/electron-amd } |  |  | 0.720 |
+| walker |  | 2634 | 16 | Json::Identity { file: samples/legacy/electron-amd/package.json } |  |  | 0.720 |
+| ns | 2657 |  | 89 | Grammar file shape: rust.ts conf + language exports | 2.10 |  | 0.709 |
+| walker |  | 2662 | 28 | Json::Entry { file: webpack-plugin/package.json } |  |  | 0.710 |
+| walker |  | 2696 | 34 | Json::Dependencies { file: webpack-plugin/package.json } |  |  | 0.710 |
+| walker |  | 2732 | 36 | Json::Dependencies { file: samples/package.json } |  |  | 0.710 |
+| walker |  | 2771 | 39 | Json::Scripts { file: samples/package.json } |  |  | 0.710 |
+| ns | 2797 |  | 140 | Tokenization test harness: testRunner.ts types + testTokenization(), and a test file head | 2.11 |  | 0.694 |
+| ns | 2839 |  | 42 | src/languages/definitions/register.all.ts head, elided middle, tail | 2.12 |  | 0.688 |
+| walker |  | 2917 | 146 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.726 |
+| walker |  | 2930 | 13 | Json::Entry { file: samples/legacy/electron-amd/package.json } |  |  | 0.726 |
+| walker |  | 2973 | 43 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.726 |
+| ns | 2974 |  | 135 | src/deprecated/: the legacy import paths, all one-line re-exports | 2.13 |  | 0.713 |
+| walker |  | 3053 | 80 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.713 |
+| walker |  | 3113 | 60 | Fs::DirListing { dir: website } |  |  | 0.714 |
+| walker |  | 3121 | 8 | Fs::DirListing { dir: website/static } |  |  | 0.714 |
+| walker |  | 3130 | 9 | Fs::DirListing { dir: website/scripts } |  |  | 0.714 |
+| walker |  | 3145 | 15 | Fs::DirListing { dir: website/static/monarch } |  |  | 0.714 |
 | walker |  | 3168 | 23 | Fs::DirListing { dir: scripts/ci } |  |  | 0.714 |
 | ns | 3343 |  | 369 | package.json scripts — build, test and dev commands (packaging variants elided) | 3.1 |  | 0.694 |
 | walker |  | 3462 | 294 | Code::CodeKey { rung: Names, file: monaco-lsp-client/generator/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |

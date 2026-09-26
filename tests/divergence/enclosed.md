@@ -1,4 +1,4 @@
-Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.565/0.531/0.595/0.592/0.598/0.663/0.634
+Score(3000)=0.662 I=0.865 C=0.506 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.565/0.561/0.654/0.662/0.598/0.663/0.634
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -72,47 +72,47 @@ Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 1230 | 18 | Fs::DirListing { dir: packages/app-client/src/modules/auth } |  |  | 0.536 |
 | walker |  | 1236 | 6 | Fs::DirListing { dir: packages/app-client/src/modules/auth/pages } |  |  | 0.536 |
 | ns | 1237 |  | 161 | CONTRIBUTING: local development setup commands | 1.9 |  | 0.464 |
-| walker |  | 1314 | 78 | Json::Scripts { file: package.json } |  |  | 0.544 |
-| walker |  | 1345 | 31 | Fs::DirListing { dir: packages/docs/src/self-hosting } |  |  | 0.545 |
-| ns | 1399 |  | 162 | Self-host quickstart: docker run invocation plus the whole docker-compose.yml | 1.10 |  | 0.496 |
-| walker |  | 1451 | 106 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.538 |
-| walker |  | 1473 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/app } |  |  | 0.539 |
-| walker |  | 1478 | 5 | Fs::DirListing { dir: packages/app-server/src/modules/app/users } |  |  | 0.539 |
-| walker |  | 1500 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/tasks } |  |  | 0.540 |
-| walker |  | 1515 | 15 | Fs::DirListing { dir: packages/app-server/src/modules/shared/logger } |  |  | 0.540 |
-| walker |  | 1538 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/i18n } |  |  | 0.540 |
-| walker |  | 1561 | 23 | Fs::DirListing { dir: packages/crypto/src/node/encryption-algorithms } |  |  | 0.541 |
-| walker |  | 1584 | 23 | Fs::DirListing { dir: packages/crypto/src/web/encryption-algorithms } |  |  | 0.542 |
-| walker |  | 1648 | 64 | Fs::DirListing { dir: packages/app-client/public } |  |  | 0.542 |
-| walker |  | 1672 | 24 | Fs::DirListing { dir: packages/lib/src/crypto/encryption-algorithms } |  |  | 0.544 |
-| walker |  | 1698 | 26 | Fs::DirListing { dir: packages/lib/src/crypto/serialization } |  |  | 0.547 |
-| walker |  | 1713 | 15 | Fs::DirListing { dir: packages/lib/src/crypto/serialization/cbor-array } |  |  | 0.549 |
-| ns | 1758 |  | 359 | packages/lib/src/index.ts in full — the definitive @enclosed/lib export surface | 2.1 |  | 0.480 |
-| walker |  | 1887 | 174 | Code::CodeKey { rung: Names, file: packages/lib/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| walker |  | 1907 | 20 | Fs::DirListing { dir: packages/app-server/src/scripts } |  |  | 0.519 |
-| walker |  | 1917 | 10 | Code::CodeKey { rung: Names, file: packages/app-client/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.519 |
-| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.595 |
-| walker |  | 2115 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.595 |
-| walker |  | 2192 | 77 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.649 |
-| walker |  | 2213 | 21 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.649 |
-| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.628 |
-| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.595 |
-| walker |  | 2552 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.658 |
-| walker |  | 2602 | 50 | Fs::DirListing { dir: packages/crypto/src/encryption-algorithms } |  |  | 0.660 |
-| walker |  | 2624 | 22 | Code::CodeKey { rung: Names, file: packages/cli/src/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
-| ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.612 |
-| walker |  | 2715 | 91 | Code::CodeKey { rung: Decl, file: packages/cli/src/cli.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.613 |
-| walker |  | 2767 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.613 |
-| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.592 |
-| ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.567 |
-| walker |  | 3090 | 323 | Code::CodeKey { rung: Decl, file: packages/app-client/src/index.tsx, decl: 1, sub: 0, line: 14 } |  |  | 0.567 |
-| walker |  | 3113 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.567 |
-| walker |  | 3138 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.568 |
-| walker |  | 3177 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.569 |
-| walker |  | 3191 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.569 |
-| walker |  | 3205 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.569 |
-| ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.541 |
-| walker |  | 3412 | 207 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 54 } |  |  | 0.605 |
+| ns | 1399 |  | 162 | Self-host quickstart: docker run invocation plus the whole docker-compose.yml | 1.10 |  | 0.423 |
+| walker |  | 1443 | 207 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 54 } |  |  | 0.571 |
+| walker |  | 1521 | 78 | Json::Scripts { file: package.json } |  |  | 0.633 |
+| walker |  | 1552 | 31 | Fs::DirListing { dir: packages/docs/src/self-hosting } |  |  | 0.634 |
+| walker |  | 1658 | 106 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.671 |
+| walker |  | 1680 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/app } |  |  | 0.672 |
+| walker |  | 1685 | 5 | Fs::DirListing { dir: packages/app-server/src/modules/app/users } |  |  | 0.672 |
+| walker |  | 1707 | 22 | Fs::DirListing { dir: packages/app-server/src/modules/tasks } |  |  | 0.673 |
+| walker |  | 1722 | 15 | Fs::DirListing { dir: packages/app-server/src/modules/shared/logger } |  |  | 0.673 |
+| walker |  | 1745 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/i18n } |  |  | 0.674 |
+| ns | 1758 |  | 359 | packages/lib/src/index.ts in full — the definitive @enclosed/lib export surface | 2.1 |  | 0.589 |
+| walker |  | 1768 | 23 | Fs::DirListing { dir: packages/crypto/src/node/encryption-algorithms } |  |  | 0.590 |
+| walker |  | 1791 | 23 | Fs::DirListing { dir: packages/crypto/src/web/encryption-algorithms } |  |  | 0.590 |
+| walker |  | 1855 | 64 | Fs::DirListing { dir: packages/app-client/public } |  |  | 0.590 |
+| walker |  | 1879 | 24 | Fs::DirListing { dir: packages/lib/src/crypto/encryption-algorithms } |  |  | 0.592 |
+| walker |  | 1905 | 26 | Fs::DirListing { dir: packages/lib/src/crypto/serialization } |  |  | 0.596 |
+| walker |  | 1920 | 15 | Fs::DirListing { dir: packages/lib/src/crypto/serialization/cbor-array } |  |  | 0.598 |
+| ns | 1943 |  | 185 | Complete file roster of packages/lib (package root and every src directory) | 2.2 |  | 0.654 |
+| walker |  | 2094 | 174 | Code::CodeKey { rung: Names, file: packages/lib/src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.679 |
+| walker |  | 2114 | 20 | Fs::DirListing { dir: packages/app-server/src/scripts } |  |  | 0.680 |
+| walker |  | 2124 | 10 | Code::CodeKey { rung: Names, file: packages/app-client/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.680 |
+| ns | 2219 |  | 276 | README 'How It Works': note creation, steps 1-7 | 2.3 |  | 0.658 |
+| walker |  | 2322 | 198 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.658 |
+| walker |  | 2399 | 77 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.713 |
+| ns | 2400 |  | 181 | createNote: option names and defaults (notes.usecases.ts) | 2.4 |  | 0.675 |
+| walker |  | 2420 | 21 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.675 |
+| ns | 2658 |  | 258 | createNote body: encrypt, store, build URL | 2.5 | 2.4 | 0.626 |
+| walker |  | 2759 | 339 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.682 |
+| walker |  | 2809 | 50 | Fs::DirListing { dir: packages/crypto/src/encryption-algorithms } |  |  | 0.684 |
+| walker |  | 2831 | 22 | Code::CodeKey { rung: Names, file: packages/cli/src/cli.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.685 |
+| ns | 2853 |  | 195 | Note URL hash-fragment scheme: the 'pw' / 'dar' markers and the fragment builder | 2.6 |  | 0.661 |
+| walker |  | 2922 | 91 | Code::CodeKey { rung: Decl, file: packages/cli/src/cli.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.662 |
+| walker |  | 2974 | 52 | Fs::DirListing { dir: packages/docs/src/public } |  |  | 0.662 |
+| ns | 3077 |  | 224 | createNoteUrl and parseNoteUrl: link assembly and the reverse parse | 2.7 | 2.6 | 0.634 |
+| walker |  | 3297 | 323 | Code::CodeKey { rung: Decl, file: packages/app-client/src/index.tsx, decl: 1, sub: 0, line: 14 } |  |  | 0.634 |
+| walker |  | 3320 | 23 | Fs::DirListing { dir: packages/app-client/src/modules/shared/http } |  |  | 0.634 |
+| walker |  | 3345 | 25 | Fs::DirListing { dir: packages/app-server/src/modules/app/config } |  |  | 0.635 |
+| walker |  | 3384 | 39 | Fs::DirListing { dir: packages/app-client/src/modules/notes } |  |  | 0.636 |
+| ns | 3390 |  | 313 | encryptNote: crypto primitives imported, options, and the encryption sequence | 2.8 |  | 0.604 |
+| walker |  | 3398 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/components } |  |  | 0.605 |
+| walker |  | 3412 | 14 | Fs::DirListing { dir: packages/app-client/src/modules/notes/pages } |  |  | 0.605 |
 | walker |  | 3456 | 44 | Fs::DirListing { dir: packages/docs/src/public/logos } |  |  | 0.605 |
 | walker |  | 3492 | 36 | Fs::DirListing { dir: packages/app-server/src/modules/app/middlewares } |  |  | 0.606 |
 | walker |  | 3530 | 38 | Fs::DirListing { dir: packages/app-server/src/modules/storage/factories } |  |  | 0.607 |

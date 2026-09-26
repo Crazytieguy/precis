@@ -1,4 +1,4 @@
-Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.747/0.845/0.862/0.789/0.738/0.701/0.710
+Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.747/0.830/0.799/0.789/0.738/0.701/0.710
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -36,25 +36,25 @@ Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 1270 |  | 130 | Test tree and sample-collection listings | 1.11 |  | 0.830 |
 | walker |  | 1382 | 120 | Code::CodeKey { rung: Names, file: src/posting/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.830 |
 | ns | 1460 |  | 190 | Complete `posting` subcommand roster | 2.1 |  | 0.803 |
-| walker |  | 1481 | 99 | Fs::DirListing { dir: tests } |  |  | 0.846 |
-| walker |  | 1512 | 31 | Fs::DirListing { dir: tests/sample-collections } |  |  | 0.873 |
-| walker |  | 1517 | 5 | Fs::DirListing { dir: tests/sample-collections/scripts } |  |  | 0.873 |
-| walker |  | 1664 | 147 | Code::CodeKey { rung: Names, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.883 |
-| walker |  | 1676 | 12 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.886 |
-| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.840 |
-| walker |  | 1698 | 22 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.845 |
-| walker |  | 1730 | 32 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 5, sub: 0, line: 76 } |  |  | 0.846 |
-| walker |  | 1764 | 34 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.846 |
-| walker |  | 1893 | 129 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 4, sub: 0, line: 50 } |  |  | 0.864 |
-| ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.836 |
-| walker |  | 2025 | 132 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.870 |
-| walker |  | 2037 | 12 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.873 |
-| walker |  | 2049 | 12 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.877 |
-| ns | 2052 |  | 145 | XDG locations: config file, themes and default collection | 2.4 |  | 0.856 |
-| walker |  | 2065 | 16 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.862 |
-| walker |  | 2082 | 17 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.864 |
-| ns | 2359 |  | 307 | collection.py type roster | 3.1 |  | 0.821 |
-| walker |  | 2395 | 313 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 30 } |  |  | 0.821 |
+| ns | 1689 |  | 229 | Every CLI argument and option | 2.2 |  | 0.763 |
+| walker |  | 1695 | 313 | Markdown::CommandBlock { file: CONTRIBUTING.md, row: 30 } |  |  | 0.763 |
+| walker |  | 1794 | 99 | Fs::DirListing { dir: tests } |  |  | 0.803 |
+| walker |  | 1825 | 31 | Fs::DirListing { dir: tests/sample-collections } |  |  | 0.829 |
+| walker |  | 1830 | 5 | Fs::DirListing { dir: tests/sample-collections/scripts } |  |  | 0.829 |
+| ns | 1907 |  | 218 | `make_posting`: CLI-to-app wiring | 2.3 |  | 0.800 |
+| walker |  | 1977 | 147 | Code::CodeKey { rung: Names, file: src/posting/__main__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
+| walker |  | 1989 | 12 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.811 |
+| walker |  | 2011 | 22 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.816 |
+| walker |  | 2043 | 32 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 5, sub: 0, line: 76 } |  |  | 0.817 |
+| ns | 2052 |  | 145 | XDG locations: config file, themes and default collection | 2.4 |  | 0.797 |
+| walker |  | 2077 | 34 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.799 |
+| walker |  | 2206 | 129 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 4, sub: 0, line: 50 } |  |  | 0.816 |
+| walker |  | 2338 | 132 | Code::CodeKey { rung: Decl, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.849 |
+| walker |  | 2350 | 12 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 3, sub: 0, line: 45 } |  |  | 0.853 |
+| ns | 2359 |  | 307 | collection.py type roster | 3.1 |  | 0.809 |
+| walker |  | 2362 | 12 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 7, sub: 0, line: 177 } |  |  | 0.813 |
+| walker |  | 2378 | 16 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 6, sub: 0, line: 96 } |  |  | 0.819 |
+| walker |  | 2395 | 17 | Code::CodeKey { rung: Doc, file: src/posting/__main__.py, decl: 8, sub: 0, line: 194 } |  |  | 0.821 |
 | ns | 2534 |  | 175 | The `.posting.yaml` on-disk request format | 3.2 |  | 0.784 |
 | walker |  | 2695 | 300 | Toml::Dependencies { file: pyproject.toml } |  |  | 0.829 |
 | ns | 2774 |  | 240 | RequestModel field roster | 3.3 | 3.1 | 0.801 |
