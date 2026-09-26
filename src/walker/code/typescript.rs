@@ -31,7 +31,8 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{
-    Language, SourceFile, block_head, file_name, file_stem, is_named_after, named_children,
+    Language, SourceFile, block_head, file_name, file_stem, has_extension, is_named_after,
+    named_children,
 };
 use crate::walker::WalkCtx;
 
@@ -50,15 +51,7 @@ const ENTRYPOINT_STEMS: &[&str] = &["index", "main", "mod", "esm"];
 /// The TypeScript grammar for `.ts` / `.mts` / `.cts`; the TSX grammar,
 /// which also parses JSX, for everything else.
 fn grammar(path: &Path) -> tree_sitter::Language {
-    let is_typescript = path
-        .extension()
-        .and_then(|extension| extension.to_str())
-        .is_some_and(|extension| {
-            ["ts", "mts", "cts"]
-                .iter()
-                .any(|candidate| extension.eq_ignore_ascii_case(candidate))
-        });
-    if is_typescript {
+    if has_extension(path, &["ts", "mts", "cts"]) {
         tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into()
     } else {
         tree_sitter_typescript::LANGUAGE_TSX.into()

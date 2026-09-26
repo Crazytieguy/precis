@@ -71,14 +71,21 @@ impl Language {
 
     /// The language whose extensions include `path`'s extension.
     pub(crate) fn from_path(path: &Path) -> Option<&'static Language> {
-        let extension = path.extension()?.to_str()?;
-        LANGUAGES.into_iter().find(|language| {
-            language
-                .extensions
+        LANGUAGES
+            .into_iter()
+            .find(|language| has_extension(path, language.extensions))
+    }
+}
+
+/// Whether `path`'s extension is one of `extensions`, ignoring case.
+fn has_extension(path: &Path, extensions: &[&str]) -> bool {
+    path.extension()
+        .and_then(|extension| extension.to_str())
+        .is_some_and(|extension| {
+            extensions
                 .iter()
                 .any(|candidate| extension.eq_ignore_ascii_case(candidate))
         })
-    }
 }
 
 /// Every extension some [`Language`] claims.

@@ -29,7 +29,7 @@ use regex::Regex;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Shape};
-use super::{Language, SourceFile, is_named_after, named_children};
+use super::{Language, SourceFile, has_extension, is_named_after, named_children};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -153,9 +153,7 @@ fn ends_in_block_comment(line: &str, starts_in_block_comment: bool) -> bool {
 }
 
 fn is_header(path: &Path) -> bool {
-    path.extension()
-        .and_then(|extension| extension.to_str())
-        .is_some_and(|extension| extension.eq_ignore_ascii_case("h"))
+    has_extension(path, &["h"])
 }
 
 fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInfo> {
