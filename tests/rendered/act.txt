@@ -81,6 +81,7 @@ README.md
   5→> "Think globally, `act` locally"
   6→
   7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
+  9→- **Fast Feedback** - Rather than having to commit/push every time you want to test out the changes you are making to your `.github/workflows/` files (or for any changes to embedded GitHub actions), you can use `act` to run the actions locally. The [environment variables](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) and [filesystem](https://help.github.com/en/actions/reference/virtual-environments-for-github-host…
   …
   16→# How Does It Work?
   17→
@@ -106,8 +107,98 @@ cmd/
   execute_test.go
   graph.go
   input.go
+    …
+    9→// Input contains the input for the root command
+    10→type Input struct {
+    11→	actor                              string
+    12→	workdir                            string
+    13→	workflowsPath                      string
+    14→	autodetectEvent                    bool
+    15→	eventPath                          string
+    16→	reuseContainers                    bool
+    17→	bindWorkdir                        bool
+    18→	secrets                            []string
+    19→	vars                               []string
+    20→	envs                               []string
+    21→	inputs                             []string
+    22→	platforms                          []string
+    23→	dryrun                             bool
+    24→	forcePull                          bool
+    25→	forceRebuild                       bool
+    26→	noOutput                           bool
+    27→	envfile                            string
+    28→	inputfile                          string
+    29→	secretfile                         string
+    30→	varfile                            string
+    31→	insecureSecrets                    bool
+    32→	defaultBranch                      string
+    33→	privileged                         bool
+    34→	usernsMode                         string
+    35→	containerArchitecture              string
+    36→	containerDaemonSocket              string
+    37→	containerOptions                   string
+    38→	noWorkflowRecurse                  bool
+    39→	useGitIgnore                       bool
+    40→	githubInstance                     string
+    41→	containerCapAdd                    []string
+    42→	containerCapDrop                   []string
+    43→	autoRemove                         bool
+    44→	artifactServerPath                 string
+    45→	artifactServerAddr                 string
+    46→	artifactServerPort                 string
+    47→	noCacheServer                      bool
+    48→	cacheServerPath                    string
+    49→	cacheServerExternalURL             string
+    50→	cacheServerAddr                    string
+    51→	cacheServerPort                    uint16
+    52→	jsonLogger                         bool
+    53→	noSkipCheckout                     bool
+    54→	remoteName                         string
+    55→	replaceGheActionWithGithubCom      []string
+    56→	replaceGheActionTokenWithGithubCom string
+    57→	matrix                             []string
+    58→	actionCachePath                    string
+    59→	actionOfflineMode                  bool
+    60→	logPrefixJobID                     bool
+    61→	networkName                        string
+    62→	useNewActionCache                  bool
+    63→	localRepository                    []string
+    64→	listOptions                        bool
+    65→	validate                           bool
+    66→	strict                             bool
+    67→	concurrentJobs                     int
+    68→}
+    …
+    84→// Envfile returns path to .env
+    85→func (i *Input) Envfile() string {
+    …
+    89→// Secretfile returns path to secrets
+    90→func (i *Input) Secretfile() string {
+    …
+    94→func (i *Input) Varfile() string {
+    …
+    98→// Workdir returns path to workdir
+    99→func (i *Input) Workdir() string {
+    …
+    103→// WorkflowsPath returns path to workflow file(s)
+    104→func (i *Input) WorkflowsPath() string {
+    …
+    108→// EventPath returns the path to events file
+    109→func (i *Input) EventPath() string {
+    …
+    113→// Inputfile returns the path to the input file
+    114→func (i *Input) Inputfile() string {
+    …
   list.go
   notices.go
+    …
+    17→type Notice struct {
+    18→	Level   string `json:"level"`
+    19→	Message string `json:"message"`
+    20→}
+    …
+    63→const NoticeURL = "https://api.nektosact.com/notices"
+    …
   platforms.go
   root.go
     …
@@ -124,10 +215,6 @@ cmd/
   root_test.go
   secrets.go
   testdata/
-    env.actrc
-    secrets.yml
-    simple.actrc
-    split.actrc
 codecov.yml
 go.mod
   1→module github.com/nektos/act
@@ -163,20 +250,13 @@ pkg/
     handler_test.go
     model.go
     storage.go
-    testdata/example/
-      example.yaml
+    testdata/
   artifacts/
     artifact.pb.go
     artifacts_v4.go
     server.go
     server_test.go
     testdata/
-      GHSL-2023-004/
-        artifacts.yml
-      upload-and-download/
-        artifacts.yml
-      v4/
-        artifacts.yml
   common/
     auth.go
     auth_test.go
@@ -223,22 +303,6 @@ pkg/
     linux_container_environment_extensions_test.go
     parse_env_file.go
     testdata/
-      Dockerfile
-        1→FROM scratch
-        2→ENV PATH="/this/path/does/not/exists/anywhere:/this/either"
-        3→ENV SOME_RANDOM_VAR=""
-        4→ENV ANOTHER_ONE="BUT_I_HAVE_VALUE"
-        5→ENV CONFLICT_VAR="I_EXIST_ONLY_HERE"
-      docker-pull-options/
-        config.json
-      scratch/
-        test.txt
-          1→testfile
-      utf16.env
-      utf16be.env
-      utf8.env
-      valid.env
-      valid.label
     util.go
     util_openbsd_mips64.go
     util_plan9.go
@@ -249,14 +313,6 @@ pkg/
     interpreter.go
     interpreter_test.go
     testdata/
-      for-hashing-1.txt
-        1→Hello
-      for-hashing-2.txt
-        1→World!
-      for-hashing-3/
-        data.txt
-        nested/
-          nested-data.txt
   filecollector/
     file_collector.go
     file_collector_test.go
@@ -282,21 +338,6 @@ pkg/
     planner_test.go
     step_result.go
     testdata/
-      container-volumes/
-        push.yml
-      empty-workflow/
-        push.yml (empty)
-      invalid-job-name/
-        invalid-1.yml
-        invalid-2.yml
-        valid-1.yml
-        valid-2.yml
-      nested/
-        success.yml
-        workflows/
-          fail.yml (empty)
-      strategy/
-        push.yml
     workflow.go
     workflow_test.go
   runner/
@@ -337,122 +378,6 @@ pkg/
     step_run_test.go
     step_test.go
     testdata/
-      .github/
-      GITHUB_ENV-use-in-env-ctx/
-      GITHUB_STATE/
-      act-composite-env-test/
-      action-cache-v2-fetch-failure-is-job-error/
-      actions/
-      actions-environment-and-context-tests/
-      basic/
-      checkout/
-      commands/
-      composite-fail-with-output/
-      container-hostname/
-      defaults-run/
-      dir with spaces/
-      do-not-leak-step-env-in-composite/
-      docker-action-custom-path/
-      docker-action-host-env/
-      ensure-post-steps/
-      env-and-path/
-      environment-files/
-      environment-files-parser-bug/
-      environment-variables/
-      evalenv/
-      evalmatrix/
-      evalmatrix-merge-array/
-      evalmatrix-merge-map/
-      evalmatrixneeds/
-      evalmatrixneeds2/
-      fail/
-      if-env-act/
-      if-expressions/
-      input-from-cli/
-      inputs-via-env-context/
-      issue-104/
-      issue-1195/
-      issue-122/
-      issue-141/
-      issue-1595/
-      issue-597/
-      issue-598/
-      job-container/
-      job-container-invalid-credentials/
-      job-container-non-root/
-      job-needs-context-contains-result/
-      job-nil-step/
-      job-status-check/
-      local-action-docker-url/
-      local-action-dockerfile/
-      local-action-js/
-      local-action-via-composite-dockerfile/
-      local-remote-action-overrides/
-      localdockerimagetest_/
-      mask-values/
-      matrix/
-      matrix-exitcode/
-      matrix-include-exclude/
-      matrix-with-user-inclusions/
-      mysql-service-container-with-health-check/
-      networking/
-      nix-prepend-path/
-      no-panic-on-invalid-composite-action/
-      node/
-      non-existent-action/
-      outputs/
-      parallel/
-      path-handling/
-      post-step-failure-is-job-failure/
-      pull-request/
-      python/
-      remote-action-composite-action-ref/
-      remote-action-composite-js-pre-with-defaults/
-      remote-action-docker/
-      remote-action-docker-new-cache/
-      remote-action-js/
-      remote-action-js-node-user/
-      runs-on/
-      secrets/
-      services/
-      services-empty-image/
-      services-host-network/
-      services-with-container/
-      set-env-new-env-file-per-step/
-      set-env-step-env-override/
-      shells/
-      steps-context/
-      stepsummary/
-      uses-action-with-pre-and-post-step/
-      uses-and-run-in-one-step/
-      uses-composite/
-      uses-composite-check-for-input-collision/
-      uses-composite-check-for-input-in-if-uses/
-      uses-composite-check-for-input-shadowing/
-      uses-composite-with-error/
-      uses-composite-with-inputs/
-      uses-composite-with-pre-and-post-steps/
-      uses-docker-url/
-      uses-github-empty/
-      uses-github-full-sha/
-      uses-github-noref/
-      uses-github-path/
-      uses-github-root/
-      uses-github-short-sha/
-      uses-nested-composite/
-      uses-workflow/
-      uses-workflow-defaults/
-      windows-add-env/
-      windows-add-env-powershell-5/
-      windows-prepend-path/
-      windows-prepend-path-powershell-5/
-      windows-shell-cmd/
-      workdir/
-      workflow_call_inputs/
-      workflow_dispatch/
-      workflow_dispatch-scalar/
-      workflow_dispatch-scalar-composite-action/
-      workflow_dispatch_no_inputs_mapping/
   schema/
     action_schema.json
     schema.go

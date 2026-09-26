@@ -303,6 +303,30 @@ migrate.go
   24→var DefaultPrefetchMigrations = uint(10)
   …
   27→var DefaultLockTimeout = 15 * time.Second
+  28→
+  29→var (
+  30→	ErrNoChange       = errors.New("no change")
+  31→	ErrNilVersion     = errors.New("no migration")
+  32→	ErrInvalidVersion = errors.New("version must be >= -1")
+  33→	ErrLocked         = errors.New("database locked")
+  34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
+  35→)
+  …
+  39→type ErrShortLimit struct {
+  40→	Short uint
+  41→}
+  …
+  44→func (e ErrShortLimit) Error() string {
+  …
+  48→type ErrDirty struct {
+  49→	Version int
+  50→}
+  52→func (e ErrDirty) Error() string {
+  …
+  56→type Migrate struct {
+  …
+  62→	// Log accepts a Logger interface
+  63→	Log Logger
   …
 migrate_test.go
 migration.go
@@ -376,23 +400,6 @@ source/
     partial_driver.go
     partial_driver_test.go
     testdata/
-      duplicates/
-        1_foobar.up.sql
-        1_foobaz.up.sql
-      no-migrations/
-        some-file (empty)
-      sql/
-        1_foobar.down.sql
-        1_foobar.up.sql
-        3_foobar.up.sql
-        4_foobar.down.sql
-        4_foobar.up.sql
-        5_foobar.down.sql
-        7_foobar.down.sql
-        7_foobar.up.sql
-        other-files-are-ignored (empty)
-        subdirs-are-ignored/
-          some-file (empty)
   iofs/
     README.md
     doc.go
@@ -409,15 +416,7 @@ source/
     example_test.go
     iofs.go
     iofs_test.go
-    testdata/migrations/
-      1_foobar.down.sql
-      1_foobar.up.sql
-      3_foobar.up.sql
-      4_foobar.down.sql
-      4_foobar.up.sql
-      5_foobar.down.sql
-      7_foobar.down.sql
-      7_foobar.up.sql
+    testdata/
   migration.go
   migration_test.go
   parse.go

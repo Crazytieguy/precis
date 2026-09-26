@@ -1,4 +1,4 @@
-Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.725/0.731/0.628/0.549/0.518/0.536/0.532
+Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.731/0.628/0.549/0.518/0.536/0.532
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,16 +38,16 @@ Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | ns | 619 |  | 126 | Adapter package listings: cli/ and the three repositories | 1.9 |  | 0.511 |
 | walker |  | 621 | 333 | Plaintext::Whole { file: Makefile } |  |  | 0.511 |
 | walker |  | 639 | 18 | Fs::DirListing { dir: internal/adapters/repositories/file } |  |  | 0.526 |
-| walker |  | 657 | 18 | Fs::DirListing { dir: internal/core/ports/mocks } |  |  | 0.561 |
-| ns | 724 |  | 105 | README section headings (all H2) | 1.10 |  | 0.528 |
-| walker |  | 762 | 105 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.587 |
-| walker |  | 806 | 44 | Markdown::CommandBlock { file: README.md, row: 49 } |  |  | 0.587 |
-| ns | 898 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.558 |
-| ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.535 |
-| walker |  | 1059 | 253 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.715 |
-| ns | 1175 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.681 |
-| ns | 1253 |  | 78 | Domain sentinel errors | 2.4 |  | 0.665 |
-| walker |  | 1301 | 242 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.665 |
+| ns | 724 |  | 105 | README section headings (all H2) | 1.10 |  | 0.494 |
+| walker |  | 744 | 105 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.554 |
+| walker |  | 788 | 44 | Markdown::CommandBlock { file: README.md, row: 49 } |  |  | 0.554 |
+| ns | 898 |  | 174 | ports.ActivityResolver — the full service contract | 2.1 |  | 0.527 |
+| ns | 1022 |  | 124 | models.Activity struct with JSON tags | 2.2 |  | 0.505 |
+| walker |  | 1041 | 253 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.682 |
+| ns | 1175 |  | 153 | ports.ActivityRepository and ports.NotesRepository | 2.3 |  | 0.651 |
+| ns | 1253 |  | 78 | Domain sentinel errors | 2.4 |  | 0.635 |
+| walker |  | 1283 | 242 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.635 |
+| walker |  | 1301 | 18 | Fs::DirListing { dir: internal/core/ports/mocks } |  |  | 0.665 |
 | walker |  | 1380 | 79 | Fs::DirListing { dir: internal/adapters/cli } |  |  | 0.794 |
 | ns | 1440 |  | 187 | dto request types for Start / Stop / Add | 2.5 |  | 0.731 |
 | walker |  | 1459 | 79 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.731 |
