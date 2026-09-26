@@ -10,8 +10,8 @@
 //! - **Declarations**: `fn` is `Callable`, except the program flow of
 //!   `main.rs` (see `show_program_flow`); `struct`, `enum`, `union`,
 //!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait`,
-//!   `impl` and `extern` blocks are `Whole` containers whose members are their
-//!   functions.
+//!   `impl` and `extern` blocks are `Whole` containers whose members are
+//!   their functions.
 //! - **Hidden**: test (`#[cfg(test)]`, `#[cfg(all(test, …))]`,
 //!   `#[test]`-style) and `#[doc(hidden)]` items, fields and variants,
 //!   inline `mod test` / `mod tests`. Outside `main.rs`,

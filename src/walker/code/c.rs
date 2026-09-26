@@ -590,11 +590,11 @@ fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
 
 /// The `X` that `guard` tests as `#ifndef X`.
 fn guarded_name(guard: Node) -> Option<Node> {
-    (guard.kind() == "preproc_ifdef")
-        .then(|| guard.child(0))
+    guard
+        .child(0)
+        .is_some_and(|token| token.kind() == "#ifndef")
+        .then(|| guard.child_by_field_name("name"))
         .flatten()
-        .filter(|token| token.kind() == "#ifndef")
-        .and_then(|_| guard.child_by_field_name("name"))
 }
 
 /// True iff `guard` tests `X` as in [`guarded_name`], its first child
