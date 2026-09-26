@@ -172,30 +172,4 @@ mod tests {
         let other = legacy.replace("\"precis\"", "\"precis-notes\"");
         assert!(!is_precis_plugin_manifest(&other));
     }
-
-    /// Rebuilds `additionalContext` the way the hook does on a fixture
-    /// big enough for the character cap to bind.
-    #[test]
-    fn main_plugin_context_fits_hook_cap() {
-        let fixture = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/toasty");
-        assert!(
-            fixture.is_dir(),
-            "{} is missing; run `cargo run --example clone_fixtures`",
-            fixture.display()
-        );
-        let uncapped = precis::render(&fixture, 3000, None).unwrap();
-        assert!(precis::char_units(&uncapped) > plugin_char_budget());
-        let output = precis::render(&fixture, 3000, Some(plugin_char_budget())).unwrap();
-        let help = help_output();
-        let context = [
-            HOOK_WRAPPER[0],
-            help.trim_end_matches('\n'),
-            HOOK_WRAPPER[1],
-            output.trim_end_matches('\n'),
-            HOOK_WRAPPER[2],
-        ]
-        .concat();
-        let units = precis::char_units(&context);
-        assert!(units <= HOOK_CONTEXT_CAP, "{units} units");
-    }
 }

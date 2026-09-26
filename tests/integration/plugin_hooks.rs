@@ -17,12 +17,18 @@ fn json_string(text: &str) -> String {
     format!("\"{}\"", text.replace('\\', "\\\\").replace('"', "\\\""))
 }
 
-/// Runs a plugin script with `input` on stdin and returns its stdout.
-fn run_hook(script: &str, input: &str, env: &[(&str, &OsStr)]) -> String {
-    let mut child = Command::new("bash")
+/// A plugin script run as Claude Code runs it, outside any plugin root.
+fn hook(script: &str) -> Command {
+    let mut command = Command::new("bash");
+    command
         .arg(hook_script(script))
-        .env_remove("CLAUDE_PLUGIN_ROOT")
-        .envs(env.iter().copied())
+        .env_remove("CLAUDE_PLUGIN_ROOT");
+    command
+}
+
+/// Runs `command` with `input` on stdin and returns its stdout.
+fn stdout_of(command: &mut Command, input: &str) -> String {
+    let mut child = command
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .spawn()
@@ -34,8 +40,13 @@ fn run_hook(script: &str, input: &str, env: &[(&str, &OsStr)]) -> String {
         .write_all(input.as_bytes())
         .unwrap();
     let output = child.wait_with_output().unwrap();
-    assert!(output.status.success(), "{script} failed on {input}");
+    assert!(output.status.success(), "{command:?} failed on {input}");
     String::from_utf8(output.stdout).unwrap()
+}
+
+/// Runs a plugin script with `input` on stdin and returns its stdout.
+fn run_hook(script: &str, input: &str, env: &[(&str, &OsStr)]) -> String {
+    stdout_of(hook(script).envs(env.iter().copied()), input)
 }
 
 /// Runs the permission hook on `command` from `cwd`; true when it
@@ -183,6 +194,44 @@ fn plugin_hooks_session_start_without_binary() {
         &[env[0], env[1], ("PATH", path.as_os_str())],
     );
     assert!(stdout.contains("unsupported platform"), "{stdout}");
+}
+
+/// The session hook runs the real binary on a fixture whose uncapped
+/// summary would push `additionalContext` past Claude Code's 10,000-unit
+/// inline limit; the binary caps itself so the whole context stays inline.
+#[test]
+fn plugin_hooks_session_start_context_fits_hook_cap() {
+    const HOOK_CONTEXT_CAP: usize = 10_000;
+    let fixture = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/toasty");
+    assert!(
+        fixture.is_dir(),
+        "{} is missing; run `cargo run --example clone_fixtures`",
+        fixture.display()
+    );
+    let temp = tempfile::tempdir().unwrap();
+    let plugin_data = temp.path().join("plugin-data");
+    std::fs::create_dir_all(&plugin_data).unwrap();
+    std::os::unix::fs::symlink(env!("CARGO_BIN_EXE_precis"), plugin_data.join("precis")).unwrap();
+
+    let hook_output = stdout_of(
+        hook("hooks/session-start.sh")
+            .current_dir(&fixture)
+            .env("CLAUDE_PLUGIN_DATA", &plugin_data),
+        r#"{"source":"startup"}"#,
+    );
+    let context = stdout_of(
+        Command::new("jq").args(["-j", ".hookSpecificOutput.additionalContext"]),
+        &hook_output,
+    );
+    assert!(context.contains("Output of `precis .`"), "{context}");
+
+    let uncapped = Command::new(env!("CARGO_BIN_EXE_precis"))
+        .current_dir(&fixture)
+        .output()
+        .unwrap();
+    assert!(precis::char_units(&String::from_utf8(uncapped.stdout).unwrap()) > HOOK_CONTEXT_CAP);
+    let units = precis::char_units(&context);
+    assert!(units <= HOOK_CONTEXT_CAP, "{units} units");
 }
 
 /// A directory of executable shell scripts, prepended to PATH.
