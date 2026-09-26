@@ -669,11 +669,17 @@ fn strip_block_for_length(raw: &str) -> String {
         .collect()
 }
 
+/// Remove `<…>` tags. A `<` not followed by a letter, `/`, `!` or `?`
+/// opens no tag in HTML (`a < b`), so it stays as text.
 fn strip_html_tags(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
-    let mut chars = s.chars();
+    let mut chars = s.chars().peekable();
     while let Some(c) = chars.next() {
-        if c == '<' {
+        if c == '<'
+            && chars
+                .peek()
+                .is_some_and(|next| next.is_ascii_alphabetic() || matches!(next, '/' | '!' | '?'))
+        {
             // Skip the tag through its closing '>', then drop the '>'.
             for inner in chars.by_ref() {
                 if inner == '>' {
@@ -1671,6 +1677,18 @@ mod tests {
         let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
         assert_eq!(block.kind(), "paragraph");
         assert!(is_decorative_block(block, source));
+    }
+
+    /// A bare `<` in HTML text is a less-than sign, not a tag that runs
+    /// to the next `>`.
+    #[test]
+    fn markdown_html_block_with_bare_less_than_is_not_decorative() {
+        assert_eq!(strip_html_tags("<b>a < b</b>"), "a < b");
+        let source = "<p align=\"center\"><b>< 5 ms startup</b></p>\n\n# Title\n";
+        let tree = parse(source);
+        let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
+        assert_eq!(block.kind(), "html_block");
+        assert!(!is_decorative_block(block, source));
     }
 
     #[test]
