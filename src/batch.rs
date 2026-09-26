@@ -128,13 +128,15 @@ pub enum JsonKey {
 /// language-agnostic declaration surface. See `walker::plaintext`.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
-    /// Whole-file render, or a head slice of a longer file. For a
-    /// fallback file, the whole of a short one; predecessor: its
-    /// `DeclSurface`.
+    /// A build file whole, or a recipe file's roster (housekeeping recipe
+    /// bodies dropped, or only its `.PHONY` lines and canonical targets
+    /// when a root `Makefile` is long). For a fallback file, the whole of
+    /// a short one; predecessor: its `DeclSurface`.
     Whole { file: PathBuf },
-    /// Indentation-zero declaration surface of a source-like text file
-    /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
-    /// Vue, CSS, reST, …). The language-agnostic fallback.
+    /// Declaration surface of a source-like or flat text file no
+    /// format-aware walker claims (Java, C++, Ruby, PHP, Swift, Vue, CSS,
+    /// shell, config, …): its shallowest indentation levels, a head slice
+    /// for a flat file. The language-agnostic fallback.
     DeclSurface { file: PathBuf },
     /// Once every other batch is scheduled, the head of a file no other
     /// batch touches, or in a single-file walk the named file's rows no
@@ -212,10 +214,12 @@ pub enum Rung {
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
-    /// `[package]` or `[workspace.package]` identity block.
+    /// `[package]`, `[workspace]` or `[workspace.package]`, or the lede of
+    /// a Python manifest's `[project]` / `[tool.poetry]`.
     Identity { file: PathBuf },
-    /// How the package runs: `[features]`, and a Python manifest's console
-    /// scripts (`[project.scripts]`, `[tool.poetry.scripts]`).
+    /// How the package builds and runs: `[features]`, Cargo's `[lib]` and
+    /// `[[bin]]`, and a Python manifest's console scripts and task runner
+    /// tables.
     Operational { file: PathBuf },
     /// Ordinary `[dependencies]` / `[workspace.dependencies]` tables,
     /// plus Python-manifest dependency sections.

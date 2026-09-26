@@ -1,12 +1,14 @@
 //! Plaintext walker — the home for every file precis has no parser
 //! for. Two jobs:
 //!
-//! 1. **Named files** ([`classify_plaintext`]): build files, dotenv
-//!    samples, version pins and the pnpm workspace, each rendered whole or as
-//!    a head slice and priced by class ([`class_value`]).
-//!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
-//!    never admitted; dotenv *samples* are, since they carry
-//!    placeholders and document the deploy-facing config keys.
+//! 1. **Named files** ([`classify_plaintext`]): build files, rendered whole
+//!    or as a recipe roster, and dotenv samples, version pins and the pnpm
+//!    workspace, rendered as flat text; each priced by class
+//!    ([`class_value`]).
+//!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`,
+//!    [`is_credential_name`]) are refused by the source cache; dotenv
+//!    *samples* are not, since they carry placeholders and document the
+//!    deploy-facing config keys.
 //!    At a package root, the project's manifest in a format no walker
 //!    parses ([`is_unparsed_manifest`]) is claimed too.
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
@@ -35,7 +37,8 @@ use super::{
 /// Line cap on a `Whole` plaintext batch.
 const PLAINTEXT_LINE_CAP: usize = 60;
 
-/// FS-metadata pre-flight gate (≈80 bytes/line × line cap).
+/// Byte cap on a `Whole` plaintext batch (≈80 bytes/line × line cap), and
+/// how far into a file the floor's head reaches.
 const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
 /// Line cap on a whole [`Class::Build`] batch.
@@ -88,8 +91,9 @@ const SOURCE_TEXT_MAX_LINE_CHARS: usize = 200;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
     /// Compact build/deploy entrypoints (`Makefile`, `Taskfile`,
-    /// `Dockerfile`, compose files). A root one too long to render whole
-    /// shows its flat surface, as [`Class::FlatText`] does.
+    /// `Dockerfile`, compose files). A root `Makefile` too long to render
+    /// whole shows what it can run ([`root_makefile_targets`]); any other
+    /// root one shows its flat surface, as [`Class::FlatText`] does.
     Build,
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation. Rendered like
@@ -143,8 +147,8 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
 /// A repository's own manifest or build script in a format no walker
 /// parses: its identity, dependencies and build entry points. Claimed
 /// only at a [package root](is_package_root), where it describes the
-/// project rather than one module of it. The JSON and TOML walkers leave
-/// such a file to this one ([`is_unparsed_manifest`]).
+/// project rather than one module of it. The TOML walker leaves such a
+/// file to this one ([`is_unparsed_manifest`]).
 fn is_unparsed_manifest_name(name: &str) -> bool {
     #[rustfmt::skip]
     const NAMES: &[&str] = &[
