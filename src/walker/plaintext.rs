@@ -1619,10 +1619,12 @@ fn recipe_name(line: &str) -> Option<&str> {
     let (targets, rest) = line.split_once(':')?;
     let mut tokens = targets.split_whitespace();
     let name = tokens.next()?;
+    let is_operator = |token: &str| matches!(token, "=" | "?=" | "+=" | "!=");
     let is_assignment = rest.starts_with('=')
         || rest.contains(":=")
         || name.contains('=')
-        || tokens.any(|token| matches!(token, "=" | "?=" | "+=" | "!="));
+        || tokens.any(is_operator)
+        || rest.split_whitespace().nth(1).is_some_and(is_operator);
     (!line.starts_with('#') && !is_assignment).then_some(name)
 }
 
@@ -2532,9 +2534,10 @@ mod tests {
             (
                 "Makefile",
                 recipes(
-                    ".PHONY: $(PHONY)\nall: vmlinux\nall: dtbs\nPHONY += help\nhelp:\n\t@echo\nbuild: FLAGS := -O2\n",
+                    ".PHONY: $(PHONY)\nall: vmlinux\nall: dtbs\nPHONY += help\nhelp:\n\t@echo\nbuild: FLAGS := -O2\n\
+                     test: CFLAGS += -g\ntest: $(OBJS:.c=.o)\n",
                 ),
-                vec![(2, 2), (5, 5)],
+                vec![(2, 2), (5, 5), (9, 9)],
                 vec![],
             ),
             (
