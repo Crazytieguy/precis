@@ -178,8 +178,8 @@ Score(3000)=0.633 I=0.892 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 9391 | 49 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 4, sub: 0, line: 102 } |  |  | 0.710 |
 | ns | 9403 |  | 173 | tests/test_api.py: how the suite is wired | 5.2 |  | 0.701 |
 | walker |  | 9440 | 49 | Code::CodeKey { rung: Doc, file: py3xui/async_api/async_api.py, decl: 4, sub: 0, line: 107 } |  |  | 0.701 |
-| walker |  | 9575 | 135 | Plaintext::DeclSurface { file: dev/clean_trash.sh } |  |  | 0.701 |
-| walker |  | 9685 | 110 | Plaintext::Whole { file: dev/clean_trash.sh } |  |  | 0.701 |
+| walker |  | 9581 | 141 | Plaintext::DeclSurface { file: dev/clean_trash.sh } |  |  | 0.701 |
+| walker |  | 9685 | 104 | Plaintext::Whole { file: dev/clean_trash.sh } |  |  | 0.701 |
 | ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.687 |
 | walker |  | 9737 | 52 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 5, sub: 0, line: 78 } |  |  | 0.687 |
 | ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.683 |

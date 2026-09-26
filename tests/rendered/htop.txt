@@ -193,11 +193,6 @@ README.md
   …
   202→## Bugs, development feedback
   203→
-  204→We have a [development mailing list](https://htop.dev/mailinglist.html). Feel free to subscribe for release announcements or asking questions on the development of `htop`.
-  205→
-  206→You can also join our IRC channel [#htop on Libera.Chat](https://web.libera.chat/#htop) and talk to the developers there.
-  207→
-  208→If you have found an issue within the source of `htop`, please check whether this has already been reported in our [GitHub issue tracker](https://github.com/htop-dev/htop/issues).
   …
   211→## History
   212→
@@ -246,6 +241,21 @@ autogen.sh
   1→#!/bin/sh
   2→autoreconf --force --install --verbose -Wall
 check-pcp-style.sh
+  …
+  3→set -eu -o pipefail
+  4→
+  5→PCP_DIR="$(dirname "$0")/pcp"
+  …
+  12→echo Scanning definitions in ${PCP_DIR} ...
+  13→
+  14→PCP_COLUMNS="${PCP_DIR}/columns"
+  15→PCP_METERS="${PCP_DIR}/meters"
+  16→PCP_SCREENS="${PCP_DIR}/screens"
+  …
+  33→check_file() {
+  …
+  185→error_occurred=0
+  …
 configure.ac
 darwin/
   DarwinMachine.c

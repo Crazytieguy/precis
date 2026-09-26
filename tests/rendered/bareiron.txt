@@ -45,9 +45,7 @@ extract_registries.sh
   3→
   4→REQUIRED_MAJOR=21
   5→SERVER_JAR="${SERVER_JAR:-server.jar}"
-  6→NOTCHIAN_DIR="notchian"
-  7→JS_RUNTIME=""
-  8→
+  …
   9→get_java_version() {
   …
   13→check_java() {
@@ -55,6 +53,10 @@ extract_registries.sh
   28→prepare_notchian_dir() {
   …
   36→dump_registries() {
+  …
+  47→detect_js_runtime() {
+  …
+  60→run_js_script() {
   …
 include/
   crafting.h
