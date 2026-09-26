@@ -1,5 +1,5 @@
-//! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
-//! headers and their line ranges. Emits one batch per ontology-recognized
+//! TOML walker. Uses `toml_edit` to identify `[table]` headers and their
+//! line ranges. Emits one batch per ontology-recognized
 //! section group (identity / operational / dependencies). Every other
 //! table — build systems, profiles, lints, tool config — and the
 //! metadata rest of a Python identity table are left to an explicit read.
@@ -19,7 +19,7 @@
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 
-use tree_sitter::{Node, Tree};
+use toml_edit::{ImDocument, Item, Table};
 
 use crate::batch::{Batch, TomlKey};
 use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
@@ -27,8 +27,9 @@ use crate::value::{dependency_roster_value, manifest_identity_value, manifest_op
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{WalkCtx, fs::files_with_any_extension, path_depth_factor, single_file_lines_content};
 
-/// A top-level `[table]` or `[[array-of-tables]]` header and its inclusive
-/// 1-based row span, which ends at the row before the next header or EOF.
+/// A `[table]` or `[[array-of-tables]]` header and its inclusive 1-based row
+/// span, which ends at its last entry: the comments above the next header
+/// introduce that table.
 #[derive(Debug, PartialEq)]
 struct Section {
     name: String,
@@ -46,19 +47,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         {
             continue;
         }
-        let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_toml_ng::LANGUAGE.into())
-        else {
+        let Some(source) = ctx.read_for_parse(&file) else {
             continue;
         };
-        let sections = collect_sections(&tree, &source);
+        let Ok(document) = ImDocument::parse(&**source) else {
+            continue;
+        };
+        let sections = collect_sections(&document);
         let python_project_manifest = is_python_project_manifest(&file, &sections);
-        let (pairs, identity_residue) = if python_project_manifest {
-            (
-                collect_table_pairs(&tree, &source),
-                python_identity_non_lede_rows(&source, &sections),
-            )
+        let identity_residue = if python_project_manifest {
+            python_identity_non_lede_rows(&source, &sections)
         } else {
-            Default::default()
+            HashSet::new()
         };
         let depth = path_depth_factor(&file, ctx);
         let identity_rows: Vec<usize> = section_rows(&sections, |n| {
@@ -92,7 +92,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         }
         let mut dependency_rows = section_rows(&sections, is_ordinary_dependency_section);
         if python_project_manifest {
-            dependency_rows.extend(pep621_dependency_array_rows(&pairs));
+            dependency_rows.extend(pep621_dependency_array_rows(&document));
         }
         if let Some(content) = single_file_lines_content(&file, &source, dependency_rows) {
             let value = dependency_roster_value(depth);
@@ -114,68 +114,6 @@ fn section_rows(sections: &[Section], name_match: impl Fn(&str) -> bool) -> Vec<
         .filter(|section| name_match(&section.name))
         .flat_map(|section| section.start..=section.end)
         .collect()
-}
-
-/// One `key = value` pair written directly under a top-level `[table]`, with
-/// the inclusive 1-based row span of the whole pair — a multi-line array or
-/// inline table runs through its closing bracket.
-struct TablePair {
-    table: String,
-    key: String,
-    start: usize,
-    end: usize,
-}
-
-fn collect_table_pairs(tree: &Tree, source: &str) -> Vec<TablePair> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    let mut out = Vec::new();
-    for child in root.children(&mut cursor) {
-        if child.kind() != "table" {
-            continue;
-        }
-        let Some(table) = extract_table_name(child, source) else {
-            continue;
-        };
-        let mut pair_cursor = child.walk();
-        for pair in child.children(&mut pair_cursor) {
-            if pair.kind() != "pair" {
-                continue;
-            }
-            let Some(key) = pair_key(pair, source) else {
-                continue;
-            };
-            out.push(TablePair {
-                table: table.clone(),
-                key,
-                start: pair.start_position().row + 1,
-                end: pair_value_node(pair).unwrap_or(pair).end_position().row + 1,
-            });
-        }
-    }
-    out
-}
-
-fn pair_key(pair: Node, source: &str) -> Option<String> {
-    let mut cursor = pair.walk();
-    pair.children(&mut cursor)
-        .find(|child| matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key"))
-        .map(|child| normalize_key_path(source[child.start_byte()..child.end_byte()].trim()))
-}
-
-fn pair_value_node(pair: Node) -> Option<Node> {
-    let mut cursor = pair.walk();
-    let mut seen_key = false;
-    for child in pair.children(&mut cursor) {
-        if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
-            seen_key = true;
-            continue;
-        }
-        if seen_key && !matches!(child.kind(), "=" | "comment") {
-            return Some(child);
-        }
-    }
-    None
 }
 
 /// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table.
@@ -289,17 +227,20 @@ fn is_lede_pair_line(line: &str) -> bool {
     }
 }
 
-/// PEP 621 dependency arrays live inside `[project]` but belong to the
-/// dependency batches.
-fn is_pep621_dependency_key(key: &str) -> bool {
-    matches!(key, "dependencies" | "optional-dependencies")
-}
-
-fn pep621_dependency_array_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> {
-    pairs
-        .iter()
-        .filter(|pair| pair.table == "project" && is_pep621_dependency_key(&pair.key))
-        .flat_map(|pair| pair.start..=pair.end)
+/// Rows of the PEP 621 dependency arrays written directly under
+/// `[project]`, key through closing bracket.
+fn pep621_dependency_array_rows<'a>(
+    document: &'a ImDocument<&str>,
+) -> impl Iterator<Item = usize> + 'a {
+    let project = document.get("project").and_then(Item::as_table);
+    ["dependencies", "optional-dependencies"]
+        .into_iter()
+        .filter_map(move |key| {
+            let (key, item) = project?.get_key_value(key)?;
+            let start = row_at(document.raw(), key.span()?.start);
+            Some(start..=row_at(document.raw(), item.as_value()?.span()?.end - 1))
+        })
+        .flatten()
 }
 
 fn is_pyproject_identity_table(name: &str) -> bool {
@@ -308,83 +249,51 @@ fn is_pyproject_identity_table(name: &str) -> bool {
 
 // --- section collection ---
 
-fn collect_sections(tree: &Tree, source: &str) -> Vec<Section> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    let headers: Vec<(String, usize)> = root
-        .children(&mut cursor)
-        .filter(|child| matches!(child.kind(), "table" | "table_array_element"))
-        .filter_map(|child| {
-            Some((
-                extract_table_name(child, source)?,
-                child.start_position().row,
-            ))
-        })
-        .collect();
-    let lines: Vec<&str> = source.lines().collect();
-    headers
-        .iter()
-        .enumerate()
-        .map(|(i, (name, row))| {
-            let mut end = headers.get(i + 1).map_or(lines.len(), |(_, next)| *next);
-            // Comments above the next header introduce that table.
-            while end > row + 1 && {
-                let line = lines[end - 1].trim_start();
-                line.is_empty() || line.starts_with('#')
-            } {
-                end -= 1;
-            }
-            Section {
-                name: name.clone(),
-                start: row + 1,
-                end,
-            }
-        })
-        .collect()
+fn collect_sections(document: &ImDocument<&str>) -> Vec<Section> {
+    let mut sections = Vec::new();
+    push_sections(document, "", document.raw(), &mut sections);
+    sections.sort_by_key(|section| section.start);
+    sections
 }
 
-fn extract_table_name(node: Node, source: &str) -> Option<String> {
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
-            let text = &source[child.start_byte()..child.end_byte()];
-            return Some(normalize_key_path(text.trim()));
-        }
-    }
-    None
-}
-
-/// Strip quotes from dotted-key segments so `[tool."poetry".scripts]`
-/// classifies the same as `[tool.poetry.scripts]`. Splits only on dots
-/// *outside* quotes, and a segment whose content contains a literal dot
-/// keeps its quotes — `["tool.poetry".scripts]` names a different table
-/// than `[tool.poetry.scripts]` and must not normalize into it.
-fn normalize_key_path(text: &str) -> String {
-    let mut segments: Vec<String> = Vec::new();
-    let mut current = String::new();
-    let mut quote: Option<char> = None;
-    let mut push_segment = |segment: &mut String| {
-        let trimmed = segment.trim();
-        segments.push(if trimmed.contains('.') {
-            format!("\"{trimmed}\"")
+/// The sections under `table`, whose path is `prefix`. A key segment with a
+/// literal dot keeps its quotes: `["tool.poetry".scripts]` names a different
+/// table than `[tool.poetry.scripts]`.
+fn push_sections(table: &Table, prefix: &str, source: &str, out: &mut Vec<Section>) {
+    for (key, item) in table {
+        let segment = if key.contains('.') {
+            format!("\"{key}\"")
         } else {
-            trimmed.to_string()
-        });
-        segment.clear();
-    };
-    for c in text.chars() {
-        match quote {
-            Some(q) if c == q => quote = None,
-            Some(_) => current.push(c),
-            None => match c {
-                '"' | '\'' => quote = Some(c),
-                '.' => push_segment(&mut current),
-                _ => current.push(c),
-            },
+            key.to_string()
+        };
+        let name = if prefix.is_empty() {
+            segment
+        } else {
+            format!("{prefix}.{segment}")
+        };
+        let tables: Vec<&Table> = match item {
+            Item::Table(table) if !table.is_dotted() => vec![table],
+            Item::ArrayOfTables(tables) => tables.iter().collect(),
+            _ => continue,
+        };
+        for table in tables {
+            if !table.is_implicit()
+                && let Some(span) = table.span()
+            {
+                out.push(Section {
+                    name: name.clone(),
+                    start: row_at(source, span.start),
+                    end: row_at(source, span.end - 1),
+                });
+            }
+            push_sections(table, &name, source, out);
         }
     }
-    push_segment(&mut current);
-    segments.join(".")
+}
+
+/// The 1-based row holding byte `offset` of `source`.
+fn row_at(source: &str, offset: usize) -> usize {
+    source[..offset].matches('\n').count() + 1
 }
 
 // --- workspace-member resolution ---
@@ -471,21 +380,16 @@ mod tests {
         crate_root.join("tests/fixtures").join(rel)
     }
 
-    fn parse(source: &str) -> Tree {
-        let mut parser = tree_sitter::Parser::new();
-        parser
-            .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
-            .unwrap();
-        parser.parse(source, None).unwrap()
+    fn parse(source: &str) -> ImDocument<&str> {
+        ImDocument::parse(source).unwrap()
     }
 
     /// `(identity lede rows, residue rows outside the dependency arrays)` for a
     /// source whose only identity table spans 1..=`end`.
     fn identity_partition(source: &str, end: usize) -> (Vec<usize>, Vec<usize>) {
-        let sections = collect_sections(&parse(source), source);
+        let sections = collect_sections(&parse(source));
         let residue = python_identity_non_lede_rows(source, &sections);
-        let owned: HashSet<usize> =
-            pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
+        let owned: HashSet<usize> = pep621_dependency_array_rows(&parse(source)).collect();
         let mut metadata_rows: Vec<usize> = residue.difference(&owned).copied().collect();
         metadata_rows.sort();
         (
@@ -509,22 +413,25 @@ mod tests {
         (dir, members)
     }
 
+    /// A quoted key segment names the same table as the bare one, unless
+    /// it holds a literal dot.
     #[test]
-    fn toml_normalize_key_path_quoted_segments() {
-        // Quoted segment without a literal dot normalizes into the
-        // dotted path; a literal-dot segment keeps its quotes so it
-        // can't be confused with the structurally-dotted table.
+    fn toml_section_names_unquote_segments_without_a_dot() {
+        let source = "[tool.\"poetry\".scripts]\na = 1\n['tool'.hatch]\nb = 2\n\
+                      [\"tool.poetry\".scripts]\nc = 3\n[\"dependencies\"]\nd = 4\n";
+        let names: Vec<String> = collect_sections(&parse(source))
+            .into_iter()
+            .map(|section| section.name)
+            .collect();
         assert_eq!(
-            normalize_key_path("tool.\"poetry\".scripts"),
-            "tool.poetry.scripts"
+            names,
+            [
+                "tool.poetry.scripts",
+                "tool.hatch",
+                "\"tool.poetry\".scripts",
+                "dependencies"
+            ]
         );
-        assert_eq!(normalize_key_path("'tool'.poetry"), "tool.poetry");
-        assert_eq!(
-            normalize_key_path("\"tool.poetry\".scripts"),
-            "\"tool.poetry\".scripts"
-        );
-        assert_eq!(normalize_key_path("dependencies"), "dependencies");
-        assert_eq!(normalize_key_path("\"dependencies\""), "dependencies");
     }
 
     /// A section runs to its last entry: the comments above the next
@@ -534,7 +441,7 @@ mod tests {
         let source = "[package]\nname = \"demo\"\nversion = \"1.0\"\n\n\
                       [[bin]]\nname = \"demo-cli\"\n# Runtime crates.\n\
                       [dependencies]\nserde = \"1\"\n";
-        let sections = collect_sections(&parse(source), source);
+        let sections = collect_sections(&parse(source));
         assert_eq!(
             sections,
             vec![
@@ -597,8 +504,7 @@ requires-python = ">=3.10"
     #[test]
     fn toml_inline_optional_dependencies_join_the_roster() {
         let source = "[project]\nname = \"demo\"\noptional-dependencies = { dev = [\"pytest\"] }\n";
-        let owned: Vec<usize> =
-            pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
+        let owned: Vec<usize> = pep621_dependency_array_rows(&parse(source)).collect();
         assert_eq!(owned, vec![3]);
         let (lede, residue) = identity_partition(source, 3);
         assert_eq!(lede, vec![1, 2]);
@@ -610,13 +516,13 @@ requires-python = ">=3.10"
     #[test]
     fn toml_cargo_package_table_has_no_identity_residue() {
         let source = "[package]\nname = \"demo\"\nkeywords = [\"a\"]\nexclude = [\"rfcs/**/*\"]\n";
-        let sections = collect_sections(&parse(source), source);
+        let sections = collect_sections(&parse(source));
         assert!(python_identity_non_lede_rows(source, &sections).is_empty());
     }
 
     #[test]
     fn toml_python_manifest_is_pyproject_or_any_project_table() {
-        let parse_sections = |source: &str| collect_sections(&parse(source), source);
+        let parse_sections = |source: &str| collect_sections(&parse(source));
 
         let project = parse_sections("[project]\nname = \"demo\"\n");
         assert!(is_python_project_manifest(
@@ -667,7 +573,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
                       [target.'cfg(unix)'.dependencies]\nlibc = \"0.2\"\n\n\
                       [target.'cfg(windows)'.dependencies.windows-sys]\nversion = \"0.59\"\n\n\
                       [target.'cfg(unix)'.dev-dependencies]\nnix = \"0.29\"\n";
-        let sections = collect_sections(&parse(source), source);
+        let sections = collect_sections(&parse(source));
         assert_eq!(
             section_rows(&sections, is_ordinary_dependency_section),
             vec![4, 5, 7, 8, 10, 11],
@@ -681,7 +587,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
                       [[bin]]\nname = \"demo-cli\"\npath = \"src/cli.rs\"\n\
                       required-features = [\"cli\"]\n\n\
                       [profile.release]\nlto = true\n";
-        let sections = collect_sections(&parse(source), source);
+        let sections = collect_sections(&parse(source));
         assert_eq!(
             section_rows(&sections, is_operational_section),
             vec![4, 5, 7, 8, 9, 10],
@@ -693,7 +599,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         let source = "[project]\nname = \"demo\"\n\n\
                       [tool.poe.tasks.test]\ncmd = \"pytest\"\n\n\
                       [tool.poe.tasks.bump]\nscript = \"demo.bump:bump\"\n";
-        let sections = collect_sections(&parse(source), source);
+        let sections = collect_sections(&parse(source));
         assert_eq!(section_rows(&sections, is_operational_section), vec![4, 5],);
     }
 
