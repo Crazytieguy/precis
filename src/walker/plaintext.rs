@@ -829,27 +829,51 @@ fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
 /// `<<~SQL`) — through the line that closes it. Its text is data, however
 /// much it looks like code. A string that never closes marks nothing.
 fn string_interiors(lines: &[&str]) -> Vec<bool> {
+    let mut rows_by_leading_identifier: Option<HashMap<&str, Vec<usize>>> = None;
     let mut inside = vec![false; lines.len()];
     let mut index = 0;
     while index < lines.len() {
-        if let Some((end, is_heredoc)) = multiline_string_end(lines[index])
-            && let Some(offset) = lines[index + 1..].iter().position(|line| {
-                if is_heredoc {
-                    line.trim()
-                        .strip_prefix(end)
-                        .is_some_and(|after| !after.starts_with(is_identifier_char))
-                } else {
-                    line.contains(end)
-                }
-            })
-        {
-            let last = index + 1 + offset;
+        let closing_row = match multiline_string_end(lines[index]) {
+            Some((end, true)) => rows_by_leading_identifier
+                .get_or_insert_with(|| index_rows_by_leading_identifier(lines))
+                .get(end)
+                .and_then(|rows| rows.get(rows.partition_point(|&row| row <= index)))
+                .copied(),
+            Some((end, false)) => lines[index + 1..]
+                .iter()
+                .position(|line| line.contains(end))
+                .map(|offset| index + 1 + offset),
+            None => None,
+        };
+        if let Some(last) = closing_row {
             inside[index + 1..=last].fill(true);
             index = last;
         }
         index += 1;
     }
     inside
+}
+
+/// The rows each identifier leads, in order — where a heredoc opened with
+/// that identifier can close. Looked up rather than scanned for, so a line
+/// that only looks like an opener (`1<<BITS`) costs no pass over the rest
+/// of the file.
+fn index_rows_by_leading_identifier<'a>(lines: &[&'a str]) -> HashMap<&'a str, Vec<usize>> {
+    let mut rows: HashMap<&str, Vec<usize>> = HashMap::new();
+    for (row, line) in lines.iter().enumerate() {
+        let identifier = leading_identifier(line.trim_start());
+        if !identifier.is_empty() {
+            rows.entry(identifier).or_default().push(row);
+        }
+    }
+    rows
+}
+
+fn leading_identifier(text: &str) -> &str {
+    let end = text
+        .find(|c: char| !is_identifier_char(c))
+        .unwrap_or(text.len());
+    &text[..end]
 }
 
 fn is_identifier_char(c: char) -> bool {
@@ -871,7 +895,7 @@ fn multiline_string_end(line: &str) -> Option<(&str, bool)> {
     let rest = rest
         .trim_start_matches(['<', '~', '-'])
         .trim_start_matches(['\'', '"']);
-    let identifier = &rest[..rest.find(|c| !is_identifier_char(c)).unwrap_or(rest.len())];
+    let identifier = leading_identifier(rest);
     identifier
         .starts_with(|c: char| c.is_ascii_uppercase())
         .then_some((identifier, true))
@@ -1597,6 +1621,12 @@ mod tests {
             string_interiors(&shift.lines().collect::<Vec<_>>())
                 .iter()
                 .all(|inside| !inside)
+        );
+
+        let closer_above_opener = "EOF\nx = <<EOF\n  EOF_NOT\nEOF;\nEOF\n";
+        assert_eq!(
+            string_interiors(&closer_above_opener.lines().collect::<Vec<_>>()),
+            vec![false, false, true, true, false]
         );
     }
 
