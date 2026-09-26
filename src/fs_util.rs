@@ -95,8 +95,9 @@ pub struct DirFilter {
     /// Memo for [`list_dir`]: every walker and every scheduler cost
     /// probe lists the same directories again.
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
-    /// Directories [`list_dir`] could not read, whose listing is empty.
-    unreadable: RefCell<HashSet<PathBuf>>,
+    /// Directories [`list_dir`] lists as nothing for a reason other than
+    /// emptiness: unreadable, or a link it never lists through.
+    unlisted: RefCell<HashSet<PathBuf>>,
     /// Entries [`DirFilter::hides_everything_in`] read from a directory it
     /// found visible, until [`list_dir`] lists them: a listing probes each
     /// directory it names, and that directory's own listing usually follows.
@@ -196,7 +197,7 @@ impl DirFilter {
             canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
             repo: None,
             listings: RefCell::new(HashMap::new()),
-            unreadable: RefCell::new(HashSet::new()),
+            unlisted: RefCell::new(HashSet::new()),
             probed_entries: RefCell::new(HashMap::new()),
             only_file: None,
         }
@@ -590,18 +591,19 @@ pub(crate) fn listed_from_root(path: &Path, filter: &DirFilter) -> bool {
 }
 
 /// Whether [`list_dir`] lists nothing for `path` because nothing there
-/// lists. An unreadable directory is not empty: something may be there.
+/// lists. An unreadable or linked directory is not empty: something may
+/// be there.
 pub(crate) fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
-    list_dir(path, filter).is_empty() && !filter.unreadable.borrow().contains(path)
+    list_dir(path, filter).is_empty() && !filter.unlisted.borrow().contains(path)
 }
 
 fn read_listing(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> {
-    if filter.is_linked_subdirectory(path) {
-        return BTreeMap::new();
-    }
     let probed = filter.probed_entries.borrow_mut().remove(path);
-    let Some(entries) = probed.or_else(|| read_entries(path)) else {
-        filter.unreadable.borrow_mut().insert(path.to_path_buf());
+    let Some(entries) = (!filter.is_linked_subdirectory(path))
+        .then(|| probed.or_else(|| read_entries(path)))
+        .flatten()
+    else {
+        filter.unlisted.borrow_mut().insert(path.to_path_buf());
         return BTreeMap::new();
     };
     entries

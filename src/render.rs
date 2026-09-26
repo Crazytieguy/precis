@@ -357,13 +357,10 @@ impl RenderedTree {
     // ---- internal ----
 
     /// Whether `path` holds nothing any budget could show: a directory
-    /// [`list_dir`] lists nothing for, or a zero-byte file. A linked
-    /// directory lists nothing because it is never listed through, so it is
-    /// not marked.
+    /// [`lists_nothing`] holds for, or a zero-byte file.
     fn entry_empty(&self, path: &Path, kind: EntryKind) -> bool {
         if matches!(kind, EntryKind::Directory) {
-            return lists_nothing(path, &self.dir_filter)
-                && !self.dir_filter.is_linked_subdirectory(path);
+            return lists_nothing(path, &self.dir_filter);
         }
         if let Some(&known) = self.file_empty.borrow().get(path) {
             return known;
