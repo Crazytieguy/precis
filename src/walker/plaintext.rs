@@ -23,6 +23,8 @@
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
 
+use rustc_hash::FxHashMap;
+
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::fs_util::list_dir;
 
@@ -674,17 +676,25 @@ fn declaration_surface(
     // rest of the file names most come first; file order breaks ties, and
     // orders statements.
     if is_language {
-        let mut word_counts: HashMap<&str, usize> = HashMap::new();
+        let name_declared_by =
+            |&(_, line, kind, rank): &(usize, usize, SurfaceLine, DeclarationRank)| {
+                (kind == SurfaceLine::Decl && rank < DeclarationRank::Statement)
+                    .then(|| declared_name(lines[line - 1].trim()))
+                    .flatten()
+            };
+        let mut references: FxHashMap<&str, usize> = rows
+            .iter()
+            .filter_map(name_declared_by)
+            .map(|name| (name, 0))
+            .collect();
         for word in source.split(|c: char| !(c.is_alphanumeric() || c == '_')) {
-            *word_counts.entry(word).or_default() += 1;
+            if let Some(count) = references.get_mut(word) {
+                *count += 1;
+            }
         }
-        rows.sort_by_cached_key(|&(_, line, kind, rank)| {
-            let declares = kind == SurfaceLine::Decl && rank < DeclarationRank::Statement;
-            let references = declares
-                .then(|| declared_name(lines[line - 1].trim()))
-                .flatten()
-                .and_then(|name| word_counts.get(name));
-            (rank, std::cmp::Reverse(references.copied().unwrap_or(0)))
+        rows.sort_by_cached_key(|row| {
+            let count = name_declared_by(row).and_then(|name| references.get(name));
+            (row.3, std::cmp::Reverse(count.copied().unwrap_or(0)))
         });
     }
     for (depth, level) in levels
