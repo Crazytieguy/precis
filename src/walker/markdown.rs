@@ -767,28 +767,14 @@ fn is_short_substantive_block(block: Node, source: &str) -> bool {
 
 /// Remove `<…>` tags, keeping the line breaks inside them so rows still
 /// line up. A `<` not followed by a letter, `/`, `!` or `?` opens no tag
-/// in HTML (`a < b`), so it stays as text.
+/// in HTML (`a < b`), so it stays as text; an unclosed tag runs to the end.
 fn strip_html_tags(s: &str) -> String {
-    let mut out = String::with_capacity(s.len());
-    let mut chars = s.chars().peekable();
-    while let Some(c) = chars.next() {
-        if c == '<'
-            && chars
-                .peek()
-                .is_some_and(|next| next.is_ascii_alphabetic() || matches!(next, '/' | '!' | '?'))
-        {
-            for inner in chars.by_ref() {
-                match inner {
-                    '>' => break,
-                    '\n' => out.push('\n'),
-                    _ => {}
-                }
-            }
-        } else {
-            out.push(c);
-        }
-    }
-    out
+    static TAG: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new("<[A-Za-z/!?][^>]*(?:>|$)").unwrap());
+    TAG.replace_all(s, |tag: &regex::Captures| {
+        "\n".repeat(tag[0].matches('\n').count())
+    })
+    .into_owned()
 }
 
 // --- tree-sitter-md helpers ---
@@ -1572,28 +1558,9 @@ fn is_html_nav_block(block: Node, source: &str) -> bool {
 /// Replace `&nbsp;`-style character references with a space so entity
 /// padding doesn't read as content.
 fn strip_html_entities(text: &str) -> String {
-    let mut out = String::with_capacity(text.len());
-    let mut rest = text;
-    while let Some(amp) = rest.find('&') {
-        out.push_str(&rest[..amp]);
-        let tail = &rest[amp + 1..];
-        match tail.find(';').filter(|end| {
-            tail[..*end]
-                .chars()
-                .all(|c| c.is_ascii_alphanumeric() || c == '#')
-        }) {
-            Some(end) => {
-                out.push(' ');
-                rest = &tail[end + 1..];
-            }
-            None => {
-                out.push('&');
-                rest = tail;
-            }
-        }
-    }
-    out.push_str(rest);
-    out
+    static ENTITY: std::sync::LazyLock<regex::Regex> =
+        std::sync::LazyLock::new(|| regex::Regex::new("&[A-Za-z0-9#]*;").unwrap());
+    ENTITY.replace_all(text, " ").into_owned()
 }
 
 /// Include `blocks` through the first substantive paragraph, stepping
