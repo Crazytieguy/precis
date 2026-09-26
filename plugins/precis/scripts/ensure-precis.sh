@@ -43,6 +43,14 @@ case "$OS-$ARCH" in
     ;;
 esac
 
+# Ask GitHub at most hourly once installed: unauthenticated API requests
+# are limited to 60 an hour, and every session start runs this hook.
+CHECKED="$PLUGIN_DATA/update-checked"
+if [ -x "$PRECIS_BIN" ] && [ -n "$(find "$CHECKED" -mmin -60 2>/dev/null)" ]; then
+  exit 0
+fi
+touch "$CHECKED"
+
 # Get latest release tag
 RELEASE_JSON=$(curl -fSs https://api.github.com/repos/Crazytieguy/precis/releases/latest) || exit 0
 

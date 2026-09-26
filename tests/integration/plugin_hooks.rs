@@ -298,6 +298,41 @@ fn plugin_hooks_install_logs_unsupported_arch() {
     assert!(log.contains("no release binary for linux-armv7l"), "{log}");
 }
 
+/// An installed plugin asks GitHub for the latest release at most once
+/// an hour, however many sessions start.
+#[test]
+fn plugin_hooks_update_checks_at_most_hourly() {
+    let temp = tempfile::tempdir().unwrap();
+    let plugin_data = temp.path().join("plugin-data");
+    std::fs::create_dir_all(&plugin_data).unwrap();
+    let binary = plugin_data.join("precis");
+    std::fs::write(&binary, "#!/bin/sh\n").unwrap();
+    std::fs::set_permissions(&binary, PermissionsExt::from_mode(0o755)).unwrap();
+    std::fs::write(plugin_data.join("version"), "v9.9.9\n").unwrap();
+    let calls = temp.path().join("curl-calls");
+    let path = path_with_fakes(
+        &temp.path().join("bin"),
+        &[(
+            "curl",
+            &format!(
+                r#"echo "$*" >> '{}'; echo '{{"tag_name":"v9.9.9"}}'"#,
+                calls.display()
+            ),
+        )],
+    );
+    for _ in 0..3 {
+        let status = Command::new("bash")
+            .arg(hook_script("scripts/ensure-precis.sh"))
+            .env("CLAUDE_PLUGIN_DATA", &plugin_data)
+            .env("PATH", &path)
+            .status()
+            .unwrap();
+        assert!(status.success());
+    }
+    let calls = std::fs::read_to_string(&calls).unwrap();
+    assert_eq!(calls.lines().count(), 1, "{calls}");
+}
+
 /// Work dirs left by killed updates are cleared once they are old
 /// enough not to belong to an update still running.
 #[test]
