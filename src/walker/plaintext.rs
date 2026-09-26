@@ -129,13 +129,13 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         }
         // `Taskfile.yaml` is a `Makefile` in YAML clothing and a `justfile` one
         // in its own syntax — the task runner's target roster.
-        "Makefile" | "Taskfile.yaml" | "Taskfile.yml" | "justfile" | "Justfile" | ".justfile"
-        | "Dockerfile" | "Containerfile" => {
+        "Taskfile.yaml" | "Taskfile.yml" | "justfile" | "Justfile" | ".justfile" | "Dockerfile"
+        | "Containerfile" => {
             return Some(Class::Build);
         }
         _ => {}
     }
-    if is_docker_compose_name(&lower) {
+    if is_makefile_name(name) || is_docker_compose_name(&lower) {
         return Some(Class::Build);
     }
     if crate::value::is_dotenv_sample_filename(name) {
@@ -1506,7 +1506,12 @@ const CANONICAL_MAKE_TARGETS: [&str; 7] =
 
 /// A `Makefile` or `justfile`: recipe headers over indented bodies.
 fn is_recipe_file_name(name: &str) -> bool {
-    matches!(name, "Makefile" | "justfile" | "Justfile" | ".justfile")
+    is_makefile_name(name) || matches!(name, "justfile" | "Justfile" | ".justfile")
+}
+
+/// A name GNU make reads without `-f`.
+fn is_makefile_name(name: &str) -> bool {
+    matches!(name, "Makefile" | "makefile" | "GNUmakefile")
 }
 
 /// A recipe file within [`BUILD_LINE_CAP`], its [housekeeping
@@ -1518,7 +1523,10 @@ fn recipe_roster_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::B
     if source.line_count() > BUILD_LINE_CAP {
         return None;
     }
-    let is_makefile = file.file_name().is_some_and(|name| name == "Makefile");
+    let is_makefile = file
+        .file_name()
+        .and_then(|name| name.to_str())
+        .is_some_and(is_makefile_name);
     let mut rows = Vec::new();
     let mut keep_body = true;
     let mut continued = false;
@@ -1581,7 +1589,7 @@ fn root_makefile_targets(
     name: &str,
     ctx: &WalkCtx,
 ) -> Option<crate::content::BatchContent> {
-    if name != "Makefile" || ctx.depth_from_root(file) != 1 {
+    if !is_makefile_name(name) || ctx.depth_from_root(file) != 1 {
         return None;
     }
     let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
@@ -2270,6 +2278,8 @@ mod tests {
             (".tool-versions", Some(Class::FlatText)),
             ("pnpm-workspace.yaml", Some(Class::FlatText)),
             ("Makefile", Some(Class::Build)),
+            ("makefile", Some(Class::Build)),
+            ("GNUmakefile", Some(Class::Build)),
             ("Taskfile.yaml", Some(Class::Build)),
             ("Taskfile.yml", Some(Class::Build)),
             ("justfile", Some(Class::Build)),
@@ -2316,7 +2326,12 @@ mod tests {
         let root = tmp.path();
         std::fs::create_dir_all(root.join("packages/api")).unwrap();
         let short = "all:\n\tcc -o app main.c\n";
-        for path in ["Makefile", "Dockerfile", "packages/api/Makefile"] {
+        for path in [
+            "Makefile",
+            "GNUmakefile",
+            "Dockerfile",
+            "packages/api/Makefile",
+        ] {
             std::fs::write(root.join(path), short).unwrap();
         }
         let ctx = WalkCtx::new(root.to_path_buf());
@@ -2326,6 +2341,7 @@ mod tests {
             small_build_file_factor(file.file_name().unwrap().to_str().unwrap(), &file, &ctx)
         };
         assert_eq!(factor("Makefile"), SMALL_BUILD_FILE_PROMOTION);
+        assert_eq!(factor("GNUmakefile"), SMALL_BUILD_FILE_PROMOTION);
         // Name gate: deploy config is not the build surface.
         assert_eq!(factor("Dockerfile"), 1.0);
         // Depth gate: a nested Makefile is one component's build step.
