@@ -9,6 +9,14 @@
 //! scheduler spends what is left on the longest affordable prefix of
 //! that batch and stops — no fallback to smaller batches
 //! (`Scheduler::schedule_partial`).
+//!
+//! Two ratio adjustments depend on what is already scheduled, so they
+//! live here rather than in a batch's value: a code `Body` batch ranks
+//! lower the more of its file's code is scheduled (breadth pressure),
+//! and a batch drawn only from the tree's dominant source file ranks
+//! higher once that file has been entered. Under a char budget, `cost`
+//! is the larger of a batch's tokens and its chars converted at the two
+//! budgets' ratio (`ranking_cost`).
 
 #[cfg(debug_assertions)]
 use std::collections::BTreeMap;

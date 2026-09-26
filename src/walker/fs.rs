@@ -1,8 +1,9 @@
-//! Filesystem walker. Discovers directories, emits listings, and surveys
-//! file sets for per-language walkers. Only does `read_dir` — never reads
-//! file contents. Pure listing lives in [`crate::fs_util::list_dir`];
-//! this module holds walker-specific policy (heavy-directory skip,
-//! per-language file enumeration).
+//! Filesystem walker: directory listings and their value, plus
+//! per-extension file enumeration for the other walkers. Only does
+//! `read_dir` — never reads file contents. Pure listing lives in
+//! [`crate::fs_util::list_dir`]; this module holds walker-specific
+//! policy (which directories recurse, how a long listing splits, how a
+//! directory's role prices its listing).
 
 use std::{
     cell::RefCell,
