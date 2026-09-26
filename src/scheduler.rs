@@ -361,7 +361,8 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// A batch that says what the repository is and how to build it: the
-    /// identity block or head of a root manifest or build file.
+    /// identity block or head of a root manifest or build file, or of a
+    /// root build script (`build.zig`, `build.ps1`).
     fn is_root_identity(&self, id: BatchId) -> bool {
         let (BatchKey::Toml(TomlKey::Identity { file })
         | BatchKey::Json(JsonKey::Identity { file })
@@ -374,7 +375,8 @@ impl<W: Walker> Scheduler<W> {
         };
         file.parent() == Some(self.ctx.root())
             && (!matches!(self.entries[id.index()].key, BatchKey::Plaintext(_))
-                || crate::walker::is_build_or_manifest_file(file, &self.ctx))
+                || crate::walker::is_build_or_manifest_file(file, &self.ctx)
+                || file.file_stem() == Some("build".as_ref()))
     }
 
     /// Cost a batch ranks at, in tokens. Under a char budget, its chars
