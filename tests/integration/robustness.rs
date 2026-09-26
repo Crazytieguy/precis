@@ -605,6 +605,21 @@ fn robustness_credential_files_render_only_their_rows() {
     }
 }
 
+/// A credential file named as the path shows by that name only, even when
+/// it is a link to an ordinarily named file.
+#[cfg(unix)]
+#[test]
+fn robustness_credential_link_named_as_the_path_renders_only_its_name() {
+    const SECRET: &str = "precis-credential-marker-9e41";
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    write(&root.join("deployment.conf"), format!("API_KEY={SECRET}\n"));
+    std::os::unix::fs::symlink("deployment.conf", root.join(".env")).unwrap();
+    for budget in [3000, 100_000] {
+        assert_eq!(render(&root.join(".env"), budget).unwrap(), ".env\n");
+    }
+}
+
 /// A directory precis can't read is not marked `(empty)`: something may be
 /// in it.
 #[cfg(unix)]

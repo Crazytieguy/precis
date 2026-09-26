@@ -32,6 +32,7 @@ mod survey;
 mod toml;
 mod workspace;
 
+pub(crate) use plaintext::is_credential_name;
 use survey::EssentialSource;
 pub(in crate::walker) use survey::language_group;
 

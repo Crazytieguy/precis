@@ -337,11 +337,14 @@ impl DirFilter {
 
     /// True when the walk reaches `target`, a resolved path: it lies
     /// inside the root and nothing on the way down to it is internal or
-    /// ignored.
+    /// ignored. A single-file walk reaches only the named file's target.
     fn reaches(&self, target: &Path, is_dir: bool) -> bool {
         let Ok(relative) = target.strip_prefix(&self.canonical_root) else {
             return false;
         };
+        if let Some(only_file) = &self.only_file {
+            return only_file.canonicalize().is_ok_and(|named| named == target);
+        }
         let mut path = self.root.clone();
         let mut components = relative.components().peekable();
         while let Some(component) = components.next() {

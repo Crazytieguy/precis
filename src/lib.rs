@@ -66,5 +66,12 @@ pub(crate) fn walk_scope(path: &Path) -> Result<DirFilter> {
             named_dir.display()
         );
     }
-    Ok(DirFilter::single_file(&resolved))
+    // A link named like a credential file shows by that name only,
+    // whatever its target is named.
+    match path.file_name() {
+        Some(name) if walker::is_credential_name(path) => {
+            Ok(DirFilter::single_file(&named_dir.join(name)))
+        }
+        _ => Ok(DirFilter::single_file(&resolved)),
+    }
 }
