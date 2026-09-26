@@ -27,11 +27,7 @@ README.md
   13→
   14→</div>
   17→## 🚀 News
-  18→- **30 Dec 2025**: ☁️ Deploy Chronos-2 to AWS with Amazon SageMaker: new guide covers real-time inference (GPU/CPU), serverless endpoints with automatic scaling, and batch transform for large-scale forecasting. See the [deployment tutorial](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb).
-  19→- **20 Oct 2025**: 🚀 [Chronos-2](https://huggingface.co/amazon/chronos-2) released. It offers _zero-shot_ support for univariate, multivariate, and covariate-informed forecasting tasks. Chronos-2 achieves the best performance on fev-bench, GIFT-Eval and Chronos Benchmark II amongst pretrained models. Check out [this notebook](notebooks/chronos-2-quickstart.ipynb) to get started with Chronos-2.
-  20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
-  21→- **26 Nov 2024**: ⚡️ Chronos-Bolt models released [on HuggingFace](https://huggingface.co/collections/amazon/chronos-models-65f1791d630a8d57cb718444). Chronos-Bolt models are more accurate (5% lower error), up to 250x faster and 20x more memory efficient than the original Chronos models of the same size!
-  22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
+  …
   24→## ✨ Introduction
   …
   32→### Available Models
@@ -41,7 +37,6 @@ README.md
   65→### Forecasting
   …
   117→## Example Notebooks
-  118→
   …
   130→## 📝 Citation
   …
@@ -221,18 +216,59 @@ src/chronos/
     pipeline.py
     trainer.py
   chronos_bolt.py
+    …
+    29→logger = logging.getLogger(__file__)
+    32→@dataclass
+    33→class ChronosBoltConfig:
+    34→    context_length: int
+    …
+    42→@dataclass
+    43→class ChronosBoltOutput(ModelOutput):
+    44→    loss: Optional[torch.Tensor] = None
+    45→    quantile_preds: Optional[torch.Tensor] = None
+    46→    attentions: Optional[torch.Tensor] = None
+    47→    cross_attentions: Optional[torch.Tensor] = None
+    50→class Patch(nn.Module):
+    51→    def __init__(self, patch_size: int, patch_stride: int) -> None:
+    …
+    56→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    …
+    71→class InstanceNorm(nn.Module):
+    …
+    113→class ResidualBlock(nn.Module):
+    114→    def __init__(
+    …
+    122→    ) -> None:
+    …
+    135→    def forward(self, x: torch.Tensor):
+    …
+    147→class ChronosBoltModelForForecasting(T5PreTrainedModel):
+    …
+    403→class ChronosBoltPipeline(BaseChronosPipeline):
+    …
   df_utils.py
   utils.py
+    …
+    11→def left_pad_and_stack_1D(tensors: List[torch.Tensor]) -> torch.Tensor:
+    …
+    22→def interpolate_quantiles(
+    23→    query_quantile_levels: torch.Tensor | list[float],
+    24→    original_quantile_levels: torch.Tensor | list[float],
+    25→    original_values: torch.Tensor,
+    26→) -> torch.Tensor:
+    …
+    135→def weighted_quantile(
+    136→    query_quantile_levels: torch.Tensor | list[float],
+    137→    sample_weights: torch.Tensor | list[float],
+    138→    samples: torch.Tensor,
+    139→):
+    …
 test/
   __init__.py
   dummy-chronos-bolt-model/
-    config.json
-    model.safetensors
   dummy-chronos-model/
   dummy-chronos2-lora/
   dummy-chronos2-model/
-    config.json
-    model.safetensors
   test_chronos.py
   test_chronos2.py
   test_chronos_bolt.py

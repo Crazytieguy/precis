@@ -246,29 +246,24 @@ nanovllm/
       12→class LinearBase(nn.Module):
       13→
       14→    def __init__(
+      15→        self,
+      16→        input_size: int,
+      17→        output_size: int,
+      18→        bias: bool = False,
+      19→        tp_dim: int | None = None,
+      20→    ):
       …
       33→    def forward(self, x: torch.Tensor) -> torch.Tensor:
       …
       37→class ReplicatedLinear(LinearBase):
       38→
       39→    def __init__(
-      40→        self,
-      41→        input_size: int,
-      42→        output_size: int,
-      43→        bias: bool = False,
+      …
       44→    ):
       …
       47→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
       …
-      50→    def forward(self, x: torch.Tensor) -> torch.Tensor:
-      …
       54→class ColumnParallelLinear(LinearBase):
-      55→
-      56→    def __init__(
-      …
-      65→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-      …
-      72→    def forward(self, x: torch.Tensor) -> torch.Tensor:
       …
       76→class MergedColumnParallelLinear(ColumnParallelLinear):
       77→
@@ -284,6 +279,13 @@ nanovllm/
       96→class QKVParallelLinear(ColumnParallelLinear):
       97→
       98→    def __init__(
+      99→        self,
+      100→        hidden_size: int,
+      101→        head_size: int,
+      102→        total_num_heads: int,
+      103→        total_num_kv_heads: int | None = None,
+      104→        bias: bool = False,
+      105→    ):
       …
       114→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: str):
       …

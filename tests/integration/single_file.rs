@@ -191,9 +191,10 @@ fn shown_rows(out: &str) -> std::collections::BTreeSet<usize> {
         .collect()
 }
 
-/// At every budget, the rows of a multi-line signature or of a macro rule
-/// are all shown or all hidden: the budget's last batch is cut between the
-/// parts of declarations it holds, never inside one.
+/// At every budget, the opening and closing rows of a multi-line signature,
+/// and the rows of a macro rule, are all shown or all hidden: the budget's
+/// last batch is cut between the parts of declarations it holds, never
+/// inside one.
 #[test]
 fn single_file_budget_cut_never_splits_a_declaration_part() {
     let temp = tempfile::tempdir().unwrap();
@@ -210,7 +211,7 @@ fn single_file_budget_cut_never_splits_a_declaration_part() {
         "#[macro_export]\nmacro_rules! info_accessible {\n    ($($arg:tt)*) => {\n        \
          $crate::info(format!($($arg)*))\n    };\n}\n",
     );
-    for (file, part) in [(&python, &[7, 8][..]), (&rust, &[3, 4, 5][..])] {
+    for (file, part) in [(&python, &[6, 8][..]), (&rust, &[3, 4, 5][..])] {
         for budget in 1..=150 {
             let shown = shown_rows(&render(file, budget, None));
             let shown_of_part = part.iter().filter(|row| shown.contains(row)).count();

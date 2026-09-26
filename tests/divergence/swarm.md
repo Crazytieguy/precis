@@ -1,4 +1,4 @@
-Score(3000)=0.762 I=0.930 C=0.625 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.643/0.711/0.762/0.821/0.723/0.674
+Score(3000)=0.762 I=0.930 C=0.625 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/4327/6240/9000)=0.698/0.643/0.712/0.762/0.821/0.723/0.674
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,18 +57,18 @@ Score(3000)=0.762 I=0.930 C=0.625 ns_rows≤3K=25/66 grid(1000/1442/2080/3000/43
 | walker |  | 1510 | 42 | Fs::DirListing { dir: examples/support_bot } |  |  | 0.601 |
 | walker |  | 1547 | 37 | Code::CodeKey { rung: Names, file: swarm/core.py, decl: 0, sub: 0, line: 0 } |  |  | 0.604 |
 | ns | 1574 |  | 92 | `swarm/types.py` imports: pydantic + reused OpenAI types | 2.9 |  | 0.583 |
-| walker |  | 1627 | 80 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 2, sub: 0, line: 26 } |  |  | 0.627 |
-| walker |  | 1690 | 63 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.650 |
-| ns | 1748 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.603 |
-| walker |  | 1764 | 74 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 4, sub: 0, line: 32 } |  |  | 0.654 |
-| walker |  | 1856 | 92 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 7, sub: 0, line: 139 } |  |  | 0.696 |
+| walker |  | 1670 | 123 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 2, sub: 0, line: 26 } |  |  | 0.633 |
+| walker |  | 1722 | 52 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 6, sub: 0, line: 89 } |  |  | 0.658 |
+| ns | 1748 |  | 174 | `swarm/core.py` import block | 2.10 |  | 0.610 |
+| walker |  | 1783 | 61 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 4, sub: 0, line: 32 } |  |  | 0.655 |
+| walker |  | 1867 | 84 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 7, sub: 0, line: 139 } |  |  | 0.696 |
 | ns | 1914 |  | 166 | `client.run()` semantics and the five-step loop | 3.1 |  | 0.678 |
-| walker |  | 1962 | 106 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 8, sub: 0, line: 231 } |  |  | 0.722 |
+| walker |  | 1962 | 95 | Code::CodeKey { rung: Decl, file: swarm/core.py, decl: 8, sub: 0, line: 231 } |  |  | 0.722 |
 | walker |  | 2052 | 90 | Plaintext::DeclSurface { file: setup.cfg } |  |  | 0.723 |
 | ns | 2068 |  | 154 | `run()` arguments table, part 1 of 2 | 3.2 |  | 0.711 |
-| walker |  | 2079 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 3, sub: 0, line: 27 } |  |  | 0.711 |
-| walker |  | 2122 | 43 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.718 |
-| walker |  | 2148 | 26 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.731 |
+| walker |  | 2105 | 53 | Code::CodeKey { rung: Names, file: swarm/repl/repl.py, decl: 0, sub: 0, line: 0 } |  |  | 0.722 |
+| walker |  | 2121 | 16 | Code::CodeKey { rung: Decl, file: swarm/repl/repl.py, decl: 3, sub: 0, line: 60 } |  |  | 0.731 |
+| walker |  | 2148 | 27 | Code::CodeKey { rung: Body, file: swarm/core.py, decl: 3, sub: 0, line: 27 } |  |  | 0.731 |
 | walker |  | 2220 | 72 | Code::CodeKey { rung: Names, file: swarm/util.py, decl: 0, sub: 0, line: 0 } |  |  | 0.747 |
 | ns | 2242 |  | 174 | `run()` arguments table, part 2 of 2 (completes the table) | 3.3 | 3.2 | 0.736 |
 | walker |  | 2283 | 63 | Code::CodeKey { rung: Names, file: swarm/types.py, decl: 0, sub: 0, line: 0 } |  |  | 0.742 |

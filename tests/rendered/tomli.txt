@@ -198,6 +198,12 @@ src/tomli/
     76→class TOMLDecodeError(ValueError):
     …
     87→    def __init__(
+    88→        self,
+    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    92→        *args: Any,
+    93→    ):
     …
     137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
     …
@@ -234,8 +240,6 @@ src/tomli/
     349→def skip_comment(src: str, pos: Pos) -> Pos:
     …
     361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
-    …
-    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
     …
   _re.py
   _types.py

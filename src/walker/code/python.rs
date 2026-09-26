@@ -3,8 +3,9 @@
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
 //!   and `type X = …` aliases (`Whole`). A decorated definition's head
-//!   starts at its first decorator; its name row is the `def` / `class`
-//!   row.
+//!   starts at its first decorator. Its name rows are the `def` / `class`
+//!   row and, when the signature spans rows, the row that closes it
+//!   (`) -> T:`), so a roster never lists an unclosed `def f(`.
 //! - **Doc**: the docstring opening a `def` / `class` body.
 //! - **Module doc**: an entry file's (a dunder-named module:
 //!   `__init__.py`, `__main__.py`, `__version__.py`) module docstring and
@@ -216,8 +217,12 @@ fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo>
         Shape::Callable => (file.node_items(statements, head_end), Vec::new()),
         Shape::Whole => class_body(file, &statements, head_end),
     };
+    let mut name_rows = vec![name_row];
+    if head_end > name_row {
+        name_rows.push(head_end);
+    }
     Some(DeclInfo {
-        name_rows: vec![name_row],
+        name_rows,
         head,
         doc,
         body,
@@ -383,7 +388,7 @@ def greet(
             panic!("one decl: {:?}", model.decls);
         };
         assert_eq!(decl.shape, Shape::Callable);
-        assert_eq!(decl.name_rows, vec![3]);
+        assert_eq!(decl.name_rows, vec![3, 5]);
         assert_eq!(decl.head, vec![1, 2, 3, 4, 5]);
         assert_eq!(rows(&decl.doc), vec![vec![6], vec![8, 9]]);
         assert_eq!(rows(&decl.body), vec![vec![10, 11], vec![12], vec![13]]);
@@ -501,6 +506,42 @@ class Config(Base):  # the config
             ]
         );
         assert!(class.members.iter().all(|member| member.members.is_empty()));
+    }
+
+    #[test]
+    fn code_python_multi_row_signature_lists_its_closing_row() {
+        let model = extract_source(
+            "props.py",
+            "\
+class Params:
+    def connect(
+        self, host: str, timeout: float = 10.0,
+    ) -> \"Connection\": ...
+class Wide(
+    Base,
+):
+    pass
+",
+        );
+        let summary: Vec<_> = model
+            .decls
+            .iter()
+            .map(|decl| {
+                let members: Vec<_> = decl
+                    .members
+                    .iter()
+                    .map(|member| member.name_rows.clone())
+                    .collect();
+                (decl.name_rows.clone(), members, rows(&decl.body))
+            })
+            .collect();
+        assert_eq!(
+            summary,
+            vec![
+                (vec![1], vec![vec![2, 4]], vec![vec![2, 4]]),
+                (vec![5, 7], vec![], vec![vec![8]]),
+            ]
+        );
     }
 
     #[test]

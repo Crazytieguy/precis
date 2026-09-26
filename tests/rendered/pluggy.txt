@@ -183,14 +183,20 @@ src/pluggy/
     25→
     26→
     27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
     …
     60→def _raise_wrapfail(
+    …
+    63→) -> NoReturn:
     …
     70→def _warn_teardown_exception(
     71→    hook_name: str, hook_impl: HookImpl, e: BaseException
     72→) -> None:
     …
     82→def _multicall(
+    …
+    87→) -> object | list[object]:
     …
   _hooks.py
   _manager.py
@@ -275,8 +281,6 @@ src/pluggy/
     395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
     …
     425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
-    426→        """Return a list of (plugin, distinfo) pairs for all
-    427→        setuptools-registered plugins."""
     …
     430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
     431→        """Return a list of (name, plugin) pairs for all registered plugins."""

@@ -1,4 +1,4 @@
-Score(3000)=0.475 I=0.795 C=0.283 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.706/0.573/0.566/0.475/0.556/0.536/0.534
+Score(3000)=0.474 I=0.797 C=0.282 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.706/0.573/0.566/0.474/0.556/0.536/0.534
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -48,30 +48,30 @@ Score(3000)=0.475 I=0.795 C=0.283 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | ns | 2356 |  | 433 | loads(): the statement dispatch body and its two top-level errors | 2.6 | 2.3 | 0.498 |
 | walker |  | 2373 | 23 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 11, sub: 0, line: 51 } |  |  | 0.499 |
 | walker |  | 2529 | 156 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 14, sub: 0, line: 57 } |  |  | 0.501 |
-| ns | 2733 |  | 377 | parse_value(): string, boolean, array and inline-table dispatch | 2.7 | 2.4 | 0.456 |
-| walker |  | 2736 | 207 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 2, line: 0 } |  |  | 0.470 |
-| walker |  | 2747 | 11 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.470 |
-| walker |  | 2761 | 14 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 31, sub: 0, line: 312 } |  |  | 0.473 |
-| walker |  | 2811 | 50 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 27, sub: 0, line: 278 } |  |  | 0.474 |
-| walker |  | 2857 | 46 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 29, sub: 0, line: 283 } |  |  | 0.475 |
-| walker |  | 2923 | 66 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 34, sub: 0, line: 327 } |  |  | 0.475 |
-| walker |  | 3006 | 83 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 17, sub: 0, line: 87 } |  |  | 0.475 |
-| ns | 3121 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.444 |
-| walker |  | 3221 | 215 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.446 |
-| walker |  | 3234 | 13 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 19, sub: 0, line: 149 } |  |  | 0.451 |
-| walker |  | 3248 | 14 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.457 |
-| walker |  | 3263 | 15 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 18, sub: 0, line: 137 } |  |  | 0.465 |
-| walker |  | 3452 | 189 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 3, line: 0 } |  |  | 0.517 |
-| ns | 3452 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.517 |
-| walker |  | 3484 | 32 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 46, sub: 0, line: 564 } |  |  | 0.517 |
-| walker |  | 3519 | 35 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 39, sub: 0, line: 413 } |  |  | 0.517 |
-| ns | 3549 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.508 |
-| walker |  | 3556 | 37 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 44, sub: 0, line: 502 } |  |  | 0.508 |
-| walker |  | 3594 | 38 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 40, sub: 0, line: 447 } |  |  | 0.508 |
-| walker |  | 3633 | 39 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 45, sub: 0, line: 528 } |  |  | 0.508 |
-| ns | 3661 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.500 |
-| walker |  | 3799 | 166 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 4, line: 0 } |  |  | 0.538 |
-| walker |  | 3835 | 36 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 52, sub: 0, line: 684 } |  |  | 0.558 |
+| walker |  | 2717 | 188 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 2, line: 0 } |  |  | 0.515 |
+| walker |  | 2731 | 14 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 31, sub: 0, line: 312 } |  |  | 0.518 |
+| ns | 2733 |  | 377 | parse_value(): string, boolean, array and inline-table dispatch | 2.7 | 2.4 | 0.471 |
+| walker |  | 2750 | 19 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 16, sub: 0, line: 76 } |  |  | 0.471 |
+| walker |  | 2806 | 56 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 34, sub: 0, line: 327 } |  |  | 0.471 |
+| walker |  | 2870 | 64 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 27, sub: 0, line: 278 } |  |  | 0.473 |
+| walker |  | 2902 | 32 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 29, sub: 0, line: 283 } |  |  | 0.473 |
+| walker |  | 2977 | 75 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 17, sub: 0, line: 87 } |  |  | 0.474 |
+| ns | 3121 |  | 388 | parse_value(): datetime, number and special-float dispatch | 2.8 | 2.4 | 0.443 |
+| walker |  | 3192 | 215 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.445 |
+| walker |  | 3205 | 13 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 19, sub: 0, line: 149 } |  |  | 0.450 |
+| walker |  | 3219 | 14 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 20, sub: 0, line: 220 } |  |  | 0.456 |
+| walker |  | 3234 | 15 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 18, sub: 0, line: 137 } |  |  | 0.463 |
+| walker |  | 3417 | 183 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 3, line: 0 } |  |  | 0.480 |
+| walker |  | 3439 | 22 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 40, sub: 0, line: 447 } |  |  | 0.480 |
+| ns | 3452 |  | 331 | Character-class constants: the complete set | 2.9 |  | 0.499 |
+| walker |  | 3464 | 25 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 39, sub: 0, line: 413 } |  |  | 0.499 |
+| ns | 3549 |  | 97 | load() body: the binary-mode requirement | 2.10 | 1.7 | 0.491 |
+| ns | 3661 |  | 112 | loads() prologue: CRLF normalisation and the str type check | 2.11 | 1.7 | 0.483 |
+| walker |  | 3751 | 287 | Code::CodeKey { rung: Names, file: src/tomli/_parser.py, decl: 0, sub: 4, line: 0 } |  |  | 0.539 |
+| walker |  | 3769 | 18 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 46, sub: 0, line: 564 } |  |  | 0.539 |
+| walker |  | 3791 | 22 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 44, sub: 0, line: 502 } |  |  | 0.539 |
+| walker |  | 3813 | 22 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 45, sub: 0, line: 528 } |  |  | 0.539 |
+| walker |  | 3835 | 22 | Code::CodeKey { rung: Decl, file: src/tomli/_parser.py, decl: 52, sub: 0, line: 684 } |  |  | 0.558 |
 | ns | 3835 |  | 174 | BASIC_STR_ESCAPE_REPLACEMENTS: the full escape table | 2.12 |  | 0.558 |
 | walker |  | 3867 | 32 | Code::CodeKey { rung: Doc, file: src/tomli/_parser.py, decl: 15, sub: 0, line: 71 } |  |  | 0.571 |
 | ns | 3871 |  | 36 | tests/ and tests/data/ listings (complete) | 3.1 |  | 0.581 |
@@ -153,9 +153,9 @@ Score(3000)=0.475 I=0.795 C=0.283 ns_rows≤3K=18/54 grid(1000/1442/2080/3000/43
 | walker |  | 8563 | 70 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 36, sub: 0, line: 361 } |  |  | 0.503 |
 | walker |  | 8619 | 56 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid } |  |  | 0.503 |
 | walker |  | 8709 | 90 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 49, sub: 0, line: 612 } |  |  | 0.513 |
-| walker |  | 8736 | 27 | Code::CodeKey { rung: Names, file: benchmark/run.py, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
+| walker |  | 8746 | 37 | Code::CodeKey { rung: Names, file: benchmark/run.py, decl: 0, sub: 0, line: 0 } |  |  | 0.513 |
 | ns | 8771 |  | 237 | RE_NUMBER: the integer and float grammar | 5.4 | 5.3 | 0.525 |
-| walker |  | 8796 | 60 | Code::CodeKey { rung: Decl, file: benchmark/run.py, decl: 1, sub: 0, line: 15 } |  |  | 0.525 |
+| walker |  | 8796 | 50 | Code::CodeKey { rung: Decl, file: benchmark/run.py, decl: 1, sub: 0, line: 15 } |  |  | 0.525 |
 | walker |  | 8893 | 97 | Code::CodeKey { rung: Body, file: src/tomli/_parser.py, decl: 18, sub: 0, line: 137 } |  |  | 0.535 |
 | ns | 8900 |  | 129 | match_to_datetime docstring and the cached_tz cache-size note | 5.5 | 5.3 | 0.534 |
 | walker |  | 8944 | 51 | Fs::DirListing { dir: tests/data/invalid/_external/toml-test/invalid/local-time } |  |  | 0.534 |
