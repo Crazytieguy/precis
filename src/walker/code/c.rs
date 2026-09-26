@@ -150,6 +150,7 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
         | "enum_specifier" => Shape::Whole,
         "preproc_def" if !is_header_guard_define(node, file) => Shape::Whole,
+        "ERROR" if misparsed_prototype_declarator(node).is_some() => Shape::Whole,
         _ => return None,
     };
     if is_flattened_parse_debris(node, file) {
@@ -317,6 +318,7 @@ fn name_rows(node: Node) -> Vec<usize> {
     let mut rows = vec![node.start_position().row + 1];
     rows.extend(
         node.children_by_field_name("declarator", &mut node.walk())
+            .chain(misparsed_prototype_declarator(node))
             .filter_map(declared_name)
             .map(|name| name.start_position().row + 1),
     );
@@ -342,6 +344,21 @@ fn is_flattened_parse_debris(node: Node, file: &SourceFile) -> bool {
         "declaration" => previous.kind() == "function_declarator",
         _ => false,
     }
+}
+
+/// The function declarator of a prototype that tree-sitter-c misparses
+/// because an attribute macro follows it (`int f(void) NOEXCEPT;`): an
+/// `ERROR` holding the return type and the declarator, then a bare `;`.
+fn misparsed_prototype_declarator(node: Node) -> Option<Node> {
+    if node.kind() != "ERROR" || node.named_child_count() < 2 {
+        return None;
+    }
+    let declarator = node.named_child(node.named_child_count() as u32 - 1)?;
+    let semicolon = node.next_named_sibling()?;
+    (declarator.kind() == "function_declarator"
+        && semicolon.kind() == "expression_statement"
+        && semicolon.named_child_count() == 0)
+        .then_some(declarator)
 }
 
 fn declared_name(mut declarator: Node) -> Option<Node> {
@@ -517,8 +534,10 @@ fn feature_gate_is_declaration_only(
                 "function_definition" if !is_header(&file.path) || is_inline(child, file) => {
                     Some(true)
                 }
-                "expression_statement" => Some(false),
-                "preproc_include" | "preproc_call" | "comment" => Some(false),
+                "ERROR" if misparsed_prototype_declarator(child).is_some() => Some(true),
+                "expression_statement" | "preproc_include" | "preproc_call" | "comment" => {
+                    Some(false)
+                }
                 _ if is_nested_gate(child) => answers[&child.id()],
                 _ => None,
             };
@@ -952,6 +971,43 @@ enum color { RED } paint(void);
                 "Whole name [14] head [14, 15] doc [] body []",
                 "Whole name [16] head [16] doc [] body []",
             ]
+        );
+    }
+
+    #[test]
+    fn c_prototypes_followed_by_an_attribute_macro_are_listed() {
+        let source = "\
+#ifndef R1_H
+#define R1_H
+/* doc 1 */
+int api_1(int x) NOEXCEPT;
+int
+api_2(struct s *ring,
+      int flags) NOEXCEPT;
+struct s *ok_api(void) NOEXCEPT;
+#endif
+";
+        let model = model("r1.h", source);
+        assert_eq!(name_rows_of(&model), vec![vec![4], vec![5, 6], vec![8]]);
+        let [api_1, api_2, _] = &model.decls[..] else {
+            panic!("{:?}", model.decls);
+        };
+        assert_eq!(rows(&api_1.doc), vec![vec![3]]);
+        assert_eq!(api_2.head, vec![5, 6, 7]);
+        assert!(api_2.body.is_empty() && api_2.shape == Shape::Whole);
+
+        let gated = "\
+#ifndef R2_H
+#define R2_H
+#ifdef HAVE_FEATURE
+int run(void) NOEXCEPT;
+int stop(void);
+#endif
+#endif
+";
+        assert_eq!(
+            name_rows_of(&self::model("r2.h", gated)),
+            vec![vec![4], vec![5]]
         );
     }
 
