@@ -261,13 +261,8 @@ pub struct RenderedTree {
     file_empty: RefCell<HashMap<PathBuf, bool>>,
     /// Same ignore rules discovery walks under: a directory holding only
     /// ignored entries has nothing any budget could show, so it is marked
-    /// empty rather than read as unexpanded.
-    ///
-    /// Shared rather than owned: the filter's caches are what keep the
-    /// "is anything visible beneath this directory" question from
-    /// costing a subtree walk, and a scheduler cost probe builds one of
-    /// these trees per call — an owned filter would throw the answers
-    /// away every time.
+    /// empty rather than read as unexpanded. Shared with the walk, so
+    /// the filter's listing memo serves both.
     dir_filter: Rc<DirFilter>,
 }
 
@@ -516,9 +511,6 @@ impl RenderedTree {
         // Group by path — costs are accounted per file (row deltas +
         // synthesized-marker delta), so source/indent lookups and the
         // anchor sets are built once per file.
-        // Keep spans compressed here: expanding every range into cloned
-        // `(PathBuf, line, Render)` rows dominated repeated scheduler probes
-        // on large roster chunks.
         let mut by_path: BTreeMap<&Path, Vec<&Span>> = BTreeMap::new();
         for span in spans {
             by_path.entry(span.path.as_path()).or_default().push(span);

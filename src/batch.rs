@@ -152,9 +152,8 @@ pub enum PrismaKey {
     Toc { file: PathBuf },
     /// Full brace-block body of one top-level `model` / `enum` /
     /// `datasource` / `generator` declaration. Predecessor: the
-    /// enclosing `Toc`. A very large `model` is split into a
-    /// head + tail at its row midpoint so high-value identity /
-    /// relation fields schedule ahead of archival-default fields.
+    /// enclosing `Toc`. A very large `model` is split into this head
+    /// and a `DeclTail` (see `prisma::MODEL_SPLIT_MIN_ROWS`).
     Decl { file: PathBuf, start_line: usize },
     /// Tail slice of a split large `model` body. Predecessor: the
     /// matching head `Decl` at `start_line`.
@@ -248,8 +247,7 @@ impl BatchKey {
     /// Cost concavity for the scheduling ratio (`value / cost^exponent`).
     /// `0.45` for prose-shaped batches whose cost grows without
     /// proportional structural value: markdown sections past the first
-    /// (index 0 is where READMEs lead with their canonical claim; see
-    /// `keeps_default_concavity` for the exemptions).
+    /// (see `keeps_default_concavity` for the exemptions).
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             BatchKey::Markdown(MarkdownKey::Section {
