@@ -381,9 +381,9 @@ plain values, so a repository whose spine was bare trades some peripheral
 rows for its names, and parses more. In a large tree those sub-listings
 are many and cheap, and they outranked the root manifest and the root
 build file until the budget ran out, at every budget from the plugin's
-up. So until a root identity batch (a root manifest's identity block, or
-the head of a root build or manifest file) has been read, the best
-eligible one outranks any listing below the spine
+up. So until a root identity batch (a root manifest's identity block or
+head, or the head of a root build script such as `build.zig`) has been
+read, the best eligible one outranks any listing below the spine
 (`Scheduler::top_ranked`). The rule reads only the schedule, never the
 budget, so a smaller budget's output stays a subset of a larger one's.
 It is bounded to the first identity batch: promoting every root
@@ -392,7 +392,10 @@ manifest and build file ahead of the spine's sub-listings cost 3000
 sub-listings early; even the first costs 1000 −0.0023 where a
 workspace's long root manifest now comes before the member listings.
 A README command block does not count: it satisfied
-the rule in repositories whose build file then went unread. This
+the rule in repositories whose build file then went unread. Nor does a
+task roster (`Makefile`, `Dockerfile`, compose file): a long root
+Makefile renders as its `.PHONY` lines, and promoting that roster
+displaced a runtime's library listing and its build instructions. This
 replaced a promotion of every root identity batch once the spine's
 listings had spent 5000 tokens, which the plugin's budget never reached;
 without it a very large tree at 8000 tokens spends more on names under

@@ -32,7 +32,7 @@ mod survey;
 mod toml;
 mod workspace;
 
-pub(crate) use plaintext::{is_build_or_manifest_file, is_credential_name};
+pub(crate) use plaintext::{is_credential_name, is_unparsed_manifest};
 use survey::EssentialSource;
 pub(in crate::walker) use survey::language_group;
 

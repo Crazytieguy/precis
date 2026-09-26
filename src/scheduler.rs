@@ -15,7 +15,7 @@
 //! lower the more of its file's code is scheduled (breadth pressure),
 //! and a batch drawn only from the tree's dominant source file ranks
 //! higher once that file has been entered. Until the root's identity (a
-//! root manifest or build file) has been read, it outranks the listings
+//! root manifest or build script) has been read, it outranks the listings
 //! below the source spine. Under a char budget, `cost` is the larger of a
 //! batch's tokens and its chars converted at the two budgets' ratio
 //! (`ranking_cost`).
@@ -361,8 +361,9 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// A batch that says what the repository is and how to build it: the
-    /// identity block or head of a root manifest or build file, or of a
-    /// root build script (`build.zig`, `build.ps1`).
+    /// identity block or head of a root manifest, or the head of a root
+    /// build script (`build.zig`, `build.ps1`). A task roster (`Makefile`,
+    /// `Dockerfile`, compose file) is not one.
     fn is_root_identity(&self, id: BatchId) -> bool {
         let (BatchKey::Toml(TomlKey::Identity { file })
         | BatchKey::Json(JsonKey::Identity { file })
@@ -373,9 +374,12 @@ impl<W: Walker> Scheduler<W> {
         else {
             return false;
         };
-        file.parent() == Some(self.ctx.root())
+        let (Some(dir), Some(name)) = (file.parent(), file.file_name()) else {
+            return false;
+        };
+        dir == self.ctx.root()
             && (!matches!(self.entries[id.index()].key, BatchKey::Plaintext(_))
-                || crate::walker::is_build_or_manifest_file(file, &self.ctx)
+                || crate::walker::is_unparsed_manifest(dir, &name.to_string_lossy(), &self.ctx)
                 || file.file_stem() == Some("build".as_ref()))
     }
 
