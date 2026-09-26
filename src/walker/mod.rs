@@ -32,7 +32,7 @@ mod survey;
 mod toml;
 mod workspace;
 
-pub(crate) use plaintext::{is_credential_name, is_unparsed_manifest};
+pub(crate) use plaintext::is_unparsed_manifest;
 use survey::EssentialSource;
 pub(in crate::walker) use survey::language_group;
 
@@ -428,14 +428,14 @@ pub(crate) fn single_file_lines_content(
 
 /// Whether precis refuses to show `path` without reading it: a
 /// credential file, by its own name or its link target's
-/// ([`plaintext::is_credential_name`]), or a link to a file in its own
+/// ([`is_credential_name`]), or a link to a file in its own
 /// directory (`CLAUDE.md -> AGENTS.md`), whose text shows under the
 /// target's row. [`SourceCache`] applies it, and [`holds_private_key`]
 /// to the text, to everything it reads, so no walker can show such a file.
 pub(crate) fn is_refused_by_name(path: &Path) -> bool {
-    plaintext::is_credential_name(path)
+    is_credential_name(path)
         || path.canonicalize().is_ok_and(|target| {
-            plaintext::is_credential_name(&target)
+            is_credential_name(&target)
                 || (target != path
                     && path.is_symlink()
                     && path
@@ -444,6 +444,56 @@ pub(crate) fn is_refused_by_name(path: &Path) -> bool {
                         .as_deref()
                         == target.parent())
         })
+}
+
+/// A file named for the credentials it holds: a dotenv file (`.env`,
+/// `.env.local`, `production.env`), a name led by a credential word
+/// (`secrets.yml`, `credentials-dev.ini`, `token.txt`, `api_key.txt`, an
+/// extensionless `secrets` script), a tool's auth file (`.pgpass`,
+/// `kubeconfig`), Terraform variable values, a key or certificate file
+/// (`master.key`, `server.pem`), or a service-account key. Samples (`.env.example`,
+/// `secrets.yml.sample`) hold placeholders, and source code and
+/// documents (`credentials.py`, `secrets.md`) are about credentials
+/// rather than holding them — except a dotenv name, whatever language
+/// its extension claims (`.env.php` returns its secrets as an array).
+pub(crate) fn is_credential_name(path: &Path) -> bool {
+    let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
+        return false;
+    };
+    let lower = name.to_ascii_lowercase();
+    #[rustfmt::skip]
+    const EXEMPT_SUFFIXES: &[&str] =
+        &[".example", ".sample", ".template", ".dist", ".md", ".mdx", ".rst", ".adoc"];
+    if EXEMPT_SUFFIXES.iter().any(|suffix| lower.ends_with(suffix)) {
+        return false;
+    }
+    if lower.starts_with(".env.") || lower.ends_with(".env") {
+        return true;
+    }
+    #[rustfmt::skip]
+    const LEADING_WORDS: &[&str] = &[
+        "env", "secret", "secrets", "credential", "credentials", "creds", "token", "tokens",
+        "password", "passwords", "passwd", "apikey", "auth",
+    ];
+    #[rustfmt::skip]
+    const AUTH_FILE_NAMES: &[&str] = &[
+        ".npmrc", ".netrc", ".pypirc", ".git-credentials", ".htpasswd", ".pgpass", ".my.cnf",
+        "kubeconfig",
+    ];
+    let leading = lower.split(['.', '-', '_']).next().unwrap_or_default();
+    language_group(path).is_none()
+        && (LEADING_WORDS.contains(&leading)
+            || ["api_key", "api-key"]
+                .iter()
+                .any(|prefix| lower.starts_with(prefix))
+            || [".tfvars", ".tfvars.json", ".key", ".pem"]
+                .iter()
+                .any(|suffix| lower.ends_with(suffix))
+            || (lower.ends_with(".json")
+                && ["service-account", "service_account", "serviceaccount"]
+                    .iter()
+                    .any(|prefix| lower.starts_with(prefix)))
+            || AUTH_FILE_NAMES.contains(&lower.as_str()))
 }
 
 /// A PEM or PGP private-key block: an armor header naming a private key,
@@ -555,6 +605,38 @@ mod tests {
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
+    }
+
+    #[test]
+    fn walker_mod_credential_names_are_data_and_config_files() {
+        #[rustfmt::skip]
+        let cases = [
+            (".env", true), (".env.local", true), (".env.local.sh", true), ("production.env", true),
+            ("docker.env", true), ("env.sh", true), ("secrets.yml", true), ("secrets.prod.sh", true),
+            ("secret.txt", true), ("credentials.json", true), ("credentials-dev.ini", true),
+            ("creds_staging.conf", true), ("secrets", true), ("prod.tfvars", true),
+            ("prod.tfvars.json", true), ("service-account.json", true),
+            ("serviceAccountKey.json", true), (".npmrc", true), (".netrc", true),
+            (".pypirc", true), (".git-credentials", true), (".htpasswd", true),
+            (".env.php", true), (".env.local.ts", true), ("token.txt", true),
+            ("tokens.json", true), ("password.txt", true), ("passwd", true),
+            ("apikey.txt", true), ("api_key.txt", true), ("api-keys.json", true),
+            ("auth.json", true), ("master.key", true), ("server.pem", true), (".pgpass", true),
+            (".my.cnf", true), ("kubeconfig", true),
+            // Samples document keys with placeholder values.
+            (".env.example", false), (".env.sample", false), (".env.template", false),
+            (".env.dist", false),
+            // Code and docs about credentials hold none.
+            ("credentials.py", false), ("secrets.rs", false), ("credentials.go", false),
+            ("token.go", false), ("auth.ts", false), ("authors.txt", false),
+            ("keyboard.txt", false),
+            ("env.d.ts", false), ("secrets.md", false), ("credentials.rst", false),
+            (".env.local.example", false), ("secrets.yml.sample", false),
+            ("service-account.yaml", false), ("environment.yml", false), ("config.json", false),
+        ];
+        for (name, expected) in cases {
+            assert_eq!(is_credential_name(Path::new(name)), expected, "{name}");
+        }
     }
 
     #[test]
