@@ -545,11 +545,10 @@ impl RenderedTree {
             for span in &file_spans {
                 for line_num in span.start..=span.end {
                     debug_assert!(
-                        source.is_none()
-                            || line_num >= 1 && line_num <= source.as_ref().unwrap().line_count(),
-                        "span line {} out of range (1..={}) for {} — schema load should have caught this",
-                        line_num,
-                        source.as_ref().map_or(0, |s| s.line_count()),
+                        source
+                            .as_ref()
+                            .is_none_or(|s| (1..=s.line_count()).contains(&line_num)),
+                        "span line {line_num} out of range for {} — schema load should have caught this",
                         path.display(),
                     );
                     let source_line = source.as_ref().and_then(|s| s.line(line_num)).unwrap_or("");
@@ -1108,16 +1107,8 @@ fn format_line_row(
                     re.is_some(),
                     "invalid Truncated regex `{pattern}` — should have been rejected at schema load"
                 );
-                if let Some(re) = re {
-                    let m = re.find(source_line);
-                    debug_assert!(
-                        m.as_ref().is_some_and(|m| !m.as_str().is_empty()),
-                        "Truncated regex `{pattern}` produced empty or no match on line {number} \
-                         — schema loader should have rejected this span"
-                    );
-                    if let Some(m) = m {
-                        push_escaped(&mut s, m.as_str(), true);
-                    }
+                if let Some(m) = re.and_then(|re| re.find(source_line)) {
+                    push_escaped(&mut s, m.as_str(), true);
                 }
             });
             s.push('…');
