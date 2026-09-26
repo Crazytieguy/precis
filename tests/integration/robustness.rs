@@ -537,6 +537,9 @@ fn robustness_credential_files_render_only_their_rows() {
         );
         let named = render(&root.join("schema.prisma"), budget).unwrap();
         assert!(!named.contains(SECRET), "{named}");
+        assert_eq!(render(&root.join(".env"), budget).unwrap(), ".env\n");
+        let linked = render(&root.join("deploy.conf"), budget).unwrap();
+        assert!(!linked.contains(SECRET), "{linked}");
         for shown in [
             "API_KEY=changeme",
             "def load_credentials():",
