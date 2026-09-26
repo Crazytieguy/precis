@@ -671,8 +671,9 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     } else {
         vec![false; lines.len()]
     };
-    let type_members = (is_language && decl_cap == usize::MAX)
-        .then(|| in_type_bodies(&lines, &opens_block, &continues, &in_block_comment));
+    let in_type_body =
+        is_language.then(|| in_type_bodies(&lines, &opens_block, &continues, &in_block_comment));
+    let type_members = in_type_body.as_ref().filter(|_| decl_cap == usize::MAX);
     let mut rows: Vec<(usize, usize, SurfaceLine, DeclarationRank)> = Vec::new();
     for (index, (line, &in_block_comment)) in lines
         .iter()
@@ -692,7 +693,9 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
             continue;
         };
         let rank = if is_language && kind == SurfaceLine::Decl {
-            declaration_rank(trimmed, opens_block[index])
+            let is_type_member =
+                indentation(line) > 0 && in_type_body.as_ref().is_some_and(|inside| inside[index]);
+            declaration_rank(trimmed, opens_block[index], is_type_member)
         } else {
             DeclarationRank::Heading
         };
@@ -730,9 +733,7 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
         for &(_, line, kind, _) in rows.iter().filter(|&&(indent, line, ..)| {
             indent == level
                 && (!is_roster_complete
-                    || type_members
-                        .as_ref()
-                        .is_some_and(|is_member| is_member[line - 1]))
+                    || type_members.is_some_and(|is_member| is_member[line - 1]))
         }) {
             let slot = match kind {
                 SurfaceLine::Comment => 0,
@@ -833,7 +834,8 @@ enum DeclarationRank {
     /// Heads a block, or declares with no body: an interface or protocol
     /// requirement, a type signature.
     Heading,
-    /// A declaration whose body follows on the same line.
+    /// A declaration whose body follows on the same line, or a type's
+    /// field or `static` member.
     OneLiner,
     Statement,
     /// Private members, test cases and control flow: not the file's API.
@@ -868,15 +870,17 @@ const INTERNAL_LEADERS: &[&str] = &[
 /// Where a declaration line falls in the roster. A line reads as a
 /// declaration by a keyword followed by a name, by a Haskell `name ::`
 /// signature, or by the C-family `Type name(` shape; it has a body when
-/// an `=` follows at bracket depth zero.
-fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
+/// an `=` follows at bracket depth zero. Inside a type's body, a `static`
+/// member declared without a block below it (a C++ header's prototype) is
+/// part of its API, unlike a file-local `static` at column zero, and a
+/// C-family field (`Type name;`) is a member, not a statement.
+fn declaration_rank(trimmed: &str, opens_block: bool, is_type_member: bool) -> DeclarationRank {
     let head_end = head_end(trimmed);
     let words: Vec<&str> = trimmed[..head_end].split_whitespace().collect();
-    if words
-        .first()
-        .is_some_and(|first| INTERNAL_LEADERS.contains(first))
-    {
-        return DeclarationRank::Internal;
+    match words.first() {
+        Some(&"static") if is_type_member && !opens_block => return DeclarationRank::OneLiner,
+        Some(first) if INTERNAL_LEADERS.contains(first) => return DeclarationRank::Internal,
+        _ => {}
     }
     if opens_block || defines_function(trimmed) {
         return DeclarationRank::Heading;
@@ -898,7 +902,13 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
         .any(|word| TYPE_KEYWORDS.contains(word) || MEMBER_KEYWORDS.contains(word))
         || words.get(1) == Some(&"::")
         || (words.len() >= 2 && trimmed[head_end..].starts_with('('));
-    if !declares {
+    let is_field = is_type_member
+        && trimmed.ends_with(';')
+        && !trimmed.contains(['(', '='])
+        && trimmed.split_whitespace().nth(1).is_some();
+    if is_field {
+        DeclarationRank::OneLiner
+    } else if !declares {
         DeclarationRank::Statement
     } else if has_same_line_body(trimmed) {
         DeclarationRank::OneLiner
@@ -1669,6 +1679,40 @@ mod tests {
         surface_text(source, Class::LanguageSource)
     }
 
+    /// A C++ header's classes surface their `static` members, which are
+    /// API inside a type, ahead of their fields, and a class of only fields
+    /// surfaces them rather than its name alone.
+    #[test]
+    fn plaintext_cpp_header_surfaces_static_members_and_fields() {
+        let factory = "class IntervalFactory\n{\npublic:\n\
+                       \x20 static Interval fromJson (const std::string& json);\n\
+                       \x20 static Interval fromLine (const std::string& line);\n\
+                       \n\
+                       private:\n  int _n {0};\n};\n";
+        assert_eq!(
+            surface(factory),
+            [
+                "class IntervalFactory",
+                "  static Interval fromJson (const std::string& json);",
+                "  static Interval fromLine (const std::string& line);",
+                "  int _n {0};",
+            ]
+        );
+        let config = "class ChartConfig\n{\npublic:\n  Datetime reference;\n  bool with_ids;\n};\n";
+        assert_eq!(
+            surface(config),
+            [
+                "class ChartConfig",
+                "  Datetime reference;",
+                "  bool with_ids;"
+            ]
+        );
+        assert_eq!(
+            declaration_rank("static int helper (int x);", false, false),
+            DeclarationRank::Internal
+        );
+    }
+
     #[test]
     fn plaintext_lock_stems_mark_only_data_format_lockfiles() {
         for name in [
@@ -1995,7 +2039,7 @@ mod tests {
             ("using Handle = unsigned long;", DeclarationRank::OneLiner),
             ("namespace App.Models;", DeclarationRank::Heading),
         ] {
-            assert_eq!(declaration_rank(line, false), rank, "{line}");
+            assert_eq!(declaration_rank(line, false, false), rank, "{line}");
         }
     }
 
