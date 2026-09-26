@@ -73,7 +73,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         let rows = || Item::new(file.node_rows(node));
         match node.kind() {
             "function_definition" | "class_definition" | "decorated_definition" => {
-                model.decls.extend(definition(file, node, false));
+                model.decls.extend(definition(file, node));
             }
             "import_from_statement" if is_package_init => model.reexports.push(rows()),
             "type_alias_statement" => {
@@ -189,16 +189,15 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
 }
 
 /// A `def` or `class`, possibly wrapped in `decorated_definition`.
-/// A class inside a class (`in_class`) is not a member and yields `None`.
-fn definition(file: &SourceFile, unit: Node, in_class: bool) -> Option<DeclInfo> {
+fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
     let inner = if unit.kind() == "decorated_definition" {
         unit.child_by_field_name("definition")?
     } else {
         unit
     };
-    let shape = match (inner.kind(), in_class) {
-        ("function_definition", _) => Shape::Callable,
-        ("class_definition", false) => Shape::Whole,
+    let shape = match inner.kind() {
+        "function_definition" => Shape::Callable,
+        "class_definition" => Shape::Whole,
         _ => return None,
     };
     let name_row = inner.start_position().row + 1;
@@ -285,9 +284,12 @@ fn suite_statements(inner: Node) -> Vec<Node> {
 }
 
 /// A class suite (after its docstring): methods become members, listed in
-/// the body by their name row; every other statement (fields, nested
-/// classes, `if` blocks) is a body [`Item`] with the comments directly
-/// above it. Comments directly above a method belong to no part.
+/// the body by their name rows; every other statement (fields, `if`
+/// blocks) is a body [`Item`] with the comments directly above it. A
+/// nested class is flattened into the suite: its head is one item, its
+/// docstring, fields and member name rows follow, and its methods become
+/// members, so it lists as a roster rather than as its whole source. Comments directly
+/// above a method or nested class belong to no part.
 fn class_body(
     file: &SourceFile,
     statements: &[Node],
@@ -297,7 +299,7 @@ fn class_body(
     let mut members = Vec::new();
     let mut run: Vec<Node> = Vec::new();
     for node in statements {
-        if let Some(member) = definition(file, *node, true) {
+        if let Some(member) = definition(file, *node) {
             let last_statement_end = run
                 .iter()
                 .rfind(|pending| pending.kind() != "comment")
@@ -309,8 +311,18 @@ fn class_body(
                 run.pop();
             }
             body.extend(file.node_items(run.drain(..), after_row));
-            body.push(Item::new(member.name_rows.iter().copied()));
-            members.push(member);
+            match member.shape {
+                Shape::Callable => {
+                    body.push(Item::new(member.name_rows.iter().copied()));
+                    members.push(member);
+                }
+                Shape::Whole => {
+                    body.push(Item::new(member.head));
+                    body.extend(member.doc);
+                    body.extend(member.body);
+                    members.extend(member.members);
+                }
+            }
         } else {
             run.push(*node);
         }
@@ -495,7 +507,8 @@ class Config(Base):  # the config
                 vec![10, 11],
                 vec![15],
                 vec![18],
-                vec![20, 21]
+                vec![20],
+                vec![21]
             ]
         );
         let members: Vec<_> = class
@@ -519,6 +532,52 @@ class Config(Base):  # the config
             ]
         );
         assert!(class.members.iter().all(|member| member.members.is_empty()));
+    }
+
+    #[test]
+    fn code_python_nested_class_flattens_into_outer_roster() {
+        let model = extract_source(
+            "spec.py",
+            "\
+class Basic:
+    INDEX = 60
+
+    class Qos(Method):
+        \"\"\"Set prefetch.\"\"\"
+        NAME = \"Basic.Qos\"
+
+        def encode(self) -> list[bytes]:
+            pieces = []
+            return pieces
+
+        class Inner:
+            def run(self): ...
+",
+        );
+        let [class] = model.decls.as_slice() else {
+            panic!("one decl: {:?}", model.decls);
+        };
+        assert_eq!(
+            rows(&class.body),
+            vec![
+                vec![2],
+                vec![4],
+                vec![5],
+                vec![6],
+                vec![8],
+                vec![12],
+                vec![13]
+            ]
+        );
+        let members: Vec<_> = class
+            .members
+            .iter()
+            .map(|member| (member.name_rows.clone(), rows(&member.body)))
+            .collect();
+        assert_eq!(
+            members,
+            vec![(vec![8], vec![vec![9], vec![10]]), (vec![13], vec![])]
+        );
     }
 
     #[test]
