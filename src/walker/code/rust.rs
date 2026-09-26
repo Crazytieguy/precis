@@ -346,7 +346,7 @@ fn macro_open_row(node: Node, file: &SourceFile) -> Option<usize> {
 }
 
 /// One item per named child of `list` that `admit` accepts, with the
-/// comments and attributes directly above it (see
+/// own-row comments and attributes directly above it (see
 /// [`SourceFile::node_items`]); those above a child `admit` rejects are
 /// dropped with it.
 fn list_entries(list: Node, file: &SourceFile, admit: impl Fn(Node) -> bool) -> Vec<Item> {
@@ -358,7 +358,9 @@ fn list_entries(list: Node, file: &SourceFile, admit: impl Fn(Node) -> bool) -> 
             child.kind(),
             "line_comment" | "block_comment" | "attribute_item"
         ) {
-            leading.push(child);
+            if file.starts_own_row(child) {
+                leading.push(child);
+            }
         } else if admit(child) {
             nodes.append(&mut leading);
             nodes.push(child);
@@ -607,6 +609,20 @@ pub(crate) trait Internal {
         assert_eq!(sorted(store.members[1].head.clone()), vec![7]);
         assert_eq!(rows(&store.members[1].body), vec![vec![8]]);
         assert_eq!(model.decls[1].members.len(), 1);
+    }
+
+    #[test]
+    fn rust_extract_trailing_comment_on_a_rejected_item_stays_hidden() {
+        let source = "\
+pub struct Foo;
+impl Foo {
+    fn helper(&self) -> u32 { 1 } // fast path
+    pub const LIMIT: u32 = 8;
+}
+";
+        let (_, model) = extract_source("a.rs", source);
+        let foo = &model.decls[1];
+        assert_eq!(rows(&foo.body), vec![vec![4]]);
     }
 
     #[test]
