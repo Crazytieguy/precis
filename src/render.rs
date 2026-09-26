@@ -919,13 +919,7 @@ fn format_marker_row(indent_depth: usize) -> String {
 /// says so.
 fn format_entry_row(names: &[String], kind: EntryKind, indent_depth: usize, empty: bool) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    for ch in names.join("/").chars() {
-        if ch.is_control() {
-            s.extend(ch.escape_default());
-        } else {
-            s.push(ch);
-        }
-    }
+    push_escaped(&mut s, &names.join("/"), false);
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
     }
@@ -934,6 +928,24 @@ fn format_entry_row(names: &[String], kind: EntryKind, indent_depth: usize, empt
     }
     s.push('\n');
     s
+}
+
+/// Append `text` with its control characters escaped (`\n`, `\u{1b}`), so
+/// no row can break in two or drive a terminal. Tabs pass through when
+/// `keep_tabs`: in source they are indentation.
+fn push_escaped(out: &mut String, text: &str, keep_tabs: bool) {
+    let escaped = |ch: char| ch.is_control() && !(keep_tabs && ch == '\t');
+    if !text.contains(escaped) {
+        out.push_str(text);
+        return;
+    }
+    for ch in text.chars() {
+        if escaped(ch) {
+            out.extend(ch.escape_default());
+        } else {
+            out.push(ch);
+        }
+    }
 }
 
 /// The part of `source_line` a `Full` row shows: at most
@@ -964,7 +976,8 @@ fn format_line_row(
         }
         Render::Full => {
             let visible = visible_full_line(source_line);
-            let _ = write!(s, "{number}→{visible}");
+            let _ = write!(s, "{number}→");
+            push_escaped(&mut s, visible, true);
             if visible.len() < source_line.len() {
                 s.push('…');
             }
@@ -984,7 +997,7 @@ fn format_line_row(
                          — schema loader should have rejected this span"
                     );
                     if let Some(m) = m {
-                        s.push_str(m.as_str());
+                        push_escaped(&mut s, m.as_str(), true);
                     }
                 }
             });
@@ -1289,6 +1302,41 @@ mod tests {
         assert_eq!(rendered, "name\\nwith\\ttabs.md\n");
         assert_eq!(cost.chars, char_units(&rendered));
         assert_eq!(cost.tokens, tokenizer::count(&rendered));
+    }
+
+    #[test]
+    fn render_source_rows_escape_control_characters_but_tabs() {
+        let cache = SourceCache::new();
+        let path = PathBuf::from(format!("{STUB_DIR}/esc.txt"));
+        cache.insert(
+            path.clone(),
+            Arc::from("\tline \x1b[31mred\x1b[0m\rover\n\x1b[1mbold\n"),
+        );
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        tree.apply(&listing(&["esc.txt"]), BatchId::new(0), |_| true);
+        let full = one_span(path.clone(), 1, Render::Full);
+        let full_cost = tree.marginal_cost(&full);
+        tree.apply(&full, BatchId::new(1), |_| true);
+        let truncated = one_span(
+            path,
+            2,
+            Render::Truncated {
+                pattern: r"^\x1b\[1m".into(),
+            },
+        );
+        let truncated_cost = tree.marginal_cost(&truncated);
+        tree.apply(&truncated, BatchId::new(2), |_| true);
+
+        let rendered = tree.render();
+        assert_eq!(
+            rendered,
+            "esc.txt\n  1→\tline \\u{1b}[31mred\\u{1b}[0m\\rover\n  2→\\u{1b}[1m…\n"
+        );
+        let listing_cost = char_units("esc.txt\n");
+        assert_eq!(
+            listing_cost + full_cost.chars + truncated_cost.chars,
+            char_units(&rendered)
+        );
     }
 
     #[test]
