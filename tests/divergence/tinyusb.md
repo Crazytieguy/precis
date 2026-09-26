@@ -88,7 +88,7 @@ Score(3000)=0.646 I=0.887 C=0.470 ns_rows≤3K=17/48 grid(1000/1442/2080/3000/43
 | walker |  | 2450 | 36 | Fs::DirListing { dir: test/hil } |  |  | 0.691 |
 | walker |  | 2523 | 73 | Markdown::Section { file: README.rst, section_index: 6, keeps_default_concavity: false } |  |  | 0.696 |
 | ns | 2557 |  | 239 | src/host/usbh.h: descriptor-fetch API, async and blocking variants | 2.6 |  | 0.668 |
-| walker |  | 2600 | 77 | Markdown::Section { file: README.rst, section_index: 12, keeps_default_concavity: false } |  |  | 0.690 |
+| walker |  | 2600 | 77 | Markdown::Section { file: README.rst, section_index: 9, keeps_default_concavity: false } |  |  | 0.690 |
 | ns | 2825 |  | 268 | src/host/usbh.h: the tuh_xfer_t transfer descriptor | 2.7 |  | 0.661 |
 | ns | 2940 |  | 115 | src/host/usbh.h: tuh_itf_info_t and tuh_bus_info_t | 2.8 |  | 0.645 |
 | ns | 3110 |  | 170 | Runtime configure IDs for tud_configure() / tuh_configure() | 2.9 |  | 0.630 |

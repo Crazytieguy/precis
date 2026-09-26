@@ -73,11 +73,6 @@ const LEDE_TARGET_TOKENS: usize = 140;
 /// folds into the current chunk instead of spawning a micro-tail.
 const OVERSIZE_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 
-/// Emergency source-character ceiling between natural blank-line cuts.
-/// Long unbroken paragraphs may have no structural split point at all;
-/// safe row boundaries outside fences keep those ranges purchasable.
-const OVERSIZE_HARD_CHUNK_CHAR_CAP: usize = 4_096;
-
 /// A lede block larger than this stays out of `ReadmeHeadline`, so a
 /// pathological README paragraph cannot turn it into a multi-megabyte
 /// batch.
@@ -954,46 +949,26 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
     let item_count = end - start + 1;
     let mut token_prefix = Vec::with_capacity(item_count + 1);
     token_prefix.push(0);
-    let mut char_prefix = Vec::with_capacity(item_count + 1);
-    char_prefix.push(0);
     let mut legal_split = vec![false; item_count];
-    let mut safe_split = vec![false; item_count];
     let line = |row: usize| src_lines.get(row - 1).copied().unwrap_or("");
     // A blank row is only a block boundary outside every verbatim block,
     // so neither a fenced example nor a `<script>` body can be cut
     // through the middle.
-    let mut block_last = vec![None; item_count];
+    let mut in_block = vec![false; item_count];
     for (first, last) in verbatim_blocks((start..=end).map(|row| (row, line(row)))) {
-        block_last[first - start..=last - start].fill(Some(last));
+        in_block[first - start..=last - start].fill(true);
     }
     let mut next_nonblank = (start, false);
     for (index, row) in (start..=end).enumerate() {
         token_prefix.push(token_prefix[index] + row_tokens(src_lines, row));
-        char_prefix.push(char_prefix[index] + line(row).chars().count() + 1);
         if index + 1 == item_count {
             continue;
         }
-        if let Some(last) = block_last[index] {
-            safe_split[index + 1] = row == last;
-            continue;
-        }
-        safe_split[index + 1] = true;
-        if line(row).trim().is_empty() {
+        if !in_block[index] && line(row).trim().is_empty() {
             if next_nonblank.0 <= row {
                 next_nonblank = next_nonblank_row(src_lines, row + 1, end);
             }
             legal_split[index + 1] = !next_nonblank.1;
-        }
-    }
-    let mut chunk_start = 0usize;
-    for index in 1..item_count {
-        if legal_split[index] {
-            chunk_start = index;
-        } else if safe_split[index]
-            && char_prefix[index] - char_prefix[chunk_start] >= OVERSIZE_HARD_CHUNK_CHAR_CAP
-        {
-            legal_split[index] = true;
-            chunk_start = index;
         }
     }
     let mut ranges = budget_chunk_ranges(
@@ -1868,17 +1843,6 @@ mod tests {
         assert_tiles(&source, &bounds);
     }
 
-    #[test]
-    fn markdown_oversize_chunks_split_unbroken_prose_at_safe_row_boundaries() {
-        let long_line = "word ".repeat(360);
-        let source = std::iter::repeat_n(long_line.as_str(), 12)
-            .collect::<Vec<_>>()
-            .join("\n");
-        let bounds = chunk_bounds_of(&source);
-        assert!(bounds.len() > 1, "expected hard splits, got {bounds:?}");
-        assert_tiles(&source, &bounds);
-    }
-
     /// A raw HTML block of CommonMark type 1 (`<script>` / `<pre>` /
     /// `<style>` / `<textarea>`) ends at its closing tag, not at the
     /// first blank line inside it. No chunk boundary may land in its
@@ -1930,18 +1894,6 @@ mod tests {
         );
         let close_row = rows_of(&source, "```").1;
         assert_no_chunk_starts_in(&source, rows_of(&source, "```text").0, close_row);
-    }
-
-    /// A long blank-line-free table has no legal boundary at all, so
-    /// only the emergency character cap may split it — the raw-HTML and
-    /// fence tracking must not strand it as one unpurchasable lump.
-    #[test]
-    fn markdown_oversize_chunks_split_a_long_table_only_at_the_hard_cap() {
-        let row = format!("| {} | {} |\n", "cell ".repeat(40), "cell ".repeat(40));
-        let source = format!("## Big\n\n| a | b |\n| - | - |\n{}", row.repeat(24));
-        let bounds = chunk_bounds_of(&source);
-        assert!(bounds.len() > 1, "expected hard-cap splits, got {bounds:?}");
-        assert_tiles(&source, &bounds);
     }
 
     #[test]
