@@ -2,17 +2,6 @@
 //! discounts, and the cost-side concavity used by the scheduler. Walkers
 //! compute their batch's `value: f64` directly; the scheduler ranks by
 //! [`ratio_with_exponent`].
-//!
-//! [`mix_signals`] prices a batch from a `(catastrophic, follow-up,
-//! zero-call)` triple with shared weights; walkers may also write their
-//! value as a plain number.
-
-/// Mix three signal axes — catastrophic-omission,
-/// follow-up minimization, zero-tool-call understanding — into a scalar
-/// value, scaled by the path-relative depth/non-essential factor.
-pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
-    (1000.0 * cat + 280.0 * fu + 300.0 * ztu) * depth.max(0.0)
-}
 
 /// Value of a manifest's runtime dependency roster, shared by every
 /// manifest format. What
@@ -67,9 +56,8 @@ pub fn roster_mass_factor(entries: usize) -> f64 {
 /// is (module doc, declaration), one for its depth (doc, body), and the
 /// roster's per-row value. The engine scales `Names` by `rows^k` (`k`
 /// the default concavity exponent), so a roster's scheduling ratio
-/// depends on its tokens per row, not on its length. Tuned on the
-/// corpus grid (2026-09-25), where `Names` is by far the most sensitive
-/// of the three.
+/// depends on its tokens per row, not on its length. `Names` is by far
+/// the most grid-sensitive of the three.
 pub fn code_rung_value(rung: crate::batch::Rung) -> f64 {
     use crate::batch::Rung;
     match rung {

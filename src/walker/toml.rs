@@ -55,7 +55,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .filter(|row| !identity_residue.contains(row))
         .collect();
         if let Some(content) = rows_content(&file, &source, identity_rows) {
-            let scale = if ctx.is_workspace_member(&file) {
+            let scale = if ctx.is_cargo_workspace_member(&file) {
                 WORKSPACE_MEMBER_IDENTITY_FACTOR
             } else {
                 1.0

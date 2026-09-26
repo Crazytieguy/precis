@@ -19,7 +19,7 @@ use crate::batch::{Batch, BatchId, BatchKey, CodeKey, Rung};
 use crate::content::BatchContent;
 use crate::fs_util::DirFilter;
 use crate::render::{Cost, RenderedTree, SourceCache};
-use crate::value::ratio_with_exponent as score_ratio;
+use crate::value::ratio_with_exponent;
 use crate::walker::{WalkCtx, Walker};
 
 /// A single scheduled batch, captured in order for snapshots and the
@@ -96,8 +96,7 @@ const BREADTH_PRESSURE_TOKEN_SCALE: f64 = 1000.0;
 /// inside that file than on another lap of breadth. Gated on the file
 /// having already been entered on its own merits, so the premium
 /// escalates depth rather than pulling one file in front of the
-/// repository's orientation. Swept full-corpus; see
-/// `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
+/// repository's orientation.
 const DOMINANT_FILE_RATIO_BOOST: f64 = 1.35;
 
 impl<W: Walker> Scheduler<W> {
@@ -312,7 +311,7 @@ impl<W: Walker> Scheduler<W> {
             let pressure = self.breadth_pressure(id) * self.dominant_file_boost(id);
             let exact_cost = self.cost_cache[&id];
             let entry = &self.entries[id.index()];
-            let ratio = score_ratio(
+            let ratio = ratio_with_exponent(
                 entry.value,
                 self.ranking_cost(exact_cost),
                 entry.key.concavity_exponent(),

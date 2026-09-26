@@ -309,7 +309,7 @@ impl WalkCtx {
     }
 
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
-    pub fn is_workspace_member(&self, file: &Path) -> bool {
+    pub fn is_cargo_workspace_member(&self, file: &Path) -> bool {
         self.cargo_workspace
             .is_member(file, || toml::collect_workspace_members(&self.root))
     }
@@ -348,8 +348,7 @@ pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> 
 }
 
 /// Minimum share of the tree's essential source bytes for the largest
-/// source file to count as the repository's spine. Swept full-corpus;
-/// see `git show a90ee9b6:docs/design-notes.md` ("Dominant source file").
+/// source file to count as the repository's spine.
 const DOMINANT_SOURCE_MASS_SHARE: f64 = 0.20;
 
 /// Upper bound on a spine file's size, checked before the file is read.

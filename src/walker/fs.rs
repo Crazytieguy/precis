@@ -31,9 +31,9 @@ pub fn expand_listed<'k>(key: &'k FsKey, ctx: &WalkCtx) -> (Vec<Batch>, Option<&
     let tail = matches!(key, FsKey::DirListingTail { .. });
     let mut out = Vec::new();
     for (name, kind) in children.iter() {
+        let child = dir.join(name);
         if matches!(kind, EntryKind::Directory)
             && head.as_ref().is_none_or(|head| head.contains(name) != tail)
-            && let child = dir.join(name)
             && should_recurse_dir(&child, ctx.root())
         {
             out.extend(dir_listing_batches(child, ctx));
@@ -168,8 +168,7 @@ fn is_sidecar(name: &str, siblings: &BTreeMap<String, EntryKind>) -> bool {
 }
 
 /// Value of a directory listing before its location prior —
-/// classification moves the prior, not this base. Set by a full-grid
-/// sweep (2026-09-25).
+/// classification moves the prior, not this base.
 const LISTING_VALUE: f64 = 1230.0;
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
@@ -183,7 +182,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     // inventory inside tests, examples or docs.
     let source_inventory_dir = !source_dir
         && !module_source_dir
-        && is_source_inventory_dir(dir, ctx)
+        && ctx.fs_state.holds_source(dir, ctx.dir_filter())
         && (non_essential < 1.0 || under_root_source_ancestor);
     // A partition under the repository's source root names part of the
     // package's API wherever it sits, so it prices like depth 1.
@@ -254,7 +253,7 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if ctx.non_essential_factor(parent) >= 1.0 && !under_source_ancestor {
         return false;
     }
-    if !is_source_inventory_dir(parent, ctx) {
+    if !ctx.fs_state.holds_source(parent, ctx.dir_filter()) {
         return false;
     }
     ctx.fs_state.child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
@@ -369,10 +368,6 @@ impl FsState {
             .insert(dir.to_path_buf(), count);
         count
     }
-}
-
-fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
-    ctx.fs_state.holds_source(dir, ctx.dir_filter())
 }
 
 /// True when `dir` lies under the repository's own top-level

@@ -303,13 +303,6 @@ impl RenderedTree {
         empty
     }
 
-    /// Entries `dir` shows through the walk's ignore rules — the same
-    /// set a listing batch draws from, so it is the denominator for
-    /// "is this listing complete".
-    fn dir_entry_count(&self, dir: &Path) -> usize {
-        list_dir(dir, &self.dir_filter).len()
-    }
-
     fn fs_marginal_cost(&self, groups: &[FsGroup]) -> Cost {
         let mut added = Listings::new();
         for group in groups {
@@ -356,7 +349,7 @@ impl RenderedTree {
             for name in names.keys() {
                 rows_after.extend(self.row_head(&parent.join(name), &added));
             }
-            let shown = self.dir_entry_count(parent);
+            let shown = list_dir(parent, &self.dir_filter).len();
             let listed_before = self.tree_children(parent).map_or(0, BTreeMap::len);
             if listing_partial(listed_before, shown) {
                 charge(&format_marker_row(self.child_indent(parent, &none)), -1);
@@ -633,7 +626,7 @@ impl RenderedTree {
                 EntryKind::File => self.render_file(&tail, indent_depth + 1, out),
             }
         }
-        if listing_partial(children.len(), self.dir_entry_count(path)) {
+        if listing_partial(children.len(), list_dir(path, &self.dir_filter).len()) {
             out.push_str(&format_marker_row(indent_depth));
         }
     }
