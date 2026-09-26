@@ -172,11 +172,7 @@ enum Atom {
 }
 
 /// Atoms of `content` with their byte footprints (each ≥ 1).
-fn graded_atoms(
-    content: &BatchContent,
-    source_cache: &SourceCache,
-    fixture_root: &Path,
-) -> Vec<(Atom, usize)> {
+fn graded_atoms(content: &BatchContent, source_cache: &SourceCache) -> Vec<(Atom, usize)> {
     match content {
         BatchContent::Fs { groups } => groups
             .iter()
@@ -194,7 +190,7 @@ fn graded_atoms(
         BatchContent::Lines { spans } => explode_spans(spans)
             .into_iter()
             .map(|(path, line, render)| {
-                let source = source_cache.get(&fixture_root.join(&path));
+                let source = source_cache.get(&path);
                 let source_line = source.as_deref().and_then(|s| s.line(line)).unwrap_or("");
                 let bytes = match render {
                     Render::Full => visible_full_line(source_line).len(),
@@ -254,7 +250,7 @@ impl<'a> Graded<'a> {
             exp_t += tree.marginal_cost(&content).tokens;
             // Predecessor-chain conflicts are `simulate_ns`'s concern.
             let _ = tree.apply(&content, BatchId::new(position), |_| true);
-            let atoms: Vec<(usize, usize)> = graded_atoms(&content, &source_cache, &fixture_root)
+            let atoms: Vec<(usize, usize)> = graded_atoms(&content, &source_cache)
                 .into_iter()
                 .map(|(atom, bytes)| {
                     let next_id = ids.len();
@@ -277,7 +273,7 @@ impl<'a> Graded<'a> {
         }
 
         let grade = |content: &BatchContent| -> Vec<(usize, usize)> {
-            graded_atoms(content, &source_cache, &fixture_root)
+            graded_atoms(content, &source_cache)
                 .into_iter()
                 .filter_map(|(atom, bytes)| Some((*ids.get(&atom)?, bytes)))
                 .collect()
