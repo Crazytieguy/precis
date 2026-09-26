@@ -15,6 +15,12 @@ use crate::north_star::NorthStar;
 /// fixture revision it was authored against.
 pub fn load_ns_checked(ns_path: &Path, fixture_root: &Path) -> Result<NorthStar> {
     let ns = load_ns(ns_path)?;
+    check_pin(&ns, ns_path, fixture_root)?;
+    Ok(ns)
+}
+
+/// The revision-pin check of [`load_ns_checked`], for an NS already parsed.
+pub fn check_pin(ns: &NorthStar, ns_path: &Path, fixture_root: &Path) -> Result<()> {
     let pin_path = fixture_root.join(crate::fs_util::PRECIS_PIN_FILE);
     let pin = std::fs::read_to_string(&pin_path)
         .with_context(|| format!("reading fixture pin {}", pin_path.display()))?;
@@ -28,7 +34,7 @@ pub fn load_ns_checked(ns_path: &Path, fixture_root: &Path) -> Result<NorthStar>
             pin_trimmed
         );
     }
-    Ok(ns)
+    Ok(())
 }
 
 /// Parse the NS TOML at `ns_path` without the revision-pin check.

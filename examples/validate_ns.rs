@@ -1,5 +1,7 @@
 //! Simulate a North Star against its fixture (`tests/fixtures/<fixture>`),
-//! print per-batch costs and violations, and exit 1 if there are any.
+//! print per-batch costs and violations, and exit 1 if there are any, 2
+//! if the NS can't be loaded or its revision pin doesn't match the
+//! fixture's.
 //!
 //! Usage: cargo run --example validate_ns -- tests/north-stars/log.toml
 
@@ -8,7 +10,7 @@ use std::process::ExitCode;
 
 use anyhow::{Context, Result};
 
-use precis::ns_loader::{load_ns, load_ns_checked};
+use precis::ns_loader::{check_pin, load_ns};
 use precis::ns_simulate::{TOKEN_CAP, simulate_ns};
 
 fn main() -> ExitCode {
@@ -29,8 +31,11 @@ fn run() -> Result<bool> {
             .nth(1)
             .context("usage: validate_ns <north-star.toml>")?,
     );
-    let fixture_root = Path::new("tests/fixtures").join(load_ns(&ns_path)?.fixture);
-    let ns = load_ns_checked(&ns_path, &fixture_root)?;
+    let ns = load_ns(&ns_path)?;
+    let fixture_root = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("tests/fixtures")
+        .join(&ns.fixture);
+    check_pin(&ns, &ns_path, &fixture_root)?;
     let batches = simulate_ns(&ns, &fixture_root);
 
     let violation_count: usize = batches.iter().map(|b| b.violations.len()).sum();
@@ -47,7 +52,7 @@ fn run() -> Result<bool> {
     println!("fixture: {}", ns.fixture);
     if let Some(largest) = batches.iter().rev().max_by_key(|b| b.cost_tokens) {
         println!(
-            "largest batch: {} tokens @ #{}",
+            "largest batch: {} tokens (id {})",
             largest.cost_tokens, largest.id
         );
     }
