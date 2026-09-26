@@ -4,7 +4,10 @@
 //! a wrapping `#ifndef X` / `#define X` / `#endif` header guard, the body
 //! of `extern "C" { … }` (bare or `#ifdef __cplusplus`-wrapped), and
 //! `#if` / `#ifdef` blocks holding only declarations and directives.
-//! Other conditional blocks stay opaque.
+//! In a source file function definitions count as declarations; in a
+//! header they mark the implementation section of a single-header
+//! library, which stays opaque, as does any block holding a statement
+//! (an `#if` splitting a function body).
 //!
 //! - Function definitions are `Callable`; prototypes, typedefs, structs /
 //!   unions / enums, global variables and macros are `Whole`, with one
@@ -358,7 +361,7 @@ fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     }
     if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
         && !is_disabled_preproc_if(node, file)
-        && feature_gate_is_declaration_only(node) == Some(true)
+        && feature_gate_is_declaration_only(node, is_header(&file.path)) == Some(true)
     {
         descend_feature_gate_branches(node, file, visit);
         return;
@@ -393,22 +396,25 @@ fn is_disabled_preproc_if(node: Node, file: &SourceFile) -> bool {
 }
 
 /// For a `preproc_if*` / `preproc_else*` subtree: `None` when any branch
-/// wraps code (a function body, a statement), else whether it holds at
-/// least one declaration beside its directives and comments.
-fn feature_gate_is_declaration_only(node: Node) -> Option<bool> {
+/// holds a statement, or a function definition `in_header`, else whether
+/// it holds at least one declaration beside its directives and comments.
+fn feature_gate_is_declaration_only(node: Node, in_header: bool) -> Option<bool> {
     let mut declaration_found = false;
     let mut cursor = node.walk();
     for child in node.named_children(&mut cursor) {
         match child.kind() {
             "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
             | "enum_specifier" => declaration_found = true,
+            "function_definition" if !in_header => declaration_found = true,
             "preproc_include"
             | "preproc_def"
             | "preproc_function_def"
             | "preproc_call"
             | "comment" => {}
             "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
-            | "preproc_elifdef" => declaration_found |= feature_gate_is_declaration_only(child)?,
+            | "preproc_elifdef" => {
+                declaration_found |= feature_gate_is_declaration_only(child, in_header)?;
+            }
             // Condition / name tokens of the `#if` / `#ifdef` itself.
             "identifier"
             | "binary_expression"
@@ -603,7 +609,7 @@ typedef int bar_t;
     }
 
     #[test]
-    fn c_feature_gates_descend_only_when_declaration_only() {
+    fn c_feature_gates_descend_unless_they_hold_code() {
         let source = "\
 #ifdef HAVE_SIMD
 int search_simd(const char *text);
@@ -625,13 +631,19 @@ static inline int wraps_code(void) { return 1; }
 #pragma pack(push, 1)
 int packed(void);
 #endif
+#ifdef SPLIT_BODY_TAIL
+  counter += 1;
+}
+#endif
 ";
-        for path in ["krep.h", "krep.c"] {
-            assert_eq!(
-                name_rows_of(&model(path, source)),
-                vec![vec![2], vec![4], vec![19]]
-            );
-        }
+        assert_eq!(
+            name_rows_of(&model("krep.c", source)),
+            vec![vec![2], vec![4], vec![15], vec![19]]
+        );
+        assert_eq!(
+            name_rows_of(&model("krep.h", source)),
+            vec![vec![2], vec![4], vec![19]]
+        );
     }
 
     #[test]

@@ -108,66 +108,83 @@ Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 5403 | 48 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 24, sub: 0, line: 512 } |  |  | 0.634 |
 | walker |  | 5433 | 30 | Fs::DirListing { dir: sig/v1.5rc1 } |  |  | 0.634 |
 | ns | 5549 |  | 196 | jv.h: path access, keys, ordering, sort/group/unique | 4.6 |  | 0.625 |
-| walker |  | 5717 | 284 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 1, line: 0 } |  |  | 0.625 |
+| walker |  | 5748 | 315 | Code::CodeKey { rung: Names, file: src/jv_dtoa.c, decl: 0, sub: 2, line: 0 } |  |  | 0.625 |
+| walker |  | 5763 | 15 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 30, sub: 0, line: 586 } |  |  | 0.625 |
+| walker |  | 5783 | 20 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 35, sub: 0, line: 750 } |  |  | 0.625 |
+| walker |  | 5804 | 21 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 33, sub: 0, line: 676 } |  |  | 0.625 |
 | ns | 5811 |  | 262 | jv.h: parsing - flags, one-shot parsers, streaming jv_parser, jv_load_file | 4.7 |  | 0.609 |
-| walker |  | 5980 | 263 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 2, line: 0 } |  |  | 0.609 |
-| walker |  | 6065 | 85 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 65, sub: 0, line: 247 } |  |  | 0.609 |
+| walker |  | 5826 | 22 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 34, sub: 0, line: 706 } |  |  | 0.609 |
+| walker |  | 5851 | 25 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 37, sub: 0, line: 869 } |  |  | 0.609 |
+| walker |  | 5876 | 25 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 38, sub: 0, line: 904 } |  |  | 0.609 |
+| walker |  | 5903 | 27 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 36, sub: 0, line: 762 } |  |  | 0.609 |
+| walker |  | 5930 | 27 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 39, sub: 0, line: 960 } |  |  | 0.609 |
+| walker |  | 5957 | 27 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 40, sub: 0, line: 990 } |  |  | 0.609 |
+| walker |  | 5985 | 28 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 43, sub: 0, line: 1118 } |  |  | 0.609 |
+| walker |  | 6014 | 29 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 45, sub: 0, line: 1314 } |  |  | 0.609 |
+| walker |  | 6045 | 31 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 44, sub: 0, line: 1184 } |  |  | 0.609 |
+| walker |  | 6082 | 37 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 31, sub: 0, line: 589 } |  |  | 0.609 |
+| walker |  | 6120 | 38 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 32, sub: 0, line: 642 } |  |  | 0.609 |
 | ns | 6129 |  | 318 | jv.h: print flags and the dump/show functions | 4.8 |  | 0.595 |
-| walker |  | 6266 | 201 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 3, line: 0 } |  |  | 0.595 |
 | ns | 6267 |  | 138 | jv.h: the convenience macro walls (existence, not bodies) | 4.9 |  | 0.586 |
-| walker |  | 6271 | 5 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 72, sub: 0, line: 274 } |  |  | 0.586 |
-| walker |  | 6278 | 7 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 68, sub: 0, line: 260 } |  |  | 0.586 |
-| walker |  | 6287 | 9 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 78, sub: 0, line: 407 } |  |  | 0.586 |
-| walker |  | 6301 | 14 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 76, sub: 0, line: 396 } |  |  | 0.586 |
-| walker |  | 6322 | 21 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 69, sub: 0, line: 264 } |  |  | 0.586 |
-| walker |  | 6350 | 28 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 73, sub: 0, line: 280 } |  |  | 0.586 |
-| walker |  | 6394 | 44 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 70, sub: 0, line: 266 } |  |  | 0.586 |
-| walker |  | 6486 | 92 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 77, sub: 0, line: 399 } |  |  | 0.586 |
-| walker |  | 6642 | 156 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 0, line: 285 } |  |  | 0.586 |
-| walker |  | 6650 | 8 | Code::CodeKey { rung: Doc, file: src/parser.c, decl: 74, sub: 0, line: 285 } |  |  | 0.586 |
+| walker |  | 6305 | 185 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 46, sub: 0, line: 1351 } |  |  | 0.586 |
+| walker |  | 6555 | 250 | Code::CodeKey { rung: Names, file: src/jv_dtoa.c, decl: 0, sub: 3, line: 0 } |  |  | 0.586 |
+| walker |  | 6561 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 49, sub: 0, line: 1404 } |  |  | 0.586 |
+| walker |  | 6567 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 54, sub: 0, line: 1557 } |  |  | 0.586 |
+| walker |  | 6573 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 55, sub: 0, line: 1586 } |  |  | 0.586 |
+| walker |  | 6587 | 14 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 48, sub: 0, line: 1401 } |  |  | 0.586 |
+| walker |  | 6609 | 22 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 50, sub: 0, line: 1412 } |  |  | 0.586 |
+| walker |  | 6650 | 41 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 51, sub: 0, line: 1422 } |  |  | 0.586 |
+| walker |  | 6693 | 43 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 53, sub: 0, line: 1525 } |  |  | 0.586 |
+| walker |  | 6749 | 56 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 56, sub: 0, line: 1612 } |  |  | 0.586 |
 | ns | 6773 |  | 506 | opcode_list.h: every opcode and its immediate kind | 5.1 |  | 0.560 |
-| walker |  | 6814 | 164 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 1, line: 285 } |  |  | 0.560 |
-| walker |  | 6962 | 148 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 2, line: 285 } |  |  | 0.560 |
-| walker |  | 7115 | 153 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 3, line: 285 } |  |  | 0.560 |
+| walker |  | 6822 | 73 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 52, sub: 0, line: 1449 } |  |  | 0.560 |
+| walker |  | 7017 | 195 | Code::CodeKey { rung: Names, file: src/jv_dtoa.c, decl: 0, sub: 4, line: 0 } |  |  | 0.560 |
+| walker |  | 7023 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 64, sub: 0, line: 1976 } |  |  | 0.560 |
+| walker |  | 7029 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 68, sub: 0, line: 1993 } |  |  | 0.560 |
+| walker |  | 7038 | 9 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 67, sub: 0, line: 1991 } |  |  | 0.560 |
+| walker |  | 7051 | 13 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 62, sub: 0, line: 1627 } |  |  | 0.560 |
+| walker |  | 7076 | 25 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 69, sub: 0, line: 1995 } |  |  | 0.560 |
+| walker |  | 7245 | 169 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 63, sub: 0, line: 1630 } |  |  | 0.560 |
 | ns | 7248 |  | 475 | parser.y: the complete token list | 5.2 |  | 0.536 |
-| walker |  | 7266 | 151 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 4, line: 285 } |  |  | 0.536 |
-| walker |  | 7420 | 154 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 5, line: 285 } |  |  | 0.536 |
+| walker |  | 7422 | 177 | Code::CodeKey { rung: Names, file: src/jv_dtoa.c, decl: 0, sub: 5, line: 0 } |  |  | 0.536 |
 | ns | 7435 |  | 187 | parser.y: operator precedence and associativity | 5.3 |  | 0.529 |
-| walker |  | 7569 | 149 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 6, line: 285 } |  |  | 0.529 |
-| walker |  | 7719 | 150 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 7, line: 285 } |  |  | 0.529 |
-| walker |  | 7888 | 169 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 8, line: 285 } |  |  | 0.529 |
-| walker |  | 8039 | 151 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 9, line: 285 } |  |  | 0.529 |
+| walker |  | 7439 | 17 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 74, sub: 0, line: 2333 } |  |  | 0.529 |
+| walker |  | 7505 | 66 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 70, sub: 0, line: 2105 } |  |  | 0.529 |
+| walker |  | 7723 | 218 | Code::CodeKey { rung: Names, file: src/jv_dtoa.c, decl: 0, sub: 6, line: 0 } |  |  | 0.529 |
+| walker |  | 7729 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 87, sub: 0, line: 3394 } |  |  | 0.529 |
+| walker |  | 7735 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 88, sub: 0, line: 3410 } |  |  | 0.529 |
+| walker |  | 7753 | 18 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 83, sub: 0, line: 2344 } |  |  | 0.529 |
+| walker |  | 7771 | 18 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 84, sub: 0, line: 2347 } |  |  | 0.529 |
+| walker |  | 7790 | 19 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 86, sub: 0, line: 2365 } |  |  | 0.529 |
+| walker |  | 7810 | 20 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 85, sub: 0, line: 2350 } |  |  | 0.529 |
+| walker |  | 8080 | 270 | Code::CodeKey { rung: Names, file: src/jv_dtoa.c, decl: 0, sub: 7, line: 0 } |  |  | 0.529 |
+| walker |  | 8086 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 89, sub: 0, line: 3428 } |  |  | 0.529 |
+| walker |  | 8092 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 93, sub: 0, line: 3514 } |  |  | 0.529 |
+| walker |  | 8098 | 6 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 100, sub: 0, line: 4205 } |  |  | 0.529 |
 | ns | 8106 |  | 671 | builtin.c: function_list, part 1 - libm, binops, conversions, keys, strings, paths, sorting | 5.4 |  | 0.510 |
-| walker |  | 8204 | 165 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 10, line: 285 } |  |  | 0.510 |
-| walker |  | 8369 | 165 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 11, line: 285 } |  |  | 0.510 |
-| walker |  | 8537 | 168 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 12, line: 285 } |  |  | 0.510 |
+| walker |  | 8109 | 11 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 92, sub: 0, line: 3512 } |  |  | 0.510 |
+| walker |  | 8129 | 20 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 99, sub: 0, line: 3525 } |  |  | 0.510 |
+| walker |  | 8166 | 37 | Code::CodeKey { rung: Decl, file: src/jv_dtoa.c, decl: 98, sub: 0, line: 3520 } |  |  | 0.510 |
+| walker |  | 8450 | 284 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 1, line: 0 } |  |  | 0.510 |
 | ns | 8607 |  | 501 | builtin.c: function_list, part 2 - search, min/max, errors, env, regex, I/O, time | 5.5 |  | 0.498 |
-| walker |  | 8664 | 127 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 13, line: 285 } |  |  | 0.498 |
-| walker |  | 8834 | 170 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 4, line: 0 } |  |  | 0.498 |
-| walker |  | 8854 | 20 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 79, sub: 0, line: 412 } |  |  | 0.498 |
-| walker |  | 9034 | 180 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 5, line: 0 } |  |  | 0.498 |
-| walker |  | 9044 | 10 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 91, sub: 0, line: 572 } |  |  | 0.498 |
-| walker |  | 9054 | 10 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 94, sub: 0, line: 580 } |  |  | 0.498 |
-| walker |  | 9066 | 12 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 92, sub: 0, line: 574 } |  |  | 0.498 |
-| walker |  | 9077 | 11 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 93, sub: 0, line: 578 } |  |  | 0.498 |
-| walker |  | 9089 | 12 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 95, sub: 0, line: 582 } |  |  | 0.498 |
-| walker |  | 9102 | 13 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 90, sub: 0, line: 570 } |  |  | 0.498 |
+| walker |  | 8713 | 263 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 2, line: 0 } |  |  | 0.498 |
+| walker |  | 8798 | 85 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 65, sub: 0, line: 247 } |  |  | 0.498 |
+| walker |  | 8999 | 201 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 3, line: 0 } |  |  | 0.498 |
+| walker |  | 9004 | 5 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 72, sub: 0, line: 274 } |  |  | 0.498 |
+| walker |  | 9011 | 7 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 68, sub: 0, line: 260 } |  |  | 0.498 |
+| walker |  | 9020 | 9 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 78, sub: 0, line: 407 } |  |  | 0.498 |
+| walker |  | 9034 | 14 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 76, sub: 0, line: 396 } |  |  | 0.498 |
+| walker |  | 9055 | 21 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 69, sub: 0, line: 264 } |  |  | 0.498 |
+| walker |  | 9083 | 28 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 73, sub: 0, line: 280 } |  |  | 0.498 |
 | ns | 9119 |  | 512 | builtin.jq: every jq-defined builtin, part 1 (lines 1-115) | 5.6 |  | 0.473 |
-| walker |  | 9129 | 27 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 96, sub: 0, line: 598 } |  |  | 0.473 |
-| walker |  | 9327 | 198 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 6, line: 0 } |  |  | 0.473 |
-| walker |  | 9339 | 12 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 99, sub: 0, line: 605 } |  |  | 0.473 |
-| walker |  | 9351 | 12 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 103, sub: 0, line: 616 } |  |  | 0.473 |
-| walker |  | 9372 | 21 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 98, sub: 0, line: 603 } |  |  | 0.473 |
-| walker |  | 9394 | 22 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 102, sub: 0, line: 614 } |  |  | 0.473 |
-| walker |  | 9419 | 25 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 100, sub: 0, line: 609 } |  |  | 0.473 |
-| walker |  | 9454 | 35 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 97, sub: 0, line: 600 } |  |  | 0.473 |
+| walker |  | 9127 | 44 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 70, sub: 0, line: 266 } |  |  | 0.473 |
+| walker |  | 9219 | 92 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 77, sub: 0, line: 399 } |  |  | 0.473 |
+| walker |  | 9375 | 156 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 0, line: 285 } |  |  | 0.473 |
+| walker |  | 9383 | 8 | Code::CodeKey { rung: Doc, file: src/parser.c, decl: 74, sub: 0, line: 285 } |  |  | 0.473 |
 | ns | 9468 |  | 349 | builtin.jq: every jq-defined builtin, part 2 (lines 116-244) | 5.7 |  | 0.459 |
-| walker |  | 9489 | 35 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 101, sub: 0, line: 611 } |  |  | 0.459 |
-| walker |  | 9561 | 72 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 104, sub: 0, line: 649 } |  |  | 0.459 |
-| walker |  | 9571 | 10 | Code::CodeKey { rung: Doc, file: src/parser.c, decl: 107, sub: 0, line: 662 } |  |  | 0.459 |
-| walker |  | 9583 | 12 | Code::CodeKey { rung: Doc, file: src/parser.c, decl: 106, sub: 0, line: 659 } |  |  | 0.459 |
+| walker |  | 9547 | 164 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 1, line: 285 } |  |  | 0.459 |
+| walker |  | 9695 | 148 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 2, line: 285 } |  |  | 0.459 |
 | ns | 9778 |  | 310 | execute.c: struct jq_state, the whole interpreter state | 5.8 |  | 0.449 |
-| walker |  | 9812 | 229 | Code::CodeKey { rung: Names, file: src/parser.c, decl: 0, sub: 7, line: 0 } |  |  | 0.449 |
-| walker |  | 9872 | 60 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 111, sub: 0, line: 825 } |  |  | 0.449 |
-| walker |  | 9934 | 62 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 121, sub: 0, line: 890 } |  |  | 0.449 |
+| walker |  | 9848 | 153 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 3, line: 285 } |  |  | 0.449 |
 | ns | 9977 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.445 |
+| walker |  | 9999 | 151 | Code::CodeKey { rung: Decl, file: src/parser.c, decl: 74, sub: 4, line: 285 } |  |  | 0.445 |

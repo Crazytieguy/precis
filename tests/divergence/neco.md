@@ -90,65 +90,66 @@ Score(3000)=0.786 I=0.909 C=0.679 ns_rows≤3K=17/53 grid(1000/1442/2080/3000/43
 | walker |  | 6316 | 295 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.787 |
 | walker |  | 6443 | 127 | Code::CodeKey { rung: Doc, file: neco.h, decl: 53, sub: 0, line: 135 } |  |  | 0.788 |
 | ns | 6616 |  | 386 | neco.c compile-time options: the complete knob list | 4.1 |  | 0.766 |
-| walker |  | 6703 | 260 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |
-| walker |  | 6710 | 7 | Code::CodeKey { rung: Decl, file: neco.c, decl: 7, sub: 0, line: 187 } |  |  | 0.766 |
-| walker |  | 6724 | 14 | Code::CodeKey { rung: Decl, file: neco.c, decl: 18, sub: 0, line: 1035 } |  |  | 0.766 |
-| walker |  | 6742 | 18 | Code::CodeKey { rung: Decl, file: neco.c, decl: 4, sub: 0, line: 166 } |  |  | 0.766 |
-| walker |  | 6763 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 9, sub: 0, line: 227 } |  |  | 0.766 |
-| walker |  | 6784 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 15, sub: 0, line: 1023 } |  |  | 0.766 |
-| walker |  | 6853 | 69 | Code::CodeKey { rung: Decl, file: neco.c, decl: 5, sub: 0, line: 172 } |  |  | 0.766 |
+| walker |  | 6705 | 262 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 0, line: 0 } |  |  | 0.766 |
+| walker |  | 6712 | 7 | Code::CodeKey { rung: Decl, file: neco.c, decl: 7, sub: 0, line: 187 } |  |  | 0.766 |
+| walker |  | 6730 | 18 | Code::CodeKey { rung: Decl, file: neco.c, decl: 4, sub: 0, line: 166 } |  |  | 0.766 |
+| walker |  | 6751 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 9, sub: 0, line: 227 } |  |  | 0.766 |
+| walker |  | 6772 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 15, sub: 0, line: 987 } |  |  | 0.766 |
+| walker |  | 6793 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 17, sub: 0, line: 1023 } |  |  | 0.766 |
+| walker |  | 6820 | 27 | Code::CodeKey { rung: Decl, file: neco.c, decl: 16, sub: 0, line: 989 } |  |  | 0.766 |
 | ns | 6875 |  | 259 | Amalgamation structure and the embedded-source boundaries | 4.2 |  | 0.745 |
-| walker |  | 6922 | 69 | Code::CodeKey { rung: Decl, file: neco.c, decl: 11, sub: 0, line: 234 } |  |  | 0.745 |
-| walker |  | 6994 | 72 | Code::CodeKey { rung: Decl, file: neco.c, decl: 12, sub: 0, line: 241 } |  |  | 0.745 |
+| walker |  | 6889 | 69 | Code::CodeKey { rung: Decl, file: neco.c, decl: 5, sub: 0, line: 172 } |  |  | 0.745 |
+| walker |  | 6958 | 69 | Code::CodeKey { rung: Decl, file: neco.c, decl: 11, sub: 0, line: 234 } |  |  | 0.745 |
 | ns | 7007 |  | 132 | Section map of Neco's own implementation | 4.3 |  | 0.738 |
-| walker |  | 7099 | 105 | Code::CodeKey { rung: Decl, file: neco.c, decl: 6, sub: 0, line: 179 } |  |  | 0.738 |
+| walker |  | 7030 | 72 | Code::CodeKey { rung: Decl, file: neco.c, decl: 12, sub: 0, line: 241 } |  |  | 0.738 |
+| walker |  | 7135 | 105 | Code::CodeKey { rung: Decl, file: neco.c, decl: 6, sub: 0, line: 179 } |  |  | 0.738 |
 | ns | 7292 |  | 285 | struct coroutine: identity, stack, arguments, scheduling flags | 4.4 |  | 0.721 |
-| walker |  | 7304 | 205 | Code::CodeKey { rung: Decl, file: neco.c, decl: 19, sub: 0, line: 1124 } |  |  | 0.721 |
-| walker |  | 7492 | 188 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 1, line: 0 } |  |  | 0.721 |
-| walker |  | 7498 | 6 | Code::CodeKey { rung: Decl, file: neco.c, decl: 21, sub: 0, line: 1145 } |  |  | 0.721 |
-| walker |  | 7509 | 11 | Code::CodeKey { rung: Decl, file: neco.c, decl: 20, sub: 0, line: 1143 } |  |  | 0.721 |
-| walker |  | 7567 | 58 | Code::CodeKey { rung: Decl, file: neco.c, decl: 28, sub: 0, line: 1155 } |  |  | 0.721 |
+| walker |  | 7335 | 200 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 1, line: 0 } |  |  | 0.721 |
+| walker |  | 7349 | 14 | Code::CodeKey { rung: Decl, file: neco.c, decl: 20, sub: 0, line: 1035 } |  |  | 0.721 |
+| walker |  | 7363 | 14 | Code::CodeKey { rung: Decl, file: neco.c, decl: 21, sub: 0, line: 1042 } |  |  | 0.721 |
+| walker |  | 7393 | 30 | Code::CodeKey { rung: Decl, file: neco.c, decl: 26, sub: 0, line: 1061 } |  |  | 0.721 |
+| walker |  | 7579 | 186 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 2, line: 0 } |  |  | 0.721 |
+| walker |  | 7585 | 6 | Code::CodeKey { rung: Decl, file: neco.c, decl: 35, sub: 0, line: 1145 } |  |  | 0.707 |
 | ns | 7585 |  | 293 | What neco_chan and neco_gen actually are | 4.5 |  | 0.707 |
+| walker |  | 7598 | 13 | Code::CodeKey { rung: Decl, file: neco.c, decl: 34, sub: 0, line: 1143 } |  |  | 0.707 |
+| walker |  | 7614 | 16 | Code::CodeKey { rung: Decl, file: neco.c, decl: 30, sub: 0, line: 1085 } |  |  | 0.707 |
+| walker |  | 7647 | 33 | Code::CodeKey { rung: Decl, file: neco.c, decl: 32, sub: 0, line: 1092 } |  |  | 0.707 |
 | ns | 7769 |  | 184 | Where the event queue backend is chosen | 4.6 |  | 0.697 |
-| walker |  | 7780 | 213 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 2, line: 0 } |  |  | 0.697 |
-| walker |  | 7795 | 15 | Code::CodeKey { rung: Decl, file: neco.c, decl: 34, sub: 0, line: 1251 } |  |  | 0.697 |
-| walker |  | 7816 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 33, sub: 0, line: 1204 } |  |  | 0.697 |
-| walker |  | 7827 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 35, sub: 0, line: 1282 } |  |  | 0.697 |
-| walker |  | 7838 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 36, sub: 0, line: 1293 } |  |  | 0.697 |
+| walker |  | 7850 | 203 | Code::CodeKey { rung: Decl, file: neco.c, decl: 33, sub: 0, line: 1124 } |  |  | 0.697 |
 | ns | 7977 |  | 208 | Test suite knobs: compilers, sanitizers, valgrind | 5.1 |  | 0.689 |
-| walker |  | 8054 | 216 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 3, line: 0 } |  |  | 0.689 |
-| walker |  | 8073 | 19 | Code::CodeKey { rung: Decl, file: neco.c, decl: 42, sub: 0, line: 1348 } |  |  | 0.689 |
-| walker |  | 8097 | 24 | Code::CodeKey { rung: Decl, file: neco.c, decl: 41, sub: 0, line: 1344 } |  |  | 0.689 |
-| walker |  | 8123 | 26 | Code::CodeKey { rung: Decl, file: neco.c, decl: 45, sub: 0, line: 1814 } |  |  | 0.689 |
-| walker |  | 8152 | 29 | Code::CodeKey { rung: Decl, file: neco.c, decl: 49, sub: 0, line: 1875 } |  |  | 0.689 |
-| walker |  | 8182 | 30 | Code::CodeKey { rung: Decl, file: neco.c, decl: 50, sub: 0, line: 1880 } |  |  | 0.689 |
+| walker |  | 8047 | 197 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 3, line: 0 } |  |  | 0.689 |
+| walker |  | 8062 | 15 | Code::CodeKey { rung: Decl, file: neco.c, decl: 48, sub: 0, line: 1251 } |  |  | 0.689 |
+| walker |  | 8083 | 21 | Code::CodeKey { rung: Decl, file: neco.c, decl: 47, sub: 0, line: 1204 } |  |  | 0.689 |
+| walker |  | 8141 | 58 | Code::CodeKey { rung: Decl, file: neco.c, decl: 42, sub: 0, line: 1155 } |  |  | 0.689 |
 | ns | 8258 |  | 281 | The private, undocumented functions the tests may call | 5.2 |  | 0.676 |
-| walker |  | 8273 | 91 | Code::CodeKey { rung: Decl, file: neco.c, decl: 40, sub: 0, line: 1337 } |  |  | 0.676 |
 | ns | 8332 |  | 74 | Every function-like macro in tests/tests.h | 5.3 |  | 0.672 |
-| walker |  | 8372 | 99 | Code::CodeKey { rung: Decl, file: neco.c, decl: 43, sub: 0, line: 1364 } |  |  | 0.672 |
-| walker |  | 8519 | 147 | Code::CodeKey { rung: Decl, file: neco.c, decl: 46, sub: 0, line: 1819 } |  |  | 0.672 |
+| walker |  | 8352 | 211 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 4, line: 0 } |  |  | 0.672 |
+| walker |  | 8371 | 19 | Code::CodeKey { rung: Decl, file: neco.c, decl: 56, sub: 0, line: 1348 } |  |  | 0.672 |
+| walker |  | 8395 | 24 | Code::CodeKey { rung: Decl, file: neco.c, decl: 55, sub: 0, line: 1344 } |  |  | 0.672 |
+| walker |  | 8486 | 91 | Code::CodeKey { rung: Decl, file: neco.c, decl: 54, sub: 0, line: 1337 } |  |  | 0.672 |
+| walker |  | 8585 | 99 | Code::CodeKey { rung: Decl, file: neco.c, decl: 57, sub: 0, line: 1364 } |  |  | 0.672 |
 | ns | 8595 |  | 263 | How run.sh compiles and runs each test | 5.4 |  | 0.659 |
-| walker |  | 8708 | 189 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 4, line: 0 } |  |  | 0.659 |
-| walker |  | 8736 | 28 | Code::CodeKey { rung: Decl, file: neco.c, decl: 53, sub: 0, line: 1899 } |  |  | 0.659 |
+| walker |  | 8596 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 49, sub: 0, line: 1282 } |  |  | 0.659 |
+| walker |  | 8607 | 11 | Code::CodeKey { rung: Doc, file: neco.c, decl: 50, sub: 0, line: 1293 } |  |  | 0.659 |
 | ns | 8792 |  | 197 | The four NECO_TESTING-only shim headers | 5.5 |  | 0.650 |
-| walker |  | 8932 | 196 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 5, line: 0 } |  |  | 0.650 |
-| walker |  | 8949 | 17 | Code::CodeKey { rung: Doc, file: neco.c, decl: 71, sub: 0, line: 1944 } |  |  | 0.650 |
-| walker |  | 8976 | 27 | Code::CodeKey { rung: Doc, file: neco.c, decl: 37, sub: 0, line: 1312 } |  |  | 0.650 |
+| walker |  | 8827 | 220 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 5, line: 0 } |  |  | 0.650 |
+| walker |  | 8843 | 16 | Code::CodeKey { rung: Decl, file: neco.c, decl: 60, sub: 0, line: 1445 } |  |  | 0.650 |
+| walker |  | 8867 | 24 | Code::CodeKey { rung: Decl, file: neco.c, decl: 59, sub: 0, line: 1440 } |  |  | 0.650 |
+| walker |  | 8893 | 26 | Code::CodeKey { rung: Decl, file: neco.c, decl: 61, sub: 0, line: 1814 } |  |  | 0.650 |
+| walker |  | 8921 | 28 | Code::CodeKey { rung: Decl, file: neco.c, decl: 66, sub: 0, line: 1880 } |  |  | 0.650 |
+| walker |  | 8949 | 28 | Code::CodeKey { rung: Decl, file: neco.c, decl: 69, sub: 0, line: 1899 } |  |  | 0.650 |
+| walker |  | 8978 | 29 | Code::CodeKey { rung: Decl, file: neco.c, decl: 65, sub: 0, line: 1875 } |  |  | 0.650 |
 | ns | 9091 |  | 299 | deps/sco.h: the scheduler contract | 6.1 |  | 0.635 |
-| walker |  | 9209 | 233 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 6, line: 0 } |  |  | 0.635 |
+| walker |  | 9125 | 147 | Code::CodeKey { rung: Decl, file: neco.c, decl: 62, sub: 0, line: 1819 } |  |  | 0.635 |
+| walker |  | 9296 | 171 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 6, line: 0 } |  |  | 0.635 |
 | ns | 9395 |  | 304 | deps/stack.h: the coroutine stack allocator | 6.2 |  | 0.625 |
-| walker |  | 9470 | 261 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 7, line: 0 } |  |  | 0.625 |
-| walker |  | 9535 | 65 | Code::CodeKey { rung: Decl, file: neco.c, decl: 93, sub: 0, line: 2165 } |  |  | 0.625 |
-| walker |  | 9556 | 21 | Code::CodeKey { rung: Doc, file: neco.c, decl: 91, sub: 0, line: 2154 } |  |  | 0.625 |
+| walker |  | 9493 | 197 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 7, line: 0 } |  |  | 0.625 |
+| walker |  | 9510 | 17 | Code::CodeKey { rung: Doc, file: neco.c, decl: 87, sub: 0, line: 1944 } |  |  | 0.625 |
+| walker |  | 9537 | 27 | Code::CodeKey { rung: Doc, file: neco.c, decl: 51, sub: 0, line: 1312 } |  |  | 0.625 |
 | ns | 9563 |  | 168 | deps/worker.h: the background thread pool | 6.3 |  | 0.618 |
 | ns | 9646 |  | 83 | deps/embed.sh: how neco.c is regenerated | 6.4 |  | 0.615 |
-| walker |  | 9771 | 215 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 8, line: 0 } |  |  | 0.615 |
-| walker |  | 9779 | 8 | Code::CodeKey { rung: Decl, file: neco.c, decl: 99, sub: 0, line: 2240 } |  |  | 0.615 |
-| walker |  | 9799 | 20 | Code::CodeKey { rung: Decl, file: neco.c, decl: 96, sub: 0, line: 2225 } |  |  | 0.615 |
+| walker |  | 9792 | 255 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 8, line: 0 } |  |  | 0.615 |
 | ns | 9827 |  | 181 | examples/select.c: the multi-channel select pattern | 6.5 |  | 0.608 |
-| walker |  | 9837 | 38 | Code::CodeKey { rung: Decl, file: neco.c, decl: 103, sub: 0, line: 2285 } |  |  | 0.608 |
-| walker |  | 9879 | 42 | Code::CodeKey { rung: Decl, file: neco.c, decl: 101, sub: 0, line: 2261 } |  |  | 0.608 |
 | ns | 9939 |  | 112 | CI | 6.6 |  | 0.603 |
-| walker |  | 9971 | 92 | Code::CodeKey { rung: Decl, file: neco.c, decl: 97, sub: 0, line: 2229 } |  |  | 0.603 |
+| walker |  | 9980 | 188 | Code::CodeKey { rung: Names, file: neco.c, decl: 0, sub: 9, line: 0 } |  |  | 0.603 |
 | ns | 9984 |  | 45 | License | 6.7 |  | 0.601 |
-| walker |  | 9999 | 28 | Code::CodeKey { rung: Decl, file: neco.c, decl: 102, sub: 0, line: 2267 } |  |  | 0.601 |

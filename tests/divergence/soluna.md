@@ -220,24 +220,19 @@ Score(3000)=0.702 I=0.906 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | walker |  | 8434 | 229 | Code::CodeKey { rung: Names, file: src/entry.c, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
 | walker |  | 8481 | 47 | Code::CodeKey { rung: Decl, file: src/entry.c, decl: 11, sub: 0, line: 103 } |  |  | 0.547 |
 | walker |  | 8548 | 67 | Code::CodeKey { rung: Decl, file: src/entry.c, decl: 7, sub: 0, line: 89 } |  |  | 0.547 |
-| walker |  | 8617 | 69 | Code::CodeKey { rung: Names, file: src/lfs.c, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
 | ns | 8655 |  | 283 | make.lua: platform detection and output layout | 5.4 |  | 0.537 |
-| walker |  | 8840 | 223 | Code::CodeKey { rung: Names, file: src/material_text.c, decl: 0, sub: 0, line: 0 } |  |  | 0.537 |
+| walker |  | 8782 | 234 | Code::CodeKey { rung: Names, file: src/entry.c, decl: 0, sub: 1, line: 0 } |  |  | 0.537 |
+| walker |  | 8795 | 13 | Code::CodeKey { rung: Decl, file: src/entry.c, decl: 21, sub: 0, line: 216 } |  |  | 0.537 |
 | ns | 8863 |  | 208 | make.lua: how clibs modules and the final executable are wired | 5.5 | 5.4 | 0.531 |
-| walker |  | 8889 | 49 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 1, sub: 0, line: 20 } |  |  | 0.531 |
-| walker |  | 8939 | 50 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 2, sub: 0, line: 28 } |  |  | 0.531 |
-| walker |  | 9024 | 85 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 3, sub: 0, line: 36 } |  |  | 0.531 |
+| walker |  | 9010 | 215 | Code::CodeKey { rung: Names, file: src/entry.c, decl: 0, sub: 2, line: 0 } |  |  | 0.531 |
 | ns | 9217 |  | 354 | make.lua: the Emscripten/WASM link configuration | 5.6 | 5.4 | 0.522 |
-| walker |  | 9244 | 220 | Code::CodeKey { rung: Names, file: src/luazip.c, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
-| walker |  | 9256 | 12 | Code::CodeKey { rung: Decl, file: src/luazip.c, decl: 6, sub: 0, line: 151 } |  |  | 0.522 |
-| walker |  | 9273 | 17 | Code::CodeKey { rung: Decl, file: src/luazip.c, decl: 7, sub: 0, line: 155 } |  |  | 0.522 |
-| walker |  | 9511 | 238 | Code::CodeKey { rung: Names, file: src/luazip.c, decl: 0, sub: 1, line: 0 } |  |  | 0.522 |
+| walker |  | 9233 | 223 | Code::CodeKey { rung: Names, file: src/entry.c, decl: 0, sub: 3, line: 0 } |  |  | 0.522 |
+| walker |  | 9439 | 206 | Code::CodeKey { rung: Names, file: src/entry.c, decl: 0, sub: 4, line: 0 } |  |  | 0.522 |
 | ns | 9518 |  | 301 | The full `soluna.app` C surface in src/entry.c | 6.1 | 3.3 | 0.515 |
-| walker |  | 9523 | 12 | Code::CodeKey { rung: Decl, file: src/luazip.c, decl: 16, sub: 0, line: 284 } |  |  | 0.515 |
 | ns | 9539 |  | 21 | Complete listing of .github: workflows and the composite action | 7.1 | 1.2 | 0.518 |
+| walker |  | 9630 | 191 | Code::CodeKey { rung: Names, file: src/lcrypt.c, decl: 0, sub: 1, line: 0 } |  |  | 0.518 |
 | ns | 9738 |  | 199 | The composite action's four outputs (action.yml) | 7.2 | 7.1 | 0.514 |
-| walker |  | 9752 | 229 | Code::CodeKey { rung: Names, file: src/luazip.c, decl: 0, sub: 2, line: 0 } |  |  | 0.514 |
+| walker |  | 9755 | 125 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 15, sub: 0, line: 187 } |  |  | 0.514 |
 | ns | 9823 |  | 85 | Complete listing of web/ content, assets and static files | 7.3 | 1.2 | 0.524 |
+| walker |  | 9885 | 130 | Code::CodeKey { rung: Decl, file: src/lcrypt.c, decl: 16, sub: 0, line: 195 } |  |  | 0.524 |
 | ns | 9925 |  | 102 | Complete listing of web/layouts (Hugo templates and shortcodes) | 7.4 | 7.3 | 0.536 |
-| walker |  | 9967 | 215 | Code::CodeKey { rung: Names, file: src/material_text.c, decl: 0, sub: 1, line: 0 } |  |  | 0.536 |
-| walker |  | 9984 | 17 | Code::CodeKey { rung: Decl, file: src/material_text.c, decl: 13, sub: 0, line: 225 } |  |  | 0.536 |

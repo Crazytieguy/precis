@@ -1,4 +1,4 @@
-Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.696/0.635/0.576/0.438/0.344/0.352/0.428
+Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.696/0.635/0.576/0.438/0.344/0.285/0.436
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -77,129 +77,139 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 3188 | 136 | Code::CodeKey { rung: Names, file: tmp-static.py, decl: 0, sub: 0, line: 0 } |  |  | 0.424 |
 | ns | 3277 |  | 232 | Metadata and distance-constraint operator encodings | 2.11 | 2.10 | 0.404 |
 | walker |  | 3338 | 150 | Code::CodeKey { rung: Decl, file: tmp-static.py, decl: 4, sub: 0, line: 13 } |  |  | 0.404 |
-| walker |  | 3506 | 168 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 1, line: 0 } |  |  | 0.404 |
-| walker |  | 3518 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 16, sub: 0, line: 361 } |  |  | 0.404 |
-| walker |  | 3598 | 80 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 15, sub: 0, line: 115 } |  |  | 0.405 |
-| ns | 3608 |  | 331 | struct vec0_vtab: field roster | 2.12 |  | 0.381 |
+| walker |  | 3502 | 164 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 1, line: 0 } |  |  | 0.404 |
+| walker |  | 3514 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 20, sub: 0, line: 169 } |  |  | 0.404 |
+| walker |  | 3526 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 21, sub: 0, line: 227 } |  |  | 0.404 |
+| walker |  | 3540 | 14 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 16, sub: 0, line: 123 } |  |  | 0.404 |
+| walker |  | 3554 | 14 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 19, sub: 0, line: 163 } |  |  | 0.404 |
+| walker |  | 3573 | 19 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 18, sub: 0, line: 128 } |  |  | 0.404 |
+| ns | 3608 |  | 331 | struct vec0_vtab: field roster | 2.12 |  | 0.380 |
+| walker |  | 3651 | 78 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 15, sub: 0, line: 115 } |  |  | 0.381 |
+| walker |  | 3673 | 22 | Code::CodeKey { rung: Doc, file: sqlite-vec.c, decl: 20, sub: 0, line: 169 } |  |  | 0.381 |
 | ns | 3720 |  | 112 | struct vec0_vtab: cached prepared statements | 2.13 | 2.12 | 0.371 |
-| walker |  | 3760 | 162 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 2, line: 0 } |  |  | 0.371 |
-| walker |  | 3772 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 24, sub: 0, line: 463 } |  |  | 0.371 |
-| walker |  | 3784 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 25, sub: 0, line: 481 } |  |  | 0.371 |
+| walker |  | 3829 | 156 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 2, line: 0 } |  |  | 0.371 |
+| walker |  | 3841 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 22, sub: 0, line: 266 } |  |  | 0.371 |
+| walker |  | 3853 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 24, sub: 0, line: 361 } |  |  | 0.371 |
+| walker |  | 3872 | 19 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 23, sub: 0, line: 326 } |  |  | 0.371 |
 | ns | 3934 |  | 214 | Column definition structs and distance metrics | 2.14 |  | 0.354 |
-| walker |  | 3954 | 170 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 3, line: 0 } |  |  | 0.354 |
+| walker |  | 4026 | 154 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 3, line: 0 } |  |  | 0.354 |
 | ns | 4027 |  | 93 | Metadata column kinds | 2.15 |  | 0.349 |
-| walker |  | 4140 | 186 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 4, line: 0 } |  |  | 0.350 |
 | ns | 4157 |  | 130 | vec0 constructor parser: function roster | 2.16 |  | 0.343 |
-| walker |  | 4182 | 42 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 36, sub: 0, line: 598 } |  |  | 0.343 |
-| walker |  | 4343 | 161 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 5, line: 0 } |  |  | 0.344 |
-| walker |  | 4369 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 45, sub: 0, line: 811 } |  |  | 0.344 |
-| walker |  | 4395 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 46, sub: 0, line: 831 } |  |  | 0.344 |
-| walker |  | 4422 | 27 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 44, sub: 0, line: 687 } |  |  | 0.344 |
+| walker |  | 4193 | 167 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 4, line: 0 } |  |  | 0.344 |
+| walker |  | 4205 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 32, sub: 0, line: 463 } |  |  | 0.344 |
+| walker |  | 4217 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 33, sub: 0, line: 481 } |  |  | 0.344 |
+| walker |  | 4238 | 21 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 37, sub: 0, line: 534 } |  |  | 0.344 |
+| walker |  | 4275 | 37 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 36, sub: 0, line: 522 } |  |  | 0.344 |
 | ns | 4439 |  | 282 | chunk_size table option: validation and default | 2.17 |  | 0.331 |
-| walker |  | 4452 | 30 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 47, sub: 0, line: 964 } |  |  | 0.331 |
-| walker |  | 4506 | 54 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 48, sub: 0, line: 998 } |  |  | 0.331 |
-| ns | 4542 |  | 103 | vec0 constructor and lifecycle functions (roster) | 2.18 |  | 0.327 |
-| walker |  | 4692 | 186 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 6, line: 0 } |  |  | 0.327 |
-| walker |  | 4705 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 55, sub: 0, line: 1131 } |  |  | 0.327 |
-| walker |  | 4718 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 56, sub: 0, line: 1151 } |  |  | 0.327 |
-| walker |  | 4731 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 57, sub: 0, line: 1193 } |  |  | 0.327 |
+| walker |  | 4470 | 195 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 5, line: 0 } |  |  | 0.331 |
+| walker |  | 4512 | 42 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 46, sub: 0, line: 598 } |  |  | 0.331 |
+| ns | 4542 |  | 103 | vec0 constructor and lifecycle functions (roster) | 2.18 |  | 0.326 |
+| walker |  | 4696 | 184 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 6, line: 0 } |  |  | 0.327 |
+| walker |  | 4722 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 55, sub: 0, line: 811 } |  |  | 0.327 |
 | ns | 4736 |  | 194 | vec0 column dispatch helpers (roster) | 2.19 |  | 0.319 |
-| walker |  | 4756 | 25 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 50, sub: 0, line: 1050 } |  |  | 0.319 |
-| walker |  | 4925 | 169 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 7, line: 0 } |  |  | 0.320 |
-| walker |  | 4938 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 58, sub: 0, line: 1234 } |  |  | 0.320 |
+| walker |  | 4748 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 56, sub: 0, line: 831 } |  |  | 0.319 |
+| walker |  | 4775 | 27 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 54, sub: 0, line: 687 } |  |  | 0.319 |
 | ns | 4950 |  | 214 | vec0 storage helpers (roster) | 2.20 |  | 0.312 |
-| walker |  | 4951 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 59, sub: 0, line: 1275 } |  |  | 0.312 |
-| walker |  | 4964 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 62, sub: 0, line: 1346 } |  |  | 0.312 |
-| walker |  | 4977 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 63, sub: 0, line: 1415 } |  |  | 0.312 |
-| walker |  | 5160 | 183 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 8, line: 0 } |  |  | 0.313 |
-| walker |  | 5173 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 66, sub: 0, line: 1574 } |  |  | 0.313 |
-| walker |  | 5186 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 67, sub: 0, line: 1690 } |  |  | 0.304 |
+| walker |  | 4956 | 181 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 7, line: 0 } |  |  | 0.313 |
+| walker |  | 4981 | 25 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 60, sub: 0, line: 1050 } |  |  | 0.313 |
+| walker |  | 5011 | 30 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 57, sub: 0, line: 964 } |  |  | 0.313 |
+| walker |  | 5046 | 35 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 62, sub: 0, line: 1056 } |  |  | 0.313 |
+| walker |  | 5100 | 54 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 58, sub: 0, line: 998 } |  |  | 0.313 |
 | ns | 5186 |  | 236 | vec0 cursor and per-query-plan state | 2.21 | 2.6 | 0.304 |
-| walker |  | 5199 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 68, sub: 0, line: 1740 } |  |  | 0.304 |
-| walker |  | 5212 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 69, sub: 0, line: 1789 } |  |  | 0.304 |
-| walker |  | 5250 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 71, sub: 0, line: 1806 } |  |  | 0.304 |
-| ns | 5304 |  | 118 | KNN primitives: bitmaps and merge (roster) | 2.22 |  | 0.300 |
-| walker |  | 5319 | 69 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 70, sub: 0, line: 1798 } |  |  | 0.300 |
-| walker |  | 5526 | 207 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 9, line: 0 } |  |  | 0.307 |
-| ns | 5530 |  | 226 | vec0 read path (roster) | 2.23 |  | 0.300 |
-| walker |  | 5537 | 11 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 80, sub: 0, line: 1886 } |  |  | 0.300 |
-| walker |  | 5571 | 34 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 79, sub: 0, line: 1880 } |  |  | 0.300 |
-| walker |  | 5606 | 35 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 82, sub: 0, line: 1900 } |  |  | 0.300 |
-| walker |  | 5644 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 83, sub: 0, line: 1956 } |  |  | 0.300 |
-| ns | 5816 |  | 286 | vec0 write path (roster) | 2.24 |  | 0.291 |
-| walker |  | 5867 | 223 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 10, line: 0 } |  |  | 0.317 |
-| walker |  | 5878 | 11 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 93, sub: 0, line: 2267 } |  |  | 0.317 |
-| walker |  | 5893 | 15 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 95, sub: 0, line: 2294 } |  |  | 0.317 |
-| walker |  | 5926 | 33 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 90, sub: 0, line: 2250 } |  |  | 0.320 |
-| walker |  | 5959 | 33 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 91, sub: 0, line: 2256 } |  |  | 0.322 |
-| ns | 5995 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.315 |
-| walker |  | 5996 | 37 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 92, sub: 0, line: 2261 } |  |  | 0.318 |
-| walker |  | 6034 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 84, sub: 0, line: 2033 } |  |  | 0.318 |
-| walker |  | 6072 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 87, sub: 0, line: 2171 } |  |  | 0.318 |
-| ns | 6096 |  | 101 | Registered virtual table modules | 3.2 |  | 0.315 |
-| walker |  | 6114 | 42 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 86, sub: 0, line: 2111 } |  |  | 0.315 |
-| walker |  | 6173 | 59 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 88, sub: 0, line: 2236 } |  |  | 0.328 |
-| ns | 6205 |  | 109 | vec_debug build string | 3.3 |  | 0.325 |
-| walker |  | 6234 | 61 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 89, sub: 0, line: 2242 } |  |  | 0.352 |
-| walker |  | 6303 | 69 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 85, sub: 0, line: 2091 } |  |  | 0.367 |
-| ns | 6439 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.394 |
-| walker |  | 6482 | 179 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 11, line: 0 } |  |  | 0.395 |
-| walker |  | 6498 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 97, sub: 0, line: 2430 } |  |  | 0.395 |
-| walker |  | 6514 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 104, sub: 0, line: 2493 } |  |  | 0.395 |
-| ns | 6530 |  | 91 | Vector element types | 3.5 |  | 0.404 |
-| walker |  | 6548 | 34 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 100, sub: 0, line: 2444 } |  |  | 0.404 |
-| walker |  | 6620 | 72 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 99, sub: 0, line: 2435 } |  |  | 0.404 |
-| ns | 6805 |  | 275 | Distance functions, scalar and SIMD (roster) | 3.6 |  | 0.412 |
-| walker |  | 6814 | 194 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 12, line: 0 } |  |  | 0.413 |
-| walker |  | 6824 | 10 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 109, sub: 0, line: 2561 } |  |  | 0.413 |
-| walker |  | 6838 | 14 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 113, sub: 0, line: 2641 } |  |  | 0.413 |
-| walker |  | 6860 | 22 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 105, sub: 0, line: 2522 } |  |  | 0.413 |
-| walker |  | 6900 | 40 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 112, sub: 0, line: 2635 } |  |  | 0.413 |
-| ns | 6981 |  | 176 | Vector value conversion helpers (roster) | 3.7 |  | 0.427 |
-| walker |  | 7034 | 134 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 111, sub: 0, line: 2622 } |  |  | 0.427 |
-| ns | 7189 |  | 208 | vec_each table function: structs, columns, methods, module | 3.8 |  | 0.437 |
-| ns | 7329 |  | 140 | vec_npy_each: .npy readers and vtab entry points | 3.9 |  | 0.432 |
-| ns | 7395 |  | 66 | vec_static_blobs / vec_static_blob_entries: entry points | 3.10 |  | 0.430 |
-| walker |  | 7430 | 396 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 110, sub: 0, line: 2588 } |  |  | 0.430 |
-| ns | 7623 |  | 228 | Makefile: complete target roster | 4.1 |  | 0.421 |
-| walker |  | 7626 | 196 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 13, line: 0 } |  |  | 0.422 |
-| walker |  | 7637 | 11 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 115, sub: 0, line: 2724 } |  |  | 0.422 |
-| walker |  | 7653 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 120, sub: 0, line: 2877 } |  |  | 0.422 |
-| walker |  | 7681 | 28 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 121, sub: 0, line: 2881 } |  |  | 0.424 |
-| walker |  | 7718 | 37 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 114, sub: 0, line: 2718 } |  |  | 0.424 |
-| walker |  | 7775 | 57 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 118, sub: 0, line: 2740 } |  |  | 0.424 |
-| ns | 7801 |  | 178 | Makefile: platform and SIMD detection | 4.2 |  | 0.418 |
-| walker |  | 7947 | 172 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 14, line: 0 } |  |  | 0.421 |
-| walker |  | 7981 | 34 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 126, sub: 0, line: 3078 } |  |  | 0.421 |
-| ns | 7992 |  | 191 | Compile-time options | 4.3 |  | 0.418 |
-| walker |  | 8028 | 47 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 125, sub: 0, line: 3026 } |  |  | 0.418 |
-| ns | 8136 |  | 144 | Public header template | 4.4 |  | 0.412 |
-| walker |  | 8258 | 230 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 0, line: 2887 } |  |  | 0.412 |
-| ns | 8331 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.407 |
-| walker |  | 8478 | 220 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 1, line: 2887 } |  |  | 0.407 |
-| ns | 8490 |  | 159 | Distribution manifest | 4.6 |  | 0.401 |
-| walker |  | 8610 | 132 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 2, line: 2887 } |  |  | 0.401 |
-| ns | 8655 |  | 165 | TODO / roadmap | 4.7 |  | 0.397 |
-| ns | 8667 |  | 12 | CI workflows | 4.8 |  | 0.400 |
-| walker |  | 8795 | 185 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 15, line: 0 } |  |  | 0.402 |
-| walker |  | 8811 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 130, sub: 0, line: 3137 } |  |  | 0.426 |
-| ns | 8811 |  | 144 | tests/ listing (complete) | 5.1 |  | 0.426 |
-| walker |  | 8827 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 135, sub: 0, line: 3273 } |  |  | 0.426 |
-| walker |  | 8843 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 136, sub: 0, line: 3302 } |  |  | 0.426 |
-| walker |  | 8871 | 28 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 131, sub: 0, line: 3166 } |  |  | 0.426 |
-| ns | 8898 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.423 |
-| walker |  | 9088 | 217 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 16, line: 0 } |  |  | 0.430 |
-| walker |  | 9104 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 137, sub: 0, line: 3329 } |  |  | 0.430 |
-| walker |  | 9196 | 92 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 145, sub: 0, line: 3384 } |  |  | 0.433 |
-| ns | 9200 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.424 |
-| walker |  | 9214 | 18 | Code::CodeKey { rung: Doc, file: sqlite-vec.c, decl: 145, sub: 0, line: 3384 } |  |  | 0.424 |
-| ns | 9280 |  | 80 | examples/ listing (complete) | 5.4 |  | 0.436 |
-| ns | 9451 |  | 171 | Python example, end to end | 5.5 |  | 0.430 |
-| ns | 9499 |  | 48 | bindings/ listings (complete) | 5.6 |  | 0.438 |
-| walker |  | 9630 | 416 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 138, sub: 0, line: 3341 } |  |  | 0.438 |
-| ns | 9638 |  | 139 | Documentation site listings (complete) | 5.7 |  | 0.458 |
-| walker |  | 9818 | 188 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 17, line: 0 } |  |  | 0.469 |
-| ns | 9838 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.463 |
-| walker |  | 9874 | 56 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 150, sub: 0, line: 3417 } |  |  | 0.469 |
-| ns | 9951 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.465 |
-| walker |  | 9958 | 84 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 147, sub: 0, line: 3394 } |  |  | 0.478 |
+| walker |  | 5270 | 170 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 8, line: 0 } |  |  | 0.304 |
+| walker |  | 5283 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 66, sub: 0, line: 1131 } |  |  | 0.304 |
+| walker |  | 5296 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 67, sub: 0, line: 1151 } |  |  | 0.304 |
+| ns | 5304 |  | 118 | KNN primitives: bitmaps and merge (roster) | 2.22 |  | 0.299 |
+| walker |  | 5309 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 68, sub: 0, line: 1193 } |  |  | 0.299 |
+| walker |  | 5322 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 69, sub: 0, line: 1234 } |  |  | 0.299 |
+| walker |  | 5335 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 70, sub: 0, line: 1275 } |  |  | 0.299 |
+| walker |  | 5507 | 172 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 9, line: 0 } |  |  | 0.300 |
+| walker |  | 5520 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 73, sub: 0, line: 1346 } |  |  | 0.300 |
+| ns | 5530 |  | 226 | vec0 read path (roster) | 2.23 |  | 0.293 |
+| walker |  | 5533 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 74, sub: 0, line: 1415 } |  |  | 0.293 |
+| walker |  | 5546 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 77, sub: 0, line: 1574 } |  |  | 0.293 |
+| walker |  | 5745 | 199 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 10, line: 0 } |  |  | 0.293 |
+| walker |  | 5758 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 78, sub: 0, line: 1690 } |  |  | 0.293 |
+| walker |  | 5771 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 79, sub: 0, line: 1740 } |  |  | 0.293 |
+| walker |  | 5784 | 13 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 80, sub: 0, line: 1789 } |  |  | 0.293 |
+| ns | 5816 |  | 286 | vec0 write path (roster) | 2.24 |  | 0.285 |
+| walker |  | 5822 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 82, sub: 0, line: 1806 } |  |  | 0.285 |
+| walker |  | 5891 | 69 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 81, sub: 0, line: 1798 } |  |  | 0.285 |
+| ns | 5995 |  | 179 | Registered SQL scalar functions (complete list) | 3.1 |  | 0.279 |
+| walker |  | 6075 | 184 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 11, line: 0 } |  |  | 0.291 |
+| walker |  | 6086 | 11 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 91, sub: 0, line: 1886 } |  |  | 0.291 |
+| ns | 6096 |  | 101 | Registered virtual table modules | 3.2 |  | 0.288 |
+| walker |  | 6120 | 34 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 90, sub: 0, line: 1880 } |  |  | 0.288 |
+| walker |  | 6155 | 35 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 93, sub: 0, line: 1900 } |  |  | 0.288 |
+| walker |  | 6193 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 94, sub: 0, line: 1956 } |  |  | 0.288 |
+| ns | 6205 |  | 109 | vec_debug build string | 3.3 |  | 0.285 |
+| walker |  | 6231 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 95, sub: 0, line: 2033 } |  |  | 0.285 |
+| walker |  | 6300 | 69 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 96, sub: 0, line: 2091 } |  |  | 0.303 |
+| ns | 6439 |  | 234 | Scalar function implementations (roster) | 3.4 |  | 0.338 |
+| walker |  | 6504 | 204 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 12, line: 0 } |  |  | 0.355 |
+| walker |  | 6515 | 11 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 104, sub: 0, line: 2267 } |  |  | 0.355 |
+| walker |  | 6530 | 15 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 106, sub: 0, line: 2294 } |  |  | 0.366 |
+| ns | 6530 |  | 91 | Vector element types | 3.5 |  | 0.366 |
+| walker |  | 6548 | 18 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 108, sub: 0, line: 2430 } |  |  | 0.366 |
+| walker |  | 6581 | 33 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 101, sub: 0, line: 2250 } |  |  | 0.368 |
+| walker |  | 6614 | 33 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 102, sub: 0, line: 2256 } |  |  | 0.370 |
+| walker |  | 6651 | 37 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 103, sub: 0, line: 2261 } |  |  | 0.372 |
+| walker |  | 6689 | 38 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 98, sub: 0, line: 2171 } |  |  | 0.372 |
+| walker |  | 6731 | 42 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 97, sub: 0, line: 2111 } |  |  | 0.372 |
+| walker |  | 6790 | 59 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 99, sub: 0, line: 2236 } |  |  | 0.383 |
+| ns | 6805 |  | 275 | Distance functions, scalar and SIMD (roster) | 3.6 |  | 0.407 |
+| walker |  | 6851 | 61 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 100, sub: 0, line: 2242 } |  |  | 0.427 |
+| ns | 6981 |  | 176 | Vector value conversion helpers (roster) | 3.7 |  | 0.444 |
+| walker |  | 7027 | 176 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 13, line: 0 } |  |  | 0.444 |
+| walker |  | 7043 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 115, sub: 0, line: 2493 } |  |  | 0.444 |
+| walker |  | 7065 | 22 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 116, sub: 0, line: 2522 } |  |  | 0.444 |
+| walker |  | 7099 | 34 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 111, sub: 0, line: 2444 } |  |  | 0.444 |
+| walker |  | 7171 | 72 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 110, sub: 0, line: 2435 } |  |  | 0.444 |
+| ns | 7189 |  | 208 | vec_each table function: structs, columns, methods, module | 3.8 |  | 0.443 |
+| ns | 7329 |  | 140 | vec_npy_each: .npy readers and vtab entry points | 3.9 |  | 0.438 |
+| walker |  | 7375 | 204 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 14, line: 0 } |  |  | 0.448 |
+| walker |  | 7385 | 10 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 120, sub: 0, line: 2561 } |  |  | 0.448 |
+| ns | 7395 |  | 66 | vec_static_blobs / vec_static_blob_entries: entry points | 3.10 |  | 0.447 |
+| walker |  | 7396 | 11 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 126, sub: 0, line: 2724 } |  |  | 0.447 |
+| walker |  | 7410 | 14 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 124, sub: 0, line: 2641 } |  |  | 0.447 |
+| walker |  | 7447 | 37 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 125, sub: 0, line: 2718 } |  |  | 0.447 |
+| walker |  | 7487 | 40 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 123, sub: 0, line: 2635 } |  |  | 0.447 |
+| walker |  | 7621 | 134 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 122, sub: 0, line: 2622 } |  |  | 0.447 |
+| ns | 7623 |  | 228 | Makefile: complete target roster | 4.1 |  | 0.437 |
+| ns | 7801 |  | 178 | Makefile: platform and SIMD detection | 4.2 |  | 0.430 |
+| ns | 7992 |  | 191 | Compile-time options | 4.3 |  | 0.427 |
+| walker |  | 8017 | 396 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 121, sub: 0, line: 2588 } |  |  | 0.427 |
+| ns | 8136 |  | 144 | Public header template | 4.4 |  | 0.421 |
+| walker |  | 8210 | 193 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 15, line: 0 } |  |  | 0.422 |
+| walker |  | 8226 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 131, sub: 0, line: 2877 } |  |  | 0.422 |
+| walker |  | 8254 | 28 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 132, sub: 0, line: 2881 } |  |  | 0.424 |
+| walker |  | 8311 | 57 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 129, sub: 0, line: 2740 } |  |  | 0.424 |
+| ns | 8331 |  | 195 | Build recipes for the shipped artifacts | 4.5 | 4.1 | 0.419 |
+| ns | 8490 |  | 159 | Distribution manifest | 4.6 |  | 0.413 |
+| walker |  | 8541 | 230 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 134, sub: 0, line: 2887 } |  |  | 0.413 |
+| ns | 8655 |  | 165 | TODO / roadmap | 4.7 |  | 0.409 |
+| ns | 8667 |  | 12 | CI workflows | 4.8 |  | 0.412 |
+| walker |  | 8761 | 220 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 134, sub: 1, line: 2887 } |  |  | 0.412 |
+| ns | 8811 |  | 144 | tests/ listing (complete) | 5.1 |  | 0.435 |
+| walker |  | 8893 | 132 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 134, sub: 2, line: 2887 } |  |  | 0.435 |
+| ns | 8898 |  | 87 | pytest fixture: how the tests load the extension | 5.2 |  | 0.432 |
+| walker |  | 9066 | 173 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 16, line: 0 } |  |  | 0.436 |
+| walker |  | 9086 | 20 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 136, sub: 0, line: 2935 } |  |  | 0.436 |
+| walker |  | 9120 | 34 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 138, sub: 0, line: 3078 } |  |  | 0.436 |
+| walker |  | 9167 | 47 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 137, sub: 0, line: 3026 } |  |  | 0.436 |
+| ns | 9200 |  | 302 | Feature test suites: complete test function roster | 5.3 |  | 0.426 |
+| ns | 9280 |  | 80 | examples/ listing (complete) | 5.4 |  | 0.438 |
+| walker |  | 9352 | 185 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 17, line: 0 } |  |  | 0.440 |
+| walker |  | 9368 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 142, sub: 0, line: 3137 } |  |  | 0.440 |
+| walker |  | 9384 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 147, sub: 0, line: 3273 } |  |  | 0.440 |
+| walker |  | 9400 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 148, sub: 0, line: 3302 } |  |  | 0.440 |
+| walker |  | 9428 | 28 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 143, sub: 0, line: 3166 } |  |  | 0.440 |
+| ns | 9451 |  | 171 | Python example, end to end | 5.5 |  | 0.434 |
+| ns | 9499 |  | 48 | bindings/ listings (complete) | 5.6 |  | 0.442 |
+| ns | 9638 |  | 139 | Documentation site listings (complete) | 5.7 |  | 0.461 |
+| walker |  | 9645 | 217 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 18, line: 0 } |  |  | 0.467 |
+| walker |  | 9661 | 16 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 149, sub: 0, line: 3329 } |  |  | 0.467 |
+| walker |  | 9753 | 92 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 157, sub: 0, line: 3384 } |  |  | 0.470 |
+| walker |  | 9771 | 18 | Code::CodeKey { rung: Doc, file: sqlite-vec.c, decl: 157, sub: 0, line: 3384 } |  |  | 0.470 |
+| ns | 9838 |  | 200 | vec0 column-type guide: the three non-vector options | 5.8 |  | 0.464 |
+| ns | 9951 |  | 113 | KNN query guide: the two supported forms | 5.9 |  | 0.460 |

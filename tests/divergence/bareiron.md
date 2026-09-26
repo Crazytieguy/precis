@@ -163,21 +163,24 @@ Score(3000)=0.696 I=0.831 C=0.582 ns_rows≤3K=20/55 grid(1000/1442/2080/3000/43
 | walker |  | 9179 | 17 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 26, sub: 0, line: 802 } |  |  | 0.738 |
 | walker |  | 9196 | 17 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 27, sub: 0, line: 812 } |  |  | 0.738 |
 | ns | 9304 |  | 187 | serialize.c — the world file path and all five persistence entry points | 6.5 |  | 0.730 |
-| walker |  | 9380 | 184 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 4, line: 0 } |  |  | 0.736 |
+| walker |  | 9379 | 183 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 4, line: 0 } |  |  | 0.736 |
+| walker |  | 9402 | 23 | Code::CodeKey { rung: Decl, file: src/procedures.c, decl: 37, sub: 0, line: 1121 } |  |  | 0.736 |
+| walker |  | 9420 | 18 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 37, sub: 0, line: 1121 } |  |  | 0.736 |
 | ns | 9485 |  | 181 | packets.c — the chat command surface (!msg and !help) | 6.6 |  | 0.729 |
-| walker |  | 9517 | 137 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 5, line: 0 } |  |  | 0.735 |
-| walker |  | 9534 | 17 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 44, sub: 0, line: 1965 } |  |  | 0.735 |
-| walker |  | 9553 | 19 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 45, sub: 0, line: 1983 } |  |  | 0.735 |
-| walker |  | 9585 | 32 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 31, sub: 0, line: 909 } |  |  | 0.735 |
-| walker |  | 9618 | 33 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 17, sub: 0, line: 434 } |  |  | 0.735 |
-| walker |  | 9651 | 33 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 33, sub: 0, line: 954 } |  |  | 0.735 |
-| walker |  | 9688 | 37 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 42, sub: 0, line: 1623 } |  |  | 0.735 |
-| walker |  | 9727 | 39 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 29, sub: 0, line: 831 } |  |  | 0.735 |
-| ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.727 |
-| ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.729 |
-| walker |  | 9772 | 45 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 21, sub: 0, line: 652 } |  |  | 0.729 |
-| walker |  | 9824 | 52 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 34, sub: 0, line: 990 } |  |  | 0.729 |
-| ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.726 |
-| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.723 |
-| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.722 |
-| walker |  | 9993 | 169 | Code::CodeKey { rung: Names, file: src/packets.c, decl: 0, sub: 0, line: 0 } |  |  | 0.722 |
+| walker |  | 9629 | 209 | Code::CodeKey { rung: Names, file: src/procedures.c, decl: 0, sub: 5, line: 0 } |  |  | 0.739 |
+| walker |  | 9652 | 23 | Code::CodeKey { rung: Decl, file: src/procedures.c, decl: 44, sub: 0, line: 1928 } |  |  | 0.739 |
+| walker |  | 9669 | 17 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 46, sub: 0, line: 1965 } |  |  | 0.739 |
+| walker |  | 9688 | 19 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 47, sub: 0, line: 1983 } |  |  | 0.739 |
+| walker |  | 9720 | 32 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 31, sub: 0, line: 909 } |  |  | 0.739 |
+| ns | 9744 |  | 259 | crafting.c — the registerSmeltingRecipe macro and the complete recipe table | 6.7 |  | 0.731 |
+| walker |  | 9753 | 33 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 17, sub: 0, line: 434 } |  |  | 0.731 |
+| ns | 9771 |  | 27 | Complete .github listings (workflow and issue templates) | 7.1 |  | 0.732 |
+| walker |  | 9786 | 33 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 33, sub: 0, line: 954 } |  |  | 0.732 |
+| walker |  | 9820 | 34 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 44, sub: 0, line: 1928 } |  |  | 0.732 |
+| walker |  | 9857 | 37 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 43, sub: 0, line: 1623 } |  |  | 0.732 |
+| ns | 9877 |  | 106 | README Contribution — the maintainer's rules for changes | 7.2 |  | 0.729 |
+| walker |  | 9896 | 39 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 29, sub: 0, line: 831 } |  |  | 0.729 |
+| ns | 9931 |  | 54 | extract_registries.sh — the top-level registry extraction sequence | 7.3 |  | 0.726 |
+| walker |  | 9941 | 45 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 21, sub: 0, line: 652 } |  |  | 0.726 |
+| ns | 9959 |  | 28 | LICENSE — the license identity line | 7.4 |  | 0.725 |
+| walker |  | 9993 | 52 | Code::CodeKey { rung: Doc, file: src/procedures.c, decl: 34, sub: 0, line: 990 } |  |  | 0.725 |
