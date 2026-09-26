@@ -126,7 +126,9 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "3rdparty"
         ) || role.starts_with("test_")
             || role.starts_with("tests_")
-            || is_scaffold_template_dir_name(role);
+            || is_scaffold_template_dir_name(role)
+            // Python under `docs/` is Sphinx config and site builders.
+            || name == "docs" && path.extension().is_some_and(|ext| ext == "py");
         // A separate documentation-site sub-app at the repo root
         // (axios's `docs/package.json`, dockly's `docs/package.json`) is
         // build-and-publish plumbing, peripheral to the parent library.
@@ -138,16 +140,6 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
         {
             return 0.2;
         }
-    }
-    // Python under a `docs/` subtree is Sphinx config / site builders /
-    // schema validators. (`docs/examples/*.py` survives because the
-    // `examples` dir classifier ran first.)
-    if path.extension().is_some_and(|ext| ext == "py")
-        && target
-            .components()
-            .any(|c| c.as_os_str().to_str().is_some_and(|s| s == "docs"))
-    {
-        return 0.3;
     }
     if path
         .file_name()
