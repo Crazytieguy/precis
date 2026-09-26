@@ -22,7 +22,7 @@ if [ "$HERE" = "$MAIN" ]; then
     exit 1
 fi
 
-[ -e tests/fixtures ] || ln -s "$MAIN/tests/fixtures" tests/fixtures
+[ -e tests/fixtures ] || ln -sfn "$MAIN/tests/fixtures" tests/fixtures
 
 if [ -e target ]; then
     echo "lane-setup: target/ exists, leaving it"

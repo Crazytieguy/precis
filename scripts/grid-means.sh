@@ -13,11 +13,18 @@ awk '
         field = substr($0, RSTART + 5, RLENGTH - 5)
         split(field, halves, "=")
         header = substr(halves[1], 1, length(halves[1]) - 1)
-        k = split(halves[2], scores, "/")
+        count = split(halves[2], scores, "/")
+        if (n > 0 && count != k) {
+            printf "grid-means: %s has %d grid budgets, earlier reports %d\n", FILENAME, count, k > "/dev/stderr"
+            failed = 1
+            exit 1
+        }
+        k = count
         for (i = 1; i <= k; i++) sum[i] += scores[i]
         n++
     }
     END {
+        if (failed) exit 1
         if (n == 0) { print "grid-means: no grid headlines found" > "/dev/stderr"; exit 1 }
         gsub("/", "\t", header)
         print header
