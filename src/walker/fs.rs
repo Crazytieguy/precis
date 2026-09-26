@@ -522,16 +522,15 @@ fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
         return false;
     };
     let name = name.to_string_lossy();
-    if is_locale_mirror(dir, &name, ctx)
+    let heavy = if name == "build" {
+        files_with_any_extension(dir, &["rs"], ctx).is_empty()
+    } else {
+        crate::fs_util::should_skip_dir(&name)
+    };
+    !(heavy
+        || is_locale_mirror(dir, &name, ctx)
         || is_generated_doc_site(dir, ctx)
-        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
-    {
-        return false;
-    }
-    if name != "build" {
-        return !crate::fs_util::should_skip_dir(&name);
-    }
-    !files_with_any_extension(dir, &["rs"], ctx).is_empty()
+        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx))
 }
 
 /// A copy of another project as its release archive unpacks, named for
@@ -875,6 +874,8 @@ mod tests {
             ("site/api/index.html", ""),
             ("site/api/navigation.html", ""),
             ("doxygen/doxygen.css", ""),
+            ("site/index.html", ""),
+            ("site/about.html", ""),
         ] {
             std::fs::write(root.join(file), text).unwrap();
         }
@@ -889,6 +890,7 @@ mod tests {
             "src/build",
             "build",
             "doxygen",
+            "site",
         ] {
             assert!(recurses(dir), "{dir}");
         }
@@ -903,5 +905,6 @@ mod tests {
         ] {
             assert!(!recurses(dir), "{dir}");
         }
+        assert!(!ctx.dir_filter().has_listed(&root.join("target")));
     }
 }

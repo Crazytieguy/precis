@@ -412,9 +412,9 @@ generated doc site is keyed on an `index.html` beside a generator's
 support file (`odoc.css`, Dokka's `navigation.html`, Javadoc's
 `package-list`, Jazzy's `docsets/`, …), not on a directory name: a
 hand-written `docs/` holding a Doxygen stylesheet template has no
-`index.html`, and a page-per-declaration tree of thousands of
-directories otherwise fills big budgets with names and costs the walk
-its pricing. Wide siblings that repeat an earlier sibling's
+`index.html`. Listing a page-per-declaration tree of thousands of
+directories fills big budgets with names that restate the API, and
+pricing those listings slows the walk. Wide siblings that repeat an earlier sibling's
 three or more entry names are deferred rather than cut; a repeated
 `Cargo.toml` + `src/` pair is a crate, and deferring those left a
 toolchain's standard library unlisted while an embedded upstream beside
