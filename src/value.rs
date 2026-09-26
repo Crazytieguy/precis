@@ -102,7 +102,6 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "test"
                 | "testing"
                 | "examples"
-                | "hack"
                 | "benches"
                 | "bench"
                 | "spec"
@@ -337,12 +336,12 @@ mod tests {
                 1.0,
                 "contribute/contribute.md contribute/build.sh contribute/conf/demo.json",
             ),
-            // Example, sample and dev-tooling trees, in either case, and a
-            // root `support/`.
+            // Example and sample trees, in either case, and a root
+            // `support/`.
             (
                 0.2,
                 "Example/AppDelegate.m samples/Polly.Samples/Program.cs \
-                 sample/app.go hack/update-codegen.sh charts/x/hack/sync.py \
+                 sample/app.go \
                  app/src/test/java/com/example/FooTest.java support/release.py",
             ),
             // A JVM package named for its publisher.

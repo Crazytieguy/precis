@@ -289,6 +289,14 @@ code to a single language.**
   prose that open blocks keep file order. Flat on the grid; on the
   real-world corpus, the share of swapped-in rows whose name another file
   uses rose from 70% to 77% (plugin) and 80% to 84% (8,000 tokens).
+- `hack/` is not a non-essential role, though example and sample trees
+  are. In every real-world repository that has one as dev tooling
+  (Kubernetes and its staging modules, moby, a Helm chart), it holds
+  the scripts the root Makefile or the chart's generated templates route
+  through (build, test, validation, codegen), and in facebook/infer a
+  `lib/hack/` is the Hack language's models. Demoting it hid moby's
+  `hack/make.sh`, `test/` and `validate/`, and the blind A/B preferred
+  the output that showed them in both presentation orders.
 
 ## Output notation
 
