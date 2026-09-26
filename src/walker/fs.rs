@@ -237,9 +237,9 @@ const ROSTER_MIN_FILES: usize = 11;
 /// pictures are, not what the project is, and catalogs, many files
 /// sharing an extension and a name prefix (`issue-*.md`,
 /// `messages_*.properties`), whose names past the first say there are
-/// more of the same. A listing
-/// of nothing but rosters is never bought. A few media files, a logo and
-/// a screenshot, cost little and keep full value.
+/// more of the same. A listing of nothing but rosters is never bought.
+/// A few media files, a logo and a screenshot, cost little and keep full
+/// value.
 fn roster_factor(children: &BTreeMap<String, EntryKind>) -> f64 {
     let listed: Vec<&String> = listed_entries(children).collect();
     let mut media = 0;
@@ -719,7 +719,7 @@ mod tests {
         assert!(value("screens").unwrap() < value("notes").unwrap() / 10.0);
         assert_eq!(value("branding"), value("notes"));
         assert_eq!(value("issues"), None);
-        assert!(value("hooks").is_some());
+        assert_eq!(value("hooks"), value("notes"));
     }
 
     #[test]
