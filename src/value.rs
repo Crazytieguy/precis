@@ -238,7 +238,7 @@ fn is_vendor_dir_name(s: &str) -> bool {
 /// name, so `_internal` and `__pycache__` go on matching nothing. Case
 /// folding stays with the caller: callers matching many role names against
 /// one directory fold once, and this borrows from that buffer.
-pub(crate) fn dir_role_name(lowercased_name: &str) -> &str {
+fn dir_role_name(lowercased_name: &str) -> &str {
     lowercased_name.trim_matches('_')
 }
 
@@ -252,7 +252,7 @@ pub(crate) fn dir_role_name(lowercased_name: &str) -> &str {
 /// The prefixed forms only. A bare `templates/` is the view layer in every
 /// server framework in the corpus (Django, Flask, Jinja, Helm charts) —
 /// demoting that would demote those projects' actual output.
-pub(crate) fn is_scaffold_template_dir_name(name: &str) -> bool {
+fn is_scaffold_template_dir_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     lower.starts_with("template-") || lower.starts_with("cra-template-") || lower == "__brick__"
 }

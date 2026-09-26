@@ -22,14 +22,14 @@ use crate::fs_util::DirFilter;
 use crate::render::{Source, SourceCache};
 
 pub(crate) mod code;
-pub mod fs;
-pub mod go_mod;
-pub mod json;
-pub mod markdown;
-pub mod plaintext;
-pub mod prisma;
+mod fs;
+mod go_mod;
+mod json;
+mod markdown;
+mod plaintext;
+mod prisma;
 mod survey;
-pub mod toml;
+mod toml;
 mod workspace;
 
 use survey::EssentialSource;
@@ -87,7 +87,6 @@ pub trait Walker {
 
 /// Top-level walker: FS listings drive discovery; per-language modules
 /// own per-dir candidate emission and are dispatched here directly.
-#[derive(Default)]
 pub struct FsWalker;
 
 impl Walker for FsWalker {

@@ -187,10 +187,8 @@ impl DirFilter {
 
     /// Filter with no ignore rules of its own, still scoped to `root`:
     /// [`list_dir`] keeps dropping [`is_internal_entry`] names and
-    /// anything resolving outside `root`. For call sites that only
-    /// re-probe entry kinds for names an already-filtered listing
-    /// produced.
-    pub fn unfiltered(root: &Path) -> Self {
+    /// anything resolving outside `root`.
+    fn unfiltered(root: &Path) -> Self {
         Self {
             root: root.to_path_buf(),
             canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
@@ -217,7 +215,7 @@ impl DirFilter {
     }
 
     /// The file a [`Self::single_file`] walk admits.
-    pub fn named_file(&self) -> Option<&Path> {
+    pub(crate) fn named_file(&self) -> Option<&Path> {
         self.only_file.as_deref()
     }
 
@@ -226,8 +224,9 @@ impl DirFilter {
     ///
     /// The root is exempt: a caller may legitimately point precis at a
     /// link, and that link is then the walk's whole scope rather than an
-    /// escape from it.
-    pub fn is_linked_subdirectory(&self, dir: &Path) -> bool {
+    /// escape from it. The CLI canonicalizes its path first, so only library
+    /// callers rely on this.
+    pub(crate) fn is_linked_subdirectory(&self, dir: &Path) -> bool {
         dir != self.root
             && dir != self.canonical_root
             && std::fs::symlink_metadata(dir).is_ok_and(|meta| meta.file_type().is_symlink())
@@ -254,7 +253,7 @@ impl DirFilter {
     /// that has no surviving file of its own, so the common case is a
     /// single probe that stops at the first visible entry. Memoized per
     /// run.
-    pub fn hides_everything_in(&self, dir: &Path) -> bool {
+    pub(crate) fn hides_everything_in(&self, dir: &Path) -> bool {
         let Some(repo) = &self.repo else {
             return false;
         };
@@ -316,7 +315,7 @@ impl DirFilter {
     }
 
     /// True when `path` must not appear in precis output.
-    pub fn excludes(&self, path: &Path, is_dir: bool) -> bool {
+    pub(crate) fn excludes(&self, path: &Path, is_dir: bool) -> bool {
         if let Some(only_file) = &self.only_file {
             return path != only_file;
         }
@@ -501,7 +500,7 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> Rc<BTreeMap<String, EntryKin
 /// as the first entry it would list. Rendering asks this of every child
 /// directory in a listing to mark the empty ones; a full listing of each
 /// child would read two levels below every listing.
-pub fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
+pub(crate) fn lists_nothing(path: &Path, filter: &DirFilter) -> bool {
     if let Some(listing) = filter.listings.borrow().get(path) {
         return listing.is_empty();
     }

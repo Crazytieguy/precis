@@ -689,7 +689,8 @@ fn content_len(content: &BatchContent) -> usize {
 
 /// The first `count` listing entries, source lines or line units of
 /// `content`, in group order, (path, line) order or unit order. A unit
-/// prefix keeps its span rows and the blank rows bridging them.
+/// prefix keeps its span rows and the blank rows bridging them, rebuilt as
+/// `Full` spans: unit batches show one file in full.
 fn content_prefix(content: &BatchContent, count: usize, sources: &SourceCache) -> BatchContent {
     let mut left = count;
     match content {
@@ -710,6 +711,13 @@ fn content_prefix(content: &BatchContent, count: usize, sources: &SourceCache) -
                 .collect(),
         },
         BatchContent::Lines { spans, units } if !units.is_empty() => {
+            debug_assert!(
+                !spans.is_empty()
+                    && spans.iter().all(|span| {
+                        span.path == spans[0].path && matches!(span.render, Render::Full)
+                    }),
+                "a unit batch is `Full` spans of one file"
+            );
             let path = &spans[0].path;
             let rows = units[..count]
                 .iter()

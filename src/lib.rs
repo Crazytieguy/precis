@@ -12,7 +12,7 @@ pub mod ns_simulate;
 pub mod render;
 pub mod scheduler;
 pub mod tokenizer;
-pub mod value;
+mod value;
 pub mod walker;
 
 pub use render::char_units;
