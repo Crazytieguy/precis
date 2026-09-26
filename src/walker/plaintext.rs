@@ -1595,13 +1595,14 @@ fn is_housekeeping_target(target: &str) -> bool {
 }
 
 /// The first target of a recipe header (a justfile recipe's
-/// name), `None` for any other line: a variable assignment, a directive
-/// or a comment.
+/// name), `None` for any other line: a variable assignment (a
+/// target-specific one too), a directive or a comment.
 fn recipe_name(line: &str) -> Option<&str> {
     let (targets, rest) = line.split_once(':')?;
     let mut tokens = targets.split_whitespace();
     let name = tokens.next()?;
     let is_assignment = rest.starts_with('=')
+        || rest.contains(":=")
         || name.contains('=')
         || tokens.any(|token| matches!(token, "=" | "?=" | "+=" | "!="));
     (!line.starts_with('#') && !is_assignment).then_some(name)
@@ -1629,14 +1630,10 @@ fn root_makefile_targets(
     let mut canonical_heads: HashMap<&str, usize> = HashMap::new();
     for (index, line) in source.lines().enumerate() {
         if declaration.is_empty() && !line.starts_with(".PHONY") {
-            if let Some((target, rest)) = line.split_once(':')
-                && CANONICAL_MAKE_TARGETS.contains(&target.trim_end())
-                && !rest.starts_with('=')
-                && !rest.contains(":=")
+            if let Some(target) = recipe_name(line)
+                && CANONICAL_MAKE_TARGETS.contains(&target)
             {
-                canonical_heads
-                    .entry(target.trim_end())
-                    .or_insert(index + 1);
+                canonical_heads.entry(target).or_insert(index + 1);
             }
             continue;
         }
