@@ -7,6 +7,8 @@
 //!    Credential-bearing names (`.env`, `.npmrc`, `secrets.sh`) are
 //!    never admitted; dotenv *samples* are, since they carry
 //!    placeholders and document the deploy-facing config keys.
+//!    At the root, the project's manifest in a format no walker parses
+//!    ([`is_unparsed_root_manifest_name`]) is claimed too.
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
 //!    [`Class::FlatText`]): the language-agnostic fallback for formats no
 //!    parser claims (Java, C++, Ruby, PHP, Swift, Kotlin, C#, Vue, …),
@@ -117,6 +119,11 @@ pub(crate) enum Class {
     /// Checked-in dotenv sample/template (`.env.sample`) — the
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
+    /// A root manifest or build script in a format no walker parses
+    /// ([`is_unparsed_root_manifest_name`]). Rendered like
+    /// [`Class::FlatText`], so its head fields (the project's name, version
+    /// and description) lead, and priced like a build file.
+    Manifest,
     /// A source file in a language no walker parses — the
     /// language-agnostic fallback. Rendered as a declaration surface.
     LanguageSource,
@@ -151,6 +158,30 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::DotenvSample);
     }
     None
+}
+
+/// A repository's own manifest or build script in a format no walker
+/// parses: its identity, dependencies and build entry points. Claimed at
+/// the root only, where it describes the project rather than one module
+/// of it.
+pub(crate) fn is_unparsed_root_manifest_name(name: &str) -> bool {
+    matches!(
+        name,
+        "pom.xml"
+            | "composer.json"
+            | "build.sbt"
+            | "CMakeLists.txt"
+            | "action.yml"
+            | "action.yaml"
+            | "DESCRIPTION"
+            | "rebar.config"
+            | "dune-project"
+            | "deps.edn"
+            | "pubspec.yaml"
+            | "shard.yml"
+    ) || [".cabal", ".csproj", ".fsproj", ".nimble"]
+        .iter()
+        .any(|extension| name.ends_with(extension))
 }
 
 /// True iff `lower` has the exact `docker-compose` / `compose` YAML stem,
@@ -1134,7 +1165,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let file = dir.join(name);
-        let named = classify_plaintext(name);
+        let named = classify_plaintext(name).or_else(|| {
+            (dir == ctx.root() && is_unparsed_root_manifest_name(name)).then_some(Class::Manifest)
+        });
         // Parsed languages belong to the code engine, except a C++
         // header the C grammar can't parse; a second slice would overlap
         // its spans.
@@ -1161,7 +1194,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         else {
             continue;
         };
-        if matches!(class, Class::LanguageSource | Class::FlatText) {
+        if matches!(
+            class,
+            Class::Manifest | Class::LanguageSource | Class::FlatText
+        ) {
             push_source_text_batches(&mut out, &file, ctx, class);
             continue;
         }
@@ -1337,7 +1373,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::LanguageSource if is_in_primary_language(file, ctx) => {
             crate::value::code_rung_value(crate::batch::Rung::Decl)
         }
-        Class::Build | Class::DotenvSample | Class::LanguageSource => 905.0,
+        Class::Build | Class::Manifest | Class::DotenvSample | Class::LanguageSource => 905.0,
         Class::Tooling | Class::FlatText => 488.0,
     };
     tier * path_depth_factor(file, ctx)
@@ -2010,6 +2046,41 @@ mod tests {
         };
         let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
         assert_eq!(rows, [(1, 2), (4, 6)]);
+    }
+
+    /// A root `pom.xml` leads with its coordinates, not the `<project
+    /// xmlns=…>` opener or the blocks after them; a module's is left to
+    /// the listing.
+    #[test]
+    fn plaintext_root_manifest_surface_is_its_head_fields() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::create_dir(root.join("module")).unwrap();
+        let mut source = format!(
+            "<?xml version=\"1.0\"?>\n<project xmlns=\"{}\">\n  <modelVersion>4.0.0</modelVersion>\n\
+             \n  <groupId>org.example</groupId>\n  <artifactId>app</artifactId>\n\
+             \n  <dependencies>\n",
+            "x".repeat(SOURCE_TEXT_MAX_LINE_CHARS)
+        );
+        for index in 0..PLAINTEXT_LINE_CAP {
+            source.push_str(&format!(
+                "    <dependency>\n      <artifactId>lib-{index}</artifactId>\n    </dependency>\n"
+            ));
+        }
+        source.push_str("  </dependencies>\n</project>\n");
+        std::fs::write(root.join("pom.xml"), &source).unwrap();
+        std::fs::write(root.join("module/pom.xml"), &source).unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        assert_eq!(batches.len(), 1);
+        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
+            panic!("expected a lines batch");
+        };
+        let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
+        let closing = source.lines().count();
+        assert_eq!(rows, [(1, 1), (3, 8), (closing - 1, closing)]);
+        assert!(expand_in_dir(&root.join("module"), &ctx).is_empty());
     }
 
     #[test]

@@ -82,7 +82,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
             continue;
         };
-        if is_skipped_json(name) {
+        if is_skipped_json(name)
+            || (dir == ctx.root() && super::plaintext::is_unparsed_root_manifest_name(name))
+        {
             continue;
         }
         if is_package_json(name) {
@@ -621,6 +623,8 @@ mod tests {
         .unwrap();
         fs::write(root.join("data.json5"), "{\n  // comment\n  value: 1\n}\n").unwrap();
         fs::write(root.join("not-json.yaml"), "value: 1\n").unwrap();
+        // The plaintext walker's root manifest.
+        fs::write(root.join("composer.json"), "{\n  \"name\": \"a/b\"\n}\n").unwrap();
         fs::write(
             root.join("large.json5"),
             "value\n".repeat(WHOLE_LINE_CAP + 1),
