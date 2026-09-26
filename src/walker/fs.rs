@@ -37,7 +37,7 @@ pub fn expand_listed(key: &FsKey, ctx: &WalkCtx) -> Vec<Batch> {
         .iter()
         .filter(|(_, kind)| matches!(kind, EntryKind::Directory))
         .map(|(name, _)| dir.join(name))
-        .filter(|child| should_recurse_dir(child))
+        .filter(|child| should_recurse_dir(child, ctx))
         .filter_map(|child| dir_listing_batch(child, ctx))
         .collect()
 }
@@ -80,7 +80,7 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch> {
         };
         let only_child = dir.join(name);
         let grandchildren = list_dir(&only_child, ctx.dir_filter());
-        if children.len() > 1 || grandchildren.is_empty() || !should_recurse_dir(&only_child) {
+        if children.len() > 1 || grandchildren.is_empty() || !should_recurse_dir(&only_child, ctx) {
             break;
         }
         dir = only_child;
@@ -247,10 +247,7 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
 /// the first of each shape shows what the siblings hold. A declared
 /// workspace member is the project's own package, whatever its layout.
 fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
-    if dir == ctx.root()
-        || ctx.is_cargo_workspace_member(&dir.join("Cargo.toml"))
-        || ctx.is_js_workspace_member(&dir.join("package.json"))
-    {
+    if dir == ctx.root() || is_declared_workspace_member(dir, ctx) {
         return false;
     }
     let (Some(parent), Some(name)) = (dir.parent(), dir.file_name()) else {
@@ -259,6 +256,11 @@ fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
     ctx.fs_state
         .shape_repeats(parent, ctx.dir_filter())
         .contains(name.to_string_lossy().as_ref())
+}
+
+fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
+    ctx.is_cargo_workspace_member(&dir.join("Cargo.toml"))
+        || ctx.is_js_workspace_member(&dir.join("package.json"))
 }
 
 pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
@@ -476,12 +478,14 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
 /// own output lives under `target/`, which the walk never enters. A
 /// translated mirror or an unpacked upstream release is named, not
 /// listed: its entries repeat names kept elsewhere.
-fn should_recurse_dir(dir: &Path) -> bool {
+fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
     };
     let name = name.to_string_lossy();
-    if is_locale_mirror(dir, &name) || is_unpacked_release(dir, &name) {
+    if is_locale_mirror(dir, &name)
+        || is_unpacked_release(dir, &name) && !is_declared_workspace_member(dir, ctx)
+    {
         return false;
     }
     if name != "build" {
@@ -624,10 +628,11 @@ mod tests {
         ] {
             std::fs::create_dir_all(root.join(dir)).unwrap();
         }
-        assert!(should_recurse_dir(&root.join("pages")));
-        assert!(!should_recurse_dir(&root.join("pages.ar")));
-        assert!(!should_recurse_dir(&root.join("pages.pt_BR")));
-        assert!(should_recurse_dir(&root.join("glossary/node.js")));
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(should_recurse_dir(&root.join("pages"), &ctx));
+        assert!(!should_recurse_dir(&root.join("pages.ar"), &ctx));
+        assert!(!should_recurse_dir(&root.join("pages.pt_BR"), &ctx));
+        assert!(should_recurse_dir(&root.join("glossary/node.js"), &ctx));
     }
 
     #[test]
@@ -690,16 +695,30 @@ mod tests {
             ("third/miniz-3.0.2", true),
             ("drivers/i2c-master", false),
             ("packages/core-main", false),
+            ("packages/ui-main", true),
         ] {
             std::fs::create_dir_all(root.join(dir)).unwrap();
             if license {
                 std::fs::write(root.join(dir).join("LICENSE"), "").unwrap();
             }
         }
-        assert!(!should_recurse_dir(&root.join("docs/prism-master")));
-        assert!(!should_recurse_dir(&root.join("third/miniz-3.0.2")));
-        assert!(should_recurse_dir(&root.join("drivers/i2c-master")));
-        assert!(should_recurse_dir(&root.join("packages/core-main")));
+        std::fs::write(
+            root.join("package.json"),
+            r#"{"name": "monorepo", "workspaces": ["packages/*"]}"#,
+        )
+        .unwrap();
+        std::fs::write(
+            root.join("packages/ui-main/package.json"),
+            r#"{"name": "ui-main"}"#,
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let recurses = |dir: &str| should_recurse_dir(&root.join(dir), &ctx);
+        assert!(!recurses("docs/prism-master"));
+        assert!(!recurses("third/miniz-3.0.2"));
+        assert!(recurses("drivers/i2c-master"));
+        assert!(recurses("packages/core-main"));
+        assert!(recurses("packages/ui-main"));
     }
 
     #[test]
