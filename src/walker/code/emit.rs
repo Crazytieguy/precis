@@ -1,8 +1,9 @@
 //! [`FileModel`] → batches: normalization, then the ladder per file.
 //!
 //! Emission order, each batch gated on its predecessor:
-//! `ModuleDoc` chunks (no predecessor), `Names` chunks (no predecessor),
-//! then per declaration in normalized order its `Decl` chunks (gated on the
+//! `ModuleDoc` chunks (no predecessor), `Names` chunks (no predecessor
+//! here; `expand_in_dir` then gates the head on its directory's roster
+//! chain), then per declaration in normalized order its `Decl` chunks (gated on the
 //! owner of its first name row: the `Names` chunk listing it, or for a
 //! member the container `Decl` chunk listing it), `Doc` and, for
 //! `Callable`, `Body` chunks (gated on the declaration's first `Decl`
@@ -44,8 +45,7 @@ pub(super) fn emit_file(
 /// for an entry file), non-essential discount and the language's file
 /// weight.
 fn file_prior(language: &Language, path: &Path, ctx: &WalkCtx) -> f64 {
-    let is_entrypoint = language.is_entrypoint.is_some_and(|test| test(path, ctx));
-    file_depth_factor(path, ctx, is_entrypoint)
+    file_depth_factor(path, ctx, language.is_entrypoint(path, ctx))
         * language.file_weight.map_or(1.0, |weight| weight(path, ctx))
 }
 

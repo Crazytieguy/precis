@@ -14,8 +14,11 @@
 //! - **Re-exports**: `__all__`, and in `__init__.py` every top-level
 //!   `from … import …`.
 
+use std::collections::HashSet;
 use std::path::Path;
+use std::sync::LazyLock;
 
+use regex::Regex;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
@@ -28,7 +31,22 @@ pub(super) const LANGUAGE: Language = Language {
     extract,
     is_entrypoint: Some(is_entrypoint),
     file_weight: Some(file_weight),
+    sibling_mentions: Some(sibling_mentions),
+    sibling_names: None,
 };
+
+/// Every word of the file's `import` and `from … import` lines: module
+/// path components and imported names, which include its sibling modules.
+fn sibling_mentions(file: &SourceFile) -> HashSet<String> {
+    static IMPORT: LazyLock<Regex> =
+        LazyLock::new(|| Regex::new(r"(?m)^[ \t]*(?:from|import)[ \t].*").unwrap());
+    static WORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\w+").unwrap());
+    IMPORT
+        .find_iter(&file.source)
+        .flat_map(|line| WORD.find_iter(line.as_str()))
+        .map(|word| word.as_str().to_owned())
+        .collect()
+}
 
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();

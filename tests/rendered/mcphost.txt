@@ -13,7 +13,23 @@ README.md
   7→## Table of Contents
   …
   41→## Overview 🌟
-  …
+  42→
+  43→MCPHost acts as a host in the MCP client-server architecture, where:
+  44→- **Hosts** (like MCPHost) are LLM applications that manage connections and interactions
+  45→- **Clients** maintain 1:1 connections with MCP servers
+  46→- **Servers** provide context, tools, and capabilities to the LLMs
+  47→
+  48→This architecture allows language models to:
+  49→- Access external tools and data sources 🛠️
+  50→- Maintain consistent context across interactions 🔄
+  51→- Execute commands and retrieve information safely 🔒
+  52→
+  53→Currently supports:
+  54→- Anthropic Claude models (Claude 3.5 Sonnet, Claude 3.5 Haiku, etc.)
+  55→- OpenAI models (GPT-4, GPT-4 Turbo, GPT-3.5, etc.)
+  56→- Google Gemini models (Gemini 2.0 Flash, Gemini 1.5 Pro, etc.)
+  57→- Any Ollama-compatible model with function calling support
+  58→- Any OpenAI-compatible API endpoint
   60→## Features ✨
   61→
   62→- Interactive conversations with multiple AI models
@@ -63,127 +79,7 @@ README.md
   …
 cmd/
   auth.go
-    …
-    17→var authCmd = &cobra.Command{
-    18→	Use:   "auth",
-    19→	Short: "Manage authentication credentials for AI providers",
-    20→	Long: `Manage authentication credentials for AI providers.
-    21→
-    22→This command allows you to securely authenticate and manage credentials for various AI providers
-    23→using OAuth flows. Stored credentials take precedence over environment variables.
-    24→
-    25→Available providers:
-    26→  - anthropic: Anthropic Claude API (OAuth)
-    27→
-    28→Examples:
-    29→  mcphost auth login anthropic
-    30→  mcphost auth logout anthropic
-    31→  mcphost auth status`,
-    32→}
-    …
-    37→var authLoginCmd = &cobra.Command{
-    …
-    58→var authLogoutCmd = &cobra.Command{
-    59→	Use:   "logout [provider]",
-    60→	Short: "Remove stored authentication credentials for a provider",
-    61→	Long: `Remove stored authentication credentials for an AI provider.
-    62→
-    63→This will delete the stored API key for the specified provider. You will need
-    64→to use environment variables or command-line flags for authentication after logout.
-    65→
-    66→Available providers:
-    67→  - anthropic: Anthropic Claude API
-    68→
-    69→Example:
-    70→  mcphost auth logout anthropic`,
-    71→	Args: cobra.ExactArgs(1),
-    72→	RunE: runAuthLogout,
-    73→}
-    …
-    78→var authStatusCmd = &cobra.Command{
-    79→	Use:   "status",
-    80→	Short: "Show authentication status for all providers",
-    81→	Long: `Show the current authentication status for all supported AI providers.
-    82→
-    83→This command displays which providers have stored credentials and when they were created.
-    84→It does not display the actual API keys for security reasons.
-    85→
-    86→Example:
-    87→  mcphost auth status`,
-    88→	RunE: runAuthStatus,
-    89→}
-    91→func init() {
-    …
-    97→func runAuthLogin(cmd *cobra.Command, args []string) error {
-    …
-    108→func runAuthLogout(cmd *cobra.Command, args []string) error {
-    …
-    119→func runAuthStatus(cmd *cobra.Command, args []string) error {
-    …
-    165→func loginAnthropic() error {
-    …
-    239→func logoutAnthropic() error {
-    …
   hooks.go
-    …
-    16→var hooksCmd = &cobra.Command{
-    17→	Use:   "hooks",
-    18→	Short: "Manage MCPHost hooks",
-    19→	Long:  "Commands for managing and testing MCPHost hooks configuration",
-    20→}
-    …
-    25→var hooksListCmd = &cobra.Command{
-    26→	Use:   "list",
-    27→	Short: "List all configured hooks",
-    28→	RunE: func(cmd *cobra.Command, args []string) error {
-    29→		config, err := hooks.LoadHooksConfig()
-    30→		if err != nil {
-    31→			return fmt.Errorf("loading hooks config: %w", err)
-    32→		}
-    33→
-    34→		w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-    35→		fmt.Fprintln(w, "EVENT\tMATCHER\tCOMMAND\tTIMEOUT")
-    36→
-    37→		for event, matchers := range config.Hooks {
-    38→			for _, matcher := range matchers {
-    39→				for _, hook := range matcher.Hooks {
-    40→					timeout := "60s"
-    41→					if hook.Timeout > 0 {
-    42→						timeout = fmt.Sprintf("%ds", hook.Timeout)
-    43→					}
-    44→					fmt.Fprintf(w, "%s\t%s\t%s\t%s\n",
-    45→						event, matcher.Matcher, hook.Command, timeout)
-    46→				}
-    47→			}
-    48→		}
-    49→
-    50→		return w.Flush()
-    51→	},
-    52→}
-    …
-    57→var hooksValidateCmd = &cobra.Command{
-    58→	Use:   "validate",
-    59→	Short: "Validate hooks configuration",
-    60→	RunE: func(cmd *cobra.Command, args []string) error {
-    61→		config, err := hooks.LoadHooksConfig()
-    62→		if err != nil {
-    63→			return fmt.Errorf("validation failed: %w", err)
-    64→		}
-    65→
-    66→		// Additional validation
-    67→		if err := hooks.ValidateHookConfig(config); err != nil {
-    68→			return fmt.Errorf("validation failed: %w", err)
-    69→		}
-    70→
-    71→		fmt.Println("✓ Hooks configuration is valid")
-    72→		return nil
-    73→	},
-    74→}
-    …
-    79→var hooksInitCmd = &cobra.Command{
-    …
-    176→func init() {
-    …
   root.go
   script.go
   script_deepseek_test.go
@@ -220,7 +116,36 @@ go.mod
   3→go 1.24.0
   4→
   5→toolchain go1.24.5
+  6→
+  7→require (
+  8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
+  9→	github.com/PuerkitoBio/goquery v1.10.3
+  10→	github.com/bytedance/sonic v1.15.0
+  11→	github.com/charmbracelet/fang v0.4.0
+  12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+  13→	github.com/cloudwego/eino v0.7.13
+  14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
+  15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
+  16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
+  17→	github.com/eino-contrib/jsonschema v1.0.3
+  18→	github.com/getkin/kin-openapi v0.131.0
+  19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
+  20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
+  21→	github.com/spf13/cobra v1.10.1
+  22→	github.com/spf13/viper v1.20.1
+  23→	github.com/tidwall/gjson v1.18.0
+  24→	golang.org/x/term v0.37.0
+  25→	google.golang.org/genai v1.22.0
+  26→	gopkg.in/yaml.v3 v3.0.1
+  27→)
   …
+  143→require (
+  …
+  145→	github.com/charmbracelet/bubbles v0.21.0
+  146→	github.com/charmbracelet/bubbletea v1.3.10
+  147→	github.com/charmbracelet/glamour v0.10.0
+  …
+  165→)
 go.sum
 internal/
   agent/
@@ -350,5 +275,59 @@ sdk/
     scripting/
       main.go
   mcphost.go
+    …
+    19→type MCPHost struct {
+    20→	agent       *agent.Agent
+    21→	sessionMgr  *session.Manager
+    22→	modelString string
+    23→}
+    …
+    28→type Options struct {
+    29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
+    30→	SystemPrompt string // Override system prompt
+    31→	ConfigFile   string // Override config file path
+    32→	MaxSteps     int    // Override max steps (0 = use default)
+    33→	Streaming    bool   // Enable streaming (default from config)
+    34→	Quiet        bool   // Suppress debug output
+    35→}
+    …
+    40→func New(ctx context.Context, opts *Options) (*MCPHost, error) {
+    …
+    130→func (m *MCPHost) Prompt(ctx context.Context, message string) (string, error) {
+    …
+    163→func (m *MCPHost) PromptWithCallbacks(
+    164→	ctx context.Context,
+    165→	message string,
+    166→	onToolCall func(name, args string),
+    167→	onToolResult func(name, args, result string, isError bool),
+    168→	onStreaming func(chunk string),
+    169→) (string, error) {
+    …
+    201→func (m *MCPHost) GetSessionManager() *session.Manager {
+    202→	return m.sessionMgr
+    …
+    207→func (m *MCPHost) LoadSession(path string) error {
+    …
+    218→func (m *MCPHost) SaveSession(path string) error {
+    …
+    224→func (m *MCPHost) ClearSession() {
+    …
+    230→func (m *MCPHost) GetModelString() string {
+    231→	return m.modelString
+    …
+    237→func (m *MCPHost) Close() error {
+    238→	return m.agent.Close()
+    …
   mcphost_test.go
   types.go
+    …
+    10→type Message = session.Message
+    …
+    14→type ToolCall = session.ToolCall
+    …
+    18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
+    19→	return msg.ConvertToSchemaMessage()
+    …
+    24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
+    25→	return session.ConvertFromSchemaMessage(msg)
+    …

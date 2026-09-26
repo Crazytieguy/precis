@@ -250,9 +250,29 @@ sqlite-dist.toml
   …
 sqlite-vec.c
   …
+  64→#ifndef _WIN32
+  65→#ifndef __EMSCRIPTEN__
+  66→#ifndef __COSMOPOLITAN__
+  67→#ifndef __wasi__
   68→typedef u_int8_t uint8_t;
   69→typedef u_int16_t uint16_t;
   70→typedef u_int64_t uint64_t;
+  71→#endif
+  72→#endif
+  73→#endif
+  74→#endif
+  76→typedef int8_t i8;
+  77→typedef uint8_t u8;
+  78→typedef int16_t i16;
+  79→typedef int32_t i32;
+  80→typedef sqlite3_int64 i64;
+  81→typedef uint32_t u32;
+  82→typedef uint64_t u64;
+  83→typedef float f32;
+  84→typedef size_t usize;
+  …
+  112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
+  113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
   …
 sqlite-vec.h.tmpl
 test.sql
@@ -313,16 +333,4 @@ tmp-static.py
   4→db = sqlite3.connect(":memory:")
   …
   11→x = np.array([[0.1, 0.2, 0.3, 0.4], [0.9, 0.8, 0.7, 0.6]], dtype=np.float32)
-  12→y = np.array([[0.2, 0.3], [0.9, 0.8], [0.6, 0.5]], dtype=np.float32)
-  13→z = np.array(
-  14→    [
-  15→        [0.1, 0.1, 0.1, 0.1],
-  16→        [0.2, 0.2, 0.2, 0.2],
-  17→        [0.3, 0.3, 0.3, 0.3],
-  18→        [0.4, 0.4, 0.4, 0.4],
-  19→        [0.5, 0.5, 0.5, 0.5],
-  20→    ],
-  21→    dtype=np.float32,
-  22→)
-  25→def register_np(array, name):
   …

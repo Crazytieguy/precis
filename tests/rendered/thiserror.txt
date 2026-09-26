@@ -90,6 +90,14 @@ README.md
   56→  example.
   57→
   58→  The messages support a shorthand for interpolating fields from the error.
+  60→    - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+  61→    - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+  62→    - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+  63→    - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+  64→
+  65→  These shorthands can be used together with any additional format args, which
+  66→  may be arbitrary expressions. For example:
+  67→
   …
   211→## Comparison to anyhow
   212→
@@ -157,29 +165,6 @@ impl/
   LICENSE-MIT
   src/
     ast.rs
-      …
-      10→pub enum Input<'a> {
-      11→    Struct(Struct<'a>),
-      12→    Enum(Enum<'a>),
-      13→}
-      15→pub struct Struct<'a> {
-      …
-      22→pub struct Enum<'a> {
-      …
-      29→pub struct Variant<'a> {
-      …
-      36→pub struct Field<'a> {
-      …
-      45→pub enum ContainerKind {
-      …
-      54→impl<'a> Input<'a> {
-      …
-      65→}
-      …
-      174→impl Display for ContainerKind {
-      175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-      …
-      185→}
     attr.rs
     expand.rs
     fallback.rs

@@ -74,45 +74,45 @@ Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 5680 | 167 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.595 |
 | ns | 5707 |  | 76 | File struct | 4.2 |  | 0.601 |
 | walker |  | 5779 | 99 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.601 |
-| walker |  | 5828 | 49 | Code::CodeKey { rung: Names, file: include/stdbool.h, decl: 0, sub: 0, line: 0 } |  |  | 0.601 |
-| walker |  | 5867 | 39 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 37, sub: 0, line: 167 } |  |  | 0.602 |
+| walker |  | 5818 | 39 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 37, sub: 0, line: 167 } |  |  | 0.602 |
 | ns | 6011 |  | 304 | Token struct (all fields) | 4.3 |  | 0.616 |
-| walker |  | 6091 | 224 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.638 |
-| walker |  | 6147 | 56 | Code::CodeKey { rung: Names, file: include/stdalign.h, decl: 0, sub: 0, line: 0 } |  |  | 0.638 |
-| ns | 6360 |  | 349 | Obj struct: variables and functions | 4.4 |  | 0.658 |
-| walker |  | 6379 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.671 |
-| ns | 6461 |  | 101 | Relocation struct | 4.5 | 4.4 | 0.676 |
-| walker |  | 6467 | 88 | Code::CodeKey { rung: Names, file: include/stddef.h, decl: 0, sub: 0, line: 0 } |  |  | 0.676 |
-| walker |  | 6654 | 187 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.707 |
+| walker |  | 6042 | 224 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.638 |
+| walker |  | 6274 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.652 |
+| ns | 6360 |  | 349 | Obj struct: variables and functions | 4.4 |  | 0.671 |
+| walker |  | 6461 | 187 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.707 |
+| ns | 6461 |  | 101 | Relocation struct | 4.5 | 4.4 | 0.707 |
+| walker |  | 6686 | 225 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
+| walker |  | 6745 | 59 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 11, sub: 0, line: 15 } |  |  | 0.707 |
 | ns | 6766 |  | 305 | NodeKind enum, first half (arithmetic through bit ops) | 4.6 |  | 0.717 |
-| walker |  | 6797 | 143 | Code::CodeKey { rung: Names, file: include/stdarg.h, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
-| walker |  | 6820 | 23 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 3, sub: 0, line: 13 } |  |  | 0.717 |
-| walker |  | 6860 | 40 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 1, sub: 0, line: 4 } |  |  | 0.717 |
-| walker |  | 6973 | 113 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 5, sub: 0, line: 44 } |  |  | 0.717 |
-| walker |  | 6990 | 17 | Code::CodeKey { rung: Names, file: include/stdnoreturn.h, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
+| walker |  | 6888 | 143 | Code::CodeKey { rung: Names, file: include/stdarg.h, decl: 0, sub: 0, line: 0 } |  |  | 0.717 |
+| walker |  | 6911 | 23 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 3, sub: 0, line: 13 } |  |  | 0.717 |
+| walker |  | 6951 | 40 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 1, sub: 0, line: 4 } |  |  | 0.717 |
+| walker |  | 7064 | 113 | Code::CodeKey { rung: Decl, file: include/stdarg.h, decl: 5, sub: 0, line: 44 } |  |  | 0.717 |
 | ns | 7114 |  | 348 | NodeKind enum, second half (control flow, calls, casts, atomics) | 4.7 | 4.6 | 0.725 |
-| walker |  | 7195 | 205 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 0, line: 0 } |  |  | 0.725 |
-| walker |  | 7413 | 218 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 1, line: 0 } |  |  | 0.725 |
+| walker |  | 7250 | 186 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 1, line: 0 } |  |  | 0.725 |
+| walker |  | 7417 | 167 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 2, line: 0 } |  |  | 0.725 |
 | ns | 7441 |  | 327 | Node struct, first half (operands, control flow, calls) | 4.8 |  | 0.734 |
-| walker |  | 7590 | 177 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 2, line: 0 } |  |  | 0.734 |
+| walker |  | 7596 | 179 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 3, line: 0 } |  |  | 0.734 |
+| walker |  | 7613 | 17 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 32, sub: 0, line: 49 } |  |  | 0.734 |
+| walker |  | 7630 | 17 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 33, sub: 0, line: 52 } |  |  | 0.734 |
 | ns | 7718 |  | 277 | Node struct, second half (goto/switch/case, asm, atomics, literals) | 4.9 | 4.8 | 0.743 |
-| walker |  | 7815 | 225 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 0, line: 0 } |  |  | 0.743 |
+| walker |  | 7816 | 186 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 4, line: 0 } |  |  | 0.743 |
 | ns | 7871 |  | 153 | TypeKind enum | 4.10 |  | 0.747 |
-| walker |  | 7874 | 59 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 11, sub: 0, line: 15 } |  |  | 0.747 |
-| walker |  | 8060 | 186 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 1, line: 0 } |  |  | 0.747 |
+| walker |  | 7984 | 168 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 5, line: 0 } |  |  | 0.747 |
 | ns | 8147 |  | 276 | Type struct, first half + the pointer/array duality comment | 4.11 |  | 0.752 |
-| walker |  | 8227 | 167 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 2, line: 0 } |  |  | 0.752 |
+| walker |  | 8151 | 167 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 6, line: 0 } |  |  | 0.752 |
 | ns | 8310 |  | 163 | Type struct, second half (array, VLA, struct, function members) | 4.12 | 4.11 | 0.755 |
-| walker |  | 8406 | 179 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 3, line: 0 } |  |  | 0.755 |
-| walker |  | 8423 | 17 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 32, sub: 0, line: 49 } |  |  | 0.755 |
+| walker |  | 8356 | 205 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 0, line: 0 } |  |  | 0.755 |
 | ns | 8435 |  | 125 | Member struct (struct/union members incl. bitfields) | 4.13 | 4.12 | 0.758 |
-| walker |  | 8440 | 17 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 33, sub: 0, line: 52 } |  |  | 0.758 |
+| walker |  | 8444 | 88 | Code::CodeKey { rung: Names, file: include/stddef.h, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
+| walker |  | 8500 | 56 | Code::CodeKey { rung: Names, file: include/stdalign.h, decl: 0, sub: 0, line: 0 } |  |  | 0.758 |
 | ns | 8524 |  | 89 | HashEntry / HashMap structs | 4.14 | 2.9 | 0.760 |
+| walker |  | 8549 | 49 | Code::CodeKey { rung: Names, file: include/stdbool.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
+| walker |  | 8566 | 17 | Code::CodeKey { rung: Names, file: include/stdnoreturn.h, decl: 0, sub: 0, line: 0 } |  |  | 0.760 |
 | ns | 8615 |  | 91 | main(): driver entry and the -cc1 self-re-exec split | 5.1 | 3.4 | 0.754 |
-| walker |  | 8626 | 186 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 4, line: 0 } |  |  | 0.754 |
-| walker |  | 8794 | 168 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 5, line: 0 } |  |  | 0.754 |
+| walker |  | 8784 | 218 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 1, line: 0 } |  |  | 0.754 |
 | ns | 8913 |  | 298 | cc1(): the compile pipeline in one function | 5.2 | 5.1 | 0.738 |
-| walker |  | 8961 | 167 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 6, line: 0 } |  |  | 0.738 |
+| walker |  | 8961 | 177 | Code::CodeKey { rung: Names, file: include/float.h, decl: 0, sub: 2, line: 0 } |  |  | 0.738 |
 | ns | 9183 |  | 270 | parse(): the top-level program loop | 5.3 |  | 0.725 |
 | walker |  | 9322 | 361 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.725 |
 | ns | 9430 |  | 247 | The statement grammar (comment above stmt()) | 6.1 |  | 0.718 |
@@ -120,4 +120,4 @@ Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | ns | 9756 |  | 326 | The expression precedence chain, as grammar comments | 6.2 | 3.9 | 0.710 |
 | walker |  | 9783 | 244 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.710 |
 | ns | 9989 |  | 233 | Every preprocessor directive chibicc handles | 6.3 |  | 0.704 |
-| walker |  | 9997 | 214 | Code::CodeKey { rung: Names, file: main.c, decl: 0, sub: 0, line: 0 } |  |  | 0.704 |
+| walker |  | 10000 | 217 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.704 |

@@ -272,16 +272,6 @@ source/
   options.ts
   priority-queue.ts
   queue.ts
-    1→export type RunFunction = () => Promise<unknown>;
-    2→
-    3→export type Queue<Element, Options> = {
-    4→	size: number;
-    5→	filter: (options: Readonly<Partial<Options>>) => Element[];
-    6→	dequeue: () => Element | undefined;
-    7→	enqueue: (run: Element, options?: Partial<Options>) => void;
-    8→	setPriority: (id: string, priority: number) => void;
-    …
-    11→};
 test/
   advanced.ts
   basic.ts

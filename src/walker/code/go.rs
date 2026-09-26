@@ -6,6 +6,10 @@
 //! re-export row, so a platform variant never lists its declarations
 //! without their condition.
 
+use std::collections::HashSet;
+use std::sync::LazyLock;
+
+use regex::Regex;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
@@ -18,7 +22,54 @@ pub(super) const LANGUAGE: Language = Language {
     extract,
     is_entrypoint: None,
     file_weight: None,
+    sibling_mentions: Some(sibling_mentions),
+    sibling_names: Some(declared_names),
 };
+
+/// Every identifier the file uses: files of one package share a
+/// namespace, so a file depends on a sibling by naming what it declares.
+fn sibling_mentions(file: &SourceFile) -> HashSet<String> {
+    static IDENTIFIER: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\b[A-Za-z_]\w*").unwrap());
+    IDENTIFIER
+        .find_iter(&file.source)
+        .map(|word| word.as_str().to_owned())
+        .collect()
+}
+
+/// The top-level functions, methods, types, constants and variables the
+/// file declares.
+fn declared_names(file: &SourceFile) -> Vec<String> {
+    let root = file.tree.root_node();
+    let mut specs = Vec::new();
+    let mut cursor = root.walk();
+    for child in root.named_children(&mut cursor) {
+        match child.kind() {
+            "function_declaration" | "method_declaration" => specs.push(child),
+            "type_declaration" | "const_declaration" | "var_declaration" => {
+                let mut inner = child.walk();
+                for spec in child.named_children(&mut inner) {
+                    if spec.kind().ends_with("_list") {
+                        let mut list = spec.walk();
+                        specs.extend(spec.named_children(&mut list));
+                    } else {
+                        specs.push(spec);
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+    let mut names = Vec::new();
+    for spec in specs {
+        let mut inner = spec.walk();
+        names.extend(
+            spec.children_by_field_name("name", &mut inner)
+                .map(|name| file.text(name))
+                .map(str::to_owned),
+        );
+    }
+    names
+}
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();

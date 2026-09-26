@@ -89,7 +89,22 @@ README.md
   37→
   38→Requests officially supports Python 3.10+.
   40→## Supported Features & Best–Practices
-  …
+  41→
+  42→Requests is ready for the demands of building robust and reliable HTTP–speaking applications, for the needs of today.
+  43→
+  44→- Keep-Alive & Connection Pooling
+  45→- International Domains and URLs
+  46→- Sessions with Cookie Persistence
+  47→- Browser-style TLS/SSL Verification
+  48→- Basic & Digest Authentication
+  49→- Familiar `dict`–like Cookies
+  50→- Automatic Content Decompression and Decoding
+  51→- Multi-part File Uploads
+  52→- SOCKS Proxy Support
+  53→- Connection Timeouts
+  54→- Streaming Downloads
+  55→- Automatic honoring of `.netrc`
+  56→- Chunked HTTP Requests
   58→## Cloning the repository
   …
 docs/
@@ -120,6 +135,9 @@ docs/
   index.rst
   make.bat
   requirements.txt
+    1→# Pinning to avoid unexpected breakages.
+    2→# Used by RTD to generate docs.
+    3→Sphinx==7.2.6
   user/
     advanced.rst
     authentication.rst
@@ -299,30 +317,6 @@ src/requests/
   packages.py
   py.typed (empty)
   sessions.py
-    …
-    76→def merge_setting(
-    77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
-    78→) -> Any:
-    …
-    108→def merge_hooks(
-    109→    request_hooks: _t.HooksType,
-    110→    session_hooks: _t.HooksType,
-    111→    dict_class: type = OrderedDict,
-    112→) -> _t.HooksType:
-    …
-    127→class SessionRedirectMixin:
-    128→    max_redirects: int
-    129→    trust_env: bool
-    130→    cookies: RequestsCookieJar
-    131→
-    132→    def send(self, request: PreparedRequest, **kwargs: Any) -> Response: ...
-    133→
-    134→    def get_redirect_target(self, resp: Response) -> str | None:
-    …
-    395→class Session(SessionRedirectMixin):
-    …
-    908→def session() -> Session:
-    …
   status_codes.py
   structures.py
   utils.py
@@ -356,3 +350,5 @@ tests/
     server.py
   utils.py
 tox.ini
+  1→[tox]
+  …

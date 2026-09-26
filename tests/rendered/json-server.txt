@@ -88,7 +88,11 @@ README.md
   82→{
   83→  "id": "1",
   84→  "title": "a title",
-  …
+  85→  "views": 100
+  86→}
+  87→```
+  88→
+  89→Run `json-server --help` for a list of options
   91→## Sponsors ✨
   92→
   93→### Gold
@@ -238,18 +242,26 @@ src/
   bin.ts
   matches-where.test.ts
   matches-where.ts
+    …
+    24→export function matchesWhere(obj: JsonObject, where: JsonObject): boolean {
+    …
   paginate.test.ts
   paginate.ts
+    1→export type PaginationResult<T> = {
+    2→  first: number
+    3→  prev: number | null
+    4→  next: number | null
+    5→  last: number
+    …
+    9→}
+    11→export function paginate<T>(items: T[], page: number, perPage: number): PaginationResult<T> {
+    …
   parse-where.test.ts
   parse-where.ts
     …
     58→export function parseWhere(query: string): JsonObject {
     …
   random-id.ts
-    …
-    3→export function randomId(): string {
-    4→  return randomBytes(8).toString('base64url')
-    …
   service.test.ts
   service.ts
     …
@@ -291,8 +303,10 @@ src/
     191→    return this.#updateOrPatch(name, body, true)
     …
     194→  async updateById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
+    195→    return this.#updateOrPatchById(name, id, body, false)
     …
     198→  async patchById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
+    199→    return this.#updateOrPatchById(name, id, body, true)
     …
     202→  async destroyById(
     203→    name: string,
@@ -302,23 +316,6 @@ src/
     …
     222→}
   where-operators.ts
-    1→export const WHERE_OPERATORS = [
-    2→  'lt',
-    3→  'lte',
-    4→  'gt',
-    5→  'gte',
-    6→  'eq',
-    7→  'ne',
-    8→  'in',
-    9→  'contains',
-    10→  'startsWith',
-    11→  'endsWith',
-    12→] as const
-    14→export type WhereOperator = (typeof WHERE_OPERATORS)[number]
-    15→
-    16→export function isWhereOperator(value: string): value is WhereOperator {
-    17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
-    …
 tsconfig.json
 views/
   index.html

@@ -42,7 +42,14 @@ README.md
   51→- Hardware: RTX 4070 Laptop (8GB)
   52→- Model: Qwen3-0.6B
   53→- Total Requests: 256 sequences
-  …
+  54→- Input Length: Randomly sampled between 100–1024 tokens
+  55→- Output Length: Randomly sampled between 100–1024 tokens
+  56→
+  57→**Performance Results:**
+  58→| Inference Engine | Output Tokens | Time (s) | Throughput (tokens/s) |
+  59→|----------------|-------------|----------|-----------------------|
+  60→| vLLM           | 133,966     | 98.37    | 1361.84               |
+  61→| Nano-vLLM      | 133,966     | 93.41    | 1434.13               |
   64→## Star History
   …
 assets/
@@ -232,79 +239,58 @@ nanovllm/
     attention.py
     embed_head.py
     layernorm.py
-      …
-      5→class RMSNorm(nn.Module):
-      6→
-      7→    def __init__(
-      8→        self,
-      9→        hidden_size: int,
-      10→        eps: float = 1e-6,
-      11→    ) -> None:
-      …
-      16→    @torch.compile
-      17→    def rms_forward(
-      18→        self,
-      19→        x: torch.Tensor,
-      20→    ) -> torch.Tensor:
-      …
-      28→    @torch.compile
-      29→    def add_rms_forward(
-      30→        self,
-      31→        x: torch.Tensor,
-      32→        residual: torch.Tensor,
-      33→    ) -> tuple[torch.Tensor, torch.Tensor]:
-      …
-      42→    def forward(
-      43→        self,
-      44→        x: torch.Tensor,
-      45→        residual: torch.Tensor | None = None,
-      46→    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
-      …
     linear.py
+      …
+      7→def divide(numerator, denominator):
+      …
+      12→class LinearBase(nn.Module):
+      13→
+      14→    def __init__(
+      …
+      33→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      37→class ReplicatedLinear(LinearBase):
+      38→
+      39→    def __init__(
+      40→        self,
+      41→        input_size: int,
+      42→        output_size: int,
+      43→        bias: bool = False,
+      44→    ):
+      …
+      47→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
+      …
+      50→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      54→class ColumnParallelLinear(LinearBase):
+      55→
+      56→    def __init__(
+      …
+      65→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
+      …
+      72→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+      …
+      76→class MergedColumnParallelLinear(ColumnParallelLinear):
+      77→
+      78→    def __init__(
+      79→        self,
+      80→        input_size: int,
+      81→        output_sizes: list[int],
+      82→        bias: bool = False,
+      83→    ):
+      …
+      87→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: int):
+      …
+      96→class QKVParallelLinear(ColumnParallelLinear):
+      97→
+      98→    def __init__(
+      …
+      114→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: str):
+      …
+      131→class RowParallelLinear(LinearBase):
+      …
     rotary_embedding.py
-      …
-      6→def apply_rotary_emb(
-      7→    x: torch.Tensor,
-      8→    cos: torch.Tensor,
-      9→    sin: torch.Tensor,
-      10→) -> torch.Tensor:
-      …
-      17→class RotaryEmbedding(nn.Module):
-      18→
-      19→    def __init__(
-      20→        self,
-      21→        head_size: int,
-      22→        rotary_dim: int,
-      23→        max_position_embeddings: int,
-      24→        base: float,
-      25→    ) -> None:
-      …
-      37→    @torch.compile
-      38→    def forward(
-      39→        self,
-      40→        positions: torch.Tensor,
-      41→        query: torch.Tensor,
-      42→        key: torch.Tensor,
-      43→    ) -> tuple[torch.Tensor, torch.Tensor]:
-      …
-      51→@lru_cache(1)
-      52→def get_rope(
-      53→    head_size: int,
-      54→    rotary_dim: int,
-      55→    max_position: int,
-      56→    base: float,
-      57→    rope_scaling: dict | None = None,
-      58→):
-      …
     sampler.py
-      …
-      5→class Sampler(nn.Module):
-      6→
-      7→    def __init__(self):
-      8→        super().__init__()
-      10→    @torch.compile
-      11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
-      …
   llm.py
     …
     4→class LLM(LLMEngine):

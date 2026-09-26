@@ -20,11 +20,11 @@ Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 699 |  | 127 | Bodies of Class:allocate and Class:new | 2.2 | 2.1 | 0.642 |
 | ns | 930 |  | 231 | Body of Class:subclass | 2.3 | 2.1 | 0.565 |
 | walker |  | 1032 | 344 | Code::CodeKey { rung: Names, file: middleclass.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
-| walker |  | 1044 | 12 | Code::CodeKey { rung: Names, file: performance/time.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
-| walker |  | 1069 | 25 | Code::CodeKey { rung: Names, file: performance/run.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
+| walker |  | 1057 | 25 | Code::CodeKey { rung: Names, file: performance/run.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.661 |
+| walker |  | 1066 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 1, sub: 0, line: 19 } |  |  | 0.661 |
 | ns | 1074 |  | 144 | Bodies of subclassed, isSubclassOf and include | 2.4 | 2.1 | 0.618 |
-| walker |  | 1078 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 1, sub: 0, line: 19 } |  |  | 0.618 |
-| walker |  | 1087 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 2, sub: 0, line: 37 } |  |  | 0.618 |
+| walker |  | 1075 | 9 | Code::CodeKey { rung: Body, file: performance/run.lua, decl: 2, sub: 0, line: 37 } |  |  | 0.618 |
+| walker |  | 1087 | 12 | Code::CodeKey { rung: Names, file: performance/time.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.618 |
 | ns | 1195 |  | 121 | Bodies of the instance-level defaults __tostring, initialize, isInstanceOf | 2.5 | 2.1 | 0.591 |
 | ns | 1340 |  | 145 | README Quick Look, part 1: defining a class, initializer, class variable, method | 3.1 |  | 0.625 |
 | walker |  | 1356 | 269 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.634 |

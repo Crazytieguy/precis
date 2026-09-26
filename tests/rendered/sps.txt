@@ -188,6 +188,8 @@ sps/
       15→pub mod search;
       16→pub mod status;
       17→pub mod uninstall;
+      18→pub mod update;
+      19→pub mod upgrade;
       …
     main.rs
       …
@@ -205,9 +207,6 @@ sps/
       planner.rs
       runner.rs
     pipeline.rs
-      1→pub mod downloader;
-      2→pub mod planner;
-      3→pub mod runner;
 sps-common/
   Cargo.toml
   src/

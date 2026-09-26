@@ -2,6 +2,7 @@
   devcontainer.json
 .github/
   ISSUE_TEMPLATE/
+    bug_report.yaml
   PULL_REQUEST_TEMPLATE.md
   mergify.yml
   workflows/
@@ -246,16 +247,6 @@ package.json
   …
 src/
   assetsLoader.js
-    …
-    10→class assetsLoader {
-    11→  static load () {
-    …
-    16→  static resolveAssetFiles () {
-    …
-    39→  static formatAsset (assetPath) {
-    …
-    42→}
-    44→module.exports = assetsLoader
   baseWidget.js
   cli.js
     …
@@ -315,17 +306,6 @@ src/
     231→}
     233→module.exports = Util
   enum.js
-    1→module.exports = {
-    2→  ContainerState: {
-    3→    created: 'created',
-    4→    restarting: 'restarting',
-    5→    running: 'running',
-    6→    removing: 'removing',
-    7→    paused: 'paused',
-    8→    exited: 'exited',
-    9→    dead: 'dead'
-    10→  }
-    11→}
   grid.config.js
   screen.js
     …
@@ -383,6 +363,17 @@ widgets/
     …
     41→  removeAllContainers () {
     …
+    53→  removeAllImages () {
+    …
+    65→  deleteSelectedContainer () {
+    …
+    82→  init () {
+    …
+    121→  getWidget () {
+    …
+    148→  renderWidget () {
+    149→    return null
+    …
     151→}
     153→module.exports = myWidget
   containers/
@@ -394,18 +385,16 @@ widgets/
     containerUtilization.widget.js
     containerVsImages.widget.js
   help.widget.js
-    …
-    5→class myWidget extends HelpWidget {
-    6→  getLabel () {
-    7→    return 'Dockly Help'
-    …
-    9→}
-    11→module.exports = myWidget
   images/
     imageInfo.widget.js
     imageList.widget.js
     imageUtilization.widget.js
   searchInput.widget.js
+    …
+    9→class myWidget extends baseWidget(EventEmitter) {
+    …
+    105→}
+    107→module.exports = myWidget
   services/
     servicesInfo.widget.js
     servicesList.widget.js
@@ -413,3 +402,17 @@ widgets/
     servicesStatus.widget.js
     servicesVsImages.widget.js
   toolbar.widget.js
+    …
+    7→class myWidget extends baseWidget(EventEmitter) {
+    8→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {}, mode }) {
+    …
+    21→  init () {
+    22→    return null
+    …
+    25→  getWidget () {
+    26→    return this.widget
+    …
+    29→  createWidget () {
+    …
+    141→}
+    143→module.exports = myWidget

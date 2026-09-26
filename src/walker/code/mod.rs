@@ -16,6 +16,8 @@ mod python;
 mod rust;
 mod typescript;
 
+use std::cmp::Reverse;
+use std::collections::HashSet;
 use std::ops::RangeInclusive;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -25,7 +27,7 @@ use tree_sitter::{Node, Tree};
 use self::model::{DeclInfo, FileModel, Item, Shape};
 use super::fs::files_with_any_extension;
 use super::{WalkCtx, node_end_row_trimmed};
-use crate::batch::Batch;
+use crate::batch::{Batch, BatchKey, Rung};
 use crate::render::Source;
 
 /// One source language: what its extraction module gives the engine.
@@ -43,6 +45,12 @@ pub(crate) struct Language {
     is_entrypoint: Option<fn(&Path, &WalkCtx) -> bool>,
     /// A file-role multiplier on every batch of the file.
     file_weight: Option<fn(&Path, &WalkCtx) -> f64>,
+    /// The names the file uses for the sibling files it depends on,
+    /// matched against each sibling's [`Self::sibling_names`]. `None`
+    /// orders the language's roster chain by size alone.
+    sibling_mentions: Option<fn(&SourceFile) -> HashSet<String>>,
+    /// The names siblings use for the file; `None` for its file stem.
+    sibling_names: Option<fn(&SourceFile) -> Vec<String>>,
 }
 
 /// The languages the engine can walk: a closed set.
@@ -56,6 +64,10 @@ const LANGUAGES: [&Language; 6] = [
 ];
 
 impl Language {
+    pub(crate) fn is_entrypoint(&self, path: &Path, ctx: &WalkCtx) -> bool {
+        self.is_entrypoint.is_some_and(|test| test(path, ctx))
+    }
+
     /// The language whose extensions include `path`'s extension.
     pub(crate) fn from_path(path: &Path) -> Option<&'static Language> {
         let extension = path.extension()?.to_str()?;
@@ -210,6 +222,10 @@ impl SourceFile {
     }
 }
 
+fn file_stem(path: &Path) -> Option<&str> {
+    path.file_stem()?.to_str()
+}
+
 /// Whether `path`'s stem is `dir`'s name, ignoring case and reading `-`
 /// as `_`: the file a project names after itself (`lib/express.js` in
 /// `express`, `sds.h` in `sds`), conventionally its front door.
@@ -277,18 +293,85 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .iter()
         .map(|(path, language)| (path.as_path(), (language.grammar)(path)))
         .collect();
-    let mut out = Vec::new();
+    let mut emitted = Vec::new();
     ctx.parse_each(&grammars, |index, source, tree| {
         let (path, language) = &files[index];
+        let bytes = source.len();
         let file = SourceFile {
             path: path.clone(),
             source,
             tree,
         };
         let model = (language.extract)(&file, ctx);
-        out.extend(emit::emit_file(language, &file, model, ctx));
+        let names = match language.sibling_names {
+            Some(names) => names(&file),
+            None => file_stem(path).into_iter().map(str::to_owned).collect(),
+        };
+        emitted.push(EmittedFile {
+            batches: emit::emit_file(language, &file, model, ctx),
+            chained: !language.is_entrypoint(path, ctx),
+            non_essential: ctx.non_essential_factor(path) < 1.0,
+            bytes,
+            names,
+            mentions: language
+                .sibling_mentions
+                .map_or_else(HashSet::new, |mentions| mentions(&file)),
+            degree: 0,
+        });
     });
-    out
+    chain_rosters(&mut emitted);
+    emitted.into_iter().flat_map(|file| file.batches).collect()
+}
+
+/// One file's batches, and what places its roster on its directory's
+/// roster chain.
+struct EmittedFile {
+    batches: Vec<Batch>,
+    /// Entry files stay off the chain: their rosters are neither gated nor
+    /// a gate.
+    chained: bool,
+    non_essential: bool,
+    bytes: usize,
+    /// See [`Language::sibling_names`].
+    names: Vec<String>,
+    /// See [`Language::sibling_mentions`].
+    mentions: HashSet<String>,
+    /// Chained siblings it depends on or that depend on it.
+    degree: usize,
+}
+
+/// Gates each chained file's `Names` head chunk on the previous chained
+/// file's, most central file first and non-essential files last. Every
+/// roster of a directory is priced alike by row length, so without the
+/// chain the files with the shortest rows open first, whatever their role.
+/// A file is central when many siblings depend on it (a base type the
+/// others are written against) or it depends on many (the one composing
+/// them); ties, and languages that don't say, fall back to size.
+fn chain_rosters(files: &mut [EmittedFile]) {
+    let mut chain: Vec<&mut EmittedFile> = files.iter_mut().filter(|file| file.chained).collect();
+    for dependent in 0..chain.len() {
+        for dependency in 0..chain.len() {
+            let depends = dependent != dependency
+                && chain[dependency].names.iter().any(|name| {
+                    chain[dependent].mentions.contains(name)
+                        && !chain[dependent].names.contains(name)
+                });
+            if depends {
+                chain[dependent].degree += 1;
+                chain[dependency].degree += 1;
+            }
+        }
+    }
+    chain.sort_by_key(|file| (file.non_essential, Reverse((file.degree, file.bytes))));
+    let mut gate: Option<BatchKey> = None;
+    for file in chain {
+        let Some(head) = file.batches.iter_mut().find(|batch| {
+            matches!(&batch.key, BatchKey::Code(key) if key.rung == Rung::Names && key.sub == 0)
+        }) else {
+            continue;
+        };
+        head.predecessor = gate.replace(head.key.clone());
+    }
 }
 
 #[cfg(test)]
@@ -402,5 +485,92 @@ mod tests {
             Some(typescript::LANGUAGE.extensions)
         );
         assert_eq!(claimed("x.cpp"), None);
+    }
+
+    /// Each file's `Names` head chunk and its predecessor's file name, for
+    /// `files` written to a fresh directory.
+    fn roster_chain(files: &[(&str, &str)]) -> Vec<(String, Option<String>)> {
+        let dir = tempfile::tempdir().unwrap();
+        for (name, content) in files {
+            std::fs::write(dir.path().join(name), content).unwrap();
+        }
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let name = |key: &BatchKey| match key {
+            BatchKey::Code(key) => key.file.file_name().unwrap().to_string_lossy().into_owned(),
+            other => panic!("not a code key: {other:?}"),
+        };
+        let mut heads: Vec<_> = expand_in_dir(dir.path(), &ctx)
+            .into_iter()
+            .filter(|batch| {
+                matches!(&batch.key, BatchKey::Code(key) if key.rung == Rung::Names && key.sub == 0)
+            })
+            .map(|batch| (name(&batch.key), batch.predecessor.as_ref().map(name)))
+            .collect();
+        heads.sort();
+        heads
+    }
+
+    fn link(file: &str, gate: Option<&str>) -> (String, Option<String>) {
+        (file.to_owned(), gate.map(str::to_owned))
+    }
+
+    #[test]
+    fn code_mod_roster_chain_puts_the_most_referenced_module_first() {
+        let chain = roster_chain(&[
+            ("__init__.py", "from .core import Engine\n"),
+            ("core.py", "class Engine:\n    pass\n"),
+            (
+                "cli.py",
+                "from .core import Engine\n\ndef main():\n    pass\n",
+            ),
+            (
+                "helpers.py",
+                "from . import core\n\ndef helper_with_a_long_name():\n    pass\n",
+            ),
+            ("test_core.py", "def test_engine():\n    pass\n"),
+        ]);
+        assert_eq!(
+            chain,
+            [
+                link("__init__.py", None),
+                link("cli.py", Some("helpers.py")),
+                link("core.py", None),
+                link("helpers.py", Some("core.py")),
+                link("test_core.py", Some("cli.py")),
+            ]
+        );
+    }
+
+    /// `variant.go` redeclares `New`, as a build-tagged platform variant
+    /// does, so naming it is not a dependency on `engine.go`.
+    #[test]
+    fn code_mod_roster_chain_links_go_files_by_the_names_they_use() {
+        let chain = roster_chain(&[
+            (
+                "engine.go",
+                "package gin\n\ntype Engine struct{}\n\nfunc New() *Engine { return nil }\n",
+            ),
+            (
+                "mode.go",
+                "package gin\n\nfunc SetModeWithAVeryLongName(value string) {}\n",
+            ),
+            (
+                "group.go",
+                "package gin\n\ntype Group struct{ engine *Engine }\n",
+            ),
+            (
+                "variant.go",
+                "package gin\n\ntype Engine2 struct{}\n\nfunc New() {}\n",
+            ),
+        ]);
+        assert_eq!(
+            chain,
+            [
+                link("engine.go", None),
+                link("group.go", Some("engine.go")),
+                link("mode.go", Some("group.go")),
+                link("variant.go", Some("mode.go")),
+            ]
+        );
     }
 }

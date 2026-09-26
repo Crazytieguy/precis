@@ -243,10 +243,10 @@ src/
   use-composed-refs.ts
   use-controllable-state.ts
   use-position-fixed.ts
-    …
-    15→export function usePositionFixed({
-    …
   use-prevent-scroll.ts
+    …
+    8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+    …
   use-scale-background.ts
   use-snap-points.ts
 test/

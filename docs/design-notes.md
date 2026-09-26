@@ -167,6 +167,18 @@ must not undo:
 - **Signals that rank every batch of a big module higher** (line-count
   weights, class members as roster entries) buy the module's
   declaration dive, not its roster, and lose.
+- **A directory's rosters open in a chain.** A roster's ratio is
+  `value / (tokens per row)^k`, so unchained, a directory's rosters sit
+  in a narrow band and open shortest-rows first, whatever each file's
+  role. Each non-entry file's `Names` head chunk is instead gated on the
+  previous file's: most sibling references first (Python imports, Go
+  names another file of the package declares), then largest, with
+  non-essential files last. Values are untouched: every value-model fix
+  tried (a prior for sibling mentions, a steeper roster exponent, a
+  depth pin beside entry files) lifted code over README and manifest
+  batches and lost. Reference signals for C `#include`, Rust
+  `crate::`/`mod` and TS/JS relative imports ranked no better than size
+  (C's most-included headers are utility headers) and were dropped.
 
 ## Threads and resource bounds
 
@@ -194,16 +206,3 @@ must not undo:
   long-listing split starts above the longest complete listing a
   training answer key ranks. Moving that trade needs an answer-key
   revision, not a walker tweak.
-- **Unopened rosters rank by row length, not centrality.** A roster's
-  ratio is `value / (tokens per row)^k`, so a directory's rosters sit in
-  a narrow band and open shortest-rows first; a central file whose rows
-  are long method signatures opens last. Per-language file weights and
-  hiding rules didn't fix it (a Go root file named after its package
-  stays under the bar: a helper file so named opens ahead of the central
-  one). Value-model tries that lost: a prior for how many sibling files
-  mention a name only this file's roster lists, which lifts code over
-  README and manifest batches and demotes re-export hubs; a steeper
-  roster exponent; pinning every file beside an entry file to depth 1,
-  since the depth discount is what keeps code below the docs. A fix
-  probably reorders only among one directory's rosters without raising
-  them against non-code batches.

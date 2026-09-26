@@ -133,41 +133,6 @@ py3xui/
       4→from py3xui.api.api_inbound import InboundApi
       5→from py3xui.api.api_server import ServerApi
     api.py
-      …
-      13→class Api:
-      …
-      67→    def __init__(
-      68→        self,
-      69→        host: str,
-      70→        username: str,
-      71→        password: str,
-      72→        use_tls_verify: bool = True,
-      73→        custom_certificate_path: str | None = None,
-      74→        logger: Any | None = None,
-      75→    ):  # pylint: disable=R0913, R0917
-      …
-      93→    @property
-      94→    def session(self) -> str | None:
-      …
-      102→    @session.setter
-      103→    def session(self, value: str) -> None:
-      …
-      115→    @property
-      116→    def cookie_name(self) -> str | None:
-      …
-      124→    @cookie_name.setter
-      125→    def cookie_name(self, value: str | None) -> None:
-      …
-      139→    @classmethod
-      140→    def from_env(
-      141→        cls,
-      142→        use_tls_verify: bool | None = None,
-      143→        custom_certificate_path: str | None = None,
-      144→        logger: Any | None = None,
-      145→    ) -> Api:
-      …
-      189→    def login(self, two_factor_code: str | int | None = None) -> None:
-      …
     api_base.py
     api_client.py
     api_database.py
@@ -182,11 +147,6 @@ py3xui/
       4→from py3xui.async_api.async_api_inbound import AsyncInboundApi
       5→from py3xui.async_api.async_api_server import AsyncServerApi
     async_api.py
-      …
-      18→class AsyncApi:
-      …
-      72→    def __init__(
-      …
     async_api_base.py
     async_api_client.py
     async_api_database.py
@@ -273,6 +233,48 @@ py3xui/
       …
       2→from py3xui.server.server import RealityKeyPair, Server
     server.py
+      …
+      7→class ServerFields:
+      …
+      10→    CPU = "cpu"
+      …
+      43→class MemoryInfo(BaseModel):
+      …
+      50→    current: int
+      51→    total: int
+      54→class XRayInfo(BaseModel):
+      …
+      62→    state: str
+      63→    error_msg: str = Field(alias=ServerFields.XRAY_ERROR_MSG) # type: ignore
+      64→    version: str
+      67→class NetworkIO(BaseModel):
+      …
+      74→    up: int
+      75→    down: int
+      78→class NetworkTraffic(BaseModel):
+      …
+      85→    sent: int
+      86→    recv: int
+      89→class PublicIP(BaseModel):
+      …
+      96→    ipv4: str
+      97→    ipv6: str
+      100→class AppStats(BaseModel):
+      …
+      108→    threads: int
+      109→    mem: int
+      110→    uptime: int
+      113→class RealityKeyPair(BaseModel):
+      …
+      116→    private_key: str = Field(alias="privateKey")  # type: ignore
+      117→    public_key: str = Field(alias="publicKey")  # type: ignore
+      118→
+      119→    model_config = ConfigDict(
+      120→        populate_by_name=True,
+      121→        extra="allow",
+      122→    )
+      125→class Server(BaseModel):
+      …
   utils/
     README.md
     __init__.py

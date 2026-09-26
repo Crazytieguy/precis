@@ -118,6 +118,16 @@ res/
   desc_xlstm_overview.svg
   xlstm_7b_poster.svg
 setup.cfg
+  1→[metadata]
+  2→version = 2.0.5
+  3→name = xlstm
+  4→description = A novel LSTM variant with promising performance compared to Transformers.
+  5→long_description = file: README.md
+  6→long_description_content_type = text/markdown
+  7→project_urls =
+  …
+  9→classifiers =
+  …
 tests/
   __init__.py (empty)
   conftest.py
@@ -224,35 +234,34 @@ xlstm/
     ln.py
     util.py
   utils.py
+    …
+    11→@dataclass
+    12→class UpProjConfigMixin:
+    13→    proj_factor: float = None  # will be overridden by subclasses
+    14→    round_proj_up_dim_up: bool = True
+    15→    round_proj_up_to_multiple_of: int = 64
+    16→
+    17→    # internal
+    18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
+    19→
+    20→    def _set_proj_up_dim(self, embedding_dim: int) -> None:
+    …
+    32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
+    33→    def __init__(self, **kwargs):
+    …
+    36→    def get_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
+    …
+    61→    def get_weight_decay_optim_group_param_names(self, **kwargs) -> tuple[Sequence[str], Sequence[str]]:
+    …
+    77→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
+    …
+    97→    def _get_weight_decay_optim_groups_for_modules(
+    98→        self, modules: list["WeightDecayOptimGroupMixin"], **kwargs
+    99→    ) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
+    …
   xlstm_block_stack.py
     …
-    15→@dataclass
     16→class xLSTMBlockStackConfig:
-    17→    mlstm_block: Optional[mLSTMBlockConfig] = None
-    18→    slstm_block: Optional[sLSTMBlockConfig] = None
-    19→
-    20→    context_length: int = -1
-    21→    num_blocks: int = 1
-    22→    embedding_dim: int = 128
-    23→    add_post_blocks_norm: bool = True
-    24→    bias: bool = False
-    25→    dropout: float = 0.0
-    26→
-    27→    # The block indices at which sLSTM blocks are placed.
-    28→    # Indexing starts from 0.
-    29→    slstm_at: Union[list[int], Literal["all"]] = field(default_factory=list)
-    30→
-    31→    # _block_map is a string that specifies which block is used at which position
-    32→    # 0: use the mLSTM block
-    33→    # 1: use the sLSTM block
-    34→    _block_map: str = None
-    36→    @property
-    37→    def block_map(self) -> list[int]:
-    …
-    40→    def _create_block_map(self) -> str:
-    41→        """Creates the block map, that specifies which block is used at which position."""
-    …
-    52→    def __post_init__(self):
     …
     77→class xLSTMBlockStack(nn.Module):
     78→    config_class = xLSTMBlockStackConfig
@@ -262,12 +271,6 @@ xlstm/
     90→    def _create_blocks(self, config: xLSTMBlockStackConfig):
     …
     111→    def reset_parameters(self) -> None:
-    …
-    117→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
-    …
-    126→    def step(
-    127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
-    128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
     …
   xlstm_large/
     __init__.py

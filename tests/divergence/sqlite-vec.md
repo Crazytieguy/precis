@@ -50,28 +50,28 @@ Score(3000)=0.438 I=0.754 C=0.254 ns_rows≤3K=18/60 grid(1000/1442/2080/3000/43
 | walker |  | 1807 | 49 | Fs::DirListing { dir: site/using } |  |  | 0.597 |
 | ns | 1829 |  | 200 | Shadow table name macros (complete set) | 2.4 |  | 0.576 |
 | walker |  | 1858 | 51 | Fs::DirListing { dir: site/guides } |  |  | 0.576 |
-| walker |  | 1994 | 136 | Code::CodeKey { rung: Names, file: tmp-static.py, decl: 0, sub: 0, line: 0 } |  |  | 0.576 |
+| walker |  | 2015 | 157 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.576 |
 | ns | 2141 |  | 312 | Shadow table CREATE TABLE DDL | 2.5 | 2.4 | 0.524 |
-| walker |  | 2144 | 150 | Code::CodeKey { rung: Decl, file: tmp-static.py, decl: 4, sub: 0, line: 13 } |  |  | 0.524 |
 | ns | 2239 |  | 98 | vec0 query plan enum | 2.6 |  | 0.509 |
-| walker |  | 2301 | 157 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.509 |
+| walker |  | 2286 | 271 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.509 |
+| walker |  | 2296 | 10 | Code::CodeKey { rung: Names, file: bindings/rust/build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
 | ns | 2392 |  | 153 | vec0BestIndex query-plan selection rules | 2.7 |  | 0.489 |
+| walker |  | 2516 | 220 | Plaintext::Whole { file: bindings/rust/Makefile } |  |  | 0.489 |
+| walker |  | 2528 | 12 | Fs::DirListing { dir: benchmarks/profiling } |  |  | 0.489 |
 | ns | 2566 |  | 174 | vec0 user column kinds | 2.8 |  | 0.467 |
-| walker |  | 2572 | 271 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.467 |
-| walker |  | 2582 | 10 | Code::CodeKey { rung: Names, file: bindings/rust/build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
-| walker |  | 2802 | 220 | Plaintext::Whole { file: bindings/rust/Makefile } |  |  | 0.467 |
-| walker |  | 2814 | 12 | Fs::DirListing { dir: benchmarks/profiling } |  |  | 0.467 |
-| walker |  | 2853 | 39 | Code::CodeKey { rung: Names, file: bindings/python/extra_init.py, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
-| walker |  | 2870 | 17 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.467 |
+| walker |  | 2567 | 39 | Code::CodeKey { rung: Names, file: bindings/python/extra_init.py, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
+| walker |  | 2584 | 17 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.467 |
+| walker |  | 2606 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.467 |
+| walker |  | 2625 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.467 |
+| walker |  | 2647 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.467 |
+| walker |  | 2662 | 15 | Fs::DirListing { dir: tests/leak-fixtures } |  |  | 0.467 |
+| walker |  | 2852 | 190 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
 | ns | 2873 |  | 307 | idxStr block kinds (complete enum) | 2.9 |  | 0.438 |
-| walker |  | 2892 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 1, sub: 0, line: 6 } |  |  | 0.438 |
-| walker |  | 2911 | 19 | Code::CodeKey { rung: Body, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
-| walker |  | 2933 | 22 | Code::CodeKey { rung: Doc, file: bindings/python/extra_init.py, decl: 2, sub: 0, line: 11 } |  |  | 0.438 |
-| walker |  | 2948 | 15 | Fs::DirListing { dir: tests/leak-fixtures } |  |  | 0.438 |
+| walker |  | 2878 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 3, sub: 0, line: 70 } |  |  | 0.438 |
+| walker |  | 2923 | 45 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 1, sub: 0, line: 64 } |  |  | 0.438 |
 | ns | 3045 |  | 172 | Partition key operator encoding | 2.10 |  | 0.424 |
-| walker |  | 3138 | 190 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 0, line: 0 } |  |  | 0.424 |
-| walker |  | 3164 | 26 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 3, sub: 0, line: 70 } |  |  | 0.424 |
-| walker |  | 3209 | 45 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 1, sub: 0, line: 64 } |  |  | 0.424 |
+| walker |  | 3059 | 136 | Code::CodeKey { rung: Names, file: tmp-static.py, decl: 0, sub: 0, line: 0 } |  |  | 0.424 |
+| walker |  | 3209 | 150 | Code::CodeKey { rung: Decl, file: tmp-static.py, decl: 4, sub: 0, line: 13 } |  |  | 0.424 |
 | ns | 3277 |  | 232 | Metadata and distance-constraint operator encodings | 2.11 | 2.10 | 0.404 |
 | walker |  | 3377 | 168 | Code::CodeKey { rung: Names, file: sqlite-vec.c, decl: 0, sub: 1, line: 0 } |  |  | 0.404 |
 | walker |  | 3389 | 12 | Code::CodeKey { rung: Decl, file: sqlite-vec.c, decl: 16, sub: 0, line: 361 } |  |  | 0.404 |

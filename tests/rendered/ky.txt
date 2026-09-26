@@ -168,22 +168,7 @@ source/
       30→}
     HTTPError.ts
     NonError.ts
-      …
-      6→export class NonError extends Error {
-      7→	override name = 'NonError';
-      8→	readonly value: unknown;
-      9→
-      10→	constructor(value: unknown) {
-      …
-      28→}
     TimeoutError.ts
-      …
-      3→export class TimeoutError extends Error {
-      4→	public request: KyRequest;
-      5→
-      6→	constructor(request: Request) {
-      …
-      11→}
   index.ts
     …
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
@@ -253,70 +238,60 @@ source/
       20→	```
       21→	*/
       22→	<T>(url: Input, options?: Options): ResponsePromise<T>;
+      23→
+      24→	/**
+      25→	Fetch the given `url` using the option `{method: 'get'}`.
+      26→
+      27→	@param url - `Request` object, `URL` object, or URL string.
+      28→	@returns A promise with `Body` methods added.
+      29→	*/
+      30→	get: <T>(url: Input, options?: Options) => ResponsePromise<T>;
+      32→	/**
+      33→	Fetch the given `url` using the option `{method: 'post'}`.
+      34→
+      35→	@param url - `Request` object, `URL` object, or URL string.
+      36→	@returns A promise with `Body` methods added.
+      37→	*/
+      38→	post: <T>(url: Input, options?: Options) => ResponsePromise<T>;
+      39→
+      40→	/**
+      41→	Fetch the given `url` using the option `{method: 'put'}`.
+      42→
+      43→	@param url - `Request` object, `URL` object, or URL string.
+      44→	@returns A promise with `Body` methods added.
+      45→	*/
+      46→	put: <T>(url: Input, options?: Options) => ResponsePromise<T>;
+      48→	/**
+      49→	Fetch the given `url` using the option `{method: 'delete'}`.
+      50→
+      51→	@param url - `Request` object, `URL` object, or URL string.
+      52→	@returns A promise with `Body` methods added.
+      53→	*/
+      54→	delete: <T>(url: Input, options?: Options) => ResponsePromise<T>;
+      55→
+      56→	/**
+      57→	Fetch the given `url` using the option `{method: 'patch'}`.
+      58→
+      59→	@param url - `Request` object, `URL` object, or URL string.
+      60→	@returns A promise with `Body` methods added.
+      61→	*/
+      62→	patch: <T>(url: Input, options?: Options) => ResponsePromise<T>;
       …
       186→};
     options.ts
     request.ts
-      1→export type KyRequest<T = unknown> = {
-      2→	json: <J = T>() => Promise<J>;
-      3→} & Request;
     response.ts
-      1→export type KyResponse<T = unknown> = {
-      2→	json: <J = T >() => Promise<J>;
-      3→} & Response;
     retry.ts
-      …
-      3→export type ShouldRetryState = {
-      4→	/**
-      5→	The error that caused the request to fail.
-      6→	*/
-      7→	error: Error;
-      8→
-      9→	/**
-      10→	The number of retries attempted. Starts at 1 for the first retry.
-      11→	*/
-      12→	retryCount: number;
-      13→};
-      15→export type RetryOptions = {
-      …
   utils/
     body.ts
     delay.ts
-      …
-      5→export type DelayOptions = {
-      6→	signal?: InternalOptions['signal'];
-      7→};
-      9→export default async function delay(
-      10→	ms: number,
-      11→	{signal}: DelayOptions,
-      12→): Promise<void> {
-      …
     is.ts
     merge.ts
     normalize.ts
     options.ts
     timeout.ts
-      …
-      3→export type TimeoutOptions = {
-      4→	timeout: number;
-      5→	fetch: typeof fetch;
-      6→};
-      …
-      9→export default async function timeout(
-      10→	request: Request,
-      11→	init: RequestInit,
-      12→	abortController: AbortController | undefined,
-      13→	options: TimeoutOptions,
-      14→): Promise<Response> {
-      …
     type-guards.ts
     types.ts
-      1→export type Mutable<T> = {
-      2→	-readonly[P in keyof T]: T[P]
-      3→};
-      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-      6→	? Array<[string, U]>
-      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
 test/
   browser.ts
   bytes.ts

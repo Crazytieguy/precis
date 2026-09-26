@@ -34,6 +34,8 @@ pub(super) const LANGUAGE: Language = Language {
     extract,
     is_entrypoint: Some(is_entrypoint),
     file_weight: Some(file_weight),
+    sibling_mentions: None,
+    sibling_names: None,
 };
 
 const ENTRYPOINT_STEMS: &[&str] = &["index", "main", "mod", "esm"];

@@ -27,6 +27,8 @@ pub(super) const LANGUAGE: Language = Language {
     extract,
     is_entrypoint: Some(is_entrypoint),
     file_weight: Some(file_weight),
+    sibling_mentions: None,
+    sibling_names: None,
 };
 
 /// Every batch of a `.c` file, relative to a header. Not tuned.

@@ -138,11 +138,6 @@ concurrency_test.go
 condition.go
 condition_test.go
 constraints.go
-  …
-  3→// Clonable defines a constraint of types having Clone() T method.
-  4→type Clonable[T any] interface {
-  5→	Clone() T
-  6→}
 docs/
   .gitignore
   CLAUDE.md
@@ -153,6 +148,22 @@ docs/
     about.md
     contributing.md
     core/
+      _category_.json
+      channel.md
+      concurrency.md
+      condition.md
+      error-handling.md
+      find.md
+      function.md
+      intersect.md
+      map.md
+      math.md
+      retry.md
+      slice.md
+      string.md
+      time.md
+      tuple.md
+      type.md
     experimental/
       _category_.json
       simd.md
@@ -164,7 +175,11 @@ docs/
       find.md
       intersect.md
       map.md
-      …
+      sequence.md
+      slice.md
+      string.md
+      tuple.md
+      type.md
     mutable/
       _category_.json
       slice.md
@@ -207,6 +222,22 @@ docs/
   static/
     .nojekyll (empty)
     img/
+      README.md
+      backpacks.svg
+      compass.svg
+      cover.png
+      favicon.ico
+      functional-gopher.png
+      go-community.png
+      icon.png
+      logo-full.png
+      logo-full.xcf
+      logo.png
+      oxygen-tube.svg
+      social-preview-small.png
+      social-preview.png
+      social-preview.xcf
+      sponsors/
     llms.txt
     robots.txt
   tsconfig.json
@@ -325,31 +356,27 @@ retry.go
 retry_example_test.go
 retry_test.go
 slice.go
+  …
+  12→func Filter[T any, Slice ~[]T](collection Slice, predicate func(item T, index int) bool) Slice {
+  …
+  27→func FilterErr[T any, Slice ~[]T](collection Slice, predicate func(item T, index int) (bool, error)) (Slice, error) {
+  …
+  45→func Map[T, R any](collection []T, transform func(item T, index int) R) []R {
+  …
+  57→func MapErr[T, R any](collection []T, transform func(item T, index int) (R, error)) ([]R, error) {
+  …
+  73→func UniqMap[T any, R comparable](collection []T, transform func(item T, index int) R) []R {
+  …
 slice_test.go
 string.go
-  …
-  16→var (
-  17→	//nolint:revive
-  18→	LowerCaseLettersCharset = []rune("abcdefghijklmnopqrstuvwxyz")
-  19→	UpperCaseLettersCharset = []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-  20→	LettersCharset          = append(LowerCaseLettersCharset, UpperCaseLettersCharset...)
-  21→	NumbersCharset          = []rune("0123456789")
-  22→	AlphanumericCharset     = append(LettersCharset, NumbersCharset...)
-  23→	SpecialCharset          = []rune("!@#$%^&*()_+-=[]{}|;':\",./<>?")
-  24→	AllCharset              = append(AlphanumericCharset, SpecialCharset...)
-  25→
-  26→	// bearer:disable go_lang_permissive_regex_validation
-  27→	splitWordReg = regexp.MustCompile(`([a-z])([A-Z0-9])|([a-zA-Z])([0-9])|([0-9])([a-zA-Z])|([A-Z])([A-Z])([a-z])`)
-  28→	// bearer:disable go_lang_permissive_regex_validation
-  29→	splitNumberLetterReg = regexp.MustCompile(`([0-9])([a-zA-Z])`)
-  30→	maximumCapacity      = math.MaxInt>>1 + 1
-  31→)
-  …
 string_test.go
 time.go
 time_test.go
 tuples.go
 tuples_test.go
 type_manipulation.go
+  …
+  7→func IsNil(x any) bool {
+  …
 type_manipulation_test.go
 types.go

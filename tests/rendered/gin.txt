@@ -122,12 +122,6 @@ codec/json/
 codecov.yml
 context.go
 context_appengine.go
-  …
-  5→//go:build appengine
-  …
-  9→func init() {
-  10→	defaultPlatform = PlatformGoogleAppEngine
-  …
 context_file_test.go
 context_test.go
 debug.go
@@ -166,6 +160,107 @@ examples/
 fs.go
 fs_test.go
 gin.go
+  …
+  25→const (
+  26→	defaultMultipartMemory = 32 << 20 // 32 MB
+  27→	escapedColon           = "\\:"
+  28→	colon                  = ":"
+  29→	backslash              = "\\"
+  30→)
+  32→var (
+  33→	default404Body = []byte("404 page not found")
+  34→	default405Body = []byte("405 method not allowed")
+  35→)
+  37→var defaultPlatform string
+  38→
+  39→var defaultTrustedCIDRs = []*net.IPNet{
+  40→	{ // 0.0.0.0/0 (IPv4)
+  41→		IP:   net.IP{0x0, 0x0, 0x0, 0x0},
+  42→		Mask: net.IPMask{0x0, 0x0, 0x0, 0x0},
+  43→	},
+  44→	{ // ::/0 (IPv6)
+  45→		IP:   net.IP{0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0},
+  46→		Mask: net.IPMask{0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0},
+  47→	},
+  48→}
+  50→// HandlerFunc defines the handler used by gin middleware as return value.
+  51→type HandlerFunc func(*Context)
+  53→// OptionFunc defines the function to change the default configuration
+  54→type OptionFunc func(*Engine)
+  56→// HandlersChain defines a HandlerFunc slice.
+  57→type HandlersChain []HandlerFunc
+  59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
+  60→func (c HandlersChain) Last() HandlerFunc {
+  …
+  67→// RouteInfo represents a request route's specification which contains method and path and its handler.
+  68→type RouteInfo struct {
+  69→	Method      string
+  70→	Path        string
+  71→	Handler     string
+  72→	HandlerFunc HandlerFunc
+  73→}
+  75→// RoutesInfo defines a RouteInfo slice.
+  76→type RoutesInfo []RouteInfo
+  78→// Trusted platforms
+  79→const (
+  80→	// PlatformGoogleAppEngine when running on Google App Engine. Trust X-Appengine-Remote-Addr
+  81→	// for determining the client's IP
+  82→	PlatformGoogleAppEngine = "X-Appengine-Remote-Addr"
+  83→	// PlatformCloudflare when using Cloudflare's CDN. Trust CF-Connecting-IP for determining
+  84→	// the client's IP
+  85→	PlatformCloudflare = "CF-Connecting-IP"
+  86→	// PlatformFlyIO when running on Fly.io. Trust Fly-Client-IP for determining the client's IP
+  87→	PlatformFlyIO = "Fly-Client-IP"
+  88→)
+  …
+  92→type Engine struct {
+  93→	RouterGroup
+  94→
+  95→	// routeTreesUpdated ensures that the initialization or update of the route trees
+  96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
+  97→	routeTreesUpdated sync.Once
+  98→
+  99→	// RedirectTrailingSlash enables automatic redirection if the current route can't be matched but a
+  100→	// handler for the path with (without) the trailing slash exists.
+  101→	// For example if /foo/ is requested but a route only exists for /foo, the
+  102→	// client is redirected to /foo with http status code 301 for GET requests
+  103→	// and 307 for all other request methods.
+  104→	RedirectTrailingSlash bool
+  106→	// RedirectFixedPath if enabled, the router tries to fix the current request path, if no
+  107→	// handle is registered for it.
+  108→	// First superfluous path elements like ../ or // are removed.
+  109→	// Afterwards the router does a case-insensitive lookup of the cleaned path.
+  110→	// If a handle can be found for this route, the router makes a redirection
+  111→	// to the corrected path with status code 301 for GET requests and 307 for
+  112→	// all other request methods.
+  113→	// For example /FOO and /..//Foo could be redirected to /foo.
+  114→	// RedirectTrailingSlash is independent of this option.
+  115→	RedirectFixedPath bool
+  …
+  189→}
+  191→var _ IRouter = (*Engine)(nil)
+  …
+  202→func New(opts ...OptionFunc) *Engine {
+  …
+  235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
+  236→func Default(opts ...OptionFunc) *Engine {
+  …
+  243→func (engine *Engine) Handler() http.Handler {
+  …
+  252→func (engine *Engine) allocateContext(maxParams uint16) *Context {
+  …
+  258→// Delims sets template left and right delims and returns an Engine instance.
+  259→func (engine *Engine) Delims(left, right string) *Engine {
+  …
+  264→// SecureJsonPrefix sets the secureJSONPrefix used in Context.SecureJSON.
+  265→func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
+  …
+  272→func (engine *Engine) LoadHTMLGlob(pattern string) {
+  …
+  288→func (engine *Engine) LoadHTMLFiles(files ...string) {
+  …
+  300→func (engine *Engine) LoadHTMLFS(fs http.FileSystem, patterns ...string) {
+  …
 ginS/
   README.md
   gins.go
@@ -187,150 +282,9 @@ internal/
     fs.go
     fs_test.go
 logger.go
-  …
-  17→type consoleColorModeValue int
-  19→const (
-  20→	autoColor consoleColorModeValue = iota
-  21→	disableColor
-  22→	forceColor
-  23→)
-  25→const (
-  26→	green   = "\033[97;42m"
-  27→	white   = "\033[90;47m"
-  28→	yellow  = "\033[90;43m"
-  29→	red     = "\033[97;41m"
-  30→	blue    = "\033[97;44m"
-  31→	magenta = "\033[97;45m"
-  32→	cyan    = "\033[97;46m"
-  33→	reset   = "\033[0m"
-  34→)
-  36→var consoleColorMode = autoColor
-  38→// LoggerConfig defines the config for Logger middleware.
-  39→type LoggerConfig struct {
-  40→	// Optional. Default value is gin.defaultLogFormatter
-  41→	Formatter LogFormatter
-  42→
-  43→	// Output is a writer where logs are written.
-  44→	// Optional. Default value is gin.DefaultWriter.
-  45→	Output io.Writer
-  46→
-  47→	// SkipPaths is a URL path array which logs are not written.
-  48→	// Optional.
-  49→	SkipPaths []string
-  50→
-  51→	// SkipQueryString indicates that query strings should not be written
-  52→	// for cases such as when API keys are passed via query strings.
-  53→	// Optional. Default value is false.
-  54→	SkipQueryString bool
-  55→
-  56→	// Skip is a Skipper that indicates which logs should not be written.
-  57→	// Optional.
-  58→	Skip Skipper
-  59→}
-  …
-  62→type Skipper func(c *Context) bool
-  …
-  65→type LogFormatter func(params LogFormatterParams) string
-  …
-  68→type LogFormatterParams struct {
-  69→	Request *http.Request
-  70→
-  71→	// TimeStamp shows the time after the server returns a response.
-  72→	TimeStamp time.Time
-  73→	// StatusCode is HTTP response code.
-  74→	StatusCode int
-  75→	// Latency is how much time the server cost to process a certain request.
-  76→	Latency time.Duration
-  77→	// ClientIP equals Context's ClientIP method.
-  78→	ClientIP string
-  79→	// Method is the HTTP method given to the request.
-  80→	Method string
-  81→	// Path is a path the client requests.
-  82→	Path string
-  83→	// ErrorMessage is set if error has occurred in processing the request.
-  84→	ErrorMessage string
-  85→	// isTerm shows whether gin's output descriptor refers to a terminal.
-  86→	isTerm bool
-  87→	// BodySize is the size of the Response Body
-  88→	BodySize int
-  89→	// Keys are the keys set on the request's context.
-  90→	Keys map[any]any
-  91→}
-  …
-  94→func (p *LogFormatterParams) StatusCodeColor() string {
-  …
-  111→// LatencyColor is the ANSI color for latency
-  112→func (p *LogFormatterParams) LatencyColor() string {
-  …
-  133→func (p *LogFormatterParams) MethodColor() string {
-  …
-  156→// ResetColor resets all escape attributes.
-  157→func (p *LogFormatterParams) ResetColor() string {
-  …
-  162→func (p *LogFormatterParams) IsOutputColor() bool {
-  …
-  167→var defaultLogFormatter = func(param LogFormatterParams) string {
-  …
-  196→// DisableConsoleColor disables color output in the console.
-  197→func DisableConsoleColor() {
-  …
-  201→// ForceConsoleColor force color output in the console.
-  202→func ForceConsoleColor() {
-  …
-  207→func ErrorLogger() HandlerFunc {
-  …
-  212→func ErrorLoggerT(typ ErrorType) HandlerFunc {
-  …
-  224→func Logger() HandlerFunc {
-  …
-  229→func LoggerWithFormatter(f LogFormatter) HandlerFunc {
-  …
-  237→func LoggerWithWriter(out io.Writer, notlogged ...string) HandlerFunc {
-  …
-  245→func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
-  …
 logger_test.go
 middleware_test.go
 mode.go
-  …
-  16→// EnvGinMode indicates environment name for gin mode.
-  17→const EnvGinMode = "GIN_MODE"
-  19→const (
-  20→	// DebugMode indicates gin mode is debug.
-  21→	DebugMode = "debug"
-  22→	// ReleaseMode indicates gin mode is release.
-  23→	ReleaseMode = "release"
-  24→	// TestMode indicates gin mode is test.
-  25→	TestMode = "test"
-  26→)
-  28→const (
-  29→	debugCode = iota
-  30→	releaseCode
-  31→	testCode
-  32→)
-  …
-  42→var DefaultWriter io.Writer = os.Stdout
-  44→// DefaultErrorWriter is the default io.Writer used by Gin to debug errors
-  45→var DefaultErrorWriter io.Writer = os.Stderr
-  47→var (
-  48→	ginMode  int32 = debugCode
-  49→	modeName atomic.Value
-  50→)
-  52→func init() {
-  …
-  57→// SetMode sets gin mode according to input string.
-  58→func SetMode(value string) {
-  …
-  80→// DisableBindValidation closes the default validator.
-  81→func DisableBindValidation() {
-  …
-  87→func EnableJsonDecoderUseNumber() {
-  …
-  93→func EnableJsonDecoderDisallowUnknownFields() {
-  …
-  97→// Mode returns current gin mode.
-  98→func Mode() string {
-  …
 mode_test.go
 path.go
 path_test.go

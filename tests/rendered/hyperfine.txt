@@ -23,6 +23,49 @@ Cargo.toml
   15→[features]
   16→# Use the nightly feature windows_process_extensions_main_thread_handle
   17→windows_process_extensions_main_thread_handle = []
+  19→[dependencies]
+  20→colored = "2.1"
+  21→indicatif = "=0.17.4"
+  22→statistical = "1.0"
+  23→csv = "1.3"
+  24→serde = { version = "1.0", features = ["derive"] }
+  25→serde_json = "1.0"
+  26→rust_decimal = "1.36"
+  27→rand = "0.8"
+  28→shell-words = "1.0"
+  29→thiserror = "2.0"
+  30→anyhow = "1.0"
+  31→
+  32→[target.'cfg(not(windows))'.dependencies]
+  33→libc = "0.2"
+  34→
+  35→[target.'cfg(windows)'.dependencies]
+  36→windows-sys = { version = "0.59", features = [
+  37→    "Win32_Foundation",
+  38→    "Win32_Security",
+  39→    "Win32_System_JobObjects",
+  40→    "Win32_System_LibraryLoader",
+  41→    "Win32_System_Threading",
+  42→] }
+  43→
+  44→[target.'cfg(all(windows, not(windows_process_extensions_main_thread_handle)))'.dependencies]
+  45→once_cell = "1.19"
+  46→
+  47→[target.'cfg(target_os="linux")'.dependencies]
+  48→nix = { version = "0.29", features = ["zerocopy"] }
+  49→
+  50→[dependencies.clap]
+  51→version = "4"
+  52→default-features = false
+  53→features = [
+  54→    "suggestions",
+  55→    "color",
+  56→    "wrap_help",
+  57→    "cargo",
+  58→    "help",
+  59→    "usage",
+  60→    "error-context",
+  61→]
   …
 LICENSE-APACHE
 LICENSE-MIT
@@ -94,7 +137,69 @@ src/
     scheduler.rs
     timing_result.rs
   cli.rs
+    …
+    8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
+    9→where
+    10→    I: IntoIterator<Item = T>,
+    11→    T: Into<OsString> + Clone + 'a,
+    12→{
+    …
+    17→/// Build the clap command for parsing command line arguments
+    18→fn build_command() -> Command {
+    …
   command.rs
+    …
+    20→/// A command that should be benchmarked.
+    21→#[derive(Debug, Clone, PartialEq, Eq)]
+    22→pub struct Command<'a> {
+    23→    /// The command name (without parameter substitution)
+    24→    name: Option<&'a str>,
+    25→
+    26→    /// The command that should be executed (without parameter substitution)
+    27→    expression: &'a str,
+    28→
+    29→    /// Zero or more parameter values.
+    30→    parameters: Vec<ParameterNameAndValue<'a>>,
+    31→}
+    33→impl<'a> Command<'a> {
+    34→    pub fn new(name: Option<&'a str>, expression: &'a str) -> Command<'a> {
+    …
+    42→    pub fn new_parametrized(
+    43→        name: Option<&'a str>,
+    44→        expression: &'a str,
+    45→        parameters: impl IntoIterator<Item = ParameterNameAndValue<'a>>,
+    46→    ) -> Command<'a> {
+    …
+    54→    pub fn get_name(&self) -> String {
+    …
+    61→    pub fn get_name_with_unused_parameters(&self) -> String {
+    …
+    77→    pub fn get_command_line(&self) -> String {
+    …
+    81→    pub fn get_command(&self) -> Result<std::process::Command> {
+    …
+    96→    pub fn get_parameters(&self) -> &[(&'a str, ParameterValue)] {
+    …
+    100→    pub fn get_unused_parameters(&self) -> impl Iterator<Item = &(&'a str, ParameterValue)> {
+    …
+    131→}
+    133→/// A collection of commands that should be benchmarked
+    134→pub struct Commands<'a>(Vec<Command<'a>>);
+    135→
+    136→impl<'a> Commands<'a> {
+    137→    pub fn from_cli_arguments(matches: &'a ArgMatches) -> Result<Commands<'a>> {
+    …
+    250→    pub fn iter(&self) -> impl Iterator<Item = &Command<'a>> {
+    …
+    254→    pub fn num_commands(&self, has_reference_command: bool) -> usize {
+    …
+    359→}
+    …
+    387→impl fmt::Display for Command<'_> {
+    388→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    …
+    391→}
+    …
   error.rs
   export/
     asciidoc.rs
@@ -153,155 +258,27 @@ src/
     61→}
   options.rs
     …
-    16→#[cfg(not(windows))]
     17→pub const DEFAULT_SHELL: &str = "sh";
-    19→#[cfg(windows)]
+    …
     20→pub const DEFAULT_SHELL: &str = "cmd.exe";
-    22→/// Shell to use for executing benchmarked commands
-    23→#[derive(Debug, PartialEq)]
+    …
     24→pub enum Shell {
-    25→    /// Default shell command
-    26→    Default(&'static str),
-    27→
-    28→    /// Custom shell command specified via --shell
-    29→    Custom(Vec<String>),
-    30→}
+    …
     32→impl Default for Shell {
-    33→    fn default() -> Self {
     …
-    36→}
     38→impl fmt::Display for Shell {
-    39→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     …
-    45→}
     47→impl Shell {
-    48→    /// Parse given string as shell command line
-    49→    pub fn parse_from_str<'a>(s: &str) -> Result<Self, OptionsError<'a>> {
     …
-    57→    pub fn command(&self) -> Command {
-    …
-    67→}
-    69→/// Action to take when an executed command fails.
-    70→#[derive(Debug, Clone, PartialEq, Eq)]
     71→pub enum CmdFailureAction {
-    72→    /// Exit with an error message
-    73→    RaiseError,
-    74→
-    75→    /// Ignore all non-zero exit codes
-    76→    IgnoreAllFailures,
-    77→
-    78→    /// Ignore specific exit codes
-    79→    IgnoreSpecificFailures(Vec<i32>),
-    80→}
-    82→/// Output style type option
-    83→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    …
     84→pub enum OutputStyleOption {
-    85→    /// Do not output with colors or any special formatting
-    86→    Basic,
-    87→
-    88→    /// Output with full color and formatting
-    89→    Full,
-    90→
-    91→    /// Keep elements such as progress bar, but use no coloring
-    92→    NoColor,
-    93→
-    94→    /// Keep coloring, but use no progress bar
-    95→    Color,
-    96→
-    97→    /// Disable all the output
-    98→    Disabled,
-    99→}
-    101→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    …
     102→pub enum SortOrder {
-    103→    Command,
-    104→    MeanTime,
-    105→}
-    107→/// Bounds for the number of benchmark runs
+    …
     108→pub struct RunBounds {
-    109→    /// Minimum number of benchmark runs
-    110→    pub min: u64,
-    111→
-    112→    /// Maximum number of benchmark runs
-    113→    pub max: Option<u64>,
-    114→}
+    …
     116→impl Default for RunBounds {
-    117→    fn default() -> Self {
-    …
-    120→}
-    122→#[derive(Debug, Default, Clone, PartialEq)]
-    123→pub enum CommandInputPolicy {
-    124→    /// Read from the null device
-    125→    #[default]
-    126→    Null,
-    127→
-    128→    /// Read input from a file
-    129→    File(PathBuf),
-    130→}
-    132→impl CommandInputPolicy {
-    133→    pub fn get_stdin(&self) -> io::Result<Stdio> {
-    …
-    145→}
-    147→/// How to handle the output of benchmarked commands
-    148→#[derive(Debug, Clone, PartialEq, Eq, Default)]
-    149→pub enum CommandOutputPolicy {
-    150→    /// Redirect output to the null device
-    151→    #[default]
-    152→    Null,
-    153→
-    154→    /// Feed output through a pipe before discarding it
-    155→    Pipe,
-    156→
-    157→    /// Redirect output to a file
-    158→    File(PathBuf),
-    159→
-    160→    /// Show command output on the terminal
-    161→    Inherit,
-    162→}
-    164→impl CommandOutputPolicy {
-    165→    pub fn get_stdout_stderr(&self) -> io::Result<(Stdio, Stdio)> {
-    …
-    182→}
-    184→#[derive(Debug, PartialEq)]
-    185→pub enum ExecutorKind {
-    186→    Raw,
-    187→    Shell(Shell),
-    188→    Mock(Option<String>),
-    189→}
-    191→impl Default for ExecutorKind {
-    192→    fn default() -> Self {
-    …
-    195→}
-    …
-    198→pub struct Options {
-    199→    /// Upper and lower bound for the number of benchmark runs
-    200→    pub run_bounds: RunBounds,
-    201→
-    202→    /// Number of warmup runs
-    203→    pub warmup_count: u64,
-    204→
-    205→    /// Minimum benchmarking time
-    206→    pub min_benchmarking_time: Second,
-    207→
-    208→    /// Whether or not to ignore non-zero exit codes
-    209→    pub command_failure_action: CmdFailureAction,
-    210→
-    211→    // Command to use as a reference for relative speed comparison
-    212→    pub reference_command: Option<String>,
-    213→
-    214→    // Name of the reference command
-    215→    pub reference_name: Option<String>,
-    …
-    249→}
-    251→impl Default for Options {
-    252→    fn default() -> Options {
-    …
-    273→}
-    275→impl Options {
-    276→    pub fn from_cli_arguments<'a>(matches: &ArgMatches) -> Result<Self, OptionsError<'a>> {
-    …
-    470→    pub fn validate_against_command_list(&mut self, commands: &Commands) -> Result<()> {
-    …
-    503→}
     …
   outlier_detection.rs
     1→//! A module for statistical outlier detection.
@@ -333,6 +310,23 @@ src/
     randomized_environment_offset.rs
     units.rs
       1→//! This module contains common units.
+      3→pub type Scalar = f64;
+      5→/// Type alias for unit of time
+      6→pub type Second = Scalar;
+      8→/// Supported time units
+      9→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+      10→pub enum Unit {
+      11→    Second,
+      12→    MilliSecond,
+      13→    MicroSecond,
+      14→}
+      16→impl Unit {
+      17→    /// The abbreviation of the Unit.
+      18→    pub fn short_name(self) -> String {
+      …
+      27→    pub fn format(self, value: Second) -> String {
+      …
+      34→}
       …
 tests/
   common.rs

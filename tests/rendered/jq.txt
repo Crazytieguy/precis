@@ -65,9 +65,26 @@ README.md
   10→## Installation
   11→
   12→### Prebuilt Binaries
-  …
+  13→
+  14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
+  15→
   16→### Docker Image
-  …
+  17→
+  18→Pull the [jq image](https://github.com/jqlang/jq/pkgs/container/jq) to start quickly with Docker.
+  19→
+  20→#### Run with Docker
+  21→
+  22→##### Example: Extracting the version from a `package.json` file
+  23→
+  24→```bash
+  25→docker run --rm -i ghcr.io/jqlang/jq:latest < package.json '.version'
+  26→```
+  27→
+  28→##### Example: Extracting the version from a `package.json` file with a mounted volume
+  29→
+  30→```bash
+  31→docker run --rm -i -v "$PWD:$PWD" -w "$PWD" ghcr.io/jqlang/jq:latest '.version' package.json
+  32→```
   34→### Building from source
   …
   67→## Community & Support
@@ -80,6 +97,21 @@ README.md
 SECURITY.md
 build/
 compile-ios.sh
+  …
+  2→# Mac C. compile-ios.sh for JQ.
+  3→
+  4→# Defaults
+  5→set -e
+  6→oniguruma='6.9.10'
+  7→
+  8→unset CFLAGS
+  9→unset CXXFLAGS
+  10→unset LDFLAGS
+  …
+  13→usage(){
+  14→cat << EOF
+  15→${0##*/}: usage
+  …
 config/
   .gitignore
   m4/
@@ -270,37 +302,6 @@ src/
   opcode_list.h
   parser.c
   parser.h
-    …
-    44→#if YYDEBUG
-    45→extern int yydebug;
-    46→#endif
-    …
-    51→struct lexer_param;
-    52→
-    53→#define YYLTYPE location
-    54→#define YYLLOC_DEFAULT(Loc, Rhs, N)             \
-    …
-    70→  enum yytokentype
-    …
-    123→  typedef enum yytokentype yytoken_kind_t;
-    124→#endif
-    …
-    126→#define YYEMPTY -2
-    127→#define YYEOF 0
-    128→#define YYerror 256
-    129→#define YYUNDEF 257
-    130→#define INVALID_CHARACTER 258
-    131→#define IDENT 259
-    132→#define FIELD 260
-    133→#define BINDING 261
-    134→#define LITERAL 262
-    135→#define FORMAT 263
-    136→#define REC 264
-    137→#define SETMOD 265
-    138→#define EQ 266
-    139→#define NEQ 267
-    140→#define DEFINEDOR 268
-    …
   parser.y
   util.c
   util.h
@@ -332,6 +333,7 @@ tests/
   setup
   shtest
   torture/
+    input0.json
   uri.test
   uritest
   utf8test

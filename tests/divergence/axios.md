@@ -197,11 +197,9 @@ Score(3000)=0.566 I=0.807 C=0.398 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 9301 | 11 | Code::CodeKey { rung: Body, file: lib/axios.js, decl: 3, sub: 0, line: 66 } |  |  | 0.322 |
 | walker |  | 9339 | 38 | Fs::DirListing { dir: tests/module/cjs/tests } |  |  | 0.322 |
 | walker |  | 9370 | 31 | Fs::DirListing { dir: tests/module/cjs/tests/helpers } |  |  | 0.322 |
-| walker |  | 9462 | 92 | Code::CodeKey { rung: Names, file: gulpfile.js, decl: 0, sub: 0, line: 0 } |  |  | 0.322 |
-| walker |  | 9479 | 17 | Code::CodeKey { rung: Decl, file: gulpfile.js, decl: 1, sub: 0, line: 12 } |  |  | 0.322 |
 | ns | 9620 |  | 366 | README section map (all H2 headings) | 7.1 |  | 0.316 |
-| walker |  | 9634 | 155 | Code::CodeKey { rung: Decl, file: gulpfile.js, decl: 3, sub: 0, line: 60 } |  |  | 0.316 |
-| ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.316 |
-| walker |  | 9904 | 270 | Code::CodeKey { rung: Decl, file: gulpfile.js, decl: 2, sub: 0, line: 36 } |  |  | 0.316 |
-| ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.313 |
-| walker |  | 9998 | 94 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.316 |
+| walker |  | 9723 | 353 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.352 |
+| ns | 9819 |  | 199 | Documentation site tree | 7.2 |  | 0.350 |
+| ns | 9943 |  | 124 | Test tree: suites and the unit-test file set | 7.3 |  | 0.346 |
+| walker |  | 9985 | 262 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.346 |
+| walker |  | 9991 | 6 | Markdown::Section { file: README.md, section_index: 57, keeps_default_concavity: false } |  |  | 0.346 |

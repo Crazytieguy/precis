@@ -29,6 +29,8 @@ pub(super) const LANGUAGE: Language = Language {
     extract,
     is_entrypoint: Some(is_entrypoint),
     file_weight: None,
+    sibling_mentions: None,
+    sibling_names: None,
 };
 
 fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {

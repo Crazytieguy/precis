@@ -59,6 +59,26 @@ README.md
   …
 docs/
   Makefile
+    1→# Minimal makefile for Sphinx documentation
+    2→#
+    3→
+    4→# You can set these variables from the command line, and also
+    5→# from the environment for the first two.
+    6→SPHINXOPTS    ?=
+    7→SPHINXBUILD   ?= sphinx-build
+    8→SOURCEDIR     = .
+    9→BUILDDIR      = _build
+    10→
+    11→# Put it first so that "make" without argument is like "make help".
+    12→help:
+    13→	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+    14→
+    15→.PHONY: help Makefile
+    16→
+    17→# Catch-all target: route all unknown targets to Sphinx using the new
+    18→# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+    19→%: Makefile
+    20→	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
   _static/
     debugger.png
     flask-icon.svg
@@ -260,6 +280,9 @@ src/flask/
     39→from .wrappers import Response as Response
   __main__.py
   app.py
+    …
+    64→T_shell_context_processor = t.TypeVar(
+    …
   blueprints.py
   cli.py
   config.py
@@ -279,6 +302,10 @@ src/flask/
       …
       77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
       …
+      102→    if current_app:
+      103→        return current_app.json.loads(s, **kwargs)
+      104→
+      105→    return _json.loads(s, **kwargs)
       108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
       …
       138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
@@ -300,36 +327,6 @@ src/flask/
   typing.py
   views.py
   wrappers.py
-    …
-    18→class Request(RequestBase):
-    …
-    31→    json_module: t.Any = json
-    32→
-    33→    #: The internal URL rule that matched the request.  This can be
-    34→    #: useful to inspect which methods are allowed for the URL from
-    35→    #: a before/after handler (``request.url_rule.methods``) etc.
-    36→    #: Though if the request's method was invalid for the URL rule,
-    37→    #: the valid list is available in ``routing_exception.valid_methods``
-    38→    #: instead (an attribute of the Werkzeug exception
-    39→    #: :exc:`~werkzeug.exceptions.MethodNotAllowed`)
-    40→    #: because the request was never internally bound.
-    41→    #:
-    42→    #: .. versionadded:: 0.6
-    43→    url_rule: Rule | None = None
-    45→    #: A dict of view arguments that matched the request.  If an exception
-    46→    #: happened when matching, this will be ``None``.
-    47→    view_args: dict[str, t.Any] | None = None
-    …
-    222→class Response(ResponseBase):
-    …
-    240→    default_mimetype: str | None = "text/html"
-    241→
-    242→    json_module = json
-    243→
-    244→    autocorrect_location_header = False
-    246→    @property
-    247→    def max_cookie_size(self) -> int:  # type: ignore
-    …
 tests/
   conftest.py
   static/

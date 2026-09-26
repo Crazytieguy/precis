@@ -13,6 +13,32 @@
 .travis.yml
 CONTRIBUTING.md
 Dockerfile
+  1→FROM golang:1.25-alpine3.21 AS builder
+  2→ARG VERSION
+  3→
+  4→RUN apk add --no-cache git gcc musl-dev make
+  5→
+  6→WORKDIR /go/src/github.com/golang-migrate/migrate
+  7→
+  8→ENV GO111MODULE=on
+  9→
+  10→COPY go.mod go.sum ./
+  11→
+  12→RUN go mod download
+  13→
+  14→COPY . ./
+  15→
+  16→RUN make build-docker
+  17→
+  18→FROM alpine:3.21
+  19→
+  20→RUN apk add --no-cache ca-certificates
+  21→
+  22→COPY --from=builder /go/src/github.com/golang-migrate/migrate/build/migrate.linux-386 /usr/local/bin/migrate
+  23→RUN ln -s /usr/local/bin/migrate /migrate
+  24→
+  25→ENTRYPOINT ["migrate"]
+  26→CMD ["--help"]
 Dockerfile.circleci
 Dockerfile.github-actions
 FAQ.md
@@ -269,68 +295,18 @@ internal/
     url.go
     url_test.go
 log.go
-  …
-  5→type Logger interface {
-  6→
-  7→	// Printf is like fmt.Printf
-  8→	Printf(format string, v ...interface{})
-  9→
-  10→	// Verbose should return true when verbose logging output is wanted
-  11→	Verbose() bool
-  12→}
 migrate.go
   1→// Package migrate reads migrations from sources and runs them against databases.
   2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
   3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
   4→// in this package.
   …
+  24→var DefaultPrefetchMigrations = uint(10)
+  …
+  27→var DefaultLockTimeout = 15 * time.Second
+  …
 migrate_test.go
 migration.go
-  …
-  13→var DefaultBufferSize = uint(100000)
-  …
-  18→type Migration struct {
-  19→	// Identifier can be any string to help identifying
-  20→	// the migration in the source.
-  21→	Identifier string
-  22→
-  23→	// Version is the version of this migration.
-  24→	Version uint
-  25→
-  26→	// TargetVersion is the migration version after this migration
-  27→	// has been applied to the database.
-  28→	// Can be -1, implying that this is a NilVersion.
-  29→	TargetVersion int
-  30→
-  31→	// Body holds an io.ReadCloser to the source.
-  32→	Body io.ReadCloser
-  33→
-  34→	// BufferedBody holds an buffered io.Reader to the underlying Body.
-  35→	BufferedBody io.Reader
-  36→
-  37→	// BufferSize defaults to DefaultBufferSize
-  38→	BufferSize uint
-  39→
-  40→	// bufferWriter holds an io.WriteCloser and pipes to BufferBody.
-  41→	// It's an *Closer for flow control.
-  42→	bufferWriter io.WriteCloser
-  43→
-  44→	// Scheduled is the time when the migration was scheduled/ queued.
-  45→	Scheduled time.Time
-  …
-  58→}
-  …
-  77→func NewMigration(body io.ReadCloser, identifier string,
-  78→	version uint, targetVersion int) (*Migration, error) {
-  …
-  106→// String implements string.Stringer and is used in tests.
-  107→func (m *Migration) String() string {
-  …
-  111→// LogString returns a string describing this migration to humans.
-  112→func (m *Migration) LogString() string {
-  …
-  122→func (m *Migration) Buffer() (berr error) {
-  …
 migration_test.go
 source/
   aws_s3/
@@ -373,7 +349,8 @@ source/
     gitlab_test.go
   go_bindata/
     README.md
-    examples/
+    examples/migrations/
+      bindata.go
     go-bindata.go
     go-bindata_test.go
     testdata/
@@ -406,9 +383,30 @@ source/
       no-migrations/
         some-file (empty)
       sql/
+        1_foobar.down.sql
+        1_foobar.up.sql
+        3_foobar.up.sql
+        4_foobar.down.sql
+        4_foobar.up.sql
+        5_foobar.down.sql
+        7_foobar.down.sql
+        7_foobar.up.sql
+        other-files-are-ignored (empty)
+        subdirs-are-ignored/
+          some-file (empty)
   iofs/
     README.md
     doc.go
+      1→/*
+      2→Package iofs provides the Go 1.16+ io/fs#FS driver.
+      3→
+      4→It can accept various file systems (like embed.FS, archive/zip#Reader) implementing io/fs#FS.
+      5→
+      6→This driver cannot be used with Go versions 1.15 and below.
+      7→
+      8→Also, Opening with a URL scheme is not supported.
+      9→*/
+      …
     example_test.go
     iofs.go
     iofs_test.go

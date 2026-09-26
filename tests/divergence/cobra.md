@@ -193,14 +193,14 @@ Score(3000)=0.673 I=0.796 C=0.569 ns_rows≤3K=19/50 grid(1000/1442/2080/3000/43
 | ns | 9563 |  | 237 | doc/: the YAML document schema and the shared helpers | 9.3 |  | 0.515 |
 | walker |  | 9569 | 40 | Code::CodeKey { rung: Doc, file: command.go, decl: 99, sub: 0, line: 1562 } |  |  | 0.515 |
 | walker |  | 9610 | 41 | Code::CodeKey { rung: Doc, file: command.go, decl: 108, sub: 0, line: 1662 } |  |  | 0.515 |
-| walker |  | 9638 | 28 | Code::CodeKey { rung: Names, file: command_notwin.go, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
-| ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.513 |
-| walker |  | 9680 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 7, sub: 0, line: 281 } |  |  | 0.513 |
-| walker |  | 9722 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 32, sub: 0, line: 478 } |  |  | 0.513 |
-| walker |  | 9765 | 43 | Code::CodeKey { rung: Doc, file: command.go, decl: 35, sub: 0, line: 520 } |  |  | 0.513 |
-| walker |  | 9808 | 43 | Code::CodeKey { rung: Doc, file: command.go, decl: 132, sub: 0, line: 1928 } |  |  | 0.513 |
-| walker |  | 9854 | 46 | Code::CodeKey { rung: Doc, file: command.go, decl: 71, sub: 0, line: 1205 } |  |  | 0.513 |
-| walker |  | 9900 | 46 | Code::CodeKey { rung: Doc, file: command.go, decl: 114, sub: 0, line: 1744 } |  |  | 0.513 |
+| walker |  | 9652 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 7, sub: 0, line: 281 } |  |  | 0.515 |
+| ns | 9677 |  | 114 | docgen documentation pages: heading map | 9.4 |  | 0.512 |
+| walker |  | 9694 | 42 | Code::CodeKey { rung: Doc, file: command.go, decl: 32, sub: 0, line: 478 } |  |  | 0.512 |
+| walker |  | 9737 | 43 | Code::CodeKey { rung: Doc, file: command.go, decl: 35, sub: 0, line: 520 } |  |  | 0.512 |
+| walker |  | 9780 | 43 | Code::CodeKey { rung: Doc, file: command.go, decl: 132, sub: 0, line: 1928 } |  |  | 0.512 |
+| walker |  | 9826 | 46 | Code::CodeKey { rung: Doc, file: command.go, decl: 71, sub: 0, line: 1205 } |  |  | 0.512 |
+| walker |  | 9872 | 46 | Code::CodeKey { rung: Doc, file: command.go, decl: 114, sub: 0, line: 1744 } |  |  | 0.512 |
+| walker |  | 9919 | 47 | Code::CodeKey { rung: Doc, file: command.go, decl: 113, sub: 0, line: 1716 } |  |  | 0.512 |
 | ns | 9929 |  | 252 | Project policy documents: section maps | 10.1 |  | 0.504 |
+| walker |  | 9966 | 47 | Code::CodeKey { rung: Doc, file: command.go, decl: 115, sub: 0, line: 1770 } |  |  | 0.504 |
 | ns | 9993 |  | 64 | Repository metadata: maintainers and local ignore rules | 10.2 |  | 0.502 |
-| walker |  | 9999 | 99 | Code::CodeKey { rung: Names, file: cobra.go, decl: 0, sub: 0, line: 0 } |  |  | 0.503 |

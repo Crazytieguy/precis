@@ -51,9 +51,27 @@ README.md
   41→the string regardless of the actual content of the string, SDS strings work
   42→well together with C strings and the user is free to use them interchangeably
   43→with other std C string functions that access the string in read-only.
-  …
+  44→
+  45→SDS was a C string I developed in the past for my everyday C programming needs,
+  46→later it was moved into Redis where it is used extensively and where it was
+  47→modified in order to be suitable for high performance operations. Now it was
+  48→extracted from Redis and forked as a stand alone project.
+  49→
+  50→Because of its many years life inside Redis, SDS provides both higher level
+  51→functions for easy strings manipulation in C, but also a set of low level
+  52→functions that make it possible to write high performance code without paying
+  53→a penalty for using an higher level string library.
+  54→
   55→Advantages and disadvantages of SDS
   56→===
+  57→
+  58→Normally dynamic string libraries for C are implemented using a structure
+  59→that defines the string. The structure has a pointer field that is managed
+  60→by the string function, so it looks like this:
+  61→
+  62→```c
+  63→struct yourAverageStringLibrary {
+  64→    char *buf;
   …
   119→SDS basics
   120→===
@@ -238,24 +256,4 @@ sds.h
   272→#endif
   …
 sdsalloc.h
-  …
-  40→#define s_malloc malloc
-  41→#define s_realloc realloc
-  42→#define s_free free
 testhelp.h
-  …
-  42→int __failed_tests = 0;
-  43→int __test_num = 0;
-  44→#define test_cond(descr,_c) do { \
-  45→    __test_num++; printf("%d - %s: ", __test_num, descr); \
-  46→    if(_c) printf("PASSED\n"); else {printf("FAILED\n"); __failed_tests++;} \
-  47→} while(0);
-  48→#define test_report() do { \
-  49→    printf("%d tests, %d passed, %d failed\n", __test_num, \
-  50→                    __test_num-__failed_tests, __failed_tests); \
-  51→    if (__failed_tests) { \
-  52→        printf("=== WARNING === We have failed tests here...\n"); \
-  53→        exit(1); \
-  54→    } \
-  55→} while(0);
-  …

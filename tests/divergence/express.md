@@ -1,4 +1,4 @@
-Score(3000)=0.562 I=0.830 C=0.380 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.729/0.704/0.578/0.562/0.516/0.408/0.475
+Score(3000)=0.586 I=0.837 C=0.410 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.729/0.704/0.558/0.586/0.516/0.408/0.475
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,25 +35,25 @@ Score(3000)=0.562 I=0.830 C=0.380 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 1787 | 124 | Markdown::Section { file: Readme.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.600 |
 | walker |  | 1829 | 42 | Code::CodeKey { rung: Doc, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.600 |
 | ns | 1896 |  | 233 | createApplication() body | 2.6 |  | 0.557 |
-| walker |  | 1948 | 119 | Code::CodeKey { rung: Names, file: lib/request.js, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
-| walker |  | 1961 | 13 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 5, sub: 0, line: 185 } |  |  | 0.566 |
-| ns | 2153 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.523 |
-| walker |  | 2214 | 253 | Code::CodeKey { rung: Names, file: lib/application.js, decl: 0, sub: 0, line: 0 } |  |  | 0.581 |
-| walker |  | 2232 | 18 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 1, sub: 0, line: 40 } |  |  | 0.581 |
-| ns | 2244 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.609 |
-| walker |  | 2307 | 75 | Code::CodeKey { rung: Names, file: lib/view.js, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
-| ns | 2369 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.584 |
-| ns | 2478 |  | 109 | Default settings established at boot | 3.1 |  | 0.570 |
-| ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.547 |
-| walker |  | 2767 | 460 | Json::Dependencies { file: package.json } |  |  | 0.549 |
-| ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.514 |
-| walker |  | 3076 | 309 | Code::CodeKey { rung: Names, file: lib/response.js, decl: 0, sub: 0, line: 0 } |  |  | 0.596 |
-| walker |  | 3087 | 11 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 13, sub: 0, line: 696 } |  |  | 0.596 |
-| walker |  | 3113 | 26 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 1, sub: 0, line: 42 } |  |  | 0.596 |
-| walker |  | 3128 | 15 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 16, sub: 0, line: 794 } |  |  | 0.596 |
-| ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.572 |
-| walker |  | 3295 | 167 | Code::CodeKey { rung: Names, file: lib/utils.js, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
-| walker |  | 3307 | 12 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 5, sub: 0, line: 75 } |  |  | 0.602 |
+| ns | 2153 |  | 257 | HTTP-verb delegation and app.all() | 2.7 |  | 0.516 |
+| ns | 2244 |  | 91 | app.* full signature lines | 2.8 | 2.2 | 0.493 |
+| walker |  | 2289 | 460 | Json::Dependencies { file: package.json } |  |  | 0.495 |
+| ns | 2369 |  | 125 | res.* full signature lines | 2.9 | 2.3 | 0.468 |
+| ns | 2478 |  | 109 | Default settings established at boot | 3.1 |  | 0.457 |
+| walker |  | 2598 | 309 | Code::CodeKey { rung: Names, file: lib/response.js, decl: 0, sub: 0, line: 0 } |  |  | 0.551 |
+| walker |  | 2609 | 11 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 13, sub: 0, line: 696 } |  |  | 0.551 |
+| walker |  | 2635 | 26 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 1, sub: 0, line: 42 } |  |  | 0.551 |
+| walker |  | 2650 | 15 | Code::CodeKey { rung: Body, file: lib/response.js, decl: 16, sub: 0, line: 794 } |  |  | 0.551 |
+| ns | 2651 |  | 173 | Remaining boot configuration: locals, mountpath, view defaults | 3.2 |  | 0.529 |
+| walker |  | 2903 | 253 | Code::CodeKey { rung: Names, file: lib/application.js, decl: 0, sub: 0, line: 0 } |  |  | 0.617 |
+| walker |  | 2921 | 18 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 1, sub: 0, line: 40 } |  |  | 0.617 |
+| ns | 2955 |  | 304 | app.set() — storage plus the three derived-setting side effects | 3.3 |  | 0.578 |
+| walker |  | 3040 | 119 | Code::CodeKey { rung: Names, file: lib/request.js, decl: 0, sub: 0, line: 0 } |  |  | 0.588 |
+| walker |  | 3053 | 13 | Code::CodeKey { rung: Body, file: lib/request.js, decl: 5, sub: 0, line: 185 } |  |  | 0.588 |
+| ns | 3140 |  | 185 | compileETag — accepted values of the `etag` setting | 3.4 |  | 0.564 |
+| walker |  | 3220 | 167 | Code::CodeKey { rung: Names, file: lib/utils.js, decl: 0, sub: 0, line: 0 } |  |  | 0.580 |
+| walker |  | 3232 | 12 | Code::CodeKey { rung: Body, file: lib/utils.js, decl: 5, sub: 0, line: 75 } |  |  | 0.580 |
+| walker |  | 3307 | 75 | Code::CodeKey { rung: Names, file: lib/view.js, decl: 0, sub: 0, line: 0 } |  |  | 0.602 |
 | walker |  | 3318 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 6, sub: 0, line: 256 } |  |  | 0.602 |
 | walker |  | 3329 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 11, sub: 0, line: 420 } |  |  | 0.602 |
 | walker |  | 3340 | 11 | Code::CodeKey { rung: Body, file: lib/application.js, decl: 12, sub: 0, line: 439 } |  |  | 0.602 |

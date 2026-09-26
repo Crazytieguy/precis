@@ -41,6 +41,22 @@ README.md
 build.sh
 build_registries.js
 extract_registries.sh
+  …
+  2→set -euo pipefail
+  3→
+  4→REQUIRED_MAJOR=21
+  5→SERVER_JAR="${SERVER_JAR:-server.jar}"
+  6→NOTCHIAN_DIR="notchian"
+  7→JS_RUNTIME=""
+  8→
+  9→get_java_version() {
+  …
+  13→check_java() {
+  …
+  28→prepare_notchian_dir() {
+  …
+  36→dump_registries() {
+  …
 include/
   crafting.h
   globals.h
@@ -217,31 +233,20 @@ include/
     274→extern MobData mob_data[MAX_MOBS];
     …
   packets.h
+    …
+    5→int cs_handshake (int client_fd);
+    6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
+    7→int cs_clientInformation (int client_fd);
+    8→int cs_pluginMessage (int client_fd);
+    9→int cs_playerAction (int client_fd);
+    10→int cs_useItemOn (int client_fd);
+    11→int cs_useItem (int client_fd);
+    …
   procedures.h
   serialize.h
-    …
-    6→#ifdef SYNC_WORLD_TO_DISK
-    7→  int initSerializer ();
-    8→  void writeBlockChangesToDisk (int from, int to);
-    9→  void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot);
-    10→  void writePlayerDataToDisk ();
-    11→  void writeDataToDiskOnInterval ();
-    12→#else
-    13→  // Define no-op placeholders for when disk syncing isn't enabled
-    14→  #define writeBlockChangesToDisk(a, b)
-    15→  #define writeChestChangesToDisk(a, b)
-    16→  #define writePlayerDataToDisk()
-    17→  #define writeDataToDiskOnInterval()
-    18→  #define initSerializer() 0
-    19→#endif
-    …
   structures.h
   tools.h
   varnum.h
-    …
-    6→#define SEGMENT_BITS 0x7F
-    7→#define CONTINUE_BIT 0x80
-    …
   worldgen.h
 src/
   CMakeLists.txt
