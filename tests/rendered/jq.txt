@@ -279,12 +279,6 @@ src/
     52→
     53→#define YYLTYPE location
     54→#define YYLLOC_DEFAULT(Loc, Rhs, N)             \
-    55→  do {                                          \
-    56→    if (N) {                                    \
-    57→      (Loc).start = YYRHSLOC(Rhs, 1).start;     \
-    58→      (Loc).end = YYRHSLOC(Rhs, N).end;         \
-    59→    } else {                                    \
-    60→      (Loc).start = YYRHSLOC(Rhs, 0).end;       \
     …
     70→  enum yytokentype
     …

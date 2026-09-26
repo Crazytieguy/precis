@@ -457,7 +457,7 @@ Overview trailing details stay here.
         let mut headline_spans = Vec::new();
         let mut section_spans = Vec::new();
         for batch in super::super::expand_in_dir(root, &ctx) {
-            let BatchContent::Lines { spans } = batch.content else {
+            let BatchContent::Lines { spans, .. } = batch.content else {
                 continue;
             };
             let rows = spans.iter().map(|span| (span.start, span.end));

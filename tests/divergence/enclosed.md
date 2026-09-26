@@ -217,4 +217,3 @@ Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9821 | 41 | Code::CodeKey { rung: Names, file: packages/lib/src/notes/notes.services.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.639 |
 | walker |  | 9871 | 50 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.services.ts, decl: 2, sub: 0, line: 39 } |  |  | 0.639 |
 | ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.649 |
-| walker |  | 9997 | 126 | Code::CodeKey { rung: Decl, file: packages/lib/src/notes/notes.services.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.649 |

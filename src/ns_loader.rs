@@ -60,7 +60,7 @@ pub(crate) fn path_escapes_root(path: &Path) -> bool {
 /// each `Listed` child exists.
 pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<BatchContent> {
     match content {
-        BatchContent::Lines { spans } => {
+        BatchContent::Lines { spans, .. } => {
             let spans = spans
                 .iter()
                 .map(|s| {
@@ -81,7 +81,10 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
                     })
                 })
                 .collect::<Result<Vec<_>>>()?;
-            Ok(BatchContent::Lines { spans })
+            Ok(BatchContent::Lines {
+                spans,
+                units: Vec::new(),
+            })
         }
         BatchContent::Fs { groups } => {
             // Same filter the walker builds for this root, so an NS
@@ -155,6 +158,7 @@ mod tests {
                 end: 1,
                 render: Render::Full,
             }],
+            units: Vec::new(),
         }
     }
 

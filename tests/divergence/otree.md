@@ -1,4 +1,4 @@
-Score(3000)=0.753 I=0.909 C=0.623 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.877/0.900/0.918/0.753/0.731/0.717/0.668
+Score(3000)=0.753 I=0.909 C=0.623 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.877/0.895/0.918/0.753/0.731/0.717/0.668
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -158,5 +158,5 @@ Score(3000)=0.753 I=0.909 C=0.623 ns_rows≤3K=19/44 grid(1000/1442/2080/3000/43
 | walker |  | 9757 | 61 | Code::CodeKey { rung: Decl, file: src/ui/data_block.rs, decl: 12, sub: 0, line: 147 } |  |  | 0.672 |
 | walker |  | 9780 | 23 | Code::CodeKey { rung: Names, file: src/ui/tree_overview.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.672 |
 | walker |  | 9923 | 143 | Code::CodeKey { rung: Decl, file: src/ui/tree_overview.rs, decl: 1, sub: 0, line: 19 } |  |  | 0.672 |
-| walker |  | 9986 | 63 | Code::CodeKey { rung: Decl, file: src/ui/tree_overview.rs, decl: 2, sub: 0, line: 32 } |  |  | 0.673 |
+| walker |  | 9991 | 68 | Code::CodeKey { rung: Decl, file: src/ui/tree_overview.rs, decl: 2, sub: 0, line: 32 } |  |  | 0.673 |
 | ns | 9997 |  | 541 | Popup, Header and Footer — types and complete method rosters | 6.6 |  | 0.668 |

@@ -208,4 +208,3 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 9843 | 17 | Code::CodeKey { rung: Doc, file: rich/console.py, decl: 89, sub: 0, line: 892 } |  |  | 0.579 |
 | walker |  | 9861 | 18 | Code::CodeKey { rung: Doc, file: rich/console.py, decl: 78, sub: 0, line: 813 } |  |  | 0.579 |
 | ns | 9981 |  | 200 | rich/_unicode_data listing (complete) | 4.12 |  | 0.586 |
-| walker |  | 10000 | 139 | Code::CodeKey { rung: Decl, file: rich/console.py, decl: 69, sub: 0, line: 619 } |  |  | 0.589 |

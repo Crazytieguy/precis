@@ -52,8 +52,8 @@
 //!   `Callable`, inside `head ∪ body` for a `Whole`.
 //!
 //! The `Decl` batch renders `head` (plus `body` for `Whole`), `Doc` renders
-//! `doc`, `Body` renders a `Callable`'s `body`. An [`Item`] is the unit the
-//! chunker never splits.
+//! `doc`, `Body` renders a `Callable`'s `body`. An [`Item`] is the unit
+//! neither the chunker nor the budget's cut of the last batch splits.
 //!
 //! # Members
 //!

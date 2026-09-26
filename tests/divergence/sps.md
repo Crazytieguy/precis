@@ -1,4 +1,4 @@
-Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.531/0.832/0.852/0.736/0.672/0.640/0.629
+Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.531/0.832/0.852/0.736/0.672/0.641/0.629
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -165,4 +165,3 @@ Score(3000)=0.736 I=0.865 C=0.627 ns_rows≤3K=19/55 grid(1000/1442/2080/3000/43
 | ns | 9816 |  | 44 | Remaining directories: crate roots and .github | 8.1 |  | 0.623 |
 | ns | 9978 |  | 162 | Contributor workflow: the exact check, format, lint and test commands | 8.2 |  | 0.619 |
 | walker |  | 9988 | 375 | Code::CodeKey { rung: Names, file: sps-net/src/oci.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.620 |
-| walker |  | 9997 | 9 | Code::CodeKey { rung: Decl, file: sps-net/src/oci.rs, decl: 8, sub: 0, line: 30 } |  |  | 0.620 |

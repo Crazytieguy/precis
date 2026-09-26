@@ -233,8 +233,6 @@ microbootstrap/
     36→        validation_alias=pydantic.AliasChoices("SERVICE_NAME", f"{ENV_PREFIX}SERVICE_NAME"),
     37→    )
     38→    service_description: str = "Micro service description"
-    39→    service_version: str = pydantic.Field(
-    40→        "1.0.0",
     …
     53→class ServerConfig(pydantic.BaseModel):
     54→    server_host: str = "0.0.0.0"  # noqa: S104

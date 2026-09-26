@@ -16,7 +16,15 @@ pub enum BatchContent {
     Fs { groups: Vec<FsGroup> },
     /// Source line ranges. Spans within a batch are disjoint on
     /// `(path, line)`; cross-batch overrides go through predecessors.
-    Lines { spans: Vec<Span> },
+    Lines {
+        spans: Vec<Span>,
+        /// Row groups a terminal partial takes whole, in the order it
+        /// takes them, for a batch whose spans are all in one file. A span
+        /// row in no group is a blank bridge, kept only between two taken
+        /// rows. Empty: each row is its own group, in `(path, line)` order.
+        #[serde(skip)]
+        units: Vec<Vec<usize>>,
+    },
 }
 
 /// One directory listing — parent directory + entries to show.

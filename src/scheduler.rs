@@ -212,7 +212,7 @@ impl<W: Walker> Scheduler<W> {
 
         self.key_to_id.insert(batch.key.clone(), id);
 
-        if let BatchContent::Lines { spans } = &batch.content {
+        if let BatchContent::Lines { spans, .. } = &batch.content {
             let mut last: Option<&PathBuf> = None;
             for span in spans {
                 // Spans arrive grouped by file; dedup consecutively.
@@ -372,9 +372,9 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// Terminal step once the top-ranked batch doesn't fit: schedule
-    /// the longest affordable prefix of its entries or source lines, so
-    /// the budget left over is spent on the head of the batch every
-    /// larger budget shows in full. The prefix is a function of the
+    /// the longest affordable prefix of its entries, source lines or line
+    /// units, so the budget left over is spent on the head of the batch
+    /// every larger budget shows in full. The prefix is a function of the
     /// batch and the tree alone, so the output at a smaller budget stays
     /// a subset of the output at a larger one.
     fn schedule_partial(&mut self, id: BatchId) {
@@ -412,7 +412,7 @@ impl<W: Walker> Scheduler<W> {
         // batches on untouched files stay stable under walker
         // invariants (line-disjoint outside predecessor chains).
         self.cost_cache.remove(&id);
-        if let BatchContent::Lines { spans } = &entry_content {
+        if let BatchContent::Lines { spans, .. } = &entry_content {
             let mut last: Option<&PathBuf> = None;
             for span in spans {
                 if last == Some(&span.path) {

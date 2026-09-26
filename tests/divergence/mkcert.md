@@ -1,4 +1,4 @@
-Score(3000)=0.839 I=0.907 C=0.775 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.582/0.640/0.773/0.839/0.804/0.702/0.646
+Score(3000)=0.839 I=0.907 C=0.775 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.582/0.632/0.772/0.839/0.804/0.702/0.646
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -118,5 +118,5 @@ Score(3000)=0.839 I=0.907 C=0.775 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | walker |  | 9668 | 296 | Code::CodeKey { rung: Body, file: truststore_java.go, decl: 2, sub: 0, line: 31 } |  |  | 0.673 |
 | ns | 9785 |  | 175 | The macOS and Linux uninstall commands, including the legacy filename cleanup | 5.6 | 5.1 | 0.676 |
 | ns | 9930 |  | 145 | go.mod: the direct and indirect dependency set | 6.1 | 1.3 | 0.674 |
-| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.674 |
-| walker |  | 9989 | 321 | Code::CodeKey { rung: Body, file: cert.go, decl: 9, sub: 0, line: 282 } |  |  | 0.691 |
+| walker |  | 9968 | 300 | Code::CodeKey { rung: Body, file: cert.go, decl: 9, sub: 0, line: 282 } |  |  | 0.690 |
+| ns | 9974 |  | 44 | README: building from source with the version stamp | 6.2 |  | 0.691 |

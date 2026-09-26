@@ -82,12 +82,6 @@ cmd/
     32→}
     …
     37→var authLoginCmd = &cobra.Command{
-    38→	Use:   "login [provider]",
-    39→	Short: "Authenticate with an AI provider using OAuth",
-    40→	Long: `Authenticate with an AI provider using OAuth flow.
-    41→
-    42→This will open your browser to complete the OAuth authentication process.
-    43→Your credentials will be securely stored and will take precedence over 
     …
     58→var authLogoutCmd = &cobra.Command{
     59→	Use:   "logout [provider]",

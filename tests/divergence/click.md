@@ -176,4 +176,3 @@ Score(3000)=0.812 I=0.943 C=0.699 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 9748 |  | 193 | globals.py and the UNSET sentinel | 9.4 |  | 0.687 |
 | ns | 9861 |  | 113 | _termui_impl.py roster: ProgressBar, pagers, Editor | 9.5 |  | 0.682 |
 | ns | 9959 |  | 98 | Changelog head: the unreleased 8.4.0 section | 10.1 |  | 0.678 |
-| walker |  | 9995 | 426 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 100, sub: 0, line: 2147 } |  |  | 0.689 |

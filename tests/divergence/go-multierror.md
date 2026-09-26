@@ -1,4 +1,4 @@
-Score(3000)=0.524 I=0.556 C=0.494 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.434/0.512/0.527/0.524/0.773/0.895/0.818
+Score(3000)=0.524 I=0.556 C=0.494 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.433/0.512/0.527/0.524/0.766/0.895/0.817
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -152,4 +152,4 @@ Score(3000)=0.524 I=0.556 C=0.494 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | ns | 9803 |  | 59 | PR template section headings | 5.12 |  | 0.798 |
 | ns | 9840 |  | 37 | LICENSE identification lines | 5.13 |  | 0.797 |
 | walker |  | 9936 | 370 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 7, sub: 0, line: 118 } |  |  | 0.799 |
-| walker |  | 9994 | 58 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 8, sub: 0, line: 157 } |  |  | 0.801 |
+| walker |  | 9946 | 10 | Code::CodeKey { rung: Body, file: multierror_test.go, decl: 8, sub: 0, line: 157 } |  |  | 0.799 |

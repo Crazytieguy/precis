@@ -376,7 +376,10 @@ pub(crate) fn single_file_lines_content(
     if spans.is_empty() {
         return None;
     }
-    Some(BatchContent::Lines { spans })
+    Some(BatchContent::Lines {
+        spans,
+        units: Vec::new(),
+    })
 }
 
 /// Cached read behind an FS-metadata byte pre-flight — skips the read

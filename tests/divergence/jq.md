@@ -153,4 +153,3 @@ Score(3000)=0.778 I=0.839 C=0.722 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 9962 | 9 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 69, sub: 0, line: 566 } |  |  | 0.412 |
 | ns | 9977 |  | 199 | manual.yml: the section titles of the jq language reference | 6.1 |  | 0.408 |
 | walker |  | 9992 | 30 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 70, sub: 0, line: 569 } |  |  | 0.408 |
-| walker |  | 9992 | 0 | Code::CodeKey { rung: Decl, file: src/lexer.h, decl: 71, sub: 0, line: 572 } |  |  | 0.408 |

@@ -182,3 +182,43 @@ fn single_file_path_errors_on_a_fifo_instead_of_reading_it() {
     let error = precis::render(&fifo, 3000, None).unwrap_err();
     assert!(error.to_string().contains("regular file"), "{error}");
 }
+
+/// Row numbers of the `N→` rows in `out`.
+fn shown_rows(out: &str) -> std::collections::BTreeSet<usize> {
+    out.lines()
+        .filter_map(|line| line.trim_start().split_once('→'))
+        .filter_map(|(number, _)| number.parse().ok())
+        .collect()
+}
+
+/// At every budget, the rows of a multi-line signature or of a macro rule
+/// are all shown or all hidden: the budget's last batch is cut between the
+/// parts of declarations it holds, never inside one.
+#[test]
+fn single_file_budget_cut_never_splits_a_declaration_part() {
+    let temp = tempfile::tempdir().unwrap();
+    let python = write(
+        temp.path(),
+        "props.py",
+        "class Params:\n    @property\n    def port(self) -> int: ...\n    @port.setter\n    \
+         def port(self, value: int) -> None: ...\n    def connect(\n        \
+         self, host: str, timeout: float = 10.0,\n    ) -> \"Connection\": ...\n",
+    );
+    let rust = write(
+        temp.path(),
+        "logger.rs",
+        "#[macro_export]\nmacro_rules! info_accessible {\n    ($($arg:tt)*) => {\n        \
+         $crate::info(format!($($arg)*))\n    };\n}\n",
+    );
+    for (file, part) in [(&python, &[7, 8][..]), (&rust, &[3, 4, 5][..])] {
+        for budget in 1..=150 {
+            let shown = shown_rows(&render(file, budget, None));
+            let shown_of_part = part.iter().filter(|row| shown.contains(row)).count();
+            assert!(
+                shown_of_part == 0 || shown_of_part == part.len(),
+                "budget {budget} shows rows {shown:?} of {}",
+                file.display()
+            );
+        }
+    }
+}

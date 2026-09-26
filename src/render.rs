@@ -8,7 +8,7 @@
 //! records, and `render()` reads source to produce the final text.
 
 use std::cell::RefCell;
-use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fmt::Write as _;
 use std::ops::Range;
 use std::path::{Path, PathBuf};
@@ -225,13 +225,13 @@ impl RenderedTree {
     pub fn marginal_cost(&self, content: &BatchContent) -> Cost {
         match content {
             BatchContent::Fs { groups } => self.fs_marginal_cost(groups),
-            BatchContent::Lines { spans } => self.spans_marginal_cost(spans),
+            BatchContent::Lines { spans, .. } => self.spans_marginal_cost(spans),
         }
     }
 
-    /// Longest prefix of `content` — its listing entries or source
-    /// lines, in order — whose marginal cost `fits`, with that cost.
-    /// `None` when not even one entry or line fits.
+    /// Longest prefix of `content` — its listing entries, source
+    /// lines or line units, in order — whose marginal cost `fits`, with
+    /// that cost. `None` when not even one fits.
     pub fn affordable_prefix(
         &self,
         content: &BatchContent,
@@ -272,7 +272,7 @@ impl RenderedTree {
                 }
                 Vec::new()
             }
-            BatchContent::Lines { spans } => self.apply_spans(spans, owner, &is_ancestor),
+            BatchContent::Lines { spans, .. } => self.apply_spans(spans, owner, &is_ancestor),
         }
     }
 
@@ -680,12 +680,15 @@ fn content_len(content: &BatchContent) -> usize {
                 FsEntries::All => 0,
             })
             .sum(),
-        BatchContent::Lines { spans } => spans.iter().map(|span| span.end + 1 - span.start).sum(),
+        BatchContent::Lines { spans, units } if units.is_empty() => {
+            spans.iter().map(|span| span.end + 1 - span.start).sum()
+        }
+        BatchContent::Lines { units, .. } => units.len(),
     }
 }
 
-/// The first `count` listing entries or source lines of `content`, in
-/// group order and (path, line) order.
+/// The first `count` listing entries, source lines or line units of
+/// `content`, in group order, (path, line) order or unit order.
 fn content_prefix(content: &BatchContent, count: usize) -> BatchContent {
     let mut left = count;
     match content {
@@ -705,9 +708,15 @@ fn content_prefix(content: &BatchContent, count: usize) -> BatchContent {
                 })
                 .collect(),
         },
-        BatchContent::Lines { spans } => {
+        BatchContent::Lines { spans, units } => {
             let mut ordered: Vec<&Span> = spans.iter().collect();
             ordered.sort_by(|a, b| (&a.path, a.start).cmp(&(&b.path, b.start)));
+            if !units.is_empty() {
+                return BatchContent::Lines {
+                    spans: unit_prefix_spans(&ordered, units, count),
+                    units: units[..count].to_vec(),
+                };
+            }
             let mut prefix = Vec::new();
             for span in ordered {
                 if left == 0 {
@@ -720,9 +729,41 @@ fn content_prefix(content: &BatchContent, count: usize) -> BatchContent {
                     ..span.clone()
                 });
             }
-            BatchContent::Lines { spans: prefix }
+            BatchContent::Lines {
+                spans: prefix,
+                units: Vec::new(),
+            }
         }
     }
+}
+
+/// `spans` narrowed to the rows of the first `count` of `units`, keeping
+/// an ungrouped (blank) row only between two kept rows of its span.
+fn unit_prefix_spans(spans: &[&Span], units: &[Vec<usize>], count: usize) -> Vec<Span> {
+    let taken: HashSet<usize> = units[..count].iter().flatten().copied().collect();
+    let grouped: HashSet<usize> = units.iter().flatten().copied().collect();
+    let mut prefix = Vec::new();
+    for span in spans {
+        let mut open: Option<Span> = None;
+        for row in span.start..=span.end {
+            if taken.contains(&row) {
+                match &mut open {
+                    Some(kept) => kept.end = row,
+                    None => {
+                        open = Some(Span {
+                            start: row,
+                            end: row,
+                            ..(*span).clone()
+                        })
+                    }
+                }
+            } else if grouped.contains(&row) {
+                prefix.extend(open.take());
+            }
+        }
+        prefix.extend(open);
+    }
+    prefix
 }
 
 /// Line numbers whose records render source content (Full/Truncated) —
@@ -996,6 +1037,7 @@ mod tests {
                 end: line,
                 render,
             }],
+            units: Vec::new(),
         }
     }
 
@@ -1301,5 +1343,33 @@ mod tests {
         assert!(delta_exact.chars > 0);
         assert!(delta_exact.tokens > 0);
         assert!(delta_exact.chars < fresh_exact.chars);
+    }
+
+    #[test]
+    fn render_unit_prefix_takes_whole_units_in_unit_order() {
+        let path = PathBuf::from(format!("{STUB_DIR}/f.rs"));
+        let content = BatchContent::Lines {
+            spans: vec![Span {
+                path: path.clone(),
+                start: 1,
+                end: 6,
+                render: Render::Full,
+            }],
+            units: vec![vec![1, 6], vec![2, 3], vec![5]],
+        };
+        let prefix_rows = |count| {
+            let BatchContent::Lines { spans, units } = content_prefix(&content, count) else {
+                unreachable!();
+            };
+            assert_eq!(units.len(), count);
+            spans
+                .iter()
+                .map(|span| (span.start, span.end))
+                .collect::<Vec<_>>()
+        };
+        assert_eq!(content_len(&content), 3);
+        assert_eq!(prefix_rows(1), [(1, 1), (6, 6)]);
+        assert_eq!(prefix_rows(2), [(1, 3), (6, 6)]);
+        assert_eq!(prefix_rows(3), [(1, 6)]);
     }
 }

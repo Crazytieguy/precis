@@ -283,6 +283,6 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 9558 | 34 | Json::Scripts { file: samples/legacy/electron-amd/package.json } |  |  | 0.504 |
 | ns | 9560 |  | 38 | docs/ listing | 8.4 |  | 0.507 |
 | walker |  | 9592 | 34 | Json::Scripts { file: samples/legacy/electron-amd-nodeIntegration/package.json } |  |  | 0.507 |
+| walker |  | 9599 | 7 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.507 |
 | ns | 9643 |  | 83 | integrate-esm.md section headings | 8.5 | 8.4 | 0.505 |
 | ns | 9769 |  | 126 | website/ and CI/publishing config listings | 8.6 |  | 0.516 |
-| walker |  | 9989 | 397 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.522 |

@@ -217,5 +217,5 @@ Score(3000)=0.674 I=0.899 C=0.505 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 9843 | 135 | Plaintext::DeclSurface { file: dev/clean_trash.sh } |  |  | 0.693 |
 | ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.689 |
 | walker |  | 9953 | 110 | Plaintext::Whole { file: dev/clean_trash.sh } |  |  | 0.689 |
-| walker |  | 9980 | 27 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 5, sub: 0, line: 115 } |  |  | 0.689 |
+| walker |  | 9968 | 15 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 5, sub: 0, line: 115 } |  |  | 0.689 |
 | ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.687 |

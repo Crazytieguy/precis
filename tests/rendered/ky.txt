@@ -253,11 +253,8 @@ source/
       20→	```
       21→	*/
       22→	<T>(url: Input, options?: Options): ResponsePromise<T>;
-      23→
-      24→	/**
-      25→	Fetch the given `url` using the option `{method: 'get'}`.
-      26→
       …
+      186→};
     options.ts
     request.ts
       1→export type KyRequest<T = unknown> = {

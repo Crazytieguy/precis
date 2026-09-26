@@ -187,7 +187,7 @@ fn graded_atoms(content: &BatchContent, source_cache: &SourceCache) -> Vec<(Atom
                 })
             })
             .collect(),
-        BatchContent::Lines { spans } => explode_spans(spans)
+        BatchContent::Lines { spans, .. } => explode_spans(spans)
             .into_iter()
             .map(|(path, line, render)| {
                 let source = source_cache.get(&path);
@@ -494,7 +494,10 @@ mod tests {
                 descriptor: "ns at 100".into(),
                 justification: String::new(),
                 predecessor: None,
-                content: BatchContent::Lines { spans: vec![] },
+                content: BatchContent::Lines {
+                    spans: vec![],
+                    units: Vec::new(),
+                },
             }],
         };
         let schedule = Schedule {
@@ -509,7 +512,10 @@ mod tests {
                     chars: 0,
                 },
                 cum_tokens: 100,
-                content: BatchContent::Lines { spans: vec![] },
+                content: BatchContent::Lines {
+                    spans: vec![],
+                    units: Vec::new(),
+                },
             }],
         };
         let graded = Graded {

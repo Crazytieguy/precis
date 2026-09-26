@@ -248,9 +248,6 @@ src/click/
     150→class MissingParameter(BadParameter):
     …
     162→    def __init__(
-    163→        self,
-    164→        message: str | None = None,
-    165→        ctx: Context | None = None,
     …
     173→    def format_message(self) -> str:
     …

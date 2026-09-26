@@ -151,23 +151,6 @@ packages/
       index.tsx
         …
         14→render(
-        15→  () => {
-        16→    const initialColorMode = 'system';
-        17→    const colorModeStorageKey = 'enclosed_color_mode';
-        18→    const localStorageManager = createLocalStorageManager(colorModeStorageKey);
-        19→
-        20→    return (
-        21→      <Router
-        22→        children={getRoutes()}
-        23→        root={props => (
-        24→          <Suspense>
-        25→            <I18nProvider>
-        26→              <NoteContextProvider>
-        27→                <ColorModeScript storageType={localStorageManager.type} storageKey={colorModeStorageKey} initialColorMode={initialColorMode} />
-        28→                <ColorModeProvider
-        29→                  initialColorMode={initialColorMode}
-        30→                  storageManager={localStorageManager}
-        31→                >
         …
       locales/
       modules/

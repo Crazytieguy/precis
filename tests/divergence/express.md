@@ -149,4 +149,3 @@ Score(3000)=0.562 I=0.830 C=0.380 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 9685 | 217 | Code::CodeKey { rung: Body, file: lib/express.js, decl: 1, sub: 0, line: 36 } |  |  | 0.523 |
 | walker |  | 9844 | 159 | Code::CodeKey { rung: Doc, file: lib/application.js, decl: 16, sub: 0, line: 522 } |  |  | 0.523 |
 | ns | 9971 |  | 298 | History.md — unreleased section and the 5.2.1 heading | 8.1 |  | 0.519 |
-| walker |  | 9998 | 154 | Code::CodeKey { rung: Doc, file: lib/response.js, decl: 8, sub: 0, line: 371 } |  |  | 0.525 |

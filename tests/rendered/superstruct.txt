@@ -201,9 +201,6 @@ src/
     10→export class Struct<T = unknown, S = unknown> {
     …
     123→export function assert<T, S>(
-    124→  value: unknown,
-    125→  struct: Struct<T, S>,
-    126→  message?: string
     …
     139→export function create<T, S>(
     140→  value: unknown,

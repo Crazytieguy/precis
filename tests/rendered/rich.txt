@@ -335,10 +335,6 @@ rich/
       15→from rich._unicode_data._versions import VERSIONS
       …
       20→VERSION_ORDER = sorted(
-      21→    [
-      22→        tuple(
-      23→            map(int, version.split(".")),
-      24→        )
       …
       28→VERSION_SET = frozenset(VERSIONS)
       29→

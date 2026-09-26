@@ -848,7 +848,7 @@ pub(super) fn named_file_rest(emitted: &[Batch], ctx: &WalkCtx) -> Option<Batch>
     let shown: HashSet<usize> = emitted
         .iter()
         .filter_map(|batch| match &batch.content {
-            crate::content::BatchContent::Lines { spans } => Some(spans),
+            crate::content::BatchContent::Lines { spans, .. } => Some(spans),
             crate::content::BatchContent::Fs { .. } => None,
         })
         .flatten()
@@ -1348,7 +1348,7 @@ mod tests {
         let ctx = WalkCtx::new(root.to_path_buf());
         let batches = expand_in_dir(root, &ctx);
         assert_eq!(batches.len(), 1);
-        let crate::content::BatchContent::Lines { spans } = &batches[0].content else {
+        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
             panic!("expected a lines batch");
         };
         let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();
@@ -1372,7 +1372,7 @@ mod tests {
 
         let ctx = WalkCtx::new(root.to_path_buf());
         let batches = expand_in_dir(root, &ctx);
-        let crate::content::BatchContent::Lines { spans } = &batches[0].content else {
+        let crate::content::BatchContent::Lines { spans, .. } = &batches[0].content else {
             panic!("expected a lines batch");
         };
         let rows: Vec<_> = spans.iter().map(|span| (span.start, span.end)).collect();

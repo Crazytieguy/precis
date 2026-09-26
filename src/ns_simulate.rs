@@ -64,7 +64,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
         // A span the renderer can't apply (missing file, bad range or
         // regex) leaves the batch out of the simulation. Quality-only
         // violations keep it in, so its successors still find it.
-        if let BatchContent::Lines { spans } = &batch.content
+        if let BatchContent::Lines { spans, .. } = &batch.content
             && validate_spans(spans, fixture_root, &source_cache, &mut violations)
         {
             out.push(record(violations, 0, cumulative));
@@ -122,7 +122,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
 /// Resolved content with no atoms: no spans, or listings that list nothing.
 fn is_zero_atom(content: &BatchContent) -> bool {
     match content {
-        BatchContent::Lines { spans } => spans.is_empty(),
+        BatchContent::Lines { spans, .. } => spans.is_empty(),
         BatchContent::Fs { groups } => groups
             .iter()
             .all(|g| matches!(&g.entries, FsEntries::Listed(paths) if paths.is_empty())),

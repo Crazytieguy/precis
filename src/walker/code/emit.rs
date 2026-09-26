@@ -168,6 +168,10 @@ impl Emitter<'_> {
                 predecessor: gate.map(BatchKey::Code),
                 content: BatchContent::Lines {
                     spans: spans(self.file, &claim.rows),
+                    units: items[range.clone()]
+                        .iter()
+                        .map(|item| item.rows.clone())
+                        .collect(),
                 },
                 value,
             });
@@ -379,7 +383,7 @@ mod tests {
                         BatchKey::Code(key) => key,
                         other => panic!("not a code key: {other:?}"),
                     };
-                    let BatchContent::Lines { spans } = batch.content else {
+                    let BatchContent::Lines { spans, .. } = batch.content else {
                         panic!("not a lines batch");
                     };
                     let rows = spans.iter().flat_map(|span| span.start..=span.end);

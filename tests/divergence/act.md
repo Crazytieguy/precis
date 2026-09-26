@@ -206,4 +206,4 @@ Score(3000)=0.580 I=0.870 C=0.387 ns_rows≤3K=18/47 grid(1000/1442/2080/3000/43
 | walker |  | 9700 | 32 | Code::CodeKey { rung: Decl, file: pkg/model/workflow.go, decl: 18, sub: 0, line: 230 } |  |  | 0.509 |
 | walker |  | 9772 | 72 | Code::CodeKey { rung: Decl, file: pkg/model/workflow.go, decl: 16, sub: 0, line: 216 } |  |  | 0.509 |
 | ns | 9854 |  | 253 | Key direct dependencies | 7.2 |  | 0.518 |
-| walker |  | 9988 | 216 | Code::CodeKey { rung: Decl, file: pkg/model/workflow.go, decl: 15, sub: 0, line: 196 } |  |  | 0.530 |
+| walker |  | 9995 | 223 | Code::CodeKey { rung: Decl, file: pkg/model/workflow.go, decl: 15, sub: 0, line: 196 } |  |  | 0.531 |

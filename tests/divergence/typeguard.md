@@ -1,4 +1,4 @@
-Score(3000)=0.619 I=0.875 C=0.438 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.883/0.901/0.718/0.619/0.549/0.488/0.548
+Score(3000)=0.619 I=0.875 C=0.438 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/4327/6240/9000)=0.883/0.901/0.718/0.619/0.549/0.485/0.547
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -192,4 +192,3 @@ Score(3000)=0.619 I=0.875 C=0.438 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 9914 |  | 56 | CI interpreter matrix | 7.4 |  | 0.596 |
 | walker |  | 9942 | 81 | Code::CodeKey { rung: Doc, file: src/typeguard/_utils.py, decl: 2, sub: 0, line: 104 } |  |  | 0.596 |
 | walker |  | 9959 | 17 | Code::CodeKey { rung: Body, file: src/typeguard/_functions.py, decl: 11, sub: 0, line: 291 } |  |  | 0.598 |
-| walker |  | 10000 | 41 | Code::CodeKey { rung: Body, file: src/typeguard/_exceptions.py, decl: 9, sub: 0, line: 38 } |  |  | 0.603 |

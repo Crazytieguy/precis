@@ -88,6 +88,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                         key: pub_item_key.clone(),
                         predecessor: None,
                         content: BatchContent::Lines {
+                            units: Vec::new(),
                             spans: vec![
                                 Span {
                                     path: stub_file("synthetic.rs"),
@@ -113,6 +114,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                         key: code_key(Rung::Doc, "synthetic.rs"),
                         predecessor: Some(pub_item_key),
                         content: BatchContent::Lines {
+                            units: Vec::new(),
                             spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
                         },
                         value: 300.0,
@@ -160,6 +162,7 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
                     key: code_key(Rung::Decl, "synthetic.rs"),
                     predecessor: None,
                     content: BatchContent::Lines {
+                        units: Vec::new(),
                         spans: vec![Span {
                             path: stub_file("synthetic.rs"),
                             start: 1,
@@ -204,6 +207,7 @@ fn scheduler_invariants_unaffordable_batch_spends_the_rest_on_its_head() {
                 key: code_key(Rung::Body, "big.rs"),
                 predecessor: None,
                 content: BatchContent::Lines {
+                    units: Vec::new(),
                     spans: single_span(stub_file("big.rs"), 1, 40, Render::Full),
                 },
                 value: 500.0,
@@ -314,6 +318,7 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 let line_content = || BatchContent::Lines {
+                    units: Vec::new(),
                     spans: single_span(stub_file("f.rs"), 1, 1, Render::Full),
                 };
                 vec![
@@ -434,6 +439,7 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
                         key: code_key(Rung::Doc, "synthetic.rs"),
                         predecessor: Some(pub_item_key.clone()),
                         content: BatchContent::Lines {
+                            units: Vec::new(),
                             spans: single_span(stub_file("synthetic.rs"), 2, 2, Render::Full),
                         },
                         value: 300.0,
@@ -442,6 +448,7 @@ fn scheduler_invariants_dependent_absorbed_before_predecessor() {
                         key: pub_item_key,
                         predecessor: None,
                         content: BatchContent::Lines {
+                            units: Vec::new(),
                             spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
                         },
                         value: 500.0,
@@ -506,6 +513,7 @@ fn scheduler_invariants_char_budget_prices_batches_in_chars() {
                     key: code_key(Rung::Decl, file),
                     predecessor: None,
                     content: BatchContent::Lines {
+                        units: Vec::new(),
                         spans: single_span(stub_file(file), 1, 1, Render::Full),
                     },
                     value: 500.0,

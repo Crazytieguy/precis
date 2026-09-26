@@ -94,6 +94,7 @@ src/
     12→#[command(disable_version_flag = true)]
     13→pub struct CommandArgs {
     …
+    109→}
     111→impl CommandArgs {
     112→    pub fn parse() -> Result<Option<Self>> {
     …

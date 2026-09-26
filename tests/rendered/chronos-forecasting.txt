@@ -245,9 +245,6 @@ src/chronos/
     439→    ) -> torch.Tensor:
     …
     513→    def predict_quantiles(
-    514→        self,
-    515→        inputs: Union[torch.Tensor, List[torch.Tensor]],
-    516→        prediction_length: Optional[int] = None,
     …
     535→    @classmethod
     536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):

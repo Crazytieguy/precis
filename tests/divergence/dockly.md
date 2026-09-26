@@ -1,4 +1,4 @@
-Score(3000)=0.709 I=0.919 C=0.547 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.944/0.854/0.788/0.709/0.621/0.553/0.548
+Score(3000)=0.709 I=0.919 C=0.547 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.944/0.838/0.788/0.709/0.621/0.553/0.547
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -271,4 +271,3 @@ Score(3000)=0.709 I=0.919 C=0.547 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 9832 | 54 | Code::CodeKey { rung: Body, file: src/screen.js, decl: 6, sub: 0, line: 79 } |  |  | 0.555 |
 | walker |  | 9901 | 69 | Code::CodeKey { rung: Body, file: src/themes/theme.selector.js, decl: 1, sub: 0, line: 13 } |  |  | 0.562 |
 | ns | 9988 |  | 249 | Secondary ops config: codefresh.yml, devcontainer image, VS Code attach config, .nvmrc | 8.3 |  | 0.555 |
-| walker |  | 9995 | 94 | Code::CodeKey { rung: Body, file: widgets/searchInput.widget.js, decl: 7, sub: 0, line: 94 } |  |  | 0.555 |

@@ -317,9 +317,8 @@ migration.go
   43→
   44→	// Scheduled is the time when the migration was scheduled/ queued.
   45→	Scheduled time.Time
-  46→
-  47→	// StartedBuffering is the time when buffering of the migration source started.
-  48→	StartedBuffering time.Time
+  …
+  58→}
   …
   77→func NewMigration(body io.ReadCloser, identifier string,
   78→	version uint, targetVersion int) (*Migration, error) {

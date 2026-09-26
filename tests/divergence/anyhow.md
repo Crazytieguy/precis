@@ -1,4 +1,4 @@
-Score(3000)=0.615 I=0.847 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.809/0.701/0.615/0.580/0.501/0.553
+Score(3000)=0.615 I=0.847 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.808/0.701/0.615/0.580/0.501/0.553
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -219,4 +219,3 @@ Score(3000)=0.615 I=0.847 C=0.446 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 9920 | 40 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 40, sub: 0, line: 828 } |  |  | 0.549 |
 | walker |  | 9968 | 48 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 38, sub: 0, line: 798 } |  |  | 0.549 |
 | ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.543 |
-| walker |  | 9994 | 26 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 41, sub: 0, line: 838 } |  |  | 0.543 |
