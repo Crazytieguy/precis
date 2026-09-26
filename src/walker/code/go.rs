@@ -7,10 +7,10 @@
 //! re-export row, so a platform variant never lists its declarations
 //! without their condition. A file carrying the generated-code banner,
 //! or excluded from every build by `//go:build ignore` (a generator or
-//! demo program), yields no declarations. Outside `package main`, what no importer can
-//! name (a lower-case declaration, spec, field or interface method, or a
-//! method on a lower-case type) is hidden, unless its file, or its
-//! struct, exports nothing.
+//! demo program), yields no declarations. Outside `package main`, what
+//! no importer can name (a lower-case declaration, spec, field or
+//! interface method, or a method on a lower-case type) is hidden, unless
+//! its file, or its struct, exports nothing.
 
 use std::collections::HashSet;
 use std::sync::LazyLock;
@@ -90,9 +90,10 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         .named_children(&mut root.walk())
         .any(|child| match child.kind() {
             "function_declaration" | "method_declaration" => is_exported_callable(child, file),
-            "type_declaration" | "const_declaration" | "var_declaration" => {
-                whole(child, file, true).is_some()
-            }
+            "type_declaration" | "const_declaration" | "var_declaration" => specs(child)
+                .0
+                .into_iter()
+                .any(|spec| declares_exported(spec, file)),
             _ => false,
         });
     let mut cursor = root.walk();
@@ -287,21 +288,7 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
 fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     let rows = file.node_rows(node);
     let start = *rows.start();
-    let mut specs = Vec::new();
-    let mut group = None;
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        match child.kind() {
-            "(" => group = Some(node),
-            "var_spec_list" => {
-                group = Some(child);
-                let mut inner = child.walk();
-                specs.extend(child.named_children(&mut inner).filter(is_spec));
-            }
-            _ if is_spec(&child) => specs.push(child),
-            _ => {}
-        }
-    }
+    let (specs, group) = specs(node);
     let visible = |node: &Node| !api_only || declares_exported(*node, file);
     let (name_rows, entries) = match group {
         Some(group) => {
@@ -345,12 +332,11 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     });
     let mut body = file.node_items(entries.iter().copied(), start);
     let (doc, mut head) = doc_and_directives(node, file);
-    head.extend(match (body.first(), body.last()) {
-        (Some(first), Some(last)) => (start..first.rows[0])
-            .chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())
-            .collect::<Vec<_>>(),
-        _ => rows.clone().collect(),
-    });
+    match (body.first(), body.last()) {
+        (Some(first), Some(last)) => head
+            .extend((start..first.rows[0]).chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())),
+        _ => head.extend(rows),
+    }
     let end_rows = |shown: bool| -> Vec<usize> {
         entries
             .iter()
@@ -375,6 +361,27 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
         shape: Shape::Whole,
         members: Vec::new(),
     })
+}
+
+/// The specs of a `type`, `const` or `var` declaration, and the node
+/// holding them when they are grouped in parentheses.
+fn specs(node: Node) -> (Vec<Node>, Option<Node>) {
+    let mut specs = Vec::new();
+    let mut group = None;
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        match child.kind() {
+            "(" => group = Some(node),
+            "var_spec_list" => {
+                group = Some(child);
+                let mut inner = child.walk();
+                specs.extend(child.named_children(&mut inner).filter(is_spec));
+            }
+            _ if is_spec(&child) => specs.push(child),
+            _ => {}
+        }
+    }
+    (specs, group)
 }
 
 fn is_spec(node: &Node) -> bool {
