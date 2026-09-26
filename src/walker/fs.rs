@@ -184,7 +184,7 @@ fn is_sidecar(name: &str, siblings: &BTreeMap<String, EntryKind>) -> bool {
 const LISTING_VALUE: f64 = 1230.0;
 
 fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
-    let module_source_dir = ctx.fs_state.is_module_source_dir(dir);
+    let module_source_dir = is_module_source_dir(dir, ctx);
     let non_essential = ctx.non_essential_factor(dir);
     let source_inventory_dir = is_source_inventory_dir(dir, ctx);
     // A package module, or a partition under the repository's source
@@ -274,7 +274,7 @@ const CATALOG_CHILD_LISTING_SUPPRESSION: f64 = 0.05;
 /// inventory inside tests, examples or docs.
 fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     !is_source_dir(dir)
-        && !ctx.fs_state.is_module_source_dir(dir)
+        && !is_module_source_dir(dir, ctx)
         && ctx.fs_state.holds_source(dir, ctx.dir_filter())
         && (ctx.non_essential_factor(dir) < 1.0 || has_source_root_ancestor(dir, ctx))
 }
@@ -299,7 +299,7 @@ fn is_deferred_catalog_child(dir: &Path, ctx: &WalkCtx) -> bool {
     }
     is_source_inventory_dir(parent, ctx)
         || !is_declared_workspace_member(dir, ctx)
-            && !ctx.fs_state.is_module_source_dir(dir)
+            && !is_module_source_dir(dir, ctx)
             && ctx
                 .fs_state
                 .shape_repeats(parent, ctx.dir_filter())
@@ -318,14 +318,15 @@ fn is_declared_workspace_member(dir: &Path, ctx: &WalkCtx) -> bool {
         || ctx.is_js_workspace_member(&dir.join("package.json"))
 }
 
-const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
+const MODULE_ENTRYPOINT_FILES: &[&str] = &[
     "index.ts",
     "index.tsx",
     "index.js",
     "index.mjs",
     "index.cjs",
+    "mod.rs",
+    "__init__.py",
 ];
-const NON_JS_MODULE_ENTRYPOINT_FILES: &[&str] = &["mod.rs", "__init__.py"];
 const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
 
 /// Case-insensitive, and `Sources/` counts: that is the spelling
@@ -342,53 +343,34 @@ fn is_source_dir(dir: &Path) -> bool {
         })
 }
 
-fn has_module_entrypoint(dir: &Path) -> bool {
-    JS_MODULE_ENTRYPOINT_FILES
+/// A package module: a directory whose listing names its own entry file
+/// (`index.ts`, `mod.rs`, `__init__.py`), or whose parent's names a file
+/// of the same stem (`foo.rs` next to `foo/`).
+fn is_module_source_dir(dir: &Path, ctx: &WalkCtx) -> bool {
+    let lists_file = |dir: &Path, name: &str| {
+        list_dir(dir, ctx.dir_filter()).get(name) == Some(&EntryKind::File)
+    };
+    MODULE_ENTRYPOINT_FILES
         .iter()
-        .chain(NON_JS_MODULE_ENTRYPOINT_FILES.iter())
-        .any(|name| dir.join(name).is_file())
-}
-
-/// A package module: a directory with its own entry file (`index.ts`,
-/// `mod.rs`, `__init__.py`) or a sibling file of the same stem
-/// (`foo.rs` next to `foo/`).
-fn is_module_source_dir(dir: &Path) -> bool {
-    has_module_entrypoint(dir) || has_module_sibling_file(dir)
-}
-
-fn has_module_sibling_file(dir: &Path) -> bool {
-    // The filesystem root has no stem to attach a sibling extension to.
-    if dir.file_name().is_none() {
-        return false;
-    }
-    let mut sibling = dir.to_path_buf();
-    MODULE_SIBLING_EXTS.iter().any(|ext| {
-        sibling.set_extension(ext);
-        sibling.is_file()
-    })
+        .any(|name| lists_file(dir, name))
+        || dir.file_name().is_some()
+            && dir.parent().is_some_and(|parent| {
+                MODULE_SIBLING_EXTS.iter().any(|ext| {
+                    dir.with_extension(ext)
+                        .file_name()
+                        .and_then(|name| name.to_str())
+                        .is_some_and(|name| lists_file(parent, name))
+                })
+            })
 }
 
 #[derive(Default)]
 pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
     shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
-    module_source_dirs: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl FsState {
-    /// [`is_module_source_dir`], cached: a listing asks it of its parent
-    /// once per child.
-    fn is_module_source_dir(&self, dir: &Path) -> bool {
-        if let Some(&module) = self.module_source_dirs.borrow().get(dir) {
-            return module;
-        }
-        let module = is_module_source_dir(dir);
-        self.module_source_dirs
-            .borrow_mut()
-            .insert(dir.to_path_buf(), module);
-        module
-    }
-
     /// Whether `dir` holds a source file at any depth, reading at most
     /// [`PROBE_ENTRY_CAP`] entries.
     pub(in crate::walker) fn holds_source(&self, dir: &Path, filter: &DirFilter) -> bool {
