@@ -94,7 +94,12 @@ src/
     36→    bytes: [MaybeUninit<u8>; 40],
     37→    written: usize,
     38→}
+    40→impl Buf {
+    41→    fn new() -> Self {
     …
+    48→    fn as_str(&self) -> &str {
+    …
+    56→}
     58→impl Write for Buf {
     59→    fn write_str(&mut self, s: &str) -> fmt::Result {
     …
@@ -156,7 +161,6 @@ src/
     955→}
     …
     966→impl ErrorImpl {
-    967→    pub(crate) unsafe fn error(this: Ref<Self>) -> &(dyn StdError + Send + Sync + 'static) {
     …
     1015→impl<E> StdError for ErrorImpl<E>
     1016→where

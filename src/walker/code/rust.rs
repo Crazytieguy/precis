@@ -15,12 +15,12 @@
 //!   functions.
 //! - **Hidden**: test (`#[cfg(test)]`, `#[cfg(all(test, …))]`,
 //!   `#[test]`-style) and `#[doc(hidden)]` items, fields and variants,
-//!   inline `mod test` / `mod tests`, `const _`, and an inherent-impl
-//!   function without a visibility modifier. An inherent impl with no
-//!   admitted function is hidden. Outside `main.rs`, a module
-//!   that declares some unhidden visible item (a visibility modifier, or
-//!   `#[macro_export]` on a `macro_rules!`) hides its private functions
-//!   and macros; its private types, constants and statics stay.
+//!   inline `mod test` / `mod tests`, and `const _`. Outside `main.rs`,
+//!   a module that declares some unhidden visible item (a visibility
+//!   modifier, or `#[macro_export]` on a `macro_rules!`) hides its
+//!   private functions, macros and inherent-impl functions, and an
+//!   inherent impl with no admitted function; its private types,
+//!   constants and statics stay.
 
 use std::path::Path;
 
@@ -104,8 +104,9 @@ fn extract_items(
         if leading.hidden || is_anonymous_const(node, file) {
             continue;
         }
+        let hides_private = scope.hides_private;
         let is_helper = matches!(node.kind(), "function_item" | "macro_definition");
-        if scope.hides_private && is_helper && !is_visible(node, &leading, file) {
+        if hides_private && is_helper && !is_visible(node, &leading, file) {
             continue;
         }
         let at_top_level = scopes.len() == 1;
@@ -130,7 +131,11 @@ fn extract_items(
                 }
                 _ => {}
             },
-            "impl_item" => model.decls.extend(impl_container(node, leading, file)),
+            "impl_item" => {
+                model
+                    .decls
+                    .extend(impl_container(node, leading, file, hides_private));
+            }
             "trait_item" | "foreign_mod_item" => {
                 model.decls.push(container(node, leading, file, |_| true));
             }
@@ -498,11 +503,18 @@ fn container(
     )
 }
 
-/// A trait impl admits every function; an inherent impl only those with
-/// a visibility modifier (`pub`, `pub(…)`), and is hidden without one.
-fn impl_container(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInfo> {
+/// A trait impl admits every function. An inherent impl in a module that
+/// hides its private helpers admits only functions with a visibility
+/// modifier (`pub`, `pub(…)`), and is hidden without one.
+fn impl_container(
+    node: Node,
+    leading: Leading,
+    file: &SourceFile,
+    hides_private: bool,
+) -> Option<DeclInfo> {
     let is_trait_impl = node.child_by_field_name("trait").is_some();
-    let admit = |child: Node| is_trait_impl || visibility_modifier(child, file).is_some();
+    let admit =
+        |child: Node| is_trait_impl || !hides_private || visibility_modifier(child, file).is_some();
     if !is_trait_impl {
         let list = node.child_by_field_name("body")?;
         let admits_any = list
@@ -916,6 +928,21 @@ impl Sealed for Engine {}
                 "Whole name [13] head [13, 15] doc [] body [[14]]",
                 "  Callable name [14] head [14] doc [] body []",
                 "Whole name [21] head [21] doc [] body []",
+            ]
+        );
+        let private_module = "\
+struct ServerImpl;
+impl ServerImpl {
+    fn handle(&mut self) {}
+}
+";
+        let (_, model) = extract_source("main.rs", private_module);
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1] doc [] body []",
+                "Whole name [2] head [2, 4] doc [] body [[3]]",
+                "  Callable name [3] head [3] doc [] body []",
             ]
         );
     }
