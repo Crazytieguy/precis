@@ -11,7 +11,9 @@
 //! joins the head, like a directive. Outside `package main`, what
 //! no importer can name (a lower-case declaration, spec or field, or a
 //! method on a lower-case type no exported function returns) is hidden,
-//! unless its file exports nothing; an exported struct with no exported
+//! unless its file exports nothing. A file whose only exports are such
+//! methods (an operator's `Evaluate`, an iterator's `Next`) lists those
+//! methods, not its private helpers. An exported struct with no exported
 //! field shows its opening and closing rows only. An interface shows
 //! every method, since a lower-case one seals it against outside
 //! implementations.
@@ -86,7 +88,10 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut functions = Vec::new();
     let declarations = top_level_declarations(root);
     let handed_out = handed_out_types(&declarations, file);
-    let exports_something = declarations.iter().any(|declaration| {
+    let exports_something = declarations
+        .iter()
+        .any(|declaration| declares_exported(*declaration, file));
+    let reaches_something = declarations.iter().any(|declaration| {
         if matches!(
             declaration.kind(),
             "function_declaration" | "method_declaration"
@@ -121,7 +126,12 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 decl
             }
             "function_declaration" | "method_declaration"
-                if !api_only || is_reachable_callable(child, file, &handed_out) =>
+                if !api_only
+                    || if reaches_something {
+                        is_reachable_callable(child, file, &handed_out)
+                    } else {
+                        declares_exported(child, file)
+                    } =>
             {
                 callable(child, file)
             }
@@ -521,9 +531,12 @@ func NewPool() (*pool, error) { return nil, nil }
         let internal = extract_source("package cmd\n\nvar rootCmd = 1\n\nfunc run() {}\n");
         assert_eq!(internal.decls.len(), 2);
         let methods_on_internal_type = extract_source(
-            "//go:build !disabled\n\npackage ops\n\ntype op struct{}\n\nfunc (o *op) Evaluate() bool { return true }\n",
+            "//go:build !disabled\n\npackage ops\n\ntype op struct{}\n\nfunc (o *op) Evaluate() bool { return true }\n\nfunc helper() {}\n",
         );
-        assert_eq!(methods_on_internal_type.decls.len(), 2);
+        assert_eq!(
+            describe(&methods_on_internal_type),
+            ["Callable name [7] head [7] doc [] body []"]
+        );
     }
 
     /// A bare `//` row splits a doc, so its summary can show alone.
