@@ -147,11 +147,16 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
         // (axios's `docs/package.json`, dockly's `docs/package.json`) is
         // build-and-publish plumbing, peripheral to the parent library.
         // Real user docs (`click/docs/`, `mdbook/docs/` — no nested
-        // package.json) keep full weight.
+        // package.json) keep full weight. A root `support/` holds release
+        // scripts, editor syntaxes and test certificates; further down it
+        // can name a module of the project's own (`src/support/`).
         if is_dotted
             || is_non_essential_role
             || is_sample_tree
-            || index == 0 && (is_vendor_dir_name(name) || is_docs_site_subtree(name, root))
+            || index == 0
+                && (is_vendor_dir_name(name)
+                    || lowered == "support"
+                    || is_docs_site_subtree(name, root))
         {
             return 0.2;
         }
@@ -335,19 +340,20 @@ mod tests {
                 1.0,
                 "contribute/contribute.md contribute/build.sh contribute/conf/demo.json",
             ),
-            // Example, sample and dev-tooling trees, in either case.
+            // Example, sample and dev-tooling trees, in either case, and a
+            // root `support/`.
             (
                 0.2,
                 "Example/AppDelegate.m samples/Polly.Samples/Program.cs \
                  sample/app.go hack/update-codegen.sh charts/x/hack/sync.py \
-                 app/src/test/java/com/example/FooTest.java",
+                 app/src/test/java/com/example/FooTest.java support/release.py",
             ),
             // A JVM package named for its publisher.
             (
                 1.0,
                 "app/src/main/kotlin/com/google/samples/apps/Main.kt \
                  src/main/java/org/springframework/samples/petclinic/Owner.java \
-                 src/main/java/com/example/demo/DemoApplication.java",
+                 src/main/java/com/example/demo/DemoApplication.java src/support/mod.rs",
             ),
             // Scaffolder payloads: the prefixed spellings only. A bare
             // `templates/` is the view layer in Django / Flask / Jinja /
