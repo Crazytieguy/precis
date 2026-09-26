@@ -617,12 +617,15 @@ fn is_static(node: Node, file: &SourceFile) -> bool {
 
 /// `inline` in any spelling: the keyword, a compiler's own (`__inline__`,
 /// `__forceinline`), or a macro for one (`__always_inline`, `LIB_INLINE`),
-/// which the grammar reads as the type.
+/// which the grammar reads as the type. `noinline` / `NO_INLINE` are not.
 fn is_inline(node: Node, file: &SourceFile) -> bool {
     let mut cursor = node.walk();
     node.children(&mut cursor).any(|child| {
+        let spelling = file.text(child).to_ascii_lowercase();
         matches!(child.kind(), "storage_class_specifier" | "type_identifier")
-            && file.text(child).to_ascii_lowercase().contains("inline")
+            && spelling.contains("inline")
+            && !spelling.contains("noinline")
+            && !spelling.contains("no_inline")
     })
 }
 
@@ -810,6 +813,8 @@ macro_inline(const volatile void *v)
 {
 	check(v);
 }
+static noinline int never_inlined(void) { return 0; }
+static NO_INLINE int never_inlined_either(void) { return 0; }
 ";
         let listed = |file_name| {
             model(file_name, source)
@@ -819,7 +824,7 @@ macro_inline(const volatile void *v)
                 .collect::<Vec<_>>()
         };
         assert_eq!(listed("sds.h"), vec![1, 4, 5, 6, 7]);
-        assert_eq!(listed("sds.c"), vec![1, 2, 3, 4, 5, 6, 7]);
+        assert_eq!(listed("sds.c"), vec![1, 2, 3, 4, 5, 6, 7, 12, 13]);
     }
 
     #[test]
