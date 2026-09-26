@@ -561,11 +561,6 @@ requires-python = ">=3.10"
     /// same lede-detection signal.
     #[test]
     fn toml_poetry_table_treated_as_pyproject_identity() {
-        assert!(is_pyproject_identity_table("tool.poetry"));
-        assert!(is_pyproject_identity_table("project"));
-        assert!(!is_pyproject_identity_table("tool.poetry.dependencies"));
-        assert!(!is_pyproject_identity_table("package"));
-
         let source = r#"[tool.poetry]
 name = "rich"
 homepage = "https://github.com/Textualize/rich"

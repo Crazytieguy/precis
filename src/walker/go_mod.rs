@@ -136,11 +136,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn go_mod_keeps_direct_requires_replace_and_retract() {
+    fn go_mod_keeps_identity_directives_direct_requires_replace_and_retract() {
         let src = "\
 module example.com/foo
 
 go 1.22
+
+toolchain go1.22.5
 
 require (
 \tgithub.com/x/y v1.0.0
@@ -151,25 +153,9 @@ replace github.com/x/y => github.com/forked/y v2.0.0
 
 retract v0.1.0
 ";
-        assert_eq!(scan(src).1, vec![1, 3, 5, 6, 8, 10, 12]);
-    }
-
-    #[test]
-    fn go_mod_identity_collects_module_go_and_toolchain_directives() {
-        let src = "\
-module example.com/foo
-
-go 1.22
-
-toolchain go1.22.5
-
-require (
-\tgithub.com/x/y v1.0.0
-)
-
-replace github.com/x/y => github.com/forked/y v2.0.0
-";
-        assert_eq!(scan(src).0, vec![1, 3, 5]);
+        let (identity, kept) = scan(src);
+        assert_eq!(identity, vec![1, 3, 5]);
+        assert_eq!(kept, vec![1, 3, 5, 7, 8, 10, 12, 14]);
     }
 
     /// A trailing comment ending in `(` does not open a block.

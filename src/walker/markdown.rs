@@ -1773,6 +1773,33 @@ mod tests {
         oversize_chunk_bounds(&src_lines, 1, end)
     }
 
+    /// `bounds` tile rows 1 through the last row of `source`, in order.
+    fn assert_tiles(source: &str, bounds: &[(usize, usize)]) {
+        assert_eq!(bounds.first().unwrap().0, 1);
+        assert_eq!(bounds.last().unwrap().1, source.lines().count());
+        for pair in bounds.windows(2) {
+            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
+        }
+    }
+
+    /// No chunk of `source` starts in rows `after + 1..=through`.
+    fn assert_no_chunk_starts_in(source: &str, after: usize, through: usize) {
+        for (chunk_start, _) in chunk_bounds_of(source) {
+            assert!(
+                !(after < chunk_start && chunk_start <= through),
+                "rows {after}..={through} cut at {chunk_start}",
+            );
+        }
+    }
+
+    /// 1-based rows of the first and last lines of `source` that trim to
+    /// `line`.
+    fn rows_of(source: &str, line: &str) -> (usize, usize) {
+        let mut rows = (1..).zip(source.lines()).filter(|(_, l)| l.trim() == line);
+        let first = rows.next().expect(line).0;
+        (first, rows.last().map_or(first, |(row, _)| row))
+    }
+
     /// A blank-separated prose paragraph of ~`tokens` tokens.
     fn prose_block(tokens: usize) -> String {
         let mut s = String::new();
@@ -1875,12 +1902,7 @@ mod tests {
         );
         let bounds = chunk_bounds_of(&source);
         assert!(bounds.len() >= 2, "expected a split, got {bounds:?}");
-        let end = source.lines().count();
-        assert_eq!(bounds.first().unwrap().0, 1);
-        assert_eq!(bounds.last().unwrap().1, end);
-        for pair in bounds.windows(2) {
-            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
-        }
+        assert_tiles(&source, &bounds);
     }
 
     #[test]
@@ -1891,12 +1913,7 @@ mod tests {
             .join("\n");
         let bounds = chunk_bounds_of(&source);
         assert!(bounds.len() > 1, "expected hard splits, got {bounds:?}");
-        let end = source.lines().count();
-        assert_eq!(bounds.first().unwrap().0, 1);
-        assert_eq!(bounds.last().unwrap().1, end);
-        for pair in bounds.windows(2) {
-            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
-        }
+        assert_tiles(&source, &bounds);
     }
 
     /// A raw HTML block of CommonMark type 1 (`<script>` / `<pre>` /
@@ -1914,22 +1931,7 @@ mod tests {
                 prose_block(60),
                 prose_block(300),
             );
-            let open_row = source
-                .lines()
-                .position(|l| l.trim() == open)
-                .expect("open row")
-                + 1;
-            let close_row = source
-                .lines()
-                .position(|l| l.trim() == close)
-                .expect("close row")
-                + 1;
-            for (chunk_start, _) in chunk_bounds_of(&source) {
-                assert!(
-                    !(open_row < chunk_start && chunk_start <= close_row),
-                    "{open} block rows {open_row}..={close_row} cut at {chunk_start}",
-                );
-            }
+            assert_no_chunk_starts_in(&source, rows_of(&source, open).0, rows_of(&source, close).0);
         }
     }
 
@@ -1944,20 +1946,12 @@ mod tests {
             prose_block(250),
             prose_block(250),
         );
-        let fence_row = source.lines().position(|l| l == "```").expect("fence") + 1;
-        let bounds = chunk_bounds_of(&source);
-        assert!(bounds.len() > 1, "expected a split, got {bounds:?}");
-        for (chunk_start, _) in bounds {
-            assert!(
-                !(fence_row - 3..=fence_row).contains(&chunk_start),
-                "blank run before the fence at {fence_row} cut at {chunk_start}",
-            );
-        }
+        assert!(chunk_bounds_of(&source).len() > 1);
+        let fence_row = rows_of(&source, "```").0;
+        assert_no_chunk_starts_in(&source, fence_row - 4, fence_row);
 
         let source = format!("## Big\n\n{}{}", "\n".repeat(50_000), prose_block(250));
-        let bounds = chunk_bounds_of(&source);
-        assert_eq!(bounds.first().unwrap().0, 1);
-        assert_eq!(bounds.last().unwrap().1, source.lines().count());
+        assert_tiles(&source, &chunk_bounds_of(&source));
     }
 
     /// A line whose backtick run is followed by non-whitespace is not a
@@ -1971,24 +1965,8 @@ mod tests {
             prose_block(60),
             prose_block(300),
         );
-        let open_row = source
-            .lines()
-            .position(|l| l.trim() == "```text")
-            .expect("open row")
-            + 1;
-        let close_row = source
-            .lines()
-            .collect::<Vec<_>>()
-            .iter()
-            .rposition(|l| l.trim() == "```")
-            .expect("close row")
-            + 1;
-        for (chunk_start, _) in chunk_bounds_of(&source) {
-            assert!(
-                !(open_row < chunk_start && chunk_start <= close_row),
-                "fence rows {open_row}..={close_row} cut at {chunk_start}",
-            );
-        }
+        let close_row = rows_of(&source, "```").1;
+        assert_no_chunk_starts_in(&source, rows_of(&source, "```text").0, close_row);
     }
 
     /// A long blank-line-free table has no legal boundary at all, so
@@ -2000,12 +1978,7 @@ mod tests {
         let source = format!("## Big\n\n| a | b |\n| - | - |\n{}", row.repeat(24));
         let bounds = chunk_bounds_of(&source);
         assert!(bounds.len() > 1, "expected hard-cap splits, got {bounds:?}");
-        let end = source.lines().count();
-        assert_eq!(bounds.first().unwrap().0, 1);
-        assert_eq!(bounds.last().unwrap().1, end);
-        for pair in bounds.windows(2) {
-            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
-        }
+        assert_tiles(&source, &bounds);
     }
 
     #[test]
@@ -2056,32 +2029,10 @@ mod tests {
             prose_block(150),
             prose_block(150)
         );
-        let src_lines: Vec<&str> = source.lines().collect();
-        let fence_rows: Vec<(usize, usize)> = {
-            // Row ranges of the two fences (1-based, inclusive).
-            let a_start = 3;
-            let a_end = a_start + 121;
-            let b_start = src_lines
-                .iter()
-                .position(|l| l.starts_with("````"))
-                .unwrap()
-                + 1;
-            let b_end = b_start
-                + src_lines[b_start..]
-                    .iter()
-                    .position(|l| l.starts_with("````"))
-                    .unwrap()
-                + 1;
-            vec![(a_start, a_end), (b_start, b_end)]
-        };
-        for (_, cut_end) in chunk_bounds_of(&source) {
-            for &(fs, fe) in &fence_rows {
-                assert!(
-                    cut_end < fs || cut_end >= fe,
-                    "cut at row {cut_end} lands inside fence {fs}..{fe}"
-                );
-            }
-        }
+        let (fence_a_start, fence_a_end) = rows_of(&source, "~~~");
+        let (fence_b_start, fence_b_end) = rows_of(&source, "````");
+        assert_no_chunk_starts_in(&source, fence_a_start, fence_a_end);
+        assert_no_chunk_starts_in(&source, fence_b_start, fence_b_end);
     }
 
     fn covered(source: &str) -> BTreeSet<usize> {
@@ -2389,6 +2340,15 @@ mod tests {
                    \n\
                    Tagline.\n",
             &[1, 3],
+            &[],
+        ),
+        // A tagline is short by its characters, not its bytes: 40 CJK
+        // characters in bold (124 bytes) still extend to the prose lede.
+        (
+            "markdown_tagline_length_counts_chars_not_bytes",
+            "# T\n\n**字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字字**\n\n\
+                   T is a tool that does things.\n\n## Install\n",
+            &[5],
             &[],
         ),
     ];
@@ -2827,19 +2787,5 @@ mod tests {
         assert_eq!(title_core("🚀 Quick Start"), "quick start");
         assert_eq!(title_core("**Usage**"), "usage");
         assert_eq!(title_core("Usage: CLI"), "usage");
-    }
-
-    /// A tagline is short by its characters, not its bytes: 40 CJK
-    /// characters in bold (124 bytes) still extend to the prose lede.
-    #[test]
-    fn markdown_tagline_length_counts_chars_not_bytes() {
-        let src = format!(
-            "# T\n\n**{}**\n\nT is a tool that does things.\n\n## Install\n",
-            "字".repeat(40)
-        );
-        assert!(
-            covered(&src).contains(&5),
-            "prose lede must follow the tagline"
-        );
     }
 }

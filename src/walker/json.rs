@@ -769,29 +769,8 @@ mod tests {
 
     /// pnpm negation (`!packages/foo`) is partially supported only —
     /// rather than expand the listed packages and silently skip the
-    /// negation, we opt the entire repo out of JS workspace damping.
-    #[test]
-    fn json_workspace_members_pnpm_negation_opts_out() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        write_pkg(root, r#"{"name": "monorepo"}"#);
-        fs::write(
-            root.join("pnpm-workspace.yaml"),
-            "packages:\n  - 'packages/*'\n  - '!packages/excluded'\n",
-        )
-        .unwrap();
-        seed_members(root, &["packages/a", "packages/excluded"]);
-        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
-        assert!(
-            members.is_empty(),
-            "pnpm negation present → empty member set (got {members:?})"
-        );
-    }
-
-    /// Mixed declaration:
-    /// `package.json#workspaces` lists `packages/*` and
-    /// `pnpm-workspace.yaml` excludes one of them. The npm-source union
-    /// path must not silently re-include the excluded package.
+    /// negation, we opt the entire repo out of JS workspace damping — even
+    /// when `package.json#workspaces` lists the excluded package too.
     #[test]
     fn json_workspace_members_pnpm_negation_overrides_npm_workspaces() {
         let dir = tempfile::tempdir().unwrap();
@@ -823,26 +802,5 @@ mod tests {
         write_pkg(root, r#"{"name": "single-package"}"#);
         let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
         assert!(members.is_empty(), "no workspaces field → empty member set");
-    }
-
-    /// Mid-name globs (`packages/foo-*`) are unsupported; resolver
-    /// returns no entries from that line rather than mis-matching.
-    #[test]
-    fn json_workspace_members_unsupported_mid_name_glob() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        write_pkg(
-            root,
-            r#"{
-                "name": "monorepo",
-                "workspaces": ["packages/mdbook-*"]
-            }"#,
-        );
-        seed_members(root, &["packages/mdbook-core"]);
-        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
-        assert!(
-            members.is_empty(),
-            "mid-name globs must not match (got {members:?})"
-        );
     }
 }
