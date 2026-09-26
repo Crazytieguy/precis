@@ -541,35 +541,48 @@ fn comment_text_is_empty(trimmed: &str) -> bool {
 /// Whole-block, not per-line: a marker matches "Copyright (c) 2014"
 /// but not the eight continuation lines of the same Apache header,
 /// and admitting those is exactly the failure v0.1's head slice had.
+/// A doc comment set off from the banner by a blank line is not part of
+/// it: it is the file's (or its first declaration's) documentation.
 fn boilerplate_banner_end(lines: &[&str], in_block_comment: &[bool]) -> usize {
-    let mut block: Vec<&str> = Vec::new();
-    let mut reached_content = false;
-    for (line, &in_block_comment) in lines.iter().zip(in_block_comment) {
+    let mut is_banner = false;
+    let mut after_blank = false;
+    let mut doc_start = None;
+    for (index, (line, &in_block_comment)) in lines.iter().zip(in_block_comment).enumerate() {
         let trimmed = line.trim();
         if trimmed.is_empty() || trimmed.starts_with("#!") || trimmed.starts_with("<?php") {
-            block.push(trimmed);
+            after_blank |= trimmed.is_empty() && !in_block_comment;
             continue;
         }
         if !in_block_comment && !is_comment_line(trimmed) {
-            reached_content = true;
-            break;
+            return if is_banner {
+                doc_start.unwrap_or(index)
+            } else {
+                0
+            };
         }
-        block.push(trimmed);
+        if is_banner
+            && after_blank
+            && doc_start.is_none()
+            && DOC_COMMENT_OPENERS
+                .iter()
+                .any(|opener| trimmed.starts_with(opener))
+        {
+            doc_start = Some(index);
+        }
+        after_blank = false;
+        let lower = trimmed.to_ascii_lowercase();
+        is_banner |= SOURCE_TEXT_BOILERPLATE_MARKERS
+            .iter()
+            .any(|marker| lower.contains(marker));
     }
     // A file that is comments all the way down is a comment-formatted
     // document, not a banner followed by code; skipping it would leave
     // nothing to render.
-    if !reached_content {
-        return 0;
-    }
-    let is_banner = block.iter().any(|line| {
-        let lower = line.to_ascii_lowercase();
-        SOURCE_TEXT_BOILERPLATE_MARKERS
-            .iter()
-            .any(|marker| lower.contains(marker))
-    });
-    if is_banner { block.len() } else { 0 }
+    0
 }
+
+/// Openers of a documentation comment, as opposed to a plain one.
+const DOC_COMMENT_OPENERS: &[&str] = &["/**", "///", "//!", "/*!", "-- |", "{-|", "(**"];
 
 /// Block comment delimiters: the C family's, Haskell's, and the ML
 /// family's and Pascal's.
@@ -960,10 +973,10 @@ fn is_annotation_only(trimmed: &str) -> bool {
 }
 
 /// A fallback file's declaration surface, then — when the surface
-/// elides part of a file short enough to render whole — the whole file
-/// behind it. Nothing when the file is unreadable, machine-generated, or
-/// has no surface. Line length says nothing about prose, which is often
-/// written one paragraph per line.
+/// elides part of a file short enough to render whole — the file past its
+/// license banner behind it. Nothing when the file is unreadable,
+/// machine-generated, or has no surface. Line length says nothing about
+/// prose, which is often written one paragraph per line.
 fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, class: Class) {
     let Some(source) = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE) else {
         return;
@@ -994,13 +1007,20 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
         content,
         value,
     });
-    let content_rows = source
-        .lines()
+    let lines: Vec<&str> = source.lines().collect();
+    let banner_end = boilerplate_banner_end(&lines, &block_comment_interiors(&lines));
+    let content_rows = lines[banner_end..]
+        .iter()
         .filter(|line| !line.trim().is_empty())
         .count();
     if surface_rows < content_rows
-        && let Some(content) =
-            gated_whole_file_content(file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP)
+        && source.len() <= PLAINTEXT_BYTE_GATE
+        && source.line_count() <= PLAINTEXT_LINE_CAP
+        && let Some(content) = single_file_lines_content(
+            file,
+            &source,
+            (banner_end + 1..=source.line_count()).collect(),
+        )
     {
         out.push(Batch {
             key: PlaintextKey::Whole {
@@ -2041,6 +2061,28 @@ mod tests {
         let rendered = scheduler.run().render();
         assert!(rendered.contains("5→}"), "{rendered}");
         assert!(!rendered.contains('…'), "{rendered}");
+    }
+
+    /// A small file renders whole past its license banner, and keeps the
+    /// doc comment that follows the banner.
+    #[test]
+    fn plaintext_small_source_text_file_renders_whole_past_its_banner() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("package-info.java"),
+            "/*\n * Copyright (C) 2012 The Authors\n */\n\n/**\n * Escapers and encoders.\n */\n\
+             package demo.escape;\n",
+        )
+        .unwrap();
+        let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
+        let rendered = scheduler.run().render();
+        assert!(!rendered.contains("Copyright"), "{rendered}");
+        assert!(
+            rendered.contains("6→ * Escapers and encoders."),
+            "{rendered}"
+        );
+        assert!(rendered.contains("8→package demo.escape;"), "{rendered}");
     }
 
     /// A file whose byte count slips under the gate but whose line
