@@ -101,9 +101,8 @@ pub enum MarkdownKey {
     CommandBlock { file: PathBuf, row: usize },
 }
 
-/// JSON batches. `package.json` splits along the shared manifest ontology
-/// (identity / operational / dependencies). Other small JSON
-/// configs get a single `Whole` batch.
+/// `package.json` batches, split along the shared manifest ontology
+/// (identity / operational / dependencies).
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum JsonKey {
     /// `package.json` identity scalars: `name`, `version`, `description`,
@@ -122,9 +121,6 @@ pub enum JsonKey {
     /// Runtime `package.json` dependency blocks (`dependencies`, optional /
     /// bundled dependencies, overrides, and resolutions).
     Dependencies { file: PathBuf },
-    /// Whole-file render of a small JSON config. Skipped for
-    /// `package.json` and for large/generated files.
-    Whole { file: PathBuf },
 }
 
 /// Batches for files no parser claims — named config/ops files and the
@@ -249,8 +245,7 @@ impl BatchKey {
     /// `0.45` for prose-shaped batches whose cost grows without
     /// proportional structural value: markdown sections past the first
     /// (index 0 is where READMEs lead with their canonical claim; see
-    /// `keeps_default_concavity` for the exemptions) and verbatim JSON
-    /// config dumps.
+    /// `keeps_default_concavity` for the exemptions).
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             BatchKey::Markdown(MarkdownKey::Section {
@@ -258,7 +253,6 @@ impl BatchKey {
                 keeps_default_concavity,
                 ..
             }) if *section_index >= 1 && !keeps_default_concavity => 0.45,
-            BatchKey::Json(JsonKey::Whole { .. }) => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }

@@ -1,4 +1,4 @@
-Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.884/0.851/0.868/0.824/0.756/0.601/0.510
+Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.884/0.851/0.868/0.824/0.756/0.601/0.530
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -95,42 +95,44 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 7297 |  | 192 | Input and Separator markup | 4.7 | 2.6 | 0.533 |
 | walker |  | 7494 | 326 | Markdown::Section { file: README.md, section_index: 11, keeps_default_concavity: false } |  |  | 0.533 |
 | walker |  | 7513 | 19 | Fs::DirListing { dir: website/styles/cmdk } |  |  | 0.534 |
+| walker |  | 7557 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.534 |
 | ns | 7563 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.525 |
-| walker |  | 7755 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.525 |
+| walker |  | 7661 | 104 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 774 } |  |  | 0.525 |
 | ns | 7763 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.520 |
-| walker |  | 7799 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.520 |
-| walker |  | 7903 | 104 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 774 } |  |  | 0.520 |
-| walker |  | 8031 | 128 | Code::CodeKey { rung: Body, file: cmdk/src/command-score.ts, decl: 1, sub: 0, line: 155 } |  |  | 0.520 |
-| ns | 8066 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.509 |
-| ns | 8162 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.511 |
-| walker |  | 8211 | 180 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 882 } |  |  | 0.516 |
-| ns | 8222 |  | 60 | Test fixture pages listing | 6.1 |  | 0.524 |
-| walker |  | 8397 | 186 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 12, sub: 0, line: 909 } |  |  | 0.530 |
+| walker |  | 7789 | 128 | Code::CodeKey { rung: Body, file: cmdk/src/command-score.ts, decl: 1, sub: 0, line: 155 } |  |  | 0.520 |
+| walker |  | 7969 | 180 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 10, sub: 0, line: 882 } |  |  | 0.526 |
+| ns | 8066 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.515 |
+| walker |  | 8155 | 186 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 12, sub: 0, line: 909 } |  |  | 0.521 |
+| ns | 8162 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.522 |
+| walker |  | 8177 | 22 | Code::CodeKey { rung: Names, file: test/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.522 |
+| ns | 8222 |  | 60 | Test fixture pages listing | 6.1 |  | 0.530 |
+| walker |  | 8249 | 72 | Code::CodeKey { rung: Names, file: website/components/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| walker |  | 8263 | 14 | Code::CodeKey { rung: Names, file: website/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
 | ns | 8400 |  | 178 | Spec names: basic behaviour | 6.2 |  | 0.525 |
-| walker |  | 8419 | 22 | Code::CodeKey { rung: Names, file: test/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
-| walker |  | 8491 | 72 | Code::CodeKey { rung: Names, file: website/components/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
-| walker |  | 8505 | 14 | Code::CodeKey { rung: Names, file: website/pages/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
+| walker |  | 8431 | 168 | Code::CodeKey { rung: Names, file: website/components/icons/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
+| walker |  | 8463 | 32 | Json::Identity { file: test/package.json } |  |  | 0.525 |
+| walker |  | 8489 | 26 | Json::Scripts { file: test/package.json } |  |  | 0.525 |
+| walker |  | 8509 | 20 | Code::CodeKey { rung: Names, file: website/components/code/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.525 |
 | ns | 8545 |  | 145 | dialog.test.ts in full - the whole spec idiom | 6.3 |  | 0.520 |
-| walker |  | 8673 | 168 | Code::CodeKey { rung: Names, file: website/components/icons/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.520 |
-| walker |  | 8705 | 32 | Json::Identity { file: test/package.json } |  |  | 0.520 |
 | ns | 8708 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.516 |
-| walker |  | 8731 | 26 | Json::Scripts { file: test/package.json } |  |  | 0.516 |
-| walker |  | 8751 | 20 | Code::CodeKey { rung: Names, file: website/components/code/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
 | ns | 8925 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.510 |
-| walker |  | 9168 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 787 } |  |  | 0.530 |
+| walker |  | 8926 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 787 } |  |  | 0.530 |
+| walker |  | 8952 | 26 | Plaintext::DeclSurface { file: test/style.css } |  |  | 0.530 |
+| walker |  | 8955 | 3 | Plaintext::Whole { file: test/style.css } |  |  | 0.530 |
+| walker |  | 8998 | 43 | Json::Identity { file: website/package.json } |  |  | 0.530 |
+| walker |  | 9077 | 79 | Json::Scripts { file: website/package.json } |  |  | 0.530 |
+| walker |  | 9092 | 15 | Plaintext::DeclSurface { file: website/public/robots.txt } |  |  | 0.530 |
 | ns | 9185 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.524 |
-| walker |  | 9194 | 26 | Plaintext::DeclSurface { file: test/style.css } |  |  | 0.524 |
-| walker |  | 9197 | 3 | Plaintext::Whole { file: test/style.css } |  |  | 0.524 |
-| walker |  | 9240 | 43 | Json::Identity { file: website/package.json } |  |  | 0.524 |
-| walker |  | 9319 | 79 | Json::Scripts { file: website/package.json } |  |  | 0.524 |
-| walker |  | 9334 | 15 | Plaintext::DeclSurface { file: website/public/robots.txt } |  |  | 0.524 |
+| walker |  | 9250 | 158 | Json::Dependencies { file: test/package.json } |  |  | 0.524 |
+| walker |  | 9283 | 33 | Plaintext::DeclSurface { file: .husky/pre-commit } |  |  | 0.524 |
+| walker |  | 9289 | 6 | Plaintext::Whole { file: .husky/pre-commit } |  |  | 0.524 |
 | ns | 9441 |  | 256 | test/pages/dialog.tsx - a working usage page | 6.7 |  | 0.514 |
-| walker |  | 9492 | 158 | Json::Dependencies { file: test/package.json } |  |  | 0.514 |
-| walker |  | 9525 | 33 | Plaintext::DeclSurface { file: .husky/pre-commit } |  |  | 0.514 |
-| walker |  | 9531 | 6 | Plaintext::Whole { file: .husky/pre-commit } |  |  | 0.514 |
-| ns | 9717 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.504 |
-| walker |  | 9728 | 197 | Json::Dependencies { file: website/package.json } |  |  | 0.504 |
-| ns | 9882 |  | 165 | CI workflow | 6.9 |  | 0.497 |
-| walker |  | 9927 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 729 } |  |  | 0.498 |
-| walker |  | 9951 | 24 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 1, line: 729 } |  |  | 0.498 |
-| ns | 9955 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.507 |
+| walker |  | 9486 | 197 | Json::Dependencies { file: website/package.json } |  |  | 0.514 |
+| walker |  | 9685 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 729 } |  |  | 0.515 |
+| ns | 9717 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.505 |
+| ns | 9882 |  | 165 | CI workflow | 6.9 |  | 0.498 |
+| walker |  | 9938 | 253 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 1, line: 729 } |  |  | 0.519 |
+| ns | 9955 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.528 |
+| walker |  | 9960 | 22 | Code::CodeKey { rung: Names, file: test/pages/portal.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
+| walker |  | 9982 | 22 | Code::CodeKey { rung: Names, file: test/pages/props.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
+| walker |  | 9996 | 14 | Code::CodeKey { rung: Names, file: test/pages/item.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |

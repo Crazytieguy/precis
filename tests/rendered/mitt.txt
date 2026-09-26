@@ -242,17 +242,17 @@ src/
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
+    49→	type GenericEventHandler =
+    50→		| Handler<Events[keyof Events]>
+    51→		| WildcardHandler<Events>;
+    52→	all = all || new Map();
+    53→
+    54→	return {
+    55→		/**
+    56→		 * A Map of event names to registered handler functions.
+    57→		 */
     …
 test/
   index_test.ts
   test-types-compilation.ts
 tsconfig.json
-  1→{
-  2→	"compileOnSave": false,
-  3→	"compilerOptions": {
-  4→		"strict": true,
-  5→		"noEmit": true,
-  6→		"declaration": true,
-  7→		"moduleResolution": "node",
-  8→		"skipLibCheck": true,
-  …

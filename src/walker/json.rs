@@ -1,13 +1,10 @@
 //! JSON walker. `package.json` splits along the same ontology as
 //! `Cargo.toml` (identity / scripts ≈ features / dependencies) plus
 //! JS-specific `Entry` and `Runtime` batches for entrypoint pointers
-//! (`main`/`module`/`exports`/…) and runtime constraints. Other small
-//! root JSON configs (`tsconfig.json`, `.eslintrc.json`, …) and
-//! `*.json5` / `*.code-workspace` files anywhere get a single `Whole`
-//! batch; nested `.json` is data (locale tables, fixtures, logs) far more
-//! often than config and is left to the listing. Lockfiles and large
-//! generated files are skipped. The full `package.json` key→batch mapping
-//! lives in the `is_*_key` predicates below.
+//! (`main`/`module`/`exports`/…) and runtime constraints. Other JSON —
+//! tool config (`tsconfig.json`, `.eslintrc.json`, …) and data — is left
+//! to the listing and the floor. The full `package.json` key→batch
+//! mapping lives in the `is_*_key` predicates below.
 
 use std::cell::OnceCell;
 use std::collections::HashSet;
@@ -26,17 +23,9 @@ use super::workspace::{
     member_named_after_root,
 };
 use super::{
-    WalkCtx, first_child_of_kind, fs::files_with_any_extension, gated_whole_file_content,
-    path_depth_factor, single_file_lines_content,
+    WalkCtx, first_child_of_kind, fs::files_with_any_extension, path_depth_factor,
+    single_file_lines_content,
 };
-
-/// Hard cap on `Whole` JSON config rendering — generated files
-/// (lockfiles, manifests in node_modules) skip the batch entirely.
-const WHOLE_LINE_CAP: usize = 60;
-
-/// FS-metadata pre-flight gate (≈200 bytes/line × line cap) — typical
-/// generated JSONs are huge; skip without reading.
-const WHOLE_BYTE_GATE: usize = WHOLE_LINE_CAP * 200;
 
 /// Per-run JSON-walker state — caches the seed root's JS/TS workspace
 /// member set (npm/yarn `workspaces` + `pnpm-workspace.yaml`).
@@ -70,43 +59,17 @@ impl JsonState {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
-    // Keep admission extension-bounded: these are explicit JSON-family
-    // formats, not files guessed to be JSON from their contents.
-    let json_family_files =
-        files_with_any_extension(dir, &["json", "json5", "code-workspace"], ctx);
-    if json_family_files.is_empty() {
-        return Vec::new();
-    }
     let mut out = Vec::new();
-    for file in json_family_files {
-        let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
-            continue;
-        };
-        if is_skipped_json(name) || super::plaintext::is_unparsed_manifest(dir, name, ctx) {
-            continue;
-        }
-        if is_package_json(name) {
-            emit_package_json(&file, ctx, &mut out);
-        } else if (dir == ctx.root() || !name.to_ascii_lowercase().ends_with(".json"))
-            && let Some(batch) = whole_json_batch(&file, ctx)
+    for file in files_with_any_extension(dir, &["json"], ctx) {
+        if file
+            .file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(is_package_json)
         {
-            out.push(batch);
+            emit_package_json(&file, ctx, &mut out);
         }
     }
     out
-}
-
-fn whole_json_batch(file: &Path, ctx: &WalkCtx) -> Option<Batch> {
-    let content = gated_whole_file_content(file, ctx, WHOLE_BYTE_GATE, WHOLE_LINE_CAP)?;
-    Some(Batch {
-        key: JsonKey::Whole {
-            file: file.to_path_buf(),
-        }
-        .into(),
-        predecessor: None,
-        content,
-        value: 589.0 * path_depth_factor(file, ctx),
-    })
 }
 
 /// Emit independently purchasable `package.json` surfaces. On ordinary
@@ -367,13 +330,6 @@ fn is_package_json(name: &str) -> bool {
 
 fn dir_name(path: &Path) -> Option<&std::ffi::OsStr> {
     path.parent().and_then(Path::file_name)
-}
-
-/// Files that never produce JSON batches — lockfiles.
-fn is_skipped_json(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    matches!(lower.as_str(), "package-lock.json" | "npm-shrinkwrap.json")
-        || lower.ends_with(".lock.json")
 }
 
 // --- key classification ---
@@ -651,44 +607,6 @@ mod tests {
         top_level_pairs(&tree, source)
     }
 
-    #[test]
-    fn json_admits_only_bounded_json_family_sidecars() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        fs::write(
-            root.join("settings.code-workspace"),
-            "{\n  \"folders\": []\n}\n",
-        )
-        .unwrap();
-        fs::write(root.join("data.json5"), "{\n  // comment\n  value: 1\n}\n").unwrap();
-        fs::write(root.join("not-json.yaml"), "value: 1\n").unwrap();
-        // The plaintext walker's root manifest.
-        fs::write(root.join("composer.json"), "{\n  \"name\": \"a/b\"\n}\n").unwrap();
-        fs::write(
-            root.join("large.json5"),
-            "value\n".repeat(WHOLE_LINE_CAP + 1),
-        )
-        .unwrap();
-
-        let ctx = WalkCtx::new(root.to_path_buf());
-        let batches = expand_in_dir(root, &ctx);
-        let whole_files: HashSet<PathBuf> = batches
-            .into_iter()
-            .filter_map(|batch| match batch.key {
-                BatchKey::Json(JsonKey::Whole { file }) => Some(file),
-                _ => None,
-            })
-            .collect();
-
-        assert_eq!(
-            whole_files,
-            HashSet::from([
-                root.join("data.json5"),
-                root.join("settings.code-workspace"),
-            ])
-        );
-    }
-
     /// A long `scripts` block delivers as a chain of chunks behind the
     /// identity block; a short one, even with many scripts on one line,
     /// stays one batch.
@@ -769,14 +687,12 @@ mod tests {
         let outside = dir.path().join("outside.txt");
         fs::write(&outside, "{\"secret\": \"outside\"}\n").unwrap();
 
-        for extension in ["json", "json5", "code-workspace"] {
-            symlink(&outside, root.join(format!("escaping.{extension}"))).unwrap();
-        }
+        symlink(&outside, root.join("package.json")).unwrap();
 
         let ctx = WalkCtx::new(root.clone());
         assert!(
             expand_in_dir(&root, &ctx).is_empty(),
-            "JSON-family discovery must reject symlinks that escape the root",
+            "package.json discovery must reject symlinks that escape the root",
         );
     }
 

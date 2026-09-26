@@ -265,6 +265,13 @@ source/
       44→	@returns A promise with `Body` methods added.
       45→	*/
       46→	put: <T>(url: Input, options?: Options) => ResponsePromise<T>;
+      48→	/**
+      49→	Fetch the given `url` using the option `{method: 'delete'}`.
+      50→
+      51→	@param url - `Request` object, `URL` object, or URL string.
+      52→	@returns A promise with `Body` methods added.
+      53→	*/
+      54→	delete: <T>(url: Input, options?: Options) => ResponsePromise<T>;
       …
     options.ts
     request.ts
@@ -304,12 +311,3 @@ test/
   stream.ts
 tsconfig.dist.json
 tsconfig.json
-  1→{
-  2→	"extends": "@sindresorhus/tsconfig",
-  3→	"compilerOptions": {
-  4→		"exactOptionalPropertyTypes": true
-  5→	},
-  6→	"include": [
-  7→		"source"
-  8→	]
-  9→}

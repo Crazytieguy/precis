@@ -1,4 +1,4 @@
-Score(3000)=0.816 I=0.957 C=0.695 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.741/0.803/0.816/0.816/0.859/0.907/0.838
+Score(3000)=0.838 I=0.962 C=0.730 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.741/0.803/0.816/0.838/0.859/0.907/0.838
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -52,17 +52,17 @@ Score(3000)=0.816 I=0.957 C=0.695 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 2799 |  | 214 | `emit()` body and the close of the factory | 3.5 | 3.4 | 0.813 |
 | walker |  | 2910 | 163 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.814 |
 | ns | 3034 |  | 235 | Complete package.json `scripts` block | 4.1 | 1.9 | 0.819 |
-| walker |  | 3059 | 149 | Json::Whole { file: tsconfig.json } |  |  | 0.823 |
-| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.829 |
-| walker |  | 3270 | 211 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.865 |
-| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.844 |
-| walker |  | 3441 | 171 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 1, line: 46 } |  |  | 0.870 |
-| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.829 |
-| walker |  | 3630 | 189 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 2, line: 46 } |  |  | 0.863 |
-| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.840 |
-| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.832 |
-| walker |  | 3811 | 181 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 3, line: 46 } |  |  | 0.854 |
-| walker |  | 3957 | 146 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 4, line: 46 } |  |  | 0.889 |
+| walker |  | 3121 | 211 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 0, line: 46 } |  |  | 0.858 |
+| ns | 3183 |  | 149 | tsconfig.json in full | 4.2 |  | 0.831 |
+| ns | 3284 |  | 101 | package.json `mocha` configuration block | 4.3 |  | 0.811 |
+| walker |  | 3292 | 171 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 1, line: 46 } |  |  | 0.837 |
+| walker |  | 3481 | 189 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 2, line: 46 } |  |  | 0.873 |
+| ns | 3501 |  | 217 | .github/workflows/main.yml in full | 4.4 |  | 0.832 |
+| ns | 3658 |  | 157 | package.json project metadata: repository, keywords, homepage, authors, license, files | 4.5 |  | 0.811 |
+| walker |  | 3662 | 181 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 3, line: 46 } |  |  | 0.834 |
+| ns | 3736 |  | 78 | test/index_test.ts imports and chai setup | 5.1 |  | 0.825 |
+| walker |  | 3808 | 146 | Code::CodeKey { rung: Body, file: src/index.ts, decl: 8, sub: 4, line: 46 } |  |  | 0.861 |
+| walker |  | 3957 | 149 | Plaintext::Rest { file: tsconfig.json } |  |  | 0.889 |
 | ns | 4153 |  | 417 | Every `describe` / `it` declaration line in test/index_test.ts | 5.2 |  | 0.854 |
 | ns | 4355 |  | 202 | test/test-types-compilation.ts preamble: typed emitter and handler fixtures | 5.3 |  | 0.826 |
 | ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.804 |
