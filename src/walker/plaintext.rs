@@ -1140,7 +1140,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 content,
                 class_value(class, &file, ctx) * small_build_file_factor(class, &file, ctx),
             ),
-            None => match root_makefile_phony_targets(&file, name, ctx) {
+            None => match root_makefile_targets(&file, name, ctx) {
                 Some(content) => (content, class_value(class, &file, ctx)),
                 None => {
                     if class == Class::Build && ctx.depth_from_root(&file) == 1 {
@@ -1350,7 +1350,7 @@ const CANONICAL_MAKE_TARGETS: [&str; 7] =
 /// [`CANONICAL_MAKE_TARGETS`] target they don't name. A declaration of
 /// only variables or patterns (`.PHONY: $(PHONY)`) names nothing and is
 /// left out.
-fn root_makefile_phony_targets(
+fn root_makefile_targets(
     file: &Path,
     name: &str,
     ctx: &WalkCtx,
