@@ -128,7 +128,7 @@ must not undo:
 - A `CodeKey` is identified by `(rung, file, decl index, chunk)`, never
   by source line (a container and its first member can share a row), and
   row ownership is a ledger that drops a conflicting row, not an
-  assertion that fails the run.
+  assertion that fails the run. The engine emits no Ellipsis records.
 - **One value table:** `value::code_rung_value` per rung and one chunk
   exponent. `Names` sits well below `Decl`, or a roster in every file
   outranks entry-file declarations, docs and manifests. A roster is
@@ -142,9 +142,15 @@ must not undo:
   pin), `file_weight` and what `extract` hides. Entry-file,
   private-declaration, member and front-door file factors, a roster head
   premium and a chunk tail decay were each removed at flat or better
-  score, as were extraction refinements (the TS/JS module doc, finer
-  doc-paragraph splits, hiding impls of hidden types, a C banner
-  cutoff); re-adding one needs a fresh measurement.
+  score, as were extraction refinements; re-adding one needs a fresh
+  measurement:
+  - the TS/JS module doc and JSDoc paragraph splits;
+  - unexported declarations in TS/JS entry files;
+  - publishing a published handle's factory;
+  - Rust badge-paragraph skipping and rustdoc fence-aware paragraphs;
+  - hiding impls of hidden types;
+  - C decoration-row paragraph splits and the C banner cutoff on
+    declaration docs.
 - **Rows that condition or define a file's exports join its roster**:
   a Go `//go:build` constraint, a Lua module's top-level `return` and
   `setmetatable(…)` call.
