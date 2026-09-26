@@ -416,12 +416,17 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
 
 /// Heavy-directory names block traversal, except a `build/` that holds
 /// Rust source: a checked-in module may be named `build`, while Cargo's
-/// own output lives under `target/`, which the walk never enters.
+/// own output lives under `target/`, which the walk never enters. A
+/// translated mirror is named, not listed: its entries repeat the names
+/// of the directory it translates.
 fn should_recurse_dir(dir: &Path) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
     };
     let name = name.to_string_lossy();
+    if is_locale_mirror(dir, &name) {
+        return false;
+    }
     if name != "build" {
         return !crate::fs_util::should_skip_dir(&name);
     }
@@ -434,6 +439,36 @@ fn should_recurse_dir(dir: &Path) -> bool {
                 && path.is_file()
         })
     })
+}
+
+/// One of several translations named after the directory they mirror:
+/// `pages.ar/`, `pages.pt_BR/` beside `pages/`.
+fn is_locale_mirror(dir: &Path, name: &str) -> bool {
+    let (Some(stem), Some(parent)) = (locale_mirror_stem(name), dir.parent()) else {
+        return false;
+    };
+    let mirrors = std::fs::read_dir(parent)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .filter(|entry| entry.file_name().to_str().and_then(locale_mirror_stem) == Some(stem))
+        .count();
+    mirrors >= 2 && parent.join(stem).is_dir()
+}
+
+/// `pages` of `pages.ar`, `pages.pt_BR`, `pages.zh-Hant`.
+fn locale_mirror_stem(name: &str) -> Option<&str> {
+    let (stem, code) = name.rsplit_once('.').filter(|(stem, _)| !stem.is_empty())?;
+    let (language, region) = code
+        .split_once(['_', '-'])
+        .map_or((code, None), |(language, region)| (language, Some(region)));
+    let is_locale = language.len() == 2
+        && language.bytes().all(|byte| byte.is_ascii_lowercase())
+        && region.is_none_or(|region| {
+            (2..=4).contains(&region.len())
+                && region.bytes().all(|byte| byte.is_ascii_alphanumeric())
+        });
+    is_locale.then_some(stem)
 }
 
 #[cfg(test)]
@@ -492,6 +527,25 @@ mod tests {
         assert_eq!(value("gallery"), None);
         assert!(value("screens").unwrap() < value("notes").unwrap() / 10.0);
         assert_eq!(value("branding"), value("notes"));
+    }
+
+    #[test]
+    fn fs_locale_mirrors_are_named_not_listed() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        for dir in [
+            "pages/common",
+            "pages.ar/common",
+            "pages.pt_BR/common",
+            "glossary/node",
+            "glossary/node.js",
+        ] {
+            std::fs::create_dir_all(root.join(dir)).unwrap();
+        }
+        assert!(should_recurse_dir(&root.join("pages")));
+        assert!(!should_recurse_dir(&root.join("pages.ar")));
+        assert!(!should_recurse_dir(&root.join("pages.pt_BR")));
+        assert!(should_recurse_dir(&root.join("glossary/node.js")));
     }
 
     #[test]
