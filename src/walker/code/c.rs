@@ -3,8 +3,9 @@
 //! The declarations of a file are its "effective top level": the body of
 //! a wrapping `#ifndef X` / `#define X` / `#endif` header guard, the body
 //! of `extern "C" { … }` (bare or `#ifdef __cplusplus`-wrapped), and
-//! `#if` / `#ifdef` blocks holding only declarations and directives.
-//! In a source file function definitions count as declarations; in a
+//! `#if` / `#ifdef` blocks holding only declarations and directives,
+//! where `#ifndef X` / `#define X …` supplying a default counts as a
+//! declaration. In a source file function definitions count as declarations; in a
 //! header they mark the implementation section of a single-header
 //! library, which stays opaque, as does any block holding a statement
 //! (an `#if` splitting a function body).
@@ -378,7 +379,7 @@ fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     }
     if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
         && !is_disabled_preproc_if(node, file)
-        && feature_gate_is_declaration_only(node, is_header(&file.path)) == Some(true)
+        && feature_gate_is_declaration_only(node, file) == Some(true)
     {
         descend_feature_gate_branches(node, file, visit);
         return;
@@ -413,24 +414,26 @@ fn is_disabled_preproc_if(node: Node, file: &SourceFile) -> bool {
 }
 
 /// For a `preproc_if*` / `preproc_else*` subtree: `None` when any branch
-/// holds a statement, or a function definition `in_header`, else whether
+/// holds a statement, or a function definition in a header, else whether
 /// it holds at least one declaration beside its directives and comments.
-fn feature_gate_is_declaration_only(node: Node, in_header: bool) -> Option<bool> {
+/// A macro definition counts only when it supplies a default for the
+/// name the block tests (`#ifndef X` / `#define X …`).
+fn feature_gate_is_declaration_only(node: Node, file: &SourceFile) -> Option<bool> {
     let mut declaration_found = false;
     let mut cursor = node.walk();
     for child in node.named_children(&mut cursor) {
         match child.kind() {
             "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
             | "enum_specifier" => declaration_found = true,
-            "function_definition" if !in_header => declaration_found = true,
-            "preproc_include"
-            | "preproc_def"
-            | "preproc_function_def"
-            | "preproc_call"
-            | "comment" => {}
+            "function_definition" if !is_header(&file.path) => declaration_found = true,
+            "preproc_def" | "preproc_function_def" => {
+                declaration_found |=
+                    guarded_name(node).is_some_and(|name| is_define_of(child, name, file));
+            }
+            "preproc_include" | "preproc_call" | "comment" => {}
             "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
             | "preproc_elifdef" => {
-                declaration_found |= feature_gate_is_declaration_only(child, in_header)?;
+                declaration_found |= feature_gate_is_declaration_only(child, file)?;
             }
             // Condition / name tokens of the `#if` / `#ifdef` itself.
             "identifier"
@@ -533,18 +536,21 @@ fn guarded_name(guard: Node) -> Option<Node> {
     }
 }
 
-/// True iff `guard` tests `X` as in [`guarded_name`] and its first child
-/// (comments aside) is `#define X`.
+/// True iff `guard` tests `X` as in [`guarded_name`], its first child
+/// (comments aside) is `#define X`, and something follows it: a block
+/// holding only the define supplies a default for `X`.
 fn is_header_guard(guard: Node, file: &SourceFile) -> bool {
     let Some(name) = guarded_name(guard) else {
         return false;
     };
     let condition = guard.child_by_field_name("condition");
     let mut cursor = guard.walk();
-    let first = guard
+    let mut body = guard
         .named_children(&mut cursor)
-        .find(|child| *child != name && Some(*child) != condition && child.kind() != "comment");
-    first.is_some_and(|define| is_define_of(define, name, file))
+        .filter(|child| *child != name && Some(*child) != condition && child.kind() != "comment");
+    body.next()
+        .is_some_and(|define| is_define_of(define, name, file))
+        && body.next().is_some()
 }
 
 /// True iff `define` is the `#define X` of a header guard on `X`.
@@ -556,7 +562,7 @@ fn is_header_guard_define(define: Node, file: &SourceFile) -> bool {
 }
 
 fn is_define_of(define: Node, name: Node, file: &SourceFile) -> bool {
-    define.kind() == "preproc_def"
+    matches!(define.kind(), "preproc_def" | "preproc_function_def")
         && define
             .child_by_field_name("name")
             .is_some_and(|defined| file.text(defined) == file.text(name))
@@ -661,6 +667,38 @@ int packed(void);
             name_rows_of(&model("krep.h", source)),
             vec![vec![2], vec![4], vec![19]]
         );
+    }
+
+    #[test]
+    fn c_feature_gates_supplying_a_default_list_their_macro() {
+        let source = "\
+#ifndef R3_H
+#define R3_H
+#ifndef CFG_1
+#define CFG_1 (1)
+#endif
+#ifndef CFG_MAX
+#define CFG_MAX(a, b) ((a) > (b) ? (a) : (b))
+#endif
+#ifdef __GNUC__
+#define CFG_UNUSED __attribute__((unused))
+#else
+#define CFG_UNUSED
+#endif
+int use_cfg(void);
+#endif
+";
+        let model = model("r3.h", source);
+        let heads: Vec<Vec<usize>> = model
+            .decls
+            .iter()
+            .map(|decl| {
+                let mut head = decl.head.clone();
+                head.sort_unstable();
+                head
+            })
+            .collect();
+        assert_eq!(heads, vec![vec![3, 4, 5], vec![6, 7, 8], vec![14]]);
     }
 
     #[test]
