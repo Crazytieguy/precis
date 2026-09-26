@@ -422,7 +422,9 @@ pub(super) mod test_support {
         let ctx = WalkCtx::new(dir.path().to_path_buf());
         let file = parse(&dir.path().join(target), language, &ctx);
         let model = (language.extract)(&file, &ctx);
-        assert_contract(&emit::normalize(model.clone(), &file));
+        if let Err(violation) = check_contract(&emit::normalize(model.clone(), &file)) {
+            panic!("{target}: {violation}");
+        }
         (file, model)
     }
 
@@ -445,50 +447,141 @@ pub(super) mod test_support {
     /// inside the rendered decl, disjoint parts, one level of members
     /// sharing only their name rows with the container, and no row in
     /// two file-level owners.
-    fn assert_contract(model: &FileModel) {
+    pub(crate) fn check_contract(model: &FileModel) -> Result<(), String> {
         let mut owned = part_rows(&model.module_doc);
         for row in part_rows(&model.reexports) {
-            assert!(owned.insert(row), "re-export row {row} owned twice");
+            if !owned.insert(row) {
+                return Err(format!("re-export row {row} owned twice"));
+            }
         }
-        let check_decl = |decl: &DeclInfo| {
-            assert!(!decl.name_rows.is_empty() && !decl.head.is_empty());
-            let head: HashSet<usize> = decl.head.iter().copied().collect();
-            let doc = part_rows(&decl.doc);
-            let body = part_rows(&decl.body);
-            assert!(head.is_disjoint(&doc) && head.is_disjoint(&body) && doc.is_disjoint(&body));
-            let rendered: HashSet<usize> = match decl.shape {
-                Shape::Callable => head.clone(),
-                Shape::Whole => head.union(&body).copied().collect(),
-            };
-            assert!(decl.name_rows.iter().all(|row| rendered.contains(row)));
-            head.union(&doc)
-                .chain(body.iter())
-                .copied()
-                .collect::<HashSet<_>>()
-        };
         for decl in &model.decls {
-            let container_rows = check_decl(decl);
-            let mut decl_rows = container_rows.clone();
+            let container_rows = decl_rows(decl)?;
+            let mut all_rows = container_rows.clone();
             for member in &decl.members {
-                assert!(member.members.is_empty());
-                let member_rows = check_decl(member);
-                let shared: Vec<_> = member_rows.intersection(&container_rows).collect();
-                assert!(
-                    shared.iter().all(|row| member.name_rows.contains(row)),
-                    "member rows {shared:?} also in its container"
-                );
-                decl_rows.extend(member_rows);
+                if !member.members.is_empty() {
+                    return Err(format!("member {:?} has members", member.name_rows));
+                }
+                let member_rows = decl_rows(member)?;
+                let shared: Vec<_> = member_rows
+                    .intersection(&container_rows)
+                    .filter(|row| !member.name_rows.contains(row))
+                    .collect();
+                if !shared.is_empty() {
+                    return Err(format!("member rows {shared:?} also in its container"));
+                }
+                all_rows.extend(member_rows);
             }
-            for row in decl_rows {
-                assert!(owned.insert(row), "declaration row {row} owned twice");
+            for row in all_rows {
+                if !owned.insert(row) {
+                    return Err(format!("declaration row {row} owned twice"));
+                }
             }
         }
+        Ok(())
+    }
+
+    /// Every row in `decl`'s parts, once its own invariants hold.
+    fn decl_rows(decl: &DeclInfo) -> Result<HashSet<usize>, String> {
+        let name_rows = &decl.name_rows;
+        if name_rows.is_empty() || decl.head.is_empty() {
+            return Err(format!(
+                "declaration {name_rows:?} has no name or head rows"
+            ));
+        }
+        let head: HashSet<usize> = decl.head.iter().copied().collect();
+        let doc = part_rows(&decl.doc);
+        let body = part_rows(&decl.body);
+        if !(head.is_disjoint(&doc) && head.is_disjoint(&body) && doc.is_disjoint(&body)) {
+            return Err(format!("declaration {name_rows:?} has overlapping parts"));
+        }
+        let rendered: HashSet<usize> = match decl.shape {
+            Shape::Callable => head.clone(),
+            Shape::Whole => head.union(&body).copied().collect(),
+        };
+        if !name_rows.iter().all(|row| rendered.contains(row)) {
+            return Err(format!("name rows {name_rows:?} outside the rendered rows"));
+        }
+        Ok(head.union(&doc).chain(body.iter()).copied().collect())
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    macro_rules! fixtures {
+        (
+            training { $($training:ident $training_url:literal $training_rev:literal,)* }
+            validation { $($validation:tt)* }
+        ) => {
+            const TRAINING_FIXTURES: &[&str] = &[$(stringify!($training)),*];
+        };
+    }
+    include!("../../../tests/data/fixtures.rs");
+
+    /// Files the contract sweep checks per fixture, spread evenly over its
+    /// sorted paths.
+    const SWEEP_FILES_PER_FIXTURE: usize = 40;
+
+    /// Real source holds shapes no hand-written case anticipates, so the
+    /// training fixtures' parsed files must extract within the [`model`]
+    /// contract. Minified bundles are exempt: they put declarations and an
+    /// `export { … }` on one row, which rows cannot split, and the engine
+    /// drops the doubly claimed row from the later batch.
+    #[test]
+    fn code_mod_training_fixtures_extract_within_the_contract() {
+        let fixtures = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
+        let mut files_per_language = [0; LANGUAGES.len()];
+        let mut violations = Vec::new();
+        for name in TRAINING_FIXTURES {
+            let root = fixtures.join(name.replace('_', "-"));
+            assert!(
+                root.is_dir(),
+                "fixture `{name}` missing; run `cargo run --example clone_fixtures`"
+            );
+            let mut files: Vec<(PathBuf, &Language)> = ignore::WalkBuilder::new(&root)
+                .build()
+                .filter_map(Result::ok)
+                .filter(|entry| entry.file_type().is_some_and(|kind| kind.is_file()))
+                .filter_map(|entry| {
+                    let language = Language::from_path(entry.path())?;
+                    Some((entry.into_path(), language))
+                })
+                .collect();
+            files.sort_by(|left, right| left.0.cmp(&right.0));
+            let stride = files.len().div_ceil(SWEEP_FILES_PER_FIXTURE).max(1);
+            let files: Vec<_> = files.into_iter().step_by(stride).collect();
+            let grammars: Vec<(&Path, tree_sitter::Language)> = files
+                .iter()
+                .map(|(path, language)| (path.as_path(), (language.grammar)(path)))
+                .collect();
+            let ctx = WalkCtx::new(root);
+            ctx.parse_each(&grammars, |index, source, tree| {
+                let (path, language) = &files[index];
+                let file = SourceFile {
+                    path: path.clone(),
+                    source,
+                    tree,
+                };
+                let model = emit::normalize((language.extract)(&file, &ctx), &file);
+                if let Err(violation) = test_support::check_contract(&model)
+                    && !super::super::plaintext::is_machine_generated_text(&file.source)
+                {
+                    violations.push(format!("{}: {violation}", path.display()));
+                }
+                let slot = LANGUAGES
+                    .iter()
+                    .position(|candidate| candidate.extensions == language.extensions)
+                    .unwrap();
+                files_per_language[slot] += 1;
+            });
+        }
+        assert!(
+            files_per_language.iter().all(|&count| count > 0),
+            "{files_per_language:?}"
+        );
+        assert!(violations.is_empty(), "{}", violations.join("\n"));
+    }
 
     #[test]
     fn code_mod_language_from_path_matches_extensions_case_insensitively() {
