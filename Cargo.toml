@@ -18,9 +18,9 @@ anyhow = "1"
 clap = { version = "4", features = ["derive"] }
 ignore = "0.4"
 regex = "1"
-serde = { version = "1", features = ["derive"] }
+serde = { version = "1", features = ["derive"], optional = true }
 rustc-hash = "2"
-toml = "0.8"
+toml = { version = "0.8", optional = true }
 toml_edit = "0.22"
 tree-sitter = "0.26.8"
 tree-sitter-c = "0.24.1"
@@ -32,7 +32,11 @@ tree-sitter-typescript = "0.23.2"
 tree-sitter-json = "0.24"
 tree-sitter-lua = "0.4"
 
+[features]
+eval = ["dep:serde", "dep:toml"]
+
 [dev-dependencies]
+precis = { path = ".", features = ["eval"] }
 paste = "1"
 tempfile = "3"
 tiktoken-rs = "0.11.0"

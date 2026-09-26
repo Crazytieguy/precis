@@ -11,7 +11,7 @@
 //! Content vocabulary shared with the NS schema lives in
 //! [`crate::content`]; this file is only walker/scheduler-internal.
 
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::content::BatchContent;
 
@@ -187,8 +187,8 @@ pub struct CodeKey {
     pub decl: u32,
     /// Chunk index within the part; 0 is the head chunk.
     pub sub: u32,
-    /// The declaration's first source row (1-based), shown by
-    /// [`BatchKey::describe`]. `decl` already determines it, so it never
+    /// The declaration's first source row (1-based), shown in divergence
+    /// reports. `decl` already determines it, so it never
     /// decides identity or order; a container and its first member can
     /// share it. 0 for the file-level rungs.
     pub line: usize,
@@ -226,24 +226,6 @@ pub enum TomlKey {
 }
 
 impl BatchKey {
-    /// One-line descriptor for divergence reports: the key's `Debug` form
-    /// with `fixture_root` stripped from its paths, e.g.
-    /// `Markdown::Section { file: README.md, section_index: 2, .. }`.
-    pub fn describe(&self, fixture_root: &Path) -> String {
-        let root = format!("{fixture_root:?}");
-        let root = root.trim_matches('"');
-        let debug = format!("{self:?}")
-            .replace(&format!("{root}/"), "")
-            .replace(root, ".")
-            .replace('"', "");
-        match debug.split_once('(') {
-            Some((walker, inner)) => {
-                format!("{walker}::{}", inner.strip_suffix(')').unwrap_or(inner))
-            }
-            None => debug,
-        }
-    }
-
     /// Cost concavity for the scheduling ratio (`value / cost^exponent`).
     /// `0.45` for prose-shaped batches whose cost grows without
     /// proportional structural value: markdown sections past the first

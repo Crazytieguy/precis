@@ -4,10 +4,14 @@ use anyhow::{Context, Result, bail};
 
 pub mod batch;
 pub mod content;
+#[cfg(feature = "eval")]
 pub mod divergence;
 pub mod fs_util;
+#[cfg(feature = "eval")]
 pub mod north_star;
+#[cfg(feature = "eval")]
 pub mod ns_loader;
+#[cfg(feature = "eval")]
 pub mod ns_simulate;
 pub mod render;
 pub mod scheduler;

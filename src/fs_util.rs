@@ -568,6 +568,7 @@ fn lists_as(path: &Path, kind: EntryKind, filter: &DirFilter) -> bool {
 /// `path` as a file. [`lists_file`] asks only the last listing, which a
 /// walk that got there has already passed through; this is for a path
 /// named from outside any walk.
+#[cfg(feature = "eval")]
 pub(crate) fn listed_from_root(path: &Path, filter: &DirFilter) -> bool {
     path.starts_with(filter.root())
         && path != filter.root()

@@ -48,7 +48,7 @@ use std::rc::Rc;
 
 use anyhow::{Context, Result};
 
-use crate::batch::BatchId;
+use crate::batch::{BatchId, BatchKey};
 use crate::content::{BatchContent, FsEntries, Render, explode_spans, with_truncate_regex};
 use crate::fs_util::DirFilter;
 use crate::north_star::NorthStar;
@@ -348,7 +348,7 @@ impl<'a> Graded<'a> {
                 pending_rows.push(format!(
                     "| walker |  | {cum} | {} | {} |  |  |",
                     batch.cost.tokens,
-                    escape_cell(&batch.key.describe(&self.schedule.root)),
+                    escape_cell(&describe_key(&batch.key, &self.schedule.root)),
                 ));
                 walker_index += 1;
             }
@@ -470,6 +470,24 @@ impl<'g> Running<'g> {
             coverage,
             score: (importance * coverage).sqrt(),
         }
+    }
+}
+
+/// One-line descriptor for a batch key: its `Debug` form with
+/// `fixture_root` stripped from its paths, e.g.
+/// `Markdown::Section { file: README.md, section_index: 2, .. }`.
+fn describe_key(key: &BatchKey, fixture_root: &Path) -> String {
+    let root = format!("{fixture_root:?}");
+    let root = root.trim_matches('"');
+    let debug = format!("{key:?}")
+        .replace(&format!("{root}/"), "")
+        .replace(root, ".")
+        .replace('"', "");
+    match debug.split_once('(') {
+        Some((walker, inner)) => {
+            format!("{walker}::{}", inner.strip_suffix(')').unwrap_or(inner))
+        }
+        None => debug,
     }
 }
 

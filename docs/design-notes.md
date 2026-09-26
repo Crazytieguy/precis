@@ -35,6 +35,16 @@
   sources too) is enforced by process — the `iterate-divergence` skill —
   and the validation surface stays thin on purpose: a rendered snapshot
   or per-row diff would re-expose what the holdout hides.
+- **The answer-key tooling is behind the `eval` feature.** `divergence`,
+  `north_star`, `ns_loader`, `ns_simulate`, the `Deserialize` derives on
+  the `content` types, and the `serde`/`toml` dependencies compile only
+  with it, so `cargo install precis` neither builds nor exposes them. A
+  path dev-dependency of the crate on itself turns the feature on for
+  every test and example build, which keeps `cargo t`, `cargo lint` and
+  both examples unchanged; `cargo publish` strips that dev-dependency.
+  Because of it `cargo lint` never checks the build without `eval`; the
+  warnings `cargo run --release` prints do. Code reachable only from
+  these modules goes behind the feature or into them.
 
 ## The subset property
 

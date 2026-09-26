@@ -1,16 +1,16 @@
 //! Shared content vocabulary for `precis` batches. These types are the
-//! data model both the North Star schema (see [`crate::north_star`]) and
-//! the walker/render pipeline speak. No walker-implementation details.
+//! data model both the North Star schema (`north_star`, under the `eval`
+//! feature) and the walker/render pipeline speak. No walker-implementation
+//! details.
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
-use serde::{Deserialize, Deserializer};
-
 /// A batch's content — FS listings or source line ranges. `kind` in TOML.
-#[derive(Debug, Clone, Deserialize)]
-#[serde(tag = "kind", rename_all = "lowercase")]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "eval", derive(serde::Deserialize))]
+#[cfg_attr(feature = "eval", serde(tag = "kind", rename_all = "lowercase"))]
 pub enum BatchContent {
     /// Directory listings.
     Fs { groups: Vec<FsGroup> },
@@ -22,13 +22,14 @@ pub enum BatchContent {
         /// takes them, for a batch whose spans are all in one file. A span
         /// row in no group is a blank bridge, kept only between two taken
         /// rows. Empty: each row is its own group, in `(path, line)` order.
-        #[serde(skip)]
+        #[cfg_attr(feature = "eval", serde(skip))]
         units: Vec<Vec<usize>>,
     },
 }
 
 /// One directory listing — parent directory + entries to show.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "eval", derive(serde::Deserialize))]
 pub struct FsGroup {
     pub parent: PathBuf,
     pub entries: FsEntries,
@@ -43,9 +44,10 @@ pub enum FsEntries {
     Listed(Vec<PathBuf>),
 }
 
-impl<'de> Deserialize<'de> for FsEntries {
-    fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
-        #[derive(Deserialize)]
+#[cfg(feature = "eval")]
+impl<'de> serde::Deserialize<'de> for FsEntries {
+    fn deserialize<D: serde::Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+        #[derive(serde::Deserialize)]
         #[serde(untagged)]
         enum Repr {
             Str(String),
@@ -62,10 +64,11 @@ impl<'de> Deserialize<'de> for FsEntries {
 }
 
 /// A contiguous range of source lines in one file plus how to render them.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "eval", derive(serde::Deserialize))]
 pub struct Span {
     /// Source file. Relative in NS input; absolutized by
-    /// [`crate::ns_loader::resolve_content`].
+    /// `ns_loader::resolve_content`.
     pub path: PathBuf,
     /// Inclusive, 1-indexed.
     pub start: usize,
@@ -97,8 +100,9 @@ pub struct Span {
 ///   one `…` marker per covered line — redundant noise. Use one
 ///   single-line `Ellipsis` span per line, or `Full`/`Truncated` if
 ///   the lines should render.
-#[derive(Debug, Clone, Deserialize, PartialEq, Eq, Hash)]
-#[serde(tag = "kind", rename_all = "lowercase")]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "eval", derive(serde::Deserialize))]
+#[cfg_attr(feature = "eval", serde(tag = "kind", rename_all = "lowercase"))]
 pub enum Render {
     Full,
     Truncated { pattern: String },
