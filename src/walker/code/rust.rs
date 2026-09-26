@@ -66,10 +66,14 @@ struct ModuleScope<'tree> {
 
 impl<'tree> ModuleScope<'tree> {
     fn new(scope: Node<'tree>, file: &SourceFile, is_program: bool) -> Self {
-        let items: Vec<(Node, Leading)> = scope
-            .named_children(&mut scope.walk())
-            .filter(|node| !is_leading_trivia(*node))
-            .map(|node| (node, Leading::above(node, file)))
+        // `Node::prev_sibling` rescans the parent's children on every call.
+        let children: Vec<Node> = scope.children(&mut scope.walk()).collect();
+        let items: Vec<(Node, Leading)> = (0..children.len())
+            .filter(|&index| children[index].is_named() && !is_leading_trivia(children[index]))
+            .map(|index| {
+                let preceding = children[..index].iter().rev().copied();
+                (children[index], Leading::walking_back(preceding, file))
+            })
             .collect();
         let hides_private = !is_program
             && items.iter().any(|(node, leading)| {
@@ -276,9 +280,21 @@ impl Leading {
     /// comments, own-row or trailing an attribute, are skipped over (rustc
     /// ignores them); anything else ends the run.
     fn above(node: Node, file: &SourceFile) -> Self {
+        Self::walking_back(
+            std::iter::successors(node.prev_sibling(), Node::prev_sibling),
+            file,
+        )
+    }
+
+    /// [`Self::above`] over `preceding`, a node's earlier siblings,
+    /// nearest first.
+    fn walking_back<'tree>(
+        preceding: impl Iterator<Item = Node<'tree>>,
+        file: &SourceFile,
+    ) -> Self {
         let mut leading = Leading::default();
-        let mut previous = node.prev_sibling();
-        while let Some(sibling) = previous {
+        let mut preceding = preceding.peekable();
+        while let Some(sibling) = preceding.next() {
             match sibling.kind() {
                 "attribute_item" => {
                     let attribute = compact_attribute(sibling, file);
@@ -297,8 +313,8 @@ impl Leading {
                 }
                 "line_comment" | "block_comment" => {
                     if !file.starts_own_row(sibling) {
-                        let trails_attribute = sibling
-                            .prev_sibling()
+                        let trails_attribute = preceding
+                            .peek()
                             .is_some_and(|before| before.kind() == "attribute_item");
                         if !trails_attribute {
                             break;
@@ -313,7 +329,6 @@ impl Leading {
                 }
                 _ => break,
             }
-            previous = sibling.prev_sibling();
         }
         leading
     }
