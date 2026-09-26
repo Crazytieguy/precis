@@ -1,5 +1,6 @@
 //! All integration tests, in one binary so a `src/` change relinks once.
 
+mod cli;
 mod fixture_baselines;
 mod ns_simulate;
 #[cfg(unix)]
