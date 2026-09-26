@@ -3,7 +3,8 @@
 //!
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
-//!   and `type X = …` aliases (`Whole`). A decorated definition's head
+//!   and `type X = …` aliases (`Whole`), plus the `def`s and `class`es
+//!   inside top-level `if` / `try` statements. A decorated definition's head
 //!   starts at its first decorator. Its name rows are its one-row
 //!   decorators (`@property` and `@overload` say what a `def` is), the
 //!   `def` / `class` row and, when the signature spans rows, the row that
@@ -79,6 +80,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         match node.kind() {
             "function_definition" | "class_definition" | "decorated_definition" => {
                 model.decls.extend(definition(file, node));
+            }
+            "if_statement" | "try_statement" => {
+                model.decls.extend(conditional_definitions(file, node));
             }
             "import_from_statement"
                 if own_package.is_some_and(|package| imports_from(file, node, package)) =>
@@ -216,6 +220,55 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
         shape: Shape::Whole,
         members: Vec::new(),
     }
+}
+
+/// The `def`s and `class`es in the blocks of an `if` / `try` statement,
+/// nested ones included. The row opening each block (`if …:`, `else:`,
+/// `except …:`) joins the head and name rows of the block's first
+/// definition, so the roster says under which condition it exists.
+fn conditional_definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
+    let mut decls = Vec::new();
+    for block in clause_blocks(statement) {
+        let first = decls.len();
+        let mut cursor = block.walk();
+        for node in block.named_children(&mut cursor) {
+            match node.kind() {
+                "function_definition" | "class_definition" | "decorated_definition" => {
+                    decls.extend(definition(file, node));
+                }
+                "if_statement" | "try_statement" => {
+                    decls.extend(conditional_definitions(file, node));
+                }
+                _ => {}
+            }
+        }
+        if let (Some(decl), Some(clause)) = (decls.get_mut(first), block.parent()) {
+            let opening_row = clause.start_position().row + 1;
+            decl.head.insert(0, opening_row);
+            decl.name_rows.insert(0, opening_row);
+        }
+    }
+    decls
+}
+
+/// An `if` / `try` statement's blocks: its own (`if` consequence, `try`
+/// body) and those of its `elif` / `else` / `except` / `finally` clauses.
+fn clause_blocks(statement: Node) -> Vec<Node> {
+    let mut blocks = Vec::new();
+    let mut cursor = statement.walk();
+    for child in statement.named_children(&mut cursor) {
+        if child.kind() == "block" {
+            blocks.push(child);
+            continue;
+        }
+        let mut clause_cursor = child.walk();
+        blocks.extend(
+            child
+                .named_children(&mut clause_cursor)
+                .filter(|grandchild| grandchild.kind() == "block"),
+        );
+    }
+    blocks
 }
 
 /// A `def` or `class`, possibly wrapped in `decorated_definition`.
@@ -705,6 +758,46 @@ class Params:
             .map(|member| member.name_rows.clone())
             .collect();
         assert_eq!(members, vec![vec![2, 3], vec![4, 5]]);
+    }
+
+    #[test]
+    fn code_python_definitions_under_if_and_try_carry_their_condition() {
+        let model = extract_source(
+            "pkg/locks.py",
+            "\
+__all__ = [\"lock\", \"unlock\"]
+def _fd(f):
+    return f
+if os.name == \"nt\":
+    import msvcrt
+    def lock(f, flags):
+        return msvcrt.lock(f)
+    def unlock(f): ...
+else:
+    try:
+        import fcntl
+    except ImportError:
+        def lock(f, flags): ...
+    else:
+        def lock(f, flags):
+            return fcntl.flock(f)
+",
+        );
+        let summary: Vec<_> = model
+            .decls
+            .iter()
+            .map(|decl| (decl.name_rows.clone(), decl.head.clone()))
+            .collect();
+        assert_eq!(
+            summary,
+            vec![
+                (vec![2], vec![2]),
+                (vec![4, 6], vec![4, 6]),
+                (vec![8], vec![8]),
+                (vec![9, 12, 13], vec![9, 12, 13]),
+                (vec![14, 15], vec![14, 15]),
+            ]
+        );
     }
 
     #[test]

@@ -138,7 +138,15 @@ bindings/
       11→def serialize_int8(vector: List[int]) -> bytes:
       12→    """Serializes a list of integers into the "raw bytes" format sqlite-vec expects"""
       13→    return pack("%sb" % len(vector), *vector)
+      16→try:
       …
+      19→    def register_numpy(db: Connection, name: str, array: npt.NDArray):
+      20→        """ayoo"""
+      …
+      42→except ImportError:
+      43→
+      44→    def register_numpy(db: Connection, name: str, array):
+      45→        raise Exception("numpy package is required for register_numpy")
   rust/
     .gitignore
     Cargo.lock
@@ -250,10 +258,6 @@ sqlite-dist.toml
   …
 sqlite-vec.c
   …
-  64→#ifndef _WIN32
-  65→#ifndef __EMSCRIPTEN__
-  66→#ifndef __COSMOPOLITAN__
-  67→#ifndef __wasi__
   68→typedef u_int8_t uint8_t;
   69→typedef u_int16_t uint16_t;
   70→typedef u_int64_t uint64_t;
@@ -329,8 +333,3 @@ tests/
   utils.py
   uv.lock
 tmp-static.py
-  …
-  4→db = sqlite3.connect(":memory:")
-  …
-  11→x = np.array([[0.1, 0.2, 0.3, 0.4], [0.9, 0.8, 0.7, 0.6]], dtype=np.float32)
-  …

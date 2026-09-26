@@ -1,4 +1,4 @@
-Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.813/0.740/0.715/0.681/0.660/0.650
+Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/4327/6240/9000)=0.692/0.813/0.740/0.715/0.681/0.660/0.652
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -147,34 +147,31 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | walker |  | 8252 | 35 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 15, sub: 0, line: 271 } |  |  | 0.664 |
 | walker |  | 8289 | 37 | Code::CodeKey { rung: Doc, file: src/requests/models.py, decl: 34, sub: 0, line: 730 } |  |  | 0.672 |
 | walker |  | 8328 | 39 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 10, sub: 0, line: 370 } |  |  | 0.672 |
-| walker |  | 8369 | 41 | Code::CodeKey { rung: Doc, file: src/requests/sessions.py, decl: 28, sub: 0, line: 888 } |  |  | 0.672 |
 | ns | 8463 |  | 333 | `resolve_redirects`: the rules the redirect loop enforces | 6.1 | 3.8 | 0.658 |
-| walker |  | 8575 | 206 | Code::CodeKey { rung: Names, file: src/requests/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
-| walker |  | 8592 | 17 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 9, sub: 0, line: 231 } |  |  | 0.662 |
-| walker |  | 8614 | 22 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 7, sub: 0, line: 149 } |  |  | 0.662 |
-| walker |  | 8642 | 28 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 6, sub: 0, line: 91 } |  |  | 0.665 |
-| walker |  | 8655 | 13 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 7, sub: 0, line: 149 } |  |  | 0.665 |
-| walker |  | 8672 | 17 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 10, sub: 0, line: 283 } |  |  | 0.665 |
-| walker |  | 8691 | 19 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 9, sub: 0, line: 231 } |  |  | 0.665 |
-| ns | 8752 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.653 |
+| walker |  | 8527 | 199 | Code::CodeKey { rung: Names, file: src/requests/utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
+| walker |  | 8549 | 22 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 9, sub: 0, line: 149 } |  |  | 0.662 |
+| walker |  | 8575 | 26 | Code::CodeKey { rung: Decl, file: src/requests/utils.py, decl: 6, sub: 0, line: 91 } |  |  | 0.665 |
+| walker |  | 8588 | 13 | Code::CodeKey { rung: Doc, file: src/requests/utils.py, decl: 9, sub: 0, line: 149 } |  |  | 0.665 |
+| ns | 8752 |  | 289 | `HTTPAdapter.send`: the urllib3 call and the `MaxRetryError` fan-out | 6.2 | 3.7 | 0.652 |
 | ns | 8954 |  | 202 | `HTTPAdapter.send`: the remaining `except` arms and the return | 6.3 | 6.2 | 0.644 |
-| ns | 9042 |  | 88 | Makefile: the remaining targets (coverage, publish, docs) | 7.1 | 1.8 | 0.648 |
-| walker |  | 9080 | 389 | Code::CodeKey { rung: Names, file: src/requests/cookies.py, decl: 0, sub: 0, line: 0 } |  |  | 0.656 |
-| walker |  | 9097 | 17 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 20, sub: 0, line: 135 } |  |  | 0.656 |
-| walker |  | 9119 | 22 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 57, sub: 0, line: 604 } |  |  | 0.656 |
-| walker |  | 9148 | 29 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 22, sub: 0, line: 164 } |  |  | 0.656 |
-| walker |  | 9185 | 37 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 54, sub: 0, line: 563 } |  |  | 0.656 |
-| walker |  | 9223 | 38 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 55, sub: 0, line: 571 } |  |  | 0.656 |
-| walker |  | 9263 | 40 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 56, sub: 0, line: 579 } |  |  | 0.656 |
-| walker |  | 9316 | 53 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 16, sub: 0, line: 114 } |  |  | 0.656 |
-| ns | 9325 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.644 |
+| walker |  | 8977 | 389 | Code::CodeKey { rung: Names, file: src/requests/cookies.py, decl: 0, sub: 0, line: 0 } |  |  | 0.652 |
+| walker |  | 8994 | 17 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 20, sub: 0, line: 135 } |  |  | 0.652 |
+| walker |  | 9016 | 22 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 57, sub: 0, line: 604 } |  |  | 0.652 |
+| ns | 9042 |  | 88 | Makefile: the remaining targets (coverage, publish, docs) | 7.1 | 1.8 | 0.656 |
+| walker |  | 9045 | 29 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 22, sub: 0, line: 164 } |  |  | 0.656 |
+| walker |  | 9082 | 37 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 54, sub: 0, line: 563 } |  |  | 0.656 |
+| walker |  | 9120 | 38 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 55, sub: 0, line: 571 } |  |  | 0.656 |
+| walker |  | 9160 | 40 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 56, sub: 0, line: 579 } |  |  | 0.656 |
+| walker |  | 9213 | 53 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 16, sub: 0, line: 114 } |  |  | 0.656 |
+| ns | 9325 |  | 283 | pyproject: every remaining table, and the settings that change how you work here | 7.2 | 1.10 | 0.643 |
+| walker |  | 9388 | 175 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 24, sub: 0, line: 191 } |  |  | 0.643 |
+| walker |  | 9418 | 30 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 26, sub: 0, line: 229 } |  |  | 0.643 |
+| walker |  | 9471 | 53 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 25, sub: 0, line: 211 } |  |  | 0.643 |
 | ns | 9480 |  | 155 | `tests/conftest.py`: the fixture set every test builds on | 7.3 |  | 0.638 |
-| walker |  | 9491 | 175 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 24, sub: 0, line: 191 } |  |  | 0.638 |
-| walker |  | 9521 | 30 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 26, sub: 0, line: 229 } |  |  | 0.638 |
-| walker |  | 9574 | 53 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 25, sub: 0, line: 211 } |  |  | 0.638 |
 | ns | 9575 |  | 95 | `tests/test_requests.py`: top-level class roster | 7.4 |  | 0.635 |
-| ns | 9757 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.629 |
-| walker |  | 9874 | 300 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 1, sub: 0, line: 31 } |  |  | 0.629 |
+| ns | 9757 |  | 182 | `tests/testserver/server.py`: the local socket server API (complete) | 7.5 |  | 0.628 |
+| walker |  | 9771 | 300 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 1, sub: 0, line: 31 } |  |  | 0.628 |
 | ns | 9914 |  | 157 | `docs/api.rst`: every section of the developer interface | 7.6 |  | 0.622 |
 | ns | 9962 |  | 48 | `HISTORY.md`: the changelog's head | 7.7 |  | 0.620 |
-| walker |  | 9978 | 104 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 24, sub: 1, line: 191 } |  |  | 0.620 |
+| walker |  | 9966 | 195 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 24, sub: 1, line: 191 } |  |  | 0.620 |
+| walker |  | 9987 | 21 | Code::CodeKey { rung: Decl, file: src/requests/cookies.py, decl: 36, sub: 0, line: 331 } |  |  | 0.620 |
