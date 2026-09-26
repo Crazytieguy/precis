@@ -212,7 +212,14 @@ code to a single language.**
   parses. Its depth excludes the directories that spell the file's
   declared `package`/`namespace` (JVM, .NET and PHP layouts mirror the
   package path), or a Java library prices below its root build script.
-  Nested Gradle scripts are module manifests, left to the listing.
+  A .NET project directory named `Root.Suffix` over `namespace Root`
+  counts as one of those directories; one spelling the whole namespace
+  (`CliFx.Tests/` for `CliFx.Tests`) does not, since peripheral projects
+  are named that way and no role rule damps them. Under a non-essential
+  directory the discount does not apply: a test tree mirrors the
+  namespace it tests, and discounting it let test surfaces take a
+  library's budget. Nested Gradle scripts are module manifests, left to
+  the listing.
 - A fallback surface carries no imports: they say what a file uses, and
   in a roster among many files their rows cost the next file's
   declarations. Its four-declaration level stop keeps a roster compact;
