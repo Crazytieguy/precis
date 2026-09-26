@@ -81,9 +81,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
                 value: manifest_identity_value(scale, depth),
             });
         }
-        let operational_rows = section_rows(&sections, |n| {
-            is_operational_section(n, python_project_manifest)
-        });
+        let operational_rows = section_rows(&sections, is_operational_section);
         if let Some(content) = single_file_lines_content(&file, &source, operational_rows) {
             out.push(Batch {
                 key: TomlKey::Operational { file: file.clone() }.into(),
@@ -218,9 +216,8 @@ fn untargeted_cargo_table(name: &str) -> &str {
 
 /// Feature flags, Cargo's library and binary target declarations, and a
 /// Python manifest's console scripts: the package's build and entry surface.
-fn is_operational_section(name: &str, python_project_manifest: bool) -> bool {
-    matches!(name, "features" | "lib" | "bin")
-        || (python_project_manifest && is_scripts_section(name))
+fn is_operational_section(name: &str) -> bool {
+    matches!(name, "features" | "lib" | "bin") || is_scripts_section(name)
 }
 
 /// Console scripts, and the task runner tables that say how to build and
@@ -686,7 +683,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
                       [profile.release]\nlto = true\n";
         let sections = collect_sections(&parse(source), source);
         assert_eq!(
-            section_rows(&sections, |n| is_operational_section(n, false)),
+            section_rows(&sections, is_operational_section),
             vec![4, 5, 7, 8, 9, 10],
         );
     }
@@ -697,10 +694,7 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
                       [tool.poe.tasks.test]\ncmd = \"pytest\"\n\n\
                       [tool.poe.tasks.bump]\nscript = \"demo.bump:bump\"\n";
         let sections = collect_sections(&parse(source), source);
-        assert_eq!(
-            section_rows(&sections, |n| is_operational_section(n, true)),
-            vec![4, 5],
-        );
+        assert_eq!(section_rows(&sections, is_operational_section), vec![4, 5],);
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries

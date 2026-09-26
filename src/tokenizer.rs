@@ -162,16 +162,12 @@ impl Encoding {
             }
         };
         loop {
-            let (index, lowest) = parts[..parts.len() - 1].iter().enumerate().fold(
-                (0, u32::MAX),
-                |(best_index, best), (index, &(_, rank))| {
-                    if rank < best {
-                        (index, rank)
-                    } else {
-                        (best_index, best)
-                    }
-                },
-            );
+            let (index, lowest) = parts[..parts.len() - 1]
+                .iter()
+                .enumerate()
+                .map(|(index, &(_, rank))| (index, rank))
+                .min_by_key(|&(_, rank)| rank)
+                .unwrap_or((0, u32::MAX));
             if lowest == u32::MAX {
                 return parts.len() - 1;
             }

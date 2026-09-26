@@ -63,8 +63,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     for file in files_with_any_extension(dir, &["json"], ctx) {
         if file
             .file_name()
-            .and_then(|name| name.to_str())
-            .is_some_and(is_package_json)
+            .is_some_and(|name| name.eq_ignore_ascii_case(PACKAGE_JSON_FILENAME))
         {
             emit_package_json(&file, ctx, &mut out);
         }
@@ -320,12 +319,6 @@ fn section_content(
         .flat_map(|(_, start, end)| *start..=*end)
         .collect();
     single_file_lines_content(file, source, lines)
-}
-
-// --- file-name predicates ---
-
-fn is_package_json(name: &str) -> bool {
-    name.eq_ignore_ascii_case("package.json")
 }
 
 fn dir_name(path: &Path) -> Option<&std::ffi::OsStr> {

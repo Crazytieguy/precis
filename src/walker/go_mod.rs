@@ -67,7 +67,7 @@ fn scan(source: &str) -> (Vec<usize>, Vec<usize>) {
                     kept.push(row);
                 }
                 open_block = None;
-            } else if !code.is_empty() && keep_block_entry(keyword, trimmed) {
+            } else if !code.is_empty() && is_kept(keyword, trimmed) {
                 block_rows.push(row);
             }
             continue;
@@ -80,7 +80,7 @@ fn scan(source: &str) -> (Vec<usize>, Vec<usize>) {
         if matches!(first, "module" | "go" | "toolchain") {
             identity.push(row);
         }
-        if keep_directive_line(first, trimmed) {
+        if DIRECTIVES.contains(&first) && is_kept(first, trimmed) {
             kept.push(row);
         }
     }
@@ -134,12 +134,9 @@ fn block_start(code: &str) -> Option<&str> {
     (rest.trim() == "(" && DIRECTIVES.contains(&first)).then_some(first)
 }
 
-fn keep_directive_line(first: &str, trimmed: &str) -> bool {
-    DIRECTIVES.contains(&first) && (first != "require" || !trimmed.contains("// indirect"))
-}
-
-fn keep_block_entry(block: &str, trimmed: &str) -> bool {
-    block != "require" || !trimmed.contains("// indirect")
+/// Every directive line but an indirect `require`.
+fn is_kept(directive: &str, trimmed: &str) -> bool {
+    directive != "require" || !trimmed.contains("// indirect")
 }
 
 #[cfg(test)]
