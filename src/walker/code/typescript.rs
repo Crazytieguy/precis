@@ -1102,7 +1102,7 @@ export function add(
             describe(&model),
             [
                 "Callable name [1] head [1] doc [] body []",
-                "Callable name [2] head [2] doc [] body []",
+                "Callable name [2] head [2, 3] doc [] body []",
             ]
         );
     }

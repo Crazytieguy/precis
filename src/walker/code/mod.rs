@@ -241,7 +241,8 @@ impl SourceFile {
     /// A `Callable` spanning `rows` whose body holds `statements`: the
     /// head runs through the row before the first statement, and at least
     /// through `floor` (the name row, or the row opening the body); each
-    /// statement past it is one body item. Without statements, all head.
+    /// statement past it is one body item. Without a statement past the
+    /// head, all head.
     pub(crate) fn callable<'tree>(
         &self,
         name_rows: Vec<usize>,
@@ -253,8 +254,14 @@ impl SourceFile {
         let head_end = statements
             .peek()
             .map_or(*rows.end(), |first| first.start_position().row.max(floor));
+        let body = self.node_items(statements, head_end);
+        let head_end = if body.is_empty() {
+            *rows.end()
+        } else {
+            head_end
+        };
         DeclInfo {
-            body: self.node_items(statements, head_end),
+            body,
             ..DeclInfo::new(
                 name_rows,
                 (*rows.start()..=head_end).collect(),

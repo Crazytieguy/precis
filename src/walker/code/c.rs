@@ -808,9 +808,11 @@ int add(int a,
         int b) { int sum = a + b;
     return sum;
 }
+int brace_below(void) { return 0;
+}
 ";
         let model = model("sds.c", source);
-        let [sdsnewlen, one_liner, empty, add] = &model.decls[..] else {
+        let [sdsnewlen, one_liner, empty, add, brace_below] = &model.decls[..] else {
             panic!("{:?}", model.decls);
         };
         assert_eq!(sdsnewlen.shape, Shape::Callable);
@@ -829,6 +831,8 @@ int add(int a,
         assert!(empty.body.is_empty());
         assert_eq!(add.head, vec![18, 19]);
         assert_eq!(rows(&add.body), vec![vec![20]]);
+        assert_eq!(brace_below.head, vec![22, 23]);
+        assert!(brace_below.body.is_empty());
     }
 
     /// An aggregate body lists its fields; a prototype returning a
