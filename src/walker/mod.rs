@@ -454,18 +454,31 @@ pub(crate) fn is_refused_by_name(path: &Path) -> bool {
 /// then key material — a base64 run at least one armor line (64
 /// characters, RFC 7468 and RFC 4880) long — then the closing armor. A
 /// header alone (a parser's constant, a documented placeholder) holds
-/// no key, whatever long token (a SHA-256 hex digest) follows it.
+/// no key, whatever long token (a SHA-256 hex digest) follows it. A
+/// block with no closing armor counts when its first line past the armor
+/// headers is a whole armor line of base64.
 pub(crate) fn holds_private_key(text: &str) -> bool {
+    let is_base64 = |ch: char| ch.is_ascii_alphanumeric() || ch == '+' || ch == '/';
     text.split("-----BEGIN ").skip(1).any(|block| {
-        let Some((block, _)) = block.split_once("-----END ") else {
+        let Some((label, body)) = block.split_once("-----") else {
             return false;
         };
-        block.split_once("-----").is_some_and(|(label, body)| {
-            label.contains("PRIVATE KEY")
-                && body
-                    .split(|ch: char| !(ch.is_ascii_alphanumeric() || ch == '+' || ch == '/'))
-                    .any(|run| run.len() >= 64)
-        })
+        if !label.contains("PRIVATE KEY") {
+            return false;
+        }
+        match body.split_once("-----END ") {
+            Some((body, _)) => body
+                .split(|ch: char| !is_base64(ch))
+                .any(|run| run.len() >= 64),
+            None => body
+                .lines()
+                .skip(1)
+                .map(str::trim)
+                .find(|line| !line.is_empty() && !line.contains(':'))
+                .is_some_and(|line| {
+                    line.len() >= 64 && line.chars().all(|ch| is_base64(ch) || ch == '=')
+                }),
+        }
     })
 }
 
@@ -612,6 +625,8 @@ mod tests {
             format!(
                 "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\n{body}\n=ab12\n-----END PGP PRIVATE KEY BLOCK-----\n"
             ),
+            format!("-----BEGIN RSA PRIVATE KEY-----\n{body}\n{body}\n"),
+            format!("-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: GnuPG v2\n\n{body}\n"),
         ] {
             assert!(holds_private_key(&text), "{text}");
         }
@@ -624,6 +639,8 @@ mod tests {
                 "const HEADER = \"-----BEGIN RSA PRIVATE KEY-----\";\nconst EMPTY_SHA256 = \"{}\";\n",
                 "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             ),
+            format!("-----BEGIN CERTIFICATE-----\n{body}\n"),
+            "-----BEGIN PRIVATE KEY-----\n<your key here>\n".to_string(),
         ] {
             assert!(!holds_private_key(&text), "{text}");
         }
