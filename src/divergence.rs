@@ -74,7 +74,7 @@ pub struct Scores {
     /// `Score(B)` for each of [`BUDGETS`].
     grid: [BudgetScore; BUDGETS.len()],
     total_ns_rows: usize,
-    /// NS rows with `exp_t ≤ 3000`.
+    /// NS rows with `exp_t` within the primary budget.
     primary_ns_rows: usize,
 }
 
@@ -86,12 +86,13 @@ impl Scores {
     /// The whole validation baseline, and the start of a report's first line.
     pub fn headline(&self) -> String {
         let primary = self.primary();
+        let budget = BUDGETS[PRIMARY_BUDGET_INDEX];
         format!(
-            "Score({})={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{}",
-            BUDGETS[PRIMARY_BUDGET_INDEX],
+            "Score({budget})={:.3} I={:.3} C={:.3} ns_rows≤{}K={}/{}",
             primary.score,
             primary.importance,
             primary.coverage,
+            budget / 1000,
             self.primary_ns_rows,
             self.total_ns_rows,
         )

@@ -31,7 +31,9 @@ const ELLIPSIS: &str = "{ kind = \"ellipsis\" }";
 
 /// Each batch's violation messages.
 fn violations(batches: &[String]) -> Vec<Vec<String>> {
-    let pin = std::fs::read_to_string(Path::new(LOG_FIXTURE).join(".precis-pin")).unwrap();
+    let pin =
+        std::fs::read_to_string(Path::new(LOG_FIXTURE).join(precis::fs_util::PRECIS_PIN_FILE))
+            .unwrap();
     let toml = format!(
         "fixture = \"log\"\nrevision_pin = \"{}\"\n\n{}",
         pin.trim(),
