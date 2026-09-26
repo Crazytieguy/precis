@@ -44,9 +44,9 @@ Score(3000)=0.742 I=0.917 C=0.601 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | walker |  | 1917 | 240 | Code::CodeKey { rung: Names, file: htmy/__init__.py, decl: 0, sub: 2, line: 0 } |  |  | 0.867 |
 | walker |  | 2005 | 88 | Code::CodeKey { rung: Names, file: htmy/md/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.867 |
 | walker |  | 2108 | 103 | Code::CodeKey { rung: Names, file: htmy/renderer/__init__.py, decl: 0, sub: 0, line: 0 } |  |  | 0.868 |
+| walker |  | 2142 | 34 | Fs::DirListing { dir: docs/examples } |  |  | 0.842 |
 | ns | 2142 |  | 242 | README "Formatter": the default attribute name/value conversion rules | 2.5 |  | 0.842 |
-| walker |  | 2165 | 57 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.842 |
-| walker |  | 2199 | 34 | Fs::DirListing { dir: docs/examples } |  |  | 0.842 |
+| walker |  | 2199 | 57 | Markdown::Section { file: README.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.842 |
 | walker |  | 2269 | 70 | Markdown::Section { file: README.md, section_index: 19, keeps_default_concavity: false } |  |  | 0.842 |
 | ns | 2302 |  | 160 | README "XSS prevention": escaping by default, and the two exceptions | 2.6 |  | 0.815 |
 | ns | 2506 |  | 204 | `pyproject.toml` project block: runtime deps, Python floor, optional `lxml` | 3.1 |  | 0.799 |

@@ -1,4 +1,4 @@
-Score(3000)=0.647 I=0.837 C=0.500 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.701/0.574/0.552/0.647/0.613/0.620/0.674
+Score(3000)=0.647 I=0.837 C=0.500 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.701/0.574/0.552/0.647/0.629/0.620/0.674
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -70,15 +70,15 @@ Score(3000)=0.647 I=0.837 C=0.500 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 3777 | 37 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 5, sub: 0, line: 167 } |  |  | 0.628 |
 | walker |  | 3821 | 44 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 7, sub: 0, line: 200 } |  |  | 0.628 |
 | walker |  | 3867 | 46 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 7, sub: 0, line: 203 } |  |  | 0.628 |
+| walker |  | 3918 | 51 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.628 |
 | ns | 3961 |  | 231 | README: browser build, `localStorage.debug`, and the Chromium Verbose caveat | 3.14 |  | 0.614 |
+| walker |  | 3969 | 51 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 8, sub: 0, line: 220 } |  |  | 0.614 |
 | ns | 4054 |  | 93 | README: setting `DEBUG` on Windows (CMD and PowerShell) | 3.15 |  | 0.603 |
-| walker |  | 4096 | 229 | Markdown::Section { file: README.md, section_index: 16, keeps_default_concavity: false } |  |  | 0.606 |
-| walker |  | 4147 | 51 | Code::CodeKey { rung: Doc, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.606 |
-| ns | 4154 |  | 100 | README: the millisecond diff feature | 3.16 |  | 0.607 |
-| walker |  | 4198 | 51 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 8, sub: 0, line: 220 } |  |  | 0.607 |
-| ns | 4349 |  | 195 | README: colors in child processes (`DEBUG_COLORS=1`) | 3.17 |  | 0.621 |
-| ns | 4464 |  | 115 | package.json: runtime dependency, optional peer dependency, and the xo lint override | 4.1 |  | 0.609 |
-| walker |  | 4568 | 370 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.632 |
+| ns | 4154 |  | 100 | README: the millisecond diff feature | 3.16 |  | 0.605 |
+| walker |  | 4339 | 370 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.629 |
+| ns | 4349 |  | 195 | README: colors in child processes (`DEBUG_COLORS=1`) | 3.17 |  | 0.614 |
+| ns | 4464 |  | 115 | package.json: runtime dependency, optional peer dependency, and the xo lint override | 4.1 |  | 0.602 |
+| walker |  | 4568 | 229 | Markdown::Section { file: README.md, section_index: 16, keeps_default_concavity: false } |  |  | 0.632 |
 | ns | 4780 |  | 316 | test.js: header plus every `describe`/`it` title | 4.2 |  | 0.614 |
 | walker |  | 4834 | 266 | Markdown::Section { file: README.md, section_index: 12, keeps_default_concavity: false } |  |  | 0.642 |
 | walker |  | 4893 | 59 | Code::CodeKey { rung: Doc, file: src/node.js, decl: 3, sub: 0, line: 124 } |  |  | 0.642 |

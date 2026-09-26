@@ -231,10 +231,10 @@ const README_SECTION_VALUE: f64 = 1181.0;
 /// early budget instead of sinking below the README index decay.
 const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
 
-/// Index decay for README sections: `(idx + 1)^-0.15`, floored at 0.7,
-/// counting from the first real H2.
+/// Index decay for README sections: `(idx + 1)^-0.15`, counting from the
+/// first real H2.
 fn readme_index_decay(range: &SectionRange) -> f64 {
-    (range.h2_index as f64 + 1.0).powf(-0.15).max(0.7)
+    (range.h2_index as f64 + 1.0).powf(-0.15)
 }
 
 fn section_value(range: &SectionRange) -> f64 {
@@ -2139,10 +2139,7 @@ mod tests {
         assert_eq!(indices, vec![0, 0, 1], "got {ranges:?}");
         assert_eq!(readme_index_decay(&ranges[1]), 1.0);
         let f = readme_index_decay(&ranges[2]);
-        assert!(
-            (0.7..1.0).contains(&f),
-            "second real H2 should decay; got {f}"
-        );
+        assert!(f < 1.0, "second real H2 should decay; got {f}");
     }
 
     /// READMEs without an H1 wrap (no synthetic intro) — first H2 is
