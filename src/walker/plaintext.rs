@@ -1441,9 +1441,10 @@ fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source
 /// language ([`is_in_primary_language`]); an unparsed manifest prices as a
 /// manifest's identity block. Contributor tooling and unclassified prose /
 /// flat config sit low. The last `package_depth` directories above
-/// `file` are not depth ([`package_directories`]) unless it sits in a
-/// test or example tree, which mirrors the packages it exercises rather
-/// than naming a unit of its own.
+/// `file` are not depth ([`package_directories`]) unless the file is
+/// non-essential ([`crate::value::non_essential_factor`]): a test or
+/// example tree mirrors the packages it exercises rather than naming a
+/// unit of its own.
 fn class_value(class: Class, file: &Path, ctx: &WalkCtx, package_depth: usize) -> f64 {
     let tier = match class {
         Class::LanguageSource if is_in_primary_language(file, ctx) => {
