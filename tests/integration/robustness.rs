@@ -150,9 +150,8 @@ fn robustness_huge_files_render_at_most_their_head() {
     let mut huge: Vec<u8> = (0..600_000)
         .flat_map(|index| format!("int value_{index} = {index};\n").into_bytes())
         .collect();
-    huge.extend_from_slice(b"\xff\xfe\n");
     let huge_path = temp.path().join("table.c");
-    write(&huge_path, huge);
+    write(&huge_path, &huge);
     write(
         &temp.path().join("small.c"),
         "int small(void) { return 1; }\n",
@@ -163,6 +162,8 @@ fn robustness_huge_files_render_at_most_their_head() {
     assert!(out.contains("table.c\n  1→int value_0 = 0;\n"), "{out}");
     assert!(!out.contains("value_1000 "), "{out}");
 
+    huge.extend_from_slice(b"\xff\xfe\n");
+    write(&huge_path, huge);
     let out = render(&huge_path, 1000).unwrap();
     assert!(out.starts_with("table.c\n  1→int value_0 = 0;\n"), "{out}");
     assert!(out.ends_with("…\n"), "{out}");
