@@ -336,7 +336,22 @@ must not undo:
     `X as X` or listed in `__all__` (0 of 572 real-world renders used
     it);
   - keeping Go methods on an unexported type an exported function
-    returns (0 of 572 real-world renders changed).
+    returns (0 of 572 real-world renders changed);
+  - AMD/UMD factory unwrapping, Python `@overload` stub hiding, Rust
+    declaring-macro invocations (`bitflags!`, `cfg_*!`), Go
+    `Deprecated:` and directive rows in the head, and C recovery for
+    `NOEXCEPT`-suffixed prototypes, all-caps macro invocations and the
+    `#if !defined(X)` guard spelling (each grid ±0.0002 avg7, at most
+    three plugin-mode renders of 236 changed).
+- **Measured again and kept** (2026-09-26): the sibling-reference roster
+  chain (size-only ordering cost 3000 −.0069); the Lua identity table
+  (3000 −.0025); TS one-hop publishing of factory callees and signature
+  types, and object-argument containers (grid-flat, but without them
+  axios loses `createInstance`, React components lose their local props
+  types, and `defineComponent({…})` / hereby `task({…})` render as raw
+  code); the Go methods-only-file listing (without it such a file lists
+  only its `//go:build` row); C parse-debris skipping (stb and
+  miniaudio roster their guard `#define`s) and the gate-doc walk.
 - **TS/JS docs skip linter / coverage directives** (`// @ts-ignore`,
   `/* istanbul ignore next */`): without the skip, a directive that is a
   declaration's only comment became its whole doc, at doc priority.
