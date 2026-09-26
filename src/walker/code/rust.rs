@@ -9,8 +9,9 @@
 //!   modeled like the file's own when it has a visibility modifier.
 //! - **Declarations**: `fn` is `Callable`, except the program flow of
 //!   `main.rs` (see `show_program_flow`); `struct`, `enum`, `union`,
-//!   `type`, `const`, `static` and `macro_rules!` are `Whole`; `trait` and
-//!   `impl` are `Whole` containers whose members are their functions.
+//!   `type`, `const`, `static`, `macro_rules!` and a macro invocation that
+//!   declares items (see `item_macro`) are `Whole`; `trait` and `impl` are
+//!   `Whole` containers whose members are their functions.
 //! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
 //!   items, inline `mod test` / `mod tests`, and an inherent-impl
 //!   function without a visibility modifier.
@@ -111,9 +112,73 @@ fn extract_items(
                     .decls
                     .push(whole(node, leading, file, body, entries, Vec::new()));
             }
+            "macro_invocation" | "expression_statement" => {
+                model.decls.extend(item_macro(node, leading, file));
+            }
             _ => {}
         }
     }
+}
+
+/// Keywords that, at the top level of a macro's token tree, mark the
+/// invocation as one that declares items (`thread_local!`, `bitflags!`, a
+/// `cfg_*!` wrapper around `pub use`s).
+const DECLARATION_KEYWORDS: &[&str] = &[
+    "pub", "struct", "enum", "static", "const", "fn", "type", "trait", "impl", "use", "mod",
+];
+
+/// An item-level macro invocation whose tokens declare items: `Whole`,
+/// one body item per declaration (the tokens through a `;`, a `,` or a
+/// `{ … }` group), each declaration's first keyword row a name row.
+fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInfo> {
+    let invocation = match node.kind() {
+        "expression_statement" => node
+            .named_child(0)
+            .filter(|child| child.kind() == "macro_invocation")?,
+        _ => node,
+    };
+    let mut cursor = invocation.walk();
+    let tokens = invocation
+        .named_children(&mut cursor)
+        .find(|child| child.kind() == "token_tree")?;
+    let open_row = tokens.start_position().row + 1;
+    let mut entries = Vec::new();
+    let mut name_rows = Vec::new();
+    let mut rows = Vec::new();
+    let mut declares = false;
+    let mut claimed_through = open_row;
+    let inner_count = tokens.child_count().saturating_sub(2);
+    let mut cursor = tokens.walk();
+    for child in tokens.children(&mut cursor).skip(1).take(inner_count) {
+        let child_rows = file.node_rows(child);
+        rows.extend((claimed_through + 1).max(*child_rows.start())..=*child_rows.end());
+        claimed_through = claimed_through.max(*child_rows.end());
+        if !declares && !child.is_named() && DECLARATION_KEYWORDS.contains(&child.kind()) {
+            declares = true;
+            name_rows.push(child.start_position().row + 1);
+        }
+        let ends_declaration = matches!(child.kind(), ";" | ",")
+            || (child.kind() == "token_tree" && file.text(child).starts_with('{'));
+        if ends_declaration && declares {
+            entries.push(Item::new(std::mem::take(&mut rows)));
+            declares = false;
+        }
+    }
+    if name_rows.is_empty() {
+        return None;
+    }
+    entries.push(Item::new(rows));
+    let mut decl = whole(
+        node,
+        leading,
+        file,
+        Some((open_row, tokens)),
+        entries,
+        Vec::new(),
+    );
+    name_rows.dedup();
+    decl.name_rows = name_rows;
+    Some(decl)
 }
 
 /// A `mod test { … }` / `mod tests { … }`, test code whether or not it is
@@ -857,5 +922,50 @@ fn main() {
             shapes("run.rs"),
             [(Shape::Callable, vec![1]), (Shape::Callable, vec![6])]
         );
+    }
+
+    #[test]
+    fn rust_extract_item_macros_are_whole_declarations() {
+        let source = "\
+/// Buffers.
+thread_local! {
+    /// Per-thread buffer.
+    pub static BUF: RefCell<Vec<u8>> = RefCell::new(Vec::new());
+}
+task_slot!(SYS, sys);
+cfg_client! {
+    pub use kube_client::api;
+    #[doc(inline)] pub use api::Api;
+}
+bitflags! {
+    pub struct Modifiers: u16 {
+        const BOLD = 1;
+    }
+}
+thread_local!(static DEPTH: Cell<u8> = Cell::new(0));
+";
+        let (_, model) = extract_source("a.rs", source);
+        let decls: Vec<_> = model
+            .decls
+            .iter()
+            .map(|decl| {
+                assert_eq!(decl.shape, Shape::Whole);
+                (
+                    decl.name_rows.clone(),
+                    sorted(decl.head.clone()),
+                    rows(&decl.body),
+                )
+            })
+            .collect();
+        assert_eq!(
+            decls,
+            vec![
+                (vec![4], vec![2, 5], vec![vec![3, 4]]),
+                (vec![8, 9], vec![7, 10], vec![vec![8], vec![9]]),
+                (vec![12], vec![11, 15], vec![vec![12, 13, 14]]),
+                (vec![16], vec![16], vec![]),
+            ]
+        );
+        assert_eq!(rows(&model.decls[0].doc), vec![vec![1]]);
     }
 }
