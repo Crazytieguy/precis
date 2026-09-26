@@ -407,22 +407,27 @@ A directory whose entries repeat names kept elsewhere appears in its
 parent's listing but is never expanded: a translated mirror
 (`pages.ar/` beside `pages/`), an unpacked upstream release
 (`prism-master/` with its own license), a documentation generator's
-HTML output, a directory the root `.gitattributes` marks
-`linguist-vendored` (`lib/libc/**`), and each project under a
-third-party directory. A declared vendored directory that is itself a
-third-party directory keeps its listing, which names its projects. A
-license of its own does not mark a directory as an embedded upstream:
-on the robustness corpus most such directories are the repository's own
-packages (Dart, Erlang and Racket packages, LLVM's subprojects) that no
-workspace manifest declares, and neither a manifest or README beside the
-license nor license text differing from the root's separated them from
-vendored copies. A generated doc site is keyed on an `index.html` beside
-a generator's support file (`odoc.css`, Dokka's `navigation.html`,
-Javadoc's `package-list`, Jazzy's `docsets/`, …), not on a directory
-name: a hand-written `docs/` holding a Doxygen stylesheet template has
-no `index.html`. Listing a page-per-declaration tree of thousands of
-directories fills big budgets with names that restate the API, and
-pricing those listings slows the walk. Wide siblings that repeat an earlier sibling's
+HTML output, and each project under a third-party directory. So is a
+directory the root `.gitattributes` declares not the repository's own
+code (`lib/libc/** linguist-vendored`), unless a later line may
+un-vendor something under it (`lib/libc/src/** -linguist-vendored`,
+`=false`, `!`); a single-star pattern (`lib/*`) marks only entries, not
+a subtree, and is ignored. Only the run root's `.gitattributes` is read,
+matching the other root-relative rules. A declared vendored directory
+that is itself a third-party directory keeps its listing, which names
+its projects. A license of its own does not mark a directory as an
+embedded upstream: on the robustness corpus most such directories are
+the repository's own packages (Dart, Erlang and Racket packages, LLVM's
+subprojects) that no workspace manifest declares, and neither a
+manifest or README beside the license nor license text differing from
+the root's separated them from vendored copies. A generated doc site is
+keyed on an `index.html` beside a generator's support file (`odoc.css`,
+Dokka's `navigation.html`, Javadoc's `package-list`, Jazzy's
+`docsets/`, …), not on a directory name: a hand-written `docs/` holding
+a Doxygen stylesheet template has no `index.html`. Listing a
+page-per-declaration tree of thousands of directories fills big budgets
+with names that restate the API, and pricing those listings slows the
+walk. Wide siblings that repeat an earlier sibling's
 three or more entry names are deferred rather than cut; a repeated
 `Cargo.toml` + `src/` pair is a crate, and deferring those left a
 toolchain's standard library unlisted while an embedded upstream beside

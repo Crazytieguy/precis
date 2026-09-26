@@ -1,6 +1,6 @@
 //! Filesystem walker: directory listings and their value, plus
 //! per-extension file enumeration for the other walkers. Only does
-//! `read_dir` — never reads file contents but the root `.gitattributes`.
+//! `read_dir` — reads no file contents except the root `.gitattributes`.
 //! Pure listing lives in [`crate::fs_util::list_dir`]; this module holds
 //! walker-specific policy (which directories recurse, how a long listing
 //! splits, how a directory's role prices its listing).
@@ -462,26 +462,54 @@ impl FsState {
 
 /// The directories whose whole contents the root `.gitattributes` marks
 /// vendored (`lib/libc/** linguist-vendored`): the repository's own
-/// declaration of an embedded upstream.
+/// statement that the directory is not its code. A later line that
+/// unsets, clears or sets otherwise `linguist-vendored` on a path that
+/// may lie under a declared directory withdraws that declaration, since
+/// it can exempt part of the subtree.
 fn declared_vendored_dirs(root: &Path) -> HashSet<PathBuf> {
     let Ok(text) = std::fs::read_to_string(root.join(".gitattributes")) else {
         return HashSet::new();
     };
-    text.lines()
-        .filter_map(|line| {
-            let mut fields = line.split_whitespace();
-            let pattern = fields.next()?;
-            if !fields.any(|attribute| {
-                matches!(attribute, "linguist-vendored" | "linguist-vendored=true")
-            }) {
-                return None;
+    let mut declared: Vec<&str> = Vec::new();
+    for line in text.lines() {
+        let mut fields = line.split_whitespace();
+        let Some(pattern) = fields.next() else {
+            continue;
+        };
+        let pattern = pattern.strip_prefix('/').unwrap_or(pattern);
+        for attribute in fields {
+            match attribute {
+                "linguist-vendored" | "linguist-vendored=true" => {
+                    if let Some(dir) = pattern.strip_suffix("/**").filter(|dir| !dir.is_empty()) {
+                        declared.push(dir);
+                    }
+                }
+                _ if attribute.trim_start_matches(['-', '!']).split('=').next()
+                    == Some("linguist-vendored") =>
+                {
+                    declared.retain(|dir| !pattern_may_reach(pattern, dir));
+                }
+                _ => {}
             }
-            let dir = pattern
-                .strip_suffix("/**")
-                .or_else(|| pattern.strip_suffix("/*"))?;
-            Some(root.join(dir.strip_prefix('/').unwrap_or(dir)))
+        }
+    }
+    declared.into_iter().map(|dir| root.join(dir)).collect()
+}
+
+/// Whether a `.gitattributes` pattern may match `dir` or a path under
+/// it. A pattern without a slash matches at any depth, and a wildcard
+/// component may match any name.
+fn pattern_may_reach(pattern: &str, dir: &str) -> bool {
+    let pattern = pattern.trim_end_matches('/');
+    if !pattern.contains('/') {
+        return true;
+    }
+    pattern
+        .split('/')
+        .zip(dir.split('/'))
+        .all(|(pattern_part, dir_part)| {
+            pattern_part.contains(['*', '?', '[']) || pattern_part == dir_part
         })
-        .collect()
 }
 
 /// True when `dir` lies under the repository's own top-level
@@ -545,11 +573,11 @@ fn is_source_inventory_file(path: &Path) -> bool {
 /// Heavy-directory names block traversal, except a `build/` that holds
 /// Rust source: a checked-in module may be named `build`, while Cargo's
 /// own output lives under `target/`, which the walk never enters. A
-/// translated mirror, an unpacked upstream release, a generated
-/// documentation site or a declared vendored directory is named, not
-/// listed: its entries repeat names kept elsewhere. A third-party
-/// directory declared vendored keeps its listing, which names the
-/// projects it holds.
+/// translated mirror, an unpacked upstream release or a generated
+/// documentation site is named, not listed: its entries repeat names
+/// kept elsewhere. So is a directory the repository declares vendored,
+/// which it says is not its own code; a third-party directory declared
+/// vendored keeps its listing, which names the projects it holds.
 fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
@@ -892,6 +920,10 @@ mod tests {
             "lib/libcxx/src",
             "lib/std/src",
             "src/xdiff",
+            "src/compat/regex",
+            "extern/core",
+            "bundled/zstd",
+            "old/keep",
             "vendor/zlib",
         ] {
             std::fs::create_dir_all(root.join(dir)).unwrap();
@@ -917,8 +949,12 @@ mod tests {
             ("site/about.html", ""),
             (
                 ".gitattributes",
-                "lib/libcxx/** linguist-vendored\n/src/xdiff/* linguist-vendored=true\n\
-                 lib/std/** -linguist-vendored\nvendor/** linguist-vendored\n",
+                "lib/libcxx/** linguist-vendored\n/src/xdiff/** linguist-vendored=true\n\
+                 lib/std/** -linguist-vendored\nvendor/** linguist-vendored\n\
+                 src/compat/* linguist-vendored\n\
+                 extern/** linguist-vendored\nextern/core/** -linguist-vendored\n\
+                 bundled/** linguist-vendored\nbundled/** linguist-vendored=false\n\
+                 old/keep/** -linguist-vendored\nold/** linguist-vendored\n",
             ),
         ] {
             std::fs::write(root.join(file), text).unwrap();
@@ -936,6 +972,9 @@ mod tests {
             "doxygen",
             "site",
             "lib/std",
+            "src/compat",
+            "extern",
+            "bundled",
             "vendor",
         ] {
             assert!(recurses(dir), "{dir}");
@@ -950,6 +989,7 @@ mod tests {
             "site/api",
             "lib/libcxx",
             "src/xdiff",
+            "old",
         ] {
             assert!(!recurses(dir), "{dir}");
         }
