@@ -985,8 +985,7 @@ fn is_internal(file: &SourceFile, doc: &[Item]) -> bool {
 /// The comments directly above `node`: one item per block comment and
 /// per run of `//` rows. JSDoc is often separated from what it documents
 /// by one blank row (`/** … */`, blank, `function f`), so one blank row
-/// still attaches, and by tool directives (`// eslint-disable-next-line`),
-/// which are skipped. A file's `@license` / `@fileoverview` header is not
+/// still attaches. A file's `@license` / `@fileoverview` header is not
 /// the doc of the declaration under it.
 fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
     let is_line_comment = |row: usize| file.line(row).trim_start().starts_with("//");
@@ -995,9 +994,6 @@ fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
         !is_file_header(comment, file.text(comment))
     }) {
         let start = *rows.start();
-        if is_tool_directive(file.line(start).trim_start()) {
-            continue;
-        }
         match items.last_mut() {
             Some(run)
                 if is_line_comment(start)
@@ -1010,31 +1006,6 @@ fn doc_items(file: &SourceFile, node: Node) -> Vec<Item> {
         }
     }
     items
-}
-
-const TOOL_DIRECTIVES: &[&str] = &[
-    "eslint-",
-    "istanbul ",
-    "tslint:",
-    "prettier-ignore",
-    "@ts-",
-    "deno-lint-",
-    "oxlint-",
-    "biome-ignore",
-];
-
-/// A comment addressed to a linter, type checker or coverage tool.
-fn is_tool_directive(comment: &str) -> bool {
-    let Some(body) = comment
-        .strip_prefix("//")
-        .or_else(|| comment.strip_prefix("/*"))
-    else {
-        return false;
-    };
-    let body = body.trim_start();
-    TOOL_DIRECTIVES
-        .iter()
-        .any(|directive| body.starts_with(directive))
 }
 
 const FILE_HEADER_TAGS: &[&str] = &[
@@ -1920,7 +1891,7 @@ export type Token = string;
     }
 
     #[test]
-    fn typescript_doc_skips_tool_directives_and_the_file_header() {
+    fn typescript_doc_skips_the_file_header() {
         let model = extract_source(
             "a.ts",
             "\
@@ -1942,9 +1913,9 @@ export class A {
             describe(&model),
             [
                 "Callable name [4] head [4] doc [] body []",
-                "Callable name [7] head [7] doc [[5]] body []",
+                "Callable name [7] head [7] doc [[5], [6]] body []",
                 "Whole name [8] head [8, 12] doc [] body [[11]]",
-                "  Callable name [11] head [11] doc [[9]] body []",
+                "  Callable name [11] head [11] doc [[9], [10]] body []",
             ]
         );
     }
