@@ -221,7 +221,8 @@ fn is_credential_name(name: &str) -> bool {
 pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
     // JVM / .NET
     "java", "kt", "kts", "scala", "sc", "groovy", "clj", "cljs", "cljc", "cs", "fs", "fsx", "vb",
-    // C family (`.c` / `.h` belong to the C walker)
+    // C family (`.c` / `.h` belong to the C walker, but for a `.h`
+    // written in C++)
     "cpp", "cc", "cxx", "hpp", "hh", "hxx", "m", "mm", "cu", "cuh",
     // other compiled languages
     "swift", "zig", "dart", "nim", "cr", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex", "exs",

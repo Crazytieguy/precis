@@ -3,9 +3,9 @@
 //! The declarations of a file are its "effective top level": the body of
 //! a wrapping `#ifndef X` / `#define X` / `#endif` header guard, the body
 //! of `extern "C" { … }` (bare or `#ifdef __cplusplus`-wrapped), and
-//! `#if` / `#ifdef` blocks holding only declarations and directives,
-//! where `#ifndef X` / `#define X …` supplying a default counts as a
-//! declaration. In a source file function definitions count as declarations; in a
+//! `#if` / `#ifdef` blocks holding only declarations and directives.
+//! `#ifndef X` / `#define X …` supplying a default counts as a
+//! declaration, and so do function definitions in a source file; in a
 //! header they mark the implementation section of a single-header
 //! library, which stays opaque, as does any block holding a statement
 //! (an `#if` splitting a function body).
