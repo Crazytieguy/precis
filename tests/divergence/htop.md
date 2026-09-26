@@ -103,40 +103,40 @@ Score(3000)=0.702 I=0.934 C=0.527 ns_rows≤3K=17/47 grid(1000/1442/2080/3000/43
 | walker |  | 7024 | 17 | Code::CodeKey { rung: Decl, file: Settings.c, decl: 21, sub: 0, line: 611 } |  |  | 0.496 |
 | walker |  | 7041 | 17 | Code::CodeKey { rung: Decl, file: Settings.c, decl: 22, sub: 0, line: 620 } |  |  | 0.496 |
 | walker |  | 7069 | 28 | Code::CodeKey { rung: Decl, file: Settings.c, decl: 19, sub: 0, line: 579 } |  |  | 0.496 |
-| walker |  | 7256 | 187 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 3, line: 0 } |  |  | 0.496 |
-| walker |  | 7435 | 179 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 4, line: 0 } |  |  | 0.496 |
+| walker |  | 7225 | 156 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 0, line: 708 } |  |  | 0.496 |
+| walker |  | 7412 | 187 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 3, line: 0 } |  |  | 0.496 |
 | ns | 7440 |  | 492 | RowField.h: the reserved column ids that htoprc and --sort-key speak | 3.7 |  | 0.479 |
-| walker |  | 7454 | 19 | Code::CodeKey { rung: Doc, file: Process.c, decl: 43, sub: 0, line: 855 } |  |  | 0.479 |
-| walker |  | 7474 | 20 | Code::CodeKey { rung: Doc, file: Process.c, decl: 41, sub: 0, line: 842 } |  |  | 0.479 |
-| walker |  | 7495 | 21 | Code::CodeKey { rung: Doc, file: Process.c, decl: 39, sub: 0, line: 829 } |  |  | 0.479 |
 | ns | 7530 |  | 90 | MeterMode.h in full: the four meter display modes | 3.8 |  | 0.475 |
+| walker |  | 7591 | 179 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 4, line: 0 } |  |  | 0.475 |
+| walker |  | 7610 | 19 | Code::CodeKey { rung: Doc, file: Process.c, decl: 43, sub: 0, line: 855 } |  |  | 0.475 |
+| walker |  | 7630 | 20 | Code::CodeKey { rung: Doc, file: Process.c, decl: 41, sub: 0, line: 842 } |  |  | 0.475 |
+| walker |  | 7651 | 21 | Code::CodeKey { rung: Doc, file: Process.c, decl: 39, sub: 0, line: 829 } |  |  | 0.475 |
 | ns | 7661 |  | 131 | CRT.h: the colour schemes selectable by color_scheme / -C | 3.9 |  | 0.471 |
-| walker |  | 7668 | 173 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 5, line: 0 } |  |  | 0.471 |
-| walker |  | 7798 | 130 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 6, line: 0 } |  |  | 0.471 |
+| walker |  | 7824 | 173 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 5, line: 0 } |  |  | 0.471 |
+| walker |  | 7954 | 130 | Code::CodeKey { rung: Names, file: Process.c, decl: 0, sub: 6, line: 0 } |  |  | 0.471 |
 | ns | 7974 |  | 313 | Makefile.am: what gets built, and the per-platform conditional blocks | 4.1 |  | 0.462 |
-| walker |  | 7977 | 179 | Code::CodeKey { rung: Decl, file: Process.c, decl: 58, sub: 0, line: 1113 } |  |  | 0.462 |
-| walker |  | 8157 | 180 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 0, line: 0 } |  |  | 0.462 |
-| walker |  | 8174 | 17 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 3, sub: 0, line: 46 } |  |  | 0.462 |
-| walker |  | 8211 | 37 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 2, sub: 0, line: 39 } |  |  | 0.462 |
+| walker |  | 8133 | 179 | Code::CodeKey { rung: Decl, file: Process.c, decl: 58, sub: 0, line: 1113 } |  |  | 0.462 |
 | ns | 8275 |  | 301 | configure.ac: the complete list of build options | 4.2 |  | 0.455 |
-| walker |  | 8285 | 74 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 1, sub: 0, line: 28 } |  |  | 0.455 |
-| walker |  | 8302 | 17 | Code::CodeKey { rung: Doc, file: CPUMeter.c, decl: 5, sub: 0, line: 78 } |  |  | 0.455 |
-| walker |  | 8467 | 165 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 1, line: 0 } |  |  | 0.455 |
+| walker |  | 8289 | 156 | Code::CodeKey { rung: Decl, file: Action.c, decl: 52, sub: 0, line: 735 } |  |  | 0.455 |
+| walker |  | 8469 | 180 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 0, line: 0 } |  |  | 0.455 |
+| walker |  | 8486 | 17 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 3, sub: 0, line: 46 } |  |  | 0.455 |
+| walker |  | 8523 | 37 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 2, sub: 0, line: 39 } |  |  | 0.455 |
 | ns | 8559 |  | 284 | CI: every job in the GitHub Actions build matrix | 4.3 |  | 0.449 |
-| walker |  | 8643 | 176 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 2, line: 0 } |  |  | 0.449 |
+| walker |  | 8597 | 74 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 1, sub: 0, line: 28 } |  |  | 0.449 |
+| walker |  | 8614 | 17 | Code::CodeKey { rung: Doc, file: CPUMeter.c, decl: 5, sub: 0, line: 78 } |  |  | 0.449 |
 | ns | 8707 |  | 148 | How htop is tested: TESTPLAN and the lua/rote UI harness | 4.4 |  | 0.446 |
-| walker |  | 8793 | 150 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 0, line: 708 } |  |  | 0.457 |
+| walker |  | 8779 | 165 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 1, line: 0 } |  |  | 0.446 |
 | ns | 8793 |  | 86 | Auxiliary directory listings: docs, scripts, iwyu, m4, workflows | 4.5 |  | 0.457 |
-| walker |  | 8947 | 154 | Code::CodeKey { rung: Names, file: Settings.c, decl: 0, sub: 3, line: 0 } |  |  | 0.457 |
+| walker |  | 8955 | 176 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 2, line: 0 } |  |  | 0.457 |
 | ns | 8992 |  | 199 | linux/: the complete Linux platform back-end | 5.1 |  | 0.484 |
-| walker |  | 9103 | 156 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 1, line: 708 } |  |  | 0.484 |
+| walker |  | 9109 | 154 | Code::CodeKey { rung: Names, file: Settings.c, decl: 0, sub: 3, line: 0 } |  |  | 0.484 |
 | ns | 9204 |  | 212 | darwin/, freebsd/, netbsd/ and openbsd/ contents | 5.2 |  | 0.509 |
-| walker |  | 9263 | 160 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 2, line: 708 } |  |  | 0.509 |
+| walker |  | 9264 | 155 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 1, line: 708 } |  |  | 0.509 |
 | ns | 9351 |  | 147 | dragonflybsd/, solaris/ and unsupported/ contents | 5.3 |  | 0.525 |
-| walker |  | 9412 | 149 | Code::CodeKey { rung: Decl, file: Action.c, decl: 52, sub: 0, line: 735 } |  |  | 0.525 |
+| walker |  | 9422 | 158 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 2, line: 708 } |  |  | 0.525 |
 | ns | 9474 |  | 123 | generic/ and zfs/: routines shared across platforms | 5.4 |  | 0.535 |
-| walker |  | 9598 | 186 | Code::CodeKey { rung: Decl, file: Action.c, decl: 51, sub: 3, line: 708 } |  |  | 0.535 |
 | ns | 9622 |  | 148 | linux/Platform.h: the symbols every platform must provide | 5.5 |  | 0.529 |
-| walker |  | 9814 | 216 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 3, line: 0 } |  |  | 0.529 |
+| walker |  | 9638 | 216 | Code::CodeKey { rung: Names, file: CPUMeter.c, decl: 0, sub: 3, line: 0 } |  |  | 0.529 |
 | ns | 9847 |  | 225 | pcp/: the Performance Co-Pilot back-end and its dynamic definition trees | 5.6 |  | 0.554 |
+| walker |  | 9853 | 215 | Code::CodeKey { rung: Decl, file: CPUMeter.c, decl: 22, sub: 0, line: 371 } |  |  | 0.554 |
 | ns | 9978 |  | 131 | A dynamic meter and a dynamic column definition, in full | 5.7 |  | 0.550 |

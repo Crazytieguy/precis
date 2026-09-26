@@ -236,6 +236,7 @@ internal/
       18→	TimeFormat      string            `mapstructure:"time_format"`
       19→	Export          ExportConfig      `mapstructure:"export"`
       …
+      23→}
       25→type CalendarConfig struct {
       26→	TimeSpentFormat   string `mapstructure:"time_spent_format"`
       27→	TimeStartFormat   string `mapstructure:"time_start_format"`

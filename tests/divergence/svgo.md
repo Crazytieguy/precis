@@ -76,10 +76,10 @@ Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 3991 | 53 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 8, sub: 0, line: 133 } |  |  | 0.545 |
 | walker |  | 4074 | 83 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 4, sub: 0, line: 100 } |  |  | 0.545 |
 | ns | 4139 |  | 183 | Anatomy of a plugin module (removeComments as exemplar) | 2.6 |  | 0.533 |
-| walker |  | 4247 | 173 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.533 |
+| walker |  | 4252 | 178 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 0, line: 30 } |  |  | 0.533 |
 | ns | 4291 |  | 152 | Overriding and disabling preset-default plugins (README) | 2.7 |  | 0.520 |
 | ns | 4408 |  | 117 | Custom plugin objects (docs/05-plugins-api.mdx) | 2.8 |  | 0.515 |
-| walker |  | 4513 | 266 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.515 |
+| walker |  | 4513 | 261 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 1, sub: 1, line: 30 } |  |  | 0.515 |
 | ns | 4603 |  | 195 | Node entry point: loadConfig and the Node optimize wrapper | 2.9 |  | 0.504 |
 | walker |  | 4669 | 156 | Code::CodeKey { rung: Decl, file: lib/types.ts, decl: 7, sub: 0, line: 117 } |  |  | 0.504 |
 | ns | 4786 |  | 183 | Plugin descriptions: preset-default steps 1-9 | 3.1 |  | 0.498 |
@@ -120,37 +120,37 @@ Score(3000)=0.649 I=0.850 C=0.496 ns_rows≤3K=14/54 grid(1000/1442/2080/3000/43
 | walker |  | 7142 | 82 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 11, sub: 0, line: 2179 } |  |  | 0.586 |
 | ns | 7223 |  | 290 | CLI options, first half | 5.3 |  | 0.574 |
 | walker |  | 7243 | 101 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 9, sub: 0, line: 2111 } |  |  | 0.574 |
-| walker |  | 7424 | 181 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 13, sub: 0, line: 2348 } |  |  | 0.574 |
+| walker |  | 7401 | 158 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 6, sub: 0, line: 389 } |  |  | 0.574 |
 | ns | 7567 |  | 344 | CLI options, second half | 5.4 |  | 0.562 |
-| walker |  | 7600 | 176 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 0, line: 2194 } |  |  | 0.562 |
+| walker |  | 7590 | 189 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 13, sub: 0, line: 2348 } |  |  | 0.562 |
 | ns | 7675 |  | 108 | bin/svgo.js executable entry | 5.5 |  | 0.557 |
-| walker |  | 7758 | 158 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 6, sub: 0, line: 389 } |  |  | 0.557 |
+| walker |  | 7774 | 184 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 0, line: 2194 } |  |  | 0.557 |
 | ns | 7790 |  | 115 | parseSvg and the sax configuration | 6.1 |  | 0.552 |
 | ns | 7913 |  | 123 | stringifier function roster | 6.2 |  | 0.548 |
-| walker |  | 7948 | 190 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 1, line: 2194 } |  |  | 0.548 |
+| walker |  | 7964 | 190 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 1, line: 2194 } |  |  | 0.548 |
 | ns | 7996 |  | 83 | xast query helpers | 6.3 |  | 0.546 |
-| walker |  | 8141 | 193 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 2, line: 2194 } |  |  | 0.546 |
+| walker |  | 8157 | 193 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 2, line: 2194 } |  |  | 0.546 |
 | ns | 8174 |  | 178 | lib/svgo/tools.js -- complete export set | 6.4 |  | 0.541 |
-| walker |  | 8321 | 180 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 3, line: 2194 } |  |  | 0.541 |
 | ns | 8330 |  | 156 | lib/style.js -- exported and internal function roster | 6.5 |  | 0.536 |
+| walker |  | 8337 | 180 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 3, line: 2194 } |  |  | 0.536 |
 | ns | 8476 |  | 146 | lib/path.js -- path data parse and stringify roster | 6.6 |  | 0.530 |
-| walker |  | 8517 | 196 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 4, line: 2194 } |  |  | 0.530 |
-| walker |  | 8704 | 187 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 5, line: 2194 } |  |  | 0.530 |
+| walker |  | 8626 | 289 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 13, sub: 1, line: 2348 } |  |  | 0.530 |
 | ns | 8710 |  | 234 | plugins/_collections.js -- complete export roster | 6.7 |  | 0.539 |
-| walker |  | 8893 | 189 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 6, line: 2194 } |  |  | 0.539 |
+| walker |  | 8822 | 196 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 4, line: 2194 } |  |  | 0.539 |
 | ns | 8904 |  | 194 | Shared plugin helper module rosters | 6.8 |  | 0.535 |
+| walker |  | 9009 | 187 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 5, line: 2194 } |  |  | 0.535 |
 | ns | 9017 |  | 113 | css-select adapter | 6.9 |  | 0.531 |
 | ns | 9034 |  | 17 | mapNodesToParents | 6.10 |  | 0.531 |
-| walker |  | 9079 | 186 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 7, line: 2194 } |  |  | 0.531 |
+| walker |  | 9198 | 189 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 6, line: 2194 } |  |  | 0.531 |
 | ns | 9268 |  | 234 | package.json scripts -- how to build, test and lint | 7.1 |  | 0.536 |
-| walker |  | 9269 | 190 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 8, line: 2194 } |  |  | 0.536 |
 | ns | 9337 |  | 69 | test/ tree listing | 7.2 |  | 0.545 |
+| walker |  | 9384 | 186 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 7, line: 2194 } |  |  | 0.545 |
 | ns | 9452 |  | 115 | The fixture-driven plugin test format | 7.3 |  | 0.543 |
-| walker |  | 9455 | 186 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 9, line: 2194 } |  |  | 0.543 |
+| walker |  | 9574 | 190 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 8, line: 2194 } |  |  | 0.543 |
 | ns | 9582 |  | 130 | docs/ and remaining leaf directory listings | 7.4 |  | 0.552 |
-| walker |  | 9642 | 187 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 10, line: 2194 } |  |  | 0.552 |
 | ns | 9717 |  | 135 | Migration guide outlines | 7.5 |  | 0.548 |
+| walker |  | 9760 | 186 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 9, line: 2194 } |  |  | 0.548 |
 | ns | 9841 |  | 124 | TypeScript and lint configuration | 7.6 |  | 0.545 |
-| walker |  | 9939 | 297 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 13, sub: 1, line: 2348 } |  |  | 0.545 |
+| walker |  | 9947 | 187 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 10, line: 2194 } |  |  | 0.545 |
 | ns | 9966 |  | 125 | Runtime dependencies | 7.7 |  | 0.549 |
-| walker |  | 9995 | 56 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 11, line: 2194 } |  |  | 0.549 |
+| walker |  | 9990 | 43 | Code::CodeKey { rung: Decl, file: plugins/_collections.js, decl: 12, sub: 11, line: 2194 } |  |  | 0.549 |

@@ -165,25 +165,6 @@ chibicc.h
   …
   126→typedef struct Obj Obj;
   127→struct Obj {
-  128→  Obj *next;
-  129→  char *name;    // Variable name
-  130→  Type *ty;      // Type
-  131→  Token *tok;    // representative token
-  132→  bool is_local; // local or global/function
-  133→  int align;     // alignment
-  134→
-  135→  // Local variable
-  136→  int offset;
-  137→
-  138→  // Global variable or function
-  139→  bool is_function;
-  140→  bool is_definition;
-  141→  bool is_static;
-  142→
-  143→  // Global variable
-  144→  bool is_tentative;
-  145→  bool is_tls;
-  146→  char *init_data;
   …
   167→typedef struct Relocation Relocation;
   168→struct Relocation {
@@ -194,6 +175,21 @@ chibicc.h
   173→};
   …
   176→typedef enum {
+  177→  ND_NULL_EXPR, // Do nothing
+  178→  ND_ADD,       // +
+  179→  ND_SUB,       // -
+  180→  ND_MUL,       // *
+  181→  ND_DIV,       // /
+  182→  ND_NEG,       // unary -
+  183→  ND_MOD,       // %
+  184→  ND_BITAND,    // &
+  185→  ND_BITOR,     // |
+  186→  ND_BITXOR,    // ^
+  187→  ND_SHL,       // <<
+  188→  ND_SHR,       // >>
+  189→  ND_EQ,        // ==
+  190→  ND_NE,        // !=
+  191→  ND_LT,        // <
   …
   225→} NodeKind;
   …

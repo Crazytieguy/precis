@@ -203,9 +203,9 @@ Score(3000)=0.779 I=0.876 C=0.692 ns_rows≤3K=19/47 grid(1000/1442/2080/3000/43
 | walker |  | 4091 | 48 | Code::CodeKey { rung: Names, file: client/store/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.764 |
 | walker |  | 4124 | 33 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 7, sub: 0, line: 67 } |  |  | 0.764 |
 | ns | 4142 |  | 180 | Server.js: how the three routers are mounted | 3.1 |  | 0.755 |
-| walker |  | 4306 | 182 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 0, line: 130 } |  |  | 0.755 |
+| walker |  | 4311 | 187 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 0, line: 130 } |  |  | 0.755 |
 | ns | 4426 |  | 284 | API resource groups: the 23 section headers of ApiRouter.init | 3.2 |  | 0.738 |
-| walker |  | 4612 | 306 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 1, line: 130 } |  |  | 0.738 |
+| walker |  | 4612 | 301 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 10, sub: 1, line: 130 } |  |  | 0.738 |
 | ns | 4806 |  | 380 | API routes: libraries | 3.3 | 3.2 | 0.717 |
 | walker |  | 4926 | 314 | Code::CodeKey { rung: Decl, file: client/store/index.js, decl: 2, sub: 0, line: 34 } |  |  | 0.717 |
 | walker |  | 5023 | 97 | Fs::DirListing { dir: client/components/tables } |  |  | 0.717 |

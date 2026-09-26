@@ -1,4 +1,4 @@
-Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.587/0.626/0.614/0.523/0.563/0.563
+Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.587/0.630/0.614/0.523/0.563/0.563
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -206,39 +206,39 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | ns | 7070 |  | 91 | `trait Source`: the three methods | 7.4 |  | 0.562 |
 | walker |  | 7227 | 412 | Toml::Operational { file: Cargo.toml } |  |  | 0.623 |
 | ns | 7277 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.615 |
+| walker |  | 7287 | 60 | Code::CodeKey { rung: Names, file: src/serde.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
+| walker |  | 7314 | 27 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 3, sub: 0, line: 31 } |  |  | 0.615 |
+| walker |  | 7339 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 4, sub: 0, line: 32 } |  |  | 0.615 |
 | ns | 7361 |  | 84 | `trait VisitSource`: the visitor side of a `Source` | 7.6 |  | 0.612 |
-| walker |  | 7384 | 157 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 163 } |  |  | 0.614 |
-| ns | 7444 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.609 |
-| walker |  | 7541 | 157 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 0, line: 202 } |  |  | 0.609 |
-| ns | 7689 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.598 |
-| walker |  | 7698 | 157 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 0, line: 250 } |  |  | 0.598 |
-| walker |  | 7855 | 157 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 0, line: 290 } |  |  | 0.598 |
-| ns | 7965 |  | 276 | The primitive conversion tables | 7.9 |  | 0.589 |
-| walker |  | 8012 | 157 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 0, line: 334 } |  |  | 0.589 |
-| walker |  | 8072 | 60 | Code::CodeKey { rung: Names, file: src/serde.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.589 |
-| walker |  | 8099 | 27 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 3, sub: 0, line: 31 } |  |  | 0.589 |
-| walker |  | 8124 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 4, sub: 0, line: 32 } |  |  | 0.589 |
-| walker |  | 8153 | 29 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 7, sub: 0, line: 126 } |  |  | 0.589 |
+| walker |  | 7368 | 29 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 7, sub: 0, line: 126 } |  |  | 0.612 |
+| walker |  | 7393 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 8, sub: 0, line: 127 } |  |  | 0.612 |
+| walker |  | 7423 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 1, sub: 0, line: 16 } |  |  | 0.612 |
+| ns | 7444 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.607 |
+| walker |  | 7445 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 2, sub: 0, line: 17 } |  |  | 0.607 |
+| walker |  | 7475 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 5, sub: 0, line: 110 } |  |  | 0.607 |
+| walker |  | 7497 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 6, sub: 0, line: 111 } |  |  | 0.607 |
+| walker |  | 7661 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 163 } |  |  | 0.609 |
+| ns | 7689 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.599 |
+| walker |  | 7825 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 0, line: 202 } |  |  | 0.599 |
+| ns | 7965 |  | 276 | The primitive conversion tables | 7.9 |  | 0.590 |
+| walker |  | 7989 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 0, line: 250 } |  |  | 0.590 |
+| walker |  | 8153 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 0, line: 290 } |  |  | 0.590 |
 | ns | 8158 |  | 193 | Roster: every method on `VisitValue` | 7.10 |  | 0.581 |
-| walker |  | 8178 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 8, sub: 0, line: 127 } |  |  | 0.581 |
-| walker |  | 8208 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 1, sub: 0, line: 16 } |  |  | 0.581 |
-| walker |  | 8230 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 2, sub: 0, line: 17 } |  |  | 0.581 |
-| walker |  | 8260 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 5, sub: 0, line: 110 } |  |  | 0.581 |
-| walker |  | 8282 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 6, sub: 0, line: 111 } |  |  | 0.581 |
-| ns | 8294 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.576 |
-| walker |  | 8566 | 284 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 1, line: 163 } |  |  | 0.583 |
-| ns | 8588 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.573 |
+| ns | 8294 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.577 |
+| walker |  | 8317 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 0, line: 334 } |  |  | 0.577 |
+| ns | 8588 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.567 |
+| walker |  | 8594 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 1, line: 163 } |  |  | 0.573 |
 | ns | 8760 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.565 |
 | ns | 8837 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.563 |
-| walker |  | 8850 | 284 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 1, line: 202 } |  |  | 0.563 |
+| walker |  | 8871 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 1, line: 202 } |  |  | 0.563 |
 | ns | 9121 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.552 |
-| walker |  | 9134 | 284 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 1, line: 250 } |  |  | 0.552 |
+| walker |  | 9148 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 1, line: 250 } |  |  | 0.552 |
 | ns | 9297 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.546 |
-| walker |  | 9418 | 284 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 1, line: 290 } |  |  | 0.546 |
+| walker |  | 9425 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 1, line: 290 } |  |  | 0.546 |
 | ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.542 |
 | ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.536 |
 | ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.534 |
-| walker |  | 9702 | 284 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 1, line: 334 } |  |  | 0.534 |
+| walker |  | 9702 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 1, line: 334 } |  |  | 0.534 |
 | ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.531 |
 | ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.527 |
 | ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.526 |
@@ -249,4 +249,3 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.525 |
 | walker |  | 9993 | 36 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 2, sub: 0, line: 21 } |  |  | 0.525 |
 | walker |  | 9999 | 6 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 3, sub: 0, line: 22 } |  |  | 0.525 |
-| walker |  | 9999 | 0 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 4, sub: 0, line: 28 } |  |  | 0.525 |

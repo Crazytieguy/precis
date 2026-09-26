@@ -162,6 +162,7 @@ src/
     …
     966→impl ErrorImpl {
     …
+    1013→}
     1015→impl<E> StdError for ErrorImpl<E>
     1016→where
     1017→    E: StdError,

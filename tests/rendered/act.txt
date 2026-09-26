@@ -287,8 +287,8 @@ pkg/
       14→type EvaluationEnvironment struct {
       15→	Github    *model.GithubContext
       16→	Env       map[string]string
-      17→	Job       *model.JobContext
       …
+      28→}
       30→type Needs struct {
       31→	Outputs map[string]string `json:"outputs"`
       32→	Result  string            `json:"result"`

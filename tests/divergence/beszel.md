@@ -1,4 +1,4 @@
-Score(3000)=0.669 I=0.831 C=0.538 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.447/0.546/0.656/0.669/0.557/0.488/0.468
+Score(3000)=0.669 I=0.831 C=0.538 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/4327/6240/9000)=0.447/0.546/0.656/0.669/0.557/0.487/0.468
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -264,4 +264,3 @@ Score(3000)=0.669 I=0.831 C=0.538 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | walker |  | 9821 | 25 | Code::CodeKey { rung: Doc, file: agent/systemd.go, decl: 3, sub: 0, line: 34 } |  |  | 0.529 |
 | ns | 9885 |  | 130 | agent/ test files and the shared test harness (completes agent/) | 7.1 |  | 0.539 |
 | walker |  | 9995 | 174 | Code::CodeKey { rung: Names, file: agent/disk.go, decl: 0, sub: 0, line: 0 } |  |  | 0.539 |
-| walker |  | 9995 | 0 | Code::CodeKey { rung: Decl, file: agent/disk.go, decl: 2, sub: 0, line: 29 } |  |  | 0.539 |

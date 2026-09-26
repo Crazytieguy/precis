@@ -902,11 +902,11 @@ mod tests {
         }
     }
 
-    /// A program's `main` renders with its body, chunked when long: the
-    /// closing brace ends its last chunk, so an excerpt of its opening
-    /// statements doesn't close the function early.
+    /// A container renders its closing row with its opening row, so an
+    /// excerpt of its first entries still shows where it ends: a long
+    /// program `main`, and a `type (` group of structs.
     #[test]
-    fn code_mod_long_main_closes_with_its_last_chunk() {
+    fn code_mod_partly_shown_container_keeps_its_closer() {
         let dir = tempfile::tempdir().unwrap();
         let statements: String = (0..400)
             .map(|index| format!("\tfmt.Println(\"step {index} of the program\")\n"))
@@ -917,7 +917,24 @@ mod tests {
         assert!(out.contains("5→func main() {"), "{out}");
         assert!(out.contains("step 0 of the program"), "{out}");
         assert!(!out.contains("step 399 of the program"), "{out}");
-        assert!(!out.contains("406→}"), "{out}");
+        assert!(out.contains("406→}"), "{out}");
+
+        let dir = tempfile::tempdir().unwrap();
+        let structs: String = (0..40)
+            .map(|node| {
+                let fields: String = (0..6)
+                    .map(|field| format!("\t\tField{field} int // field {field} of node {node}\n"))
+                    .collect();
+                format!("\t// A Node{node} node is node number {node}.\n\tNode{node} struct {{\n{fields}\t}}\n")
+            })
+            .collect();
+        let source = format!("package ast\n\n// Nodes.\ntype (\n{structs})\n");
+        let closer = source.lines().count();
+        std::fs::write(dir.path().join("ast.go"), source).unwrap();
+        let out = crate::render(dir.path(), 1000, None).unwrap();
+        assert!(out.contains("4→type ("), "{out}");
+        assert!(!out.contains("field 5 of node 39"), "{out}");
+        assert!(out.contains(&format!("{closer}→)")), "{out}");
     }
 
     /// Each file's `Names` head chunk and its predecessor's file name, for
