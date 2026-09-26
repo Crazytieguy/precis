@@ -2,6 +2,8 @@
 
 mod fixture_baselines;
 mod ns_simulate;
+#[cfg(unix)]
+mod plugin_hooks;
 mod readme_example;
 mod robustness;
 mod scheduler_invariants;

@@ -29,6 +29,12 @@ eval "$(echo "$input" | "$JQ" -r '
   "cwd=" + (.cwd // "" | @sh)
 ')"
 
+# Paths are checked against the canonical cwd, so a missing cwd or one
+# reached through a symlink can't widen or break the check.
+[ -n "$cwd" ] || exit 0
+cwd=$(realpath "$cwd" 2>/dev/null) || exit 0
+[ -d "$cwd" ] || exit 0
+
 # Any newline/carriage return means the command is multi-line or has been
 # crafted to hide content past the tokenizer — fall through to a user prompt.
 case "$command" in
@@ -43,19 +49,23 @@ if [ ${#tokens[@]} -eq 0 ] || [ "${tokens[0]}" != "precis" ]; then
   exit 0
 fi
 
-# Collect every path-like token after "precis"
+# Parse precis's own grammar; anything else falls through to a prompt.
+# Every positional argument is a path, whatever it looks like.
 paths=()
 
 for ((i = 1; i < ${#tokens[@]}; i++)); do
   token="${tokens[$i]}"
 
-  # Flag: -x, --long, --long=value (value restricted to same safe chars as paths)
-  if [[ "$token" =~ ^--?[-a-zA-Z0-9]+(=[a-zA-Z0-9_./~-]*)?$ ]]; then
-    continue
-  fi
+  case "$token" in
+    -h|--help|-V|--version) continue ;;
+    --token-budget|--budget|--char-budget)
+      i=$((i + 1))
+      [[ "${tokens[$i]:-}" =~ ^[0-9]+$ ]] || exit 0
+      continue
+      ;;
+  esac
 
-  # Number: purely digits (flag value like 4000)
-  if [[ "$token" =~ ^[0-9]+$ ]]; then
+  if [[ "$token" =~ ^--(token-budget|budget|char-budget)=[0-9]+$ ]]; then
     continue
   fi
 
@@ -64,48 +74,37 @@ for ((i = 1; i < ${#tokens[@]}; i++)); do
     continue
   fi
 
-  # Path: safe filesystem characters
-  if [[ "$token" =~ ^[a-zA-Z0-9_./~-]+$ ]]; then
+  # Path: safe filesystem characters, not starting with a dash (an unknown
+  # flag) or with a `~` the shell would expand as `~user`.
+  if [[ "$token" =~ ^[a-zA-Z0-9_./~-]+$ && "$token" != -* ]]; then
+    case "$token" in
+      "~") token="$HOME" ;;
+      "~/"*) token="$HOME/${token#\~/}" ;;
+      "~"*) exit 0 ;;
+    esac
     paths+=("$token")
     continue
   fi
 
-  # Unrecognized token — fall through to normal prompt
   exit 0
 done
 
-allow_response() {
-  "$JQ" -n '{
-    hookSpecificOutput: {
-      hookEventName: "PermissionRequest",
-      decision: { behavior: "allow" }
-    }
-  }'
-}
-
-# No paths: precis alone, precis --help, etc — all safe
-if [ ${#paths[@]} -eq 0 ]; then
-  allow_response
-  exit 0
-fi
+# precis with no path summarizes the working directory
+[ ${#paths[@]} -gt 0 ] || paths=(.)
 
 # Every path must resolve to something inside cwd
 for path_value in "${paths[@]}"; do
-  # Expand tilde (not expanded inside double quotes)
-  if [[ "$path_value" == "~/"* ]]; then
-    path_value="$HOME/${path_value#\~/}"
-  elif [[ "$path_value" == "~" ]]; then
-    path_value="$HOME"
-  fi
-
   # Can't resolve (nonexistent, unusual token, etc) — fall through to a prompt.
   resolved=$(cd "$cwd" && realpath "$path_value" 2>/dev/null) || exit 0
 
   if [[ "$resolved" != "$cwd" && "$resolved" != "$cwd/"* ]]; then
-    # At least one path is outside cwd — fall through to normal prompt
     exit 0
   fi
 done
 
-# All paths inside cwd — allow
-allow_response
+"$JQ" -n '{
+  hookSpecificOutput: {
+    hookEventName: "PermissionRequest",
+    decision: { behavior: "allow" }
+  }
+}'
