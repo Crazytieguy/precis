@@ -999,6 +999,7 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
     for (first, last) in verbatim_blocks((start..=end).map(|row| (row, line(row)))) {
         block_last[first - start..=last - start].fill(Some(last));
     }
+    let mut next_nonblank = (start, false);
     for (index, row) in (start..=end).enumerate() {
         token_prefix.push(token_prefix[index] + row_tokens(src_lines, row));
         char_prefix.push(char_prefix[index] + line(row).chars().count() + 1);
@@ -1011,7 +1012,10 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
         }
         safe_split[index + 1] = true;
         if line(row).trim().is_empty() {
-            legal_split[index + 1] = !next_nonblank_opens_fence(src_lines, row + 1, end);
+            if next_nonblank.0 <= row {
+                next_nonblank = next_nonblank_row(src_lines, row + 1, end);
+            }
+            legal_split[index + 1] = !next_nonblank.1;
         }
     }
     let mut chunk_start = 0usize;
@@ -1223,15 +1227,17 @@ pub(super) fn lines_content(
     (!spans.is_empty()).then_some(BatchContent::Lines { spans, units })
 }
 
-fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> bool {
+/// The first non-blank row in `from..=end` (`end + 1` when there is
+/// none) and whether it opens a fence.
+fn next_nonblank_row(src_lines: &[&str], from: usize, end: usize) -> (usize, bool) {
     for row in from..=end {
         let t = src_lines.get(row - 1).copied().unwrap_or("").trim_start();
         if t.is_empty() {
             continue;
         }
-        return fence_marker(t).is_some();
+        return (row, fence_marker(t).is_some());
     }
-    false
+    (end + 1, false)
 }
 
 /// Emit `head` as-is, or — when its row range exceeds
@@ -2033,6 +2039,33 @@ mod tests {
                 );
             }
         }
+    }
+
+    /// Every blank row of a run before a fence binds to it, and the
+    /// lookahead is shared across the run, so a long run of blank rows
+    /// costs one pass.
+    #[test]
+    fn markdown_oversize_chunks_bind_a_blank_run_to_the_fence_after_it() {
+        let source = format!(
+            "## Big\n\n{}\n\n\n```\ncode\n```\n\n{}\n{}",
+            prose_block(250),
+            prose_block(250),
+            prose_block(250),
+        );
+        let fence_row = source.lines().position(|l| l == "```").expect("fence") + 1;
+        let bounds = chunk_bounds_of(&source);
+        assert!(bounds.len() > 1, "expected a split, got {bounds:?}");
+        for (chunk_start, _) in bounds {
+            assert!(
+                !(fence_row - 3..=fence_row).contains(&chunk_start),
+                "blank run before the fence at {fence_row} cut at {chunk_start}",
+            );
+        }
+
+        let source = format!("## Big\n\n{}{}", "\n".repeat(50_000), prose_block(250));
+        let bounds = chunk_bounds_of(&source);
+        assert_eq!(bounds.first().unwrap().0, 1);
+        assert_eq!(bounds.last().unwrap().1, source.lines().count());
     }
 
     /// A line whose backtick run is followed by non-whitespace is not a
