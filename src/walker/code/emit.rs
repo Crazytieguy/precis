@@ -14,7 +14,7 @@
 use std::collections::HashSet;
 use std::path::Path;
 
-use super::chunk::{chunk_ranges, chunk_value_factor, item_cost};
+use super::chunk::{chunk_ranges, chunk_value_factor, split_oversize_items};
 use super::ledger::Ledger;
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{Language, SourceFile};
@@ -155,10 +155,7 @@ impl Emitter<'_> {
         parent: Option<&CodeKey>,
         prior: f64,
     ) -> Option<CodeKey> {
-        let costs: Vec<usize> = items
-            .iter()
-            .map(|item| item_cost(item, self.file))
-            .collect();
+        let (items, costs) = split_oversize_items(items, self.file);
         let part_cost: usize = costs.iter().sum();
         let ranges = chunk_ranges(&costs);
         let part_value = prior * code_rung_value(head.rung);
@@ -470,6 +467,28 @@ mod tests {
         }
     }
 
+    /// A body that is one huge statement still renders a prefix: the
+    /// statement splits into rows, chunked like any oversize part.
+    #[test]
+    fn emit_splits_an_oversize_item_into_rows() {
+        let mut callable = decl(1, vec![1], Shape::Callable);
+        callable.body = vec![rows(2..=80)];
+        let batches = emit(
+            80,
+            FileModel {
+                decls: vec![callable],
+                ..FileModel::default()
+            },
+        );
+        let bodies: Vec<_> = batches
+            .iter()
+            .filter(|(key, _, _)| key.rung == Rung::Body)
+            .collect();
+        assert!(bodies.len() > 1);
+        assert_eq!(bodies[0].2.first(), Some(&2));
+        assert_eq!(bodies.last().unwrap().2.last(), Some(&80));
+    }
+
     /// The roster lists in source order, so an oversize trailing re-export
     /// block chunks after the declarations named before it instead of
     /// gating them.
@@ -477,9 +496,9 @@ mod tests {
     fn emit_roster_keeps_source_order_ahead_of_a_trailing_reexport_block() {
         let decls = (1..=60).map(|row| decl(row, vec![row], Shape::Whole));
         let batches = emit(
-            300,
+            100,
             FileModel {
-                reexports: vec![rows(61..=300)],
+                reexports: vec![rows(61..=100)],
                 decls: decls.collect(),
                 ..FileModel::default()
             },
@@ -492,7 +511,7 @@ mod tests {
         assert_eq!(names[0].1, None);
         assert_eq!(names[0].2.first(), Some(&1));
         let (last, earlier) = names.split_last().unwrap();
-        assert_eq!(last.2.last(), Some(&300));
+        assert_eq!(last.2.last(), Some(&100));
         assert!(
             earlier
                 .iter()

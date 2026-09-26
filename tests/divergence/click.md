@@ -126,9 +126,11 @@ Score(3000)=0.837 I=0.952 C=0.736 ns_rows≤3K=20/58 grid(1000/1442/2080/3000/43
 | ns | 7707 |  | 265 | Exception hierarchy with exit codes | 6.4 |  | 0.734 |
 | walker |  | 7714 | 201 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 66, sub: 2, line: 1531 } |  |  | 0.745 |
 | walker |  | 7729 | 15 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 80, sub: 0, line: 1935 } |  |  | 0.745 |
-| ns | 7912 |  | 205 | decorators.py roster: every decorator and its overloads | 7.1 |  | 0.732 |
-| ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.724 |
-| walker |  | 8185 | 456 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 90, sub: 0, line: 2147 } |  |  | 0.743 |
+| walker |  | 7899 | 170 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 90, sub: 0, line: 2147 } |  |  | 0.747 |
+| ns | 7912 |  | 205 | decorators.py roster: every decorator and its overloads | 7.1 |  | 0.734 |
+| walker |  | 8072 | 173 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 90, sub: 1, line: 2147 } |  |  | 0.739 |
+| ns | 8143 |  | 231 | @click.command: the naming rule | 7.2 | 7.1 | 0.730 |
+| walker |  | 8185 | 113 | Code::CodeKey { rung: Decl, file: src/click/core.py, decl: 90, sub: 2, line: 2147 } |  |  | 0.743 |
 | walker |  | 8203 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 52, sub: 0, line: 1166 } |  |  | 0.743 |
 | walker |  | 8221 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 53, sub: 0, line: 1189 } |  |  | 0.743 |
 | walker |  | 8239 | 18 | Code::CodeKey { rung: Doc, file: src/click/core.py, decl: 54, sub: 0, line: 1201 } |  |  | 0.743 |

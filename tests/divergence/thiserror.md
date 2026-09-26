@@ -139,8 +139,10 @@ Score(3000)=0.602 I=0.849 C=0.427 ns_rows≤3K=24/56 grid(1000/1442/2080/3000/43
 | ns | 5726 |  | 131 | fmt.rs: FmtArguments and the remaining function roster | 3.15 | 3.14 | 0.535 |
 | walker |  | 5835 | 165 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 4, sub: 0, line: 63 } |  |  | 0.535 |
 | ns | 5905 |  | 179 | ast.rs: ContainerKind and its six display strings | 3.16 |  | 0.525 |
+| walker |  | 5985 | 150 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 3, sub: 0, line: 32 } |  |  | 0.525 |
+| walker |  | 6147 | 162 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 3, sub: 1, line: 32 } |  |  | 0.525 |
 | ns | 6198 |  | 293 | ast.rs: complete from_syn constructor roster | 3.17 |  | 0.515 |
-| walker |  | 6286 | 451 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 3, sub: 0, line: 32 } |  |  | 0.515 |
+| walker |  | 6286 | 139 | Code::CodeKey { rung: Decl, file: impl/src/scan_expr.rs, decl: 3, sub: 2, line: 32 } |  |  | 0.515 |
 | ns | 6357 |  | 159 | impl/src/generics.rs: ParamsInScope and InferredBounds | 3.18 |  | 0.507 |
 | walker |  | 6360 | 74 | Code::CodeKey { rung: Names, file: impl/src/valid.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.509 |
 | walker |  | 6384 | 24 | Code::CodeKey { rung: Decl, file: impl/src/valid.rs, decl: 1, sub: 0, line: 5 } |  |  | 0.510 |

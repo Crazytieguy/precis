@@ -128,17 +128,22 @@ Score(3000)=0.654 I=0.800 C=0.535 ns_rows≤3K=24/60 grid(1000/1442/2080/3000/43
 | ns | 6928 |  | 138 | `dynamic/`: the `plugin` build-tag file and its two exported tests | 4.9 |  | 0.692 |
 | walker |  | 7140 | 260 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 5, sub: 0, line: 170 } |  |  | 0.692 |
 | ns | 7158 |  | 230 | `dynamic/dynamic_test.go`: building the plugin and calling into it | 4.10 |  | 0.691 |
+| walker |  | 7347 | 207 | Code::CodeKey { rung: Body, file: xxhashbench/xxhashbench_test.go, decl: 1, sub: 0, line: 108 } |  |  | 0.691 |
 | ns | 7367 |  | 209 | `xxhashbench/`: separate module, `replace ../`, and its deprecation TODO | 4.11 |  | 0.688 |
 | ns | 7566 |  | 199 | `xxhashbench/`: the comparison table's shape and every hash it compares | 4.12 | 4.11 | 0.675 |
-| walker |  | 7662 | 522 | Code::CodeKey { rung: Body, file: xxhashbench/xxhashbench_test.go, decl: 1, sub: 0, line: 108 } |  |  | 0.675 |
+| walker |  | 7751 | 404 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 4, sub: 0, line: 131 } |  |  | 0.675 |
 | ns | 7899 |  | 333 | CI: the test matrix and the exact commands run | 4.13 |  | 0.661 |
+| walker |  | 7921 | 170 | Code::CodeKey { rung: Body, file: xxhashbench/xxhashbench_test.go, decl: 1, sub: 1, line: 108 } |  |  | 0.661 |
 | ns | 8030 |  | 131 | README: Compatibility section body | 4.14 | 1.8 | 0.664 |
-| walker |  | 8066 | 404 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 4, sub: 0, line: 131 } |  |  | 0.664 |
-| ns | 8336 |  | 306 | README: measured purego-vs-asm throughput table and how it was produced | 4.15 | 1.8 | 0.669 |
-| ns | 8364 |  | 28 | License identification | 4.16 |  | 0.667 |
-| ns | 8514 |  | 150 | `xxhash_amd64.s`: build tags and both `TEXT` symbol definitions | 5.1 |  | 0.661 |
-| ns | 8664 |  | 150 | `xxhash_arm64.s`: build tags and both `TEXT` symbol definitions | 5.2 |  | 0.654 |
-| walker |  | 8724 | 658 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 1, sub: 0, line: 12 } |  |  | 0.671 |
+| walker |  | 8066 | 145 | Code::CodeKey { rung: Body, file: xxhashbench/xxhashbench_test.go, decl: 1, sub: 2, line: 108 } |  |  | 0.664 |
+| walker |  | 8231 | 165 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 1, sub: 0, line: 12 } |  |  | 0.669 |
+| ns | 8336 |  | 306 | README: measured purego-vs-asm throughput table and how it was produced | 4.15 | 1.8 | 0.674 |
+| ns | 8364 |  | 28 | License identification | 4.16 |  | 0.673 |
+| walker |  | 8387 | 156 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 1, sub: 1, line: 12 } |  |  | 0.683 |
+| ns | 8514 |  | 150 | `xxhash_amd64.s`: build tags and both `TEXT` symbol definitions | 5.1 |  | 0.676 |
+| walker |  | 8569 | 182 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 1, sub: 2, line: 12 } |  |  | 0.677 |
+| ns | 8664 |  | 150 | `xxhash_arm64.s`: build tags and both `TEXT` symbol definitions | 5.2 |  | 0.671 |
+| walker |  | 8724 | 155 | Code::CodeKey { rung: Body, file: xxhash_test.go, decl: 1, sub: 3, line: 12 } |  |  | 0.671 |
 | ns | 8821 |  | 157 | `xxhash_amd64.s`: the complete register-allocation map | 5.3 | 5.1 | 0.664 |
 | ns | 9036 |  | 215 | `xxhash_arm64.s`: the complete register-allocation map | 5.4 | 5.2 | 0.654 |
 | walker |  | 9059 | 335 | Plaintext::Rest { file: xxhashbench/go.sum } |  |  | 0.654 |

@@ -184,5 +184,8 @@ Score(3000)=0.691 I=0.762 C=0.626 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 9647 | 15 | Code::CodeKey { rung: Doc, file: rich/console.py, decl: 131, sub: 0, line: 2059 } |  |  | 0.571 |
 | walker |  | 9662 | 15 | Code::CodeKey { rung: Doc, file: rich/console.py, decl: 132, sub: 0, line: 2132 } |  |  | 0.571 |
 | walker |  | 9678 | 16 | Code::CodeKey { rung: Doc, file: rich/console.py, decl: 79, sub: 0, line: 817 } |  |  | 0.571 |
+| walker |  | 9695 | 17 | Code::CodeKey { rung: Doc, file: rich/console.py, decl: 89, sub: 0, line: 892 } |  |  | 0.571 |
 | ns | 9781 |  | 147 | benchmarks/, tools/, questions/ and .faq/ listings | 4.11 |  | 0.579 |
-| ns | 9981 |  | 200 | rich/_unicode_data listing (complete) | 4.12 |  | 0.585 |
+| walker |  | 9873 | 178 | Code::CodeKey { rung: Decl, file: rich/console.py, decl: 69, sub: 0, line: 619 } |  |  | 0.584 |
+| ns | 9981 |  | 200 | rich/_unicode_data listing (complete) | 4.12 |  | 0.590 |
+| walker |  | 9989 | 116 | Code::CodeKey { rung: Decl, file: rich/console.py, decl: 69, sub: 1, line: 619 } |  |  | 0.597 |

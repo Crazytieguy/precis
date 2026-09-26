@@ -1,4 +1,4 @@
-Score(3000)=0.631 I=0.833 C=0.478 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.574/0.551/0.631/0.661/0.658/0.676
+Score(3000)=0.631 I=0.833 C=0.478 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/4327/6240/9000)=0.699/0.574/0.551/0.631/0.661/0.658/0.701
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -100,11 +100,13 @@ Score(3000)=0.631 I=0.833 C=0.478 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 6521 | 477 | Markdown::Section { file: README.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.660 |
 | walker |  | 6560 | 39 | Code::CodeKey { rung: Body, file: src/node.js, decl: 4, sub: 0, line: 155 } |  |  | 0.660 |
 | ns | 6586 |  | 334 | src/common.js: per-instance properties and the `enabled` getter/setter | 5.4 | 2.3 | 0.638 |
-| ns | 6978 |  | 392 | src/common.js: `matchesTemplate()` — the wildcard matcher | 5.5 | 2.3 | 0.617 |
-| ns | 7175 |  | 197 | src/common.js: `disable()` and `enabled()` bodies | 5.6 | 2.3 | 0.605 |
-| walker |  | 7197 | 637 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 0, line: 1 } |  |  | 0.650 |
-| walker |  | 7270 | 73 | Code::CodeKey { rung: Body, file: src/node.js, decl: 9, sub: 0, line: 231 } |  |  | 0.650 |
-| walker |  | 7359 | 89 | Code::CodeKey { rung: Body, file: src/node.js, decl: 7, sub: 0, line: 203 } |  |  | 0.651 |
+| walker |  | 6748 | 188 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 0, line: 1 } |  |  | 0.653 |
+| walker |  | 6821 | 73 | Code::CodeKey { rung: Body, file: src/node.js, decl: 9, sub: 0, line: 231 } |  |  | 0.653 |
+| walker |  | 6910 | 89 | Code::CodeKey { rung: Body, file: src/node.js, decl: 7, sub: 0, line: 203 } |  |  | 0.654 |
+| ns | 6978 |  | 392 | src/common.js: `matchesTemplate()` — the wildcard matcher | 5.5 | 2.3 | 0.633 |
+| walker |  | 7107 | 197 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 1, line: 1 } |  |  | 0.638 |
+| ns | 7175 |  | 197 | src/common.js: `disable()` and `enabled()` bodies | 5.6 | 2.3 | 0.626 |
+| walker |  | 7359 | 252 | Code::CodeKey { rung: Body, file: karma.conf.js, decl: 1, sub: 2, line: 1 } |  |  | 0.651 |
 | ns | 7424 |  | 249 | src/common.js: `selectColor()` and `extend()` bodies | 5.7 | 2.3 | 0.639 |
 | ns | 7559 |  | 135 | src/common.js: `coerce()` and the deprecated `destroy()` stub | 5.8 | 2.3 | 0.633 |
 | walker |  | 7561 | 202 | Code::CodeKey { rung: Body, file: src/node.js, decl: 5, sub: 0, line: 167 } |  |  | 0.634 |
@@ -119,10 +121,14 @@ Score(3000)=0.631 I=0.833 C=0.478 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | ns | 8516 |  | 322 | src/node.js: `useColors`, `formatArgs`, `getDate`, `log` bodies | 6.3 | 2.6 | 0.689 |
 | walker |  | 8650 | 161 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 8, sub: 0, line: 219 } |  |  | 0.691 |
 | ns | 8849 |  | 333 | src/browser.js: `formatArgs()` — `%c` CSS injection | 6.4 | 2.7 | 0.675 |
-| ns | 9033 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.678 |
-| ns | 9385 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.686 |
-| ns | 9529 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.679 |
-| walker |  | 9666 | 1016 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 2, line: 7 } |  |  | 0.756 |
-| ns | 9710 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.747 |
-| walker |  | 9909 | 243 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.753 |
-| ns | 9920 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.741 |
+| walker |  | 8877 | 227 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 2, line: 7 } |  |  | 0.687 |
+| ns | 9033 |  | 184 | src/node.js: `save`, `load`, `init` bodies | 6.5 | 2.6 | 0.690 |
+| walker |  | 9075 | 198 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 3, line: 7 } |  |  | 0.708 |
+| ns | 9385 |  | 352 | src/browser.js: `save`, `load`, `localstorage` bodies | 6.6 | 2.7 | 0.715 |
+| walker |  | 9465 | 390 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 5, sub: 0, line: 149 } |  |  | 0.738 |
+| ns | 9529 |  | 144 | Formatter implementations: node `%o`/`%O` and browser `%j` | 6.7 | 2.6 | 0.730 |
+| walker |  | 9666 | 201 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 4, line: 7 } |  |  | 0.744 |
+| ns | 9710 |  | 181 | Both color palettes, head and tail, with the elision marked | 6.8 | 2.7 | 0.736 |
+| walker |  | 9861 | 195 | Code::CodeKey { rung: Body, file: src/common.js, decl: 1, sub: 5, line: 7 } |  |  | 0.747 |
+| ns | 9920 |  | 210 | LICENSE header, plus .gitignore in full and the .editorconfig head | 7.1 |  | 0.735 |
+| walker |  | 9958 | 97 | Code::CodeKey { rung: Body, file: src/browser.js, decl: 4, sub: 0, line: 115 } |  |  | 0.735 |

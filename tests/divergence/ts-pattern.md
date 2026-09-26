@@ -143,8 +143,9 @@ Score(3000)=0.709 I=0.836 C=0.601 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 7543 | 24 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 30, sub: 0, line: 196 } |  |  | 0.614 |
 | walker |  | 7613 | 70 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 32, sub: 0, line: 203 } |  |  | 0.614 |
 | ns | 7632 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.599 |
+| walker |  | 7795 | 182 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 38, sub: 0, line: 645 } |  |  | 0.599 |
 | ns | 8004 |  | 372 | Headline export of every remaining src/types/ module, with its purpose line | 4.6 |  | 0.589 |
-| walker |  | 8084 | 471 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 38, sub: 0, line: 645 } |  |  | 0.589 |
+| walker |  | 8084 | 289 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 38, sub: 1, line: 645 } |  |  | 0.589 |
 | ns | 8277 |  | 273 | package.json scripts — the complete command set for this repo | 5.1 |  | 0.596 |
 | walker |  | 8286 | 202 | Code::CodeKey { rung: Names, file: src/types/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.596 |
 | walker |  | 8325 | 39 | Code::CodeKey { rung: Decl, file: src/types/helpers.ts, decl: 9, sub: 0, line: 49 } |  |  | 0.596 |

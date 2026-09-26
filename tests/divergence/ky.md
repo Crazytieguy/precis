@@ -1,4 +1,4 @@
-Score(3000)=0.723 I=0.906 C=0.577 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.803/0.917/0.860/0.723/0.613/0.583/0.552
+Score(3000)=0.723 I=0.906 C=0.577 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/4327/6240/9000)=0.803/0.917/0.860/0.723/0.615/0.583/0.552
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,75 +58,78 @@ Score(3000)=0.723 I=0.906 C=0.577 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 3433 |  | 341 | Hook function signatures and their `*State` objects | 2.8 | 2.6 | 0.658 |
 | walker |  | 3558 | 451 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 3, line: 5 } |  |  | 0.679 |
 | ns | 3698 |  | 265 | Public error classes: `HTTPError`, `TimeoutError`, `ForceRetryError` | 2.9 |  | 0.656 |
-| ns | 3974 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.638 |
-| walker |  | 4027 | 469 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 4, line: 5 } |  |  | 0.643 |
-| ns | 4152 |  | 178 | `ky.stop`, `ky.retry()` and the `ForceRetryOptions` fields | 2.11 |  | 0.623 |
-| ns | 4323 |  | 171 | `requestMethods`, `responseTypes` and `maxSafeTimeout` | 2.12 |  | 0.613 |
-| ns | 4524 |  | 201 | Option registries: `kyOptionKeys`, `requestOptionsRegistry`, `vendorSpecificOptions` | 2.13 |  | 0.595 |
-| walker |  | 4585 | 558 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 5, line: 5 } |  |  | 0.603 |
-| ns | 4737 |  | 213 | Core public type aliases: `Input`, `Progress`, search-param and method types | 2.14 |  | 0.593 |
-| walker |  | 4841 | 256 | Markdown::Section { file: readme.md, section_index: 35, keeps_default_concavity: false } |  |  | 0.593 |
-| ns | 4995 |  | 258 | `Ky` class: every field and method, name-only (core/Ky.ts) | 3.1 |  | 0.568 |
-| walker |  | 5075 | 234 | Markdown::Section { file: readme.md, section_index: 36, keeps_default_concavity: false } |  |  | 0.568 |
-| walker |  | 5094 | 19 | Code::CodeKey { rung: Names, file: source/errors/HTTPError.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
+| walker |  | 3716 | 158 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 4, line: 5 } |  |  | 0.658 |
+| walker |  | 3938 | 222 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 5, line: 5 } |  |  | 0.658 |
+| ns | 3974 |  | 276 | `Options` and `NormalizedOptions` interfaces | 2.10 |  | 0.640 |
+| walker |  | 4123 | 185 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 6, line: 5 } |  |  | 0.645 |
+| ns | 4152 |  | 178 | `ky.stop`, `ky.retry()` and the `ForceRetryOptions` fields | 2.11 |  | 0.625 |
+| ns | 4323 |  | 171 | `requestMethods`, `responseTypes` and `maxSafeTimeout` | 2.12 |  | 0.615 |
+| walker |  | 4335 | 212 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 7, line: 5 } |  |  | 0.615 |
+| ns | 4524 |  | 201 | Option registries: `kyOptionKeys`, `requestOptionsRegistry`, `vendorSpecificOptions` | 2.13 |  | 0.597 |
+| walker |  | 4591 | 256 | Markdown::Section { file: readme.md, section_index: 35, keeps_default_concavity: false } |  |  | 0.597 |
+| ns | 4737 |  | 213 | Core public type aliases: `Input`, `Progress`, search-param and method types | 2.14 |  | 0.587 |
+| walker |  | 4825 | 234 | Markdown::Section { file: readme.md, section_index: 36, keeps_default_concavity: false } |  |  | 0.587 |
+| ns | 4995 |  | 258 | `Ky` class: every field and method, name-only (core/Ky.ts) | 3.1 |  | 0.563 |
+| walker |  | 5070 | 245 | Code::CodeKey { rung: Decl, file: source/types/ky.ts, decl: 1, sub: 8, line: 5 } |  |  | 0.568 |
+| walker |  | 5089 | 19 | Code::CodeKey { rung: Names, file: source/errors/HTTPError.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
 | ns | 5101 |  | 106 | Runtime capability flags exported by core/constants.ts | 3.2 |  | 0.566 |
-| walker |  | 5156 | 62 | Code::CodeKey { rung: Decl, file: source/errors/HTTPError.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.570 |
-| walker |  | 5171 | 15 | Code::CodeKey { rung: Names, file: source/errors/NonError.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
-| walker |  | 5212 | 41 | Code::CodeKey { rung: Decl, file: source/errors/NonError.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.570 |
-| walker |  | 5227 | 15 | Code::CodeKey { rung: Names, file: source/errors/TimeoutError.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
-| walker |  | 5257 | 30 | Code::CodeKey { rung: Decl, file: source/errors/TimeoutError.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.577 |
+| walker |  | 5151 | 62 | Code::CodeKey { rung: Decl, file: source/errors/HTTPError.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.570 |
+| walker |  | 5166 | 15 | Code::CodeKey { rung: Names, file: source/errors/NonError.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.570 |
+| walker |  | 5207 | 41 | Code::CodeKey { rung: Decl, file: source/errors/NonError.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.570 |
+| walker |  | 5222 | 15 | Code::CodeKey { rung: Names, file: source/errors/TimeoutError.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
+| walker |  | 5252 | 30 | Code::CodeKey { rung: Decl, file: source/errors/TimeoutError.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.577 |
 | ns | 5292 |  | 191 | Every exported symbol of `source/utils/` (merge, normalize, options) | 3.3 |  | 0.563 |
-| walker |  | 5582 | 325 | Code::CodeKey { rung: Names, file: source/core/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
+| walker |  | 5577 | 325 | Code::CodeKey { rung: Names, file: source/core/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.579 |
 | ns | 5586 |  | 294 | Every exported symbol of `source/utils/` (timeout, delay, body, guards, misc) | 3.4 | 3.3 | 0.560 |
-| walker |  | 5600 | 18 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.563 |
-| walker |  | 5628 | 28 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 16, sub: 0, line: 256 } |  |  | 0.565 |
-| walker |  | 5752 | 124 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 15, sub: 0, line: 237 } |  |  | 0.588 |
+| walker |  | 5595 | 18 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.563 |
+| walker |  | 5623 | 28 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 16, sub: 0, line: 256 } |  |  | 0.565 |
+| walker |  | 5747 | 124 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 15, sub: 0, line: 237 } |  |  | 0.588 |
 | ns | 5766 |  | 180 | Every readme option anchor (`##### <option>`) and hook anchor | 3.5 |  | 0.578 |
-| walker |  | 5862 | 110 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 7, sub: 0, line: 46 } |  |  | 0.591 |
-| walker |  | 5991 | 129 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 17, sub: 0, line: 265 } |  |  | 0.594 |
+| walker |  | 5857 | 110 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 7, sub: 0, line: 46 } |  |  | 0.591 |
+| walker |  | 5986 | 129 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 17, sub: 0, line: 265 } |  |  | 0.594 |
 | ns | 6002 |  | 236 | `test/helpers/`: every exported test helper | 3.6 |  | 0.583 |
-| walker |  | 6308 | 317 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.584 |
+| walker |  | 6303 | 317 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.584 |
 | ns | 6313 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.581 |
-| walker |  | 6326 | 18 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 8, sub: 0, line: 58 } |  |  | 0.581 |
-| walker |  | 6345 | 19 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 9, sub: 0, line: 61 } |  |  | 0.581 |
+| walker |  | 6321 | 18 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 8, sub: 0, line: 58 } |  |  | 0.581 |
+| walker |  | 6340 | 19 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 9, sub: 0, line: 61 } |  |  | 0.581 |
 | ns | 6409 |  | 96 | The internal-only `NonError` wrapper | 3.8 |  | 0.578 |
-| ns | 6701 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.567 |
-| walker |  | 6705 | 360 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.581 |
-| walker |  | 6817 | 112 | Json::Whole { file: tsconfig.dist.json } |  |  | 0.582 |
+| walker |  | 6700 | 360 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.593 |
+| ns | 6701 |  | 292 | `createInstance`: how `ky`, the method shortcuts, `create` and `extend` are built | 4.1 |  | 0.581 |
+| walker |  | 6812 | 112 | Json::Whole { file: tsconfig.dist.json } |  |  | 0.582 |
 | ns | 6918 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.573 |
 | ns | 7121 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.565 |
-| walker |  | 7198 | 381 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.567 |
+| walker |  | 7193 | 381 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.567 |
 | ns | 7553 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.553 |
-| walker |  | 7600 | 402 | Markdown::Section { file: readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.555 |
-| walker |  | 7846 | 246 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 11, sub: 0, line: 68 } |  |  | 0.559 |
-| walker |  | 7869 | 23 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 11, sub: 0, line: 68 } |  |  | 0.563 |
-| walker |  | 7899 | 30 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.569 |
+| walker |  | 7595 | 402 | Markdown::Section { file: readme.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.555 |
+| walker |  | 7841 | 246 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 11, sub: 0, line: 68 } |  |  | 0.559 |
+| walker |  | 7864 | 23 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 11, sub: 0, line: 68 } |  |  | 0.563 |
+| walker |  | 7894 | 30 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.569 |
 | ns | 7965 |  | 412 | `#retry`: the recursive retry loop and the `beforeRetry` hook contract | 4.5 | 3.1 | 0.554 |
 | ns | 8174 |  | 209 | Constructor: input validation and `prefixUrl` joining | 4.6 | 2.5 | 0.547 |
-| walker |  | 8260 | 361 | Code::CodeKey { rung: Names, file: source/types/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.556 |
-| walker |  | 8333 | 73 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 6, sub: 0, line: 16 } |  |  | 0.563 |
+| walker |  | 8255 | 361 | Code::CodeKey { rung: Names, file: source/types/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.556 |
+| walker |  | 8328 | 73 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 6, sub: 0, line: 16 } |  |  | 0.563 |
 | ns | 8351 |  | 177 | Where a non-2xx response becomes an `HTTPError` | 4.7 | 3.1 | 0.557 |
-| walker |  | 8470 | 137 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 12, sub: 0, line: 373 } |  |  | 0.570 |
+| walker |  | 8465 | 137 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 12, sub: 0, line: 373 } |  |  | 0.570 |
 | ns | 8506 |  | 155 | `mergeHeaders`: how `.extend()` removes a header | 5.1 | 3.3 | 0.564 |
-| walker |  | 8615 | 145 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 11, sub: 0, line: 358 } |  |  | 0.564 |
-| walker |  | 8630 | 15 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 7, sub: 0, line: 27 } |  |  | 0.564 |
+| walker |  | 8610 | 145 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 11, sub: 0, line: 358 } |  |  | 0.564 |
+| walker |  | 8625 | 15 | Code::CodeKey { rung: Doc, file: source/types/options.ts, decl: 7, sub: 0, line: 27 } |  |  | 0.564 |
 | ns | 8679 |  | 173 | `mergeHooks` / `newHookValue`: hook array inheritance | 5.2 | 3.3 | 0.558 |
 | ns | 8953 |  | 274 | `deepMerge`: signal collection, shallow `context`, `searchParams` accumulation | 5.3 | 3.3 | 0.550 |
-| walker |  | 9052 | 422 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.556 |
+| walker |  | 9047 | 422 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 10, sub: 0, line: 312 } |  |  | 0.556 |
 | ns | 9078 |  | 125 | Install instructions, CDN entry points and the Deno import | 6.1 | 3.7 | 0.560 |
-| walker |  | 9221 | 169 | Code::CodeKey { rung: Names, file: source/types/hooks.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
+| walker |  | 9216 | 169 | Code::CodeKey { rung: Names, file: source/types/hooks.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
 | ns | 9235 |  | 157 | Support matrix, related packages and maintainers | 6.2 | 1.5 | 0.564 |
-| walker |  | 9267 | 46 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 2, sub: 0, line: 14 } |  |  | 0.568 |
-| ns | 9323 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.568 |
-| walker |  | 9324 | 57 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 6, sub: 0, line: 41 } |  |  | 0.574 |
-| walker |  | 9412 | 88 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 3, sub: 0, line: 20 } |  |  | 0.582 |
+| walker |  | 9262 | 46 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 2, sub: 0, line: 14 } |  |  | 0.568 |
+| walker |  | 9319 | 57 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 6, sub: 0, line: 41 } |  |  | 0.575 |
+| ns | 9323 |  | 88 | "Extending types": why ky uses type aliases | 6.3 | 1.12 | 0.574 |
+| walker |  | 9407 | 88 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 3, sub: 0, line: 20 } |  |  | 0.582 |
 | ns | 9426 |  | 103 | npm scripts: how to build, test and debug | 7.1 | 1.9 | 0.586 |
 | ns | 9453 |  | 27 | Remaining root directories: `.github/` and `media/` | 7.2 |  | 0.589 |
-| walker |  | 9503 | 91 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 5, sub: 0, line: 32 } |  |  | 0.592 |
-| walker |  | 9596 | 93 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.596 |
+| walker |  | 9498 | 91 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 5, sub: 0, line: 32 } |  |  | 0.592 |
+| walker |  | 9591 | 93 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.596 |
 | ns | 9647 |  | 194 | TypeScript configuration (both tsconfigs, complete) | 7.3 | 7.1 | 0.605 |
-| walker |  | 9691 | 95 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 7, sub: 0, line: 48 } |  |  | 0.609 |
-| walker |  | 9718 | 27 | Code::CodeKey { rung: Names, file: source/types/retry.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
-| walker |  | 9800 | 82 | Code::CodeKey { rung: Decl, file: source/types/retry.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.610 |
-| walker |  | 9818 | 18 | Code::CodeKey { rung: Names, file: source/types/ResponsePromise.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
+| walker |  | 9686 | 95 | Code::CodeKey { rung: Decl, file: source/types/hooks.ts, decl: 7, sub: 0, line: 48 } |  |  | 0.609 |
+| walker |  | 9713 | 27 | Code::CodeKey { rung: Names, file: source/types/retry.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.609 |
+| walker |  | 9795 | 82 | Code::CodeKey { rung: Decl, file: source/types/retry.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.610 |
+| walker |  | 9813 | 18 | Code::CodeKey { rung: Names, file: source/types/ResponsePromise.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.610 |
 | ns | 9915 |  | 268 | AVA configuration and the shape of a typical test | 7.4 | 3.6 | 0.601 |

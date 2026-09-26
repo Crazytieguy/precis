@@ -41,7 +41,10 @@ The scheduler stops on the first top-ranked batch that doesn't fit, after
 spending what is left on the longest affordable prefix of that batch
 (`src/scheduler.rs`): its first listing entries, its first source rows, or,
 for a code batch, its first items taken whole, so the cut never lands
-inside a signature, statement or field. Every decision taken at a smaller
+inside a signature, statement or field. The exception is an item too
+large to chunk (a function body that is one long `match`, a constant
+table): it is split into rows, since whole it showed nothing below the
+budget that held all of it. Every decision taken at a smaller
 token budget is also taken at a larger one, so the smaller output is a
 subset of the larger, and the divergence metric replays one schedule per
 fixture instead of running the walker per budget. Skipping an ill-fitting batch

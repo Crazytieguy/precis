@@ -257,21 +257,23 @@ Score(3000)=0.712 I=0.803 C=0.632 ns_rows≤3K=23/56 grid(1000/1442/2080/3000/43
 | walker |  | 8076 | 42 | Fs::DirListing { dir: website/src/website/utils } |  |  | 0.531 |
 | walker |  | 8110 | 34 | Json::Scripts { file: samples/legacy/electron-amd/package.json } |  |  | 0.531 |
 | ns | 8114 |  | 207 | MonacoLspClient wiring + index exports | 6.2 | 6.1 | 0.525 |
-| ns | 8163 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.531 |
-| ns | 8447 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.526 |
-| ns | 8611 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.517 |
-| walker |  | 8731 | 621 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.526 |
-| ns | 8760 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.522 |
-| walker |  | 8782 | 51 | Fs::DirListing { dir: test/smoke } |  |  | 0.536 |
-| walker |  | 8790 | 8 | Fs::DirListing { dir: test/smoke/esbuild } |  |  | 0.536 |
-| walker |  | 8798 | 8 | Fs::DirListing { dir: test/smoke/vite } |  |  | 0.536 |
-| walker |  | 8806 | 8 | Fs::DirListing { dir: test/smoke/webpack } |  |  | 0.536 |
-| walker |  | 8818 | 12 | Fs::DirListing { dir: test/smoke/parcel } |  |  | 0.536 |
-| walker |  | 8877 | 59 | Json::Scripts { file: samples/electron-esm-webpack/package.json } |  |  | 0.536 |
-| walker |  | 8902 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.536 |
-| walker |  | 8927 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.536 |
-| walker |  | 8952 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 7, sub: 0, line: 64 } |  |  | 0.536 |
-| walker |  | 8977 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 33, sub: 0, line: 628 } |  |  | 0.536 |
+| walker |  | 8161 | 51 | Fs::DirListing { dir: test/smoke } |  |  | 0.539 |
+| ns | 8163 |  | 49 | webpack-plugin package: complete tree listing | 6.3 |  | 0.545 |
+| walker |  | 8169 | 8 | Fs::DirListing { dir: test/smoke/esbuild } |  |  | 0.545 |
+| walker |  | 8177 | 8 | Fs::DirListing { dir: test/smoke/vite } |  |  | 0.545 |
+| walker |  | 8185 | 8 | Fs::DirListing { dir: test/smoke/webpack } |  |  | 0.545 |
+| walker |  | 8197 | 12 | Fs::DirListing { dir: test/smoke/parcel } |  |  | 0.545 |
+| walker |  | 8256 | 59 | Json::Scripts { file: samples/electron-esm-webpack/package.json } |  |  | 0.545 |
+| walker |  | 8281 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.545 |
+| walker |  | 8306 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.545 |
+| walker |  | 8331 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 7, sub: 0, line: 64 } |  |  | 0.545 |
+| walker |  | 8356 | 25 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 33, sub: 0, line: 628 } |  |  | 0.545 |
+| ns | 8447 |  | 284 | webpack-plugin option fields and peer-dependency contract | 6.4 | 6.3 | 0.540 |
+| walker |  | 8543 | 187 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 0, line: 102 } |  |  | 0.544 |
+| ns | 8611 |  | 164 | build/ and scripts/ tree listings | 7.1 |  | 0.534 |
+| walker |  | 8737 | 194 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 1, line: 102 } |  |  | 0.536 |
+| ns | 8760 |  | 149 | build-monaco-editor.ts run() — what the published package is made of | 7.2 |  | 0.533 |
+| walker |  | 8977 | 240 | Code::CodeKey { rung: Decl, file: webpack-plugin/src/index.ts, decl: 1, sub: 2, line: 102 } |  |  | 0.536 |
 | ns | 8998 |  | 238 | check-samples.ts — the invariant every new language must satisfy | 7.3 |  | 0.528 |
 | walker |  | 9040 | 63 | Json::Scripts { file: samples/browser-esm-webpack-typescript/package.json } |  |  | 0.528 |
 | walker |  | 9066 | 26 | Code::CodeKey { rung: Doc, file: monaco-lsp-client/generator/index.ts, decl: 3, sub: 0, line: 26 } |  |  | 0.528 |

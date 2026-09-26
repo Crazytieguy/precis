@@ -57,7 +57,8 @@
 //! The `Decl` batch renders `head` (plus `body` for `Whole`, its head rows
 //! past the body closing the last chunk), `Doc` renders `doc`, `Body`
 //! renders a `Callable`'s `body`. An [`Item`] is the unit neither the
-//! chunker nor the budget's cut of the last batch splits.
+//! chunker nor the budget's cut of the last batch splits, unless it alone
+//! is oversize: then each of its rows is one.
 //!
 //! # Members
 //!

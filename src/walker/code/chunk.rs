@@ -29,6 +29,30 @@ pub(super) fn item_cost(item: &Item, file: &SourceFile) -> usize {
         .sum()
 }
 
+/// `items` and their token costs, each item costing more than
+/// [`SPLIT_AT`] split into one item per row. An item that large (a
+/// function body that is one 400-row `match`, a `return` of a whole JSX
+/// tree, a constant table) would otherwise render nothing until the
+/// budget holds all of it, and stall every budget below that.
+pub(super) fn split_oversize_items(items: &[Item], file: &SourceFile) -> (Vec<Item>, Vec<usize>) {
+    let mut split = Vec::with_capacity(items.len());
+    let mut costs = Vec::with_capacity(items.len());
+    for item in items {
+        let cost = item_cost(item, file);
+        if cost <= SPLIT_AT {
+            split.push(item.clone());
+            costs.push(cost);
+            continue;
+        }
+        for &row in &item.rows {
+            let row_item = Item::new([row]);
+            costs.push(item_cost(&row_item, file));
+            split.push(row_item);
+        }
+    }
+    (split, costs)
+}
+
 /// Consecutive ranges of item indices, one per chunk, never splitting an
 /// item: one range when the part costs at most [`SPLIT_AT`], otherwise cut
 /// at [`TARGET`] / [`MIN_TAIL`]. Empty for an empty part.

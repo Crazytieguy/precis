@@ -1,4 +1,4 @@
-Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.711/0.747/0.752/0.884/0.798/0.748/0.660
+Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/4327/6240/9000)=0.711/0.747/0.785/0.884/0.798/0.748/0.665
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -36,13 +36,18 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 1494 |  | 237 | DialogProps declarations, second half (lines 86-137) plus the union tail | 2.3 | 2.2 | 0.689 |
 | walker |  | 1802 | 318 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 4, sub: 0, line: 139 } |  |  | 0.702 |
 | ns | 1812 |  | 318 | Root's destructured parameter list — every prop's default value | 2.4 | 1.6 | 0.741 |
-| ns | 2031 |  | 219 | Snap-point prop documentation (fills 2.1's ellipses) | 2.5 | 2.1 | 0.752 |
-| ns | 2198 |  | 167 | Docs for dismissible, modal and direction (fills 2.3's ellipses) | 2.6 | 2.3 | 0.723 |
-| ns | 2398 |  | 200 | Docs for closeThreshold, noBodyStyles, setBackgroundColorOnScale, scrollLockTimeout | 2.7 | 2.2 | 0.692 |
-| ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.679 |
-| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.657 |
-| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.641 |
-| walker |  | 2972 | 1170 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 0, line: 50 } |  |  | 0.921 |
+| walker |  | 1982 | 180 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 0, line: 50 } |  |  | 0.756 |
+| ns | 2031 |  | 219 | Snap-point prop documentation (fills 2.1's ellipses) | 2.5 | 2.1 | 0.766 |
+| walker |  | 2183 | 201 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 1, line: 50 } |  |  | 0.809 |
+| ns | 2198 |  | 167 | Docs for dismissible, modal and direction (fills 2.3's ellipses) | 2.6 | 2.3 | 0.778 |
+| walker |  | 2370 | 187 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 2, line: 50 } |  |  | 0.806 |
+| ns | 2398 |  | 200 | Docs for closeThreshold, noBodyStyles, setBackgroundColorOnScale, scrollLockTimeout | 2.7 | 2.2 | 0.813 |
+| ns | 2490 |  | 92 | Docs for fixed and handleOnly | 2.8 | 2.2 | 0.816 |
+| walker |  | 2548 | 178 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 3, line: 50 } |  |  | 0.860 |
+| ns | 2661 |  | 171 | Docs for defaultOpen, disablePreventScroll and repositionInputs | 2.9 | 2.3 | 0.833 |
+| walker |  | 2734 | 186 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 4, line: 50 } |  |  | 0.874 |
+| ns | 2802 |  | 141 | Docs for snapToSequentialPoint and onAnimationEnd — last of the prop docs | 2.10 | 2.3 | 0.853 |
+| walker |  | 2972 | 238 | Code::CodeKey { rung: Decl, file: src/index.tsx, decl: 3, sub: 5, line: 50 } |  |  | 0.921 |
 | ns | 2991 |  | 189 | src/constants.ts in full — every tuning constant and its value | 3.1 |  | 0.884 |
 | walker |  | 3038 | 66 | Fs::DirListing { dir: test/tests } |  |  | 0.885 |
 | ns | 3069 |  | 78 | src/types.ts in full — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.872 |
@@ -118,29 +123,32 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 7078 | 187 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 5, sub: 0, line: 68 } |  |  | 0.693 |
 | walker |  | 7224 | 146 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 4, sub: 0, line: 42 } |  |  | 0.693 |
 | ns | 7355 |  | 313 | onRelease: the close-vs-snap-back decision ladder | 4.9 | 4.8 | 0.676 |
-| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.666 |
-| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.657 |
-| walker |  | 7889 | 665 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.661 |
+| walker |  | 7394 | 170 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.681 |
+| walker |  | 7568 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 23 } |  |  | 0.681 |
+| walker |  | 7608 | 40 | Json::Identity { file: test/package.json } |  |  | 0.681 |
+| ns | 7627 |  | 272 | The data-vaul-* attributes emitted by Overlay and Content | 4.10 |  | 0.671 |
+| walker |  | 7671 | 63 | Json::Scripts { file: test/package.json } |  |  | 0.671 |
+| walker |  | 7780 | 109 | Json::Dependencies { file: test/package.json } |  |  | 0.671 |
+| ns | 7796 |  | 169 | Handle: click-to-cycle snap points | 4.11 |  | 0.661 |
 | ns | 7942 |  | 146 | NestedRoot: how a nested drawer is wired to its parent | 4.12 |  | 0.653 |
-| walker |  | 8063 | 174 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 3, sub: 0, line: 23 } |  |  | 0.653 |
+| walker |  | 7964 | 184 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 1, line: 8 } |  |  | 0.653 |
 | ns | 8092 |  | 150 | The base [data-vaul-drawer] rule and the shape of the variant rules | 5.1 |  | 0.649 |
-| walker |  | 8103 | 40 | Json::Identity { file: test/package.json } |  |  | 0.649 |
-| walker |  | 8166 | 63 | Json::Scripts { file: test/package.json } |  |  | 0.649 |
-| walker |  | 8275 | 109 | Json::Dependencies { file: test/package.json } |  |  | 0.649 |
+| walker |  | 8195 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 72 } |  |  | 0.649 |
 | ns | 8277 |  | 185 | style.css selector inventory — which attribute combinations are styled | 5.2 | 5.1 | 0.644 |
 | ns | 8405 |  | 128 | Every @keyframes name in style.css | 5.3 |  | 0.638 |
-| ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.647 |
-| walker |  | 8506 | 231 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 6, sub: 0, line: 72 } |  |  | 0.647 |
-| ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.651 |
-| ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.656 |
-| walker |  | 8801 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 13, sub: 0, line: 1098 } |  |  | 0.670 |
+| walker |  | 8490 | 295 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 13, sub: 0, line: 1098 } |  |  | 0.653 |
+| ns | 8504 |  | 99 | Complete listing of test/src/app — one demo route per feature | 6.1 |  | 0.661 |
+| ns | 8570 |  | 66 | Complete listing of test/tests — the Playwright spec set | 6.2 |  | 0.666 |
+| ns | 8622 |  | 52 | Listing of the test/ package root | 6.3 |  | 0.670 |
+| walker |  | 8678 | 188 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 2, line: 8 } |  |  | 0.670 |
 | ns | 8915 |  | 293 | Spec-suite to demo-route map for every Playwright file | 6.4 |  | 0.660 |
-| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.651 |
-| walker |  | 9118 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.655 |
+| walker |  | 8995 | 317 | Code::CodeKey { rung: Body, file: src/index.tsx, decl: 5, sub: 0, line: 803 } |  |  | 0.665 |
+| ns | 9117 |  | 202 | Playwright runner configuration: server, devices, testDir | 6.5 |  | 0.655 |
 | ns | 9223 |  | 106 | Shared e2e helpers: openDrawer and ANIMATION_DURATION | 6.6 |  | 0.652 |
 | ns | 9354 |  | 131 | package.json publishing surface: files and the exports map | 7.1 |  | 0.657 |
-| ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.653 |
-| walker |  | 9634 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.658 |
+| walker |  | 9511 | 516 | Code::CodeKey { rung: Body, file: src/use-position-fixed.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.662 |
+| ns | 9516 |  | 162 | Runtime and peer dependencies, and the pinned package manager | 7.2 |  | 0.658 |
+| walker |  | 9634 | 123 | Code::CodeKey { rung: Body, file: src/use-scale-background.ts, decl: 1, sub: 3, line: 8 } |  |  | 0.658 |
 | ns | 9644 |  | 128 | Workspace and task-runner config: pnpm-workspace.yaml and turbo.json | 7.3 |  | 0.663 |
 | walker |  | 9665 | 31 | Code::CodeKey { rung: Names, file: test/tests/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.663 |
 | walker |  | 9724 | 59 | Code::CodeKey { rung: Decl, file: test/tests/helpers.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.663 |

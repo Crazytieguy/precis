@@ -88,12 +88,13 @@ Score(3000)=0.689 I=0.894 C=0.532 ns_rows≤3K=17/50 grid(1000/1442/2080/3000/43
 | ns | 4447 |  | 235 | suppress_type_checks() docstring | 2.15 | 2.13 | 0.542 |
 | ns | 4610 |  | 163 | TypeCheckMemo: __slots__ and constructor | 2.16 |  | 0.529 |
 | walker |  | 4617 | 494 | Code::CodeKey { rung: Decl, file: src/typeguard/_checkers.py, decl: 6, sub: 0, line: 99 } |  |  | 0.529 |
-| walker |  | 4888 | 271 | Code::CodeKey { rung: Names, file: src/typeguard/_utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.531 |
-| walker |  | 4917 | 29 | Code::CodeKey { rung: Decl, file: src/typeguard/_utils.py, decl: 10, sub: 0, line: 172 } |  |  | 0.531 |
-| walker |  | 4924 | 7 | Code::CodeKey { rung: Body, file: src/typeguard/_utils.py, decl: 11, sub: 0, line: 176 } |  |  | 0.531 |
+| walker |  | 4815 | 198 | Code::CodeKey { rung: Decl, file: src/typeguard/_checkers.py, decl: 33, sub: 0, line: 1005 } |  |  | 0.530 |
 | ns | 4961 |  | 351 | TypeCheckConfiguration attribute documentation | 2.17 | 2.6 | 0.507 |
+| walker |  | 5086 | 271 | Code::CodeKey { rung: Names, file: src/typeguard/_utils.py, decl: 0, sub: 0, line: 0 } |  |  | 0.508 |
+| walker |  | 5115 | 29 | Code::CodeKey { rung: Decl, file: src/typeguard/_utils.py, decl: 10, sub: 0, line: 172 } |  |  | 0.508 |
+| walker |  | 5122 | 7 | Code::CodeKey { rung: Body, file: src/typeguard/_utils.py, decl: 11, sub: 0, line: 176 } |  |  | 0.508 |
 | ns | 5220 |  | 259 | TypeCheckMemo attribute documentation | 2.18 | 2.16 | 0.492 |
-| walker |  | 5440 | 516 | Code::CodeKey { rung: Decl, file: src/typeguard/_checkers.py, decl: 33, sub: 0, line: 1005 } |  |  | 0.494 |
+| walker |  | 5440 | 318 | Code::CodeKey { rung: Decl, file: src/typeguard/_checkers.py, decl: 33, sub: 1, line: 1005 } |  |  | 0.494 |
 | walker |  | 5476 | 36 | Code::CodeKey { rung: Names, file: src/typeguard/_pytest_plugin.py, decl: 0, sub: 0, line: 0 } |  |  | 0.495 |
 | walker |  | 5489 | 13 | Code::CodeKey { rung: Names, file: src/typeguard/_memo.py, decl: 0, sub: 0, line: 0 } |  |  | 0.496 |
 | walker |  | 5535 | 46 | Code::CodeKey { rung: Decl, file: src/typeguard/_memo.py, decl: 1, sub: 0, line: 8 } |  |  | 0.498 |
