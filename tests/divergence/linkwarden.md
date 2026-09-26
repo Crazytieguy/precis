@@ -163,10 +163,10 @@ Score(3000)=0.740 I=0.895 C=0.611 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | walker |  | 6885 | 15 | Code::CodeKey { rung: Names, file: apps/mobile/app/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.655 |
 | ns | 6888 |  | 166 | Complete apps/worker listing, including every job and every preservation handler | 5.1 |  | 0.668 |
 | walker |  | 6948 | 63 | Code::CodeKey { rung: Names, file: apps/web/pages/collections/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
-| walker |  | 6963 | 15 | Code::CodeKey { rung: Body, file: apps/web/pages/collections/index.tsx, decl: 2, sub: 0, line: 153 } |  |  | 0.668 |
-| walker |  | 7026 | 63 | Code::CodeKey { rung: Names, file: apps/web/pages/links/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
-| walker |  | 7041 | 15 | Code::CodeKey { rung: Body, file: apps/web/pages/links/index.tsx, decl: 2, sub: 0, line: 70 } |  |  | 0.668 |
-| walker |  | 7106 | 65 | Code::CodeKey { rung: Names, file: apps/web/pages/tags/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
+| walker |  | 7011 | 63 | Code::CodeKey { rung: Names, file: apps/web/pages/links/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
+| walker |  | 7076 | 65 | Code::CodeKey { rung: Names, file: apps/web/pages/tags/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
+| walker |  | 7091 | 15 | Code::CodeKey { rung: Body, file: apps/web/pages/collections/index.tsx, decl: 2, sub: 0, line: 153 } |  |  | 0.668 |
+| walker |  | 7106 | 15 | Code::CodeKey { rung: Body, file: apps/web/pages/links/index.tsx, decl: 2, sub: 0, line: 70 } |  |  | 0.668 |
 | walker |  | 7121 | 15 | Code::CodeKey { rung: Body, file: apps/web/pages/tags/index.tsx, decl: 2, sub: 0, line: 274 } |  |  | 0.668 |
 | ns | 7157 |  | 269 | worker.ts — the whole scheduler entry point | 5.2 |  | 0.657 |
 | walker |  | 7200 | 79 | Fs::DirListing { dir: apps/web/lib/client } |  |  | 0.666 |
@@ -245,20 +245,21 @@ Score(3000)=0.740 I=0.895 C=0.611 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 8941 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.781 |
 | walker |  | 9122 | 377 | Json::Scripts { file: package.json } |  |  | 0.804 |
 | ns | 9155 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.795 |
-| walker |  | 9165 | 43 | Code::CodeKey { rung: Body, file: apps/web/pages/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.795 |
-| walker |  | 9209 | 44 | Code::CodeKey { rung: Body, file: apps/web/pages/settings/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.795 |
 | ns | 9334 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.787 |
-| ns | 9466 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.779 |
-| walker |  | 9526 | 317 | Fs::DirListing { dir: apps/web/components } |  |  | 0.807 |
-| walker |  | 9535 | 9 | Fs::DirListing { dir: apps/web/components/LinkViews } |  |  | 0.807 |
-| walker |  | 9551 | 16 | Fs::DirListing { dir: apps/web/components/InputSelect } |  |  | 0.807 |
-| walker |  | 9577 | 26 | Fs::DirListing { dir: apps/web/components/Preservation } |  |  | 0.808 |
-| walker |  | 9618 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.816 |
-| walker |  | 9680 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.820 |
+| walker |  | 9439 | 317 | Fs::DirListing { dir: apps/web/components } |  |  | 0.815 |
+| walker |  | 9448 | 9 | Fs::DirListing { dir: apps/web/components/LinkViews } |  |  | 0.815 |
+| walker |  | 9464 | 16 | Fs::DirListing { dir: apps/web/components/InputSelect } |  |  | 0.816 |
+| ns | 9466 |  | 132 | CI workflows, GitHub templates, the patch-package patch, and every translated locale | 7.5 |  | 0.807 |
+| walker |  | 9490 | 26 | Fs::DirListing { dir: apps/web/components/Preservation } |  |  | 0.808 |
+| walker |  | 9531 | 41 | Fs::DirListing { dir: apps/web/components/ui } |  |  | 0.816 |
+| walker |  | 9593 | 62 | Fs::DirListing { dir: apps/web/components/LinkViews/LinkComponents } |  |  | 0.820 |
 | ns | 9682 |  | 216 | apps/mobile root and the complete Expo Router screen tree | 8.1 |  | 0.825 |
-| walker |  | 9848 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.843 |
+| walker |  | 9761 | 168 | Fs::DirListing { dir: apps/web/components/ModalContent } |  |  | 0.843 |
+| walker |  | 9804 | 43 | Code::CodeKey { rung: Body, file: apps/web/pages/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.843 |
+| walker |  | 9848 | 44 | Code::CodeKey { rung: Body, file: apps/web/pages/settings/index.tsx, decl: 1, sub: 0, line: 4 } |  |  | 0.843 |
 | ns | 9884 |  | 202 | Mobile components, stores and query-cache modules | 8.2 | 8.1 | 0.845 |
-| walker |  | 9897 | 49 | Code::CodeKey { rung: Body, file: apps/web/pages/admin/index.tsx, decl: 1, sub: 0, line: 3 } |  |  | 0.845 |
-| walker |  | 9939 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.845 |
-| walker |  | 9951 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.845 |
-| walker |  | 9993 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.846 |
+| walker |  | 9890 | 42 | Json::Identity { file: packages/lib/package.json } |  |  | 0.845 |
+| walker |  | 9902 | 12 | Json::Entry { file: packages/lib/package.json } |  |  | 0.845 |
+| walker |  | 9944 | 42 | Json::Identity { file: packages/router/package.json } |  |  | 0.846 |
+| walker |  | 9956 | 12 | Json::Entry { file: packages/router/package.json } |  |  | 0.846 |
+| walker |  | 9990 | 34 | Json::Dependencies { file: packages/router/package.json } |  |  | 0.846 |

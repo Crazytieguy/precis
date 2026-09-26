@@ -65,21 +65,21 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 4253 | 327 | Code::CodeKey { rung: Decl, file: src/context.ts, decl: 1, sub: 0, line: 37 } |  |  | 0.790 |
 | walker |  | 4268 | 15 | Code::CodeKey { rung: Names, file: src/use-scale-background.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.790 |
 | ns | 4271 |  | 249 | useSnapPoints parameter object (fills 3.8's ellipsis) | 3.9 | 3.8 | 0.798 |
-| walker |  | 4297 | 29 | Code::CodeKey { rung: Doc, file: src/helpers.ts, decl: 9, sub: 0, line: 108 } |  |  | 0.798 |
-| walker |  | 4306 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.798 |
-| walker |  | 4359 | 53 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.798 |
-| walker |  | 4403 | 44 | Code::CodeKey { rung: Decl, file: src/use-controllable-state.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.798 |
-| walker |  | 4515 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
-| walker |  | 4527 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.811 |
-| walker |  | 4540 | 13 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.811 |
-| walker |  | 4555 | 15 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 6, sub: 0, line: 30 } |  |  | 0.811 |
+| walker |  | 4277 | 9 | Fs::DirListing { dir: test/public } |  |  | 0.798 |
+| walker |  | 4330 | 53 | Code::CodeKey { rung: Names, file: src/use-controllable-state.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.798 |
+| walker |  | 4374 | 44 | Code::CodeKey { rung: Decl, file: src/use-controllable-state.ts, decl: 1, sub: 0, line: 5 } |  |  | 0.798 |
+| walker |  | 4486 | 112 | Code::CodeKey { rung: Names, file: src/browser.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
+| walker |  | 4498 | 12 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 2, sub: 0, line: 10 } |  |  | 0.811 |
+| walker |  | 4511 | 13 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 3, sub: 0, line: 14 } |  |  | 0.811 |
 | ns | 4565 |  | 294 | usePositionFixed: the iOS rationale comment, its signature and return | 3.10 |  | 0.788 |
-| walker |  | 4632 | 77 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.788 |
-| ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.785 |
-| walker |  | 4776 | 144 | Code::CodeKey { rung: Names, file: src/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.806 |
-| walker |  | 4816 | 40 | Code::CodeKey { rung: Decl, file: src/constants.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.814 |
-| walker |  | 4868 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.818 |
-| walker |  | 4889 | 21 | Code::CodeKey { rung: Decl, file: src/types.ts, decl: 2, sub: 0, line: 2 } |  |  | 0.824 |
+| walker |  | 4588 | 77 | Code::CodeKey { rung: Names, file: src/use-composed-refs.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.788 |
+| walker |  | 4732 | 144 | Code::CodeKey { rung: Names, file: src/constants.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.809 |
+| ns | 4758 |  | 193 | use-prevent-scroll.ts exported surface and its provenance | 3.11 |  | 0.806 |
+| walker |  | 4772 | 40 | Code::CodeKey { rung: Decl, file: src/constants.ts, decl: 1, sub: 0, line: 1 } |  |  | 0.814 |
+| walker |  | 4824 | 52 | Code::CodeKey { rung: Names, file: src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.818 |
+| walker |  | 4845 | 21 | Code::CodeKey { rung: Decl, file: src/types.ts, decl: 2, sub: 0, line: 2 } |  |  | 0.824 |
+| walker |  | 4860 | 15 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 6, sub: 0, line: 30 } |  |  | 0.824 |
+| walker |  | 4889 | 29 | Code::CodeKey { rung: Doc, file: src/helpers.ts, decl: 9, sub: 0, line: 108 } |  |  | 0.824 |
 | ns | 4907 |  | 149 | use-prevent-scroll.ts module-private declarations | 3.12 | 3.11 | 0.812 |
 | walker |  | 4914 | 25 | Code::CodeKey { rung: Body, file: src/use-composed-refs.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.812 |
 | walker |  | 4937 | 23 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 4, sub: 0, line: 18 } |  |  | 0.812 |
@@ -94,11 +94,11 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | ns | 5319 |  | 194 | useScaleBackground and use-composed-refs — the two smallest modules | 3.14 |  | 0.797 |
 | walker |  | 5375 | 58 | Code::CodeKey { rung: Doc, file: src/use-prevent-scroll.ts, decl: 5, sub: 0, line: 68 } |  |  | 0.797 |
 | walker |  | 5416 | 41 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 3, sub: 0, line: 29 } |  |  | 0.797 |
-| walker |  | 5478 | 62 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 6, sub: 0, line: 294 } |  |  | 0.797 |
 | ns | 5542 |  | 223 | Every member declared inside Root (names + effect locations) | 4.1 |  | 0.779 |
-| walker |  | 5548 | 70 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 5, sub: 0, line: 22 } |  |  | 0.779 |
-| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.761 |
-| walker |  | 5828 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.762 |
+| walker |  | 5696 | 280 | Plaintext::DeclSurface { file: src/style.css } |  |  | 0.779 |
+| walker |  | 5758 | 62 | Code::CodeKey { rung: Body, file: src/use-prevent-scroll.ts, decl: 6, sub: 0, line: 294 } |  |  | 0.779 |
+| ns | 5760 |  | 218 | Root's state and refs — the whole drag bookkeeping set | 4.2 |  | 0.762 |
+| walker |  | 5828 | 70 | Code::CodeKey { rung: Body, file: src/browser.ts, decl: 5, sub: 0, line: 22 } |  |  | 0.762 |
 | ns | 5867 |  | 107 | Root's useSnapPoints wiring — what it destructures and what it passes | 4.3 |  | 0.751 |
 | walker |  | 5887 | 59 | Code::CodeKey { rung: Body, file: src/context.ts, decl: 11, sub: 0, line: 69 } |  |  | 0.762 |
 | walker |  | 5964 | 77 | Code::CodeKey { rung: Body, file: src/helpers.ts, decl: 8, sub: 0, line: 94 } |  |  | 0.762 |
@@ -163,5 +163,7 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 9816 | 5 | Fs::DirListing { dir: test/src/app/with-scaled-background } |  |  | 0.666 |
 | walker |  | 9821 | 5 | Fs::DirListing { dir: test/src/app/with-snap-points } |  |  | 0.666 |
 | walker |  | 9826 | 5 | Fs::DirListing { dir: test/src/app/without-scaled-background } |  |  | 0.666 |
+| walker |  | 9863 | 37 | Code::CodeKey { rung: Names, file: test/src/app/layout.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.666 |
+| walker |  | 9892 | 29 | Code::CodeKey { rung: Decl, file: test/src/app/layout.tsx, decl: 1, sub: 0, line: 7 } |  |  | 0.666 |
 | ns | 9913 |  | 160 | CI: the Playwright workflow steps | 7.6 |  | 0.661 |
 | ns | 9978 |  | 65 | Prettier configuration — the formatting any new code must match | 7.7 |  | 0.658 |

@@ -206,12 +206,8 @@ gin.go
   264→// SecureJsonPrefix sets the secureJSONPrefix used in Context.SecureJSON.
   265→func (engine *Engine) SecureJsonPrefix(prefix string) *Engine {
   …
-  270→// LoadHTMLGlob loads HTML files identified by glob pattern
-  271→// and associates the result with HTML renderer.
   272→func (engine *Engine) LoadHTMLGlob(pattern string) {
   …
-  286→// LoadHTMLFiles loads a slice of HTML files
-  287→// and associates the result with HTML renderer.
   288→func (engine *Engine) LoadHTMLFiles(files ...string) {
   …
   300→func (engine *Engine) LoadHTMLFS(fs http.FileSystem, patterns ...string) {
@@ -322,6 +318,15 @@ render/
 response_writer.go
 response_writer_test.go
 routergroup.go
+  …
+  27→type IRouter interface {
+  …
+  33→type IRoutes interface {
+  …
+  55→type RouterGroup struct {
+  …
+  65→func (group *RouterGroup) Use(middleware ...HandlerFunc) IRoutes {
+  …
 routergroup_test.go
 routes_test.go
 test_helpers.go

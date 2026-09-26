@@ -1,4 +1,4 @@
-Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.587/0.630/0.614/0.522/0.552/0.563
+Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/4327/6240/9000)=0.693/0.587/0.630/0.614/0.523/0.563/0.563
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -63,10 +63,10 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 1917 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 39, sub: 0, line: 706 } |  |  | 0.569 |
 | ns | 1934 |  | 152 | Global state: LOGGER, STATE, the state constants, LOG_LEVEL_NAMES | 2.7 |  | 0.593 |
 | walker |  | 2089 | 172 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 28, sub: 0, line: 634 } |  |  | 0.637 |
-| walker |  | 2102 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 22, sub: 0, line: 547 } |  |  | 0.637 |
 | ns | 2117 |  | 183 | Roster: the impls that make Level and LevelFilter comparable and parseable | 2.8 |  | 0.655 |
-| ns | 2395 |  | 278 | `STATIC_MAX_LEVEL`: compile-time level resolution | 2.9 | 2.1 | 0.627 |
-| walker |  | 2403 | 301 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 12, sub: 0, line: 473 } |  |  | 0.661 |
+| walker |  | 2390 | 301 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 12, sub: 0, line: 473 } |  |  | 0.690 |
+| ns | 2395 |  | 278 | `STATIC_MAX_LEVEL`: compile-time level resolution | 2.9 | 2.1 | 0.661 |
+| walker |  | 2403 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 22, sub: 0, line: 547 } |  |  | 0.661 |
 | walker |  | 2417 | 14 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 38, sub: 0, line: 698 } |  |  | 0.661 |
 | walker |  | 2435 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 23, sub: 0, line: 553 } |  |  | 0.661 |
 | ns | 2470 |  | 75 | `trait Log`: the three required methods | 3.1 | 2.1 | 0.643 |
@@ -94,90 +94,90 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 3138 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 88, sub: 0, line: 1236 } |  |  | 0.596 |
 | ns | 3186 |  | 114 | `logger()`: the acquire-load fast path | 3.7 | 2.2 | 0.584 |
 | walker |  | 3244 | 106 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 45, sub: 0, line: 841 } |  |  | 0.585 |
-| walker |  | 3254 | 10 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 80, sub: 0, line: 1165 } |  |  | 0.585 |
 | ns | 3373 |  | 187 | `set_logger_inner`: the compare-exchange install path | 3.8 |  | 0.563 |
-| walker |  | 3504 | 250 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 49, sub: 0, line: 869 } |  |  | 0.564 |
-| walker |  | 3512 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 50, sub: 0, line: 871 } |  |  | 0.564 |
+| walker |  | 3494 | 250 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 49, sub: 0, line: 869 } |  |  | 0.564 |
+| walker |  | 3502 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 50, sub: 0, line: 871 } |  |  | 0.564 |
+| walker |  | 3510 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 51, sub: 0, line: 877 } |  |  | 0.564 |
+| walker |  | 3518 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 52, sub: 0, line: 883 } |  |  | 0.555 |
 | ns | 3518 |  | 145 | Runtime max-level get and set bodies | 3.9 | 2.2 | 0.555 |
-| walker |  | 3520 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 51, sub: 0, line: 877 } |  |  | 0.555 |
-| walker |  | 3528 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 52, sub: 0, line: 883 } |  |  | 0.555 |
-| walker |  | 3536 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 53, sub: 0, line: 889 } |  |  | 0.555 |
-| walker |  | 3544 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 54, sub: 0, line: 895 } |  |  | 0.555 |
-| walker |  | 3552 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 55, sub: 0, line: 901 } |  |  | 0.555 |
-| walker |  | 3560 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 56, sub: 0, line: 907 } |  |  | 0.555 |
-| walker |  | 3568 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 57, sub: 0, line: 916 } |  |  | 0.555 |
-| walker |  | 3576 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 58, sub: 0, line: 922 } |  |  | 0.555 |
-| walker |  | 3584 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 59, sub: 0, line: 931 } |  |  | 0.555 |
-| ns | 3599 |  | 81 | no_std wiring | 3.10 |  | 0.549 |
-| walker |  | 3604 | 20 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 60, sub: 0, line: 937 } |  |  | 0.550 |
-| walker |  | 3624 | 20 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 61, sub: 0, line: 944 } |  |  | 0.550 |
-| walker |  | 3633 | 9 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 50, sub: 0, line: 871 } |  |  | 0.550 |
-| walker |  | 3643 | 10 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 51, sub: 0, line: 877 } |  |  | 0.550 |
+| walker |  | 3526 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 53, sub: 0, line: 889 } |  |  | 0.555 |
+| walker |  | 3534 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 54, sub: 0, line: 895 } |  |  | 0.555 |
+| walker |  | 3542 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 55, sub: 0, line: 901 } |  |  | 0.555 |
+| walker |  | 3550 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 56, sub: 0, line: 907 } |  |  | 0.555 |
+| walker |  | 3558 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 57, sub: 0, line: 916 } |  |  | 0.555 |
+| walker |  | 3566 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 58, sub: 0, line: 922 } |  |  | 0.555 |
+| walker |  | 3574 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 59, sub: 0, line: 931 } |  |  | 0.555 |
+| walker |  | 3594 | 20 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 60, sub: 0, line: 937 } |  |  | 0.555 |
+| ns | 3599 |  | 81 | no_std wiring | 3.10 |  | 0.550 |
+| walker |  | 3614 | 20 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 61, sub: 0, line: 944 } |  |  | 0.550 |
+| walker |  | 3623 | 9 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 50, sub: 0, line: 871 } |  |  | 0.550 |
+| walker |  | 3633 | 10 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 51, sub: 0, line: 877 } |  |  | 0.550 |
+| walker |  | 3643 | 10 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 80, sub: 0, line: 1165 } |  |  | 0.550 |
 | walker |  | 3655 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 52, sub: 0, line: 883 } |  |  | 0.550 |
 | walker |  | 3667 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 59, sub: 0, line: 931 } |  |  | 0.550 |
 | ns | 3679 |  | 80 | Roster: the seven public macros of src/macros.rs | 4.1 |  | 0.542 |
-| walker |  | 3680 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 53, sub: 0, line: 889 } |  |  | 0.542 |
-| walker |  | 3693 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 55, sub: 0, line: 901 } |  |  | 0.542 |
-| walker |  | 3706 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 57, sub: 0, line: 916 } |  |  | 0.542 |
-| walker |  | 3720 | 14 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 81, sub: 0, line: 1171 } |  |  | 0.542 |
-| walker |  | 3734 | 14 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 88, sub: 0, line: 1236 } |  |  | 0.542 |
 | ns | 3831 |  | 152 | `log!`: all four call forms | 4.2 | 4.1 | 0.533 |
-| walker |  | 4096 | 362 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 63, sub: 0, line: 1007 } |  |  | 0.535 |
+| walker |  | 4029 | 362 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 63, sub: 0, line: 1007 } |  |  | 0.535 |
+| walker |  | 4038 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 64, sub: 0, line: 1020 } |  |  | 0.535 |
+| walker |  | 4047 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 65, sub: 0, line: 1036 } |  |  | 0.535 |
+| walker |  | 4056 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 66, sub: 0, line: 1043 } |  |  | 0.535 |
+| walker |  | 4065 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 67, sub: 0, line: 1050 } |  |  | 0.535 |
+| walker |  | 4074 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 68, sub: 0, line: 1057 } |  |  | 0.535 |
+| walker |  | 4083 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 69, sub: 0, line: 1064 } |  |  | 0.535 |
+| walker |  | 4092 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 70, sub: 0, line: 1071 } |  |  | 0.535 |
 | ns | 4099 |  | 268 | `__log!`: the expansion every log call becomes | 4.3 |  | 0.522 |
-| walker |  | 4105 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 64, sub: 0, line: 1020 } |  |  | 0.522 |
-| walker |  | 4114 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 65, sub: 0, line: 1036 } |  |  | 0.522 |
-| walker |  | 4123 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 66, sub: 0, line: 1043 } |  |  | 0.522 |
-| walker |  | 4132 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 67, sub: 0, line: 1050 } |  |  | 0.522 |
-| walker |  | 4141 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 68, sub: 0, line: 1057 } |  |  | 0.522 |
-| walker |  | 4150 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 69, sub: 0, line: 1064 } |  |  | 0.522 |
-| walker |  | 4159 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 70, sub: 0, line: 1071 } |  |  | 0.522 |
-| walker |  | 4168 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 71, sub: 0, line: 1078 } |  |  | 0.522 |
-| ns | 4170 |  | 71 | `error!`: head and matcher arms | 4.5 | 4.1 | 0.515 |
-| walker |  | 4177 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 72, sub: 0, line: 1085 } |  |  | 0.515 |
-| walker |  | 4186 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 73, sub: 0, line: 1092 } |  |  | 0.515 |
-| walker |  | 4195 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 75, sub: 0, line: 1107 } |  |  | 0.515 |
-| walker |  | 4217 | 22 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 74, sub: 0, line: 1099 } |  |  | 0.516 |
+| walker |  | 4101 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 71, sub: 0, line: 1078 } |  |  | 0.522 |
+| walker |  | 4110 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 72, sub: 0, line: 1085 } |  |  | 0.522 |
+| walker |  | 4119 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 73, sub: 0, line: 1092 } |  |  | 0.522 |
+| walker |  | 4128 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 75, sub: 0, line: 1107 } |  |  | 0.522 |
+| walker |  | 4150 | 22 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 74, sub: 0, line: 1099 } |  |  | 0.522 |
+| walker |  | 4163 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 53, sub: 0, line: 889 } |  |  | 0.522 |
+| ns | 4170 |  | 71 | `error!`: head and matcher arms | 4.5 | 4.1 | 0.516 |
+| walker |  | 4176 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 55, sub: 0, line: 901 } |  |  | 0.516 |
+| walker |  | 4189 | 13 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 57, sub: 0, line: 916 } |  |  | 0.516 |
+| walker |  | 4203 | 14 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 81, sub: 0, line: 1171 } |  |  | 0.516 |
+| walker |  | 4217 | 14 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 88, sub: 0, line: 1236 } |  |  | 0.516 |
 | walker |  | 4232 | 15 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 54, sub: 0, line: 895 } |  |  | 0.516 |
 | walker |  | 4247 | 15 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 91, sub: 0, line: 1249 } |  |  | 0.522 |
 | walker |  | 4263 | 16 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 60, sub: 0, line: 937 } |  |  | 0.522 |
 | walker |  | 4279 | 16 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 75, sub: 0, line: 1107 } |  |  | 0.522 |
 | walker |  | 4295 | 16 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 82, sub: 0, line: 1177 } |  |  | 0.522 |
-| walker |  | 4313 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 65, sub: 0, line: 1036 } |  |  | 0.522 |
-| walker |  | 4331 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 71, sub: 0, line: 1078 } |  |  | 0.522 |
-| walker |  | 4349 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 73, sub: 0, line: 1092 } |  |  | 0.522 |
-| walker |  | 4368 | 19 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 86, sub: 0, line: 1222 } |  |  | 0.522 |
-| walker |  | 4387 | 19 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 87, sub: 0, line: 1229 } |  |  | 0.522 |
 | ns | 4406 |  | 236 | Roster: every doc(hidden) internal macro, with its feature fork | 4.6 |  | 0.506 |
-| walker |  | 4609 | 222 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.525 |
-| walker |  | 4617 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 113, sub: 0, line: 1374 } |  |  | 0.525 |
-| walker |  | 4626 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 114, sub: 0, line: 1395 } |  |  | 0.525 |
-| walker |  | 4640 | 14 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 116, sub: 0, line: 1477 } |  |  | 0.528 |
-| walker |  | 4661 | 21 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 115, sub: 0, line: 1419 } |  |  | 0.532 |
-| walker |  | 4683 | 22 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 112, sub: 0, line: 1349 } |  |  | 0.536 |
-| walker |  | 4735 | 52 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 96, sub: 0, line: 1285 } |  |  | 0.536 |
-| ns | 4763 |  | 357 | `__log_value!`: the capture-modifier dispatch table | 4.7 | 4.6 | 0.510 |
-| walker |  | 4821 | 86 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 100, sub: 0, line: 1294 } |  |  | 0.514 |
-| walker |  | 4917 | 96 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 104, sub: 0, line: 1310 } |  |  | 0.519 |
-| ns | 4964 |  | 201 | `log_enabled!`: purpose and call forms | 4.9 | 4.1 | 0.509 |
-| walker |  | 5013 | 96 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 108, sub: 0, line: 1327 } |  |  | 0.515 |
-| walker |  | 5024 | 11 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 95, sub: 0, line: 1283 } |  |  | 0.521 |
-| walker |  | 5044 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 67, sub: 0, line: 1050 } |  |  | 0.521 |
-| walker |  | 5064 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 68, sub: 0, line: 1057 } |  |  | 0.521 |
-| walker |  | 5084 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 69, sub: 0, line: 1064 } |  |  | 0.521 |
-| walker |  | 5104 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 74, sub: 0, line: 1099 } |  |  | 0.521 |
-| walker |  | 5126 | 22 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 56, sub: 0, line: 907 } |  |  | 0.521 |
-| walker |  | 5148 | 22 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 58, sub: 0, line: 922 } |  |  | 0.521 |
-| ns | 5168 |  | 204 | `__private_api`: the three functions macros expand into | 5.1 |  | 0.508 |
-| walker |  | 5289 | 141 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 4, line: 0 } |  |  | 0.526 |
-| walker |  | 5301 | 12 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 121, sub: 0, line: 1558 } |  |  | 0.526 |
-| walker |  | 5313 | 12 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 125, sub: 0, line: 1575 } |  |  | 0.526 |
-| walker |  | 5336 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 118, sub: 0, line: 1547 } |  |  | 0.526 |
-| walker |  | 5364 | 28 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 122, sub: 0, line: 1564 } |  |  | 0.513 |
+| walker |  | 4517 | 222 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 3, line: 0 } |  |  | 0.525 |
+| walker |  | 4525 | 8 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 113, sub: 0, line: 1374 } |  |  | 0.525 |
+| walker |  | 4534 | 9 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 114, sub: 0, line: 1395 } |  |  | 0.525 |
+| walker |  | 4548 | 14 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 116, sub: 0, line: 1477 } |  |  | 0.528 |
+| walker |  | 4569 | 21 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 115, sub: 0, line: 1419 } |  |  | 0.532 |
+| walker |  | 4591 | 22 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 112, sub: 0, line: 1349 } |  |  | 0.536 |
+| walker |  | 4643 | 52 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 96, sub: 0, line: 1285 } |  |  | 0.536 |
+| walker |  | 4729 | 86 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 100, sub: 0, line: 1294 } |  |  | 0.540 |
+| ns | 4763 |  | 357 | `__log_value!`: the capture-modifier dispatch table | 4.7 | 4.6 | 0.514 |
+| walker |  | 4825 | 96 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 104, sub: 0, line: 1310 } |  |  | 0.519 |
+| walker |  | 4921 | 96 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 108, sub: 0, line: 1327 } |  |  | 0.526 |
+| walker |  | 4932 | 11 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 95, sub: 0, line: 1283 } |  |  | 0.532 |
+| walker |  | 4950 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 65, sub: 0, line: 1036 } |  |  | 0.532 |
+| ns | 4964 |  | 201 | `log_enabled!`: purpose and call forms | 4.9 | 4.1 | 0.521 |
+| walker |  | 4968 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 71, sub: 0, line: 1078 } |  |  | 0.521 |
+| walker |  | 4986 | 18 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 73, sub: 0, line: 1092 } |  |  | 0.521 |
+| walker |  | 5005 | 19 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 86, sub: 0, line: 1222 } |  |  | 0.521 |
+| walker |  | 5024 | 19 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 87, sub: 0, line: 1229 } |  |  | 0.521 |
+| walker |  | 5165 | 141 | Code::CodeKey { rung: Names, file: src/lib.rs, decl: 0, sub: 4, line: 0 } |  |  | 0.540 |
+| ns | 5168 |  | 204 | `__private_api`: the three functions macros expand into | 5.1 |  | 0.526 |
+| walker |  | 5177 | 12 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 121, sub: 0, line: 1558 } |  |  | 0.526 |
+| walker |  | 5189 | 12 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 125, sub: 0, line: 1575 } |  |  | 0.526 |
+| walker |  | 5212 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 118, sub: 0, line: 1547 } |  |  | 0.526 |
+| walker |  | 5240 | 28 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 122, sub: 0, line: 1564 } |  |  | 0.526 |
+| walker |  | 5272 | 32 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 119, sub: 0, line: 1551 } |  |  | 0.526 |
+| walker |  | 5304 | 32 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 123, sub: 0, line: 1568 } |  |  | 0.526 |
 | ns | 5364 |  | 196 | `log_impl`: where a `Record` is actually built | 5.2 |  | 0.513 |
-| walker |  | 5396 | 32 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 119, sub: 0, line: 1551 } |  |  | 0.513 |
-| walker |  | 5428 | 32 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 123, sub: 0, line: 1568 } |  |  | 0.513 |
 | ns | 5513 |  | 149 | `GlobalLogger`: the zero-sized proxy for the global slot | 5.3 |  | 0.502 |
-| walker |  | 5706 | 278 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 127, sub: 0, line: 1611 } |  |  | 0.529 |
+| walker |  | 5582 | 278 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 127, sub: 0, line: 1611 } |  |  | 0.529 |
+| walker |  | 5602 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 67, sub: 0, line: 1050 } |  |  | 0.529 |
+| walker |  | 5622 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 68, sub: 0, line: 1057 } |  |  | 0.529 |
+| walker |  | 5642 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 69, sub: 0, line: 1064 } |  |  | 0.529 |
+| walker |  | 5662 | 20 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 74, sub: 0, line: 1099 } |  |  | 0.529 |
+| walker |  | 5684 | 22 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 56, sub: 0, line: 907 } |  |  | 0.529 |
+| walker |  | 5706 | 22 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 58, sub: 0, line: 922 } |  |  | 0.529 |
 | walker |  | 5729 | 23 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 61, sub: 0, line: 944 } |  |  | 0.529 |
 | ns | 5737 |  | 224 | `kv_support`: the capture_* functions behind every modifier | 5.4 |  | 0.521 |
 | walker |  | 5754 | 25 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 72, sub: 0, line: 1085 } |  |  | 0.521 |
@@ -193,55 +193,59 @@ Score(3000)=0.614 I=0.803 C=0.469 ns_rows≤3K=23/67 grid(1000/1442/2080/3000/43
 | walker |  | 6086 | 61 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 122, sub: 0, line: 1564 } |  |  | 0.544 |
 | ns | 6125 |  | 101 | `Metadata` and its accessors | 6.3 | 2.1 | 0.551 |
 | walker |  | 6154 | 68 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 85, sub: 0, line: 1211 } |  |  | 0.551 |
-| walker |  | 6225 | 71 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 112, sub: 0, line: 1349 } |  |  | 0.551 |
-| walker |  | 6305 | 80 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.563 |
+| walker |  | 6234 | 80 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.563 |
+| walker |  | 6305 | 71 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 112, sub: 0, line: 1349 } |  |  | 0.563 |
 | ns | 6331 |  | 206 | Roster: `RecordBuilder` and all twelve setters | 6.4 | 2.1 | 0.576 |
-| walker |  | 6386 | 81 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 94, sub: 0, line: 1279 } |  |  | 0.576 |
 | ns | 6434 |  | 103 | `MetadataBuilder` and its setters | 6.5 | 2.1 | 0.582 |
 | ns | 6591 |  | 157 | What structured logging means in `log` | 7.1 |  | 0.576 |
-| walker |  | 6729 | 343 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 7, sub: 0, line: 390 } |  |  | 0.585 |
+| walker |  | 6648 | 343 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 7, sub: 0, line: 390 } |  |  | 0.585 |
+| walker |  | 6729 | 81 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 94, sub: 0, line: 1279 } |  |  | 0.585 |
 | ns | 6774 |  | 183 | The complete list of capture modifiers | 7.2 |  | 0.580 |
 | walker |  | 6815 | 86 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 93, sub: 0, line: 1271 } |  |  | 0.580 |
-| walker |  | 6913 | 98 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 12, sub: 0, line: 473 } |  |  | 0.580 |
 | ns | 6979 |  | 205 | The kv module's structure and complete export list | 7.3 |  | 0.567 |
 | ns | 7070 |  | 91 | `trait Source`: the three methods | 7.4 |  | 0.562 |
-| ns | 7277 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.555 |
-| walker |  | 7325 | 412 | Toml::Operational { file: Cargo.toml } |  |  | 0.615 |
+| walker |  | 7227 | 412 | Toml::Operational { file: Cargo.toml } |  |  | 0.623 |
+| ns | 7277 |  | 207 | Roster: every type that implements `Source` | 7.5 |  | 0.615 |
+| walker |  | 7287 | 60 | Code::CodeKey { rung: Names, file: src/serde.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.615 |
+| walker |  | 7314 | 27 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 3, sub: 0, line: 31 } |  |  | 0.615 |
+| walker |  | 7339 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 4, sub: 0, line: 32 } |  |  | 0.615 |
 | ns | 7361 |  | 84 | `trait VisitSource`: the visitor side of a `Source` | 7.6 |  | 0.612 |
-| walker |  | 7385 | 60 | Code::CodeKey { rung: Names, file: src/serde.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.612 |
-| walker |  | 7412 | 27 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 3, sub: 0, line: 31 } |  |  | 0.612 |
-| walker |  | 7437 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 4, sub: 0, line: 32 } |  |  | 0.612 |
+| walker |  | 7368 | 29 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 7, sub: 0, line: 126 } |  |  | 0.612 |
+| walker |  | 7393 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 8, sub: 0, line: 127 } |  |  | 0.612 |
+| walker |  | 7423 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 1, sub: 0, line: 16 } |  |  | 0.612 |
 | ns | 7444 |  | 83 | `Value` and `ToValue` | 7.7 |  | 0.607 |
-| walker |  | 7466 | 29 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 7, sub: 0, line: 126 } |  |  | 0.607 |
-| walker |  | 7491 | 25 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 8, sub: 0, line: 127 } |  |  | 0.607 |
-| walker |  | 7521 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 1, sub: 0, line: 16 } |  |  | 0.607 |
-| walker |  | 7543 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 2, sub: 0, line: 17 } |  |  | 0.607 |
-| walker |  | 7573 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 5, sub: 0, line: 110 } |  |  | 0.607 |
-| walker |  | 7595 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 6, sub: 0, line: 111 } |  |  | 0.607 |
-| ns | 7689 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.597 |
-| walker |  | 7759 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 163 } |  |  | 0.599 |
-| walker |  | 7923 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 0, line: 202 } |  |  | 0.599 |
+| walker |  | 7445 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 2, sub: 0, line: 17 } |  |  | 0.607 |
+| walker |  | 7475 | 30 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 5, sub: 0, line: 110 } |  |  | 0.607 |
+| walker |  | 7497 | 22 | Code::CodeKey { rung: Decl, file: src/serde.rs, decl: 6, sub: 0, line: 111 } |  |  | 0.607 |
+| walker |  | 7661 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 163 } |  |  | 0.609 |
+| ns | 7689 |  | 245 | Roster: every constructor and conversion on `Value` | 7.8 |  | 0.599 |
+| walker |  | 7825 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 0, line: 202 } |  |  | 0.599 |
 | ns | 7965 |  | 276 | The primitive conversion tables | 7.9 |  | 0.590 |
-| walker |  | 8087 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 0, line: 250 } |  |  | 0.590 |
+| walker |  | 7989 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 0, line: 250 } |  |  | 0.590 |
+| walker |  | 8153 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 0, line: 290 } |  |  | 0.590 |
 | ns | 8158 |  | 193 | Roster: every method on `VisitValue` | 7.10 |  | 0.581 |
-| walker |  | 8251 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 0, line: 290 } |  |  | 0.581 |
 | ns | 8294 |  | 136 | The two `Value` backends: `value_bag` and the dependency-free fallback | 7.11 |  | 0.577 |
-| walker |  | 8415 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 0, line: 334 } |  |  | 0.577 |
+| walker |  | 8317 | 164 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 0, line: 334 } |  |  | 0.577 |
 | ns | 8588 |  | 294 | `Key`, `ToKey`, and their feature-gated support modules | 7.12 |  | 0.567 |
-| walker |  | 8692 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 1, line: 163 } |  |  | 0.573 |
+| walker |  | 8594 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 1, line: 163 } |  |  | 0.573 |
 | ns | 8760 |  | 172 | `kv::Error`: every variant of the private inner enum | 7.13 |  | 0.565 |
 | ns | 8837 |  | 77 | `Source::get` and `Source::count` default implementations | 7.17 | 7.4 | 0.563 |
-| walker |  | 8969 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 1, line: 202 } |  |  | 0.563 |
+| walker |  | 8871 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 3, sub: 1, line: 202 } |  |  | 0.563 |
 | ns | 9121 |  | 284 | Roster: every test in tests/macros.rs | 8.1 |  | 0.552 |
-| walker |  | 9246 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 1, line: 250 } |  |  | 0.552 |
+| walker |  | 9148 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 4, sub: 1, line: 250 } |  |  | 0.552 |
 | ns | 9297 |  | 176 | tests/integration.rs: the capturing test logger and what it pins | 8.2 |  | 0.546 |
+| walker |  | 9425 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 1, line: 290 } |  |  | 0.546 |
 | ns | 9463 |  | 166 | src/serde.rs: what is serialised, and how | 8.3 |  | 0.542 |
-| walker |  | 9523 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 5, sub: 1, line: 290 } |  |  | 0.542 |
 | ns | 9607 |  | 144 | CI: the seven jobs | 8.4 |  | 0.536 |
 | ns | 9663 |  | 56 | The companion crate that tests compile-time filtering | 8.5 |  | 0.534 |
+| walker |  | 9702 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 1, line: 334 } |  |  | 0.534 |
 | ns | 9735 |  | 72 | Roster: the value benchmarks | 8.6 |  | 0.531 |
-| walker |  | 9800 | 277 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 6, sub: 1, line: 334 } |  |  | 0.531 |
 | ns | 9844 |  | 109 | The mutually-exclusive feature guards | 8.7 |  | 0.527 |
 | ns | 9889 |  | 45 | CHANGELOG: format and latest release | 8.8 |  | 0.526 |
-| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.522 |
-| walker |  | 9984 | 184 | Code::CodeKey { rung: Names, file: src/__private_api.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.524 |
+| walker |  | 9929 | 227 | Code::CodeKey { rung: Names, file: src/__private_api.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.527 |
+| walker |  | 9937 | 8 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 6, sub: 0, line: 38 } |  |  | 0.528 |
+| walker |  | 9946 | 9 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 13, sub: 0, line: 107 } |  |  | 0.528 |
+| walker |  | 9957 | 11 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 1, sub: 0, line: 9 } |  |  | 0.528 |
+| ns | 9979 |  | 90 | Roster: the top-level sections of the structured-logging RFC | 8.9 |  | 0.525 |
+| walker |  | 9993 | 36 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 2, sub: 0, line: 21 } |  |  | 0.525 |
+| walker |  | 9999 | 6 | Code::CodeKey { rung: Decl, file: src/__private_api.rs, decl: 3, sub: 0, line: 22 } |  |  | 0.525 |

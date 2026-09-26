@@ -14,6 +14,7 @@ README.md
   14→```
   16→## Usage
   17→
+  18→`debug` exposes a function; simply pass this function the name of your module, and it will return a decorated version of `console.error` for you to pass debug statements to. This will allow you to toggle the debug output for different parts of your module as well as the module as a whole.
   …
   110→## Namespace Colors
   …
@@ -287,9 +288,6 @@ src/
     125→	return /^debug_/i.test(key);
     126→}).reduce((obj, key) => {
     …
-    151→/**
-    152→ * Is stdout a TTY? Colored output is enabled when `true`.
-    153→ */
     155→function useColors() {
     …
     167→function formatArgs(args) {

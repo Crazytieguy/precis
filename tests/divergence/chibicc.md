@@ -1,4 +1,4 @@
-Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.801/0.749/0.736/0.707/0.601/0.652/0.738
+Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.801/0.749/0.736/0.707/0.601/0.651/0.738
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -47,19 +47,19 @@ Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 2781 | 134 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 44, sub: 0, line: 301 } |  |  | 0.706 |
 | walker |  | 2891 | 110 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.707 |
 | walker |  | 3067 | 176 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.708 |
-| walker |  | 3073 | 6 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.708 |
 | ns | 3100 |  | 364 | preprocess.c file-header comment: the hideset macro-expansion algorithm | 3.2 |  | 0.673 |
 | ns | 3229 |  | 129 | Internal (non-exported) helpers of type.c, unicode.c and hashmap.c | 3.3 |  | 0.660 |
-| walker |  | 3254 | 181 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 1, line: 176 } |  |  | 0.662 |
-| walker |  | 3525 | 271 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 2, line: 176 } |  |  | 0.664 |
+| walker |  | 3248 | 181 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 1, line: 176 } |  |  | 0.662 |
+| walker |  | 3519 | 271 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 39, sub: 2, line: 176 } |  |  | 0.664 |
 | ns | 3561 |  | 332 | Function-name roster: main.c (the driver) | 3.4 |  | 0.629 |
-| walker |  | 3847 | 322 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 36, sub: 0, line: 127 } |  |  | 0.633 |
+| walker |  | 3841 | 322 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 36, sub: 0, line: 127 } |  |  | 0.633 |
+| walker |  | 3847 | 6 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 39, sub: 0, line: 176 } |  |  | 0.633 |
 | ns | 3965 |  | 404 | Function-name roster: tokenize.c | 3.5 |  | 0.597 |
 | walker |  | 4056 | 209 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.598 |
 | walker |  | 4063 | 7 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 40, sub: 0, line: 228 } |  |  | 0.598 |
-| walker |  | 4071 | 8 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.598 |
 | ns | 4346 |  | 381 | Function-name roster: codegen.c | 3.6 |  | 0.568 |
-| walker |  | 4445 | 374 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 1, line: 228 } |  |  | 0.572 |
+| walker |  | 4437 | 374 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 40, sub: 1, line: 228 } |  |  | 0.572 |
+| walker |  | 4445 | 8 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 46, sub: 0, line: 362 } |  |  | 0.572 |
 | walker |  | 4454 | 9 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 35, sub: 0, line: 126 } |  |  | 0.573 |
 | ns | 4756 |  | 410 | Function-name roster: preprocess.c, token and macro machinery | 3.7 |  | 0.547 |
 | walker |  | 4884 | 430 | Code::CodeKey { rung: Decl, file: chibicc.h, decl: 45, sub: 0, line: 320 } |  |  | 0.550 |
@@ -74,12 +74,12 @@ Score(3000)=0.707 I=0.851 C=0.588 ns_rows≤3K=23/51 grid(1000/1442/2080/3000/43
 | walker |  | 5680 | 167 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.595 |
 | ns | 5707 |  | 76 | File struct | 4.2 |  | 0.601 |
 | walker |  | 5779 | 99 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.601 |
-| walker |  | 5818 | 39 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 37, sub: 0, line: 167 } |  |  | 0.602 |
-| ns | 6011 |  | 304 | Token struct (all fields) | 4.3 |  | 0.616 |
-| walker |  | 6042 | 224 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.638 |
-| walker |  | 6274 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.652 |
-| ns | 6360 |  | 349 | Obj struct: variables and functions | 4.4 |  | 0.671 |
-| walker |  | 6461 | 187 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.707 |
+| walker |  | 6003 | 224 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.624 |
+| ns | 6011 |  | 304 | Token struct (all fields) | 4.3 |  | 0.637 |
+| walker |  | 6235 | 232 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.651 |
+| ns | 6360 |  | 349 | Obj struct: variables and functions | 4.4 |  | 0.670 |
+| walker |  | 6422 | 187 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.702 |
+| walker |  | 6461 | 39 | Code::CodeKey { rung: Doc, file: chibicc.h, decl: 37, sub: 0, line: 167 } |  |  | 0.707 |
 | ns | 6461 |  | 101 | Relocation struct | 4.5 | 4.4 | 0.707 |
 | walker |  | 6686 | 225 | Code::CodeKey { rung: Names, file: include/stdatomic.h, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
 | walker |  | 6745 | 59 | Code::CodeKey { rung: Decl, file: include/stdatomic.h, decl: 11, sub: 0, line: 15 } |  |  | 0.707 |

@@ -1,4 +1,4 @@
-Score(3000)=0.791 I=0.901 C=0.695 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.790/0.635/0.696/0.791/0.735/0.655/0.624
+Score(3000)=0.791 I=0.901 C=0.695 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.790/0.635/0.696/0.791/0.736/0.663/0.624
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,53 +58,53 @@ Score(3000)=0.791 I=0.901 C=0.695 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 2550 | 61 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 22, sub: 0, line: 794 } |  |  | 0.731 |
 | ns | 2579 |  | 123 | .onError() contract, with its example elided | 2.9 | 2.1 | 0.715 |
 | walker |  | 2624 | 74 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 17, sub: 0, line: 696 } |  |  | 0.732 |
-| walker |  | 2727 | 103 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 16, sub: 0, line: 682 } |  |  | 0.765 |
-| ns | 2743 |  | 164 | Doc comments for the .size, .sizeBy(), .pending and .isPaused introspection members | 2.10 | 2.1 | 0.776 |
-| walker |  | 2930 | 203 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.825 |
+| ns | 2743 |  | 164 | Doc comments for the .size, .sizeBy(), .pending and .isPaused introspection members | 2.10 | 2.1 | 0.746 |
+| walker |  | 2827 | 203 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.796 |
+| walker |  | 2930 | 103 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 16, sub: 0, line: 682 } |  |  | 0.825 |
 | ns | 2972 |  | 229 | .isRateLimited, .isSaturated and .runningTasks, including the runningTasks element shape | 2.11 | 2.1 | 0.791 |
+| walker |  | 2987 | 57 | Code::CodeKey { rung: Names, file: source/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.791 |
 | ns | 3044 |  | 72 | .setPriority(id, priority) signature and contract | 2.12 | 2.1 | 0.781 |
-| walker |  | 3054 | 124 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 15, sub: 0, line: 668 } |  |  | 0.812 |
-| walker |  | 3111 | 57 | Code::CodeKey { rung: Names, file: source/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.812 |
-| walker |  | 3241 | 130 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 2, sub: 0, line: 97 } |  |  | 0.813 |
-| ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.783 |
-| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.755 |
-| walker |  | 3638 | 397 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 3, sub: 0, line: 111 } |  |  | 0.759 |
-| walker |  | 3675 | 37 | Code::CodeKey { rung: Names, file: source/priority-queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.759 |
-| walker |  | 3692 | 17 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.759 |
-| walker |  | 3826 | 134 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.760 |
+| walker |  | 3117 | 130 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 2, sub: 0, line: 97 } |  |  | 0.782 |
+| ns | 3291 |  | 247 | Every field of every option type in source/options.ts (complete) | 3.1 |  | 0.753 |
+| walker |  | 3514 | 397 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 3, sub: 0, line: 111 } |  |  | 0.757 |
+| walker |  | 3551 | 37 | Code::CodeKey { rung: Names, file: source/priority-queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.757 |
+| walker |  | 3568 | 17 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.757 |
+| ns | 3604 |  | 313 | One-line description, minimum and @default for each constructor option | 3.2 | 3.1 | 0.730 |
+| walker |  | 3702 | 134 | Code::CodeKey { rung: Decl, file: source/priority-queue.ts, decl: 2, sub: 0, line: 11 } |  |  | 0.731 |
+| walker |  | 3826 | 124 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 15, sub: 0, line: 668 } |  |  | 0.760 |
 | walker |  | 3841 | 15 | Code::CodeKey { rung: Body, file: source/priority-queue.ts, decl: 10, sub: 0, line: 115 } |  |  | 0.760 |
-| walker |  | 3851 | 10 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 23, sub: 0, line: 802 } |  |  | 0.760 |
 | ns | 3868 |  | 264 | The strict option explained: sliding window vs fixed window | 3.3 | 3.1 | 0.748 |
 | ns | 4015 |  | 147 | Per-task option docs: priority, id, and the AbortSignal contract | 3.4 | 3.1 | 0.750 |
-| walker |  | 4076 | 225 | Markdown::Section { file: readme.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.750 |
+| walker |  | 4066 | 225 | Markdown::Section { file: readme.md, section_index: 13, keeps_default_concavity: false } |  |  | 0.750 |
 | ns | 4155 |  | 140 | Constructor default-options literal | 3.5 |  | 0.735 |
-| walker |  | 4243 | 167 | Markdown::Section { file: readme.md, section_index: 27, keeps_default_concavity: false } |  |  | 0.735 |
-| walker |  | 4254 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 4, sub: 0, line: 382 } |  |  | 0.735 |
-| walker |  | 4265 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 21, sub: 0, line: 785 } |  |  | 0.735 |
-| walker |  | 4346 | 81 | Json::Whole { file: tsconfig.json } |  |  | 0.736 |
-| walker |  | 4357 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 24, sub: 0, line: 809 } |  |  | 0.736 |
+| walker |  | 4233 | 167 | Markdown::Section { file: readme.md, section_index: 27, keeps_default_concavity: false } |  |  | 0.735 |
+| walker |  | 4314 | 81 | Json::Whole { file: tsconfig.json } |  |  | 0.736 |
 | ns | 4496 |  | 341 | Every constructor validation rule and its error message | 3.6 |  | 0.713 |
-| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.699 |
-| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.690 |
-| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.668 |
-| walker |  | 5150 | 793 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 1, sub: 0, line: 27 } |  |  | 0.725 |
-| ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.701 |
-| walker |  | 5350 | 200 | Markdown::Section { file: readme.md, section_index: 21, keeps_default_concavity: false } |  |  | 0.702 |
-| walker |  | 5362 | 12 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 12, sub: 0, line: 609 } |  |  | 0.702 |
-| walker |  | 5581 | 219 | Markdown::Section { file: readme.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.704 |
+| ns | 4629 |  | 133 | The concurrency getter/setter, including runtime mutation and its validation | 3.7 | 2.1 | 0.698 |
+| ns | 4781 |  | 152 | Every FAQ question in readme.md (complete, eight questions) | 3.8 |  | 0.689 |
+| ns | 5035 |  | 254 | Name-only roster of all 21 private methods and private getters of PQueue | 4.1 |  | 0.667 |
+| walker |  | 5107 | 793 | Code::CodeKey { rung: Decl, file: source/options.ts, decl: 1, sub: 0, line: 27 } |  |  | 0.725 |
+| walker |  | 5117 | 10 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 23, sub: 0, line: 802 } |  |  | 0.725 |
+| walker |  | 5317 | 200 | Markdown::Section { file: readme.md, section_index: 21, keeps_default_concavity: false } |  |  | 0.726 |
+| walker |  | 5328 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 4, sub: 0, line: 382 } |  |  | 0.727 |
+| ns | 5332 |  | 297 | Every private field of PQueue with its type: the complete instance state | 4.2 |  | 0.702 |
+| walker |  | 5339 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 21, sub: 0, line: 785 } |  |  | 0.702 |
+| walker |  | 5350 | 11 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 24, sub: 0, line: 809 } |  |  | 0.702 |
+| walker |  | 5569 | 219 | Markdown::Section { file: readme.md, section_index: 22, keeps_default_concavity: false } |  |  | 0.704 |
+| walker |  | 5581 | 12 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 12, sub: 0, line: 609 } |  |  | 0.704 |
 | ns | 5589 |  | 257 | #tryToStartAnother: the admission decision and task dispatch | 4.3 | 4.1 | 0.678 |
 | walker |  | 5594 | 13 | Code::CodeKey { rung: Body, file: source/index.ts, decl: 25, sub: 0, line: 888 } |  |  | 0.678 |
 | ns | 5749 |  | 160 | add(): option normalization and automatic id assignment | 4.4 | 2.3 | 0.665 |
 | walker |  | 5861 | 267 | Markdown::Section { file: readme.md, section_index: 20, keeps_default_concavity: false } |  |  | 0.668 |
 | ns | 5900 |  | 151 | add(): the run() prologue — pending accounting and runningTasks tracking | 4.5 | 4.4 | 0.655 |
-| walker |  | 6142 | 281 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 26, sub: 0, line: 918 } |  |  | 0.670 |
-| ns | 6158 |  | 258 | add(): invoking the task, wrapping it in p-timeout, and racing the abort signal | 4.6 | 4.5 | 0.652 |
-| walker |  | 6182 | 40 | Code::CodeKey { rung: Names, file: source/lower-bound.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.652 |
-| walker |  | 6217 | 35 | Code::CodeKey { rung: Names, file: source/queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.654 |
-| walker |  | 6331 | 114 | Code::CodeKey { rung: Decl, file: source/queue.ts, decl: 2, sub: 0, line: 3 } |  |  | 0.677 |
-| walker |  | 6371 | 40 | Code::CodeKey { rung: Doc, file: source/lower-bound.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.677 |
-| ns | 6456 |  | 298 | add(): settlement, completed/error events, and the finally block that defers #next | 4.7 | 4.1 | 0.653 |
-| walker |  | 6697 | 326 | Markdown::Section { file: readme.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.653 |
+| walker |  | 5901 | 40 | Code::CodeKey { rung: Names, file: source/lower-bound.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.655 |
+| walker |  | 5936 | 35 | Code::CodeKey { rung: Names, file: source/queue.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.657 |
+| walker |  | 6050 | 114 | Code::CodeKey { rung: Decl, file: source/queue.ts, decl: 2, sub: 0, line: 3 } |  |  | 0.681 |
+| walker |  | 6090 | 40 | Code::CodeKey { rung: Doc, file: source/lower-bound.ts, decl: 1, sub: 0, line: 3 } |  |  | 0.681 |
+| ns | 6158 |  | 258 | add(): invoking the task, wrapping it in p-timeout, and racing the abort signal | 4.6 | 4.5 | 0.663 |
+| walker |  | 6416 | 326 | Markdown::Section { file: readme.md, section_index: 14, keeps_default_concavity: false } |  |  | 0.663 |
+| ns | 6456 |  | 298 | add(): settlement, completed/error events, and the finally block that defers #next | 4.7 | 4.1 | 0.639 |
+| walker |  | 6697 | 281 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 26, sub: 0, line: 918 } |  |  | 0.653 |
 | ns | 6741 |  | 285 | add(): enqueueing and the queued-task abort path | 4.8 | 4.4 | 0.634 |
 | ns | 6963 |  | 222 | #isIntervalPausedAt: the strict sliding-window branch | 4.9 | 4.1 | 0.622 |
 | walker |  | 7036 | 339 | Code::CodeKey { rung: Doc, file: source/index.ts, decl: 27, sub: 0, line: 952 } |  |  | 0.636 |

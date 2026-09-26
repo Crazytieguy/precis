@@ -271,6 +271,13 @@ source/
     985→export {TimeoutError} from 'p-timeout';
   lower-bound.ts
   options.ts
+    …
+    27→export type Options<QueueType extends Queue<RunFunction, QueueOptions>, QueueOptions extends QueueAddOptions> = {
+    …
+    97→export type QueueAddOptions = {
+    …
+    111→export type TaskOptions = {
+    …
   priority-queue.ts
   queue.ts
 test/

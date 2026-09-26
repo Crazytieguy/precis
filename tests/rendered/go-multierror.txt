@@ -129,10 +129,19 @@ README.md
   96→formats to a nice human-readable format.
   97→
   98→`go-multierror` is compatible with the Go standard library
-  …
+  99→[errors](https://golang.org/pkg/errors/) package, supporting the
+  100→`As`, `Is`, and `Unwrap` functions for error introspection. Note that `Unwrap` 
+  101→returns errors one at a time via chaining, unlike `errors.Join` which 
+  102→implements the newer `Unwrap() []error` signature (Go 1.20+).
   104→## Installation and Docs
-  …
+  105→
+  106→Install using `go get github.com/hashicorp/go-multierror`.
+  107→
+  108→Full documentation is available at
+  109→https://pkg.go.dev/github.com/hashicorp/go-multierror
+  110→
   111→### Requires go version 1.13 or newer
+  112→
   …
   129→## Usage
   130→
@@ -248,17 +257,6 @@ multierror.go
   56→	}
   57→	return e.Errors
   …
-  60→// Unwrap returns an error from Error (or nil if there are no errors).
-  61→// This error returned will further support Unwrap to get the next error,
-  62→// etc. The order will match the order of Errors in the multierror.Error
-  63→// at the time of calling.
-  64→//
-  65→// The resulting error supports errors.As/Is/Unwrap so you can continue
-  66→// to use the stdlib errors package to introspect further.
-  67→//
-  68→// This will perform a shallow copy of the errors slice. Any errors appended
-  69→// to this error after calling Unwrap will not be available until a new
-  70→// Unwrap is called on the multierror.Error.
   71→func (e *Error) Unwrap() error {
   …
 multierror_test.go

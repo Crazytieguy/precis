@@ -1,4 +1,4 @@
-Score(3000)=0.633 I=0.892 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.862/0.847/0.721/0.633/0.584/0.697/0.715
+Score(3000)=0.633 I=0.892 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/4327/6240/9000)=0.862/0.847/0.721/0.633/0.583/0.697/0.715
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -68,37 +68,37 @@ Score(3000)=0.633 I=0.892 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | ns | 3400 |  | 242 | AsyncClientApi: complete async method roster | 2.11 |  | 0.589 |
 | ns | 3667 |  | 267 | AsyncInboundApi, AsyncServerApi, AsyncDatabaseApi: complete async rosters | 2.12 | 2.11 | 0.570 |
 | walker |  | 3670 | 340 | Code::CodeKey { rung: Decl, file: py3xui/server/server.py, decl: 9, sub: 0, line: 125 } |  |  | 0.572 |
-| walker |  | 3684 | 14 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 1, sub: 0, line: 7 } |  |  | 0.573 |
-| walker |  | 3709 | 25 | Code::CodeKey { rung: Names, file: py3xui/inbound/inbound.py, decl: 0, sub: 0, line: 0 } |  |  | 0.573 |
+| walker |  | 3695 | 25 | Code::CodeKey { rung: Names, file: py3xui/inbound/inbound.py, decl: 0, sub: 0, line: 0 } |  |  | 0.572 |
 | ns | 3789 |  | 122 | py3xui/utils/env.py: every public function, signatures only | 2.13 |  | 0.563 |
-| walker |  | 3890 | 181 | Code::CodeKey { rung: Decl, file: py3xui/inbound/inbound.py, decl: 1, sub: 0, line: 15 } |  |  | 0.565 |
-| ns | 3954 |  | 165 | TLS configuration: disabling verification vs. supplying a custom certificate | 2.14 |  | 0.560 |
+| walker |  | 3876 | 181 | Code::CodeKey { rung: Decl, file: py3xui/inbound/inbound.py, decl: 1, sub: 0, line: 15 } |  |  | 0.565 |
+| ns | 3954 |  | 165 | TLS configuration: disabling verification vs. supplying a custom certificate | 2.14 |  | 0.559 |
 | ns | 4102 |  | 148 | Two-factor login and the URI-path gotcha | 2.15 |  | 0.555 |
-| walker |  | 4260 | 370 | Code::CodeKey { rung: Decl, file: py3xui/inbound/inbound.py, decl: 2, sub: 0, line: 38 } |  |  | 0.559 |
-| walker |  | 4272 | 12 | Code::CodeKey { rung: Decl, file: py3xui/inbound/inbound.py, decl: 3, sub: 0, line: 88 } |  |  | 0.559 |
-| walker |  | 4288 | 16 | Code::CodeKey { rung: Doc, file: py3xui/client/client.py, decl: 1, sub: 0, line: 7 } |  |  | 0.560 |
-| ns | 4301 |  | 199 | class Client: required fields and the first block of optional ones | 3.1 |  | 0.584 |
-| walker |  | 4304 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/inbound.py, decl: 1, sub: 0, line: 15 } |  |  | 0.584 |
-| walker |  | 4330 | 26 | Code::CodeKey { rung: Names, file: py3xui/inbound/stream_settings.py, decl: 0, sub: 0, line: 0 } |  |  | 0.584 |
-| walker |  | 4453 | 123 | Code::CodeKey { rung: Decl, file: py3xui/inbound/stream_settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.586 |
-| ns | 4520 |  | 219 | class Client: remaining fields and model_config | 3.2 | 3.1 | 0.601 |
-| ns | 4778 |  | 258 | ClientFields: the complete python-name to panel-JSON-key mapping | 3.3 |  | 0.628 |
-| walker |  | 4785 | 332 | Code::CodeKey { rung: Decl, file: py3xui/inbound/stream_settings.py, decl: 2, sub: 0, line: 25 } |  |  | 0.629 |
-| walker |  | 4801 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/stream_settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.629 |
-| walker |  | 4829 | 28 | Code::CodeKey { rung: Names, file: py3xui/inbound/sniffing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.629 |
-| walker |  | 4888 | 59 | Code::CodeKey { rung: Decl, file: py3xui/inbound/sniffing.py, decl: 1, sub: 0, line: 9 } |  |  | 0.629 |
-| ns | 4921 |  | 143 | class Inbound: required fields and the first block of optionals | 3.4 |  | 0.642 |
-| walker |  | 4999 | 111 | Code::CodeKey { rung: Decl, file: py3xui/inbound/sniffing.py, decl: 2, sub: 0, line: 20 } |  |  | 0.643 |
-| walker |  | 5023 | 24 | Code::CodeKey { rung: Names, file: py3xui/inbound/settings.py, decl: 0, sub: 0, line: 0 } |  |  | 0.643 |
-| walker |  | 5058 | 35 | Code::CodeKey { rung: Decl, file: py3xui/inbound/settings.py, decl: 2, sub: 0, line: 17 } |  |  | 0.644 |
+| walker |  | 4246 | 370 | Code::CodeKey { rung: Decl, file: py3xui/inbound/inbound.py, decl: 2, sub: 0, line: 38 } |  |  | 0.559 |
+| walker |  | 4258 | 12 | Code::CodeKey { rung: Decl, file: py3xui/inbound/inbound.py, decl: 3, sub: 0, line: 88 } |  |  | 0.559 |
+| walker |  | 4272 | 14 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 1, sub: 0, line: 7 } |  |  | 0.559 |
+| walker |  | 4298 | 26 | Code::CodeKey { rung: Names, file: py3xui/inbound/stream_settings.py, decl: 0, sub: 0, line: 0 } |  |  | 0.559 |
+| ns | 4301 |  | 199 | class Client: required fields and the first block of optional ones | 3.1 |  | 0.583 |
+| walker |  | 4421 | 123 | Code::CodeKey { rung: Decl, file: py3xui/inbound/stream_settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.584 |
+| ns | 4520 |  | 219 | class Client: remaining fields and model_config | 3.2 | 3.1 | 0.600 |
+| walker |  | 4753 | 332 | Code::CodeKey { rung: Decl, file: py3xui/inbound/stream_settings.py, decl: 2, sub: 0, line: 25 } |  |  | 0.601 |
+| ns | 4778 |  | 258 | ClientFields: the complete python-name to panel-JSON-key mapping | 3.3 |  | 0.619 |
+| walker |  | 4781 | 28 | Code::CodeKey { rung: Names, file: py3xui/inbound/sniffing.py, decl: 0, sub: 0, line: 0 } |  |  | 0.619 |
+| walker |  | 4840 | 59 | Code::CodeKey { rung: Decl, file: py3xui/inbound/sniffing.py, decl: 1, sub: 0, line: 9 } |  |  | 0.619 |
+| ns | 4921 |  | 143 | class Inbound: required fields and the first block of optionals | 3.4 |  | 0.632 |
+| walker |  | 4951 | 111 | Code::CodeKey { rung: Decl, file: py3xui/inbound/sniffing.py, decl: 2, sub: 0, line: 20 } |  |  | 0.633 |
+| walker |  | 4975 | 24 | Code::CodeKey { rung: Names, file: py3xui/inbound/settings.py, decl: 0, sub: 0, line: 0 } |  |  | 0.633 |
+| walker |  | 5010 | 35 | Code::CodeKey { rung: Decl, file: py3xui/inbound/settings.py, decl: 2, sub: 0, line: 17 } |  |  | 0.634 |
+| walker |  | 5047 | 37 | Code::CodeKey { rung: Decl, file: py3xui/inbound/settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.634 |
+| walker |  | 5063 | 16 | Code::CodeKey { rung: Doc, file: py3xui/client/client.py, decl: 1, sub: 0, line: 7 } |  |  | 0.643 |
+| walker |  | 5079 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/inbound.py, decl: 1, sub: 0, line: 15 } |  |  | 0.644 |
 | ns | 5088 |  | 167 | class Inbound: traffic counters, expiry, client_stats and model_config | 3.5 | 3.4 | 0.656 |
-| walker |  | 5095 | 37 | Code::CodeKey { rung: Decl, file: py3xui/inbound/settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.656 |
-| walker |  | 5111 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.656 |
-| walker |  | 5127 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/sniffing.py, decl: 1, sub: 0, line: 9 } |  |  | 0.656 |
-| walker |  | 5147 | 20 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 8, sub: 0, line: 113 } |  |  | 0.656 |
+| walker |  | 5095 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.656 |
+| walker |  | 5111 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/sniffing.py, decl: 1, sub: 0, line: 9 } |  |  | 0.656 |
+| walker |  | 5127 | 16 | Code::CodeKey { rung: Doc, file: py3xui/inbound/stream_settings.py, decl: 1, sub: 0, line: 9 } |  |  | 0.656 |
 | ns | 5301 |  | 213 | InboundFields: the complete inbound JSON key mapping | 3.6 |  | 0.669 |
-| ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.663 |
-| walker |  | 5384 | 237 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.680 |
+| walker |  | 5364 | 237 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.686 |
+| ns | 5375 |  | 74 | Inbound.to_json signature and contract | 3.7 |  | 0.679 |
+| walker |  | 5384 | 20 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 8, sub: 0, line: 113 } |  |  | 0.680 |
 | walker |  | 5406 | 22 | Code::CodeKey { rung: Names, file: py3xui/api/api_base.py, decl: 0, sub: 0, line: 0 } |  |  | 0.680 |
 | walker |  | 5484 | 78 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 1, sub: 0, line: 15 } |  |  | 0.680 |
 | walker |  | 5495 | 11 | Code::CodeKey { rung: Names, file: py3xui/api/api.py, decl: 0, sub: 0, line: 0 } |  |  | 0.680 |
@@ -126,39 +126,39 @@ Score(3000)=0.633 I=0.892 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 6893 | 26 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 21, sub: 0, line: 313 } |  |  | 0.707 |
 | walker |  | 6941 | 48 | Code::CodeKey { rung: Decl, file: py3xui/api/api_base.py, decl: 20, sub: 0, line: 246 } |  |  | 0.707 |
 | walker |  | 6951 | 10 | Code::CodeKey { rung: Body, file: py3xui/api/api.py, decl: 3, sub: 0, line: 93 } |  |  | 0.707 |
-| walker |  | 6962 | 11 | Code::CodeKey { rung: Body, file: py3xui/api/api.py, decl: 5, sub: 0, line: 115 } |  |  | 0.707 |
-| walker |  | 6978 | 16 | Code::CodeKey { rung: Doc, file: py3xui/api/api_base.py, decl: 1, sub: 0, line: 15 } |  |  | 0.707 |
-| walker |  | 6991 | 13 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_base.py, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
-| walker |  | 7003 | 12 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api.py, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
+| walker |  | 6964 | 13 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_base.py, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
+| walker |  | 6976 | 12 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api.py, decl: 0, sub: 0, line: 0 } |  |  | 0.707 |
 | ns | 7050 |  | 219 | The six nested server sub-models, class lines plus fields | 3.15 | 3.14 | 0.714 |
-| ns | 7161 |  | 111 | class RealityKeyPair | 3.16 |  | 0.717 |
+| ns | 7161 |  | 111 | class RealityKeyPair | 3.16 |  | 0.716 |
+| walker |  | 7174 | 198 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api.py, decl: 1, sub: 0, line: 18 } |  |  | 0.717 |
 | ns | 7187 |  | 26 | Location of ServerFields, the server-status alias table | 3.17 | 3.14 | 0.718 |
-| walker |  | 7201 | 198 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api.py, decl: 1, sub: 0, line: 18 } |  |  | 0.718 |
-| walker |  | 7249 | 48 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api.py, decl: 7, sub: 0, line: 144 } |  |  | 0.718 |
-| ns | 7303 |  | 116 | ApiFields response-envelope constants and class BaseApi | 4.1 |  | 0.721 |
-| walker |  | 7322 | 73 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api.py, decl: 2, sub: 0, line: 72 } |  |  | 0.729 |
-| walker |  | 7339 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_client.py, decl: 0, sub: 0, line: 0 } |  |  | 0.729 |
-| ns | 7536 |  | 233 | BaseApi.__init__: the private state every sub-API carries | 4.2 | 4.1 | 0.720 |
-| walker |  | 7564 | 225 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_client.py, decl: 1, sub: 0, line: 12 } |  |  | 0.734 |
-| walker |  | 7581 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_inbound.py, decl: 0, sub: 0, line: 0 } |  |  | 0.734 |
-| walker |  | 7725 | 144 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_inbound.py, decl: 1, sub: 0, line: 11 } |  |  | 0.740 |
-| walker |  | 7742 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_server.py, decl: 0, sub: 0, line: 0 } |  |  | 0.741 |
-| walker |  | 7799 | 57 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_server.py, decl: 1, sub: 0, line: 8 } |  |  | 0.747 |
+| walker |  | 7222 | 48 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api.py, decl: 7, sub: 0, line: 144 } |  |  | 0.718 |
+| walker |  | 7295 | 73 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api.py, decl: 2, sub: 0, line: 72 } |  |  | 0.727 |
+| ns | 7303 |  | 116 | ApiFields response-envelope constants and class BaseApi | 4.1 |  | 0.725 |
+| walker |  | 7312 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_client.py, decl: 0, sub: 0, line: 0 } |  |  | 0.726 |
+| ns | 7536 |  | 233 | BaseApi.__init__: the private state every sub-API carries | 4.2 | 4.1 | 0.716 |
+| walker |  | 7537 | 225 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_client.py, decl: 1, sub: 0, line: 12 } |  |  | 0.730 |
+| walker |  | 7554 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_inbound.py, decl: 0, sub: 0, line: 0 } |  |  | 0.730 |
+| walker |  | 7698 | 144 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_inbound.py, decl: 1, sub: 0, line: 11 } |  |  | 0.736 |
+| walker |  | 7715 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_server.py, decl: 0, sub: 0, line: 0 } |  |  | 0.738 |
+| walker |  | 7772 | 57 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_server.py, decl: 1, sub: 0, line: 8 } |  |  | 0.743 |
+| walker |  | 7789 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_database.py, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
+| walker |  | 7804 | 15 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_database.py, decl: 1, sub: 0, line: 7 } |  |  | 0.747 |
 | ns | 7809 |  | 273 | BaseApi: every member, signatures only | 4.3 | 4.1 | 0.752 |
-| walker |  | 7816 | 17 | Code::CodeKey { rung: Names, file: py3xui/async_api/async_api_database.py, decl: 0, sub: 0, line: 0 } |  |  | 0.754 |
-| walker |  | 7831 | 15 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_database.py, decl: 1, sub: 0, line: 7 } |  |  | 0.756 |
-| walker |  | 7841 | 10 | Code::CodeKey { rung: Body, file: py3xui/async_api/async_api.py, decl: 3, sub: 0, line: 98 } |  |  | 0.756 |
-| ns | 8024 |  | 215 | How the TLS `verify` argument is chosen, per request | 4.4 | 4.3 | 0.745 |
-| walker |  | 8069 | 228 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 1, sub: 0, line: 16 } |  |  | 0.745 |
-| walker |  | 8142 | 73 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 2, sub: 0, line: 49 } |  |  | 0.745 |
-| ns | 8248 |  | 224 | The retry loop: which errors retry, the backoff, and what is raised at the end | 4.5 | 4.4 | 0.732 |
-| walker |  | 8430 | 288 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 1, sub: 1, line: 16 } |  |  | 0.732 |
-| walker |  | 8456 | 26 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 20, sub: 0, line: 308 } |  |  | 0.732 |
-| ns | 8467 |  | 219 | BaseApi.login: the POST that mints the session cookie | 4.6 | 4.3 | 0.722 |
-| walker |  | 8501 | 45 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 15, sub: 0, line: 166 } |  |  | 0.722 |
-| walker |  | 8512 | 11 | Code::CodeKey { rung: Body, file: py3xui/async_api/async_api.py, decl: 5, sub: 0, line: 120 } |  |  | 0.722 |
-| walker |  | 8607 | 95 | Code::CodeKey { rung: Names, file: py3xui/utils/env.py, decl: 0, sub: 0, line: 0 } |  |  | 0.727 |
-| walker |  | 8634 | 27 | Code::CodeKey { rung: Decl, file: py3xui/utils/env.py, decl: 1, sub: 0, line: 7 } |  |  | 0.731 |
+| ns | 8024 |  | 215 | How the TLS `verify` argument is chosen, per request | 4.4 | 4.3 | 0.741 |
+| walker |  | 8032 | 228 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 1, sub: 0, line: 16 } |  |  | 0.741 |
+| walker |  | 8105 | 73 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 2, sub: 0, line: 49 } |  |  | 0.741 |
+| ns | 8248 |  | 224 | The retry loop: which errors retry, the backoff, and what is raised at the end | 4.5 | 4.4 | 0.729 |
+| walker |  | 8393 | 288 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 1, sub: 1, line: 16 } |  |  | 0.729 |
+| walker |  | 8419 | 26 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 20, sub: 0, line: 308 } |  |  | 0.729 |
+| walker |  | 8464 | 45 | Code::CodeKey { rung: Decl, file: py3xui/async_api/async_api_base.py, decl: 15, sub: 0, line: 166 } |  |  | 0.729 |
+| ns | 8467 |  | 219 | BaseApi.login: the POST that mints the session cookie | 4.6 | 4.3 | 0.718 |
+| walker |  | 8474 | 10 | Code::CodeKey { rung: Body, file: py3xui/async_api/async_api.py, decl: 3, sub: 0, line: 98 } |  |  | 0.718 |
+| walker |  | 8569 | 95 | Code::CodeKey { rung: Names, file: py3xui/utils/env.py, decl: 0, sub: 0, line: 0 } |  |  | 0.723 |
+| walker |  | 8596 | 27 | Code::CodeKey { rung: Decl, file: py3xui/utils/env.py, decl: 1, sub: 0, line: 7 } |  |  | 0.727 |
+| walker |  | 8607 | 11 | Code::CodeKey { rung: Body, file: py3xui/api/api.py, decl: 5, sub: 0, line: 115 } |  |  | 0.727 |
+| walker |  | 8618 | 11 | Code::CodeKey { rung: Body, file: py3xui/async_api/async_api.py, decl: 5, sub: 0, line: 120 } |  |  | 0.727 |
+| walker |  | 8634 | 16 | Code::CodeKey { rung: Doc, file: py3xui/api/api_base.py, decl: 1, sub: 0, line: 15 } |  |  | 0.731 |
 | walker |  | 8649 | 15 | Code::CodeKey { rung: Names, file: py3xui/inbound/bases.py, decl: 0, sub: 0, line: 0 } |  |  | 0.731 |
 | ns | 8675 |  | 208 | Cookie discovery, cookie dict, and the login-required guards | 4.7 | 4.6 | 0.722 |
 | walker |  | 8694 | 45 | Code::CodeKey { rung: Decl, file: py3xui/inbound/bases.py, decl: 1, sub: 0, line: 9 } |  |  | 0.723 |
@@ -174,18 +174,14 @@ Score(3000)=0.633 I=0.892 C=0.450 ns_rows≤3K=20/57 grid(1000/1442/2080/3000/43
 | walker |  | 9163 | 47 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 3, sub: 0, line: 93 } |  |  | 0.710 |
 | walker |  | 9210 | 47 | Code::CodeKey { rung: Doc, file: py3xui/async_api/async_api.py, decl: 3, sub: 0, line: 98 } |  |  | 0.710 |
 | ns | 9230 |  | 155 | Every remaining directory in the repository, listed in full | 5.1 |  | 0.710 |
-| walker |  | 9259 | 49 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 4, sub: 0, line: 102 } |  |  | 0.710 |
-| walker |  | 9308 | 49 | Code::CodeKey { rung: Doc, file: py3xui/async_api/async_api.py, decl: 4, sub: 0, line: 107 } |  |  | 0.710 |
-| walker |  | 9360 | 52 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 5, sub: 0, line: 78 } |  |  | 0.710 |
+| walker |  | 9342 | 132 | Plaintext::DeclSurface { file: dev/pydoc.sh } |  |  | 0.710 |
+| walker |  | 9391 | 49 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 4, sub: 0, line: 102 } |  |  | 0.710 |
 | ns | 9403 |  | 173 | tests/test_api.py: how the suite is wired | 5.2 |  | 0.701 |
-| walker |  | 9414 | 54 | Code::CodeKey { rung: Doc, file: py3xui/async_api/async_api.py, decl: 5, sub: 0, line: 120 } |  |  | 0.701 |
-| walker |  | 9468 | 54 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 4, sub: 0, line: 67 } |  |  | 0.701 |
-| walker |  | 9524 | 56 | Code::CodeKey { rung: Doc, file: py3xui/inbound/inbound.py, decl: 4, sub: 0, line: 114 } |  |  | 0.706 |
-| walker |  | 9656 | 132 | Plaintext::DeclSurface { file: dev/pydoc.sh } |  |  | 0.706 |
-| walker |  | 9713 | 57 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 2, sub: 0, line: 43 } |  |  | 0.707 |
-| ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.693 |
-| walker |  | 9848 | 135 | Plaintext::DeclSurface { file: dev/clean_trash.sh } |  |  | 0.693 |
-| ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.689 |
-| walker |  | 9958 | 110 | Plaintext::Whole { file: dev/clean_trash.sh } |  |  | 0.689 |
-| walker |  | 9973 | 15 | Code::CodeKey { rung: Doc, file: py3xui/api/api.py, decl: 5, sub: 0, line: 115 } |  |  | 0.689 |
-| ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.687 |
+| walker |  | 9440 | 49 | Code::CodeKey { rung: Doc, file: py3xui/async_api/async_api.py, decl: 4, sub: 0, line: 107 } |  |  | 0.701 |
+| walker |  | 9575 | 135 | Plaintext::DeclSurface { file: dev/clean_trash.sh } |  |  | 0.701 |
+| walker |  | 9685 | 110 | Plaintext::Whole { file: dev/clean_trash.sh } |  |  | 0.701 |
+| ns | 9719 |  | 316 | tests/test_api.py: every test function in the file | 5.3 | 5.2 | 0.687 |
+| walker |  | 9737 | 52 | Code::CodeKey { rung: Doc, file: py3xui/server/server.py, decl: 5, sub: 0, line: 78 } |  |  | 0.687 |
+| ns | 9910 |  | 191 | Lint configuration and the development dependency set | 5.4 |  | 0.683 |
+| ns | 9981 |  | 71 | The per-package README.md files are generated, not written | 5.5 |  | 0.681 |
+| walker |  | 9997 | 260 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.690 |

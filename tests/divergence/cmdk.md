@@ -68,8 +68,8 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 3691 | 244 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.776 |
 | walker |  | 3704 | 13 | Fs::DirListing { dir: website/styles } |  |  | 0.776 |
 | ns | 3715 |  | 127 | InputProps + CommandFilter signature | 2.11 | 2.5 | 0.761 |
-| walker |  | 3750 | 46 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 14, sub: 0, line: 1004 } |  |  | 0.761 |
-| walker |  | 3776 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.761 |
+| walker |  | 3730 | 26 | Code::CodeKey { rung: Names, file: cmdk/src/command-score.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.761 |
+| walker |  | 3776 | 46 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 14, sub: 0, line: 1004 } |  |  | 0.761 |
 | ns | 4048 |  | 333 | ARCHITECTURE: the three rejected APIs and why selection tracks value | 3.1 | 1.8 | 0.756 |
 | walker |  | 4300 | 524 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.756 |
 | ns | 4406 |  | 358 | Internal types: Context, State, Store, Group | 3.2 |  | 0.723 |
@@ -80,10 +80,10 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 5200 | 474 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.673 |
 | ns | 5268 |  | 214 | Root keydown handler: IME guard, vim down bindings, ArrowDown | 3.6 | 3.4 | 0.652 |
 | walker |  | 5349 | 149 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.652 |
-| walker |  | 5415 | 66 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 11, sub: 0, line: 899 } |  |  | 0.652 |
 | ns | 5646 |  | 378 | score() and sort(): per-group maximum score and the ordering rules | 4.1 | 3.4 | 0.622 |
+| walker |  | 5990 | 641 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.622 |
 | ns | 5995 |  | 349 | sort(): the DOM re-append loop | 4.2 | 4.1 | 0.601 |
-| walker |  | 6056 | 641 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.601 |
+| walker |  | 6056 | 66 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 11, sub: 0, line: 899 } |  |  | 0.601 |
 | ns | 6400 |  | 405 | filterItems(): scoring every item and deriving visible groups | 4.3 | 3.4 | 0.576 |
 | walker |  | 6633 | 577 | Markdown::Section { file: README.md, section_index: 9, keeps_default_concavity: false } |  |  | 0.576 |
 | ns | 6670 |  | 270 | Item: value inference, render gate, select handlers | 4.4 | 2.6 | 0.563 |
@@ -96,8 +96,8 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | ns | 7563 |  | 266 | List, Dialog, Empty and Loading markup | 4.8 | 2.6 | 0.525 |
 | walker |  | 7755 | 242 | Json::Whole { file: tsconfig.json } |  |  | 0.525 |
 | ns | 7763 |  | 200 | Roster of module-level helpers | 4.9 |  | 0.520 |
-| walker |  | 7859 | 104 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 774 } |  |  | 0.520 |
-| walker |  | 7903 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.520 |
+| walker |  | 7799 | 44 | Fs::DirListing { dir: website/public } |  |  | 0.520 |
+| walker |  | 7903 | 104 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 7, sub: 0, line: 774 } |  |  | 0.520 |
 | walker |  | 8031 | 128 | Code::CodeKey { rung: Body, file: cmdk/src/command-score.ts, decl: 1, sub: 0, line: 155 } |  |  | 0.520 |
 | ns | 8066 |  | 303 | command-score: the full scoring weight table | 5.1 |  | 0.509 |
 | ns | 8162 |  | 96 | command-score: exported signature and alias handling | 5.2 | 5.1 | 0.511 |
@@ -113,9 +113,9 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 8705 | 32 | Json::Identity { file: test/package.json } |  |  | 0.520 |
 | ns | 8708 |  | 163 | Spec names: item lifecycle and item-advanced | 6.4 |  | 0.516 |
 | walker |  | 8731 | 26 | Json::Scripts { file: test/package.json } |  |  | 0.516 |
+| walker |  | 8751 | 20 | Code::CodeKey { rung: Names, file: website/components/code/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
 | ns | 8925 |  | 217 | Spec names: group, props matrix, numeric values | 6.5 |  | 0.510 |
-| walker |  | 9148 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 787 } |  |  | 0.530 |
-| walker |  | 9168 | 20 | Code::CodeKey { rung: Names, file: website/components/code/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.530 |
+| walker |  | 9168 | 417 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 8, sub: 0, line: 787 } |  |  | 0.530 |
 | ns | 9185 |  | 260 | Spec names: keybinds (four describe blocks) | 6.6 |  | 0.524 |
 | walker |  | 9194 | 26 | Plaintext::DeclSurface { file: test/style.css } |  |  | 0.524 |
 | walker |  | 9197 | 3 | Plaintext::Whole { file: test/style.css } |  |  | 0.524 |
@@ -127,8 +127,8 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9525 | 33 | Plaintext::DeclSurface { file: .husky/pre-commit } |  |  | 0.514 |
 | walker |  | 9531 | 6 | Plaintext::Whole { file: .husky/pre-commit } |  |  | 0.514 |
 | ns | 9717 |  | 276 | Playwright config (whole file) | 6.8 |  | 0.504 |
-| walker |  | 9730 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 729 } |  |  | 0.505 |
-| ns | 9882 |  | 165 | CI workflow | 6.9 |  | 0.498 |
-| walker |  | 9927 | 197 | Json::Dependencies { file: website/package.json } |  |  | 0.498 |
+| walker |  | 9728 | 197 | Json::Dependencies { file: website/package.json } |  |  | 0.504 |
+| ns | 9882 |  | 165 | CI workflow | 6.9 |  | 0.497 |
+| walker |  | 9927 | 199 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 0, line: 729 } |  |  | 0.498 |
 | walker |  | 9951 | 24 | Code::CodeKey { rung: Body, file: cmdk/src/index.tsx, decl: 6, sub: 1, line: 729 } |  |  | 0.498 |
 | ns | 9955 |  | 73 | Website source listings (demos, pages, drop-in stylesheets) | 7.1 |  | 0.507 |

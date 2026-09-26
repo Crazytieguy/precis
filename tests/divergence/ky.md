@@ -94,9 +94,9 @@ Score(3000)=0.732 I=0.909 C=0.589 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 6824 | 360 | Markdown::Section { file: readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.583 |
 | ns | 6918 |  | 217 | `#calculateRetryDelay`: limit, non-Error wrapping, forced and method checks | 4.2 | 3.1 | 0.574 |
 | walker |  | 6936 | 112 | Json::Whole { file: tsconfig.dist.json } |  |  | 0.575 |
-| walker |  | 6966 | 30 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.579 |
-| ns | 7121 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.571 |
-| walker |  | 7361 | 395 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.572 |
+| ns | 7121 |  | 203 | `#calculateRetryDelay`: the `shouldRetry` predicate contract | 4.3 | 4.2 | 0.567 |
+| walker |  | 7331 | 395 | Markdown::Section { file: readme.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.568 |
+| walker |  | 7361 | 30 | Code::CodeKey { rung: Doc, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.572 |
 | ns | 7553 |  | 432 | `#calculateRetryDelay`: timeouts, status codes and `Retry-After` parsing | 4.4 | 4.3 | 0.558 |
 | walker |  | 7722 | 361 | Code::CodeKey { rung: Names, file: source/types/options.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
 | walker |  | 7795 | 73 | Code::CodeKey { rung: Decl, file: source/types/options.ts, decl: 6, sub: 0, line: 16 } |  |  | 0.575 |

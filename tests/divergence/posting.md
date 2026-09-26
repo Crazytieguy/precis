@@ -63,124 +63,118 @@ Score(3000)=0.789 I=0.930 C=0.670 ns_rows≤3K=19/49 grid(1000/1442/2080/3000/43
 | ns | 2934 |  | 160 | RequestModel behaviour roster | 3.4 |  | 0.789 |
 | walker |  | 2938 | 57 | Code::CodeKey { rung: Names, file: src/posting/app.py, decl: 0, sub: 0, line: 0 } |  |  | 0.789 |
 | walker |  | 2953 | 15 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 1, sub: 0, line: 93 } |  |  | 0.789 |
-| walker |  | 2963 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 1, sub: 0, line: 93 } |  |  | 0.789 |
-| walker |  | 2973 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 3, sub: 0, line: 108 } |  |  | 0.789 |
-| ns | 3145 |  | 211 | Key-value, option and script models | 3.5 | 3.1 | 0.761 |
-| walker |  | 3290 | 317 | Code::CodeKey { rung: Names, file: src/posting/collection.py, decl: 0, sub: 0, line: 0 } |  |  | 0.808 |
-| walker |  | 3300 | 10 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 10, sub: 0, line: 66 } |  |  | 0.808 |
-| walker |  | 3316 | 16 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 11, sub: 0, line: 70 } |  |  | 0.808 |
-| walker |  | 3337 | 21 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 31, sub: 0, line: 407 } |  |  | 0.808 |
+| ns | 3145 |  | 211 | Key-value, option and script models | 3.5 | 3.1 | 0.760 |
+| walker |  | 3270 | 317 | Code::CodeKey { rung: Names, file: src/posting/collection.py, decl: 0, sub: 0, line: 0 } |  |  | 0.808 |
+| walker |  | 3280 | 10 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 10, sub: 0, line: 66 } |  |  | 0.808 |
+| walker |  | 3296 | 16 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 11, sub: 0, line: 70 } |  |  | 0.808 |
+| walker |  | 3317 | 21 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 31, sub: 0, line: 407 } |  |  | 0.808 |
+| walker |  | 3338 | 21 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 32, sub: 0, line: 412 } |  |  | 0.808 |
 | ns | 3349 |  | 204 | Collection tree: loading a directory, saving it back | 3.6 | 3.1 | 0.787 |
-| walker |  | 3358 | 21 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 32, sub: 0, line: 412 } |  |  | 0.787 |
-| walker |  | 3380 | 22 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 8, sub: 0, line: 56 } |  |  | 0.787 |
-| walker |  | 3402 | 22 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 9, sub: 0, line: 61 } |  |  | 0.787 |
-| walker |  | 3431 | 29 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 12, sub: 0, line: 75 } |  |  | 0.789 |
-| walker |  | 3460 | 29 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 13, sub: 0, line: 81 } |  |  | 0.789 |
-| walker |  | 3489 | 29 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 14, sub: 0, line: 87 } |  |  | 0.789 |
-| walker |  | 3527 | 38 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 30, sub: 0, line: 401 } |  |  | 0.789 |
+| walker |  | 3360 | 22 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 8, sub: 0, line: 56 } |  |  | 0.787 |
+| walker |  | 3382 | 22 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 9, sub: 0, line: 61 } |  |  | 0.787 |
+| walker |  | 3411 | 29 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 12, sub: 0, line: 75 } |  |  | 0.789 |
+| walker |  | 3440 | 29 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 13, sub: 0, line: 81 } |  |  | 0.789 |
+| walker |  | 3469 | 29 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 14, sub: 0, line: 87 } |  |  | 0.789 |
+| walker |  | 3507 | 38 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 30, sub: 0, line: 401 } |  |  | 0.789 |
 | ns | 3563 |  | 214 | config.py structure and settings-source configuration | 4.1 |  | 0.767 |
-| walker |  | 3594 | 67 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 15, sub: 0, line: 93 } |  |  | 0.767 |
-| walker |  | 3665 | 71 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 17, sub: 0, line: 103 } |  |  | 0.777 |
-| ns | 3714 |  | 151 | Settings keys, part 1 | 4.2 |  | 0.762 |
-| walker |  | 3750 | 85 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 33, sub: 0, line: 417 } |  |  | 0.762 |
-| walker |  | 3873 | 123 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 21, sub: 0, line: 138 } |  |  | 0.771 |
+| walker |  | 3574 | 67 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 15, sub: 0, line: 93 } |  |  | 0.767 |
+| walker |  | 3645 | 71 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 17, sub: 0, line: 103 } |  |  | 0.777 |
+| ns | 3714 |  | 151 | Settings keys, part 1 | 4.2 |  | 0.761 |
+| walker |  | 3730 | 85 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 33, sub: 0, line: 417 } |  |  | 0.761 |
+| walker |  | 3853 | 123 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 21, sub: 0, line: 138 } |  |  | 0.771 |
 | ns | 3892 |  | 178 | Settings keys, part 2 | 4.3 | 4.2 | 0.756 |
-| walker |  | 4004 | 131 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 18, sub: 0, line: 111 } |  |  | 0.765 |
-| walker |  | 4193 | 189 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 34, sub: 0, line: 427 } |  |  | 0.776 |
-| walker |  | 4211 | 18 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 36, sub: 0, line: 441 } |  |  | 0.776 |
-| walker |  | 4235 | 24 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 35, sub: 0, line: 434 } |  |  | 0.776 |
+| walker |  | 3984 | 131 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 18, sub: 0, line: 111 } |  |  | 0.765 |
+| walker |  | 4173 | 189 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 34, sub: 0, line: 427 } |  |  | 0.775 |
+| walker |  | 4191 | 18 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 36, sub: 0, line: 441 } |  |  | 0.775 |
+| walker |  | 4215 | 24 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 35, sub: 0, line: 434 } |  |  | 0.775 |
 | ns | 4250 |  | 358 | Configuration precedence and guide section map | 4.4 |  | 0.741 |
-| walker |  | 4426 | 191 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 3, sub: 0, line: 23 } |  |  | 0.741 |
-| ns | 4526 |  | 276 | app.py class roster and MainScreen reactive state | 5.1 |  | 0.725 |
-| walker |  | 4632 | 206 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 22, sub: 0, line: 154 } |  |  | 0.730 |
-| ns | 4716 |  | 190 | Main screen keybindings, part 1 | 5.2 | 5.1 | 0.710 |
-| walker |  | 4831 | 199 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 22, sub: 1, line: 154 } |  |  | 0.721 |
-| ns | 4962 |  | 246 | Main screen keybindings, part 2 | 5.3 | 5.2 | 0.696 |
-| walker |  | 5145 | 314 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 22, sub: 2, line: 154 } |  |  | 0.717 |
-| ns | 5155 |  | 193 | Global app keybindings | 5.4 | 5.1 | 0.702 |
-| walker |  | 5159 | 14 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 23, sub: 0, line: 205 } |  |  | 0.705 |
-| walker |  | 5174 | 15 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 25, sub: 0, line: 291 } |  |  | 0.705 |
-| walker |  | 5189 | 15 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 38, sub: 0, line: 541 } |  |  | 0.705 |
-| walker |  | 5205 | 16 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 24, sub: 0, line: 269 } |  |  | 0.705 |
+| walker |  | 4406 | 191 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 3, sub: 0, line: 23 } |  |  | 0.741 |
+| ns | 4526 |  | 276 | app.py class roster and MainScreen reactive state | 5.1 |  | 0.724 |
+| walker |  | 4612 | 206 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 22, sub: 0, line: 154 } |  |  | 0.729 |
+| ns | 4716 |  | 190 | Main screen keybindings, part 1 | 5.2 | 5.1 | 0.709 |
+| walker |  | 4811 | 199 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 22, sub: 1, line: 154 } |  |  | 0.719 |
+| ns | 4962 |  | 246 | Main screen keybindings, part 2 | 5.3 | 5.2 | 0.695 |
+| walker |  | 5125 | 314 | Code::CodeKey { rung: Decl, file: src/posting/collection.py, decl: 22, sub: 2, line: 154 } |  |  | 0.716 |
+| walker |  | 5139 | 14 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 23, sub: 0, line: 205 } |  |  | 0.719 |
+| walker |  | 5154 | 15 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 25, sub: 0, line: 291 } |  |  | 0.719 |
+| ns | 5155 |  | 193 | Global app keybindings | 5.4 | 5.1 | 0.703 |
+| walker |  | 5169 | 15 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 38, sub: 0, line: 541 } |  |  | 0.703 |
+| walker |  | 5185 | 16 | Code::CodeKey { rung: Doc, file: src/posting/collection.py, decl: 24, sub: 0, line: 269 } |  |  | 0.703 |
+| walker |  | 5195 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 1, sub: 0, line: 93 } |  |  | 0.704 |
+| walker |  | 5205 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 3, sub: 0, line: 108 } |  |  | 0.705 |
 | ns | 5444 |  | 289 | MainScreen method roster, part 1 | 5.5 |  | 0.687 |
 | walker |  | 5551 | 346 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 66, sub: 0, line: 1205 } |  |  | 0.718 |
 | ns | 5679 |  | 235 | MainScreen method roster, part 2 | 5.6 |  | 0.704 |
 | walker |  | 5751 | 200 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 66, sub: 1, line: 1205 } |  |  | 0.704 |
 | walker |  | 5806 | 55 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 67, sub: 0, line: 1239 } |  |  | 0.704 |
-| walker |  | 5820 | 14 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 72, sub: 0, line: 1361 } |  |  | 0.704 |
 | ns | 5823 |  | 144 | MainScreen.compose: the widget layout | 5.7 | 5.5 | 0.694 |
-| walker |  | 5835 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 71, sub: 0, line: 1330 } |  |  | 0.694 |
-| walker |  | 6030 | 195 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 66, sub: 2, line: 1205 } |  |  | 0.695 |
-| walker |  | 6036 | 6 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 80, sub: 0, line: 1576 } |  |  | 0.695 |
-| walker |  | 6053 | 17 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 70, sub: 0, line: 1302 } |  |  | 0.695 |
+| walker |  | 6001 | 195 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 66, sub: 2, line: 1205 } |  |  | 0.695 |
+| walker |  | 6007 | 6 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 80, sub: 0, line: 1576 } |  |  | 0.695 |
+| walker |  | 6021 | 14 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 72, sub: 0, line: 1361 } |  |  | 0.695 |
+| walker |  | 6036 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 71, sub: 0, line: 1330 } |  |  | 0.695 |
 | ns | 6072 |  | 249 | `Posting` App method roster | 5.8 |  | 0.694 |
-| walker |  | 6194 | 141 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 66, sub: 3, line: 1205 } |  |  | 0.703 |
-| walker |  | 6207 | 13 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 82, sub: 0, line: 1591 } |  |  | 0.703 |
-| walker |  | 6255 | 48 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 84, sub: 0, line: 1620 } |  |  | 0.703 |
-| walker |  | 6305 | 50 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 86, sub: 0, line: 1655 } |  |  | 0.703 |
+| walker |  | 6177 | 141 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 66, sub: 3, line: 1205 } |  |  | 0.703 |
+| walker |  | 6190 | 13 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 82, sub: 0, line: 1591 } |  |  | 0.703 |
+| walker |  | 6238 | 48 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 84, sub: 0, line: 1620 } |  |  | 0.703 |
+| walker |  | 6288 | 50 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 86, sub: 0, line: 1655 } |  |  | 0.703 |
 | ns | 6311 |  | 239 | Command palette: every command | 6.1 |  | 0.692 |
 | ns | 6694 |  | 383 | Request-editor widget class roster | 6.2 |  | 0.675 |
 | ns | 6902 |  | 208 | Response and collection-browser widget class roster | 6.3 |  | 0.667 |
-| walker |  | 6983 | 678 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 0, line: 112 } |  |  | 0.726 |
-| walker |  | 7149 | 166 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 1, line: 112 } |  |  | 0.737 |
+| walker |  | 6966 | 678 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 0, line: 112 } |  |  | 0.726 |
+| walker |  | 7132 | 166 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 1, line: 112 } |  |  | 0.737 |
 | ns | 7238 |  | 336 | Shared widget class roster | 6.4 |  | 0.724 |
-| walker |  | 7371 | 222 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 2, line: 112 } |  |  | 0.727 |
-| walker |  | 7409 | 38 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 5, sub: 0, line: 196 } |  |  | 0.727 |
+| walker |  | 7354 | 222 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 2, line: 112 } |  |  | 0.727 |
+| walker |  | 7392 | 38 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 5, sub: 0, line: 196 } |  |  | 0.727 |
 | ns | 7440 |  | 202 | Scripting API: the `Posting` object handed to user scripts | 6.5 |  | 0.720 |
-| walker |  | 7460 | 51 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 9, sub: 0, line: 271 } |  |  | 0.720 |
-| walker |  | 7470 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 13, sub: 0, line: 520 } |  |  | 0.720 |
-| walker |  | 7660 | 190 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 3, line: 112 } |  |  | 0.724 |
-| walker |  | 7673 | 13 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 16, sub: 0, line: 560 } |  |  | 0.724 |
-| walker |  | 7690 | 17 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 17, sub: 0, line: 567 } |  |  | 0.724 |
-| walker |  | 7709 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 18, sub: 0, line: 605 } |  |  | 0.724 |
-| walker |  | 7723 | 14 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 14, sub: 0, line: 526 } |  |  | 0.724 |
+| walker |  | 7443 | 51 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 9, sub: 0, line: 271 } |  |  | 0.720 |
+| walker |  | 7453 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 13, sub: 0, line: 520 } |  |  | 0.720 |
+| walker |  | 7643 | 190 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 3, line: 112 } |  |  | 0.724 |
+| walker |  | 7656 | 13 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 16, sub: 0, line: 560 } |  |  | 0.724 |
+| walker |  | 7673 | 17 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 17, sub: 0, line: 567 } |  |  | 0.724 |
+| walker |  | 7692 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 18, sub: 0, line: 605 } |  |  | 0.724 |
 | ns | 7732 |  | 292 | Variables subsystem | 6.6 |  | 0.716 |
-| walker |  | 7911 | 188 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 4, line: 112 } |  |  | 0.729 |
-| walker |  | 7921 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 20, sub: 0, line: 663 } |  |  | 0.729 |
-| walker |  | 7932 | 11 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 22, sub: 0, line: 673 } |  |  | 0.729 |
-| walker |  | 7945 | 13 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 21, sub: 0, line: 667 } |  |  | 0.729 |
-| walker |  | 7960 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 25, sub: 0, line: 696 } |  |  | 0.729 |
-| walker |  | 7975 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 26, sub: 0, line: 704 } |  |  | 0.729 |
+| walker |  | 7880 | 188 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 4, line: 112 } |  |  | 0.729 |
+| walker |  | 7890 | 10 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 20, sub: 0, line: 663 } |  |  | 0.729 |
+| walker |  | 7901 | 11 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 22, sub: 0, line: 673 } |  |  | 0.729 |
+| walker |  | 7914 | 13 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 21, sub: 0, line: 667 } |  |  | 0.729 |
 | ns | 8068 |  | 336 | Theme model | 6.7 |  | 0.716 |
-| walker |  | 8166 | 191 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 5, line: 112 } |  |  | 0.719 |
-| walker |  | 8183 | 17 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 30, sub: 0, line: 759 } |  |  | 0.719 |
-| walker |  | 8202 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 32, sub: 0, line: 780 } |  |  | 0.719 |
-| walker |  | 8214 | 12 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 28, sub: 0, line: 748 } |  |  | 0.719 |
-| walker |  | 8226 | 12 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 30, sub: 0, line: 759 } |  |  | 0.719 |
+| walker |  | 8105 | 191 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 5, line: 112 } |  |  | 0.719 |
+| walker |  | 8122 | 17 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 30, sub: 0, line: 759 } |  |  | 0.719 |
+| walker |  | 8141 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 32, sub: 0, line: 780 } |  |  | 0.719 |
+| walker |  | 8153 | 12 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 28, sub: 0, line: 748 } |  |  | 0.719 |
+| walker |  | 8165 | 12 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 30, sub: 0, line: 759 } |  |  | 0.719 |
+| walker |  | 8179 | 14 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 14, sub: 0, line: 526 } |  |  | 0.719 |
 | ns | 8260 |  | 192 | Every builtin theme name | 6.8 |  | 0.712 |
-| ns | 8413 |  | 153 | Importer entry points | 6.9 |  | 0.707 |
-| walker |  | 8416 | 190 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 6, line: 112 } |  |  | 0.710 |
-| walker |  | 8430 | 14 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 35, sub: 0, line: 816 } |  |  | 0.710 |
-| walker |  | 8449 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 33, sub: 0, line: 792 } |  |  | 0.710 |
-| walker |  | 8468 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 34, sub: 0, line: 804 } |  |  | 0.710 |
-| walker |  | 8496 | 28 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 36, sub: 0, line: 824 } |  |  | 0.710 |
-| walker |  | 8511 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 36, sub: 0, line: 824 } |  |  | 0.710 |
+| walker |  | 8369 | 190 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 6, line: 112 } |  |  | 0.715 |
+| walker |  | 8383 | 14 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 35, sub: 0, line: 816 } |  |  | 0.715 |
+| walker |  | 8402 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 33, sub: 0, line: 792 } |  |  | 0.715 |
+| ns | 8413 |  | 153 | Importer entry points | 6.9 |  | 0.710 |
+| walker |  | 8421 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 34, sub: 0, line: 804 } |  |  | 0.710 |
+| walker |  | 8449 | 28 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 36, sub: 0, line: 824 } |  |  | 0.710 |
 | ns | 8530 |  | 117 | URL and path-parameter helpers | 6.10 |  | 0.707 |
-| ns | 8694 |  | 164 | HTTP header catalogue | 6.11 |  | 0.699 |
-| walker |  | 8705 | 194 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 7, line: 112 } |  |  | 0.710 |
-| walker |  | 8723 | 18 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 38, sub: 0, line: 857 } |  |  | 0.710 |
-| walker |  | 8742 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 43, sub: 0, line: 999 } |  |  | 0.710 |
-| walker |  | 8754 | 12 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 42, sub: 0, line: 969 } |  |  | 0.710 |
-| walker |  | 8768 | 14 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 39, sub: 0, line: 901 } |  |  | 0.710 |
-| walker |  | 8785 | 17 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 16, sub: 0, line: 560 } |  |  | 0.710 |
-| walker |  | 8802 | 17 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 35, sub: 0, line: 816 } |  |  | 0.710 |
-| walker |  | 8820 | 18 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 31, sub: 0, line: 771 } |  |  | 0.710 |
-| walker |  | 8838 | 18 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 32, sub: 0, line: 780 } |  |  | 0.710 |
-| walker |  | 8856 | 18 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 33, sub: 0, line: 792 } |  |  | 0.710 |
-| walker |  | 8875 | 19 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 15, sub: 0, line: 544 } |  |  | 0.710 |
-| walker |  | 8894 | 19 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 29, sub: 0, line: 752 } |  |  | 0.710 |
-| walker |  | 8913 | 19 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 34, sub: 0, line: 804 } |  |  | 0.710 |
-| walker |  | 8924 | 11 | Fs::DirListing { dir: tests/sample-themes } |  |  | 0.710 |
-| walker |  | 8944 | 20 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 37, sub: 0, line: 835 } |  |  | 0.710 |
+| walker |  | 8643 | 194 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 4, sub: 7, line: 112 } |  |  | 0.718 |
+| walker |  | 8661 | 18 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 38, sub: 0, line: 857 } |  |  | 0.718 |
+| walker |  | 8680 | 19 | Code::CodeKey { rung: Decl, file: src/posting/app.py, decl: 43, sub: 0, line: 999 } |  |  | 0.718 |
+| walker |  | 8692 | 12 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 42, sub: 0, line: 969 } |  |  | 0.718 |
+| ns | 8694 |  | 164 | HTTP header catalogue | 6.11 |  | 0.710 |
+| walker |  | 8706 | 14 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 39, sub: 0, line: 901 } |  |  | 0.710 |
+| walker |  | 8721 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 25, sub: 0, line: 696 } |  |  | 0.710 |
+| walker |  | 8736 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 26, sub: 0, line: 704 } |  |  | 0.710 |
+| walker |  | 8751 | 15 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 36, sub: 0, line: 824 } |  |  | 0.710 |
+| walker |  | 8762 | 11 | Fs::DirListing { dir: tests/sample-themes } |  |  | 0.710 |
+| walker |  | 8779 | 17 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 16, sub: 0, line: 560 } |  |  | 0.710 |
+| walker |  | 8796 | 17 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 35, sub: 0, line: 816 } |  |  | 0.710 |
+| walker |  | 8813 | 17 | Code::CodeKey { rung: Doc, file: src/posting/app.py, decl: 70, sub: 0, line: 1302 } |  |  | 0.710 |
 | ns | 8989 |  | 295 | Test invocation: the Makefile is mandatory | 7.1 |  | 0.709 |
-| ns | 9139 |  | 150 | Development environment and snapshot testing | 7.2 |  | 0.705 |
-| walker |  | 9266 | 322 | Code::CodeKey { rung: Names, file: src/posting/themes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.706 |
-| walker |  | 9354 | 88 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 11, sub: 0, line: 305 } |  |  | 0.706 |
+| walker |  | 9135 | 322 | Code::CodeKey { rung: Names, file: src/posting/themes.py, decl: 0, sub: 0, line: 0 } |  |  | 0.709 |
+| ns | 9139 |  | 150 | Development environment and snapshot testing | 7.2 |  | 0.706 |
+| walker |  | 9223 | 88 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 11, sub: 0, line: 305 } |  |  | 0.706 |
+| walker |  | 9314 | 91 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 3, sub: 0, line: 54 } |  |  | 0.706 |
 | ns | 9407 |  | 268 | Scripting and core workflow guide section maps | 7.3 |  | 0.694 |
-| walker |  | 9445 | 91 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 3, sub: 0, line: 54 } |  |  | 0.694 |
-| walker |  | 9580 | 135 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 5, sub: 0, line: 72 } |  |  | 0.694 |
+| walker |  | 9449 | 135 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 5, sub: 0, line: 72 } |  |  | 0.694 |
+| walker |  | 9584 | 135 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 7, sub: 0, line: 94 } |  |  | 0.694 |
 | ns | 9692 |  | 285 | Remaining guide section maps | 7.4 |  | 0.683 |
-| walker |  | 9715 | 135 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 7, sub: 0, line: 94 } |  |  | 0.683 |
-| walker |  | 9888 | 173 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 2, sub: 0, line: 34 } |  |  | 0.683 |
+| walker |  | 9757 | 173 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 2, sub: 0, line: 34 } |  |  | 0.683 |
+| walker |  | 9972 | 215 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 1, sub: 0, line: 14 } |  |  | 0.683 |
 | ns | 9981 |  | 289 | Remaining packaging metadata and CI | 7.5 | 1.7 | 0.671 |
-| walker |  | 9990 | 102 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 1, sub: 0, line: 14 } |  |  | 0.671 |
+| walker |  | 9995 | 23 | Code::CodeKey { rung: Decl, file: src/posting/themes.py, decl: 8, sub: 0, line: 106 } |  |  | 0.671 |

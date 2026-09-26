@@ -110,103 +110,103 @@ Score(3000)=0.547 I=0.867 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 2695 | 72 | Code::CodeKey { rung: Decl, file: crates/toasty-cli/src/lib.rs, decl: 8, sub: 0, line: 60 } |  |  | 0.572 |
 | walker |  | 2803 | 108 | Code::CodeKey { rung: Decl, file: crates/toasty-cli/src/lib.rs, decl: 2, sub: 0, line: 18 } |  |  | 0.572 |
 | walker |  | 2847 | 44 | Code::CodeKey { rung: Decl, file: crates/toasty-cli/src/lib.rs, decl: 7, sub: 0, line: 44 } |  |  | 0.572 |
-| walker |  | 2860 | 13 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 5, sub: 0, line: 33 } |  |  | 0.572 |
 | ns | 2919 |  | 262 | The `Relation` trait and the three relation wrapper types | 2.11 |  | 0.547 |
-| walker |  | 2964 | 104 | Code::CodeKey { rung: Names, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
-| walker |  | 2984 | 20 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 1, sub: 0, line: 29 } |  |  | 0.547 |
-| walker |  | 3006 | 22 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 2, sub: 0, line: 34 } |  |  | 0.547 |
-| walker |  | 3039 | 33 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 10, sub: 0, line: 95 } |  |  | 0.547 |
-| walker |  | 3096 | 57 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 20, sub: 0, line: 344 } |  |  | 0.547 |
+| walker |  | 2951 | 104 | Code::CodeKey { rung: Names, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
+| walker |  | 2971 | 20 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 1, sub: 0, line: 29 } |  |  | 0.547 |
+| walker |  | 2993 | 22 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 2, sub: 0, line: 34 } |  |  | 0.547 |
+| walker |  | 3026 | 33 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 10, sub: 0, line: 95 } |  |  | 0.547 |
+| walker |  | 3083 | 57 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 20, sub: 0, line: 344 } |  |  | 0.547 |
 | ns | 3118 |  | 199 | Result streaming: `Cursor<M>` and `Page<M>` | 2.12 |  | 0.534 |
-| walker |  | 3157 | 61 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 11, sub: 0, line: 101 } |  |  | 0.534 |
-| walker |  | 3248 | 91 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 15, sub: 0, line: 156 } |  |  | 0.534 |
-| walker |  | 3279 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 18, sub: 0, line: 169 } |  |  | 0.534 |
-| walker |  | 3338 | 59 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 19, sub: 0, line: 175 } |  |  | 0.534 |
+| walker |  | 3144 | 61 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 11, sub: 0, line: 101 } |  |  | 0.534 |
+| walker |  | 3235 | 91 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 15, sub: 0, line: 156 } |  |  | 0.534 |
+| walker |  | 3266 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 18, sub: 0, line: 169 } |  |  | 0.534 |
+| walker |  | 3325 | 59 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 19, sub: 0, line: 175 } |  |  | 0.534 |
 | ns | 3353 |  | 235 | Write-side builders: `CreateMany` and `Association` linking | 2.13 |  | 0.524 |
-| walker |  | 3463 | 125 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 4, sub: 0, line: 40 } |  |  | 0.524 |
+| walker |  | 3450 | 125 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 4, sub: 0, line: 40 } |  |  | 0.524 |
 | ns | 3475 |  | 122 | examples/ tree, all four examples (complete) | 3.1 |  | 0.515 |
-| walker |  | 3569 | 106 | Code::CodeKey { rung: Names, file: crates/std-util/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
-| walker |  | 3677 | 108 | Code::CodeKey { rung: Names, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
-| walker |  | 3698 | 21 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 15, sub: 0, line: 258 } |  |  | 0.515 |
-| walker |  | 3726 | 28 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 2, sub: 0, line: 29 } |  |  | 0.515 |
+| walker |  | 3556 | 106 | Code::CodeKey { rung: Names, file: crates/std-util/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
+| walker |  | 3664 | 108 | Code::CodeKey { rung: Names, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
+| walker |  | 3685 | 21 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 15, sub: 0, line: 258 } |  |  | 0.515 |
+| walker |  | 3713 | 28 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 2, sub: 0, line: 29 } |  |  | 0.515 |
+| walker |  | 3742 | 29 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 1, sub: 0, line: 23 } |  |  | 0.490 |
 | ns | 3742 |  | 267 | Canonical model definitions (examples/hello-toasty/src/main.rs:1-31) | 3.2 |  | 0.490 |
-| walker |  | 3755 | 29 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 1, sub: 0, line: 23 } |  |  | 0.490 |
-| walker |  | 3786 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 10, sub: 0, line: 177 } |  |  | 0.490 |
-| walker |  | 3863 | 77 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 11, sub: 0, line: 183 } |  |  | 0.490 |
+| walker |  | 3773 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 10, sub: 0, line: 177 } |  |  | 0.490 |
+| walker |  | 3850 | 77 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 11, sub: 0, line: 183 } |  |  | 0.490 |
+| walker |  | 3891 | 41 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 13, sub: 0, line: 195 } |  |  | 0.490 |
 | ns | 3894 |  | 152 | Opening a database: builder, connection URL, push_schema | 3.3 |  | 0.479 |
-| walker |  | 3904 | 41 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 13, sub: 0, line: 195 } |  |  | 0.479 |
-| walker |  | 3993 | 89 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 17, sub: 0, line: 267 } |  |  | 0.479 |
-| walker |  | 4024 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 20, sub: 0, line: 355 } |  |  | 0.479 |
-| walker |  | 4080 | 56 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 21, sub: 0, line: 390 } |  |  | 0.479 |
+| walker |  | 3980 | 89 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 17, sub: 0, line: 267 } |  |  | 0.479 |
+| walker |  | 4011 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 20, sub: 0, line: 355 } |  |  | 0.479 |
+| walker |  | 4067 | 56 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 21, sub: 0, line: 390 } |  |  | 0.479 |
 | ns | 4116 |  | 222 | CRUD and relation walkthrough (hello-toasty main body) | 3.4 |  | 0.469 |
-| walker |  | 4204 | 124 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 4, sub: 0, line: 79 } |  |  | 0.469 |
-| walker |  | 4214 | 10 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 14, sub: 0, line: 215 } |  |  | 0.469 |
-| walker |  | 4237 | 23 | Fs::DirListing { dir: examples/todo-with-cli } |  |  | 0.482 |
-| walker |  | 4244 | 7 | Fs::DirListing { dir: examples/todo-with-cli/src } |  |  | 0.488 |
-| walker |  | 4252 | 8 | Fs::DirListing { dir: examples/todo-with-cli/src/bin } |  |  | 0.495 |
-| walker |  | 4330 | 78 | Code::CodeKey { rung: Names, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.496 |
+| walker |  | 4191 | 124 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 4, sub: 0, line: 79 } |  |  | 0.469 |
+| walker |  | 4201 | 10 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 14, sub: 0, line: 215 } |  |  | 0.469 |
+| walker |  | 4224 | 23 | Fs::DirListing { dir: examples/todo-with-cli } |  |  | 0.482 |
+| walker |  | 4231 | 7 | Fs::DirListing { dir: examples/todo-with-cli/src } |  |  | 0.488 |
+| walker |  | 4239 | 8 | Fs::DirListing { dir: examples/todo-with-cli/src/bin } |  |  | 0.495 |
+| walker |  | 4317 | 78 | Code::CodeKey { rung: Names, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.496 |
+| walker |  | 4340 | 23 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 13, sub: 0, line: 122 } |  |  | 0.496 |
 | ns | 4343 |  | 227 | Composite keys and has_one: the two variant example models | 3.5 |  | 0.480 |
-| walker |  | 4353 | 23 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 13, sub: 0, line: 122 } |  |  | 0.480 |
-| walker |  | 4381 | 28 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 1, sub: 0, line: 22 } |  |  | 0.480 |
-| walker |  | 4426 | 45 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 14, sub: 0, line: 127 } |  |  | 0.480 |
-| walker |  | 4492 | 66 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 2, sub: 0, line: 28 } |  |  | 0.480 |
+| walker |  | 4368 | 28 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 1, sub: 0, line: 22 } |  |  | 0.480 |
+| walker |  | 4413 | 45 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 14, sub: 0, line: 127 } |  |  | 0.480 |
+| walker |  | 4479 | 66 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 2, sub: 0, line: 28 } |  |  | 0.480 |
 | ns | 4547 |  | 204 | todo-with-cli: `create_db`, the CLI binary, and Toasty.toml | 3.6 |  | 0.466 |
-| walker |  | 4587 | 95 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 17, sub: 0, line: 142 } |  |  | 0.466 |
-| walker |  | 4618 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 20, sub: 0, line: 256 } |  |  | 0.466 |
-| walker |  | 4674 | 56 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 21, sub: 0, line: 288 } |  |  | 0.466 |
-| walker |  | 4815 | 141 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 6, sub: 0, line: 59 } |  |  | 0.466 |
-| walker |  | 4828 | 13 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.466 |
-| walker |  | 4895 | 67 | Code::CodeKey { rung: Names, file: crates/toasty-sql/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
+| walker |  | 4574 | 95 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 17, sub: 0, line: 142 } |  |  | 0.466 |
+| walker |  | 4605 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 20, sub: 0, line: 256 } |  |  | 0.466 |
+| walker |  | 4661 | 56 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 21, sub: 0, line: 288 } |  |  | 0.466 |
+| walker |  | 4802 | 141 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 6, sub: 0, line: 59 } |  |  | 0.466 |
+| walker |  | 4869 | 67 | Code::CodeKey { rung: Names, file: crates/toasty-sql/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.467 |
 | ns | 4916 |  | 369 | toasty-core source tree: driver, error, schema (complete) | 4.1 |  | 0.554 |
 | ns | 5075 |  | 159 | toasty-core public surface (src/lib.rs, complete file) | 4.2 |  | 0.543 |
-| walker |  | 5304 | 409 | Fs::DirListing { dir: crates/toasty-core/src/stmt } |  |  | 0.549 |
+| walker |  | 5278 | 409 | Fs::DirListing { dir: crates/toasty-core/src/stmt } |  |  | 0.549 |
 | ns | 5306 |  | 231 | The `Schema` triple: app schema, db schema, mapping | 4.3 |  | 0.536 |
-| walker |  | 5490 | 186 | Code::CodeKey { rung: Names, file: crates/toasty-driver-integration-suite/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.536 |
+| walker |  | 5464 | 186 | Code::CodeKey { rung: Names, file: crates/toasty-driver-integration-suite/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.536 |
+| walker |  | 5558 | 94 | Code::CodeKey { rung: Names, file: crates/toasty-driver-mysql/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.536 |
 | ns | 5567 |  | 261 | The `Driver` trait — the database extension point | 4.4 |  | 0.526 |
-| walker |  | 5584 | 94 | Code::CodeKey { rung: Names, file: crates/toasty-driver-mysql/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
-| walker |  | 5604 | 20 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 10, sub: 0, line: 132 } |  |  | 0.526 |
-| walker |  | 5625 | 21 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 14, sub: 0, line: 184 } |  |  | 0.526 |
-| walker |  | 5651 | 26 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 2, sub: 0, line: 27 } |  |  | 0.526 |
-| walker |  | 5680 | 29 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 1, sub: 0, line: 21 } |  |  | 0.526 |
-| walker |  | 5730 | 50 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 11, sub: 0, line: 137 } |  |  | 0.526 |
+| walker |  | 5578 | 20 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 10, sub: 0, line: 132 } |  |  | 0.526 |
+| walker |  | 5599 | 21 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 14, sub: 0, line: 184 } |  |  | 0.526 |
+| walker |  | 5625 | 26 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 2, sub: 0, line: 27 } |  |  | 0.526 |
+| walker |  | 5654 | 29 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 1, sub: 0, line: 21 } |  |  | 0.526 |
+| walker |  | 5704 | 50 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 11, sub: 0, line: 137 } |  |  | 0.526 |
 | ns | 5750 |  | 183 | The `Connection` trait: exec, push_schema, migrations | 4.5 |  | 0.520 |
-| walker |  | 5819 | 89 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 16, sub: 0, line: 190 } |  |  | 0.520 |
-| walker |  | 5850 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 19, sub: 0, line: 329 } |  |  | 0.520 |
+| walker |  | 5793 | 89 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 16, sub: 0, line: 190 } |  |  | 0.520 |
+| walker |  | 5824 | 31 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 19, sub: 0, line: 329 } |  |  | 0.520 |
 | ns | 5869 |  | 119 | The eight driver `Operation` enum variants | 4.6 |  | 0.515 |
-| walker |  | 5906 | 56 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 20, sub: 0, line: 358 } |  |  | 0.515 |
-| walker |  | 6026 | 120 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 4, sub: 0, line: 62 } |  |  | 0.515 |
-| walker |  | 6041 | 15 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 3, sub: 0, line: 31 } |  |  | 0.515 |
-| walker |  | 6056 | 15 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 3, sub: 0, line: 30 } |  |  | 0.515 |
-| walker |  | 6194 | 138 | Code::CodeKey { rung: Names, file: crates/toasty-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
-| walker |  | 6210 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 1, sub: 0, line: 13 } |  |  | 0.532 |
-| walker |  | 6226 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 6, sub: 0, line: 38 } |  |  | 0.532 |
-| walker |  | 6242 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-core/src/lib.rs, decl: 1, sub: 0, line: 16 } |  |  | 0.537 |
-| walker |  | 6258 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 12, sub: 0, line: 185 } |  |  | 0.537 |
-| walker |  | 6274 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 5, sub: 0, line: 54 } |  |  | 0.537 |
-| ns | 6278 |  | 409 | The statement AST node roster (crates/toasty-core/src/stmt/, complete) | 4.7 |  | 0.587 |
-| walker |  | 6349 | 75 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.587 |
-| ns | 6405 |  | 127 | The top-level `Statement` enum (toasty-core/src/stmt.rs) | 4.8 |  | 0.580 |
-| walker |  | 6635 | 286 | Code::CodeKey { rung: Names, file: crates/toasty/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.631 |
-| ns | 6652 |  | 247 | `Capability`: the complete feature-advertisement field set | 4.9 |  | 0.622 |
-| walker |  | 6672 | 37 | Toml::Dependencies { file: crates/std-util/Cargo.toml } |  |  | 0.622 |
-| walker |  | 6689 | 17 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 3, sub: 0, line: 20 } |  |  | 0.622 |
-| walker |  | 6706 | 17 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 7, sub: 0, line: 44 } |  |  | 0.622 |
-| walker |  | 6724 | 18 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 4, sub: 0, line: 28 } |  |  | 0.622 |
-| walker |  | 6777 | 53 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-driver-integration-suite/src/stmt.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
-| walker |  | 6900 | 123 | Code::CodeKey { rung: Names, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 5880 | 56 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 20, sub: 0, line: 358 } |  |  | 0.515 |
+| walker |  | 6000 | 120 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-mysql/src/lib.rs, decl: 4, sub: 0, line: 62 } |  |  | 0.515 |
+| walker |  | 6013 | 13 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 5, sub: 0, line: 33 } |  |  | 0.515 |
+| walker |  | 6026 | 13 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.515 |
+| walker |  | 6164 | 138 | Code::CodeKey { rung: Names, file: crates/toasty-core/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.532 |
+| walker |  | 6239 | 75 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.532 |
+| ns | 6278 |  | 409 | The statement AST node roster (crates/toasty-core/src/stmt/, complete) | 4.7 |  | 0.583 |
+| ns | 6405 |  | 127 | The top-level `Statement` enum (toasty-core/src/stmt.rs) | 4.8 |  | 0.576 |
+| walker |  | 6525 | 286 | Code::CodeKey { rung: Names, file: crates/toasty/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.627 |
+| walker |  | 6562 | 37 | Toml::Dependencies { file: crates/std-util/Cargo.toml } |  |  | 0.627 |
+| walker |  | 6577 | 15 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 3, sub: 0, line: 31 } |  |  | 0.627 |
+| walker |  | 6592 | 15 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 3, sub: 0, line: 30 } |  |  | 0.627 |
+| walker |  | 6645 | 53 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-driver-integration-suite/src/stmt.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.627 |
+| ns | 6652 |  | 247 | `Capability`: the complete feature-advertisement field set | 4.9 |  | 0.618 |
+| walker |  | 6661 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 1, sub: 0, line: 13 } |  |  | 0.618 |
+| walker |  | 6677 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 6, sub: 0, line: 38 } |  |  | 0.618 |
+| walker |  | 6693 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-core/src/lib.rs, decl: 1, sub: 0, line: 16 } |  |  | 0.622 |
+| walker |  | 6709 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 12, sub: 0, line: 185 } |  |  | 0.622 |
+| walker |  | 6725 | 16 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 5, sub: 0, line: 54 } |  |  | 0.622 |
+| walker |  | 6848 | 123 | Code::CodeKey { rung: Names, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 6856 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 2, sub: 0, line: 15 } |  |  | 0.622 |
+| walker |  | 6864 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 3, sub: 0, line: 20 } |  |  | 0.622 |
+| walker |  | 6872 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 4, sub: 0, line: 27 } |  |  | 0.622 |
+| walker |  | 6881 | 9 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.622 |
+| walker |  | 6892 | 11 | Code::CodeKey { rung: Body, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 2, sub: 0, line: 15 } |  |  | 0.622 |
 | ns | 6902 |  | 250 | `StorageTypes`, `SchemaMutations`, and the four per-database presets | 4.10 |  | 0.614 |
-| walker |  | 6908 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 2, sub: 0, line: 15 } |  |  | 0.614 |
-| walker |  | 6916 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 3, sub: 0, line: 20 } |  |  | 0.614 |
-| walker |  | 6924 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 4, sub: 0, line: 27 } |  |  | 0.614 |
-| walker |  | 6933 | 9 | Code::CodeKey { rung: Decl, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.614 |
-| walker |  | 6944 | 11 | Code::CodeKey { rung: Body, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 2, sub: 0, line: 15 } |  |  | 0.614 |
-| walker |  | 6956 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 3, sub: 0, line: 20 } |  |  | 0.614 |
-| walker |  | 7018 | 62 | Code::CodeKey { rung: Names, file: crates/toasty-codegen/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.614 |
-| walker |  | 7031 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.614 |
-| walker |  | 7078 | 47 | Toml::Dependencies { file: crates/toasty-driver-integration-suite-macros/Cargo.toml } |  |  | 0.614 |
+| walker |  | 6954 | 62 | Code::CodeKey { rung: Names, file: crates/toasty-codegen/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.614 |
+| walker |  | 6971 | 17 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 3, sub: 0, line: 20 } |  |  | 0.614 |
+| walker |  | 6988 | 17 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 7, sub: 0, line: 44 } |  |  | 0.614 |
+| walker |  | 7006 | 18 | Code::CodeKey { rung: Doc, file: crates/toasty-cli/src/lib.rs, decl: 4, sub: 0, line: 28 } |  |  | 0.614 |
+| walker |  | 7053 | 47 | Toml::Dependencies { file: crates/toasty-driver-integration-suite-macros/Cargo.toml } |  |  | 0.614 |
+| walker |  | 7065 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 3, sub: 0, line: 20 } |  |  | 0.614 |
 | ns | 7104 |  | 202 | The fifteen `ErrorKind` variants (toasty-core/src/error.rs) | 4.11 |  | 0.605 |
-| walker |  | 7127 | 49 | Toml::Dependencies { file: crates/toasty-codegen/Cargo.toml } |  |  | 0.605 |
-| walker |  | 7165 | 38 | Fs::DirListing { dir: crates/toasty-sql/tests } |  |  | 0.606 |
+| walker |  | 7114 | 49 | Toml::Dependencies { file: crates/toasty-codegen/Cargo.toml } |  |  | 0.605 |
+| walker |  | 7152 | 38 | Fs::DirListing { dir: crates/toasty-sql/tests } |  |  | 0.606 |
+| walker |  | 7165 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.606 |
 | walker |  | 7206 | 41 | Fs::DirListing { dir: tests/tests } |  |  | 0.606 |
 | walker |  | 7304 | 98 | Code::CodeKey { rung: Names, file: crates/toasty-macros/src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
 | walker |  | 7312 | 8 | Code::CodeKey { rung: Decl, file: crates/toasty-macros/src/lib.rs, decl: 3, sub: 0, line: 25 } |  |  | 0.608 |
@@ -217,58 +217,56 @@ Score(3000)=0.547 I=0.867 C=0.345 ns_rows≤3K=18/52 grid(1000/1442/2080/3000/43
 | walker |  | 7400 | 8 | Code::CodeKey { rung: Body, file: crates/toasty-macros/src/lib.rs, decl: 3, sub: 0, line: 25 } |  |  | 0.616 |
 | walker |  | 7413 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-macros/src/lib.rs, decl: 4, sub: 0, line: 30 } |  |  | 0.617 |
 | walker |  | 7426 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-macros/src/lib.rs, decl: 5, sub: 0, line: 35 } |  |  | 0.619 |
-| walker |  | 7435 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-cli/src/lib.rs, decl: 5, sub: 0, line: 33 } |  |  | 0.619 |
 | ns | 7473 |  | 369 | crates/toasty/src/engine tree (complete) | 5.1 |  | 0.649 |
-| walker |  | 7498 | 63 | Toml::Dependencies { file: crates/toasty-macros/Cargo.toml } |  |  | 0.649 |
-| walker |  | 7549 | 51 | Fs::DirListing { dir: tests/src } |  |  | 0.649 |
-| walker |  | 7567 | 18 | Fs::DirListing { dir: tests/src/db } |  |  | 0.650 |
-| walker |  | 7576 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 12, sub: 0, line: 138 } |  |  | 0.650 |
-| walker |  | 7585 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 15, sub: 0, line: 185 } |  |  | 0.650 |
-| walker |  | 7643 | 58 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/stmt/value_cmp.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.650 |
-| walker |  | 7654 | 11 | Code::CodeKey { rung: Body, file: crates/toasty-cli/src/lib.rs, decl: 4, sub: 0, line: 28 } |  |  | 0.650 |
-| walker |  | 7726 | 72 | Toml::Operational { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.650 |
-| walker |  | 7735 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 3, sub: 0, line: 35 } |  |  | 0.650 |
-| walker |  | 7744 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 12, sub: 0, line: 102 } |  |  | 0.650 |
-| walker |  | 7754 | 10 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 6, sub: 0, line: 68 } |  |  | 0.650 |
+| walker |  | 7489 | 63 | Toml::Dependencies { file: crates/toasty-macros/Cargo.toml } |  |  | 0.649 |
+| walker |  | 7540 | 51 | Fs::DirListing { dir: tests/src } |  |  | 0.649 |
+| walker |  | 7558 | 18 | Fs::DirListing { dir: tests/src/db } |  |  | 0.650 |
+| walker |  | 7567 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-cli/src/lib.rs, decl: 5, sub: 0, line: 33 } |  |  | 0.650 |
+| walker |  | 7625 | 58 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/stmt/value_cmp.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.650 |
+| walker |  | 7697 | 72 | Toml::Operational { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.650 |
 | ns | 7756 |  | 283 | `Engine`: the four-phase pipeline doc and `exec` entry point | 5.2 |  | 0.642 |
-| walker |  | 7833 | 79 | Toml::Dependencies { file: crates/toasty-driver-dynamodb/Cargo.toml } |  |  | 0.642 |
+| walker |  | 7776 | 79 | Toml::Dependencies { file: crates/toasty-driver-dynamodb/Cargo.toml } |  |  | 0.642 |
+| walker |  | 7785 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 12, sub: 0, line: 138 } |  |  | 0.642 |
+| walker |  | 7865 | 80 | Toml::Dependencies { file: crates/toasty-driver-sqlite/Cargo.toml } |  |  | 0.642 |
 | ns | 7872 |  | 116 | engine.rs module roster and private-module boundary | 5.3 |  | 0.635 |
-| walker |  | 7913 | 80 | Toml::Dependencies { file: crates/toasty-driver-sqlite/Cargo.toml } |  |  | 0.635 |
-| walker |  | 7923 | 10 | Code::CodeKey { rung: Body, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.635 |
-| walker |  | 8007 | 84 | Toml::Operational { file: crates/toasty-driver-postgresql/Cargo.toml } |  |  | 0.635 |
-| walker |  | 8095 | 88 | Toml::Operational { file: crates/toasty-core/Cargo.toml } |  |  | 0.635 |
+| walker |  | 7874 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 15, sub: 0, line: 185 } |  |  | 0.635 |
+| walker |  | 7885 | 11 | Code::CodeKey { rung: Body, file: crates/toasty-cli/src/lib.rs, decl: 4, sub: 0, line: 28 } |  |  | 0.635 |
+| walker |  | 7969 | 84 | Toml::Operational { file: crates/toasty-driver-postgresql/Cargo.toml } |  |  | 0.635 |
+| walker |  | 7978 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 3, sub: 0, line: 35 } |  |  | 0.635 |
+| walker |  | 7987 | 9 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 12, sub: 0, line: 102 } |  |  | 0.635 |
+| walker |  | 7997 | 10 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 6, sub: 0, line: 68 } |  |  | 0.635 |
+| walker |  | 8085 | 88 | Toml::Operational { file: crates/toasty-core/Cargo.toml } |  |  | 0.635 |
+| walker |  | 8095 | 10 | Code::CodeKey { rung: Body, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 4, sub: 0, line: 49 } |  |  | 0.635 |
 | ns | 8097 |  | 225 | The engine as a mini-program: query-engine.md execution model | 5.4 |  | 0.630 |
 | walker |  | 8138 | 43 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-integration-suite-macros/src/lib.rs, decl: 4, sub: 0, line: 27 } |  |  | 0.630 |
 | walker |  | 8149 | 11 | Code::CodeKey { rung: Body, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 8, sub: 0, line: 68 } |  |  | 0.630 |
-| walker |  | 8194 | 45 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 13, sub: 0, line: 195 } |  |  | 0.630 |
-| walker |  | 8207 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 5, sub: 0, line: 64 } |  |  | 0.630 |
-| walker |  | 8219 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 6, sub: 0, line: 46 } |  |  | 0.630 |
 | ns | 8225 |  | 128 | toasty-codegen tree: attribute parsing and expansion (complete) | 6.1 |  | 0.640 |
-| walker |  | 8386 | 167 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.640 |
-| ns | 8412 |  | 187 | The codegen entry points: `generate_model` / `generate_embed` | 6.2 |  | 0.635 |
-| walker |  | 8472 | 86 | Fs::DirListing { dir: tests/tests/ui } |  |  | 0.636 |
-| walker |  | 8586 | 114 | Toml::Dependencies { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.636 |
+| walker |  | 8316 | 167 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.640 |
+| walker |  | 8402 | 86 | Fs::DirListing { dir: tests/tests/ui } |  |  | 0.640 |
+| ns | 8412 |  | 187 | The codegen entry points: `generate_model` / `generate_embed` | 6.2 |  | 0.636 |
+| walker |  | 8516 | 114 | Toml::Dependencies { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.636 |
+| walker |  | 8561 | 45 | Code::CodeKey { rung: Doc, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 13, sub: 0, line: 195 } |  |  | 0.636 |
 | ns | 8638 |  | 226 | The inherent methods generated on every model | 6.3 |  | 0.631 |
-| walker |  | 8801 | 215 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.631 |
-| walker |  | 8814 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 5, sub: 0, line: 42 } |  |  | 0.631 |
+| walker |  | 8776 | 215 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.631 |
 | ns | 8839 |  | 201 | toasty-sql tree: serializer and DDL statement types (complete) | 6.4 |  | 0.644 |
 | ns | 8906 |  | 67 | toasty-sql public surface (src/lib.rs, complete file) | 6.5 |  | 0.647 |
 | ns | 9034 |  | 128 | The four driver crates and their source files (complete) | 6.6 |  | 0.654 |
 | ns | 9175 |  | 141 | The SQLite driver as the reference `Driver` implementation | 6.7 |  | 0.656 |
 | ns | 9236 |  | 61 | toasty-cli tree: the migration subcommand files (complete) | 6.8 |  | 0.659 |
-| walker |  | 9444 | 630 | Plaintext::Whole { file: compose.yaml } |  |  | 0.659 |
+| walker |  | 9406 | 630 | Plaintext::Whole { file: compose.yaml } |  |  | 0.659 |
+| walker |  | 9419 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-mysql/src/lib.rs, decl: 5, sub: 0, line: 64 } |  |  | 0.659 |
+| walker |  | 9431 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 6, sub: 0, line: 46 } |  |  | 0.659 |
 | ns | 9452 |  | 216 | The workspace `tests/` crate and `benches/` (complete) | 7.1 |  | 0.668 |
-| walker |  | 9485 | 41 | Toml::Identity { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.668 |
-| walker |  | 9526 | 41 | Toml::Identity { file: crates/toasty-driver-postgresql/Cargo.toml } |  |  | 0.668 |
-| walker |  | 9538 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 6, sub: 0, line: 85 } |  |  | 0.668 |
-| walker |  | 9580 | 42 | Toml::Identity { file: crates/toasty/Cargo.toml } |  |  | 0.668 |
-| walker |  | 9594 | 14 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 16, sub: 0, line: 158 } |  |  | 0.668 |
-| walker |  | 9706 | 112 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/stmt/like.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
-| walker |  | 9719 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 5, sub: 0, line: 81 } |  |  | 0.668 |
-| walker |  | 9735 | 16 | Code::CodeKey { rung: Body, file: crates/toasty-driver-sqlite/src/lib.rs, decl: 5, sub: 0, line: 54 } |  |  | 0.656 |
+| walker |  | 9472 | 41 | Toml::Identity { file: crates/toasty-driver-mysql/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9513 | 41 | Toml::Identity { file: crates/toasty-driver-postgresql/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9555 | 42 | Toml::Identity { file: crates/toasty/Cargo.toml } |  |  | 0.668 |
+| walker |  | 9667 | 112 | Code::CodeKey { rung: ModuleDoc, file: crates/toasty-core/src/stmt/like.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.668 |
+| walker |  | 9680 | 13 | Code::CodeKey { rung: Body, file: crates/toasty-driver-dynamodb/src/lib.rs, decl: 5, sub: 0, line: 42 } |  |  | 0.668 |
+| walker |  | 9728 | 48 | Toml::Identity { file: crates/toasty-sql/Cargo.toml } |  |  | 0.668 |
 | ns | 9735 |  | 283 | The driver integration suite and its test roster (complete) | 7.2 |  | 0.656 |
-| walker |  | 9783 | 48 | Toml::Identity { file: crates/toasty-sql/Cargo.toml } |  |  | 0.656 |
 | ns | 9858 |  | 123 | The `toasty` crate's complete feature-flag set | 7.3 |  | 0.652 |
-| walker |  | 9928 | 145 | Toml::Dependencies { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
-| walker |  | 9975 | 47 | Toml::Identity { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
-| walker |  | 9993 | 18 | Toml::Identity { file: crates/toasty-core/Cargo.toml } |  |  | 0.652 |
+| walker |  | 9873 | 145 | Toml::Dependencies { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
+| walker |  | 9920 | 47 | Toml::Identity { file: crates/toasty-cli/Cargo.toml } |  |  | 0.652 |
+| walker |  | 9932 | 12 | Code::CodeKey { rung: Body, file: crates/toasty-driver-postgresql/src/lib.rs, decl: 6, sub: 0, line: 85 } |  |  | 0.652 |
+| walker |  | 9981 | 49 | Toml::Identity { file: crates/toasty-core/Cargo.toml } |  |  | 0.652 |
+| walker |  | 9988 | 7 | Toml::Dependencies { file: crates/toasty-core/Cargo.toml } |  |  | 0.652 |

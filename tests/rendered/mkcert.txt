@@ -200,7 +200,7 @@ truststore_darwin.go
   20→	CertutilInstallHelp = "brew install nss"
   21→	NSSBrowsers         = "Firefox"
   22→)
-  24→// https://github.com/golang/go/issues/24652#issuecomment-399826583
+  …
   25→var trustSettings []interface{}
   26→var _, _ = plist.Unmarshal(trustSettingsData, &trustSettings)
   27→var trustSettingsData = []byte(`

@@ -1,4 +1,4 @@
-Score(3000)=0.624 I=0.805 C=0.485 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.437/0.471/0.523/0.624/0.777/0.855/0.790
+Score(3000)=0.608 I=0.801 C=0.461 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/4327/6240/9000)=0.437/0.471/0.521/0.608/0.772/0.855/0.790
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -52,36 +52,36 @@ Score(3000)=0.624 I=0.805 C=0.485 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 1671 | 38 | Code::CodeKey { rung: Body, file: sort.go, decl: 1, sub: 0, line: 7 } |  |  | 0.447 |
 | walker |  | 1707 | 36 | Code::CodeKey { rung: Body, file: group.go, decl: 3, sub: 0, line: 36 } |  |  | 0.453 |
 | ns | 1770 |  | 190 | `ErrorOrNil` and `WrappedErrors` doc comments | 2.5 | 1.7 | 0.473 |
-| walker |  | 1882 | 175 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.479 |
-| ns | 1945 |  | 175 | `Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support | 2.6 | 1.7 | 0.496 |
-| ns | 2063 |  | 118 | `Flatten` and `Prefix` doc comments | 2.7 | 1.6 | 0.483 |
-| walker |  | 2132 | 250 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.554 |
-| ns | 2174 |  | 111 | `Group` doc comments: Go and Wait | 2.8 | 1.6 | 0.561 |
-| ns | 2383 |  | 209 | format.go semantics: the formatter hook and the default output strings | 2.9 | 1.6 | 0.538 |
-| walker |  | 2508 | 376 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.532 |
-| ns | 2508 |  | 125 | README: customizing the message via `ErrorFormat` | 2.10 |  | 0.532 |
-| ns | 2687 |  | 179 | README: getting at the individual errors | 2.11 |  | 0.512 |
-| walker |  | 2849 | 341 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.524 |
-| ns | 2990 |  | 303 | README: `errors.As` extraction and `errors.Is` sentinel checks | 2.12 |  | 0.494 |
-| walker |  | 3088 | 239 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.631 |
-| ns | 3125 |  | 135 | README: returning a multierror only if there are errors | 2.13 |  | 0.614 |
-| ns | 3302 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.599 |
-| walker |  | 3395 | 307 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.640 |
-| walker |  | 3483 | 88 | Code::CodeKey { rung: Doc, file: prefix.go, decl: 1, sub: 0, line: 16 } |  |  | 0.661 |
-| ns | 3485 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.677 |
-| ns | 3645 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.688 |
-| walker |  | 3782 | 299 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.743 |
+| ns | 1945 |  | 175 | `Error.Unwrap` doc comment: ordering, shallow copy, errors.As/Is support | 2.6 | 1.7 | 0.454 |
+| walker |  | 1957 | 250 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.530 |
+| ns | 2063 |  | 118 | `Flatten` and `Prefix` doc comments | 2.7 | 1.6 | 0.516 |
+| ns | 2174 |  | 111 | `Group` doc comments: Go and Wait | 2.8 | 1.6 | 0.525 |
+| walker |  | 2333 | 376 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.542 |
+| ns | 2383 |  | 209 | format.go semantics: the formatter hook and the default output strings | 2.9 | 1.6 | 0.520 |
+| ns | 2508 |  | 125 | README: customizing the message via `ErrorFormat` | 2.10 |  | 0.499 |
+| walker |  | 2674 | 341 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.511 |
+| ns | 2687 |  | 179 | README: getting at the individual errors | 2.11 |  | 0.492 |
+| walker |  | 2913 | 239 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.634 |
+| ns | 2990 |  | 303 | README: `errors.As` extraction and `errors.Is` sentinel checks | 2.12 |  | 0.597 |
+| ns | 3125 |  | 135 | README: returning a multierror only if there are errors | 2.13 |  | 0.581 |
+| walker |  | 3220 | 307 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.624 |
+| ns | 3302 |  | 177 | `chain` doc comment: why the type exists and its precondition | 2.14 | 1.8 | 0.610 |
+| walker |  | 3395 | 175 | Code::CodeKey { rung: Doc, file: multierror.go, decl: 6, sub: 0, line: 71 } |  |  | 0.640 |
+| ns | 3485 |  | 183 | README migration guide: basic aggregation with `errors.Join` | 2.15 |  | 0.658 |
+| ns | 3645 |  | 160 | README migration guide: replacing custom formatting | 2.16 |  | 0.670 |
+| walker |  | 3694 | 299 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.726 |
+| walker |  | 3782 | 88 | Code::CodeKey { rung: Doc, file: prefix.go, decl: 1, sub: 0, line: 16 } |  |  | 0.743 |
 | walker |  | 3844 | 62 | Code::CodeKey { rung: Body, file: multierror.go, decl: 3, sub: 0, line: 31 } |  |  | 0.748 |
 | walker |  | 3943 | 99 | Code::CodeKey { rung: Body, file: flatten.go, decl: 1, sub: 0, line: 8 } |  |  | 0.752 |
 | ns | 3974 |  | 329 | README migration guide: replacing `Group` with a mutex collector | 2.17 |  | 0.763 |
 | walker |  | 4067 | 124 | Code::CodeKey { rung: Doc, file: append.go, decl: 1, sub: 0, line: 14 } |  |  | 0.781 |
-| walker |  | 4168 | 101 | Code::CodeKey { rung: Body, file: group.go, decl: 2, sub: 0, line: 20 } |  |  | 0.787 |
-| ns | 4294 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.748 |
-| walker |  | 4310 | 142 | Code::CodeKey { rung: Body, file: format.go, decl: 2, sub: 0, line: 17 } |  |  | 0.777 |
-| ns | 4464 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.776 |
-| ns | 4621 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.760 |
-| ns | 4753 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.744 |
-| walker |  | 4863 | 553 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.822 |
+| ns | 4294 |  | 320 | `Append` body: the type switch, flattening, and nil filtering | 3.1 | 1.6 | 0.743 |
+| ns | 4464 |  | 170 | Bodies of `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors` | 3.2 | 1.7 | 0.744 |
+| walker |  | 4620 | 553 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.826 |
+| ns | 4621 |  | 157 | `Error.Unwrap` body: empty/single fast paths and the shallow copy into `chain` | 3.3 | 1.7 | 0.808 |
+| walker |  | 4721 | 101 | Code::CodeKey { rung: Body, file: group.go, decl: 2, sub: 0, line: 20 } |  |  | 0.813 |
+| ns | 4753 |  | 132 | `chain` method bodies: Error/Unwrap/As/Is | 3.4 | 1.8 | 0.796 |
+| walker |  | 4863 | 142 | Code::CodeKey { rung: Body, file: format.go, decl: 2, sub: 0, line: 17 } |  |  | 0.822 |
 | ns | 4939 |  | 186 | flatten.go bodies: exported `Flatten` and the recursive helper | 3.5 | 1.6 | 0.808 |
 | walker |  | 5061 | 198 | Code::CodeKey { rung: Body, file: prefix.go, decl: 1, sub: 0, line: 16 } |  |  | 0.813 |
 | ns | 5137 |  | 198 | `Prefix` body: in-place rewrite of each wrapped error | 3.6 | 1.6 | 0.816 |

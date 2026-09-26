@@ -111,9 +111,6 @@ index.js
 lib/
   application.js
     …
-    36→/**
-    37→ * Application prototype.
-    38→ */
     40→var app = exports = module.exports = {};
     …
     59→app.init = function init() {
@@ -151,12 +148,7 @@ lib/
   express.js
     …
     27→exports = module.exports = createApplication;
-    29→/**
-    30→ * Create an express application.
-    31→ *
-    32→ * @return {Function}
-    33→ * @api public
-    34→ */
+    …
     36→function createApplication() {
     …
     62→exports.application = proto;
@@ -187,7 +179,6 @@ lib/
     171→req.acceptsCharsets = function(...charsets) {
     …
     185→req.acceptsLanguages = function(...languages) {
-    186→  return accepts(this).languages(...languages);
     …
     214→req.range = function range(size, options) {
     …
@@ -278,6 +269,11 @@ package.json
   52→    "once": "^1.4.0",
   53→    "parseurl": "^1.3.3",
   54→    "proxy-addr": "^2.0.7",
+  55→    "qs": "^6.14.2",
+  56→    "range-parser": "^1.2.1",
+  57→    "router": "^2.2.0",
+  58→    "send": "^1.1.0",
+  59→    "serve-static": "^2.2.0",
   …
   82→  "engines": {
   83→    "node": ">= 18"

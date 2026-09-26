@@ -86,6 +86,13 @@ README.md
   31→docker run --rm -i -v "$PWD:$PWD" -w "$PWD" ghcr.io/jqlang/jq:latest '.version' package.json
   32→```
   34→### Building from source
+  35→
+  36→#### Dependencies
+  37→
+  38→- libtool
+  39→- make
+  40→- automake
+  41→- autoconf
   …
   67→## Community & Support
   68→

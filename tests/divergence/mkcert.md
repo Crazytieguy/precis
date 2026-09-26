@@ -1,4 +1,4 @@
-Score(3000)=0.802 I=0.891 C=0.722 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.613/0.778/0.802/0.804/0.702/0.646
+Score(3000)=0.802 I=0.891 C=0.722 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/4327/6240/9000)=0.659/0.613/0.778/0.802/0.805/0.694/0.646
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,45 +44,45 @@ Score(3000)=0.802 I=0.891 C=0.722 ns_rows≤3K=19/48 grid(1000/1442/2080/3000/43
 | walker |  | 2683 | 268 | Code::CodeKey { rung: Decl, file: truststore_darwin.go, decl: 4, sub: 0, line: 27 } |  |  | 0.746 |
 | walker |  | 2838 | 155 | Code::CodeKey { rung: Names, file: truststore_linux.go, decl: 0, sub: 0, line: 0 } |  |  | 0.793 |
 | walker |  | 2861 | 23 | Code::CodeKey { rung: Decl, file: truststore_linux.go, decl: 1, sub: 0, line: 17 } |  |  | 0.800 |
-| walker |  | 2883 | 22 | Code::CodeKey { rung: Doc, file: truststore_darwin.go, decl: 2, sub: 0, line: 25 } |  |  | 0.800 |
 | ns | 2893 |  | 327 | NSS and Java constant blocks: the nssDBs / firefoxPaths search lists and the keytool state vars | 2.8 | 1.9 | 0.784 |
-| ns | 3259 |  | 366 | Linux platform detection: init() choosing the distro trust anchor directory and certutil install hint | 2.9 | 1.7 | 0.747 |
-| walker |  | 3265 | 382 | Code::CodeKey { rung: Names, file: truststore_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
-| walker |  | 3268 | 3 | Code::CodeKey { rung: Decl, file: truststore_windows.go, decl: 1, sub: 0, line: 19 } |  |  | 0.799 |
-| walker |  | 3271 | 3 | Code::CodeKey { rung: Decl, file: truststore_windows.go, decl: 2, sub: 0, line: 25 } |  |  | 0.799 |
-| walker |  | 3428 | 157 | Code::CodeKey { rung: Names, file: truststore_java.go, decl: 0, sub: 0, line: 0 } |  |  | 0.855 |
-| walker |  | 3431 | 3 | Code::CodeKey { rung: Decl, file: truststore_java.go, decl: 1, sub: 0, line: 21 } |  |  | 0.857 |
+| walker |  | 3243 | 382 | Code::CodeKey { rung: Names, file: truststore_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.837 |
+| walker |  | 3246 | 3 | Code::CodeKey { rung: Decl, file: truststore_windows.go, decl: 1, sub: 0, line: 19 } |  |  | 0.840 |
+| walker |  | 3249 | 3 | Code::CodeKey { rung: Decl, file: truststore_windows.go, decl: 2, sub: 0, line: 25 } |  |  | 0.840 |
+| ns | 3259 |  | 366 | Linux platform detection: init() choosing the distro trust anchor directory and certutil install hint | 2.9 | 1.7 | 0.799 |
+| walker |  | 3406 | 157 | Code::CodeKey { rung: Names, file: truststore_java.go, decl: 0, sub: 0, line: 0 } |  |  | 0.855 |
+| walker |  | 3409 | 3 | Code::CodeKey { rung: Decl, file: truststore_java.go, decl: 1, sub: 0, line: 21 } |  |  | 0.857 |
+| walker |  | 3431 | 22 | Code::CodeKey { rung: Doc, file: truststore_darwin.go, decl: 2, sub: 0, line: 25 } |  |  | 0.857 |
 | ns | 3644 |  | 385 | NSS detection: init() setting hasNSS, hasCertutil and certutilPath | 2.10 | 1.9 | 0.803 |
 | walker |  | 3717 | 286 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 0, line: 87 } |  |  | 0.837 |
 | walker |  | 3912 | 195 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.837 |
-| walker |  | 3937 | 25 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 3, sub: 0, line: 51 } |  |  | 0.837 |
 | ns | 3943 |  | 299 | Java detection: init() resolving JAVA_HOME, keytool and the cacerts keystore | 2.11 | 1.9 | 0.801 |
-| walker |  | 3978 | 41 | Code::CodeKey { rung: Doc, file: truststore_java.go, decl: 6, sub: 0, line: 110 } |  |  | 0.801 |
-| walker |  | 4019 | 41 | Code::CodeKey { rung: Doc, file: truststore_nss.go, decl: 6, sub: 0, line: 120 } |  |  | 0.801 |
-| walker |  | 4238 | 219 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 1, line: 87 } |  |  | 0.803 |
-| ns | 4374 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.760 |
-| walker |  | 4430 | 192 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 2, line: 87 } |  |  | 0.761 |
-| walker |  | 4585 | 155 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 3, line: 87 } |  |  | 0.763 |
+| walker |  | 4131 | 219 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 1, line: 87 } |  |  | 0.803 |
+| walker |  | 4323 | 192 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 2, line: 87 } |  |  | 0.805 |
+| ns | 4374 |  | 431 | Run(): CAROOT setup, loadCA, and the install/uninstall/warn dispatch | 3.1 | 1.4 | 0.761 |
+| walker |  | 4478 | 155 | Code::CodeKey { rung: Decl, file: main.go, decl: 4, sub: 3, line: 87 } |  |  | 0.763 |
+| walker |  | 4503 | 25 | Code::CodeKey { rung: Body, file: truststore_linux.go, decl: 3, sub: 0, line: 51 } |  |  | 0.763 |
+| walker |  | 4544 | 41 | Code::CodeKey { rung: Doc, file: truststore_java.go, decl: 6, sub: 0, line: 110 } |  |  | 0.763 |
+| walker |  | 4585 | 41 | Code::CodeKey { rung: Doc, file: truststore_nss.go, decl: 6, sub: 0, line: 120 } |  |  | 0.763 |
 | ns | 4776 |  | 402 | Run(): the CSR branch and the hostname/IP/email/URI argument validation | 3.2 | 3.1 | 0.726 |
 | walker |  | 4792 | 207 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.752 |
-| walker |  | 4860 | 68 | Code::CodeKey { rung: Body, file: cert.go, decl: 7, sub: 0, line: 202 } |  |  | 0.752 |
 | ns | 5035 |  | 259 | getCAROOT(): where the local CA is stored on each OS | 3.3 | 1.5 | 0.726 |
-| walker |  | 5155 | 295 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.726 |
+| walker |  | 5087 | 295 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.726 |
 | ns | 5189 |  | 154 | storeEnabled() and checkPlatform(): the TRUST_STORES gate and the system-store check | 3.4 | 1.5 | 0.708 |
-| walker |  | 5403 | 248 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.709 |
-| ns | 5543 |  | 354 | main(): flag conflict validation and construction of the mkcert value | 3.5 | 2.1 | 0.720 |
-| walker |  | 5642 | 239 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.720 |
+| walker |  | 5335 | 248 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.708 |
+| ns | 5543 |  | 354 | main(): flag conflict validation and construction of the mkcert value | 3.5 | 2.1 | 0.719 |
+| walker |  | 5574 | 239 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.719 |
+| walker |  | 5642 | 68 | Code::CodeKey { rung: Body, file: cert.go, decl: 7, sub: 0, line: 202 } |  |  | 0.720 |
 | ns | 5695 |  | 152 | main(): the flag.Usage override, -help and -version handling | 3.6 | 2.1 | 0.727 |
-| walker |  | 5703 | 61 | Code::CodeKey { rung: Doc, file: main.go, decl: 3, sub: 0, line: 85 } |  |  | 0.727 |
+| walker |  | 5873 | 231 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.727 |
 | ns | 5876 |  | 181 | commandWithSudo(): how every privileged trust-store command is wrapped | 3.7 | 1.5 | 0.716 |
-| walker |  | 5934 | 231 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.716 |
+| walker |  | 5934 | 61 | Code::CodeKey { rung: Doc, file: main.go, decl: 3, sub: 0, line: 85 } |  |  | 0.716 |
 | ns | 5961 |  | 85 | generateKey(): the key algorithm and sizes | 4.1 | 1.6 | 0.709 |
-| walker |  | 6016 | 82 | Code::CodeKey { rung: Body, file: cert.go, decl: 5, sub: 0, line: 166 } |  |  | 0.719 |
-| ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.699 |
-| walker |  | 6270 | 254 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.702 |
-| walker |  | 6387 | 117 | Code::CodeKey { rung: Body, file: cert.go, decl: 2, sub: 0, line: 37 } |  |  | 0.703 |
-| ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.685 |
-| walker |  | 6795 | 408 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.685 |
+| walker |  | 6188 | 254 | Markdown::Section { file: README.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.712 |
+| ns | 6227 |  | 266 | fileNames(): the output filename convention | 4.2 | 1.6 | 0.693 |
+| walker |  | 6270 | 82 | Code::CodeKey { rung: Body, file: cert.go, decl: 5, sub: 0, line: 166 } |  |  | 0.702 |
+| ns | 6558 |  | 331 | makeCert(): the leaf certificate template and its 2-year-3-month validity | 4.3 | 1.6 | 0.684 |
+| walker |  | 6678 | 408 | Markdown::Section { file: README.md, section_index: 8, keeps_default_concavity: false } |  |  | 0.684 |
+| walker |  | 6795 | 117 | Code::CodeKey { rung: Body, file: cert.go, decl: 2, sub: 0, line: 37 } |  |  | 0.685 |
 | walker |  | 6860 | 65 | Code::CodeKey { rung: Body, file: truststore_windows.go, decl: 7, sub: 0, line: 83 } |  |  | 0.685 |
 | walker |  | 6937 | 77 | Code::CodeKey { rung: Body, file: truststore_darwin.go, decl: 6, sub: 0, line: 105 } |  |  | 0.685 |
 | ns | 6981 |  | 423 | makeCert(): SAN classification and extended key usages | 4.4 | 4.3 | 0.667 |

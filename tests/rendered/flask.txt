@@ -283,6 +283,9 @@ src/flask/
     …
     64→T_shell_context_processor = t.TypeVar(
     …
+    67→T_teardown = t.TypeVar("T_teardown", bound=ft.TeardownCallable)
+    68→T_template_filter = t.TypeVar("T_template_filter", bound=ft.TemplateFilterCallable)
+    …
   blueprints.py
   cli.py
   config.py
@@ -302,10 +305,6 @@ src/flask/
       …
       77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
       …
-      102→    if current_app:
-      103→        return current_app.json.loads(s, **kwargs)
-      104→
-      105→    return _json.loads(s, **kwargs)
       108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
       …
       138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:

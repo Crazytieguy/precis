@@ -252,7 +252,9 @@ src/
     3→  prev: number | null
     4→  next: number | null
     5→  last: number
-    …
+    6→  pages: number
+    7→  items: number
+    8→  data: T[]
     9→}
     11→export function paginate<T>(items: T[], page: number, perPage: number): PaginationResult<T> {
     …
@@ -279,7 +281,6 @@ src/
     85→    this.#db = db
     …
     92→  has(name: string): boolean {
-    93→    return Object.prototype.hasOwnProperty.call(this.#db?.data, name)
     …
     96→  findById(name: string, id: string, query: { _embed?: string[] | string }): Item | undefined {
     …
@@ -303,10 +304,8 @@ src/
     191→    return this.#updateOrPatch(name, body, true)
     …
     194→  async updateById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
-    195→    return this.#updateOrPatchById(name, id, body, false)
     …
     198→  async patchById(name: string, id: string, body: Item = {}): Promise<Item | undefined> {
-    199→    return this.#updateOrPatchById(name, id, body, true)
     …
     202→  async destroyById(
     203→    name: string,
@@ -316,6 +315,10 @@ src/
     …
     222→}
   where-operators.ts
+    1→export const WHERE_OPERATORS = [
+    …
+    14→export type WhereOperator = (typeof WHERE_OPERATORS)[number]
+    …
 tsconfig.json
 views/
   index.html

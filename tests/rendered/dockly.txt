@@ -255,7 +255,6 @@ src/
     66→Cli.prototype.showUsage = function () {
     …
     93→Cli.prototype.cliParse = function () {
-    94→  return commandLineArgs(this.cliOpts)
     …
     97→module.exports = new Cli()
   dockerUtil.js
@@ -393,6 +392,8 @@ widgets/
     10→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {} }) {
     …
     24→  getLabel () {
+    …
+    28→  renderWidget () {
     …
     105→}
     107→module.exports = myWidget

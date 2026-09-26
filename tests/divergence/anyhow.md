@@ -1,4 +1,4 @@
-Score(3000)=0.651 I=0.835 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.809/0.696/0.651/0.552/0.530/0.574
+Score(3000)=0.651 I=0.835 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/4327/6240/9000)=0.751/0.801/0.696/0.651/0.552/0.530/0.574
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -30,19 +30,19 @@ Score(3000)=0.651 I=0.835 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | ns | 1009 |  | 216 | lib.rs crate attributes and module declarations | 1.10 |  | 0.680 |
 | walker |  | 1024 | 23 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.681 |
 | walker |  | 1058 | 34 | Code::CodeKey { rung: Decl, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.682 |
-| walker |  | 1070 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.683 |
-| walker |  | 1160 | 90 | Fs::DirListing { dir: tests } |  |  | 0.809 |
-| walker |  | 1164 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.809 |
-| walker |  | 1168 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.809 |
-| walker |  | 1182 | 14 | Fs::DirListing { dir: tests/crate } |  |  | 0.809 |
-| walker |  | 1189 | 7 | Code::CodeKey { rung: Body, file: src/lib.rs, decl: 2, sub: 0, line: 280 } |  |  | 0.809 |
+| walker |  | 1148 | 90 | Fs::DirListing { dir: tests } |  |  | 0.808 |
+| walker |  | 1152 | 4 | Fs::DirListing { dir: tests/common } |  |  | 0.808 |
+| walker |  | 1156 | 4 | Fs::DirListing { dir: tests/drop } |  |  | 0.808 |
+| walker |  | 1170 | 14 | Fs::DirListing { dir: tests/crate } |  |  | 0.808 |
+| walker |  | 1182 | 12 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 7, sub: 0, line: 618 } |  |  | 0.809 |
 | ns | 1244 |  | 235 | Complete roster of exported items in lib.rs | 2.1 |  | 0.797 |
-| walker |  | 1258 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
+| walker |  | 1251 | 69 | Code::CodeKey { rung: Names, file: build.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.797 |
+| walker |  | 1258 | 7 | Code::CodeKey { rung: Body, file: src/lib.rs, decl: 2, sub: 0, line: 280 } |  |  | 0.797 |
 | walker |  | 1288 | 30 | Code::CodeKey { rung: Doc, file: src/lib.rs, decl: 8, sub: 0, line: 624 } |  |  | 0.799 |
-| walker |  | 1298 | 10 | Code::CodeKey { rung: Body, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.807 |
-| walker |  | 1380 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.809 |
-| ns | 1452 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.755 |
-| walker |  | 1505 | 125 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.755 |
+| walker |  | 1370 | 82 | Fs::DirListing { dir: tests/ui } |  |  | 0.801 |
+| ns | 1452 |  | 208 | impl Error — roster of every public method | 2.2 |  | 0.747 |
+| walker |  | 1495 | 125 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.747 |
+| walker |  | 1505 | 10 | Code::CodeKey { rung: Body, file: src/lib.rs, decl: 9, sub: 0, line: 648 } |  |  | 0.755 |
 | ns | 1612 |  | 160 | Context trait — both method signatures with bounds | 2.3 | 2.1 | 0.762 |
 | walker |  | 1642 | 137 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.762 |
 | walker |  | 1733 | 91 | Code::CodeKey { rung: Names, file: src/ensure.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.762 |
@@ -119,15 +119,15 @@ Score(3000)=0.651 I=0.835 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | ns | 4798 |  | 171 | __parse_ensure! extent, first rule, and catch-all | 3.10 | 3.6 | 0.541 |
 | walker |  | 4864 | 104 | Code::CodeKey { rung: Decl, file: src/error.rs, decl: 19, sub: 0, line: 640 } |  |  | 0.541 |
 | walker |  | 4879 | 15 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 17, sub: 0, line: 568 } |  |  | 0.541 |
-| walker |  | 4897 | 18 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 15, sub: 0, line: 490 } |  |  | 0.541 |
-| walker |  | 4940 | 43 | Code::CodeKey { rung: Names, file: src/backtrace.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
-| walker |  | 4959 | 19 | Code::CodeKey { rung: Decl, file: src/backtrace.rs, decl: 1, sub: 0, line: 7 } |  |  | 0.541 |
-| walker |  | 4983 | 24 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
+| walker |  | 4922 | 43 | Code::CodeKey { rung: Names, file: src/backtrace.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
+| walker |  | 4941 | 19 | Code::CodeKey { rung: Decl, file: src/backtrace.rs, decl: 1, sub: 0, line: 7 } |  |  | 0.541 |
+| walker |  | 4965 | 24 | Code::CodeKey { rung: Names, file: src/macros.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.541 |
 | ns | 4995 |  | 197 | lib.rs __private — the macro-facing surface | 3.11 | 3.3 | 0.530 |
-| walker |  | 5151 | 168 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 1, sub: 0, line: 56 } |  |  | 0.552 |
+| walker |  | 5133 | 168 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 1, sub: 0, line: 56 } |  |  | 0.552 |
 | ns | 5156 |  | 161 | test_fmt.rs — the f/g/h fixture and expected `{:#}` strings | 4.1 | 2.4 | 0.545 |
 | ns | 5295 |  | 139 | test_fmt.rs — expected `{:?}` strings, including numbered causes | 4.2 | 4.1 | 0.533 |
-| walker |  | 5403 | 252 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 202 } |  |  | 0.572 |
+| walker |  | 5385 | 252 | Code::CodeKey { rung: Decl, file: src/macros.rs, decl: 2, sub: 0, line: 202 } |  |  | 0.572 |
+| walker |  | 5403 | 18 | Code::CodeKey { rung: Doc, file: src/error.rs, decl: 15, sub: 0, line: 490 } |  |  | 0.572 |
 | ns | 5454 |  | 159 | test_repr.rs — size, null-pointer-optimization, autotrait assertions | 4.3 | 1.5 | 0.560 |
 | ns | 5633 |  | 179 | test_downcast.rs — what a bail!'d error downcasts to | 4.4 | 3.4 | 0.546 |
 | walker |  | 5654 | 251 | Code::CodeKey { rung: Names, file: src/context.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
@@ -183,36 +183,36 @@ Score(3000)=0.651 I=0.835 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 7818 | 37 | Code::CodeKey { rung: Decl, file: src/kind.rs, decl: 4, sub: 0, line: 68 } |  |  | 0.547 |
 | walker |  | 7868 | 50 | Code::CodeKey { rung: Decl, file: src/kind.rs, decl: 11, sub: 0, line: 114 } |  |  | 0.549 |
 | walker |  | 7874 | 6 | Code::CodeKey { rung: Decl, file: src/kind.rs, decl: 12, sub: 0, line: 116 } |  |  | 0.549 |
-| walker |  | 7882 | 8 | Code::CodeKey { rung: Body, file: src/kind.rs, decl: 8, sub: 0, line: 90 } |  |  | 0.549 |
 | ns | 7959 |  | 177 | context.rs — where .context() is implemented | 6.4 | 2.3 | 0.545 |
-| walker |  | 7993 | 111 | Code::CodeKey { rung: Names, file: src/chain.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.548 |
-| walker |  | 8013 | 20 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 10, sub: 0, line: 76 } |  |  | 0.549 |
-| walker |  | 8043 | 30 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 3, sub: 0, line: 26 } |  |  | 0.550 |
-| walker |  | 8049 | 6 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 4, sub: 0, line: 27 } |  |  | 0.550 |
-| walker |  | 8083 | 34 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 12, sub: 0, line: 93 } |  |  | 0.550 |
-| walker |  | 8118 | 35 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.550 |
+| walker |  | 7985 | 111 | Code::CodeKey { rung: Names, file: src/chain.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.548 |
+| walker |  | 8005 | 20 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 10, sub: 0, line: 76 } |  |  | 0.549 |
+| walker |  | 8035 | 30 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 3, sub: 0, line: 26 } |  |  | 0.550 |
+| walker |  | 8041 | 6 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 4, sub: 0, line: 27 } |  |  | 0.550 |
+| walker |  | 8075 | 34 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 12, sub: 0, line: 93 } |  |  | 0.550 |
+| walker |  | 8110 | 35 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.550 |
 | ns | 8133 |  | 174 | context.rs — ContextError impls, Quoted, and the Sealed trait | 6.5 | 6.4 | 0.556 |
-| walker |  | 8162 | 44 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 8, sub: 0, line: 56 } |  |  | 0.559 |
-| walker |  | 8230 | 68 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 5, sub: 0, line: 35 } |  |  | 0.562 |
+| walker |  | 8154 | 44 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 8, sub: 0, line: 56 } |  |  | 0.559 |
+| walker |  | 8222 | 68 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 5, sub: 0, line: 35 } |  |  | 0.562 |
 | ns | 8261 |  | 128 | fmt.rs — the rendering entry points | 6.6 | 5.6 | 0.566 |
-| walker |  | 8329 | 99 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 2, sub: 0, line: 15 } |  |  | 0.579 |
+| walker |  | 8321 | 99 | Code::CodeKey { rung: Decl, file: src/chain.rs, decl: 2, sub: 0, line: 15 } |  |  | 0.579 |
 | ns | 8413 |  | 152 | build.rs — the complete custom-cfg vocabulary | 7.1 |  | 0.575 |
 | ns | 8527 |  | 114 | build.rs — which compiler turns each cfg on | 7.2 | 7.1 | 0.572 |
-| walker |  | 8539 | 210 | Code::CodeKey { rung: Names, file: src/wrapper.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
-| walker |  | 8546 | 7 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 7, sub: 0, line: 33 } |  |  | 0.585 |
-| walker |  | 8555 | 9 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.586 |
-| walker |  | 8582 | 27 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 13, sub: 0, line: 56 } |  |  | 0.588 |
-| walker |  | 8630 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 8, sub: 0, line: 36 } |  |  | 0.588 |
+| walker |  | 8531 | 210 | Code::CodeKey { rung: Names, file: src/wrapper.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.583 |
+| walker |  | 8538 | 7 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 7, sub: 0, line: 33 } |  |  | 0.585 |
+| walker |  | 8547 | 9 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 1, sub: 0, line: 10 } |  |  | 0.586 |
+| walker |  | 8574 | 27 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 13, sub: 0, line: 56 } |  |  | 0.588 |
+| walker |  | 8622 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 8, sub: 0, line: 36 } |  |  | 0.588 |
 | ns | 8637 |  | 110 | backtrace.rs — the three definitions of Backtrace | 7.3 |  | 0.585 |
-| walker |  | 8678 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 10, sub: 0, line: 45 } |  |  | 0.585 |
-| walker |  | 8726 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 14, sub: 0, line: 60 } |  |  | 0.585 |
-| walker |  | 8774 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 16, sub: 0, line: 67 } |  |  | 0.585 |
+| walker |  | 8670 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 10, sub: 0, line: 45 } |  |  | 0.585 |
+| walker |  | 8718 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 14, sub: 0, line: 60 } |  |  | 0.585 |
+| walker |  | 8766 | 48 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 16, sub: 0, line: 67 } |  |  | 0.585 |
 | ns | 8813 |  | 176 | backtrace.rs — impl_backtrace! and backtrace!(), both arms each | 7.4 | 7.3 | 0.579 |
-| walker |  | 8824 | 50 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.579 |
-| walker |  | 8874 | 50 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 4, sub: 0, line: 22 } |  |  | 0.579 |
-| walker |  | 8944 | 70 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 18, sub: 0, line: 74 } |  |  | 0.579 |
+| walker |  | 8816 | 50 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 2, sub: 0, line: 13 } |  |  | 0.579 |
+| walker |  | 8866 | 50 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 4, sub: 0, line: 22 } |  |  | 0.579 |
+| walker |  | 8936 | 70 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 18, sub: 0, line: 74 } |  |  | 0.579 |
+| walker |  | 8948 | 12 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 20, sub: 0, line: 80 } |  |  | 0.579 |
 | ns | 8954 |  | 141 | backtrace.rs — backtrace_if_absent! and the vendored capture module | 7.5 | 7.3 | 0.574 |
-| walker |  | 8956 | 12 | Code::CodeKey { rung: Decl, file: src/wrapper.rs, decl: 20, sub: 0, line: 80 } |  |  | 0.574 |
+| walker |  | 8956 | 8 | Code::CodeKey { rung: Body, file: src/kind.rs, decl: 8, sub: 0, line: 90 } |  |  | 0.574 |
 | ns | 9086 |  | 132 | nightly.rs — the build probe and generic-member-access shims | 7.6 | 7.1 | 0.570 |
 | walker |  | 9180 | 224 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.570 |
 | ns | 9217 |  | 131 | Toolchain pin and the no_std check-crate | 7.7 |  | 0.564 |
@@ -227,6 +227,5 @@ Score(3000)=0.651 I=0.835 C=0.507 ns_rows≤3K=20/63 grid(1000/1442/2080/3000/43
 | walker |  | 9794 | 13 | Code::CodeKey { rung: Body, file: src/nightly.rs, decl: 1, sub: 0, line: 41 } |  |  | 0.558 |
 | walker |  | 9808 | 14 | Code::CodeKey { rung: Body, file: src/nightly.rs, decl: 2, sub: 0, line: 52 } |  |  | 0.558 |
 | ns | 9849 |  | 109 | One complete compile-fail pair — wrong-interpolation | 8.3 | 8.2 | 0.554 |
-| walker |  | 9881 | 73 | Code::CodeKey { rung: Body, file: build.rs, decl: 4, sub: 0, line: 199 } |  |  | 0.554 |
-| walker |  | 9946 | 65 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
+| walker |  | 9873 | 65 | Code::CodeKey { rung: ModuleDoc, file: src/lib.rs, decl: 0, sub: 0, line: 0 } |  |  | 0.554 |
 | ns | 9990 |  | 141 | Shared test helpers in tests/common and tests/drop | 8.4 | 4.4 | 0.548 |

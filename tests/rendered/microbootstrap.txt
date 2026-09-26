@@ -233,6 +233,10 @@ microbootstrap/
     36→        validation_alias=pydantic.AliasChoices("SERVICE_NAME", f"{ENV_PREFIX}SERVICE_NAME"),
     37→    )
     38→    service_description: str = "Micro service description"
+    39→    service_version: str = pydantic.Field(
+    40→        "1.0.0",
+    41→        validation_alias=pydantic.AliasChoices("CI_COMMIT_TAG", f"{ENV_PREFIX}SERVICE_VERSION"),
+    42→    )
     …
     53→class ServerConfig(pydantic.BaseModel):
     54→    server_host: str = "0.0.0.0"  # noqa: S104
@@ -284,7 +288,7 @@ microbootstrap/
     109→    SentryConfig,
     110→    PyroscopeConfig,
     111→):
-    112→    """Settings for a vanilla service."""
+    …
 package-lock.json
 package.json
   …
