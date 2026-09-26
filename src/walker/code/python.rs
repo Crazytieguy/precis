@@ -86,12 +86,11 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         }
         let rows = || Item::new(file.node_rows(node));
         match node.kind() {
-            "function_definition" | "class_definition" | "decorated_definition" => {
-                model.decls.extend(definition(file, node));
-            }
-            "if_statement" | "try_statement" => {
-                model.decls.extend(conditional_definitions(file, node));
-            }
+            "function_definition"
+            | "class_definition"
+            | "decorated_definition"
+            | "if_statement"
+            | "try_statement" => model.decls.extend(definitions(file, node)),
             "import_from_statement"
                 if is_package_init
                     && (imports_own_module(file, node, ctx)
@@ -258,24 +257,20 @@ fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
     DeclInfo::new(vec![*rows.start()], rows.collect(), Shape::Whole)
 }
 
-/// The `def`s and `class`es in the blocks of an `if` / `try` statement,
-/// nested ones included. The row opening each block (`if …:`, `else:`,
-/// `except …:`) joins the head and name rows of the block's first
-/// definition, so the roster says under which condition it exists.
-fn conditional_definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
+/// The `def`s and `class`es a statement defines: itself, or those in
+/// the blocks of an `if` / `try` statement, nested ones included. The row
+/// opening each block (`if …:`, `else:`, `except …:`) joins the head and
+/// name rows of the block's first definition, so the roster says under
+/// which condition it exists.
+fn definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> {
+    if !matches!(statement.kind(), "if_statement" | "try_statement") {
+        return definition(file, statement).into_iter().collect();
+    }
     let mut decls = Vec::new();
     for block in clause_blocks(statement) {
         let first = decls.len();
         for node in block.named_children(&mut block.walk()) {
-            match node.kind() {
-                "function_definition" | "class_definition" | "decorated_definition" => {
-                    decls.extend(definition(file, node));
-                }
-                "if_statement" | "try_statement" => {
-                    decls.extend(conditional_definitions(file, node));
-                }
-                _ => {}
-            }
+            decls.extend(definitions(file, node));
         }
         if let (Some(decl), Some(clause)) = (decls.get_mut(first), block.parent()) {
             let opening_row = clause.start_position().row + 1;
