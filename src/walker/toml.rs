@@ -233,12 +233,13 @@ fn pep621_dependency_array_rows<'a>(
     document: &'a ImDocument<&str>,
 ) -> impl Iterator<Item = usize> + 'a {
     let project = document.get("project").and_then(Item::as_table);
+    let rows = RowIndex::new(document.raw());
     ["dependencies", "optional-dependencies"]
         .into_iter()
         .filter_map(move |key| {
             let (key, item) = project?.get_key_value(key)?;
-            let start = row_at(document.raw(), key.span()?.start);
-            Some(start..=row_at(document.raw(), item.as_value()?.span()?.end - 1))
+            let start = rows.row_at(key.span()?.start);
+            Some(start..=rows.row_at(item.as_value()?.span()?.end - 1))
         })
         .flatten()
 }
@@ -251,7 +252,7 @@ fn is_pyproject_identity_table(name: &str) -> bool {
 
 fn collect_sections(document: &ImDocument<&str>) -> Vec<Section> {
     let mut sections = Vec::new();
-    push_sections(document, "", document.raw(), &mut sections);
+    push_sections(document, "", &RowIndex::new(document.raw()), &mut sections);
     sections.sort_by_key(|section| section.start);
     sections
 }
@@ -259,7 +260,7 @@ fn collect_sections(document: &ImDocument<&str>) -> Vec<Section> {
 /// The sections under `table`, whose path is `prefix`. A key segment with a
 /// literal dot keeps its quotes: `["tool.poetry".scripts]` names a different
 /// table than `[tool.poetry.scripts]`.
-fn push_sections(table: &Table, prefix: &str, source: &str, out: &mut Vec<Section>) {
+fn push_sections(table: &Table, prefix: &str, rows: &RowIndex, out: &mut Vec<Section>) {
     for (key, item) in table {
         let segment = if key.contains('.') {
             format!("\"{key}\"")
@@ -282,18 +283,32 @@ fn push_sections(table: &Table, prefix: &str, source: &str, out: &mut Vec<Sectio
             {
                 out.push(Section {
                     name: name.clone(),
-                    start: row_at(source, span.start),
-                    end: row_at(source, span.end - 1),
+                    start: rows.row_at(span.start),
+                    end: rows.row_at(span.end - 1),
                 });
             }
-            push_sections(table, &name, source, out);
+            push_sections(table, &name, rows, out);
         }
     }
 }
 
-/// The 1-based row holding byte `offset` of `source`.
-fn row_at(source: &str, offset: usize) -> usize {
-    source[..offset].matches('\n').count() + 1
+/// Byte offsets of a source's newlines, which map a byte offset to its row.
+struct RowIndex(Vec<usize>);
+
+impl RowIndex {
+    fn new(source: &str) -> Self {
+        Self(
+            source
+                .match_indices('\n')
+                .map(|(offset, _)| offset)
+                .collect(),
+        )
+    }
+
+    /// The 1-based row holding byte `offset`.
+    fn row_at(&self, offset: usize) -> usize {
+        self.0.partition_point(|&newline| newline < offset) + 1
+    }
 }
 
 // --- workspace-member resolution ---
@@ -431,6 +446,25 @@ mod tests {
                 "\"tool.poetry\".scripts",
                 "dependencies"
             ]
+        );
+    }
+
+    /// Section rows come from one newline index, not a rescan of the
+    /// source prefix per table.
+    #[test]
+    fn toml_sections_of_a_many_table_file() {
+        let source: String = (0..20_000)
+            .map(|i| format!("[entry{i:05}]\nx = 1\n"))
+            .collect();
+        let sections = collect_sections(&parse(&source));
+        assert_eq!(sections.len(), 20_000);
+        assert_eq!(
+            sections.last(),
+            Some(&Section {
+                name: "entry19999".to_string(),
+                start: 39_999,
+                end: 40_000
+            })
         );
     }
 
