@@ -1241,6 +1241,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         // header the C grammar can't parse; a second slice would overlap
         // its spans.
         let owned_elsewhere = super::code::Language::from_path(&file).is_some();
+        // A Gradle script below a package root is one module's manifest,
+        // left to the listing like any nested module manifest.
+        let is_nested_gradle_script = !is_package_root(dir, ctx)
+            && [".gradle", ".gradle.kts"]
+                .iter()
+                .any(|suffix| name.ends_with(suffix));
+        if is_nested_gradle_script {
+            continue;
+        }
         let Some(class) = named
             .or_else(|| {
                 (!owned_elsewhere)
@@ -2572,6 +2581,24 @@ mod tests {
         assert_eq!(value("core.ml"), decl);
         assert_eq!(value("core.mli"), decl);
         assert!(value("tool.rb") < decl);
+    }
+
+    /// The root's Gradle scripts render; a module's are left to the listing.
+    #[test]
+    fn plaintext_nested_gradle_scripts_are_module_manifests() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::create_dir(root.join("core")).unwrap();
+        for script in [
+            "build.gradle.kts",
+            "core/build.gradle.kts",
+            "core/core.gradle",
+        ] {
+            std::fs::write(root.join(script), "plugins {\n  id(\"java\")\n}\n").unwrap();
+        }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(!expand_in_dir(root, &ctx).is_empty());
+        assert!(expand_in_dir(&root.join("core"), &ctx).is_empty());
     }
 
     /// The directories a file's package declaration spells are not depth.
