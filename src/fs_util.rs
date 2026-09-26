@@ -288,7 +288,7 @@ impl DirFilter {
             };
             let path = entry.path();
             // An entry the listing drops is not a surviving one.
-            let Some(kind) = resolved_kind(&path, &file_type, &self.canonical_root) else {
+            let Some(kind) = resolved_kind(&path, &file_type, self) else {
                 continue;
             };
             let is_dir = matches!(kind, EntryKind::Directory);
@@ -312,6 +312,27 @@ impl DirFilter {
             && surviving_subdirs
                 .iter()
                 .all(|child| self.hides_everything_in(child))
+    }
+
+    /// True when the walk reaches `target`, a resolved path: it lies
+    /// inside the root and nothing on the way down to it is internal or
+    /// ignored.
+    fn reaches(&self, target: &Path, is_dir: bool) -> bool {
+        let Ok(relative) = target.strip_prefix(&self.canonical_root) else {
+            return false;
+        };
+        let mut path = self.root.clone();
+        let mut components = relative.components().peekable();
+        while let Some(component) = components.next() {
+            path.push(component);
+            let component_is_dir = is_dir || components.peek().is_some();
+            if is_internal_entry(&component.as_os_str().to_string_lossy())
+                || self.excludes(&path, component_is_dir)
+            {
+                return false;
+            }
+        }
+        true
     }
 
     /// True when `path` must not appear in precis output.
@@ -423,9 +444,10 @@ fn resolve_relative_to(base: &Path, target: &str) -> PathBuf {
 /// Kind an entry surfaces as, or `None` when it must not surface at all.
 ///
 /// An ordinary entry is its own type. A symbolic link is the type of
-/// what it resolves to, and only when that lands inside `canonical_root`
-/// — the containment rule the whole walk rests on. precis summarizes
-/// *a path*; a link out of that path has no business contributing
+/// what it resolves to, and only when the walk [reaches](DirFilter::reaches)
+/// that: inside the root — the containment rule the whole walk rests
+/// on — and not ignored. precis summarizes *a path*; a link out of that
+/// path has no business contributing
 /// either content or structure, and a checkout that ships one
 /// (`config.ini -> ~/.config/app/credentials.ini`) would otherwise have
 /// precis read arbitrary files off the machine running it and paste them
@@ -436,7 +458,9 @@ fn resolve_relative_to(base: &Path, target: &str) -> PathBuf {
 /// A link that stays inside the root is an alias for content the walk
 /// can already reach, and hiding it would misreport real repository
 /// structure (`CLAUDE.md -> AGENTS.md`, `README -> README.md`), so it
-/// keeps its row.
+/// keeps its row. A link to what the walk hides (`README.md -> .env`
+/// with `.env` ignored) is an alias for nothing the walk may show, and
+/// goes the way of its target.
 ///
 /// A FIFO, socket or device is not repository content, and opening one
 /// to read it can block forever, so only directories and regular files
@@ -446,17 +470,16 @@ fn resolve_relative_to(base: &Path, target: &str) -> PathBuf {
 fn resolved_kind(
     child: &Path,
     file_type: &std::fs::FileType,
-    canonical_root: &Path,
+    filter: &DirFilter,
 ) -> Option<EntryKind> {
     if !file_type.is_symlink() {
         return (file_type.is_dir() || file_type.is_file()).then(|| entry_kind(file_type.is_dir()));
     }
     let target = child.canonicalize().ok()?;
-    if !target.starts_with(canonical_root) {
-        return None;
-    }
     let target_type = std::fs::metadata(&target).ok()?.file_type();
-    (target_type.is_dir() || target_type.is_file()).then(|| entry_kind(target_type.is_dir()))
+    ((target_type.is_dir() || target_type.is_file())
+        && filter.reaches(&target, target_type.is_dir()))
+    .then(|| entry_kind(target_type.is_dir()))
 }
 
 fn entry_kind(is_dir: bool) -> EntryKind {
@@ -467,15 +490,15 @@ fn entry_kind(is_dir: bool) -> EntryKind {
     }
 }
 
-/// Read a directory's immediate children into a name-keyed map. Names
-/// are lossy UTF-8 (rare non-UTF-8 paths lose information, accepted so
-/// names round-trip through TOML).
+/// Read a directory's immediate children into a name-keyed map.
 ///
-/// Drops `.git`, the precis-internal `.precis-pin`, anything resolving
-/// outside the walk root (see [`resolved_kind`]), and whatever `filter`
-/// hides. Non-ignored dotfiles are repo content and stay: `.github`,
-/// `.gitignore`, `.dockerignore` are all things the North Stars rank, so
-/// nothing is filtered for being hidden as such.
+/// Drops names that aren't UTF-8 (every consumer reopens an entry by
+/// its listed name, and a lossy spelling can name a different entry),
+/// `.git`, the precis-internal `.precis-pin`, anything resolving
+/// outside the walk root or onto what it hides (see [`resolved_kind`]),
+/// and whatever `filter` hides. Non-ignored dotfiles are repo content
+/// and stay: `.github`, `.gitignore`, `.dockerignore` are all things the
+/// North Stars rank, so nothing is filtered for being hidden as such.
 ///
 /// Listing a *linked* directory yields nothing. Every name under it is
 /// already reachable at the target's real path, and refusing to list
@@ -539,13 +562,12 @@ fn listed_entry(
     entry: &std::fs::DirEntry,
     filter: &DirFilter,
 ) -> Option<(String, EntryKind)> {
-    let name_os = entry.file_name();
-    let name = name_os.to_string_lossy().into_owned();
+    let name = entry.file_name().into_string().ok()?;
     if is_internal_entry(&name) {
         return None;
     }
-    let child = path.join(&name_os);
-    let kind = resolved_kind(&child, &entry.file_type().ok()?, &filter.canonical_root)?;
+    let child = path.join(&name);
+    let kind = resolved_kind(&child, &entry.file_type().ok()?, filter)?;
     let is_dir = matches!(kind, EntryKind::Directory);
     if filter.excludes(&child, is_dir) {
         return None;

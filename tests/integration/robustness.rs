@@ -365,3 +365,65 @@ fn robustness_symlinks_named_directly_stay_contained() {
     assert!(out.starts_with("README.md\n"), "{out}");
     assert!(out.contains("# demo"), "{out}");
 }
+
+/// A link that stays inside the root but lands on something the walk
+/// hides is an alias for nothing it may show: neither the link nor what
+/// it points at renders, whatever name the link wears.
+#[cfg(unix)]
+#[test]
+fn robustness_links_to_hidden_entries_render_nothing_of_them() {
+    use std::os::unix::fs::symlink;
+
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    write(
+        &root.join(".git/config"),
+        format!("[user]\n{OUT_OF_ROOT_MARKER}\n"),
+    );
+    write(&root.join(".gitignore"), "notes.txt\nprivate/\n");
+    write(
+        &root.join("notes.txt"),
+        format!("token = {OUT_OF_ROOT_MARKER}\n"),
+    );
+    write(
+        &root.join("private/plan.md"),
+        format!("# Plan\n\n{OUT_OF_ROOT_MARKER}\n"),
+    );
+    write(&root.join("main.py"), "def main():\n    return 1\n");
+    symlink("notes.txt", root.join("README.md")).unwrap();
+    symlink("private/plan.md", root.join("GUIDE.md")).unwrap();
+    symlink("private", root.join("docs")).unwrap();
+    symlink(".git/config", root.join("setup.cfg")).unwrap();
+
+    let out = render(root, 100_000).unwrap();
+    assert!(!out.contains(OUT_OF_ROOT_MARKER), "{out}");
+    assert!(out.contains("1→def main():"), "{out}");
+}
+
+/// Every consumer reopens an entry by the name its listing gives, so a
+/// name that isn't UTF-8 must not list under a lossy spelling that
+/// another entry — here a link out of the root — really has. Filesystems
+/// that refuse such names (APFS) have nothing to test.
+#[cfg(unix)]
+#[test]
+fn robustness_non_utf8_names_never_alias_another_entry() {
+    use std::os::unix::ffi::OsStrExt;
+    use std::os::unix::fs::symlink;
+
+    let temp = tempfile::tempdir().unwrap();
+    let outside = temp.path().join("outside.json");
+    let root = temp.path().join("repo");
+    write(
+        &outside,
+        format!("{{\"token\": \"{OUT_OF_ROOT_MARKER}\"}}\n"),
+    );
+    write(&root.join("README.md"), "# demo\n");
+    let raw_name = std::ffi::OsStr::from_bytes(b"config-\xff.json");
+    if std::fs::write(root.join(raw_name), "{}\n").is_err() {
+        return;
+    }
+    symlink(&outside, root.join("config-\u{FFFD}.json")).unwrap();
+
+    let out = render(&root, 100_000).unwrap();
+    assert!(!out.contains(OUT_OF_ROOT_MARKER), "{out}");
+}
