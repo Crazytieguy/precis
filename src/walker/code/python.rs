@@ -494,12 +494,13 @@ fn suite_statements(inner: Node) -> Vec<Node> {
 
 /// A class suite (after its docstring): methods, including those in an
 /// `if` / `try` block (see [`definitions`]), become members, listed in
-/// the body by their name rows; every other statement (fields, blocks
-/// defining nothing) is a body [`Item`] with the comments directly above
-/// it. A
-/// nested class is flattened into the suite: its head is one item, its
-/// doc, fields and member name rows follow, and its methods become
-/// members, so it lists as a roster rather than as its whole source.
+/// the body by their name rows, and the block's other statements are
+/// body items (see [`clause_fields`]); every other statement (fields,
+/// blocks defining nothing) is a body [`Item`] with the comments directly
+/// above it. A nested class is flattened into the suite: its head is one
+/// item, its doc, fields and member name rows follow, and its methods
+/// become members, so it lists as a roster rather than as its whole
+/// source.
 /// Comments directly above a method or nested class are its doc when it
 /// has no docstring, and otherwise in no part.
 fn class_body(
@@ -513,10 +514,7 @@ fn class_body(
     for node in statements {
         let defined = definitions(file, *node);
         if defined.is_empty() {
-            if !matches!(
-                node.kind(),
-                "function_definition" | "class_definition" | "decorated_definition"
-            ) {
+            if !is_definition_kind(node.kind()) {
                 run.push(*node);
             }
             continue;
@@ -531,6 +529,7 @@ fn class_body(
             run.pop();
         }
         body.extend(file.node_items(run.drain(..), after_row));
+        let first_new = body.len();
         for member in defined {
             match member.shape {
                 Shape::Callable => {
@@ -545,9 +544,50 @@ fn class_body(
                 }
             }
         }
+        if matches!(node.kind(), "if_statement" | "try_statement") {
+            body.extend(clause_fields(file, *node, after_row));
+            body[first_new..].sort_by_key(|item| item.rows.first().copied());
+        }
     }
     body.extend(file.node_items(run, after_row));
     (body, members)
+}
+
+/// The statements of an `if` / `try` statement's clauses that define
+/// nothing (fields, assignments), as body [`Item`]s. A clause defining
+/// nothing else lists its opening row (`else:`) with its first statement.
+fn clause_fields(file: &SourceFile, statement: Node, after_row: usize) -> Vec<Item> {
+    let mut items = Vec::new();
+    for block in clause_blocks(statement) {
+        let mut fields: Vec<Node> = Vec::new();
+        let mut defines = false;
+        for node in block.named_children(&mut block.walk()) {
+            if !definitions(file, node).is_empty() {
+                defines = true;
+                while fields.last().is_some_and(|field| field.kind() == "comment") {
+                    fields.pop();
+                }
+                if matches!(node.kind(), "if_statement" | "try_statement") {
+                    items.extend(clause_fields(file, node, after_row));
+                }
+            } else if !is_definition_kind(node.kind()) {
+                fields.push(node);
+            }
+        }
+        let mut block_items = file.node_items(fields, after_row);
+        if !defines && let (Some(first), Some(clause)) = (block_items.first_mut(), block.parent()) {
+            first.rows.insert(0, clause.start_position().row + 1);
+        }
+        items.extend(block_items);
+    }
+    items
+}
+
+fn is_definition_kind(kind: &str) -> bool {
+    matches!(
+        kind,
+        "function_definition" | "class_definition" | "decorated_definition"
+    )
 }
 
 #[cfg(test)]
@@ -676,16 +716,23 @@ class Thing:
     if DEBUG:
         level = 1
     def public(self): ...
+    if sys.platform == \"win32\":
+        supports_fork = False
+        # Spawn a worker.
+        def start(self): ...
+    else:
+        supports_fork = True
 ",
         );
         assert_eq!(
             describe(&model),
             [
-                "Whole name [1] head [1] doc [] body [[2, 3], [4, 5], [7, 8], [10, 11], [12]]",
+                "Whole name [1] head [1] doc [] body [[2, 3], [4, 5], [7, 8], [10, 11], [12], [13, 16], [14], [17, 18]]",
                 "  Callable name [2, 3] head [2, 3] doc [] body []",
                 "  Callable name [4, 5] head [4, 5] doc [] body [[6]]",
                 "  Callable name [7, 8] head [7, 8] doc [] body [[9]]",
                 "  Callable name [12] head [12] doc [] body []",
+                "  Callable name [13, 16] head [13, 16] doc [[15]] body []",
             ]
         );
     }
