@@ -652,7 +652,32 @@ fn value_declaration(file: &SourceFile, span: Span, name_row: usize, value: Node
     if is_function_kind(value.kind()) {
         return callable(file, span, name_row, None);
     }
-    whole(file, span, vec![name_row], None)
+    whole(file, span, vec![name_row], last_object_argument(value))
+}
+
+/// The object literal a call or `new` ends its arguments with:
+/// `z.object({ … })`, `createTheme(base, { … })`, `new Store({ … })`,
+/// also through chained calls (`z.object({ … }).strict()`).
+fn last_object_argument(value: Node) -> Option<Node> {
+    let mut call = value;
+    loop {
+        let arguments = match call.kind() {
+            "call_expression" | "new_expression" => call.child_by_field_name("arguments")?,
+            _ => return None,
+        };
+        let mut cursor = arguments.walk();
+        let last = arguments
+            .named_children(&mut cursor)
+            .filter(|argument| argument.kind() != "comment")
+            .last();
+        if let Some(object) = last.filter(|last| last.kind() == "object") {
+            return Some(object);
+        }
+        call = call
+            .child_by_field_name("function")
+            .filter(|callee| callee.kind() == "member_expression")?
+            .child_by_field_name("object")?;
+    }
 }
 
 /// The statement block of a function value, seen through parentheses and
@@ -1104,6 +1129,35 @@ export const config = {
         assert_eq!(
             describe(&model),
             ["Whole name [1] head [1, 8] doc [] body [[2], [3, 4], [5, 6, 7]]"]
+        );
+    }
+
+    #[test]
+    fn code_typescript_call_ending_in_an_object_lists_its_entries() {
+        let model = extract_source(
+            "src/schema.ts",
+            "\
+export const userSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+export const theme = createTheme(base, {
+  color: 'red',
+}).strict();
+export const store = new Store({
+  path: '/tmp',
+});
+export const plain = z.object(shape);
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [1] head [1, 4] doc [] body [[2], [3]]",
+                "Whole name [5] head [5, 7] doc [] body [[6]]",
+                "Whole name [8] head [8, 10] doc [] body [[9]]",
+                "Whole name [11] head [11] doc [] body []",
+            ]
         );
     }
 
