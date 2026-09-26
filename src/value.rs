@@ -78,51 +78,33 @@ pub fn depth_factor(depth: usize) -> f64 {
 /// `root` so the harness's outer `tests/fixtures/` doesn't poison.
 pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f64 {
     let target = path.strip_prefix(root).unwrap_or(path);
-    // Dot-prefixed entries at any depth are tooling / CI / admin /
-    // docs-site plumbing, except `.github/workflows/...` (CI config).
-    let mut comps = target.components();
-    if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) {
-        if first.eq_ignore_ascii_case(".github") {
-            let second = comps.next().and_then(|c| c.as_os_str().to_str());
-            if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
-                return 0.2;
-            }
-        } else if (first.starts_with('.') && first != ".") || is_vendor_dir_name(first) {
-            return 0.2;
-        } else if is_docs_site_subtree(first, root) {
-            // Separate documentation-site sub-app at the repo root
-            // (axios's `docs/package.json`, dockly's `docs/package.json`).
-            // The site is build-and-publish plumbing — its sources are
-            // peripheral to understanding the parent library. NS authors
-            // rank the parent README ahead of the site's own pages,
-            // scaffolding, and per-package config. Real user docs
-            // (`click/docs/`, `mdbook/docs/` — no nested package.json)
-            // keep full weight.
-            return 0.2;
-        }
-    }
-    for component in target.components().skip(1) {
-        if component
-            .as_os_str()
-            .to_str()
-            .is_some_and(|s| s.starts_with('.') && s != ".")
-        {
-            return 0.2;
-        }
-    }
-    for component in target.components() {
-        let Some(raw) = component.as_os_str().to_str() else {
+    let names: Vec<Option<&str>> = target
+        .components()
+        .map(|component| component.as_os_str().to_str())
+        .collect();
+    for (index, name) in names.iter().enumerate() {
+        let Some(name) = *name else {
             continue;
         };
+        // Dot-prefixed entries at any depth are tooling / CI / admin /
+        // docs-site plumbing, except `.github/workflows/...` (CI config).
+        let is_ci_config = index == 0
+            && name.eq_ignore_ascii_case(".github")
+            && names
+                .get(1)
+                .copied()
+                .flatten()
+                .is_some_and(|second| second.eq_ignore_ascii_case("workflows"));
+        let is_dotted = name.starts_with('.') && name != "." && !is_ci_config;
         // Case-insensitive: `Tests/`, `Scripts/`, `Examples/` are
         // the spelling in Swift, C#, Objective-C and Java trees,
         // and a role classifier that only knows the lowercase
         // spelling gives those ecosystems' test suites the same
         // weight as their library source.
-        let lowered = raw.to_ascii_lowercase();
-        let s = dir_role_name(&lowered);
-        if matches!(
-            s,
+        let lowered = name.to_ascii_lowercase();
+        let role = dir_role_name(&lowered);
+        let is_non_essential_role = matches!(
+            role,
             "tests"
                 | "test"
                 | "testing"
@@ -142,9 +124,17 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "third-party"
                 | "thirdparty"
                 | "3rdparty"
-        ) || s.starts_with("test_")
-            || s.starts_with("tests_")
-            || is_scaffold_template_dir_name(s)
+        ) || role.starts_with("test_")
+            || role.starts_with("tests_")
+            || is_scaffold_template_dir_name(role);
+        // A separate documentation-site sub-app at the repo root
+        // (axios's `docs/package.json`, dockly's `docs/package.json`) is
+        // build-and-publish plumbing, peripheral to the parent library.
+        // Real user docs (`click/docs/`, `mdbook/docs/` — no nested
+        // package.json) keep full weight.
+        if is_dotted
+            || is_non_essential_role
+            || index == 0 && (is_vendor_dir_name(name) || is_docs_site_subtree(name, root))
         {
             return 0.2;
         }
