@@ -82,9 +82,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
             continue;
         };
-        if is_skipped_json(name)
-            || (dir == ctx.root() && super::plaintext::is_unparsed_manifest_name(name))
-        {
+        if is_skipped_json(name) || super::plaintext::is_unparsed_manifest(dir, name, ctx) {
             continue;
         }
         if is_package_json(name) {

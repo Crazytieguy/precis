@@ -8,7 +8,7 @@
 //!    never admitted; dotenv *samples* are, since they carry
 //!    placeholders and document the deploy-facing config keys.
 //!    At a package root, the project's manifest in a format no walker
-//!    parses ([`is_unparsed_manifest_name`]) is claimed too.
+//!    parses ([`is_unparsed_manifest`]) is claimed too.
 //! 2. **Every other source-like text file** ([`Class::LanguageSource`],
 //!    [`Class::FlatText`]): the language-agnostic fallback for formats no
 //!    parser claims, rendered as its [`declaration_surface`] and, when
@@ -114,7 +114,7 @@ pub(crate) enum Class {
     /// deploy-facing config-key documentation, head-sampled when long.
     DotenvSample,
     /// The project's manifest or build script in a format no walker parses
-    /// ([`is_unparsed_manifest_name`]). Rendered like [`Class::FlatText`],
+    /// ([`is_unparsed_manifest`]). Rendered like [`Class::FlatText`],
     /// so its head fields (the project's name, version and description)
     /// lead, and priced as a manifest's identity block.
     Manifest,
@@ -157,14 +157,23 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
 /// A repository's own manifest or build script in a format no walker
 /// parses: its identity, dependencies and build entry points. Claimed
 /// only at a [package root](is_package_root), where it describes the
-/// project rather than one module of it.
-pub(crate) fn is_unparsed_manifest_name(name: &str) -> bool {
+/// project rather than one module of it. The JSON and TOML walkers leave
+/// such a file to this one ([`is_unparsed_manifest`]).
+fn is_unparsed_manifest_name(name: &str) -> bool {
     #[rustfmt::skip]
     const NAMES: &[&str] = &[
         "pom.xml", "composer.json", "build.sbt", "CMakeLists.txt", "action.yml", "action.yaml",
         "DESCRIPTION", "rebar.config", "dune-project", "deps.edn", "pubspec.yaml", "shard.yml",
+        "Project.toml", "book.toml", "foundry.toml", "stack.yaml", "dbt_project.yml",
+        "_quarto.yml", "datapackage.yml", "environment.yml",
     ];
     NAMES.contains(&name) || name.ends_with(".cabal") || name.ends_with(".nimble")
+}
+
+/// Whether `name` in `dir` is a project manifest this walker claims (see
+/// [`is_unparsed_manifest_name`]).
+pub(crate) fn is_unparsed_manifest(dir: &Path, name: &str, ctx: &WalkCtx) -> bool {
+    is_package_root(dir, ctx) && is_unparsed_manifest_name(name)
 }
 
 /// The root, or a first-level directory that holds the project itself:
@@ -1238,10 +1247,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         }
         let file = dir.join(name);
-        let named = classify_plaintext(name).or_else(|| {
-            (is_package_root(dir, ctx) && is_unparsed_manifest_name(name))
-                .then_some(Class::Manifest)
-        });
+        let named = classify_plaintext(name)
+            .or_else(|| is_unparsed_manifest(dir, name, ctx).then_some(Class::Manifest));
         // Parsed languages belong to the code engine, except a C++
         // header the C grammar can't parse; a second slice would overlap
         // its spans.
@@ -2421,6 +2428,23 @@ mod tests {
         assert_eq!(rows, [(1, 1), (3, 8), (closing - 1, closing)]);
         assert!(expand_in_dir(&root.join("module"), &ctx).is_empty());
         assert_eq!(expand_in_dir(&root.join("src"), &ctx).len(), 1);
+    }
+
+    /// A root manifest in a TOML dialect whose identity sits outside the
+    /// tables the TOML walker reads (Julia's top-level `name`) is this
+    /// walker's alone.
+    #[test]
+    fn plaintext_claims_root_manifest_in_unread_toml_dialect() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("Project.toml"),
+            "name = \"Demo\"\nversion = \"1.0.0\"\n\n[deps]\nJSON = \"682c06a0\"\n",
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(super::super::toml::expand_in_dir(root, &ctx).is_empty());
+        assert_eq!(expand_in_dir(root, &ctx).len(), 1);
     }
 
     #[test]

@@ -39,6 +39,13 @@ struct Section {
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
     for file in files_with_any_extension(dir, &["toml"], ctx) {
+        if file
+            .file_name()
+            .and_then(|name| name.to_str())
+            .is_some_and(|name| super::plaintext::is_unparsed_manifest(dir, name, ctx))
+        {
+            continue;
+        }
         let Some((source, tree)) = ctx.parse_tree(&file, &tree_sitter_toml_ng::LANGUAGE.into())
         else {
             continue;
