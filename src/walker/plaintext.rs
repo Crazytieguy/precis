@@ -1542,8 +1542,7 @@ fn small_build_file_factor(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
 const CANONICAL_MAKE_TARGETS: [&str; 7] =
     ["all", "build", "test", "tests", "check", "install", "help"];
 
-/// A `Makefile` or `justfile`: column-0 recipe headers over indented
-/// bodies.
+/// A `Makefile` or `justfile`: recipe headers over indented bodies.
 fn is_recipe_file_name(name: &str) -> bool {
     matches!(name, "Makefile" | "justfile" | "Justfile" | ".justfile")
 }
@@ -1557,16 +1556,23 @@ fn recipe_roster_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::B
     if source.line_count() > BUILD_LINE_CAP {
         return None;
     }
+    let is_makefile = file.file_name().is_some_and(|name| name == "Makefile");
     let mut rows = Vec::new();
     let mut keep_body = true;
+    let mut continued = false;
     for (index, line) in source.lines().enumerate() {
-        if line.starts_with([' ', '\t']) {
+        let continues_previous = std::mem::replace(&mut continued, line.ends_with('\\'));
+        let indented_target = is_makefile
+            && !continues_previous
+            && line.starts_with(' ')
+            && recipe_name(line.trim_start()).is_some();
+        if line.starts_with([' ', '\t']) && !indented_target {
             if keep_body {
                 rows.push(index + 1);
             }
             continue;
         }
-        if let Some(name) = recipe_name(line) {
+        if let Some(name) = recipe_name(line.trim_start()) {
             keep_body = !is_housekeeping_target(name);
         } else if !line.trim_start().is_empty() && !line.starts_with('#') {
             keep_body = true;
@@ -1588,7 +1594,7 @@ fn is_housekeeping_target(target: &str) -> bool {
     first_word.is_some_and(|word| WORDS.contains(&word))
 }
 
-/// The first target of a column-0 recipe header (a justfile recipe's
+/// The first target of a recipe header (a justfile recipe's
 /// name), `None` for any other line: a variable assignment, a directive
 /// or a comment.
 fn recipe_name(line: &str) -> Option<&str> {
@@ -2401,6 +2407,12 @@ mod tests {
                     .to_string(),
                 vec![(1, 2), (4, 7)],
                 vec![(1, 2), (4, 7)],
+            ),
+            (
+                "Makefile",
+                "clean:\n\trm -f app \\\n  dist: out\n\n  test:\n\tcargo test\n".to_string(),
+                vec![(1, 1), (5, 6)],
+                vec![(1, 1), (5, 6)],
             ),
             (
                 "justfile",
