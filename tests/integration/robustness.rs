@@ -620,13 +620,14 @@ fn robustness_unreadable_directory_is_not_marked_empty() {
     let locked = root.join("locked");
     std::fs::set_permissions(&locked, PermissionsExt::from_mode(0o000)).unwrap();
     let readable_anyway = std::fs::read_dir(&locked).is_ok();
-    let out = (!readable_anyway).then(|| render(root, 3000).unwrap());
+    let outputs =
+        (!readable_anyway).then(|| [100, 3000, 100_000].map(|budget| render(root, budget)));
     std::fs::set_permissions(&locked, PermissionsExt::from_mode(0o755)).unwrap();
-    let Some(out) = out else {
-        return;
-    };
-    assert!(out.contains("hollow/ (empty)\n"), "{out}");
-    assert!(out.lines().any(|row| row == "locked/"), "{out}");
+    for out in outputs.into_iter().flatten() {
+        let out = out.unwrap();
+        assert!(out.contains("hollow/ (empty)\n"), "{out}");
+        assert!(out.lines().any(|row| row == "locked/"), "{out}");
+    }
 }
 
 /// A link to a file beside it lists as a row, its text shown once, under
