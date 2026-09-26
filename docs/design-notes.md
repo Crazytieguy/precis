@@ -103,6 +103,9 @@ never reached the ones answer keys rank.
   library `npm install x` lines, prerequisite installs, credential
   exports and sample output. Taking every install/setup block cost
   −0.0008 at 3000 and bought those on 236 real repositories.
+  Within a section, a block under a heading naming a platform or
+  environment (Nix, Docker, Windows, macOS, …) is taken only when no
+  other is: a guide's first block is often an alternative route.
 - **Back matter** (license, contributing, sponsors, …) emits no section
   text but keeps a command-titled subsection's block, since a
   Contributing section's Testing is the dev workflow. The outline keeps

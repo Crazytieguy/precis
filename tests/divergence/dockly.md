@@ -1,4 +1,4 @@
-Score(3000)=0.722 I=0.919 C=0.567 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.943/0.803/0.788/0.722/0.620/0.548/0.534
+Score(3000)=0.722 I=0.919 C=0.567 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.944/0.803/0.788/0.722/0.620/0.548/0.534
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -31,27 +31,27 @@ Score(3000)=0.722 I=0.919 C=0.567 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 726 | 103 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.751 |
 | walker |  | 748 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.751 |
 | ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.755 |
-| walker |  | 788 | 40 | Markdown::CommandBlock { file: README.md, row: 69 } |  |  | 0.755 |
-| walker |  | 870 | 82 | Json::ScriptsTail { file: package.json } |  |  | 0.790 |
+| walker |  | 807 | 59 | Markdown::CommandBlock { file: README.md, row: 78 } |  |  | 0.756 |
+| walker |  | 889 | 82 | Json::ScriptsTail { file: package.json } |  |  | 0.791 |
 | ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.745 |
-| walker |  | 973 | 103 | Json::Entry { file: package.json } |  |  | 0.943 |
-| walker |  | 1025 | 52 | Fs::DirListing { dir: docs } |  |  | 0.944 |
-| walker |  | 1034 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.944 |
-| walker |  | 1047 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.944 |
+| walker |  | 992 | 103 | Json::Entry { file: package.json } |  |  | 0.944 |
+| walker |  | 1044 | 52 | Fs::DirListing { dir: docs } |  |  | 0.944 |
+| walker |  | 1053 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.874 |
 | ns | 1053 |  | 162 | index.js: pre-flight CLI dispatch (--help, --version, node version floor) | 1.10 | 1.9 | 0.874 |
-| walker |  | 1217 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.879 |
-| ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.812 |
-| walker |  | 1242 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.812 |
-| walker |  | 1349 | 107 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.824 |
-| walker |  | 1371 | 22 | Code::CodeKey { rung: Decl, file: index.js, decl: 2, sub: 0, line: 18 } |  |  | 0.832 |
-| walker |  | 1393 | 22 | Code::CodeKey { rung: Decl, file: index.js, decl: 3, sub: 0, line: 23 } |  |  | 0.843 |
+| walker |  | 1066 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.875 |
+| ns | 1219 |  | 166 | index.js: bootstrap promise chain and the three helper function signatures | 1.11 | 1.10 | 0.807 |
+| walker |  | 1236 | 170 | Plaintext::Whole { file: Dockerfile } |  |  | 0.812 |
+| walker |  | 1261 | 25 | Fs::DirListing { dir: docs/src/components } |  |  | 0.813 |
+| walker |  | 1368 | 107 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.825 |
+| walker |  | 1390 | 22 | Code::CodeKey { rung: Decl, file: index.js, decl: 2, sub: 0, line: 18 } |  |  | 0.833 |
+| walker |  | 1412 | 22 | Code::CodeKey { rung: Decl, file: index.js, decl: 3, sub: 0, line: 23 } |  |  | 0.844 |
 | ns | 1414 |  | 195 | Runtime dependency list from package.json | 1.12 |  | 0.803 |
-| walker |  | 1444 | 51 | Code::CodeKey { rung: Decl, file: index.js, decl: 4, sub: 0, line: 28 } |  |  | 0.837 |
-| walker |  | 1552 | 108 | Code::CodeKey { rung: Decl, file: index.js, decl: 5, sub: 0, line: 34 } |  |  | 0.889 |
-| ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.820 |
-| walker |  | 1747 | 195 | Json::Dependencies { file: package.json } |  |  | 0.866 |
-| ns | 1857 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.840 |
-| walker |  | 1867 | 120 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.842 |
+| walker |  | 1463 | 51 | Code::CodeKey { rung: Decl, file: index.js, decl: 4, sub: 0, line: 28 } |  |  | 0.838 |
+| walker |  | 1571 | 108 | Code::CodeKey { rung: Decl, file: index.js, decl: 5, sub: 0, line: 34 } |  |  | 0.890 |
+| ns | 1737 |  | 323 | The in-app keybinding table (src/widgetsTemplates/help.widget.template.js:102-125) | 2.1 |  | 0.821 |
+| walker |  | 1766 | 195 | Json::Dependencies { file: package.json } |  |  | 0.867 |
+| ns | 1857 |  | 120 | src/cli.js: the complete flag roster (all eight option names) | 2.2 |  | 0.841 |
+| walker |  | 1867 | 101 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.842 |
 | walker |  | 1887 | 20 | Code::CodeKey { rung: Names, file: src/dockerUtil.js, decl: 0, sub: 0, line: 0 } |  |  | 0.842 |
 | ns | 2043 |  | 186 | src/cli.js: the four docker-connection options in full (socketPath, host, port, protocol) | 2.3 | 2.2 | 0.787 |
 | walker |  | 2184 | 297 | Code::CodeKey { rung: Decl, file: src/dockerUtil.js, decl: 1, sub: 0, line: 5 } |  |  | 0.790 |

@@ -1337,7 +1337,9 @@ const SETUP_COMMANDS: CommandSource = CommandSource {
 };
 
 /// The command block of `section` under a build/test/run heading, else
-/// under a setup/install heading (see [`command_block`]).
+/// under a setup/install heading (see [`command_block`]). Within each,
+/// a block under a heading naming a platform or environment (see
+/// [`is_platform_title_core`]) is taken only when no other is found.
 fn first_command_block(
     section: Node,
     source: &str,
@@ -1345,7 +1347,23 @@ fn first_command_block(
 ) -> Option<CommandBlockRows> {
     [BUILD_COMMANDS, SETUP_COMMANDS]
         .iter()
-        .find_map(|commands| command_block(section, None, commands, source, src_lines))
+        .find_map(|commands| {
+            [true, false].into_iter().find_map(|skip_platforms| {
+                command_block(section, None, commands, skip_platforms, source, src_lines)
+            })
+        })
+}
+
+/// A title naming the platform or environment its commands are for
+/// (`Nix integration`, `Building on Windows`).
+fn is_platform_title_core(core: &str) -> bool {
+    #[rustfmt::skip]
+    const PLATFORMS: &[&str] = &[
+        "nix", "docker", "podman", "vagrant", "conda", "windows", "macos", "mac", "osx",
+        "wsl", "android", "ios", "freebsd", "homebrew",
+    ];
+    core.split_whitespace()
+        .any(|word| PLATFORMS.contains(&word))
 }
 
 /// The first code block that `commands` accepts, at any depth in lists
@@ -1360,6 +1378,7 @@ fn command_block(
     section: Node,
     command_heading: Option<Node>,
     commands: &CommandSource,
+    skip_platforms: bool,
     source: &str,
     src_lines: &[&str],
 ) -> Option<CommandBlockRows> {
@@ -1406,7 +1425,9 @@ fn command_block(
     let (content, subsections): (Vec<Node>, Vec<Node>) = children
         .into_iter()
         .partition(|child| child.kind() != "section");
-    if let Some(heading) = command_heading {
+    if let Some(heading) = command_heading
+        && !(skip_platforms && is_platform_title_core(&title))
+    {
         // A setext heading opens no `section`, so it can sit among the
         // content; the run of blocks stops at it.
         let heading_rows: Vec<usize> = content
@@ -1439,9 +1460,16 @@ fn command_block(
             });
         }
     }
-    subsections
-        .into_iter()
-        .find_map(|child| command_block(child, command_heading, commands, source, src_lines))
+    subsections.into_iter().find_map(|child| {
+        command_block(
+            child,
+            command_heading,
+            commands,
+            skip_platforms,
+            source,
+            src_lines,
+        )
+    })
 }
 
 /// A shell block that works in the checkout: it clones the repository,
@@ -2713,6 +2741,28 @@ mod tests {
     /// section — its shell, untagged or indented blocks, never a code sample —
     /// and the section holding it gates on it. Back matter yields only the
     /// command block of a command-titled subsection.
+    /// A block under a heading naming a platform is taken only when the
+    /// section has no other.
+    #[test]
+    fn markdown_command_block_prefers_the_default_platform() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body = "# Tool\n\n\
+                    ## Building\n\n### Nix\n\n```sh\nnix build\n```\n\n\
+                    ### From source\n\n```sh\nmake\n```\n\n\
+                    ## Building on Windows\n\n```sh\nnmake\n```\n";
+        fs::write(root.join("README.md"), body).unwrap();
+        let command_rows: Vec<usize> = expand_in_dir(root, &WalkCtx::new(root.to_path_buf()))
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Markdown(MarkdownKey::CommandBlock { row, .. }) => Some(*row),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(command_rows, vec![13, 19]);
+    }
+
     /// Setup and install sections yield a command block only for a block
     /// that works in the checkout, and only where no build/test/run
     /// heading in the section holds one.
