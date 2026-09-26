@@ -868,7 +868,8 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
         .first()
         .is_some_and(|first| has_word("class struct union enum extension protocol", first))
         && !trimmed.contains('(')
-        && (trimmed.ends_with(';') || trimmed.ends_with("{}"))
+        && ((trimmed.ends_with(';') && !trimmed.contains('{'))
+            || trimmed.trim_end_matches(';').ends_with("{}"))
     {
         return DeclarationRank::Statement;
     }
@@ -2048,6 +2049,16 @@ mod tests {
             declaration_rank("extension Request: Equatable {}", false),
             DeclarationRank::Statement
         );
+        for compact_definition in [
+            "enum Color { Red, Blue };",
+            "struct Point { int x; int y; };",
+        ] {
+            assert_eq!(
+                declaration_rank(compact_definition, false),
+                DeclarationRank::Heading,
+                "{compact_definition}"
+            );
+        }
         assert_eq!(
             declaration_rank("namespace App.Models;", false),
             DeclarationRank::Heading
