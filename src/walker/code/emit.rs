@@ -363,9 +363,9 @@ mod tests {
         run(&file)
     }
 
-    /// Emits `model` for a file of `lines` rows, asserting no row was
-    /// dropped as a non-ancestor overlap. Returns each batch's key,
-    /// predecessor and rendered rows.
+    /// Emits `model` for a file of `lines` rows, asserting each batch
+    /// renders every row of its items, none dropped as a non-ancestor
+    /// overlap. Returns each batch's key, predecessor and rendered rows.
     fn emit(lines: usize, model: FileModel) -> Vec<(CodeKey, Option<CodeKey>, Vec<usize>)> {
         with_file(lines, |file| {
             let mut emitter = Emitter {
@@ -383,15 +383,18 @@ mod tests {
                         BatchKey::Code(key) => key,
                         other => panic!("not a code key: {other:?}"),
                     };
-                    let BatchContent::Lines { spans, .. } = batch.content else {
+                    let BatchContent::Lines { spans, units } = batch.content else {
                         panic!("not a lines batch");
                     };
-                    let rows = spans.iter().flat_map(|span| span.start..=span.end);
-                    (
-                        code_key(batch.key),
-                        batch.predecessor.map(code_key),
-                        rows.collect(),
-                    )
+                    let key = code_key(batch.key);
+                    let rows: Vec<usize> = spans
+                        .iter()
+                        .flat_map(|span| span.start..=span.end)
+                        .collect();
+                    let mut unit_rows: Vec<usize> = units.into_iter().flatten().collect();
+                    sort_dedup(&mut unit_rows);
+                    assert_eq!(rows, unit_rows, "{key:?} dropped rows");
+                    (key, batch.predecessor.map(code_key), rows)
                 })
                 .collect()
         })
