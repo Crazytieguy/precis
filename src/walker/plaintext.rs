@@ -663,13 +663,15 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize
     ];
     let mut used = [0usize; 3];
     let mut selected: Vec<usize> = Vec::new();
-    // In a language file, a declaration that opens a block (a class, a
-    // function, a module) is what the roster is for; statements and
-    // directives take the slots it leaves. A flat file's surface stays
-    // its head.
+    // In a language file the roster is for types and functions;
+    // statements and directives take the slots they leave. A flat file's
+    // surface stays its head.
     if is_language {
         let opens_block = block_openers(&lines, &continues);
-        rows.sort_by_key(|&(_, line, kind)| kind == SurfaceLine::Decl && !opens_block[line - 1]);
+        rows.sort_by_key(|&(_, line, kind)| match kind {
+            SurfaceLine::Decl => declaration_rank(lines[line - 1].trim(), opens_block[line - 1]),
+            _ => DeclarationRank::Heading,
+        });
     }
     for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
         for &(_, line, kind) in rows.iter().filter(|(indent, ..)| *indent == level) {
@@ -715,21 +717,102 @@ fn block_openers(lines: &[&str], continues: &[bool]) -> Vec<bool> {
     opens
 }
 
+/// Roster order of a declaration line, first to last.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+enum DeclarationRank {
+    /// Heads a block, or declares with no body: an interface or protocol
+    /// requirement, a type signature, a forward declaration.
+    Heading,
+    /// A declaration whose body follows on the same line.
+    OneLiner,
+    Statement,
+    /// Private members, test cases and control flow: not the file's API.
+    Internal,
+}
+
+/// Words that declare the name after them, across the covered languages.
+const DECLARATION_KEYWORDS: &str = "class interface trait object struct enum protocol extension \
+    module record union namespace defmodule type typealias data newtype instance def fun func \
+    function fn sub defmacro proc val var let const";
+
+/// First words of a line that is not part of a file's API: a private or
+/// file-local member, a test case, or a control-flow statement.
+const INTERNAL_LEADERS: &str = "private fileprivate defp static test begin rescue ensure else \
+    elsif elif comptime if unless for foreach while until switch match when try catch finally do \
+    return throw raise new await yield";
+
+/// Where a declaration line falls in the roster. A line reads as a
+/// declaration by a keyword followed by a name, by a Haskell `name ::`
+/// signature, or by the C-family `Type name(` shape; it has a body when
+/// an `=` follows at bracket depth zero.
+fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
+    let head_end = trimmed
+        .find(['(', '=', '{', '<', '['])
+        .unwrap_or(trimmed.len());
+    let words: Vec<&str> = trimmed[..head_end].split_whitespace().collect();
+    if words.first().is_some_and(|first| {
+        INTERNAL_LEADERS
+            .split_whitespace()
+            .any(|leader| leader == *first)
+    }) {
+        return DeclarationRank::Internal;
+    }
+    if opens_block {
+        return DeclarationRank::Heading;
+    }
+    let declares = words.iter().rev().skip(1).any(|word| {
+        DECLARATION_KEYWORDS
+            .split_whitespace()
+            .any(|keyword| keyword == *word)
+    }) || words.get(1) == Some(&"::")
+        || (words.len() >= 2 && trimmed[head_end..].starts_with('('));
+    match (declares, has_same_line_body(trimmed)) {
+        (true, false) => DeclarationRank::Heading,
+        (true, true) => DeclarationRank::OneLiner,
+        (false, _) => DeclarationRank::Statement,
+    }
+}
+
+/// Whether an assignment `=` (not `==`, `=>`, `<=`, …) sits outside every
+/// bracket on the line.
+fn has_same_line_body(trimmed: &str) -> bool {
+    let bytes = trimmed.as_bytes();
+    let mut depth = 0;
+    bytes.iter().enumerate().any(|(index, &byte)| {
+        match byte {
+            b'(' | b'[' | b'{' => depth += 1,
+            b')' | b']' | b'}' => depth -= 1,
+            _ => {}
+        }
+        let operator_char = |at: Option<&u8>| at.is_some_and(|c| b"=<>!:+-*/".contains(c));
+        byte == b'='
+            && depth == 0
+            && !operator_char(index.checked_sub(1).and_then(|before| bytes.get(before)))
+            && !operator_char(bytes.get(index + 1))
+    })
+}
+
 /// Leading characters of a line indented under the one above it that
 /// carries on that line's expression — a method chain, a wrapped
 /// assignment or type, a guard, a pipe.
 const CONTINUATION_OPERATORS: &[char] = &['.', '=', '?', ':', '|', '&', '+', '-', ','];
 
+/// Trailing characters of a line whose expression carries on to the
+/// deeper line below it: an assignment, a binary operator, a list.
+const CONTINUED_OPERATORS: &[char] = &['=', '+', '-', '&', ','];
+
 /// Per line, whether it continues a logical line begun above it: the rest
 /// of a `(` or `[` left open there (wrapped parameters, a multi-line
 /// annotation, a literal), a line led by a closing bracket, or a deeper
-/// line led by an operator. It declares nothing on its own. A line back
+/// line led by an operator or below one that ends in one. It declares
+/// nothing on its own. A line back
 /// at or above the indentation that opened the bracket ends it, so a
 /// miscounted bracket cannot swallow the rest of the file.
 fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
     let mut continues = vec![false; lines.len()];
     let mut depth = 0;
     let mut head_indent = 0;
+    let mut previous_carries_on = false;
     for (index, line) in lines.iter().enumerate() {
         let trimmed = line.trim();
         if trimmed.is_empty() || in_block_comment[index] || is_comment_line(trimmed) {
@@ -742,11 +825,13 @@ fn continuation_lines(lines: &[&str], in_block_comment: &[bool]) -> Vec<bool> {
         }
         continues[index] = depth > 0
             || led_by_closer
-            || (indent > head_indent && trimmed.starts_with(CONTINUATION_OPERATORS));
+            || (indent > head_indent
+                && (previous_carries_on || trimmed.starts_with(CONTINUATION_OPERATORS)));
         if depth == 0 && !continues[index] {
             head_indent = indent;
         }
         depth = (depth + bracket_balance(trimmed)).max(0);
+        previous_carries_on = trimmed.ends_with(CONTINUED_OPERATORS);
     }
     continues
 }
@@ -1327,6 +1412,60 @@ mod tests {
         );
         assert!(opens_block[0] && opens_block[10], "{opens_block:?}");
         assert!(!opens_block[3], "{opens_block:?}");
+    }
+
+    /// An abstract member is the API a trait or interface defines and
+    /// outranks members with bodies; private members, test cases and
+    /// control flow come last.
+    #[test]
+    fn plaintext_source_text_surface_ranks_signatures_before_bodies_and_internals() {
+        let mut scala = vec!["trait Functor {".to_string()];
+        for n in 0..SOURCE_TEXT_DECL_LINES {
+            scala.push(format!("  def helper{n}: Int ="));
+            scala.push(format!("    {n}"));
+        }
+        scala.extend(
+            [
+                "  private def hidden(): Int = 0",
+                "  def map[A, B](fa: F[A])(f: A => B): F[B]",
+                "  boolean isValid(String email);",
+                "}",
+            ]
+            .map(String::from),
+        );
+        let scala = scala.join("\n");
+        let lines: Vec<&str> = scala.lines().collect();
+        let text: Vec<&str> = surface_of(&scala).iter().map(|n| lines[n - 1]).collect();
+        assert!(
+            text.contains(&"  def map[A, B](fa: F[A])(f: A => B): F[B]"),
+            "{text:?}"
+        );
+        assert!(
+            text.contains(&"  boolean isValid(String email);"),
+            "{text:?}"
+        );
+        assert!(
+            !text.contains(&"  private def hidden(): Int = 0"),
+            "{text:?}"
+        );
+
+        for (line, rank) in [
+            ("rescue LoadError", DeclarationRank::Internal),
+            ("comptime {", DeclarationRank::Internal),
+            (
+                "fun noCache(): Boolean = noCache",
+                DeclarationRank::OneLiner,
+            ),
+            (
+                "treeChecks :: [Parameters -> Token]",
+                DeclarationRank::Heading,
+            ),
+            ("return foo(x);", DeclarationRank::Internal),
+            ("foo(bar);", DeclarationRank::Statement),
+            ("val url: HttpUrl =", DeclarationRank::OneLiner),
+        ] {
+            assert_eq!(declaration_rank(line, false), rank, "{line}");
+        }
     }
 
     #[test]
