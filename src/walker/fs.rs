@@ -1,12 +1,12 @@
 //! Filesystem walker: directory listings and their value, plus
 //! per-extension file enumeration for the other walkers. Only does
-//! `read_dir` — never reads file contents. Pure listing lives in
-//! [`crate::fs_util::list_dir`]; this module holds walker-specific
-//! policy (which directories recurse, how a long listing splits, how a
-//! directory's role prices its listing).
+//! `read_dir` — never reads file contents but the root `.gitattributes`.
+//! Pure listing lives in [`crate::fs_util::list_dir`]; this module holds
+//! walker-specific policy (which directories recurse, how a long listing
+//! splits, how a directory's role prices its listing).
 
 use std::{
-    cell::RefCell,
+    cell::{OnceCell, RefCell},
     collections::{BTreeMap, BTreeSet, HashMap, HashSet},
     path::{Path, PathBuf},
     rc::Rc,
@@ -384,6 +384,7 @@ fn is_module_source_dir(dir: &Path, ctx: &WalkCtx) -> bool {
 pub(in crate::walker) struct FsState {
     holds_source: RefCell<HashMap<PathBuf, bool>>,
     shape_repeats: RefCell<HashMap<PathBuf, Rc<HashSet<String>>>>,
+    declared_vendored_dirs: OnceCell<HashSet<PathBuf>>,
 }
 
 impl FsState {
@@ -451,6 +452,36 @@ impl FsState {
             .insert(parent.to_path_buf(), Rc::clone(&repeats));
         repeats
     }
+
+    fn is_declared_vendored(&self, dir: &Path, root: &Path) -> bool {
+        self.declared_vendored_dirs
+            .get_or_init(|| declared_vendored_dirs(root))
+            .contains(dir)
+    }
+}
+
+/// The directories whose whole contents the root `.gitattributes` marks
+/// vendored (`lib/libc/** linguist-vendored`): the repository's own
+/// declaration of an embedded upstream.
+fn declared_vendored_dirs(root: &Path) -> HashSet<PathBuf> {
+    let Ok(text) = std::fs::read_to_string(root.join(".gitattributes")) else {
+        return HashSet::new();
+    };
+    text.lines()
+        .filter_map(|line| {
+            let mut fields = line.split_whitespace();
+            let pattern = fields.next()?;
+            if !fields.any(|attribute| {
+                matches!(attribute, "linguist-vendored" | "linguist-vendored=true")
+            }) {
+                return None;
+            }
+            let dir = pattern
+                .strip_suffix("/**")
+                .or_else(|| pattern.strip_suffix("/*"))?;
+            Some(root.join(dir.strip_prefix('/').unwrap_or(dir)))
+        })
+        .collect()
 }
 
 /// True when `dir` lies under the repository's own top-level
@@ -514,9 +545,11 @@ fn is_source_inventory_file(path: &Path) -> bool {
 /// Heavy-directory names block traversal, except a `build/` that holds
 /// Rust source: a checked-in module may be named `build`, while Cargo's
 /// own output lives under `target/`, which the walk never enters. A
-/// translated mirror, an unpacked upstream release or a generated
-/// documentation site is named, not listed: its entries repeat names
-/// kept elsewhere.
+/// translated mirror, an unpacked upstream release, a generated
+/// documentation site or a declared vendored directory is named, not
+/// listed: its entries repeat names kept elsewhere. A third-party
+/// directory declared vendored keeps its listing, which names the
+/// projects it holds.
 fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     let Some(name) = dir.file_name() else {
         return false;
@@ -530,7 +563,9 @@ fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     !(heavy
         || is_locale_mirror(dir, &name, ctx)
         || is_generated_doc_site(dir, ctx)
-        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx))
+        || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
+        || ctx.fs_state.is_declared_vendored(dir, ctx.root())
+            && !crate::value::is_third_party_dir(dir, ctx.root()))
 }
 
 /// A copy of another project as its release archive unpacks, named for
@@ -833,7 +868,7 @@ mod tests {
     }
 
     #[test]
-    fn fs_mirrors_releases_doc_sites_and_build_output_are_named_not_listed() {
+    fn fs_mirrors_releases_doc_sites_vendored_and_build_output_are_named_not_listed() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         for dir in [
@@ -854,6 +889,10 @@ mod tests {
             "target",
             "site/api",
             "doxygen",
+            "lib/libcxx/src",
+            "lib/std/src",
+            "src/xdiff",
+            "vendor/zlib",
         ] {
             std::fs::create_dir_all(root.join(dir)).unwrap();
         }
@@ -876,6 +915,11 @@ mod tests {
             ("doxygen/doxygen.css", ""),
             ("site/index.html", ""),
             ("site/about.html", ""),
+            (
+                ".gitattributes",
+                "lib/libcxx/** linguist-vendored\n/src/xdiff/* linguist-vendored=true\n\
+                 lib/std/** -linguist-vendored\nvendor/** linguist-vendored\n",
+            ),
         ] {
             std::fs::write(root.join(file), text).unwrap();
         }
@@ -891,6 +935,8 @@ mod tests {
             "build",
             "doxygen",
             "site",
+            "lib/std",
+            "vendor",
         ] {
             assert!(recurses(dir), "{dir}");
         }
@@ -902,6 +948,8 @@ mod tests {
             "tools/build",
             "target",
             "site/api",
+            "lib/libcxx",
+            "src/xdiff",
         ] {
             assert!(!recurses(dir), "{dir}");
         }
