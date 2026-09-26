@@ -13,6 +13,7 @@
 //! A mismatch writes `<file>.new` next to the baseline and fails.
 //! `UPDATE_BASELINES=1 cargo t` rewrites the baselines instead and passes.
 
+use std::collections::BTreeSet;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -107,6 +108,64 @@ fn run_fixture(name: &str, rev: &str) -> (String, PathBuf, Schedule) {
     let schedule = render_schedule(&fixture_dir, SCHEDULE_BUDGET)
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
     (fixture, fixture_dir, schedule)
+}
+
+/// The subset property (`docs/design-notes.md`) that the baselines and
+/// the divergence grid rely on: replaying the `SCHEDULE_BUDGET` schedule
+/// at a smaller budget reproduces a direct run there, and every row shown
+/// at one budget is still shown at a larger one.
+#[test]
+fn fixture_baselines_replay_matches_direct_render() {
+    for fixture in ["mitt", "sds", "middleclass"] {
+        let fixture_dir = repo_path(&format!("tests/fixtures/{fixture}"));
+        let schedule = render_schedule(&fixture_dir, SCHEDULE_BUDGET)
+            .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
+        let mut smaller_rows = BTreeSet::new();
+        for budget in [1000, RENDERED_BUDGET, 9000] {
+            let direct = precis::render(&fixture_dir, budget, None).unwrap();
+            assert_eq!(
+                direct,
+                render_with_schedule(&schedule, budget),
+                "{fixture} at {budget}"
+            );
+            let rows = tree_rows(&direct);
+            let dropped: Vec<_> = smaller_rows.difference(&rows).collect();
+            assert!(
+                dropped.is_empty(),
+                "{fixture} at {budget} drops {dropped:?}"
+            );
+            smaller_rows = rows;
+        }
+    }
+}
+
+/// Each shown row keyed by the rows it nests under. An `a/b/` row is split
+/// into its directories: `a/` renders alone until `b/` is expanded.
+fn tree_rows(rendered: &str) -> BTreeSet<Vec<String>> {
+    let mut rows = BTreeSet::new();
+    let mut ancestors: Vec<(usize, Vec<&str>)> = Vec::new();
+    for line in rendered.lines() {
+        let row = line.trim_start_matches(' ');
+        let depth = line.len() - row.len();
+        ancestors.retain(|(ancestor_depth, _)| *ancestor_depth < depth);
+        let parts: Vec<&str> = if row.contains('→') {
+            vec![row]
+        } else {
+            row.split_inclusive('/').collect()
+        };
+        let mut key: Vec<String> = ancestors
+            .iter()
+            .flat_map(|(_, parts)| parts.iter().map(|part| part.to_string()))
+            .collect();
+        for part in &parts {
+            key.push(part.to_string());
+            if row != "…" {
+                rows.insert(key.clone());
+            }
+        }
+        ancestors.push((depth, parts));
+    }
+    rows
 }
 
 /// Every fixture scores above zero; zero means the NS and walker atoms
