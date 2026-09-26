@@ -1449,7 +1449,9 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx, package_depth: usize) -
 /// source declares first (`package com.acme.util;` in
 /// `src/main/java/com/acme/util/`, `namespace App\Http;` in `app/Http/`).
 /// They name the unit, as an import path does, rather than nest it in the
-/// repository.
+/// repository. So does the .NET project directory above them that names
+/// one assembly of the namespace (`namespace Polly.Retry;` in
+/// `src/Polly.Core/Retry/`).
 fn package_directories(file: &Path, source: &str) -> usize {
     let Some(declared) = source.lines().find_map(|line| {
         let line = line.trim_start();
@@ -1458,19 +1460,30 @@ fn package_directories(file: &Path, source: &str) -> usize {
     }) else {
         return 0;
     };
-    let segments = declared
+    let segments: Vec<&str> = declared
         .trim_end_matches([';', '{', ' '])
-        .rsplit(['.', '\\']);
-    let directories = file.parent().into_iter().flat_map(Path::components).rev();
-    segments
-        .zip(directories)
-        .take_while(|(segment, directory)| {
-            directory
-                .as_os_str()
-                .to_str()
-                .is_some_and(|directory| directory.eq_ignore_ascii_case(segment))
-        })
-        .count()
+        .split(['.', '\\'])
+        .collect();
+    let directories: Vec<&str> = file
+        .parent()
+        .into_iter()
+        .flat_map(Path::components)
+        .rev()
+        .map_while(|directory| directory.as_os_str().to_str())
+        .collect();
+    let matched = segments
+        .iter()
+        .rev()
+        .zip(&directories)
+        .take_while(|(segment, directory)| directory.eq_ignore_ascii_case(segment))
+        .count();
+    let outer_namespace = segments[..segments.len() - matched].join(".");
+    let in_assembly_directory = !outer_namespace.is_empty()
+        && directories.get(matched).is_some_and(|directory| {
+            directory.as_bytes().get(outer_namespace.len()) == Some(&b'.')
+                && directory[..outer_namespace.len()].eq_ignore_ascii_case(&outer_namespace)
+        });
+    matched + usize::from(in_assembly_directory)
 }
 
 /// Whether `file` is in the language the repository is written in. When
@@ -2689,6 +2702,26 @@ mod tests {
                 Path::new("src/Polly/Retry/Policy.cs"),
                 "namespace Polly.Retry\n{\n",
                 2,
+            ),
+            (
+                Path::new("src/Polly.Core/Retry/RetryHelper.cs"),
+                "namespace Polly.Retry;\n",
+                2,
+            ),
+            (
+                Path::new("src/Polly.Core/ResiliencePipeline.cs"),
+                "namespace Polly;\n",
+                1,
+            ),
+            (
+                Path::new("src/CliFx.Tests/SpecsBase.cs"),
+                "namespace CliFx.Tests;\n",
+                0,
+            ),
+            (
+                Path::new("src/PollyCore/Retry/RetryHelper.cs"),
+                "namespace Polly.Retry;\n",
+                1,
             ),
             (java, "public class Strings {}\n", 0),
         ];
