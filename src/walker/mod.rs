@@ -440,7 +440,7 @@ pub(crate) fn is_refused_by_name(path: &Path) -> bool {
 /// no key, whatever long token (a SHA-256 hex digest) follows it. A block
 /// whose closing armor is missing (a head read cut short of it) counts
 /// when its first line past the armor headers is a whole base64 armor
-/// line.
+/// line, less any quote or comment marks around it (`> `, `// `).
 pub(crate) fn holds_private_key(text: &str) -> bool {
     let is_base64 = |ch: char| ch.is_ascii_alphanumeric() || ch == '+' || ch == '/';
     text.split("-----BEGIN ").skip(1).any(|block| {
@@ -457,7 +457,7 @@ pub(crate) fn holds_private_key(text: &str) -> bool {
             None => body
                 .lines()
                 .skip(1)
-                .map(str::trim)
+                .map(|line| line.trim_matches(|ch: char| !is_base64(ch) && ch != '='))
                 .find(|line| !line.is_empty() && !line.contains(':'))
                 .is_some_and(|line| {
                     line.len() >= 64 && line.chars().all(|ch| is_base64(ch) || ch == '=')
@@ -609,6 +609,10 @@ mod tests {
             ),
             format!(
                 "-----BEGIN PGP PRIVATE KEY BLOCK-----\nVersion: GnuPG v2\n\n{body}\n{}",
+                &body[..20]
+            ),
+            format!(
+                "> -----BEGIN RSA PRIVATE KEY-----\n> {body}\n> {}",
                 &body[..20]
             ),
         ] {

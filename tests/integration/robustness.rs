@@ -668,6 +668,39 @@ fn robustness_private_key_past_the_floors_head_renders_only_its_row() {
     }
 }
 
+/// A private key quoted in prose (a blockquote) or spelled out as a
+/// string in a code sample, its closing armor past the floor's head,
+/// renders none of its material.
+#[test]
+fn robustness_quoted_private_key_past_the_floors_head_renders_no_material() {
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path();
+    let quoted_material: String = (0..150)
+        .map(|line| format!("> PrecisKeyMaterial{line:047}\n"))
+        .collect();
+    let string_material: String = (0..150)
+        .map(|line| format!("  \"PrecisKeyMaterial{line:047}\\n\" +\n"))
+        .collect();
+    write(
+        &root.join("README.md"),
+        format!(
+            "# demo\n\n```js\nconst key =\n  \"-----BEGIN RSA PRIVATE KEY-----\\n\" +\n\
+             {string_material}  \"-----END RSA PRIVATE KEY-----\\n\";\n```\n"
+        ),
+    );
+    write(
+        &root.join("docs/key.md"),
+        format!(
+            "# key\n\n> -----BEGIN RSA PRIVATE KEY-----\n{quoted_material}\
+             > -----END RSA PRIVATE KEY-----\n"
+        ),
+    );
+    for budget in [3000, 100_000] {
+        let out = render(root, budget).unwrap();
+        assert!(!out.contains("PrecisKeyMaterial"), "{out}");
+    }
+}
+
 /// Distinctive enough that finding it anywhere in the output is proof,
 /// not coincidence.
 #[cfg(unix)]
