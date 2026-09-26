@@ -741,13 +741,22 @@ mod tests {
         std::fs::write(root.join("src/lib.rs"), "").unwrap();
         std::fs::write(root.join("src/generated.rs"), "").unwrap();
         std::fs::write(root.join("src/trace.log"), "").unwrap();
-        // Self-ignoring scratch dir, and a parent left holding only one.
+        // Self-ignoring directories: no pattern matches one from outside,
+        // since the `*` that hides it lives inside it, so a parent's
+        // listing has to look in. One alone, a parent left holding only
+        // one, and a parent that also holds a real file.
         std::fs::create_dir(root.join("scratch")).unwrap();
         std::fs::write(root.join("scratch/.gitignore"), "*\n").unwrap();
         std::fs::write(root.join("scratch/notes"), "").unwrap();
         std::fs::create_dir_all(root.join("outer/inner")).unwrap();
         std::fs::write(root.join("outer/inner/.gitignore"), "*\n").unwrap();
         std::fs::write(root.join("outer/inner/blob"), "").unwrap();
+        std::fs::create_dir_all(root.join("mixed/cache")).unwrap();
+        std::fs::write(root.join("mixed/cache/.gitignore"), "*\n").unwrap();
+        std::fs::write(root.join("mixed/real.rs"), "").unwrap();
+        // Dot-directories other than `.git` are repository content.
+        std::fs::create_dir_all(root.join(".github/workflows")).unwrap();
+        std::fs::write(root.join(".github/workflows/ci.yml"), "").unwrap();
         // Unanchored `tmp/` reaches any depth.
         std::fs::create_dir_all(root.join("docs/tmp")).unwrap();
         std::fs::write(root.join("docs/guide.md"), "").unwrap();
@@ -788,86 +797,6 @@ mod tests {
 
         let filter = DirFilter::without_global_excludes(root);
         assert_eq!(names_in(root, &filter), [".gitignore", "dist", "run.log"]);
-    }
-
-    #[test]
-    fn fs_util_filter_honours_the_gitignore_chain_in_a_repo() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        std::fs::create_dir_all(root.join(GIT_DIR).join("info")).unwrap();
-        std::fs::write(root.join(GIT_DIR).join("info/exclude"), "local-only\n").unwrap();
-        std::fs::write(root.join(".gitignore"), "*.log\nbuild/\n!keep.log\n").unwrap();
-        std::fs::create_dir_all(root.join(".github/workflows")).unwrap();
-        std::fs::create_dir(root.join("build")).unwrap();
-        std::fs::create_dir(root.join("src")).unwrap();
-        std::fs::write(root.join("run.log"), "x").unwrap();
-        std::fs::write(root.join("keep.log"), "x").unwrap();
-        std::fs::write(root.join("local-only"), "x").unwrap();
-        // Nested .gitignore: applies to its own directory and below, and
-        // can re-include what an ancestor ignored.
-        std::fs::write(root.join("src/.gitignore"), "generated.rs\n!*.log\n").unwrap();
-        std::fs::write(root.join("src/lib.rs"), "").unwrap();
-        std::fs::write(root.join("src/generated.rs"), "").unwrap();
-        std::fs::write(root.join("src/trace.log"), "").unwrap();
-
-        let filter = DirFilter::without_global_excludes(root);
-        // `.git` gone, ignored entries gone, dotfile repo content kept.
-        assert_eq!(
-            names_in(root, &filter),
-            [".github", ".gitignore", "keep.log", "src"]
-        );
-        assert_eq!(
-            names_in(&root.join("src"), &filter),
-            [".gitignore", "lib.rs", "trace.log"]
-        );
-    }
-
-    /// The self-ignoring-directory idiom: a scratch dir whose own
-    /// `.gitignore` is `*`. No pattern matches the directory from
-    /// outside — the one that hides it lives inside it — so a parent's
-    /// listing has to look in. Git agrees these are ignored; it collapses
-    /// them to a single `dir/` row under `git status --ignored`.
-    #[test]
-    fn fs_util_filter_drops_a_directory_that_hides_all_its_own_contents() {
-        let temp = tempfile::tempdir().unwrap();
-        let root = temp.path();
-        std::fs::create_dir(root.join(GIT_DIR)).unwrap();
-        std::fs::write(root.join(".gitignore"), "\n").unwrap();
-        // Hides everything it holds, including its own `.gitignore`.
-        std::fs::create_dir(root.join("scratch")).unwrap();
-        std::fs::write(root.join("scratch/.gitignore"), "*\n").unwrap();
-        std::fs::write(root.join("scratch/notes.txt"), "x").unwrap();
-        // Holds only such a directory — git collapses the whole chain.
-        std::fs::create_dir_all(root.join("outer/inner")).unwrap();
-        std::fs::write(root.join("outer/inner/.gitignore"), "*\n").unwrap();
-        std::fs::write(root.join("outer/inner/blob.bin"), "x").unwrap();
-        // Genuinely empty: real repository structure, keeps its row.
-        std::fs::create_dir(root.join("placeholder")).unwrap();
-        // Mixed: one hidden child, one real file.
-        std::fs::create_dir_all(root.join("mixed/cache")).unwrap();
-        std::fs::write(root.join("mixed/cache/.gitignore"), "*\n").unwrap();
-        std::fs::write(root.join("mixed/real.rs"), "").unwrap();
-
-        let filter = DirFilter::without_global_excludes(root);
-        assert_eq!(
-            names_in(root, &filter),
-            [".gitignore", "mixed", "placeholder"]
-        );
-        assert_eq!(names_in(&root.join("mixed"), &filter), ["real.rs"]);
-        // A hidden directory is never listed, so nothing keeps its entries.
-        for hidden in ["scratch", "outer", "outer/inner", "mixed/cache"] {
-            assert!(
-                !filter
-                    .probed_entries
-                    .borrow()
-                    .contains_key(&root.join(hidden)),
-                "{hidden}"
-            );
-        }
-        assert!(filter.hides_everything_in(&root.join("scratch")));
-        assert!(filter.hides_everything_in(&root.join("outer")));
-        assert!(!filter.hides_everything_in(&root.join("placeholder")));
-        assert!(!filter.hides_everything_in(&root.join("mixed")));
     }
 
     /// The listing layer is where containment lives, so state it here
