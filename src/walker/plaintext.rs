@@ -400,8 +400,9 @@ enum SurfaceLine {
 /// or C# file, so they rank as declarations.
 #[rustfmt::skip]
 const SOURCE_TEXT_IMPORT_PREFIXES: &[&str] = &[
-    "import", "#import", "#include", "using ", "require", "from ", "use ", "@use", "@import",
-    "@forward", "open ", "extern crate", "include ", "load(", "export * from", "export {",
+    "import", "#import", "#include", "using ", "require ", "require(", "require_relative",
+    "require_once", "requires ", "from ", "use ", "@use", "@import", "@forward", "extern crate",
+    "include ", "load(", "export * from", "export {",
 ];
 
 /// Substrings that mark a comment line as boilerplate rather than
@@ -425,10 +426,16 @@ fn classify_surface_line(trimmed: &str, in_block_comment: bool) -> Option<Surfac
         return None;
     }
     let lower = trimmed.to_ascii_lowercase();
+    // OCaml and F# `open` a module; Kotlin and Swift `open` a class or member
+    // to overriding.
+    let opens_module = trimmed
+        .strip_prefix("open ")
+        .is_some_and(|rest| rest.starts_with(char::is_uppercase));
     if !in_block_comment
-        && SOURCE_TEXT_IMPORT_PREFIXES
-            .iter()
-            .any(|prefix| lower.starts_with(prefix))
+        && (opens_module
+            || SOURCE_TEXT_IMPORT_PREFIXES
+                .iter()
+                .any(|prefix| lower.starts_with(prefix)))
     {
         return Some(SurfaceLine::Import);
     }
@@ -1527,6 +1534,35 @@ mod tests {
         assert!(is_comment_line("#Region \"Fields\""));
         assert!(is_comment_line("#endregion"));
         assert!(!is_comment_line("#region-picker {"));
+    }
+
+    /// Only a module opens with `open` or loads with `require`: a Kotlin or
+    /// Swift `open` declaration and a Swift `required init` are declarations.
+    #[test]
+    fn plaintext_source_text_open_and_required_declarations_are_not_imports() {
+        for line in [
+            "open System.IO",
+            "open Core",
+            "require 'rack'",
+            "require_relative 'x'",
+        ] {
+            assert_eq!(
+                classify_surface_line(line, false),
+                Some(SurfaceLine::Import),
+                "{line}"
+            );
+        }
+        for line in [
+            "open class Table(name: String) {",
+            "open func request()",
+            "required init()",
+        ] {
+            assert_eq!(
+                classify_surface_line(line, false),
+                Some(SurfaceLine::Decl),
+                "{line}"
+            );
+        }
     }
 
     /// The interior of a multi-line `<!-- … -->` is comment, not a roster

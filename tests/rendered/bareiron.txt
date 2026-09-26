@@ -54,8 +54,6 @@ extract_registries.sh
   …
   28→prepare_notchian_dir() {
   …
-  36→dump_registries() {
-  …
 include/
   crafting.h
   globals.h
@@ -241,6 +239,7 @@ include/
     9→int cs_playerAction (int client_fd);
     10→int cs_useItemOn (int client_fd);
     11→int cs_useItem (int client_fd);
+    12→int cs_setPlayerPositionAndRotation (int client_fd, double *x, double *y, double *z, float *yaw, float *pitch, uint8_t *on_ground);
     …
   procedures.h
   serialize.h
