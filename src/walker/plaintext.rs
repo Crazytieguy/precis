@@ -765,21 +765,15 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
 }
 
 /// Whether an assignment `=` (not `==`, `=>`, `<=`, …) sits outside every
-/// bracket on the line.
+/// round and square bracket and literal on the line.
 fn has_same_line_body(trimmed: &str) -> bool {
     let bytes = trimmed.as_bytes();
-    let mut depth = 0;
+    let operator_char = |at: Option<&u8>| at.is_some_and(|c| b"=<>!:+-*/".contains(c));
     bytes.iter().enumerate().any(|(index, &byte)| {
-        match byte {
-            b'(' | b'[' | b'{' => depth += 1,
-            b')' | b']' | b'}' => depth -= 1,
-            _ => {}
-        }
-        let operator_char = |at: Option<&u8>| at.is_some_and(|c| b"=<>!:+-*/".contains(c));
         byte == b'='
-            && depth == 0
             && !operator_char(index.checked_sub(1).and_then(|before| bytes.get(before)))
             && !operator_char(bytes.get(index + 1))
+            && bracket_balance(&trimmed[..index]) == 0
     })
 }
 
