@@ -143,7 +143,7 @@ Or add to your `.claude/settings.json` manually:
 }
 ```
 
-The plugin automatically downloads and updates the binary — no manual install needed.
+The plugin automatically downloads and updates the binary — no manual install needed. It runs on macOS and Linux (x86_64 and arm64); on other platforms, install the standalone CLI and configure your agent as below.
 
 ### Standalone CLI
 

@@ -1,7 +1,9 @@
 //! The plugin's shell hooks, run as Claude Code runs them: JSON on stdin,
 //! a decision (or nothing) on stdout.
 
+use std::ffi::OsStr;
 use std::io::Write;
+use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
@@ -13,6 +15,27 @@ fn hook_script(relative: &str) -> PathBuf {
 
 fn json_string(text: &str) -> String {
     format!("\"{}\"", text.replace('\\', "\\\\").replace('"', "\\\""))
+}
+
+/// Runs a plugin script with `input` on stdin and returns its stdout.
+fn run_hook(script: &str, input: &str, env: &[(&str, &OsStr)]) -> String {
+    let mut child = Command::new("bash")
+        .arg(hook_script(script))
+        .env_remove("CLAUDE_PLUGIN_ROOT")
+        .envs(env.iter().copied())
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap();
+    child
+        .stdin
+        .take()
+        .unwrap()
+        .write_all(input.as_bytes())
+        .unwrap();
+    let output = child.wait_with_output().unwrap();
+    assert!(output.status.success(), "{script} failed on {input}");
+    String::from_utf8(output.stdout).unwrap()
 }
 
 /// Runs the permission hook on `command` from `cwd`; true when it
@@ -27,23 +50,15 @@ fn approves(cwd: Option<&Path>, command: &str, home: &Path) -> bool {
         input.push_str(&format!(",\"cwd\":{}", json_string(&cwd.to_string_lossy())));
     }
     input.push('}');
-    let mut child = Command::new("bash")
-        .arg(hook_script("hooks/auto-approve-precis.sh"))
-        .env("HOME", home)
-        .env("CLAUDE_PLUGIN_DATA", home.join("plugin-data"))
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .spawn()
-        .unwrap();
-    child
-        .stdin
-        .take()
-        .unwrap()
-        .write_all(input.as_bytes())
-        .unwrap();
-    let output = child.wait_with_output().unwrap();
-    assert!(output.status.success(), "hook failed on {input}");
-    let stdout = String::from_utf8(output.stdout).unwrap();
+    let plugin_data = home.join("plugin-data");
+    let stdout = run_hook(
+        "hooks/auto-approve-precis.sh",
+        &input,
+        &[
+            ("HOME", home.as_os_str()),
+            ("CLAUDE_PLUGIN_DATA", plugin_data.as_os_str()),
+        ],
+    );
     if stdout.trim().is_empty() {
         return false;
     }
@@ -133,4 +148,44 @@ fn plugin_hooks_approve_through_symlinked_cwd() {
     std::os::unix::fs::symlink(&project, &link).unwrap();
     assert!(approves(Some(&link), "precis sub", temp.path()));
     assert!(!approves(Some(&link), "precis 123", temp.path()));
+}
+
+/// The session hook without a binary to run says why, and adds the
+/// plugin's data directory to PATH once however often it runs.
+#[test]
+fn plugin_hooks_session_start_without_binary() {
+    let temp = tempfile::tempdir().unwrap();
+    let plugin_data = temp.path().join("plugin-data");
+    let env_file = temp.path().join("env");
+    let env = [
+        ("CLAUDE_PLUGIN_DATA", plugin_data.as_os_str()),
+        ("CLAUDE_ENV_FILE", env_file.as_os_str()),
+    ];
+    let input = r#"{"source":"startup"}"#;
+    for _ in 0..2 {
+        let stdout = run_hook("hooks/session-start.sh", input, &env);
+        assert!(stdout.contains("error, see"), "{stdout}");
+    }
+    let exports = std::fs::read_to_string(&env_file).unwrap();
+    assert_eq!(exports.lines().count(), 1, "{exports}");
+    assert!(
+        exports.contains(&*plugin_data.to_string_lossy()),
+        "{exports}"
+    );
+
+    let fake_bin = temp.path().join("bin");
+    std::fs::create_dir(&fake_bin).unwrap();
+    let uname = fake_bin.join("uname");
+    std::fs::write(&uname, "#!/bin/sh\necho MINGW64_NT-10.0\n").unwrap();
+    std::fs::set_permissions(&uname, PermissionsExt::from_mode(0o755)).unwrap();
+    let search_path = std::env::var_os("PATH").unwrap();
+    let path =
+        std::env::join_paths(std::iter::once(fake_bin).chain(std::env::split_paths(&search_path)))
+            .unwrap();
+    let stdout = run_hook(
+        "hooks/session-start.sh",
+        input,
+        &[env[0], env[1], ("PATH", path.as_os_str())],
+    );
+    assert!(stdout.contains("unsupported platform"), "{stdout}");
 }

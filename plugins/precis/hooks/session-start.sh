@@ -38,8 +38,9 @@ if [ "$SOURCE" = "resume" ]; then
 fi
 
 # Add plugin data dir to PATH so Claude can run precis manually
-if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
-  echo "export PATH=\"$PLUGIN_DATA:\$PATH\"" >> "$CLAUDE_ENV_FILE"
+PATH_LINE="export PATH=\"$PLUGIN_DATA:\$PATH\""
+if [ -n "${CLAUDE_ENV_FILE:-}" ] && ! grep -qxF "$PATH_LINE" "$CLAUDE_ENV_FILE" 2>/dev/null; then
+  echo "$PATH_LINE" >> "$CLAUDE_ENV_FILE"
 fi
 
 # Bootstrap binaries synchronously on first install.
@@ -78,5 +79,8 @@ if [ -x "$PRECIS_BIN" ] && [ -n "$JQ" ]; then
     echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m available"}'
   fi
 else
-  echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m error, see '"$LOG_FILE"'"}'
+  case "$(uname -s)" in
+    Darwin|Linux) echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m error, see '"$LOG_FILE"'"}' ;;
+    *) echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m unsupported platform, the plugin runs on macOS and Linux"}' ;;
+  esac
 fi
