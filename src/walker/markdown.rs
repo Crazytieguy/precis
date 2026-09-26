@@ -9,7 +9,8 @@
 //! In document order:
 //! - `ReadmeHeadline` — the first heading plus the lede: the first
 //!   substantive block before it and the blocks under it through the
-//!   first paragraph, stepping over chrome (badges, logos, nav rows).
+//!   first paragraph, stepping over chrome (badges, logos, nav rows,
+//!   badge tables).
 //! - `Prelude` — the rest of the text above the first heading, chrome
 //!   excluded. Predecessor: the headline.
 //! - `HeadingsOutline` — every H1–H3 heading row the headline doesn't
@@ -596,12 +597,16 @@ fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
 
 // --- decorative classifiers ---
 
-/// Inline children with no semantic content — whitespace, breaks, and
-/// HTML tags other than `<img>` (a tag's text sits outside it).
+/// Inline children with no semantic content — whitespace, breaks,
+/// character references (`&nbsp;` padding), and HTML tags other than
+/// `<img>` (a tag's text sits outside it).
 fn is_skippable_inline(node: Node, source: &str) -> bool {
     match node.kind() {
         "text" => source[node.start_byte()..node.end_byte()].trim().is_empty(),
-        "hard_line_break" | "soft_line_break" => true,
+        "hard_line_break"
+        | "soft_line_break"
+        | "entity_reference"
+        | "numeric_character_reference" => true,
         "html_tag" => !is_img_html_tag(node, source),
         _ => false,
     }
@@ -648,16 +653,25 @@ fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
     had_any
 }
 
-/// Paragraph is decorative iff every named inline child is decorative
-/// or skippable, at least one is decorative, and no plain text sits
-/// between or around them. Plain-text paragraphs return `false`.
+/// Paragraph is decorative iff its inline text is badge-only (see
+/// [`is_badge_only_inline_text`]). Plain-text paragraphs return `false`.
 fn is_decorative_paragraph(para: Node, source: &str) -> bool {
-    let Some(inline_block) = first_child_of_kind(para, "inline") else {
-        return false;
-    };
-    let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
+    first_child_of_kind(para, "inline")
+        .is_some_and(|inline| is_badge_only_inline_text(&source[inline.byte_range()]))
+}
+
+/// True iff every named inline child of `inline_text` is decorative or
+/// skippable, at least one is decorative, and no plain text sits between
+/// or around them. Written as a table (a `|` on every line), the text may
+/// also hold the table's pipes and dashes and bold or code labels.
+fn is_badge_only_inline_text(inline_text: &str) -> bool {
     let Some(tree) = parse_inline(inline_text) else {
         return false;
+    };
+    let table = inline_text.lines().all(|line| line.contains('|'));
+    let is_gap = |gap: &str| {
+        gap.chars()
+            .all(|c| c.is_whitespace() || (table && matches!(c, '|' | '-' | ':')))
     };
     let root = tree.root_node();
     let mut cur = root.walk();
@@ -666,20 +680,23 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
     for node in root.children(&mut cur).filter(|c| c.is_named()) {
         if is_decorative_inline(node, inline_text) {
             any_decorative = true;
-        } else if !is_skippable_inline(node, inline_text) {
+        } else if !is_skippable_inline(node, inline_text)
+            && !(table && matches!(node.kind(), "strong_emphasis" | "code_span"))
+        {
             return false;
         }
-        if !inline_text[cursor..node.start_byte()].trim().is_empty() {
+        if !is_gap(&inline_text[cursor..node.start_byte()]) {
             return false;
         }
         cursor = node.end_byte();
     }
-    any_decorative && inline_text[cursor..].trim().is_empty()
+    any_decorative && is_gap(&inline_text[cursor..])
 }
 
 fn is_decorative_block(block: Node, source: &str) -> bool {
     match block.kind() {
         "paragraph" => is_decorative_paragraph(block, source),
+        "pipe_table" => is_badge_only_inline_text(&source[block.byte_range()]),
         // `[label]: url` definitions render nothing on their own; YAML /
         // TOML front matter is site metadata, not project description.
         "link_reference_definition" | "minus_metadata" | "plus_metadata" => true,
@@ -2205,6 +2222,26 @@ mod tests {
                    ------------\n",
             &[3, 5],
             &[1],
+        ),
+        // Badges padded with `&nbsp;`, and a table of badges under bold
+        // labels, are chrome.
+        (
+            "markdown_badge_rows_with_entities_and_tables_are_decorative",
+            "# Widget\n\
+                   \n\
+                   [![ci](https://e.x/ci.svg)](https://e.x/ci)&nbsp;&nbsp;[![docs](https://e.x/d.svg)](https://e.x/d)\n\
+                   \n\
+                   **`Docs`** |\n\
+                   ---------- |\n\
+                   [![api](https://e.x/api.svg)](https://e.x/api) |\n\
+                   \n\
+                   | **Linux** | **macOS** |\n\
+                   |---|---|\n\
+                   | [![l](https://e.x/l.svg)](https://e.x/l) | [![m](https://e.x/m.svg)](https://e.x/m) |\n\
+                   \n\
+                   Widget renders gadgets.\n",
+            &[1, 13],
+            &[3, 5, 7, 9, 11],
         ),
     ];
 
