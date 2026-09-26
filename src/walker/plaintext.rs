@@ -69,7 +69,7 @@ const SOURCE_TEXT_MIN_DECLS: usize = 4;
 
 /// Hard bound on levels descended, so a file that never reaches
 /// [`SOURCE_TEXT_MIN_DECLS`] (a script that is one long block) walks
-/// into its statement bodies only so far.
+/// into its statement bodies only so far, and types nest only so deep.
 const SOURCE_TEXT_MAX_INDENT_LEVELS: usize = 4;
 
 /// Pre-flight byte gate for the fallback. Generous — only the
@@ -606,12 +606,15 @@ fn block_comment_interiors(lines: &[&str]) -> Vec<bool> {
 /// with no nesting every line qualifies, so the rule degrades to a head
 /// slice. Where column zero is one wrapper line (`module Foo`, a
 /// `namespace`), levels are added, shallowest first, until the roster has
-/// [`SOURCE_TEXT_MIN_DECLS`] declarations or
-/// [`SOURCE_TEXT_MAX_INDENT_LEVELS`] levels have been consumed.
+/// [`SOURCE_TEXT_MIN_DECLS`] declarations. At most
+/// [`SOURCE_TEXT_MAX_INDENT_LEVELS`] levels are consumed.
 ///
 /// `decl_cap` bounds the declarations kept: [`SOURCE_TEXT_DECL_LINES`] for
 /// a roster among many files, unbounded when the file is the whole walk
-/// and the surface is its outline.
+/// and the surface is its outline. An outline of a language file goes on
+/// past a complete roster through the members of its types
+/// ([`in_type_bodies`]), so a file whose column zero holds one large class
+/// among small ones still lists that class's members.
 fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usize>, usize) {
     let lines: Vec<&str> = source.lines().collect();
     let in_block_comment = block_comment_interiors(&lines);
@@ -627,6 +630,8 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     } else {
         vec![false; lines.len()]
     };
+    let type_members = (is_language && decl_cap == usize::MAX)
+        .then(|| in_type_bodies(&lines, &opens_block, &continues, &in_block_comment));
     let mut rows: Vec<(usize, usize, SurfaceLine, DeclarationRank)> = Vec::new();
     for (index, (line, &in_block_comment)) in lines
         .iter()
@@ -664,6 +669,7 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     ];
     let mut used = [0usize; 3];
     let mut selected: Vec<usize> = Vec::new();
+    let mut is_roster_complete = false;
     // In a language file the roster is for types and functions;
     // statements and directives take the slots they leave. A flat file's
     // surface stays its head.
@@ -683,10 +689,14 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
             .peekable();
         let is_statement_body = level_declarations.peek().is_some()
             && level_declarations.all(|&(.., rank)| rank >= DeclarationRank::Statement);
-        if is_language && depth > 0 && is_statement_body {
-            break;
-        }
-        for &(_, line, kind, _) in rows.iter().filter(|(indent, ..)| *indent == level) {
+        is_roster_complete |= is_language && depth > 0 && is_statement_body;
+        for &(_, line, kind, _) in rows.iter().filter(|&&(indent, line, ..)| {
+            indent == level
+                && (!is_roster_complete
+                    || type_members
+                        .as_ref()
+                        .is_some_and(|is_member| is_member[line - 1]))
+        }) {
             let slot = match kind {
                 SurfaceLine::Import => 0,
                 SurfaceLine::Comment => 1,
@@ -698,7 +708,8 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
             used[slot] += 1;
             selected.push(line);
         }
-        if used[2] >= SOURCE_TEXT_MIN_DECLS || used == caps {
+        is_roster_complete |= used[2] >= SOURCE_TEXT_MIN_DECLS;
+        if used[2] == caps[2] || (is_roster_complete && type_members.is_none()) {
             break;
         }
     }
@@ -729,6 +740,57 @@ fn block_openers(lines: &[&str], continues: &[bool]) -> Vec<bool> {
     opens
 }
 
+/// Per line, whether every block around it is a type's body — a class,
+/// module or namespace, whose members are the file's API, rather than a
+/// function's, whose statements are not. Bracket-only and continuation
+/// lines neither open nor close a block, and comment lines only sit in one.
+fn in_type_bodies(
+    lines: &[&str],
+    opens_block: &[bool],
+    continues: &[bool],
+    in_block_comment: &[bool],
+) -> Vec<bool> {
+    let mut open: Vec<(usize, bool)> = Vec::new();
+    let mut inside = vec![false; lines.len()];
+    for (index, line) in lines.iter().enumerate() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || is_block_closer(trimmed) || continues[index] {
+            continue;
+        }
+        let indent = indentation(line);
+        let is_code = !in_block_comment[index] && !is_comment_line(trimmed);
+        while is_code
+            && open
+                .last()
+                .is_some_and(|&(opener_indent, _)| opener_indent >= indent)
+        {
+            open.pop();
+        }
+        inside[index] = open.last().is_none_or(|&(_, is_type)| is_type);
+        if is_code && opens_block[index] {
+            open.push((indent, inside[index] && declares_type(trimmed)));
+        }
+    }
+    inside
+}
+
+/// Whether a line declares a type or namespace by keyword.
+fn declares_type(trimmed: &str) -> bool {
+    trimmed[..head_end(trimmed)]
+        .split_whitespace()
+        .rev()
+        .skip(1)
+        .any(|word| has_word(TYPE_KEYWORDS, word))
+}
+
+/// Where a line's modifiers, keyword and name end: its first bracket or
+/// `=`.
+fn head_end(trimmed: &str) -> usize {
+    trimmed
+        .find(['(', '=', '{', '<', '['])
+        .unwrap_or(trimmed.len())
+}
+
 /// Roster order of a declaration line, first to last.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum DeclarationRank {
@@ -742,10 +804,14 @@ enum DeclarationRank {
     Internal,
 }
 
-/// Words that declare the name after them, across the covered languages.
-const DECLARATION_KEYWORDS: &str = "class interface trait object struct enum protocol extension \
-    module record union namespace defmodule type typealias data newtype instance def fun func \
-    function fn sub defmacro proc val var let const";
+/// Words that declare a type or namespace named after them, across the
+/// covered languages.
+const TYPE_KEYWORDS: &str = "class interface trait object struct enum protocol extension module \
+    record union namespace defmodule defprotocol defimpl impl instance";
+
+/// Words that declare any other name after them.
+const MEMBER_KEYWORDS: &str =
+    "type typealias data newtype def fun func function fn sub defmacro proc val var let const";
 
 /// First words of a line that is not part of a file's API: a private or
 /// file-local member, a test case, or a control-flow statement.
@@ -763,9 +829,7 @@ fn has_word(table: &str, word: &str) -> bool {
 /// signature, or by the C-family `Type name(` shape; it has a body when
 /// an `=` follows at bracket depth zero.
 fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
-    let head_end = trimmed
-        .find(['(', '=', '{', '<', '['])
-        .unwrap_or(trimmed.len());
+    let head_end = head_end(trimmed);
     let words: Vec<&str> = trimmed[..head_end].split_whitespace().collect();
     if words
         .first()
@@ -780,7 +844,7 @@ fn declaration_rank(trimmed: &str, opens_block: bool) -> DeclarationRank {
         .iter()
         .rev()
         .skip(1)
-        .any(|word| has_word(DECLARATION_KEYWORDS, word))
+        .any(|word| has_word(TYPE_KEYWORDS, word) || has_word(MEMBER_KEYWORDS, word))
         || words.get(1) == Some(&"::")
         || (words.len() >= 2 && trimmed[head_end..].starts_with('('));
     if !declares {
@@ -1798,6 +1862,30 @@ mod tests {
                 assert!(!has(needle), "leaked {needle:?}: {text:?}");
             }
         }
+    }
+
+    /// An outline lists the members of every type, past a column zero that
+    /// already holds a roster, but not the statements in function bodies.
+    #[test]
+    fn plaintext_source_text_outline_lists_type_members_past_the_roster() {
+        let swift = "public class Request {\n    public func resume() -> Self {\n        self\n    }\n\
+                     \n    public func cancel() -> Self {\n        let task = self\n        return task\n    }\n}\n\
+                     \nextension Request: Equatable {\n}\n\nextension Request: Hashable {\n}\n\
+                     \nextension Request {\n    func helper() {}\n}\n\nfunc main() {\n    let x = 1\n}\n";
+        let lines: Vec<&str> = swift.lines().collect();
+        let (rows, _) = declaration_surface(swift, Class::LanguageSource, usize::MAX);
+        let text: Vec<&str> = rows.iter().map(|n| lines[n - 1].trim()).collect();
+        for needle in [
+            "public func resume() -> Self {",
+            "public func cancel() -> Self {",
+            "func helper() {}",
+        ] {
+            assert!(text.contains(&needle), "missing {needle:?}: {text:?}");
+        }
+        for needle in ["let task = self", "let x = 1"] {
+            assert!(!text.contains(&needle), "leaked {needle:?}: {text:?}");
+        }
+        assert!(!surface(swift).contains(&"    public func resume() -> Self {"));
     }
 
     #[test]
