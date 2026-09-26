@@ -203,9 +203,6 @@ pkg/
     docker_auth.go
     docker_build.go
     docker_cli.go
-      …
-      10→//nolint:unparam,errcheck
-      …
     docker_cli_test.go
     docker_images.go
     docker_images_test.go
@@ -231,7 +228,7 @@ pkg/
         2→ENV PATH="/this/path/does/not/exists/anywhere:/this/either"
         3→ENV SOME_RANDOM_VAR=""
         4→ENV ANOTHER_ONE="BUT_I_HAVE_VALUE"
-        …
+        5→ENV CONFLICT_VAR="I_EXIST_ONLY_HERE"
       docker-pull-options/
         config.json
       scratch/

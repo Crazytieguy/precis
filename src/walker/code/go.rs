@@ -106,7 +106,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 continue;
             }
             "package_clause" => {
-                model.module_doc = doc_paragraphs(child, file);
+                (model.module_doc, _) = doc_and_directives(child, file);
                 let mut inner = child.walk();
                 is_program = child
                     .named_children(&mut inner)
@@ -198,14 +198,22 @@ fn declares_exported(node: Node, file: &SourceFile) -> bool {
     names.any(|name| is_exported(file.text(name)))
 }
 
-/// The comments directly above `node`, one [`Item`] per paragraph. A Go
-/// doc separates paragraphs with a bare `//` row, which stays with the
-/// paragraph above it.
-fn doc_paragraphs(node: Node, file: &SourceFile) -> Vec<Item> {
+/// The comments directly above `node`: its doc, one [`Item`] per
+/// paragraph, and the rows of its directives. A Go doc separates
+/// paragraphs with a bare `//` row, which stays with the paragraph above
+/// it. A directive (`//go:embed f`, `//go:linkname x`, `//export f`)
+/// instructs the toolchain and belongs with the declaration's head, as
+/// an attribute would.
+fn doc_and_directives(node: Node, file: &SourceFile) -> (Vec<Item>, Vec<usize>) {
     let mut items: Vec<Item> = Vec::new();
+    let mut directives = Vec::new();
     let mut after_break = true;
     for row in file.comments_above(node, 1, |_| true).into_iter().flatten() {
         let text = file.line(row).trim();
+        if is_directive(text) {
+            directives.push(row);
+            continue;
+        }
         let is_break = text.is_empty() || text == "//";
         match items.last_mut() {
             Some(item) if is_break || !after_break => item.rows.push(row),
@@ -213,7 +221,25 @@ fn doc_paragraphs(node: Node, file: &SourceFile) -> Vec<Item> {
         }
         after_break = is_break;
     }
-    items
+    (items, directives)
+}
+
+/// Go's directive comment syntax: `//line `, `//extern `, `//export `,
+/// or `//` then `[a-z0-9]+:[a-z0-9]` (`//go:noinline`, `//nolint:errcheck`).
+fn is_directive(text: &str) -> bool {
+    let Some(rest) = text.strip_prefix("//") else {
+        return false;
+    };
+    if ["line ", "extern ", "export "]
+        .iter()
+        .any(|prefix| rest.starts_with(prefix))
+    {
+        return true;
+    }
+    let is_word = |c: char| c.is_ascii_lowercase() || c.is_ascii_digit();
+    rest.split_once(':').is_some_and(|(namespace, after)| {
+        !namespace.is_empty() && namespace.chars().all(is_word) && after.starts_with(is_word)
+    })
 }
 
 /// A function or method: the head runs through the row opening its
@@ -242,10 +268,11 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
     } else {
         open_row
     };
+    let (doc, directives) = doc_and_directives(node, file);
     Some(DeclInfo {
         name_rows: vec![start],
-        head: (start..=head_end).collect(),
-        doc: doc_paragraphs(node, file),
+        head: directives.into_iter().chain(start..=head_end).collect(),
+        doc,
         body,
         shape: Shape::Callable,
         members: Vec::new(),
@@ -317,12 +344,13 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
         list.named_children(&mut inner).collect()
     });
     let mut body = file.node_items(entries.iter().copied(), start);
-    let head = match (body.first(), body.last()) {
+    let (doc, mut head) = doc_and_directives(node, file);
+    head.extend(match (body.first(), body.last()) {
         (Some(first), Some(last)) => (start..first.rows[0])
             .chain(last.rows[last.rows.len() - 1] + 1..=*rows.end())
-            .collect(),
-        _ => rows.collect(),
-    };
+            .collect::<Vec<_>>(),
+        _ => rows.clone().collect(),
+    });
     let end_rows = |shown: bool| -> Vec<usize> {
         entries
             .iter()
@@ -342,7 +370,7 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     Some(DeclInfo {
         name_rows,
         head,
-        doc: doc_paragraphs(node, file),
+        doc,
         body,
         shape: Shape::Whole,
         members: Vec::new(),
@@ -520,6 +548,36 @@ func Foo() {}
         );
         assert_eq!(model.module_doc, [Item::new([1, 2]), Item::new([3])]);
         assert_eq!(model.decls[0].doc, [Item::new([6, 7]), Item::new([8, 9])]);
+    }
+
+    /// A directive stays with its declaration even when the doc is hidden.
+    #[test]
+    fn go_directives_are_head_not_doc() {
+        let model = extract_source(
+            "\
+//go:generate mockery
+package ov
+
+// configTemplate is the default configuration.
+//
+//go:embed ov.yaml.template
+var ConfigTemplate string
+
+//go:nosplit
+func Gosched() {
+\tmcall(gosched_m)
+}
+",
+        );
+        assert!(model.module_doc.is_empty());
+        let template = &model.decls[0];
+        assert_eq!(template.doc, [Item::new([4, 5])]);
+        assert_eq!(template.head, [6, 7]);
+        let gosched = &model.decls[1];
+        assert!(gosched.doc.is_empty());
+        assert_eq!(gosched.head, [9, 10]);
+        assert!(is_directive("//nolint:errcheck") && is_directive("//export Add"));
+        assert!(!is_directive("// Note: prose") && !is_directive("//TODO: fix"));
     }
 
     #[test]

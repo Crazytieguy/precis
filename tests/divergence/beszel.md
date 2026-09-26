@@ -243,11 +243,11 @@ Score(3000)=0.642 I=0.802 C=0.514 ns_rows≤3K=16/44 grid(1000/1442/2080/3000/43
 | ns | 9701 |  | 116 | Frontend route table (router.tsx) | 6.4 |  | 0.528 |
 | walker |  | 9712 | 287 | Code::CodeKey { rung: Names, file: agent/sensors_windows.go, decl: 0, sub: 0, line: 0 } |  |  | 0.528 |
 | walker |  | 9715 | 3 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 3, sub: 0, line: 46 } |  |  | 0.528 |
+| walker |  | 9733 | 18 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 2, sub: 0, line: 43 } |  |  | 0.528 |
 | ns | 9755 |  | 54 | internal/site/src/lib listing (complete) | 6.5 |  | 0.533 |
-| walker |  | 9814 | 99 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 1, sub: 0, line: 31 } |  |  | 0.533 |
-| walker |  | 9828 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 6, sub: 0, line: 83 } |  |  | 0.533 |
-| walker |  | 9842 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 10, sub: 0, line: 247 } |  |  | 0.533 |
-| walker |  | 9858 | 16 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 2, sub: 0, line: 44 } |  |  | 0.533 |
+| walker |  | 9830 | 97 | Code::CodeKey { rung: Decl, file: agent/sensors_windows.go, decl: 1, sub: 0, line: 31 } |  |  | 0.533 |
+| walker |  | 9844 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 6, sub: 0, line: 83 } |  |  | 0.533 |
+| walker |  | 9858 | 14 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 10, sub: 0, line: 247 } |  |  | 0.533 |
 | walker |  | 9875 | 17 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 11, sub: 0, line: 255 } |  |  | 0.533 |
 | ns | 9885 |  | 130 | agent/ test files and the shared test harness (completes agent/) | 7.1 |  | 0.543 |
 | walker |  | 9893 | 18 | Code::CodeKey { rung: Doc, file: agent/sensors_windows.go, decl: 7, sub: 0, line: 119 } |  |  | 0.543 |

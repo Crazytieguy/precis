@@ -301,15 +301,9 @@ internal/
   xtime/
     README.md
     fake.go
-      1→//nolint:revive
-      …
     noCopy.go
     real.go
-      1→//nolint:revive
-      …
     time.go
-      1→//nolint:revive
-      …
 intersect.go
 intersect_test.go
 it/
@@ -377,6 +371,12 @@ tuples_test.go
 type_manipulation.go
   …
   7→func IsNil(x any) bool {
+  …
+  22→func IsNotNil(x any) bool {
+  …
+  28→func ToPtr[T any](x T) *T {
+  …
+  34→func Nil[T any]() *T {
   …
 type_manipulation_test.go
 types.go

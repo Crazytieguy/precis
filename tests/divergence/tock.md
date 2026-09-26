@@ -147,13 +147,13 @@ Score(3000)=0.549 I=0.819 C=0.368 ns_rows≤3K=25/59 grid(1000/1442/2080/3000/43
 | walker |  | 6796 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/add.go, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
 | walker |  | 6813 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/list_gui.go, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
 | walker |  | 6830 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/start.go, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
-| walker |  | 6858 | 28 | Code::CodeKey { rung: Names, file: internal/adapters/cli/analyze.go, decl: 0, sub: 0, line: 0 } |  |  | 0.526 |
+| walker |  | 6852 | 22 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/start.go, decl: 1, sub: 0, line: 16 } |  |  | 0.526 |
 | ns | 6874 |  | 239 | notes repository: sidecar file layout and YAML front matter | 5.5 |  | 0.515 |
-| walker |  | 7013 | 155 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/analyze.go, decl: 2, sub: 0, line: 70 } |  |  | 0.516 |
-| walker |  | 7030 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/watch.go, decl: 0, sub: 0, line: 0 } |  |  | 0.516 |
+| walker |  | 6880 | 28 | Code::CodeKey { rung: Names, file: internal/adapters/cli/analyze.go, decl: 0, sub: 0, line: 0 } |  |  | 0.515 |
+| walker |  | 7035 | 155 | Code::CodeKey { rung: Decl, file: internal/adapters/cli/analyze.go, decl: 2, sub: 0, line: 70 } |  |  | 0.516 |
 | ns | 7045 |  | 171 | timewarrior repository: interval shape and data layout | 5.6 |  | 0.506 |
-| walker |  | 7047 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/report.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
-| walker |  | 7069 | 22 | Code::CodeKey { rung: Doc, file: internal/adapters/cli/start.go, decl: 1, sub: 0, line: 17 } |  |  | 0.506 |
+| walker |  | 7052 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/watch.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
+| walker |  | 7069 | 17 | Code::CodeKey { rung: Names, file: internal/adapters/cli/report.go, decl: 0, sub: 0, line: 0 } |  |  | 0.506 |
 | walker |  | 7082 | 13 | Code::CodeKey { rung: Body, file: internal/core/models/activity.go, decl: 2, sub: 0, line: 19 } |  |  | 0.508 |
 | walker |  | 7100 | 18 | Code::CodeKey { rung: Names, file: internal/adapters/cli/ical.go, decl: 0, sub: 0, line: 0 } |  |  | 0.508 |
 | walker |  | 7154 | 54 | Code::CodeKey { rung: Names, file: internal/services/ics/generator.go, decl: 0, sub: 0, line: 0 } |  |  | 0.508 |
