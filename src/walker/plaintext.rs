@@ -484,7 +484,7 @@ fn is_block_closer(trimmed: &str) -> bool {
     // `end`, `end;`, `endmodule // cpu`, `endif(WIN32)`.
     let ends_by_keyword = keyword.starts_with("end")
         && (matches!(rest, "" | ";" | ".")
-            || rest.starts_with('(')
+            || (rest.starts_with('(') && rest.ends_with(')'))
             || (rest.starts_with(' ') && is_comment_line(rest.trim_start())));
     ends_by_keyword
         || matches!(trimmed, "fi" | "done" | "esac" | "#endif" | "*/")
@@ -2074,6 +2074,8 @@ mod tests {
             "end_time = now()",
             "endTime();",
             "end.join",
+            "endswith(s, suffix) = last(s) == suffix",
+            "endpoint(Request) -> handle(Request).",
         ] {
             assert!(!is_block_closer(statement), "{statement}");
         }
