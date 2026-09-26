@@ -80,7 +80,8 @@ fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
 /// A module a package `__init__.py` above it imports names from
 /// (`from .core import Engine`, `from .engine.core import Engine`,
 /// `from pkg.engine.core import Engine`) implements a package's public API,
-/// so it outranks its sibling helper modules.
+/// so it outranks its sibling helper modules. The `from . import core`
+/// form doesn't count: adding it measured -0.0001 avg7 (2026-09-25).
 fn file_weight(path: &Path, ctx: &WalkCtx) -> f64 {
     let Some(stem) = path.file_stem().and_then(|s| s.to_str()) else {
         return 1.0;

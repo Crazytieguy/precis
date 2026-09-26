@@ -1,6 +1,7 @@
 //! Lua extraction. Declarations are the top-level function forms, all
 //! `Callable`:
-//!  - `function_declaration` (incl. `local function`),
+//!  - `function_declaration` (incl. `local function`: hiding file-local
+//!    functions measured -0.0020 at 3000, 2026-09-25),
 //!  - `assignment_statement` / `variable_declaration` / `return_statement`
 //!    with a `function_definition` right-hand side, and
 //!  - function-valued `field`s inside a top-level table-constructor
