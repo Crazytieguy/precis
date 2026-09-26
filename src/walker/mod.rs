@@ -6,7 +6,7 @@
 //! predecessor scheduling, and applies content to the rendered tree.
 //! Source text is cached on [`WalkCtx`]; parse trees are not.
 
-use std::cell::OnceCell;
+use std::cell::{Cell, OnceCell};
 use std::collections::{BTreeSet, HashMap};
 use std::ops::Range;
 use std::panic::AssertUnwindSafe;
@@ -125,6 +125,8 @@ pub struct WalkCtx {
     /// discovery rather than filtered out downstream.
     dir_filter: Rc<DirFilter>,
     source_cache: SourceCache,
+    /// What is left of [`RUN_PARSE_BYTE_CAP`].
+    parse_bytes_left: Cell<usize>,
     cargo_workspace: workspace::WorkspaceMembership,
     fs_state: fs::FsState,
     json_state: json::JsonState,
@@ -155,6 +157,7 @@ impl WalkCtx {
             root: dir_filter.root().to_path_buf(),
             dir_filter: Rc::new(dir_filter),
             source_cache,
+            parse_bytes_left: Cell::new(RUN_PARSE_BYTE_CAP),
             cargo_workspace: workspace::WorkspaceMembership::default(),
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
@@ -242,7 +245,7 @@ impl WalkCtx {
     /// parsed while its directory expands, and its batches carry
     /// everything they need from it.
     pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<Source>, Tree)> {
-        let source = gated_read_source(path, self, PARSE_BYTE_CAP)?;
+        let source = self.read_for_parse(path)?;
         let tree = parser_for(language).parse(source.as_bytes(), None)?;
         Some((source, tree))
     }
@@ -259,7 +262,7 @@ impl WalkCtx {
     ) {
         let sources: Vec<Option<Arc<Source>>> = files
             .iter()
-            .map(|(path, _)| gated_read_source(path, self, PARSE_BYTE_CAP))
+            .map(|(path, _)| self.read_for_parse(path))
             .collect();
         let source_len = |index: usize| sources[index].as_ref().map_or(0, |source| source.len());
         let workers = std::thread::available_parallelism()
@@ -318,6 +321,16 @@ impl WalkCtx {
         });
     }
 
+    /// `path`'s source for a parse, charged to the run's
+    /// [`RUN_PARSE_BYTE_CAP`]. A file that doesn't fit what is left is not
+    /// read, so directories expanded later in the run parse less.
+    fn read_for_parse(&self, path: &Path) -> Option<Arc<Source>> {
+        let left = self.parse_bytes_left.get();
+        let source = gated_read_source(path, self, PARSE_BYTE_CAP.min(left))?;
+        self.parse_bytes_left.set(left.saturating_sub(source.len()));
+        Some(source)
+    }
+
     /// `true` iff `file` is a Cargo workspace-member `Cargo.toml`.
     pub fn is_cargo_workspace_member(&self, file: &Path) -> bool {
         self.cargo_workspace
@@ -350,6 +363,14 @@ fn parser_for(language: &Language) -> tree_sitter::Parser {
 /// 4.1 MB (`miniaudio.h`), while a 25.9 MB generated `parser.c` cost
 /// 900 MB and seconds to parse.
 const PARSE_BYTE_CAP: usize = 8 * 1024 * 1024;
+
+/// Most source bytes one run parses, over every file. Sources stay cached
+/// for the whole run and a parse costs several times its source in memory
+/// and time, so without it a directory of generated sources each under
+/// [`PARSE_BYTE_CAP`] runs to gigabytes. The 186-repo robustness sweep's
+/// largest run parses 19.8 MB at an 8000-token budget; the training
+/// corpus's at most 4.5 MB at 9000.
+const RUN_PARSE_BYTE_CAP: usize = 32 * 1024 * 1024;
 
 pub(in crate::walker) fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
     let mut cursor = node.walk();
@@ -479,6 +500,37 @@ mod tests {
             .into_iter()
             .map(|s| (s.start, s.end, s.render))
             .collect()
+    }
+
+    #[test]
+    fn walker_mod_parses_stop_at_the_run_byte_cap() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let paths: Vec<PathBuf> = ["a.rs", "b.rs", "c.rs", "d.rs"]
+            .iter()
+            .map(|name| root.join(name))
+            .collect();
+        let bytes = [
+            "fn a() {}\n",
+            "fn big() { let x = 1; }\n",
+            "fn c() {}\n",
+            "fn d() {}\n",
+        ];
+        for (path, text) in paths.iter().zip(bytes) {
+            std::fs::write(path, text).unwrap();
+        }
+        let ctx = WalkCtx::new(root.to_path_buf());
+        ctx.parse_bytes_left
+            .set(bytes[0].len() + bytes[2].len() + 1);
+        let language: Language = tree_sitter_rust::LANGUAGE.into();
+        let files: Vec<(&Path, Language)> = paths[..3]
+            .iter()
+            .map(|path| (path.as_path(), language.clone()))
+            .collect();
+        let mut visited = Vec::new();
+        ctx.parse_each(&files, |index, _, _| visited.push(index));
+        assert_eq!(visited, [0, 2]);
+        assert!(ctx.parse_tree(&paths[3], &language).is_none());
     }
 
     #[test]
