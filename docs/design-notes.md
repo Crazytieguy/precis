@@ -271,13 +271,14 @@ must not undo:
   - hiding impls of hidden types;
   - C decoration-row paragraph splits and the C banner cutoff on
     declaration docs;
-  - skipping linter / coverage directives in TS/JS docs (the JSDoc
-    above one attaches regardless);
   - rostering a Python `__init__`'s third-party imports spelled
     `X as X` or listed in `__all__` (0 of 572 real-world renders used
     it);
   - keeping Go methods on an unexported type an exported function
     returns (0 of 572 real-world renders changed).
+- **TS/JS docs skip linter / coverage directives** (`// @ts-ignore`,
+  `/* istanbul ignore next */`): without the skip, a directive that is a
+  declaration's only comment became its whole doc, at doc priority.
 - **Lua file-local functions are listed**: hiding `local function`
   declarations measured 3000 −.0020 (2026-09-25).
 - **Rows that condition or define a file's exports join its roster**:
@@ -297,7 +298,10 @@ must not undo:
   role. Each non-entry file's `Names` head chunk is instead gated on the
   previous file's: most sibling references first (Python imports, Go
   names another file of the package declares), then largest, with
-  non-essential files last. Values are untouched: every value-model fix
+  non-essential files last: by path, or by content when the language
+  says so (`FileModel::non_essential`: a Go file whose only exports are
+  methods on unexported types; ranked by its sibling references, it
+  opened ahead of the package's API files). Values are untouched: every value-model fix
   tried (a prior for sibling mentions, a steeper roster exponent, a
   depth pin beside entry files) lifted code over README and manifest
   batches and lost. Reference signals for C `#include`, Rust
