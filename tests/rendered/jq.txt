@@ -92,6 +92,7 @@ README.md
   38→- libtool
   39→- make
   40→- automake
+  41→- autoconf
   …
   67→## Community & Support
   68→
@@ -114,11 +115,9 @@ compile-ios.sh
   9→unset CXXFLAGS
   10→unset LDFLAGS
   …
+  13→usage(){
+  14→cat << EOF
   15→${0##*/}: usage
-  …
-  54→A error as occurred.
-  …
-  66→cd "${builddir}/"
   …
 config/
   .gitignore

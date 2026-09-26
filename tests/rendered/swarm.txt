@@ -23,6 +23,9 @@ README.md
   21→pip install git+https://github.com/openai/swarm.git
   22→```
   24→## Usage
+  25→
+  26→```python
+  27→from swarm import Swarm, Agent
   …
   60→## Table of Contents
   …
@@ -239,10 +242,6 @@ setup.cfg
   6→long_description = file: README.md
   7→long_description_content_type = text/markdown
   8→license = MIT
-  9→
-  10→[options]
-  …
-  14→install_requires =
   …
 swarm/
   __init__.py

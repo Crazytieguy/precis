@@ -123,8 +123,10 @@ pub(crate) enum Class {
     /// language-agnostic fallback. Rendered as a declaration surface.
     LanguageSource,
     /// A flat-config, script or plain-text file with no owning walker. Same
-    /// extraction, but its surface is mostly a head slice, which claims
-    /// much less than a declaration roster does and is priced for it.
+    /// extraction (a file with no nesting has every line at
+    /// indentation zero, so the surface *is* its head slice), but a
+    /// head slice claims much less than a declaration roster does and
+    /// is priced for it.
     FlatText,
 }
 
@@ -585,8 +587,17 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     let lines: Vec<&str> = source.lines().collect();
     let in_block_comment = block_comment_interiors(&lines);
     let banner_end = boilerplate_banner_end(&lines, &in_block_comment);
-    let continues = continuation_lines(&lines, &in_block_comment);
-    let opens_block = block_openers(&lines, &continues);
+    let is_language = class == Class::LanguageSource;
+    let continues = if is_language {
+        continuation_lines(&lines, &in_block_comment)
+    } else {
+        vec![false; lines.len()]
+    };
+    let opens_block = if is_language {
+        block_openers(&lines, &continues)
+    } else {
+        vec![false; lines.len()]
+    };
     let mut rows: Vec<(usize, usize, SurfaceLine, DeclarationRank)> = Vec::new();
     for (index, (line, &in_block_comment)) in lines
         .iter()
@@ -598,14 +609,14 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
         if trimmed.is_empty()
             || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS
             || continues[index]
-            || (class == Class::LanguageSource && is_annotation_only(trimmed))
+            || (is_language && is_annotation_only(trimmed))
         {
             continue;
         }
         let Some(kind) = classify_surface_line(trimmed, in_block_comment) else {
             continue;
         };
-        let rank = if kind == SurfaceLine::Decl {
+        let rank = if is_language && kind == SurfaceLine::Decl {
             declaration_rank(trimmed, opens_block[index])
         } else {
             DeclarationRank::Heading
@@ -624,24 +635,26 @@ fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> (Vec<usiz
     ];
     let mut used = [0usize; 3];
     let mut selected: Vec<usize> = Vec::new();
-    // The roster is for types and functions; statements and directives
-    // take the slots they leave.
-    rows.sort_by_key(|&(.., rank)| rank);
+    // In a language file the roster is for types and functions;
+    // statements and directives take the slots they leave. A flat file's
+    // surface stays its head.
+    if is_language {
+        rows.sort_by_key(|&(.., rank)| rank);
+    }
     for (depth, level) in levels
         .into_iter()
         .take(SOURCE_TEXT_MAX_INDENT_LEVELS)
         .enumerate()
     {
-        // In a language file, a deeper level whose code lines are all
-        // statements is function bodies; a level of only comments or
-        // imports does not decide.
+        // A deeper level whose code lines are all statements is function
+        // bodies; a level of only comments or imports does not decide.
         let mut level_declarations = rows
             .iter()
             .filter(|&&(indent, _, kind, _)| indent == level && kind == SurfaceLine::Decl)
             .peekable();
         let is_statement_body = level_declarations.peek().is_some()
             && level_declarations.all(|&(.., rank)| rank >= DeclarationRank::Statement);
-        if class == Class::LanguageSource && depth > 0 && is_statement_body {
+        if is_language && depth > 0 && is_statement_body {
             break;
         }
         for &(_, line, kind, _) in rows.iter().filter(|(indent, ..)| *indent == level) {
@@ -1427,15 +1440,33 @@ mod tests {
     }
 
     /// Column-zero statements ahead of a file's functions do not take the
-    /// roster's slots from them.
+    /// roster's slots from them, in a language file; a flat file's surface
+    /// stays its head.
     #[test]
     fn plaintext_source_text_surface_prefers_lines_that_open_blocks() {
         let setup: String = (0..SOURCE_TEXT_DECL_LINES)
             .map(|n| format!("let g:setting_{n} = {n}\n"))
             .collect();
         let vim = setup + "\nfunction! plug#begin(...)\n  return 1\nendfunction\n";
-        let text = surface(&vim);
+        let text = surface_text(&vim, Class::LanguageSource);
         assert!(text.contains(&"function! plug#begin(...)"), "{text:?}");
+        assert!(!surface_text(&vim, Class::FlatText).contains(&"function! plug#begin(...)"));
+    }
+
+    /// A flat config's indented value list is content, not a wrapped
+    /// signature: every value stays on the surface.
+    #[test]
+    fn plaintext_source_text_flat_surface_keeps_indented_values() {
+        let tox = "[testenv]\ndeps =\n    pytest\n    coverage\ncommands =\n    python -m pip check\n    python -m pytest\n";
+        let text = surface_text(tox, Class::FlatText);
+        for line in [
+            "[testenv]",
+            "    pytest",
+            "    python -m pip check",
+            "    python -m pytest",
+        ] {
+            assert!(text.contains(&line), "{line:?} missing from {text:?}");
+        }
     }
 
     /// A multi-line annotation, a wrapped initializer and the tail of a

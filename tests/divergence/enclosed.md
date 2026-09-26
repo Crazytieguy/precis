@@ -206,13 +206,12 @@ Score(3000)=0.592 I=0.826 C=0.424 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 9445 | 112 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.619 |
 | walker |  | 9559 | 114 | Code::CodeKey { rung: Decl, file: packages/lib/src/crypto/crypto.usecases.ts, decl: 2, sub: 0, line: 38 } |  |  | 0.619 |
 | ns | 9578 |  | 244 | app-server package scripts: both runtime targets, tests, typecheck | 6.2 |  | 0.622 |
-| walker |  | 9616 | 57 | Plaintext::DeclSurface { file: packages/app-client/src/app.css } |  |  | 0.622 |
-| walker |  | 9646 | 30 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
-| walker |  | 9685 | 39 | Code::CodeKey { rung: Decl, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.622 |
-| walker |  | 9727 | 42 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 9589 | 30 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 9628 | 39 | Code::CodeKey { rung: Decl, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts, decl: 1, sub: 0, line: 6 } |  |  | 0.622 |
+| walker |  | 9670 | 42 | Code::CodeKey { rung: Names, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
+| walker |  | 9704 | 34 | Code::CodeKey { rung: Decl, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.622 |
+| walker |  | 9752 | 48 | Code::CodeKey { rung: Names, file: packages/crypto/src/index.node.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.622 |
 | ns | 9754 |  | 176 | Dockerfile: the two-stage image build and its runtime contract | 6.3 |  | 0.626 |
-| walker |  | 9761 | 34 | Code::CodeKey { rung: Decl, file: packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts, decl: 1, sub: 0, line: 9 } |  |  | 0.626 |
-| walker |  | 9809 | 48 | Code::CodeKey { rung: Names, file: packages/crypto/src/index.node.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.626 |
+| walker |  | 9889 | 137 | Code::CodeKey { rung: Decl, file: packages/crypto/src/index.node.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.626 |
 | ns | 9910 |  | 156 | Documentation site and Cloudflare deploy package: complete file rosters | 6.4 |  | 0.636 |
-| walker |  | 9946 | 137 | Code::CodeKey { rung: Decl, file: packages/crypto/src/index.node.ts, decl: 1, sub: 0, line: 8 } |  |  | 0.636 |
-| walker |  | 9994 | 48 | Code::CodeKey { rung: Names, file: packages/crypto/src/index.web.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.636 |
+| walker |  | 9937 | 48 | Code::CodeKey { rung: Names, file: packages/crypto/src/index.web.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.636 |

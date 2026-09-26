@@ -51,9 +51,9 @@ Score(3000)=0.715 I=0.908 C=0.563 ns_rows≤3K=17/49 grid(1000/1442/2080/3000/43
 | ns | 2870 |  | 251 | `Session.request`: the complete keyword signature | 2.7 | 2.6 | 0.715 |
 | walker |  | 2912 | 176 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.715 |
 | walker |  | 2951 | 39 | Plaintext::DeclSurface { file: docs/requirements.txt } |  |  | 0.715 |
-| walker |  | 3048 | 97 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.715 |
 | ns | 3053 |  | 183 | `Session.__init__`: every default value | 2.8 | 2.6 | 0.697 |
-| walker |  | 3119 | 71 | Plaintext::Whole { file: tox.ini } |  |  | 0.697 |
+| walker |  | 3061 | 110 | Plaintext::DeclSurface { file: tox.ini } |  |  | 0.697 |
+| walker |  | 3119 | 58 | Plaintext::Whole { file: tox.ini } |  |  | 0.697 |
 | walker |  | 3265 | 146 | Code::CodeKey { rung: Names, file: src/requests/models.py, decl: 0, sub: 0, line: 0 } |  |  | 0.697 |
 | walker |  | 3335 | 70 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 9, sub: 0, line: 255 } |  |  | 0.697 |
 | walker |  | 3360 | 25 | Code::CodeKey { rung: Decl, file: src/requests/models.py, decl: 10, sub: 0, line: 258 } |  |  | 0.697 |

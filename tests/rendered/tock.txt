@@ -197,9 +197,8 @@ install.sh
   15→FORMAT="tar.gz"
   16→BINDIR="/usr/local/bin"
   …
+  19→OS=$(uname -s)
   20→case "$OS" in
-  …
-  35→case "$ARCH" in
   …
 internal/
   adapters/
