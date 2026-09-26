@@ -247,3 +247,8 @@ once workspace members were exempt.
   Listings are never split: a head-and-rest split of long listings
   was grid-neutral and spent real-world budget on the first 40 names
   of man-page, test-data and generated-code directories.
+- **Pre-0.2 plugin hooks are recognized by their plugin manifest**
+  (`run_by_session_hook` in `src/main.rs`): they don't set
+  `PRECIS_SESSION_HOOK`, yet their update script installs the latest
+  binary, and uncapped output overflows the hook cap. Drop that branch
+  once those plugin installs have had time to update.

@@ -205,7 +205,7 @@ precis . --token-budget 8000       # with a larger token budget
 precis . --char-budget 9000        # also cap the output's length
 ```
 
-The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; when run from the plugin's hook (`CLAUDE_PLUGIN_ROOT` set), precis derives a default so the injected context stays within Claude Code's 10,000-unit limit.
+The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation. `--char-budget` counts UTF-16 code units, the unit Claude Code measures hook output in; when run from the plugin's session-start hook, precis derives a default so the injected context stays within Claude Code's 10,000-unit limit.
 
 Given a single file, precis shows its structure first, then spends whatever budget is left on the file's text from the top, so a file that fits prints whole. A binary file prints only its name.
 

@@ -17,6 +17,9 @@ const HOOK_WRAPPER: [&str; 3] = [
     "\n```",
 ];
 
+/// Set by that script on its `precis .` run.
+const SESSION_HOOK_VAR: &str = "PRECIS_SESSION_HOOK";
+
 /// clap does not wrap help text, so the lines below are pre-wrapped.
 const ABOUT: &str = "\
 Summarize a directory or file within a token budget.
@@ -48,7 +51,7 @@ fn main() -> Result<()> {
     let cli = Cli::parse();
     let char_budget = cli
         .char_budget
-        .or_else(|| std::env::var_os("CLAUDE_PLUGIN_ROOT").map(|_| plugin_char_budget()));
+        .or_else(|| run_by_session_hook().then(plugin_char_budget));
 
     if !cli.path.exists() {
         bail!("{} does not exist", cli.path.display());
@@ -59,6 +62,24 @@ fn main() -> Result<()> {
         warn_empty_output(&cli.path, cli.token_budget, char_budget);
     }
     write_stdout(&output)
+}
+
+/// Whether precis's own session-start hook is running us, so the output
+/// must fit the hook cap. Hooks from plugin versions before 0.2 don't set
+/// [`SESSION_HOOK_VAR`] but still download this binary; they are
+/// recognized by the plugin they run from. Claude Code sets
+/// `CLAUDE_PLUGIN_ROOT` for every plugin's hooks, so that alone would
+/// cap other plugins' runs too.
+fn run_by_session_hook() -> bool {
+    std::env::var_os(SESSION_HOOK_VAR).is_some()
+        || std::env::var_os("CLAUDE_PLUGIN_ROOT").is_some_and(|root| {
+            std::fs::read_to_string(Path::new(&root).join(".claude-plugin/plugin.json"))
+                .is_ok_and(|manifest| is_precis_plugin_manifest(&manifest))
+        })
+}
+
+fn is_precis_plugin_manifest(manifest: &str) -> bool {
+    manifest.contains("\"name\": \"precis\"")
 }
 
 /// What is left of the hook cap once the session-start hook has spent
@@ -130,6 +151,14 @@ mod tests {
             script.contains(&jq_expression),
             "session-start.sh no longer builds {jq_expression:?}; update HOOK_WRAPPER"
         );
+        let summary_run = format!("{SESSION_HOOK_VAR}=1 \"$PRECIS_BIN\" .");
+        assert!(
+            script.contains(&summary_run),
+            "session-start.sh no longer runs {summary_run:?}"
+        );
+        assert!(is_precis_plugin_manifest(include_str!(
+            "../plugins/precis/.claude-plugin/plugin.json"
+        )));
     }
 
     /// Rebuilds `additionalContext` the way the hook does on a fixture
