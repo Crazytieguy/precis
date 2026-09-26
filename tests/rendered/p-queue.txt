@@ -127,6 +127,7 @@ readme.md
 source/
   index.ts
     …
+    11→type EventName = 'active' | 'idle' | 'empty' | 'add' | 'next' | 'completed' | 'error' | 'pendingZero' | 'rateLimit' | 'rateLimitCleared';
     13→/**
     14→Promise queue with concurrency control.
     15→*/

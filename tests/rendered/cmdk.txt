@@ -70,10 +70,6 @@ README.md
   443→
   444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
   445→
-  446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
-  447→
-  448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
-  449→
   …
   456→## History
   457→
@@ -138,6 +134,13 @@ cmdk/
   src/
     command-score.ts
     index.tsx
+      …
+      137→type State = {
+      138→  search: string
+      139→  value: string
+      140→  selectedItemId?: string
+      141→  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
+      142→}
       …
       149→type Group = {
       150→  id: string

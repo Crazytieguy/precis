@@ -230,6 +230,8 @@ src/
     1097→
     1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
     …
+    1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
+    1129→
     1130→export function Portal(props: PortalProps) {
     …
     1137→export const Drawer = {
@@ -268,10 +270,6 @@ test/
     controlled.spec.ts
     helpers.ts
     initial-snap.spec.ts
-    nested.spec.ts
-    non-dismissible.spec.ts
-    with-handle.spec.ts
-    with-redirect.spec.ts
     …
   tsconfig.json
 tsconfig.json

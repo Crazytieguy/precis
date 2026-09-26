@@ -74,6 +74,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         .map(|&statement| (statement, scan.classify(file, statement)))
         .collect();
     scan.follow_local_factories(file, &classified);
+    scan.follow_signature_types(file, &classified);
 
     let exports_nothing = scan.public_names.is_empty()
         && classified
@@ -416,6 +417,70 @@ impl<'source> ExportScan<'source> {
         }
         self.public_names.extend(callees);
     }
+
+    /// A published declaration's signature names the local types a caller
+    /// has to know (`props: CardProps`, `extends StateType<T>`), so those
+    /// are published too (one hop).
+    fn follow_signature_types(
+        &mut self,
+        file: &'source SourceFile,
+        classified: &[(Node, TopLevel)],
+    ) {
+        let mut types = Vec::new();
+        for (_, top_level) in classified {
+            let node = match top_level {
+                TopLevel::Exported(node) => *node,
+                TopLevel::Local(node)
+                    if declared_names(file, *node)
+                        .iter()
+                        .any(|name| self.public_names.contains(name)) =>
+                {
+                    *node
+                }
+                _ => continue,
+            };
+            signature_types(file, node, &mut types);
+        }
+        self.public_names.extend(types);
+    }
+}
+
+/// The type names `node`'s parameter lists, return types and
+/// `extends` / `implements` clauses mention, outside function and class
+/// bodies.
+fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut Vec<&'source str>) {
+    fn walk<'source>(
+        file: &'source SourceFile,
+        node: Node,
+        in_signature: bool,
+        types: &mut Vec<&'source str>,
+    ) {
+        if matches!(node.kind(), "statement_block" | "class_body") {
+            return;
+        }
+        if in_signature && node.kind() == "type_identifier" {
+            types.push(file.text(node));
+        }
+        let in_signature = in_signature
+            || matches!(
+                node.kind(),
+                "formal_parameters"
+                    | "extends_clause"
+                    | "extends_type_clause"
+                    | "implements_clause"
+            );
+        let return_type = node.child_by_field_name("return_type");
+        let mut cursor = node.walk();
+        for child in node.named_children(&mut cursor) {
+            walk(
+                file,
+                child,
+                in_signature || Some(child) == return_type,
+                types,
+            );
+        }
+    }
+    walk(file, node, false, types);
 }
 
 /// A top-level statement that runs rather than declares: an entry
@@ -1350,6 +1415,28 @@ module.exports = Area = Base.extend({
                 "  Callable name [13] head [13] doc [] body [[14]]",
             ]
         );
+    }
+
+    #[test]
+    fn code_typescript_local_types_in_published_signatures_are_published() {
+        let model = extract_source(
+            "src/timeline.tsx",
+            "\
+type RoomTimelineProps = { room: Room };
+type Hidden = { secret: string };
+type StateType<T> = Merged<T>;
+export function RoomTimeline({ room }: RoomTimelineProps) {
+  const x: Hidden = load();
+}
+export interface TreeState<T> extends StateType<T> {}
+",
+        );
+        let name_rows: Vec<Vec<usize>> = model
+            .decls
+            .iter()
+            .map(|decl| decl.name_rows.clone())
+            .collect();
+        assert_eq!(name_rows, [vec![1], vec![3], vec![4], vec![7]]);
     }
 
     #[test]

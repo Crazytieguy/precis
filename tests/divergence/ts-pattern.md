@@ -1,4 +1,4 @@
-Score(3000)=0.705 I=0.835 C=0.595 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.738/0.907/0.810/0.705/0.638/0.581/0.601
+Score(3000)=0.705 I=0.835 C=0.595 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.738/0.907/0.810/0.705/0.638/0.581/0.592
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -132,50 +132,49 @@ Score(3000)=0.705 I=0.835 C=0.595 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | ns | 6867 |  | 157 | The `Matcher` interface and its `[symbols.isVariadic]` flag | 4.3 |  | 0.546 |
 | walker |  | 6876 | 120 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 32, sub: 0, line: 1075 } |  |  | 0.546 |
 | walker |  | 6996 | 120 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 37, sub: 0, line: 1241 } |  |  | 0.546 |
-| walker |  | 7213 | 217 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.547 |
-| walker |  | 7237 | 24 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 5, sub: 0, line: 74 } |  |  | 0.547 |
-| walker |  | 7263 | 26 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 3, sub: 0, line: 38 } |  |  | 0.535 |
-| ns | 7263 |  | 396 | Complete roster of the matcher-alias types (`ArrayP`, `SetP`, `SelectP`, …) | 4.4 |  | 0.535 |
-| walker |  | 7293 | 30 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 9, sub: 0, line: 96 } |  |  | 0.536 |
-| walker |  | 7376 | 83 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 7, sub: 0, line: 83 } |  |  | 0.536 |
-| walker |  | 7475 | 99 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.550 |
-| walker |  | 7617 | 142 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.564 |
-| ns | 7632 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.550 |
-| walker |  | 7805 | 188 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 4, sub: 0, line: 50 } |  |  | 0.566 |
-| walker |  | 7827 | 22 | Code::CodeKey { rung: Doc, file: src/types/Pattern.ts, decl: 5, sub: 0, line: 74 } |  |  | 0.566 |
-| walker |  | 7909 | 82 | Code::CodeKey { rung: Names, file: src/types/InvertPattern.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.566 |
-| walker |  | 7931 | 22 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 1, sub: 0, line: 106 } |  |  | 0.566 |
-| walker |  | 7955 | 24 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 4, sub: 0, line: 303 } |  |  | 0.566 |
-| ns | 8004 |  | 372 | Headline export of every remaining src/types/ module, with its purpose line | 4.6 |  | 0.557 |
-| walker |  | 8054 | 99 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 2, sub: 0, line: 180 } |  |  | 0.557 |
-| walker |  | 8155 | 101 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 3, sub: 0, line: 192 } |  |  | 0.557 |
-| walker |  | 8177 | 22 | Code::CodeKey { rung: Doc, file: src/types/InvertPattern.ts, decl: 4, sub: 0, line: 303 } |  |  | 0.558 |
-| walker |  | 8215 | 38 | Code::CodeKey { rung: Names, file: src/types/Match.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.558 |
-| ns | 8277 |  | 273 | package.json scripts — the complete command set for this repo | 5.1 |  | 0.565 |
-| walker |  | 8396 | 181 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.574 |
-| walker |  | 8435 | 39 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 17, sub: 0, line: 116 } |  |  | 0.574 |
-| ns | 8453 |  | 176 | jest.config.cjs and tests/tsconfig.json in full — the test harness | 5.2 |  | 0.567 |
-| walker |  | 8482 | 47 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 18, sub: 0, line: 124 } |  |  | 0.568 |
-| ns | 8607 |  | 154 | tsconfig.json in full — the library's compiler settings | 5.3 |  | 0.562 |
-| walker |  | 8658 | 176 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.569 |
-| walker |  | 8672 | 14 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 20, sub: 0, line: 132 } |  |  | 0.571 |
-| walker |  | 8692 | 20 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 23, sub: 0, line: 157 } |  |  | 0.572 |
-| walker |  | 8753 | 61 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 22, sub: 0, line: 138 } |  |  | 0.580 |
-| walker |  | 8774 | 21 | Code::CodeKey { rung: Doc, file: src/types/Pattern.ts, decl: 24, sub: 0, line: 190 } |  |  | 0.582 |
-| ns | 8853 |  | 246 | package.json `exports` map — the dual ESM/CJS and `./types` subpaths | 5.4 |  | 0.593 |
-| walker |  | 8947 | 173 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 3, line: 0 } |  |  | 0.597 |
-| walker |  | 8971 | 24 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 30, sub: 0, line: 196 } |  |  | 0.601 |
-| ns | 9028 |  | 175 | docs/roadmap.md — the unimplemented items | 5.5 |  | 0.596 |
-| ns | 9178 |  | 150 | Heading locations in the v4-to-v5 migration guide | 5.6 |  | 0.591 |
+| walker |  | 7117 | 121 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 3, sub: 0, line: 116 } |  |  | 0.546 |
+| ns | 7263 |  | 396 | Complete roster of the matcher-alias types (`ArrayP`, `SetP`, `SelectP`, …) | 4.4 |  | 0.532 |
+| walker |  | 7334 | 217 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.535 |
+| walker |  | 7358 | 24 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 5, sub: 0, line: 74 } |  |  | 0.535 |
+| walker |  | 7384 | 26 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 3, sub: 0, line: 38 } |  |  | 0.535 |
+| walker |  | 7414 | 30 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 9, sub: 0, line: 96 } |  |  | 0.536 |
+| walker |  | 7497 | 83 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 7, sub: 0, line: 83 } |  |  | 0.536 |
+| walker |  | 7596 | 99 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 1, sub: 0, line: 7 } |  |  | 0.550 |
+| ns | 7632 |  | 369 | `Pattern<a>` itself — what shapes are legal as a pattern for a given type | 4.5 |  | 0.536 |
+| walker |  | 7738 | 142 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 2, sub: 0, line: 23 } |  |  | 0.550 |
+| walker |  | 7926 | 188 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 4, sub: 0, line: 50 } |  |  | 0.566 |
+| walker |  | 7948 | 22 | Code::CodeKey { rung: Doc, file: src/types/Pattern.ts, decl: 5, sub: 0, line: 74 } |  |  | 0.566 |
+| ns | 8004 |  | 372 | Headline export of every remaining src/types/ module, with its purpose line | 4.6 |  | 0.556 |
+| walker |  | 8030 | 82 | Code::CodeKey { rung: Names, file: src/types/InvertPattern.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.557 |
+| walker |  | 8052 | 22 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 1, sub: 0, line: 106 } |  |  | 0.557 |
+| walker |  | 8076 | 24 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 4, sub: 0, line: 303 } |  |  | 0.557 |
+| walker |  | 8175 | 99 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 2, sub: 0, line: 180 } |  |  | 0.557 |
+| walker |  | 8276 | 101 | Code::CodeKey { rung: Decl, file: src/types/InvertPattern.ts, decl: 3, sub: 0, line: 192 } |  |  | 0.557 |
+| ns | 8277 |  | 273 | package.json scripts — the complete command set for this repo | 5.1 |  | 0.564 |
+| walker |  | 8298 | 22 | Code::CodeKey { rung: Doc, file: src/types/InvertPattern.ts, decl: 4, sub: 0, line: 303 } |  |  | 0.565 |
+| walker |  | 8381 | 83 | Code::CodeKey { rung: Names, file: src/types/Match.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.565 |
+| walker |  | 8410 | 29 | Code::CodeKey { rung: Decl, file: src/types/Match.ts, decl: 4, sub: 0, line: 251 } |  |  | 0.565 |
+| ns | 8453 |  | 176 | jest.config.cjs and tests/tsconfig.json in full — the test harness | 5.2 |  | 0.557 |
+| walker |  | 8459 | 49 | Code::CodeKey { rung: Decl, file: src/types/Match.ts, decl: 3, sub: 0, line: 245 } |  |  | 0.557 |
+| ns | 8607 |  | 154 | tsconfig.json in full — the library's compiler settings | 5.3 |  | 0.552 |
+| walker |  | 8640 | 181 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 1, line: 0 } |  |  | 0.560 |
+| walker |  | 8679 | 39 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 17, sub: 0, line: 116 } |  |  | 0.561 |
+| walker |  | 8726 | 47 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 18, sub: 0, line: 124 } |  |  | 0.562 |
+| ns | 8853 |  | 246 | package.json `exports` map — the dual ESM/CJS and `./types` subpaths | 5.4 |  | 0.574 |
+| walker |  | 8902 | 176 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 2, line: 0 } |  |  | 0.581 |
+| walker |  | 8916 | 14 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 20, sub: 0, line: 132 } |  |  | 0.583 |
+| walker |  | 8936 | 20 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 23, sub: 0, line: 157 } |  |  | 0.583 |
+| walker |  | 8997 | 61 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 22, sub: 0, line: 138 } |  |  | 0.592 |
+| walker |  | 9018 | 21 | Code::CodeKey { rung: Doc, file: src/types/Pattern.ts, decl: 24, sub: 0, line: 190 } |  |  | 0.593 |
+| ns | 9028 |  | 175 | docs/roadmap.md — the unimplemented items | 5.5 |  | 0.588 |
+| ns | 9178 |  | 150 | Heading locations in the v4-to-v5 migration guide | 5.6 |  | 0.583 |
+| walker |  | 9222 | 204 | Code::CodeKey { rung: Names, file: src/types/Pattern.ts, decl: 0, sub: 3, line: 0 } |  |  | 0.587 |
+| walker |  | 9246 | 24 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 30, sub: 0, line: 196 } |  |  | 0.591 |
 | ns | 9307 |  | 129 | The internal type-guard predicates behind every wildcard in src/patterns.ts | 5.7 |  | 0.583 |
-| walker |  | 9442 | 471 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 37, sub: 0, line: 645 } |  |  | 0.583 |
+| walker |  | 9316 | 70 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 32, sub: 0, line: 203 } |  |  | 0.583 |
 | ns | 9463 |  | 156 | tests/types-catalog/utils.ts — the shared fixture types used across the suite | 5.8 |  | 0.578 |
-| walker |  | 9563 | 121 | Code::CodeKey { rung: Doc, file: src/patterns.ts, decl: 3, sub: 0, line: 116 } |  |  | 0.578 |
 | ns | 9622 |  | 159 | examples/one-file-demo — the demo's table of contents | 5.9 |  | 0.574 |
-| walker |  | 9765 | 202 | Code::CodeKey { rung: Names, file: src/types/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.574 |
-| walker |  | 9804 | 39 | Code::CodeKey { rung: Decl, file: src/types/helpers.ts, decl: 9, sub: 0, line: 49 } |  |  | 0.574 |
+| walker |  | 9787 | 471 | Code::CodeKey { rung: Decl, file: src/types/Pattern.ts, decl: 38, sub: 0, line: 645 } |  |  | 0.574 |
 | ns | 9843 |  | 221 | jsr.json in full, and package.json's devDependencies | 5.10 |  | 0.570 |
-| walker |  | 9852 | 48 | Code::CodeKey { rung: Decl, file: src/types/helpers.ts, decl: 5, sub: 0, line: 25 } |  |  | 0.570 |
-| walker |  | 9917 | 65 | Code::CodeKey { rung: Decl, file: src/types/helpers.ts, decl: 8, sub: 0, line: 42 } |  |  | 0.570 |
 | ns | 9964 |  | 121 | `.prettierrc` in full, and the benchmark runner scripts | 5.11 |  | 0.567 |
-| walker |  | 9991 | 74 | Code::CodeKey { rung: Decl, file: src/types/helpers.ts, decl: 4, sub: 0, line: 16 } |  |  | 0.567 |
+| walker |  | 9989 | 202 | Code::CodeKey { rung: Names, file: src/types/helpers.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.567 |
