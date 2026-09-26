@@ -462,9 +462,7 @@ fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut V
 fn is_script_statement(statement: Node) -> bool {
     match statement.kind() {
         "import_statement" | "export_statement" | "empty_statement" => false,
-        "expression_statement" => statement
-            .named_child(0)
-            .is_some_and(|expression| expression.kind() != "string"),
+        "expression_statement" => !is_directive(statement),
         kind => kind.ends_with("_statement"),
     }
 }
