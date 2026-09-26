@@ -215,8 +215,7 @@ impl SourceFile {
     ) -> Vec<Item> {
         let mut nodes = Vec::new();
         let mut leading = Vec::new();
-        let mut cursor = list.walk();
-        for child in list.named_children(&mut cursor) {
+        for child in list.named_children(&mut list.walk()) {
             if is_leading_trivia(child) {
                 if self.starts_own_row(child) {
                     leading.push(child);

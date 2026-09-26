@@ -70,9 +70,8 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     };
     let is_entry = is_entrypoint(&file.path, ctx);
     let root = file.tree.root_node();
-    let mut cursor = root.walk();
     let mut first_statement = true;
-    for node in root.named_children(&mut cursor) {
+    for node in root.named_children(&mut root.walk()) {
         if node.kind() == "comment" {
             continue;
         }
@@ -184,9 +183,8 @@ fn imports_own_module(file: &SourceFile, statement: Node, ctx: &WalkCtx) -> bool
 /// Whether a `from … import …` re-exports a name on purpose: `X as X`, or
 /// a name `__all__` lists.
 fn reexports_explicitly(file: &SourceFile, statement: Node, exported_names: &[&str]) -> bool {
-    let mut cursor = statement.walk();
     statement
-        .children_by_field_name("name", &mut cursor)
+        .children_by_field_name("name", &mut statement.walk())
         .any(|name| match name.kind() {
             "aliased_import" => {
                 name.child_by_field_name("name")
@@ -202,9 +200,8 @@ fn reexports_explicitly(file: &SourceFile, statement: Node, exported_names: &[&s
 /// The string contents of the module's top-level `__all__` assignments.
 fn all_names(file: &SourceFile) -> Vec<&str> {
     let root = file.tree.root_node();
-    let mut cursor = root.walk();
     let mut names = Vec::new();
-    for statement in root.named_children(&mut cursor) {
+    for statement in root.named_children(&mut root.walk()) {
         if statement.kind() == "expression_statement"
             && matches!(assignment_target(file, statement), Some(("__all__", _)))
         {
@@ -219,8 +216,7 @@ fn collect_string_contents<'a>(file: &'a SourceFile, node: Node, names: &mut Vec
         names.push(file.text(node));
         return;
     }
-    let mut cursor = node.walk();
-    for child in node.named_children(&mut cursor) {
+    for child in node.named_children(&mut node.walk()) {
         collect_string_contents(file, child, names);
     }
 }
@@ -234,8 +230,7 @@ fn is_dunder(name: &str) -> bool {
 /// and whether the assignment is augmented; `None` for tuple, attribute
 /// or subscript targets and for non-assignments.
 fn assignment_target<'a>(file: &'a SourceFile, statement: Node) -> Option<(&'a str, bool)> {
-    let mut cursor = statement.walk();
-    let assignment = statement.named_children(&mut cursor).next()?;
+    let assignment = statement.named_children(&mut statement.walk()).next()?;
     let left = assignment.child_by_field_name("left")?;
     if left.kind() != "identifier" {
         return None;
@@ -252,8 +247,7 @@ fn is_docstring(node: Node) -> bool {
     if node.kind() != "expression_statement" {
         return false;
     }
-    let mut cursor = node.walk();
-    node.named_children(&mut cursor)
+    node.named_children(&mut node.walk())
         .next()
         .is_some_and(|first| matches!(first.kind(), "string" | "concatenated_string"))
 }
@@ -272,8 +266,7 @@ fn conditional_definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> 
     let mut decls = Vec::new();
     for block in clause_blocks(statement) {
         let first = decls.len();
-        let mut cursor = block.walk();
-        for node in block.named_children(&mut cursor) {
+        for node in block.named_children(&mut block.walk()) {
             match node.kind() {
                 "function_definition" | "class_definition" | "decorated_definition" => {
                     decls.extend(definition(file, node));
@@ -297,16 +290,14 @@ fn conditional_definitions(file: &SourceFile, statement: Node) -> Vec<DeclInfo> 
 /// body) and those of its `elif` / `else` / `except` / `finally` clauses.
 fn clause_blocks(statement: Node) -> Vec<Node> {
     let mut blocks = Vec::new();
-    let mut cursor = statement.walk();
-    for child in statement.named_children(&mut cursor) {
+    for child in statement.named_children(&mut statement.walk()) {
         if child.kind() == "block" {
             blocks.push(child);
             continue;
         }
-        let mut clause_cursor = child.walk();
         blocks.extend(
             child
-                .named_children(&mut clause_cursor)
+                .named_children(&mut child.walk())
                 .filter(|grandchild| grandchild.kind() == "block"),
         );
     }
@@ -368,8 +359,7 @@ fn defined(unit: Node) -> Option<Node> {
 }
 
 fn is_overload(file: &SourceFile, unit: Node) -> bool {
-    let mut cursor = unit.walk();
-    unit.named_children(&mut cursor)
+    unit.named_children(&mut unit.walk())
         .filter(|child| child.kind() == "decorator")
         .filter_map(|decorator| decorator.named_child(0))
         .any(|expression| {
@@ -394,8 +384,7 @@ fn has_implementation_after(file: &SourceFile, unit: Node) -> bool {
 
 /// Rows of the decorators above a definition that each fit on one row.
 fn single_row_decorators(file: &SourceFile, unit: Node) -> Vec<usize> {
-    let mut cursor = unit.walk();
-    unit.named_children(&mut cursor)
+    unit.named_children(&mut unit.walk())
         .filter(|child| child.kind() == "decorator")
         .map(|decorator| file.node_rows(decorator))
         .filter(|rows| rows.start() == rows.end())
@@ -408,9 +397,8 @@ fn colon_row(inner: Node) -> usize {
     let body_start = inner
         .child_by_field_name("body")
         .map_or(usize::MAX, |body| body.start_byte());
-    let mut cursor = inner.walk();
     inner
-        .children(&mut cursor)
+        .children(&mut inner.walk())
         .filter(|child| child.kind() == ":" && child.end_byte() <= body_start)
         .last()
         .map_or(inner.start_position().row, |colon| {
@@ -432,13 +420,11 @@ fn suite_statements(inner: Node) -> Vec<Node> {
         .or_else(|| inner.child_by_field_name("superclasses"))
         .or_else(|| inner.child_by_field_name("name"))
         .map_or(inner.start_byte(), |node| node.end_byte());
-    let mut cursor = inner.walk();
     let mut statements: Vec<Node> = inner
-        .named_children(&mut cursor)
+        .named_children(&mut inner.walk())
         .filter(|child| child.kind() == "comment" && child.start_byte() >= header_end)
         .collect();
-    let mut cursor = body.walk();
-    statements.extend(body.named_children(&mut cursor));
+    statements.extend(body.named_children(&mut body.walk()));
     statements.sort_by_key(|node| node.start_byte());
     statements
 }

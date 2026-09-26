@@ -185,9 +185,8 @@ fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInf
             .filter(|child| child.kind() == "macro_invocation")?,
         _ => node,
     };
-    let mut cursor = invocation.walk();
     let tokens = invocation
-        .named_children(&mut cursor)
+        .named_children(&mut invocation.walk())
         .find(|child| child.kind() == "token_tree")?;
     let open_row = tokens.start_position().row + 1;
     let mut entries = Vec::new();
@@ -196,8 +195,11 @@ fn item_macro(node: Node, leading: Leading, file: &SourceFile) -> Option<DeclInf
     let mut declares = false;
     let mut claimed_through = open_row;
     let inner_count = tokens.child_count().saturating_sub(2);
-    let mut cursor = tokens.walk();
-    for child in tokens.children(&mut cursor).skip(1).take(inner_count) {
+    for child in tokens
+        .children(&mut tokens.walk())
+        .skip(1)
+        .take(inner_count)
+    {
         let child_rows = file.node_rows(child);
         rows.extend((claimed_through + 1).max(*child_rows.start())..=*child_rows.end());
         claimed_through = claimed_through.max(*child_rows.end());
@@ -314,9 +316,8 @@ fn is_test_cfg(compact_attribute: &str) -> bool {
 /// An attribute item's contents between `#[` and `]`, whitespace removed:
 /// `cfg(test)`, `tokio::test`, `doc="…"`.
 fn compact_attribute(attribute_item: Node, file: &SourceFile) -> String {
-    let mut cursor = attribute_item.walk();
     attribute_item
-        .named_children(&mut cursor)
+        .named_children(&mut attribute_item.walk())
         .find(|child| child.kind() == "attribute")
         .map(|attribute| {
             file.text(attribute)
@@ -329,9 +330,8 @@ fn compact_attribute(attribute_item: Node, file: &SourceFile) -> String {
 
 /// `pub`, `pub(crate)`, …: the item's visibility modifier, if any.
 fn visibility_modifier<'a>(node: Node, file: &'a SourceFile) -> Option<&'a str> {
-    let mut cursor = node.walk();
     let modifier = node
-        .children(&mut cursor)
+        .children(&mut node.walk())
         .find(|child| child.kind() == "visibility_modifier")?;
     Some(file.text(modifier).trim())
 }
@@ -420,8 +420,7 @@ fn container(
     let mut members = Vec::new();
     let is_function =
         |child: Node| matches!(child.kind(), "function_item" | "function_signature_item");
-    let mut cursor = list.walk();
-    for child in list.named_children(&mut cursor) {
+    for child in list.named_children(&mut list.walk()) {
         if !is_function(child) {
             continue;
         }
@@ -454,9 +453,8 @@ fn impl_container(node: Node, leading: Leading, file: &SourceFile) -> Option<Dec
     let admit = |child: Node| is_trait_impl || visibility_modifier(child, file).is_some();
     if !is_trait_impl {
         let list = node.child_by_field_name("body")?;
-        let mut cursor = list.walk();
         let admits_any = list
-            .named_children(&mut cursor)
+            .named_children(&mut list.walk())
             .any(|child| admit(child) && !Leading::above(child, file).hidden);
         if !admits_any {
             return None;
@@ -467,9 +465,8 @@ fn impl_container(node: Node, leading: Leading, file: &SourceFile) -> Option<Dec
 
 /// The row of the delimiter opening a `macro_rules!` body.
 fn macro_open_row(node: Node, file: &SourceFile) -> Option<usize> {
-    let mut cursor = node.walk();
     let row = node
-        .children(&mut cursor)
+        .children(&mut node.walk())
         .find(|child| matches!(file.text(*child), "{" | "(" | "["))?
         .start_position()
         .row;
@@ -480,8 +477,7 @@ fn macro_open_row(node: Node, file: &SourceFile) -> Option<usize> {
 /// `#![…]` attributes around them skipped), as paragraphs.
 fn module_doc(file: &SourceFile, root: Node) -> Vec<Item> {
     let mut rows = Vec::new();
-    let mut cursor = root.walk();
-    for child in root.named_children(&mut cursor) {
+    for child in root.named_children(&mut root.walk()) {
         match child.kind() {
             "line_comment" | "block_comment" => {
                 if child.child_by_field_name("inner").is_some() {

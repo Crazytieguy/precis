@@ -68,8 +68,7 @@ fn grammar(path: &Path) -> tree_sitter::Language {
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let root = file.tree.root_node();
     let scope = module_factory_body(file, root).unwrap_or(root);
-    let mut cursor = scope.walk();
-    let statements: Vec<Node> = scope.named_children(&mut cursor).collect();
+    let statements: Vec<Node> = scope.named_children(&mut scope.walk()).collect();
 
     let mut scan = ExportScan::default();
     let classified: Vec<(Node, TopLevel)> = statements
@@ -155,8 +154,7 @@ fn module_factory_body<'tree>(file: &SourceFile, root: Node<'tree>) -> Option<No
     let is_wrapper = (callee.kind() == "identifier" && file.text(callee) == "define")
         || is_function_kind(callee.kind());
     let arguments = call.child_by_field_name("arguments")?;
-    let mut cursor = arguments.walk();
-    let factory = arguments.named_children(&mut cursor).last()?;
+    let factory = arguments.named_children(&mut arguments.walk()).last()?;
     let body = factory.child_by_field_name("body")?;
     (is_wrapper && is_function_kind(factory.kind()) && body.kind() == "statement_block")
         .then_some(body)
@@ -287,8 +285,7 @@ impl<'source> ExportScan<'source> {
                     return self.exported_value(file, value);
                 }
                 if statement.child_by_field_name("source").is_none() {
-                    let mut cursor = statement.walk();
-                    for child in statement.named_children(&mut cursor) {
+                    for child in statement.named_children(&mut statement.walk()) {
                         match child.kind() {
                             "export_clause" => self.mark_clause(file, child),
                             // `export = X`
@@ -364,8 +361,7 @@ impl<'source> ExportScan<'source> {
         }
         if value.kind() == "object" {
             let mut all_names = true;
-            let mut cursor = value.walk();
-            for entry in value.named_children(&mut cursor) {
+            for entry in value.named_children(&mut value.walk()) {
                 match object_entry_name(entry) {
                     Some(name) => self.mark(file, name),
                     None => all_names &= entry.kind() == "comment",
@@ -379,8 +375,7 @@ impl<'source> ExportScan<'source> {
     }
 
     fn mark_clause(&mut self, file: &'source SourceFile, clause: Node) {
-        let mut cursor = clause.walk();
-        for specifier in clause.named_children(&mut cursor) {
+        for specifier in clause.named_children(&mut clause.walk()) {
             if let Some(name) = specifier.child_by_field_name("name") {
                 self.mark(file, name);
             }
@@ -473,8 +468,7 @@ fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut V
                     | "implements_clause"
             );
         let return_type = node.child_by_field_name("return_type");
-        let mut cursor = node.walk();
-        for child in node.named_children(&mut cursor) {
+        for child in node.named_children(&mut node.walk()) {
             walk(
                 file,
                 child,
@@ -541,9 +535,8 @@ fn unwrap_ambient(node: Node) -> Node {
     if node.kind() != "ambient_declaration" {
         return node;
     }
-    let mut cursor = node.walk();
     let inner = node
-        .named_children(&mut cursor)
+        .named_children(&mut node.walk())
         .find(|child| child.kind() != "comment");
     inner.unwrap_or(node)
 }
@@ -551,9 +544,8 @@ fn unwrap_ambient(node: Node) -> Node {
 /// The names a top-level declaration binds.
 fn declared_names<'source>(file: &'source SourceFile, node: Node) -> Vec<&'source str> {
     if matches!(node.kind(), "lexical_declaration" | "variable_declaration") {
-        let mut cursor = node.walk();
         return node
-            .named_children(&mut cursor)
+            .named_children(&mut node.walk())
             .filter_map(|declarator| declarator.child_by_field_name("name"))
             .filter(|name| name.kind() == "identifier")
             .map(|name| file.text(name))
@@ -612,8 +604,7 @@ fn is_reference(file: &SourceFile, value: Node) -> bool {
 /// `const x = require('y')`, including `require('y').z` and
 /// `require('y')(…)` chains.
 fn is_require_declaration(file: &SourceFile, node: Node) -> bool {
-    let mut cursor = node.walk();
-    node.named_children(&mut cursor)
+    node.named_children(&mut node.walk())
         .filter_map(|declarator| declarator.child_by_field_name("value"))
         .any(|value| is_require_rooted(file, value))
 }
@@ -803,9 +794,8 @@ fn last_object_argument(value: Node) -> Option<Node> {
             "call_expression" | "new_expression" => call.child_by_field_name("arguments")?,
             _ => return None,
         };
-        let mut cursor = arguments.walk();
         let last = arguments
-            .named_children(&mut cursor)
+            .named_children(&mut arguments.walk())
             .filter(|argument| argument.kind() != "comment")
             .last();
         if let Some(object) = last.filter(|last| last.kind() == "object") {
@@ -911,8 +901,7 @@ fn class(
     let mut comment_start = None;
     // A method's decorators are its preceding siblings, not its children.
     let mut first_decorator: Option<Node> = None;
-    let mut cursor = block.walk();
-    for child in block.named_children(&mut cursor) {
+    for child in block.named_children(&mut block.walk()) {
         let child_rows = file.node_rows(child);
         match child.kind() {
             "comment" => {
@@ -988,8 +977,7 @@ fn is_hidden_member(file: &SourceFile, member: Node, is_data_entry: bool) -> boo
     {
         return true;
     }
-    let mut cursor = member.walk();
-    member.children(&mut cursor).any(|child| {
+    member.children(&mut member.walk()).any(|child| {
         child.kind() == "accessibility_modifier"
             && matches!(file.text(child), "private" | "protected")
     })

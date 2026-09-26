@@ -68,8 +68,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
 /// tables, which are declarations.
 fn module_export_nodes<'a>(file: &'a SourceFile) -> Vec<Node<'a>> {
     let root = file.tree.root_node();
-    let mut cursor = root.walk();
-    root.children(&mut cursor)
+    root.children(&mut root.walk())
         .filter(|child| {
             (child.kind() == "return_statement"
                 && rhs_of_kind(*child, "function_definition").is_none())
@@ -85,19 +84,15 @@ fn export_tables(export: Node) -> Vec<Node> {
     let expressions = match export.kind() {
         "table_constructor" => return vec![export],
         "function_call" => export.child_by_field_name("arguments"),
-        _ => {
-            let mut cursor = export.walk();
-            export
-                .children(&mut cursor)
-                .find(|child| child.kind() == "expression_list")
-        }
+        _ => export
+            .children(&mut export.walk())
+            .find(|child| child.kind() == "expression_list"),
     };
     let Some(expressions) = expressions else {
         return Vec::new();
     };
-    let mut cursor = expressions.walk();
     expressions
-        .named_children(&mut cursor)
+        .named_children(&mut expressions.walk())
         .filter(|expression| matches!(expression.kind(), "table_constructor" | "function_call"))
         .flat_map(export_tables)
         .collect()
@@ -107,8 +102,7 @@ fn export_tables(export: Node) -> Vec<Node> {
 /// (`local M = { foo = function … }`) surface one nesting level deep.
 fn find_decls(root: Node) -> Vec<Node> {
     let mut out = Vec::new();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
+    for child in root.children(&mut root.walk()) {
         match child.kind() {
             "function_declaration" => out.push(child),
             "return_statement" if rhs_of_kind(child, "function_definition").is_some() => {
@@ -130,8 +124,7 @@ fn find_decls(root: Node) -> Vec<Node> {
 /// Fields with function values from a table constructor, recursing into
 /// nested constructors up to `remaining_depth` more levels.
 fn collect_function_fields<'a>(table: Node<'a>, out: &mut Vec<Node<'a>>, remaining_depth: u8) {
-    let mut cursor = table.walk();
-    for field in table.children(&mut cursor) {
+    for field in table.children(&mut table.walk()) {
         if field.kind() != "field" {
             continue;
         }
@@ -156,12 +149,10 @@ fn collect_function_fields<'a>(table: Node<'a>, out: &mut Vec<Node<'a>>, remaini
 /// The node of `kind` that's the right-hand side of an
 /// `assignment_statement` / `variable_declaration`.
 fn rhs_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
+    for child in node.children(&mut node.walk()) {
         match child.kind() {
             "expression_list" => {
-                let mut inner = child.walk();
-                for expr in child.children(&mut inner) {
+                for expr in child.children(&mut child.walk()) {
                     if expr.kind() == kind {
                         return Some(expr);
                     }
@@ -227,9 +218,8 @@ const IDENTITY_META_KEYS: [&str; 7] = [
 /// those fields is a metadata key.
 fn module_identity_rows(file: &SourceFile) -> Vec<usize> {
     let root = file.tree.root_node();
-    let mut cursor = root.walk();
     let Some((statement, table)) = root
-        .named_children(&mut cursor)
+        .named_children(&mut root.walk())
         .find(|node| node.kind() != "comment")
         .filter(|node| matches!(node.kind(), "variable_declaration" | "assignment_statement"))
         .and_then(|statement| Some((statement, rhs_of_kind(statement, "table_constructor")?)))
@@ -238,8 +228,7 @@ fn module_identity_rows(file: &SourceFile) -> Vec<usize> {
     };
     let mut rows = vec![*file.node_rows(statement).start()];
     let mut has_meta_key = false;
-    let mut cursor = table.walk();
-    for field in table.named_children(&mut cursor) {
+    for field in table.named_children(&mut table.walk()) {
         let field_rows = file.node_rows(field);
         let Some(key) = field
             .child_by_field_name("name")

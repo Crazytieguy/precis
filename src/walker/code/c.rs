@@ -61,8 +61,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         }
     };
     let top_level = header_guard(root, file).unwrap_or(root);
-    let mut cursor = top_level.walk();
-    for child in top_level.named_children(&mut cursor) {
+    for child in top_level.named_children(&mut top_level.walk()) {
         visit_with_envelope_descent(child, file, &mut visit);
     }
     attach_directives(&mut decls, &directives);
@@ -277,9 +276,8 @@ fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
 /// a definition whose return type sits on the row above.
 fn name_rows(node: Node) -> Vec<usize> {
     let mut rows = vec![node.start_position().row + 1];
-    let mut cursor = node.walk();
     rows.extend(
-        node.children_by_field_name("declarator", &mut cursor)
+        node.children_by_field_name("declarator", &mut node.walk())
             .chain(misparsed_prototype_declarator(node))
             .filter_map(declared_name)
             .map(|name| name.start_position().row + 1),
@@ -355,9 +353,8 @@ fn aggregate_body(node: Node) -> Option<Node> {
     let specifier = match node.kind() {
         "struct_specifier" | "union_specifier" | "enum_specifier" => node,
         "declaration" | "type_definition" => {
-            let mut cursor = node.walk();
             if node
-                .children_by_field_name("declarator", &mut cursor)
+                .children_by_field_name("declarator", &mut node.walk())
                 .any(declarator_is_function)
             {
                 return None;
@@ -396,8 +393,7 @@ fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
     visit: &mut F,
 ) {
     if let Some(decl_list) = extern_c_declaration_list(node, file) {
-        let mut cursor = decl_list.walk();
-        for child in decl_list.named_children(&mut cursor) {
+        for child in decl_list.named_children(&mut decl_list.walk()) {
             visit_with_envelope_descent(child, file, visit);
         }
         return;
@@ -421,8 +417,7 @@ fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
     file: &SourceFile,
     visit: &mut F,
 ) {
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
+    for child in node.children(&mut node.walk()) {
         match child.kind() {
             "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
                 descend_feature_gate_branches(child, file, visit);
@@ -480,9 +475,8 @@ fn extern_c_declaration_list<'a>(node: Node<'a>, file: &SourceFile) -> Option<No
         "preproc_ifdef" => cplusplus_wrapped_linkage_specification(node, file)?,
         _ => return None,
     };
-    let mut cursor = linkage.walk();
     linkage
-        .children(&mut cursor)
+        .children(&mut linkage.walk())
         .find(|child| child.kind() == "declaration_list")
 }
 
@@ -516,9 +510,8 @@ fn cplusplus_wrapped_linkage_specification<'a>(
 /// wrapping the whole file (comments aside), whose children are the
 /// effective top level.
 fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
-    let mut cursor = root.walk();
     let mut candidate = None;
-    for child in root.children(&mut cursor) {
+    for child in root.children(&mut root.walk()) {
         match child.kind() {
             "comment" => {}
             "preproc_if" | "preproc_ifdef"
@@ -589,8 +582,7 @@ fn is_define_of(define: Node, name: Node, file: &SourceFile) -> bool {
 }
 
 fn is_static(node: Node, file: &SourceFile) -> bool {
-    let mut cursor = node.walk();
-    node.children(&mut cursor).any(|child| {
+    node.children(&mut node.walk()).any(|child| {
         child.kind() == "storage_class_specifier" && file.text(child).trim() == "static"
     })
 }
@@ -599,8 +591,7 @@ fn is_static(node: Node, file: &SourceFile) -> bool {
 /// `__forceinline`), or a macro for one (`__always_inline`, `LIB_INLINE`),
 /// which the grammar reads as the type. `noinline` / `NO_INLINE` are not.
 fn is_inline(node: Node, file: &SourceFile) -> bool {
-    let mut cursor = node.walk();
-    node.children(&mut cursor).any(|child| {
+    node.children(&mut node.walk()).any(|child| {
         let spelling = file.text(child).to_ascii_lowercase();
         matches!(child.kind(), "storage_class_specifier" | "type_identifier")
             && spelling.contains("inline")

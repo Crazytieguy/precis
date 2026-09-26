@@ -48,10 +48,9 @@ fn sibling_mentions(file: &SourceFile) -> HashSet<String> {
 fn declared_names(file: &SourceFile) -> Vec<String> {
     let mut names = Vec::new();
     for declaration in top_level_declarations(file.tree.root_node()) {
-        let mut cursor = declaration.walk();
         names.extend(
             declaration
-                .children_by_field_name("name", &mut cursor)
+                .children_by_field_name("name", &mut declaration.walk())
                 .map(|name| file.text(name).to_owned()),
         );
     }
@@ -87,8 +86,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         .iter()
         .any(|declaration| declares_exported(*declaration, file));
     let handed_out = handed_out_types(&declarations, file);
-    let mut cursor = root.walk();
-    for child in root.named_children(&mut cursor) {
+    for child in root.named_children(&mut root.walk()) {
         let decl = match child.kind() {
             "comment" if file.text(child).starts_with("//go:build") => {
                 if file.text(child)["//go:build".len()..].trim() == "ignore" {
@@ -99,9 +97,8 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
             }
             "package_clause" => {
                 (model.module_doc, _) = doc_and_directives(child, file);
-                let mut inner = child.walk();
                 is_program = child
-                    .named_children(&mut inner)
+                    .named_children(&mut child.walk())
                     .any(|name| name.kind() == "package_identifier" && file.text(name) == "main");
                 api_only = !is_program && exports_something;
                 continue;
@@ -134,8 +131,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
 /// parser tables and conversion code, which nobody reads as the
 /// package's source.
 fn is_generated(root: Node, file: &SourceFile) -> bool {
-    let mut cursor = root.walk();
-    root.named_children(&mut cursor)
+    root.named_children(&mut root.walk())
         .take_while(|child| child.kind() == "comment")
         .any(|comment| {
             let text = file.text(comment).trim_end();
@@ -154,8 +150,7 @@ fn is_exported(name: &str) -> bool {
 fn is_reachable_callable(node: Node, file: &SourceFile, handed_out: &[&str]) -> bool {
     declares_exported(node, file)
         && node.child_by_field_name("receiver").is_none_or(|receiver| {
-            let mut cursor = receiver.walk();
-            let parameter = receiver.named_children(&mut cursor).next();
+            let parameter = receiver.named_children(&mut receiver.walk()).next();
             parameter
                 .and_then(|parameter| base_type_name(parameter.child_by_field_name("type")?))
                 .is_some_and(|name| {
@@ -186,8 +181,7 @@ fn handed_out_types<'a>(declarations: &[Node], file: &'a SourceFile) -> Vec<&'a 
             if node.kind() == "type_identifier" {
                 names.push(file.text(node));
             }
-            let mut inner = node.walk();
-            pending.extend(node.named_children(&mut inner));
+            pending.extend(node.named_children(&mut node.walk()));
         }
     }
     names
@@ -342,14 +336,12 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
 fn specs(node: Node) -> (Vec<Node>, Option<Node>) {
     let mut specs = Vec::new();
     let mut group = None;
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
+    for child in node.children(&mut node.walk()) {
         match child.kind() {
             "(" => group = Some(node),
             "var_spec_list" => {
                 group = Some(child);
-                let mut inner = child.walk();
-                specs.extend(child.named_children(&mut inner).filter(is_spec));
+                specs.extend(child.named_children(&mut child.walk()).filter(is_spec));
             }
             _ if is_spec(&child) => specs.push(child),
             _ => {}
