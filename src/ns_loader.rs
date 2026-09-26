@@ -59,14 +59,16 @@ pub(crate) fn path_escapes_root(fixture_root: &Path, path: &Path) -> bool {
     }
 }
 
-/// Resolve an NS `BatchContent` against the fixture root. Input must be
-/// raw NS content (root-relative paths) — resolved output doesn't
-/// round-trip. Absolutizes span paths; expands `FsEntries::All` into a
-/// concrete `Listed(paths)` via [`list_dir`] (same utility the walker
-/// uses, so NS and walker see identical filesystem content); verifies
-/// each parent is a directory and each `Listed` entry's name one of its
-/// children.
-pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<BatchContent> {
+/// Resolve an NS `BatchContent` against the fixture root `filter` is
+/// scoped to. Input must be raw NS content (root-relative paths) —
+/// resolved output doesn't round-trip. Absolutizes span paths; expands
+/// `FsEntries::All` into a concrete `Listed(paths)` via [`list_dir`] and
+/// `filter`, the filter the walker builds for that root, so an NS listing
+/// and the walker's listing of the same directory can't disagree about
+/// what exists; verifies each parent is a directory and each `Listed`
+/// entry's name one of its children.
+pub fn resolve_content(content: &BatchContent, filter: &DirFilter) -> Result<BatchContent> {
+    let fixture_root = filter.root();
     match content {
         BatchContent::Lines { spans, .. } => {
             let spans = spans
@@ -95,13 +97,9 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
             })
         }
         BatchContent::Fs { groups } => {
-            // Same filter the walker builds for this root, so an NS
-            // `all` listing and the walker's listing of the same
-            // directory can't disagree about what exists.
-            let filter = DirFilter::new(fixture_root);
             let resolved = groups
                 .iter()
-                .map(|g| resolve_fs_group(g, fixture_root, &filter))
+                .map(|g| resolve_fs_group(g, fixture_root, filter))
                 .collect::<Result<Vec<_>>>()?;
             Ok(BatchContent::Fs { groups: resolved })
         }
@@ -171,6 +169,10 @@ mod tests {
     use super::*;
     use crate::content::Render;
 
+    fn resolve(content: &BatchContent, root: &Path) -> Result<BatchContent> {
+        resolve_content(content, &DirFilter::new(root))
+    }
+
     fn lines_content(path: &str) -> BatchContent {
         BatchContent::Lines {
             spans: vec![Span {
@@ -189,9 +191,9 @@ mod tests {
     #[test]
     fn ns_loader_rejects_escaping_span_paths() {
         let root = Path::new("/repo");
-        assert!(resolve_content(&lines_content("../outside.rs"), root).is_err());
-        assert!(resolve_content(&lines_content("/etc/passwd"), root).is_err());
-        assert!(resolve_content(&lines_content("src/a/../b.rs"), root).is_err());
+        assert!(resolve(&lines_content("../outside.rs"), root).is_err());
+        assert!(resolve(&lines_content("/etc/passwd"), root).is_err());
+        assert!(resolve(&lines_content("src/a/../b.rs"), root).is_err());
     }
 
     fn fs_content(parent: &str, entries: FsEntries) -> BatchContent {
@@ -204,7 +206,7 @@ mod tests {
     }
 
     fn resolve_error(content: &BatchContent, root: &Path) -> String {
-        format!("{:#}", resolve_content(content, root).unwrap_err())
+        format!("{:#}", resolve(content, root).unwrap_err())
     }
 
     /// A link out of the fixture escapes it as surely as `..` does; a
@@ -222,10 +224,10 @@ mod tests {
         std::os::unix::fs::symlink(outside.path(), root.join("out")).unwrap();
         std::os::unix::fs::symlink(root.join("src"), root.join("linked")).unwrap();
 
-        assert!(resolve_content(&lines_content("src/lib.rs"), root).is_ok());
-        assert!(resolve_content(&lines_content("out/secret.txt"), root).is_err());
+        assert!(resolve(&lines_content("src/lib.rs"), root).is_ok());
+        assert!(resolve(&lines_content("out/secret.txt"), root).is_err());
         let listed = |names: &[&str]| FsEntries::Listed(names.iter().map(PathBuf::from).collect());
-        assert!(resolve_content(&fs_content(".", listed(&["src"])), root).is_ok());
+        assert!(resolve(&fs_content(".", listed(&["src"])), root).is_ok());
         assert!(resolve_error(&fs_content("README.md", FsEntries::All), root).contains("a file"));
         assert!(resolve_error(&fs_content("linked", FsEntries::All), root).contains("a link"));
         assert!(resolve_error(&fs_content("out", FsEntries::All), root).contains("stay inside"));

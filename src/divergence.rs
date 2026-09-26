@@ -42,11 +42,13 @@
 use std::collections::HashMap;
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 
 use anyhow::{Context, Result};
 
 use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, explode_spans, with_truncate_regex};
+use crate::fs_util::DirFilter;
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache, visible_full_line};
@@ -238,7 +240,12 @@ impl<'a> Graded<'a> {
             .canonicalize()
             .with_context(|| format!("canonicalize fixture_root {}", fixture_root.display()))?;
         let source_cache = SourceCache::new();
-        let mut tree = RenderedTree::new(fixture_root.clone(), source_cache.clone());
+        let filter = Rc::new(DirFilter::new(&fixture_root));
+        let mut tree = RenderedTree::with_filter(
+            fixture_root.clone(),
+            source_cache.clone(),
+            Rc::clone(&filter),
+        );
 
         let mut ids: HashMap<Atom, usize> = HashMap::new();
         let mut occurrences: Vec<Vec<(usize, usize)>> = Vec::new();
@@ -246,7 +253,7 @@ impl<'a> Graded<'a> {
         let mut exp_t = 0;
         let mut next_rank = 1;
         for (position, batch) in ns.batches.iter().enumerate() {
-            let content = resolve_content(&batch.content, &fixture_root)?;
+            let content = resolve_content(&batch.content, &filter)?;
             exp_t += tree.marginal_cost(&content).tokens;
             // Predecessor-chain conflicts are `simulate_ns`'s concern.
             let _ = tree.apply(&content, BatchId::new(position), |_| true);
@@ -282,7 +289,11 @@ impl<'a> Graded<'a> {
         let partial_rows = BUDGETS
             .iter()
             .map(|&budget| {
-                let mut tree = RenderedTree::new(schedule.root.clone(), source_cache.clone());
+                let mut tree = RenderedTree::with_filter(
+                    schedule.root.clone(),
+                    source_cache.clone(),
+                    Rc::clone(&filter),
+                );
                 replay(schedule, &mut tree, budget).map_or_else(Vec::new, |prefix| grade(&prefix))
             })
             .collect();

@@ -5,9 +5,11 @@
 
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 
 use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, Span, with_truncate_regex};
+use crate::fs_util::DirFilter;
 use crate::north_star::{NorthStar, NsBatch};
 use crate::ns_loader::{path_escapes_root, resolve_content};
 use crate::render::{RenderedTree, SourceCache};
@@ -30,7 +32,12 @@ fn envelope_max(cumulative_before: usize) -> usize {
 
 pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
     let source_cache = SourceCache::new();
-    let mut tree = RenderedTree::new(fixture_root.to_path_buf(), source_cache.clone());
+    let filter = Rc::new(DirFilter::new(fixture_root));
+    let mut tree = RenderedTree::with_filter(
+        fixture_root.to_path_buf(),
+        source_cache.clone(),
+        Rc::clone(&filter),
+    );
     let mut seen_ids: HashSet<&str> = HashSet::new();
     let mut by_id: HashMap<&str, &NsBatch> = HashMap::new();
     for batch in &ns.batches {
@@ -80,7 +87,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Vec<SimulatedBatch> {
             out.push(record(violations, 0, cumulative));
             continue;
         }
-        let content = match resolve_content(&batch.content, fixture_root) {
+        let content = match resolve_content(&batch.content, &filter) {
             Ok(content) => content,
             Err(e) => {
                 violations.push(format!("fs content resolution failed: {e}"));
