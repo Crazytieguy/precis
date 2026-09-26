@@ -181,15 +181,14 @@ fn is_credential_stem(stem: &str) -> bool {
     )
 }
 
-/// A credential stem with or without its extension, a real (non-sample)
-/// dotenv file, or a tool's auth file.
+/// A name led by a credential stem (`secrets.yml`,
+/// `secrets.production.yaml`, `credentials-local.json`), a real
+/// (non-sample) dotenv file, or a tool's auth file.
 fn is_credential_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
-    let stem = lower
-        .rsplit_once('.')
-        .map_or(lower.as_str(), |(stem, _)| stem);
+    let leading = lower.split(['.', '-', '_']).next().unwrap_or_default();
     is_credential_stem(&lower)
-        || is_credential_stem(stem)
+        || is_credential_stem(leading)
         || (lower.starts_with(".env.") && !crate::value::is_dotenv_sample_filename(name))
         || matches!(
             lower.as_str(),
@@ -861,7 +860,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 /// [`PLAINTEXT_BYTE_GATE`] long. The file a single-file walk names instead
 /// renders whatever of its first [`SOURCE_TEXT_BYTE_GATE`] no batch shows;
 /// any other file stays a name when it is hidden, a license text,
-/// credential-bearing (by name, or PEM key material), derived or
+/// credential-bearing (by name, or private-key armor), derived or
 /// machine-generated.
 pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
     let mut shown: HashMap<&Path, HashSet<usize>> = HashMap::new();
@@ -916,8 +915,7 @@ pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
             continue;
         };
         if has_nul_byte(&source)
-            || (!is_named
-                && (is_machine_generated_text(&source) || source.contains("PRIVATE KEY-----")))
+            || (!is_named && (is_machine_generated_text(&source) || source.contains("PRIVATE KEY")))
         {
             continue;
         }
@@ -1648,7 +1646,23 @@ mod tests {
         std::fs::write(root.join("chapter.tex"), "\\section{Intro}\nFirst words.\n").unwrap();
         std::fs::write(root.join("LICENSE"), "MIT License\n").unwrap();
         std::fs::write(root.join("secrets.yml"), "api_token: abc\n").unwrap();
+        std::fs::write(
+            root.join("secrets.production.yaml"),
+            "db_password: hunter2\n",
+        )
+        .unwrap();
+        std::fs::create_dir(root.join("config")).unwrap();
+        std::fs::write(
+            root.join("config/credentials.local.json"),
+            "{\"token\": \"t0k\"}\n",
+        )
+        .unwrap();
         std::fs::write(root.join("deploy_key"), "-----BEGIN PRIVATE KEY-----\n").unwrap();
+        std::fs::write(
+            root.join("signing-key.asc"),
+            "-----BEGIN PGP PRIVATE KEY BLOCK-----\n\nlQVYBGXpayloadAAAA\n=ab12\n-----END PGP PRIVATE KEY BLOCK-----\n",
+        )
+        .unwrap();
         std::fs::create_dir(root.join(".github")).unwrap();
         std::fs::write(root.join(".github/labels.yml"), "- name: bug\n").unwrap();
         std::fs::write(root.join("sprite.png"), [0x89, b'P', b'N', b'G', 0]).unwrap();
@@ -1660,7 +1674,11 @@ mod tests {
         assert!(rendered.contains("First words."), "{rendered}");
         assert!(!rendered.contains("MIT License"), "{rendered}");
         assert!(!rendered.contains("api_token"), "{rendered}");
+        assert!(!rendered.contains("hunter2"), "{rendered}");
+        assert!(!rendered.contains("t0k"), "{rendered}");
         assert!(!rendered.contains("BEGIN PRIVATE KEY"), "{rendered}");
+        assert!(!rendered.contains("PGP PRIVATE KEY"), "{rendered}");
+        assert!(!rendered.contains("payload"), "{rendered}");
         assert!(!rendered.contains("name: bug"), "{rendered}");
         assert!(!rendered.contains("guid"), "{rendered}");
     }
