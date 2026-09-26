@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 
 const README_EXAMPLE_FIXTURE: &str = "mitt";
-const README_EXAMPLE_BUDGET: usize = 900;
+const README_EXAMPLE_BUDGET: usize = 1200;
 
 #[test]
 fn readme_example_matches_output() {

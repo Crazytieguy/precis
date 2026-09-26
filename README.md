@@ -6,7 +6,7 @@ Upgrading from v0.1? The flags and the output notation changed; see [CHANGELOG.m
 
 ## Example
 
-Here's what `precis` shows for [developit/mitt](https://github.com/developit/mitt), a tiny TypeScript event emitter, at a 900-token budget:
+Here's what `precis` shows for [developit/mitt](https://github.com/developit/mitt), a tiny TypeScript event emitter, at a 1200-token budget:
 
 <!-- precis-example-start -->
 ```
@@ -94,6 +94,10 @@ package.json
   23→    "typecheck": "tsc --noEmit",
   24→    "bundle": "microbundle -f es,cjs,umd",
   25→    "build": "npm-run-all --silent clean -p bundle -s docs",
+  26→    "clean": "rimraf dist",
+  27→    "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
+  28→    "release": "npm run -s build -s && npm t && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
+  29→  },
   …
   41→  "license": "MIT",
   42→  "files": [
@@ -103,6 +107,24 @@ package.json
   …
 src/
   index.ts
+    1→export type EventType = string | symbol;
+    …
+    5→export type Handler<T = unknown> = (event: T) => void;
+    6→export type WildcardHandler<T = Record<string, unknown>> = (
+    …
+    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
+    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+    14→	WildcardHandler<T>
+    15→>;
+    …
+    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+    …
+    23→export interface Emitter<Events extends Record<EventType, unknown>> {
+    …
+    46→export default function mitt<Events extends Record<EventType, unknown>>(
+    47→	all?: EventHandlerMap<Events>
+    48→): Emitter<Events> {
+    …
 test/
   index_test.ts
   test-types-compilation.ts
@@ -110,7 +132,7 @@ tsconfig.json
 ```
 <!-- precis-example-end -->
 
-The file tree shows everything that exists; the README's lede and headings say what the package is and how its docs are organized; and `package.json` identifies the package and its entry points. At larger budgets `src/index.ts` follows with its exported types and signatures. Line numbers make every entry a precise jump target for follow-up reads.
+The file tree shows every file in the project; the README's lede and headings say what the package is and how its docs are organized; `package.json` identifies the package and its entry points; and `src/index.ts` shows its exported types and the signature of `mitt` itself. Line numbers make every entry a precise jump target for follow-up reads.
 
 A `…` row means "there is more here that isn't shown": source inside a file, or further entries in a directory. A directory other than the root with more than 120 entries may show only 40 of them, subdirectories picked before files, then that `…`. A source line longer than 500 characters is cut short with `…`. A row like `src/main/java/` is a chain of directories that each hold only the next. An entry with nothing under it wasn't expanded, unless it is marked `(empty)`: a zero-byte file, or a directory holding nothing precis lists.
 
