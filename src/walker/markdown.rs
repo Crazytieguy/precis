@@ -1967,29 +1967,6 @@ mod tests {
         );
     }
 
-    /// A badge wall written as raw HTML inside a markdown paragraph is
-    /// decoration, exactly like the markdown-image form.
-    #[test]
-    fn markdown_raw_html_badge_paragraph_is_decorative() {
-        let source = "<a href=\"https://x\"><img src=\"https://b.svg\" alt=\"b\"></a>\n\n# Title\n";
-        let tree = parse(source);
-        let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
-        assert_eq!(block.kind(), "paragraph");
-        assert!(is_decorative_block(block, source));
-    }
-
-    /// A bare `<` in HTML text is a less-than sign, not a tag that runs
-    /// to the next `>`.
-    #[test]
-    fn markdown_html_block_with_bare_less_than_is_not_decorative() {
-        assert_eq!(strip_html_tags("<b>a < b</b>"), "a < b");
-        let source = "<p align=\"center\"><b>< 5 ms startup</b></p>\n\n# Title\n";
-        let tree = parse(source);
-        let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
-        assert_eq!(block.kind(), "html_block");
-        assert!(!is_decorative_block(block, source));
-    }
-
     #[test]
     fn markdown_oversize_chunks_cover_range_and_stay_disjoint() {
         let source = format!(
@@ -2423,6 +2400,72 @@ mod tests {
             &[1],
             &[3, 5],
         ),
+        // Short bold tagline followed by a prose lede: the headline
+        // extends to the prose paragraph (posting shape).
+        (
+            "markdown_post_h1_short_tagline_extends_to_prose_lede",
+            "# Posting\n\
+                   \n\
+                   **A powerful HTTP client that lives in your terminal.**\n\
+                   \n\
+                   Posting is an HTTP client, not unlike Postman.\n\
+                   \n\
+                   ## Install\n",
+            &[1, 3, 5],
+            &[],
+        ),
+        // A first paragraph past the tagline length is the lede itself, so
+        // the headline doesn't extend to a second one.
+        (
+            "markdown_post_h1_long_first_paragraph_no_extension",
+            "# D2TS\n\
+                   \n\
+                   D2TS is a TypeScript implementation of differential dataflow with a long prose lede that runs past the tagline threshold.\n\
+                   \n\
+                   A second paragraph the headline must NOT pull in.\n\
+                   \n\
+                   ## Install\n",
+            &[1, 3],
+            &[5],
+        ),
+        // A sub-section heading is not the project's title, so the
+        // headline doesn't extend under it (superstruct shape).
+        (
+            "markdown_non_h1_first_section_no_extension",
+            "<p>tagline html block</p>\n\
+                   \n\
+                   ### Usage\n\
+                   \n\
+                   Short body para.\n\
+                   \n\
+                   A second body para that must NOT land in headline.\n",
+            &[3, 5],
+            &[7],
+        ),
+        // A badge wall written as raw HTML inside a markdown paragraph is
+        // decoration, exactly like the markdown-image form.
+        (
+            "markdown_raw_html_badge_paragraph_is_decorative",
+            "<a href=\"https://x\"><img src=\"https://b.svg\" alt=\"b\"></a>\n\
+                   \n\
+                   # Title\n\
+                   \n\
+                   Tagline.\n",
+            &[3, 5],
+            &[1],
+        ),
+        // A bare `<` in HTML text is a less-than sign, not a tag that runs
+        // to the next `>`, so the block has text and is kept.
+        (
+            "markdown_html_block_with_bare_less_than_is_not_decorative",
+            "<p align=\"center\"><b>< 5 ms startup</b></p>\n\
+                   \n\
+                   # Title\n\
+                   \n\
+                   Tagline.\n",
+            &[1, 3],
+            &[],
+        ),
     ];
 
     #[test]
@@ -2444,66 +2487,6 @@ mod tests {
                 );
             }
         }
-    }
-
-    /// Short bold tagline followed by a prose lede: the extension
-    /// takes the prose paragraph so the headline carries the full
-    /// "what is this" snippet (posting shape).
-    #[test]
-    fn markdown_post_h1_short_tagline_extends_to_prose_lede() {
-        let src = "# Posting\n\
-                   \n\
-                   **A powerful HTTP client that lives in your terminal.**\n\
-                   \n\
-                   Posting is an HTTP client, not unlike Postman.\n\
-                   \n\
-                   ## Install\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1), "H1 missing");
-        assert!(rows.contains(&3), "bold tagline missing");
-        assert!(
-            rows.contains(&5),
-            "prose-lede paragraph must be picked up by extension"
-        );
-    }
-
-    /// A long first paragraph (stripped content > tagline threshold)
-    /// is the lede itself — the extension must NOT pull in a
-    /// second paragraph.
-    #[test]
-    fn markdown_post_h1_long_first_paragraph_no_extension() {
-        let src = "# D2TS\n\
-                   \n\
-                   D2TS is a TypeScript implementation of differential dataflow with a long prose lede that runs past the tagline threshold.\n\
-                   \n\
-                   A second paragraph the headline must NOT pull in.\n\
-                   \n\
-                   ## Install\n";
-        let rows = covered(src);
-        assert!(rows.contains(&1), "H1 missing");
-        assert!(rows.contains(&3), "first paragraph missing");
-        assert!(!rows.contains(&5), "second paragraph must NOT be pulled in");
-    }
-
-    /// Sub-section heading (`### Usage`) is NOT the project's
-    /// title — extension must not fire under non-H1 first-headed
-    /// sections (superstruct shape).
-    #[test]
-    fn markdown_non_h1_first_section_no_extension() {
-        let src = "<p>tagline html block</p>\n\
-                   \n\
-                   ### Usage\n\
-                   \n\
-                   Short body para.\n\
-                   \n\
-                   A second body para that must NOT land in headline.\n";
-        let rows = covered(src);
-        assert!(rows.contains(&3), "heading missing");
-        assert!(rows.contains(&5), "first paragraph missing");
-        assert!(
-            !rows.contains(&7),
-            "second paragraph must NOT be pulled in under non-H1 first heading"
-        );
     }
 
     // --- HeadingsOutline tests ---
@@ -2680,31 +2663,29 @@ mod tests {
         }
     }
 
-    /// `# Title` README's first real H2 must get readme-index decay
-    /// factor 1.0 (i.e. be unscaled): the synthetic H1-unwrap intro
-    /// shares index 0 with it rather than pushing "## Install" to index
-    /// 1 (~0.90).
+    /// A README's first real H2 gets readme-index decay factor 1.0
+    /// (unscaled) with or without a `# Title` wrap: the synthetic
+    /// H1-unwrap intro shares index 0 with it rather than pushing
+    /// "## Install" to index 1 (~0.90).
     #[test]
     fn markdown_readme_index_decay_skips_synthetic_intro() {
-        let src = "# Title\n\nTagline.\n\n## Install\n\nbody\n\n## Use\n\nbody\n";
-        let ranges = sections(src);
-        // Three ranges: synthetic intro, ## Install, ## Use.
-        let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
-        assert_eq!(indices, vec![0, 0, 1], "got {ranges:?}");
-        assert_eq!(readme_index_decay(&ranges[1]), 1.0);
-        let f = readme_index_decay(&ranges[2]);
-        assert!(f < 1.0, "second real H2 should decay; got {f}");
-    }
-
-    /// READMEs without an H1 wrap (no synthetic intro) — first H2 is
-    /// index 0 and gets factor 1.0 directly.
-    #[test]
-    fn markdown_readme_index_decay_no_synthetic_intro() {
-        let src = "## Install\n\nbody\n\n## Use\n\nbody\n";
-        let ranges = sections(src);
-        let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
-        assert_eq!(indices, vec![0, 1]);
-        assert_eq!(readme_index_decay(&ranges[0]), 1.0);
+        for (src, expected_indices) in [
+            (
+                "# Title\n\nTagline.\n\n## Install\n\nbody\n\n## Use\n\nbody\n",
+                vec![0, 0, 1],
+            ),
+            ("## Install\n\nbody\n\n## Use\n\nbody\n", vec![0, 1]),
+        ] {
+            let ranges = sections(src);
+            let indices: Vec<usize> = ranges.iter().map(|r| r.h2_index).collect();
+            assert_eq!(indices, expected_indices, "got {ranges:?}");
+            let [.., install, second] = ranges.as_slice() else {
+                unreachable!()
+            };
+            assert_eq!(readme_index_decay(install), 1.0);
+            let f = readme_index_decay(second);
+            assert!(f < 1.0, "second real H2 should decay; got {f}");
+        }
     }
 
     /// Only the root README is read; every other document, a nested
