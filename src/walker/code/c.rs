@@ -229,11 +229,12 @@ fn doc_above(node: Node, file: &SourceFile) -> Vec<Item> {
         let Some(gate) = anchor.parent() else {
             return doc;
         };
+        let mut previous = anchor.prev_named_sibling();
+        while let Some(comment) = previous.filter(|node| node.kind() == "comment") {
+            previous = comment.prev_named_sibling();
+        }
         let opens_gate = matches!(gate.kind(), "preproc_if" | "preproc_ifdef")
-            && anchor.prev_named_sibling().is_some_and(|previous| {
-                Some(previous) == gate.child_by_field_name("condition")
-                    || Some(previous) == gate.child_by_field_name("name")
-            });
+            && previous.is_some_and(|previous| gate.named_child(0) == Some(previous));
         if !doc.is_empty() || !opens_gate || is_header_guard(gate, file) {
             return doc;
         }
@@ -1126,7 +1127,7 @@ int next;
 #define BYTES_PER_BLOCK (16)
 #endif
 /* Open a channel. */
-#ifdef HAVE_CH
+#ifdef HAVE_CH // channels
 #if defined(FAST)
 int ch_open(void);
 #endif
