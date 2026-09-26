@@ -1178,8 +1178,10 @@ fn is_annotation_only(trimmed: &str) -> bool {
 /// surface is worth the share of the rows it passed over that are new: a
 /// prologue every file opens with (`open! Core`, `<script setup
 /// lang="ts">`, an author line) says nothing about the file past its
-/// first showing. Block closers and [bare words](is_bare_word) are never
-/// held.
+/// first showing. A file whose whole surface repeats earlier files' shows
+/// its new lines through the whole-file batch alone, worth the share of
+/// its content rows that are new. Block closers and
+/// [bare words](is_bare_word) are never held.
 fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, class: Class) {
     let Some(source) = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE) else {
         return;
@@ -1202,57 +1204,69 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
             class
         };
     let row_text = |line: usize| source.line(line).unwrap_or_default().trim();
-    let mut shown_elsewhere = ctx.fallback_row_texts.borrow_mut();
+    let shown_elsewhere = ctx.fallback_row_texts.borrow();
     let (selected, banner_end, repeated_rows) =
         declaration_surface(&source, surface_class, decl_cap, &shown_elsewhere);
-    let fits_whole =
-        source.len() <= PLAINTEXT_BYTE_GATE && source.line_count() <= PLAINTEXT_LINE_CAP;
     let whole_rows: Vec<usize> = (banner_end + 1..=source.line_count())
         .filter(|&line| !shown_elsewhere.contains(row_text(line)))
         .collect();
-    shown_elsewhere.extend(
-        (if fits_whole { &whole_rows } else { &selected })
-            .iter()
-            .map(|&line| row_text(line))
-            .filter(|text| !is_block_closer(text) && !is_bare_word(text))
-            .map(str::to_owned),
-    );
     drop(shown_elsewhere);
-    let surface_rows = selected.len();
-    let Some(content) = single_file_lines_content(file, &source, selected) else {
-        return;
-    };
-    let surface_key: BatchKey = PlaintextKey::DeclSurface {
-        file: file.to_path_buf(),
-    }
-    .into();
-    let value = class_value(class, file, ctx, package_directories(file, &source))
-        * surface_rows as f64
-        / (surface_rows + repeated_rows) as f64;
-    out.push(Batch {
-        key: surface_key.clone(),
-        predecessor: None,
-        content,
-        value,
-    });
+    let fits_whole =
+        source.len() <= PLAINTEXT_BYTE_GATE && source.line_count() <= PLAINTEXT_LINE_CAP;
     let content_rows = whole_rows
         .iter()
         .filter(|&&line| !row_text(line).is_empty())
         .count();
-    if surface_rows < content_rows
+    let file_value = class_value(class, file, ctx, package_directories(file, &source));
+    let surface_rows = selected.len();
+    let mut claimed: Vec<usize> = Vec::new();
+    let mut predecessor = None;
+    let mut value = 0.0;
+    if let Some(content) = single_file_lines_content(file, &source, selected.clone()) {
+        let surface_key: BatchKey = PlaintextKey::DeclSurface {
+            file: file.to_path_buf(),
+        }
+        .into();
+        value = file_value * surface_rows as f64 / (surface_rows + repeated_rows) as f64;
+        out.push(Batch {
+            key: surface_key.clone(),
+            predecessor: None,
+            content,
+            value,
+        });
+        claimed = selected;
+        predecessor = Some(surface_key);
+    } else if repeated_rows > 0 {
+        let all_content_rows = source
+            .lines()
+            .skip(banner_end)
+            .filter(|line| !line.trim().is_empty())
+            .count();
+        value = file_value * content_rows as f64 / all_content_rows.max(1) as f64;
+    }
+    if (predecessor.is_some() || repeated_rows > 0)
+        && surface_rows < content_rows
         && fits_whole
-        && let Some(content) = single_file_lines_content(file, &source, whole_rows)
+        && let Some(content) = single_file_lines_content(file, &source, whole_rows.clone())
     {
         out.push(Batch {
             key: PlaintextKey::Whole {
                 file: file.to_path_buf(),
             }
             .into(),
-            predecessor: Some(surface_key),
+            predecessor,
             content,
             value,
         });
+        claimed = whole_rows;
     }
+    ctx.fallback_row_texts.borrow_mut().extend(
+        claimed
+            .iter()
+            .map(|&line| row_text(line))
+            .filter(|text| !is_block_closer(text) && !is_bare_word(text))
+            .map(str::to_owned),
+    );
 }
 
 /// A line of one word and nothing else (`let`, `in`, `else`, `begin`):
@@ -2028,6 +2042,47 @@ mod tests {
         assert!(first_rows.contains(&1), "{first_rows:?}");
         assert_eq!(second_rows, &[3]);
         assert!((second_value * 3.0 - first_value).abs() < 1e-9);
+    }
+
+    /// A file whose surface is all prologue an earlier file showed still
+    /// shows its new lines, and only lines an emitted batch holds are
+    /// withheld from later files.
+    #[test]
+    fn plaintext_source_text_repeated_surface_keeps_new_lines() {
+        let dir = tempfile::tempdir().unwrap();
+        for (name, body) in [("a", "alpha"), ("b", "beta"), ("c", "beta")] {
+            let source = format!("open! Core\n  {body} body\n");
+            std::fs::write(dir.path().join(format!("{name}.ml")), source).unwrap();
+        }
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches: Vec<(String, bool, Vec<usize>)> = expand_in_dir(dir.path(), &ctx)
+            .into_iter()
+            .map(|batch| {
+                let crate::content::BatchContent::Lines { spans, .. } = &batch.content else {
+                    panic!("expected a lines batch");
+                };
+                let rows = spans
+                    .iter()
+                    .flat_map(|span| span.start..=span.end)
+                    .collect();
+                let file = match &batch.key {
+                    BatchKey::Plaintext(
+                        PlaintextKey::DeclSurface { file } | PlaintextKey::Whole { file },
+                    ) => file.file_stem().unwrap().to_string_lossy().into_owned(),
+                    key => panic!("unexpected key {key:?}"),
+                };
+                (file, batch.predecessor.is_none(), rows)
+            })
+            .collect();
+        let of = |name: &str| -> Vec<(bool, Vec<usize>)> {
+            batches
+                .iter()
+                .filter(|(file, ..)| file == name)
+                .map(|(_, is_root, rows)| (*is_root, rows.clone()))
+                .collect()
+        };
+        assert_eq!(of("b"), [(true, vec![2])], "{batches:?}");
+        assert!(of("c").is_empty(), "{batches:?}");
     }
 
     /// A flat config's indented value list is content, not a wrapped
