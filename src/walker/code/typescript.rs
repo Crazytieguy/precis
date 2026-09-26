@@ -201,9 +201,9 @@ enum TopLevel<'tree> {
     Exported(Node<'tree>),
     /// A declaration that is API only if something exports its name.
     Local(Node<'tree>),
-    /// A function assigned onto a local (`app.use = function …`,
-    /// `Router.prototype.route = …`): a method of that local's API when
-    /// the local is published.
+    /// A value assigned onto a local (`app.use = function …`,
+    /// `Router.prototype.route = …`, `Store.VERSION = '1.0'`): part of
+    /// that local's API when the local is published.
     Method {
         receiver: Node<'tree>,
         value: Node<'tree>,
@@ -538,8 +538,8 @@ fn commonjs_assignment_value<'tree>(
     }
 }
 
-/// `R.name = <function>`, `R.prototype.name = <function>` or
-/// `R.prototype = { … }`, with `R` a plain name.
+/// `R.name = …`, `R.prototype.name = …` or `R.prototype = …`, with `R` a
+/// plain name.
 fn method_assignment<'tree>(file: &SourceFile, assignment: Node<'tree>) -> TopLevel<'tree> {
     let (Some(left), Some(value)) = (
         assignment.child_by_field_name("left"),
@@ -547,22 +547,16 @@ fn method_assignment<'tree>(file: &SourceFile, assignment: Node<'tree>) -> TopLe
     ) else {
         return TopLevel::Skip;
     };
-    let is_prototype = |node: Node| {
-        node.kind() == "member_expression"
-            && node
-                .child_by_field_name("property")
-                .is_some_and(|property| file.text(property) == "prototype")
-    };
-    let is_function = is_function_kind(value.kind()) || wrapped_function_block(value).is_some();
-    let is_prototype_object = value.kind() == "object" && is_prototype(left);
-    if assignment.kind() != "assignment_expression"
-        || left.kind() != "member_expression"
-        || !(is_function || is_prototype_object)
-    {
+    if assignment.kind() != "assignment_expression" || left.kind() != "member_expression" {
         return TopLevel::Skip;
     }
     let mut object = left.child_by_field_name("object");
-    if let Some(prototype) = object.filter(|object| is_prototype(*object)) {
+    if let Some(prototype) = object.filter(|object| {
+        object.kind() == "member_expression"
+            && object
+                .child_by_field_name("property")
+                .is_some_and(|property| file.text(property) == "prototype")
+    }) {
         object = prototype.child_by_field_name("object");
     }
     match object {
@@ -1360,7 +1354,7 @@ exports.static = require('serve-static');
     }
 
     #[test]
-    fn code_typescript_functions_assigned_onto_a_published_local_are_its_methods() {
+    fn code_typescript_values_assigned_onto_a_published_local_are_its_api() {
         let model = extract_source(
             "lib/application.js",
             "\
@@ -1380,6 +1374,7 @@ app.name = 'app';
             [
                 "Whole name [1] head [1] doc [] body []",
                 "Callable name [2] head [2] doc [] body [[3]]",
+                "Whole name [9] head [9] doc [] body []",
             ]
         );
         let router = extract_source(

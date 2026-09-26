@@ -154,8 +154,6 @@ hooks/
     68→module.exports = hook
 index.js
   …
-  5→EventEmitter.defaultMaxListeners = 50
-  …
   17→const cliOptions = cli.cliParse()
   18→if (cliOptions.help) {
   19→  cli.showUsage()
@@ -392,6 +390,9 @@ widgets/
   searchInput.widget.js
     …
     9→class myWidget extends baseWidget(EventEmitter) {
+    10→  constructor ({ blessed = {}, contrib = {}, screen = {}, grid = {} }) {
+    …
+    24→  getLabel () {
     …
     105→}
     107→module.exports = myWidget

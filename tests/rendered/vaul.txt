@@ -206,6 +206,8 @@ src/
     803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
     804→  function ({ ...rest }, ref) {
     …
+    829→Overlay.displayName = 'Drawer.Overlay';
+    830→
     831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
     832→
     833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -213,6 +215,8 @@ src/
     835→  ref,
     836→) {
     …
+    987→Content.displayName = 'Drawer.Content';
+    988→
     989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
     990→  preventCycle?: boolean;
     991→};
@@ -222,6 +226,8 @@ src/
     998→  ref,
     999→) {
     …
+    1096→Handle.displayName = 'Drawer.Handle';
+    1097→
     1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
     …
     1130→export function Portal(props: PortalProps) {
@@ -244,9 +250,6 @@ src/
   use-controllable-state.ts
   use-position-fixed.ts
   use-prevent-scroll.ts
-    …
-    8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-    …
   use-scale-background.ts
   use-snap-points.ts
 test/
@@ -269,8 +272,7 @@ test/
     non-dismissible.spec.ts
     with-handle.spec.ts
     with-redirect.spec.ts
-    with-scaled-background.spec.ts
-    without-scaled-background.spec.ts
+    …
   tsconfig.json
 tsconfig.json
 turbo.json
