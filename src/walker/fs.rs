@@ -1,6 +1,7 @@
 //! Filesystem walker: directory listings and their value, plus
 //! per-extension file enumeration for the other walkers. Only does
-//! `read_dir` — reads no file contents except the root `.gitattributes`.
+//! `read_dir` — reads no file contents except the root `.gitattributes`,
+//! through [`WalkCtx::read_source`].
 //! Pure listing lives in [`crate::fs_util::list_dir`]; this module holds
 //! walker-specific policy (which directories recurse, how a long listing
 //! splits, how a directory's role prices its listing).
@@ -453,9 +454,9 @@ impl FsState {
         repeats
     }
 
-    fn is_declared_vendored(&self, dir: &Path, root: &Path) -> bool {
+    fn is_declared_vendored(&self, dir: &Path, ctx: &WalkCtx) -> bool {
         self.declared_vendored_dirs
-            .get_or_init(|| declared_vendored_dirs(root))
+            .get_or_init(|| declared_vendored_dirs(ctx))
             .contains(dir)
     }
 }
@@ -466,8 +467,9 @@ impl FsState {
 /// unsets, clears or sets otherwise `linguist-vendored` on a path that
 /// may lie under a declared directory withdraws that declaration, since
 /// it can exempt part of the subtree.
-fn declared_vendored_dirs(root: &Path) -> HashSet<PathBuf> {
-    let Ok(text) = std::fs::read_to_string(root.join(".gitattributes")) else {
+fn declared_vendored_dirs(ctx: &WalkCtx) -> HashSet<PathBuf> {
+    let root = ctx.root();
+    let Some(text) = ctx.read_source(&root.join(".gitattributes")) else {
         return HashSet::new();
     };
     let mut declared: Vec<&str> = Vec::new();
@@ -592,7 +594,7 @@ fn should_recurse_dir(dir: &Path, ctx: &WalkCtx) -> bool {
         || is_locale_mirror(dir, &name, ctx)
         || is_generated_doc_site(dir, ctx)
         || is_unpacked_release(dir, &name, ctx) && !is_declared_workspace_member(dir, ctx)
-        || ctx.fs_state.is_declared_vendored(dir, ctx.root())
+        || ctx.fs_state.is_declared_vendored(dir, ctx)
             && !crate::value::is_third_party_dir(dir, ctx.root()))
 }
 
@@ -994,5 +996,20 @@ mod tests {
             assert!(!recurses(dir), "{dir}");
         }
         assert!(!ctx.dir_filter().has_listed(&root.join("target")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn fs_gitattributes_linked_outside_the_root_declares_nothing() {
+        let outside = tempfile::tempdir().unwrap();
+        let attributes = outside.path().join("gitattributes");
+        std::fs::write(&attributes, "vendor/** linguist-vendored\n").unwrap();
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        std::fs::create_dir_all(root.join("vendor")).unwrap();
+        std::fs::write(root.join("vendor/lib.c"), "").unwrap();
+        std::os::unix::fs::symlink(&attributes, root.join(".gitattributes")).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(should_recurse_dir(&root.join("vendor"), &ctx));
     }
 }
