@@ -27,25 +27,25 @@ Score(3000)=0.702 I=0.906 C=0.544 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | ns | 497 |  | 91 | Complete listing of docs/ — the LuaCATS API reference | 1.6 |  | 0.328 |
 | ns | 585 |  | 88 | Complete listing of test/ — runnable example entries and .game files | 1.7 |  | 0.282 |
 | walker |  | 594 | 322 | Fs::DirListing { dir: src } |  |  | 0.315 |
-| walker |  | 607 | 13 | Fs::DirListing { dir: src/platform } |  |  | 0.316 |
-| walker |  | 613 | 6 | Fs::DirListing { dir: src/data } |  |  | 0.316 |
-| walker |  | 629 | 16 | Fs::DirListing { dir: src/platform/linux } |  |  | 0.316 |
-| walker |  | 645 | 16 | Fs::DirListing { dir: src/platform/windows } |  |  | 0.316 |
-| walker |  | 663 | 18 | Fs::DirListing { dir: src/platform/macos } |  |  | 0.316 |
-| walker |  | 686 | 23 | Fs::DirListing { dir: src/platform/wasm } |  |  | 0.317 |
-| ns | 700 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.302 |
-| walker |  | 711 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.320 |
-| walker |  | 724 | 13 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.320 |
-| walker |  | 743 | 19 | Fs::DirListing { dir: web/assets } |  |  | 0.320 |
-| walker |  | 799 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.451 |
-| walker |  | 812 | 13 | Fs::DirListing { dir: web/static/fonts } |  |  | 0.451 |
-| walker |  | 838 | 26 | Fs::DirListing { dir: clibs/soluna } |  |  | 0.452 |
-| walker |  | 864 | 26 | Fs::DirListing { dir: web/layouts } |  |  | 0.452 |
-| walker |  | 868 | 4 | Fs::DirListing { dir: web/layouts/docs } |  |  | 0.452 |
-| walker |  | 872 | 4 | Fs::DirListing { dir: web/layouts/playframe } |  |  | 0.452 |
-| walker |  | 880 | 8 | Fs::DirListing { dir: web/layouts/partials } |  |  | 0.452 |
+| walker |  | 623 | 29 | Plaintext::Whole { file: Makefile } |  |  | 0.315 |
+| walker |  | 636 | 13 | Fs::DirListing { dir: src/platform } |  |  | 0.316 |
+| walker |  | 642 | 6 | Fs::DirListing { dir: src/data } |  |  | 0.316 |
+| walker |  | 658 | 16 | Fs::DirListing { dir: src/platform/linux } |  |  | 0.316 |
+| walker |  | 674 | 16 | Fs::DirListing { dir: src/platform/windows } |  |  | 0.316 |
+| walker |  | 692 | 18 | Fs::DirListing { dir: src/platform/macos } |  |  | 0.316 |
+| ns | 700 |  | 115 | The eight vendored submodules (.gitmodules paths) | 1.8 |  | 0.301 |
+| walker |  | 715 | 23 | Fs::DirListing { dir: src/platform/wasm } |  |  | 0.302 |
+| walker |  | 740 | 25 | Fs::DirListing { dir: src/service } |  |  | 0.320 |
+| walker |  | 753 | 13 | Plaintext::DeclSurface { file: src/yogaone.cpp } |  |  | 0.320 |
+| walker |  | 772 | 19 | Fs::DirListing { dir: web/assets } |  |  | 0.320 |
+| walker |  | 828 | 56 | Fs::DirListing { dir: src/lualib } |  |  | 0.451 |
+| walker |  | 841 | 13 | Fs::DirListing { dir: web/static/fonts } |  |  | 0.451 |
+| walker |  | 867 | 26 | Fs::DirListing { dir: clibs/soluna } |  |  | 0.452 |
 | ns | 884 |  | 184 | Complete listing of src/ C and C++ translation units | 1.9 |  | 0.528 |
-| walker |  | 909 | 29 | Plaintext::Whole { file: Makefile } |  |  | 0.528 |
+| walker |  | 893 | 26 | Fs::DirListing { dir: web/layouts } |  |  | 0.528 |
+| walker |  | 897 | 4 | Fs::DirListing { dir: web/layouts/docs } |  |  | 0.528 |
+| walker |  | 901 | 4 | Fs::DirListing { dir: web/layouts/playframe } |  |  | 0.528 |
+| walker |  | 909 | 8 | Fs::DirListing { dir: web/layouts/partials } |  |  | 0.528 |
 | walker |  | 926 | 17 | Fs::DirListing { dir: web/layouts/_default } |  |  | 0.529 |
 | walker |  | 931 | 5 | Fs::DirListing { dir: web/content/examples } |  |  | 0.529 |
 | walker |  | 1022 | 91 | Fs::DirListing { dir: docs } |  |  | 0.642 |

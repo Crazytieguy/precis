@@ -32,7 +32,7 @@ mod survey;
 mod toml;
 mod workspace;
 
-pub(crate) use plaintext::is_unparsed_manifest;
+pub(crate) use plaintext::{is_makefile_name, is_unparsed_manifest};
 use survey::EssentialSource;
 pub(in crate::walker) use survey::language_group;
 

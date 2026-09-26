@@ -348,9 +348,9 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// A batch that says what the repository is and how to build it: the
-    /// identity block or head of a root manifest, or the head of a root
-    /// build script (`build.zig`, `build.gradle.kts`). A task roster (`Makefile`,
-    /// `Dockerfile`, compose file) is not one.
+    /// identity block or head of a root manifest, the head of a root
+    /// build script (`build.zig`, `build.gradle.kts`), or a root Makefile's
+    /// build and test rules. A `Dockerfile` or compose file is not one.
     fn is_root_identity(&self, id: BatchId) -> bool {
         let (BatchKey::Toml(TomlKey::Identity { file })
         | BatchKey::Json(JsonKey::Identity { file })
@@ -368,6 +368,7 @@ impl<W: Walker> Scheduler<W> {
         dir == self.ctx.root()
             && (!matches!(self.entries[id.index()].key, BatchKey::Plaintext(_))
                 || crate::walker::is_unparsed_manifest(dir, &name, &self.ctx)
+                || crate::walker::is_makefile_name(&name)
                 || name.split('.').next() == Some("build"))
     }
 
@@ -564,6 +565,25 @@ mod tests {
     /// head, and together they fill the budget.
     #[test]
     fn scheduler_root_identity_outranks_the_spines_sublistings() {
+        let cmake = format!(
+            "cmake_minimum_required(VERSION 3.20)\nproject(engine C)\n{}",
+            "target_sources(engine PRIVATE src/core/alpha.c src/core/beta.c src/core/gamma.c)\n"
+                .repeat(40)
+        );
+        let makefile = format!(
+            "{}test: engine\n\t./run-tests --all\n",
+            "src/%.o: src/%.c\n\t$(CC) -c $< -o $@ $(CFLAGS) $(EXTRA_FLAGS)\n".repeat(60)
+        );
+        for (build_file, text, expected) in [
+            ("CMakeLists.txt", cmake, "project(engine C)"),
+            ("Makefile", makefile, "./run-tests --all"),
+        ] {
+            let output = render_with_spine(build_file, &text);
+            assert!(output.contains(expected), "{output}");
+        }
+    }
+
+    fn render_with_spine(build_file: &str, text: &str) -> String {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
         let write = |path: &str, text: &str| {
@@ -571,14 +591,7 @@ mod tests {
             std::fs::create_dir_all(path.parent().unwrap()).unwrap();
             std::fs::write(path, text).unwrap();
         };
-        write(
-            "CMakeLists.txt",
-            &format!(
-                "cmake_minimum_required(VERSION 3.20)\nproject(engine C)\n{}",
-                "target_sources(engine PRIVATE src/core/alpha.c src/core/beta.c src/core/gamma.c)\n"
-                    .repeat(40)
-            ),
-        );
+        write(build_file, text);
         for module in 0..40 {
             for file in ["a", "b"] {
                 write(
@@ -587,7 +600,6 @@ mod tests {
                 );
             }
         }
-        let output = crate::render(root, 400, None).unwrap();
-        assert!(output.contains("project(engine C)"), "{output}");
+        crate::render(root, 400, None).unwrap()
     }
 }

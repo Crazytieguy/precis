@@ -1558,7 +1558,7 @@ fn is_recipe_file_name(name: &str) -> bool {
 }
 
 /// A name GNU make reads without `-f`.
-fn is_makefile_name(name: &str) -> bool {
+pub(crate) fn is_makefile_name(name: &str) -> bool {
     matches!(name, "Makefile" | "makefile" | "GNUmakefile")
 }
 

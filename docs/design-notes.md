@@ -474,9 +474,10 @@ can displace the README's build section; capping the promoted batch, or
 splitting a long `members` list out of the identity block, is deferred.
 A README command block does not count: it satisfied
 the rule in repositories whose build file then went unread. Nor does a
-task roster (`Makefile`, `Dockerfile`, compose file): a long root
-Makefile renders as its `.PHONY` lines, and promoting that roster
-displaced a runtime's library listing and its build instructions. This
+`Dockerfile` or compose file. A root Makefile does since a long one
+shows its build and test rules; while it rendered as its `.PHONY`
+lines, promoting that roster displaced a runtime's library listing and
+its build instructions. This
 replaced a promotion of every root identity batch once the spine's
 listings had spent 5000 tokens, which the plugin's budget never reached;
 without it a very large tree at 8000 tokens spends more on names under
