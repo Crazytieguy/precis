@@ -469,27 +469,35 @@ fn read_pnpm_workspaces(ctx: &WalkCtx) -> Option<Vec<String>> {
     let Some(text) = ctx.read_source(&ctx.root().join("pnpm-workspace.yaml")) else {
         return Some(Vec::new());
     };
-    let mut entries = Vec::new();
+    let mut values = Vec::new();
     let mut in_packages_block = false;
     for raw_line in text.lines() {
         // A `#` inside a quoted scalar isn't a comment, but workspace
         // entries are paths/globs without one.
         let line = raw_line.split_once('#').map_or(raw_line, |(head, _)| head);
         let trimmed = line.trim_end();
-        if trimmed.is_empty() {
+        // A block sequence may sit at its key's own indentation.
+        if let Some(item) = trimmed.trim_start().strip_prefix('-') {
+            if in_packages_block {
+                values.push(item);
+            }
             continue;
         }
-        if !trimmed.starts_with(char::is_whitespace) {
-            in_packages_block = trimmed.starts_with("packages:");
+        if trimmed.is_empty() || trimmed.starts_with(char::is_whitespace) {
             continue;
         }
-        if !in_packages_block {
-            continue;
+        let packages = trimmed.strip_prefix("packages:").map(str::trim);
+        in_packages_block = packages.is_some();
+        if let Some(flow) = packages
+            .and_then(|value| value.strip_prefix('['))
+            .and_then(|value| value.strip_suffix(']'))
+        {
+            values.extend(flow.split(','));
         }
-        let Some(rest) = trimmed.trim_start().strip_prefix('-') else {
-            continue;
-        };
-        let value = rest.trim().trim_matches(['"', '\'']);
+    }
+    let mut entries = Vec::new();
+    for value in values {
+        let value = value.trim().trim_matches(['"', '\'']);
         if value.starts_with('!') {
             return None;
         }
@@ -747,27 +755,38 @@ mod tests {
         assert!(members.contains(&expected));
     }
 
+    /// Indented, unindented and flow sequences all spell the list.
     #[test]
     fn json_workspace_members_pnpm_yaml_packages_list() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        write_pkg(root, r#"{"name": "monorepo"}"#);
-        fs::write(
-            root.join("pnpm-workspace.yaml"),
+        for packages in [
             "packages:\n  - 'packages/*'\n  - examples/foo\n",
-        )
-        .unwrap();
-        seed_members(root, &["packages/a", "examples/foo", "examples/bar"]);
-        let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
-        for hit in ["packages/a", "examples/foo"] {
-            let pkg = member_path(root, hit);
-            assert!(members.contains(&pkg), "expected member: {}", pkg.display());
+            "packages:\n- 'packages/*'\n- examples/foo\n",
+            "packages: ['packages/*', \"examples/foo\"]\n",
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            let root = dir.path();
+            write_pkg(root, r#"{"name": "monorepo"}"#);
+            fs::write(
+                root.join("pnpm-workspace.yaml"),
+                format!("{packages}onlyBuiltDependencies:\n- examples/bar\n"),
+            )
+            .unwrap();
+            seed_members(root, &["packages/a", "examples/foo", "examples/bar"]);
+            let members = collect_workspace_members(&WalkCtx::new(root.to_path_buf()));
+            for hit in ["packages/a", "examples/foo"] {
+                let pkg = member_path(root, hit);
+                assert!(
+                    members.contains(&pkg),
+                    "expected member: {} in {packages:?}",
+                    pkg.display()
+                );
+            }
+            let miss = member_path(root, "examples/bar");
+            assert!(
+                !members.contains(&miss),
+                "examples/bar must not be a member in {packages:?}"
+            );
         }
-        let miss = member_path(root, "examples/bar");
-        assert!(
-            !members.contains(&miss),
-            "examples/bar must not be a member"
-        );
     }
 
     /// pnpm negation (`!packages/foo`) is partially supported only —
