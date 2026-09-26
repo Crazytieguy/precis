@@ -61,9 +61,9 @@ Score(3000)=0.675 I=0.895 C=0.509 ns_rows≤3K=21/48 grid(1000/1442/2080/3000/43
 | ns | 1412 |  | 156 | The complete default settings table (src/data/settingdefault.dl) | 2.3 |  | 0.775 |
 | walker |  | 1416 | 10 | Plaintext::DeclSurface { file: bin/readme.txt } |  |  | 0.775 |
 | walker |  | 1462 | 46 | Fs::DirListing { dir: 3rd } |  |  | 0.776 |
-| walker |  | 1476 | 14 | Code::CodeKey { rung: Names, file: make.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
 | ns | 1482 |  | 70 | All three .game setting files in test/ | 2.4 | 2.3 | 0.761 |
-| walker |  | 1564 | 88 | Fs::DirListing { dir: test } |  |  | 0.838 |
+| walker |  | 1550 | 88 | Fs::DirListing { dir: test } |  |  | 0.838 |
+| walker |  | 1564 | 14 | Code::CodeKey { rung: Names, file: make.lua, decl: 0, sub: 0, line: 0 } |  |  | 0.838 |
 | ns | 1618 |  | 136 | The `soluna` core module surface (docs/soluna.lua declarations) | 2.5 |  | 0.815 |
 | ns | 1799 |  | 181 | Types and parameter docs for the `soluna` module | 2.6 | 2.5 | 0.790 |
 | walker |  | 1813 | 249 | Plaintext::Whole { file: src/yogaone.cpp } |  |  | 0.790 |

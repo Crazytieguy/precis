@@ -474,40 +474,34 @@ fn find_primary_language(source: &EssentialSource) -> Option<&'static str> {
     (!tied).then_some(primary)
 }
 
-/// Extension → language family, collapsing the families whose files sit
-/// side by side in one codebase (a `.h` beside its `.c`, a `.js` beside
-/// its `.ts`, an interface beside its implementation). Any other
-/// extension the plaintext fallback reads is its own family. `None` for anything that isn't hand-authored code.
+/// Extension → language family. Every extension the code engine parses
+/// or the plaintext fallback reads as language source is its own family,
+/// except those whose files sit side by side with another's in one
+/// codebase (a `.h` beside its `.c`, a `.ts` beside its `.js`, an
+/// interface beside its implementation), which join it. `None` for
+/// anything that isn't hand-authored code.
 pub(super) fn language_group(path: &Path) -> Option<&'static str> {
     let ext = path.extension()?.to_str()?.to_ascii_lowercase();
-    Some(match ext.as_str() {
-        "c" | "cc" | "cpp" | "cxx" | "h" | "hpp" | "hh" | "hxx" | "cu" | "cuh" | "mm" => "c",
-        "js" | "jsx" | "cjs" | "mjs" | "ts" | "tsx" => "js",
-        "go" => "go",
-        "lua" => "lua",
-        "py" | "pyi" => "py",
-        "hs" | "lhs" => "hs",
-        "ml" | "mli" => "ml",
-        "erl" | "hrl" => "erl",
-        "ex" | "exs" => "ex",
-        "pl" | "pm" => "pl",
-        "pas" | "pp" | "dpr" | "lpr" => "pas",
-        "f" | "f90" | "f95" | "f03" | "f08" | "for" => "f",
-        "cob" | "cbl" | "cpy" => "cob",
-        "adb" | "ads" => "ada",
-        "v" | "sv" | "svh" => "v",
-        "vhd" | "vhdl" => "vhdl",
-        "rb" => "rb",
-        "rs" => "rs",
-        "swift" => "swift",
-        "zig" => "zig",
-        "cls" | "sty" => "tex",
-        _ => {
-            return plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS
-                .iter()
-                .copied()
-                .find(|&language| language == ext);
-        }
+    let claimed = code::parsed_extensions()
+        .chain(plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS.iter().copied())
+        .find(|&claimed| claimed == ext)?;
+    Some(match claimed {
+        "cc" | "cpp" | "cxx" | "h" | "hpp" | "hh" | "hxx" | "cu" | "cuh" | "mm" => "c",
+        "jsx" | "cjs" | "mjs" | "ts" | "tsx" | "mts" | "cts" => "js",
+        "pyi" => "py",
+        "lhs" => "hs",
+        "mli" => "ml",
+        "hrl" => "erl",
+        "exs" => "ex",
+        "pm" => "pl",
+        "pp" | "dpr" | "lpr" => "pas",
+        "f90" | "f95" | "f03" | "f08" | "for" => "f",
+        "cbl" | "cpy" => "cob",
+        "ads" => "adb",
+        "sv" | "svh" => "v",
+        "vhd" => "vhdl",
+        "sty" => "cls",
+        other => other,
     })
 }
 
@@ -741,6 +735,17 @@ mod tests {
         std::fs::write(root.join("src/main.c"), "int main(void) { return 0; }\n").unwrap();
 
         assert_eq!(dominant_source_file_of(root), None);
+    }
+
+    #[test]
+    fn walker_mod_language_group_covers_every_parsed_extension() {
+        let group = |ext: &str| language_group(&PathBuf::from(format!("x.{ext}")));
+        for ext in code::parsed_extensions() {
+            assert!(group(ext).is_some(), ".{ext} is parsed but has no family");
+        }
+        assert_eq!(group("MTS"), group("js"));
+        assert_eq!(group("cpp"), group("h"));
+        assert_eq!(group("yaml"), None);
     }
 
     #[test]

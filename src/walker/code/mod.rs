@@ -68,6 +68,13 @@ impl Language {
     }
 }
 
+/// Every extension some [`Language`] claims.
+pub(crate) fn parsed_extensions() -> impl Iterator<Item = &'static str> {
+    LANGUAGES
+        .into_iter()
+        .flat_map(|language| language.extensions.iter().copied())
+}
+
 /// Per-run state of the language modules that keep any.
 #[derive(Default)]
 pub(crate) struct CodeState {
@@ -240,10 +247,7 @@ fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
 /// Batches for every source file in `dir`. Called by `FsWalker` once per
 /// scheduled directory listing.
 pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
-    let extensions: Vec<&str> = LANGUAGES
-        .into_iter()
-        .flat_map(|language| language.extensions.iter().copied())
-        .collect();
+    let extensions: Vec<&str> = parsed_extensions().collect();
     let files: Vec<(PathBuf, &Language)> = files_with_any_extension(dir, &extensions, ctx)
         .into_iter()
         .filter_map(|path| Language::from_path(&path).map(|language| (path, language)))

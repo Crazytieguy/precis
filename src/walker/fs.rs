@@ -446,24 +446,13 @@ fn holds_source_uncached(
 /// A directory is a source directory because of what its files *are*,
 /// not because of which languages this crate happens to parse — a
 /// `com/google/gson/` of `.java` is as much a package as a `src/` of
-/// `.ts`. The parsed languages are listed here; every other
-/// hand-authored source format comes from
-/// [`crate::walker::plaintext::SOURCE_TEXT_CODE_EXTENSIONS`].
+/// `.ts`. Markdown counts too: a docs directory is an inventory, and a
+/// listing of its pages often carries the orientation value.
 fn is_source_inventory_file(path: &Path) -> bool {
-    // Markdown files count here because docs directories are inventories too:
-    // a listing of pages often carries the orientation value.
-    const PARSED_INVENTORY_EXTS: &[&str] = &[
-        "c", "cc", "cjs", "cpp", "cxx", "go", "h", "hpp", "js", "jsx", "md", "mdx", "mjs", "py",
-        "rs", "ts", "tsx",
-    ];
-    path.extension()
-        .and_then(|e| e.to_str())
-        .is_some_and(|ext| {
-            let lower = ext.to_ascii_lowercase();
-            PARSED_INVENTORY_EXTS.contains(&lower.as_str())
-                || crate::walker::plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS
-                    .contains(&lower.as_str())
-        })
+    super::language_group(path).is_some()
+        || path
+            .extension()
+            .is_some_and(|ext| ext.eq_ignore_ascii_case("md") || ext.eq_ignore_ascii_case("mdx"))
 }
 
 fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 {
