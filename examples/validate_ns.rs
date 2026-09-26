@@ -57,7 +57,10 @@ fn run() -> Result<bool> {
         );
     }
     println!();
-    println!("  pos  id{:20}  cost   cum    descriptor", "");
+    println!(
+        "  pos  {:20}  {:>5}  {:>5}  descriptor",
+        "id", "cost", "cum"
+    );
     for (position, b) in batches.iter().enumerate() {
         let flag = if b.violations.is_empty() { " " } else { "!" };
         println!(
