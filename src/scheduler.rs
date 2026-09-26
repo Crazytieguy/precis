@@ -249,9 +249,8 @@ impl<W: Walker> Scheduler<W> {
 
     /// Top-ranked eligible batch + its cost.
     fn top_ranked(&mut self) -> Option<(BatchId, Cost)> {
-        let eligible: Vec<BatchId> = self.eligible.iter().copied().collect();
         let mut best: Option<(f64, BatchId, Cost)> = None;
-        for id in eligible {
+        for &id in &self.eligible {
             if !self.cost_cache.contains_key(&id) {
                 let content = &self.entries[id.index()].content;
                 let c = self.tree.marginal_cost(content);
@@ -315,19 +314,11 @@ impl<W: Walker> Scheduler<W> {
         let conflicts = self
             .tree
             .apply(&entry_content, id, |i| ancestors.contains(&i));
-        if cfg!(debug_assertions) && !conflicts.is_empty() {
-            let current_key = &self.entries[id.index()].key;
-            let conflict_details = conflicts
-                .iter()
-                .map(|conflict| {
-                    let owner_key = &self.entries[conflict.existing_owner.index()].key;
-                    format!("{conflict:?} owned by {owner_key:?}")
-                })
-                .collect::<Vec<_>>();
-            panic!(
-                "walker-emitted batch hit non-ancestor overlap for {current_key:?}: {conflict_details:?}"
-            );
-        }
+        debug_assert!(
+            conflicts.is_empty(),
+            "walker-emitted batch hit non-ancestor overlap for {:?}: {conflicts:?}",
+            self.entries[id.index()].key
+        );
         self.scheduled.insert(id);
         self.eligible.remove(&id);
         if let Some(released) = self.waiting.remove(&self.entries[id.index()].key) {
@@ -429,9 +420,7 @@ impl<W: Walker> Scheduler<W> {
                 break;
             };
             if !set.insert(*pred_id) {
-                if cfg!(debug_assertions) {
-                    panic!("predecessor cycle detected at {pred_key:?}");
-                }
+                debug_assert!(false, "predecessor cycle detected at {pred_key:?}");
                 break;
             }
             cur = self.entries[pred_id.index()].predecessor.as_ref();
