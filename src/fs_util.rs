@@ -11,7 +11,7 @@ use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::ffi::{OsStr, OsString};
 use std::fs::FileType;
-use std::path::{Component, Path, PathBuf};
+use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
 use ignore::Match;
@@ -550,13 +550,17 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> Rc<BTreeMap<String, EntryKin
 
 /// Whether the listing of `path`'s directory admits it as a file.
 pub(crate) fn lists_file(path: &Path, filter: &DirFilter) -> bool {
+    lists_as(path, EntryKind::File, filter)
+}
+
+fn lists_as(path: &Path, kind: EntryKind, filter: &DirFilter) -> bool {
     let (Some(dir), Some(name)) = (
         path.parent(),
         path.file_name().and_then(|name| name.to_str()),
     ) else {
         return false;
     };
-    list_dir(dir, filter).get(name) == Some(&EntryKind::File)
+    list_dir(dir, filter).get(name) == Some(&kind)
 }
 
 /// Whether the listings reach `path` from the walk root: each directory
@@ -565,29 +569,14 @@ pub(crate) fn lists_file(path: &Path, filter: &DirFilter) -> bool {
 /// walk that got there has already passed through; this is for a path
 /// named from outside any walk.
 pub(crate) fn listed_from_root(path: &Path, filter: &DirFilter) -> bool {
-    let Ok(relative) = path.strip_prefix(filter.root()) else {
-        return false;
-    };
-    let mut dir = filter.root().to_path_buf();
-    let mut components = relative
-        .components()
-        .filter(|component| *component != Component::CurDir)
-        .peekable();
-    while let Some(component) = components.next() {
-        let Some(name) = component.as_os_str().to_str() else {
-            return false;
-        };
-        let expected = if components.peek().is_some() {
-            EntryKind::Directory
-        } else {
-            EntryKind::File
-        };
-        if list_dir(&dir, filter).get(name) != Some(&expected) {
-            return false;
-        }
-        dir.push(name);
-    }
-    dir != filter.root()
+    path.starts_with(filter.root())
+        && path != filter.root()
+        && path
+            .ancestors()
+            .skip(1)
+            .take_while(|dir| *dir != filter.root())
+            .all(|dir| lists_as(dir, EntryKind::Directory, filter))
+        && lists_file(path, filter)
 }
 
 /// Whether [`list_dir`] lists nothing for `path` because nothing there
