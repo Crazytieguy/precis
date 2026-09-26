@@ -1005,7 +1005,7 @@ pub fn visible_full_line(source_line: &str) -> &str {
 /// to a credential-named key (`password: "hunter2"`,
 /// `"api_key" => 'sk-…'`, `SECRET_KEY = "…"`, `authToken: "…"`), whatever
 /// punctuation it holds. A placeholder (`{}`, `{password}`, `{{ … }}`,
-/// `${DB_PASSWORD}`, `$DB_PASSWORD`, `<password>`, `%s`,
+/// `${DB_PASSWORD}`, `$DB_PASSWORD`, `$user:$password`, `<password>`, `%s`,
 /// `env(DB_PASSWORD)`, `%env(DB_PASSWORD)%`), a phrase
 /// (`"Save password": "Tallenna salasana"`),
 /// a version (`"parse-passwd": "^1.0.0"`), a value spelling its
@@ -1027,7 +1027,7 @@ fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
     });
     static PLACEHOLDER: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
         regex::Regex::new(concat!(
-            r"^(?:<[^>]*>|\$\w+|[\w.]+\(.*\)|%[\w.()]+%|%(?:\(\w+\))?[sd])$",
+            r"^(?:<[^>]*>|\$\w+(?:[^\w\s$]+\$[A-Za-z_]\w*)*|[\w.]+\(.*\)|%[\w.()]+%|%(?:\(\w+\))?[sd])$",
             r"|\$\{|\{\{|\{%|\{\w*\}",
         ))
         .unwrap()
@@ -1408,6 +1408,15 @@ mod tests {
                 r#"password = "$DB_PASSWORD""#,
                 r#"password = "$DB_PASSWORD""#,
             ),
+            (
+                r#"val usernameAndPassword = "$username:$password""#,
+                r#"val usernameAndPassword = "$username:$password""#,
+            ),
+            (
+                r#"password = "$2b$12$R9h/cIPz0gi.URNNX3kh2O""#,
+                r#"password = "…""#,
+            ),
+            (r#"password = "$user:hunter2""#, r#"password = "…""#),
             (
                 r#"password = "%(password)s""#,
                 r#"password = "%(password)s""#,
