@@ -3,6 +3,6 @@
 mod fixture_baselines;
 mod ns_simulate;
 mod readme_example;
+mod robustness;
 mod scheduler_invariants;
 mod single_file;
-mod symlink_containment;

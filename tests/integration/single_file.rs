@@ -83,14 +83,6 @@ fn single_file_unsupported_extension_renders_its_content() {
     );
 }
 
-#[test]
-fn single_file_binary_renders_only_its_row() {
-    let temp = tempfile::tempdir().unwrap();
-    let file = write(temp.path(), "blob.xyz", "alpha\0beta\n");
-
-    assert_eq!(render(&file, 3000, None), "blob.xyz\n");
-}
-
 /// A test file declares nothing, so no walker has a surface for it; the
 /// budget goes to its head.
 #[test]
@@ -166,42 +158,10 @@ fn single_file_unparsed_language_outlines_every_declaration() {
     assert!(!out.contains("compute(39, 0)"), "{out}");
 }
 
-/// Only the head of a file too large for the walkers is read: bytes past
-/// it that are not UTF-8 do not stop it from rendering.
-#[test]
-fn single_file_past_the_byte_gate_renders_its_head() {
-    let temp = tempfile::tempdir().unwrap();
-    let mut contents: Vec<u8> = (0..60_000)
-        .flat_map(|i| format!("event {i}: ok\n").into_bytes())
-        .collect();
-    contents.extend_from_slice(b"\xff\xfe\n");
-    let file = temp.path().join("server.log");
-    std::fs::write(&file, contents).unwrap();
-
-    let out = render(&file, 1000, None);
-    assert!(out.starts_with("server.log\n  1→event 0: ok\n"), "{out}");
-    assert!(out.ends_with("…\n"), "{out}");
-}
-
 #[test]
 fn single_file_path_errors_when_missing() {
     let temp = tempfile::tempdir().unwrap();
     assert!(precis::render(&temp.path().join("absent.rs"), 3000, None).is_err());
-}
-
-#[cfg(unix)]
-#[test]
-fn single_file_path_errors_on_a_fifo_instead_of_reading_it() {
-    let temp = tempfile::tempdir().unwrap();
-    let fifo = temp.path().join("events.txt");
-    let status = std::process::Command::new("mkfifo")
-        .arg(&fifo)
-        .status()
-        .unwrap();
-    assert!(status.success());
-
-    let error = precis::render(&fifo, 3000, None).unwrap_err();
-    assert!(error.to_string().contains("regular file"), "{error}");
 }
 
 /// Row numbers of the `N→` rows in `out`.
