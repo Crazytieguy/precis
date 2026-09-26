@@ -97,9 +97,9 @@ pub struct DirFilter {
     listings: RefCell<HashMap<PathBuf, Rc<BTreeMap<String, EntryKind>>>>,
     /// Memo for [`lists_nothing`] on directories not listed in full.
     emptiness: RefCell<HashMap<PathBuf, bool>>,
-    /// Entries [`DirFilter::hides_everything_in`] read, until [`list_dir`]
-    /// lists them: a listing probes each directory it names, and that
-    /// directory's own listing usually follows.
+    /// Entries [`DirFilter::hides_everything_in`] read from a directory it
+    /// found visible, until [`list_dir`] lists them: a listing probes each
+    /// directory it names, and that directory's own listing usually follows.
     probed_entries: RefCell<HashMap<PathBuf, RawEntries>>,
     /// Set for a single-file walk: the one entry under `root` the filter
     /// admits. See [`DirFilter::single_file`].
@@ -262,8 +262,8 @@ impl DirFilter {
     ///
     /// Answering costs one `read_dir`, whose entries the directory's own
     /// listing reuses, and recurses only into a directory that has no
-    /// surviving file of its own, so the common case is a single probe
-    /// that stops at the first visible entry. Memoized per run.
+    /// surviving file of its own, so the common case is a single read
+    /// whose checks stop at the first visible entry. Memoized per run.
     pub(crate) fn hides_everything_in(&self, dir: &Path) -> bool {
         let Some(repo) = &self.repo else {
             return false;
@@ -272,6 +272,9 @@ impl DirFilter {
             return known;
         }
         let vacuous = self.probe_hides_everything_in(dir);
+        if vacuous {
+            self.probed_entries.borrow_mut().remove(dir);
+        }
         repo.vacuous.borrow_mut().insert(dir.to_path_buf(), vacuous);
         vacuous
     }
@@ -846,6 +849,16 @@ mod tests {
             [".gitignore", "mixed", "placeholder"]
         );
         assert_eq!(names_in(&root.join("mixed"), &filter), ["real.rs"]);
+        // A hidden directory is never listed, so nothing keeps its entries.
+        for hidden in ["scratch", "outer", "outer/inner", "mixed/cache"] {
+            assert!(
+                !filter
+                    .probed_entries
+                    .borrow()
+                    .contains_key(&root.join(hidden)),
+                "{hidden}"
+            );
+        }
         assert!(filter.hides_everything_in(&root.join("scratch")));
         assert!(filter.hides_everything_in(&root.join("outer")));
         assert!(!filter.hides_everything_in(&root.join("placeholder")));
