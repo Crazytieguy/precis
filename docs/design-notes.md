@@ -89,12 +89,34 @@ displaces a priced batch.
   any tree that isn't a repository.
 - **Matching is pattern-only; the index is never read**, so a force-added
   file matching an ignore pattern is hidden.
-- **Nothing outside the walk root surfaces.** precis runs on untrusted
-  checkouts whose output is pasted into agent contexts, so containment
-  belongs to the listing layer (`fs_util::list_dir`, `resolved_kind`)
-  and every consumer inherits it. The one exception is
-  workspace-membership parsing, which follows links to read member
-  lists and never renders the text.
+- **Nothing outside the walk root, and nothing it hides, surfaces.**
+  precis runs unattended on untrusted checkouts whose output is pasted
+  into agent contexts, so containment belongs to the listing layer
+  (`fs_util::list_dir`, `resolved_kind`) and every consumer inherits
+  it. A link lists only when its resolved target is inside the root and
+  nothing on the way down to it is internal or ignored; only regular
+  files and directories list; a non-UTF-8 name doesn't list, since
+  consumers reopen entries by their listed name.
+- **Every content read is admitted and bounded.** `WalkCtx::read_source`
+  reads a path only when its directory's listing admits it as a file,
+  which holds the manifests workspace discovery and Python's
+  `__init__.py` ancestry open by fixed name to the listing's rules
+  (refused reads as no declaration). `SourceCache::get` then reads only
+  a regular file of at most `MAX_SOURCE_BYTES` with no NUL byte,
+  decoding bytes that aren't UTF-8 as U+FFFD. The floor's head read
+  (`plaintext::file_head`) sees only listed files. Workspace membership
+  canonicalizes member manifest paths without reading them, and the TS
+  engine's nearest-`package.json` probe is a stat.
+- **Credential files never render, whichever walker reads them.**
+  `walker::is_refused` — a credential file name (of the path or its link
+  target), or a PEM/PGP private-key block with key material under its
+  armor — is applied by `SourceCache` to everything it reads or is
+  handed, so a refused file lists by name only; no walker carries a
+  check of its own. The name rule exempts samples (`*.example`,
+  `*.sample`, `*.template`, `*.dist`), source code and documents, which
+  are about credentials rather than holding them. Prisma leaves a
+  datasource's inline connection URL out. Secrets in ordinarily named
+  config are not detected.
 
 ## Cross-language vs language-specific concerns
 
