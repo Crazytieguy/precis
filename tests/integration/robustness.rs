@@ -158,6 +158,61 @@ fn robustness_special_files_named_like_git_pointers_are_never_read() {
     }
 }
 
+/// Generated sources nest expressions, types, declarators, preprocessor
+/// branches and modules far deeper than hand-written code, and extraction
+/// runs on the rendering thread, so a walk recursing once per level
+/// overflows the stack and aborts the whole run. Rendering on a small
+/// stack makes such a walk fail here at a modest depth, and the time
+/// limit catches one quadratic in the depth.
+#[test]
+fn robustness_deeply_nested_sources_render() {
+    const DEPTH: usize = 20_000;
+    let temp = tempfile::tempdir().unwrap();
+    let nest = |open: &str, inner: &str, close: &str| {
+        format!("{}{inner}{}", open.repeat(DEPTH), close.repeat(DEPTH))
+    };
+    let chain = |head: &str, link: &str, tail: &str| format!("{head}{}{tail}", link.repeat(DEPTH));
+    let files = [
+        ("member.ts", chain("export default a", ".b", ";\n")),
+        ("condition.ts", chain("export const x = a", " || a", ";\n")),
+        ("require.js", chain("const q = require('x')", ".b", ";\n")),
+        (
+            "generic.ts",
+            format!("export function f(x: {}) {{}}\n", nest("A<", "T", ">")),
+        ),
+        ("pointer.h", chain("int ", "*", "x;\n")),
+        ("gates.h", nest("#ifdef A\n", "int x;\n", "#endif\n")),
+        (
+            "alternates.h",
+            chain("#if A\nint x;\n", "#elif B\nint y;\n", "#endif\n"),
+        ),
+        ("extern.h", nest("extern \"C\" {\n", "int x;\n", "}\n")),
+        (
+            "modules.rs",
+            nest("pub mod a {\n", "pub fn f() {}\n", "}\n"),
+        ),
+    ];
+    for (name, contents) in &files {
+        write(&temp.path().join(name), contents);
+    }
+
+    let (sender, receiver) = mpsc::channel();
+    let root = temp.path().to_path_buf();
+    std::thread::Builder::new()
+        .stack_size(256 * 1024)
+        .spawn(move || {
+            let _ = sender.send(precis::render(&root, 3000, None));
+        })
+        .unwrap();
+    let out = receiver
+        .recv_timeout(Duration::from_secs(60))
+        .expect("no render within 60 s")
+        .unwrap();
+    for (name, _) in &files {
+        assert!(out.contains(name), "`{name}` missing:\n{out}");
+    }
+}
+
 #[test]
 fn robustness_binary_files_render_only_their_rows() {
     let temp = tempfile::tempdir().unwrap();

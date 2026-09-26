@@ -28,8 +28,8 @@ use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Item, Shape};
 use super::{
-    Language, ProgramFunction, SourceFile, block_head, file_name, is_leading_trivia,
-    named_children, show_program_flow,
+    Language, MAX_SCOPE_NESTING, ProgramFunction, SourceFile, block_head, file_name,
+    is_leading_trivia, named_children, show_program_flow,
 };
 use crate::walker::WalkCtx;
 
@@ -56,32 +56,55 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     model
 }
 
-/// Models the items of the file or of an inline module's body. The
-/// program flow is collected from the file's top-level functions only.
+/// The items of the file or of an inline module's body not yet modeled.
+struct ModuleScope<'tree> {
+    items: std::vec::IntoIter<(Node<'tree>, Leading)>,
+    /// Whether the module's private helpers are hidden: it is not a
+    /// program's top level, and some item says it is visible.
+    hides_private: bool,
+}
+
+impl<'tree> ModuleScope<'tree> {
+    fn new(scope: Node<'tree>, file: &SourceFile, is_program: bool) -> Self {
+        let items: Vec<(Node, Leading)> = scope
+            .named_children(&mut scope.walk())
+            .filter(|node| !is_leading_trivia(*node))
+            .map(|node| (node, Leading::above(node, file)))
+            .collect();
+        let hides_private = !is_program
+            && items.iter().any(|(node, leading)| {
+                has_visibility_rule(*node) && !leading.hidden && is_visible(*node, leading, file)
+            });
+        Self {
+            items: items.into_iter(),
+            hides_private,
+        }
+    }
+}
+
+/// Models the items of the file and of its visible inline modules, in
+/// source order, down to [`MAX_SCOPE_NESTING`] modules deep. The program
+/// flow is collected from the file's top-level functions only.
 fn extract_items(
-    scope: Node,
+    root: Node,
     file: &SourceFile,
     model: &mut FileModel,
     mut program_functions: Option<&mut Vec<ProgramFunction>>,
 ) {
-    let mut cursor = scope.walk();
-    let hides_private = program_functions.is_none()
-        && scope.named_children(&mut cursor).any(|node| {
-            let leading = Leading::above(node, file);
-            has_visibility_rule(node) && !leading.hidden && is_visible(node, &leading, file)
-        });
-    for node in scope.named_children(&mut cursor) {
-        if is_leading_trivia(node) {
+    let mut scopes = vec![ModuleScope::new(root, file, program_functions.is_some())];
+    while let Some(scope) = scopes.last_mut() {
+        let Some((node, leading)) = scope.items.next() else {
+            scopes.pop();
             continue;
-        }
-        let leading = Leading::above(node, file);
+        };
         if leading.hidden || is_anonymous_const(node, file) {
             continue;
         }
         let is_helper = matches!(node.kind(), "function_item" | "macro_definition");
-        if hides_private && is_helper && !is_visible(node, &leading, file) {
+        if scope.hides_private && is_helper && !is_visible(node, &leading, file) {
             continue;
         }
+        let at_top_level = scopes.len() == 1;
         match node.kind() {
             "use_declaration" | "mod_item" => match node.child_by_field_name("body") {
                 None if node.kind() == "mod_item"
@@ -95,8 +118,10 @@ fn extract_items(
                     let mut rows = leading.attribute_rows;
                     rows.extend(node.start_position().row + 1..=body.start_position().row + 1);
                     model.reexports.push(Item::new(rows));
-                    if visibility_modifier(node, file).is_some() {
-                        extract_items(body, file, model, None);
+                    if visibility_modifier(node, file).is_some()
+                        && scopes.len() <= MAX_SCOPE_NESTING
+                    {
+                        scopes.push(ModuleScope::new(body, file, false));
                     }
                 }
                 _ => {}
@@ -106,7 +131,7 @@ fn extract_items(
                 model.decls.push(container(node, leading, file, |_| true));
             }
             "function_item" => {
-                if let Some(functions) = program_functions.as_deref_mut() {
+                if let Some(functions) = program_functions.as_deref_mut().filter(|_| at_top_level) {
                     functions.push(ProgramFunction::new(model.decls.len(), node, file));
                 }
                 model.decls.push(callable(node, leading, file));

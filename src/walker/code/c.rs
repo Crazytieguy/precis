@@ -21,6 +21,7 @@
 //! A header written in C++ ([`is_cpp_header`]) is left to the plaintext
 //! fallback, like a `.hpp`.
 
+use std::collections::HashMap;
 use std::ops::RangeInclusive;
 use std::path::Path;
 use std::sync::LazyLock;
@@ -29,7 +30,9 @@ use regex::Regex;
 use tree_sitter::Node;
 
 use super::model::{DeclInfo, FileModel, Shape};
-use super::{Language, SourceFile, has_extension, is_named_after, named_children};
+use super::{
+    Language, MAX_SCOPE_NESTING, SourceFile, has_extension, is_named_after, named_children,
+};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
@@ -61,9 +64,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
         }
     };
     let top_level = header_guard(root, file).unwrap_or(root);
-    for child in top_level.named_children(&mut top_level.walk()) {
-        visit_with_envelope_descent(child, file, &mut visit);
-    }
+    visit_with_envelope_descent(top_level, file, &mut visit);
     attach_directives(&mut decls, &directives);
     FileModel {
         decls,
@@ -335,14 +336,16 @@ fn misparsed_prototype_declarator(node: Node) -> Option<Node> {
         .then_some(declarator)
 }
 
-fn declared_name(declarator: Node) -> Option<Node> {
-    match declarator.kind() {
-        "identifier" | "type_identifier" | "field_identifier" => Some(declarator),
-        _ => declarator
+fn declared_name(mut declarator: Node) -> Option<Node> {
+    while !matches!(
+        declarator.kind(),
+        "identifier" | "type_identifier" | "field_identifier"
+    ) {
+        declarator = declarator
             .child_by_field_name("declarator")
-            .or_else(|| declarator.named_child(0))
-            .and_then(declared_name),
+            .or_else(|| declarator.named_child(0))?;
     }
+    Some(declarator)
 }
 
 /// The struct / union / enum body a declaration defines, unless the
@@ -372,57 +375,72 @@ fn aggregate_body(node: Node) -> Option<Node> {
         .filter(|body| matches!(body.kind(), "field_declaration_list" | "enumerator_list"))
 }
 
-fn declarator_is_function(node: Node) -> bool {
-    match node.kind() {
-        "function_declarator" => true,
-        "pointer_declarator" | "parenthesized_declarator" | "init_declarator" => node
+fn declarator_is_function(mut node: Node) -> bool {
+    while matches!(
+        node.kind(),
+        "pointer_declarator" | "parenthesized_declarator" | "init_declarator"
+    ) {
+        let Some(inner) = node
             .child_by_field_name("declarator")
             .or_else(|| node.named_child(0))
-            .is_some_and(declarator_is_function),
-        _ => false,
+        else {
+            return false;
+        };
+        node = inner;
+    }
+    node.kind() == "function_declarator"
+}
+
+/// Visits the named children of `top_level` in source order, descending
+/// into each `extern "C" { … }` envelope (raw or `#ifdef
+/// __cplusplus`-wrapped) and declaration-only feature gate. A descended
+/// gate's children are visited, directive tokens (`#ifdef`, `#else`,
+/// `#endif`) included, plus the bodies of its `#else` / `#elif`
+/// alternates; nested gates descend (or stay opaque) on their own merits.
+/// An envelope, gate or alternate (which nests in the branch before it)
+/// counts as a scope, and one inside [`MAX_SCOPE_NESTING`] others stays
+/// opaque.
+fn visit_with_envelope_descent<'a>(
+    top_level: Node<'a>,
+    file: &SourceFile,
+    mut visit: impl FnMut(Node<'a>),
+) {
+    let mut gate_answers = HashMap::new();
+    // Each node with whether it is a branch of a descended gate, and the
+    // number of scopes around it.
+    let mut pending: Vec<(Node, bool, usize)> = top_level
+        .named_children(&mut top_level.walk())
+        .map(|node| (node, false, 0))
+        .collect();
+    pending.reverse();
+    while let Some((node, in_gate, depth)) = pending.pop() {
+        let (children, in_gate): (Vec<Node>, _) = if depth >= MAX_SCOPE_NESTING {
+            visit(node);
+            continue;
+        } else if in_gate && is_gate_alternate(node.kind()) {
+            (node.children(&mut node.walk()).collect(), true)
+        } else if let Some(decl_list) = extern_c_declaration_list(node, file) {
+            (named_children(Some(decl_list)), false)
+        } else if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
+            && !is_disabled_preproc_if(node, file)
+            && feature_gate_is_declaration_only(node, file, &mut gate_answers) == Some(true)
+        {
+            (node.children(&mut node.walk()).collect(), true)
+        } else {
+            visit(node);
+            continue;
+        };
+        pending.extend(
+            children
+                .into_iter()
+                .rev()
+                .map(|child| (child, in_gate, depth + 1)),
+        );
     }
 }
 
-/// Visit `node`, descending if it's an `extern "C" { … }` envelope (raw
-/// or `#ifdef __cplusplus`-wrapped) or a declaration-only feature gate.
-fn visit_with_envelope_descent<'a, F: FnMut(Node<'a>)>(
-    node: Node<'a>,
-    file: &SourceFile,
-    visit: &mut F,
-) {
-    if let Some(decl_list) = extern_c_declaration_list(node, file) {
-        for child in decl_list.named_children(&mut decl_list.walk()) {
-            visit_with_envelope_descent(child, file, visit);
-        }
-        return;
-    }
-    if matches!(node.kind(), "preproc_if" | "preproc_ifdef")
-        && !is_disabled_preproc_if(node, file)
-        && feature_gate_is_declaration_only(node, file) == Some(true)
-    {
-        descend_feature_gate_branches(node, file, visit);
-        return;
-    }
-    visit(node);
-}
-
-/// Visit every branch of a declaration-only feature gate: its children,
-/// directive tokens (`#ifdef`, `#else`, `#endif`) included, plus the
-/// bodies of `#else` / `#elif` alternates. Nested gates descend (or stay
-/// opaque) on their own merits.
-fn descend_feature_gate_branches<'a, F: FnMut(Node<'a>)>(
-    node: Node<'a>,
-    file: &SourceFile,
-    visit: &mut F,
-) {
-    for child in node.children(&mut node.walk()) {
-        match child.kind() {
-            "preproc_else" | "preproc_elif" | "preproc_elifdef" => {
-                descend_feature_gate_branches(child, file, visit);
-            }
-            _ => visit_with_envelope_descent(child, file, visit),
-        }
-    }
+fn is_gate_alternate(kind: &str) -> bool {
+    matches!(kind, "preproc_else" | "preproc_elif" | "preproc_elifdef")
 }
 
 /// True for `#if 0` blocks: commented-out code, not a feature gate.
@@ -435,33 +453,54 @@ fn is_disabled_preproc_if(node: Node, file: &SourceFile) -> bool {
 /// holds a statement, or a function definition in a header, else whether
 /// it holds at least one declaration beside its directives and comments.
 /// A macro definition counts only when it supplies a default for the
-/// name the block tests (`#ifndef X` / `#define X …`).
-fn feature_gate_is_declaration_only(node: Node, file: &SourceFile) -> Option<bool> {
-    let mut declaration_found = false;
-    let condition = node
-        .child_by_field_name("condition")
-        .or_else(|| node.child_by_field_name("name"));
-    for child in node.named_children(&mut node.walk()) {
-        if Some(child) == condition {
+/// name the block tests (`#ifndef X` / `#define X …`). Answers are
+/// memoized in `answers` by node id and found bottom-up, so nested gates
+/// cost time linear in their size and no stack depth.
+fn feature_gate_is_declaration_only(
+    gate: Node,
+    file: &SourceFile,
+    answers: &mut HashMap<usize, Option<bool>>,
+) -> Option<bool> {
+    let is_nested_gate = |node: Node| {
+        matches!(node.kind(), "preproc_if" | "preproc_ifdef") || is_gate_alternate(node.kind())
+    };
+    let mut pending = vec![gate];
+    while let Some(&node) = pending.last() {
+        let unanswered: Vec<Node> = node
+            .named_children(&mut node.walk())
+            .filter(|child| is_nested_gate(*child) && !answers.contains_key(&child.id()))
+            .collect();
+        if !unanswered.is_empty() {
+            pending.extend(unanswered);
             continue;
         }
-        match child.kind() {
-            "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
-            | "enum_specifier" => declaration_found = true,
-            "function_definition" if !is_header(&file.path) => declaration_found = true,
-            "preproc_def" | "preproc_function_def" => {
-                declaration_found |=
-                    guarded_name(node).is_some_and(|name| is_define_of(child, name, file));
+        pending.pop();
+        let condition = node
+            .child_by_field_name("condition")
+            .or_else(|| node.child_by_field_name("name"));
+        let mut answer = Some(false);
+        for child in node.named_children(&mut node.walk()) {
+            if Some(child) == condition {
+                continue;
             }
-            "preproc_include" | "preproc_call" | "comment" => {}
-            "preproc_if" | "preproc_ifdef" | "preproc_else" | "preproc_elif"
-            | "preproc_elifdef" => {
-                declaration_found |= feature_gate_is_declaration_only(child, file)?;
-            }
-            _ => return None,
+            let declares = match child.kind() {
+                "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
+                | "enum_specifier" => Some(true),
+                "function_definition" if !is_header(&file.path) => Some(true),
+                "preproc_def" | "preproc_function_def" => {
+                    Some(guarded_name(node).is_some_and(|name| is_define_of(child, name, file)))
+                }
+                "preproc_include" | "preproc_call" | "comment" => Some(false),
+                _ if is_nested_gate(child) => answers[&child.id()],
+                _ => None,
+            };
+            answer = answer
+                .zip(declares)
+                .map(|(found, declares)| found || declares);
         }
+        answers.insert(node.id(), answer);
     }
-    Some(declaration_found)
+    answers[&gate.id()]
 }
 
 /// If `node` is an `extern "C" { … }` envelope (raw or

@@ -440,14 +440,10 @@ impl<'source> ExportScan<'source> {
 /// `extends` / `implements` clauses mention, outside function and class
 /// bodies.
 fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut Vec<&'source str>) {
-    fn walk<'source>(
-        file: &'source SourceFile,
-        node: Node,
-        in_signature: bool,
-        types: &mut Vec<&'source str>,
-    ) {
+    let mut pending = vec![(node, false)];
+    while let Some((node, in_signature)) = pending.pop() {
         if matches!(node.kind(), "statement_block" | "class_body") {
-            return;
+            continue;
         }
         if in_signature && node.kind() == "type_identifier" {
             types.push(file.text(node));
@@ -461,16 +457,11 @@ fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut V
                     | "implements_clause"
             );
         let return_type = node.child_by_field_name("return_type");
-        for child in node.named_children(&mut node.walk()) {
-            walk(
-                file,
-                child,
-                in_signature || Some(child) == return_type,
-                types,
-            );
-        }
+        pending.extend(
+            node.named_children(&mut node.walk())
+                .map(|child| (child, in_signature || Some(child) == return_type)),
+        );
     }
-    walk(file, node, false, types);
 }
 
 /// A top-level statement that runs rather than declares: an entry
@@ -584,14 +575,14 @@ fn object_entry_name(entry: Node) -> Option<Node> {
 }
 
 /// A name, a property path off a name, or a `require` chain.
-fn is_reference(file: &SourceFile, value: Node) -> bool {
-    match value.kind() {
-        "identifier" => true,
-        "member_expression" => value
-            .child_by_field_name("object")
-            .is_some_and(|object| is_reference(file, object)),
-        _ => is_require_rooted(file, value),
+fn is_reference(file: &SourceFile, mut value: Node) -> bool {
+    while value.kind() == "member_expression" {
+        let Some(object) = value.child_by_field_name("object") else {
+            return false;
+        };
+        value = object;
     }
+    value.kind() == "identifier" || is_require_rooted(file, value)
 }
 
 /// `const x = require('y')`, including `require('y').z` and
@@ -602,16 +593,23 @@ fn is_require_declaration(file: &SourceFile, node: Node) -> bool {
         .any(|value| is_require_rooted(file, value))
 }
 
-fn is_require_rooted(file: &SourceFile, node: Node) -> bool {
-    match node.kind() {
-        "call_expression" => node.child_by_field_name("function").is_some_and(|callee| {
-            (callee.kind() == "identifier" && file.text(callee) == "require")
-                || is_require_rooted(file, callee)
-        }),
-        "member_expression" | "subscript_expression" => node
-            .child_by_field_name("object")
-            .is_some_and(|object| is_require_rooted(file, object)),
-        _ => false,
+fn is_require_rooted(file: &SourceFile, mut node: Node) -> bool {
+    loop {
+        let inner = match node.kind() {
+            "call_expression" => node.child_by_field_name("function"),
+            "member_expression" | "subscript_expression" => node.child_by_field_name("object"),
+            _ => return false,
+        };
+        let Some(inner) = inner else {
+            return false;
+        };
+        if node.kind() == "call_expression"
+            && inner.kind() == "identifier"
+            && file.text(inner) == "require"
+        {
+            return true;
+        }
+        node = inner;
     }
 }
 

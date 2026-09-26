@@ -95,6 +95,15 @@ pub(crate) fn parsed_extensions() -> impl Iterator<Item = &'static str> {
         .flat_map(|language| language.extensions.iter().copied())
 }
 
+/// How deeply the scopes an extraction descends into (C feature gates,
+/// their alternates and `extern "C"` blocks, Rust inline modules) may
+/// nest; deeper ones are not descended. Tree-sitter finds a node's parent
+/// and siblings by walking down from the root, so the work per descended
+/// node grows with its depth, and generated input can nest hundreds of
+/// thousands deep. C99 requires compilers to support 63 nested levels of
+/// conditional inclusion.
+const MAX_SCOPE_NESTING: usize = 63;
+
 /// Per-run state of the language modules that keep any.
 #[derive(Default)]
 pub(crate) struct CodeState {
