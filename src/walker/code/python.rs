@@ -4,7 +4,9 @@
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
 //!   and `type X = …` aliases (`Whole`), plus the `def`s and `class`es
-//!   inside top-level `if` / `try` statements. A decorated definition's head
+//!   inside top-level `if` / `try` statements. An `@overload` stub whose
+//!   implementation follows it is hidden: the implementation's signature
+//!   stands for the function, so the roster doesn't repeat its name. A decorated definition's head
 //!   starts at its first decorator. Its name rows are its one-row
 //!   decorators (`@property` and `@overload` say what a `def` is), the
 //!   `def` / `class` row and, when the signature spans rows, the row that
@@ -271,13 +273,13 @@ fn clause_blocks(statement: Node) -> Vec<Node> {
     blocks
 }
 
-/// A `def` or `class`, possibly wrapped in `decorated_definition`.
+/// A `def` or `class`, possibly wrapped in `decorated_definition`;
+/// `None` for an `@overload` stub whose implementation follows it.
 fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
-    let inner = if unit.kind() == "decorated_definition" {
-        unit.child_by_field_name("definition")?
-    } else {
-        unit
-    };
+    let inner = defined(unit)?;
+    if is_overload(file, unit) && has_implementation_after(file, unit) {
+        return None;
+    }
     let shape = match inner.kind() {
         "function_definition" => Shape::Callable,
         "class_definition" => Shape::Whole,
@@ -313,6 +315,40 @@ fn definition(file: &SourceFile, unit: Node) -> Option<DeclInfo> {
         shape,
         members,
     })
+}
+
+/// The `def` / `class` node of a possibly decorated definition.
+fn defined(unit: Node) -> Option<Node> {
+    if unit.kind() == "decorated_definition" {
+        unit.child_by_field_name("definition")
+    } else {
+        Some(unit)
+    }
+}
+
+fn is_overload(file: &SourceFile, unit: Node) -> bool {
+    let mut cursor = unit.walk();
+    unit.named_children(&mut cursor)
+        .filter(|child| child.kind() == "decorator")
+        .filter_map(|decorator| decorator.named_child(0))
+        .any(|expression| {
+            let text = file.text(expression);
+            text == "overload" || text.ends_with(".overload")
+        })
+}
+
+/// Whether a later sibling defines the same name without `@overload`.
+fn has_implementation_after(file: &SourceFile, unit: Node) -> bool {
+    let name = |node: Node| {
+        defined(node)
+            .and_then(|inner| inner.child_by_field_name("name"))
+            .map(|name| file.text(name))
+    };
+    let Some(overloaded) = name(unit) else {
+        return false;
+    };
+    std::iter::successors(unit.next_named_sibling(), |node| node.next_named_sibling())
+        .any(|sibling| name(sibling) == Some(overloaded) && !is_overload(file, sibling))
 }
 
 /// Rows of the decorators above a definition that each fit on one row.
@@ -382,32 +418,37 @@ fn class_body(
     let mut members = Vec::new();
     let mut run: Vec<Node> = Vec::new();
     for node in statements {
-        if let Some(member) = definition(file, *node) {
-            let last_statement_end = run
-                .iter()
-                .rfind(|pending| pending.kind() != "comment")
-                .map_or(0, |statement| *file.node_rows(*statement).end());
-            while run.last().is_some_and(|pending| {
-                pending.kind() == "comment"
-                    && *file.node_rows(*pending).start() > last_statement_end
-            }) {
-                run.pop();
-            }
-            body.extend(file.node_items(run.drain(..), after_row));
-            match member.shape {
-                Shape::Callable => {
-                    body.push(Item::new(member.name_rows.iter().copied()));
-                    members.push(member);
-                }
-                Shape::Whole => {
-                    body.push(Item::new(member.head));
-                    body.extend(member.doc);
-                    body.extend(member.body);
-                    members.extend(member.members);
-                }
-            }
-        } else {
+        if !matches!(
+            node.kind(),
+            "function_definition" | "class_definition" | "decorated_definition"
+        ) {
             run.push(*node);
+            continue;
+        }
+        let Some(member) = definition(file, *node) else {
+            continue;
+        };
+        let last_statement_end = run
+            .iter()
+            .rfind(|pending| pending.kind() != "comment")
+            .map_or(0, |statement| *file.node_rows(*statement).end());
+        while run.last().is_some_and(|pending| {
+            pending.kind() == "comment" && *file.node_rows(*pending).start() > last_statement_end
+        }) {
+            run.pop();
+        }
+        body.extend(file.node_items(run.drain(..), after_row));
+        match member.shape {
+            Shape::Callable => {
+                body.push(Item::new(member.name_rows.iter().copied()));
+                members.push(member);
+            }
+            Shape::Whole => {
+                body.push(Item::new(member.head));
+                body.extend(member.doc);
+                body.extend(member.body);
+                members.extend(member.members);
+            }
         }
     }
     body.extend(file.node_items(run, after_row));
@@ -798,6 +839,48 @@ else:
                 (vec![14, 15], vec![14, 15]),
             ]
         );
+    }
+
+    #[test]
+    fn code_python_overload_stubs_before_their_implementation_are_hidden() {
+        let source = "\
+@overload
+def filter(x: int) -> list[int]: ...
+@typing.overload
+def filter(x: str) -> list[str]: ...
+def filter(x):
+    return [x]
+class Wikicode:
+    @overload
+    def ifilter(self, x: int) -> int: ...
+    def ifilter(self, x):
+        return x
+";
+        let model = extract_source("wikicode.py", source);
+        let summary: Vec<_> = model
+            .decls
+            .iter()
+            .map(|decl| {
+                let members: Vec<_> = decl
+                    .members
+                    .iter()
+                    .map(|member| member.name_rows.clone())
+                    .collect();
+                (decl.name_rows.clone(), members)
+            })
+            .collect();
+        assert_eq!(summary, vec![(vec![5], vec![]), (vec![7], vec![vec![10]])]);
+        assert_eq!(rows(&model.decls[1].body), vec![vec![10]]);
+        let stub = extract_source(
+            "wikicode.pyi",
+            &source[..source.find("def filter(x):").unwrap()],
+        );
+        let stub_names: Vec<_> = stub
+            .decls
+            .iter()
+            .map(|decl| decl.name_rows.clone())
+            .collect();
+        assert_eq!(stub_names, vec![vec![1, 2], vec![3, 4]]);
     }
 
     #[test]
