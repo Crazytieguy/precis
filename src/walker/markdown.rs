@@ -1287,8 +1287,8 @@ fn is_reference_usage_section(section: Node, source: &str) -> bool {
 
 fn section_title_core(section: Node, source: &str) -> String {
     first_heading_child(section)
-        .and_then(|heading| first_child_of_kind(heading, "inline"))
-        .map(|inline| title_core(&source[inline.start_byte()..inline.end_byte()]))
+        .and_then(|heading| heading.child_by_field_name("heading_content"))
+        .map(|content| title_core(&source[content.byte_range()]))
         .unwrap_or_default()
 }
 
@@ -1370,6 +1370,13 @@ fn command_block(
         .into_iter()
         .partition(|child| child.kind() != "section");
     if let Some(heading) = command_heading {
+        // A setext heading opens no `section`, so it can sit among the
+        // content; the run of blocks stops at it.
+        let heading_rows: Vec<usize> = content
+            .iter()
+            .filter(|child| matches!(child.kind(), "atx_heading" | "setext_heading"))
+            .map(|child| child.start_position().row + 1)
+            .collect();
         let mut blocks = Vec::new();
         for child in content {
             collect_shell_blocks(child, source, &mut blocks);
@@ -1379,8 +1386,12 @@ fn command_block(
             .map(rows)
             .skip_while(|&(start, end)| tokens(start, end) > OVERSIZE_CHUNK_TARGET_TOKENS);
         if let Some((start, mut end)) = spans.next() {
-            for (_, next_end) in spans {
-                if tokens(start, next_end) > OVERSIZE_CHUNK_TARGET_TOKENS {
+            for (next_start, next_end) in spans {
+                if tokens(start, next_end) > OVERSIZE_CHUNK_TARGET_TOKENS
+                    || heading_rows
+                        .iter()
+                        .any(|&row| end < row && row < next_start)
+                {
                     break;
                 }
                 end = next_end;
@@ -2579,8 +2590,8 @@ mod tests {
     }
 
     /// A root build guide yields one `CommandBlock`: the first under a
-    /// command-titled heading. Nothing else of it is read, and a nested
-    /// guide not at all.
+    /// command-titled heading, ATX or setext, its run stopping at the next
+    /// heading. Nothing else of it is read, and a nested guide not at all.
     #[test]
     fn markdown_root_build_guides_yield_one_command_block() {
         use std::fs;
@@ -2595,6 +2606,11 @@ mod tests {
         fs::write(
             root.join("INSTALL.md"),
             "# Installation\n\n```\npip install tool\n```\n\n## Building\n\n```\n./configure && make install\n```\n",
+        )
+        .unwrap();
+        fs::write(
+            root.join("COMPILE.md"),
+            "Compile\n=======\n\nNeeds gcc.\n\nBuild\n-----\n\n    make\n\nInstall\n-------\n\n    make install\n",
         )
         .unwrap();
         fs::write(
@@ -2624,6 +2640,7 @@ mod tests {
             command_rows,
             [
                 ("BUILDING.md".to_string(), vec![(11, 15)]),
+                ("COMPILE.md".to_string(), vec![(1, 2), (9, 9)]),
                 ("INSTALL.md".to_string(), vec![(7, 11)]),
             ]
         );
