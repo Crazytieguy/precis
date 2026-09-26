@@ -22,13 +22,19 @@ use std::path::{Path, PathBuf};
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, TomlKey};
-use crate::render::Source;
 use crate::value::{dependency_roster_value, manifest_identity_value, manifest_operational_value};
 
 use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{WalkCtx, fs::files_with_any_extension, path_depth_factor, single_file_lines_content};
 
-type Section = (String, usize, usize);
+/// A top-level `[table]` or `[[array-of-tables]]` header and its inclusive
+/// 1-based row span, which ends at the row before the next header or EOF.
+#[derive(Debug, PartialEq)]
+struct Section {
+    name: String,
+    start: usize,
+    end: usize,
+}
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     let mut out = Vec::new();
@@ -39,14 +45,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         };
         let sections = collect_sections(&tree, &source);
         let python_project_manifest = is_python_project_manifest(&file, &sections);
-        // Pair-level detail is only consulted for Python identity tables.
-        let pairs = if python_project_manifest {
-            collect_table_pairs(&tree, &source)
+        let (pairs, identity_residue) = if python_project_manifest {
+            (
+                collect_table_pairs(&tree, &source),
+                python_identity_non_lede_rows(&source, &sections),
+            )
         } else {
-            Vec::new()
+            Default::default()
         };
         let depth = path_depth_factor(&file, ctx);
-        let identity_residue = python_identity_non_lede_rows(&source, &sections);
         let identity_rows: Vec<usize> = section_rows(&sections, |n| {
             matches!(n, "package" | "workspace" | "workspace.package")
                 || (python_project_manifest && is_pyproject_identity_table(n))
@@ -54,7 +61,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .into_iter()
         .filter(|row| !identity_residue.contains(row))
         .collect();
-        if let Some(content) = rows_content(&file, &source, identity_rows) {
+        if let Some(content) = single_file_lines_content(&file, &source, identity_rows) {
             let scale = if ctx.is_cargo_workspace_member(&file) {
                 WORKSPACE_MEMBER_IDENTITY_FACTOR
             } else {
@@ -70,7 +77,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         let operational_rows = section_rows(&sections, |n| {
             is_operational_section(n, python_project_manifest)
         });
-        if let Some(content) = rows_content(&file, &source, operational_rows) {
+        if let Some(content) = single_file_lines_content(&file, &source, operational_rows) {
             out.push(Batch {
                 key: TomlKey::Operational { file: file.clone() }.into(),
                 predecessor: None,
@@ -82,7 +89,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         if python_project_manifest {
             dependency_rows.extend(pep621_dependency_array_rows(&pairs));
         }
-        if let Some(content) = rows_content(&file, &source, dependency_rows) {
+        if let Some(content) = single_file_lines_content(&file, &source, dependency_rows) {
             let value = dependency_roster_value(file.parent() == Some(ctx.root()), depth);
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
@@ -99,20 +106,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
 fn section_rows(sections: &[Section], name_match: impl Fn(&str) -> bool) -> Vec<usize> {
     sections
         .iter()
-        .filter(|(name, _, _)| name_match(name))
-        .flat_map(|(_, start, end)| *start..=*end)
+        .filter(|section| name_match(&section.name))
+        .flat_map(|section| section.start..=section.end)
         .collect()
-}
-
-fn rows_content(
-    file: &Path,
-    source: &Source,
-    rows: Vec<usize>,
-) -> Option<crate::content::BatchContent> {
-    if rows.is_empty() {
-        return None;
-    }
-    single_file_lines_content(file, source, rows)
 }
 
 /// One `key = value` pair written directly under a top-level `[table]`, with
@@ -180,7 +176,7 @@ fn pair_value_node(pair: Node) -> Option<Node> {
 /// `pyproject.toml`, or any TOML declaring a PEP 621 `[project]` table.
 fn is_python_project_manifest(file: &Path, sections: &[Section]) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
-        || sections.iter().any(|(name, _, _)| name == "project")
+        || sections.iter().any(|section| section.name == "project")
 }
 
 fn is_ordinary_dependency_section(name: &str) -> bool {
@@ -237,8 +233,8 @@ fn python_identity_non_lede_rows(source: &str, sections: &[Section]) -> HashSet<
     let lines: Vec<&str> = source.lines().collect();
     sections
         .iter()
-        .filter(|(name, _, _)| is_pyproject_identity_table(name))
-        .flat_map(|(_, start, end)| (start + 1)..=*end)
+        .filter(|section| is_pyproject_identity_table(&section.name))
+        .flat_map(|section| (section.start + 1)..=section.end)
         .filter(|row| {
             !lines
                 .get(row - 1)
@@ -295,9 +291,6 @@ fn is_pyproject_identity_table(name: &str) -> bool {
 
 // --- section collection ---
 
-/// `(header_name, start_1based, end_1based)` for every top-level
-/// `table` or `[[array-of-tables]]`. End is the row before the next
-/// table/array block or EOF.
 fn collect_sections(tree: &Tree, source: &str) -> Vec<Section> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -317,7 +310,11 @@ fn collect_sections(tree: &Tree, source: &str) -> Vec<Section> {
         .enumerate()
         .map(|(i, (name, row))| {
             let end = headers.get(i + 1).map_or(total_rows, |(_, next)| *next);
-            (name.clone(), row + 1, end)
+            Section {
+                name: name.clone(),
+                start: row + 1,
+                end,
+            }
         })
         .collect()
 }
@@ -515,9 +512,21 @@ mod tests {
         assert_eq!(
             sections,
             vec![
-                ("package".to_string(), 1, 4),
-                ("bin".to_string(), 5, 7),
-                ("dependencies".to_string(), 8, 9),
+                Section {
+                    name: "package".to_string(),
+                    start: 1,
+                    end: 4
+                },
+                Section {
+                    name: "bin".to_string(),
+                    start: 5,
+                    end: 7
+                },
+                Section {
+                    name: "dependencies".to_string(),
+                    start: 8,
+                    end: 9
+                },
             ],
         );
     }
