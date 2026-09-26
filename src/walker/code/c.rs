@@ -11,8 +11,9 @@
 //! (an `#if` splitting a function body).
 //!
 //! - Function definitions are `Callable`; prototypes, typedefs, structs /
-//!   unions / enums, global variables and macros are `Whole`, with one
-//!   body [`Item`] per field or enumerator.
+//!   unions / enums, global variables, macros and declaring macro
+//!   invocations are `Whole`, with one body [`Item`] per field or
+//!   enumerator.
 //! - A non-`inline` `static` in a header is hidden.
 //! - A declaration's doc is the comment run directly above it.
 //!
@@ -139,6 +140,7 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         | "preproc_function_def" => Shape::Whole,
         "preproc_def" if !is_header_guard_define(node, file) => Shape::Whole,
         "ERROR" if misparsed_prototype_declarator(node).is_some() => Shape::Whole,
+        "expression_statement" if is_declaring_macro_invocation(node, file) => Shape::Whole,
         _ => return None,
     };
     // A header's `static inline` definition is the header-only accessor
@@ -251,6 +253,22 @@ fn name_rows(node: Node) -> Vec<usize> {
     rows.sort_unstable();
     rows.dedup();
     rows
+}
+
+/// A file-scope `NAME(args);` with an all-caps callee: a macro invocation
+/// that declares something (`EXPORT_SYMBOL(f);`, `ARRAY_HEAD(List,
+/// struct Item *);`), unlike the statements of a function body that an
+/// `#if` split onto the top level.
+fn is_declaring_macro_invocation(node: Node, file: &SourceFile) -> bool {
+    node.named_child_count() == 1
+        && node
+            .named_child(0)
+            .filter(|call| call.kind() == "call_expression")
+            .and_then(|call| call.child_by_field_name("function"))
+            .is_some_and(|callee| {
+                callee.kind() == "identifier"
+                    && !file.text(callee).chars().any(|c| c.is_ascii_lowercase())
+            })
 }
 
 /// The function declarator of a prototype that tree-sitter-c misparses
@@ -881,6 +899,25 @@ struct s *ok_api(void) NOEXCEPT;
         assert_eq!(rows(&api_1.doc), vec![vec![3]]);
         assert_eq!(api_2.head, vec![5, 6, 7]);
         assert!(api_2.body.is_empty() && api_2.shape == Shape::Whole);
+    }
+
+    #[test]
+    fn c_declaring_macro_invocations_are_listed() {
+        let source = "\
+int fn_1(int x) { return x; }
+EXPORT_SYMBOL(fn_1);
+/* Array of Foo pointers. */
+ARRAY_HEAD(FooArray, struct Foo *);
+MODULE_LICENSE(\"GPL\");
+cleanup(state);
+";
+        let model = model("r6.c", source);
+        assert_eq!(
+            name_rows_of(&model),
+            vec![vec![1], vec![2], vec![4], vec![5]]
+        );
+        assert_eq!(rows(&model.decls[2].doc), vec![vec![3]]);
+        assert_eq!(model.decls[2].shape, Shape::Whole);
     }
 
     #[test]
