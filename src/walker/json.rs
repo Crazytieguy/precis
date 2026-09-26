@@ -306,22 +306,19 @@ fn scripts_chunks(
 
 /// A script row named for one of the conventional entry points.
 fn is_entry_point_script(row: &str) -> bool {
-    let name = row.trim_start().trim_start_matches('"');
-    [
-        "build",
-        "test",
-        "lint",
-        "dev",
-        "start",
-        "check",
-        "typecheck",
-        "format",
-    ]
-    .iter()
-    .any(|entry_point| {
-        name.strip_prefix(entry_point)
-            .is_some_and(|rest| rest.starts_with('"'))
-    })
+    row.trim_start()
+        .strip_prefix('"')
+        .and_then(|rest| rest.split_once('"'))
+        .is_some_and(|(name, _)| is_entry_point_script_name(name))
+}
+
+/// A task or script name for one of the conventional entry points, which
+/// say how to build, test and run a project.
+pub(super) fn is_entry_point_script_name(name: &str) -> bool {
+    matches!(
+        name,
+        "build" | "test" | "lint" | "dev" | "start" | "check" | "typecheck" | "format"
+    )
 }
 
 /// Emit `chunks` as `Scripts` then `ScriptsTail`s, each gated on the one

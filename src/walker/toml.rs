@@ -10,7 +10,7 @@
 //!   only, so the batch stays cheap enough to win an early slot
 //! - `Operational { file }` — `[features]`, Cargo's `[lib]` and `[[bin]]`
 //!   target declarations, and a Python manifest's
-//!   `[project.scripts]` / `[tool.poetry.scripts]`
+//!   `[project.scripts]` / `[tool.poetry.scripts]` and task runner tables
 //! - `Dependencies { file }` — Cargo `[dependencies]` (platform-specific
 //!   ones included) / `[workspace.dependencies]`,
 //!   `[tool.poetry.dependencies]`, and the PEP
@@ -216,8 +216,21 @@ fn is_operational_section(name: &str, python_project_manifest: bool) -> bool {
         || (python_project_manifest && is_scripts_section(name))
 }
 
+/// Console scripts, and the task runner tables that say how to build and
+/// test the project: a whole task table, or a task-per-table runner's
+/// entry-point tasks.
 fn is_scripts_section(name: &str) -> bool {
-    matches!(name, "project.scripts" | "tool.poetry.scripts")
+    matches!(
+        name,
+        "project.scripts"
+            | "tool.poetry.scripts"
+            | "tool.poe.tasks"
+            | "tool.pdm.scripts"
+            | "tool.taskipy.tasks"
+            | "tool.hatch.envs.default.scripts"
+    ) || name
+        .strip_prefix("tool.poe.tasks.")
+        .is_some_and(super::json::is_entry_point_script_name)
 }
 
 /// Rows of a Python identity table that its lede does not take: the author and
@@ -659,6 +672,18 @@ authors = ["Will McGugan <willmcgugan@gmail.com>"]
         assert_eq!(
             section_rows(&sections, |n| is_operational_section(n, false)),
             vec![4, 5, 6, 7, 8, 9, 10, 11],
+        );
+    }
+
+    #[test]
+    fn toml_python_task_runner_entry_points_are_operational() {
+        let source = "[project]\nname = \"demo\"\n\n\
+                      [tool.poe.tasks.test]\ncmd = \"pytest\"\n\n\
+                      [tool.poe.tasks.bump]\nscript = \"demo.bump:bump\"\n";
+        let sections = collect_sections(&parse(source), source);
+        assert_eq!(
+            section_rows(&sections, |n| is_operational_section(n, true)),
+            vec![4, 5, 6],
         );
     }
 

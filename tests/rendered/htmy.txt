@@ -191,22 +191,8 @@ htmy/
     38→class WithContext(Fragment):
     …
     43→    __slots__ = ("_context",)
-    44→
-    45→    def __init__(self, *children: ComponentType, context: Context) -> None:
-    …
-    56→    def htmy_context(self) -> Context:
     …
     64→class ContextAware:
-    …
-    100→    __slots__ = ()
-    101→
-    102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
-    103→
-    104→    def __init_subclass__(cls) -> None:
-    …
-    108→    def in_context(self, *children: ComponentType) -> WithContext:
-    …
-    115→    def to_context(self) -> Context:
     …
     146→class SkipProperty(Exception):
     …
@@ -324,6 +310,21 @@ pyproject.toml
   15→[project.optional-dependencies]
   16→lxml = ["lxml>=6.0.0"]
   …
+  81→[tool.poe.tasks]
+  82→format = "ruff format --check ."
+  83→format-fix = "ruff format ."
+  84→
+  85→lint = "ruff check ."
+  86→lint-fix = "ruff . --fix"
+  87→
+  88→mypy = "mypy ."
+  89→
+  90→check.sequence = ["format", "lint", "mypy"]
+  91→check.ignore_fail = "return_non_zero"
+  92→
+  93→test = "python -m pytest tests"
+  94→
+  95→serve-docs = "zensical serve"
 tests/
   __init__.py (empty)
   conftest.py
