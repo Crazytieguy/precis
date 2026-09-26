@@ -223,11 +223,11 @@ fn doc_above(node: Node, file: &SourceFile) -> Vec<Item> {
 
 /// A directive of a descended feature gate: its rows (through the end
 /// of a multiline condition), the rows of the whole gate, and whether
-/// the gate is a header guard.
+/// the gate has an `#elif` / `#else` alternate.
 struct GateDirective {
     rows: RangeInclusive<usize>,
     gate_rows: RangeInclusive<usize>,
-    in_header_guard: bool,
+    has_alternates: bool,
 }
 
 /// A descended feature gate and the branch of it that holds a node: the
@@ -260,15 +260,17 @@ fn gate_directive(token: Node, enclosing: GateBranch, file: &SourceFile) -> Gate
     GateDirective {
         rows: start_row..=end_row,
         gate_rows: file.node_rows(gate),
-        in_header_guard: is_header_guard(gate, file),
+        has_alternates: gate.child_by_field_name("alternative").is_some(),
     }
 }
 
 /// Adds each feature gate directive to the head of the nearest
 /// declaration inside its gate: the next one, or, for an `#endif` or a
-/// directive opening an empty trailing branch, the previous one. A
-/// directive opening the next declaration's branch also joins its name
-/// rows, unless it opens a header guard. An enclosing gate's directives
+/// directive opening an empty trailing branch, the previous one. When
+/// the gate has alternates, a directive opening the next declaration's
+/// branch also joins its name rows, so the roster doesn't list each
+/// branch's declarations as if all of them held; a single-branch gate's
+/// directive stays out of the roster's cost. An enclosing gate's directives
 /// land on the same declarations as the nested gate's, so a gated
 /// declaration never renders without any of its conditions.
 fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
@@ -295,7 +297,7 @@ fn attach_directives(decls: &mut [DeclInfo], directives: &[GateDirective]) {
             .first()
             .filter(|(first, _)| *first <= gate_end);
         if let Some(&(_, index)) = next {
-            if !directive.in_header_guard {
+            if directive.has_alternates {
                 decls[index].name_rows.extend(directive.rows.clone());
             }
             decls[index].head.extend(directive.rows.clone());
@@ -796,15 +798,15 @@ REGISTER_MODULE(module_fn);
             vec![
                 vec![1, 2],
                 vec![3, 4],
-                vec![14, 15],
-                vec![17, 19],
-                vec![25, 26],
+                vec![15],
+                vec![19],
+                vec![26],
                 vec![27]
             ]
         );
         assert_eq!(
             name_rows_of(&model("krep.h", source)),
-            vec![vec![1, 2], vec![3, 4], vec![14, 15], vec![17, 19]]
+            vec![vec![1, 2], vec![3, 4], vec![15], vec![19]]
         );
     }
 
