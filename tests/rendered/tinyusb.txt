@@ -49,7 +49,6 @@ LICENSE
 README.rst
   1→TinyUSB
   2→=======
-  4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
   …
   31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
   32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
@@ -62,16 +61,7 @@ README.rst
   40→* **Portable:** Supports 50+ MCU families
   41→* **Comprehensive:** Includes CDC, HID, MSC, Audio, and Host support
   42→* **RTOS-friendly:** Works with bare metal, FreeRTOS, RT-Thread, and Mynewt
-  43→
-  44→.. figure:: docs/assets/stack.svg
-  45→   :width: 500px
-  46→   :align: left
-  47→   :alt: stackup
-  48→
-  49→.. raw:: html
-  50→
-  51→   <div class="clear-both"></div>
-  52→
+  …
   53→::
   54→
   55→    .
@@ -292,6 +282,13 @@ src/
     24→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/video/video_device.c
     25→    # host
     26→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/host/usbh.c
+    27→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/host/hub.c
+    28→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/cdc/cdc_host.c
+    29→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/hid/hid_host.c
+    30→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/midi/midi_host.c
+    31→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/msc/msc_host.c
+    32→    ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/class/vendor/vendor_host.c
+    33→    # typec
     …
     39→# Add tinyusb to a existing target
     40→function(tinyusb_target_add TARGET)

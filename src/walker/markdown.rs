@@ -47,7 +47,7 @@ use super::{
 };
 
 mod line_scanned;
-use line_scanned::line_scanned_readme;
+use line_scanned::{line_scanned_readme, rst_chrome_rows};
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
 /// suppresses itself — the outline predecesses every section, so an
@@ -125,7 +125,11 @@ fn readme_batches(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
             &source,
             &ranges,
             None,
-            &BTreeSet::new(),
+            &if markup == ReadmeMarkup::Rst {
+                rst_chrome_rows(&source)
+            } else {
+                BTreeSet::new()
+            },
             headline_emitted,
         );
         return out;

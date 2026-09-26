@@ -117,7 +117,11 @@ never reached the ones answer keys rank.
 - **Chrome** (badges, logos, rules, link definitions, nav menus, and
   tables of contents: lists whose items mostly open with an in-document
   link) is left out wherever it sits, section bodies included. Catalog
-  READMEs lose their category contents list with it.
+  READMEs lose their category contents list with it. A reST README's
+  chrome is the same set in its own syntax: comments, hyperlink
+  targets, substitution definitions, `image`/`figure`/`raw`/`contents`
+  directives, and paragraphs of bare substitution references, grid-table
+  badge rows included.
 - **A document batch cut short by the budget never leaves a fence or
   `<pre>` open**: a verbatim block's opening and closing rows are one
   unit, taken before its body. This covers README sections and the

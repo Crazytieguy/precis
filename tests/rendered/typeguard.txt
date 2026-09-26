@@ -46,8 +46,7 @@ README.rst
   45→   * may clash with other import hooks
   46→
   47→See the documentation_ for further information.
-  48→
-  49→.. _documentation: https://typeguard.readthedocs.io/en/latest/
+  …
 docs/
   api.rst
   conf.py
@@ -224,6 +223,8 @@ src/typeguard/
     663→def check_io(
     …
     668→) -> None:
+    …
+    679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
     …
   _config.py
     …

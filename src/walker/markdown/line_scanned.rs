@@ -273,6 +273,66 @@ fn rst_lede(src_lines: &[&str], rows: &[usize]) -> Option<std::ops::Range<usize>
     Some(start..start + len)
 }
 
+/// 1-based rows of reST decoration, which no `Section` batch shows:
+/// comments, hyperlink targets, substitution definitions and `image`,
+/// `figure`, `raw` and `contents` directives with their indented bodies,
+/// and lines of bare substitution references (`|build| |docs|`) with the
+/// grid-table borders around them.
+pub(super) fn rst_chrome_rows(source: &str) -> BTreeSet<usize> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let is_reference_line = |index: Option<usize>| {
+        index
+            .and_then(|i| src_lines.get(i))
+            .is_some_and(|line| is_substitution_reference_line(line))
+    };
+    let mut rows = BTreeSet::new();
+    let mut open_block_indent: Option<usize> = None;
+    for (i, line) in src_lines.iter().enumerate() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        let indent = line.len() - line.trim_start().len();
+        if open_block_indent.is_some_and(|open| indent > open) {
+            rows.insert(i + 1);
+            continue;
+        }
+        open_block_indent = None;
+        let markup_body = trimmed
+            .strip_prefix("..")
+            .filter(|rest| rest.is_empty() || rest.starts_with(' '))
+            .map(str::trim);
+        if markup_body.is_some_and(|body| match body.split_once("::") {
+            _ if body.starts_with(['|', '_']) => true,
+            Some((name, _)) if !name.contains(char::is_whitespace) => {
+                matches!(name, "image" | "figure" | "raw" | "contents")
+            }
+            _ => !body.starts_with('['),
+        }) {
+            open_block_indent = Some(indent);
+            rows.insert(i + 1);
+        } else if is_reference_line(Some(i))
+            || (trimmed.starts_with('+')
+                && trimmed.chars().all(|c| matches!(c, '+' | '-' | '='))
+                && (is_reference_line(i.checked_sub(1)) || is_reference_line(Some(i + 1))))
+        {
+            rows.insert(i + 1);
+        }
+    }
+    rows
+}
+
+/// `|Build Status| |Docs|` or a grid-table row of them (`| |1| |2| |`):
+/// text between pipes is blank or a whole substitution name.
+fn is_substitution_reference_line(line: &str) -> bool {
+    let line = line.trim();
+    line.starts_with('|')
+        && line.split('|').any(|piece| !piece.trim().is_empty())
+        && line
+            .split('|')
+            .all(|piece| piece.trim().is_empty() || piece.trim() == piece)
+}
+
 /// Non-blank rows (1-based) of `[start, end]` outside `.. directive::`
 /// blocks and their indented continuations — where a lede can sit.
 fn rst_content_rows(src_lines: &[&str], start: usize, end: usize) -> Vec<usize> {
@@ -471,5 +531,42 @@ Overview trailing details stay here.
         }
         assert_eq!(headline_spans, vec![(1, 2), (12, 12)]);
         assert_eq!(section_spans, vec![(4, 7), (14, 14)]);
+    }
+
+    #[test]
+    fn line_scanned_rst_chrome_is_badges_images_and_targets() {
+        let src = "\
+Tool
+====
+
++---------+
+| |1| |2| |
++---------+
+
+.. |1| image:: https://ci.example/badge
+    :target: https://ci.example
+.. |2| image:: https://docs.example/badge
+
+|Build Status| |Docs|
+
+Tool does the useful thing. See the `guide`_.
+
+| A line block keeps
+| its prose.
+
+.. _guide: https://guide.example
+.. links
+
+.. [1] A footnote stays.
+
+.. code-block:: sh
+
+    make
+
+.. figure:: logo.svg
+   :alt: Logo
+";
+        let rows: Vec<usize> = rst_chrome_rows(src).into_iter().collect();
+        assert_eq!(rows, vec![4, 5, 6, 8, 9, 10, 12, 19, 20, 28, 29]);
     }
 }

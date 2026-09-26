@@ -46,6 +46,20 @@ README.rst
   32→     * White Light Generation -> Whitelightgenerator
   33→     * All the Way            -> All the Way...
   …
+  90→Install
+  91→-------
+  92→
+  93→You can install beets by typing ``pip install beets`` or directly from Github
+  94→(see details here_). Beets has also been packaged in the `software
+  95→repositories`_ of several distributions. Check out the `Getting Started`_ guide
+  96→for more information.
+  …
+  112→Read More
+  113→---------
+  114→
+  115→Learn more about beets at `its Web site`_. Follow `@b33ts`_ on Mastodon for news
+  116→and updates.
+  …
 README_kr.rst
 SECURITY.md
 beets/
@@ -224,21 +238,10 @@ beetsplug/
       78→VOLUME_MAX = 100
       79→
       80→SAFE_COMMANDS = (
-      81→    # Commands that are available when unauthenticated.
-      82→    "close",
-      83→    "commands",
-      84→    "notcommands",
-      85→    "password",
-      86→    "ping",
-      87→)
       …
       90→SUBSYSTEMS = [
       …
       110→class BPDError(Exception):
-      …
-      115→    def __init__(self, code, message, cmd_name="", index=0):
-      …
-      121→    template = Template("$resp [$code@$index] {$cmd_name} $message")
       …
       138→def make_bpd_error(s_code, s_message):
       …
@@ -276,10 +279,6 @@ beetsplug/
       1583→class BPDPlugin(BeetsPlugin):
       …
       1588→    def __init__(self):
-      …
-      1601→    def start_bpd(self, lib, host, port, password, volume, ctrl_port):
-      …
-      1607→    def commands(self):
       …
     gstplayer.py
   bpm.py

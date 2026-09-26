@@ -85,9 +85,7 @@ README.rst
   111→monthly donations directly to the project.
   112→
   113→``pluggy`` is part of the ``pytest-dev`` project, see more details in the `pytest collective`_.
-  114→
-  115→.. _Open Collective: https://opencollective.com
-  116→.. _pytest collective: https://opencollective.com/pytest
+  …
 RELEASING.rst
 SECURITY.md
 TIDELIFT.rst
@@ -196,7 +194,10 @@ src/pluggy/
     72→) -> None:
     …
     82→def _multicall(
-    …
+    83→    hook_name: str,
+    84→    hook_impls: Sequence[HookImpl],
+    85→    caller_kwargs: Mapping[str, object],
+    86→    firstresult: bool,
     87→) -> object | list[object]:
     …
   _hooks.py
