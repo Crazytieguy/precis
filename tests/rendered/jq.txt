@@ -95,7 +95,6 @@ README.md
   41→- autoconf
   42→
   43→#### Instructions
-  44→
   45→```console
   46→git submodule update --init    # if building from git to get oniguruma
   47→autoreconf -i                  # if building from git
@@ -109,7 +108,7 @@ README.md
   55→Build a statically linked version:
   56→
   57→```console
-  …
+  58→make LDFLAGS=-all-static
   59→```
   …
   67→## Community & Support

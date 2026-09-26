@@ -1,4 +1,4 @@
-Score(3000)=0.848 I=0.900 C=0.800 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.750/0.803/0.839/0.848/0.707/0.595/0.498
+Score(3000)=0.847 I=0.898 C=0.798 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/4327/6240/9000)=0.805/0.826/0.857/0.847/0.707/0.595/0.498
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -29,42 +29,42 @@ Score(3000)=0.848 I=0.900 C=0.800 ns_rows≤3K=16/40 grid(1000/1442/2080/3000/43
 | walker |  | 650 | 14 | Fs::DirListing { dir: scripts } |  |  | 0.627 |
 | walker |  | 697 | 47 | Fs::DirListing { dir: config/m4 } |  |  | 0.627 |
 | walker |  | 769 | 72 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.628 |
-| walker |  | 821 | 52 | Markdown::CommandBlock { file: README.md, row: 24 } |  |  | 0.628 |
 | ns | 840 |  | 233 | src/ listing (complete) - the flat core | 1.7 |  | 0.743 |
-| walker |  | 873 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.743 |
-| walker |  | 916 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.749 |
-| walker |  | 920 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.749 |
-| walker |  | 924 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.749 |
-| walker |  | 928 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.749 |
-| walker |  | 932 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.749 |
-| walker |  | 936 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.749 |
-| walker |  | 940 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.749 |
-| walker |  | 944 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.749 |
-| ns | 1005 |  | 165 | tests/ listing (complete) | 1.8 |  | 0.652 |
-| walker |  | 1109 | 165 | Fs::DirListing { dir: tests } |  |  | 0.794 |
-| ns | 1113 |  | 108 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.805 |
-| ns | 1160 |  | 47 | CI workflows and vendored dependencies (complete listings) | 1.10 |  | 0.808 |
-| walker |  | 1192 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.808 |
-| walker |  | 1368 | 176 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.811 |
-| ns | 1385 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.797 |
-| walker |  | 1420 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.798 |
-| ns | 1503 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.784 |
-| walker |  | 1601 | 181 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.824 |
-| ns | 1749 |  | 246 | jq.h: input/debug/stderr callbacks and the attribute store | 2.3 |  | 0.792 |
-| walker |  | 1757 | 156 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.822 |
-| walker |  | 1923 | 166 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.833 |
-| ns | 1979 |  | 230 | jq.h: jq_util_input_* file/stdin reader and jq_set_colors | 2.4 |  | 0.812 |
-| walker |  | 2021 | 98 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 4, line: 0 } |  |  | 0.839 |
-| walker |  | 2119 | 98 | Fs::DirListing { dir: sig } |  |  | 0.839 |
-| ns | 2202 |  | 223 | main.c usage(): synopsis and one-paragraph description | 3.1 |  | 0.818 |
-| walker |  | 2465 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.818 |
-| walker |  | 2480 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.818 |
-| walker |  | 2485 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.818 |
-| ns | 2653 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.778 |
-| walker |  | 2668 | 183 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.778 |
-| walker |  | 2783 | 115 | Plaintext::DeclSurface { file: compile-ios.sh } |  |  | 0.778 |
-| ns | 3043 |  | 390 | main.c usage(): program, argument and mode options (-f through --) | 3.3 |  | 0.745 |
-| walker |  | 3119 | 336 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.830 |
+| walker |  | 924 | 155 | Markdown::CommandBlock { file: README.md, row: 45 } |  |  | 0.802 |
+| walker |  | 976 | 52 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.802 |
+| ns | 1005 |  | 165 | tests/ listing (complete) | 1.8 |  | 0.698 |
+| walker |  | 1019 | 43 | Fs::DirListing { dir: docs/content/manual } |  |  | 0.704 |
+| walker |  | 1023 | 4 | Fs::DirListing { dir: docs/content/manual/dev } |  |  | 0.704 |
+| walker |  | 1027 | 4 | Fs::DirListing { dir: docs/content/manual/v1.3 } |  |  | 0.704 |
+| walker |  | 1031 | 4 | Fs::DirListing { dir: docs/content/manual/v1.4 } |  |  | 0.704 |
+| walker |  | 1035 | 4 | Fs::DirListing { dir: docs/content/manual/v1.5 } |  |  | 0.704 |
+| walker |  | 1039 | 4 | Fs::DirListing { dir: docs/content/manual/v1.6 } |  |  | 0.704 |
+| walker |  | 1043 | 4 | Fs::DirListing { dir: docs/content/manual/v1.7 } |  |  | 0.704 |
+| walker |  | 1047 | 4 | Fs::DirListing { dir: docs/content/manual/v1.8 } |  |  | 0.704 |
+| ns | 1113 |  | 108 | docs/ and docs/content/manual listings (complete) | 1.9 |  | 0.729 |
+| ns | 1160 |  | 47 | CI workflows and vendored dependencies (complete listings) | 1.10 |  | 0.736 |
+| walker |  | 1212 | 165 | Fs::DirListing { dir: tests } |  |  | 0.848 |
+| walker |  | 1295 | 83 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.848 |
+| ns | 1385 |  | 225 | jq.h: jq_state lifecycle - init, compile, start, next, teardown | 2.1 |  | 0.809 |
+| walker |  | 1471 | 176 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 0, line: 0 } |  |  | 0.836 |
+| ns | 1503 |  | 118 | jq.h: debug-trace flags and halt / exit-code / error-message API | 2.2 |  | 0.814 |
+| walker |  | 1523 | 52 | Code::CodeKey { rung: Decl, file: src/jq.h, decl: 1, sub: 0, line: 11 } |  |  | 0.821 |
+| walker |  | 1704 | 181 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 1, line: 0 } |  |  | 0.861 |
+| ns | 1749 |  | 246 | jq.h: input/debug/stderr callbacks and the attribute store | 2.3 |  | 0.828 |
+| walker |  | 1860 | 156 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 2, line: 0 } |  |  | 0.857 |
+| ns | 1979 |  | 230 | jq.h: jq_util_input_* file/stdin reader and jq_set_colors | 2.4 |  | 0.825 |
+| walker |  | 2026 | 166 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 3, line: 0 } |  |  | 0.846 |
+| walker |  | 2124 | 98 | Code::CodeKey { rung: Names, file: src/jq.h, decl: 0, sub: 4, line: 0 } |  |  | 0.872 |
+| ns | 2202 |  | 223 | main.c usage(): synopsis and one-paragraph description | 3.1 |  | 0.851 |
+| walker |  | 2222 | 98 | Fs::DirListing { dir: sig } |  |  | 0.851 |
+| walker |  | 2568 | 346 | Plaintext::Whole { file: Dockerfile } |  |  | 0.851 |
+| walker |  | 2583 | 15 | Plaintext::DeclSurface { file: docs/public/robots.txt } |  |  | 0.851 |
+| walker |  | 2588 | 5 | Fs::DirListing { dir: tests/torture } |  |  | 0.851 |
+| ns | 2653 |  | 451 | main.c usage(): input and output-formatting options (-n through --seq) | 3.2 |  | 0.809 |
+| walker |  | 2703 | 115 | Plaintext::DeclSurface { file: compile-ios.sh } |  |  | 0.809 |
+| walker |  | 2938 | 235 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.809 |
+| ns | 3043 |  | 390 | main.c usage(): program, argument and mode options (-f through --) | 3.3 |  | 0.775 |
+| walker |  | 3119 | 181 | Markdown::Section { file: README.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.830 |
 | walker |  | 3206 | 87 | Code::CodeKey { rung: Doc, file: src/jq.h, decl: 34, sub: 0, line: 60 } |  |  | 0.830 |
 | ns | 3210 |  | 167 | main.c: process exit-status codes | 3.4 |  | 0.814 |
 | ns | 3433 |  | 223 | main.c: the undocumented flags (--debug-dump-disasm, --debug-trace, --run-tests) | 3.5 |  | 0.795 |
