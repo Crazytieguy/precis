@@ -16,14 +16,15 @@ Score(3000)=0.838 I=0.962 C=0.730 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | walker |  | 315 | 12 | Fs::DirListing { dir: test } |  |  | 0.816 |
 | ns | 330 |  | 35 | Complete listings of src/, test/, .github/ and .github/workflows/ | 1.6 |  | 0.827 |
 | ns | 397 |  | 67 | All seven README `##` section headings | 1.7 |  | 0.736 |
-| walker |  | 459 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.850 |
-| walker |  | 459 | 0 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.850 |
-| walker |  | 532 | 73 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.851 |
-| ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.757 |
+| walker |  | 408 | 93 | Json::Scripts { file: package.json } |  |  | 0.737 |
+| ns | 540 |  | 143 | package.json identity and legacy entry-point fields | 1.8 |  | 0.659 |
+| walker |  | 552 | 144 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.757 |
+| walker |  | 552 | 0 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.757 |
 | ns | 627 |  | 87 | package.json `exports` conditional map | 1.9 | 1.8 | 0.693 |
-| walker |  | 744 | 212 | Json::Entry { file: package.json } |  |  | 0.872 |
-| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.726 |
-| walker |  | 979 | 235 | Json::Scripts { file: package.json } |  |  | 0.739 |
+| walker |  | 696 | 144 | Json::ScriptsTail { file: package.json } |  |  | 0.696 |
+| walker |  | 769 | 73 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.697 |
+| ns | 826 |  | 199 | src/index.ts: the six exported type aliases in full | 1.10 | 1.3 | 0.580 |
+| walker |  | 979 | 210 | Json::Entry { file: package.json } |  |  | 0.739 |
 | ns | 1032 |  | 206 | The complete `Emitter<Events>` interface with all overloads | 2.1 | 1.3 | 0.658 |
 | ns | 1110 |  | 78 | `mitt()` factory JSDoc and signature | 2.2 | 1.3 | 0.628 |
 | walker |  | 1139 | 160 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.736 |

@@ -14,10 +14,11 @@ Score(3000)=0.884 I=0.937 C=0.834 ns_rows≤3K=20/61 grid(1000/1442/2080/3000/43
 | walker |  | 285 | 71 | Fs::DirListing { dir: src } |  |  | 0.743 |
 | walker |  | 319 | 34 | Json::Dependencies { file: package.json } |  |  | 0.743 |
 | ns | 334 |  | 115 | The `Drawer` namespace object — the entire public component set | 1.4 |  | 0.620 |
-| walker |  | 342 | 23 | Plaintext::DeclSurface { file: pnpm-workspace.yaml } |  |  | 0.620 |
-| walker |  | 394 | 52 | Fs::DirListing { dir: test } |  |  | 0.622 |
-| ns | 402 |  | 68 | README: the unmaintained notice (whole file) | 1.5 |  | 0.618 |
-| walker |  | 531 | 137 | Json::Scripts { file: package.json } |  |  | 0.629 |
+| walker |  | 401 | 82 | Json::Scripts { file: package.json } |  |  | 0.623 |
+| ns | 402 |  | 68 | README: the unmaintained notice (whole file) | 1.5 |  | 0.620 |
+| walker |  | 456 | 55 | Json::ScriptsTail { file: package.json } |  |  | 0.627 |
+| walker |  | 479 | 23 | Plaintext::DeclSurface { file: pnpm-workspace.yaml } |  |  | 0.627 |
+| walker |  | 531 | 52 | Fs::DirListing { dir: test } |  |  | 0.629 |
 | ns | 588 |  | 186 | Every top-level export declaration in src/index.tsx (names only) | 1.6 |  | 0.552 |
 | walker |  | 703 | 172 | Json::Entry { file: package.json } |  |  | 0.740 |
 | ns | 735 |  | 147 | src/index.tsx imports: Radix dialog, style.css, and the first hook modules | 1.7 |  | 0.676 |

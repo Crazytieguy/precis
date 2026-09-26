@@ -24,16 +24,17 @@ Score(3000)=0.722 I=0.919 C=0.567 ns_rows≤3K=22/55 grid(1000/1442/2080/3000/43
 | walker |  | 497 | 34 | Json::Runtime { file: package.json } |  |  | 0.743 |
 | ns | 533 |  | 122 | npm scripts block | 1.6 |  | 0.703 |
 | walker |  | 542 | 45 | Fs::DirListing { dir: widgets/containers } |  |  | 0.786 |
-| walker |  | 561 | 19 | Fs::DirListing { dir: .github } |  |  | 0.786 |
-| walker |  | 581 | 20 | Fs::DirListing { dir: .github/workflows } |  |  | 0.786 |
-| ns | 630 |  | 97 | Published `files` allow-list and the node engines floor | 1.7 |  | 0.733 |
-| walker |  | 684 | 103 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.744 |
-| walker |  | 706 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.745 |
-| walker |  | 746 | 40 | Markdown::CommandBlock { file: README.md, row: 69 } |  |  | 0.745 |
-| ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.750 |
-| walker |  | 853 | 107 | Json::Entry { file: package.json } |  |  | 0.959 |
-| ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.903 |
-| walker |  | 973 | 120 | Json::Scripts { file: package.json } |  |  | 0.943 |
+| walker |  | 584 | 42 | Json::Scripts { file: package.json } |  |  | 0.792 |
+| walker |  | 603 | 19 | Fs::DirListing { dir: .github } |  |  | 0.792 |
+| walker |  | 623 | 20 | Fs::DirListing { dir: .github/workflows } |  |  | 0.793 |
+| ns | 630 |  | 97 | Published `files` allow-list and the node engines floor | 1.7 |  | 0.739 |
+| walker |  | 726 | 103 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.751 |
+| walker |  | 748 | 22 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.751 |
+| ns | 759 |  | 129 | README tagline plus every top-level heading location | 1.8 |  | 0.755 |
+| walker |  | 788 | 40 | Markdown::CommandBlock { file: README.md, row: 69 } |  |  | 0.755 |
+| walker |  | 870 | 82 | Json::ScriptsTail { file: package.json } |  |  | 0.790 |
+| ns | 891 |  | 132 | index.js: shebang and the module wiring of the executable | 1.9 |  | 0.745 |
+| walker |  | 973 | 103 | Json::Entry { file: package.json } |  |  | 0.943 |
 | walker |  | 1025 | 52 | Fs::DirListing { dir: docs } |  |  | 0.944 |
 | walker |  | 1034 | 9 | Fs::DirListing { dir: docs/src } |  |  | 0.944 |
 | walker |  | 1047 | 13 | Fs::DirListing { dir: docs/src/pages } |  |  | 0.944 |

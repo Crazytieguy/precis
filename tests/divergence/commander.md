@@ -1,4 +1,4 @@
-Score(3000)=0.582 I=0.794 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.620/0.620/0.600/0.582/0.671/0.668/0.536
+Score(3000)=0.582 I=0.794 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/4327/6240/9000)=0.596/0.620/0.600/0.582/0.671/0.668/0.536
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -19,23 +19,24 @@ Score(3000)=0.582 I=0.794 C=0.427 ns_rows≤3K=27/65 grid(1000/1442/2080/3000/43
 | walker |  | 397 | 20 | Fs::DirListing { dir: .github } |  |  | 0.606 |
 | walker |  | 407 | 10 | Fs::DirListing { dir: .github/workflows } |  |  | 0.606 |
 | ns | 441 |  | 105 | index.js: the complete class + error export block | 1.7 |  | 0.495 |
-| walker |  | 500 | 93 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.497 |
-| walker |  | 546 | 46 | Markdown::CommandBlock { file: Readme.md, row: 1094 } |  |  | 0.497 |
-| walker |  | 570 | 24 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.497 |
-| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.409 |
-| walker |  | 595 | 25 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.409 |
-| walker |  | 606 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.410 |
-| ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.573 |
-| walker |  | 703 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.653 |
-| ns | 928 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.583 |
-| walker |  | 940 | 237 | Fs::DirListing { dir: examples } |  |  | 0.590 |
-| walker |  | 954 | 14 | Code::CodeKey { rung: Doc, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.611 |
-| walker |  | 1112 | 158 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.710 |
-| walker |  | 1189 | 77 | Markdown::Section { file: Readme.md, section_index: 29, keeps_default_concavity: false } |  |  | 0.710 |
-| ns | 1213 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.630 |
-| ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.613 |
-| ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.578 |
-| walker |  | 1450 | 261 | Json::Scripts { file: package.json } |  |  | 0.584 |
+| walker |  | 464 | 57 | Json::Scripts { file: package.json } |  |  | 0.508 |
+| walker |  | 557 | 93 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.510 |
+| ns | 577 |  | 136 | esm.mjs — the named-export ESM wrapper in full | 1.8 |  | 0.420 |
+| walker |  | 603 | 46 | Markdown::CommandBlock { file: Readme.md, row: 1094 } |  |  | 0.420 |
+| walker |  | 627 | 24 | Markdown::Section { file: Readme.md, section_index: 2, keeps_default_concavity: false } |  |  | 0.420 |
+| walker |  | 652 | 25 | Markdown::Section { file: Readme.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.420 |
+| walker |  | 663 | 11 | Code::CodeKey { rung: Names, file: esm.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.421 |
+| ns | 679 |  | 102 | Repository root listing (complete) | 1.9 |  | 0.580 |
+| walker |  | 760 | 97 | Code::CodeKey { rung: Decl, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.660 |
+| ns | 928 |  | 249 | docs/terminology.md in full — the domain vocabulary | 1.10 |  | 0.589 |
+| walker |  | 997 | 237 | Fs::DirListing { dir: examples } |  |  | 0.596 |
+| walker |  | 1011 | 14 | Code::CodeKey { rung: Doc, file: esm.mjs, decl: 1, sub: 0, line: 4 } |  |  | 0.617 |
+| walker |  | 1169 | 158 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.716 |
+| ns | 1213 |  | 285 | docs/parsing-and-hooks.md in full — the parse life cycle | 1.11 |  | 0.636 |
+| ns | 1312 |  | 99 | Readme: the library's job, in five lines of prose | 1.12 |  | 0.619 |
+| walker |  | 1373 | 204 | Json::ScriptsTail { file: package.json } |  |  | 0.620 |
+| ns | 1446 |  | 134 | Readme Quick Start: the complete split.js program | 1.13 |  | 0.584 |
+| walker |  | 1450 | 77 | Markdown::Section { file: Readme.md, section_index: 29, keeps_default_concavity: false } |  |  | 0.584 |
 | ns | 1524 |  | 78 | Readme Quick Start console transcript (unknown-option error + suggestion) | 1.14 | 1.13 | 0.569 |
 | ns | 1657 |  | 133 | Command roster 1/10 — construction, subcommands, help/output configuration (lib/command.js 13-288) | 2.1 |  | 0.542 |
 | walker |  | 1730 | 280 | Json::Entry { file: package.json } |  |  | 0.586 |

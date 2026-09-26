@@ -11,9 +11,10 @@ Score(3000)=0.631 I=0.833 C=0.478 ns_rows≤3K=21/54 grid(1000/1442/2080/3000/43
 | walker |  | 189 | 32 | Json::Dependencies { file: package.json } |  |  | 1.000 |
 | ns | 205 |  | 113 | src/index.js in full — the environment dispatch | 1.3 |  | 0.755 |
 | walker |  | 221 | 32 | Json::Runtime { file: package.json } |  |  | 0.764 |
-| walker |  | 289 | 68 | Json::Entry { file: package.json } |  |  | 0.776 |
-| ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.803 |
-| walker |  | 395 | 106 | Json::Scripts { file: package.json } |  |  | 0.821 |
+| walker |  | 266 | 45 | Json::Scripts { file: package.json } |  |  | 0.767 |
+| walker |  | 327 | 61 | Json::ScriptsTail { file: package.json } |  |  | 0.782 |
+| ns | 328 |  | 123 | package.json identity, entry points, engines, license | 1.4 |  | 0.748 |
+| walker |  | 395 | 68 | Json::Entry { file: package.json } |  |  | 0.821 |
 | ns | 436 |  | 108 | package.json `scripts` — every build/test/lint entry point | 1.5 |  | 0.829 |
 | walker |  | 586 | 191 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.866 |
 | walker |  | 611 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.866 |

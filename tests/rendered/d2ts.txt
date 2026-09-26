@@ -75,10 +75,6 @@ eslint.base.mjs
 examples/
   basic.ts
   d2ql/
-    README.md
-    basic_select.ts
-    functions.ts
-    …
   electric/
     CHANGELOG.md
     README.md
@@ -219,22 +215,16 @@ packages/
       5→  "description": "D2TS is a TypeScript implementation of Differential Dataflow.",
       …
       20→  "type": "module",
-      21→  "main": "dist/index.js",
-      22→  "types": "dist/index.d.ts",
-      23→  "exports": {
-      24→    ".": {
-      25→      "types": "./dist/index.d.ts",
-      26→      "default": "./dist/index.js"
-      27→    },
-      28→    "./sqlite": {
-      29→      "types": "./dist/sqlite/index.d.ts",
-      30→      "default": "./dist/sqlite/index.js"
-      31→    },
-      32→    "./electric": {
-      33→      "types": "./dist/electric/index.d.ts",
-      34→      "default": "./dist/electric/index.js"
-      35→    }
-      36→  },
+      …
+      37→  "scripts": {
+      38→    "build": "tsc",
+      39→    "test": "vitest run",
+      40→    "lint": "eslint './src/**/*.ts' './tests/**/*.ts' --config eslint.config.mjs",
+      41→    "lint:fix": "eslint src/**/*.ts tests/**/*.ts --fix",
+      42→    "typecheck": "tsc --noEmit",
+      43→    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json}\" \"tests/**/*.{ts,tsx,js,jsx,json}\"",
+      44→    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json}\" \"tests/**/*.{ts,tsx,js,jsx,json}\""
+      45→  },
       …
       73→  "dependencies": {
       74→    "@types/murmurhash-js": "^1.0.6",

@@ -146,43 +146,49 @@ Score(3000)=0.662 I=0.865 C=0.506 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 5330 | 77 | Json::Identity { file: packages/app-client/package.json } |  |  | 0.720 |
 | ns | 5361 |  | 228 | createServer: the ordered middleware stack and route registration | 3.4 | 3.1 | 0.700 |
 | walker |  | 5381 | 51 | Json::Runtime { file: packages/app-client/package.json } |  |  | 0.700 |
-| walker |  | 5581 | 200 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.700 |
+| walker |  | 5474 | 93 | Json::Scripts { file: packages/app-client/package.json } |  |  | 0.700 |
+| walker |  | 5581 | 107 | Json::ScriptsTail { file: packages/app-client/package.json } |  |  | 0.700 |
 | walker |  | 5658 | 77 | Json::Identity { file: packages/app-server/package.json } |  |  | 0.700 |
 | walker |  | 5709 | 51 | Json::Runtime { file: packages/app-server/package.json } |  |  | 0.700 |
+| walker |  | 5800 | 91 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.700 |
 | ns | 5858 |  | 497 | Every environment variable the server reads, with its config section | 3.5 |  | 0.676 |
-| walker |  | 5937 | 228 | Json::Dependencies { file: packages/app-server/package.json } |  |  | 0.676 |
-| walker |  | 6014 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.676 |
-| walker |  | 6028 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.676 |
-| walker |  | 6045 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.676 |
-| walker |  | 6078 | 33 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.676 |
+| walker |  | 5990 | 190 | Json::ScriptsTail { file: packages/app-server/package.json } |  |  | 0.677 |
 | ns | 6084 |  | 226 | POST /api/notes: the zod request schema and the payload-size limit | 3.6 | 3.1 | 0.663 |
-| walker |  | 6163 | 85 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.663 |
-| walker |  | 6242 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.663 |
-| walker |  | 6275 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.663 |
+| walker |  | 6216 | 226 | Json::Dependencies { file: packages/app-server/package.json } |  |  | 0.663 |
 | ns | 6281 |  | 197 | The stored note record and the note repository's method set | 3.7 |  | 0.648 |
-| walker |  | 6326 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.648 |
-| walker |  | 6475 | 149 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.648 |
-| ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.640 |
-| walker |  | 6554 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.640 |
-| walker |  | 6605 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.640 |
-| walker |  | 6719 | 114 | Json::Dependencies { file: packages/lib/package.json } |  |  | 0.640 |
+| walker |  | 6293 | 77 | Json::Identity { file: packages/docs/package.json } |  |  | 0.648 |
+| walker |  | 6307 | 14 | Json::Entry { file: packages/docs/package.json } |  |  | 0.648 |
+| walker |  | 6324 | 17 | Json::Runtime { file: packages/docs/package.json } |  |  | 0.648 |
+| walker |  | 6357 | 33 | Json::Dependencies { file: packages/docs/package.json } |  |  | 0.648 |
+| walker |  | 6411 | 54 | Json::Scripts { file: packages/docs/package.json } |  |  | 0.648 |
+| walker |  | 6442 | 31 | Json::ScriptsTail { file: packages/docs/package.json } |  |  | 0.648 |
+| ns | 6484 |  | 203 | The three storage drivers behind the unstorage abstraction | 3.8 |  | 0.641 |
+| walker |  | 6521 | 79 | Json::Identity { file: packages/crypto/package.json } |  |  | 0.641 |
+| walker |  | 6554 | 33 | Json::Dependencies { file: packages/crypto/package.json } |  |  | 0.641 |
+| walker |  | 6605 | 51 | Json::Runtime { file: packages/crypto/package.json } |  |  | 0.641 |
+| walker |  | 6678 | 73 | Json::Scripts { file: packages/crypto/package.json } |  |  | 0.641 |
+| walker |  | 6754 | 76 | Json::ScriptsTail { file: packages/crypto/package.json } |  |  | 0.641 |
 | ns | 6772 |  | 288 | Error catalogue: every note and auth error code with its status | 3.9 |  | 0.628 |
-| walker |  | 6843 | 124 | Json::Entry { file: packages/lib/package.json } |  |  | 0.628 |
-| ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.621 |
-| walker |  | 6990 | 147 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.621 |
-| walker |  | 7070 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.621 |
-| walker |  | 7121 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.621 |
+| walker |  | 6833 | 79 | Json::Identity { file: packages/lib/package.json } |  |  | 0.628 |
+| walker |  | 6884 | 51 | Json::Runtime { file: packages/lib/package.json } |  |  | 0.628 |
+| walker |  | 6957 | 73 | Json::Scripts { file: packages/lib/package.json } |  |  | 0.628 |
+| ns | 6987 |  | 215 | Optional authentication: the two middlewares and the users source | 3.10 |  | 0.622 |
+| walker |  | 7035 | 78 | Json::ScriptsTail { file: packages/lib/package.json } |  |  | 0.622 |
+| walker |  | 7147 | 112 | Json::Dependencies { file: packages/lib/package.json } |  |  | 0.622 |
 | ns | 7186 |  | 199 | Expired-note deletion task and its config wiring | 3.11 | 3.5 | 0.614 |
-| walker |  | 7205 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.614 |
-| walker |  | 7349 | 144 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.614 |
+| walker |  | 7269 | 122 | Json::Entry { file: packages/lib/package.json } |  |  | 0.614 |
+| walker |  | 7349 | 80 | Json::Identity { file: packages/cli/package.json } |  |  | 0.614 |
+| walker |  | 7400 | 51 | Json::Runtime { file: packages/cli/package.json } |  |  | 0.614 |
 | ns | 7406 |  | 220 | The two server entry points: node bootstrap and Cloudflare worker | 3.12 | 3.4 | 0.604 |
-| walker |  | 7498 | 149 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.604 |
-| walker |  | 7512 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.604 |
+| walker |  | 7484 | 84 | Json::Entry { file: packages/cli/package.json } |  |  | 0.604 |
+| walker |  | 7569 | 85 | Json::Scripts { file: packages/cli/package.json } |  |  | 0.604 |
 | ns | 7575 |  | 169 | cli.ts: the three subcommands and the citty entry point | 4.1 |  | 0.603 |
+| walker |  | 7635 | 66 | Json::ScriptsTail { file: packages/cli/package.json } |  |  | 0.603 |
 | ns | 7705 |  | 130 | Complete file roster of packages/cli | 4.2 |  | 0.618 |
-| walker |  | 7803 | 291 | Json::Dependencies { file: packages/app-client/package.json } |  |  | 0.618 |
+| walker |  | 7777 | 142 | Json::Dependencies { file: packages/cli/package.json } |  |  | 0.618 |
+| walker |  | 7791 | 14 | Fs::DirListing { dir: .github/ISSUE_TEMPLATE } |  |  | 0.618 |
 | ns | 7969 |  | 264 | `enclosed create`: every flag, its description and its short alias | 4.3 | 4.1 | 0.608 |
-| walker |  | 8082 | 279 | Json::Scripts { file: packages/app-server/package.json } |  |  | 0.608 |
+| walker |  | 8082 | 291 | Json::Dependencies { file: packages/app-client/package.json } |  |  | 0.608 |
 | walker |  | 8117 | 35 | Plaintext::DeclSurface { file: packages/app-client/public/robots.txt } |  |  | 0.608 |
 | walker |  | 8149 | 32 | Code::CodeKey { rung: Names, file: packages/crypto/src/api-definition.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.608 |
 | ns | 8227 |  | 258 | `enclosed view`: arguments, and `enclosed config` set/get/delete/reset | 4.4 | 4.1 | 0.598 |

@@ -1,4 +1,4 @@
-Score(3000)=0.620 I=0.849 C=0.453 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.712/0.701/0.588/0.620/0.542/0.429/0.487
+Score(3000)=0.620 I=0.849 C=0.453 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.691/0.701/0.588/0.620/0.542/0.429/0.487
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,16 +15,17 @@ Score(3000)=0.620 I=0.849 C=0.453 ns_rows≤3K=19/51 grid(1000/1442/2080/3000/43
 | walker |  | 368 | 31 | Json::Runtime { file: package.json } |  |  | 0.754 |
 | walker |  | 418 | 50 | Json::Entry { file: package.json } |  |  | 0.755 |
 | ns | 443 |  | 147 | Readme tagline + canonical quick-start snippet | 1.5 |  | 0.793 |
-| walker |  | 546 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.793 |
-| walker |  | 607 | 61 | Markdown::CommandBlock { file: Readme.md, row: 163 } |  |  | 0.793 |
-| ns | 652 |  | 209 | npm scripts + engines | 1.6 |  | 0.708 |
-| ns | 678 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.723 |
-| walker |  | 694 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.723 |
-| ns | 789 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.682 |
-| walker |  | 795 | 101 | Fs::DirListing { dir: examples } |  |  | 0.685 |
-| walker |  | 928 | 133 | Code::CodeKey { rung: Names, file: lib/express.js, decl: 0, sub: 0, line: 0 } |  |  | 0.787 |
-| ns | 962 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.693 |
-| walker |  | 1104 | 176 | Json::Scripts { file: package.json } |  |  | 0.776 |
+| walker |  | 472 | 54 | Json::Scripts { file: package.json } |  |  | 0.796 |
+| walker |  | 600 | 128 | Markdown::HeadingsOutline { file: Readme.md } |  |  | 0.796 |
+| ns | 652 |  | 209 | npm scripts + engines | 1.6 |  | 0.727 |
+| walker |  | 661 | 61 | Markdown::CommandBlock { file: Readme.md, row: 163 } |  |  | 0.727 |
+| ns | 678 |  | 26 | .github listing — all four workflows | 1.7 |  | 0.740 |
+| walker |  | 748 | 87 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: true } |  |  | 0.740 |
+| ns | 789 |  | 111 | Prototype bases and module exports of each lib file | 2.1 |  | 0.698 |
+| walker |  | 849 | 101 | Fs::DirListing { dir: examples } |  |  | 0.701 |
+| ns | 962 |  | 173 | app.* roster — every application method name | 2.2 |  | 0.617 |
+| walker |  | 971 | 122 | Json::ScriptsTail { file: package.json } |  |  | 0.690 |
+| walker |  | 1104 | 133 | Code::CodeKey { rung: Names, file: lib/express.js, decl: 0, sub: 0, line: 0 } |  |  | 0.776 |
 | walker |  | 1119 | 15 | Code::CodeKey { rung: Names, file: index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.796 |
 | ns | 1201 |  | 239 | res.* roster — every response method name | 2.3 |  | 0.695 |
 | ns | 1465 |  | 264 | req.* roster — methods and defineGetter properties | 2.4 |  | 0.631 |

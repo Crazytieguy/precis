@@ -1,4 +1,4 @@
-Score(3000)=0.708 I=0.866 C=0.578 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.829/0.725/0.708/0.692/0.721/0.678
+Score(3000)=0.708 I=0.866 C=0.578 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/4327/6240/9000)=0.733/0.829/0.724/0.708/0.692/0.721/0.678
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -36,26 +36,27 @@ Score(3000)=0.708 I=0.866 C=0.578 ns_rows≤3K=18/51 grid(1000/1442/2080/3000/43
 | walker |  | 1183 | 27 | Fs::DirListing { dir: bookmarks/frontend/utils } |  |  | 0.881 |
 | walker |  | 1210 | 27 | Fs::DirListing { dir: bookmarks/templates/settings } |  |  | 0.881 |
 | walker |  | 1220 | 10 | Plaintext::DeclSurface { file: version.txt } |  |  | 0.881 |
-| walker |  | 1289 | 69 | Fs::DirListing { dir: bookmarks/styles } |  |  | 0.881 |
-| walker |  | 1330 | 41 | Fs::DirListing { dir: bookmarks/templates/shared } |  |  | 0.881 |
-| walker |  | 1427 | 97 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.881 |
+| walker |  | 1273 | 53 | Json::Scripts { file: package.json } |  |  | 0.881 |
+| walker |  | 1342 | 69 | Fs::DirListing { dir: bookmarks/styles } |  |  | 0.881 |
+| walker |  | 1383 | 41 | Fs::DirListing { dir: bookmarks/templates/shared } |  |  | 0.881 |
 | ns | 1438 |  | 284 | pyproject.toml project metadata + runtime dependencies | 1.11 |  | 0.829 |
 | ns | 1460 |  | 22 | bookmarks/settings/ listing (complete) | 1.12 |  | 0.830 |
-| walker |  | 1599 | 172 | Markdown::CommandBlock { file: README.md, row: 71 } |  |  | 0.830 |
+| walker |  | 1480 | 97 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.830 |
 | ns | 1602 |  | 142 | Settings resolution order + manage.py/pytest wiring | 1.13 | 1.12 | 0.800 |
-| walker |  | 1647 | 48 | Fs::DirListing { dir: bookmarks/management/commands } |  |  | 0.800 |
-| walker |  | 1682 | 35 | Fs::DirListing { dir: docs } |  |  | 0.801 |
-| ns | 1710 |  | 108 | docs/ site and its content pages (complete) | 1.14 |  | 0.755 |
-| walker |  | 1742 | 60 | Fs::DirListing { dir: bookmarks/frontend/components } |  |  | 0.757 |
-| walker |  | 1759 | 17 | Fs::DirListing { dir: docs/src } |  |  | 0.757 |
-| walker |  | 1766 | 7 | Fs::DirListing { dir: docs/src/content } |  |  | 0.757 |
-| walker |  | 1775 | 9 | Fs::DirListing { dir: docs/src/components } |  |  | 0.757 |
+| walker |  | 1652 | 172 | Markdown::CommandBlock { file: README.md, row: 71 } |  |  | 0.800 |
+| ns | 1710 |  | 108 | docs/ site and its content pages (complete) | 1.14 |  | 0.747 |
+| walker |  | 1723 | 71 | Json::ScriptsTail { file: package.json } |  |  | 0.747 |
+| walker |  | 1771 | 48 | Fs::DirListing { dir: bookmarks/management/commands } |  |  | 0.747 |
+| walker |  | 1806 | 35 | Fs::DirListing { dir: docs } |  |  | 0.755 |
+| walker |  | 1866 | 60 | Fs::DirListing { dir: bookmarks/frontend/components } |  |  | 0.757 |
+| walker |  | 1883 | 17 | Fs::DirListing { dir: docs/src } |  |  | 0.757 |
 | ns | 1885 |  | 175 | models.py symbol roster (all 17 top-level classes and functions) | 2.1 |  | 0.724 |
-| walker |  | 1902 | 127 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.724 |
-| walker |  | 1971 | 69 | Fs::DirListing { dir: bookmarks/templates/bookmarks } |  |  | 0.724 |
-| walker |  | 1988 | 17 | Fs::DirListing { dir: bookmarks/templates/bookmarks/details } |  |  | 0.724 |
-| walker |  | 2038 | 50 | Fs::DirListing { dir: scripts } |  |  | 0.725 |
-| walker |  | 2162 | 124 | Json::Scripts { file: package.json } |  |  | 0.725 |
+| walker |  | 1890 | 7 | Fs::DirListing { dir: docs/src/content } |  |  | 0.724 |
+| walker |  | 1899 | 9 | Fs::DirListing { dir: docs/src/components } |  |  | 0.724 |
+| walker |  | 2026 | 127 | Plaintext::Whole { file: docker-compose.yml } |  |  | 0.724 |
+| walker |  | 2095 | 69 | Fs::DirListing { dir: bookmarks/templates/bookmarks } |  |  | 0.724 |
+| walker |  | 2112 | 17 | Fs::DirListing { dir: bookmarks/templates/bookmarks/details } |  |  | 0.724 |
+| walker |  | 2162 | 50 | Fs::DirListing { dir: scripts } |  |  | 0.725 |
 | ns | 2296 |  | 411 | Bookmark model fields (complete) | 2.2 | 2.1 | 0.679 |
 | ns | 2439 |  | 143 | UserProfile field roster (names + types) | 2.3 | 2.1 | 0.654 |
 | walker |  | 2498 | 336 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.697 |

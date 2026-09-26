@@ -15,13 +15,14 @@ Score(3000)=0.794 I=0.903 C=0.699 ns_rows≤3K=21/56 grid(1000/1442/2080/3000/43
 | walker |  | 245 | 31 | Json::Runtime { file: package.json } |  |  | 0.708 |
 | ns | 245 |  | 60 | Complete listings of source/, test/ and test-d/ | 1.4 |  | 0.708 |
 | walker |  | 299 | 54 | Json::Dependencies { file: package.json } |  |  | 0.708 |
-| walker |  | 330 | 31 | Fs::DirListing { dir: test } |  |  | 0.910 |
-| ns | 380 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.836 |
-| walker |  | 451 | 121 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.865 |
-| ns | 496 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.864 |
-| walker |  | 543 | 92 | Json::Entry { file: package.json } |  |  | 0.873 |
-| ns | 564 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.834 |
-| walker |  | 647 | 104 | Json::Scripts { file: package.json } |  |  | 0.834 |
+| walker |  | 360 | 61 | Json::Scripts { file: package.json } |  |  | 0.708 |
+| ns | 380 |  | 135 | PQueue class declaration, its two type parameters, and the complete event-name union | 1.5 |  | 0.650 |
+| walker |  | 405 | 45 | Json::ScriptsTail { file: package.json } |  |  | 0.651 |
+| walker |  | 436 | 31 | Fs::DirListing { dir: test } |  |  | 0.837 |
+| ns | 496 |  | 116 | Every section heading in readme.md (all H2s plus the two API H3s) | 1.6 |  | 0.710 |
+| walker |  | 557 | 121 | Markdown::HeadingsOutline { file: readme.md } |  |  | 0.865 |
+| ns | 564 |  | 68 | The package's complete public export surface (end of source/index.ts) | 1.7 |  | 0.826 |
+| walker |  | 647 | 90 | Json::Entry { file: package.json } |  |  | 0.834 |
 | ns | 713 |  | 149 | source/queue.ts in full: the pluggable Queue contract | 1.8 |  | 0.747 |
 | ns | 902 |  | 189 | package.json identity block: name, version, description, module type, exports, engines | 1.9 |  | 0.731 |
 | walker |  | 1010 | 363 | Markdown::Section { file: readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.790 |

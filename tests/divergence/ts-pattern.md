@@ -1,4 +1,4 @@
-Score(3000)=0.709 I=0.836 C=0.601 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.742/0.910/0.822/0.709/0.638/0.573/0.593
+Score(3000)=0.709 I=0.836 C=0.601 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/4327/6240/9000)=0.737/0.906/0.822/0.709/0.638/0.573/0.593
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -22,23 +22,24 @@ Score(3000)=0.709 I=0.836 C=0.601 ns_rows≤3K=20/53 grid(1000/1442/2080/3000/43
 | walker |  | 446 | 15 | Fs::DirListing { dir: examples/gif-fetcher } |  |  | 0.808 |
 | walker |  | 461 | 15 | Fs::DirListing { dir: examples/one-file-demo } |  |  | 0.813 |
 | ns | 513 |  | 156 | All top-level (# / ##) README headings with line numbers | 1.6 |  | 0.702 |
-| walker |  | 608 | 147 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.837 |
-| walker |  | 608 | 0 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.837 |
-| ns | 639 |  | 126 | README opening example: the match/with/exhaustive expression itself | 1.7 |  | 0.800 |
-| walker |  | 662 | 54 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.800 |
+| walker |  | 552 | 91 | Json::Scripts { file: package.json } |  |  | 0.702 |
+| ns | 639 |  | 126 | README opening example: the match/with/exhaustive expression itself | 1.7 |  | 0.671 |
+| walker |  | 699 | 147 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.800 |
+| walker |  | 699 | 0 | Markdown::Section { file: README.md, section_index: 5, keeps_default_concavity: false } |  |  | 0.800 |
+| walker |  | 753 | 54 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.800 |
 | ns | 758 |  | 119 | The discriminated-union types the README's opening example matches on | 1.8 | 1.7 | 0.733 |
-| walker |  | 982 | 320 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.742 |
-| ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.749 |
+| walker |  | 1073 | 320 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: true } |  |  | 0.750 |
+| ns | 1073 |  | 315 | README Features list — the capability inventory | 1.9 |  | 0.750 |
 | ns | 1217 |  | 144 | Complete listings of docs/, examples/ (and their subdirs), benchmarks/, scripts/, .github/ | 1.10 |  | 0.718 |
-| walker |  | 1243 | 261 | Markdown::Prelude { file: README.md } |  |  | 0.807 |
-| walker |  | 1253 | 10 | Code::CodeKey { rung: Names, file: src/types/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
-| walker |  | 1276 | 23 | Fs::DirListing { dir: examples/gif-fetcher/src } |  |  | 0.851 |
-| walker |  | 1333 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.906 |
-| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.729 |
-| walker |  | 1631 | 298 | Fs::DirListing { dir: tests } |  |  | 0.907 |
-| walker |  | 1639 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.920 |
-| ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.864 |
-| walker |  | 1912 | 273 | Json::Scripts { file: package.json } |  |  | 0.866 |
+| walker |  | 1334 | 261 | Markdown::Prelude { file: README.md } |  |  | 0.807 |
+| walker |  | 1344 | 10 | Code::CodeKey { rung: Names, file: src/types/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.807 |
+| walker |  | 1367 | 23 | Fs::DirListing { dir: examples/gif-fetcher/src } |  |  | 0.851 |
+| walker |  | 1424 | 57 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.906 |
+| ns | 1523 |  | 306 | Complete tests/ listing — the feature-named test-file map | 1.11 |  | 0.730 |
+| walker |  | 1606 | 182 | Json::ScriptsTail { file: package.json } |  |  | 0.731 |
+| ns | 1751 |  | 228 | README `###` heading locations: Getting Started walkthrough and API Reference | 1.12 |  | 0.687 |
+| walker |  | 1904 | 298 | Fs::DirListing { dir: tests } |  |  | 0.853 |
+| walker |  | 1912 | 8 | Fs::DirListing { dir: tests/types-catalog } |  |  | 0.866 |
 | ns | 1965 |  | 214 | README `###` heading locations: the Patterns catalogue | 1.13 |  | 0.826 |
 | walker |  | 2019 | 107 | Markdown::Section { file: README.md, section_index: 4, keeps_default_concavity: false } |  |  | 0.826 |
 | ns | 2047 |  | 82 | README `###`/`####` heading locations: the Types section | 1.14 |  | 0.810 |

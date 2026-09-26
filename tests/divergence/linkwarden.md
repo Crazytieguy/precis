@@ -245,7 +245,7 @@ Score(3000)=0.741 I=0.896 C=0.612 ns_rows≤3K=15/51 grid(1000/1442/2080/3000/43
 | ns | 8706 |  | 240 | verifyUser — the guard chain every authenticated route runs first | 7.1 |  | 0.778 |
 | walker |  | 8789 | 104 | Markdown::Section { file: README.md, section_index: 6, keeps_default_concavity: false } |  |  | 0.778 |
 | ns | 8941 |  | 235 | docker-compose.yml — the three-container deployment | 7.2 |  | 0.781 |
-| walker |  | 9127 | 338 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.804 |
+| walker |  | 9127 | 338 | Json::ScriptsTail { file: package.json } |  |  | 0.804 |
 | ns | 9155 |  | 214 | .env.sample — the required variables and the complete list of section headings | 7.3 |  | 0.795 |
 | walker |  | 9224 | 97 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.795 |
 | ns | 9334 |  | 179 | The head of the optional tuning-variable block | 7.4 | 7.3 | 0.787 |

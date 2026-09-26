@@ -304,6 +304,11 @@ package.json
   …
   5→  "description": "Self-hosted audiobook and podcast server",
   6→  "main": "index.js",
+  7→  "scripts": {
+  8→    "dev": "nodemon --watch server index.js -- --dev",
+  9→    "start": "node index.js",
+  …
+  20→    "test": "mocha",
   …
   23→  "bin": "index.js",
   …
@@ -379,22 +384,6 @@ server/
       index.js
     fluentFfmpeg/
     fsExtra/
-      LICENSE
-      copy/
-      empty/
-        index.js
-      ensure/
-      fs/
-        index.js
-      index.js
-      mkdirs/
-      move/
-      path-exists/
-        index.js
-      remove/
-        index.js
-        rimraf.js
-      util/
     fusejs/
       index.js
     imageType/

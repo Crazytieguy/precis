@@ -213,6 +213,16 @@ examples/
     server.js
 gulpfile.js
 index.d.cts
+  1→type MethodsHeaders = Partial<
+  …
+  7→type AxiosHeaderMatcher =
+  …
+  12→type AxiosHeaderParser = (this: AxiosHeaders, value: axios.AxiosHeaderValue, header: string) => any;
+  13→
+  14→type CommonRequestHeadersList =
+  …
+  22→type ContentType =
+  …
 index.d.ts
 index.js
   …
@@ -247,16 +257,41 @@ lib/
     …
     28→function createInstance(defaultConfig) {
     …
+    46→// Create the default instance to be exported
     47→const axios = createInstance(defaults);
-    …
+    49→// Expose Axios class to allow class inheritance
     50→axios.Axios = Axios;
-    …
+    52→// Expose Cancel & CancelToken
     53→axios.CanceledError = CanceledError;
     54→axios.CancelToken = CancelToken;
     55→axios.isCancel = isCancel;
     56→axios.VERSION = VERSION;
     57→axios.toFormData = toFormData;
+    59→// Expose AxiosError class
+    60→axios.AxiosError = AxiosError;
+    62→// alias for CanceledError for backward compatibility
+    63→axios.Cancel = axios.CanceledError;
+    65→// Expose all/spread
+    66→axios.all = function all(promises) {
     …
+    70→axios.spread = spread;
+    72→// Expose isAxiosError
+    73→axios.isAxiosError = isAxiosError;
+    75→// Expose mergeConfig
+    76→axios.mergeConfig = mergeConfig;
+    77→
+    78→axios.AxiosHeaders = AxiosHeaders;
+    79→
+    80→axios.formToJSON = (thing) => formDataToJSON(utils.isHTMLForm(thing) ? new FormData(thing) : thing);
+    81→
+    82→axios.getAdapter = adapters.getAdapter;
+    83→
+    84→axios.HttpStatusCode = HttpStatusCode;
+    85→
+    86→axios.default = axios;
+    87→
+    88→// this module should only have a default export
+    89→export default axios;
   cancel/
     CancelToken.js
     CanceledError.js
@@ -364,27 +399,13 @@ package.json
   …
   100→  "scripts": {
   101→    "build": "gulp clear && cross-env NODE_ENV=production rollup -c -m",
-  102→    "version": "npm run build && git add package.json",
-  103→    "preversion": "gulp version",
+  …
   104→    "test": "npm run test:vitest",
-  105→    "test:vitest": "vitest run",
-  106→    "test:vitest:unit": "vitest run --project unit",
-  107→    "test:vitest:browser": "vitest run --project browser",
-  108→    "test:vitest:browser:headless": "vitest run --project browser-headless",
-  109→    "test:vitest:watch": "vitest",
-  110→    "test:smoke:cjs:vitest": "npm --prefix tests/smoke/cjs run test:smoke:cjs:mocha",
-  111→    "test:smoke:esm:vitest": "npm --prefix tests/smoke/esm run test:smoke:esm:vitest",
-  112→    "test:smoke:deno": "deno task --cwd tests/smoke/deno test",
-  113→    "test:smoke:bun": "bun test --cwd tests/smoke/bun",
-  114→    "test:module:cjs": "npm --prefix tests/module/cjs run test:module:cjs",
-  115→    "test:module:esm": "npm --prefix tests/module/esm run test:module:esm",
-  116→    "docs:dev": "cd docs && npm run docs:dev",
+  …
   117→    "start": "node ./sandbox/server.js",
-  118→    "examples": "node ./examples/server.js",
+  …
   119→    "lint": "eslint lib/**/*.js",
-  120→    "fix": "eslint --fix lib/**/*.js",
-  121→    "prepare": "husky"
-  122→  },
+  …
   123→  "dependencies": {
   124→    "follow-redirects": "^1.16.0",
   125→    "form-data": "^4.0.5",

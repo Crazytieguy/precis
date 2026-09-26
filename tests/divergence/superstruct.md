@@ -1,4 +1,4 @@
-Score(3000)=0.452 I=0.769 C=0.266 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.607/0.500/0.452/0.541/0.600/0.580
+Score(3000)=0.452 I=0.769 C=0.266 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/4327/6240/9000)=0.719/0.606/0.500/0.452/0.541/0.600/0.580
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -29,20 +29,21 @@ Score(3000)=0.452 I=0.769 C=0.266 ns_rows≤3K=20/60 grid(1000/1442/2080/3000/43
 | ns | 816 |  | 178 | Core API signatures: assert / create / is / mask / validate | 1.7 |  | 0.658 |
 | ns | 971 |  | 155 | Readme canonical usage snippet | 1.8 |  | 0.577 |
 | walker |  | 997 | 233 | Markdown::Section { file: Readme.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.719 |
-| walker |  | 1054 | 57 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.719 |
 | ns | 1066 |  | 95 | src/struct.ts symbol roster: methods and top-level helpers | 2.1 |  | 0.671 |
-| walker |  | 1109 | 55 | Fs::DirListing { dir: examples } |  |  | 0.673 |
-| walker |  | 1134 | 25 | Fs::DirListing { dir: test/api } |  |  | 0.674 |
-| walker |  | 1213 | 79 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.727 |
+| walker |  | 1088 | 91 | Json::Scripts { file: package.json } |  |  | 0.671 |
+| walker |  | 1145 | 57 | Markdown::Section { file: Readme.md, section_index: 7, keeps_default_concavity: false } |  |  | 0.671 |
+| walker |  | 1200 | 55 | Fs::DirListing { dir: examples } |  |  | 0.673 |
+| walker |  | 1225 | 25 | Fs::DirListing { dir: test/api } |  |  | 0.674 |
+| walker |  | 1304 | 79 | Code::CodeKey { rung: Names, file: src/index.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.727 |
 | ns | 1318 |  | 252 | Complete roster of the 25 type structs | 2.2 |  | 0.630 |
-| walker |  | 1338 | 125 | Fs::DirListing { dir: test/validation } |  |  | 0.636 |
-| ns | 1420 |  | 102 | Complete roster of src/structs/utilities.ts | 2.3 |  | 0.606 |
+| ns | 1420 |  | 102 | Complete roster of src/structs/utilities.ts | 2.3 |  | 0.600 |
+| walker |  | 1429 | 125 | Fs::DirListing { dir: test/validation } |  |  | 0.606 |
 | ns | 1503 |  | 83 | Complete roster of src/structs/refinements.ts | 2.4 |  | 0.584 |
-| walker |  | 1521 | 183 | Fs::DirListing { dir: test/typings } |  |  | 0.589 |
-| ns | 1537 |  | 34 | Complete roster of src/structs/coercions.ts | 2.5 |  | 0.582 |
-| ns | 1651 |  | 114 | Failure - the shape of every validation failure | 2.6 |  | 0.556 |
-| ns | 1829 |  | 178 | StructError class: doc, fields, and its early-exit contract | 2.7 |  | 0.526 |
-| walker |  | 1847 | 326 | Json::Scripts { file: package.json } |  |  | 0.527 |
+| ns | 1537 |  | 34 | Complete roster of src/structs/coercions.ts | 2.5 |  | 0.577 |
+| ns | 1651 |  | 114 | Failure - the shape of every validation failure | 2.6 |  | 0.551 |
+| walker |  | 1664 | 235 | Json::ScriptsTail { file: package.json } |  |  | 0.552 |
+| ns | 1829 |  | 178 | StructError class: doc, fields, and its early-exit contract | 2.7 |  | 0.522 |
+| walker |  | 1847 | 183 | Fs::DirListing { dir: test/typings } |  |  | 0.527 |
 | walker |  | 2023 | 176 | Markdown::Section { file: Readme.md, section_index: 3, keeps_default_concavity: false } |  |  | 0.527 |
 | ns | 2037 |  | 208 | Exported type vocabulary of src/struct.ts | 2.8 |  | 0.500 |
 | ns | 2140 |  | 103 | Function roster of src/utils.ts | 2.9 |  | 0.486 |

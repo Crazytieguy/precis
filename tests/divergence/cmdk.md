@@ -17,10 +17,11 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 348 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.500 |
 | walker |  | 369 | 21 | Json::Runtime { file: package.json } |  |  | 0.500 |
 | walker |  | 471 | 102 | Json::Scripts { file: package.json } |  |  | 0.503 |
-| ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.429 |
-| walker |  | 551 | 80 | Json::Scripts { file: cmdk/package.json } |  |  | 0.493 |
+| walker |  | 512 | 41 | Json::Scripts { file: cmdk/package.json } |  |  | 0.505 |
+| ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.450 |
+| walker |  | 551 | 39 | Json::ScriptsTail { file: cmdk/package.json } |  |  | 0.493 |
 | walker |  | 647 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.493 |
-| walker |  | 747 | 100 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.500 |
+| walker |  | 747 | 100 | Json::ScriptsTail { file: package.json } |  |  | 0.500 |
 | ns | 764 |  | 232 | Root package.json: identity and every workspace script | 1.6 |  | 0.555 |
 | walker |  | 801 | 54 | Fs::DirListing { dir: website } |  |  | 0.641 |
 | walker |  | 815 | 14 | Fs::DirListing { dir: website/components } |  |  | 0.641 |

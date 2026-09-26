@@ -20,12 +20,13 @@ Score(3000)=0.749 I=0.915 C=0.614 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 393 | 34 | Json::Runtime { file: package.json } |  |  | 0.522 |
 | walker |  | 462 | 69 | Json::Entry { file: package.json } |  |  | 0.531 |
 | ns | 513 |  | 182 | Complete README section map (every H2 and H3) | 1.5 |  | 0.425 |
-| walker |  | 661 | 199 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.592 |
-| walker |  | 686 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.592 |
-| ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.581 |
-| walker |  | 716 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.581 |
-| ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.535 |
-| walker |  | 880 | 164 | Json::Scripts { file: package.json } |  |  | 0.600 |
+| walker |  | 563 | 101 | Json::Scripts { file: package.json } |  |  | 0.432 |
+| walker |  | 626 | 63 | Json::ScriptsTail { file: package.json } |  |  | 0.442 |
+| ns | 708 |  | 195 | Package identity, bin entry, module type, engine floor, beta banner | 1.6 |  | 0.455 |
+| walker |  | 825 | 199 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.600 |
+| walker |  | 850 | 25 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.600 |
+| ns | 872 |  | 164 | Complete npm script block (package.json 35-45) | 1.7 |  | 0.600 |
+| walker |  | 880 | 30 | Markdown::Section { file: README.md, section_index: 10, keeps_default_concavity: false } |  |  | 0.600 |
 | ns | 1101 |  | 229 | Complete runtime dependency list (package.json 46-60) | 1.8 |  | 0.545 |
 | walker |  | 1109 | 229 | Json::Dependencies { file: package.json } |  |  | 0.620 |
 | ns | 1140 |  | 39 | Complete listing of every non-src directory | 1.9 |  | 0.619 |

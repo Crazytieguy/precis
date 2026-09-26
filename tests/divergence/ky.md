@@ -20,7 +20,8 @@ Score(3000)=0.728 I=0.907 C=0.584 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | walker |  | 483 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.891 |
 | walker |  | 514 | 31 | Json::Runtime { file: package.json } |  |  | 0.892 |
 | ns | 535 |  | 120 | "Benefits over plain fetch" feature bullets | 1.6 | 1.5 | 0.893 |
-| walker |  | 617 | 103 | Json::Scripts { file: package.json } |  |  | 0.894 |
+| walker |  | 566 | 52 | Json::Scripts { file: package.json } |  |  | 0.893 |
+| walker |  | 617 | 51 | Json::ScriptsTail { file: package.json } |  |  | 0.894 |
 | ns | 669 |  | 134 | source/index.ts: the runtime exports (default `ky`, error classes, type guards) | 1.7 |  | 0.811 |
 | walker |  | 720 | 103 | Json::Entry { file: package.json } |  |  | 0.821 |
 | ns | 751 |  | 82 | Readme usage example: the canonical call shape | 1.8 | 1.5 | 0.776 |

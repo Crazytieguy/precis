@@ -17,9 +17,10 @@ Score(3000)=0.692 I=0.862 C=0.555 ns_rows≤3K=21/59 grid(1000/1442/2080/3000/43
 | walker |  | 295 | 8 | Fs::DirListing { dir: examples } |  |  | 0.910 |
 | walker |  | 306 | 11 | Fs::DirListing { dir: .github } |  |  | 0.913 |
 | walker |  | 310 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.915 |
-| walker |  | 356 | 46 | Json::Runtime { file: package.json } |  |  | 0.916 |
+| walker |  | 340 | 30 | Json::Scripts { file: package.json } |  |  | 0.915 |
+| walker |  | 361 | 21 | Json::ScriptsTail { file: package.json } |  |  | 0.767 |
 | ns | 361 |  | 131 | readme tagline + every `##` section heading | 1.5 |  | 0.767 |
-| walker |  | 405 | 49 | Json::Scripts { file: package.json } |  |  | 0.770 |
+| walker |  | 405 | 44 | Json::Runtime { file: package.json } |  |  | 0.770 |
 | walker |  | 432 | 27 | Fs::DirListing { dir: test } |  |  | 0.781 |
 | ns | 568 |  | 207 | package.json `imports` subpath map, `types`, `engines`, `scripts` | 1.6 |  | 0.684 |
 | walker |  | 669 | 237 | Code::CodeKey { rung: Names, file: source/index.js, decl: 0, sub: 0, line: 0 } |  |  | 0.698 |

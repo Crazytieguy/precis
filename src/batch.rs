@@ -114,10 +114,11 @@ pub enum JsonKey {
     /// `package.json` runtime/toolchain constraints (`engines`,
     /// `packageManager`).
     Runtime { file: PathBuf },
-    /// `package.json` `scripts` block, or its first chunk when it is long.
+    /// `package.json` `scripts` block, or its entry-point scripts alone
+    /// when it has others too.
     Scripts { file: PathBuf },
-    /// A later chunk of a long `scripts` block, in source order.
-    ScriptsTail { file: PathBuf, chunk: usize },
+    /// The rest of a `scripts` block whose entry points are split off.
+    ScriptsTail { file: PathBuf },
     /// Runtime `package.json` dependency blocks (`dependencies`, optional /
     /// bundled dependencies, overrides, and resolutions).
     Dependencies { file: PathBuf },
