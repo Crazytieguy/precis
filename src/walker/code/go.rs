@@ -85,19 +85,16 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     let mut functions = Vec::new();
     let declarations = top_level_declarations(root);
     let handed_out = handed_out_types(&declarations, file);
-    let exports_something = declarations
+    let reaches_something = declarations
         .iter()
-        .any(|declaration| declares_exported(*declaration, file));
-    let reaches_something = declarations.iter().any(|declaration| {
-        if matches!(
-            declaration.kind(),
-            "function_declaration" | "method_declaration"
-        ) {
-            is_reachable_callable(*declaration, file, &handed_out)
+        .any(|declaration| is_reachable(*declaration, file, &handed_out));
+    let admits_callable = |node: Node| {
+        if reaches_something {
+            is_reachable(node, file, &handed_out)
         } else {
-            declares_exported(*declaration, file)
+            declares_exported(node, file)
         }
-    });
+    };
     for child in root.named_children(&mut root.walk()) {
         let decl = match child.kind() {
             "comment" if file.text(child).starts_with("//go:build") => {
@@ -112,7 +109,10 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 is_program = child
                     .named_children(&mut child.walk())
                     .any(|name| name.kind() == "package_identifier" && file.text(name) == "main");
-                api_only = !is_program && exports_something;
+                api_only = !is_program
+                    && declarations
+                        .iter()
+                        .any(|declaration| declares_exported(*declaration, file));
                 continue;
             }
             "function_declaration" if is_program => {
@@ -123,12 +123,7 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
                 decl
             }
             "function_declaration" | "method_declaration"
-                if !api_only
-                    || if reaches_something {
-                        is_reachable_callable(child, file, &handed_out)
-                    } else {
-                        declares_exported(child, file)
-                    } =>
+                if !api_only || admits_callable(child) =>
             {
                 callable(child, file)
             }
@@ -149,9 +144,9 @@ fn is_exported(name: &str) -> bool {
     name.chars().next().is_some_and(char::is_uppercase)
 }
 
-/// An exported function, or an exported method whose receiver type an
-/// importer can reach: an exported type, or one in `handed_out`.
-fn is_reachable_callable(node: Node, file: &SourceFile, handed_out: &[&str]) -> bool {
+/// An exported spec or function, or an exported method whose receiver
+/// type an importer can reach: an exported type, or one in `handed_out`.
+fn is_reachable(node: Node, file: &SourceFile, handed_out: &[&str]) -> bool {
     declares_exported(node, file)
         && node.child_by_field_name("receiver").is_none_or(|receiver| {
             let parameter = receiver.named_children(&mut receiver.walk()).next();
