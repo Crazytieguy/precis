@@ -322,67 +322,48 @@ const CARGO_MANIFEST_FILENAME: &str = "Cargo.toml";
 pub(super) fn collect_workspace_members(ctx: &WalkCtx) -> HashSet<PathBuf> {
     let root = ctx.root();
     let root_manifest = root.join(CARGO_MANIFEST_FILENAME);
-    let Some(value) = ctx
-        .read_source(&root_manifest)
-        .and_then(|source| toml::from_str::<toml::Value>(&source).ok())
-    else {
+    let Some(source) = ctx.read_source(&root_manifest) else {
+        return HashSet::new();
+    };
+    let Ok(document) = ImDocument::parse(&**source) else {
         return HashSet::new();
     };
     // Path-dep auto-promotion only applies inside a Cargo workspace. Without
     // a [workspace] table the manifest is just a regular crate, and damping
     // its path-dep sub-crates would deprioritize legitimate package identity.
-    let Some(workspace) = value.get("workspace").and_then(|v| v.as_table()) else {
+    let Some(workspace) = document.get("workspace").and_then(Item::as_table_like) else {
         return HashSet::new();
     };
     let Ok(canonical_root) = root.canonicalize() else {
         return HashSet::new();
     };
-
-    let collect = |key: &str| -> HashSet<PathBuf> {
-        let Some(arr) = workspace.get(key).and_then(|v| v.as_array()) else {
-            return HashSet::new();
-        };
-        let mut out = HashSet::new();
-        for entry in arr.iter().filter_map(|v| v.as_str()) {
-            for path in expand_member_entry(root, entry) {
-                if let Some(member) =
-                    canonical_member(&canonical_root, &path, CARGO_MANIFEST_FILENAME)
-                {
-                    out.insert(member);
-                }
-            }
-        }
-        out
+    let resolve = |entries: &mut dyn Iterator<Item = &str>| -> HashSet<PathBuf> {
+        entries
+            .flat_map(|entry| expand_member_entry(root, entry))
+            .filter_map(|dir| canonical_member(&canonical_root, &dir, CARGO_MANIFEST_FILENAME))
+            .collect()
     };
-
-    let mut candidates = collect("members");
-
-    for table_name in ["dependencies", "dev-dependencies", "build-dependencies"] {
-        let Some(table) = value.get(table_name).and_then(|v| v.as_table()) else {
-            continue;
-        };
-        for dep in table.values() {
-            if let Some(path) = dep_path(dep)
-                && let Some(member) =
-                    canonical_member(&canonical_root, &root.join(path), CARGO_MANIFEST_FILENAME)
-            {
-                candidates.insert(member);
-            }
-        }
-    }
-
-    for ex in collect("exclude") {
-        candidates.remove(&ex);
+    let workspace_array = |key| {
+        workspace
+            .get(key)
+            .and_then(Item::as_array)
+            .into_iter()
+            .flatten()
+            .filter_map(|entry| entry.as_str())
+    };
+    let path_dependencies = ["dependencies", "dev-dependencies", "build-dependencies"]
+        .into_iter()
+        .filter_map(|table| document.get(table)?.as_table_like())
+        .flat_map(|table| table.iter())
+        .filter_map(|(_, dependency)| dependency.as_table_like()?.get("path")?.as_str());
+    let mut candidates = resolve(&mut workspace_array("members").chain(path_dependencies));
+    for excluded in resolve(&mut workspace_array("exclude")) {
+        candidates.remove(&excluded);
     }
     if let Ok(canonical_root_manifest) = root_manifest.canonicalize() {
         candidates.remove(&canonical_root_manifest);
     }
     candidates
-}
-
-/// The `path = "..."` of a dependency-style entry, if it has one.
-fn dep_path(spec: &toml::Value) -> Option<&str> {
-    spec.as_table()?.get("path")?.as_str()
 }
 
 #[cfg(test)]
