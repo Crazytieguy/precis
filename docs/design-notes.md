@@ -224,7 +224,10 @@ once workspace members were exempt.
   inventory answer depends only on that directory; an answer the budget
   cut short is not cached. `hides_everything_in` is uncapped on purpose:
   it only descends through directories with nothing visible, and a
-  capped answer would list each of them as `(empty)`.
+  capped answer would list each of them as `(empty)`. A run-wide cap
+  was tried (2026-09-25): the rows it keeps expose the subtree to
+  listings and inventory probes, which doubled user time on 0.3M- and
+  1.2M-entry trees of ignored build objects.
 
 ## Open items
 
