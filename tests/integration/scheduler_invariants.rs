@@ -150,49 +150,6 @@ fn scheduler_invariants_override_via_predecessor_chain() {
 }
 
 #[test]
-fn scheduler_invariants_tiny_budget_truncates_cleanly() {
-    struct OneEntry;
-    impl Walker for OneEntry {
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch> {
-            vec![fs_listing_batch(900.0, "synthetic.rs")]
-        }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch> {
-            if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                vec![Batch {
-                    key: code_key(Rung::Decl, "synthetic.rs"),
-                    predecessor: None,
-                    content: BatchContent::Lines {
-                        units: Vec::new(),
-                        spans: vec![Span {
-                            path: stub_file("synthetic.rs"),
-                            start: 1,
-                            end: 20,
-                            render: Render::Full,
-                        }],
-                    },
-                    value: 500.0,
-                }]
-            } else {
-                Vec::new()
-            }
-        }
-    }
-
-    let cache = SourceCache::new();
-    let body: String = (0..20)
-        .map(|_| "very long line that will not fit at one token\n")
-        .collect();
-    preload(&cache, &stub_file("synthetic.rs"), &body);
-    let scheduler = Scheduler::new(WalkCtx::with_cache(stub_dir(), cache), OneEntry, 1, None);
-    let tree = scheduler.run();
-    let rendered = tree.render();
-    assert!(
-        !rendered.contains("very long line"),
-        "tiny budget shouldn't fit content"
-    );
-}
-
-#[test]
 fn scheduler_invariants_unaffordable_batch_spends_the_rest_on_its_head() {
     struct ListingThenFile;
     impl Walker for ListingThenFile {
@@ -241,6 +198,9 @@ fn scheduler_invariants_unaffordable_batch_spends_the_rest_on_its_head() {
     for row in partial.lines().filter(|row| row.trim() != "…") {
         assert!(whole.lines().any(|whole_row| whole_row == row), "{row}");
     }
+    let tiny = render_at(1);
+    assert!(precis::tokenizer::count(&tiny) <= 1, "{tiny}");
+    assert!(!tiny.contains("let line_"), "{tiny}");
 }
 
 /// Walker that emits one batch: the listing of `.0`, exactly as
