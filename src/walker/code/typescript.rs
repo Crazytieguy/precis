@@ -110,7 +110,9 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         };
         let mut decl = declaration(file, statement, node);
         decl.doc = doc_items(file, statement);
-        model.decls.push(decl);
+        if !is_internal(file, &decl.doc) {
+            model.decls.push(decl);
+        }
     }
     model
 }
@@ -1003,8 +1005,10 @@ fn class(file: &SourceFile, span: Span, class_name_row: usize, block: Option<Nod
                 let block = function_block.or_else(|| child.child_by_field_name("body"));
                 let mut member = callable(file, span, member_name_row, block);
                 member.doc = doc_items(file, anchor);
-                body.push(Item::new(member.name_rows.iter().copied()));
-                members.push(member);
+                if !is_internal(file, &member.doc) {
+                    body.push(Item::new(member.name_rows.iter().copied()));
+                    members.push(member);
+                }
             } else {
                 let start = leading_comment.unwrap_or(span.start).max(last_row + 1);
                 if start <= span.end {
@@ -1044,6 +1048,15 @@ fn is_hidden_member(file: &SourceFile, member: Node) -> bool {
     member.children(&mut cursor).any(|child| {
         child.kind() == "accessibility_modifier"
             && matches!(file.text(child), "private" | "protected")
+    })
+}
+
+/// A doc tagged `@internal` or `@ignore`: public to the compiler, but
+/// not part of the documented API.
+fn is_internal(file: &SourceFile, doc: &[Item]) -> bool {
+    doc.iter().flat_map(|item| &item.rows).any(|&row| {
+        let line = file.line(row);
+        line.contains("@internal") || line.contains("@ignore")
     })
 }
 
@@ -1297,6 +1310,32 @@ export { Provider };
                 "  Callable name [8] head [8] doc [] body []",
                 "Callable name [10] head [10] doc [] body []",
                 "Callable name [12] head [12] doc [] body []",
+            ]
+        );
+    }
+
+    #[test]
+    fn code_typescript_internal_tagged_declarations_are_hidden() {
+        let model = extract_source(
+            "src/proxy.ts",
+            "\
+/** @internal */
+export class HttpProxy {}
+/**
+ * Public client.
+ */
+export class Client {
+  /** @ignore */
+  reset() {}
+  send() {}
+}
+",
+        );
+        assert_eq!(
+            describe(&model),
+            [
+                "Whole name [6] head [6, 10] doc [[3, 4, 5]] body [[9]]",
+                "  Callable name [9] head [9] doc [] body []",
             ]
         );
     }
