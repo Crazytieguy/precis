@@ -1,16 +1,21 @@
-//! The binary's own branches: exit status on a bad path, and the stderr
-//! notes that say why a summary came out empty.
+//! The binary's own branches: exit status on a bad path or a reader that
+//! closes early, and the stderr notes that say why a summary came out
+//! empty.
 
 use std::ffi::OsStr;
-use std::process::{Command, Output};
+use std::process::{Command, Output, Stdio};
+
+/// The binary, outside any session hook.
+fn precis_command() -> Command {
+    let mut command = Command::new(env!("CARGO_BIN_EXE_precis"));
+    command
+        .env_remove("PRECIS_SESSION_HOOK")
+        .env_remove("CLAUDE_PLUGIN_ROOT");
+    command
+}
 
 fn precis<I: IntoIterator<Item = S>, S: AsRef<OsStr>>(args: I) -> Output {
-    Command::new(env!("CARGO_BIN_EXE_precis"))
-        .args(args)
-        .env_remove("PRECIS_SESSION_HOOK")
-        .env_remove("CLAUDE_PLUGIN_ROOT")
-        .output()
-        .unwrap()
+    precis_command().args(args).output().unwrap()
 }
 
 /// Asserts a successful run printed nothing and returns its stderr.
@@ -51,4 +56,22 @@ fn cli_explains_missing_paths_and_empty_output() {
         starved_file.ends_with("--char-budget 0; raise it\n"),
         "{starved_file}"
     );
+}
+
+/// A reader that stops early (`precis . | head`) is normal termination:
+/// exit 0 with nothing on stderr.
+#[test]
+fn cli_exits_cleanly_when_the_reader_closes_early() {
+    let temp = tempfile::tempdir().unwrap();
+    std::fs::write(temp.path().join("main.rs"), "fn main() {}\n").unwrap();
+    let mut child = precis_command()
+        .arg(temp.path())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .unwrap();
+    drop(child.stdout.take());
+    let output = child.wait_with_output().unwrap();
+    assert!(output.status.success(), "{output:?}");
+    assert!(output.stderr.is_empty(), "{output:?}");
 }
