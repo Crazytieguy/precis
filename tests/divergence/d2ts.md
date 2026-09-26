@@ -113,70 +113,69 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 6112 | 87 | Json::Scripts { file: packages/d2ts-benchmark/package.json } |  |  | 0.708 |
 | ns | 6251 |  | 383 | README Key Features — every operator with a one-line description | 5.1 | 1.10 | 0.714 |
 | walker |  | 6369 | 257 | Markdown::Section { file: README.md, section_index: 17, keeps_default_concavity: false } |  |  | 0.745 |
-| walker |  | 6404 | 35 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/base.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
-| walker |  | 6461 | 57 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 2, sub: 0, line: 19 } |  |  | 0.745 |
-| walker |  | 6537 | 76 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.745 |
+| walker |  | 6414 | 45 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/base.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.745 |
+| walker |  | 6458 | 44 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 2, sub: 0, line: 12 } |  |  | 0.745 |
+| walker |  | 6515 | 57 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 3, sub: 0, line: 19 } |  |  | 0.745 |
+| walker |  | 6589 | 74 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.745 |
 | ns | 6681 |  | 430 | packages/d2ts/README.md — complete heading map (1081-line API reference) | 5.2 |  | 0.716 |
-| walker |  | 6702 | 165 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 3, sub: 0, line: 27 } |  |  | 0.716 |
-| walker |  | 6793 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.729 |
-| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.720 |
-| walker |  | 6864 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.720 |
-| walker |  | 6947 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.720 |
-| walker |  | 7135 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.720 |
-| walker |  | 7229 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.734 |
-| ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.712 |
-| walker |  | 7401 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.712 |
+| walker |  | 6754 | 165 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/base.ts, decl: 4, sub: 0, line: 27 } |  |  | 0.716 |
+| ns | 6844 |  | 163 | Operator factory roster — single-stream operators | 5.3 | 2.5 | 0.707 |
+| walker |  | 6845 | 91 | Json::Identity { file: packages/d2mini/package.json } |  |  | 0.720 |
+| walker |  | 6916 | 71 | Json::Dependencies { file: packages/d2mini/package.json } |  |  | 0.720 |
+| walker |  | 6999 | 83 | Json::Entry { file: packages/d2mini/package.json } |  |  | 0.720 |
+| walker |  | 7187 | 188 | Json::Scripts { file: packages/d2mini/package.json } |  |  | 0.720 |
+| ns | 7244 |  | 400 | Operator factory roster — keyed, join, ordering and aggregate families | 5.4 | 5.3 | 0.699 |
+| walker |  | 7281 | 94 | Json::Identity { file: packages/d2ql/package.json } |  |  | 0.712 |
 | ns | 7446 |  | 202 | Operator implementation classes and the LinearUnaryOperator base | 5.5 | 5.4 | 0.702 |
-| walker |  | 7589 | 188 | Json::Scripts { file: packages/d2ql/package.json } |  |  | 0.702 |
-| walker |  | 7617 | 28 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/graph.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.702 |
+| walker |  | 7453 | 172 | Json::Entry { file: packages/d2ql/package.json } |  |  | 0.702 |
 | ns | 7622 |  | 176 | groupBy.ts — the AggregateFunction contract | 5.6 | 5.4 | 0.694 |
-| walker |  | 7640 | 23 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/graph.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.694 |
+| walker |  | 7641 | 188 | Json::Scripts { file: packages/d2ql/package.json } |  |  | 0.694 |
+| walker |  | 7669 | 28 | Code::CodeKey { rung: Names, file: packages/d2ts-benchmark/src/graph.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.694 |
+| walker |  | 7692 | 23 | Code::CodeKey { rung: Decl, file: packages/d2ts-benchmark/src/graph.ts, decl: 1, sub: 0, line: 15 } |  |  | 0.694 |
 | ns | 7842 |  | 220 | D2QL identity and README section map | 6.1 |  | 0.686 |
-| walker |  | 7913 | 273 | Code::CodeKey { rung: Names, file: packages/d2ql/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
-| walker |  | 7932 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 7, sub: 0, line: 183 } |  |  | 0.686 |
-| walker |  | 7951 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 9, sub: 0, line: 192 } |  |  | 0.686 |
-| walker |  | 7970 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 11, sub: 0, line: 201 } |  |  | 0.686 |
-| walker |  | 7991 | 21 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 4, sub: 0, line: 24 } |  |  | 0.686 |
-| walker |  | 8019 | 28 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 10, sub: 0, line: 196 } |  |  | 0.686 |
-| walker |  | 8048 | 29 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 14, sub: 0, line: 247 } |  |  | 0.686 |
-| walker |  | 8079 | 31 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 6, sub: 0, line: 178 } |  |  | 0.686 |
+| walker |  | 7965 | 273 | Code::CodeKey { rung: Names, file: packages/d2ql/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.686 |
+| walker |  | 7984 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 7, sub: 0, line: 183 } |  |  | 0.686 |
+| walker |  | 8003 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 9, sub: 0, line: 192 } |  |  | 0.686 |
+| walker |  | 8022 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 11, sub: 0, line: 201 } |  |  | 0.686 |
+| walker |  | 8043 | 21 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 4, sub: 0, line: 24 } |  |  | 0.686 |
+| walker |  | 8071 | 28 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 10, sub: 0, line: 196 } |  |  | 0.686 |
 | ns | 8084 |  | 242 | D2QL "Current Features" — the supported SQL subset | 6.2 | 6.1 | 0.677 |
-| walker |  | 8110 | 31 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 8, sub: 0, line: 187 } |  |  | 0.677 |
-| walker |  | 8156 | 46 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 3, sub: 0, line: 15 } |  |  | 0.677 |
-| walker |  | 8213 | 57 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 5, sub: 0, line: 48 } |  |  | 0.677 |
-| walker |  | 8283 | 70 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 16, sub: 0, line: 263 } |  |  | 0.677 |
-| walker |  | 8366 | 83 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 17, sub: 0, line: 274 } |  |  | 0.677 |
+| walker |  | 8100 | 29 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 14, sub: 0, line: 247 } |  |  | 0.677 |
+| walker |  | 8131 | 31 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 6, sub: 0, line: 178 } |  |  | 0.677 |
+| walker |  | 8162 | 31 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 8, sub: 0, line: 187 } |  |  | 0.677 |
+| walker |  | 8208 | 46 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 3, sub: 0, line: 15 } |  |  | 0.677 |
+| walker |  | 8265 | 57 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 5, sub: 0, line: 48 } |  |  | 0.677 |
+| walker |  | 8335 | 70 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 16, sub: 0, line: 263 } |  |  | 0.677 |
+| walker |  | 8418 | 83 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 17, sub: 0, line: 274 } |  |  | 0.677 |
 | ns | 8442 |  | 358 | schema.ts — the Query interface family | 6.3 |  | 0.662 |
-| walker |  | 8461 | 95 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 15, sub: 0, line: 251 } |  |  | 0.662 |
-| walker |  | 8599 | 138 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 13, sub: 0, line: 234 } |  |  | 0.662 |
+| walker |  | 8513 | 95 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 15, sub: 0, line: 251 } |  |  | 0.662 |
 | ns | 8604 |  | 162 | schema.ts — the Comparator and LogicalOperator vocabularies | 6.4 | 6.3 | 0.653 |
-| walker |  | 8605 | 6 | Code::CodeKey { rung: Doc, file: packages/d2ql/src/types.ts, decl: 4, sub: 0, line: 24 } |  |  | 0.653 |
+| walker |  | 8651 | 138 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 13, sub: 0, line: 234 } |  |  | 0.653 |
+| walker |  | 8657 | 6 | Code::CodeKey { rung: Doc, file: packages/d2ql/src/types.ts, decl: 4, sub: 0, line: 24 } |  |  | 0.653 |
 | ns | 8735 |  | 131 | compileQuery — the package's single entry point | 6.5 |  | 0.648 |
-| walker |  | 8835 | 230 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 12, sub: 0, line: 209 } |  |  | 0.648 |
-| walker |  | 8847 | 12 | Code::CodeKey { rung: Doc, file: packages/d2ql/src/types.ts, decl: 3, sub: 0, line: 15 } |  |  | 0.648 |
-| walker |  | 8914 | 67 | Code::CodeKey { rung: Names, file: packages/d2ts/src/d2.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
-| walker |  | 8936 | 22 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.649 |
-| walker |  | 8974 | 38 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 41, sub: 0, line: 166 } |  |  | 0.649 |
-| ns | 8978 |  | 243 | query-builder.ts — the fluent builder's complete method set | 6.6 |  | 0.639 |
-| walker |  | 9012 | 38 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 42, sub: 0, line: 167 } |  |  | 0.639 |
+| walker |  | 8887 | 230 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/types.ts, decl: 12, sub: 0, line: 209 } |  |  | 0.648 |
+| walker |  | 8899 | 12 | Code::CodeKey { rung: Doc, file: packages/d2ql/src/types.ts, decl: 3, sub: 0, line: 15 } |  |  | 0.648 |
+| walker |  | 8966 | 67 | Code::CodeKey { rung: Names, file: packages/d2ts/src/d2.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
+| ns | 8978 |  | 243 | query-builder.ts — the fluent builder's complete method set | 6.6 |  | 0.638 |
+| walker |  | 8988 | 22 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 1, sub: 0, line: 11 } |  |  | 0.639 |
+| walker |  | 9026 | 38 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 41, sub: 0, line: 166 } |  |  | 0.639 |
+| walker |  | 9064 | 38 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 42, sub: 0, line: 167 } |  |  | 0.639 |
 | ns | 9076 |  | 98 | d2mini README — how it differs from d2ts | 7.1 |  | 0.637 |
 | ns | 9165 |  | 89 | d2mini/src/d2.ts — the versionless D2 constructor | 7.2 | 7.1 | 0.633 |
-| walker |  | 9197 | 185 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.644 |
-| walker |  | 9391 | 194 | Code::CodeKey { rung: Names, file: packages/d2ts/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.648 |
-| ns | 9401 |  | 236 | README: using the SQLite backend | 8.1 | 1.10 | 0.642 |
-| walker |  | 9412 | 21 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 12, sub: 0, line: 117 } |  |  | 0.643 |
-| walker |  | 9435 | 23 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 5, sub: 0, line: 24 } |  |  | 0.645 |
-| walker |  | 9462 | 27 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.648 |
-| walker |  | 9502 | 40 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 7, sub: 0, line: 31 } |  |  | 0.652 |
-| ns | 9529 |  | 128 | sqlite/database.ts — the SQLiteDb driver interface | 8.2 | 8.1 | 0.647 |
-| walker |  | 9545 | 43 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 8, sub: 0, line: 37 } |  |  | 0.647 |
-| walker |  | 9616 | 71 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 4, sub: 0, line: 14 } |  |  | 0.658 |
+| walker |  | 9249 | 185 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/d2.ts, decl: 2, sub: 0, line: 15 } |  |  | 0.644 |
+| ns | 9401 |  | 236 | README: using the SQLite backend | 8.1 | 1.10 | 0.638 |
+| walker |  | 9443 | 194 | Code::CodeKey { rung: Names, file: packages/d2ts/src/types.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.642 |
+| walker |  | 9464 | 21 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 12, sub: 0, line: 117 } |  |  | 0.643 |
+| walker |  | 9487 | 23 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 5, sub: 0, line: 24 } |  |  | 0.645 |
+| walker |  | 9514 | 27 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 2, sub: 0, line: 7 } |  |  | 0.648 |
+| ns | 9529 |  | 128 | sqlite/database.ts — the SQLiteDb driver interface | 8.2 | 8.1 | 0.642 |
+| walker |  | 9554 | 40 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 7, sub: 0, line: 31 } |  |  | 0.647 |
+| walker |  | 9597 | 43 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 8, sub: 0, line: 37 } |  |  | 0.647 |
+| walker |  | 9668 | 71 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 4, sub: 0, line: 14 } |  |  | 0.658 |
 | ns | 9683 |  | 154 | withSQLite, SQLIndex and the Electric bridge exports | 8.3 | 8.2 | 0.659 |
-| walker |  | 9702 | 86 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 9, sub: 0, line: 43 } |  |  | 0.659 |
-| walker |  | 9821 | 119 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 10, sub: 0, line: 52 } |  |  | 0.659 |
+| walker |  | 9754 | 86 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 9, sub: 0, line: 43 } |  |  | 0.659 |
 | ns | 9827 |  | 144 | README: what each example demonstrates | 9.1 | 1.10 | 0.662 |
-| walker |  | 9829 | 8 | Code::CodeKey { rung: Body, file: packages/d2ts-benchmark/src/base.ts, decl: 6, sub: 0, line: 48 } |  |  | 0.662 |
-| walker |  | 9931 | 102 | Code::CodeKey { rung: Names, file: packages/d2ql/src/store.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
-| walker |  | 9962 | 31 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/store.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.662 |
+| walker |  | 9873 | 119 | Code::CodeKey { rung: Decl, file: packages/d2ts/src/types.ts, decl: 10, sub: 0, line: 52 } |  |  | 0.662 |
+| walker |  | 9975 | 102 | Code::CodeKey { rung: Names, file: packages/d2ql/src/store.ts, decl: 0, sub: 0, line: 0 } |  |  | 0.662 |
 | ns | 9977 |  | 150 | examples/electric — what the demo app does | 9.2 | 2.13 | 0.659 |
-| walker |  | 9996 | 34 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/store.ts, decl: 2, sub: 0, line: 20 } |  |  | 0.659 |
+| walker |  | 9994 | 19 | Code::CodeKey { rung: Decl, file: packages/d2ql/src/store.ts, decl: 1, sub: 0, line: 14 } |  |  | 0.659 |

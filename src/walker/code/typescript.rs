@@ -441,12 +441,12 @@ impl<'source> ExportScan<'source> {
 }
 
 /// The type names `node`'s parameter lists, return types and
-/// `extends` / `implements` clauses mention, outside function and class
-/// bodies.
+/// `extends` / `implements` clauses mention, a class's member signatures
+/// included, outside function bodies.
 fn signature_types<'source>(file: &'source SourceFile, node: Node, types: &mut Vec<&'source str>) {
     let mut pending = vec![(node, false)];
     while let Some((node, in_signature)) = pending.pop() {
-        if matches!(node.kind(), "statement_block" | "class_body") {
+        if node.kind() == "statement_block" {
             continue;
         }
         if in_signature && node.kind() == "type_identifier" {
@@ -1496,6 +1496,14 @@ export function RoomTimeline({ room }: RoomTimelineProps) {
   const x: Hidden = load();
 }
 export interface TreeState<T> extends StateType<T> {}
+interface ServerOptions { port: number }
+type Handler = () => void;
+export class Server {
+  constructor(options: ServerOptions) {
+    const h: Hidden = load();
+  }
+  use(handler: Handler) {}
+}
 ",
         );
         let name_rows: Vec<Vec<usize>> = model
@@ -1503,7 +1511,18 @@ export interface TreeState<T> extends StateType<T> {}
             .iter()
             .map(|decl| decl.name_rows.clone())
             .collect();
-        assert_eq!(name_rows, [vec![1], vec![3], vec![4], vec![7]]);
+        assert_eq!(
+            name_rows,
+            [
+                vec![1],
+                vec![3],
+                vec![4],
+                vec![7],
+                vec![8],
+                vec![9],
+                vec![10]
+            ]
+        );
     }
 
     #[test]
