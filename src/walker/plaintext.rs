@@ -203,7 +203,8 @@ fn is_docker_compose_name(lower: &str) -> bool {
 /// variable values, or a service-account key. Samples (`.env.example`,
 /// `secrets.yml.sample`) hold placeholders, and source code and
 /// documents (`credentials.py`, `secrets.md`) are about credentials
-/// rather than holding them.
+/// rather than holding them — except a dotenv name, whatever language
+/// its extension claims (`.env.php` returns its secrets as an array).
 pub(crate) fn is_credential_name(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|name| name.to_str()) else {
         return false;
@@ -212,16 +213,18 @@ pub(crate) fn is_credential_name(path: &Path) -> bool {
     #[rustfmt::skip]
     const EXEMPT_SUFFIXES: &[&str] =
         &[".example", ".sample", ".template", ".dist", ".md", ".mdx", ".rst", ".adoc"];
-    let is_exempt = EXEMPT_SUFFIXES.iter().any(|suffix| lower.ends_with(suffix))
-        || super::language_group(path).is_some();
+    if EXEMPT_SUFFIXES.iter().any(|suffix| lower.ends_with(suffix)) {
+        return false;
+    }
+    if lower.starts_with(".env.") || lower.ends_with(".env") {
+        return true;
+    }
     let leading = lower.split(['.', '-', '_']).next().unwrap_or_default();
-    !is_exempt
+    super::language_group(path).is_none()
         && (matches!(
             leading,
             "env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
-        ) || lower.starts_with(".env.")
-            || lower.ends_with(".env")
-            || lower.ends_with(".tfvars")
+        ) || lower.ends_with(".tfvars")
             || lower.ends_with(".tfvars.json")
             || (lower.ends_with(".json")
                 && ["service-account", "service_account", "serviceaccount"]
@@ -1750,6 +1753,7 @@ mod tests {
             ("prod.tfvars.json", true), ("service-account.json", true),
             ("serviceAccountKey.json", true), (".npmrc", true), (".netrc", true),
             (".pypirc", true), (".git-credentials", true), (".htpasswd", true),
+            (".env.php", true), (".env.local.ts", true),
             // Samples document keys with placeholder values.
             (".env.example", false), (".env.sample", false), (".env.template", false),
             (".env.dist", false),
