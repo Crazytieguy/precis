@@ -290,7 +290,7 @@ must not undo:
   `/* istanbul ignore next */`): without the skip, a directive that is a
   declaration's only comment became its whole doc, at doc priority.
 - **Lua file-local functions are listed**: hiding `local function`
-  declarations measured 3000 −.0020 (2026-09-25).
+  declarations measured 3000 −.0020.
 - **Rows that condition or define a file's exports join its roster**:
   a Go `//go:build` constraint, a Lua module's top-level `return` and
   `setmetatable(…)` call.
@@ -348,8 +348,7 @@ module tree) lost to small peripheral listings and stayed a bare name
 even at 8000 tokens. The directories that each hold more than half of
 the survey's essential source bytes form one chain down from the root,
 and each one's listing head is valued twice (`fs::dir_listing_batches`).
-Measured on 2026-09-26 against the robustness and eval corpora and the
-grid:
+Alternatives tried on the robustness and eval corpora and the grid:
 - Weighing by file count instead of bytes made test playgrounds and
   board-support trees the spine (3000 −0.0044).
 - Boosting every directory in proportion to its share of the files, or
@@ -423,8 +422,3 @@ rows for its names, and parses more.
   pick, and scheduling a batch drops the cached cost of every other
   batch on its file, so a file with hundreds of batches is re-costed
   per pick. Only the CLI reaches these budgets.
-- **Python parsing is quadratic in a run of comment lines.** A `def`
-  followed by 20,000 `#` rows takes 2 s and 40,000 take 7 s, all of it
-  inside tree-sitter-python's parse (lexer re-advancing over the run);
-  the same padding costs 0.1 s in the other grammars. Fixing it means
-  a grammar patch or a pre-parse guard on the source.
