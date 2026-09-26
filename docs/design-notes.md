@@ -391,6 +391,10 @@ manifest and build file ahead of the spine's sub-listings cost 3000
 −0.007, since the answer keys of smaller repositories want those
 sub-listings early; even the first costs 1000 −0.0023 where a
 workspace's long root manifest now comes before the member listings.
+An identity that doesn't fit ends the schedule with its affordable
+prefix, so at the plugin's budget a large workspace's `members` roster
+can displace the README's build section; capping the promoted batch, or
+splitting a long `members` list out of the identity block, is deferred.
 A README command block does not count: it satisfied
 the rule in repositories whose build file then went unread. Nor does a
 task roster (`Makefile`, `Dockerfile`, compose file): a long root
