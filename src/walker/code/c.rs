@@ -418,15 +418,18 @@ fn cplusplus_wrapped_linkage_specification<'a>(
     found
 }
 
-/// The `#ifndef X` / `#define X` / `#endif` block wrapping the whole file
-/// (comments aside), whose children are the effective top level.
+/// The `#ifndef X` (or `#if !defined(X)`) / `#define X` / `#endif` block
+/// wrapping the whole file (comments aside), whose children are the
+/// effective top level.
 fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
     let mut cursor = root.walk();
     let mut candidate = None;
     for child in root.children(&mut cursor) {
         match child.kind() {
             "comment" => {}
-            "preproc_ifdef" if candidate.is_none() && is_header_guard(child, file) => {
+            "preproc_if" | "preproc_ifdef"
+                if candidate.is_none() && is_header_guard(child, file) =>
+            {
                 candidate = Some(child);
             }
             _ => return None,
@@ -435,35 +438,57 @@ fn header_guard<'a>(root: Node<'a>, file: &SourceFile) -> Option<Node<'a>> {
     candidate
 }
 
-/// True iff `ifdef` is `#ifndef X` whose first child (comments aside)
-/// is `#define X`.
-fn is_header_guard(ifdef: Node, file: &SourceFile) -> bool {
-    let Some(name) = ifdef.child_by_field_name("name") else {
+/// The `X` that `guard` tests as `#ifndef X` or `#if !defined(X)`.
+fn guarded_name(guard: Node) -> Option<Node> {
+    match guard.kind() {
+        "preproc_ifdef" => guard
+            .child(0)
+            .is_some_and(|token| token.kind() == "#ifndef")
+            .then(|| guard.child_by_field_name("name"))
+            .flatten(),
+        "preproc_if" => {
+            let condition = guard
+                .child_by_field_name("condition")
+                .filter(|condition| condition.kind() == "unary_expression")?;
+            condition
+                .child_by_field_name("operator")
+                .is_some_and(|operator| operator.kind() == "!")
+                .then(|| condition.child_by_field_name("argument"))
+                .flatten()
+                .filter(|argument| argument.kind() == "preproc_defined")?
+                .named_child(0)
+        }
+        _ => None,
+    }
+}
+
+/// True iff `guard` tests `X` as in [`guarded_name`] and its first child
+/// (comments aside) is `#define X`.
+fn is_header_guard(guard: Node, file: &SourceFile) -> bool {
+    let Some(name) = guarded_name(guard) else {
         return false;
     };
-    if ifdef.child(0).is_none_or(|token| token.kind() != "#ifndef") {
-        return false;
-    }
-    let mut cursor = ifdef.walk();
-    let first = ifdef
+    let condition = guard.child_by_field_name("condition");
+    let mut cursor = guard.walk();
+    let first = guard
         .named_children(&mut cursor)
-        .find(|child| *child != name && child.kind() != "comment");
-    first.is_some_and(|define| {
-        define.kind() == "preproc_def"
-            && define
-                .child_by_field_name("name")
-                .is_some_and(|defined| file.text(defined) == file.text(name))
+        .find(|child| *child != name && Some(*child) != condition && child.kind() != "comment");
+    first.is_some_and(|define| is_define_of(define, name, file))
+}
+
+/// True iff `define` is the `#define X` of a header guard on `X`.
+fn is_header_guard_define(define: Node, file: &SourceFile) -> bool {
+    define.parent().is_some_and(|guard| {
+        is_header_guard(guard, file)
+            && guarded_name(guard).is_some_and(|name| is_define_of(define, name, file))
     })
 }
 
-/// True iff `define` is the `#define X` of an `#ifndef X` header guard.
-fn is_header_guard_define(define: Node, file: &SourceFile) -> bool {
-    define
-        .parent()
-        .filter(|guard| is_header_guard(*guard, file))
-        .and_then(|guard| guard.child_by_field_name("name"))
-        .zip(define.child_by_field_name("name"))
-        .is_some_and(|(guard, defined)| file.text(guard) == file.text(defined))
+fn is_define_of(define: Node, name: Node, file: &SourceFile) -> bool {
+    define.kind() == "preproc_def"
+        && define
+            .child_by_field_name("name")
+            .is_some_and(|defined| file.text(defined) == file.text(name))
 }
 
 fn has_storage_class(node: Node, file: &SourceFile, keyword: &str) -> bool {
@@ -501,6 +526,16 @@ int foo(void);
 ";
         let guarded = model("version.h", guarded);
         assert_eq!(name_rows_of(&guarded), vec![vec![3], vec![4]]);
+
+        let if_guarded = "\
+#if !defined(DECCONTEXT)
+#define DECCONTEXT
+#define DEC_INIT_BASE 0
+int dec_init(void);
+#endif
+";
+        let if_guarded = model("decContext.h", if_guarded);
+        assert_eq!(name_rows_of(&if_guarded), vec![vec![3], vec![4]]);
 
         let wrapped = "\
 #ifdef __cplusplus
