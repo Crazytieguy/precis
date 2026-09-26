@@ -9,6 +9,13 @@ LICENSE
 Makefile
   …
   63→.PHONY: all clean install uninstall test test-directory ci bench-rg
+  64→
+  65→all: $(TARGET)
+  …
+  90→test: $(TEST_TARGET)
+  91→	./$(TEST_TARGET)
+  …
+  107→install: $(TARGET)
   …
 README.md
   1→# k(r)ep - A high-performance string search utility
@@ -203,9 +210,6 @@ krep.h
   122→} thread_data_t;
   …
   125→typedef struct task
-  126→{
-  127→   void *(*func)(void *); // Task function
-  128→   void *arg;             // Function argument
   …
   130→} task_t;
   131→
@@ -221,8 +225,6 @@ krep.h
   161→int search_file(const search_params_t *params, const char *filename, int requested_thread_count);
   …
   170→int search_string(const search_params_t *params, const char *text);
-  …
-  180→int search_directory_recursive(const char *base_dir, const search_params_t *params, int thread_count);
   …
 test/
   benchmark_krep_vs_rg.sh

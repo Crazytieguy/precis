@@ -18,6 +18,8 @@ LICENSE
 Makefile
   1→.PHONY : all clean shader
   …
+  35→all : $(BIN)/$(APPNAME)
+  …
 README.md
   …
   3→Sokol + Lua = Soluna
@@ -157,10 +159,6 @@ docs/
     28→
     29→return font
   font_system.lua
-    …
-    15→function font_system.ttfdata(name) end
-    16→
-    17→return font_system
   image.lua
     …
     17→function image.load(data) end

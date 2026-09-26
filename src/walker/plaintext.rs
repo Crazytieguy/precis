@@ -1626,12 +1626,13 @@ fn recipe_name(line: &str) -> Option<&str> {
     (!line.starts_with('#') && !is_assignment).then_some(name)
 }
 
-/// A root Makefile too long to render whole still names what it can run:
-/// its `.PHONY` declarations, the author's own list of commands, each
-/// through its backslash-continued lines, and the first rule head of each
-/// [`CANONICAL_MAKE_TARGETS`] target they don't name. A declaration of
-/// only variables or patterns (`.PHONY: $(PHONY)`) names nothing and is
-/// left out.
+/// A root Makefile too long to render whole still shows how to build and
+/// test: the first rule of each [`CANONICAL_MAKE_TARGETS`] target, with its
+/// recipe unless the target is `help` or [housekeeping](is_housekeeping_target), and
+/// each `.PHONY` declaration naming several targets, the author's own list
+/// of commands, through its backslash-continued lines. A declaration of one
+/// target only marks the rule under it, and one of only variables or
+/// patterns (`.PHONY: $(PHONY)`) names nothing.
 fn root_makefile_targets(
     file: &Path,
     name: &str,
@@ -1643,40 +1644,41 @@ fn root_makefile_targets(
     let source = ctx.read_source_within(file, SOURCE_TEXT_BYTE_GATE)?;
     let mut rows = Vec::new();
     let mut declaration = Vec::new();
-    let mut declaration_targets = Vec::new();
-    let mut declared = HashSet::new();
-    let mut canonical_heads: HashMap<&str, usize> = HashMap::new();
+    let mut declaration_targets = 0;
+    let mut shown_targets = HashSet::new();
+    let mut in_shown_recipe = false;
+    let mut continued = false;
     for (index, line) in source.lines().enumerate() {
-        if declaration.is_empty() && !line.starts_with(".PHONY") {
-            if let Some(target) = recipe_name(line)
-                && CANONICAL_MAKE_TARGETS.contains(&target)
-            {
-                canonical_heads.entry(target).or_insert(index + 1);
-            }
+        let continues_previous = std::mem::replace(&mut continued, line.ends_with('\\'));
+        if in_shown_recipe && (continues_previous || line.starts_with('\t')) {
+            rows.push(index + 1);
             continue;
         }
-        declaration.push(index + 1);
-        declaration_targets.extend(
-            line.strip_prefix(".PHONY:")
+        in_shown_recipe = false;
+        if !declaration.is_empty() || line.starts_with(".PHONY") {
+            declaration.push(index + 1);
+            declaration_targets += line
+                .strip_prefix(".PHONY:")
                 .unwrap_or(line)
                 .split_whitespace()
-                .filter(|target| *target != "\\" && !target.contains(['$', '%'])),
-        );
-        if !line.ends_with('\\') {
-            if !declaration_targets.is_empty() {
-                rows.append(&mut declaration);
-                declared.extend(declaration_targets.drain(..));
+                .filter(|target| *target != "\\" && !target.contains(['$', '%']))
+                .count();
+            if !line.ends_with('\\') {
+                if declaration_targets > 1 {
+                    rows.append(&mut declaration);
+                }
+                declaration.clear();
+                declaration_targets = 0;
             }
-            declaration.clear();
+        } else if !line.starts_with('\t')
+            && let Some(target) = recipe_name(line)
+            && CANONICAL_MAKE_TARGETS.contains(&target)
+            && shown_targets.insert(target)
+        {
+            rows.push(index + 1);
+            in_shown_recipe = target != "help" && !is_housekeeping_target(target);
         }
     }
-    rows.extend(
-        canonical_heads
-            .into_iter()
-            .filter(|(target, _)| !declared.contains(target))
-            .map(|(_, row)| row),
-    );
-    rows.sort_unstable();
     single_file_lines_content(file, &source, rows)
 }
 
@@ -2476,10 +2478,10 @@ mod tests {
     /// The rows each build file renders at the root and one level down. A
     /// small Makefile or justfile renders whole anywhere but for its
     /// housekeeping recipes' bodies; a Makefile too long, or too wide for
-    /// the byte gate, renders at the root only its `.PHONY` declarations
-    /// (through their continuation lines) that name a target and the rule
-    /// heads of canonical targets they don't name, and a long root
-    /// Dockerfile only its head.
+    /// the byte gate, renders at the root only its canonical targets' rules
+    /// (a housekeeping or `help` one's head alone) and its `.PHONY`
+    /// declarations (through their continuation lines) that name several
+    /// targets, and a long root Dockerfile only its head.
     #[test]
     fn plaintext_build_file_rows() {
         let recipes = |prefix: &str| -> String {
@@ -2529,9 +2531,19 @@ mod tests {
             (
                 "Makefile",
                 recipes(
-                    "BUILD_DEPS = common-a common-b\n.PHONY: build test\n\nbuild: $(BUILD_DEPS)\n",
+                    "BUILD_DEPS = common-a common-b\n.PHONY: build test\nSHELL = /bin/sh\n\
+                     build: $(BUILD_DEPS)\n\tcc main.c \\\n  -o app\n\tcc test.c\nFLAGS = -O2\n",
                 ),
-                vec![(2, 2)],
+                vec![(2, 2), (4, 7)],
+                vec![],
+            ),
+            (
+                "Makefile",
+                recipes(
+                    ".PHONY: test\ntest: build\n\tcargo test\n\n.PHONY: install\n\
+                     install: build\n\tcp app /usr/bin\n",
+                ),
+                vec![(2, 3), (6, 6)],
                 vec![],
             ),
             (

@@ -17,23 +17,32 @@ CONTRIBUTING.md
 LICENSE
 Makefile
   …
-  10→.PHONY: test
+  12→test:
+  13→	echo "mode: count" > coverage.out
+  14→	for d in $(TESTFOLDER); do \
+  15→		if [ -n "$(TESTTAGS)" ]; then \
+  16→			$(GO) test $(TESTTAGS) -v -covermode=count -coverprofile=profile.out $$d > tmp.out; \
+  17→		else \
+  18→			$(GO) test -v -covermode=count -coverprofile=profile.out $$d > tmp.out; \
+  19→		fi; \
+  20→		cat tmp.out; \
+  21→		if grep -q "^--- FAIL" tmp.out; then \
+  22→			rm tmp.out; \
+  23→			exit 1; \
+  24→		elif grep -q "build failed" tmp.out; then \
+  25→			rm tmp.out; \
+  26→			exit 1; \
+  27→		elif grep -q "setup failed" tmp.out; then \
+  28→			rm tmp.out; \
+  29→			exit 1; \
+  30→		fi; \
+  31→		if [ -f profile.out ]; then \
+  32→			cat profile.out | grep -v "mode:" >> coverage.out; \
+  33→			rm profile.out; \
+  34→		fi; \
+  35→	done
   …
-  37→.PHONY: fmt
-  …
-  42→.PHONY: fmt-check
-  …
-  52→.PHONY: vet
-  …
-  57→.PHONY: lint
-  …
-  65→.PHONY: misspell
-  …
-  73→.PHONY: misspell-check
-  …
-  81→.PHONY: tools
-  …
-  92→.PHONY: help
+  94→help:
   …
 README.md
   1→# Gin Web Framework
@@ -315,33 +324,10 @@ response_writer_test.go
 routergroup.go
   …
   27→type IRouter interface {
-  28→	IRoutes
-  29→	Group(string, ...HandlerFunc) *RouterGroup
-  30→}
   …
   33→type IRoutes interface {
-  34→	Use(...HandlerFunc) IRoutes
-  35→
-  36→	Handle(string, string, ...HandlerFunc) IRoutes
-  …
-  51→}
   …
   55→type RouterGroup struct {
-  56→	Handlers HandlersChain
-  …
-  60→}
-  …
-  65→func (group *RouterGroup) Use(middleware ...HandlerFunc) IRoutes {
-  …
-  72→func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
-  …
-  82→func (group *RouterGroup) BasePath() string {
-  …
-  103→func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) IRoutes {
-  …
-  111→func (group *RouterGroup) POST(relativePath string, handlers ...HandlerFunc) IRoutes {
-  …
-  116→func (group *RouterGroup) GET(relativePath string, handlers ...HandlerFunc) IRoutes {
   …
 routergroup_test.go
 routes_test.go

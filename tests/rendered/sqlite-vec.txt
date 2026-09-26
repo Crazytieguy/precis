@@ -12,7 +12,12 @@ Makefile
   …
   72→all: loadable static cli
   …
+  174→test:
+  175→	sqlite3 :memory: '.read test.sql'
+  176→
   177→.PHONY: version loadable static test clean gh-release evidence-of install uninstall
+  …
+  201→install:
   …
 README.md
   1→# `sqlite-vec`
@@ -343,6 +348,3 @@ tests/
   utils.py
   uv.lock
 tmp-static.py
-  …
-  4→db = sqlite3.connect(":memory:")
-  …

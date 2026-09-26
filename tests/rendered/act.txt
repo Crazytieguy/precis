@@ -32,47 +32,16 @@ IMAGES.md
 LICENSE
 Makefile
   …
-  22→.PHONY: pr
+  26→build:
+  27→	go build -ldflags "-X main.version=$(VERSION)" -o dist/local/act main.go
   …
-  25→.PHONY: build
+  39→test:
+  40→	go test ./...
+  41→	$(ACT)
   …
-  29→.PHONY: format
-  …
-  33→.PHONY: format-all
-  …
-  38→.PHONY: test
-  …
-  43→.PHONY: lint-go
-  …
-  47→.PHONY: lint-js
-  …
-  51→.PHONY: lint-md
-  …
-  55→.PHONY: lint-rest
-  …
-  63→.PHONY: lint
-  …
-  66→.PHONY: lint-fix
-  …
-  69→.PHONY: fix
-  …
-  73→.PHONY: tidy
-  …
-  77→.PHONY: install
-  …
-  83→.PHONY: installer
-  …
-  88→.PHONY: promote
-  …
-  107→.PHONY: snapshot
+  78→install: build
   …
   114→.PHONY: clean all
-  115→
-  116→.PHONY: upgrade
-  …
-  123→.PHONY: deps-tools
-  …
-  127→.PHONY: security-check
   …
 README.md
   …
@@ -142,6 +111,7 @@ cmd/
     …
     103→// WorkflowsPath returns path to workflow file(s)
     104→func (i *Input) WorkflowsPath() string {
+    105→	return i.resolve(i.workflowsPath)
     …
     108→// EventPath returns the path to events file
     109→func (i *Input) EventPath() string {
@@ -188,6 +158,11 @@ go.mod
   1→module github.com/nektos/act
   2→
   3→go 1.25.0
+  4→
+  5→require (
+  6→	github.com/AlecAivazis/survey/v2 v2.3.7
+  7→	github.com/Masterminds/semver v1.5.0
+  8→	github.com/adrg/xdg v0.5.3
   …
 go.sum
 install.sh
@@ -285,7 +260,15 @@ pkg/
       16→	Env       map[string]string
       17→	Job       *model.JobContext
       18→	Jobs      *map[string]*model.WorkflowCallResult
-      …
+      19→	Steps     map[string]*model.StepResult
+      20→	Runner    map[string]interface{}
+      21→	Secrets   map[string]string
+      22→	Vars      map[string]string
+      23→	Strategy  map[string]interface{}
+      24→	Matrix    map[string]interface{}
+      25→	Needs     map[string]Needs
+      26→	Inputs    map[string]interface{}
+      27→	HashFiles func([]reflect.Value) (interface{}, error)
       28→}
       30→type Needs struct {
       31→	Outputs map[string]string `json:"outputs"`

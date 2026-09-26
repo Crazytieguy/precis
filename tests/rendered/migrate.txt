@@ -47,6 +47,14 @@ LICENSE
 MIGRATIONS.md
 Makefile
   …
+  9→build:
+  10→	CGO_ENABLED=0 go build -ldflags='-X main.Version=$(VERSION)' -tags '$(DATABASE) $(SOURCE)' ./cmd/migrate
+  …
+  36→test:
+  37→	@-rm -r $(COVERAGE_DIR)
+  38→	@mkdir $(COVERAGE_DIR)
+  39→	make test-with-flags TEST_FLAGS='-v -race -covermode atomic -coverprofile $$(COVERAGE_DIR)/combined.txt -bench=. -benchmem -timeout 20m'
+  …
   114→.PHONY: build build-docker build-cli clean test-short test test-with-flags html-coverage \
   115→        restore-import-paths rewrite-import-paths list-external-deps release \
   116→		docs kill-docs open-docs kill-orphaned-docker-containers echo-source echo-database
@@ -310,25 +318,10 @@ migrate.go
   32→	ErrInvalidVersion = errors.New("version must be >= -1")
   33→	ErrLocked         = errors.New("database locked")
   34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
-  35→)
   …
   39→type ErrShortLimit struct {
-  40→	Short uint
-  41→}
   …
   44→func (e ErrShortLimit) Error() string {
-  …
-  48→type ErrDirty struct {
-  49→	Version int
-  50→}
-  52→func (e ErrDirty) Error() string {
-  …
-  56→type Migrate struct {
-  …
-  62→	// Log accepts a Logger interface
-  63→	Log Logger
-  …
-  81→}
   …
 migrate_test.go
 migration.go
