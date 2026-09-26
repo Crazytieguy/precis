@@ -1012,7 +1012,7 @@ pub fn visible_full_line(source_line: &str) -> &str {
 /// `"api_key" => 'sk-…'`, `SECRET_KEY = "…"`, `authToken: "…"`). A
 /// placeholder (`{}`, `${DB_PASSWORD}`, `<password>`, `%s`,
 /// `env(DB_PASSWORD)`), a phrase (`"Save password": "Tallenna salasana"`),
-/// a number or version (`"parse-passwd": "^1.0.0"`), a value spelling its
+/// a version (`"parse-passwd": "^1.0.0"`), a value spelling its
 /// own key (`ACCESS_TOKEN = "access_token"`), and anything unquoted — a
 /// variable, a call, a type — is code or documentation, and shows, as
 /// does every literal in a document (`export API_KEY='your-key'`).
@@ -1025,7 +1025,7 @@ fn redact_secrets(line: &str, in_document: bool) -> std::borrow::Cow<'_, str> {
             r#"(?i)(?<open>["']?)"#,
             r"(?<key>[\w.-]*(?:password|passwd|pwd|secret|token|(?:api|access|secret|private|auth)[_-]?key))",
             r#"(?<close>["']?)\s*(?:=>|:=|:|=)\s*"#,
-            r#"(?<literal>"(?:[^"\\{}()$<%\s]|\\.)*[a-z](?:[^"\\{}()$<%\s]|\\.)*"|'(?:[^'\\{}()$<%\s]|\\.)*[a-z](?:[^'\\{}()$<%\s]|\\.)*')"#,
+            r#"(?<literal>"(?:[^"\\{}()$<%\s]|\\.)*[a-z](?:[^"\\{}()$<%\s]|\\.)*"|'(?:[^'\\{}()$<%\s]|\\.)*[a-z](?:[^'\\{}()$<%\s]|\\.)*'|"\d+"|'\d+')"#,
         ))
         .unwrap()
     });
@@ -1358,6 +1358,7 @@ mod tests {
             (r#"tokenizer = "gpt2""#, r#"tokenizer = "gpt2""#),
             (r#""parse-passwd": "^1.0.0""#, r#""parse-passwd": "^1.0.0""#),
             (r#"githubToken: "ghp_abc""#, r#"githubToken: "…""#),
+            (r#"password = "12345678""#, r#"password = "…""#),
             (r#""Password": "密码""#, r#""Password": "密码""#),
             (r#"password = "ab\"cd123""#, r#"password = "…""#),
             (r#"password = "\"hunter2""#, r#"password = "…""#),
