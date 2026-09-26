@@ -463,21 +463,45 @@ fn scan_rst_headings(src_lines: &[&str]) -> Vec<RstHeading> {
     headings
 }
 
-/// Line-scan AsciiDoc section titles (`= Title`, `== Section`, …).
+/// Line-scan AsciiDoc section titles (`= Title`, `== Section`, …) outside
+/// delimited blocks (`----` listings, `....` literals, `====` examples, …),
+/// whose lines are content even when they start with `= `.
 fn scan_asciidoc_headings(src_lines: &[&str]) -> Vec<RstHeading> {
-    src_lines
-        .iter()
-        .enumerate()
-        .filter(|(_, line)| {
-            let rest = line.trim_start_matches('=');
-            (1..=6).contains(&(line.len() - rest.len())) && rest.starts_with(' ')
-        })
-        .map(|(i, _)| RstHeading {
-            start_row: i + 1,
-            title_row: i + 1,
-            underline_row: i + 1,
-        })
-        .collect()
+    let mut open_delimiter: Option<&str> = None;
+    let mut headings = Vec::new();
+    for (i, line) in src_lines.iter().enumerate() {
+        let trimmed = line.trim_end();
+        if is_asciidoc_block_delimiter(trimmed) {
+            match open_delimiter {
+                None => open_delimiter = Some(trimmed),
+                Some(open) if open == trimmed => open_delimiter = None,
+                Some(_) => {}
+            }
+            continue;
+        }
+        let rest = line.trim_start_matches('=');
+        if open_delimiter.is_none()
+            && (1..=6).contains(&(line.len() - rest.len()))
+            && rest.starts_with(' ')
+        {
+            headings.push(RstHeading {
+                start_row: i + 1,
+                title_row: i + 1,
+                underline_row: i + 1,
+            });
+        }
+    }
+    headings
+}
+
+/// A run of four or more of one AsciiDoc block-delimiter character alone
+/// on its line; the same run closes the block.
+fn is_asciidoc_block_delimiter(line: &str) -> bool {
+    line.chars().next().is_some_and(|first| {
+        matches!(first, '-' | '.' | '=' | '*' | '_' | '+' | '/')
+            && line.len() >= 4
+            && line.chars().all(|c| c == first)
+    })
 }
 
 /// A reST or AsciiDoc README split into its `ReadmeHeadline` and
@@ -2472,6 +2496,31 @@ mod tests {
         assert_eq!(headline.into_iter().collect::<Vec<_>>(), vec![1, 3]);
         let last = sections.last().unwrap();
         assert_eq!((last.start, last.end), (5, 7));
+    }
+
+    #[test]
+    fn markdown_asciidoc_headings_skip_delimited_blocks() {
+        let src = "\
+= Tool
+
+== Usage
+
+----
+$ tool --sum
+= 42
+----
+
+....
+== not a section either
+....
+
+== License
+";
+        let rows: Vec<usize> = scan_asciidoc_headings(&src.lines().collect::<Vec<_>>())
+            .iter()
+            .map(|heading| heading.title_row)
+            .collect();
+        assert_eq!(rows, vec![1, 3, 14]);
     }
 
     #[test]
