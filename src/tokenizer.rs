@@ -72,6 +72,7 @@ fn load_ranks(rank_file: &str) -> FxHashMap<&'static [u8], u32> {
         decode_base64(&line[..space], &mut bytes);
         let rank = line[space + 1..]
             .iter()
+            .take_while(|symbol| symbol.is_ascii_digit())
             .fold(0, |rank, digit| rank * 10 + u32::from(digit - b'0'));
         tokens.push((start..bytes.len(), rank));
     }
