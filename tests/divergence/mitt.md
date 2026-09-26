@@ -1,4 +1,4 @@
-Score(3000)=0.788 I=0.937 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.739/0.773/0.800/0.788/0.835/0.648/0.590
+Score(3000)=0.788 I=0.937 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.739/0.773/0.800/0.788/0.837/0.876/0.836
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -61,26 +61,28 @@ Score(3000)=0.788 I=0.937 C=0.663 ns_rows≤3K=21/55 grid(1000/1442/2080/3000/43
 | ns | 4540 |  | 185 | index_test shared fixture: the `Events` map and `beforeEach` | 5.4 | 5.2 | 0.786 |
 | ns | 4736 |  | 196 | Type test: `on` argument inference, including the `'*'` cases | 5.5 | 5.3 | 0.766 |
 | ns | 4932 |  | 196 | Type test: `off` argument inference | 5.6 |  | 0.748 |
-| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.730 |
-| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.715 |
-| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.695 |
-| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.679 |
-| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.668 |
-| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.648 |
-| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.635 |
-| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.618 |
-| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.609 |
-| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.616 |
-| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.620 |
-| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.628 |
-| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.637 |
-| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.626 |
-| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.625 |
-| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.614 |
-| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.602 |
-| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.590 |
-| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.581 |
-| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.576 |
-| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.573 |
-| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.570 |
-| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.563 |
+| walker |  | 4940 | 805 | Plaintext::Rest { file: test/test-types-compilation.ts } |  |  | 0.836 |
+| ns | 5128 |  | 196 | Type test: `emit` argument inference and optional-payload rules | 5.7 |  | 0.840 |
+| ns | 5281 |  | 153 | Tests: default export is a function; optional pre-seeded handler map | 6.1 | 5.2 | 0.822 |
+| ns | 5452 |  | 171 | Tests: `all` property exposure and `on` registering new / arbitrary types | 6.2 | 5.2 | 0.799 |
+| ns | 5679 |  | 227 | Tests: `on` appends to an existing type and does NOT normalize case | 6.3 | 5.2 | 0.781 |
+| ns | 5838 |  | 159 | Tests: symbol event types and duplicate listener registration | 6.4 | 5.2 | 0.768 |
+| ns | 6120 |  | 282 | Tests: `off` removes a handler and preserves case distinctions | 6.5 | 5.2 | 0.745 |
+| ns | 6338 |  | 218 | Tests: `off` removes only the first match; `off(type)` clears the type | 6.6 | 5.2 | 0.730 |
+| ns | 6613 |  | 275 | Tests: `emit` invokes the type handler with exactly one argument, case-sensitively | 6.7 | 5.2 | 0.711 |
+| ns | 6777 |  | 164 | Tests: `*` handlers receive `(type, event)` for every emit | 6.8 | 5.2 | 0.700 |
+| ns | 6919 |  | 142 | README API section: generated-by marker and its table of contents | 7.1 |  | 0.705 |
+| ns | 7025 |  | 106 | README Examples & Demos section | 7.2 |  | 0.707 |
+| walker |  | 7051 | 2111 | Plaintext::Rest { file: test/index_test.ts } |  |  | 0.903 |
+| ns | 7257 |  | 232 | README generated API reference: `mitt`, `all`, `on` | 7.3 |  | 0.902 |
+| ns | 7600 |  | 343 | README generated API reference: `off`, `emit` | 7.4 |  | 0.902 |
+| ns | 7912 |  | 312 | README Contribute section: issue reporting and the PR checklist | 7.5 |  | 0.887 |
+| ns | 7943 |  | 31 | README License line | 7.6 |  | 0.885 |
+| ns | 8311 |  | 368 | package.json devDependencies in full | 7.7 |  | 0.869 |
+| ns | 8536 |  | 225 | .eslintrc: ignore patterns, extended configs, parser, env, globals | 7.8 |  | 0.853 |
+| ns | 8808 |  | 272 | .eslintrc rules block in full | 7.9 | 7.8 | 0.836 |
+| ns | 9012 |  | 204 | Formatting config: package.json `prettier` block and .editorconfig | 7.10 |  | 0.823 |
+| ns | 9132 |  | 120 | .github/workflows/compressed-size.yml in full | 7.11 |  | 0.816 |
+| ns | 9206 |  | 74 | .gitignore in full | 7.12 |  | 0.811 |
+| ns | 9389 |  | 183 | README badge header | 7.13 |  | 0.807 |
+| ns | 9601 |  | 212 | .github/PULL_REQUEST_TEMPLATE.md in full | 7.14 |  | 0.797 |

@@ -65,6 +65,10 @@ case: an NS that ranks their content as primary is an NS-author error.
 Pricing other docs' sections or outlines at any tier bought the wrong
 pages (translations, migration guides, nested package READMEs) and
 never reached the ones answer keys rank.
+A repository that exhausts the pool before the budget gets one more
+round: the head of every listed file no batch touches
+(`plaintext::floor_batches`), ranked among themselves only, so it never
+displaces a priced batch.
 
 ## Gitignore and containment
 

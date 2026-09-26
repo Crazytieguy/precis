@@ -126,6 +126,7 @@ Score(3000)=0.746 I=0.916 C=0.608 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | walker |  | 7779 | 327 | Code::CodeKey { rung: Body, file: src/app.ts, decl: 2, sub: 2, line: 94 } |  |  | 0.754 |
 | ns | 7806 |  | 254 | Collection/item route bodies and the 404/201 terminal handler | 4.12 | 3.6 | 0.760 |
 | walker |  | 8004 | 225 | Json::Whole { file: fixtures/db.json5 } |  |  | 0.760 |
+| walker |  | 8021 | 17 | Plaintext::Rest { file: public/test.html } |  |  | 0.760 |
 | ns | 8052 |  | 246 | NormalizedAdapter read/write bodies: $schema and id normalization | 4.13 | 3.10 | 0.765 |
 | ns | 8301 |  | 249 | bin.ts startup: file checks and adapter selection | 4.14 | 3.1 | 0.751 |
 | ns | 8460 |  | 159 | Service #updateOrPatchById: id-preserving row replacement | 4.15 | 3.5 | 0.743 |
@@ -133,5 +134,7 @@ Score(3000)=0.746 I=0.916 C=0.608 ns_rows≤3K=22/54 grid(1000/1442/2080/3000/43
 | ns | 8939 |  | 368 | Complete roster of every test and sub-test name in src/ | 5.1 |  | 0.734 |
 | ns | 9193 |  | 254 | tsconfig.json and schema.json in full | 5.2 |  | 0.740 |
 | ns | 9410 |  | 217 | Example databases: fixtures/db.json in full, db.json5 head | 5.3 |  | 0.730 |
-| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.717 |
-| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.708 |
+| walker |  | 9706 | 1685 | Plaintext::Rest { file: views/index.html } |  |  | 0.719 |
+| ns | 9706 |  | 296 | Dev dependencies and every remaining config file | 5.4 |  | 0.719 |
+| ns | 9945 |  | 239 | views/index.html: the Eta template body | 5.5 |  | 0.724 |
+| walker |  | 9990 | 284 | Plaintext::Rest { file: src/bin.ts } |  |  | 0.724 |

@@ -77,6 +77,12 @@ pub trait Walker {
     /// Called when a batch is scheduled — returns newly-discovered
     /// batches.
     fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Batch>;
+
+    /// Called once, when every batch in `emitted` that can be scheduled
+    /// is: batches that spend only the budget left over.
+    fn floor(&mut self, _emitted: &[Batch], _ctx: &WalkCtx) -> Vec<Batch> {
+        Vec::new()
+    }
 }
 
 /// Top-level walker: FS listings drive discovery; per-language modules
@@ -104,8 +110,11 @@ impl Walker for FsWalker {
         out.extend(prisma::expand_in_dir(dir, ctx));
         out.extend(go_mod::expand_in_dir(dir, ctx));
         out.extend(code::expand_in_dir(dir, ctx));
-        out.extend(plaintext::named_file_rest(&out, ctx));
         out
+    }
+
+    fn floor(&mut self, emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
+        plaintext::floor_batches(emitted, ctx)
     }
 }
 

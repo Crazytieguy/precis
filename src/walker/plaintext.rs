@@ -13,12 +13,13 @@
 //!    rendered as its [`declaration_surface`] — a head slice for flat text
 //!    such as shell, CSS and config — and, when short, whole behind it. Without it those files show only as a filename.
 //!    Markup documents (reST, AsciiDoc, …) are not claimed: like
-//!    markdown beyond the root README, they are left to the listing.
+//!    markdown beyond the root README, they are left to the listing and
+//!    the floor.
 //!
-//! In a single-file walk it also renders whatever of the named file the
-//! other walkers leave unshown ([`named_file_rest`]).
+//! Once the walkers' batches are all scheduled, it also renders the head
+//! of every listed file they leave untouched ([`floor_batches`]).
 
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::io::Read;
 use std::path::Path;
 use std::sync::Arc;
@@ -75,7 +76,7 @@ const SOURCE_TEXT_MAX_INDENT_LEVELS: usize = 4;
 /// Pre-flight byte gate for the fallback. Generous — only the
 /// declaration surface is rendered, not the file — but bounded so a
 /// stray data blob is never read. Also how far into a named file
-/// [`named_file_rest`] reaches, so a multi-megabyte file is not
+/// [`floor_batches`] reaches, so a multi-megabyte file is not
 /// tokenized whole for a budget that shows its head.
 const SOURCE_TEXT_BYTE_GATE: usize = 512 * 1024;
 
@@ -178,6 +179,22 @@ fn is_credential_stem(stem: &str) -> bool {
         stem,
         "env" | ".env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
     )
+}
+
+/// A credential stem with or without its extension, a real (non-sample)
+/// dotenv file, or a tool's auth file.
+fn is_credential_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    let stem = lower
+        .rsplit_once('.')
+        .map_or(lower.as_str(), |(stem, _)| stem);
+    is_credential_stem(&lower)
+        || is_credential_stem(stem)
+        || (lower.starts_with(".env.") && !crate::value::is_dotenv_sample_filename(name))
+        || matches!(
+            lower.as_str(),
+            ".npmrc" | ".netrc" | ".pypirc" | ".git-credentials" | ".htpasswd"
+        )
 }
 
 /// Programming-language extensions the fallback claims. A directory
@@ -302,22 +319,7 @@ fn classify_source_text(name: &str) -> Option<Class> {
         return Some(Class::LanguageSource);
     }
     let (stem, ext) = lower.rsplit_once('.')?;
-    if is_credential_stem(stem) {
-        return None;
-    }
-    // Derived siblings of a hand-authored source: `app.min.js`,
-    // `bundle.chunk.css`, `pnpm-lock.yaml`, `main.js.map`.
-    if stem.ends_with(".min")
-        || stem.ends_with("-min")
-        || stem.ends_with(".bundle")
-        || stem.ends_with(".chunk")
-        || stem.ends_with(".generated")
-        || stem.ends_with("_generated")
-        || stem.ends_with("-lock")
-        || stem.ends_with(".lock")
-        || ext == "map"
-        || ext == "lock"
-    {
+    if is_credential_stem(stem) || is_derived_artifact_name(&lower) {
         return None;
     }
     if SOURCE_TEXT_LANGUAGE_EXTENSIONS.contains(&ext)
@@ -328,6 +330,24 @@ fn classify_source_text(name: &str) -> Option<Class> {
     SOURCE_TEXT_FLAT_EXTENSIONS
         .contains(&ext)
         .then_some(Class::FlatText)
+}
+
+/// A derived sibling of a hand-authored file, by its lowercased name:
+/// `app.min.js`, `bundle.chunk.css`, `pnpm-lock.yaml`, `main.js.map`.
+fn is_derived_artifact_name(lower: &str) -> bool {
+    let Some((stem, ext)) = lower.rsplit_once('.') else {
+        return false;
+    };
+    stem.ends_with(".min")
+        || stem.ends_with("-min")
+        || stem.ends_with(".bundle")
+        || stem.ends_with(".chunk")
+        || stem.ends_with(".generated")
+        || stem.ends_with("_generated")
+        || stem.ends_with("-lock")
+        || stem.ends_with(".lock")
+        || ext == "map"
+        || ext == "lock"
 }
 
 /// Build-tool wrapper scripts, written by `gradle wrapper` and
@@ -834,63 +854,124 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
     out
 }
 
-/// In a single-file walk, the named file's rows that none of `emitted`
-/// shows, worth nothing: it ranks behind every batch a walker chose and
-/// spends only the budget they leave. A file that fits renders whole,
-/// and a file no walker has anything to say about renders its head
-/// rather than its name alone.
-pub(super) fn named_file_rest(emitted: &[Batch], ctx: &WalkCtx) -> Option<Batch> {
-    let file = ctx.dir_filter().named_file()?;
-    let source = named_file_head(file, ctx)?;
-    if has_nul_byte(&source) {
-        return None;
-    }
-    let shown: HashSet<usize> = emitted
-        .iter()
-        .filter_map(|batch| match &batch.content {
-            crate::content::BatchContent::Lines { spans, .. } => Some(spans),
-            crate::content::BatchContent::Fs { .. } => None,
-        })
-        .flatten()
-        .filter(|span| span.path == file)
-        .flat_map(|span| span.start..=span.end)
-        .collect();
-    let mut bytes_before = 0;
-    let rows = (1..=source.line_count())
-        .take_while(|&row| {
-            bytes_before += source.line(row).map_or(0, str::len) + 1;
-            bytes_before <= SOURCE_TEXT_BYTE_GATE
-        })
-        .filter(|row| !shown.contains(row))
-        .collect();
-    Some(Batch {
-        key: PlaintextKey::Rest {
-            file: file.to_path_buf(),
+/// Once every batch a walker emitted is scheduled, the head of each listed
+/// file none of `emitted` touches. They spend only the budget the walkers
+/// leave, so a repository that runs dry renders its documents, templates
+/// and configs rather than their names alone. The head is
+/// [`PLAINTEXT_BYTE_GATE`] long. The file a single-file walk names instead
+/// renders whatever of its first [`SOURCE_TEXT_BYTE_GATE`] no batch shows;
+/// any other file stays a name when it is hidden, a license text,
+/// credential-bearing (by name, or PEM key material), derived or
+/// machine-generated.
+pub(super) fn floor_batches(emitted: &[Batch], ctx: &WalkCtx) -> Vec<Batch> {
+    let mut shown: HashMap<&Path, HashSet<usize>> = HashMap::new();
+    let mut listed: Vec<(&Path, &str)> = Vec::new();
+    for batch in emitted {
+        match &batch.content {
+            crate::content::BatchContent::Lines { spans, .. } => {
+                for span in spans {
+                    shown
+                        .entry(&span.path)
+                        .or_default()
+                        .extend(span.start..=span.end);
+                }
+            }
+            crate::content::BatchContent::Fs { groups } => {
+                for group in groups {
+                    if let crate::content::FsEntries::Listed(names) = &group.entries {
+                        listed.extend(
+                            names
+                                .iter()
+                                .filter_map(|name| Some((group.parent.as_path(), name.to_str()?))),
+                        );
+                    }
+                }
+            }
         }
-        .into(),
-        predecessor: None,
-        content: single_file_lines_content(file, &source, rows)?,
-        value: 0.0,
+    }
+    let named_file = ctx.dir_filter().named_file();
+    let mut out = Vec::new();
+    for (dir, name) in listed {
+        let kind = list_dir(dir, ctx.dir_filter()).get(name).copied();
+        if kind != Some(crate::fs_util::EntryKind::File) {
+            continue;
+        }
+        let file = dir.join(name);
+        let is_named = named_file == Some(file.as_path());
+        if !is_named
+            && (shown.contains_key(file.as_path())
+                || is_hidden(&file, ctx)
+                || is_license_file_name(name)
+                || is_credential_name(name)
+                || is_derived_artifact_name(&name.to_ascii_lowercase()))
+        {
+            continue;
+        }
+        let head_bytes = if is_named {
+            SOURCE_TEXT_BYTE_GATE
+        } else {
+            PLAINTEXT_BYTE_GATE
+        };
+        let Some(source) = file_head(&file, ctx, head_bytes) else {
+            continue;
+        };
+        if has_nul_byte(&source)
+            || (!is_named
+                && (is_machine_generated_text(&source) || source.contains("PRIVATE KEY-----")))
+        {
+            continue;
+        }
+        let shown = shown.get(file.as_path());
+        let mut bytes_before = 0;
+        let rows = (1..=source.line_count())
+            .take_while(|&row| {
+                bytes_before += source.line(row).map_or(0, str::len) + 1;
+                bytes_before <= head_bytes
+            })
+            .filter(|row| shown.is_none_or(|shown| !shown.contains(row)))
+            .collect();
+        let Some(content) = single_file_lines_content(&file, &source, rows) else {
+            continue;
+        };
+        let value = path_depth_factor(&file, ctx);
+        out.push(Batch {
+            key: PlaintextKey::Rest { file }.into(),
+            predecessor: None,
+            content,
+            value,
+        });
+    }
+    out
+}
+
+/// Whether `file` or a directory above it (below the root) is dot-prefixed:
+/// CI, editor, linter and ignore-list configuration, which says nothing
+/// about what the project does.
+fn is_hidden(file: &Path, ctx: &WalkCtx) -> bool {
+    file.strip_prefix(ctx.root()).is_ok_and(|relative| {
+        relative
+            .components()
+            .any(|component| component.as_os_str().as_encoded_bytes().starts_with(b"."))
     })
 }
 
-/// The named file's source as far as [`named_file_rest`] can reach into
-/// it: whole when a walker has already read it or it fits within
-/// [`SOURCE_TEXT_BYTE_GATE`], else only its head, so a multi-gigabyte
-/// log is never read whole. The head runs a few bytes past the gate, the
-/// longest UTF-8 character, so the line the gate cuts stays too long to
-/// select and still tells the renderer that more of the file follows.
-fn named_file_head(file: &Path, ctx: &WalkCtx) -> Option<Arc<Source>> {
+/// `file`'s source as far as `head_bytes` reach into it: whole when a
+/// walker has already read it or it fits, else only its head, so a
+/// multi-gigabyte log is never read whole. The head runs a few bytes past
+/// `head_bytes`, the longest UTF-8 character, so the line the cut falls in
+/// stays too long to select and still tells the renderer that more of the
+/// file follows.
+fn file_head(file: &Path, ctx: &WalkCtx, head_bytes: usize) -> Option<Arc<Source>> {
     if let Some(source) = ctx.source_cache().cached(file) {
         return Some(source);
     }
     let mut head = Vec::new();
     std::fs::File::open(file)
         .ok()?
-        .take((SOURCE_TEXT_BYTE_GATE + 4) as u64)
+        .take((head_bytes + 4) as u64)
         .read_to_end(&mut head)
         .ok()?;
-    if head.len() > SOURCE_TEXT_BYTE_GATE {
+    if head.len() > head_bytes {
         let last_line_start = head
             .iter()
             .rposition(|&byte| byte == b'\n')
@@ -1543,17 +1624,45 @@ mod tests {
 
         let scheduler = Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
-        assert_has_plaintext_whole(&report, ".tool-versions");
-        let rendered = report.tree.render();
-        assert!(rendered.contains("line 0"), "{rendered}");
-        assert!(
-            rendered.contains(&format!("line {}", PLAINTEXT_LINE_CAP - 1)),
-            "{rendered}"
-        );
-        assert!(
-            !rendered.contains(&format!("line {PLAINTEXT_LINE_CAP}")),
-            "rendered past the cap: {rendered}"
-        );
+        let whole_rows: Vec<(usize, usize)> = report
+            .scheduled
+            .iter()
+            .filter(|record| matches!(record.key, BatchKey::Plaintext(PlaintextKey::Whole { .. })))
+            .flat_map(|record| match &record.content {
+                crate::content::BatchContent::Lines { spans, .. } => {
+                    spans.iter().map(|span| (span.start, span.end)).collect()
+                }
+                crate::content::BatchContent::Fs { .. } => Vec::new(),
+            })
+            .collect();
+        assert_eq!(whole_rows, vec![(1, PLAINTEXT_LINE_CAP)]);
+    }
+
+    /// Once the walkers' batches are all scheduled, a file no walker
+    /// claims renders its head; a license text, credentials and hidden files
+    /// stay names, and a sidecar the listing leaves out stays unnamed.
+    #[test]
+    fn plaintext_floor_renders_unclaimed_heads_once_the_pool_runs_dry() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("chapter.tex"), "\\section{Intro}\nFirst words.\n").unwrap();
+        std::fs::write(root.join("LICENSE"), "MIT License\n").unwrap();
+        std::fs::write(root.join("secrets.yml"), "api_token: abc\n").unwrap();
+        std::fs::write(root.join("deploy_key"), "-----BEGIN PRIVATE KEY-----\n").unwrap();
+        std::fs::create_dir(root.join(".github")).unwrap();
+        std::fs::write(root.join(".github/labels.yml"), "- name: bug\n").unwrap();
+        std::fs::write(root.join("sprite.png"), [0x89, b'P', b'N', b'G', 0]).unwrap();
+        std::fs::write(root.join("sprite.png.meta"), "guid: 0123\n").unwrap();
+
+        let rendered =
+            Scheduler::new(WalkCtx::new(root.to_path_buf()), FsWalker, 4_000, None).run();
+        let rendered = rendered.render();
+        assert!(rendered.contains("First words."), "{rendered}");
+        assert!(!rendered.contains("MIT License"), "{rendered}");
+        assert!(!rendered.contains("api_token"), "{rendered}");
+        assert!(!rendered.contains("BEGIN PRIVATE KEY"), "{rendered}");
+        assert!(!rendered.contains("name: bug"), "{rendered}");
+        assert!(!rendered.contains("guid"), "{rendered}");
     }
 
     #[test]

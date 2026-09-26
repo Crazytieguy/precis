@@ -153,8 +153,19 @@ impl<W: Walker> Scheduler<W> {
         }
 
         // Prefix-monotone scheduling — stop on the first top-ranked
-        // batch that doesn't fit (no fallback to smaller batches).
-        while let Some((id, cost)) = self.top_ranked() {
+        // batch that doesn't fit (no fallback to smaller batches). A pool
+        // that runs dry is refilled once from the walker's floor.
+        let mut floor_absorbed = false;
+        loop {
+            let Some((id, cost)) = self.top_ranked() else {
+                if std::mem::replace(&mut floor_absorbed, true) {
+                    break;
+                }
+                for batch in self.walker.floor(&self.entries, &self.ctx) {
+                    self.absorb(batch);
+                }
+                continue;
+            };
             if !self.fits(cost) {
                 self.schedule_partial(id);
                 break;

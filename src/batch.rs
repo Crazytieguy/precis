@@ -135,8 +135,9 @@ pub enum PlaintextKey {
     /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
     /// Vue, CSS, reST, …). The language-agnostic fallback.
     DeclSurface { file: PathBuf },
-    /// In a single-file walk, the named file's rows no other batch
-    /// shows.
+    /// Once every other batch is scheduled, the head of a file no other
+    /// batch touches, or in a single-file walk the named file's rows no
+    /// other batch shows.
     Rest { file: PathBuf },
 }
 

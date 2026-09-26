@@ -1,4 +1,4 @@
-Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.648/0.653/0.812/0.838/0.721/0.608/0.539
+Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.648/0.653/0.812/0.838/0.722/0.709/0.740
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,25 +57,39 @@ Score(3000)=0.838 I=0.908 C=0.774 ns_rows≤3K=24/47 grid(1000/1442/2080/3000/43
 | ns | 2932 |  | 167 | _includeMixin body | 4.5 | 4.1 | 0.771 |
 | walker |  | 2977 | 291 | Code::CodeKey { rung: Body, file: middleclass.lua, decl: 6, sub: 0, line: 81 } |  |  | 0.838 |
 | ns | 3145 |  | 213 | _declareInstanceMethod and _propagateInstanceMethod bodies | 4.6 | 4.1 | 0.838 |
+| walker |  | 3214 | 237 | Plaintext::Rest { file: rockspecs/middleclass-3.0-0.rockspec } |  |  | 0.838 |
 | ns | 3379 |  | 234 | _createIndexWrapper body | 4.7 | 4.1 | 0.839 |
+| walker |  | 3451 | 237 | Plaintext::Rest { file: rockspecs/middleclass-3.1-0.rockspec } |  |  | 0.840 |
 | ns | 3515 |  | 136 | Top-level describe block for each of the eight spec files | 5.1 |  | 0.815 |
+| walker |  | 3688 | 237 | Plaintext::Rest { file: rockspecs/middleclass-3.2-0.rockspec } |  |  | 0.815 |
 | ns | 3700 |  | 185 | The Lua-version gate that conditionally requires the 5.2/5.3 metamethod specs | 5.2 |  | 0.793 |
+| walker |  | 3925 | 237 | Plaintext::Rest { file: rockspecs/middleclass-4.0-0.rockspec } |  |  | 0.794 |
 | ns | 4000 |  | 300 | spec/class_spec.lua in full | 5.3 | 5.1 | 0.757 |
+| walker |  | 4162 | 237 | Plaintext::Rest { file: rockspecs/middleclass-4.1-0.rockspec } |  |  | 0.758 |
 | ns | 4227 |  | 227 | Every describe block in default_methods_spec.lua | 5.4 |  | 0.721 |
 | ns | 4360 |  | 133 | Every describe block in metamethods_spec.lua | 5.5 | 5.1 | 0.704 |
-| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.683 |
-| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.664 |
-| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.652 |
-| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.643 |
-| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.625 |
-| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.608 |
-| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.591 |
-| ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.584 |
-| ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.575 |
-| ns | 7263 |  | 239 | Current rockspec in full (middleclass-4.1.1-0) | 6.3 |  | 0.563 |
-| ns | 7409 |  | 146 | .travis.yml Lua version matrix and test script | 6.4 |  | 0.557 |
-| ns | 7494 |  | 85 | Version line of each of the five older rockspecs | 6.5 |  | 0.554 |
-| ns | 7644 |  | 150 | performance/time.lua in full plus run.lua's harness header | 6.6 |  | 0.555 |
-| ns | 7734 |  | 90 | The six operations benchmarked by performance/run.lua | 6.7 | 6.6 | 0.549 |
-| ns | 7952 |  | 218 | .travis.yml remainder: toolchain install, coverage upload, branch and mail rules | 6.8 | 6.4 | 0.540 |
-| ns | 7970 |  | 18 | MIT license copyright line | 6.9 |  | 0.539 |
+| walker |  | 4401 | 239 | Plaintext::Rest { file: rockspecs/middleclass-4.1.1-0.rockspec } |  |  | 0.706 |
+| ns | 4505 |  | 145 | Every describe block in classes_spec.lua and instances_spec.lua | 5.6 |  | 0.685 |
+| walker |  | 4715 | 314 | Plaintext::Rest { file: spec/class_spec.lua } |  |  | 0.730 |
+| ns | 4771 |  | 266 | mixins_spec.lua setup: what a mixin looks like in practice | 5.7 |  | 0.710 |
+| ns | 5128 |  | 357 | metamethods_spec Vector fixture, part 1: arithmetic and comparison metamethods | 5.8 | 5.5 | 0.697 |
+| ns | 5328 |  | 200 | metamethods_spec Vector fixture, part 2: __pow, __mul, and the non-function __metatable/__mode fields | 5.9 | 5.8 | 0.687 |
+| walker |  | 5497 | 782 | Plaintext::Rest { file: CHANGELOG.md } |  |  | 0.721 |
+| ns | 5768 |  | 440 | Lua 5.3 metamethod fixture: the bitwise and __gc set | 5.10 |  | 0.701 |
+| ns | 6061 |  | 293 | Lua 5.2 metamethod fixture: __len, __pairs, __ipairs | 5.11 |  | 0.682 |
+| ns | 6392 |  | 331 | metamethods_spec: the __index/__newindex getter-setter fixture | 5.12 | 5.5 | 0.663 |
+| walker |  | 6401 | 904 | Plaintext::Rest { file: UPDATING.md } |  |  | 0.690 |
+| ns | 6684 |  | 292 | UPDATING 2.x to 3.x migration prose | 6.1 | 3.7 | 0.695 |
+| walker |  | 7018 | 617 | Plaintext::Rest { file: spec/mixins_spec.lua } |  |  | 0.721 |
+| ns | 7024 |  | 340 | CHANGELOG entries for the 3.x and 2.0 releases | 6.2 | 3.5 | 0.726 |
+| ns | 7263 |  | 239 | Current rockspec in full (middleclass-4.1.1-0) | 6.3 |  | 0.732 |
+| ns | 7409 |  | 146 | .travis.yml Lua version matrix and test script | 6.4 |  | 0.724 |
+| ns | 7494 |  | 85 | Version line of each of the five older rockspecs | 6.5 |  | 0.726 |
+| ns | 7644 |  | 150 | performance/time.lua in full plus run.lua's harness header | 6.6 |  | 0.723 |
+| walker |  | 7655 | 637 | Plaintext::Rest { file: spec/instances_spec.lua } |  |  | 0.725 |
+| ns | 7734 |  | 90 | The six operations benchmarked by performance/run.lua | 6.7 | 6.6 | 0.717 |
+| ns | 7952 |  | 218 | .travis.yml remainder: toolchain install, coverage upload, branch and mail rules | 6.8 | 6.4 | 0.704 |
+| ns | 7970 |  | 18 | MIT license copyright line | 6.9 |  | 0.703 |
+| walker |  | 8608 | 953 | Plaintext::Rest { file: spec/metamethods_lua_5_2.lua } |  |  | 0.730 |
+| walker |  | 9972 | 1364 | Plaintext::Rest { file: spec/classes_spec.lua } |  |  | 0.754 |
+| walker |  | 9991 | 19 | Plaintext::Rest { file: spec/metamethods_lua_5_3.lua } |  |  | 0.754 |
