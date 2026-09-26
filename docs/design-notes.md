@@ -172,7 +172,10 @@ code to a single language.**
   in `value.rs`; walkers only map their tables and keys onto it.
   Development and peer rosters, author/URL metadata and tool config are
   not emitted. A workspace's primary member is the member directory
-  named after the repository, for Cargo and JS alike.
+  named after the repository, for Cargo and JS alike. A private root
+  `package.json`'s entry-point scripts (build/test/lint/…) price at its
+  identity value, since that identity is nearly empty; pricing every
+  root's scripts that way lost at 1000–1442 (superstruct, linkding).
 - A root manifest in any other format (Maven, Composer, Cabal, sbt,
   CMake, GitHub Actions, …) gets no walker of its own: the
   plaintext fallback renders its flat surface, which in these formats is

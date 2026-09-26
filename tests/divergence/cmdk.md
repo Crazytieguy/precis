@@ -1,4 +1,4 @@
-Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.858/0.886/0.868/0.824/0.756/0.601/0.510
+Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/4327/6240/9000)=0.884/0.851/0.868/0.824/0.756/0.601/0.510
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -16,28 +16,29 @@ Score(3000)=0.824 I=0.934 C=0.726 ns_rows≤3K=16/47 grid(1000/1442/2080/3000/43
 | walker |  | 344 | 8 | Fs::DirListing { dir: .github } |  |  | 0.500 |
 | walker |  | 348 | 4 | Fs::DirListing { dir: .github/workflows } |  |  | 0.500 |
 | walker |  | 369 | 21 | Json::Runtime { file: package.json } |  |  | 0.500 |
-| walker |  | 449 | 80 | Json::Scripts { file: cmdk/package.json } |  |  | 0.506 |
-| ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.489 |
-| walker |  | 545 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.489 |
-| walker |  | 599 | 54 | Fs::DirListing { dir: website } |  |  | 0.594 |
-| walker |  | 613 | 14 | Fs::DirListing { dir: website/components } |  |  | 0.594 |
-| walker |  | 623 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.594 |
-| walker |  | 633 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.594 |
-| walker |  | 650 | 17 | Fs::DirListing { dir: website/pages } |  |  | 0.594 |
-| walker |  | 708 | 58 | Fs::DirListing { dir: test } |  |  | 0.796 |
-| walker |  | 731 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.797 |
-| ns | 764 |  | 232 | Root package.json: identity and every workspace script | 1.6 |  | 0.722 |
-| walker |  | 876 | 145 | Json::Entry { file: cmdk/package.json } |  |  | 0.804 |
-| walker |  | 910 | 34 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.845 |
-| ns | 1043 |  | 279 | README section map (all H2 + H3 headings) | 1.7 |  | 0.741 |
-| walker |  | 1198 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.880 |
-| walker |  | 1224 | 26 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.910 |
-| ns | 1225 |  | 182 | ARCHITECTURE: the core invariant + section map | 1.8 |  | 0.858 |
-| walker |  | 1344 | 120 | Markdown::CommandBlock { file: README.md, row: 466 } |  |  | 0.867 |
-| ns | 1361 |  | 136 | README testing steps (verbatim) | 1.9 | 1.7 | 0.850 |
-| walker |  | 1365 | 21 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.875 |
-| ns | 1473 |  | 112 | index.tsx imports + 'use client' | 2.1 |  | 0.846 |
-| walker |  | 1567 | 202 | Json::Scripts { file: package.json } |  |  | 0.903 |
+| walker |  | 471 | 102 | Json::Scripts { file: package.json } |  |  | 0.503 |
+| ns | 532 |  | 189 | Published package identity + entry points | 1.5 |  | 0.429 |
+| walker |  | 551 | 80 | Json::Scripts { file: cmdk/package.json } |  |  | 0.493 |
+| walker |  | 647 | 96 | Json::Dependencies { file: cmdk/package.json } |  |  | 0.493 |
+| walker |  | 747 | 100 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.500 |
+| ns | 764 |  | 232 | Root package.json: identity and every workspace script | 1.6 |  | 0.555 |
+| walker |  | 801 | 54 | Fs::DirListing { dir: website } |  |  | 0.641 |
+| walker |  | 815 | 14 | Fs::DirListing { dir: website/components } |  |  | 0.641 |
+| walker |  | 825 | 10 | Fs::DirListing { dir: website/components/code } |  |  | 0.641 |
+| walker |  | 835 | 10 | Fs::DirListing { dir: website/components/icons } |  |  | 0.641 |
+| walker |  | 852 | 17 | Fs::DirListing { dir: website/pages } |  |  | 0.641 |
+| walker |  | 910 | 58 | Fs::DirListing { dir: test } |  |  | 0.813 |
+| walker |  | 933 | 23 | Fs::DirListing { dir: website/components/cmdk } |  |  | 0.814 |
+| ns | 1043 |  | 279 | README section map (all H2 + H3 headings) | 1.7 |  | 0.713 |
+| walker |  | 1078 | 145 | Json::Entry { file: cmdk/package.json } |  |  | 0.782 |
+| walker |  | 1112 | 34 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.817 |
+| ns | 1225 |  | 182 | ARCHITECTURE: the core invariant + section map | 1.8 |  | 0.771 |
+| ns | 1361 |  | 136 | README testing steps (verbatim) | 1.9 | 1.7 | 0.708 |
+| walker |  | 1400 | 288 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.824 |
+| walker |  | 1426 | 26 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.851 |
+| ns | 1473 |  | 112 | index.tsx imports + 'use client' | 2.1 |  | 0.822 |
+| walker |  | 1546 | 120 | Markdown::CommandBlock { file: README.md, row: 466 } |  |  | 0.879 |
+| walker |  | 1567 | 21 | Markdown::Section { file: README.md, section_index: 15, keeps_default_concavity: false } |  |  | 0.903 |
 | ns | 1690 |  | 217 | Public export surface (Command.* object + named exports) | 2.2 |  | 0.824 |
 | walker |  | 1747 | 180 | Code::CodeKey { rung: Names, file: cmdk/src/index.tsx, decl: 0, sub: 0, line: 0 } |  |  | 0.826 |
 | walker |  | 1771 | 24 | Code::CodeKey { rung: Decl, file: cmdk/src/index.tsx, decl: 2, sub: 0, line: 149 } |  |  | 0.826 |

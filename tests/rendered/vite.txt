@@ -110,6 +110,16 @@ package.json
   6→    "node": "^20.19.0 || >=22.12.0"
   7→  },
   …
+  20→  "scripts": {
+  …
+  23→    "format": "oxfmt",
+  24→    "lint": "eslint --cache . --concurrency auto",
+  25→    "typecheck": "tsc -p scripts && pnpm -r --parallel run typecheck",
+  26→    "test": "pnpm test-unit && pnpm test-serve && pnpm test-build",
+  …
+  36→    "build": "pnpm -r --filter='./packages/*' run build",
+  37→    "dev": "pnpm -r --parallel --filter='./packages/*' run dev",
+  …
   93→  "packageManager": "pnpm@10.33.4",
   …
 packages/
@@ -377,12 +387,7 @@ playground/
   assets-sanitize/
     +circle.svg
     .env
-    __tests__/
-    _circle.svg
-    index.html
-    index.js
-    package.json
-    vite.config.js
+    …
   backend-integration/
   base-conflict/
   build-old/
@@ -400,15 +405,6 @@ playground/
     vite.config.js
   client-reload/
   csp/
-    __tests__/
-    dynamic.css
-    dynamic.js
-    from-js.css
-    index.html
-    index.js
-    linked.css
-    package.json
-    vite.config.js
   css/
   css-codesplit/
   css-codesplit-cjs/
@@ -423,33 +419,15 @@ playground/
     static.js
   css-lightningcss/
   css-lightningcss-proxy/
-    __tests__/
-    index.html
-    package.json
-    server.js
   css-lightningcss-root/
   css-no-codesplit/
   css-sourcemap/
   data-uri/
   define/
   devtools/
-    index.html
-    package.json
-    src/
-      counter.ts
-      main.ts
-    vite.config.ts
   dynamic-import/
   dynamic-import-inline/
   env/
-    .env
-    .env.development
-    .env.production
-    __tests__/
-    index.html
-    index.js
-    package.json
-    vite.config.js
   env-nested/
   environment-react-ssr/
   extensions/

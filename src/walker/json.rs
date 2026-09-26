@@ -134,12 +134,13 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     } else {
         1.0
     };
+    let identity_value = manifest_identity_value(identity_scale, depth);
     let operational = manifest_operational_value(depth);
     let f = file.to_path_buf();
     let section_kinds = [
         (
             JsonKey::Identity { file: f.clone() },
-            manifest_identity_value(identity_scale, depth),
+            identity_value,
             is_identity_key as fn(&str) -> bool,
         ),
         (
@@ -163,11 +164,21 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
             is_runtime_dependencies_key,
         ),
     ];
+    // A private root manifest publishes nothing, so its identity says
+    // little; its entry-point scripts say how to build, test and run the
+    // project, and ride at the identity's value.
+    let private_root = ctx.depth_from_root(file) == 1
+        && pairs.iter().any(|(name, start, _)| {
+            name == "private"
+                && source
+                    .line(*start)
+                    .is_some_and(|line| line.contains("true"))
+        });
     let overlap_chain = package_sections_share_lines(&pairs);
     let mut chunked_scripts = if overlap_chain {
         None
     } else {
-        scripts_chunks(file, &source, &tree)
+        scripts_chunks(file, &source, &tree, private_root)
     };
     // Identity is first in `section_kinds`, so every later section sees
     // whether it was emitted.
@@ -186,7 +197,12 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
         if matches!(key, JsonKey::Scripts { .. })
             && let Some(chunks) = chunked_scripts.take()
         {
-            push_chained_chunks(out, file, chunks, predecessor, value);
+            let lead_value = if chunks.leads_with_entry_points {
+                identity_value
+            } else {
+                value
+            };
+            push_chained_chunks(out, file, chunks.contents, predecessor, lead_value, value);
         } else if let Some(content) = section_content(file, &source, &pairs, name_match) {
             out.push(Batch {
                 key: emitted.clone(),
@@ -204,11 +220,24 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch>) {
     }
 }
 
-/// A long `scripts` block's rows in chunks (see [`chunk_ranges`]), the
-/// conventional entry points first and the rest in source order: the
-/// `"scripts": {` row leads the first chunk and the closing brace ends
-/// the last. `None` when it stays one batch.
-fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<BatchContent>> {
+/// A `scripts` block's rows as a chain of chunks: the `"scripts": {` row
+/// leads the first and the closing brace ends the last.
+struct ScriptsChunks {
+    contents: Vec<BatchContent>,
+    /// The first chunk holds exactly the conventional entry points.
+    leads_with_entry_points: bool,
+}
+
+/// A `scripts` block's rows in chunks (see [`chunk_ranges`]), the
+/// conventional entry points first and the rest in source order. With
+/// `entry_points_apart`, the entry points are a chunk of their own. `None`
+/// when the block stays one batch.
+fn scripts_chunks(
+    file: &Path,
+    source: &Source,
+    tree: &Tree,
+    entry_points_apart: bool,
+) -> Option<ScriptsChunks> {
     let object = first_child_of_kind(tree.root_node(), "object")?;
     let scripts = object_field_value(object, "scripts", source)?;
     let mut cursor = scripts.walk();
@@ -219,7 +248,11 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
         .collect();
     let lines: Vec<&str> = source.lines().collect();
     entries.sort_by_key(|&(start, _)| !is_entry_point_script(lines[start - 1]));
-    let mut charged_rows = std::collections::HashSet::new();
+    let entry_point_count = entries
+        .iter()
+        .take_while(|&&(start, _)| is_entry_point_script(lines[start - 1]))
+        .count();
+    let mut charged_rows = HashSet::new();
     let costs: Vec<usize> = entries
         .iter()
         .map(|&(start, end)| {
@@ -229,13 +262,24 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
                 .sum()
         })
         .collect();
-    let ranges = chunk_ranges(&costs);
-    if ranges.len() < 2 {
+    let leads_with_entry_points = entry_points_apart && entry_point_count > 0;
+    let ranges = if leads_with_entry_points {
+        std::iter::once(0..entry_point_count)
+            .chain(
+                chunk_ranges(&costs[entry_point_count..])
+                    .into_iter()
+                    .map(|range| range.start + entry_point_count..range.end + entry_point_count),
+            )
+            .collect()
+    } else {
+        chunk_ranges(&costs)
+    };
+    if ranges.len() < 2 && !leads_with_entry_points {
         return None;
     }
     let key_row = scripts.parent()?.start_position().row + 1;
     let last = ranges.len() - 1;
-    ranges
+    let contents = ranges
         .into_iter()
         .enumerate()
         .map(|(index, range)| {
@@ -253,7 +297,11 @@ fn scripts_chunks(file: &Path, source: &Source, tree: &Tree) -> Option<Vec<Batch
             rows.dedup();
             single_file_lines_content(file, source, rows)
         })
-        .collect()
+        .collect::<Option<_>>()?;
+    Some(ScriptsChunks {
+        contents,
+        leads_with_entry_points,
+    })
 }
 
 /// A script row named for one of the conventional entry points.
@@ -277,12 +325,13 @@ fn is_entry_point_script(row: &str) -> bool {
 }
 
 /// Emit `chunks` as `Scripts` then `ScriptsTail`s, each gated on the one
-/// before, all at the unsplit block's value.
+/// before: the first at `lead_value`, the rest at the unsplit block's value.
 fn push_chained_chunks(
     out: &mut Vec<Batch>,
     file: &Path,
     chunks: Vec<BatchContent>,
     mut predecessor: Option<BatchKey>,
+    lead_value: f64,
     value: f64,
 ) {
     for (chunk, content) in chunks.into_iter().enumerate() {
@@ -296,7 +345,7 @@ fn push_chained_chunks(
             key: key.clone(),
             predecessor: predecessor.replace(key),
             content,
-            value,
+            value: if chunk == 0 { lead_value } else { value },
         });
     }
 }
@@ -683,6 +732,35 @@ mod tests {
         for pair in chunks.windows(2) {
             assert_eq!(pair[1].1.as_ref(), Some(&pair[0].0));
         }
+    }
+
+    /// A private root manifest's entry-point scripts are a batch of their
+    /// own at the identity's value; the other scripts follow at the
+    /// operational value.
+    #[test]
+    fn json_private_root_entry_point_scripts_ride_at_identity_value() {
+        let dir = tempfile::tempdir().unwrap();
+        write_pkg(
+            dir.path(),
+            "{\n  \"private\": true,\n  \"scripts\": {\n    \"release\": \"changeset publish\",\n    \"build\": \"tsc -b\",\n    \"test\": \"vitest\"\n  }\n}\n",
+        );
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(dir.path(), &ctx);
+        let value_of = |wanted: fn(&JsonKey) -> bool| {
+            batches
+                .iter()
+                .find_map(|batch| match &batch.key {
+                    BatchKey::Json(key) if wanted(key) => Some(batch.value),
+                    _ => None,
+                })
+                .unwrap()
+        };
+        let identity = value_of(|key| matches!(key, JsonKey::Identity { .. }));
+        assert_eq!(
+            value_of(|key| matches!(key, JsonKey::Scripts { .. })),
+            identity
+        );
+        assert!(value_of(|key| matches!(key, JsonKey::ScriptsTail { .. })) < identity);
     }
 
     #[cfg(unix)]

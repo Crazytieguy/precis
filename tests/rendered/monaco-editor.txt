@@ -24,15 +24,6 @@
   tasks.json
 CHANGELOG.md
 CONTRIBUTING.md
-  …
-  89→## Running the editor tests
-  90→
-  91→```bash
-  92→> npm run build-monaco-editor
-  93→> npm run test
-  94→> npm run compile --prefix webpack-plugin
-  95→
-  …
 LICENSE.txt
 MAINTAINING.md
 README.md
@@ -122,6 +113,11 @@ package.json
   6→	"description": "A browser based code editor",
   …
   9→	"license": "MIT",
+  10→	"scripts": {
+  …
+  26→		"test": "ts-node ./build/check-samples && npm run test:grammars",
+  …
+  33→		"build": "npm run build-lsp && npm run build-monaco-editor",
   …
 samples/
   README.md

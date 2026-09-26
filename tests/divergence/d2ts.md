@@ -1,4 +1,4 @@
-Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.673/0.762/0.810/0.799/0.751/0.714/0.639
+Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/4327/6240/9000)=0.670/0.822/0.810/0.799/0.751/0.714/0.639
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -13,41 +13,42 @@ Score(3000)=0.799 I=0.894 C=0.715 ns_rows≤3K=24/55 grid(1000/1442/2080/3000/43
 | walker |  | 219 | 17 | Fs::DirListing { dir: packages/d2ts-benchmark } |  |  | 0.706 |
 | walker |  | 231 | 12 | Fs::DirListing { dir: packages/d2ts-benchmark/src } |  |  | 0.706 |
 | walker |  | 237 | 6 | Fs::DirListing { dir: .github/workflows } |  |  | 0.706 |
-| walker |  | 245 | 8 | Fs::DirListing { dir: .changeset } |  |  | 0.706 |
-| walker |  | 270 | 25 | Fs::DirListing { dir: packages/d2ql } |  |  | 0.709 |
-| ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.695 |
-| walker |  | 339 | 69 | Fs::DirListing { dir: packages/d2ql/src } |  |  | 0.701 |
-| walker |  | 348 | 9 | Fs::DirListing { dir: packages/d2ql/src/query-builder } |  |  | 0.702 |
-| walker |  | 378 | 30 | Fs::DirListing { dir: packages/d2mini } |  |  | 0.708 |
-| ns | 387 |  | 99 | README lede — ElectricSQL ShapeStreams and pipeline type inference | 1.6 | 1.1 | 0.671 |
-| walker |  | 411 | 33 | Fs::DirListing { dir: packages/d2mini/src } |  |  | 0.672 |
-| walker |  | 447 | 36 | Fs::DirListing { dir: packages/d2ts } |  |  | 0.683 |
-| walker |  | 491 | 44 | Fs::DirListing { dir: packages/d2ts/src } |  |  | 0.691 |
-| walker |  | 495 | 4 | Fs::DirListing { dir: packages/d2ts/src/electric } |  |  | 0.691 |
-| walker |  | 515 | 20 | Fs::DirListing { dir: packages/d2ts/src/sqlite } |  |  | 0.691 |
-| ns | 578 |  | 191 | Root package.json — identity and every workspace script | 1.7 |  | 0.566 |
-| walker |  | 600 | 85 | Json::Identity { file: packages/d2ts/package.json } |  |  | 0.569 |
-| walker |  | 657 | 57 | Fs::DirListing { dir: packages/d2ts/src/sqlite/operators } |  |  | 0.573 |
-| ns | 728 |  | 150 | Published package identity: d2ts and d2mini | 1.8 |  | 0.547 |
-| walker |  | 755 | 98 | Fs::DirListing { dir: packages/d2ts/src/operators } |  |  | 0.557 |
-| walker |  | 859 | 104 | Fs::DirListing { dir: packages/d2mini/src/operators } |  |  | 0.566 |
-| ns | 871 |  | 143 | Private package identity: d2ql and d2ts-benchmark | 1.9 | 1.8 | 0.519 |
-| walker |  | 933 | 74 | Json::Dependencies { file: packages/d2ts/package.json } |  |  | 0.519 |
-| walker |  | 968 | 35 | Fs::DirListing { dir: examples } |  |  | 0.673 |
-| ns | 1032 |  | 161 | Root README section map (every H2) | 1.10 |  | 0.592 |
-| walker |  | 1141 | 173 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.744 |
-| walker |  | 1141 | 0 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.744 |
-| ns | 1284 |  | 252 | README "Implementation Details" — provenance and the four core data structures | 1.11 | 1.10 | 0.663 |
-| walker |  | 1313 | 172 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.699 |
-| ns | 1392 |  | 108 | Every package's own root listing | 2.1 |  | 0.748 |
-| ns | 1436 |  | 44 | packages/d2ts/src — complete module roster | 2.2 |  | 0.762 |
-| ns | 1506 |  | 70 | packages/d2ts/src/index.ts — the public export barrel | 2.3 |  | 0.743 |
-| ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.765 |
-| walker |  | 1696 | 383 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.767 |
-| walker |  | 1722 | 26 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.785 |
-| walker |  | 1733 | 11 | Code::CodeKey { rung: Names, file: eslint.base.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.785 |
-| ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.734 |
-| walker |  | 1869 | 136 | Json::Scripts { file: package.json } |  |  | 0.791 |
+| ns | 288 |  | 70 | README lede — what incremental execution buys you | 1.5 | 1.1 | 0.692 |
+| walker |  | 308 | 71 | Json::Scripts { file: package.json } |  |  | 0.701 |
+| walker |  | 316 | 8 | Fs::DirListing { dir: .changeset } |  |  | 0.701 |
+| walker |  | 341 | 25 | Fs::DirListing { dir: packages/d2ql } |  |  | 0.704 |
+| ns | 387 |  | 99 | README lede — ElectricSQL ShapeStreams and pipeline type inference | 1.6 | 1.1 | 0.667 |
+| walker |  | 410 | 69 | Fs::DirListing { dir: packages/d2ql/src } |  |  | 0.672 |
+| walker |  | 419 | 9 | Fs::DirListing { dir: packages/d2ql/src/query-builder } |  |  | 0.674 |
+| walker |  | 449 | 30 | Fs::DirListing { dir: packages/d2mini } |  |  | 0.680 |
+| walker |  | 482 | 33 | Fs::DirListing { dir: packages/d2mini/src } |  |  | 0.681 |
+| walker |  | 518 | 36 | Fs::DirListing { dir: packages/d2ts } |  |  | 0.691 |
+| walker |  | 562 | 44 | Fs::DirListing { dir: packages/d2ts/src } |  |  | 0.699 |
+| walker |  | 566 | 4 | Fs::DirListing { dir: packages/d2ts/src/electric } |  |  | 0.699 |
+| ns | 578 |  | 191 | Root package.json — identity and every workspace script | 1.7 |  | 0.627 |
+| walker |  | 586 | 20 | Fs::DirListing { dir: packages/d2ts/src/sqlite } |  |  | 0.627 |
+| walker |  | 671 | 85 | Json::Identity { file: packages/d2ts/package.json } |  |  | 0.630 |
+| walker |  | 728 | 57 | Fs::DirListing { dir: packages/d2ts/src/sqlite/operators } |  |  | 0.602 |
+| ns | 728 |  | 150 | Published package identity: d2ts and d2mini | 1.8 |  | 0.602 |
+| walker |  | 826 | 98 | Fs::DirListing { dir: packages/d2ts/src/operators } |  |  | 0.612 |
+| ns | 871 |  | 143 | Private package identity: d2ql and d2ts-benchmark | 1.9 | 1.8 | 0.562 |
+| walker |  | 930 | 104 | Fs::DirListing { dir: packages/d2mini/src/operators } |  |  | 0.571 |
+| walker |  | 995 | 65 | Json::ScriptsTail { file: package.json, chunk: 1 } |  |  | 0.670 |
+| ns | 1032 |  | 161 | Root README section map (every H2) | 1.10 |  | 0.590 |
+| walker |  | 1069 | 74 | Json::Dependencies { file: packages/d2ts/package.json } |  |  | 0.590 |
+| walker |  | 1104 | 35 | Fs::DirListing { dir: examples } |  |  | 0.714 |
+| walker |  | 1277 | 173 | Markdown::HeadingsOutline { file: README.md } |  |  | 0.837 |
+| walker |  | 1277 | 0 | Markdown::Section { file: README.md, section_index: 1, keeps_default_concavity: false } |  |  | 0.837 |
+| ns | 1284 |  | 252 | README "Implementation Details" — provenance and the four core data structures | 1.11 | 1.10 | 0.760 |
+| ns | 1392 |  | 108 | Every package's own root listing | 2.1 |  | 0.797 |
+| ns | 1436 |  | 44 | packages/d2ts/src — complete module roster | 2.2 |  | 0.807 |
+| walker |  | 1449 | 172 | Markdown::Section { file: README.md, section_index: 0, keeps_default_concavity: false } |  |  | 0.833 |
+| ns | 1506 |  | 70 | packages/d2ts/src/index.ts — the public export barrel | 2.3 |  | 0.812 |
+| ns | 1604 |  | 98 | packages/d2ts/src/operators — complete operator file roster | 2.4 |  | 0.826 |
+| walker |  | 1832 | 383 | Markdown::Section { file: README.md, section_index: 2, keeps_default_concavity: true } |  |  | 0.828 |
+| ns | 1844 |  | 240 | packages/d2ts/src/operators/index.ts — exported operator set | 2.5 | 2.4 | 0.775 |
+| walker |  | 1858 | 26 | Plaintext::Whole { file: pnpm-workspace.yaml } |  |  | 0.791 |
+| walker |  | 1869 | 11 | Code::CodeKey { rung: Names, file: eslint.base.mjs, decl: 0, sub: 0, line: 0 } |  |  | 0.791 |
 | walker |  | 1893 | 24 | Fs::DirListing { dir: examples/electric } |  |  | 0.792 |
 | walker |  | 1901 | 8 | Fs::DirListing { dir: examples/electric/src } |  |  | 0.792 |
 | walker |  | 1914 | 13 | Fs::DirListing { dir: examples/electric/db } |  |  | 0.793 |
