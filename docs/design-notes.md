@@ -265,7 +265,10 @@ must not undo:
   `MAX_REEXPORT_ENTRIES`: counting every row of a hundreds-of-names
   barrel ranked each of its chunks like a declaration roster, ahead of
   the modules it re-exports. Counting a statement as one entry instead
-  cost 3000 −.0024 (answer keys rank short export blocks early).
+  cost 3000 −.0024 (answer keys rank short export blocks early). A
+  Rust re-export's attribute rows (`FileModel::reexport_attribute_rows`)
+  count outside the cap: a feature-gated facade spends two to three
+  rows per `pub use`, and capped with them it fell below its crates.
 - **Per-language pricing enters only through `is_entrypoint`** (a depth
   pin), `file_weight` and what `extract` hides. Entry-file,
   private-declaration, member and front-door file factors, a roster head
