@@ -145,6 +145,27 @@ fn single_file_larger_than_the_budget_stays_within_it() {
     assert!(precis::char_units(&capped) <= char_budget, "{capped}");
 }
 
+/// A file no parser claims is outlined whole before the budget goes to
+/// its head, so a declaration far down the file is still named.
+#[test]
+fn single_file_unparsed_language_outlines_every_declaration() {
+    let temp = tempfile::tempdir().unwrap();
+    let methods: String = (0..40)
+        .map(|i| {
+            let body: String = (0..10)
+                .map(|j| format!("    total += compute({i}, {j});\n"))
+                .collect();
+            format!("  public int method{i}() {{\n{body}    return total;\n  }}\n\n")
+        })
+        .collect();
+    let source = format!("package demo;\n\npublic final class Validator {{\n{methods}}}\n");
+    let file = write(temp.path(), "Validator.java", &source);
+
+    let out = render(&file, 1000, None);
+    assert!(out.contains("public int method39() {"), "{out}");
+    assert!(!out.contains("compute(39, 0)"), "{out}");
+}
+
 /// Only the head of a file too large for the walkers is read: bytes past
 /// it that are not UTF-8 do not stop it from rendering.
 #[test]

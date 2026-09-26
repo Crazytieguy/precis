@@ -617,7 +617,11 @@ fn block_comment_interiors(lines: &[&str]) -> Vec<bool> {
 /// The result is a *surface*, not a summary: no parse, no signature
 /// reconstruction, no bodies. It is priced accordingly in
 /// [`class_value`].
-fn declaration_surface(source: &str, class: Class) -> Vec<usize> {
+///
+/// `decl_cap` bounds the declarations kept: [`SOURCE_TEXT_DECL_LINES`] for
+/// a roster among many files, unbounded when the file is the whole walk
+/// and the surface is its outline.
+fn declaration_surface(source: &str, class: Class, decl_cap: usize) -> Vec<usize> {
     let lines: Vec<&str> = source.lines().collect();
     let in_block_comment = block_comment_interiors(&lines);
     let banner_end = boilerplate_banner_end(&lines, &in_block_comment);
@@ -645,7 +649,7 @@ fn declaration_surface(source: &str, class: Class) -> Vec<usize> {
     let caps = [
         SOURCE_TEXT_IMPORT_LINES,
         SOURCE_TEXT_COMMENT_LINES,
-        SOURCE_TEXT_DECL_LINES,
+        decl_cap,
     ];
     let mut used = [0usize; 3];
     let mut selected: Vec<usize> = Vec::new();
@@ -713,7 +717,12 @@ fn push_source_text_batches(out: &mut Vec<Batch>, file: &Path, ctx: &WalkCtx, cl
     {
         return;
     }
-    let selected = declaration_surface(&source, class);
+    let decl_cap = if ctx.dir_filter().named_file().is_some() {
+        usize::MAX
+    } else {
+        SOURCE_TEXT_DECL_LINES
+    };
+    let selected = declaration_surface(&source, class, decl_cap);
     let surface_rows = selected.len();
     let Some(content) = single_file_lines_content(file, &source, selected) else {
         return;
@@ -1096,7 +1105,7 @@ mod tests {
 
     /// Line numbers a surface selects, for readable assertions.
     fn surface_of(source: &str) -> Vec<usize> {
-        declaration_surface(source, Class::LanguageSource)
+        declaration_surface(source, Class::LanguageSource, SOURCE_TEXT_DECL_LINES)
     }
 
     #[test]
@@ -1160,7 +1169,7 @@ mod tests {
         let vim = setup + "\nfunction! plug#begin(...)\n  return 1\nendfunction\n";
         let lines: Vec<&str> = vim.lines().collect();
         let text = |class| -> Vec<&str> {
-            declaration_surface(&vim, class)
+            declaration_surface(&vim, class, SOURCE_TEXT_DECL_LINES)
                 .iter()
                 .map(|n| lines[n - 1])
                 .collect()
