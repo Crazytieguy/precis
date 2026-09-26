@@ -1,4 +1,5 @@
-//! Python extraction for the code engine.
+//! Python extraction for the code engine, for modules (`.py`) and type
+//! stubs (`.pyi`) alike.
 //!
 //! - **Declarations**: top-level `def` (`Callable`), `class` (`Whole`
 //!   container whose methods are members), simple `NAME = …` assignments
@@ -30,7 +31,7 @@ use super::{Language, SourceFile};
 use crate::walker::WalkCtx;
 
 pub(super) const LANGUAGE: Language = Language {
-    extensions: &["py"],
+    extensions: &["py", "pyi"],
     grammar: |_| tree_sitter_python::LANGUAGE.into(),
     extract,
     is_entrypoint: Some(is_entrypoint),
@@ -54,7 +55,7 @@ fn sibling_mentions(file: &SourceFile) -> HashSet<String> {
 
 fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
     let mut model = FileModel::default();
-    let own_package = (file_name(&file.path) == Some("__init__.py"))
+    let own_package = (file_stem(&file.path) == Some("__init__"))
         .then(|| top_level_package(&file.path, ctx))
         .flatten();
     let is_entry = is_entrypoint(&file.path, ctx);
@@ -102,7 +103,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 }
 
 fn is_entrypoint(path: &Path, _ctx: &WalkCtx) -> bool {
-    file_name(path).is_some_and(|name| name.starts_with("__") && name.ends_with("__.py"))
+    file_stem(path).is_some_and(is_dunder)
 }
 
 /// A module a package `__init__.py` above it imports names from
@@ -167,8 +168,8 @@ fn imports_from(file: &SourceFile, statement: Node, package: &str) -> bool {
     module.kind() == "relative_import" || file.text(module).split('.').next() == Some(package)
 }
 
-fn file_name(path: &Path) -> Option<&str> {
-    path.file_name().and_then(|name| name.to_str())
+fn file_stem(path: &Path) -> Option<&str> {
+    path.file_stem().and_then(|stem| stem.to_str())
 }
 
 fn is_dunder(name: &str) -> bool {
@@ -680,6 +681,33 @@ class Wide(
     }
 
     #[test]
+    fn code_python_type_stub_parses_like_a_module() {
+        assert!(
+            Language::from_path(Path::new("stub.pyi"))
+                .is_some_and(|language| language.extensions == LANGUAGE.extensions)
+        );
+        let model = extract_source(
+            "pkg/stub.pyi",
+            "\
+class Params:
+    @property
+    def port(self) -> int: ...
+    @port.setter
+    def port(self, value: int) -> None: ...
+",
+        );
+        let [class] = model.decls.as_slice() else {
+            panic!("one decl: {:?}", model.decls);
+        };
+        let members: Vec<_> = class
+            .members
+            .iter()
+            .map(|member| member.name_rows.clone())
+            .collect();
+        assert_eq!(members, vec![vec![2, 3], vec![4, 5]]);
+    }
+
+    #[test]
     fn code_python_constants_and_aliases_are_whole_head_only() {
         let model = extract_source(
             "consts.py",
@@ -756,6 +784,7 @@ _first = second = 0
         let ctx = WalkCtx::new(PathBuf::from("/repo"));
         let entrypoint = |path: &str| is_entrypoint(Path::new(path), &ctx);
         assert!(entrypoint("/repo/pkg/__init__.py"));
+        assert!(entrypoint("/repo/pkg/__init__.pyi"));
         assert!(entrypoint("/repo/pkg/__main__.py"));
         assert!(entrypoint("/repo/pkg/__version__.py"));
         assert!(!entrypoint("/repo/pkg/main.py"));
