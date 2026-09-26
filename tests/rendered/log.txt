@@ -81,10 +81,6 @@ src/
       …
   lib.rs
     …
-    405→#[macro_use]
-    406→mod macros;
-    407→mod serde;
-    408→
     409→#[cfg(feature = "kv")]
     410→pub mod kv;
     …
@@ -284,6 +280,9 @@ src/
     1202→}
     1204→impl<'a> MetadataBuilder<'a> {
     …
+    1212→    pub fn new() -> MetadataBuilder<'a> {
+    …
+    1240→}
     1242→impl Default for MetadataBuilder<'_> {
     1243→    fn default() -> Self {
     …

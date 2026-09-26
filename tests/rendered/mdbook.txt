@@ -212,12 +212,7 @@ crates/
           …
       lib.rs
         1→//! mdBook HTML renderer.
-        3→mod html;
-        4→mod html_handlebars;
-        5→pub mod theme;
-        6→pub(crate) mod utils;
-        7→
-        8→pub use html_handlebars::HtmlHandlebars;
+        …
       theme/
         fonts.rs
         mod.rs
@@ -270,6 +265,16 @@ crates/
         18→pub use mdbook_core::book;
         19→pub use mdbook_core::config;
         20→pub use mdbook_core::errors;
+        …
+        28→pub trait Renderer {
+        …
+        30→    fn name(&self) -> &str;
+        …
+        35→}
+        …
+        40→pub struct RenderContext {
+        …
+        63→impl RenderContext {
         …
   mdbook-summary/
     Cargo.toml

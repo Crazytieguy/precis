@@ -2,9 +2,9 @@
 //!
 //! - **Module doc**: the file's leading `//!` / `/*! */` comments, one
 //!   [`Item`] per paragraph.
-//! - **Re-exports**: `pub use …;` and every `mod name;` declaration (the
-//!   file's module tree, whatever its visibility). Other `use` and
-//!   `extern crate` items are plumbing and not modeled. An inline
+//! - **Re-exports**: `pub use …;` and `pub mod name;`. Other `use`, `mod`
+//!   and `extern crate` items are plumbing (the directory tree already
+//!   lists a private module's file) and not modeled. An inline
 //!   `mod name {` row is a re-export too; the items in its body are
 //!   modeled like the file's own when it has a visibility modifier.
 //! - **Declarations**: `fn` is `Callable`, except the program flow of
@@ -102,9 +102,7 @@ fn extract_items(
         let at_top_level = scopes.len() == 1;
         match node.kind() {
             "use_declaration" | "mod_item" => match node.child_by_field_name("body") {
-                None if node.kind() == "mod_item"
-                    || visibility_modifier(node, file) == Some("pub") =>
-                {
+                None if visibility_modifier(node, file) == Some("pub") => {
                     let mut rows = leading.attribute_rows;
                     rows.extend(file.node_rows(node));
                     model.reexports.push(Item::new(rows));
@@ -906,7 +904,7 @@ impl ServerImpl {
     }
 
     #[test]
-    fn rust_extract_reexports_are_pub_use_and_mod_declarations() {
+    fn rust_extract_reexports_are_pub_use_and_pub_mod_declarations() {
         let source = "\
 use std::io;
 mod private;
@@ -920,10 +918,7 @@ pub use crate::{
 extern crate alloc;
 ";
         let (_, model) = extract_source("lib.rs", source);
-        assert_eq!(
-            rows(&model.reexports),
-            vec![vec![2], vec![4, 5], vec![6, 7, 8, 9]]
-        );
+        assert_eq!(rows(&model.reexports), vec![vec![4, 5], vec![6, 7, 8, 9]]);
         assert!(model.decls.is_empty());
     }
 

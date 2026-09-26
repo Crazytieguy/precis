@@ -94,6 +94,8 @@ src/
     11→#[derive(Parser, Debug)]
     12→#[command(disable_version_flag = true)]
     13→pub struct CommandArgs {
+    14→    /// The file to read data. If this is empty, read from stdin.
+    15→    pub path: Option<String>,
     …
     109→}
     111→impl CommandArgs {
@@ -154,15 +156,6 @@ src/
     96→}
     …
   main.rs
-    1→mod clipboard;
-    2→mod cmd;
-    3→mod config;
-    4→mod debug;
-    5→mod edit;
-    6→mod live_reload;
-    7→mod parse;
-    8→mod tree;
-    9→mod ui;
     …
     27→fn run() -> Result<()> {
     28→    let Some(args) = CommandArgs::parse()? else {

@@ -71,6 +71,18 @@ crates/
     Cargo.toml
     src/
       lib.rs
+        1→pub mod num;
+        2→pub mod option;
+        3→pub mod result;
+        4→pub mod slice;
+        5→pub mod str;
+        6→
+        7→pub mod prelude {
+        8→    pub use crate::{
+        9→        assert_empty, assert_err, assert_none, assert_ok, assert_unique, num::NumUtil,
+        10→        slice::SliceUtil,
+        11→    };
+        …
       num.rs
       option.rs
       result.rs
@@ -206,10 +218,7 @@ crates/
     src/
       config.rs
       lib.rs
-        1→mod config;
-        2→mod migration;
-        3→mod theme;
-        4→
+        …
         5→pub use config::*;
         6→pub use migration::*;
         …
@@ -382,29 +391,6 @@ crates/
     Cargo.toml
     src/
       lib.rs
-        1→mod op;
-        2→mod r#type;
-        3→mod value;
-        …
-        29→#[derive(Debug)]
-        30→pub struct DynamoDb {
-        31→    url: String,
-        32→}
-        34→impl DynamoDb {
-        35→    pub fn new(url: String) -> Self {
-        …
-        38→}
-        …
-        41→impl Driver for DynamoDb {
-        …
-        96→pub struct Connection {
-        …
-        101→impl Connection {
-        …
-        157→impl toasty_core::driver::Connection for Connection {
-        …
-        345→struct ExprAttrs {
-        …
       op/
         create_table.rs
         delete_by_key.rs
@@ -477,6 +463,11 @@ crates/
       8→toasty-core.workspace = true
     src/
       lib.rs
+        1→pub mod migration;
+        2→pub use migration::*;
+        3→
+        4→pub mod serializer;
+        …
       migration.rs
       serializer/
         column.rs
@@ -539,6 +530,15 @@ examples/
     src/
       main.rs
   todo-with-cli/
+    .gitignore
+    Cargo.toml
+    Toasty.toml
+    src/
+      bin/
+        app.rs
+        cli.rs
+      lib.rs
+    toasty/
   user-has-one-profile/
     Cargo.toml
     src/

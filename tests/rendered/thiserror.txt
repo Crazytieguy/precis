@@ -99,7 +99,8 @@ README.md
   69→  #[derive(Error, Debug)]
   70→  pub enum Error {
   71→      #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
-  …
+  72→      InvalidLookahead(u32),
+  73→  }
   74→  ```
   …
   211→## Comparison to anyhow
@@ -170,17 +171,6 @@ impl/
     fmt.rs
     generics.rs
     lib.rs
-      …
-      23→mod ast;
-      24→mod attr;
-      25→mod expand;
-      26→mod fallback;
-      27→mod fmt;
-      28→mod generics;
-      29→mod prop;
-      30→mod scan_expr;
-      31→mod unraw;
-      32→mod valid;
       …
       39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
       40→pub fn derive_error(input: TokenStream) -> TokenStream {
@@ -278,15 +268,7 @@ src/
     …
   lib.rs
     …
-    281→mod aserror;
-    282→mod display;
-    283→#[cfg(error_generic_member_access)]
-    284→mod provide;
-    285→mod var;
-    286→
     287→pub use thiserror_impl::*;
-    288→
-    289→mod private;
     …
   private.rs
   provide.rs
@@ -303,6 +285,14 @@ src/
     …
     20→impl<T: Error + ?Sized> Sealed for T {}
   var.rs
+    …
+    3→pub struct Var<'a, T: ?Sized>(pub &'a T);
+    4→
+    5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
+    6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+    7→        Pointer::fmt(self.0, formatter)
+    …
+    9→}
 tests/
   compiletest.rs
   no-std/
