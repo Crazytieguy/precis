@@ -83,10 +83,10 @@ Score(3000)=0.723 I=0.906 C=0.577 ns_rows≤3K=19/52 grid(1000/1442/2080/3000/43
 | ns | 5586 |  | 294 | Every exported symbol of `source/utils/` (timeout, delay, body, guards, misc) | 3.4 | 3.3 | 0.560 |
 | walker |  | 5595 | 18 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 12, sub: 0, line: 148 } |  |  | 0.563 |
 | walker |  | 5623 | 28 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 16, sub: 0, line: 256 } |  |  | 0.565 |
-| walker |  | 5747 | 124 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 15, sub: 0, line: 237 } |  |  | 0.588 |
-| ns | 5766 |  | 180 | Every readme option anchor (`##### <option>`) and hook anchor | 3.5 |  | 0.578 |
-| walker |  | 5857 | 110 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 7, sub: 0, line: 46 } |  |  | 0.591 |
-| walker |  | 5986 | 129 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 17, sub: 0, line: 265 } |  |  | 0.594 |
+| walker |  | 5752 | 129 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 17, sub: 0, line: 265 } |  |  | 0.566 |
+| ns | 5766 |  | 180 | Every readme option anchor (`##### <option>`) and hook anchor | 3.5 |  | 0.556 |
+| walker |  | 5876 | 124 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 15, sub: 0, line: 237 } |  |  | 0.581 |
+| walker |  | 5986 | 110 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 7, sub: 0, line: 46 } |  |  | 0.594 |
 | ns | 6002 |  | 236 | `test/helpers/`: every exported test helper | 3.6 |  | 0.583 |
 | walker |  | 6303 | 317 | Code::CodeKey { rung: Decl, file: source/core/constants.ts, decl: 1, sub: 0, line: 4 } |  |  | 0.584 |
 | ns | 6313 |  | 311 | Remaining readme H4/H6 headings (input, defaultOptions, ky.retry options, CDN, FAQ) | 3.7 |  | 0.581 |

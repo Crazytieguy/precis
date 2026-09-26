@@ -756,10 +756,16 @@ fn value_declaration(
     value: Node,
 ) -> DeclInfo {
     let mut value = value;
-    while value.kind() == "assignment_expression"
-        && let Some(right) = value.child_by_field_name("right")
-    {
-        value = right;
+    loop {
+        let inner = match value.kind() {
+            "assignment_expression" => value.child_by_field_name("right"),
+            "as_expression" | "satisfies_expression" | "parenthesized_expression" => {
+                value.named_child(0)
+            }
+            _ => None,
+        };
+        let Some(inner) = inner else { break };
+        value = inner;
     }
     if is_class_kind(value.kind()) {
         return class(file, rows, name_row, value.child_by_field_name("body"));
@@ -1387,6 +1393,25 @@ export const config = {
                 "  Callable name [5] head [5] doc [] body [[6]]",
             ]
         );
+    }
+
+    #[test]
+    fn typescript_object_under_as_const_or_satisfies_lists_its_entries() {
+        for suffix in ["as const", "satisfies Handlers"] {
+            let model = extract_source(
+                "src/handlers.ts",
+                &format!(
+                    "export const handlers = {{\n  get(a) {{\n    return a;\n  }},\n  set: 1,\n}} {suffix};\n"
+                ),
+            );
+            assert_eq!(
+                describe(&model),
+                [
+                    "Whole name [1] head [1, 6] doc [] body [[2], [5]]",
+                    "  Callable name [2] head [2] doc [] body [[3]]",
+                ]
+            );
+        }
     }
 
     #[test]
