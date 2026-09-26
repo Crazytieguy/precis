@@ -1263,6 +1263,8 @@ mod tests {
             charged += tree.marginal_cost(content).tokens;
             tree.apply(content, BatchId::new(i), |_| true);
         }
+        let relisted = dir_listing(root.clone(), &["shown.rs"]);
+        assert_eq!(tree.marginal_cost(&relisted), Cost::default());
         let rendered: usize = tree
             .render()
             .lines()
@@ -1441,53 +1443,7 @@ mod tests {
     }
 
     #[test]
-    fn render_gap_marker_synthesized_iff_elided_source_nonblank() {
-        let (cache, path) = gap_fixture();
-        let mut tree = RenderedTree::new(stub_dir(), cache);
-        tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
-        // Full lines only — no author Ellipsis records at all.
-        for line in [1, 3, 6] {
-            let content = one_span(path.clone(), line, Render::Full);
-            assert!(tree.marginal_cost(&content).tokens > 0);
-            tree.apply(&content, BatchId::new(line), |_| true);
-        }
-        let out = tree.render();
-        // Blank-only gap (line 2): no marker. Non-blank gap (4-5):
-        // marker synthesized despite no Ellipsis record.
-        assert_eq!(out.matches('…').count(), 1, "output:\n{out}");
-        let idx_b = out.find("3→fn b();").unwrap();
-        let idx_marker = out.find('…').unwrap();
-        let idx_c = out.find("6→fn c();").unwrap();
-        assert!(idx_b < idx_marker && idx_marker < idx_c, "output:\n{out}");
-    }
-
-    #[test]
-    fn render_gap_marker_ellipsis_records_cost_nothing_and_never_duplicate() {
-        let (cache, path) = gap_fixture();
-        let mut tree = RenderedTree::new(stub_dir(), cache);
-        tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
-        for line in [1, 3, 6] {
-            tree.apply(
-                &one_span(path.clone(), line, Render::Full),
-                BatchId::new(line),
-                |_| true,
-            );
-        }
-        let before = tree.render();
-        // Author Ellipsis records inside blank (2) and non-blank (4)
-        // gaps: zero marginal cost, output byte-identical.
-        for line in [2, 4] {
-            let content = one_span(path.clone(), line, Render::Ellipsis);
-            let cost = tree.marginal_cost(&content);
-            assert_eq!(cost.tokens, 0, "ellipsis at {line} must cost nothing");
-            assert_eq!(cost.chars, 0);
-            tree.apply(&content, BatchId::new(10 + line), |_| true);
-        }
-        assert_eq!(tree.render(), before);
-    }
-
-    #[test]
-    fn render_gap_marker_leading_and_trailing() {
+    fn render_gap_markers_mark_only_elided_nonblank_source() {
         let (cache, path) = gap_fixture();
         let mut tree = RenderedTree::new(stub_dir(), cache);
         tree.apply(&listing(&["f.c"]), BatchId::new(0), |_| true);
@@ -1495,45 +1451,42 @@ mod tests {
         // non-blank (line 1; lines 4-6) → leading + trailing markers.
         tree.apply(
             &one_span(path.clone(), 3, Render::Full),
-            BatchId::new(1),
+            BatchId::new(3),
             |_| true,
         );
         let out = tree.render();
         assert_eq!(out.matches('…').count(), 2, "output:\n{out}");
-        let idx_row = out.find("3→fn b();").unwrap();
-        let first = out.find('…').unwrap();
-        let last = out.rfind('…').unwrap();
-        assert!(first < idx_row && idx_row < last, "output:\n{out}");
+        let row = out.find("3→fn b();").unwrap();
+        assert!(
+            out.find('…').unwrap() < row && row < out.rfind('…').unwrap(),
+            "output:\n{out}"
+        );
+        // Blank-only gap (line 2): no marker. Non-blank gap (4-5):
+        // marker synthesized despite no Ellipsis record.
+        for line in [1, 6] {
+            let content = one_span(path.clone(), line, Render::Full);
+            assert!(tree.marginal_cost(&content).tokens > 0);
+            tree.apply(&content, BatchId::new(line), |_| true);
+        }
+        let out = tree.render();
+        assert_eq!(out.matches('…').count(), 1, "output:\n{out}");
+        let marker = out.find('…').unwrap();
+        assert!(
+            out.find("3→fn b();").unwrap() < marker && marker < out.find("6→fn c();").unwrap(),
+            "output:\n{out}"
+        );
+        // Author Ellipsis records inside blank (2) and non-blank (4)
+        // gaps: zero marginal cost, output byte-identical.
+        for line in [2, 4] {
+            let content = one_span(path.clone(), line, Render::Ellipsis);
+            assert_eq!(tree.marginal_cost(&content), Cost::default(), "line {line}");
+            tree.apply(&content, BatchId::new(10 + line), |_| true);
+        }
+        assert_eq!(tree.render(), out);
     }
 
     #[test]
-    fn render_already_listed_entries_cost_nothing() {
-        let cache = SourceCache::new();
-        let mut tree = RenderedTree::new(stub_dir(), cache);
-        tree.apply(&listing(&["a.rs", "b.rs"]), BatchId::new(0), |_| true);
-
-        let overlap = tree.marginal_cost(&listing(&["a.rs"]));
-        assert_eq!(overlap.tokens, 0);
-        assert_eq!(overlap.chars, 0);
-    }
-
-    #[test]
-    fn render_listing_escapes_control_characters_in_names() {
-        let cache = SourceCache::new();
-        let mut tree = RenderedTree::new(stub_dir(), cache);
-        let content = listing(&["name\nwith\ttabs.md"]);
-
-        let cost = tree.marginal_cost(&content);
-        tree.apply(&content, BatchId::new(0), |_| true);
-
-        let rendered = tree.render();
-        assert_eq!(rendered, "name\\nwith\\ttabs.md\n");
-        assert_eq!(cost.chars, char_units(&rendered));
-        assert_eq!(cost.tokens, tokenizer::count(&rendered));
-    }
-
-    #[test]
-    fn render_source_rows_escape_control_characters_but_tabs() {
+    fn render_escapes_control_characters_in_names_and_rows_but_tabs() {
         let cache = SourceCache::new();
         let path = PathBuf::from(format!("{STUB_DIR}/esc.txt"));
         cache.insert(
@@ -1541,29 +1494,33 @@ mod tests {
             Arc::from("\tline \x1b[31mred\x1b[0m\rover\n\x1b[1mbold\n"),
         );
         let mut tree = RenderedTree::new(stub_dir(), cache);
-        tree.apply(&listing(&["esc.txt"]), BatchId::new(0), |_| true);
-        let full = one_span(path.clone(), 1, Render::Full);
-        let full_cost = tree.marginal_cost(&full);
-        tree.apply(&full, BatchId::new(1), |_| true);
-        let truncated = one_span(
-            path,
-            2,
-            Render::Truncated {
-                pattern: r"^\x1b\[1m".into(),
-            },
-        );
-        let truncated_cost = tree.marginal_cost(&truncated);
-        tree.apply(&truncated, BatchId::new(2), |_| true);
-
+        let steps = [
+            listing(&["esc.txt", "name\nwith\ttabs.md"]),
+            one_span(path.clone(), 1, Render::Full),
+            one_span(
+                path,
+                2,
+                Render::Truncated {
+                    pattern: r"^\x1b\[1m".into(),
+                },
+            ),
+        ];
+        let mut charged = Cost::default();
+        for (i, content) in steps.iter().enumerate() {
+            charged = charged + tree.marginal_cost(content);
+            tree.apply(content, BatchId::new(i), |_| true);
+        }
         let rendered = tree.render();
         assert_eq!(
             rendered,
-            "esc.txt\n  1→\tline \\u{1b}[31mred\\u{1b}[0m\\rover\n  2→\\u{1b}[1m…\n"
+            "esc.txt\n  1→\tline \\u{1b}[31mred\\u{1b}[0m\\rover\n  2→\\u{1b}[1m…\nname\\nwith\\ttabs.md\n"
         );
-        let listing_cost = char_units("esc.txt\n");
         assert_eq!(
-            listing_cost + full_cost.chars + truncated_cost.chars,
-            char_units(&rendered)
+            charged,
+            Cost {
+                tokens: tokenizer::count(&rendered),
+                chars: char_units(&rendered),
+            }
         );
     }
 
