@@ -26,9 +26,10 @@ use tree_sitter::{Node, Tree};
 
 pub(in crate::walker) use self::c::is_cpp_header;
 use self::model::{DeclInfo, FileModel, Item, Shape};
-use super::fs::files_with_any_extension;
+use super::plaintext::{has_minified_lines, is_derived_artifact_name};
 use super::{WalkCtx, node_end_row_trimmed};
 use crate::batch::{Batch, BatchKey, Rung};
+use crate::fs_util::{EntryKind, list_dir};
 use crate::render::Source;
 
 /// One source language: what its extraction module gives the engine.
@@ -418,12 +419,23 @@ fn show_program_flow(decls: &mut [DeclInfo], functions: &[ProgramFunction]) {
 }
 
 /// Batches for every source file in `dir`. Called by `FsWalker` once per
-/// scheduled directory listing.
+/// scheduled directory listing. Derived artifacts (`app.min.js`,
+/// `main.bundle.js`, `api.generated.ts`) and files of lines too long to
+/// be hand-wrapped are left to their listing rows, as the plaintext
+/// fallback leaves them: extracting one renders machine output. A
+/// generator banner alone is not enough, since hand-written files carry
+/// one too (`__version__ = …  # DO NOT EDIT THIS LINE MANUALLY`).
 pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
-    let extensions: Vec<&str> = parsed_extensions().collect();
-    let files: Vec<(PathBuf, &Language)> = files_with_any_extension(dir, &extensions, ctx)
-        .into_iter()
-        .filter_map(|path| Language::from_path(&path).map(|language| (path, language)))
+    let files: Vec<(PathBuf, &Language)> = list_dir(dir, ctx.dir_filter())
+        .iter()
+        .filter(|(name, kind)| {
+            **kind == EntryKind::File && !is_derived_artifact_name(&name.to_ascii_lowercase())
+        })
+        .filter_map(|(name, _)| {
+            let path = dir.join(name);
+            let language = Language::from_path(&path)?;
+            Some((path, language))
+        })
         .collect();
     let grammars: Vec<(&Path, tree_sitter::Language)> = files
         .iter()
@@ -431,6 +443,9 @@ pub(crate) fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch> {
         .collect();
     let mut emitted = Vec::new();
     ctx.parse_each(&grammars, |index, source, tree| {
+        if has_minified_lines(&source) {
+            return;
+        }
         let (path, language) = &files[index];
         let bytes = source.len();
         let file = SourceFile {
@@ -681,11 +696,8 @@ mod tests {
     const SWEEP_FILES_PER_FIXTURE: usize = 40;
 
     /// Real source holds shapes no hand-written case anticipates, so the
-    /// training fixtures' parsed files must extract within the [`model`]
-    /// contract. Machine-generated files are exempt: a minified bundle puts
-    /// declarations and an `export { … }` on one row, which rows cannot
-    /// split, and the engine drops the doubly claimed row from the later
-    /// batch.
+    /// training fixtures' files the engine extracts (see [`expand_in_dir`])
+    /// must extract within the [`model`] contract.
     #[test]
     fn code_mod_training_fixtures_extract_within_the_contract() {
         let fixtures = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
@@ -700,7 +712,12 @@ mod tests {
             let mut files: Vec<(PathBuf, &Language)> = ignore::WalkBuilder::new(&root)
                 .build()
                 .filter_map(Result::ok)
-                .filter(|entry| entry.file_type().is_some_and(|kind| kind.is_file()))
+                .filter(|entry| {
+                    entry.file_type().is_some_and(|kind| kind.is_file())
+                        && !is_derived_artifact_name(
+                            &entry.file_name().to_string_lossy().to_ascii_lowercase(),
+                        )
+                })
                 .filter_map(|entry| {
                     let language = Language::from_path(entry.path())?;
                     Some((entry.into_path(), language))
@@ -715,6 +732,9 @@ mod tests {
                 .collect();
             let ctx = WalkCtx::new(root);
             ctx.parse_each(&grammars, |index, source, tree| {
+                if has_minified_lines(&source) {
+                    return;
+                }
                 let (path, language) = &files[index];
                 let file = SourceFile {
                     path: path.clone(),
@@ -722,9 +742,7 @@ mod tests {
                     tree,
                 };
                 let model = emit::normalize((language.extract)(&file, &ctx), &file);
-                if let Err(violation) = test_support::check_contract(&model)
-                    && !super::super::plaintext::is_machine_generated_text(&file.source)
-                {
+                if let Err(violation) = test_support::check_contract(&model) {
                     violations.push(format!("{}: {violation}", path.display()));
                 }
                 let slot = LANGUAGES

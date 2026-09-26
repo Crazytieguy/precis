@@ -287,16 +287,50 @@ fn robustness_huge_files_render_at_most_their_head() {
     assert!(out.ends_with("…\n"), "{out}");
 }
 
+/// Minified and bundled source is machine output: named as such
+/// (`.min.js`, `.bundle.js`) or not, the code engine leaves it to its
+/// listing row, as the plaintext fallback does.
+#[test]
+fn robustness_minified_sources_render_only_their_rows() {
+    let temp = tempfile::tempdir().unwrap();
+    write(
+        &temp.path().join("main.js"),
+        "export function main() {\n  return 1;\n}\n",
+    );
+    let minified = format!(
+        "export const w=1;{}\n",
+        "w.x=function(n){return n};".repeat(600)
+    );
+    for name in [
+        "vendor/lib.min.js",
+        "public/app.bundle.js",
+        "vendor/widget.js",
+    ] {
+        write(&temp.path().join(name), &minified);
+    }
+
+    let out = render(temp.path(), 3000).unwrap();
+    assert!(out.contains("export function main() {"), "{out}");
+    for name in ["lib.min.js", "app.bundle.js", "widget.js"] {
+        assert!(out.contains(&format!("  {name}\n")), "{out}");
+    }
+    assert!(!out.contains("w.x=function"), "{out}");
+}
+
 /// A long run without a break (an embedded base64 blob of zeros) costs
 /// the tokenizer time quadratic in its length, so nothing may price a
-/// source line past the prefix its row renders.
+/// source line past the prefix its row renders. `data.py`'s trailing
+/// comment rows keep its mean line short, as in a hand-written module: a
+/// file of mostly long lines reads as minified and renders only its
+/// listing row.
 #[test]
 fn robustness_long_lines_render_as_a_prefix() {
     let temp = tempfile::tempdir().unwrap();
     let blob = "A".repeat(200_000);
+    let comment_rows = "#\n".repeat(2_000);
     write(
         &temp.path().join("data.py"),
-        format!("DATA = \"{blob}\"\n\n\ndef load():\n    return DATA\n"),
+        format!("DATA = \"{blob}\"\n\n\ndef load():\n    return DATA\n{comment_rows}"),
     );
     write(
         &temp.path().join("README.md"),

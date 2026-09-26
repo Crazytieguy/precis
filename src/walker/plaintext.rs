@@ -330,7 +330,7 @@ fn classify_source_text(name: &str) -> Option<Class> {
 
 /// A derived sibling of a hand-authored file, by its lowercased name:
 /// `app.min.js`, `bundle.chunk.css`, `pnpm-lock.yaml`, `main.js.map`.
-fn is_derived_artifact_name(lower: &str) -> bool {
+pub(in crate::walker) fn is_derived_artifact_name(lower: &str) -> bool {
     let Some((stem, ext)) = lower.rsplit_once('.') else {
         return false;
     };
@@ -1038,7 +1038,7 @@ pub(in crate::walker) fn is_machine_generated_text(source: &str) -> bool {
     has_generated_marker(source) || has_minified_lines(source)
 }
 
-fn has_minified_lines(source: &str) -> bool {
+pub(in crate::walker) fn has_minified_lines(source: &str) -> bool {
     let line_count = source.lines().count();
     line_count == 0 || source.len() / line_count > SOURCE_TEXT_MAX_MEAN_LINE_BYTES
 }
