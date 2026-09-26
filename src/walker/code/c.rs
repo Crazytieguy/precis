@@ -14,9 +14,8 @@
 //! - Function definitions are `Callable`, and so is a function-like
 //!   macro: its `#define NAME(args)` rows are the head, each later
 //!   continuation row a body item. Prototypes, typedefs, structs / unions / enums,
-//!   global variables, object-like macros and declaring macro
-//!   invocations are `Whole`, with one body [`Item`] per field or
-//!   enumerator.
+//!   global variables and object-like macros are `Whole`, with one body
+//!   [`Item`] per field or enumerator.
 //! - A `static` in a header is hidden unless a specifier spells it
 //!   inline (`inline`, `__inline`, `SDS_INLINE`; not `noinline`).
 //! - A declaration's doc is the comment run directly above it, or above
@@ -151,7 +150,6 @@ fn declaration(node: Node, file: &SourceFile, in_header: bool) -> Option<DeclInf
         "declaration" | "type_definition" | "struct_specifier" | "union_specifier"
         | "enum_specifier" => Shape::Whole,
         "preproc_def" if !is_header_guard_define(node, file) => Shape::Whole,
-        "expression_statement" if is_declaring_macro_invocation(node, file) => Shape::Whole,
         _ => return None,
     };
     if is_flattened_parse_debris(node, file) {
@@ -346,22 +344,6 @@ fn is_flattened_parse_debris(node: Node, file: &SourceFile) -> bool {
     }
 }
 
-/// A file-scope `NAME(args);` with an all-caps callee: a macro invocation
-/// that declares something (`EXPORT_SYMBOL(f);`, `ARRAY_HEAD(List,
-/// struct Item *);`), unlike the statements of a function body that an
-/// `#if` split onto the top level.
-fn is_declaring_macro_invocation(node: Node, file: &SourceFile) -> bool {
-    node.named_child_count() == 1
-        && node
-            .named_child(0)
-            .filter(|call| call.kind() == "call_expression")
-            .and_then(|call| call.child_by_field_name("function"))
-            .is_some_and(|callee| {
-                callee.kind() == "identifier"
-                    && !file.text(callee).chars().any(|c| c.is_ascii_lowercase())
-            })
-}
-
 fn declared_name(mut declarator: Node) -> Option<Node> {
     while !matches!(
         declarator.kind(),
@@ -535,7 +517,7 @@ fn feature_gate_is_declaration_only(
                 "function_definition" if !is_header(&file.path) || is_inline(child, file) => {
                     Some(true)
                 }
-                "expression_statement" => Some(is_declaring_macro_invocation(child, file)),
+                "expression_statement" => Some(false),
                 "preproc_include" | "preproc_call" | "comment" => Some(false),
                 _ if is_nested_gate(child) => answers[&child.id()],
                 _ => None,
@@ -777,14 +759,7 @@ REGISTER_MODULE(module_fn);
 ";
         assert_eq!(
             name_rows_of(&model("krep.c", source)),
-            vec![
-                vec![1, 2],
-                vec![3, 4],
-                vec![15],
-                vec![19],
-                vec![26],
-                vec![27]
-            ]
+            vec![vec![1, 2], vec![3, 4], vec![15], vec![19], vec![26]]
         );
         assert_eq!(
             name_rows_of(&model("krep.h", source)),
@@ -977,63 +952,6 @@ enum color { RED } paint(void);
                 "Whole name [14] head [14, 15] doc [] body []",
                 "Whole name [16] head [16] doc [] body []",
             ]
-        );
-    }
-
-    #[test]
-    fn c_declaring_macro_invocations_are_listed() {
-        let source = "\
-int fn_1(int x) { return x; }
-EXPORT_SYMBOL(fn_1);
-/* Array of Foo pointers. */
-ARRAY_HEAD(FooArray, struct Foo *);
-MODULE_LICENSE(\"GPL\");
-cleanup(state);
-";
-        let model = model("r6.c", source);
-        assert_eq!(
-            name_rows_of(&model),
-            vec![vec![1], vec![2], vec![4], vec![5]]
-        );
-        assert_eq!(rows(&model.decls[2].doc), vec![vec![3]]);
-        assert_eq!(model.decls[2].shape, Shape::Whole);
-    }
-
-    #[test]
-    fn c_flattened_parse_debris_is_skipped() {
-        let source = "\
-#ifndef LIB_H
-#define LIB_H
-int api(void);
-#if defined(__SSE2__)
-#define LIB_SSE2
-#ifdef _MSC_VER
-#if _MSC_VER >= 1400
-static int cpuid3(void)
-{
-   int info[4];
-   __cpuid(info,1);
-   return info[3];
-}
-#else
-static int cpuid3(void)
-{
-   int res;
-   __asm {
-      mov  eax,1
-      cpuid
-      mov  res,edx
-   }
-   return res;
-}
-#endif
-#endif
-#endif
-#endif
-";
-        assert_eq!(
-            name_rows_of(&model("lib.h", source)),
-            vec![vec![3], vec![5]]
         );
     }
 
