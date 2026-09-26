@@ -708,8 +708,9 @@ fn is_decorative_block(block: Node, source: &str) -> bool {
         "paragraph" => is_decorative_paragraph(block, source),
         "pipe_table" => is_badge_only_inline_text(&source[block.byte_range()]),
         // `[label]: url` definitions render nothing on their own; YAML /
-        // TOML front matter is site metadata, not project description.
-        "link_reference_definition" | "minus_metadata" | "plus_metadata" => true,
+        // TOML front matter is site metadata, not project description; a
+        // `---` rule separates, it says nothing.
+        "link_reference_definition" | "minus_metadata" | "plus_metadata" | "thematic_break" => true,
         "html_block" => is_decorative_html_block(block, source),
         _ => false,
     }
@@ -2253,6 +2254,20 @@ mod tests {
                    Widget renders gadgets.\n",
             &[1, 13],
             &[3, 5, 7, 9, 11],
+        ),
+        // A `---` rule is chrome: the tagline's one extra block is the
+        // lede past it, not the rule.
+        (
+            "markdown_thematic_break_is_decorative",
+            "<h1 align=\"center\">Widget</h1>\n\
+                   \n\
+                   ---\n\
+                   \n\
+                   Widget renders gadgets.\n\
+                   \n\
+                   ## Usage\n",
+            &[1, 5, 7],
+            &[3],
         ),
         // A headingless README's headline is its lede past the chrome.
         (
