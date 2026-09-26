@@ -247,12 +247,15 @@ fn all_names(file: &SourceFile) -> Vec<&str> {
 }
 
 fn collect_string_contents<'a>(file: &'a SourceFile, node: Node, names: &mut Vec<&'a str>) {
-    if node.kind() == "string_content" {
-        names.push(file.text(node));
-        return;
-    }
-    for child in node.named_children(&mut node.walk()) {
-        collect_string_contents(file, child, names);
+    let mut pending = vec![node];
+    while let Some(node) = pending.pop() {
+        if node.kind() == "string_content" {
+            names.push(file.text(node));
+            continue;
+        }
+        let first = pending.len();
+        pending.extend(node.named_children(&mut node.walk()));
+        pending[first..].reverse();
     }
 }
 

@@ -191,6 +191,10 @@ fn robustness_deeply_nested_sources_render() {
             "modules.rs",
             nest("pub mod a {\n", "pub fn f() {}\n", "}\n"),
         ),
+        (
+            "__init__.py",
+            chain("__all__ = [\"a\"]", " +\n[\"b\"]", "\n"),
+        ),
     ];
     for (name, contents) in &files {
         write(&temp.path().join(name), contents);
