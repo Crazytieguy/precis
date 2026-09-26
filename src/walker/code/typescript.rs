@@ -1,15 +1,16 @@
 //! TypeScript / JavaScript extraction for the code engine.
 //!
-//! A file's API is what it exports: ESM `export` declarations, the
-//! locals an `export { … }` clause, `export default X` or `export = X`
-//! names, and CommonJS `module.exports` / `exports.x` targets. Every
-//! top-level declaration of a `.d.ts` file is API (ambient declarations
-//! are implicitly exported), and so is every top-level declaration of an
-//! entrypoint that exports nothing (an application's startup file), whose
-//! top-level control flow statements are declarations too; other
-//! unexported declarations are hidden.
-//! `export … from` and the statements that export a name without
-//! declaring it are re-exports, listed on the roster.
+//! A file's declarations are its API:
+//! - exported declarations and the locals an `export { … }` clause,
+//!   `export default X`, `export = X` or a CommonJS `module.exports` /
+//!   `exports.x` assignment names;
+//! - every top-level declaration of a `.d.ts` (ambient declarations are
+//!   implicitly exported);
+//! - every top-level declaration and control-flow statement of an
+//!   entrypoint that exports nothing (an application's startup file).
+//!
+//! Everything else is hidden. `export … from` and the statements that
+//! export a name without declaring it are re-exports, listed on the roster.
 //!
 //! Classes are containers: methods (and arrow-function fields) are
 //! members, other fields are body items, and `#name` / `private` /

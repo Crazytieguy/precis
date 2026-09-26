@@ -16,7 +16,7 @@
 //! # Parts of a declaration
 //!
 //! A [`DeclInfo`] splits a declaration's rows into `doc`, `head` and
-//! `body`, which must be pairwise disjoint, plus `name_rows`:
+//! `body`, plus `name_rows`:
 //!
 //! - **`doc`**: the doc comment rows directly above the declaration (no
 //!   blank row between them and the head), or a docstring inside it (the
@@ -76,18 +76,14 @@
 //! members the language enforces as private to their container. Every
 //! declaration in the model is priced alike.
 //!
-//! # Disjointness
+//! # Ownership
 //!
 //! Within a file, no row may belong to two of `module_doc`, `reexports`
-//! and the declarations; within a declaration, `doc`, `head` and `body`
-//! are disjoint; a member shares rows with its container only through its
-//! `name_rows` (a TS `class A { foo(` member shares the container's
-//! opening row). A row in no part is never rendered, including context
-//! wrapping several declarations (a C `#ifdef … #endif`, a TS
+//! and the declarations. A row in no part never renders, including
+//! context wrapping several declarations (a C `#ifdef … #endif`, a TS
 //! `declare namespace X {` line). A row two batches claim outside one
-//! predecessor chain is dropped from the later batch (asserted zero in the
-//! engine's unit tests), so a violation loses content rather than failing
-//! the run.
+//! predecessor chain is dropped from the later batch, so a violation
+//! loses content rather than failing the run.
 //!
 //! # What the engine does, so `extract` doesn't
 //!

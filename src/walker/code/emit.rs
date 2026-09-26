@@ -199,11 +199,8 @@ fn spans(file: &SourceFile, rows: &[usize]) -> Vec<Span> {
     spans
 }
 
-/// The engine-side steps of the [`super::model`] contract: drop blank and
-/// out-of-range rows, sort and dedup rows, strip `module_doc` rows from
-/// every other part, order by first row, merge same-first-row
-/// declarations, trim at the next sibling, make each declaration's parts
-/// disjoint.
+/// The engine-side steps of the [`super::model`] contract (its "Rows"
+/// and "What the engine does" sections), plus dropping out-of-range rows.
 pub(super) fn normalize(mut model: FileModel, file: &SourceFile) -> FileModel {
     let content_row =
         |row: usize| (1..=file.line_count()).contains(&row) && !file.line(row).trim().is_empty();

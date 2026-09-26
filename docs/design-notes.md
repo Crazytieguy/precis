@@ -188,13 +188,18 @@ must not undo:
   barrels then outrank root listings at small budgets. Per-language pricing enters only through `is_entrypoint`
   (a depth pin), `file_weight` and what `extract` hides.
 - **Removed after measuring neutral or better on the grid
-  (2026-09-25); re-adding one needs a fresh measurement:** entry-file,
-  private-declaration and member factors, a roster head premium, a
-  chunk tail decay; the TS/JS module doc, JSDoc paragraph splits,
-  unexported declarations in TS/JS entry files, publishing a published
-  handle's factory; Rust badge-paragraph skipping, rustdoc fence-aware
-  paragraphs, hiding impls of hidden types; C decoration-row paragraph
-  splits; the C banner cutoff on declaration docs.
+  (2026-09-25); re-adding one needs a fresh measurement:**
+  - entry-file, private-declaration and member value factors
+  - a roster head premium
+  - a chunk tail decay
+  - the TS/JS module doc
+  - JSDoc paragraph splits
+  - unexported declarations in TS/JS entry files that export something
+  - Rust badge-paragraph skipping
+  - rustdoc fence-aware paragraphs
+  - hiding impls of hidden Rust types
+  - C decoration-row paragraph splits
+  - the C banner cutoff on declaration docs
 - **Rows that condition or define a file's exports join its roster as
   re-export rows**: a Go `//go:build` constraint (otherwise platform
   variants list the same declarations with no condition), and a Lua
