@@ -251,7 +251,6 @@ impl TreeNode {
     }
 }
 
-#[derive(Debug)]
 pub struct RenderedTree {
     root: PathBuf,
     nodes: HashMap<PathBuf, TreeNode>,

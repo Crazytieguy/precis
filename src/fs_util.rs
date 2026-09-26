@@ -106,19 +106,6 @@ pub struct DirFilter {
     only_file: Option<PathBuf>,
 }
 
-impl std::fmt::Debug for DirFilter {
-    /// The matchers themselves aren't printable and wouldn't be legible
-    /// if they were; what a reader wants from a dump is whether ignore
-    /// rules are active at all, and for which root.
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("DirFilter")
-            .field("root", &self.root)
-            .field("ignore_rules", &self.repo.is_some())
-            .field("only_file", &self.only_file)
-            .finish_non_exhaustive()
-    }
-}
-
 struct RepoIgnores {
     /// `.gitignore` matcher per directory; `None` for a directory with
     /// no `.gitignore`. Lazily populated.

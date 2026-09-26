@@ -39,7 +39,6 @@ pub struct ScheduledBatchRecord {
 }
 
 /// Scheduler output: rendered tree + ordered log of scheduled batches.
-#[derive(Debug)]
 pub struct RunReport {
     pub tree: RenderedTree,
     pub scheduled: Vec<ScheduledBatchRecord>,
