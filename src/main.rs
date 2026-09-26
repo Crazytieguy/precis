@@ -156,9 +156,18 @@ mod tests {
             script.contains(&summary_run),
             "session-start.sh no longer runs {summary_run:?}"
         );
-        assert!(is_precis_plugin_manifest(include_str!(
-            "../plugins/precis/.claude-plugin/plugin.json"
-        )));
+    }
+
+    /// The 0.1 plugin's manifest, which sets no [`SESSION_HOOK_VAR`].
+    #[test]
+    fn main_recognizes_legacy_plugin_manifest() {
+        let legacy = r#"{
+  "name": "precis",
+  "version": "0.1.0",
+  "description": "Automatic codebase structure context via precis"
+}
+"#;
+        assert!(is_precis_plugin_manifest(legacy));
     }
 
     /// Rebuilds `additionalContext` the way the hook does on a fixture
