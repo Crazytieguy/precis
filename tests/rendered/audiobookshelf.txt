@@ -143,6 +143,7 @@ client/
     batch/
       index.vue
     collection/
+      _id.vue
     config/
       api-keys/
         index.vue
@@ -168,7 +169,8 @@ client/
         index.vue
     config.vue
     index.vue
-    item/
+    item/_id/
+      index.vue
     library/_library/
       bookshelf/
         _id.vue
@@ -185,9 +187,11 @@ client/
     login.vue
     oops.vue
     playlist/
+      _id.vue
     share/
       _slug.vue
     upload/
+      index.vue
   players/
     AudioTrack.js
     CastPlayer.js
@@ -377,9 +381,6 @@ server/
     fsExtra/
       LICENSE
       copy/
-        copy-sync.js
-        copy.js
-        index.js
       empty/
         index.js
       ensure/
@@ -387,8 +388,6 @@ server/
         index.js
       index.js
       mkdirs/
-        index.js
-        …
       move/
       path-exists/
         index.js

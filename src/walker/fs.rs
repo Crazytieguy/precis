@@ -329,10 +329,12 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
 }
 
 /// True when `dir` is one of many sibling directories and names exactly
-/// the entries an earlier sibling names (`keyboards/*/`, `charts/*/`):
-/// the first of each shape shows what the siblings hold. A declared
-/// workspace member or a package module is the project's own code,
-/// whatever its layout.
+/// the three or more entries an earlier sibling names (`keyboards/*/`,
+/// `charts/*/`): the first of each shape shows what the siblings hold.
+/// Listing a one- or two-entry shape (`Cargo.toml` and `src/`) costs
+/// about what naming it does, and deferring it hides the code below. A
+/// declared workspace member or a package module is the project's own
+/// code, whatever its layout.
 fn repeats_sibling_shape(dir: &Path, ctx: &WalkCtx) -> bool {
     if dir == ctx.root() || is_declared_workspace_member(dir, ctx) || is_module_source_dir(dir) {
         return false;
@@ -461,8 +463,8 @@ impl FsState {
         count
     }
 
-    /// Names of `parent`'s subdirectories whose entry names repeat an
-    /// earlier subdirectory's, when `parent` holds at least
+    /// Names of `parent`'s subdirectories whose three or more entry names
+    /// repeat an earlier subdirectory's, when `parent` holds at least
     /// [`CATALOG_PARENT_MIN_CHILD_DIRS`] of them.
     fn shape_repeats(&self, parent: &Path, filter: &DirFilter) -> Rc<HashSet<String>> {
         if let Some(repeats) = self.shape_repeats.borrow().get(parent) {
@@ -477,8 +479,7 @@ impl FsState {
                 .filter(|(_, kind)| matches!(kind, EntryKind::Directory));
             for (name, _) in subdirs {
                 let entries = list_dir(&parent.join(name), filter);
-                if !entries.is_empty()
-                    && !shapes.insert(entries.keys().cloned().collect::<Vec<_>>())
+                if entries.len() > 2 && !shapes.insert(entries.keys().cloned().collect::<Vec<_>>())
                 {
                     repeats.insert(name.clone());
                 }
@@ -781,9 +782,12 @@ mod tests {
             .collect();
         for chart in &chart_names {
             std::fs::create_dir_all(root.join("charts").join(chart)).unwrap();
-            for file in ["Chart.yaml", "values.yaml"] {
+            for file in ["Chart.yaml", "README.md", "values.yaml"] {
                 std::fs::write(root.join("charts").join(chart).join(file), "").unwrap();
             }
+            std::fs::create_dir_all(root.join("crates").join(chart).join("src")).unwrap();
+            std::fs::write(root.join("crates").join(chart).join("Cargo.toml"), "").unwrap();
+            std::fs::write(root.join("crates").join(chart).join("src/lib.rs"), "").unwrap();
         }
         std::fs::write(root.join("charts/chart9/NOTES.txt"), "").unwrap();
         for index in 0..CATALOG_PARENT_MIN_CHILD_DIRS {
@@ -800,6 +804,7 @@ mod tests {
             value("charts/chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
         );
         assert!(value("charts/chart9") > value("charts/chart1"));
+        assert_eq!(value("crates/chart1"), value("crates/chart0"));
         assert_eq!(value("apps/app1"), value("apps/app0"));
     }
 

@@ -229,7 +229,10 @@ parent's listing but is never expanded: a translated mirror
 (`pages.ar/` beside `pages/`), an unpacked upstream release
 (`prism-master/` with its own license), and each project under a
 third-party directory. Wide siblings that repeat an earlier sibling's
-entry names are deferred rather than cut. Declared workspace members
+three or more entry names are deferred rather than cut; a repeated
+`Cargo.toml` + `src/` pair is a crate, and deferring those left a
+toolchain's standard library unlisted while an embedded upstream beside
+it was listed and parsed (20 MB of generated source). Declared workspace members
 are exempt from the shape deferral and the unpacked-release cut, and
 package modules (a directory with its own entry file) from the shape
 deferral, because a workspace's crates or a Django project's apps share
