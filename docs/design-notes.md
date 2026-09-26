@@ -518,11 +518,15 @@ breadth pressure on them after 1000 to 4000 spine tokens 3000 −0.004 to
   The exception is size-gated: pricing a listing by its non-media share
   cost the grid while it reached a three-file `media/`, and was neutral
   once it applied only from eleven media files up. Catalogs (eleven or
-  more non-source, non-script files sharing a name prefix and
-  extension) share that pricing: keying them on name homogeneity rather
-  than directory names moved the grid by +0.0001 at 3000. Source and
-  scripts are exempt because module files share a prefix by convention
-  and a script roster names the project's commands.
+  more files sharing a name prefix and extension, none of them source,
+  declaration or script files) share that pricing: keying them on name
+  homogeneity rather than directory names moved the grid by +0.0001 at
+  3000. Source files and the declarative source-text formats
+  (`plaintext::SOURCE_TEXT_DECLARATIVE_EXTENSIONS`: `.tf`, `.proto`,
+  `.graphql`, `.nix`, …) are exempt because a module's files and its
+  declarations share a prefix by convention (`kubelet_*.go`,
+  `aws_*.tf`), and scripts because a script roster names the project's
+  commands.
   No answer key ranks a listing past the split size, so the long-listing
   split (`fs::listing_parts`) is invisible to the grid; it is judged on
   real repositories, where a big source directory delivered whole
