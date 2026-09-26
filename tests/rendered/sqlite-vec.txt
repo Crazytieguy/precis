@@ -177,6 +177,11 @@ bindings/
       …
     src/
       lib.rs
+        1→#[link(name = "sqlite_vec0")]
+        2→extern "C" {
+        3→    pub fn sqlite3_vec_init();
+        4→}
+        …
 examples/
   nbc-headlines/
   python-recipes/
@@ -261,10 +266,7 @@ sqlite-vec.c
   68→typedef u_int8_t uint8_t;
   69→typedef u_int16_t uint16_t;
   70→typedef u_int64_t uint64_t;
-  71→#endif
-  72→#endif
-  73→#endif
-  74→#endif
+  …
   76→typedef int8_t i8;
   77→typedef uint8_t u8;
   78→typedef int16_t i16;

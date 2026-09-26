@@ -10,8 +10,9 @@
 //! - **Declarations**: `fn` is `Callable`, except the program flow of
 //!   `main.rs` (see `show_program_flow`); `struct`, `enum`, `union`,
 //!   `type`, `const`, `static`, `macro_rules!` and a macro invocation that
-//!   declares items (see `item_macro`) are `Whole`; `trait` and `impl` are
-//!   `Whole` containers whose members are their functions.
+//!   declares items (see `item_macro`) are `Whole`; `trait`, `impl` and
+//!   `extern` blocks are `Whole` containers whose members are their
+//!   functions.
 //! - **Hidden**: `#[cfg(test)]`, `#[test]`-style and `#[doc(hidden)]`
 //!   items, inline `mod test` / `mod tests`, `const _`, and an
 //!   inherent-impl function without a visibility modifier. An inherent
@@ -100,7 +101,9 @@ fn extract_items(
                 _ => {}
             },
             "impl_item" => model.decls.extend(impl_container(node, leading, file)),
-            "trait_item" => model.decls.push(container(node, leading, file, |_| true)),
+            "trait_item" | "foreign_mod_item" => {
+                model.decls.push(container(node, leading, file, |_| true));
+            }
             "function_item" => {
                 if let Some(functions) = program_functions.as_deref_mut() {
                     functions.push(ProgramFunction::new(model.decls.len(), node, file));
@@ -780,6 +783,23 @@ pub(crate) trait Internal {
         assert_eq!(sorted(store.members[1].head.clone()), vec![7]);
         assert_eq!(rows(&store.members[1].body), vec![vec![8]]);
         assert_eq!(model.decls[1].members.len(), 1);
+    }
+
+    #[test]
+    fn rust_extract_extern_block_functions_are_members() {
+        let source = "\
+pub struct Ctx;
+extern \"C\" {
+    /// Initialize.
+    pub fn lib_init(ctx: *mut Ctx) -> i32;
+    static VERSION: u32;
+}
+";
+        let (_, model) = extract_source("a.rs", source);
+        let block = &model.decls[1];
+        assert_eq!(sorted(block.head.clone()), vec![2, 6]);
+        assert_eq!(rows(&block.body), vec![vec![4], vec![5]]);
+        assert_eq!(rows(&block.members[0].doc), vec![vec![3]]);
     }
 
     #[test]
