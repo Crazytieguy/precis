@@ -58,18 +58,14 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             "import_from_statement" if is_package_init => model.reexports.push(rows()),
             "type_alias_statement" => {
                 if node.child_by_field_name("left").is_some() {
-                    model.decls.push(whole_statement(file, node));
+                    model.decls.push(constant_or_alias(file, node));
                 }
             }
             "expression_statement" => match assignment_target(file, node) {
-                Some(Assignment::Plain("__all__") | Assignment::Augmented("__all__")) => {
-                    model.reexports.push(rows());
-                }
-                Some(Assignment::Plain(name)) if is_entry && is_dunder(name) => {
-                    model.module_doc.push(rows())
-                }
-                Some(Assignment::Plain(_)) => model.decls.push(whole_statement(file, node)),
-                Some(Assignment::Augmented(_)) | None => {}
+                Some(("__all__", _)) => model.reexports.push(rows()),
+                Some((name, false)) if is_entry && is_dunder(name) => model.module_doc.push(rows()),
+                Some((_, false)) => model.decls.push(constant_or_alias(file, node)),
+                Some((_, true)) | None => {}
             },
             _ => {}
         }
@@ -129,27 +125,23 @@ fn is_dunder(name: &str) -> bool {
     name.len() >= 4 && name.starts_with("__") && name.ends_with("__")
 }
 
-enum Assignment<'a> {
-    Plain(&'a str),
-    Augmented(&'a str),
-}
-
 /// The identifier an `expression_statement` assigns (`NAME = …`,
-/// `NAME: T = …`, `NAME += …`, the first target of `NAME = OTHER = …`);
-/// `None` for tuple, attribute or subscript targets and for non-assignments.
-fn assignment_target<'a>(file: &'a SourceFile, statement: Node) -> Option<Assignment<'a>> {
+/// `NAME: T = …`, `NAME += …`, the first target of `NAME = OTHER = …`)
+/// and whether the assignment is augmented; `None` for tuple, attribute
+/// or subscript targets and for non-assignments.
+fn assignment_target<'a>(file: &'a SourceFile, statement: Node) -> Option<(&'a str, bool)> {
     let mut cursor = statement.walk();
     let assignment = statement.named_children(&mut cursor).next()?;
     let left = assignment.child_by_field_name("left")?;
     if left.kind() != "identifier" {
         return None;
     }
-    let name = file.text(left);
-    match assignment.kind() {
-        "assignment" => Some(Assignment::Plain(name)),
-        "augmented_assignment" => Some(Assignment::Augmented(name)),
-        _ => None,
-    }
+    let is_augmented = match assignment.kind() {
+        "assignment" => false,
+        "augmented_assignment" => true,
+        _ => return None,
+    };
+    Some((file.text(left), is_augmented))
 }
 
 fn is_docstring(node: Node) -> bool {
@@ -163,7 +155,7 @@ fn is_docstring(node: Node) -> bool {
 }
 
 /// A constant or alias: all head, no body.
-fn whole_statement(file: &SourceFile, node: Node) -> DeclInfo {
+fn constant_or_alias(file: &SourceFile, node: Node) -> DeclInfo {
     let rows = file.node_rows(node);
     DeclInfo {
         name_rows: vec![*rows.start()],

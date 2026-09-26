@@ -71,8 +71,8 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
         && classified
             .iter()
             .all(|(_, top_level)| !matches!(top_level, TopLevel::Exported(_) | TopLevel::Reexport));
-    let lists_unexported =
-        is_declaration_file(&file.path) || (exports_nothing && is_entrypoint(&file.path, ctx));
+    let is_ambient_file = is_declaration_file(&file.path);
+    let is_entry_program = exports_nothing && is_entrypoint(&file.path, ctx);
 
     let mut model = FileModel::default();
     for (statement, top_level) in classified {
@@ -86,7 +86,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
                 let exported = declared_names(file, node)
                     .iter()
                     .any(|name| scan.public_names.contains(*name));
-                if !exported && !lists_unexported {
+                if !exported && !is_ambient_file && !is_entry_program {
                     continue;
                 }
                 node
@@ -96,7 +96,7 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
             {
                 value
             }
-            TopLevel::Skip if lists_unexported && is_script_statement(statement) => statement,
+            TopLevel::Skip if is_entry_program && is_script_statement(statement) => statement,
             TopLevel::Method { .. } | TopLevel::Skip => continue,
         };
         let mut decl = declaration(file, statement, node);
@@ -111,18 +111,10 @@ fn extract(file: &SourceFile, ctx: &WalkCtx) -> FileModel {
 /// walk root): `index.ts`, `lib/main.js`, `src/node/index.ts`; and,
 /// outside `bin/`, the source named after that package (`lib/express.js`).
 fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
-    let Some((stem, extension)) = path
-        .file_name()
-        .and_then(|name| name.to_str())
-        .and_then(|name| name.rsplit_once('.'))
-    else {
-        return false;
-    };
-    let is_source = LANGUAGE
-        .extensions
-        .iter()
-        .any(|candidate| extension.eq_ignore_ascii_case(candidate));
-    let Some(dir) = path.parent().filter(|_| is_source) else {
+    let (Some(stem), Some(dir)) = (
+        path.file_stem().and_then(|stem| stem.to_str()),
+        path.parent(),
+    ) else {
         return false;
     };
     let package_dir = ctx.code.typescript.package_dir(dir, ctx.root());
@@ -252,7 +244,10 @@ impl<'source> ExportScan<'source> {
                 TopLevel::Reexport
             }
             "expression_statement" => {
-                if let Some(value) = commonjs_export_value(file, statement) {
+                if let Some(value) = statement
+                    .named_child(0)
+                    .and_then(|expression| commonjs_assignment_value(file, expression))
+                {
                     return self.exported_value(file, value);
                 }
                 match statement.named_child(0) {
@@ -511,13 +506,9 @@ fn is_require_rooted(file: &SourceFile, node: Node) -> bool {
     }
 }
 
-/// The exported value of a CommonJS export statement: `module.exports =
+/// The exported value of a CommonJS export assignment: `module.exports =
 /// X`, `exports.x = X`, `module.exports.x = X`, `exports['x'] = X`, and
 /// chains through a bare `exports` (`exports = module.exports = X`).
-fn commonjs_export_value<'tree>(file: &SourceFile, statement: Node<'tree>) -> Option<Node<'tree>> {
-    commonjs_assignment_value(file, statement.named_child(0)?)
-}
-
 fn commonjs_assignment_value<'tree>(
     file: &SourceFile,
     mut expression: Node<'tree>,
@@ -637,7 +628,7 @@ fn declaration(file: &SourceFile, statement: Node, node: Node) -> DeclInfo {
                 whole(file, span, name_rows, None)
             }
         },
-        _ => value_declaration(file, span, span.start, node),
+        _ => value_declaration(file, span, name_row, node),
     }
 }
 
@@ -709,8 +700,9 @@ fn callable(file: &SourceFile, span: Span, name_row: usize, block: Option<Node>)
     let first_statement = block.and_then(|block| block.named_child(0));
     let (head_end, body) = match (block, first_statement) {
         (Some(block), Some(first)) => {
+            let first_row = first.start_position().row + 1;
             let head_end = (block.start_position().row + 1)
-                .max(first.start_position().row)
+                .max(first_row - 1)
                 .max(name_row);
             let mut cursor = block.walk();
             (
