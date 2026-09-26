@@ -9,11 +9,12 @@
 //! or excluded from every build by `//go:build ignore` (a generator or
 //! demo program), yields no declarations. A `Deprecated:` doc paragraph
 //! joins the head, like a directive. Outside `package main`, what
-//! no importer can name (a lower-case declaration, spec, field or
-//! interface method, or a method on a lower-case type no exported
-//! function returns) is hidden, unless its file exports nothing; an
-//! exported struct with no exported field shows its opening and closing
-//! rows only.
+//! no importer can name (a lower-case declaration, spec or field, or a
+//! method on a lower-case type no exported function returns) is hidden,
+//! unless its file exports nothing; an exported struct with no exported
+//! field shows its opening and closing rows only. An interface shows
+//! every method, since a lower-case one seals it against outside
+//! implementations.
 
 use std::collections::HashSet;
 use std::sync::LazyLock;
@@ -280,8 +281,8 @@ fn callable(node: Node, file: &SourceFile) -> Option<DeclInfo> {
 /// `type`, `const` or `var`: a grouped declaration's body is its specs;
 /// a single struct or interface type's body is its fields / methods. The
 /// head is every row outside the span of the body items. With
-/// `api_only`, unexported specs, fields and interface methods are left
-/// out, and so is a declaration with nothing exported.
+/// `api_only`, unexported specs and fields are left out, and so is a
+/// declaration with nothing exported.
 fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     let rows = file.node_rows(node);
     let start = *rows.start();
@@ -325,9 +326,7 @@ fn whole(node: Node, file: &SourceFile, api_only: bool) -> Option<DeclInfo> {
     }
     let mut decl = file.whole(name_rows, rows, entries);
     if let Some(list) = entries {
-        let is_entry = |entry: &Node| {
-            is_spec(entry) || matches!(entry.kind(), "field_declaration" | "method_elem")
-        };
+        let is_entry = |entry: &Node| is_spec(entry) || entry.kind() == "field_declaration";
         decl.body = file.admitted_items(list, start, |entry| !is_entry(&entry) || visible(&entry));
     }
     let (doc, directives) = head_doc_and_directives(node, file);
@@ -448,10 +447,10 @@ var x, Y = 1, 2
         );
     }
 
-    /// Outside `package main`, a declaration, spec, field or interface
-    /// method no importer can name is hidden, unless its file exports
-    /// nothing. An exported method on an unexported type stays
-    /// when an exported function returns that type.
+    /// Outside `package main`, a declaration, spec or field no importer
+    /// can name is hidden, unless its file exports nothing; an interface
+    /// keeps its lower-case methods. An exported method on an unexported
+    /// type stays when an exported function returns that type.
     #[test]
     fn go_library_hides_unexported_declarations() {
         let model = extract_source(
@@ -475,6 +474,10 @@ type Handler interface {
 
 type Digest struct {
 \tv1 uint64
+}
+
+type Expr interface {
+\tisExpr()
 }
 
 var (
@@ -505,13 +508,14 @@ func NewPool() (*pool, error) { return nil, nil }
             describe(&model),
             [
                 "Whole name [7] head [7, 11] doc [] body [[8], [10]]",
-                "Whole name [13] head [13, 16] doc [] body [[14]]",
+                "Whole name [13] head [13, 16] doc [] body [[14], [15]]",
                 "Whole name [18] head [18, 20] doc [] body []",
-                "Whole name [22, 23] head [22, 25] doc [] body [[23]]",
-                "Callable name [31] head [31] doc [] body []",
+                "Whole name [22] head [22, 24] doc [] body [[23]]",
+                "Whole name [26, 27] head [26, 29] doc [] body [[27]]",
                 "Callable name [35] head [35] doc [] body []",
-                "Callable name [41] head [41] doc [] body []",
-                "Callable name [43] head [43] doc [] body []",
+                "Callable name [39] head [39] doc [] body []",
+                "Callable name [45] head [45] doc [] body []",
+                "Callable name [47] head [47] doc [] body []",
             ]
         );
         let internal = extract_source("package cmd\n\nvar rootCmd = 1\n\nfunc run() {}\n");
