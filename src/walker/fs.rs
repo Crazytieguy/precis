@@ -7,7 +7,7 @@
 
 use std::{
     cell::RefCell,
-    collections::{BTreeMap, HashMap, HashSet},
+    collections::{BTreeMap, BTreeSet, HashMap, HashSet},
     path::{Path, PathBuf},
     rc::Rc,
 };
@@ -308,10 +308,12 @@ fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
 /// [`CATALOG_PARENT_MIN_CHILD_DIRS`] subdirectories, and either it is a
 /// source inventory, whose children are catalog leaves, or `dir` names
 /// exactly the three or more entries an earlier sibling names
-/// (`keyboards/*/`, `charts/*/`), so the first of each shape shows what
-/// the siblings hold. Listing a one- or two-entry shape (`Cargo.toml`
-/// and `src/`) costs about what naming it does, and deferring it hides
-/// the code below. A declared workspace member or a package module is
+/// (`keyboards/*/`, `charts/*/`), or it is a leaf of non-source files
+/// shaped like an earlier sibling (`plugins/*/`, a docs page's
+/// `index.md`), so the first of each shape shows what the siblings hold.
+/// Listing another one- or two-entry shape (`Cargo.toml` and `src/`)
+/// costs about what naming it does, and deferring it hides the code
+/// below. A declared workspace member or a package module is
 /// the project's own code, whatever its layout. The walk root's parent
 /// is outside the walk, so the root is never deferred.
 fn is_deferred_catalog_child(dir: &Path, ctx: &WalkCtx) -> bool {
@@ -414,7 +416,9 @@ impl FsState {
     }
 
     /// Names of `parent`'s subdirectories whose three or more entry names
-    /// repeat an earlier subdirectory's.
+    /// repeat an earlier subdirectory's. A leaf of non-source files
+    /// repeats one however few its entries, with its own name matched as
+    /// a wildcard (`aws/aws.plugin.zsh` repeats `git/git.plugin.zsh`).
     fn shape_repeats(&self, parent: &Path, filter: &DirFilter) -> Rc<HashSet<String>> {
         if let Some(repeats) = self.shape_repeats.borrow().get(parent) {
             return Rc::clone(repeats);
@@ -427,7 +431,20 @@ impl FsState {
             .filter(|(_, kind)| matches!(kind, EntryKind::Directory));
         for (name, _) in subdirs {
             let entries = list_dir(&parent.join(name), filter);
-            if entries.len() > 2 && !shapes.insert(entries.keys().cloned().collect::<Vec<_>>()) {
+            let non_source_leaf = entries.iter().all(|(entry, kind)| {
+                matches!(kind, EntryKind::File) && super::language_group(Path::new(entry)).is_none()
+            });
+            let shape: BTreeSet<String> = entries
+                .keys()
+                .map(|entry| {
+                    if non_source_leaf {
+                        entry.replace(name.as_str(), "\0")
+                    } else {
+                        entry.clone()
+                    }
+                })
+                .collect();
+            if (entries.len() > 2 || non_source_leaf) && !shapes.insert(shape) {
                 repeats.insert(name.clone());
             }
         }
@@ -717,6 +734,14 @@ mod tests {
             for file in ["Chart.yaml", "README.md", "values.yaml"] {
                 std::fs::write(root.join("charts").join(chart).join(file), "").unwrap();
             }
+            let plugin = root.join("plugins").join(chart);
+            std::fs::create_dir_all(&plugin).unwrap();
+            std::fs::write(plugin.join(format!("{chart}.plugin.zsh")), "").unwrap();
+            std::fs::write(plugin.join("README.md"), "").unwrap();
+            let package = root.join("pkg").join(chart);
+            std::fs::create_dir_all(&package).unwrap();
+            std::fs::write(package.join(format!("{chart}.go")), "package x").unwrap();
+            std::fs::write(package.join(format!("{chart}_test.go")), "package x").unwrap();
             std::fs::create_dir_all(root.join("crates").join(chart).join("src")).unwrap();
             std::fs::write(root.join("crates").join(chart).join("Cargo.toml"), "").unwrap();
             std::fs::write(root.join("crates").join(chart).join("src/lib.rs"), "").unwrap();
@@ -736,6 +761,11 @@ mod tests {
             value("charts/chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
         );
         assert!(value("charts/chart9") > value("charts/chart1"));
+        assert_eq!(
+            value("plugins/chart1"),
+            value("plugins/chart0") * CATALOG_CHILD_LISTING_SUPPRESSION
+        );
+        assert_eq!(value("pkg/chart1"), value("pkg/chart0"));
         assert_eq!(value("crates/chart1"), value("crates/chart0"));
         assert_eq!(value("apps/app1"), value("apps/app0"));
     }

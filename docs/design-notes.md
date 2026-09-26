@@ -369,7 +369,12 @@ are exempt from the shape deferral and the unpacked-release cut, and
 package modules (a directory with its own entry file) from the shape
 deferral, because a workspace's crates or a Django project's apps share
 a layout but not their code, and a listing gates discovery of the
-source under it. A
+source under it. A leaf of non-source files is deferred however few
+its entries, with its own name matched as a wildcard (`aws/` holding
+`aws.plugin.zsh` and `README.md`, a docs page's `index.md`). Extending
+the wildcard to shapes holding source or subdirectories scored +0.0005
+at 3000 but deferred source packages (rails' `actionpack/`, Go
+packages, engine modules) whose code is what the listing gates. A
 single-child listing run stops at a third-party directory so that its
 key, not a vendored child's, is what expansion checks. These rules came
 from the robustness corpus; the grid was neutral or better for each
