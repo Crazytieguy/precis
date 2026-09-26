@@ -75,10 +75,16 @@ fn extract(file: &SourceFile, _ctx: &WalkCtx) -> FileModel {
     }
 }
 
-/// A header within one directory of the root named after the repository
-/// (`sds.h`, `src/jq.h`): the library's public interface.
+/// A header named after the repository within one directory of the root
+/// (`sds.h`, `src/jq.h`), or in an `include/` directory within two
+/// (`src/include/liburing.h`): the library's public interface.
 fn is_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
-    is_header(path) && ctx.depth_from_root(path) <= 2 && is_named_after(path, ctx.root())
+    let max_depth = if path.parent().and_then(Path::file_name) == Some("include".as_ref()) {
+        3
+    } else {
+        2
+    };
+    is_header(path) && ctx.depth_from_root(path) <= max_depth && is_named_after(path, ctx.root())
 }
 
 fn file_weight(path: &Path, _ctx: &WalkCtx) -> f64 {
@@ -1214,6 +1220,8 @@ int other_api(void);
         assert!(entrypoint("src/SQLITE-VEC.h"));
         assert!(!entrypoint("sqlite-vec.c"));
         assert!(!entrypoint("include/deep/sqlite-vec.h"));
+        assert!(entrypoint("src/include/sqlite-vec.h"));
+        assert!(!entrypoint("src/lib/sqlite-vec.h"));
         assert!(!entrypoint("src/util.h"));
     }
 }
